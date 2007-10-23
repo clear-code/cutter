@@ -20,6 +20,11 @@ AC_PROG_LN_S
 AC_PROG_MAKE_SET
 AC_PROG_LIBTOOL
 
+dnl **************************************************************
+dnl Check for GLib.
+dnl **************************************************************
+AM_PATH_GLIB_2_0(2.14.0, [], [], [gmodule gobject])
+
 # Checks for libraries.
 # FIXME: Replace `main' with a function in `-ldl':
 AC_CHECK_LIB([dl], [dlopen])
