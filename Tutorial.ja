@@ -4,78 +4,78 @@
 
 $Id: Tutorial.ja 17 2004-09-14 06:47:53Z kou $
 
-== $B2<=`Hw(B
+== 下準備
 
-$B$^$:!$%F%9%H$r:n@.$9$k$?$a$N2<=`Hw$r$7$^$9!%(B
+まず，テストを作成するための下準備をします．
 ((<GaUnit|URL:http://www.cozmixng.org/~rwiki/?cmd=view;name=GaUnit>))
-$B$KIU$$$F$$$k(Brun-test.el$B$r;H$&$H2>Dj$7$FOC$r?J$a$^$9!%(B
+に付いているrun-test.elを使うと仮定して話を進めます．
 
-$B:#2s$O!$;MB'1i;;$r9T$&%W%m%0%i%`$r:n@.$7$^$9!%(B
+今回は，四則演算を行うプログラムを作成します．
 
-=== $B%G%#%l%/%H%j9=@.(B
+=== ディレクトリ構成
 
-$B$^$:!$%W%m%0%i%`$r:n@.$9$k$?$a$N%G%#%l%/%H%j$rMQ0U$7$^$9!%:#(B
-$B2s$O(Bcalc$B$H$7$^$7$g$&!%(B
+まず，プログラムを作成するためのディレクトリを用意します．今
+回はcalcとしましょう．
 
-  % cd ~/work/c/ # $B$H$+%W%m%0%i%`:n@.MQ%G%#%l%/%H%j$K0\F0(B
+  % cd ~/work/c/ # とかプログラム作成用ディレクトリに移動
   % mkdir calc
   % cd calc
 
-$BB3$$$F!$(Bcalc/$B%G%#%l%/%H%j0J2<$K%W%m%0%i%`MQ%G%#%l%/%H%j(Bsrc/
-$B$H!$%F%9%H%W%m%0%i%`MQ%G%#%l%/%H%j(Btest/$B$r:n@.$7$^$9!%(B
+続いて，calc/ディレクトリ以下にプログラム用ディレクトリsrc/
+と，テストプログラム用ディレクトリtest/を作成します．
 
   [calc]% mkdir src
   [calc]% mkdir test
 
-$B$D$^$j!$%G%#%l%/%H%j9=@.$O0J2<$N$h$&$K$J$j$^$9!%(B
+つまり，ディレクトリ構成は以下のようになります．
 
-  calc/ -+- src/ $B%=!<%9%U%!%$%k$rCV$/(B
+  calc/ -+- src/ ソースファイルを置く
          |
-         +- test/ $B%F%9%HMQ$N%U%!%$%k$rCV$/(B
+         +- test/ テスト用のファイルを置く
 
-=== $B%F%9%H5/F0$N<+F02=(B
+=== テスト起動の自動化
 
-$B%G%#%l%/%H%j9=@.$,=PMh$?$N$G!$<!$K!$%F%9%H$r5/F0$r<+F02=$9$k(B
-$B$?$a$N%U%!%$%k$r:n@.$7$^$9!%(B
+ディレクトリ構成が出来たので，次に，テストを起動を自動化する
+ためのファイルを作成します．
 
-$B$^$:!$%F%9%H5/F0MQ%9%/%j%W%H(Bcalc/test/run-test.sh$B$r:n@.$7$^(B
-$B$9!%FbMF$O0J2<$N$h$&$K$7$^$9!%(Bmake$B$O(BGNU Make$B$r;H$&$h$&$K$7$F(B
-$B$/$@$5$$!%%7%9%F%`$K$h$C$F$O(Bgmake$B$H$$$&%3%^%s%I$G%$%s%9%H!<(B
-$B%k$5$l$F$$$k$+$b$7$l$^$;$s!%E,59JQ99$7$F$/$@$5$$!%(B
+まず，テスト起動用スクリプトcalc/test/run-test.shを作成しま
+す．内容は以下のようにします．makeはGNU Makeを使うようにして
+ください．システムによってはgmakeというコマンドでインストー
+ルされているかもしれません．適宜変更してください．
 
   #!/bin/sh
   make test
 
-$B<B9T8"$rIU$1$k$N$rK:$l$J$$$G$/$@$5$$!%(B
+実行権を付けるのを忘れないでください．
 
   [calc]% chmod +x test/run-test.sh
 
-$B<!$K!$(Bcalc/Makefile$B$r:n@.$7$^$9!%FbMF$O0J2<$N$h$&$K$7$^$9!%(B
+次に，calc/Makefileを作成します．内容は以下のようにします．
 
   include Makefile.test
 
-calc/Makefile.test$B$O!V(B$PREFIX/share/cutter/Makefile.test$B!W(B
-$B!J(B$PREFIX$B$O(B./configure$B;~$K(B--prefix$B$G;XDj$7$?CM!K$r%3%T!<$7$F(B
-$B$-$^$9!%$"$k$$$O!$%"!<%+%$%VCf$N(Bsample/calc/Makefile.test$B$r(B
-$B%3%T!<$7$F$b$h$$$G$9!%(B
+calc/Makefile.testは「$PREFIX/share/cutter/Makefile.test」
+（$PREFIXは./configure時に--prefixで指定した値）をコピーして
+きます．あるいは，アーカイブ中のsample/calc/Makefile.testを
+コピーしてもよいです．
 
-$B$H$$$&$3$H$G!$8=:_$O0J2<$N$h$&$J9=@.$K$J$C$F$$$k$O$:$G$9!%(B
+ということで，現在は以下のような構成になっているはずです．
 
-  calc/ -+- Makefile <- $B:n@.(B
+  calc/ -+- Makefile <- 作成
          |
-         +- Makefile.test <- $B%3%T!<(B
+         +- Makefile.test <- コピー
          |
          +- src/
          |
-         +- test/ -+- run-test.sh <- $B:n@.(B
+         +- test/ -+- run-test.sh <- 作成
 
 
-== $B%F%9%H$N:n@.(B
+== テストの作成
 
-$B%F%9%H$O(Btest/$B0J2<$K(Btest_XXX.c$B$H$$$&L>A0$G:n@.$7$^$9!%:#2s$O(B
-test/test_calc.c$B$H$7$F%F%9%H$r=q$-$^$7$g$&!%(B
+テストはtest/以下にtest_XXX.cという名前で作成します．今回は
+test/test_calc.cとしてテストを書きましょう．
 
-$B$^$:!$B-$7;;$N%F%9%H$r=q$-$^$9!%(B
+まず，足し算のテストを書きます．
 
   #include <cutter/cutter.h>
   
@@ -91,14 +91,14 @@ test/test_calc.c$B$H$7$F%F%9%H$r=q$-$^$7$g$&!%(B
   UT_REGISTER(add_test, "add test")
   UT_REGISTER_END
 
-$B$3$N%F%9%H$G$O!$(B(({add(1, 2)}))$B$N7k2L$,(B(({3}))$B$K$J$k$+$r%F%9(B
-$B%H$7$F$$$^$9!%$=$l$G$O!$(Brun-test.el$B$r;H$C$F$$$k>l9g$O(BC-cC-t
-$B$G%F%9%H$r<B9T$7$F$_$^$7$g$&!%;H$C$F$$$J$$>l9g$O0J2<$N%3%^%s(B
-$B%I$G%F%9%H$r<B9T$7$^$9!%(B
+このテストでは，(({add(1, 2)}))の結果が(({3}))になるかをテス
+トしています．それでは，run-test.elを使っている場合はC-cC-t
+でテストを実行してみましょう．使っていない場合は以下のコマン
+ドでテストを実行します．
 
   [calc]% test/run-test.sh
 
-$B0J2<$N$h$&$J7k2L$K$J$k$G$7$g$&!%(B
+以下のような結果になるでしょう．
 
   Need to run make depend
   gcc -Wall -ggdb -Isrc -Itest -I`echo ~/local/include`   -MM -MG src/calc.c | sed -e 's,^\(.*\):,src/\1:,' > .depend.src
@@ -106,24 +106,24 @@ test/test_calc.c$B$H$7$F%F%9%H$r=q$-$^$7$g$&!%(B
   cat .depend.src .depend.test > .depend
   rm .depend.src .depend.test
 
-$B$3$l$O!$%U%!%$%k4V$N0MB84X78$r<+F07W;;$7$F$$$^$9!%I,MW$J$H$-(B
-$B!J:#$N$h$&$K%U%!%$%k$r:n@.$7$?$H$-$dJQ99$5$l$?$H$-!K$K<+F0$G(B
-$B<B9T$5$l$^$9!%(B
+これは，ファイル間の依存関係を自動計算しています．必要なとき
+（今のようにファイルを作成したときや変更されたとき）に自動で
+実行されます．
 
-$B0MB84X78$,7W;;$5$l$?$N$G$b$&0lEY(BC-cC-t$B$G%F%9%H$7$F$_$^$7$g$&!%(B
+依存関係が計算されたのでもう一度C-cC-tでテストしてみましょう．
 
   gcc -Wall -ggdb -Isrc -Itest -I`echo ~/local/include` -o test/test_calc.o -c test/test_calc.c
   test/test_calc.c:3:18: calc.h: No such file or directory
   test/test_calc.c: In function `add_test':
   test/test_calc.c:7: warning: implicit declaration of function `add'
-  gmake: *** [test/test_calc.o] $B%(%i!<(B 1
+  gmake: *** [test/test_calc.o] エラー 1
 
-calc.h$B$,$J$$$N$G%3%s%Q%$%k%(%i!<$K$J$C$F$$$^$9!%$H$$$&$3$H$G!$(B
-src/calc.h$B$r:n@.$7$^$7$g$&!%(B
+calc.hがないのでコンパイルエラーになっています．ということで，
+src/calc.hを作成しましょう．
 
   int add(int x, int y);
 
-$B$-$C$A$j$H$3$s$JIw$K$7$F$b$h$$$G$9!%(B
+きっちりとこんな風にしてもよいです．
 
   #ifndef CALC_H
   #define CALC_H
@@ -132,20 +132,20 @@ src/calc.h$B$r:n@.$7$^$7$g$&!%(B
 
   #endif
 
-$B$=$l$G$O!$(BC-cC-t$B$G%F%9%H$rAv$i$;$^$7$g$&!%(B
+それでは，C-cC-tでテストを走らせましょう．
 
   gcc -Wall -ggdb -Isrc -Itest -I`echo ~/local/include` -o test/test_calc.o -c test/test_calc.c
   gcc -L./ -shared -o test/libtest_calc.so test/test_calc.o
   cutter -vp
   dlopen() failed: ./test/libtest_calc.so: Undefined symbol "add"
   Assertion ((null)) failed load.c:43
-  gmake: *** [do-test] Abort trap ($B%3%"%@%s%W$7$^$7$?(B)
+  gmake: *** [do-test] Abort trap (コアダンプしました)
   rm test/test_calc.o
 
-(({add}))$B$,Dj5A$5$l$F$$$J$$$N$G(Bcore$B$rEG$$$F=*N;$7$^$7$?!%$=(B
-$B$l$G$O!$(Bsrc/calc.c$B$K(B(({add}))$B$NDj5A$r=q$-$^$7$g$&!%%F%9%H$G(B
-$B$O(B(({add})) $B$O(B(({1})), (({2}))$B$r0z?t$H$7$F<u$1<h$C$?$i!$(B
-(({3}))$B$rJV$9$3$H$K$J$C$F$$$^$7$?!%(B
+(({add}))が定義されていないのでcoreを吐いて終了しました．そ
+れでは，src/calc.cに(({add}))の定義を書きましょう．テストで
+は(({add})) は(({1})), (({2}))を引数として受け取ったら，
+(({3}))を返すことになっていました．
 
   #include "calc.h"
 
@@ -155,8 +155,8 @@ src/calc.h$B$r:n@.$7$^$7$g$&!%(B
     return 3;
   }
 
-$BB-$7;;$7$F$$$J$$$H;W$&$+$b$7$l$^$;$s$,!$$3$l$G$$$$$N$G$9!%%F(B
-$B%9%H$O(B(({3}))$B$rJV$9$3$H$r4|BT$7$F$$$k$N$G$9$+$i!%(B
+足し算していないと思うかもしれませんが，これでいいのです．テ
+ストは(({3}))を返すことを期待しているのですから．
 
   gcc -Wall -ggdb -Isrc -Itest -I`echo ~/local/include`   -MM -MG src/calc.c | sed -e 's,^\(.*\):,src/\1:,' > .depend.src
   ...
@@ -165,15 +165,15 @@ src/calc.h$B$r:n@.$7$^$7$g$&!%(B
   [1/1](100.00%) tests passed.
   rm test/test_calc.o src/calc.o
 
-$B%3%s%Q%$%k8e$K%F%9%H$r<B9T!J(Bcutter -vp$B!K$7$F$$$^$9!%!V(Btests
-passed.$B!W$H$$$&$N$r8+$F$b$o$+$kDL$j!$%F%9%H$r%Q%9$7$F$$$^$9!%(B
-$BM=A[DL$j$G$9$M!%(B
+コンパイル後にテストを実行（cutter -vp）しています．「tests
+passed.」というのを見てもわかる通り，テストをパスしています．
+予想通りですね．
 
-$B$?$@!$:#$N(B(({add}))$B$@$HEz$($,(B3$B$K$J$k>l9g$7$+@5$7$/F0:n$7$^$;(B
-$B$s!%B>$N>l9g$G$bF0:n$9$k$h$&$K%F%9%H$rDI2C$7$F!$2~NI$7$^$7$g(B
-$B$&!%(B
+ただ，今の(({add}))だと答えが3になる場合しか正しく動作しませ
+ん．他の場合でも動作するようにテストを追加して，改良しましょ
+う．
 
-test/test_calc.c$B$r0J2<$N$h$&$KJQ99$7$^$9!%(B
+test/test_calc.cを以下のように変更します．
 
   UT_DEF(add_test)
   {
@@ -182,10 +182,10 @@ test/test_calc.c$B$r0J2<$N$h$&$KJQ99$7$^$9!%(B
     UT_PASS;
   }
 
-$B$D$^$j!$(B(({1 + 2}))$B$N7k2L$,(B(({3}))$B$K$J$k$@$1$G$O$J$/!$(B(({3 +
--2}))$B$N7k2L$,(B(({1}))$B$K$J$kI,MW$,$"$j$^$9!%(B
+つまり，(({1 + 2}))の結果が(({3}))になるだけではなく，(({3 +
+-2}))の結果が(({1}))になる必要があります．
 
-$B$=$l$G$O!$(BC-cC-t$B$G%F%9%H$7$^$7$g$&!%(B
+それでは，C-cC-tでテストしましょう．
 
   gcc -Wall -ggdb -Isrc -Itest -I`echo ~/local/include`   -MM -MG src/calc.c | sed -e 's,^\(.*\):,src/\1:,' > .depend.src
   ...
@@ -197,12 +197,12 @@ test/test_calc.c$B$r0J2<$N$h$&$KJQ99$7$^$9!%(B
     but was: <3>
 
   [0/1](0.00%) tests passed.
-  gmake: *** [do-test] $B%(%i!<(B 1
+  gmake: *** [do-test] エラー 1
   rm test/test_calc.o src/calc.o
 
-$BM=A[DL$j<:GT$7$^$7$?!%(B(({3 + -2}))$B$G$b7k2L$,(B3$B$K$J$C$F$$$^$9!%(B
+予想通り失敗しました．(({3 + -2}))でも結果が3になっています．
 
-$B$=$l$G$O!$%F%9%H$r%Q%9$9$k$h$&$K(Bsrc/calc.c$B$r$rJQ99$7$^$7$g$&!%(B
+それでは，テストをパスするようにsrc/calc.cをを変更しましょう．
 
   int
   add(int x, int y)
@@ -210,7 +210,7 @@ test/test_calc.c$B$r0J2<$N$h$&$KJQ99$7$^$9!%(B
     return x + y;
   }
 
-C-cC-t$B$G%F%9%H$7$^$9!%(B
+C-cC-tでテストします．
 
   gcc -Wall -ggdb -Isrc -Itest -I`echo ~/local/include`   -MM -MG src/calc.c | sed -e 's,^\(.*\):,src/\1:,' > .depend.src
   ...
@@ -219,23 +219,23 @@ C-cC-t$B$G%F%9%H$7$^$9!%(B
   [1/1](100.00%) tests passed.
   rm test/test_calc.o src/calc.o
 
-$B%Q%9$7$^$7$?!%$"$H$O!$:#$N<j=g$r7+$jJV$7$F$$$1$P$h$$$G$9!%$D(B
-$B$^$j!$$3$&$$$&$3$H$G$9!%(B
+パスしました．あとは，今の手順を繰り返していけばよいです．つ
+まり，こういうことです．
 
-  * $B%F%9%H$N:n@.(B
-  * $B%F%9%H$N<B9T!J%(%i!<$K$J$k$3$H$r3NG'!K(B
-  * $B%F%9%H$r%Q%9$9$k$h$&$K%=!<%9$NJQ99(B
-  * $B%F%9%H$N<B9T!J%F%9%H$K%Q%9$9$k$3$H$r3NG'!%%Q%9$9$k$^$G$O(B
-    $B<!$N%F%9%H$rDI2C$7$J$$!K(B
+  * テストの作成
+  * テストの実行（エラーになることを確認）
+  * テストをパスするようにソースの変更
+  * テストの実行（テストにパスすることを確認．パスするまでは
+    次のテストを追加しない）
 
-$B0z$-;;!$$+$1;;!$3d$j;;$O=IBj$H$7$^$7$g$&!%(B
+引き算，かけ算，割り算は宿題としましょう．
 
-== $B$*$^$1(B
+== おまけ
 
-$B$H;W$$$^$7$?$,!$0z$-;;$@$1DI2C$7$F$_$^$7$g$&!%<+J,$G$d$j$?$$(B
-$B?M$O8+$J$$$G$/$@$5$$!%(B
+と思いましたが，引き算だけ追加してみましょう．自分でやりたい
+人は見ないでください．
 
-$B$^$:!$(Btest/test_calc.c$B$K%F%9%H$rDI2C$7$^$9!%(B
+まず，test/test_calc.cにテストを追加します．
 
   UT_DEF(sub_test)
   {
@@ -243,14 +243,14 @@ C-cC-t$B$G%F%9%H$7$^$9!%(B
     UT_PASS;
   }
 
-$B%F%9%H$rEPO?$9$k$3$H$rK:$l$F$O$$$1$^$;$s!%(B
+テストを登録することを忘れてはいけません．
 
   UT_REGISTER_BEGIN("calc test")
   UT_REGISTER(add_test, "add test")
-  UT_REGISTER(sub_test, "sub test") /* <- $BDI2C(B */
+  UT_REGISTER(sub_test, "sub test") /* <- 追加 */
   UT_REGISTER_END
 
-C-cC-t$B$G%F%9%H$r<B9T$7$^$9!%(B
+C-cC-tでテストを実行します．
 
   gcc -Wall -ggdb -Isrc -Itest -I`echo ~/local/include`   -MM -MG src/calc.c | sed -e 's,^\(.*\):,src/\1:,' > .depend.src
   ...
@@ -259,25 +259,25 @@ C-cC-t$B$G%F%9%H$r<B9T$7$^$9!%(B
   cutter -vp
   dlopen() failed: ./test/libtest_calc.so: Undefined symbol "sub"
   Assertion ((null)) failed load.c:43
-  gmake: *** [do-test] Abort trap ($B%3%"%@%s%W$7$^$7$?(B)
+  gmake: *** [do-test] Abort trap (コアダンプしました)
   rm test/test_calc.o src/calc.o
 
-(({sub}))$B$r@k8@$r$7$F$$$J$$$3$H$K$h$k7Y9p$,=P$F$$$^$9!%$^$?!$(B
-(({sub}))$B$rDj5A$7$F$$$J$$$?$a$K(Bcore$B$rEG$$$F$$$^$9!%(B
+(({sub}))を宣言をしていないことによる警告が出ています．また，
+(({sub}))を定義していないためにcoreを吐いています．
 
-$B$^$:!$(Bsrc/calc.h$B$K(B(({sub}))$B$N%W%m%H%?%$%W@k8@$rDI2C$7$^$7$g(B
-$B$&!%(B
+まず，src/calc.hに(({sub}))のプロトタイプ宣言を追加しましょ
+う．
 
   gcc -Wall -ggdb -Isrc -Itest -I`echo ~/local/include`   -MM -MG src/calc.c | sed -e 's,^\(.*\):,src/\1:,' > .depend.src
   ...
   cutter -vp
   dlopen() failed: ./test/libtest_calc.so: Undefined symbol "sub"
   Assertion ((null)) failed load.c:43
-  gmake: *** [do-test] Abort trap ($B%3%"%@%s%W$7$^$7$?(B)
+  gmake: *** [do-test] Abort trap (コアダンプしました)
 
-(({sub}))$B$N@k8@$,$J$$$H$$$&7Y9p$,$J$/$J$j$^$7$?!%(B
+(({sub}))の宣言がないという警告がなくなりました．
 
-src/calc.c$B$KDj5A$r=q$-$^$7$g$&!%(B
+src/calc.cに定義を書きましょう．
 
   int
   sub(int x, int y)
@@ -285,16 +285,16 @@ src/calc.c$B$KDj5A$r=q$-$^$7$g$&!%(B
     return x - y;
   }
 
-$B4JC1$G$9$M!%(B
+簡単ですね．
 
-C-cC-t$B$G%F%9%H$7$^$7$g$&!%(B
+C-cC-tでテストしましょう．
   gcc -Wall -ggdb -Isrc -Itest -I`echo ~/local/include`   -MM -MG src/calc.c | sed -e 's,^\(.*\):,src/\1:,' > .depend.src
   ...
   cutter -vp
   ..
   [2/2](100.00%) tests passed.
 
-$B%Q%9$7$^$7$?!%(B
+パスしました．
 
-$B0J>e$G$9!%$+$1;;$H3d$j;;$OK\Ev$K=IBj$G$9!%(B
+以上です．かけ算と割り算は本当に宿題です．
 
