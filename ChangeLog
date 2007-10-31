@@ -1,5 +1,9 @@
 2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test-container.c: (dispose): Unref each CutTest object.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test-container.c: Implement run method of CutTestClass.
 
 2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>

@@ -90,6 +90,7 @@ dispose (GObject *object)
     CutTestContainerPrivate *priv = CUT_TEST_CONTAINER_GET_PRIVATE(object);
 
     if (priv->tests) {
+        g_list_foreach (priv->tests, (GFunc)g_object_unref, NULL);
         g_list_free(priv->tests);
         priv->tests = NULL;
     }
