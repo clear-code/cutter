@@ -1,5 +1,10 @@
 2007-10-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test-container.[c|h]: Remove cut_test_container_new()
+	since CutTestContainer is an abstract object.
+
+2007-10-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test-container.[c|h]: Add skelton of GObject.
 
 2007-10-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>

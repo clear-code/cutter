@@ -73,12 +73,6 @@ cut_test_container_init (CutTestContainer *chr)
 {
 }
 
-CutTestContainer*
-cut_test_container_new (void)
-{
-    return g_object_new(CUT_TYPE_TEST_CONTAINER, NULL);
-}
-
 static void
 dispose (GObject *object)
 {

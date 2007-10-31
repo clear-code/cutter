@@ -48,8 +48,6 @@ struct _CutTestContainerClass
 
 GType             cut_test_container_get_type (void) G_GNUC_CONST;
 
-CutTestContainer *cut_test_container_new      (void);
-
 G_END_DECLS
 
 #endif /* __CUT_TEST_CONTAINER_H__ */
