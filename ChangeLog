@@ -1,3 +1,8 @@
+2007-10-31  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-test-container.[ch]: cut_test_container_run_tests()
+	-> cut_test_container_run().
+
 2007-10-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-test.[c|h]: Added cut_test_get_assertion_count().

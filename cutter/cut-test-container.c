@@ -118,7 +118,7 @@ get_property (GObject    *object,
 }
 
 gboolean
-cut_test_container_run_tests (CutTestContainer *container)
+cut_test_container_run (CutTestContainer *container)
 {
     GList *list;
     gboolean ret;
@@ -129,7 +129,7 @@ cut_test_container_run_tests (CutTestContainer *container)
             continue;
         if (CUT_IS_TEST_CONTAINER(list->data)) {
             CutTestContainer *child = CUT_TEST_CONTAINER(list->data);
-            ret = cut_test_container_run_tests(child);
+            ret = cut_test_container_run(child);
         } else if (CUT_IS_TEST(list->data)) {
             CutTest *test = CUT_TEST(list->data);
             ret = cut_test_run(test);

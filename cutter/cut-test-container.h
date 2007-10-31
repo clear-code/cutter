@@ -48,7 +48,7 @@ struct _CutTestContainerClass
 
 GType           cut_test_container_get_type  (void) G_GNUC_CONST;
 
-gboolean        cut_test_container_run_tests (CutTestContainer *container);
+gboolean        cut_test_container_run       (CutTestContainer *container);
 
 G_END_DECLS
 
