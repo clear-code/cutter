@@ -94,6 +94,7 @@ dispose (GObject *object)
         g_list_free(priv->tests);
         priv->tests = NULL;
     }
+
     G_OBJECT_CLASS(cut_test_container_parent_class)->dispose(object);
 }
 

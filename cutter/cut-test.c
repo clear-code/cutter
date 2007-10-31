@@ -35,13 +35,14 @@ typedef struct _CutTestPrivate	CutTestPrivate;
 struct _CutTestPrivate
 {
     CutTestFunction test_function;
-    guint n_assertion;
+    guint assertion_count;
 };
 
 enum
 {
     PROP_0,
-    PROP_TEST_FUNCTION
+    PROP_TEST_FUNCTION,
+    PROP_ASSERTION_COUNT
 };
 
 G_DEFINE_ABSTRACT_TYPE (CutTest, cut_test, G_TYPE_OBJECT)
@@ -78,6 +79,13 @@ cut_test_class_init (CutTestClass *klass)
                                 G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class, PROP_TEST_FUNCTION, spec);
 
+    spec = g_param_spec_uint("assertion-count",
+                             "Assertion Count",
+                             "The number of assertion.",
+                             0, G_MAXUINT32, 0,
+                             G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_ASSERTION_COUNT, spec);
+
     g_type_class_add_private(gobject_class, sizeof(CutTestPrivate));
 }
 
@@ -87,7 +95,7 @@ cut_test_init (CutTest *container)
     CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(container);
 
     priv->test_function = NULL;
-    priv->n_assertion = 0;
+    priv->assertion_count = 0;
 }
 
 static void
@@ -112,6 +120,9 @@ set_property (GObject      *object,
       case PROP_TEST_FUNCTION:
         priv->test_function = g_value_get_pointer(value);
         break;
+      case PROP_ASSERTION_COUNT:
+        priv->assertion_count = g_value_get_uint(value);
+        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
@@ -129,6 +140,9 @@ get_property (GObject    *object,
     switch (prop_id) {
       case PROP_TEST_FUNCTION:
         g_value_set_pointer(value, priv->test_function);
+        break;
+      case PROP_ASSERTION_COUNT:
+        g_value_set_uint(value, priv->assertion_count);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -166,7 +180,7 @@ cut_test_run (CutTest *test)
 guint
 cut_test_get_assertion_count (CutTest *test)
 {
-    return CUT_TEST_GET_PRIVATE(test)->n_assertion;
+    return CUT_TEST_GET_PRIVATE(test)->assertion_count;
 }
 
 /*

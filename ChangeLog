@@ -1,5 +1,9 @@
 2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test.c: "assertion-count" property.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test-container.c: (cut_test_container_class_init):Assign
 	test_class value.
 	(real_run): Get assertion count.
