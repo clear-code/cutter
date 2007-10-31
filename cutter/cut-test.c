@@ -34,11 +34,13 @@
 typedef struct _CutTestPrivate	CutTestPrivate;
 struct _CutTestPrivate
 {
+    CutTestFunction *test_function;
 };
 
 enum
 {
-    PROP_0
+    PROP_0,
+    PROP_TEST_FUNCTION
 };
 
 G_DEFINE_ABSTRACT_TYPE (CutTest, cut_test, G_TYPE_OBJECT)
@@ -72,6 +74,8 @@ static void
 cut_test_init (CutTest *container)
 {
     CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(container);
+
+    priv->test_function = NULL;
 }
 
 static void
@@ -106,6 +110,14 @@ get_property (GObject    *object,
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
     }
+}
+
+CutTest *
+cut_test_new (CutTestFunction function)
+{
+    return g_object_new(CUT_TYPE_TEST,
+                        "test-function", function,
+                        NULL);
 }
 
 gboolean

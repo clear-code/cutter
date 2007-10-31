@@ -46,9 +46,13 @@ struct _CutTestClass
     GObjectClass parent_class;
 };
 
+typedef gboolean    (*CutTestFunction) (void);
+
 GType           cut_test_get_type  (void) G_GNUC_CONST;
 
 gboolean        cut_test_run       (CutTest *test);
+
+CutTest        *cut_test_new       (CutTestFunction function);
 
 G_END_DECLS
 
