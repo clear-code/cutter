@@ -1,5 +1,9 @@
 2007-10-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test.c: (cut_test_run): Invoke test_function().
+
+2007-10-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test.[c|h]: Added cut_test_new().
 
 2007-10-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>

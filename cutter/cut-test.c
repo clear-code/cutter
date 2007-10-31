@@ -34,7 +34,7 @@
 typedef struct _CutTestPrivate	CutTestPrivate;
 struct _CutTestPrivate
 {
-    CutTestFunction *test_function;
+    CutTestFunction test_function;
 };
 
 enum
@@ -123,7 +123,12 @@ cut_test_new (CutTestFunction function)
 gboolean
 cut_test_run (CutTest *test)
 {
-    return FALSE;
+    CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(test);
+
+    if (!priv->test_function)
+        return FALSE;
+
+    return priv->test_function();
 }
 
 /*
