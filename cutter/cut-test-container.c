@@ -56,10 +56,13 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 
+static gboolean real_run   (CutTest         *test);
+
 static void
 cut_test_container_class_init (CutTestContainerClass *klass)
 {
     GObjectClass *gobject_class;
+    CutTestClass *test_class;
     GParamSpec *spec;
 
     gobject_class = G_OBJECT_CLASS(klass);
@@ -67,6 +70,8 @@ cut_test_container_class_init (CutTestContainerClass *klass)
     gobject_class->dispose      = dispose;
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
+
+    test_class->run = real_run;
 
     g_type_class_add_private(gobject_class, sizeof(CutTestContainerPrivate));
 }
@@ -127,20 +132,21 @@ cut_test_container_add_test (CutTestContainer *container, CutTest *test)
     priv->tests = g_list_prepend(priv->tests, test);
 }
 
-gboolean
-cut_test_container_run (CutTestContainer *container)
+static gboolean
+real_run (CutTest *test)
 {
     GList *list;
     gboolean ret;
-    CutTestContainerPrivate *priv = CUT_TEST_CONTAINER_GET_PRIVATE(container);
+    CutTestContainerPrivate *priv;
+
+    g_return_val_if_fail (CUT_IS_TEST_CONTAINER(test), FALSE);
+
+    priv = CUT_TEST_CONTAINER_GET_PRIVATE(test);
 
     for (list = priv->tests; list; list = g_list_next(list)) {
         if (!list->data)
             continue;
-        if (CUT_IS_TEST_CONTAINER(list->data)) {
-            CutTestContainer *child = CUT_TEST_CONTAINER(list->data);
-            ret = cut_test_container_run(child);
-        } else if (CUT_IS_TEST(list->data)) {
+        if (CUT_IS_TEST(list->data)) {
             CutTest *test = CUT_TEST(list->data);
             ret = cut_test_run(test);
         } else {
