@@ -34,7 +34,7 @@ enum VerboseLevel {
 #define CUT_SUITE _ut_suite
 #define CUT_NAME _ut_name
 
-#include <cutter/assersions.h>
+#include <assersions.h>
 
 #define CUT_INITIALIZER NULL
 #define CUT_FINALIZER NULL
