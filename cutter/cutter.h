@@ -17,20 +17,20 @@
 typedef unsigned short bool;
 
 enum VerboseLevel {
-  SILENT,
-  PROGRESS,
-  NORMAL,
-  VERBOSE
+    SILENT,
+    PROGRESS,
+    NORMAL,
+    VERBOSE
 };
 
-#define uassert(exp) do {                       \
-  if (!(exp))                                   \
-    {                                           \
-      fprintf(stderr,                           \
-              "Assertion (%s) failed %s:%d\n",  \
-              (exp), __FILE__, __LINE__);       \
-      abort();                                  \
-    }                                           \
+#define uassert(exp) do {                         \
+    if (!(exp))                                   \
+    {                                             \
+        fprintf(stderr,                           \
+                "Assertion (%s) failed %s:%d\n",  \
+                (exp), __FILE__, __LINE__);       \
+        abort();                                  \
+    }                                             \
 } while (0)
 
 #define UT_INFO _ut_info
@@ -52,15 +52,15 @@ enum VerboseLevel {
 
 typedef struct utest_info_tag
 {
-  int line;
-  char file[MAXUTESTFILELEN];
-  char base[MAX_UTEST_BASE_LEN];
-  char msg[MAXUTESTMESGLEN];
-  char suiteName[MAXUTESTNAMELEN];
-  char testName[MAXUTESTNAMELEN];
-  int status;
-  void (*logerror)(struct utest_info_tag*,int,const char*,const char*);
-  struct utest_info_tag* next;
+    int line;
+    char file[MAXUTESTFILELEN];
+    char base[MAX_UTEST_BASE_LEN];
+    char msg[MAXUTESTMESGLEN];
+    char suiteName[MAXUTESTNAMELEN];
+    char testName[MAXUTESTNAMELEN];
+    int status;
+    void (*logerror)(struct utest_info_tag*,int,const char*,const char*);
+    struct utest_info_tag* next;
 } utest_info;
 
 typedef struct utest_test_tag
@@ -81,31 +81,34 @@ typedef struct utest_suite_tag
 
 
 #define UT_DEF(name)                            \
-static bool                                     \
+    static bool                                 \
 name(utest_info *UT_INFO)
 
 
 #define UT_REGISTER_BEGIN(name)                 \
-static utest_suite UT_SUITE = {                 \
-  name,                                         \
-  UT_INITIALIZER,                               \
-  UT_FINALIZER,                                 \
-  UT_SETUP,                                     \
-  UT_TEARDOWN,                                  \
-  {
+    static utest_suite UT_SUITE = {             \
+        name,                                   \
+        UT_INITIALIZER,                         \
+        UT_FINALIZER,                           \
+        UT_SETUP,                               \
+        UT_TEARDOWN,                            \
+        {
 
 #define UT_REGISTER(func_name, desc)            \
-    {desc, &func_name},
+            {desc, &func_name},
 
 #define UT_REGISTER_END                         \
-    {"null", NULL}                              \
-  }                                             \
-};                                              \
+            {"null", NULL}                      \
+        }                                       \
+    };                                          \
                                                 \
 utest_suite*                                    \
 register_suite(void)                            \
 {                                               \
-  return &UT_SUITE;                             \
+    return &UT_SUITE;                           \
 }
 
 #endif /* CUTTER_CUTTER_H */
+/*
+vi:ts=4:nowrap:ai:expandtab:sw=4
+*/

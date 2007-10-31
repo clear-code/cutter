@@ -27,137 +27,141 @@
  */
 
 #define STRNSAME_P(target, test_str) \
-  (strncmp((target), (test_str), strlen(test_str)) == 0)
+    (strncmp((target), (test_str), strlen(test_str)) == 0)
 
 static int
 Usage (int argc, char* argv[], const char* errmsg)
 {
-	ShowUsage (argc, argv, errmsg);
-	exit(1);
+    ShowUsage (argc, argv, errmsg);
+    exit(1);
 }
 
 static bool
 set_verbose_level(utest_world *world, const char *level) 
 {
-  if ((STRNSAME_P(level, "s") || (STRNSAME_P(level, "silent")))) {
-    world->verbose_level = SILENT;
-  } else if ((STRNSAME_P(level, "n") || (STRNSAME_P(level, "normal")))) {
-    world->verbose_level = NORMAL;
-  } else if ((STRNSAME_P(level, "p") || (STRNSAME_P(level, "progress")))) {
-    world->verbose_level = PROGRESS;
-  } else if ((STRNSAME_P(level, "v") || (STRNSAME_P(level, "verbose")))) {
-    world->verbose_level = VERBOSE;
-  } else {
-    return FALSE;
-  }
-  return TRUE;
+    if ((STRNSAME_P(level, "s") || (STRNSAME_P(level, "silent")))) {
+        world->verbose_level = SILENT;
+    } else if ((STRNSAME_P(level, "n") || (STRNSAME_P(level, "normal")))) {
+        world->verbose_level = NORMAL;
+    } else if ((STRNSAME_P(level, "p") || (STRNSAME_P(level, "progress")))) {
+        world->verbose_level = PROGRESS;
+    } else if ((STRNSAME_P(level, "v") || (STRNSAME_P(level, "verbose")))) {
+        world->verbose_level = VERBOSE;
+    } else {
+        return FALSE;
+    }
+    return TRUE;
 }
 
 static void
 show_usage_with_invalid_verbose_type(const char *type, int argc, char **argv)
 {
-  const char *message = "Invalid verbose type: ";
-  int len = strlen(type);
-  char *buffer;
+    const char *message = "Invalid verbose type: ";
+    int len = strlen(type);
+    char *buffer;
 
-  buffer = (char *)malloc(strlen(message) + len + 1);
-  buffer = strdup(message);
-  buffer = strncat(buffer, type, len);
-  Usage (argc, argv, buffer);
+    buffer = (char *)malloc(strlen(message) + len + 1);
+    buffer = strdup(message);
+    buffer = strncat(buffer, type, len);
+    Usage (argc, argv, buffer);
 }
 
 static bool
 handle_verbose_arg(utest_world *world, const char *level, int argc, char **argv)
 {
-  const char *v = "-v";
-  const char *verbose = "--verbose=";
-  const char *type;
-  
-  if STRNSAME_P(level, v) {
-    type = level + strlen(v);
-    if (!set_verbose_level(world, type)) {
-      show_usage_with_invalid_verbose_type(type, argc, argv);
+    const char *v = "-v";
+    const char *verbose = "--verbose=";
+    const char *type;
+
+    if STRNSAME_P(level, v) {
+        type = level + strlen(v);
+        if (!set_verbose_level(world, type)) {
+            show_usage_with_invalid_verbose_type(type, argc, argv);
+        }
+    } else if STRNSAME_P(level, verbose) {
+        type = level + strlen(verbose);
+        if (!set_verbose_level(world, type)) {
+            show_usage_with_invalid_verbose_type(type, argc, argv);
+        }
+    } else {
+        return FALSE;
     }
-  } else if STRNSAME_P(level, verbose) {
-    type = level + strlen(verbose);
-    if (!set_verbose_level(world, type)) {
-      show_usage_with_invalid_verbose_type(type, argc, argv);
-    }
-  } else {
-    return FALSE;
-  }
-  return TRUE;
+    return TRUE;
 }
 
 static bool
 handle_base_arg(utest_world *world, const char *arg)
 {
-  const char *b = "-b";
-  const char *base = "--base=";
-  const char *where;
-  
-  if STRNSAME_P(arg, b) {
-    where = arg + strlen(b);
-    strncpy(world->base, where, MAX_UTEST_BASE_LEN);
-  } else if STRNSAME_P(arg, base) {
-    where = arg + strlen(base);
-    strncpy(world->base, where, MAX_UTEST_BASE_LEN);
-  } else {
-    return FALSE;
-  }
-  return TRUE;
+    const char *b = "-b";
+    const char *base = "--base=";
+    const char *where;
+
+    if STRNSAME_P(arg, b) {
+        where = arg + strlen(b);
+        strncpy(world->base, where, MAX_UTEST_BASE_LEN);
+    } else if STRNSAME_P(arg, base) {
+        where = arg + strlen(base);
+        strncpy(world->base, where, MAX_UTEST_BASE_LEN);
+    } else {
+        return FALSE;
+    }
+    return TRUE;
 }
 
 /* compiles a list of test suites and then runs them */
 static int
 RunTester (int argc, char* argv[])
 {
-	utest_world world;
-  int i;
+    utest_world world;
+    int i;
 
-	InitWorld(&world);
+    InitWorld(&world);
 
-	/* check command line parameters */
-  for (i = 1; i < argc; i++) {
-		if (STRNSAME_P(argv[i], "-h") || STRNSAME_P(argv[i], "--help")) {
-      Usage (argc, argv, NULL);
-    } else if (handle_verbose_arg(&world, argv[i], argc, argv)) {
-      /* do nothing */
-    } else if (handle_base_arg(&world, argv[i])) {
-      /* do nothing */
-    } else {
-      if (argv[i + 1] == NULL) {
-        world.rootDir = argv[i];
-      } else {
-        Usage (argc, argv, "Incorrect number of arguments");
-      }
+    /* check command line parameters */
+    for (i = 1; i < argc; i++) {
+        if (STRNSAME_P(argv[i], "-h") || STRNSAME_P(argv[i], "--help")) {
+            Usage (argc, argv, NULL);
+        } else if (handle_verbose_arg(&world, argv[i], argc, argv)) {
+            /* do nothing */
+        } else if (handle_base_arg(&world, argv[i])) {
+            /* do nothing */
+        } else {
+            if (argv[i + 1] == NULL) {
+                world.rootDir = argv[i];
+            } else {
+                Usage (argc, argv, "Incorrect number of arguments");
+            }
+        }
     }
-	}
 
-	/* banner */
-	ShowBanner (&world);
+    /* banner */
+    ShowBanner (&world);
 
-	CompileWorld(&world);
+    CompileWorld(&world);
 
-	/* init timers */
-	InitWorldTimers(&world);
+    /* init timers */
+    InitWorldTimers(&world);
 
-	RunWorld(&world);
+    RunWorld(&world);
 
-	/* final timers */
-	FiniWorldTimers(&world);
-	
-	ShowProgress (&world);
-	ShowInfo (&world);
+    /* final timers */
+    FiniWorldTimers(&world);
 
-	return (world.badTestCount ? 1 : 0);
+    ShowProgress (&world);
+    ShowInfo (&world);
+
+    return (world.badTestCount ? 1 : 0);
 }
 
-int main(int argc, char* argv[])
+int
+main(int argc, char* argv[])
 {
-	int ret;
+    int ret;
 
-	ret = RunTester(argc, argv);
+    ret = RunTester(argc, argv);
 
-	return ret;
+    return ret;
 }
+/*
+vi:ts=4:nowrap:ai:expandtab:sw=4
+*/
