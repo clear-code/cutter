@@ -114,6 +114,7 @@ get_property (GObject    *object,
         break;
     }
 }
+
 gboolean
 cut_test_container_run_tests (CutTestContainer *container)
 {
@@ -123,7 +124,7 @@ cut_test_container_run_tests (CutTestContainer *container)
     for (list = priv->tests; list; list = g_list_next(list)) {
         if (list->data && CUT_IS_TEST_CONTAINER(list->data)) {
             CutTestContainer *child = CUT_TEST_CONTAINER(list->data);
-            gboolean ret = cut_test_container_run_tests (child);
+            gboolean ret = cut_test_container_run_tests(child);
         }
     }
 
