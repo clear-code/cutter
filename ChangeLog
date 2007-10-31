@@ -1,5 +1,9 @@
 2007-10-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test-container.[c|h]: Declare cut_test_container_run_tests()
+
+2007-10-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/main.c: Renamed from cutter/cutter.c:
 
 2007-10-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>

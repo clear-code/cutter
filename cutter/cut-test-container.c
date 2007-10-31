@@ -114,6 +114,12 @@ get_property (GObject    *object,
         break;
     }
 }
+gboolean
+cut_test_container_run_tests (void)
+{
+    return FALSE;
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw
 */

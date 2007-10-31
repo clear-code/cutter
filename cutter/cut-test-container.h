@@ -46,7 +46,9 @@ struct _CutTestContainerClass
     GObjectClass parent_class;
 };
 
-GType             cut_test_container_get_type (void) G_GNUC_CONST;
+GType           cut_test_container_get_type  (void) G_GNUC_CONST;
+
+gboolean        cut_test_container_run_tests (void);
 
 G_END_DECLS
 
