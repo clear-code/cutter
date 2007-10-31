@@ -29,6 +29,8 @@
 
 #include "cut-test-container.h"
 
+#include "cut-test.h"
+
 #define CUT_TEST_CONTAINER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_CONTAINER, CutTestContainerPrivate))
 
 typedef struct _CutTestContainerPrivate	CutTestContainerPrivate;
@@ -119,12 +121,20 @@ gboolean
 cut_test_container_run_tests (CutTestContainer *container)
 {
     GList *list;
+    gboolean ret;
     CutTestContainerPrivate *priv = CUT_TEST_CONTAINER_GET_PRIVATE(container);
 
     for (list = priv->tests; list; list = g_list_next(list)) {
-        if (list->data && CUT_IS_TEST_CONTAINER(list->data)) {
+        if (!list->data)
+            continue;
+        if (CUT_IS_TEST_CONTAINER(list->data)) {
             CutTestContainer *child = CUT_TEST_CONTAINER(list->data);
-            gboolean ret = cut_test_container_run_tests(child);
+            ret = cut_test_container_run_tests(child);
+        } else if (CUT_IS_TEST(list->data)) {
+            CutTest *test = CUT_TEST(list->data);
+            ret = cut_test_run(test);
+        } else {
+            g_warning ("This object is not test or test container!");
         }
     }
 
