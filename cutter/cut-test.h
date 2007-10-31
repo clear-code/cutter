@@ -44,6 +44,8 @@ struct _CutTest
 struct _CutTestClass
 {
     GObjectClass parent_class;
+
+    gboolean (*run) (CutTest *test);
 };
 
 typedef gboolean    (*CutTestFunction) (void);

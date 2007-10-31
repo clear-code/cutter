@@ -56,6 +56,8 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 
+static gboolean real_run   (CutTest         *test);
+
 static void
 cut_test_class_init (CutTestClass *klass)
 {
@@ -67,6 +69,8 @@ cut_test_class_init (CutTestClass *klass)
     gobject_class->dispose      = dispose;
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
+
+    klass->run = real_run;
 
     spec = g_param_spec_pointer("test-function",
                                 "Test Function",
@@ -140,8 +144,8 @@ cut_test_new (CutTestFunction function)
                         NULL);
 }
 
-gboolean
-cut_test_run (CutTest *test)
+static gboolean
+real_run (CutTest *test)
 {
     CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(test);
 
@@ -149,6 +153,14 @@ cut_test_run (CutTest *test)
         return FALSE;
 
     return priv->test_function();
+}
+
+gboolean
+cut_test_run (CutTest *test)
+{
+    CutTestClass *class = CUT_TEST_GET_CLASS(test);
+
+    return class->run(test);
 }
 
 guint
