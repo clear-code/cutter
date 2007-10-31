@@ -6,7 +6,7 @@ AC_PREREQ(2.59)
 AC_INIT(cutter, 0.0.2, kou@cozmixng.org)
 AC_CONFIG_AUX_DIR([config])
 
-AC_CONFIG_SRCDIR([cutter/cutter.c])
+AC_CONFIG_SRCDIR([cutter/main.c])
 AM_CONFIG_HEADER([cutter/config.h])
 
 AM_INIT_AUTOMAKE($PACKAGE_NAME, $PACKAGE_VERSION)
