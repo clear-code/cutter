@@ -164,7 +164,7 @@ cut_test_run (CutTest *test)
 }
 
 guint
-cut_test_get_assersion_count (CutTest *test)
+cut_test_get_assertion_count (CutTest *test)
 {
     return CUT_TEST_GET_PRIVATE(test)->n_assertion;
 }
