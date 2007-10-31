@@ -1,3 +1,7 @@
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test.c: "test-function" property.
+
 2007-10-31  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-test-container.[ch]: cut_test_container_run_tests()

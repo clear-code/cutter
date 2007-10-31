@@ -68,6 +68,12 @@ cut_test_class_init (CutTestClass *klass)
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
 
+    spec = g_param_spec_pointer ("test-function",
+                                 "Test Function",
+                                 "The function for test",
+                                 G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+    g_object_class_install_property (gobject_class, PROP_TEST_FUNCTION, spec);
+
     g_type_class_add_private(gobject_class, sizeof(CutTestPrivate));
 }
 
@@ -85,6 +91,8 @@ dispose (GObject *object)
 {
     CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(object);
 
+    priv->test_function = NULL;
+
     G_OBJECT_CLASS(cut_test_parent_class)->dispose(object);
 }
 
@@ -94,7 +102,12 @@ set_property (GObject      *object,
               const GValue *value,
               GParamSpec   *pspec)
 {
+    CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(object);
+
     switch (prop_id) {
+      case PROP_TEST_FUNCTION:
+        priv->test_function = g_value_get_pointer (value);
+        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
@@ -107,7 +120,12 @@ get_property (GObject    *object,
               GValue     *value,
               GParamSpec *pspec)
 {
+    CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(object);
+
     switch (prop_id) {
+      case PROP_TEST_FUNCTION:
+        g_value_set_pointer (value, priv->test_function);
+        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
