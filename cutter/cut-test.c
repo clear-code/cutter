@@ -35,6 +35,7 @@ typedef struct _CutTestPrivate	CutTestPrivate;
 struct _CutTestPrivate
 {
     CutTestFunction test_function;
+    guint n_assertion;
 };
 
 enum
@@ -76,6 +77,7 @@ cut_test_init (CutTest *container)
     CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(container);
 
     priv->test_function = NULL;
+    priv->n_assertion = 0;
 }
 
 static void
@@ -129,6 +131,12 @@ cut_test_run (CutTest *test)
         return FALSE;
 
     return priv->test_function();
+}
+
+guint
+cut_test_get_assersion_count (CutTest *test)
+{
+    return CUT_TEST_GET_PRIVATE(test)->n_assertion;
 }
 
 /*
