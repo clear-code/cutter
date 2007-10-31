@@ -63,9 +63,9 @@ cut_test_container_class_init (CutTestContainerClass *klass)
 {
     GObjectClass *gobject_class;
     CutTestClass *test_class;
-    GParamSpec *spec;
 
     gobject_class = G_OBJECT_CLASS(klass);
+    test_class = CUT_TEST_CLASS(klass);
 
     gobject_class->dispose      = dispose;
     gobject_class->set_property = set_property;
@@ -138,6 +138,7 @@ real_run (CutTest *test)
 {
     GList *list;
     gboolean ret;
+    guint assertion_count;
     CutTestContainerPrivate *priv;
 
     g_return_val_if_fail (CUT_IS_TEST_CONTAINER(test), FALSE);
@@ -150,6 +151,7 @@ real_run (CutTest *test)
         if (CUT_IS_TEST(list->data)) {
             CutTest *test = CUT_TEST(list->data);
             ret = cut_test_run(test);
+            assertion_count = cut_test_get_assertion_count(test);
         } else {
             g_warning("This object is neither test nor test container!");
         }
