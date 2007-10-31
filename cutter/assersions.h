@@ -1,5 +1,8 @@
 #ifndef CUTTER_ASSERSIONS_H
 #define CUTTER_ASSERSIONS_H
+
+G_BEGIN_DECLS
+
 #include <stdio.h>
 #include <string.h>
 
@@ -63,5 +66,5 @@ if (strcmp(expect, actual) != 0)                        \
   return FALSE;                                         \
 }
 
-
+G_END_DECLS
 #endif /* CUTTER_ASSERSIONS_H */

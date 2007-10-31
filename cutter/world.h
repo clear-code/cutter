@@ -9,53 +9,60 @@
 #ifndef CUTTER_WORLD_H
 #define CUTTER_WORLD_H
 
+G_BEGIN_DECLS
+
 #include <cutter/cutter.h>
 
 typedef struct utest_suite_stub_tag
 {
-	char libpath[MAXUTESTPATHLEN];
-	int testCount;
-	utest_suite* suite;
-	struct utest_suite_stub_tag* next;
+    char libpath[MAXUTESTPATHLEN];
+    int testCount;
+    utest_suite* suite;
+    struct utest_suite_stub_tag* next;
 } utest_suite_stub;
 
 typedef struct utest_world_tag
 {
-	/* config */
-	const char* rootDir;
-	
-  char base[MAX_UTEST_BASE_LEN];
-  
-	/* test counters */
-	int suiteCount;
-	int testCount;
+    /* config */
+    const char* rootDir;
 
-	int finSuiteCount;
-	int finTestCount;
+    char base[MAX_UTEST_BASE_LEN];
 
-	int badTestCount;
-	int goodTestCount;
+    /* test counters */
+    int suiteCount;
+    int testCount;
 
-	/* times */
-	long secStart;
-	long usecStart;
-	long secEnd;
-	long usecEnd;
+    int finSuiteCount;
+    int finTestCount;
 
-	/* tests */
-	void (*addstub)(struct utest_world_tag*, utest_suite_stub*);
-	utest_suite_stub* stubHead;
-	utest_suite_stub* stubTail;
+    int badTestCount;
+    int goodTestCount;
 
-	void (*addinfo)(struct utest_world_tag*, utest_info*);
-	utest_info* infoHead;
-	utest_info* infoTail;
+    /* times */
+    long secStart;
+    long usecStart;
+    long secEnd;
+    long usecEnd;
 
-  enum VerboseLevel verbose_level;
+    /* tests */
+    void (*addstub)(struct utest_world_tag*, utest_suite_stub*);
+    utest_suite_stub* stubHead;
+    utest_suite_stub* stubTail;
+
+    void (*addinfo)(struct utest_world_tag*, utest_info*);
+    utest_info* infoHead;
+    utest_info* infoTail;
+
+    enum VerboseLevel verbose_level;
 } utest_world;
 
 void InitWorld (utest_world* world);
 void InitWorldTimers (utest_world* world);
 void FiniWorldTimers (utest_world* world);
 
+G_END_DECLS
+
 #endif /* CUTTER_WORLD_H */
+/*
+   vi:ts=4:nowrap:ai:expandtab:sw=4
+   */

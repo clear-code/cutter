@@ -11,6 +11,8 @@
 
 #include <glib.h>
 
+G_BEGIN_DECLS
+
 enum VerboseLevel {
     SILENT,
     PROGRESS,
@@ -104,6 +106,8 @@ register_suite(void)                            \
 }
 
 #define CUTTER_BANNER "Cutter is based on CUnitTester by Stewart Gebbie <cunit@gethos.net> 2004"
+
+G_END_DECLS
 
 #endif /* CUTTER_CUTTER_H */
 /*

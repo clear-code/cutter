@@ -8,6 +8,8 @@
 #ifndef CUTTER_SHOW_H
 #define CUTTER_SHOW_H
 
+G_BEGIN_DECLS
+
 #include "world.h"
 
 void ShowError (const char* fmt,...);
@@ -21,5 +23,7 @@ void ShowProgress (utest_world* world);
 void ShowTestInfo (utest_info* info);
 
 void ShowAddTest (utest_world* world, utest_suite_stub* stub);
+
+G_END_DECLS
 
 #endif /* CUTTER_SHOW_H */

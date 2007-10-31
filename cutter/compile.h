@@ -8,9 +8,13 @@
 #ifndef CUTTER_COMPILE_H
 #define CUTTER_COMPILE_H
 
+G_BEGIN_DECLS
+
 #include "world.h"
 
 void CompileWorld (utest_world* world);
 
+
+G_END_DECLS
 
 #endif /* CUTTER_COMPILE_H */
