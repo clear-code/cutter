@@ -30,11 +30,29 @@
     (strncmp((target), (test_str), strlen(test_str)) == 0)
 
 static int
-usage (int argc, char* argv[], const char* errmsg)
+show_usage (int argc, char* argv[], const char* errmsg)
 {
-    ShowUsage(argc, argv, errmsg);
+    printf("Usage: %s [OPTIONS] [search directory]\n", argv[0]);
+    printf("  OPTIONS:\n");
+    printf("    -vLEVEL or --verbose=LEVEL\n");
+    printf("      LEVEL: s[ilent], n[ormal], p[rogress], v[erbose]\n");
+    printf("    -bBASE or --base=BASE\n");
+    printf("      BASE: base directory of tests. use when error is occurred\n");
+
+    if (errmsg) printf("Error: %s\n", errmsg);
+    printf("\n%s\n", CUTTER_BANNER);
+    printf(
+           "\n"
+           "\tStarting in the specified search directory, Cutter\n"
+           "\twill recurse through the sub directories and search for\n"
+           "\tfiles with names matching libtest_*.so. The test suites\n"
+           "\tdefined within these libraries are then loaded and run.\n"
+           "\tThe final statistics are displayed along with any\n"
+           "\taccumulated error messages.\n"
+          );
     exit(1);
 }
+
 
 static bool
 set_verbose_level(utest_world *world, const char *level) 
@@ -63,7 +81,7 @@ show_usage_with_invalid_verbose_type(const char *type, int argc, char **argv)
     buffer = (char *)malloc(strlen(message) + len + 1);
     buffer = strdup(message);
     buffer = strncat(buffer, type, len);
-    Usage (argc, argv, buffer);
+    show_usage(argc, argv, buffer);
 }
 
 static bool
@@ -120,7 +138,7 @@ RunTester (int argc, char* argv[])
     /* check command line parameters */
     for (i = 1; i < argc; i++) {
         if (STRNSAME_P(argv[i], "-h") || STRNSAME_P(argv[i], "--help")) {
-            Usage(argc, argv, NULL);
+            show_usage(argc, argv, NULL);
         } else if (handle_verbose_arg(&world, argv[i], argc, argv)) {
             /* do nothing */
         } else if (handle_base_arg(&world, argv[i])) {
@@ -129,7 +147,7 @@ RunTester (int argc, char* argv[])
             if (argv[i + 1] == NULL) {
                 world.rootDir = argv[i];
             } else {
-                Usage(argc, argv, "Incorrect number of arguments");
+                show_usage(argc, argv, "Incorrect number of arguments");
             }
         }
     }

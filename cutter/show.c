@@ -16,7 +16,6 @@
 
 #include "show.h"
 
-#define CUTTER_BANNER "Cutter is based on CUnitTester by Stewart Gebbie <cunit@gethos.net> 2004"
 #define CUNIT_URL "CUnitTester: http://www.gethos.net/opensource/cunit"
 
 static int
@@ -76,30 +75,6 @@ ShowMsg (const char* fmt, ...)
     va_end(ap);
     printf("%s", colourNormal());
 }
-
-void
-ShowUsage (int argc, char* argv[], const char* errmsg)
-{
-    printf("Usage: %s [OPTIONS] [search directory]\n", argv[0]);
-    printf("  OPTIONS:\n");
-    printf("    -vLEVEL or --verbose=LEVEL\n");
-    printf("      LEVEL: s[ilent], n[ormal], p[rogress], v[erbose]\n");
-    printf("    -bBASE or --base=BASE\n");
-    printf("      BASE: base directory of tests. use when error is occurred\n");
-
-    if (errmsg) printf("Error: %s\n", errmsg);
-    printf("\n%s\n", CUTTER_BANNER);
-    printf(
-           "\n"
-           "\tStarting in the specified search directory, Cutter\n"
-           "\twill recurse through the sub directories and search for\n"
-           "\tfiles with names matching libtest_*.so. The test suites\n"
-           "\tdefined within these libraries are then loaded and run.\n"
-           "\tThe final statistics are displayed along with any\n"
-           "\taccumulated error messages.\n"
-          );
-}
-
 
 void
 ShowTestInfo (utest_info* info)

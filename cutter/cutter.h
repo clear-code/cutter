@@ -108,6 +108,8 @@ register_suite(void)                            \
     return &UT_SUITE;                           \
 }
 
+#define CUTTER_BANNER "Cutter is based on CUnitTester by Stewart Gebbie <cunit@gethos.net> 2004"
+
 #endif /* CUTTER_CUTTER_H */
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

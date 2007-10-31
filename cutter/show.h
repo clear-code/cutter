@@ -13,8 +13,6 @@
 void ShowError (const char* fmt,...);
 void ShowMsg (const char* fmt,...);
 
-void ShowUsage (int argc, char* argv[], const char* errmsg);
-
 void ShowBanner (utest_world* world);
 void ShowInfo (utest_world* world);
 void ShowStart (utest_world* world);
