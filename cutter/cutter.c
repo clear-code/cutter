@@ -55,7 +55,7 @@ show_usage (int argc, char* argv[], const char* errmsg)
 
 
 static gboolean
-set_verbose_level(utest_world *world, const char *level) 
+set_verbose_level (utest_world *world, const char *level) 
 {
     if ((STRNSAME_P(level, "s") || (STRNSAME_P(level, "silent")))) {
         world->verbose_level = SILENT;
@@ -72,7 +72,7 @@ set_verbose_level(utest_world *world, const char *level)
 }
 
 static void
-show_usage_with_invalid_verbose_type(const char *type, int argc, char **argv)
+show_usage_with_invalid_verbose_type (const char *type, int argc, char **argv)
 {
     const char *message = "Invalid verbose type: ";
     int len = strlen(type);
@@ -85,7 +85,7 @@ show_usage_with_invalid_verbose_type(const char *type, int argc, char **argv)
 }
 
 static gboolean
-handle_verbose_arg(utest_world *world, const char *level, int argc, char **argv)
+handle_verbose_arg (utest_world *world, const char *level, int argc, char **argv)
 {
     const char *v = "-v";
     const char *verbose = "--verbose=";
@@ -108,7 +108,7 @@ handle_verbose_arg(utest_world *world, const char *level, int argc, char **argv)
 }
 
 static gboolean
-handle_base_arg(utest_world *world, const char *arg)
+handle_base_arg (utest_world *world, const char *arg)
 {
     const char *b = "-b";
     const char *base = "--base=";
@@ -172,7 +172,7 @@ RunTester (int argc, char* argv[])
 }
 
 int
-main(int argc, char* argv[])
+main (int argc, char* argv[])
 {
     int ret;
 
