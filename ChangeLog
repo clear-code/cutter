@@ -1,5 +1,9 @@
 2007-10-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cutter.c: RunTester() -> run_tester().
+
+2007-10-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* sample/calc/test/test_calc.c: CT_DEF -> CUT_DEFINE_TEST. UT -> CUT.
 
 2007-10-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>

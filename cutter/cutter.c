@@ -128,7 +128,7 @@ handle_base_arg (utest_world *world, const char *arg)
 
 /* compiles a list of test suites and then runs them */
 static int
-RunTester (int argc, char* argv[])
+run_tester (int argc, char* argv[])
 {
     utest_world world;
     int i;
@@ -176,7 +176,7 @@ main (int argc, char* argv[])
 {
     int ret;
 
-    ret = RunTester(argc, argv);
+    ret = run_tester(argc, argv);
 
     return ret;
 }
