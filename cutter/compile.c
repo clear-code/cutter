@@ -20,7 +20,7 @@
 #include <alloca.h>
 #endif
 
-#include <cutter/cutter.h>
+#include "cutter.h"
 
 #include "load.h"
 #include "compile.h"
