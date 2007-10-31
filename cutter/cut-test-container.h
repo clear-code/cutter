@@ -55,5 +55,5 @@ G_END_DECLS
 #endif /* __CUT_TEST_CONTAINER_H__ */
 
 /*
-vi:ts=4:nowrap:ai:expandtab:sw
+vi:ts=4:nowrap:ai:expandtab:sw=4
 */

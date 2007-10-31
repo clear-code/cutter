@@ -142,5 +142,5 @@ cut_test_container_run_tests (CutTestContainer *container)
 }
 
 /*
-vi:ts=4:nowrap:ai:expandtab:sw
+vi:ts=4:nowrap:ai:expandtab:sw=4
 */
