@@ -1,5 +1,10 @@
 2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test-container.c: Added cut_test_container_add().
+	CutTestContainer should be a child of CutTest?
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test.c: "test-function" property.
 
 2007-10-31  Kouhei Sutou  <kou@cozmixng.org>

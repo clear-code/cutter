@@ -24,6 +24,8 @@
 
 #include <glib-object.h>
 
+#include "cut-test.h"
+
 G_BEGIN_DECLS
 
 #define CUT_TYPE_TEST_CONTAINER            (cut_test_container_get_type ())
@@ -49,6 +51,8 @@ struct _CutTestContainerClass
 GType           cut_test_container_get_type  (void) G_GNUC_CONST;
 
 gboolean        cut_test_container_run       (CutTestContainer *container);
+void            cut_test_container_add_test  (CutTestContainer *container,
+                                              CutTest          *test);
 
 G_END_DECLS
 

@@ -117,6 +117,16 @@ get_property (GObject    *object,
     }
 }
 
+void
+cut_test_container_add_test (CutTestContainer *container, CutTest *test)
+{
+    CutTestContainerPrivate *priv = CUT_TEST_CONTAINER_GET_PRIVATE(container);
+
+    if (CUT_IS_TEST(test))
+        return;
+    priv->tests = g_list_prepend(priv->tests, test);
+}
+
 gboolean
 cut_test_container_run (CutTestContainer *container)
 {
