@@ -34,6 +34,7 @@
 typedef struct _CutTestContainerPrivate	CutTestContainerPrivate;
 struct _CutTestContainerPrivate
 {
+    GList *tests;
 };
 
 enum
@@ -59,24 +60,33 @@ cut_test_container_class_init (CutTestContainerClass *klass)
     GObjectClass *gobject_class;
     GParamSpec *spec;
 
-    gobject_class = G_OBJECT_CLASS (klass);
+    gobject_class = G_OBJECT_CLASS(klass);
 
     gobject_class->dispose      = dispose;
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
 
-    g_type_class_add_private (gobject_class, sizeof (CutTestContainerPrivate));
+    g_type_class_add_private(gobject_class, sizeof(CutTestContainerPrivate));
 }
 
 static void
-cut_test_container_init (CutTestContainer *chr)
+cut_test_container_init (CutTestContainer *container)
 {
+    CutTestContainerPrivate *priv = CUT_TEST_CONTAINER_GET_PRIVATE(container);
+
+    priv->tests = NULL;
 }
 
 static void
 dispose (GObject *object)
 {
-    G_OBJECT_CLASS (cut_test_container_parent_class)->dispose (object);
+    CutTestContainerPrivate *priv = CUT_TEST_CONTAINER_GET_PRIVATE(object);
+
+    if (priv->tests) {
+        g_list_free(priv->tests);
+        priv->tests = NULL;
+    }
+    G_OBJECT_CLASS(cut_test_container_parent_class)->dispose(object);
 }
 
 static void
