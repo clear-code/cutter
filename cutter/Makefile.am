@@ -18,6 +18,7 @@ cutter_SOURCES =			\
 		run.c run.h 		\
 		show.c show.h 		\
 		world.c world.h 	\
-		cutter.c cutter.h
+		cutter.h		\
+		main.c
 cutter_LDADD =				\
 	$(GLIB_LIBS)
