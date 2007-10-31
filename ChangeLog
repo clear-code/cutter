@@ -1,6 +1,10 @@
 2007-10-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
-	* cutter/*.[c|h}, test/test_triv.c:: UT -> CUT.
+	* cutter/cutter.h, test/test_triv.c: CT_DEF -> CUT_DEFINE_TEST.
+
+2007-10-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/*.[c|h}, test/test_triv.c: UT -> CUT.
 
 2007-10-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 

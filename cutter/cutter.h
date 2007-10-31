@@ -77,7 +77,7 @@ typedef struct utest_suite_tag
 } utest_suite;
 
 
-#define CUT_DEF(name)                            \
+#define CUT_DEFINE_TEST(name)                   \
     static gboolean                             \
 name(utest_info *CUT_INFO)
 

@@ -14,26 +14,26 @@
 
 /* an example test suite */
 
-CUT_DEF(ATest)
+CUT_DEFINE_TEST(ATest)
 {
   CUT_PASS;
 }
 
-CUT_DEF(BTest)
+CUT_DEFINE_TEST(BTest)
 {
   CUT_ASSERT (FALSE, "This is a Bad Test");
 
   CUT_PASS;
 }
 
-CUT_DEF(CTest)
+CUT_DEFINE_TEST(CTest)
 {
   CUT_FAIL ("This test is doomed to fail");
 
   CUT_PASS;
 }
 
-CUT_DEF(DTest)
+CUT_DEFINE_TEST(DTest)
 {
   CUT_ASSERT_EQUAL_DOUBLE(0.5, 0.1, 0.55, "equal double");
   
