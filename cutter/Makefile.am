@@ -11,6 +11,8 @@ bin_PROGRAMS = cutter
 cutter_SOURCES =			\
 		cut-test-container.h	\
 		cut-test-container.c	\
+		cut-test.h		\
+		cut-test.c		\
 		compile.c compile.h	\
 		config.h 		\
 		info.c info.h 		\

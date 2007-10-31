@@ -1,5 +1,9 @@
 2007-10-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test.[c|h]: Added CutTest object.
+
+2007-10-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test-container.c: Run cut_test_container_run_tests() for
 	eatch test object.
 
