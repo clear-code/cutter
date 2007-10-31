@@ -134,7 +134,7 @@ cut_test_container_run_tests (CutTestContainer *container)
             CutTest *test = CUT_TEST(list->data);
             ret = cut_test_run(test);
         } else {
-            g_warning ("This object is not test or test container!");
+            g_warning ("This object is neither test nor test container!");
         }
     }
 
