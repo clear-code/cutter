@@ -30,9 +30,9 @@
     (strncmp((target), (test_str), strlen(test_str)) == 0)
 
 static int
-Usage (int argc, char* argv[], const char* errmsg)
+usage (int argc, char* argv[], const char* errmsg)
 {
-    ShowUsage (argc, argv, errmsg);
+    ShowUsage(argc, argv, errmsg);
     exit(1);
 }
 
@@ -120,7 +120,7 @@ RunTester (int argc, char* argv[])
     /* check command line parameters */
     for (i = 1; i < argc; i++) {
         if (STRNSAME_P(argv[i], "-h") || STRNSAME_P(argv[i], "--help")) {
-            Usage (argc, argv, NULL);
+            Usage(argc, argv, NULL);
         } else if (handle_verbose_arg(&world, argv[i], argc, argv)) {
             /* do nothing */
         } else if (handle_base_arg(&world, argv[i])) {
@@ -129,13 +129,13 @@ RunTester (int argc, char* argv[])
             if (argv[i + 1] == NULL) {
                 world.rootDir = argv[i];
             } else {
-                Usage (argc, argv, "Incorrect number of arguments");
+                Usage(argc, argv, "Incorrect number of arguments");
             }
         }
     }
 
     /* banner */
-    ShowBanner (&world);
+    ShowBanner(&world);
 
     CompileWorld(&world);
 
@@ -147,8 +147,8 @@ RunTester (int argc, char* argv[])
     /* final timers */
     FiniWorldTimers(&world);
 
-    ShowProgress (&world);
-    ShowInfo (&world);
+    ShowProgress(&world);
+    ShowInfo(&world);
 
     return (world.badTestCount ? 1 : 0);
 }

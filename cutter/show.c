@@ -53,7 +53,8 @@ vl_printf(utest_world *world, enum VerboseLevel level, char *format, ...)
     }
 }
 
-void ShowError (const char* fmt, ...)
+void
+ShowError (const char* fmt, ...)
 {
     va_list ap;
 
@@ -64,7 +65,8 @@ void ShowError (const char* fmt, ...)
     printf("%s", colourNormal());
 }
 
-void ShowMsg (const char* fmt, ...)
+void
+ShowMsg (const char* fmt, ...)
 {
     va_list ap;
 
@@ -75,7 +77,8 @@ void ShowMsg (const char* fmt, ...)
     printf("%s", colourNormal());
 }
 
-void ShowUsage (int argc, char* argv[], const char* errmsg)
+void
+ShowUsage (int argc, char* argv[], const char* errmsg)
 {
     printf("Usage: %s [OPTIONS] [search directory]\n", argv[0]);
     printf("  OPTIONS:\n");
@@ -98,9 +101,10 @@ void ShowUsage (int argc, char* argv[], const char* errmsg)
 }
 
 
-void ShowTestInfo (utest_info* info)
+void
+ShowTestInfo (utest_info* info)
 {
-    if (info->status == FALSE)
+    if (info->status == FALSE) {
         printf("%s/%s:%d: - %s %s - %s\n", 
                info->base,
                info->file,
@@ -108,10 +112,12 @@ void ShowTestInfo (utest_info* info)
                info->suiteName, 
                info->testName, 
                info->msg);
+    }
 }
 
 
-void ShowInfo (utest_world* world)
+void
+ShowInfo (utest_world* world)
 {
     double percentGood;
     double percentBad;
@@ -153,7 +159,8 @@ void ShowInfo (utest_world* world)
 }
 
 
-void ShowStart (utest_world* world)
+void
+ShowStart (utest_world* world)
 {
     vl_printf(world, NORMAL,
               "There %s %d test%s in %d suite%s to run:\n", 
@@ -170,7 +177,8 @@ static char swizzle[]={
     '\0'
 };
 
-void ShowProgress (utest_world* world)
+void
+ShowProgress (utest_world* world)
 {
     int perc = 0;
     int width = 0;
