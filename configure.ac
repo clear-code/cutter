@@ -52,6 +52,7 @@ AC_FUNC_VPRINTF
 AC_CHECK_FUNCS([gettimeofday strerror fnmatch])
 
 AC_CONFIG_FILES([Makefile
+		 cutter.pc
 		 cutter/Makefile
                  sample/Makefile
                  sample/calc/Makefile.test
