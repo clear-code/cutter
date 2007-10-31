@@ -20,6 +20,45 @@ AC_PROG_LN_S
 AC_PROG_MAKE_SET
 AC_PROG_LIBTOOL
 
+if test "x$GCC" = "xyes"; then
+  case " $CFLAGS " in
+  *[\ \	]-Wall[\ \	]*) ;;
+  *) CFLAGS="$CFLAGS -Wall" ;;
+  esac
+
+  case " $CFLAGS " in
+  *[\ \	]-Wmissing-declarations[\ \	]*) ;;
+  *) CFLAGS="$CFLAGS -Wmissing-declarations" ;;
+  esac
+
+  case " $CFLAGS " in
+  *[\ \	]-Wmissing-prototypes[\ \	]*) ;;
+  *) CFLAGS="$CFLAGS -Wmissing-prototypes" ;;
+  esac
+
+  case " $CFLAGS " in
+  *[\ \	]-Wpointer-arith[\ \	]*) ;;
+  *) CFLAGS="$CFLAGS -Wpointer-arith" ;;
+  esac
+
+  case " $CFLAGS " in
+  *[\ \	]-Wcast-align[\ \	]*) ;;
+  *) CFLAGS="$CFLAGS -Wcast-align" ;;
+  esac
+
+  if test "x$enable_ansi" = "xyes"; then
+    case " $CFLAGS " in
+    *[\ \	]-ansi[\ \	]*) ;;
+    *) CFLAGS="$CFLAGS -ansi" ;;
+    esac
+
+    case " $CFLAGS " in
+    *[\ \	]-pedantic[\ \	]*) ;;
+    *) CFLAGS="$CFLAGS -pedantic" ;;
+    esac
+  fi
+fi
+
 dnl **************************************************************
 dnl Check for GLib.
 dnl **************************************************************
