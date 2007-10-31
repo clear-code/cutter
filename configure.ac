@@ -51,6 +51,9 @@ AC_FUNC_STAT
 AC_FUNC_VPRINTF
 AC_CHECK_FUNCS([gettimeofday strerror fnmatch])
 
+CUTTER_CFLAGS="\$(GLIB_CFLAGS)"
+AC_SUBST(CUTTER_CFLAGS)
+
 AC_CONFIG_FILES([Makefile
 		 cutter.pc
 		 cutter/Makefile

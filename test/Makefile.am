@@ -1,4 +1,6 @@
-INCLUDES = -I$(top_builddir) -I$(top_srcdir)
+INCLUDES = $(CUTTER_CFLAGS)	\
+	-I$(top_builddir)	\
+	-I$(top_srcdir)
 
 EXTRA_DIST = run-test.sh
 

@@ -3,6 +3,7 @@
 	* cutter/cutter.h: Define CUTTER_BANNER.
 	* curret/cutter.c, cutter/show.[c|h]: ShowUsage -> show_usage(). And
 	moved into cutter.c
+	* configure.ac, test/Makefile.am: Define CUTTER_CFLAGS.
 
 2007-10-24  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
