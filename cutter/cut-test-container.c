@@ -44,7 +44,7 @@ enum
     PROP_0
 };
 
-G_DEFINE_ABSTRACT_TYPE (CutTestContainer, cut_test_container, G_TYPE_OBJECT)
+G_DEFINE_ABSTRACT_TYPE (CutTestContainer, cut_test_container, CUT_TYPE_TEST)
 
 static void dispose        (GObject         *object);
 static void set_property   (GObject         *object,

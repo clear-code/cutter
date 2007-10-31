@@ -1,5 +1,10 @@
 2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test-container.c: Now CutTestContainer is a child of
+	CutTest.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test.c: Added a vertual function for running test.
 
 2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>

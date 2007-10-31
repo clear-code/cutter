@@ -40,12 +40,12 @@ typedef struct _CutTestContainerClass CutTestContainerClass;
 
 struct _CutTestContainer
 {
-    GObject object;
+    CutTest object;
 };
 
 struct _CutTestContainerClass
 {
-    GObjectClass parent_class;
+    CutTestClass parent_class;
 };
 
 GType           cut_test_container_get_type  (void) G_GNUC_CONST;
