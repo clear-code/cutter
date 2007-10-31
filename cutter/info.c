@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <cutter/cutter.h>
+#include "cutter.h"
 
 #include "info.h"
 

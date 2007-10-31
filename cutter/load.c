@@ -11,7 +11,7 @@
 #include <string.h>
 #include <dlfcn.h>
 
-#include <cutter/cutter.h>
+#include "cutter.h"
 
 #include "load.h"
 #include "show.h"

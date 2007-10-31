@@ -9,12 +9,7 @@
 #ifndef CUTTER_CUTTER_H
 #define CUTTER_CUTTER_H
 
-#ifndef TRUE
-#define TRUE 1
-#define FALSE 0
-#endif
-
-typedef unsigned short bool;
+#include <glib.h>
 
 enum VerboseLevel {
     SILENT,
@@ -66,22 +61,22 @@ typedef struct utest_info_tag
 typedef struct utest_test_tag
 {
     char name[MAXUTESTNAMELEN];
-    bool (*theTest)(utest_info*);
+    gboolean (*theTest)(utest_info*);
 } utest_test;
 
 typedef struct utest_suite_tag
 {
     char name[MAXUTESTNAMELEN];
-    bool (*initializer)(utest_info*);
-    bool (*finalizer)(utest_info*);
-    bool (*setup)(utest_info*);
-    bool (*teardown)(utest_info*);
+    gboolean (*initializer)(utest_info*);
+    gboolean (*finalizer)(utest_info*);
+    gboolean (*setup)(utest_info*);
+    gboolean (*teardown)(utest_info*);
     utest_test tests[];
 } utest_suite;
 
 
 #define UT_DEF(name)                            \
-    static bool                                 \
+    static gboolean                                 \
 name(utest_info *UT_INFO)
 
 

@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <cutter/cutter.h>
+#include "cutter.h"
 
 #include "run.h"
 #include "info.h"

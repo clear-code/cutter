@@ -8,7 +8,7 @@
 /* $Id: world.c 7 2004-09-10 10:07:43Z kou $ */
 #include <sys/time.h>
 
-#include <cutter/cutter.h>
+#include "cutter.h"
 
 #include "world.h"
 #include "info.h"

@@ -12,7 +12,7 @@
 #include <string.h>
 #include <math.h>
 
-#include <cutter/cutter.h>
+#include "cutter.h"
 
 #include "show.h"
 

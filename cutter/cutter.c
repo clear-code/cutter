@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <cutter/cutter.h>
+#include "cutter.h"
 
 #include "world.h"
 #include "run.h"
@@ -54,7 +54,7 @@ show_usage (int argc, char* argv[], const char* errmsg)
 }
 
 
-static bool
+static gboolean
 set_verbose_level(utest_world *world, const char *level) 
 {
     if ((STRNSAME_P(level, "s") || (STRNSAME_P(level, "silent")))) {
@@ -84,7 +84,7 @@ show_usage_with_invalid_verbose_type(const char *type, int argc, char **argv)
     show_usage(argc, argv, buffer);
 }
 
-static bool
+static gboolean
 handle_verbose_arg(utest_world *world, const char *level, int argc, char **argv)
 {
     const char *v = "-v";
@@ -107,7 +107,7 @@ handle_verbose_arg(utest_world *world, const char *level, int argc, char **argv)
     return TRUE;
 }
 
-static bool
+static gboolean
 handle_base_arg(utest_world *world, const char *arg)
 {
     const char *b = "-b";
