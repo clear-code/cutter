@@ -15,7 +15,7 @@ G_BEGIN_DECLS
 
 typedef struct utest_suite_stub_tag
 {
-    char libpath[MAXUTESTPATHLEN];
+    char libpath[MAXCUTESTPATHLEN];
     int testCount;
     utest_suite* suite;
     struct utest_suite_stub_tag* next;
@@ -26,7 +26,7 @@ typedef struct utest_world_tag
     /* config */
     const char* rootDir;
 
-    char base[MAX_UTEST_BASE_LEN];
+    char base[MAX_CUTEST_BASE_LEN];
 
     /* test counters */
     int suiteCount;

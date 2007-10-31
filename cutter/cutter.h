@@ -30,31 +30,31 @@ enum VerboseLevel {
     }                                             \
 } while (0)
 
-#define UT_INFO _ut_info
-#define UT_SUITE _ut_suite
-#define UT_NAME _ut_name
+#define CUT_INFO _ut_info
+#define CUT_SUITE _ut_suite
+#define CUT_NAME _ut_name
 
 #include <cutter/assersions.h>
 
-#define UT_INITIALIZER NULL
-#define UT_FINALIZER NULL
-#define UT_SETUP NULL
-#define UT_TEARDOWN NULL
+#define CUT_INITIALIZER NULL
+#define CUT_FINALIZER NULL
+#define CUT_SETUP NULL
+#define CUT_TEARDOWN NULL
 
-#define MAXUTESTNAMELEN 100
-#define MAXUTESTFILELEN 100
-#define MAXUTESTPATHLEN 200
-#define MAXUTESTMESGLEN 200
-#define MAX_UTEST_BASE_LEN 200
+#define MAXCUTESTNAMELEN 100
+#define MAXCUTESTFILELEN 100
+#define MAXCUTESTPATHLEN 200
+#define MAXCUTESTMESGLEN 200
+#define MAX_CUTEST_BASE_LEN 200
 
 typedef struct utest_info_tag
 {
     int line;
-    char file[MAXUTESTFILELEN];
-    char base[MAX_UTEST_BASE_LEN];
-    char msg[MAXUTESTMESGLEN];
-    char suiteName[MAXUTESTNAMELEN];
-    char testName[MAXUTESTNAMELEN];
+    char file[MAXCUTESTFILELEN];
+    char base[MAX_CUTEST_BASE_LEN];
+    char msg[MAXCUTESTMESGLEN];
+    char suiteName[MAXCUTESTNAMELEN];
+    char testName[MAXCUTESTNAMELEN];
     int status;
     void (*logerror)(struct utest_info_tag*,int,const char*,const char*);
     struct utest_info_tag* next;
@@ -62,13 +62,13 @@ typedef struct utest_info_tag
 
 typedef struct utest_test_tag
 {
-    char name[MAXUTESTNAMELEN];
+    char name[MAXCUTESTNAMELEN];
     gboolean (*theTest)(utest_info*);
 } utest_test;
 
 typedef struct utest_suite_tag
 {
-    char name[MAXUTESTNAMELEN];
+    char name[MAXCUTESTNAMELEN];
     gboolean (*initializer)(utest_info*);
     gboolean (*finalizer)(utest_info*);
     gboolean (*setup)(utest_info*);
@@ -77,24 +77,24 @@ typedef struct utest_suite_tag
 } utest_suite;
 
 
-#define UT_DEF(name)                            \
-    static gboolean                                 \
-name(utest_info *UT_INFO)
+#define CUT_DEF(name)                            \
+    static gboolean                             \
+name(utest_info *CUT_INFO)
 
 
-#define UT_REGISTER_BEGIN(name)                 \
-    static utest_suite UT_SUITE = {             \
+#define CUT_REGISTER_BEGIN(name)                 \
+    static utest_suite CUT_SUITE = {             \
         name,                                   \
-        UT_INITIALIZER,                         \
-        UT_FINALIZER,                           \
-        UT_SETUP,                               \
-        UT_TEARDOWN,                            \
+        CUT_INITIALIZER,                         \
+        CUT_FINALIZER,                           \
+        CUT_SETUP,                               \
+        CUT_TEARDOWN,                            \
         {
 
-#define UT_REGISTER(func_name, desc)            \
+#define CUT_REGISTER(func_name, desc)            \
             {desc, &func_name},
 
-#define UT_REGISTER_END                         \
+#define CUT_REGISTER_END                         \
             {"null", NULL}                      \
         }                                       \
     };                                          \
@@ -102,7 +102,7 @@ name(utest_info *UT_INFO)
 utest_suite*                                    \
 register_suite(void)                            \
 {                                               \
-    return &UT_SUITE;                           \
+    return &CUT_SUITE;                           \
 }
 
 #define CUTTER_BANNER "Cutter is based on CUnitTester by Stewart Gebbie <cunit@gethos.net> 2004"

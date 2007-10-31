@@ -26,9 +26,9 @@ init_info_with_base(utest_info* info,
 {
     InitInfo(info, suiteName, testName);
     if (strlen(base) == 0) {
-        strncpy(info->base, ".", MAX_UTEST_BASE_LEN);
+        strncpy(info->base, ".", MAX_CUTEST_BASE_LEN);
     } else {
-        strncpy(info->base, base, MAX_UTEST_BASE_LEN);
+        strncpy(info->base, base, MAX_CUTEST_BASE_LEN);
     }
 }
 

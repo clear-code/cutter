@@ -86,7 +86,7 @@ AddSuite (utest_world* world, const char* libpath, const char *dir)
 
     stub->suite = suite;
     stub->testCount = CountTests(stub->suite);
-    strncpy(stub->libpath, libpath, MAXUTESTPATHLEN);
+    strncpy(stub->libpath, libpath, MAXCUTESTPATHLEN);
     stub->next = NULL;
 
     ShowAddTest(world, stub);

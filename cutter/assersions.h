@@ -8,23 +8,23 @@ G_BEGIN_DECLS
 
 #define ASSERT_MESSAGE_BUFFER_SIZE 512
 
-#define UT_PASS return TRUE
+#define CUT_PASS return TRUE
 
-#define UT_ASSERT(expect, message)                          \
+#define CUT_ASSERT(expect, message)                          \
 if(!(expect))                                               \
 {                                                           \
-  UT_INFO->logerror(UT_INFO, __LINE__ ,__FILE__, message);  \
+  CUT_INFO->logerror(CUT_INFO, __LINE__ ,__FILE__, message);  \
   return FALSE;                                             \
 }
 
-#define UT_FAIL(message)                                    \
+#define CUT_FAIL(message)                                    \
 if(1)                                                       \
 {                                                           \
-  UT_INFO->logerror(UT_INFO, __LINE__, __FILE__, message);  \
+  CUT_INFO->logerror(CUT_INFO, __LINE__, __FILE__, message);  \
   return FALSE;                                             \
 }
 
-#define UT_ASSERT_EQUAL_INT(expect, actual, message)    \
+#define CUT_ASSERT_EQUAL_INT(expect, actual, message)    \
 if (expect != actual)                                   \
 {                                                       \
   char buffer[ASSERT_MESSAGE_BUFFER_SIZE];              \
@@ -32,11 +32,11 @@ if (expect != actual)                                   \
            ASSERT_MESSAGE_BUFFER_SIZE - 1,              \
            "%s\n expected: <%d>\n  but was: <%d>",      \
            message, expect, actual);                    \
-  UT_INFO->logerror(UT_INFO,__LINE__,__FILE__,buffer);  \
+  CUT_INFO->logerror(CUT_INFO,__LINE__,__FILE__,buffer);  \
   return FALSE;                                         \
 }
 
-#define UT_ASSERT_EQUAL_DOUBLE(expect, error, actual, message)  \
+#define CUT_ASSERT_EQUAL_DOUBLE(expect, error, actual, message)  \
 do {                                                            \
   double _expect = expect;                                      \
   double _actual = actual;                                      \
@@ -49,12 +49,12 @@ do {                                                            \
              ASSERT_MESSAGE_BUFFER_SIZE - 1,                    \
              "%s\n expected: <%g> +/-<%g>\n  but was: <%g>",    \
              message, _expect, _error, _actual);                \
-    UT_INFO->logerror(UT_INFO,__LINE__,__FILE__,buffer);        \
+    CUT_INFO->logerror(CUT_INFO,__LINE__,__FILE__,buffer);        \
     return FALSE;                                               \
   }                                                             \
 } while(0)
 
-#define UT_ASSERT_EQUAL_STRING(expect, actual, message) \
+#define CUT_ASSERT_EQUAL_STRING(expect, actual, message) \
 if (strcmp(expect, actual) != 0)                        \
 {                                                       \
   char buffer[ASSERT_MESSAGE_BUFFER_SIZE];              \
@@ -62,9 +62,10 @@ if (strcmp(expect, actual) != 0)                        \
            ASSERT_MESSAGE_BUFFER_SIZE - 1,              \
            "%s\n expected: <%s>\n  but was: <%s>",      \
            message, expect, actual);                    \
-  UT_INFO->logerror(UT_INFO,__LINE__,__FILE__,buffer);  \
+  CUT_INFO->logerror(CUT_INFO,__LINE__,__FILE__,buffer);  \
   return FALSE;                                         \
 }
 
 G_END_DECLS
+
 #endif /* CUTTER_ASSERSIONS_H */

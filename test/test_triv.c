@@ -14,35 +14,35 @@
 
 /* an example test suite */
 
-UT_DEF(ATest)
+CUT_DEF(ATest)
 {
-  UT_PASS;
+  CUT_PASS;
 }
 
-UT_DEF(BTest)
+CUT_DEF(BTest)
 {
-  UT_ASSERT (FALSE, "This is a Bad Test");
+  CUT_ASSERT (FALSE, "This is a Bad Test");
 
-  UT_PASS;
+  CUT_PASS;
 }
 
-UT_DEF(CTest)
+CUT_DEF(CTest)
 {
-  UT_FAIL ("This test is doomed to fail");
+  CUT_FAIL ("This test is doomed to fail");
 
-  UT_PASS;
+  CUT_PASS;
 }
 
-UT_DEF(DTest)
+CUT_DEF(DTest)
 {
-  UT_ASSERT_EQUAL_DOUBLE(0.5, 0.1, 0.55, "equal double");
+  CUT_ASSERT_EQUAL_DOUBLE(0.5, 0.1, 0.55, "equal double");
   
-  UT_PASS;
+  CUT_PASS;
 }
 
-UT_REGISTER_BEGIN("Example::Dummy")
-UT_REGISTER(ATest, "Good Test")
-UT_REGISTER(BTest, "Bad Test")
-UT_REGISTER(CTest, "Fail Test")
-UT_REGISTER(DTest, "Double Test")
-UT_REGISTER_END
+CUT_REGISTER_BEGIN("Example::Dummy")
+CUT_REGISTER(ATest, "Good Test")
+CUT_REGISTER(BTest, "Bad Test")
+CUT_REGISTER(CTest, "Fail Test")
+CUT_REGISTER(DTest, "Double Test")
+CUT_REGISTER_END

@@ -16,15 +16,15 @@
 
 /* TODO UTestFillInfo could be passed as a function pointer in the info struct */
 void
-UTestFillInfo (utest_info* info, int line, const char* file, const char* msg)
+CUTestFillInfo (utest_info* info, int line, const char* file, const char* msg)
 {
     uassert(info);
     uassert(file);
     uassert(msg);
 
     info->line = line;
-    strncpy(info->msg, msg, MAXUTESTMESGLEN);
-    strncpy(info->file, file, MAXUTESTFILELEN);
+    strncpy(info->msg, msg, MAXCUTESTMESGLEN);
+    strncpy(info->file, file, MAXCUTESTFILELEN);
 }
 
 void
@@ -34,11 +34,11 @@ AddInfo (utest_world* world, utest_info* info)
 
     copy->line = info->line;
     copy->status = info->status;
-    strncpy(copy->msg, info->msg, MAXUTESTMESGLEN);
-    strncpy(copy->file, info->file, MAXUTESTFILELEN);
-    strncpy(copy->base, info->base, MAX_UTEST_BASE_LEN);
-    strncpy(copy->suiteName, info->suiteName, MAXUTESTNAMELEN);
-    strncpy(copy->testName, info->testName, MAXUTESTNAMELEN);
+    strncpy(copy->msg, info->msg, MAXCUTESTMESGLEN);
+    strncpy(copy->file, info->file, MAXCUTESTFILELEN);
+    strncpy(copy->base, info->base, MAX_CUTEST_BASE_LEN);
+    strncpy(copy->suiteName, info->suiteName, MAXCUTESTNAMELEN);
+    strncpy(copy->testName, info->testName, MAXCUTESTNAMELEN);
     copy->next = NULL;
 
     if (world->infoHead == NULL) {
@@ -65,10 +65,10 @@ InitInfo (utest_info* info, const char* suiteName, const char* testName)
     info->base[0] = '\0';
     info->msg[0] = '\0';
 
-    strncpy(info->suiteName, suiteName, MAXUTESTNAMELEN);
-    strncpy(info->testName, testName, MAXUTESTNAMELEN);
+    strncpy(info->suiteName, suiteName, MAXCUTESTNAMELEN);
+    strncpy(info->testName, testName, MAXCUTESTNAMELEN);
 
-    info->logerror = &UTestFillInfo;
+    info->logerror = &CUTestFillInfo;
 }
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

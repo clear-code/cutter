@@ -116,10 +116,10 @@ handle_base_arg(utest_world *world, const char *arg)
 
     if STRNSAME_P(arg, b) {
         where = arg + strlen(b);
-        strncpy(world->base, where, MAX_UTEST_BASE_LEN);
+        strncpy(world->base, where, MAX_CUTEST_BASE_LEN);
     } else if STRNSAME_P(arg, base) {
         where = arg + strlen(base);
-        strncpy(world->base, where, MAX_UTEST_BASE_LEN);
+        strncpy(world->base, where, MAX_CUTEST_BASE_LEN);
     } else {
         return FALSE;
     }

@@ -1,6 +1,10 @@
 2007-10-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
-	* cutter/.h: Added G_BEGIN_DECLS and G_END_DECLS.
+	* cutter/*.[c|h}, test/test_triv.c:: UT -> CUT.
+
+2007-10-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/*.h: Added G_BEGIN_DECLS and G_END_DECLS.
 
 2007-10-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
