@@ -1,5 +1,9 @@
 2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* test/test_sample.c: Removed.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* test/test_cut_test_case.c: Added tests for CutTestCase.
 
 2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
