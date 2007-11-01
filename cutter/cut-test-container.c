@@ -157,8 +157,6 @@ real_run (CutTest *test, CutTestError **error)
             g_warning("This object is neither test nor test container!");
         }
     }
-
-    return;
 }
 
 /*
