@@ -1,5 +1,9 @@
 2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test.[c|h]: Added cut_test_get_name().
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* test/test_cut_test.c: Fix cut_test_new() fitst argument.
 
 2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
