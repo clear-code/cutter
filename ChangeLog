@@ -1,5 +1,10 @@
 2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* test/Makefile.am: Compile test_sample.c.
+	* test/test_sample.c: #include "cut-test.h".
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test-loader.h, cutter/cut-test.h: CutTestStruct was moved
 	into cut-test.h.
 
