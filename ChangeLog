@@ -1,5 +1,9 @@
 2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test-loader.c: Open so file with g_module_open().
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test-loader.c: (constructor): Added.
 
 2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>

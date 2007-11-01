@@ -26,6 +26,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <glib.h>
+#include <gmodule.h>
 
 #include "cut-test-loader.h"
 
@@ -81,6 +82,23 @@ cut_test_loader_class_init (CutTestLoaderClass *klass)
     g_type_class_add_private(gobject_class, sizeof(CutTestLoaderPrivate));
 }
 
+static void
+cut_test_loader_load (CutTestLoader *loader)
+{
+    GModule *module;
+    CutTestLoaderPrivate *priv = CUT_TEST_LOADER_GET_PRIVATE(loader);
+
+    if (!priv->so_filename)
+        return;
+
+    module = g_module_open(priv->so_filename, G_MODULE_BIND_LAZY);
+    if (module) {
+        gpointer symbol;
+        g_module_symbol(module, "function-name", &symbol);
+        g_module_close(module);
+    }
+}
+
 static GObject *
 constructor (GType type, guint n_props, GObjectConstructParam *props)
 {
@@ -90,14 +108,15 @@ constructor (GType type, guint n_props, GObjectConstructParam *props)
     object = klass->constructor(type, n_props, props);
 
     /* load so file */
+    cut_test_loader_load(CUT_TEST_LOADER(object));
 
     return object;
 }
 
 static void
-cut_test_loader_init (CutTestLoader *container)
+cut_test_loader_init (CutTestLoader *loader)
 {
-    CutTestLoaderPrivate *priv = CUT_TEST_LOADER_GET_PRIVATE(container);
+    CutTestLoaderPrivate *priv = CUT_TEST_LOADER_GET_PRIVATE(loader);
 
     priv->so_filename = NULL;
 }
