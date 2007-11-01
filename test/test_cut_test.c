@@ -11,13 +11,13 @@ dummy_test_function (void)
     cut_assert_equal_int(1, 1);
 }
 
-static void
+void
 setup (void)
 {
     test_object = cut_test_new("dummy test", dummy_test_function);
 }
 
-static void
+void
 tear_down (void)
 {
     g_object_unref(test_object);
