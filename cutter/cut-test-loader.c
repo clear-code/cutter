@@ -176,7 +176,7 @@ cut_test_loader_load_test_case (CutTestLoader *loader)
                     "cut_tests_len",
                     (gpointer)&priv->tests_len);
 
-    if (!priv->tests || !priv->tests_len)
+    if (!priv->tests || !*priv->tests_len)
         return NULL;
 
     test_case = cut_test_case_new();
