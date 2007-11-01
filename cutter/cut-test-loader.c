@@ -29,6 +29,7 @@
 #include <gmodule.h>
 
 #include "cut-test-loader.h"
+#include "cut-test-case.h"
 
 #define CUT_TEST_LOADER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_LOADER, CutTestLoaderPrivate))
 
@@ -88,19 +89,33 @@ cut_test_loader_class_init (CutTestLoaderClass *klass)
 static void
 cut_test_loader_load (CutTestLoader *loader)
 {
+    guint i;
+    CutTestCase *test_case;
     CutTestLoaderPrivate *priv = CUT_TEST_LOADER_GET_PRIVATE(loader);
 
     if (!priv->so_filename)
         return;
 
     priv->module = g_module_open(priv->so_filename, G_MODULE_BIND_LAZY);
-    if (priv->module) {
-        g_module_symbol(priv->module,
-                        "cut_tests",
-                        (gpointer)&priv->tests);
-        g_module_symbol(priv->module,
-                        "cut_tests_len",
-                        (gpointer)&priv->tests_len);
+    if (!priv->module)
+        return;
+
+    g_module_symbol(priv->module,
+                    "cut_tests",
+                    (gpointer)&priv->tests);
+    g_module_symbol(priv->module,
+                    "cut_tests_len",
+                    (gpointer)&priv->tests_len);
+
+    if (!priv->tests || !priv->tests_len)
+        return;
+
+    test_case = cut_test_case_new();
+    for (i = 0; i < priv->tests_len; i++) {
+        CutTestStruct t = priv->tests[i];
+        CutTest *test;
+        test = cut_test_new(t.function);
+        cut_test_container_add_test(CUT_TEST_CONTAINER(test_case), test);
     }
 }
 
