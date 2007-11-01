@@ -1,5 +1,9 @@
 2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* test/test_cut_test.c: Tests for CutTest.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test.h: CutTestStruct -> CutTestEntry.
 	* cutter/cut-test-loader.c, test/test_sample.c: Follow the above
 	change.
