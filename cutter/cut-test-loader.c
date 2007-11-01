@@ -45,15 +45,18 @@ enum
 
 G_DEFINE_ABSTRACT_TYPE (CutTestLoader, cut_test_loader, G_TYPE_OBJECT)
 
-static void dispose        (GObject         *object);
-static void set_property   (GObject         *object,
-                            guint            prop_id,
-                            const GValue    *value,
-                            GParamSpec      *pspec);
-static void get_property   (GObject         *object,
-                            guint            prop_id,
-                            GValue          *value,
-                            GParamSpec      *pspec);
+static GObject *constructor (GType                  type,
+                             guint                  n_props,
+                             GObjectConstructParam *props);
+static void dispose         (GObject               *object);
+static void set_property    (GObject               *object,
+                             guint                  prop_id,
+                             const GValue          *value,
+                             GParamSpec            *pspec);
+static void get_property    (GObject               *object,
+                             guint                  prop_id,
+                             GValue                *value,
+                             GParamSpec            *pspec);
 
 static void
 cut_test_loader_class_init (CutTestLoaderClass *klass)
@@ -63,6 +66,7 @@ cut_test_loader_class_init (CutTestLoaderClass *klass)
 
     gobject_class = G_OBJECT_CLASS(klass);
 
+    gobject_class->constructor  = constructor;
     gobject_class->dispose      = dispose;
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
@@ -75,6 +79,19 @@ cut_test_loader_class_init (CutTestLoaderClass *klass)
     g_object_class_install_property(gobject_class, PROP_SO_FILENAME, spec);
 
     g_type_class_add_private(gobject_class, sizeof(CutTestLoaderPrivate));
+}
+
+static GObject *
+constructor (GType type, guint n_props, GObjectConstructParam *props)
+{
+    GObject *object;
+    GObjectClass *klass = G_OBJECT_CLASS(cut_test_loader_parent_class);
+
+    object = klass->constructor(type, n_props, props);
+
+    /* load so file */
+
+    return object;
 }
 
 static void
@@ -143,6 +160,7 @@ cut_test_loader_new (const gchar *soname)
                         "so-filename", soname,
                         NULL);
 }
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */
