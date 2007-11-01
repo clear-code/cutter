@@ -1,5 +1,10 @@
 2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test-case.[c|h], cutter/cut-test-load.c: Join tear and
+	down. tear_down -> teardown.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-assertion.h: Output filname and line number.
 
 2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>

@@ -37,7 +37,7 @@ typedef struct _CutTestCasePrivate	CutTestCasePrivate;
 struct _CutTestCasePrivate
 {
     CutSetupFunction setup;
-    CutTearDownFunction tear_down;
+    CutTearDownFunction teardown;
 };
 
 enum
@@ -99,7 +99,7 @@ cut_test_case_init (CutTestCase *test_case)
     CutTestCasePrivate *priv = CUT_TEST_CASE_GET_PRIVATE(test_case);
 
     priv->setup = NULL;
-    priv->tear_down = NULL;
+    priv->teardown = NULL;
 }
 
 static void
@@ -121,7 +121,7 @@ set_property (GObject      *object,
         priv->setup = g_value_get_pointer(value);
         break;
       case PROP_TEAR_DOWN_FUNCTION:
-        priv->tear_down = g_value_get_pointer(value);
+        priv->teardown = g_value_get_pointer(value);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -142,7 +142,7 @@ get_property (GObject    *object,
         g_value_set_pointer(value, priv->setup);
         break;
       case PROP_TEAR_DOWN_FUNCTION:
-        g_value_set_pointer(value, priv->tear_down);
+        g_value_set_pointer(value, priv->teardown);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -151,11 +151,11 @@ get_property (GObject    *object,
 }
 
 CutTestCase *
-cut_test_case_new (CutSetupFunction setup_function, CutTearDownFunction tear_down_function)
+cut_test_case_new (CutSetupFunction setup_function, CutTearDownFunction teardown_function)
 {
     return g_object_new(CUT_TYPE_TEST_CASE,
                         "setup-function", setup_function,
-                        "tear-down-function", tear_down_function, NULL);
+                        "tear-down-function", teardown_function, NULL);
 }
 
 guint
@@ -178,8 +178,8 @@ real_run (CutTest *test, CutTestError **error)
 
     CUT_TEST_CLASS(cut_test_case_parent_class)->run(test, error);
 
-    if (priv->tear_down)
-        priv->tear_down();
+    if (priv->teardown)
+        priv->teardown();
 }
 
 /*
