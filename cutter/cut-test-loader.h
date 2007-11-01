@@ -46,6 +46,8 @@ struct _CutTestLoaderClass
     GObjectClass parent_class;
 };
 
+typedef void (*CutTestRegisterFunction) (void);
+
 GType cut_test_loader_get_type  (void) G_GNUC_CONST;
 
 CutTestLoader *cut_test_loader_new (const gchar *soname);

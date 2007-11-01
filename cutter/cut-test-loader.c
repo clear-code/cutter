@@ -36,6 +36,8 @@ typedef struct _CutTestLoaderPrivate	CutTestLoaderPrivate;
 struct _CutTestLoaderPrivate
 {
     gchar *so_filename;
+    GModule *module;
+    CutTestRegisterFunction register_function;
 };
 
 enum
@@ -85,17 +87,14 @@ cut_test_loader_class_init (CutTestLoaderClass *klass)
 static void
 cut_test_loader_load (CutTestLoader *loader)
 {
-    GModule *module;
     CutTestLoaderPrivate *priv = CUT_TEST_LOADER_GET_PRIVATE(loader);
 
     if (!priv->so_filename)
         return;
 
-    module = g_module_open(priv->so_filename, G_MODULE_BIND_LAZY);
-    if (module) {
-        gpointer symbol;
-        g_module_symbol(module, "function-name", &symbol);
-        g_module_close(module);
+    priv->module = g_module_open(priv->so_filename, G_MODULE_BIND_LAZY);
+    if (priv->module) {
+        g_module_symbol(priv->module, "cut_test_register", (gpointer)&priv->register_function);
     }
 }
 
@@ -119,6 +118,7 @@ cut_test_loader_init (CutTestLoader *loader)
     CutTestLoaderPrivate *priv = CUT_TEST_LOADER_GET_PRIVATE(loader);
 
     priv->so_filename = NULL;
+    priv->register_function = NULL;
 }
 
 static void
@@ -129,6 +129,11 @@ dispose (GObject *object)
     if (priv->so_filename) {
         g_free(priv->so_filename);
         priv->so_filename = NULL;
+    }
+
+    if (priv->module) {
+        g_module_close(priv->module);
+        priv->module = NULL;
     }
 
     G_OBJECT_CLASS(cut_test_loader_parent_class)->dispose(object);

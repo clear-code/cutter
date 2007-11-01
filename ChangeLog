@@ -1,5 +1,10 @@
 2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test-loader.h: typedef CutTestRegisterFunction.
+	* cutter/cut-test-loader.c: Load "cut_test_register" symbol.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test-loader.c: Open so file with g_module_open().
 
 2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
