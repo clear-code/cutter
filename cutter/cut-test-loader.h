@@ -35,12 +35,6 @@ G_BEGIN_DECLS
 
 typedef struct _CutTestLoader      CutTestLoader;
 typedef struct _CutTestLoaderClass CutTestLoaderClass;
-typedef struct _CutTestLoaderError CutTestLoaderError;
-
-struct _CutTestLoaderError
-{
-    gchar *error_message;
-};
 
 struct _CutTestLoader
 {
@@ -52,9 +46,9 @@ struct _CutTestLoaderClass
     GObjectClass parent_class;
 };
 
-GType     cut_test_loader_get_type  (void) G_GNUC_CONST;
+GType cut_test_loader_get_type  (void) G_GNUC_CONST;
 
-CutTestLoader  *cut_test_loader_new (const gchar *soname);
+CutTestLoader *cut_test_loader_new (const gchar *soname);
 
 G_END_DECLS
 
