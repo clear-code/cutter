@@ -40,13 +40,13 @@ main (int argc, char* argv[])
 
     repository = cut_test_repository_new(argv[1]);
     suite = cut_test_repository_create_test_suite(repository);
-    g_object_unref(repository);
 
     if (suite) {
         CutTestError *error = NULL;
         cut_test_run(CUT_TEST(suite), &error);
         g_object_unref(suite);
     }
+    g_object_unref(repository);
 
     exit(0);
 }

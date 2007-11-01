@@ -36,6 +36,7 @@ typedef struct _CutTestRepositoryPrivate	CutTestRepositoryPrivate;
 struct _CutTestRepositoryPrivate
 {
     gchar *dirname;
+    GList *loaders;
 };
 
 enum
@@ -84,6 +85,7 @@ cut_test_repository_init (CutTestRepository *repository)
     CutTestRepositoryPrivate *priv = CUT_TEST_REPOSITORY_GET_PRIVATE(repository);
 
     priv->dirname = NULL;
+    priv->loaders = NULL;
 }
 
 static void
@@ -94,6 +96,12 @@ dispose (GObject *object)
     if (priv->dirname) {
         g_free(priv->dirname);
         priv->dirname = NULL;
+    }
+
+    if (priv->loaders) {
+        g_list_foreach(priv->loaders, (GFunc)g_object_unref, NULL);
+        g_list_free(priv->loaders);
+        priv->loaders = NULL;
     }
 
     G_OBJECT_CLASS(cut_test_repository_parent_class)->dispose(object);
@@ -179,8 +187,7 @@ cut_test_repository_create_test_suite (CutTestRepository *repository)
             cut_test_container_add_test(CUT_TEST_CONTAINER(suite),
                                         CUT_TEST(test_case));
         }
-
-        g_object_unref(loader);
+        priv->loaders = g_list_prepend(priv->loaders, loader);
     }
     g_dir_close(dir);
 
