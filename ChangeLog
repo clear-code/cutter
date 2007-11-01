@@ -1,5 +1,9 @@
 2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test-loader.c: NULL check barrier.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test-case.c: Invoke setup() and tear_down() in run()
 	method.
 
