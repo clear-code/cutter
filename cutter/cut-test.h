@@ -65,7 +65,8 @@ struct _CutTestClass
 
 GType     cut_test_get_type  (void) G_GNUC_CONST;
 
-CutTest  *cut_test_new                 (CutTestFunction function);
+CutTest  *cut_test_new                 (const gchar *test_name,
+                                        CutTestFunction function);
 void      cut_test_run                 (CutTest *test, CutTestError **error);
 guint     cut_test_get_assertion_count (CutTest *test);
 
