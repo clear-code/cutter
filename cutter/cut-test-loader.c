@@ -34,11 +34,13 @@
 typedef struct _CutTestLoaderPrivate	CutTestLoaderPrivate;
 struct _CutTestLoaderPrivate
 {
+    gchar *so_filename;
 };
 
 enum
 {
-    PROP_0
+    PROP_0,
+    PROP_SO_FILENAME
 };
 
 G_DEFINE_ABSTRACT_TYPE (CutTestLoader, cut_test_loader, G_TYPE_OBJECT)
@@ -57,12 +59,20 @@ static void
 cut_test_loader_class_init (CutTestLoaderClass *klass)
 {
     GObjectClass *gobject_class;
+    GParamSpec *spec;
 
     gobject_class = G_OBJECT_CLASS(klass);
 
     gobject_class->dispose      = dispose;
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
+
+    spec = g_param_spec_string("so-filename",
+                               ".so filename",
+                               "The filename of shared object",
+                               NULL,
+                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+    g_object_class_install_property(gobject_class, PROP_SO_FILENAME, spec);
 
     g_type_class_add_private(gobject_class, sizeof(CutTestLoaderPrivate));
 }
@@ -71,12 +81,19 @@ static void
 cut_test_loader_init (CutTestLoader *container)
 {
     CutTestLoaderPrivate *priv = CUT_TEST_LOADER_GET_PRIVATE(container);
+
+    priv->so_filename = NULL;
 }
 
 static void
 dispose (GObject *object)
 {
     CutTestLoaderPrivate *priv = CUT_TEST_LOADER_GET_PRIVATE(object);
+
+    if (priv->so_filename) {
+        g_free(priv->so_filename);
+        priv->so_filename = NULL;
+    }
 
     G_OBJECT_CLASS(cut_test_loader_parent_class)->dispose(object);
 }
@@ -90,6 +107,11 @@ set_property (GObject      *object,
     CutTestLoaderPrivate *priv = CUT_TEST_LOADER_GET_PRIVATE(object);
 
     switch (prop_id) {
+      case PROP_SO_FILENAME:
+        if (priv->so_filename)
+            g_free(priv->so_filename);
+        priv->so_filename = g_value_dup_string(value);
+        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
@@ -105,6 +127,9 @@ get_property (GObject    *object,
     CutTestLoaderPrivate *priv = CUT_TEST_LOADER_GET_PRIVATE(object);
 
     switch (prop_id) {
+      case PROP_SO_FILENAME:
+        g_value_set_string(value, priv->so_filename);
+        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
@@ -115,6 +140,7 @@ CutTestLoader *
 cut_test_loader_new (const gchar *soname)
 {
     return g_object_new(CUT_TYPE_TEST_LOADER,
+                        "so-filename", soname,
                         NULL);
 }
 /*
