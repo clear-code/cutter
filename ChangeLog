@@ -1,5 +1,9 @@
 2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test-loader.h: typedef CutTestStruct. It is temporary.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test-loader.h: typedef CutTestRegisterFunction.
 	* cutter/cut-test-loader.c: Load "cut_test_register" symbol.
 

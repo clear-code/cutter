@@ -24,6 +24,8 @@
 
 #include <glib-object.h>
 
+#include "cut-test.h"
+
 G_BEGIN_DECLS
 
 #define CUT_TYPE_TEST_LOADER            (cut_test_loader_get_type ())
@@ -35,6 +37,13 @@ G_BEGIN_DECLS
 
 typedef struct _CutTestLoader      CutTestLoader;
 typedef struct _CutTestLoaderClass CutTestLoaderClass;
+typedef struct _CutTestStruct      CutTestStruct;
+
+struct _CutTestStruct
+{
+    const gchar *name;
+    CutTestFunction function;
+};
 
 struct _CutTestLoader
 {
