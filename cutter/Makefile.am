@@ -22,6 +22,7 @@ cutter_LDADD =				\
 	$(GLIB_LIBS)
 
 cutter2_SOURCES =			\
+		cut-assertion.h		\
 		cut-test.h		\
 		cut-test.c		\
 		cut-test-container.h	\
