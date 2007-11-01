@@ -29,11 +29,15 @@ G_BEGIN_DECLS
 
 #define cut_assert_equal_int(expect, actual)            \
 if (expect != actual) {                                 \
+    g_print("%s expected: %d but was: %d\n",            \
+            __PRETTY_FUNCTION__, expect, actual);       \
 } else {                                                \
 }
 
 #define cut_assert_equal_string(expect, actual)         \
 if (!strcmp(expect, actual))           {                \
+    g_print("%s expected: %s but was: %s\n",            \
+            __PRETTY_FUNCTION__, expect, actual);       \
 } else {                                                \
 }
 
