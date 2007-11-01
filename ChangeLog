@@ -1,5 +1,11 @@
 2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test-case.[c|h]: Now cut_test_case_new() needs CutSetupFunction and
+	CutTearDownFunction.
+	* cutter/cut-test-loader.c: Follow the above change.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test.h: typedef CutSetupFunction and CutTearDownFunction.
 	* cutter/cut-test-case.c: Use CutSetupFunction and
 	CutTearDownFunction.

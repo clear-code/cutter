@@ -160,6 +160,8 @@ cut_test_loader_load_test_case (CutTestLoader *loader)
 {
     guint i;
     CutTestCase *test_case;
+    CutSetupFunction setup_function = NULL;
+    CutTearDownFunction tear_down_function = NULL;
     CutTestLoaderPrivate *priv = CUT_TEST_LOADER_GET_PRIVATE(loader);
 
     if (!priv->so_filename)
@@ -179,7 +181,7 @@ cut_test_loader_load_test_case (CutTestLoader *loader)
     if (!priv->tests || priv->tests_len || !*priv->tests_len)
         return NULL;
 
-    test_case = cut_test_case_new();
+    test_case = cut_test_case_new(setup_function, tear_down_function);
     for (i = 0; i < *priv->tests_len; i++) {
         CutTestEntry t = priv->tests[i];
         CutTest *test;

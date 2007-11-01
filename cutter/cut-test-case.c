@@ -116,9 +116,11 @@ get_property (GObject    *object,
 }
 
 CutTestCase *
-cut_test_case_new (void)
+cut_test_case_new (CutSetupFunction setup_function, CutTearDownFunction tear_down_function)
 {
-    return g_object_new(CUT_TYPE_TEST_CASE, NULL);
+    return g_object_new(CUT_TYPE_TEST_CASE,
+                        "setup-function", setup_function,
+                        "tear-down-function", tear_down_function, NULL);
 }
 
 guint
