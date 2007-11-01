@@ -1,5 +1,10 @@
 2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test-repository.c: Give a full-path filename to
+	cut_test_loader_new().
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-main.c: Run tests.
 
 2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>

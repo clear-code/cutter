@@ -163,11 +163,14 @@ cut_test_repository_create_test_suite (CutTestRepository *repository)
     while ((entry = g_dir_read_name(dir))) {
         CutTestLoader *loader;
         CutTestCase *test_case;
+        gchar *path_name;
 
         if (!g_str_has_suffix(entry, "."G_MODULE_SUFFIX))
             continue;
 
-        loader = cut_test_loader_new(entry);
+        path_name = g_build_filename(priv->dirname, entry, NULL);
+        loader = cut_test_loader_new(path_name);
+        g_free(path_name);
 
         test_case = cut_test_loader_load_test_case(loader);
         if (test_case) {
