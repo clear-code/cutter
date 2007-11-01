@@ -1,5 +1,10 @@
 2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test-case.c, cutter/cut-test-suite.c: Remove
+	g_type_class_add_private().
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test.c: Added "test-name" property.
 
 2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>

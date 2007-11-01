@@ -65,8 +65,6 @@ cut_test_case_class_init (CutTestCaseClass *klass)
     gobject_class->dispose      = dispose;
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
-
-    g_type_class_add_private(gobject_class, sizeof(CutTestCasePrivate));
 }
 
 static void
