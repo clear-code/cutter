@@ -36,8 +36,8 @@
 typedef struct _CutTestCasePrivate	CutTestCasePrivate;
 struct _CutTestCasePrivate
 {
-    CutTestFunction setup;
-    CutTestFunction tear_down;
+    CutSetupFunction setup;
+    CutTearDownFunction tear_down;
 };
 
 enum

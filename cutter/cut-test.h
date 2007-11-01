@@ -38,7 +38,9 @@ typedef struct _CutTestClass    CutTestClass;
 typedef struct _CutTestError    CutTestError;
 typedef struct _CutTestEntry    CutTestEntry;
 
-typedef void    (*CutTestFunction) (void);
+typedef void    (*CutTestFunction)     (void);
+typedef void    (*CutSetupFunction)    (void);
+typedef void    (*CutTearDownFunction) (void);
 
 struct _CutTestEntry
 {
