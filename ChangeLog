@@ -1,5 +1,9 @@
 2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-main.c: Remove needless header.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* test/test_cut_assertion.c: Added string test.
 
 2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>

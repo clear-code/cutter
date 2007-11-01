@@ -24,7 +24,6 @@
 #endif /* HAVE_CONFIG_H */
 
 #include <stdlib.h>
-#include <string.h>
 #include <glib.h>
 
 #include "cut-test-suite.h"
