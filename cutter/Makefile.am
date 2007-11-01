@@ -9,10 +9,12 @@ pkginclude_HEADERS = cutter.h assersions.h
 bin_PROGRAMS = cutter
 
 cutter_SOURCES =			\
-		cut-test-container.h	\
-		cut-test-container.c	\
 		cut-test.h		\
 		cut-test.c		\
+		cut-test-container.h	\
+		cut-test-container.c	\
+		cut-test-case.h		\
+		cut-test-case.c		\
 		cut-test-loader.h	\
 		cut-test-loader.c	\
 		compile.c compile.h	\
