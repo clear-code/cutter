@@ -88,7 +88,7 @@ cut_test_loader_init (CutTestLoader *loader)
 
     priv->so_filename = NULL;
     priv->tests = NULL;
-    priv->tests_len = 0;
+    priv->tests_len = NULL;
 }
 
 static void
