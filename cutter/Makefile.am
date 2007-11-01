@@ -17,6 +17,8 @@ cutter_SOURCES =			\
 		cut-test-case.c		\
 		cut-test-loader.h	\
 		cut-test-loader.c	\
+		cut-test-repository.h	\
+		cut-test-repository.c	\
 		compile.c compile.h	\
 		config.h 		\
 		info.c info.h 		\
