@@ -29,8 +29,9 @@ G_BEGIN_DECLS
 
 #define cut_assert_equal_int(expect, actual)            \
 if (expect != actual) {                                 \
-    g_print("%s expected: %d but was: %d\n",            \
-            __PRETTY_FUNCTION__, expect, actual);       \
+    g_print("%s expected: %d but was: %d in %s:%d\n",   \
+            __PRETTY_FUNCTION__, expect, actual,        \
+            __FILE__, __LINE__);                        \
 } else {                                                \
 }
 
@@ -41,15 +42,18 @@ do {                                                    \
     double _error = error;                              \
     if (!(_expect - _error <= _actual &&                \
           _actual <= _expect + _error)) {               \
-        g_print("%s expected: %g +/- %g but was: %g\n", \
-                __PRETTY_FUNCTION__, expect, error, actual); \
+        g_print("%s expected: %g +/- %g but was: %g in %s:%d\n", \
+                __PRETTY_FUNCTION__,                    \
+                expect, error, actual,                  \
+                __FILE__, __LINE__);                    \
     }                                                   \
 } while(0)
 
 #define cut_assert_equal_string(expect, actual)         \
 if (strcmp(expect, actual))           {                 \
-    g_print("%s expected: %s but was: %s\n",            \
-            __PRETTY_FUNCTION__, expect, actual);       \
+    g_print("%s expected: %s but was: %s in %s:%d\n",   \
+            __PRETTY_FUNCTION__, expect, actual,        \
+            __FILE__, __LINE__);                        \
 } else {                                                \
 }
 

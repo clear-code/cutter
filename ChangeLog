@@ -1,5 +1,9 @@
 2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-assertion.h: Output filname and line number.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* test/test_sample.c: Removed.
 
 2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
