@@ -3,13 +3,13 @@
 static void
 test_function1 (void)
 {
-
+    g_warning("test_function1 is called");
 }
 
 static void
 test_function2 (void)
 {
-    g_warning("hoge");
+    g_warning("test_function2 is called");
 }
 
 CutTestStruct cut_tests[] =
