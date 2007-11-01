@@ -1,5 +1,10 @@
 2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test.c, cutter/cut-test-loader.c,
+	cutter/cut-test-repository.c: Not abstract type.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/Makefile.am, cutter/cut-main.c: Make cutter2. cutter will be
 	replaced bt cutter2.
 

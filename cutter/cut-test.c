@@ -45,7 +45,7 @@ enum
     PROP_ASSERTION_COUNT
 };
 
-G_DEFINE_ABSTRACT_TYPE (CutTest, cut_test, G_TYPE_OBJECT)
+G_DEFINE_TYPE (CutTest, cut_test, G_TYPE_OBJECT)
 
 static void dispose        (GObject         *object);
 static void set_property   (GObject         *object,

@@ -44,7 +44,7 @@ enum
     PROP_DIRNAME
 };
 
-G_DEFINE_ABSTRACT_TYPE (CutTestRepository, cut_test_repository, G_TYPE_OBJECT)
+G_DEFINE_TYPE (CutTestRepository, cut_test_repository, G_TYPE_OBJECT)
 
 static void dispose         (GObject               *object);
 static void set_property    (GObject               *object,

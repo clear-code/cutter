@@ -47,7 +47,7 @@ enum
     PROP_SO_FILENAME
 };
 
-G_DEFINE_ABSTRACT_TYPE (CutTestLoader, cut_test_loader, G_TYPE_OBJECT)
+G_DEFINE_TYPE (CutTestLoader, cut_test_loader, G_TYPE_OBJECT)
 
 static void dispose         (GObject               *object);
 static void set_property    (GObject               *object,
