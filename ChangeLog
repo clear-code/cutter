@@ -1,5 +1,9 @@
 2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test-case.[c|h]: Declare cut_test_case_get_test_count().
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test-loader.c: Initialize tests_len with NULL.
 
 2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>

@@ -110,6 +110,12 @@ cut_test_case_new (void)
     return g_object_new(CUT_TYPE_TEST_CASE, NULL);
 }
 
+guint
+cut_test_case_get_test_count (CutTestCase *test_case)
+{
+    return 0;
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */

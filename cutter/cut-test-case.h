@@ -48,9 +48,10 @@ struct _CutTestCaseClass
     CutTestContainerClass parent_class;
 };
 
-GType           cut_test_case_get_type  (void) G_GNUC_CONST;
+GType        cut_test_case_get_type       (void) G_GNUC_CONST;
 
-CutTestCase    *cut_test_case_new       (void);
+CutTestCase *cut_test_case_new            (void);
+guint        cut_test_case_get_test_count (CutTestCase *test_case);
 
 G_END_DECLS
 
