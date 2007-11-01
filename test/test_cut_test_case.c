@@ -23,7 +23,7 @@ dummy_setup_function (void)
 }
 
 static void
-dummy_tear_down_function (void)
+dummy_teardown_function (void)
 {
     setup_flag = FALSE;
     teardown_flag = TRUE;
@@ -34,7 +34,7 @@ setup (void)
 {
     CutTest *test;
     test_object = cut_test_case_new(dummy_setup_function,
-                                    dummy_tear_down_function);
+                                    dummy_teardown_function);
     test = cut_test_new("dummy test", dummy_test_function);
     cut_test_container_add_test(CUT_TEST_CONTAINER(test_object), test);
     test = cut_test_new("dummy test2", dummy_test_function);
@@ -42,7 +42,7 @@ setup (void)
 }
 
 void
-tear_down (void)
+teardown (void)
 {
     g_object_unref(test_object);
 }

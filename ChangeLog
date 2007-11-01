@@ -1,5 +1,10 @@
 2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* test/test_cut_test.c, test/test_cut_test_case.c: Join tear and
+	down. tear_down -> teardown.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test-case.[c|h], cutter/cut-test-load.c: Join tear and
 	down. tear_down -> teardown.
 

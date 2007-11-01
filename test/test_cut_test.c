@@ -19,7 +19,7 @@ setup (void)
 }
 
 void
-tear_down (void)
+teardown (void)
 {
     g_object_unref(test_object);
 }
