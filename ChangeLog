@@ -1,5 +1,11 @@
 2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test-loader.h: Delete CutTestRegisterFunction.
+	* cutter/cut-test-loader.c: Get "cut_tests" and "cut_tests_len"
+	symbol.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test-loader.h: typedef CutTestStruct. It is temporary.
 
 2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>

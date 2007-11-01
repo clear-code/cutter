@@ -37,7 +37,8 @@ struct _CutTestLoaderPrivate
 {
     gchar *so_filename;
     GModule *module;
-    CutTestRegisterFunction register_function;
+    CutTestStruct *tests;
+    guint tests_len;
 };
 
 enum
@@ -95,8 +96,11 @@ cut_test_loader_load (CutTestLoader *loader)
     priv->module = g_module_open(priv->so_filename, G_MODULE_BIND_LAZY);
     if (priv->module) {
         g_module_symbol(priv->module,
-                        "cut_test_register",
-                        (gpointer)&priv->register_function);
+                        "cut_tests",
+                        (gpointer)&priv->tests);
+        g_module_symbol(priv->module,
+                        "cut_tests_len",
+                        (gpointer)&priv->tests_len);
     }
 }
 
@@ -120,7 +124,8 @@ cut_test_loader_init (CutTestLoader *loader)
     CutTestLoaderPrivate *priv = CUT_TEST_LOADER_GET_PRIVATE(loader);
 
     priv->so_filename = NULL;
-    priv->register_function = NULL;
+    priv->tests = NULL;
+    priv->tests_len = 0;
 }
 
 static void
