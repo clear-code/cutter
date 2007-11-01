@@ -1,5 +1,10 @@
 2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test-loader.[c|h]: New object for collection test
+	functions from shared object (i.e. .so file).
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test.h: CutTestFuncion returns nothing.
 
 2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>

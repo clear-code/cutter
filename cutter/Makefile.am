@@ -13,6 +13,8 @@ cutter_SOURCES =			\
 		cut-test-container.c	\
 		cut-test.h		\
 		cut-test.c		\
+		cut-test-loader.h	\
+		cut-test-loader.c	\
 		compile.c compile.h	\
 		config.h 		\
 		info.c info.h 		\
