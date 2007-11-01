@@ -94,7 +94,9 @@ cut_test_loader_load (CutTestLoader *loader)
 
     priv->module = g_module_open(priv->so_filename, G_MODULE_BIND_LAZY);
     if (priv->module) {
-        g_module_symbol(priv->module, "cut_test_register", (gpointer)&priv->register_function);
+        g_module_symbol(priv->module,
+                        "cut_test_register",
+                        (gpointer)&priv->register_function);
     }
 }
 
