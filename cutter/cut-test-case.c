@@ -36,6 +36,8 @@
 typedef struct _CutTestCasePrivate	CutTestCasePrivate;
 struct _CutTestCasePrivate
 {
+    CutTestFunction setup;
+    CutTestFunction tear_down;
 };
 
 enum
@@ -55,16 +57,25 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 
+static void real_run       (CutTest         *test,
+                            CutTestError   **error);
+
 static void
 cut_test_case_class_init (CutTestCaseClass *klass)
 {
     GObjectClass *gobject_class;
+    CutTestClass *test_class;
 
     gobject_class = G_OBJECT_CLASS(klass);
+    test_class = CUT_TEST_CLASS(klass);
 
     gobject_class->dispose      = dispose;
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
+
+    test_class->run = real_run;
+
+    g_type_class_add_private(gobject_class, sizeof(CutTestCasePrivate));
 }
 
 static void
@@ -114,6 +125,24 @@ guint
 cut_test_case_get_test_count (CutTestCase *test_case)
 {
     return 0;
+}
+
+static void
+real_run (CutTest *test, CutTestError **error)
+{
+    CutTestCasePrivate *priv;
+
+    g_return_if_fail(CUT_IS_TEST_CASE(test));
+
+    priv = CUT_TEST_CASE_GET_PRIVATE(test);
+
+    if (priv->setup)
+        priv->setup();
+
+    CUT_TEST_CLASS(cut_test_case_parent_class)->run(test, error);
+
+    if (priv->tear_down)
+        priv->tear_down();
 }
 
 /*
