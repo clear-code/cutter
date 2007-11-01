@@ -1,5 +1,9 @@
 2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-text-context.[c|h]: New object.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-main.c: Remove needless header.
 
 2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>

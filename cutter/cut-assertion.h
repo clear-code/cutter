@@ -33,7 +33,7 @@ if (expect != actual) {                                 \
 }
 
 #define cut_assert_equal_string(expect, actual)         \
-if (expect && !strcmp(expect, actual)) {                \
+if (!strcmp(expect, actual))           {                \
 } else {                                                \
 }
 
