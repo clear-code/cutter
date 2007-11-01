@@ -54,7 +54,7 @@ struct _CutTestClass
     void (*run) (CutTest *test, CutTestError **error);
 };
 
-typedef gboolean    (*CutTestFunction) (void);
+typedef void    (*CutTestFunction) (void);
 
 GType     cut_test_get_type  (void) G_GNUC_CONST;
 
