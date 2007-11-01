@@ -42,7 +42,9 @@ struct _CutTestCasePrivate
 
 enum
 {
-    PROP_0
+    PROP_0,
+    PROP_SETUP_FUNCTION,
+    PROP_TEAR_DOWN_FUNCTION
 };
 
 G_DEFINE_TYPE (CutTestCase, cut_test_case, CUT_TYPE_TEST_CONTAINER)
@@ -65,6 +67,7 @@ cut_test_case_class_init (CutTestCaseClass *klass)
 {
     GObjectClass *gobject_class;
     CutTestClass *test_class;
+    GParamSpec *spec;
 
     gobject_class = G_OBJECT_CLASS(klass);
     test_class = CUT_TEST_CLASS(klass);
@@ -75,12 +78,28 @@ cut_test_case_class_init (CutTestCaseClass *klass)
 
     test_class->run = real_run;
 
+    spec = g_param_spec_pointer("setup-function",
+                                "Setup Function",
+                                "The function for setup",
+                                G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+    g_object_class_install_property(gobject_class, PROP_SETUP_FUNCTION, spec);
+
+    spec = g_param_spec_pointer("tear-down-function",
+                                "TearDown Function",
+                                "The function for tear down",
+                                G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+    g_object_class_install_property(gobject_class, PROP_TEAR_DOWN_FUNCTION, spec);
+
     g_type_class_add_private(gobject_class, sizeof(CutTestCasePrivate));
 }
 
 static void
 cut_test_case_init (CutTestCase *test_case)
 {
+    CutTestCasePrivate *priv = CUT_TEST_CASE_GET_PRIVATE(test_case);
+
+    priv->setup = NULL;
+    priv->tear_down = NULL;
 }
 
 static void
@@ -95,7 +114,15 @@ set_property (GObject      *object,
               const GValue *value,
               GParamSpec   *pspec)
 {
+    CutTestCasePrivate *priv = CUT_TEST_CASE_GET_PRIVATE(object);
+
     switch (prop_id) {
+      case PROP_SETUP_FUNCTION:
+        priv->setup = g_value_get_pointer(value);
+        break;
+      case PROP_TEAR_DOWN_FUNCTION:
+        priv->tear_down = g_value_get_pointer(value);
+        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
@@ -108,7 +135,15 @@ get_property (GObject    *object,
               GValue     *value,
               GParamSpec *pspec)
 {
+    CutTestCasePrivate *priv = CUT_TEST_CASE_GET_PRIVATE(object);
+
     switch (prop_id) {
+      case PROP_SETUP_FUNCTION:
+        g_value_set_pointer(value, priv->setup);
+        break;
+      case PROP_TEAR_DOWN_FUNCTION:
+        g_value_set_pointer(value, priv->tear_down);
+        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;

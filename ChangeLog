@@ -1,5 +1,10 @@
 2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test-case.c: "setup-function" and "tear-down-function"
+	property.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test-case.[c|h]: Now cut_test_case_new() needs CutSetupFunction and
 	CutTearDownFunction.
 	* cutter/cut-test-loader.c: Follow the above change.
