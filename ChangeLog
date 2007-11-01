@@ -1,5 +1,11 @@
 2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test-loader.c: Remove constructor().
+	Added cut_test_loader_load_test_case() to load each CutTest and create
+	a CutTestCase object from these CutTest objects.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test-loader.c: Create CutTestCase which has CutTest
 	objects.
 

@@ -29,7 +29,6 @@
 #include <gmodule.h>
 
 #include "cut-test-loader.h"
-#include "cut-test-case.h"
 
 #define CUT_TEST_LOADER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_LOADER, CutTestLoaderPrivate))
 
@@ -50,9 +49,6 @@ enum
 
 G_DEFINE_ABSTRACT_TYPE (CutTestLoader, cut_test_loader, G_TYPE_OBJECT)
 
-static GObject *constructor (GType                  type,
-                             guint                  n_props,
-                             GObjectConstructParam *props);
 static void dispose         (GObject               *object);
 static void set_property    (GObject               *object,
                              guint                  prop_id,
@@ -71,7 +67,6 @@ cut_test_loader_class_init (CutTestLoaderClass *klass)
 
     gobject_class = G_OBJECT_CLASS(klass);
 
-    gobject_class->constructor  = constructor;
     gobject_class->dispose      = dispose;
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
@@ -84,53 +79,6 @@ cut_test_loader_class_init (CutTestLoaderClass *klass)
     g_object_class_install_property(gobject_class, PROP_SO_FILENAME, spec);
 
     g_type_class_add_private(gobject_class, sizeof(CutTestLoaderPrivate));
-}
-
-static void
-cut_test_loader_load (CutTestLoader *loader)
-{
-    guint i;
-    CutTestCase *test_case;
-    CutTestLoaderPrivate *priv = CUT_TEST_LOADER_GET_PRIVATE(loader);
-
-    if (!priv->so_filename)
-        return;
-
-    priv->module = g_module_open(priv->so_filename, G_MODULE_BIND_LAZY);
-    if (!priv->module)
-        return;
-
-    g_module_symbol(priv->module,
-                    "cut_tests",
-                    (gpointer)&priv->tests);
-    g_module_symbol(priv->module,
-                    "cut_tests_len",
-                    (gpointer)&priv->tests_len);
-
-    if (!priv->tests || !priv->tests_len)
-        return;
-
-    test_case = cut_test_case_new();
-    for (i = 0; i < priv->tests_len; i++) {
-        CutTestStruct t = priv->tests[i];
-        CutTest *test;
-        test = cut_test_new(t.function);
-        cut_test_container_add_test(CUT_TEST_CONTAINER(test_case), test);
-    }
-}
-
-static GObject *
-constructor (GType type, guint n_props, GObjectConstructParam *props)
-{
-    GObject *object;
-    GObjectClass *klass = G_OBJECT_CLASS(cut_test_loader_parent_class);
-
-    object = klass->constructor(type, n_props, props);
-
-    /* load so file */
-    cut_test_loader_load(CUT_TEST_LOADER(object));
-
-    return object;
 }
 
 static void
@@ -205,6 +153,41 @@ cut_test_loader_new (const gchar *soname)
     return g_object_new(CUT_TYPE_TEST_LOADER,
                         "so-filename", soname,
                         NULL);
+}
+
+CutTestCase *
+cut_test_loader_load_test_case (CutTestLoader *loader)
+{
+    guint i;
+    CutTestCase *test_case;
+    CutTestLoaderPrivate *priv = CUT_TEST_LOADER_GET_PRIVATE(loader);
+
+    if (!priv->so_filename)
+        return NULL;
+
+    priv->module = g_module_open(priv->so_filename, G_MODULE_BIND_LAZY);
+    if (!priv->module)
+        return NULL;
+
+    g_module_symbol(priv->module,
+                    "cut_tests",
+                    (gpointer)&priv->tests);
+    g_module_symbol(priv->module,
+                    "cut_tests_len",
+                    (gpointer)&priv->tests_len);
+
+    if (!priv->tests || !priv->tests_len)
+        return NULL;
+
+    test_case = cut_test_case_new();
+    for (i = 0; i < priv->tests_len; i++) {
+        CutTestStruct t = priv->tests[i];
+        CutTest *test;
+        test = cut_test_new(t.function);
+        cut_test_container_add_test(CUT_TEST_CONTAINER(test_case), test);
+    }
+
+    return test_case;
 }
 
 /*

@@ -25,6 +25,7 @@
 #include <glib-object.h>
 
 #include "cut-test.h"
+#include "cut-test-case.h"
 
 G_BEGIN_DECLS
 
@@ -58,6 +59,7 @@ struct _CutTestLoaderClass
 GType cut_test_loader_get_type  (void) G_GNUC_CONST;
 
 CutTestLoader *cut_test_loader_new (const gchar *soname);
+CutTestCase   *cut_test_loader_load_test_case (CutTestLoader *loader);
 
 G_END_DECLS
 
