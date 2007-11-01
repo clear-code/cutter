@@ -178,7 +178,7 @@ cut_test_loader_load_test_case (CutTestLoader *loader)
                     "cut_tests_len",
                     (gpointer)&priv->tests_len);
 
-    if (!priv->tests || priv->tests_len || !*priv->tests_len)
+    if (!priv->tests || !priv->tests_len || !*priv->tests_len)
         return NULL;
 
     g_module_symbol(priv->module,

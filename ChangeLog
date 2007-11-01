@@ -1,5 +1,9 @@
 2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test-loader.h: Fix typo. !
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-assertion.h: Added.
 
 2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
