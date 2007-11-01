@@ -35,6 +35,12 @@ G_BEGIN_DECLS
 
 typedef struct _CutTest      CutTest;
 typedef struct _CutTestClass CutTestClass;
+typedef struct _CutTestError CutTestError;
+
+struct _CutTestError
+{
+    gchar *error_message;
+};
 
 struct _CutTest
 {
@@ -45,7 +51,7 @@ struct _CutTestClass
 {
     GObjectClass parent_class;
 
-    gboolean (*run) (CutTest *test);
+    void (*run) (CutTest *test, CutTestError **error);
 };
 
 typedef gboolean    (*CutTestFunction) (void);
@@ -53,7 +59,7 @@ typedef gboolean    (*CutTestFunction) (void);
 GType     cut_test_get_type  (void) G_GNUC_CONST;
 
 CutTest  *cut_test_new                 (CutTestFunction function);
-gboolean  cut_test_run                 (CutTest *test);
+void      cut_test_run                 (CutTest *test, CutTestError **error);
 guint     cut_test_get_assertion_count (CutTest *test);
 
 G_END_DECLS

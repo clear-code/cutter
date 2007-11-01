@@ -57,7 +57,8 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 
-static gboolean real_run   (CutTest         *test);
+static void real_run       (CutTest         *test,
+                            CutTestError   **error);
 
 static void
 cut_test_class_init (CutTestClass *klass)
@@ -158,23 +159,23 @@ cut_test_new (CutTestFunction function)
                         NULL);
 }
 
-static gboolean
-real_run (CutTest *test)
+static void
+real_run (CutTest *test, CutTestError **error)
 {
     CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(test);
 
     if (!priv->test_function)
-        return FALSE;
+        return;
 
-    return priv->test_function();
+    priv->test_function();
 }
 
-gboolean
-cut_test_run (CutTest *test)
+void
+cut_test_run (CutTest *test, CutTestError **error)
 {
     CutTestClass *class = CUT_TEST_GET_CLASS(test);
 
-    return class->run(test);
+    return class->run(test, error);
 }
 
 guint
