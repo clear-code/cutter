@@ -36,11 +36,11 @@ G_BEGIN_DECLS
 typedef struct _CutTest         CutTest;
 typedef struct _CutTestClass    CutTestClass;
 typedef struct _CutTestError    CutTestError;
-typedef struct _CutTestStruct   CutTestStruct;
+typedef struct _CutTestEntry    CutTestEntry;
 
 typedef void    (*CutTestFunction) (void);
 
-struct _CutTestStruct
+struct _CutTestEntry
 {
     const gchar *name;
     CutTestFunction function;

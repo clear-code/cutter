@@ -1,5 +1,11 @@
 2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test.h: CutTestStruct -> CutTestEntry.
+	* cutter/cut-test-loader.c, test/test_sample.c: Follow the above
+	change.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test-repository.c: Preserve each loader until running
 	tests.
 	* cutter/cut-main.c: Unref CutTestRepositry before exit().

@@ -37,7 +37,7 @@ struct _CutTestLoaderPrivate
 {
     gchar *so_filename;
     GModule *module;
-    CutTestStruct *tests;
+    CutTestEntry *tests;
     guint *tests_len;
 };
 
@@ -181,7 +181,7 @@ cut_test_loader_load_test_case (CutTestLoader *loader)
 
     test_case = cut_test_case_new();
     for (i = 0; i < *priv->tests_len; i++) {
-        CutTestStruct t = priv->tests[i];
+        CutTestEntry t = priv->tests[i];
         CutTest *test;
         if (!t.name)
             continue;

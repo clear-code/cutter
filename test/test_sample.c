@@ -12,7 +12,7 @@ test_function2 (void)
     g_warning("test_function2 is called");
 }
 
-CutTestStruct cut_tests[] =
+CutTestEntry cut_tests[] =
 {
     {"test1", test_function1},
     {"test2", test_function2}
