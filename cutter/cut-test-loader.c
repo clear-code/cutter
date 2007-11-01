@@ -38,7 +38,7 @@ struct _CutTestLoaderPrivate
     gchar *so_filename;
     GModule *module;
     CutTestStruct *tests;
-    guint tests_len;
+    guint *tests_len;
 };
 
 enum
@@ -180,9 +180,11 @@ cut_test_loader_load_test_case (CutTestLoader *loader)
         return NULL;
 
     test_case = cut_test_case_new();
-    for (i = 0; i < priv->tests_len; i++) {
+    for (i = 0; i < *priv->tests_len; i++) {
         CutTestStruct t = priv->tests[i];
         CutTest *test;
+        if (!t.name)
+            continue;
         test = cut_test_new(t.name, t.function);
         cut_test_container_add_test(CUT_TEST_CONTAINER(test_case), test);
     }

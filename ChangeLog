@@ -1,5 +1,9 @@
 2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test-loader.c: tests_len should be a pointer.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test-case.c, cutter/cut-test-suite.c: Remove
 	g_type_class_add_private().
 
