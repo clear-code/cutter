@@ -1,5 +1,10 @@
 2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test-loader.h, cutter/cut-test.h: CutTestStruct was moved
+	into cut-test.h.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test-suite.[c|h]: Added
 	cut_test_repository_create_test_suite().
 

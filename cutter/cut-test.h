@@ -33,9 +33,18 @@ G_BEGIN_DECLS
 #define CUT_IS_TEST_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_TEST))
 #define CUT_TEST_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_TEST, CutTestClass))
 
-typedef struct _CutTest      CutTest;
-typedef struct _CutTestClass CutTestClass;
-typedef struct _CutTestError CutTestError;
+typedef struct _CutTest         CutTest;
+typedef struct _CutTestClass    CutTestClass;
+typedef struct _CutTestError    CutTestError;
+typedef struct _CutTestStruct   CutTestStruct;
+
+typedef void    (*CutTestFunction) (void);
+
+struct _CutTestStruct
+{
+    const gchar *name;
+    CutTestFunction function;
+};
 
 struct _CutTestError
 {
@@ -53,8 +62,6 @@ struct _CutTestClass
 
     void (*run) (CutTest *test, CutTestError **error);
 };
-
-typedef void    (*CutTestFunction) (void);
 
 GType     cut_test_get_type  (void) G_GNUC_CONST;
 
