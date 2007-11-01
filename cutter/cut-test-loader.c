@@ -183,7 +183,7 @@ cut_test_loader_load_test_case (CutTestLoader *loader)
     for (i = 0; i < priv->tests_len; i++) {
         CutTestStruct t = priv->tests[i];
         CutTest *test;
-        test = cut_test_new(t.function);
+        test = cut_test_new(t.name, t.function);
         cut_test_container_add_test(CUT_TEST_CONTAINER(test_case), test);
     }
 
