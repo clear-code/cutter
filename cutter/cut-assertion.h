@@ -35,7 +35,7 @@ if (expect != actual) {                                 \
 }
 
 #define cut_assert_equal_string(expect, actual)         \
-if (!strcmp(expect, actual))           {                \
+if (strcmp(expect, actual))           {                 \
     g_print("%s expected: %s but was: %s\n",            \
             __PRETTY_FUNCTION__, expect, actual);       \
 } else {                                                \

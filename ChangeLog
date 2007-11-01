@@ -1,5 +1,9 @@
 2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-assertion.h: !strcmp -> strcmp.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-assertion.h: Output error message.
 
 2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
