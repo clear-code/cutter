@@ -181,6 +181,13 @@ cut_test_loader_load_test_case (CutTestLoader *loader)
     if (!priv->tests || priv->tests_len || !*priv->tests_len)
         return NULL;
 
+    g_module_symbol(priv->module,
+                    "setup",
+                    (gpointer)&setup_function);
+    g_module_symbol(priv->module,
+                    "tear_down",
+                    (gpointer)&tear_down_function);
+
     test_case = cut_test_case_new(setup_function, tear_down_function);
     for (i = 0; i < *priv->tests_len; i++) {
         CutTestEntry t = priv->tests[i];
