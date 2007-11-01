@@ -1,5 +1,10 @@
 2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/Makefile.am, cutter/cut-main.c: Make cutter2. cutter will be
+	replaced bt cutter2.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* test/Makefile.am: Compile test_sample.c.
 	* test/test_sample.c: #include "cut-test.h".
 
