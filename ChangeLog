@@ -1,5 +1,10 @@
 2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-assertion.h: define cut_assert_equal_double.
+	* test/test_cut_assertion.h: double value test.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-assertion.h: !strcmp -> strcmp.
 
 2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>

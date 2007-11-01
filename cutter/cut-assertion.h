@@ -34,6 +34,18 @@ if (expect != actual) {                                 \
 } else {                                                \
 }
 
+#define cut_assert_equal_double(expect, error, actual)  \
+do {                                                    \
+    double _expect = expect;                            \
+    double _actual = actual;                            \
+    double _error = error;                              \
+    if (!(_expect - _error <= _actual &&                \
+          _actual <= _expect + _error)) {               \
+        g_print("%s expected: %g +/- %g but was: %g\n", \
+                __PRETTY_FUNCTION__, expect, error, actual); \
+    }                                                   \
+} while(0)
+
 #define cut_assert_equal_string(expect, actual)         \
 if (strcmp(expect, actual))           {                 \
     g_print("%s expected: %s but was: %s\n",            \
