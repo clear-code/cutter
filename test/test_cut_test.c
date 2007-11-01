@@ -32,13 +32,13 @@ test_assertion_count (void)
 static void
 test_name (void)
 {
-    cut_assert_equal_string("test name test", cut_test_get_name(test_object));
+    cut_assert_equal_string("dummy test", cut_test_get_name(test_object));
 }
 
 CutTestEntry cut_tests[] =
 {
     {"assertion count test", test_assertion_count},
-    {"test name test", test_name},
+    {"name test", test_name},
 };
 const gint cut_tests_len = G_N_ELEMENTS(cut_tests);
 
