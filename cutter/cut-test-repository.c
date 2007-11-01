@@ -26,9 +26,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <glib.h>
-#include <gmodule.h>
 
 #include "cut-test-repository.h"
+#include "cut-test-loader.h"
 
 #define CUT_TEST_REPOSITORY_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_REPOSITORY, CutTestRepositoryPrivate))
 
@@ -143,6 +143,45 @@ cut_test_repository_new (const gchar *dirname)
     return g_object_new(CUT_TYPE_TEST_REPOSITORY,
                         "dirname", dirname,
                         NULL);
+}
+
+CutTestSuite *
+cut_test_repository_create_test_suite (CutTestRepository *repository)
+{
+    CutTestSuite *suite = NULL;
+    GDir *dir;
+    const gchar *entry;
+    CutTestRepositoryPrivate *priv = CUT_TEST_REPOSITORY_GET_PRIVATE(repository);
+
+    if (!priv->dirname)
+        return NULL;
+
+    dir = g_dir_open(priv->dirname, 0, NULL);
+    if (!dir)
+        return NULL;
+
+    while ((entry = g_dir_read_name(dir))) {
+        CutTestLoader *loader;
+        CutTestCase *test_case;
+
+        if (!g_str_has_suffix(entry, "."G_MODULE_SUFFIX))
+            continue;
+
+        loader = cut_test_loader_new(entry);
+
+        test_case = cut_test_loader_load_test_case(loader);
+        if (test_case) {
+            if (!suite)
+                suite = cut_test_suite_new();
+            cut_test_container_add_test(CUT_TEST_CONTAINER(suite),
+                                        CUT_TEST(test_case));
+        }
+
+        g_object_unref(loader);
+    }
+    g_dir_close(dir);
+
+    return suite;
 }
 
 /*

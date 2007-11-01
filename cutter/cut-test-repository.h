@@ -25,7 +25,7 @@
 #include <glib-object.h>
 
 #include "cut-test.h"
-#include "cut-test-case.h"
+#include "cut-test-suite.h"
 
 G_BEGIN_DECLS
 
@@ -52,6 +52,7 @@ struct _CutTestRepositoryClass
 GType cut_test_repository_get_type  (void) G_GNUC_CONST;
 
 CutTestRepository *cut_test_repository_new (const gchar *dirname);
+CutTestSuite *cut_test_repository_create_test_suite (CutTestRepository *repository);
 
 G_END_DECLS
 
