@@ -1,5 +1,9 @@
 2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-main.c: Run tests.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test-container.c: Delete cut_test_container_run().
 
 2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
