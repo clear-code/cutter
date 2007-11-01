@@ -1,3 +1,4 @@
+#include "cut-test.h"
 #include "cut-assertion.h"
 
 static void

@@ -1,5 +1,9 @@
 2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* test/Makefile.am, test/cut_assertion.c: make cut_assertion test.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test-loader.h: Fix typo. !
 
 2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
