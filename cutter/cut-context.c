@@ -37,6 +37,7 @@ typedef struct _CutContextPrivate	CutContextPrivate;
 struct _CutContextPrivate
 {
     CutTest *test;
+    gint verborse_level;
 };
 
 enum
@@ -85,6 +86,7 @@ cut_context_init (CutContext *context)
     CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
 
     priv->test = NULL;
+    priv->verborse_level = 0;
 }
 
 static void
@@ -151,13 +153,21 @@ cut_context_set_error (CutContext *context,
                        const gchar *filename,
                        guint line)
 {
-    CutTest *test = CUT_CONTEXT_GET_PRIVATE(context)->test;
+    CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
+    CutTest *test = priv->test;
 
     cut_test_set_error(test, error_message,
                        function_name, filename,
                        line);
     /* output log */
-    g_print("%s", error_message);
+    switch (priv->verborse_level) {
+      case 1:
+        g_print("%s", error_message);
+        break;
+      default:
+        g_print("E");
+        break;
+    }
 }
 
 CutContext *
