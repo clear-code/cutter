@@ -30,9 +30,16 @@ G_BEGIN_DECLS
 
 #define cut_assert_equal_int(expect, actual)                \
 if (expect != actual) {                                     \
-    g_print("%s:%d: (%s)\nexpected: <%d>\n but was: <%d>\n",  \
+    gchar *message;                                         \
+    message = g_strdup_printf(                              \
+            "%s:%d: (%s)\nexpected: <%d>\n but was: <%d>\n",\
             __FILE__, __LINE__, __PRETTY_FUNCTION__,        \
             expect, actual);                                \
+    cut_context_set_error(                                  \
+            cut_context_get_current(),                      \
+            message, __PRETTY_FUNCTION__,                   \
+            __FILE__, __LINE__);                            \
+    g_free(message);                                        \
 } else {                                                    \
     cut_context_increment_assertion_count(                  \
             cut_context_get_current());                     \
@@ -45,10 +52,16 @@ do {                                                    \
     double _error = error;                              \
     if (!(_expect - _error <= _actual &&                \
           _actual <= _expect + _error)) {               \
-        g_print("%s:%d: (%s)\nexpected: <%g +/- %g>\n but was: <%g>\n", \
-                __FILE__, __LINE__,                     \
-                __PRETTY_FUNCTION__,                    \
-                expect, error, actual);                 \
+        gchar *message;                                 \
+        message = g_strdup_printf(                      \
+            "%s:%d: (%s)\nexpected: <%g +/- %g>\n but was: <%g>\n",\
+            __FILE__, __LINE__, __PRETTY_FUNCTION__,    \
+            expect, error, actual);                     \
+        cut_context_set_error(                          \
+            cut_context_get_current(),                  \
+            message, __PRETTY_FUNCTION__,               \
+            __FILE__, __LINE__);                        \
+        g_free(message);                                \
     } else {                                            \
         cut_context_increment_assertion_count(          \
                 cut_context_get_current());             \
@@ -57,9 +70,16 @@ do {                                                    \
 
 #define cut_assert_equal_string(expect, actual)         \
 if (strcmp(expect, actual))           {                 \
-    g_print("%s:%d (%s)\nexpected: <%s> but was: <%s>\n",   \
-            __FILE__, __LINE__,                         \
-            __PRETTY_FUNCTION__, expect, actual);       \
+    gchar *message;                                         \
+    message = g_strdup_printf(                              \
+            "%s:%d: (%s)\nexpected: <%s>\n but was: <%s>\n",\
+            __FILE__, __LINE__, __PRETTY_FUNCTION__,        \
+            expect, actual);                                \
+    cut_context_set_error(                                  \
+            cut_context_get_current(),                      \
+            message, __PRETTY_FUNCTION__,                   \
+            __FILE__, __LINE__);                            \
+    g_free(message);                                        \
 } else {                                                \
     cut_context_increment_assertion_count(              \
             cut_context_get_current());                 \

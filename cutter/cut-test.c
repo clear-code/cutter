@@ -266,6 +266,19 @@ cut_test_set_error (CutTest *test,
                     const gchar *filename,
                     guint line)
 {
+    CutTestError *error;
+    CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(test);
+
+    error = g_new0(CutTestError, 1);
+
+    error->message = g_strdup(error_message);
+    error->function_name = g_strdup(function_name);
+    error->filename = g_strdup(filename);
+    error->line = line;
+
+    if (priv->error)
+        cut_test_error_free(priv->error);
+    priv->error = error;
 }
 
 guint

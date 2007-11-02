@@ -156,6 +156,8 @@ cut_context_set_error (CutContext *context,
     cut_test_set_error(test, error_message,
                        function_name, filename,
                        line);
+    /* output log */
+    g_print("%s", error_message);
 }
 
 CutContext *

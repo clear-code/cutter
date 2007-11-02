@@ -1,5 +1,10 @@
 2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-assertion.c, cutter/cut-test.c: Set error.
+	* cutter/cut-context.c: Output message.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test.[c|h], cutter/cut-context.[c|h]: Implement set error
 	function.
 
