@@ -1,5 +1,10 @@
 2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-context.[c|h]: Added cut_context_output_error_log() and
+	cut_context_output_normal_log().
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-context.c: Added verborse mode.
 
 2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>

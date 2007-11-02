@@ -210,6 +210,11 @@ real_run (CutTest *test, CutTestError **error)
                 priv->setup();
 
             cut_test_run(test, error);
+            if (*error) {
+                cut_context_output_error_log(cut_context_get_current());
+            } else {
+                cut_context_output_normal_log(cut_context_get_current());
+            }
             assertion_count = cut_test_get_assertion_count(test);
 
             if (priv->teardown)

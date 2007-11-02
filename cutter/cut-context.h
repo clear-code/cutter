@@ -62,6 +62,8 @@ void  cut_context_set_error                 (CutContext *context,
                                              const gchar *function_name,
                                              const gchar *filename,
                                              guint line);
+void  cut_context_output_error_log          (CutContext *context);
+void  cut_context_output_normal_log         (CutContext *context);
 
 CutContext *cut_context_get_current (void);
 

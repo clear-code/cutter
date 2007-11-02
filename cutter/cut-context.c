@@ -159,13 +159,38 @@ cut_context_set_error (CutContext *context,
     cut_test_set_error(test, error_message,
                        function_name, filename,
                        line);
+}
+
+void
+cut_context_output_error_log (CutContext *context)
+{
+    CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
+    CutTest *test = priv->test;
+
     /* output log */
     switch (priv->verborse_level) {
       case 1:
-        g_print("%s", error_message);
+        g_print("error message should be in here!");
         break;
       default:
         g_print("E");
+        break;
+    }
+}
+
+void
+cut_context_output_normal_log (CutContext *context)
+{
+    CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
+    CutTest *test = priv->test;
+
+    /* output log */
+    switch (priv->verborse_level) {
+      case 1:
+        g_print(".");
+        break;
+      default:
+        g_print(".");
         break;
     }
 }
