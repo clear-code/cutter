@@ -209,7 +209,7 @@ real_run (CutTest *test, CutTestError **error)
             if (priv->teardown)
                 priv->teardown();
         } else {
-            g_warning("This object is neither test nor test container!");
+            g_warning("This object is not CutTest object");
         }
     }
 }
