@@ -28,6 +28,22 @@
 
 G_BEGIN_DECLS
 
+#define cut_assert(expect)                                  \
+if (!expect) {                                              \
+    gchar *message;                                         \
+    message = g_strdup_printf(                              \
+            "%s:%d: (%s)\nfailed>\n",                       \
+            __FILE__, __LINE__, __PRETTY_FUNCTION__);       \
+    cut_context_set_error(                                  \
+            cut_context_get_current(),                      \
+            message, __PRETTY_FUNCTION__,                   \
+            __FILE__, __LINE__);                            \
+    g_free(message);                                        \
+} else {                                                    \
+    cut_context_increment_assertion_count(                  \
+            cut_context_get_current());                     \
+}
+
 #define cut_assert_equal_int(expect, actual)                \
 if (expect != actual) {                                     \
     gchar *message;                                         \
