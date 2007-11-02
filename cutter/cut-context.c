@@ -29,8 +29,6 @@
 
 #include "cut-context.h"
 
-#include "cut.h"
-
 #define CUT_CONTEXT_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_CONTEXT, CutContextPrivate))
 
 typedef struct _CutContextPrivate	CutContextPrivate;

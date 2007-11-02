@@ -26,7 +26,7 @@
 #include <stdlib.h>
 #include <glib.h>
 
-#include "cut.h"
+#include "cut-context.h"
 #include "cut-test-suite.h"
 #include "cut-repository.h"
 

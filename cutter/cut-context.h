@@ -48,6 +48,8 @@ struct _CutContextClass
     GObjectClass parent_class;
 };
 
+extern GPrivate *private_thread_context;
+
 GType        cut_context_get_type  (void) G_GNUC_CONST;
 
 CutContext  *cut_context_new (void);

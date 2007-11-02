@@ -24,7 +24,7 @@
 
 #include <glib.h>
 #include <string.h>
-#include <cut.h>
+#include "cut-context.h"
 
 G_BEGIN_DECLS
 

@@ -29,8 +29,6 @@
 
 #include "cut-test.h"
 
-#include "cut.h"
-
 #define CUT_TEST_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST, CutTestPrivate))
 
 typedef struct _CutTestPrivate	CutTestPrivate;

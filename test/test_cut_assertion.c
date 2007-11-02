@@ -1,5 +1,4 @@
-#include "cut-test.h"
-#include "cut-assertion.h"
+#include "cut.h"
 
 void
 test_equal_int (void)

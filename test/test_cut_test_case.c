@@ -1,5 +1,5 @@
+#include "cut.h"
 #include "cut-test-case.h"
-#include "cut-assertion.h"
 
 static CutTestCase *test_object;
 

@@ -24,10 +24,12 @@
 
 #include "cut-context.h"
 #include "cut-test.h"
+#include "cut-assertion.h"
 
 G_BEGIN_DECLS
 
-extern GPrivate *private_thread_context;
+void setup(void);
+void teardown(void);
 
 G_END_DECLS
 

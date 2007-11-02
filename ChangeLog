@@ -1,5 +1,8 @@
 2007-11-02  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/*.h: made cut.h as the header for user.
+	* test/test_cut_*.c: included "cut.h".
+
 	* cutter/cut-test.h, cutter/cut-loader.c: removed CutTestEntry.
 
 	* test/test_cut_*.c: removed needless test registration.
