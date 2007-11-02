@@ -1,5 +1,7 @@
 #include "cut.h"
 
+void test_assertion_count(void);
+
 static CutTest *test_object;
 
 static void

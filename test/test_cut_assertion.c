@@ -1,5 +1,9 @@
 #include "cut.h"
 
+void test_equal_int(void);
+void test_equal_string(void);
+void test_equal_double(void);
+
 void
 test_equal_int (void)
 {

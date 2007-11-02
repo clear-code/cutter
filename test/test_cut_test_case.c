@@ -1,6 +1,11 @@
 #include "cut.h"
 #include "cut-test-case.h"
 
+void test_setup(void);
+void test_teardown(void);
+void test_test_case_count(void);
+
+
 static CutTestCase *test_object;
 
 static gboolean setup_flag = FALSE;
