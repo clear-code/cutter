@@ -22,6 +22,8 @@
 #ifndef __CUT_H__
 #define __CUT_H__
 
+#include <glib.h>
+
 #include "cut-context.h"
 #include "cut-test.h"
 #include "cut-assertion.h"
