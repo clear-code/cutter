@@ -62,7 +62,10 @@ struct _CutTestClass
 {
     GObjectClass parent_class;
 
-    void (*run) (CutTest *test, CutTestError **error);
+    void (*start)    (CutTest *test);
+    void (*complete) (CutTest *test);
+
+    void (*run)      (CutTest *test, CutTestError **error);
 };
 
 GType        cut_test_get_type  (void) G_GNUC_CONST;

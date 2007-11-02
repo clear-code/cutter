@@ -49,6 +49,15 @@ enum
     PROP_ASSERTION_COUNT
 };
 
+enum
+{
+	START_SIGNAL,
+    COMPLETE_SIGNAL,
+	LAST_SIGNAL
+};
+
+static gint cut_test_signals[LAST_SIGNAL] = {0};
+
 G_DEFINE_TYPE (CutTest, cut_test, G_TYPE_OBJECT)
 
 static void dispose        (GObject         *object);
@@ -97,6 +106,24 @@ cut_test_class_init (CutTestClass *klass)
                              0, G_MAXUINT32, 0,
                              G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_ASSERTION_COUNT, spec);
+
+	cut_test_signals[START_SIGNAL]
+        = g_signal_new ("start",
+                G_TYPE_FROM_CLASS (klass),
+                G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
+                G_STRUCT_OFFSET (CutTestClass, start),
+                NULL, NULL,
+                g_cclosure_marshal_VOID__VOID,
+                G_TYPE_NONE, 0);
+
+	cut_test_signals[COMPLETE_SIGNAL]
+        = g_signal_new ("complete",
+                G_TYPE_FROM_CLASS (klass),
+                G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
+                G_STRUCT_OFFSET (CutTestClass, complete),
+                NULL, NULL,
+                g_cclosure_marshal_VOID__VOID,
+                G_TYPE_NONE, 0);
 
     g_type_class_add_private(gobject_class, sizeof(CutTestPrivate));
 }
@@ -190,8 +217,10 @@ real_run (CutTest *test, CutTestError **error)
 
     if (!priv->test_function)
         return;
-
+    
+    g_signal_emit_by_name(test, "start");
     priv->test_function();
+    g_signal_emit_by_name(test, "complete");
 }
 
 void
