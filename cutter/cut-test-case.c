@@ -172,7 +172,9 @@ cut_test_case_new (CutSetupFunction setup_function, CutTearDownFunction teardown
 guint
 cut_test_case_get_test_count (CutTestCase *test_case)
 {
-    return 0;
+    CutTestCasePrivate *priv = CUT_TEST_CASE_GET_PRIVATE(test_case);
+
+    return g_list_length(priv->tests);
 }
 
 void
