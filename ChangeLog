@@ -1,5 +1,9 @@
 2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test-case.c: Error if not success!
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-assertion.h: Added cut_assert().
 
 2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>

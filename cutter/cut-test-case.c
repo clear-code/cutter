@@ -212,7 +212,7 @@ real_run (CutTest *test)
                 priv->setup();
 
             success = cut_test_run(test);
-            if (success) {
+            if (!success) {
                 cut_context_output_error_log(cut_context_get_current());
             } else {
                 cut_context_output_normal_log(cut_context_get_current());
