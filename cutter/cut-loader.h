@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef __CUT_TEST_LOADER_H__
-#define __CUT_TEST_LOADER_H__
+#ifndef __CUT_LOADER_H__
+#define __CUT_LOADER_H__
 
 #include <glib-object.h>
 
@@ -29,34 +29,34 @@
 
 G_BEGIN_DECLS
 
-#define CUT_TYPE_TEST_LOADER            (cut_test_loader_get_type ())
-#define CUT_TEST_LOADER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_TEST_LOADER, CutTestLoader))
-#define CUT_TEST_LOADER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_TEST_LOADER, CutTestLoaderClass))
-#define CUT_IS_TEST_LOADER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_TEST_LOADER))
-#define CUT_IS_TEST_LOADER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_TEST_LOADER))
-#define CUT_TEST_LOADER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_TEST_LOADER, CutTestLoaderClass))
+#define CUT_TYPE_LOADER            (cut_loader_get_type ())
+#define CUT_LOADER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_LOADER, CutLoader))
+#define CUT_LOADER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_LOADER, CutLoaderClass))
+#define CUT_IS_LOADER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_LOADER))
+#define CUT_IS_LOADER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_LOADER))
+#define CUT_LOADER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_LOADER, CutLoaderClass))
 
-typedef struct _CutTestLoader      CutTestLoader;
-typedef struct _CutTestLoaderClass CutTestLoaderClass;
+typedef struct _CutLoader      CutLoader;
+typedef struct _CutLoaderClass CutLoaderClass;
 
-struct _CutTestLoader
+struct _CutLoader
 {
     GObject object;
 };
 
-struct _CutTestLoaderClass
+struct _CutLoaderClass
 {
     GObjectClass parent_class;
 };
 
-GType cut_test_loader_get_type  (void) G_GNUC_CONST;
+GType cut_loader_get_type  (void) G_GNUC_CONST;
 
-CutTestLoader *cut_test_loader_new (const gchar *soname);
-CutTestCase   *cut_test_loader_load_test_case (CutTestLoader *loader);
+CutLoader *cut_loader_new (const gchar *soname);
+CutTestCase *cut_loader_load_test_case (CutLoader *loader);
 
 G_END_DECLS
 
-#endif /* __CUT_TEST_LOADER_H__ */
+#endif /* __CUT_LOADER_H__ */
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

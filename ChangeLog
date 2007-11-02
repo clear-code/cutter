@@ -1,5 +1,11 @@
 2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test-loader.[c|h] -> cutter/cut-loader.[c|h]: Renamed.
+	* cutter/cut-test-repository.[c|h] -> cutter/cut-repository.[c|h]:
+	Renamed.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* test/test_cut_test.c, test/test_cut_test_case.c: Join tear and
 	down. tear_down -> teardown.
 

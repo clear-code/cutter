@@ -28,12 +28,12 @@
 #include <glib.h>
 #include <gmodule.h>
 
-#include "cut-test-loader.h"
+#include "cut-loader.h"
 
-#define CUT_TEST_LOADER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_LOADER, CutTestLoaderPrivate))
+#define CUT_LOADER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_LOADER, CutLoaderPrivate))
 
-typedef struct _CutTestLoaderPrivate	CutTestLoaderPrivate;
-struct _CutTestLoaderPrivate
+typedef struct _CutLoaderPrivate	CutLoaderPrivate;
+struct _CutLoaderPrivate
 {
     gchar *so_filename;
     GModule *module;
@@ -47,7 +47,7 @@ enum
     PROP_SO_FILENAME
 };
 
-G_DEFINE_TYPE (CutTestLoader, cut_test_loader, G_TYPE_OBJECT)
+G_DEFINE_TYPE (CutLoader, cut_loader, G_TYPE_OBJECT)
 
 static void dispose         (GObject               *object);
 static void set_property    (GObject               *object,
@@ -60,7 +60,7 @@ static void get_property    (GObject               *object,
                              GParamSpec            *pspec);
 
 static void
-cut_test_loader_class_init (CutTestLoaderClass *klass)
+cut_loader_class_init (CutLoaderClass *klass)
 {
     GObjectClass *gobject_class;
     GParamSpec *spec;
@@ -78,13 +78,13 @@ cut_test_loader_class_init (CutTestLoaderClass *klass)
                                G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class, PROP_SO_FILENAME, spec);
 
-    g_type_class_add_private(gobject_class, sizeof(CutTestLoaderPrivate));
+    g_type_class_add_private(gobject_class, sizeof(CutLoaderPrivate));
 }
 
 static void
-cut_test_loader_init (CutTestLoader *loader)
+cut_loader_init (CutLoader *loader)
 {
-    CutTestLoaderPrivate *priv = CUT_TEST_LOADER_GET_PRIVATE(loader);
+    CutLoaderPrivate *priv = CUT_LOADER_GET_PRIVATE(loader);
 
     priv->so_filename = NULL;
     priv->tests = NULL;
@@ -94,7 +94,7 @@ cut_test_loader_init (CutTestLoader *loader)
 static void
 dispose (GObject *object)
 {
-    CutTestLoaderPrivate *priv = CUT_TEST_LOADER_GET_PRIVATE(object);
+    CutLoaderPrivate *priv = CUT_LOADER_GET_PRIVATE(object);
 
     if (priv->so_filename) {
         g_free(priv->so_filename);
@@ -106,7 +106,7 @@ dispose (GObject *object)
         priv->module = NULL;
     }
 
-    G_OBJECT_CLASS(cut_test_loader_parent_class)->dispose(object);
+    G_OBJECT_CLASS(cut_loader_parent_class)->dispose(object);
 }
 
 static void
@@ -115,7 +115,7 @@ set_property (GObject      *object,
               const GValue *value,
               GParamSpec   *pspec)
 {
-    CutTestLoaderPrivate *priv = CUT_TEST_LOADER_GET_PRIVATE(object);
+    CutLoaderPrivate *priv = CUT_LOADER_GET_PRIVATE(object);
 
     switch (prop_id) {
       case PROP_SO_FILENAME:
@@ -135,7 +135,7 @@ get_property (GObject    *object,
               GValue     *value,
               GParamSpec *pspec)
 {
-    CutTestLoaderPrivate *priv = CUT_TEST_LOADER_GET_PRIVATE(object);
+    CutLoaderPrivate *priv = CUT_LOADER_GET_PRIVATE(object);
 
     switch (prop_id) {
       case PROP_SO_FILENAME:
@@ -147,22 +147,22 @@ get_property (GObject    *object,
     }
 }
 
-CutTestLoader *
-cut_test_loader_new (const gchar *soname)
+CutLoader *
+cut_loader_new (const gchar *soname)
 {
-    return g_object_new(CUT_TYPE_TEST_LOADER,
+    return g_object_new(CUT_TYPE_LOADER,
                         "so-filename", soname,
                         NULL);
 }
 
 CutTestCase *
-cut_test_loader_load_test_case (CutTestLoader *loader)
+cut_loader_load_test_case (CutLoader *loader)
 {
     guint i;
     CutTestCase *test_case;
     CutSetupFunction setup_function = NULL;
     CutTearDownFunction teardown_function = NULL;
-    CutTestLoaderPrivate *priv = CUT_TEST_LOADER_GET_PRIVATE(loader);
+    CutLoaderPrivate *priv = CUT_LOADER_GET_PRIVATE(loader);
 
     if (!priv->so_filename)
         return NULL;

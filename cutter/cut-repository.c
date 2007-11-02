@@ -27,13 +27,13 @@
 #include <string.h>
 #include <glib.h>
 
-#include "cut-test-repository.h"
-#include "cut-test-loader.h"
+#include "cut-repository.h"
+#include "cut-loader.h"
 
-#define CUT_TEST_REPOSITORY_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_REPOSITORY, CutTestRepositoryPrivate))
+#define CUT_REPOSITORY_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_REPOSITORY, CutRepositoryPrivate))
 
-typedef struct _CutTestRepositoryPrivate	CutTestRepositoryPrivate;
-struct _CutTestRepositoryPrivate
+typedef struct _CutRepositoryPrivate	CutRepositoryPrivate;
+struct _CutRepositoryPrivate
 {
     gchar *dirname;
     GList *loaders;
@@ -45,7 +45,7 @@ enum
     PROP_DIRNAME
 };
 
-G_DEFINE_TYPE (CutTestRepository, cut_test_repository, G_TYPE_OBJECT)
+G_DEFINE_TYPE (CutRepository, cut_repository, G_TYPE_OBJECT)
 
 static void dispose         (GObject               *object);
 static void set_property    (GObject               *object,
@@ -58,7 +58,7 @@ static void get_property    (GObject               *object,
                              GParamSpec            *pspec);
 
 static void
-cut_test_repository_class_init (CutTestRepositoryClass *klass)
+cut_repository_class_init (CutRepositoryClass *klass)
 {
     GObjectClass *gobject_class;
     GParamSpec *spec;
@@ -76,13 +76,13 @@ cut_test_repository_class_init (CutTestRepositoryClass *klass)
                                G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class, PROP_DIRNAME, spec);
 
-    g_type_class_add_private(gobject_class, sizeof(CutTestRepositoryPrivate));
+    g_type_class_add_private(gobject_class, sizeof(CutRepositoryPrivate));
 }
 
 static void
-cut_test_repository_init (CutTestRepository *repository)
+cut_repository_init (CutRepository *repository)
 {
-    CutTestRepositoryPrivate *priv = CUT_TEST_REPOSITORY_GET_PRIVATE(repository);
+    CutRepositoryPrivate *priv = CUT_REPOSITORY_GET_PRIVATE(repository);
 
     priv->dirname = NULL;
     priv->loaders = NULL;
@@ -91,7 +91,7 @@ cut_test_repository_init (CutTestRepository *repository)
 static void
 dispose (GObject *object)
 {
-    CutTestRepositoryPrivate *priv = CUT_TEST_REPOSITORY_GET_PRIVATE(object);
+    CutRepositoryPrivate *priv = CUT_REPOSITORY_GET_PRIVATE(object);
 
     if (priv->dirname) {
         g_free(priv->dirname);
@@ -104,7 +104,7 @@ dispose (GObject *object)
         priv->loaders = NULL;
     }
 
-    G_OBJECT_CLASS(cut_test_repository_parent_class)->dispose(object);
+    G_OBJECT_CLASS(cut_repository_parent_class)->dispose(object);
 }
 
 static void
@@ -113,7 +113,7 @@ set_property (GObject      *object,
               const GValue *value,
               GParamSpec   *pspec)
 {
-    CutTestRepositoryPrivate *priv = CUT_TEST_REPOSITORY_GET_PRIVATE(object);
+    CutRepositoryPrivate *priv = CUT_REPOSITORY_GET_PRIVATE(object);
 
     switch (prop_id) {
       case PROP_DIRNAME:
@@ -133,7 +133,7 @@ get_property (GObject    *object,
               GValue     *value,
               GParamSpec *pspec)
 {
-    CutTestRepositoryPrivate *priv = CUT_TEST_REPOSITORY_GET_PRIVATE(object);
+    CutRepositoryPrivate *priv = CUT_REPOSITORY_GET_PRIVATE(object);
 
     switch (prop_id) {
       case PROP_DIRNAME:
@@ -145,21 +145,21 @@ get_property (GObject    *object,
     }
 }
 
-CutTestRepository *
-cut_test_repository_new (const gchar *dirname)
+CutRepository *
+cut_repository_new (const gchar *dirname)
 {
-    return g_object_new(CUT_TYPE_TEST_REPOSITORY,
+    return g_object_new(CUT_TYPE_REPOSITORY,
                         "dirname", dirname,
                         NULL);
 }
 
 CutTestSuite *
-cut_test_repository_create_test_suite (CutTestRepository *repository)
+cut_repository_create_test_suite (CutRepository *repository)
 {
     CutTestSuite *suite = NULL;
     GDir *dir;
     const gchar *entry;
-    CutTestRepositoryPrivate *priv = CUT_TEST_REPOSITORY_GET_PRIVATE(repository);
+    CutRepositoryPrivate *priv = CUT_REPOSITORY_GET_PRIVATE(repository);
 
     if (!priv->dirname)
         return NULL;
@@ -169,7 +169,7 @@ cut_test_repository_create_test_suite (CutTestRepository *repository)
         return NULL;
 
     while ((entry = g_dir_read_name(dir))) {
-        CutTestLoader *loader;
+        CutLoader *loader;
         CutTestCase *test_case;
         gchar *path_name;
 
@@ -177,10 +177,10 @@ cut_test_repository_create_test_suite (CutTestRepository *repository)
             continue;
 
         path_name = g_build_filename(priv->dirname, entry, NULL);
-        loader = cut_test_loader_new(path_name);
+        loader = cut_loader_new(path_name);
         g_free(path_name);
 
-        test_case = cut_test_loader_load_test_case(loader);
+        test_case = cut_loader_load_test_case(loader);
         if (test_case) {
             if (!suite)
                 suite = cut_test_suite_new();

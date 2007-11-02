@@ -33,10 +33,10 @@ cutter2_SOURCES =			\
 		cut-test-case.c		\
 		cut-test-suite.h	\
 		cut-test-suite.c	\
-		cut-test-loader.h	\
-		cut-test-loader.c	\
-		cut-test-repository.h	\
-		cut-test-repository.c	\
+		cut-loader.h		\
+		cut-loader.c		\
+		cut-repository.h	\
+		cut-repository.c	\
 		cut-main.c
 cutter2_LDADD =				\
 	$(GLIB_LIBS)

@@ -27,18 +27,18 @@
 #include <glib.h>
 
 #include "cut-test-suite.h"
-#include "cut-test-repository.h"
+#include "cut-repository.h"
 
 int
 main (int argc, char* argv[])
 {
     CutTestSuite *suite;
-    CutTestRepository *repository;
+    CutRepository *repository;
 
     g_type_init();
 
-    repository = cut_test_repository_new(argv[1]);
-    suite = cut_test_repository_create_test_suite(repository);
+    repository = cut_repository_new(argv[1]);
+    suite = cut_repository_create_test_suite(repository);
 
     if (suite) {
         CutTestError *error = NULL;
