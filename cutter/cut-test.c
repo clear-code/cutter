@@ -191,15 +191,15 @@ real_run (CutTest *test, CutTestError **error)
     if (!priv->test_function)
         return;
 
-    cut_test_context_reset_assertion_count(
-        cut_test_context_get_current());
+    cut_context_reset_assertion_count(
+        cut_context_get_current());
 
     priv->test_function();
 
-    priv->assertion_count = cut_test_context_get_assertion_count(
-                                cut_test_context_get_current());
-    cut_test_context_reset_assertion_count(
-        cut_test_context_get_current());
+    priv->assertion_count = cut_context_get_assertion_count(
+                                cut_context_get_current());
+    cut_context_reset_assertion_count(
+        cut_context_get_current());
 }
 
 void

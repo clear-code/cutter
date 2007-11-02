@@ -22,7 +22,7 @@
 #ifndef __CUT_H__
 #define __CUT_H__
 
-#include "cut-test-context.h"
+#include "cut-context.h"
 #include "cut-test.h"
 
 G_BEGIN_DECLS

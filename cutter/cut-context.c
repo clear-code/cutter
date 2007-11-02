@@ -27,14 +27,14 @@
 #include <string.h>
 #include <glib.h>
 
-#include "cut-test-context.h"
+#include "cut-context.h"
 
 #include "cut.h"
 
-#define CUT_TEST_CONTEXT_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_CONTEXT, CutTestContextPrivate))
+#define CUT_CONTEXT_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_CONTEXT, CutContextPrivate))
 
-typedef struct _CutTestContextPrivate	CutTestContextPrivate;
-struct _CutTestContextPrivate
+typedef struct _CutContextPrivate	CutContextPrivate;
+struct _CutContextPrivate
 {
     guint assertion_count;
 };
@@ -45,7 +45,7 @@ enum
     PROP_ASSERTION_COUNT
 };
 
-G_DEFINE_TYPE (CutTestContext, cut_test_context, G_TYPE_OBJECT)
+G_DEFINE_TYPE (CutContext, cut_context, G_TYPE_OBJECT)
 
 static void dispose        (GObject         *object);
 static void set_property   (GObject         *object,
@@ -58,7 +58,7 @@ static void get_property   (GObject         *object,
                             GParamSpec      *pspec);
 
 static void
-cut_test_context_class_init (CutTestContextClass *klass)
+cut_context_class_init (CutContextClass *klass)
 {
     GObjectClass *gobject_class;
     GParamSpec *spec;
@@ -76,13 +76,13 @@ cut_test_context_class_init (CutTestContextClass *klass)
                              G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_ASSERTION_COUNT, spec);
 
-    g_type_class_add_private(gobject_class, sizeof(CutTestContextPrivate));
+    g_type_class_add_private(gobject_class, sizeof(CutContextPrivate));
 }
 
 static void
-cut_test_context_init (CutTestContext *context)
+cut_context_init (CutContext *context)
 {
-    CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+    CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
 
     priv->assertion_count = 0;
 }
@@ -90,7 +90,7 @@ cut_test_context_init (CutTestContext *context)
 static void
 dispose (GObject *object)
 {
-    G_OBJECT_CLASS(cut_test_context_parent_class)->dispose(object);
+    G_OBJECT_CLASS(cut_context_parent_class)->dispose(object);
 }
 
 static void
@@ -99,7 +99,7 @@ set_property (GObject      *object,
               const GValue *value,
               GParamSpec   *pspec)
 {
-    CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(object);
+    CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(object);
 
     switch (prop_id) {
       case PROP_ASSERTION_COUNT:
@@ -117,7 +117,7 @@ get_property (GObject    *object,
               GValue     *value,
               GParamSpec *pspec)
 {
-    CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(object);
+    CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(object);
 
     switch (prop_id) {
       case PROP_ASSERTION_COUNT:
@@ -129,39 +129,39 @@ get_property (GObject    *object,
     }
 }
 
-CutTestContext *
-cut_test_context_new (void)
+CutContext *
+cut_context_new (void)
 {
-    return g_object_new(CUT_TYPE_TEST_CONTEXT, NULL);
+    return g_object_new(CUT_TYPE_CONTEXT, NULL);
 }
 
 guint
-cut_test_context_get_assertion_count (CutTestContext *context)
+cut_context_get_assertion_count (CutContext *context)
 {
-    return CUT_TEST_CONTEXT_GET_PRIVATE(context)->assertion_count;
+    return CUT_CONTEXT_GET_PRIVATE(context)->assertion_count;
 }
 
 void
-cut_test_context_reset_assertion_count (CutTestContext *context)
+cut_context_reset_assertion_count (CutContext *context)
 {
-    CUT_TEST_CONTEXT_GET_PRIVATE(context)->assertion_count = 0;
+    CUT_CONTEXT_GET_PRIVATE(context)->assertion_count = 0;
 }
 
 void
-cut_test_context_increment_assertion_count (CutTestContext *context)
+cut_context_increment_assertion_count (CutContext *context)
 {
-    CUT_TEST_CONTEXT_GET_PRIVATE(context)->assertion_count++;
+    CUT_CONTEXT_GET_PRIVATE(context)->assertion_count++;
 }
 
-CutTestContext *
-cut_test_context_get_current (void)
+CutContext *
+cut_context_get_current (void)
 {
-    CutTestContext *current;
+    CutContext *current;
 
     current = g_private_get(private_thread_context);
 
     if (!current) {
-        current = cut_test_context_new();
+        current = cut_context_new();
         g_private_set(private_thread_context, current);
     }
 
