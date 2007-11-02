@@ -28,14 +28,14 @@
 
 G_BEGIN_DECLS
 
-#define cut_assert_equal_int(expect, actual)            \
-if (expect != actual) {                                 \
-    g_print("%s expected: %d but was: %d in %s:%d\n",   \
-            __PRETTY_FUNCTION__, expect, actual,        \
-            __FILE__, __LINE__);                        \
-} else {                                                \
-    cut_context_increment_assertion_count(              \
-            cut_context_get_current());                  \
+#define cut_assert_equal_int(expect, actual)                \
+if (expect != actual) {                                     \
+    g_print("%s:%d:%s\nexpected: <%d>\n but was: <%d>\n",  \
+            __FILE__, __LINE__, __PRETTY_FUNCTION__,        \
+            expect, actual);                                \
+} else {                                                    \
+    cut_context_increment_assertion_count(                  \
+            cut_context_get_current());                     \
 }
 
 #define cut_assert_equal_double(expect, error, actual)  \

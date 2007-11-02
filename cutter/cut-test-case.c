@@ -211,6 +211,7 @@ real_run (CutTest *test, CutTestError **error)
 
             cut_test_run(test, error);
             assertion_count = cut_test_get_assertion_count(test);
+
             if (priv->teardown)
                 priv->teardown();
         } else {
