@@ -1,3 +1,8 @@
+2007-11-02  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-loader.c: detected test function names that should
+	start with "test_".
+
 2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-assertion.h: Return if fail.

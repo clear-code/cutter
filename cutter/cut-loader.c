@@ -26,6 +26,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <glib.h>
+#include <glib/gstdio.h>
 #include <gmodule.h>
 
 #include "cut-loader.h"
@@ -155,10 +156,70 @@ cut_loader_new (const gchar *soname)
                         NULL);
 }
 
+static inline gboolean
+is_test_function_name_consisted_of (char c)
+{
+    return(('0' <= c && c <= '0') ||
+           ('A' <= c && c <= 'Z') ||
+           ('a' <= c && c <= 'z') ||
+           ('_' == c));
+}
+
+static inline gboolean
+is_test_function_name (GString *name)
+{
+    return name->len > 4 && g_str_has_prefix(name->str, "test_");
+}
+
+static GList *
+collect_test_functions (CutLoaderPrivate *priv)
+{
+    FILE *input;
+    GString *name;
+    char buffer[4096];
+    size_t size;
+    GList *test_names;
+    GHashTable *test_name_table;
+
+    input = g_fopen(priv->so_filename, "rb");
+    if (!input)
+        return NULL;
+
+    test_name_table = g_hash_table_new(g_str_hash, g_str_equal);
+    name = g_string_new("");
+    while ((size = fread(buffer, sizeof(*buffer), sizeof(buffer), input)) > 0) {
+        size_t i;
+        for (i = 0; i < size; i++) {
+            if (is_test_function_name_consisted_of(buffer[i])) {
+                g_string_append_c(name, buffer[i]);
+            } else if (name->len) {
+                if (is_test_function_name(name)) {
+                    g_hash_table_insert(test_name_table,
+                                        g_strdup(name->str), NULL);
+                }
+                g_string_truncate(name, 0);
+            }
+        }
+    }
+
+    if (is_test_function_name(name)) {
+        g_hash_table_insert(test_name_table, g_strdup(name->str), NULL);
+    }
+    g_string_free(name, TRUE);
+
+    test_names = g_hash_table_get_keys(test_name_table);
+    g_hash_table_unref(test_name_table);
+
+    fclose(input);
+
+    return test_names;
+}
+
 CutTestCase *
 cut_loader_load_test_case (CutLoader *loader)
 {
-    guint i;
+    GList *node;;
+    GList *test_names;
     CutTestCase *test_case;
     CutSetupFunction setup_function = NULL;
     CutTearDownFunction teardown_function = NULL;
@@ -171,14 +232,8 @@ cut_loader_load_test_case (CutLoader *loader)
     if (!priv->module)
         return NULL;
 
-    g_module_symbol(priv->module,
-                    "cut_tests",
-                    (gpointer)&priv->tests);
-    g_module_symbol(priv->module,
-                    "cut_tests_len",
-                    (gpointer)&priv->tests_len);
-
-    if (!priv->tests || !priv->tests_len || !*priv->tests_len)
+    test_names = collect_test_functions(priv);
+    if (!test_names)
         return NULL;
 
     g_module_symbol(priv->module,
@@ -189,12 +244,21 @@ cut_loader_load_test_case (CutLoader *loader)
                     (gpointer)&teardown_function);
 
     test_case = cut_test_case_new(setup_function, teardown_function);
-    for (i = 0; i < *priv->tests_len; i++) {
-        CutTestEntry t = priv->tests[i];
+    for (node = test_names; node; node = g_list_next(node)) {
+        gchar *name;
         CutTest *test;
-        test = cut_test_new(t.function);
+        CutTestFunction function;
+
+        name = node->data;
+        g_module_symbol(priv->module, name, (gpointer)&function);
+        g_free(name);
+        if (!function)
+            continue;
+
+        test = cut_test_new(function);
         cut_test_case_add_test(test_case, test);
     }
+    g_list_free(test_names);
 
     return test_case;
 }
