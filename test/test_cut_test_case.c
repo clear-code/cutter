@@ -19,13 +19,11 @@ static void
 dummy_setup_function (void)
 {
     setup_flag = TRUE;
-    teardown_flag = FALSE;
 }
 
 static void
 dummy_teardown_function (void)
 {
-    setup_flag = FALSE;
     teardown_flag = TRUE;
 }
 
@@ -50,6 +48,17 @@ teardown (void)
 static void
 test_setup (void)
 {
+    setup_flag = FALSE;
+    cut_assert(cut_test_run(CUT_TEST(test_object)));
+    cut_assert(setup_flag);
+}
+
+static void
+test_teardown (void)
+{
+    teardown_flag = FALSE;
+    cut_assert(cut_test_run(CUT_TEST(test_object)));
+    cut_assert(teardown_flag);
 }
 
 static void
@@ -60,7 +69,9 @@ test_test_case_count (void)
 
 CutTestEntry cut_tests[] =
 {
-    {test_test_case_count}
+    {test_test_case_count},
+    {test_setup},
+    {test_teardown}
 };
 const gint cut_tests_len = G_N_ELEMENTS(cut_tests);
 
