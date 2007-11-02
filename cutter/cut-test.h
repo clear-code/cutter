@@ -44,7 +44,6 @@ typedef void    (*CutTearDownFunction) (void);
 
 struct _CutTestEntry
 {
-    const gchar *name;
     CutTestFunction function;
 };
 
@@ -73,10 +72,8 @@ struct _CutTestClass
 
 GType        cut_test_get_type  (void) G_GNUC_CONST;
 
-CutTest     *cut_test_new                 (const gchar *test_name,
-                                           CutTestFunction function);
+CutTest     *cut_test_new                 (CutTestFunction function);
 void         cut_test_run                 (CutTest *test, CutTestError **error);
-const gchar *cut_test_get_name            (CutTest *test);
 guint        cut_test_get_assertion_count (CutTest *test);
 void         cut_test_increment_assertion_count
                                           (CutTest *test);

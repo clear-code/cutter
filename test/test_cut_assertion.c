@@ -25,9 +25,9 @@ test_equal_double (void)
 
 CutTestEntry cut_tests[] =
 {
-    {"euqal int test", test_equal_int},
-    {"euqal string test", test_equal_string},
-    {"euqal double test", test_equal_double},
+    {test_equal_int},
+    {test_equal_string},
+    {test_equal_double},
 };
 const gint cut_tests_len = G_N_ELEMENTS(cut_tests);
 
