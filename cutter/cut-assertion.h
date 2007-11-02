@@ -29,7 +29,7 @@
 G_BEGIN_DECLS
 
 #define cut_assert(expect)                                  \
-if (!expect) {                                              \
+if (!(expect)) {                                            \
     gchar *message;                                         \
     message = g_strdup_printf(                              \
             "%s:%d: (%s)\nfailed>\n",                       \
@@ -39,6 +39,7 @@ if (!expect) {                                              \
             message, __PRETTY_FUNCTION__,                   \
             __FILE__, __LINE__);                            \
     g_free(message);                                        \
+    return;                                                 \
 } else {                                                    \
     cut_context_increment_assertion_count(                  \
             cut_context_get_current());                     \
@@ -56,6 +57,7 @@ if (expect != actual) {                                     \
             message, __PRETTY_FUNCTION__,                   \
             __FILE__, __LINE__);                            \
     g_free(message);                                        \
+    return;                                                 \
 } else {                                                    \
     cut_context_increment_assertion_count(                  \
             cut_context_get_current());                     \
@@ -78,6 +80,7 @@ do {                                                    \
             message, __PRETTY_FUNCTION__,               \
             __FILE__, __LINE__);                        \
         g_free(message);                                \
+        return;                                         \
     } else {                                            \
         cut_context_increment_assertion_count(          \
                 cut_context_get_current());             \
@@ -96,9 +99,10 @@ if (strcmp(expect, actual))           {                 \
             message, __PRETTY_FUNCTION__,                   \
             __FILE__, __LINE__);                            \
     g_free(message);                                        \
-} else {                                                \
-    cut_context_increment_assertion_count(              \
-            cut_context_get_current());                 \
+    return;                                                 \
+} else {                                                    \
+    cut_context_increment_assertion_count(                  \
+            cut_context_get_current());                     \
 }
 
 G_END_DECLS
