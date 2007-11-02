@@ -1,5 +1,9 @@
 2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-assertion.c: Increment assertion count.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test.c: Control assertion count in run method.
 
 2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>

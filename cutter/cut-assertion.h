@@ -24,6 +24,7 @@
 
 #include <glib.h>
 #include <string.h>
+#include <cut.h>
 
 G_BEGIN_DECLS
 
@@ -33,6 +34,7 @@ if (expect != actual) {                                 \
             __PRETTY_FUNCTION__, expect, actual,        \
             __FILE__, __LINE__);                        \
 } else {                                                \
+    cut_test_context_increment_assertion_count(g_cut_context);\
 }
 
 #define cut_assert_equal_double(expect, error, actual)  \
@@ -46,6 +48,8 @@ do {                                                    \
                 __PRETTY_FUNCTION__,                    \
                 expect, error, actual,                  \
                 __FILE__, __LINE__);                    \
+    } else {                                            \
+        cut_test_context_increment_assertion_count(g_cut_context);\
     }                                                   \
 } while(0)
 
@@ -55,6 +59,7 @@ if (strcmp(expect, actual))           {                 \
             __PRETTY_FUNCTION__, expect, actual,        \
             __FILE__, __LINE__);                        \
 } else {                                                \
+    cut_test_context_increment_assertion_count(g_cut_context);\
 }
 
 G_END_DECLS
