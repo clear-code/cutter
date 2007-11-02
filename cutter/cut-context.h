@@ -57,6 +57,11 @@ void  cut_context_increment_assertion_count (CutContext *context);
 
 void  cut_context_set_test                  (CutContext *context,
                                              CutTest    *test);
+void  cut_context_set_error                 (CutContext *context,
+                                             const gchar *error_message,
+                                             const gchar *function_name,
+                                             const gchar *filename,
+                                             guint line);
 
 CutContext *cut_context_get_current (void);
 

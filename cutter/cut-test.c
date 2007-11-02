@@ -39,6 +39,7 @@ struct _CutTestPrivate
     gchar *test_name;
     CutTestFunction test_function;
     guint assertion_count;
+    CutTestError *error;
 };
 
 enum
@@ -135,6 +136,23 @@ cut_test_init (CutTest *container)
 
     priv->test_function = NULL;
     priv->assertion_count = 0;
+    priv->error = NULL;
+}
+
+static void
+cut_test_error_free (CutTestError *error)
+{
+    if (!error)
+        return;
+
+    if (error->message)
+        g_free(error->message);
+    if (error->function_name)
+        g_free(error->function_name);
+    if (error->filename)
+        g_free(error->filename);
+
+    g_free(error);
 }
 
 static void
@@ -145,6 +163,10 @@ dispose (GObject *object)
     if (priv->test_name) {
         g_free(priv->test_name);
         priv->test_name = NULL;
+    }
+    if (priv->error) {
+        cut_test_error_free(priv->error);
+        priv->error = NULL;
     }
     priv->test_function = NULL;
 
@@ -235,6 +257,15 @@ void
 cut_test_increment_assertion_count (CutTest *test)
 {
     CUT_TEST_GET_PRIVATE(test)->assertion_count++;
+}
+
+void
+cut_test_set_error (CutTest *test,
+                    const gchar *error_message,
+                    const gchar *function_name,
+                    const gchar *filename,
+                    guint line)
+{
 }
 
 guint

@@ -99,8 +99,6 @@ set_property (GObject      *object,
               const GValue *value,
               GParamSpec   *pspec)
 {
-    CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(object);
-
     switch (prop_id) {
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -114,8 +112,6 @@ get_property (GObject    *object,
               GValue     *value,
               GParamSpec *pspec)
 {
-    CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(object);
-
     switch (prop_id) {
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -146,6 +142,20 @@ void
 cut_context_set_test (CutContext *context, CutTest *test)
 {
     CUT_CONTEXT_GET_PRIVATE(context)->test = test;
+}
+
+void
+cut_context_set_error (CutContext *context,
+                       const gchar *error_message,
+                       const gchar *function_name,
+                       const gchar *filename,
+                       guint line)
+{
+    CutTest *test = CUT_CONTEXT_GET_PRIVATE(context)->test;
+
+    cut_test_set_error(test, error_message,
+                       function_name, filename,
+                       line);
 }
 
 CutContext *

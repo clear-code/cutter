@@ -50,7 +50,10 @@ struct _CutTestEntry
 
 struct _CutTestError
 {
-    gchar *error_message;
+    gchar *message;
+    gchar *function_name;
+    gchar *filename;
+    guint line;
 };
 
 struct _CutTest
@@ -77,7 +80,11 @@ const gchar *cut_test_get_name            (CutTest *test);
 guint        cut_test_get_assertion_count (CutTest *test);
 void         cut_test_increment_assertion_count
                                           (CutTest *test);
-
+void         cut_test_set_error           (CutTest *test,
+                                           const gchar *error_message,
+                                           const gchar *function_name,
+                                           const gchar *filename,
+                                           guint line);
 G_END_DECLS
 
 #endif /* __CUT_TEST_H__ */
