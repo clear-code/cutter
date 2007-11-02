@@ -24,6 +24,8 @@
 
 #include <glib-object.h>
 
+#include "cut-test.h"
+
 G_BEGIN_DECLS
 
 #define CUT_TYPE_CONTEXT            (cut_context_get_type ())
@@ -48,11 +50,13 @@ struct _CutContextClass
 
 GType        cut_context_get_type  (void) G_GNUC_CONST;
 
-CutContext    *cut_context_new (void);
+CutContext  *cut_context_new (void);
 
-guint cut_context_get_assertion_count       (CutContext *context);
 void  cut_context_reset_assertion_count     (CutContext *context);
 void  cut_context_increment_assertion_count (CutContext *context);
+
+void  cut_context_set_test                  (CutContext *context,
+                                             CutTest    *test);
 
 CutContext *cut_context_get_current (void);
 

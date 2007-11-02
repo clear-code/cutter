@@ -30,6 +30,7 @@
 #include "cut-test-case.h"
 
 #include "cut-test.h"
+#include "cut-context.h"
 
 #define CUT_TEST_CASE_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_CASE, CutTestCasePrivate))
 
@@ -203,6 +204,7 @@ real_run (CutTest *test, CutTestError **error)
             continue;
         if (CUT_IS_TEST(list->data)) {
             CutTest *test = CUT_TEST(list->data);
+            cut_context_set_test(cut_context_get_current(), test);
 
             if (priv->setup)
                 priv->setup();

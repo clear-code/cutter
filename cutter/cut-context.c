@@ -36,7 +36,7 @@
 typedef struct _CutContextPrivate	CutContextPrivate;
 struct _CutContextPrivate
 {
-    guint assertion_count;
+    CutTest *test;
 };
 
 enum
@@ -84,7 +84,7 @@ cut_context_init (CutContext *context)
 {
     CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
 
-    priv->assertion_count = 0;
+    priv->test = NULL;
 }
 
 static void
@@ -102,9 +102,6 @@ set_property (GObject      *object,
     CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(object);
 
     switch (prop_id) {
-      case PROP_ASSERTION_COUNT:
-        priv->assertion_count = g_value_get_uint(value);
-        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
@@ -120,9 +117,6 @@ get_property (GObject    *object,
     CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(object);
 
     switch (prop_id) {
-      case PROP_ASSERTION_COUNT:
-        g_value_set_uint(value, priv->assertion_count);
-        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
@@ -135,22 +129,23 @@ cut_context_new (void)
     return g_object_new(CUT_TYPE_CONTEXT, NULL);
 }
 
-guint
-cut_context_get_assertion_count (CutContext *context)
-{
-    return CUT_CONTEXT_GET_PRIVATE(context)->assertion_count;
-}
-
 void
 cut_context_reset_assertion_count (CutContext *context)
 {
-    CUT_CONTEXT_GET_PRIVATE(context)->assertion_count = 0;
 }
 
 void
 cut_context_increment_assertion_count (CutContext *context)
 {
-    CUT_CONTEXT_GET_PRIVATE(context)->assertion_count++;
+    CutTest *test = CUT_CONTEXT_GET_PRIVATE(context)->test;
+
+    cut_test_increment_assertion_count(test);
+}
+
+void
+cut_context_set_test (CutContext *context, CutTest *test)
+{
+    CUT_CONTEXT_GET_PRIVATE(context)->test = test;
 }
 
 CutContext *
