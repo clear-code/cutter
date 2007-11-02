@@ -45,7 +45,7 @@ teardown (void)
     g_object_unref(test_object);
 }
 
-static void
+void
 test_setup (void)
 {
     setup_flag = FALSE;
@@ -53,7 +53,7 @@ test_setup (void)
     cut_assert(setup_flag);
 }
 
-static void
+void
 test_teardown (void)
 {
     teardown_flag = FALSE;
@@ -61,19 +61,11 @@ test_teardown (void)
     cut_assert(teardown_flag);
 }
 
-static void
+void
 test_test_case_count (void)
 {
     cut_assert_equal_int(2, cut_test_case_get_test_count(test_object));
 }
-
-CutTestEntry cut_tests[] =
-{
-    {test_test_case_count},
-    {test_setup},
-    {test_teardown}
-};
-const gint cut_tests_len = G_N_ELEMENTS(cut_tests);
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
