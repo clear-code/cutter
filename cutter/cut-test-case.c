@@ -202,10 +202,11 @@ real_run (CutTest *test, CutTestError **error)
         if (!list->data)
             continue;
         if (CUT_IS_TEST(list->data)) {
+            CutTest *test = CUT_TEST(list->data);
+
             if (priv->setup)
                 priv->setup();
 
-            CutTest *test = CUT_TEST(list->data);
             cut_test_run(test, error);
             assertion_count = cut_test_get_assertion_count(test);
             if (priv->teardown)

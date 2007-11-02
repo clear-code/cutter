@@ -1,3 +1,7 @@
+2007-11-02  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-test-case.c: used C style.
+
 2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-test-context.[c|h] -> cutter/cut-context.[c|h]: Renamed.
