@@ -196,11 +196,11 @@ cut_context_get_current (void)
 {
     CutContext *current;
 
-    current = g_private_get(private_thread_context);
+    current = g_private_get(cut_context_private);
 
     if (!current) {
         current = cut_context_new();
-        g_private_set(private_thread_context, current);
+        g_private_set(cut_context_private, current);
     }
 
     return current;
