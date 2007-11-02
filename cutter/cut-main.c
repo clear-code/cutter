@@ -54,8 +54,7 @@ main (int argc, char* argv[])
     suite = cut_repository_create_test_suite(repository);
 
     if (suite) {
-        CutTestError *error = NULL;
-        cut_test_run(CUT_TEST(suite), &error);
+        cut_test_run(CUT_TEST(suite));
         g_object_unref(suite);
     }
     g_object_unref(repository);

@@ -1,5 +1,11 @@
 2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test.[c|h], cutter/cut-test-case.c,
+	cutter/cut-test-container.c, cutter/cut-main.c: run method now returns
+	gboolean value.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test.[c|h]: test name is not needed any more.
 	* cutter/cut-loader.c, test/test_cut_assertion.c,
 	test/test_cut_test.c: Follow the above change.

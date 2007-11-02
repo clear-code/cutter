@@ -56,8 +56,7 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 
-static void real_run       (CutTest         *test,
-                            CutTestError   **error);
+static gboolean real_run   (CutTest         *test);
 
 static void
 cut_test_container_class_init (CutTestContainerClass *klass)
@@ -135,14 +134,15 @@ cut_test_container_add_test (CutTestContainer *container, CutTest *test)
     }
 }
 
-static void
-real_run (CutTest *test, CutTestError **error)
+static gboolean
+real_run (CutTest *test)
 {
     GList *list;
     guint assertion_count;
+    gboolean success = TRUE;
     CutTestContainerPrivate *priv;
 
-    g_return_if_fail(CUT_IS_TEST_CONTAINER(test));
+    g_return_val_if_fail(CUT_IS_TEST_CONTAINER(test), FALSE);
 
     priv = CUT_TEST_CONTAINER_GET_PRIVATE(test);
 
@@ -151,12 +151,14 @@ real_run (CutTest *test, CutTestError **error)
             continue;
         if (CUT_IS_TEST(list->data)) {
             CutTest *test = CUT_TEST(list->data);
-            cut_test_run(test, error);
+            success = cut_test_run(test);
             assertion_count = cut_test_get_assertion_count(test);
         } else {
             g_warning("This object is neither test nor test container!");
         }
     }
+
+    return success;
 }
 
 /*

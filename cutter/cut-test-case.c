@@ -62,8 +62,7 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 
-static void real_run       (CutTest         *test,
-                            CutTestError   **error);
+static gboolean real_run   (CutTest         *test);
 
 static void
 cut_test_case_class_init (CutTestCaseClass *klass)
@@ -188,14 +187,15 @@ cut_test_case_add_test (CutTestCase *test_case, CutTest *test)
     }
 }
 
-static void
-real_run (CutTest *test, CutTestError **error)
+static gboolean
+real_run (CutTest *test)
 {
     CutTestCasePrivate *priv;
     GList *list;
     guint assertion_count;
+    gboolean all_success = TRUE;
 
-    g_return_if_fail(CUT_IS_TEST_CASE(test));
+    g_return_val_if_fail(CUT_IS_TEST_CASE(test), FALSE);
 
     priv = CUT_TEST_CASE_GET_PRIVATE(test);
 
@@ -204,16 +204,19 @@ real_run (CutTest *test, CutTestError **error)
             continue;
         if (CUT_IS_TEST(list->data)) {
             CutTest *test = CUT_TEST(list->data);
+            gboolean success;
+
             cut_context_set_test(cut_context_get_current(), test);
 
             if (priv->setup)
                 priv->setup();
 
-            cut_test_run(test, error);
-            if (*error) {
+            success = cut_test_run(test);
+            if (success) {
                 cut_context_output_error_log(cut_context_get_current());
             } else {
                 cut_context_output_normal_log(cut_context_get_current());
+                all_success = FALSE;
             }
             assertion_count = cut_test_get_assertion_count(test);
 
@@ -223,6 +226,8 @@ real_run (CutTest *test, CutTestError **error)
             g_warning("This object is not CutTest object");
         }
     }
+
+    return all_success;
 }
 
 /*

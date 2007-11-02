@@ -69,8 +69,7 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 
-static void real_run       (CutTest         *test,
-                            CutTestError   **error);
+static gboolean real_run   (CutTest         *test);
 
 static void
 cut_test_class_init (CutTestClass *klass)
@@ -210,25 +209,27 @@ cut_test_new (CutTestFunction function)
                         NULL);
 }
 
-static void
-real_run (CutTest *test, CutTestError **error)
+static gboolean
+real_run (CutTest *test)
 {
     CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(test);
 
     if (!priv->test_function)
-        return;
+        return FALSE;
     
     g_signal_emit_by_name(test, "start");
     priv->test_function();
     g_signal_emit_by_name(test, "complete");
+
+    return TRUE;
 }
 
-void
-cut_test_run (CutTest *test, CutTestError **error)
+gboolean
+cut_test_run (CutTest *test)
 {
     CutTestClass *class = CUT_TEST_GET_CLASS(test);
 
-    return class->run(test, error);
+    return class->run(test);
 }
 
 void
