@@ -1,5 +1,10 @@
 2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut.h: New file. declare global context.
+	* cutter/cut-main.c: Create a global context and unreference it.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test-case.[c|h]: Now CutTestCase is a child of CutTest.
 	* cutter/cut-loader.c, test/test_cut_test_case.c: Follow the above
 	change.

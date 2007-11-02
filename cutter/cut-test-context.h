@@ -48,7 +48,7 @@ struct _CutTestContextClass
 
 GType        cut_test_context_get_type  (void) G_GNUC_CONST;
 
-CutTestContext     *cut_test_context_new (void);
+CutTestContext    *cut_test_context_new (void);
 
 G_END_DECLS
 

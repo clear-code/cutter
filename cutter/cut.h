@@ -19,43 +19,19 @@
  *
  */
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif /* HAVE_CONFIG_H */
+#ifndef __CUT_H__
+#define __CUT_H__
 
-#include <stdlib.h>
-#include <glib.h>
+#include "cut-test-context.h"
+#include "cut-test.h"
 
-#include "cut.h"
-#include "cut-test-suite.h"
-#include "cut-repository.h"
+G_BEGIN_DECLS
 
-CutTestContext *g_cut_context = NULL;
+extern CutTestContext *g_cut_context;
 
-int
-main (int argc, char* argv[])
-{
-    CutTestSuite *suite;
-    CutRepository *repository;
+G_END_DECLS
 
-    g_type_init();
-
-    g_cut_context = cut_test_context_new();
-
-    repository = cut_repository_new(argv[1]);
-    suite = cut_repository_create_test_suite(repository);
-
-    if (suite) {
-        CutTestError *error = NULL;
-        cut_test_run(CUT_TEST(suite), &error);
-        g_object_unref(suite);
-    }
-    g_object_unref(repository);
-
-    g_object_unref(g_cut_context);
-
-    exit(0);
-}
+#endif /* __CUT_H__ */
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
