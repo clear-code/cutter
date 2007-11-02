@@ -1,5 +1,7 @@
 2007-11-02  Kouhei Sutou  <kou@cozmixng.org>
 
+	* TODO: added.
+
 	* cutter/cut-main.c, cutter/cut-context.[ch]:
 	private_thread_context -> cut_context_private.
 
