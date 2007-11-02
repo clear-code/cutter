@@ -38,8 +38,6 @@ struct _CutLoaderPrivate
 {
     gchar *so_filename;
     GModule *module;
-    CutTestEntry *tests;
-    guint *tests_len;
 };
 
 enum
@@ -88,8 +86,6 @@ cut_loader_init (CutLoader *loader)
     CutLoaderPrivate *priv = CUT_LOADER_GET_PRIVATE(loader);
 
     priv->so_filename = NULL;
-    priv->tests = NULL;
-    priv->tests_len = NULL;
 }
 
 static void

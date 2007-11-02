@@ -1,5 +1,9 @@
 2007-11-02  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test.h, cutter/cut-loader.c: removed CutTestEntry.
+
+	* test/test_cut_*.c: removed needless test registration.
+
 	* cutter/cut-loader.c: detected test function names that should
 	start with "test_".
 

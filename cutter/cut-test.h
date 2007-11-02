@@ -36,16 +36,10 @@ G_BEGIN_DECLS
 typedef struct _CutTest         CutTest;
 typedef struct _CutTestClass    CutTestClass;
 typedef struct _CutTestError    CutTestError;
-typedef struct _CutTestEntry    CutTestEntry;
 
 typedef void    (*CutTestFunction)     (void);
 typedef void    (*CutSetupFunction)    (void);
 typedef void    (*CutTearDownFunction) (void);
-
-struct _CutTestEntry
-{
-    CutTestFunction function;
-};
 
 struct _CutTestError
 {
