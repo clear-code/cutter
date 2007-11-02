@@ -1,5 +1,8 @@
 2007-11-02  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut.h: included glib.h.
+	* cutter/cut-assertion.h: removed "#include glib.h".
+
 	* test/test_cut_*.c: added prototype declarations.
 
 	* cutter/cut-context.c: removed unused variable.
