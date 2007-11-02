@@ -36,9 +36,9 @@ setup (void)
     test_object = cut_test_case_new(dummy_setup_function,
                                     dummy_teardown_function);
     test = cut_test_new("dummy test", dummy_test_function);
-    cut_test_container_add_test(CUT_TEST_CONTAINER(test_object), test);
+    cut_test_case_add_test(test_object, test);
     test = cut_test_new("dummy test2", dummy_test_function);
-    cut_test_container_add_test(CUT_TEST_CONTAINER(test_object), test);
+    cut_test_case_add_test(test_object, test);
 }
 
 void

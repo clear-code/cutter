@@ -195,7 +195,7 @@ cut_loader_load_test_case (CutLoader *loader)
         if (!t.name)
             continue;
         test = cut_test_new(t.name, t.function);
-        cut_test_container_add_test(CUT_TEST_CONTAINER(test_case), test);
+        cut_test_case_add_test(test_case, test);
     }
 
     return test_case;

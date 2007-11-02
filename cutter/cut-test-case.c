@@ -36,6 +36,8 @@
 typedef struct _CutTestCasePrivate	CutTestCasePrivate;
 struct _CutTestCasePrivate
 {
+    GList *tests;
+
     CutSetupFunction setup;
     CutTearDownFunction teardown;
 };
@@ -47,7 +49,7 @@ enum
     PROP_TEAR_DOWN_FUNCTION
 };
 
-G_DEFINE_TYPE (CutTestCase, cut_test_case, CUT_TYPE_TEST_CONTAINER)
+G_DEFINE_TYPE (CutTestCase, cut_test_case, CUT_TYPE_TEST)
 
 static void dispose        (GObject         *object);
 static void set_property   (GObject         *object,
@@ -98,6 +100,7 @@ cut_test_case_init (CutTestCase *test_case)
 {
     CutTestCasePrivate *priv = CUT_TEST_CASE_GET_PRIVATE(test_case);
 
+    priv->tests = NULL;
     priv->setup = NULL;
     priv->teardown = NULL;
 }
@@ -105,6 +108,14 @@ cut_test_case_init (CutTestCase *test_case)
 static void
 dispose (GObject *object)
 {
+    CutTestCasePrivate *priv = CUT_TEST_CASE_GET_PRIVATE(object);
+
+    if (priv->tests) {
+        g_list_foreach(priv->tests, (GFunc)g_object_unref, NULL);
+        g_list_free(priv->tests);
+        priv->tests = NULL;
+    }
+
     G_OBJECT_CLASS(cut_test_case_parent_class)->dispose(object);
 }
 
@@ -164,22 +175,43 @@ cut_test_case_get_test_count (CutTestCase *test_case)
     return 0;
 }
 
+void
+cut_test_case_add_test (CutTestCase *test_case, CutTest *test)
+{
+    CutTestCasePrivate *priv = CUT_TEST_CASE_GET_PRIVATE(test_case);
+
+    if (CUT_IS_TEST(test)) {
+        priv->tests = g_list_prepend(priv->tests, test);
+    }
+}
+
 static void
 real_run (CutTest *test, CutTestError **error)
 {
     CutTestCasePrivate *priv;
+    GList *list;
+    guint assertion_count;
 
     g_return_if_fail(CUT_IS_TEST_CASE(test));
 
     priv = CUT_TEST_CASE_GET_PRIVATE(test);
 
-    if (priv->setup)
-        priv->setup();
+    for (list = priv->tests; list; list = g_list_next(list)) {
+        if (!list->data)
+            continue;
+        if (CUT_IS_TEST(list->data)) {
+            if (priv->setup)
+                priv->setup();
 
-    CUT_TEST_CLASS(cut_test_case_parent_class)->run(test, error);
-
-    if (priv->teardown)
-        priv->teardown();
+            CutTest *test = CUT_TEST(list->data);
+            cut_test_run(test, error);
+            assertion_count = cut_test_get_assertion_count(test);
+            if (priv->teardown)
+                priv->teardown();
+        } else {
+            g_warning("This object is neither test nor test container!");
+        }
+    }
 }
 
 /*

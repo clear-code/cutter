@@ -24,7 +24,7 @@
 
 #include <glib-object.h>
 
-#include "cut-test-container.h"
+#include "cut-test.h"
 
 G_BEGIN_DECLS
 
@@ -40,18 +40,20 @@ typedef struct _CutTestCaseClass CutTestCaseClass;
 
 struct _CutTestCase
 {
-    CutTestContainer object;
+    CutTest object;
 };
 
 struct _CutTestCaseClass
 {
-    CutTestContainerClass parent_class;
+    CutTestClass parent_class;
 };
 
 GType        cut_test_case_get_type       (void) G_GNUC_CONST;
 
 CutTestCase *cut_test_case_new            (CutSetupFunction setup_funcion,
                                            CutTearDownFunction teardown_function);
+void         cut_test_case_add_test       (CutTestCase *test_case,
+                                           CutTest *test);
 guint        cut_test_case_get_test_count (CutTestCase *test_case);
 
 G_END_DECLS

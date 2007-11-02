@@ -1,5 +1,11 @@
 2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test-case.[c|h]: Now CutTestCase is a child of CutTest.
+	* cutter/cut-loader.c, test/test_cut_test_case.c: Follow the above
+	change.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test-loader.[c|h] -> cutter/cut-loader.[c|h]: Renamed.
 	* cutter/cut-test-repository.[c|h] -> cutter/cut-repository.[c|h]:
 	Renamed.
