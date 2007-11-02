@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef __CUT_ASSERTIONS_H__
-#define __CUT_ASSERTIONS_H__
+#ifndef __CUT_ASSERTION_H__
+#define __CUT_ASSERTION_H__
 
 #include <glib.h>
 #include <string.h>
@@ -59,7 +59,7 @@ if (strcmp(expect, actual))           {                 \
 
 G_END_DECLS
 
-#endif /* __CUT_ASSERTIONS_H__ */
+#endif /* __CUT_ASSERTION_H__ */
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
