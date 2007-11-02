@@ -35,9 +35,9 @@ setup (void)
     CutTest *test;
     test_object = cut_test_case_new(dummy_setup_function,
                                     dummy_teardown_function);
-    test = cut_test_new("dummy test", dummy_test_function);
+    test = cut_test_new(dummy_test_function);
     cut_test_case_add_test(test_object, test);
-    test = cut_test_new("dummy test2", dummy_test_function);
+    test = cut_test_new(dummy_test_function);
     cut_test_case_add_test(test_object, test);
 }
 
@@ -60,7 +60,7 @@ test_test_case_count (void)
 
 CutTestEntry cut_tests[] =
 {
-    {"test case count test", test_test_case_count},
+    {test_test_case_count}
 };
 const gint cut_tests_len = G_N_ELEMENTS(cut_tests);
 
