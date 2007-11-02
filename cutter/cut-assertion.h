@@ -34,7 +34,8 @@ if (expect != actual) {                                 \
             __PRETTY_FUNCTION__, expect, actual,        \
             __FILE__, __LINE__);                        \
 } else {                                                \
-    cut_test_context_increment_assertion_count(g_cut_context);\
+    cut_test_context_increment_assertion_count(         \
+            cut_test_context_get_current());            \
 }
 
 #define cut_assert_equal_double(expect, error, actual)  \
@@ -49,7 +50,8 @@ do {                                                    \
                 expect, error, actual,                  \
                 __FILE__, __LINE__);                    \
     } else {                                            \
-        cut_test_context_increment_assertion_count(g_cut_context);\
+        cut_test_context_increment_assertion_count(     \
+                cut_test_context_get_current());        \
     }                                                   \
 } while(0)
 
@@ -59,7 +61,8 @@ if (strcmp(expect, actual))           {                 \
             __PRETTY_FUNCTION__, expect, actual,        \
             __FILE__, __LINE__);                        \
 } else {                                                \
-    cut_test_context_increment_assertion_count(g_cut_context);\
+    cut_test_context_increment_assertion_count(         \
+            cut_test_context_get_current());            \
 }
 
 G_END_DECLS

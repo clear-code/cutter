@@ -29,6 +29,8 @@
 
 #include "cut-test-context.h"
 
+#include "cut.h"
+
 #define CUT_TEST_CONTEXT_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_CONTEXT, CutTestContextPrivate))
 
 typedef struct _CutTestContextPrivate	CutTestContextPrivate;
@@ -149,6 +151,21 @@ void
 cut_test_context_increment_assertion_count (CutTestContext *context)
 {
     CUT_TEST_CONTEXT_GET_PRIVATE(context)->assertion_count++;
+}
+
+CutTestContext *
+cut_test_context_get_current (void)
+{
+    CutTestContext *current;
+
+    current = g_private_get(private_thread_context);
+
+    if (!current) {
+        current = cut_test_context_new();
+        g_private_set(private_thread_context, current);
+    }
+
+    return current;
 }
 
 /*

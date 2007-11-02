@@ -30,7 +30,13 @@
 #include "cut-test-suite.h"
 #include "cut-repository.h"
 
-CutTestContext *g_cut_context = NULL;
+GPrivate *private_thread_context = NULL;
+
+static void
+private_thread_context_cleanup (gpointer data)
+{
+
+}
 
 int
 main (int argc, char* argv[])
@@ -40,7 +46,9 @@ main (int argc, char* argv[])
 
     g_type_init();
 
-    g_cut_context = cut_test_context_new();
+    g_thread_init(NULL);
+
+    private_thread_context = g_private_new(private_thread_context_cleanup);
 
     repository = cut_repository_new(argv[1]);
     suite = cut_repository_create_test_suite(repository);
@@ -51,8 +59,6 @@ main (int argc, char* argv[])
         g_object_unref(suite);
     }
     g_object_unref(repository);
-
-    g_object_unref(g_cut_context);
 
     exit(0);
 }

@@ -1,5 +1,10 @@
 2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut.h, cuttter/cut-test-context.[ch}, cutter/cut-assertion.h,
+	cutter/cut-test.c, cutter/cut-main.c: Be thread safe.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test-case.c: Rerturn correct number of test cases.
 
 2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>

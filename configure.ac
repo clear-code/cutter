@@ -62,7 +62,7 @@ fi
 dnl **************************************************************
 dnl Check for GLib.
 dnl **************************************************************
-AM_PATH_GLIB_2_0(2.14.0, [], [], [gmodule gobject])
+AM_PATH_GLIB_2_0(2.14.0, [], [], [gmodule gobject gthread])
 
 # Checks for libraries.
 # FIXME: Replace `main' with a function in `-ldl':

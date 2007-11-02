@@ -27,7 +27,7 @@
 
 G_BEGIN_DECLS
 
-extern CutTestContext *g_cut_context;
+extern GPrivate *private_thread_context;
 
 G_END_DECLS
 
