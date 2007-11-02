@@ -1,5 +1,12 @@
 2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test-context.[c|h]: Added
+	cut_test_context_get_assertion_count(),
+	cut_test_context_reset_assertion_count(),
+	cut_test_context_increment_assertion_count().
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut.h: New file. declare global context.
 	* cutter/cut-main.c: Create a global context and unreference it.
 

@@ -50,6 +50,10 @@ GType        cut_test_context_get_type  (void) G_GNUC_CONST;
 
 CutTestContext    *cut_test_context_new (void);
 
+guint cut_test_context_get_assertion_count       (CutTestContext *context);
+void  cut_test_context_reset_assertion_count     (CutTestContext *context);
+void  cut_test_context_increment_assertion_count (CutTestContext *context);
+
 G_END_DECLS
 
 #endif /* __CUT_TEST_CONTEXT_H__ */
