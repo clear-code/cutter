@@ -163,7 +163,6 @@ void
 cut_context_output_error_log (CutContext *context)
 {
     CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
-    CutTest *test = priv->test;
 
     /* output log */
     switch (priv->verborse_level) {
@@ -180,7 +179,6 @@ void
 cut_context_output_normal_log (CutContext *context)
 {
     CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
-    CutTest *test = priv->test;
 
     /* output log */
     switch (priv->verborse_level) {

@@ -1,5 +1,7 @@
 2007-11-02  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-context.c: removed unused variable.
+
 	* cutter/*.h: made cut.h as the header for user.
 	* test/test_cut_*.c: included "cut.h".
 
