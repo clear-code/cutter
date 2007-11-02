@@ -82,6 +82,8 @@ void         cut_test_set_error           (CutTest *test,
                                            const gchar *function_name,
                                            const gchar *filename,
                                            guint line);
+const CutTestError *cut_test_get_error    (CutTest *test);
+
 G_END_DECLS
 
 #endif /* __CUT_TEST_H__ */

@@ -266,6 +266,12 @@ cut_test_get_assertion_count (CutTest *test)
     return CUT_TEST_GET_PRIVATE(test)->assertion_count;
 }
 
+const CutTestError *
+cut_test_get_error (CutTest *test)
+{
+    return CUT_TEST_GET_PRIVATE(test)->error;
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */

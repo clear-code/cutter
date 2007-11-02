@@ -1,5 +1,9 @@
 2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test.[c|h]: Added cut_test_get_error().
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* test/test_cut_test_case.c: Added setup teardown tests.
 
 2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
