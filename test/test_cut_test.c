@@ -9,7 +9,6 @@ dummy_test_function (void)
     cut_assert_equal_int(1, 1);
     cut_assert_equal_int(1, 1);
     cut_assert_equal_int(1, 1);
-    cut_assert_equal_int(1, 1);
 }
 
 void
@@ -27,6 +26,7 @@ teardown (void)
 static void
 test_assertion_count (void)
 {
+    cut_test_run(test_object, NULL);
     cut_assert_equal_int(3, cut_test_get_assertion_count(test_object));
 }
 
