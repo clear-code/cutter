@@ -30,7 +30,7 @@ G_BEGIN_DECLS
 
 #define cut_assert_equal_int(expect, actual)                \
 if (expect != actual) {                                     \
-    g_print("%s:%d:%s\nexpected: <%d>\n but was: <%d>\n",  \
+    g_print("%s:%d: (%s)\nexpected: <%d>\n but was: <%d>\n",  \
             __FILE__, __LINE__, __PRETTY_FUNCTION__,        \
             expect, actual);                                \
 } else {                                                    \
@@ -45,10 +45,10 @@ do {                                                    \
     double _error = error;                              \
     if (!(_expect - _error <= _actual &&                \
           _actual <= _expect + _error)) {               \
-        g_print("%s expected: %g +/- %g but was: %g in %s:%d\n", \
+        g_print("%s:%d: (%s)\nexpected: <%g +/- %g>\n but was: <%g>\n", \
+                __FILE__, __LINE__,                     \
                 __PRETTY_FUNCTION__,                    \
-                expect, error, actual,                  \
-                __FILE__, __LINE__);                    \
+                expect, error, actual);                 \
     } else {                                            \
         cut_context_increment_assertion_count(          \
                 cut_context_get_current());             \
@@ -57,9 +57,9 @@ do {                                                    \
 
 #define cut_assert_equal_string(expect, actual)         \
 if (strcmp(expect, actual))           {                 \
-    g_print("%s expected: %s but was: %s in %s:%d\n",   \
-            __PRETTY_FUNCTION__, expect, actual,        \
-            __FILE__, __LINE__);                        \
+    g_print("%s:%d (%s)\nexpected: <%s> but was: <%s>\n",   \
+            __FILE__, __LINE__,                         \
+            __PRETTY_FUNCTION__, expect, actual);       \
 } else {                                                \
     cut_context_increment_assertion_count(              \
             cut_context_get_current());                 \
