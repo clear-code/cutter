@@ -26,7 +26,7 @@ teardown (void)
 static void
 test_assertion_count (void)
 {
-    cut_test_run(test_object);
+    cut_assert(cut_test_run(test_object));
     cut_assert_equal_int(3, cut_test_get_assertion_count(test_object));
 }
 
