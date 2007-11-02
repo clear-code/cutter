@@ -72,6 +72,8 @@ CutTest     *cut_test_new                 (const gchar *test_name,
 void         cut_test_run                 (CutTest *test, CutTestError **error);
 const gchar *cut_test_get_name            (CutTest *test);
 guint        cut_test_get_assertion_count (CutTest *test);
+void         cut_test_increment_assertion_count
+                                          (CutTest *test);
 
 G_END_DECLS
 

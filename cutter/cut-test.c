@@ -191,15 +191,7 @@ real_run (CutTest *test, CutTestError **error)
     if (!priv->test_function)
         return;
 
-    cut_context_reset_assertion_count(
-        cut_context_get_current());
-
     priv->test_function();
-
-    priv->assertion_count = cut_context_get_assertion_count(
-                                cut_context_get_current());
-    cut_context_reset_assertion_count(
-        cut_context_get_current());
 }
 
 void
@@ -208,6 +200,12 @@ cut_test_run (CutTest *test, CutTestError **error)
     CutTestClass *class = CUT_TEST_GET_CLASS(test);
 
     return class->run(test, error);
+}
+
+void
+cut_test_increment_assertion_count (CutTest *test)
+{
+    CUT_TEST_GET_PRIVATE(test)->assertion_count++;
 }
 
 guint
