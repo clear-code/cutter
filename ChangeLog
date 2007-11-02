@@ -1,5 +1,10 @@
 2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test.c: (real_run): return value depends on error
+	existence.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test-case.c: Error if not success!
 
 2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>

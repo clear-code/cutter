@@ -221,7 +221,7 @@ real_run (CutTest *test)
     priv->test_function();
     g_signal_emit_by_name(test, "complete");
 
-    return TRUE;
+    return priv->error ? FALSE : TRUE;
 }
 
 gboolean
