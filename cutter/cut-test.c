@@ -29,6 +29,8 @@
 
 #include "cut-test.h"
 
+#include "cut.h"
+
 #define CUT_TEST_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST, CutTestPrivate))
 
 typedef struct _CutTestPrivate	CutTestPrivate;
@@ -189,7 +191,12 @@ real_run (CutTest *test, CutTestError **error)
     if (!priv->test_function)
         return;
 
+    cut_test_context_reset_assertion_count(g_cut_context);
+
     priv->test_function();
+
+    priv->assertion_count = cut_test_context_get_assertion_count(g_cut_context);
+    cut_test_context_reset_assertion_count(g_cut_context);
 }
 
 void
