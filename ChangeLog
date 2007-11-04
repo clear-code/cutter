@@ -1,5 +1,10 @@
 2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-context.c: Output test function name if verbose level
+	equals 1.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test.[c|h]: Added cut_test_get_function_name().
 	And plugged memory leak.
 

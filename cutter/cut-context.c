@@ -84,7 +84,7 @@ cut_context_init (CutContext *context)
     CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
 
     priv->test = NULL;
-    priv->verborse_level = 0;
+    priv->verborse_level = 1;
 }
 
 static void
@@ -179,11 +179,14 @@ void
 cut_context_output_normal_log (CutContext *context)
 {
     CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
+    const gchar *test_function_name;
+
+    test_function_name = cut_test_get_function_name(priv->test);
 
     /* output log */
     switch (priv->verborse_level) {
       case 1:
-        g_print(".");
+        g_print("(%s):.\n", test_function_name);
         break;
       default:
         g_print(".");
