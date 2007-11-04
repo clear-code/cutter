@@ -157,6 +157,10 @@ dispose (GObject *object)
 {
     CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(object);
 
+    if (priv->function_name) {
+        g_free(priv->function_name);
+        priv->function_name = NULL;
+    }
     if (priv->error) {
         cut_test_error_free(priv->error);
         priv->error = NULL;
@@ -274,6 +278,12 @@ cut_test_set_error (CutTest *test,
     if (priv->error)
         cut_test_error_free(priv->error);
     priv->error = error;
+}
+
+const gchar *
+cut_test_get_function_name (CutTest *test)
+{
+    return CUT_TEST_GET_PRIVATE(test)->function_name;
 }
 
 guint
