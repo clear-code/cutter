@@ -100,6 +100,6 @@ AC_CONFIG_FILES([Makefile
                  sample/calc/Makefile.test
                  CUnit/Makefile
                  test/Makefile
-		 test/loader_test_case/Makefile])
+		 test/loader_test_dir/Makefile])
 
 AC_OUTPUT
