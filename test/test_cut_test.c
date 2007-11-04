@@ -15,7 +15,7 @@ dummy_test_function (void)
 void
 setup (void)
 {
-    test_object = cut_test_new(dummy_test_function);
+    test_object = cut_test_new("dummy-test", dummy_test_function);
 }
 
 void

@@ -34,6 +34,7 @@
 typedef struct _CutTestPrivate	CutTestPrivate;
 struct _CutTestPrivate
 {
+    gchar *function_name;
     CutTestFunction test_function;
     guint assertion_count;
     CutTestError *error;
@@ -42,6 +43,7 @@ struct _CutTestPrivate
 enum
 {
     PROP_0,
+    PROP_FUNCTION_NAME,
     PROP_TEST_FUNCTION,
     PROP_ASSERTION_COUNT
 };
@@ -82,6 +84,13 @@ cut_test_class_init (CutTestClass *klass)
     gobject_class->get_property = get_property;
 
     klass->run = real_run;
+
+    spec = g_param_spec_string("function-name",
+                               "Fcuntion name",
+                               "The function name of the test",
+                               NULL,
+                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+    g_object_class_install_property(gobject_class, PROP_FUNCTION_NAME, spec);
 
     spec = g_param_spec_pointer("test-function",
                                 "Test Function",
@@ -166,6 +175,11 @@ set_property (GObject      *object,
     CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(object);
 
     switch (prop_id) {
+      case PROP_FUNCTION_NAME:
+        if (priv->function_name)
+            g_free(priv->function_name);
+        priv->function_name = g_value_dup_string(value);
+        break;
       case PROP_TEST_FUNCTION:
         priv->test_function = g_value_get_pointer(value);
         break;
@@ -187,6 +201,9 @@ get_property (GObject    *object,
     CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(object);
 
     switch (prop_id) {
+      case PROP_FUNCTION_NAME:
+        g_value_set_string(value, priv->function_name);
+        break;
       case PROP_TEST_FUNCTION:
         g_value_set_pointer(value, priv->test_function);
         break;
@@ -200,9 +217,10 @@ get_property (GObject    *object,
 }
 
 CutTest *
-cut_test_new (CutTestFunction function)
+cut_test_new (const gchar *function_name, CutTestFunction function)
 {
     return g_object_new(CUT_TYPE_TEST,
+                        "function-name", function_name,
                         "test-function", function,
                         NULL);
 }
