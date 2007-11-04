@@ -1,5 +1,9 @@
 2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* test/test_cut_loader.c: Added CutLoader test.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* test/loader_test_dir/Makefile.am: Use LD_FLAGS. added -avoid-version option.
 
 2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
