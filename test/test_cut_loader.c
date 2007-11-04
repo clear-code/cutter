@@ -25,6 +25,8 @@ test_load_function (void)
     test_case = cut_loader_load_test_case(test_loader);
 
     cut_assert(test_case);
+    cut_assert_equal_int(4, cut_test_case_get_test_count(test_case));
+
     g_object_unref(test_case);
 }
 
