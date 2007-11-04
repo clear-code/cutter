@@ -5,6 +5,9 @@ INCLUDES = $(CUTTER_CFLAGS)	\
 noinst_LTLIBRARIES = 				\
 		libdummy_loader_test.la
 
+LDFLAGS =			\
+	-rpath $(libdir)	\
+	-avoid-version
+
 libdummy_loader_test_la_SOURCES = dummy_test_functions.c
-libdummy_loader_test_la_LDFLAGS = -rpath $(libdir) 
 
