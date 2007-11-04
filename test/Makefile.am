@@ -1,4 +1,4 @@
-SUBDIRS = loader_test_case
+SUBDIRS = loader_test_dir
 
 INCLUDES = $(CUTTER_CFLAGS)	\
 	-I$(top_builddir)	\
