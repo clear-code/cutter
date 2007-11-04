@@ -126,6 +126,14 @@ cut_context_new (void)
 }
 
 void
+cut_context_set_verbose_level (CutContext *context, gint level)
+{
+    CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
+
+    priv->verbose_level = level;
+}
+
+void
 cut_context_reset_assertion_count (CutContext *context)
 {
 }
