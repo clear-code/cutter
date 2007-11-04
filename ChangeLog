@@ -1,3 +1,7 @@
+2007-11-04  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/run-tests.sh: Run cutter2.
+
 2007-11-02  Kouhei Sutou  <kou@cozmixng.org>
 
 	* TODO: added.
