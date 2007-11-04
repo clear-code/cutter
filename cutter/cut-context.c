@@ -41,7 +41,7 @@ struct _CutContextPrivate
 enum
 {
     PROP_0,
-    PROP_ASSERTION_COUNT
+    PROP_VERBOSE_LEVEL
 };
 
 G_DEFINE_TYPE (CutContext, cut_context, G_TYPE_OBJECT)
@@ -68,12 +68,12 @@ cut_context_class_init (CutContextClass *klass)
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
 
-    spec = g_param_spec_uint("assertion-count",
-                             "Assertion Count",
-                             "The number of assertion.",
-                             0, G_MAXUINT32, 0,
-                             G_PARAM_READWRITE);
-    g_object_class_install_property(gobject_class, PROP_ASSERTION_COUNT, spec);
+    spec = g_param_spec_int("verbose-level",
+                            "Verbose Level",
+                            "The number of representing verbosity level",
+                            0, G_MAXINT32, 0,
+                            G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_VERBOSE_LEVEL, spec);
 
     g_type_class_add_private(gobject_class, sizeof(CutContextPrivate));
 }
@@ -99,7 +99,12 @@ set_property (GObject      *object,
               const GValue *value,
               GParamSpec   *pspec)
 {
+    CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(object);
+
     switch (prop_id) {
+      case PROP_VERBOSE_LEVEL:
+        priv->verbose_level = g_value_get_uint(value);
+        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
@@ -112,7 +117,12 @@ get_property (GObject    *object,
               GValue     *value,
               GParamSpec *pspec)
 {
+    CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(object);
+
     switch (prop_id) {
+      case PROP_VERBOSE_LEVEL:
+        g_value_set_uint(value, priv->verbose_level);
+        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
