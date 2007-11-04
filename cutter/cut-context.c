@@ -134,11 +134,6 @@ cut_context_set_verbose_level (CutContext *context, gint level)
 }
 
 void
-cut_context_reset_assertion_count (CutContext *context)
-{
-}
-
-void
 cut_context_increment_assertion_count (CutContext *context)
 {
     CutTest *test = CUT_CONTEXT_GET_PRIVATE(context)->test;
