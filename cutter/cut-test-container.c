@@ -134,6 +134,12 @@ cut_test_container_add_test (CutTestContainer *container, CutTest *test)
     }
 }
 
+const GList *
+cut_test_container_get_children (CutTestContainer *container)
+{
+    return CUT_TEST_CONTAINER_GET_PRIVATE(container)->tests;
+}
+
 static gboolean
 real_run (CutTest *test)
 {
