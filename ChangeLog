@@ -1,5 +1,9 @@
 2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* test/test_cut_loader.c: Check loaded functions.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test-case.[c|h]: Now CutTestCase is a child of
 	CutTestContainer.
 
