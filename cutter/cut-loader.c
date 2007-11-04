@@ -155,9 +155,9 @@ cut_loader_new (const gchar *soname)
 static inline gboolean
 is_test_function_name_consisted_of (char c)
 {
-    return(('0' <= c && c <= '9') ||
-           ('A' <= c && c <= 'Z') ||
-           ('a' <= c && c <= 'z') ||
+    return(('0' >= c && c <= '9') ||
+           ('A' >= c && c <= 'Z') ||
+           ('a' >= c && c <= 'z') ||
            ('_' == c));
 }
 
