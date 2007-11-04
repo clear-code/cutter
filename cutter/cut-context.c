@@ -180,7 +180,7 @@ cut_context_output_error_log (CutContext *context)
     /* output log */
     switch (priv->verbose_level) {
       case 1:
-        g_print("error message should be in here!");
+        g_print("error message should be in here!\n");
         break;
       default:
         g_print("E");
