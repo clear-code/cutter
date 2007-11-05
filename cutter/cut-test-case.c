@@ -209,6 +209,12 @@ cut_test_case_add_test (CutTestCase *test_case, CutTest *test)
     cut_test_container_add_test(CUT_TEST_CONTAINER(test_case), test);
 }
 
+gboolean
+cut_test_case_run_function (CutTestCase *test_case, const gchar *name)
+{
+    return FALSE;
+}
+
 static gboolean
 real_run (CutTest *test)
 {
