@@ -1,5 +1,9 @@
 2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* test/test_cut_test.c: Added get_name test and run test.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* test/test_cut_test_case.c: Added get_name test.
 
 2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
