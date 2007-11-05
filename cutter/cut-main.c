@@ -33,10 +33,12 @@
 GPrivate *cut_context_private = NULL;
 
 static gint verbose_level = 0;
+static gchar *base_dir = NULL;
 
 static GOptionEntry option_entries[] =
 {
-    {"verbose", 'v', 0, G_OPTION_ARG_INT, &verbose_level, "Set verbose level", "L"}
+    {"verbose", 'v', 0, G_OPTION_ARG_INT, &verbose_level, "Set verbose level", "L"},
+    {"base", 'b', 0, G_OPTION_ARG_STRING, &base_dir, "Set base dir of source code", "B"}
 };
 
 static void
@@ -63,6 +65,7 @@ main (int argc, char* argv[])
     cut_context_private = g_private_new(cut_context_private_cleanup);
 
     cut_context_set_verbose_level(cut_context_get_current(), verbose_level);
+    cut_context_set_base_dir(cut_context_get_current(), base_dir);
 
     repository = cut_repository_new(argv[1]);
     suite = cut_repository_create_test_suite(repository);

@@ -1,5 +1,9 @@
 2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-main.c: Added base_dir option.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-context.[c|h]: Added cut_context_set_base_dir().
 
 2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
