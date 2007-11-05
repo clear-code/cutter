@@ -236,6 +236,7 @@ test_g_filename_from_uri (void)
 			         NULL);
       cut_assert_equal_string (from_uri_tests[i].expected_filename, res);
       cut_assert_equal_string (from_uri_tests[i].expected_hostname, hostname);
+      g_free (hostname);
       g_free (res);
     }
 }
@@ -269,6 +270,8 @@ test_g_filename_from_uri_error (void)
       cut_assert (error->domain == G_CONVERT_ERROR);
       cut_assert_equal_int (from_uri_error_tests[i].expected_error, error->code);
       g_error_free (error);
+      g_free (res);
+      g_free (hostname);
     }
 }
 
@@ -290,10 +293,10 @@ test_roundtrip (void)
       
       error = NULL;
       res = g_filename_from_uri (uri, &hostname, &error);
-      cut_assert(!error);
+      cut_assert (!error);
 
-      cut_assert_equal_string(to_uri_tests[i].filename, res);
-      cut_assert_equal_string(to_uri_tests[i].hostname, hostname);
+      cut_assert_equal_string (to_uri_tests[i].filename, res);
+      cut_assert_equal_string (to_uri_tests[i].hostname, hostname);
     }
 }
 
@@ -317,16 +320,16 @@ test_uri_list (void)
 
   uris = g_uri_list_extract_uris (list);
   
-  cut_assert_equal_int(3, g_strv_length(uris));
+  cut_assert_equal_int (3, g_strv_length (uris));
   
   for (j = 0; j < 3; j++)
     {
-      cut_assert_equal_string(expected_uris[j], uris[j]);
+      cut_assert_equal_string (expected_uris[j], uris[j]);
     }
 
   g_strfreev (uris);
 
   uris = g_uri_list_extract_uris ("# just hot air\r\n# more hot air");
-  cut_assert_equal_int(0, g_strv_length(uris));
+  cut_assert_equal_int (0, g_strv_length (uris));
 }
 
