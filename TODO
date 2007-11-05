@@ -1,8 +1,8 @@
-== Assigned to ktou
-
-* None
-
 == Assigned to ikezoe
+
+* Write tests 
+
+== Assigned to ktou
 
 * エラーになるアサーションっぽいのが欲しい。cut_crash()とかそんなの。
   setup()/teardown()の中で異常な状態になったときに呼ぶ。
