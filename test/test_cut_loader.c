@@ -8,7 +8,7 @@ static CutLoader *test_loader;
 void
 setup (void)
 {
-    test_loader = cut_loader_new("loader_test_dir/.libs");
+    test_loader = cut_loader_new("loader_test_dir/.libs/libdummy_loader_test.so");
 }
 
 void
@@ -42,11 +42,12 @@ test_load_function (void)
     gint i;
 
     test_case = cut_loader_load_test_case(test_loader);
-
     cut_assert(test_case);
     cut_assert_equal_int(4, cut_test_case_get_test_count(test_case));
+
     tests = (GList *) cut_test_container_get_children(CUT_TEST_CONTAINER(test_case));
     cut_assert(tests);
+
     tests = g_list_sort(tests, compare_function_name);
     for (list = tests, i = 0; list; list = g_list_next(list), i++) {
         CutTest *test;
