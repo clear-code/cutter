@@ -1,21 +1,20 @@
-#include <cutter/cutter.h>
+#include <cut.h>
 
 #include "calc.h"
 
-CUT_DEFINE_TEST(add_test)
+void test_add_function(void);
+void test_sub_function(void);
+
+void
+test_add_function(void)
 {
-  CUT_ASSERT_EQUAL_INT(3, add(1, 2), "1 + 2");
-  CUT_ASSERT_EQUAL_INT(1, add(3, -2), "3 + -2");
-  CUT_PASS;
+  cut_assert_equal_int(3, add(1, 2));
+  cut_assert_equal_int(1, add(3, -2));
 }
 
-CUT_DEFINE_TEST(sub_test)
+void
+test_sub_function(void)
 {
-  CUT_ASSERT_EQUAL_INT(1, sub(3, 2), "3 - 2");
-  CUT_PASS;
+  cut_assert_equal_int(1, sub(3, 2));
 }
 
-CUT_REGISTER_BEGIN("calc test")
-CUT_REGISTER(add_test, "add test")
-CUT_REGISTER(sub_test, "sub test")
-CUT_REGISTER_END
