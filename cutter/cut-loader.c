@@ -240,7 +240,7 @@ cut_loader_load_test_case (CutLoader *loader)
     for (node = test_names; node; node = g_list_next(node)) {
         gchar *name;
         CutTest *test;
-        CutTestFunction function;
+        CutTestFunction function = NULL;
 
         name = node->data;
         g_module_symbol(priv->module, name, (gpointer)&function);

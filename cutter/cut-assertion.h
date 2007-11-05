@@ -27,10 +27,25 @@
 
 G_BEGIN_DECLS
 
+#define cut_fail(message)                               \
+{                                                       \
+    gchar *error_message;                               \
+    error_message = g_strdup_printf("%s:%d: (%s)\nfailed\n", \
+                              __FILE__,                 \
+                              __LINE__,                 \
+                              __PRETTY_FUNCTION__);     \
+    cut_context_set_error(                              \
+            cut_context_get_current(),                  \
+            error_message, __PRETTY_FUNCTION__,         \
+            __FILE__, __LINE__);                        \
+    g_free(error_message);                              \
+    return;                                             \
+}
+
 #define cut_assert(expect)                              \
 if (!(expect)) {                                        \
     gchar *message;                                     \
-    message = g_strdup_printf("%s:%d: (%s)\nfailed>\n", \
+    message = g_strdup_printf("%s:%d: (%s)\nfailed\n",  \
                               __FILE__,                 \
                               __LINE__,                 \
                               __PRETTY_FUNCTION__);     \
