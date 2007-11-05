@@ -237,9 +237,9 @@ real_run (CutTest *test)
             success = cut_test_run(test);
             if (!success) {
                 cut_context_output_error_log(cut_context_get_current());
+                all_success = FALSE;
             } else {
                 cut_context_output_normal_log(cut_context_get_current());
-                all_success = FALSE;
             }
             assertion_count = cut_test_get_assertion_count(test);
 

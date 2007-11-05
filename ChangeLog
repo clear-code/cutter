@@ -1,6 +1,10 @@
 2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
-	* cutter/cut-container.c: Return reliable gboolean value.
+	* cutter/cut-test-case.c: (real_run): Return FALSE if fails.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-container.c: Return reliable gboolean value.
 
 2007-11-05  Kouhei Sutou  <kou@cozmixng.org>
 
