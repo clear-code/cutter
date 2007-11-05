@@ -2,37 +2,28 @@
 
 = README.ja
 
-$Id: README.ja 20 2004-11-05 12:05:36Z kou $
-
 == 名前
 
 Cutter
 
 == 作者
 
-Kouhei Sutou <kou@cozmixng.org>
+  * Kouhei Sutou <kou@cozmixng.org>
+  * Hiroyuki Ikezoe <poincare@ikezoe.net>
 
 == ライセンス
 
 LGPL
 
-== メーリングリスト
-
-((<COZMIXNG RWiki - 連絡先
-|URL:http://www.cozmixng.org/~rwiki/?cmd=view;name=%CF%A2%CD%ED%C0%E8>))
-を御覧下さい．
-
 == なにこれ？
 
-((<CUnit|URL:http://www.gethos.net/opensource/cunit>))を改造
-したCのためのUnit Testing Frameworkです．CUnitに付属している
-ドキュメントはCUnit/以下にあります．
+CのためのUnit Testing Frameworkです．
 
 テストを共有ライブラリとして作成するのが特長です．
 
 == 依存ライブラリ
 
-特に無し
+  * GLib
 
 === あればよいもの
 
@@ -41,9 +32,9 @@ LGPL
 
 == 入手方法
 
-((<URL:http://www.cozmixng.org/~kou/download/cutter.tar.gz>))
+((<URL:http://sourceforge.net/project/showfiles.php?group_id=208375>))
 
-  % svn co http://www.cozmixng.org/repos/c/cutter/trunk cutter
+  % svn co https://cutter.svn.sourceforge.net/svnroot/cutter/trunk cutter
 
 == インストール
 
@@ -83,64 +74,66 @@ LGPL
 
 === 表明
 
-UT_ASSERT*の一覧です．引数にある(({message}))は表明が失敗した
-場合に表示されます．
+表明の一覧です．引数にある(({message}))は表明が失敗した場合に
+表示されます．
 
---- UT_PASS
-    
-    必ずパスします．
-
---- UT_FAIL(message)
+--- cut_fail(message)
     
     必ず失敗します．
 
---- UT_ASSERT(expect, message)
+--- cut_assert(expected)
     
-    (({expect}))が0以外ならパスします．
+    (({expected}))が0以外ならパスします．
 
---- UT_ASSERT_EQUAL_INT(expect, actual, message)
+--- cut_assert_equal_int(expected, actual)
     
-    (({expect}))と(({actual}))が等しければパスします．どちら
+    (({expected}))と(({actual}))が等しければパスします．どちら
     もint型あるいはその亜種（longとか）である必要があります．
 
---- UT_ASSERT_EQUAL_DOUBLE(expect, error, actual, message)
+--- cut_assert_equal_double(expected, error, actual)
     
-    (({actual}))が(({expect}))-(({error}))から
-    (({expect}))+(({error}))の間であればパスします．どちら
+    (({actual}))が(({expected}))-(({error}))から
+    (({expected}))+(({error}))の間であればパスします．どちら
     もdouble型あるいはその亜種（floatとか）である必要があり
     ます．
 
---- UT_ASSERT_EQUAL_STRING(expect, actual, message)
+--- cut_assert_equal_string(expected, actual, message)
     
-    (({expect}))と(({actual}))が同じ内容の文字列であればパス
+    (({expected}))と(({actual}))が同じ内容の文字列であればパス
     します．
 
 === 雛型
 
 テストの雛型は以下のようになります．
 
-  #include <cutter/cutter.h>
+  #include <cutter.h>
   
   #include "自分のプログラムのヘッダファイル"
   
-  UT_DEF(テスト名1)
-  {
-    UT_ASSERTなんとか;
-    ...
-    UT_PASS; /* ここまで来たらテストにパスしたということ */
-  }
-  
-  UT_DEF(テスト名2)
-  {
-    ...
-  }
-  
-  ...
-  
-  /* テストを登録 */
-  UT_REGISTER_BEGIN("テスト全体の名前") /* ;は付けない */
-  UT_REGISTER(テスト名1, "テストの説明") /* ;は付けない */
-  UT_REGISTER(テスト名2, "テストの説明") /* ;は付けない */
-  ...
-  UT_REGISTER_END
+  void test_function1(void);
+  void test_function2(void);
 
+  void
+  setup (void)
+  {
+    /* 初期化用コード */
+  }
+  
+  void
+  teardown (void)
+  {
+    /* 後片付け用コード */
+  }
+
+  void
+  test_function1(void)
+  {
+    cut_assert_XXX();
+    ...
+  }
+  
+  void
+  test_function1(void)
+  {
+    ...
+  }

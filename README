@@ -2,35 +2,24 @@
 
 = README.en
 
-$Id: README.en 14 2004-09-14 05:23:13Z kou $
-
 == Author
 
-Kouhei Sutou <kou@cozmixng.org>
+  * Kouhei Sutou <kou@cozmixng.org>
+  * Hiroyuki Ikezoe <poincare@ikezoe.net>
 
 == License
 
 LGPL
 
-== Mailing list
-
-Send mail that To field is cozdev@cozmixng.quickml.com , Cc
-field is kou@cozmixng.org and Subject and Body contain
-somthig to
-((<"cozdev@cozmixng.quickml.com"|URL:mailto:cozdev@cozmixng.quickml.com?cc=kou@cozmixng.org&subject=Join!>)).
-
-Note that this mailing list's main language is Japanese. But
-English mail is welcome too.
-
 == What's this?
 
-Cutter is Unit Testing Framework for C. 
+Cutter is an Unit Testing Framework for C.
 
 The feature of Cutter is to making test as shared library.
 
 == Dependency libraries
 
-None.
+  * GLib
 
 === Suggested programs
 
@@ -40,9 +29,9 @@ None.
 
 == Get
 
-((<URL:http://www.cozmixng.org/~kou/download/cutter.tar.gz>))
+((<URL:http://sourceforge.net/project/showfiles.php?group_id=208375>))
 
-  % svn co http://www.cozmixng.org/repos/c/cutter/trunk cutter
+  % svn co https://cutter.svn.sourceforge.net/svnroot/cutter/trunk cutter
 
 == Install
 
@@ -61,9 +50,9 @@ None.
    It specifies verbose level. LEVEL is silent (s), normal (n),
    progress (p) or verbose (v). Output is more verbosely in
    the back.
-   
+
 : -bBASE, --base=BASE
-   
+
    Cutter adds BASE before file name when test fails. This
    is for tolls (like Emacs) which have function jumping to
    error line.
@@ -86,36 +75,36 @@ This is the list of assertion functions. (({message})) in the
 arguments is displayed when assertion fails.
 
 --- cut_fail(message)
-    
+
     It always fails.
 
---- cut_assert(expect)
-    
-    It passes when (({expect})) is not 0.
+--- cut_assert(expected)
 
---- cut_assert_equal_int(expect, actual)
-    
-    It passes when (({expect})) equals (({actual})). They
+    It passes when (({expected})) is not 0.
+
+--- cut_assert_equal_int(expected, actual)
+
+    It passes when (({expected})) equals (({actual})). They
     must be int type or variant of int (like long).
 
---- cut_assert_equal_double(expect, actual)
-    
-    It passes when (({expect})) equals (({actual})). They
+--- cut_assert_equal_double(expected, actual)
+
+    It passes when (({expected})) equals (({actual})). They
     must be float type or variant of double.
 
---- cut_assert_equal_string(expect, actual)
-    
-    It passes when (({expect})) and (({actual})) are same
+--- cut_assert_equal_string(expected, actual)
+
+    It passes when (({expected})) and (({actual})) are same
     content string.
 
 === Template
 
 The following is template of test.
 
-  #include <cut.h>
+  #include <cutter.h>
   
   #include "HEADER_FILE_OF_YOUR_PROGRAM"
- 
+  
   void test_function1(void);
   void test_function2(void);
 
