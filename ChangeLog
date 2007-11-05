@@ -1,3 +1,7 @@
+2007-11-05  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-main.c (option_entries): NULL terminated.
+
 2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* Remove old cutter files.
