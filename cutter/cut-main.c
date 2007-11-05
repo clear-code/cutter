@@ -38,7 +38,7 @@ static gchar *base_dir = NULL;
 static GOptionEntry option_entries[] =
 {
     {"verbose", 'v', 0, G_OPTION_ARG_INT, &verbose_level, "Set verbose level", "L"},
-    {"base", 'b', 0, G_OPTION_ARG_STRING, &base_dir, "Set base dir of source code", "B"}
+    {"base", 'b', 0, G_OPTION_ARG_STRING, &base_dir, "Set base dirirectory of source code", "B"}
 };
 
 static void
