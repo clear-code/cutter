@@ -1,5 +1,9 @@
 2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-context.c: Output error message.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* test/loader_test_dir/dummy_test_functions.c: gboolean -> int.
 
 2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>

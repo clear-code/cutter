@@ -176,11 +176,14 @@ void
 cut_context_output_error_log (CutContext *context)
 {
     CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
+    const CutTestError *error;
+
+    error = cut_test_get_error(priv->test);
 
     /* output log */
     switch (priv->verbose_level) {
       case 1:
-        g_print("error message should be in here!\n");
+        g_print("%s", error->message);
         break;
       default:
         g_print("E");
