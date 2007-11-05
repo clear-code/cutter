@@ -29,31 +29,19 @@ G_BEGIN_DECLS
 
 #define cut_fail(message)                               \
 {                                                       \
-    gchar *error_message;                               \
-    error_message = g_strdup_printf("%s:%d: (%s)\nfailed\n", \
-                              __FILE__,                 \
-                              __LINE__,                 \
-                              __PRETTY_FUNCTION__);     \
     cut_context_set_error(                              \
             cut_context_get_current(),                  \
-            error_message, __PRETTY_FUNCTION__,         \
+            "failed", __PRETTY_FUNCTION__,              \
             __FILE__, __LINE__);                        \
-    g_free(error_message);                              \
     return;                                             \
 }
 
 #define cut_assert(expect)                              \
 if (!(expect)) {                                        \
-    gchar *message;                                     \
-    message = g_strdup_printf("%s:%d: (%s)\nfailed\n",  \
-                              __FILE__,                 \
-                              __LINE__,                 \
-                              __PRETTY_FUNCTION__);     \
     cut_context_set_error(                              \
             cut_context_get_current(),                  \
-            message, __PRETTY_FUNCTION__,               \
+            "failed", __PRETTY_FUNCTION__,              \
             __FILE__, __LINE__);                        \
-    g_free(message);                                    \
     return;                                             \
 } else {                                                \
     cut_context_increment_assertion_count(              \
@@ -64,8 +52,7 @@ if (!(expect)) {                                        \
 if (expect != actual) {                                     \
     gchar *message;                                         \
     message = g_strdup_printf(                              \
-            "%s:%d: (%s)\nexpected: <%d>\n but was: <%d>\n",\
-            __FILE__, __LINE__, __PRETTY_FUNCTION__,        \
+            "expected: <%d>\n but was: <%d>\n",             \
             expect, actual);                                \
     cut_context_set_error(                                  \
             cut_context_get_current(),                      \
@@ -87,8 +74,7 @@ do {                                                    \
           _actual <= _expect + _error)) {               \
         gchar *message;                                 \
         message = g_strdup_printf(                      \
-            "%s:%d: (%s)\nexpected: <%g +/- %g>\n but was: <%g>\n",\
-            __FILE__, __LINE__, __PRETTY_FUNCTION__,    \
+            "expected: <%g +/- %g>\n but was: <%g>\n",  \
             expect, error, actual);                     \
         cut_context_set_error(                          \
             cut_context_get_current(),                  \
@@ -106,8 +92,7 @@ do {                                                    \
 if (strcmp(expect, actual))           {                 \
     gchar *message;                                         \
     message = g_strdup_printf(                              \
-            "%s:%d: (%s)\nexpected: <%s>\n but was: <%s>\n",\
-            __FILE__, __LINE__, __PRETTY_FUNCTION__,        \
+            "expected: <%s>\n but was: <%s>\n",             \
             expect, actual);                                \
     cut_context_set_error(                                  \
             cut_context_get_current(),                      \

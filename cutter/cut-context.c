@@ -226,7 +226,10 @@ cut_context_output_error_log (CutContext *context)
     /* output log */
     switch (priv->verbose_level) {
       case 1:
-        g_print("%s", error->message);
+        g_print("%s:%d: (%s)\n%s\n", error->filename,
+                                     error->line,
+                                     error->function_name,
+                                     error->message);
         break;
       default:
         if (priv->use_color)

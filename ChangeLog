@@ -1,5 +1,11 @@
 2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-assertion.h: Remove filename, line number and function
+	name from rrror message.
+	* cutter/cut-context.c: Make error message.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-main.c: Set color option.
 	* cutter/cut-context.c: Output "F" with red color.
 
