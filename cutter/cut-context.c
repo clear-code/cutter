@@ -32,6 +32,9 @@
 
 #define CUT_CONTEXT_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_CONTEXT, CutContextPrivate))
 
+#define RED_COLOR "\033[01;31m"
+#define NORMAL_COLOR "\033[00m"
+
 typedef struct _CutContextPrivate	CutContextPrivate;
 struct _CutContextPrivate
 {
@@ -226,7 +229,10 @@ cut_context_output_error_log (CutContext *context)
         g_print("%s", error->message);
         break;
       default:
-        g_print("F");
+        if (priv->use_color)
+            g_print(RED_COLOR"F"NORMAL_COLOR);
+        else
+            g_print("F");
         break;
     }
 }

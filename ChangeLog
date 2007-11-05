@@ -1,5 +1,10 @@
 2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-main.c: Set color option.
+	* cutter/cut-context.c: Output "F" with red color.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-context.[c|h]: Added cut_context_set_use_color().
 	* cutter/cut-main.c: Added color option.
 

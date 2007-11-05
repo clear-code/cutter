@@ -68,6 +68,7 @@ main (int argc, char* argv[])
 
     cut_context_set_verbose_level(cut_context_get_current(), verbose_level);
     cut_context_set_base_dir(cut_context_get_current(), base_dir);
+    cut_context_set_use_color(cut_context_get_current(), use_color);
 
     repository = cut_repository_new(argv[1]);
     suite = cut_repository_create_test_suite(repository);
