@@ -83,7 +83,7 @@ test_teardown (void)
 void
 test_test_case_count (void)
 {
-    cut_assert_equal_int(2, cut_test_case_get_test_count(test_object));
+    cut_assert_equal_int(3, cut_test_case_get_test_count(test_object));
 }
 
 void
