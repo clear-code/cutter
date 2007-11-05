@@ -1,3 +1,7 @@
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-container.c: Return reliable gboolean value.
+
 2007-11-05  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-main.c (option_entries): NULL terminated.

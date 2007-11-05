@@ -144,8 +144,7 @@ static gboolean
 real_run (CutTest *test)
 {
     GList *list;
-    guint assertion_count;
-    gboolean success = TRUE;
+    gboolean all_success = TRUE;
     CutTestContainerPrivate *priv;
 
     g_return_val_if_fail(CUT_IS_TEST_CONTAINER(test), FALSE);
@@ -156,15 +155,17 @@ real_run (CutTest *test)
         if (!list->data)
             continue;
         if (CUT_IS_TEST(list->data)) {
+            gboolean success;
             CutTest *test = CUT_TEST(list->data);
             success = cut_test_run(test);
-            assertion_count = cut_test_get_assertion_count(test);
+            if (!success)
+                all_success = FALSE;
         } else {
             g_warning("This object is neither test nor test container!");
         }
     }
 
-    return success;
+    return all_success;
 }
 
 /*
