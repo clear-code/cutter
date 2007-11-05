@@ -34,11 +34,13 @@ GPrivate *cut_context_private = NULL;
 
 static gint verbose_level = 0;
 static gchar *base_dir = NULL;
+static gboolean use_color = FALSE;
 
 static GOptionEntry option_entries[] =
 {
     {"verbose", 'v', 0, G_OPTION_ARG_INT, &verbose_level, "Set verbose level", "L"},
-    {"base", 'b', 0, G_OPTION_ARG_STRING, &base_dir, "Set base dirirectory of source code", "B"}
+    {"base", 'b', 0, G_OPTION_ARG_STRING, &base_dir, "Set base dirirectory of source code", "B"},
+    {"color", 'c', 0, G_OPTION_ARG_NONE, &use_color, "Output log with colors", NULL}
 };
 
 static void

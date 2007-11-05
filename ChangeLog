@@ -1,5 +1,10 @@
 2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-context.[c|h]: Added cut_context_set_use_color().
+	* cutter/cut-main.c: Added color option.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-context-private.h: Added. Declare get_test() and
 	set_test() method.
 	* cutter/cut-test-case.c, test/test_cut_test.c,

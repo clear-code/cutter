@@ -25,6 +25,7 @@ cutter2_SOURCES =			\
 		cut-assertion.h		\
 		cut-test.h		\
 		cut-test.c		\
+		cut-context-private.h	\
 		cut-context.h		\
 		cut-context.c		\
 		cut-test-container.h	\

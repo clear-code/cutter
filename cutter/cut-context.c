@@ -37,6 +37,7 @@ struct _CutContextPrivate
 {
     CutTest *test;
     gint verbose_level;
+    gboolean use_color;
     gchar *base_dir;
 };
 
@@ -87,6 +88,7 @@ cut_context_init (CutContext *context)
 
     priv->test = NULL;
     priv->verbose_level = 0;
+    priv->use_color = FALSE;
 }
 
 static void
@@ -165,6 +167,14 @@ cut_context_set_base_dir (CutContext *context, const gchar *base_dir)
     if (base_dir) {
         priv->base_dir = g_strdup(base_dir);
     }
+}
+
+void
+cut_context_set_use_color (CutContext *context, gboolean use_color)
+{
+    CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
+
+    priv->use_color = use_color;
 }
 
 void
