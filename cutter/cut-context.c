@@ -180,6 +180,12 @@ cut_context_set_test (CutContext *context, CutTest *test)
     CUT_CONTEXT_GET_PRIVATE(context)->test = test;
 }
 
+CutTest *
+cut_context_get_current_test (CutContext *context)
+{
+    return CUT_CONTEXT_GET_PRIVATE(context)->test;
+}
+
 void
 cut_context_set_error (CutContext *context,
                        const gchar *error_message,
