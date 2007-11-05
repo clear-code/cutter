@@ -5,6 +5,7 @@ void test_equal_int(void);
 void test_equal_string(void);
 void test_equal_double(void);
 void test_fail(void);
+void test_pending(void);
 
 static void
 dummy_fail_test_function (void)
@@ -32,6 +33,12 @@ test_equal_double (void)
 {
     cut_assert_equal_double(1.0, 0.1, 1.0);
     cut_assert_equal_double(1.0, 0.01, 1.01);
+}
+
+void
+test_pending (void)
+{
+    cut_pending("This test has not been implemented yet.");
 }
 
 void

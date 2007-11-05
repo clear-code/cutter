@@ -1,3 +1,7 @@
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test_assertion.c: Added cut_pending() test.
+
 2007-11-05  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/, test/, sample/: cut.h -> cutter.h.
