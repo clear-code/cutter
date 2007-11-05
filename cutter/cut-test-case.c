@@ -209,10 +209,49 @@ cut_test_case_add_test (CutTestCase *test_case, CutTest *test)
     cut_test_container_add_test(CUT_TEST_CONTAINER(test_case), test);
 }
 
+static gint
+compare_function_name (gconstpointer a, gconstpointer b)
+{
+    g_return_val_if_fail(CUT_IS_TEST(a), -1);
+
+    return strcmp(cut_test_get_function_name(CUT_TEST(a)), (gchar *) b);
+}
+
 gboolean
 cut_test_case_run_function (CutTestCase *test_case, const gchar *name)
 {
-    return FALSE;
+    CutTestCasePrivate *priv;
+    CutTest *test;
+    GList *list, *tests;
+    gboolean success;
+
+    g_return_val_if_fail(CUT_IS_TEST_CASE(test_case), FALSE);
+
+    priv = CUT_TEST_CASE_GET_PRIVATE(test_case);
+    tests = (GList*) cut_test_container_get_children(CUT_TEST_CONTAINER(test_case));
+
+    list = g_list_find_custom(tests, name, (GCompareFunc) compare_function_name);
+
+    if (!list)
+        return FALSE;
+
+    test = CUT_TEST(list->data);
+    cut_context_set_test(cut_context_get_current(), test);
+
+    if (priv->setup)
+        priv->setup();
+
+    success = cut_test_run(test);
+    if (!success) {
+        cut_context_output_error_log(cut_context_get_current());
+    } else {
+        cut_context_output_normal_log(cut_context_get_current());
+    }
+
+    if (priv->teardown)
+        priv->teardown();
+
+    return success;
 }
 
 static gboolean

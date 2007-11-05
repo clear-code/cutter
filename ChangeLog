@@ -1,3 +1,7 @@
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-case.c: Implement cut_test_case_run_function().
+
 2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-assertion.h: Added cut_pending().
