@@ -1,4 +1,5 @@
 #include "cut.h"
+#include "cut-test.h"
 
 void test_assertion_count(void);
 
