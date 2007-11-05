@@ -1,5 +1,9 @@
 2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* test/test_cut_test_suite.c: Added.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* test/test_cut_test_case.c: Added cut_test_case_run_function() test.
 
 2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
