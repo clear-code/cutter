@@ -53,6 +53,7 @@ cut_context_private_cleanup (gpointer data)
 int
 main (int argc, char* argv[])
 {
+    gboolean success = TRUE;
     GOptionContext *option_context;
     CutTestSuite *suite;
     CutRepository *repository;
@@ -75,12 +76,12 @@ main (int argc, char* argv[])
     suite = cut_repository_create_test_suite(repository);
 
     if (suite) {
-        cut_test_run(CUT_TEST(suite));
+        success = cut_test_run(CUT_TEST(suite));
         g_object_unref(suite);
     }
     g_object_unref(repository);
 
-    exit(0);
+    exit(success ? 0 : 1);
 }
 
 /*
