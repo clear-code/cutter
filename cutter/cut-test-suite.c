@@ -30,6 +30,7 @@
 #include "cut-test-suite.h"
 
 #include "cut-test.h"
+#include "cut-test-case.h"
 
 #define CUT_TEST_SUITE_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_SUITE, CutTestSuitePrivate))
 
@@ -109,6 +110,34 @@ CutTestSuite *
 cut_test_suite_new (void)
 {
     return g_object_new(CUT_TYPE_TEST_SUITE, NULL);
+}
+
+static gint
+compare_test_case_name (gconstpointer a, gconstpointer b)
+{
+    g_return_val_if_fail(CUT_IS_TEST_CASE(a), -1);
+
+    return strcmp(cut_test_case_get_name(CUT_TEST_CASE(a)), (gchar *) b);
+}
+
+gboolean
+cut_test_suite_run_test_case (CutTestSuite *suite, const gchar *name)
+{
+    CutTestCase *test_case;
+    GList *list, *test_cases;
+
+    g_return_val_if_fail(CUT_IS_TEST_SUITE(suite), FALSE);
+
+    test_cases = (GList*) cut_test_container_get_children(CUT_TEST_CONTAINER(suite));
+
+    list = g_list_find_custom(test_cases, name, (GCompareFunc) compare_test_case_name);
+
+    if (!list)
+        return FALSE;
+
+    test_case = CUT_TEST_CASE(list->data);
+
+    return cut_test_run(CUT_TEST(test_case));
 }
 
 /*

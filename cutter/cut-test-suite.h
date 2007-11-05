@@ -48,9 +48,12 @@ struct _CutTestSuiteClass
     CutTestContainerClass parent_class;
 };
 
-GType           cut_test_suite_get_type  (void) G_GNUC_CONST;
+GType           cut_test_suite_get_type      (void) G_GNUC_CONST;
 
-CutTestSuite    *cut_test_suite_new       (void);
+CutTestSuite   *cut_test_suite_new           (void);
+gboolean        cut_test_suite_run_test_case (CutTestSuite *suite,
+                                              const gchar *name);
+
 
 G_END_DECLS
 
