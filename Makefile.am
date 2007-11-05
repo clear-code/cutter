@@ -1,4 +1,4 @@
-SUBDIRS = cutter sample test CUnit
+SUBDIRS = cutter sample test
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = cutter.pc

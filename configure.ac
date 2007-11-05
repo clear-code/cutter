@@ -6,7 +6,7 @@ AC_PREREQ(2.59)
 AC_INIT(cutter, 0.0.2, kou@cozmixng.org)
 AC_CONFIG_AUX_DIR([config])
 
-AC_CONFIG_SRCDIR([cutter/main.c])
+AC_CONFIG_SRCDIR([cutter/cut-main.c])
 AM_CONFIG_HEADER([cutter/config.h])
 
 AM_INIT_AUTOMAKE($PACKAGE_NAME, $PACKAGE_VERSION)
@@ -98,7 +98,6 @@ AC_CONFIG_FILES([Makefile
 		 cutter/Makefile
                  sample/Makefile
                  sample/calc/Makefile.test
-                 CUnit/Makefile
                  test/Makefile
 		 test/loader_test_dir/Makefile])
 
