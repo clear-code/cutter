@@ -6,34 +6,60 @@
 void test_run_test_case (void);
 
 static CutTestSuite *test_object;
-static CutLoader *loader1, *loader2;
+static CutLoader *loader;
+
+static gboolean run_dummy_run_test_function_flag = FALSE;
+static gboolean run_dummy_test_function_flag = FALSE;
+
+static void
+dummy_test_function (void)
+{
+    cut_assert_equal_int(1, 1);
+    cut_assert_equal_int(1, 1);
+    cut_assert_equal_int(1, 1);
+    cut_assert_equal_int(1, 1);
+    run_dummy_test_function_flag = TRUE;
+}
+
+static void
+dummy_run_test_function (void)
+{
+    run_dummy_run_test_function_flag = TRUE;
+}
 
 void
 setup (void)
 {
     CutTestCase *test_case;
+    CutTest *test;
     test_object = cut_test_suite_new();
 
-    loader1 = cut_loader_new("loader_test_dir/.libs/libdummy_loader_test.so");
-    loader2 = cut_loader_new("loader_test_dir/.libs/libdummy_loader_test2.so");
-    test_case = cut_loader_load_test_case(loader1);
+    loader = cut_loader_new("loader_test_dir/.libs/libdummy_loader_test.so");
+    test_case = cut_loader_load_test_case(loader);
     cut_test_container_add_test(CUT_TEST_CONTAINER(test_object), CUT_TEST(test_case));
-    test_case = cut_loader_load_test_case(loader2);
+
+    test_case = cut_test_case_new("dummy_test_case", NULL, NULL);
+    test = cut_test_new("dummy test 1", dummy_test_function);
+    cut_test_case_add_test(test_case, test);
+    test = cut_test_new("run_test_function", dummy_run_test_function);
+    cut_test_case_add_test(test_case, test);
+
     cut_test_container_add_test(CUT_TEST_CONTAINER(test_object), CUT_TEST(test_case));
 }
 
 void
 teardown (void)
 {
-    g_object_unref(loader1);
-    g_object_unref(loader2);
+    g_object_unref(loader);
     g_object_unref(test_object);
 }
 
 void
 test_run_test_case (void)
 {
-    cut_test_suite_run_test_case (test_object, "dummy_loader_test2");
+    cut_assert(cut_test_suite_run_test_case(test_object, "dummy_test_case"));
+    cut_assert(run_dummy_test_function_flag);
+    cut_assert(run_dummy_test_function_flag);
 }
 
 /*
