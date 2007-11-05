@@ -36,6 +36,7 @@ struct _CutContextPrivate
 {
     CutTest *test;
     gint verbose_level;
+    gchar *base_dir;
 };
 
 enum
@@ -84,12 +85,19 @@ cut_context_init (CutContext *context)
     CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
 
     priv->test = NULL;
-    priv->verbose_level = 1;
+    priv->verbose_level = 0;
 }
 
 static void
 dispose (GObject *object)
 {
+    CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(object);
+
+    if (priv->base_dir) {
+        g_free(priv->base_dir);
+        priv->base_dir = NULL;
+    }
+
     G_OBJECT_CLASS(cut_context_parent_class)->dispose(object);
 }
 
@@ -141,6 +149,21 @@ cut_context_set_verbose_level (CutContext *context, gint level)
     CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
 
     priv->verbose_level = level;
+}
+
+void
+cut_context_set_base_dir (CutContext *context, const gchar *base_dir)
+{
+    CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
+
+    if (priv->base_dir) {
+        g_free(priv->base_dir);
+        priv->base_dir = NULL;
+    }
+
+    if (base_dir) {
+        priv->base_dir = g_strdup(base_dir);
+    }
 }
 
 void
