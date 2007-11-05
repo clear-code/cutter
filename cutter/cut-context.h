@@ -24,8 +24,6 @@
 
 #include <glib-object.h>
 
-#include "cut-test.h"
-
 G_BEGIN_DECLS
 
 #define CUT_TYPE_CONTEXT            (cut_context_get_type ())
