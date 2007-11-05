@@ -1,5 +1,9 @@
 2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* Remove old cutter files.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-context.c: verbose level 2.
 
 2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>

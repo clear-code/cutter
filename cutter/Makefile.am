@@ -4,24 +4,11 @@ INCLUDES = $(GLIB_CFLAGS)	\
 
 EXTRA_DIST = config.h.in
 
-pkginclude_HEADERS = cutter.h assersions.h
+pkginclude_HEADERS = cut-assertion.h cut.h
 
-bin_PROGRAMS = cutter cutter2
+bin_PROGRAMS = cutter
 
 cutter_SOURCES =			\
-		compile.c compile.h	\
-		config.h 		\
-		info.c info.h 		\
-		load.c load.h 		\
-		run.c run.h 		\
-		show.c show.h 		\
-		world.c world.h 	\
-		cutter.h		\
-		main.c
-cutter_LDADD =				\
-	$(GLIB_LIBS)
-
-cutter2_SOURCES =			\
 		cut-assertion.h		\
 		cut-test.h		\
 		cut-test.c		\
@@ -39,5 +26,5 @@ cutter2_SOURCES =			\
 		cut-repository.h	\
 		cut-repository.c	\
 		cut-main.c
-cutter2_LDADD =				\
+cutter_LDADD =				\
 	$(GLIB_LIBS)

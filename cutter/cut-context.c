@@ -230,8 +230,8 @@ cut_context_output_error_log (CutContext *context)
     switch (priv->verbose_level) {
       case 1:
         g_print("%s:%d: (%s):", error->filename,
-                                 error->line,
-                                 error->function_name);
+                                error->line,
+                                error->function_name);
         if (priv->use_color)
             g_print(RED_COLOR"F"NORMAL_COLOR"\n");
         else
