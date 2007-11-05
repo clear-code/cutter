@@ -1,5 +1,10 @@
 2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* test/test-cut-test.h: Restore original test after running dummy
+	test.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* test/test-cut-assrtion.h: Added a test for cut_fail().
 
 2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>

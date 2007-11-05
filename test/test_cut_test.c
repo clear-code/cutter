@@ -27,8 +27,14 @@ teardown (void)
 void
 test_assertion_count (void)
 {
+    CutTest *original_test;
+    gboolean ret;
+
+    original_test = cut_context_get_current_test(cut_context_get_current());
     cut_context_set_test(cut_context_get_current(), test_object);
-    cut_assert(cut_test_run(test_object));
+    ret = cut_test_run(test_object);
+    cut_context_set_test(cut_context_get_current(), original_test);
+    cut_assert(ret);
     cut_assert_equal_int(3, cut_test_get_assertion_count(test_object));
 }
 
