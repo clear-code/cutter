@@ -1,5 +1,10 @@
 2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* test/loader_test_dir/dummy_test_functions.c: Remove type check
+	functions. CutLoader now cannot check value type.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* test/test_cut_loader.c: Load so file.
 
 2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
