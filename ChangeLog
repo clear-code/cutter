@@ -1,5 +1,9 @@
 2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* sample/glib/test_glib_uri.c: Added.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-assertion.h, cutter/cut-context.h: Moved
 	cut_context_get_current(), cut_context_set_error() and
 	cut_context_increment_assertion_count().

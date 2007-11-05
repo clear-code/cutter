@@ -1,3 +1,5 @@
+SUBDIRS = glib
+
 dist_pkgdata_DATA = calc/Makefile.test
 
 EXTRA_DIST = calc

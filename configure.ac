@@ -98,6 +98,7 @@ AC_CONFIG_FILES([Makefile
 		 cutter/Makefile
                  sample/Makefile
                  sample/calc/Makefile.test
+		 sample/glib/Makefile
                  test/Makefile
 		 test/loader_test_dir/Makefile])
 
