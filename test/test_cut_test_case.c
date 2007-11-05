@@ -36,7 +36,8 @@ void
 setup (void)
 {
     CutTest *test;
-    test_object = cut_test_case_new(dummy_setup_function,
+    test_object = cut_test_case_new("dummy test case",
+                                    dummy_setup_function,
                                     dummy_teardown_function);
     test = cut_test_new("dummy test 1", dummy_test_function);
     cut_test_case_add_test(test_object, test);

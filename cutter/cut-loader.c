@@ -236,7 +236,7 @@ cut_loader_load_test_case (CutLoader *loader)
                     "teardown",
                     (gpointer)&teardown_function);
 
-    test_case = cut_test_case_new(setup_function, teardown_function);
+    test_case = cut_test_case_new(priv->so_filename, setup_function, teardown_function);
     for (node = test_names; node; node = g_list_next(node)) {
         gchar *name;
         CutTest *test;

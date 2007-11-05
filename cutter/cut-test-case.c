@@ -38,6 +38,7 @@
 typedef struct _CutTestCasePrivate	CutTestCasePrivate;
 struct _CutTestCasePrivate
 {
+    gchar *name;
     CutSetupFunction setup;
     CutTearDownFunction teardown;
 };
@@ -45,6 +46,7 @@ struct _CutTestCasePrivate
 enum
 {
     PROP_0,
+    PROP_NAME,
     PROP_SETUP_FUNCTION,
     PROP_TEAR_DOWN_FUNCTION
 };
@@ -79,6 +81,13 @@ cut_test_case_class_init (CutTestCaseClass *klass)
 
     test_class->run = real_run;
 
+    spec = g_param_spec_string("name",
+                               "name",
+                               "The name of the test case",
+                               NULL,
+                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+    g_object_class_install_property(gobject_class, PROP_NAME, spec);
+
     spec = g_param_spec_pointer("setup-function",
                                 "Setup Function",
                                 "The function for setup",
@@ -101,11 +110,19 @@ cut_test_case_init (CutTestCase *test_case)
 
     priv->setup = NULL;
     priv->teardown = NULL;
+    priv->name = NULL;
 }
 
 static void
 dispose (GObject *object)
 {
+    CutTestCasePrivate *priv = CUT_TEST_CASE_GET_PRIVATE(object);
+
+    if (priv->name) {
+        g_free(priv->name);
+        priv->name = NULL;
+    }
+
     G_OBJECT_CLASS(cut_test_case_parent_class)->dispose(object);
 }
 
@@ -118,6 +135,11 @@ set_property (GObject      *object,
     CutTestCasePrivate *priv = CUT_TEST_CASE_GET_PRIVATE(object);
 
     switch (prop_id) {
+      case PROP_NAME:
+        if (priv->name)
+            g_free(priv->name);
+        priv->name = g_value_dup_string(value);
+        break;
       case PROP_SETUP_FUNCTION:
         priv->setup = g_value_get_pointer(value);
         break;
@@ -139,6 +161,9 @@ get_property (GObject    *object,
     CutTestCasePrivate *priv = CUT_TEST_CASE_GET_PRIVATE(object);
 
     switch (prop_id) {
+      case PROP_NAME:
+        g_value_set_string(value, priv->name);
+        break;
       case PROP_SETUP_FUNCTION:
         g_value_set_pointer(value, priv->setup);
         break;
@@ -152,9 +177,12 @@ get_property (GObject    *object,
 }
 
 CutTestCase *
-cut_test_case_new (CutSetupFunction setup_function, CutTearDownFunction teardown_function)
+cut_test_case_new (const gchar *name,
+                   CutSetupFunction setup_function,
+                   CutTearDownFunction teardown_function)
 {
     return g_object_new(CUT_TYPE_TEST_CASE,
+                        "name", name,
                         "setup-function", setup_function,
                         "tear-down-function", teardown_function, NULL);
 }
@@ -167,6 +195,12 @@ cut_test_case_get_test_count (CutTestCase *test_case)
     tests = (GList*) cut_test_container_get_children(CUT_TEST_CONTAINER(test_case));
 
     return g_list_length(tests);
+}
+
+const gchar *
+cut_test_case_get_name (CutTestCase *test_case)
+{
+    return CUT_TEST_CASE_GET_PRIVATE(test_case)->name;
 }
 
 void

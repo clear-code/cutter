@@ -50,11 +50,13 @@ struct _CutTestCaseClass
 
 GType        cut_test_case_get_type       (void) G_GNUC_CONST;
 
-CutTestCase *cut_test_case_new            (CutSetupFunction setup_funcion,
+CutTestCase *cut_test_case_new            (const gchar *name,
+                                           CutSetupFunction setup_funcion,
                                            CutTearDownFunction teardown_function);
 void         cut_test_case_add_test       (CutTestCase *test_case,
                                            CutTest *test);
 guint        cut_test_case_get_test_count (CutTestCase *test_case);
+const gchar *cut_test_case_get_name       (CutTestCase *test_case);
 
 G_END_DECLS
 

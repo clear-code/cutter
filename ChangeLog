@@ -1,5 +1,12 @@
 2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test-case[c|h]: Added cut_test_case_get_name().
+	cut_test_case_new() now needs its name.
+	* cutter/cut-loader.c, test/test_cut_test_case.c: Follow the above
+	change.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-assertion.h: Remove filename, line number and function
 	name from rrror message.
 	* cutter/cut-context.c: Make error message.
