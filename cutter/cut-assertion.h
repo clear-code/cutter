@@ -88,8 +88,9 @@ do {                                                    \
     }                                                   \
 } while(0)
 
-#define cut_assert_equal_string(expect, actual)         \
-if (strcmp(expect, actual))           {                 \
+#define cut_assert_equal_string(expect, actual)             \
+if ((!expect && actual) || (expect && !actual) ||           \
+    (expect && actual &&strcmp(expect, actual))) {          \
     gchar *message;                                         \
     message = g_strdup_printf(                              \
             "expected: <%s>\n but was: <%s>\n",             \
