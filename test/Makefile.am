@@ -6,6 +6,8 @@ INCLUDES = $(CUTTER_CFLAGS)	\
 
 EXTRA_DIST = run-test.sh
 
+TESTS = run-test.sh
+
 noinst_LTLIBRARIES = 				\
 		libtest_cut_assertion.la	\
 		libtest_cut_test.la		\
