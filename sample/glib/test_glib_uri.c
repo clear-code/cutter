@@ -39,7 +39,6 @@ typedef struct
   char *filename;
   char *hostname;
   char *expected_result;
-  GConvertError expected_error; /* If failed */
 }  ToUriTest;
 
 ToUriTest
@@ -84,31 +83,38 @@ to_uri_tests[] = {
 };
 
 
-ToUriTest
+typedef struct
+{
+  char *filename;
+  char *hostname;
+  GConvertError expected_error; /* If failed */
+}  ToUriErrorTest;
+
+ToUriErrorTest
 to_uri_error_tests[] = {
 #ifndef G_OS_WIN32
-  { "c:\\windows", NULL, NULL, G_CONVERT_ERROR_NOT_ABSOLUTE_PATH}, /* it's important to get this error on Unix */
-  { "c:\\windows", "localhost", NULL, G_CONVERT_ERROR_NOT_ABSOLUTE_PATH},
-  { "c:\\windows", "otherhost", NULL, G_CONVERT_ERROR_NOT_ABSOLUTE_PATH},
+  { "c:\\windows", NULL, G_CONVERT_ERROR_NOT_ABSOLUTE_PATH}, /* it's important to get this error on Unix */
+  { "c:\\windows", "localhost", G_CONVERT_ERROR_NOT_ABSOLUTE_PATH},
+  { "c:\\windows", "otherhost", G_CONVERT_ERROR_NOT_ABSOLUTE_PATH},
 #endif
-  { "etc", "localhost", NULL, G_CONVERT_ERROR_NOT_ABSOLUTE_PATH},
-  { "/etc", "\xC3\xB6\xC3\xA4\xC3\xA5", NULL, G_CONVERT_ERROR_ILLEGAL_SEQUENCE},
-  { "/etc", "\xE5\xE4\xF6", NULL, G_CONVERT_ERROR_ILLEGAL_SEQUENCE},
-  { "", NULL, NULL, G_CONVERT_ERROR_NOT_ABSOLUTE_PATH},
-  { "", "", NULL, G_CONVERT_ERROR_NOT_ABSOLUTE_PATH},
-  { "", "localhost", NULL, G_CONVERT_ERROR_NOT_ABSOLUTE_PATH},
-  { "", "otherhost", NULL, G_CONVERT_ERROR_NOT_ABSOLUTE_PATH},
+  { "etc", "localhost", G_CONVERT_ERROR_NOT_ABSOLUTE_PATH},
+  { "/etc", "\xC3\xB6\xC3\xA4\xC3\xA5", G_CONVERT_ERROR_ILLEGAL_SEQUENCE},
+  { "/etc", "\xE5\xE4\xF6", G_CONVERT_ERROR_ILLEGAL_SEQUENCE},
+  { "", NULL, G_CONVERT_ERROR_NOT_ABSOLUTE_PATH},
+  { "", "", G_CONVERT_ERROR_NOT_ABSOLUTE_PATH},
+  { "", "localhost", G_CONVERT_ERROR_NOT_ABSOLUTE_PATH},
+  { "", "otherhost", G_CONVERT_ERROR_NOT_ABSOLUTE_PATH},
   /* This and some of the following are of course as such illegal file names on Windows,
    * and would not occur in real life.
    */
-  { "/", "0123456789-", NULL, G_CONVERT_ERROR_ILLEGAL_SEQUENCE},
-  { "/", "_.!~*'()", NULL, G_CONVERT_ERROR_ILLEGAL_SEQUENCE},
-  { "/", "\"#%<>[\\]^`{|}\x7F", NULL, G_CONVERT_ERROR_ILLEGAL_SEQUENCE},
-  { "/", ";?&=+$,", NULL, G_CONVERT_ERROR_ILLEGAL_SEQUENCE},
-  { "/", "/", NULL, G_CONVERT_ERROR_ILLEGAL_SEQUENCE},
-  { "/", "@:", NULL, G_CONVERT_ERROR_ILLEGAL_SEQUENCE},
-  { "/", "\x80\xFF", NULL, G_CONVERT_ERROR_ILLEGAL_SEQUENCE},
-  { "/", "\xC3\x80\xC3\xBF", NULL, G_CONVERT_ERROR_ILLEGAL_SEQUENCE},
+  { "/", "0123456789-", G_CONVERT_ERROR_ILLEGAL_SEQUENCE},
+  { "/", "_.!~*'()", G_CONVERT_ERROR_ILLEGAL_SEQUENCE},
+  { "/", "\"#%<>[\\]^`{|}\x7F", G_CONVERT_ERROR_ILLEGAL_SEQUENCE},
+  { "/", ";?&=+$,", G_CONVERT_ERROR_ILLEGAL_SEQUENCE},
+  { "/", "/", G_CONVERT_ERROR_ILLEGAL_SEQUENCE},
+  { "/", "@:", G_CONVERT_ERROR_ILLEGAL_SEQUENCE},
+  { "/", "\x80\xFF", G_CONVERT_ERROR_ILLEGAL_SEQUENCE},
+  { "/", "\xC3\x80\xC3\xBF", G_CONVERT_ERROR_ILLEGAL_SEQUENCE},
 };
 
 
@@ -117,7 +123,6 @@ typedef struct
   char *uri;
   char *expected_filename;
   char *expected_hostname;
-  GConvertError expected_error; /* If failed */
 }  FromUriTest;
 
 FromUriTest
@@ -162,26 +167,32 @@ from_uri_tests[] = {
 };
 
 
-FromUriTest
+typedef struct
+{
+  char *uri;
+  GConvertError expected_error; /* If failed */
+}  FromUriErrorTest;
+
+FromUriErrorTest
 from_uri_error_tests[] = {
-  { "file://%C3%B6%C3%A4%C3%A5/etc", NULL, NULL, G_CONVERT_ERROR_BAD_URI},
-  { "file://\xE5\xE4\xF6/etc", NULL, NULL, G_CONVERT_ERROR_BAD_URI},
-  { "file://%E5%E4%F6/etc", NULL, NULL, G_CONVERT_ERROR_BAD_URI},
-  { "file:///some/file#bad", NULL, NULL, G_CONVERT_ERROR_BAD_URI},
-  { "file://some", NULL, NULL, G_CONVERT_ERROR_BAD_URI},
-  { "", NULL, NULL, G_CONVERT_ERROR_BAD_URI},
-  { "file:test", NULL, NULL, G_CONVERT_ERROR_BAD_URI},
-  { "http://www.yahoo.com/", NULL, NULL, G_CONVERT_ERROR_BAD_URI},
-  { "file://0123456789/", NULL, NULL, G_CONVERT_ERROR_BAD_URI},
-  { "file://-_.!~*'()/", NULL, NULL, G_CONVERT_ERROR_BAD_URI},
-  { "file://\"<>[\\]^`{|}\x7F/", NULL, NULL, G_CONVERT_ERROR_BAD_URI},
-  { "file://;?&=+$,/", NULL, NULL, G_CONVERT_ERROR_BAD_URI},
-  { "file://%C3%80%C3%BF/", NULL, NULL, G_CONVERT_ERROR_BAD_URI},
-  { "file://@/", NULL, NULL, G_CONVERT_ERROR_BAD_URI},
-  { "file://:/", NULL, NULL, G_CONVERT_ERROR_BAD_URI},
-  { "file://#/", NULL, NULL, G_CONVERT_ERROR_BAD_URI},
-  { "file://%23/", NULL, NULL, G_CONVERT_ERROR_BAD_URI},
-  { "file://%2F/", NULL, NULL, G_CONVERT_ERROR_BAD_URI},
+  { "file://%C3%B6%C3%A4%C3%A5/etc", G_CONVERT_ERROR_BAD_URI},
+  { "file://\xE5\xE4\xF6/etc", G_CONVERT_ERROR_BAD_URI},
+  { "file://%E5%E4%F6/etc", G_CONVERT_ERROR_BAD_URI},
+  { "file:///some/file#bad", G_CONVERT_ERROR_BAD_URI},
+  { "file://some", G_CONVERT_ERROR_BAD_URI},
+  { "", G_CONVERT_ERROR_BAD_URI},
+  { "file:test", G_CONVERT_ERROR_BAD_URI},
+  { "http://www.yahoo.com/", G_CONVERT_ERROR_BAD_URI},
+  { "file://0123456789/", G_CONVERT_ERROR_BAD_URI},
+  { "file://-_.!~*'()/", G_CONVERT_ERROR_BAD_URI},
+  { "file://\"<>[\\]^`{|}\x7F/", G_CONVERT_ERROR_BAD_URI},
+  { "file://;?&=+$,/", G_CONVERT_ERROR_BAD_URI},
+  { "file://%C3%80%C3%BF/", G_CONVERT_ERROR_BAD_URI},
+  { "file://@/", G_CONVERT_ERROR_BAD_URI},
+  { "file://:/", G_CONVERT_ERROR_BAD_URI},
+  { "file://#/", G_CONVERT_ERROR_BAD_URI},
+  { "file://%23/", G_CONVERT_ERROR_BAD_URI},
+  { "file://%2F/", G_CONVERT_ERROR_BAD_URI},
 };
 
 
@@ -217,7 +228,7 @@ test_g_filename_to_uri_error (void)
       cut_assert (!res);
       cut_assert (error);
       cut_assert (error->domain == G_CONVERT_ERROR);
-      cut_assert_equal_int (to_uri_tests[i].expected_error, error->code);
+      cut_assert_equal_int (to_uri_error_tests[i].expected_error, error->code);
       g_error_free (error);
     }
 }
