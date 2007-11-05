@@ -5,6 +5,7 @@ void test_setup(void);
 void test_teardown(void);
 void test_test_case_count(void);
 void test_run_this_function(void);
+void test_get_name(void);
 
 static CutTestCase *test_object;
 
@@ -92,6 +93,12 @@ test_run_this_function (void)
     cut_assert(cut_test_case_run_function(test_object, "run_test_function"));
     cut_assert(run_dummy_run_test_function_flag);
     cut_assert(!run_dummy_test_function_flag);
+}
+
+void
+test_get_name (void)
+{
+    cut_assert_equal_string("dummy test case", cut_test_case_get_name(test_object));
 }
 
 /*
