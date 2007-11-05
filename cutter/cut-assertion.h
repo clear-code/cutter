@@ -46,6 +46,15 @@ void  cut_context_set_error                 (CutContext *context,
     return;                                             \
 }
 
+#define cut_pending(message)                            \
+{                                                       \
+    cut_context_set_error(                              \
+            cut_context_get_current(),                  \
+            message, __PRETTY_FUNCTION__,               \
+            __FILE__, __LINE__);                        \
+    return;                                             \
+}
+
 #define cut_assert(expect)                              \
 if (!(expect)) {                                        \
     cut_context_set_error(                              \
