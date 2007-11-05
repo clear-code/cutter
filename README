@@ -24,9 +24,7 @@ English mail is welcome too.
 
 == What's this?
 
-Cutter is Unit Testing Framework for C. Cutter is based on
-((<CUnit|URL:http://www.gethos.net/opensource/cunit>)).
-There are some documents of CUnit under the CUnit/ directory.
+Cutter is Unit Testing Framework for C. 
 
 The feature of Cutter is to making test as shared library.
 
@@ -84,32 +82,28 @@ See sample/calc/.
 
 === Assertions
 
-This is the list of UT_ASSERT*. (({message})) in the
+This is the list of assertion functions. (({message})) in the
 arguments is displayed when assertion fails.
 
---- UT_PASS
-    
-    It always passes.
-
---- UT_FAIL(message)
+--- cut_fail(message)
     
     It always fails.
 
---- UT_ASSERT(expect, message)
+--- cut_assert(expect)
     
     It passes when (({expect})) is not 0.
 
---- UT_ASSERT_EQUAL_INT(expect, actual, message)
+--- cut_assert_equal_int(expect, actual)
     
     It passes when (({expect})) equals (({actual})). They
     must be int type or variant of int (like long).
 
---- UT_ASSERT_EQUAL_FLOAT(expect, actual, message)
+--- cut_assert_equal_double(expect, actual)
     
     It passes when (({expect})) equals (({actual})). They
-    must be float type or variant of float (like double).
+    must be float type or variant of double.
 
---- UT_ASSERT_EQUAL_STRING(expect, actual, message)
+--- cut_assert_equal_string(expect, actual)
     
     It passes when (({expect})) and (({actual})) are same
     content string.
@@ -118,28 +112,37 @@ arguments is displayed when assertion fails.
 
 The following is template of test.
 
-  #include <cutter/cutter.h>
+  #include <cut.h>
   
   #include "HEADER_FILE_OF_YOUR_PROGRAM"
-  
-  UT_DEF(TEST_NAME_1)
-  {
-    UT_ASSERT_SOMETHING;
-    ...
-    UT_PASS; /* test is passed when reach it!! */
-  }
-  
-  UT_DEF(TEST_NAME_2)
-  {
-    ...
-  }
-  
-  ...
-  
-  /* register tests */
-  UT_REGISTER_BEGIN("TEST_NAME") /* don't add `;' */
-  UT_REGISTER(TEST_NAME_1, "description of test1") /* don't add `;' */
-  UT_REGISTER(TEST_NAME_2, "description of test2") /* don't add `;' */
-  ...
-  UT_REGISTER_END
+ 
+  void test_function1(void);
+  void test_function2(void);
 
+  static int condition = 0;
+  
+  void
+  setup (void)
+  {
+    condition = 1;
+  }
+  
+  void
+  teardown (void)
+  {
+    condition = 2;
+  }
+
+  void
+  test_function1(void)
+  {
+    cut_assert_XXX();
+    ...
+  }
+  
+  void
+  test_function1(void)
+  {
+    ...
+  }
+  
