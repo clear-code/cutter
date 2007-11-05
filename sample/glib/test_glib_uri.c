@@ -300,7 +300,7 @@ test_roundtrip (void)
 			       to_uri_tests[i].hostname,
 			       &error);
       
-      cut_assert(!error);
+      cut_assert (!error);
       
       error = NULL;
       res = g_filename_from_uri (uri, &hostname, &error);
