@@ -31,7 +31,7 @@ G_BEGIN_DECLS
 {                                                       \
     cut_context_set_error(                              \
             cut_context_get_current(),                  \
-            "failed", __PRETTY_FUNCTION__,              \
+            message, __PRETTY_FUNCTION__,               \
             __FILE__, __LINE__);                        \
     return;                                             \
 }
