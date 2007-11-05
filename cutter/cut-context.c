@@ -33,6 +33,9 @@
 #define CUT_CONTEXT_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_CONTEXT, CutContextPrivate))
 
 #define RED_COLOR "\033[01;31m"
+#define GREEN_COLOR "\033[01;32m"
+#define YELLOW_COLOR "\033[01;33m"
+#define BLUE_COLOR "\033[01;34m"
 #define NORMAL_COLOR "\033[00m"
 
 typedef struct _CutContextPrivate	CutContextPrivate;
@@ -226,10 +229,24 @@ cut_context_output_error_log (CutContext *context)
     /* output log */
     switch (priv->verbose_level) {
       case 1:
-        g_print("%s:%d: (%s)\n%s\n", error->filename,
-                                     error->line,
-                                     error->function_name,
-                                     error->message);
+        g_print("%s:%d: (%s):", error->filename,
+                                 error->line,
+                                 error->function_name);
+        if (priv->use_color)
+            g_print(RED_COLOR"F"NORMAL_COLOR"\n");
+        else
+            g_print("F\n");
+
+        break;
+      case 2:
+        g_print("%s:%d: (%s)\n", error->filename,
+                                 error->line,
+                                 error->function_name);
+        if (priv->use_color)
+            g_print(RED_COLOR"%s"NORMAL_COLOR"\n", error->message);
+        else
+            g_print("%s\n", error->message);
+
         break;
       default:
         if (priv->use_color)
@@ -251,6 +268,9 @@ cut_context_output_normal_log (CutContext *context)
     /* output log */
     switch (priv->verbose_level) {
       case 1:
+        g_print("(%s):.\n", test_function_name);
+        break;
+      case 2:
         g_print("(%s):.\n", test_function_name);
         break;
       default:

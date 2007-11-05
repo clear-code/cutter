@@ -1,5 +1,9 @@
 2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-context.c: verbose level 2.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* test/Makefile.am: Run run-test.sh when make check.
 
 2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
