@@ -4,6 +4,7 @@
 
 void test_assertion_count(void);
 void test_get_function_name(void);
+void test_increment_assertion_count(void);
 void test_run(void);
 
 static CutTest *test_object;
@@ -50,6 +51,17 @@ test_assertion_count (void)
 {
     cut_assert(run_the_test());
     cut_assert_equal_int(3, cut_test_get_assertion_count(test_object));
+}
+
+void
+test_increment_assertion_count (void)
+{
+    cut_test_increment_assertion_count(test_object);
+    cut_test_increment_assertion_count(test_object);
+    cut_test_increment_assertion_count(test_object);
+    cut_test_increment_assertion_count(test_object);
+    cut_test_increment_assertion_count(test_object);
+    cut_assert_equal_int(5, cut_test_get_assertion_count(test_object));
 }
 
 void
