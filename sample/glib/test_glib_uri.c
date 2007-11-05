@@ -307,6 +307,11 @@ test_roundtrip (void)
       cut_assert (!error);
 
       cut_assert_equal_string (to_uri_tests[i].filename, res);
+
+      if (!to_uri_tests[i].hostname)
+        to_uri_tests[i].hostname = "";
+      if (!hostname)
+        hostname = "";
       cut_assert_equal_string (to_uri_tests[i].hostname, hostname);
     }
 }

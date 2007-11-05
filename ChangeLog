@@ -1,5 +1,9 @@
 2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* sample/glib/test_glib_uri.c: Change NULL to "".
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* sample/glib/test_glib_uri.c: Separate some tests.
 
 2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
