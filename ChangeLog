@@ -1,5 +1,11 @@
 2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-assertion.h, cutter/cut-context.h: Moved
+	cut_context_get_current(), cut_context_set_error() and
+	cut_context_increment_assertion_count().
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-assertion.h: (cut_assert_equal_string): NULL check.
 
 2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>

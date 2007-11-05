@@ -23,6 +23,7 @@
 #define __CUT_CONTEXT_H__
 
 #include <glib-object.h>
+#include "cut.h"
 
 G_BEGIN_DECLS
 
@@ -33,7 +34,6 @@ G_BEGIN_DECLS
 #define CUT_IS_CONTEXT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_CONTEXT))
 #define CUT_CONTEXT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_CONTEXT, CutContextClass))
 
-typedef struct _CutContext         CutContext;
 typedef struct _CutContextClass    CutContextClass;
 
 struct _CutContext
@@ -58,17 +58,9 @@ void  cut_context_set_base_dir              (CutContext *context,
                                              const gchar *base_dir);
 void  cut_context_set_use_color             (CutContext *context,
                                              gboolean    use_color);
-void  cut_context_increment_assertion_count (CutContext *context);
 
-void  cut_context_set_error                 (CutContext *context,
-                                             const gchar *error_message,
-                                             const gchar *function_name,
-                                             const gchar *filename,
-                                             guint line);
 void  cut_context_output_error_log          (CutContext *context);
 void  cut_context_output_normal_log         (CutContext *context);
-
-CutContext *cut_context_get_current (void);
 
 G_END_DECLS
 

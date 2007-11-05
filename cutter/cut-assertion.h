@@ -23,9 +23,19 @@
 #define __CUT_ASSERTION_H__
 
 #include <string.h>
-#include "cut-context.h"
+#include <glib.h>
 
 G_BEGIN_DECLS
+
+typedef struct _CutContext         CutContext;
+
+CutContext *cut_context_get_current (void);
+void  cut_context_increment_assertion_count (CutContext *context);
+void  cut_context_set_error                 (CutContext *context,
+                                             const gchar *error_message,
+                                             const gchar *function_name,
+                                             const gchar *filename,
+                                             guint line);
 
 #define cut_fail(message)                               \
 {                                                       \
