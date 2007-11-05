@@ -1,4 +1,8 @@
-== Asignee ktou
+== Assigned to ktou
+
+* None
+
+== Assigned to ikezoe
 
 * エラーになるアサーションっぽいのが欲しい。cut_crash()とかそんなの。
   setup()/teardown()の中で異常な状態になったときに呼ぶ。
@@ -15,7 +19,3 @@
 * サマリを表示
 * 結果出力部分をオブジェクト化
 * cut_pending()。表示は黄色のP。
-
-== Asignee ikezoe
-
-* None
