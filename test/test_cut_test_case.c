@@ -1,4 +1,4 @@
-#include "cut.h"
+#include "cutter.h"
 #include "cut-test-case.h"
 
 void test_setup(void);

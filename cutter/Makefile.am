@@ -4,7 +4,7 @@ INCLUDES = $(GLIB_CFLAGS)	\
 
 EXTRA_DIST = config.h.in
 
-pkginclude_HEADERS = cut-assertion.h cut.h
+pkginclude_HEADERS = cut-assertion.h cutter.h
 
 bin_PROGRAMS = cutter
 

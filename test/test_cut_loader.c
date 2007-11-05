@@ -1,4 +1,4 @@
-#include "cut.h"
+#include "cutter.h"
 #include "cut-loader.h"
 
 void test_load_function (void);

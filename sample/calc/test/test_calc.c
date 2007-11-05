@@ -1,4 +1,4 @@
-#include <cut.h>
+#include <cutter.h>
 
 #include "calc.h"
 

@@ -25,7 +25,7 @@
  */
 
 
-#include "cut.h"
+#include "cutter.h"
 
 void test_g_filename_to_uri (void);
 void test_g_filename_to_uri_error (void);

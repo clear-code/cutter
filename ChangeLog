@@ -1,3 +1,7 @@
+2007-11-05  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/, test/, sample/: cut.h -> cutter.h.
+
 2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* sample/glib/test_glib_uri.c: Change NULL to "".

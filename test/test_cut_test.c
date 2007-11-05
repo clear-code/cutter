@@ -1,4 +1,4 @@
-#include "cut.h"
+#include "cutter.h"
 #include "cut-test.h"
 #include "cut-context-private.h"
 

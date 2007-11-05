@@ -23,7 +23,7 @@
 #define __CUT_CONTEXT_H__
 
 #include <glib-object.h>
-#include "cut.h"
+#include "cutter.h"
 
 G_BEGIN_DECLS
 
