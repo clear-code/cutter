@@ -216,7 +216,7 @@ cut_context_output_error_log (CutContext *context)
         g_print("%s", error->message);
         break;
       default:
-        g_print("E");
+        g_print("F");
         break;
     }
 }
