@@ -60,8 +60,6 @@ void  cut_context_set_base_dir              (CutContext *context,
                                              const gchar *base_dir);
 void  cut_context_increment_assertion_count (CutContext *context);
 
-void  cut_context_set_test                  (CutContext *context,
-                                             CutTest    *test);
 void  cut_context_set_error                 (CutContext *context,
                                              const gchar *error_message,
                                              const gchar *function_name,
@@ -71,7 +69,6 @@ void  cut_context_output_error_log          (CutContext *context);
 void  cut_context_output_normal_log         (CutContext *context);
 
 CutContext *cut_context_get_current (void);
-CutTest *cut_context_get_current_test (CutContext *context);
 
 G_END_DECLS
 

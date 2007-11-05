@@ -1,4 +1,5 @@
 #include "cut.h"
+#include "cut-context-private.h"
 
 void test_equal_int(void);
 void test_equal_string(void);

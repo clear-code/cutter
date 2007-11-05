@@ -1,5 +1,6 @@
 #include "cut.h"
 #include "cut-test.h"
+#include "cut-context-private.h"
 
 void test_assertion_count(void);
 

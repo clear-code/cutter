@@ -1,5 +1,12 @@
 2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-context-private.h: Added. Declare get_test() and
+	set_test() method.
+	* cutter/cut-test-case.c, test/test_cut_test.c,
+	test/test_cut_assertion.c: include "cut-context-private.h".
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut.h: Do not include "cut-test.h" and "cut-context.h".
 	* test/test_cut_test.c: include "cut-test.h".
 

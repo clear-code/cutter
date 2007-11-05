@@ -28,6 +28,7 @@
 #include <glib.h>
 
 #include "cut-context.h"
+#include "cut-context-private.h"
 
 #define CUT_CONTEXT_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_CONTEXT, CutContextPrivate))
 
