@@ -228,16 +228,6 @@ cut_context_output_error_log (CutContext *context)
 
     /* output log */
     switch (priv->verbose_level) {
-      case 1:
-        g_print("%s:%d: (%s):", error->filename,
-                                error->line,
-                                error->function_name);
-        if (priv->use_color)
-            g_print(RED_COLOR"F"NORMAL_COLOR"\n");
-        else
-            g_print("F\n");
-
-        break;
       case 2:
         g_print("%s:%d: (%s)\n", error->filename,
                                  error->line,
@@ -246,13 +236,15 @@ cut_context_output_error_log (CutContext *context)
             g_print(RED_COLOR"%s"NORMAL_COLOR"\n", error->message);
         else
             g_print("%s\n", error->message);
-
         break;
-      default:
+      case 1:
         if (priv->use_color)
             g_print(RED_COLOR"F"NORMAL_COLOR);
         else
             g_print("F");
+        break;
+      case 0:
+      default:
         break;
     }
 }
@@ -267,14 +259,14 @@ cut_context_output_normal_log (CutContext *context)
 
     /* output log */
     switch (priv->verbose_level) {
-      case 1:
-        g_print("(%s):.\n", test_function_name);
-        break;
       case 2:
         g_print("(%s):.\n", test_function_name);
         break;
-      default:
+      case 1:
         g_print(".");
+        break;
+      case 0:
+      default:
         break;
     }
 }
