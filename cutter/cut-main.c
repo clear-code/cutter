@@ -32,6 +32,13 @@
 
 GPrivate *cut_context_private = NULL;
 
+static gint verbose_level = 0;
+
+static GOptionEntry option_entries[] =
+{
+    {"verbose", 'v', 0, G_OPTION_ARG_INT, &verbose_level, "Set verbose level", "L"}
+};
+
 static void
 cut_context_private_cleanup (gpointer data)
 {
@@ -41,14 +48,21 @@ cut_context_private_cleanup (gpointer data)
 int
 main (int argc, char* argv[])
 {
+    GOptionContext *option_context;
     CutTestSuite *suite;
     CutRepository *repository;
+
+    option_context = g_option_context_new("");
+    g_option_context_add_main_entries(option_context, option_entries, "cutter");
+    g_option_context_parse(option_context, &argc, &argv, NULL);
 
     g_type_init();
 
     g_thread_init(NULL);
 
     cut_context_private = g_private_new(cut_context_private_cleanup);
+
+    cut_context_set_verbose_level(cut_context_get_current(), verbose_level);
 
     repository = cut_repository_new(argv[1]);
     suite = cut_repository_create_test_suite(repository);
