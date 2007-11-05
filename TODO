@@ -1,3 +1,10 @@
 * エラーになるアサーションっぽいのが欲しい。cut_crash()とかそんなの。
   setup()/teardown()の中で異常な状態になったときに呼ぶ。
   メモリ割り当てに失敗したとか。
+* -n, --name=NAMEで指定した名前のテストケースのみ実行。
+  例えば--name=test_cut_loaderならlibtest_cut_loader.soの中のテストだけ実行。
+  libXXX.soのlibと.soは省略可能。
+  * --name=/REGEXP/と指定されたら正規表現にマッチしたテストだけ実行。
+* -t, --test=NAMEで指定した名前のテストのみ実行。
+  例えば(ry
+  * (ry
