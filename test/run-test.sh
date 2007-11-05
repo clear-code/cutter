@@ -1,4 +1,4 @@
 #!/bin/sh
 
 make \
-  && ../cutter/cutter2 .libs
+  && ../cutter/cutter2 "$@" .libs 
