@@ -71,7 +71,6 @@ void  cut_context_output_error_log          (CutContext *context);
 void  cut_context_output_normal_log         (CutContext *context);
 
 CutContext *cut_context_get_current (void);
-void  cut_context_set_current       (CutContext *context);
 
 G_END_DECLS
 
