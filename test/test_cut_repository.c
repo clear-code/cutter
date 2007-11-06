@@ -10,7 +10,7 @@ static CutRepository *test_repository;
 void
 setup (void)
 {
-    test_repository = cut_repository_new("./repository_test_dir");
+    test_repository = cut_repository_new("./repository_test_dir/");
 }
 
 void

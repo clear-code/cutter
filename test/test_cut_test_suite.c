@@ -5,6 +5,8 @@
 #include "cut-context-private.h"
 
 void test_run_test_case (void);
+void test_run_test_function (void);
+void test_run_test_function_in_test_case (void);
 
 static CutContext *test_context;
 static CutTestSuite *test_object;
@@ -75,8 +77,43 @@ test_run_test_case (void)
 
     cut_assert(ret);
 
-
     cut_assert(run_dummy_test_function_flag);
+    cut_assert(run_dummy_run_test_function_flag);
+}
+
+void
+test_run_test_function (void)
+{
+    CutContext *original_context;
+    gboolean ret;
+
+    original_context = cut_context_get_current();
+
+    cut_context_set_current(test_context);
+    ret = cut_test_suite_run_test_function(test_object, "run_test_function");
+    cut_context_set_current(original_context);
+
+    cut_assert(ret);
+
+    cut_assert(run_dummy_run_test_function_flag);
+}
+
+void
+test_run_test_function_in_test_case (void)
+{
+    CutContext *original_context;
+    gboolean ret;
+
+    original_context = cut_context_get_current();
+
+    cut_context_set_current(test_context);
+    ret = cut_test_suite_run_test_function_in_test_case(test_object,
+                                                        "run_test_function",
+                                                        "dummy_test_case");
+    cut_context_set_current(original_context);
+
+    cut_assert(ret);
+
     cut_assert(run_dummy_run_test_function_flag);
 }
 
