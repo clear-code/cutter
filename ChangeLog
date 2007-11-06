@@ -1,5 +1,10 @@
 2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-test-suite.c, test/test-cut-loader.c,
+	test/test-cut-repository.c, test/Makefile.am: used utility library.
+
+	* test/cuttest-utils.[ch]: added utility library for test.
+
 	* test/test-cut-test-suite.c: used base directory for searching.
 
 	* test/run-test.sh: passed base directory.

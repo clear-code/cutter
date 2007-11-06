@@ -4,6 +4,8 @@
 #include "cut-test-case.h"
 #include "cut-test-container.h"
 
+#include "cuttest-utils.h"
+
 void test_create_test_suite (void);
 
 static CutRepository *test_repository;
@@ -12,14 +14,10 @@ void
 setup (void)
 {
     CutContext *context;
-    const gchar *base_dir;
     gchar *test_repository_path;
 
     context = cut_context_new();
-    base_dir = g_getenv("BASE_DIR");
-    if (!base_dir)
-        base_dir = ".";
-    test_repository_path = g_build_filename(base_dir,
+    test_repository_path = g_build_filename(cuttest_get_base_dir(),
                                             "repository_test_dir",
                                             NULL);
     test_repository = cut_repository_new(context, test_repository_path);

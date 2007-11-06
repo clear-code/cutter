@@ -4,6 +4,8 @@
 #include "cut-loader.h"
 #include "cut-context-private.h"
 
+#include "cuttest-utils.h"
+
 void test_run_test_case (void);
 void test_run_test_function (void);
 void test_run_test_function_in_test_case (void);
@@ -36,7 +38,6 @@ setup (void)
 {
     CutTestCase *test_case;
     CutTest *test;
-    const gchar *base_dir;
     gchar *test_path;
 
     test_context = cut_context_new();
@@ -44,10 +45,7 @@ setup (void)
 
     test_object = cut_test_suite_new();
 
-    base_dir = g_getenv("BASE_DIR");
-    if (!base_dir)
-        base_dir = ".";
-    test_path = g_build_filename(base_dir,
+    test_path = g_build_filename(cuttest_get_base_dir(),
                                  "loader_test_dir",
                                  ".libs",
                                  "libdummy_loader_test.so",

@@ -1,6 +1,8 @@
 #include "cutter.h"
 #include "cut-loader.h"
 
+#include "cuttest-utils.h"
+
 void test_load_function (void);
 
 static CutLoader *test_loader;
@@ -8,13 +10,9 @@ static CutLoader *test_loader;
 void
 setup (void)
 {
-    const gchar *base_dir;
     gchar *test_path;
 
-    base_dir = g_getenv("BASE_DIR");
-    if (!base_dir)
-        base_dir = ".";
-    test_path = g_build_filename(base_dir,
+    test_path = g_build_filename(cuttest_get_base_dir(),
                                  "loader_test_dir",
                                  ".libs",
                                  "libdummy_loader_test.so",
