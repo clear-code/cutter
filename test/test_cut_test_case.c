@@ -81,7 +81,7 @@ run_the_test (void)
 
     original_context = cut_context_get_current();
     cut_context_set_current(test_context);
-    ret = cut_test_run(CUT_TEST(test_object));
+    ret = cut_test_case_run(test_object);
     cut_context_set_current(original_context);
 
     return ret;
