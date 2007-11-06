@@ -1,5 +1,10 @@
 2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-loader.c: Remove G_MODULE_SUFFIX and "lib" prefix from
+	test case name.
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* test/test_cut_test.c: Added cut_test_get_result() test.
 
 2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
