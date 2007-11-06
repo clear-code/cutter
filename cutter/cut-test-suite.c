@@ -143,13 +143,13 @@ cut_test_suite_find_test_case (CutTestSuite *suite, const gchar *test_case_name)
 }
 
 gboolean
-cut_test_suite_run_test_case (CutTestSuite *suite, const gchar *name)
+cut_test_suite_run_test_case (CutTestSuite *suite, const gchar *test_case_name)
 {
     CutTestCase *test_case;
 
     g_return_val_if_fail(CUT_IS_TEST_SUITE(suite), FALSE);
 
-    test_case = cut_test_suite_find_test_case(suite, name);
+    test_case = cut_test_suite_find_test_case(suite, test_case_name);
     if (!test_case)
         return FALSE;
 
