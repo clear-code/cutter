@@ -2,9 +2,11 @@
 #include "cut-test-case.h"
 #include "cut-test-suite.h"
 #include "cut-loader.h"
+#include "cut-context-private.h"
 
 void test_run_test_case (void);
 
+static CutContext *test_context;
 static CutTestSuite *test_object;
 static CutLoader *loader;
 
@@ -32,6 +34,10 @@ setup (void)
 {
     CutTestCase *test_case;
     CutTest *test;
+
+    test_context = cut_context_new();
+    cut_context_set_verbose_level(test_context, CUT_VERBOSE_LEVEL_SILENT);
+
     test_object = cut_test_suite_new();
 
     loader = cut_loader_new("loader_test_dir/.libs/libdummy_loader_test.so");
@@ -52,12 +58,24 @@ teardown (void)
 {
     g_object_unref(loader);
     g_object_unref(test_object);
+    g_object_unref(test_context);
 }
 
 void
 test_run_test_case (void)
 {
-    cut_assert(cut_test_suite_run_test_case(test_object, "dummy_test_case"));
+    CutContext *original_context;
+    gboolean ret;
+
+    original_context = cut_context_get_current();
+
+    cut_context_set_current(test_context);
+    ret = cut_test_suite_run_test_case(test_object, "dummy_test_case");
+    cut_context_set_current(original_context);
+
+    cut_assert(ret);
+
+
     cut_assert(run_dummy_test_function_flag);
     cut_assert(run_dummy_run_test_function_flag);
 }

@@ -1,5 +1,9 @@
 2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* test/test_cut_test_suite.c: Use test own CutContext.
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* test/test_cut_test_case.c: Use test own CutContext.
 
 2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
