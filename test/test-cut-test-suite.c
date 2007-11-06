@@ -36,13 +36,24 @@ setup (void)
 {
     CutTestCase *test_case;
     CutTest *test;
+    const gchar *base_dir;
+    gchar *test_path;
 
     test_context = cut_context_new();
     cut_context_set_verbose_level(test_context, CUT_VERBOSE_LEVEL_SILENT);
 
     test_object = cut_test_suite_new();
 
-    loader = cut_loader_new("loader_test_dir/.libs/libdummy_loader_test.so");
+    base_dir = g_getenv("BASE_DIR");
+    if (!base_dir)
+        base_dir = ".";
+    test_path = g_build_filename(base_dir,
+                                 "loader_test_dir",
+                                 ".libs",
+                                 "libdummy_loader_test.so",
+                                 NULL);
+    loader = cut_loader_new(test_path);
+    g_free(test_path);
     test_case = cut_loader_load_test_case(loader);
     cut_test_suite_add_test_case(test_object, test_case);
 

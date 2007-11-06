@@ -1,5 +1,7 @@
 2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-test-suite.c: used base directory for searching.
+
 	* test/run-test.sh: passed base directory.
 	* test/test-cut-loader.c, test/test-cut-repository.c: used base
 	directory for searching.
