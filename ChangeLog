@@ -1,5 +1,7 @@
 2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-case.c, cutter/cut-test-container.c: emitted signals.
+
 	* cutter/cut-output.c: used purple for error.
 
 	* cutter/cut-output.[ch], cutter/cut-test.[ch],

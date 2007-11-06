@@ -151,19 +151,26 @@ real_run (CutTest *test)
 
     priv = CUT_TEST_CONTAINER_GET_PRIVATE(test);
 
+    g_signal_emit_by_name(test, "start");
     for (list = priv->tests; list; list = g_list_next(list)) {
         if (!list->data)
             continue;
         if (CUT_IS_TEST(list->data)) {
-            gboolean success;
             CutTest *test = CUT_TEST(list->data);
-            success = cut_test_run(test);
-            if (!success)
+            if (!cut_test_run(test))
                 all_success = FALSE;
         } else {
             g_warning("This object is neither test nor test container!");
         }
     }
+
+    if (all_success) {
+        g_signal_emit_by_name(test, "success");
+    } else {
+        g_signal_emit_by_name(test, "failure");
+    }
+
+    g_signal_emit_by_name(test, "complete");
 
     return all_success;
 }
