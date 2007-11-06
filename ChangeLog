@@ -1,3 +1,8 @@
+2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-output.[ch]: split from CutContext.
+	* cutter/Makefile.am, cutter/cut-context.[ch]: used CutOutput.
+
 2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-main.c: Show error message if directory is not specified.
