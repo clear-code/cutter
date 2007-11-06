@@ -1,3 +1,7 @@
+2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
+
+	* test/run-test.sh: more generalize.
+
 2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* test/test_cut_test_case.c: Added run test.
