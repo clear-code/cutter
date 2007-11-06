@@ -36,6 +36,7 @@
 #define GREEN_COLOR "\033[01;32m"
 #define YELLOW_COLOR "\033[01;33m"
 #define BLUE_COLOR "\033[01;34m"
+#define PURPLE_COLOR "\033[01;35m"
 #define NORMAL_COLOR "\033[00m"
 
 typedef struct _CutOutputPrivate	CutOutputPrivate;
@@ -290,7 +291,7 @@ cut_output_on_error (CutOutput *output, CutTest *test)
 
     if (priv->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
-    print_with_color(priv, RED_COLOR, "E"); /* FIXME: PURPLE */
+    print_with_color(priv, PURPLE_COLOR, "E");
 
     if (priv->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
         return;

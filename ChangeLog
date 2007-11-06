@@ -1,5 +1,7 @@
 2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-output.c: used purple for error.
+
 	* cutter/cut-output.[ch], cutter/cut-test.[ch],
 	cutter/cut-context.c, cutter/cut-test-case.c: used signal for
 	output trigger.
