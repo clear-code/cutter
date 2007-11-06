@@ -26,19 +26,19 @@
 
 	* test/run-test.sh: more generalize.
 
-2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* test/test_cut_test_case.c: Added run test.
 
-2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* test/test_cut_test.c: Added increment_assertion_count test.
 
-2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* test/test_cut_test.c: Added get_name test and run test.
 
-2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* test/test_cut_test_case.c: Added get_name test.
 
@@ -46,11 +46,11 @@
 
 	* cutter/cut-test-suite.[c|h]: Added cut_test_suite_run_test_case().
 
-2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* test/test_cut_test_suite.c: Implement test for cut_test_suite_run_test_case().
 
-2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* test/test_cut_test_suite.c: Added test for cut_test_suite_run_test_case().
 
