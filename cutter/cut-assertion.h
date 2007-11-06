@@ -73,7 +73,7 @@ void  cut_context_set_result                (CutContext *context,
             message, __PRETTY_FUNCTION__,       \
             __FILE__, __LINE__);                \
     return;                                     \
-}
+} while(0)
 
 #define cut_assert(expect) do                           \
 {                                                       \
