@@ -9,5 +9,5 @@ LDFLAGS =			\
 	-rpath $(libdir)	\
 	-avoid-version
 
-libdummy_loader_test_la_SOURCES = dummy_test_functions.c
+libdummy_loader_test_la_SOURCES = dummy-test-functions.c
 

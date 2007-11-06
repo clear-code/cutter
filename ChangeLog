@@ -1,5 +1,10 @@
 2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* test/loader_test_dir/*.c, test/repository_test_dir/*.c: Renamed. Use
+	"-" for conjunction character.
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* test/*.c: Renamed. Use "-" for conjunction character.
 
 2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>

@@ -11,7 +11,7 @@ LDFLAGS =			\
 	-rpath $(libdir)	\
 	-avoid-version
 
-libtest_case1_la_SOURCES = test_case1.c
-libtest_case2_la_SOURCES = test_case2.c
-libtest_case3_la_SOURCES = test_case3.c
+libtest_case1_la_SOURCES = test-case1.c
+libtest_case2_la_SOURCES = test-case2.c
+libtest_case3_la_SOURCES = test-case3.c
 
