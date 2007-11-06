@@ -1,3 +1,8 @@
+2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-assertion.h (cut_error): added.
+	* test/test-cut-assertion.c: added a test for cut_error().
+
 2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-output.c: (status_to_name), (status_to_color): Write

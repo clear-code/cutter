@@ -45,6 +45,16 @@ void  cut_context_set_result                (CutContext *context,
                                              const gchar *filename,
                                              guint line);
 
+#define cut_error(message)                              \
+{                                                       \
+    cut_context_set_result(                             \
+            cut_context_get_current(),                  \
+            CUT_TEST_RESULT_ERROR,                      \
+            message, __PRETTY_FUNCTION__,               \
+            __FILE__, __LINE__);                        \
+    return;                                             \
+}
+
 #define cut_fail(message)                               \
 {                                                       \
     cut_context_set_result(                             \
