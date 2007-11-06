@@ -1,3 +1,9 @@
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-suite.[c|h]: Added
+	cut_test_suite_run_test_function() and
+	cut_test_suite_fun_test_function_in_test_case().
+
 2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-test-case.c, cutter/cut-test-container.c: emitted signals.

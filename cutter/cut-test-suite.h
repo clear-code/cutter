@@ -56,6 +56,13 @@ void            cut_test_suite_add_test_case (CutTestSuite *suite,
                                               CutTestCase *test_case);
 gboolean        cut_test_suite_run_test_case (CutTestSuite *suite,
                                               const gchar *name);
+gboolean        cut_test_suite_run_test_function
+                                             (CutTestSuite *suite,
+                                              const gchar *function_name);
+gboolean        cut_test_suite_run_test_function_in_test_case
+                                             (CutTestSuite *suite,
+                                              const gchar *function_name,
+                                              const gchar *test_case_name);
 
 
 G_END_DECLS

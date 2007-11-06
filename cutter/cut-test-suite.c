@@ -120,24 +120,75 @@ compare_test_case_name (gconstpointer a, gconstpointer b)
     return strcmp(cut_test_case_get_name(CUT_TEST_CASE(a)), (gchar *) b);
 }
 
+static CutTestCase *
+cut_test_suite_find_test_case (CutTestSuite *suite, const gchar *test_case_name)
+{
+    GList *list, *test_cases;
+
+    test_cases = (GList*) cut_test_container_get_children(CUT_TEST_CONTAINER(suite));
+
+    list = g_list_find_custom(test_cases, test_case_name,
+                              (GCompareFunc) compare_test_case_name);
+
+    if (!list)
+        return NULL;
+
+    return CUT_TEST_CASE(list->data);
+}
+
 gboolean
 cut_test_suite_run_test_case (CutTestSuite *suite, const gchar *name)
 {
     CutTestCase *test_case;
-    GList *list, *test_cases;
 
     g_return_val_if_fail(CUT_IS_TEST_SUITE(suite), FALSE);
 
-    test_cases = (GList*) cut_test_container_get_children(CUT_TEST_CONTAINER(suite));
-
-    list = g_list_find_custom(test_cases, name, (GCompareFunc) compare_test_case_name);
-
-    if (!list)
+    test_case = cut_test_suite_find_test_case(suite, name);
+    if (!test_case)
         return FALSE;
 
-    test_case = CUT_TEST_CASE(list->data);
-
     return cut_test_run(CUT_TEST(test_case));
+}
+
+gboolean
+cut_test_suite_run_test_function (CutTestSuite *suite, const gchar *function_name)
+{
+    gboolean all_success = TRUE;
+    const GList *list, *test_cases;
+
+    g_return_val_if_fail(CUT_IS_TEST_SUITE(suite), FALSE);
+
+    test_cases = cut_test_container_get_children(CUT_TEST_CONTAINER(suite));
+
+    for (list = test_cases; list; list = g_list_next(list)) {
+        if (!list->data)
+            continue;
+        if (CUT_IS_TEST_CASE(list->data)) {
+            gboolean success;
+            CutTestCase *test_case = CUT_TEST_CASE(list->data);
+            success = cut_test_case_run_function(test_case, function_name);
+            if (!success)
+                all_success = FALSE;
+        }
+    }
+
+    return all_success;
+}
+
+gboolean
+cut_test_suite_run_test_function_in_test_case (CutTestSuite *suite,
+                                               const gchar *function_name,
+                                               const gchar *test_case_name)
+{
+    CutTestCase *test_case;
+
+    g_return_val_if_fail(CUT_IS_TEST_SUITE(suite), FALSE);
+
+    test_case = cut_test_suite_find_test_case(suite, test_case_name);
+    if (!test_case)
+        return FALSE;
+
+    return cut_test_case_run_function(test_case, function_name);
 }
 
 void
