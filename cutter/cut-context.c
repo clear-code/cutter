@@ -256,7 +256,7 @@ cut_context_output_error_log (CutContext *context)
     /* output log */
     switch (priv->verbose_level) {
       case CUT_VERBOSE_LEVEL_VERBOSE:
-        g_print("%s:%d: (%s)\n", error->filename,
+        g_print("%s:%d: %s()\n", error->filename,
                                  error->line,
                                  error->function_name);
         if (priv->use_color)
@@ -287,7 +287,7 @@ cut_context_output_normal_log (CutContext *context)
     /* output log */
     switch (priv->verbose_level) {
       case CUT_VERBOSE_LEVEL_VERBOSE:
-        g_print("(%s):.\n", test_function_name);
+        g_print("%s:.\n", test_function_name);
         break;
       case CUT_VERBOSE_LEVEL_NORMAL:
         g_print(".");
