@@ -35,6 +35,8 @@ GPrivate *cut_context_private = NULL;
 static gchar *verbose_level = NULL;
 static gchar *source_directory = NULL;
 static gboolean use_color = FALSE;
+static gchar **test_case_names = NULL;
+static gchar **test_names = NULL;
 
 static const GOptionEntry option_entries[] =
 {
@@ -44,6 +46,10 @@ static const GOptionEntry option_entries[] =
      "Set directory of source code", "DIRECTORY"},
     {"color", 'c', 0, G_OPTION_ARG_NONE, &use_color,
      "Output log with colors", NULL},
+    {"name", 'n', 0, G_OPTION_ARG_STRING_ARRAY, &test_case_names,
+     "Specify test cases", "TEST_CASE_NAME1,TEST_CASE_NAME2,..."},
+    {"test", 't', 0, G_OPTION_ARG_STRING_ARRAY, &test_names,
+     "Specify tests", "TEST_NAME1,TEST_NAME2,..."},
     {NULL}
 };
 
@@ -60,10 +66,31 @@ show_no_argument_error (GOptionContext *option_context)
 
     g_print("You should specify directory stored in shared object or execution file.\n");
 
-    help_string = g_option_context_get_help (option_context,
-                                             TRUE, NULL);
+    help_string = g_option_context_get_help(option_context,
+                                            TRUE, NULL);
     g_print("%s", help_string);
     g_free(help_string);
+}
+
+static gboolean
+run_tests (CutTestSuite *suite)
+{
+    gboolean all_success = TRUE;
+    gboolean success = FALSE;
+
+    if (test_names && test_case_names) {
+    } else if (test_case_names) {
+        gint i;
+        for (i = 0; test_case_names[i] != NULL; i++) {
+            success = cut_test_suite_run_test_case(suite, test_case_names[i]);
+            if (!success)
+                all_success = FALSE;
+        }
+    } else {
+        success = cut_test_run(CUT_TEST(suite));
+    }
+
+    return all_success;
 }
 
 int
@@ -105,7 +132,7 @@ main (int argc, char *argv[])
     suite = cut_repository_create_test_suite(repository);
 
     if (suite) {
-        success = cut_test_run(CUT_TEST(suite));
+        success = run_tests(suite);
         g_object_unref(suite);
     }
     g_object_unref(repository);

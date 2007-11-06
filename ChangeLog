@@ -1,5 +1,9 @@
 2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-main.c: Added --name and --test options.
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test-case.[c|h]: Added cut_test_case_run().
 
 2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
