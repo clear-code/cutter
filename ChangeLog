@@ -1,5 +1,9 @@
 2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* test/test_cut_repository.c: Added.
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* test/test_cut_test.c: Added get error, set error test.
 
 2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
