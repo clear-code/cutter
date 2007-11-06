@@ -46,6 +46,12 @@ struct _CutContextClass
     GObjectClass parent_class;
 };
 
+typedef enum {
+    CUT_VERBOSE_LEVEL_SILENT,
+    CUT_VERBOSE_LEVEL_NORMAL,
+    CUT_VERBOSE_LEVEL_VERBOSE
+} CutVerboseLevel;
+
 extern GPrivate *cut_context_private;
 
 GType        cut_context_get_type  (void) G_GNUC_CONST;
@@ -53,7 +59,9 @@ GType        cut_context_get_type  (void) G_GNUC_CONST;
 CutContext  *cut_context_new (void);
 
 void  cut_context_set_verbose_level         (CutContext *context,
-                                             gint        level);
+                                             CutVerboseLevel verbose_level);
+void  cut_context_set_verbose_level_by_name (CutContext *context,
+                                             const gchar *verbose_level);
 void  cut_context_set_base_dir              (CutContext *context,
                                              const gchar *base_dir);
 void  cut_context_set_use_color             (CutContext *context,

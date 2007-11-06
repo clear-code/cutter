@@ -32,15 +32,18 @@
 
 GPrivate *cut_context_private = NULL;
 
-static gint verbose_level = 0;
+static gchar *verbose_level = NULL;
 static gchar *base_dir = NULL;
 static gboolean use_color = FALSE;
 
 static const GOptionEntry option_entries[] =
 {
-    {"verbose", 'v', 0, G_OPTION_ARG_INT, &verbose_level, "Set verbose level", "L"},
-    {"base", 'b', 0, G_OPTION_ARG_STRING, &base_dir, "Set base dirirectory of source code", "B"},
-    {"color", 'c', 0, G_OPTION_ARG_NONE, &use_color, "Output log with colors", NULL},
+    {"verbose", 'v', 0, G_OPTION_ARG_STRING, &verbose_level,
+     "Set verbose level", "LEVEL"},
+    {"base", 'b', 0, G_OPTION_ARG_STRING, &base_dir,
+     "Set base directory of source code", "BASE"},
+    {"color", 'c', 0, G_OPTION_ARG_NONE, &use_color,
+     "Output log with colors", NULL},
     {NULL}
 };
 
@@ -68,7 +71,8 @@ main (int argc, char* argv[])
 
     cut_context_private = g_private_new(cut_context_private_cleanup);
 
-    cut_context_set_verbose_level(cut_context_get_current(), verbose_level);
+    cut_context_set_verbose_level_by_name(cut_context_get_current(),
+                                          verbose_level);
     cut_context_set_base_dir(cut_context_get_current(), base_dir);
     cut_context_set_use_color(cut_context_get_current(), use_color);
 

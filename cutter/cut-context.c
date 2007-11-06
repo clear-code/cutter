@@ -29,6 +29,7 @@
 
 #include "cut-context.h"
 #include "cut-context-private.h"
+#include "cut-enum-types.h"
 
 #define CUT_CONTEXT_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_CONTEXT, CutContextPrivate))
 
@@ -42,7 +43,7 @@ typedef struct _CutContextPrivate	CutContextPrivate;
 struct _CutContextPrivate
 {
     CutTest *test;
-    gint verbose_level;
+    CutVerboseLevel verbose_level;
     gboolean use_color;
     gchar *base_dir;
 };
@@ -77,11 +78,12 @@ cut_context_class_init (CutContextClass *klass)
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
 
-    spec = g_param_spec_int("verbose-level",
-                            "Verbose Level",
-                            "The number of representing verbosity level",
-                            0, G_MAXINT32, 0,
-                            G_PARAM_READWRITE);
+    spec = g_param_spec_enum("verbose-level",
+                             "Verbose Level",
+                             "The number of representing verbosity level",
+                             CUT_TYPE_VERBOSE_LEVEL,
+                             CUT_VERBOSE_LEVEL_NORMAL,
+                             G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_VERBOSE_LEVEL, spec);
 
     g_type_class_add_private(gobject_class, sizeof(CutContextPrivate));
@@ -93,7 +95,7 @@ cut_context_init (CutContext *context)
     CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
 
     priv->test = NULL;
-    priv->verbose_level = 0;
+    priv->verbose_level = CUT_VERBOSE_LEVEL_NORMAL;
     priv->use_color = FALSE;
 }
 
@@ -120,7 +122,7 @@ set_property (GObject      *object,
 
     switch (prop_id) {
       case PROP_VERBOSE_LEVEL:
-        priv->verbose_level = g_value_get_uint(value);
+        priv->verbose_level = g_value_get_enum(value);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -138,7 +140,7 @@ get_property (GObject    *object,
 
     switch (prop_id) {
       case PROP_VERBOSE_LEVEL:
-        g_value_set_uint(value, priv->verbose_level);
+        g_value_set_enum(value, priv->verbose_level);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -153,12 +155,37 @@ cut_context_new (void)
 }
 
 void
-cut_context_set_verbose_level (CutContext *context, gint level)
+cut_context_set_verbose_level (CutContext *context, CutVerboseLevel level)
 {
     CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
 
     priv->verbose_level = level;
 }
+
+void
+cut_context_set_verbose_level_by_name (CutContext *context, const gchar *name)
+{
+    CutVerboseLevel level;
+
+    if (name == NULL) {
+        level = CUT_VERBOSE_LEVEL_NORMAL;
+    } else if (g_utf8_collate(name, "s") == 0 ||
+               g_utf8_collate(name, "silent") == 0) {
+        level = CUT_VERBOSE_LEVEL_SILENT;
+    } else if (g_utf8_collate(name, "n") == 0 ||
+               g_utf8_collate(name, "normal") == 0) {
+        level = CUT_VERBOSE_LEVEL_NORMAL;
+    } else if (g_utf8_collate(name, "v") == 0 ||
+               g_utf8_collate(name, "verbose") == 0) {
+        level = CUT_VERBOSE_LEVEL_VERBOSE;
+    } else {
+        g_warning("Invalid verbose level name: %s", name);
+        return;
+    }
+
+    cut_context_set_verbose_level(context, level);
+}
+
 
 void
 cut_context_set_base_dir (CutContext *context, const gchar *base_dir)
