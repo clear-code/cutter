@@ -73,19 +73,20 @@ struct _CutTestClass
 
 GType        cut_test_get_type  (void) G_GNUC_CONST;
 
-CutTest     *cut_test_new                 (const gchar *function_name, CutTestFunction function);
+CutTest     *cut_test_new                 (const gchar *function_name,
+                                           CutTestFunction function);
 gboolean     cut_test_run                 (CutTest *test);
 const gchar *cut_test_get_function_name   (CutTest *test);
 guint        cut_test_get_assertion_count (CutTest *test);
 void         cut_test_increment_assertion_count
                                           (CutTest *test);
-void         cut_test_set_result           (CutTest *test,
-                                            CutTestResultStatus status,
-                                            const gchar *result_message,
-                                            const gchar *function_name,
-                                            const gchar *filename,
-                                            guint line);
-const CutTestResult *cut_test_get_result    (CutTest *test);
+void         cut_test_set_result          (CutTest *test,
+                                           CutTestResultStatus status,
+                                           const gchar *result_message,
+                                           const gchar *function_name,
+                                           const gchar *filename,
+                                           guint line);
+const CutTestResult *cut_test_get_result  (CutTest *test);
 
 G_END_DECLS
 
