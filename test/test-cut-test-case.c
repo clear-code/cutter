@@ -141,7 +141,7 @@ test_run_with_setup_error (void)
 {
     set_error_on_setup = TRUE;
     cut_assert(!run_the_test());
-    cut_assert_equal_int(0, n_run_dummy_test_function);
+    cut_assert_equal_int(0, n_run_dummy_test_function1);
     cut_assert_equal_int(0, n_run_dummy_run_test_function);
 }
 

@@ -1,5 +1,7 @@
 2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-test-case.c: fixed a typo.
+
 	* cutter/cut-test-container.[ch]: added new signals on
 	start/complete test.
 	* cutter/cut-context.c: used start/complete-test signals of test case
