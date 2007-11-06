@@ -1,5 +1,9 @@
 2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* configure.ac: version 0.1.0.
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* test/test-cut-test-suite.c: Added tests for regular expression
 	filter.
 
