@@ -26,6 +26,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <glib.h>
+#include <glib/gstdio.h>
 
 #include "cut-output.h"
 #include "cut-enum-types.h"
@@ -197,12 +198,19 @@ status_to_color(CutTestResultStatus status)
 
 static void
 print_for_status(CutOutputPrivate *priv, CutTestResultStatus status,
-                 const gchar *message)
+                 gchar const *format, ...)
 {
-    if (priv->use_color)
-        g_print("%s%s%s", status_to_color(status), message, NORMAL_COLOR);
-    else
-        g_print("%s", message);
+    va_list args;
+
+    va_start(args, format);
+    if (priv->use_color) {
+        g_print(status_to_color(status));
+        g_vprintf(format, args);
+        g_print(NORMAL_COLOR);
+    } else {
+        g_vprintf(format, args);
+    }
+    va_end(args);
 }
 
 
@@ -308,6 +316,7 @@ cut_output_on_success (CutOutput *output, CutTest *test)
     if (priv->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
     print_for_status(priv, CUT_TEST_RESULT_SUCCESS, ".");
+    fflush(stdout);
 }
 
 void
@@ -318,6 +327,7 @@ cut_output_on_failure (CutOutput *output, CutTest *test)
     if (priv->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
     print_for_status(priv, CUT_TEST_RESULT_FAILURE, "F");
+    fflush(stdout);
 }
 
 void
@@ -328,6 +338,7 @@ cut_output_on_error (CutOutput *output, CutTest *test)
     if (priv->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
     print_for_status(priv, CUT_TEST_RESULT_ERROR, "E");
+    fflush(stdout);
 }
 
 void
@@ -338,6 +349,7 @@ cut_output_on_pending (CutOutput *output, CutTest *test)
     if (priv->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
     print_for_status(priv, CUT_TEST_RESULT_PENDING, "P");
+    fflush(stdout);
 }
 
 void
@@ -353,12 +365,16 @@ void
 cut_output_on_complete_test_suite (CutOutput *output, CutTestSuite *test_suite)
 {
     gint i;
+    gint assertions, failures, errors, pendings;
     const GList *test_case_node;
     CutTestContainer *container;
+    CutTestResultStatus status;
     CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
 
     if (priv->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
+
+    assertions =  failures = errors = pendings = 0;
 
     i = 1;
     container = CUT_TEST_CONTAINER(test_suite);
@@ -377,6 +393,7 @@ cut_output_on_complete_test_suite (CutOutput *output, CutTestSuite *test_suite)
             const CutTestResult *result;
             gchar *filename;
 
+            assertions += cut_test_get_assertion_count(test);
             result = cut_test_get_result(test);
             if (!result)
                 continue;
@@ -395,9 +412,39 @@ cut_output_on_complete_test_suite (CutOutput *output, CutTestSuite *test_suite)
             print_for_status(priv, result->status, result->message);
             g_print("\n%s:%d: %s()\n",
                     filename, result->line, result->function_name);
+
+            switch (result->status) {
+              case CUT_TEST_RESULT_FAILURE:
+                failures++;
+                break;
+              case CUT_TEST_RESULT_ERROR:
+                errors++;
+                break;
+              case CUT_TEST_RESULT_PENDING:
+                pendings++;
+                break;
+              default:
+                break;
+            }
+
             i++;
         }
     }
+
+    g_print("\n");
+    if (errors > 0) {
+        status = CUT_TEST_RESULT_ERROR;
+    } else if (failures > 0) {
+        status = CUT_TEST_RESULT_FAILURE;
+    } else if (pendings > 0) {
+        status = CUT_TEST_RESULT_PENDING;
+    } else {
+        status = CUT_TEST_RESULT_SUCCESS;
+    }
+    print_for_status(priv, status,
+                     "%d assertions, %d failures, %d errors, %d pendings",
+                     assertions, failures, errors, pendings);
+    g_print("\n");
 }
 
 

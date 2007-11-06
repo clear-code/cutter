@@ -1,7 +1,10 @@
 2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-output.c: showed summary.
+
 	* cutter/cut-output.c: showed failure details even if normal
 	verbose mode.
+
 	* test/run-test.sh: used normal verbose mode.
 
 	* cutter/cut-assertion.h: improved error message.
