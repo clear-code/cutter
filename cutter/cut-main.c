@@ -84,6 +84,7 @@ main (int argc, char* argv[])
         g_object_unref(suite);
     }
     g_object_unref(repository);
+    g_option_context_free(option_context);
 
     exit(success ? 0 : 1);
 }
