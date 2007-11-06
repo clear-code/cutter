@@ -36,7 +36,7 @@ setup (void)
 
     loader = cut_loader_new("loader_test_dir/.libs/libdummy_loader_test.so");
     test_case = cut_loader_load_test_case(loader);
-    cut_test_container_add_test(CUT_TEST_CONTAINER(test_object), CUT_TEST(test_case));
+    cut_test_suite_add_test_case(test_object, test_case);
 
     test_case = cut_test_case_new("dummy_test_case", NULL, NULL);
     test = cut_test_new("dummy test 1", dummy_test_function);
@@ -44,7 +44,7 @@ setup (void)
     test = cut_test_new("run_test_function", dummy_run_test_function);
     cut_test_case_add_test(test_case, test);
 
-    cut_test_container_add_test(CUT_TEST_CONTAINER(test_object), CUT_TEST(test_case));
+    cut_test_suite_add_test_case(test_object, test_case);
 }
 
 void
