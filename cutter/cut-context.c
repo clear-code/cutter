@@ -313,6 +313,12 @@ cut_context_get_current (void)
     return current;
 }
 
+void
+cut_context_set_current (CutContext *context)
+{
+    g_private_set(cut_context_private, context);
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */

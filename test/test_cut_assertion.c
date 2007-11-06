@@ -45,15 +45,21 @@ void
 test_fail (void)
 {
     CutTest *test_object;
-    CutTest *original_test;
+    CutContext *original_context, *test_context;
     gboolean ret;
 
     test_object = cut_test_new("dummy-fail-test", dummy_fail_test_function);
     cut_assert(test_object);
-    original_test = cut_context_get_current_test(cut_context_get_current());
-    cut_context_set_test(cut_context_get_current(), test_object);
+
+    test_context = cut_context_new();
+    cut_context_set_verbose_level(test_context, CUT_VERBOSE_LEVEL_VERBOSE);
+    cut_context_set_test(test_context, test_object);
+
+    original_context = cut_context_get_current();
+    cut_context_set_current(test_context);
     ret = cut_test_run(test_object);
-    cut_context_set_test(cut_context_get_current(), original_test);
+    cut_context_set_current(original_context);
+
     cut_assert(!ret);
     g_object_unref(test_object);
 }

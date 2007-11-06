@@ -1,3 +1,11 @@
+2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-context.c, cutter/cut-assertion.h: exported context
+	change API.
+	* test/test_cut_assertion.c: replaces context not test.
+
+	* cutter/cut-context.c: improved format.
+
 2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-repository.c: Use cut_test_suite_add_test_case() instead
