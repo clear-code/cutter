@@ -47,7 +47,7 @@ test_pending (void)
     CutTest *test_object;
     CutContext *original_context, *test_context;
     gboolean ret;
-    CutTestResult *result;
+    const CutTestResult *result;
 
     test_object = cut_test_new("dummy-pending-test", dummy_pending_test_function);
     cut_assert(test_object);
@@ -63,12 +63,10 @@ test_pending (void)
 
     cut_assert(!ret);
 
-    result = (CutTestResult *) cut_test_get_result(test_object);
+    result = cut_test_get_result(test_object);
     cut_assert(result);
 
     cut_assert_equal_int(CUT_TEST_RESULT_PENDING, result->status);
-    cut_assert_equal_string("This test has been pending ever!", result->message);
-    cut_assert_equal_string("dummy_pending_test_function", result->function_name);
 
     g_object_unref(test_object);
     g_object_unref(test_context);
