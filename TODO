@@ -19,3 +19,4 @@
 * サマリを表示
 * 結果出力部分をオブジェクト化
 * cut_pending()。表示は黄色のP。
+* add timer APIs.
