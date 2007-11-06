@@ -104,7 +104,7 @@ run_tests (CutTestSuite *suite)
                 all_success = FALSE;
         }
     } else {
-        success = cut_test_run(CUT_TEST(suite));
+        all_success = cut_test_suite_run(suite);
     }
 
     return all_success;

@@ -1,5 +1,10 @@
 2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-main.c: (run_tests): Return value of
+	return the value of cut_test_suite_run().
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test-suite.[c|h]: Added cut_test_suite_run().
 
 2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
