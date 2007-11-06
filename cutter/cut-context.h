@@ -24,6 +24,7 @@
 
 #include <glib-object.h>
 #include "cutter.h"
+#include "cut-output.h"
 
 G_BEGIN_DECLS
 
@@ -45,12 +46,6 @@ struct _CutContextClass
 {
     GObjectClass parent_class;
 };
-
-typedef enum {
-    CUT_VERBOSE_LEVEL_SILENT,
-    CUT_VERBOSE_LEVEL_NORMAL,
-    CUT_VERBOSE_LEVEL_VERBOSE
-} CutVerboseLevel;
 
 extern GPrivate *cut_context_private;
 

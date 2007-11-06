@@ -29,29 +29,20 @@
 
 #include "cut-context.h"
 #include "cut-context-private.h"
-#include "cut-enum-types.h"
+#include "cut-output.h"
 
 #define CUT_CONTEXT_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_CONTEXT, CutContextPrivate))
-
-#define RED_COLOR "\033[01;31m"
-#define GREEN_COLOR "\033[01;32m"
-#define YELLOW_COLOR "\033[01;33m"
-#define BLUE_COLOR "\033[01;34m"
-#define NORMAL_COLOR "\033[00m"
 
 typedef struct _CutContextPrivate	CutContextPrivate;
 struct _CutContextPrivate
 {
     CutTest *test;
-    CutVerboseLevel verbose_level;
-    gboolean use_color;
-    gchar *source_directory;
+    CutOutput *output;
 };
 
 enum
 {
-    PROP_0,
-    PROP_VERBOSE_LEVEL
+    PROP_0
 };
 
 G_DEFINE_TYPE (CutContext, cut_context, G_TYPE_OBJECT)
@@ -70,21 +61,12 @@ static void
 cut_context_class_init (CutContextClass *klass)
 {
     GObjectClass *gobject_class;
-    GParamSpec *spec;
 
     gobject_class = G_OBJECT_CLASS(klass);
 
     gobject_class->dispose      = dispose;
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
-
-    spec = g_param_spec_enum("verbose-level",
-                             "Verbose Level",
-                             "The number of representing verbosity level",
-                             CUT_TYPE_VERBOSE_LEVEL,
-                             CUT_VERBOSE_LEVEL_NORMAL,
-                             G_PARAM_READWRITE);
-    g_object_class_install_property(gobject_class, PROP_VERBOSE_LEVEL, spec);
 
     g_type_class_add_private(gobject_class, sizeof(CutContextPrivate));
 }
@@ -95,8 +77,7 @@ cut_context_init (CutContext *context)
     CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
 
     priv->test = NULL;
-    priv->verbose_level = CUT_VERBOSE_LEVEL_NORMAL;
-    priv->use_color = FALSE;
+    priv->output = cut_output_new();
 }
 
 static void
@@ -104,9 +85,9 @@ dispose (GObject *object)
 {
     CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(object);
 
-    if (priv->source_directory) {
-        g_free(priv->source_directory);
-        priv->source_directory = NULL;
+    if (priv->output) {
+        g_object_unref(priv->output);
+        priv->output = NULL;
     }
 
     G_OBJECT_CLASS(cut_context_parent_class)->dispose(object);
@@ -121,9 +102,6 @@ set_property (GObject      *object,
     CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(object);
 
     switch (prop_id) {
-      case PROP_VERBOSE_LEVEL:
-        priv->verbose_level = g_value_get_enum(value);
-        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
@@ -139,9 +117,6 @@ get_property (GObject    *object,
     CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(object);
 
     switch (prop_id) {
-      case PROP_VERBOSE_LEVEL:
-        g_value_set_enum(value, priv->verbose_level);
-        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
@@ -159,31 +134,17 @@ cut_context_set_verbose_level (CutContext *context, CutVerboseLevel level)
 {
     CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
 
-    priv->verbose_level = level;
+    if (priv->output)
+        cut_output_set_verbose_level(priv->output, level);
 }
 
 void
 cut_context_set_verbose_level_by_name (CutContext *context, const gchar *name)
 {
-    CutVerboseLevel level;
+    CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
 
-    if (name == NULL) {
-        level = CUT_VERBOSE_LEVEL_NORMAL;
-    } else if (g_utf8_collate(name, "s") == 0 ||
-               g_utf8_collate(name, "silent") == 0) {
-        level = CUT_VERBOSE_LEVEL_SILENT;
-    } else if (g_utf8_collate(name, "n") == 0 ||
-               g_utf8_collate(name, "normal") == 0) {
-        level = CUT_VERBOSE_LEVEL_NORMAL;
-    } else if (g_utf8_collate(name, "v") == 0 ||
-               g_utf8_collate(name, "verbose") == 0) {
-        level = CUT_VERBOSE_LEVEL_VERBOSE;
-    } else {
-        g_warning("Invalid verbose level name: %s", name);
-        return;
-    }
-
-    cut_context_set_verbose_level(context, level);
+    if (priv->output)
+        cut_output_set_verbose_level_by_name(priv->output, name);
 }
 
 
@@ -192,14 +153,8 @@ cut_context_set_source_directory (CutContext *context, const gchar *directory)
 {
     CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
 
-    if (priv->source_directory) {
-        g_free(priv->source_directory);
-        priv->source_directory = NULL;
-    }
-
-    if (directory) {
-        priv->source_directory = g_strdup(directory);
-    }
+    if (priv->output)
+        cut_output_set_source_directory(priv->output, directory);
 }
 
 void
@@ -207,7 +162,8 @@ cut_context_set_use_color (CutContext *context, gboolean use_color)
 {
     CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
 
-    priv->use_color = use_color;
+    if (priv->output)
+        cut_output_set_use_color(priv->output, use_color);
 }
 
 void
@@ -249,60 +205,18 @@ void
 cut_context_output_error_log (CutContext *context)
 {
     CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
-    const CutTestError *error;
-    gchar *filename;
 
-    error = cut_test_get_error(priv->test);
-
-    /* output log */
-    switch (priv->verbose_level) {
-      case CUT_VERBOSE_LEVEL_VERBOSE:
-        if (priv->source_directory)
-            filename = g_build_filename(priv->source_directory, error->filename,
-                                        NULL);
-        else
-            filename = g_strdup(error->filename);
-        g_print("%s:%d: %s()\n", filename,
-                                 error->line,
-                                 error->function_name);
-        g_free(filename);
-        if (priv->use_color)
-            g_print(RED_COLOR"%s"NORMAL_COLOR"\n", error->message);
-        else
-            g_print("%s\n", error->message);
-        break;
-      case CUT_VERBOSE_LEVEL_NORMAL:
-        if (priv->use_color)
-            g_print(RED_COLOR"F"NORMAL_COLOR);
-        else
-            g_print("F");
-        break;
-      case CUT_VERBOSE_LEVEL_SILENT:
-      default:
-        break;
-    }
+    if (priv->output)
+        cut_output_on_failure(priv->output, priv->test);
 }
 
 void
 cut_context_output_normal_log (CutContext *context)
 {
     CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
-    const gchar *test_function_name;
 
-    test_function_name = cut_test_get_function_name(priv->test);
-
-    /* output log */
-    switch (priv->verbose_level) {
-      case CUT_VERBOSE_LEVEL_VERBOSE:
-        g_print("%s:.\n", test_function_name);
-        break;
-      case CUT_VERBOSE_LEVEL_NORMAL:
-        g_print(".");
-        break;
-      case CUT_VERBOSE_LEVEL_SILENT:
-      default:
-        break;
-    }
+    if (priv->output)
+        cut_output_on_success(priv->output, priv->test);
 }
 
 CutContext *
