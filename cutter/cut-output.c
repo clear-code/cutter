@@ -150,6 +150,29 @@ get_property (GObject    *object,
 }
 
 static const gchar *
+status_to_name(CutTestResultStatus status)
+{
+    const gchar *name;
+
+    switch (status) {
+      case CUT_TEST_RESULT_SUCCESS:
+        name = "Success";
+        break;
+      case CUT_TEST_RESULT_FAILURE:
+        name = "Failure";
+        break;
+      case CUT_TEST_RESULT_ERROR:
+        name = "Error";
+        break;
+      case CUT_TEST_RESULT_PENDING:
+        name = "Pending";
+        break;
+    }
+
+    return name;
+}
+
+static const gchar *
 status_to_color(CutTestResultStatus status)
 {
     const gchar *color;
@@ -360,6 +383,9 @@ cut_output_on_complete_test_suite (CutOutput *output, CutTestSuite *test_suite)
                 filename = g_strdup(result->filename);
 
             g_print("\n%d) ", i);
+            print_for_status(priv, result->status,
+                             status_to_name(result->status));
+            print_for_status(priv, result->status, ": ");
             print_for_status(priv, result->status, result->message);
             g_print("\n%s:%d: %s()\n",
                     filename, result->line, result->function_name);
