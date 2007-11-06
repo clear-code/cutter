@@ -10,6 +10,9 @@ void test_run_test_case (void);
 void test_run_test_function (void);
 void test_run_test_function_in_test_case (void);
 void test_get_n_tests (void);
+void test_get_n_failures (void);
+
+static gboolean fail_test = FALSE;
 
 static CutContext *test_context;
 static CutTestSuite *test_object;
@@ -23,6 +26,8 @@ dummy_test_function (void)
 {
     cut_assert_equal_int(1, 1);
     cut_assert_equal_int(1, 1);
+    if (fail_test)
+        cut_assert_equal_int(1, 2);
     cut_assert_equal_int(1, 1);
     cut_assert_equal_int(1, 1);
     run_dummy_test_function_flag = TRUE;
@@ -31,6 +36,8 @@ dummy_test_function (void)
 static void
 dummy_run_test_function (void)
 {
+    if (fail_test)
+        cut_assert(FALSE);
     run_dummy_run_test_function_flag = TRUE;
 }
 
@@ -40,6 +47,8 @@ setup (void)
     CutTestCase *test_case;
     CutTest *test;
     gchar *test_path;
+
+    fail_test = FALSE;
 
     test_context = cut_context_new();
     cut_context_set_verbose_level(test_context, CUT_VERBOSE_LEVEL_SILENT);
@@ -131,6 +140,24 @@ void
 test_get_n_tests (void)
 {
     cut_assert_equal_int(6, cut_test_get_n_tests(CUT_TEST(test_object)));
+}
+
+void
+test_get_n_failures (void)
+{
+    CutContext *original_context;
+    gboolean ret;
+
+    fail_test = TRUE;
+
+    original_context = cut_context_get_current();
+
+    cut_context_set_current(test_context);
+    ret = cut_test_suite_run(test_object);
+    cut_context_set_current(original_context);
+
+    cut_assert(!ret);
+    cut_assert_equal_int(2, cut_test_get_n_failures(CUT_TEST(test_object)));
 }
 
 /*
