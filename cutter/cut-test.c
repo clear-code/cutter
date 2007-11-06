@@ -28,6 +28,7 @@
 #include <glib.h>
 
 #include "cut-test.h"
+#include "cut-test-container.h"
 
 #define CUT_TEST_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST, CutTestPrivate))
 
@@ -285,11 +286,6 @@ real_run (CutTest *test)
     gboolean success;
     const gchar *status_signal_name = NULL;
 
-    if (!priv->test_function)
-        return FALSE;
-
-    g_signal_emit_by_name(test, "start");
-
     g_timer_start(priv->timer);
     priv->test_function();
     g_timer_stop(priv->timer);
@@ -315,17 +311,25 @@ real_run (CutTest *test)
     }
     g_signal_emit_by_name(test, status_signal_name);
 
-    g_signal_emit_by_name(test, "complete");
-
     return success;
 }
 
 gboolean
 cut_test_run (CutTest *test)
 {
+    gboolean success;
     CutTestClass *class = CUT_TEST_GET_CLASS(test);
 
-    return class->run(test);
+    if (!CUT_IS_TEST_CONTAINER(test)) {
+        if (!CUT_TEST_GET_PRIVATE(test)->test_function)
+            return FALSE;
+    }    
+
+    g_signal_emit_by_name(test, "start");
+    success = class->run(test);
+    g_signal_emit_by_name(test, "complete");
+
+    return success;
 }
 
 void

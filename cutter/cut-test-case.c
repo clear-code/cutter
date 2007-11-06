@@ -272,7 +272,6 @@ real_run (CutTest *test)
     tests = cut_test_container_get_children(CUT_TEST_CONTAINER(test));
     priv = CUT_TEST_CASE_GET_PRIVATE(test);
 
-    g_signal_emit_by_name(test, "start");
     for (list = tests; list; list = g_list_next(list)) {
         if (!list->data)
             continue;
@@ -299,8 +298,6 @@ real_run (CutTest *test)
     } else {
         g_signal_emit_by_name(test, "failure");
     }
-
-    g_signal_emit_by_name(test, "complete");
 
     return all_success;
 }
