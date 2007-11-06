@@ -7,6 +7,7 @@ void test_get_function_name(void);
 void test_increment_assertion_count(void);
 void test_run(void);
 void test_result(void);
+void test_is_success(void);
 
 static CutContext *test_context;
 static CutTest *test_object;
@@ -19,6 +20,17 @@ dummy_test_function (void)
     cut_assert_equal_int(1, 1);
     cut_assert_equal_int(1, 1);
     run_test_flag = TRUE;
+}
+
+static void
+dummy_success_test (void)
+{
+}
+
+static void
+dummy_failure_test (void)
+{
+    cut_fail("This test should be failed");
 }
 
 void
@@ -38,15 +50,15 @@ teardown (void)
 }
 
 static gboolean
-run_the_test (void)
+run_the_test (CutTest *test)
 {
     CutContext *original_context;
     gboolean ret;
 
     original_context = cut_context_get_current();
     cut_context_set_current(test_context);
-    cut_context_set_test(test_context, test_object);
-    ret = cut_test_run(test_object);
+    cut_context_set_test(test_context, test);
+    ret = cut_test_run(test);
     cut_context_set_current(original_context);
 
     return ret;
@@ -55,7 +67,7 @@ run_the_test (void)
 void
 test_assertion_count (void)
 {
-    cut_assert(run_the_test());
+    cut_assert(run_the_test(test_object));
     cut_assert_equal_int(3, cut_test_get_n_assertions(test_object));
 }
 
@@ -79,7 +91,7 @@ test_get_function_name (void)
 void
 test_run (void)
 {
-    cut_assert(run_the_test());
+    cut_assert(run_the_test(test_object));
     cut_assert(run_test_flag);
 }
 
@@ -125,6 +137,20 @@ test_result (void)
     cut_assert(result);
     cut_assert_equal_int(CUT_TEST_RESULT_PENDING, result->status);
 } 
+
+void
+test_is_success (void)
+{
+    CutTest *test;
+
+    test = cut_test_new("dummy-success-test", dummy_success_test);
+    cut_assert(run_the_test(test));
+    cut_assert(cut_test_is_success(test));
+
+    test = cut_test_new("dummy-failure-test", dummy_failure_test);
+    cut_assert(!run_the_test(test));
+    cut_assert(!cut_test_is_success(test));
+}
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
