@@ -1,5 +1,7 @@
 2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-context.c: used CutVerboseLevel not integer.
+
 	* cutter/cut-main.c, cutter/cut-context.h, cutter/cut-context.c,
 	  cutter/Makefile.am: specify verbose level as string.
 
