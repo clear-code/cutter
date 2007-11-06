@@ -1,5 +1,10 @@
 2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-main.c: Use cut_test_suite_run_test_function() and so on.
+	We need a function which checks test case has function.
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* test/test_cut_test_case.c: Use cut_test_case_run() instead of
 	cut_test_run().
 

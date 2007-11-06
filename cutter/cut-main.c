@@ -79,10 +79,27 @@ run_tests (CutTestSuite *suite)
     gboolean success = FALSE;
 
     if (test_names && test_case_names) {
+        gint i, j;
+        for (i = 0; test_case_names[i] != NULL; i++) {
+            for (j = 0; test_names[i] != NULL; j++) {
+                success = cut_test_suite_run_test_function_in_test_case(suite,
+                                                                        test_case_names[i],
+                                                                        test_names[j]);
+                if (!success)
+                    all_success = FALSE;
+            }
+        }
     } else if (test_case_names) {
         gint i;
         for (i = 0; test_case_names[i] != NULL; i++) {
             success = cut_test_suite_run_test_case(suite, test_case_names[i]);
+            if (!success)
+                all_success = FALSE;
+        }
+    } else if (test_names) {
+        gint i;
+        for (i = 0; test_names[i] != NULL; i++) {
+            success = cut_test_suite_run_test_function(suite, test_names[i]);
             if (!success)
                 all_success = FALSE;
         }
