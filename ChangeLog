@@ -1,3 +1,9 @@
+2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-test.[ch] (cut_test_is_success): added.
+	* cutter/cut-test-case.c: don't run test when setup fails.
+	* test/test-cut-test-case.c: added a test for the above case.
+
 2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-test.c: Emit "start" and "complete" signals in

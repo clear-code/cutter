@@ -92,6 +92,8 @@ void         cut_test_set_result          (CutTest *test,
                                            guint line);
 const CutTestResult *cut_test_get_result  (CutTest *test);
 
+gboolean     cut_test_is_success          (CutTest *test);
+
 gdouble      cut_test_get_elapsed         (CutTest *test);
 
 guint        cut_test_get_n_assertions    (CutTest *test);

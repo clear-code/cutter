@@ -6,12 +6,15 @@ void test_setup(void);
 void test_teardown(void);
 void test_test_case_count(void);
 void test_run(void);
+void test_run_with_setup_error(void);
 void test_run_this_function(void);
 void test_get_name(void);
 void test_has_function(void);
 
 static CutTestCase *test_object;
 static CutContext *test_context;
+
+static gboolean set_error_on_setup = FALSE;
 
 static gint n_setup = 0;
 static gint n_teardown = 0;
@@ -37,6 +40,8 @@ dummy_run_test_function (void)
 static void
 dummy_setup_function (void)
 {
+    if (set_error_on_setup)
+        cut_error("Error in setup");
     n_setup++;
 }
 
@@ -50,6 +55,8 @@ void
 setup (void)
 {
     CutTest *test;
+
+    set_error_on_setup = FALSE;
 
     n_setup = 0;
     n_teardown = 0;
@@ -117,6 +124,15 @@ test_run (void)
     cut_assert(run_the_test());
     cut_assert_equal_int(2, n_run_dummy_test_function);
     cut_assert_equal_int(1, n_run_dummy_run_test_function);
+}
+
+void
+test_run_with_setup_error (void)
+{
+    set_error_on_setup = TRUE;
+    cut_assert(!run_the_test());
+    cut_assert_equal_int(0, n_run_dummy_test_function);
+    cut_assert_equal_int(0, n_run_dummy_run_test_function);
 }
 
 void

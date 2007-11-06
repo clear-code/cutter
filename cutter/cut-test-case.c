@@ -283,7 +283,7 @@ real_run (CutTest *test)
             if (priv->setup)
                 priv->setup();
 
-            if (!cut_test_run(test))
+            if (!cut_test_is_success(test) || !cut_test_run(test))
                 all_success = FALSE;
 
             if (priv->teardown)

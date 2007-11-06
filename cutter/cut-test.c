@@ -382,6 +382,12 @@ cut_test_get_result (CutTest *test)
     return CUT_TEST_GET_PRIVATE(test)->result;
 }
 
+gboolean
+cut_test_is_success (CutTest *test)
+{
+    return cut_test_get_result(test) == NULL;
+}
+
 static gdouble
 real_get_elapsed (CutTest *test)
 {
