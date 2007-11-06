@@ -112,6 +112,12 @@ cut_test_suite_new (void)
     return g_object_new(CUT_TYPE_TEST_SUITE, NULL);
 }
 
+gboolean
+cut_test_suite_run (CutTestSuite *suite)
+{
+    return cut_test_run(CUT_TEST(suite));
+}
+
 static gint
 compare_test_case_name (gconstpointer a, gconstpointer b)
 {
