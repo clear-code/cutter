@@ -153,7 +153,6 @@ cut_test_suite_run_test_case (CutTestSuite *suite, const gchar *name)
 gboolean
 cut_test_suite_run_test_function (CutTestSuite *suite, const gchar *function_name)
 {
-    gboolean all_success = TRUE;
     const GList *list, *test_cases;
 
     g_return_val_if_fail(CUT_IS_TEST_SUITE(suite), FALSE);
@@ -164,15 +163,13 @@ cut_test_suite_run_test_function (CutTestSuite *suite, const gchar *function_nam
         if (!list->data)
             continue;
         if (CUT_IS_TEST_CASE(list->data)) {
-            gboolean success;
             CutTestCase *test_case = CUT_TEST_CASE(list->data);
-            success = cut_test_case_run_function(test_case, function_name);
-            if (!success)
-                all_success = FALSE;
+            if (cut_test_case_has_function(test_case, function_name))
+                return cut_test_case_run_function(test_case, function_name);
         }
     }
 
-    return all_success;
+    return FALSE;
 }
 
 gboolean
