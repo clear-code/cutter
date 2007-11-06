@@ -413,12 +413,12 @@ cut_output_on_complete_test_suite (CutOutput *output, CutTestSuite *test_suite)
             else
                 filename = g_strdup(result->filename);
 
-            g_print("\n%d) ", i);
+            g_print("\n\n%d) ", i);
             print_for_status(priv, result->status,
                              status_to_name(result->status));
             g_print("\n");
             print_for_status(priv, result->status, result->message);
-            g_print("\n%s:%d: %s()\n",
+            g_print("\n%s:%d: %s()",
                     filename, result->line, result->function_name);
 
             switch (result->status) {
@@ -439,7 +439,10 @@ cut_output_on_complete_test_suite (CutOutput *output, CutTestSuite *test_suite)
         }
     }
 
-    g_print("\n");
+    g_print("\n\n");
+    g_print("Finished in %g seconds",
+            cut_test_get_elapsed(CUT_TEST(test_suite)));
+    g_print("\n\n");
     if (errors > 0) {
         status = CUT_TEST_RESULT_ERROR;
     } else if (failures > 0) {

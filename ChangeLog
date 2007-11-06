@@ -1,5 +1,8 @@
 2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test.[ch], cutter/cut-test-container.c: added timer.
+	* cutter/cut-output.c: showed elapsed time in test.
+
 	* cutter/cut-assertion.h (cut_error): added.
 	* test/test-cut-assertion.c: added a test for cut_error().
 

@@ -57,6 +57,7 @@ static void get_property   (GObject         *object,
                             GParamSpec      *pspec);
 
 static gboolean real_run   (CutTest         *test);
+static gdouble  real_get_elapsed  (CutTest  *test);
 
 static void
 cut_test_container_class_init (CutTestContainerClass *klass)
@@ -72,6 +73,7 @@ cut_test_container_class_init (CutTestContainerClass *klass)
     gobject_class->get_property = get_property;
 
     test_class->run = real_run;
+    test_class->get_elapsed = real_get_elapsed;
 
     g_type_class_add_private(gobject_class, sizeof(CutTestContainerPrivate));
 }
@@ -173,6 +175,25 @@ real_run (CutTest *test)
     g_signal_emit_by_name(test, "complete");
 
     return all_success;
+}
+
+static gdouble
+real_get_elapsed (CutTest *test)
+{
+    gdouble result = 0.0;
+    const GList *child;
+    CutTestContainerPrivate *priv;
+
+    g_return_val_if_fail(CUT_IS_TEST_CONTAINER(test), FALSE);
+
+    priv = CUT_TEST_CONTAINER_GET_PRIVATE(test);
+    for (child = priv->tests; child; child = g_list_next(child)) {
+        CutTest *test = child->data;
+
+        result += cut_test_get_elapsed(test);
+    }
+
+    return result;
 }
 
 /*

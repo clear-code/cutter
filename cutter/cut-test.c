@@ -38,6 +38,7 @@ struct _CutTestPrivate
     CutTestFunction test_function;
     guint assertion_count;
     CutTestResult *result;
+    GTimer *timer;
 };
 
 enum
@@ -74,6 +75,7 @@ static void get_property   (GObject         *object,
                             GParamSpec      *pspec);
 
 static gboolean real_run   (CutTest         *test);
+static gdouble  real_get_elapsed  (CutTest  *test);
 
 static void
 cut_test_class_init (CutTestClass *klass)
@@ -88,6 +90,7 @@ cut_test_class_init (CutTestClass *klass)
     gobject_class->get_property = get_property;
 
     klass->run = real_run;
+    klass->get_elapsed = real_get_elapsed;
 
     spec = g_param_spec_string("function-name",
                                "Fcuntion name",
@@ -174,6 +177,7 @@ cut_test_init (CutTest *container)
     priv->test_function = NULL;
     priv->assertion_count = 0;
     priv->result = NULL;
+    priv->timer = g_timer_new();
 }
 
 static void
@@ -206,6 +210,11 @@ dispose (GObject *object)
         priv->result = NULL;
     }
     priv->test_function = NULL;
+
+    if (priv->timer) {
+        g_timer_destroy(priv->timer);
+        priv->timer = NULL;
+    }
 
     G_OBJECT_CLASS(cut_test_parent_class)->dispose(object);
 }
@@ -281,7 +290,9 @@ real_run (CutTest *test)
 
     g_signal_emit_by_name(test, "start");
 
+    g_timer_start(priv->timer);
     priv->test_function();
+    g_timer_stop(priv->timer);
     success = priv->result ? FALSE : TRUE;
 
     if (success) {
@@ -363,6 +374,18 @@ const CutTestResult *
 cut_test_get_result (CutTest *test)
 {
     return CUT_TEST_GET_PRIVATE(test)->result;
+}
+
+static gdouble
+real_get_elapsed (CutTest *test)
+{
+    return g_timer_elapsed(CUT_TEST_GET_PRIVATE(test)->timer, NULL);
+}
+
+gdouble
+cut_test_get_elapsed (CutTest *test)
+{
+    return CUT_TEST_GET_CLASS(test)->get_elapsed(test);
 }
 
 /*

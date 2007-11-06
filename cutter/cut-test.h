@@ -69,6 +69,7 @@ struct _CutTestClass
     void (*complete) (CutTest *test);
 
     gboolean (*run)  (CutTest *test);
+    gdouble  (*get_elapsed) (CutTest *test);
 };
 
 GType        cut_test_get_type  (void) G_GNUC_CONST;
@@ -87,6 +88,8 @@ void         cut_test_set_result          (CutTest *test,
                                            const gchar *filename,
                                            guint line);
 const CutTestResult *cut_test_get_result  (CutTest *test);
+
+gdouble      cut_test_get_elapsed         (CutTest *test);
 
 G_END_DECLS
 
