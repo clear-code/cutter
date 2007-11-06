@@ -1,3 +1,7 @@
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-main.c: Show error message if directory is not specified.
+
 2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-main.c, cutter/cut-context.[ch]: base_dir ->

@@ -53,8 +53,21 @@ cut_context_private_cleanup (gpointer data)
 
 }
 
+static void
+show_no_argument_error (GOptionContext *option_context)
+{
+    gchar *help_string;
+
+    g_print("You should specify directory stored in shared object or execution file.\n");
+
+    help_string = g_option_context_get_help (option_context,
+                                             TRUE, NULL);
+    g_print("%s", help_string);
+    g_free(help_string);
+}
+
 int
-main (int argc, char* argv[])
+main (int argc, char *argv[])
 {
     gboolean success = TRUE;
     GOptionContext *option_context;
@@ -64,6 +77,12 @@ main (int argc, char* argv[])
     option_context = g_option_context_new("");
     g_option_context_add_main_entries(option_context, option_entries, "cutter");
     g_option_context_parse(option_context, &argc, &argv, NULL);
+
+    if (argc == 1) {
+        show_no_argument_error(option_context);
+        g_option_context_free(option_context);
+        exit(1);
+    }
 
     g_type_init();
 
