@@ -153,32 +153,52 @@ cut_repository_new (const gchar *dirname)
                         NULL);
 }
 
-CutTestSuite *
-cut_repository_create_test_suite (CutRepository *repository)
+static void
+cut_repository_collect_loader (CutRepository *repository, const gchar *dir_name)
 {
-    CutTestSuite *suite = NULL;
     GDir *dir;
     const gchar *entry;
     CutRepositoryPrivate *priv = CUT_REPOSITORY_GET_PRIVATE(repository);
 
-    if (!priv->dirname)
-        return NULL;
-
-    dir = g_dir_open(priv->dirname, 0, NULL);
+    dir = g_dir_open(dir_name, 0, NULL);
     if (!dir)
-        return NULL;
+        return;
 
     while ((entry = g_dir_read_name(dir))) {
         CutLoader *loader;
-        CutTestCase *test_case;
         gchar *path_name;
+
+        path_name = g_build_filename(dir_name, entry, NULL);
+
+        if (g_file_test(path_name, G_FILE_TEST_IS_DIR))
+            cut_repository_collect_loader(repository, path_name);
 
         if (!g_str_has_suffix(entry, "."G_MODULE_SUFFIX))
             continue;
 
-        path_name = g_build_filename(priv->dirname, entry, NULL);
         loader = cut_loader_new(path_name);
         g_free(path_name);
+
+        priv->loaders = g_list_prepend(priv->loaders, loader);
+    }
+    g_dir_close(dir);
+}
+
+CutTestSuite *
+cut_repository_create_test_suite (CutRepository *repository)
+{
+    CutTestSuite *suite = NULL;
+    CutRepositoryPrivate *priv = CUT_REPOSITORY_GET_PRIVATE(repository);
+    GList *list;
+
+    if (!priv->dirname)
+        return NULL;
+
+    cut_repository_collect_loader (repository, priv->dirname);
+
+    for (list = priv->loaders; list; list = g_list_next(list)) {
+        CutLoader *loader = CUT_LOADER(list->data);
+        CutTestCase *test_case;
 
         test_case = cut_loader_load_test_case(loader);
         if (test_case) {
@@ -186,9 +206,7 @@ cut_repository_create_test_suite (CutRepository *repository)
                 suite = cut_test_suite_new();
             cut_test_suite_add_test_case(suite,test_case);
         }
-        priv->loaders = g_list_prepend(priv->loaders, loader);
     }
-    g_dir_close(dir);
 
     return suite;
 }
