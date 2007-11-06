@@ -33,15 +33,15 @@
 GPrivate *cut_context_private = NULL;
 
 static gchar *verbose_level = NULL;
-static gchar *base_dir = NULL;
+static gchar *source_directory = NULL;
 static gboolean use_color = FALSE;
 
 static const GOptionEntry option_entries[] =
 {
     {"verbose", 'v', 0, G_OPTION_ARG_STRING, &verbose_level,
      "Set verbose level", "LEVEL"},
-    {"base", 'b', 0, G_OPTION_ARG_STRING, &base_dir,
-     "Set base directory of source code", "BASE"},
+    {"source-directory", 's', 0, G_OPTION_ARG_STRING, &source_directory,
+     "Set directory of source code", "DIRECTORY"},
     {"color", 'c', 0, G_OPTION_ARG_NONE, &use_color,
      "Output log with colors", NULL},
     {NULL}
@@ -73,7 +73,13 @@ main (int argc, char* argv[])
 
     cut_context_set_verbose_level_by_name(cut_context_get_current(),
                                           verbose_level);
-    cut_context_set_base_dir(cut_context_get_current(), base_dir);
+    if (source_directory) {
+        cut_context_set_source_directory(cut_context_get_current(),
+                                         source_directory);
+    } else {
+        cut_context_set_source_directory(cut_context_get_current(),
+                                         argv[1]);
+    }
     cut_context_set_use_color(cut_context_get_current(), use_color);
 
     repository = cut_repository_new(argv[1]);

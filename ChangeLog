@@ -1,3 +1,9 @@
+2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-main.c, cutter/cut-context.[ch]: base_dir ->
+	source_directory.
+	* test/run-test.sh: used -s option.
+
 2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-main.c: Plugged memory leak.
@@ -5,7 +11,7 @@
 2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-assertion.h, cutter/cut-context-private.h:
-	Moved cut_context_set_current() 
+	Moved cut_context_set_current().
 
 2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 

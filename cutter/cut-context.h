@@ -59,11 +59,11 @@ GType        cut_context_get_type  (void) G_GNUC_CONST;
 CutContext  *cut_context_new (void);
 
 void  cut_context_set_verbose_level         (CutContext *context,
-                                             CutVerboseLevel verbose_level);
+                                             CutVerboseLevel level);
 void  cut_context_set_verbose_level_by_name (CutContext *context,
-                                             const gchar *verbose_level);
-void  cut_context_set_base_dir              (CutContext *context,
-                                             const gchar *base_dir);
+                                             const gchar *name);
+void  cut_context_set_source_directory      (CutContext *context,
+                                             const gchar *directory);
 void  cut_context_set_use_color             (CutContext *context,
                                              gboolean    use_color);
 

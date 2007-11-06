@@ -45,7 +45,7 @@ struct _CutContextPrivate
     CutTest *test;
     CutVerboseLevel verbose_level;
     gboolean use_color;
-    gchar *base_dir;
+    gchar *source_directory;
 };
 
 enum
@@ -104,9 +104,9 @@ dispose (GObject *object)
 {
     CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(object);
 
-    if (priv->base_dir) {
-        g_free(priv->base_dir);
-        priv->base_dir = NULL;
+    if (priv->source_directory) {
+        g_free(priv->source_directory);
+        priv->source_directory = NULL;
     }
 
     G_OBJECT_CLASS(cut_context_parent_class)->dispose(object);
@@ -188,17 +188,17 @@ cut_context_set_verbose_level_by_name (CutContext *context, const gchar *name)
 
 
 void
-cut_context_set_base_dir (CutContext *context, const gchar *base_dir)
+cut_context_set_source_directory (CutContext *context, const gchar *directory)
 {
     CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
 
-    if (priv->base_dir) {
-        g_free(priv->base_dir);
-        priv->base_dir = NULL;
+    if (priv->source_directory) {
+        g_free(priv->source_directory);
+        priv->source_directory = NULL;
     }
 
-    if (base_dir) {
-        priv->base_dir = g_strdup(base_dir);
+    if (directory) {
+        priv->source_directory = g_strdup(directory);
     }
 }
 
@@ -250,15 +250,22 @@ cut_context_output_error_log (CutContext *context)
 {
     CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
     const CutTestError *error;
+    gchar *filename;
 
     error = cut_test_get_error(priv->test);
 
     /* output log */
     switch (priv->verbose_level) {
       case CUT_VERBOSE_LEVEL_VERBOSE:
-        g_print("%s:%d: %s()\n", error->filename,
+        if (priv->source_directory)
+            filename = g_build_filename(priv->source_directory, error->filename,
+                                        NULL);
+        else
+            filename = g_strdup(error->filename);
+        g_print("%s:%d: %s()\n", filename,
                                  error->line,
                                  error->function_name);
+        g_free(filename);
         if (priv->use_color)
             g_print(RED_COLOR"%s"NORMAL_COLOR"\n", error->message);
         else
