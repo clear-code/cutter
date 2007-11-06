@@ -357,7 +357,7 @@ cut_output_on_complete_test_suite (CutOutput *output, CutTestSuite *test_suite)
     CutTestContainer *container;
     CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
 
-    if (priv->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
+    if (priv->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
 
     i = 1;
