@@ -1,11 +1,11 @@
 2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
-	* test/test_cut_repository.c: Create CutTestRepositry from
+	* test/test_cut_repository.c: Create CutRepositry from
 	repository_test_dir.
 
 2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
-	* test/repository_test_dir: Added dir for storing test data CutTestRepository.
+	* test/repository_test_dir: Added dir for storing test data CutRepository.
 
 2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
 
