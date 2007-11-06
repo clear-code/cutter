@@ -5,6 +5,9 @@
 
 2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertion.h: improved format.
+	* test/test-cut-test-case.c: improved test approach.
+
 	* test/test-cut-test-suite.c, test/test-cut-loader.c,
 	test/test-cut-repository.c, test/Makefile.am: used utility library.
 

@@ -13,10 +13,10 @@ void test_has_function(void);
 static CutTestCase *test_object;
 static CutContext *test_context;
 
-static gboolean setup_flag = FALSE;
-static gboolean teardown_flag = FALSE;
-static gboolean run_dummy_run_test_function_flag = FALSE;
-static gboolean run_dummy_test_function_flag = FALSE;
+static gint n_setup = 0;
+static gint n_teardown = 0;
+static gint n_run_dummy_run_test_function = 0;
+static gint n_run_dummy_test_function = 0;
 
 static void
 dummy_test_function (void)
@@ -25,33 +25,36 @@ dummy_test_function (void)
     cut_assert_equal_int(1, 1);
     cut_assert_equal_int(1, 1);
     cut_assert_equal_int(1, 1);
-    run_dummy_test_function_flag = TRUE;
+    n_run_dummy_test_function++;
 }
 
 static void
 dummy_run_test_function (void)
 {
-    run_dummy_run_test_function_flag = TRUE;
+    n_run_dummy_run_test_function++;
 }
 
 static void
 dummy_setup_function (void)
 {
-    run_dummy_run_test_function_flag = FALSE;
-    run_dummy_test_function_flag = FALSE;
-    setup_flag = TRUE;
+    n_setup++;
 }
 
 static void
 dummy_teardown_function (void)
 {
-    teardown_flag = TRUE;
+    n_teardown++;
 }
 
 void
 setup (void)
 {
     CutTest *test;
+
+    n_setup = 0;
+    n_teardown = 0;
+    n_run_dummy_run_test_function = 0;
+    n_run_dummy_test_function = 0;
 
     test_context = cut_context_new();
     cut_context_set_verbose_level(test_context, CUT_VERBOSE_LEVEL_SILENT);
@@ -91,17 +94,15 @@ run_the_test (void)
 void
 test_setup (void)
 {
-    setup_flag = FALSE;
     cut_assert(run_the_test());
-    cut_assert(setup_flag);
+    cut_assert(1 < n_setup);
 }
 
 void
 test_teardown (void)
 {
-    teardown_flag = FALSE;
     cut_assert(run_the_test());
-    cut_assert(teardown_flag);
+    cut_assert(1 < n_teardown);
 }
 
 void
@@ -114,8 +115,8 @@ void
 test_run (void)
 {
     cut_assert(run_the_test());
-    cut_assert(run_dummy_test_function_flag);
-    cut_assert(run_dummy_run_test_function_flag);
+    cut_assert_equal_int(2, n_run_dummy_test_function);
+    cut_assert_equal_int(1, n_run_dummy_run_test_function);
 }
 
 void
@@ -131,14 +132,15 @@ test_run_this_function (void)
 
     cut_assert(ret);
 
-    cut_assert(run_dummy_run_test_function_flag);
-    cut_assert(!run_dummy_test_function_flag);
+    cut_assert_equal_int(1, n_run_dummy_run_test_function);
+    cut_assert_equal_int(0, n_run_dummy_test_function);
 }
 
 void
 test_get_name (void)
 {
-    cut_assert_equal_string("dummy test case", cut_test_case_get_name(test_object));
+    cut_assert_equal_string("dummy test case",
+                            cut_test_case_get_name(test_object));
 }
 
 void
