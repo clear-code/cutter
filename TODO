@@ -21,3 +21,4 @@
 * cut_pending()。表示は黄色のP。
 * add timer APIs.
 * add cut_fork().
+* CutTestError -> CutTestResult.
