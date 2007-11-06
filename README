@@ -45,15 +45,15 @@ The feature of Cutter is to making test as shared library.
 
 === Options
 
-: -vLEVEL, --verbose=LEVEL
+: -v LEVEL, --verbose=LEVEL
 
    It specifies verbose level. LEVEL is silent (s), normal (n),
    progress (p) or verbose (v). Output is more verbosely in
    the back.
 
-: -bBASE, --base=BASE
+: -s DIRECTORY, --source-directory=DIRECTORY
 
-   Cutter adds BASE before file name when test fails. This
+   Cutter adds DIRECTORY before file name when test fails. This
    is for tolls (like Emacs) which have function jumping to
    error line.
 
