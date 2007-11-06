@@ -1,5 +1,5 @@
 #!/bin/sh
 
-base_dir=`dirname $0`
+export BASE_DIR="`dirname $0`"
 make > /dev/null && \
-  $base_dir/../cutter/cutter -s $base_dir "$@" $base_dir/.libs
+  $BASE_DIR/../cutter/cutter -s $BASE_DIR "$@" $BASE_DIR

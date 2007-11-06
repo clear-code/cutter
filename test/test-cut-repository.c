@@ -12,9 +12,18 @@ void
 setup (void)
 {
     CutContext *context;
+    const gchar *base_dir;
+    gchar *test_repository_path;
 
     context = cut_context_new();
-    test_repository = cut_repository_new(context, "./repository_test_dir/");
+    base_dir = g_getenv("BASE_DIR");
+    if (!base_dir)
+        base_dir = ".";
+    test_repository_path = g_build_filename(base_dir,
+                                            "repository_test_dir",
+                                            NULL);
+    test_repository = cut_repository_new(context, test_repository_path);
+    g_free(test_repository_path);
     g_object_unref(context);
 }
 

@@ -1,5 +1,9 @@
 2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/run-test.sh: passed base directory.
+	* test/test-cut-loader.c, test/test-cut-repository.c: used base
+	directory for searching.
+
 	* cutter/cut-output.c:
 	- showed summary.
 	- showed failure details even if normal	verbose mode.
