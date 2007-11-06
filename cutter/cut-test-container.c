@@ -58,6 +58,10 @@ static void get_property   (GObject         *object,
 
 static gboolean real_run   (CutTest         *test);
 static gdouble  real_get_elapsed  (CutTest  *test);
+static guint    real_get_n_assertions (CutTest *test);
+static guint    real_get_n_failures (CutTest *test);
+static guint    real_get_n_errors   (CutTest *test);
+static guint    real_get_n_pendings (CutTest *test);
 
 static void
 cut_test_container_class_init (CutTestContainerClass *klass)
@@ -74,6 +78,10 @@ cut_test_container_class_init (CutTestContainerClass *klass)
 
     test_class->run = real_run;
     test_class->get_elapsed = real_get_elapsed;
+    test_class->get_n_assertions = real_get_n_assertions;
+    test_class->get_n_failures = real_get_n_failures;
+    test_class->get_n_errors = real_get_n_errors;
+    test_class->get_n_pendings = real_get_n_pendings;
 
     g_type_class_add_private(gobject_class, sizeof(CutTestContainerPrivate));
 }
@@ -188,6 +196,82 @@ real_get_elapsed (CutTest *test)
         CutTest *test = child->data;
 
         result += cut_test_get_elapsed(test);
+    }
+
+    return result;
+}
+
+static guint
+real_get_n_assertions (CutTest *test)
+{
+    guint result = 0;
+    const GList *child;
+    CutTestContainerPrivate *priv;
+
+    g_return_val_if_fail(CUT_IS_TEST_CONTAINER(test), FALSE);
+
+    priv = CUT_TEST_CONTAINER_GET_PRIVATE(test);
+    for (child = priv->tests; child; child = g_list_next(child)) {
+        CutTest *test = child->data;
+
+        result += cut_test_get_n_assertions(test);
+    }
+
+    return result;
+}
+
+static guint
+real_get_n_failures (CutTest *test)
+{
+    guint result = 0;
+    const GList *child;
+    CutTestContainerPrivate *priv;
+
+    g_return_val_if_fail(CUT_IS_TEST_CONTAINER(test), FALSE);
+
+    priv = CUT_TEST_CONTAINER_GET_PRIVATE(test);
+    for (child = priv->tests; child; child = g_list_next(child)) {
+        CutTest *test = child->data;
+
+        result += cut_test_get_n_failures(test);
+    }
+
+    return result;
+}
+
+static guint
+real_get_n_errors (CutTest *test)
+{
+    guint result = 0;
+    const GList *child;
+    CutTestContainerPrivate *priv;
+
+    g_return_val_if_fail(CUT_IS_TEST_CONTAINER(test), FALSE);
+
+    priv = CUT_TEST_CONTAINER_GET_PRIVATE(test);
+    for (child = priv->tests; child; child = g_list_next(child)) {
+        CutTest *test = child->data;
+
+        result += cut_test_get_n_errors(test);
+    }
+
+    return result;
+}
+
+static guint
+real_get_n_pendings (CutTest *test)
+{
+    guint result = 0;
+    const GList *child;
+    CutTestContainerPrivate *priv;
+
+    g_return_val_if_fail(CUT_IS_TEST_CONTAINER(test), FALSE);
+
+    priv = CUT_TEST_CONTAINER_GET_PRIVATE(test);
+    for (child = priv->tests; child; child = g_list_next(child)) {
+        CutTest *test = child->data;
+
+        result += cut_test_get_n_pendings(test);
     }
 
     return result;

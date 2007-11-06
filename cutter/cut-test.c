@@ -77,6 +77,10 @@ static void get_property   (GObject         *object,
 
 static gboolean real_run   (CutTest         *test);
 static gdouble  real_get_elapsed  (CutTest  *test);
+static guint    real_get_n_assertions (CutTest *test);
+static guint    real_get_n_failures (CutTest *test);
+static guint    real_get_n_errors   (CutTest *test);
+static guint    real_get_n_pendings (CutTest *test);
 
 static void
 cut_test_class_init (CutTestClass *klass)
@@ -92,6 +96,10 @@ cut_test_class_init (CutTestClass *klass)
 
     klass->run = real_run;
     klass->get_elapsed = real_get_elapsed;
+    klass->get_n_assertions = real_get_n_assertions;
+    klass->get_n_failures = real_get_n_failures;
+    klass->get_n_errors = real_get_n_errors;
+    klass->get_n_pendings = real_get_n_pendings;
 
     spec = g_param_spec_string("function-name",
                                "Fcuntion name",
@@ -368,12 +376,6 @@ cut_test_get_function_name (CutTest *test)
     return CUT_TEST_GET_PRIVATE(test)->function_name;
 }
 
-guint
-cut_test_get_assertion_count (CutTest *test)
-{
-    return CUT_TEST_GET_PRIVATE(test)->assertion_count;
-}
-
 const CutTestResult *
 cut_test_get_result (CutTest *test)
 {
@@ -390,6 +392,69 @@ gdouble
 cut_test_get_elapsed (CutTest *test)
 {
     return CUT_TEST_GET_CLASS(test)->get_elapsed(test);
+}
+
+static guint
+real_get_n_assertions (CutTest *test)
+{
+    return CUT_TEST_GET_PRIVATE(test)->assertion_count;
+}
+
+guint
+cut_test_get_n_assertions (CutTest *test)
+{
+    return CUT_TEST_GET_CLASS(test)->get_n_assertions(test);
+}
+
+static guint
+real_get_n_failures (CutTest *test)
+{
+    CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(test);
+
+    if (!priv->result)
+        return 0;
+
+    return priv->result->status == CUT_TEST_RESULT_FAILURE ? 1 : 0;
+}
+
+guint
+cut_test_get_n_failures (CutTest *test)
+{
+    return CUT_TEST_GET_CLASS(test)->get_n_failures(test);
+}
+
+static guint
+real_get_n_errors (CutTest *test)
+{
+    CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(test);
+
+    if (!priv->result)
+        return 0;
+
+    return priv->result->status == CUT_TEST_RESULT_ERROR ? 1 : 0;
+}
+
+guint
+cut_test_get_n_errors (CutTest *test)
+{
+    return CUT_TEST_GET_CLASS(test)->get_n_errors(test);
+}
+
+static guint
+real_get_n_pendings (CutTest *test)
+{
+    CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(test);
+
+    if (!priv->result)
+        return 0;
+
+    return priv->result->status == CUT_TEST_RESULT_PENDING ? 1 : 0;
+}
+
+guint
+cut_test_get_n_pendings (CutTest *test)
+{
+    return CUT_TEST_GET_CLASS(test)->get_n_pendings(test);
 }
 
 /*

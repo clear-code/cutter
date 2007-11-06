@@ -380,7 +380,7 @@ cut_output_on_complete_test_suite (CutOutput *output, CutTestSuite *test_suite)
     if (priv->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
 
-    n_tests = assertions = failures = errors = pendings = 0;
+    n_tests = 0;
 
     i = 1;
     container = CUT_TEST_CONTAINER(test_suite);
@@ -401,7 +401,6 @@ cut_output_on_complete_test_suite (CutOutput *output, CutTestSuite *test_suite)
 
             n_tests++;
 
-            assertions += cut_test_get_assertion_count(test);
             result = cut_test_get_result(test);
             if (!result)
                 continue;
@@ -421,20 +420,6 @@ cut_output_on_complete_test_suite (CutOutput *output, CutTestSuite *test_suite)
             g_print("\n%s:%d: %s()",
                     filename, result->line, result->function_name);
 
-            switch (result->status) {
-              case CUT_TEST_RESULT_FAILURE:
-                failures++;
-                break;
-              case CUT_TEST_RESULT_ERROR:
-                errors++;
-                break;
-              case CUT_TEST_RESULT_PENDING:
-                pendings++;
-                break;
-              default:
-                break;
-            }
-
             i++;
         }
     }
@@ -443,6 +428,11 @@ cut_output_on_complete_test_suite (CutOutput *output, CutTestSuite *test_suite)
     g_print("Finished in %g seconds",
             cut_test_get_elapsed(CUT_TEST(test_suite)));
     g_print("\n\n");
+
+    assertions = cut_test_get_n_assertions(CUT_TEST(test_suite));
+    failures = cut_test_get_n_failures(CUT_TEST(test_suite));
+    errors = cut_test_get_n_errors(CUT_TEST(test_suite));
+    pendings = cut_test_get_n_pendings(CUT_TEST(test_suite));
     if (errors > 0) {
         status = CUT_TEST_RESULT_ERROR;
     } else if (failures > 0) {
