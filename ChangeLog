@@ -1,5 +1,7 @@
 2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertion.h: surrounded with do {} while(0).
+
 	* cutter/cut-test.[ch], cutter/cut-test-container.c: added
 	cut_test_get_n_tests().
 	* test/test-cut-test.c, test/test-cut-test-case.c,

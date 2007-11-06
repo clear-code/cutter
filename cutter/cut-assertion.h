@@ -45,79 +45,105 @@ void  cut_context_set_result                (CutContext *context,
                                              const gchar *filename,
                                              guint line);
 
-#define cut_error(message)                              \
-{                                                       \
-    cut_context_set_result(                             \
-            cut_context_get_current(),                  \
-            CUT_TEST_RESULT_ERROR,                      \
-            message, __PRETTY_FUNCTION__,               \
-            __FILE__, __LINE__);                        \
-    return;                                             \
+#define cut_error(message) do                   \
+{                                               \
+    cut_context_set_result(                     \
+            cut_context_get_current(),          \
+            CUT_TEST_RESULT_ERROR,              \
+            message, __PRETTY_FUNCTION__,       \
+            __FILE__, __LINE__);                \
+    return;                                     \
+} while(0)
+
+#define cut_fail(message) do                    \
+{                                               \
+    cut_context_set_result(                     \
+        cut_context_get_current(),              \
+        CUT_TEST_RESULT_FAILURE,                \
+        message, __PRETTY_FUNCTION__,           \
+        __FILE__, __LINE__);                    \
+    return;                                     \
+} while(0)
+
+#define cut_pending(message) do                 \
+{                                               \
+    cut_context_set_result(                     \
+            cut_context_get_current(),          \
+            CUT_TEST_RESULT_PENDING,            \
+            message, __PRETTY_FUNCTION__,       \
+            __FILE__, __LINE__);                \
+    return;                                     \
 }
 
-#define cut_fail(message)                               \
+#define cut_assert(expect) do                           \
 {                                                       \
-    cut_context_set_result(                             \
-            cut_context_get_current(),                  \
-            CUT_TEST_RESULT_FAILURE,                    \
-            message, __PRETTY_FUNCTION__,               \
-            __FILE__, __LINE__);                        \
-    return;                                             \
-}
-
-#define cut_pending(message)                            \
-{                                                       \
-    cut_context_set_result(                             \
-            cut_context_get_current(),                  \
-            CUT_TEST_RESULT_PENDING,                    \
-            message, __PRETTY_FUNCTION__,               \
-            __FILE__, __LINE__);                        \
-    return;                                             \
-}
-
-#define cut_assert(expect)                              \
-if (!(expect)) {                                        \
-    cut_context_set_result(                             \
+    if (!(expect)) {                                    \
+        cut_context_set_result(                         \
             cut_context_get_current(),                  \
             CUT_TEST_RESULT_FAILURE,                    \
             "expected: <" #expect "> is not 0/NULL",    \
             __PRETTY_FUNCTION__,                        \
             __FILE__, __LINE__);                        \
-    return;                                             \
-} else {                                                \
-    cut_context_increment_assertion_count(              \
+        return;                                         \
+    } else {                                            \
+        cut_context_increment_assertion_count(          \
             cut_context_get_current());                 \
-}
+    }                                                   \
+} while(0)
 
-#define cut_assert_equal_int(expect, actual)                \
-if (expect != actual) {                                     \
-    gchar *message;                                         \
-    message = g_strdup_printf(                              \
-            "expected: <%d>\n but was: <%d>",               \
-            expect, actual);                                \
-    cut_context_set_result(                                 \
+
+#define cut_assert_equal_int(expect, actual) do \
+{                                               \
+    if (expect != actual) {                     \
+        gchar *message;                         \
+        message = g_strdup_printf(              \
+            "expected: <%d>\n but was: <%d>",   \
+            expect, actual);                    \
+        cut_context_set_result(                 \
+            cut_context_get_current(),          \
+            CUT_TEST_RESULT_FAILURE,            \
+            message, __PRETTY_FUNCTION__,       \
+            __FILE__, __LINE__);                \
+        g_free(message);                        \
+        return;                                 \
+    } else {                                    \
+        cut_context_increment_assertion_count(  \
+            cut_context_get_current());         \
+    }                                           \
+} while(0)
+
+#define cut_assert_equal_double(expect, error, actual) do   \
+{                                                           \
+    double _expect = expect;                                \
+    double _actual = actual;                                \
+    double _error = error;                                  \
+    if (!(_expect - _error <= _actual &&                    \
+          _actual <= _expect + _error)) {                   \
+        gchar *message;                                     \
+        message = g_strdup_printf(                          \
+            "expected: <%g +/- %g>\n but was: <%g>",        \
+            expect, _error, actual);                        \
+        cut_context_set_result(                             \
             cut_context_get_current(),                      \
             CUT_TEST_RESULT_FAILURE,                        \
             message, __PRETTY_FUNCTION__,                   \
             __FILE__, __LINE__);                            \
-    g_free(message);                                        \
-    return;                                                 \
-} else {                                                    \
-    cut_context_increment_assertion_count(                  \
-            cut_context_get_current());                     \
-}
+        g_free(message);                                    \
+        return;                                             \
+    } else {                                                \
+        cut_context_increment_assertion_count(              \
+                cut_context_get_current());                 \
+    }                                                       \
+} while(0)
 
-#define cut_assert_equal_double(expect, error, actual)  \
-do {                                                    \
-    double _expect = expect;                            \
-    double _actual = actual;                            \
-    double _error = error;                              \
-    if (!(_expect - _error <= _actual &&                \
-          _actual <= _expect + _error)) {               \
+#define cut_assert_equal_string(expect, actual) do      \
+{                                                       \
+    if ((!expect && actual) || (expect && !actual) ||   \
+        (expect && actual &&strcmp(expect, actual))) {  \
         gchar *message;                                 \
         message = g_strdup_printf(                      \
-            "expected: <%g +/- %g>\n but was: <%g>",    \
-            expect, _error, actual);                    \
+            "expected: <%s>\n but was: <%s>",           \
+            expect, actual);                            \
         cut_context_set_result(                         \
             cut_context_get_current(),                  \
             CUT_TEST_RESULT_FAILURE,                    \
@@ -127,28 +153,10 @@ do {                                                    \
         return;                                         \
     } else {                                            \
         cut_context_increment_assertion_count(          \
-                cut_context_get_current());             \
+            cut_context_get_current());                 \
     }                                                   \
 } while(0)
 
-#define cut_assert_equal_string(expect, actual)             \
-if ((!expect && actual) || (expect && !actual) ||           \
-    (expect && actual &&strcmp(expect, actual))) {          \
-    gchar *message;                                         \
-    message = g_strdup_printf(                              \
-            "expected: <%s>\n but was: <%s>",               \
-            expect, actual);                                \
-    cut_context_set_result(                                 \
-            cut_context_get_current(),                      \
-            CUT_TEST_RESULT_FAILURE,                        \
-            message, __PRETTY_FUNCTION__,                   \
-            __FILE__, __LINE__);                            \
-    g_free(message);                                        \
-    return;                                                 \
-} else {                                                    \
-    cut_context_increment_assertion_count(                  \
-            cut_context_get_current());                     \
-}
 
 G_END_DECLS
 
