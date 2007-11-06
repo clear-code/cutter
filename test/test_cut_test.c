@@ -6,8 +6,7 @@ void test_assertion_count(void);
 void test_get_function_name(void);
 void test_increment_assertion_count(void);
 void test_run(void);
-void test_set_error(void);
-void test_get_error(void);
+void test_result(void);
 
 static CutContext *test_context;
 static CutTest *test_object;
@@ -85,15 +84,46 @@ test_run (void)
 }
 
 void
-test_get_error (void)
+test_result (void)
 {
-    cut_assert(FALSE);
-}
+    const CutTestResult *result;
+    
+    cut_test_set_result(test_object,
+                        CUT_TEST_RESULT_FAILURE,
+                        "result-message",
+                        "function-name",
+                        "filename",
+                        999);
+    result = cut_test_get_result(test_object);
 
-void
-test_set_error (void)
-{
-    cut_assert(FALSE);
+    cut_assert(result);
+    cut_assert_equal_int(CUT_TEST_RESULT_FAILURE, result->status);
+    cut_assert_equal_string("result-message", result->message);
+    cut_assert_equal_string("function-name", result->function_name);
+    cut_assert_equal_string("filename", result->filename);
+    cut_assert_equal_int(999, result->line);
+
+    cut_test_set_result(test_object,
+                        CUT_TEST_RESULT_ERROR,
+                        "result-message",
+                        "function-name",
+                        "filename",
+                        999);
+    result = cut_test_get_result(test_object);
+
+    cut_assert(result);
+    cut_assert_equal_int(CUT_TEST_RESULT_ERROR, result->status);
+
+    cut_test_set_result(test_object,
+                        CUT_TEST_RESULT_PENDING,
+                        "result-message",
+                        "function-name",
+                        "filename",
+                        999);
+    result = cut_test_get_result(test_object);
+
+    cut_assert(result);
+    cut_assert_equal_int(CUT_TEST_RESULT_PENDING, result->status);
 } 
 
 /*

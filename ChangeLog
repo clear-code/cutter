@@ -1,5 +1,9 @@
 2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* test/test_cut_test.c: Added cut_test_get_result() test.
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* test/test_cut_assertion.c: Added cut_pending() test.
 
 2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
