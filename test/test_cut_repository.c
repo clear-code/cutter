@@ -1,4 +1,5 @@
 #include "cutter.h"
+#include "cut-context.h"
 #include "cut-repository.h"
 #include "cut-test-case.h"
 #include "cut-test-container.h"
@@ -10,7 +11,11 @@ static CutRepository *test_repository;
 void
 setup (void)
 {
-    test_repository = cut_repository_new("./repository_test_dir/");
+    CutContext *context;
+
+    context = cut_context_new();
+    test_repository = cut_repository_new(context, "./repository_test_dir/");
+    g_object_unref(context);
 }
 
 void

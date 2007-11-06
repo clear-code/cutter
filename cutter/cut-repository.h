@@ -51,7 +51,8 @@ struct _CutRepositoryClass
 
 GType cut_repository_get_type  (void) G_GNUC_CONST;
 
-CutRepository *cut_repository_new               (const gchar *dirname);
+CutRepository *cut_repository_new               (CutContext *context,
+                                                 const gchar *directory);
 CutTestSuite  *cut_repository_create_test_suite (CutRepository *repository);
 
 G_END_DECLS

@@ -117,6 +117,7 @@ main (int argc, char *argv[])
     GOptionContext *option_context;
     CutTestSuite *suite;
     CutRepository *repository;
+    CutContext *context;
 
     option_context = g_option_context_new("");
     g_option_context_add_main_entries(option_context, option_entries, "cutter");
@@ -132,20 +133,19 @@ main (int argc, char *argv[])
 
     g_thread_init(NULL);
 
+    context = cut_context_new();
     cut_context_private = g_private_new(cut_context_private_cleanup);
+    g_private_set(cut_context_private, context);
 
-    cut_context_set_verbose_level_by_name(cut_context_get_current(),
-                                          verbose_level);
+    cut_context_set_verbose_level_by_name(context, verbose_level);
     if (source_directory) {
-        cut_context_set_source_directory(cut_context_get_current(),
-                                         source_directory);
+        cut_context_set_source_directory(context, source_directory);
     } else {
-        cut_context_set_source_directory(cut_context_get_current(),
-                                         argv[1]);
+        cut_context_set_source_directory(context, argv[1]);
     }
-    cut_context_set_use_color(cut_context_get_current(), use_color);
+    cut_context_set_use_color(context, use_color);
 
-    repository = cut_repository_new(argv[1]);
+    repository = cut_repository_new(context, argv[1]);
     suite = cut_repository_create_test_suite(repository);
 
     if (suite) {

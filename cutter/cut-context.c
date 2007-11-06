@@ -279,6 +279,68 @@ cut_context_set_test (CutContext *context, CutTest *test)
     priv->test = test;
 }
 
+static void
+cb_start_test_case(CutTestCase *test_case, gpointer data)
+{
+    CutContext *context = data;
+    CutContextPrivate *priv;
+
+    priv = CUT_CONTEXT_GET_PRIVATE(context);
+    if (priv->output)
+        cut_output_on_start_test_case(priv->output, test_case);
+}
+
+static void
+cb_complete_test_case(CutTestCase *test_case, gpointer data)
+{
+    CutContext *context = data;
+    CutContextPrivate *priv;
+
+    priv = CUT_CONTEXT_GET_PRIVATE(context);
+    if (priv->output)
+        cut_output_on_complete_test_case(priv->output, test_case);
+}
+
+void
+cut_context_connect_test_case (CutContext *context, CutTestCase *test_case)
+{
+    g_signal_connect(test_case, "start",
+                     G_CALLBACK(cb_start_test_case), context);
+    g_signal_connect(test_case, "complete",
+                     G_CALLBACK(cb_complete_test_case), context);
+}
+
+static void
+cb_start_test_suite(CutTestSuite *test_suite, gpointer data)
+{
+    CutContext *context = data;
+    CutContextPrivate *priv;
+
+    priv = CUT_CONTEXT_GET_PRIVATE(context);
+    if (priv->output)
+        cut_output_on_start_test_suite(priv->output, test_suite);
+}
+
+static void
+cb_complete_test_suite(CutTestSuite *test_suite, gpointer data)
+{
+    CutContext *context = data;
+    CutContextPrivate *priv;
+
+    priv = CUT_CONTEXT_GET_PRIVATE(context);
+    if (priv->output)
+        cut_output_on_complete_test_suite(priv->output, test_suite);
+}
+
+void
+cut_context_connect_test_suite (CutContext *context, CutTestSuite *test_suite)
+{
+    g_signal_connect(test_suite, "start",
+                     G_CALLBACK(cb_start_test_suite), context);
+    g_signal_connect(test_suite, "complete",
+                     G_CALLBACK(cb_complete_test_suite), context);
+}
+
 CutTest *
 cut_context_get_current_test (CutContext *context)
 {
@@ -322,16 +384,7 @@ cut_context_output_normal_log (CutContext *context)
 CutContext *
 cut_context_get_current (void)
 {
-    CutContext *current;
-
-    current = g_private_get(cut_context_private);
-
-    if (!current) {
-        current = cut_context_new();
-        g_private_set(cut_context_private, current);
-    }
-
-    return current;
+    return g_private_get(cut_context_private);
 }
 
 void

@@ -223,6 +223,28 @@ cut_output_set_use_color (CutOutput *output, gboolean use_color)
 }
 
 void
+cut_output_on_start_test_suite (CutOutput *output, CutTestSuite *test_suite)
+{
+    CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
+
+    if (priv->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
+        return;
+
+    g_print("Starting test suite...\n");
+}
+
+void
+cut_output_on_start_test_case (CutOutput *output, CutTestCase *test_case)
+{
+    CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
+
+    if (priv->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
+        return;
+
+    g_print("Starting test case %s...\n", cut_test_case_get_name(test_case));
+}
+
+void
 cut_output_on_start_test (CutOutput *output, CutTest *test)
 {
     CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
@@ -336,6 +358,29 @@ cut_output_on_pending (CutOutput *output, CutTest *test)
             result->function_name);
     g_free(filename);
 }
+
+void
+cut_output_on_complete_test_case (CutOutput *output, CutTestCase *test_case)
+{
+    CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
+
+    if (priv->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
+        return;
+
+    g_print("Finished test case %s\n", cut_test_case_get_name(test_case));
+}
+
+void
+cut_output_on_complete_test_suite (CutOutput *output, CutTestSuite *test_suite)
+{
+    CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
+
+    if (priv->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
+        return;
+
+    g_print("Finished test suite\n");
+}
+
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

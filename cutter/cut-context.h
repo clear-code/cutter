@@ -25,6 +25,7 @@
 #include <glib-object.h>
 #include "cutter.h"
 #include "cut-output.h"
+#include "cut-test-suite.h"
 
 G_BEGIN_DECLS
 
@@ -61,6 +62,11 @@ void  cut_context_set_source_directory      (CutContext *context,
                                              const gchar *directory);
 void  cut_context_set_use_color             (CutContext *context,
                                              gboolean    use_color);
+
+void  cut_context_connect_test_case         (CutContext *context,
+                                             CutTestCase *test_case);
+void  cut_context_connect_test_suite        (CutContext *context,
+                                             CutTestSuite *test_suite);
 
 void  cut_context_output_error_log          (CutContext *context);
 void  cut_context_output_normal_log         (CutContext *context);

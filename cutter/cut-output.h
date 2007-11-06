@@ -24,7 +24,7 @@
 
 #include <glib-object.h>
 #include "cutter.h"
-#include "cut-test.h"
+#include "cut-test-suite.h"
 
 G_BEGIN_DECLS
 
@@ -67,12 +67,20 @@ void  cut_output_set_source_directory      (CutOutput *output,
 void  cut_output_set_use_color             (CutOutput *output,
                                             gboolean   use_color);
 
+void  cut_output_on_start_test_suite       (CutOutput *output,
+                                            CutTestSuite *test_suite);
+void  cut_output_on_start_test_case        (CutOutput *output,
+                                            CutTestCase *test_case);
 void  cut_output_on_start_test             (CutOutput *output, CutTest *test);
-void  cut_output_on_complete_test          (CutOutput *output, CutTest *test);
 void  cut_output_on_success                (CutOutput *output, CutTest *test);
 void  cut_output_on_failure                (CutOutput *output, CutTest *test);
 void  cut_output_on_error                  (CutOutput *output, CutTest *test);
 void  cut_output_on_pending                (CutOutput *output, CutTest *test);
+void  cut_output_on_complete_test          (CutOutput *output, CutTest *test);
+void  cut_output_on_complete_test_case     (CutOutput *output,
+                                            CutTestCase *test_case);
+void  cut_output_on_complete_test_suite    (CutOutput *output,
+                                            CutTestSuite *test_suite);
 
 G_END_DECLS
 

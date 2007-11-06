@@ -1,3 +1,14 @@
+2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-main.c: made context explicitly.
+
+	* cutter/cut-repository.[ch]: required context for initialize function.
+
+	* cutter/cut-context.[ch], cutter/cut-output.[ch]: added callback
+	on start/complete test case/suite.
+
+	* test/test_cut_repository.c: followed the above changes.
+
 2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-test-case.[c|h]: Added cut_test_case_has_function().
