@@ -1,3 +1,8 @@
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-output.c: (status_to_name), (status_to_color): Write
+	default case for suppress compiler warning.
+
 2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
 
 	* test/test-cut-test-suite.c, test/test-cut-loader.c,

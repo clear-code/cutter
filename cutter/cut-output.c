@@ -168,6 +168,9 @@ status_to_name(CutTestResultStatus status)
       case CUT_TEST_RESULT_PENDING:
         name = "Pending";
         break;
+      default:
+        name = "";
+        break;
     }
 
     return name;
@@ -190,6 +193,9 @@ status_to_color(CutTestResultStatus status)
         break;
       case CUT_TEST_RESULT_PENDING:
         color = YELLOW_COLOR;
+        break;
+      default:
+        color = "";
         break;
     }
 
