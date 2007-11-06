@@ -184,8 +184,7 @@ cut_repository_create_test_suite (CutRepository *repository)
         if (test_case) {
             if (!suite)
                 suite = cut_test_suite_new();
-            cut_test_container_add_test(CUT_TEST_CONTAINER(suite),
-                                        CUT_TEST(test_case));
+            cut_test_suite_add_test_case(suite,test_case);
         }
         priv->loaders = g_list_prepend(priv->loaders, loader);
     }
