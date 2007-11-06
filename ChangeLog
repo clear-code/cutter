@@ -1,3 +1,8 @@
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test-cut-test-suite.c: Added tests for regular expression
+	filter.
+
 2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
 
 	* test/test-cut-test-case.c, test/test-cut-test-suite.c: added

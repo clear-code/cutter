@@ -7,8 +7,13 @@
 #include "cuttest-utils.h"
 
 void test_run_test_case (void);
+void test_run_test_case_with_regex (void);
 void test_run_test_function (void);
+void test_run_test_function_with_regex (void);
 void test_run_test_function_in_test_case (void);
+void test_run_test_function_with_regex_in_test_case (void);
+void test_run_test_function_in_test_case_with_regex (void);
+void test_run_test_function_with_regex_in_test_case_with_regex (void);
 void test_get_n_tests (void);
 void test_get_n_failures (void);
 
@@ -18,11 +23,16 @@ static CutContext *test_context;
 static CutTestSuite *test_object;
 static CutLoader *loader;
 
-static gboolean run_dummy_run_test_function_flag = FALSE;
-static gboolean run_dummy_test_function_flag = FALSE;
+static gint n_run_dummy_run_test_function = 0;
+static gint n_run_dummy_test_function1 = 0;
+static gint n_run_dummy_test_function2 = 0;
+
+static gint n_run_bummy_run_test_function = 0;
+static gint n_run_bummy_test_function1 = 0;
+static gint n_run_bummy_test_function2 = 0;
 
 static void
-dummy_test_function (void)
+dummy_test_function1 (void)
 {
     cut_assert_equal_int(1, 1);
     cut_assert_equal_int(1, 1);
@@ -30,7 +40,13 @@ dummy_test_function (void)
         cut_assert_equal_int(1, 2);
     cut_assert_equal_int(1, 1);
     cut_assert_equal_int(1, 1);
-    run_dummy_test_function_flag = TRUE;
+    n_run_dummy_test_function1++;
+}
+
+static void
+dummy_test_function2 (void)
+{
+    n_run_dummy_test_function2++;
 }
 
 static void
@@ -38,7 +54,27 @@ dummy_run_test_function (void)
 {
     if (fail_test)
         cut_assert(FALSE);
-    run_dummy_run_test_function_flag = TRUE;
+    n_run_dummy_run_test_function++;
+}
+
+static void
+bummy_test_function1 (void)
+{
+    n_run_bummy_test_function1++;
+}
+
+static void
+bummy_test_function2 (void)
+{
+    n_run_bummy_test_function2++;
+}
+
+static void
+bummy_run_test_function (void)
+{
+    if (fail_test)
+        cut_assert(FALSE);
+    n_run_bummy_run_test_function++;
 }
 
 void
@@ -49,6 +85,12 @@ setup (void)
     gchar *test_path;
 
     fail_test = FALSE;
+    n_run_dummy_test_function1 = 0;
+    n_run_dummy_test_function2 = 0;
+    n_run_dummy_run_test_function = 0;
+    n_run_bummy_test_function1 = 0;
+    n_run_bummy_test_function2 = 0;
+    n_run_bummy_run_test_function = 0;
 
     test_context = cut_context_new();
     cut_context_set_verbose_level(test_context, CUT_VERBOSE_LEVEL_SILENT);
@@ -66,11 +108,21 @@ setup (void)
     cut_test_suite_add_test_case(test_object, test_case);
 
     test_case = cut_test_case_new("dummy_test_case", NULL, NULL);
-    test = cut_test_new("dummy test 1", dummy_test_function);
+    test = cut_test_new("dummy_test_1", dummy_test_function1);
+    cut_test_case_add_test(test_case, test);
+    test = cut_test_new("dummy_test_2", dummy_test_function2);
     cut_test_case_add_test(test_case, test);
     test = cut_test_new("run_test_function", dummy_run_test_function);
     cut_test_case_add_test(test_case, test);
+    cut_test_suite_add_test_case(test_object, test_case);
 
+    test_case = cut_test_case_new("bummy_test_case", NULL, NULL);
+    test = cut_test_new("bummy_test_1", bummy_test_function1);
+    cut_test_case_add_test(test_case, test);
+    test = cut_test_new("bummy_test_2", bummy_test_function2);
+    cut_test_case_add_test(test_case, test);
+    test = cut_test_new("bummy_run_test_function", bummy_run_test_function);
+    cut_test_case_add_test(test_case, test);
     cut_test_suite_add_test_case(test_object, test_case);
 }
 
@@ -82,8 +134,8 @@ teardown (void)
     g_object_unref(test_context);
 }
 
-void
-test_run_test_case (void)
+static gboolean
+run_test_case (const gchar *test_case_name)
 {
     CutContext *original_context;
     gboolean ret;
@@ -91,17 +143,14 @@ test_run_test_case (void)
     original_context = cut_context_get_current();
 
     cut_context_set_current(test_context);
-    ret = cut_test_suite_run_test_case(test_object, "dummy_test_case");
+    ret = cut_test_suite_run_test_case(test_object, test_case_name);
     cut_context_set_current(original_context);
 
-    cut_assert(ret);
-
-    cut_assert(run_dummy_test_function_flag);
-    cut_assert(run_dummy_run_test_function_flag);
+    return ret; 
 }
 
-void
-test_run_test_function (void)
+static gboolean
+run_test_function (const gchar *test_function_name)
 {
     CutContext *original_context;
     gboolean ret;
@@ -109,16 +158,15 @@ test_run_test_function (void)
     original_context = cut_context_get_current();
 
     cut_context_set_current(test_context);
-    ret = cut_test_suite_run_test_function(test_object, "run_test_function");
+    ret = cut_test_suite_run_test_function(test_object, test_function_name);
     cut_context_set_current(original_context);
 
-    cut_assert(ret);
-
-    cut_assert(run_dummy_run_test_function_flag);
+    return ret; 
 }
 
-void
-test_run_test_function_in_test_case (void)
+static gboolean
+run_test_function_in_test_case (const gchar *test_function_name,
+                                const gchar *test_case_name)
 {
     CutContext *original_context;
     gboolean ret;
@@ -127,19 +175,89 @@ test_run_test_function_in_test_case (void)
 
     cut_context_set_current(test_context);
     ret = cut_test_suite_run_test_function_in_test_case(test_object,
-                                                        "run_test_function",
-                                                        "dummy_test_case");
+                                                        test_function_name,
+                                                        test_case_name);
     cut_context_set_current(original_context);
 
-    cut_assert(ret);
+    return ret; 
+}
 
-    cut_assert(run_dummy_run_test_function_flag);
+void
+test_run_test_case (void)
+{
+    cut_assert(run_test_case("dummy_test_case"));
+    cut_assert_equal_int(n_run_dummy_test_function1, 1);
+    cut_assert_equal_int(n_run_dummy_test_function2, 1);
+    cut_assert_equal_int(n_run_dummy_run_test_function, 1);
+}
+
+void
+test_run_test_case_with_regex (void)
+{
+    cut_assert(run_test_case("/^dummy/"));
+    cut_assert_equal_int(n_run_dummy_test_function1, 1);
+    cut_assert_equal_int(n_run_dummy_test_function2, 1);
+    cut_assert_equal_int(n_run_dummy_run_test_function, 1);
+}
+
+void
+test_run_test_function (void)
+{
+    cut_assert(run_test_function("run_test_function"));
+    cut_assert_equal_int(n_run_dummy_test_function1, 0);
+    cut_assert_equal_int(n_run_dummy_test_function2, 0);
+    cut_assert_equal_int(n_run_dummy_run_test_function, 1);
+}
+
+void
+test_run_test_function_with_regex (void)
+{
+    cut_assert(run_test_function("/^dummy/"));
+    cut_assert_equal_int(n_run_dummy_test_function1, 1);
+    cut_assert_equal_int(n_run_dummy_test_function2, 1);
+    cut_assert_equal_int(n_run_dummy_run_test_function, 0);
+}
+
+void
+test_run_test_function_in_test_case (void)
+{
+    cut_assert(run_test_function_in_test_case("run_test_function", "dummy_test_case"));
+    cut_assert_equal_int(n_run_dummy_test_function1, 0);
+    cut_assert_equal_int(n_run_dummy_test_function2, 0);
+    cut_assert_equal_int(n_run_dummy_run_test_function, 1);
+}
+
+void
+test_run_test_function_with_regex_in_test_case (void)
+{
+    cut_assert(run_test_function_in_test_case("/^dummy/", "dummy_test_case"));
+    cut_assert_equal_int(n_run_dummy_test_function1, 1);
+    cut_assert_equal_int(n_run_dummy_test_function2, 1);
+    cut_assert_equal_int(n_run_dummy_run_test_function, 0);
+}
+
+void
+test_run_test_function_in_test_case_with_regex (void)
+{
+    cut_assert(run_test_function_in_test_case("run_test_function", "/^dummy/"));
+    cut_assert_equal_int(n_run_dummy_test_function1, 0);
+    cut_assert_equal_int(n_run_dummy_test_function2, 0);
+    cut_assert_equal_int(n_run_dummy_run_test_function, 1);
+}
+
+void
+test_run_test_function_with_regex_in_test_case_with_regex (void)
+{
+    cut_assert(run_test_function_in_test_case("/^dummy/", "/^dummy/"));
+    cut_assert_equal_int(n_run_dummy_test_function1, 1);
+    cut_assert_equal_int(n_run_dummy_test_function2, 1);
+    cut_assert_equal_int(n_run_dummy_run_test_function, 0);
 }
 
 void
 test_get_n_tests (void)
 {
-    cut_assert_equal_int(6, cut_test_get_n_tests(CUT_TEST(test_object)));
+    cut_assert_equal_int(10, cut_test_get_n_tests(CUT_TEST(test_object)));
 }
 
 void
@@ -157,7 +275,7 @@ test_get_n_failures (void)
     cut_context_set_current(original_context);
 
     cut_assert(!ret);
-    cut_assert_equal_int(2, cut_test_get_n_failures(CUT_TEST(test_object)));
+    cut_assert_equal_int(3, cut_test_get_n_failures(CUT_TEST(test_object)));
 }
 
 /*
