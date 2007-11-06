@@ -293,20 +293,29 @@ cut_output_on_start_test_case (CutOutput *output, CutTestCase *test_case)
 }
 
 void
-cut_output_on_start_test (CutOutput *output, CutTest *test)
+cut_output_on_start_test (CutOutput *output, CutTestCase *test_case,
+                          CutTest *test)
 {
     CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
 
     if (priv->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
         return;
 
-    g_print("%s: ", cut_test_get_function_name(test));
+    g_print("%s(%s): ",
+            cut_test_get_function_name(test),
+            cut_test_case_get_name(test_case));
 }
 
 void
-cut_output_on_complete_test (CutOutput *output, CutTest *test)
+cut_output_on_complete_test (CutOutput *output, CutTestCase *test_case,
+                             CutTest *test)
 {
     CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
+    const CutTestResult *result;
+
+    result = cut_test_get_result(test);
+    if (result && result->status == CUT_TEST_RESULT_ERROR)
+        cut_output_on_error(output, test);
 
     if (priv->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
         return;

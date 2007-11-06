@@ -263,14 +263,16 @@ cut_test_case_run (CutTestCase *test_case)
 static gboolean
 real_run (CutTest *test)
 {
+    CutTestContainer *container;
     CutTestCasePrivate *priv;
     const GList *list, *tests;
     gboolean all_success = TRUE;
 
     g_return_val_if_fail(CUT_IS_TEST_CASE(test), FALSE);
 
-    tests = cut_test_container_get_children(CUT_TEST_CONTAINER(test));
-    priv = CUT_TEST_CASE_GET_PRIVATE(test);
+    container = CUT_TEST_CONTAINER(test);
+    tests = cut_test_container_get_children(container);
+    priv = CUT_TEST_CASE_GET_PRIVATE(container);
 
     for (list = tests; list; list = g_list_next(list)) {
         if (!list->data)
@@ -280,6 +282,7 @@ real_run (CutTest *test)
 
             cut_context_set_test(cut_context_get_current(), test);
 
+            g_signal_emit_by_name(container, "start-test", test);
             if (priv->setup)
                 priv->setup();
 
@@ -288,6 +291,7 @@ real_run (CutTest *test)
 
             if (priv->teardown)
                 priv->teardown();
+            g_signal_emit_by_name(container, "complete-test", test);
         } else {
             g_warning("This object is not CutTest object");
         }

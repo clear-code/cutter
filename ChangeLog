@@ -1,3 +1,11 @@
+2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-test-container.[ch]: added new signals on
+	start/complete test.
+	* cutter/cut-context.c: used start/complete-test signals of test case
+	instead of start/complete signals of test.
+	* cutter/cut-output.c: improved output.
+
 2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* test/test-cut-test-case.c: Added test for regular expression filter

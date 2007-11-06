@@ -175,17 +175,6 @@ cut_context_increment_assertion_count (CutContext *context)
 }
 
 static void
-cb_start(CutTest *test, gpointer data)
-{
-    CutContext *context = data;
-    CutContextPrivate *priv;
-
-    priv = CUT_CONTEXT_GET_PRIVATE(context);
-    if (priv->output)
-        cut_output_on_start_test(priv->output, test);
-}
-
-static void
 cb_success(CutTest *test, gpointer data)
 {
     CutContext *context = data;
@@ -229,17 +218,6 @@ cb_pending(CutTest *test, gpointer data)
         cut_output_on_pending(priv->output, test);
 }
 
-static void
-cb_complete(CutTest *test, gpointer data)
-{
-    CutContext *context = data;
-    CutContextPrivate *priv;
-
-    priv = CUT_CONTEXT_GET_PRIVATE(context);
-    if (priv->output)
-        cut_output_on_complete_test(priv->output, test);
-}
-
 void
 cut_context_set_test (CutContext *context, CutTest *test)
 {
@@ -247,9 +225,6 @@ cut_context_set_test (CutContext *context, CutTest *test)
 
     priv = CUT_CONTEXT_GET_PRIVATE(context);
     if (priv->test) {
-        g_signal_handlers_disconnect_by_func(priv->test,
-                                             G_CALLBACK(cb_start),
-                                             context);
         g_signal_handlers_disconnect_by_func(priv->test,
                                              G_CALLBACK(cb_success),
                                              context);
@@ -262,21 +237,38 @@ cut_context_set_test (CutContext *context, CutTest *test)
         g_signal_handlers_disconnect_by_func(priv->test,
                                              G_CALLBACK(cb_pending),
                                              context);
-        g_signal_handlers_disconnect_by_func(priv->test,
-                                             G_CALLBACK(cb_complete),
-                                             context);
     }
 
     if (test) {
-        g_signal_connect(test, "start", G_CALLBACK(cb_start), context);
         g_signal_connect(test, "success", G_CALLBACK(cb_success), context);
         g_signal_connect(test, "failure", G_CALLBACK(cb_failure), context);
         g_signal_connect(test, "error", G_CALLBACK(cb_error), context);
         g_signal_connect(test, "pending", G_CALLBACK(cb_pending), context);
-        g_signal_connect(test, "complete", G_CALLBACK(cb_complete), context);
     }
 
     priv->test = test;
+}
+
+static void
+cb_start_test(CutTestCase *test_case, CutTest *test, gpointer data)
+{
+    CutContext *context = data;
+    CutContextPrivate *priv;
+
+    priv = CUT_CONTEXT_GET_PRIVATE(context);
+    if (priv->output)
+        cut_output_on_start_test(priv->output, test_case, test);
+}
+
+static void
+cb_complete_test(CutTestCase *test_case, CutTest *test, gpointer data)
+{
+    CutContext *context = data;
+    CutContextPrivate *priv;
+
+    priv = CUT_CONTEXT_GET_PRIVATE(context);
+    if (priv->output)
+        cut_output_on_complete_test(priv->output, test_case, test);
 }
 
 static void
@@ -304,6 +296,11 @@ cb_complete_test_case(CutTestCase *test_case, gpointer data)
 void
 cut_context_connect_test_case (CutContext *context, CutTestCase *test_case)
 {
+    g_signal_connect(test_case, "start-test",
+                     G_CALLBACK(cb_start_test), context);
+    g_signal_connect(test_case, "complete-test",
+                     G_CALLBACK(cb_complete_test), context);
+
     g_signal_connect(test_case, "start",
                      G_CALLBACK(cb_start_test_case), context);
     g_signal_connect(test_case, "complete",
