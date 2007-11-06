@@ -1,5 +1,9 @@
 2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test-suite.[c|h]: Added cut_test_suite_add_test_case().
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* test/test_cut_repository.c: Create CutRepositry from
 	repository_test_dir.
 

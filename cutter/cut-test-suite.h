@@ -25,6 +25,7 @@
 #include <glib-object.h>
 
 #include "cut-test-container.h"
+#include "cut-test-case.h"
 
 G_BEGIN_DECLS
 
@@ -51,6 +52,8 @@ struct _CutTestSuiteClass
 GType           cut_test_suite_get_type      (void) G_GNUC_CONST;
 
 CutTestSuite   *cut_test_suite_new           (void);
+void            cut_test_suite_add_test_case (CutTestSuite *suite,
+                                              CutTestCase *test_case);
 gboolean        cut_test_suite_run_test_case (CutTestSuite *suite,
                                               const gchar *name);
 

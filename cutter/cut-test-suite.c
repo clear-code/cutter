@@ -140,6 +140,15 @@ cut_test_suite_run_test_case (CutTestSuite *suite, const gchar *name)
     return cut_test_run(CUT_TEST(test_case));
 }
 
+void
+cut_test_suite_add_test_case (CutTestSuite *suite, CutTestCase *test_case)
+{
+    g_return_if_fail(CUT_IS_TEST_CASE(test_case));
+    g_return_if_fail(CUT_IS_TEST_SUITE(suite));
+
+    cut_test_container_add_test(CUT_TEST_CONTAINER(suite), CUT_TEST(test_case));
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */
