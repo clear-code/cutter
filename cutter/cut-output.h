@@ -67,6 +67,7 @@ void  cut_output_set_source_directory      (CutOutput *output,
 void  cut_output_set_use_color             (CutOutput *output,
                                             gboolean   use_color);
 
+void  cut_output_on_start_test             (CutOutput *output, CutTest *test);
 void  cut_output_on_failure                (CutOutput *output, CutTest *test);
 void  cut_output_on_success                (CutOutput *output, CutTest *test);
 

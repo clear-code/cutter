@@ -174,10 +174,31 @@ cut_context_increment_assertion_count (CutContext *context)
     cut_test_increment_assertion_count(test);
 }
 
+static void
+cb_start(CutTest *test, gpointer data)
+{
+    CutContext *context = data;
+    CutContextPrivate *priv;
+
+    priv = CUT_CONTEXT_GET_PRIVATE(context);
+    if (priv->output)
+        cut_output_on_start_test(priv->output, test);
+}
+
 void
 cut_context_set_test (CutContext *context, CutTest *test)
 {
-    CUT_CONTEXT_GET_PRIVATE(context)->test = test;
+    CutContextPrivate *priv;
+
+    priv = CUT_CONTEXT_GET_PRIVATE(context);
+    if (priv->test)
+        g_signal_handlers_disconnect_by_func(priv->test,
+                                             G_CALLBACK(cb_start),
+                                             context);
+
+    if (test)
+        g_signal_connect(test, "start", G_CALLBACK(cb_start), context);
+    priv->test = test;
 }
 
 CutTest *

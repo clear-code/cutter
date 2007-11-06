@@ -1,3 +1,7 @@
+2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-context.c, cutter/cut-output.[ch]: used start signal.
+
 2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-repository.c: Search directory recursively.

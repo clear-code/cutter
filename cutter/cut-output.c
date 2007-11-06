@@ -148,6 +148,17 @@ get_property (GObject    *object,
     }
 }
 
+static void
+print_with_color(CutOutputPrivate *priv, const gchar *color,
+                 const gchar *message)
+{
+    if (priv->use_color)
+        g_print("%s%s%s", color, message, NORMAL_COLOR);
+    else
+        g_print("%s", message);
+}
+
+
 CutOutput *
 cut_output_new (void)
 {
@@ -211,36 +222,15 @@ cut_output_set_use_color (CutOutput *output, gboolean use_color)
 }
 
 void
-cut_output_on_failure (CutOutput *output, CutTest *test)
+cut_output_on_start_test (CutOutput *output, CutTest *test)
 {
     CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
-    const CutTestResult *result;
-    gchar *filename;
 
-    result = cut_test_get_result(test);
-    /* output log */
     switch (priv->verbose_level) {
       case CUT_VERBOSE_LEVEL_VERBOSE:
-        if (priv->source_directory)
-            filename = g_build_filename(priv->source_directory, result->filename,
-                                        NULL);
-        else
-            filename = g_strdup(result->filename);
-        g_print("%s:%d: %s()\n", filename,
-                                 result->line,
-                                 result->function_name);
-        g_free(filename);
-        if (priv->use_color)
-            g_print(RED_COLOR"%s"NORMAL_COLOR"\n", result->message);
-        else
-            g_print("%s\n", result->message);
+        g_print("%s: ", cut_test_get_function_name(test));
         break;
       case CUT_VERBOSE_LEVEL_NORMAL:
-        if (priv->use_color)
-            g_print(RED_COLOR"F"NORMAL_COLOR);
-        else
-            g_print("F");
-        break;
       case CUT_VERBOSE_LEVEL_SILENT:
       default:
         break;
@@ -248,25 +238,45 @@ cut_output_on_failure (CutOutput *output, CutTest *test)
 }
 
 void
+cut_output_on_failure (CutOutput *output, CutTest *test)
+{
+    CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
+    const CutTestResult *result;
+    gchar *filename;
+
+    if (priv->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
+        return;
+    print_with_color(priv, RED_COLOR, "F");
+
+
+    if (priv->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
+        return;
+    result = cut_test_get_result(test);
+    if (priv->source_directory)
+        filename = g_build_filename(priv->source_directory,
+                                    result->filename,
+                                    NULL);
+    else
+        filename = g_strdup(result->filename);
+    g_print("\n%s:%d: %s()\n",
+            filename,
+            result->line,
+            result->function_name);
+    g_free(filename);
+}
+
+void
 cut_output_on_success (CutOutput *output, CutTest *test)
 {
     CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
-    const gchar *test_function_name;
 
-    test_function_name = cut_test_get_function_name(test);
+    if (priv->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
+        return;
+    print_with_color(priv, GREEN_COLOR, ".");
 
-    /* output log */
-    switch (priv->verbose_level) {
-      case CUT_VERBOSE_LEVEL_VERBOSE:
-        g_print("%s:.\n", test_function_name);
-        break;
-      case CUT_VERBOSE_LEVEL_NORMAL:
-        g_print(".");
-        break;
-      case CUT_VERBOSE_LEVEL_SILENT:
-      default:
-        break;
-    }
+    if (priv->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
+        return;
+    g_print("\n");
 }
 
 /*
