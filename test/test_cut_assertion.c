@@ -13,6 +13,12 @@ dummy_fail_test_function (void)
     cut_fail("This test should fail");
 }
 
+static void
+dummy_pending_test_function (void)
+{
+    cut_pending("This test has been pending ever!");
+}
+
 void
 test_equal_int (void)
 {
@@ -38,7 +44,34 @@ test_equal_double (void)
 void
 test_pending (void)
 {
-    cut_pending("This test has not been implemented yet.");
+    CutTest *test_object;
+    CutContext *original_context, *test_context;
+    gboolean ret;
+    CutTestResult *result;
+
+    test_object = cut_test_new("dummy-pending-test", dummy_pending_test_function);
+    cut_assert(test_object);
+
+    test_context = cut_context_new();
+    cut_context_set_verbose_level(test_context, CUT_VERBOSE_LEVEL_SILENT);
+    cut_context_set_test(test_context, test_object);
+
+    original_context = cut_context_get_current();
+    cut_context_set_current(test_context);
+    ret = cut_test_run(test_object);
+    cut_context_set_current(original_context);
+
+    cut_assert(!ret);
+
+    result = (CutTestResult *) cut_test_get_result(test_object);
+    cut_assert(result);
+
+    cut_assert_equal_int(CUT_TEST_RESULT_PENDING, result->status);
+    cut_assert_equal_string("This test has been pending ever!", result->message);
+    cut_assert_equal_string("dummy_pending_test_function", result->function_name);
+
+    g_object_unref(test_object);
+    g_object_unref(test_context);
 }
 
 void
@@ -52,7 +85,7 @@ test_fail (void)
     cut_assert(test_object);
 
     test_context = cut_context_new();
-    cut_context_set_verbose_level(test_context, CUT_VERBOSE_LEVEL_VERBOSE);
+    cut_context_set_verbose_level(test_context, CUT_VERBOSE_LEVEL_SILENT);
     cut_context_set_test(test_context, test_object);
 
     original_context = cut_context_get_current();
@@ -62,6 +95,7 @@ test_fail (void)
 
     cut_assert(!ret);
     g_object_unref(test_object);
+    g_object_unref(test_context);
 }
 
 /*
