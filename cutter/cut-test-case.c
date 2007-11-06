@@ -254,6 +254,12 @@ cut_test_case_run_function (CutTestCase *test_case, const gchar *name)
     return success;
 }
 
+gboolean
+cut_test_case_run (CutTestCase *test_case)
+{
+    return cut_test_run(CUT_TEST(test_case));
+}
+
 static gboolean
 real_run (CutTest *test)
 {
@@ -272,7 +278,6 @@ real_run (CutTest *test)
             continue;
         if (CUT_IS_TEST(list->data)) {
             CutTest *test = CUT_TEST(list->data);
-            gboolean success;
 
             cut_context_set_test(cut_context_get_current(), test);
 
