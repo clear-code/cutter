@@ -8,6 +8,7 @@ void test_increment_assertion_count(void);
 void test_run(void);
 void test_result(void);
 void test_is_success(void);
+void test_n_failures(void);
 
 static CutContext *test_context;
 static CutTest *test_object;
@@ -30,6 +31,9 @@ dummy_success_test (void)
 static void
 dummy_failure_test (void)
 {
+    cut_fail("This test should be failed");
+    cut_fail("This test should be failed");
+    cut_fail("This test should be failed");
     cut_fail("This test should be failed");
 }
 
@@ -150,6 +154,16 @@ test_is_success (void)
     test = cut_test_new("dummy-failure-test", dummy_failure_test);
     cut_assert(!run_the_test(test));
     cut_assert(!cut_test_is_success(test));
+}
+
+void
+test_n_failures (void)
+{
+    CutTest *test;
+
+    test = cut_test_new("dummy-failure-test", dummy_failure_test);
+    cut_assert(!run_the_test(test));
+    cut_assert_equal_int(4, cut_test_get_n_failures(test));
 }
 
 /*

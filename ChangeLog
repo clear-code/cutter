@@ -1,5 +1,10 @@
 2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* test/test-cut-test.c: Added test for cut_test_get_n_failures().
+	I think the number of cut_fail() can not be above 1.
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* test/test-cut-test.c: Added test for cut_test_is_success().
 
 2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
