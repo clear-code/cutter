@@ -9,6 +9,7 @@ void test_run(void);
 void test_set_error(void);
 void test_get_error(void);
 
+static CutContext *test_context;
 static CutTest *test_object;
 static gboolean run_test_flag = FALSE;
 
@@ -24,6 +25,8 @@ dummy_test_function (void)
 void
 setup (void)
 {
+    test_context = cut_context_new();
+    cut_context_set_verbose_level(test_context, CUT_VERBOSE_LEVEL_SILENT);
     test_object = cut_test_new("dummy-test", dummy_test_function);
     run_test_flag = FALSE;
 }
@@ -32,18 +35,20 @@ void
 teardown (void)
 {
     g_object_unref(test_object);
+    g_object_unref(test_context);
 }
 
 static gboolean
 run_the_test (void)
 {
-    CutTest *original_test;
+    CutContext *original_context;
     gboolean ret;
 
-    original_test = cut_context_get_current_test(cut_context_get_current());
-    cut_context_set_test(cut_context_get_current(), test_object);
+    original_context = cut_context_get_current();
+    cut_context_set_current(test_context);
+    cut_context_set_test(test_context, test_object);
     ret = cut_test_run(test_object);
-    cut_context_set_test(cut_context_get_current(), original_test);
+    cut_context_set_current(original_context);
 
     return ret;
 }
