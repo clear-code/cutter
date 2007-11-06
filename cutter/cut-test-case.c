@@ -222,15 +222,15 @@ cut_test_case_run_function (CutTestCase *test_case, const gchar *name)
 {
     CutTestCasePrivate *priv;
     CutTest *test;
-    GList *list, *tests;
+    const GList *list, *tests;
     gboolean success;
 
     g_return_val_if_fail(CUT_IS_TEST_CASE(test_case), FALSE);
 
     priv = CUT_TEST_CASE_GET_PRIVATE(test_case);
-    tests = (GList*) cut_test_container_get_children(CUT_TEST_CONTAINER(test_case));
+    tests = cut_test_container_get_children(CUT_TEST_CONTAINER(test_case));
 
-    list = g_list_find_custom(tests, name, (GCompareFunc) compare_function_name);
+    list = g_list_find_custom((GList *)tests, name, (GCompareFunc) compare_function_name);
 
     if (!list)
         return FALSE;
@@ -258,13 +258,13 @@ static gboolean
 real_run (CutTest *test)
 {
     CutTestCasePrivate *priv;
-    GList *list, *tests;
+    const GList *list, *tests;
     guint assertion_count;
     gboolean all_success = TRUE;
 
     g_return_val_if_fail(CUT_IS_TEST_CASE(test), FALSE);
 
-    tests = (GList*) cut_test_container_get_children(CUT_TEST_CONTAINER(test));
+    tests = cut_test_container_get_children(CUT_TEST_CONTAINER(test));
     priv = CUT_TEST_CASE_GET_PRIVATE(test);
 
     for (list = tests; list; list = g_list_next(list)) {
