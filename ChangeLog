@@ -1,5 +1,10 @@
 2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test-suite.c: Use cut_test_case_run() instead of
+	cut_test_run().
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test-suite.c: Check the test case has the function before
 	run the test.
 

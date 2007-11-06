@@ -147,7 +147,7 @@ cut_test_suite_run_test_case (CutTestSuite *suite, const gchar *name)
     if (!test_case)
         return FALSE;
 
-    return cut_test_run(CUT_TEST(test_case));
+    return cut_test_case_run(test_case);
 }
 
 gboolean
