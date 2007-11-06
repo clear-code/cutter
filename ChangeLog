@@ -1,5 +1,7 @@
 2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-output.c: removed needless variables.
+
 	* cutter/cut-output.c: suppressed warnings.
 
 	* cutter/cut-output.c: showed status label.

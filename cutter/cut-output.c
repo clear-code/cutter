@@ -353,25 +353,24 @@ void
 cut_output_on_complete_test_suite (CutOutput *output, CutTestSuite *test_suite)
 {
     gint i;
-    const GList *test_cases;
-    GList *test_case_node;
+    const GList *test_case_node;
+    CutTestContainer *container;
     CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
 
     if (priv->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
         return;
 
     i = 1;
-    test_cases = cut_test_container_get_children(CUT_TEST_CONTAINER(test_suite));
-    for (test_case_node = (GList *)test_cases;
+    container = CUT_TEST_CONTAINER(test_suite);
+    for (test_case_node = cut_test_container_get_children(container);
          test_case_node;
          test_case_node = g_list_next(test_case_node)) {
-        const GList *tests;
-        GList *test_node;
+        const GList *test_node;
         CutTestCase *test_case;
 
         test_case = test_case_node->data;
-        tests = cut_test_container_get_children(CUT_TEST_CONTAINER(test_case));
-        for (test_node = (GList *)tests;
+        container = CUT_TEST_CONTAINER(test_case);
+        for (test_node = cut_test_container_get_children(container);
              test_node;
              test_node = g_list_next(test_node)) {
             CutTest *test = test_node->data;
