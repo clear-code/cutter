@@ -185,19 +185,97 @@ cb_start(CutTest *test, gpointer data)
         cut_output_on_start_test(priv->output, test);
 }
 
+static void
+cb_success(CutTest *test, gpointer data)
+{
+    CutContext *context = data;
+    CutContextPrivate *priv;
+
+    priv = CUT_CONTEXT_GET_PRIVATE(context);
+    if (priv->output)
+        cut_output_on_success(priv->output, test);
+}
+
+static void
+cb_failure(CutTest *test, gpointer data)
+{
+    CutContext *context = data;
+    CutContextPrivate *priv;
+
+    priv = CUT_CONTEXT_GET_PRIVATE(context);
+    if (priv->output)
+        cut_output_on_failure(priv->output, test);
+}
+
+static void
+cb_error(CutTest *test, gpointer data)
+{
+    CutContext *context = data;
+    CutContextPrivate *priv;
+
+    priv = CUT_CONTEXT_GET_PRIVATE(context);
+    if (priv->output)
+        cut_output_on_error(priv->output, test);
+}
+
+static void
+cb_pending(CutTest *test, gpointer data)
+{
+    CutContext *context = data;
+    CutContextPrivate *priv;
+
+    priv = CUT_CONTEXT_GET_PRIVATE(context);
+    if (priv->output)
+        cut_output_on_pending(priv->output, test);
+}
+
+static void
+cb_complete(CutTest *test, gpointer data)
+{
+    CutContext *context = data;
+    CutContextPrivate *priv;
+
+    priv = CUT_CONTEXT_GET_PRIVATE(context);
+    if (priv->output)
+        cut_output_on_complete_test(priv->output, test);
+}
+
 void
 cut_context_set_test (CutContext *context, CutTest *test)
 {
     CutContextPrivate *priv;
 
     priv = CUT_CONTEXT_GET_PRIVATE(context);
-    if (priv->test)
+    if (priv->test) {
         g_signal_handlers_disconnect_by_func(priv->test,
                                              G_CALLBACK(cb_start),
                                              context);
+        g_signal_handlers_disconnect_by_func(priv->test,
+                                             G_CALLBACK(cb_success),
+                                             context);
+        g_signal_handlers_disconnect_by_func(priv->test,
+                                             G_CALLBACK(cb_failure),
+                                             context);
+        g_signal_handlers_disconnect_by_func(priv->test,
+                                             G_CALLBACK(cb_error),
+                                             context);
+        g_signal_handlers_disconnect_by_func(priv->test,
+                                             G_CALLBACK(cb_pending),
+                                             context);
+        g_signal_handlers_disconnect_by_func(priv->test,
+                                             G_CALLBACK(cb_complete),
+                                             context);
+    }
 
-    if (test)
+    if (test) {
         g_signal_connect(test, "start", G_CALLBACK(cb_start), context);
+        g_signal_connect(test, "success", G_CALLBACK(cb_success), context);
+        g_signal_connect(test, "failure", G_CALLBACK(cb_failure), context);
+        g_signal_connect(test, "error", G_CALLBACK(cb_error), context);
+        g_signal_connect(test, "pending", G_CALLBACK(cb_pending), context);
+        g_signal_connect(test, "complete", G_CALLBACK(cb_complete), context);
+    }
+
     priv->test = test;
 }
 

@@ -50,9 +50,13 @@ enum
 
 enum
 {
-	START_SIGNAL,
+    START_SIGNAL,
+    SUCCESS_SIGNAL,
+    FAILURE_SIGNAL,
+    ERROR_SIGNAL,
+    PENDING_SIGNAL,
     COMPLETE_SIGNAL,
-	LAST_SIGNAL
+    LAST_SIGNAL
 };
 
 static gint cut_test_signals[LAST_SIGNAL] = {0};
@@ -110,6 +114,42 @@ cut_test_class_init (CutTestClass *klass)
                 G_TYPE_FROM_CLASS (klass),
                 G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                 G_STRUCT_OFFSET (CutTestClass, start),
+                NULL, NULL,
+                g_cclosure_marshal_VOID__VOID,
+                G_TYPE_NONE, 0);
+
+	cut_test_signals[SUCCESS_SIGNAL]
+        = g_signal_new ("success",
+                G_TYPE_FROM_CLASS (klass),
+                G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
+                G_STRUCT_OFFSET (CutTestClass, success),
+                NULL, NULL,
+                g_cclosure_marshal_VOID__VOID,
+                G_TYPE_NONE, 0);
+
+	cut_test_signals[FAILURE_SIGNAL]
+        = g_signal_new ("failure",
+                G_TYPE_FROM_CLASS (klass),
+                G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
+                G_STRUCT_OFFSET (CutTestClass, failure),
+                NULL, NULL,
+                g_cclosure_marshal_VOID__VOID,
+                G_TYPE_NONE, 0);
+
+	cut_test_signals[ERROR_SIGNAL]
+        = g_signal_new ("error",
+                G_TYPE_FROM_CLASS (klass),
+                G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
+                G_STRUCT_OFFSET (CutTestClass, error),
+                NULL, NULL,
+                g_cclosure_marshal_VOID__VOID,
+                G_TYPE_NONE, 0);
+
+	cut_test_signals[PENDING_SIGNAL]
+        = g_signal_new ("pending",
+                G_TYPE_FROM_CLASS (klass),
+                G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
+                G_STRUCT_OFFSET (CutTestClass, pending),
                 NULL, NULL,
                 g_cclosure_marshal_VOID__VOID,
                 G_TYPE_NONE, 0);
@@ -233,15 +273,37 @@ static gboolean
 real_run (CutTest *test)
 {
     CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(test);
+    gboolean success;
+    const gchar *status_signal_name = NULL;
 
     if (!priv->test_function)
         return FALSE;
-    
+
     g_signal_emit_by_name(test, "start");
+
     priv->test_function();
+    success = priv->result ? FALSE : TRUE;
+
+    if (success) {
+        status_signal_name = "success";
+    } else {
+        switch (priv->result->status) {
+          case CUT_TEST_RESULT_FAILURE:
+            status_signal_name = "failure";
+            break;
+          case CUT_TEST_RESULT_ERROR:
+            status_signal_name = "error";
+            break;
+          case CUT_TEST_RESULT_PENDING:
+            status_signal_name = "pending";
+            break;
+        }
+    }
+    g_signal_emit_by_name(test, status_signal_name);
+
     g_signal_emit_by_name(test, "complete");
 
-    return priv->result ? FALSE : TRUE;
+    return success;
 }
 
 gboolean

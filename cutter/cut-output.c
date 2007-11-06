@@ -226,15 +226,31 @@ cut_output_on_start_test (CutOutput *output, CutTest *test)
 {
     CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
 
-    switch (priv->verbose_level) {
-      case CUT_VERBOSE_LEVEL_VERBOSE:
-        g_print("%s: ", cut_test_get_function_name(test));
-        break;
-      case CUT_VERBOSE_LEVEL_NORMAL:
-      case CUT_VERBOSE_LEVEL_SILENT:
-      default:
-        break;
-    }
+    if (priv->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
+        return;
+
+    g_print("%s: ", cut_test_get_function_name(test));
+}
+
+void
+cut_output_on_complete_test (CutOutput *output, CutTest *test)
+{
+    CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
+
+    if (priv->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
+        return;
+
+    g_print("\n");
+}
+
+void
+cut_output_on_success (CutOutput *output, CutTest *test)
+{
+    CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
+
+    if (priv->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
+        return;
+    print_with_color(priv, GREEN_COLOR, ".");
 }
 
 void
@@ -258,7 +274,7 @@ cut_output_on_failure (CutOutput *output, CutTest *test)
                                     NULL);
     else
         filename = g_strdup(result->filename);
-    g_print("\n%s:%d: %s()\n",
+    g_print("\n%s:%d: %s()",
             filename,
             result->line,
             result->function_name);
@@ -266,17 +282,58 @@ cut_output_on_failure (CutOutput *output, CutTest *test)
 }
 
 void
-cut_output_on_success (CutOutput *output, CutTest *test)
+cut_output_on_error (CutOutput *output, CutTest *test)
 {
     CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
+    const CutTestResult *result;
+    gchar *filename;
 
     if (priv->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
-    print_with_color(priv, GREEN_COLOR, ".");
+    print_with_color(priv, RED_COLOR, "E"); /* FIXME: PURPLE */
 
     if (priv->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
         return;
-    g_print("\n");
+    result = cut_test_get_result(test);
+    if (priv->source_directory)
+        filename = g_build_filename(priv->source_directory,
+                                    result->filename,
+                                    NULL);
+    else
+        filename = g_strdup(result->filename);
+    g_print("\n%s:%d: %s()",
+            filename,
+            result->line,
+            result->function_name);
+    g_free(filename);
+}
+
+void
+cut_output_on_pending (CutOutput *output, CutTest *test)
+{
+    CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
+    const CutTestResult *result;
+    gchar *filename;
+
+    if (priv->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
+        return;
+    print_with_color(priv, YELLOW_COLOR, "P");
+
+
+    if (priv->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
+        return;
+    result = cut_test_get_result(test);
+    if (priv->source_directory)
+        filename = g_build_filename(priv->source_directory,
+                                    result->filename,
+                                    NULL);
+    else
+        filename = g_strdup(result->filename);
+    g_print("\n%s:%d: %s()",
+            filename,
+            result->line,
+            result->function_name);
+    g_free(filename);
 }
 
 /*

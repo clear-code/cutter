@@ -259,7 +259,6 @@ real_run (CutTest *test)
 {
     CutTestCasePrivate *priv;
     const GList *list, *tests;
-    guint assertion_count;
     gboolean all_success = TRUE;
 
     g_return_val_if_fail(CUT_IS_TEST_CASE(test), FALSE);
@@ -279,14 +278,8 @@ real_run (CutTest *test)
             if (priv->setup)
                 priv->setup();
 
-            success = cut_test_run(test);
-            if (!success) {
-                cut_context_output_error_log(cut_context_get_current());
+            if (!cut_test_run(test))
                 all_success = FALSE;
-            } else {
-                cut_context_output_normal_log(cut_context_get_current());
-            }
-            assertion_count = cut_test_get_assertion_count(test);
 
             if (priv->teardown)
                 priv->teardown();
