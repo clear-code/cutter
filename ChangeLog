@@ -1,5 +1,8 @@
 2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertion.h: improved error message.
+	* cutter/cut-output.c: improved format.
+
 	* cutter/cut-output.c: removed needless variables.
 
 	* cutter/cut-output.c: suppressed warnings.

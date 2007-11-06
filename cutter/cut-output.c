@@ -391,7 +391,7 @@ cut_output_on_complete_test_suite (CutOutput *output, CutTestSuite *test_suite)
             g_print("\n%d) ", i);
             print_for_status(priv, result->status,
                              status_to_name(result->status));
-            print_for_status(priv, result->status, ": ");
+            g_print("\n");
             print_for_status(priv, result->status, result->message);
             g_print("\n%s:%d: %s()\n",
                     filename, result->line, result->function_name);

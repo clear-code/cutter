@@ -70,7 +70,8 @@ if (!(expect)) {                                        \
     cut_context_set_result(                             \
             cut_context_get_current(),                  \
             CUT_TEST_RESULT_FAILURE,                    \
-            "failed", __PRETTY_FUNCTION__,              \
+            "expected: <" #expect "> is not 0/NULL",    \
+            __PRETTY_FUNCTION__,                        \
             __FILE__, __LINE__);                        \
     return;                                             \
 } else {                                                \
