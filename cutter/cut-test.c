@@ -288,6 +288,9 @@ real_run (CutTest *test)
         status_signal_name = "success";
     } else {
         switch (priv->result->status) {
+          case CUT_TEST_RESULT_SUCCESS:
+            g_assert("must not happen");
+            break;
           case CUT_TEST_RESULT_FAILURE:
             status_signal_name = "failure";
             break;

@@ -53,7 +53,6 @@ GType        cut_test_container_get_type     (void) G_GNUC_CONST;
 void         cut_test_container_add_test     (CutTestContainer *container,
                                               CutTest          *test);
 const GList *cut_test_container_get_children (CutTestContainer *container);
-                        
 
 G_END_DECLS
 

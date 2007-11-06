@@ -1,3 +1,10 @@
+2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-output.c: showed error summary.
+
+	* cutter/cut-assertion.h: added CUT_TEST_RESULT_SUCCESS.
+	* cutter/cut-test.c: followed the above change.
+
 2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-main.c: (run_tests): Return value of

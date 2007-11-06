@@ -149,12 +149,35 @@ get_property (GObject    *object,
     }
 }
 
+static const gchar *
+status_to_color(CutTestResultStatus status)
+{
+    const gchar *color;
+
+    switch (status) {
+      case CUT_TEST_RESULT_SUCCESS:
+        color = GREEN_COLOR;
+        break;
+      case CUT_TEST_RESULT_FAILURE:
+        color = RED_COLOR;
+        break;
+      case CUT_TEST_RESULT_ERROR:
+        color = PURPLE_COLOR;
+        break;
+      case CUT_TEST_RESULT_PENDING:
+        color = YELLOW_COLOR;
+        break;
+    }
+
+    return color;
+}
+
 static void
-print_with_color(CutOutputPrivate *priv, const gchar *color,
+print_for_status(CutOutputPrivate *priv, CutTestResultStatus status,
                  const gchar *message)
 {
     if (priv->use_color)
-        g_print("%s%s%s", color, message, NORMAL_COLOR);
+        g_print("%s%s%s", status_to_color(status), message, NORMAL_COLOR);
     else
         g_print("%s", message);
 }
@@ -225,23 +248,11 @@ cut_output_set_use_color (CutOutput *output, gboolean use_color)
 void
 cut_output_on_start_test_suite (CutOutput *output, CutTestSuite *test_suite)
 {
-    CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
-
-    if (priv->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
-        return;
-
-    g_print("Starting test suite...\n");
 }
 
 void
 cut_output_on_start_test_case (CutOutput *output, CutTestCase *test_case)
 {
-    CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
-
-    if (priv->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
-        return;
-
-    g_print("Starting test case %s...\n", cut_test_case_get_name(test_case));
 }
 
 void
@@ -273,90 +284,37 @@ cut_output_on_success (CutOutput *output, CutTest *test)
 
     if (priv->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
-    print_with_color(priv, GREEN_COLOR, ".");
+    print_for_status(priv, CUT_TEST_RESULT_SUCCESS, ".");
 }
 
 void
 cut_output_on_failure (CutOutput *output, CutTest *test)
 {
     CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
-    const CutTestResult *result;
-    gchar *filename;
 
     if (priv->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
-    print_with_color(priv, RED_COLOR, "F");
-
-
-    if (priv->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
-        return;
-    result = cut_test_get_result(test);
-    if (priv->source_directory)
-        filename = g_build_filename(priv->source_directory,
-                                    result->filename,
-                                    NULL);
-    else
-        filename = g_strdup(result->filename);
-    g_print("\n%s:%d: %s()",
-            filename,
-            result->line,
-            result->function_name);
-    g_free(filename);
+    print_for_status(priv, CUT_TEST_RESULT_FAILURE, "F");
 }
 
 void
 cut_output_on_error (CutOutput *output, CutTest *test)
 {
     CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
-    const CutTestResult *result;
-    gchar *filename;
 
     if (priv->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
-    print_with_color(priv, PURPLE_COLOR, "E");
-
-    if (priv->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
-        return;
-    result = cut_test_get_result(test);
-    if (priv->source_directory)
-        filename = g_build_filename(priv->source_directory,
-                                    result->filename,
-                                    NULL);
-    else
-        filename = g_strdup(result->filename);
-    g_print("\n%s:%d: %s()",
-            filename,
-            result->line,
-            result->function_name);
-    g_free(filename);
+    print_for_status(priv, CUT_TEST_RESULT_ERROR, "E");
 }
 
 void
 cut_output_on_pending (CutOutput *output, CutTest *test)
 {
     CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
-    const CutTestResult *result;
-    gchar *filename;
 
     if (priv->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
-    print_with_color(priv, YELLOW_COLOR, "P");
-
-
-    if (priv->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
-        return;
-    result = cut_test_get_result(test);
-    if (priv->source_directory)
-        filename = g_build_filename(priv->source_directory,
-                                    result->filename,
-                                    NULL);
-    else
-        filename = g_strdup(result->filename);
-    g_print("\n%s:%d: %s()",
-            filename,
-            result->line,
-            result->function_name);
-    g_free(filename);
+    print_for_status(priv, CUT_TEST_RESULT_PENDING, "P");
 }
 
 void
@@ -366,19 +324,48 @@ cut_output_on_complete_test_case (CutOutput *output, CutTestCase *test_case)
 
     if (priv->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
         return;
-
-    g_print("Finished test case %s\n", cut_test_case_get_name(test_case));
 }
 
 void
 cut_output_on_complete_test_suite (CutOutput *output, CutTestSuite *test_suite)
 {
+    gint i;
+    GList *cases, *tests;
     CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
 
     if (priv->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
         return;
 
-    g_print("Finished test suite\n");
+    i = 1;
+    for (cases = cut_test_container_get_children(CUT_TEST_CONTAINER(test_suite));
+         cases;
+         cases = g_list_next(cases)) {
+        CutTestCase *test_case = cases->data;
+        for (tests = cut_test_container_get_children(CUT_TEST_CONTAINER(test_case));
+             tests;
+             tests = g_list_next(tests)) {
+            CutTest *test = tests->data;
+            const CutTestResult *result;
+            gchar *filename;
+
+            result = cut_test_get_result(test);
+            if (!result)
+                continue;
+
+            if (priv->source_directory)
+                filename = g_build_filename(priv->source_directory,
+                                            result->filename,
+                                            NULL);
+            else
+                filename = g_strdup(result->filename);
+
+            g_print("\n%d) ", i);
+            print_for_status(priv, result->status, result->message);
+            g_print("\n%s:%d: %s()\n",
+                    filename, result->line, result->function_name);
+            i++;
+        }
+    }
 }
 
 

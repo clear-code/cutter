@@ -30,6 +30,7 @@ G_BEGIN_DECLS
 typedef struct _CutContext         CutContext;
 
 typedef enum {
+    CUT_TEST_RESULT_SUCCESS,
     CUT_TEST_RESULT_FAILURE,
     CUT_TEST_RESULT_ERROR,
     CUT_TEST_RESULT_PENDING
