@@ -305,6 +305,28 @@ real_run (CutTest *test)
     return all_success;
 }
 
+gboolean
+cut_test_case_has_function (CutTestCase *test_case, const gchar *function_name)
+{
+    const GList *tests, *list;
+    g_return_val_if_fail(CUT_IS_TEST_CASE(test_case), FALSE);
+
+    tests = cut_test_container_get_children(CUT_TEST_CONTAINER(test_case));
+
+    for (list = tests; list; list = g_list_next(list)) {
+        if (!list->data)
+            continue;
+        if (CUT_IS_TEST(list->data)) {
+            CutTest *test = CUT_TEST(list->data);
+            const gchar *name;
+            name = cut_test_get_function_name(test);
+            if (!strcmp(function_name, name))
+                return TRUE;
+        }
+    }
+    return FALSE;
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */
