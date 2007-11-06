@@ -59,7 +59,7 @@ test_run_test_case (void)
 {
     cut_assert(cut_test_suite_run_test_case(test_object, "dummy_test_case"));
     cut_assert(run_dummy_test_function_flag);
-    cut_assert(run_dummy_test_function_flag);
+    cut_assert(run_dummy_run_test_function_flag);
 }
 
 /*
