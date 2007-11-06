@@ -100,6 +100,7 @@ AC_CONFIG_FILES([Makefile
                  sample/calc/Makefile.test
 		 sample/glib/Makefile
                  test/Makefile
-		 test/loader_test_dir/Makefile])
+		 test/loader_test_dir/Makefile
+		 test/repository_test_dir/Makefile])
 
 AC_OUTPUT

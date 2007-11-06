@@ -1,3 +1,7 @@
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/repository_test_dir: Added dir for storing test data CutTestRepository.
+
 2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-context.c: used CutVerboseLevel not integer.
