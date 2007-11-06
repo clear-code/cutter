@@ -6,6 +6,8 @@ void test_assertion_count(void);
 void test_get_function_name(void);
 void test_increment_assertion_count(void);
 void test_run(void);
+void test_set_error(void);
+void test_get_error(void);
 
 static CutTest *test_object;
 static gboolean run_test_flag = FALSE;
@@ -76,6 +78,18 @@ test_run (void)
     cut_assert(run_the_test());
     cut_assert(run_test_flag);
 }
+
+void
+test_get_error (void)
+{
+    cut_assert(FALSE);
+}
+
+void
+test_set_error (void)
+{
+    cut_assert(FALSE);
+} 
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
