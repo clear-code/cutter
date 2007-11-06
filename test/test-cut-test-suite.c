@@ -9,6 +9,7 @@
 void test_run_test_case (void);
 void test_run_test_function (void);
 void test_run_test_function_in_test_case (void);
+void test_get_n_tests (void);
 
 static CutContext *test_context;
 static CutTestSuite *test_object;
@@ -124,6 +125,12 @@ test_run_test_function_in_test_case (void)
     cut_assert(ret);
 
     cut_assert(run_dummy_run_test_function_flag);
+}
+
+void
+test_get_n_tests (void)
+{
+    cut_assert_equal_int(6, cut_test_get_n_tests(CUT_TEST(test_object)));
 }
 
 /*

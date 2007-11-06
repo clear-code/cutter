@@ -70,6 +70,7 @@ struct _CutTestClass
 
     gboolean (*run)  (CutTest *test);
     gdouble  (*get_elapsed) (CutTest *test);
+    guint    (*get_n_tests)      (CutTest *test);
     guint    (*get_n_assertions) (CutTest *test);
     guint    (*get_n_failures)   (CutTest *test);
     guint    (*get_n_errors)     (CutTest *test);
@@ -96,6 +97,7 @@ gboolean     cut_test_is_success          (CutTest *test);
 
 gdouble      cut_test_get_elapsed         (CutTest *test);
 
+guint        cut_test_get_n_tests         (CutTest *test);
 guint        cut_test_get_n_assertions    (CutTest *test);
 guint        cut_test_get_n_failures      (CutTest *test);
 guint        cut_test_get_n_errors        (CutTest *test);

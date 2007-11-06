@@ -380,7 +380,7 @@ void
 cut_output_on_complete_test_suite (CutOutput *output, CutTestSuite *test_suite)
 {
     gint i;
-    gint n_tests, assertions, failures, errors, pendings;
+    gint assertions, failures, errors, pendings;
     const GList *test_case_node;
     CutTestContainer *container;
     CutTestResultStatus status;
@@ -388,8 +388,6 @@ cut_output_on_complete_test_suite (CutOutput *output, CutTestSuite *test_suite)
 
     if (priv->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
-
-    n_tests = 0;
 
     i = 1;
     container = CUT_TEST_CONTAINER(test_suite);
@@ -407,8 +405,6 @@ cut_output_on_complete_test_suite (CutOutput *output, CutTestSuite *test_suite)
             CutTest *test = test_node->data;
             const CutTestResult *result;
             gchar *filename;
-
-            n_tests++;
 
             result = cut_test_get_result(test);
             if (!result)
@@ -454,7 +450,8 @@ cut_output_on_complete_test_suite (CutOutput *output, CutTestSuite *test_suite)
     print_for_status(priv, status,
                      "%d tests, %d assertions, %d failures, "
                      "%d errors, %d pendings",
-                     n_tests, assertions, failures, errors, pendings);
+                     cut_test_get_n_tests(CUT_TEST(test_suite)),
+                     assertions, failures, errors, pendings);
     g_print("\n");
 }
 

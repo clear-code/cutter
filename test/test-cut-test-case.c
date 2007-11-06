@@ -11,6 +11,7 @@ void test_run_this_function(void);
 void test_run_functions_with_regex(void);
 void test_get_name(void);
 void test_has_function(void);
+void test_get_n_tests(void);
 
 static CutTestCase *test_object;
 static CutContext *test_context;
@@ -193,6 +194,13 @@ test_has_function (void)
     cut_assert(cut_test_case_has_function(test_object, "run_test_function"));
     cut_assert(!cut_test_case_has_function(test_object, "not_exist_function"));
 }
+
+void
+test_get_n_tests (void)
+{
+    cut_assert_equal_int(3, cut_test_get_n_tests(CUT_TEST(test_object)));
+}
+
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

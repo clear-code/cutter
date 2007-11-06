@@ -77,10 +77,11 @@ static void get_property   (GObject         *object,
 
 static gboolean real_run   (CutTest         *test);
 static gdouble  real_get_elapsed  (CutTest  *test);
+static guint    real_get_n_tests      (CutTest *test);
 static guint    real_get_n_assertions (CutTest *test);
-static guint    real_get_n_failures (CutTest *test);
-static guint    real_get_n_errors   (CutTest *test);
-static guint    real_get_n_pendings (CutTest *test);
+static guint    real_get_n_failures   (CutTest *test);
+static guint    real_get_n_errors     (CutTest *test);
+static guint    real_get_n_pendings   (CutTest *test);
 
 static void
 cut_test_class_init (CutTestClass *klass)
@@ -96,6 +97,7 @@ cut_test_class_init (CutTestClass *klass)
 
     klass->run = real_run;
     klass->get_elapsed = real_get_elapsed;
+    klass->get_n_tests = real_get_n_tests;
     klass->get_n_assertions = real_get_n_assertions;
     klass->get_n_failures = real_get_n_failures;
     klass->get_n_errors = real_get_n_errors;
@@ -398,6 +400,18 @@ gdouble
 cut_test_get_elapsed (CutTest *test)
 {
     return CUT_TEST_GET_CLASS(test)->get_elapsed(test);
+}
+
+static guint
+real_get_n_tests (CutTest *test)
+{
+    return 1;
+}
+
+guint
+cut_test_get_n_tests (CutTest *test)
+{
+    return CUT_TEST_GET_CLASS(test)->get_n_tests(test);
 }
 
 static guint
