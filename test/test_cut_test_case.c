@@ -1,5 +1,6 @@
 #include "cutter.h"
 #include "cut-test-case.h"
+#include "cut-context-private.h"
 
 void test_setup(void);
 void test_teardown(void);
@@ -9,6 +10,7 @@ void test_run_this_function(void);
 void test_get_name(void);
 
 static CutTestCase *test_object;
+static CutContext *test_context;
 
 static gboolean setup_flag = FALSE;
 static gboolean teardown_flag = FALSE;
@@ -49,6 +51,10 @@ void
 setup (void)
 {
     CutTest *test;
+
+    test_context = cut_context_new();
+    cut_context_set_verbose_level(test_context, CUT_VERBOSE_LEVEL_SILENT);
+
     test_object = cut_test_case_new("dummy test case",
                                     dummy_setup_function,
                                     dummy_teardown_function);
@@ -64,13 +70,28 @@ void
 teardown (void)
 {
     g_object_unref(test_object);
+    g_object_unref(test_context);
+}
+
+static gboolean
+run_the_test (void)
+{
+    CutContext *original_context;
+    gboolean ret;
+
+    original_context = cut_context_get_current();
+    cut_context_set_current(test_context);
+    ret = cut_test_run(CUT_TEST(test_object));
+    cut_context_set_current(original_context);
+
+    return ret;
 }
 
 void
 test_setup (void)
 {
     setup_flag = FALSE;
-    cut_assert(cut_test_run(CUT_TEST(test_object)));
+    cut_assert(run_the_test());
     cut_assert(setup_flag);
 }
 
@@ -78,7 +99,7 @@ void
 test_teardown (void)
 {
     teardown_flag = FALSE;
-    cut_assert(cut_test_run(CUT_TEST(test_object)));
+    cut_assert(run_the_test());
     cut_assert(teardown_flag);
 }
 
@@ -91,15 +112,24 @@ test_test_case_count (void)
 void
 test_run (void)
 {
-    cut_assert(cut_test_run(CUT_TEST(test_object)));
-    cut_assert(run_dummy_run_test_function_flag);
+    cut_assert(run_the_test());
     cut_assert(run_dummy_test_function_flag);
+    cut_assert(run_dummy_run_test_function_flag);
 }
 
 void
 test_run_this_function (void)
 {
-    cut_assert(cut_test_case_run_function(test_object, "run_test_function"));
+    CutContext *original_context;
+    gboolean ret;
+
+    original_context = cut_context_get_current();
+    cut_context_set_current(test_context);
+    ret = cut_test_case_run_function(test_object, "run_test_function");
+    cut_context_set_current(original_context);
+
+    cut_assert(ret);
+
     cut_assert(run_dummy_run_test_function_flag);
     cut_assert(!run_dummy_test_function_flag);
 }
