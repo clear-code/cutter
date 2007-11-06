@@ -37,7 +37,7 @@ struct _CutTestPrivate
     gchar *function_name;
     CutTestFunction test_function;
     guint assertion_count;
-    CutTestError *error;
+    CutTestResult *result;
 };
 
 enum
@@ -133,23 +133,23 @@ cut_test_init (CutTest *container)
 
     priv->test_function = NULL;
     priv->assertion_count = 0;
-    priv->error = NULL;
+    priv->result = NULL;
 }
 
 static void
-cut_test_error_free (CutTestError *error)
+cut_test_result_free (CutTestResult *result)
 {
-    if (!error)
+    if (!result)
         return;
 
-    if (error->message)
-        g_free(error->message);
-    if (error->function_name)
-        g_free(error->function_name);
-    if (error->filename)
-        g_free(error->filename);
+    if (result->message)
+        g_free(result->message);
+    if (result->function_name)
+        g_free(result->function_name);
+    if (result->filename)
+        g_free(result->filename);
 
-    g_free(error);
+    g_free(result);
 }
 
 static void
@@ -161,9 +161,9 @@ dispose (GObject *object)
         g_free(priv->function_name);
         priv->function_name = NULL;
     }
-    if (priv->error) {
-        cut_test_error_free(priv->error);
-        priv->error = NULL;
+    if (priv->result) {
+        cut_test_result_free(priv->result);
+        priv->result = NULL;
     }
     priv->test_function = NULL;
 
@@ -241,7 +241,7 @@ real_run (CutTest *test)
     priv->test_function();
     g_signal_emit_by_name(test, "complete");
 
-    return priv->error ? FALSE : TRUE;
+    return priv->result ? FALSE : TRUE;
 }
 
 gboolean
@@ -259,25 +259,27 @@ cut_test_increment_assertion_count (CutTest *test)
 }
 
 void
-cut_test_set_error (CutTest *test,
-                    const gchar *error_message,
-                    const gchar *function_name,
-                    const gchar *filename,
-                    guint line)
+cut_test_set_result (CutTest *test,
+                     CutTestResultStatus status,
+                     const gchar *result_message,
+                     const gchar *function_name,
+                     const gchar *filename,
+                     guint line)
 {
-    CutTestError *error;
+    CutTestResult *result;
     CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(test);
 
-    error = g_new0(CutTestError, 1);
+    result = g_new0(CutTestResult, 1);
 
-    error->message = g_strdup(error_message);
-    error->function_name = g_strdup(function_name);
-    error->filename = g_strdup(filename);
-    error->line = line;
+    result->status = status;
+    result->message = g_strdup(result_message);
+    result->function_name = g_strdup(function_name);
+    result->filename = g_strdup(filename);
+    result->line = line;
 
-    if (priv->error)
-        cut_test_error_free(priv->error);
-    priv->error = error;
+    if (priv->result)
+        cut_test_result_free(priv->result);
+    priv->result = result;
 }
 
 const gchar *
@@ -292,10 +294,10 @@ cut_test_get_assertion_count (CutTest *test)
     return CUT_TEST_GET_PRIVATE(test)->assertion_count;
 }
 
-const CutTestError *
-cut_test_get_error (CutTest *test)
+const CutTestResult *
+cut_test_get_result (CutTest *test)
 {
-    return CUT_TEST_GET_PRIVATE(test)->error;
+    return CUT_TEST_GET_PRIVATE(test)->result;
 }
 
 /*

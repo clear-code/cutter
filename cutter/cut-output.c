@@ -214,26 +214,26 @@ void
 cut_output_on_failure (CutOutput *output, CutTest *test)
 {
     CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
-    const CutTestError *error;
+    const CutTestResult *result;
     gchar *filename;
 
-    error = cut_test_get_error(test);
+    result = cut_test_get_result(test);
     /* output log */
     switch (priv->verbose_level) {
       case CUT_VERBOSE_LEVEL_VERBOSE:
         if (priv->source_directory)
-            filename = g_build_filename(priv->source_directory, error->filename,
+            filename = g_build_filename(priv->source_directory, result->filename,
                                         NULL);
         else
-            filename = g_strdup(error->filename);
+            filename = g_strdup(result->filename);
         g_print("%s:%d: %s()\n", filename,
-                                 error->line,
-                                 error->function_name);
+                                 result->line,
+                                 result->function_name);
         g_free(filename);
         if (priv->use_color)
-            g_print(RED_COLOR"%s"NORMAL_COLOR"\n", error->message);
+            g_print(RED_COLOR"%s"NORMAL_COLOR"\n", result->message);
         else
-            g_print("%s\n", error->message);
+            g_print("%s\n", result->message);
         break;
       case CUT_VERBOSE_LEVEL_NORMAL:
         if (priv->use_color)

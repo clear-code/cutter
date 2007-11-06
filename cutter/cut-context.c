@@ -187,18 +187,19 @@ cut_context_get_current_test (CutContext *context)
 }
 
 void
-cut_context_set_error (CutContext *context,
-                       const gchar *error_message,
-                       const gchar *function_name,
-                       const gchar *filename,
-                       guint line)
+cut_context_set_result (CutContext *context,
+                        CutTestResultStatus status,
+                        const gchar *result_message,
+                        const gchar *function_name,
+                        const gchar *filename,
+                        guint line)
 {
     CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
     CutTest *test = priv->test;
 
-    cut_test_set_error(test, error_message,
-                       function_name, filename,
-                       line);
+    cut_test_set_result(test, status, result_message,
+                        function_name, filename,
+                        line);
 }
 
 void

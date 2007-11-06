@@ -24,6 +24,8 @@
 
 #include <glib-object.h>
 
+#include "cut-assertion.h"
+
 G_BEGIN_DECLS
 
 #define CUT_TYPE_TEST            (cut_test_get_type ())
@@ -35,14 +37,15 @@ G_BEGIN_DECLS
 
 typedef struct _CutTest         CutTest;
 typedef struct _CutTestClass    CutTestClass;
-typedef struct _CutTestError    CutTestError;
+typedef struct _CutTestResult    CutTestResult;
 
 typedef void    (*CutTestFunction)     (void);
 typedef void    (*CutSetupFunction)    (void);
 typedef void    (*CutTearDownFunction) (void);
 
-struct _CutTestError
+struct _CutTestResult
 {
+    CutTestResultStatus status;
     gchar *message;
     gchar *function_name;
     gchar *filename;
@@ -72,12 +75,13 @@ const gchar *cut_test_get_function_name   (CutTest *test);
 guint        cut_test_get_assertion_count (CutTest *test);
 void         cut_test_increment_assertion_count
                                           (CutTest *test);
-void         cut_test_set_error           (CutTest *test,
-                                           const gchar *error_message,
-                                           const gchar *function_name,
-                                           const gchar *filename,
-                                           guint line);
-const CutTestError *cut_test_get_error    (CutTest *test);
+void         cut_test_set_result           (CutTest *test,
+                                            CutTestResultStatus status,
+                                            const gchar *result_message,
+                                            const gchar *function_name,
+                                            const gchar *filename,
+                                            guint line);
+const CutTestResult *cut_test_get_result    (CutTest *test);
 
 G_END_DECLS
 

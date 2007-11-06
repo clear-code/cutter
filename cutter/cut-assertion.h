@@ -29,18 +29,26 @@ G_BEGIN_DECLS
 
 typedef struct _CutContext         CutContext;
 
+typedef enum {
+    CUT_TEST_RESULT_FAILURE,
+    CUT_TEST_RESULT_ERROR,
+    CUT_TEST_RESULT_PENDING
+} CutTestResultStatus;
+
 CutContext *cut_context_get_current (void);
 void  cut_context_increment_assertion_count (CutContext *context);
-void  cut_context_set_error                 (CutContext *context,
-                                             const gchar *error_message,
+void  cut_context_set_result                (CutContext *context,
+                                             CutTestResultStatus status,
+                                             const gchar *result_message,
                                              const gchar *function_name,
                                              const gchar *filename,
                                              guint line);
 
 #define cut_fail(message)                               \
 {                                                       \
-    cut_context_set_error(                              \
+    cut_context_set_result(                             \
             cut_context_get_current(),                  \
+            CUT_TEST_RESULT_FAILURE,                    \
             message, __PRETTY_FUNCTION__,               \
             __FILE__, __LINE__);                        \
     return;                                             \
@@ -48,8 +56,9 @@ void  cut_context_set_error                 (CutContext *context,
 
 #define cut_pending(message)                            \
 {                                                       \
-    cut_context_set_error(                              \
+    cut_context_set_result(                             \
             cut_context_get_current(),                  \
+            CUT_TEST_RESULT_FAILURE,                    \
             message, __PRETTY_FUNCTION__,               \
             __FILE__, __LINE__);                        \
     return;                                             \
@@ -57,8 +66,9 @@ void  cut_context_set_error                 (CutContext *context,
 
 #define cut_assert(expect)                              \
 if (!(expect)) {                                        \
-    cut_context_set_error(                              \
+    cut_context_set_result(                             \
             cut_context_get_current(),                  \
+            CUT_TEST_RESULT_FAILURE,                    \
             "failed", __PRETTY_FUNCTION__,              \
             __FILE__, __LINE__);                        \
     return;                                             \
@@ -73,8 +83,9 @@ if (expect != actual) {                                     \
     message = g_strdup_printf(                              \
             "expected: <%d>\n but was: <%d>\n",             \
             expect, actual);                                \
-    cut_context_set_error(                                  \
+    cut_context_set_result(                                 \
             cut_context_get_current(),                      \
+            CUT_TEST_RESULT_FAILURE,                        \
             message, __PRETTY_FUNCTION__,                   \
             __FILE__, __LINE__);                            \
     g_free(message);                                        \
@@ -94,9 +105,10 @@ do {                                                    \
         gchar *message;                                 \
         message = g_strdup_printf(                      \
             "expected: <%g +/- %g>\n but was: <%g>\n",  \
-            expect, error, actual);                     \
-        cut_context_set_error(                          \
+            expect, _error, actual);                    \
+        cut_context_set_result(                         \
             cut_context_get_current(),                  \
+            CUT_TEST_RESULT_FAILURE,                    \
             message, __PRETTY_FUNCTION__,               \
             __FILE__, __LINE__);                        \
         g_free(message);                                \
@@ -114,8 +126,9 @@ if ((!expect && actual) || (expect && !actual) ||           \
     message = g_strdup_printf(                              \
             "expected: <%s>\n but was: <%s>\n",             \
             expect, actual);                                \
-    cut_context_set_error(                                  \
+    cut_context_set_result(                                 \
             cut_context_get_current(),                      \
+            CUT_TEST_RESULT_FAILURE,                        \
             message, __PRETTY_FUNCTION__,                   \
             __FILE__, __LINE__);                            \
     g_free(message);                                        \
