@@ -8,6 +8,7 @@ void test_test_case_count(void);
 void test_run(void);
 void test_run_this_function(void);
 void test_get_name(void);
+void test_has_function(void);
 
 static CutTestCase *test_object;
 static CutContext *test_context;
@@ -138,6 +139,13 @@ void
 test_get_name (void)
 {
     cut_assert_equal_string("dummy test case", cut_test_case_get_name(test_object));
+}
+
+void
+test_has_function (void)
+{
+    cut_assert(cut_test_case_has_function(test_object, "run_test_function"));
+    cut_assert(!cut_test_case_has_function(test_object, "not_exist_function"));
 }
 
 /*
