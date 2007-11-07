@@ -285,16 +285,18 @@ static gboolean
 run (CutTestCase *test_case, CutTest *test, CutContext *context)
 {
     CutTestCasePrivate *priv;
-    CutTestContext *test_context;
+    CutTestContext *original_test_context, *test_context;
     gboolean success = TRUE;
 
     priv = CUT_TEST_CASE_GET_PRIVATE(test_case);
-    if (!priv->set_current_test_context) {
+    if (!priv->get_current_test_context ||
+        !priv->set_current_test_context) {
         g_warning("You should include <cutter.h>");
         return FALSE;
     }
 
     test_context = cut_test_context_new(NULL, test_case, NULL);
+    original_test_context = priv->get_current_test_context();
     priv->set_current_test_context(test_context);
 
     g_signal_emit_by_name(test_case, "start-test", test);
@@ -313,7 +315,7 @@ run (CutTestCase *test_case, CutTest *test, CutContext *context)
         priv->teardown();
     g_signal_emit_by_name(test_case, "complete-test", test);
 
-    priv->set_current_test_context(NULL);
+    priv->set_current_test_context(original_test_context);
     g_object_unref(test_context);
 
     return success;

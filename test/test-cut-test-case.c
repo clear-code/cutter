@@ -11,8 +11,6 @@ void test_run_functions_with_regex(void);
 void test_get_name(void);
 void test_has_function(void);
 
-static CutTestContext *dummy_current_test_context = NULL;
-
 static CutTestCase *test_object;
 static CutContext *test_context;
 
@@ -60,18 +58,6 @@ dummy_teardown_function (void)
     n_teardown++;
 }
 
-static CutTestContext *
-dummy_get_current_test_context_function (void)
-{
-    return dummy_current_test_context;
-}
-
-static void
-dummy_set_current_test_context_function (CutTestContext *context)
-{
-    dummy_current_test_context = context;
-}
-
 void
 setup (void)
 {
@@ -91,8 +77,8 @@ setup (void)
     test_object = cut_test_case_new("dummy test case",
                                     dummy_setup_function,
                                     dummy_teardown_function,
-                                    dummy_get_current_test_context_function,
-                                    dummy_set_current_test_context_function);
+                                    get_current_test_context,
+                                    set_current_test_context);
     test = cut_test_new("dummy test 1", dummy_test_function1);
     cut_test_case_add_test(test_object, test);
     test = cut_test_new("dummy test 2", dummy_test_function2);
@@ -189,4 +175,3 @@ test_has_function (void)
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */
-
