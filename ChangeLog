@@ -1,5 +1,11 @@
 2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test-suite.c: support regular expression for
+	cut_test_suite_run_test_case().
+	Where has "success" signal gnone?
+
+2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test-case.c: Use cut_utils_create_regex_pattern().
 
 2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>

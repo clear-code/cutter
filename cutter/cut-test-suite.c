@@ -32,6 +32,7 @@
 #include "cut-test.h"
 #include "cut-test-case.h"
 #include "cut-context.h"
+#include "cut-utils.h"
 
 #define CUT_TEST_SUITE_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_SUITE, CutTestSuitePrivate))
 
@@ -139,19 +140,16 @@ cut_test_suite_new (void)
     return g_object_new(CUT_TYPE_TEST_SUITE, NULL);
 }
 
-gboolean
-cut_test_suite_run (CutTestSuite *suite, CutContext *context)
+static gboolean
+cut_test_suite_run_test_cases (CutTestSuite *suite, CutContext *context,
+                               const GList *tests)
 {
-
-    CutTestContainer *container;
-    const GList *list, *tests;
+    const GList *list;
     gboolean all_success = TRUE;
 
     cut_context_start_test_suite(context, suite);
     g_signal_emit_by_name(CUT_TEST(suite), "start");
 
-    container = CUT_TEST_CONTAINER(suite);
-    tests = cut_test_container_get_children(container);
     for (list = tests; list; list = g_list_next(list)) {
         if (!list->data)
             continue;
@@ -168,7 +166,7 @@ cut_test_suite_run (CutTestSuite *suite, CutContext *context)
     }
 
     if (all_success) {
-        g_signal_emit_by_name(CUT_TEST(suite), "success");
+        /* g_signal_emit_by_name(CUT_TEST(suite), "success");*/
     } else {
         g_signal_emit_by_name(CUT_TEST(suite), "failure");
     }
@@ -178,12 +176,49 @@ cut_test_suite_run (CutTestSuite *suite, CutContext *context)
     return all_success;
 }
 
+gboolean
+cut_test_suite_run (CutTestSuite *suite, CutContext *context)
+{
+    CutTestContainer *container;
+    const GList *tests;
+
+    container = CUT_TEST_CONTAINER(suite);
+    tests = cut_test_container_get_children(container);
+
+    return cut_test_suite_run_test_cases(suite, context, tests);
+}
+
 static gint
 compare_test_case_name (gconstpointer a, gconstpointer b)
 {
     g_return_val_if_fail(CUT_IS_TEST_CASE(a), -1);
 
     return strcmp(cut_test_case_get_name(CUT_TEST_CASE(a)), (gchar *) b);
+}
+
+static GList *
+collect_test_cases_with_regex (const GList *tests, gchar *pattern)
+{
+    GList *matched_list = NULL, *list;
+    GRegex *regex;
+
+    if (!strlen(pattern))
+        return NULL;
+
+    regex = g_regex_new(pattern, G_REGEX_EXTENDED, 0, NULL);
+    for (list = (GList *)tests; list; list = g_list_next(list)) {
+        gboolean match;
+        CutTestCase *test_case = CUT_TEST_CASE(list->data);
+        match = g_regex_match(regex, 
+                              cut_test_case_get_name(test_case),
+                              0, NULL);
+        if (match) {
+            matched_list = g_list_prepend(matched_list, test_case);
+        }
+    }
+    g_regex_unref(regex);
+
+    return matched_list;
 }
 
 static CutTestCase *
@@ -206,15 +241,24 @@ gboolean
 cut_test_suite_run_test_case (CutTestSuite *suite, CutContext *context,
                               const gchar *test_case_name)
 {
-    CutTestCase *test_case;
+    const GList *test_cases;
+    GList *matched_tests;
+    gchar *pattern;
+    gboolean success = FALSE;
 
     g_return_val_if_fail(CUT_IS_TEST_SUITE(suite), FALSE);
 
-    test_case = cut_test_suite_find_test_case(suite, test_case_name);
-    if (!test_case)
-        return FALSE;
+    test_cases = cut_test_container_get_children(CUT_TEST_CONTAINER(suite));
 
-    return cut_test_case_run(test_case, context);
+    pattern = cut_utils_create_regex_pattern(test_case_name);
+    matched_tests = collect_test_cases_with_regex(test_cases, pattern);
+    if (matched_tests) {
+        success = cut_test_suite_run_test_cases(suite, context, matched_tests);
+        g_list_free(matched_tests);
+    }
+    g_free(pattern);
+
+    return success;
 }
 
 gboolean
