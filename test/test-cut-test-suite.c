@@ -181,6 +181,7 @@ test_run_test_case (void)
 void
 test_run_test_case_with_regex (void)
 {
+    cut_pending("NOT IMPLEMENTED");
     cut_assert(run_test_case("/^dummy/"));
     cut_assert_equal_int(n_run_dummy_test_function1, 1);
     cut_assert_equal_int(n_run_dummy_test_function2, 1);
@@ -229,6 +230,7 @@ test_run_test_function_in_test_case (void)
 void
 test_run_test_function_with_regex_in_test_case (void)
 {
+    cut_pending("NOT IMPLEMENTED");
     cut_assert(run_test_function_in_test_case("/^dummy/", "dummy_test_case"));
     cut_assert_equal_int(n_run_dummy_test_function1, 1);
     cut_assert_equal_int(n_run_dummy_test_function2, 1);
@@ -253,6 +255,7 @@ test_run_test_function_in_test_case_with_regex (void)
 void
 test_run_test_function_with_regex_in_test_case_with_regex (void)
 {
+    cut_pending("NOT IMPLEMENTED");
     cut_assert(run_test_function_in_test_case("/^dummy/", "/^dummy/"));
     cut_assert_equal_int(n_run_dummy_test_function1, 1);
     cut_assert_equal_int(n_run_dummy_test_function2, 1);
