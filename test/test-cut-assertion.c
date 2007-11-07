@@ -119,18 +119,27 @@ void
 test_fail (void)
 {
     CutTest *test_object;
-    CutContext *test_context;
+    CutContext *context;
+    CutTestContext *original_test_context, *test_context;
+    gboolean success;
 
     test_object = cut_test_new("dummy-fail-test", dummy_fail_test_function);
     cut_assert(test_object);
 
-    test_context = cut_context_new();
-    cut_context_set_verbose_level(test_context, CUT_VERBOSE_LEVEL_SILENT);
+    context = cut_context_new();
+    cut_context_set_verbose_level(context, CUT_VERBOSE_LEVEL_SILENT);
 
-    cut_assert(!cut_test_run(test_object, test_context), "cut_fail() did not return FALSE!");
+    test_context = cut_test_context_new(NULL, NULL, test_object);
+    original_test_context = get_current_test_context();
+    set_current_test_context(test_context);
+    success = cut_test_run(test_object, context);
+    set_current_test_context(original_test_context);
 
-    g_object_unref(test_object);
+    cut_assert(!success);
+
     g_object_unref(test_context);
+    g_object_unref(context);
+    g_object_unref(test_object);
 }
 
 
