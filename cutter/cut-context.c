@@ -189,6 +189,18 @@ typedef struct _TestCallBackInfo
 } TestCallBackInfo;
 
 static void
+cb_pass_assertion(CutTest *test, gpointer data)
+{
+    TestCallBackInfo *info = data;
+    CutContext *context;
+    CutContextPrivate *priv;
+
+    context = info->context;
+    priv = CUT_CONTEXT_GET_PRIVATE(context);
+    priv->n_assertions++;
+}
+
+static void
 cb_success(CutTest *test, gpointer data)
 {
     TestCallBackInfo *info = data;
@@ -249,6 +261,11 @@ cb_pending(CutTest *test, CutTestResult *result, gpointer data)
 static void
 cb_complete (CutTest *test, gpointer data)
 {
+    TestCallBackInfo *info = data;
+
+    g_signal_handlers_disconnect_by_func(test,
+                                         G_CALLBACK(cb_pass_assertion),
+                                         data);
     g_signal_handlers_disconnect_by_func(test,
                                          G_CALLBACK(cb_success),
                                          data);
@@ -264,18 +281,29 @@ cb_complete (CutTest *test, gpointer data)
     g_signal_handlers_disconnect_by_func(test,
                                          G_CALLBACK(cb_complete),
                                          data);
+
+    g_object_unref(info->context);
+    if (info->result)
+        g_object_unref(info->result);
+    g_free(info);
 }
 
 void
 cut_context_start_test (CutContext *context, CutTest *test)
 {
+    TestCallBackInfo *info;
+
+    info = g_new0(TestCallBackInfo, 1);
+    info->context = context;
+    g_object_ref(context);
     CUT_CONTEXT_GET_PRIVATE(context)->n_tests++;
 
-    g_signal_connect(test, "success", G_CALLBACK(cb_success), context);
-    g_signal_connect(test, "failure", G_CALLBACK(cb_failure), context);
-    g_signal_connect(test, "error", G_CALLBACK(cb_error), context);
-    g_signal_connect(test, "pending", G_CALLBACK(cb_pending), context);
-    g_signal_connect(test, "complete", G_CALLBACK(cb_complete), context);
+    g_signal_connect(test, "pass_assertion",
+                     G_CALLBACK(cb_pass_assertion), info);
+    g_signal_connect(test, "failure", G_CALLBACK(cb_failure), info);
+    g_signal_connect(test, "error", G_CALLBACK(cb_error), info);
+    g_signal_connect(test, "pending", G_CALLBACK(cb_pending), info);
+    g_signal_connect(test, "complete", G_CALLBACK(cb_complete), info);
 }
 
 static void
