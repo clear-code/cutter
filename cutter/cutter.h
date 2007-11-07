@@ -24,7 +24,7 @@
 
 #include <glib.h>
 
-#include "cut-assertion.h"
+#include "cut-assertions.h"
 
 G_BEGIN_DECLS
 

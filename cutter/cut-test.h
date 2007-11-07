@@ -25,7 +25,7 @@
 #include <glib-object.h>
 
 #include "cut-private.h"
-#include "cut-assertion.h"
+#include "cut-assertions.h"
 #include "cut-test-context.h"
 #include "cut-test-result.h"
 

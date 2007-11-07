@@ -4,10 +4,10 @@ INCLUDES = $(GLIB_CFLAGS)	\
 
 EXTRA_DIST = config.h.in
 
-pkginclude_HEADERS = cut-assertion.h cutter.h
+pkginclude_HEADERS = cut-assertions.h cutter.h
 
 cutter_h_sources =				\
-	cut-assertion.h				\
+	cut-assertions.h			\
 	cut-context.h				\
 	cut-test-result.h			\
 	cut-output.h
