@@ -90,7 +90,7 @@ cut_test_result_class_init (CutTestResultClass *klass)
                                "The message of the result",
                                NULL,
                                G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
-    g_object_class_install_property(gobject_class, PROP_FUNCTION_NAME, spec);
+    g_object_class_install_property(gobject_class, PROP_MESSAGE, spec);
 
     spec = g_param_spec_string("function-name",
                                "Function name",
@@ -104,7 +104,7 @@ cut_test_result_class_init (CutTestResultClass *klass)
                                "The filename of the result",
                                NULL,
                                G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
-    g_object_class_install_property(gobject_class, PROP_FUNCTION_NAME, spec);
+    g_object_class_install_property(gobject_class, PROP_FILENAME, spec);
 
     spec = g_param_spec_uint("line",
                              "Line number",
