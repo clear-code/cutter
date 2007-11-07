@@ -1,7 +1,7 @@
 2007-11-07  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-assertion.h, cutter/cut-test-context.c:
-	cut_test_context_register_result() now accepts varags.
+	cut_test_context_register_result() now accepts varargs.
 
 2007-11-07  Kouhei Sutou  <kou@cozmixng.org>
 
