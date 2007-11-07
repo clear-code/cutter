@@ -11,6 +11,7 @@ void test_fail(void);
 void test_pending(void);
 void test_start_signal(void);
 void test_complete_signal(void);
+void test_assert_message(void);
 
 static gboolean need_cleanup;
 
@@ -43,6 +44,12 @@ static void
 dummy_normal_test_function (void)
 {
     cut_assert(TRUE);
+}
+
+static void
+dummy_assert_message_test_function (void)
+{
+    cut_assert(FALSE, "The message of %s", "assertion");
 }
 
 static void
@@ -201,6 +208,28 @@ test_fail (void)
                          cut_test_result_get_status(test_result));
 }
 
+void
+test_assert_message (void)
+{
+    CutTest *test;
+
+    test = cut_test_new("dummy-assertion-message-test", dummy_assert_message_test_function);
+    cut_assert(test);
+
+    g_signal_connect(test, "failure", G_CALLBACK(cb_collect_result),
+                     &test_result);
+    cut_assert(!run(test));
+    g_signal_handlers_disconnect_by_func(test,
+                                         G_CALLBACK(cb_collect_result),
+                                         &test_result);
+    cut_assert(test_result,
+               "Could not get a CutTestResult object "
+               "since \"failure\" signal was not emmitted.");
+    cut_assert_equal_int(CUT_TEST_RESULT_FAILURE,
+                         cut_test_result_get_status(test_result));
+    cut_assert_equal_string("The message of assertion",
+                            cut_test_result_get_message(test_result));
+}
 
 void
 test_start_signal (void)
