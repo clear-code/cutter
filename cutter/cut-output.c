@@ -391,6 +391,9 @@ cut_output_on_complete_test_suite (CutOutput *output, CutContext *context,
     if (priv->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
 
+    if (priv->verbose_level == CUT_VERBOSE_LEVEL_NORMAL)
+        g_print("\n");
+
     i = 1;
     for (node = cut_context_get_results(context);
          node;
