@@ -158,10 +158,12 @@ test_is_success (void)
     test = cut_test_new("dummy-success-test", dummy_success_test);
     cut_assert(run_the_test(test));
     cut_assert(cut_test_is_success(test));
+    g_object_unref(test);
 
     test = cut_test_new("dummy-failure-test", dummy_failure_test);
     cut_assert(!run_the_test(test));
     cut_assert(!cut_test_is_success(test));
+    g_object_unref(test);
 }
 
 void
@@ -172,6 +174,7 @@ test_n_failures (void)
     test = cut_test_new("dummy-failure-test", dummy_failure_test);
     cut_assert(!run_the_test(test));
     cut_assert_equal_int(1, cut_test_get_n_failures(test));
+    g_object_unref(test);
 }
 
 /*
