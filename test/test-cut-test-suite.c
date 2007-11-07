@@ -105,6 +105,7 @@ setup (void)
     loader = cut_loader_new(test_path);
     g_free(test_path);
     test_case = cut_loader_load_test_case(loader);
+    cut_assert(test_case);
     cut_test_suite_add_test_case(test_object, test_case);
 
     test_case = cut_test_case_new("dummy_test_case", NULL, NULL);
@@ -137,49 +138,27 @@ teardown (void)
 static gboolean
 run_test_case (const gchar *test_case_name)
 {
-    CutContext *original_context;
-    gboolean ret;
-
-    original_context = cut_context_get_current();
-
-    cut_context_set_current(test_context);
-    ret = cut_test_suite_run_test_case(test_object, test_case_name);
-    cut_context_set_current(original_context);
-
-    return ret; 
+    return cut_test_suite_run_test_case(test_object,
+                                        test_context,
+                                        test_case_name);
 }
 
 static gboolean
 run_test_function (const gchar *test_function_name)
 {
-    CutContext *original_context;
-    gboolean ret;
-
-    original_context = cut_context_get_current();
-
-    cut_context_set_current(test_context);
-    ret = cut_test_suite_run_test_function(test_object, test_function_name);
-    cut_context_set_current(original_context);
-
-    return ret; 
+    return cut_test_suite_run_test_function(test_object,
+                                            test_context,
+                                            test_function_name);
 }
 
 static gboolean
 run_test_function_in_test_case (const gchar *test_function_name,
                                 const gchar *test_case_name)
 {
-    CutContext *original_context;
-    gboolean ret;
-
-    original_context = cut_context_get_current();
-
-    cut_context_set_current(test_context);
-    ret = cut_test_suite_run_test_function_in_test_case(test_object,
-                                                        test_function_name,
-                                                        test_case_name);
-    cut_context_set_current(original_context);
-
-    return ret; 
+    return cut_test_suite_run_test_function_in_test_case(test_object,
+                                                         test_context,
+                                                         test_function_name,
+                                                         test_case_name);
 }
 
 void
@@ -287,18 +266,9 @@ test_get_n_tests (void)
 void
 test_get_n_failures (void)
 {
-    CutContext *original_context;
-    gboolean ret;
-
     fail_test = TRUE;
 
-    original_context = cut_context_get_current();
-
-    cut_context_set_current(test_context);
-    ret = cut_test_suite_run(test_object);
-    cut_context_set_current(original_context);
-
-    cut_assert(!ret);
+    cut_assert(!cut_test_suite_run(test_object, test_context));
     cut_assert_equal_int(3, cut_test_get_n_failures(CUT_TEST(test_object)));
 }
 

@@ -13,16 +13,13 @@ static CutRepository *test_repository;
 void
 setup (void)
 {
-    CutContext *context;
     gchar *test_repository_path;
 
-    context = cut_context_new();
     test_repository_path = g_build_filename(cuttest_get_base_dir(),
                                             "repository_test_dir",
                                             NULL);
-    test_repository = cut_repository_new(context, test_repository_path);
+    test_repository = cut_repository_new(test_repository_path);
     g_free(test_repository_path);
-    g_object_unref(context);
 }
 
 void

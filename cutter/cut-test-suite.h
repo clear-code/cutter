@@ -47,6 +47,9 @@ struct _CutTestSuite
 struct _CutTestSuiteClass
 {
     CutTestContainerClass parent_class;
+
+    void (*start_test_case)    (CutTestSuite *suite, CutTestCase *test_case);
+    void (*complete_test_case) (CutTestSuite *suite, CutTestCase *test_case);
 };
 
 GType           cut_test_suite_get_type      (void) G_GNUC_CONST;
@@ -54,14 +57,18 @@ GType           cut_test_suite_get_type      (void) G_GNUC_CONST;
 CutTestSuite   *cut_test_suite_new           (void);
 void            cut_test_suite_add_test_case (CutTestSuite *suite,
                                               CutTestCase *test_case);
-gboolean        cut_test_suite_run           (CutTestSuite *suite);
+gboolean        cut_test_suite_run           (CutTestSuite *suite,
+                                              CutContext   *context);
 gboolean        cut_test_suite_run_test_case (CutTestSuite *suite,
-                                              const gchar *test_case_name);
+                                              CutContext   *context,
+                                              const gchar  *test_case_name);
 gboolean        cut_test_suite_run_test_function
                                              (CutTestSuite *suite,
-                                              const gchar *function_name);
+                                              CutContext   *context,
+                                              const gchar  *function_name);
 gboolean        cut_test_suite_run_test_function_in_test_case
                                              (CutTestSuite *suite,
+                                              CutContext   *context,
                                               const gchar *function_name,
                                               const gchar *test_case_name);
 

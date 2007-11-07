@@ -73,7 +73,7 @@ show_no_argument_error (GOptionContext *option_context)
 }
 
 static gboolean
-run_tests (CutTestSuite *suite)
+run_tests (CutTestSuite *suite, CutContext *context)
 {
     gboolean all_success = TRUE;
     gboolean success = FALSE;
@@ -83,6 +83,7 @@ run_tests (CutTestSuite *suite)
         for (i = 0; test_case_names[i] != NULL; i++) {
             for (j = 0; test_names[i] != NULL; j++) {
                 success = cut_test_suite_run_test_function_in_test_case(suite,
+                                                                        context,
                                                                         test_case_names[i],
                                                                         test_names[j]);
                 if (!success)
@@ -92,19 +93,20 @@ run_tests (CutTestSuite *suite)
     } else if (test_case_names) {
         gint i;
         for (i = 0; test_case_names[i] != NULL; i++) {
-            success = cut_test_suite_run_test_case(suite, test_case_names[i]);
+            success = cut_test_suite_run_test_case(suite, context,
+                                                   test_case_names[i]);
             if (!success)
                 all_success = FALSE;
         }
     } else if (test_names) {
         gint i;
         for (i = 0; test_names[i] != NULL; i++) {
-            success = cut_test_suite_run_test_function(suite, test_names[i]);
+            success = cut_test_suite_run_test_function(suite, context, test_names[i]);
             if (!success)
                 all_success = FALSE;
         }
     } else {
-        all_success = cut_test_suite_run(suite);
+        all_success = cut_test_suite_run(suite, context);
     }
 
     return all_success;
@@ -145,11 +147,11 @@ main (int argc, char *argv[])
     }
     cut_context_set_use_color(context, use_color);
 
-    repository = cut_repository_new(context, argv[1]);
+    repository = cut_repository_new(argv[1]);
     suite = cut_repository_create_test_suite(repository);
 
     if (suite) {
-        success = run_tests(suite);
+        success = run_tests(suite, context);
         g_object_unref(suite);
     }
     g_object_unref(repository);

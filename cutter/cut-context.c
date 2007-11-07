@@ -169,9 +169,9 @@ cut_context_set_use_color (CutContext *context, gboolean use_color)
 void
 cut_context_increment_assertion_count (CutContext *context)
 {
-    CutTest *test = CUT_CONTEXT_GET_PRIVATE(context)->test;
+/*     CutTest *test = CUT_CONTEXT_GET_PRIVATE(context)->test; */
 
-    cut_test_increment_assertion_count(test);
+/*     cut_test_increment_assertion_count(test); */
 }
 
 static void
@@ -219,7 +219,7 @@ cb_pending(CutTest *test, gpointer data)
 }
 
 void
-cut_context_set_test (CutContext *context, CutTest *test)
+cut_context_start_test (CutContext *context, CutTest *test)
 {
     CutContextPrivate *priv;
 
@@ -294,7 +294,7 @@ cb_complete_test_case(CutTestCase *test_case, gpointer data)
 }
 
 void
-cut_context_connect_test_case (CutContext *context, CutTestCase *test_case)
+cut_context_start_test_case (CutContext *context, CutTestCase *test_case)
 {
     g_signal_connect(test_case, "start-test",
                      G_CALLBACK(cb_start_test), context);
@@ -330,7 +330,7 @@ cb_complete_test_suite(CutTestSuite *test_suite, gpointer data)
 }
 
 void
-cut_context_connect_test_suite (CutContext *context, CutTestSuite *test_suite)
+cut_context_start_test_suite (CutContext *context, CutTestSuite *test_suite)
 {
     g_signal_connect(test_suite, "start",
                      G_CALLBACK(cb_start_test_suite), context);
@@ -355,9 +355,7 @@ cut_context_set_result (CutContext *context,
     CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
     CutTest *test = priv->test;
 
-    cut_test_set_result(test, status, result_message,
-                        function_name, filename,
-                        line);
+    g_print("%s\n", result_message);
 }
 
 void

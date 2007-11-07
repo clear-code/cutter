@@ -29,14 +29,12 @@
 
 #include "cut-repository.h"
 #include "cut-loader.h"
-#include "cut-context.h"
 
 #define CUT_REPOSITORY_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_REPOSITORY, CutRepositoryPrivate))
 
 typedef struct _CutRepositoryPrivate	CutRepositoryPrivate;
 struct _CutRepositoryPrivate
 {
-    CutContext *context;
     gchar *directory;
     GList *loaders;
 };
@@ -44,7 +42,6 @@ struct _CutRepositoryPrivate
 enum
 {
     PROP_0,
-    PROP_CONTEXT,
     PROP_DIRECTORY
 };
 
@@ -72,13 +69,6 @@ cut_repository_class_init (CutRepositoryClass *klass)
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
 
-    spec = g_param_spec_object("context",
-                               "Context",
-                               "The context for this repository",
-                               CUT_TYPE_CONTEXT,
-                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
-    g_object_class_install_property(gobject_class, PROP_CONTEXT, spec);
-
     spec = g_param_spec_string("directory",
                                "Directory name",
                                "The directory name in which stores shared object",
@@ -94,7 +84,6 @@ cut_repository_init (CutRepository *repository)
 {
     CutRepositoryPrivate *priv = CUT_REPOSITORY_GET_PRIVATE(repository);
 
-    priv->context = NULL;
     priv->directory = NULL;
     priv->loaders = NULL;
 }
@@ -103,11 +92,6 @@ static void
 dispose (GObject *object)
 {
     CutRepositoryPrivate *priv = CUT_REPOSITORY_GET_PRIVATE(object);
-
-    if (priv->context) {
-        g_object_unref(priv->context);
-        priv->context = NULL;
-    }
 
     if (priv->directory) {
         g_free(priv->directory);
@@ -132,13 +116,6 @@ set_property (GObject      *object,
     CutRepositoryPrivate *priv = CUT_REPOSITORY_GET_PRIVATE(object);
 
     switch (prop_id) {
-      case PROP_CONTEXT:
-        if (priv->context)
-            g_object_unref(priv->context);
-        priv->context = g_value_get_object(value);
-        if (priv->context)
-            g_object_ref(priv->context);
-        break;
       case PROP_DIRECTORY:
         if (priv->directory)
             g_free(priv->directory);
@@ -159,9 +136,6 @@ get_property (GObject    *object,
     CutRepositoryPrivate *priv = CUT_REPOSITORY_GET_PRIVATE(object);
 
     switch (prop_id) {
-      case PROP_CONTEXT:
-        g_value_set_object(value, priv->context);
-        break;
       case PROP_DIRECTORY:
         g_value_set_string(value, priv->directory);
         break;
@@ -172,10 +146,9 @@ get_property (GObject    *object,
 }
 
 CutRepository *
-cut_repository_new (CutContext *context, const gchar *directory)
+cut_repository_new (const gchar *directory)
 {
     return g_object_new(CUT_TYPE_REPOSITORY,
-                        "context", context,
                         "directory", directory,
                         NULL);
 }
@@ -229,11 +202,8 @@ cut_repository_create_test_suite (CutRepository *repository)
 
         test_case = cut_loader_load_test_case(loader);
         if (test_case) {
-            cut_context_connect_test_case(priv->context, test_case);
-            if (!suite) {
+            if (!suite)
                 suite = cut_test_suite_new();
-                cut_context_connect_test_suite(priv->context, suite);
-            }
             cut_test_suite_add_test_case(suite, test_case);
         }
     }

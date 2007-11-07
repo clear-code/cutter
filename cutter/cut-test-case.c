@@ -51,6 +51,15 @@ enum
     PROP_TEAR_DOWN_FUNCTION
 };
 
+enum
+{
+    START_TEST_SIGNAL,
+    COMPLETE_TEST_SIGNAL,
+    LAST_SIGNAL
+};
+
+static gint cut_test_case_signals[LAST_SIGNAL] = {0};
+
 G_DEFINE_TYPE (CutTestCase, cut_test_case, CUT_TYPE_TEST_CONTAINER)
 
 static void dispose        (GObject         *object);
@@ -62,8 +71,6 @@ static void get_property   (GObject         *object,
                             guint            prop_id,
                             GValue          *value,
                             GParamSpec      *pspec);
-
-static gboolean real_run   (CutTest         *test);
 
 static void
 cut_test_case_class_init (CutTestCaseClass *klass)
@@ -78,8 +85,6 @@ cut_test_case_class_init (CutTestCaseClass *klass)
     gobject_class->dispose      = dispose;
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
-
-    test_class->run = real_run;
 
     spec = g_param_spec_string("name",
                                "name",
@@ -99,6 +104,24 @@ cut_test_case_class_init (CutTestCaseClass *klass)
                                 "The function for tear down",
                                 G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class, PROP_TEAR_DOWN_FUNCTION, spec);
+
+	cut_test_case_signals[START_TEST_SIGNAL]
+        = g_signal_new("start-test",
+                G_TYPE_FROM_CLASS(klass),
+                G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
+                G_STRUCT_OFFSET(CutTestCaseClass, start_test),
+                NULL, NULL,
+                g_cclosure_marshal_VOID__OBJECT,
+                G_TYPE_NONE, 1, CUT_TYPE_TEST);
+
+	cut_test_case_signals[COMPLETE_TEST_SIGNAL]
+        = g_signal_new("complete-test",
+                G_TYPE_FROM_CLASS(klass),
+                G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
+                G_STRUCT_OFFSET(CutTestCaseClass, complete_test),
+                NULL, NULL,
+                g_cclosure_marshal_VOID__OBJECT,
+                G_TYPE_NONE, 1, CUT_TYPE_TEST);
 
     g_type_class_add_private(gobject_class, sizeof(CutTestCasePrivate));
 }
@@ -218,7 +241,8 @@ compare_function_name (gconstpointer a, gconstpointer b)
 }
 
 gboolean
-cut_test_case_run_function (CutTestCase *test_case, const gchar *name)
+cut_test_case_run_function (CutTestCase *test_case, CutContext *context,
+                            const gchar *name)
 {
     CutTestCasePrivate *priv;
     CutTest *test;
@@ -236,16 +260,16 @@ cut_test_case_run_function (CutTestCase *test_case, const gchar *name)
         return FALSE;
 
     test = CUT_TEST(list->data);
-    cut_context_set_test(cut_context_get_current(), test);
+    cut_context_start_test(cut_context_get_current(), test);
 
     if (priv->setup)
         priv->setup();
 
-    success = cut_test_run(test);
+    success = cut_test_run(test, context);
     if (!success) {
-        cut_context_output_error_log(cut_context_get_current());
+        cut_context_output_error_log(context);
     } else {
-        cut_context_output_normal_log(cut_context_get_current());
+        cut_context_output_normal_log(context);
     }
 
     if (priv->teardown)
@@ -255,52 +279,44 @@ cut_test_case_run_function (CutTestCase *test_case, const gchar *name)
 }
 
 gboolean
-cut_test_case_run (CutTestCase *test_case)
-{
-    return cut_test_run(CUT_TEST(test_case));
-}
-
-static gboolean
-real_run (CutTest *test)
+cut_test_case_run (CutTestCase *test_case, CutContext *context)
 {
     CutTestContainer *container;
     CutTestCasePrivate *priv;
     const GList *list, *tests;
     gboolean all_success = TRUE;
 
-    g_return_val_if_fail(CUT_IS_TEST_CASE(test), FALSE);
+    cut_context_start_test_case(context, test_case);
 
-    container = CUT_TEST_CONTAINER(test);
+    priv = CUT_TEST_CASE_GET_PRIVATE(test_case);
+    container = CUT_TEST_CONTAINER(test_case);
     tests = cut_test_container_get_children(container);
-    priv = CUT_TEST_CASE_GET_PRIVATE(container);
-
     for (list = tests; list; list = g_list_next(list)) {
         if (!list->data)
             continue;
+
         if (CUT_IS_TEST(list->data)) {
             CutTest *test = CUT_TEST(list->data);
 
-            cut_context_set_test(cut_context_get_current(), test);
-
-            g_signal_emit_by_name(container, "start-test", test);
+            g_signal_emit_by_name(test_case, "start-test", test);
             if (priv->setup)
                 priv->setup();
 
-            if (!cut_test_is_success(test) || !cut_test_run(test))
+            if (!cut_test_is_success(test) || !cut_test_run(test, context))
                 all_success = FALSE;
 
             if (priv->teardown)
                 priv->teardown();
-            g_signal_emit_by_name(container, "complete-test", test);
+            g_signal_emit_by_name(test_case, "complete-test", test);
         } else {
             g_warning("This object is not CutTest object");
         }
     }
 
     if (all_success) {
-        g_signal_emit_by_name(test, "success");
+        g_signal_emit_by_name(CUT_TEST(test_case), "success");
     } else {
-        g_signal_emit_by_name(test, "failure");
+        g_signal_emit_by_name(CUT_TEST(test_case), "failure");
     }
 
     return all_success;

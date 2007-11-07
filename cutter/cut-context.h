@@ -63,9 +63,11 @@ void  cut_context_set_source_directory      (CutContext *context,
 void  cut_context_set_use_color             (CutContext *context,
                                              gboolean    use_color);
 
-void  cut_context_connect_test_case         (CutContext *context,
+void  cut_context_start_test                (CutContext *context,
+                                             CutTest    *test);
+void  cut_context_start_test_case           (CutContext *context,
                                              CutTestCase *test_case);
-void  cut_context_connect_test_suite        (CutContext *context,
+void  cut_context_start_test_suite          (CutContext *context,
                                              CutTestSuite *test_suite);
 
 void  cut_context_output_error_log          (CutContext *context);

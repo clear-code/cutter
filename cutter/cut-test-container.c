@@ -44,15 +44,6 @@ enum
     PROP_0
 };
 
-enum
-{
-    START_TEST_SIGNAL,
-    COMPLETE_TEST_SIGNAL,
-    LAST_SIGNAL
-};
-
-static gint cut_test_container_signals[LAST_SIGNAL] = {0};
-
 G_DEFINE_ABSTRACT_TYPE (CutTestContainer, cut_test_container, CUT_TYPE_TEST)
 
 static void dispose        (GObject         *object);
@@ -65,7 +56,6 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 
-static gboolean real_run   (CutTest         *test);
 static gdouble  real_get_elapsed  (CutTest  *test);
 static guint    real_get_n_tests      (CutTest *test);
 static guint    real_get_n_assertions (CutTest *test);
@@ -86,31 +76,12 @@ cut_test_container_class_init (CutTestContainerClass *klass)
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
 
-    test_class->run = real_run;
     test_class->get_elapsed = real_get_elapsed;
     test_class->get_n_tests = real_get_n_tests;
     test_class->get_n_assertions = real_get_n_assertions;
     test_class->get_n_failures = real_get_n_failures;
     test_class->get_n_errors = real_get_n_errors;
     test_class->get_n_pendings = real_get_n_pendings;
-
-	cut_test_container_signals[START_TEST_SIGNAL]
-        = g_signal_new("start-test",
-                G_TYPE_FROM_CLASS(klass),
-                G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
-                G_STRUCT_OFFSET(CutTestContainerClass, start_test),
-                NULL, NULL,
-                g_cclosure_marshal_VOID__OBJECT,
-                G_TYPE_NONE, 1, CUT_TYPE_TEST);
-
-	cut_test_container_signals[COMPLETE_TEST_SIGNAL]
-        = g_signal_new("complete-test",
-                G_TYPE_FROM_CLASS(klass),
-                G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
-                G_STRUCT_OFFSET(CutTestContainerClass, complete_test),
-                NULL, NULL,
-                g_cclosure_marshal_VOID__OBJECT,
-                G_TYPE_NONE, 1, CUT_TYPE_TEST);
 
     g_type_class_add_private(gobject_class, sizeof(CutTestContainerPrivate));
 }
@@ -177,43 +148,6 @@ const GList *
 cut_test_container_get_children (CutTestContainer *container)
 {
     return CUT_TEST_CONTAINER_GET_PRIVATE(container)->tests;
-}
-
-static gboolean
-real_run (CutTest *test)
-{
-    GList *list;
-    gboolean all_success = TRUE;
-    CutTestContainer *container;
-    CutTestContainerPrivate *priv;
-
-    g_return_val_if_fail(CUT_IS_TEST_CONTAINER(test), FALSE);
-
-    container = CUT_TEST_CONTAINER(test);
-    priv = CUT_TEST_CONTAINER_GET_PRIVATE(container);
-
-    for (list = priv->tests; list; list = g_list_next(list)) {
-        if (!list->data)
-            continue;
-        if (CUT_IS_TEST(list->data)) {
-            CutTest *test = CUT_TEST(list->data);
-
-            g_signal_emit_by_name(container, "start-test", test);
-            if (!cut_test_run(test))
-                all_success = FALSE;
-            g_signal_emit_by_name(container, "complete-test", test);
-        } else {
-            g_warning("This object is neither test nor test container!");
-        }
-    }
-
-    if (all_success) {
-        g_signal_emit_by_name(test, "success");
-    } else {
-        g_signal_emit_by_name(test, "failure");
-    }
-
-    return all_success;
 }
 
 static gdouble

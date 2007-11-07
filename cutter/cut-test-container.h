@@ -46,9 +46,6 @@ struct _CutTestContainer
 struct _CutTestContainerClass
 {
     CutTestClass parent_class;
-
-    void (*start_test)    (CutTestContainer *container, CutTest *test);
-    void (*complete_test) (CutTestContainer *container, CutTest *test);
 };
 
 GType        cut_test_container_get_type     (void) G_GNUC_CONST;

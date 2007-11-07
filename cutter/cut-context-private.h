@@ -30,8 +30,6 @@
 G_BEGIN_DECLS
 
 CutTest *cut_context_get_current_test (CutContext *context);
-void     cut_context_set_test         (CutContext *context,
-                                       CutTest    *test);
 void     cut_context_set_current      (CutContext *context);
 
 G_END_DECLS

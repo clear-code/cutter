@@ -104,15 +104,7 @@ teardown (void)
 static gboolean
 run_the_test (void)
 {
-    CutContext *original_context;
-    gboolean ret;
-
-    original_context = cut_context_get_current();
-    cut_context_set_current(test_context);
-    ret = cut_test_case_run(test_object);
-    cut_context_set_current(original_context);
-
-    return ret;
+    return cut_test_case_run(test_object, test_context);
 }
 
 void
@@ -156,15 +148,8 @@ test_run_with_setup_error (void)
 void
 test_run_this_function (void)
 {
-    CutContext *original_context;
-    gboolean ret;
-
-    original_context = cut_context_get_current();
-    cut_context_set_current(test_context);
-    ret = cut_test_case_run_function(test_object, "run_test_function");
-    cut_context_set_current(original_context);
-
-    cut_assert(ret);
+    cut_assert(cut_test_case_run_function(test_object, test_context,
+                                          "run_test_function"));
 
     cut_assert_equal_int(1, n_run_dummy_run_test_function);
     cut_assert_equal_int(0, n_run_dummy_test_function1);
@@ -173,15 +158,7 @@ test_run_this_function (void)
 void
 test_run_functions_with_regex (void)
 {
-    CutContext *original_context;
-    gboolean ret;
-
-    original_context = cut_context_get_current();
-    cut_context_set_current(test_context);
-    ret = cut_test_case_run_function(test_object, "/^dummy/");
-    cut_context_set_current(original_context);
-
-    cut_assert(ret);
+    cut_assert(cut_test_case_run_function(test_object, test_context, "/^dummy/"));
 
     cut_assert_equal_int(0, n_run_dummy_run_test_function);
     cut_assert_equal_int(1, n_run_dummy_test_function1);
@@ -211,17 +188,9 @@ test_get_n_tests (void)
 void
 test_get_n_failures (void)
 {
-    CutContext *original_context;
-    gboolean ret;
-
     fail_test = TRUE;
 
-    original_context = cut_context_get_current();
-    cut_context_set_current(test_context);
-    ret = cut_test_case_run(test_object);
-    cut_context_set_current(original_context);
-
-    cut_assert(!ret);
+    cut_assert(!cut_test_case_run(test_object, test_context));
     cut_assert_equal_int(2, cut_test_get_n_failures(CUT_TEST(test_object)));
 }
 

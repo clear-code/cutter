@@ -52,8 +52,7 @@ void
 test_error (void)
 {
     CutTest *test_object;
-    CutContext *original_context, *test_context;
-    gboolean ret;
+    CutContext *test_context;
     const CutTestResult *result;
 
     test_object = cut_test_new("dummy-error-test", dummy_error_test_function);
@@ -61,14 +60,8 @@ test_error (void)
 
     test_context = cut_context_new();
     cut_context_set_verbose_level(test_context, CUT_VERBOSE_LEVEL_SILENT);
-    cut_context_set_test(test_context, test_object);
 
-    original_context = cut_context_get_current();
-    cut_context_set_current(test_context);
-    ret = cut_test_run(test_object);
-    cut_context_set_current(original_context);
-
-    cut_assert(!ret);
+    cut_assert(!cut_test_run(test_object, test_context));
 
     result = cut_test_get_result(test_object);
     cut_assert(result);
@@ -83,8 +76,7 @@ void
 test_pending (void)
 {
     CutTest *test_object;
-    CutContext *original_context, *test_context;
-    gboolean ret;
+    CutContext *test_context;
     const CutTestResult *result;
 
     test_object = cut_test_new("dummy-pending-test", dummy_pending_test_function);
@@ -92,14 +84,7 @@ test_pending (void)
 
     test_context = cut_context_new();
     cut_context_set_verbose_level(test_context, CUT_VERBOSE_LEVEL_SILENT);
-    cut_context_set_test(test_context, test_object);
-
-    original_context = cut_context_get_current();
-    cut_context_set_current(test_context);
-    ret = cut_test_run(test_object);
-    cut_context_set_current(original_context);
-
-    cut_assert(!ret);
+    cut_assert(!cut_test_run(test_object, test_context));
 
     result = cut_test_get_result(test_object);
     cut_assert(result);
@@ -114,22 +99,16 @@ void
 test_fail (void)
 {
     CutTest *test_object;
-    CutContext *original_context, *test_context;
-    gboolean ret;
+    CutContext *test_context;
 
     test_object = cut_test_new("dummy-fail-test", dummy_fail_test_function);
     cut_assert(test_object);
 
     test_context = cut_context_new();
     cut_context_set_verbose_level(test_context, CUT_VERBOSE_LEVEL_SILENT);
-    cut_context_set_test(test_context, test_object);
 
-    original_context = cut_context_get_current();
-    cut_context_set_current(test_context);
-    ret = cut_test_run(test_object);
-    cut_context_set_current(original_context);
+    cut_assert(!cut_test_run(test_object, test_context));
 
-    cut_assert(!ret);
     g_object_unref(test_object);
     g_object_unref(test_context);
 }

@@ -68,7 +68,6 @@ struct _CutTestClass
     void (*pending)  (CutTest *test);
     void (*complete) (CutTest *test);
 
-    gboolean (*run)  (CutTest *test);
     gdouble  (*get_elapsed) (CutTest *test);
     guint    (*get_n_tests)      (CutTest *test);
     guint    (*get_n_assertions) (CutTest *test);
@@ -81,7 +80,7 @@ GType        cut_test_get_type  (void) G_GNUC_CONST;
 
 CutTest     *cut_test_new                 (const gchar *function_name,
                                            CutTestFunction function);
-gboolean     cut_test_run                 (CutTest *test);
+gboolean     cut_test_run                 (CutTest *test, CutContext *context);
 const gchar *cut_test_get_function_name   (CutTest *test);
 void         cut_test_increment_assertion_count
                                           (CutTest *test);

@@ -29,6 +29,7 @@
 
 #include "cut-test.h"
 #include "cut-test-container.h"
+#include "cut-context.h"
 
 #define CUT_TEST_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST, CutTestPrivate))
 
@@ -75,7 +76,6 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 
-static gboolean real_run   (CutTest         *test);
 static gdouble  real_get_elapsed  (CutTest  *test);
 static guint    real_get_n_tests      (CutTest *test);
 static guint    real_get_n_assertions (CutTest *test);
@@ -95,7 +95,6 @@ cut_test_class_init (CutTestClass *klass)
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
 
-    klass->run = real_run;
     klass->get_elapsed = real_get_elapsed;
     klass->get_n_tests = real_get_n_tests;
     klass->get_n_assertions = real_get_n_assertions;
@@ -289,12 +288,19 @@ cut_test_new (const gchar *function_name, CutTestFunction function)
                         NULL);
 }
 
-static gboolean
-real_run (CutTest *test)
+gboolean
+cut_test_run (CutTest *test, CutContext *context)
 {
     CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(test);
     gboolean success;
     const gchar *status_signal_name = NULL;
+
+    if (priv->test_function)
+        return FALSE;
+
+    cut_context_start_test(context, test);
+
+    g_signal_emit_by_name(test, "start");
 
     g_timer_start(priv->timer);
     priv->test_function();
@@ -321,22 +327,6 @@ real_run (CutTest *test)
     }
     g_signal_emit_by_name(test, status_signal_name);
 
-    return success;
-}
-
-gboolean
-cut_test_run (CutTest *test)
-{
-    gboolean success;
-    CutTestClass *class = CUT_TEST_GET_CLASS(test);
-
-    if (!CUT_IS_TEST_CONTAINER(test)) {
-        if (!CUT_TEST_GET_PRIVATE(test)->test_function)
-            return FALSE;
-    }    
-
-    g_signal_emit_by_name(test, "start");
-    success = class->run(test);
     g_signal_emit_by_name(test, "complete");
 
     return success;

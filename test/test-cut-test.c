@@ -57,16 +57,7 @@ teardown (void)
 static gboolean
 run_the_test (CutTest *test)
 {
-    CutContext *original_context;
-    gboolean ret;
-
-    original_context = cut_context_get_current();
-    cut_context_set_current(test_context);
-    cut_context_set_test(test_context, test);
-    ret = cut_test_run(test);
-    cut_context_set_current(original_context);
-
-    return ret;
+    return cut_test_run(test, test_context);
 }
 
 void
