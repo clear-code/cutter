@@ -1,5 +1,7 @@
 2007-11-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/loader_test_dir/dummy-test-functions.c: suppress warnings.
+
 	* cutter/cut-output.c: improved output.
 
 	* test/test-cut-assertion.c: worked again.
