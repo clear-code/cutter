@@ -38,14 +38,40 @@ static gboolean use_color = FALSE;
 static gchar **test_case_names = NULL;
 static gchar **test_names = NULL;
 
+static gboolean
+parse_color_arg (const gchar *option_name, const gchar *value,
+                 gpointer data, GError **error)
+{
+    if (value == NULL ||
+        g_utf8_collate(value, "yes") == 0 ||
+        g_utf8_collate(value, "true") == 0) {
+        use_color = TRUE;
+    } else if (g_utf8_collate(value, "no") == 0 ||
+               g_utf8_collate(value, "false") == 0) {
+        use_color = FALSE;
+    } else if (g_utf8_collate(value, "auto") == 0) {
+        const gchar *term;
+        term = g_getenv("TERM");
+        use_color = term && g_str_has_suffix(term, "term");
+    } else {
+        g_set_error(error,
+                    g_option_error_quark(),
+                    G_OPTION_ERROR_FAILED,
+                    "invalid color value: %s", value);
+        return FALSE;
+    }
+
+    return TRUE;
+}
+
 static const GOptionEntry option_entries[] =
 {
     {"verbose", 'v', 0, G_OPTION_ARG_STRING, &verbose_level,
      "Set verbose level", "LEVEL"},
     {"source-directory", 's', 0, G_OPTION_ARG_STRING, &source_directory,
      "Set directory of source code", "DIRECTORY"},
-    {"color", 'c', 0, G_OPTION_ARG_NONE, &use_color,
-     "Output log with colors", NULL},
+    {"color", 'c', G_OPTION_FLAG_OPTIONAL_ARG, G_OPTION_ARG_CALLBACK,
+     parse_color_arg, "Output log with colors", "[yes|true|no|false|auto]"},
     {"name", 'n', 0, G_OPTION_ARG_STRING_ARRAY, &test_case_names,
      "Specify test cases", "TEST_CASE_NAME1,TEST_CASE_NAME2,..."},
     {"test", 't', 0, G_OPTION_ARG_STRING_ARRAY, &test_names,
