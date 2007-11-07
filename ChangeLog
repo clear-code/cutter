@@ -1,3 +1,8 @@
+2007-11-07  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test-cut-test.c: Remove test_result().
+	* test/test-cut-test-result.c: Added get_status test.
+
 2007-11-07  Kouhei Sutou  <kou@cozmixng.org>
 
 	* test/test-cut-test-case.c: removed needless tests.

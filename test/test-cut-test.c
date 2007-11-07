@@ -7,7 +7,6 @@ void test_n_assertions(void);
 void test_get_function_name(void);
 void test_increment_assertion_count(void);
 void test_run(void);
-void test_result(void);
 
 static CutContext *test_context;
 static CutTest *test_object;
@@ -83,55 +82,6 @@ test_run (void)
 {
     cut_assert(run_the_test(test_object));
     cut_assert(run_test_flag);
-}
-
-void
-test_result (void)
-{
-    CutTestResult *result;
-
-    cut_test_set_result(test_object,
-                        CUT_TEST_RESULT_FAILURE,
-                        "result-message",
-                        "function-name",
-                        "filename",
-                        999);
-    result = cut_test_get_result(test_object);
-
-    cut_assert(result);
-    cut_assert_equal_int(CUT_TEST_RESULT_FAILURE,
-                         cut_test_result_get_status(result));
-    cut_assert_equal_string("result-message",
-                            cut_test_result_get_message(result));
-    cut_assert_equal_string("function-name",
-                            cut_test_result_get_function_name(result));
-    cut_assert_equal_string("filename",
-                            cut_test_result_get_filename(result));
-    cut_assert_equal_int(999, cut_test_result_get_line(result));
-
-    cut_test_set_result(test_object,
-                        CUT_TEST_RESULT_ERROR,
-                        "result-message",
-                        "function-name",
-                        "filename",
-                        999);
-    result = cut_test_get_result(test_object);
-
-    cut_assert(result);
-    cut_assert_equal_int(CUT_TEST_RESULT_ERROR,
-                         cut_test_result_get_status(result));
-
-    cut_test_set_result(test_object,
-                        CUT_TEST_RESULT_PENDING,
-                        "result-message",
-                        "function-name",
-                        "filename",
-                        999);
-    result = cut_test_get_result(test_object);
-
-    cut_assert(result);
-    cut_assert_equal_int(CUT_TEST_RESULT_PENDING,
-                         cut_test_result_get_status(result));
 }
 
 /*
