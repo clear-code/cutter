@@ -7,7 +7,9 @@ EXTRA_DIST = config.h.in
 pkginclude_HEADERS = cut-assertion.h cutter.h
 
 cutter_h_sources =				\
+	cut-assertion.h				\
 	cut-context.h				\
+	cut-test-result.h			\
 	cut-output.h
 
 enum_source_prefix = cut-enum-types
@@ -46,6 +48,7 @@ cutter_SOURCES =			\
 		cut-repository.h	\
 		cut-repository.c	\
 		cut-output.c		\
+		cut-test-result.c	\
 		cut-main.c
 
 cutter_LDADD =				\

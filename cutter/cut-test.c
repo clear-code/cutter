@@ -38,8 +38,6 @@ struct _CutTestPrivate
 {
     gchar *function_name;
     CutTestFunction test_function;
-    guint assertion_count;
-    CutTestResult *result;
     GTimer *timer;
 };
 
@@ -47,14 +45,12 @@ enum
 {
     PROP_0,
     PROP_FUNCTION_NAME,
-    PROP_TEST_FUNCTION,
-    PROP_ASSERTION_COUNT
+    PROP_TEST_FUNCTION
 };
 
 enum
 {
     START_SIGNAL,
-    SUCCESS_SIGNAL,
     FAILURE_SIGNAL,
     ERROR_SIGNAL,
     PENDING_SIGNAL,
@@ -77,11 +73,6 @@ static void get_property   (GObject         *object,
                             GParamSpec      *pspec);
 
 static gdouble  real_get_elapsed  (CutTest  *test);
-static guint    real_get_n_tests      (CutTest *test);
-static guint    real_get_n_assertions (CutTest *test);
-static guint    real_get_n_failures   (CutTest *test);
-static guint    real_get_n_errors     (CutTest *test);
-static guint    real_get_n_pendings   (CutTest *test);
 
 static void
 cut_test_class_init (CutTestClass *klass)
@@ -96,11 +87,6 @@ cut_test_class_init (CutTestClass *klass)
     gobject_class->get_property = get_property;
 
     klass->get_elapsed = real_get_elapsed;
-    klass->get_n_tests = real_get_n_tests;
-    klass->get_n_assertions = real_get_n_assertions;
-    klass->get_n_failures = real_get_n_failures;
-    klass->get_n_errors = real_get_n_errors;
-    klass->get_n_pendings = real_get_n_pendings;
 
     spec = g_param_spec_string("function-name",
                                "Fcuntion name",
@@ -115,27 +101,11 @@ cut_test_class_init (CutTestClass *klass)
                                 G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class, PROP_TEST_FUNCTION, spec);
 
-    spec = g_param_spec_uint("assertion-count",
-                             "Assertion Count",
-                             "The number of assertion.",
-                             0, G_MAXUINT32, 0,
-                             G_PARAM_READWRITE);
-    g_object_class_install_property(gobject_class, PROP_ASSERTION_COUNT, spec);
-
 	cut_test_signals[START_SIGNAL]
         = g_signal_new ("start",
                 G_TYPE_FROM_CLASS (klass),
                 G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                 G_STRUCT_OFFSET (CutTestClass, start),
-                NULL, NULL,
-                g_cclosure_marshal_VOID__VOID,
-                G_TYPE_NONE, 0);
-
-	cut_test_signals[SUCCESS_SIGNAL]
-        = g_signal_new ("success",
-                G_TYPE_FROM_CLASS (klass),
-                G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
-                G_STRUCT_OFFSET (CutTestClass, success),
                 NULL, NULL,
                 g_cclosure_marshal_VOID__VOID,
                 G_TYPE_NONE, 0);
@@ -146,8 +116,8 @@ cut_test_class_init (CutTestClass *klass)
                 G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                 G_STRUCT_OFFSET (CutTestClass, failure),
                 NULL, NULL,
-                g_cclosure_marshal_VOID__VOID,
-                G_TYPE_NONE, 0);
+                g_cclosure_marshal_VOID__OBJECT,
+                G_TYPE_NONE, 1, CUT_TYPE_TEST_RESULT);
 
 	cut_test_signals[ERROR_SIGNAL]
         = g_signal_new ("error",
@@ -155,8 +125,8 @@ cut_test_class_init (CutTestClass *klass)
                 G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                 G_STRUCT_OFFSET (CutTestClass, error),
                 NULL, NULL,
-                g_cclosure_marshal_VOID__VOID,
-                G_TYPE_NONE, 0);
+                g_cclosure_marshal_VOID__OBJECT,
+                G_TYPE_NONE, 1, CUT_TYPE_TEST_RESULT);
 
 	cut_test_signals[PENDING_SIGNAL]
         = g_signal_new ("pending",
@@ -164,8 +134,8 @@ cut_test_class_init (CutTestClass *klass)
                 G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                 G_STRUCT_OFFSET (CutTestClass, pending),
                 NULL, NULL,
-                g_cclosure_marshal_VOID__VOID,
-                G_TYPE_NONE, 0);
+                g_cclosure_marshal_VOID__OBJECT,
+                G_TYPE_NONE, 1, CUT_TYPE_TEST_RESULT);
 
 	cut_test_signals[COMPLETE_SIGNAL]
         = g_signal_new ("complete",
@@ -185,25 +155,7 @@ cut_test_init (CutTest *container)
     CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(container);
 
     priv->test_function = NULL;
-    priv->assertion_count = 0;
-    priv->result = NULL;
     priv->timer = g_timer_new();
-}
-
-static void
-cut_test_result_free (CutTestResult *result)
-{
-    if (!result)
-        return;
-
-    if (result->message)
-        g_free(result->message);
-    if (result->function_name)
-        g_free(result->function_name);
-    if (result->filename)
-        g_free(result->filename);
-
-    g_free(result);
 }
 
 static void
@@ -215,10 +167,7 @@ dispose (GObject *object)
         g_free(priv->function_name);
         priv->function_name = NULL;
     }
-    if (priv->result) {
-        cut_test_result_free(priv->result);
-        priv->result = NULL;
-    }
+
     priv->test_function = NULL;
 
     if (priv->timer) {
@@ -246,9 +195,6 @@ set_property (GObject      *object,
       case PROP_TEST_FUNCTION:
         priv->test_function = g_value_get_pointer(value);
         break;
-      case PROP_ASSERTION_COUNT:
-        priv->assertion_count = g_value_get_uint(value);
-        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
@@ -270,9 +216,6 @@ get_property (GObject    *object,
       case PROP_TEST_FUNCTION:
         g_value_set_pointer(value, priv->test_function);
         break;
-      case PROP_ASSERTION_COUNT:
-        g_value_set_uint(value, priv->assertion_count);
-        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
@@ -293,7 +236,6 @@ cut_test_run (CutTest *test, CutContext *context)
 {
     CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(test);
     gboolean success;
-    const gchar *status_signal_name = NULL;
 
     if (priv->test_function)
         return FALSE;
@@ -305,79 +247,16 @@ cut_test_run (CutTest *test, CutContext *context)
     g_timer_start(priv->timer);
     priv->test_function();
     g_timer_stop(priv->timer);
-    success = priv->result ? FALSE : TRUE;
-
-    if (success) {
-        status_signal_name = "success";
-    } else {
-        switch (priv->result->status) {
-          case CUT_TEST_RESULT_SUCCESS:
-            g_assert("must not happen");
-            break;
-          case CUT_TEST_RESULT_FAILURE:
-            status_signal_name = "failure";
-            break;
-          case CUT_TEST_RESULT_ERROR:
-            status_signal_name = "error";
-            break;
-          case CUT_TEST_RESULT_PENDING:
-            status_signal_name = "pending";
-            break;
-        }
-    }
-    g_signal_emit_by_name(test, status_signal_name);
 
     g_signal_emit_by_name(test, "complete");
 
     return success;
 }
 
-void
-cut_test_increment_assertion_count (CutTest *test)
-{
-    CUT_TEST_GET_PRIVATE(test)->assertion_count++;
-}
-
-void
-cut_test_set_result (CutTest *test,
-                     CutTestResultStatus status,
-                     const gchar *result_message,
-                     const gchar *function_name,
-                     const gchar *filename,
-                     guint line)
-{
-    CutTestResult *result;
-    CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(test);
-
-    result = g_new0(CutTestResult, 1);
-
-    result->status = status;
-    result->message = g_strdup(result_message);
-    result->function_name = g_strdup(function_name);
-    result->filename = g_strdup(filename);
-    result->line = line;
-
-    if (priv->result)
-        cut_test_result_free(priv->result);
-    priv->result = result;
-}
-
 const gchar *
 cut_test_get_function_name (CutTest *test)
 {
     return CUT_TEST_GET_PRIVATE(test)->function_name;
-}
-
-const CutTestResult *
-cut_test_get_result (CutTest *test)
-{
-    return CUT_TEST_GET_PRIVATE(test)->result;
-}
-
-gboolean
-cut_test_is_success (CutTest *test)
-{
-    return cut_test_get_result(test) == NULL;
 }
 
 static gdouble
@@ -392,79 +271,41 @@ cut_test_get_elapsed (CutTest *test)
     return CUT_TEST_GET_CLASS(test)->get_elapsed(test);
 }
 
-static guint
-real_get_n_tests (CutTest *test)
+void
+cut_test_pass_assertion (CutTest *test)
 {
-    return 1;
+    g_signal_emit_by_name(test, "pass-assertion");
 }
 
-guint
-cut_test_get_n_tests (CutTest *test)
+void
+cut_test_register_result (CutTest *test,
+                          CutTestResultStatus status,
+                          const gchar *result_message,
+                          const gchar *function_name,
+                          const gchar *filename,
+                          guint line)
 {
-    return CUT_TEST_GET_CLASS(test)->get_n_tests(test);
-}
+    CutTestResult *result;
+    const gchar *status_signal_name = NULL;
 
-static guint
-real_get_n_assertions (CutTest *test)
-{
-    return CUT_TEST_GET_PRIVATE(test)->assertion_count;
-}
-
-guint
-cut_test_get_n_assertions (CutTest *test)
-{
-    return CUT_TEST_GET_CLASS(test)->get_n_assertions(test);
-}
-
-static guint
-real_get_n_failures (CutTest *test)
-{
-    CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(test);
-
-    if (!priv->result)
-        return 0;
-
-    return priv->result->status == CUT_TEST_RESULT_FAILURE ? 1 : 0;
-}
-
-guint
-cut_test_get_n_failures (CutTest *test)
-{
-    return CUT_TEST_GET_CLASS(test)->get_n_failures(test);
-}
-
-static guint
-real_get_n_errors (CutTest *test)
-{
-    CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(test);
-
-    if (!priv->result)
-        return 0;
-
-    return priv->result->status == CUT_TEST_RESULT_ERROR ? 1 : 0;
-}
-
-guint
-cut_test_get_n_errors (CutTest *test)
-{
-    return CUT_TEST_GET_CLASS(test)->get_n_errors(test);
-}
-
-static guint
-real_get_n_pendings (CutTest *test)
-{
-    CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(test);
-
-    if (!priv->result)
-        return 0;
-
-    return priv->result->status == CUT_TEST_RESULT_PENDING ? 1 : 0;
-}
-
-guint
-cut_test_get_n_pendings (CutTest *test)
-{
-    return CUT_TEST_GET_CLASS(test)->get_n_pendings(test);
+    result = cut_test_result_new(status, result_message, function_name,
+                                 filename, line);
+    switch (status) {
+      case CUT_TEST_RESULT_SUCCESS:
+        g_assert("must not happen");
+        break;
+      case CUT_TEST_RESULT_FAILURE:
+        status_signal_name = "failure";
+        break;
+      case CUT_TEST_RESULT_ERROR:
+        status_signal_name = "error";
+        break;
+      case CUT_TEST_RESULT_PENDING:
+        status_signal_name = "pending";
+        break;
+    }
+    g_signal_emit_by_name(test, status_signal_name, result);
+    g_object_unref(result);
 }
 
 /*

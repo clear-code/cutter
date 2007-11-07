@@ -31,6 +31,23 @@ G_BEGIN_DECLS
 void setup(void);
 void teardown(void);
 
+void set_current_test(CutTest *test);
+CutTest *get_current_test(void);
+
+static CutTest *_current_test = NULL;
+
+void
+set_current_test (CutTest *test)
+{
+    _current_test = test;
+}
+
+CutTest *
+get_current_test (void)
+{
+    return _current_test;
+}
+
 G_END_DECLS
 
 #endif /* __CUTTER_H__ */

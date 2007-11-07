@@ -55,7 +55,9 @@ GType        cut_test_case_get_type       (void) G_GNUC_CONST;
 
 CutTestCase *cut_test_case_new            (const gchar *name,
                                            CutSetupFunction setup_funcion,
-                                           CutTearDownFunction teardown_function);
+                                           CutTearDownFunction teardown_function,
+                                           CutGetCurrentTestFunction get_current_test_function,
+                                           CutSetCurrentTestFunction set_current_test_function);
 void         cut_test_case_add_test       (CutTestCase *test_case,
                                            CutTest *test);
 guint        cut_test_case_get_test_count (CutTestCase *test_case);

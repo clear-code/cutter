@@ -101,8 +101,8 @@ test_run (void)
 void
 test_result (void)
 {
-    const CutTestResult *result;
-    
+    CutTestResult *result;
+
     cut_test_set_result(test_object,
                         CUT_TEST_RESULT_FAILURE,
                         "result-message",
@@ -112,11 +112,15 @@ test_result (void)
     result = cut_test_get_result(test_object);
 
     cut_assert(result);
-    cut_assert_equal_int(CUT_TEST_RESULT_FAILURE, result->status);
-    cut_assert_equal_string("result-message", result->message);
-    cut_assert_equal_string("function-name", result->function_name);
-    cut_assert_equal_string("filename", result->filename);
-    cut_assert_equal_int(999, result->line);
+    cut_assert_equal_int(CUT_TEST_RESULT_FAILURE,
+                         cut_test_result_get_status(result));
+    cut_assert_equal_string("result-message",
+                            cut_test_result_get_message(result));
+    cut_assert_equal_string("function-name",
+                            cut_test_result_get_function_name(result));
+    cut_assert_equal_string("filename",
+                            cut_test_result_get_filename(result));
+    cut_assert_equal_int(999, cut_test_result_get_line(result));
 
     cut_test_set_result(test_object,
                         CUT_TEST_RESULT_ERROR,
@@ -127,7 +131,8 @@ test_result (void)
     result = cut_test_get_result(test_object);
 
     cut_assert(result);
-    cut_assert_equal_int(CUT_TEST_RESULT_ERROR, result->status);
+    cut_assert_equal_int(CUT_TEST_RESULT_ERROR,
+                         cut_test_result_get_status(result));
 
     cut_test_set_result(test_object,
                         CUT_TEST_RESULT_PENDING,
@@ -138,8 +143,9 @@ test_result (void)
     result = cut_test_get_result(test_object);
 
     cut_assert(result);
-    cut_assert_equal_int(CUT_TEST_RESULT_PENDING, result->status);
-} 
+    cut_assert_equal_int(CUT_TEST_RESULT_PENDING,
+                         cut_test_result_get_status(result));
+}
 
 void
 test_is_success (void)

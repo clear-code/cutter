@@ -308,14 +308,12 @@ cut_output_on_start_test (CutOutput *output, CutTestCase *test_case,
 
 void
 cut_output_on_complete_test (CutOutput *output, CutTestCase *test_case,
-                             CutTest *test)
+                             CutTest *test, CutTestResult *result)
 {
     CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
-    const CutTestResult *result;
 
-    result = cut_test_get_result(test);
-    if (result && result->status == CUT_TEST_RESULT_ERROR)
-        cut_output_on_error(output, test);
+    if (result && cut_test_result_get_status(result) == CUT_TEST_RESULT_ERROR)
+        cut_output_on_error(output, test, result);
 
     if (priv->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
         return;
@@ -335,7 +333,7 @@ cut_output_on_success (CutOutput *output, CutTest *test)
 }
 
 void
-cut_output_on_failure (CutOutput *output, CutTest *test)
+cut_output_on_failure (CutOutput *output, CutTest *test, CutTestResult *result)
 {
     CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
 
@@ -346,7 +344,7 @@ cut_output_on_failure (CutOutput *output, CutTest *test)
 }
 
 void
-cut_output_on_error (CutOutput *output, CutTest *test)
+cut_output_on_error (CutOutput *output, CutTest *test, CutTestResult *result)
 {
     CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
 
@@ -357,7 +355,7 @@ cut_output_on_error (CutOutput *output, CutTest *test)
 }
 
 void
-cut_output_on_pending (CutOutput *output, CutTest *test)
+cut_output_on_pending (CutOutput *output, CutTest *test, CutTestResult *result)
 {
     CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
 
@@ -377,7 +375,8 @@ cut_output_on_complete_test_case (CutOutput *output, CutTestCase *test_case)
 }
 
 void
-cut_output_on_complete_test_suite (CutOutput *output, CutTestSuite *test_suite)
+cut_output_on_complete_test_suite (CutOutput *output, CutTestSuite *test_suite,
+                                   GList *results)
 {
     gint i;
     gint assertions, failures, errors, pendings;
@@ -389,69 +388,68 @@ cut_output_on_complete_test_suite (CutOutput *output, CutTestSuite *test_suite)
     if (priv->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
 
-    i = 1;
-    container = CUT_TEST_CONTAINER(test_suite);
-    for (test_case_node = cut_test_container_get_children(container);
-         test_case_node;
-         test_case_node = g_list_next(test_case_node)) {
-        const GList *test_node;
-        CutTestCase *test_case;
+/*     i = 1; */
+/*     container = CUT_TEST_CONTAINER(test_suite); */
+/*     for (test_case_node = cut_test_container_get_children(container); */
+/*          test_case_node; */
+/*          test_case_node = g_list_next(test_case_node)) { */
+/*         const GList *test_node; */
+/*         CutTestCase *test_case; */
 
-        test_case = test_case_node->data;
-        container = CUT_TEST_CONTAINER(test_case);
-        for (test_node = cut_test_container_get_children(container);
-             test_node;
-             test_node = g_list_next(test_node)) {
-            CutTest *test = test_node->data;
-            const CutTestResult *result;
-            gchar *filename;
+/*         test_case = test_case_node->data; */
+/*         container = CUT_TEST_CONTAINER(test_case); */
+/*         for (test_node = cut_test_container_get_children(container); */
+/*              test_node; */
+/*              test_node = g_list_next(test_node)) { */
+/*             CutTest *test = test_node->data; */
+/*             const CutTestResult *result; */
+/*             gchar *filename; */
 
-            result = cut_test_get_result(test);
-            if (!result)
-                continue;
+/*             if (!result) */
+/*                 continue; */
 
-            if (priv->source_directory)
-                filename = g_build_filename(priv->source_directory,
-                                            result->filename,
-                                            NULL);
-            else
-                filename = g_strdup(result->filename);
+/*             if (priv->source_directory) */
+/*                 filename = g_build_filename(priv->source_directory, */
+/*                                             result->filename, */
+/*                                             NULL); */
+/*             else */
+/*                 filename = g_strdup(result->filename); */
 
-            g_print("\n\n%d) ", i);
-            print_for_status(priv, result->status,
-                             status_to_name(result->status));
-            g_print("\n");
-            print_for_status(priv, result->status, result->message);
-            g_print("\n%s:%d: %s()",
-                    filename, result->line, result->function_name);
+/*             g_print("\n\n%d) ", i); */
+/*             print_for_status(priv, result->status, */
+/*                              status_to_name(result->status)); */
+/*             g_print("\n"); */
+/*             print_for_status(priv, result->status, result->message); */
+/*             g_print("\n%s:%d: %s()", */
+/*                     filename, result->line, result->function_name); */
 
-            i++;
-        }
-    }
+/*             i++; */
+/*         } */
+/*     } */
 
-    g_print("\n\n");
+/*     g_print("\n\n"); */
     g_print("Finished in %g seconds",
             cut_test_get_elapsed(CUT_TEST(test_suite)));
     g_print("\n\n");
 
-    assertions = cut_test_get_n_assertions(CUT_TEST(test_suite));
-    failures = cut_test_get_n_failures(CUT_TEST(test_suite));
-    errors = cut_test_get_n_errors(CUT_TEST(test_suite));
-    pendings = cut_test_get_n_pendings(CUT_TEST(test_suite));
-    if (errors > 0) {
-        status = CUT_TEST_RESULT_ERROR;
-    } else if (failures > 0) {
-        status = CUT_TEST_RESULT_FAILURE;
-    } else if (pendings > 0) {
-        status = CUT_TEST_RESULT_PENDING;
-    } else {
-        status = CUT_TEST_RESULT_SUCCESS;
-    }
-    print_for_status(priv, status,
-                     "%d tests, %d assertions, %d failures, "
-                     "%d errors, %d pendings",
-                     cut_test_get_n_tests(CUT_TEST(test_suite)),
-                     assertions, failures, errors, pendings);
+/*     assertions = cut_test_get_n_assertions(CUT_TEST(test_suite)); */
+/*     failures = cut_test_get_n_failures(CUT_TEST(test_suite)); */
+/*     errors = cut_test_get_n_errors(CUT_TEST(test_suite)); */
+/*     pendings = cut_test_get_n_pendings(CUT_TEST(test_suite)); */
+/*     if (errors > 0) { */
+/*         status = CUT_TEST_RESULT_ERROR; */
+/*     } else if (failures > 0) { */
+/*         status = CUT_TEST_RESULT_FAILURE; */
+/*     } else if (pendings > 0) { */
+/*         status = CUT_TEST_RESULT_PENDING; */
+/*     } else { */
+/*         status = CUT_TEST_RESULT_SUCCESS; */
+/*     } */
+/*     print_for_status(priv, status, */
+/*                      "%d tests, %d assertions, %d failures, " */
+/*                      "%d errors, %d pendings", */
+/*                      cut_test_get_n_tests(CUT_TEST(test_suite)), */
+/*                      assertions, failures, errors, pendings); */
     g_print("\n");
 }
 

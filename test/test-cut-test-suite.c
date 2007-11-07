@@ -19,6 +19,8 @@ void test_get_n_failures (void);
 
 static gboolean fail_test = FALSE;
 
+static CutTest *dummy_current_test = NULL;
+
 static CutContext *test_context;
 static CutTestSuite *test_object;
 static CutLoader *loader;
@@ -30,6 +32,18 @@ static gint n_run_dummy_test_function2 = 0;
 static gint n_run_bummy_run_test_function = 0;
 static gint n_run_bummy_test_function1 = 0;
 static gint n_run_bummy_test_function2 = 0;
+
+static CutTest *
+dummy_get_current_test_function (void)
+{
+    return dummy_current_test;
+}
+
+static void
+dummy_set_current_test_function (CutTest *test)
+{
+    dummy_current_test = test;
+}
 
 static void
 dummy_test_function1 (void)
@@ -108,7 +122,9 @@ setup (void)
     cut_assert(test_case);
     cut_test_suite_add_test_case(test_object, test_case);
 
-    test_case = cut_test_case_new("dummy_test_case", NULL, NULL);
+    test_case = cut_test_case_new("dummy_test_case", NULL, NULL,
+                                  dummy_get_current_test_function,
+                                  dummy_set_current_test_function);
     test = cut_test_new("dummy_test_1", dummy_test_function1);
     cut_test_case_add_test(test_case, test);
     test = cut_test_new("dummy_test_2", dummy_test_function2);
@@ -117,7 +133,9 @@ setup (void)
     cut_test_case_add_test(test_case, test);
     cut_test_suite_add_test_case(test_object, test_case);
 
-    test_case = cut_test_case_new("bummy_test_case", NULL, NULL);
+    test_case = cut_test_case_new("bummy_test_case", NULL, NULL,
+                                  dummy_get_current_test_function,
+                                  dummy_set_current_test_function);
     test = cut_test_new("bummy_test_1", bummy_test_function1);
     cut_test_case_add_test(test_case, test);
     test = cut_test_new("bummy_test_2", bummy_test_function2);

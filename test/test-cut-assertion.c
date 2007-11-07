@@ -66,7 +66,8 @@ test_error (void)
     result = cut_test_get_result(test_object);
     cut_assert(result);
 
-    cut_assert_equal_int(CUT_TEST_RESULT_ERROR, result->status);
+    cut_assert_equal_int(CUT_TEST_RESULT_ERROR,
+                         cutter_test_result_get_status(result));
 
     g_object_unref(test_object);
     g_object_unref(test_context);
@@ -89,7 +90,8 @@ test_pending (void)
     result = cut_test_get_result(test_object);
     cut_assert(result);
 
-    cut_assert_equal_int(CUT_TEST_RESULT_PENDING, result->status);
+    cut_assert_equal_int(CUT_TEST_RESULT_PENDING,
+                         cut_test_result_get_status(result));
 
     g_object_unref(test_object);
     g_object_unref(test_context);

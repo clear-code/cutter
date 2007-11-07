@@ -23,7 +23,8 @@
 #define __CUT_CONTEXT_H__
 
 #include <glib-object.h>
-#include "cutter.h"
+
+#include "cut-assertion.h"
 #include "cut-output.h"
 #include "cut-test-suite.h"
 

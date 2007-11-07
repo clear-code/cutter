@@ -216,6 +216,8 @@ cut_loader_load_test_case (CutLoader *loader)
     CutTestCase *test_case;
     gchar *test_case_name, *filename;
     CutSetupFunction setup_function = NULL;
+    CutGetCurrentTestFunction get_current_test_function = NULL;
+    CutSetCurrentTestFunction set_current_test_function = NULL;
     CutTearDownFunction teardown_function = NULL;
     CutLoaderPrivate *priv = CUT_LOADER_GET_PRIVATE(loader);
 
@@ -236,17 +238,28 @@ cut_loader_load_test_case (CutLoader *loader)
     g_module_symbol(priv->module,
                     "teardown",
                     (gpointer)&teardown_function);
+    g_module_symbol(priv->module,
+                    "get_current_test",
+                    (gpointer)&get_current_test_function);
+    g_module_symbol(priv->module,
+                    "set_current_test",
+                    (gpointer)&set_current_test_function);
 
     filename = g_path_get_basename(priv->so_filename);
     if (g_str_has_prefix(filename, "lib")) {
         gchar *string;
-        string = g_strdup(filename + strlen("len"));
+        string = g_strdup(filename + strlen("lib"));
         g_free(filename);
         filename = string;
     }
-    test_case_name = g_strndup(filename, strlen(filename) - strlen(G_MODULE_SUFFIX) -1);
+    test_case_name = g_strndup(filename,
+                               strlen(filename) - strlen(G_MODULE_SUFFIX) -1);
     g_free(filename);
-    test_case = cut_test_case_new(test_case_name, setup_function, teardown_function);
+    test_case = cut_test_case_new(test_case_name,
+                                  setup_function,
+                                  teardown_function,
+                                  get_current_test_function,
+                                  set_current_test_function);
     g_free(test_case_name);
     for (node = test_names; node; node = g_list_next(node)) {
         gchar *name;

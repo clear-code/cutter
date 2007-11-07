@@ -23,7 +23,7 @@
 #define __CUT_OUTPUT_H__
 
 #include <glib-object.h>
-#include "cutter.h"
+
 #include "cut-test-suite.h"
 
 G_BEGIN_DECLS
@@ -75,16 +75,24 @@ void  cut_output_on_start_test             (CutOutput *output,
                                             CutTestCase *test_case,
                                             CutTest *test);
 void  cut_output_on_success                (CutOutput *output, CutTest *test);
-void  cut_output_on_failure                (CutOutput *output, CutTest *test);
-void  cut_output_on_error                  (CutOutput *output, CutTest *test);
-void  cut_output_on_pending                (CutOutput *output, CutTest *test);
+void  cut_output_on_failure                (CutOutput *output,
+                                            CutTest *test,
+                                            CutTestResult *result);
+void  cut_output_on_error                  (CutOutput *output,
+                                            CutTest *test,
+                                            CutTestResult *result);
+void  cut_output_on_pending                (CutOutput *output,
+                                            CutTest *test,
+                                            CutTestResult *result);
 void  cut_output_on_complete_test          (CutOutput *output,
                                             CutTestCase *test_case,
-                                            CutTest *test);
+                                            CutTest *test,
+                                            CutTestResult *result);
 void  cut_output_on_complete_test_case     (CutOutput *output,
                                             CutTestCase *test_case);
 void  cut_output_on_complete_test_suite    (CutOutput *output,
-                                            CutTestSuite *test_suite);
+                                            CutTestSuite *test_suite,
+                                            GList *results);
 
 G_END_DECLS
 

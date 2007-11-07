@@ -25,6 +25,7 @@
 #include <glib-object.h>
 
 #include "cut-assertion.h"
+#include "cut-test-result.h"
 
 G_BEGIN_DECLS
 
@@ -35,22 +36,13 @@ G_BEGIN_DECLS
 #define CUT_IS_TEST_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_TEST))
 #define CUT_TEST_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_TEST, CutTestClass))
 
-typedef struct _CutTest         CutTest;
 typedef struct _CutTestClass    CutTestClass;
-typedef struct _CutTestResult    CutTestResult;
 
 typedef void    (*CutTestFunction)     (void);
 typedef void    (*CutSetupFunction)    (void);
 typedef void    (*CutTearDownFunction) (void);
-
-struct _CutTestResult
-{
-    CutTestResultStatus status;
-    gchar *message;
-    gchar *function_name;
-    gchar *filename;
-    guint line;
-};
+typedef CutTest *(*CutGetCurrentTestFunction) (void);
+typedef void     (*CutSetCurrentTestFunction) (CutTest *test);
 
 struct _CutTest
 {
@@ -62,18 +54,12 @@ struct _CutTestClass
     GObjectClass parent_class;
 
     void (*start)    (CutTest *test);
-    void (*success)  (CutTest *test);
-    void (*failure)  (CutTest *test);
-    void (*error)    (CutTest *test);
-    void (*pending)  (CutTest *test);
+    void (*failure)  (CutTest *test, CutTestResult *result);
+    void (*error)    (CutTest *test, CutTestResult *result);
+    void (*pending)  (CutTest *test, CutTestResult *result);
     void (*complete) (CutTest *test);
 
     gdouble  (*get_elapsed) (CutTest *test);
-    guint    (*get_n_tests)      (CutTest *test);
-    guint    (*get_n_assertions) (CutTest *test);
-    guint    (*get_n_failures)   (CutTest *test);
-    guint    (*get_n_errors)     (CutTest *test);
-    guint    (*get_n_pendings)   (CutTest *test);
 };
 
 GType        cut_test_get_type  (void) G_GNUC_CONST;
@@ -82,25 +68,8 @@ CutTest     *cut_test_new                 (const gchar *function_name,
                                            CutTestFunction function);
 gboolean     cut_test_run                 (CutTest *test, CutContext *context);
 const gchar *cut_test_get_function_name   (CutTest *test);
-void         cut_test_increment_assertion_count
-                                          (CutTest *test);
-void         cut_test_set_result          (CutTest *test,
-                                           CutTestResultStatus status,
-                                           const gchar *result_message,
-                                           const gchar *function_name,
-                                           const gchar *filename,
-                                           guint line);
-const CutTestResult *cut_test_get_result  (CutTest *test);
-
-gboolean     cut_test_is_success          (CutTest *test);
 
 gdouble      cut_test_get_elapsed         (CutTest *test);
-
-guint        cut_test_get_n_tests         (CutTest *test);
-guint        cut_test_get_n_assertions    (CutTest *test);
-guint        cut_test_get_n_failures      (CutTest *test);
-guint        cut_test_get_n_errors        (CutTest *test);
-guint        cut_test_get_n_pendings      (CutTest *test);
 
 G_END_DECLS
 
