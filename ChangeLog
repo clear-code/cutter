@@ -1,5 +1,7 @@
 2007-11-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-test-case.c: removed needless tests.
+
 	* test/test-cut-test.c: removed a needless test.
 
 2007-11-07  Hiroyuki Ikezoe  <poincare@ikezoe.net>
