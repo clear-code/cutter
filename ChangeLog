@@ -1,5 +1,9 @@
 2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* test/test-cut-test-suite.c: enable all tests.
+
+2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test-suite.c: support regular expression for
 	cut_test_suite_run_function_in_test_case().
 
