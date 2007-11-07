@@ -15,9 +15,6 @@ void test_run_test_function_with_regex_in_test_case (void);
 void test_run_test_function_in_test_case_with_regex (void);
 void test_run_test_function_with_regex_in_test_case_with_regex (void);
 void test_get_n_tests (void);
-void test_get_n_failures (void);
-
-static gboolean fail_test = FALSE;
 
 static CutTest *dummy_current_test = NULL;
 
@@ -50,8 +47,6 @@ dummy_test_function1 (void)
 {
     cut_assert_equal_int(1, 1);
     cut_assert_equal_int(1, 1);
-    if (fail_test)
-        cut_assert_equal_int(1, 2);
     cut_assert_equal_int(1, 1);
     cut_assert_equal_int(1, 1);
     n_run_dummy_test_function1++;
@@ -66,8 +61,6 @@ dummy_test_function2 (void)
 static void
 dummy_run_test_function (void)
 {
-    if (fail_test)
-        cut_assert(FALSE);
     n_run_dummy_run_test_function++;
 }
 
@@ -86,8 +79,6 @@ bummy_test_function2 (void)
 static void
 bummy_run_test_function (void)
 {
-    if (fail_test)
-        cut_assert(FALSE);
     n_run_bummy_run_test_function++;
 }
 
@@ -98,7 +89,6 @@ setup (void)
     CutTest *test;
     gchar *test_path;
 
-    fail_test = FALSE;
     n_run_dummy_test_function1 = 0;
     n_run_dummy_test_function2 = 0;
     n_run_dummy_run_test_function = 0;
@@ -278,15 +268,6 @@ void
 test_get_n_tests (void)
 {
     cut_assert_equal_int(10, cut_test_get_n_tests(CUT_TEST(test_object)));
-}
-
-void
-test_get_n_failures (void)
-{
-    fail_test = TRUE;
-
-    cut_assert(!cut_test_suite_run(test_object, test_context));
-    cut_assert_equal_int(3, cut_test_get_n_failures(CUT_TEST(test_object)));
 }
 
 /*

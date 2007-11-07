@@ -1,5 +1,7 @@
 2007-11-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-test-suite.c: removed a needless test.
+
 	* cutter/cut-context.c: re-supported '.' on success.
 
 	* test/Makefile.am: fixed utility link.
