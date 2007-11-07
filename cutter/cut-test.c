@@ -105,7 +105,7 @@ cut_test_class_init (CutTestClass *klass)
 	cut_test_signals[START_SIGNAL]
         = g_signal_new ("start",
                 G_TYPE_FROM_CLASS (klass),
-                G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
+                G_SIGNAL_RUN_LAST,
                 G_STRUCT_OFFSET (CutTestClass, start),
                 NULL, NULL,
                 g_cclosure_marshal_VOID__VOID,
@@ -114,7 +114,7 @@ cut_test_class_init (CutTestClass *klass)
 	cut_test_signals[PASS_ASSERTION_SIGNAL]
         = g_signal_new ("pass-assertion",
                 G_TYPE_FROM_CLASS (klass),
-                G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
+                G_SIGNAL_RUN_LAST,
                 G_STRUCT_OFFSET (CutTestClass, pass_assertion),
                 NULL, NULL,
                 g_cclosure_marshal_VOID__VOID,
@@ -123,7 +123,7 @@ cut_test_class_init (CutTestClass *klass)
 	cut_test_signals[FAILURE_SIGNAL]
         = g_signal_new ("failure",
                 G_TYPE_FROM_CLASS (klass),
-                G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
+                G_SIGNAL_RUN_LAST,
                 G_STRUCT_OFFSET (CutTestClass, failure),
                 NULL, NULL,
                 g_cclosure_marshal_VOID__OBJECT,
@@ -132,7 +132,7 @@ cut_test_class_init (CutTestClass *klass)
 	cut_test_signals[ERROR_SIGNAL]
         = g_signal_new ("error",
                 G_TYPE_FROM_CLASS (klass),
-                G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
+                G_SIGNAL_RUN_LAST,
                 G_STRUCT_OFFSET (CutTestClass, error),
                 NULL, NULL,
                 g_cclosure_marshal_VOID__OBJECT,
@@ -141,7 +141,7 @@ cut_test_class_init (CutTestClass *klass)
 	cut_test_signals[PENDING_SIGNAL]
         = g_signal_new ("pending",
                 G_TYPE_FROM_CLASS (klass),
-                G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
+                G_SIGNAL_RUN_LAST,
                 G_STRUCT_OFFSET (CutTestClass, pending),
                 NULL, NULL,
                 g_cclosure_marshal_VOID__OBJECT,
@@ -150,7 +150,7 @@ cut_test_class_init (CutTestClass *klass)
 	cut_test_signals[COMPLETE_SIGNAL]
         = g_signal_new ("complete",
                 G_TYPE_FROM_CLASS (klass),
-                G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
+                G_SIGNAL_RUN_LAST,
                 G_STRUCT_OFFSET (CutTestClass, complete),
                 NULL, NULL,
                 g_cclosure_marshal_VOID__VOID,

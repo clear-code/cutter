@@ -1,5 +1,10 @@
 2007-11-07  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test.c, cutter/cut-test-case.c, cutter/cut-test-suite.c:
+	Removed G_SIGNAL_DETAILED.
+
+2007-11-07  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* test/test-cut-test-assertion.c: Added test for assertion message.
 	Hmm, why this test fails?
 

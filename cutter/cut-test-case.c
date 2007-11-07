@@ -128,7 +128,7 @@ cut_test_case_class_init (CutTestCaseClass *klass)
 	cut_test_case_signals[START_TEST_SIGNAL]
         = g_signal_new("start-test",
                 G_TYPE_FROM_CLASS(klass),
-                G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
+                G_SIGNAL_RUN_LAST,
                 G_STRUCT_OFFSET(CutTestCaseClass, start_test),
                 NULL, NULL,
                 g_cclosure_marshal_VOID__OBJECT,
@@ -137,7 +137,7 @@ cut_test_case_class_init (CutTestCaseClass *klass)
 	cut_test_case_signals[COMPLETE_TEST_SIGNAL]
         = g_signal_new("complete-test",
                 G_TYPE_FROM_CLASS(klass),
-                G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
+                G_SIGNAL_RUN_LAST,
                 G_STRUCT_OFFSET(CutTestCaseClass, complete_test),
                 NULL, NULL,
                 g_cclosure_marshal_VOID__OBJECT,

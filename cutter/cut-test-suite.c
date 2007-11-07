@@ -80,7 +80,7 @@ cut_test_suite_class_init (CutTestSuiteClass *klass)
 	cut_test_suite_signals[START_TEST_CASE_SIGNAL]
         = g_signal_new("start-test-case",
                 G_TYPE_FROM_CLASS(klass),
-                G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
+                G_SIGNAL_RUN_LAST,
                 G_STRUCT_OFFSET(CutTestSuiteClass, start_test_case),
                 NULL, NULL,
                 g_cclosure_marshal_VOID__OBJECT,
@@ -89,7 +89,7 @@ cut_test_suite_class_init (CutTestSuiteClass *klass)
 	cut_test_suite_signals[COMPLETE_TEST_CASE_SIGNAL]
         = g_signal_new("complete-test-case",
                 G_TYPE_FROM_CLASS(klass),
-                G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
+                G_SIGNAL_RUN_LAST,
                 G_STRUCT_OFFSET(CutTestSuiteClass, complete_test_case),
                 NULL, NULL,
                 g_cclosure_marshal_VOID__OBJECT,
