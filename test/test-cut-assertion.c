@@ -65,19 +65,19 @@ test_error (void)
     CutTestResult *result = NULL;
 
     test_object = cut_test_new("dummy-error-test", dummy_error_test_function);
-    cut_assert(test_object);
+    cut_assert(test_object, "Creating a new CutTest object failed");
 
     test_context = cut_context_new();
     cut_context_set_verbose_level(test_context, CUT_VERBOSE_LEVEL_SILENT);
 
     g_signal_connect(test_object, "error",
                      G_CALLBACK(cb_collect_result), &result);
-    cut_assert(!cut_test_run(test_object, test_context));
+    cut_assert(cut_test_run(test_object, test_context));
     g_signal_handlers_disconnect_by_func(test_object,
                                          G_CALLBACK(cb_collect_result),
                                          &result);
 
-    cut_assert(result);
+    cut_assert(result, "Could not get a CutTestResult object since \"error\" signal was not emmitted.");
     cut_assert_equal_int(CUT_TEST_RESULT_ERROR,
                          cut_test_result_get_status(result));
     g_object_unref(result);
@@ -94,19 +94,19 @@ test_pending (void)
     CutTestResult *result = NULL;
 
     test_object = cut_test_new("dummy-pending-test", dummy_pending_test_function);
-    cut_assert(test_object);
+    cut_assert(test_object, "Creating a new CutTest object failed");
 
     test_context = cut_context_new();
     cut_context_set_verbose_level(test_context, CUT_VERBOSE_LEVEL_SILENT);
 
     g_signal_connect(test_object, "pending",
                      G_CALLBACK(cb_collect_result), &result);
-    cut_assert(!cut_test_run(test_object, test_context));
+    cut_assert(!cut_test_run(test_object, test_context), "cut_pending() did not return FALSE!");
     g_signal_handlers_disconnect_by_func(test_object,
                                          G_CALLBACK(cb_collect_result),
                                          &result);
 
-    cut_assert(result);
+    cut_assert(result, "Could not get a CutTestResult object since \"pending\" signal was not emmitted.");
     cut_assert_equal_int(CUT_TEST_RESULT_PENDING,
                          cut_test_result_get_status(result));
     g_object_unref(result);
@@ -127,11 +127,12 @@ test_fail (void)
     test_context = cut_context_new();
     cut_context_set_verbose_level(test_context, CUT_VERBOSE_LEVEL_SILENT);
 
-    cut_assert(!cut_test_run(test_object, test_context));
+    cut_assert(!cut_test_run(test_object, test_context), "cut_fail() did not return FALSE!");
 
     g_object_unref(test_object);
     g_object_unref(test_context);
 }
+
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

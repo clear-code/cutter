@@ -1,3 +1,8 @@
+2007-11-07  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test-cut-assertion.c: Show significant message if cut_assert()
+	failed.
+
 2007-11-07  Kouhei Sutou  <kou@cozmixng.org>
 
 	* test/test-cut-assertion.c: suppressed warnings.
