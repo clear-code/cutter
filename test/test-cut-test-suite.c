@@ -189,6 +189,9 @@ test_run_test_case (void)
     cut_assert_equal_int(n_run_dummy_test_function1, 1);
     cut_assert_equal_int(n_run_dummy_test_function2, 1);
     cut_assert_equal_int(n_run_dummy_run_test_function, 1);
+    cut_assert_equal_int(n_run_bummy_test_function1, 0);
+    cut_assert_equal_int(n_run_bummy_test_function2, 0);
+    cut_assert_equal_int(n_run_bummy_run_test_function, 0);
 }
 
 void
@@ -198,6 +201,9 @@ test_run_test_case_with_regex (void)
     cut_assert_equal_int(n_run_dummy_test_function1, 1);
     cut_assert_equal_int(n_run_dummy_test_function2, 1);
     cut_assert_equal_int(n_run_dummy_run_test_function, 1);
+    cut_assert_equal_int(n_run_bummy_test_function1, 0);
+    cut_assert_equal_int(n_run_bummy_test_function2, 0);
+    cut_assert_equal_int(n_run_bummy_run_test_function, 0);
 }
 
 void
@@ -207,6 +213,9 @@ test_run_test_function (void)
     cut_assert_equal_int(n_run_dummy_test_function1, 0);
     cut_assert_equal_int(n_run_dummy_test_function2, 0);
     cut_assert_equal_int(n_run_dummy_run_test_function, 1);
+    cut_assert_equal_int(n_run_bummy_test_function1, 0);
+    cut_assert_equal_int(n_run_bummy_test_function2, 0);
+    cut_assert_equal_int(n_run_bummy_run_test_function, 0);
 }
 
 void
@@ -216,6 +225,9 @@ test_run_test_function_with_regex (void)
     cut_assert_equal_int(n_run_dummy_test_function1, 1);
     cut_assert_equal_int(n_run_dummy_test_function2, 1);
     cut_assert_equal_int(n_run_dummy_run_test_function, 0);
+    cut_assert_equal_int(n_run_bummy_test_function1, 0);
+    cut_assert_equal_int(n_run_bummy_test_function2, 0);
+    cut_assert_equal_int(n_run_bummy_run_test_function, 0);
 }
 
 void
@@ -225,6 +237,9 @@ test_run_test_function_in_test_case (void)
     cut_assert_equal_int(n_run_dummy_test_function1, 0);
     cut_assert_equal_int(n_run_dummy_test_function2, 0);
     cut_assert_equal_int(n_run_dummy_run_test_function, 1);
+    cut_assert_equal_int(n_run_bummy_test_function1, 0);
+    cut_assert_equal_int(n_run_bummy_test_function2, 0);
+    cut_assert_equal_int(n_run_bummy_run_test_function, 0);
 }
 
 void
@@ -234,6 +249,9 @@ test_run_test_function_with_regex_in_test_case (void)
     cut_assert_equal_int(n_run_dummy_test_function1, 1);
     cut_assert_equal_int(n_run_dummy_test_function2, 1);
     cut_assert_equal_int(n_run_dummy_run_test_function, 0);
+    cut_assert_equal_int(n_run_bummy_test_function1, 0);
+    cut_assert_equal_int(n_run_bummy_test_function2, 0);
+    cut_assert_equal_int(n_run_bummy_run_test_function, 0);
 }
 
 void
@@ -243,6 +261,9 @@ test_run_test_function_in_test_case_with_regex (void)
     cut_assert_equal_int(n_run_dummy_test_function1, 0);
     cut_assert_equal_int(n_run_dummy_test_function2, 0);
     cut_assert_equal_int(n_run_dummy_run_test_function, 1);
+    cut_assert_equal_int(n_run_bummy_test_function1, 0);
+    cut_assert_equal_int(n_run_bummy_test_function2, 0);
+    cut_assert_equal_int(n_run_bummy_run_test_function, 0);
 }
 
 void
@@ -252,6 +273,9 @@ test_run_test_function_with_regex_in_test_case_with_regex (void)
     cut_assert_equal_int(n_run_dummy_test_function1, 1);
     cut_assert_equal_int(n_run_dummy_test_function2, 1);
     cut_assert_equal_int(n_run_dummy_run_test_function, 0);
+    cut_assert_equal_int(n_run_bummy_test_function1, 0);
+    cut_assert_equal_int(n_run_bummy_test_function2, 0);
+    cut_assert_equal_int(n_run_bummy_run_test_function, 0);
 }
 
 void
