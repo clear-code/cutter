@@ -1,5 +1,9 @@
 2007-11-07  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* test/test-cut-test-result.c: Added tests.
+
+2007-11-07  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* test/test-cut-assertion.c: Added tests for signals.
 
 2007-11-07  Kouhei Sutou  <kou@cozmixng.org>
