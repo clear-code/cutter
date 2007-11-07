@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef __CUT_ASSERTION_H__
-#define __CUT_ASSERTION_H__
+#ifndef __CUT_ASSERTIONS_H__
+#define __CUT_ASSERTIONS_H__
 
 #include <string.h>
 #include <glib.h>
@@ -161,7 +161,7 @@ void  cut_test_context_register_result      (CutTestContext *context,
 
 G_END_DECLS
 
-#endif /* __CUT_ASSERTION_H__ */
+#endif /* __CUT_ASSERTIONS_H__ */
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
