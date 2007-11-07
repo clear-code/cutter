@@ -27,6 +27,13 @@ dummy_pending_test_function (void)
     cut_pending("This test has been pending ever!");
 }
 
+static void
+cb_collect_result (CutTest *test, CutTestResult *result, CutTestResult **output)
+{
+    *output = result;
+    g_object_ref(*output);
+}
+
 void
 test_equal_int (void)
 {
@@ -54,7 +61,7 @@ test_error (void)
 {
     CutTest *test_object;
     CutContext *test_context;
-    const CutTestResult *result;
+    CutTestResult *result = NULL;
 
     test_object = cut_test_new("dummy-error-test", dummy_error_test_function);
     cut_assert(test_object);
@@ -62,13 +69,17 @@ test_error (void)
     test_context = cut_context_new();
     cut_context_set_verbose_level(test_context, CUT_VERBOSE_LEVEL_SILENT);
 
+    g_signal_connect(test_object, "error",
+                     G_CALLBACK(cb_collect_result), &result);
     cut_assert(!cut_test_run(test_object, test_context));
+    g_signal_handlers_disconnect_by_func(test_object,
+                                         G_CALLBACK(cb_collect_result),
+                                         &result);
 
-    result = cut_test_get_result(test_object);
     cut_assert(result);
-
     cut_assert_equal_int(CUT_TEST_RESULT_ERROR,
-                         cutter_test_result_get_status(result));
+                         cut_test_result_get_status(result));
+    g_object_unref(result);
 
     g_object_unref(test_object);
     g_object_unref(test_context);
@@ -79,20 +90,25 @@ test_pending (void)
 {
     CutTest *test_object;
     CutContext *test_context;
-    CutTestResult *result;
+    CutTestResult *result = NULL;
 
     test_object = cut_test_new("dummy-pending-test", dummy_pending_test_function);
     cut_assert(test_object);
 
     test_context = cut_context_new();
     cut_context_set_verbose_level(test_context, CUT_VERBOSE_LEVEL_SILENT);
+
+    g_signal_connect(test_object, "pending",
+                     G_CALLBACK(cb_collect_result), &result);
     cut_assert(!cut_test_run(test_object, test_context));
+    g_signal_handlers_disconnect_by_func(test_object,
+                                         G_CALLBACK(cb_collect_result),
+                                         &result);
 
-    result = cut_test_get_result(test_object);
     cut_assert(result);
-
     cut_assert_equal_int(CUT_TEST_RESULT_PENDING,
                          cut_test_result_get_status(result));
+    g_object_unref(result);
 
     g_object_unref(test_object);
     g_object_unref(test_context);

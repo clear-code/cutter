@@ -84,7 +84,7 @@ void  cut_test_context_register_result      (CutTestContext *context,
             __PRETTY_FUNCTION__,                        \
             __FILE__, __LINE__);                        \
         return;                                         \
-    } else {                                            \
+    } else {                                                            \
         cut_test_context_pass_assertion(get_current_test_context());    \
     }                                                   \
 } while(0)

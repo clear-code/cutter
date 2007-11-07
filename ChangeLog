@@ -1,5 +1,7 @@
 2007-11-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-assertion.c: followed the recent changes.
+
 	* cutter/cut-context.c: worked signals again.
 
 	* cutter/cut-test-case.c: fixed a silly bug.
