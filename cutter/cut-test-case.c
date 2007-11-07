@@ -289,12 +289,11 @@ run (CutTestCase *test_case, CutTest *test, CutContext *context)
     CutTestContext *test_context;
     gboolean success = TRUE;
 
+    priv = CUT_TEST_CASE_GET_PRIVATE(test_case);
     if (!priv->set_current_test_context) {
         g_warning("You should include <cutter.h>");
         return FALSE;
     }
-
-    priv = CUT_TEST_CASE_GET_PRIVATE(test_case);
 
     test_context = cut_test_context_new(NULL, test_case, NULL);
     priv->set_current_test_context(test_context);

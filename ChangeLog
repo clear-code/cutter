@@ -1,5 +1,7 @@
 2007-11-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-case.c: fixed a silly bug.
+
 	* cutter/cut-test.[ch]: defined missing signal.
 
 	* cutter/cut-loader.c (cut_loader_load_test_case): don't spread
