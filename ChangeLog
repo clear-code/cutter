@@ -1,5 +1,9 @@
 2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* test/run-tests.sh: Added ^ at regex head.
+
+2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* test/test-cut-repositry.c, test/repository_test_dir/Makefile.am:
 	Change test case name.
 
