@@ -9,6 +9,8 @@ void test_equal_double(void);
 void test_error(void);
 void test_fail(void);
 void test_pending(void);
+void test_start_signal(void);
+void test_complete_signal(void);
 
 static gboolean need_cleanup;
 
@@ -16,6 +18,8 @@ static CutTest *test_object;
 static CutContext *context;
 static CutTestContext *test_context;
 static CutTestResult *test_result;
+static gint n_start_signal = 0;
+static gint n_complete_signal = 0;
 
 static void
 dummy_error_test_function (void)
@@ -36,10 +40,28 @@ dummy_pending_test_function (void)
 }
 
 static void
+dummy_normal_test_function (void)
+{
+    cut_assert(TRUE);
+}
+
+static void
 cb_collect_result (CutTest *test, CutTestResult *result, CutTestResult **output)
 {
     *output = result;
     g_object_ref(*output);
+}
+
+static void
+cb_start_signal (CutTest *test, gpointer data)
+{
+    n_start_signal++;
+}
+
+static void
+cb_complete_signal (CutTest *test, gpointer data)
+{
+    n_complete_signal++;
 }
 
 static gboolean
@@ -72,6 +94,8 @@ setup (void)
     context = NULL;
     test_context = NULL;
     test_result = NULL;
+    n_start_signal = 0;
+    n_complete_signal = 0;
 }
 
 void
@@ -164,7 +188,50 @@ test_fail (void)
     test = cut_test_new("dummy-fail-test", dummy_fail_test_function);
     cut_assert(test);
 
+    g_signal_connect(test, "failure", G_CALLBACK(cb_collect_result),
+                     &test_result);
     cut_assert(!run(test));
+    g_signal_handlers_disconnect_by_func(test,
+                                         G_CALLBACK(cb_collect_result),
+                                         &test_result);
+    cut_assert(test_result,
+               "Could not get a CutTestResult object "
+               "since \"failure\" signal was not emmitted.");
+    cut_assert_equal_int(CUT_TEST_RESULT_FAILURE,
+                         cut_test_result_get_status(test_result));
+}
+
+
+void
+test_start_signal (void)
+{
+    CutTest *test;
+
+    test = cut_test_new("dummy-normal-test", dummy_normal_test_function);
+    cut_assert(test);
+
+    g_signal_connect(test, "start", G_CALLBACK(cb_start_signal), NULL);
+    cut_assert(run(test));
+    g_signal_handlers_disconnect_by_func(test,
+                                         G_CALLBACK(cb_start_signal),
+                                         NULL);
+    cut_assert_equal_int(1, n_start_signal);
+}
+
+void
+test_complete_signal (void)
+{
+    CutTest *test;
+
+    test = cut_test_new("dummy-normal-test", dummy_normal_test_function);
+    cut_assert(test);
+
+    g_signal_connect(test, "complete", G_CALLBACK(cb_complete_signal), NULL);
+    cut_assert(run(test));
+    g_signal_handlers_disconnect_by_func(test,
+                                         G_CALLBACK(cb_complete_signal),
+                                         NULL);
+    cut_assert_equal_int(1, n_complete_signal);
 }
 
 
