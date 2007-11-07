@@ -1,5 +1,9 @@
 #!/bin/sh
 
 export BASE_DIR="`dirname $0`"
-make > /dev/null && \
-  $BASE_DIR/../cutter/cutter -s $BASE_DIR "$@" $BASE_DIR
+
+if test x"$NO_MAKE" != x"yes"; then
+    make > /dev/null || exit 1
+fi
+
+$BASE_DIR/../cutter/cutter -s $BASE_DIR "$@" $BASE_DIR
