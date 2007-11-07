@@ -51,6 +51,7 @@ enum
 enum
 {
     START_SIGNAL,
+    PASS_ASSERTION_SIGNAL,
     FAILURE_SIGNAL,
     ERROR_SIGNAL,
     PENDING_SIGNAL,
@@ -106,6 +107,15 @@ cut_test_class_init (CutTestClass *klass)
                 G_TYPE_FROM_CLASS (klass),
                 G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                 G_STRUCT_OFFSET (CutTestClass, start),
+                NULL, NULL,
+                g_cclosure_marshal_VOID__VOID,
+                G_TYPE_NONE, 0);
+
+	cut_test_signals[PASS_ASSERTION_SIGNAL]
+        = g_signal_new ("pass-assertion",
+                G_TYPE_FROM_CLASS (klass),
+                G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
+                G_STRUCT_OFFSET (CutTestClass, pass_assertion),
                 NULL, NULL,
                 g_cclosure_marshal_VOID__VOID,
                 G_TYPE_NONE, 0);

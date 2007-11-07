@@ -56,6 +56,7 @@ struct _CutTestClass
     GObjectClass parent_class;
 
     void (*start)    (CutTest *test);
+    void (*pass_assertion) (CutTest *test);
     void (*failure)  (CutTest *test, CutTestResult *result);
     void (*error)    (CutTest *test, CutTestResult *result);
     void (*pending)  (CutTest *test, CutTestResult *result);
