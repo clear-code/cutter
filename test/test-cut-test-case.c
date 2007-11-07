@@ -80,9 +80,9 @@ setup (void)
                                     dummy_teardown_function,
                                     get_current_test_context,
                                     set_current_test_context);
-    test = cut_test_new("dummy test 1", dummy_test_function1);
+    test = cut_test_new("dummy_test_1", dummy_test_function1);
     cut_test_case_add_test(test_object, test);
-    test = cut_test_new("dummy test 2", dummy_test_function2);
+    test = cut_test_new("dummy_test_2", dummy_test_function2);
     cut_test_case_add_test(test_object, test);
     test = cut_test_new("run_test_function", dummy_run_test_function);
     cut_test_case_add_test(test_object, test);
@@ -152,8 +152,7 @@ test_run_this_function (void)
 void
 test_run_functions_with_regex (void)
 {
-    cut_pending("NOT IMPLEMENTED");
-    cut_assert(cut_test_case_run_function(test_object, test_context, "/^dummy/"));
+    cut_assert(cut_test_case_run_function(test_object, test_context, "/^dummy.*/"));
 
     cut_assert_equal_int(0, n_run_dummy_run_test_function);
     cut_assert_equal_int(1, n_run_dummy_test_function1);

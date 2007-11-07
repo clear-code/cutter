@@ -72,7 +72,7 @@ cb_complete_signal (CutTest *test, gpointer data)
 }
 
 static gboolean
-run(CutTest *test)
+run (CutTest *test)
 {
     gboolean success;
     CutTestContext *original_test_context;

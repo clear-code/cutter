@@ -273,14 +273,6 @@ cut_test_case_add_test (CutTestCase *test_case, CutTest *test)
     cut_test_container_add_test(CUT_TEST_CONTAINER(test_case), test);
 }
 
-static gint
-compare_function_name (gconstpointer a, gconstpointer b)
-{
-    g_return_val_if_fail(CUT_IS_TEST(a), -1);
-
-    return strcmp(cut_test_get_function_name(CUT_TEST(a)), (gchar *) b);
-}
-
 static gboolean
 run (CutTestCase *test_case, CutTest *test, CutContext *context)
 {
@@ -321,46 +313,41 @@ run (CutTestCase *test_case, CutTest *test, CutContext *context)
     return success;
 }
 
-gboolean
-cut_test_case_run_function (CutTestCase *test_case, CutContext *context,
-                            const gchar *name)
+static GList *
+collect_tests_matched_regex (const GList *tests, gchar *pattern)
 {
-    CutTestCasePrivate *priv;
-    const GList *list, *tests;
-    gboolean success;
+    GList *matched_list = NULL, *list;
+    GRegex *regex;
 
-    g_return_val_if_fail(CUT_IS_TEST_CASE(test_case), FALSE);
+    if (!strlen(pattern))
+        return NULL;
 
-    priv = CUT_TEST_CASE_GET_PRIVATE(test_case);
-    tests = cut_test_container_get_children(CUT_TEST_CONTAINER(test_case));
+    regex = g_regex_new(pattern, G_REGEX_EXTENDED, 0, NULL);
+    for (list = (GList *)tests; list; list = g_list_next(list)) {
+        gboolean match;
+        CutTest *test = CUT_TEST(list->data);
+        match = g_regex_match(regex, 
+                              cut_test_get_function_name(test),
+                              0, NULL);
+        if (match) {
+            matched_list = g_list_prepend(matched_list, test);
+        }
+    }
+    g_regex_unref(regex);
 
-    list = g_list_find_custom((GList *)tests, name, (GCompareFunc) compare_function_name);
-
-    if (!list)
-        return FALSE;
-
-    cut_context_start_test_case(context, test_case);
-    g_signal_emit_by_name(CUT_TEST(test_case), "start");
-    success = run(test_case, CUT_TEST(list->data), context);
-    g_signal_emit_by_name(CUT_TEST(test_case), "complete");
-
-    return success;
+    return matched_list;
 }
 
-gboolean
-cut_test_case_run (CutTestCase *test_case, CutContext *context)
+static gboolean
+cut_test_case_run_tests (CutTestCase *test_case, CutContext *context,
+                         const GList *tests)
 {
-    CutTestContainer *container;
-    CutTestCasePrivate *priv;
-    const GList *list, *tests;
+    const GList *list;
     gboolean all_success = TRUE;
 
     cut_context_start_test_case(context, test_case);
     g_signal_emit_by_name(CUT_TEST(test_case), "start");
 
-    priv = CUT_TEST_CASE_GET_PRIVATE(test_case);
-    container = CUT_TEST_CONTAINER(test_case);
-    tests = cut_test_container_get_children(container);
     for (list = tests; list; list = g_list_next(list)) {
         if (!list->data)
             continue;
@@ -376,6 +363,50 @@ cut_test_case_run (CutTestCase *test_case, CutContext *context)
     g_signal_emit_by_name(CUT_TEST(test_case), "complete");
 
     return all_success;
+}
+
+gboolean
+cut_test_case_run_function (CutTestCase *test_case, CutContext *context,
+                            const gchar *name)
+{
+    CutTestCasePrivate *priv;
+    const GList *tests;
+    GList *matched_tests;
+    gchar *pattern;
+    gboolean success = FALSE;
+
+    g_return_val_if_fail(CUT_IS_TEST_CASE(test_case), FALSE);
+
+    priv = CUT_TEST_CASE_GET_PRIVATE(test_case);
+    tests = cut_test_container_get_children(CUT_TEST_CONTAINER(test_case));
+
+    if (g_str_has_prefix(name, "/") && g_str_has_suffix(name, "/")) {
+        pattern = g_strndup(name + 1, strlen(name) - 2);  
+    } else {
+        pattern = g_strdup_printf("^%s$", name);
+    }
+    matched_tests = collect_tests_matched_regex(tests, pattern);
+    if (matched_tests) {
+        success = cut_test_case_run_tests(test_case, context, matched_tests);
+        g_list_free(matched_tests);
+    }
+    g_free(pattern);
+
+    return success;
+}
+
+gboolean
+cut_test_case_run (CutTestCase *test_case, CutContext *context)
+{
+    CutTestContainer *container;
+    CutTestCasePrivate *priv;
+    const GList *tests;
+
+    priv = CUT_TEST_CASE_GET_PRIVATE(test_case);
+    container = CUT_TEST_CONTAINER(test_case);
+    tests = cut_test_container_get_children(container);
+
+    return cut_test_case_run_tests(test_case, context, tests);
 }
 
 gboolean

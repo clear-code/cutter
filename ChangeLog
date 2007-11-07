@@ -1,5 +1,11 @@
 2007-11-07  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test-case.c: Implement regex match for
+	cut_test_case_run_function().
+	* test/test-cut-test-case.c: Enable regex match test.
+
+2007-11-07  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test.c, cutter/cut-test-case.c, cutter/cut-test-suite.c:
 	Removed G_SIGNAL_DETAILED.
 
