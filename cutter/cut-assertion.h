@@ -42,7 +42,8 @@ void  cut_test_context_register_result      (CutTestContext *context,
                                              const gchar *result_message,
                                              const gchar *function_name,
                                              const gchar *filename,
-                                             guint line);
+                                             guint line,
+                                             ...);
 
 #define cut_error(message) do                   \
 {                                               \
@@ -74,7 +75,7 @@ void  cut_test_context_register_result      (CutTestContext *context,
     return;                                     \
 } while(0)
 
-#define cut_assert(expect) do                           \
+#define cut_assert(expect, ...) do                      \
 {                                                       \
     if (!(expect)) {                                    \
         cut_test_context_register_result(                       \
@@ -90,7 +91,7 @@ void  cut_test_context_register_result      (CutTestContext *context,
 } while(0)
 
 
-#define cut_assert_equal_int(expect, actual) do         \
+#define cut_assert_equal_int(expect, actual, ...) do    \
 {                                                       \
     if (expect != actual) {                             \
         gchar *message;                                 \
@@ -110,7 +111,7 @@ void  cut_test_context_register_result      (CutTestContext *context,
     }                                                   \
 } while(0)
 
-#define cut_assert_equal_double(expect, error, actual) do   \
+#define cut_assert_equal_double(expect, error, actual, ...) do \
 {                                                           \
     double _expect = expect;                                \
     double _actual = actual;                                \
@@ -135,7 +136,7 @@ void  cut_test_context_register_result      (CutTestContext *context,
     }                                                       \
 } while(0)
 
-#define cut_assert_equal_string(expect, actual) do      \
+#define cut_assert_equal_string(expect, actual, ...) do \
 {                                                       \
     if ((!expect && actual) || (expect && !actual) ||   \
         (expect && actual &&strcmp(expect, actual))) {  \

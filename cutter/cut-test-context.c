@@ -258,7 +258,8 @@ cut_test_context_register_result (CutTestContext *context,
                           const gchar *result_message,
                           const gchar *function_name,
                           const gchar *filename,
-                          guint line)
+                          guint line,
+                          ...)
 {
     CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
     CutTestResult *result;
