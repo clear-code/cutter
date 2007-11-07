@@ -1,5 +1,8 @@
 2007-11-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-context.c, cutter/cut-assertion.h: supported
+	optional user message.
+
 	* test/test-cut-test.c: removed needless tests.
 
 	* cutter/cut-test-result.c: fixed typos.

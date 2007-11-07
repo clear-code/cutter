@@ -254,19 +254,45 @@ cut_test_context_pass_assertion (CutTestContext *context)
 
 void
 cut_test_context_register_result (CutTestContext *context,
-                          CutTestResultStatus status,
-                          const gchar *result_message,
-                          const gchar *function_name,
-                          const gchar *filename,
-                          guint line,
-                          ...)
+                                  CutTestResultStatus status,
+                                  const gchar *function_name,
+                                  const gchar *filename,
+                                  guint line,
+                                  const gchar *message,
+                                  ...)
 {
     CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
     CutTestResult *result;
     const gchar *status_signal_name = NULL;
+    gchar *result_message = NULL;
+    const gchar *system_message, *format;
+    va_list args;
 
-    result = cut_test_result_new(status, result_message, function_name,
-                                 filename, line);
+    system_message = message;
+    va_start(args, message);
+    format = va_arg(args, gchar *);
+    if (format) {
+        result_message = g_strdup_vprintf(format, args);
+    }
+
+    if (system_message) {
+        if (result_message) {
+            gchar *message_with_system_message;
+            message_with_system_message = g_strconcat(result_message, "\n",
+                                                      system_message,
+                                                      NULL);
+            g_free(result_message);
+            result_message = message_with_system_message;
+        } else {
+            result_message = g_strdup(system_message);
+        }
+    }
+
+    result = cut_test_result_new(status, result_message,
+                                 function_name, filename, line);
+    g_free(result_message);
+    va_end(args);
+
     switch (status) {
       case CUT_TEST_RESULT_SUCCESS:
         g_assert("must not happen");
