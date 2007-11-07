@@ -14,7 +14,6 @@ void test_run_test_function_in_test_case (void);
 void test_run_test_function_with_regex_in_test_case (void);
 void test_run_test_function_in_test_case_with_regex (void);
 void test_run_test_function_with_regex_in_test_case_with_regex (void);
-void test_get_n_tests (void);
 
 static CutTest *dummy_current_test = NULL;
 
@@ -262,12 +261,6 @@ test_run_test_function_with_regex_in_test_case_with_regex (void)
     cut_assert_equal_int(n_run_bummy_test_function1, 0);
     cut_assert_equal_int(n_run_bummy_test_function2, 0);
     cut_assert_equal_int(n_run_bummy_run_test_function, 0);
-}
-
-void
-test_get_n_tests (void)
-{
-    cut_assert_equal_int(10, cut_test_get_n_tests(CUT_TEST(test_object)));
 }
 
 /*
