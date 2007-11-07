@@ -29,6 +29,8 @@
 #include <glib/gstdio.h>
 
 #include "cut-output.h"
+#include "cut-test.h"
+#include "cut-test-case.h"
 #include "cut-enum-types.h"
 
 #define CUT_OUTPUT_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_OUTPUT, CutOutputPrivate))

@@ -14,7 +14,7 @@ void test_has_function(void);
 void test_get_n_tests(void);
 void test_get_n_failures(void);
 
-static CutTest *dummy_current_test = NULL;
+static CutTestContext *dummy_current_test_context = NULL;
 
 static CutTestCase *test_object;
 static CutContext *test_context;
@@ -68,16 +68,16 @@ dummy_teardown_function (void)
     n_teardown++;
 }
 
-static CutTest *
-dummy_get_current_test_function (void)
+static CutTestContext *
+dummy_get_current_test_context_function (void)
 {
-    return dummy_current_test;
+    return dummy_current_test_context;
 }
 
 static void
-dummy_set_current_test_function (CutTest *test)
+dummy_set_current_test_context_function (CutTestContext *context)
 {
-    dummy_current_test = test;
+    dummy_current_test_context = context;
 }
 
 void
@@ -100,8 +100,8 @@ setup (void)
     test_object = cut_test_case_new("dummy test case",
                                     dummy_setup_function,
                                     dummy_teardown_function,
-                                    dummy_get_current_test_function,
-                                    dummy_set_current_test_function);
+                                    dummy_get_current_test_context_function,
+                                    dummy_set_current_test_context_function);
     test = cut_test_new("dummy test 1", dummy_test_function1);
     cut_test_case_add_test(test_object, test);
     test = cut_test_new("dummy test 2", dummy_test_function2);

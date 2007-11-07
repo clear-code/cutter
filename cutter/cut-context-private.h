@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef __CUT_PRIVATE_H__
-#define __CUT_PRIVATE_H__
+#ifndef __CUT_CONTEXT_PRIVATE_H__
+#define __CUT_CONTEXT_PRIVATE_H__
 
 #include <glib.h>
 
@@ -32,9 +32,10 @@ G_BEGIN_DECLS
 CutTest *cut_context_get_current_test (CutContext *context);
 void     cut_context_set_current      (CutContext *context);
 
+
 G_END_DECLS
 
-#endif /* __CUT_PRIVATE_H__ */
+#endif /* __CUT_CONTEXT_PRIVATE_H__ */
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

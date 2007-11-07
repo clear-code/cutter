@@ -27,8 +27,7 @@
 
 G_BEGIN_DECLS
 
-typedef struct _CutContext         CutContext;
-typedef struct _CutTest         CutTest;
+typedef struct _CutTestContext     CutTestContext;
 
 typedef enum {
     CUT_TEST_RESULT_SUCCESS,
@@ -37,8 +36,8 @@ typedef enum {
     CUT_TEST_RESULT_PENDING
 } CutTestResultStatus;
 
-void  cut_test_pass_assertion               (CutTest *test);
-void  cut_test_register_result              (CutTest *test,
+void  cut_test_context_pass_assertion       (CutTestContext *context);
+void  cut_test_context_register_result      (CutTestContext *context,
                                              CutTestResultStatus status,
                                              const gchar *result_message,
                                              const gchar *function_name,
@@ -47,8 +46,8 @@ void  cut_test_register_result              (CutTest *test,
 
 #define cut_error(message) do                   \
 {                                               \
-    cut_test_register_result(                   \
-        get_current_test(),                     \
+    cut_test_context_register_result(           \
+        get_current_test_context(),             \
         CUT_TEST_RESULT_ERROR,                  \
         message, __PRETTY_FUNCTION__,           \
         __FILE__, __LINE__);                    \
@@ -57,8 +56,8 @@ void  cut_test_register_result              (CutTest *test,
 
 #define cut_fail(message) do                    \
 {                                               \
-    cut_test_register_result(                   \
-        get_current_test(),                     \
+    cut_test_context_register_result(                   \
+        get_current_test_context(),                     \
         CUT_TEST_RESULT_FAILURE,                \
         message, __PRETTY_FUNCTION__,           \
         __FILE__, __LINE__);                    \
@@ -67,8 +66,8 @@ void  cut_test_register_result              (CutTest *test,
 
 #define cut_pending(message) do                 \
 {                                               \
-    cut_test_register_result(                   \
-        get_current_test(),                     \
+    cut_test_context_register_result(                   \
+        get_current_test_context(),                     \
         CUT_TEST_RESULT_PENDING,                \
         message, __PRETTY_FUNCTION__,           \
         __FILE__, __LINE__);                    \
@@ -78,15 +77,15 @@ void  cut_test_register_result              (CutTest *test,
 #define cut_assert(expect) do                           \
 {                                                       \
     if (!(expect)) {                                    \
-        cut_test_register_result(                       \
-            get_current_test(),                         \
+        cut_test_context_register_result(                       \
+            get_current_test_context(),                         \
             CUT_TEST_RESULT_FAILURE,                    \
             "expected: <" #expect "> is not 0/NULL",    \
             __PRETTY_FUNCTION__,                        \
             __FILE__, __LINE__);                        \
         return;                                         \
     } else {                                            \
-        cut_test_pass_assertion(get_current_test());    \
+        cut_test_context_pass_assertion(get_current_test_context());    \
     }                                                   \
 } while(0)
 
@@ -99,15 +98,15 @@ void  cut_test_register_result              (CutTest *test,
             "<" #expect " = " #actual ">\n"             \
             "expected: <%d>\n but was: <%d>",           \
             expect, actual);                            \
-        cut_test_register_result(                       \
-            get_current_test(),                         \
+        cut_test_context_register_result(                       \
+            get_current_test_context(),                         \
             CUT_TEST_RESULT_FAILURE,                    \
             message, __PRETTY_FUNCTION__,               \
             __FILE__, __LINE__);                        \
         g_free(message);                                \
         return;                                         \
     } else {                                            \
-        cut_test_pass_assertion(get_current_test());    \
+        cut_test_context_pass_assertion(get_current_test_context());    \
     }                                                   \
 } while(0)
 
@@ -124,15 +123,15 @@ void  cut_test_register_result              (CutTest *test,
             " <= " #expect "+" #error">\n"                  \
             "expected: <%g +/- %g>\n but was: <%g>",        \
             expect, _error, actual);                        \
-        cut_test_register_result(                           \
-            get_current_test(),                             \
+        cut_test_context_register_result(                           \
+            get_current_test_context(),                             \
             CUT_TEST_RESULT_FAILURE,                        \
             message, __PRETTY_FUNCTION__,                   \
             __FILE__, __LINE__);                            \
         g_free(message);                                    \
         return;                                             \
     } else {                                                \
-        cut_test_pass_assertion(get_current_test());        \
+        cut_test_context_pass_assertion(get_current_test_context());    \
     }                                                       \
 } while(0)
 
@@ -145,15 +144,15 @@ void  cut_test_register_result              (CutTest *test,
             "<" #expect " = " #actual ">\n"             \
             "expected: <%s>\n but was: <%s>",           \
             expect, actual);                            \
-        cut_test_register_result(                       \
-            get_current_test(),                         \
+        cut_test_context_register_result(                       \
+            get_current_test_context(),                         \
             CUT_TEST_RESULT_FAILURE,                    \
             message, __PRETTY_FUNCTION__,               \
             __FILE__, __LINE__);                        \
         g_free(message);                                \
         return;                                         \
     } else {                                            \
-        cut_test_pass_assertion(get_current_test());    \
+        cut_test_context_pass_assertion(get_current_test_context());    \
     }                                                   \
 } while(0)
 

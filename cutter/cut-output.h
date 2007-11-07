@@ -24,7 +24,8 @@
 
 #include <glib-object.h>
 
-#include "cut-test-suite.h"
+#include "cut-private.h"
+#include "cut-test-result.h"
 
 G_BEGIN_DECLS
 

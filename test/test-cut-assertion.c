@@ -1,4 +1,5 @@
 #include "cutter.h"
+#include "cut-test-result.h"
 #include "cut-context-private.h"
 
 void test_equal_int(void);
@@ -78,7 +79,7 @@ test_pending (void)
 {
     CutTest *test_object;
     CutContext *test_context;
-    const CutTestResult *result;
+    CutTestResult *result;
 
     test_object = cut_test_new("dummy-pending-test", dummy_pending_test_function);
     cut_assert(test_object);

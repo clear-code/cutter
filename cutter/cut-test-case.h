@@ -35,7 +35,6 @@ G_BEGIN_DECLS
 #define CUT_IS_TEST_CASE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_TEST_CASE))
 #define CUT_TEST_CASE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_TEST_CASE, CutTestCaseClass))
 
-typedef struct _CutTestCase      CutTestCase;
 typedef struct _CutTestCaseClass CutTestCaseClass;
 
 struct _CutTestCase
@@ -56,8 +55,10 @@ GType        cut_test_case_get_type       (void) G_GNUC_CONST;
 CutTestCase *cut_test_case_new            (const gchar *name,
                                            CutSetupFunction setup_funcion,
                                            CutTearDownFunction teardown_function,
-                                           CutGetCurrentTestFunction get_current_test_function,
-                                           CutSetCurrentTestFunction set_current_test_function);
+                                           CutGetCurrentTestContextFunction
+                                           get_current_test_context_function,
+                                           CutSetCurrentTestContextFunction
+                                           set_current_test_context_function);
 void         cut_test_case_add_test       (CutTestCase *test_case,
                                            CutTest *test);
 guint        cut_test_case_get_test_count (CutTestCase *test_case);

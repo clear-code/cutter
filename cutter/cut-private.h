@@ -19,38 +19,21 @@
  *
  */
 
-#ifndef __CUTTER_H__
-#define __CUTTER_H__
+#ifndef __CUT_PRIVATE_H__
+#define __CUT_PRIVATE_H__
 
 #include <glib.h>
 
-#include "cut-assertion.h"
-
 G_BEGIN_DECLS
 
-void setup(void);
-void teardown(void);
-
-void set_current_test_context(CutTestContext *context);
-CutTestContext *get_current_test_context(void);
-
-static CutTestContext *_current_test_context = NULL;
-
-void
-set_current_test_context (CutTestContext *context)
-{
-    _current_test_context = context;
-}
-
-CutTestContext *
-get_current_test_context (void)
-{
-    return _current_test_context;
-}
+typedef struct _CutContext         CutContext;
+typedef struct _CutTestSuite       CutTestSuite;
+typedef struct _CutTestCase        CutTestCase;
+typedef struct _CutTest            CutTest;
 
 G_END_DECLS
 
-#endif /* __CUTTER_H__ */
+#endif /* __CUT_PRIVATE_H__ */
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

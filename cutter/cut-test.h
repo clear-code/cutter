@@ -24,7 +24,9 @@
 
 #include <glib-object.h>
 
+#include "cut-private.h"
 #include "cut-assertion.h"
+#include "cut-test-context.h"
 #include "cut-test-result.h"
 
 G_BEGIN_DECLS
@@ -41,8 +43,8 @@ typedef struct _CutTestClass    CutTestClass;
 typedef void    (*CutTestFunction)     (void);
 typedef void    (*CutSetupFunction)    (void);
 typedef void    (*CutTearDownFunction) (void);
-typedef CutTest *(*CutGetCurrentTestFunction) (void);
-typedef void     (*CutSetCurrentTestFunction) (CutTest *test);
+typedef CutTestContext *(*CutGetCurrentTestContextFunction) (void);
+typedef void            (*CutSetCurrentTestContextFunction) (CutTestContext *context);
 
 struct _CutTest
 {

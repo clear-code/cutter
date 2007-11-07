@@ -36,7 +36,6 @@ G_BEGIN_DECLS
 #define CUT_IS_TEST_SUITE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_TEST_SUITE))
 #define CUT_TEST_SUITE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_TEST_SUITE, CutTestSuiteClass))
 
-typedef struct _CutTestSuite      CutTestSuite;
 typedef struct _CutTestSuiteClass CutTestSuiteClass;
 
 struct _CutTestSuite

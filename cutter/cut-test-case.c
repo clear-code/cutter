@@ -41,8 +41,8 @@ struct _CutTestCasePrivate
     gchar *name;
     CutSetupFunction setup;
     CutTearDownFunction teardown;
-    CutGetCurrentTestFunction get_current_test;
-    CutSetCurrentTestFunction set_current_test;
+    CutGetCurrentTestContextFunction get_current_test_context;
+    CutSetCurrentTestContextFunction set_current_test_context;
 };
 
 enum
@@ -51,8 +51,8 @@ enum
     PROP_NAME,
     PROP_SETUP_FUNCTION,
     PROP_TEAR_DOWN_FUNCTION,
-    PROP_GET_CURRENT_TEST_FUNCTION,
-    PROP_SET_CURRENT_TEST_FUNCTION
+    PROP_GET_CURRENT_TEST_CONTEXT_FUNCTION,
+    PROP_SET_CURRENT_TEST_CONTEXT_FUNCTION
 };
 
 enum
@@ -109,19 +109,21 @@ cut_test_case_class_init (CutTestCaseClass *klass)
                                 G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class, PROP_TEAR_DOWN_FUNCTION, spec);
 
-    spec = g_param_spec_pointer("get-current-test-function",
-                                "Get current test function",
-                                "The function for getting current test",
+    spec = g_param_spec_pointer("get-current-test-context-function",
+                                "Get current test context function",
+                                "The function for getting current test context",
                                 G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class,
-                                    PROP_GET_CURRENT_TEST_FUNCTION, spec);
+                                    PROP_GET_CURRENT_TEST_CONTEXT_FUNCTION,
+                                    spec);
 
-    spec = g_param_spec_pointer("set-current-test-function",
-                                "Set current test function",
-                                "The function for setting current test",
+    spec = g_param_spec_pointer("set-current-test-context-function",
+                                "Set current test context function",
+                                "The function for setting current test context",
                                 G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class,
-                                    PROP_SET_CURRENT_TEST_FUNCTION, spec);
+                                    PROP_SET_CURRENT_TEST_CONTEXT_FUNCTION,
+                                    spec);
 
 
 	cut_test_case_signals[START_TEST_SIGNAL]
@@ -152,8 +154,8 @@ cut_test_case_init (CutTestCase *test_case)
 
     priv->setup = NULL;
     priv->teardown = NULL;
-    priv->get_current_test = NULL;
-    priv->set_current_test = NULL;
+    priv->get_current_test_context = NULL;
+    priv->set_current_test_context = NULL;
     priv->name = NULL;
 }
 
@@ -190,11 +192,11 @@ set_property (GObject      *object,
       case PROP_TEAR_DOWN_FUNCTION:
         priv->teardown = g_value_get_pointer(value);
         break;
-      case PROP_GET_CURRENT_TEST_FUNCTION:
-        priv->get_current_test = g_value_get_pointer(value);
+      case PROP_GET_CURRENT_TEST_CONTEXT_FUNCTION:
+        priv->get_current_test_context = g_value_get_pointer(value);
         break;
-      case PROP_SET_CURRENT_TEST_FUNCTION:
-        priv->set_current_test = g_value_get_pointer(value);
+      case PROP_SET_CURRENT_TEST_CONTEXT_FUNCTION:
+        priv->set_current_test_context = g_value_get_pointer(value);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -220,11 +222,11 @@ get_property (GObject    *object,
       case PROP_TEAR_DOWN_FUNCTION:
         g_value_set_pointer(value, priv->teardown);
         break;
-      case PROP_GET_CURRENT_TEST_FUNCTION:
-        g_value_set_pointer(value, priv->get_current_test);
+      case PROP_GET_CURRENT_TEST_CONTEXT_FUNCTION:
+        g_value_set_pointer(value, priv->get_current_test_context);
         break;
-      case PROP_SET_CURRENT_TEST_FUNCTION:
-        g_value_set_pointer(value, priv->set_current_test);
+      case PROP_SET_CURRENT_TEST_CONTEXT_FUNCTION:
+        g_value_set_pointer(value, priv->set_current_test_context);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -236,15 +238,17 @@ CutTestCase *
 cut_test_case_new (const gchar *name,
                    CutSetupFunction setup_function,
                    CutTearDownFunction teardown_function,
-                   CutGetCurrentTestFunction get_current_test_function,
-                   CutSetCurrentTestFunction set_current_test_function)
+                   CutGetCurrentTestContextFunction get_current_test_context_function,
+                   CutSetCurrentTestContextFunction set_current_test_context_function)
 {
     return g_object_new(CUT_TYPE_TEST_CASE,
                         "name", name,
                         "setup-function", setup_function,
                         "tear-down-function", teardown_function,
-                        "get-current-test-function", get_current_test_function,
-                        "set-current-test-function", set_current_test_function,
+                        "get-current-test-context-function",
+                        get_current_test_context_function,
+                        "set-current-test-context-function",
+                        set_current_test_context_function,
                         NULL);
 }
 
@@ -300,7 +304,7 @@ cut_test_case_run_function (CutTestCase *test_case, CutContext *context,
     test = CUT_TEST(list->data);
     cut_context_start_test(context, test);
 
-    priv->set_current_test(test);
+    /* priv->set_current_test_context(test_conext); */
     if (priv->setup)
         priv->setup();
 
@@ -313,7 +317,7 @@ cut_test_case_run_function (CutTestCase *test_case, CutContext *context,
 
     if (priv->teardown)
         priv->teardown();
-    priv->set_current_test(NULL);
+    priv->set_current_test_context(NULL);
 
     return success;
 }
@@ -336,18 +340,28 @@ cut_test_case_run (CutTestCase *test_case, CutContext *context)
             continue;
 
         if (CUT_IS_TEST(list->data)) {
-            CutTest *test = CUT_TEST(list->data);
+            CutTestContext *test_context;
+            CutTest *test;
+
+            test = CUT_TEST(list->data);
+            test_context = cut_test_context_new(NULL, test_case, NULL);
+            priv->set_current_test_context(test_context);
 
             g_signal_emit_by_name(test_case, "start-test", test);
             if (priv->setup)
                 priv->setup();
 
+            cut_test_context_set_test(test_context, test);
             if (/*!cut_test_is_success(test) || FIXME*/!cut_test_run(test, context))
                 all_success = FALSE;
+            cut_test_context_set_test(test_context, NULL);
 
             if (priv->teardown)
                 priv->teardown();
             g_signal_emit_by_name(test_case, "complete-test", test);
+
+            priv->set_current_test_context(NULL);
+            g_object_unref(test_context);
         } else {
             g_warning("This object is not CutTest object");
         }

@@ -1,5 +1,7 @@
 2007-11-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/, test/: introduced CutterTestContext. not work yet.
+
 	* test/test-cut-test-suite.c (setup): used cut_error() not
 	cut_assert(). But not work yet.
 
