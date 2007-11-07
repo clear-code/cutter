@@ -338,6 +338,41 @@ collect_tests_with_regex (const GList *tests, gchar *pattern)
     return matched_list;
 }
 
+static gchar *
+create_regex_pattern (const gchar *string)
+{
+    gchar *pattern;
+
+    if (!string) {
+        pattern = g_strdup(".*");
+    } else if (strlen(string) > 1 &&
+        g_str_has_prefix(string, "/") && g_str_has_suffix(string, "/")) {
+        pattern = g_strndup(string + 1, strlen(string) - 2);  
+    } else {
+        pattern = g_strdup_printf("^%s$", string);
+    }
+
+    return pattern;
+}
+
+static GList *
+cut_test_case_collect_tests (CutTestCase *test_case, const gchar *name)
+{
+    GList *matched_tests = NULL;
+    const GList *tests;
+    gchar *pattern;
+
+    g_return_val_if_fail(CUT_IS_TEST_CASE(test_case), NULL);
+
+    tests = cut_test_container_get_children(CUT_TEST_CONTAINER(test_case));
+
+    pattern = create_regex_pattern(name);
+    matched_tests = collect_tests_with_regex(tests, pattern);
+    g_free(pattern);
+
+    return matched_tests;
+}
+
 static gboolean
 cut_test_case_run_tests (CutTestCase *test_case, CutContext *context,
                          const GList *tests)
@@ -365,43 +400,20 @@ cut_test_case_run_tests (CutTestCase *test_case, CutContext *context,
     return all_success;
 }
 
-static gchar *
-create_regex_pattern (const gchar *string)
-{
-    gchar *pattern;
-
-    if (!string) {
-        pattern = g_strdup(".*");
-    } else if (strlen(string) > 1 &&
-        g_str_has_prefix(string, "/") && g_str_has_suffix(string, "/")) {
-        pattern = g_strndup(string + 1, strlen(string) - 2);  
-    } else {
-        pattern = g_strdup_printf("^%s$", string);
-    }
-
-    return pattern;
-}
-
 gboolean
 cut_test_case_run_function (CutTestCase *test_case, CutContext *context,
                             const gchar *name)
 {
-    const GList *tests;
     GList *matched_tests;
-    gchar *pattern;
     gboolean success = FALSE;
 
     g_return_val_if_fail(CUT_IS_TEST_CASE(test_case), FALSE);
 
-    tests = cut_test_container_get_children(CUT_TEST_CONTAINER(test_case));
-
-    pattern = create_regex_pattern(name);
-    matched_tests = collect_tests_with_regex(tests, pattern);
+    matched_tests = cut_test_case_collect_tests(test_case, name);
     if (matched_tests) {
         success = cut_test_case_run_tests(test_case, context, matched_tests);
         g_list_free(matched_tests);
     }
-    g_free(pattern);
 
     return success;
 }
@@ -421,23 +433,18 @@ cut_test_case_run (CutTestCase *test_case, CutContext *context)
 gboolean
 cut_test_case_has_function (CutTestCase *test_case, const gchar *function_name)
 {
-    const GList *tests, *list;
+    GList *matched_tests;
+    gboolean found = FALSE;
+
     g_return_val_if_fail(CUT_IS_TEST_CASE(test_case), FALSE);
 
-    tests = cut_test_container_get_children(CUT_TEST_CONTAINER(test_case));
-
-    for (list = tests; list; list = g_list_next(list)) {
-        if (!list->data)
-            continue;
-        if (CUT_IS_TEST(list->data)) {
-            CutTest *test = CUT_TEST(list->data);
-            const gchar *name;
-            name = cut_test_get_function_name(test);
-            if (!strcmp(function_name, name))
-                return TRUE;
-        }
+    matched_tests = cut_test_case_collect_tests(test_case, function_name);
+    if (matched_tests) {
+        found = TRUE;
+        g_list_free(matched_tests);
     }
-    return FALSE;
+
+    return found;
 }
 
 /*

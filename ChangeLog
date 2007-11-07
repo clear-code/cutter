@@ -1,5 +1,9 @@
 2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test-case.c: Code cleanup. Added some utility functions.
+
+2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test-case.c: (create_regex_pattern): Added utility
 	function. The function should be moved into cut-utils.h.
 
