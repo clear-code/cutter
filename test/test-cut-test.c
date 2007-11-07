@@ -1,8 +1,6 @@
 #include "cutter.h"
 #include "cut-test.h"
 
-void test_n_tests(void);
-void test_n_assertions(void);
 void test_get_function_name(void);
 void test_increment_assertion_count(void);
 void test_run(void);
@@ -54,20 +52,6 @@ static gboolean
 run_the_test (CutTest *test)
 {
     return cut_test_run(test, test_context);
-}
-
-void
-test_n_tests (void)
-{
-    cut_assert(run_the_test(test_object));
-    cut_assert_equal_int(1, cut_test_get_n_tests(test_object));
-}
-
-void
-test_n_assertions (void)
-{
-    cut_assert(run_the_test(test_object));
-    cut_assert_equal_int(3, cut_test_get_n_assertions(test_object));
 }
 
 void

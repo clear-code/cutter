@@ -1,5 +1,7 @@
 2007-11-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-test.c: removed needless tests.
+
 	* cutter/cut-test-result.c: fixed typos.
 
 	* cutter/cut-context.[ch]: exported inner variables.
