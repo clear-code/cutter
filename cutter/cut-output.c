@@ -381,53 +381,41 @@ cut_output_on_complete_test_suite (CutOutput *output, CutTestSuite *test_suite,
                                    GList *results)
 {
     gint i;
-    gint assertions, failures, errors, pendings;
-    const GList *test_case_node;
-    CutTestContainer *container;
-    CutTestResultStatus status;
+    GList *node;
     CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
 
     if (priv->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
 
-/*     i = 1; */
-/*     container = CUT_TEST_CONTAINER(test_suite); */
-/*     for (test_case_node = cut_test_container_get_children(container); */
-/*          test_case_node; */
-/*          test_case_node = g_list_next(test_case_node)) { */
-/*         const GList *test_node; */
-/*         CutTestCase *test_case; */
+    i = 1;
+    for (node = results; node; node = g_list_next(node)) {
+        CutTestResult *result = node->data;
+        CutTestResultStatus status;
+        gchar *filename;
+        const gchar *message;
 
-/*         test_case = test_case_node->data; */
-/*         container = CUT_TEST_CONTAINER(test_case); */
-/*         for (test_node = cut_test_container_get_children(container); */
-/*              test_node; */
-/*              test_node = g_list_next(test_node)) { */
-/*             CutTest *test = test_node->data; */
-/*             const CutTestResult *result; */
-/*             gchar *filename; */
+        if (priv->source_directory)
+            filename = g_build_filename(priv->source_directory,
+                                        cut_test_result_get_filename(result),
+                                        NULL);
+        else
+            filename = g_strdup(cut_test_result_get_filename(result));
 
-/*             if (!result) */
-/*                 continue; */
+        status = cut_test_result_get_status(result);
+        message = cut_test_result_get_message(result);
 
-/*             if (priv->source_directory) */
-/*                 filename = g_build_filename(priv->source_directory, */
-/*                                             result->filename, */
-/*                                             NULL); */
-/*             else */
-/*                 filename = g_strdup(result->filename); */
-
-/*             g_print("\n\n%d) ", i); */
-/*             print_for_status(priv, result->status, */
-/*                              status_to_name(result->status)); */
-/*             g_print("\n"); */
-/*             print_for_status(priv, result->status, result->message); */
-/*             g_print("\n%s:%d: %s()", */
-/*                     filename, result->line, result->function_name); */
-
-/*             i++; */
-/*         } */
-/*     } */
+        g_print("\n\n%d) ", i);
+        print_for_status(priv, status, status_to_name(status));
+        if (message) {
+            g_print("\n");
+            print_for_status(priv, status, message);
+        }
+        g_print("\n%s:%d: %s()",
+                filename,
+                cut_test_result_get_line(result),
+                cut_test_result_get_function_name(result));
+        i++;
+    }
 
     g_print("\n\n");
     g_print("Finished in %g seconds",

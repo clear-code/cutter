@@ -1,5 +1,7 @@
 2007-11-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-context.c, cutter/cut-output.c: showed summary again.
+
 	* cutter/cut-context-private.h: removed.
 	* cutter/, test/: followed the above change.
 

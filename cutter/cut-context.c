@@ -266,8 +266,12 @@ cb_complete (CutTest *test, gpointer data)
 
     context = info->context;
     priv = CUT_CONTEXT_GET_PRIVATE(context);
-    if (!info->result && priv->output)
-        cut_output_on_success(priv->output, test);
+    if (info->result) {
+        priv->results = g_list_prepend(priv->results, info->result);
+    } else {
+        if (priv->output)
+            cut_output_on_success(priv->output, test);
+    }
 
     g_signal_handlers_disconnect_by_func(test,
                                          G_CALLBACK(cb_pass_assertion),
@@ -289,8 +293,6 @@ cb_complete (CutTest *test, gpointer data)
                                          data);
 
     g_object_unref(info->context);
-    if (info->result)
-        g_object_unref(info->result);
     g_free(info);
 }
 
@@ -401,7 +403,8 @@ cb_complete_test_suite(CutTestSuite *test_suite, gpointer data)
 
     priv = CUT_CONTEXT_GET_PRIVATE(context);
     if (priv->output)
-        cut_output_on_complete_test_suite(priv->output, test_suite, NULL);
+        cut_output_on_complete_test_suite(priv->output, test_suite,
+                                          priv->results);
 
     g_signal_handlers_disconnect_by_func(test_suite,
                                          G_CALLBACK(cb_start_test_suite), data);
