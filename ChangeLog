@@ -1,5 +1,7 @@
 2007-11-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/Makefile.am: fixed utility link.
+
 	* test/test-cut-assertion.c: followed the recent changes.
 
 	* cutter/cut-context.c: worked signals again.

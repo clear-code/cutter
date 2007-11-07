@@ -27,7 +27,10 @@ libcuttest_utils_la_SOURCES = cuttest-utils.c
 libtest_cut_assertion_la_SOURCES  = test-cut-assertion.c
 libtest_cut_test_la_SOURCES       = test-cut-test.c
 libtest_cut_test_case_la_SOURCES  = test-cut-test-case.c
-libtest_cut_test_suite_la_SOURCES = test-cut-test-suite.c libcuttest_loader.la
-libtest_cut_loader_la_SOURCES     = test-cut-loader.c libcuttest_loader.la
-libtest_cut_repository_la_SOURCES = test-cut-repository.c libcuttest_loader.la
+libtest_cut_test_suite_la_SOURCES = test-cut-test-suite.c
+libtest_cut_test_suite_la_LIBADD  = libcuttest_utils.la
+libtest_cut_loader_la_SOURCES     = test-cut-loader.c
+libtest_cut_loader_la_LIBADD      = libcuttest_utils.la
+libtest_cut_repository_la_SOURCES = test-cut-repository.c
+libtest_cut_repository_la_LIBADD  = libcuttest_utils.la
 
