@@ -188,14 +188,6 @@ cut_test_suite_run (CutTestSuite *suite, CutContext *context)
     return cut_test_suite_run_test_cases(suite, context, tests);
 }
 
-static gint
-compare_test_case_name (gconstpointer a, gconstpointer b)
-{
-    g_return_val_if_fail(CUT_IS_TEST_CASE(a), -1);
-
-    return strcmp(cut_test_case_get_name(CUT_TEST_CASE(a)), (gchar *) b);
-}
-
 static GList *
 collect_test_cases_with_regex (const GList *tests, gchar *pattern)
 {
@@ -221,20 +213,22 @@ collect_test_cases_with_regex (const GList *tests, gchar *pattern)
     return matched_list;
 }
 
-static CutTestCase *
-cut_test_suite_find_test_case (CutTestSuite *suite, const gchar *test_case_name)
+static GList *
+cut_test_suite_collect_test_cases (CutTestSuite *suite, const gchar *name)
 {
-    GList *list, *test_cases;
+    GList *matched_tests = NULL;
+    const GList *tests;
+    gchar *pattern;
 
-    test_cases = (GList*) cut_test_container_get_children(CUT_TEST_CONTAINER(suite));
+    g_return_val_if_fail(CUT_IS_TEST_SUITE(suite), NULL);
 
-    list = g_list_find_custom(test_cases, test_case_name,
-                              (GCompareFunc) compare_test_case_name);
+    tests = cut_test_container_get_children(CUT_TEST_CONTAINER(suite));
 
-    if (!list)
-        return NULL;
+    pattern = cut_utils_create_regex_pattern(name);
+    matched_tests = collect_test_cases_with_regex(tests, pattern);
+    g_free(pattern);
 
-    return CUT_TEST_CASE(list->data);
+    return matched_tests;
 }
 
 gboolean
@@ -261,19 +255,20 @@ cut_test_suite_run_test_case (CutTestSuite *suite, CutContext *context,
     return success;
 }
 
-gboolean
-cut_test_suite_run_test_function (CutTestSuite *suite, CutContext *context,
-                                  const gchar *function_name)
+static gboolean
+cut_test_suite_run_function_in_test_cases (CutTestSuite *suite,
+                                           CutContext *context,
+                                           const gchar *function_name,
+                                           const GList *test_cases)
 {
     gboolean all_success = TRUE;
-    const GList *list, *test_cases;
+    const GList *list;
 
     g_return_val_if_fail(CUT_IS_TEST_SUITE(suite), FALSE);
 
     cut_context_start_test_suite(context, suite);
     g_signal_emit_by_name(CUT_TEST(suite), "start");
 
-    test_cases = cut_test_container_get_children(CUT_TEST_CONTAINER(suite));
     for (list = test_cases; list; list = g_list_next(list)) {
         if (!list->data)
             continue;
@@ -293,20 +288,41 @@ cut_test_suite_run_test_function (CutTestSuite *suite, CutContext *context,
 }
 
 gboolean
+cut_test_suite_run_test_function (CutTestSuite *suite, CutContext *context,
+                                  const gchar *function_name)
+{
+    const GList *test_cases;
+
+    g_return_val_if_fail(CUT_IS_TEST_SUITE(suite), FALSE);
+
+    test_cases = cut_test_container_get_children(CUT_TEST_CONTAINER(suite));
+    return cut_test_suite_run_function_in_test_cases(suite, context, 
+                                              function_name, test_cases);
+}
+
+gboolean
 cut_test_suite_run_test_function_in_test_case (CutTestSuite *suite,
                                                CutContext   *context,
                                                const gchar *function_name,
                                                const gchar *test_case_name)
 {
-    CutTestCase *test_case;
+    GList *test_cases;
+    gboolean success = FALSE;
 
     g_return_val_if_fail(CUT_IS_TEST_SUITE(suite), FALSE);
 
-    test_case = cut_test_suite_find_test_case(suite, test_case_name);
-    if (!test_case)
+    test_cases = cut_test_suite_collect_test_cases(suite, test_case_name);
+    if (!test_cases)
         return FALSE;
 
-    return cut_test_case_run_function(test_case, context, function_name);
+    success = cut_test_suite_run_function_in_test_cases(suite,
+                                                        context,
+                                                        function_name,
+                                                        test_cases);
+
+    g_list_free(test_cases);
+
+    return success;
 }
 
 void
