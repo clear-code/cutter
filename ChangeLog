@@ -1,5 +1,8 @@
 2007-11-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-test-suite.c (setup): used cut_error() not
+	cut_assert(). But not work yet.
+
 	* cutter/, test/: published TestCase not TestContext.
 
 	* cutter/, test/: test run requires context. NOT WORK!

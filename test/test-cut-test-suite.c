@@ -119,7 +119,8 @@ setup (void)
     loader = cut_loader_new(test_path);
     g_free(test_path);
     test_case = cut_loader_load_test_case(loader);
-    cut_assert(test_case);
+    if (!test_case)
+        cut_error("XXX");
     cut_test_suite_add_test_case(test_object, test_case);
 
     test_case = cut_test_case_new("dummy_test_case", NULL, NULL,
