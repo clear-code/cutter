@@ -1,5 +1,7 @@
 2007-11-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-context.c: defined missing properties.
+
 	* cutter/cut-test.c, cutter/cut-test-context.c: moved callback
 	functions from test.
 

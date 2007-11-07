@@ -28,6 +28,7 @@
 #include <glib.h>
 
 #include "cut-test-context.h"
+#include "cut-test-suite.h"
 
 #define CUT_TEST_CONTEXT_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_CONTEXT, CutTestContextPrivate))
 
@@ -63,12 +64,34 @@ static void
 cut_test_context_class_init (CutTestContextClass *klass)
 {
     GObjectClass *gobject_class;
+    GParamSpec *spec;
 
     gobject_class = G_OBJECT_CLASS(klass);
 
     gobject_class->dispose      = dispose;
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
+
+    spec = g_param_spec_object("test-suite",
+                               "Test suite",
+                               "The test suite of the test context",
+                               CUT_TYPE_TEST_SUITE,
+                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+    g_object_class_install_property(gobject_class, PROP_TEST_SUITE, spec);
+
+    spec = g_param_spec_object("test-case",
+                               "Test case",
+                               "The test case of the test context",
+                               CUT_TYPE_TEST_CASE,
+                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+    g_object_class_install_property(gobject_class, PROP_TEST_CASE, spec);
+
+    spec = g_param_spec_object("test",
+                               "Test",
+                               "The test of the test context",
+                               CUT_TYPE_TEST,
+                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+    g_object_class_install_property(gobject_class, PROP_TEST, spec);
 
     g_type_class_add_private(gobject_class, sizeof(CutTestContextPrivate));
 }
