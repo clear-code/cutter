@@ -1,8 +1,10 @@
 2007-11-07  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
-	* test/test-cut-test-suite.c: more assrtions.
+	* test/test-cut-test-suite.c: more assertions.
 
 2007-11-07  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-assertion.h: improved error messages.
 
 	* sample/glib/run-test.sh, sample/glib/Makefile.am,
 	test/run-test.sh, test/Makefile.am: don't run make when invoked

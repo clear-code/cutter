@@ -97,6 +97,7 @@ void  cut_context_set_result                (CutContext *context,
     if (expect != actual) {                     \
         gchar *message;                         \
         message = g_strdup_printf(              \
+            "<" #expect " = " #actual ">\n"     \
             "expected: <%d>\n but was: <%d>",   \
             expect, actual);                    \
         cut_context_set_result(                 \
@@ -121,6 +122,8 @@ void  cut_context_set_result                (CutContext *context,
           _actual <= _expect + _error)) {                   \
         gchar *message;                                     \
         message = g_strdup_printf(                          \
+            "<" #expect "-" #error " <= " #actual           \
+            " <= " #expect "+" #error">\n"                  \
             "expected: <%g +/- %g>\n but was: <%g>",        \
             expect, _error, actual);                        \
         cut_context_set_result(                             \
@@ -142,6 +145,7 @@ void  cut_context_set_result                (CutContext *context,
         (expect && actual &&strcmp(expect, actual))) {  \
         gchar *message;                                 \
         message = g_strdup_printf(                      \
+            "<" #expect " = " #actual ">\n"             \
             "expected: <%s>\n but was: <%s>",           \
             expect, actual);                            \
         cut_context_set_result(                         \
