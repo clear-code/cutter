@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <cutter.h>
 
 void test_abcdefghijklmnopqratuvwzyz_ABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789 (void);
 void test_dummy_function1 (void);

@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <cutter.h>
 
 void test_dummy_function1 (void);
 void test_dummy_function2 (void);

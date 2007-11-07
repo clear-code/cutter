@@ -1,5 +1,7 @@
 2007-11-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/, cutter/: fixed SEGV bugs.
+
 	* cutter/cut-test-case.c (run): unified test run process.
 
 	* cutter/cut-test-context.c: defined missing properties.
