@@ -10,6 +10,13 @@ void test_error(void);
 void test_fail(void);
 void test_pending(void);
 
+static gboolean need_cleanup;
+
+static CutTest *test_object;
+static CutContext *context;
+static CutTestContext *test_context;
+static CutTestResult *test_result;
+
 static void
 dummy_error_test_function (void)
 {
@@ -33,6 +40,54 @@ cb_collect_result (CutTest *test, CutTestResult *result, CutTestResult **output)
 {
     *output = result;
     g_object_ref(*output);
+}
+
+static gboolean
+run(CutTest *test)
+{
+    gboolean success;
+    CutTestContext *original_test_context;
+
+    need_cleanup = TRUE;
+
+    test_object = test;
+
+    context = cut_context_new();
+    cut_context_set_verbose_level(context, CUT_VERBOSE_LEVEL_SILENT);
+
+    test_context = cut_test_context_new(NULL, NULL, test_object);
+    original_test_context = get_current_test_context();
+    set_current_test_context(test_context);
+    success = cut_test_run(test_object, context);
+    set_current_test_context(original_test_context);
+
+    return success;
+}
+
+void
+setup (void)
+{
+    need_cleanup = FALSE;
+    test_object = NULL;
+    context = NULL;
+    test_context = NULL;
+    test_result = NULL;
+}
+
+void
+teardown (void)
+{
+    if (!need_cleanup)
+        return;
+
+    if (test_object)
+        g_object_unref(test_object);
+    if (context)
+        g_object_unref(context);
+    if (test_context)
+        g_object_unref(test_context);
+    if (test_result)
+        g_object_unref(test_result);
 }
 
 void
@@ -60,86 +115,56 @@ test_equal_double (void)
 void
 test_error (void)
 {
-    CutTest *test_object;
-    CutContext *test_context;
-    CutTestResult *result = NULL;
+    CutTest *test;
 
-    test_object = cut_test_new("dummy-error-test", dummy_error_test_function);
-    cut_assert(test_object, "Creating a new CutTest object failed");
+    test = cut_test_new("dummy-error-test", dummy_error_test_function);
+    cut_assert(test, "Creating a new CutTest object failed");
 
-    test_context = cut_context_new();
-    cut_context_set_verbose_level(test_context, CUT_VERBOSE_LEVEL_SILENT);
-
-    g_signal_connect(test_object, "error",
-                     G_CALLBACK(cb_collect_result), &result);
-    cut_assert(cut_test_run(test_object, test_context));
-    g_signal_handlers_disconnect_by_func(test_object,
+    g_signal_connect(test, "error", G_CALLBACK(cb_collect_result),
+                     &test_result);
+    cut_assert(!run(test));
+    g_signal_handlers_disconnect_by_func(test,
                                          G_CALLBACK(cb_collect_result),
-                                         &result);
+                                         &test_result);
 
-    cut_assert(result, "Could not get a CutTestResult object since \"error\" signal was not emmitted.");
+    cut_assert(test_result,
+               "Could not get a CutTestResult object "
+               "since \"error\" signal was not emmitted.");
     cut_assert_equal_int(CUT_TEST_RESULT_ERROR,
-                         cut_test_result_get_status(result));
-    g_object_unref(result);
-
-    g_object_unref(test_object);
-    g_object_unref(test_context);
+                         cut_test_result_get_status(test_result));
 }
 
 void
 test_pending (void)
 {
-    CutTest *test_object;
-    CutContext *test_context;
-    CutTestResult *result = NULL;
+    CutTest *test;
 
-    test_object = cut_test_new("dummy-pending-test", dummy_pending_test_function);
-    cut_assert(test_object, "Creating a new CutTest object failed");
+    test = cut_test_new("dummy-pending-test", dummy_pending_test_function);
+    cut_assert(test, "Creating a new CutTest object failed");
 
-    test_context = cut_context_new();
-    cut_context_set_verbose_level(test_context, CUT_VERBOSE_LEVEL_SILENT);
-
-    g_signal_connect(test_object, "pending",
-                     G_CALLBACK(cb_collect_result), &result);
-    cut_assert(!cut_test_run(test_object, test_context), "cut_pending() did not return FALSE!");
-    g_signal_handlers_disconnect_by_func(test_object,
+    g_signal_connect(test, "pending", G_CALLBACK(cb_collect_result),
+                     &test_result);
+    cut_assert(!run(test), "cut_pending() did not return FALSE!");
+    g_signal_handlers_disconnect_by_func(test,
                                          G_CALLBACK(cb_collect_result),
-                                         &result);
+                                         &test_result);
 
-    cut_assert(result, "Could not get a CutTestResult object since \"pending\" signal was not emmitted.");
+    cut_assert(test_result,
+               "Could not get a CutTestResult object "
+               "since \"pending\" signal was not emmitted.");
     cut_assert_equal_int(CUT_TEST_RESULT_PENDING,
-                         cut_test_result_get_status(result));
-    g_object_unref(result);
-
-    g_object_unref(test_object);
-    g_object_unref(test_context);
+                         cut_test_result_get_status(test_result));
 }
 
 void
 test_fail (void)
 {
-    CutTest *test_object;
-    CutContext *context;
-    CutTestContext *original_test_context, *test_context;
-    gboolean success;
+    CutTest *test;
 
-    test_object = cut_test_new("dummy-fail-test", dummy_fail_test_function);
-    cut_assert(test_object);
+    test = cut_test_new("dummy-fail-test", dummy_fail_test_function);
+    cut_assert(test);
 
-    context = cut_context_new();
-    cut_context_set_verbose_level(context, CUT_VERBOSE_LEVEL_SILENT);
-
-    test_context = cut_test_context_new(NULL, NULL, test_object);
-    original_test_context = get_current_test_context();
-    set_current_test_context(test_context);
-    success = cut_test_run(test_object, context);
-    set_current_test_context(original_test_context);
-
-    cut_assert(!success);
-
-    g_object_unref(test_context);
-    g_object_unref(context);
-    g_object_unref(test_object);
+    cut_assert(!run(test));
 }
 
 

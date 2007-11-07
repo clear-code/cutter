@@ -1,6 +1,6 @@
 2007-11-07  Kouhei Sutou  <kou@cozmixng.org>
 
-	* test/test-cut-assertion.c (test_fail): fixed.
+	* test/test-cut-assertion.c: worked again.
 
 	* cutter/cut-context.c: fixed free function.
 
