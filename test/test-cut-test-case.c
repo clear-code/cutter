@@ -1,6 +1,5 @@
 #include "cutter.h"
 #include "cut-test-case.h"
-#include "cut-context-private.h"
 
 void test_setup(void);
 void test_teardown(void);

@@ -1,6 +1,5 @@
 #include "cutter.h"
 #include "cut-test-result.h"
-#include "cut-context-private.h"
 
 void test_get_status(void);
 

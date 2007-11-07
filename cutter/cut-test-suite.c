@@ -149,6 +149,8 @@ cut_test_suite_run (CutTestSuite *suite, CutContext *context)
 
     cut_context_start_test_suite(context, suite);
 
+    g_signal_emit_by_name(CUT_TEST(suite), "start");
+
     container = CUT_TEST_CONTAINER(suite);
     tests = cut_test_container_get_children(container);
     for (list = tests; list; list = g_list_next(list)) {
@@ -171,6 +173,8 @@ cut_test_suite_run (CutTestSuite *suite, CutContext *context)
     } else {
         g_signal_emit_by_name(CUT_TEST(suite), "failure");
     }
+
+    g_signal_emit_by_name(CUT_TEST(suite), "complete");
 
     return all_success;
 }

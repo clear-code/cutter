@@ -31,7 +31,6 @@
 
 #include "cut-test.h"
 #include "cut-context.h"
-#include "cut-context-private.h"
 
 #define CUT_TEST_CASE_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_CASE, CutTestCasePrivate))
 
@@ -347,6 +346,8 @@ cut_test_case_run (CutTestCase *test_case, CutContext *context)
 
     cut_context_start_test_case(context, test_case);
 
+    g_signal_emit_by_name(CUT_TEST(test_case), "start");
+
     priv = CUT_TEST_CASE_GET_PRIVATE(test_case);
     container = CUT_TEST_CONTAINER(test_case);
     tests = cut_test_container_get_children(container);
@@ -367,6 +368,8 @@ cut_test_case_run (CutTestCase *test_case, CutContext *context)
     } else {
         g_signal_emit_by_name(CUT_TEST(test_case), "failure");
     }
+
+    g_signal_emit_by_name(CUT_TEST(test_case), "complete");
 
     return all_success;
 }

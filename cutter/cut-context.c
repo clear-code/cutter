@@ -28,7 +28,6 @@
 #include <glib.h>
 
 #include "cut-context.h"
-#include "cut-context-private.h"
 #include "cut-output.h"
 
 #define CUT_CONTEXT_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_CONTEXT, CutContextPrivate))
@@ -418,12 +417,6 @@ cut_context_start_test_suite (CutContext *context, CutTestSuite *test_suite)
                      G_CALLBACK(cb_start_test_suite), context);
     g_signal_connect(test_suite, "complete",
                      G_CALLBACK(cb_complete_test_suite), context);
-}
-
-CutTest *
-cut_context_get_current_test (CutContext *context)
-{
-    return NULL;
 }
 
 /*

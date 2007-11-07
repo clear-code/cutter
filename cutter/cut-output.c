@@ -429,10 +429,10 @@ cut_output_on_complete_test_suite (CutOutput *output, CutTestSuite *test_suite,
 /*         } */
 /*     } */
 
-/*     g_print("\n\n"); */
+    g_print("\n\n");
     g_print("Finished in %g seconds",
             cut_test_get_elapsed(CUT_TEST(test_suite)));
-    g_print("\n\n");
+    /* g_print("\n\n"); */
 
 /*     assertions = cut_test_get_n_assertions(CUT_TEST(test_suite)); */
 /*     failures = cut_test_get_n_failures(CUT_TEST(test_suite)); */

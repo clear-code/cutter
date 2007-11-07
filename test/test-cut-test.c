@@ -1,6 +1,5 @@
 #include "cutter.h"
 #include "cut-test.h"
-#include "cut-context-private.h"
 
 void test_n_tests(void);
 void test_n_assertions(void);

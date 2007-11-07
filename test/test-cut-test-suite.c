@@ -2,7 +2,6 @@
 #include "cut-test-case.h"
 #include "cut-test-suite.h"
 #include "cut-loader.h"
-#include "cut-context-private.h"
 
 #include "cuttest-utils.h"
 

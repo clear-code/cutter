@@ -1,6 +1,6 @@
 #include "cutter.h"
+#include "cut-test.h"
 #include "cut-test-result.h"
-#include "cut-context-private.h"
 
 void test_equal_int(void);
 void test_equal_string(void);
