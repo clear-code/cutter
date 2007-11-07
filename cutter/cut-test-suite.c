@@ -148,7 +148,6 @@ cut_test_suite_run (CutTestSuite *suite, CutContext *context)
     gboolean all_success = TRUE;
 
     cut_context_start_test_suite(context, suite);
-
     g_signal_emit_by_name(CUT_TEST(suite), "start");
 
     container = CUT_TEST_CONTAINER(suite);
@@ -222,24 +221,31 @@ gboolean
 cut_test_suite_run_test_function (CutTestSuite *suite, CutContext *context,
                                   const gchar *function_name)
 {
+    gboolean all_success = FALSE;
     const GList *list, *test_cases;
 
     g_return_val_if_fail(CUT_IS_TEST_SUITE(suite), FALSE);
 
-    test_cases = cut_test_container_get_children(CUT_TEST_CONTAINER(suite));
+    cut_context_start_test_suite(context, suite);
+    g_signal_emit_by_name(CUT_TEST(suite), "start");
 
+    test_cases = cut_test_container_get_children(CUT_TEST_CONTAINER(suite));
     for (list = test_cases; list; list = g_list_next(list)) {
         if (!list->data)
             continue;
         if (CUT_IS_TEST_CASE(list->data)) {
             CutTestCase *test_case = CUT_TEST_CASE(list->data);
-            if (cut_test_case_has_function(test_case, function_name))
-                return cut_test_case_run_function(test_case, context,
-                                                  function_name);
+            if (cut_test_case_has_function(test_case, function_name)) {
+                if (!cut_test_case_run_function(test_case,
+                                                context,
+                                                function_name))
+                    all_success = FALSE;
+            }
         }
     }
+    g_signal_emit_by_name(CUT_TEST(suite), "complete");
 
-    return FALSE;
+    return all_success;
 }
 
 gboolean
