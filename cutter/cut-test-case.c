@@ -369,7 +369,6 @@ gboolean
 cut_test_case_run_function (CutTestCase *test_case, CutContext *context,
                             const gchar *name)
 {
-    CutTestCasePrivate *priv;
     const GList *tests;
     GList *matched_tests;
     gchar *pattern;
@@ -377,7 +376,6 @@ cut_test_case_run_function (CutTestCase *test_case, CutContext *context,
 
     g_return_val_if_fail(CUT_IS_TEST_CASE(test_case), FALSE);
 
-    priv = CUT_TEST_CASE_GET_PRIVATE(test_case);
     tests = cut_test_container_get_children(CUT_TEST_CONTAINER(test_case));
 
     if (g_str_has_prefix(name, "/") && g_str_has_suffix(name, "/")) {
@@ -399,10 +397,8 @@ gboolean
 cut_test_case_run (CutTestCase *test_case, CutContext *context)
 {
     CutTestContainer *container;
-    CutTestCasePrivate *priv;
     const GList *tests;
 
-    priv = CUT_TEST_CASE_GET_PRIVATE(test_case);
     container = CUT_TEST_CONTAINER(test_case);
     tests = cut_test_container_get_children(container);
 
