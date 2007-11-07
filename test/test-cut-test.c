@@ -8,7 +8,6 @@ void test_get_function_name(void);
 void test_increment_assertion_count(void);
 void test_run(void);
 void test_result(void);
-void test_is_success(void);
 
 static CutContext *test_context;
 static CutTest *test_object;
@@ -144,22 +143,6 @@ test_result (void)
     cut_assert(result);
     cut_assert_equal_int(CUT_TEST_RESULT_PENDING,
                          cut_test_result_get_status(result));
-}
-
-void
-test_is_success (void)
-{
-    CutTest *test;
-
-    test = cut_test_new("dummy-success-test", dummy_success_test);
-    cut_assert(run_the_test(test));
-    cut_assert(cut_test_is_success(test));
-    g_object_unref(test);
-
-    test = cut_test_new("dummy-failure-test", dummy_failure_test);
-    cut_assert(!run_the_test(test));
-    cut_assert(!cut_test_is_success(test));
-    g_object_unref(test);
 }
 
 /*
