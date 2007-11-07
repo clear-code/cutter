@@ -1,5 +1,7 @@
 2007-11-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-test-case.c: suppressed warnings.
+
 	* test/test-cut-test.c: suppress warnings.
 
 	* test/loader_test_dir/dummy-test-functions.c: suppress warnings.
