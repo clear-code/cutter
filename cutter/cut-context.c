@@ -95,7 +95,7 @@ dispose (GObject *object)
     CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(object);
 
     if (priv->results) {
-        g_list_foreach(priv->results, (GFunc)g_free, NULL);
+        g_list_foreach(priv->results, (GFunc)g_object_unref, NULL);
         g_list_free(priv->results);
         priv->results = NULL;
     }
