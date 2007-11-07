@@ -1,5 +1,8 @@
 2007-11-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test.c, cutter/cut-test-context.c: moved callback
+	functions from test.
+
 	* cutter/, test/: introduced CutterTestContext. not work yet.
 
 	* test/test-cut-test-suite.c (setup): used cut_error() not

@@ -271,43 +271,6 @@ cut_test_get_elapsed (CutTest *test)
     return CUT_TEST_GET_CLASS(test)->get_elapsed(test);
 }
 
-void
-cut_test_pass_assertion (CutTest *test)
-{
-    g_signal_emit_by_name(test, "pass-assertion");
-}
-
-void
-cut_test_register_result (CutTest *test,
-                          CutTestResultStatus status,
-                          const gchar *result_message,
-                          const gchar *function_name,
-                          const gchar *filename,
-                          guint line)
-{
-    CutTestResult *result;
-    const gchar *status_signal_name = NULL;
-
-    result = cut_test_result_new(status, result_message, function_name,
-                                 filename, line);
-    switch (status) {
-      case CUT_TEST_RESULT_SUCCESS:
-        g_assert("must not happen");
-        break;
-      case CUT_TEST_RESULT_FAILURE:
-        status_signal_name = "failure";
-        break;
-      case CUT_TEST_RESULT_ERROR:
-        status_signal_name = "error";
-        break;
-      case CUT_TEST_RESULT_PENDING:
-        status_signal_name = "pending";
-        break;
-    }
-    g_signal_emit_by_name(test, status_signal_name, result);
-    g_object_unref(result);
-}
-
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */
