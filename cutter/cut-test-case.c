@@ -282,14 +282,43 @@ compare_function_name (gconstpointer a, gconstpointer b)
     return strcmp(cut_test_get_function_name(CUT_TEST(a)), (gchar *) b);
 }
 
+static gboolean
+run (CutTestCase *test_case, CutTest *test, CutContext *context)
+{
+    CutTestCasePrivate *priv;
+    CutTestContext *test_context;
+    gboolean success = TRUE;
+
+    priv = CUT_TEST_CASE_GET_PRIVATE(test_case);
+
+    test_context = cut_test_context_new(NULL, test_case, NULL);
+    priv->set_current_test_context(test_context);
+
+    g_signal_emit_by_name(test_case, "start-test", test);
+    if (priv->setup)
+        priv->setup();
+
+    cut_test_context_set_test(test_context, test);
+    if (/*!cut_test_is_success(test) || FIXME*/!cut_test_run(test, context))
+        success = FALSE;
+    cut_test_context_set_test(test_context, NULL);
+
+    if (priv->teardown)
+        priv->teardown();
+    g_signal_emit_by_name(test_case, "complete-test", test);
+
+    priv->set_current_test_context(NULL);
+    g_object_unref(test_context);
+
+    return success;
+}
+
 gboolean
 cut_test_case_run_function (CutTestCase *test_case, CutContext *context,
                             const gchar *name)
 {
     CutTestCasePrivate *priv;
-    CutTest *test;
     const GList *list, *tests;
-    gboolean success;
 
     g_return_val_if_fail(CUT_IS_TEST_CASE(test_case), FALSE);
 
@@ -301,25 +330,7 @@ cut_test_case_run_function (CutTestCase *test_case, CutContext *context,
     if (!list)
         return FALSE;
 
-    test = CUT_TEST(list->data);
-    cut_context_start_test(context, test);
-
-    /* priv->set_current_test_context(test_conext); */
-    if (priv->setup)
-        priv->setup();
-
-    success = cut_test_run(test, context);
-/*     if (!success) { */
-/*         cut_context_output_error_log(context); */
-/*     } else { */
-/*         cut_context_output_normal_log(context); */
-/*     } */
-
-    if (priv->teardown)
-        priv->teardown();
-    priv->set_current_test_context(NULL);
-
-    return success;
+    return run(test_case, CUT_TEST(list->data), context);
 }
 
 gboolean
@@ -340,28 +351,8 @@ cut_test_case_run (CutTestCase *test_case, CutContext *context)
             continue;
 
         if (CUT_IS_TEST(list->data)) {
-            CutTestContext *test_context;
-            CutTest *test;
-
-            test = CUT_TEST(list->data);
-            test_context = cut_test_context_new(NULL, test_case, NULL);
-            priv->set_current_test_context(test_context);
-
-            g_signal_emit_by_name(test_case, "start-test", test);
-            if (priv->setup)
-                priv->setup();
-
-            cut_test_context_set_test(test_context, test);
-            if (/*!cut_test_is_success(test) || FIXME*/!cut_test_run(test, context))
+            if (!run(test_case, CUT_TEST(list->data), context))
                 all_success = FALSE;
-            cut_test_context_set_test(test_context, NULL);
-
-            if (priv->teardown)
-                priv->teardown();
-            g_signal_emit_by_name(test_case, "complete-test", test);
-
-            priv->set_current_test_context(NULL);
-            g_object_unref(test_context);
         } else {
             g_warning("This object is not CutTest object");
         }
