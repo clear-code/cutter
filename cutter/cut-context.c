@@ -262,6 +262,13 @@ static void
 cb_complete (CutTest *test, gpointer data)
 {
     TestCallBackInfo *info = data;
+    CutContext *context;
+    CutContextPrivate *priv;
+
+    context = info->context;
+    priv = CUT_CONTEXT_GET_PRIVATE(context);
+    if (!info->result && priv->output)
+        cut_output_on_success(priv->output, test);
 
     g_signal_handlers_disconnect_by_func(test,
                                          G_CALLBACK(cb_pass_assertion),
