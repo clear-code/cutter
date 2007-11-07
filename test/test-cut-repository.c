@@ -29,9 +29,9 @@ teardown (void)
 }
 
 static const gchar *expected_test_case_name[] = {
-"test_case1",
-"test_case2",
-"test_case3"
+"repository_test_case1",
+"repository_test_case2",
+"repository_test_case3"
 };
 
 static gint
