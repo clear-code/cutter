@@ -51,13 +51,16 @@ struct _CutTestResultClass
 GType          cut_test_result_get_type   (void) G_GNUC_CONST;
 
 CutTestResult *cut_test_result_new        (CutTestResultStatus status,
-                                           const gchar *result_message,
+                                           const gchar *user_message,
+                                           const gchar *system_message,
                                            const gchar *function_name,
                                            const gchar *filename,
                                            guint line);
 
 CutTestResultStatus  cut_test_result_get_status        (CutTestResult *result);
 const gchar         *cut_test_result_get_message       (CutTestResult *result);
+const gchar         *cut_test_result_get_user_message  (CutTestResult *result);
+const gchar         *cut_test_result_get_system_message(CutTestResult *result);
 const gchar         *cut_test_result_get_function_name (CutTestResult *result);
 const gchar         *cut_test_result_get_filename      (CutTestResult *result);
 guint                cut_test_result_get_line          (CutTestResult *result);

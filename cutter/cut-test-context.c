@@ -267,7 +267,7 @@ cut_test_context_register_result (CutTestContext *context,
     CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
     CutTestResult *result;
     const gchar *status_signal_name = NULL;
-    gchar *result_message = NULL;
+    gchar *user_message = NULL;
     const gchar *system_message, *format;
     va_list args;
 
@@ -277,25 +277,13 @@ cut_test_context_register_result (CutTestContext *context,
     va_start(args, message);
     format = va_arg(args, gchar *);
     if (format) {
-        result_message = g_strdup_vprintf(format, args);
+        user_message = g_strdup_vprintf(format, args);
     }
 
-    if (system_message) {
-        if (result_message) {
-            gchar *message_with_system_message;
-            message_with_system_message = g_strconcat(result_message, "\n",
-                                                      system_message,
-                                                      NULL);
-            g_free(result_message);
-            result_message = message_with_system_message;
-        } else {
-            result_message = g_strdup(system_message);
-        }
-    }
-
-    result = cut_test_result_new(status, result_message,
+    result = cut_test_result_new(status, user_message, system_message,
                                  function_name, filename, line);
-    g_free(result_message);
+    if (user_message)
+        g_free(user_message);
     va_end(args);
 
     switch (status) {

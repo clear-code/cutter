@@ -37,6 +37,8 @@ struct _CutTestResultPrivate
 {
     CutTestResultStatus status;
     gchar *message;
+    gchar *user_message;
+    gchar *system_message;
     gchar *function_name;
     gchar *filename;
     guint line;
@@ -46,7 +48,8 @@ enum
 {
     PROP_0,
     PROP_STATUS,
-    PROP_MESSAGE,
+    PROP_USER_MESSAGE,
+    PROP_SYSTEM_MESSAGE,
     PROP_FUNCTION_NAME,
     PROP_FILENAME,
     PROP_LINE,
@@ -85,12 +88,19 @@ cut_test_result_class_init (CutTestResultClass *klass)
                              G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class, PROP_STATUS, spec);
 
-    spec = g_param_spec_string("message",
-                               "Message",
-                               "The message of the result",
+    spec = g_param_spec_string("user-message",
+                               "User Message",
+                               "The message from user of the result",
                                NULL,
                                G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
-    g_object_class_install_property(gobject_class, PROP_MESSAGE, spec);
+    g_object_class_install_property(gobject_class, PROP_USER_MESSAGE, spec);
+
+    spec = g_param_spec_string("system-message",
+                               "System Message",
+                               "The message from system of the result",
+                               NULL,
+                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+    g_object_class_install_property(gobject_class, PROP_SYSTEM_MESSAGE, spec);
 
     spec = g_param_spec_string("function-name",
                                "Function name",
@@ -123,6 +133,8 @@ cut_test_result_init (CutTestResult *result)
 
     priv->status = CUT_TEST_RESULT_SUCCESS;
     priv->message = NULL;
+    priv->user_message = NULL;
+    priv->system_message = NULL;
     priv->function_name = NULL;
     priv->filename = NULL;
     priv->line = 0;
@@ -136,6 +148,16 @@ dispose (GObject *object)
     if (priv->message) {
         g_free(priv->message);
         priv->message = NULL;
+    }
+
+    if (priv->user_message) {
+        g_free(priv->user_message);
+        priv->user_message = NULL;
+    }
+
+    if (priv->system_message) {
+        g_free(priv->system_message);
+        priv->system_message = NULL;
     }
 
     if (priv->function_name) {
@@ -163,10 +185,20 @@ set_property (GObject      *object,
       case PROP_STATUS:
         priv->status = g_value_get_enum(value);
         break;
-      case PROP_MESSAGE:
+      case PROP_USER_MESSAGE:
+        if (priv->user_message)
+            g_free(priv->user_message);
+        priv->user_message = g_value_dup_string(value);
         if (priv->message)
             g_free(priv->message);
-        priv->message = g_value_dup_string(value);
+        priv->message = NULL;
+      case PROP_SYSTEM_MESSAGE:
+        if (priv->system_message)
+            g_free(priv->system_message);
+        priv->system_message = g_value_dup_string(value);
+        if (priv->message)
+            g_free(priv->message);
+        priv->message = NULL;
       case PROP_FUNCTION_NAME:
         if (priv->function_name)
             g_free(priv->function_name);
@@ -197,8 +229,11 @@ get_property (GObject    *object,
       case PROP_STATUS:
         g_value_set_enum(value, priv->status);
         break;
-      case PROP_MESSAGE:
-        g_value_set_string(value, priv->message);
+      case PROP_USER_MESSAGE:
+        g_value_set_string(value, priv->user_message);
+        break;
+      case PROP_SYSTEM_MESSAGE:
+        g_value_set_string(value, priv->system_message);
         break;
       case PROP_FUNCTION_NAME:
         g_value_set_string(value, priv->function_name);
@@ -217,14 +252,16 @@ get_property (GObject    *object,
 
 CutTestResult *
 cut_test_result_new (CutTestResultStatus status,
-                     const gchar *result_message,
+                     const gchar *user_message,
+                     const gchar *system_message,
                      const gchar *function_name,
                      const gchar *filename,
                      guint line)
 {
     return g_object_new(CUT_TYPE_TEST_RESULT,
                         "status", status,
-                        "message", result_message,
+                        "user-message", user_message,
+                        "system-message", system_message,
                         "function-name", function_name,
                         "filename", filename,
                         "line", line,
@@ -240,7 +277,33 @@ cut_test_result_get_status (CutTestResult *result)
 const gchar *
 cut_test_result_get_message (CutTestResult *result)
 {
-    return CUT_TEST_RESULT_GET_PRIVATE(result)->message;
+    CutTestResultPrivate *priv = CUT_TEST_RESULT_GET_PRIVATE(result);
+
+    if (!priv->message && (priv->user_message || priv->system_message)) {
+        if (priv->user_message && priv->system_message) {
+            priv->message = g_strdup_printf("%s\n%s",
+                                            priv->user_message,
+                                            priv->system_message);
+        } else {
+            priv->message = g_strdup(priv->user_message ?
+                                     priv->user_message :
+                                     priv->system_message);
+        }
+    }
+
+    return priv->message;
+}
+
+const gchar *
+cut_test_result_get_user_message (CutTestResult *result)
+{
+    return CUT_TEST_RESULT_GET_PRIVATE(result)->user_message;
+}
+
+const gchar *
+cut_test_result_get_system_message (CutTestResult *result)
+{
+    return CUT_TEST_RESULT_GET_PRIVATE(result)->system_message;
 }
 
 const gchar *

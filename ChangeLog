@@ -1,3 +1,9 @@
+2007-11-07  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-test-result.[ch]: added user_message and system_message.
+	* cutter/cut-test-context.c: followed the above changes.
+	* test/test-cut-test-result.c: added tests for message.
+
 2007-11-07  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-test-case.c: Implement regex match for
