@@ -30,8 +30,6 @@
 #include "cut-test-suite.h"
 #include "cut-repository.h"
 
-GPrivate *cut_context_private = NULL;
-
 static gchar *verbose_level = NULL;
 static gchar *source_directory = NULL;
 static gboolean use_color = FALSE;
@@ -78,12 +76,6 @@ static const GOptionEntry option_entries[] =
      "Specify tests", "TEST_NAME1,TEST_NAME2,..."},
     {NULL}
 };
-
-static void
-cut_context_private_cleanup (gpointer data)
-{
-
-}
 
 static void
 show_no_argument_error (GOptionContext *option_context)
@@ -162,8 +154,6 @@ main (int argc, char *argv[])
     g_thread_init(NULL);
 
     context = cut_context_new();
-    cut_context_private = g_private_new(cut_context_private_cleanup);
-    g_private_set(cut_context_private, context);
 
     cut_context_set_verbose_level_by_name(context, verbose_level);
     if (source_directory) {

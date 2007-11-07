@@ -1,5 +1,7 @@
 2007-11-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-main.c: removed needless codes.
+
 	* cutter/cut-main.c: detected color mode automatically.
 
 	* test/test-cut-assertion.c (test_assert_message): used
