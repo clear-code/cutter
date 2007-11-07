@@ -73,17 +73,6 @@ test_n_assertions (void)
 }
 
 void
-test_increment_assertion_count (void)
-{
-    cut_test_increment_assertion_count(test_object);
-    cut_test_increment_assertion_count(test_object);
-    cut_test_increment_assertion_count(test_object);
-    cut_test_increment_assertion_count(test_object);
-    cut_test_increment_assertion_count(test_object);
-    cut_assert_equal_int(5, cut_test_get_n_assertions(test_object));
-}
-
-void
 test_get_function_name (void)
 {
     cut_assert_equal_string("dummy-test", cut_test_get_function_name(test_object));
