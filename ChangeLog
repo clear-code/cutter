@@ -1,5 +1,8 @@
 2007-11-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test.c: checked whether the test was successfully
+	finished or not.
+
 	* cutter/cut-assertion.h: improved message.
 
 	* cutter/cut-output.c: improved format.

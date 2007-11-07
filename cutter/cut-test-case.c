@@ -373,12 +373,6 @@ cut_test_case_run (CutTestCase *test_case, CutContext *context)
         }
     }
 
-    if (all_success) {
-        g_signal_emit_by_name(CUT_TEST(test_case), "success");
-    } else {
-        g_signal_emit_by_name(CUT_TEST(test_case), "failure");
-    }
-
     g_signal_emit_by_name(CUT_TEST(test_case), "complete");
 
     return all_success;

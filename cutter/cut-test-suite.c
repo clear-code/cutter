@@ -221,7 +221,7 @@ gboolean
 cut_test_suite_run_test_function (CutTestSuite *suite, CutContext *context,
                                   const gchar *function_name)
 {
-    gboolean all_success = FALSE;
+    gboolean all_success = TRUE;
     const GList *list, *test_cases;
 
     g_return_val_if_fail(CUT_IS_TEST_SUITE(suite), FALSE);

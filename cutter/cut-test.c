@@ -241,11 +241,18 @@ cut_test_new (const gchar *function_name, CutTestFunction function)
                         NULL);
 }
 
+static void
+cb_check_success (CutTest *test, CutTestResult *result, gpointer data)
+{
+    gboolean *success = data;
+    *success = FALSE;
+}
+
 gboolean
 cut_test_run (CutTest *test, CutContext *context)
 {
     CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(test);
-    gboolean success;
+    gboolean success = TRUE;
 
     if (!priv->test_function)
         return FALSE;
@@ -254,9 +261,14 @@ cut_test_run (CutTest *test, CutContext *context)
 
     g_signal_emit_by_name(test, "start");
 
+    g_signal_connect(test, "failure", G_CALLBACK(cb_check_success), &success);
+    g_signal_connect(test, "error", G_CALLBACK(cb_check_success), &success);
+    g_signal_connect(test, "pending", G_CALLBACK(cb_check_success), &success);
     g_timer_start(priv->timer);
     priv->test_function();
     g_timer_stop(priv->timer);
+    g_signal_handlers_disconnect_by_func(test, G_CALLBACK(cb_check_success),
+                                         &success);
 
     g_signal_emit_by_name(test, "complete");
 
