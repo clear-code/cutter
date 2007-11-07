@@ -1,5 +1,8 @@
 2007-11-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertion.h (cut_assert_operator): added.
+	* cutter/cut-assertion.h: cleanup.
+
 	* cutter/cut-main.c: removed needless codes.
 
 	* cutter/cut-main.c: detected color mode automatically.
