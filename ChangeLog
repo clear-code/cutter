@@ -1,5 +1,9 @@
 2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* test/run-tests.sh: Added --name option.
+
+2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* test/test-cut-test-suite.c: enable all tests.
 
 2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
