@@ -1,5 +1,7 @@
 2007-11-08  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertions.h: cleanup.
+
 	* cutter/: cut-assertion.h -> cut-assertions.h.
 
 2007-11-07  Kouhei Sutou  <kou@cozmixng.org>
