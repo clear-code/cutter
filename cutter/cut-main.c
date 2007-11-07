@@ -99,7 +99,7 @@ run_tests (CutTestSuite *suite, CutContext *context)
     if (test_names && test_case_names) {
         gint i, j;
         for (i = 0; test_case_names[i] != NULL; i++) {
-            for (j = 0; test_names[i] != NULL; j++) {
+            for (j = 0; test_names[j] != NULL; j++) {
                 success = cut_test_suite_run_test_function_in_test_case(suite,
                                                                         context,
                                                                         test_case_names[i],
