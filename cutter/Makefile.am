@@ -49,6 +49,8 @@ cutter_SOURCES =			\
 		cut-output.c		\
 		cut-test-result.c	\
 		cut-test-context.c	\
+		cut-utils.h		\
+		cut-utils.c		\
 		cut-main.c
 
 cutter_LDADD =				\
