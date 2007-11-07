@@ -301,10 +301,13 @@ run (CutTestCase *test_case, CutTest *test, CutContext *context)
     if (priv->setup)
         priv->setup();
 
-    cut_test_context_set_test(test_context, test);
-    if (/*!cut_test_is_success(test) || FIXME*/!cut_test_run(test, context))
+    if (cut_test_context_is_failed(test_context)) {
         success = FALSE;
-    cut_test_context_set_test(test_context, NULL);
+    } else {
+        cut_test_context_set_test(test_context, test);
+        success = cut_test_run(test, context);
+        cut_test_context_set_test(test_context, NULL);
+    }
 
     if (priv->teardown)
         priv->teardown();
@@ -322,6 +325,7 @@ cut_test_case_run_function (CutTestCase *test_case, CutContext *context,
 {
     CutTestCasePrivate *priv;
     const GList *list, *tests;
+    gboolean success;
 
     g_return_val_if_fail(CUT_IS_TEST_CASE(test_case), FALSE);
 
@@ -333,7 +337,12 @@ cut_test_case_run_function (CutTestCase *test_case, CutContext *context,
     if (!list)
         return FALSE;
 
-    return run(test_case, CUT_TEST(list->data), context);
+    cut_context_start_test_case(context, test_case);
+    g_signal_emit_by_name(CUT_TEST(test_case), "start");
+    success = run(test_case, CUT_TEST(list->data), context);
+    g_signal_emit_by_name(CUT_TEST(test_case), "complete");
+
+    return success;
 }
 
 gboolean
@@ -345,7 +354,6 @@ cut_test_case_run (CutTestCase *test_case, CutContext *context)
     gboolean all_success = TRUE;
 
     cut_context_start_test_case(context, test_case);
-
     g_signal_emit_by_name(CUT_TEST(test_case), "start");
 
     priv = CUT_TEST_CASE_GET_PRIVATE(test_case);
