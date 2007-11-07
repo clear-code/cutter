@@ -31,6 +31,7 @@
 
 #include "cut-test.h"
 #include "cut-context.h"
+#include "cut-utils.h"
 
 #define CUT_TEST_CASE_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_CASE, CutTestCasePrivate))
 
@@ -338,23 +339,6 @@ collect_tests_with_regex (const GList *tests, gchar *pattern)
     return matched_list;
 }
 
-static gchar *
-create_regex_pattern (const gchar *string)
-{
-    gchar *pattern;
-
-    if (!string) {
-        pattern = g_strdup(".*");
-    } else if (strlen(string) > 1 &&
-        g_str_has_prefix(string, "/") && g_str_has_suffix(string, "/")) {
-        pattern = g_strndup(string + 1, strlen(string) - 2);  
-    } else {
-        pattern = g_strdup_printf("^%s$", string);
-    }
-
-    return pattern;
-}
-
 static GList *
 cut_test_case_collect_tests (CutTestCase *test_case, const gchar *name)
 {
@@ -366,7 +350,7 @@ cut_test_case_collect_tests (CutTestCase *test_case, const gchar *name)
 
     tests = cut_test_container_get_children(CUT_TEST_CONTAINER(test_case));
 
-    pattern = create_regex_pattern(name);
+    pattern = cut_utils_create_regex_pattern(name);
     matched_tests = collect_tests_with_regex(tests, pattern);
     g_free(pattern);
 
