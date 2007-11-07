@@ -38,6 +38,7 @@ struct _CutTestContextPrivate
     CutTestSuite *test_suite;
     CutTestCase *test_case;
     CutTest *test;
+    gboolean failed;
 };
 
 enum
@@ -104,6 +105,8 @@ cut_test_context_init (CutTestContext *context)
     priv->test_suite = NULL;
     priv->test_case = NULL;
     priv->test = NULL;
+
+    priv->failed = FALSE;
 }
 
 static void
@@ -268,6 +271,8 @@ cut_test_context_register_result (CutTestContext *context,
     const gchar *system_message, *format;
     va_list args;
 
+    priv->failed = TRUE;
+
     system_message = message;
     va_start(args, message);
     format = va_arg(args, gchar *);
@@ -315,6 +320,12 @@ cut_test_context_register_result (CutTestContext *context,
     }
 
     g_object_unref(result);
+}
+
+gboolean
+cut_test_context_is_failed (CutTestContext *context)
+{
+    return CUT_TEST_CONTEXT_GET_PRIVATE(context)->failed;
 }
 
 /*

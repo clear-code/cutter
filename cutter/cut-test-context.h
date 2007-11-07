@@ -67,6 +67,8 @@ CutTest      *cut_test_context_get_test       (CutTestContext *context);
 void          cut_test_context_set_test       (CutTestContext *context,
                                                CutTest        *test);
 
+gboolean      cut_test_context_is_failed      (CutTestContext *context);
+
 G_END_DECLS
 
 #endif /* __CUT_TEST_CONTEXT_H__ */

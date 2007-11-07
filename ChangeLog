@@ -1,5 +1,7 @@
 2007-11-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-context.[ch]: added cut_test_context_is_failed().
+
 	* cutter/cut-test-case.c: emitted signals when invoking with -n option.
 
 	* cutter/cut-test-suite.c: emitted signals when invoking with -n option.
