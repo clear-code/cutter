@@ -1,5 +1,6 @@
 #include "cutter.h"
 #include "cut-test.h"
+#include "cut-context.h"
 
 void test_get_function_name(void);
 void test_increment_assertion_count(void);
@@ -16,20 +17,6 @@ dummy_test_function (void)
     cut_assert_equal_int(1, 1);
     cut_assert_equal_int(1, 1);
     run_test_flag = TRUE;
-}
-
-static void
-dummy_success_test (void)
-{
-}
-
-static void
-dummy_failure_test (void)
-{
-    cut_fail("This test should be failed");
-    cut_fail("This test should be failed");
-    cut_fail("This test should be failed");
-    cut_fail("This test should be failed");
 }
 
 void
@@ -57,7 +44,8 @@ run_the_test (CutTest *test)
 void
 test_get_function_name (void)
 {
-    cut_assert_equal_string("dummy-test", cut_test_get_function_name(test_object));
+    cut_assert_equal_string("dummy-test",
+                            cut_test_get_function_name(test_object));
 }
 
 void
