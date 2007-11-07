@@ -151,6 +151,7 @@ test_run_this_function (void)
 void
 test_run_functions_with_regex (void)
 {
+    cut_pending("NOT IMPLEMENTED");
     cut_assert(cut_test_case_run_function(test_object, test_context, "/^dummy/"));
 
     cut_assert_equal_int(0, n_run_dummy_run_test_function);

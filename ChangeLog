@@ -1,5 +1,7 @@
 2007-11-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-test-case.c: marked as pending.
+
 	* cutter/cut-test-case.c: supported nested run.
 	* test/test-cut-test-case.c: used the above feature.
 
