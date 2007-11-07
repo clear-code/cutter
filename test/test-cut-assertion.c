@@ -228,7 +228,7 @@ test_assert_message (void)
     cut_assert_equal_int(CUT_TEST_RESULT_FAILURE,
                          cut_test_result_get_status(test_result));
     cut_assert_equal_string("The message of assertion",
-                            cut_test_result_get_message(test_result));
+                            cut_test_result_get_user_message(test_result));
 }
 
 void

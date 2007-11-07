@@ -1,5 +1,8 @@
 2007-11-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-assertion.c (test_assert_message): used
+	user_message not message.
+
 	* cutter/cut-test-result.[ch]: added user_message and system_message.
 	* cutter/cut-test-context.c: followed the above changes.
 	* test/test-cut-test-result.c: added tests for message.
