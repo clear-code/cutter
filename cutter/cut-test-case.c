@@ -314,7 +314,7 @@ run (CutTestCase *test_case, CutTest *test, CutContext *context)
 }
 
 static GList *
-collect_tests_matched_regex (const GList *tests, gchar *pattern)
+collect_tests_with_regex (const GList *tests, gchar *pattern)
 {
     GList *matched_list = NULL, *list;
     GRegex *regex;
@@ -383,7 +383,7 @@ cut_test_case_run_function (CutTestCase *test_case, CutContext *context,
     } else {
         pattern = g_strdup_printf("^%s$", name);
     }
-    matched_tests = collect_tests_matched_regex(tests, pattern);
+    matched_tests = collect_tests_with_regex(tests, pattern);
     if (matched_tests) {
         success = cut_test_case_run_tests(test_case, context, matched_tests);
         g_list_free(matched_tests);
