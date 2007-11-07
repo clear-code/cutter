@@ -409,20 +409,20 @@ cut_output_on_complete_test_suite (CutOutput *output, CutContext *context,
         status = cut_test_result_get_status(result);
         message = cut_test_result_get_message(result);
 
-        g_print("\n\n%d) ", i);
+        g_print("\n%d) ", i);
         print_for_status(priv, status, status_to_name(status));
         if (message) {
             g_print("\n");
             print_for_status(priv, status, message);
         }
-        g_print("\n%s:%d: %s()",
+        g_print("\n%s:%d: %s()\n",
                 filename,
                 cut_test_result_get_line(result),
                 cut_test_result_get_function_name(result));
         i++;
     }
 
-    g_print("\n\n");
+    g_print("\n");
     g_print("Finished in %g seconds",
             cut_test_get_elapsed(CUT_TEST(test_suite)));
     g_print("\n\n");
