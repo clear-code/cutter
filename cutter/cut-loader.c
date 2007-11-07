@@ -224,7 +224,8 @@ cut_loader_load_test_case (CutLoader *loader)
     if (!priv->so_filename)
         return NULL;
 
-    priv->module = g_module_open(priv->so_filename, G_MODULE_BIND_LAZY);
+    priv->module = g_module_open(priv->so_filename,
+                                 G_MODULE_BIND_LAZY | G_MODULE_BIND_LOCAL);
     if (!priv->module)
         return NULL;
 

@@ -1,5 +1,8 @@
 2007-11-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-loader.c (cut_loader_load_test_case): don't spread
+	symbol name to global.
+
 	* cutter/cut-test.c (cut_test_run): run test.
 
 	* test/, cutter/: fixed SEGV bugs.
