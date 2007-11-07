@@ -82,7 +82,7 @@ void  cut_test_context_register_result      (CutTestContext *context,
             get_current_test_context(),                                 \
             CUT_TEST_RESULT_FAILURE,                                    \
             __PRETTY_FUNCTION__, __FILE__, __LINE__,                    \
-            "expected: <" #expect "> is not 0/NULL",                    \
+            "expected: <" #expect "> is not TRUE/NULL",                 \
             ## __VA_ARGS__, NULL);                                      \
         return;                                                         \
     } else {                                                            \

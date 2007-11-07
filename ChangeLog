@@ -1,5 +1,7 @@
 2007-11-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertion.h: improved message.
+
 	* cutter/cut-output.c: improved format.
 
 	* test/test-cut-test-case.c: marked as pending.
