@@ -1,5 +1,7 @@
 2007-11-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-test-suite.c: suppressed warnings.
+
 	* test/test-cut-test-suite.c: marked as pending.
 
 	* cutter/cut-test.c: checked whether the test was successfully
