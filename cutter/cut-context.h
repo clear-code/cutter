@@ -69,8 +69,13 @@ void  cut_context_start_test_case           (CutContext *context,
 void  cut_context_start_test_suite          (CutContext *context,
                                              CutTestSuite *test_suite);
 
-void  cut_context_output_error_log          (CutContext *context);
-void  cut_context_output_normal_log         (CutContext *context);
+guint cut_context_get_n_tests               (CutContext *context);
+guint cut_context_get_n_assertions          (CutContext *context);
+guint cut_context_get_n_failures            (CutContext *context);
+guint cut_context_get_n_errors              (CutContext *context);
+guint cut_context_get_n_pendings            (CutContext *context);
+
+const GList *cut_context_get_results        (CutContext *context);
 
 G_END_DECLS
 

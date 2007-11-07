@@ -403,8 +403,7 @@ cb_complete_test_suite(CutTestSuite *test_suite, gpointer data)
 
     priv = CUT_CONTEXT_GET_PRIVATE(context);
     if (priv->output)
-        cut_output_on_complete_test_suite(priv->output, test_suite,
-                                          priv->results);
+        cut_output_on_complete_test_suite(priv->output, context, test_suite);
 
     g_signal_handlers_disconnect_by_func(test_suite,
                                          G_CALLBACK(cb_start_test_suite), data);
@@ -421,6 +420,43 @@ cut_context_start_test_suite (CutContext *context, CutTestSuite *test_suite)
     g_signal_connect(test_suite, "complete",
                      G_CALLBACK(cb_complete_test_suite), context);
 }
+
+
+guint
+cut_context_get_n_tests (CutContext *context)
+{
+    return CUT_CONTEXT_GET_PRIVATE(context)->n_tests;
+}
+
+guint
+cut_context_get_n_assertions (CutContext *context)
+{
+    return CUT_CONTEXT_GET_PRIVATE(context)->n_assertions;
+}
+
+guint
+cut_context_get_n_failures (CutContext *context)
+{
+        return CUT_CONTEXT_GET_PRIVATE(context)->n_failures;
+}
+
+guint
+cut_context_get_n_errors (CutContext *context)
+{
+    return CUT_CONTEXT_GET_PRIVATE(context)->n_errors;
+}
+
+guint
+cut_context_get_n_pendings (CutContext *context)
+{
+    return CUT_CONTEXT_GET_PRIVATE(context)->n_pendings;
+}
+
+const GList *
+cut_context_get_results (CutContext *context)
+{
+    return CUT_CONTEXT_GET_PRIVATE(context)->results;
+};
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

@@ -29,6 +29,7 @@
 #include <glib/gstdio.h>
 
 #include "cut-output.h"
+#include "cut-context.h"
 #include "cut-test.h"
 #include "cut-test-case.h"
 #include "cut-enum-types.h"
@@ -377,20 +378,24 @@ cut_output_on_complete_test_case (CutOutput *output, CutTestCase *test_case)
 }
 
 void
-cut_output_on_complete_test_suite (CutOutput *output, CutTestSuite *test_suite,
-                                   GList *results)
+cut_output_on_complete_test_suite (CutOutput *output, CutContext *context,
+                                   CutTestSuite *test_suite)
 {
     gint i;
-    GList *node;
-    CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
+    guint n_tests, n_assertions, n_failures, n_errors, n_pendings;
+    const GList *node;
+    CutTestResultStatus status;
+    CutOutputPrivate *priv;
 
+    priv = CUT_OUTPUT_GET_PRIVATE(output);
     if (priv->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
 
     i = 1;
-    for (node = results; node; node = g_list_next(node)) {
+    for (node = cut_context_get_results(context);
+         node;
+         node = g_list_next(node)) {
         CutTestResult *result = node->data;
-        CutTestResultStatus status;
         gchar *filename;
         const gchar *message;
 
@@ -420,26 +425,28 @@ cut_output_on_complete_test_suite (CutOutput *output, CutTestSuite *test_suite,
     g_print("\n\n");
     g_print("Finished in %g seconds",
             cut_test_get_elapsed(CUT_TEST(test_suite)));
-    /* g_print("\n\n"); */
+    g_print("\n\n");
 
-/*     assertions = cut_test_get_n_assertions(CUT_TEST(test_suite)); */
-/*     failures = cut_test_get_n_failures(CUT_TEST(test_suite)); */
-/*     errors = cut_test_get_n_errors(CUT_TEST(test_suite)); */
-/*     pendings = cut_test_get_n_pendings(CUT_TEST(test_suite)); */
-/*     if (errors > 0) { */
-/*         status = CUT_TEST_RESULT_ERROR; */
-/*     } else if (failures > 0) { */
-/*         status = CUT_TEST_RESULT_FAILURE; */
-/*     } else if (pendings > 0) { */
-/*         status = CUT_TEST_RESULT_PENDING; */
-/*     } else { */
-/*         status = CUT_TEST_RESULT_SUCCESS; */
-/*     } */
-/*     print_for_status(priv, status, */
-/*                      "%d tests, %d assertions, %d failures, " */
-/*                      "%d errors, %d pendings", */
-/*                      cut_test_get_n_tests(CUT_TEST(test_suite)), */
-/*                      assertions, failures, errors, pendings); */
+
+    n_tests = cut_context_get_n_tests(context);
+    n_assertions = cut_context_get_n_assertions(context);
+    n_failures = cut_context_get_n_failures(context);
+    n_errors = cut_context_get_n_errors(context);
+    n_pendings = cut_context_get_n_pendings(context);
+
+    if (n_errors > 0) {
+        status = CUT_TEST_RESULT_ERROR;
+    } else if (n_failures > 0) {
+        status = CUT_TEST_RESULT_FAILURE;
+    } else if (n_pendings > 0) {
+        status = CUT_TEST_RESULT_PENDING;
+    } else {
+        status = CUT_TEST_RESULT_SUCCESS;
+    }
+    print_for_status(priv, status,
+                     "%d tests, %d assertions, %d failures, "
+                     "%d errors, %d pendings",
+                     n_tests, n_assertions, n_failures, n_errors, n_pendings);
     g_print("\n");
 }
 
