@@ -1,5 +1,7 @@
 2007-11-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test.c (cut_test_run): run test.
+
 	* test/, cutter/: fixed SEGV bugs.
 
 	* cutter/cut-test-case.c (run): unified test run process.

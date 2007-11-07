@@ -237,7 +237,7 @@ cut_test_run (CutTest *test, CutContext *context)
     CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(test);
     gboolean success;
 
-    if (priv->test_function)
+    if (!priv->test_function)
         return FALSE;
 
     cut_context_start_test(context, test);
