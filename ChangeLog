@@ -1,5 +1,12 @@
 2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test-container.[c|h]: Added
+	cut_test_container_filter_children().
+	* cutter/cut-test-suite.c, cutter/cut-test-case.c: Use
+	cut_test_container_filter_children().
+
+2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test-case.[c|h]: Removed cut_test_case_get_name().
 	* cutter/cut-test-suite.c, cutter/cut-output.c: Use cut_test_get_name()
 	instead of cut_test_case_get_name().

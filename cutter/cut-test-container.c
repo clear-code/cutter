@@ -30,6 +30,7 @@
 #include "cut-test-container.h"
 
 #include "cut-test.h"
+#include "cut-utils.h"
 
 #define CUT_TEST_CONTAINER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_CONTAINER, CutTestContainerPrivate))
 
@@ -157,6 +158,49 @@ real_get_elapsed (CutTest *test)
     }
 
     return result;
+}
+
+static GList *
+collect_tests_with_regex (const GList *tests, gchar *pattern)
+{
+    GList *matched_list = NULL, *list;
+    GRegex *regex;
+
+    if (!strlen(pattern))
+        return NULL;
+
+    regex = g_regex_new(pattern, G_REGEX_EXTENDED, 0, NULL);
+    for (list = (GList *)tests; list; list = g_list_next(list)) {
+        gboolean match;
+        CutTest *test = CUT_TEST(list->data);
+        match = g_regex_match(regex, cut_test_get_name(test),
+                              0, NULL);
+        if (match) {
+            matched_list = g_list_prepend(matched_list, test);
+        }
+    }
+    g_regex_unref(regex);
+
+    return matched_list;
+}
+
+GList *
+cut_test_container_filter_children (CutTestContainer *container,
+                                    const gchar *filter)
+{
+    GList *matched_tests = NULL;
+    const GList *tests;
+    gchar *pattern;
+
+    g_return_val_if_fail(CUT_IS_TEST_CONTAINER(container), NULL);
+
+    tests = cut_test_container_get_children(container);
+
+    pattern = cut_utils_create_regex_pattern(filter);
+    matched_tests = collect_tests_with_regex(tests, pattern);
+    g_free(pattern);
+
+    return matched_tests;
 }
 
 /*

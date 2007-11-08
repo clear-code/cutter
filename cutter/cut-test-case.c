@@ -318,49 +318,6 @@ run (CutTestCase *test_case, CutTest *test, CutContext *context)
     return success;
 }
 
-static GList *
-collect_tests_with_regex (const GList *tests, gchar *pattern)
-{
-    GList *matched_list = NULL, *list;
-    GRegex *regex;
-
-    if (!strlen(pattern))
-        return NULL;
-
-    regex = g_regex_new(pattern, G_REGEX_EXTENDED, 0, NULL);
-    for (list = (GList *)tests; list; list = g_list_next(list)) {
-        gboolean match;
-        CutTest *test = CUT_TEST(list->data);
-        match = g_regex_match(regex, 
-                              cut_test_get_name(test),
-                              0, NULL);
-        if (match) {
-            matched_list = g_list_prepend(matched_list, test);
-        }
-    }
-    g_regex_unref(regex);
-
-    return matched_list;
-}
-
-static GList *
-cut_test_case_collect_tests (CutTestCase *test_case, const gchar *name)
-{
-    GList *matched_tests = NULL;
-    const GList *tests;
-    gchar *pattern;
-
-    g_return_val_if_fail(CUT_IS_TEST_CASE(test_case), NULL);
-
-    tests = cut_test_container_get_children(CUT_TEST_CONTAINER(test_case));
-
-    pattern = cut_utils_create_regex_pattern(name);
-    matched_tests = collect_tests_with_regex(tests, pattern);
-    g_free(pattern);
-
-    return matched_tests;
-}
-
 static gboolean
 cut_test_case_run_tests (CutTestCase *test_case, CutContext *context,
                          const GList *tests)
@@ -400,7 +357,7 @@ cut_test_case_run_function (CutTestCase *test_case, CutContext *context,
 
     g_return_val_if_fail(CUT_IS_TEST_CASE(test_case), FALSE);
 
-    matched_tests = cut_test_case_collect_tests(test_case, name);
+    matched_tests = cut_test_container_filter_children(CUT_TEST_CONTAINER(test_case), name);
     if (matched_tests) {
         success = cut_test_case_run_tests(test_case, context, matched_tests);
         g_list_free(matched_tests);
@@ -429,7 +386,8 @@ cut_test_case_has_function (CutTestCase *test_case, const gchar *function_name)
 
     g_return_val_if_fail(CUT_IS_TEST_CASE(test_case), FALSE);
 
-    matched_tests = cut_test_case_collect_tests(test_case, function_name);
+    matched_tests = cut_test_container_filter_children(CUT_TEST_CONTAINER(test_case),
+                                                       function_name);
     if (matched_tests) {
         found = TRUE;
         g_list_free(matched_tests);
