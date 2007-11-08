@@ -1,5 +1,13 @@
 2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test-case.[c|h]: Removed cut_test_case_get_name().
+	* cutter/cut-test-suite.c, cutter/cut-output.c: Use cut_test_get_name()
+	instead of cut_test_case_get_name().
+	* test/test-cut-test-case.c. test/test-cut-repository.c: Use
+	cut_test_get_name() instead of cut_test_case_get_name().
+
+2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test.[c|h]: cut_test_get_function_name ->
 	cut_test_get_name.
 	* cutter/cut-test-case.c, cutter/cut-output.c: Use cut_test_get_name()

@@ -76,6 +76,8 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 
+static const gchar *real_get_name     (CutTest  *test);
+
 static void
 cut_test_case_class_init (CutTestCaseClass *klass)
 {
@@ -89,6 +91,8 @@ cut_test_case_class_init (CutTestCaseClass *klass)
     gobject_class->dispose      = dispose;
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
+
+    test_class->get_name = real_get_name;
 
     spec = g_param_spec_string("name",
                                "name",
@@ -262,10 +266,10 @@ cut_test_case_get_test_count (CutTestCase *test_case)
     return g_list_length(tests);
 }
 
-const gchar *
-cut_test_case_get_name (CutTestCase *test_case)
+static const gchar *
+real_get_name (CutTest *test)
 {
-    return CUT_TEST_CASE_GET_PRIVATE(test_case)->name;
+    return CUT_TEST_CASE_GET_PRIVATE(test)->name;
 }
 
 void

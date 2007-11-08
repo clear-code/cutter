@@ -162,7 +162,7 @@ void
 test_get_name (void)
 {
     cut_assert_equal_string("dummy test case",
-                            cut_test_case_get_name(test_object));
+                            cut_test_get_name(CUT_TEST(test_object)));
 }
 
 void

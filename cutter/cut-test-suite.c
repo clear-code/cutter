@@ -262,7 +262,7 @@ collect_test_cases_with_regex (const GList *tests, gchar *pattern)
         gboolean match;
         CutTestCase *test_case = CUT_TEST_CASE(list->data);
         match = g_regex_match(regex, 
-                              cut_test_case_get_name(test_case),
+                              cut_test_get_name(CUT_TEST(test_case)),
                               0, NULL);
         if (match) {
             matched_list = g_list_prepend(matched_list, test_case);

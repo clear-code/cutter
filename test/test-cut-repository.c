@@ -37,11 +37,11 @@ static const gchar *expected_test_case_name[] = {
 static gint
 compare_test_case_name (gconstpointer a, gconstpointer b)
 {
-    CutTestCase *ta, *tb;
-    ta = CUT_TEST_CASE(a);
-    tb = CUT_TEST_CASE(b);
+    CutTest *ta, *tb;
+    ta = CUT_TEST(a);
+    tb = CUT_TEST(b);
 
-    return strcmp(cut_test_case_get_name(ta), cut_test_case_get_name(tb));
+    return strcmp(cut_test_get_name(ta), cut_test_get_name(tb));
 }
 
 void
@@ -65,7 +65,7 @@ test_create_test_suite (void)
         test_case = CUT_TEST_CASE(list->data);
 
         cut_assert_equal_string(expected_test_case_name[i],
-                                cut_test_case_get_name(test_case));
+                                cut_test_get_name(CUT_TEST(test_case)));
     }
 
     g_object_unref(suite);
