@@ -62,7 +62,9 @@ fi
 dnl **************************************************************
 dnl Check for GLib.
 dnl **************************************************************
-AM_PATH_GLIB_2_0(2.14.0, [], [], [gmodule gobject gthread])
+GLIB_REQUIRED=2.14.0
+AC_SUBST(GLIB_REQUIRED)
+AM_PATH_GLIB_2_0($GLIB_REQUIRED, [], [], [gmodule gobject gthread])
 
 # Checks for libraries.
 AC_CHECK_LIB(bfd, bfd_init, [], [AC_ERROR("-lbfd not found")])
