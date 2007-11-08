@@ -168,7 +168,7 @@ test_error (void)
 {
     CutTest *test;
 
-    test = cut_test_new("dummy-error-test", dummy_error_test_function);
+    test = cut_test_new("dummy-error-test", NULL, dummy_error_test_function);
     cut_assert(test, "Creating a new CutTest object failed");
 
     g_signal_connect(test, "error", G_CALLBACK(cb_collect_result),
@@ -190,7 +190,7 @@ test_pending (void)
 {
     CutTest *test;
 
-    test = cut_test_new("dummy-pending-test", dummy_pending_test_function);
+    test = cut_test_new("dummy-pending-test", NULL, dummy_pending_test_function);
     cut_assert(test, "Creating a new CutTest object failed");
 
     g_signal_connect(test, "pending", G_CALLBACK(cb_collect_result),
@@ -212,7 +212,7 @@ test_fail (void)
 {
     CutTest *test;
 
-    test = cut_test_new("dummy-fail-test", dummy_fail_test_function);
+    test = cut_test_new("dummy-fail-test", NULL, dummy_fail_test_function);
     cut_assert(test);
 
     g_signal_connect(test, "failure", G_CALLBACK(cb_collect_result),
@@ -233,7 +233,8 @@ test_assert_message (void)
 {
     CutTest *test;
 
-    test = cut_test_new("dummy-assertion-message-test", dummy_assert_message_test_function);
+    test = cut_test_new("dummy-assertion-message-test", NULL,
+                        dummy_assert_message_test_function);
     cut_assert(test);
 
     g_signal_connect(test, "failure", G_CALLBACK(cb_collect_result),
@@ -256,7 +257,7 @@ test_start_signal (void)
 {
     CutTest *test;
 
-    test = cut_test_new("dummy-normal-test", dummy_normal_test_function);
+    test = cut_test_new("dummy-normal-test", NULL, dummy_normal_test_function);
     cut_assert(test);
 
     g_signal_connect(test, "start", G_CALLBACK(cb_start_signal), NULL);
@@ -272,7 +273,7 @@ test_complete_signal (void)
 {
     CutTest *test;
 
-    test = cut_test_new("dummy-normal-test", dummy_normal_test_function);
+    test = cut_test_new("dummy-normal-test", NULL, dummy_normal_test_function);
     cut_assert(test);
 
     g_signal_connect(test, "complete", G_CALLBACK(cb_complete_signal), NULL);

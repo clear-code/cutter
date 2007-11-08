@@ -293,9 +293,14 @@ cut_output_on_start_test (CutOutput *output, CutTestCase *test_case,
                           CutTest *test)
 {
     CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
+    const gchar *description;
 
     if (priv->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
         return;
+
+    description = cut_test_get_description(test);
+    if (description)
+        g_print("%s\n", description);
 
     g_print("%s(%s): ",
             cut_test_get_function_name(test),

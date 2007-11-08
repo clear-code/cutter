@@ -37,6 +37,7 @@ typedef struct _CutTestPrivate	CutTestPrivate;
 struct _CutTestPrivate
 {
     gchar *function_name;
+    gchar *description;
     CutTestFunction test_function;
     GTimer *timer;
 };
@@ -45,6 +46,7 @@ enum
 {
     PROP_0,
     PROP_FUNCTION_NAME,
+    PROP_DESCRIPTION,
     PROP_TEST_FUNCTION
 };
 
@@ -96,6 +98,13 @@ cut_test_class_init (CutTestClass *klass)
                                NULL,
                                G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class, PROP_FUNCTION_NAME, spec);
+
+    spec = g_param_spec_string("description",
+                               "Description",
+                               "The description of the test",
+                               NULL,
+                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+    g_object_class_install_property(gobject_class, PROP_DESCRIPTION, spec);
 
     spec = g_param_spec_pointer("test-function",
                                 "Test Function",
@@ -188,6 +197,11 @@ dispose (GObject *object)
         priv->function_name = NULL;
     }
 
+    if (priv->description) {
+        g_free(priv->description);
+        priv->description = NULL;
+    }
+
     priv->test_function = NULL;
 
     if (priv->timer) {
@@ -212,6 +226,11 @@ set_property (GObject      *object,
             g_free(priv->function_name);
         priv->function_name = g_value_dup_string(value);
         break;
+      case PROP_DESCRIPTION:
+        if (priv->description)
+            g_free(priv->description);
+        priv->description = g_value_dup_string(value);
+        break;
       case PROP_TEST_FUNCTION:
         priv->test_function = g_value_get_pointer(value);
         break;
@@ -233,6 +252,9 @@ get_property (GObject    *object,
       case PROP_FUNCTION_NAME:
         g_value_set_string(value, priv->function_name);
         break;
+      case PROP_DESCRIPTION:
+        g_value_set_string(value, priv->description);
+        break;
       case PROP_TEST_FUNCTION:
         g_value_set_pointer(value, priv->test_function);
         break;
@@ -243,10 +265,12 @@ get_property (GObject    *object,
 }
 
 CutTest *
-cut_test_new (const gchar *function_name, CutTestFunction function)
+cut_test_new (const gchar *function_name, const gchar *description,
+              CutTestFunction function)
 {
     return g_object_new(CUT_TYPE_TEST,
                         "function-name", function_name,
+                        "description", description,
                         "test-function", function,
                         NULL);
 }
@@ -292,6 +316,12 @@ const gchar *
 cut_test_get_function_name (CutTest *test)
 {
     return CUT_TEST_GET_PRIVATE(test)->function_name;
+}
+
+const gchar *
+cut_test_get_description (CutTest *test)
+{
+    return CUT_TEST_GET_PRIVATE(test)->description;
 }
 
 static gdouble

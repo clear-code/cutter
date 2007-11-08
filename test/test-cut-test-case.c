@@ -80,11 +80,11 @@ setup (void)
                                     dummy_teardown_function,
                                     get_current_test_context,
                                     set_current_test_context);
-    test = cut_test_new("dummy_test_1", dummy_test_function1);
+    test = cut_test_new("dummy_test_1", NULL, dummy_test_function1);
     cut_test_case_add_test(test_object, test);
-    test = cut_test_new("dummy_test_2", dummy_test_function2);
+    test = cut_test_new("dummy_test_2", NULL, dummy_test_function2);
     cut_test_case_add_test(test_object, test);
-    test = cut_test_new("run_test_function", dummy_run_test_function);
+    test = cut_test_new("run_test_function", NULL, dummy_run_test_function);
     cut_test_case_add_test(test_object, test);
 }
 

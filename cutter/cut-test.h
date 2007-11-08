@@ -69,9 +69,11 @@ struct _CutTestClass
 GType        cut_test_get_type  (void) G_GNUC_CONST;
 
 CutTest     *cut_test_new                 (const gchar *function_name,
+                                           const gchar *description,
                                            CutTestFunction function);
 gboolean     cut_test_run                 (CutTest *test, CutContext *context);
 const gchar *cut_test_get_function_name   (CutTest *test);
+const gchar *cut_test_get_description     (CutTest *test);
 
 gdouble      cut_test_get_elapsed         (CutTest *test);
 

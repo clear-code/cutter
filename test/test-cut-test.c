@@ -3,6 +3,7 @@
 #include "cut-context.h"
 
 void test_get_function_name(void);
+void test_get_description(void);
 void test_increment_assertion_count(void);
 void test_run(void);
 
@@ -24,7 +25,7 @@ setup (void)
 {
     test_context = cut_context_new();
     cut_context_set_verbose_level(test_context, CUT_VERBOSE_LEVEL_SILENT);
-    test_object = cut_test_new("dummy-test", dummy_test_function);
+    test_object = cut_test_new("dummy-test", "Dummy Test", dummy_test_function);
     run_test_flag = FALSE;
 }
 
@@ -46,6 +47,13 @@ test_get_function_name (void)
 {
     cut_assert_equal_string("dummy-test",
                             cut_test_get_function_name(test_object));
+}
+
+void
+test_get_description (void)
+{
+    cut_assert_equal_string("Dummy Test",
+                            cut_test_get_description(test_object));
 }
 
 void

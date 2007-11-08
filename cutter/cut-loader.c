@@ -270,7 +270,7 @@ cut_loader_load_test_case (CutLoader *loader)
         name = node->data;
         g_module_symbol(priv->module, name, (gpointer)&function);
         if (function) {
-            test = cut_test_new(name, function);
+            test = cut_test_new(name, NULL, function);
             cut_test_case_add_test(test_case, test);
         }
         g_free(name);

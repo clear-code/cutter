@@ -100,22 +100,23 @@ setup (void)
     test_case = cut_test_case_new("dummy_test_case", NULL, NULL,
                                   get_current_test_context,
                                   set_current_test_context);
-    test = cut_test_new("dummy_test_1", dummy_test_function1);
+    test = cut_test_new("dummy_test_1", NULL, dummy_test_function1);
     cut_test_case_add_test(test_case, test);
-    test = cut_test_new("dummy_test_2", dummy_test_function2);
+    test = cut_test_new("dummy_test_2", NULL, dummy_test_function2);
     cut_test_case_add_test(test_case, test);
-    test = cut_test_new("run_test_function", dummy_run_test_function);
+    test = cut_test_new("run_test_function", NULL, dummy_run_test_function);
     cut_test_case_add_test(test_case, test);
     cut_test_suite_add_test_case(test_object, test_case);
 
     test_case = cut_test_case_new("bummy_test_case", NULL, NULL,
                                   get_current_test_context,
                                   set_current_test_context);
-    test = cut_test_new("bummy_test_1", bummy_test_function1);
+    test = cut_test_new("bummy_test_1", NULL, bummy_test_function1);
     cut_test_case_add_test(test_case, test);
-    test = cut_test_new("bummy_test_2", bummy_test_function2);
+    test = cut_test_new("bummy_test_2", NULL, bummy_test_function2);
     cut_test_case_add_test(test_case, test);
-    test = cut_test_new("bummy_run_test_function", bummy_run_test_function);
+    test = cut_test_new("bummy_run_test_function", NULL,
+                        bummy_run_test_function);
     cut_test_case_add_test(test_case, test);
     cut_test_suite_add_test_case(test_object, test_case);
 }

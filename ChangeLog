@@ -1,5 +1,9 @@
 2007-11-08  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cutter-test.[ch]: added description.
+	* test/test-cut-test.c: added a test for description.
+	* cutter/cut-output.c: showed description if available.
+
 	* cutter/cut-output.c: showed elapsed time for each test.
 
 	* test/run-test.sh, sample/glib/run-test.sh: used --multi-thread option.
