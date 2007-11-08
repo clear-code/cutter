@@ -32,6 +32,7 @@
 #include "cut-context.h"
 #include "cut-test.h"
 #include "cut-test-case.h"
+#include "cut-verbose-level.h"
 #include "cut-enum-types.h"
 
 #define CUT_OUTPUT_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_OUTPUT, CutOutputPrivate))
@@ -240,25 +241,17 @@ cut_output_set_verbose_level (CutOutput *output, CutVerboseLevel level)
 void
 cut_output_set_verbose_level_by_name (CutOutput *output, const gchar *name)
 {
+    GError *error = NULL;
     CutVerboseLevel level;
 
-    if (name == NULL) {
-        level = CUT_VERBOSE_LEVEL_NORMAL;
-    } else if (g_utf8_collate(name, "s") == 0 ||
-               g_utf8_collate(name, "silent") == 0) {
-        level = CUT_VERBOSE_LEVEL_SILENT;
-    } else if (g_utf8_collate(name, "n") == 0 ||
-               g_utf8_collate(name, "normal") == 0) {
-        level = CUT_VERBOSE_LEVEL_NORMAL;
-    } else if (g_utf8_collate(name, "v") == 0 ||
-               g_utf8_collate(name, "verbose") == 0) {
-        level = CUT_VERBOSE_LEVEL_VERBOSE;
-    } else {
-        g_warning("Invalid verbose level name: %s", name);
-        return;
-    }
+    level = cut_verbose_level_parse(name, &error);
 
-    cut_output_set_verbose_level(output, level);
+    if (error) {
+        g_warning("%s\n", error->message);
+        g_error_free(error);
+    } else {
+        cut_output_set_verbose_level(output, level);
+    }
 }
 
 

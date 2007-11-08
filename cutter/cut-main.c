@@ -29,12 +29,31 @@
 #include "cut-context.h"
 #include "cut-test-suite.h"
 #include "cut-repository.h"
+#include "cut-verbose-level.h"
 
-static gchar *verbose_level = NULL;
+static CutVerboseLevel verbose_level = CUT_VERBOSE_LEVEL_NORMAL;
 static gchar *source_directory = NULL;
 static gboolean use_color = FALSE;
 static gchar **test_case_names = NULL;
 static gchar **test_names = NULL;
+
+static gboolean
+parse_verbose_level_arg (const gchar *option_name, const gchar *value,
+                         gpointer data, GError **error)
+{
+    GError *verbose_level_error = NULL;
+
+    verbose_level = cut_verbose_level_parse(value, &verbose_level_error);
+    if (!verbose_level_error)
+        return TRUE;
+
+    g_set_error(error,
+                G_OPTION_ERROR,
+                G_OPTION_ERROR_BAD_VALUE,
+                "%s", verbose_level_error->message);
+    g_error_free(verbose_level_error);
+    return FALSE;
+}
 
 static gboolean
 parse_color_arg (const gchar *option_name, const gchar *value,
@@ -53,9 +72,9 @@ parse_color_arg (const gchar *option_name, const gchar *value,
         use_color = term && g_str_has_suffix(term, "term");
     } else {
         g_set_error(error,
-                    g_option_error_quark(),
-                    G_OPTION_ERROR_FAILED,
-                    "invalid color value: %s", value);
+                    G_OPTION_ERROR,
+                    G_OPTION_ERROR_BAD_VALUE,
+                    "Invalid color value: %s", value);
         return FALSE;
     }
 
@@ -64,8 +83,8 @@ parse_color_arg (const gchar *option_name, const gchar *value,
 
 static const GOptionEntry option_entries[] =
 {
-    {"verbose", 'v', 0, G_OPTION_ARG_STRING, &verbose_level,
-     "Set verbose level", "LEVEL"},
+    {"verbose", 'v', 0, G_OPTION_ARG_CALLBACK, parse_verbose_level_arg,
+     "Set verbose level", "[s|silent|n|normal|v|verbose]"},
     {"source-directory", 's', 0, G_OPTION_ARG_STRING, &source_directory,
      "Set directory of source code", "DIRECTORY"},
     {"color", 'c', G_OPTION_FLAG_OPTIONAL_ARG, G_OPTION_ARG_CALLBACK,
@@ -131,6 +150,7 @@ main (int argc, char *argv[])
     g_option_context_add_main_entries(option_context, option_entries, "cutter");
     if (!g_option_context_parse(option_context, &argc, &argv, &error)) {
         g_print("%s\n", error->message);
+        g_error_free(error);
         g_option_context_free(option_context);
         exit(1);
     }
@@ -150,7 +170,7 @@ main (int argc, char *argv[])
 
     context = cut_context_new();
 
-    cut_context_set_verbose_level_by_name(context, verbose_level);
+    cut_context_set_verbose_level(context, verbose_level);
     if (source_directory) {
         cut_context_set_source_directory(context, source_directory);
     } else {

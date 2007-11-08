@@ -26,6 +26,7 @@
 
 #include "cut-private.h"
 #include "cut-test-result.h"
+#include "cut-verbose-level.h"
 
 G_BEGIN_DECLS
 
@@ -48,12 +49,6 @@ struct _CutOutputClass
 {
     GObjectClass parent_class;
 };
-
-typedef enum {
-    CUT_VERBOSE_LEVEL_SILENT,
-    CUT_VERBOSE_LEVEL_NORMAL,
-    CUT_VERBOSE_LEVEL_VERBOSE
-} CutVerboseLevel;
 
 GType        cut_output_get_type  (void) G_GNUC_CONST;
 

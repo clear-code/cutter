@@ -10,6 +10,7 @@ cutter_h_sources =				\
 	cut-assertions.h			\
 	cut-context.h				\
 	cut-test-result.h			\
+	cut-verbose-level.h			\
 	cut-output.h
 
 enum_source_prefix = cut-enum-types
@@ -50,6 +51,7 @@ cutter_SOURCES =			\
 		cut-test-context.c	\
 		cut-utils.h		\
 		cut-utils.c		\
+		cut-verbose-level.c	\
 		cut-main.c
 
 cutter_LDADD =				\

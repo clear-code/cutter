@@ -53,6 +53,8 @@ GType        cut_context_get_type  (void) G_GNUC_CONST;
 
 CutContext  *cut_context_new (void);
 
+CutVerboseLevel cut_context_parse_verbose_level (CutContext *context,
+                                                 const gchar *name);
 void  cut_context_set_verbose_level         (CutContext *context,
                                              CutVerboseLevel level);
 void  cut_context_set_verbose_level_by_name (CutContext *context,
