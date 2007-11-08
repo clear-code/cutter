@@ -8,6 +8,7 @@ TESTS = run-test.sh
 TESTS_ENVIRONMENT = NO_MAKE=yes
 
 noinst_LTLIBRARIES = 				\
+		test_glib_utf8_pointer.la	\
 		test_glib_uri.la
 
 LDFLAGS =			\
@@ -16,4 +17,5 @@ LDFLAGS =			\
 	-avoid-version
 
 test_glib_uri_la_SOURCES = test_glib_uri.c
+test_glib_utf8_pointer_la_SOURCES = test_glib_utf8_pointer.c
 
