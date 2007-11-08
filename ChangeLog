@@ -1,5 +1,7 @@
 2007-11-08  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-output.c: showed elapsed time for each test.
+
 	* test/run-test.sh, sample/glib/run-test.sh: used --multi-thread option.
 
 	* cutter/: supported multi-thread mode.

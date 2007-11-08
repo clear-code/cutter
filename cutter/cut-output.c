@@ -314,7 +314,7 @@ cut_output_on_complete_test (CutOutput *output, CutTestCase *test_case,
     if (priv->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
         return;
 
-    g_print("\n");
+    g_print(": (%f)\n", cut_test_get_elapsed(test));
 }
 
 void
@@ -419,7 +419,7 @@ cut_output_on_complete_test_suite (CutOutput *output, CutContext *context,
     }
 
     g_print("\n");
-    g_print("Finished in %g seconds",
+    g_print("Finished in %f seconds",
             cut_test_get_elapsed(CUT_TEST(test_suite)));
     g_print("\n\n");
 
