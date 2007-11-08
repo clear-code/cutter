@@ -12,6 +12,7 @@ void test_error_signal(void);
 void test_pass_assertion_signal(void);
 void test_failure_signal(void);
 void test_pending_signal(void);
+void test_notification_signal(void);
 
 static CutContext *context;
 static CutTest *test_object;
@@ -23,6 +24,7 @@ static gint n_failure_signal = 0;
 static gint n_error_signal = 0;
 static gint n_pending_signal = 0;
 static gint n_pass_assertion_signal = 0;
+static gint n_notification_signal = 0;
 
 static void
 dummy_test_function (void)
@@ -46,6 +48,12 @@ dummy_pending_function (void)
 }
 
 static void
+dummy_notification_function (void)
+{
+    cut_notify("This test has been notification ever!");
+}
+
+static void
 dummy_error_function (void)
 {
     cut_error("This test should error");
@@ -61,6 +69,7 @@ setup (void)
     n_failure_signal = 0;
     n_error_signal = 0;
     n_pending_signal = 0;
+    n_notification_signal = 0;
     n_pass_assertion_signal = 0;
 
     context = cut_context_new();
@@ -104,6 +113,12 @@ static void
 cb_pending_signal (CutTest *test, gpointer data)
 {
     n_pending_signal++;
+}
+
+static void
+cb_notification_signal (CutTest *test, gpointer data)
+{
+    n_notification_signal++;
 }
 
 static void
@@ -221,6 +236,23 @@ test_pending_signal (void)
                                          G_CALLBACK(cb_pending_signal),
                                          NULL);
     cut_assert_equal_int(1, n_pending_signal);
+    g_object_unref(test);
+}
+
+void
+test_notification_signal (void)
+{
+    CutTest *test;
+
+    test = cut_test_new("dummy-notification-test", NULL, dummy_notification_function);
+    cut_assert(test);
+
+    g_signal_connect(test, "notification", G_CALLBACK(cb_notification_signal), NULL);
+    cut_assert(run(test));
+    g_signal_handlers_disconnect_by_func(test,
+                                         G_CALLBACK(cb_notification_signal),
+                                         NULL);
+    cut_assert_equal_int(1, n_notification_signal);
     g_object_unref(test);
 }
 

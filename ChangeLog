@@ -1,5 +1,9 @@
 2007-11-09  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* test/test-cut-test.c: Added test for "notification" signal.
+
+2007-11-09  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-assertions.c: (cut_assert), (cut_assert_null): Remove
 	needless %s.
 
