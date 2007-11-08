@@ -1,5 +1,7 @@
 2007-11-08  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/run-test.sh, sample/glib/run-test.sh: used --multi-thread option.
+
 	* cutter/: supported multi-thread mode.
 
 	* cutter/: improved option handling for verbose level.
