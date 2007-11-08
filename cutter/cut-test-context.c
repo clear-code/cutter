@@ -290,24 +290,28 @@ cut_test_context_register_result (CutTestContext *context,
     CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
     CutTestResult *result;
     const gchar *status_signal_name = NULL;
-    gchar *user_message = NULL;
-    const gchar *system_message, *format;
+    gchar *user_message = NULL, *system_message = NULL;
+    const gchar *format;
     va_list args;
 
     priv->failed = TRUE;
 
-    system_message = message;
     va_start(args, message);
+    if (message) {
+        system_message = g_strdup_vprintf(message, args);
+    }
     format = va_arg(args, gchar *);
     if (format) {
         user_message = g_strdup_vprintf(format, args);
     }
+    va_end(args);
 
     result = cut_test_result_new(status, user_message, system_message,
                                  function_name, filename, line);
+    if (system_message)
+        g_free(system_message);
     if (user_message)
         g_free(user_message);
-    va_end(args);
 
     status_signal_name = status_to_signal_name(status);
     if (priv->test) {

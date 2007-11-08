@@ -55,6 +55,7 @@ void  cut_test_context_register_result      (CutTestContext *context,
         CUT_TEST_RESULT_ ## status,                     \
         __PRETTY_FUNCTION__, __FILE__, __LINE__,        \
         message, ## __VA_ARGS__);                       \
+    return;                                             \
 } while (0)
 
 
@@ -67,13 +68,11 @@ void  cut_test_context_register_result      (CutTestContext *context,
 #define cut_fail(format, ...) do                            \
 {                                                           \
     cut_test_fail(FAILURE, NULL, format, ## __VA_ARGS__);   \
-    return;                                                 \
 } while(0)
 
 #define cut_pending(format, ...) do                         \
 {                                                           \
     cut_test_fail(PENDING, NULL, format, ## __VA_ARGS__);   \
-    return;                                                 \
 } while(0)
 
 #define cut_assert(expected, ...) do                        \
@@ -83,9 +82,9 @@ void  cut_test_context_register_result      (CutTestContext *context,
     } else {                                                \
         cut_test_fail(                                      \
             FAILURE,                                        \
+            "%s",                                           \
             "expected: <" #expected "> is not TRUE/NULL",   \
             ## __VA_ARGS__, NULL);                          \
-        return;                                             \
     }                                                       \
 } while(0)
 
@@ -96,26 +95,23 @@ void  cut_test_context_register_result      (CutTestContext *context,
     } else {                                                \
         cut_test_fail(                                      \
             FAILURE,                                        \
-            "expected: <" #actual "> is NULL",              \
+            "%s", "expected: <" #actual "> is NULL",        \
             ## __VA_ARGS__, NULL);                          \
-        return;                                             \
     }                                                       \
 } while(0)
 
-#define cut_assert_equal_int(expected, actual, ...) do                  \
-{                                                                       \
-    if ((expected) == (actual)) {                                       \
-        cut_test_pass();                                                \
-    } else {                                                            \
-        gchar *message;                                                 \
-        message = g_strdup_printf(                                      \
-            "<" #expected " == " #actual ">\n"                          \
-            "expected: <%ld>\n but was: <%ld>",                         \
-            (glong)(expected), (glong)(actual));                        \
-        cut_test_fail(FAILURE, message, ## __VA_ARGS__, NULL);          \
-        g_free(message);                                                \
-        return;                                                         \
-    }                                                                   \
+#define cut_assert_equal_int(expected, actual, ...) do      \
+{                                                           \
+    if ((expected) == (actual)) {                           \
+        cut_test_pass();                                    \
+    } else {                                                \
+        cut_test_fail(FAILURE,                              \
+                      "<%s == %s>\n"                        \
+                      "expected: <%ld>\n but was: <%ld>",   \
+                      #expected, #actual,                   \
+                      (glong)(expected), (glong)(actual),   \
+                      ## __VA_ARGS__, NULL);                \
+    }                                                       \
 } while(0)
 
 #define cut_assert_equal_double(expected, error, actual, ...) do        \
@@ -127,15 +123,12 @@ void  cut_test_context_register_result      (CutTestContext *context,
         _actual <= _expected + _error) {                                \
         cut_test_pass();                                                \
     } else {                                                            \
-        gchar *message;                                                 \
-        message = g_strdup_printf(                                      \
-            "<" #expected "-" #error " <= " #actual                     \
-            " <= " #expected "+" #error">\n"                            \
-            "expected: <%g +/- %g>\n but was: <%g>",                    \
-            _expected, _error, _actual);                                \
-        cut_test_fail(FAILURE, message, ## __VA_ARGS__, NULL);          \
-        g_free(message);                                                \
-        return;                                                         \
+        cut_test_fail(FAILURE,                                          \
+                      "<%s-%s <= %s <= %s+%s>\n"                        \
+                      "expected: <%g +/- %g>\n but was: <%g>",          \
+                      #expected, #error, #actual, #expected, #error,    \
+                      _expected, _error, _actual,                       \
+                      ## __VA_ARGS__, NULL);                            \
     }                                                                   \
 } while(0)
 
@@ -146,14 +139,12 @@ void  cut_test_context_register_result      (CutTestContext *context,
     if (_expected && _actual && strcmp(_expected, _actual) == 0) {      \
         cut_test_pass();                                                \
     } else {                                                            \
-        gchar *message;                                                 \
-        message = g_strdup_printf(                                      \
-            "<" #expected " == " #actual ">\n"                          \
-            "expected: <%s>\n but was: <%s>",                           \
-            _expected, _actual);                                        \
-        cut_test_fail(FAILURE, message, ## __VA_ARGS__, NULL);          \
-        g_free(message);                                                \
-        return;                                                         \
+        cut_test_fail(FAILURE,                                          \
+                      "<%s == %s>\n",                                   \
+                      "expected: <%s>\n but was: <%s>",                 \
+                      #expected, #actual,                               \
+                      _expected, _actual,                               \
+                      ## __VA_ARGS__, NULL);                            \
     }                                                                   \
 } while(0)
 
@@ -164,9 +155,9 @@ void  cut_test_context_register_result      (CutTestContext *context,
     } else {                                                            \
         cut_test_fail(                                                  \
             FAILURE,                                                    \
-            "expected: <" #lhs " " #operator " " #rhs "> is TRUE",      \
+            "expected: <%s %s %s> is TRUE",                             \
+            #lhs, #operator, #rhs,                                      \
             ## __VA_ARGS__, NULL);                                      \
-        return;                                                         \
     }                                                                   \
 } while(0)
 

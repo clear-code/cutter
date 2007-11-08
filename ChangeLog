@@ -1,5 +1,8 @@
 2007-11-08  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-context.c: supported multiple vprintf arguments.
+	* cutter/cut-assertions.h: used the above feature.
+
 	* cutter/cut-test-context.c (status_to_signal_name): extracted.
 
 	* cutter/cut-output.c: avoided to spread color effect.
