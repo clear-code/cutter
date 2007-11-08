@@ -77,19 +77,6 @@ static const GOptionEntry option_entries[] =
     {NULL}
 };
 
-static void
-show_no_argument_error (GOptionContext *option_context)
-{
-    gchar *help_string;
-
-    g_print("You should specify directory stored in shared object or execution file.\n");
-
-    help_string = g_option_context_get_help(option_context,
-                                            TRUE, NULL);
-    g_print("%s", help_string);
-    g_free(help_string);
-}
-
 static gboolean
 run_tests (CutTestSuite *suite, CutContext *context)
 {
@@ -138,13 +125,21 @@ main (int argc, char *argv[])
     CutTestSuite *suite;
     CutRepository *repository;
     CutContext *context;
+    GError *error = NULL;
 
-    option_context = g_option_context_new("");
+    option_context = g_option_context_new("TEST_DIRECTORY");
     g_option_context_add_main_entries(option_context, option_entries, "cutter");
-    g_option_context_parse(option_context, &argc, &argv, NULL);
+    if (!g_option_context_parse(option_context, &argc, &argv, &error)) {
+        g_print("%s\n", error->message);
+        g_option_context_free(option_context);
+        exit(1);
+    }
 
     if (argc == 1) {
-        show_no_argument_error(option_context);
+        gchar *help_string;
+        help_string = g_option_context_get_help(option_context, TRUE, NULL);
+        g_print("%s", help_string);
+        g_free(help_string);
         g_option_context_free(option_context);
         exit(1);
     }
