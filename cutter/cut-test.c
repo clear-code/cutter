@@ -320,7 +320,7 @@ cut_test_get_name (CutTest *test)
     return CUT_TEST_GET_CLASS(test)->get_name(test);
 }
 
-const gchar *
+static const gchar *
 real_get_name (CutTest *test)
 {
     return CUT_TEST_GET_PRIVATE(test)->function_name;
