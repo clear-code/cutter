@@ -194,20 +194,18 @@ cut_repository_create_test_suite (CutRepository *repository)
     if (!priv->directory)
         return NULL;
 
-    cut_repository_collect_loader (repository, priv->directory);
+    cut_repository_collect_loader(repository, priv->directory);
 
+    suite = cut_test_suite_new();
     for (list = priv->loaders; list; list = g_list_next(list)) {
         CutLoader *loader = CUT_LOADER(list->data);
         CutTestCase *test_case;
 
         test_case = cut_loader_load_test_case(loader);
         if (test_case) {
-            if (!suite)
-                suite = cut_test_suite_new();
             cut_test_suite_add_test_case(suite, test_case);
         }
     }
-
     return suite;
 }
 
