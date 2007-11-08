@@ -9,8 +9,13 @@ void test_run(void);
 void test_run_with_setup_error(void);
 void test_run_this_function(void);
 void test_run_tests_with_regex(void);
+void test_run_with_name_filter(void);
+void test_run_with_regex_filter(void);
+void test_run_with_name_and_regex_filter(void);
 void test_get_name(void);
 void test_has_test(void);
+void test_start_signal(void);
+void test_complete_signal(void);
 
 static CutTestCase *test_object;
 static CutContext *test_context;
@@ -22,6 +27,8 @@ static gint n_teardown = 0;
 static gint n_run_dummy_run_test_function = 0;
 static gint n_run_dummy_test_function1 = 0;
 static gint n_run_dummy_test_function2 = 0;
+static gint n_start_signal = 0;
+static gint n_complete_signal = 0;
 
 static void
 dummy_test_function1 (void)
@@ -71,6 +78,8 @@ setup (void)
     n_run_dummy_run_test_function = 0;
     n_run_dummy_test_function1 = 0;
     n_run_dummy_test_function2 = 0;
+    n_start_signal = 0;
+    n_complete_signal = 0;
 
     test_context = cut_context_new();
     cut_context_set_verbose_level(test_context, CUT_VERBOSE_LEVEL_SILENT);
@@ -93,6 +102,18 @@ teardown (void)
 {
     g_object_unref(test_object);
     g_object_unref(test_context);
+}
+
+static void
+cb_start_signal (CutTestCase *test_case, gpointer data)
+{
+    n_start_signal++;
+}
+
+static void
+cb_complete_signal (CutTestCase *test_case, gpointer data)
+{
+    n_complete_signal++;
 }
 
 static gboolean
@@ -159,6 +180,39 @@ test_run_tests_with_regex (void)
 }
 
 void
+test_run_with_name_filter (void)
+{
+    const gchar *names[] = {"dummy_test_1", "run_test_function"};
+
+    cut_assert(cut_test_case_run_with_filter(test_object, test_context, (gchar **)names));
+    cut_assert_equal_int(1, n_run_dummy_run_test_function);
+    cut_assert_equal_int(1, n_run_dummy_test_function1);
+    cut_assert_equal_int(0, n_run_dummy_test_function2);
+}
+
+void
+test_run_with_regex_filter (void)
+{
+    const gchar *regex[] = {"/dummy/"};
+
+    cut_assert(cut_test_case_run_with_filter(test_object, test_context, (gchar **)regex));
+    cut_assert_equal_int(0, n_run_dummy_run_test_function);
+    cut_assert_equal_int(1, n_run_dummy_test_function1);
+    cut_assert_equal_int(1, n_run_dummy_test_function2);
+}
+
+void
+test_run_with_name_and_regex_filter (void)
+{
+    const gchar *name_and_regex[] = {"/dummy/", "run_test_function"};
+
+    cut_assert(cut_test_case_run_with_filter(test_object, test_context, (gchar **)name_and_regex));
+    cut_assert_equal_int(1, n_run_dummy_run_test_function);
+    cut_assert_equal_int(1, n_run_dummy_test_function1);
+    cut_assert_equal_int(1, n_run_dummy_test_function2);
+}
+
+void
 test_get_name (void)
 {
     cut_assert_equal_string("dummy test case",
@@ -172,6 +226,28 @@ test_has_test (void)
     cut_assert(!cut_test_case_has_test(test_object, "not_exist_function"));
     cut_assert(cut_test_case_has_test(test_object, "/run/"));
     cut_assert(!cut_test_case_has_test(test_object, "/run$/"));
+}
+
+void
+test_start_signal (void)
+{
+    g_signal_connect(test_object, "start-test", G_CALLBACK(cb_start_signal), NULL);
+    cut_assert(cut_test_case_run(test_object, test_context));
+    g_signal_handlers_disconnect_by_func(test_object,
+                                         G_CALLBACK(cb_start_signal),
+                                         NULL);
+    cut_assert_equal_int(3, n_start_signal);
+}
+
+void
+test_complete_signal (void)
+{
+    g_signal_connect(test_object, "complete-test", G_CALLBACK(cb_complete_signal), NULL);
+    cut_assert(cut_test_case_run(test_object, test_context));
+    g_signal_handlers_disconnect_by_func(test_object,
+                                         G_CALLBACK(cb_complete_signal),
+                                         NULL);
+    cut_assert_equal_int(3, n_complete_signal);
 }
 
 /*

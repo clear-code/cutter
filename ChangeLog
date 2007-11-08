@@ -1,5 +1,15 @@
 2007-11-09  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* test/test-cut-test-case.c: Added tests for
+	cut_test_case_run_with_filter().
+
+2007-11-09  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test-cut-test-case.c: Added tests for "start-test" and
+	"complete-test" signal.
+
+2007-11-09  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* test/test-cut-test.c: Added test for "notification" signal.
 
 2007-11-09  Hiroyuki Ikezoe  <poincare@ikezoe.net>
