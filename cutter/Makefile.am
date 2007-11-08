@@ -32,7 +32,6 @@ bin_PROGRAMS = cutter
 cutter_SOURCES =			\
 		$(cutter_h_sources)	\
 		cut-enum-types.c	\
-		cut-assertion.h		\
 		cut-test.h		\
 		cut-test.c		\
 		cut-context.c		\
