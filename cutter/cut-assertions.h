@@ -110,8 +110,8 @@ void  cut_test_context_register_result      (CutTestContext *context,
         gchar *message;                                                 \
         message = g_strdup_printf(                                      \
             "<" #expected " == " #actual ">\n"                          \
-            "expected: <%d>\n but was: <%d>",                           \
-            (expected), (actual));                                      \
+            "expected: <%ld>\n but was: <%ld>",                         \
+            (glong)(expected), (glong)(actual));                        \
         cut_test_fail(FAILURE, message, ## __VA_ARGS__, NULL);          \
         g_free(message);                                                \
         return;                                                         \

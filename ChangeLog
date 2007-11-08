@@ -1,5 +1,9 @@
 2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-assertions.c: (cut_assert_equal_int): Cast glong.
+
+2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* test/test-cut-test-case.c, test/test-cut-test-suite.c: Change
 	regular expression. ^dummy.* -> dummy 
 
