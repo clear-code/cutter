@@ -50,6 +50,7 @@ cutter_SOURCES =			\
 		cut-output.c		\
 		cut-test-result.c	\
 		cut-test-context.c	\
+		cut-test-context.h	\
 		cut-utils.h		\
 		cut-utils.c		\
 		cut-verbose-level.c	\
