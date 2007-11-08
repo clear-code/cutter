@@ -171,6 +171,7 @@ test_has_function (void)
     cut_assert(cut_test_case_has_function(test_object, "run_test_function"));
     cut_assert(!cut_test_case_has_function(test_object, "not_exist_function"));
     cut_assert(cut_test_case_has_function(test_object, "/run/"));
+    cut_assert(!cut_test_case_has_function(test_object, "/run$/"));
 }
 
 /*
