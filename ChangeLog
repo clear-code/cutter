@@ -1,5 +1,7 @@
 2007-11-08  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-assertion.c: added 's'.
+
 	* cutter/cut-test.[ch]: re-supported success signal.
 	* cutter/cut-test-suite.c: emitted success signal again.
 	* cutter/cut-context.c (cut_context_start_test): used success

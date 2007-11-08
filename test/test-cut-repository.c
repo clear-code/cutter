@@ -64,7 +64,8 @@ test_create_test_suite (void)
         cut_assert(CUT_IS_TEST_CASE(list->data));
         test_case = CUT_TEST_CASE(list->data);
 
-        cut_assert_equal_string(expected_test_case_name[i], cut_test_case_get_name(test_case));
+        cut_assert_equal_string(expected_test_case_name[i],
+                                cut_test_case_get_name(test_case));
     }
 
     g_object_unref(suite);
