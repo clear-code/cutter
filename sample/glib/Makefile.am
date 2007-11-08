@@ -8,11 +8,12 @@ TESTS = run-test.sh
 TESTS_ENVIRONMENT = NO_MAKE=yes
 
 noinst_LTLIBRARIES = 				\
-		libtest_glib_uri.la
+		test_glib_uri.la
 
 LDFLAGS =			\
 	-rpath $(libdir)	\
+	-module			\
 	-avoid-version
 
-libtest_glib_uri_la_SOURCES = test_glib_uri.c
+test_glib_uri_la_SOURCES = test_glib_uri.c
 
