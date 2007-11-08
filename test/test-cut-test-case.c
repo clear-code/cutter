@@ -8,9 +8,9 @@ void test_test_case_count(void);
 void test_run(void);
 void test_run_with_setup_error(void);
 void test_run_this_function(void);
-void test_run_functions_with_regex(void);
+void test_run_tests_with_regex(void);
 void test_get_name(void);
-void test_has_function(void);
+void test_has_test(void);
 
 static CutTestCase *test_object;
 static CutContext *test_context;
@@ -142,17 +142,17 @@ test_run_with_setup_error (void)
 void
 test_run_this_function (void)
 {
-    cut_assert(cut_test_case_run_function(test_object, test_context,
-                                          "run_test_function"));
+    cut_assert(cut_test_case_run_test(test_object, test_context,
+                                      "run_test_function"));
 
     cut_assert_equal_int(1, n_run_dummy_run_test_function);
     cut_assert_equal_int(0, n_run_dummy_test_function1);
 }
 
 void
-test_run_functions_with_regex (void)
+test_run_tests_with_regex (void)
 {
-    cut_assert(cut_test_case_run_function(test_object, test_context, "/dummy/"));
+    cut_assert(cut_test_case_run_test(test_object, test_context, "/dummy/"));
     cut_assert_equal_int(0, n_run_dummy_run_test_function);
     cut_assert_equal_int(1, n_run_dummy_test_function1);
     cut_assert_equal_int(1, n_run_dummy_test_function2);
@@ -166,12 +166,12 @@ test_get_name (void)
 }
 
 void
-test_has_function (void)
+test_has_test (void)
 {
-    cut_assert(cut_test_case_has_function(test_object, "run_test_function"));
-    cut_assert(!cut_test_case_has_function(test_object, "not_exist_function"));
-    cut_assert(cut_test_case_has_function(test_object, "/run/"));
-    cut_assert(!cut_test_case_has_function(test_object, "/run$/"));
+    cut_assert(cut_test_case_has_test(test_object, "run_test_function"));
+    cut_assert(!cut_test_case_has_test(test_object, "not_exist_function"));
+    cut_assert(cut_test_case_has_test(test_object, "/run/"));
+    cut_assert(!cut_test_case_has_test(test_object, "/run$/"));
 }
 
 /*

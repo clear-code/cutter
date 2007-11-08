@@ -348,27 +348,22 @@ cut_test_case_run_tests (CutTestCase *test_case, CutContext *context,
 }
 
 gboolean
-cut_test_case_run_function (CutTestCase *test_case, CutContext *context,
-                            const gchar *name)
+cut_test_case_run_test (CutTestCase *test_case, CutContext *context,
+                        const gchar *name)
 {
-    GList *matched_tests;
-    gboolean success = FALSE;
+    gchar *test_names[2];
 
     g_return_val_if_fail(CUT_IS_TEST_CASE(test_case), FALSE);
 
-    matched_tests = cut_test_container_filter_children(CUT_TEST_CONTAINER(test_case), name);
-    if (matched_tests) {
-        success = cut_test_case_run_tests(test_case, context, matched_tests);
-        g_list_free(matched_tests);
-    }
-
-    return success;
+    test_names[0] = (gchar *)name;
+    test_names[1] = NULL;
+    return cut_test_case_run_with_filter(test_case, context, test_names);
 }
 
 gboolean
-cut_test_case_run_with_filter(CutTestCase *test_case,
-                              CutContext  *context,
-                              const gchar **test_names)
+cut_test_case_run_with_filter (CutTestCase *test_case,
+                               CutContext  *context,
+                               gchar      **test_names)
 {
     CutTestContainer *container;
     GList *filtered_tests = NULL;
@@ -406,15 +401,16 @@ cut_test_case_run (CutTestCase *test_case, CutContext *context)
 }
 
 gboolean
-cut_test_case_has_function (CutTestCase *test_case, const gchar *function_name)
+cut_test_case_has_test (CutTestCase *test_case, const gchar *name)
 {
+    CutTestContainer *container;
     GList *matched_tests;
     gboolean found = FALSE;
 
     g_return_val_if_fail(CUT_IS_TEST_CASE(test_case), FALSE);
 
-    matched_tests = cut_test_container_filter_children(CUT_TEST_CONTAINER(test_case),
-                                                       function_name);
+    container = CUT_TEST_CONTAINER(test_case);
+    matched_tests = cut_test_container_filter_children(container, name);
     if (matched_tests) {
         found = TRUE;
         g_list_free(matched_tests);

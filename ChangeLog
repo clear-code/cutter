@@ -1,5 +1,8 @@
 2007-11-08  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-test-case.c, cutter/cut-test-case.[ch]: removed
+	'_function'.
+
 	* cutter/cut-test-suite.[ch], test/test-cut-test-suite.c: removed
 	'_function'.
 
