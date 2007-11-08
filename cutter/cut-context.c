@@ -268,9 +268,6 @@ cb_complete (CutTest *test, gpointer data)
     priv = CUT_CONTEXT_GET_PRIVATE(context);
     if (info->result) {
         priv->results = g_list_prepend(priv->results, info->result);
-    } else {
-        if (priv->output)
-            cut_output_on_success(priv->output, test);
     }
 
     g_signal_handlers_disconnect_by_func(test,
@@ -308,6 +305,7 @@ cut_context_start_test (CutContext *context, CutTest *test)
 
     g_signal_connect(test, "pass_assertion",
                      G_CALLBACK(cb_pass_assertion), info);
+    g_signal_connect(test, "success", G_CALLBACK(cb_success), info);
     g_signal_connect(test, "failure", G_CALLBACK(cb_failure), info);
     g_signal_connect(test, "error", G_CALLBACK(cb_error), info);
     g_signal_connect(test, "pending", G_CALLBACK(cb_pending), info);

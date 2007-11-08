@@ -165,11 +165,8 @@ cut_test_suite_run_test_cases (CutTestSuite *suite, CutContext *context,
         }
     }
 
-    if (all_success) {
-        /* g_signal_emit_by_name(CUT_TEST(suite), "success");*/
-    } else {
-        g_signal_emit_by_name(CUT_TEST(suite), "failure");
-    }
+    if (all_success)
+        g_signal_emit_by_name(CUT_TEST(suite), "success");
 
     g_signal_emit_by_name(CUT_TEST(suite), "complete");
 

@@ -57,6 +57,7 @@ struct _CutTestClass
 
     void (*start)    (CutTest *test);
     void (*pass_assertion) (CutTest *test);
+    void (*success)  (CutTest *test);
     void (*failure)  (CutTest *test, CutTestResult *result);
     void (*error)    (CutTest *test, CutTestResult *result);
     void (*pending)  (CutTest *test, CutTestResult *result);

@@ -52,6 +52,7 @@ enum
 {
     START_SIGNAL,
     PASS_ASSERTION_SIGNAL,
+    SUCCESS_SIGNAL,
     FAILURE_SIGNAL,
     ERROR_SIGNAL,
     PENDING_SIGNAL,
@@ -116,6 +117,15 @@ cut_test_class_init (CutTestClass *klass)
                 G_TYPE_FROM_CLASS (klass),
                 G_SIGNAL_RUN_LAST,
                 G_STRUCT_OFFSET (CutTestClass, pass_assertion),
+                NULL, NULL,
+                g_cclosure_marshal_VOID__VOID,
+                G_TYPE_NONE, 0);
+
+	cut_test_signals[SUCCESS_SIGNAL]
+        = g_signal_new ("success",
+                G_TYPE_FROM_CLASS (klass),
+                G_SIGNAL_RUN_LAST,
+                G_STRUCT_OFFSET (CutTestClass, success),
                 NULL, NULL,
                 g_cclosure_marshal_VOID__VOID,
                 G_TYPE_NONE, 0);
@@ -269,6 +279,9 @@ cut_test_run (CutTest *test, CutContext *context)
     g_timer_stop(priv->timer);
     g_signal_handlers_disconnect_by_func(test, G_CALLBACK(cb_check_success),
                                          &success);
+
+    if (success)
+        g_signal_emit_by_name(test, "success");
 
     g_signal_emit_by_name(test, "complete");
 
