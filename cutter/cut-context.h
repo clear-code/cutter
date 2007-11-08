@@ -80,6 +80,7 @@ guint cut_context_get_n_assertions          (CutContext *context);
 guint cut_context_get_n_failures            (CutContext *context);
 guint cut_context_get_n_errors              (CutContext *context);
 guint cut_context_get_n_pendings            (CutContext *context);
+guint cut_context_get_n_notifications       (CutContext *context);
 
 const GList *cut_context_get_results        (CutContext *context);
 

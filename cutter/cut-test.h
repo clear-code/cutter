@@ -61,6 +61,7 @@ struct _CutTestClass
     void (*failure)  (CutTest *test, CutTestResult *result);
     void (*error)    (CutTest *test, CutTestResult *result);
     void (*pending)  (CutTest *test, CutTestResult *result);
+    void (*notification)(CutTest *test, CutTestResult *result);
     void (*complete) (CutTest *test);
 
     gdouble      (*get_elapsed)  (CutTest *test);

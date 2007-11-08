@@ -80,6 +80,9 @@ void  cut_output_on_error                  (CutOutput *output,
 void  cut_output_on_pending                (CutOutput *output,
                                             CutTest *test,
                                             CutTestResult *result);
+void  cut_output_on_notification           (CutOutput *output,
+                                            CutTest *test,
+                                            CutTestResult *result);
 void  cut_output_on_complete_test          (CutOutput *output,
                                             CutTestCase *test_case,
                                             CutTest *test,

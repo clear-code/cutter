@@ -40,6 +40,7 @@ struct _CutContextPrivate
     guint n_failures;
     guint n_errors;
     guint n_pendings;
+    guint n_notifications;
     GList *results;
     CutOutput *output;
     gboolean use_multi_thread;
@@ -53,6 +54,7 @@ enum
     PROP_N_FAILURES,
     PROP_N_ERRORS,
     PROP_N_PENDINGS,
+    PROP_N_NOTIFICATIONS,
     PROP_USE_MULTI_THREAD
 };
 
@@ -135,6 +137,7 @@ cut_context_init (CutContext *context)
     priv->n_failures = 0;
     priv->n_errors = 0;
     priv->n_pendings = 0;
+    priv->n_notifications = 0;
     priv->results = NULL;
     priv->output = cut_output_new();
     priv->use_multi_thread = FALSE;
@@ -183,6 +186,9 @@ set_property (GObject      *object,
       case PROP_N_PENDINGS:
         priv->n_pendings = g_value_get_uint(value);
         break;
+      case PROP_N_NOTIFICATIONS:
+        priv->n_notifications = g_value_get_uint(value);
+        break;
       case PROP_USE_MULTI_THREAD:
         priv->use_multi_thread = g_value_get_boolean(value);
         break;
@@ -215,6 +221,9 @@ get_property (GObject    *object,
         break;
       case PROP_N_PENDINGS:
         g_value_set_uint(value, priv->n_pendings);
+        break;
+      case PROP_N_NOTIFICATIONS:
+        g_value_set_uint(value, priv->n_notifications);
         break;
       case PROP_USE_MULTI_THREAD:
         g_value_set_boolean(value, priv->use_multi_thread);
@@ -357,6 +366,21 @@ cb_pending(CutTest *test, CutTestResult *result, gpointer data)
 }
 
 static void
+cb_notification(CutTest *test, CutTestResult *result, gpointer data)
+{
+    TestCallBackInfo *info = data;
+    CutContext *context;
+    CutContextPrivate *priv;
+
+    context = info->context;
+    info->result = g_object_ref(result);
+    priv = CUT_CONTEXT_GET_PRIVATE(context);
+    priv->n_notifications++;
+    if (priv->output)
+        cut_output_on_notification(priv->output, test, info->result);
+}
+
+static void
 cb_complete (CutTest *test, gpointer data)
 {
     TestCallBackInfo *info = data;
@@ -385,6 +409,9 @@ cb_complete (CutTest *test, gpointer data)
                                          G_CALLBACK(cb_pending),
                                          data);
     g_signal_handlers_disconnect_by_func(test,
+                                         G_CALLBACK(cb_notification),
+                                         data);
+    g_signal_handlers_disconnect_by_func(test,
                                          G_CALLBACK(cb_complete),
                                          data);
 
@@ -408,6 +435,7 @@ cut_context_start_test (CutContext *context, CutTest *test)
     g_signal_connect(test, "failure", G_CALLBACK(cb_failure), info);
     g_signal_connect(test, "error", G_CALLBACK(cb_error), info);
     g_signal_connect(test, "pending", G_CALLBACK(cb_pending), info);
+    g_signal_connect(test, "notification", G_CALLBACK(cb_notification), info);
     g_signal_connect(test, "complete", G_CALLBACK(cb_complete), info);
 }
 
@@ -547,6 +575,12 @@ guint
 cut_context_get_n_pendings (CutContext *context)
 {
     return CUT_CONTEXT_GET_PRIVATE(context)->n_pendings;
+}
+
+guint
+cut_context_get_n_notifications (CutContext *context)
+{
+    return CUT_CONTEXT_GET_PRIVATE(context)->n_notifications;
 }
 
 const GList *

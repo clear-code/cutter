@@ -270,6 +270,9 @@ status_to_signal_name (CutTestResultStatus status)
       case CUT_TEST_RESULT_PENDING:
         status_signal_name = "pending";
         break;
+      case CUT_TEST_RESULT_NOTIFICATION:
+        status_signal_name = "notification";
+        break;
       default:
         g_assert("must not happen");
         break;

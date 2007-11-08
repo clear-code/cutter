@@ -33,7 +33,8 @@ typedef enum {
     CUT_TEST_RESULT_SUCCESS,
     CUT_TEST_RESULT_FAILURE,
     CUT_TEST_RESULT_ERROR,
-    CUT_TEST_RESULT_PENDING
+    CUT_TEST_RESULT_PENDING,
+    CUT_TEST_RESULT_NOTIFICATION
 } CutTestResultStatus;
 
 void  cut_test_context_pass_assertion       (CutTestContext *context);
@@ -48,32 +49,33 @@ void  cut_test_context_register_result      (CutTestContext *context,
 #define cut_test_pass() \
     cut_test_context_pass_assertion(get_current_test_context())
 
-#define cut_test_fail(status, message, ...) do          \
-{                                                       \
-    cut_test_context_register_result(                   \
-        get_current_test_context(),                     \
-        CUT_TEST_RESULT_ ## status,                     \
-        __PRETTY_FUNCTION__, __FILE__, __LINE__,        \
-        message, ## __VA_ARGS__);                       \
-    return;                                             \
+#define cut_test_register_result(status, message, ...) do   \
+{                                                           \
+    cut_test_context_register_result(                       \
+        get_current_test_context(),                         \
+        CUT_TEST_RESULT_ ## status,                         \
+        __PRETTY_FUNCTION__, __FILE__, __LINE__,            \
+        message, ## __VA_ARGS__);                           \
+} while (0)
+
+#define cut_test_fail(status, message, ...) do                  \
+{                                                               \
+    cut_test_register_result(status, message, ## __VA_ARGS__);  \
+    return;                                                     \
 } while (0)
 
 
-#define cut_error(format, ...) do                       \
-{                                                       \
-    cut_test_fail(ERROR, NULL, format, ## __VA_ARGS__); \
-    return;                                             \
-} while(0)
+#define cut_error(format, ...)                          \
+    cut_test_fail(ERROR, NULL, format, ## __VA_ARGS__)
 
-#define cut_fail(format, ...) do                            \
-{                                                           \
-    cut_test_fail(FAILURE, NULL, format, ## __VA_ARGS__);   \
-} while(0)
+#define cut_fail(format, ...)                               \
+    cut_test_fail(FAILURE, NULL, format, ## __VA_ARGS__)
 
-#define cut_pending(format, ...) do                         \
-{                                                           \
-    cut_test_fail(PENDING, NULL, format, ## __VA_ARGS__);   \
-} while(0)
+#define cut_pending(format, ...)                            \
+    cut_test_fail(PENDING, NULL, format, ## __VA_ARGS__)
+
+#define cut_notify(format, ...)                                         \
+    cut_test_register_result(NOTIFICATION, NULL, format, ## __VA_ARGS__)
 
 #define cut_assert(expected, ...) do                        \
 {                                                           \

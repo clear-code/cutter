@@ -1,5 +1,7 @@
 2007-11-08  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/: supported cut_notify().
+
 	* cutter/cut-context.c: supported property to avoid warnings.
 
 	* cutter/cut-test-context.c: supported multiple vprintf arguments.

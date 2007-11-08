@@ -42,6 +42,7 @@
 #define YELLOW_COLOR "\033[01;33m"
 #define BLUE_COLOR "\033[01;34m"
 #define PURPLE_COLOR "\033[01;35m"
+#define CYAN_COLOR "\033[01;36m"
 #define NORMAL_COLOR "\033[00m"
 
 typedef struct _CutOutputPrivate	CutOutputPrivate;
@@ -172,6 +173,9 @@ status_to_name(CutTestResultStatus status)
       case CUT_TEST_RESULT_PENDING:
         name = "Pending";
         break;
+      case CUT_TEST_RESULT_NOTIFICATION:
+        name = "Notification";
+        break;
       default:
         name = "";
         break;
@@ -197,6 +201,9 @@ status_to_color(CutTestResultStatus status)
         break;
       case CUT_TEST_RESULT_PENDING:
         color = YELLOW_COLOR;
+        break;
+      case CUT_TEST_RESULT_NOTIFICATION:
+        color = CYAN_COLOR;
         break;
       default:
         color = "";
@@ -370,6 +377,18 @@ cut_output_on_pending (CutOutput *output, CutTest *test, CutTestResult *result)
 }
 
 void
+cut_output_on_notification (CutOutput *output, CutTest *test,
+                            CutTestResult *result)
+{
+    CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
+
+    if (priv->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
+        return;
+    print_for_status(priv, CUT_TEST_RESULT_NOTIFICATION, "N");
+    fflush(stdout);
+}
+
+void
 cut_output_on_complete_test_case (CutOutput *output, CutTestCase *test_case)
 {
     CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
@@ -383,7 +402,8 @@ cut_output_on_complete_test_suite (CutOutput *output, CutContext *context,
                                    CutTestSuite *test_suite)
 {
     gint i;
-    guint n_tests, n_assertions, n_failures, n_errors, n_pendings;
+    guint n_tests, n_assertions, n_failures, n_errors;
+    guint n_pendings, n_notifications;
     const GList *node;
     CutTestResultStatus status;
     CutOutputPrivate *priv;
@@ -437,6 +457,7 @@ cut_output_on_complete_test_suite (CutOutput *output, CutContext *context,
     n_failures = cut_context_get_n_failures(context);
     n_errors = cut_context_get_n_errors(context);
     n_pendings = cut_context_get_n_pendings(context);
+    n_notifications = cut_context_get_n_notifications(context);
 
     if (n_errors > 0) {
         status = CUT_TEST_RESULT_ERROR;
@@ -444,13 +465,16 @@ cut_output_on_complete_test_suite (CutOutput *output, CutContext *context,
         status = CUT_TEST_RESULT_FAILURE;
     } else if (n_pendings > 0) {
         status = CUT_TEST_RESULT_PENDING;
+    } else if (n_notifications > 0) {
+        status = CUT_TEST_RESULT_NOTIFICATION;
     } else {
         status = CUT_TEST_RESULT_SUCCESS;
     }
     print_for_status(priv, status,
                      "%d tests, %d assertions, %d failures, "
-                     "%d errors, %d pendings",
-                     n_tests, n_assertions, n_failures, n_errors, n_pendings);
+                     "%d errors, %d pendings, %d notifications",
+                     n_tests, n_assertions, n_failures, n_errors,
+                     n_pendings, n_notifications);
     g_print("\n");
 }
 
