@@ -4,5 +4,5 @@
 
 == Assigned to ktou
 
-* バックトレースを表示
-* add cut_fork().
+* cut_pending(cut_output_backtrace());
+* cut_pending(cut_fork());
