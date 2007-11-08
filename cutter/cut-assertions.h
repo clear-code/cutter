@@ -24,27 +24,9 @@
 
 #include <string.h>
 #include <glib.h>
+#include <cut-public.h>
 
 G_BEGIN_DECLS
-
-typedef struct _CutTestContext     CutTestContext;
-
-typedef enum {
-    CUT_TEST_RESULT_SUCCESS,
-    CUT_TEST_RESULT_FAILURE,
-    CUT_TEST_RESULT_ERROR,
-    CUT_TEST_RESULT_PENDING,
-    CUT_TEST_RESULT_NOTIFICATION
-} CutTestResultStatus;
-
-void  cut_test_context_pass_assertion       (CutTestContext *context);
-void  cut_test_context_register_result      (CutTestContext *context,
-                                             CutTestResultStatus status,
-                                             const gchar *function_name,
-                                             const gchar *filename,
-                                             guint line,
-                                             const gchar *message,
-                                             ...);
 
 #define cut_test_pass() \
     cut_test_context_pass_assertion(get_current_test_context())

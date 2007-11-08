@@ -10,6 +10,7 @@ cutter_h_sources =				\
 	cut-assertions.h			\
 	cut-context.h				\
 	cut-test-result.h			\
+	cut-public.h				\
 	cut-verbose-level.h			\
 	cut-output.h
 

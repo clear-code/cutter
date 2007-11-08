@@ -19,39 +19,37 @@
  *
  */
 
-#ifndef __CUTTER_H__
-#define __CUTTER_H__
+#ifndef __CUT_PUBLIC_H__
+#define __CUT_PUBLIC_H__
 
-#include <glib.h>
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-#include "cut-public.h"
-#include "cut-assertions.h"
+typedef struct _CutTestContext     CutTestContext;
 
-G_BEGIN_DECLS
+typedef enum {
+    CUT_TEST_RESULT_SUCCESS,
+    CUT_TEST_RESULT_FAILURE,
+    CUT_TEST_RESULT_ERROR,
+    CUT_TEST_RESULT_PENDING,
+    CUT_TEST_RESULT_NOTIFICATION
+} CutTestResultStatus;
 
-void setup(void);
-void teardown(void);
+void  cut_test_context_pass_assertion       (CutTestContext *context);
+void  cut_test_context_register_result      (CutTestContext *context,
+                                             CutTestResultStatus status,
+                                             const char *function_name,
+                                             const char *filename,
+                                             unsigned int line,
+                                             const char *message,
+                                             ...);
 
-void set_current_test_context(CutTestContext *context);
-CutTestContext *get_current_test_context(void);
-
-static CutTestContext *_current_test_context = NULL;
-
-void
-set_current_test_context (CutTestContext *context)
-{
-    _current_test_context = context;
+#ifdef __cplusplus
 }
+#endif
 
-CutTestContext *
-get_current_test_context (void)
-{
-    return _current_test_context;
-}
-
-G_END_DECLS
-
-#endif /* __CUTTER_H__ */
+#endif /* __CUT_PUBLIC_H__ */
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
