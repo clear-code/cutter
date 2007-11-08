@@ -32,7 +32,7 @@
 GQuark
 cut_verbose_level_error_quark (void)
 {
-  return g_quark_from_static_string ("cut-verbose-level-error-quark");
+  return g_quark_from_static_string("cut-verbose-level-error-quark");
 }
 
 CutVerboseLevel
