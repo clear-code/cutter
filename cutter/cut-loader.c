@@ -29,6 +29,8 @@
 #include <glib/gstdio.h>
 #include <gmodule.h>
 
+#include <bfd.h>
+
 #include "cut-loader.h"
 
 #define CUT_LOADER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_LOADER, CutLoaderPrivate))
@@ -153,57 +155,50 @@ cut_loader_new (const gchar *soname)
 }
 
 static inline gboolean
-is_test_function_name_consisted_of (char c)
+is_test_function_name (const gchar *name)
 {
-    return g_ascii_isalnum(c) || '_' == c;
-}
-
-static inline gboolean
-is_test_function_name (GString *name)
-{
-    return name->len > 4 && g_str_has_prefix(name->str, "test_");
+    return name && g_str_has_prefix(name, "test_");
 }
 
 static GList *
 collect_test_functions (CutLoaderPrivate *priv)
 {
-    FILE *input;
-    GString *name;
-    char buffer[4096];
-    size_t size;
-    GList *test_names;
-    GHashTable *test_name_table;
+    GList *test_names = NULL;
+    long storage_needed;
+    asymbol **symbol_table;
+    long number_of_symbols;
+    long i;
+    bfd *abfd;
 
-    input = g_fopen(priv->so_filename, "rb");
-    if (!input)
+    abfd = bfd_openr(priv->so_filename, NULL);
+    if (!abfd)
         return NULL;
 
-    test_name_table = g_hash_table_new(g_str_hash, g_str_equal);
-    name = g_string_new("");
-    while ((size = fread(buffer, sizeof(*buffer), sizeof(buffer), input)) > 0) {
-        size_t i;
-        for (i = 0; i < size; i++) {
-            if (is_test_function_name_consisted_of(buffer[i])) {
-                g_string_append_c(name, buffer[i]);
-            } else if (name->len) {
-                if (is_test_function_name(name)) {
-                    g_hash_table_insert(test_name_table,
-                                        g_strdup(name->str), NULL);
-                }
-                g_string_truncate(name, 0);
-            }
+    if (!bfd_check_format(abfd, bfd_object)) {
+        bfd_close(abfd);
+        return NULL;
+    }
+
+    storage_needed = bfd_get_symtab_upper_bound(abfd);
+    if (storage_needed <= 0) {
+        bfd_close(abfd);
+        return NULL;
+    }
+
+    symbol_table = (asymbol **)g_new(char, storage_needed);
+    number_of_symbols = bfd_canonicalize_symtab(abfd, symbol_table);
+
+    for (i = 0; i < number_of_symbols; i++) {
+        symbol_info info;
+
+        bfd_symbol_info(symbol_table[i], &info);
+        if (info.type == 'T' && is_test_function_name(info.name)) {
+            test_names = g_list_prepend(test_names, g_strdup(info.name));
         }
     }
 
-    if (is_test_function_name(name)) {
-        g_hash_table_insert(test_name_table, g_strdup(name->str), NULL);
-    }
-    g_string_free(name, TRUE);
-
-    test_names = g_hash_table_get_keys(test_name_table);
-    g_hash_table_unref(test_name_table);
-
-    fclose(input);
+    g_free(symbol_table);
+    bfd_close(abfd);
 
     return test_names;
 }
