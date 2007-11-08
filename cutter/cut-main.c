@@ -36,6 +36,7 @@ static gchar *source_directory = NULL;
 static gboolean use_color = FALSE;
 static gchar **test_case_names = NULL;
 static gchar **test_names = NULL;
+static gboolean use_multi_thread = FALSE;
 
 static gboolean
 parse_verbose_level_arg (const gchar *option_name, const gchar *value,
@@ -93,6 +94,8 @@ static const GOptionEntry option_entries[] =
      "Specify test cases", "TEST_CASE_NAME1,TEST_CASE_NAME2,..."},
     {"test", 't', 0, G_OPTION_ARG_STRING_ARRAY, &test_names,
      "Specify tests", "TEST_NAME1,TEST_NAME2,..."},
+    {"multi-thread", 'm', 0, G_OPTION_ARG_NONE, &use_multi_thread,
+     "Run test cases with multi-thread", NULL},
     {NULL}
 };
 
@@ -177,6 +180,7 @@ main (int argc, char *argv[])
         cut_context_set_source_directory(context, argv[1]);
     }
     cut_context_set_use_color(context, use_color);
+    cut_context_set_multi_thread(context, use_multi_thread);
 
     repository = cut_repository_new(argv[1]);
     suite = cut_repository_create_test_suite(repository);

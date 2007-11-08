@@ -42,6 +42,7 @@ struct _CutContextPrivate
     guint n_pendings;
     GList *results;
     CutOutput *output;
+    gboolean use_multi_thread;
 };
 
 enum
@@ -87,6 +88,7 @@ cut_context_init (CutContext *context)
     priv->n_pendings = 0;
     priv->results = NULL;
     priv->output = cut_output_new();
+    priv->use_multi_thread = FALSE;
 }
 
 static void
@@ -179,6 +181,18 @@ cut_context_set_use_color (CutContext *context, gboolean use_color)
 
     if (priv->output)
         cut_output_set_use_color(priv->output, use_color);
+}
+
+void
+cut_context_set_multi_thread (CutContext *context, gboolean use_multi_thread)
+{
+    CUT_CONTEXT_GET_PRIVATE(context)->use_multi_thread = use_multi_thread;
+}
+
+gboolean
+cut_context_get_multi_thread (CutContext *context)
+{
+    return CUT_CONTEXT_GET_PRIVATE(context)->use_multi_thread;
 }
 
 typedef struct _TestCallBackInfo

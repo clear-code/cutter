@@ -64,6 +64,10 @@ void  cut_context_set_source_directory      (CutContext *context,
 void  cut_context_set_use_color             (CutContext *context,
                                              gboolean    use_color);
 
+void     cut_context_set_multi_thread       (CutContext *context,
+                                             gboolean    use_multi_thread);
+gboolean cut_context_get_multi_thread       (CutContext *context);
+
 void  cut_context_start_test                (CutContext *context,
                                              CutTest    *test);
 void  cut_context_start_test_case           (CutContext *context,
