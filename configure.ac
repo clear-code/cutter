@@ -65,10 +65,7 @@ dnl **************************************************************
 AM_PATH_GLIB_2_0(2.14.0, [], [], [gmodule gobject gthread])
 
 # Checks for libraries.
-# FIXME: Replace `main' with a function in `-ldl':
-AC_CHECK_LIB([dl], [dlopen])
-# FIXME: Replace `main' with a function in `-lm':
-AC_CHECK_LIB([m], [ceil])
+AC_CHECK_LIB(bfd, bfd_init, [], [AC_ERROR("-lbfd not found")])
 
 # Checks for header files.
 AC_FUNC_ALLOCA

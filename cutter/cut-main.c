@@ -171,6 +171,8 @@ main (int argc, char *argv[])
 
     g_thread_init(NULL);
 
+    bfd_init();
+
     context = cut_context_new();
 
     cut_context_set_verbose_level(context, verbose_level);

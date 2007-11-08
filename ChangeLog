@@ -1,8 +1,15 @@
+2007-11-08  Kouhei Sutou  <kou@cozmixng.org>
+
+	* configure.ac: added -lbfd check.
+	* cutter/cut-main.c: called bfd_init(). But BFD isn't used yet.
+
 2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* sample/glib/test_glib_utf8_pointer.c: Added.
 
 2007-11-08  Kouhei Sutou  <kou@cozmixng.org>
+
+	* configure.ac: added -lbfd check.
 
 	* cutter/cutter-test.[ch]: added description.
 	* test/test-cut-test.c: added a test for description.
