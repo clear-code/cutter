@@ -1,3 +1,8 @@
+2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* sample/glib/test_glib_uri.c: Separate test that
+	g_filename_from_uri() does not return hostname.
+
 2007-11-08  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-assertions.h (cut_assert_null): added.

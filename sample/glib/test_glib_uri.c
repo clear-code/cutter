@@ -31,6 +31,7 @@ void test_g_filename_to_uri (void);
 void test_g_filename_to_uri_error (void);
 void test_g_filename_from_uri (void);
 void test_g_filename_from_uri_error (void);
+void test_g_filename_from_uri_nohostname (void);
 void test_roundtrip (void);
 void test_uri_list (void);
 
@@ -127,25 +128,40 @@ typedef struct
 
 FromUriTest
 from_uri_tests[] = {
+  { "file://localhost/etc", "/etc", "localhost"},
+  { "file://localhost/etc/%23%25%20file", "/etc/#% file", "localhost"},
+  { "file://localhost/\xE5\xE4\xF6", "/\xe5\xe4\xf6", "localhost"},
+  { "file://localhost/%E5%E4%F6", "/\xe5\xe4\xf6", "localhost"},
+  { "file://otherhost/etc", "/etc", "otherhost"},
+  { "file://otherhost/etc/%23%25%20file", "/etc/#% file", "otherhost"},
+#ifdef G_OS_WIN32
+  /* Accept also the old Netscape drive-letter-and-vertical bar convention */
+  { "file://otherhost//server/share/foo", "\\\\server\\share\\foo", "otherhost"},
+#endif
+  { "file://ABCDEFGHIJKLMNOPQRSTUVWXYZ/", "/", "ABCDEFGHIJKLMNOPQRSTUVWXYZ"},
+  { "file://abcdefghijklmnopqrstuvwxyz/", "/", "abcdefghijklmnopqrstuvwxyz"},
+};
+
+typedef struct
+{
+  char *uri;
+  char *expected_filename;
+}  FromUriNoHostnameTest;
+
+FromUriNoHostnameTest
+from_uri_nohostname_tests[] = {
   { "file:///etc", "/etc"},
   { "file:/etc", "/etc"},
 #ifdef G_OS_WIN32
   /* On Win32 we don't return "localhost" hostames, just in case
    * it isn't recognized anyway.
    */
-  { "file://localhost/etc", "/etc", NULL},
-  { "file://localhost/etc/%23%25%20file", "/etc/#% file", NULL},
-  { "file://localhost/\xE5\xE4\xF6", "/\xe5\xe4\xf6", NULL},
-  { "file://localhost/%E5%E4%F6", "/\xe5\xe4\xf6", NULL},
-#else
-  { "file://localhost/etc", "/etc", "localhost"},
-  { "file://localhost/etc/%23%25%20file", "/etc/#% file", "localhost"},
-  { "file://localhost/\xE5\xE4\xF6", "/\xe5\xe4\xf6", "localhost"},
-  { "file://localhost/%E5%E4%F6", "/\xe5\xe4\xf6", "localhost"},
+  { "file://localhost/etc", "/etc"},
+  { "file://localhost/etc/%23%25%20file", "/etc/#% file"},
+  { "file://localhost/\xE5\xE4\xF6", "/\xe5\xe4\xf6"},
+  { "file://localhost/%E5%E4%F6", "/\xe5\xe4\xf6"},
 #endif
-  { "file://otherhost/etc", "/etc", "otherhost"},
-  { "file://otherhost/etc/%23%25%20file", "/etc/#% file", "otherhost"},
-  { "file:////etc/%C3%B6%C3%C3%C3%A5", "//etc/\xc3\xb6\xc3\xc3\xc3\xa5", NULL},
+  { "file:////etc/%C3%B6%C3%C3%C3%A5", "//etc/\xc3\xb6\xc3\xc3\xc3\xa5"},
   { "file:////etc", "//etc"},
   { "file://///etc", "///etc"},
 #ifdef G_OS_WIN32
@@ -156,14 +172,11 @@ from_uri_tests[] = {
   { "file:///c|/foo", "c:\\foo"},
   { "file:////server/share/dir", "\\\\server\\share\\dir"},
   { "file://localhost//server/share/foo", "\\\\server\\share\\foo"},
-  { "file://otherhost//server/share/foo", "\\\\server\\share\\foo", "otherhost"},
 #else
   { "file:///c:\\foo", "/c:\\foo"},
   { "file:///c:/foo", "/c:/foo"},
   { "file:////c:/foo", "//c:/foo"},
 #endif
-  { "file://ABCDEFGHIJKLMNOPQRSTUVWXYZ/", "/", "ABCDEFGHIJKLMNOPQRSTUVWXYZ"},
-  { "file://abcdefghijklmnopqrstuvwxyz/", "/", "abcdefghijklmnopqrstuvwxyz"},
 };
 
 
@@ -248,6 +261,24 @@ test_g_filename_from_uri (void)
       cut_assert_equal_string (from_uri_tests[i].expected_filename, res);
       cut_assert_equal_string (from_uri_tests[i].expected_hostname, hostname);
       g_free (hostname);
+      g_free (res);
+    }
+}
+
+void
+test_g_filename_from_uri_nohostname (void)
+{
+  int i;
+  gchar *res;
+  gchar *hostname;
+  
+  for (i = 0; i < G_N_ELEMENTS (from_uri_nohostname_tests); i++)
+    {
+      res = g_filename_from_uri (from_uri_nohostname_tests[i].uri,
+			         &hostname,
+			         NULL);
+      cut_assert_equal_string (from_uri_nohostname_tests[i].expected_filename, res);
+      cut_assert_null (hostname);
       g_free (res);
     }
 }
