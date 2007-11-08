@@ -171,50 +171,59 @@ run (gpointer data)
     return GINT_TO_POINTER(success);
 }
 
+static void
+run_with_thread (CutTestSuite *test_suite, CutTestCase *test_case,
+                 CutContext *context, gboolean try_thread,
+                 GList **threads, gboolean *success)
+{
+    RunTestInfo *info;
+    gboolean need_no_thread_run = TRUE;
+
+    info = g_new0(RunTestInfo, 1);
+    info->test_suite = g_object_ref(test_suite);
+    info->test_case = g_object_ref(test_case);
+    info->context = g_object_ref(context);
+
+    if (try_thread) {
+        GThread *thread;
+        GError *error = NULL;
+
+        thread = g_thread_create(run, info, TRUE, &error);
+        if (error) {
+            g_warning("%s(%d)", error->message, error->code);
+            g_error_free(error);
+        } else {
+            need_no_thread_run = FALSE;
+            *threads = g_list_append(*threads, thread);
+        }
+    }
+
+    if (need_no_thread_run) {
+        if (!run(info))
+            *success = FALSE;
+    }
+}
+
+
 static gboolean
 cut_test_suite_run_test_cases (CutTestSuite *suite, CutContext *context,
                                const GList *tests)
 {
     const GList *list;
     GList *node, *threads = NULL;
-    gboolean use_thread;
+    gboolean try_thread;
     gboolean all_success = TRUE;
 
     cut_context_start_test_suite(context, suite);
     g_signal_emit_by_name(CUT_TEST(suite), "start");
 
-    use_thread = cut_context_get_multi_thread(context);
+    try_thread = cut_context_get_multi_thread(context);
     for (list = tests; list; list = g_list_next(list)) {
         if (!list->data)
             continue;
         if (CUT_IS_TEST_CASE(list->data)) {
-            RunTestInfo *info;
-            gboolean need_no_thread_run = TRUE;
-
-            info = g_new0(RunTestInfo, 1);
-            info->test_suite = g_object_ref(suite);
-            info->test_case = g_object_ref(CUT_TEST_CASE(list->data));
-            info->context = g_object_ref(context);
-
-            if (use_thread) {
-                GThread *thread;
-                GError *error = NULL;
-
-                thread = g_thread_create(run, info, TRUE, &error);
-                if (error) {
-                    g_warning("%s(%d)", error->message, error->code);
-                    g_error_free(error);
-                } else {
-                    need_no_thread_run = FALSE;
-                    threads = g_list_append(threads, thread);
-                }
-            }
-
-            if (need_no_thread_run) {
-                if (!run(info))
-                    all_success = FALSE;
-            }
-
+            run_with_thread(suite, list->data, context, try_thread,
+                            &threads, &all_success);
         } else {
             g_warning("This object is not test case!");
         }
@@ -336,6 +345,7 @@ cut_test_suite_run_test_function_in_test_case (CutTestSuite *suite,
 
     return success;
 }
+
 
 void
 cut_test_suite_add_test_case (CutTestSuite *suite, CutTestCase *test_case)
