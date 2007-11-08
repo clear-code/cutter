@@ -1,5 +1,9 @@
 2007-11-09  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/Makefile.am: Added cut-private.h into cutter_SOURCES.
+
+2007-11-09  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* test/test-cut-test-case.c: Added tests for
 	cut_test_case_run_with_filter().
 
