@@ -84,7 +84,6 @@ void  cut_test_context_register_result      (CutTestContext *context,
     } else {                                                \
         cut_test_fail(                                      \
             FAILURE,                                        \
-            "%s",                                           \
             "expected: <" #expected "> is not TRUE/NULL",   \
             ## __VA_ARGS__, NULL);                          \
     }                                                       \
@@ -97,7 +96,7 @@ void  cut_test_context_register_result      (CutTestContext *context,
     } else {                                                \
         cut_test_fail(                                      \
             FAILURE,                                        \
-            "%s", "expected: <" #actual "> is NULL",        \
+            "expected: <" #actual "> is NULL",              \
             ## __VA_ARGS__, NULL);                          \
     }                                                       \
 } while(0)
