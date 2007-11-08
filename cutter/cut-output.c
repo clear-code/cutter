@@ -303,7 +303,7 @@ cut_output_on_start_test (CutOutput *output, CutTestCase *test_case,
         g_print("%s\n", description);
 
     g_print("%s(%s): ",
-            cut_test_get_function_name(test),
+            cut_test_get_name(test),
             cut_test_case_get_name(test_case));
 }
 

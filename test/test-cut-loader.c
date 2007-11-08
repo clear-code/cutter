@@ -41,7 +41,7 @@ compare_function_name (gconstpointer a, gconstpointer b)
     ta = CUT_TEST(a);
     tb = CUT_TEST(b);
 
-    return strcmp(cut_test_get_function_name(ta), cut_test_get_function_name(tb));
+    return strcmp(cut_test_get_name(ta), cut_test_get_name(tb));
 }
 
 void
@@ -66,7 +66,7 @@ test_load_function (void)
         cut_assert(CUT_IS_TEST(list->data));
 
         test = CUT_TEST(list->data);
-        cut_assert_equal_string(expected_functions[i], cut_test_get_function_name(test));
+        cut_assert_equal_string(expected_functions[i], cut_test_get_name(test));
     }
 
     g_object_unref(test_case);

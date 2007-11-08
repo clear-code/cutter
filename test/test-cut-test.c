@@ -2,7 +2,7 @@
 #include "cut-test.h"
 #include "cut-context.h"
 
-void test_get_function_name(void);
+void test_get_name(void);
 void test_get_description(void);
 void test_increment_assertion_count(void);
 void test_run(void);
@@ -43,10 +43,10 @@ run_the_test (CutTest *test)
 }
 
 void
-test_get_function_name (void)
+test_get_name (void)
 {
     cut_assert_equal_string("dummy-test",
-                            cut_test_get_function_name(test_object));
+                            cut_test_get_name(test_object));
 }
 
 void

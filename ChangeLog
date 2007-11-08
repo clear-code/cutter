@@ -1,5 +1,14 @@
 2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test.[c|h]: cut_test_get_function_name ->
+	cut_test_get_name.
+	* cutter/cut-test-case.c, cutter/cut-output.c: Use cut_test_get_name()
+	instead of cut_test_get_function_name().
+	* test/test-cut-test.c. test/test-cut-loader.c: Use
+	cut_test_get_name() instead of cut_test_get_function_name().
+
+2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-assertions.c: (cut_assert_equal_int): Cast glong.
 
 2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>

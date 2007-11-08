@@ -328,7 +328,7 @@ collect_tests_with_regex (const GList *tests, gchar *pattern)
         gboolean match;
         CutTest *test = CUT_TEST(list->data);
         match = g_regex_match(regex, 
-                              cut_test_get_function_name(test),
+                              cut_test_get_name(test),
                               0, NULL);
         if (match) {
             matched_list = g_list_prepend(matched_list, test);

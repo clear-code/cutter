@@ -76,7 +76,8 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 
-static gdouble  real_get_elapsed  (CutTest  *test);
+static gdouble      real_get_elapsed  (CutTest  *test);
+static const gchar *real_get_name     (CutTest  *test);
 
 static void
 cut_test_class_init (CutTestClass *klass)
@@ -91,6 +92,7 @@ cut_test_class_init (CutTestClass *klass)
     gobject_class->get_property = get_property;
 
     klass->get_elapsed = real_get_elapsed;
+    klass->get_name    = real_get_name;
 
     spec = g_param_spec_string("function-name",
                                "Fcuntion name",
@@ -313,7 +315,13 @@ cut_test_run (CutTest *test, CutContext *context)
 }
 
 const gchar *
-cut_test_get_function_name (CutTest *test)
+cut_test_get_name (CutTest *test)
+{
+    return CUT_TEST_GET_CLASS(test)->get_name(test);
+}
+
+const gchar *
+real_get_name (CutTest *test)
 {
     return CUT_TEST_GET_PRIVATE(test)->function_name;
 }
