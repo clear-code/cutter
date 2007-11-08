@@ -67,6 +67,9 @@ gboolean     cut_test_case_run            (CutTestCase *test_case,
 gboolean     cut_test_case_run_function   (CutTestCase *test_case,
                                            CutContext  *context,
                                            const gchar *name);
+gboolean     cut_test_case_run_with_filter(CutTestCase *test_case,
+                                           CutContext  *context,
+                                           const gchar **test_names);
 gboolean     cut_test_case_has_function   (CutTestCase *test_case,
                                            const gchar *function_name);
 

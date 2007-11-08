@@ -366,6 +366,34 @@ cut_test_case_run_function (CutTestCase *test_case, CutContext *context,
 }
 
 gboolean
+cut_test_case_run_with_filter(CutTestCase *test_case,
+                              CutContext  *context,
+                              const gchar **test_names)
+{
+    CutTestContainer *container;
+    GList *filtered_tests = NULL;
+    gboolean success = TRUE;
+
+    container = CUT_TEST_CONTAINER(test_case);
+    if (test_names) {
+        for (; *test_names; test_names++) {
+            GList *tests;
+            tests = cut_test_container_filter_children(container, *test_names);
+            filtered_tests = g_list_concat(tests, filtered_tests);
+        }
+    } else {
+        filtered_tests =
+            g_list_copy((GList *)cut_test_container_get_children(container));
+    }
+
+    success = cut_test_case_run_tests(test_case, context, filtered_tests);
+
+    g_list_free(filtered_tests);
+
+    return success;
+}
+
+gboolean
 cut_test_case_run (CutTestCase *test_case, CutContext *context)
 {
     CutTestContainer *container;

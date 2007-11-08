@@ -70,6 +70,11 @@ gboolean        cut_test_suite_run_test_function_in_test_case
                                               CutContext   *context,
                                               const gchar *function_name,
                                               const gchar *test_case_name);
+gboolean        cut_test_suite_run_with_filter
+                                             (CutTestSuite *suite,
+                                              CutContext   *context,
+                                              const gchar **test_case_names,
+                                              const gchar **test_names);
 
 G_END_DECLS
 

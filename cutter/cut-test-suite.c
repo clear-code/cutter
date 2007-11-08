@@ -144,6 +144,7 @@ typedef struct _RunTestInfo
     CutTestSuite *test_suite;
     CutTestCase *test_case;
     CutContext *context;
+    gchar **test_names;
 } RunTestInfo;
 
 static gpointer
@@ -153,19 +154,22 @@ run (gpointer data)
     CutTestSuite *test_suite;
     CutTestCase *test_case;
     CutContext *context;
+    gchar **test_names;
     gboolean success;
 
     test_suite = info->test_suite;
     test_case = info->test_case;
     context = info->context;
+    test_names = info->test_names;
 
     g_signal_emit_by_name(test_suite, "start-test-case", test_case);
-    success = cut_test_case_run(test_case, context);
+    success = cut_test_case_run_with_filter(test_case, context, test_names);
     g_signal_emit_by_name(test_suite, "complete-test-case", test_case);
 
     g_object_unref(test_suite);
     g_object_unref(test_case);
     g_object_unref(context);
+    g_strfreev(test_names);
     g_free(info);
 
     return GINT_TO_POINTER(success);
@@ -173,8 +177,8 @@ run (gpointer data)
 
 static void
 run_with_thread (CutTestSuite *test_suite, CutTestCase *test_case,
-                 CutContext *context, gboolean try_thread,
-                 GList **threads, gboolean *success)
+                 CutContext *context, const gchar **test_names,
+                 gboolean try_thread, GList **threads, gboolean *success)
 {
     RunTestInfo *info;
     gboolean need_no_thread_run = TRUE;
@@ -183,6 +187,7 @@ run_with_thread (CutTestSuite *test_suite, CutTestCase *test_case,
     info->test_suite = g_object_ref(test_suite);
     info->test_case = g_object_ref(test_case);
     info->context = g_object_ref(context);
+    info->test_names = g_strdupv(test_names);
 
     if (try_thread) {
         GThread *thread;
@@ -206,24 +211,24 @@ run_with_thread (CutTestSuite *test_suite, CutTestCase *test_case,
 
 
 static gboolean
-cut_test_suite_run_test_cases (CutTestSuite *suite, CutContext *context,
-                               const GList *tests)
+cut_test_suite_run_test_cases (CutTestSuite *test_suite, CutContext *context,
+                               const GList *tests, const gchar **test_names)
 {
     const GList *list;
     GList *node, *threads = NULL;
     gboolean try_thread;
     gboolean all_success = TRUE;
 
-    cut_context_start_test_suite(context, suite);
-    g_signal_emit_by_name(CUT_TEST(suite), "start");
+    cut_context_start_test_suite(context, test_suite);
+    g_signal_emit_by_name(CUT_TEST(test_suite), "start");
 
     try_thread = cut_context_get_multi_thread(context);
     for (list = tests; list; list = g_list_next(list)) {
         if (!list->data)
             continue;
         if (CUT_IS_TEST_CASE(list->data)) {
-            run_with_thread(suite, list->data, context, try_thread,
-                            &threads, &all_success);
+            run_with_thread(test_suite, list->data, context, test_names,
+                            try_thread, &threads, &all_success);
         } else {
             g_warning("This object is not test case!");
         }
@@ -237,9 +242,9 @@ cut_test_suite_run_test_cases (CutTestSuite *suite, CutContext *context,
     }
 
     if (all_success)
-        g_signal_emit_by_name(CUT_TEST(suite), "success");
+        g_signal_emit_by_name(CUT_TEST(test_suite), "success");
 
-    g_signal_emit_by_name(CUT_TEST(suite), "complete");
+    g_signal_emit_by_name(CUT_TEST(test_suite), "complete");
 
     return all_success;
 }
@@ -253,7 +258,7 @@ cut_test_suite_run (CutTestSuite *suite, CutContext *context)
     container = CUT_TEST_CONTAINER(suite);
     tests = cut_test_container_get_children(container);
 
-    return cut_test_suite_run_test_cases(suite, context, tests);
+    return cut_test_suite_run_test_cases(suite, context, tests, NULL);
 }
 
 gboolean
@@ -267,10 +272,9 @@ cut_test_suite_run_test_case (CutTestSuite *suite, CutContext *context,
 
     matched_tests = cut_test_container_filter_children(CUT_TEST_CONTAINER(suite),
                                                        test_case_name);
-    if (matched_tests) {
-        success = cut_test_suite_run_test_cases(suite, context, matched_tests);
-        g_list_free(matched_tests);
-    }
+    success = cut_test_suite_run_test_cases(suite, context, matched_tests,
+                                            NULL);
+    g_list_free(matched_tests);
 
     return success;
 }
@@ -342,6 +346,37 @@ cut_test_suite_run_test_function_in_test_case (CutTestSuite *suite,
                                                         test_cases);
 
     g_list_free(test_cases);
+
+    return success;
+}
+
+gboolean
+cut_test_suite_run_with_filter (CutTestSuite *test_suite,
+                                CutContext   *context,
+                                const gchar **test_case_names,
+                                const gchar **test_names)
+{
+    CutTestContainer *container;
+    GList *filtered_test_cases = NULL;
+    gboolean success = TRUE;
+
+    container = CUT_TEST_CONTAINER(test_suite);
+    if (test_case_names) {
+        for (; *test_case_names; test_case_names++) {
+            GList *test_cases;
+            test_cases = cut_test_container_filter_children(container,
+                                                            *test_case_names);
+            filtered_test_cases = g_list_concat(test_cases, filtered_test_cases);
+        }
+    } else {
+        filtered_test_cases =
+            g_list_copy((GList *)cut_test_container_get_children(container));
+    }
+
+    success = cut_test_suite_run_test_cases(test_suite, context,
+                                            filtered_test_cases, test_names);
+
+    g_list_free(filtered_test_cases);
 
     return success;
 }
