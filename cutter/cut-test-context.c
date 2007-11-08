@@ -255,6 +255,29 @@ cut_test_context_pass_assertion (CutTestContext *context)
     g_signal_emit_by_name(priv->test, "pass-assertion");
 }
 
+static const gchar *
+status_to_signal_name (CutTestResultStatus status)
+{
+    const gchar *status_signal_name = "success";
+
+    switch (status) {
+      case CUT_TEST_RESULT_FAILURE:
+        status_signal_name = "failure";
+        break;
+      case CUT_TEST_RESULT_ERROR:
+        status_signal_name = "error";
+        break;
+      case CUT_TEST_RESULT_PENDING:
+        status_signal_name = "pending";
+        break;
+      default:
+        g_assert("must not happen");
+        break;
+    }
+
+    return status_signal_name;
+}
+
 void
 cut_test_context_register_result (CutTestContext *context,
                                   CutTestResultStatus status,
@@ -286,21 +309,7 @@ cut_test_context_register_result (CutTestContext *context,
         g_free(user_message);
     va_end(args);
 
-    switch (status) {
-      case CUT_TEST_RESULT_SUCCESS:
-        g_assert("must not happen");
-        break;
-      case CUT_TEST_RESULT_FAILURE:
-        status_signal_name = "failure";
-        break;
-      case CUT_TEST_RESULT_ERROR:
-        status_signal_name = "error";
-        break;
-      case CUT_TEST_RESULT_PENDING:
-        status_signal_name = "pending";
-        break;
-    }
-
+    status_signal_name = status_to_signal_name(status);
     if (priv->test) {
         g_signal_emit_by_name(priv->test, status_signal_name, result);
     } else if (priv->test_case) {
