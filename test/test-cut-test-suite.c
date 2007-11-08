@@ -8,12 +8,12 @@
 
 void test_run_test_case (void);
 void test_run_test_case_with_regex (void);
-void test_run_test_function (void);
-void test_run_test_function_with_regex (void);
-void test_run_test_function_in_test_case (void);
-void test_run_test_function_with_regex_in_test_case (void);
-void test_run_test_function_in_test_case_with_regex (void);
-void test_run_test_function_with_regex_in_test_case_with_regex (void);
+void test_run_test (void);
+void test_run_test_with_regex (void);
+void test_run_test_in_test_case (void);
+void test_run_test_with_regex_in_test_case (void);
+void test_run_test_in_test_case_with_regex (void);
+void test_run_test_with_regex_in_test_case_with_regex (void);
 
 static CutContext *test_context;
 static CutTestSuite *test_object;
@@ -138,21 +138,18 @@ run_test_case (const gchar *test_case_name)
 }
 
 static gboolean
-run_test_function (const gchar *test_function_name)
+run_test (const gchar *test_name)
 {
-    return cut_test_suite_run_test_function(test_object,
-                                            test_context,
-                                            test_function_name);
+    return cut_test_suite_run_test(test_object, test_context, test_name);
 }
 
 static gboolean
-run_test_function_in_test_case (const gchar *test_function_name,
-                                const gchar *test_case_name)
+run_test_in_test_case (const gchar *test_name, const gchar *test_case_name)
 {
-    return cut_test_suite_run_test_function_in_test_case(test_object,
-                                                         test_context,
-                                                         test_function_name,
-                                                         test_case_name);
+    return cut_test_suite_run_test_in_test_case(test_object,
+                                                test_context,
+                                                test_name,
+                                                test_case_name);
 }
 
 void
@@ -180,9 +177,9 @@ test_run_test_case_with_regex (void)
 }
 
 void
-test_run_test_function (void)
+test_run_test (void)
 {
-    cut_assert(run_test_function("run_test_function"));
+    cut_assert(run_test("run_test_function"));
     cut_assert_equal_int(n_run_dummy_test_function1, 0);
     cut_assert_equal_int(n_run_dummy_test_function2, 0);
     cut_assert_equal_int(n_run_dummy_run_test_function, 1);
@@ -192,9 +189,9 @@ test_run_test_function (void)
 }
 
 void
-test_run_test_function_with_regex (void)
+test_run_test_with_regex (void)
 {
-    cut_assert(run_test_function("/dummy/"));
+    cut_assert(run_test("/dummy/"));
     cut_assert_equal_int(n_run_dummy_test_function1, 1);
     cut_assert_equal_int(n_run_dummy_test_function2, 1);
     cut_assert_equal_int(n_run_dummy_run_test_function, 0);
@@ -204,9 +201,9 @@ test_run_test_function_with_regex (void)
 }
 
 void
-test_run_test_function_in_test_case (void)
+test_run_test_in_test_case (void)
 {
-    cut_assert(run_test_function_in_test_case("run_test_function", "dummy_test_case"));
+    cut_assert(run_test_in_test_case("run_test_function", "dummy_test_case"));
     cut_assert_equal_int(n_run_dummy_test_function1, 0);
     cut_assert_equal_int(n_run_dummy_test_function2, 0);
     cut_assert_equal_int(n_run_dummy_run_test_function, 1);
@@ -216,9 +213,9 @@ test_run_test_function_in_test_case (void)
 }
 
 void
-test_run_test_function_with_regex_in_test_case (void)
+test_run_test_with_regex_in_test_case (void)
 {
-    cut_assert(run_test_function_in_test_case("/dummy/", "dummy_test_case"));
+    cut_assert(run_test_in_test_case("/dummy/", "dummy_test_case"));
     cut_assert_equal_int(n_run_dummy_test_function1, 1);
     cut_assert_equal_int(n_run_dummy_test_function2, 1);
     cut_assert_equal_int(n_run_dummy_run_test_function, 0);
@@ -228,9 +225,9 @@ test_run_test_function_with_regex_in_test_case (void)
 }
 
 void
-test_run_test_function_in_test_case_with_regex (void)
+test_run_test_in_test_case_with_regex (void)
 {
-    cut_assert(run_test_function_in_test_case("run_test_function", "/dummy/"));
+    cut_assert(run_test_in_test_case("run_test_function", "/dummy/"));
     cut_assert_equal_int(n_run_dummy_test_function1, 0);
     cut_assert_equal_int(n_run_dummy_test_function2, 0);
     cut_assert_equal_int(n_run_dummy_run_test_function, 1);
@@ -240,9 +237,9 @@ test_run_test_function_in_test_case_with_regex (void)
 }
 
 void
-test_run_test_function_with_regex_in_test_case_with_regex (void)
+test_run_test_with_regex_in_test_case_with_regex (void)
 {
-    cut_assert(run_test_function_in_test_case("/dummy/", "/dummy/"));
+    cut_assert(run_test_in_test_case("/dummy/", "/dummy/"));
     cut_assert_equal_int(n_run_dummy_test_function1, 1);
     cut_assert_equal_int(n_run_dummy_test_function2, 1);
     cut_assert_equal_int(n_run_dummy_run_test_function, 0);

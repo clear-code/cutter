@@ -177,7 +177,7 @@ run (gpointer data)
 
 static void
 run_with_thread (CutTestSuite *test_suite, CutTestCase *test_case,
-                 CutContext *context, const gchar **test_names,
+                 CutContext *context, gchar **test_names,
                  gboolean try_thread, GList **threads, gboolean *success)
 {
     RunTestInfo *info;
@@ -212,7 +212,7 @@ run_with_thread (CutTestSuite *test_suite, CutTestCase *test_case,
 
 static gboolean
 cut_test_suite_run_test_cases (CutTestSuite *test_suite, CutContext *context,
-                               const GList *tests, const gchar **test_names)
+                               const GList *tests, gchar **test_names)
 {
     const GList *list;
     GList *node, *threads = NULL;
@@ -265,96 +265,58 @@ gboolean
 cut_test_suite_run_test_case (CutTestSuite *suite, CutContext *context,
                               const gchar *test_case_name)
 {
-    GList *matched_tests;
-    gboolean success = FALSE;
+    gchar *test_case_names[2];
 
     g_return_val_if_fail(CUT_IS_TEST_SUITE(suite), FALSE);
 
-    matched_tests = cut_test_container_filter_children(CUT_TEST_CONTAINER(suite),
-                                                       test_case_name);
-    success = cut_test_suite_run_test_cases(suite, context, matched_tests,
-                                            NULL);
-    g_list_free(matched_tests);
+    test_case_names[0] = (gchar *)test_case_name;
+    test_case_names[1] = NULL;
 
-    return success;
-}
-
-static gboolean
-cut_test_suite_run_function_in_test_cases (CutTestSuite *suite,
-                                           CutContext *context,
-                                           const gchar *function_name,
-                                           const GList *test_cases)
-{
-    gboolean all_success = TRUE;
-    const GList *list;
-
-    g_return_val_if_fail(CUT_IS_TEST_SUITE(suite), FALSE);
-
-    cut_context_start_test_suite(context, suite);
-    g_signal_emit_by_name(CUT_TEST(suite), "start");
-
-    for (list = test_cases; list; list = g_list_next(list)) {
-        if (!list->data)
-            continue;
-        if (CUT_IS_TEST_CASE(list->data)) {
-            CutTestCase *test_case = CUT_TEST_CASE(list->data);
-            if (cut_test_case_has_function(test_case, function_name)) {
-                if (!cut_test_case_run_function(test_case,
-                                                context,
-                                                function_name))
-                    all_success = FALSE;
-            }
-        }
-    }
-    g_signal_emit_by_name(CUT_TEST(suite), "complete");
-
-    return all_success;
+    return cut_test_suite_run_with_filter(suite, context,
+                                          test_case_names, NULL);
 }
 
 gboolean
-cut_test_suite_run_test_function (CutTestSuite *suite, CutContext *context,
-                                  const gchar *function_name)
+cut_test_suite_run_test (CutTestSuite *suite, CutContext *context,
+                         const gchar *test_name)
 {
     const GList *test_cases;
+    gchar *test_names[2];
 
     g_return_val_if_fail(CUT_IS_TEST_SUITE(suite), FALSE);
 
+    test_names[0] = (gchar *)test_name;
+    test_names[1] = NULL;
     test_cases = cut_test_container_get_children(CUT_TEST_CONTAINER(suite));
-    return cut_test_suite_run_function_in_test_cases(suite, context, 
-                                              function_name, test_cases);
+    return cut_test_suite_run_test_cases(suite, context, test_cases,
+                                         test_names);
 }
 
 gboolean
-cut_test_suite_run_test_function_in_test_case (CutTestSuite *suite,
-                                               CutContext   *context,
-                                               const gchar *function_name,
-                                               const gchar *test_case_name)
+cut_test_suite_run_test_in_test_case (CutTestSuite *suite,
+                                      CutContext   *context,
+                                      const gchar  *test_name,
+                                      const gchar  *test_case_name)
 {
-    GList *test_cases;
-    gboolean success = FALSE;
+    gchar *test_names[2];
+    gchar *test_case_names[2];
 
     g_return_val_if_fail(CUT_IS_TEST_SUITE(suite), FALSE);
 
-    test_cases = cut_test_container_filter_children(CUT_TEST_CONTAINER(suite),
-                                                    test_case_name);
-    if (!test_cases)
-        return FALSE;
+    test_names[0] = (gchar *)test_name;
+    test_names[1] = NULL;
+    test_case_names[0] = (gchar *)test_case_name;
+    test_case_names[1] = NULL;
 
-    success = cut_test_suite_run_function_in_test_cases(suite,
-                                                        context,
-                                                        function_name,
-                                                        test_cases);
-
-    g_list_free(test_cases);
-
-    return success;
+    return cut_test_suite_run_with_filter(suite, context, test_case_names,
+                                          test_names);
 }
 
 gboolean
 cut_test_suite_run_with_filter (CutTestSuite *test_suite,
                                 CutContext   *context,
-                                const gchar **test_case_names,
-                                const gchar **test_names)
+                                gchar       **test_case_names,
+                                gchar       **test_names)
 {
     CutTestContainer *container;
     GList *filtered_test_cases = NULL;

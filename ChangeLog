@@ -1,3 +1,8 @@
+2007-11-08  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-test-suite.[ch], test/test-cut-test-suite.c: removed
+	'_function'.
+
 2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* test/test-cut-test.c: Added some signal tests.
