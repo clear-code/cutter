@@ -7,6 +7,7 @@ void test_equal_int(void);
 void test_equal_string(void);
 void test_equal_double(void);
 void test_operator(void);
+void test_null(void);
 void test_error(void);
 void test_fail(void);
 void test_pending(void);
@@ -154,6 +155,12 @@ test_operator (void)
     cut_assert_operator(NULL, ==, NULL);
     cut_assert_operator(TRUE, ||, FALSE);
     cut_assert_operator(TRUE, &&, TRUE);
+}
+
+void
+test_null (void)
+{
+    cut_assert_null(NULL);
 }
 
 void

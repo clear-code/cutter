@@ -89,6 +89,18 @@ void  cut_test_context_register_result      (CutTestContext *context,
     }                                                       \
 } while(0)
 
+#define cut_assert_null(actual, ...) do                     \
+{                                                           \
+    if ((actual) == NULL) {                                 \
+        cut_test_pass();                                    \
+    } else {                                                \
+        cut_test_fail(                                      \
+            FAILURE,                                        \
+            "expected: <" #actual "> is NULL",              \
+            ## __VA_ARGS__, NULL);                          \
+        return;                                             \
+    }                                                       \
+} while(0)
 
 #define cut_assert_equal_int(expected, actual, ...) do                  \
 {                                                                       \
