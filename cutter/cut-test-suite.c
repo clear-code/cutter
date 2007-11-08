@@ -32,7 +32,6 @@
 #include "cut-test.h"
 #include "cut-test-case.h"
 #include "cut-context.h"
-#include "cut-utils.h"
 
 #define CUT_TEST_SUITE_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_SUITE, CutTestSuitePrivate))
 
