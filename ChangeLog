@@ -4,6 +4,8 @@
 
 2007-11-08  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-assertions.c: added a test for cut_notify().
+
 	* cutter/: supported cut_notify().
 
 	* cutter/cut-context.c: supported property to avoid warnings.

@@ -11,6 +11,7 @@ void test_null(void);
 void test_error(void);
 void test_fail(void);
 void test_pending(void);
+void test_notification(void);
 void test_assert_message(void);
 
 static gboolean need_cleanup;
@@ -36,6 +37,12 @@ static void
 dummy_pending_test_function (void)
 {
     cut_pending("This test has been pending ever!");
+}
+
+static void
+dummy_notify_test_function (void)
+{
+    cut_notify("This test has been notify ever!");
 }
 
 static void
@@ -180,6 +187,28 @@ test_pending (void)
                "Could not get a CutTestResult object "
                "since \"pending\" signal was not emmitted.");
     cut_assert_equal_int(CUT_TEST_RESULT_PENDING,
+                         cut_test_result_get_status(test_result));
+}
+
+void
+test_notification (void)
+{
+    CutTest *test;
+
+    test = cut_test_new("dummy-notify-test", NULL, dummy_notify_test_function);
+    cut_assert(test, "Creating a new CutTest object failed");
+
+    g_signal_connect(test, "notification", G_CALLBACK(cb_collect_result),
+                     &test_result);
+    cut_assert(run(test), "cut_notify() did return FALSE!");
+    g_signal_handlers_disconnect_by_func(test,
+                                         G_CALLBACK(cb_collect_result),
+                                         &test_result);
+
+    cut_assert(test_result,
+               "Could not get a CutTestResult object "
+               "since \"notification\" signal was not emmitted.");
+    cut_assert_equal_int(CUT_TEST_RESULT_NOTIFICATION,
                          cut_test_result_get_status(test_result));
 }
 
