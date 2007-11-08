@@ -214,9 +214,10 @@ print_for_status(CutOutputPrivate *priv, CutTestResultStatus status,
 
     va_start(args, format);
     if (priv->use_color) {
-        g_print(status_to_color(status));
-        g_vprintf(format, args);
-        g_print(NORMAL_COLOR);
+        gchar *message;
+        message = g_strdup_vprintf(format, args);
+        g_print("%s%s%s", status_to_color(status), message, NORMAL_COLOR);
+        g_free(message);
     } else {
         g_vprintf(format, args);
     }
@@ -305,6 +306,7 @@ cut_output_on_start_test (CutOutput *output, CutTestCase *test_case,
     g_print("%s(%s): ",
             cut_test_get_name(test),
             cut_test_get_name(CUT_TEST(test_case)));
+    fflush(stdout);
 }
 
 void
@@ -320,6 +322,7 @@ cut_output_on_complete_test (CutOutput *output, CutTestCase *test_case,
         return;
 
     g_print(": (%f)\n", cut_test_get_elapsed(test));
+    fflush(stdout);
 }
 
 void

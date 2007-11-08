@@ -1,5 +1,7 @@
 2007-11-08  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-output.c: avoided to spread color effect.
+
 	* cutter/cut-repository.c: created empty suite.
 
 	* test/test-cut-test-case.c, cutter/cut-test-case.[ch]: removed
