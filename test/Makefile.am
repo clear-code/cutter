@@ -11,7 +11,7 @@ TESTS_ENVIRONMENT = NO_MAKE=yes
 
 noinst_LTLIBRARIES = 				\
 		libcuttest_utils.la		\
-		libtest_cut_assertion.la	\
+		libtest_cut_assertions.la	\
 		libtest_cut_test.la		\
 		libtest_cut_test_result.la	\
 		libtest_cut_test_case.la	\
@@ -25,7 +25,7 @@ LDFLAGS =			\
 
 libcuttest_utils_la_SOURCES = cuttest-utils.c
 
-libtest_cut_assertion_la_SOURCES   = test-cut-assertion.c
+libtest_cut_assertions_la_SOURCES  = test-cut-assertions.c
 libtest_cut_test_la_SOURCES        = test-cut-test.c
 libtest_cut_test_result_la_SOURCES = test-cut-test-result.c
 libtest_cut_test_case_la_SOURCES   = test-cut-test-case.c
