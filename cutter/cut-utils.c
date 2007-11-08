@@ -38,9 +38,12 @@ cut_utils_create_regex_pattern (const gchar *string)
         pattern = g_strdup(".*");
     } else if (strlen(string) > 1 &&
         g_str_has_prefix(string, "/") && g_str_has_suffix(string, "/")) {
-        pattern = g_strndup(string + 1, strlen(string) - 2);  
+        pattern = g_strndup(string + 1, strlen(string) - 2);
     } else {
-        pattern = g_strdup_printf("^%s$", string);
+        gchar *escaped_string;
+        escaped_string = g_regex_escape_string(string, -1);
+        pattern = g_strdup_printf("^%s$", escaped_string);
+        g_free(escaped_string);
     }
 
     return pattern;
