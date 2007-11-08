@@ -62,7 +62,7 @@ test_create_test_suite (void)
     for (list = test_cases, i = 0; list; list = g_list_next(list), i++) {
         CutTestCase *test_case;
 
-        cut_assert(i >= n_expected_test_case_names);
+        cut_assert(i < n_expected_test_case_names);
         cut_assert(CUT_IS_TEST_CASE(list->data));
         test_case = CUT_TEST_CASE(list->data);
 

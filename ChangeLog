@@ -1,3 +1,7 @@
+2007-11-09  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test-cut-repository.c: Fix comparison.
+
 2007-11-08  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-output.c: added notification message.
