@@ -177,7 +177,7 @@ status_to_name(CutTestResultStatus status)
         name = "Notification";
         break;
       default:
-        name = "";
+        name = "MUST NOT HAPPEN!!!";
         break;
     }
 
