@@ -22,7 +22,7 @@
 #ifndef __CUTTER_H__
 #define __CUTTER_H__
 
-#include <cut-assertions.h>
+#include <cutter/cut-assertions.h>
 
 #ifdef __cplusplus
 extern "C" {

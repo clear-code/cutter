@@ -1,3 +1,9 @@
+2007-11-09  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/Makefile.am, cutter/cuttter.h, cutter/cut-assertions.h:
+	cut-public.h and cut-assertions.h are installed in
+	$INCLUDE_DIR/cuttter/cutter/.
+
 2007-11-09  Kouhei Sutou  <kou@cozmixng.org>
 
 	* test/test-cut-test-case.c: added NULL to indicate end of array.
