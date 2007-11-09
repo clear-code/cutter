@@ -98,13 +98,25 @@ See sample/calc/.
 This is the list of assertion functions. (({message})) in the
 arguments is displayed when assertion fails.
 
+--- cut_error(message)
+
+    It returns error status. It should be used in setup() or teardown().
+
 --- cut_fail(message)
 
     It always fails.
 
+--- cut_pending(message)
+
+    It returns pending status.
+
 --- cut_assert(expected)
 
     It passes when (({expected})) is not 0.
+
+--- cut_assert_null(expected)
+
+    It passes when (({expected})) is not NULL.
 
 --- cut_assert_equal_int(expected, actual)
 
@@ -120,6 +132,10 @@ arguments is displayed when assertion fails.
 
     It passes when (({expected})) and (({actual})) are same
     content string.
+
+--- cut_notify(message)
+
+    It just shows the message.
 
 === Template
 
@@ -149,7 +165,9 @@ The following is template of test.
   void
   test_function1(void)
   {
-    cut_assert_XXX();
+    cut_assert_equal_int(1, condition,
+                         "The condition value should set 1 in setup() but was: %d.",
+			 condition);
     ...
   }
   
