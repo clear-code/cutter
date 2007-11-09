@@ -67,6 +67,7 @@ extern "C" {
     } else {                                                \
         cut_test_fail(                                      \
             FAILURE,                                        \
+            "%s",                                           \
             "expected: <" #expected "> is not TRUE/NULL",   \
             ## __VA_ARGS__, NULL);                          \
     }                                                       \
@@ -79,6 +80,7 @@ extern "C" {
     } else {                                                \
         cut_test_fail(                                      \
             FAILURE,                                        \
+            "%s",                                           \
             "expected: <" #actual "> is NULL",              \
             ## __VA_ARGS__, NULL);                          \
     }                                                       \
@@ -124,7 +126,7 @@ extern "C" {
         cut_test_pass();                                                \
     } else {                                                            \
         cut_test_fail(FAILURE,                                          \
-                      "<%s == %s>\n",                                   \
+                      "<%s == %s>\n"                                    \
                       "expected: <%s>\n but was: <%s>",                 \
                       #expected, #actual,                               \
                       _expected, _actual,                               \

@@ -1,3 +1,8 @@
+2007-11-09  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-assertions.h: re-added needed "%s". This is needed
+	when expected or actual include format string like "%s".
+
 2007-11-09  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* configure.ac, cutter/Makefile.am: Support for static binary.
