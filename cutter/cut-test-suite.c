@@ -218,6 +218,7 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite, CutContext *context,
     GList *node, *threads = NULL;
     gboolean try_thread;
     gboolean all_success = TRUE;
+    int i;
 
     cut_context_start_test_suite(context, test_suite);
     g_signal_emit_by_name(CUT_TEST(test_suite), "start");
