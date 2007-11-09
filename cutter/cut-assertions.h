@@ -23,10 +23,11 @@
 #define __CUT_ASSERTIONS_H__
 
 #include <string.h>
-#include <glib.h>
 #include <cut-public.h>
 
-G_BEGIN_DECLS
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 #define cut_test_pass() \
     cut_test_context_pass_assertion(get_current_test_context())
@@ -92,7 +93,7 @@ G_BEGIN_DECLS
                       "<%s == %s>\n"                        \
                       "expected: <%ld>\n but was: <%ld>",   \
                       #expected, #actual,                   \
-                      (glong)(expected), (glong)(actual),   \
+                      (long)(expected), (long)(actual),     \
                       ## __VA_ARGS__, NULL);                \
     }                                                       \
 } while(0)
@@ -117,8 +118,8 @@ G_BEGIN_DECLS
 
 #define cut_assert_equal_string(expected, actual, ...) do               \
 {                                                                       \
-    const gchar *_expected = (expected);                                \
-    const gchar *_actual = (actual);                                    \
+    const char *_expected = (expected);                                 \
+    const char *_actual = (actual);                                     \
     if (_expected && _actual && strcmp(_expected, _actual) == 0) {      \
         cut_test_pass();                                                \
     } else {                                                            \
@@ -145,7 +146,9 @@ G_BEGIN_DECLS
 } while(0)
 
 
-G_END_DECLS
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __CUT_ASSERTIONS_H__ */
 

@@ -1,5 +1,9 @@
 2007-11-09  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-assertions.h: Removed <glib.h>.
+
+2007-11-09  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cutter.h: Removed <glib.h>.
 
 2007-11-09  Hiroyuki Ikezoe  <poincare@ikezoe.net>
