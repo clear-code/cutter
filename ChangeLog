@@ -1,3 +1,7 @@
+2007-11-09  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* configure.ac, cutter/Makefile.am: Support for static binary.
+
 2007-11-09  Kouhei Sutou  <kou@cozmixng.org>
 
 	* configure.ac, cutter/cut-loader.c, cutter/cut-main.c: BFD is optional.

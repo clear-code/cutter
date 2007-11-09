@@ -4,6 +4,10 @@ INCLUDES = $(GLIB_CFLAGS)	\
 
 EXTRA_DIST = config.h.in
 
+if ENABLE_STATIC_BINARY
+AM_LDFLAGS = -all-static
+endif
+
 cutterincludedir=$(includedir)/cutter
 cutterinclude_HEADERS = 		\
 	cutter.h
