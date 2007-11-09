@@ -23,7 +23,9 @@ LDFLAGS =			\
 	-rpath $(libdir)	\
 	-avoid-version
 
-libcuttest_utils_la_SOURCES = cuttest-utils.c
+libcuttest_utils_la_SOURCES = 		\
+			cuttest-utils.c	\
+			cuttest-utils.h
 
 libtest_cut_assertions_la_SOURCES  = test-cut-assertions.c
 libtest_cut_test_la_SOURCES        = test-cut-test.c
