@@ -26,6 +26,7 @@
 
 
 #include "cutter.h"
+#include <glib.h>
 
 void test_g_filename_to_uri (void);
 void test_g_filename_to_uri_error (void);
