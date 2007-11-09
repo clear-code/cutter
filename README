@@ -57,6 +57,30 @@ The feature of Cutter is to making test as shared library.
    is for tolls (like Emacs) which have function jumping to
    error line.
 
+: -c DIRECTORY, --color=DIRECTORY
+
+   Cutter adds DIRECTORY before file name when test fails. This
+   is for tolls (like Emacs) which have function jumping to
+   error line.
+
+: -n DIRECTORY, --name=DIRECTORY
+
+   Cutter adds DIRECTORY before file name when test fails. This
+   is for tolls (like Emacs) which have function jumping to
+   error line.
+
+: -t DIRECTORY, --test=DIRECTORY
+
+   Cutter adds DIRECTORY before file name when test fails. This
+   is for tolls (like Emacs) which have function jumping to
+   error line.
+
+: -m, --multi-thread
+
+   Cutter adds DIRECTORY before file name when test fails. This
+   is for tolls (like Emacs) which have function jumping to
+   error line.
+
 == How to make test
 
 Executing flow of test is the following.
