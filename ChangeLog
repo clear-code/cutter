@@ -1,5 +1,7 @@
 2007-11-09  Kouhei Sutou  <kou@cozmixng.org>
 
+	* README: fixed lazy copy-and-paste.
+
 	* cutter.pc.in: don't require glib-2.0.
 
 	* cutter/cut-assertions.h: re-added needed "%s". This is needed
