@@ -69,22 +69,6 @@ AM_PATH_GLIB_2_0($GLIB_REQUIRED, [], [], [gmodule gobject gthread])
 # Checks for libraries.
 AC_CHECK_LIB(bfd, bfd_init)
 
-# Checks for header files.
-AC_FUNC_ALLOCA
-AC_HEADER_DIRENT
-AC_HEADER_STDC
-AC_CHECK_HEADERS([stdlib.h string.h sys/time.h dlfcn.h direct.h fnmatch.h])
-
-# Checks for typedefs, structures, and compiler characteristics.
-AC_HEADER_STDBOOL
-AC_C_CONST
-AC_TYPE_SIZE_T
-AC_HEADER_TIME
-
-# Checks for library functions.
-AC_FUNC_CLOSEDIR_VOID
-AC_REPLACE_FNMATCH
-
 CUTTER_CFLAGS="\$(GLIB_CFLAGS)"
 AC_SUBST(CUTTER_CFLAGS)
 
