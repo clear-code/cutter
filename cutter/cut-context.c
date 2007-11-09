@@ -44,6 +44,7 @@ struct _CutContextPrivate
     GList *results;
     CutOutput *output;
     gboolean use_multi_thread;
+    GMutex *mutex;
 };
 
 enum
@@ -141,6 +142,7 @@ cut_context_init (CutContext *context)
     priv->results = NULL;
     priv->output = cut_output_new();
     priv->use_multi_thread = FALSE;
+    priv->mutex = g_mutex_new();
 }
 
 static void
@@ -157,6 +159,11 @@ dispose (GObject *object)
     if (priv->output) {
         g_object_unref(priv->output);
         priv->output = NULL;
+    }
+
+    if (priv->mutex) {
+        g_mutex_free(priv->mutex);
+        priv->mutex = NULL;
     }
 
     G_OBJECT_CLASS(cut_context_parent_class)->dispose(object);
@@ -280,7 +287,11 @@ cut_context_set_use_color (CutContext *context, gboolean use_color)
 void
 cut_context_set_multi_thread (CutContext *context, gboolean use_multi_thread)
 {
-    CUT_CONTEXT_GET_PRIVATE(context)->use_multi_thread = use_multi_thread;
+   CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
+
+   g_mutex_lock(priv->mutex);
+   priv->use_multi_thread = use_multi_thread;
+   g_mutex_unlock(priv->mutex);
 }
 
 gboolean
@@ -304,7 +315,9 @@ cb_pass_assertion(CutTest *test, gpointer data)
 
     context = info->context;
     priv = CUT_CONTEXT_GET_PRIVATE(context);
+    g_mutex_lock(priv->mutex);
     priv->n_assertions++;
+    g_mutex_unlock(priv->mutex);
 }
 
 static void
@@ -328,9 +341,11 @@ cb_failure(CutTest *test, CutTestResult *result, gpointer data)
     CutContextPrivate *priv;
 
     context = info->context;
-    info->result = g_object_ref(result);
     priv = CUT_CONTEXT_GET_PRIVATE(context);
+    g_mutex_lock(priv->mutex);
+    info->result = g_object_ref(result);
     priv->n_failures++;
+    g_mutex_unlock(priv->mutex);
     if (priv->output)
         cut_output_on_failure(priv->output, test, info->result);
 }
@@ -343,9 +358,11 @@ cb_error(CutTest *test, CutTestResult *result, gpointer data)
     CutContextPrivate *priv;
 
     context = info->context;
-    info->result = g_object_ref(result);
     priv = CUT_CONTEXT_GET_PRIVATE(context);
+    g_mutex_lock(priv->mutex);
+    info->result = g_object_ref(result);
     priv->n_errors++;
+    g_mutex_unlock(priv->mutex);
     if (priv->output)
         cut_output_on_error(priv->output, test, info->result);
 }
@@ -358,9 +375,11 @@ cb_pending(CutTest *test, CutTestResult *result, gpointer data)
     CutContextPrivate *priv;
 
     context = info->context;
-    info->result = g_object_ref(result);
     priv = CUT_CONTEXT_GET_PRIVATE(context);
+    g_mutex_lock(priv->mutex);
+    info->result = g_object_ref(result);
     priv->n_pendings++;
+    g_mutex_unlock(priv->mutex);
     if (priv->output)
         cut_output_on_pending(priv->output, test, info->result);
 }
@@ -373,9 +392,11 @@ cb_notification(CutTest *test, CutTestResult *result, gpointer data)
     CutContextPrivate *priv;
 
     context = info->context;
-    info->result = g_object_ref(result);
     priv = CUT_CONTEXT_GET_PRIVATE(context);
+    g_mutex_lock(priv->mutex);
+    info->result = g_object_ref(result);
     priv->n_notifications++;
+    g_mutex_unlock(priv->mutex);
     if (priv->output)
         cut_output_on_notification(priv->output, test, info->result);
 }
@@ -390,7 +411,9 @@ cb_complete (CutTest *test, gpointer data)
     context = info->context;
     priv = CUT_CONTEXT_GET_PRIVATE(context);
     if (info->result) {
+        g_mutex_lock(priv->mutex);
         priv->results = g_list_prepend(priv->results, info->result);
+        g_mutex_unlock(priv->mutex);
     }
 
     g_signal_handlers_disconnect_by_func(test,
@@ -423,11 +446,16 @@ void
 cut_context_start_test (CutContext *context, CutTest *test)
 {
     TestCallBackInfo *info;
+    CutContextPrivate *priv;
 
     info = g_new0(TestCallBackInfo, 1);
     info->context = context;
     g_object_ref(context);
-    CUT_CONTEXT_GET_PRIVATE(context)->n_tests++;
+
+    priv = CUT_CONTEXT_GET_PRIVATE(context);
+    g_mutex_lock(priv->mutex);
+    priv->n_tests++;
+    g_mutex_unlock(priv->mutex);
 
     g_signal_connect(test, "pass_assertion",
                      G_CALLBACK(cb_pass_assertion), info);

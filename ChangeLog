@@ -1,5 +1,7 @@
 2007-11-09  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-context.c: made thread safe.
+
 	* README: fixed lazy copy-and-paste.
 
 	* cutter.pc.in: don't require glib-2.0.
