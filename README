@@ -110,25 +110,25 @@ arguments is displayed when assertion fails.
 
     It returns pending status.
 
---- cut_assert(expected)
+--- cut_assert(expected, ...)
 
     It passes when (({expected})) is not 0.
 
---- cut_assert_null(expected)
+--- cut_assert_null(expected, ...)
 
     It passes when (({expected})) is not NULL.
 
---- cut_assert_equal_int(expected, actual)
+--- cut_assert_equal_int(expected, actual, ...)
 
     It passes when (({expected})) equals (({actual})). They
     must be int type or variant of int (like long).
 
---- cut_assert_equal_double(expected, actual)
+--- cut_assert_equal_double(expected, actual, ...)
 
     It passes when (({expected})) equals (({actual})). They
     must be float type or variant of double.
 
---- cut_assert_equal_string(expected, actual)
+--- cut_assert_equal_string(expected, actual, ...)
 
     It passes when (({expected})) and (({actual})) are same
     content string.
