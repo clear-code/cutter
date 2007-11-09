@@ -22,12 +22,11 @@
 #ifndef __CUTTER_H__
 #define __CUTTER_H__
 
-#include <glib.h>
+#include <cut-assertions.h>
 
-#include "cut-public.h"
-#include "cut-assertions.h"
-
-G_BEGIN_DECLS
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 void setup(void);
 void teardown(void);
@@ -49,7 +48,9 @@ get_current_test_context (void)
     return _current_test_context;
 }
 
-G_END_DECLS
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* __CUTTER_H__ */
 
