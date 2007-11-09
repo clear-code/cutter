@@ -1,3 +1,7 @@
+2007-11-09  Kouhei Sutou  <kou@cozmixng.org>
+
+	* test/test-cut-test-case.c: added NULL to indicate end of array.
+
 2007-11-09  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-assertions.h: Removed <glib.h>.
