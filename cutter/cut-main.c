@@ -26,7 +26,9 @@
 #include <stdlib.h>
 #include <glib.h>
 
-#include <bfd.h>
+#ifdef HAVE_LIBBFD
+#  include <bfd.h>
+#endif
 
 #include "cut-context.h"
 #include "cut-test-suite.h"
@@ -133,7 +135,9 @@ main (int argc, char *argv[])
 
     g_thread_init(NULL);
 
+#ifdef HAVE_LIBBFD
     bfd_init();
+#endif
 
     context = cut_context_new();
 

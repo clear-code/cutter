@@ -29,7 +29,9 @@
 #include <glib/gstdio.h>
 #include <gmodule.h>
 
-#include <bfd.h>
+#ifdef HAVE_LIBBFD
+#  include <bfd.h>
+#endif
 
 #include "cut-loader.h"
 
@@ -160,6 +162,7 @@ is_test_function_name (const gchar *name)
     return name && g_str_has_prefix(name, "test_");
 }
 
+#ifdef HAVE_LIBBFD
 static GList *
 collect_test_functions (CutLoaderPrivate *priv)
 {
@@ -202,6 +205,63 @@ collect_test_functions (CutLoaderPrivate *priv)
 
     return test_names;
 }
+#else
+static inline gboolean
+is_test_function_name_consisted_of (char c)
+{
+    return g_ascii_isalnum(c) || '_' == c;
+}
+
+static inline gboolean
+is_test_function_name_string (GString *name)
+{
+    return name->len > 4 && is_test_function_name(name->str);
+}
+
+static GList *
+collect_test_functions (CutLoaderPrivate *priv)
+{
+    FILE *input;
+    GString *name;
+    char buffer[4096];
+    size_t size;
+    GList *test_names;
+    GHashTable *test_name_table;
+
+    input = g_fopen(priv->so_filename, "rb");
+    if (!input)
+        return NULL;
+
+    test_name_table = g_hash_table_new(g_str_hash, g_str_equal);
+    name = g_string_new("");
+    while ((size = fread(buffer, sizeof(*buffer), sizeof(buffer), input)) > 0) {
+        size_t i;
+        for (i = 0; i < size; i++) {
+            if (is_test_function_name_consisted_of(buffer[i])) {
+                g_string_append_c(name, buffer[i]);
+            } else if (name->len) {
+                if (is_test_function_name_string(name)) {
+                    g_hash_table_insert(test_name_table,
+                                        g_strdup(name->str), NULL);
+                }
+                g_string_truncate(name, 0);
+            }
+        }
+    }
+
+    if (is_test_function_name_string(name)) {
+        g_hash_table_insert(test_name_table, g_strdup(name->str), NULL);
+    }
+    g_string_free(name, TRUE);
+
+    test_names = g_hash_table_get_keys(test_name_table);
+    g_hash_table_unref(test_name_table);
+
+    fclose(input);
+
+    return test_names;
+}
+#endif
 
 CutTestCase *
 cut_loader_load_test_case (CutLoader *loader)

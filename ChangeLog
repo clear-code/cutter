@@ -1,3 +1,7 @@
+2007-11-09  Kouhei Sutou  <kou@cozmixng.org>
+
+	* configure.ac, cutter/cut-loader.c, cutter/cut-main.c: BFD is optional.
+
 2007-11-09  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/Makefile.am, cutter/cuttter.h, cutter/cut-assertions.h:

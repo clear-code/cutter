@@ -67,7 +67,7 @@ AC_SUBST(GLIB_REQUIRED)
 AM_PATH_GLIB_2_0($GLIB_REQUIRED, [], [], [gmodule gobject gthread])
 
 # Checks for libraries.
-AC_CHECK_LIB(bfd, bfd_init, [], [AC_ERROR("-lbfd not found")])
+AC_CHECK_LIB(bfd, bfd_init)
 
 # Checks for header files.
 AC_FUNC_ALLOCA
