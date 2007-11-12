@@ -91,22 +91,30 @@ test_incremental (gboolean line_break,
     }
 }
 
-#define test_incremental_with_line_breaks_for_length(length) do {\
-  gsize encoded_length, decoded_length, max; \
-  max = (length) * 4 / 3 + (length) * 4 / (3 * 72) + 7; \
-  test_incremental (FALSE, (length), &encoded_length, &decoded_length); \
-  cut_assert (encoded_length <= max, "Too long encoded length: got %d, expected max %d", encoded_length, max); \
-  cut_assert_equal_int ((length), decoded_length); \
-  cut_assert (memcmp(data, data2, (length)) == 0); \
+#define test_incremental_with_line_breaks_for_length(length) do         \
+{                                                                       \
+    gsize _length, encoded_length, decoded_length, max;                 \
+    _length = (length);                                                 \
+    max = _length * 4 / 3 + _length * 4 / (3 * 72) + 7;                 \
+    test_incremental (FALSE, _length,                                   \
+                      &encoded_length, &decoded_length);                \
+    cut_assert (encoded_length <= max,                                  \
+                "Too long encoded length: got %d, expected max %d",     \
+                encoded_length, max);                                   \
+    cut_assert_equal_memory (data, _length, data2, decoded_length);     \
 } while (0)
 
-#define test_incremental_no_line_breaks_for_length(length) do {\
-  gsize encoded_length, decoded_length, max; \
-  max = (length) * 4 / 3 + 6; \
-  test_incremental (FALSE, (length), &encoded_length, &decoded_length); \
-  cut_assert (encoded_length <= max, "Too long encoded length: got %d, expected max %d", encoded_length, max); \
-  cut_assert_equal_int ((length), decoded_length); \
-  cut_assert (memcmp(data, data2, (length)) == 0); \
+#define test_incremental_no_line_breaks_for_length(length) do           \
+{                                                                       \
+    gsize _length, encoded_length, decoded_length, max;                 \
+    _length = (length);                                                 \
+    max = _length * 4 / 3 + 6;                                          \
+    test_incremental (FALSE, _length,                                   \
+                      &encoded_length, &decoded_length);                \
+    cut_assert (encoded_length <= max,                                  \
+                "Too long encoded length: got %d, expected max %d",     \
+                encoded_length, max);                                   \
+    cut_assert_equal_memory (data, _length, data2, decoded_length);     \
 } while (0)
 
 void

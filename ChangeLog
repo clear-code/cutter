@@ -1,5 +1,8 @@
 2007-11-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertions.h: added cut_assert_equal_memory().
+	* sample/glib/test-base64.c: used cut_assert_equal_memory().
+
 	* sample/glib/test-glib-option.c: removed needless \n.
 
 2007-11-12  Hiroyuki Ikezoe  <poincare@ikezoe.net>

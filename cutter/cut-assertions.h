@@ -115,7 +115,7 @@ extern "C" {
                       "expected: <%g +/- %g>\n but was: <%g>",          \
                       #expected, #error, #actual, #expected, #error,    \
                       _expected, _error, _actual,                       \
-                      NULL, ## __VA_ARGS__, NULL);                            \
+                      NULL, ## __VA_ARGS__, NULL);                      \
     }                                                                   \
 } while(0)
 
@@ -131,6 +131,28 @@ extern "C" {
                       "expected: <%s>\n but was: <%s>",                 \
                       #expected, #actual,                               \
                       _expected, _actual,                               \
+                      NULL, ## __VA_ARGS__, NULL);                      \
+    }                                                                   \
+} while(0)
+
+#define cut_assert_equal_memory(expected, expected_size,                \
+                                actual, actual_size, ...) do            \
+{                                                                       \
+    const void *_expected = (expected);                                 \
+    size_t _expected_size = (expected_size);                            \
+    const void *_actual = (actual);                                     \
+    size_t _actual_size = (actual_size);                                \
+    if (_expected_size == _actual_size &&                               \
+        memcmp(_expected, _actual, _expected_size) == 0) {              \
+        cut_test_pass();                                                \
+    } else {                                                            \
+        cut_test_fail(FAILURE,                                          \
+                      "<%s(%s) == %s(%s)>\n"                            \
+                      "expected: <%p(%ld)>\n but was: <%p(%ld)>",       \
+                      #expected, #expected_size,                        \
+                      #actual, #actual_size,                            \
+                      _expected, (long)_expected_size,                  \
+                      _actual, (long)_actual_size,                      \
                       NULL, ## __VA_ARGS__, NULL);                      \
     }                                                                   \
 } while(0)
