@@ -1,3 +1,7 @@
+2007-11-13  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* sample/glib/test-regex.c: Added but not completed yet.
+
 2007-11-13  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-utils.c (cut_utils_compare_string_array): cleanup.
