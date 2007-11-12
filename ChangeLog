@@ -1,3 +1,9 @@
+2007-11-12  Kouhei Sutou  <kou@cozmixng.org>
+
+	* test/test-cut-assertions.c
+	(test_assert_message_with_format_string): added a test for assert
+	message with format string.
+
 2007-11-09  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-context.c: made thread safe.

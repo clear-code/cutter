@@ -13,6 +13,7 @@ void test_fail(void);
 void test_pending(void);
 void test_notification(void);
 void test_assert_message(void);
+void test_assert_message_with_format_string(void);
 
 static gboolean need_cleanup;
 
@@ -49,6 +50,14 @@ static void
 dummy_assert_message_test_function (void)
 {
     cut_assert(FALSE, "The message of %s", "assertion");
+}
+
+static void
+dummy_assert_message_with_format_string (void)
+{
+    cut_assert_equal_string("%s", "%d",
+                            "%s and %s have format string",
+                            "expected", "actual");
 }
 
 static void
@@ -257,6 +266,31 @@ test_assert_message (void)
                             cut_test_result_get_user_message(test_result));
 }
 
+void
+test_assert_message_with_format_string (void)
+{
+    CutTest *test;
+
+    test = cut_test_new("dummy-assert-message-with-string", NULL,
+                        dummy_assert_message_with_format_string);
+    cut_assert(test);
+
+    g_signal_connect(test, "failure", G_CALLBACK(cb_collect_result),
+                     &test_result);
+    cut_assert(!run(test));
+    g_signal_handlers_disconnect_by_func(test,
+                                         G_CALLBACK(cb_collect_result),
+                                         &test_result);
+    cut_assert(test_result,
+               "Could not get a CutTestResult object "
+               "since \"failure\" signal was not emmitted.");
+    cut_assert_equal_int(CUT_TEST_RESULT_FAILURE,
+                         cut_test_result_get_status(test_result));
+    cut_assert_equal_string("<%s == %d>\nexpected: <%s>\n but was: <%d>",
+                            cut_test_result_get_system_message(test_result));
+    cut_assert_equal_string("expected and actual have format string",
+                            cut_test_result_get_user_message(test_result));
+}
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
