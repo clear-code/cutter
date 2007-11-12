@@ -1,3 +1,8 @@
+2007-11-12  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* sample/glib/test-glib-option.c: Added. All tests are picked from
+	test/test-option.c:
+
 2007-11-12  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-assertions.h: removed needless NULL.
