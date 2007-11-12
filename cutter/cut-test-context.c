@@ -304,7 +304,7 @@ cut_test_context_register_result (CutTestContext *context,
         system_message = g_strdup_vprintf(message, args);
     }
     while (message) {
-        message = va_arg(args, gchar *);
+        message = va_arg(args, gchar *); /* FIXME */
     }
     format = va_arg(args, gchar *);
     if (format) {
