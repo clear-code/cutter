@@ -58,12 +58,14 @@ cut_utils_compare_string_array (const gchar **strings1, const gchar **strings2)
     if (length != g_strv_length((gchar **)strings2))
         return FALSE;
 
-    for (i = 0; strings1[i] && strings2[i]; i++) {
+    for (i = 0; i < length; i++) {
+        if (!strings1[i] || !strings2[i])
+            return FALSE;
         if (strcmp(strings1[i], strings2[i]))
             return FALSE;
     }
 
-    return (i == length) ? TRUE : FALSE;
+    return TRUE;
 }
 
 /*
