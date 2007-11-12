@@ -40,6 +40,7 @@ void
 setup (void)
 {
   keyfile = NULL;
+  keyfile = g_key_file_new ();
   g_log_set_default_handler (log_func, NULL);
 }
 
@@ -48,24 +49,6 @@ teardown (void)
 {
   if (keyfile)
     g_key_file_free (keyfile);
-}
-
-static GKeyFile *
-load_data (const gchar   *data, 
-	   GKeyFileFlags  flags)
-{
-  GKeyFile *keyfile;
-  GError *error = NULL;
-
-  keyfile = g_key_file_new ();
-  g_key_file_load_from_data (keyfile, data, -1, flags, &error);
-  if (error)
-    {
-      g_print ("Could not load data: %s\n", error->message);
-      exit (1);
-    }
-  
-  return keyfile;
 }
 
 #define check_error(error, error_domain, error_code) \
@@ -326,7 +309,7 @@ test_line_ends (void)
     "key3=value3\r\r\n"
     "key4=value4\n";
 
-  keyfile = load_data (data, 0);
+  cut_assert (g_key_file_load_from_data (keyfile, data, -1, 0, NULL));
 
   check_string_value (keyfile, "group1", "key1", "value1");
   check_string_value (keyfile, "group1", "key2", "value2");
@@ -348,7 +331,7 @@ test_whitespace (void)
     "key4  =  value \t4\n"
     "  key5  =  value5\n";
   
-  keyfile = load_data (data, 0);
+  cut_assert (g_key_file_load_from_data (keyfile, data, -1, 0, NULL));
 
   check_string_value (keyfile, "group1", "key1", "value1");
   check_string_value (keyfile, "group1", "key2", "value2");
@@ -386,7 +369,7 @@ test_comments (void)
   const gchar *group_comment= " group comment\n group comment, continued\n";
   const gchar *key_comment= " key comment\n key comment, continued\n";
   
-  keyfile = load_data (data, 0);
+  cut_assert (g_key_file_load_from_data (keyfile, data, -1, 0, NULL));
 
   check_string_value (keyfile, "group1", "key1", "value1");
   check_string_value (keyfile, "group1", "key2", "value2");
@@ -406,7 +389,8 @@ test_comments (void)
 
   g_key_file_free (keyfile);
 
-  keyfile = load_data (data, G_KEY_FILE_KEEP_COMMENTS);
+  keyfile = g_key_file_new ();
+  cut_assert (g_key_file_load_from_data (keyfile, data, -1, G_KEY_FILE_KEEP_COMMENTS, NULL));
 
   names = g_key_file_get_keys (keyfile, "group1", &len, &error);
   check_no_error (error);
@@ -459,7 +443,7 @@ test_listing (void)
     "key3=value3\n"
     "key4=value4\n";
   
-  keyfile = load_data (data, 0);
+  cut_assert (g_key_file_load_from_data (keyfile, data, -1, 0, NULL));
 
   names = g_key_file_get_groups (keyfile, &len);
   if (names == NULL)
@@ -535,7 +519,7 @@ test_string (void)
     "key1=\\a\\b\\0800xff\n"
     "key2=blabla\\\n";
   
-  keyfile = load_data (data, 0);
+  cut_assert (g_key_file_load_from_data (keyfile, data, -1, 0, NULL));
 
   check_string_value (keyfile, "valid", "key1", " \n\t\r\\");
   check_string_value (keyfile, "valid", "key2", "\"quoted\"");
@@ -569,7 +553,7 @@ test_boolean (void)
     "key3=yes\n"
     "key4=no\n";
   
-  keyfile = load_data (data, 0);
+  cut_assert (g_key_file_load_from_data (keyfile, data, -1, 0, NULL));
 
   check_boolean_value (keyfile, "valid", "key1", TRUE);
   check_boolean_value (keyfile, "valid", "key2", FALSE);
@@ -616,7 +600,7 @@ test_number (void)
     "key7=2x2\n"
     "key8=abc\n";
   
-  keyfile = load_data (data, 0);
+  cut_assert (g_key_file_load_from_data (keyfile, data, -1, 0, NULL));
 
   check_integer_value (keyfile, "valid", "key1", 0);
   check_integer_value (keyfile, "valid", "key2", 1);
@@ -667,7 +651,7 @@ test_locale_string (void)
     "key1[en] =v1-en\n"
     "key1[sr@Latn]=v1-sr\n";
   
-  keyfile = load_data (data, G_KEY_FILE_KEEP_TRANSLATIONS);
+  cut_assert (g_key_file_load_from_data (keyfile, data, -1, G_KEY_FILE_KEEP_TRANSLATIONS, NULL));
 
   check_locale_string_value (keyfile, "valid", "key1", "it", "v1");
   check_locale_string_value (keyfile, "valid", "key1", "de", "v1-de");
@@ -685,7 +669,8 @@ test_locale_string (void)
   g_setenv ("LANGUAGE", "de", TRUE);
   setlocale (LC_ALL, "");
 
-  keyfile = load_data (data, 0);
+  keyfile = g_key_file_new ();
+  cut_assert (g_key_file_load_from_data (keyfile, data, -1, 0, NULL));
 
   check_locale_string_value (keyfile, "valid", "key1", "it", "v1");
   check_locale_string_value (keyfile, "valid", "key1", "de", "v1-de");
@@ -711,7 +696,7 @@ test_lists (void)
     "key8=v1\\,v2\n"
     "key9=0;1.3456;-76532.456\n";
   
-  keyfile = load_data (data, 0);
+  cut_assert (g_key_file_load_from_data (keyfile, data, -1, 0, NULL));
 
   check_string_list_value (keyfile, "valid", "key1", "v1", "v2", NULL);
   check_string_list_value (keyfile, "valid", "key2", "v1", "v2", NULL);
@@ -728,7 +713,8 @@ test_lists (void)
 
   /* Now check an alternate separator */
 
-  keyfile = load_data (data, 0);
+  keyfile = g_key_file_new ();
+  cut_assert (g_key_file_load_from_data (keyfile, data, -1, 0, NULL));
   g_key_file_set_list_separator (keyfile, ',');
 
   check_string_list_value (keyfile, "valid", "key1", "v1;v2", NULL);
@@ -753,7 +739,7 @@ test_group_remove (void)
     "key1=bla\n"
     "key2=bla\n";
   
-  keyfile = load_data (data, 0);
+  cut_assert (g_key_file_load_from_data (keyfile, data, -1, 0, NULL));
   
   names = g_key_file_get_groups (keyfile, &len);
   if (names == NULL)
@@ -816,7 +802,7 @@ test_key_remove (void)
     "key1=bla\n"
     "key2=bla\n";
   
-  keyfile = load_data (data, 0);
+  cut_assert (g_key_file_load_from_data (keyfile, data, -1, 0, NULL));
   
   check_string_value (keyfile, "group1", "key1", "bla");
 
@@ -845,7 +831,7 @@ test_groups (void)
     "[2]\n"
     "key2=123\n";
   
-  keyfile = load_data (data, 0);
+  cut_assert (g_key_file_load_from_data (keyfile, data, -1, 0, NULL));
 
   check_string_value (keyfile, "1", "key1", "123");
   check_string_value (keyfile, "2", "key2", "123");
@@ -1098,7 +1084,7 @@ test_duplicate_keys (void)
     "key1=123\n"
     "key1=345\n";
 
-  keyfile = load_data (data, 0);
+  cut_assert (g_key_file_load_from_data (keyfile, data, -1, 0, NULL));
   check_string_value (keyfile, "1", "key1", "345");
 }
 
@@ -1112,7 +1098,7 @@ test_duplicate_groups (void)
     "[Desktop Entry]\n"
     "key2=123\n";
   
-  keyfile = load_data (data, 0);
+  cut_assert (g_key_file_load_from_data (keyfile, data, -1, 0, NULL));
   check_string_value (keyfile, "Desktop Entry", "key1", "123");
   check_string_value (keyfile, "Desktop Entry", "key2", "123");
 }
@@ -1129,7 +1115,7 @@ test_duplicate_groups2 (void)
     "[A]\n"
     "foo=bang\n";
   
-  keyfile = load_data (data, 0);
+  cut_assert (g_key_file_load_from_data (keyfile, data, -1, 0, NULL));
   check_string_value (keyfile, "A", "foo", "bang");
   check_string_value (keyfile, "B", "foo", "baz");
 }
