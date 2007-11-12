@@ -1,6 +1,7 @@
 #include "cutter.h"
 #include "cut-test.h"
 #include "cut-test-result.h"
+#include "cut-utils.h"
 #include "cut-context.h"
 
 void test_equal_int(void);
@@ -170,7 +171,7 @@ test_equal_string_array (void)
     const gchar *strings1[] = {"a", "b", "c", NULL};
     const gchar *strings2[] = {"a", "b", "c", NULL};
 
-    /* cut_assert_string_array(strings1, strings2); */
+    cut_assert_equal_string_array(strings1, strings2);
 }
 
 void

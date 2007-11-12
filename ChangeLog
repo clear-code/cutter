@@ -3,6 +3,8 @@
 	* cutter/cut-utils.[c|h]: Added cut_utils_compare_string_array().
 	* cutter/cut-assertions.c: Added cut_assert_equal_string_array(), but
 	the function is exposured...
+	* test/test-cut-assertions.c: Added test for
+	cut_assert_equal_string_array().
 
 2007-11-12  Kouhei Sutou  <kou@cozmixng.org>
 
