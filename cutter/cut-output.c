@@ -471,8 +471,8 @@ cut_output_on_complete_test_suite (CutOutput *output, CutContext *context,
         status = CUT_TEST_RESULT_SUCCESS;
     }
     print_for_status(priv, status,
-                     "%d tests, %d assertions, %d failures, "
-                     "%d errors, %d pendings, %d notifications",
+                     "%d test(s), %d assertion(s), %d failure(s), "
+                     "%d error(s), %d pending(s), %d notification(s)",
                      n_tests, n_assertions, n_failures, n_errors,
                      n_pendings, n_notifications);
     g_print("\n");
