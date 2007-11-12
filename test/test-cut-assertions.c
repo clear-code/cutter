@@ -7,6 +7,7 @@ void test_equal_int(void);
 void test_equal_string(void);
 void test_equal_double(void);
 void test_operator(void);
+void test_equal_string_array (void);
 void test_null(void);
 void test_error(void);
 void test_fail(void);
@@ -14,6 +15,8 @@ void test_pending(void);
 void test_notification(void);
 void test_assert_message(void);
 void test_assert_message_with_format_string(void);
+void test_error_equal_string (void);
+void test_error_equal_string_with_null (void);
 
 static gboolean need_cleanup;
 
@@ -21,6 +24,18 @@ static CutTest *test_object;
 static CutContext *context;
 static CutTestContext *test_context;
 static CutTestResult *test_result;
+
+static void
+error_equal_string (void)
+{
+    cut_assert_equal_string("a", "ab");
+}
+
+static void
+error_equal_string_with_null (void)
+{
+    cut_assert_equal_string("", NULL);
+}
 
 static void
 dummy_error_test_function (void)
@@ -150,9 +165,42 @@ test_operator (void)
 }
 
 void
+test_equal_string_array (void)
+{
+    const gchar *strings1[] = {"a", "b", "c", NULL};
+    const gchar *strings2[] = {"a", "b", "c", NULL};
+
+    /* cut_assert_string_array(strings1, strings2); */
+}
+
+void
 test_null (void)
 {
     cut_assert_null(NULL);
+}
+
+void
+test_error_equal_string_with_null (void)
+{
+    CutTest *test;
+
+    test = cut_test_new("error-equal-string-with-null", NULL,
+                        error_equal_string_with_null);
+    cut_assert(test, "Creating a new CutTest object failed");
+
+    cut_assert(!run(test));
+}
+
+void
+test_error_equal_string (void)
+{
+    CutTest *test;
+
+    test = cut_test_new("error-equal-string", NULL,
+                        error_equal_string);
+    cut_assert(test, "Creating a new CutTest object failed");
+
+    cut_assert(!run(test));
 }
 
 void

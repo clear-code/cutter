@@ -11,6 +11,7 @@
 
 	* sample/glib/test-glib-option.c: Added. All tests are picked from
 	test/test-option.c:
+	* test/test-cut-assertions.c: Added tests for error case.
 
 2007-11-12  Kouhei Sutou  <kou@cozmixng.org>
 
