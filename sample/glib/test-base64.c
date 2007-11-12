@@ -163,6 +163,6 @@ test_full (void)
 
   cut_assert_equal_int (DATA_SIZE, len);
 
-  cut_assert (memcmp(data, data2, DATA_SIZE) == 0);
+  cut_assert_equal_memory (data, DATA_SIZE, data2, DATA_SIZE);
 }
 
