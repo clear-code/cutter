@@ -6,6 +6,7 @@
 == Assigned to ktou
 
 * cut_pending(cut_output_backtrace());
+ * g_on_error_stack_trace().
 * cut_pending(cut_fork());
 * introduce priority system.
 * supported metadata for test. describe_TEST_NAME().
