@@ -1,3 +1,5 @@
+/* -*- c-file-style: "gnu" -*- */
+
 #include <cutter.h>
 
 #include "config.h"

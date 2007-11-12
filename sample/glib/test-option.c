@@ -1,4 +1,6 @@
-#include <cutter.h> 
+/* -*- c-file-style: "gnu" -*- */
+
+#include <cutter.h>
 
 #include <stdio.h>
 #include <string.h>

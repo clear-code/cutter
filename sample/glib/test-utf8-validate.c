@@ -1,3 +1,4 @@
+/* -*- c-file-style: "gnu" -*- */
 /* GLIB - Library of useful routines for C programming
  * Copyright (C) 2001 Matthias Clasen <matthiasc@poet.de>
  *
