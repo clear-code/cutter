@@ -1,5 +1,7 @@
 2007-11-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertions.h: added missing "%s".
+
 	* test/test-cut-assertions.c
 	(test_assert_message_with_format_string): added a test for assert
 	message with format string.

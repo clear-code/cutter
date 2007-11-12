@@ -69,7 +69,7 @@ extern "C" {
             FAILURE,                                        \
             "%s",                                           \
             "expected: <" #expected "> is not TRUE/NULL",   \
-            ## __VA_ARGS__, NULL);                          \
+            NULL, ## __VA_ARGS__, NULL);                    \
     }                                                       \
 } while(0)
 
@@ -82,7 +82,7 @@ extern "C" {
             FAILURE,                                        \
             "%s",                                           \
             "expected: <" #actual "> is NULL",              \
-            ## __VA_ARGS__, NULL);                          \
+            NULL, ## __VA_ARGS__, NULL);                    \
     }                                                       \
 } while(0)
 
@@ -92,11 +92,12 @@ extern "C" {
         cut_test_pass();                                    \
     } else {                                                \
         cut_test_fail(FAILURE,                              \
+                      "%s",                                 \
                       "<%s == %s>\n"                        \
                       "expected: <%ld>\n but was: <%ld>",   \
                       #expected, #actual,                   \
                       (long)(expected), (long)(actual),     \
-                      ## __VA_ARGS__, NULL);                \
+                      NULL, ## __VA_ARGS__, NULL);          \
     }                                                       \
 } while(0)
 
@@ -114,7 +115,7 @@ extern "C" {
                       "expected: <%g +/- %g>\n but was: <%g>",          \
                       #expected, #error, #actual, #expected, #error,    \
                       _expected, _error, _actual,                       \
-                      ## __VA_ARGS__, NULL);                            \
+                      NULL, ## __VA_ARGS__, NULL);                      \
     }                                                                   \
 } while(0)
 
@@ -126,11 +127,12 @@ extern "C" {
         cut_test_pass();                                                \
     } else {                                                            \
         cut_test_fail(FAILURE,                                          \
+                      "%s",                                             \
                       "<%s == %s>\n"                                    \
                       "expected: <%s>\n but was: <%s>",                 \
                       #expected, #actual,                               \
                       _expected, _actual,                               \
-                      ## __VA_ARGS__, NULL);                            \
+                      NULL, ## __VA_ARGS__, NULL);                      \
     }                                                                   \
 } while(0)
 
@@ -141,9 +143,10 @@ extern "C" {
     } else {                                                            \
         cut_test_fail(                                                  \
             FAILURE,                                                    \
+            "%s",                                                       \
             "expected: <%s %s %s> is TRUE",                             \
             #lhs, #operator, #rhs,                                      \
-            ## __VA_ARGS__, NULL);                                      \
+            NULL, ## __VA_ARGS__, NULL);                                \
     }                                                                   \
 } while(0)
 
