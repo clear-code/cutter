@@ -161,8 +161,6 @@ test_full (void)
   text = g_base64_encode (data, DATA_SIZE);
   data2 = g_base64_decode (text, &len);
 
-  cut_assert_equal_int (DATA_SIZE, len);
-
-  cut_assert_equal_memory (data, DATA_SIZE, data2, DATA_SIZE);
+  cut_assert_equal_memory (data, DATA_SIZE, data2, len);
 }
 
