@@ -69,7 +69,7 @@ extern "C" {
             FAILURE,                                        \
             "%s",                                           \
             "expected: <" #expected "> is not TRUE/NULL",   \
-            NULL, ## __VA_ARGS__, NULL);                    \
+            ## __VA_ARGS__, NULL);                          \
     }                                                       \
 } while(0)
 
@@ -82,7 +82,7 @@ extern "C" {
             FAILURE,                                        \
             "%s",                                           \
             "expected: <" #actual "> is NULL",              \
-            NULL, ## __VA_ARGS__, NULL);                    \
+            ## __VA_ARGS__, NULL);                          \
     }                                                       \
 } while(0)
 
@@ -97,7 +97,7 @@ extern "C" {
                       "expected: <%ld>\n but was: <%ld>",   \
                       #expected, #actual,                   \
                       (long)(expected), (long)(actual),     \
-                      NULL, ## __VA_ARGS__, NULL);          \
+                      ## __VA_ARGS__, NULL);                \
     }                                                       \
 } while(0)
 
@@ -115,7 +115,7 @@ extern "C" {
                       "expected: <%g +/- %g>\n but was: <%g>",          \
                       #expected, #error, #actual, #expected, #error,    \
                       _expected, _error, _actual,                       \
-                      NULL, ## __VA_ARGS__, NULL);                      \
+                      ## __VA_ARGS__, NULL);                            \
     }                                                                   \
 } while(0)
 
@@ -131,7 +131,7 @@ extern "C" {
                       "expected: <%s>\n but was: <%s>",                 \
                       #expected, #actual,                               \
                       _expected, _actual,                               \
-                      NULL, ## __VA_ARGS__, NULL);                      \
+                      ## __VA_ARGS__, NULL);                            \
     }                                                                   \
 } while(0)
 
@@ -144,7 +144,7 @@ extern "C" {
             FAILURE,                                                    \
             "expected: <%s %s %s> is TRUE",                             \
             #lhs, #operator, #rhs,                                      \
-            NULL, ## __VA_ARGS__, NULL);                                \
+            ## __VA_ARGS__, NULL);                                      \
     }                                                                   \
 } while(0)
 

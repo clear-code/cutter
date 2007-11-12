@@ -434,10 +434,10 @@ cut_output_on_complete_test_suite (CutOutput *output, CutContext *context,
         message = cut_test_result_get_message(result);
 
         g_print("\n%d) ", i);
-        print_for_status(priv, status, status_to_name(status));
+        print_for_status(priv, status, "%s", status_to_name(status));
         if (message) {
             g_print("\n");
-            print_for_status(priv, status, message);
+            print_for_status(priv, status, "%s", message);
         }
         g_print("\n%s:%d: %s()\n",
                 filename,
