@@ -48,6 +48,24 @@ cut_utils_create_regex_pattern (const gchar *string)
     return pattern;
 }
 
+gboolean
+cut_utils_compare_string_array (const gchar **strings1, const gchar **strings2)
+{
+    gint i, length;
+
+    length = g_strv_length((gchar **)strings1);
+
+    if (length != g_strv_length((gchar **)strings2))
+        return FALSE;
+
+    for (i = 0; strings1[i] && strings2[i]; i++) {
+        if (strcmp(strings1[i], strings2[i]))
+            return FALSE;
+    }
+
+    return (i == length) ? TRUE : FALSE;
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */

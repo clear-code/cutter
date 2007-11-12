@@ -28,6 +28,8 @@ G_BEGIN_DECLS
 
 gchar *cut_utils_create_regex_pattern (const gchar *string);
 
+gboolean cut_utils_compare_string_array (const gchar **strings1, const gchar **strings2);
+
 G_END_DECLS
 
 #endif /* __CUT_UTILS_H__ */

@@ -157,6 +157,23 @@ extern "C" {
     }                                                                   \
 } while(0)
 
+#define cut_assert_equal_string_array(expected, actual, ...) do         \
+{                                                                       \
+    const char **_expected = (const char **)(expected);                 \
+    const char **_actual = (const char **)(actual);                     \
+    if (_expected && _actual &&                                         \
+        cut_utils_compare_string_array(_expected, _actual)) {           \
+        cut_test_pass();                                                \
+    } else {                                                            \
+        cut_test_fail(FAILURE,                                          \
+                      "<%s == %s>\n"                                    \
+                      "expected: <%s>\n but was: <%s>",                 \
+                      #expected, #actual,                               \
+                      _expected, _actual,                               \
+                      NULL, ## __VA_ARGS__, NULL);                      \
+    }                                                                   \
+} while(0)
+
 #define cut_assert_operator(lhs, operator, rhs, ...) do                 \
 {                                                                       \
     if ((lhs) operator (rhs)) {                                         \
