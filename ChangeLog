@@ -1,5 +1,7 @@
 2007-11-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertions.h: used "[]" for representing size.
+
 	* cutter/cut-assertions.h: added cut_assert_equal_memory().
 	* sample/glib/test-base64.c: used cut_assert_equal_memory().
 

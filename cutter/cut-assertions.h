@@ -147,8 +147,8 @@ extern "C" {
         cut_test_pass();                                                \
     } else {                                                            \
         cut_test_fail(FAILURE,                                          \
-                      "<%s(%s) == %s(%s)>\n"                            \
-                      "expected: <%p(%ld)>\n but was: <%p(%ld)>",       \
+                      "<%s[%s] == %s[%s]>\n"                            \
+                      "expected: <%p[%ld]>\n but was: <%p[%ld]>",       \
                       #expected, #expected_size,                        \
                       #actual, #actual_size,                            \
                       _expected, (long)_expected_size,                  \
