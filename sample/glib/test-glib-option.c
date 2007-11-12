@@ -5,11 +5,10 @@
 #include <locale.h>
 #include <glib.h>
 
-int error_test1_int;
-char *error_test2_string;
-static gboolean error_test3_boolean;
+static gboolean error_test_pre_parse_fail = FALSE;
+static gboolean error_test_post_parse_fail = FALSE;
 
-int callback_test2_int;
+static int callback_test2_int;
 
 static gchar *callback_test_optional_string;
 static gboolean callback_test_optional_boolean;
@@ -139,7 +138,8 @@ error_pre_parse_int (GOptionContext *context,
 		     gpointer	     data,
 		     GError        **error)
 {
-  //cut_assert_equal_int (0x12345678, error_test1_int);
+  if (0x12345678 != test_int)
+    error_test_pre_parse_fail = TRUE;
 
   return TRUE;
 }
@@ -150,7 +150,8 @@ error_post_parse_int (GOptionContext *context,
 		      gpointer	      data,
 		      GError        **error)
 {
-  g_assert (error_test1_int == 20);
+  if (20 != test_int)
+    error_test_post_parse_fail = TRUE;
 
   /* Set an error in the post hook */
   g_set_error (error, G_OPTION_ERROR, G_OPTION_ERROR_BAD_VALUE, NULL);
@@ -163,9 +164,12 @@ test_parse_int_error (void)
 {
   GOptionGroup *main_group;
   GOptionEntry entries [] =
-    { { "test", 0, 0, G_OPTION_ARG_INT, &error_test1_int, NULL, NULL },
+    { { "test", 0, 0, G_OPTION_ARG_INT, &test_int, NULL, NULL },
       { NULL } };
-  error_test1_int = 0x12345678;
+  test_int = 0x12345678;
+
+  error_test_pre_parse_fail = FALSE;
+  error_test_post_parse_fail = FALSE;
   
   g_option_context_add_main_entries (context, entries, NULL);
 
@@ -178,9 +182,11 @@ test_parse_int_error (void)
   argv = split_string ("program --test 20", &argc);
 
   cut_assert (!g_option_context_parse (context, &argc, &argv, &error));
+  cut_assert (!error_test_pre_parse_fail);
+  cut_assert (!error_test_post_parse_fail);
 
   /* On failure, values should be reset */
-  cut_assert_equal_int (0x12345678, error_test1_int);
+  cut_assert_equal_int (0x12345678, test_int);
 }
 
 static gboolean
@@ -189,7 +195,8 @@ error_test2_pre_parse (GOptionContext *context,
 		       gpointer	  data,
 		       GError        **error)
 {
-  g_assert (strcmp (error_test2_string, "foo") == 0);
+  if (strcmp (test_string, "foo") != 0)
+    error_test_pre_parse_fail = TRUE;
 
   return TRUE;
 }
@@ -200,7 +207,8 @@ error_test2_post_parse (GOptionContext *context,
 			gpointer	  data,
 			GError        **error)
 {
-  g_assert (strcmp (error_test2_string, "bar") == 0);
+  if (strcmp (test_string, "bar") != 0)
+    error_test_post_parse_fail = TRUE;
 
   /* Set an error in the post hook */
   g_set_error (error, G_OPTION_ERROR, G_OPTION_ERROR_BAD_VALUE, NULL);
@@ -213,9 +221,11 @@ test_parse_string_error (void)
 {
   GOptionGroup *main_group;
   GOptionEntry entries [] =
-    { { "test", 0, 0, G_OPTION_ARG_STRING, &error_test2_string, NULL, NULL },
+    { { "test", 0, 0, G_OPTION_ARG_STRING, &test_string, NULL, NULL },
       { NULL } };
-  error_test2_string = "foo";
+  test_string = g_strdup ("foo");
+  error_test_pre_parse_fail = FALSE;
+  error_test_post_parse_fail = FALSE;
 
   g_option_context_add_main_entries (context, entries, NULL);
 
@@ -227,8 +237,10 @@ test_parse_string_error (void)
   /* Now try parsing */
   argv = split_string ("program --test bar", &argc);
   cut_assert (!g_option_context_parse (context, &argc, &argv, &error));
+  cut_assert (!error_test_pre_parse_fail);
+  cut_assert (!error_test_post_parse_fail);
 
-  cut_assert (!strcmp("foo", error_test2_string));
+  cut_assert (!strcmp("foo", test_string));
 }
 
 static gboolean
@@ -237,7 +249,8 @@ error_test3_pre_parse (GOptionContext *context,
 		       gpointer	  data,
 		       GError        **error)
 {
-  g_assert (!error_test3_boolean);
+  if (test_boolean)
+    error_test_pre_parse_fail = TRUE;
 
   return TRUE;
 }
@@ -248,7 +261,8 @@ error_test3_post_parse (GOptionContext *context,
 			gpointer	  data,
 			GError        **error)
 {
-  g_assert (error_test3_boolean);
+  if (!test_boolean)
+    error_test_post_parse_fail = TRUE;
 
   /* Set an error in the post hook */
   g_set_error (error, G_OPTION_ERROR, G_OPTION_ERROR_BAD_VALUE, NULL);
@@ -261,9 +275,11 @@ test_parse_boolean_error (void)
 {
   GOptionGroup *main_group;
   GOptionEntry entries [] =
-    { { "test", 0, 0, G_OPTION_ARG_NONE, &error_test3_boolean, NULL, NULL },
+    { { "test", 0, 0, G_OPTION_ARG_NONE, &test_boolean, NULL, NULL },
       { NULL } };
-  error_test3_boolean = FALSE;
+  test_boolean = FALSE;
+  error_test_pre_parse_fail = FALSE;
+  error_test_post_parse_fail = FALSE;
 
   g_option_context_add_main_entries (context, entries, NULL);
 
@@ -275,8 +291,10 @@ test_parse_boolean_error (void)
   /* Now try parsing */
   argv = split_string ("program --test", &argc);
   cut_assert (!g_option_context_parse (context, &argc, &argv, &error));
+  cut_assert (!error_test_pre_parse_fail);
+  cut_assert (!error_test_post_parse_fail);
 
-  cut_assert (!error_test3_boolean);
+  cut_assert (!test_boolean);
 }
 
 void
