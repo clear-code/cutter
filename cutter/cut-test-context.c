@@ -303,6 +303,9 @@ cut_test_context_register_result (CutTestContext *context,
     if (message) {
         system_message = g_strdup_vprintf(message, args);
     }
+    while (message) {
+        message = va_arg(args, gchar *);
+    }
     format = va_arg(args, gchar *);
     if (format) {
         user_message = g_strdup_vprintf(format, args);
