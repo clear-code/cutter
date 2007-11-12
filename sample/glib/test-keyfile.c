@@ -446,11 +446,7 @@ test_listing (void)
   cut_assert (g_key_file_load_from_data (keyfile, data, -1, 0, NULL));
 
   names = g_key_file_get_groups (keyfile, &len);
-  if (names == NULL)
-    {
-      g_print ("Error listing groups\n");
-      exit (1);
-    }
+  cut_assert (names);
 
   check_length ("groups", g_strv_length (names), len, 2);
   check_name ("group name", names[0], "group1", 0);
@@ -482,11 +478,7 @@ test_listing (void)
     }
 
   start = g_key_file_get_start_group (keyfile);
-  if (!start || strcmp (start, "group1") != 0)
-    {
-      g_print ("Start group finding trouble\n");
-      exit (1);
-    }
+  cut_assert_equal_string ("group1", start);
   g_free (start);
 
   if (!g_key_file_has_key (keyfile, "group1", "key1", &error) ||
@@ -742,11 +734,7 @@ test_group_remove (void)
   cut_assert (g_key_file_load_from_data (keyfile, data, -1, 0, NULL));
   
   names = g_key_file_get_groups (keyfile, &len);
-  if (names == NULL)
-    {
-      g_print ("Error listing groups\n");
-      exit (1);
-    }
+  cut_assert (names);
 
   check_length ("groups", g_strv_length (names), len, 3);
   check_name ("group name", names[0], "group1", 0);
@@ -759,11 +747,7 @@ test_group_remove (void)
   g_strfreev (names);
 
   names = g_key_file_get_groups (keyfile, &len);
-  if (names == NULL)
-    {
-      g_print ("Error listing groups\n");
-      exit (1);
-    }
+  cut_assert (names);
 
   check_length ("groups", g_strv_length (names), len, 2);
   check_name ("group name", names[0], "group2", 0);
@@ -775,11 +759,7 @@ test_group_remove (void)
   g_strfreev (names);
 
   names = g_key_file_get_groups (keyfile, &len);
-  if (names == NULL)
-    {
-      g_print ("Error listing groups\n");
-      exit (1);
-    }
+  cut_assert (names);
 
   check_length ("groups", g_strv_length (names), len, 1);
   check_name ("group name", names[0], "group3", 0);
