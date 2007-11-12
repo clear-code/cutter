@@ -9,6 +9,7 @@ TESTS_ENVIRONMENT = NO_MAKE=yes
 
 noinst_LTLIBRARIES = 			\
 		test_base64.la		\
+		test_keyfile.la		\
 		test_option.la		\
 		test_utf8_pointer.la	\
 		test_utf8_validate.la	\
@@ -20,6 +21,7 @@ LDFLAGS =			\
 	-avoid-version
 
 test_base64_la_SOURCES = test-base64.c
+test_keyfile_la_SOURCES = test-keyfile.c
 test_option_la_SOURCES = test-option.c
 test_uri_la_SOURCES = test-uri.c
 test_utf8_pointer_la_SOURCES = test-utf8-pointer.c
