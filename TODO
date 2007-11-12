@@ -7,3 +7,5 @@
 
 * cut_pending(cut_output_backtrace());
 * cut_pending(cut_fork());
+* introduce priority system.
+* supported metadata for test. describe_TEST_NAME().
