@@ -56,6 +56,8 @@ CutOutput   *cut_output_new (void);
 
 void  cut_output_set_verbose_level         (CutOutput *output,
                                             CutVerboseLevel level);
+CutVerboseLevel
+      cut_output_get_verbose_level         (CutOutput *output);
 void  cut_output_set_verbose_level_by_name (CutOutput *output,
                                             const gchar *name);
 void  cut_output_set_source_directory      (CutOutput *output,

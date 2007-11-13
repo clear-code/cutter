@@ -246,6 +246,12 @@ cut_output_set_verbose_level (CutOutput *output, CutVerboseLevel level)
     priv->verbose_level = level;
 }
 
+CutVerboseLevel
+cut_output_get_verbose_level (CutOutput *output)
+{
+    return CUT_OUTPUT_GET_PRIVATE(output)->level;
+}
+
 void
 cut_output_set_verbose_level_by_name (CutOutput *output, const gchar *name)
 {
