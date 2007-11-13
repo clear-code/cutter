@@ -10,7 +10,8 @@ TESTS = run-test.sh
 TESTS_ENVIRONMENT = NO_MAKE=yes
 
 noinst_LTLIBRARIES = 			\
-		test_builder.la
+		test_builder.la		\
+		test_floating.la
 
 LIBADD = $(GTK_LIBS)
 
@@ -22,4 +23,7 @@ LDFLAGS =			\
 test_builder_la_SOURCES = test-builder.c
 test_builder_la_LDFLAGS = $(LDFLAGS) -export-dynamic
 test_builder_la_LIBADD = $(LIBADD)
+
+test_floating_la_SOURCES = test-floating.c
+test_floating_la_LIBADD = $(LIBADD)
 
