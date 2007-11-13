@@ -169,7 +169,7 @@ cut_run (const char *directory)
     }
     g_object_unref(repository);
 
-    return TRUE;
+    return success;
 }
 
 int
