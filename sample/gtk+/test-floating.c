@@ -28,7 +28,6 @@ static void destroy (void) { destroyed = TRUE; }
 void
 setup (void)
 {
-  gtk_init (NULL, NULL);
 }
 
 void
