@@ -62,6 +62,9 @@ libcutter_la_SOURCES =			\
 		cut-loader.c		\
 		cut-repository.h	\
 		cut-repository.c	\
+		cut-module.h		\
+		cut-module.c		\
+		cut-module-impl.h	\
 		cut-output.c		\
 		cut-test-result.c	\
 		cut-test-result.h	\

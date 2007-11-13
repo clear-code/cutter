@@ -1,3 +1,8 @@
+2007-11-14  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-module.[c|h], cutter/cut-module-impl.h: Added files for
+	modularization of CutOutput, but not used yet.
+
 2007-11-13  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/main.c: Added.
