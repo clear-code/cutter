@@ -1,5 +1,10 @@
 2007-11-13  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/main.c: Added.
+	* cutter/Makefile.am: Create cutter library.
+
+2007-11-13  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-main.[c|h]: Added cut_init() and cut_run() for cutter
 	library.
 

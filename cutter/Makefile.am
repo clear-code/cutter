@@ -4,6 +4,9 @@ INCLUDES = $(GLIB_CFLAGS)	\
 
 EXTRA_DIST = config.h.in
 
+libcutterdir = $(libdir)/$(PACKAGE)
+libcutter_LTLIBRARIES = libcutter.la
+
 if ENABLE_STATIC_BINARY
 AM_LDFLAGS = -all-static
 endif
@@ -40,7 +43,9 @@ BUILT_SOURCES = $(enum_sources)
 
 bin_PROGRAMS = cutter
 
-cutter_SOURCES =			\
+cutter_SOURCES = main.c
+
+libcutter_la_SOURCES =			\
 		$(cutter_h_sources)	\
 		cut-enum-types.c	\
 		cut-private.h		\
@@ -68,9 +73,10 @@ cutter_SOURCES =			\
 		cut-main.h		\
 		cut-main.c
 
-cutter_LDADD =				\
+libcutter_la_LIBADD =			\
 	$(GLIB_LIBS)
 
+cutter_LDADD = libcutter.la
 
 $(enum_source_prefix).c: stamp-$(enum_source_prefix)-c $(enum_source_prefix).h
 	@true
