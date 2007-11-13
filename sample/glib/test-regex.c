@@ -1,3 +1,4 @@
+/* -*- c-file-style: "gnu" -*- */
 /*
  * Copyright (C) 2005 - 2006, Marco Barisione <marco@barisione.org>
  *
@@ -59,6 +60,7 @@ void test_replace (void);
 void test_partial_match (void);
 void test_replace_lit (void);
 void test_expand (void);
+void test_match_next (void);
 void test_sub_pattern (void);
 void test_named_sub_pattern (void);
 void test_fetch_all (void);
@@ -247,6 +249,7 @@ test_match_simple (void)
   g_regex_unref (regex); \
   regex = NULL; \
 }
+
 void
 test_match (void)
 {
@@ -697,11 +700,14 @@ free_match (gpointer data, gpointer user_data)
   g_free (match->string);
   g_free (match);
 }
-#if 0
-#define TEST_MATCH_NEXT(pattern, string, string_len, start_position, expected) { \
-  GSList *matches = NULL;
-  
-  /* The va_list is a NULL-terminated sequence of: extected matched string,
+
+static GSList *
+collect_expected_matches (gint start_position, ...)
+{
+  va_list args;
+  GSList *expected = NULL;
+
+  /* The va_list is a NULL-terminated sequence of: expected matched string,
    * expected start and expected end. */
   va_start (args, start_position);
   while (TRUE)
@@ -719,124 +725,103 @@ free_match (gpointer data, gpointer user_data)
   expected = g_slist_reverse (expected);
   va_end (args);
 
-  regex = g_regex_new (pattern, 0, 0, NULL);
+  return expected;
+}
 
-  g_regex_match_full (regex, string, string_len,
-		      start_position, 0, &match_info, NULL);
-  while (g_match_info_matches (match_info))
+static GSList *
+collect_actual_matches (GRegex **regex, const gchar *pattern,
+                        const gchar *string, gssize string_len,
+                        gint start_position, GMatchInfo **match_info)
+{
+  GSList *actual = NULL;
+
+  *regex = g_regex_new (pattern, 0, 0, NULL);
+  g_regex_match_full (*regex, string, string_len,
+		      start_position, 0, match_info, NULL);
+
+  while (g_match_info_matches (*match_info))
     {
       Match *match = g_new0 (Match, 1);
-      match->string = g_match_info_fetch (match_info, 0);
+      match->string = g_match_info_fetch (*match_info, 0);
       match->start = UNTOUCHED;
       match->end = UNTOUCHED;
-      g_match_info_fetch_pos (match_info, 0, &match->start, &match->end);
-      matches = g_slist_prepend (matches, match);
-      g_match_info_next (match_info, NULL);
-    }
-  g_assert (regex == g_match_info_get_regex (match_info));
-  g_assert (string == g_match_info_get_string (match_info));
-  g_match_info_free (match_info);
-  matches = g_slist_reverse (matches);
-
-  if (g_slist_length (matches) != g_slist_length (expected))
-    {
-      gint match_count = g_slist_length (matches);
-      g_print ("failed \t(got %d %s, expected %d)\n", match_count,
-	       match_count == 1 ? "match" : "matches", 
-	       g_slist_length (expected));
-      ret = FALSE;
-      goto exit;
+      g_match_info_fetch_pos (*match_info, 0, &match->start, &match->end);
+      actual = g_slist_prepend (actual, match);
+      g_match_info_next (*match_info, NULL);
     }
 
-  l_exp = expected;
-  l_match =  matches;
-  while (l_exp != NULL)
-    {
-      Match *exp = l_exp->data;
-      Match *match = l_match->data;
-
-      if (!streq(exp->string, match->string))
-	{
-	  g_print ("failed \t(got \"%s\", expected \"%s\")\n",
-		   match->string, exp->string);
-	  ret = FALSE;
-	  goto exit;
-	}
-
-      if (exp->start != match->start || exp->end != match->end)
-	{
-	  g_print ("failed \t(got [%d, %d], expected [%d, %d])\n",
-		   match->start, match->end, exp->start, exp->end);
-	  ret = FALSE;
-	  goto exit;
-	}
-
-      l_exp = g_slist_next (l_exp);
-      l_match = g_slist_next (l_match);
-    }
-
-exit:
-  if (ret)
-    {
-      gint count = g_slist_length (matches);
-    }
-
-  g_regex_unref (regex);
-  g_slist_foreach (expected, free_match, NULL);
-  g_slist_free (expected);
-  g_slist_foreach (matches, free_match, NULL);
-  g_slist_free (matches);
-
-  return ret;
+  return actual;
 }
-#endif
-static gboolean
-test_match_next (const gchar *pattern,
-		 const gchar *string,
-		 gssize       string_len,
-		 gint         start_position,
-		 ...)
+
+#define TEST_MATCH_NEXT(pattern, _string, string_len, start_position, ...) do \
+{                                                                       \
+  GRegex *regex;                                                        \
+  GMatchInfo *match_info;                                               \
+  GSList *actual = NULL, *expected = NULL;                              \
+  GSList *actual_node, *expected_node;                                  \
+                                                                        \
+  expected = collect_expected_matches (start_position, ## __VA_ARGS__); \
+  actual = collect_actual_matches (&regex, pattern,                     \
+                                   _string, string_len,                 \
+                                   start_position, &match_info);        \
+  cut_assert (regex == g_match_info_get_regex (match_info));            \
+  cut_assert_equal_string (_string,                                     \
+                           g_match_info_get_string (match_info));       \
+  g_match_info_free (match_info);                                       \
+  actual = g_slist_reverse (actual);                                    \
+                                                                        \
+  cut_assert_equal_int(g_slist_length (expected),                       \
+                       g_slist_length (actual));                        \
+                                                                        \
+  expected_node = expected;                                             \
+  actual_node = actual;                                                 \
+  while (expected_node)                                                 \
+    {                                                                   \
+      Match *exp = expected_node->data;                                 \
+      Match *act = actual_node->data;                                   \
+                                                                        \
+      if (exp->string)                                                  \
+        cut_assert_equal_string(exp->string, act->string);              \
+      else                                                              \
+        cut_assert_null(act->string);                                   \
+                                                                        \
+      expected_node = g_slist_next (expected_node);                     \
+      actual_node = g_slist_next (actual_node);                         \
+    }                                                                   \
+                                                                        \
+  g_regex_unref (regex);                                                \
+  g_slist_foreach (expected, free_match, NULL);                         \
+  g_slist_free (expected);                                              \
+  g_slist_foreach (actual, free_match, NULL);                           \
+  g_slist_free (actual);                                                \
+} while (0)
+
+void
+test_match_next (void)
 {
-}
+  /* TEST_MATCH_NEXT#(pattern, string, string_len, start_position, ...) */
+  TEST_MATCH_NEXT("a", "x", -1, 0, NULL);
+  TEST_MATCH_NEXT("a", "ax", -1, 1, NULL);
+  TEST_MATCH_NEXT("a", "xa", 1, 0, NULL);
+  TEST_MATCH_NEXT("a", "axa", 1, 2, NULL);
+  TEST_MATCH_NEXT("a", "a", -1, 0, "a", 0, 1, NULL);
+  TEST_MATCH_NEXT("a", "xax", -1, 0, "a", 1, 2, NULL);
+  TEST_MATCH_NEXT(EURO, ENG EURO, -1, 0, EURO, 2, 5, NULL);
+  TEST_MATCH_NEXT("a*", "", -1, 0, "", 0, 0, NULL);
+  TEST_MATCH_NEXT("a*", "aa", -1, 0, "aa", 0, 2, "", 2, 2, NULL);
+  TEST_MATCH_NEXT(EURO "*", EURO EURO, -1, 0, EURO EURO, 0, 6, "", 6, 6, NULL);
+  TEST_MATCH_NEXT("a", "axa", -1, 0, "a", 0, 1, "a", 2, 3, NULL);
+  TEST_MATCH_NEXT("a+", "aaxa", -1, 0, "aa", 0, 2, "a", 3, 4, NULL);
+  TEST_MATCH_NEXT("a", "aa", -1, 0, "a", 0, 1, "a", 1, 2, NULL);
+  TEST_MATCH_NEXT("a", "ababa", -1, 2, "a", 2, 3, "a", 4, 5, NULL);
+  TEST_MATCH_NEXT(EURO "+", EURO "-" EURO, -1, 0, EURO, 0, 3, EURO, 4, 7, NULL);
+  TEST_MATCH_NEXT("", "ab", -1, 0, "", 0, 0, "", 1, 1, "", 2, 2, NULL);
+  TEST_MATCH_NEXT("", AGRAVE "b", -1, 0, "", 0, 0, "", 2, 2, "", 3, 3, NULL);
+  TEST_MATCH_NEXT("a", "aaxa", -1, 0, "a", 0, 1, "a", 1, 2, "a", 3, 4, NULL);
+  TEST_MATCH_NEXT("a", "aa" OGRAVE "a", -1, 0, "a", 0, 1, "a", 1, 2, "a", 4, 5, NULL);
+  TEST_MATCH_NEXT("a*", "aax", -1, 0, "aa", 0, 2, "", 2, 2, "", 3, 3, NULL);
+  TEST_MATCH_NEXT("a*", "aaxa", -1, 0, "aa", 0, 2, "", 2, 2, "a", 3, 4, "", 4, 4, NULL);
 
-#define TEST_MATCH_NEXT1(pattern, string, string_len, start_position, \
-			      t1, s1, e1) { \
-  total++; \
-  if (test_match_next (pattern, string, string_len, start_position, \
-		       t1, s1, e1, NULL)) \
-    PASS; \
-  else \
-    FAIL; \
-}
-
-#define TEST_MATCH_NEXT2(pattern, string, string_len, start_position, \
-			 t1, s1, e1, t2, s2, e2) { \
-  total++; \
-  if (test_match_next (pattern, string, string_len, start_position, \
-		       t1, s1, e1, t2, s2, e2, NULL)) \
-    PASS; \
-  else \
-    FAIL; \
-}
-
-#define TEST_MATCH_NEXT3(pattern, string, string_len, start_position, \
-			 t1, s1, e1, t2, s2, e2, t3, s3, e3) { \
-  total++; \
-  if (test_match_next (pattern, string, string_len, start_position, \
-		       t1, s1, e1, t2, s2, e2, t3, s3, e3, NULL)) \
-    PASS; \
-  else \
-    FAIL; \
-}
-
-#define TEST_MATCH_NEXT4(pattern, string, string_len, start_position, \
-			 t1, s1, e1, t2, s2, e2, t3, s3, e3, t4, s4, e4) { \
-  total++; \
-  if (test_match_next (pattern, string, string_len, start_position, \
-		       t1, s1, e1, t2, s2, e2, t3, s3, e3, t4, s4, e4, NULL)) \
-    PASS; \
-  else \
-    FAIL; \
 }
 
 #define TEST_SUB_PATTERN(pattern, string, start_position, sub_n, expected_sub, \
@@ -1444,33 +1429,7 @@ exit:
 int
 main (int argc, char *argv[])
 {
-
-  /* TEST_MATCH(pattern, compile_opts, match_opts, string,
-   * 		string_len, start_position, match_opts2, expected) */
-  /* TEST_MATCH_NEXT#(pattern, string, string_len, start_position, ...) */
-  TEST_MATCH_NEXT0("a", "x", -1, 0);
-  TEST_MATCH_NEXT0("a", "ax", -1, 1);
-  TEST_MATCH_NEXT0("a", "xa", 1, 0);
-  TEST_MATCH_NEXT0("a", "axa", 1, 2);
-  TEST_MATCH_NEXT1("a", "a", -1, 0, "a", 0, 1);
-  TEST_MATCH_NEXT1("a", "xax", -1, 0, "a", 1, 2);
-  TEST_MATCH_NEXT1(EURO, ENG EURO, -1, 0, EURO, 2, 5);
-  TEST_MATCH_NEXT1("a*", "", -1, 0, "", 0, 0);
-  TEST_MATCH_NEXT2("a*", "aa", -1, 0, "aa", 0, 2, "", 2, 2);
-  TEST_MATCH_NEXT2(EURO "*", EURO EURO, -1, 0, EURO EURO, 0, 6, "", 6, 6);
-  TEST_MATCH_NEXT2("a", "axa", -1, 0, "a", 0, 1, "a", 2, 3);
-  TEST_MATCH_NEXT2("a+", "aaxa", -1, 0, "aa", 0, 2, "a", 3, 4);
-  TEST_MATCH_NEXT2("a", "aa", -1, 0, "a", 0, 1, "a", 1, 2);
-  TEST_MATCH_NEXT2("a", "ababa", -1, 2, "a", 2, 3, "a", 4, 5);
-  TEST_MATCH_NEXT2(EURO "+", EURO "-" EURO, -1, 0, EURO, 0, 3, EURO, 4, 7);
-  TEST_MATCH_NEXT3("", "ab", -1, 0, "", 0, 0, "", 1, 1, "", 2, 2);
-  TEST_MATCH_NEXT3("", AGRAVE "b", -1, 0, "", 0, 0, "", 2, 2, "", 3, 3);
-  TEST_MATCH_NEXT3("a", "aaxa", -1, 0, "a", 0, 1, "a", 1, 2, "a", 3, 4);
-  TEST_MATCH_NEXT3("a", "aa" OGRAVE "a", -1, 0, "a", 0, 1, "a", 1, 2, "a", 4, 5);
-  TEST_MATCH_NEXT3("a*", "aax", -1, 0, "aa", 0, 2, "", 2, 2, "", 3, 3);
-  TEST_MATCH_NEXT4("a*", "aaxa", -1, 0, "aa", 0, 2, "", 2, 2, "a", 3, 4, "", 4, 4);
-
-  /* TEST_MATCH_ALL#(pattern, string, string_len, start_position, ...) */
+/* TEST_MATCH_ALL#(pattern, string, string_len, start_position, ...) */
   TEST_MATCH_ALL0("<.*>", "", -1, 0);
   TEST_MATCH_ALL0("a+", "", -1, 0);
   TEST_MATCH_ALL0("a+", "a", 0, 0);

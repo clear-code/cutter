@@ -1,3 +1,7 @@
+2007-11-13  Kouhei Sutou  <kou@cozmixng.org>
+
+	* sample/glib/test-regex.c (test_match_next): added.
+
 2007-11-13  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-assertions.c: Added cut_assert_equal().
