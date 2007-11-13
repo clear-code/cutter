@@ -242,7 +242,7 @@ test_parse_string_error (void)
   cut_assert (!error_test_pre_parse_fail);
   cut_assert (!error_test_post_parse_fail);
 
-  cut_assert (!strcmp("foo", test_string));
+  cut_assert_equal_string ("foo", test_string);
 }
 
 static gboolean
@@ -505,7 +505,7 @@ test_callback_optional_1 (void)
 
   cut_assert_equal_string ("foo.txt", callback_test_optional_string);
   
-  cut_assert  (callback_test_optional_boolean);
+  cut_assert (callback_test_optional_boolean);
 
   g_free (callback_test_optional_string);
 }
