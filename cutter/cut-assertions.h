@@ -187,6 +187,18 @@ extern "C" {
     }                                                                   \
 } while(0)
 
+#define cut_assert_equal(function, expected, actual, ...) do            \
+{                                                                       \
+    if (function(expected, actual)) {                                   \
+        cut_test_pass();                                                \
+    } else {                                                            \
+        cut_test_fail(                                                  \
+            FAILURE,                                                    \
+            "expected: <%s(%s, %s)> is TRUE",                           \
+            #function, #expected, #actual,                              \
+            NULL, ## __VA_ARGS__, NULL);                                \
+    }                                                                   \
+} while(0)
 
 #ifdef __cplusplus
 }

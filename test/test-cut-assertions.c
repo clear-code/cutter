@@ -18,6 +18,7 @@ void test_assert_message(void);
 void test_assert_message_with_format_string(void);
 void test_error_equal_string (void);
 void test_error_equal_string_with_null (void);
+void test_assert_equal_function (void);
 
 static gboolean need_cleanup;
 
@@ -339,6 +340,18 @@ test_assert_message_with_format_string (void)
                             cut_test_result_get_system_message(test_result));
     cut_assert_equal_string("expected and actual have format string",
                             cut_test_result_get_user_message(test_result));
+}
+
+static gboolean 
+compare_function (gpointer a, gpointer b)
+{
+    return TRUE;
+}
+
+void
+test_assert_equal_function (void)
+{
+    cut_assert_equal(compare_function, "o", "o");
 }
 
 /*

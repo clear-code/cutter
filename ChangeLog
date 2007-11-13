@@ -1,5 +1,11 @@
 2007-11-13  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-assertions.c: Added cut_assert_equal().
+	* test/test-cut-assertions.c: Added test for
+	cut_assert_equal().
+
+2007-11-13  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* sample/glib/test-regex.c: Added but not completed yet.
 
 2007-11-13  Kouhei Sutou  <kou@cozmixng.org>
