@@ -77,12 +77,22 @@ AM_CONDITIONAL([ENABLE_STATIC_BINARY], [test "$enable_static_binary" = "yes"])
 CUTTER_CFLAGS="\$(GLIB_CFLAGS)"
 AC_SUBST(CUTTER_CFLAGS)
 
+dnl **************************************************************
+dnl Check for GTK+
+dnl **************************************************************
+AM_PATH_GTK_2_0(2.12.0, [], [], [])
+PKG_CHECK_MODULES(GTK_PRINT, gtk+-unix-print-2.0,
+                  [gtk_print=yes], [gtk_print=no])
+AM_CONDITIONAL([HAVE_GTK], [test "x$no_gtk" = x -a "x$gtk_print" = xyes])
+
 AC_CONFIG_FILES([Makefile
 		 cutter.pc
+		 libcutter.pc
 		 cutter/Makefile
                  sample/Makefile
                  sample/calc/Makefile.test
 		 sample/glib/Makefile
+		 sample/gtk+/Makefile
                  test/Makefile
 		 test/loader_test_dir/Makefile
 		 test/repository_test_dir/Makefile])

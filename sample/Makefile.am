@@ -1,5 +1,9 @@
 SUBDIRS = glib
 
+if HAVE_GTK
+SUBDIRS += gtk+
+endif
+
 dist_pkgdata_DATA = calc/Makefile.test
 
 EXTRA_DIST = calc

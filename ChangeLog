@@ -1,3 +1,7 @@
+2007-11-13  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* sample/gtk+/*: Added a test for GtkBuilder but not worked yet.
+
 2007-11-13  Kouhei Sutou  <kou@cozmixng.org>
 
 	* sample/glib/test-regex.c (test_match_next): added.
