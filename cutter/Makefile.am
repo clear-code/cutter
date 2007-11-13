@@ -65,6 +65,7 @@ cutter_SOURCES =			\
 		cut-utils.h		\
 		cut-utils.c		\
 		cut-verbose-level.c	\
+		cut-main.h		\
 		cut-main.c
 
 cutter_LDADD =				\

@@ -30,6 +30,8 @@
 #  include <bfd.h>
 #endif
 
+#include "cut-main.h"
+
 #include "cut-context.h"
 #include "cut-test-suite.h"
 #include "cut-repository.h"
@@ -41,6 +43,7 @@ static gboolean use_color = FALSE;
 static gchar **test_case_names = NULL;
 static gchar **test_names = NULL;
 static gboolean use_multi_thread = FALSE;
+static CutContext *context = NULL;
 
 static gboolean
 parse_verbose_level_arg (const gchar *option_name, const gchar *value,
@@ -103,26 +106,22 @@ static const GOptionEntry option_entries[] =
     {NULL}
 };
 
-int
-main (int argc, char *argv[])
+void
+cut_init (int *argc, char ***argv)
 {
-    gboolean success = TRUE;
     GOptionContext *option_context;
-    CutTestSuite *suite;
-    CutRepository *repository;
-    CutContext *context;
     GError *error = NULL;
 
     option_context = g_option_context_new("TEST_DIRECTORY");
     g_option_context_add_main_entries(option_context, option_entries, "cutter");
-    if (!g_option_context_parse(option_context, &argc, &argv, &error)) {
+    if (!g_option_context_parse(option_context, argc, argv, &error)) {
         g_print("%s\n", error->message);
         g_error_free(error);
         g_option_context_free(option_context);
         exit(1);
     }
 
-    if (argc == 1) {
+    if (*argc == 1) {
         gchar *help_string;
         help_string = g_option_context_get_help(option_context, TRUE, NULL);
         g_print("%s", help_string);
@@ -145,12 +144,22 @@ main (int argc, char *argv[])
     if (source_directory) {
         cut_context_set_source_directory(context, source_directory);
     } else {
-        cut_context_set_source_directory(context, argv[1]);
+        cut_context_set_source_directory(context, *argv[1]);
     }
     cut_context_set_use_color(context, use_color);
     cut_context_set_multi_thread(context, use_multi_thread);
 
-    repository = cut_repository_new(argv[1]);
+    g_option_context_free(option_context);
+}
+
+gboolean
+cut_run (const char *directory)
+{
+    gboolean success = TRUE;
+    CutTestSuite *suite;
+    CutRepository *repository;
+
+    repository = cut_repository_new(directory);
     suite = cut_repository_create_test_suite(repository);
 
     if (suite) {
@@ -159,9 +168,16 @@ main (int argc, char *argv[])
         g_object_unref(suite);
     }
     g_object_unref(repository);
-    g_option_context_free(option_context);
 
-    exit(success ? 0 : 1);
+    return TRUE;
+}
+
+int
+main (int argc, char *argv[])
+{
+    cut_init (&argc, &argv);
+
+    exit(cut_run(argv[1]) ? 0 : 1);
 }
 
 /*
