@@ -1,3 +1,4 @@
+/* -*- c-file-style: "gnu" -*- */
 /* buildertest.c
  * Copyright (C) 2006-2007 Async Open Source
  * Authors: Johan Dahlin

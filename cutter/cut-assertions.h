@@ -92,7 +92,6 @@ extern "C" {
         cut_test_pass();                                    \
     } else {                                                \
         cut_test_fail(FAILURE,                              \
-                      "%s",                                 \
                       "<%s == %s>\n"                        \
                       "expected: <%ld>\n but was: <%ld>",   \
                       #expected, #actual,                   \
