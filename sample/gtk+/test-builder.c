@@ -117,6 +117,9 @@ test_parser (void)
   cut_assert_equal_int (GTK_BUILDER_ERROR, error->domain);
   cut_assert_equal_int (GTK_BUILDER_ERROR_INVALID_TAG, error->code);
   g_error_free (error);
+
+  g_object_unref (builder);
+  builder = NULL;
 }
 
 int normal;
@@ -1574,8 +1577,8 @@ test_window (void)
 
   builder = builder_new_from_string (buffer2, -1, NULL);
   window1 = gtk_builder_get_object (builder, "window1");
-  cut_assert (title);
-  g_free (title);
+  g_object_get (window1, "title", &title, NULL);
+  cut_assert_null (title);
   gtk_widget_destroy (GTK_WIDGET (window1));
   g_object_unref (builder);
   builder = NULL;
