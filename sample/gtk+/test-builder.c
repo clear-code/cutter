@@ -205,6 +205,32 @@ signal_extra2 (GtkButton *button, GParamSpec spec)
   normal = 40;
 }
 
+static void
+connect_signals (GtkBuilder *gtk_builder,
+                 GObject *object,
+		 const gchar *signal_name,
+		 const gchar *handler_name,
+		 GObject *connect_object,
+		 GConnectFlags flags,
+		 gpointer user_data)
+{
+  GCallback func;
+  GModule *module;
+
+  module = g_module_open ("test_builder.so", G_MODULE_BIND_LAZY);
+  if (!g_module_symbol (module, handler_name, (gpointer)&func))
+    {
+       g_warning ("Could not find signal handler '%s'", handler_name);
+       return;
+    }
+
+  if (connect_object)
+    g_signal_connect_object (object, signal_name, func, connect_object, flags);
+  else
+    g_signal_connect_data (object, signal_name, func, user_data, NULL, flags);
+  g_module_close (module);
+}
+
 void
 test_connect_signals (void)
 {
@@ -251,7 +277,7 @@ test_connect_signals (void)
     "</interface>";
 
   builder = builder_new_from_string (buffer, -1, NULL);
-  gtk_builder_connect_signals (builder, NULL);
+  gtk_builder_connect_signals_full (builder, connect_signals, NULL);
 
   window = gtk_builder_get_object (builder, "window1");
   gtk_window_set_title (GTK_WINDOW (window), "test");
@@ -264,7 +290,7 @@ test_connect_signals (void)
   g_object_unref (builder);
   
   builder = builder_new_from_string (buffer_order, -1, NULL);
-  gtk_builder_connect_signals (builder, NULL);
+  gtk_builder_connect_signals_full (builder, connect_signals, NULL);
   window = gtk_builder_get_object (builder, "window1");
   normal = 0;
   gtk_window_set_title (GTK_WINDOW (window), "test");
@@ -276,7 +302,7 @@ test_connect_signals (void)
 			       strlen (buffer_extra), NULL);
   gtk_builder_add_from_string (builder, buffer_extra2,
 			       strlen (buffer_extra2), NULL);
-  gtk_builder_connect_signals (builder, NULL);
+  gtk_builder_connect_signals_full (builder, connect_signals, NULL);
   window = gtk_builder_get_object (builder, "window2");
   gtk_window_set_title (GTK_WINDOW (window), "test");
   cut_assert_equal_int (30, normal);
@@ -294,8 +320,8 @@ test_connect_signals (void)
   normal = 0;
   
   builder = builder_new_from_string (buffer_after_child, -1, NULL);
+  gtk_builder_connect_signals_full (builder, connect_signals, NULL);
   window = gtk_builder_get_object (builder, "window1");
-  gtk_builder_connect_signals (builder, NULL);
   gtk_window_set_title (GTK_WINDOW (window), "test");
 
   cut_assert_equal_int (1, normal);
