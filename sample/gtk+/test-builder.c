@@ -57,6 +57,15 @@ void test_widget (void);
 void test_window (void);
 void test_reference_counting (void);
 
+void signal_normal (GtkWindow *window, GParamSpec spec);
+void signal_after (GtkWindow *window, GParamSpec spec);
+void signal_object (GtkButton *button, GParamSpec spec);
+void signal_object_after (GtkButton *button, GParamSpec spec);
+void signal_first (GtkButton *button, GParamSpec spec);
+void signal_second (GtkButton *button, GParamSpec spec);
+void signal_extra (GtkButton *button, GParamSpec spec);
+void signal_extra2 (GtkButton *button, GParamSpec spec);
+
 static GtkBuilder *builder = NULL;
 
 void
@@ -123,17 +132,17 @@ test_parser (void)
   builder = NULL;
 }
 
-int normal;
-int after;
-int object;
-int object_after;
+static int normal;
+static int after;
+static int object;
+static int object_after;
 
 void
 signal_normal (GtkWindow *window, GParamSpec spec)
 {
   cut_assert (GTK_IS_WINDOW (window));
-  cut_assert (normal == 0);
-  cut_assert (after == 0);
+  cut_assert_equal_int (0, normal);
+  cut_assert_equal_int (0, after);
 
   normal++;
 }
@@ -142,8 +151,8 @@ void
 signal_after (GtkWindow *window, GParamSpec spec)
 {
   cut_assert (GTK_IS_WINDOW (window));
-  cut_assert (normal == 1);
-  cut_assert (after == 0);
+  cut_assert_equal_int (1, normal);
+  cut_assert_equal_int (0, after);
   
   after++;
 }
@@ -152,8 +161,8 @@ void
 signal_object (GtkButton *button, GParamSpec spec)
 {
   cut_assert (GTK_IS_BUTTON (button));
-  cut_assert (object == 0);
-  cut_assert (object_after == 0);
+  cut_assert_equal_int (0, object);
+  cut_assert_equal_int (0, object_after);
 
   object++;
 }
@@ -162,8 +171,8 @@ void
 signal_object_after (GtkButton *button, GParamSpec spec)
 {
   cut_assert (GTK_IS_BUTTON (button));
-  cut_assert (object == 1);
-  cut_assert (object_after == 0);
+  cut_assert_equal_int (1, object);
+  cut_assert_equal_int (0, object_after);
 
   object_after++;
 }
@@ -171,28 +180,28 @@ signal_object_after (GtkButton *button, GParamSpec spec)
 void
 signal_first (GtkButton *button, GParamSpec spec)
 {
-  cut_assert (normal == 0);
+  cut_assert_equal_int (0, normal);
   normal = 10;
 }
 
 void
 signal_second (GtkButton *button, GParamSpec spec)
 {
-  cut_assert (normal == 10);
+  cut_assert_equal_int (10, normal);
   normal = 20;
 }
 
 void
 signal_extra (GtkButton *button, GParamSpec spec)
 {
-  cut_assert (normal == 20);
+  cut_assert_equal_int (20, normal);
   normal = 30;
 }
 
 void
 signal_extra2 (GtkButton *button, GParamSpec spec)
 {
-  cut_assert (normal == 30);
+  cut_assert_equal_int (30, normal);
   normal = 40;
 }
 
@@ -382,21 +391,21 @@ test_domain (void)
   builder = builder_new_from_string (buffer1, -1, "domain-1");
   domain = gtk_builder_get_translation_domain (builder);
   cut_assert (domain);
-  cut_assert (strcmp (domain, "domain-1") == 0);
+  cut_assert_equal_string ("domain-1", domain);
   g_object_unref (builder);
   builder = NULL;
   
   builder = builder_new_from_string (buffer2, -1, NULL);
   domain = gtk_builder_get_translation_domain (builder);
   cut_assert (domain);
-  cut_assert (strcmp (domain, "domain") == 0);
+  cut_assert_equal_string ("domain", domain);
   g_object_unref (builder);
   builder = NULL;
   
   builder = builder_new_from_string (buffer2, -1, "domain-1");
   domain = gtk_builder_get_translation_domain (builder);
   cut_assert (domain);
-  cut_assert (strcmp (domain, "domain-1") == 0);
+  cut_assert_equal_string ("domain-1", domain);
   g_object_unref (builder);
   builder = NULL;
 }
@@ -500,25 +509,25 @@ void test_sizegroup (void)
   builder = builder_new_from_string (buffer1, -1, NULL);
   sizegroup = gtk_builder_get_object (builder, "sizegroup1");
   widgets = gtk_size_group_get_widgets (GTK_SIZE_GROUP (sizegroup));
-  cut_assert (g_slist_length (widgets) == 2);
+  cut_assert_equal_int (2, g_slist_length (widgets));
   g_slist_free (widgets);
   g_object_unref (builder);
 
   builder = builder_new_from_string (buffer2, -1, NULL);
   sizegroup = gtk_builder_get_object (builder, "sizegroup1");
   widgets = gtk_size_group_get_widgets (GTK_SIZE_GROUP (sizegroup));
-  cut_assert (g_slist_length (widgets) == 0);
+  cut_assert_equal_int (0, g_slist_length (widgets));
   g_slist_free (widgets);
   g_object_unref (builder);
 
   builder = builder_new_from_string (buffer3, -1, NULL);
   sizegroup = gtk_builder_get_object (builder, "sizegroup1");
   widgets = gtk_size_group_get_widgets (GTK_SIZE_GROUP (sizegroup));
-  cut_assert (g_slist_length (widgets) == 2);
+  cut_assert_equal_int (2, g_slist_length (widgets));
   g_slist_free (widgets);
   sizegroup = gtk_builder_get_object (builder, "sizegroup2");
   widgets = gtk_size_group_get_widgets (GTK_SIZE_GROUP (sizegroup));
-  cut_assert (g_slist_length (widgets) == 2);
+  cut_assert_equal_int (2, g_slist_length (widgets));
   g_slist_free (widgets);
 
 #if 0
@@ -591,12 +600,12 @@ void test_list_store (void)
                       2, &age,
                       -1);
   cut_assert (surname != NULL);
-  cut_assert (strcmp (surname, "John") == 0);
+  cut_assert_equal_string ("John", surname);
   g_free (surname);
   cut_assert (lastname != NULL);
-  cut_assert (strcmp (lastname, "Doe") == 0);
+  cut_assert_equal_string ("Doe", lastname);
   g_free (lastname);
-  cut_assert (age == 25);
+  cut_assert_equal_int (25, age);
   cut_assert (gtk_tree_model_iter_next (GTK_TREE_MODEL (store), &iter) == TRUE);
   
   gtk_tree_model_get (GTK_TREE_MODEL (store), &iter,
@@ -605,12 +614,12 @@ void test_list_store (void)
                       2, &age,
                       -1);
   cut_assert (surname != NULL);
-  cut_assert (strcmp (surname, "Johan") == 0);
+  cut_assert_equal_string ("Johan", surname);
   g_free (surname);
   cut_assert (lastname != NULL);
-  cut_assert (strcmp (lastname, "Dole") == 0);
+  cut_assert_equal_string ("Dole", lastname);
   g_free (lastname);
-  cut_assert (age == 50);
+  cut_assert_equal_int (50, age);
   cut_assert (gtk_tree_model_iter_next (GTK_TREE_MODEL (store), &iter) == FALSE);
   
   g_object_unref (builder);
@@ -755,17 +764,17 @@ void test_spin_button (void)
   adjustment = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (object));
   cut_assert (GTK_IS_ADJUSTMENT (adjustment));
   g_object_get (adjustment, "value", &value, NULL);
-  cut_assert (value == 1);
+  cut_assert_equal_int (1, value);
   g_object_get (adjustment, "lower", &value, NULL);
-  cut_assert (value == 0);
+  cut_assert_equal_int (0, value);
   g_object_get (adjustment, "upper", &value, NULL);
-  cut_assert (value == 10);
+  cut_assert_equal_int (10, value);
   g_object_get (adjustment, "step-increment", &value, NULL);
-  cut_assert (value == 2);
+  cut_assert_equal_int (2, value);
   g_object_get (adjustment, "page-increment", &value, NULL);
-  cut_assert (value == 3);
+  cut_assert_equal_int (3, value);
   g_object_get (adjustment, "page-size", &value, NULL);
-  cut_assert (value == 5);
+  cut_assert_equal_int (5, value);
   
   g_object_unref (builder);
   builder = NULL;
@@ -804,8 +813,7 @@ void test_notebook (void)
   builder = builder_new_from_string (buffer, -1, NULL);
   notebook = gtk_builder_get_object (builder, "notebook1");
   cut_assert (notebook != NULL);
-  cut_assert (gtk_notebook_get_n_pages (GTK_NOTEBOOK (notebook)) == 2,
-                        FALSE);
+  cut_assert (gtk_notebook_get_n_pages (GTK_NOTEBOOK (notebook)) == 2);
 
   label = gtk_notebook_get_nth_page (GTK_NOTEBOOK (notebook), 0);
   cut_assert (GTK_IS_LABEL (label));
@@ -950,7 +958,7 @@ void test_children (void)
   cut_assert (dialog != NULL);
   cut_assert (GTK_IS_DIALOG (dialog));
   children = gtk_container_get_children (GTK_CONTAINER (dialog));
-  cut_assert (g_list_length (children) == 1);
+  cut_assert_equal_int (1, g_list_length (children));
   g_list_free (children);
   
   vbox = gtk_builder_get_object (builder, "dialog1-vbox");
