@@ -249,7 +249,7 @@ cut_output_set_verbose_level (CutOutput *output, CutVerboseLevel level)
 CutVerboseLevel
 cut_output_get_verbose_level (CutOutput *output)
 {
-    return CUT_OUTPUT_GET_PRIVATE(output)->level;
+    return CUT_OUTPUT_GET_PRIVATE(output)->verbose_level;
 }
 
 void
@@ -282,6 +282,12 @@ cut_output_set_source_directory (CutOutput *output, const gchar *directory)
     if (directory) {
         priv->source_directory = g_strdup(directory);
     }
+}
+
+const gchar *
+cut_output_get_source_directory (CutOutput *output)
+{
+    return CUT_OUTPUT_GET_PRIVATE(output)->source_directory;
 }
 
 void

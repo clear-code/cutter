@@ -62,6 +62,8 @@ void  cut_output_set_verbose_level_by_name (CutOutput *output,
                                             const gchar *name);
 void  cut_output_set_source_directory      (CutOutput *output,
                                             const gchar *directory);
+const gchar *
+      cut_output_get_source_directory      (CutOutput *output);
 void  cut_output_set_use_color             (CutOutput *output,
                                             gboolean   use_color);
 

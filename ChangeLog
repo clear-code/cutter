@@ -3,6 +3,7 @@
 	* cutter/cut-module.[c|h], cutter/cut-module-impl.h: Added files for
 	modularization of CutOutput, but not used yet.
 	* cutter/cut-output.[c|h]: Added cut_output_get_verbose_level().
+	* cutter/cut-output.[c|h]: Added cut_output_get_source_directory().
 
 2007-11-13  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
