@@ -175,9 +175,15 @@ cut_run (const char *directory)
 int
 main (int argc, char *argv[])
 {
+    gboolean success = TRUE;
+
     cut_init (&argc, &argv);
 
-    exit(cut_run(argv[1]) ? 0 : 1);
+    success  = cut_run(argv[1]);
+
+    g_object_unref (context);
+
+    exit(success ? 0 : 1);
 }
 
 /*

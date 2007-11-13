@@ -3,6 +3,7 @@
 	* cutter/main.c: Added.
 	* cutter/Makefile.am: Create cutter library.
 	* sample/gtk+/cutter-gtk.c: Added a program for running tests of GTK+.
+	* cutter/main.c: Plugged memory leak.
 
 2007-11-13  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
