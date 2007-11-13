@@ -87,6 +87,7 @@ AM_CONDITIONAL([HAVE_GTK], [test "x$no_gtk" = x -a "x$gtk_print" = xyes])
 
 AC_CONFIG_FILES([Makefile
 		 cutter.pc
+		 libcutter.pc
 		 cutter/Makefile
                  sample/Makefile
                  sample/calc/Makefile.test

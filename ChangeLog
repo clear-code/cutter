@@ -1,3 +1,7 @@
+2007-11-13  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* libcutter.pc.in: Added pkgconfig file for cutter library.
+
 2007-11-13  Kouhei Sutou  <kou@cozmixng.org>
 
 	* **/run-test.sh: run make in top directory.
