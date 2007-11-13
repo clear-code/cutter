@@ -78,6 +78,20 @@ CUTTER_CFLAGS="\$(GLIB_CFLAGS)"
 AC_SUBST(CUTTER_CFLAGS)
 
 dnl **************************************************************
+dnl Configure for modules.
+dnl **************************************************************
+
+moduledir="\${libdir}/\$(PACKAGE)/module"
+AC_SUBST(moduledir)
+
+dnl **************************************************************
+dnl Configure for output modules.
+dnl **************************************************************
+
+output_moduledir="\${moduledir}/output"
+AC_SUBST(output_moduledir)
+
+dnl **************************************************************
 dnl Check for GTK+
 dnl **************************************************************
 AM_PATH_GTK_2_0(2.12.0, [], [], [])
@@ -89,6 +103,8 @@ AC_CONFIG_FILES([Makefile
 		 cutter.pc
 		 libcutter.pc
 		 cutter/Makefile
+		 cutter/module/Makefile
+		 cutter/module/output/Makefile
                  sample/Makefile
                  sample/calc/Makefile.test
 		 sample/glib/Makefile
