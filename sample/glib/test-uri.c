@@ -222,7 +222,7 @@ test_g_filename_to_uri (void)
       res = g_filename_to_uri (to_uri_tests[i].filename,
 			       to_uri_tests[i].hostname,
 			       NULL);
-      cut_assert_equal_string(to_uri_tests[i].expected_result, res);
+      cut_assert_equal_string (to_uri_tests[i].expected_result, res);
       g_free (res);
     }
 }
