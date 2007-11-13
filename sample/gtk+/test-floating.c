@@ -20,6 +20,8 @@
 #include <cutter.h>
 #include <gtk/gtk.h>
 
+void test_floating (void);
+
 static gboolean destroyed = FALSE;
 static void destroy (void) { destroyed = TRUE; }
      
