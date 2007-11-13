@@ -1094,11 +1094,10 @@ void test_treeview_column (void)
   cut_assert (GTK_IS_TREE_VIEW (treeview));
   column = gtk_tree_view_get_column (GTK_TREE_VIEW (treeview), 0);
   cut_assert (GTK_IS_TREE_VIEW_COLUMN (column));
-  cut_assert (strcmp (gtk_tree_view_column_get_title (column),
-				"Test") == 0);
+  cut_assert_equal_string ("Test", gtk_tree_view_column_get_title (column), "Test");
 
   renderers = gtk_tree_view_column_get_cell_renderers (column);
-  cut_assert (g_list_length (renderers) == 1);
+  cut_assert_equal_int (1, g_list_length (renderers));
   renderer = g_list_nth_data (renderers, 0);
   cut_assert (renderer);
   cut_assert (GTK_IS_CELL_RENDERER_TEXT (renderer));
@@ -1109,13 +1108,13 @@ void test_treeview_column (void)
   renderer = gtk_builder_get_object (builder, "renderer1");
   g_object_get (renderer, "text", &text, NULL);
   cut_assert (text);
-  cut_assert (strcmp (text, "25") == 0);
+  cut_assert_equal_string ("25", text);
   g_free (text);
   
   renderer = gtk_builder_get_object (builder, "renderer2");
   g_object_get (renderer, "text", &text, NULL);
   cut_assert (text);
-  cut_assert (strcmp (text, "John") == 0);
+  cut_assert_equal_string ("John", text);
   g_free (text);
 
   gtk_widget_unrealize (GTK_WIDGET (treeview));
@@ -1172,7 +1171,7 @@ void test_icon_view (void)
   renderer = gtk_builder_get_object (builder, "renderer1");
   g_object_get (renderer, "text", &text, NULL);
   cut_assert (text);
-  cut_assert (strcmp (text, "test") == 0);
+  cut_assert_equal_string ("test", text);
   g_free (text);
     
   window = gtk_builder_get_object (builder, "window1");
@@ -1234,14 +1233,14 @@ void test_combo_box (void)
   cut_assert (renderer);
   g_object_get (renderer, "text", &text, NULL);
   cut_assert (text);
-  cut_assert (strcmp (text, "Bar") == 0);
+  cut_assert_equal_string ("Bar", text);
   g_free (text);
 
   renderer = gtk_builder_get_object (builder, "renderer1");
   cut_assert (renderer);
   g_object_get (renderer, "text", &text, NULL);
   cut_assert (text);
-  cut_assert (strcmp (text, "2") == 0);
+  cut_assert_equal_string ("2", text);
   g_free (text);
 
   window = gtk_builder_get_object (builder, "window1");
@@ -1304,14 +1303,14 @@ test_combo_box_entry (void)
   cut_assert (renderer);
   g_object_get (renderer, "text", &text, NULL);
   cut_assert (text);
-  cut_assert (strcmp (text, "Bar") == 0);
+  cut_assert_equal_string ("Bar", text);
   g_free (text);
 
   renderer = gtk_builder_get_object (builder, "renderer1");
   cut_assert (renderer);
   g_object_get (renderer, "text", &text, NULL);
   cut_assert (text);
-  cut_assert (strcmp (text, "2") == 0);
+  cut_assert_equal_string ("2", text);
   g_free (text);
 
   window = gtk_builder_get_object (builder, "window1");
@@ -1372,7 +1371,7 @@ test_cell_view (void)
   
   renderers = gtk_cell_view_get_cell_renderers (GTK_CELL_VIEW (cellview));
   cut_assert (renderers);
-  cut_assert (g_list_length (renderers) == 1);
+  cut_assert (1, g_list_length (renderers));
   
   gtk_widget_realize (GTK_WIDGET (cellview));
 
@@ -1380,7 +1379,7 @@ test_cell_view (void)
   g_list_free (renderers);
   cut_assert (renderer);
   g_object_get (renderer, "text", &text, NULL);
-  cut_assert (strcmp (text, "test") == 0);
+  cut_assert_equal_string ("test", text);
   g_free (text);
   gtk_tree_path_free (path);
 
