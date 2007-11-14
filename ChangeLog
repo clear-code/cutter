@@ -1,5 +1,9 @@
 2007-11-14  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/module/output/cut-output-gtk.c: Added skelton.
+
+2007-11-14  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-output.[c|h], cutter/cut-context.c,cutter/cut-main.c:
 	Modularization of CutOutput.
 	* cutter/module/output/cut-output-console.c: "use-color" property.
