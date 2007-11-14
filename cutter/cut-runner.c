@@ -251,6 +251,7 @@ cut_runner_run (CutRunner *runner, const gchar *directory)
     klass = CUT_RUNNER_GET_CLASS(runner);
     if (klass->run)
         return klass->run(runner, directory);
+
     return FALSE;
 }
 
