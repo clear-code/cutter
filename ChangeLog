@@ -1,3 +1,8 @@
+2007-11-14  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-output.c, cutter/module/output/cut-output-console.c:
+	worked use_color again.
+
 2007-11-14  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-test-result.[c|h]: Added cut_test_result_get_test_name().

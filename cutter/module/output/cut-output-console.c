@@ -83,8 +83,6 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 
-static void set_use_color          (CutOutput *output,
-                                    gboolean use_color);
 static void on_start_test_suite    (CutOutput *output,
                                     CutTestSuite *test_suite);
 static void on_start_test_case     (CutOutput *output,
@@ -327,14 +325,6 @@ print_for_status(CutOutputConsole *console, CutTestResultStatus status,
         g_vprintf(format, args);
     }
     va_end(args);
-}
-
-static void
-set_use_color (CutOutput *output, gboolean use_color)
-{
-    CutOutputConsole *console = CUT_OUTPUT_CONSOLE(output);
-
-    console->use_color = use_color;
 }
 
 static void

@@ -315,9 +315,7 @@ cut_output_get_source_directory (CutOutput *output)
 void
 cut_output_set_use_color (CutOutput *output, gboolean use_color)
 {
-    CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
-
-    priv->use_color = use_color;
+    g_object_set(output, "use_color", use_color, NULL);
 }
 
 void
