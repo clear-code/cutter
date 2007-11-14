@@ -264,50 +264,74 @@ check_boolean_list_value (GKeyFile    *keyfile,
   g_free (value);
 }
 
-#define check_boolean_value(keyfile, group, key, expected) \
-{ \
-  GError *error = NULL; \
-  gboolean value; \
-  value = g_key_file_get_boolean (keyfile, group, key, &error); \
-  check_no_error (error); \
-  cut_assert_equal_int (expected, value, \
-      "Group %s key %s: expected boolean value '%s', actual value '%s'", \
-	       group, key, expected ? "true" : "false", \
-	       value ? "true" : "false"); \
+static void
+check_boolean_value (GKeyFile    *keyfile,
+		     const gchar *group,
+		     const gchar *key,
+		     gboolean     expected)
+{
+  GError *error = NULL;
+  gboolean value;
+  value = g_key_file_get_boolean (keyfile, group, key, &error);
+  check_no_error (error);
+  cut_assert_equal_int (expected, value,
+		  	"Group %s key %s: expected boolean value '%s', actual value '%s'",
+			group, key, expected ? "true" : "false",
+			value ? "true" : "false");
 }
 
-#define check_integer_value(keyfile, group, key, expected) \
-{ \
-  GError *error = NULL; \
-  gint value; \
-  value = g_key_file_get_integer (keyfile, group, key, &error); \
-  check_no_error (error); \
-  cut_assert_equal_int (expected, value, \
-      "Group %s key %s: expected integer value %d, actual value %d", \
-	       group, key, expected, value); \
+static void
+check_integer_value (GKeyFile    *keyfile,
+		     const gchar *group,
+		     const gchar *key,
+		     gint         expected)
+{
+  GError *error = NULL;
+  gint value;
+  value = g_key_file_get_integer (keyfile, group, key, &error);
+  check_no_error (error);
+  cut_assert_equal_int (expected, value,
+		  	"Group %s key %s: expected integer value %d, actual value %d",
+			group, key, expected, value);
 }
 
-#define check_double_value(keyfile, group, key, expected) { \
-  GError *error = NULL; \
-  gdouble value; \
-  value = g_key_file_get_double (keyfile, group, key, &error); \
-  check_no_error (error); \
-  cut_assert_equal_double (expected, 0.0, value, \
-      "Group %s key %s: expected integer value %e, actual value %e", \
-	       group, key, expected, value); \
+static void
+check_double_value (GKeyFile    *keyfile,
+		    const gchar *group,
+		    const gchar *key,
+		    gdouble      expected)
+{
+  GError *error = NULL;
+  gdouble value;
+  value = g_key_file_get_double (keyfile, group, key, &error);
+  check_no_error (error);
+  cut_assert_equal_double (expected, 0.0, value,
+		  	   "Group %s key %s: expected integer value %e, actual value %e",
+			   group, key, expected, value);
 }
 
-#define check_name(what, value, expected, position) \
-  cut_assert (value); \
-  cut_assert (expected, value, \
-      "Wrong %s returned: got '%s' at %d, expected '%s'", \
-	       what, value, position, expected);
+static void
+check_name (const gchar *what,
+	    const gchar *value,
+	    const gchar *expected,
+	    gint         position)
+{
+  cut_assert (value);
+  cut_assert_equal_string (expected, value,
+		  	   "Wrong %s returned: got '%s' at %d, expected '%s'",
+			   what, value, position, expected);
+}
 
-#define check_length(what, n_items, length, expected) \
-  cut_assert (n_items == length && length == expected, \
-      "Wrong number of %s returned: got %d items, length %d, expected %d", \
-	       what, n_items, length, expected);
-
+static void
+check_length (const gchar *what,
+	      gint         n_items,
+	      gint         length,
+	      gint         expected)
+{
+  cut_assert (n_items == length && length == expected,
+	      "Wrong number of %s returned: got %d items, length %d, expected %d",
+	      what, n_items, length, expected);
+}
 
 /* check that both \n and \r\n are accepted as line ends,
  * and that stray \r are passed through
