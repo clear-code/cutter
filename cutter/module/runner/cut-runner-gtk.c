@@ -105,7 +105,6 @@ class_init (CutRunnerClass *klass)
 static void
 init (CutRunnerGtk *runner)
 {
-    gtk_init(NULL, NULL);
 }
 
 static void
@@ -196,12 +195,15 @@ get_property (GObject    *object,
 static void
 runner_init (CutRunner *runner, int *argc, char ***argv)
 {
+    gtk_init(argc, argv);
 }
 
 static gboolean
 runner_run (CutRunner *runner, const gchar *directory)
 {
-    return FALSE;
+    gtk_main();
+
+    return TRUE;
 }
 
 
