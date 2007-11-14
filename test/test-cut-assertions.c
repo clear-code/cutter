@@ -208,6 +208,44 @@ test_error_equal_string (void)
     cut_assert(!run(test));
 }
 
+static void
+cut_assert_test_result_summary (gint n_tests, gint n_assertions,
+                                gint n_failures, gint n_errors,
+                                gint n_pendings, gint n_notifications)
+{
+    cut_assert_equal_int(n_tests, cut_context_get_n_tests(context));
+    cut_assert_equal_int(n_assertions, cut_context_get_n_assertions(context));
+    cut_assert_equal_int(n_failures, cut_context_get_n_failures(context));
+    cut_assert_equal_int(n_errors, cut_context_get_n_errors(context));
+    cut_assert_equal_int(n_pendings, cut_context_get_n_pendings(context));
+    cut_assert_equal_int(n_notifications,
+                         cut_context_get_n_notifications(context));
+}
+
+static void
+cut_assert_test_result (gint i, CutTestResultStatus status,
+                        const gchar *test_name,
+                        const gchar *user_message, const gchar *system_message,
+                        const gchar *function_name)
+{
+    const GList *results;
+    CutTestResult *result;
+
+    results = cut_context_get_results(context);
+    cut_assert_operator_int(i, <=, g_list_length((GList *)results));
+
+    result = g_list_nth_data((GList *)results, i);
+    cut_assert(result);
+    cut_assert_equal_int(status, cut_test_result_get_status(result));
+    cut_assert_equal_string(test_name, cut_test_result_get_test_name(result));
+    cut_assert_equal_string_or_null(user_message,
+                                    cut_test_result_get_user_message(result));
+    cut_assert_equal_string_or_null(system_message,
+                                    cut_test_result_get_system_message(result));
+    cut_assert_equal_string(function_name,
+                            cut_test_result_get_function_name(result));
+}
+
 void
 test_error (void)
 {
@@ -216,18 +254,11 @@ test_error (void)
     test = cut_test_new("dummy-error-test", NULL, dummy_error_test_function);
     cut_assert(test, "Creating a new CutTest object failed");
 
-    g_signal_connect(test, "error", G_CALLBACK(cb_collect_result),
-                     &test_result);
     cut_assert(!run(test));
-    g_signal_handlers_disconnect_by_func(test,
-                                         G_CALLBACK(cb_collect_result),
-                                         &test_result);
-
-    cut_assert(test_result,
-               "Could not get a CutTestResult object "
-               "since \"error\" signal was not emmitted.");
-    cut_assert_equal_int(CUT_TEST_RESULT_ERROR,
-                         cut_test_result_get_status(test_result));
+    cut_assert_test_result_summary(1, 0, 0, 1, 0, 0);
+    cut_assert_test_result(0, CUT_TEST_RESULT_ERROR, "dummy-error-test",
+                           "This test should error", NULL,
+                           "dummy_error_test_function");
 }
 
 void
