@@ -71,9 +71,9 @@ void            cut_runner_unload      (void);
 GList          *cut_runner_get_registered_types (void);
 GList          *cut_runner_get_log_domains      (void);
 
-CutRunner   *cut_runner_new (const gchar *name,
-                             const gchar *first_property,
-                             ...);
+CutRunner   *cut_runner_new  (const gchar *name,
+                              const gchar *first_property,
+                              ...);
 void         cut_runner_init (CutRunner *runner,
                               int *argc,
                               char ***argv);
