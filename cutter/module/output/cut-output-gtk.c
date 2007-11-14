@@ -154,15 +154,15 @@ register_type (GTypeModule *type_module)
             (GClassInitFunc) class_init,
             NULL,           /* class_finalize */
             NULL,           /* class_data */
-            sizeof (CutOutputGtk),
+            sizeof(CutOutputGtk),
             0,
             (GInstanceInitFunc) init,
         };
 
-    cut_type_output_gtk = g_type_module_register_type (type_module,
-                                                           CUT_TYPE_OUTPUT,
-                                                           "CutOutputGtk",
-                                                           &info, 0);
+    cut_type_output_gtk = g_type_module_register_type(type_module,
+                                                      CUT_TYPE_OUTPUT,
+                                                      "CutOutputGtk",
+                                                      &info, 0);
 }
 
 G_MODULE_EXPORT GList *
@@ -170,11 +170,11 @@ CUT_MODULE_IMPL_INIT (GTypeModule *type_module)
 {
     GList *registered_types = NULL;
 
-    register_type (type_module);
+    register_type(type_module);
     if (cut_type_output_gtk)
         registered_types =
-            g_list_prepend (registered_types,
-                            (gchar *) g_type_name (cut_type_output_gtk));
+            g_list_prepend(registered_types,
+                           (gchar *)g_type_name(cut_type_output_gtk));
 
     return registered_types;
 }
@@ -187,13 +187,13 @@ CUT_MODULE_IMPL_EXIT (void)
 G_MODULE_EXPORT GObject *
 CUT_MODULE_IMPL_INSTANTIATE (const gchar *first_property, va_list var_args)
 {
-    return g_object_new_valist (CUT_TYPE_OUTPUT_GTK, first_property, var_args);
+    return g_object_new_valist(CUT_TYPE_OUTPUT_GTK, first_property, var_args);
 }
 
 G_MODULE_EXPORT gchar *
 CUT_MODULE_IMPL_GET_LOG_DOMAIN (void)
 {
-    return g_strdup (G_LOG_DOMAIN);
+    return g_strdup(G_LOG_DOMAIN);
 }
 
 static void
