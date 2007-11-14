@@ -44,7 +44,7 @@ void  cut_test_context_register_result      (CutTestContext *context,
                                              unsigned int line,
                                              const char *message,
                                              ...);
-void  cut_test_context_long_jump            (CutTestContext *context);
+void  cut_test_context_long_jump            (CutTestContext *context) __attribute__((__noreturn__));
 
 #ifdef __cplusplus
 }

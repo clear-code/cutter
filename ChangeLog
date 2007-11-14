@@ -1,3 +1,8 @@
+2007-11-15  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-public.h: Append __attribute__((__noreturn__)) to
+	cut_text_context_long_jump().
+
 2007-11-14  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-assertions.h (cut_assert_operator_int): fixed a
