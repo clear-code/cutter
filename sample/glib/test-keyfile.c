@@ -149,26 +149,19 @@ check_integer_list_value (GKeyFile    *keyfile,
 
   value = g_key_file_get_integer_list (keyfile, group, key, &len, &error);
   check_no_error (error);
-  cut_assert (value != NULL);
+  cut_assert (value);
   
   va_start (args, key);
   i = 0;
   v = va_arg (args, gint);
   while (v != -100)
     {
-      if (i == len)
-	{
-	  g_print ("Group %s key %s: list too short (%d)\n", 
-		   group, key, i);      
-	  exit (1);
-	}
-      if (value[i] != v)
-	{
-	  g_print ("Group %s key %s: mismatch at %d, expected %d, got %d\n", 
-		   group, key, i, v, value[i]);      
-	  exit (1);
-	}
-
+      cut_assert (i != len,
+      		  "Group %s key %s: list too short (%d)\n", 
+		  group, key, i);      
+      cut_assert_equal_int (v, value[i],
+		      	    "Group %s key %s: mismatch at %d, expected %d, got %d\n", 
+			    group, key, i, v, value[i]);      
       i++;
       v = va_arg (args, gint);
     }
@@ -192,26 +185,19 @@ check_double_list_value (GKeyFile    *keyfile,
 
   value = g_key_file_get_double_list (keyfile, group, key, &len, &error);
   check_no_error (error);
-  cut_assert (value != NULL);
+  cut_assert (value);
   
   va_start (args, key);
   i = 0;
   v = va_arg (args, gdouble);
   while (v != -100)
     {
-      if (i == len)
-	{
-	  g_print ("Group %s key %s: list too short (%d)\n", 
-		   group, key, i);      
-	  exit (1);
-	}
-      if (value[i] != v)
-	{
-	  g_print ("Group %s key %s: mismatch at %d, expected %e, got %e\n", 
-		   group, key, i, v, value[i]);      
-	  exit (1);
-	}
-
+      cut_assert (i != len,
+	  	  "Group %s key %s: list too short (%d)\n", 
+		  group, key, i);      
+      cut_assert_equal_int (v, value[i],
+		      	    "Group %s key %s: mismatch at %d, expected %e, got %e\n", 
+			    group, key, i, v, value[i]);      
       i++;
       v = va_arg (args, gdouble);
     }
@@ -235,26 +221,19 @@ check_boolean_list_value (GKeyFile    *keyfile,
 
   value = g_key_file_get_boolean_list (keyfile, group, key, &len, &error);
   check_no_error (error);
-  g_assert (value != NULL);
+  cut_assert (value);
   
   va_start (args, key);
   i = 0;
   v = va_arg (args, gboolean);
   while (v != -100)
     {
-      if (i == len)
-	{
-	  g_print ("Group %s key %s: list too short (%d)\n", 
-		   group, key, i);      
-	  exit (1);
-	}
-      if (value[i] != v)
-	{
-	  g_print ("Group %s key %s: mismatch at %d, expected %d, got %d\n", 
-		   group, key, i, v, value[i]);      
-	  exit (1);
-	}
-
+      cut_assert (i != len,
+		  "Group %s key %s: list too short (%d)\n", 
+		  group, key, i);      
+      cut_assert_equal_int (v, value[i],
+		      	    "Group %s key %s: mismatch at %d, expected %d, got %d\n", 
+			    group, key, i, v, value[i]);      
       i++;
       v = va_arg (args, gboolean);
     }
@@ -506,26 +485,20 @@ test_listing (void)
 
   g_strfreev (names);
 
-  if (!g_key_file_has_group (keyfile, "group1") ||
-      !g_key_file_has_group (keyfile, "group2") ||
-      g_key_file_has_group (keyfile, "group10") ||
-      g_key_file_has_group (keyfile, "group2 "))      
-    {
-      g_print ("Group finding trouble\n");
-      exit (1);      
-    }
+  cut_assert (g_key_file_has_group (keyfile, "group1") &&
+	      g_key_file_has_group (keyfile, "group2") &&
+	      !g_key_file_has_group (keyfile, "group10") &&
+	      !g_key_file_has_group (keyfile, "group2 "),
+	      "Group finding trouble");
 
   start = g_key_file_get_start_group (keyfile);
   cut_assert_equal_string ("group1", start);
   g_free (start);
 
-  if (!g_key_file_has_key (keyfile, "group1", "key1", &error) ||
-      !g_key_file_has_key (keyfile, "group2", "key3", &error) ||
-      g_key_file_has_key (keyfile, "group2", "no-such-key", &error))
-    {
-      g_print ("Key finding trouble\n");
-      exit (1);      
-    }
+  cut_assert (g_key_file_has_key (keyfile, "group1", "key1", &error) &&
+	      g_key_file_has_key (keyfile, "group2", "key3", &error) &&
+	      !g_key_file_has_key (keyfile, "group2", "no-such-key", &error),
+	      "Key finding trouble");
   check_no_error (error);
   
   g_key_file_has_key (keyfile, "no-such-group", "key", &error);
