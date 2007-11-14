@@ -219,12 +219,12 @@ extern "C" {
     if (_lhs operator _rhs) {                                           \
         cut_test_pass();                                                \
     } else {                                                            \
-        cut_test_fail(                                                  \
-            FAILURE,                                                    \
-            "expected: <%s %s %s>\n but was: <%ld> %s <%ld>"            \
-            #lhs, #operator, #rhs,                                      \
-            _lhs, #operator, _rhs,                                      \
-            NULL, ## __VA_ARGS__, NULL);                                \
+        cut_test_fail(FAILURE,                                          \
+                      "expected: <%s> %s <%s>\n"                        \
+                      " but was: <%ld> %s <%ld>",                       \
+                      #lhs, #operator, #rhs,                            \
+                      _lhs, #operator, _rhs,                            \
+                      NULL, ## __VA_ARGS__, NULL);                      \
     }                                                                   \
 } while(0)
 

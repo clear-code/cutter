@@ -1,5 +1,8 @@
 2007-11-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertions.h (cut_assert_operator_int): fixed a
+	string literal bug.
+
 	* cutter/cut-assertions.h (cut_assert_equal_string_or_null): added.
 	* test/test-cut-assertions.c: cleanup.
 

@@ -232,7 +232,7 @@ cut_assert_test_result (gint i, CutTestResultStatus status,
     CutTestResult *result;
 
     results = cut_context_get_results(context);
-    cut_assert_operator_int(i, <=, g_list_length((GList *)results));
+    cut_assert_operator_int(i, <, g_list_length((GList *)results));
 
     result = g_list_nth_data((GList *)results, i);
     cut_assert(result);
