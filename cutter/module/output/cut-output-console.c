@@ -67,13 +67,6 @@ struct _CutOutputConsoleClass
     CutOutputClass parent_class;
 };
 
-typedef struct _CutOutputPrivate	CutOutputPrivate;
-struct _CutOutputPrivate
-{
-    CutVerboseLevel verbose_level;
-    gchar *source_directory;
-};
-
 enum
 {
     PROP_0,
