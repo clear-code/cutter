@@ -33,9 +33,6 @@
 #include "cut-output.h"
 #include "cut-context.h"
 #include "cut-test.h"
-#include "cut-test-case.h"
-#include "cut-verbose-level.h"
-#include "cut-enum-types.h"
 
 #define CUT_TYPE_OUTPUT_CONSOLE            cut_type_output_console
 #define CUT_OUTPUT_CONSOLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_OUTPUT_CONSOLE, CutOutputConsole))
