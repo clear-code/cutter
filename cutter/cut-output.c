@@ -37,14 +37,6 @@
 
 #define CUT_OUTPUT_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_OUTPUT, CutOutputPrivate))
 
-#define RED_COLOR "\033[01;31m"
-#define GREEN_COLOR "\033[01;32m"
-#define YELLOW_COLOR "\033[01;33m"
-#define BLUE_COLOR "\033[01;34m"
-#define PURPLE_COLOR "\033[01;35m"
-#define CYAN_COLOR "\033[01;36m"
-#define NORMAL_COLOR "\033[00m"
-
 typedef struct _CutOutputPrivate	CutOutputPrivate;
 struct _CutOutputPrivate
 {
