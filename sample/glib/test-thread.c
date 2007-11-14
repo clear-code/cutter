@@ -81,7 +81,7 @@ test_g_static_rec_mutex (void)
 {
   GThread *thread;
 
-  g_assert (g_static_rec_mutex_trylock (&test_g_static_rec_mutex_mutex));
+  cut_assert (g_static_rec_mutex_trylock (&test_g_static_rec_mutex_mutex));
   test_g_static_rec_mutex_thread_ready = FALSE;
   thread = g_thread_create (test_g_static_rec_mutex_thread, 
 			    GINT_TO_POINTER (42), TRUE, NULL);
@@ -90,7 +90,7 @@ test_g_static_rec_mutex (void)
   while (!test_g_static_rec_mutex_thread_ready)
     g_usleep (G_USEC_PER_SEC / 5);
 
-  g_assert (g_static_rec_mutex_trylock (&test_g_static_rec_mutex_mutex));
+  cut_assert (g_static_rec_mutex_trylock (&test_g_static_rec_mutex_mutex));
   test_g_static_rec_mutex_int = 41;
   g_static_rec_mutex_unlock (&test_g_static_rec_mutex_mutex);
   test_g_static_rec_mutex_int = 42;  
@@ -105,7 +105,7 @@ test_g_static_rec_mutex (void)
   test_g_static_rec_mutex_int = 0;  
   g_static_rec_mutex_unlock (&test_g_static_rec_mutex_mutex);
 
-  g_assert (GPOINTER_TO_INT (g_thread_join (thread)) == 43);
+  cut_assert (43, GPOINTER_TO_INT (g_thread_join (thread)));
 }
 
 /* GStaticPrivate */
@@ -381,8 +381,6 @@ main (int   argc,
   /* Only run the test, if threads are enabled and a default thread
      implementation is available */
 #if defined(G_THREADS_ENABLED) && ! defined(G_THREADS_IMPL_NONE)
-  g_thread_init (NULL);
-
   /* Now we rerun all tests, but this time we fool the system into
    * thinking, that the available thread system is not native, but
    * userprovided. */
