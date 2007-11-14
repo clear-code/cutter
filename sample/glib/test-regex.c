@@ -526,39 +526,44 @@ test_replace (void)
   cut_assert_null_replace (".", "a", 0, "\\g");
 }
 
-#define TEST_PARTIAL_MATCH(pattern, string) { \
-  regex = g_regex_new (pattern, 0, 0, NULL); \
-  g_regex_match (regex, string, G_REGEX_MATCH_PARTIAL, &match_info); \
-  cut_assert (g_match_info_is_partial_match (match_info)); \
-  cut_assert (!g_match_info_fetch_pos (match_info, 0, NULL, NULL)); \
-  cut_assert (!g_match_info_fetch_pos (match_info, 1, NULL, NULL)); \
-  g_match_info_free (match_info); \
-  g_regex_unref (regex); \
-  regex = NULL; \
-  match_info = NULL; \
+static void
+cut_assert_partial_match (const gchar *pattern,
+			  const gchar *string)
+{
+  regex = g_regex_new (pattern, 0, 0, NULL);
+  g_regex_match (regex, string, G_REGEX_MATCH_PARTIAL, &match_info);
+  cut_assert (g_match_info_is_partial_match (match_info));
+  cut_assert (!g_match_info_fetch_pos (match_info, 0, NULL, NULL));
+  cut_assert (!g_match_info_fetch_pos (match_info, 1, NULL, NULL));
+  g_match_info_free (match_info);
+  g_regex_unref (regex);
+  regex = NULL;
+  match_info = NULL;
 }
 
-#define TEST_PARTIAL_MISMATCH(pattern, string) { \
-  regex = g_regex_new (pattern, 0, 0, NULL); \
-  g_regex_match (regex, string, G_REGEX_MATCH_PARTIAL, &match_info); \
-  cut_assert (!g_match_info_is_partial_match (match_info)); \
-  g_match_info_free (match_info); \
-  g_regex_unref (regex); \
-  regex = NULL; \
-  match_info = NULL; \
+static void
+cut_assert_partial_mismatch (const gchar *pattern,
+			     const gchar *string)
+{
+  regex = g_regex_new (pattern, 0, 0, NULL);
+  g_regex_match (regex, string, G_REGEX_MATCH_PARTIAL, &match_info);
+  cut_assert (!g_match_info_is_partial_match (match_info));
+  g_match_info_free (match_info);
+  g_regex_unref (regex);
+  regex = NULL;
+  match_info = NULL;
 }
 
 void
 test_partial_match (void)
 {
-  /* TEST_PARTIAL(pattern, string, expected) */
-  TEST_PARTIAL_MATCH("^ab", "a");
-  TEST_PARTIAL_MATCH("ab", "xa");
-  TEST_PARTIAL_MATCH("(a)+b", "aa");
-  TEST_PARTIAL_MATCH("a?b", "a");
-  TEST_PARTIAL_MISMATCH("^ab", "xa");
-  TEST_PARTIAL_MISMATCH("ab", "ab"); /* normal match. */
-  TEST_PARTIAL_MISMATCH("a+b", "aa"); /* PCRE_ERROR_BAD_PARTIAL */
+  cut_assert_partial_match ("^ab", "a");
+  cut_assert_partial_match ("ab", "xa");
+  cut_assert_partial_match ("(a)+b", "aa");
+  cut_assert_partial_match ("a?b", "a");
+  cut_assert_partial_mismatch ("^ab", "xa");
+  cut_assert_partial_mismatch ("ab", "ab"); /* normal match. */
+  cut_assert_partial_mismatch ("a+b", "aa"); /* PCRE_ERROR_BAD_PARTIAL */
 }
 
 static void
@@ -628,112 +633,118 @@ test_replace_lit (void)
   cut_assert_replace_lit ("-", "-" EURO "-" AGRAVE "-" HSTROKE, 0, "", EURO AGRAVE HSTROKE);
 }
 
-#define TEST_EXPAND(pattern, string, string_to_expand, raw, expected) { \
-  gchar *res; \
-  regex = g_regex_new (pattern, raw ? G_REGEX_RAW : 0, 0, NULL); \
-  g_regex_match (regex, string, 0, &match_info); \
-  res = g_match_info_expand_references (match_info, string_to_expand, NULL); \
-  if (!expected) \
-    cut_assert_null (res); \
-  else \
-    cut_assert_equal_string (expected, res); \
-  if (res) \
-    g_free (res); \
-  if (match_info) \
-    g_match_info_free (match_info); \
-  if (regex) \
-    g_regex_unref (regex); \
-  match_info = NULL; \
-  regex = NULL; \
+static void
+cut_assert_expand (const gchar *pattern,
+		   const gchar *string,
+		   const gchar *string_to_expand,
+		   gboolean     raw,
+		   const gchar *expected)
+{
+  gchar *res;
+  regex = g_regex_new (pattern, raw ? G_REGEX_RAW : 0, 0, NULL);
+  g_regex_match (regex, string, 0, &match_info);
+  res = g_match_info_expand_references (match_info, string_to_expand, NULL);
+  if (!expected)
+    cut_assert_null (res);
+  else
+    cut_assert_equal_string (expected, res);
+  if (res)
+    g_free (res);
+  if (match_info)
+    g_match_info_free (match_info);
+  if (regex)
+    g_regex_unref (regex);
+  match_info = NULL;
+  regex = NULL;
 }
 
-#define TEST_EXPAND_RETURN_NULL(string_to_expand) \
-  cut_assert_null (g_match_info_expand_references (NULL, string_to_expand, NULL));
-
-#define TEST_EXPAND_NULL(string_to_expand, expected) {\
-  gchar *res; \
-  res = g_match_info_expand_references (NULL, string_to_expand, NULL); \
-  cut_assert_equal_string (expected, res); \
-  if (res) \
-    g_free (res); \
+static void
+cut_assert_expand_null (const gchar *string_to_expand,
+			const gchar *expected)
+{
+  gchar *res;
+  res = g_match_info_expand_references (NULL, string_to_expand, NULL);
+  cut_assert_equal_string (expected, res);
+  if (res)
+    g_free (res);
 }
 
 void
 test_expand (void)
 {
   /* TEST_EXPAND(pattern, string, string_to_expand, raw, expected) */
-  TEST_EXPAND("a", "a", "", FALSE, "");
-  TEST_EXPAND("a", "a", "\\0", FALSE, "a");
-  TEST_EXPAND("a", "a", "\\1", FALSE, "");
-  TEST_EXPAND("(a)", "ab", "\\1", FALSE, "a");
-  TEST_EXPAND("(a)", "a", "\\1", FALSE, "a");
-  TEST_EXPAND("(a)", "a", "\\g<1>", FALSE, "a");
-  TEST_EXPAND("a", "a", "\\0130", FALSE, "X");
-  TEST_EXPAND("a", "a", "\\\\\\0", FALSE, "\\a");
-  TEST_EXPAND("a(?P<G>.)c", "xabcy", "X\\g<G>X", FALSE, "XbX");
-  TEST_EXPAND("(.)(?P<1>.)", "ab", "\\1", FALSE, "a");
-  TEST_EXPAND("(.)(?P<1>.)", "ab", "\\g<1>", FALSE, "a");
-  TEST_EXPAND(".", EURO, "\\0", FALSE, EURO);
-  TEST_EXPAND("(.)", EURO, "\\1", FALSE, EURO);
-  TEST_EXPAND("(?P<G>.)", EURO, "\\g<G>", FALSE, EURO);
-  TEST_EXPAND(".", "a", EURO, FALSE, EURO);
-  TEST_EXPAND(".", "a", EURO "\\0", FALSE, EURO "a");
-  TEST_EXPAND(".", "", "\\Lab\\Ec", FALSE, "abc");
-  TEST_EXPAND(".", "", "\\LaB\\EC", FALSE, "abC");
-  TEST_EXPAND(".", "", "\\Uab\\Ec", FALSE, "ABc");
-  TEST_EXPAND(".", "", "a\\ubc", FALSE, "aBc");
-  TEST_EXPAND(".", "", "a\\lbc", FALSE, "abc");
-  TEST_EXPAND(".", "", "A\\uBC", FALSE, "ABC");
-  TEST_EXPAND(".", "", "A\\lBC", FALSE, "AbC");
-  TEST_EXPAND(".", "", "A\\l\\\\BC", FALSE, "A\\BC");
-  TEST_EXPAND(".", "", "\\L" AGRAVE "\\E", FALSE, AGRAVE);
-  TEST_EXPAND(".", "", "\\U" AGRAVE "\\E", FALSE, AGRAVE_UPPER);
-  TEST_EXPAND(".", "", "\\u" AGRAVE "a", FALSE, AGRAVE_UPPER "a");
-  TEST_EXPAND(".", "ab", "x\\U\\0y\\Ez", FALSE, "xAYz");
-  TEST_EXPAND(".(.)", "AB", "x\\L\\1y\\Ez", FALSE, "xbyz");
-  TEST_EXPAND(".", "ab", "x\\u\\0y\\Ez", FALSE, "xAyz");
-  TEST_EXPAND(".(.)", "AB", "x\\l\\1y\\Ez", FALSE, "xbyz");
-  TEST_EXPAND(".(.)", "a" AGRAVE_UPPER, "x\\l\\1y", FALSE, "x" AGRAVE "y");
-  TEST_EXPAND("a", "bab", "\\x{61}", FALSE, "a");
-  TEST_EXPAND("a", "bab", "\\x61", FALSE, "a");
-  TEST_EXPAND("a", "bab", "\\x5a", FALSE, "Z");
-  TEST_EXPAND("a", "bab", "\\0\\x5A", FALSE, "aZ");
-  TEST_EXPAND("a", "bab", "\\1\\x{5A}", FALSE, "Z");
-  TEST_EXPAND("a", "bab", "\\x{00E0}", FALSE, AGRAVE);
-  TEST_EXPAND("", "bab", "\\x{0634}", FALSE, SHEEN);
-  TEST_EXPAND("", "bab", "\\x{634}", FALSE, SHEEN);
-  TEST_EXPAND("", "", "\\t", FALSE, "\t");
-  TEST_EXPAND("", "", "\\v", FALSE, "\v");
-  TEST_EXPAND("", "", "\\r", FALSE, "\r");
-  TEST_EXPAND("", "", "\\n", FALSE, "\n");
-  TEST_EXPAND("", "", "\\f", FALSE, "\f");
-  TEST_EXPAND("", "", "\\a", FALSE, "\a");
-  TEST_EXPAND("", "", "\\b", FALSE, "\b");
-  TEST_EXPAND("a(.)", "abc", "\\0\\b\\1", FALSE, "ab\bb");
-  TEST_EXPAND("a(.)", "abc", "\\0141", FALSE, "a");
-  TEST_EXPAND("a(.)", "abc", "\\078", FALSE, "\a8");
-  TEST_EXPAND("a(.)", "abc", "\\077", FALSE, "?");
-  TEST_EXPAND("a(.)", "abc", "\\0778", FALSE, "?8");
-  TEST_EXPAND("a(.)", "a" AGRAVE "b", "\\1", FALSE, AGRAVE);
-  TEST_EXPAND("a(.)", "a" AGRAVE "b", "\\1", TRUE, "\xc3");
-  TEST_EXPAND("a(.)", "a" AGRAVE "b", "\\0", TRUE, "a\xc3");
+  cut_assert_expand ("a", "a", "", FALSE, "");
+  cut_assert_expand ("a", "a", "\\0", FALSE, "a");
+  cut_assert_expand ("a", "a", "\\1", FALSE, "");
+  cut_assert_expand ("(a)", "ab", "\\1", FALSE, "a");
+  cut_assert_expand ("(a)", "a", "\\1", FALSE, "a");
+  cut_assert_expand ("(a)", "a", "\\g<1>", FALSE, "a");
+  cut_assert_expand ("a", "a", "\\0130", FALSE, "X");
+  cut_assert_expand ("a", "a", "\\\\\\0", FALSE, "\\a");
+  cut_assert_expand ("a(?P<G>.)c", "xabcy", "X\\g<G>X", FALSE, "XbX");
+  cut_assert_expand ("(.)(?P<1>.)", "ab", "\\1", FALSE, "a");
+  cut_assert_expand ("(.)(?P<1>.)", "ab", "\\g<1>", FALSE, "a");
+  cut_assert_expand (".", EURO, "\\0", FALSE, EURO);
+  cut_assert_expand ("(.)", EURO, "\\1", FALSE, EURO);
+  cut_assert_expand ("(?P<G>.)", EURO, "\\g<G>", FALSE, EURO);
+  cut_assert_expand (".", "a", EURO, FALSE, EURO);
+  cut_assert_expand (".", "a", EURO "\\0", FALSE, EURO "a");
+  cut_assert_expand (".", "", "\\Lab\\Ec", FALSE, "abc");
+  cut_assert_expand (".", "", "\\LaB\\EC", FALSE, "abC");
+  cut_assert_expand (".", "", "\\Uab\\Ec", FALSE, "ABc");
+  cut_assert_expand (".", "", "a\\ubc", FALSE, "aBc");
+  cut_assert_expand (".", "", "a\\lbc", FALSE, "abc");
+  cut_assert_expand (".", "", "A\\uBC", FALSE, "ABC");
+  cut_assert_expand (".", "", "A\\lBC", FALSE, "AbC");
+  cut_assert_expand (".", "", "A\\l\\\\BC", FALSE, "A\\BC");
+  cut_assert_expand (".", "", "\\L" AGRAVE "\\E", FALSE, AGRAVE);
+  cut_assert_expand (".", "", "\\U" AGRAVE "\\E", FALSE, AGRAVE_UPPER);
+  cut_assert_expand (".", "", "\\u" AGRAVE "a", FALSE, AGRAVE_UPPER "a");
+  cut_assert_expand (".", "ab", "x\\U\\0y\\Ez", FALSE, "xAYz");
+  cut_assert_expand (".(.)", "AB", "x\\L\\1y\\Ez", FALSE, "xbyz");
+  cut_assert_expand (".", "ab", "x\\u\\0y\\Ez", FALSE, "xAyz");
+  cut_assert_expand (".(.)", "AB", "x\\l\\1y\\Ez", FALSE, "xbyz");
+  cut_assert_expand (".(.)", "a" AGRAVE_UPPER, "x\\l\\1y", FALSE, "x" AGRAVE "y");
+  cut_assert_expand ("a", "bab", "\\x{61}", FALSE, "a");
+  cut_assert_expand ("a", "bab", "\\x61", FALSE, "a");
+  cut_assert_expand ("a", "bab", "\\x5a", FALSE, "Z");
+  cut_assert_expand ("a", "bab", "\\0\\x5A", FALSE, "aZ");
+  cut_assert_expand ("a", "bab", "\\1\\x{5A}", FALSE, "Z");
+  cut_assert_expand ("a", "bab", "\\x{00E0}", FALSE, AGRAVE);
+  cut_assert_expand ("", "bab", "\\x{0634}", FALSE, SHEEN);
+  cut_assert_expand ("", "bab", "\\x{634}", FALSE, SHEEN);
+  cut_assert_expand ("", "", "\\t", FALSE, "\t");
+  cut_assert_expand ("", "", "\\v", FALSE, "\v");
+  cut_assert_expand ("", "", "\\r", FALSE, "\r");
+  cut_assert_expand ("", "", "\\n", FALSE, "\n");
+  cut_assert_expand ("", "", "\\f", FALSE, "\f");
+  cut_assert_expand ("", "", "\\a", FALSE, "\a");
+  cut_assert_expand ("", "", "\\b", FALSE, "\b");
+  cut_assert_expand ("a(.)", "abc", "\\0\\b\\1", FALSE, "ab\bb");
+  cut_assert_expand ("a(.)", "abc", "\\0141", FALSE, "a");
+  cut_assert_expand ("a(.)", "abc", "\\078", FALSE, "\a8");
+  cut_assert_expand ("a(.)", "abc", "\\077", FALSE, "?");
+  cut_assert_expand ("a(.)", "abc", "\\0778", FALSE, "?8");
+  cut_assert_expand ("a(.)", "a" AGRAVE "b", "\\1", FALSE, AGRAVE);
+  cut_assert_expand ("a(.)", "a" AGRAVE "b", "\\1", TRUE, "\xc3");
+  cut_assert_expand ("a(.)", "a" AGRAVE "b", "\\0", TRUE, "a\xc3");
 
   /* Invalid strings. */
-  TEST_EXPAND("", "", "\\Q", FALSE, NULL);
-  TEST_EXPAND("", "", "x\\Ay", FALSE, NULL);
-  TEST_EXPAND("", "", "\\g<", FALSE, NULL);
-  TEST_EXPAND("", "", "\\g<>", FALSE, NULL);
-  TEST_EXPAND("", "", "\\g<1a>", FALSE, NULL);
-  TEST_EXPAND("", "", "\\g<a$>", FALSE, NULL);
-  TEST_EXPAND("", "", "\\", FALSE, NULL);
-  TEST_EXPAND("a", "a", "\\x{61", FALSE, NULL);
-  TEST_EXPAND("a", "a", "\\x6X", FALSE, NULL);
+  cut_assert_expand ("", "", "\\Q", FALSE, NULL);
+  cut_assert_expand ("", "", "x\\Ay", FALSE, NULL);
+  cut_assert_expand ("", "", "\\g<", FALSE, NULL);
+  cut_assert_expand ("", "", "\\g<>", FALSE, NULL);
+  cut_assert_expand ("", "", "\\g<1a>", FALSE, NULL);
+  cut_assert_expand ("", "", "\\g<a$>", FALSE, NULL);
+  cut_assert_expand ("", "", "\\", FALSE, NULL);
+  cut_assert_expand ("a", "a", "\\x{61", FALSE, NULL);
+  cut_assert_expand ("a", "a", "\\x6X", FALSE, NULL);
   /* Pattern-less. */
-  TEST_EXPAND_NULL("", "");
-  TEST_EXPAND_NULL("\\n", "\n");
+  cut_assert_expand_null ("", "");
+  cut_assert_expand_null ("\\n", "\n");
   /* Invalid strings */
-  TEST_EXPAND_RETURN_NULL("\\Q");
-  TEST_EXPAND_RETURN_NULL("x\\Ay");
+  cut_assert_null (g_match_info_expand_references (NULL, "\\Q", NULL));
+  cut_assert_null (g_match_info_expand_references (NULL, "x\\Ay", NULL));
 }
 
 struct _Match
