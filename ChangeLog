@@ -1,5 +1,11 @@
 2007-11-14  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-output.[c|h], cutter/cut-context.c,cutter/cut-main.c:
+	Modularization of CutOutput.
+	* cutter/module/output/cut-output-console.c: "use-color" property.
+
+2007-11-14  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-module.[c|h], cutter/cut-module-impl.h: Added files for
 	modularization of CutOutput, but not used yet.
 	* cutter/cut-output.[c|h]: Added cut_output_get_verbose_level().

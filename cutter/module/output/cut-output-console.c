@@ -131,8 +131,9 @@ class_init (CutOutputClass *klass)
 {
     GObjectClass *gobject_class;
     CutOutputClass *output_class;
+    GParamSpec *spec;
 
-    parent_class = g_type_class_peek_parent (klass);
+    parent_class = g_type_class_peek_parent(klass);
 
     gobject_class = G_OBJECT_CLASS(klass);
     output_class  = CUT_OUTPUT_CLASS(klass);
@@ -152,6 +153,13 @@ class_init (CutOutputClass *klass)
     output_class->on_complete_test       = on_complete_test;
     output_class->on_complete_test_case  = on_complete_test_case;
     output_class->on_complete_test_suite = on_complete_test_suite;
+
+    spec = g_param_spec_boolean("use-color",
+                                "Use color",
+                                "Whether use color",
+                                FALSE,
+                                G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_USE_COLOR, spec);
 }
 
 static void
@@ -225,7 +233,12 @@ set_property (GObject      *object,
               const GValue *value,
               GParamSpec   *pspec)
 {
+    CutOutputConsole *console = CUT_OUTPUT_CONSOLE(object);
+
     switch (prop_id) {
+      case PROP_USE_COLOR:
+        console->use_color = g_value_get_boolean(value);
+        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
@@ -238,7 +251,12 @@ get_property (GObject    *object,
               GValue     *value,
               GParamSpec *pspec)
 {
+    CutOutputConsole *console = CUT_OUTPUT_CONSOLE(object);
+
     switch (prop_id) {
+      case PROP_USE_COLOR:
+        g_value_set_boolean(value, console->use_color);
+        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;

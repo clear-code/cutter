@@ -99,6 +99,8 @@ PKG_CHECK_MODULES(GTK_PRINT, gtk+-unix-print-2.0,
                   [gtk_print=yes], [gtk_print=no])
 AM_CONDITIONAL([HAVE_GTK], [test "x$no_gtk" = x -a "x$gtk_print" = xyes])
 
+CUTTER_CFLAGS="$GLIB_CFLAGS -DOUTPUT_MODULEDIR=\\\"\"\$(output_moduledir)\"\\\""
+
 AC_CONFIG_FILES([Makefile
 		 cutter.pc
 		 libcutter.pc

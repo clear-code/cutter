@@ -24,6 +24,7 @@
 
 #include <glib-object.h>
 
+#include "cut-module.h"
 #include "cut-private.h"
 #include "cut-test-result.h"
 #include "cut-verbose-level.h"
@@ -48,11 +49,56 @@ struct _CutOutput
 struct _CutOutputClass
 {
     GObjectClass parent_class;
+
+    void (*on_start_test_suite)    (CutOutput *output,
+                                    CutTestSuite *test_suite);
+    void (*on_start_test_case)     (CutOutput *output,
+                                    CutTestCase *test_case);
+    void (*on_start_test)          (CutOutput *output,
+                                    CutTestCase *test_case,
+                                    CutTest *test);
+    void (*on_success)             (CutOutput *output,
+                                    CutTest *test);
+    void (*on_failure)             (CutOutput *output,
+                                    CutTest *test,
+                                    CutTestResult *result);
+    void (*on_error)               (CutOutput *output,
+                                    CutTest *test,
+                                    CutTestResult *result);
+    void (*on_pending)             (CutOutput *output,
+                                    CutTest *test,
+                                    CutTestResult *result);
+    void (*on_notification)        (CutOutput *output,
+                                    CutTest *test,
+                                    CutTestResult *result);
+    void (*on_complete_test)       (CutOutput *output,
+                                    CutTestCase *test_case,
+                                    CutTest *test,
+                                    CutTestResult *result);
+    void (*on_complete_test_case)  (CutOutput *output,
+                                    CutTestCase *test_case);
+    void (*on_complete_test_suite) (CutOutput *output,
+                                    CutContext *context,
+                                    CutTestSuite *test_suite);
 };
 
 GType        cut_output_get_type  (void) G_GNUC_CONST;
 
-CutOutput   *cut_output_new (void);
+void            cut_output_init        (void);
+void            cut_output_quit        (void);
+
+const gchar    *cut_output_get_default_module_dir   (void);
+void            cut_output_set_default_module_dir   (const gchar *dir);
+
+void            cut_output_load        (const gchar *base_dir);
+CutModule      *cut_output_load_module (const gchar *name);
+void            cut_output_unload      (void);
+GList          *cut_output_get_registered_types (void);
+GList          *cut_output_get_log_domains      (void);
+
+CutOutput   *cut_output_new (const gchar *name,
+                             const gchar *first_property,
+                             ...);
 
 void  cut_output_set_verbose_level         (CutOutput *output,
                                             CutVerboseLevel level);

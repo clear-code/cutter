@@ -61,7 +61,8 @@ enum
     PROP_SOURCE_DIRECTORY
 };
 
-G_DEFINE_TYPE (CutOutput, cut_output, G_TYPE_OBJECT)
+static GList *outputs = NULL;
+static gchar *module_dir = NULL;
 
 static void dispose        (GObject         *object);
 static void set_property   (GObject         *object,
@@ -72,6 +73,101 @@ static void get_property   (GObject         *object,
                             guint            prop_id,
                             GValue          *value,
                             GParamSpec      *pspec);
+
+void cut_output_init (void)
+{
+}
+
+void cut_output_quit (void)
+{
+    cut_output_unload();
+    cut_output_set_default_module_dir(NULL);
+}
+
+const gchar *
+cut_output_get_default_module_dir (void)
+{
+    return module_dir;
+}
+
+void
+cut_output_set_default_module_dir (const gchar *dir)
+{
+    if (module_dir)
+        g_free(module_dir);
+    module_dir = NULL;
+
+    if (dir)
+        module_dir = g_strdup(dir);
+}
+
+static const gchar *
+_cut_output_module_dir (void)
+{
+    const gchar *dir;
+
+    if (module_dir)
+        return module_dir;
+
+    dir = g_getenv("CUT_OUTPUT_MODULE_DIR");
+    if (dir)
+        return dir;
+
+    return OUTPUT_MODULEDIR;
+}
+
+void
+cut_output_load (const gchar *base_dir)
+{
+    if (!base_dir)
+        base_dir = _cut_output_module_dir();
+
+    outputs = g_list_concat(cut_module_load_modules(base_dir), outputs);
+}
+
+CutModule *
+cut_output_load_module (const gchar *name)
+{
+    CutModule *module;
+
+    module = cut_module_find(outputs, name);
+    if (module)
+        return module;
+
+    module = cut_module_load_module(_cut_output_module_dir(), name);
+    if (module) {
+        if (g_type_module_use(G_TYPE_MODULE(module))) {
+            outputs = g_list_prepend(outputs, module);
+            g_type_module_unuse(G_TYPE_MODULE(module));
+        }
+    }
+
+    return module;
+}
+
+void
+cut_output_unload (void)
+{
+    g_list_foreach(outputs, (GFunc)cut_module_unload, NULL);
+    g_list_free(outputs);
+    outputs = NULL;
+}
+
+GList *
+cut_output_get_registered_types (void)
+{
+    return cut_module_collect_registered_types(outputs);
+}
+
+GList *
+cut_output_get_log_domains (void)
+{
+    return cut_module_collect_log_domains(outputs);
+}
+
+#define cut_output_init init
+G_DEFINE_ABSTRACT_TYPE (CutOutput, cut_output, G_TYPE_OBJECT)
+#undef cut_output_init
 
 static void
 cut_output_class_init (CutOutputClass *klass)
@@ -97,7 +193,7 @@ cut_output_class_init (CutOutputClass *klass)
 }
 
 static void
-cut_output_init (CutOutput *output)
+init (CutOutput *output)
 {
     CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
 
@@ -155,87 +251,21 @@ get_property (GObject    *object,
     }
 }
 
-static const gchar *
-status_to_name(CutTestResultStatus status)
-{
-    const gchar *name;
-
-    switch (status) {
-      case CUT_TEST_RESULT_SUCCESS:
-        name = "Success";
-        break;
-      case CUT_TEST_RESULT_FAILURE:
-        name = "Failure";
-        break;
-      case CUT_TEST_RESULT_ERROR:
-        name = "Error";
-        break;
-      case CUT_TEST_RESULT_PENDING:
-        name = "Pending";
-        break;
-      case CUT_TEST_RESULT_NOTIFICATION:
-        name = "Notification";
-        break;
-      default:
-        name = "MUST NOT HAPPEN!!!";
-        break;
-    }
-
-    return name;
-}
-
-static const gchar *
-status_to_color(CutTestResultStatus status)
-{
-    const gchar *color;
-
-    switch (status) {
-      case CUT_TEST_RESULT_SUCCESS:
-        color = GREEN_COLOR;
-        break;
-      case CUT_TEST_RESULT_FAILURE:
-        color = RED_COLOR;
-        break;
-      case CUT_TEST_RESULT_ERROR:
-        color = PURPLE_COLOR;
-        break;
-      case CUT_TEST_RESULT_PENDING:
-        color = YELLOW_COLOR;
-        break;
-      case CUT_TEST_RESULT_NOTIFICATION:
-        color = CYAN_COLOR;
-        break;
-      default:
-        color = "";
-        break;
-    }
-
-    return color;
-}
-
-static void
-print_for_status(CutOutputPrivate *priv, CutTestResultStatus status,
-                 gchar const *format, ...)
-{
-    va_list args;
-
-    va_start(args, format);
-    if (priv->use_color) {
-        gchar *message;
-        message = g_strdup_vprintf(format, args);
-        g_print("%s%s%s", status_to_color(status), message, NORMAL_COLOR);
-        g_free(message);
-    } else {
-        g_vprintf(format, args);
-    }
-    va_end(args);
-}
-
-
 CutOutput *
-cut_output_new (void)
+cut_output_new (const gchar *name, const gchar *first_property, ...)
 {
-    return g_object_new(CUT_TYPE_OUTPUT, NULL);
+    CutModule *module;
+    GObject *output;
+    va_list var_args;
+
+    module = cut_output_load_module(name);
+    g_return_val_if_fail(module != NULL, NULL);
+
+    va_start(var_args, first_property);
+    output = cut_module_instantiate(module, first_property, var_args);
+    va_end(var_args);
+
+    return CUT_OUTPUT(output);
 }
 
 void
@@ -301,193 +331,140 @@ cut_output_set_use_color (CutOutput *output, gboolean use_color)
 void
 cut_output_on_start_test_suite (CutOutput *output, CutTestSuite *test_suite)
 {
+    CutOutputClass *klass;
+
+    g_return_if_fail(CUT_IS_OUTPUT(output));
+
+    klass = CUT_OUTPUT_GET_CLASS(output);
+    if (klass->on_start_test_suite)
+        klass->on_start_test_suite(output, test_suite);
 }
 
 void
 cut_output_on_start_test_case (CutOutput *output, CutTestCase *test_case)
 {
+    CutOutputClass *klass;
+
+    g_return_if_fail(CUT_IS_OUTPUT(output));
+
+    klass = CUT_OUTPUT_GET_CLASS(output);
+    if (klass->on_start_test_case)
+        klass->on_start_test_case(output, test_case);
 }
 
 void
 cut_output_on_start_test (CutOutput *output, CutTestCase *test_case,
                           CutTest *test)
 {
-    CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
-    const gchar *description;
+    CutOutputClass *klass;
 
-    if (priv->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
-        return;
+    g_return_if_fail(CUT_IS_OUTPUT(output));
 
-    description = cut_test_get_description(test);
-    if (description)
-        g_print("%s\n", description);
-
-    g_print("%s(%s): ",
-            cut_test_get_name(test),
-            cut_test_get_name(CUT_TEST(test_case)));
-    fflush(stdout);
+    klass = CUT_OUTPUT_GET_CLASS(output);
+    if (klass->on_start_test)
+        klass->on_start_test(output, test_case, test);
 }
 
 void
 cut_output_on_complete_test (CutOutput *output, CutTestCase *test_case,
                              CutTest *test, CutTestResult *result)
 {
-    CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
+    CutOutputClass *klass;
+
+    g_return_if_fail(CUT_IS_OUTPUT(output));
 
     if (result && cut_test_result_get_status(result) == CUT_TEST_RESULT_ERROR)
         cut_output_on_error(output, test, result);
 
-    if (priv->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
-        return;
-
-    g_print(": (%f)\n", cut_test_get_elapsed(test));
-    fflush(stdout);
+    klass = CUT_OUTPUT_GET_CLASS(output);
+    if (klass->on_complete_test)
+        klass->on_complete_test(output, test_case, test, result);
 }
 
 void
 cut_output_on_success (CutOutput *output, CutTest *test)
 {
-    CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
+    CutOutputClass *klass;
 
-    if (priv->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
-        return;
-    print_for_status(priv, CUT_TEST_RESULT_SUCCESS, ".");
-    fflush(stdout);
+    g_return_if_fail(CUT_IS_OUTPUT(output));
+
+    klass = CUT_OUTPUT_GET_CLASS(output);
+    if (klass->on_success)
+        klass->on_success(output, test);
 }
 
 void
 cut_output_on_failure (CutOutput *output, CutTest *test, CutTestResult *result)
 {
-    CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
+    CutOutputClass *klass;
 
-    if (priv->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
-        return;
-    print_for_status(priv, CUT_TEST_RESULT_FAILURE, "F");
-    fflush(stdout);
+    g_return_if_fail(CUT_IS_OUTPUT(output));
+
+    klass = CUT_OUTPUT_GET_CLASS(output);
+    if (klass->on_failure)
+        klass->on_failure(output, test, result);
 }
 
 void
 cut_output_on_error (CutOutput *output, CutTest *test, CutTestResult *result)
 {
-    CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
+    CutOutputClass *klass;
 
-    if (priv->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
-        return;
-    print_for_status(priv, CUT_TEST_RESULT_ERROR, "E");
-    fflush(stdout);
+    g_return_if_fail(CUT_IS_OUTPUT(output));
+
+    klass = CUT_OUTPUT_GET_CLASS(output);
+    if (klass->on_error)
+        klass->on_error(output, test, result);
 }
 
 void
 cut_output_on_pending (CutOutput *output, CutTest *test, CutTestResult *result)
 {
-    CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
+    CutOutputClass *klass;
 
-    if (priv->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
-        return;
-    print_for_status(priv, CUT_TEST_RESULT_PENDING, "P");
-    fflush(stdout);
+    g_return_if_fail(CUT_IS_OUTPUT(output));
+
+    klass = CUT_OUTPUT_GET_CLASS(output);
+    if (klass->on_pending)
+        klass->on_pending(output, test, result);
 }
 
 void
 cut_output_on_notification (CutOutput *output, CutTest *test,
                             CutTestResult *result)
 {
-    CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
+    CutOutputClass *klass;
 
-    if (priv->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
-        return;
-    print_for_status(priv, CUT_TEST_RESULT_NOTIFICATION, "N");
-    fflush(stdout);
+    g_return_if_fail(CUT_IS_OUTPUT(output));
+
+    klass = CUT_OUTPUT_GET_CLASS(output);
+    if (klass->on_notification)
+        klass->on_notification(output, test, result);
 }
 
 void
 cut_output_on_complete_test_case (CutOutput *output, CutTestCase *test_case)
 {
-    CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
+    CutOutputClass *klass;
 
-    if (priv->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
-        return;
+    g_return_if_fail(CUT_IS_OUTPUT(output));
+
+    klass = CUT_OUTPUT_GET_CLASS(output);
+    if (klass->on_complete_test_case)
+        klass->on_complete_test_case(output, test_case);
 }
 
 void
 cut_output_on_complete_test_suite (CutOutput *output, CutContext *context,
                                    CutTestSuite *test_suite)
 {
-    gint i;
-    guint n_tests, n_assertions, n_failures, n_errors;
-    guint n_pendings, n_notifications;
-    const GList *node;
-    CutTestResultStatus status;
-    CutOutputPrivate *priv;
+    CutOutputClass *klass;
 
-    priv = CUT_OUTPUT_GET_PRIVATE(output);
-    if (priv->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
-        return;
+    g_return_if_fail(CUT_IS_OUTPUT(output));
 
-    if (priv->verbose_level == CUT_VERBOSE_LEVEL_NORMAL)
-        g_print("\n");
-
-    i = 1;
-    for (node = cut_context_get_results(context);
-         node;
-         node = g_list_next(node)) {
-        CutTestResult *result = node->data;
-        gchar *filename;
-        const gchar *message;
-
-        if (priv->source_directory)
-            filename = g_build_filename(priv->source_directory,
-                                        cut_test_result_get_filename(result),
-                                        NULL);
-        else
-            filename = g_strdup(cut_test_result_get_filename(result));
-
-        status = cut_test_result_get_status(result);
-        message = cut_test_result_get_message(result);
-
-        g_print("\n%d) ", i);
-        print_for_status(priv, status, "%s", status_to_name(status));
-        if (message) {
-            g_print("\n");
-            print_for_status(priv, status, "%s", message);
-        }
-        g_print("\n%s:%d: %s()\n",
-                filename,
-                cut_test_result_get_line(result),
-                cut_test_result_get_function_name(result));
-        i++;
-    }
-
-    g_print("\n");
-    g_print("Finished in %f seconds",
-            cut_test_get_elapsed(CUT_TEST(test_suite)));
-    g_print("\n\n");
-
-
-    n_tests = cut_context_get_n_tests(context);
-    n_assertions = cut_context_get_n_assertions(context);
-    n_failures = cut_context_get_n_failures(context);
-    n_errors = cut_context_get_n_errors(context);
-    n_pendings = cut_context_get_n_pendings(context);
-    n_notifications = cut_context_get_n_notifications(context);
-
-    if (n_errors > 0) {
-        status = CUT_TEST_RESULT_ERROR;
-    } else if (n_failures > 0) {
-        status = CUT_TEST_RESULT_FAILURE;
-    } else if (n_pendings > 0) {
-        status = CUT_TEST_RESULT_PENDING;
-    } else if (n_notifications > 0) {
-        status = CUT_TEST_RESULT_NOTIFICATION;
-    } else {
-        status = CUT_TEST_RESULT_SUCCESS;
-    }
-    print_for_status(priv, status,
-                     "%d test(s), %d assertion(s), %d failure(s), "
-                     "%d error(s), %d pending(s), %d notification(s)",
-                     n_tests, n_assertions, n_failures, n_errors,
-                     n_pendings, n_notifications);
-    g_print("\n");
+    klass = CUT_OUTPUT_GET_CLASS(output);
+    if (klass->on_complete_test_suite)
+        klass->on_complete_test_suite(output, context, test_suite);
 }
 
 

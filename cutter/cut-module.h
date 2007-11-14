@@ -48,7 +48,7 @@ struct _CutModuleClass
 
 GType     cut_module_get_type (void) G_GNUC_CONST;
 
-CutModule *cut_module_load_module           (const gchar    *base_dir,
+CutModule   *cut_module_load_module         (const gchar    *base_dir,
                                              const gchar    *name);
 GList       *cut_module_load_modules        (const gchar    *base_dir);
 GList       *cut_module_load_modules_unique (const gchar    *base_dir,

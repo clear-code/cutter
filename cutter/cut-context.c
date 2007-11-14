@@ -140,7 +140,7 @@ cut_context_init (CutContext *context)
     priv->n_pendings = 0;
     priv->n_notifications = 0;
     priv->results = NULL;
-    priv->output = cut_output_new();
+    priv->output = cut_output_new("console", "use-color", TRUE, NULL);
     priv->use_multi_thread = FALSE;
     priv->mutex = g_mutex_new();
 }

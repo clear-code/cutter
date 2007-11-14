@@ -138,6 +138,8 @@ cut_init (int *argc, char ***argv)
     bfd_init();
 #endif
 
+    cut_output_init();
+
     context = cut_context_new();
 
     cut_context_set_verbose_level(context, verbose_level);
