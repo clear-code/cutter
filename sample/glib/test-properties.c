@@ -4,6 +4,8 @@
 #include <glib.h>
 #include <glib-object.h>
 
+void test_main (void);
+
 #define G_TYPE_TEST               (g_test_get_type ())
 #define G_TEST(test)              (G_TYPE_CHECK_INSTANCE_CAST ((test), G_TYPE_TEST, GTest))
 #define G_IS_TEST(test)           (G_TYPE_CHECK_INSTANCE_TYPE ((test), G_TYPE_TEST))
@@ -55,18 +57,19 @@ g_test_get_type (void)
 {
   static GType test_type = 0;
 
-  if (!test_type) {
-    static const GTypeInfo test_info = {
-      sizeof (GTestClass),
-      NULL,
-      NULL,
-      (GClassInitFunc) g_test_class_init,
-      NULL,
-      NULL,
-      sizeof (GTest),
-      0,
-      (GInstanceInitFunc) g_test_init,
-      NULL
+  if (!test_type) 
+    {
+      static const GTypeInfo test_info = {
+        sizeof (GTestClass),
+        NULL,
+        NULL,
+        (GClassInitFunc) g_test_class_init,
+        NULL,
+        NULL,
+        sizeof (GTest),
+        0,
+        (GInstanceInitFunc) g_test_init,
+        NULL
     };
 
     test_type = g_type_register_static (G_TYPE_OBJECT, "GTest", &test_info, 0);
@@ -180,14 +183,14 @@ run_thread (GTest * test)
 {
   gint i = 1;
   
-  while (!stopping) {
-    g_test_do_property (test);
-    if ((i++ % 10000) == 0)
-      {
-        g_print (".%c", 'a' + test->id);
-        g_thread_yield(); /* force context switch */
-      }
-  }
+  while (!stopping)
+    {
+      g_test_do_property (test);
+      if ((i++ % 10000) == 0)
+        {
+          g_thread_yield (); /* force context switch */
+        }
+    }
 
   return NULL;
 }
@@ -205,49 +208,50 @@ test_main (void)
 
   test_objects = g_array_new (FALSE, FALSE, sizeof (GTest *));
 
-  for (i = 0; i < n_threads; i++) {
-    GTest *test;
+  for (i = 0; i < n_threads; i++)
+    {
+      GTest *test;
     
-    test = g_object_new (G_TYPE_TEST, NULL);
-    g_array_append_val (test_objects, test);
+      test = g_object_new (G_TYPE_TEST, NULL);
+      g_array_append_val (test_objects, test);
 
-    cut_assert_equal_int (test->count, test->dummy);
-    g_signal_connect (test, "notify::dummy", G_CALLBACK (dummy_notify), NULL);
-  }
+      cut_assert_equal_int (test->count, test->dummy);
+      g_signal_connect (test, "notify::dummy", G_CALLBACK (dummy_notify), NULL);
+    }
     
   test_threads = g_array_new (FALSE, FALSE, sizeof (GThread *));
 
   stopping = FALSE;
 
-  for (i = 0; i < n_threads; i++) {
-    GThread *thread;
-    GTest *test;
+  for (i = 0; i < n_threads; i++)
+    {
+      GThread *thread;
+      GTest *test;
 
-    test = g_array_index (test_objects, GTest *, i);
+      test = g_array_index (test_objects, GTest *, i);
 
-    thread = g_thread_create ((GThreadFunc) run_thread, test, TRUE, NULL);
-    g_array_append_val (test_threads, thread);
-  }
+      thread = g_thread_create ((GThreadFunc) run_thread, test, TRUE, NULL);
+      g_array_append_val (test_threads, thread);
+    }
   g_usleep (3000000);
 
   stopping = TRUE;
-  g_print ("\nstopping\n");
 
   /* join all threads */
-  for (i = 0; i < n_threads; i++) {
-    GThread *thread;
+  for (i = 0; i < n_threads; i++) 
+    {
+      GThread *thread;
 
-    thread = g_array_index (test_threads, GThread *, i);
-    g_thread_join (thread);
-  }
+      thread = g_array_index (test_threads, GThread *, i);
+      g_thread_join (thread);
+    }
 
-  g_print ("stopped\n");
+  for (i = 0; i < n_threads; i++)
+    {
+      GTest *test;
 
-  for (i = 0; i < n_threads; i++) {
-    GTest *test;
+      test = g_array_index (test_objects, GTest *, i);
 
-    test = g_array_index (test_objects, GTest *, i);
-
-    cut_assert_equal_int (test->count, test->dummy);
-  }
+      cut_assert_equal_int (test->count, test->dummy);
+    }
 }
