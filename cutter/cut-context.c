@@ -590,7 +590,7 @@ cut_context_get_n_assertions (CutContext *context)
 guint
 cut_context_get_n_failures (CutContext *context)
 {
-        return CUT_CONTEXT_GET_PRIVATE(context)->n_failures;
+    return CUT_CONTEXT_GET_PRIVATE(context)->n_failures;
 }
 
 guint
