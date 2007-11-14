@@ -36,6 +36,9 @@ typedef struct _CutTestResultPrivate	CutTestResultPrivate;
 struct _CutTestResultPrivate
 {
     CutTestResultStatus status;
+    gchar *test_name;
+    gchar *test_case_name;
+    gchar *test_suite_name;
     gchar *message;
     gchar *user_message;
     gchar *system_message;
@@ -48,6 +51,9 @@ enum
 {
     PROP_0,
     PROP_STATUS,
+    PROP_TEST_NAME,
+    PROP_TEST_CASE_NAME,
+    PROP_TEST_SUITE_NAME,
     PROP_USER_MESSAGE,
     PROP_SYSTEM_MESSAGE,
     PROP_FUNCTION_NAME,
@@ -87,6 +93,27 @@ cut_test_result_class_init (CutTestResultClass *klass)
                              CUT_TEST_RESULT_SUCCESS,
                              G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class, PROP_STATUS, spec);
+
+    spec = g_param_spec_string("test-name",
+                               "Test Name",
+                               "The name of the test",
+                               NULL,
+                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+    g_object_class_install_property(gobject_class, PROP_TEST_NAME, spec);
+
+    spec = g_param_spec_string("test-case-name",
+                               "TestCase Name",
+                               "The name of the test case",
+                               NULL,
+                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+    g_object_class_install_property(gobject_class, PROP_TEST_CASE_NAME, spec);
+
+    spec = g_param_spec_string("test-suite-name",
+                               "Test Suite Name",
+                               "The name of the test suite",
+                               NULL,
+                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+    g_object_class_install_property(gobject_class, PROP_TEST_SUITE_NAME, spec);
 
     spec = g_param_spec_string("user-message",
                                "User Message",
@@ -132,6 +159,9 @@ cut_test_result_init (CutTestResult *result)
     CutTestResultPrivate *priv = CUT_TEST_RESULT_GET_PRIVATE(result);
 
     priv->status = CUT_TEST_RESULT_SUCCESS;
+    priv->test_name = NULL;
+    priv->test_case_name = NULL;
+    priv->test_suite_name = NULL;
     priv->message = NULL;
     priv->user_message = NULL;
     priv->system_message = NULL;
@@ -144,6 +174,21 @@ static void
 dispose (GObject *object)
 {
     CutTestResultPrivate *priv = CUT_TEST_RESULT_GET_PRIVATE(object);
+
+    if (priv->test_name) {
+        g_free(priv->test_name);
+        priv->test_name = NULL;
+    }
+
+    if (priv->test_case_name) {
+        g_free(priv->test_case_name);
+        priv->test_case_name = NULL;
+    }
+
+    if (priv->test_suite_name) {
+        g_free(priv->test_suite_name);
+        priv->test_suite_name = NULL;
+    }
 
     if (priv->message) {
         g_free(priv->message);
@@ -185,6 +230,18 @@ set_property (GObject      *object,
       case PROP_STATUS:
         priv->status = g_value_get_enum(value);
         break;
+      case PROP_TEST_NAME:
+        if (priv->test_name)
+            g_free(priv->test_name);
+        priv->test_name = g_value_dup_string(value);
+      case PROP_TEST_CASE_NAME:
+        if (priv->test_case_name)
+            g_free(priv->test_case_name);
+        priv->test_case_name = g_value_dup_string(value);
+      case PROP_TEST_SUITE_NAME:
+        if (priv->test_suite_name)
+            g_free(priv->test_suite_name);
+        priv->test_suite_name = g_value_dup_string(value);
       case PROP_USER_MESSAGE:
         if (priv->user_message)
             g_free(priv->user_message);
@@ -229,6 +286,15 @@ get_property (GObject    *object,
       case PROP_STATUS:
         g_value_set_enum(value, priv->status);
         break;
+      case PROP_TEST_NAME:
+        g_value_set_string(value, priv->test_name);
+        break;
+      case PROP_TEST_CASE_NAME:
+        g_value_set_string(value, priv->test_case_name);
+        break;
+      case PROP_TEST_SUITE_NAME:
+        g_value_set_string(value, priv->test_suite_name);
+        break;
       case PROP_USER_MESSAGE:
         g_value_set_string(value, priv->user_message);
         break;
@@ -252,6 +318,9 @@ get_property (GObject    *object,
 
 CutTestResult *
 cut_test_result_new (CutTestResultStatus status,
+                     const gchar *test_name,
+                     const gchar *test_case_name,
+                     const gchar *test_suite_name,
                      const gchar *user_message,
                      const gchar *system_message,
                      const gchar *function_name,
@@ -260,6 +329,9 @@ cut_test_result_new (CutTestResultStatus status,
 {
     return g_object_new(CUT_TYPE_TEST_RESULT,
                         "status", status,
+                        "test-name", test_name,
+                        "test-case-name", test_case_name,
+                        "test-suite-name", test_suite_name,
                         "user-message", user_message,
                         "system-message", system_message,
                         "function-name", function_name,

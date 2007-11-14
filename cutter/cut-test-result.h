@@ -51,6 +51,9 @@ struct _CutTestResultClass
 GType          cut_test_result_get_type   (void) G_GNUC_CONST;
 
 CutTestResult *cut_test_result_new        (CutTestResultStatus status,
+                                           const gchar *test_name,
+                                           const gchar *test_case_name,
+                                           const gchar *test_suite_name,
                                            const gchar *user_message,
                                            const gchar *system_message,
                                            const gchar *function_name,

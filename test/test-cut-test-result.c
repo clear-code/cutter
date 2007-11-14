@@ -16,6 +16,9 @@ test_get_status (void)
     CutTestResult *result;
 
     result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
+                                 "test-name",
+                                 "test-case-name",
+                                 "test-suite-name",
                                  "user-message",
                                  "system-message",
                                  "function-name",
@@ -26,6 +29,9 @@ test_get_status (void)
     g_object_unref(result);
 
     result = cut_test_result_new(CUT_TEST_RESULT_FAILURE,
+                                 "test-name",
+                                 "test-case-name",
+                                 "test-suite-name",
                                  "user-message",
                                  "system-message",
                                  "function-name",
@@ -36,6 +42,9 @@ test_get_status (void)
     g_object_unref(result);
 
     result = cut_test_result_new(CUT_TEST_RESULT_ERROR,
+                                 "test-name",
+                                 "test-case-name",
+                                 "test-suite-name",
                                  "user-message",
                                  "system-message",
                                  "function-name",
@@ -46,6 +55,9 @@ test_get_status (void)
     g_object_unref(result);
 
     result = cut_test_result_new(CUT_TEST_RESULT_PENDING,
+                                 "test-name",
+                                 "test-case-name",
+                                 "test-suite-name",
                                  "user-message",
                                  "system-message",
                                  "function-name",
@@ -62,6 +74,9 @@ test_get_message_full (void)
     CutTestResult *result;
 
     result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
+                                 "test-name",
+                                 "test-case-name",
+                                 "test-suite-name",
                                  "user-message",
                                  "system-message",
                                  "function-name",
@@ -82,6 +97,9 @@ test_get_message_only_user (void)
     CutTestResult *result;
 
     result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
+                                 "test-name",
+                                 "test-case-name",
+                                 "test-suite-name",
                                  "user-message",
                                  NULL,
                                  "function-name",
@@ -101,6 +119,9 @@ test_get_message_only_system (void)
     CutTestResult *result;
 
     result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
+                                 "test-name",
+                                 "test-case-name",
+                                 "test-suite-name",
                                  NULL,
                                  "system-message",
                                  "function-name",
@@ -120,6 +141,9 @@ test_get_message_none (void)
     CutTestResult *result;
 
     result = cut_test_result_new(CUT_TEST_RESULT_FAILURE,
+                                 "test-name",
+                                 "test-case-name",
+                                 "test-suite-name",
                                  NULL,
                                  NULL,
                                  "function-name",
@@ -140,6 +164,9 @@ test_get_function_name (void)
     CutTestResult *result;
 
     result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
+                                 "test-name",
+                                 "test-case-name",
+                                 "test-suite-name",
                                  "user-message",
                                  "system-message",
                                  "function-name",
@@ -150,6 +177,9 @@ test_get_function_name (void)
     g_object_unref(result);
 
     result = cut_test_result_new(CUT_TEST_RESULT_FAILURE,
+                                 "test-name",
+                                 "test-case-name",
+                                 "test-suite-name",
                                  NULL,
                                  NULL,
                                  NULL,
@@ -166,6 +196,9 @@ test_get_filename (void)
     CutTestResult *result;
 
     result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
+                                 "test-name",
+                                 "test-case-name",
+                                 "test-suite-name",
                                  "user-message",
                                  "system-message",
                                  "function-name",
@@ -175,6 +208,9 @@ test_get_filename (void)
     g_object_unref(result);
 
     result = cut_test_result_new(CUT_TEST_RESULT_FAILURE,
+                                 "test-name",
+                                 "test-case-name",
+                                 "test-suite-name",
                                  NULL,
                                  NULL,
                                  NULL,
@@ -191,6 +227,9 @@ test_get_line (void)
     CutTestResult *result;
 
     result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
+                                 "test-name",
+                                 "test-case-name",
+                                 "test-suite-name",
                                  "user-message",
                                  "system-message",
                                  "function-name",
@@ -200,6 +239,9 @@ test_get_line (void)
     g_object_unref(result);
 
     result = cut_test_result_new(CUT_TEST_RESULT_FAILURE,
+                                 "test-name",
+                                 "test-case-name",
+                                 "test-suite-name",
                                  NULL,
                                  NULL,
                                  NULL,
@@ -209,6 +251,9 @@ test_get_line (void)
     g_object_unref(result);
 
     result = cut_test_result_new(CUT_TEST_RESULT_FAILURE,
+                                 "test-name",
+                                 "test-case-name",
+                                 "test-suite-name",
                                  NULL,
                                  NULL,
                                  NULL,

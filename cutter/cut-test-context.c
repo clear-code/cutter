@@ -312,7 +312,11 @@ cut_test_context_register_result (CutTestContext *context,
     }
     va_end(args);
 
-    result = cut_test_result_new(status, user_message, system_message,
+    result = cut_test_result_new(status, 
+                                 priv->test ? cut_test_get_name(CUT_TEST(priv->test)) : NULL,
+                                 priv->test_case ? cut_test_get_name(CUT_TEST(priv->test_case)) : NULL,
+                                 priv->test_suite ? cut_test_get_name(CUT_TEST(priv->test_suite)) : NULL,
+                                 user_message, system_message,
                                  function_name, filename, line);
     if (system_message)
         g_free(system_message);
