@@ -19,6 +19,7 @@ void test_assert_message_with_format_string(void);
 void test_error_equal_string (void);
 void test_error_equal_string_with_null (void);
 void test_assert_equal_function (void);
+void test_failure_from_nested_function (void);
 
 static gboolean need_cleanup;
 static gboolean compare_function_is_called;
@@ -357,6 +358,42 @@ test_assert_equal_function (void)
     cut_assert(!compare_function_is_called);
     cut_assert_equal(compare_function, "o", "o");
     cut_assert(compare_function_is_called);
+}
+
+static void
+fail_in_nested_function (void)
+{
+    cut_fail("Fail from nested function");
+}
+
+static void
+just_call_fail_in_nested_function (void)
+{
+    fail_in_nested_function();
+    cut_fail("Never here");
+}
+
+void
+test_failure_from_nested_function (void)
+{
+    CutTest *test;
+    CutTestResult *result;
+
+    test = cut_test_new("fail from nested function", NULL,
+                        just_call_fail_in_nested_function);
+    cut_assert(test);
+
+    cut_assert(!run(test));
+
+    cut_assert(context);
+    cut_assert(1, cut_context_get_n_tests(context));
+    cut_assert(1, cut_context_get_n_assertions(context));
+    cut_assert(1, g_list_length((GList *)cut_context_get_results(context)));
+    cut_assert(1, cut_context_get_n_failures(context));
+
+    result = cut_context_get_results(context)->data;
+    cut_assert_equal_string("Fail from nested function",
+                            cut_test_result_get_user_message(result));
 }
 
 /*

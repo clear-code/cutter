@@ -1,5 +1,8 @@
 2007-11-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-assertions.c (test_failure_from_nested_function):
+	added a test for setjmp/longjmp for CutTest.
+
 	* test/test-cut-assertions.c (test_assert_equal_function):
 	improved test.
 
