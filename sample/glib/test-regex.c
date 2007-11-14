@@ -113,48 +113,57 @@ streq (const gchar *s1, const gchar *s2)
     return strcmp (s1, s2) == 0;
 }
 
-#define TEST_REGEX_NEW(pattern, compile_opts, match_opts) \
-  regex = g_regex_new (pattern, compile_opts, match_opts, NULL); \
-  cut_assert (regex, "failed (pattern: \"%s\", compile: %d, match %d)", \
-	      pattern, compile_opts, match_opts); \
-  cut_assert (streq (g_regex_get_pattern (regex), pattern), \
-              "failed (pattern: \"%s\")", pattern); \
-  g_regex_unref (regex); \
+static void
+cut_assert_regex_new (const gchar       *pattern,
+		      GRegexCompileFlags compile_opts,
+		      GRegexMatchFlags   match_opts)
+{
+  regex = g_regex_new (pattern, compile_opts, match_opts, NULL);
+  cut_assert (regex, "failed (pattern: \"%s\", compile: %d, match %d)",
+	      pattern, compile_opts, match_opts);
+  cut_assert (streq (g_regex_get_pattern (regex), pattern),
+              "failed (pattern: \"%s\")", pattern);
+  g_regex_unref (regex);
   regex = NULL;
+}
 
 void
 test_regex_new (void)
 {
-  TEST_REGEX_NEW ("", 0, 0);
-  TEST_REGEX_NEW ("", 0, 0);
-  TEST_REGEX_NEW (".*", 0, 0);
-  TEST_REGEX_NEW (".*", G_REGEX_OPTIMIZE, 0);
-  TEST_REGEX_NEW (".*", G_REGEX_MULTILINE, 0);
-  TEST_REGEX_NEW (".*", G_REGEX_DOTALL, 0);
-  TEST_REGEX_NEW (".*", G_REGEX_DOTALL, G_REGEX_MATCH_NOTBOL);
-  TEST_REGEX_NEW ("(123\\d*)[a-zA-Z]+(?P<hello>.*)", 0, 0);
-  TEST_REGEX_NEW ("(123\\d*)[a-zA-Z]+(?P<hello>.*)", G_REGEX_CASELESS, 0);
-  TEST_REGEX_NEW ("(123\\d*)[a-zA-Z]+(?P<hello>.*)", G_REGEX_CASELESS | G_REGEX_OPTIMIZE, 0);
-  TEST_REGEX_NEW ("(?P<A>x)|(?P<A>y)", G_REGEX_DUPNAMES, 0);
-  TEST_REGEX_NEW ("(?P<A>x)|(?P<A>y)", G_REGEX_DUPNAMES | G_REGEX_OPTIMIZE, 0);
+  cut_assert_regex_new ("", 0, 0);
+  cut_assert_regex_new ("", 0, 0);
+  cut_assert_regex_new (".*", 0, 0);
+  cut_assert_regex_new (".*", G_REGEX_OPTIMIZE, 0);
+  cut_assert_regex_new (".*", G_REGEX_MULTILINE, 0);
+  cut_assert_regex_new (".*", G_REGEX_DOTALL, 0);
+  cut_assert_regex_new (".*", G_REGEX_DOTALL, G_REGEX_MATCH_NOTBOL);
+  cut_assert_regex_new ("(123\\d*)[a-zA-Z]+(?P<hello>.*)", 0, 0);
+  cut_assert_regex_new ("(123\\d*)[a-zA-Z]+(?P<hello>.*)", G_REGEX_CASELESS, 0);
+  cut_assert_regex_new ("(123\\d*)[a-zA-Z]+(?P<hello>.*)", G_REGEX_CASELESS | G_REGEX_OPTIMIZE, 0);
+  cut_assert_regex_new ("(?P<A>x)|(?P<A>y)", G_REGEX_DUPNAMES, 0);
+  cut_assert_regex_new ("(?P<A>x)|(?P<A>y)", G_REGEX_DUPNAMES | G_REGEX_OPTIMIZE, 0);
   /* This gives "internal error: code overflow" with pcre 6.0 */
-  TEST_REGEX_NEW ("(?i)(?-i)", 0, 0);
+  cut_assert_regex_new ("(?i)(?-i)", 0, 0);
 }
 
-#define TEST_REGEX_NEW_FAIL(pattern, compile_opts) \
-  regex = g_regex_new (pattern, compile_opts, 0, NULL); \
-  cut_assert_null (regex, "failed (pattern: \"%s\", compile: %d)", \
+static void
+cut_assert_regex_new_fail (const gchar       *pattern,
+			   GRegexCompileFlags compile_opts)
+{
+  regex = g_regex_new (pattern, compile_opts, 0, NULL);
+  cut_assert_null (regex, "failed (pattern: \"%s\", compile: %d)",
 	           pattern, compile_opts);
+}
 
 void
 test_regex_new_fail (void)
 {
-  TEST_REGEX_NEW_FAIL ("(", 0);
-  TEST_REGEX_NEW_FAIL (")", 0);
-  TEST_REGEX_NEW_FAIL ("[", 0);
-  TEST_REGEX_NEW_FAIL ("*", 0);
-  TEST_REGEX_NEW_FAIL ("?", 0);
-  TEST_REGEX_NEW_FAIL ("(?P<A>x)|(?P<A>y)", 0);
+  cut_assert_regex_new_fail ("(", 0);
+  cut_assert_regex_new_fail (")", 0);
+  cut_assert_regex_new_fail ("[", 0);
+  cut_assert_regex_new_fail ("*", 0);
+  cut_assert_regex_new_fail ("?", 0);
+  cut_assert_regex_new_fail ("(?P<A>x)|(?P<A>y)", 0);
 }
 
 void
@@ -291,67 +300,76 @@ test_match (void)
   cut_assert_match ("a#\nb", G_REGEX_EXTENDED | G_REGEX_NEWLINE_CR, 0, "a", -1, 0, 0);
 }
 
-#define TEST_MISMATCH(pattern, compile_opts, match_opts, string, \
-		   string_len, start_position, match_opts2) { \
-  regex = g_regex_new (pattern, compile_opts, match_opts, NULL); \
-  cut_assert (regex, "failed (pattern: \"%s\", compile: %d, match %d)", \
-	      pattern, compile_opts, match_opts); \
-  cut_assert (!g_regex_match_full (regex, string, string_len, \
-              start_position, match_opts2, NULL, NULL)); \
-  if (string_len == -1 && start_position == 0) \
-    { \
-      cut_assert (!g_regex_match (regex, string, match_opts2, NULL), \
-	          "failed (pattern: \"%s\", string: \"%s\")", \
-		   pattern, string); \
-    } \
-  g_regex_unref (regex); \
-  regex = NULL; \
+static void
+cut_assert_mismatch (const gchar       *pattern,
+		     GRegexCompileFlags compile_opts,
+		     GRegexMatchFlags   match_opts,
+		     const gchar       *string,
+		     gsize              string_len,
+		     gint               start_position,
+		     GRegexMatchFlags   match_opts2)
+{
+  regex = g_regex_new (pattern, compile_opts, match_opts, NULL);
+  cut_assert (regex, "failed (pattern: \"%s\", compile: %d, match %d)",
+	      pattern, compile_opts, match_opts);
+  cut_assert (!g_regex_match_full (regex, string, string_len,
+              start_position, match_opts2, NULL, NULL));
+  if (string_len == -1 && start_position == 0)
+    {
+      cut_assert (!g_regex_match (regex, string, match_opts2, NULL),
+	          "failed (pattern: \"%s\", string: \"%s\")",
+		   pattern, string);
+    }
+  g_regex_unref (regex);
+  regex = NULL;
 }
+
 void
 test_mismatch (void)
 {
-  TEST_MISMATCH("a", 0, 0, "A", -1, 0, 0);
-  TEST_MISMATCH("a", 0, 0, "ab", -1, 1, 0);
-  TEST_MISMATCH("a", 0, 0, "ba", 1, 0, 0);
-  TEST_MISMATCH("a", 0, 0, "b", -1, 0, 0);
-  TEST_MISMATCH("a", 0, G_REGEX_ANCHORED, "ab", -1, 1, 0);
-  TEST_MISMATCH("a", 0, G_REGEX_ANCHORED, "ba", 1, 0, 0);
-  TEST_MISMATCH("a", 0, G_REGEX_ANCHORED, "bab", -1, 0, 0);
-  TEST_MISMATCH("a", 0, G_REGEX_ANCHORED, "b", -1, 0, 0);
-  TEST_MISMATCH("a", 0, 0, "ab", -1, 1, G_REGEX_ANCHORED);
-  TEST_MISMATCH("a", 0, 0, "ba", 1, 0, G_REGEX_ANCHORED);
-  TEST_MISMATCH("a", 0, 0, "bab", -1, 0, G_REGEX_ANCHORED);
-  TEST_MISMATCH("a", 0, 0, "b", -1, 0, G_REGEX_ANCHORED);
-  TEST_MISMATCH("\\d", 0, 0, EURO, -1, 0, 0);
-  TEST_MISMATCH("^.{3}$", 0, 0, EURO, -1, 0, 0);
-  TEST_MISMATCH("^.$", G_REGEX_RAW, 0, EURO, -1, 0, 0);
+  cut_assert_mismatch ("a", 0, 0, "A", -1, 0, 0);
+  cut_assert_mismatch ("a", 0, 0, "ab", -1, 1, 0);
+  cut_assert_mismatch ("a", 0, 0, "ba", 1, 0, 0);
+  cut_assert_mismatch ("a", 0, 0, "b", -1, 0, 0);
+  cut_assert_mismatch ("a", 0, G_REGEX_ANCHORED, "ab", -1, 1, 0);
+  cut_assert_mismatch ("a", 0, G_REGEX_ANCHORED, "ba", 1, 0, 0);
+  cut_assert_mismatch ("a", 0, G_REGEX_ANCHORED, "bab", -1, 0, 0);
+  cut_assert_mismatch ("a", 0, G_REGEX_ANCHORED, "b", -1, 0, 0);
+  cut_assert_mismatch ("a", 0, 0, "ab", -1, 1, G_REGEX_ANCHORED);
+  cut_assert_mismatch ("a", 0, 0, "ba", 1, 0, G_REGEX_ANCHORED);
+  cut_assert_mismatch ("a", 0, 0, "bab", -1, 0, G_REGEX_ANCHORED);
+  cut_assert_mismatch ("a", 0, 0, "b", -1, 0, G_REGEX_ANCHORED);
+  cut_assert_mismatch ("\\d", 0, 0, EURO, -1, 0, 0);
+  cut_assert_mismatch ("^.{3}$", 0, 0, EURO, -1, 0, 0);
+  cut_assert_mismatch ("^.$", G_REGEX_RAW, 0, EURO, -1, 0, 0);
 
   /* New lines handling. */
-  TEST_MISMATCH("^a\\Rb$", 0, 0, "a\n\rb", -1, 0, 0);
-  TEST_MISMATCH("^a\\nb$", 0, 0, "a\r\nb", -1, 0, 0);
+  cut_assert_mismatch ("^a\\Rb$", 0, 0, "a\n\rb", -1, 0, 0);
+  cut_assert_mismatch ("^a\\nb$", 0, 0, "a\r\nb", -1, 0, 0);
 
-  TEST_MISMATCH("^b$", 0, 0, "a\nb\nc", -1, 0, 0);
-  TEST_MISMATCH("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CR, 0, "a\nb\nc", -1, 0, 0);
-  TEST_MISMATCH("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CRLF, 0, "a\nb\nc", -1, 0, 0);
-  TEST_MISMATCH("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CR, 0, "a\r\nb\r\nc", -1, 0, 0);
-  TEST_MISMATCH("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_LF, 0, "a\r\nb\r\nc", -1, 0, 0);
-  TEST_MISMATCH("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_LF, 0, "a\rb\rc", -1, 0, 0);
-  TEST_MISMATCH("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CRLF, 0, "a\rb\rc", -1, 0, 0);
-  TEST_MISMATCH("^b$", G_REGEX_MULTILINE, G_REGEX_MATCH_NEWLINE_CR, "a\nb\nc", -1, 0, 0);
-  TEST_MISMATCH("^b$", G_REGEX_MULTILINE, G_REGEX_MATCH_NEWLINE_CRLF, "a\nb\nc", -1, 0, 0);
-  TEST_MISMATCH("^b$", G_REGEX_MULTILINE, G_REGEX_MATCH_NEWLINE_CR, "a\r\nb\r\nc", -1, 0, 0);
-  TEST_MISMATCH("^b$", G_REGEX_MULTILINE, G_REGEX_MATCH_NEWLINE_LF, "a\r\nb\r\nc", -1, 0, 0);
-  TEST_MISMATCH("^b$", G_REGEX_MULTILINE, G_REGEX_MATCH_NEWLINE_LF, "a\rb\rc", -1, 0, 0);
-  TEST_MISMATCH("^b$", G_REGEX_MULTILINE, G_REGEX_MATCH_NEWLINE_CRLF, "a\rb\rc", -1, 0, 0);
+  cut_assert_mismatch ("^b$", 0, 0, "a\nb\nc", -1, 0, 0);
+  cut_assert_mismatch ("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CR, 0, "a\nb\nc", -1, 0, 0);
+  cut_assert_mismatch ("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CRLF, 0, "a\nb\nc", -1, 0, 0);
+  cut_assert_mismatch ("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CR, 0, "a\r\nb\r\nc", -1, 0, 0);
+  cut_assert_mismatch ("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_LF, 0, "a\r\nb\r\nc", -1, 0, 0);
+  cut_assert_mismatch ("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_LF, 0, "a\rb\rc", -1, 0, 0);
+  cut_assert_mismatch ("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CRLF, 0, "a\rb\rc", -1, 0, 0);
+  cut_assert_mismatch ("^b$", G_REGEX_MULTILINE, G_REGEX_MATCH_NEWLINE_CR, "a\nb\nc", -1, 0, 0);
+  cut_assert_mismatch ("^b$", G_REGEX_MULTILINE, G_REGEX_MATCH_NEWLINE_CRLF, "a\nb\nc", -1, 0, 0);
+  cut_assert_mismatch ("^b$", G_REGEX_MULTILINE, G_REGEX_MATCH_NEWLINE_CR, "a\r\nb\r\nc", -1, 0, 0);
+  cut_assert_mismatch ("^b$", G_REGEX_MULTILINE, G_REGEX_MATCH_NEWLINE_LF, "a\r\nb\r\nc", -1, 0, 0);
+  cut_assert_mismatch ("^b$", G_REGEX_MULTILINE, G_REGEX_MATCH_NEWLINE_LF, "a\rb\rc", -1, 0, 0);
+  cut_assert_mismatch ("^b$", G_REGEX_MULTILINE, G_REGEX_MATCH_NEWLINE_CRLF, "a\rb\rc", -1, 0, 0);
 
-  TEST_MISMATCH("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CR, G_REGEX_MATCH_NEWLINE_LF, "a\rb\rc", -1, 0, 0);
-  TEST_MISMATCH("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CR, G_REGEX_MATCH_NEWLINE_CRLF, "a\rb\rc", -1, 0, 0);
+  cut_assert_mismatch ("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CR, G_REGEX_MATCH_NEWLINE_LF, "a\rb\rc", -1, 0, 0);
+  cut_assert_mismatch ("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CR, G_REGEX_MATCH_NEWLINE_CRLF, "a\rb\rc", -1, 0, 0);
 
-  TEST_MISMATCH("a#\nb", G_REGEX_EXTENDED, 0, "a", -1, 0, 0);
-  TEST_MISMATCH("a#\r\nb", G_REGEX_EXTENDED, 0, "a", -1, 0, 0);
-  TEST_MISMATCH("a#\rb", G_REGEX_EXTENDED, 0, "a", -1, 0, 0);
-  TEST_MISMATCH("a#\nb", G_REGEX_EXTENDED, G_REGEX_MATCH_NEWLINE_CR, "a", -1, 0, 0);
+  cut_assert_mismatch ("a#\nb", G_REGEX_EXTENDED, 0, "a", -1, 0, 0);
+  cut_assert_mismatch ("a#\r\nb", G_REGEX_EXTENDED, 0, "a", -1, 0, 0);
+  cut_assert_mismatch ("a#\rb", G_REGEX_EXTENDED, 0, "a", -1, 0, 0);
+  cut_assert_mismatch ("a#\nb", G_REGEX_EXTENDED, G_REGEX_MATCH_NEWLINE_CR, "a", -1, 0, 0);
 }
+
 static void
 cut_assert_match_count (const gchar     *pattern,
 			const gchar     *string,
@@ -447,55 +465,65 @@ test_escape (void)
 	      	     "a\\|a\\(a\\)a\\[a\\]a\\{a\\}a\\^a\\$a\\*a\\+a\\?a\\.a");
 }
 
-#define TEST_REPLACE(pattern, string, start_position, replacement, expected) { \
-  gchar *res; \
-  regex = g_regex_new (pattern, 0, 0, NULL); \
-  res = g_regex_replace (regex, string, -1, start_position, replacement, 0, NULL); \
-  cut_assert_equal_string (expected, res); \
-  g_free (res); \
-  g_regex_unref (regex); \
-  regex = NULL; \
+static void
+cut_assert_replace (const gchar *pattern,
+		    const gchar *string,
+		    gint         start_position,
+		    const gchar *replacement,
+		    const gchar *expected)
+{
+  gchar *res;
+  regex = g_regex_new (pattern, 0, 0, NULL);
+  res = g_regex_replace (regex, string, -1, start_position, replacement, 0, NULL);
+  cut_assert_equal_string (expected, res);
+  g_free (res);
+  g_regex_unref (regex);
+  regex = NULL;
 }
 
-#define TEST_REPLACE_NULL(pattern, string, start_position, replacement) { \
-  gchar *res; \
-  regex = g_regex_new (pattern, 0, 0, NULL); \
-  res = g_regex_replace (regex, string, -1, start_position, replacement, 0, NULL); \
-  cut_assert_null (res); \
-  g_regex_unref (regex); \
-  regex = NULL; \
+static void
+cut_assert_null_replace (const gchar *pattern,
+			 const gchar *string,
+			 gint         start_position,
+			 const gchar *replacement)
+{
+  gchar *res;
+  regex = g_regex_new (pattern, 0, 0, NULL);
+  res = g_regex_replace (regex, string, -1, start_position, replacement, 0, NULL);
+  cut_assert_null (res);
+  g_regex_unref (regex);
+  regex = NULL;
 }
 
 void
 test_replace (void)
 {
-  /* TEST_REPLACE(pattern, string, start_position, replacement, expected) */
-  TEST_REPLACE("a", "ababa", 0, "A", "AbAbA");
-  TEST_REPLACE("a", "ababa", 1, "A", "abAbA");
-  TEST_REPLACE("a", "ababa", 2, "A", "abAbA");
-  TEST_REPLACE("a", "ababa", 3, "A", "ababA");
-  TEST_REPLACE("a", "ababa", 4, "A", "ababA");
-  TEST_REPLACE("a", "ababa", 5, "A", "ababa");
-  TEST_REPLACE("a", "ababa", 6, "A", "ababa");
-  TEST_REPLACE("a", "abababa", 2, "A", "abAbAbA");
-  TEST_REPLACE("a", "abab", 0, "A", "AbAb");
-  TEST_REPLACE("a", "baba", 0, "A", "bAbA");
-  TEST_REPLACE("a", "bab", 0, "A", "bAb");
-  TEST_REPLACE("$^", "abc", 0, "X", "abc");
-  TEST_REPLACE("(.)a", "ciao", 0, "a\\1", "caio");
-  TEST_REPLACE("a.", "abc", 0, "\\0\\0", "ababc");
-  TEST_REPLACE("a", "asd", 0, "\\0101", "Asd");
-  TEST_REPLACE("(a).\\1", "aba cda", 0, "\\1\\n", "a\n cda");
-  TEST_REPLACE("a" AGRAVE "a", "a" AGRAVE "a", 0, "x", "x");
-  TEST_REPLACE("a" AGRAVE "a", "a" AGRAVE "a", 0, OGRAVE, OGRAVE);
-  TEST_REPLACE("[^-]", "-" EURO "-x-" HSTROKE, 0, "a", "-a-a-a");
-  TEST_REPLACE("[^-]", "-" EURO "-" HSTROKE, 0, "a\\g<0>a", "-a" EURO "a-a" HSTROKE "a");
-  TEST_REPLACE("-", "-" EURO "-" HSTROKE, 0, "", EURO HSTROKE);
-  TEST_REPLACE(".*", "hello", 0, "\\U\\0\\E", "HELLO");
-  TEST_REPLACE(".*", "hello", 0, "\\u\\0", "Hello");
-  TEST_REPLACE("\\S+", "hello world", 0, "\\U-\\0-", "-HELLO- -WORLD-");
-  TEST_REPLACE_NULL(".", "a", 0, "\\A");
-  TEST_REPLACE_NULL(".", "a", 0, "\\g");
+  cut_assert_replace ("a", "ababa", 0, "A", "AbAbA");
+  cut_assert_replace ("a", "ababa", 1, "A", "abAbA");
+  cut_assert_replace ("a", "ababa", 2, "A", "abAbA");
+  cut_assert_replace ("a", "ababa", 3, "A", "ababA");
+  cut_assert_replace ("a", "ababa", 4, "A", "ababA");
+  cut_assert_replace ("a", "ababa", 5, "A", "ababa");
+  cut_assert_replace ("a", "ababa", 6, "A", "ababa");
+  cut_assert_replace ("a", "abababa", 2, "A", "abAbAbA");
+  cut_assert_replace ("a", "abab", 0, "A", "AbAb");
+  cut_assert_replace ("a", "baba", 0, "A", "bAbA");
+  cut_assert_replace ("a", "bab", 0, "A", "bAb");
+  cut_assert_replace ("$^", "abc", 0, "X", "abc");
+  cut_assert_replace ("(.)a", "ciao", 0, "a\\1", "caio");
+  cut_assert_replace ("a.", "abc", 0, "\\0\\0", "ababc");
+  cut_assert_replace ("a", "asd", 0, "\\0101", "Asd");
+  cut_assert_replace ("(a).\\1", "aba cda", 0, "\\1\\n", "a\n cda");
+  cut_assert_replace ("a" AGRAVE "a", "a" AGRAVE "a", 0, "x", "x");
+  cut_assert_replace ("a" AGRAVE "a", "a" AGRAVE "a", 0, OGRAVE, OGRAVE);
+  cut_assert_replace ("[^-]", "-" EURO "-x-" HSTROKE, 0, "a", "-a-a-a");
+  cut_assert_replace ("[^-]", "-" EURO "-" HSTROKE, 0, "a\\g<0>a", "-a" EURO "a-a" HSTROKE "a");
+  cut_assert_replace ("-", "-" EURO "-" HSTROKE, 0, "", EURO HSTROKE);
+  cut_assert_replace (".*", "hello", 0, "\\U\\0\\E", "HELLO");
+  cut_assert_replace (".*", "hello", 0, "\\u\\0", "Hello");
+  cut_assert_replace ("\\S+", "hello world", 0, "\\U-\\0-", "-HELLO- -WORLD-");
+  cut_assert_null_replace (".", "a", 0, "\\A");
+  cut_assert_null_replace (".", "a", 0, "\\g");
 }
 
 #define TEST_PARTIAL_MATCH(pattern, string) { \
@@ -533,63 +561,71 @@ test_partial_match (void)
   TEST_PARTIAL_MISMATCH("a+b", "aa"); /* PCRE_ERROR_BAD_PARTIAL */
 }
 
-#define TEST_CHECK_REPLACEMENT(string_to_expand, expected_refs) \
-  cut_assert (g_regex_check_replacement (string_to_expand, &has_refs, NULL)); \
-  cut_assert (expected_refs == has_refs, \
-              "failed (got has_references \"%s\", expected \"%s\")", \
-	       has_refs ? "TRUE" : "FALSE", \
-	       expected_refs ? "TRUE" : "FALSE"); \
+static void
+cut_assert_replacement (const gchar *string_to_expand,
+			gboolean     expected_refs)
+{
+  gboolean has_refs;
+  cut_assert (g_regex_check_replacement (string_to_expand, &has_refs, NULL));
+  cut_assert (expected_refs == has_refs,
+              "failed (got has_references \"%s\", expected \"%s\")",
+	       has_refs ? "TRUE" : "FALSE",
+	       expected_refs ? "TRUE" : "FALSE");
+}
 
 void
 test_check_replacement (void)
 {
-  gboolean has_refs;
-  /* TEST_CHECK_REPLACEMENT(string_to_expand, expected, expected_refs) */
-  TEST_CHECK_REPLACEMENT("", FALSE);
-  TEST_CHECK_REPLACEMENT("a", FALSE);
-  TEST_CHECK_REPLACEMENT("\\t\\n\\v\\r\\f\\a\\b\\\\\\x{61}", FALSE);
-  TEST_CHECK_REPLACEMENT("\\0", TRUE);
-  TEST_CHECK_REPLACEMENT("\\n\\2", TRUE);
-  TEST_CHECK_REPLACEMENT("\\g<foo>", TRUE);
+  cut_assert_replacement ("", FALSE);
+  cut_assert_replacement ("a", FALSE);
+  cut_assert_replacement ("\\t\\n\\v\\r\\f\\a\\b\\\\\\x{61}", FALSE);
+  cut_assert_replacement ("\\0", TRUE);
+  cut_assert_replacement ("\\n\\2", TRUE);
+  cut_assert_replacement ("\\g<foo>", TRUE);
 
   /* Invalid strings */
   cut_assert (!g_regex_check_replacement ("\\Q", NULL, NULL));
   cut_assert (!g_regex_check_replacement ("x\\Ay", NULL, NULL));
 }
 
-#define TEST_REPLACE_LIT(pattern, string, start_position, replacement, expected) { \
-  gchar *res; \
-  regex = g_regex_new (pattern, 0, 0, NULL); \
-  res = g_regex_replace_literal (regex, string, -1, start_position, \
-				 replacement, 0, NULL); \
-  cut_assert_equal_string (expected, res); \
-  g_free (res); \
-  g_regex_unref (regex); \
-  regex = NULL; \
+static void
+cut_assert_replace_lit (const gchar *pattern,
+			const gchar *string,
+			gint         start_position,
+			const gchar *replacement,
+			const gchar *expected)
+{
+  gchar *res;
+  regex = g_regex_new (pattern, 0, 0, NULL);
+  res = g_regex_replace_literal (regex, string, -1, start_position,
+				 replacement, 0, NULL);
+  cut_assert_equal_string (expected, res);
+  g_free (res);
+  g_regex_unref (regex);
+  regex = NULL;
 }
 
 void
 test_replace_lit (void)
 {
-  /* TEST_REPLACE_LIT(pattern, string, start_position, replacement, expected) */
-  TEST_REPLACE_LIT("a", "ababa", 0, "A", "AbAbA");
-  TEST_REPLACE_LIT("a", "ababa", 1, "A", "abAbA");
-  TEST_REPLACE_LIT("a", "ababa", 2, "A", "abAbA");
-  TEST_REPLACE_LIT("a", "ababa", 3, "A", "ababA");
-  TEST_REPLACE_LIT("a", "ababa", 4, "A", "ababA");
-  TEST_REPLACE_LIT("a", "ababa", 5, "A", "ababa");
-  TEST_REPLACE_LIT("a", "ababa", 6, "A", "ababa");
-  TEST_REPLACE_LIT("a", "abababa", 2, "A", "abAbAbA");
-  TEST_REPLACE_LIT("a", "abcadaa", 0, "A", "AbcAdAA");
-  TEST_REPLACE_LIT("$^", "abc", 0, "X", "abc");
-  TEST_REPLACE_LIT("(.)a", "ciao", 0, "a\\1", "ca\\1o");
-  TEST_REPLACE_LIT("a.", "abc", 0, "\\0\\0\\n", "\\0\\0\\nc");
-  TEST_REPLACE_LIT("a" AGRAVE "a", "a" AGRAVE "a", 0, "x", "x");
-  TEST_REPLACE_LIT("a" AGRAVE "a", "a" AGRAVE "a", 0, OGRAVE, OGRAVE);
-  TEST_REPLACE_LIT(AGRAVE, "-" AGRAVE "-" HSTROKE, 0, "a" ENG "a", "-a" ENG "a-" HSTROKE);
-  TEST_REPLACE_LIT("[^-]", "-" EURO "-" AGRAVE "-" HSTROKE, 0, "a", "-a-a-a");
-  TEST_REPLACE_LIT("[^-]", "-" EURO "-" AGRAVE, 0, "a\\g<0>a", "-a\\g<0>a-a\\g<0>a");
-  TEST_REPLACE_LIT("-", "-" EURO "-" AGRAVE "-" HSTROKE, 0, "", EURO AGRAVE HSTROKE);
+  cut_assert_replace_lit ("a", "ababa", 0, "A", "AbAbA");
+  cut_assert_replace_lit ("a", "ababa", 1, "A", "abAbA");
+  cut_assert_replace_lit ("a", "ababa", 2, "A", "abAbA");
+  cut_assert_replace_lit ("a", "ababa", 3, "A", "ababA");
+  cut_assert_replace_lit ("a", "ababa", 4, "A", "ababA");
+  cut_assert_replace_lit ("a", "ababa", 5, "A", "ababa");
+  cut_assert_replace_lit ("a", "ababa", 6, "A", "ababa");
+  cut_assert_replace_lit ("a", "abababa", 2, "A", "abAbAbA");
+  cut_assert_replace_lit ("a", "abcadaa", 0, "A", "AbcAdAA");
+  cut_assert_replace_lit ("$^", "abc", 0, "X", "abc");
+  cut_assert_replace_lit ("(.)a", "ciao", 0, "a\\1", "ca\\1o");
+  cut_assert_replace_lit ("a.", "abc", 0, "\\0\\0\\n", "\\0\\0\\nc");
+  cut_assert_replace_lit ("a" AGRAVE "a", "a" AGRAVE "a", 0, "x", "x");
+  cut_assert_replace_lit ("a" AGRAVE "a", "a" AGRAVE "a", 0, OGRAVE, OGRAVE);
+  cut_assert_replace_lit (AGRAVE, "-" AGRAVE "-" HSTROKE, 0, "a" ENG "a", "-a" ENG "a-" HSTROKE);
+  cut_assert_replace_lit ("[^-]", "-" EURO "-" AGRAVE "-" HSTROKE, 0, "a", "-a-a-a");
+  cut_assert_replace_lit ("[^-]", "-" EURO "-" AGRAVE, 0, "a\\g<0>a", "-a\\g<0>a-a\\g<0>a");
+  cut_assert_replace_lit ("-", "-" EURO "-" AGRAVE "-" HSTROKE, 0, "", EURO AGRAVE HSTROKE);
 }
 
 #define TEST_EXPAND(pattern, string, string_to_expand, raw, expected) { \
@@ -840,23 +876,30 @@ test_match_next (void)
 
 }
 
-#define TEST_SUB_PATTERN(pattern, string, start_position, sub_n, expected_sub, \
-			 expected_start, expected_end) { \
-  gchar *sub_expr; \
-  gint start = UNTOUCHED, end = UNTOUCHED; \
-  regex = g_regex_new (pattern, 0, 0, NULL); \
-  g_regex_match_full (regex, string, -1, start_position, 0, &match_info, NULL); \
-  sub_expr = g_match_info_fetch (match_info, sub_n); \
-  cut_assert_equal_string (expected_sub, sub_expr); \
-  g_free (sub_expr); \
-  g_match_info_fetch_pos (match_info, sub_n, &start, &end); \
-  cut_assert (start == expected_start && end == expected_end, \
-      "failed (got [%d, %d], expected [%d, %d])", \
-	       start, end, expected_start, expected_end); \
-  g_regex_unref (regex); \
-  g_match_info_free (match_info); \
-  regex = NULL; \
-  match_info = NULL; \
+static void
+cut_assert_sub_pattern (const gchar *pattern,
+			const gchar *string,
+			gint         start_position,
+			gint         sub_n,
+			const gchar *expected_sub,
+			gint         expected_start,
+			gint         expected_end)
+{
+  gchar *sub_expr;
+  gint start = UNTOUCHED, end = UNTOUCHED;
+  regex = g_regex_new (pattern, 0, 0, NULL);
+  g_regex_match_full (regex, string, -1, start_position, 0, &match_info, NULL);
+  sub_expr = g_match_info_fetch (match_info, sub_n);
+  cut_assert_equal_string (expected_sub, sub_expr);
+  g_free (sub_expr);
+  g_match_info_fetch_pos (match_info, sub_n, &start, &end);
+  cut_assert (start == expected_start && end == expected_end,
+	      "failed (got [%d, %d], expected [%d, %d])",
+	      start, end, expected_start, expected_end);
+  g_regex_unref (regex);
+  g_match_info_free (match_info);
+  regex = NULL;
+  match_info = NULL;
 }
 
 #define TEST_SUB_PATTERN_NULL(pattern, string, start_position, sub_n) { \
@@ -879,14 +922,14 @@ test_sub_pattern (void)
 {
   /* TEST_SUB_PATTERN(pattern, string, start_position, sub_n, expected_sub,
    * 		      expected_start, expected_end) */
-  TEST_SUB_PATTERN("a", "a", 0, 0, "a", 0, 1);
-  TEST_SUB_PATTERN("a(.)", "ab", 0, 1, "b", 1, 2);
-  TEST_SUB_PATTERN("a(.)", "a" EURO, 0, 1, EURO, 1, 4);
-  TEST_SUB_PATTERN("(?:.*)(a)(.)", "xxa" ENG, 0, 2, ENG, 3, 5);
-  TEST_SUB_PATTERN("(" HSTROKE ")", "a" HSTROKE ENG, 0, 1, HSTROKE, 1, 3);
-  TEST_SUB_PATTERN("(a)?(b)", "b", 0, 0, "b", 0, 1);
-  TEST_SUB_PATTERN("(a)?(b)", "b", 0, 1, "", -1, -1);
-  TEST_SUB_PATTERN("(a)?(b)", "b", 0, 2, "b", 0, 1);
+  cut_assert_sub_pattern ("a", "a", 0, 0, "a", 0, 1);
+  cut_assert_sub_pattern ("a(.)", "ab", 0, 1, "b", 1, 2);
+  cut_assert_sub_pattern ("a(.)", "a" EURO, 0, 1, EURO, 1, 4);
+  cut_assert_sub_pattern ("(?:.*)(a)(.)", "xxa" ENG, 0, 2, ENG, 3, 5);
+  cut_assert_sub_pattern ("(" HSTROKE ")", "a" HSTROKE ENG, 0, 1, HSTROKE, 1, 3);
+  cut_assert_sub_pattern ("(a)?(b)", "b", 0, 0, "b", 0, 1);
+  cut_assert_sub_pattern ("(a)?(b)", "b", 0, 1, "", -1, -1);
+  cut_assert_sub_pattern ("(a)?(b)", "b", 0, 2, "b", 0, 1);
 
   TEST_SUB_PATTERN_NULL("a", "a", 0, 1);
   TEST_SUB_PATTERN_NULL("a", "a", 0, 1);
