@@ -15,7 +15,8 @@ noinst_LTLIBRARIES = 			\
 		test_thread.la		\
 		test_utf8_pointer.la	\
 		test_utf8_validate.la	\
-		test_uri.la
+		test_uri.la		\
+		test_properties.la
 
 LDFLAGS =			\
 	-rpath $(libdir)	\
@@ -31,3 +32,4 @@ test_uri_la_SOURCES = test-uri.c
 test_utf8_pointer_la_SOURCES = test-utf8-pointer.c
 test_utf8_validate_la_SOURCES = test-utf8-validate.c
 
+test_properties_la_SOURCES = test-properties.c
