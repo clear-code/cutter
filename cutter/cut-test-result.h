@@ -61,6 +61,7 @@ CutTestResult *cut_test_result_new        (CutTestResultStatus status,
                                            guint line);
 
 CutTestResultStatus  cut_test_result_get_status        (CutTestResult *result);
+const gchar         *cut_test_result_get_test_name     (CutTestResult *result);
 const gchar         *cut_test_result_get_message       (CutTestResult *result);
 const gchar         *cut_test_result_get_user_message  (CutTestResult *result);
 const gchar         *cut_test_result_get_system_message(CutTestResult *result);

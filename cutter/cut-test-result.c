@@ -367,6 +367,12 @@ cut_test_result_get_message (CutTestResult *result)
 }
 
 const gchar *
+cut_test_result_get_test_name (CutTestResult *result)
+{
+    return CUT_TEST_RESULT_GET_PRIVATE(result)->test_name;
+}
+
+const gchar *
 cut_test_result_get_user_message (CutTestResult *result)
 {
     return CUT_TEST_RESULT_GET_PRIVATE(result)->user_message;

@@ -1,5 +1,11 @@
 2007-11-14  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test-result.[c|h]: Added cut_test_result_get_test_name().
+	* cutter/module/output/cut-output-console.c: Show test name if the
+	test fails.
+
+2007-11-14  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-test-result.[c|h]: cut_test_result_new() needs test and
 	test case and test suite name.
 	* cutter/cut-test-context.c, test/test-cut-test-result.c: Follow the

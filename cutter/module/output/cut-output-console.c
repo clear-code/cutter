@@ -481,7 +481,10 @@ on_complete_test_suite (CutOutput *output, CutContext *context,
         message = cut_test_result_get_message(result);
 
         g_print("\n%d) ", i);
-        print_for_status(console, status, "%s", status_to_name(status));
+        print_for_status(console, status,
+                         "%s : %s",
+                         status_to_name(status),
+                         cut_test_result_get_test_name(result));
         if (message) {
             g_print("\n");
             print_for_status(console, status, "%s", message);
@@ -491,6 +494,7 @@ on_complete_test_suite (CutOutput *output, CutContext *context,
                 cut_test_result_get_line(result),
                 cut_test_result_get_function_name(result));
         i++;
+        g_free(filename);
     }
 
     g_print("\n");
