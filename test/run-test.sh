@@ -6,5 +6,5 @@ if test x"$NO_MAKE" != x"yes"; then
     make -C ../ > /dev/null || exit 1
 fi
 
-$BASE_DIR/../cutter/cutter --color=auto --name=/^test_.*/ --multi-thread \
+CUT_OUTPUT_MODULE_DIR=../cutter/module/output/.libs $BASE_DIR/../cutter/cutter --color=auto --name=/^test_.*/ --multi-thread \
     -s $BASE_DIR "$@" $BASE_DIR
