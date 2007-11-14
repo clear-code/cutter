@@ -7,7 +7,8 @@ INCLUDES = $(CUTTER_CFLAGS)	\
 EXTRA_DIST = run-test.sh
 
 TESTS = run-test.sh
-TESTS_ENVIRONMENT = NO_MAKE=yes
+TESTS_ENVIRONMENT = NO_MAKE=yes \
+	CUT_OUTPUT_MODULE_DIR=../cutter/module/output/.libs
 
 noinst_LTLIBRARIES = 				\
 		libcuttest_utils.la		\
