@@ -51,45 +51,59 @@ teardown (void)
     g_key_file_free (keyfile);
 }
 
-#define check_error(error, error_domain, error_code) \
-  cut_assert (error); \
-  cut_assert_equal_int (error_domain, error->domain,\
-      "Wrong error domain: got %s, expected %s", \
-	       g_quark_to_string (error->domain), \
-	       g_quark_to_string (error_domain)); \
-  cut_assert_equal_int (error_code, error->code); \
-  g_error_free (error); \
-  error = NULL;
+static void
+check_error (GError **error,
+	     GQuark   domain,
+	     gint     code)
+{
+  cut_assert (*error);
+  cut_assert_equal_int (domain, (*error)->domain,
+		  	"Wrong error domain: got %s, expected %s",
+			g_quark_to_string ((*error)->domain),
+			g_quark_to_string (domain));
+  cut_assert_equal_int (code, (*error)->code);
+  g_error_free (*error);
+  *error = NULL;
+}
 
 #define check_no_error(error) \
   cut_assert_null (error, "Unexpected error: (%s, %d) %s\n", \
 	           g_quark_to_string (error->domain), \
 		   error->code, error->message);
 
-#define check_string_value(file, group, key, expected) \
-{ \
-  GError *error = NULL; \
-  gchar *value; \
-  value = g_key_file_get_string (file, group, key, &error); \
-  check_no_error (error); \
-  cut_assert (value); \
-  cut_assert_equal_string (expected, value, \
-     "Group %s key %s: expected string value '%s', actual value '%s'", \
-	       group, key, expected, value); \
-  g_free (value); \
+static void
+check_string_value (GKeyFile    *keyfile,
+		    const gchar *group,
+		    const gchar *key,
+		    const gchar *expected)
+{
+  GError *error = NULL;
+  gchar *value;
+  value = g_key_file_get_string (keyfile, group, key, &error);
+  check_no_error (error);
+  cut_assert (value);
+  cut_assert_equal_string (expected, value,
+		  	   "Group %s key %s: expected string value '%s', actual value '%s'",
+			   group, key, expected, value);
+  g_free (value);
 }
 
-#define check_locale_string_value(keyfile, group, key, locale, expected) \
-{ \
-  GError *error = NULL; \
-  gchar *value; \
-  value = g_key_file_get_locale_string (keyfile, group, key, locale, &error); \
-  check_no_error (error); \
-  cut_assert (value); \
-  cut_assert_equal_string (expected, value, \
-      "Group %s key %s locale %s: expected string value '%s', actual value '%s'", \
-	       group, key, locale, expected, value); \
-  g_free (value); \
+static void
+check_locale_string_value (GKeyFile    *keyfile,
+			   const gchar *group,
+			   const gchar *key,
+			   const gchar *locale,
+			   const gchar *expected)
+{
+  GError *error = NULL;
+  gchar *value;
+  value = g_key_file_get_locale_string (keyfile, group, key, locale, &error);
+  check_no_error (error);
+  cut_assert (value);
+  cut_assert_equal_string (expected, value,
+			   "Group %s key %s locale %s: expected string value '%s', actual value '%s'",
+			   group, key, locale, expected, value);
+  g_free (value);
 }
 
 static void
@@ -135,7 +149,7 @@ check_integer_list_value (GKeyFile    *keyfile,
 
   value = g_key_file_get_integer_list (keyfile, group, key, &len, &error);
   check_no_error (error);
-  g_assert (value != NULL);
+  cut_assert (value != NULL);
   
   va_start (args, key);
   i = 0;
@@ -178,7 +192,7 @@ check_double_list_value (GKeyFile    *keyfile,
 
   value = g_key_file_get_double_list (keyfile, group, key, &len, &error);
   check_no_error (error);
-  g_assert (value != NULL);
+  cut_assert (value != NULL);
   
   va_start (args, key);
   i = 0;
@@ -419,7 +433,7 @@ test_comments (void)
   g_free (comment);
 
   comment = g_key_file_get_comment (keyfile, "group3", NULL, &error);
-  check_error (error, 
+  check_error (&error, 
 	       G_KEY_FILE_ERROR,
 	       G_KEY_FILE_ERROR_GROUP_NOT_FOUND);
   cut_assert_null (comment);
@@ -464,7 +478,7 @@ test_listing (void)
   g_strfreev (names);
 
   names = g_key_file_get_keys (keyfile, "no-such-group", &len, &error);
-  check_error (error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_GROUP_NOT_FOUND);
+  check_error (&error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_GROUP_NOT_FOUND);
 
   g_strfreev (names);
 
@@ -491,7 +505,7 @@ test_listing (void)
   check_no_error (error);
   
   g_key_file_has_key (keyfile, "no-such-group", "key", &error);
-  check_error (error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_GROUP_NOT_FOUND);
+  check_error (&error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_GROUP_NOT_FOUND);
 }
 
 /* check parsing of string values */
@@ -519,11 +533,11 @@ test_string (void)
   check_string_value (keyfile, "valid", "key4", "\xe2\x89\xa0\xe2\x89\xa0");  
   
   value = g_key_file_get_string (keyfile, "invalid", "key1", &error);
-  check_error (error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_INVALID_VALUE);
+  check_error (&error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_INVALID_VALUE);
   g_free (value);
 
   value = g_key_file_get_string (keyfile, "invalid", "key2", &error);
-  check_error (error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_INVALID_VALUE);
+  check_error (&error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_INVALID_VALUE);
   g_free (value);
 }
 
@@ -553,16 +567,16 @@ test_boolean (void)
   check_boolean_value (keyfile, "valid", "key4", FALSE);
 
   g_key_file_get_boolean (keyfile, "invalid", "key1", &error);
-  check_error (error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_INVALID_VALUE);
+  check_error (&error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_INVALID_VALUE);
 
   g_key_file_get_boolean (keyfile, "invalid", "key2", &error);
-  check_error (error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_INVALID_VALUE);
+  check_error (&error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_INVALID_VALUE);
 
   g_key_file_get_boolean (keyfile, "invalid", "key3", &error);
-  check_error (error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_INVALID_VALUE);
+  check_error (&error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_INVALID_VALUE);
 
   g_key_file_get_boolean (keyfile, "invalid", "key4", &error);
-  check_error (error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_INVALID_VALUE);
+  check_error (&error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_INVALID_VALUE);
 }
 
 /* check parsing of integer and double values */
@@ -605,28 +619,28 @@ test_number (void)
   check_double_value (keyfile, "valid", "dkey3", -3453.7);
 
   g_key_file_get_integer (keyfile, "invalid", "key1", &error);
-  check_error (error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_INVALID_VALUE);
+  check_error (&error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_INVALID_VALUE);
 
   g_key_file_get_integer (keyfile, "invalid", "key2", &error);
-  check_error (error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_INVALID_VALUE);
+  check_error (&error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_INVALID_VALUE);
 
   g_key_file_get_integer (keyfile, "invalid", "key3", &error);
-  check_error (error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_INVALID_VALUE);
+  check_error (&error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_INVALID_VALUE);
 
   g_key_file_get_integer (keyfile, "invalid", "key4", &error);
-  check_error (error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_INVALID_VALUE);
+  check_error (&error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_INVALID_VALUE);
 
   g_key_file_get_double (keyfile, "invalid", "key5", &error);
-  check_error (error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_INVALID_VALUE);
+  check_error (&error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_INVALID_VALUE);
 
   g_key_file_get_double (keyfile, "invalid", "key6", &error);
-  check_error (error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_INVALID_VALUE);
+  check_error (&error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_INVALID_VALUE);
 
   g_key_file_get_double (keyfile, "invalid", "key7", &error);
-  check_error (error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_INVALID_VALUE);
+  check_error (&error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_INVALID_VALUE);
 
   g_key_file_get_double (keyfile, "invalid", "key8", &error);
-  check_error (error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_INVALID_VALUE);
+  check_error (&error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_INVALID_VALUE);
 }
 
 /* check handling of translated strings */
@@ -765,7 +779,7 @@ test_group_remove (void)
   check_name ("group name", names[0], "group3", 0);
 
   g_key_file_remove_group (keyfile, "no such group", &error);
-  check_error (error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_GROUP_NOT_FOUND);
+  check_error (&error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_GROUP_NOT_FOUND);
 
   g_strfreev (names);
 }
@@ -790,14 +804,14 @@ test_key_remove (void)
   check_no_error (error);
 
   value = g_key_file_get_string (keyfile, "group1", "key1", &error);
-  check_error (error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_KEY_NOT_FOUND);
+  check_error (&error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_KEY_NOT_FOUND);
   g_free (value);
   
   g_key_file_remove_key (keyfile, "group1", "key1", &error);
-  check_error (error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_KEY_NOT_FOUND);
+  check_error (&error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_KEY_NOT_FOUND);
 
   g_key_file_remove_key (keyfile, "no such group", "key1", &error);
-  check_error (error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_GROUP_NOT_FOUND);
+  check_error (&error, G_KEY_FILE_ERROR, G_KEY_FILE_ERROR_GROUP_NOT_FOUND);
 }
 
 
@@ -830,7 +844,7 @@ test_group_names (void)
   keyfile = g_key_file_new ();
   g_key_file_load_from_data (keyfile, data, -1, 0, &error);
   g_key_file_free (keyfile);  
-  check_error (error, 
+  check_error (&error, 
 	       G_KEY_FILE_ERROR,
 	       G_KEY_FILE_ERROR_PARSE);
 
@@ -840,7 +854,7 @@ test_group_names (void)
   keyfile = g_key_file_new ();
   g_key_file_load_from_data (keyfile, data, -1, 0, &error);
   g_key_file_free (keyfile);  
-  check_error (error, 
+  check_error (&error, 
 	       G_KEY_FILE_ERROR,
 	       G_KEY_FILE_ERROR_PARSE);
 
@@ -850,7 +864,7 @@ test_group_names (void)
   keyfile = g_key_file_new ();
   g_key_file_load_from_data (keyfile, data, -1, 0, &error);
   g_key_file_free (keyfile);  
-  check_error (error, 
+  check_error (&error, 
 	       G_KEY_FILE_ERROR,
 	       G_KEY_FILE_ERROR_PARSE);
 
@@ -860,7 +874,7 @@ test_group_names (void)
   keyfile = g_key_file_new ();
   g_key_file_load_from_data (keyfile, data, -1, 0, &error);
   g_key_file_free (keyfile);  
-  check_error (error, 
+  check_error (&error, 
 	       G_KEY_FILE_ERROR,
 	       G_KEY_FILE_ERROR_PARSE);
 
@@ -875,7 +889,7 @@ test_group_names (void)
   keyfile = g_key_file_new ();
   g_key_file_set_string (keyfile, "a[b", "key1", "123");
   value = g_key_file_get_string (keyfile, "a[b", "key1", &error);
-  check_error (error, 
+  check_error (&error, 
                G_KEY_FILE_ERROR,
                G_KEY_FILE_ERROR_GROUP_NOT_FOUND);  
   g_key_file_free (keyfile);  
@@ -883,7 +897,7 @@ test_group_names (void)
   keyfile = g_key_file_new ();
   g_key_file_set_string (keyfile, "a]b", "key1", "123");
   value = g_key_file_get_string (keyfile, "a]b", "key1", &error);
-  check_error (error, 
+  check_error (&error, 
                G_KEY_FILE_ERROR,
                G_KEY_FILE_ERROR_GROUP_NOT_FOUND);  
   g_key_file_free (keyfile);  
@@ -891,7 +905,7 @@ test_group_names (void)
   keyfile = g_key_file_new ();
   g_key_file_set_string (keyfile, "a\tb", "key1", "123");
   value = g_key_file_get_string (keyfile, "a\tb", "key1", &error);
-  check_error (error, 
+  check_error (&error, 
                G_KEY_FILE_ERROR,
                G_KEY_FILE_ERROR_GROUP_NOT_FOUND);  
   g_key_file_free (keyfile);  
@@ -916,7 +930,7 @@ test_key_names (void)
   keyfile = g_key_file_new ();
   g_key_file_load_from_data (keyfile, data, -1, 0, &error);
   g_key_file_free (keyfile);  
-  check_error (error, 
+  check_error (&error, 
 	       G_KEY_FILE_ERROR,
 	       G_KEY_FILE_ERROR_PARSE);
 
@@ -926,7 +940,7 @@ test_key_names (void)
   keyfile = g_key_file_new ();
   g_key_file_load_from_data (keyfile, data, -1, 0, &error);
   g_key_file_free (keyfile);  
-  check_error (error, 
+  check_error (&error, 
 	       G_KEY_FILE_ERROR,
 	       G_KEY_FILE_ERROR_PARSE);
 
@@ -936,7 +950,7 @@ test_key_names (void)
   keyfile = g_key_file_new ();
   g_key_file_load_from_data (keyfile, data, -1, 0, &error);
   g_key_file_free (keyfile);  
-  check_error (error, 
+  check_error (&error, 
 	       G_KEY_FILE_ERROR,
 	       G_KEY_FILE_ERROR_PARSE);
 
@@ -946,7 +960,7 @@ test_key_names (void)
   keyfile = g_key_file_new ();
   g_key_file_load_from_data (keyfile, data, -1, 0, &error);
   g_key_file_free (keyfile);  
-  check_error (error, 
+  check_error (&error, 
 	       G_KEY_FILE_ERROR,
 	       G_KEY_FILE_ERROR_PARSE);
 
@@ -982,7 +996,7 @@ test_key_names (void)
          "foo [de] =123\n";
   keyfile = g_key_file_new ();
   g_key_file_load_from_data (keyfile, data, -1, 0, &error);
-  check_error (error, 
+  check_error (&error, 
 	       G_KEY_FILE_ERROR,
 	       G_KEY_FILE_ERROR_PARSE);
   g_key_file_free (keyfile);  
@@ -1007,7 +1021,7 @@ test_key_names (void)
   g_key_file_set_string (keyfile, "a", "x", "123");
   g_key_file_set_string (keyfile, "a", "key=", "123");
   value = g_key_file_get_string (keyfile, "a", "key=", &error);
-  check_error (error, 
+  check_error (&error, 
                G_KEY_FILE_ERROR,
                G_KEY_FILE_ERROR_KEY_NOT_FOUND);  
   g_key_file_free (keyfile);  
@@ -1016,7 +1030,7 @@ test_key_names (void)
   g_key_file_set_string (keyfile, "a", "x", "123");
   g_key_file_set_string (keyfile, "a", "key[", "123");
   value = g_key_file_get_string (keyfile, "a", "key[", &error);
-  check_error (error, 
+  check_error (&error, 
                G_KEY_FILE_ERROR,
                G_KEY_FILE_ERROR_KEY_NOT_FOUND);  
   g_key_file_free (keyfile);  
@@ -1032,7 +1046,7 @@ test_key_names (void)
   g_key_file_set_string (keyfile, "a", "x", "123");
   g_key_file_set_string (keyfile, "a", " key", "123");
   value = g_key_file_get_string (keyfile, "a", " key", &error);
-  check_error (error, 
+  check_error (&error, 
                G_KEY_FILE_ERROR,
                G_KEY_FILE_ERROR_KEY_NOT_FOUND);  
   g_key_file_free (keyfile);  
