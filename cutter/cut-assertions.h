@@ -204,11 +204,10 @@ extern "C" {
     if ((lhs) operator (rhs)) {                                         \
         cut_test_pass();                                                \
     } else {                                                            \
-        cut_test_fail(                                                  \
-            FAILURE,                                                    \
-            "expected: <%s %s %s> is TRUE",                             \
-            #lhs, #operator, #rhs,                                      \
-            NULL, ## __VA_ARGS__, NULL);                                \
+        cut_test_fail(FAILURE,                                          \
+                      "expected: <%s %s %s> is TRUE",                   \
+                      #lhs, #operator, #rhs,                            \
+                      NULL, ## __VA_ARGS__, NULL);                      \
     }                                                                   \
 } while(0)
 
