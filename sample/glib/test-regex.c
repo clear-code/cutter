@@ -233,57 +233,62 @@ test_match_simple (void)
   cut_assert(!g_regex_match_simple("[", "", 0, 0));
 }
 
-#define TEST_MATCH(pattern, compile_opts, match_opts, string, \
-		   string_len, start_position, match_opts2) { \
-  regex = g_regex_new (pattern, compile_opts, match_opts, NULL); \
-  cut_assert (regex, "failed (pattern: \"%s\", compile: %d, match %d)", \
-	      pattern, compile_opts, match_opts); \
-  cut_assert (g_regex_match_full (regex, string, string_len, \
-              start_position, match_opts2, NULL, NULL)); \
-  if (string_len == -1 && start_position == 0) \
-    { \
-      cut_assert (g_regex_match (regex, string, match_opts2, NULL), \
-	          "failed (pattern: \"%s\", string: \"%s\")", \
-		   pattern, string); \
-    } \
-  g_regex_unref (regex); \
-  regex = NULL; \
+static void
+cut_assert_match(const gchar *pattern, GRegexCompileFlags compile_options,
+                 GRegexMatchFlags pattern_match_options, const gchar *string,
+                 gssize length, gint start_position,
+                 GRegexMatchFlags match_options)
+{
+  regex = g_regex_new (pattern, compile_options, pattern_match_options, NULL);
+  cut_assert (regex,
+              "failed (pattern: \"%s\", compile: %d, match %d)",
+	      pattern, compile_options, pattern_match_options);
+  cut_assert (g_regex_match_full (regex, string, length, start_position,
+                                  match_options, NULL, NULL));
+  if (length == -1 && start_position == 0)
+    {
+      cut_assert (g_regex_match (regex, string, match_options, NULL),
+	          "failed (pattern: \"%s\", string: \"%s\")",
+                  pattern, string);
+    }
+  g_regex_unref (regex);
+  regex = NULL;
 }
 
 void
 test_match (void)
 {
-  TEST_MATCH("a", 0, 0, "a", -1, 0, 0);
-  TEST_MATCH("a", G_REGEX_CASELESS, 0, "A", -1, 0, 0);
-  TEST_MATCH("a", 0, 0, "bab", -1, 0, 0);
-  TEST_MATCH("a", 0, G_REGEX_ANCHORED, "a", -1, 0, 0);
-  TEST_MATCH("a|b", 0, 0, "a", -1, 0, 0);
-  TEST_MATCH("^.$", 0, 0, EURO, -1, 0, 0);
-  TEST_MATCH("^.{3}$", G_REGEX_RAW, 0, EURO, -1, 0, 0);
-  TEST_MATCH(AGRAVE, G_REGEX_CASELESS, 0, AGRAVE_UPPER, -1, 0, 0);
-  TEST_MATCH("a", 0, 0, "a", -1, 0, G_REGEX_ANCHORED);
+  cut_assert_match("a", 0, 0, "a", -1, 0, 0);
+  cut_assert_match("a", G_REGEX_CASELESS, 0, "A", -1, 0, 0);
+  cut_assert_match("a", 0, 0, "bab", -1, 0, 0);
+  cut_assert_match("a", 0, G_REGEX_ANCHORED, "a", -1, 0, 0);
+  cut_assert_match("a|b", 0, 0, "a", -1, 0, 0);
+  cut_assert_match("^.$", 0, 0, EURO, -1, 0, 0);
+  cut_assert_match("^.{3}$", G_REGEX_RAW, 0, EURO, -1, 0, 0);
+  cut_assert_match(AGRAVE, G_REGEX_CASELESS, 0, AGRAVE_UPPER, -1, 0, 0);
+  cut_assert_match("a", 0, 0, "a", -1, 0, G_REGEX_ANCHORED);
 
   /* New lines handling. */
-  TEST_MATCH("^a\\Rb$", 0, 0, "a\r\nb", -1, 0, 0);
-  TEST_MATCH("^a\\Rb$", 0, 0, "a\nb", -1, 0, 0);
-  TEST_MATCH("^a\\Rb$", 0, 0, "a\rb", -1, 0, 0);
-  TEST_MATCH("^a\\R\\Rb$", 0, 0, "a\n\rb", -1, 0, 0);
-  TEST_MATCH("^a\\r\\nb$", 0, 0, "a\r\nb", -1, 0, 0);
-  TEST_MATCH("^b$", G_REGEX_MULTILINE, 0, "a\nb\nc", -1, 0, 0);
-  TEST_MATCH("^b$", G_REGEX_MULTILINE, 0, "a\r\nb\r\nc", -1, 0, 0);
-  TEST_MATCH("^b$", G_REGEX_MULTILINE, 0, "a\rb\rc", -1, 0, 0);
-  TEST_MATCH("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_LF, 0, "a\nb\nc", -1, 0, 0);
-  TEST_MATCH("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CRLF, 0, "a\r\nb\r\nc", -1, 0, 0);
-  TEST_MATCH("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CR, 0, "a\rb\rc", -1, 0, 0);
-  TEST_MATCH("^b$", G_REGEX_MULTILINE, G_REGEX_MATCH_NEWLINE_LF, "a\nb\nc", -1, 0, 0);
-  TEST_MATCH("^b$", G_REGEX_MULTILINE, G_REGEX_MATCH_NEWLINE_CRLF, "a\r\nb\r\nc", -1, 0, 0);
-  TEST_MATCH("^b$", G_REGEX_MULTILINE, G_REGEX_MATCH_NEWLINE_CR, "a\rb\rc", -1, 0, 0);
-  TEST_MATCH("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CR, G_REGEX_MATCH_NEWLINE_ANY, "a\nb\nc", -1, 0, 0);
-  TEST_MATCH("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CR, G_REGEX_MATCH_NEWLINE_ANY, "a\rb\rc", -1, 0, 0);
-  TEST_MATCH("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CR, G_REGEX_MATCH_NEWLINE_ANY, "a\r\nb\r\nc", -1, 0, 0);
-  TEST_MATCH("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CR, G_REGEX_MATCH_NEWLINE_LF, "a\nb\nc", -1, 0, 0);
-  TEST_MATCH("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CR, G_REGEX_MATCH_NEWLINE_CRLF, "a\r\nb\r\nc", -1, 0, 0);
-  TEST_MATCH("a#\nb", G_REGEX_EXTENDED | G_REGEX_NEWLINE_CR, 0, "a", -1, 0, 0);
+  cut_assert_match("^a\\Rb$", 0, 0, "a\r\nb", -1, 0, 0);
+  cut_assert_match("^a\\Rb$", 0, 0, "a\nb", -1, 0, 0);
+  cut_assert_match("^a\\Rb$", 0, 0, "a\rb", -1, 0, 0);
+  cut_assert_match("^a\\R\\Rb$", 0, 0, "a\n\rb", -1, 0, 0);
+  cut_assert_match("^a\\r\\nb$", 0, 0, "a\r\nb", -1, 0, 0);
+  cut_assert_match("^b$", G_REGEX_MULTILINE, 0, "a\nb\nc", -1, 0, 0);
+  cut_assert_match("^b$", G_REGEX_MULTILINE, 0, "a\r\nb\r\nc", -1, 0, 0);
+  cut_assert_match("^b$", G_REGEX_MULTILINE, 0, "a\rb\rc", -1, 0, 0);
+  cut_assert_match("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_LF, 0, "a\nb\nc", -1, 0, 0);
+  cut_assert_match("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CRLF, 0, "a\r\nb\r\nc", -1, 0, 0);
+  cut_assert_match("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CR, 0, "a\rb\rc", -1, 0, 0);
+  cut_assert_match("^b$", G_REGEX_MULTILINE, G_REGEX_MATCH_NEWLINE_LF, "a\nb\nc", -1, 0, 0);
+  cut_assert_match("^b$", G_REGEX_MULTILINE, G_REGEX_MATCH_NEWLINE_CRLF, "a\r\nb\r\nc", -1, 0, 0);
+  cut_assert_match("^b$", G_REGEX_MULTILINE, G_REGEX_MATCH_NEWLINE_CR, "a\rb\rc", -1, 0, 0);
+  cut_assert_match("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CR, G_REGEX_MATCH_NEWLINE_ANY, "a\nb\nc", -1, 0, 0);
+  cut_assert_match("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CR, G_REGEX_MATCH_NEWLINE_ANY, "a\rb\rc", -1, 0, 0);
+  cut_assert_match("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CR, G_REGEX_MATCH_NEWLINE_ANY, "a\r\nb\r\nc", -1, 0, 0);
+  cut_assert_match("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CR, G_REGEX_MATCH_NEWLINE_LF, "a\nb\nc", -1, 0, 0);
+  cut_assert_match("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CR, G_REGEX_MATCH_NEWLINE_CRLF, "a\r\nb\r\nc", -1, 0, 0);
+  cut_assert_match("a#\nb", G_REGEX_EXTENDED | G_REGEX_NEWLINE_CR, 0, "a", -1, 0, 0);
 }
 
 #define TEST_MISMATCH(pattern, compile_opts, match_opts, string, \
