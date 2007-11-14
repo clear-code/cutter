@@ -21,6 +21,7 @@ void test_error_equal_string_with_null (void);
 void test_assert_equal_function (void);
 
 static gboolean need_cleanup;
+static gboolean compare_function_is_called;
 
 static CutTest *test_object;
 static CutContext *context;
@@ -110,6 +111,7 @@ void
 setup (void)
 {
     need_cleanup = FALSE;
+    compare_function_is_called = FALSE;
     test_object = NULL;
     context = NULL;
     test_context = NULL;
@@ -342,16 +344,19 @@ test_assert_message_with_format_string (void)
                             cut_test_result_get_user_message(test_result));
 }
 
-static gboolean 
+static gboolean
 compare_function (gpointer a, gpointer b)
 {
+    compare_function_is_called = TRUE;
     return TRUE;
 }
 
 void
 test_assert_equal_function (void)
 {
+    cut_assert(!compare_function_is_called);
     cut_assert_equal(compare_function, "o", "o");
+    cut_assert(compare_function_is_called);
 }
 
 /*

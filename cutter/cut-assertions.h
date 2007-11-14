@@ -45,7 +45,6 @@ extern "C" {
 {                                                                   \
     cut_test_register_result(status, message, ## __VA_ARGS__);      \
     cut_test_context_long_jump(get_current_test_context());         \
-    return;                                                         \
 } while (0)
 
 

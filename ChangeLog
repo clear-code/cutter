@@ -1,5 +1,8 @@
 2007-11-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-assertions.c (test_assert_equal_function):
+	improved test.
+
 	* sample/glib/test-regex.c (test_match): used function instead of macro.
 
 	* cutter/: used setjmp/longjmp to terminate test by failure.
