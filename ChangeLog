@@ -1,6 +1,7 @@
 2007-11-14  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-runner.[c|h]: Added.
+	* cutter/module/runner/*: Added.
 
 2007-11-14  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 

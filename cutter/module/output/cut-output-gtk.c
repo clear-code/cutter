@@ -53,6 +53,8 @@ struct _CutOutputGtk
     CutOutput     object;
     gchar        *name;
     gboolean      use_color;
+
+    GtkTextBuffer *text_buffer;
 };
 
 struct _CutOutputGtkClass
@@ -140,7 +142,19 @@ class_init (CutOutputClass *klass)
 static void
 init (CutOutputGtk *output)
 {
-    gtk_init(NULL, NULL);
+    GtkWidget *window;
+    GtkWidget *text_view;
+
+    window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_default_size(GTK_WINDOW(window), 400, 300);
+
+    text_view = gtk_text_view_new();
+    gtk_container_add(GTK_CONTAINER(window), text_view);
+    gtk_widget_show(text_view);
+
+    output->text_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_view));
+
+    gtk_widget_show(window);
 }
 
 static void
@@ -253,6 +267,11 @@ on_complete_test (CutOutput *output, CutTestCase *test_case,
 static void
 on_success (CutOutput *output, CutTest *test)
 {
+    GtkTextIter iter;
+    CutOutputGtk *output_gtk = CUT_OUTPUT_GTK(output);
+
+    gtk_text_buffer_get_end_iter(output_gtk->text_buffer, &iter);
+    gtk_text_buffer_insert(output_gtk->text_buffer, &iter, ".", -1);
 }
 
 static void
