@@ -26,13 +26,18 @@
 #include <stdlib.h>
 
 #include "cut-main.h"
+#include <glib-object.h>
 
 int
 main (int argc, char *argv[])
 {
+    gboolean success = TRUE;
+
     cut_init (&argc, &argv);
 
-    exit(cut_run(argv[1]) ? 0 : 1);
+    success  = cut_run(argv[1]);
+
+    exit(success ? 0 : 1);
 }
 
 /*

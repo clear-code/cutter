@@ -174,20 +174,6 @@ cut_run (const char *directory)
     return success;
 }
 
-int
-main (int argc, char *argv[])
-{
-    gboolean success = TRUE;
-
-    cut_init (&argc, &argv);
-
-    success  = cut_run(argv[1]);
-
-    g_object_unref (context);
-
-    exit(success ? 0 : 1);
-}
-
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */
