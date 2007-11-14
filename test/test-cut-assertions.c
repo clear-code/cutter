@@ -100,7 +100,7 @@ run (CutTest *test)
     test_context = cut_test_context_new(NULL, NULL, test_object);
     original_test_context = get_current_test_context();
     set_current_test_context(test_context);
-    success = cut_test_run(test_object, context);
+    success = cut_test_run(test_object, test_context, context);
     set_current_test_context(original_test_context);
 
     return success;

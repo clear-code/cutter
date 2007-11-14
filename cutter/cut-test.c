@@ -295,7 +295,7 @@ cb_check_success (CutTest *test, CutTestResult *result, gpointer data)
 }
 
 gboolean
-cut_test_run (CutTest *test, CutContext *context)
+cut_test_run (CutTest *test, CutTestContext *test_context, CutContext *context)
 {
     CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(test);
     gboolean success = TRUE;
@@ -311,7 +311,8 @@ cut_test_run (CutTest *test, CutContext *context)
     g_signal_connect(test, "error", G_CALLBACK(cb_check_success), &success);
     g_signal_connect(test, "pending", G_CALLBACK(cb_check_success), &success);
     g_timer_start(priv->timer);
-    priv->test_function();
+    if (cut_test_context_set_jump(test_context))
+        priv->test_function();
     g_timer_stop(priv->timer);
     g_signal_handlers_disconnect_by_func(test, G_CALLBACK(cb_check_success),
                                          &success);

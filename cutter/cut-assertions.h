@@ -41,10 +41,11 @@ extern "C" {
         message, ## __VA_ARGS__);                           \
 } while (0)
 
-#define cut_test_fail(status, message, ...) do                  \
-{                                                               \
-    cut_test_register_result(status, message, ## __VA_ARGS__);  \
-    return;                                                     \
+#define cut_test_fail(status, message, ...) do                      \
+{                                                                   \
+    cut_test_register_result(status, message, ## __VA_ARGS__);      \
+    cut_test_context_long_jump(get_current_test_context());         \
+    return;                                                         \
 } while (0)
 
 

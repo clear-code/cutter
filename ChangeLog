@@ -1,5 +1,8 @@
 2007-11-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/: used setjmp/longjmp to terminate test by failure.
+	* test/: followed the above changes.
+
 	* test/run-test.sh: cleanup.
 
 	* cutter/cut-output.c, cutter/module/output/cut-output-console.c:

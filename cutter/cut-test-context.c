@@ -25,6 +25,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <setjmp.h>
 #include <glib.h>
 
 #include "cut-test-context.h"
@@ -39,6 +40,7 @@ struct _CutTestContextPrivate
     CutTestCase *test_case;
     CutTest *test;
     gboolean failed;
+    jmp_buf jump_buffer;
 };
 
 enum
@@ -243,6 +245,22 @@ cut_test_context_set_test (CutTestContext *context, CutTest *test)
     if (test)
         g_object_ref(test);
     priv->test = test;
+}
+
+gboolean
+cut_test_context_set_jump (CutTestContext *context)
+{
+    CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+
+    return setjmp(priv->jump_buffer) == 0;
+}
+
+void
+cut_test_context_long_jump (CutTestContext *context)
+{
+    CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+
+    longjmp(priv->jump_buffer, 1);
 }
 
 void

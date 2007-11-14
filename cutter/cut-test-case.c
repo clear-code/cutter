@@ -296,19 +296,23 @@ run (CutTestCase *test_case, CutTest *test, CutContext *context)
     priv->set_current_test_context(test_context);
 
     g_signal_emit_by_name(test_case, "start-test", test);
-    if (priv->setup)
-        priv->setup();
+    if (priv->setup) {
+        if (cut_test_context_set_jump(test_context))
+            priv->setup();
+    }
 
     if (cut_test_context_is_failed(test_context)) {
         success = FALSE;
     } else {
         cut_test_context_set_test(test_context, test);
-        success = cut_test_run(test, context);
+        success = cut_test_run(test, test_context, context);
         cut_test_context_set_test(test_context, NULL);
     }
 
-    if (priv->teardown)
-        priv->teardown();
+    if (priv->teardown) {
+        if (cut_test_context_set_jump(test_context))
+            priv->teardown();
+    }
     g_signal_emit_by_name(test_case, "complete-test", test);
 
     priv->set_current_test_context(original_test_context);
