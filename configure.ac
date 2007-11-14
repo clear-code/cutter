@@ -92,6 +92,13 @@ output_moduledir="\${moduledir}/output"
 AC_SUBST(output_moduledir)
 
 dnl **************************************************************
+dnl Configure for runner modules.
+dnl **************************************************************
+
+runner_moduledir="\${moduledir}/runner"
+AC_SUBST(runner_moduledir)
+
+dnl **************************************************************
 dnl Check for GTK+
 dnl **************************************************************
 AM_PATH_GTK_2_0(2.12.0, [], [], [])
@@ -100,6 +107,7 @@ PKG_CHECK_MODULES(GTK_PRINT, gtk+-unix-print-2.0,
 AM_CONDITIONAL([HAVE_GTK], [test "x$no_gtk" = x -a "x$gtk_print" = xyes])
 
 CUTTER_CFLAGS="$GLIB_CFLAGS -DOUTPUT_MODULEDIR=\\\"\"\$(output_moduledir)\"\\\""
+CUTTER_CFLAGS="$CUTTER_CFLAGS -DRUNNER_MODULEDIR=\\\"\"\$(runner_moduledir)\"\\\""
 
 AC_CONFIG_FILES([Makefile
 		 cutter.pc

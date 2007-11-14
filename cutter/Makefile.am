@@ -70,6 +70,8 @@ libcutter_la_SOURCES =			\
 		cut-module.c		\
 		cut-module-impl.h	\
 		cut-output.c		\
+		cut-runner.h		\
+		cut-runner.c		\
 		cut-test-result.c	\
 		cut-test-result.h	\
 		cut-test-context.c	\
