@@ -1,5 +1,7 @@
 2007-11-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/run-test.sh: cleanup.
+
 	* cutter/cut-output.c, cutter/module/output/cut-output-console.c:
 	worked use_color again.
 
