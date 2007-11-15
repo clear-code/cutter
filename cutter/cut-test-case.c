@@ -377,17 +377,7 @@ cut_test_case_run_with_filter (CutTestCase *test_case,
 
     container = CUT_TEST_CONTAINER(test_case);
     if (test_names) {
-        for (; *test_names; test_names++) {
-            GList *tests;
-            tests = cut_test_container_filter_children(container, *test_names);
-            if (filtered_tests) {
-                filtered_tests = cut_test_list_intersection(tests, filtered_tests);
-                if (tests)
-                    g_list_free(tests);
-            } else {
-                filtered_tests = tests;
-            }
-        }
+        filtered_tests = cut_test_container_filter_children(container, test_names);
     } else {
         filtered_tests =
             g_list_copy((GList *)cut_test_container_get_children(container));
@@ -410,25 +400,6 @@ cut_test_case_run (CutTestCase *test_case, CutContext *context)
     tests = cut_test_container_get_children(container);
 
     return cut_test_case_run_tests(test_case, context, tests);
-}
-
-gboolean
-cut_test_case_has_test (CutTestCase *test_case, const gchar *name)
-{
-    CutTestContainer *container;
-    GList *matched_tests;
-    gboolean found = FALSE;
-
-    g_return_val_if_fail(CUT_IS_TEST_CASE(test_case), FALSE);
-
-    container = CUT_TEST_CONTAINER(test_case);
-    matched_tests = cut_test_container_filter_children(container, name);
-    if (matched_tests) {
-        found = TRUE;
-        g_list_free(matched_tests);
-    }
-
-    return found;
 }
 
 /*

@@ -13,7 +13,6 @@ void test_run_with_name_filter(void);
 void test_run_with_regex_filter(void);
 void test_run_with_name_and_regex_filter(void);
 void test_get_name(void);
-void test_has_test(void);
 void test_start_signal(void);
 void test_complete_signal(void);
 
@@ -220,15 +219,6 @@ test_get_name (void)
 {
     cut_assert_equal_string("dummy test case",
                             cut_test_get_name(CUT_TEST(test_object)));
-}
-
-void
-test_has_test (void)
-{
-    cut_assert(cut_test_case_has_test(test_object, "run_test_function"));
-    cut_assert(!cut_test_case_has_test(test_object, "not_exist_function"));
-    cut_assert(cut_test_case_has_test(test_object, "/run/"));
-    cut_assert(!cut_test_case_has_test(test_object, "/run$/"));
 }
 
 void

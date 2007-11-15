@@ -5,6 +5,14 @@
 	* cutter/cut-test-case.c: Use cut_utils_list_intersection() instead of
 	g_list_concat().
 	* cutter/cut-utils.c: NULL check barrier.
+	* cutter/cut-test-container.h: The second argument of
+	cut_test_container_filter_children() is gchar **. 
+	* cutter/cut-test-container.c: Use cut_utils_list_intersection().
+	* cutter/cut-test-case.c, cutter/cut-test-suite.c: Use
+	cut_test_container_filter_children() directly.
+	* cutter/cut-test-case.h: Remove cut_test_case_has_children().
+	* test/test-cut-test-case.c: Remove a test for
+	cut_test_case_has_children().
 
 2007-11-15  Kouhei Sutou  <kou@cozmixng.org>
 

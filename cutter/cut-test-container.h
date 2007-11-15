@@ -55,7 +55,7 @@ void         cut_test_container_add_test     (CutTestContainer *container,
 const GList *cut_test_container_get_children (CutTestContainer *container);
 GList       *cut_test_container_filter_children
                                              (CutTestContainer *container,
-                                              const gchar *filter);
+                                              gchar **filter);
 
 G_END_DECLS
 

@@ -186,19 +186,27 @@ collect_tests_with_regex (const GList *tests, gchar *pattern)
 
 GList *
 cut_test_container_filter_children (CutTestContainer *container,
-                                    const gchar *filter)
+                                    gchar **filter)
 {
     GList *matched_tests = NULL;
     const GList *tests;
-    gchar *pattern;
 
     g_return_val_if_fail(CUT_IS_TEST_CONTAINER(container), NULL);
 
     tests = cut_test_container_get_children(container);
 
-    pattern = cut_utils_create_regex_pattern(filter);
-    matched_tests = collect_tests_with_regex(tests, pattern);
-    g_free(pattern);
+    for (; *filter; filter++) {
+        gchar *pattern;
+        GList *children;
+
+        pattern = cut_utils_create_regex_pattern(*filter);
+        children = collect_tests_with_regex(tests, pattern);
+        g_free(pattern);
+        if (children) {
+            matched_tests = cut_test_list_intersection(matched_tests, children);
+            g_list_free(children);
+        }
+    }
 
     return matched_tests;
 }

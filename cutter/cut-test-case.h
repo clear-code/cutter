@@ -74,8 +74,6 @@ gboolean     cut_test_case_run_test       (CutTestCase *test_case,
 gboolean     cut_test_case_run_with_filter(CutTestCase *test_case,
                                            CutContext  *context,
                                            gchar **test_names);
-gboolean     cut_test_case_has_test       (CutTestCase *test_case,
-                                           const gchar *name);
 
 G_END_DECLS
 

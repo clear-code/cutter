@@ -417,15 +417,8 @@ cut_test_suite_run_with_filter (CutTestSuite *test_suite,
 
     container = CUT_TEST_CONTAINER(test_suite);
     if (test_case_names) {
-        for (; *test_case_names; test_case_names++) {
-            GList *test_cases;
-            test_cases = cut_test_container_filter_children(container,
-                                                            *test_case_names);
-            if (test_cases) {
-                filtered_test_cases = cut_test_list_intersection(filtered_test_cases, test_cases);
-                g_list_free(test_cases);
-            }
-        }
+        filtered_test_cases = cut_test_container_filter_children(container,
+                                                                 test_case_names);
     } else {
         filtered_test_cases =
             g_list_copy((GList *)cut_test_container_get_children(container));
