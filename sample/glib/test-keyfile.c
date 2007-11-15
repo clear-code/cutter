@@ -28,6 +28,8 @@ void test_reload_idempotency (void);
 
 static GKeyFile *keyfile;
 
+static GLogFunc default_log_func;
+
 static void
 log_func (const gchar   *log_domain,
 	  GLogLevelFlags log_level,
@@ -41,7 +43,7 @@ setup (void)
 {
   keyfile = NULL;
   keyfile = g_key_file_new ();
-  g_log_set_default_handler (log_func, NULL);
+  default_log_func = g_log_set_default_handler (log_func, NULL);
 }
 
 void
@@ -49,6 +51,7 @@ teardown (void)
 {
   if (keyfile)
     g_key_file_free (keyfile);
+  g_log_set_default_handler (default_log_func, NULL);
 }
 
 static void
