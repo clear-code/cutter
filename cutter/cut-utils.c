@@ -74,6 +74,12 @@ cut_test_list_intersection (GList *list1, GList *list2)
 {
     GList *ret = NULL, *node;
 
+    if (!list1 && !list2)
+        return NULL;
+
+    if (!list1 || !list2)
+        return list1 ? g_list_copy(list1) : g_list_copy(list2);
+
     for (node = list1; node; node = g_list_next(node)) {
         if (g_list_find(list2, node->data))
             ret = g_list_prepend(ret, node->data);
