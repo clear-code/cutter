@@ -1,6 +1,8 @@
 2007-11-15  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* sample/glib/test-keyfile.c: Restore original log function.
+	* sample/glib/test-properties.c: Do not use g_log_set_always_fatal()
+	since it causes crash.
 
 2007-11-15  Kouhei Sutou  <kou@cozmixng.org>
 

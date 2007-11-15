@@ -203,9 +203,6 @@ test_main (void)
   GArray *test_threads;
   const gint n_threads = 5;
 
-  g_log_set_always_fatal (G_LOG_LEVEL_WARNING | G_LOG_LEVEL_CRITICAL | g_log_set_always_fatal (G_LOG_FATAL_MASK));
-  g_type_init ();
-
   test_objects = g_array_new (FALSE, FALSE, sizeof (GTest *));
 
   for (i = 0; i < n_threads; i++)
