@@ -11,31 +11,32 @@ TESTS_ENVIRONMENT = NO_MAKE=yes \
 	CUT_OUTPUT_MODULE_DIR=../cutter/module/output/.libs
 
 noinst_LTLIBRARIES = 				\
-		libcuttest_utils.la		\
-		libtest_cut_assertions.la	\
-		libtest_cut_test.la		\
-		libtest_cut_test_result.la	\
-		libtest_cut_test_case.la	\
-		libtest_cut_test_suite.la	\
-		libtest_cut_loader.la		\
-		libtest_cut_repository.la
+		cuttest_utils.la		\
+		test_cut_assertions.la	\
+		test_cut_test.la		\
+		test_cut_test_result.la	\
+		test_cut_test_case.la	\
+		test_cut_test_suite.la	\
+		test_cut_loader.la		\
+		test_cut_repository.la
 
 LDFLAGS =			\
+	-module			\
 	-rpath $(libdir)	\
 	-avoid-version
 
-libcuttest_utils_la_SOURCES = 		\
+cuttest_utils_la_SOURCES = 		\
 			cuttest-utils.c	\
 			cuttest-utils.h
 
-libtest_cut_assertions_la_SOURCES  = test-cut-assertions.c
-libtest_cut_test_la_SOURCES        = test-cut-test.c
-libtest_cut_test_result_la_SOURCES = test-cut-test-result.c
-libtest_cut_test_case_la_SOURCES   = test-cut-test-case.c
-libtest_cut_test_suite_la_SOURCES  = test-cut-test-suite.c
-libtest_cut_test_suite_la_LIBADD   = libcuttest_utils.la
-libtest_cut_loader_la_SOURCES      = test-cut-loader.c
-libtest_cut_loader_la_LIBADD       = libcuttest_utils.la
-libtest_cut_repository_la_SOURCES  = test-cut-repository.c
-libtest_cut_repository_la_LIBADD   = libcuttest_utils.la
+test_cut_assertions_la_SOURCES  = test-cut-assertions.c
+test_cut_test_la_SOURCES        = test-cut-test.c
+test_cut_test_result_la_SOURCES = test-cut-test-result.c
+test_cut_test_case_la_SOURCES   = test-cut-test-case.c
+test_cut_test_suite_la_SOURCES  = test-cut-test-suite.c
+test_cut_test_suite_la_LIBADD   = libcuttest_utils.la
+test_cut_loader_la_SOURCES      = test-cut-loader.c
+test_cut_loader_la_LIBADD       = libcuttest_utils.la
+test_cut_repository_la_SOURCES  = test-cut-repository.c
+test_cut_repository_la_LIBADD   = libcuttest_utils.la
 
