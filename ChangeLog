@@ -1,6 +1,7 @@
 2007-11-15  Kouhei Sutou  <kou@cozmixng.org>
 
 	* sample/glib/test-regex.c: cutterlized.
+	* sample/glib/test-regex.c: cleanup.
 
 2007-11-15  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 

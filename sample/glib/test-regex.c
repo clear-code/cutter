@@ -1269,11 +1269,12 @@ collect_expected_matchesv (va_list args)
 }
 
 static void
-cut_assert_match_all_full_each (const gchar *pattern,
-                                const gchar *string,
-                                gssize       string_len,
-                                gint         start_position,
-                                va_list      args)
+cut_assert_match_all_each (const gchar *pattern,
+                           gboolean     use_full,
+                           const gchar *string,
+                           gssize       string_len,
+                           gint         start_position,
+                           va_list      args)
 {
   GSList *expected_node;
   gint expected_length;
@@ -1285,13 +1286,27 @@ cut_assert_match_all_full_each (const gchar *pattern,
 
   regex = g_regex_new (pattern, 0, 0, NULL);
   if (expected_length == 0)
-    cut_assert (!g_regex_match_all_full (regex, string, string_len,
-                                         start_position, 0, &match_info, NULL),
-                "/%s/ !~ <%s>", pattern, string);
+    {
+      if (use_full)
+        cut_assert (!g_regex_match_all_full (regex, string, string_len,
+                                             start_position, 0, &match_info,
+                                             NULL),
+                    "/%s/ !~ <%s>", pattern, string);
+      else
+        cut_assert (!g_regex_match_all (regex, string, 0, &match_info),
+                    "/%s/ !~ <%s>", pattern, string);
+    }
   else
-    cut_assert (g_regex_match_all_full (regex, string, string_len,
-                                        start_position, 0, &match_info, NULL),
-                "/%s/ =~ <%s>", pattern, string);
+    {
+      if (use_full)
+        cut_assert (g_regex_match_all_full (regex, string, string_len,
+                                            start_position, 0, &match_info,
+                                            NULL),
+                    "/%s/ =~ <%s>", pattern, string);
+      else
+        cut_assert (g_regex_match_all (regex, string, 0, &match_info),
+                    "/%s/ =~ <%s>", pattern, string);
+    }
 
   match_count = g_match_info_get_match_count (match_info);
   cut_assert_equal_int (expected_length, match_count);
@@ -1324,54 +1339,6 @@ cut_assert_match_all_full_each (const gchar *pattern,
 }
 
 static void
-cut_assert_match_all_each (const gchar *pattern,
-                           const gchar *string,
-                           va_list args)
-{
-  GSList *expected_node;
-  gint expected_length;
-  gint match_count;
-  gint i;
-
-  collect_expected_matchesv (args);
-  expected_length = g_slist_length (expected_matches);
-
-  regex = g_regex_new (pattern, 0, 0, NULL);
-  if (expected_length == 0)
-    cut_assert (!g_regex_match_all (regex, string, 0, &match_info),
-                "/%s/ !~ <%s>", pattern, string);
-  else
-    cut_assert (g_regex_match_all (regex, string, 0, &match_info),
-                "/%s/ =~ <%s>", pattern, string);
-
-  match_count = g_match_info_get_match_count (match_info);
-  cut_assert_equal_int (expected_length, match_count);
-
-  expected_node = expected_matches;
-  for (i = 0; i < match_count; i++)
-    {
-      gint start, end;
-      gchar *matched_string;
-      Match *expected_match = expected_node->data;
-
-      matched_string = g_match_info_fetch (match_info, i);
-      cut_assert_equal_string_or_null (expected_match->string, matched_string);
-
-      cut_assert (g_match_info_fetch_pos (match_info, i, &start, &end));
-      cut_assert_equal_int (expected_match->start, start,
-                            "/%s/ =~ <%s>", pattern, expected_match->string);
-      cut_assert_equal_int (expected_match->end, end,
-                            "/%s/ =~ <%s>", pattern, expected_match->string);
-
-      expected_node = g_slist_next (expected_node);
-    }
-
-  free_regex ();
-  free_match_info ();
-  free_expected_matches ();
-}
-
-static void
 cut_assert_match_all (const gchar *pattern,
                       const gchar *string,
                       gssize string_length,
@@ -1383,14 +1350,17 @@ cut_assert_match_all (const gchar *pattern,
   va_start (args, start_position);
 
   va_copy (copied_args, args);
-  cut_assert_match_all_full_each (pattern, string, string_length, start_position,
-                                  copied_args);
+  cut_assert_match_all_each (pattern, TRUE,
+                             string, string_length, start_position,
+                             copied_args);
   va_end(copied_args);
 
   if (string_length == -1 && start_position == 0)
     {
       va_copy (copied_args, args);
-      cut_assert_match_all_each (pattern, string, copied_args);
+      cut_assert_match_all_each (pattern, FALSE,
+                                 string, string_length, start_position,
+                                 copied_args);
       va_end(copied_args);
     }
 
