@@ -148,34 +148,52 @@ cut_init (int *argc, char ***argv)
     g_option_context_free(option_context);
 }
 
-gboolean
-cut_run (const char *directory)
+CutContext *
+cut_create_context (void)
 {
     CutContext *context;
-    gboolean success = TRUE;
-    CutTestSuite *suite;
-    CutRepository *repository;
 
     context = cut_context_new();
 
     cut_context_set_verbose_level(context, verbose_level);
-    if (source_directory) {
+    if (source_directory)
         cut_context_set_source_directory(context, source_directory);
-    } else {
-        cut_context_set_source_directory(context, directory);
-    }
     cut_context_set_use_color(context, use_color);
     cut_context_set_multi_thread(context, use_multi_thread);
 
+    return context;
+}
+
+CutTestSuite *
+cut_create_test_suite (const gchar *directory)
+{
+    CutRepository *repository;
+    CutTestSuite *suite;
 
     repository = cut_repository_new(directory);
     suite = cut_repository_create_test_suite(repository);
+    g_object_unref(repository);
+
+    return suite;
+}
+
+gboolean
+cut_run (const gchar *directory)
+{
+    CutContext *context;
+    gboolean success = TRUE;
+    CutTestSuite *suite;
+
+    context = cut_create_context();
+    if (!cut_context_get_source_directory(context))
+        cut_context_set_source_directory(context, directory);
+
+    suite = cut_create_test_suite(directory);
     if (suite) {
         success = cut_test_suite_run_with_filter(suite, context,
                                                  test_case_names, test_names);
         g_object_unref(suite);
     }
-    g_object_unref(repository);
 
     g_object_unref(context);
 

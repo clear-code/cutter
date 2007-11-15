@@ -266,23 +266,22 @@ collect_test_functions (CutLoaderPrivate *priv)
 static void
 cb_complete (CutTestCase *test_case, gpointer data)
 {
-    CutLoaderPrivate *priv = data;
-
-    if (priv->module) {
-        g_module_close(priv->module);
-        priv->module = NULL;
-    }
+    CutLoader *loader = data;
+    g_object_unref(loader);
 }
 
 static CutTestCase *
-create_test_case (CutLoaderPrivate *priv)
+create_test_case (CutLoader *loader)
 {
+    CutLoaderPrivate *priv;
     CutTestCase *test_case;
     CutSetupFunction setup_function = NULL;
     CutGetCurrentTestContextFunction get_current_test_context_function = NULL;
     CutSetCurrentTestContextFunction set_current_test_context_function = NULL;
     CutTearDownFunction teardown_function = NULL;
     gchar *test_case_name, *filename;
+
+    priv = CUT_LOADER_GET_PRIVATE(loader);
 
     g_module_symbol(priv->module,
                     "setup",
@@ -314,7 +313,8 @@ create_test_case (CutLoaderPrivate *priv)
                                   set_current_test_context_function);
     g_free(test_case_name);
 
-    g_signal_connect(test_case, "complete", G_CALLBACK(cb_complete), priv);
+    g_object_ref(loader);
+    g_signal_connect(test_case, "complete", G_CALLBACK(cb_complete), loader);
 
     return test_case;
 }
@@ -339,7 +339,7 @@ cut_loader_load_test_case (CutLoader *loader)
     if (!test_names)
         return NULL;
 
-    test_case = create_test_case(priv);
+    test_case = create_test_case(loader);
     for (node = test_names; node; node = g_list_next(node)) {
         gchar *name;
         CutTest *test;

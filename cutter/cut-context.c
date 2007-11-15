@@ -284,6 +284,17 @@ cut_context_set_source_directory (CutContext *context, const gchar *directory)
         cut_output_set_source_directory(priv->output, directory);
 }
 
+const gchar *
+cut_context_get_source_directory (CutContext *context)
+{
+    CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
+
+    if (priv->output)
+        return cut_output_get_source_directory(priv->output);
+    else
+        return NULL;
+}
+
 void
 cut_context_set_use_color (CutContext *context, gboolean use_color)
 {

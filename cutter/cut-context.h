@@ -61,6 +61,7 @@ void  cut_context_set_verbose_level_by_name (CutContext *context,
                                              const gchar *name);
 void  cut_context_set_source_directory      (CutContext *context,
                                              const gchar *directory);
+const gchar *cut_context_get_source_directory (CutContext *context);
 void  cut_context_set_use_color             (CutContext *context,
                                              gboolean    use_color);
 

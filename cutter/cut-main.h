@@ -22,12 +22,16 @@
 #ifndef __CUT_MAIN_H__
 #define __CUT_MAIN_H__
 
-#include <glib.h>
+#include "cut-context.h"
+#include "cut-test-suite.h"
 
 G_BEGIN_DECLS
 
-void     cut_init (int *argc, char ***argv);
-gboolean cut_run  (const char *directory);
+void          cut_init              (int *argc, char ***argv);
+gboolean      cut_run               (const gchar *directory);
+
+CutContext   *cut_create_context    (void);
+CutTestSuite *cut_create_test_suite (const gchar *directory);
 
 G_END_DECLS
 
