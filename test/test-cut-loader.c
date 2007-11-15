@@ -15,7 +15,7 @@ setup (void)
     test_path = g_build_filename(cuttest_get_base_dir(),
                                  "loader_test_dir",
                                  ".libs",
-                                 "libdummy_loader_test.so",
+                                 "dummy_loader_test.so",
                                  NULL);
     test_loader = cut_loader_new(test_path);
     g_free(test_path);

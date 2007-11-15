@@ -34,9 +34,9 @@ test_cut_test_la_SOURCES        = test-cut-test.c
 test_cut_test_result_la_SOURCES = test-cut-test-result.c
 test_cut_test_case_la_SOURCES   = test-cut-test-case.c
 test_cut_test_suite_la_SOURCES  = test-cut-test-suite.c
-test_cut_test_suite_la_LIBADD   = libcuttest_utils.la
+test_cut_test_suite_la_LIBADD   = cuttest_utils.la
 test_cut_loader_la_SOURCES      = test-cut-loader.c
-test_cut_loader_la_LIBADD       = libcuttest_utils.la
+test_cut_loader_la_LIBADD       = cuttest_utils.la
 test_cut_repository_la_SOURCES  = test-cut-repository.c
-test_cut_repository_la_LIBADD   = libcuttest_utils.la
+test_cut_repository_la_LIBADD   = cuttest_utils.la
 

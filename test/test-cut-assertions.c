@@ -391,10 +391,12 @@ test_assert_equal_function (void)
     cut_assert(compare_function_is_called);
 }
 
-static void
+static gboolean
 fail_in_nested_function (void)
 {
     cut_fail("Fail from nested function");
+
+    return FALSE;
 }
 
 static void

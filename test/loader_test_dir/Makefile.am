@@ -3,11 +3,12 @@ INCLUDES = $(CUTTER_CFLAGS)	\
 	-I$(top_srcdir)
 
 noinst_LTLIBRARIES = 				\
-		libdummy_loader_test.la
+		dummy_loader_test.la
 
 LDFLAGS =			\
+	-module			\
 	-rpath $(libdir)	\
 	-avoid-version
 
-libdummy_loader_test_la_SOURCES = dummy-test-functions.c
+dummy_loader_test_la_SOURCES = dummy-test-functions.c
 
