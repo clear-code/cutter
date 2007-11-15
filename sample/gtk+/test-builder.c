@@ -276,6 +276,9 @@ test_connect_signals (void)
     "  </object>"
     "</interface>";
 
+  if (!GTK_CHECK_VERSION(2,12,2))
+    cut_pending("The following tests fail on GTK+-2.12.1");
+
   builder = builder_new_from_string (buffer, -1, NULL);
   gtk_builder_connect_signals_full (builder, connect_signals, NULL);
 
@@ -318,7 +321,7 @@ test_connect_signals (void)
   /* new test, reset globals */
   after = 0;
   normal = 0;
-  
+
   builder = builder_new_from_string (buffer_after_child, -1, NULL);
   gtk_builder_connect_signals_full (builder, connect_signals, NULL);
   window = gtk_builder_get_object (builder, "window1");
