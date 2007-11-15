@@ -427,7 +427,8 @@ cut_test_suite_run_with_filter (CutTestSuite *test_suite,
     success = cut_test_suite_run_test_cases(test_suite, context,
                                             filtered_test_cases, test_names);
 
-    g_list_free(filtered_test_cases);
+    if (filtered_test_cases)
+        g_list_free(filtered_test_cases);
 
     return success;
 }
