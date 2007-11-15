@@ -65,14 +65,14 @@ The feature of Cutter is to making test as shared library.
    or option is omitted, Cutter uses colorized output if
    available.
 
-: -n TEST_CASE_NAME1,TEST_CASE_NAME2,..., --name=TEST_CASE_NAME1,TEST_CASE_NAME2,...
+: -t TEST_CASE_NAME1,TEST_CASE_NAME2,..., --test-case=TEST_CASE_NAME1,TEST_CASE_NAME2,...
 
    Cutter runs test cases that is matched with
    TEST_CASE_NAME1, TEST_CASE_NAME2 or .... If
    TEST_CASE_NAME is surrounded by "/" (e.g. /test_/),
    TEST_CASE_NAME is handled as regular expression.
 
-: -t TEST_NAME1,TEST_NAME2,..., --test=TEST_NAME1,TEST_NAME2,...
+: -n TEST_NAME1,TEST_NAME2,..., --name=TEST_NAME1,TEST_NAME2,...
 
    Cutter runs tests that is matched with TEST_NAME1,
    TEST_NAME2 or .... If TEST_NAME is surrounded by "/"

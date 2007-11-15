@@ -1,5 +1,10 @@
 2007-11-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-main.c:
+	- -t/--test -> -n/--name
+	- -n/--name -> -t/--test-case
+	* README, test/run-test.sh: followed the above changes.
+
 	* cutter/Makefile.am: don't use variable.
 
 	* cutter/: implemented user data in test case.

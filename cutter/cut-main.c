@@ -96,10 +96,10 @@ static const GOptionEntry option_entries[] =
      "Set directory of source code", "DIRECTORY"},
     {"color", 'c', G_OPTION_FLAG_OPTIONAL_ARG, G_OPTION_ARG_CALLBACK,
      parse_color_arg, "Output log with colors", "[yes|true|no|false|auto]"},
-    {"name", 'n', 0, G_OPTION_ARG_STRING_ARRAY, &test_case_names,
-     "Specify test cases", "TEST_CASE_NAME1,TEST_CASE_NAME2,..."},
-    {"test", 't', 0, G_OPTION_ARG_STRING_ARRAY, &test_names,
+    {"name", 'n', 0, G_OPTION_ARG_STRING_ARRAY, &test_names,
      "Specify tests", "TEST_NAME1,TEST_NAME2,..."},
+    {"test-case", 't', 0, G_OPTION_ARG_STRING_ARRAY, &test_case_names,
+     "Specify test cases", "TEST_CASE_NAME1,TEST_CASE_NAME2,..."},
     {"multi-thread", 'm', 0, G_OPTION_ARG_NONE, &use_multi_thread,
      "Run test cases with multi-thread", NULL},
     {NULL}
