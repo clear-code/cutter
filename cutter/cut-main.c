@@ -43,7 +43,6 @@ static gboolean use_color = FALSE;
 static gchar **test_case_names = NULL;
 static gchar **test_names = NULL;
 static gboolean use_multi_thread = FALSE;
-static CutContext *context = NULL;
 
 static gboolean
 parse_verbose_level_arg (const gchar *option_name, const gchar *value,
@@ -146,6 +145,7 @@ cut_init (int *argc, char ***argv)
 gboolean
 cut_run (const char *directory)
 {
+    CutContext *context;
     gboolean success = TRUE;
     CutTestSuite *suite;
     CutRepository *repository;
@@ -170,6 +170,8 @@ cut_run (const char *directory)
         g_object_unref(suite);
     }
     g_object_unref(repository);
+
+    g_object_unref(context);
 
     return success;
 }
