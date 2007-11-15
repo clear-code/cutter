@@ -76,7 +76,8 @@ typedef struct _Match
 
 static GRegex *regex;
 static GMatchInfo *match_info;
-static GSList *expected_matches;
+static GSList *expected_matches, *actual_matches;
+static gchar *escaped_string, *replaced_string, *expanded_string;
 
 void
 setup (void)
@@ -84,6 +85,10 @@ setup (void)
   regex = NULL;
   match_info = NULL;
   expected_matches = NULL;
+  actual_matches = NULL;
+  escaped_string = NULL;
+  replaced_string = NULL;
+  expanded_string = NULL;
 }
 
 static void
@@ -121,37 +126,56 @@ free_expected_matches (void)
   expected_matches = NULL;
 }
 
+static void
+free_actual_matches (void)
+{
+  g_slist_foreach (actual_matches, free_match, NULL);
+  g_slist_free (actual_matches);
+  actual_matches = NULL;
+}
+
+static void
+free_escaped_string (void)
+{
+  g_free (escaped_string);
+  escaped_string = NULL;
+}
+
+static void
+free_replaced_string (void)
+{
+  g_free (replaced_string);
+  replaced_string = NULL;
+}
+
+static void
+free_expanded_string (void)
+{
+  g_free (expanded_string);
+  expanded_string = NULL;
+}
+
 void
 teardown (void)
 {
   free_regex ();
   free_match_info ();
   free_expected_matches ();
+  free_actual_matches ();
+  free_escaped_string ();
+  free_replaced_string ();
+  free_expanded_string ();
 }
 
-
-#define PASS passed++
-#define FAIL \
-  G_STMT_START \
-    { \
-      failed++; \
-      if (abort_on_fail) \
-	goto end; \
-    } \
-  G_STMT_END
-
-/* A replacement for strcmp that doesn't crash with null pointers. */
-static gboolean
-streq (const gchar *s1, const gchar *s2)
+static void
+cut_assert_regex_new_without_free (const gchar       *pattern,
+                                   GRegexCompileFlags compile_opts,
+                                   GRegexMatchFlags   match_opts)
 {
-  if (s1 == NULL && s2 == NULL)
-    return TRUE;
-  else if (s1 == NULL)
-    return FALSE;
-  else if (s2 == NULL)
-    return FALSE;
-  else
-    return strcmp (s1, s2) == 0;
+  regex = g_regex_new (pattern, compile_opts, match_opts, NULL);
+  cut_assert (regex, "failed (pattern: \"%s\", compile: %d, match %d)",
+	      pattern, compile_opts, match_opts);
+  cut_assert_equal_string (pattern, g_regex_get_pattern (regex));
 }
 
 static void
@@ -159,13 +183,8 @@ cut_assert_regex_new (const gchar       *pattern,
 		      GRegexCompileFlags compile_opts,
 		      GRegexMatchFlags   match_opts)
 {
-  regex = g_regex_new (pattern, compile_opts, match_opts, NULL);
-  cut_assert (regex, "failed (pattern: \"%s\", compile: %d, match %d)",
-	      pattern, compile_opts, match_opts);
-  cut_assert (streq (g_regex_get_pattern (regex), pattern),
-              "failed (pattern: \"%s\")", pattern);
-  g_regex_unref (regex);
-  regex = NULL;
+  cut_assert_regex_new_without_free (pattern, compile_opts, match_opts);
+  free_regex ();
 }
 
 void
@@ -180,9 +199,11 @@ test_regex_new (void)
   cut_assert_regex_new (".*", G_REGEX_DOTALL, G_REGEX_MATCH_NOTBOL);
   cut_assert_regex_new ("(123\\d*)[a-zA-Z]+(?P<hello>.*)", 0, 0);
   cut_assert_regex_new ("(123\\d*)[a-zA-Z]+(?P<hello>.*)", G_REGEX_CASELESS, 0);
-  cut_assert_regex_new ("(123\\d*)[a-zA-Z]+(?P<hello>.*)", G_REGEX_CASELESS | G_REGEX_OPTIMIZE, 0);
+  cut_assert_regex_new ("(123\\d*)[a-zA-Z]+(?P<hello>.*)",
+                        G_REGEX_CASELESS | G_REGEX_OPTIMIZE, 0);
   cut_assert_regex_new ("(?P<A>x)|(?P<A>y)", G_REGEX_DUPNAMES, 0);
-  cut_assert_regex_new ("(?P<A>x)|(?P<A>y)", G_REGEX_DUPNAMES | G_REGEX_OPTIMIZE, 0);
+  cut_assert_regex_new ("(?P<A>x)|(?P<A>y)",
+                        G_REGEX_DUPNAMES | G_REGEX_OPTIMIZE, 0);
   /* This gives "internal error: code overflow" with pcre 6.0 */
   cut_assert_regex_new ("(?i)(?-i)", 0, 0);
 }
@@ -207,102 +228,114 @@ test_regex_new_fail (void)
   cut_assert_regex_new_fail ("(?P<A>x)|(?P<A>y)", 0);
 }
 
+#define cut_assert_match_simple(pattern, string,                        \
+                                compile_options, match_options)         \
+  cut_assert (g_regex_match_simple (pattern, string,                    \
+                                    compile_options, match_options))
+
+#define cut_assert_not_match_simple(pattern, string,                    \
+                                    compile_options, match_options)     \
+  cut_assert (!g_regex_match_simple (pattern, string,                   \
+                                     compile_options, match_options))
+
 void
 test_match_simple (void)
 {
-  cut_assert (!g_regex_match_simple ("a", "", 0, 0));
-  cut_assert (g_regex_match_simple ("a", "a", 0, 0));
-  cut_assert (g_regex_match_simple ("a", "ba", 0, 0));
-  cut_assert (!g_regex_match_simple ("^a", "ba", 0, 0));
-  cut_assert (!g_regex_match_simple ("a", "ba", G_REGEX_ANCHORED, 0));
-  cut_assert (!g_regex_match_simple ("a", "ba", 0, G_REGEX_MATCH_ANCHORED));
-  cut_assert (g_regex_match_simple ("a", "ab", G_REGEX_ANCHORED, 0));
-  cut_assert (g_regex_match_simple ("a", "ab", 0, G_REGEX_MATCH_ANCHORED));
-  cut_assert (g_regex_match_simple ("a", "a", G_REGEX_CASELESS, 0));
-  cut_assert (g_regex_match_simple ("a", "A", G_REGEX_CASELESS, 0));
+  cut_assert_not_match_simple ("a", "", 0, 0);
+  cut_assert_not_match_simple ("a", "", 0, 0);
+  cut_assert_match_simple ("a", "a", 0, 0);
+  cut_assert_match_simple ("a", "ba", 0, 0);
+  cut_assert_not_match_simple ("^a", "ba", 0, 0);
+  cut_assert_not_match_simple ("a", "ba", G_REGEX_ANCHORED, 0);
+  cut_assert_not_match_simple ("a", "ba", 0, G_REGEX_MATCH_ANCHORED);
+  cut_assert_match_simple ("a", "ab", G_REGEX_ANCHORED, 0);
+  cut_assert_match_simple ("a", "ab", 0, G_REGEX_MATCH_ANCHORED);
+  cut_assert_match_simple ("a", "a", G_REGEX_CASELESS, 0);
+  cut_assert_match_simple ("a", "A", G_REGEX_CASELESS, 0);
   /* These are needed to test extended properties. */
-  cut_assert (g_regex_match_simple (AGRAVE, AGRAVE, G_REGEX_CASELESS, 0));
-  cut_assert (g_regex_match_simple (AGRAVE, AGRAVE_UPPER, G_REGEX_CASELESS, 0));
-  cut_assert (g_regex_match_simple ("\\p{L}", "a", 0, 0));
-  cut_assert (!g_regex_match_simple ("\\p{L}", "1", 0, 0));
-  cut_assert (g_regex_match_simple ("\\p{L}", AGRAVE, 0, 0));
-  cut_assert (g_regex_match_simple ("\\p{L}", AGRAVE_UPPER, 0, 0));
-  cut_assert (g_regex_match_simple ("\\p{L}", SHEEN, 0, 0));
-  cut_assert (!g_regex_match_simple ("\\p{L}", ETH30, 0, 0));
-  cut_assert (g_regex_match_simple ("\\p{Ll}", "a", 0, 0));
-  cut_assert (g_regex_match_simple ("\\p{Ll}", AGRAVE, 0, 0));
-  cut_assert (!g_regex_match_simple ("\\p{Ll}", AGRAVE_UPPER, 0, 0));
-  cut_assert (!g_regex_match_simple ("\\p{Ll}", ETH30, 0, 0));
-  cut_assert (!g_regex_match_simple ("\\p{Sc}", AGRAVE, 0, 0));
-  cut_assert (g_regex_match_simple ("\\p{Sc}", EURO, 0, 0));
-  cut_assert (!g_regex_match_simple ("\\p{Sc}", ETH30, 0, 0));
-  cut_assert (!g_regex_match_simple ("\\p{N}", "a", 0, 0));
-  cut_assert (g_regex_match_simple ("\\p{N}", "1", 0, 0));
-  cut_assert (!g_regex_match_simple ("\\p{N}", AGRAVE, 0, 0));
-  cut_assert (!g_regex_match_simple ("\\p{N}", AGRAVE_UPPER, 0, 0));
-  cut_assert (!g_regex_match_simple ("\\p{N}", SHEEN, 0, 0));
-  cut_assert (g_regex_match_simple ("\\p{N}", ETH30, 0, 0));
-  cut_assert (!g_regex_match_simple ("\\p{Nd}", "a", 0, 0));
-  cut_assert (g_regex_match_simple ("\\p{Nd}", "1", 0, 0));
-  cut_assert (!g_regex_match_simple ("\\p{Nd}", AGRAVE, 0, 0));
-  cut_assert (!g_regex_match_simple ("\\p{Nd}", AGRAVE_UPPER, 0, 0));
-  cut_assert (!g_regex_match_simple ("\\p{Nd}", SHEEN, 0, 0));
-  cut_assert (!g_regex_match_simple ("\\p{Nd}", ETH30, 0, 0));
-  cut_assert (!g_regex_match_simple ("\\p{Common}", SHEEN, 0, 0));
-  cut_assert (!g_regex_match_simple ("\\p{Common}", "a", 0, 0));
-  cut_assert (!g_regex_match_simple ("\\p{Common}", AGRAVE, 0, 0));
-  cut_assert (!g_regex_match_simple ("\\p{Common}", AGRAVE_UPPER, 0, 0));
-  cut_assert (!g_regex_match_simple ("\\p{Common}", ETH30, 0, 0));
-  cut_assert (g_regex_match_simple ("\\p{Common}", "%", 0, 0));
-  cut_assert (g_regex_match_simple ("\\p{Common}", "1", 0, 0));
-  cut_assert (g_regex_match_simple ("\\p{Arabic}", SHEEN, 0, 0));
-  cut_assert (!g_regex_match_simple ("\\p{Arabic}", "a", 0, 0));
-  cut_assert (!g_regex_match_simple ("\\p{Arabic}", AGRAVE, 0, 0));
-  cut_assert (!g_regex_match_simple ("\\p{Arabic}", AGRAVE_UPPER, 0, 0));
-  cut_assert (!g_regex_match_simple ("\\p{Arabic}", ETH30, 0, 0));
-  cut_assert (!g_regex_match_simple ("\\p{Arabic}", "%", 0, 0));
-  cut_assert (!g_regex_match_simple ("\\p{Arabic}", "1", 0, 0));
-  cut_assert (!g_regex_match_simple ("\\p{Latin}", SHEEN, 0, 0));
-  cut_assert (g_regex_match_simple ("\\p{Latin}", "a", 0, 0));
-  cut_assert (g_regex_match_simple ("\\p{Latin}", AGRAVE, 0, 0));
-  cut_assert (g_regex_match_simple ("\\p{Latin}", AGRAVE_UPPER, 0, 0));
-  cut_assert (!g_regex_match_simple ("\\p{Latin}", ETH30, 0, 0));
-  cut_assert (!g_regex_match_simple ("\\p{Latin}", "%", 0, 0));
-  cut_assert (!g_regex_match_simple ("\\p{Latin}", "1", 0, 0));
-  cut_assert (!g_regex_match_simple ("\\p{Ethiopic}", SHEEN, 0, 0));
-  cut_assert (!g_regex_match_simple ("\\p{Ethiopic}", "a", 0, 0));
-  cut_assert (!g_regex_match_simple ("\\p{Ethiopic}", AGRAVE, 0, 0));
-  cut_assert (!g_regex_match_simple ("\\p{Ethiopic}", AGRAVE_UPPER, 0, 0));
-  cut_assert (g_regex_match_simple ("\\p{Ethiopic}", ETH30, 0, 0));
-  cut_assert (!g_regex_match_simple ("\\p{Ethiopic}", "%", 0, 0));
-  cut_assert (!g_regex_match_simple ("\\p{Ethiopic}", "1", 0, 0));
-  cut_assert (g_regex_match_simple ("\\p{L}(?<=\\p{Arabic})", SHEEN, 0, 0));
-  cut_assert (!g_regex_match_simple ("\\p{L}(?<=\\p{Latin})", SHEEN, 0, 0));
+  cut_assert_match_simple (AGRAVE, AGRAVE, G_REGEX_CASELESS, 0);
+  cut_assert_match_simple (AGRAVE, AGRAVE_UPPER, G_REGEX_CASELESS, 0);
+  cut_assert_match_simple ("\\p{L}", "a", 0, 0);
+  cut_assert_not_match_simple ("\\p{L}", "1", 0, 0);
+  cut_assert_match_simple ("\\p{L}", AGRAVE, 0, 0);
+  cut_assert_match_simple ("\\p{L}", AGRAVE_UPPER, 0, 0);
+  cut_assert_match_simple ("\\p{L}", SHEEN, 0, 0);
+  cut_assert_not_match_simple ("\\p{L}", ETH30, 0, 0);
+  cut_assert_match_simple ("\\p{Ll}", "a", 0, 0);
+  cut_assert_match_simple ("\\p{Ll}", AGRAVE, 0, 0);
+  cut_assert_not_match_simple ("\\p{Ll}", AGRAVE_UPPER, 0, 0);
+  cut_assert_not_match_simple ("\\p{Ll}", ETH30, 0, 0);
+  cut_assert_not_match_simple ("\\p{Sc}", AGRAVE, 0, 0);
+  cut_assert_match_simple ("\\p{Sc}", EURO, 0, 0);
+  cut_assert_not_match_simple ("\\p{Sc}", ETH30, 0, 0);
+  cut_assert_not_match_simple ("\\p{N}", "a", 0, 0);
+  cut_assert_match_simple ("\\p{N}", "1", 0, 0);
+  cut_assert_not_match_simple ("\\p{N}", AGRAVE, 0, 0);
+  cut_assert_not_match_simple ("\\p{N}", AGRAVE_UPPER, 0, 0);
+  cut_assert_not_match_simple ("\\p{N}", SHEEN, 0, 0);
+  cut_assert_match_simple ("\\p{N}", ETH30, 0, 0);
+  cut_assert_not_match_simple ("\\p{Nd}", "a", 0, 0);
+  cut_assert_match_simple ("\\p{Nd}", "1", 0, 0);
+  cut_assert_not_match_simple ("\\p{Nd}", AGRAVE, 0, 0);
+  cut_assert_not_match_simple ("\\p{Nd}", AGRAVE_UPPER, 0, 0);
+  cut_assert_not_match_simple ("\\p{Nd}", SHEEN, 0, 0);
+  cut_assert_not_match_simple ("\\p{Nd}", ETH30, 0, 0);
+  cut_assert_not_match_simple ("\\p{Common}", SHEEN, 0, 0);
+  cut_assert_not_match_simple ("\\p{Common}", "a", 0, 0);
+  cut_assert_not_match_simple ("\\p{Common}", AGRAVE, 0, 0);
+  cut_assert_not_match_simple ("\\p{Common}", AGRAVE_UPPER, 0, 0);
+  cut_assert_not_match_simple ("\\p{Common}", ETH30, 0, 0);
+  cut_assert_match_simple ("\\p{Common}", "%", 0, 0);
+  cut_assert_match_simple ("\\p{Common}", "1", 0, 0);
+  cut_assert_match_simple ("\\p{Arabic}", SHEEN, 0, 0);
+  cut_assert_not_match_simple ("\\p{Arabic}", "a", 0, 0);
+  cut_assert_not_match_simple ("\\p{Arabic}", AGRAVE, 0, 0);
+  cut_assert_not_match_simple ("\\p{Arabic}", AGRAVE_UPPER, 0, 0);
+  cut_assert_not_match_simple ("\\p{Arabic}", ETH30, 0, 0);
+  cut_assert_not_match_simple ("\\p{Arabic}", "%", 0, 0);
+  cut_assert_not_match_simple ("\\p{Arabic}", "1", 0, 0);
+  cut_assert_not_match_simple ("\\p{Latin}", SHEEN, 0, 0);
+  cut_assert_match_simple ("\\p{Latin}", "a", 0, 0);
+  cut_assert_match_simple ("\\p{Latin}", AGRAVE, 0, 0);
+  cut_assert_match_simple ("\\p{Latin}", AGRAVE_UPPER, 0, 0);
+  cut_assert_not_match_simple ("\\p{Latin}", ETH30, 0, 0);
+  cut_assert_not_match_simple ("\\p{Latin}", "%", 0, 0);
+  cut_assert_not_match_simple ("\\p{Latin}", "1", 0, 0);
+  cut_assert_not_match_simple ("\\p{Ethiopic}", SHEEN, 0, 0);
+  cut_assert_not_match_simple ("\\p{Ethiopic}", "a", 0, 0);
+  cut_assert_not_match_simple ("\\p{Ethiopic}", AGRAVE, 0, 0);
+  cut_assert_not_match_simple ("\\p{Ethiopic}", AGRAVE_UPPER, 0, 0);
+  cut_assert_match_simple ("\\p{Ethiopic}", ETH30, 0, 0);
+  cut_assert_not_match_simple ("\\p{Ethiopic}", "%", 0, 0);
+  cut_assert_not_match_simple ("\\p{Ethiopic}", "1", 0, 0);
+  cut_assert_match_simple ("\\p{L}(?<=\\p{Arabic})", SHEEN, 0, 0);
+  cut_assert_not_match_simple ("\\p{L}(?<=\\p{Latin})", SHEEN, 0, 0);
   /* Invalid patterns. */
-  cut_assert (!g_regex_match_simple ("\\", "a", 0, 0));
-  cut_assert (!g_regex_match_simple ("[", "", 0, 0));
+  cut_assert_not_match_simple ("\\", "a", 0, 0);
+  cut_assert_not_match_simple ("[", "", 0, 0);
 }
 
 static void
-cut_assert_match (const gchar *pattern, GRegexCompileFlags compile_options,
-                  GRegexMatchFlags pattern_match_options, const gchar *string,
-                  gssize length, gint start_position,
-                  GRegexMatchFlags match_options)
+cut_assert_match (const gchar        *pattern,
+                  GRegexCompileFlags  compile_options,
+                  GRegexMatchFlags    pattern_match_options,
+                  const gchar        *string,
+                  gssize              length,
+                  gint                start_position,
+                  GRegexMatchFlags    match_options)
 {
-  regex = g_regex_new (pattern, compile_options, pattern_match_options, NULL);
-  cut_assert (regex,
-              "failed (pattern: \"%s\", compile: %d, match %d)",
-	      pattern, compile_options, pattern_match_options);
+  cut_assert_regex_new_without_free (pattern, compile_options,
+                                     pattern_match_options);
   cut_assert (g_regex_match_full (regex, string, length, start_position,
-                                  match_options, NULL, NULL));
+                                  match_options, NULL, NULL),
+              "/%s/ =~ <%s>", pattern, string);
   if (length == -1 && start_position == 0)
     {
       cut_assert (g_regex_match (regex, string, match_options, NULL),
 	          "failed (pattern: \"%s\", string: \"%s\")",
                   pattern, string);
     }
-  g_regex_unref (regex);
-  regex = NULL;
+  free_regex ();
 }
 
 void
@@ -350,19 +383,16 @@ cut_assert_mismatch (const gchar       *pattern,
 		     gint               start_position,
 		     GRegexMatchFlags   match_opts2)
 {
-  regex = g_regex_new (pattern, compile_opts, match_opts, NULL);
-  cut_assert (regex, "failed (pattern: \"%s\", compile: %d, match %d)",
-	      pattern, compile_opts, match_opts);
+  cut_assert_regex_new_without_free (pattern, compile_opts, match_opts);
   cut_assert (!g_regex_match_full (regex, string, string_len,
-              start_position, match_opts2, NULL, NULL));
+                                   start_position, match_opts2, NULL, NULL),
+              "/%s/ !~ <%s>", pattern, string);
   if (string_len == -1 && start_position == 0)
     {
       cut_assert (!g_regex_match (regex, string, match_opts2, NULL),
-	          "failed (pattern: \"%s\", string: \"%s\")",
-		   pattern, string);
+	          "/%s/ !~ <%s>", pattern, string);
     }
-  g_regex_unref (regex);
-  regex = NULL;
+  free_regex ();
 }
 
 void
@@ -418,20 +448,24 @@ cut_assert_match_count (const gchar     *pattern,
                   	GRegexMatchFlags match_opts,
 			gint             expected_count)
 {
-  regex = g_regex_new (pattern, 0, 0, NULL);
-  g_regex_match_full (regex, string, -1, start_position,
-		      match_opts, &match_info, NULL);
-  cut_assert_equal_int (expected_count, g_match_info_get_match_count (match_info));
-  g_match_info_free (match_info);
-  g_regex_unref (regex);
-  match_info = NULL;
-  regex = NULL;
+  cut_assert_regex_new_without_free (pattern, 0, 0);
+  if (expected_count == 0)
+    cut_assert (!g_regex_match_full (regex, string, -1, start_position,
+                                     match_opts, &match_info, NULL),
+                "/%s/ !~ <%s>", pattern, string);
+  else
+    cut_assert (g_regex_match_full (regex, string, -1, start_position,
+                                    match_opts, &match_info, NULL),
+                "/%s/ =~ <%s>", pattern, string);
+  cut_assert_equal_int (expected_count,
+                        g_match_info_get_match_count (match_info));
+  free_regex ();
+  free_match_info ();
 }
 
 void
 test_match_count (void)
 {
-  /* TEST_MATCH_COUNT(pattern, string, start_position, match_opts, expected_count) */
   cut_assert_match_count ("a", "", 0, 0, 0);
   cut_assert_match_count ("a", "a", 0, 0, 1);
   cut_assert_match_count ("a", "a", 1, 0, 0);
@@ -449,10 +483,9 @@ cut_assert_get_string_number (const gchar *pattern,
 			      const gchar *name,
 			      gint         expected_num)
 {
-  regex = g_regex_new (pattern, 0, 0, NULL);
+  cut_assert_regex_new_without_free (pattern, 0, 0);
   cut_assert_equal_int (expected_num, g_regex_get_string_number (regex, name));
-  g_regex_unref (regex);
-  regex = NULL;
+  free_regex ();
 }
 
 void
@@ -476,10 +509,10 @@ cut_assert_escape (const gchar *string,
 		   gint         length,
 		   const gchar *expected)
 {
-  gchar *escaped;
-  escaped = g_regex_escape_string (string, length);
-  cut_assert_equal_string (expected, escaped);
-  g_free (escaped);
+  escaped_string = g_regex_escape_string (string, length);
+  cut_assert_equal_string (expected, escaped_string,
+                           "<%s> -> <%s>", string, escaped_string);
+  free_escaped_string ();
 }
 
 void
@@ -513,27 +546,12 @@ cut_assert_replace (const gchar *pattern,
 		    const gchar *replacement,
 		    const gchar *expected)
 {
-  gchar *res;
-  regex = g_regex_new (pattern, 0, 0, NULL);
-  res = g_regex_replace (regex, string, -1, start_position, replacement, 0, NULL);
-  cut_assert_equal_string (expected, res);
-  g_free (res);
-  g_regex_unref (regex);
-  regex = NULL;
-}
-
-static void
-cut_assert_null_replace (const gchar *pattern,
-			 const gchar *string,
-			 gint         start_position,
-			 const gchar *replacement)
-{
-  gchar *res;
-  regex = g_regex_new (pattern, 0, 0, NULL);
-  res = g_regex_replace (regex, string, -1, start_position, replacement, 0, NULL);
-  cut_assert_null (res);
-  g_regex_unref (regex);
-  regex = NULL;
+  cut_assert_regex_new_without_free (pattern, 0, 0);
+  replaced_string = g_regex_replace (regex, string, -1, start_position,
+                                     replacement, 0, NULL);
+  cut_assert_equal_string_or_null (expected, replaced_string);
+  free_regex ();
+  free_replaced_string ();
 }
 
 void
@@ -563,36 +581,36 @@ test_replace (void)
   cut_assert_replace (".*", "hello", 0, "\\U\\0\\E", "HELLO");
   cut_assert_replace (".*", "hello", 0, "\\u\\0", "Hello");
   cut_assert_replace ("\\S+", "hello world", 0, "\\U-\\0-", "-HELLO- -WORLD-");
-  cut_assert_null_replace (".", "a", 0, "\\A");
-  cut_assert_null_replace (".", "a", 0, "\\g");
+  cut_assert_replace (".", "a", 0, "\\A", NULL);
+  cut_assert_replace (".", "a", 0, "\\g", NULL);
 }
 
 static void
 cut_assert_partial_match (const gchar *pattern,
 			  const gchar *string)
 {
-  regex = g_regex_new (pattern, 0, 0, NULL);
+  cut_assert_regex_new_without_free (pattern, 0, 0);
   g_regex_match (regex, string, G_REGEX_MATCH_PARTIAL, &match_info);
-  cut_assert (g_match_info_is_partial_match (match_info));
-  cut_assert (!g_match_info_fetch_pos (match_info, 0, NULL, NULL));
-  cut_assert (!g_match_info_fetch_pos (match_info, 1, NULL, NULL));
-  g_match_info_free (match_info);
-  g_regex_unref (regex);
-  regex = NULL;
-  match_info = NULL;
+  cut_assert (!g_match_info_fetch_pos (match_info, 0, NULL, NULL),
+              "/%s/ =~ <%s>", pattern, string);
+  cut_assert (!g_match_info_fetch_pos (match_info, 1, NULL, NULL),
+              "/%s/ =~ <%s>", pattern, string);
+
+  free_regex ();
+  free_match_info ();
 }
 
 static void
 cut_assert_partial_mismatch (const gchar *pattern,
 			     const gchar *string)
 {
-  regex = g_regex_new (pattern, 0, 0, NULL);
+  cut_assert_regex_new_without_free (pattern, 0, 0);
   g_regex_match (regex, string, G_REGEX_MATCH_PARTIAL, &match_info);
-  cut_assert (!g_match_info_is_partial_match (match_info));
-  g_match_info_free (match_info);
-  g_regex_unref (regex);
-  regex = NULL;
-  match_info = NULL;
+  cut_assert (!g_match_info_is_partial_match (match_info),
+              "/%s/ =~ <%s>", pattern, string);
+
+  free_regex ();
+  free_match_info ();
 }
 
 void
@@ -613,10 +631,7 @@ cut_assert_replacement (const gchar *string_to_expand,
 {
   gboolean has_refs;
   cut_assert (g_regex_check_replacement (string_to_expand, &has_refs, NULL));
-  cut_assert (expected_refs == has_refs,
-              "failed (got has_references \"%s\", expected \"%s\")",
-	       has_refs ? "TRUE" : "FALSE",
-	       expected_refs ? "TRUE" : "FALSE");
+  cut_assert_equal_int (expected_refs, has_refs);
 }
 
 void
@@ -641,14 +656,13 @@ cut_assert_replace_lit (const gchar *pattern,
 			const gchar *replacement,
 			const gchar *expected)
 {
-  gchar *res;
-  regex = g_regex_new (pattern, 0, 0, NULL);
-  res = g_regex_replace_literal (regex, string, -1, start_position,
-				 replacement, 0, NULL);
-  cut_assert_equal_string (expected, res);
-  g_free (res);
-  g_regex_unref (regex);
-  regex = NULL;
+  cut_assert_regex_new_without_free (pattern, 0, 0);
+  replaced_string = g_regex_replace_literal (regex, string, -1, start_position,
+                                             replacement, 0, NULL);
+  cut_assert_equal_string (expected, replaced_string);
+
+  free_regex ();
+  free_replaced_string ();
 }
 
 void
@@ -681,33 +695,26 @@ cut_assert_expand (const gchar *pattern,
 		   gboolean     raw,
 		   const gchar *expected)
 {
-  gchar *res;
-  regex = g_regex_new (pattern, raw ? G_REGEX_RAW : 0, 0, NULL);
+  cut_assert_regex_new_without_free (pattern, raw ? G_REGEX_RAW : 0, 0);
+
   g_regex_match (regex, string, 0, &match_info);
-  res = g_match_info_expand_references (match_info, string_to_expand, NULL);
-  if (!expected)
-    cut_assert_null (res);
-  else
-    cut_assert_equal_string (expected, res);
-  if (res)
-    g_free (res);
-  if (match_info)
-    g_match_info_free (match_info);
-  if (regex)
-    g_regex_unref (regex);
-  match_info = NULL;
-  regex = NULL;
+  expanded_string = g_match_info_expand_references (match_info,
+                                                    string_to_expand, NULL);
+  cut_assert_equal_string_or_null (expected, expanded_string);
+
+  free_regex ();
+  free_match_info ();
+  free_expanded_string ();
 }
 
 static void
 cut_assert_expand_null (const gchar *string_to_expand,
 			const gchar *expected)
 {
-  gchar *res;
-  res = g_match_info_expand_references (NULL, string_to_expand, NULL);
-  cut_assert_equal_string (expected, res);
-  if (res)
-    g_free (res);
+  expanded_string = g_match_info_expand_references (NULL, string_to_expand,
+                                                    NULL);
+  cut_assert_equal_string (expected, expanded_string);
+  free_expanded_string ();
 }
 
 void
@@ -788,17 +795,13 @@ test_expand (void)
   cut_assert_null (g_match_info_expand_references (NULL, "x\\Ay", NULL));
 }
 
-static GSList *
-collect_expected_matches (gint start_position, ...)
+static void
+collect_expected_matches (va_list args)
 {
-  va_list args;
-  GSList *expected = NULL;
-
-  /* The va_list is a NULL-terminated sequence of: expected matched string,
+  /* The va_list is a NULL-terminated sequence of: extected matched string,
    * expected start and expected end. */
-  va_start (args, start_position);
   while (TRUE)
-   {
+    {
       Match *match;
       const gchar *expected_string = va_arg (args, const gchar *);
       if (expected_string == NULL)
@@ -807,21 +810,16 @@ collect_expected_matches (gint start_position, ...)
       match->string = g_strdup (expected_string);
       match->start = va_arg (args, gint);
       match->end = va_arg (args, gint);
-      expected = g_slist_prepend (expected, match);
+      expected_matches = g_slist_prepend (expected_matches, match);
     }
-  expected = g_slist_reverse (expected);
-  va_end (args);
-
-  return expected;
+  expected_matches = g_slist_reverse (expected_matches);
 }
 
-static GSList *
+static void
 collect_actual_matches (GRegex **regex, const gchar *pattern,
                         const gchar *string, gssize string_len,
                         gint start_position, GMatchInfo **match_info)
 {
-  GSList *actual = NULL;
-
   *regex = g_regex_new (pattern, 0, 0, NULL);
   g_regex_match_full (*regex, string, string_len,
 		      start_position, 0, match_info, NULL);
@@ -833,81 +831,79 @@ collect_actual_matches (GRegex **regex, const gchar *pattern,
       match->start = UNTOUCHED;
       match->end = UNTOUCHED;
       g_match_info_fetch_pos (*match_info, 0, &match->start, &match->end);
-      actual = g_slist_prepend (actual, match);
+      actual_matches = g_slist_prepend (actual_matches, match);
       g_match_info_next (*match_info, NULL);
     }
-
-  return actual;
+  actual_matches = g_slist_reverse (actual_matches);
 }
 
-#define TEST_MATCH_NEXT(pattern, _string, string_len, start_position, ...) do \
-{                                                                       \
-  GRegex *regex;                                                        \
-  GMatchInfo *match_info;                                               \
-  GSList *actual = NULL, *expected = NULL;                              \
-  GSList *actual_node, *expected_node;                                  \
-                                                                        \
-  expected = collect_expected_matches (start_position, ## __VA_ARGS__); \
-  actual = collect_actual_matches (&regex, pattern,                     \
-                                   _string, string_len,                 \
-                                   start_position, &match_info);        \
-  cut_assert (regex == g_match_info_get_regex (match_info));            \
-  cut_assert_equal_string (_string,                                     \
-                           g_match_info_get_string (match_info));       \
-  g_match_info_free (match_info);                                       \
-  actual = g_slist_reverse (actual);                                    \
-                                                                        \
-  cut_assert_equal_int(g_slist_length (expected),                       \
-                       g_slist_length (actual));                        \
-                                                                        \
-  expected_node = expected;                                             \
-  actual_node = actual;                                                 \
-  while (expected_node)                                                 \
-    {                                                                   \
-      Match *exp = expected_node->data;                                 \
-      Match *act = actual_node->data;                                   \
-                                                                        \
-      if (exp->string)                                                  \
-        cut_assert_equal_string(exp->string, act->string);              \
-      else                                                              \
-        cut_assert_null(act->string);                                   \
-                                                                        \
-      expected_node = g_slist_next (expected_node);                     \
-      actual_node = g_slist_next (actual_node);                         \
-    }                                                                   \
-                                                                        \
-  g_regex_unref (regex);                                                \
-  g_slist_foreach (expected, free_match, NULL);                         \
-  g_slist_free (expected);                                              \
-  g_slist_foreach (actual, free_match, NULL);                           \
-  g_slist_free (actual);                                                \
-} while (0)
+static void
+cut_assert_match_next (const gchar *pattern,
+                       const gchar *string,
+                       gssize       string_length,
+                       gint         start_position,
+                       ...)
+{
+  GSList *actual_node, *expected_node;
+  va_list args;
+
+  va_start (args, start_position);
+  collect_expected_matches (args);
+  va_end (args);
+
+  collect_actual_matches (&regex, pattern,
+                          string, string_length,
+                          start_position, &match_info);
+  cut_assert (regex == g_match_info_get_regex (match_info));
+  cut_assert_equal_string (string, g_match_info_get_string (match_info));
+  free_match_info ();
+
+  cut_assert_equal_int(g_slist_length (expected_matches),
+                       g_slist_length (actual_matches));
+
+  expected_node = expected_matches;
+  actual_node = actual_matches;
+  while (expected_node)
+    {
+      Match *exp = expected_node->data;
+      Match *act = actual_node->data;
+
+      cut_assert_equal_string_or_null (exp->string, act->string);
+
+      expected_node = g_slist_next (expected_node);
+      actual_node = g_slist_next (actual_node);
+    }
+
+  free_regex ();
+  free_expected_matches ();
+  free_actual_matches ();
+}
 
 void
 test_match_next (void)
 {
   /* TEST_MATCH_NEXT#(pattern, string, string_len, start_position, ...) */
-  TEST_MATCH_NEXT("a", "x", -1, 0, NULL);
-  TEST_MATCH_NEXT("a", "ax", -1, 1, NULL);
-  TEST_MATCH_NEXT("a", "xa", 1, 0, NULL);
-  TEST_MATCH_NEXT("a", "axa", 1, 2, NULL);
-  TEST_MATCH_NEXT("a", "a", -1, 0, "a", 0, 1, NULL);
-  TEST_MATCH_NEXT("a", "xax", -1, 0, "a", 1, 2, NULL);
-  TEST_MATCH_NEXT(EURO, ENG EURO, -1, 0, EURO, 2, 5, NULL);
-  TEST_MATCH_NEXT("a*", "", -1, 0, "", 0, 0, NULL);
-  TEST_MATCH_NEXT("a*", "aa", -1, 0, "aa", 0, 2, "", 2, 2, NULL);
-  TEST_MATCH_NEXT(EURO "*", EURO EURO, -1, 0, EURO EURO, 0, 6, "", 6, 6, NULL);
-  TEST_MATCH_NEXT("a", "axa", -1, 0, "a", 0, 1, "a", 2, 3, NULL);
-  TEST_MATCH_NEXT("a+", "aaxa", -1, 0, "aa", 0, 2, "a", 3, 4, NULL);
-  TEST_MATCH_NEXT("a", "aa", -1, 0, "a", 0, 1, "a", 1, 2, NULL);
-  TEST_MATCH_NEXT("a", "ababa", -1, 2, "a", 2, 3, "a", 4, 5, NULL);
-  TEST_MATCH_NEXT(EURO "+", EURO "-" EURO, -1, 0, EURO, 0, 3, EURO, 4, 7, NULL);
-  TEST_MATCH_NEXT("", "ab", -1, 0, "", 0, 0, "", 1, 1, "", 2, 2, NULL);
-  TEST_MATCH_NEXT("", AGRAVE "b", -1, 0, "", 0, 0, "", 2, 2, "", 3, 3, NULL);
-  TEST_MATCH_NEXT("a", "aaxa", -1, 0, "a", 0, 1, "a", 1, 2, "a", 3, 4, NULL);
-  TEST_MATCH_NEXT("a", "aa" OGRAVE "a", -1, 0, "a", 0, 1, "a", 1, 2, "a", 4, 5, NULL);
-  TEST_MATCH_NEXT("a*", "aax", -1, 0, "aa", 0, 2, "", 2, 2, "", 3, 3, NULL);
-  TEST_MATCH_NEXT("a*", "aaxa", -1, 0, "aa", 0, 2, "", 2, 2, "a", 3, 4, "", 4, 4, NULL);
+  cut_assert_match_next ("a", "x", -1, 0, NULL);
+  cut_assert_match_next ("a", "ax", -1, 1, NULL);
+  cut_assert_match_next ("a", "xa", 1, 0, NULL);
+  cut_assert_match_next ("a", "axa", 1, 2, NULL);
+  cut_assert_match_next ("a", "a", -1, 0, "a", 0, 1, NULL);
+  cut_assert_match_next ("a", "xax", -1, 0, "a", 1, 2, NULL);
+  cut_assert_match_next (EURO, ENG EURO, -1, 0, EURO, 2, 5, NULL);
+  cut_assert_match_next ("a*", "", -1, 0, "", 0, 0, NULL);
+  cut_assert_match_next ("a*", "aa", -1, 0, "aa", 0, 2, "", 2, 2, NULL);
+  cut_assert_match_next (EURO "*", EURO EURO, -1, 0, EURO EURO, 0, 6, "", 6, 6, NULL);
+  cut_assert_match_next ("a", "axa", -1, 0, "a", 0, 1, "a", 2, 3, NULL);
+  cut_assert_match_next ("a+", "aaxa", -1, 0, "aa", 0, 2, "a", 3, 4, NULL);
+  cut_assert_match_next ("a", "aa", -1, 0, "a", 0, 1, "a", 1, 2, NULL);
+  cut_assert_match_next ("a", "ababa", -1, 2, "a", 2, 3, "a", 4, 5, NULL);
+  cut_assert_match_next (EURO "+", EURO "-" EURO, -1, 0, EURO, 0, 3, EURO, 4, 7, NULL);
+  cut_assert_match_next ("", "ab", -1, 0, "", 0, 0, "", 1, 1, "", 2, 2, NULL);
+  cut_assert_match_next ("", AGRAVE "b", -1, 0, "", 0, 0, "", 2, 2, "", 3, 3, NULL);
+  cut_assert_match_next ("a", "aaxa", -1, 0, "a", 0, 1, "a", 1, 2, "a", 3, 4, NULL);
+  cut_assert_match_next ("a", "aa" OGRAVE "a", -1, 0, "a", 0, 1, "a", 1, 2, "a", 4, 5, NULL);
+  cut_assert_match_next ("a*", "aax", -1, 0, "aa", 0, 2, "", 2, 2, "", 3, 3, NULL);
+  cut_assert_match_next ("a*", "aaxa", -1, 0, "aa", 0, 2, "", 2, 2, "a", 3, 4, "", 4, 4, NULL);
 
 }
 
@@ -1249,26 +1245,6 @@ test_split (void)
 }
 
 static void
-collect_expected_matchesv (va_list args)
-{
-  /* The va_list is a NULL-terminated sequence of: extected matched string,
-   * expected start and expected end. */
-  while (TRUE)
-    {
-      Match *match;
-      const gchar *expected_string = va_arg (args, const gchar *);
-      if (expected_string == NULL)
-        break;
-      match = g_new0 (Match, 1);
-      match->string = g_strdup (expected_string);
-      match->start = va_arg (args, gint);
-      match->end = va_arg (args, gint);
-      expected_matches = g_slist_prepend (expected_matches, match);
-    }
-  expected_matches = g_slist_reverse (expected_matches);
-}
-
-static void
 cut_assert_match_all_each (const gchar *pattern,
                            gboolean     use_full,
                            const gchar *string,
@@ -1281,7 +1257,7 @@ cut_assert_match_all_each (const gchar *pattern,
   gint match_count;
   gint i;
 
-  collect_expected_matchesv (args);
+  collect_expected_matches (args);
   expected_length = g_slist_length (expected_matches);
 
   regex = g_regex_new (pattern, 0, 0, NULL);
