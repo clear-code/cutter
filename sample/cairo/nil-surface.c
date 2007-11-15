@@ -27,6 +27,9 @@
 
 #include <stddef.h>
 #include <cairo.h>
+#include <cairo-pdf.h>
+#include <cairo-svg.h>
+#include <cairo-ps.h>
 
 void test_nil_surface (void);
 
@@ -35,16 +38,13 @@ static cairo_t *cr;
 void
 setup (void)
 {
-    cairo_surface_t *surface;
-    surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, 100, 100);
-    cr = cairo_create (surface);
-    cairo_surface_destroy (surface);
 }
 
 void
 teardown (void)
 {
-    cairo_destroy (cr);
+    if (cr)
+        cairo_destroy (cr);
     cr = NULL;
 }
 
@@ -167,6 +167,37 @@ draw (cairo_t *cr)
 void
 test_nil_surface (void)
 {
+    cairo_surface_t *surface;
+
+#ifdef CAIRO_HAS_SVG_SURFACE
+    surface = cairo_svg_surface_create ("nil-surface.svg", 1.0, 1.0);
+    cr = cairo_create (surface);
+    cairo_surface_destroy (surface);
+    draw (cr);
+    cairo_destroy (cr);
+#endif /* CAIRO_HAS_SVG_SURFACE */
+#ifdef CAIRO_HAS_PDF_SURFACE
+    surface = cairo_pdf_surface_create ("nil-surface.svg", 1.0, 1.0);
+    cr = cairo_create (surface);
+    cairo_surface_destroy (surface);
+    draw (cr);
+    cairo_destroy (cr);
+#endif /* CAIRO_HAS_PDF_SURFACE */
+#ifdef CAIRO_HAS_PS_SURFACE
+    surface = cairo_ps_surface_create ("nil-surface.ps", 1.0, 1.0);
+    cr = cairo_create (surface);
+    cairo_surface_destroy (surface);
+    draw (cr);
+    cairo_destroy (cr);
+#endif /* CAIRO_HAS_PS_SURFACE */
+#ifdef CAIRO_HAS_XLIB_XRENDER_SURFACE
+#endif /* CAIRO_HAS_XLIB_XRENDER_SURFACE */
+#ifdef CAIRO_HAS_XLIB_SURFACE
+#endif /* CAIRO_HAS_XLIB_SURFACE */
+
+    surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, 100, 100);
+    cr = cairo_create (surface);
+    cairo_surface_destroy (surface);
     draw (cr);    
 }
 
