@@ -106,6 +106,17 @@ PKG_CHECK_MODULES(GTK_PRINT, gtk+-unix-print-2.0,
                   [gtk_print=yes], [gtk_print=no])
 AM_CONDITIONAL([HAVE_GTK], [test "x$no_gtk" = x -a "x$gtk_print" = xyes])
 
+dnl **************************************************************
+dnl Check for Cairo
+dnl **************************************************************
+cairo_exists=no
+PKG_CHECK_MODULES(CAIRO, cairo,
+		  [cairo_exists=yes], [cairo_exists=no])
+AC_SUBST([CAIRO_CFLAGS])
+AC_SUBST([CAIRO_LIBS])
+
+AM_CONDITIONAL([HAVE_CAIRO], [test $cairo_exists = "yes"])
+
 CUTTER_CFLAGS="$GLIB_CFLAGS -DOUTPUT_MODULEDIR=\\\"\"\$(output_moduledir)\"\\\""
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DRUNNER_MODULEDIR=\\\"\"\$(runner_moduledir)\"\\\""
 
@@ -120,6 +131,7 @@ AC_CONFIG_FILES([Makefile
                  sample/calc/Makefile.test
 		 sample/glib/Makefile
 		 sample/gtk+/Makefile
+		 sample/cairo/Makefile
                  test/Makefile
 		 test/loader_test_dir/Makefile
 		 test/repository_test_dir/Makefile])
