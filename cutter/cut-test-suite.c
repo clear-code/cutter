@@ -27,6 +27,11 @@
 #include <string.h>
 #include <glib.h>
 
+#include <setjmp.h>
+#define __USE_GNU
+#include <signal.h>
+#undef __USE_GNU
+
 #include "cut-test-suite.h"
 
 #include "cut-test.h"
@@ -51,6 +56,8 @@ enum
     COMPLETE_TEST_CASE_SIGNAL,
     LAST_SIGNAL
 };
+
+static jmp_buf jump_buffer;
 
 static gint cut_test_suite_signals[LAST_SIGNAL] = {0};
 
@@ -209,6 +216,11 @@ run_with_thread (CutTestSuite *test_suite, CutTestCase *test_case,
     }
 }
 
+static void
+segv_handler (int signum)
+{
+    longjmp(jump_buffer, signum);
+}
 
 static gboolean
 cut_test_suite_run_test_cases (CutTestSuite *test_suite, CutContext *context,
@@ -218,31 +230,39 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite, CutContext *context,
     GList *node, *threads = NULL;
     gboolean try_thread;
     gboolean all_success = TRUE;
+    sighandler_t previous_segv_handler;
 
-    cut_context_start_test_suite(context, test_suite);
-    g_signal_emit_by_name(CUT_TEST(test_suite), "start");
+    previous_segv_handler = signal(SIGSEGV, segv_handler);
+    if (setjmp(jump_buffer) == 0) {
+        cut_context_start_test_suite(context, test_suite);
+        g_signal_emit_by_name(CUT_TEST(test_suite), "start");
 
-    try_thread = cut_context_get_multi_thread(context);
-    for (list = tests; list; list = g_list_next(list)) {
-        if (!list->data)
-            continue;
-        if (CUT_IS_TEST_CASE(list->data)) {
-            run_with_thread(test_suite, list->data, context, test_names,
-                            try_thread, &threads, &all_success);
-        } else {
-            g_warning("This object is not test case!");
+        try_thread = cut_context_get_multi_thread(context);
+        for (list = tests; list; list = g_list_next(list)) {
+            if (!list->data)
+                continue;
+            if (CUT_IS_TEST_CASE(list->data)) {
+                run_with_thread(test_suite, list->data, context, test_names,
+                                try_thread, &threads, &all_success);
+            } else {
+                g_warning("This object is not test case!");
+            }
         }
+
+        for (node = threads; node; node = g_list_next(node)) {
+            GThread *thread = node->data;
+
+            if (!GPOINTER_TO_INT(g_thread_join(thread)))
+                all_success = FALSE;
+        }
+
+        if (all_success)
+            g_signal_emit_by_name(CUT_TEST(test_suite), "success");
+    } else {
+        all_success = FALSE;
+        g_signal_emit_by_name(CUT_TEST(test_suite), "crashed");
     }
-
-    for (node = threads; node; node = g_list_next(node)) {
-        GThread *thread = node->data;
-
-        if (!GPOINTER_TO_INT(g_thread_join(thread)))
-            all_success = FALSE;
-    }
-
-    if (all_success)
-        g_signal_emit_by_name(CUT_TEST(test_suite), "success");
+    signal(SIGSEGV, previous_segv_handler);
 
     g_signal_emit_by_name(CUT_TEST(test_suite), "complete");
 

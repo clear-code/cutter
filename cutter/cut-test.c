@@ -60,6 +60,7 @@ enum
     PENDING_SIGNAL,
     NOTIFICATION_SIGNAL,
     COMPLETE_SIGNAL,
+    CRASHED_SIGNAL,
     LAST_SIGNAL
 };
 
@@ -183,6 +184,15 @@ cut_test_class_init (CutTestClass *klass)
                 G_TYPE_FROM_CLASS (klass),
                 G_SIGNAL_RUN_LAST,
                 G_STRUCT_OFFSET (CutTestClass, complete),
+                NULL, NULL,
+                g_cclosure_marshal_VOID__VOID,
+                G_TYPE_NONE, 0);
+
+	cut_test_signals[CRASHED_SIGNAL]
+        = g_signal_new ("crashed",
+                G_TYPE_FROM_CLASS (klass),
+                G_SIGNAL_RUN_LAST,
+                G_STRUCT_OFFSET (CutTestClass, crashed),
                 NULL, NULL,
                 g_cclosure_marshal_VOID__VOID,
                 G_TYPE_NONE, 0);

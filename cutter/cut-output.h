@@ -80,6 +80,9 @@ struct _CutOutputClass
     void (*on_complete_test_suite) (CutOutput *output,
                                     CutContext *context,
                                     CutTestSuite *test_suite);
+    void (*on_crashed_test_suite)  (CutOutput *output,
+                                    CutContext *context,
+                                    CutTestSuite *test_suite);
 };
 
 GType        cut_output_get_type  (void) G_GNUC_CONST;
@@ -140,6 +143,9 @@ void  cut_output_on_complete_test          (CutOutput *output,
 void  cut_output_on_complete_test_case     (CutOutput *output,
                                             CutTestCase *test_case);
 void  cut_output_on_complete_test_suite    (CutOutput *output,
+                                            CutContext *context,
+                                            CutTestSuite *test_suite);
+void  cut_output_on_crashed_test_suite     (CutOutput *output,
                                             CutContext *context,
                                             CutTestSuite *test_suite);
 

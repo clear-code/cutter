@@ -42,11 +42,13 @@
 #define CUT_OUTPUT_CONSOLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_OUTPUT_CONSOLE, CutOutputConsoleClass))
 
 #define RED_COLOR "\033[01;31m"
+#define RED_BACK_COLOR "\033[41m"
 #define GREEN_COLOR "\033[01;32m"
 #define YELLOW_COLOR "\033[01;33m"
 #define BLUE_COLOR "\033[01;34m"
 #define PURPLE_COLOR "\033[01;35m"
 #define CYAN_COLOR "\033[01;36m"
+#define WHITE_COLOR "\033[01;37m"
 #define NORMAL_COLOR "\033[00m"
 
 typedef struct _CutOutputConsole CutOutputConsole;
@@ -113,6 +115,9 @@ static void on_complete_test_case  (CutOutput *output,
 static void on_complete_test_suite (CutOutput *output,
                                     CutContext *context,
                                     CutTestSuite *test_suite);
+static void on_crashed_test_suite  (CutOutput *output,
+                                    CutContext *context,
+                                    CutTestSuite *test_suite);
 
 static void
 class_init (CutOutputClass *klass)
@@ -141,6 +146,7 @@ class_init (CutOutputClass *klass)
     output_class->on_complete_test       = on_complete_test;
     output_class->on_complete_test_case  = on_complete_test_case;
     output_class->on_complete_test_suite = on_complete_test_suite;
+    output_class->on_crashed_test_suite  = on_crashed_test_suite;
 
     spec = g_param_spec_boolean("use-color",
                                 "Use color",
@@ -272,6 +278,9 @@ status_to_name(CutTestResultStatus status)
       case CUT_TEST_RESULT_NOTIFICATION:
         name = "Notification";
         break;
+      case CUT_TEST_RESULT_CRASH:
+        name = "CRASH!!!";
+        break;
       default:
         name = "MUST NOT HAPPEN!!!";
         break;
@@ -300,6 +309,9 @@ status_to_color(CutTestResultStatus status)
         break;
       case CUT_TEST_RESULT_NOTIFICATION:
         color = CYAN_COLOR;
+        break;
+      case CUT_TEST_RESULT_CRASH:
+        color = RED_BACK_COLOR WHITE_COLOR;
         break;
       default:
         color = "";
@@ -442,6 +454,7 @@ on_complete_test_suite (CutOutput *output, CutContext *context,
     guint n_pendings, n_notifications;
     const GList *node;
     CutTestResultStatus status;
+    gboolean crashed;
     CutOutputConsole *console = CUT_OUTPUT_CONSOLE(output);
 
     if (cut_output_get_verbose_level(output) < CUT_VERBOSE_LEVEL_NORMAL)
@@ -449,6 +462,13 @@ on_complete_test_suite (CutOutput *output, CutContext *context,
 
     if (cut_output_get_verbose_level(output) == CUT_VERBOSE_LEVEL_NORMAL)
         g_print("\n");
+
+    crashed = cut_context_is_crashed(context);
+    if (crashed) {
+        print_for_status(console, CUT_TEST_RESULT_CRASH,
+                         "%s", status_to_name(CUT_TEST_RESULT_CRASH));
+        g_print("\n");
+    }
 
     i = 1;
     for (node = cut_context_get_results(context);
@@ -500,7 +520,9 @@ on_complete_test_suite (CutOutput *output, CutContext *context,
     n_pendings = cut_context_get_n_pendings(context);
     n_notifications = cut_context_get_n_notifications(context);
 
-    if (n_errors > 0) {
+    if (crashed) {
+        status = CUT_TEST_RESULT_CRASH;
+    } else if (n_errors > 0) {
         status = CUT_TEST_RESULT_ERROR;
     } else if (n_failures > 0) {
         status = CUT_TEST_RESULT_FAILURE;
@@ -519,6 +541,15 @@ on_complete_test_suite (CutOutput *output, CutContext *context,
     g_print("\n");
 }
 
+static void
+on_crashed_test_suite (CutOutput *output, CutContext *context,
+                       CutTestSuite *test_suite)
+{
+    CutOutputConsole *console = CUT_OUTPUT_CONSOLE(output);
+
+    print_for_status(console, CUT_TEST_RESULT_CRASH, "!");
+    fflush(stdout);
+}
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

@@ -45,6 +45,7 @@ struct _CutContextPrivate
     CutOutput *output;
     gboolean use_multi_thread;
     GMutex *mutex;
+    gboolean crashed;
 };
 
 enum
@@ -143,6 +144,7 @@ cut_context_init (CutContext *context)
     priv->output = cut_output_new("console", "use-color", TRUE, NULL);
     priv->use_multi_thread = FALSE;
     priv->mutex = g_mutex_new();
+    priv->crashed = FALSE;
 }
 
 static void
@@ -549,6 +551,18 @@ cb_start_test_suite(CutTestSuite *test_suite, gpointer data)
 }
 
 static void
+cb_crashed_test_suite(CutTestSuite *test_suite, gpointer data)
+{
+    CutContext *context = data;
+    CutContextPrivate *priv;
+
+    priv = CUT_CONTEXT_GET_PRIVATE(context);
+    priv->crashed = TRUE;
+    if (priv->output)
+        cut_output_on_crashed_test_suite(priv->output, context, test_suite);
+}
+
+static void
 cb_complete_test_suite(CutTestSuite *test_suite, gpointer data)
 {
     CutContext *context = data;
@@ -563,6 +577,9 @@ cb_complete_test_suite(CutTestSuite *test_suite, gpointer data)
     g_signal_handlers_disconnect_by_func(test_suite,
                                          G_CALLBACK(cb_complete_test_suite),
                                          data);
+    g_signal_handlers_disconnect_by_func(test_suite,
+                                         G_CALLBACK(cb_crashed_test_suite),
+                                         data);
 }
 
 void
@@ -572,6 +589,8 @@ cut_context_start_test_suite (CutContext *context, CutTestSuite *test_suite)
                      G_CALLBACK(cb_start_test_suite), context);
     g_signal_connect(test_suite, "complete",
                      G_CALLBACK(cb_complete_test_suite), context);
+    g_signal_connect(test_suite, "crashed",
+                     G_CALLBACK(cb_crashed_test_suite), context);
 }
 
 
@@ -615,6 +634,12 @@ const GList *
 cut_context_get_results (CutContext *context)
 {
     return CUT_CONTEXT_GET_PRIVATE(context)->results;
+};
+
+gboolean
+cut_context_is_crashed (CutContext *context)
+{
+    return CUT_CONTEXT_GET_PRIVATE(context)->crashed;
 };
 
 /*

@@ -457,6 +457,19 @@ cut_output_on_complete_test_suite (CutOutput *output, CutContext *context,
         klass->on_complete_test_suite(output, context, test_suite);
 }
 
+void
+cut_output_on_crashed_test_suite (CutOutput *output, CutContext *context,
+                                  CutTestSuite *test_suite)
+{
+    CutOutputClass *klass;
+
+    g_return_if_fail(CUT_IS_OUTPUT(output));
+
+    klass = CUT_OUTPUT_GET_CLASS(output);
+    if (klass->on_crashed_test_suite)
+        klass->on_crashed_test_suite(output, context, test_suite);
+}
+
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
