@@ -203,7 +203,10 @@ cut_test_container_filter_children (CutTestContainer *container,
         children = collect_tests_with_regex(tests, pattern);
         g_free(pattern);
         if (children) {
+            GList *old_matched = matched_tests;
             matched_tests = cut_test_list_intersection(matched_tests, children);
+            if (old_matched)
+                g_list_free(old_matched);
             g_list_free(children);
         }
     }
