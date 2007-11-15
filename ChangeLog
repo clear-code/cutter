@@ -1,3 +1,8 @@
+2007-11-15  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-test-context.c, cutter/cut-assertions.h,
+	cutter/cut-public.h: supported inspecting string array.
+
 2007-11-15  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* sample/glib/test-keyfile.c: Restore original log function.

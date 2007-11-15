@@ -41,6 +41,7 @@ struct _CutTestContextPrivate
     CutTest *test;
     gboolean failed;
     jmp_buf jump_buffer;
+    GList *inspected_strings;
 };
 
 enum
@@ -109,6 +110,7 @@ cut_test_context_init (CutTestContext *context)
     priv->test = NULL;
 
     priv->failed = FALSE;
+    priv->inspected_strings = NULL;
 }
 
 static void
@@ -130,6 +132,10 @@ dispose (GObject *object)
         g_object_unref(priv->test);
         priv->test = NULL;
     }
+
+    g_list_foreach(priv->inspected_strings, (GFunc)g_free, NULL);
+    g_list_free(priv->inspected_strings);
+    priv->inspected_strings = NULL;
 
     G_OBJECT_CLASS(cut_test_context_parent_class)->dispose(object);
 }
@@ -355,6 +361,31 @@ gboolean
 cut_test_context_is_failed (CutTestContext *context)
 {
     return CUT_TEST_CONTEXT_GET_PRIVATE(context)->failed;
+}
+
+const char *
+cut_test_context_inspect_string_array (CutTestContext *context,
+                                       const char    **strings)
+{
+    CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+    GString *inspected;
+    const char **string, **next_string;
+
+    inspected = g_string_new("[");
+    string = strings;
+    while (*string) {
+        g_string_append_printf(inspected, "\"%s\"", *string);
+        next_string = string + 1;
+        if (*next_string)
+            g_string_append(inspected, ", ");
+        string = next_string;
+    }
+    g_string_append(inspected, "]");
+
+    priv->inspected_strings = g_list_prepend(priv->inspected_strings,
+                                             inspected->str);
+
+    return g_string_free(inspected, FALSE);
 }
 
 /*

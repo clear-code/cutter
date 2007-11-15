@@ -29,6 +29,10 @@
 extern "C" {
 #endif
 
+#define cut_inspect_string_array(strings)                               \
+    cut_test_context_inspect_string_array(get_current_test_context(),   \
+                                          strings)
+
 #define cut_test_pass() \
     cut_test_context_pass_assertion(get_current_test_context())
 
@@ -194,7 +198,8 @@ extern "C" {
                       "<%s == %s>\n"                                    \
                       "expected: <%s>\n but was: <%s>",                 \
                       #expected, #actual,                               \
-                      _expected, _actual,                               \
+                      cut_inspect_string_array(_expected),              \
+                      cut_inspect_string_array(_actual),                \
                       NULL, ## __VA_ARGS__, NULL);                      \
     }                                                                   \
 } while(0)
