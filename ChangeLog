@@ -1,5 +1,7 @@
 2007-11-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-suite.c: supported interrupting.
+
 	* cutter/: supported showing summary on SEGV.
 
 	* cutter/cut-test-context.c, cutter/cut-assertions.h,

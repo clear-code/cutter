@@ -217,7 +217,7 @@ run_with_thread (CutTestSuite *test_suite, CutTestCase *test_case,
 }
 
 static void
-segv_handler (int signum)
+ill_be_back_handler (int signum)
 {
     longjmp(jump_buffer, signum);
 }
@@ -230,10 +230,14 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite, CutContext *context,
     GList *node, *threads = NULL;
     gboolean try_thread;
     gboolean all_success = TRUE;
-    sighandler_t previous_segv_handler;
+    gint signum;
+    sighandler_t previous_segv_handler, previous_int_handler;
 
-    previous_segv_handler = signal(SIGSEGV, segv_handler);
-    if (setjmp(jump_buffer) == 0) {
+    previous_segv_handler = signal(SIGSEGV, ill_be_back_handler);
+    previous_int_handler = signal(SIGINT, ill_be_back_handler);
+    signum = setjmp(jump_buffer);
+    switch (signum) {
+      case 0:
         cut_context_start_test_suite(context, test_suite);
         g_signal_emit_by_name(CUT_TEST(test_suite), "start");
 
@@ -258,10 +262,15 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite, CutContext *context,
 
         if (all_success)
             g_signal_emit_by_name(CUT_TEST(test_suite), "success");
-    } else {
+        break;
+      case SIGSEGV:
         all_success = FALSE;
         g_signal_emit_by_name(CUT_TEST(test_suite), "crashed");
+        break;
+      default:
+        break;
     }
+    signal(SIGINT, previous_int_handler);
     signal(SIGSEGV, previous_segv_handler);
 
     g_signal_emit_by_name(CUT_TEST(test_suite), "complete");
