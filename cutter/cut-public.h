@@ -46,6 +46,10 @@ void  cut_test_context_register_result      (CutTestContext *context,
                                              ...);
 void  cut_test_context_long_jump            (CutTestContext *context) __attribute__((__noreturn__));
 
+gboolean cut_utils_compare_string_array     (const gchar **strings1,
+                                             const gchar **strings2);
+
+
 #ifdef __cplusplus
 }
 #endif

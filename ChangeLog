@@ -1,5 +1,11 @@
 2007-11-15  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-public.h, cutter/cut-utils.h: Moved
+	cut_utils_compare_string_array into cut-public.h.
+	* cutter/cut-utils.c: include "cut-public.h".
+
+2007-11-15  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* cutter/cut-public.h: Append __attribute__((__noreturn__)) to
 	cut_text_context_long_jump().
 

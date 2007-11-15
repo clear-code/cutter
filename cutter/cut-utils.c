@@ -27,6 +27,7 @@
 #include <glib.h>
 
 #include "cut-utils.h"
+#include "cut-public.h"
 
 gchar *
 cut_utils_create_regex_pattern (const gchar *string)
