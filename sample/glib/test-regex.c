@@ -77,7 +77,7 @@ typedef struct _Match
 static GRegex *regex;
 static GMatchInfo *match_info;
 static GSList *expected_matches, *actual_matches;
-static gchar *escaped_string, *replaced_string, *expanded_string;
+static gchar *escaped_string, *replaced_string, *expanded_string, *substring;
 
 void
 setup (void)
@@ -89,6 +89,7 @@ setup (void)
   escaped_string = NULL;
   replaced_string = NULL;
   expanded_string = NULL;
+  substring = NULL;
 }
 
 static void
@@ -155,6 +156,13 @@ free_expanded_string (void)
   expanded_string = NULL;
 }
 
+static void
+free_substring (void)
+{
+  g_free (substring);
+  substring = NULL;
+}
+
 void
 teardown (void)
 {
@@ -165,6 +173,7 @@ teardown (void)
   free_escaped_string ();
   free_replaced_string ();
   free_expanded_string ();
+  free_substring ();
 }
 
 static void
@@ -916,36 +925,26 @@ cut_assert_sub_pattern (const gchar *pattern,
 			gint         expected_start,
 			gint         expected_end)
 {
-  gchar *sub_expr;
   gint start = UNTOUCHED, end = UNTOUCHED;
-  regex = g_regex_new (pattern, 0, 0, NULL);
-  g_regex_match_full (regex, string, -1, start_position, 0, &match_info, NULL);
-  sub_expr = g_match_info_fetch (match_info, sub_n);
-  cut_assert_equal_string (expected_sub, sub_expr);
-  g_free (sub_expr);
-  g_match_info_fetch_pos (match_info, sub_n, &start, &end);
-  cut_assert (start == expected_start && end == expected_end,
-	      "failed (got [%d, %d], expected [%d, %d])",
-	      start, end, expected_start, expected_end);
-  g_regex_unref (regex);
-  g_match_info_free (match_info);
-  regex = NULL;
-  match_info = NULL;
-}
+  cut_assert_regex_new_without_free (pattern, 0, 0);
+  cut_assert (g_regex_match_full (regex, string, -1, start_position, 0,
+                                  &match_info, NULL),
+              "/%s/ =~ <%s>", pattern, string);
+  substring = g_match_info_fetch (match_info, sub_n);
+  cut_assert_equal_string_or_null (expected_sub, substring);
+  free_substring ();
 
-#define TEST_SUB_PATTERN_NULL(pattern, string, start_position, sub_n) { \
-  gchar *sub_expr; \
-  gint start = UNTOUCHED, end = UNTOUCHED; \
-  regex = g_regex_new (pattern, 0, 0, NULL); \
-  g_regex_match_full (regex, string, -1, start_position, 0, &match_info, NULL); \
-  sub_expr = g_match_info_fetch (match_info, sub_n); \
-  cut_assert_null (sub_expr); \
-  g_match_info_fetch_pos (match_info, sub_n, &start, &end); \
-  cut_assert (start == UNTOUCHED && end == UNTOUCHED); \
-  g_regex_unref (regex); \
-  g_match_info_free (match_info); \
-  regex = NULL; \
-  match_info = NULL; \
+  if (expected_sub)
+    cut_assert (g_match_info_fetch_pos (match_info, sub_n, &start, &end),
+                "$%d", sub_n);
+  else
+    cut_assert (!g_match_info_fetch_pos (match_info, sub_n, &start, &end),
+                "!$%d", sub_n);
+  cut_assert_equal_int (expected_start, start); /* FIXME */
+  cut_assert_equal_int (expected_end, end); /* assert_equal_int_array() */
+
+  free_regex ();
+  free_match_info ();
 }
 
 void
@@ -958,12 +957,10 @@ test_sub_pattern (void)
   cut_assert_sub_pattern ("a(.)", "a" EURO, 0, 1, EURO, 1, 4);
   cut_assert_sub_pattern ("(?:.*)(a)(.)", "xxa" ENG, 0, 2, ENG, 3, 5);
   cut_assert_sub_pattern ("(" HSTROKE ")", "a" HSTROKE ENG, 0, 1, HSTROKE, 1, 3);
+  cut_assert_sub_pattern ("a", "a", 0, 1, NULL, UNTOUCHED, UNTOUCHED);
   cut_assert_sub_pattern ("(a)?(b)", "b", 0, 0, "b", 0, 1);
   cut_assert_sub_pattern ("(a)?(b)", "b", 0, 1, "", -1, -1);
   cut_assert_sub_pattern ("(a)?(b)", "b", 0, 2, "b", 0, 1);
-
-  TEST_SUB_PATTERN_NULL("a", "a", 0, 1);
-  TEST_SUB_PATTERN_NULL("a", "a", 0, 1);
 }
 
 #define TEST_NAMED_SUB_PATTERN(pattern, string, start_position, sub_name, \
