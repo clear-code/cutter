@@ -2,6 +2,8 @@
 
 	* cutter/cut-utils.[hc], cutter/cut-test-suite.c: union ->
 	intersection. 
+	* cutter/cut-test-case.c: Use cut_utils_list_intersection() instead of
+	g_list_concat().
 
 2007-11-15  Kouhei Sutou  <kou@cozmixng.org>
 

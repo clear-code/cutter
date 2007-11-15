@@ -380,7 +380,13 @@ cut_test_case_run_with_filter (CutTestCase *test_case,
         for (; *test_names; test_names++) {
             GList *tests;
             tests = cut_test_container_filter_children(container, *test_names);
-            filtered_tests = g_list_concat(tests, filtered_tests);
+            if (filtered_tests) {
+                filtered_tests = cut_test_list_intersection(tests, filtered_tests);
+                if (tests)
+                    g_list_free(tests);
+            } else {
+                filtered_tests = tests;
+            }
         }
     } else {
         filtered_tests =
