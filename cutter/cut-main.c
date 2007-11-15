@@ -140,17 +140,6 @@ cut_init (int *argc, char ***argv)
 
     cut_output_init();
 
-    context = cut_context_new();
-
-    cut_context_set_verbose_level(context, verbose_level);
-    if (source_directory) {
-        cut_context_set_source_directory(context, source_directory);
-    } else {
-        cut_context_set_source_directory(context, *argv[1]);
-    }
-    cut_context_set_use_color(context, use_color);
-    cut_context_set_multi_thread(context, use_multi_thread);
-
     g_option_context_free(option_context);
 }
 
@@ -161,9 +150,20 @@ cut_run (const char *directory)
     CutTestSuite *suite;
     CutRepository *repository;
 
+    context = cut_context_new();
+
+    cut_context_set_verbose_level(context, verbose_level);
+    if (source_directory) {
+        cut_context_set_source_directory(context, source_directory);
+    } else {
+        cut_context_set_source_directory(context, directory);
+    }
+    cut_context_set_use_color(context, use_color);
+    cut_context_set_multi_thread(context, use_multi_thread);
+
+
     repository = cut_repository_new(directory);
     suite = cut_repository_create_test_suite(repository);
-
     if (suite) {
         success = cut_test_suite_run_with_filter(suite, context,
                                                  test_case_names, test_names);
