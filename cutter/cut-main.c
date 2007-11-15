@@ -180,11 +180,11 @@ cut_create_test_suite (const gchar *directory)
 gboolean
 cut_run_test_suite (CutTestSuite *suite, CutContext *context)
 {
-    if (suite)
-        return cut_test_suite_run_with_filter(suite, context,
-                                              test_case_names, test_names);
-    else
+    if (!suite)
         return TRUE;
+
+    return cut_test_suite_run_with_filter(suite, context,
+                                          test_case_names, test_names);
 }
 
 gboolean
