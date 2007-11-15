@@ -70,7 +70,7 @@ cut_utils_compare_string_array (const gchar **strings1, const gchar **strings2)
 }
 
 GList *
-cut_test_list_union (GList *list1, GList *list2)
+cut_test_list_intersection (GList *list1, GList *list2)
 {
     GList *ret = NULL, *node;
 

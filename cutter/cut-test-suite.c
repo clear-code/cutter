@@ -422,7 +422,7 @@ cut_test_suite_run_with_filter (CutTestSuite *test_suite,
             test_cases = cut_test_container_filter_children(container,
                                                             *test_case_names);
             if (filtered_test_cases) {
-                filtered_test_cases = cut_test_list_union(test_cases, filtered_test_cases);
+                filtered_test_cases = cut_test_list_intersection(test_cases, filtered_test_cases);
                 if (test_cases)
                     g_list_free(test_cases);
             } else {
