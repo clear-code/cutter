@@ -1,3 +1,7 @@
+2007-11-15  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/: showed stack trace on SEGV.
+
 2007-11-15  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* sample/cairo/*: Added sample test for cairo.

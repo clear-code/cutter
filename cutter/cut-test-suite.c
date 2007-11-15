@@ -23,6 +23,8 @@
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
 
+#include <stdio.h>
+#include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
 #include <glib.h>
@@ -58,6 +60,7 @@ enum
 };
 
 static jmp_buf jump_buffer;
+static gchar *stack_trace = NULL;
 
 static gint cut_test_suite_signals[LAST_SIGNAL] = {0};
 
@@ -217,8 +220,67 @@ run_with_thread (CutTestSuite *test_suite, CutTestCase *test_case,
 }
 
 static void
+read_stack_trace (int in_fd)
+{
+    GRegex *regex;
+    GString *buffer;
+    gchar window[4096];
+    gssize size;
+
+    buffer = g_string_new("");
+    while ((size = read(in_fd, window, sizeof(window))) > 0) {
+        g_string_append_len(buffer, window, size);
+    }
+
+    regex = g_regex_new("^.+?<signal handler called>\n",
+                        G_REGEX_MULTILINE | G_REGEX_DOTALL,
+                        G_REGEX_MATCH_NEWLINE_ANY, NULL);
+    if (regex) {
+        stack_trace = g_regex_replace(regex, buffer->str, buffer->len, 0,
+                                      "", 0, NULL);
+        g_regex_unref(regex);
+        g_string_free(buffer, TRUE);
+    } else {
+        stack_trace = g_string_free(buffer, FALSE);
+    }
+}
+
+static void
+collect_stack_trace (void)
+{
+    int fds[2];
+    FILE *original_stdout, *pseudo_stdout;
+
+    if (pipe(fds) == -1) {
+        perror("unable to open pipe for collecting stack trace");
+        return;
+    }
+
+    original_stdout = stdout;
+    pseudo_stdout = fdopen(fds[1], "w");
+    if (!pseudo_stdout) {
+        perror("unable to open FILE for pipe");
+        close(fds[0]);
+        close(fds[1]);
+        return;
+    }
+    stdout = pseudo_stdout;
+    g_on_error_stack_trace(g_get_prgname());
+    stdout = original_stdout;
+    fclose(pseudo_stdout);
+
+    read_stack_trace(fds[0]);
+
+    close(fds[0]);
+    close(fds[1]);
+}
+
+static void
 ill_be_back_handler (int signum)
 {
+    g_free(stack_trace);
+    stack_trace = NULL;
+    collect_stack_trace();
     longjmp(jump_buffer, signum);
 }
 
@@ -265,7 +327,8 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite, CutContext *context,
         break;
       case SIGSEGV:
         all_success = FALSE;
-        g_signal_emit_by_name(CUT_TEST(test_suite), "crashed");
+        g_signal_emit_by_name(CUT_TEST(test_suite), "crashed", stack_trace);
+        g_free(stack_trace);
         break;
       default:
         break;

@@ -63,7 +63,7 @@ struct _CutTestClass
     void (*pending)  (CutTest *test, CutTestResult *result);
     void (*notification)(CutTest *test, CutTestResult *result);
     void (*complete) (CutTest *test);
-    void (*crashed)  (CutTest *test);
+    void (*crashed)  (CutTest *test, const gchar *stack_trace);
 
     gdouble      (*get_elapsed)  (CutTest *test);
     const gchar *(*get_name)     (CutTest *test);

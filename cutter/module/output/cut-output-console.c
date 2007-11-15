@@ -465,9 +465,14 @@ on_complete_test_suite (CutOutput *output, CutContext *context,
 
     crashed = cut_context_is_crashed(context);
     if (crashed) {
+        const gchar *stack_trace;
         print_for_status(console, CUT_TEST_RESULT_CRASH,
                          "%s", status_to_name(CUT_TEST_RESULT_CRASH));
         g_print("\n");
+
+        stack_trace = cut_context_get_stack_trace(context);
+        if (stack_trace)
+            g_print("%s\n", stack_trace);
     }
 
     i = 1;

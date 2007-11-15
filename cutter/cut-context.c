@@ -46,6 +46,7 @@ struct _CutContextPrivate
     gboolean use_multi_thread;
     GMutex *mutex;
     gboolean crashed;
+    gchar *stack_trace;
 };
 
 enum
@@ -145,6 +146,7 @@ cut_context_init (CutContext *context)
     priv->use_multi_thread = FALSE;
     priv->mutex = g_mutex_new();
     priv->crashed = FALSE;
+    priv->stack_trace = NULL;
 }
 
 static void
@@ -166,6 +168,11 @@ dispose (GObject *object)
     if (priv->mutex) {
         g_mutex_free(priv->mutex);
         priv->mutex = NULL;
+    }
+
+    if (priv->stack_trace) {
+        g_free(priv->stack_trace);
+        priv->stack_trace = NULL;
     }
 
     G_OBJECT_CLASS(cut_context_parent_class)->dispose(object);
@@ -551,13 +558,16 @@ cb_start_test_suite(CutTestSuite *test_suite, gpointer data)
 }
 
 static void
-cb_crashed_test_suite(CutTestSuite *test_suite, gpointer data)
+cb_crashed_test_suite(CutTestSuite *test_suite, const gchar *stack_trace,
+                      gpointer data)
 {
     CutContext *context = data;
     CutContextPrivate *priv;
 
     priv = CUT_CONTEXT_GET_PRIVATE(context);
     priv->crashed = TRUE;
+    g_free(priv->stack_trace);
+    priv->stack_trace = g_strdup(stack_trace);
     if (priv->output)
         cut_output_on_crashed_test_suite(priv->output, context, test_suite);
 }
@@ -640,6 +650,12 @@ gboolean
 cut_context_is_crashed (CutContext *context)
 {
     return CUT_CONTEXT_GET_PRIVATE(context)->crashed;
+};
+
+const gchar *
+cut_context_get_stack_trace (CutContext *context)
+{
+    return CUT_CONTEXT_GET_PRIVATE(context)->stack_trace;
 };
 
 /*

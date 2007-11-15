@@ -85,6 +85,7 @@ guint cut_context_get_n_notifications       (CutContext *context);
 const GList *cut_context_get_results        (CutContext *context);
 
 gboolean cut_context_is_crashed             (CutContext *context);
+const gchar *cut_context_get_stack_trace    (CutContext *context);
 
 
 G_END_DECLS

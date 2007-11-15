@@ -194,8 +194,8 @@ cut_test_class_init (CutTestClass *klass)
                 G_SIGNAL_RUN_LAST,
                 G_STRUCT_OFFSET (CutTestClass, crashed),
                 NULL, NULL,
-                g_cclosure_marshal_VOID__VOID,
-                G_TYPE_NONE, 0);
+                g_cclosure_marshal_VOID__STRING,
+                G_TYPE_NONE, 1, G_TYPE_STRING);
 
     g_type_class_add_private(gobject_class, sizeof(CutTestPrivate));
 }
