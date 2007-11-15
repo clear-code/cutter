@@ -42,6 +42,8 @@ struct _CutTestContextPrivate
     gboolean failed;
     jmp_buf jump_buffer;
     GList *inspected_strings;
+    gpointer user_data;
+    GDestroyNotify user_data_destroy_notify;
 };
 
 enum
@@ -111,6 +113,9 @@ cut_test_context_init (CutTestContext *context)
 
     priv->failed = FALSE;
     priv->inspected_strings = NULL;
+
+    priv->user_data = NULL;
+    priv->user_data_destroy_notify = NULL;
 }
 
 static void
@@ -136,6 +141,10 @@ dispose (GObject *object)
     g_list_foreach(priv->inspected_strings, (GFunc)g_free, NULL);
     g_list_free(priv->inspected_strings);
     priv->inspected_strings = NULL;
+
+    if (priv->user_data && priv->user_data_destroy_notify)
+        priv->user_data_destroy_notify(priv->user_data);
+    priv->user_data = NULL;
 
     G_OBJECT_CLASS(cut_test_context_parent_class)->dispose(object);
 }
@@ -251,6 +260,25 @@ cut_test_context_set_test (CutTestContext *context, CutTest *test)
     if (test)
         g_object_ref(test);
     priv->test = test;
+}
+
+gpointer
+cut_test_context_get_user_data (CutTestContext *context)
+{
+    return CUT_TEST_CONTEXT_GET_PRIVATE(context)->user_data;
+}
+
+void
+cut_test_context_set_user_data (CutTestContext *context, gpointer user_data,
+                                GDestroyNotify notify)
+{
+    CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+
+    if (priv->user_data && priv->user_data_destroy_notify)
+        priv->user_data_destroy_notify(priv->user_data);
+
+    priv->user_data = user_data;
+    priv->user_data_destroy_notify = notify;
 }
 
 gboolean

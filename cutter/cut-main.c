@@ -178,11 +178,21 @@ cut_create_test_suite (const gchar *directory)
 }
 
 gboolean
+cut_run_test_suite (CutTestSuite *suite, CutContext *context)
+{
+    if (suite)
+        return cut_test_suite_run_with_filter(suite, context,
+                                              test_case_names, test_names);
+    else
+        return TRUE;
+}
+
+gboolean
 cut_run (const gchar *directory)
 {
     CutContext *context;
-    gboolean success = TRUE;
     CutTestSuite *suite;
+    gboolean success = TRUE;
 
     context = cut_create_context();
     if (!cut_context_get_source_directory(context))
@@ -190,8 +200,7 @@ cut_run (const gchar *directory)
 
     suite = cut_create_test_suite(directory);
     if (suite) {
-        success = cut_test_suite_run_with_filter(suite, context,
-                                                 test_case_names, test_names);
+        success = cut_run_test_suite(suite, context);
         g_object_unref(suite);
     }
 

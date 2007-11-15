@@ -32,6 +32,8 @@ gboolean      cut_run               (const gchar *directory);
 
 CutContext   *cut_create_context    (void);
 CutTestSuite *cut_create_test_suite (const gchar *directory);
+gboolean      cut_run_test_suite    (CutTestSuite *suite,
+                                     CutContext   *context);
 
 G_END_DECLS
 

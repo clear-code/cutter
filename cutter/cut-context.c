@@ -28,7 +28,10 @@
 #include <glib.h>
 
 #include "cut-context.h"
+#include "cut-test-case.h"
 #include "cut-output.h"
+
+#include "cut-marshalers.h"
 
 #define CUT_CONTEXT_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_CONTEXT, CutContextPrivate))
 
@@ -60,6 +63,18 @@ enum
     PROP_N_NOTIFICATIONS,
     PROP_USE_MULTI_THREAD
 };
+
+enum
+{
+    START_SIGNAL,
+    START_TEST_SIGNAL,
+    COMPLETE_TEST_SIGNAL,
+    START_TEST_CASE_SIGNAL,
+    COMPLETE_TEST_CASE_SIGNAL,
+    LAST_SIGNAL
+};
+
+static gint cut_context_signals[LAST_SIGNAL] = {0};
 
 G_DEFINE_TYPE (CutContext, cut_context, G_TYPE_OBJECT)
 
@@ -126,6 +141,44 @@ cut_context_class_init (CutContextClass *klass)
                                 FALSE,
                                 G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class, PROP_USE_MULTI_THREAD, spec);
+
+
+	cut_context_signals[START_TEST_SIGNAL]
+        = g_signal_new ("start-test",
+                G_TYPE_FROM_CLASS (klass),
+                G_SIGNAL_RUN_LAST,
+                G_STRUCT_OFFSET (CutContextClass, start_test),
+                NULL, NULL,
+                _cut_marshal_VOID__OBJECT_OBJECT,
+                G_TYPE_NONE, 2, CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT);
+
+	cut_context_signals[COMPLETE_TEST_SIGNAL]
+        = g_signal_new ("complete-test",
+                G_TYPE_FROM_CLASS (klass),
+                G_SIGNAL_RUN_LAST,
+                G_STRUCT_OFFSET (CutContextClass, complete_test),
+                NULL, NULL,
+                _cut_marshal_VOID__OBJECT_OBJECT,
+                G_TYPE_NONE, 2, CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT);
+
+	cut_context_signals[START_TEST_CASE_SIGNAL]
+        = g_signal_new ("start-test-case",
+                G_TYPE_FROM_CLASS (klass),
+                G_SIGNAL_RUN_LAST,
+                G_STRUCT_OFFSET (CutContextClass, start_test_case),
+                NULL, NULL,
+                g_cclosure_marshal_VOID__OBJECT,
+                G_TYPE_NONE, 1, CUT_TYPE_TEST_CASE);
+
+	cut_context_signals[COMPLETE_TEST_CASE_SIGNAL]
+        = g_signal_new ("complete-test-case",
+                G_TYPE_FROM_CLASS (klass),
+                G_SIGNAL_RUN_LAST,
+                G_STRUCT_OFFSET (CutContextClass, complete_test_case),
+                NULL, NULL,
+                g_cclosure_marshal_VOID__OBJECT,
+                G_TYPE_NONE, 1, CUT_TYPE_TEST_CASE);
+
 
     g_type_class_add_private(gobject_class, sizeof(CutContextPrivate));
 }
@@ -488,10 +541,13 @@ cut_context_start_test (CutContext *context, CutTest *test)
 }
 
 static void
-cb_start_test(CutTestCase *test_case, CutTest *test, gpointer data)
+cb_start_test(CutTestCase *test_case, CutTest *test,
+              CutTestContext *test_context, gpointer data)
 {
     CutContext *context = data;
     CutContextPrivate *priv;
+
+    g_signal_emit_by_name(context, "start-test", test, test_context);
 
     priv = CUT_CONTEXT_GET_PRIVATE(context);
     if (priv->output)
@@ -499,7 +555,8 @@ cb_start_test(CutTestCase *test_case, CutTest *test, gpointer data)
 }
 
 static void
-cb_complete_test(CutTestCase *test_case, CutTest *test, gpointer data)
+cb_complete_test(CutTestCase *test_case, CutTest *test,
+                 CutTestContext *test_context, gpointer data)
 {
     CutContext *context = data;
     CutContextPrivate *priv;
@@ -507,6 +564,8 @@ cb_complete_test(CutTestCase *test_case, CutTest *test, gpointer data)
     priv = CUT_CONTEXT_GET_PRIVATE(context);
     if (priv->output)
         cut_output_on_complete_test(priv->output, test_case, test, NULL);
+
+    g_signal_emit_by_name(context, "complete-test", test, test_context);
 }
 
 static void
@@ -541,11 +600,15 @@ cb_complete_test_case(CutTestCase *test_case, gpointer data)
     g_signal_handlers_disconnect_by_func(test_case,
                                          G_CALLBACK(cb_complete_test_case),
                                          data);
+
+    g_signal_emit_by_name(context, "complete-test-case", test_case);
 }
 
 void
 cut_context_start_test_case (CutContext *context, CutTestCase *test_case)
 {
+    g_signal_emit_by_name(context, "start-test-case", test_case);
+
     g_signal_connect(test_case, "start-test",
                      G_CALLBACK(cb_start_test), context);
     g_signal_connect(test_case, "complete-test",

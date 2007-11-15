@@ -54,6 +54,7 @@ const char *cut_test_context_inspect_string_array (CutTestContext *context,
 int   cut_utils_compare_string_array        (const char **strings1,
                                              const char **strings2);
 
+void *cut_test_context_get_user_data        (CutTestContext *context);
 
 #ifdef __cplusplus
 }

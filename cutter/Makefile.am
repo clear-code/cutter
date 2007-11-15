@@ -6,7 +6,7 @@ INCLUDES = $(GLIB_CFLAGS)	\
 
 AM_CPPFLAGS = $(CUTTER_CFLAGS)
 
-EXTRA_DIST = config.h.in
+EXTRA_DIST = config.h.in cut-marshalers.list
 
 libcutterdir = $(libdir)/$(PACKAGE)
 libcutter_LTLIBRARIES = libcutter.la
@@ -39,11 +39,15 @@ enum_sources =			\
 	$(enum_source_prefix).c	\
 	$(enum_source_prefix).h
 
+marshal_sources =	\
+	cut-marshalers.c cut-marshalers.h
+
 MAINTAINERCLEANFILES =			\
 	stamp-$(enum_source_prefix)-c	\
 	stamp-$(enum_source_prefix)-h
 
-BUILT_SOURCES = $(enum_sources)
+BUILT_SOURCES = $(enum_sources) $(marshal_sources)
+CLEANFILES = $(enum_sources) $(marshal_sources)
 
 bin_PROGRAMS = cutter
 
@@ -51,7 +55,8 @@ cutter_SOURCES = main.c
 
 libcutter_la_SOURCES =			\
 		$(cutter_h_sources)	\
-		cut-enum-types.c	\
+		$(enum_sources)		\
+		$(marshal_sources)	\
 		cut-private.h		\
 		cut-test.h		\
 		cut-test.c		\
@@ -124,3 +129,9 @@ stamp-$(enum_source_prefix)-h: $(enum_sources_h) Makefile
 	  cp tmp-$(enum_source_prefix).h $(enum_source_prefix).h) && \
 	rm -f tmp-$(enum_source_prefix).h && \
 	echo timestamp > $(@F)
+
+cut-marshalers.h : cut-marshalers.list
+	$(GLIB_GENMARSHAL) $(top_srcdir)/cutter/cut-marshalers.list --header --prefix=_cut_marshal > $@
+
+cut-marshalers.c : cut-marshalers.list
+	$(GLIB_GENMARSHAL) $(top_srcdir)/cutter/cut-marshalers.list --header --body --prefix=_cut_marshal > $@

@@ -1,5 +1,8 @@
 2007-11-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/: implemented user data in test case.
+	* sample/cairo/: used the above feature.
+
 	* cutter/module/output/cut-output-console.c: supported tab stop.
 
 	* cutter/cut-main.[ch]: split functions.

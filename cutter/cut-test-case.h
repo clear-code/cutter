@@ -46,8 +46,12 @@ struct _CutTestCaseClass
 {
     CutTestContainerClass parent_class;
 
-    void (*start_test)    (CutTestCase *test_case, CutTest *test);
-    void (*complete_test) (CutTestCase *test_case, CutTest *test);
+    void (*start_test)    (CutTestCase    *test_case,
+                           CutTest        *test,
+                           CutTestContext *test_context);
+    void (*complete_test) (CutTestCase    *test_case,
+                           CutTest        *test,
+                           CutTestContext *test_context);
 };
 
 GType        cut_test_case_get_type       (void) G_GNUC_CONST;

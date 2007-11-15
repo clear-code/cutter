@@ -45,6 +45,17 @@ struct _CutContext
 struct _CutContextClass
 {
     GObjectClass parent_class;
+
+    void (*start_test)          (CutContext     *context,
+                                 CutTest        *test,
+                                 CutTestContext *test_context);
+    void (*complete_test)       (CutContext     *context,
+                                 CutTest        *test,
+                                 CutTestContext *test_context);
+    void (*start_test_case)     (CutContext     *context,
+                                 CutTestCase    *test_case);
+    void (*complete_test_case)  (CutContext     *context,
+                                 CutTestCase    *test_case);
 };
 
 extern GPrivate *cut_context_private;

@@ -372,12 +372,13 @@ on_start_test (CutOutput *output, CutTestCase *test_case,
     name = cut_test_get_name(test);
     name_length = strlen(name) + 2;
     tab_stop = g_string_new("");
-    while (name_length < (8 * 8 - 1)) {
+    while (name_length < (8 * 7 - 1)) {
         g_string_append_c(tab_stop, '\t');
         name_length += 8;
     }
     g_print("  %s:%s", name, tab_stop->str);
     g_string_free(tab_stop, TRUE);
+    fflush(stdout);
 }
 
 static void

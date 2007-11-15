@@ -32,6 +32,8 @@
 #include "cut-test.h"
 #include "cut-context.h"
 
+#include "cut-marshalers.h"
+
 #define CUT_TEST_CASE_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_CASE, CutTestCasePrivate))
 
 typedef struct _CutTestCasePrivate	CutTestCasePrivate;
@@ -135,8 +137,8 @@ cut_test_case_class_init (CutTestCaseClass *klass)
                 G_SIGNAL_RUN_LAST,
                 G_STRUCT_OFFSET(CutTestCaseClass, start_test),
                 NULL, NULL,
-                g_cclosure_marshal_VOID__OBJECT,
-                G_TYPE_NONE, 1, CUT_TYPE_TEST);
+                _cut_marshal_VOID__OBJECT_OBJECT,
+                G_TYPE_NONE, 2, CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT);
 
 	cut_test_case_signals[COMPLETE_TEST_SIGNAL]
         = g_signal_new("complete-test",
@@ -144,8 +146,8 @@ cut_test_case_class_init (CutTestCaseClass *klass)
                 G_SIGNAL_RUN_LAST,
                 G_STRUCT_OFFSET(CutTestCaseClass, complete_test),
                 NULL, NULL,
-                g_cclosure_marshal_VOID__OBJECT,
-                G_TYPE_NONE, 1, CUT_TYPE_TEST);
+                _cut_marshal_VOID__OBJECT_OBJECT,
+                G_TYPE_NONE, 2, CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT);
 
     g_type_class_add_private(gobject_class, sizeof(CutTestCasePrivate));
 }
@@ -295,7 +297,7 @@ run (CutTestCase *test_case, CutTest *test, CutContext *context)
     original_test_context = priv->get_current_test_context();
     priv->set_current_test_context(test_context);
 
-    g_signal_emit_by_name(test_case, "start-test", test);
+    g_signal_emit_by_name(test_case, "start-test", test, test_context);
     if (priv->setup) {
         if (cut_test_context_set_jump(test_context))
             priv->setup();
@@ -313,7 +315,7 @@ run (CutTestCase *test_case, CutTest *test, CutContext *context)
         if (cut_test_context_set_jump(test_context))
             priv->teardown();
     }
-    g_signal_emit_by_name(test_case, "complete-test", test);
+    g_signal_emit_by_name(test_case, "complete-test", test, test_context);
 
     priv->set_current_test_context(original_test_context);
     g_object_unref(test_context);

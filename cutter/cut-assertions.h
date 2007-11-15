@@ -33,6 +33,9 @@ extern "C" {
     cut_test_context_inspect_string_array(get_current_test_context(),   \
                                           strings)
 
+#define cut_user_data                                               \
+    (cut_test_context_get_user_data(get_current_test_context()))
+
 #define cut_test_pass() \
     cut_test_context_pass_assertion(get_current_test_context())
 
