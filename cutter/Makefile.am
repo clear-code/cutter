@@ -55,7 +55,8 @@ cutter_SOURCES = main.c
 
 libcutter_la_SOURCES =			\
 		$(cutter_h_sources)	\
-		$(enum_sources)		\
+		cut-enum-types.h	\
+		cut-enum-types.c	\
 		$(marshal_sources)	\
 		cut-private.h		\
 		cut-test.h		\
