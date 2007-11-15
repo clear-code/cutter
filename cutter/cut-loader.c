@@ -263,6 +263,17 @@ collect_test_functions (CutLoaderPrivate *priv)
 }
 #endif
 
+static void
+cb_complete (CutTestCase *test_case, gpointer data)
+{
+    CutLoaderPrivate *priv = data;
+
+    if (priv->module) {
+        g_module_close(priv->module);
+        priv->module = NULL;
+    }
+}
+
 static CutTestCase *
 create_test_case (CutLoaderPrivate *priv)
 {
@@ -302,6 +313,8 @@ create_test_case (CutLoaderPrivate *priv)
                                   get_current_test_context_function,
                                   set_current_test_context_function);
     g_free(test_case_name);
+
+    g_signal_connect(test_case, "complete", G_CALLBACK(cb_complete), priv);
 
     return test_case;
 }

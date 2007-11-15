@@ -1,5 +1,7 @@
 2007-11-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-loader.c: closed module on test case is completed.
+
 	* cutter/cut-loader.c: creanup.
 
 	* cutter/: showed stack trace on SEGV.
