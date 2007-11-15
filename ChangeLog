@@ -1,5 +1,7 @@
 2007-11-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* configure.ac: removed runner.
+
 	* cutter/Makefile.am: fixed dependencies.
 
 	* cutter/cut-main.c:
