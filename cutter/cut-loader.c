@@ -263,30 +263,15 @@ collect_test_functions (CutLoaderPrivate *priv)
 }
 #endif
 
-CutTestCase *
-cut_loader_load_test_case (CutLoader *loader)
+static CutTestCase *
+create_test_case (CutLoaderPrivate *priv)
 {
-    GList *node;;
-    GList *test_names;
     CutTestCase *test_case;
-    gchar *test_case_name, *filename;
     CutSetupFunction setup_function = NULL;
     CutGetCurrentTestContextFunction get_current_test_context_function = NULL;
     CutSetCurrentTestContextFunction set_current_test_context_function = NULL;
     CutTearDownFunction teardown_function = NULL;
-    CutLoaderPrivate *priv = CUT_LOADER_GET_PRIVATE(loader);
-
-    if (!priv->so_filename)
-        return NULL;
-
-    priv->module = g_module_open(priv->so_filename,
-                                 G_MODULE_BIND_LAZY | G_MODULE_BIND_LOCAL);
-    if (!priv->module)
-        return NULL;
-
-    test_names = collect_test_functions(priv);
-    if (!test_names)
-        return NULL;
+    gchar *test_case_name, *filename;
 
     g_module_symbol(priv->module,
                     "setup",
@@ -317,6 +302,31 @@ cut_loader_load_test_case (CutLoader *loader)
                                   get_current_test_context_function,
                                   set_current_test_context_function);
     g_free(test_case_name);
+
+    return test_case;
+}
+
+CutTestCase *
+cut_loader_load_test_case (CutLoader *loader)
+{
+    GList *node;;
+    GList *test_names;
+    CutTestCase *test_case;
+    CutLoaderPrivate *priv = CUT_LOADER_GET_PRIVATE(loader);
+
+    if (!priv->so_filename)
+        return NULL;
+
+    priv->module = g_module_open(priv->so_filename,
+                                 G_MODULE_BIND_LAZY | G_MODULE_BIND_LOCAL);
+    if (!priv->module)
+        return NULL;
+
+    test_names = collect_test_functions(priv);
+    if (!test_names)
+        return NULL;
+
+    test_case = create_test_case(priv);
     for (node = test_names; node; node = g_list_next(node)) {
         gchar *name;
         CutTest *test;
