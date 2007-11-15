@@ -347,12 +347,19 @@ on_start_test_suite (CutOutput *output, CutTestSuite *test_suite)
 static void
 on_start_test_case (CutOutput *output, CutTestCase *test_case)
 {
+    if (cut_output_get_verbose_level(output) < CUT_VERBOSE_LEVEL_VERBOSE)
+        return;
+
+    g_print("%s:\n", cut_test_get_name(CUT_TEST(test_case)));
 }
 
 static void
 on_start_test (CutOutput *output, CutTestCase *test_case,
                CutTest *test)
 {
+    GString *tab_stop;
+    const gchar *name;
+    gint name_length;
     const gchar *description;
 
     if (cut_output_get_verbose_level(output) < CUT_VERBOSE_LEVEL_VERBOSE)
@@ -360,12 +367,17 @@ on_start_test (CutOutput *output, CutTestCase *test_case,
 
     description = cut_test_get_description(test);
     if (description)
-        g_print("%s\n", description);
+        g_print("  %s\n", description);
 
-    g_print("%s(%s): ",
-            cut_test_get_name(test),
-            cut_test_get_name(CUT_TEST(test_case)));
-    fflush(stdout);
+    name = cut_test_get_name(test);
+    name_length = strlen(name) + 2;
+    tab_stop = g_string_new("");
+    while (name_length < (8 * 8 - 1)) {
+        g_string_append_c(tab_stop, '\t');
+        name_length += 8;
+    }
+    g_print("  %s:%s", name, tab_stop->str);
+    g_string_free(tab_stop, TRUE);
 }
 
 static void

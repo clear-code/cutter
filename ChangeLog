@@ -1,5 +1,7 @@
 2007-11-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/module/output/cut-output-console.c: supported tab stop.
+
 	* cutter/cut-main.[ch]: split functions.
 
 	* cutter/cut-main.c: added initialized check.
