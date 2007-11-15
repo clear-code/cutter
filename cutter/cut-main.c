@@ -108,8 +108,14 @@ static const GOptionEntry option_entries[] =
 void
 cut_init (int *argc, char ***argv)
 {
+    static gboolean initialized = FALSE;
     GOptionContext *option_context;
     GError *error = NULL;
+
+    if (initialized)
+        return;
+
+    initialized = TRUE;
 
     option_context = g_option_context_new("TEST_DIRECTORY");
     g_option_context_add_main_entries(option_context, option_entries, "cutter");

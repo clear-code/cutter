@@ -1,5 +1,7 @@
 2007-11-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-main.c: added initialized check.
+
 	* cutter/cut-main.c: CutContext is not static.
 
 2007-11-15  Hiroyuki Ikezoe  <poincare@ikezoe.net>
