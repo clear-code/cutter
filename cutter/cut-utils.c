@@ -69,6 +69,19 @@ cut_utils_compare_string_array (const gchar **strings1, const gchar **strings2)
     return TRUE;
 }
 
+GList *
+cut_test_list_union (GList *list1, GList *list2)
+{
+    GList *ret = NULL, *node;
+
+    for (node = list1; node; node = g_list_next(node)) {
+        if (g_list_find(list2, node->data))
+            ret = g_list_prepend(ret, node->data);
+    }
+
+    return ret;
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */

@@ -28,6 +28,8 @@ G_BEGIN_DECLS
 
 gchar *cut_utils_create_regex_pattern (const gchar *string);
 
+GList *cut_test_list_union (GList *list1, GList *list2);
+
 G_END_DECLS
 
 #endif /* __CUT_UTILS_H__ */

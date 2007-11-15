@@ -39,6 +39,7 @@
 #include "cut-test.h"
 #include "cut-test-case.h"
 #include "cut-context.h"
+#include "cut-utils.h"
 
 #define CUT_TEST_SUITE_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_SUITE, CutTestSuitePrivate))
 
@@ -420,7 +421,13 @@ cut_test_suite_run_with_filter (CutTestSuite *test_suite,
             GList *test_cases;
             test_cases = cut_test_container_filter_children(container,
                                                             *test_case_names);
-            filtered_test_cases = g_list_concat(test_cases, filtered_test_cases);
+            if (filtered_test_cases) {
+                filtered_test_cases = cut_test_list_union(test_cases, filtered_test_cases);
+                if (test_cases)
+                    g_list_free(test_cases);
+            } else {
+                filtered_test_cases = test_cases;
+            }
         }
     } else {
         filtered_test_cases =
