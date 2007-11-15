@@ -1,5 +1,7 @@
 2007-11-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/Makefile.am: fixed dependencies.
+
 	* cutter/cut-main.c:
 	- -t/--test -> -n/--name
 	- -n/--name -> -t/--test-case

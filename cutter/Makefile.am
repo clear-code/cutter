@@ -44,10 +44,10 @@ marshal_sources =	\
 
 MAINTAINERCLEANFILES =			\
 	stamp-$(enum_source_prefix)-c	\
-	stamp-$(enum_source_prefix)-h
+	stamp-$(enum_source_prefix)-h   \
+	$(marshal_sources)
 
 BUILT_SOURCES = $(enum_sources) $(marshal_sources)
-CLEANFILES = $(enum_sources) $(marshal_sources)
 
 bin_PROGRAMS = cutter
 
