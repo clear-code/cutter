@@ -61,31 +61,72 @@ void test_partial_match (void);
 void test_replace_lit (void);
 void test_expand (void);
 void test_match_next (void);
+void test_match_all (void);
 void test_sub_pattern (void);
 void test_named_sub_pattern (void);
 void test_fetch_all (void);
 void test_split_simple (void);
 void test_split (void);
 
+typedef struct _Match
+{
+  gchar *string;
+  gint start, end;
+} Match;
+
 static GRegex *regex;
 static GMatchInfo *match_info;
+static GSList *expected_matches;
 
 void
 setup (void)
 {
   regex = NULL;
   match_info = NULL;
+  expected_matches = NULL;
+}
+
+static void
+free_regex (void)
+{
+  if (regex)
+    g_regex_unref (regex);
+  regex = NULL;
+}
+
+static void
+free_match_info (void)
+{
+  if (match_info)
+    g_match_info_free (match_info);
+  match_info = NULL;
+
+}
+
+static void
+free_match (gpointer data, gpointer user_data)
+{
+  Match *match = data;
+  if (match == NULL)
+    return;
+  g_free (match->string);
+  g_free (match);
+}
+
+static void
+free_expected_matches (void)
+{
+  g_slist_foreach (expected_matches, free_match, NULL);
+  g_slist_free (expected_matches);
+  expected_matches = NULL;
 }
 
 void
 teardown (void)
 {
-  if (match_info)
-    g_match_info_free (match_info);
-  if (regex)
-    g_regex_unref (regex);
-  match_info = NULL;
-  regex = NULL;
+  free_regex ();
+  free_match_info ();
+  free_expected_matches ();
 }
 
 
@@ -747,23 +788,6 @@ test_expand (void)
   cut_assert_null (g_match_info_expand_references (NULL, "x\\Ay", NULL));
 }
 
-struct _Match
-{
-  gchar *string;
-  gint start, end;
-};
-typedef struct _Match Match;
-
-static void
-free_match (gpointer data, gpointer user_data)
-{
-  Match *match = data;
-  if (match == NULL)
-    return;
-  g_free (match->string);
-  g_free (match);
-}
-
 static GSList *
 collect_expected_matches (gint start_position, ...)
 {
@@ -1224,298 +1248,174 @@ test_split (void)
   TEST_SPLIT(" *", "ab c", 0, 4, expected9);
 }
 
-static gboolean
-test_match_all_full (const gchar *pattern,
-		     const gchar *string,
-		     gssize       string_len,
-		     gint         start_position,
-		     ...)
+static void
+collect_expected_matchesv (va_list args)
 {
-  GRegex *regex;
-  GMatchInfo *match_info;
-  va_list args;
-  GSList *expected = NULL;
-  GSList *l_exp;
-  gboolean match_ok;
-  gboolean ret = TRUE;
-  gint match_count;
-  gint i;
-  
   /* The va_list is a NULL-terminated sequence of: extected matched string,
    * expected start and expected end. */
+  while (TRUE)
+    {
+      Match *match;
+      const gchar *expected_string = va_arg (args, const gchar *);
+      if (expected_string == NULL)
+        break;
+      match = g_new0 (Match, 1);
+      match->string = g_strdup (expected_string);
+      match->start = va_arg (args, gint);
+      match->end = va_arg (args, gint);
+      expected_matches = g_slist_prepend (expected_matches, match);
+    }
+  expected_matches = g_slist_reverse (expected_matches);
+}
+
+static void
+cut_assert_match_all_full_each (const gchar *pattern,
+                                const gchar *string,
+                                gssize       string_len,
+                                gint         start_position,
+                                va_list      args)
+{
+  GSList *expected_node;
+  gint expected_length;
+  gint match_count;
+  gint i;
+
+  collect_expected_matchesv (args);
+  expected_length = g_slist_length (expected_matches);
+
+  regex = g_regex_new (pattern, 0, 0, NULL);
+  if (expected_length == 0)
+    cut_assert (!g_regex_match_all_full (regex, string, string_len,
+                                         start_position, 0, &match_info, NULL),
+                "/%s/ !~ <%s>", pattern, string);
+  else
+    cut_assert (g_regex_match_all_full (regex, string, string_len,
+                                        start_position, 0, &match_info, NULL),
+                "/%s/ =~ <%s>", pattern, string);
+
+  match_count = g_match_info_get_match_count (match_info);
+  cut_assert_equal_int (expected_length, match_count);
+
+  expected_node = expected_matches;
+  for (i = 0; i < match_count; i++)
+    {
+      gint start, end;
+      gchar *matched_string;
+      Match *expected_match = expected_node->data;
+
+      matched_string = g_match_info_fetch (match_info, i);
+      cut_assert_equal_string (expected_match->string, matched_string,
+                               "/%s/ =~ <%s>",
+                               pattern, expected_match->string, i, match_count);
+      g_free (matched_string);
+
+      cut_assert (g_match_info_fetch_pos (match_info, i, &start, &end));
+      cut_assert_equal_int (expected_match->start, start,
+                            "/%s/ =~ <%s>", pattern, expected_match->string);
+      cut_assert_equal_int (expected_match->end, end,
+                            "/%s/ =~ <%s>", pattern, expected_match->string);
+
+      expected_node = g_slist_next (expected_node);
+    }
+
+  free_regex ();
+  free_match_info ();
+  free_expected_matches ();
+}
+
+static void
+cut_assert_match_all_each (const gchar *pattern,
+                           const gchar *string,
+                           va_list args)
+{
+  GSList *expected_node;
+  gint expected_length;
+  gint match_count;
+  gint i;
+
+  collect_expected_matchesv (args);
+  expected_length = g_slist_length (expected_matches);
+
+  regex = g_regex_new (pattern, 0, 0, NULL);
+  if (expected_length == 0)
+    cut_assert (!g_regex_match_all (regex, string, 0, &match_info),
+                "/%s/ !~ <%s>", pattern, string);
+  else
+    cut_assert (g_regex_match_all (regex, string, 0, &match_info),
+                "/%s/ =~ <%s>", pattern, string);
+
+  match_count = g_match_info_get_match_count (match_info);
+  cut_assert_equal_int (expected_length, match_count);
+
+  expected_node = expected_matches;
+  for (i = 0; i < match_count; i++)
+    {
+      gint start, end;
+      gchar *matched_string;
+      Match *expected_match = expected_node->data;
+
+      matched_string = g_match_info_fetch (match_info, i);
+      cut_assert_equal_string_or_null (expected_match->string, matched_string);
+
+      cut_assert (g_match_info_fetch_pos (match_info, i, &start, &end));
+      cut_assert_equal_int (expected_match->start, start,
+                            "/%s/ =~ <%s>", pattern, expected_match->string);
+      cut_assert_equal_int (expected_match->end, end,
+                            "/%s/ =~ <%s>", pattern, expected_match->string);
+
+      expected_node = g_slist_next (expected_node);
+    }
+
+  free_regex ();
+  free_match_info ();
+  free_expected_matches ();
+}
+
+static void
+cut_assert_match_all (const gchar *pattern,
+                      const gchar *string,
+                      gssize string_length,
+                      gint start_position,
+                      ...)
+{
+  va_list args, copied_args;
+
   va_start (args, start_position);
-  while (TRUE)
-   {
-      Match *match;
-      const gchar *expected_string = va_arg (args, const gchar *);
-      if (expected_string == NULL)
-        break;
-      match = g_new0 (Match, 1);
-      match->string = g_strdup (expected_string);
-      match->start = va_arg (args, gint);
-      match->end = va_arg (args, gint);
-      expected = g_slist_prepend (expected, match);
+
+  va_copy (copied_args, args);
+  cut_assert_match_all_full_each (pattern, string, string_length, start_position,
+                                  copied_args);
+  va_end(copied_args);
+
+  if (string_length == -1 && start_position == 0)
+    {
+      va_copy (copied_args, args);
+      cut_assert_match_all_each (pattern, string, copied_args);
+      va_end(copied_args);
     }
-  expected = g_slist_reverse (expected);
+
   va_end (args);
-
-  regex = g_regex_new (pattern, 0, 0, NULL);
-  match_ok = g_regex_match_all_full (regex, string, string_len, start_position,
-				     0, &match_info, NULL);
-
-  if (match_ok && g_slist_length (expected) == 0)
-    {
-      g_print ("failed\n");
-      ret = FALSE;
-      goto exit;
-    }
-  if (!match_ok && g_slist_length (expected) != 0)
-    {
-      g_print ("failed\n");
-      ret = FALSE;
-      goto exit;
-    }
-
-  match_count = g_match_info_get_match_count (match_info);
-  if (match_count != g_slist_length (expected))
-    {
-      g_print ("failed \t(got %d %s, expected %d)\n", match_count,
-	       match_count == 1 ? "match" : "matches", 
-	       g_slist_length (expected));
-      ret = FALSE;
-      goto exit;
-    }
-
-  l_exp = expected;
-  for (i = 0; i < match_count; i++)
-    {
-      gint start, end;
-      gchar *matched_string;
-      Match *exp = l_exp->data;
-
-      matched_string = g_match_info_fetch (match_info, i);
-      g_match_info_fetch_pos (match_info, i, &start, &end);
-
-      if (!streq(exp->string, matched_string))
-	{
-	  g_print ("failed \t(got \"%s\", expected \"%s\")\n",
-		   matched_string, exp->string);
-          g_free (matched_string);
-	  ret = FALSE;
-	  goto exit;
-	}
-      g_free (matched_string);
-
-      if (exp->start != start || exp->end != end)
-	{
-	  g_print ("failed \t(got [%d, %d], expected [%d, %d])\n",
-		   start, end, exp->start, exp->end);
-	  ret = FALSE;
-	  goto exit;
-	}
-
-      l_exp = g_slist_next (l_exp);
-    }
-
-exit:
-  g_match_info_free (match_info);
-  g_regex_unref (regex);
-  g_slist_foreach (expected, free_match, NULL);
-  g_slist_free (expected);
-
-  return ret;
 }
 
-#define TEST_MATCH_ALL(pattern, string, string_len, start_position, expected) { \
-  total++; \
-  if (test_match_all_full (pattern, string, string_len, start_position, NULL)) \
-    PASS; \
-  else \
-    FAIL; \
-  if (string_len == -1 && start_position == 0) \
-  { \
-    total++; \
-    if (test_match_all (pattern, string, NULL)) \
-      PASS; \
-    else \
-      FAIL; \
-  } \
-}
-
-static gboolean
-test_match_all (const gchar *pattern,
-		const gchar *string,
-                ...)
+void
+test_match_all (void)
 {
-  GRegex *regex;
-  GMatchInfo *match_info;
-  va_list args;
-  GSList *expected = NULL;
-  GSList *l_exp;
-  gboolean match_ok;
-  gboolean ret = TRUE;
-  gint match_count;
-  gint i;
-  
-  /* The va_list is a NULL-terminated sequence of: extected matched string,
-   * expected start and expected end. */
-  va_start (args, string);
-  while (TRUE)
-   {
-      Match *match;
-      const gchar *expected_string = va_arg (args, const gchar *);
-      if (expected_string == NULL)
-        break;
-      match = g_new0 (Match, 1);
-      match->string = g_strdup (expected_string);
-      match->start = va_arg (args, gint);
-      match->end = va_arg (args, gint);
-      expected = g_slist_prepend (expected, match);
-    }
-  expected = g_slist_reverse (expected);
-  va_end (args);
-
-  regex = g_regex_new (pattern, 0, 0, NULL);
-  match_ok = g_regex_match_all (regex, string, 0, &match_info);
-
-  if (match_ok && g_slist_length (expected) == 0)
-    {
-      g_print ("failed\n");
-      ret = FALSE;
-      goto exit;
-    }
-  if (!match_ok && g_slist_length (expected) != 0)
-    {
-      g_print ("failed\n");
-      ret = FALSE;
-      goto exit;
-    }
-
-  match_count = g_match_info_get_match_count (match_info);
-  if (match_count != g_slist_length (expected))
-    {
-      g_print ("failed \t(got %d %s, expected %d)\n", match_count,
-	       match_count == 1 ? "match" : "matches", 
-	       g_slist_length (expected));
-      ret = FALSE;
-      goto exit;
-    }
-
-  l_exp = expected;
-  for (i = 0; i < match_count; i++)
-    {
-      gint start, end;
-      gchar *matched_string;
-      Match *exp = l_exp->data;
-
-      matched_string = g_match_info_fetch (match_info, i);
-      g_match_info_fetch_pos (match_info, i, &start, &end);
-
-      if (!streq(exp->string, matched_string))
-	{
-	  g_print ("failed \t(got \"%s\", expected \"%s\")\n",
-		   matched_string, exp->string);
-          g_free (matched_string);
-	  ret = FALSE;
-	  goto exit;
-	}
-      g_free (matched_string);
-
-      if (exp->start != start || exp->end != end)
-	{
-	  g_print ("failed \t(got [%d, %d], expected [%d, %d])\n",
-		   start, end, exp->start, exp->end);
-	  ret = FALSE;
-	  goto exit;
-	}
-
-      l_exp = g_slist_next (l_exp);
-    }
-
-exit:
-
-  g_match_info_free (match_info);
-  g_regex_unref (regex);
-  g_slist_foreach (expected, free_match, NULL);
-  g_slist_free (expected);
-
-  return ret;
+  cut_assert_match_all ("<.*>", "", -1, 0, NULL);
+  cut_assert_match_all ("a+", "", -1, 0, NULL);
+  cut_assert_match_all ("a+", "a", 0, 0, NULL);
+  cut_assert_match_all ("a+", "a", -1, 1, NULL);
+  cut_assert_match_all ("<.*>", "<a>", -1, 0, "<a>", 0, 3, NULL);
+  cut_assert_match_all ("a+", "a", -1, 0, "a", 0, 1, NULL);
+  cut_assert_match_all ("a+", "aa", 1, 0, "a", 0, 1, NULL);
+  cut_assert_match_all ("a+", "aa", -1, 1, "a", 1, 2, NULL);
+  cut_assert_match_all ("a+", "aa", 2, 1, "a", 1, 2, NULL);
+  cut_assert_match_all (".+", ENG, -1, 0, ENG, 0, 2, NULL);
+  cut_assert_match_all ("<.*>", "<a><b>", -1, 0, "<a><b>", 0, 6,
+                        "<a>", 0, 3, NULL);
+  cut_assert_match_all ("a+", "aa", -1, 0, "aa", 0, 2, "a", 0, 1, NULL);
+  cut_assert_match_all (".+", ENG EURO, -1, 0, ENG EURO, 0, 5, ENG, 0, 2, NULL);
+  cut_assert_match_all ("<.*>", "<a><b><c>", -1, 0, "<a><b><c>", 0, 9,
+                        "<a><b>", 0, 6, "<a>", 0, 3, NULL);
+  cut_assert_match_all ("a+", "aaa", -1, 0, "aaa", 0, 3, "aa", 0, 2,
+                        "a", 0, 1, NULL);
 }
-
-#define TEST_MATCH_ALL1(pattern, string, string_len, start_position, \
-			t1, s1, e1) { \
-  total++; \
-  if (test_match_all_full (pattern, string, string_len, start_position, \
-			   t1, s1, e1, NULL)) \
-    PASS; \
-  else \
-    FAIL; \
-  if (string_len == -1 && start_position == 0) \
-  { \
-    total++; \
-    if (test_match_all (pattern, string, t1, s1, e1, NULL)) \
-      PASS; \
-    else \
-      FAIL; \
-  } \
-}
-
-#define TEST_MATCH_ALL2(pattern, string, string_len, start_position, \
-			t1, s1, e1, t2, s2, e2) { \
-  total++; \
-  if (test_match_all_full (pattern, string, string_len, start_position, \
-			   t1, s1, e1, t2, s2, e2, NULL)) \
-    PASS; \
-  else \
-    FAIL; \
-  if (string_len == -1 && start_position == 0) \
-  { \
-    total++; \
-    if (test_match_all (pattern, string, t1, s1, e1, t2, s2, e2, NULL)) \
-      PASS; \
-    else \
-      FAIL; \
-  } \
-}
-
-#define TEST_MATCH_ALL3(pattern, string, string_len, start_position, \
-			t1, s1, e1, t2, s2, e2, t3, s3, e3) { \
-  total++; \
-  if (test_match_all_full (pattern, string, string_len, start_position, \
-			   t1, s1, e1, t2, s2, e2, t3, s3, e3, NULL)) \
-    PASS; \
-  else \
-    FAIL; \
-  if (string_len == -1 && start_position == 0) \
-  { \
-    total++; \
-    if (test_match_all (pattern, string, t1, s1, e1, t2, s2, e2, t3, s3, e3, NULL)) \
-      PASS; \
-    else \
-      FAIL; \
-  } \
-}
-#if 0
-int
-main (int argc, char *argv[])
-{
-/* TEST_MATCH_ALL#(pattern, string, string_len, start_position, ...) */
-  TEST_MATCH_ALL0("<.*>", "", -1, 0);
-  TEST_MATCH_ALL0("a+", "", -1, 0);
-  TEST_MATCH_ALL0("a+", "a", 0, 0);
-  TEST_MATCH_ALL0("a+", "a", -1, 1);
-  TEST_MATCH_ALL1("<.*>", "<a>", -1, 0, "<a>", 0, 3);
-  TEST_MATCH_ALL1("a+", "a", -1, 0, "a", 0, 1);
-  TEST_MATCH_ALL1("a+", "aa", 1, 0, "a", 0, 1);
-  TEST_MATCH_ALL1("a+", "aa", -1, 1, "a", 1, 2);
-  TEST_MATCH_ALL1("a+", "aa", 2, 1, "a", 1, 2);
-  TEST_MATCH_ALL1(".+", ENG, -1, 0, ENG, 0, 2);
-  TEST_MATCH_ALL2("<.*>", "<a><b>", -1, 0, "<a><b>", 0, 6, "<a>", 0, 3);
-  TEST_MATCH_ALL2("a+", "aa", -1, 0, "aa", 0, 2, "a", 0, 1);
-  TEST_MATCH_ALL2(".+", ENG EURO, -1, 0, ENG EURO, 0, 5, ENG, 0, 2);
-  TEST_MATCH_ALL3("<.*>", "<a><b><c>", -1, 0, "<a><b><c>", 0, 9,
-		  "<a><b>", 0, 6, "<a>", 0, 3);
-  TEST_MATCH_ALL3("a+", "aaa", -1, 0, "aaa", 0, 3, "aa", 0, 2, "a", 0, 1);
-}
-#endif
-

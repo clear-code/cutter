@@ -884,6 +884,7 @@ test_group_names (void)
   check_no_error (error);
 
   keyfile = g_key_file_new ();
+  cut_assert (keyfile);
   g_key_file_set_string (keyfile, "a[b", "key1", "123");
   value = g_key_file_get_string (keyfile, "a[b", "key1", &error);
   check_error (&error, 

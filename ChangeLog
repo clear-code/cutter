@@ -1,3 +1,7 @@
+2007-11-15  Kouhei Sutou  <kou@cozmixng.org>
+
+	* sample/glib/test-regex.c: cutterlized.
+
 2007-11-15  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* sample/gtk+/test-builder.c: (test_connect_signals): Check GTK+
