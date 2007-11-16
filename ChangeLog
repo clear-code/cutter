@@ -1,5 +1,8 @@
 2007-11-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* autogen.sh: don't use gtkdocize because we have customoized
+	gtk-doc.make.
+
 	* doc/reference/ja.po: updated.
 
 	* gtk-doc.make: supported install.

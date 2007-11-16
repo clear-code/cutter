@@ -11,7 +11,7 @@ run()
 
 run libtoolize --copy --force
 run glib-gettextize --force --copy
-run gtkdocize --copy
+#run gtkdocize --copy
 run aclocal
 run autoheader
 run automake --add-missing --foreign --copy
