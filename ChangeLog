@@ -1,3 +1,7 @@
+2007-11-16  Kouhei Sutou  <kou@cozmixng.org>
+
+	* ./: supported gettext.
+
 2007-11-16  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* configure.ac: Use gtk-doc.

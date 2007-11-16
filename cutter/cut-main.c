@@ -24,7 +24,9 @@
 #endif /* HAVE_CONFIG_H */
 
 #include <stdlib.h>
+#include <locale.h>
 #include <glib.h>
+#include <glib/gi18n-lib.h>
 
 #ifdef HAVE_LIBBFD
 #  include <bfd.h>
@@ -81,7 +83,7 @@ parse_color_arg (const gchar *option_name, const gchar *value,
         g_set_error(error,
                     G_OPTION_ERROR,
                     G_OPTION_ERROR_BAD_VALUE,
-                    "Invalid color value: %s", value);
+                    _("Invalid color value: %s"), value);
         return FALSE;
     }
 
@@ -91,17 +93,17 @@ parse_color_arg (const gchar *option_name, const gchar *value,
 static const GOptionEntry option_entries[] =
 {
     {"verbose", 'v', 0, G_OPTION_ARG_CALLBACK, parse_verbose_level_arg,
-     "Set verbose level", "[s|silent|n|normal|v|verbose]"},
+     N_("Set verbose level"), "[s|silent|n|normal|v|verbose]"},
     {"source-directory", 's', 0, G_OPTION_ARG_STRING, &source_directory,
-     "Set directory of source code", "DIRECTORY"},
+     N_("Set directory of source code"), "DIRECTORY"},
     {"color", 'c', G_OPTION_FLAG_OPTIONAL_ARG, G_OPTION_ARG_CALLBACK,
-     parse_color_arg, "Output log with colors", "[yes|true|no|false|auto]"},
+     parse_color_arg, N_("Output log with colors"), "[yes|true|no|false|auto]"},
     {"name", 'n', 0, G_OPTION_ARG_STRING_ARRAY, &test_names,
-     "Specify tests", "TEST_NAME"},
+     N_("Specify tests"), "TEST_NAME"},
     {"test-case", 't', 0, G_OPTION_ARG_STRING_ARRAY, &test_case_names,
-     "Specify test cases", "TEST_CASE_NAME"},
+     N_("Specify test cases"), "TEST_CASE_NAME"},
     {"multi-thread", 'm', 0, G_OPTION_ARG_NONE, &use_multi_thread,
-     "Run test cases with multi-thread", NULL},
+     N_("Run test cases with multi-thread"), NULL},
     {NULL}
 };
 
@@ -116,6 +118,16 @@ cut_init (int *argc, char ***argv)
         return;
 
     initialized = TRUE;
+
+    g_print("%s:%s\n", GETTEXT_PACKAGE, LOCALEDIR);
+    bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
+    bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
+    textdomain(GETTEXT_PACKAGE);
+
+    setlocale(LC_ALL, "");
+
+    g_type_init();
+	if (!g_thread_supported()) g_thread_init(NULL);
 
     option_context = g_option_context_new("TEST_DIRECTORY");
     g_option_context_add_main_entries(option_context, option_entries, "cutter");
@@ -134,10 +146,6 @@ cut_init (int *argc, char ***argv)
         g_option_context_free(option_context);
         exit(1);
     }
-
-    g_type_init();
-
-    g_thread_init(NULL);
 
 #ifdef HAVE_LIBBFD
     bfd_init();

@@ -4,7 +4,9 @@ INCLUDES = $(GLIB_CFLAGS)	\
 	 -I$(top_builddir)	\
 	 -I$(top_srcdir)
 
-AM_CPPFLAGS = $(CUTTER_CFLAGS)
+AM_CPPFLAGS = 						\
+	-DLOCALEDIR=\""$(localedir)"\"			\
+	$(CUTTER_CFLAGS)
 
 EXTRA_DIST = config.h.in cut-marshalers.list
 

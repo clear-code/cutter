@@ -1,0 +1,46 @@
+# Cutter ja.po.
+# Copyright (C) 2007 Kouhei Sutou
+# This file is distributed under the same license as the Cutter package.
+# Kouhei Sutou <kou@cozmixng.org>, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Cutter trunk\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-11-16 15:21+0900\n"
+"PO-Revision-Date: 2007-11-16 15:24+0900\n"
+"Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
+"Language-Team: Japanese\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: cutter/cut-main.c:85
+#, c-format
+msgid "Invalid color value: %s"
+msgstr "不正な色指定です: %s"
+
+#: cutter/cut-main.c:95
+msgid "Set verbose level"
+msgstr "詳細度を設定"
+
+#: cutter/cut-main.c:97
+msgid "Set directory of source code"
+msgstr "ソースコードのディレクトリを設定"
+
+#: cutter/cut-main.c:99
+msgid "Output log with colors"
+msgstr "色付きでログを出力"
+
+#: cutter/cut-main.c:101
+msgid "Specify tests"
+msgstr "テストを指定"
+
+#: cutter/cut-main.c:103
+msgid "Specify test cases"
+msgstr "テストケースを指定"
+
+#: cutter/cut-main.c:105
+msgid "Run test cases with multi-thread"
+msgstr "マルチスレッドでテストケースを実行"

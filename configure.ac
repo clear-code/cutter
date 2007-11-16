@@ -123,6 +123,18 @@ dnl **************************************************************
 
 GTK_DOC_CHECK([1.4])
 
+dnl **************************************************************
+dnl Check for gettext.
+dnl **************************************************************
+
+GETTEXT_PACKAGE=cutter
+AC_SUBST(GETTEXT_PACKAGE)
+AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE], ["$GETTEXT_PACKAGE"], [Gettext package])
+
+ALL_LINGUAS="ja"
+AM_GLIB_GNU_GETTEXT
+
+
 CUTTER_CFLAGS="$GLIB_CFLAGS -DOUTPUT_MODULEDIR=\\\"\"\$(output_moduledir)\"\\\""
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DRUNNER_MODULEDIR=\\\"\"\$(runner_moduledir)\"\\\""
 
@@ -140,8 +152,9 @@ AC_CONFIG_FILES([Makefile
                  test/Makefile
 		 test/loader_test_dir/Makefile
 		 test/repository_test_dir/Makefile
+		 po/Makefile.in
 		 doc/Makefile
-		doc/reference/version.xml
+		 doc/reference/version.xml
 		 doc/reference/Makefile])
 
 AC_OUTPUT

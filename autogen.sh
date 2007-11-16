@@ -1,8 +1,5 @@
 #!/bin/sh
 
-srcdir=`dirname $0`
-test -z "$srcdir" && srcdir=.
-
 run()
 {
     $@
@@ -13,6 +10,7 @@ run()
 }
 
 run libtoolize --copy --force
+run glib-gettextize --force --copy
 run gtkdocize --copy
 run aclocal
 run autoheader
