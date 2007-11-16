@@ -23,13 +23,13 @@ LDFLAGS =			\
 	-module			\
 	-avoid-version
 
-test_base64_la_SOURCES = test-base64.c
-test_keyfile_la_SOURCES = test-keyfile.c
-test_option_la_SOURCES = test-option.c
-test_regex_la_SOURCES = test-regex.c
-test_thread_la_SOURCES = test-thread.c
-test_uri_la_SOURCES = test-uri.c
-test_utf8_pointer_la_SOURCES = test-utf8-pointer.c
-test_utf8_validate_la_SOURCES = test-utf8-validate.c
+test_base64_la_SOURCES = base64.c
+test_keyfile_la_SOURCES = keyfile.c
+test_option_la_SOURCES = option.c
+test_regex_la_SOURCES = regex.c
+test_thread_la_SOURCES = thread.c
+test_uri_la_SOURCES = uri.c
+test_utf8_pointer_la_SOURCES = utf8-pointer.c
+test_utf8_validate_la_SOURCES = utf8-validate.c
 
-test_properties_la_SOURCES = test-properties.c
+test_properties_la_SOURCES = properties.c
