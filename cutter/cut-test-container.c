@@ -197,18 +197,13 @@ cut_test_container_filter_children (CutTestContainer *container,
 
     for (; *filter; filter++) {
         gchar *pattern;
-        GList *children;
 
         pattern = cut_utils_create_regex_pattern(*filter);
-        children = collect_tests_with_regex(tests, pattern);
+        if (!matched_tests)
+            matched_tests = collect_tests_with_regex(tests, pattern);
+        else
+            matched_tests = collect_tests_with_regex(matched_tests, pattern);
         g_free(pattern);
-        if (children) {
-            GList *old_matched = matched_tests;
-            matched_tests = cut_test_list_intersection(matched_tests, children);
-            if (old_matched)
-                g_list_free(old_matched);
-            g_list_free(children);
-        }
     }
 
     return matched_tests;

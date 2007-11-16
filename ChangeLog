@@ -13,6 +13,9 @@
 	* cutter/cut-test-case.h: Remove cut_test_case_has_children().
 	* test/test-cut-test-case.c: Remove a test for
 	cut_test_case_has_children().
+	* cutter/cut-utils.[hc]: Remove cut_utils_list_intersection().
+	* cutter/cut-test-container.c: Do not use
+	cut_utils_list_intersection().
 
 2007-11-15  Kouhei Sutou  <kou@cozmixng.org>
 
