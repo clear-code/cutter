@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 0.1.0\n"
 "POT-Creation-Date: 2007-11-16 17:46+0900\n"
-"PO-Revision-Date: 2007-11-16 19:10+0900\n"
+"PO-Revision-Date: 2007-11-16 21:22+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -201,7 +201,7 @@ msgstr ""
 #: xml/cut-utils.xml:38(title) xml/cut-verbose-level.xml:43(title)
 #: xml/cutter.xml:41(title)
 msgid "Description"
-msgstr ""
+msgstr "説明"
 
 #: xml/cut-assertions.xml:65(title) xml/cut-context.xml:109(title)
 #: xml/cut-enum-types.xml:50(title) xml/cut-loader.xml:64(title)
@@ -215,7 +215,7 @@ msgstr ""
 #: xml/cut-utils.xml:45(title) xml/cut-verbose-level.xml:50(title)
 #: xml/cutter.xml:48(title)
 msgid "Details"
-msgstr ""
+msgstr "詳細"
 
 #: xml/cut-assertions.xml:67(title)
 msgid ""
