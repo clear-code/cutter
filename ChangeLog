@@ -1,3 +1,9 @@
+2007-11-16  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-public.h: removed CRASH result.
+	* cutter/module/output/cut-output-console.c: printed test case name
+	with color.
+
 2007-11-16  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-repository.c: Load only so file which has "test" prefix.

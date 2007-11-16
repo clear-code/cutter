@@ -44,12 +44,15 @@
 #define RED_COLOR "\033[01;31m"
 #define RED_BACK_COLOR "\033[41m"
 #define GREEN_COLOR "\033[01;32m"
+#define GREEN_BACK_COLOR "\033[01;42m"
 #define YELLOW_COLOR "\033[01;33m"
 #define BLUE_COLOR "\033[01;34m"
 #define PURPLE_COLOR "\033[01;35m"
 #define CYAN_COLOR "\033[01;36m"
 #define WHITE_COLOR "\033[01;37m"
 #define NORMAL_COLOR "\033[00m"
+
+#define CRASH_COLOR RED_BACK_COLOR WHITE_COLOR
 
 typedef struct _CutOutputConsole CutOutputConsole;
 typedef struct _CutOutputConsoleClass CutOutputConsoleClass;
@@ -278,9 +281,6 @@ status_to_name(CutTestResultStatus status)
       case CUT_TEST_RESULT_NOTIFICATION:
         name = "Notification";
         break;
-      case CUT_TEST_RESULT_CRASH:
-        name = "CRASH!!!";
-        break;
       default:
         name = "MUST NOT HAPPEN!!!";
         break;
@@ -310,9 +310,6 @@ status_to_color(CutTestResultStatus status)
       case CUT_TEST_RESULT_NOTIFICATION:
         color = CYAN_COLOR;
         break;
-      case CUT_TEST_RESULT_CRASH:
-        color = RED_BACK_COLOR WHITE_COLOR;
-        break;
       default:
         color = "";
         break;
@@ -322,20 +319,38 @@ status_to_color(CutTestResultStatus status)
 }
 
 static void
-print_for_status(CutOutputConsole *console, CutTestResultStatus status,
-                 gchar const *format, ...)
+print_with_colorv (CutOutputConsole *console, const gchar *color,
+                   gchar const *format, va_list args)
 {
-    va_list args;
-
-    va_start(args, format);
-    if (console->use_color) {
+   if (console->use_color) {
         gchar *message;
         message = g_strdup_vprintf(format, args);
-        g_print("%s%s%s", status_to_color(status), message, NORMAL_COLOR);
+        g_print("%s%s%s", color, message, NORMAL_COLOR);
         g_free(message);
     } else {
         g_vprintf(format, args);
     }
+}
+
+static void
+print_with_color (CutOutputConsole *console, const gchar *color,
+                  gchar const *format, ...)
+{
+    va_list args;
+
+    va_start(args, format);
+    print_with_colorv(console, color, format, args);
+    va_end(args);
+}
+
+static void
+print_for_status (CutOutputConsole *console, CutTestResultStatus status,
+                  gchar const *format, ...)
+{
+    va_list args;
+
+    va_start(args, format);
+    print_with_colorv(console, status_to_color(status), format, args);
     va_end(args);
 }
 
@@ -350,7 +365,9 @@ on_start_test_case (CutOutput *output, CutTestCase *test_case)
     if (cut_output_get_verbose_level(output) < CUT_VERBOSE_LEVEL_VERBOSE)
         return;
 
-    g_print("%s:\n", cut_test_get_name(CUT_TEST(test_case)));
+    print_with_color(CUT_OUTPUT_CONSOLE(output), GREEN_BACK_COLOR,
+                     "%s:", cut_test_get_name(CUT_TEST(test_case)));
+    g_print("\n");
 }
 
 static void
@@ -466,7 +483,7 @@ on_complete_test_suite (CutOutput *output, CutContext *context,
     guint n_tests, n_assertions, n_failures, n_errors;
     guint n_pendings, n_notifications;
     const GList *node;
-    CutTestResultStatus status;
+    const gchar *color;
     gboolean crashed;
     CutOutputConsole *console = CUT_OUTPUT_CONSOLE(output);
 
@@ -479,8 +496,7 @@ on_complete_test_suite (CutOutput *output, CutContext *context,
     crashed = cut_context_is_crashed(context);
     if (crashed) {
         const gchar *stack_trace;
-        print_for_status(console, CUT_TEST_RESULT_CRASH,
-                         "%s", status_to_name(CUT_TEST_RESULT_CRASH));
+        print_with_color(console, CRASH_COLOR, "CRASH!!!");
         g_print("\n");
 
         stack_trace = cut_context_get_stack_trace(context);
@@ -493,6 +509,7 @@ on_complete_test_suite (CutOutput *output, CutContext *context,
          node;
          node = g_list_next(node)) {
         CutTestResult *result = node->data;
+        CutTestResultStatus status;
         gchar *filename;
         const gchar *message;
         const gchar *source_directory;
@@ -510,7 +527,7 @@ on_complete_test_suite (CutOutput *output, CutContext *context,
 
         g_print("\n%d) ", i);
         print_for_status(console, status,
-                         "%s : %s",
+                         "%s: %s",
                          status_to_name(status),
                          cut_test_result_get_test_name(result));
         if (message) {
@@ -539,19 +556,23 @@ on_complete_test_suite (CutOutput *output, CutContext *context,
     n_notifications = cut_context_get_n_notifications(context);
 
     if (crashed) {
-        status = CUT_TEST_RESULT_CRASH;
-    } else if (n_errors > 0) {
-        status = CUT_TEST_RESULT_ERROR;
-    } else if (n_failures > 0) {
-        status = CUT_TEST_RESULT_FAILURE;
-    } else if (n_pendings > 0) {
-        status = CUT_TEST_RESULT_PENDING;
-    } else if (n_notifications > 0) {
-        status = CUT_TEST_RESULT_NOTIFICATION;
+        color = CRASH_COLOR;
     } else {
-        status = CUT_TEST_RESULT_SUCCESS;
+        CutTestResultStatus status;
+        if (n_errors > 0) {
+            status = CUT_TEST_RESULT_ERROR;
+        } else if (n_failures > 0) {
+            status = CUT_TEST_RESULT_FAILURE;
+        } else if (n_pendings > 0) {
+            status = CUT_TEST_RESULT_PENDING;
+        } else if (n_notifications > 0) {
+            status = CUT_TEST_RESULT_NOTIFICATION;
+        } else {
+            status = CUT_TEST_RESULT_SUCCESS;
+        }
+        color = status_to_color(status);
     }
-    print_for_status(console, status,
+    print_with_color(console, color,
                      "%d test(s), %d assertion(s), %d failure(s), "
                      "%d error(s), %d pending(s), %d notification(s)",
                      n_tests, n_assertions, n_failures, n_errors,
@@ -565,7 +586,7 @@ on_crashed_test_suite (CutOutput *output, CutContext *context,
 {
     CutOutputConsole *console = CUT_OUTPUT_CONSOLE(output);
 
-    print_for_status(console, CUT_TEST_RESULT_CRASH, "!");
+    print_with_color(console, CRASH_COLOR, "!");
     fflush(stdout);
 }
 
