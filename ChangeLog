@@ -1,3 +1,7 @@
+2007-11-16  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-repository.c: Load only so file which has "test" prefix.
+
 2007-11-16  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/: fixed setjmp() usage.

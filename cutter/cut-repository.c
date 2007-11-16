@@ -173,8 +173,15 @@ cut_repository_collect_loader (CutRepository *repository, const gchar *dir_name)
         if (g_file_test(path_name, G_FILE_TEST_IS_DIR))
             cut_repository_collect_loader(repository, path_name);
 
-        if (!g_str_has_suffix(entry, "."G_MODULE_SUFFIX))
+        if (!g_str_has_suffix(entry, "."G_MODULE_SUFFIX)) {
+            g_free(path_name);
             continue;
+        }
+
+        if (!g_str_has_prefix(entry, "test")) {
+            g_free(path_name);
+            continue;
+        }
 
         loader = cut_loader_new(path_name);
         g_free(path_name);
