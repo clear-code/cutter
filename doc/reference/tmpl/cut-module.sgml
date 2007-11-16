@@ -1,0 +1,101 @@
+<!-- ##### SECTION Title ##### -->
+CutModule
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT CutModule ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION cut_module_load_module ##### -->
+<para>
+
+</para>
+
+@base_dir: 
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_module_load_modules ##### -->
+<para>
+
+</para>
+
+@base_dir: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_module_load_modules_unique ##### -->
+<para>
+
+</para>
+
+@base_dir: 
+@modules: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_module_find ##### -->
+<para>
+
+</para>
+
+@modules: 
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_module_instantiate ##### -->
+<para>
+
+</para>
+
+@module: 
+@first_property: 
+@var_args: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_module_collect_registered_types ##### -->
+<para>
+
+</para>
+
+@modules: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_module_collect_log_domains ##### -->
+<para>
+
+</para>
+
+@modules: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_module_unload ##### -->
+<para>
+
+</para>
+
+@module: 
+
+

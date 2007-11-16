@@ -1,0 +1,131 @@
+<!-- ##### SECTION Title ##### -->
+CutTestCase
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT CutTestCase ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SIGNAL CutTestCase::complete-test ##### -->
+<para>
+
+</para>
+
+@cuttestcase: the object which received the signal.
+@arg1: 
+@arg2: 
+
+<!-- ##### SIGNAL CutTestCase::start-test ##### -->
+<para>
+
+</para>
+
+@cuttestcase: the object which received the signal.
+@arg1: 
+@arg2: 
+
+<!-- ##### ARG CutTestCase:get-current-test-context-function ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG CutTestCase:name ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG CutTestCase:set-current-test-context-function ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG CutTestCase:setup-function ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG CutTestCase:tear-down-function ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION cut_test_case_new ##### -->
+<para>
+
+</para>
+
+@name: 
+@setup_funcion: 
+@teardown_function: 
+@Param4: 
+@Param5: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_test_case_add_test ##### -->
+<para>
+
+</para>
+
+@test_case: 
+@test: 
+
+
+<!-- ##### FUNCTION cut_test_case_get_test_count ##### -->
+<para>
+
+</para>
+
+@test_case: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_test_case_run ##### -->
+<para>
+
+</para>
+
+@test_case: 
+@context: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_test_case_run_test ##### -->
+<para>
+
+</para>
+
+@test_case: 
+@context: 
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_test_case_run_with_filter ##### -->
+<para>
+
+</para>
+
+@test_case: 
+@context: 
+@test_names: 
+@Returns: 
+
+

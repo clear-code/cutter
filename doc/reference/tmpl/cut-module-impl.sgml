@@ -1,0 +1,87 @@
+<!-- ##### SECTION Title ##### -->
+cut-module-impl
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### USER_FUNCTION CutModuleInitFunc ##### -->
+<para>
+
+</para>
+
+@module: 
+@Returns: 
+
+
+<!-- ##### USER_FUNCTION CutModuleExitFunc ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### USER_FUNCTION CutModuleInstantiateFunc ##### -->
+<para>
+
+</para>
+
+@first_property: 
+@var_args: 
+@Returns: 
+
+
+<!-- ##### USER_FUNCTION CutModuleGetLogDomainFunc ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION CUT_MODULE_IMPL_INIT ##### -->
+<para>
+
+</para>
+
+@module: 
+@Returns: 
+
+
+<!-- ##### FUNCTION CUT_MODULE_IMPL_EXIT ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION CUT_MODULE_IMPL_INSTANTIATE ##### -->
+<para>
+
+</para>
+
+@first_property: 
+@var_args: 
+@Returns: 
+
+
+<!-- ##### FUNCTION CUT_MODULE_IMPL_GET_LOG_DOMAIN ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+

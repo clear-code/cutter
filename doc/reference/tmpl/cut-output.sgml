@@ -1,0 +1,282 @@
+<!-- ##### SECTION Title ##### -->
+CutOutput
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT CutOutput ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### ARG CutOutput:verbose-level ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION cut_output_init ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION cut_output_quit ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION cut_output_get_default_module_dir ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_output_set_default_module_dir ##### -->
+<para>
+
+</para>
+
+@dir: 
+
+
+<!-- ##### FUNCTION cut_output_load ##### -->
+<para>
+
+</para>
+
+@base_dir: 
+
+
+<!-- ##### FUNCTION cut_output_load_module ##### -->
+<para>
+
+</para>
+
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_output_unload ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION cut_output_get_registered_types ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_output_get_log_domains ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_output_new ##### -->
+<para>
+
+</para>
+
+@name: 
+@first_property: 
+@Varargs: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_output_set_verbose_level ##### -->
+<para>
+
+</para>
+
+@output: 
+@level: 
+
+
+<!-- ##### FUNCTION cut_output_get_verbose_level ##### -->
+<para>
+
+</para>
+
+@output: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_output_set_verbose_level_by_name ##### -->
+<para>
+
+</para>
+
+@output: 
+@name: 
+
+
+<!-- ##### FUNCTION cut_output_set_source_directory ##### -->
+<para>
+
+</para>
+
+@output: 
+@directory: 
+
+
+<!-- ##### FUNCTION cut_output_get_source_directory ##### -->
+<para>
+
+</para>
+
+@output: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_output_set_use_color ##### -->
+<para>
+
+</para>
+
+@output: 
+@use_color: 
+
+
+<!-- ##### FUNCTION cut_output_on_start_test_suite ##### -->
+<para>
+
+</para>
+
+@output: 
+@test_suite: 
+
+
+<!-- ##### FUNCTION cut_output_on_start_test_case ##### -->
+<para>
+
+</para>
+
+@output: 
+@test_case: 
+
+
+<!-- ##### FUNCTION cut_output_on_start_test ##### -->
+<para>
+
+</para>
+
+@output: 
+@test_case: 
+@test: 
+
+
+<!-- ##### FUNCTION cut_output_on_success ##### -->
+<para>
+
+</para>
+
+@output: 
+@test: 
+
+
+<!-- ##### FUNCTION cut_output_on_failure ##### -->
+<para>
+
+</para>
+
+@output: 
+@test: 
+@result: 
+
+
+<!-- ##### FUNCTION cut_output_on_error ##### -->
+<para>
+
+</para>
+
+@output: 
+@test: 
+@result: 
+
+
+<!-- ##### FUNCTION cut_output_on_pending ##### -->
+<para>
+
+</para>
+
+@output: 
+@test: 
+@result: 
+
+
+<!-- ##### FUNCTION cut_output_on_notification ##### -->
+<para>
+
+</para>
+
+@output: 
+@test: 
+@result: 
+
+
+<!-- ##### FUNCTION cut_output_on_complete_test ##### -->
+<para>
+
+</para>
+
+@output: 
+@test_case: 
+@test: 
+@result: 
+
+
+<!-- ##### FUNCTION cut_output_on_complete_test_case ##### -->
+<para>
+
+</para>
+
+@output: 
+@test_case: 
+
+
+<!-- ##### FUNCTION cut_output_on_complete_test_suite ##### -->
+<para>
+
+</para>
+
+@output: 
+@context: 
+@test_suite: 
+
+
+<!-- ##### FUNCTION cut_output_on_crashed_test_suite ##### -->
+<para>
+
+</para>
+
+@output: 
+@context: 
+@test_suite: 
+
+

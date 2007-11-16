@@ -1,0 +1,60 @@
+<!-- ##### SECTION Title ##### -->
+cut-verbose-level
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### ENUM CutVerboseLevel ##### -->
+<para>
+
+</para>
+
+@CUT_VERBOSE_LEVEL_SILENT: 
+@CUT_VERBOSE_LEVEL_NORMAL: 
+@CUT_VERBOSE_LEVEL_VERBOSE: 
+
+<!-- ##### MACRO CUT_VERBOSE_LEVEL_ERROR ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### ENUM CutVerboseLevelError ##### -->
+<para>
+
+</para>
+
+@CUT_VERBOSE_LEVEL_ERROR_BAD_VALUE: 
+
+<!-- ##### FUNCTION cut_verbose_level_error_quark ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_verbose_level_parse ##### -->
+<para>
+
+</para>
+
+@name: 
+@error: 
+@Returns: 
+
+

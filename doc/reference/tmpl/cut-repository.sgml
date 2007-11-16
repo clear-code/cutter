@@ -1,0 +1,48 @@
+<!-- ##### SECTION Title ##### -->
+CutRepository
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT CutRepository ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### ARG CutRepository:directory ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION cut_repository_new ##### -->
+<para>
+
+</para>
+
+@directory: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_repository_create_test_suite ##### -->
+<para>
+
+</para>
+
+@repository: 
+@Returns: 
+
+

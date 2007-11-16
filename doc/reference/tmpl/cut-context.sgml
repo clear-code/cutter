@@ -1,0 +1,284 @@
+<!-- ##### SECTION Title ##### -->
+CutContext
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT CutContext ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SIGNAL CutContext::complete-test ##### -->
+<para>
+
+</para>
+
+@cutcontext: the object which received the signal.
+@arg1: 
+@arg2: 
+
+<!-- ##### SIGNAL CutContext::complete-test-case ##### -->
+<para>
+
+</para>
+
+@cutcontext: the object which received the signal.
+@arg1: 
+
+<!-- ##### SIGNAL CutContext::start-test ##### -->
+<para>
+
+</para>
+
+@cutcontext: the object which received the signal.
+@arg1: 
+@arg2: 
+
+<!-- ##### SIGNAL CutContext::start-test-case ##### -->
+<para>
+
+</para>
+
+@cutcontext: the object which received the signal.
+@arg1: 
+
+<!-- ##### ARG CutContext:n-assertions ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG CutContext:n-errors ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG CutContext:n-failures ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG CutContext:n-pendings ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG CutContext:n-tests ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG CutContext:use-multi-thread ##### -->
+<para>
+
+</para>
+
+<!-- ##### VARIABLE cut_context_private ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION cut_context_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_context_parse_verbose_level ##### -->
+<para>
+
+</para>
+
+@context: 
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_context_set_verbose_level ##### -->
+<para>
+
+</para>
+
+@context: 
+@level: 
+
+
+<!-- ##### FUNCTION cut_context_set_verbose_level_by_name ##### -->
+<para>
+
+</para>
+
+@context: 
+@name: 
+
+
+<!-- ##### FUNCTION cut_context_set_source_directory ##### -->
+<para>
+
+</para>
+
+@context: 
+@directory: 
+
+
+<!-- ##### FUNCTION cut_context_get_source_directory ##### -->
+<para>
+
+</para>
+
+@context: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_context_set_use_color ##### -->
+<para>
+
+</para>
+
+@context: 
+@use_color: 
+
+
+<!-- ##### FUNCTION cut_context_set_multi_thread ##### -->
+<para>
+
+</para>
+
+@context: 
+@use_multi_thread: 
+
+
+<!-- ##### FUNCTION cut_context_get_multi_thread ##### -->
+<para>
+
+</para>
+
+@context: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_context_start_test ##### -->
+<para>
+
+</para>
+
+@context: 
+@test: 
+
+
+<!-- ##### FUNCTION cut_context_start_test_case ##### -->
+<para>
+
+</para>
+
+@context: 
+@test_case: 
+
+
+<!-- ##### FUNCTION cut_context_start_test_suite ##### -->
+<para>
+
+</para>
+
+@context: 
+@test_suite: 
+
+
+<!-- ##### FUNCTION cut_context_get_n_tests ##### -->
+<para>
+
+</para>
+
+@context: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_context_get_n_assertions ##### -->
+<para>
+
+</para>
+
+@context: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_context_get_n_failures ##### -->
+<para>
+
+</para>
+
+@context: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_context_get_n_errors ##### -->
+<para>
+
+</para>
+
+@context: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_context_get_n_pendings ##### -->
+<para>
+
+</para>
+
+@context: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_context_get_n_notifications ##### -->
+<para>
+
+</para>
+
+@context: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_context_get_results ##### -->
+<para>
+
+</para>
+
+@context: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_context_is_crashed ##### -->
+<para>
+
+</para>
+
+@context: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_context_get_stack_trace ##### -->
+<para>
+
+</para>
+
+@context: 
+@Returns: 
+
+

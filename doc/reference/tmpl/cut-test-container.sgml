@@ -1,0 +1,53 @@
+<!-- ##### SECTION Title ##### -->
+CutTestContainer
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT CutTestContainer ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION cut_test_container_add_test ##### -->
+<para>
+
+</para>
+
+@container: 
+@test: 
+
+
+<!-- ##### FUNCTION cut_test_container_get_children ##### -->
+<para>
+
+</para>
+
+@container: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_test_container_filter_children ##### -->
+<para>
+
+</para>
+
+@container: 
+@filter: 
+@Returns: 
+
+

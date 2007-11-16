@@ -1,0 +1,162 @@
+<!-- ##### SECTION Title ##### -->
+CutTestContext
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### MACRO CUT_TYPE_TEST_CONTEXT ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO CUT_TEST_CONTEXT ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+
+<!-- ##### MACRO CUT_IS_TEST_CONTEXT ##### -->
+<para>
+
+</para>
+
+@obj: 
+
+
+<!-- ##### STRUCT CutTestContext ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### ARG CutTestContext:test ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG CutTestContext:test-case ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG CutTestContext:test-suite ##### -->
+<para>
+
+</para>
+
+<!-- ##### VARIABLE cut_test_context_private ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION cut_test_context_new ##### -->
+<para>
+
+</para>
+
+@test_suite: 
+@test_case: 
+@test: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_test_context_get_test_suite ##### -->
+<para>
+
+</para>
+
+@context: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_test_context_set_test_suite ##### -->
+<para>
+
+</para>
+
+@context: 
+@test_suite: 
+
+
+<!-- ##### FUNCTION cut_test_context_get_test_case ##### -->
+<para>
+
+</para>
+
+@context: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_test_context_set_test_case ##### -->
+<para>
+
+</para>
+
+@context: 
+@test_case: 
+
+
+<!-- ##### FUNCTION cut_test_context_get_test ##### -->
+<para>
+
+</para>
+
+@context: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_test_context_set_test ##### -->
+<para>
+
+</para>
+
+@context: 
+@test: 
+
+
+<!-- ##### FUNCTION cut_test_context_set_user_data ##### -->
+<para>
+
+</para>
+
+@context: 
+@user_data: 
+@notify: 
+
+
+<!-- ##### FUNCTION cut_test_context_is_failed ##### -->
+<para>
+
+</para>
+
+@context: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_test_context_set_jump ##### -->
+<para>
+
+</para>
+
+@context: 
+@buffer: 
+
+

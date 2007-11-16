@@ -1,0 +1,249 @@
+<!-- ##### SECTION Title ##### -->
+cut-private
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT CutContext ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SIGNAL CutContext::complete-test ##### -->
+<para>
+
+</para>
+
+@: 
+@: 
+@: 
+
+<!-- ##### SIGNAL CutContext::complete-test-case ##### -->
+<para>
+
+</para>
+
+@: 
+@: 
+
+<!-- ##### SIGNAL CutContext::start-test ##### -->
+<para>
+
+</para>
+
+@: 
+@: 
+@: 
+
+<!-- ##### SIGNAL CutContext::start-test-case ##### -->
+<para>
+
+</para>
+
+@: 
+@: 
+
+<!-- ##### ARG CutContext:n-assertions ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG CutContext:n-errors ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG CutContext:n-failures ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG CutContext:n-pendings ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG CutContext:n-tests ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG CutContext:use-multi-thread ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT CutTestSuite ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SIGNAL CutTestSuite::complete-test-case ##### -->
+<para>
+
+</para>
+
+@: 
+@: 
+
+<!-- ##### SIGNAL CutTestSuite::start-test-case ##### -->
+<para>
+
+</para>
+
+@: 
+@: 
+
+<!-- ##### STRUCT CutTestCase ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SIGNAL CutTestCase::complete-test ##### -->
+<para>
+
+</para>
+
+@: 
+@: 
+@: 
+
+<!-- ##### SIGNAL CutTestCase::start-test ##### -->
+<para>
+
+</para>
+
+@: 
+@: 
+@: 
+
+<!-- ##### ARG CutTestCase:get-current-test-context-function ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG CutTestCase:name ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG CutTestCase:set-current-test-context-function ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG CutTestCase:setup-function ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG CutTestCase:tear-down-function ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT CutTest ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SIGNAL CutTest::complete ##### -->
+<para>
+
+</para>
+
+@: 
+
+<!-- ##### SIGNAL CutTest::crashed ##### -->
+<para>
+
+</para>
+
+@: 
+@: 
+
+<!-- ##### SIGNAL CutTest::error ##### -->
+<para>
+
+</para>
+
+@: 
+@: 
+
+<!-- ##### SIGNAL CutTest::failure ##### -->
+<para>
+
+</para>
+
+@: 
+@: 
+
+<!-- ##### SIGNAL CutTest::notification ##### -->
+<para>
+
+</para>
+
+@: 
+@: 
+
+<!-- ##### SIGNAL CutTest::pass-assertion ##### -->
+<para>
+
+</para>
+
+@: 
+
+<!-- ##### SIGNAL CutTest::pending ##### -->
+<para>
+
+</para>
+
+@: 
+@: 
+
+<!-- ##### SIGNAL CutTest::start ##### -->
+<para>
+
+</para>
+
+@: 
+
+<!-- ##### SIGNAL CutTest::success ##### -->
+<para>
+
+</para>
+
+@: 
+
+<!-- ##### ARG CutTest:description ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG CutTest:function-name ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG CutTest:test-function ##### -->
+<para>
+
+</para>
+

@@ -1,0 +1,111 @@
+<!-- ##### SECTION Title ##### -->
+cut-public
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT CutTestContext ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### ARG CutTestContext:test ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG CutTestContext:test-case ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG CutTestContext:test-suite ##### -->
+<para>
+
+</para>
+
+<!-- ##### ENUM CutTestResultStatus ##### -->
+<para>
+
+</para>
+
+@CUT_TEST_RESULT_SUCCESS: 
+@CUT_TEST_RESULT_FAILURE: 
+@CUT_TEST_RESULT_ERROR: 
+@CUT_TEST_RESULT_PENDING: 
+@CUT_TEST_RESULT_NOTIFICATION: 
+@CUT_TEST_RESULT_CRASH: 
+
+<!-- ##### FUNCTION cut_test_context_pass_assertion ##### -->
+<para>
+
+</para>
+
+@context: 
+
+
+<!-- ##### FUNCTION cut_test_context_register_result ##### -->
+<para>
+
+</para>
+
+@context: 
+@status: 
+@function_name: 
+@filename: 
+@line: 
+@message: 
+@Varargs: 
+
+
+<!-- ##### FUNCTION cut_test_context_long_jump ##### -->
+<para>
+
+</para>
+
+@context: 
+
+
+<!-- ##### FUNCTION cut_test_context_inspect_string_array ##### -->
+<para>
+
+</para>
+
+@context: 
+@strings: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_utils_compare_string_array ##### -->
+<para>
+
+</para>
+
+@strings1: 
+@strings2: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_test_context_get_user_data ##### -->
+<para>
+
+</para>
+
+@context: 
+@Returns: 
+
+

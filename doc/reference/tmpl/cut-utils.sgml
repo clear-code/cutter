@@ -1,0 +1,28 @@
+<!-- ##### SECTION Title ##### -->
+cut-utils
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### FUNCTION cut_utils_create_regex_pattern ##### -->
+<para>
+
+</para>
+
+@string: 
+@Returns: 
+
+
