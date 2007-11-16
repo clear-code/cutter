@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 0.1.0\n"
 "POT-Creation-Date: 2007-11-16 17:46+0900\n"
-"PO-Revision-Date: 2007-11-16 17:48+0900\n"
+"PO-Revision-Date: 2007-11-16 19:10+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 
 #: cutter-docs-original.sgml:7(title)
 msgid "Cutter Reference Manual"
-msgstr ""
+msgstr "Cutterリファレンスマニュアル"
 
 #: cutter-docs-original.sgml:8(releaseinfo)
 msgid "for Cutter &version;"
@@ -25,11 +25,11 @@ msgstr "Cutter &version;用"
 
 #: cutter-docs-original.sgml:12(title)
 msgid "Reference"
-msgstr ""
+msgstr "リファレンス"
 
 #: cutter-docs-original.sgml:37(title)
 msgid "Index"
-msgstr ""
+msgstr "索引"
 
 #: xml/cut-assertions.xml:7(refentrytitle) xml/cut-assertions.xml:13(refname)
 msgid "cut-assertions"
@@ -77,7 +77,7 @@ msgstr ""
 #: xml/cut-utils.xml:19(title) xml/cut-verbose-level.xml:19(title)
 #: xml/cutter.xml:19(title)
 msgid "Synopsis"
-msgstr ""
+msgstr "概要"
 
 #: xml/cut-assertions.xml:25(link) xml/cut-assertions.xml:68(primary)
 msgid "cut_inspect_string_array"
@@ -815,7 +815,7 @@ msgstr ""
 #: xml/cut-test-context.xml:53(title) xml/cut-test-result.xml:48(title)
 #: xml/cut-test-suite.xml:51(title) xml/cut-test.xml:45(title)
 msgid "Object Hierarchy"
-msgstr ""
+msgstr "オブジェクト階層"
 
 #: xml/cut-context.xml:66(link) xml/cut-loader.xml:36(link)
 #: xml/cut-module-impl.xml:27(link) xml/cut-module-impl.xml:32(link)
@@ -845,7 +845,7 @@ msgstr ""
 #: xml/cut-test-case.xml:63(title) xml/cut-test-context.xml:67(title)
 #: xml/cut-test-result.xml:62(title) xml/cut-test.xml:60(title)
 msgid "Properties"
-msgstr ""
+msgstr "プロパティ"
 
 #: xml/cut-context.xml:80(link) xml/cut-private.xml:70(link)
 msgid "n-assertions"
@@ -888,7 +888,7 @@ msgstr ""
 #: xml/cut-test-case.xml:75(title) xml/cut-test-suite.xml:68(title)
 #: xml/cut-test.xml:70(title)
 msgid "Signals"
-msgstr ""
+msgstr "シグナル"
 
 #: xml/cut-context.xml:93(link) xml/cut-private.xml:91(link)
 #: xml/cut-private.xml:97(link) xml/cut-test-case.xml:78(link)
@@ -1326,7 +1326,7 @@ msgstr ""
 #: xml/cut-test-case.xml:224(title) xml/cut-test-context.xml:298(title)
 #: xml/cut-test-result.xml:255(title) xml/cut-test.xml:231(title)
 msgid "Property Details"
-msgstr ""
+msgstr "プロパティ詳細"
 
 #: xml/cut-context.xml:439(title) xml/cut-private.xml:149(title)
 msgid ""
@@ -1465,7 +1465,7 @@ msgstr ""
 #: xml/cut-test-case.xml:245(title) xml/cut-test-suite.xml:238(title)
 #: xml/cut-test.xml:247(title)
 msgid "Signal Details"
-msgstr ""
+msgstr "シグナル詳細"
 
 #: xml/cut-context.xml:468(title) xml/cut-private.xml:205(title)
 msgid ""

@@ -1,5 +1,7 @@
 2007-11-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/ja.po: updated.
+
 	* gtk-doc.make: supported install.
 
 	* gtk-doc.make, doc/references/: supported multi po.
