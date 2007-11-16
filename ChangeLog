@@ -1,5 +1,8 @@
 2007-11-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/ja.po: updated.
+	* doc/reference/cutter-docs.sgml: improved structure.
+
 	* cutter/cutter.h, cutter/cut-hidden-definitions.h,
 	doc/reference/Makefile.am: hide [sg]et_current_test_context() from
 	user.

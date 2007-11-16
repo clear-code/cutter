@@ -27,3 +27,17 @@
 @status: 
 @...: 
 
+<!-- ##### FUNCTION get_current_test_context ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION set_current_test_context ##### -->
+<para>
+
+</para>
+
+@context: 
+

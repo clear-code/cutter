@@ -31,19 +31,3 @@ cutter
 
 
 
-<!-- ##### FUNCTION set_current_test_context ##### -->
-<para>
-
-</para>
-
-@context: 
-
-
-<!-- ##### FUNCTION get_current_test_context ##### -->
-<para>
-
-</para>
-
-@Returns: 
-
-
