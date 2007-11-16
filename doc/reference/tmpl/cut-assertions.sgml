@@ -17,44 +17,11 @@ cut-assertions
 <!-- ##### SECTION Stability_Level ##### -->
 
 
-<!-- ##### MACRO cut_inspect_string_array ##### -->
-<para>
-
-</para>
-
-@strings: 
-
-
 <!-- ##### MACRO cut_user_data ##### -->
 <para>
 
 </para>
 
-
-
-<!-- ##### MACRO cut_test_pass ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO cut_test_register_result ##### -->
-<para>
-
-</para>
-
-@status: 
-@...: 
-
-
-<!-- ##### MACRO cut_test_fail ##### -->
-<para>
-
-</para>
-
-@status: 
-@...: 
 
 
 <!-- ##### MACRO cut_error ##### -->

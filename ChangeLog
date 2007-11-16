@@ -1,5 +1,8 @@
 2007-11-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertions-helper.h, cutter/cut-assertions.h,
+	doc/reference/: hid helper macros from user.
+
 	* doc/reference/Makefile.am (update-po): fixed a typo.
 	* doc/reference/ja.po: updated.
 

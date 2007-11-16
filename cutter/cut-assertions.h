@@ -24,36 +24,14 @@
 
 #include <string.h>
 #include <cutter/cut-public.h>
+#include <cutter/cut-assertions-helper.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-#define cut_inspect_string_array(strings)                               \
-    cut_test_context_inspect_string_array(get_current_test_context(),   \
-                                          strings)
-
 #define cut_user_data                                               \
     (cut_test_context_get_user_data(get_current_test_context()))
-
-#define cut_test_pass() \
-    cut_test_context_pass_assertion(get_current_test_context())
-
-#define cut_test_register_result(status, ...) do            \
-{                                                           \
-    cut_test_context_register_result(                       \
-        get_current_test_context(),                         \
-        CUT_TEST_RESULT_ ## status,                         \
-        __PRETTY_FUNCTION__, __FILE__, __LINE__,            \
-        __VA_ARGS__, NULL);                                 \
-} while (0)
-
-#define cut_test_fail(status, ...) do                               \
-{                                                                   \
-    cut_test_register_result(status, ## __VA_ARGS__);               \
-    cut_test_context_long_jump(get_current_test_context());         \
-} while (0)
-
 
 #define cut_error(...)                          \
     cut_test_fail(ERROR, NULL, __VA_ARGS__)

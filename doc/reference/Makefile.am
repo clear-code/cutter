@@ -18,6 +18,7 @@ HFILE_GLOB=$(top_srcdir)/cutter/cut-assertions.h
 
 # Headers to ignore
 IGNORE_HFILES=			\
+	cut-assertions-helper.h	\
 	cut-context.h		\
 	cut-enum-types.h	\
 	cut-loader.h		\
