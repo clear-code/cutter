@@ -21,6 +21,7 @@ IGNORE_HFILES=			\
 	cut-assertions-helper.h	\
 	cut-context.h		\
 	cut-enum-types.h	\
+	cut-hidden-definitions.h\
 	cut-loader.h		\
 	cut-marshalers.h	\
 	cut-module-impl.h	\

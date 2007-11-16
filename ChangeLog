@@ -1,5 +1,9 @@
 2007-11-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cutter.h, cutter/cut-hidden-definitions.h,
+	doc/reference/Makefile.am: hide [sg]et_current_test_context() from
+	user.
+
 	* cutter/cut-assertions-helper.h, cutter/cut-assertions.h,
 	doc/reference/: hid helper macros from user.
 

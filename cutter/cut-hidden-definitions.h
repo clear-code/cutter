@@ -19,24 +19,37 @@
  *
  */
 
-#ifndef __CUTTER_H__
-#define __CUTTER_H__
+#ifndef __CUT_HIDDEN_DEFINITIONS_H__
+#define __CUT_HIDDEN_DEFINITIONS_H__
 
-#include <cutter/cut-assertions.h>
-#include <cutter/cut-hidden-definitions.h>
+#include <cutter/cut-public.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void setup(void);
-void teardown(void);
+void set_current_test_context(CutTestContext *context);
+CutTestContext *get_current_test_context(void);
+
+static CutTestContext *_current_test_context = NULL;
+
+void
+set_current_test_context (CutTestContext *context)
+{
+    _current_test_context = context;
+}
+
+CutTestContext *
+get_current_test_context (void)
+{
+    return _current_test_context;
+}
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* __CUTTER_H__ */
+#endif /* __CUTTER_HIDDEN_DEFINITIONS_H__ */
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

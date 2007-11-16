@@ -25,6 +25,7 @@ cuttersubincludedir=$(includedir)/cutter/cutter
 cuttersubinclude_HEADERS = 		\
 	cut-assertions.h		\
 	cut-assertions-helper.h		\
+	cut-hidden-definitions.h	\
 	cut-public.h
 
 cutter_h_sources =				\
