@@ -23,7 +23,7 @@
 #define __CUT_ASSERTIONS_H__
 
 #include <string.h>
-#include <cutter/cut-public.h>
+#include "cut-public.h"
 
 #ifdef __cplusplus
 extern "C" {

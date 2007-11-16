@@ -1,5 +1,7 @@
 2007-11-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertions.h: used "" not <>.
+
 	* autogen.sh: don't use gtkdocize because we have customoized
 	gtk-doc.make.
 
