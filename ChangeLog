@@ -1,5 +1,8 @@
 2007-11-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/Makefile.am (update-po): fixed a typo.
+	* doc/reference/ja.po: updated.
+
 	* doc/reference/: hide non-public functions.
 
 	* cutter/cut-assertions.h: cleanup.

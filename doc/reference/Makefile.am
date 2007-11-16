@@ -78,7 +78,7 @@ $(DOC_MODULE).pot: sgml-build.stamp
 update-po: Makefile sgml.stamp
 	$(MAKE) $(DOC_MODULE).pot
 	for catalog in $(CATALOGS); do		\
-	  xml2po -k -u $$(catalog)		\
+	  xml2po -k -u $$catalog		\
 	    $(srcdir)/$(DOC_MAIN_SGML_FILE)	\
 	    $(srcdir)/xml/*.xml;		\
 	done
