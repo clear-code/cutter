@@ -49,14 +49,16 @@ void
 test_create_test_suite (void)
 {
     CutTestSuite *suite;
+    CutTestContainer *container;
     GList *test_cases, *list;
     gint i;
 
     suite = cut_repository_create_test_suite(test_repository);
     cut_assert(suite);
 
-    test_cases = (GList *) cut_test_container_get_children(CUT_TEST_CONTAINER(suite));
-    cut_assert(test_cases);
+    container = CUT_TEST_CONTAINER(suite);
+    test_cases = (GList *)cut_test_container_get_children(container);
+    cut_assert_not_null(test_cases);
 
     test_cases = g_list_sort(test_cases, compare_test_case_name);
     for (list = test_cases, i = 0; list; list = g_list_next(list), i++) {

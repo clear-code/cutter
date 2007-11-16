@@ -28,10 +28,6 @@ CutContext
 
 </para>
 
-@: 
-@: 
-@:
-
 @cutcontext: the object which received the signal.
 @arg1: 
 @arg2: 
@@ -41,9 +37,6 @@ CutContext
 
 </para>
 
-@: 
-@:
-
 @cutcontext: the object which received the signal.
 @arg1: 
 
@@ -51,10 +44,6 @@ CutContext
 <para>
 
 </para>
-
-@: 
-@: 
-@:
 
 @cutcontext: the object which received the signal.
 @arg1: 
@@ -64,9 +53,6 @@ CutContext
 <para>
 
 </para>
-
-@: 
-@:
 
 @cutcontext: the object which received the signal.
 @arg1: 

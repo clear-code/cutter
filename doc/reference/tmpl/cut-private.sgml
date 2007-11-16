@@ -28,34 +28,34 @@ cut-private
 
 </para>
 
-@cutcontext: the object which received the signal.
-@arg1: 
-@arg2: 
+@: 
+@: 
+@: 
 
 <!-- ##### SIGNAL CutContext::complete-test-case ##### -->
 <para>
 
 </para>
 
-@cutcontext: the object which received the signal.
-@arg1: 
+@: 
+@: 
 
 <!-- ##### SIGNAL CutContext::start-test ##### -->
 <para>
 
 </para>
 
-@cutcontext: the object which received the signal.
-@arg1: 
-@arg2: 
+@: 
+@: 
+@: 
 
 <!-- ##### SIGNAL CutContext::start-test-case ##### -->
 <para>
 
 </para>
 
-@cutcontext: the object which received the signal.
-@arg1: 
+@: 
+@: 
 
 <!-- ##### ARG CutContext:n-assertions ##### -->
 <para>

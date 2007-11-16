@@ -91,6 +91,18 @@ extern "C" {
     }                                                       \
 } while(0)
 
+#define cut_assert_not_null(actual, ...) do                 \
+{                                                           \
+    if ((actual) != NULL) {                                 \
+        cut_test_pass();                                    \
+    } else {                                                \
+        cut_test_fail(FAILURE,                              \
+                      "expected: <%s> is not NULL",         \
+                      #actual,                              \
+                      NULL, ## __VA_ARGS__, NULL);          \
+    }                                                       \
+} while(0)
+
 #define cut_assert_equal_int(expected, actual, ...) do      \
 {                                                           \
     if ((expected) == (actual)) {                           \
