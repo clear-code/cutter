@@ -26,7 +26,9 @@ IGNORE_HFILES=			\
 
 INCLUDES = \
 	-I$(top_srcdir)/cutter 		\
-	-I$(top_builddir)/cuttter	\
+	-I$(top_srcdir) 		\
+	-I$(top_builddir)/cutter	\
+	-I$(top_builddir)		\
 	$(GLIB_CFLAGS)
 GTKDOC_LIBS = \
 	$(top_builddir)/cutter/libcutter.la \
