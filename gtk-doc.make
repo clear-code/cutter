@@ -158,21 +158,33 @@ maintainer-clean-local: clean
 	cd $(srcdir) && rm -rf xml html
 
 install-data-local:
-	installfiles=`echo $(srcdir)/html/*`; \
-	if test "$$installfiles" = '$(srcdir)/html/*'; \
-	then echo '-- Nothing to install' ; \
-	else \
-	  $(mkinstalldirs) $(DESTDIR)$(TARGET_DIR); \
-	  for i in $$installfiles; do \
-	    echo '-- Installing '$$i ; \
-	    $(INSTALL_DATA) $$i $(DESTDIR)$(TARGET_DIR); \
-	  done; \
-	  echo '-- Installing $(srcdir)/html/index.sgml' ; \
-	  $(INSTALL_DATA) $(srcdir)/html/index.sgml $(DESTDIR)$(TARGET_DIR) || :; \
-	  if test `which gtkdoc-rebase` != ""; then \
-        gtkdoc-rebase --relative --dest-dir=$(DESTDIR) --html-dir=$(DESTDIR)$(TARGET_DIR) ; \
-	  fi \
-	fi
+	for catalog in '' $(CATALOGS); do				\
+	  if test x"$$catalog" = "x"; then				\
+	    dir="/html";						\
+	    target_dir="";						\
+	  else								\
+	    lang=`echo $$catalog | sed 's/.po$$//'`;			\
+	    dir="/$$lang/html";						\
+	    target_dir="/$$lang";					\
+	  fi;								\
+	  installfiles=`echo $(srcdir)/$$dir/*`;			\
+	  if test "$$installfiles" = '$(srcdir)/$$dir/*'; then		\
+	    echo '-- Nothing to install';				\
+	  else								\
+	    $(mkinstalldirs) $(DESTDIR)$(TARGET_DIR)$$target_dir;	\
+	    for i in $$installfiles; do					\
+	      echo '-- Installing '$$i;					\
+	      $(INSTALL_DATA) $$i $(DESTDIR)$(TARGET_DIR)$$target_dir;	\
+	    done;							\
+	    echo '-- Installing $(srcdir)$$dir/index.sgml';		\
+	    $(INSTALL_DATA) $(srcdir)$$dir/index.sgml 			\
+	      $(DESTDIR)$(TARGET_DIR)$$target_dir || :;			\
+	    if test `which gtkdoc-rebase` != ""; then			\
+	      gtkdoc-rebase --relative --dest-dir=$(DESTDIR)		\
+	        --html-dir=$(DESTDIR)$(TARGET_DIR)$$target_dir;		\
+	    fi;								\
+	  fi;								\
+	done
 
 uninstall-local:
 	rm -f $(DESTDIR)$(TARGET_DIR)/*
@@ -195,6 +207,14 @@ dist-hook: dist-check-gtkdoc dist-hook-local
 	-cp $(srcdir)/tmpl/*.sgml $(distdir)/tmpl
 	-cp $(srcdir)/xml/*.xml $(distdir)/xml
 	cp $(srcdir)/html/* $(distdir)/html
+	for catalog in $(CATALOGS); do					\
+	  lang=`echo $$catalog | sed 's/.po$$//'`;			\
+	  mkdir -p $(distdir)/$$lang/html;				\
+	  mkdir -p $(distdir)/$$lang/xml;				\
+	  cp $(srcdir)/$$lang/html/* $(distdir)/$$lang/html;		\
+	  cp $(srcdir)/$$lang/xml/* $(distdir)/$$lang/html;		\
+	  cp $(srcdir)/$$lang/$(DOC_MAIN_SGML_FILE) $(distdir)/$$lang/;	\
+	done
 	cp $(srcdir)/$(DOC_MODULE).types $(distdir)/
 	cp $(srcdir)/$(DOC_MODULE)-sections.txt $(distdir)/
 	cd $(distdir) && rm -f $(DISTCLEANFILES)

@@ -1,5 +1,7 @@
 2007-11-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gtk-doc.make: supported install.
+
 	* gtk-doc.make, doc/references/: supported multi po.
 
 	* doc/reference/: supported reference manual for Japanese. (but dirty)
@@ -27,12 +29,12 @@
 2007-11-16  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-utils.[hc], cutter/cut-test-suite.c: union ->
-	intersection. 
+	intersection.
 	* cutter/cut-test-case.c: Use cut_utils_list_intersection() instead of
 	g_list_concat().
 	* cutter/cut-utils.c: NULL check barrier.
 	* cutter/cut-test-container.h: The second argument of
-	cut_test_container_filter_children() is gchar **. 
+	cut_test_container_filter_children() is gchar **.
 	* cutter/cut-test-container.c: Use cut_utils_list_intersection().
 	* cutter/cut-test-case.c, cutter/cut-test-suite.c: Use
 	cut_test_container_filter_children() directly.
