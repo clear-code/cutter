@@ -24,6 +24,8 @@
 
 #include <glib-object.h>
 
+#include <setjmp.h>
+
 #include "cut-private.h"
 #include "cut-assertions.h"
 #include "cut-output.h"
@@ -73,7 +75,8 @@ void          cut_test_context_set_user_data  (CutTestContext *context,
 
 gboolean      cut_test_context_is_failed      (CutTestContext *context);
 
-gboolean      cut_test_context_set_jump       (CutTestContext *context);
+void          cut_test_context_set_jump       (CutTestContext *context,
+                                               jmp_buf        *buffer);
 
 G_END_DECLS
 

@@ -297,18 +297,12 @@ cut_test_new (const gchar *function_name, const gchar *description,
                         NULL);
 }
 
-static void
-cb_check_success (CutTest *test, CutTestResult *result, gpointer data)
-{
-    gboolean *success = data;
-    *success = FALSE;
-}
-
 gboolean
 cut_test_run (CutTest *test, CutTestContext *test_context, CutContext *context)
 {
     CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(test);
     gboolean success = TRUE;
+    jmp_buf jump_buffer;
 
     if (!priv->test_function)
         return FALSE;
@@ -317,15 +311,15 @@ cut_test_run (CutTest *test, CutTestContext *test_context, CutContext *context)
 
     g_signal_emit_by_name(test, "start");
 
-    g_signal_connect(test, "failure", G_CALLBACK(cb_check_success), &success);
-    g_signal_connect(test, "error", G_CALLBACK(cb_check_success), &success);
-    g_signal_connect(test, "pending", G_CALLBACK(cb_check_success), &success);
-    g_timer_start(priv->timer);
-    if (cut_test_context_set_jump(test_context))
+    cut_test_context_set_jump(test_context, &jump_buffer);
+    if (setjmp(jump_buffer) == 0) {
+        g_timer_start(priv->timer);
         priv->test_function();
+        success = TRUE;
+    } else {
+        success = FALSE;
+    }
     g_timer_stop(priv->timer);
-    g_signal_handlers_disconnect_by_func(test, G_CALLBACK(cb_check_success),
-                                         &success);
 
     if (success)
         g_signal_emit_by_name(test, "success");

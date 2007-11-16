@@ -40,7 +40,7 @@ struct _CutTestContextPrivate
     CutTestCase *test_case;
     CutTest *test;
     gboolean failed;
-    jmp_buf jump_buffer;
+    jmp_buf *jump_buffer;
     GList *inspected_strings;
     gpointer user_data;
     GDestroyNotify user_data_destroy_notify;
@@ -112,6 +112,7 @@ cut_test_context_init (CutTestContext *context)
     priv->test = NULL;
 
     priv->failed = FALSE;
+
     priv->inspected_strings = NULL;
 
     priv->user_data = NULL;
@@ -281,12 +282,12 @@ cut_test_context_set_user_data (CutTestContext *context, gpointer user_data,
     priv->user_data_destroy_notify = notify;
 }
 
-gboolean
-cut_test_context_set_jump (CutTestContext *context)
+void
+cut_test_context_set_jump (CutTestContext *context, jmp_buf *buffer)
 {
     CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
 
-    return setjmp(priv->jump_buffer) == 0;
+    priv->jump_buffer = buffer;
 }
 
 void
@@ -294,7 +295,7 @@ cut_test_context_long_jump (CutTestContext *context)
 {
     CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
 
-    longjmp(priv->jump_buffer, 1);
+    longjmp(*(priv->jump_buffer), 1);
 }
 
 void

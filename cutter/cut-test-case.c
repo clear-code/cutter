@@ -285,6 +285,7 @@ run (CutTestCase *test_case, CutTest *test, CutContext *context)
     CutTestCasePrivate *priv;
     CutTestContext *original_test_context, *test_context;
     gboolean success = TRUE;
+    jmp_buf jump_buffer;
 
     priv = CUT_TEST_CASE_GET_PRIVATE(test_case);
     if (!priv->get_current_test_context ||
@@ -299,8 +300,10 @@ run (CutTestCase *test_case, CutTest *test, CutContext *context)
 
     g_signal_emit_by_name(test_case, "start-test", test, test_context);
     if (priv->setup) {
-        if (cut_test_context_set_jump(test_context))
+        cut_test_context_set_jump(test_context, &jump_buffer);
+        if (setjmp(jump_buffer) == 0) {
             priv->setup();
+        }
     }
 
     if (cut_test_context_is_failed(test_context)) {
@@ -312,8 +315,10 @@ run (CutTestCase *test_case, CutTest *test, CutContext *context)
     }
 
     if (priv->teardown) {
-        if (cut_test_context_set_jump(test_context))
+        cut_test_context_set_jump(test_context, &jump_buffer);
+        if (setjmp(jump_buffer) == 0) {
             priv->teardown();
+        }
     }
     g_signal_emit_by_name(test_case, "complete-test", test, test_context);
 
