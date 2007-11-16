@@ -30,9 +30,6 @@
 extern "C" {
 #endif
 
-#define cut_user_data                                               \
-    (cut_test_context_get_user_data(get_current_test_context()))
-
 #define cut_error(...)                          \
     cut_test_fail(ERROR, NULL, __VA_ARGS__)
 

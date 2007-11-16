@@ -32,6 +32,10 @@ extern "C" {
 void setup(void);
 void teardown(void);
 
+#define cut_user_data                                               \
+    (cut_test_context_get_user_data(get_current_test_context()))
+
+
 #ifdef __cplusplus
 }
 #endif
