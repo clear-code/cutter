@@ -1,5 +1,7 @@
 2007-11-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertions.h: cleanup.
+
 	* doc/reference/ja.po: updated.
 
 	* cutter/cut-assertions.h (cut_assert_not_null): added.

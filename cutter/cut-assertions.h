@@ -39,33 +39,33 @@ extern "C" {
 #define cut_test_pass() \
     cut_test_context_pass_assertion(get_current_test_context())
 
-#define cut_test_register_result(status, message, ...) do   \
+#define cut_test_register_result(status, ...) do            \
 {                                                           \
     cut_test_context_register_result(                       \
         get_current_test_context(),                         \
         CUT_TEST_RESULT_ ## status,                         \
         __PRETTY_FUNCTION__, __FILE__, __LINE__,            \
-        message, ## __VA_ARGS__);                           \
+        __VA_ARGS__, NULL);                                 \
 } while (0)
 
-#define cut_test_fail(status, message, ...) do                      \
+#define cut_test_fail(status, ...) do                               \
 {                                                                   \
-    cut_test_register_result(status, message, ## __VA_ARGS__);      \
+    cut_test_register_result(status, ## __VA_ARGS__);               \
     cut_test_context_long_jump(get_current_test_context());         \
 } while (0)
 
 
-#define cut_error(format, ...)                          \
-    cut_test_fail(ERROR, NULL, format, ## __VA_ARGS__)
+#define cut_error(...)                          \
+    cut_test_fail(ERROR, NULL, __VA_ARGS__)
 
-#define cut_fail(format, ...)                               \
-    cut_test_fail(FAILURE, NULL, format, ## __VA_ARGS__)
+#define cut_fail(...)                           \
+    cut_test_fail(FAILURE, NULL, __VA_ARGS__)
 
-#define cut_pending(format, ...)                            \
-    cut_test_fail(PENDING, NULL, format, ## __VA_ARGS__)
+#define cut_pending(...)                        \
+    cut_test_fail(PENDING, NULL, __VA_ARGS__)
 
-#define cut_notify(format, ...)                                         \
-    cut_test_register_result(NOTIFICATION, NULL, format, ## __VA_ARGS__)
+#define cut_notify(...)                                         \
+    cut_test_register_result(NOTIFICATION, NULL, __VA_ARGS__)
 
 #define cut_assert(actual, ...) do                          \
 {                                                           \
@@ -75,7 +75,7 @@ extern "C" {
         cut_test_fail(                                      \
             FAILURE,                                        \
             "expected: <%s> is not TRUE/NULL", #actual,     \
-            NULL, ## __VA_ARGS__, NULL);                    \
+            NULL, ## __VA_ARGS__);                          \
     }                                                       \
 } while(0)
 
@@ -87,7 +87,7 @@ extern "C" {
         cut_test_fail(                                      \
             FAILURE,                                        \
             "expected: <%s> is NULL", #actual,              \
-            NULL, ## __VA_ARGS__, NULL);                    \
+            NULL, ## __VA_ARGS__);                          \
     }                                                       \
 } while(0)
 
@@ -99,7 +99,7 @@ extern "C" {
         cut_test_fail(FAILURE,                              \
                       "expected: <%s> is not NULL",         \
                       #actual,                              \
-                      NULL, ## __VA_ARGS__, NULL);          \
+                      NULL, ## __VA_ARGS__);                \
     }                                                       \
 } while(0)
 
@@ -113,7 +113,7 @@ extern "C" {
                       "expected: <%ld>\n but was: <%ld>",   \
                       #expected, #actual,                   \
                       (long)(expected), (long)(actual),     \
-                      NULL, ## __VA_ARGS__, NULL);          \
+                      NULL, ## __VA_ARGS__);                \
     }                                                       \
 } while(0)
 
@@ -131,7 +131,7 @@ extern "C" {
                       "expected: <%g +/- %g>\n but was: <%g>",          \
                       #expected, #error, #actual, #expected, #error,    \
                       _expected, _error, _actual,                       \
-                      NULL, ## __VA_ARGS__, NULL);                      \
+                      NULL, ## __VA_ARGS__);                            \
     }                                                                   \
 } while(0)
 
@@ -147,7 +147,7 @@ extern "C" {
                       "expected: <%s>\n but was: <%s>",                 \
                       #expected, #actual,                               \
                       _expected, _actual,                               \
-                      NULL, ## __VA_ARGS__, NULL);                      \
+                      NULL, ## __VA_ARGS__);                            \
     }                                                                   \
 } while(0)
 
@@ -163,7 +163,7 @@ extern "C" {
                           "expected: <%s> is NULL\n"                    \
                           " but was: <%s>",                             \
                           #actual, _actual,                             \
-                          NULL, ## __VA_ARGS__, NULL);                  \
+                          NULL, ## __VA_ARGS__);                        \
         }                                                               \
     } else {                                                            \
         if (_actual && strcmp(_expected, _actual) == 0) {               \
@@ -174,7 +174,7 @@ extern "C" {
                           "expected: <%s>\n but was: <%s>",             \
                           #expected, #actual,                           \
                           _expected, _actual,                           \
-                          NULL, ## __VA_ARGS__, NULL);                  \
+                          NULL, ## __VA_ARGS__);                        \
         }                                                               \
     }                                                                   \
 } while(0)
@@ -197,7 +197,7 @@ extern "C" {
                       #actual, #actual_size,                            \
                       _expected, (long)_expected_size,                  \
                       _actual, (long)_actual_size,                      \
-                      NULL, ## __VA_ARGS__, NULL);                      \
+                      NULL, ## __VA_ARGS__);                            \
     }                                                                   \
 } while(0)
 
@@ -215,7 +215,7 @@ extern "C" {
                       #expected, #actual,                               \
                       cut_inspect_string_array(_expected),              \
                       cut_inspect_string_array(_actual),                \
-                      NULL, ## __VA_ARGS__, NULL);                      \
+                      NULL, ## __VA_ARGS__);                            \
     }                                                                   \
 } while(0)
 
@@ -227,7 +227,7 @@ extern "C" {
         cut_test_fail(FAILURE,                                          \
                       "expected: <%s %s %s> is TRUE",                   \
                       #lhs, #operator, #rhs,                            \
-                      NULL, ## __VA_ARGS__, NULL);                      \
+                      NULL, ## __VA_ARGS__);                            \
     }                                                                   \
 } while(0)
 
@@ -243,7 +243,7 @@ extern "C" {
                       " but was: <%ld> %s <%ld>",                       \
                       #lhs, #operator, #rhs,                            \
                       _lhs, #operator, _rhs,                            \
-                      NULL, ## __VA_ARGS__, NULL);                      \
+                      NULL, ## __VA_ARGS__);                            \
     }                                                                   \
 } while(0)
 
@@ -256,7 +256,7 @@ extern "C" {
             FAILURE,                                                    \
             "expected: <%s(%s, %s)> is TRUE",                           \
             #function, #expected, #actual,                              \
-            NULL, ## __VA_ARGS__, NULL);                                \
+            NULL, ## __VA_ARGS__);                                      \
     }                                                                   \
 } while(0)
 
