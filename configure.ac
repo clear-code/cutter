@@ -117,6 +117,12 @@ AC_SUBST([CAIRO_LIBS])
 
 AM_CONDITIONAL([HAVE_CAIRO], [test $cairo_exists = "yes"])
 
+dnl **************************************************************
+dnl Checks for gtk-doc
+dnl **************************************************************
+
+GTK_DOC_CHECK([1.4])
+
 CUTTER_CFLAGS="$GLIB_CFLAGS -DOUTPUT_MODULEDIR=\\\"\"\$(output_moduledir)\"\\\""
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DRUNNER_MODULEDIR=\\\"\"\$(runner_moduledir)\"\\\""
 
@@ -133,6 +139,9 @@ AC_CONFIG_FILES([Makefile
 		 sample/cairo/Makefile
                  test/Makefile
 		 test/loader_test_dir/Makefile
-		 test/repository_test_dir/Makefile])
+		 test/repository_test_dir/Makefile
+		 doc/Makefile
+		doc/reference/version.xml
+		 doc/reference/Makefile])
 
 AC_OUTPUT

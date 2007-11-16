@@ -13,6 +13,7 @@ run()
 }
 
 run libtoolize --copy --force
+run gtkdocize --copy
 run aclocal
 run autoheader
 run automake --add-missing --foreign --copy

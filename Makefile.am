@@ -1,4 +1,4 @@
-SUBDIRS = cutter test sample
+SUBDIRS = cutter test sample doc
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = 	\
