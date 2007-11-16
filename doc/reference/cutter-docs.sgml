@@ -10,6 +10,7 @@
 
   <chapter>
     <title>Reference</title>
+<!--
     <xi:include href="xml/cut-test-context.xml"/>
     <xi:include href="xml/cut-test-case.xml"/>
     <xi:include href="xml/cut-repository.xml"/>
@@ -22,15 +23,20 @@
     <xi:include href="xml/cut-test-container.xml"/>
     <xi:include href="xml/cut-test-suite.xml"/>
     <xi:include href="xml/cut-runner.xml"/>
+-->
     <xi:include href="xml/cut-assertions.xml"/>
     <xi:include href="xml/cutter.xml"/>
+<!--
     <xi:include href="xml/cut-private.xml"/>
     <xi:include href="xml/cut-enum-types.xml"/>
     <xi:include href="xml/cut-utils.xml"/>
     <xi:include href="xml/cut-public.xml"/>
+-->
     <xi:include href="xml/cut-main.xml"/>
+<!--
     <xi:include href="xml/cut-verbose-level.xml"/>
     <xi:include href="xml/cut-module-impl.xml"/>
+-->
   </chapter>
 
   <index>

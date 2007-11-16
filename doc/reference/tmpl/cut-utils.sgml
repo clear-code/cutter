@@ -17,12 +17,3 @@ cut-utils
 <!-- ##### SECTION Stability_Level ##### -->
 
 
-<!-- ##### FUNCTION cut_utils_create_regex_pattern ##### -->
-<para>
-
-</para>
-
-@string: 
-@Returns: 
-
-

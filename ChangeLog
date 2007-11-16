@@ -1,5 +1,7 @@
 2007-11-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/: hide non-public functions.
+
 	* cutter/cut-assertions.h: cleanup.
 
 	* doc/reference/ja.po: updated.

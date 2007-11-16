@@ -17,32 +17,3 @@ CutLoader
 <!-- ##### SECTION Stability_Level ##### -->
 
 
-<!-- ##### STRUCT CutLoader ##### -->
-<para>
-
-</para>
-
-
-<!-- ##### ARG CutLoader:so-filename ##### -->
-<para>
-
-</para>
-
-<!-- ##### FUNCTION cut_loader_new ##### -->
-<para>
-
-</para>
-
-@soname: 
-@Returns: 
-
-
-<!-- ##### FUNCTION cut_loader_load_test_case ##### -->
-<para>
-
-</para>
-
-@loader: 
-@Returns: 
-
-

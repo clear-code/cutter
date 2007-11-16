@@ -18,6 +18,25 @@ HFILE_GLOB=$(top_srcdir)/cutter/cut-assertions.h
 
 # Headers to ignore
 IGNORE_HFILES=			\
+	cut-context.h		\
+	cut-enum-types.h	\
+	cut-loader.h		\
+	cut-marshalers.h	\
+	cut-module-impl.h	\
+	cut-module.h		\
+	cut-output.h		\
+	cut-private.h		\
+	cut-public.h		\
+	cut-repository.h	\
+	cut-runner.h		\
+	cut-test-case.h		\
+	cut-test-context.h	\
+	cut-test-container.h	\
+	cut-test-result.h	\
+	cut-test-suite.h	\
+	cut-test.h		\
+	cut-utils.h		\
+	cut-verbose-level.h	\
 	config.h
 
 INCLUDES = \
