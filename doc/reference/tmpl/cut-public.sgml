@@ -48,7 +48,6 @@ cut-public
 @CUT_TEST_RESULT_ERROR: 
 @CUT_TEST_RESULT_PENDING: 
 @CUT_TEST_RESULT_NOTIFICATION: 
-@CUT_TEST_RESULT_CRASH: 
 
 <!-- ##### FUNCTION cut_test_context_pass_assertion ##### -->
 <para>

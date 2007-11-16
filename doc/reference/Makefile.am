@@ -22,6 +22,7 @@ IGNORE_HFILES=			\
 
 INCLUDES = \
 	-I$(top_srcdir)/cutter 		\
+	-I$(top_srcdir) 		\
 	-I$(top_builddir)/cutter	\
 	$(GLIB_CFLAGS)
 
