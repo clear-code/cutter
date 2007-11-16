@@ -102,15 +102,45 @@ sgml.stamp: sgml-build.stamp
 
 #### html ####
 
-html-build.stamp: sgml.stamp $(DOC_MAIN_SGML_FILE) $(content_files)
+html-build.stamp: sgml.stamp $(CATALOGS) $(DOC_MAIN_SGML_FILE) $(content_files)
 	@echo 'gtk-doc: Building HTML'
 	@-chmod -R u+w $(srcdir)
+	@echo "English:"
 	rm -rf $(srcdir)/html
-	mkdir $(srcdir)/html
-	cd $(srcdir)/html && gtkdoc-mkhtml $(DOC_MODULE) ../$(DOC_MAIN_SGML_FILE)
-	test "x$(HTML_IMAGES)" = "x" || ( cd $(srcdir) && cp $(HTML_IMAGES) html )
-	@echo 'gtk-doc: Fixing cross-references'
-	cd $(srcdir) && gtkdoc-fixxref --module-dir=html --html-dir=$(HTML_DIR) $(FIXXREF_OPTIONS)
+	mkdir -p $(srcdir)/html
+	cd $(srcdir)/html && \
+	  gtkdoc-mkhtml $(DOC_MODULE) ../$(DOC_MAIN_SGML_FILE)
+	test "x$(HTML_IMAGES)" = "x" ||	\
+	  ( cd $(srcdir) && cp $(HTML_IMAGES) html/ )
+	echo 'gtk-doc: Fixing cross-references'
+	cd $(srcdir) &&					\
+	  gtkdoc-fixxref --module-dir=html		\
+	  --html-dir=$(HTML_DIR) $(FIXXREF_OPTIONS)
+	for catalog in $(CATALOGS); do					\
+	  lang=`echo $$catalog | sed 's/.po$$//'`;			\
+	  echo "$$lang:";						\
+	  rm -rf $(srcdir)/$$lang;					\
+	  mkdir -p $(srcdir)/$$lang/html;				\
+	  mkdir -p $(srcdir)/$$lang/xml;				\
+	  xml2po -k -p $$catalog -l $$lang				\
+	    $(srcdir)/$(DOC_MAIN_SGML_FILE) >				\
+	      $$lang/$(DOC_MAIN_SGML_FILE);				\
+	  for xml in $(srcdir)/xml/*.xml; do				\
+	    xml2po -k -p $$catalog -l $$lang $$xml >			\
+	      $$lang/xml/`basename $$xml`;				\
+	  done;								\
+	  for file in $(content_files); do				\
+	    cp $(srcdir)/$$file $$lang;					\
+	  done;								\
+	  ( cd $(srcdir)/$$lang/html &&					\
+	      gtkdoc-mkhtml $(DOC_MODULE) ../$(DOC_MAIN_SGML_FILE) );	\
+	  test "x$(HTML_IMAGES)" = "x" ||				\
+	    ( cd $(srcdir) && cp $(HTML_IMAGES) $$lang/html/ );		\
+	  echo 'gtk-doc: Fixing cross-references';			\
+	  ( cd $(srcdir) &&						\
+	      gtkdoc-fixxref --module-dir=$$lang/html			\
+	        --html-dir=$(HTML_DIR) $(FIXXREF_OPTIONS) );		\
+	done
 	touch html-build.stamp
 
 ##############

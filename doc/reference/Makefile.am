@@ -4,11 +4,7 @@ MAINTAINERCLEANFILE = Makefile.in
 DOC_MODULE=cutter
 
 # The top-level SGML file.
-DOC_MAIN_ORIGINAL_SGML_FILE=cutter-docs-original.sgml
 DOC_MAIN_SGML_FILE=cutter-docs.sgml
-
-$(DOC_MAIN_SGML_FILE): $(DOC_MAIN_ORIGINAL_SGML_FILE)
-	cp -p $(DOC_MAIN_ORIGINAL_SGML_FILE) $(DOC_MAIN_SGML_FILE)
 
 # Extra options to supply to gtkdoc-scan
 SCAN_OPTIONS=
@@ -41,12 +37,12 @@ HTML_IMAGES =
 
 # Extra SGML files that are included by $(DOC_MAIN_SGML_FILE)
 content_files =				\
-	version.xml			\
-	$(DOC_MAIN_ORIGINAL_SGML_FILE)	\
-	$(DOC_MODULE).pot
+	version.xml
 
 # Extra options to supply to gtkdoc-fixref
 FIXXREF_OPTIONS=
+
+CATALOGS=ja.po
 
 # include common portion ...
 include $(top_srcdir)/gtk-doc.make
@@ -57,25 +53,12 @@ EXTRA_DIST +=				\
 
 $(DOC_MODULE).pot: sgml-build.stamp
 	xml2po -k -o $(DOC_MODULE).pot \
-	  $(srcdir)/$(DOC_MAIN_ORIGINAL_SGML_FILE) $(srcdir)/xml/*.xml
+	  $(srcdir)/$(DOC_MAIN_SGML_FILE) $(srcdir)/xml/*.xml
 
-ja.po: $(DOC_MODULE).pot
-	rm -f .xml2po.mo
-	xml2po -k -u ja.po \
-	  $(srcdir)/$(DOC_MAIN_ORIGINAL_SGML_FILE) $(srcdir)/xml/*.xml
-
-sgml-ja.stamp: sgml-build.stamp ja.po
-	for x in $(srcdir)/$(DOC_MAIN_SGML_FILE) $(srcdir)/xml/*.xml;	\
-	do								\
-	  mv $$x $$x.orig;						\
-	  xml2po -k -p ja.po -l ja $$x.orig > $$x;			\
-	  rm -f $$x.orig;						\
+update-po: Makefile sgml.stamp
+	$(MAKE) $(DOC_MODULE).pot
+	for catalog in $(CATALOGS); do		\
+	  xml2po -k -u $$(catalog)		\
+	    $(srcdir)/$(DOC_MAIN_SGML_FILE)	\
+	    $(srcdir)/xml/*.xml;		\
 	done
-
-html-build-ja.stamp: sgml-ja.stamp html-build.stamp
-	rm -rf $(srcdir)/ja/html
-	mkdir -p $(srcdir)/ja
-	mv $(srcdir)/html $(srcdir)/ja/
-	rm -f html-build.stamp
-	rm -f sgml-build.stamp
-	touch html-build-ja.stamp

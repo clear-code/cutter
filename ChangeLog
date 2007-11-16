@@ -1,5 +1,7 @@
 2007-11-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gtk-doc.make, doc/references/: supported multi po.
+
 	* doc/reference/: supported reference manual for Japanese. (but dirty)
 
 	* ./: supported gettext.
