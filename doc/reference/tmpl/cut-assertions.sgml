@@ -17,13 +17,6 @@ cut-assertions
 <!-- ##### SECTION Stability_Level ##### -->
 
 
-<!-- ##### MACRO cut_user_data ##### -->
-<para>
-
-</para>
-
-
-
 <!-- ##### MACRO cut_error ##### -->
 <para>
 
@@ -72,6 +65,15 @@ cut-assertions
 
 @actual: 
 @...: optinal format string, followed by parameters to insert into the format string (as with printf())
+
+
+<!-- ##### MACRO cut_assert_not_null ##### -->
+<para>
+
+</para>
+
+@actual: 
+@...: 
 
 
 <!-- ##### MACRO cut_assert_equal_int ##### -->

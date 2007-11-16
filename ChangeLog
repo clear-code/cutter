@@ -1,5 +1,7 @@
 2007-11-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/Makefile.am: checked cutter.h.
+
 	* cutter/cutter.h (cut_user_data): moved from cut-assertions.h
 
 	* doc/reference/ja.po: updated.

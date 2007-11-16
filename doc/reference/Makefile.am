@@ -13,7 +13,7 @@ SCAN_OPTIONS=
 DOC_SOURCE_DIR=../../cutter
 
 # Used for dependencies
-HFILE_GLOB=$(top_srcdir)/cutter/cut-assertions.h
+HFILE_GLOB=$(top_srcdir)/cutter/cutter.h
 #CFILE_GLOB=$(top_srcdir)/cutter/*.c
 
 # Headers to ignore
