@@ -85,11 +85,11 @@ moduledir="\${libdir}/\$(PACKAGE)/module"
 AC_SUBST(moduledir)
 
 dnl **************************************************************
-dnl Configure for output modules.
+dnl Configure for runner modules.
 dnl **************************************************************
 
-output_moduledir="\${moduledir}/output"
-AC_SUBST(output_moduledir)
+runner_moduledir="\${moduledir}/runner"
+AC_SUBST(runner_moduledir)
 
 dnl **************************************************************
 dnl Configure for runner modules.
@@ -135,15 +135,14 @@ ALL_LINGUAS="ja"
 AM_GLIB_GNU_GETTEXT
 
 
-CUTTER_CFLAGS="$GLIB_CFLAGS -DOUTPUT_MODULEDIR=\\\"\"\$(output_moduledir)\"\\\""
-CUTTER_CFLAGS="$CUTTER_CFLAGS -DRUNNER_MODULEDIR=\\\"\"\$(runner_moduledir)\"\\\""
+CUTTER_CFLAGS="$GLIB_CFLAGS -DRUNNER_MODULEDIR=\\\"\"\$(runner_moduledir)\"\\\""
 
 AC_CONFIG_FILES([Makefile
 		 cutter.pc
 		 libcutter.pc
 		 cutter/Makefile
 		 cutter/module/Makefile
-		 cutter/module/output/Makefile
+		 cutter/module/runner/Makefile
                  sample/Makefile
                  sample/calc/Makefile.test
 		 sample/glib/Makefile
