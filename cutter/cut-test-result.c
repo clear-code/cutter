@@ -373,6 +373,18 @@ cut_test_result_get_test_name (CutTestResult *result)
 }
 
 const gchar *
+cut_test_result_get_test_case_name (CutTestResult *result)
+{
+    return CUT_TEST_RESULT_GET_PRIVATE(result)->test_case_name;
+}
+
+const gchar *
+cut_test_result_get_test_suite_name (CutTestResult *result)
+{
+    return CUT_TEST_RESULT_GET_PRIVATE(result)->test_suite_name;
+}
+
+const gchar *
 cut_test_result_get_user_message (CutTestResult *result)
 {
     return CUT_TEST_RESULT_GET_PRIVATE(result)->user_message;

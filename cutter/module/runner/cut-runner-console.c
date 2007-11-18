@@ -482,6 +482,7 @@ cb_complete_test_suite (CutContext *context, CutTestSuite *test_suite,
         gchar *filename;
         const gchar *message;
         const gchar *source_directory;
+        const gchar *name;
 
         source_directory = cut_runner_get_source_directory(runner);
         if (source_directory)
@@ -493,12 +494,16 @@ cb_complete_test_suite (CutContext *context, CutTestSuite *test_suite,
 
         status = cut_test_result_get_status(result);
         message = cut_test_result_get_message(result);
+        name = cut_test_result_get_test_name(result);
+        if (!name)
+            name = cut_test_result_get_test_case_name(result);
+        if (!name)
+            name = cut_test_result_get_test_suite_name(result);
 
         g_print("\n%d) ", i);
-        print_for_status(console, status,
-                         "%s: %s",
-                         status_to_name(status),
-                         cut_test_result_get_test_name(result));
+        print_for_status(console, status, "%s: %s",
+                         status_to_name(status), name);
+
         if (message) {
             g_print("\n");
             print_for_status(console, status, "%s", message);
