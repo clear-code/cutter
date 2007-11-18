@@ -42,8 +42,8 @@
 static CutVerboseLevel verbose_level = CUT_VERBOSE_LEVEL_NORMAL;
 static gchar *source_directory = NULL;
 static gboolean use_color = FALSE;
-static gchar **test_case_names = NULL;
-static gchar **test_names = NULL;
+static const gchar **test_case_names = NULL;
+static const gchar **test_names = NULL;
 static gboolean use_multi_thread = FALSE;
 
 static gboolean

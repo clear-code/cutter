@@ -72,8 +72,8 @@ gboolean        cut_test_suite_run_test_in_test_case
 gboolean        cut_test_suite_run_with_filter
                                              (CutTestSuite *test_suite,
                                               CutContext   *context,
-                                              gchar       **test_case_names,
-                                              gchar       **test_names);
+                                              const gchar **test_case_names,
+                                              const gchar **test_names);
 
 G_END_DECLS
 

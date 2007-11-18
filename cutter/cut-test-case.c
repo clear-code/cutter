@@ -362,19 +362,18 @@ gboolean
 cut_test_case_run_test (CutTestCase *test_case, CutContext *context,
                         const gchar *name)
 {
-    gchar *test_names[2];
+    const gchar *test_names[] = {NULL, NULL};
 
     g_return_val_if_fail(CUT_IS_TEST_CASE(test_case), FALSE);
 
-    test_names[0] = (gchar *)name;
-    test_names[1] = NULL;
+    test_names[0] = name;
     return cut_test_case_run_with_filter(test_case, context, test_names);
 }
 
 gboolean
-cut_test_case_run_with_filter (CutTestCase *test_case,
-                               CutContext  *context,
-                               gchar      **test_names)
+cut_test_case_run_with_filter (CutTestCase  *test_case,
+                               CutContext   *context,
+                               const gchar **test_names)
 {
     CutTestContainer *container;
     GList *filtered_tests = NULL;
@@ -385,7 +384,7 @@ cut_test_case_run_with_filter (CutTestCase *test_case,
         filtered_tests =
             cut_test_container_filter_children(container, test_names);
     } else {
-        gchar *default_test_names[] = {"/^test_/", NULL};
+        const gchar *default_test_names[] = {"/^test_/", NULL};
         filtered_tests =
             cut_test_container_filter_children(container, default_test_names);
     }

@@ -174,7 +174,8 @@ run (gpointer data)
     test_names = info->test_names;
 
     g_signal_emit_by_name(test_suite, "start-test-case", test_case);
-    success = cut_test_case_run_with_filter(test_case, context, test_names);
+    success = cut_test_case_run_with_filter(test_case, context,
+                                            (const gchar **)test_names);
     g_signal_emit_by_name(test_suite, "complete-test-case", test_case);
 
     g_object_unref(test_suite);
@@ -188,7 +189,7 @@ run (gpointer data)
 
 static void
 run_with_thread (CutTestSuite *test_suite, CutTestCase *test_case,
-                 CutContext *context, gchar **test_names,
+                 CutContext *context, const gchar **test_names,
                  gboolean try_thread, GList **threads, gboolean *success)
 {
     RunTestInfo *info;
@@ -198,7 +199,7 @@ run_with_thread (CutTestSuite *test_suite, CutTestCase *test_case,
     info->test_suite = g_object_ref(test_suite);
     info->test_case = g_object_ref(test_case);
     info->context = g_object_ref(context);
-    info->test_names = g_strdupv(test_names);
+    info->test_names = g_strdupv((gchar **)test_names);
 
     if (try_thread) {
         GThread *thread;
@@ -287,7 +288,7 @@ ill_be_back_handler (int signum)
 
 static gboolean
 cut_test_suite_run_test_cases (CutTestSuite *test_suite, CutContext *context,
-                               const GList *tests, gchar **test_names)
+                               const GList *tests, const gchar **test_names)
 {
     const GList *list;
     GList *node, *threads = NULL;
@@ -358,13 +359,11 @@ gboolean
 cut_test_suite_run_test_case (CutTestSuite *suite, CutContext *context,
                               const gchar *test_case_name)
 {
-    gchar *test_case_names[2];
+    const gchar *test_case_names[] = {NULL, NULL};
 
     g_return_val_if_fail(CUT_IS_TEST_SUITE(suite), FALSE);
 
-    test_case_names[0] = (gchar *)test_case_name;
-    test_case_names[1] = NULL;
-
+    test_case_names[0] = test_case_name;
     return cut_test_suite_run_with_filter(suite, context,
                                           test_case_names, NULL);
 }
@@ -374,12 +373,11 @@ cut_test_suite_run_test (CutTestSuite *suite, CutContext *context,
                          const gchar *test_name)
 {
     const GList *test_cases;
-    gchar *test_names[2];
+    const gchar *test_names[] = {NULL, NULL};
 
     g_return_val_if_fail(CUT_IS_TEST_SUITE(suite), FALSE);
 
-    test_names[0] = (gchar *)test_name;
-    test_names[1] = NULL;
+    test_names[0] = test_name;
     test_cases = cut_test_container_get_children(CUT_TEST_CONTAINER(suite));
     return cut_test_suite_run_test_cases(suite, context, test_cases,
                                          test_names);
@@ -391,15 +389,13 @@ cut_test_suite_run_test_in_test_case (CutTestSuite *suite,
                                       const gchar  *test_name,
                                       const gchar  *test_case_name)
 {
-    gchar *test_names[2];
-    gchar *test_case_names[2];
+    const gchar *test_names[] = {NULL, NULL};
+    const gchar *test_case_names[] = {NULL, NULL};
 
     g_return_val_if_fail(CUT_IS_TEST_SUITE(suite), FALSE);
 
-    test_names[0] = (gchar *)test_name;
-    test_names[1] = NULL;
-    test_case_names[0] = (gchar *)test_case_name;
-    test_case_names[1] = NULL;
+    test_names[0] = test_name;
+    test_case_names[0] = test_case_name;
 
     return cut_test_suite_run_with_filter(suite, context, test_case_names,
                                           test_names);
@@ -408,8 +404,8 @@ cut_test_suite_run_test_in_test_case (CutTestSuite *suite,
 gboolean
 cut_test_suite_run_with_filter (CutTestSuite *test_suite,
                                 CutContext   *context,
-                                gchar       **test_case_names,
-                                gchar       **test_names)
+                                const gchar **test_case_names,
+                                const gchar **test_names)
 {
     CutTestContainer *container;
     GList *filtered_test_cases = NULL;

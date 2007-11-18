@@ -186,7 +186,7 @@ collect_tests_with_regex (const GList *tests, gchar *pattern)
 
 GList *
 cut_test_container_filter_children (CutTestContainer *container,
-                                    gchar **filter)
+                                    const gchar **filter)
 {
     GList *matched_tests = NULL;
     const GList *tests;
