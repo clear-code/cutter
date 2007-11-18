@@ -1,7 +1,10 @@
 2007-11-18  Kouhei Sutou  <kou@cozmixng.org>
 
-	* cutter/module/runner/cut-runner-console.c: used test_case_name
+	* cutter/module/runner/cut-runner-console.c: cleanup.
+
+	* Cutter/module/runner/cut-runner-console.c: used test_case_name
 	if test_name isn't available.
+
 	* cutter/cut-test-result.[ch]: exported test_case_name and
 	test_suite_name.
 

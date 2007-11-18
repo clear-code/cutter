@@ -444,34 +444,13 @@ cb_complete_test_case (CutContext *context, CutTestCase *test_case,
 }
 
 static void
-cb_complete_test_suite (CutContext *context, CutTestSuite *test_suite,
-                        CutRunnerConsole *console)
+print_results (CutRunnerConsole *console, CutContext *context)
 {
     gint i;
-    guint n_tests, n_assertions, n_failures, n_errors;
-    guint n_pendings, n_notifications;
     const GList *node;
-    const gchar *color;
-    gboolean crashed;
     CutRunner *runner;
 
     runner = CUT_RUNNER(console);
-    if (cut_runner_get_verbose_level(runner) < CUT_VERBOSE_LEVEL_NORMAL)
-        return;
-
-    if (cut_runner_get_verbose_level(runner) == CUT_VERBOSE_LEVEL_NORMAL)
-        g_print("\n");
-
-    crashed = cut_context_is_crashed(context);
-    if (crashed) {
-        const gchar *stack_trace;
-        print_with_color(console, CRASH_COLOR, "CRASH!!!");
-        g_print("\n");
-
-        stack_trace = cut_context_get_stack_trace(context);
-        if (stack_trace)
-            g_print("%s\n", stack_trace);
-    }
 
     i = 1;
     for (node = cut_context_get_results(context);
@@ -515,6 +494,37 @@ cb_complete_test_suite (CutContext *context, CutTestSuite *test_suite,
         i++;
         g_free(filename);
     }
+}
+
+static void
+cb_complete_test_suite (CutContext *context, CutTestSuite *test_suite,
+                        CutRunnerConsole *console)
+{
+    guint n_tests, n_assertions, n_failures, n_errors;
+    guint n_pendings, n_notifications;
+    const gchar *color;
+    gboolean crashed;
+    CutVerboseLevel verbose_level;
+
+    verbose_level = GET_VERBOSE_LEVEL(console);
+    if (verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
+        return;
+
+    if (verbose_level == CUT_VERBOSE_LEVEL_NORMAL)
+        g_print("\n");
+
+    crashed = cut_context_is_crashed(context);
+    if (crashed) {
+        const gchar *stack_trace;
+        print_with_color(console, CRASH_COLOR, "CRASH!!!");
+        g_print("\n");
+
+        stack_trace = cut_context_get_stack_trace(context);
+        if (stack_trace)
+            g_print("%s\n", stack_trace);
+    }
+
+    print_results(console, context);
 
     g_print("\n");
     g_print("Finished in %f seconds",
