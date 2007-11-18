@@ -379,8 +379,9 @@ cut_test_suite_run_test (CutTestSuite *suite, CutContext *context,
 
     test_names[0] = test_name;
     test_cases = cut_test_container_get_children(CUT_TEST_CONTAINER(suite));
-    return cut_test_suite_run_test_cases(suite, context, test_cases,
-                                         test_names);
+    return cut_test_suite_run_test_cases(suite, context,
+                                         test_cases,
+                                         test_name ? test_names : NULL);
 }
 
 gboolean
@@ -416,8 +417,10 @@ cut_test_suite_run_with_filter (CutTestSuite *test_suite,
         filtered_test_cases =
             cut_test_container_filter_children(container, test_case_names);
     } else {
+        const gchar *default_test_case_names[] = {"/^test_/", NULL};
         filtered_test_cases =
-            g_list_copy((GList *)cut_test_container_get_children(container));
+            cut_test_container_filter_children(container,
+                                               default_test_case_names);
     }
 
     success = cut_test_suite_run_test_cases(test_suite, context,

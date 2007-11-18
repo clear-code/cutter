@@ -1,5 +1,9 @@
 2007-11-18  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-suite.c: used /^test_/ for default test case
+	name filter.
+	* test/test-cut-test-suite.c: added a test for default test filter.
+
 	* **/run-test.sh: output -> runner.
 
 	* cutter/cut-context.c: removed too much signal emitting.

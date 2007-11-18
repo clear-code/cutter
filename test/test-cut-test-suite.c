@@ -14,6 +14,8 @@ void test_run_test_in_test_case (void);
 void test_run_test_with_regex_in_test_case (void);
 void test_run_test_in_test_case_with_regex (void);
 void test_run_test_with_regex_in_test_case_with_regex (void);
+void test_run_test_in_test_case_with_null (void);
+void test_run_test_with_filter_with_null (void);
 
 static CutContext *test_context;
 static CutTestSuite *test_object;
@@ -152,6 +154,15 @@ run_test_in_test_case (const gchar *test_name, const gchar *test_case_name)
                                                 test_case_name);
 }
 
+static gboolean
+run_test_with_filter (const gchar **test_case_names, const gchar **test_names)
+{
+    return cut_test_suite_run_with_filter(test_object,
+                                          test_context,
+                                          test_case_names,
+                                          test_names);
+}
+
 void
 test_run_test_case (void)
 {
@@ -246,6 +257,30 @@ test_run_test_with_regex_in_test_case_with_regex (void)
     cut_assert_equal_int(n_run_bummy_test_function1, 0);
     cut_assert_equal_int(n_run_bummy_test_function2, 0);
     cut_assert_equal_int(n_run_bummy_run_test_function, 0);
+}
+
+void
+test_run_test_in_test_case_with_null (void)
+{
+    cut_assert(run_test(NULL));
+    cut_assert_equal_int(0, n_run_dummy_test_function1);
+    cut_assert_equal_int(0, n_run_dummy_test_function2);
+    cut_assert_equal_int(0, n_run_dummy_run_test_function);
+    cut_assert_equal_int(0, n_run_bummy_test_function1);
+    cut_assert_equal_int(0, n_run_bummy_test_function2);
+    cut_assert_equal_int(0, n_run_bummy_run_test_function);
+}
+
+void
+test_run_test_with_filter_with_null (void)
+{
+    cut_assert(run_test_with_filter(NULL, NULL));
+    cut_assert_equal_int(0, n_run_dummy_test_function1);
+    cut_assert_equal_int(0, n_run_dummy_test_function2);
+    cut_assert_equal_int(0, n_run_dummy_run_test_function);
+    cut_assert_equal_int(0, n_run_bummy_test_function1);
+    cut_assert_equal_int(0, n_run_bummy_test_function2);
+    cut_assert_equal_int(0, n_run_bummy_run_test_function);
 }
 
 /*
