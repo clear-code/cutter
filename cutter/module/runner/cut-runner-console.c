@@ -497,40 +497,12 @@ print_results (CutRunnerConsole *console, CutContext *context)
 }
 
 static void
-cb_complete_test_suite (CutContext *context, CutTestSuite *test_suite,
-                        CutRunnerConsole *console)
+print_summary (CutRunnerConsole *console, CutContext *context,
+               gboolean crashed)
 {
     guint n_tests, n_assertions, n_failures, n_errors;
     guint n_pendings, n_notifications;
     const gchar *color;
-    gboolean crashed;
-    CutVerboseLevel verbose_level;
-
-    verbose_level = GET_VERBOSE_LEVEL(console);
-    if (verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
-        return;
-
-    if (verbose_level == CUT_VERBOSE_LEVEL_NORMAL)
-        g_print("\n");
-
-    crashed = cut_context_is_crashed(context);
-    if (crashed) {
-        const gchar *stack_trace;
-        print_with_color(console, CRASH_COLOR, "CRASH!!!");
-        g_print("\n");
-
-        stack_trace = cut_context_get_stack_trace(context);
-        if (stack_trace)
-            g_print("%s\n", stack_trace);
-    }
-
-    print_results(console, context);
-
-    g_print("\n");
-    g_print("Finished in %f seconds",
-            cut_test_get_elapsed(CUT_TEST(test_suite)));
-    g_print("\n\n");
-
 
     n_tests = cut_context_get_n_tests(context);
     n_assertions = cut_context_get_n_assertions(context);
@@ -562,6 +534,41 @@ cb_complete_test_suite (CutContext *context, CutTestSuite *test_suite,
                      n_tests, n_assertions, n_failures, n_errors,
                      n_pendings, n_notifications);
     g_print("\n");
+}
+
+static void
+cb_complete_test_suite (CutContext *context, CutTestSuite *test_suite,
+                        CutRunnerConsole *console)
+{
+    gboolean crashed;
+    CutVerboseLevel verbose_level;
+
+    verbose_level = GET_VERBOSE_LEVEL(console);
+    if (verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
+        return;
+
+    if (verbose_level == CUT_VERBOSE_LEVEL_NORMAL)
+        g_print("\n");
+
+    crashed = cut_context_is_crashed(context);
+    if (crashed) {
+        const gchar *stack_trace;
+        print_with_color(console, CRASH_COLOR, "CRASH!!!");
+        g_print("\n");
+
+        stack_trace = cut_context_get_stack_trace(context);
+        if (stack_trace)
+            g_print("%s\n", stack_trace);
+    }
+
+    print_results(console, context);
+
+    g_print("\n");
+    g_print("Finished in %f seconds",
+            cut_test_get_elapsed(CUT_TEST(test_suite)));
+    g_print("\n\n");
+
+    print_summary(console, context, crashed);
 }
 
 static void
