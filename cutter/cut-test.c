@@ -30,6 +30,7 @@
 #include "cut-test.h"
 #include "cut-test-container.h"
 #include "cut-context.h"
+#include "cut-marshalers.h"
 
 #define CUT_TEST_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST, CutTestPrivate))
 
@@ -131,8 +132,8 @@ cut_test_class_init (CutTestClass *klass)
                 G_SIGNAL_RUN_LAST,
                 G_STRUCT_OFFSET (CutTestClass, pass_assertion),
                 NULL, NULL,
-                g_cclosure_marshal_VOID__VOID,
-                G_TYPE_NONE, 0);
+                g_cclosure_marshal_VOID__OBJECT,
+                G_TYPE_NONE, 1, CUT_TYPE_TEST_CONTEXT);
 
 	cut_test_signals[SUCCESS_SIGNAL]
         = g_signal_new ("success",
@@ -149,8 +150,8 @@ cut_test_class_init (CutTestClass *klass)
                 G_SIGNAL_RUN_LAST,
                 G_STRUCT_OFFSET (CutTestClass, failure),
                 NULL, NULL,
-                g_cclosure_marshal_VOID__OBJECT,
-                G_TYPE_NONE, 1, CUT_TYPE_TEST_RESULT);
+                _cut_marshal_VOID__OBJECT_OBJECT,
+                G_TYPE_NONE, 2, CUT_TYPE_TEST_CONTEXT, CUT_TYPE_TEST_RESULT);
 
 	cut_test_signals[ERROR_SIGNAL]
         = g_signal_new ("error",
@@ -158,8 +159,8 @@ cut_test_class_init (CutTestClass *klass)
                 G_SIGNAL_RUN_LAST,
                 G_STRUCT_OFFSET (CutTestClass, error),
                 NULL, NULL,
-                g_cclosure_marshal_VOID__OBJECT,
-                G_TYPE_NONE, 1, CUT_TYPE_TEST_RESULT);
+                _cut_marshal_VOID__OBJECT_OBJECT,
+                G_TYPE_NONE, 2, CUT_TYPE_TEST_CONTEXT, CUT_TYPE_TEST_RESULT);
 
 	cut_test_signals[PENDING_SIGNAL]
         = g_signal_new ("pending",
@@ -167,8 +168,8 @@ cut_test_class_init (CutTestClass *klass)
                 G_SIGNAL_RUN_LAST,
                 G_STRUCT_OFFSET (CutTestClass, pending),
                 NULL, NULL,
-                g_cclosure_marshal_VOID__OBJECT,
-                G_TYPE_NONE, 1, CUT_TYPE_TEST_RESULT);
+                _cut_marshal_VOID__OBJECT_OBJECT,
+                G_TYPE_NONE, 2, CUT_TYPE_TEST_CONTEXT, CUT_TYPE_TEST_RESULT);
 
 	cut_test_signals[NOTIFICATION_SIGNAL]
         = g_signal_new ("notification",
@@ -176,8 +177,8 @@ cut_test_class_init (CutTestClass *klass)
                 G_SIGNAL_RUN_LAST,
                 G_STRUCT_OFFSET (CutTestClass, notification),
                 NULL, NULL,
-                g_cclosure_marshal_VOID__OBJECT,
-                G_TYPE_NONE, 1, CUT_TYPE_TEST_RESULT);
+                _cut_marshal_VOID__OBJECT_OBJECT,
+                G_TYPE_NONE, 2, CUT_TYPE_TEST_CONTEXT, CUT_TYPE_TEST_RESULT);
 
 	cut_test_signals[COMPLETE_SIGNAL]
         = g_signal_new ("complete",

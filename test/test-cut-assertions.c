@@ -80,7 +80,8 @@ dummy_assert_message_with_format_string (void)
 }
 
 static void
-cb_collect_result (CutTest *test, CutTestResult *result, CutTestResult **output)
+cb_collect_result (CutTest *test, CutTestContext *test_context,
+                   CutTestResult *result, CutTestResult **output)
 {
     *output = result;
     g_object_ref(*output);
@@ -97,7 +98,6 @@ run (CutTest *test)
     test_object = test;
 
     context = cut_context_new();
-    cut_context_set_verbose_level(context, CUT_VERBOSE_LEVEL_SILENT);
 
     test_context = cut_test_context_new(NULL, NULL, test_object);
     original_test_context = get_current_test_context();

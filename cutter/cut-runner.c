@@ -41,7 +41,6 @@ typedef struct _CutRunnerPrivate	CutRunnerPrivate;
 struct _CutRunnerPrivate
 {
     CutVerboseLevel verbose_level;
-    gboolean use_color;
     gchar *source_directory;
 };
 
@@ -49,7 +48,6 @@ enum
 {
     PROP_0,
     PROP_VERBOSE_LEVEL,
-    PROP_USE_COLOR,
     PROP_SOURCE_DIRECTORY
 };
 
@@ -173,6 +171,7 @@ cut_runner_class_init (CutRunnerClass *klass)
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
 
+
     spec = g_param_spec_enum("verbose-level",
                              "Verbose Level",
                              "The number of representing verbosity level",
@@ -190,7 +189,6 @@ init (CutRunner *runner)
     CutRunnerPrivate *priv = CUT_RUNNER_GET_PRIVATE(runner);
 
     priv->verbose_level = CUT_VERBOSE_LEVEL_NORMAL;
-    priv->use_color = FALSE;
     priv->source_directory = NULL;
 }
 
@@ -290,7 +288,6 @@ cut_runner_set_verbose_level_by_name (CutRunner *runner, const gchar *name)
     }
 }
 
-
 void
 cut_runner_set_source_directory (CutRunner *runner, const gchar *directory)
 {
@@ -312,164 +309,19 @@ cut_runner_get_source_directory (CutRunner *runner)
     return CUT_RUNNER_GET_PRIVATE(runner)->source_directory;
 }
 
-void
-cut_runner_set_use_color (CutRunner *runner, gboolean use_color)
-{
-    g_object_set(runner, "use_color", use_color, NULL);
-}
-
-void
-cut_runner_on_start_test_suite (CutRunner *runner, CutTestSuite *test_suite)
+gboolean
+cut_runner_run (CutRunner *runner, CutTestSuite *test_suite, CutContext *context)
 {
     CutRunnerClass *klass;
 
-    g_return_if_fail(CUT_IS_RUNNER(runner));
+    g_return_val_if_fail(CUT_IS_RUNNER(runner), FALSE);
 
     klass = CUT_RUNNER_GET_CLASS(runner);
-    if (klass->on_start_test_suite)
-        klass->on_start_test_suite(runner, test_suite);
+    if (klass->run)
+        return klass->run(runner, test_suite, context);
+    else
+        return FALSE;
 }
-
-void
-cut_runner_on_start_test_case (CutRunner *runner, CutTestCase *test_case)
-{
-    CutRunnerClass *klass;
-
-    g_return_if_fail(CUT_IS_RUNNER(runner));
-
-    klass = CUT_RUNNER_GET_CLASS(runner);
-    if (klass->on_start_test_case)
-        klass->on_start_test_case(runner, test_case);
-}
-
-void
-cut_runner_on_start_test (CutRunner *runner, CutTestCase *test_case,
-                          CutTest *test)
-{
-    CutRunnerClass *klass;
-
-    g_return_if_fail(CUT_IS_RUNNER(runner));
-
-    klass = CUT_RUNNER_GET_CLASS(runner);
-    if (klass->on_start_test)
-        klass->on_start_test(runner, test_case, test);
-}
-
-void
-cut_runner_on_complete_test (CutRunner *runner, CutTestCase *test_case,
-                             CutTest *test, CutTestResult *result)
-{
-    CutRunnerClass *klass;
-
-    g_return_if_fail(CUT_IS_RUNNER(runner));
-
-    if (result && cut_test_result_get_status(result) == CUT_TEST_RESULT_ERROR)
-        cut_runner_on_error(runner, test, result);
-
-    klass = CUT_RUNNER_GET_CLASS(runner);
-    if (klass->on_complete_test)
-        klass->on_complete_test(runner, test_case, test, result);
-}
-
-void
-cut_runner_on_success (CutRunner *runner, CutTest *test)
-{
-    CutRunnerClass *klass;
-
-    g_return_if_fail(CUT_IS_RUNNER(runner));
-
-    klass = CUT_RUNNER_GET_CLASS(runner);
-    if (klass->on_success)
-        klass->on_success(runner, test);
-}
-
-void
-cut_runner_on_failure (CutRunner *runner, CutTest *test, CutTestResult *result)
-{
-    CutRunnerClass *klass;
-
-    g_return_if_fail(CUT_IS_RUNNER(runner));
-
-    klass = CUT_RUNNER_GET_CLASS(runner);
-    if (klass->on_failure)
-        klass->on_failure(runner, test, result);
-}
-
-void
-cut_runner_on_error (CutRunner *runner, CutTest *test, CutTestResult *result)
-{
-    CutRunnerClass *klass;
-
-    g_return_if_fail(CUT_IS_RUNNER(runner));
-
-    klass = CUT_RUNNER_GET_CLASS(runner);
-    if (klass->on_error)
-        klass->on_error(runner, test, result);
-}
-
-void
-cut_runner_on_pending (CutRunner *runner, CutTest *test, CutTestResult *result)
-{
-    CutRunnerClass *klass;
-
-    g_return_if_fail(CUT_IS_RUNNER(runner));
-
-    klass = CUT_RUNNER_GET_CLASS(runner);
-    if (klass->on_pending)
-        klass->on_pending(runner, test, result);
-}
-
-void
-cut_runner_on_notification (CutRunner *runner, CutTest *test,
-                            CutTestResult *result)
-{
-    CutRunnerClass *klass;
-
-    g_return_if_fail(CUT_IS_RUNNER(runner));
-
-    klass = CUT_RUNNER_GET_CLASS(runner);
-    if (klass->on_notification)
-        klass->on_notification(runner, test, result);
-}
-
-void
-cut_runner_on_complete_test_case (CutRunner *runner, CutTestCase *test_case)
-{
-    CutRunnerClass *klass;
-
-    g_return_if_fail(CUT_IS_RUNNER(runner));
-
-    klass = CUT_RUNNER_GET_CLASS(runner);
-    if (klass->on_complete_test_case)
-        klass->on_complete_test_case(runner, test_case);
-}
-
-void
-cut_runner_on_complete_test_suite (CutRunner *runner, CutContext *context,
-                                   CutTestSuite *test_suite)
-{
-    CutRunnerClass *klass;
-
-    g_return_if_fail(CUT_IS_RUNNER(runner));
-
-    klass = CUT_RUNNER_GET_CLASS(runner);
-    if (klass->on_complete_test_suite)
-        klass->on_complete_test_suite(runner, context, test_suite);
-}
-
-void
-cut_runner_on_crashed_test_suite (CutRunner *runner, CutContext *context,
-                                  CutTestSuite *test_suite)
-{
-    CutRunnerClass *klass;
-
-    g_return_if_fail(CUT_IS_RUNNER(runner));
-
-    klass = CUT_RUNNER_GET_CLASS(runner);
-    if (klass->on_crashed_test_suite)
-        klass->on_crashed_test_suite(runner, context, test_suite);
-}
-
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

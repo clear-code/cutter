@@ -38,6 +38,7 @@
 #include "cut-test-suite.h"
 #include "cut-repository.h"
 #include "cut-verbose-level.h"
+#include "cut-runner.h"
 
 static CutVerboseLevel verbose_level = CUT_VERBOSE_LEVEL_NORMAL;
 static gchar *source_directory = NULL;
@@ -150,7 +151,7 @@ cut_init (int *argc, char ***argv)
     bfd_init();
 #endif
 
-    cut_output_init();
+    cut_runner_init();
 
     g_option_context_free(option_context);
 }
@@ -162,11 +163,11 @@ cut_create_context (void)
 
     context = cut_context_new();
 
-    cut_context_set_verbose_level(context, verbose_level);
     if (source_directory)
         cut_context_set_source_directory(context, source_directory);
-    cut_context_set_use_color(context, use_color);
     cut_context_set_multi_thread(context, use_multi_thread);
+    cut_context_set_target_test_case_names(context, test_case_names);
+    cut_context_set_target_test_names(context, test_names);
 
     return context;
 }
@@ -187,11 +188,19 @@ cut_create_test_suite (const gchar *directory)
 gboolean
 cut_run_test_suite (CutTestSuite *suite, CutContext *context)
 {
+    CutRunner *runner;
+    gboolean success;
+
     if (!suite)
         return TRUE;
 
-    return cut_test_suite_run_with_filter(suite, context,
-                                          test_case_names, test_names);
+    runner = cut_runner_new("console",
+                            "use-color", use_color,
+                            "verbose-level", verbose_level,
+                            NULL);
+    success = cut_runner_run(runner, suite, context);
+    g_object_unref(runner);
+    return success;
 }
 
 gboolean

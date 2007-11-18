@@ -346,13 +346,13 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite, CutContext *context,
 gboolean
 cut_test_suite_run (CutTestSuite *suite, CutContext *context)
 {
-    CutTestContainer *container;
-    const GList *tests;
+    const gchar **test_case_names;
+    const gchar **test_names;
 
-    container = CUT_TEST_CONTAINER(suite);
-    tests = cut_test_container_get_children(container);
-
-    return cut_test_suite_run_test_cases(suite, context, tests, NULL);
+    test_case_names = cut_context_get_target_test_case_names(context);
+    test_names = cut_context_get_target_test_names(context);
+    return cut_test_suite_run_with_filter(suite, context,
+                                          test_case_names, test_names);
 }
 
 gboolean

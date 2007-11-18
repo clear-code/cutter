@@ -29,7 +29,6 @@
 
 #include "cut-context.h"
 #include "cut-test-case.h"
-#include "cut-output.h"
 
 #include "cut-marshalers.h"
 
@@ -45,11 +44,13 @@ struct _CutContextPrivate
     guint n_pendings;
     guint n_notifications;
     GList *results;
-    CutOutput *output;
     gboolean use_multi_thread;
     GMutex *mutex;
     gboolean crashed;
     gchar *stack_trace;
+    gchar *source_directory;
+    gchar **target_test_case_names;
+    gchar **target_test_names;
 };
 
 enum
@@ -67,14 +68,28 @@ enum
 enum
 {
     START_SIGNAL,
-    START_TEST_SIGNAL,
-    COMPLETE_TEST_SIGNAL,
-    START_TEST_CASE_SIGNAL,
-    COMPLETE_TEST_CASE_SIGNAL,
+
+    START_TEST_SUITE,
+    START_TEST_CASE,
+    START_TEST,
+
+    PASS,
+    SUCCESS,
+    FAILURE,
+    ERROR,
+    PENDING,
+    NOTIFICATION,
+
+    COMPLETE_TEST,
+    COMPLETE_TEST_CASE,
+    COMPLETE_TEST_SUITE,
+
+    CRASHED,
+
     LAST_SIGNAL
 };
 
-static gint cut_context_signals[LAST_SIGNAL] = {0};
+static gint signals[LAST_SIGNAL] = {0};
 
 G_DEFINE_TYPE (CutContext, cut_context, G_TYPE_OBJECT)
 
@@ -143,42 +158,130 @@ cut_context_class_init (CutContextClass *klass)
     g_object_class_install_property(gobject_class, PROP_USE_MULTI_THREAD, spec);
 
 
-	cut_context_signals[START_TEST_SIGNAL]
-        = g_signal_new ("start-test",
-                G_TYPE_FROM_CLASS (klass),
-                G_SIGNAL_RUN_LAST,
-                G_STRUCT_OFFSET (CutContextClass, start_test),
-                NULL, NULL,
-                _cut_marshal_VOID__OBJECT_OBJECT,
-                G_TYPE_NONE, 2, CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT);
+	signals[START_TEST_SUITE]
+        = g_signal_new ("start-test-suite",
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutContextClass, start_test_suite),
+                        NULL, NULL,
+                        g_cclosure_marshal_VOID__OBJECT,
+                        G_TYPE_NONE, 1, CUT_TYPE_TEST_SUITE);
 
-	cut_context_signals[COMPLETE_TEST_SIGNAL]
-        = g_signal_new ("complete-test",
-                G_TYPE_FROM_CLASS (klass),
-                G_SIGNAL_RUN_LAST,
-                G_STRUCT_OFFSET (CutContextClass, complete_test),
-                NULL, NULL,
-                _cut_marshal_VOID__OBJECT_OBJECT,
-                G_TYPE_NONE, 2, CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT);
-
-	cut_context_signals[START_TEST_CASE_SIGNAL]
+	signals[START_TEST_CASE]
         = g_signal_new ("start-test-case",
-                G_TYPE_FROM_CLASS (klass),
-                G_SIGNAL_RUN_LAST,
-                G_STRUCT_OFFSET (CutContextClass, start_test_case),
-                NULL, NULL,
-                g_cclosure_marshal_VOID__OBJECT,
-                G_TYPE_NONE, 1, CUT_TYPE_TEST_CASE);
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutContextClass, start_test_case),
+                        NULL, NULL,
+                        g_cclosure_marshal_VOID__OBJECT,
+                        G_TYPE_NONE, 1, CUT_TYPE_TEST_CASE);
 
-	cut_context_signals[COMPLETE_TEST_CASE_SIGNAL]
+	signals[START_TEST]
+        = g_signal_new ("start-test",
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutContextClass, start_test),
+                        NULL, NULL,
+                        _cut_marshal_VOID__OBJECT_OBJECT,
+                        G_TYPE_NONE, 2, CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT);
+
+	signals[PASS]
+        = g_signal_new ("pass",
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutContextClass, pass),
+                        NULL, NULL,
+                        _cut_marshal_VOID__OBJECT_OBJECT,
+                        G_TYPE_NONE, 2, CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT);
+
+	signals[SUCCESS]
+        = g_signal_new ("success",
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutContextClass, success),
+                        NULL, NULL,
+                        g_cclosure_marshal_VOID__OBJECT,
+                        G_TYPE_NONE, 1, CUT_TYPE_TEST);
+
+	signals[FAILURE]
+        = g_signal_new ("failure",
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutContextClass, failure),
+                        NULL, NULL,
+                        _cut_marshal_VOID__OBJECT_OBJECT_OBJECT,
+                        G_TYPE_NONE, 3,
+                        CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT,
+                        CUT_TYPE_TEST_RESULT);
+
+	signals[ERROR]
+        = g_signal_new ("error",
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutContextClass, error),
+                        NULL, NULL,
+                        _cut_marshal_VOID__OBJECT_OBJECT_OBJECT,
+                        G_TYPE_NONE, 3,
+                        CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT,
+                        CUT_TYPE_TEST_RESULT);
+
+	signals[PENDING]
+        = g_signal_new ("pending",
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutContextClass, pending),
+                        NULL, NULL,
+                        _cut_marshal_VOID__OBJECT_OBJECT_OBJECT,
+                        G_TYPE_NONE, 3,
+                        CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT,
+                        CUT_TYPE_TEST_RESULT);
+
+	signals[NOTIFICATION]
+        = g_signal_new ("notification",
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutContextClass, notification),
+                        NULL, NULL,
+                        _cut_marshal_VOID__OBJECT_OBJECT_OBJECT,
+                        G_TYPE_NONE, 3,
+                        CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT,
+                        CUT_TYPE_TEST_RESULT);
+
+    signals[COMPLETE_TEST]
+        = g_signal_new ("complete-test",
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutContextClass, complete_test),
+                        NULL, NULL,
+                        _cut_marshal_VOID__OBJECT_OBJECT,
+                        G_TYPE_NONE, 2, CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT);
+
+	signals[COMPLETE_TEST_CASE]
         = g_signal_new ("complete-test-case",
-                G_TYPE_FROM_CLASS (klass),
-                G_SIGNAL_RUN_LAST,
-                G_STRUCT_OFFSET (CutContextClass, complete_test_case),
-                NULL, NULL,
-                g_cclosure_marshal_VOID__OBJECT,
-                G_TYPE_NONE, 1, CUT_TYPE_TEST_CASE);
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutContextClass, complete_test_case),
+                        NULL, NULL,
+                        g_cclosure_marshal_VOID__OBJECT,
+                        G_TYPE_NONE, 1, CUT_TYPE_TEST_CASE);
 
+	signals[COMPLETE_TEST_SUITE]
+        = g_signal_new ("complete-test-suite",
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutContextClass, complete_test_suite),
+                        NULL, NULL,
+                        g_cclosure_marshal_VOID__OBJECT,
+                        G_TYPE_NONE, 1, CUT_TYPE_TEST_SUITE);
+
+	signals[CRASHED]
+        = g_signal_new ("crashed",
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutContextClass, crashed),
+                        NULL, NULL,
+                        g_cclosure_marshal_VOID__STRING,
+                        G_TYPE_NONE, 1, G_TYPE_STRING);
 
     g_type_class_add_private(gobject_class, sizeof(CutContextPrivate));
 }
@@ -195,11 +298,13 @@ cut_context_init (CutContext *context)
     priv->n_pendings = 0;
     priv->n_notifications = 0;
     priv->results = NULL;
-    priv->output = cut_output_new("console", "use-color", TRUE, NULL);
     priv->use_multi_thread = FALSE;
     priv->mutex = g_mutex_new();
     priv->crashed = FALSE;
     priv->stack_trace = NULL;
+    priv->source_directory = NULL;
+    priv->target_test_case_names = NULL;
+    priv->target_test_names = NULL;
 }
 
 static void
@@ -213,20 +318,22 @@ dispose (GObject *object)
         priv->results = NULL;
     }
 
-    if (priv->output) {
-        g_object_unref(priv->output);
-        priv->output = NULL;
-    }
-
     if (priv->mutex) {
         g_mutex_free(priv->mutex);
         priv->mutex = NULL;
     }
 
-    if (priv->stack_trace) {
-        g_free(priv->stack_trace);
-        priv->stack_trace = NULL;
-    }
+    g_free(priv->stack_trace);
+    priv->stack_trace = NULL;
+
+    g_free(priv->source_directory);
+    priv->source_directory = NULL;
+
+    g_strfreev(priv->target_test_case_names);
+    priv->target_test_case_names = NULL;
+
+    g_strfreev(priv->target_test_names);
+    priv->target_test_names = NULL;
 
     G_OBJECT_CLASS(cut_context_parent_class)->dispose(object);
 }
@@ -310,67 +417,68 @@ cut_context_new (void)
 }
 
 void
-cut_context_set_verbose_level (CutContext *context, CutVerboseLevel level)
-{
-    CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
-
-    if (priv->output)
-        cut_output_set_verbose_level(priv->output, level);
-}
-
-void
-cut_context_set_verbose_level_by_name (CutContext *context, const gchar *name)
-{
-    CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
-
-    if (priv->output)
-        cut_output_set_verbose_level_by_name(priv->output, name);
-}
-
-
-void
 cut_context_set_source_directory (CutContext *context, const gchar *directory)
 {
     CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
 
-    if (priv->output)
-        cut_output_set_source_directory(priv->output, directory);
+    g_free(priv->source_directory);
+    priv->source_directory = g_strdup(directory);
 }
 
 const gchar *
 cut_context_get_source_directory (CutContext *context)
 {
-    CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
-
-    if (priv->output)
-        return cut_output_get_source_directory(priv->output);
-    else
-        return NULL;
-}
-
-void
-cut_context_set_use_color (CutContext *context, gboolean use_color)
-{
-    CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
-
-    if (priv->output)
-        cut_output_set_use_color(priv->output, use_color);
+    return CUT_CONTEXT_GET_PRIVATE(context)->source_directory;
 }
 
 void
 cut_context_set_multi_thread (CutContext *context, gboolean use_multi_thread)
 {
-   CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
+    CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
 
-   g_mutex_lock(priv->mutex);
-   priv->use_multi_thread = use_multi_thread;
-   g_mutex_unlock(priv->mutex);
+    g_mutex_lock(priv->mutex);
+    priv->use_multi_thread = use_multi_thread;
+    g_mutex_unlock(priv->mutex);
 }
 
 gboolean
 cut_context_get_multi_thread (CutContext *context)
 {
     return CUT_CONTEXT_GET_PRIVATE(context)->use_multi_thread;
+}
+
+void
+cut_context_set_target_test_case_names (CutContext *context,
+                                        const gchar **names)
+{
+    CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
+
+    g_strfreev(priv->target_test_case_names);
+    priv->target_test_case_names = g_strdupv((gchar **)names);
+}
+
+const gchar **
+cut_context_get_target_test_case_names (CutContext *context)
+{
+    CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
+    return (const gchar **)(priv->target_test_case_names);
+}
+
+void
+cut_context_set_target_test_names (CutContext *context,
+                                   const gchar **names)
+{
+    CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
+
+    g_strfreev(priv->target_test_names);
+    priv->target_test_names = g_strdupv((gchar **)names);
+}
+
+const gchar **
+cut_context_get_target_test_names (CutContext *context)
+{
+    CutContextPrivate *priv = CUT_CONTEXT_GET_PRIVATE(context);
+    return (const gchar **)(priv->target_test_names);
 }
 
 typedef struct _TestCallBackInfo
@@ -380,7 +488,7 @@ typedef struct _TestCallBackInfo
 } TestCallBackInfo;
 
 static void
-cb_pass_assertion(CutTest *test, gpointer data)
+cb_pass_assertion (CutTest *test, CutTestContext *test_context, gpointer data)
 {
     TestCallBackInfo *info = data;
     CutContext *context;
@@ -391,10 +499,12 @@ cb_pass_assertion(CutTest *test, gpointer data)
     g_mutex_lock(priv->mutex);
     priv->n_assertions++;
     g_mutex_unlock(priv->mutex);
+
+    g_signal_emit(context, signals[PASS], 0, test, test_context);
 }
 
 static void
-cb_success(CutTest *test, gpointer data)
+cb_success (CutTest *test, gpointer data)
 {
     TestCallBackInfo *info = data;
     CutContext *context;
@@ -402,12 +512,12 @@ cb_success(CutTest *test, gpointer data)
 
     context = info->context;
     priv = CUT_CONTEXT_GET_PRIVATE(context);
-    if (priv->output)
-        cut_output_on_success(priv->output, test);
+    g_signal_emit(context, signals[SUCCESS], 0, test);
 }
 
 static void
-cb_failure(CutTest *test, CutTestResult *result, gpointer data)
+cb_failure (CutTest *test, CutTestContext *test_context, CutTestResult *result,
+            gpointer data)
 {
     TestCallBackInfo *info = data;
     CutContext *context;
@@ -419,12 +529,13 @@ cb_failure(CutTest *test, CutTestResult *result, gpointer data)
     info->result = g_object_ref(result);
     priv->n_failures++;
     g_mutex_unlock(priv->mutex);
-    if (priv->output)
-        cut_output_on_failure(priv->output, test, info->result);
+
+    g_signal_emit(context, signals[FAILURE], 0, test, test_context, result);
 }
 
 static void
-cb_error(CutTest *test, CutTestResult *result, gpointer data)
+cb_error (CutTest *test, CutTestContext *test_context, CutTestResult *result,
+          gpointer data)
 {
     TestCallBackInfo *info = data;
     CutContext *context;
@@ -436,12 +547,13 @@ cb_error(CutTest *test, CutTestResult *result, gpointer data)
     info->result = g_object_ref(result);
     priv->n_errors++;
     g_mutex_unlock(priv->mutex);
-    if (priv->output)
-        cut_output_on_error(priv->output, test, info->result);
+
+    g_signal_emit(context, signals[ERROR], 0, test, test_context, result);
 }
 
 static void
-cb_pending(CutTest *test, CutTestResult *result, gpointer data)
+cb_pending (CutTest *test, CutTestContext *test_context, CutTestResult *result,
+            gpointer data)
 {
     TestCallBackInfo *info = data;
     CutContext *context;
@@ -453,12 +565,13 @@ cb_pending(CutTest *test, CutTestResult *result, gpointer data)
     info->result = g_object_ref(result);
     priv->n_pendings++;
     g_mutex_unlock(priv->mutex);
-    if (priv->output)
-        cut_output_on_pending(priv->output, test, info->result);
+
+    g_signal_emit(context, signals[PENDING], 0, test, test_context, result);
 }
 
 static void
-cb_notification(CutTest *test, CutTestResult *result, gpointer data)
+cb_notification (CutTest *test, CutTestContext *test_context,
+                 CutTestResult *result, gpointer data)
 {
     TestCallBackInfo *info = data;
     CutContext *context;
@@ -470,8 +583,8 @@ cb_notification(CutTest *test, CutTestResult *result, gpointer data)
     info->result = g_object_ref(result);
     priv->n_notifications++;
     g_mutex_unlock(priv->mutex);
-    if (priv->output)
-        cut_output_on_notification(priv->output, test, info->result);
+
+    g_signal_emit(context, signals[NOTIFICATION], 0, test, test_context, result);
 }
 
 static void
@@ -541,17 +654,12 @@ cut_context_start_test (CutContext *context, CutTest *test)
 }
 
 static void
-cb_start_test(CutTestCase *test_case, CutTest *test,
-              CutTestContext *test_context, gpointer data)
+cb_start_test (CutTestCase *test_case, CutTest *test,
+               CutTestContext *test_context, gpointer data)
 {
     CutContext *context = data;
-    CutContextPrivate *priv;
 
-    g_signal_emit_by_name(context, "start-test", test, test_context);
-
-    priv = CUT_CONTEXT_GET_PRIVATE(context);
-    if (priv->output)
-        cut_output_on_start_test(priv->output, test_case, test);
+    g_signal_emit(context, signals[START_TEST], 0, test, test_context);
 }
 
 static void
@@ -559,36 +667,22 @@ cb_complete_test(CutTestCase *test_case, CutTest *test,
                  CutTestContext *test_context, gpointer data)
 {
     CutContext *context = data;
-    CutContextPrivate *priv;
 
-    priv = CUT_CONTEXT_GET_PRIVATE(context);
-    if (priv->output)
-        cut_output_on_complete_test(priv->output, test_case, test, NULL);
-
-    g_signal_emit_by_name(context, "complete-test", test, test_context);
+    g_signal_emit(context, signals[COMPLETE_TEST], 0, test, test_context);
 }
 
 static void
 cb_start_test_case(CutTestCase *test_case, gpointer data)
 {
     CutContext *context = data;
-    CutContextPrivate *priv;
 
-    priv = CUT_CONTEXT_GET_PRIVATE(context);
-    if (priv->output)
-        cut_output_on_start_test_case(priv->output, test_case);
+    g_signal_emit(context, signals[START_TEST_CASE], 0, test_case);
 }
 
 static void
 cb_complete_test_case(CutTestCase *test_case, gpointer data)
 {
     CutContext *context = data;
-    CutContextPrivate *priv;
-
-    priv = CUT_CONTEXT_GET_PRIVATE(context);
-    if (priv->output)
-        cut_output_on_complete_test_case(priv->output, test_case);
-
 
     g_signal_handlers_disconnect_by_func(test_case,
                                          G_CALLBACK(cb_start_test), data);
@@ -601,7 +695,7 @@ cb_complete_test_case(CutTestCase *test_case, gpointer data)
                                          G_CALLBACK(cb_complete_test_case),
                                          data);
 
-    g_signal_emit_by_name(context, "complete-test-case", test_case);
+    g_signal_emit(context, signals[COMPLETE_TEST_CASE], 0, test_case);
 }
 
 void
@@ -624,11 +718,8 @@ static void
 cb_start_test_suite(CutTestSuite *test_suite, gpointer data)
 {
     CutContext *context = data;
-    CutContextPrivate *priv;
 
-    priv = CUT_CONTEXT_GET_PRIVATE(context);
-    if (priv->output)
-        cut_output_on_start_test_suite(priv->output, test_suite);
+    g_signal_emit(context, signals[START_TEST_SUITE], 0, test_suite);
 }
 
 static void
@@ -642,19 +733,14 @@ cb_crashed_test_suite(CutTestSuite *test_suite, const gchar *stack_trace,
     priv->crashed = TRUE;
     g_free(priv->stack_trace);
     priv->stack_trace = g_strdup(stack_trace);
-    if (priv->output)
-        cut_output_on_crashed_test_suite(priv->output, context, test_suite);
+
+    g_signal_emit(context, signals[CRASHED], 0, priv->stack_trace);
 }
 
 static void
 cb_complete_test_suite(CutTestSuite *test_suite, gpointer data)
 {
     CutContext *context = data;
-    CutContextPrivate *priv;
-
-    priv = CUT_CONTEXT_GET_PRIVATE(context);
-    if (priv->output)
-        cut_output_on_complete_test_suite(priv->output, context, test_suite);
 
     g_signal_handlers_disconnect_by_func(test_suite,
                                          G_CALLBACK(cb_start_test_suite), data);
@@ -664,6 +750,8 @@ cb_complete_test_suite(CutTestSuite *test_suite, gpointer data)
     g_signal_handlers_disconnect_by_func(test_suite,
                                          G_CALLBACK(cb_crashed_test_suite),
                                          data);
+
+    g_signal_emit(context, signals[COMPLETE_TEST_SUITE], 0, test_suite);
 }
 
 void

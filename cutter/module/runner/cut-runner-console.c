@@ -29,10 +29,12 @@
 #include <glib/gstdio.h>
 #include <gmodule.h>
 
-#include "cut-module-impl.h"
-#include "cut-runner.h"
-#include "cut-context.h"
-#include "cut-test.h"
+#include <cut-module-impl.h>
+#include <cut-runner.h>
+#include <cut-context.h>
+#include <cut-test.h>
+#include <cut-test-suite.h>
+#include <cut-test-context.h>
 
 #define CUT_TYPE_RUNNER_CONSOLE            cut_type_runner_console
 #define CUT_RUNNER_CONSOLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_RUNNER_CONSOLE, CutRunnerConsole))
@@ -87,40 +89,9 @@ static void get_property   (GObject         *object,
                             guint            prop_id,
                             GValue          *value,
                             GParamSpec      *pspec);
-
-static void on_start_test_suite    (CutRunner *runner,
-                                    CutTestSuite *test_suite);
-static void on_start_test_case     (CutRunner *runner,
-                                    CutTestCase *test_case);
-static void on_start_test          (CutRunner *runner,
-                                    CutTestCase *test_case,
-                                    CutTest *test);
-static void on_complete_test       (CutRunner *runner,
-                                    CutTestCase *test_case,
-                                    CutTest *test,
-                                    CutTestResult *result);
-static void on_success             (CutRunner *runner,
-                                    CutTest *test);
-static void on_failure             (CutRunner *runner,
-                                    CutTest *test,
-                                    CutTestResult *result);
-static void on_error               (CutRunner *runner,
-                                    CutTest *test,
-                                    CutTestResult *result);
-static void on_pending             (CutRunner *runner,
-                                    CutTest *test,
-                                    CutTestResult *result);
-static void on_notification        (CutRunner *runner,
-                                    CutTest *test,
-                                    CutTestResult *result);
-static void on_complete_test_case  (CutRunner *runner,
-                                    CutTestCase *test_case);
-static void on_complete_test_suite (CutRunner *runner,
-                                    CutContext *context,
-                                    CutTestSuite *test_suite);
-static void on_crashed_test_suite  (CutRunner *runner,
-                                    CutContext *context,
-                                    CutTestSuite *test_suite);
+static gboolean run        (CutRunner    *runner,
+                            CutTestSuite *test_suite,
+                            CutContext   *context);
 
 static void
 class_init (CutRunnerClass *klass)
@@ -138,18 +109,7 @@ class_init (CutRunnerClass *klass)
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
 
-    runner_class->on_start_test_suite    = on_start_test_suite;
-    runner_class->on_start_test_case     = on_start_test_case;
-    runner_class->on_start_test          = on_start_test;
-    runner_class->on_success             = on_success;
-    runner_class->on_failure             = on_failure;
-    runner_class->on_error               = on_error;
-    runner_class->on_pending             = on_pending;
-    runner_class->on_notification        = on_notification;
-    runner_class->on_complete_test       = on_complete_test;
-    runner_class->on_complete_test_case  = on_complete_test_case;
-    runner_class->on_complete_test_suite = on_complete_test_suite;
-    runner_class->on_crashed_test_suite  = on_crashed_test_suite;
+    runner_class->run = run;
 
     spec = g_param_spec_boolean("use-color",
                                 "Use color",
@@ -160,9 +120,9 @@ class_init (CutRunnerClass *klass)
 }
 
 static void
-init (CutRunnerConsole *runner)
+init (CutRunnerConsole *console)
 {
-    runner->use_color = FALSE;
+    console->use_color = FALSE;
 }
 
 static void
@@ -355,31 +315,33 @@ print_for_status (CutRunnerConsole *console, CutTestResultStatus status,
 }
 
 static void
-on_start_test_suite (CutRunner *runner, CutTestSuite *test_suite)
+cb_start_test_suite (CutContext *context, CutTestSuite *test_suite,
+                     CutRunnerConsole *console)
 {
 }
 
 static void
-on_start_test_case (CutRunner *runner, CutTestCase *test_case)
+cb_start_test_case (CutContext *context, CutTestCase *test_case,
+                    CutRunnerConsole *console)
 {
-    if (cut_runner_get_verbose_level(runner) < CUT_VERBOSE_LEVEL_VERBOSE)
+    if (cut_runner_get_verbose_level(CUT_RUNNER(console)) < CUT_VERBOSE_LEVEL_VERBOSE)
         return;
 
-    print_with_color(CUT_RUNNER_CONSOLE(runner), GREEN_BACK_COLOR,
+    print_with_color(console, GREEN_BACK_COLOR,
                      "%s:", cut_test_get_name(CUT_TEST(test_case)));
     g_print("\n");
 }
 
 static void
-on_start_test (CutRunner *runner, CutTestCase *test_case,
-               CutTest *test)
+cb_start_test (CutContext *context, CutTest *test, CutTestContext *test_context,
+               CutRunnerConsole *console)
 {
     GString *tab_stop;
     const gchar *name;
     gint name_length;
     const gchar *description;
 
-    if (cut_runner_get_verbose_level(runner) < CUT_VERBOSE_LEVEL_VERBOSE)
+    if (cut_runner_get_verbose_level(CUT_RUNNER(console)) < CUT_VERBOSE_LEVEL_VERBOSE)
         return;
 
     description = cut_test_get_description(test);
@@ -399,13 +361,74 @@ on_start_test (CutRunner *runner, CutTestCase *test_case,
 }
 
 static void
-on_complete_test (CutRunner *runner, CutTestCase *test_case,
-                  CutTest *test, CutTestResult *result)
+cb_success (CutContext *context, CutTest *test, CutRunnerConsole *console)
 {
-    if (result && cut_test_result_get_status(result) == CUT_TEST_RESULT_ERROR)
-        cut_runner_on_error(runner, test, result);
+    if (cut_runner_get_verbose_level(CUT_RUNNER(console)) < CUT_VERBOSE_LEVEL_NORMAL)
+        return;
+    print_for_status(console, CUT_TEST_RESULT_SUCCESS, ".");
+    fflush(stdout);
+}
 
-    if (cut_runner_get_verbose_level(runner) < CUT_VERBOSE_LEVEL_VERBOSE)
+static void
+cb_failure (CutContext       *context,
+            CutTest          *test,
+            CutTestContext   *test_context,
+            CutTestResult    *result,
+            CutRunnerConsole *console)
+{
+    if (cut_runner_get_verbose_level(CUT_RUNNER(console)) < CUT_VERBOSE_LEVEL_NORMAL)
+        return;
+    print_for_status(console, CUT_TEST_RESULT_FAILURE, "F");
+    fflush(stdout);
+}
+
+static void
+cb_error (CutContext       *context,
+          CutTest          *test,
+          CutTestContext   *test_context,
+          CutTestResult    *result,
+          CutRunnerConsole *console)
+{
+    if (cut_runner_get_verbose_level(CUT_RUNNER(console)) < CUT_VERBOSE_LEVEL_NORMAL)
+        return;
+    print_for_status(console, CUT_TEST_RESULT_ERROR, "E");
+    fflush(stdout);
+}
+
+static void
+cb_pending (CutContext       *context,
+            CutTest          *test,
+            CutTestContext   *test_context,
+            CutTestResult    *result,
+            CutRunnerConsole *console)
+{
+    if (cut_runner_get_verbose_level(CUT_RUNNER(console)) < CUT_VERBOSE_LEVEL_NORMAL)
+        return;
+    print_for_status(console, CUT_TEST_RESULT_PENDING, "P");
+    fflush(stdout);
+}
+
+static void
+cb_notification (CutContext       *context,
+                 CutTest          *test,
+                 CutTestContext   *test_context,
+                 CutTestResult    *result,
+                 CutRunnerConsole *console)
+{
+    if (cut_runner_get_verbose_level(CUT_RUNNER(console)) < CUT_VERBOSE_LEVEL_NORMAL)
+        return;
+    print_for_status(console, CUT_TEST_RESULT_NOTIFICATION, "N");
+    fflush(stdout);
+}
+
+static void
+cb_complete_test (CutContext *context, CutTest *test,
+                  CutTestContext *test_context, CutRunnerConsole *console)
+{
+/*     if (result && cut_test_result_get_status(result) == CUT_TEST_RESULT_ERROR) */
+/*         runner_on_error(runner, test, result); */
+
+    if (cut_runner_get_verbose_level(CUT_RUNNER(console)) < CUT_VERBOSE_LEVEL_VERBOSE)
         return;
 
     g_print(": (%f)\n", cut_test_get_elapsed(test));
@@ -413,71 +436,16 @@ on_complete_test (CutRunner *runner, CutTestCase *test_case,
 }
 
 static void
-on_success (CutRunner *runner, CutTest *test)
+cb_complete_test_case (CutContext *context, CutTestCase *test_case,
+                       CutRunnerConsole *console)
 {
-    CutRunnerConsole *console = CUT_RUNNER_CONSOLE(runner);
-
-    if (cut_runner_get_verbose_level(runner) < CUT_VERBOSE_LEVEL_NORMAL)
-        return;
-    print_for_status(console, CUT_TEST_RESULT_SUCCESS, ".");
-    fflush(stdout);
-}
-
-static void
-on_failure (CutRunner *runner, CutTest *test, CutTestResult *result)
-{
-    CutRunnerConsole *console = CUT_RUNNER_CONSOLE(runner);
-
-    if (cut_runner_get_verbose_level(runner) < CUT_VERBOSE_LEVEL_NORMAL)
-        return;
-    print_for_status(console, CUT_TEST_RESULT_FAILURE, "F");
-    fflush(stdout);
-}
-
-static void
-on_error (CutRunner *runner, CutTest *test, CutTestResult *result)
-{
-    CutRunnerConsole *console = CUT_RUNNER_CONSOLE(runner);
-
-    if (cut_runner_get_verbose_level(runner) < CUT_VERBOSE_LEVEL_NORMAL)
-        return;
-    print_for_status(console, CUT_TEST_RESULT_ERROR, "E");
-    fflush(stdout);
-}
-
-static void
-on_pending (CutRunner *runner, CutTest *test, CutTestResult *result)
-{
-    CutRunnerConsole *console = CUT_RUNNER_CONSOLE(runner);
-
-    if (cut_runner_get_verbose_level(runner) < CUT_VERBOSE_LEVEL_NORMAL)
-        return;
-    print_for_status(console, CUT_TEST_RESULT_PENDING, "P");
-    fflush(stdout);
-}
-
-static void
-on_notification (CutRunner *runner, CutTest *test,
-                 CutTestResult *result)
-{
-    CutRunnerConsole *console = CUT_RUNNER_CONSOLE(runner);
-
-    if (cut_runner_get_verbose_level(runner) < CUT_VERBOSE_LEVEL_NORMAL)
-        return;
-    print_for_status(console, CUT_TEST_RESULT_NOTIFICATION, "N");
-    fflush(stdout);
-}
-
-static void
-on_complete_test_case (CutRunner *runner, CutTestCase *test_case)
-{
-    if (cut_runner_get_verbose_level(runner) < CUT_VERBOSE_LEVEL_VERBOSE)
+    if (cut_runner_get_verbose_level(CUT_RUNNER(console)) < CUT_VERBOSE_LEVEL_VERBOSE)
         return;
 }
 
 static void
-on_complete_test_suite (CutRunner *runner, CutContext *context,
-                        CutTestSuite *test_suite)
+cb_complete_test_suite (CutContext *context, CutTestSuite *test_suite,
+                        CutRunnerConsole *console)
 {
     gint i;
     guint n_tests, n_assertions, n_failures, n_errors;
@@ -485,8 +453,9 @@ on_complete_test_suite (CutRunner *runner, CutContext *context,
     const GList *node;
     const gchar *color;
     gboolean crashed;
-    CutRunnerConsole *console = CUT_RUNNER_CONSOLE(runner);
+    CutRunner *runner;
 
+    runner = CUT_RUNNER(console);
     if (cut_runner_get_verbose_level(runner) < CUT_VERBOSE_LEVEL_NORMAL)
         return;
 
@@ -581,14 +550,77 @@ on_complete_test_suite (CutRunner *runner, CutContext *context,
 }
 
 static void
-on_crashed_test_suite (CutRunner *runner, CutContext *context,
-                       CutTestSuite *test_suite)
+cb_crashed (CutContext *context, CutRunnerConsole *console)
 {
-    CutRunnerConsole *console = CUT_RUNNER_CONSOLE(runner);
-
     print_with_color(console, CRASH_COLOR, "!");
     fflush(stdout);
 }
+
+static void
+connect_to_context (CutRunnerConsole *console, CutContext *context)
+{
+#define CONNECT(name) \
+    g_signal_connect(context, #name, G_CALLBACK(cb_ ## name), console)
+
+    CONNECT(start_test_suite);
+    CONNECT(start_test_case);
+    CONNECT(start_test);
+
+    CONNECT(success);
+    CONNECT(failure);
+    CONNECT(error);
+    CONNECT(pending);
+    CONNECT(notification);
+
+    CONNECT(complete_test);
+    CONNECT(complete_test_case);
+    CONNECT(complete_test_suite);
+
+    CONNECT(crashed);
+
+#undef CONNECT
+}
+
+static void
+disconnect_from_context (CutRunnerConsole *console, CutContext *context)
+{
+#define DISCONNECT(name)                                                \
+    g_signal_handlers_disconnect_by_func(context,                       \
+                                         G_CALLBACK(cb_ ## name),       \
+                                         console)
+
+    DISCONNECT(start_test_suite);
+    DISCONNECT(start_test_case);
+    DISCONNECT(start_test);
+
+    DISCONNECT(success);
+    DISCONNECT(failure);
+    DISCONNECT(error);
+    DISCONNECT(pending);
+    DISCONNECT(notification);
+
+    DISCONNECT(complete_test);
+    DISCONNECT(complete_test_case);
+    DISCONNECT(complete_test_suite);
+
+    DISCONNECT(crashed);
+
+#undef DISCONNECT
+}
+
+static gboolean
+run (CutRunner *runner, CutTestSuite *test_suite, CutContext *context)
+{
+    CutRunnerConsole *console = CUT_RUNNER_CONSOLE(runner);
+    gboolean success;
+
+    connect_to_context(console, context);
+    success = cut_test_suite_run(test_suite, context);
+    disconnect_from_context(console, context);
+
+    return success;
+}
+
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

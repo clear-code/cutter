@@ -73,7 +73,6 @@ setup (void)
     n_pass_assertion_signal = 0;
 
     context = cut_context_new();
-    cut_context_set_verbose_level(context, CUT_VERBOSE_LEVEL_SILENT);
 
     test_object = cut_test_new("dummy-test", "Dummy Test", dummy_test_function);
 }

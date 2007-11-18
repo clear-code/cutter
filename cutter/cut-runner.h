@@ -50,6 +50,10 @@ struct _CutRunnerClass
 {
     GObjectClass parent_class;
 
+    gboolean (*run)                (CutRunner    *runner,
+                                    CutTestSuite *test_suite,
+                                    CutContext   *context);
+
     void (*on_start_test_suite)    (CutRunner *runner,
                                     CutTestSuite *test_suite);
     void (*on_start_test_case)     (CutRunner *runner,
@@ -116,39 +120,9 @@ const gchar *
 void  cut_runner_set_use_color             (CutRunner *runner,
                                             gboolean   use_color);
 
-void  cut_runner_on_start_test_suite       (CutRunner *runner,
-                                            CutTestSuite *test_suite);
-void  cut_runner_on_start_test_case        (CutRunner *runner,
-                                            CutTestCase *test_case);
-void  cut_runner_on_start_test             (CutRunner *runner,
-                                            CutTestCase *test_case,
-                                            CutTest *test);
-void  cut_runner_on_success                (CutRunner *runner, CutTest *test);
-void  cut_runner_on_failure                (CutRunner *runner,
-                                            CutTest *test,
-                                            CutTestResult *result);
-void  cut_runner_on_error                  (CutRunner *runner,
-                                            CutTest *test,
-                                            CutTestResult *result);
-void  cut_runner_on_pending                (CutRunner *runner,
-                                            CutTest *test,
-                                            CutTestResult *result);
-void  cut_runner_on_notification           (CutRunner *runner,
-                                            CutTest *test,
-                                            CutTestResult *result);
-void  cut_runner_on_complete_test          (CutRunner *runner,
-                                            CutTestCase *test_case,
-                                            CutTest *test,
-                                            CutTestResult *result);
-void  cut_runner_on_complete_test_case     (CutRunner *runner,
-                                            CutTestCase *test_case);
-void  cut_runner_on_complete_test_suite    (CutRunner *runner,
-                                            CutContext *context,
-                                            CutTestSuite *test_suite);
-void  cut_runner_on_crashed_test_suite     (CutRunner *runner,
-                                            CutContext *context,
-                                            CutTestSuite *test_suite);
-
+gboolean cut_runner_run                    (CutRunner    *runner,
+                                            CutTestSuite *test_suite,
+                                            CutContext   *context);
 G_END_DECLS
 
 #endif /* __CUT_RUNNER_H__ */

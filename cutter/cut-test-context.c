@@ -305,7 +305,7 @@ cut_test_context_pass_assertion (CutTestContext *context)
 
     g_return_if_fail(priv->test);
 
-    g_signal_emit_by_name(priv->test, "pass-assertion");
+    g_signal_emit_by_name(priv->test, "pass-assertion", context);
 }
 
 static const gchar *
@@ -347,6 +347,8 @@ cut_test_context_register_result (CutTestContext *context,
     CutTestResult *result;
     const gchar *status_signal_name = NULL;
     gchar *user_message = NULL, *system_message = NULL;
+    const gchar *test_suite_name = NULL, *test_case_name = NULL;
+    const gchar *test_name = NULL;
     const gchar *format;
     va_list args;
 
@@ -365,10 +367,14 @@ cut_test_context_register_result (CutTestContext *context,
     }
     va_end(args);
 
-    result = cut_test_result_new(status, 
-                                 priv->test ? cut_test_get_name(CUT_TEST(priv->test)) : NULL,
-                                 priv->test_case ? cut_test_get_name(CUT_TEST(priv->test_case)) : NULL,
-                                 priv->test_suite ? cut_test_get_name(CUT_TEST(priv->test_suite)) : NULL,
+    if (priv->test)
+        test_name = cut_test_get_name(priv->test);
+    if (priv->test_case)
+        test_case_name = cut_test_get_name(CUT_TEST(priv->test_case));
+    if (priv->test_suite)
+        test_suite_name = cut_test_get_name(CUT_TEST(priv->test_suite));
+    result = cut_test_result_new(status,
+                                 test_name, test_case_name, test_suite_name,
                                  user_message, system_message,
                                  function_name, filename, line);
     if (system_message)
@@ -378,9 +384,11 @@ cut_test_context_register_result (CutTestContext *context,
 
     status_signal_name = status_to_signal_name(status);
     if (priv->test) {
-        g_signal_emit_by_name(priv->test, status_signal_name, result);
+        g_signal_emit_by_name(priv->test, status_signal_name,
+                              context, result);
     } else if (priv->test_case) {
-        g_signal_emit_by_name(priv->test_case, status_signal_name, result);
+        g_signal_emit_by_name(priv->test_case, status_signal_name,
+                              context, result);
     }
 
     g_object_unref(result);

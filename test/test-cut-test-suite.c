@@ -83,7 +83,6 @@ setup (void)
     n_run_bummy_run_test_function = 0;
 
     test_context = cut_context_new();
-    cut_context_set_verbose_level(test_context, CUT_VERBOSE_LEVEL_SILENT);
 
     test_object = cut_test_suite_new();
 

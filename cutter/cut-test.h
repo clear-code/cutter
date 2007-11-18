@@ -55,15 +55,25 @@ struct _CutTestClass
 {
     GObjectClass parent_class;
 
-    void (*start)    (CutTest *test);
-    void (*pass_assertion) (CutTest *test);
-    void (*success)  (CutTest *test);
-    void (*failure)  (CutTest *test, CutTestResult *result);
-    void (*error)    (CutTest *test, CutTestResult *result);
-    void (*pending)  (CutTest *test, CutTestResult *result);
-    void (*notification)(CutTest *test, CutTestResult *result);
-    void (*complete) (CutTest *test);
-    void (*crashed)  (CutTest *test, const gchar *stack_trace);
+    void (*start)          (CutTest        *test);
+    void (*pass_assertion) (CutTest        *test,
+                            CutTestContext *context);
+    void (*success)        (CutTest        *test);
+    void (*failure)        (CutTest        *test,
+                            CutTestContext *context,
+                            CutTestResult  *result);
+    void (*error)          (CutTest        *test,
+                            CutTestContext *context,
+                            CutTestResult  *result);
+    void (*pending)        (CutTest        *test,
+                            CutTestContext *context,
+                            CutTestResult  *result);
+    void (*notification)   (CutTest        *test,
+                            CutTestContext *context,
+                            CutTestResult  *result);
+    void (*complete)       (CutTest        *test);
+    void (*crashed)        (CutTest        *test,
+                            const gchar    *stack_trace);
 
     gdouble      (*get_elapsed)  (CutTest *test);
     const gchar *(*get_name)     (CutTest *test);

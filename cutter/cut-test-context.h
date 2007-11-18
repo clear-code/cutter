@@ -28,7 +28,6 @@
 
 #include "cut-private.h"
 #include "cut-assertions.h"
-#include "cut-output.h"
 
 G_BEGIN_DECLS
 

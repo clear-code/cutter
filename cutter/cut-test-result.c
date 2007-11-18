@@ -102,7 +102,7 @@ cut_test_result_class_init (CutTestResultClass *klass)
     g_object_class_install_property(gobject_class, PROP_TEST_NAME, spec);
 
     spec = g_param_spec_string("test-case-name",
-                               "TestCase Name",
+                               "Test Case Name",
                                "The name of the test case",
                                NULL,
                                G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);

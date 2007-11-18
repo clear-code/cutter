@@ -24,7 +24,8 @@
 
 #include <glib-object.h>
 
-#include "cut-output.h"
+#include "cut-test-suite.h"
+#include "cut-verbose-level.h"
 
 G_BEGIN_DECLS
 
@@ -46,19 +47,47 @@ struct _CutContextClass
 {
     GObjectClass parent_class;
 
+    void (*start_test_suite)    (CutContext     *context,
+                                 CutTestSuite   *test_suite);
+    void (*start_test_case)     (CutContext     *context,
+                                 CutTestCase    *test_case);
     void (*start_test)          (CutContext     *context,
                                  CutTest        *test,
                                  CutTestContext *test_context);
+
+    void (*pass)                (CutContext     *context,
+                                 CutTest        *test,
+                                 CutTestContext *test_context);
+    void (*success)             (CutContext     *context,
+                                 CutTest        *test);
+    void (*failure)             (CutContext     *context,
+                                 CutTest        *test,
+                                 CutTestContext *test_context,
+                                 CutTestResult  *result);
+    void (*error)               (CutContext     *context,
+                                 CutTest        *test,
+                                 CutTestContext *test_context,
+                                 CutTestResult  *result);
+    void (*pending)             (CutContext     *context,
+                                 CutTest        *test,
+                                 CutTestContext *test_context,
+                                 CutTestResult  *result);
+    void (*notification)        (CutContext     *context,
+                                 CutTest        *test,
+                                 CutTestContext *test_context,
+                                 CutTestResult  *result);
+
     void (*complete_test)       (CutContext     *context,
                                  CutTest        *test,
                                  CutTestContext *test_context);
-    void (*start_test_case)     (CutContext     *context,
-                                 CutTestCase    *test_case);
     void (*complete_test_case)  (CutContext     *context,
                                  CutTestCase    *test_case);
-};
+    void (*complete_test_suite) (CutContext     *context,
+                                 CutTestSuite   *test_suite);
 
-extern GPrivate *cut_context_private;
+    void (*crashed)             (CutContext     *context,
+                                 const gchar    *stack_trace);
+};
 
 GType        cut_context_get_type  (void) G_GNUC_CONST;
 
@@ -79,6 +108,16 @@ void  cut_context_set_use_color             (CutContext *context,
 void     cut_context_set_multi_thread       (CutContext *context,
                                              gboolean    use_multi_thread);
 gboolean cut_context_get_multi_thread       (CutContext *context);
+
+void     cut_context_set_target_test_case_names
+                                            (CutContext   *context,
+                                             const gchar **names);
+const gchar **cut_context_get_target_test_case_names
+                                            (CutContext   *context);
+void     cut_context_set_target_test_names  (CutContext   *context,
+                                             const gchar **names);
+const gchar **cut_context_get_target_test_names
+                                            (CutContext   *context);
 
 void  cut_context_start_test                (CutContext *context,
                                              CutTest    *test);
