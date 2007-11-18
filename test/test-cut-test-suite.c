@@ -132,9 +132,10 @@ teardown (void)
 static gboolean
 run_test_case (const gchar *test_case_name)
 {
-    return cut_test_suite_run_test_case(test_object,
-                                        test_context,
-                                        test_case_name);
+    return cut_test_suite_run_test_in_test_case(test_object,
+                                                test_context,
+                                                "/.*/",
+                                                test_case_name);
 }
 
 static gboolean

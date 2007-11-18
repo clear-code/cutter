@@ -382,10 +382,12 @@ cut_test_case_run_with_filter (CutTestCase *test_case,
 
     container = CUT_TEST_CONTAINER(test_case);
     if (test_names) {
-        filtered_tests = cut_test_container_filter_children(container, test_names);
-    } else {
         filtered_tests =
-            g_list_copy((GList *)cut_test_container_get_children(container));
+            cut_test_container_filter_children(container, test_names);
+    } else {
+        gchar *default_test_names[] = {"/^test_/", NULL};
+        filtered_tests =
+            cut_test_container_filter_children(container, default_test_names);
     }
 
     success = cut_test_case_run_tests(test_case, context, filtered_tests);

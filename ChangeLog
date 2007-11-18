@@ -1,3 +1,9 @@
+2007-11-18  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/: run tests whose name is started with 'test_' by default.
+	* test/test-cut-test-suite.c (run_test_case): passed '/.*/' to run
+	all tests.
+
 2007-11-16  Kouhei Sutou  <kou@cozmixng.org>
 
 	* doc/reference/Makefile.am: checked cutter.h.
