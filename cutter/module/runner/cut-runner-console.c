@@ -43,6 +43,9 @@
 #define CUT_IS_RUNNER_CONSOLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_RUNNER_CONSOLE))
 #define CUT_RUNNER_CONSOLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_RUNNER_CONSOLE, CutRunnerConsoleClass))
 
+#define GET_VERBOSE_LEVEL(console) \
+    (cut_runner_get_verbose_level(CUT_RUNNER(console)))
+
 #define RED_COLOR "\033[01;31m"
 #define RED_BACK_COLOR "\033[41m"
 #define GREEN_COLOR "\033[01;32m"
@@ -324,7 +327,7 @@ static void
 cb_start_test_case (CutContext *context, CutTestCase *test_case,
                     CutRunnerConsole *console)
 {
-    if (cut_runner_get_verbose_level(CUT_RUNNER(console)) < CUT_VERBOSE_LEVEL_VERBOSE)
+    if (GET_VERBOSE_LEVEL(console) < CUT_VERBOSE_LEVEL_VERBOSE)
         return;
 
     print_with_color(console, GREEN_BACK_COLOR,
@@ -341,7 +344,7 @@ cb_start_test (CutContext *context, CutTest *test, CutTestContext *test_context,
     gint name_length;
     const gchar *description;
 
-    if (cut_runner_get_verbose_level(CUT_RUNNER(console)) < CUT_VERBOSE_LEVEL_VERBOSE)
+    if (GET_VERBOSE_LEVEL(console) < CUT_VERBOSE_LEVEL_VERBOSE)
         return;
 
     description = cut_test_get_description(test);
@@ -363,7 +366,7 @@ cb_start_test (CutContext *context, CutTest *test, CutTestContext *test_context,
 static void
 cb_success (CutContext *context, CutTest *test, CutRunnerConsole *console)
 {
-    if (cut_runner_get_verbose_level(CUT_RUNNER(console)) < CUT_VERBOSE_LEVEL_NORMAL)
+    if (GET_VERBOSE_LEVEL(console) < CUT_VERBOSE_LEVEL_NORMAL)
         return;
     print_for_status(console, CUT_TEST_RESULT_SUCCESS, ".");
     fflush(stdout);
@@ -376,7 +379,7 @@ cb_failure (CutContext       *context,
             CutTestResult    *result,
             CutRunnerConsole *console)
 {
-    if (cut_runner_get_verbose_level(CUT_RUNNER(console)) < CUT_VERBOSE_LEVEL_NORMAL)
+    if (GET_VERBOSE_LEVEL(console) < CUT_VERBOSE_LEVEL_NORMAL)
         return;
     print_for_status(console, CUT_TEST_RESULT_FAILURE, "F");
     fflush(stdout);
@@ -389,7 +392,7 @@ cb_error (CutContext       *context,
           CutTestResult    *result,
           CutRunnerConsole *console)
 {
-    if (cut_runner_get_verbose_level(CUT_RUNNER(console)) < CUT_VERBOSE_LEVEL_NORMAL)
+    if (GET_VERBOSE_LEVEL(console) < CUT_VERBOSE_LEVEL_NORMAL)
         return;
     print_for_status(console, CUT_TEST_RESULT_ERROR, "E");
     fflush(stdout);
@@ -402,7 +405,7 @@ cb_pending (CutContext       *context,
             CutTestResult    *result,
             CutRunnerConsole *console)
 {
-    if (cut_runner_get_verbose_level(CUT_RUNNER(console)) < CUT_VERBOSE_LEVEL_NORMAL)
+    if (GET_VERBOSE_LEVEL(console) < CUT_VERBOSE_LEVEL_NORMAL)
         return;
     print_for_status(console, CUT_TEST_RESULT_PENDING, "P");
     fflush(stdout);
@@ -415,7 +418,7 @@ cb_notification (CutContext       *context,
                  CutTestResult    *result,
                  CutRunnerConsole *console)
 {
-    if (cut_runner_get_verbose_level(CUT_RUNNER(console)) < CUT_VERBOSE_LEVEL_NORMAL)
+    if (GET_VERBOSE_LEVEL(console) < CUT_VERBOSE_LEVEL_NORMAL)
         return;
     print_for_status(console, CUT_TEST_RESULT_NOTIFICATION, "N");
     fflush(stdout);
@@ -425,10 +428,7 @@ static void
 cb_complete_test (CutContext *context, CutTest *test,
                   CutTestContext *test_context, CutRunnerConsole *console)
 {
-/*     if (result && cut_test_result_get_status(result) == CUT_TEST_RESULT_ERROR) */
-/*         runner_on_error(runner, test, result); */
-
-    if (cut_runner_get_verbose_level(CUT_RUNNER(console)) < CUT_VERBOSE_LEVEL_VERBOSE)
+    if (GET_VERBOSE_LEVEL(console) < CUT_VERBOSE_LEVEL_VERBOSE)
         return;
 
     g_print(": (%f)\n", cut_test_get_elapsed(test));
@@ -439,7 +439,7 @@ static void
 cb_complete_test_case (CutContext *context, CutTestCase *test_case,
                        CutRunnerConsole *console)
 {
-    if (cut_runner_get_verbose_level(CUT_RUNNER(console)) < CUT_VERBOSE_LEVEL_VERBOSE)
+    if (GET_VERBOSE_LEVEL(console) < CUT_VERBOSE_LEVEL_VERBOSE)
         return;
 }
 

@@ -1,5 +1,8 @@
 2007-11-18  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-context.c, cutter/module/runner/cut-runner-console.c:
+	cleanup.
+
 	* cutter/cut-context.c: cleanup.
 
 	* cutter/cut-test-case.c, cutter/cut-test-suite.c: cleanup.

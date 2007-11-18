@@ -646,16 +646,24 @@ cb_complete_test_case(CutTestCase *test_case, gpointer data)
 {
     CutContext *context = data;
 
-    g_signal_handlers_disconnect_by_func(test_case,
-                                         G_CALLBACK(cb_start_test), data);
-    g_signal_handlers_disconnect_by_func(test_case,
-                                         G_CALLBACK(cb_complete_test), data);
+#define DISCONNECT(name)                                                \
+    g_signal_handlers_disconnect_by_func(test_case,                     \
+                                         G_CALLBACK(cb_ ## name),       \
+                                         data)
 
-    g_signal_handlers_disconnect_by_func(test_case,
-                                         G_CALLBACK(cb_start_test_case), data);
-    g_signal_handlers_disconnect_by_func(test_case,
-                                         G_CALLBACK(cb_complete_test_case),
-                                         data);
+    DISCONNECT(start_test);
+    DISCONNECT(complete_test);
+
+    DISCONNECT(success);
+    DISCONNECT(failure);
+    DISCONNECT(error);
+    DISCONNECT(pending);
+    DISCONNECT(notification);
+
+    DISCONNECT(start_test_case);
+    DISCONNECT(complete_test_case);
+
+#undef DISCONNECT
 
     g_signal_emit(context, signals[COMPLETE_TEST_CASE], 0, test_case);
 }
@@ -663,15 +671,28 @@ cb_complete_test_case(CutTestCase *test_case, gpointer data)
 void
 cut_context_start_test_case (CutContext *context, CutTestCase *test_case)
 {
-    g_signal_connect(test_case, "start-test",
-                     G_CALLBACK(cb_start_test), context);
-    g_signal_connect(test_case, "complete-test",
-                     G_CALLBACK(cb_complete_test), context);
+#define CONNECT(name) \
+    g_signal_connect(test_case, #name, G_CALLBACK(cb_ ## name), context)
 
-    g_signal_connect(test_case, "start",
-                     G_CALLBACK(cb_start_test_case), context);
-    g_signal_connect(test_case, "complete",
-                     G_CALLBACK(cb_complete_test_case), context);
+    CONNECT(start_test);
+    CONNECT(complete_test);
+
+    CONNECT(success);
+    CONNECT(failure);
+    CONNECT(error);
+    CONNECT(pending);
+    CONNECT(notification);
+
+#undef CONNECT
+
+#define CONNECT(name)                                                   \
+    g_signal_connect(test_case, #name,                                  \
+                     G_CALLBACK(cb_ ## name ## _test_case), context)
+
+    CONNECT(start);
+    CONNECT(complete);
+
+#undef CONNECT
 }
 
 static void
