@@ -1,5 +1,7 @@
 2007-11-18  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertions.h: readded 'format' parameter name.
+
 	* cutter/: added const to gchar **.
 
 	* cutter/: run tests whose name is started with 'test_' by default.

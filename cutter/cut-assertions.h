@@ -30,17 +30,17 @@
 extern "C" {
 #endif
 
-#define cut_error(...)                          \
-    cut_test_fail(ERROR, NULL, __VA_ARGS__)
+#define cut_error(format, ...)                  \
+    cut_test_fail(ERROR, NULL, format, ## __VA_ARGS__)
 
-#define cut_fail(...)                           \
-    cut_test_fail(FAILURE, NULL, __VA_ARGS__)
+#define cut_fail(format, ...)                    \
+    cut_test_fail(FAILURE, NULL, format, ## __VA_ARGS__)
 
-#define cut_pending(...)                        \
-    cut_test_fail(PENDING, NULL, __VA_ARGS__)
+#define cut_pending(format, ...)                 \
+    cut_test_fail(PENDING, NULL, format, ## __VA_ARGS__)
 
-#define cut_notify(...)                                         \
-    cut_test_register_result(NOTIFICATION, NULL, __VA_ARGS__)
+#define cut_notify(format, ...)                  \
+    cut_test_register_result(NOTIFICATION, NULL, format, ## __VA_ARGS__)
 
 #define cut_assert(actual, ...) do                          \
 {                                                           \
