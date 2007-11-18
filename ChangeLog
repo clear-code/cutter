@@ -1,5 +1,8 @@
 2007-11-18  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-main.c: added --runner option but console backend is
+	only available for now.
+
 	* cutter/module/runner/cut-runner-console.c: cleanup.
 
 	* Cutter/module/runner/cut-runner-console.c: used test_case_name

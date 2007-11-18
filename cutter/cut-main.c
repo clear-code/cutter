@@ -46,6 +46,7 @@ static gboolean use_color = FALSE;
 static const gchar **test_case_names = NULL;
 static const gchar **test_names = NULL;
 static gboolean use_multi_thread = FALSE;
+static const gchar *runner_name = NULL;
 
 static gboolean
 parse_verbose_level_arg (const gchar *option_name, const gchar *value,
@@ -105,6 +106,8 @@ static const GOptionEntry option_entries[] =
      N_("Specify test cases"), "TEST_CASE_NAME"},
     {"multi-thread", 'm', 0, G_OPTION_ARG_NONE, &use_multi_thread,
      N_("Run test cases with multi-thread"), NULL},
+    {"runner", 'r', 0, G_OPTION_ARG_STRING, &runner_name,
+     N_("Specify test runner"), "[console|gtk]"},
     {NULL}
 };
 
@@ -190,14 +193,24 @@ cut_run_test_suite (CutTestSuite *suite, CutContext *context)
 {
     CutRunner *runner;
     gboolean success;
+    const gchar *used_runner_name;
 
     if (!suite)
         return TRUE;
 
-    runner = cut_runner_new("console",
+    if (runner_name)
+        used_runner_name = runner_name;
+    else
+        used_runner_name = "console";
+    runner = cut_runner_new(used_runner_name,
                             "use-color", use_color,
                             "verbose-level", verbose_level,
                             NULL);
+    if (!runner) {
+        g_warning("can't create runner: %s", used_runner_name);
+        return FALSE;
+    }
+
     success = cut_runner_run(runner, suite, context);
     g_object_unref(runner);
     return success;
