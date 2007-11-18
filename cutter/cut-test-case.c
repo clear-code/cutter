@@ -380,7 +380,7 @@ cut_test_case_run_with_filter (CutTestCase  *test_case,
     gboolean success = TRUE;
 
     container = CUT_TEST_CONTAINER(test_case);
-    if (test_names) {
+    if (test_names && *test_names) {
         filtered_tests =
             cut_test_container_filter_children(container, test_names);
     } else {
