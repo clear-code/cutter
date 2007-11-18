@@ -161,50 +161,68 @@ real_get_elapsed (CutTest *test)
 }
 
 static GList *
-collect_tests_with_regex (const GList *tests, gchar *pattern)
+filter_to_regexs (const gchar **filter)
 {
-    GList *matched_list = NULL, *list;
-    GRegex *regex;
+    GList *regexs = NULL;
 
-    if (!strlen(pattern))
-        return NULL;
+    for (; *filter; filter++) {
+        GRegex *regex;
+        gchar *pattern;
 
-    regex = g_regex_new(pattern, G_REGEX_EXTENDED, 0, NULL);
-    for (list = (GList *)tests; list; list = g_list_next(list)) {
-        gboolean match;
-        CutTest *test = CUT_TEST(list->data);
-        match = g_regex_match(regex, cut_test_get_name(test),
-                              0, NULL);
-        if (match) {
-            matched_list = g_list_prepend(matched_list, test);
-        }
+        if (*filter[0] == '\0')
+            continue;
+
+        pattern = cut_utils_create_regex_pattern(*filter);
+        regex = g_regex_new(pattern, G_REGEX_EXTENDED, 0, NULL);
+        if (regex)
+            regexs = g_list_prepend(regexs, regex);
+        g_free(pattern);
     }
-    g_regex_unref(regex);
 
-    return matched_list;
+    return regexs;
+}
+
+static inline gboolean
+match (GList *regexs, const gchar *name)
+{
+    GList *node;
+
+    for (node = regexs; node; node = g_list_next(node)) {
+        GRegex *regex = node->data;
+
+        if (g_regex_match(regex, name, 0, NULL))
+            return TRUE;
+    }
+
+    return FALSE;
 }
 
 GList *
 cut_test_container_filter_children (CutTestContainer *container,
                                     const gchar **filter)
 {
+    GList *original, *node, *regexs;
     GList *matched_tests = NULL;
-    const GList *tests;
 
     g_return_val_if_fail(CUT_IS_TEST_CONTAINER(container), NULL);
 
-    tests = cut_test_container_get_children(container);
+    original = (GList *)cut_test_container_get_children(container);
+    if (!filter)
+        return g_list_copy(original);
 
-    for (; *filter; filter++) {
-        gchar *pattern;
+    regexs = filter_to_regexs(filter);
+    if (!regexs)
+        return g_list_copy(original);
 
-        pattern = cut_utils_create_regex_pattern(*filter);
-        if (!matched_tests)
-            matched_tests = collect_tests_with_regex(tests, pattern);
-        else
-            matched_tests = collect_tests_with_regex(matched_tests, pattern);
-        g_free(pattern);
+    for (node = original; node; node = g_list_next(node)) {
+        CutTest *test = node->data;
+
+        if (match(regexs, cut_test_get_name(test)))
+            matched_tests = g_list_prepend(matched_tests, test);
     }
+
+    g_list_foreach(regexs, (GFunc)g_regex_unref, NULL);
+    g_list_free(regexs);
 
     return matched_tests;
 }

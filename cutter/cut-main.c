@@ -119,7 +119,6 @@ cut_init (int *argc, char ***argv)
 
     initialized = TRUE;
 
-    g_print("%s:%s\n", GETTEXT_PACKAGE, LOCALEDIR);
     bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
     bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
     textdomain(GETTEXT_PACKAGE);

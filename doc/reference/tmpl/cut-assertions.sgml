@@ -22,6 +22,7 @@ cut-assertions
 
 </para>
 
+@format: 
 @...: format string, followed by parameters to insert into the format string (as with printf())
 
 
@@ -30,6 +31,7 @@ cut-assertions
 
 </para>
 
+@format: 
 @...: format string, followed by parameters to insert into the format string (as with printf())
 
 
@@ -38,6 +40,7 @@ cut-assertions
 
 </para>
 
+@format: 
 @...: format string, followed by parameters to insert into the format string (as with printf())
 
 
@@ -46,6 +49,7 @@ cut-assertions
 
 </para>
 
+@format: 
 @...: format string, followed by parameters to insert into the format string (as with printf())
 
 

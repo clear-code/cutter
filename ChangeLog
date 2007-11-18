@@ -1,5 +1,7 @@
 2007-11-18  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-container.c: implemented intuitive test refinement.
+
 	* cutter/cut-assertions.h: readded 'format' parameter name.
 
 	* cutter/: added const to gchar **.
