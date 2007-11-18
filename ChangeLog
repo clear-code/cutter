@@ -1,5 +1,7 @@
 2007-11-18  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-context.c: cleanup.
+
 	* cutter/cut-test-case.c, cutter/cut-test-suite.c: cleanup.
 
 	* test/test-cut-test-suite.c: expected value should be at the left

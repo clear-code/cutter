@@ -481,20 +481,12 @@ cut_context_get_target_test_names (CutContext *context)
     return (const gchar **)(priv->target_test_names);
 }
 
-typedef struct _TestCallBackInfo
-{
-    CutContext *context;
-    CutTestResult *result;
-} TestCallBackInfo;
-
 static void
 cb_pass_assertion (CutTest *test, CutTestContext *test_context, gpointer data)
 {
-    TestCallBackInfo *info = data;
-    CutContext *context;
+    CutContext *context = data;
     CutContextPrivate *priv;
 
-    context = info->context;
     priv = CUT_CONTEXT_GET_PRIVATE(context);
     g_mutex_lock(priv->mutex);
     priv->n_assertions++;
@@ -506,11 +498,9 @@ cb_pass_assertion (CutTest *test, CutTestContext *test_context, gpointer data)
 static void
 cb_success (CutTest *test, gpointer data)
 {
-    TestCallBackInfo *info = data;
-    CutContext *context;
+    CutContext *context = data;
     CutContextPrivate *priv;
 
-    context = info->context;
     priv = CUT_CONTEXT_GET_PRIVATE(context);
     g_signal_emit(context, signals[SUCCESS], 0, test);
 }
@@ -519,14 +509,12 @@ static void
 cb_failure (CutTest *test, CutTestContext *test_context, CutTestResult *result,
             gpointer data)
 {
-    TestCallBackInfo *info = data;
-    CutContext *context;
+    CutContext *context = data;
     CutContextPrivate *priv;
 
-    context = info->context;
     priv = CUT_CONTEXT_GET_PRIVATE(context);
     g_mutex_lock(priv->mutex);
-    info->result = g_object_ref(result);
+    priv->results = g_list_prepend(priv->results, g_object_ref(result));
     priv->n_failures++;
     g_mutex_unlock(priv->mutex);
 
@@ -537,14 +525,12 @@ static void
 cb_error (CutTest *test, CutTestContext *test_context, CutTestResult *result,
           gpointer data)
 {
-    TestCallBackInfo *info = data;
-    CutContext *context;
+    CutContext *context = data;
     CutContextPrivate *priv;
 
-    context = info->context;
     priv = CUT_CONTEXT_GET_PRIVATE(context);
     g_mutex_lock(priv->mutex);
-    info->result = g_object_ref(result);
+    priv->results = g_list_prepend(priv->results, g_object_ref(result));
     priv->n_errors++;
     g_mutex_unlock(priv->mutex);
 
@@ -555,14 +541,12 @@ static void
 cb_pending (CutTest *test, CutTestContext *test_context, CutTestResult *result,
             gpointer data)
 {
-    TestCallBackInfo *info = data;
-    CutContext *context;
+    CutContext *context = data;
     CutContextPrivate *priv;
 
-    context = info->context;
     priv = CUT_CONTEXT_GET_PRIVATE(context);
     g_mutex_lock(priv->mutex);
-    info->result = g_object_ref(result);
+    priv->results = g_list_prepend(priv->results, g_object_ref(result));
     priv->n_pendings++;
     g_mutex_unlock(priv->mutex);
 
@@ -573,14 +557,12 @@ static void
 cb_notification (CutTest *test, CutTestContext *test_context,
                  CutTestResult *result, gpointer data)
 {
-    TestCallBackInfo *info = data;
-    CutContext *context;
+    CutContext *context = data;
     CutContextPrivate *priv;
 
-    context = info->context;
     priv = CUT_CONTEXT_GET_PRIVATE(context);
     g_mutex_lock(priv->mutex);
-    info->result = g_object_ref(result);
+    priv->results = g_list_prepend(priv->results, g_object_ref(result));
     priv->n_notifications++;
     g_mutex_unlock(priv->mutex);
 
@@ -590,18 +572,6 @@ cb_notification (CutTest *test, CutTestContext *test_context,
 static void
 cb_complete (CutTest *test, gpointer data)
 {
-    TestCallBackInfo *info = data;
-    CutContext *context;
-    CutContextPrivate *priv;
-
-    context = info->context;
-    priv = CUT_CONTEXT_GET_PRIVATE(context);
-    if (info->result) {
-        g_mutex_lock(priv->mutex);
-        priv->results = g_list_prepend(priv->results, info->result);
-        g_mutex_unlock(priv->mutex);
-    }
-
     g_signal_handlers_disconnect_by_func(test,
                                          G_CALLBACK(cb_pass_assertion),
                                          data);
@@ -623,20 +593,12 @@ cb_complete (CutTest *test, gpointer data)
     g_signal_handlers_disconnect_by_func(test,
                                          G_CALLBACK(cb_complete),
                                          data);
-
-    g_object_unref(info->context);
-    g_free(info);
 }
 
 void
 cut_context_start_test (CutContext *context, CutTest *test)
 {
-    TestCallBackInfo *info;
     CutContextPrivate *priv;
-
-    info = g_new0(TestCallBackInfo, 1);
-    info->context = context;
-    g_object_ref(context);
 
     priv = CUT_CONTEXT_GET_PRIVATE(context);
     g_mutex_lock(priv->mutex);
@@ -644,13 +606,13 @@ cut_context_start_test (CutContext *context, CutTest *test)
     g_mutex_unlock(priv->mutex);
 
     g_signal_connect(test, "pass_assertion",
-                     G_CALLBACK(cb_pass_assertion), info);
-    g_signal_connect(test, "success", G_CALLBACK(cb_success), info);
-    g_signal_connect(test, "failure", G_CALLBACK(cb_failure), info);
-    g_signal_connect(test, "error", G_CALLBACK(cb_error), info);
-    g_signal_connect(test, "pending", G_CALLBACK(cb_pending), info);
-    g_signal_connect(test, "notification", G_CALLBACK(cb_notification), info);
-    g_signal_connect(test, "complete", G_CALLBACK(cb_complete), info);
+                     G_CALLBACK(cb_pass_assertion), context);
+    g_signal_connect(test, "success", G_CALLBACK(cb_success), context);
+    g_signal_connect(test, "failure", G_CALLBACK(cb_failure), context);
+    g_signal_connect(test, "error", G_CALLBACK(cb_error), context);
+    g_signal_connect(test, "pending", G_CALLBACK(cb_pending), context);
+    g_signal_connect(test, "notification", G_CALLBACK(cb_notification), context);
+    g_signal_connect(test, "complete", G_CALLBACK(cb_complete), context);
 }
 
 static void
