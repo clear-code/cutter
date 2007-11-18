@@ -1,5 +1,7 @@
 2007-11-18  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-context.c: removed too much signal emitting.
+
 	* cutter/, test/: output -> runner. worked again.
 
 	* cutter/: output -> runner.

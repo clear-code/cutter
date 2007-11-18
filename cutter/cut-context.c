@@ -701,8 +701,6 @@ cb_complete_test_case(CutTestCase *test_case, gpointer data)
 void
 cut_context_start_test_case (CutContext *context, CutTestCase *test_case)
 {
-    g_signal_emit_by_name(context, "start-test-case", test_case);
-
     g_signal_connect(test_case, "start-test",
                      G_CALLBACK(cb_start_test), context);
     g_signal_connect(test_case, "complete-test",
