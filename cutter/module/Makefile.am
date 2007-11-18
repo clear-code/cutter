@@ -1,1 +1,1 @@
-SUBDIRS = output
+SUBDIRS = runner

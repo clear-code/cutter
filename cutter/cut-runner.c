@@ -28,17 +28,17 @@
 #include <glib.h>
 #include <glib/gstdio.h>
 
-#include "cut-output.h"
+#include "cut-runner.h"
 #include "cut-context.h"
 #include "cut-test.h"
 #include "cut-test-case.h"
 #include "cut-verbose-level.h"
 #include "cut-enum-types.h"
 
-#define CUT_OUTPUT_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_OUTPUT, CutOutputPrivate))
+#define CUT_RUNNER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_RUNNER, CutRunnerPrivate))
 
-typedef struct _CutOutputPrivate	CutOutputPrivate;
-struct _CutOutputPrivate
+typedef struct _CutRunnerPrivate	CutRunnerPrivate;
+struct _CutRunnerPrivate
 {
     CutVerboseLevel verbose_level;
     gboolean use_color;
@@ -53,7 +53,7 @@ enum
     PROP_SOURCE_DIRECTORY
 };
 
-static GList *outputs = NULL;
+static GList *runners = NULL;
 static gchar *module_dir = NULL;
 
 static void dispose        (GObject         *object);
@@ -66,24 +66,24 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 
-void cut_output_init (void)
+void cut_runner_init (void)
 {
 }
 
-void cut_output_quit (void)
+void cut_runner_quit (void)
 {
-    cut_output_unload();
-    cut_output_set_default_module_dir(NULL);
+    cut_runner_unload();
+    cut_runner_set_default_module_dir(NULL);
 }
 
 const gchar *
-cut_output_get_default_module_dir (void)
+cut_runner_get_default_module_dir (void)
 {
     return module_dir;
 }
 
 void
-cut_output_set_default_module_dir (const gchar *dir)
+cut_runner_set_default_module_dir (const gchar *dir)
 {
     if (module_dir)
         g_free(module_dir);
@@ -94,42 +94,42 @@ cut_output_set_default_module_dir (const gchar *dir)
 }
 
 static const gchar *
-_cut_output_module_dir (void)
+_cut_runner_module_dir (void)
 {
     const gchar *dir;
 
     if (module_dir)
         return module_dir;
 
-    dir = g_getenv("CUT_OUTPUT_MODULE_DIR");
+    dir = g_getenv("CUT_RUNNER_MODULE_DIR");
     if (dir)
         return dir;
 
-    return OUTPUT_MODULEDIR;
+    return RUNNER_MODULEDIR;
 }
 
 void
-cut_output_load (const gchar *base_dir)
+cut_runner_load (const gchar *base_dir)
 {
     if (!base_dir)
-        base_dir = _cut_output_module_dir();
+        base_dir = _cut_runner_module_dir();
 
-    outputs = g_list_concat(cut_module_load_modules(base_dir), outputs);
+    runners = g_list_concat(cut_module_load_modules(base_dir), runners);
 }
 
 CutModule *
-cut_output_load_module (const gchar *name)
+cut_runner_load_module (const gchar *name)
 {
     CutModule *module;
 
-    module = cut_module_find(outputs, name);
+    module = cut_module_find(runners, name);
     if (module)
         return module;
 
-    module = cut_module_load_module(_cut_output_module_dir(), name);
+    module = cut_module_load_module(_cut_runner_module_dir(), name);
     if (module) {
         if (g_type_module_use(G_TYPE_MODULE(module))) {
-            outputs = g_list_prepend(outputs, module);
+            runners = g_list_prepend(runners, module);
             g_type_module_unuse(G_TYPE_MODULE(module));
         }
     }
@@ -138,31 +138,31 @@ cut_output_load_module (const gchar *name)
 }
 
 void
-cut_output_unload (void)
+cut_runner_unload (void)
 {
-    g_list_foreach(outputs, (GFunc)cut_module_unload, NULL);
-    g_list_free(outputs);
-    outputs = NULL;
+    g_list_foreach(runners, (GFunc)cut_module_unload, NULL);
+    g_list_free(runners);
+    runners = NULL;
 }
 
 GList *
-cut_output_get_registered_types (void)
+cut_runner_get_registered_types (void)
 {
-    return cut_module_collect_registered_types(outputs);
+    return cut_module_collect_registered_types(runners);
 }
 
 GList *
-cut_output_get_log_domains (void)
+cut_runner_get_log_domains (void)
 {
-    return cut_module_collect_log_domains(outputs);
+    return cut_module_collect_log_domains(runners);
 }
 
-#define cut_output_init init
-G_DEFINE_ABSTRACT_TYPE (CutOutput, cut_output, G_TYPE_OBJECT)
-#undef cut_output_init
+#define cut_runner_init init
+G_DEFINE_ABSTRACT_TYPE (CutRunner, cut_runner, G_TYPE_OBJECT)
+#undef cut_runner_init
 
 static void
-cut_output_class_init (CutOutputClass *klass)
+cut_runner_class_init (CutRunnerClass *klass)
 {
     GObjectClass *gobject_class;
     GParamSpec *spec;
@@ -181,13 +181,13 @@ cut_output_class_init (CutOutputClass *klass)
                              G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_VERBOSE_LEVEL, spec);
 
-    g_type_class_add_private(gobject_class, sizeof(CutOutputPrivate));
+    g_type_class_add_private(gobject_class, sizeof(CutRunnerPrivate));
 }
 
 static void
-init (CutOutput *output)
+init (CutRunner *runner)
 {
-    CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
+    CutRunnerPrivate *priv = CUT_RUNNER_GET_PRIVATE(runner);
 
     priv->verbose_level = CUT_VERBOSE_LEVEL_NORMAL;
     priv->use_color = FALSE;
@@ -197,14 +197,14 @@ init (CutOutput *output)
 static void
 dispose (GObject *object)
 {
-    CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(object);
+    CutRunnerPrivate *priv = CUT_RUNNER_GET_PRIVATE(object);
 
     if (priv->source_directory) {
         g_free(priv->source_directory);
         priv->source_directory = NULL;
     }
 
-    G_OBJECT_CLASS(cut_output_parent_class)->dispose(object);
+    G_OBJECT_CLASS(cut_runner_parent_class)->dispose(object);
 }
 
 static void
@@ -213,7 +213,7 @@ set_property (GObject      *object,
               const GValue *value,
               GParamSpec   *pspec)
 {
-    CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(object);
+    CutRunnerPrivate *priv = CUT_RUNNER_GET_PRIVATE(object);
 
     switch (prop_id) {
       case PROP_VERBOSE_LEVEL:
@@ -231,7 +231,7 @@ get_property (GObject    *object,
               GValue     *value,
               GParamSpec *pspec)
 {
-    CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(object);
+    CutRunnerPrivate *priv = CUT_RUNNER_GET_PRIVATE(object);
 
     switch (prop_id) {
       case PROP_VERBOSE_LEVEL:
@@ -243,39 +243,39 @@ get_property (GObject    *object,
     }
 }
 
-CutOutput *
-cut_output_new (const gchar *name, const gchar *first_property, ...)
+CutRunner *
+cut_runner_new (const gchar *name, const gchar *first_property, ...)
 {
     CutModule *module;
-    GObject *output;
+    GObject *runner;
     va_list var_args;
 
-    module = cut_output_load_module(name);
+    module = cut_runner_load_module(name);
     g_return_val_if_fail(module != NULL, NULL);
 
     va_start(var_args, first_property);
-    output = cut_module_instantiate(module, first_property, var_args);
+    runner = cut_module_instantiate(module, first_property, var_args);
     va_end(var_args);
 
-    return CUT_OUTPUT(output);
+    return CUT_RUNNER(runner);
 }
 
 void
-cut_output_set_verbose_level (CutOutput *output, CutVerboseLevel level)
+cut_runner_set_verbose_level (CutRunner *runner, CutVerboseLevel level)
 {
-    CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
+    CutRunnerPrivate *priv = CUT_RUNNER_GET_PRIVATE(runner);
 
     priv->verbose_level = level;
 }
 
 CutVerboseLevel
-cut_output_get_verbose_level (CutOutput *output)
+cut_runner_get_verbose_level (CutRunner *runner)
 {
-    return CUT_OUTPUT_GET_PRIVATE(output)->verbose_level;
+    return CUT_RUNNER_GET_PRIVATE(runner)->verbose_level;
 }
 
 void
-cut_output_set_verbose_level_by_name (CutOutput *output, const gchar *name)
+cut_runner_set_verbose_level_by_name (CutRunner *runner, const gchar *name)
 {
     GError *error = NULL;
     CutVerboseLevel level;
@@ -286,15 +286,15 @@ cut_output_set_verbose_level_by_name (CutOutput *output, const gchar *name)
         g_warning("%s\n", error->message);
         g_error_free(error);
     } else {
-        cut_output_set_verbose_level(output, level);
+        cut_runner_set_verbose_level(runner, level);
     }
 }
 
 
 void
-cut_output_set_source_directory (CutOutput *output, const gchar *directory)
+cut_runner_set_source_directory (CutRunner *runner, const gchar *directory)
 {
-    CutOutputPrivate *priv = CUT_OUTPUT_GET_PRIVATE(output);
+    CutRunnerPrivate *priv = CUT_RUNNER_GET_PRIVATE(runner);
 
     if (priv->source_directory) {
         g_free(priv->source_directory);
@@ -307,167 +307,167 @@ cut_output_set_source_directory (CutOutput *output, const gchar *directory)
 }
 
 const gchar *
-cut_output_get_source_directory (CutOutput *output)
+cut_runner_get_source_directory (CutRunner *runner)
 {
-    return CUT_OUTPUT_GET_PRIVATE(output)->source_directory;
+    return CUT_RUNNER_GET_PRIVATE(runner)->source_directory;
 }
 
 void
-cut_output_set_use_color (CutOutput *output, gboolean use_color)
+cut_runner_set_use_color (CutRunner *runner, gboolean use_color)
 {
-    g_object_set(output, "use_color", use_color, NULL);
+    g_object_set(runner, "use_color", use_color, NULL);
 }
 
 void
-cut_output_on_start_test_suite (CutOutput *output, CutTestSuite *test_suite)
+cut_runner_on_start_test_suite (CutRunner *runner, CutTestSuite *test_suite)
 {
-    CutOutputClass *klass;
+    CutRunnerClass *klass;
 
-    g_return_if_fail(CUT_IS_OUTPUT(output));
+    g_return_if_fail(CUT_IS_RUNNER(runner));
 
-    klass = CUT_OUTPUT_GET_CLASS(output);
+    klass = CUT_RUNNER_GET_CLASS(runner);
     if (klass->on_start_test_suite)
-        klass->on_start_test_suite(output, test_suite);
+        klass->on_start_test_suite(runner, test_suite);
 }
 
 void
-cut_output_on_start_test_case (CutOutput *output, CutTestCase *test_case)
+cut_runner_on_start_test_case (CutRunner *runner, CutTestCase *test_case)
 {
-    CutOutputClass *klass;
+    CutRunnerClass *klass;
 
-    g_return_if_fail(CUT_IS_OUTPUT(output));
+    g_return_if_fail(CUT_IS_RUNNER(runner));
 
-    klass = CUT_OUTPUT_GET_CLASS(output);
+    klass = CUT_RUNNER_GET_CLASS(runner);
     if (klass->on_start_test_case)
-        klass->on_start_test_case(output, test_case);
+        klass->on_start_test_case(runner, test_case);
 }
 
 void
-cut_output_on_start_test (CutOutput *output, CutTestCase *test_case,
+cut_runner_on_start_test (CutRunner *runner, CutTestCase *test_case,
                           CutTest *test)
 {
-    CutOutputClass *klass;
+    CutRunnerClass *klass;
 
-    g_return_if_fail(CUT_IS_OUTPUT(output));
+    g_return_if_fail(CUT_IS_RUNNER(runner));
 
-    klass = CUT_OUTPUT_GET_CLASS(output);
+    klass = CUT_RUNNER_GET_CLASS(runner);
     if (klass->on_start_test)
-        klass->on_start_test(output, test_case, test);
+        klass->on_start_test(runner, test_case, test);
 }
 
 void
-cut_output_on_complete_test (CutOutput *output, CutTestCase *test_case,
+cut_runner_on_complete_test (CutRunner *runner, CutTestCase *test_case,
                              CutTest *test, CutTestResult *result)
 {
-    CutOutputClass *klass;
+    CutRunnerClass *klass;
 
-    g_return_if_fail(CUT_IS_OUTPUT(output));
+    g_return_if_fail(CUT_IS_RUNNER(runner));
 
     if (result && cut_test_result_get_status(result) == CUT_TEST_RESULT_ERROR)
-        cut_output_on_error(output, test, result);
+        cut_runner_on_error(runner, test, result);
 
-    klass = CUT_OUTPUT_GET_CLASS(output);
+    klass = CUT_RUNNER_GET_CLASS(runner);
     if (klass->on_complete_test)
-        klass->on_complete_test(output, test_case, test, result);
+        klass->on_complete_test(runner, test_case, test, result);
 }
 
 void
-cut_output_on_success (CutOutput *output, CutTest *test)
+cut_runner_on_success (CutRunner *runner, CutTest *test)
 {
-    CutOutputClass *klass;
+    CutRunnerClass *klass;
 
-    g_return_if_fail(CUT_IS_OUTPUT(output));
+    g_return_if_fail(CUT_IS_RUNNER(runner));
 
-    klass = CUT_OUTPUT_GET_CLASS(output);
+    klass = CUT_RUNNER_GET_CLASS(runner);
     if (klass->on_success)
-        klass->on_success(output, test);
+        klass->on_success(runner, test);
 }
 
 void
-cut_output_on_failure (CutOutput *output, CutTest *test, CutTestResult *result)
+cut_runner_on_failure (CutRunner *runner, CutTest *test, CutTestResult *result)
 {
-    CutOutputClass *klass;
+    CutRunnerClass *klass;
 
-    g_return_if_fail(CUT_IS_OUTPUT(output));
+    g_return_if_fail(CUT_IS_RUNNER(runner));
 
-    klass = CUT_OUTPUT_GET_CLASS(output);
+    klass = CUT_RUNNER_GET_CLASS(runner);
     if (klass->on_failure)
-        klass->on_failure(output, test, result);
+        klass->on_failure(runner, test, result);
 }
 
 void
-cut_output_on_error (CutOutput *output, CutTest *test, CutTestResult *result)
+cut_runner_on_error (CutRunner *runner, CutTest *test, CutTestResult *result)
 {
-    CutOutputClass *klass;
+    CutRunnerClass *klass;
 
-    g_return_if_fail(CUT_IS_OUTPUT(output));
+    g_return_if_fail(CUT_IS_RUNNER(runner));
 
-    klass = CUT_OUTPUT_GET_CLASS(output);
+    klass = CUT_RUNNER_GET_CLASS(runner);
     if (klass->on_error)
-        klass->on_error(output, test, result);
+        klass->on_error(runner, test, result);
 }
 
 void
-cut_output_on_pending (CutOutput *output, CutTest *test, CutTestResult *result)
+cut_runner_on_pending (CutRunner *runner, CutTest *test, CutTestResult *result)
 {
-    CutOutputClass *klass;
+    CutRunnerClass *klass;
 
-    g_return_if_fail(CUT_IS_OUTPUT(output));
+    g_return_if_fail(CUT_IS_RUNNER(runner));
 
-    klass = CUT_OUTPUT_GET_CLASS(output);
+    klass = CUT_RUNNER_GET_CLASS(runner);
     if (klass->on_pending)
-        klass->on_pending(output, test, result);
+        klass->on_pending(runner, test, result);
 }
 
 void
-cut_output_on_notification (CutOutput *output, CutTest *test,
+cut_runner_on_notification (CutRunner *runner, CutTest *test,
                             CutTestResult *result)
 {
-    CutOutputClass *klass;
+    CutRunnerClass *klass;
 
-    g_return_if_fail(CUT_IS_OUTPUT(output));
+    g_return_if_fail(CUT_IS_RUNNER(runner));
 
-    klass = CUT_OUTPUT_GET_CLASS(output);
+    klass = CUT_RUNNER_GET_CLASS(runner);
     if (klass->on_notification)
-        klass->on_notification(output, test, result);
+        klass->on_notification(runner, test, result);
 }
 
 void
-cut_output_on_complete_test_case (CutOutput *output, CutTestCase *test_case)
+cut_runner_on_complete_test_case (CutRunner *runner, CutTestCase *test_case)
 {
-    CutOutputClass *klass;
+    CutRunnerClass *klass;
 
-    g_return_if_fail(CUT_IS_OUTPUT(output));
+    g_return_if_fail(CUT_IS_RUNNER(runner));
 
-    klass = CUT_OUTPUT_GET_CLASS(output);
+    klass = CUT_RUNNER_GET_CLASS(runner);
     if (klass->on_complete_test_case)
-        klass->on_complete_test_case(output, test_case);
+        klass->on_complete_test_case(runner, test_case);
 }
 
 void
-cut_output_on_complete_test_suite (CutOutput *output, CutContext *context,
+cut_runner_on_complete_test_suite (CutRunner *runner, CutContext *context,
                                    CutTestSuite *test_suite)
 {
-    CutOutputClass *klass;
+    CutRunnerClass *klass;
 
-    g_return_if_fail(CUT_IS_OUTPUT(output));
+    g_return_if_fail(CUT_IS_RUNNER(runner));
 
-    klass = CUT_OUTPUT_GET_CLASS(output);
+    klass = CUT_RUNNER_GET_CLASS(runner);
     if (klass->on_complete_test_suite)
-        klass->on_complete_test_suite(output, context, test_suite);
+        klass->on_complete_test_suite(runner, context, test_suite);
 }
 
 void
-cut_output_on_crashed_test_suite (CutOutput *output, CutContext *context,
+cut_runner_on_crashed_test_suite (CutRunner *runner, CutContext *context,
                                   CutTestSuite *test_suite)
 {
-    CutOutputClass *klass;
+    CutRunnerClass *klass;
 
-    g_return_if_fail(CUT_IS_OUTPUT(output));
+    g_return_if_fail(CUT_IS_RUNNER(runner));
 
-    klass = CUT_OUTPUT_GET_CLASS(output);
+    klass = CUT_RUNNER_GET_CLASS(runner);
     if (klass->on_crashed_test_suite)
-        klass->on_crashed_test_suite(output, context, test_suite);
+        klass->on_crashed_test_suite(runner, context, test_suite);
 }
 
 

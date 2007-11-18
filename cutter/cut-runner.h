@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef __CUT_OUTPUT_H__
-#define __CUT_OUTPUT_H__
+#ifndef __CUT_RUNNER_H__
+#define __CUT_RUNNER_H__
 
 #include <glib-object.h>
 
@@ -31,127 +31,127 @@
 
 G_BEGIN_DECLS
 
-#define CUT_TYPE_OUTPUT            (cut_output_get_type ())
-#define CUT_OUTPUT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_OUTPUT, CutOutput))
-#define CUT_OUTPUT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_OUTPUT, CutOutputClass))
-#define CUT_IS_OUTPUT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_OUTPUT))
-#define CUT_IS_OUTPUT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_OUTPUT))
-#define CUT_OUTPUT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_OUTPUT, CutOutputClass))
+#define CUT_TYPE_RUNNER            (cut_runner_get_type ())
+#define CUT_RUNNER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_RUNNER, CutRunner))
+#define CUT_RUNNER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_RUNNER, CutRunnerClass))
+#define CUT_IS_RUNNER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_RUNNER))
+#define CUT_IS_RUNNER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_RUNNER))
+#define CUT_RUNNER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_RUNNER, CutRunnerClass))
 
-typedef struct _CutOutput         CutOutput;
-typedef struct _CutOutputClass    CutOutputClass;
+typedef struct _CutRunner         CutRunner;
+typedef struct _CutRunnerClass    CutRunnerClass;
 
-struct _CutOutput
+struct _CutRunner
 {
     GObject object;
 };
 
-struct _CutOutputClass
+struct _CutRunnerClass
 {
     GObjectClass parent_class;
 
-    void (*on_start_test_suite)    (CutOutput *output,
+    void (*on_start_test_suite)    (CutRunner *runner,
                                     CutTestSuite *test_suite);
-    void (*on_start_test_case)     (CutOutput *output,
+    void (*on_start_test_case)     (CutRunner *runner,
                                     CutTestCase *test_case);
-    void (*on_start_test)          (CutOutput *output,
+    void (*on_start_test)          (CutRunner *runner,
                                     CutTestCase *test_case,
                                     CutTest *test);
-    void (*on_success)             (CutOutput *output,
+    void (*on_success)             (CutRunner *runner,
                                     CutTest *test);
-    void (*on_failure)             (CutOutput *output,
+    void (*on_failure)             (CutRunner *runner,
                                     CutTest *test,
                                     CutTestResult *result);
-    void (*on_error)               (CutOutput *output,
+    void (*on_error)               (CutRunner *runner,
                                     CutTest *test,
                                     CutTestResult *result);
-    void (*on_pending)             (CutOutput *output,
+    void (*on_pending)             (CutRunner *runner,
                                     CutTest *test,
                                     CutTestResult *result);
-    void (*on_notification)        (CutOutput *output,
+    void (*on_notification)        (CutRunner *runner,
                                     CutTest *test,
                                     CutTestResult *result);
-    void (*on_complete_test)       (CutOutput *output,
+    void (*on_complete_test)       (CutRunner *runner,
                                     CutTestCase *test_case,
                                     CutTest *test,
                                     CutTestResult *result);
-    void (*on_complete_test_case)  (CutOutput *output,
+    void (*on_complete_test_case)  (CutRunner *runner,
                                     CutTestCase *test_case);
-    void (*on_complete_test_suite) (CutOutput *output,
+    void (*on_complete_test_suite) (CutRunner *runner,
                                     CutContext *context,
                                     CutTestSuite *test_suite);
-    void (*on_crashed_test_suite)  (CutOutput *output,
+    void (*on_crashed_test_suite)  (CutRunner *runner,
                                     CutContext *context,
                                     CutTestSuite *test_suite);
 };
 
-GType        cut_output_get_type  (void) G_GNUC_CONST;
+GType        cut_runner_get_type  (void) G_GNUC_CONST;
 
-void            cut_output_init        (void);
-void            cut_output_quit        (void);
+void            cut_runner_init        (void);
+void            cut_runner_quit        (void);
 
-const gchar    *cut_output_get_default_module_dir   (void);
-void            cut_output_set_default_module_dir   (const gchar *dir);
+const gchar    *cut_runner_get_default_module_dir   (void);
+void            cut_runner_set_default_module_dir   (const gchar *dir);
 
-void            cut_output_load        (const gchar *base_dir);
-CutModule      *cut_output_load_module (const gchar *name);
-void            cut_output_unload      (void);
-GList          *cut_output_get_registered_types (void);
-GList          *cut_output_get_log_domains      (void);
+void            cut_runner_load        (const gchar *base_dir);
+CutModule      *cut_runner_load_module (const gchar *name);
+void            cut_runner_unload      (void);
+GList          *cut_runner_get_registered_types (void);
+GList          *cut_runner_get_log_domains      (void);
 
-CutOutput   *cut_output_new (const gchar *name,
+CutRunner   *cut_runner_new (const gchar *name,
                              const gchar *first_property,
                              ...);
 
-void  cut_output_set_verbose_level         (CutOutput *output,
+void  cut_runner_set_verbose_level         (CutRunner *runner,
                                             CutVerboseLevel level);
 CutVerboseLevel
-      cut_output_get_verbose_level         (CutOutput *output);
-void  cut_output_set_verbose_level_by_name (CutOutput *output,
+      cut_runner_get_verbose_level         (CutRunner *runner);
+void  cut_runner_set_verbose_level_by_name (CutRunner *runner,
                                             const gchar *name);
-void  cut_output_set_source_directory      (CutOutput *output,
+void  cut_runner_set_source_directory      (CutRunner *runner,
                                             const gchar *directory);
 const gchar *
-      cut_output_get_source_directory      (CutOutput *output);
-void  cut_output_set_use_color             (CutOutput *output,
+      cut_runner_get_source_directory      (CutRunner *runner);
+void  cut_runner_set_use_color             (CutRunner *runner,
                                             gboolean   use_color);
 
-void  cut_output_on_start_test_suite       (CutOutput *output,
+void  cut_runner_on_start_test_suite       (CutRunner *runner,
                                             CutTestSuite *test_suite);
-void  cut_output_on_start_test_case        (CutOutput *output,
+void  cut_runner_on_start_test_case        (CutRunner *runner,
                                             CutTestCase *test_case);
-void  cut_output_on_start_test             (CutOutput *output,
+void  cut_runner_on_start_test             (CutRunner *runner,
                                             CutTestCase *test_case,
                                             CutTest *test);
-void  cut_output_on_success                (CutOutput *output, CutTest *test);
-void  cut_output_on_failure                (CutOutput *output,
+void  cut_runner_on_success                (CutRunner *runner, CutTest *test);
+void  cut_runner_on_failure                (CutRunner *runner,
                                             CutTest *test,
                                             CutTestResult *result);
-void  cut_output_on_error                  (CutOutput *output,
+void  cut_runner_on_error                  (CutRunner *runner,
                                             CutTest *test,
                                             CutTestResult *result);
-void  cut_output_on_pending                (CutOutput *output,
+void  cut_runner_on_pending                (CutRunner *runner,
                                             CutTest *test,
                                             CutTestResult *result);
-void  cut_output_on_notification           (CutOutput *output,
+void  cut_runner_on_notification           (CutRunner *runner,
                                             CutTest *test,
                                             CutTestResult *result);
-void  cut_output_on_complete_test          (CutOutput *output,
+void  cut_runner_on_complete_test          (CutRunner *runner,
                                             CutTestCase *test_case,
                                             CutTest *test,
                                             CutTestResult *result);
-void  cut_output_on_complete_test_case     (CutOutput *output,
+void  cut_runner_on_complete_test_case     (CutRunner *runner,
                                             CutTestCase *test_case);
-void  cut_output_on_complete_test_suite    (CutOutput *output,
+void  cut_runner_on_complete_test_suite    (CutRunner *runner,
                                             CutContext *context,
                                             CutTestSuite *test_suite);
-void  cut_output_on_crashed_test_suite     (CutOutput *output,
+void  cut_runner_on_crashed_test_suite     (CutRunner *runner,
                                             CutContext *context,
                                             CutTestSuite *test_suite);
 
 G_END_DECLS
 
-#endif /* __CUT_OUTPUT_H__ */
+#endif /* __CUT_RUNNER_H__ */
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

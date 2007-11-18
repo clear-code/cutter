@@ -32,7 +32,7 @@ cutter_h_sources =				\
 	cut-context.h				\
 	cut-public.h				\
 	cut-verbose-level.h			\
-	cut-output.h
+	cut-runner.h
 
 enum_source_prefix = cut-enum-types
 
@@ -79,7 +79,7 @@ libcutter_la_SOURCES =			\
 		cut-module.h		\
 		cut-module.c		\
 		cut-module-impl.h	\
-		cut-output.c		\
+		cut-runner.c		\
 		cut-test-result.c	\
 		cut-test-result.h	\
 		cut-test-context.c	\

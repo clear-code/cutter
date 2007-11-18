@@ -1,5 +1,7 @@
 2007-11-18  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/: output -> runner.
+
 	* cutter/cut-runner.[ch]: removed.
 
 	* cutter/cut-test-container.c: implemented intuitive test refinement.
