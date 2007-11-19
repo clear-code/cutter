@@ -4,34 +4,216 @@
 
 $Id: Tutorial.ja 17 2004-09-14 06:47:53Z kou $
 
-== 下準備
+== はじめに
 
-まず，テストを作成するための下準備をします．
-((<GaUnit|URL:http://www.cozmixng.org/~rwiki/?cmd=view;name=GaUnit>))
-に付いているrun-test.elを使うと仮定して話を進めます．
+スタックを実現するプログラム（ライブラリ）をC言語で作成する。
+プログラム作成はテストを作成しながら行う。テストの作成にはC
+言語用のテスティングフレームワークであるCutterを用いる。
 
-今回は，四則演算を行うプログラムを作成します．
+プログラムのビルドシステムにはGNUビルドシステム（GNU
+Autoconf/GNU Automake/GNU Libtool）を使用する。GNUビルドシス
+テムはビルド環境の差異を吸収する。これによりプログラム・テス
+トを複数の環境で容易にビルドできるようになる。
 
-=== ディレクトリ構成
+大きなコストをかけずにプログラム本体が複数の環境で動作するの
+であれば、その方がよい。さらにテストもその環境で動作するのな
+らば、プログラム本体がその環境で正しく動作することを容易に検
+証できる。プログラム本体だけではなく、テストも複数の環境で容
+易に動作することは重要である。
 
-まず，プログラムを作成するためのディレクトリを用意します．今
-回はcalcとしましょう．
+Cutterが依存しているライブラリはGLibのみである。GLibはUNIX系
+のシステムだけではなく、WindowsやMac OS X上でも動作する移植
+性の高いライブラリである。CutterはGLibを利用することにより移
+植性の高い状態を保ちつつ豊富なテスト支援機能を提供するxUnit
+系のテスティングフレームワークである。
 
-  % cd ~/work/c/ # とかプログラム作成用ディレクトリに移動
-  % mkdir calc
-  % cd calc
+以下、スタックを作成しながらCutterの使い方について述べる。
+なお、Cutterはインストールされているものとする。
 
-続いて，calc/ディレクトリ以下にプログラム用ディレクトリsrc/
-と，テストプログラム用ディレクトリtest/を作成します．
+このプログラムのソースコード一式はsample/stack/以下にある。
 
-  [calc]% mkdir src
-  [calc]% mkdir test
+== ディレクトリ構成
 
-つまり，ディレクトリ構成は以下のようになります．
+まず、プログラムを作成するためのディレクトリを用意する。ディ
+レクトリはstackとする。
 
-  calc/ -+- src/ ソースファイルを置く
-         |
-         +- test/ テスト用のファイルを置く
+  % mkdir -p ~/work/c/stack
+  % cd stack
+
+続いて、stack/ディレクトリ以下にビルド補助ファイル用ディレク
+トリconfig/、プログラム用ディレクトリsrc/、テストプログラム用
+ディレクトリtest/を作成する。
+
+  [stack]% mkdir config src test
+
+つまり、ディレクトリ構成は以下のようになる。
+
+  stack/ -+- config/ ビルド補助用ディレクトリ
+          |
+          +- src/ ソースファイル用ディレクトリ
+          |
+          +- test/ テストプログラム用ディレクトリ
+
+== GNUビルドシステム化
+
+GNUビルドシステムでは、コマンドを実行し、いくつかのファイルを
+自動生成する。これらのコマンドは、autogen.shというシェルスク
+リプトを作成し、そこから呼び出すのが一般的である。ここでも、
+その慣習に従う。
+
+  [stack]% vim autogen.sh
+  [stack]% chmod +x autogen.sh
+  [stack]% cat autogen.sh
+  #!/bin/sh
+
+  run()
+  {
+      $@
+      if test $? -ne 0; then
+          echo "Failed $@"
+          exit 1
+      fi
+  }
+
+  run aclocal
+  run libtoolize --copy --force
+  run autoheader
+  run automake --add-missing --foreign --copy
+  run autoconf
+
+run()はコマンドの実行結果を確認するための便利のための関数で
+ある。実行しているコマンドはそれぞれ以下のためである。
+
+  * aclocal: Automakeが利用するマクロをaclocal.m4に集める
+  * libtoolize: libtoolを使用するために必要なファイルを用意
+  * autoheader: configureスクリプトが利用するconfig.h.inファイルを作成
+  * automake: configureスクリプトが利用するMakefile.inを生成
+  * autoconf: configureスクリプトを生成
+
+この時点でautogen.shを実行すると以下のようになる。
+
+  [stack]% ./autogen.sh
+  aclocal: `configure.ac' or `configure.in' is required
+  Failed aclocal
+
+Autoconf用のファイルであるconfigure.acを用意する必要がある。
+
+=== configure.ac
+
+autogen.shのための最低限のconfigure.acは以下の通りである。
+
+  AC_PREREQ(2.59)
+
+  AC_INIT(stack, 0.0.1, you@example.com)
+  AC_CONFIG_AUX_DIR([config])
+  AC_CONFIG_HEADER([src/config.h])
+
+  AM_INIT_AUTOMAKE($PACKAGE_NAME, $PACKAGE_VERSION)
+
+  AC_PROG_LIBTOOL
+
+  AC_CONFIG_FILES([Makefile])
+
+  AC_OUTPUT
+
+configure.acを用意してもう一度autogen.shを実行すると以下のよ
+うになる。
+
+  [stack]% ./autogen.sh
+  Putting files in AC_CONFIG_AUX_DIR, `config'.
+  configure.ac: installing `config/install-sh'
+  configure.ac: installing `config/missing'
+  automake: no `Makefile.am' found for any configure output
+  Failed automake --add-missing --foreign --copy
+
+今度はAutomakeのためにMakefile.amを用意する必要がある。
+
+=== Makefile.am
+
+autogen.shのためだけであれば空のMakefile.amで構わない。
+
+  [stack]% touch Makefile.am
+  [stack]% ./autogen.sh
+  Putting files in AC_CONFIG_AUX_DIR, `config'.
+
+これでconfigureスクリプトが生成される。この時点で一般的なソ
+フトウェアのようにconfigure; make; make installができるよう
+になる。
+
+  [stack]% ./configure
+  ...
+  [stack]% make
+  [stack]% make install
+
+ただし、ビルドするものもインストールするものも何もないため、
+今は何も起きない。
+
+== はじめてのテスト作成
+
+最低限のビルド環境が整ったので、テストの作成にはいる。まずは、
+新しく作ったばかりのスタックは空であることをテストする。コー
+ドにすると以下の通りである。
+
+  void
+  test_new_stack (void)
+  {
+      Stack *stack;
+      stack = stack_new();
+      if (stack_is_empty(stack))
+          PASS;
+      else
+          FAIL;
+  }
+
+ここでは、上記のテストをCutterのテストとして動作させる。
+
+=== テストプログラムの作成
+
+テストプログラムはtest/以下に作成する。ここでは
+test/test_stack.cとして作成するものとする。
+
+まず、Cutterを使うためにcutter.hをincludeする。
+
+  #include <cutter.h>
+
+また、テスト対象のスタックの実装のAPIが書かれているstack.hも
+includeする。（stack.hは後で作成する。）
+
+  #include <stack.h>
+
+続いて、このスタックのAPIを用いてテストを作成する。
+
+  void
+  test_new_stack (void)
+  {
+      Stack *stack;
+      stack = stack_new();
+      cut_assert(stack_is_empty(stack));
+  }
+
+cut_assert()は引数が0ならテストが失敗、0以外ならテストが成功
+と判断するマクロである。Cutterのテストとはcut_XXX()マクロを使
+用して、特定の状況で望んだ動作をしているかを検証するプログラ
+ムを作成するということである。
+
+以下に、「作成したばかりのスタックは空である」ということを検
+証するテストのソースコード全体を示す。
+
+  #include <cutter.h>
+  #include <stack.h>
+
+  void
+  test_new_stack (void)
+  {
+      Stack *stack;
+      stack = stack_new();
+      cut_assert(stack_is_empty(stack));
+  }
+
+=== テストのビルド
+
+*** ここまで ***
+
 
 === テスト起動の自動化
 

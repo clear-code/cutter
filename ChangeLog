@@ -1,3 +1,8 @@
+2007-11-19  Kouhei Sutou  <kou@cozmixng.org>
+
+	* Tutorial.ja: started updating to stack from calc .
+	* sample/stack/: added.
+
 2007-11-19  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-test-context.c: (cut_test_context_inspect_string_array):
