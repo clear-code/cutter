@@ -2,11 +2,18 @@
 
 #include <glib.h>
 
+#if defined(G_THREADS_ENABLED) && ! defined(G_THREADS_IMPL_NONE)
 void test_g_mutex (void);
 void test_g_static_rec_mutex (void);
 void test_g_static_private (void);
 void test_g_static_rw_lock (void);
 void test_g_thread_once (void);
+
+void
+setup (void)
+{
+  g_thread_use_default_impl = FALSE;
+}
 
 /* GMutex */
 static GMutex* test_g_mutex_mutex = NULL;
@@ -110,7 +117,7 @@ test_g_static_rec_mutex (void)
 
 /* GStaticPrivate */
 
-#define THREADS 10
+#define THREADS 100
 
 static GStaticPrivate test_g_static_private_private1 = G_STATIC_PRIVATE_INIT;
 static GStaticPrivate test_g_static_private_private2 = G_STATIC_PRIVATE_INIT;
@@ -143,7 +150,7 @@ test_g_static_private_thread (gpointer data)
   guint number = GPOINTER_TO_INT (data);
   guint i;
   guint *private1, *private2;
-  for (i = 0; i < 10; i++)
+  for (i = 0; i < 100; i++)
     {
       number = number * 11 + 1; /* A very simple and bad RNG ;-) */
       private1 = g_static_private_get (&test_g_static_private_private1);
@@ -174,7 +181,7 @@ test_g_static_private_thread (gpointer data)
   while (test_g_static_private_ready != 0)
     g_usleep (G_USEC_PER_SEC / 5);  
 
-  for (i = 0; i < 10; i++)
+  for (i = 0; i < 100; i++)
     {
       private2 = g_static_private_get (&test_g_static_private_private2);
       number = number * 11 + 1; /* A very simple and bad RNG ;-) */
@@ -373,20 +380,5 @@ test_g_thread_once (void)
     }
 }
 
-
-int 
-main (int   argc,
-      char *argv[])
-{
-  /* Only run the test, if threads are enabled and a default thread
-     implementation is available */
-#if defined(G_THREADS_ENABLED) && ! defined(G_THREADS_IMPL_NONE)
-  /* Now we rerun all tests, but this time we fool the system into
-   * thinking, that the available thread system is not native, but
-   * userprovided. */
-
-  g_thread_use_default_impl = FALSE;
-  
 #endif
-  return 0;
-}
+

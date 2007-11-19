@@ -1,3 +1,9 @@
+2007-11-20  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* sample/glib/thread.c: Code cleanup. remove main(). Set
+	g_thread_default_impl FALSE, the change fixes a crash
+	test_g_static_private() but test_g_static_rec_mutex() is locked!?
+
 2007-11-19  Kouhei Sutou  <kou@cozmixng.org>
 
 	* Tutorial.ja: started updating to stack from calc .
