@@ -26,7 +26,6 @@ IGNORE_HFILES=			\
 	cut-marshalers.h	\
 	cut-module-impl.h	\
 	cut-module.h		\
-	cut-output.h		\
 	cut-private.h		\
 	cut-public.h		\
 	cut-repository.h	\
