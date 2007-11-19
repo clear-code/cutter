@@ -117,7 +117,7 @@ test_g_static_rec_mutex (void)
 
 /* GStaticPrivate */
 
-#define THREADS 100
+#define THREADS 10
 
 static GStaticPrivate test_g_static_private_private1 = G_STATIC_PRIVATE_INIT;
 static GStaticPrivate test_g_static_private_private2 = G_STATIC_PRIVATE_INIT;
@@ -150,7 +150,7 @@ test_g_static_private_thread (gpointer data)
   guint number = GPOINTER_TO_INT (data);
   guint i;
   guint *private1, *private2;
-  for (i = 0; i < 100; i++)
+  for (i = 0; i < 10; i++)
     {
       number = number * 11 + 1; /* A very simple and bad RNG ;-) */
       private1 = g_static_private_get (&test_g_static_private_private1);
@@ -181,7 +181,7 @@ test_g_static_private_thread (gpointer data)
   while (test_g_static_private_ready != 0)
     g_usleep (G_USEC_PER_SEC / 5);  
 
-  for (i = 0; i < 100; i++)
+  for (i = 0; i < 10; i++)
     {
       private2 = g_static_private_get (&test_g_static_private_private2);
       number = number * 11 + 1; /* A very simple and bad RNG ;-) */
