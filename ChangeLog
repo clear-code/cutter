@@ -1,5 +1,7 @@
 2007-11-19  Kouhei Sutou  <kou@cozmixng.org>
 
+	* configure.ac, sample/Makefile.am: removed calc.
+
 	* sample/calc/: removed.
 
 	* sample/glib/run-test.sh: supported easy gdb invoking.

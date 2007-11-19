@@ -144,7 +144,6 @@ AC_CONFIG_FILES([Makefile
 		 cutter/module/Makefile
 		 cutter/module/runner/Makefile
                  sample/Makefile
-                 sample/calc/Makefile.test
 		 sample/glib/Makefile
 		 sample/gtk+/Makefile
 		 sample/cairo/Makefile
