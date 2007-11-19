@@ -200,7 +200,6 @@ void
 test_regex_new (void)
 {
   cut_assert_regex_new ("", 0, 0);
-  cut_assert_regex_new ("", 0, 0);
   cut_assert_regex_new (".*", 0, 0);
   cut_assert_regex_new (".*", G_REGEX_OPTIMIZE, 0);
   cut_assert_regex_new (".*", G_REGEX_MULTILINE, 0);
