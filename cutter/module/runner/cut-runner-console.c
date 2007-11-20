@@ -368,8 +368,10 @@ cb_success (CutContext *context, CutTest *test, CutRunnerConsole *console)
 {
     if (GET_VERBOSE_LEVEL(console) < CUT_VERBOSE_LEVEL_NORMAL)
         return;
-    print_for_status(console, CUT_TEST_RESULT_SUCCESS, ".");
-    fflush(stdout);
+    if (!CUT_IS_TEST_CONTAINER(test)) {
+        print_for_status(console, CUT_TEST_RESULT_SUCCESS, ".");
+        fflush(stdout);
+    }
 }
 
 static void
