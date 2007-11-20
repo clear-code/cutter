@@ -79,37 +79,9 @@ static void get_property   (GObject         *object,
                             guint            prop_id,
                             GValue          *value,
                             GParamSpec      *pspec);
-
-static void on_start_test_suite    (CutRunner *runner,
-                                    CutTestSuite *test_suite);
-static void on_start_test_case     (CutRunner *runner,
-                                    CutTestCase *test_case);
-static void on_start_test          (CutRunner *runner,
-                                    CutTestCase *test_case,
-                                    CutTest *test);
-static void on_complete_test       (CutRunner *runner,
-                                    CutTestCase *test_case,
-                                    CutTest *test,
-                                    CutTestResult *result);
-static void on_success             (CutRunner *runner,
-                                    CutTest *test);
-static void on_failure             (CutRunner *runner,
-                                    CutTest *test,
-                                    CutTestResult *result);
-static void on_error               (CutRunner *runner,
-                                    CutTest *test,
-                                    CutTestResult *result);
-static void on_pending             (CutRunner *runner,
-                                    CutTest *test,
-                                    CutTestResult *result);
-static void on_notification        (CutRunner *runner,
-                                    CutTest *test,
-                                    CutTestResult *result);
-static void on_complete_test_case  (CutRunner *runner,
-                                    CutTestCase *test_case);
-static void on_complete_test_suite (CutRunner *runner,
-                                    CutContext *context,
-                                    CutTestSuite *test_suite);
+static gboolean run        (CutRunner    *runner,
+                            CutTestSuite *test_suite,
+                            CutContext   *context);
 
 static void
 class_init (CutRunnerClass *klass)
@@ -125,18 +97,8 @@ class_init (CutRunnerClass *klass)
     gobject_class->dispose      = dispose;
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
-
-    runner_class->on_start_test_suite    = on_start_test_suite;
-    runner_class->on_start_test_case     = on_start_test_case;
-    runner_class->on_start_test          = on_start_test;
-    runner_class->on_success             = on_success;
-    runner_class->on_failure             = on_failure;
-    runner_class->on_error               = on_error;
-    runner_class->on_pending             = on_pending;
-    runner_class->on_notification        = on_notification;
-    runner_class->on_complete_test       = on_complete_test;
-    runner_class->on_complete_test_case  = on_complete_test_case;
-    runner_class->on_complete_test_suite = on_complete_test_suite;
+    
+    runner_class->run           = run;
 }
 
 static void
@@ -242,68 +204,15 @@ get_property (GObject    *object,
     }
 }
 
-static void
-on_start_test_suite (CutRunner *runner, CutTestSuite *test_suite)
-{
-}
 
-static void
-on_start_test_case (CutRunner *runner, CutTestCase *test_case)
+static gboolean
+run (CutRunner *runner, CutTestSuite *test_suite, CutContext *context)
 {
-}
+    gboolean success;
 
-static void
-on_start_test (CutRunner *runner, CutTestCase *test_case,
-               CutTest *test)
-{
-}
+    success = cut_test_suite_run(test_suite, context);
 
-static void
-on_complete_test (CutRunner *runner, CutTestCase *test_case,
-                  CutTest *test, CutTestResult *result)
-{
-}
-
-static void
-on_success (CutRunner *runner, CutTest *test)
-{
-    GtkTextIter iter;
-    CutRunnerGtk *runner_gtk = CUT_RUNNER_GTK(runner);
-
-    gtk_text_buffer_get_end_iter(runner_gtk->text_buffer, &iter);
-    gtk_text_buffer_insert(runner_gtk->text_buffer, &iter, ".", -1);
-}
-
-static void
-on_failure (CutRunner *runner, CutTest *test, CutTestResult *result)
-{
-}
-
-static void
-on_error (CutRunner *runner, CutTest *test, CutTestResult *result)
-{
-}
-
-static void
-on_pending (CutRunner *runner, CutTest *test, CutTestResult *result)
-{
-}
-
-static void
-on_notification (CutRunner *runner, CutTest *test,
-                 CutTestResult *result)
-{
-}
-
-static void
-on_complete_test_case (CutRunner *runner, CutTestCase *test_case)
-{
-}
-
-static void
-on_complete_test_suite (CutRunner *runner, CutContext *context,
-                        CutTestSuite *test_suite)
-{
+    return success;
 }
 
 

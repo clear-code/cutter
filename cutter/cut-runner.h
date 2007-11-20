@@ -53,40 +53,6 @@ struct _CutRunnerClass
     gboolean (*run)                (CutRunner    *runner,
                                     CutTestSuite *test_suite,
                                     CutContext   *context);
-
-    void (*on_start_test_suite)    (CutRunner *runner,
-                                    CutTestSuite *test_suite);
-    void (*on_start_test_case)     (CutRunner *runner,
-                                    CutTestCase *test_case);
-    void (*on_start_test)          (CutRunner *runner,
-                                    CutTestCase *test_case,
-                                    CutTest *test);
-    void (*on_success)             (CutRunner *runner,
-                                    CutTest *test);
-    void (*on_failure)             (CutRunner *runner,
-                                    CutTest *test,
-                                    CutTestResult *result);
-    void (*on_error)               (CutRunner *runner,
-                                    CutTest *test,
-                                    CutTestResult *result);
-    void (*on_pending)             (CutRunner *runner,
-                                    CutTest *test,
-                                    CutTestResult *result);
-    void (*on_notification)        (CutRunner *runner,
-                                    CutTest *test,
-                                    CutTestResult *result);
-    void (*on_complete_test)       (CutRunner *runner,
-                                    CutTestCase *test_case,
-                                    CutTest *test,
-                                    CutTestResult *result);
-    void (*on_complete_test_case)  (CutRunner *runner,
-                                    CutTestCase *test_case);
-    void (*on_complete_test_suite) (CutRunner *runner,
-                                    CutContext *context,
-                                    CutTestSuite *test_suite);
-    void (*on_crashed_test_suite)  (CutRunner *runner,
-                                    CutContext *context,
-                                    CutTestSuite *test_suite);
 };
 
 GType        cut_runner_get_type  (void) G_GNUC_CONST;
