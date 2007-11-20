@@ -1,5 +1,7 @@
 2007-11-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter.pc.in: exported cutter program.
+
 	* libcutter.pc.in (Requires): added gmodule-2.0 and removed glib-2.0.
 	* cutter.pc.in: don't need -lcutter.
 
