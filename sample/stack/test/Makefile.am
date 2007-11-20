@@ -1,3 +1,6 @@
+TESTS = run-test.sh
+TESTS_ENVIRONMENT = CUTTER="$(CUTTER)"
+
 noinst_LTLIBRARIES = test_stack.la
 
 INCLUDES = $(CUTTER_CFLAGS) -I$(top_srcdir)/src

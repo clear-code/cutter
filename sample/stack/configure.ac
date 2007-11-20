@@ -12,6 +12,10 @@ PKG_CHECK_MODULES(CUTTER, cutter)
 AC_SUBST([CUTTER_CFLAGS])
 AC_SUBST([CUTTER_LIBS])
 
+_PKG_CONFIG(CUTTER, variable=cutter, cutter)
+CUTTER=$pkg_cv_CUTTER
+AC_SUBST([CUTTER])
+
 AC_CONFIG_FILES([Makefile
                  test/Makefile])
 

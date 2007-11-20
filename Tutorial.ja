@@ -294,11 +294,16 @@ test/Makefileが生成され、test/以下でのmakeが失敗しなくなる。
 test/Makefile.am:
   noinst_LTLIBRARIES = test_stack.la
 
-今回はライブラリ名から「lib」を省略するので、libtoolに-moduleオ
-プションを渡す必要がある。また、-module
+テストの共有ライブラリはCutterが提供するテスト実行コマンド
+cutterから動的に読み込まれる。動的に読み込まれる共有ライブラ
+リは、libtoolに-moduleオプションを渡す必要がある。ま
+た、-moduleオプションを指定する場合-rpathも指定する必要がある。
+そこで、LDFLAGSを以下のように指定する。-avoid-versionはテスト
+の共有ライブラリにはバージョン番号を付ける必要がないため指定
+している。
 
 test/Makefile.am:
-  LDFLAGS = -module
+  LDFLAGS = -module -rpath $(libdir) -avoid-version
 
 test/test_stack.laのビルド（test_stack.soはtest/.libs/以下に
 作成される）にはtest/test-stack.cを使用するので、それを指定す
@@ -396,7 +401,7 @@ test/Makefile.am:
   INCLUDES = $(CUTTER_CFLAGS)
   LIBS = $(CUTTER_LIBS)
 
-  LDFLAGS = -module
+  LDFLAGS = -module -rpath $(libdir) -avoid-version
 
   test_stack_la_SOURCES = test-stack.c
 
@@ -471,8 +476,97 @@ stack_new()が宣言されていないため警告がでるが共有ライブラ
   test-stack.c: In function 'test_new_stack':
   test-stack.c:8: warning: assignment makes pointer from integer without a cast
   ...
-  [stack]% 
+  [stack]% file test/.libs/test_stack.so
+  test/.libs/test_stack.so: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), not stripped
 
+共有ライブラリが作成されたので、cutterコマンドでこのテストを
+起動できる。
+
+  [stack]% cutter test/
+  cutter: symbol lookup error: test/.libs/test_stack.so: undefined symbol: stack_new
+
+stack_new()が定義されていないため読み込みに失敗するが、テス
+トプログラムが読み込まれることは確認できる。
+
+==== テスト起動の自動化
+
+GNUビルドシステムでは一般的にmake checkでテストが起動する。
+スタックの実装でも同様にテストが起動するようにする。
+
+まず、テストを起動するスクリプトtest/run-test.shを作成する。
+cutterコマンドのパスは環境変数CUTTERで受け取ることにする。
+
+test/run-test.sh:
+  #!/bin/sh
+
+  export BASE_DIR="`dirname $0`"
+  $CUTTER --color=auto -s $BASE_DIR "$@" $BASE_DIR
+
+実行権を付けることを忘れないこと。
+
+  [stack]% chmod +x test/run-test.sh
+
+test/Makefile.amにテスト起動スクリプトとしてtest/run-test.sh
+を使うことを指定する。
+
+test/Makefile.am:
+  TESTS = run-test.sh
+  TESTS_ENVIRONMENT = CUTTER="$(CUTTER)"
+  ...
+
+TESTS_ENVIRONMENTではcutterコマンドのパスを環境変数CUTTERで
+渡している。cutterコマンドのパスはconfigureで検出する。
+cutterコマンドのパスを検出するために、configure.acに以下を追
+加する。
+
+configure.ac:
+  ...
+  _PKG_CONFIG(CUTTER, variable=cutter, cutter)
+  CUTTER=$pkg_cv_CUTTER
+  AC_SUBST([CUTTER])
+  ...
+
+configure.ac全体は以下のようになる。
+
+configure.ac:
+  AC_PREREQ(2.59)
+
+  AC_INIT(stack, 0.0.1, you@example.com)
+  AC_CONFIG_AUX_DIR([config])
+  AC_CONFIG_HEADER([src/config.h])
+
+  AM_INIT_AUTOMAKE($PACKAGE_NAME, $PACKAGE_VERSION)
+
+  AC_PROG_LIBTOOL
+
+  PKG_CHECK_MODULES(CUTTER, cutter)
+  AC_SUBST([CUTTER_CFLAGS])
+  AC_SUBST([CUTTER_LIBS])
+
+  _PKG_CONFIG(CUTTER, variable=cutter, cutter)
+  CUTTER=$pkg_cv_CUTTER
+  AC_SUBST([CUTTER])
+
+  AC_CONFIG_FILES([Makefile
+                   test/Makefile])
+
+  AC_OUTPUT
+
+make checkでテストが走ることを確認する。
+
+  [stack]% make check
+  ...
+  cutter: symbol lookup error: ./.libs/test_stack.so: undefined symbol: stack_new
+  FAIL: run-test.sh
+  ================================
+  1 of 1 tests failed
+  Please report to you@example.com
+  ================================
+  ...
+
+=== スタックの実装
+
+*** ここまで ***
 
 === テスト起動の自動化
 
