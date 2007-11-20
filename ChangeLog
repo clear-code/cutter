@@ -1,3 +1,7 @@
+2007-11-20  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/Makefile.am: installed libcutter.so into $(libdir).
+
 2007-11-20  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* sample/glib/thread.c: Code cleanup. remove main(). Set

@@ -10,8 +10,7 @@ AM_CPPFLAGS = 						\
 
 EXTRA_DIST = config.h.in cut-marshalers.list
 
-libcutterdir = $(libdir)/$(PACKAGE)
-libcutter_LTLIBRARIES = libcutter.la
+lib_LTLIBRARIES = libcutter.la
 
 if ENABLE_STATIC_BINARY
 AM_LDFLAGS = -all-static
