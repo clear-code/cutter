@@ -9,7 +9,6 @@ TESTS_ENVIRONMENT = NO_MAKE=yes
 
 noinst_LTLIBRARIES = 			\
 		test_array.la		\
-		test_asyncqueue.la	\
 		test_atomic.la		\
 		test_base64.la		\
 		test_keyfile.la		\
@@ -27,7 +26,6 @@ LDFLAGS =			\
 	-avoid-version
 
 test_array_la_SOURCES = array.c
-test_asyncqueue_la_SOURCES = asyncqueue.c
 test_atomic_la_SOURCES = atomic.c
 test_base64_la_SOURCES = base64.c
 test_keyfile_la_SOURCES = keyfile.c
