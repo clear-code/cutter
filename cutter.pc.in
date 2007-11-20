@@ -6,6 +6,4 @@ includedir=@includedir@
 Name: Cutter
 Description: Cutter is Unit Testing Framework for C.
 Version: @VERSION@
-#Requires: glib-2.0 >= @GLIB_REQUIRED@
-Libs: -L${libdir} -lcutter
 Cflags: -I${includedir}/cutter

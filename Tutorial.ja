@@ -61,9 +61,7 @@ GNUビルドシステムでは、コマンドを実行し、いくつかのフ�
 リプトを作成し、そこから呼び出すのが一般的である。ここでも、
 その慣習に従う。
 
-  [stack]% vim autogen.sh
-  [stack]% chmod +x autogen.sh
-  [stack]% cat autogen.sh
+autogen.sh:
   #!/bin/sh
 
   run()
@@ -80,6 +78,10 @@ GNUビルドシステムでは、コマンドを実行し、いくつかのフ�
   run autoheader
   run automake --add-missing --foreign --copy
   run autoconf
+
+autogen.shに実行権を付けることを忘れないこと。
+
+  [stack]% chmod +x autogen.sh
 
 run()はコマンドの実行結果を確認するための便利のための関数で
 ある。実行しているコマンドはそれぞれ以下のためである。
@@ -102,6 +104,7 @@ Autoconf用のファイルであるconfigure.acを用意する必要がある。
 
 autogen.shのための最低限のconfigure.acは以下の通りである。
 
+configure.ac:
   AC_PREREQ(2.59)
 
   AC_INIT(stack, 0.0.1, you@example.com)
@@ -170,19 +173,22 @@ autogen.shのためだけであれば空のMakefile.amで構わない。
 === テストプログラムの作成
 
 テストプログラムはtest/以下に作成する。ここでは
-test/test_stack.cとして作成するものとする。
+test/test-stack.cとして作成するものとする。
 
 まず、Cutterを使うためにcutter.hをincludeする。
 
+test/test-stack.c:
   #include <cutter.h>
 
 また、テスト対象のスタックの実装のAPIが書かれているstack.hも
 includeする。（stack.hは後で作成する。）
 
+test/test-stack.c:
   #include <stack.h>
 
 続いて、このスタックのAPIを用いてテストを作成する。
 
+test/test-stack.c:
   void
   test_new_stack (void)
   {
@@ -199,6 +205,7 @@ cut_assert()は引数が0ならテストが失敗、0以外ならテストが成
 以下に、「作成したばかりのスタックは空である」ということを検
 証するテストのソースコード全体を示す。
 
+test/test-stack.c:
   #include <cutter.h>
   #include <stack.h>
 
@@ -212,7 +219,259 @@ cut_assert()は引数が0ならテストが失敗、0以外ならテストが成
 
 === テストのビルド
 
-*** ここまで ***
+Cutterの各テストは共有ライブラリになる。上記で作成したテスト
+を共有ライブラリとしてビルドするために、Makefile.amを変更す
+る。
+
+==== test/以下でのビルド設定
+
+現在のMakefile.amは空である。サブディレクトリであるtest/以下
+のtest/test-stack.cをビルドするためにはMakefile.amにtest/以
+下がサブディレクトリとして存在することを指定する。
+
+Makefile.am:
+  SUBDIRS = test
+
+Makefile.amを変更した後にmakeを実行すると、makeがMakefile.am
+の変更を検出し、Makefileなどを自動的に更新する。
+
+  [stack]% % make
+   cd . && /bin/sh /home/kou/work/c/cutter/sample/stack/config/missing --run automake-1.9 --foreign  Makefile
+   cd . && /bin/sh ./config.status Makefile 
+  config.status: creating Makefile
+  Making all in test
+  make[1]: ディレクトリ `/home/kou/work/c/cutter/sample/stack/test' に入ります
+  make[1]: *** ターゲット `all' を make するルールがありません.  中止.
+  make[1]: ディレクトリ `/home/kou/work/c/cutter/sample/stack/test' から出ます
+  make: *** [all-recursive] エラー 1
+
+test/以下もビルドしにいこうとしているのがわかる。ただし、
+test/Makefileがないためtest/以下でのビルドは失敗している。
+
+test/以下でビルドを行うようにするため、test/Makefile.amを作
+成する。また、configureでtest/Makefileを生成するように指定す
+る。
+
+test/以下でのmakeが失敗しないようにするには、空の
+test/Makefile.amでもよい。
+
+  [stack]% touch test/Makefile.am
+
+あとはconfigure.acにtest/Makefileを生成するように指定すれば
+makeは通るようになる。
+
+configure.ac:
+  ...
+  AC_CONFIG_FILES([Makefile
+                   test/Makefile])
+  ...
+
+実際にmakeを実行すると自動で再びconfigureが走り、
+test/Makefileが生成され、test/以下でのmakeが失敗しなくなる。
+
+  [stack]% make
+  ...
+  config.status: creating test/Makefile
+  config.status: creating src/config.h
+  config.status: src/config.h is unchanged
+  config.status: executing depfiles commands
+  Making all in test
+  make[1]: ディレクトリ `/home/kou/work/c/cutter/sample/stack/test' に入ります
+  make[1]: `all' に対して行うべき事はありません.
+  make[1]: ディレクトリ `/home/kou/work/c/cutter/sample/stack/test' から出ます
+  make[1]: ディレクトリ `/home/kou/work/c/cutter/sample/stack' に入ります
+  make[1]: `all-am' に対して行うべき事はありません.
+  make[1]: ディレクトリ `/home/kou/work/c/cutter/sample/stack' から出ます
+
+==== test/test_stack.soのビルド
+
+それではtest/test_stack.cを共有ライブラリとしてビルドできる
+ようにtest/Makefile.amを編集する。テスト用の共有ライブラリは
+「test_」から始まる名前にする（「test_」の前に「lib」が付い
+ても良い）。また、テストプログラムはインストールする必要がな
+いため「noinst_」を使う。
+
+test/Makefile.am:
+  noinst_LTLIBRARIES = test_stack.la
+
+今回はライブラリ名から「lib」を省略するので、libtoolに-moduleオ
+プションを渡す必要がある。また、-module
+
+test/Makefile.am:
+  LDFLAGS = -module
+
+test/test_stack.laのビルド（test_stack.soはtest/.libs/以下に
+作成される）にはtest/test-stack.cを使用するので、それを指定す
+る。
+
+test/Makefile.am:
+  test_stack_la_SOURCES = test-stack.c
+
+これでtest/test_stack.laがビルドできる。
+
+  [stack]% make
+   cd . && /bin/sh /home/kou/work/c/cutter/sample/stack/config/missing --run automake-1.9 --foreign  Makefile
+  Makefile.am: required file `config/depcomp' not found
+  make: *** [Makefile.in] エラー 1
+
+config/depcompを生成するには--add-missingオプション付きで
+automakeを実行する必要がある。これにはautogen.shを使用できる。
+また、configureを再実行する必要もある。
+
+  [stack]% ./autogen.sh
+  [stack]% ./configure
+
+これでmakeを実行することによりtest/test_stack.laができるよう
+になる。
+
+  [stack]% make
+  ...
+  test-stack.c:1:20: error: cutter.h: No such file or directory
+  test-stack.c:2:19: error: stack.h: No such file or directory
+  test-stack.c: In function 'test_new_stack':
+  test-stack.c:7: error: 'Stack' undeclared (first use in this function)
+  test-stack.c:7: error: (Each undeclared identifier is reported only once
+  test-stack.c:7: error: for each function it appears in.)
+  test-stack.c:7: error: 'stack' undeclared (first use in this function)
+  make[1]: *** [test-stack.lo] エラー 1
+  make[1]: ディレクトリ `/home/kou/work/c/cutter/sample/stack/test' から出ます
+  make: *** [all-recursive] エラー 1
+
+ただし、上記のようにCutterを使用する設定を行っていないため
+cutter.hが読み込めない。また、スタックの実装もないため
+stack.hの読み込みにも失敗する。
+
+==== Cutterの使用
+
+まずは、cutter.hを読み込めるようにする。Cutterは一般的なパッ
+ケージ情報管理ツールpkg-configを使用している。そのため、容易
+にGNUビルドシステムから利用することができる。
+
+まず、configure.acにCutterを検出するコードを追加する。
+
+configure.ac:
+  ...
+  PKG_CHECK_MODULES(CUTTER, cutter)
+  AC_SUBST([CUTTER_CFLAGS])
+  AC_SUBST([CUTTER_LIBS])
+
+  AC_CONFIG_FILES([Makefile
+                   test/Makefile])
+  ...
+
+また、test/Makefile.amでは検出したCutter用の設定を利用する。
+
+test/Makefile.am:
+  ...
+  INCLUDES = $(CUTTER_CFLAGS)
+  LIBS = $(CUTTER_LIBS)
+  ...
+
+現時点での完全なconfigure.acとtest/Makefile.amは以下のように
+なる。
+
+configure.ac:
+  AC_PREREQ(2.59)
+
+  AC_INIT(stack, 0.0.1, you@example.com)
+  AC_CONFIG_AUX_DIR([config])
+  AC_CONFIG_HEADER([src/config.h])
+
+  AM_INIT_AUTOMAKE($PACKAGE_NAME, $PACKAGE_VERSION)
+
+  AC_PROG_LIBTOOL
+
+  PKG_CHECK_MODULES(CUTTER, cutter)
+  AC_SUBST([CUTTER_CFLAGS])
+  AC_SUBST([CUTTER_LIBS])
+
+  AC_CONFIG_FILES([Makefile
+                   test/Makefile])
+
+  AC_OUTPUT
+
+test/Makefile.am:
+  noinst_LTLIBRARIES = test_stack.la
+
+  INCLUDES = $(CUTTER_CFLAGS)
+  LIBS = $(CUTTER_LIBS)
+
+  LDFLAGS = -module
+
+  test_stack_la_SOURCES = test-stack.c
+
+変更後、makeを実行すると自動的にconfigureが実行され、Cutter
+を利用したビルドが行われる。
+
+  [stack]% make
+  ...
+  test-stack.c:2:19: error: stack.h: No such file or directory
+  test-stack.c: In function 'test_new_stack':
+  test-stack.c:7: error: 'Stack' undeclared (first use in this function)
+  test-stack.c:7: error: (Each undeclared identifier is reported only once
+  test-stack.c:7: error: for each function it appears in.)
+  test-stack.c:7: error: 'stack' undeclared (first use in this function)
+  make[1]: *** [test-stack.lo] エラー 1
+  make[1]: ディレクトリ `/home/kou/work/c/cutter/sample/stack/test' から出ます
+  make: *** [all-recursive] エラー 1
+
+cutter.hが読み込めないというエラーがなくなった。
+
+==== スタックAPIの作成
+
+次はstack.hが読み込めないエラーを解消する。
+
+スタックの実装はsrc/以下に作成するので、スタックのAPIである
+stack.hはsrc/stack.hに置く。
+
+  [stack]% touch src/stack.h
+
+インクルードパスを設定し、テストプログラムからstack.hを読み
+込めるようにする。
+
+test/Makefile.am:
+  ...
+  INCLUDES = $(CUTTER_CFLAGS) -I$(top_srcdir)/src
+  ...
+
+makeを実行するとstack.hが読み込めないエラーが解消されている
+のが分かる。
+
+  [stack]% make
+  ...
+  test-stack.c: In function 'test_new_stack':
+  test-stack.c:7: error: 'Stack' undeclared (first use in this function)
+  test-stack.c:7: error: (Each undeclared identifier is reported only once
+  test-stack.c:7: error: for each function it appears in.)
+  test-stack.c:7: error: 'stack' undeclared (first use in this function)
+  make[1]: *** [test-stack.lo] エラー 1
+  make[1]: ディレクトリ `/home/kou/work/c/cutter/sample/stack/test' から出ます
+  make: *** [all-recursive] エラー 1
+
+残りのエラーがStack型が宣言されていないことだけになった。
+
+==== Stack型の宣言
+
+src/stack.hにStack型を宣言し、テストプログラムをビルドできる
+ようにする。
+
+src/stack.h:
+  #ifndef __STACK_H__
+  #define __STACK_H__
+
+  typedef struct _Stack Stack;
+
+  #endif
+
+stack_new()が宣言されていないため警告がでるが共有ライブラリ
+を作成することはできる。
+
+  [stack]% make
+  ...
+  test-stack.c: In function 'test_new_stack':
+  test-stack.c:8: warning: assignment makes pointer from integer without a cast
+  ...
+  [stack]% 
 
 
 === テスト起動の自動化
