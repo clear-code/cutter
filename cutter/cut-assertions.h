@@ -70,14 +70,21 @@ extern "C" {
 #define cut_notify(format, ...)                  \
     cut_test_register_result(NOTIFICATION, NULL, format, ## __VA_ARGS__)
 
-#define cut_assert(actual, ...) do                          \
+/**
+ * cut_assert:
+ * @expression: the expression to check.
+ * @...: format string, followed by parameters to insert into the format string (as with printf())
+ *
+ *
+ */
+#define cut_assert(expression, ...) do                      \
 {                                                           \
-    if (actual) {                                           \
+    if (expression) {                                       \
         cut_test_pass();                                    \
     } else {                                                \
         cut_test_fail(                                      \
             FAILURE,                                        \
-            "expected: <%s> is not TRUE/NULL", #actual,     \
+            "expected: <%s> is not TRUE/NULL", #expression, \
             NULL, ## __VA_ARGS__);                          \
     }                                                       \
 } while(0)
@@ -106,6 +113,14 @@ extern "C" {
     }                                                       \
 } while(0)
 
+/**
+ * cut_assert_equal_int:
+ * @expected: integer value.
+ * @actual: integer value.
+ * @...: format string, followed by parameters to insert into the format string (as with printf())
+ *
+ *
+ */
 #define cut_assert_equal_int(expected, actual, ...) do      \
 {                                                           \
     long _expected = (long)(expected);                      \
@@ -122,6 +137,14 @@ extern "C" {
     }                                                       \
 } while(0)
 
+/**
+ * cut_assert_equal_uint:
+ * @expected: integer value.
+ * @actual: integer value.
+ * @...: format string, followed by parameters to insert into the format string (as with printf())
+ *
+ *
+ */
 #define cut_assert_equal_uint(expected, actual, ...) do     \
 {                                                           \
     unsigned long _expected = (unsigned long)(expected);    \
@@ -138,6 +161,15 @@ extern "C" {
     }                                                       \
 } while(0)
 
+/**
+ * cut_assert_equal_double:
+ * @expected: integer value.
+ * @error: integer value.
+ * @actual: integer value.
+ * @...: format string, followed by parameters to insert into the format string (as with printf())
+ *
+ *
+ */
 #define cut_assert_equal_double(expected, error, actual, ...) do        \
 {                                                                       \
     double _expected = (expected);                                      \
@@ -156,6 +188,14 @@ extern "C" {
     }                                                                   \
 } while(0)
 
+/**
+ * cut_assert_equal_string:
+ * @expected: integer value.
+ * @actual: integer value.
+ * @...: format string, followed by parameters to insert into the format string (as with printf())
+ *
+ *
+ */
 #define cut_assert_equal_string(expected, actual, ...) do               \
 {                                                                       \
     const char *_expected = (expected);                                 \
