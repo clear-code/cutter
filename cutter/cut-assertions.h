@@ -30,15 +30,43 @@
 extern "C" {
 #endif
 
+/**
+ * cut_error:
+ * @format: the message format. See the printf() documentation.
+ * @...: the parameters to insert into the format string.
+ *
+ *
+ */
 #define cut_error(format, ...)                  \
     cut_test_fail(ERROR, NULL, format, ## __VA_ARGS__)
 
+/**
+ * cut_fail:
+ * @format: the message format. See the printf() documentation.
+ * @...: the parameters to insert into the format string.
+ *
+ *
+ */
 #define cut_fail(format, ...)                    \
     cut_test_fail(FAILURE, NULL, format, ## __VA_ARGS__)
 
+/**
+ * cut_pending:
+ * @format: the message format. See the printf() documentation.
+ * @...: the parameters to insert into the format string.
+ *
+ *
+ */
 #define cut_pending(format, ...)                 \
     cut_test_fail(PENDING, NULL, format, ## __VA_ARGS__)
 
+/**
+ * cut_notify:
+ * @format: the message format. See the printf() documentation.
+ * @...: the parameters to insert into the format string.
+ *
+ *
+ */
 #define cut_notify(format, ...)                  \
     cut_test_register_result(NOTIFICATION, NULL, format, ## __VA_ARGS__)
 
