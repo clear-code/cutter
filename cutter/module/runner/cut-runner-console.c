@@ -465,7 +465,7 @@ print_results (CutRunnerConsole *console, CutContext *context)
         const gchar *source_directory;
         const gchar *name;
 
-        source_directory = cut_runner_get_source_directory(runner);
+        source_directory = cut_context_get_source_directory(context);
         if (source_directory)
             filename = g_build_filename(source_directory,
                                         cut_test_result_get_filename(result),
