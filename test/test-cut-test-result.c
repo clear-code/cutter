@@ -246,8 +246,8 @@ test_get_line (void)
                                  NULL,
                                  NULL,
                                  NULL,
-                                 -1);
-    cut_assert_equal_int(-1, cut_test_result_get_line(result)); /* this test should be failed?*/
+                                 0);
+    cut_assert_equal_int(0, cut_test_result_get_line(result));
     g_object_unref(result);
 
     result = cut_test_result_new(CUT_TEST_RESULT_FAILURE,
