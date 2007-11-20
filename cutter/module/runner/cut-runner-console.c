@@ -574,7 +574,8 @@ cb_complete_test_suite (CutContext *context, CutTestSuite *test_suite,
 }
 
 static void
-cb_crashed (CutContext *context, CutRunnerConsole *console)
+cb_crashed (CutContext *context, const gchar *stack_trace,
+            CutRunnerConsole *console)
 {
     print_with_color(console, CRASH_COLOR, "!");
     fflush(stdout);

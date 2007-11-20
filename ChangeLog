@@ -1,5 +1,7 @@
 2007-11-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/module/runner/cut-runner-console.c: fixed callback arguments.
+
 	* cutter/module/runner/cut-runner-console.c: used
 	cut_context_get_source_directory() not
 	cut_runner_get_source_directory().
