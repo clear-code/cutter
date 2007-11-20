@@ -1374,7 +1374,7 @@ src/stack.c:
           free(stack->data);
           stack->data = NULL;
           stack->size = 0;
-          return;
+          return value;
       }
       stack->data = new_data;
 
@@ -1389,3 +1389,296 @@ src/stack.c:
   Finished in 0.000039 seconds
 
   3 test(s), 15 assertion(s), 0 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
+
+== 重複の排除
+
+stack_push()/stack_pop()の実装では動的なメモリ割り当て部分、
+メモリ割り当て失敗時のエラー処理部分に重複があった。一般的に
+コード中に重複があることは、メンテナンス性の面などの理由で悪
+いこととされている。
+
+ここでは、既存の動作を変更せずに重複している悪い部分を修正す
+る。既存の動作が変わっていないことはテストを実行することで確
+認することができる。
+
+=== メモリ割り当て部分の重複の除去
+
+まず、以下のメモリ割り当て部分の重複を除去する。
+
+src/stack.c:
+  new_data = realloc(stack->data, sizeof(*stack->data) * stack->size);
+
+この部分はstack_realloc()として切り出す。
+
+src/stack.c:
+  ...
+  static int *
+  stack_realloc (Stack *stack)
+  {
+      return realloc(stack->data, sizeof(*stack->data) * stack->size);
+  }
+
+  void
+  stack_push (Stack *stack, int value)
+  {
+      ...
+      new_data = stack_realloc(stack);
+      ...
+  }
+
+  int
+  stack_pop (Stack *stack)
+  {
+      ...
+      new_data = stack_realloc(stack);
+      ...
+  }
+
+この変更の後でも以前と同じ挙動をしているかを確かめる。
+
+  [stack]% test/run-test.sh
+  ...
+
+  Finished in 0.000039 seconds
+
+  3 test(s), 15 assertion(s), 0 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
+
+結果が緑なので次へ進める。
+
+=== エラー処理部分の重複の除去
+
+次に、以下のメモリ割り当て失敗時のエラー処理部分の重複を除去
+する。
+
+src/stack.c:
+  ...
+  void
+  stack_push (Stack *stack, int value)
+  {
+      ...
+      new_data = stack_realloc(stack);
+      if (!new_data) {
+          free(stack->data);
+          stack->data = NULL;
+          stack->size = 0;
+          return;
+      }
+      ...
+  }
+
+  int
+  stack_pop (Stack *stack)
+  {
+      ...
+      new_data = stack_realloc(stack);
+      if (stack->size > 0 && !new_data) {
+          free(stack->data);
+          stack->data = NULL;
+          stack->size = 0;
+          return value;
+      }
+      ...
+  }
+
+これらのエラー処理をstack_realloc()の中に移動し、
+stack_realloc()は割り当てたメモリを返すのではなく、新しくメ
+モリを割り当てることに成功したかどうかを返すことにする。
+
+src/stack.c:
+  ...
+  static int
+  stack_realloc (Stack *stack)
+  {
+      int *new_data;
+
+      new_data = realloc(stack->data, sizeof(*stack->data) * stack->size);
+      if (stack->size > 0 && !new_data) {
+          free(stack->data);
+          stack->data = NULL;
+          stack->size = 0;
+          return FALSE;
+      }
+      stack->data = new_data;
+
+      return TRUE;
+  }
+
+  void
+  stack_push (Stack *stack, int value)
+  {
+      stack->size++;
+      if (!stack_realloc(stack))
+          return;
+      stack->data[stack->size - 1] = value;
+  }
+
+  int
+  stack_pop (Stack *stack)
+  {
+      int value;
+
+      stack->size--;
+      value = stack->data[stack->size];
+      stack_realloc(stack);
+      return value;
+  }
+
+この変更の後でも以前と同じ挙動をしているかを確かめる。
+
+  [stack]% test/run-test.sh
+  ...
+
+  Finished in 0.000040 seconds
+
+  3 test(s), 15 assertion(s), 0 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
+
+既存の動作を変更することなく、プログラム中の重複部分を取り除
+き、プログラムを改良したことを確認できた。
+
+== まとめ
+
+本稿では小さなスタックの実装を例にしてGNUビルドシステムを用い
+たビルド環境の構築方法・Cutterを用いたテストの作成方法・テス
+トのあるプログラムでのプログラムの改良方法を示した。
+
+=== メリット
+
+GNUビルドシステムを用いることにより、ビルド環境の差異を吸収
+することが比較的容易になる。これはプログラムの移植性を向上さ
+せることにつながる。
+
+Cutterを用いることにより、簡単にテストが書ける。既存のC言語用
+テスティングフレームワークではテストを定義するために独自のマ
+クロを用いたり、テストの定義とテストの登録を別々に行う必要が
+あるなどテスト以外にも書かなければいけないことが多い。Cutter
+はこの点を改善し、テスト定義のための独自のマクロを提供せず、
+通常どおりに関数を定義するだけでテストを定義できるようにした。
+明示的にテストを定義する必要もない。
+
+本稿ではcut_assert()とcut_assert_equal_int()しか使用しなかっ
+たが、cut_assert_equal_string()など期待値と実際の値を比較する
+ための方法を多数用意している。これにより、テストプログラムの
+ための比較方法を定義しなければいけない機会が減り、より簡潔に
+テストプログラムを書けるようになる。
+
+また、Cutterのテスト結果出力は必要のない情報はなるべく表示せ
+ず、必要な情報はできるだけ多く提供する。これは必要な情報が埋
+もれてしまうのを防ぎ、プログラムの修正を支援する。また、C言語
+ではよくある異常終了時には、バックトレースの出力を試み、プロ
+グラム修正のためのより多くの情報を提供する。
+
+既存の機能を変更せずにプログラムの内部構造を改良することはメ
+ンテナンス性を向上させるのに非常に役立つ。自動化されたテスト
+を作成することにより、既存の機能が変更されていないことを容易
+に確認できる。
+
+また、新規に機能を追加する場合でも、自動化されたテストがあれ
+ば、既存の機能を壊すことなく機能を追加していることを確認でき
+る。自動化テストを用意することはメンテナンス面でも、新機能開
+発面でも品質の高いプログラムを作成する上で有用である。
+
+=== スタックの実装
+
+最終的なプログラムは以下の通りである。このスタックは素朴な実
+装であるため、エラーの通知方法やパフォーマンスのチューニング
+などの課題が残っているが、テストが示している通りの基本的な機
+能は実装されている。
+
+src/stack.c:
+  #include <stdlib.h>
+  #include "stack.h"
+
+  #define TRUE 1
+  #define FALSE 0
+
+  struct _Stack {
+      int size;
+      int *data;
+  };
+
+  Stack *
+  stack_new (void)
+  {
+      Stack *stack;
+
+      stack = malloc(sizeof(Stack));
+      if (!stack)
+          return NULL;
+
+      stack->size = 0;
+      stack->data = NULL;
+      return stack;
+  }
+
+  void
+  stack_free (Stack *stack)
+  {
+      free(stack->data);
+      free(stack);
+  }
+
+  int
+  stack_is_empty (Stack *stack)
+  {
+      return stack->size == 0;
+  }
+
+  int
+  stack_get_size (Stack *stack)
+  {
+      return stack->size;
+  }
+
+  static int
+  stack_realloc (Stack *stack)
+  {
+      int *new_data;
+
+      new_data = realloc(stack->data, sizeof(*stack->data) * stack->size);
+      if (stack->size > 0 && !new_data) {
+          free(stack->data);
+          stack->data = NULL;
+          stack->size = 0;
+          return FALSE;
+      }
+      stack->data = new_data;
+
+      return TRUE;
+  }
+
+  void
+  stack_push (Stack *stack, int value)
+  {
+      stack->size++;
+      if (!stack_realloc(stack))
+          return;
+      stack->data[stack->size - 1] = value;
+  }
+
+  int
+  stack_pop (Stack *stack)
+  {
+      int value;
+
+      stack->size--;
+      value = stack->data[stack->size];
+      stack_realloc(stack);
+      return value;
+  }
+
+=== 関連項目
+
+  * xUnit: Cutterも属するassertXXXといった方法で結果を確認し
+    ながらテストを書いていくテストの書き方をサポートするライ
+    ブラリのこと。テスティングフレームワークとも呼ぶ。様々な
+    言語で実装されている。
+    * SUnit (Smalltalk)
+    * JUnit (Java)
+    * Test::Unit (Ruby)
+    * PyUnit (Pytnon)
+    * ...
+
+  * エクストリーム・プログラミング（Extreme Programming, XP）:
+    品質の高いプログラムを開発するための方法を集めたプログラ
+    ミング方法。テストの作成も重要視している。
+
