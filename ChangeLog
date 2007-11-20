@@ -1,5 +1,8 @@
 2007-11-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* configure.ac: exported cutter program path for internal test.
+	* test/run-test.s, test/Makefile.am: used CUTTER.
+
 	* cutter.pc.in: exported cutter program.
 
 	* libcutter.pc.in (Requires): added gmodule-2.0 and removed glib-2.0.

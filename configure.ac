@@ -135,6 +135,9 @@ ALL_LINGUAS="ja"
 AM_GLIB_GNU_GETTEXT
 
 
+CUTTER="\$(top_builddir)/cutter/cutter\$(EXEEXT)"
+AC_SUBST(CUTTER)
+
 CUTTER_CFLAGS="$GLIB_CFLAGS -DRUNNER_MODULEDIR=\\\"\"\$(runner_moduledir)\"\\\""
 
 AC_CONFIG_FILES([Makefile

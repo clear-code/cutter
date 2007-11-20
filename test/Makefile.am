@@ -7,8 +7,9 @@ INCLUDES = $(CUTTER_CFLAGS)	\
 EXTRA_DIST = run-test.sh
 
 TESTS = run-test.sh
-TESTS_ENVIRONMENT = NO_MAKE=yes \
-	CUT_OUTPUT_MODULE_DIR=../cutter/module/output/.libs
+TESTS_ENVIRONMENT = \
+	NO_MAKE=yes \
+	CUTTER="$(CUTTER)"
 
 noinst_LTLIBRARIES = 				\
 		cuttest_utils.la		\
@@ -40,3 +41,5 @@ test_cut_loader_la_LIBADD       = cuttest_utils.la
 test_cut_repository_la_SOURCES  = test-cut-repository.c
 test_cut_repository_la_LIBADD   = cuttest_utils.la
 
+echo-cutter:
+	@echo $(CUTTER)
