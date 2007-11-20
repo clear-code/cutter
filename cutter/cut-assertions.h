@@ -80,14 +80,16 @@ extern "C" {
 
 #define cut_assert_equal_int(expected, actual, ...) do      \
 {                                                           \
-    if ((expected) == (actual)) {                           \
+    long _expected = (long)(expected);                      \
+    long _actual = (long)(actual);                          \
+    if (_expected == _actual) {                             \
         cut_test_pass();                                    \
     } else {                                                \
         cut_test_fail(FAILURE,                              \
                       "<%s == %s>\n"                        \
                       "expected: <%ld>\n but was: <%ld>",   \
                       #expected, #actual,                   \
-                      (long)(expected), (long)(actual),     \
+                      _expected, _actual,                   \
                       NULL, ## __VA_ARGS__);                \
     }                                                       \
 } while(0)

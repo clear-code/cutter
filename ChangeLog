@@ -1,5 +1,8 @@
 2007-11-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertions.h (cut_assert_equal_int): don't evaluate
+	twice.
+
 	* configure.ac: exported cutter program path for internal test.
 	* test/run-test.s, test/Makefile.am: used CUTTER.
 
