@@ -58,7 +58,7 @@ cut-assertions
 
 </para>
 
-@actual: 
+@expression: 
 @...: optinal format string, followed by parameters to insert into the format string (as with printf())
 
 
