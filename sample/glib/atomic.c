@@ -25,7 +25,7 @@ test_atomic (void)
   cut_assert_equal_int (0, g_atomic_int_exchange_and_add (&atomic, 5));
   cut_assert_equal_int (5, atomic);
 
-  cut_assert_equal_int (0, g_atomic_int_exchange_and_add (&atomic, -10));
+  cut_assert_equal_int (5, g_atomic_int_exchange_and_add (&atomic, -10));
   cut_assert_equal_int (-5, atomic);
 
   g_atomic_int_add (&atomic, 20);
