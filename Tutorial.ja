@@ -479,7 +479,9 @@ stack_new()が宣言されていないため警告がでるが共有ライブラ
   [stack]% file test/.libs/test_stack.so
   test/.libs/test_stack.so: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), not stripped
 
-共有ライブラリが作成されたので、cutterコマンドでこのテストを
+=== テスト起動
+
+共有ライブラリが作成できたので、cutterコマンドでこのテストを
 起動できる。
 
   [stack]% cutter test/
@@ -564,46 +566,245 @@ make checkでテストが走ることを確認する。
   ================================
   ...
 
+==== test/run-test.shの単独実行のサポート
+
+make checkではビルドログなどテスト結果以外の出力がでて、テス
+ト結果が埋もれてしまう。そこで、make check経由ではなく
+test/run-test.shを実行できるようにする。
+
+まず、test/run-test.shを環境変数CUTTERが指定されていない場合
+は、cutterコマンドのパスを自動的に検出する。さらにmake check
+経由でtest/run-test.shが起動された場合はmakeを実行し、必要な
+ファイルをビルドする。
+
+test/autogen.sh:
+  #!/bin/sh
+
+  export BASE_DIR="`dirname $0`"
+
+  if test -z "$NO_MAKE"; then
+      make -C $BASE_DIR/../ > /dev/null || exit 1
+  fi
+
+  if test -z "$CUTTER"; then
+      CUTTER="`make -s -C $BASE_DIR echo-cutter`"
+  fi
+
+  $CUTTER --color=auto -s $BASE_DIR "$@" $BASE_DIR
+
+このtest/run-test.shに対応するためにtest/Makefile.amを以下の
+ように変更する。
+
+test/Makefile.am:
+  ...
+  TESTS_ENVIRONMENT = NO_MAKE=yes CUTTER="$(CUTTER)"
+  ...
+  echo-cutter:
+  	@echo $(CUTTER)
+
+test/Makefile.am全体は以下のようになる。
+
+test/Makefile.am:
+  TESTS = run-test.sh
+  TESTS_ENVIRONMENT = NO_MAKE=yes CUTTER="$(CUTTER)"
+
+  noinst_LTLIBRARIES = test_stack.la
+
+  INCLUDES = $(CUTTER_CFLAGS) -I$(top_srcdir)/src
+  LIBS = $(CUTTER_LIBS)
+
+  LDFLAGS = -module -rpath $(libdir) -avoid-version
+
+  test_stack_la_SOURCES = test-stack.c
+
+  echo-cutter:
+  	@echo $(CUTTER)
+
+test/run-test.shを直接実行してテストが起動することを確認する。
+
+  [stack]% test/run-test.sh
+  cutter: symbol lookup error: test/.libs/test_stack.so: undefined symbol: stack_new
+
+こここからはmake checkではなくtest/run-test.shを使用する。こ
+れは必要な情報のみが出力され、本当に興味のあるテストの結果が
+埋もれてしまうのを防ぐためである。
+
+また、スタックの実装を行う前にテストの実行環境を整備している
+のは、テストを実行するコストを下げるためである。これは、テス
+トを実行することが面倒になるとテストを実行しなくなり、その結
+果、プログラムの品質低下につながるためである。
+
+最初にテスト環境の整備を行うと、その分、プログラム本体の開発
+着手が遅れてしまう。しかし、プログラム本体が開発・保守され続
+ける間は常にテストを実行し、品質を保持する必要があるため、最
+初にテスト環境整備に当てたコストは回収可能である。今後、快適
+に品質の高いプログラムの開発を行うために、最初にテスト環境の
+整備を行うことは重要である。
+
 === スタックの実装
 
+テスト環境の整備ができたため、スタックの実装に入る。
+
+==== 簡単なstack_new()の実装
+
+まず、stack_new()を定義し、実行時エラーの原因を解決する。
+
+スタックの実装はsrc/stack.cで行う。簡単なstack_new()の実装は
+以下の通りである。
+
+src/stack.c:
+  #include <stdlib.h>
+  #include "stack.h"
+
+  Stack *
+  stack_new (void)
+  {
+      return NULL;
+  }
+
+==== src/libstack.laのビルド
+
+それでは、makeでsrc/stack.cをビルドできるようにする。
+
+まず、test/以下をビルド対象に加えたように、src/以下もビルド
+対象とする。
+
+Makefile.am:
+  SUBDIRS = src test
+
+configure.ac:
+  ...
+  AC_CONFIG_FILES([Makefile
+                   src/Makefile
+                   test/Makefile])
+  ...
+
+これでsrc/以下もビルド対象となる。
+
+  [stack]% test/run-test.sh
+  configure.ac:19: required file `src/Makefile.in' not found
+  make: *** [Makefile.in] エラー 1
+
+src/Makefile.amを作成するとこのエラーはなくなる。
+
+  [stack]% touch src/Makefile.am
+  [stack]% test/run-test.sh
+  /tmp/local/bin/cutter: symbol lookup error: test/.libs/test_stack.so: undefined symbol: stack_new
+
+makeは通るようになるが、この時点ではsrc/stack.cはビルドされ
+ないし、テストプログラムもlibstack.soをリンクしていないので
+stack_new()が定義されていないエラーは変わらない。
+
+src/Makefile.amに以下を追加し、src/stack.cからlibstack.soを
+作成する。
+
+src/Makefile.am:
+  lib_LTLIBRARIES = libstack.la
+
+  libstack_la_SOURCES = stack.c
+
+makeでsrc/.libs/libstack.so.0.0.0を生成することができる。
+
+  [stack]% make
+  [stack]% file src/.libs/libstack.so.0.0.0
+  src/.libs/libstack.so.0.0.0: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), not stripped
+
+==== src/libstack.laのリンク
+
+libstack.soはできたがテストプログラムにはリンクしていないの
+で、まだ実行時エラーは発生する。
+
+  [stack]% test/run-test.sh
+  cutter: symbol lookup error: test/.libs/test_stack.so: undefined symbol: stack_new
+
+libstack.soをリンクするためにtest/Makefile.amを以下のように
+変更する。
+
+test/Makefile.am:
+  ...
+  LIBS = $(CUTTER_LIBS) $(top_builddir)/src/libstack.la
+  ...
+
+テストプログラムを再リンクする必要があるため、一度make clean
+してからビルドしなおす。
+
+  [stack]% make clean
+  [stack]% make
+  [stack]% test/run-test.sh
+  cutter: symbol lookup error: test/.libs/test_stack.so: undefined symbol: stack_is_empty
+
+今まではstack_new()が見つからずにエラーが発生していたが、
+stack_is_empty()が見つからないというエラーに変わった。これに
+より、libstack.soがリンクされていることが確認できた。
+
+==== stack_is_empty()の実装
+
+テストプログラム中ではstack_is_empty()の結果を以下のようにテ
+ストしている。
+
+test/test-stack.c:
+  ...
+  cut_assert(stack_is_empty(stack));
+  ...
+
+つまり、stack_is_empty()が真を返すことをテストしている。よっ
+て、src/stack.cでのstack_is_empty()は真を返す必要がある。
+
+src/stack.c:
+  ...
+  #define TRUE 1
+  #define FALSE 0
+  ...
+  int
+  stack_is_empty (Stack *stack)
+  {
+      return TRUE;
+  }
+
+src/stack.c全体は以下のようになる。
+
+src/stack.c:
+  #include <stdlib.h>
+  #include "stack.h"
+
+  #define TRUE 1
+  #define FALSE 0
+
+  Stack *
+  stack_new (void)
+  {
+      return NULL;
+  }
+
+  int
+  stack_is_empty (Stack *stack)
+  {
+      return TRUE;
+  }
+
+
+このstack_is_empty()の実装は常に真を返すため、テストは成功す
+るはずである。
+
+  [stack]% test/run-test.sh
+  .
+
+  Finished in 0.000006 seconds
+
+  1 test(s), 1 assertion(s), 0 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
+
+テストが動作することが確認できた。以降ではテストを作成しなが
+らスタックの実装を完成させる。
+
+== pushの実装
+
+まずはpushを実装する。pushをした後はスタックのサイズが1にな
+り、スタックは空ではなくなるはずである。これをテストにすると
+以下のようになる。
+
+test/test-stack.c:
+
 *** ここまで ***
-
-=== テスト起動の自動化
-
-ディレクトリ構成が出来たので，次に，テストを起動を自動化する
-ためのファイルを作成します．
-
-まず，テスト起動用スクリプトcalc/test/run-test.shを作成しま
-す．内容は以下のようにします．makeはGNU Makeを使うようにして
-ください．システムによってはgmakeというコマンドでインストー
-ルされているかもしれません．適宜変更してください．
-
-  #!/bin/sh
-  make test
-
-実行権を付けるのを忘れないでください．
-
-  [calc]% chmod +x test/run-test.sh
-
-次に，calc/Makefileを作成します．内容は以下のようにします．
-
-  include Makefile.test
-
-calc/Makefile.testは「$PREFIX/share/cutter/Makefile.test」
-（$PREFIXは./configure時に--prefixで指定した値）をコピーして
-きます．あるいは，アーカイブ中のsample/calc/Makefile.testを
-コピーしてもよいです．
-
-ということで，現在は以下のような構成になっているはずです．
-
-  calc/ -+- Makefile <- 作成
-         |
-         +- Makefile.test <- コピー
-         |
-         +- src/
-         |
-         +- test/ -+- run-test.sh <- 作成
-
 
 == テストの作成
 

@@ -17,6 +17,7 @@ CUTTER=$pkg_cv_CUTTER
 AC_SUBST([CUTTER])
 
 AC_CONFIG_FILES([Makefile
+                 src/Makefile
                  test/Makefile])
 
 AC_OUTPUT
