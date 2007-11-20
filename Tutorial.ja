@@ -209,6 +209,8 @@ test/test-stack.c:
   #include <cutter.h>
   #include <stack.h>
 
+  void test_new_stack (void);
+
   void
   test_new_stack (void)
   {
@@ -285,7 +287,7 @@ test/Makefileが生成され、test/以下でのmakeが失敗しなくなる。
 
 ==== test/test_stack.soのビルド
 
-それではtest/test_stack.cを共有ライブラリとしてビルドできる
+それではtest/test-stack.cを共有ライブラリとしてビルドできる
 ようにtest/Makefile.amを編集する。テスト用の共有ライブラリは
 「test_」から始まる名前にする（「test_」の前に「lib」が付い
 ても良い）。また、テストプログラムはインストールする必要がな
@@ -334,10 +336,10 @@ automakeを実行する必要がある。これにはautogen.shを使用でき�
   test-stack.c:1:20: error: cutter.h: No such file or directory
   test-stack.c:2:19: error: stack.h: No such file or directory
   test-stack.c: In function 'test_new_stack':
-  test-stack.c:7: error: 'Stack' undeclared (first use in this function)
-  test-stack.c:7: error: (Each undeclared identifier is reported only once
-  test-stack.c:7: error: for each function it appears in.)
-  test-stack.c:7: error: 'stack' undeclared (first use in this function)
+  test-stack.c:8: error: 'Stack' undeclared (first use in this function)
+  test-stack.c:8: error: (Each undeclared identifier is reported only once
+  test-stack.c:8: error: for each function it appears in.)
+  test-stack.c:8: error: 'stack' undeclared (first use in this function)
   make[1]: *** [test-stack.lo] エラー 1
   make[1]: ディレクトリ `/home/kou/work/c/cutter/sample/stack/test' から出ます
   make: *** [all-recursive] エラー 1
@@ -412,10 +414,10 @@ test/Makefile.am:
   ...
   test-stack.c:2:19: error: stack.h: No such file or directory
   test-stack.c: In function 'test_new_stack':
-  test-stack.c:7: error: 'Stack' undeclared (first use in this function)
-  test-stack.c:7: error: (Each undeclared identifier is reported only once
-  test-stack.c:7: error: for each function it appears in.)
-  test-stack.c:7: error: 'stack' undeclared (first use in this function)
+  test-stack.c:8: error: 'Stack' undeclared (first use in this function)
+  test-stack.c:8: error: (Each undeclared identifier is reported only once
+  test-stack.c:8: error: for each function it appears in.)
+  test-stack.c:8: error: 'stack' undeclared (first use in this function)
   make[1]: *** [test-stack.lo] エラー 1
   make[1]: ディレクトリ `/home/kou/work/c/cutter/sample/stack/test' から出ます
   make: *** [all-recursive] エラー 1
@@ -445,10 +447,10 @@ makeを実行するとstack.hが読み込めないエラーが解消されてい
   [stack]% make
   ...
   test-stack.c: In function 'test_new_stack':
-  test-stack.c:7: error: 'Stack' undeclared (first use in this function)
-  test-stack.c:7: error: (Each undeclared identifier is reported only once
-  test-stack.c:7: error: for each function it appears in.)
-  test-stack.c:7: error: 'stack' undeclared (first use in this function)
+  test-stack.c:8: error: 'Stack' undeclared (first use in this function)
+  test-stack.c:8: error: (Each undeclared identifier is reported only once
+  test-stack.c:8: error: for each function it appears in.)
+  test-stack.c:8: error: 'stack' undeclared (first use in this function)
   make[1]: *** [test-stack.lo] エラー 1
   make[1]: ディレクトリ `/home/kou/work/c/cutter/sample/stack/test' から出ます
   make: *** [all-recursive] エラー 1
@@ -474,10 +476,28 @@ stack_new()が宣言されていないため警告がでるが共有ライブラ
   [stack]% make
   ...
   test-stack.c: In function 'test_new_stack':
-  test-stack.c:8: warning: assignment makes pointer from integer without a cast
+  test-stack.c:9: warning: assignment makes pointer from integer without a cast
   ...
   [stack]% file test/.libs/test_stack.so
   test/.libs/test_stack.so: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), not stripped
+
+==== stack_new()/stack_is_empty()の宣言
+
+stack_new()、stack_is_empty()を宣言し、警告を解消する。
+
+  #ifndef __STACK_H__
+  #define __STACK_H__
+
+  typedef struct _Stack Stack;
+
+  Stack *stack_new      (void);
+  int    stack_is_empty (Stack *stack);
+
+  #endif
+
+makeをして警告がでないことを確認する。
+
+  [stack]% make
 
 === テスト起動
 
@@ -793,16 +813,385 @@ src/stack.c:
 
   1 test(s), 1 assertion(s), 0 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
 
-テストが動作することが確認できた。以降ではテストを作成しなが
-らスタックの実装を完成させる。
+「.」がひとつ表示されているのは1つのテストがパスしたことを表
+している。現在は1つしかテストがないので1つのテストにパスした
+ということはすべてのテストにパスしたということである。
+
+環境によっては表示が緑になっているはずである。これはテストが
+パスしているので次に進んでもよいという意味である。
+
+テストが動作することが確認できたので、以降ではテストを作成し
+ながらスタックの実装を完成させる。
 
 == pushの実装
 
-まずはpushを実装する。pushをした後はスタックのサイズが1にな
-り、スタックは空ではなくなるはずである。これをテストにすると
-以下のようになる。
+まずはpushを実装する。今回の実装では、スタックにはintのみを
+格納できることする。
+
+=== pushのテスト
+
+pushをした後はスタックのサイズが1になり、スタックは空ではなく
+なるはずである。これをテストにすると以下のようになる。
 
 test/test-stack.c:
+  ...
+  void test_push (void);
+  ...
+  void
+  test_push (void)
+  {
+      Stack *stack;
+      int value = 100;
+
+      stack = stack_new();
+      cut_assert_equal_int(0, stack_get_size(stack));
+      stack_push(stack, value);
+      cut_assert_equal_int(1, stack_get_size(stack));
+      cut_assert(!stack_is_empty(stack));
+  }
+
+テストを実行すると、stack_get_size()が定義されていないため実
+行時エラーになる。
+
+  [stack]% test/run-test.sh
+  cutter: symbol lookup error: ./test/.libs/test_stack.so: undefined symbol: stack_get_size
+
+このテストをパスするようにpushを実装する。
+
+=== cut_stack_push()の実装
+
+まずは、パスしなくても良いのでテストが動くように
+stack_get_size()とstack_push()を実装する。
+
+まず、src/stack.hに宣言を追加する。
+
+src/stack.h:
+  ...
+  int    stack_get_size (Stack *stack);
+  void   stack_push     (Stack *stack, int value);
+  ...
+
+続いてsrc/stack.cに定義を追加する。
+
+src/stack.c:
+  ...
+  int
+  stack_get_size (Stack *stack)
+  {
+      return 0;
+  }
+
+  void
+  stack_push (Stack *stack, int value)
+  {
+  }
+
+stack_get_size()が0を返しているのは、最初のstack_get_size()
+は以下のように0を期待されているからである。
+
+test/test-stack.c:
+  ...
+  stack = stack_new();
+  cut_assert_equal_int(0, stack_get_size(stack));
+  ...
+
+pushの実装ができたのでテストを実行する。
+
+  [stack]% test/run-test.sh
+  F.
+
+  1) Failure: test_push
+  <1 == stack_get_size(stack)>
+  expected: <1>
+   but was: <0>
+  ./test/test-stack.c:24: test_push()
+
+  Finished in 0.000086 seconds
+
+  2 test(s), 2 assertion(s), 1 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
+
+「F」はテストが失敗（Failure）したことを表している。環境によっ
+ては表示が赤くなっているはずである。これは、テストがパスして
+いないので先に進むことは危険であることを示している。popの実
+装に移る前にテストをパスさせるようにpushを実装を改良するべき
+だということである。
+
+cutterからのメッセージでは、test/test-stack.cの24行目、
+test_push()関数の中でstack_get_size(stack)の値が1ではなく0の
+ために失敗したということを表している。該当する行は以下の通り
+である。
+
+test/test-stack.c:24:
+  cut_assert_equal_int(1, stack_get_size(stack));
+
+これはstack_get_size()が常に0を返しているためである。
+stack_push()された後には内部のカウンタを1つ進める必要がある。
+
+=== メモリ開放
+
+今まではstack_new()でNULLを返していたが、test_pushテストをパ
+スするためには内部にカウンタを持つ必要があるため、メモリを割
+り当てる必要がある。メモリを割り当てた場合、使用済のメモリを
+開放する必要がある。
+
+例えば、test_new_stack()では以下のようにする必要がある。
+
+  void
+  test_new_stack (void)
+  {
+      Stack *stack;
+      stack = stack_new();
+      cut_assert(stack_is_empty(stack));
+      stack_free(stack);
+  }
+
+しかし、stack_free()の前のcut_assert()が失敗した場合はその時
+点で処理が終了してしまうため、stack_free()が呼ばれずメモリリー
+クが発生する。（ただし、テストプログラムはすぐに終了する短命
+なプログラムため、害が大きくなることは少ない。）
+
+Cutterではテストの前後に必ず実行される関数を設定することがで
+きる。それがsetup()/teardown()である。これらはテストが成功し
+た場合も失敗した場合も呼ばれるためテスト中で割り当てたメモリ
+を確実に開放する処理などに使うことができる。
+
+test_new_stack()をsetup()/teardown()を使って確実にメモリを開
+放するようにすると以下のようになる。
+
+test/test-stack.c:
+  ...
+  static Stack *stack;
+
+  void
+  setup (void)
+  {
+      stack = NULL;
+  }
+
+  void
+  teardown (void)
+  {
+      if (stack)
+          stack_free(stack);
+  }
+
+  void
+  test_new_stack (void)
+  {
+      stack = stack_new();
+      cut_assert(stack_is_empty(stack));
+  }
+  ...
+
+同様に、test_push()でも、関数内のローカル変数stackを使わずに
+ファイル中でstaticなstackを使用すれば確実にメモリを開放でき
+る。
+
+test/test-stack.c:
+  ...
+  void
+  test_push (void)
+  {
+      int value = 100;
+
+      stack = stack_new();
+      cut_assert_equal_int(0, stack_get_size(stack));
+      stack_push(stack, value);
+      cut_assert_equal_int(1, stack_get_size(stack));
+      cut_assert(!stack_is_empty(stack));
+  }
+  ...
+
+setup()/teardown()を使用したtest/test-stack.c全体は以下のよ
+うになる。
+
+test/test-stack.c:
+  #include <cutter.h>
+  #include <stack.h>
+
+  void test_new_stack (void);
+  void test_push (void);
+
+  static Stack *stack;
+
+  void
+  setup (void)
+  {
+      stack = NULL;
+  }
+
+  void
+  teardown (void)
+  {
+      if (stack)
+          stack_free(stack);
+  }
+
+  void
+  test_new_stack (void)
+  {
+      stack = stack_new();
+      cut_assert(stack_is_empty(stack));
+  }
+
+  void
+  test_push (void)
+  {
+      int value = 100;
+
+      stack = stack_new();
+      cut_assert_equal_int(0, stack_get_size(stack));
+      stack_push(stack, value);
+      cut_assert_equal_int(1, stack_get_size(stack));
+      cut_assert(!stack_is_empty(stack));
+  }
+
+この変更の後でもテストが変更前と同じ結果を返すことを確認する。
+
+  [stack]% test/run-test.sh
+  F.
+
+  1) Failure: test_push
+  <1 == stack_get_size(stack)>
+  expected: <1>
+   but was: <0>
+  test/test-stack.c:37: test_push()
+
+  Finished in 0.000092 seconds
+
+  2 test(s), 2 assertion(s), 1 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
+
+=== stack_new()/stack_free()の実装
+
+それでは、stack_new()でメモリを割り当て、stack_free()で開放
+する処理を実装する。
+
+まず、src/stack.hにstack_free()を宣言する。
+
+src/stack.h:
+  ...
+  void   stack_free     (Stack *stack);
+  ...
+
+続いて、src/stack.cにStackを定義する。Stackはスタックのサイズ
+を保存するフィールドを含む。
+
+src/stack.c:
+  ...
+  struct _Stack {
+      int size;
+  };
+  ...
+
+stack_new()でStackのためのメモリを割り当て、stack_free()で開
+放する。
+
+src/stack.c:
+  ...
+  Stack *
+  stack_new (void)
+  {
+      Stack *stack;
+
+      stack = malloc(sizeof(Stack));
+      if (!stack)
+          return NULL;
+
+      stack->size = 0;
+      return stack;
+  }
+
+  void
+  stack_free (Stack *stack)
+  {
+      free(stack);
+  }
+  ...
+
+この変更の後でもテストが変更前と同じ結果を返すことを確認する。
+
+  [stack]% test/run-test.sh
+  F.
+
+  1) Failure: test_push
+  <1 == stack_get_size(stack)>
+  expected: <1>
+   but was: <0>
+  test/test-stack.c:37: test_push()
+
+  Finished in 0.000090 seconds
+
+  2 test(s), 2 assertion(s), 1 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
+
+=== stack_push()の本実装
+
+Stackにスタックサイズを持つことができるようになったので、こ
+れを使用してテストをパスするように
+stack_push()/stack_get_size()を実装する。
+
+src/stack.c:
+  ...
+  int
+  stack_get_size (Stack *stack)
+  {
+      return stack->size;
+  }
+
+  void
+  stack_push (Stack *stack, int value)
+  {
+      stack->size++;
+  }
+
+pushする毎にスタックサイズを増やし、そのサイズを返すようにし
+た。これで今まで失敗していたstack_get_size()のテストがパスす
+るはずである。
+
+  [stack]% test/run-test.sh
+  F.
+
+  1) Failure: test_push
+  expected: <!stack_is_empty(stack)> is not TRUE/NULL
+  ./test/test-stack.c:38: test_push()
+
+  Finished in 0.000087 seconds
+
+  2 test(s), 3 assertion(s), 1 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
+
+期待通りstack_get_size()のテストはパスしたがその後の
+test/test-stack.cの38行め、stack_is_empty()で失敗している。
+
+test/test-stack.c:38:
+  cut_assert(!stack_is_empty(stack));
+
+スタックにpushしたら空ではなくなるはずである。
+
+=== stack_is_empty()の本実装
+
+スタックが空なのはスタックサイズが0のときである。よって、
+stack_is_empty()の実装は以下のようになる。
+
+src/stack.c:
+  ...
+  int
+  stack_is_empty (Stack *stack)
+  {
+      return stack->size == 0;
+  }
+  ...
+
+テストを実行し、すべてのテストにパスすることを確認する。
+
+  % test/run-test.sh
+  ..
+
+  Finished in 0.000015 seconds
+
+  2 test(s), 4 assertion(s), 0 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
+
+pushのテストもパスし、既存のスタックを作った直後の場合のテス
+トもパスしたままである。すべてのテストがパスしたため、結果表
+示も緑に戻った。これで安心してpopの実装に進むことができる。
 
 *** ここまで ***
 
