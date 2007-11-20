@@ -94,6 +94,22 @@ extern "C" {
     }                                                       \
 } while(0)
 
+#define cut_assert_equal_uint(expected, actual, ...) do     \
+{                                                           \
+    unsigned long _expected = (unsigned long)(expected);    \
+    unsigned long _actual = (unsigned long)(actual);        \
+    if (_expected == _actual) {                             \
+        cut_test_pass();                                    \
+    } else {                                                \
+        cut_test_fail(FAILURE,                              \
+                      "<%s == %s>\n"                        \
+                      "expected: <%lu>\n but was: <%lu>",   \
+                      #expected, #actual,                   \
+                      _expected, _actual,                   \
+                      NULL, ## __VA_ARGS__);                \
+    }                                                       \
+} while(0)
+
 #define cut_assert_equal_double(expected, error, actual, ...) do        \
 {                                                                       \
     double _expected = (expected);                                      \
