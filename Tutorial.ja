@@ -709,7 +709,7 @@ src/Makefile.amを作成するとこのエラーはなくなる。
 
   [stack]% touch src/Makefile.am
   [stack]% test/run-test.sh
-  /tmp/local/bin/cutter: symbol lookup error: test/.libs/test_stack.so: undefined symbol: stack_new
+  cutter: symbol lookup error: test/.libs/test_stack.so: undefined symbol: stack_new
 
 makeは通るようになるが、この時点ではsrc/stack.cはビルドされ
 ないし、テストプログラムもlibstack.soをリンクしていないので
@@ -841,11 +841,10 @@ test/test-stack.c:
   test_push (void)
   {
       Stack *stack;
-      int value = 100;
 
       stack = stack_new();
       cut_assert_equal_int(0, stack_get_size(stack));
-      stack_push(stack, value);
+      stack_push(stack, 100);
       cut_assert_equal_int(1, stack_get_size(stack));
       cut_assert(!stack_is_empty(stack));
   }
@@ -904,7 +903,7 @@ pushの実装ができたのでテストを実行する。
   <1 == stack_get_size(stack)>
   expected: <1>
    but was: <0>
-  ./test/test-stack.c:24: test_push()
+  ./test/test-stack.c:23: test_push()
 
   Finished in 0.000086 seconds
 
@@ -921,7 +920,7 @@ test_push()関数の中でstack_get_size(stack)の値が1ではなく0の
 ために失敗したということを表している。該当する行は以下の通り
 である。
 
-test/test-stack.c:24:
+test/test-stack.c:23:
   cut_assert_equal_int(1, stack_get_size(stack));
 
 これはstack_get_size()が常に0を返しているためである。
@@ -992,11 +991,9 @@ test/test-stack.c:
   void
   test_push (void)
   {
-      int value = 100;
-
       stack = stack_new();
       cut_assert_equal_int(0, stack_get_size(stack));
-      stack_push(stack, value);
+      stack_push(stack, 100);
       cut_assert_equal_int(1, stack_get_size(stack));
       cut_assert(!stack_is_empty(stack));
   }
@@ -1037,11 +1034,9 @@ test/test-stack.c:
   void
   test_push (void)
   {
-      int value = 100;
-
       stack = stack_new();
       cut_assert_equal_int(0, stack_get_size(stack));
-      stack_push(stack, value);
+      stack_push(stack, 100);
       cut_assert_equal_int(1, stack_get_size(stack));
       cut_assert(!stack_is_empty(stack));
   }
@@ -1055,7 +1050,7 @@ test/test-stack.c:
   <1 == stack_get_size(stack)>
   expected: <1>
    but was: <0>
-  test/test-stack.c:37: test_push()
+  test/test-stack.c:34: test_push()
 
   Finished in 0.000092 seconds
 
@@ -1117,7 +1112,7 @@ src/stack.c:
   <1 == stack_get_size(stack)>
   expected: <1>
    but was: <0>
-  test/test-stack.c:37: test_push()
+  test/test-stack.c:34: test_push()
 
   Finished in 0.000090 seconds
 
@@ -1152,16 +1147,16 @@ pushする毎にスタックサイズを増やし、そのサイズを返すよ�
 
   1) Failure: test_push
   expected: <!stack_is_empty(stack)> is not TRUE/NULL
-  ./test/test-stack.c:38: test_push()
+  ./test/test-stack.c:35: test_push()
 
   Finished in 0.000087 seconds
 
   2 test(s), 3 assertion(s), 1 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
 
 期待通りstack_get_size()のテストはパスしたがその後の
-test/test-stack.cの38行め、stack_is_empty()で失敗している。
+test/test-stack.cの35行目、stack_is_empty()で失敗している。
 
-test/test-stack.c:38:
+test/test-stack.c:35:
   cut_assert(!stack_is_empty(stack));
 
 スタックにpushしたら空ではなくなるはずである。
@@ -1193,233 +1188,204 @@ pushのテストもパスし、既存のスタックを作った直後の場合�
 トもパスしたままである。すべてのテストがパスしたため、結果表
 示も緑に戻った。これで安心してpopの実装に進むことができる。
 
-*** ここまで ***
+== popの実装
 
-== テストの作成
+pushが実装できたので、次はpushで入れたデータを取り出すpopを
+実装する。
 
-テストはtest/以下にtest_XXX.cという名前で作成します．今回は
-test/test_calc.cとしてテストを書きましょう．
+=== popのテスト
 
-まず，足し算のテストを書きます．
+popをすると最後にpushした値が順番に返ってくる。また、popする
+毎にスタックサイズが減り、最後は空になる。これをテストにする
+と以下のようになる。
 
-  #include <cutter/cutter.h>
-  
-  #include "calc.h"
-  
-  UT_DEF(add_test)
+test/test-stack.c:
+  ...
+  void
+  test_pop (void)
   {
-    UT_ASSERT_EQUAL_INT(3, add(1, 2), "1 + 2");
-    UT_PASS;
+      stack = stack_new();
+
+      stack_push(stack, 10);
+      stack_push(stack, 20);
+      stack_push(stack, 30);
+
+      cut_assert_equal_int(3, stack_get_size(stack));
+      cut_assert_equal_int(30, stack_pop(stack));
+      cut_assert_equal_int(2, stack_get_size(stack));
+      cut_assert_equal_int(20, stack_pop(stack));
+      cut_assert_equal_int(1, stack_get_size(stack));
+
+      stack_push(stack, 40);
+      cut_assert_equal_int(2, stack_get_size(stack));
+      cut_assert_equal_int(40, stack_pop(stack));
+      cut_assert_equal_int(1, stack_get_size(stack));
+      cut_assert_equal_int(10, stack_pop(stack));
+      cut_assert_equal_int(0, stack_get_size(stack));
+      cut_assert(stack_is_empty(stack));
   }
-  
-  UT_REGISTER_BEGIN("calc test")
-  UT_REGISTER(add_test, "add test")
-  UT_REGISTER_END
 
-このテストでは，(({add(1, 2)}))の結果が(({3}))になるかをテス
-トしています．それでは，run-test.elを使っている場合はC-cC-t
-でテストを実行してみましょう．使っていない場合は以下のコマン
-ドでテストを実行します．
+テストを走らせる。
 
-  [calc]% test/run-test.sh
+  [stack]% test/run-test.sh
+  ..cutter: symbol lookup error: test/.libs/test_stack.so: undefined symbol: stack_pop
 
-以下のような結果になるでしょう．
+stack_pop()を定義していないためエラーが発生している。エラー
+メッセージの前に「.」が二つ出ているので既存のテストはパスし
+ていることが確認できる。
 
-  Need to run make depend
-  gcc -Wall -ggdb -Isrc -Itest -I`echo ~/local/include`   -MM -MG src/calc.c | sed -e 's,^\(.*\):,src/\1:,' > .depend.src
-  gcc -Wall -ggdb -Isrc -Itest -I`echo ~/local/include`   -MM -MG test/test_calc.c | sed -e 's,^\(.*\):,test/\1:,' > .depend.test
-  cat .depend.src .depend.test > .depend
-  rm .depend.src .depend.test
+=== stack_pop()の実装
 
-これは，ファイル間の依存関係を自動計算しています．必要なとき
-（今のようにファイルを作成したときや変更されたとき）に自動で
-実行されます．
+まず、src/stack.hにstack_pop()の宣言を追加する。
 
-依存関係が計算されたのでもう一度C-cC-tでテストしてみましょう．
+src/stack.h:
+  ...
+  int    stack_pop      (Stack *stack);
+  ...
 
-  gcc -Wall -ggdb -Isrc -Itest -I`echo ~/local/include` -o test/test_calc.o -c test/test_calc.c
-  test/test_calc.c:3:18: calc.h: No such file or directory
-  test/test_calc.c: In function `add_test':
-  test/test_calc.c:7: warning: implicit declaration of function `add'
-  gmake: *** [test/test_calc.o] エラー 1
+つづいて、src/stack.cにstack_pop()の実装を追加する。
 
-calc.hがないのでコンパイルエラーになっています．ということで，
-src/calc.hを作成しましょう．
+src/stack.c:
+  ...
+  int
+  stack_pop (Stack *stack)
+  {
+      return 30;
+  }
 
-  int add(int x, int y);
+ここで30を返すようにしているのは最初のstack_pop()では30を返
+すことが期待されているからである。
 
-きっちりとこんな風にしてもよいです．
+test/test-stack.c:49:
+  cut_assert_equal_int(30, stack_pop(stack));
 
-  #ifndef CALC_H
-  #define CALC_H
+テストを実行し、popのテストもエラーが発生せずに実行されるこ
+とを確認する。
 
-  int add(int x, int y);
+  [stack]% test/run-test.sh
+  ..F
 
-  #endif
+  1) Failure: test_pop
+  <2 == stack_get_size(stack)>
+  expected: <2>
+   but was: <3>
+  test/test-stack.c:50: test_pop()
 
-それでは，C-cC-tでテストを走らせましょう．
+  Finished in 0.000085 seconds
 
-  gcc -Wall -ggdb -Isrc -Itest -I`echo ~/local/include` -o test/test_calc.o -c test/test_calc.c
-  gcc -L./ -shared -o test/libtest_calc.so test/test_calc.o
-  cutter -vp
-  dlopen() failed: ./test/libtest_calc.so: Undefined symbol "add"
-  Assertion ((null)) failed load.c:43
-  gmake: *** [do-test] Abort trap (コアダンプしました)
-  rm test/test_calc.o
+  3 test(s), 6 assertion(s), 1 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
 
-(({add}))が定義されていないのでcoreを吐いて終了しました．そ
-れでは，src/calc.cに(({add}))の定義を書きましょう．テストで
-は(({add})) は(({1})), (({2}))を引数として受け取ったら，
-(({3}))を返すことになっていました．
+popのテストが実行された。しかし、現在のstack_pop()ではスタッ
+クサイズを変更していないため、popした後のスタックサイズを確
+認しているtest/test-stack.cの50行目のstack_get_size()で失敗
+している。
 
-  #include "calc.h"
+test/test-stack.c:50:
+  cut_assert_equal_int(2, stack_get_size(stack));
+
+=== データ領域の確保
+
+テストが実行されることが確認できたのでテストにパスするように
+stack_pop()を実装する。
+
+後でpopで取り出すために、pushされたデータを保存しておく必要
+がある。Stackに保存されたデータを示す場所を用意し、
+stack_push()/stack_pop()で動的に必要な領域を割り当てる。
+
+まず、Stackに保存されたデータを示す場所を用意し、stack_new()
+で初期化、stack_free()で開放する。
+
+src/stack.c:
+  ...
+  struct _Stack {
+      int size;
+      int *data;
+  };
+
+  Stack *
+  stack_new (void)
+  {
+      ...
+      stack->data = NULL;
+      ...
+  }
+
+  void
+  stack_free (Stack *stack)
+  {
+      free(stack->data);
+      free(stack);
+  }
+  ...
+
+この時点では外部向けの処理の内容は変わっていないはずなので、
+テストを実行して変更前と同じように失敗することを確認する。
+
+  [stack]% test/run-test.sh
+  ..F
+
+  1) Failure: test_pop
+  <2 == stack_get_size(stack)>
+  expected: <2>
+   but was: <3>
+  test/test-stack.c:50: test_pop()
+
+  Finished in 0.000084 seconds
+
+  3 test(s), 6 assertion(s), 1 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
+
+=== stack_pop()の本実装
+
+保存したデータを示す場所が用意できたので
+stack_push()/stack_pop()でそこに必要な分だけ領域を割り当て、
+データを保存する。
+
+src/stack.c:
+  ...
+  void
+  stack_push (Stack *stack, int value)
+  {
+      int *new_data;
+
+      stack->size++;
+      new_data = realloc(stack->data, sizeof(*stack->data) * stack->size);
+      if (!new_data) {
+          free(stack->data);
+          stack->data = NULL;
+          stack->size = 0;
+          return;
+      }
+      stack->data = new_data;
+
+      stack->data[stack->size - 1] = value;
+  }
 
   int
-  add(int x, int y)
+  stack_pop (Stack *stack)
   {
-    return 3;
+      int value;
+      int *new_data;
+
+      stack->size--;
+      value = stack->data[stack->size];
+
+      new_data = realloc(stack->data, sizeof(*stack->data) * stack->size);
+      if (stack->size > 0 && !new_data) {
+          free(stack->data);
+          stack->data = NULL;
+          stack->size = 0;
+          return;
+      }
+      stack->data = new_data;
+
+      return value;
   }
 
-足し算していないと思うかもしれませんが，これでいいのです．テ
-ストは(({3}))を返すことを期待しているのですから．
+テストを実行し、popのテストがパスすることを確認する。
 
-  gcc -Wall -ggdb -Isrc -Itest -I`echo ~/local/include`   -MM -MG src/calc.c | sed -e 's,^\(.*\):,src/\1:,' > .depend.src
+  [stack]% test/run-test.sh
   ...
-  cutter -vp
-  .
-  [1/1](100.00%) tests passed.
-  rm test/test_calc.o src/calc.o
 
-コンパイル後にテストを実行（cutter -vp）しています．「tests
-passed.」というのを見てもわかる通り，テストをパスしています．
-予想通りですね．
+  Finished in 0.000039 seconds
 
-ただ，今の(({add}))だと答えが3になる場合しか正しく動作しませ
-ん．他の場合でも動作するようにテストを追加して，改良しましょ
-う．
-
-test/test_calc.cを以下のように変更します．
-
-  UT_DEF(add_test)
-  {
-    UT_ASSERT_EQUAL_INT(3, add(1, 2), "1 + 2");
-    UT_ASSERT_EQUAL_INT(1, add(3, -2), "3 + -2");
-    UT_PASS;
-  }
-
-つまり，(({1 + 2}))の結果が(({3}))になるだけではなく，(({3 +
--2}))の結果が(({1}))になる必要があります．
-
-それでは，C-cC-tでテストしましょう．
-
-  gcc -Wall -ggdb -Isrc -Itest -I`echo ~/local/include`   -MM -MG src/calc.c | sed -e 's,^\(.*\):,src/\1:,' > .depend.src
-  ...
-  cutter -vp
-  E
-  Errors:
-  ./test/test_calc.c:8: - calc test add test - 3 + -2
-   expected: <1>
-    but was: <3>
-
-  [0/1](0.00%) tests passed.
-  gmake: *** [do-test] エラー 1
-  rm test/test_calc.o src/calc.o
-
-予想通り失敗しました．(({3 + -2}))でも結果が3になっています．
-
-それでは，テストをパスするようにsrc/calc.cをを変更しましょう．
-
-  int
-  add(int x, int y)
-  {
-    return x + y;
-  }
-
-C-cC-tでテストします．
-
-  gcc -Wall -ggdb -Isrc -Itest -I`echo ~/local/include`   -MM -MG src/calc.c | sed -e 's,^\(.*\):,src/\1:,' > .depend.src
-  ...
-  cutter -vp
-  .
-  [1/1](100.00%) tests passed.
-  rm test/test_calc.o src/calc.o
-
-パスしました．あとは，今の手順を繰り返していけばよいです．つ
-まり，こういうことです．
-
-  * テストの作成
-  * テストの実行（エラーになることを確認）
-  * テストをパスするようにソースの変更
-  * テストの実行（テストにパスすることを確認．パスするまでは
-    次のテストを追加しない）
-
-引き算，かけ算，割り算は宿題としましょう．
-
-== おまけ
-
-と思いましたが，引き算だけ追加してみましょう．自分でやりたい
-人は見ないでください．
-
-まず，test/test_calc.cにテストを追加します．
-
-  UT_DEF(sub_test)
-  {
-    UT_ASSERT_EQUAL_INT(1, sub(3, 2), "3 - 2");
-    UT_PASS;
-  }
-
-テストを登録することを忘れてはいけません．
-
-  UT_REGISTER_BEGIN("calc test")
-  UT_REGISTER(add_test, "add test")
-  UT_REGISTER(sub_test, "sub test") /* <- 追加 */
-  UT_REGISTER_END
-
-C-cC-tでテストを実行します．
-
-  gcc -Wall -ggdb -Isrc -Itest -I`echo ~/local/include`   -MM -MG src/calc.c | sed -e 's,^\(.*\):,src/\1:,' > .depend.src
-  ...
-  test/test_calc.c: In function `sub_test':
-  test/test_calc.c:14: warning: implicit declaration of function `sub'
-  cutter -vp
-  dlopen() failed: ./test/libtest_calc.so: Undefined symbol "sub"
-  Assertion ((null)) failed load.c:43
-  gmake: *** [do-test] Abort trap (コアダンプしました)
-  rm test/test_calc.o src/calc.o
-
-(({sub}))を宣言をしていないことによる警告が出ています．また，
-(({sub}))を定義していないためにcoreを吐いています．
-
-まず，src/calc.hに(({sub}))のプロトタイプ宣言を追加しましょ
-う．
-
-  gcc -Wall -ggdb -Isrc -Itest -I`echo ~/local/include`   -MM -MG src/calc.c | sed -e 's,^\(.*\):,src/\1:,' > .depend.src
-  ...
-  cutter -vp
-  dlopen() failed: ./test/libtest_calc.so: Undefined symbol "sub"
-  Assertion ((null)) failed load.c:43
-  gmake: *** [do-test] Abort trap (コアダンプしました)
-
-(({sub}))の宣言がないという警告がなくなりました．
-
-src/calc.cに定義を書きましょう．
-
-  int
-  sub(int x, int y)
-  {
-    return x - y;
-  }
-
-簡単ですね．
-
-C-cC-tでテストしましょう．
-  gcc -Wall -ggdb -Isrc -Itest -I`echo ~/local/include`   -MM -MG src/calc.c | sed -e 's,^\(.*\):,src/\1:,' > .depend.src
-  ...
-  cutter -vp
-  ..
-  [2/2](100.00%) tests passed.
-
-パスしました．
-
-以上です．かけ算と割り算は本当に宿題です．
-
+  3 test(s), 15 assertion(s), 0 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
