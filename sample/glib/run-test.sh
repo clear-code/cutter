@@ -11,4 +11,4 @@ CUTTER=$BASE_DIR/../../cutter/cutter
 if test x"$CUTTER_DEBUG" = x"yes"; then
     CUTTER="$BASE_DIR/../../libtool --mode=execute gdb --args $CUTTER"
 fi
-$CUTTER --color=auto -s $BASE_DIR "$@" $BASE_DIR
+$CUTTER --color=auto -m -s $BASE_DIR "$@" $BASE_DIR
