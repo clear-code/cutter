@@ -56,5 +56,5 @@ test_atomic (void)
 
   cut_assert (g_atomic_pointer_compare_and_exchange (&atomic_pointer, 
 						     biggest_pointer, NULL));
-  cut_assert_null (biggest_pointer);
+  cut_assert (biggest_pointer);
 }
