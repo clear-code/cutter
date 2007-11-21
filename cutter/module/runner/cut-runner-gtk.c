@@ -525,16 +525,56 @@ disconnect_from_context (CutRunnerGtk *runner, CutContext *context)
 #undef DISCONNECT
 }
 
-static gboolean
-run (CutRunner *runner, CutTestSuite *test_suite, CutContext *context)
+typedef struct _RunTestInfo
+{
+    CutRunner    *runner;
+    CutTestSuite *test_suite;
+    CutContext   *context;
+} RunTestInfo;
+
+static gpointer
+test_run (gpointer data)
 {
     gboolean success;
+    RunTestInfo *info = data;
+    CutRunner *runner;
+    CutTestSuite *test_suite;
+    CutContext *context;
+
+    runner = info->runner;
+    test_suite = info->test_suite;
+    context = info->context;
 
     connect_to_context(CUT_RUNNER_GTK(runner), context);
     success = cut_test_suite_run(test_suite, context);
     disconnect_from_context(CUT_RUNNER_GTK(runner), context);
 
+    g_object_unref(runner);
+    g_object_unref(test_suite);
+    g_object_unref(context);
+    g_free(info);
+
+    return GINT_TO_POINTER(success);
+}
+
+static gboolean
+run (CutRunner *runner, CutTestSuite *test_suite, CutContext *context)
+{
+    gboolean success;
+    RunTestInfo *info;
+    GThread *thread;
+
+    info = g_new0(RunTestInfo, 1);
+    info->runner = g_object_ref(runner);
+    info->test_suite = g_object_ref(test_suite);
+    info->context = g_object_ref(context);
+
+    thread = g_thread_create(test_run, info, TRUE, NULL);
+
     gtk_main();
+
+    success = GPOINTER_TO_INT(g_thread_join(thread));
+
     return success;
 }
 
