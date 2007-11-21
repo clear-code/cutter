@@ -1,5 +1,7 @@
 2007-11-21  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/Makefile.am: updated DIST files.
+
 	* cutter/cutter.h, cutter/cut-assertions.h: added documentations.
 
 	* cutter/cut-assertions.h: added documentations.

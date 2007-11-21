@@ -72,7 +72,9 @@ include $(top_srcdir)/gtk-doc.make
 
 # Other files to distribute
 EXTRA_DIST +=				\
-	version.xml.in
+	version.xml.in			\
+	tutorial.xml			\
+	tutorial.xml.ja
 
 $(DOC_MODULE).pot: sgml-build.stamp
 	xml2po -k -o $(DOC_MODULE).pot \
