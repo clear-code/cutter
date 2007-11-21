@@ -1,5 +1,7 @@
 2007-11-21  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/ja.po: updated messages.
+
 	* doc/reference/tmpl/cut-assertions.sgml: updated.
 
 	* doc/reference/Makefile.am: updated DIST files.

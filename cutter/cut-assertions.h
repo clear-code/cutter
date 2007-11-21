@@ -81,7 +81,7 @@ extern "C" {
  * @format: the message format. See the printf() documentation.
  * @...: the parameters to insert into the format string.
  *
- * Adds a notification message. The test is continued.
+ * Leaves a notification message. The test is continued.
  */
 #define cut_notify(format, ...)                  \
     cut_test_register_result(NOTIFICATION, NULL, format, ## __VA_ARGS__)
