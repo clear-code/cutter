@@ -1,5 +1,8 @@
 2007-11-21  Kouhei Sutou  <kou@cozmixng.org>
 
+	* TUTORIAL, misc/rd2refentry-lib.rb, gtk-doc.make, doc/reference/:
+	supported tutorial XML build.
+
 	* doc/reference/: used tutorial.xml.
 
 	* misc/rd2refentry-lib.rb, TUTORIAL.ja: supported title and purpose.

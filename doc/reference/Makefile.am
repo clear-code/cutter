@@ -85,3 +85,10 @@ update-po: Makefile sgml.stamp
 	    $(srcdir)/$(DOC_MAIN_SGML_FILE)	\
 	    $(srcdir)/xml/*.xml;		\
 	done
+
+RD2REFENTRY_LIB = $(top_srcdir)/misc/rd2refentry-lib.rb
+tutorial.xml: $(top_srcdir)/TUTORIAL $(RD2REFENTRY_LIB) tutorial.xml.ja
+	rd2 -r $(RD2REFENTRY_LIB) $(top_srcdir)/TUTORIAL > tutorial.xml
+
+tutorial.xml.ja: $(top_srcdir)/TUTORIAL.ja $(RD2REFENTRY_LIB)
+	rd2 -r $(RD2REFENTRY_LIB) $(top_srcdir)/TUTORIAL.ja > tutorial.xml.ja

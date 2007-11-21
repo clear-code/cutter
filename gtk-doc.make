@@ -130,7 +130,11 @@ html-build.stamp: sgml.stamp $(CATALOGS) $(DOC_MAIN_SGML_FILE) $(content_files)
 	      $$lang/xml/`basename $$xml`;				\
 	  done;								\
 	  for file in $(content_files); do				\
-	    cp $(srcdir)/$$file $$lang;					\
+	    if test -f $(srcdir)/$$file.$$lang; then			\
+	      cp $(srcdir)/$$file.$$lang $$lang/$$file;			\
+	    else							\
+	      cp $(srcdir)/$$file $$lang;				\
+	    fi;								\
 	  done;								\
 	  ( cd $(srcdir)/$$lang/html &&					\
 	      gtkdoc-mkhtml $(DOC_MODULE) ../$(DOC_MAIN_SGML_FILE) );	\

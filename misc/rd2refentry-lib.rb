@@ -28,7 +28,7 @@ module RD
       ret = ""
       ret << "#{xml_decl}\n"
       ret << "#{doctype_decl}\n"
-      ret << "<refentry id=\"tutorial\">\n"
+      ret << "<refentry id=\"#{ref_entry_id}\">\n"
       ret << "#{ref_meta}\n"
       ret << "#{ref_name_div}\n"
       ret << collect_section_contents(contents).join("\n\n")
@@ -78,6 +78,10 @@ module RD
       "<!DOCTYPE refentry \n" +
         "  PUBLIC \"-//OASIS//DTD DocBook XML V4.1.2//EN\"\n" +
         "  \"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd\">"
+    end
+
+    def ref_entry_id
+      File.basename(ARGF.filename, ".*").downcase
     end
 
     def tag(name, attributes={}, *contents)
