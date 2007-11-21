@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 0.1.0\n"
-"POT-Creation-Date: 2007-11-21 17:09+0900\n"
-"PO-Revision-Date: 2007-11-21 17:09+0900\n"
+"POT-Creation-Date: 2007-11-21 17:16+0900\n"
+"PO-Revision-Date: 2007-11-21 17:20+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -284,7 +284,7 @@ msgstr ""
 
 #: xml/cut-assertions.xml:136(para)
 msgid "Passes if <parameter>expression</parameter> is not 0 or NULL."
-msgstr ""
+msgstr "<parameter>expression</parameter>が0でもNULLでもないときにパスします。"
 
 #: xml/cut-assertions.xml:141(term) xml/cut-assertions.xml:157(term)
 #: xml/cut-assertions.xml:173(term)
@@ -321,7 +321,7 @@ msgstr ""
 
 #: xml/cut-assertions.xml:152(para)
 msgid "Passes if <parameter>expression</parameter> is NULL."
-msgstr ""
+msgstr "<parameter>expression</parameter>がNULLのときにパスします。"
 
 #: xml/cut-assertions.xml:166(title)
 msgid ""
@@ -335,7 +335,7 @@ msgstr ""
 
 #: xml/cut-assertions.xml:168(para)
 msgid "Passes if <parameter>expression</parameter> is not NULL."
-msgstr ""
+msgstr "<parameter>expression</parameter>がNULLではないときにパスします。"
 
 #: xml/cut-assertions.xml:182(title)
 msgid ""
@@ -351,6 +351,8 @@ msgstr ""
 msgid ""
 "Passes if <parameter>expected</parameter> == <parameter>actual</parameter>."
 msgstr ""
+"<parameter>expected</parameter> == <parameter>actual</parameter>が成り立つと"
+"きパスします。"
 
 #: xml/cut-assertions.xml:189(term) xml/cut-assertions.xml:208(term)
 #: xml/cut-assertions.xml:231(term) xml/cut-assertions.xml:251(term)
@@ -391,10 +393,13 @@ msgid ""
 "&lt;= <parameter>actual</parameter> &lt;= (<parameter>expected</parameter> + "
 "<parameter>error</parameter>)."
 msgstr ""
+"(<parameter>expected</parameter> - <parameter>error</parameter>) &lt;= "
+"<parameter>actual</parameter> &lt;= (<parameter>expected</parameter> + "
+"<parameter>error</parameter>)が成り立つときパスします。"
 
 #: xml/cut-assertions.xml:209(simpara)
 msgid "an expected float value."
-msgstr ""
+msgstr "期待される浮動小数点数。"
 
 #: xml/cut-assertions.xml:211(term)
 msgid "<parameter>error</parameter>&nbsp;:"
@@ -402,11 +407,11 @@ msgstr ""
 
 #: xml/cut-assertions.xml:212(simpara)
 msgid "an float value that specifies error range."
-msgstr ""
+msgstr "誤差範囲を示す浮動小数点数。"
 
 #: xml/cut-assertions.xml:215(simpara)
 msgid "an actual float value."
-msgstr ""
+msgstr "実際の浮動小数点数。"
 
 #: xml/cut-assertions.xml:223(title)
 msgid ""
@@ -425,11 +430,14 @@ msgid ""
 "parameter> are not NULL and strcmp(<parameter>expected</parameter>, "
 "<parameter>actual</parameter>) == 0."
 msgstr ""
+"<parameter>expected</parameter>と<parameter>actual</parameter>がどちらとも"
+"NULLではなく、strcmp(<parameter>expected</parameter>, <parameter>actual</"
+"parameter>) == 0が成り立つときパスします。"
 
 #: xml/cut-assertions.xml:232(simpara) xml/cut-assertions.xml:235(simpara)
 #: xml/cut-assertions.xml:252(simpara) xml/cut-assertions.xml:255(simpara)
 msgid "an expected string value."
-msgstr ""
+msgstr "期待される文字列。"
 
 #: xml/cut-assertions.xml:243(title)
 msgid ""
@@ -448,6 +456,9 @@ msgid ""
 "parameter> are NULL or strcmp(<parameter>expected</parameter>, "
 "<parameter>actual</parameter>) == 0."
 msgstr ""
+"<parameter>expected</parameter>と<parameter>actual</parameter>がどちらとも"
+"NULL、あるいはstrcmp(<parameter>expected</parameter>, <parameter>actual</"
+"parameter>) == 0が成り立つときにパスします。"
 
 #: xml/cut-assertions.xml:263(title)
 msgid ""
@@ -468,10 +479,14 @@ msgid ""
 "parameter> and memcmp(<parameter>expected</parameter>, <parameter>actual</"
 "parameter>, <parameter>expected_size</parameter>) == 0."
 msgstr ""
+"<parameter>expected_size</parameter> == <parameter>actual_size</parameter>が"
+"成り立ち、かつ、memcmp(<parameter>expected</parameter>, <parameter>actual</"
+"parameter>, <parameter>expected_size</parameter>) == 0が成り立つときにパスし"
+"ます。"
 
 #: xml/cut-assertions.xml:273(simpara)
 msgid "an expected data."
-msgstr ""
+msgstr "期待するデータ。"
 
 #: xml/cut-assertions.xml:275(term)
 msgid "<parameter>expected_size</parameter>&nbsp;:"
@@ -479,11 +494,11 @@ msgstr ""
 
 #: xml/cut-assertions.xml:276(simpara)
 msgid "a size of <parameter>expected</parameter>."
-msgstr ""
+msgstr "<parameter>expected</parameter>のサイズ。"
 
 #: xml/cut-assertions.xml:279(simpara)
 msgid "an actual data."
-msgstr ""
+msgstr "実際のデータ。"
 
 #: xml/cut-assertions.xml:281(term)
 msgid "<parameter>actual_size</parameter>&nbsp;:"
@@ -491,7 +506,7 @@ msgstr ""
 
 #: xml/cut-assertions.xml:282(simpara)
 msgid "a size of <parameter>actual</parameter>."
-msgstr ""
+msgstr "<parameter>actual</parameter>のサイズ。"
 
 #: xml/cut-assertions.xml:290(title)
 msgid ""
@@ -507,17 +522,20 @@ msgstr ""
 #: xml/cut-assertions.xml:292(para)
 msgid ""
 "Passes if both <parameter>expected</parameter> and <parameter>actual</"
-"parameter> is not NULL and have same content (<link linkend=\"strcmp"
+"parameter> are not NULL and have same content (<link linkend=\"strcmp"
 "\"><function>strcmp()</function></link> == 0) strings."
 msgstr ""
+"<parameter>expected</parameter>と<parameter>actual</parameter>がどちらとも"
+"NULLではなく、どちらも同じ内容の文字列(<link linkend=\"strcmp"
+"\"><function>strcmp()</function></link> == 0)を持つときにパスします。"
 
 #: xml/cut-assertions.xml:299(simpara)
 msgid "an expected NULL-terminated array of strings."
-msgstr ""
+msgstr "期待する文字列の配列。配列はNULL終端。"
 
 #: xml/cut-assertions.xml:302(simpara)
 msgid "an actual NULL-terminated array of strings."
-msgstr ""
+msgstr "実際の文字列の配列。配列はNULL終端。"
 
 #: xml/cut-assertions.xml:310(title)
 msgid ""
@@ -533,7 +551,7 @@ msgstr ""
 msgid ""
 "Passes if (<parameter>lhs</parameter> <parameter>operator</parameter> "
 "<parameter>rhs</parameter>) is TRUE."
-msgstr ""
+msgstr "(<parameter>lhs</parameter> <parameter>operator</parameter> <parameter>rhs</parameter>)が真のときにパスします。"
 
 #: xml/cut-assertions.xml:317(programlisting)
 #, no-wrap
@@ -548,7 +566,7 @@ msgstr ""
 
 #: xml/cut-assertions.xml:324(simpara)
 msgid "a left hand side value."
-msgstr ""
+msgstr "左辺値。"
 
 #: xml/cut-assertions.xml:326(term) xml/cut-assertions.xml:354(term)
 msgid "<parameter>operator</parameter>&nbsp;:"
@@ -556,7 +574,7 @@ msgstr ""
 
 #: xml/cut-assertions.xml:327(simpara) xml/cut-assertions.xml:355(simpara)
 msgid "a binary operator."
-msgstr ""
+msgstr "二項演算子。"
 
 #: xml/cut-assertions.xml:329(term) xml/cut-assertions.xml:357(term)
 msgid "<parameter>rhs</parameter>&nbsp;:"
@@ -564,7 +582,7 @@ msgstr ""
 
 #: xml/cut-assertions.xml:330(simpara)
 msgid "a right hand side value."
-msgstr ""
+msgstr "右辺値。"
 
 #: xml/cut-assertions.xml:338(title)
 msgid ""
@@ -605,7 +623,7 @@ msgstr ""
 msgid ""
 "Passes if <parameter>function</parameter>(<parameter>expected</parameter>, "
 "<parameter>actual</parameter>) returns TRUE."
-msgstr ""
+msgstr "<parameter>function</parameter>(<parameter>expected</parameter>, <parameter>actual</parameter>)が真を返すときパスします。"
 
 #: xml/cut-assertions.xml:373(programlisting)
 #, no-wrap
@@ -622,7 +640,7 @@ msgstr ""
 msgid ""
 "a function that compares <parameter>actual</parameter> with "
 "<parameter>expected</parameter>."
-msgstr ""
+msgstr "<parameter>actual</parameter>と<parameter>expected</parameter>を比較する関数。"
 
 #: xml/cut-assertions.xml:383(simpara)
 msgid "an expected value."
@@ -736,7 +754,7 @@ msgstr ""
 #: xml/cut-main.xml:102(term) xml/cut-main.xml:120(term)
 #: xml/cutter.xml:176(term)
 msgid "<emphasis>Returns</emphasis>&nbsp;:"
-msgstr ""
+msgstr "<emphasis>戻り値</emphasis>&nbsp;:"
 
 #: xml/cut-main.xml:83(title)
 msgid ""
@@ -785,7 +803,7 @@ msgstr ""
 
 #: xml/cutter.xml:14(refpurpose)
 msgid "An Unit Testing Framework for C."
-msgstr ""
+msgstr "C言語用単体テストフレームワーク"
 
 #: xml/cutter.xml:25(link) xml/cutter.xml:148(primary)
 msgid "setup"

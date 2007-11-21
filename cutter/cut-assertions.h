@@ -329,7 +329,7 @@ extern "C" {
  * @...: optional format string, followed by parameters to insert
  * into the format string (as with printf())
  *
- * Passes if both @expected and @actual is not NULL and
+ * Passes if both @expected and @actual are not NULL and
  * have same content (strcmp() == 0) strings.
  */
 #define cut_assert_equal_string_array(expected, actual, ...) do         \
