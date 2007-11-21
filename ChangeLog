@@ -2,6 +2,7 @@
 
 	* cutter/cut-runner.h: Cleanup.
 	* cutter/module/runner/cut-runner-gtk.c: Reenablded CutRunnerGtk.
+	* cutter/module/runner/cut-runner-gtk.c: Show window.
 
 2007-11-20  Kouhei Sutou  <kou@cozmixng.org>
 

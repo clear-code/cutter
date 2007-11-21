@@ -64,7 +64,8 @@ struct _CutRunnerGtkClass
 
 enum
 {
-    PROP_0
+    PROP_0,
+    PROP_USE_COLOR
 };
 
 static GType cut_type_runner_gtk = 0;
@@ -88,6 +89,7 @@ class_init (CutRunnerClass *klass)
 {
     GObjectClass *gobject_class;
     CutRunnerClass *runner_class;
+    GParamSpec *spec;
 
     parent_class = g_type_class_peek_parent(klass);
 
@@ -97,25 +99,49 @@ class_init (CutRunnerClass *klass)
     gobject_class->dispose      = dispose;
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
-    
     runner_class->run           = run;
+
+    spec = g_param_spec_boolean("use-color",
+                                "Use color",
+                                "Whether use color",
+                                FALSE,
+                                G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_USE_COLOR, spec);
+}
+
+static GtkWidget *
+create_window (CutRunnerGtk *runner)
+{
+    GtkWidget *window, *scrolled_window;
+    GtkWidget *text_view;
+
+    window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_default_size(GTK_WINDOW(window), 400, 300);
+    g_signal_connect(G_OBJECT(window), "destroy",
+                     G_CALLBACK (gtk_main_quit), NULL);
+
+    scrolled_window = gtk_scrolled_window_new(NULL, NULL);
+    gtk_container_add(GTK_CONTAINER(window), scrolled_window);
+    gtk_widget_show(scrolled_window);
+
+    text_view = gtk_text_view_new();
+    gtk_container_add(GTK_CONTAINER(scrolled_window), text_view);
+    gtk_widget_show(text_view);
+
+    runner->text_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_view));
+
+    gtk_widget_show(window);
+
+    return window;
 }
 
 static void
 init (CutRunnerGtk *runner)
 {
     GtkWidget *window;
-    GtkWidget *text_view;
 
-    window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_default_size(GTK_WINDOW(window), 400, 300);
-
-    text_view = gtk_text_view_new();
-    gtk_container_add(GTK_CONTAINER(window), text_view);
-    gtk_widget_show(text_view);
-
-    runner->text_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_view));
-
+    gtk_init(NULL, NULL);
+    window = create_window(runner);
     gtk_widget_show(window);
 }
 
@@ -184,7 +210,12 @@ set_property (GObject      *object,
               const GValue *value,
               GParamSpec   *pspec)
 {
+    CutRunnerGtk *gtk = CUT_RUNNER_GTK(object);
+
     switch (prop_id) {
+      case PROP_USE_COLOR:
+        gtk->use_color = g_value_get_boolean(value);
+        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
@@ -197,21 +228,313 @@ get_property (GObject    *object,
               GValue     *value,
               GParamSpec *pspec)
 {
+    CutRunnerGtk *gtk = CUT_RUNNER_GTK(object);
+
     switch (prop_id) {
+      case PROP_USE_COLOR:
+        g_value_set_boolean(value, gtk->use_color);
+        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
     }
 }
 
+static void
+print_for_status (CutRunnerGtk *runner, CutTestResultStatus status,
+                  gchar const *format, ...)
+{
+    gchar *message;
+    va_list args;
+    GtkTextIter iter;
+
+    va_start(args, format);
+    message = g_strdup_vprintf(format, args);
+    gtk_text_buffer_get_end_iter(runner->text_buffer, &iter);
+    gtk_text_buffer_insert(runner->text_buffer, &iter, message, -1);
+    g_free(message);
+    va_end(args);
+}
+
+static void
+print_log (CutRunnerGtk *runner, gchar const *format, ...)
+{
+    gchar *message;
+    va_list args;
+    GtkTextIter iter;
+
+    va_start(args, format);
+    message = g_strdup_vprintf(format, args);
+    gtk_text_buffer_get_end_iter(runner->text_buffer, &iter);
+    gtk_text_buffer_insert(runner->text_buffer, &iter, message, -1);
+    g_free(message);
+    va_end(args);
+}
+
+static void
+cb_start_test_suite (CutContext *context, CutTestSuite *test_suite,
+                     CutRunnerGtk *runner)
+{
+}
+
+static void
+cb_start_test_case (CutContext *context, CutTestCase *test_case,
+                    CutRunnerGtk *runner)
+{
+}
+
+static void
+cb_start_test (CutContext *context, CutTest *test, CutTestContext *test_context,
+               CutRunnerGtk *runner)
+{
+    GString *tab_stop;
+    const gchar *name;
+    gint name_length;
+    const gchar *description;
+
+    description = cut_test_get_description(test);
+    if (description)
+        print_log(runner, "  %s\n", description);
+
+    name = cut_test_get_name(test);
+    name_length = strlen(name) + 2;
+    tab_stop = g_string_new("");
+    while (name_length < (8 * 7 - 1)) {
+        g_string_append_c(tab_stop, '\t');
+        name_length += 8;
+    }
+    print_log(runner, "  %s:%s", name, tab_stop->str);
+    g_string_free(tab_stop, TRUE);
+}
+
+static void
+cb_success (CutContext *context, CutTest *test, CutRunnerGtk *runner)
+{
+    if (!CUT_IS_TEST_CONTAINER(test)) {
+        GtkTextIter iter;
+        gtk_text_buffer_get_end_iter(runner->text_buffer, &iter);
+        gtk_text_buffer_insert(runner->text_buffer, &iter, ".", -1);
+    }
+}
+
+static void
+cb_failure (CutContext       *context,
+            CutTest          *test,
+            CutTestContext   *test_context,
+            CutTestResult    *result,
+            CutRunnerGtk *runner)
+{
+    print_for_status(runner, CUT_TEST_RESULT_FAILURE, "F");
+}
+
+static void
+cb_error (CutContext       *context,
+          CutTest          *test,
+          CutTestContext   *test_context,
+          CutTestResult    *result,
+          CutRunnerGtk *runner)
+{
+    print_for_status(runner, CUT_TEST_RESULT_ERROR, "E");
+}
+
+static void
+cb_pending (CutContext       *context,
+            CutTest          *test,
+            CutTestContext   *test_context,
+            CutTestResult    *result,
+            CutRunnerGtk *runner)
+{
+    print_for_status(runner, CUT_TEST_RESULT_PENDING, "P");
+}
+
+static void
+cb_notification (CutContext       *context,
+                 CutTest          *test,
+                 CutTestContext   *test_context,
+                 CutTestResult    *result,
+                 CutRunnerGtk *runner)
+{
+    print_for_status(runner, CUT_TEST_RESULT_NOTIFICATION, "N");
+}
+
+static void
+cb_complete_test (CutContext *context, CutTest *test,
+                  CutTestContext *test_context, CutRunnerGtk *runner)
+{
+    print_log(runner, ": (%f)\n", cut_test_get_elapsed(test));
+}
+
+static void
+cb_complete_test_case (CutContext *context, CutTestCase *test_case,
+                       CutRunnerGtk *runner)
+{
+}
+
+static void
+print_results (CutRunnerGtk *runner, CutContext *context)
+{
+    gint i;
+    const GList *node;
+
+    i = 1;
+    for (node = cut_context_get_results(context);
+         node;
+         node = g_list_next(node)) {
+        CutTestResult *result = node->data;
+        CutTestResultStatus status;
+        gchar *filename;
+        const gchar *message;
+        const gchar *source_directory;
+        const gchar *name;
+
+        source_directory = cut_context_get_source_directory(context);
+        if (source_directory)
+            filename = g_build_filename(source_directory,
+                                        cut_test_result_get_filename(result),
+                                        NULL);
+        else
+            filename = g_strdup(cut_test_result_get_filename(result));
+
+        status = cut_test_result_get_status(result);
+        message = cut_test_result_get_message(result);
+        name = cut_test_result_get_test_name(result);
+        if (!name)
+            name = cut_test_result_get_test_case_name(result);
+        if (!name)
+            name = cut_test_result_get_test_suite_name(result);
+
+
+        print_log(runner, "\n%s:%d: %s()\n",
+                  filename,
+                  cut_test_result_get_line(result),
+                  cut_test_result_get_function_name(result));
+        i++;
+        g_free(filename);
+    }
+}
+
+static void
+print_summary (CutRunnerGtk *runner, CutContext *context,
+               gboolean crashed)
+{
+    guint n_tests, n_assertions, n_failures, n_errors;
+    guint n_pendings, n_notifications;
+
+    n_tests = cut_context_get_n_tests(context);
+    n_assertions = cut_context_get_n_assertions(context);
+    n_failures = cut_context_get_n_failures(context);
+    n_errors = cut_context_get_n_errors(context);
+    n_pendings = cut_context_get_n_pendings(context);
+    n_notifications = cut_context_get_n_notifications(context);
+
+    if (crashed) {
+    } else {
+        CutTestResultStatus status;
+        if (n_errors > 0) {
+            status = CUT_TEST_RESULT_ERROR;
+        } else if (n_failures > 0) {
+            status = CUT_TEST_RESULT_FAILURE;
+        } else if (n_pendings > 0) {
+            status = CUT_TEST_RESULT_PENDING;
+        } else if (n_notifications > 0) {
+            status = CUT_TEST_RESULT_NOTIFICATION;
+        } else {
+            status = CUT_TEST_RESULT_SUCCESS;
+        }
+    }
+}
+
+static void
+cb_complete_test_suite (CutContext *context, CutTestSuite *test_suite,
+                        CutRunnerGtk *runner)
+{
+    gboolean crashed;
+
+    crashed = cut_context_is_crashed(context);
+    if (crashed) {
+        const gchar *stack_trace;
+
+        stack_trace = cut_context_get_stack_trace(context);
+        if (stack_trace)
+            print_log(runner, "%s\n", stack_trace);
+    }
+
+    print_results(runner, context);
+
+    print_log(runner, "Finished in %f seconds",
+              cut_test_get_elapsed(CUT_TEST(test_suite)));
+
+    print_summary(runner, context, crashed);
+}
+
+static void
+cb_crashed (CutContext *context, const gchar *stack_trace,
+            CutRunnerGtk *runner)
+{
+}
+
+static void
+connect_to_context (CutRunnerGtk *runner, CutContext *context)
+{
+#define CONNECT(name) \
+    g_signal_connect(context, #name, G_CALLBACK(cb_ ## name), runner)
+
+    CONNECT(start_test_suite);
+    CONNECT(start_test_case);
+    CONNECT(start_test);
+
+    CONNECT(success);
+    CONNECT(failure);
+    CONNECT(error);
+    CONNECT(pending);
+    CONNECT(notification);
+
+    CONNECT(complete_test);
+    CONNECT(complete_test_case);
+    CONNECT(complete_test_suite);
+
+    CONNECT(crashed);
+
+#undef CONNECT
+}
+
+static void
+disconnect_from_context (CutRunnerGtk *runner, CutContext *context)
+{
+#define DISCONNECT(name)                                                \
+    g_signal_handlers_disconnect_by_func(context,                       \
+                                         G_CALLBACK(cb_ ## name),       \
+                                         runner)
+
+    DISCONNECT(start_test_suite);
+    DISCONNECT(start_test_case);
+    DISCONNECT(start_test);
+
+    DISCONNECT(success);
+    DISCONNECT(failure);
+    DISCONNECT(error);
+    DISCONNECT(pending);
+    DISCONNECT(notification);
+
+    DISCONNECT(complete_test);
+    DISCONNECT(complete_test_case);
+    DISCONNECT(complete_test_suite);
+
+    DISCONNECT(crashed);
+
+#undef DISCONNECT
+}
 
 static gboolean
 run (CutRunner *runner, CutTestSuite *test_suite, CutContext *context)
 {
     gboolean success;
 
+    connect_to_context(CUT_RUNNER_GTK(runner), context);
     success = cut_test_suite_run(test_suite, context);
+    disconnect_from_context(CUT_RUNNER_GTK(runner), context);
 
+    gtk_main();
     return success;
 }
 
