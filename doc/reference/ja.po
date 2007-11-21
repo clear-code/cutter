@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 0.1.0\n"
-"POT-Creation-Date: 2007-11-21 17:16+0900\n"
-"PO-Revision-Date: 2007-11-21 17:20+0900\n"
+"POT-Creation-Date: 2007-11-21 17:48+0900\n"
+"PO-Revision-Date: 2007-11-21 17:48+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -551,7 +551,9 @@ msgstr ""
 msgid ""
 "Passes if (<parameter>lhs</parameter> <parameter>operator</parameter> "
 "<parameter>rhs</parameter>) is TRUE."
-msgstr "(<parameter>lhs</parameter> <parameter>operator</parameter> <parameter>rhs</parameter>)が真のときにパスします。"
+msgstr ""
+"(<parameter>lhs</parameter> <parameter>operator</parameter> <parameter>rhs</"
+"parameter>)が真のときにパスします。"
 
 #: xml/cut-assertions.xml:317(programlisting)
 #, no-wrap
@@ -623,7 +625,9 @@ msgstr ""
 msgid ""
 "Passes if <parameter>function</parameter>(<parameter>expected</parameter>, "
 "<parameter>actual</parameter>) returns TRUE."
-msgstr "<parameter>function</parameter>(<parameter>expected</parameter>, <parameter>actual</parameter>)が真を返すときパスします。"
+msgstr ""
+"<parameter>function</parameter>(<parameter>expected</parameter>, "
+"<parameter>actual</parameter>)が真を返すときパスします。"
 
 #: xml/cut-assertions.xml:373(programlisting)
 #, no-wrap
@@ -640,7 +644,9 @@ msgstr ""
 msgid ""
 "a function that compares <parameter>actual</parameter> with "
 "<parameter>expected</parameter>."
-msgstr "<parameter>actual</parameter>と<parameter>expected</parameter>を比較する関数。"
+msgstr ""
+"<parameter>actual</parameter>と<parameter>expected</parameter>を比較する関"
+"数。"
 
 #: xml/cut-assertions.xml:383(simpara)
 msgid "an expected value."
@@ -870,6 +876,12 @@ msgid ""
 "linkend=\"cut-assert-XXX\"><function>cut_assert_XXX()</function></link> to "
 "check that your program works as you expect. <placeholder-1/>"
 msgstr ""
+"簡単に使えます。Cutterではテストプログラム中にCUTTER_DEFINE_TEST_STARTや"
+"CUTTER_DEFINE_TEST_ENDなどといった不思議なマクロを使う必要がありません。通常"
+"のプログラムと同じようにテストプログラムを書くことができます。ただし、プログ"
+"ラムが期待した通り動作していることを検証するために<link linkend=\"cut-assert-"
+"XXX\"><function>cut_assert_XXX()</function></link>を使う必要があります。"
+"<placeholder-1/>"
 
 #: xml/cutter.xml:85(programlisting)
 #, no-wrap
@@ -890,6 +902,12 @@ msgid ""
 "at the end. Cutter doesn't output each test name, how many assertions are "
 "used for a test and so because we don't need the information on success."
 msgstr ""
+"簡素ですが有用な情報を出力をします。Cutterはデフォルトではテストが問題なく動"
+"いているときは静かに動きます。以下は、Cutter自身のテストの出力です。"
+"<placeholder-1/>Cutterはテストが1つパスしたことを示すためには「.」だけを出力"
+"し、最後にテスト結果の要約を出力します。Cutterは各テストの名前や何個検証した"
+"かなどの情報は表示しません。これは、テスト成功時にはこれらの情報は必要ないか"
+"らです。"
 
 #: xml/cutter.xml:98(programlisting)
 #, no-wrap
@@ -927,6 +945,15 @@ msgid ""
 "\"dummy-error-name\". We can get the above information from Cutter output. "
 "This will help your debug."
 msgstr ""
+"Cutterは失敗時にはたくさんの情報を出力します。<placeholder-1/>上記の結果は"
+"Cutterの自己テストにおかしな期待値を追加したために起きています。<placeholder-"
+"2/>おかしな検証はtest/test-cut-assertions.cの240行目に書かれていて、その行は"
+"<link linkend=\"cut-assert-test-result\"><function>cut_assert_test_result()</"
+"function></link>関数内にあります。この関数はtest_errorテストから呼び出されて"
+"います。cut_test_result_get_test_name(result)が\"Strange!!!\"を返すことを期待"
+"していますが、実際は\"dummy-error-name\"が返ってきています。このような情報を"
+"上記のCutterの出力から得ることができます。これはデバッグの手助けになるでしょ"
+"う。"
 
 #: xml/cutter.xml:124(para)
 msgid ""
@@ -938,16 +965,27 @@ msgid ""
 "jump to FILENAME at LINE with next-error command. (C-x `) This helps that "
 "you find the problem line rapidly."
 msgstr ""
+"Cutterの出力形式は実用的です。' but was:'はその上の'expected:'と並ぶようにイ"
+"ンデントされています。これは期待値と実測値をパッと見て簡単に比較できるように"
+"するためです。問題のあった行は「ファイル名:行: 関数」というように整形されてい"
+"ます。これはEmacsと連携するためです。Emacsのcompilation-modeではこの形式が"
+"*compilation*バッファに表れると、next-errorコマンド(C-x `)で「ファイル名」の"
+"「行」へジャンプすることができます。これは問題行を素早く見つける手助けをしま"
+"す。"
 
 #: xml/cutter.xml:134(para)
-msgid "Cutter supports no only easy test writing but also easy debugging."
+msgid "Cutter supports not only easy test writing but also easy debugging."
 msgstr ""
+"Cutterは簡単にテストを書くことを支援するだけではなく、簡単にデバッグをできる"
+"ことも支援します。"
 
 #: xml/cutter.xml:41(para)
 msgid ""
 "Cutter is an Unit Testing Framework for C and has the following features: "
 "<placeholder-1/>"
 msgstr ""
+"Cutterは以下のような特徴をもったC用の単体テストフレームワークです。"
+"<placeholder-1/>"
 
 #: xml/cutter.xml:147(title)
 msgid "<anchor id=\"setup\" role=\"function\"/>setup ()"
@@ -964,6 +1002,9 @@ msgid ""
 "your test program, cutter will call your <link linkend=\"setup"
 "\"><function>setup()</function></link> before each your test is run."
 msgstr ""
+"テストプログラム中で<link linkend=\"setup\"><function>setup()</function></"
+"link>を定義していたら、cutterは各テストが実行される前に定義された<link "
+"linkend=\"setup\"><function>setup()</function></link>を呼びだします。"
 
 #: xml/cutter.xml:156(title)
 msgid "<anchor id=\"teardown\" role=\"function\"/>teardown ()"
@@ -981,6 +1022,10 @@ msgid ""
 "\"><function>teardown()</function></link> after each your test is run even "
 "if a test is failed."
 msgstr ""
+"テストプログラム中で<link linkend=\"teardown\"><function>teardown()</"
+"function></link>を定義していたら、cutterは各テストの後に、たとえテストが失敗"
+"していた時でも、<link linkend=\"teardown\"><function>teardown()</function></"
+"link>を呼びだします。"
 
 #: xml/cutter.xml:166(title)
 msgid "<anchor id=\"cut-user-data\" role=\"macro\"/>cut_user_data"
@@ -997,14 +1042,17 @@ msgid ""
 "command. You can pass a data from your custom test runner to test programs. "
 "They will receive your data through this."
 msgstr ""
+"cutterコマンドのようなテスト起動コマンドを独自に作ったときにだけ役にたちま"
+"す。独自のテスト起動コマンドからテストプログラムにデータを渡すことができま"
+"す。テストプログラムはこのマクロを使ってデータを受け取ることができます。"
 
 #: xml/cutter.xml:176(simpara)
 msgid "a data from a program who invokes your test."
-msgstr ""
+msgstr "テストを実行したプログラムからのデータ。"
 
 #: xml/cutter.xml:185(title)
 msgid "See Also"
-msgstr ""
+msgstr "参考"
 
 #. Put one translator per line, in the form of NAME <EMAIL>, YEAR1, YEAR2.
 #: xml/cutter.xml:0(None)

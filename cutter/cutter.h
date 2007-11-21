@@ -128,7 +128,7 @@ extern "C" {
  * at LINE with next-error command. (C-x `) This helps that you
  * find the problem line rapidly.
  *   </para><para>
- * Cutter supports no only easy test writing but also easy
+ * Cutter supports not only easy test writing but also easy
  * debugging.
  *   </para></listitem>
  * </itemizedlist>
