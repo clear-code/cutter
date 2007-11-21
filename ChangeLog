@@ -1,3 +1,7 @@
+2007-11-21  Kouhei Sutou  <kou@cozmixng.org>
+
+	* misc/rd2refentry-lib.rb: added.
+
 2007-11-21  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-runner.h: Cleanup.
