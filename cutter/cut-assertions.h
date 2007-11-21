@@ -31,6 +31,21 @@ extern "C" {
 #endif
 
 /**
+ * SECTION: cut-assertions
+ * @title: Assertions
+ * @short_description: Checks that your program works as you expect.
+ *
+ * To check that your program works as you expect, you use
+ * cut_assert_XXX() where you want to check expected value
+ * is got.
+ *
+ * e.g.:
+ * |[
+ * cut_assert_equal_int(3, 1 + 2);
+ * ]|
+ */
+
+/**
  * cut_error:
  * @format: the message format. See the printf() documentation.
  * @...: the parameters to insert into the format string.
@@ -74,7 +89,7 @@ extern "C" {
 /**
  * cut_assert:
  * @expression: the expression to check.
- * @...: format string, followed by parameters to insert
+ * @...: optional format string, followed by parameters to insert
  * into the format string (as with printf())
  *
  * Passes if @expression is not 0 or NULL.
@@ -94,7 +109,7 @@ extern "C" {
 /**
  * cut_assert_null:
  * @expression: the expression to check.
- * @...: format string, followed by parameters to insert
+ * @...: optional format string, followed by parameters to insert
  * into the format string (as with printf())
  *
  * Passes if @expression is NULL.
@@ -114,7 +129,7 @@ extern "C" {
 /**
  * cut_assert_not_null:
  * @expression: the expression to check.
- * @...: format string, followed by parameters to insert
+ * @...: optional format string, followed by parameters to insert
  * into the format string (as with printf())
  *
  * Passes if @expression is not NULL.
@@ -135,7 +150,7 @@ extern "C" {
  * cut_assert_equal_int:
  * @expected: an expected integer value.
  * @actual: an actual integer value.
- * @...: format string, followed by parameters to insert
+ * @...: optional format string, followed by parameters to insert
  * into the format string (as with printf())
  *
  * Passes if @expected == @actual.
@@ -160,7 +175,7 @@ extern "C" {
  * cut_assert_equal_uint:
  * @expected: an expected unsigned integer value.
  * @actual: an actual unsigned integer value.
- * @...: format string, followed by parameters to insert
+ * @...: optional format string, followed by parameters to insert
  * into the format string (as with printf())
  *
  * Passes if @expected == @actual.
@@ -186,7 +201,7 @@ extern "C" {
  * @expected: an expected float value.
  * @error: an float value that specifies error range.
  * @actual: an actual float value.
- * @...: format string, followed by parameters to insert
+ * @...: optional format string, followed by parameters to insert
  * into the format string (as with printf())
  *
  * Passes if (@expected - @error) <= @actual <= (@expected + @error).
@@ -213,7 +228,7 @@ extern "C" {
  * cut_assert_equal_string:
  * @expected: an expected string value.
  * @actual: an expected string value.
- * @...: format string, followed by parameters to insert
+ * @...: optional format string, followed by parameters to insert
  * into the format string (as with printf())
  *
  * Passes if both @expected and @actual are not NULL and
@@ -239,7 +254,7 @@ extern "C" {
  * cut_assert_equal_string_or_null:
  * @expected: an expected string value.
  * @actual: an expected string value.
- * @...: format string, followed by parameters to insert
+ * @...: optional format string, followed by parameters to insert
  * into the format string (as with printf())
  *
  * Passes if both @expected and @actual are NULL or
@@ -279,7 +294,7 @@ extern "C" {
  * @expected_size: a size of @expected.
  * @actual: an actual data.
  * @actual_size: a size of @actual.
- * @...: format string, followed by parameters to insert
+ * @...: optional format string, followed by parameters to insert
  * into the format string (as with printf())
  *
  * Passes if @expected_size == @actual_size and
@@ -311,7 +326,7 @@ extern "C" {
  * cut_assert_equal_string_array:
  * @expected: an expected NULL-terminated array of strings.
  * @actual: an actual NULL-terminated array of strings.
- * @...: format string, followed by parameters to insert
+ * @...: optional format string, followed by parameters to insert
  * into the format string (as with printf())
  *
  * Passes if both @expected and @actual is not NULL and
@@ -340,13 +355,15 @@ extern "C" {
  * @lhs: a left hand side value.
  * @operator: a binary operator.
  * @rhs: a right hand side value.
- * @...: format string, followed by parameters to insert
+ * @...: optional format string, followed by parameters to insert
  * into the format string (as with printf())
  *
  * Passes if (@lhs @operator @rhs) is TRUE.
  *
- * e.g.
- *   cut_assert_operator(1, <, 2) -> (1 < 2)
+ * e.g.:
+ * |[
+ * cut_assert_operator(1, <, 2) -> (1 < 2)
+ * ]|
  */
 #define cut_assert_operator(lhs, operator, rhs, ...) do                 \
 {                                                                       \
@@ -365,13 +382,15 @@ extern "C" {
  * @lhs: a left hand side integer value.
  * @operator: a binary operator.
  * @rhs: a right hand side integer value.
- * @...: format string, followed by parameters to insert
+ * @...: optional format string, followed by parameters to insert
  * into the format string (as with printf())
  *
  * Passes if (@lhs @operator @rhs) is TRUE.
  *
- * e.g.
- *   cut_assert_operator_int(1, <, 2) -> (1 < 2)
+ * e.g.:
+ * |[
+ * cut_assert_operator_int(1, <, 2) -> (1 < 2)
+ * ]|
  */
 #define cut_assert_operator_int(lhs, operator, rhs, ...) do             \
 {                                                                       \
@@ -394,13 +413,15 @@ extern "C" {
  * @function: a function that compares @actual with @expected.
  * @expected: an expected value.
  * @actual: an actual value.
- * @...: format string, followed by parameters to insert
+ * @...: optional format string, followed by parameters to insert
  * into the format string (as with printf())
  *
  * Passes if @function(@expected, @actual) returns TRUE.
  *
- * e.g.
- *   cut_assert_equal(strcmp, "abc", "abc") -> Pass
+ * e.g.:
+ * |[
+ * cut_assert_equal(strcmp, "abc", "abc") -> Pass
+ * ]|
  */
 #define cut_assert_equal(function, expected, actual, ...) do            \
 {                                                                       \

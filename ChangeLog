@@ -1,5 +1,7 @@
 2007-11-21  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cutter.h, cutter/cut-assertions.h: added documentations.
+
 	* cutter/cut-assertions.h: added documentations.
 
 	* TUTORIAL, misc/rd2refentry-lib.rb, gtk-doc.make, doc/reference/:
