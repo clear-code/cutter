@@ -35,7 +35,7 @@ extern "C" {
  * @format: the message format. See the printf() documentation.
  * @...: the parameters to insert into the format string.
  *
- *
+ * Raises an error with message.
  */
 #define cut_error(format, ...)                  \
     cut_test_fail(ERROR, NULL, format, ## __VA_ARGS__)
@@ -45,7 +45,7 @@ extern "C" {
  * @format: the message format. See the printf() documentation.
  * @...: the parameters to insert into the format string.
  *
- *
+ * Raises a failure with message.
  */
 #define cut_fail(format, ...)                    \
     cut_test_fail(FAILURE, NULL, format, ## __VA_ARGS__)
@@ -55,7 +55,8 @@ extern "C" {
  * @format: the message format. See the printf() documentation.
  * @...: the parameters to insert into the format string.
  *
- *
+ * Marks the test is pending with message. The test is
+ * stopped.
  */
 #define cut_pending(format, ...)                 \
     cut_test_fail(PENDING, NULL, format, ## __VA_ARGS__)
@@ -65,7 +66,7 @@ extern "C" {
  * @format: the message format. See the printf() documentation.
  * @...: the parameters to insert into the format string.
  *
- *
+ * Adds a notification message. The test is continued.
  */
 #define cut_notify(format, ...)                  \
     cut_test_register_result(NOTIFICATION, NULL, format, ## __VA_ARGS__)
@@ -73,9 +74,10 @@ extern "C" {
 /**
  * cut_assert:
  * @expression: the expression to check.
- * @...: format string, followed by parameters to insert into the format string (as with printf())
+ * @...: format string, followed by parameters to insert
+ * into the format string (as with printf())
  *
- *
+ * Passes if @expression is not 0 or NULL.
  */
 #define cut_assert(expression, ...) do                      \
 {                                                           \
@@ -89,37 +91,54 @@ extern "C" {
     }                                                       \
 } while(0)
 
-#define cut_assert_null(actual, ...) do                     \
+/**
+ * cut_assert_null:
+ * @expression: the expression to check.
+ * @...: format string, followed by parameters to insert
+ * into the format string (as with printf())
+ *
+ * Passes if @expression is NULL.
+ */
+#define cut_assert_null(expression, ...) do                 \
 {                                                           \
-    if ((actual) == NULL) {                                 \
+    if ((expression) == NULL) {                             \
         cut_test_pass();                                    \
     } else {                                                \
         cut_test_fail(                                      \
             FAILURE,                                        \
-            "expected: <%s> is NULL", #actual,              \
+            "expected: <%s> is NULL", #expression,          \
             NULL, ## __VA_ARGS__);                          \
     }                                                       \
 } while(0)
 
-#define cut_assert_not_null(actual, ...) do                 \
+/**
+ * cut_assert_not_null:
+ * @expression: the expression to check.
+ * @...: format string, followed by parameters to insert
+ * into the format string (as with printf())
+ *
+ * Passes if @expression is not NULL.
+ */
+#define cut_assert_not_null(expression, ...) do             \
 {                                                           \
-    if ((actual) != NULL) {                                 \
+    if ((expression) != NULL) {                             \
         cut_test_pass();                                    \
     } else {                                                \
         cut_test_fail(FAILURE,                              \
                       "expected: <%s> is not NULL",         \
-                      #actual,                              \
+                      #expression,                          \
                       NULL, ## __VA_ARGS__);                \
     }                                                       \
 } while(0)
 
 /**
  * cut_assert_equal_int:
- * @expected: integer value.
- * @actual: integer value.
- * @...: format string, followed by parameters to insert into the format string (as with printf())
+ * @expected: an expected integer value.
+ * @actual: an actual integer value.
+ * @...: format string, followed by parameters to insert
+ * into the format string (as with printf())
  *
- *
+ * Passes if @expected == @actual.
  */
 #define cut_assert_equal_int(expected, actual, ...) do      \
 {                                                           \
@@ -139,11 +158,12 @@ extern "C" {
 
 /**
  * cut_assert_equal_uint:
- * @expected: integer value.
- * @actual: integer value.
- * @...: format string, followed by parameters to insert into the format string (as with printf())
+ * @expected: an expected unsigned integer value.
+ * @actual: an actual unsigned integer value.
+ * @...: format string, followed by parameters to insert
+ * into the format string (as with printf())
  *
- *
+ * Passes if @expected == @actual.
  */
 #define cut_assert_equal_uint(expected, actual, ...) do     \
 {                                                           \
@@ -163,12 +183,13 @@ extern "C" {
 
 /**
  * cut_assert_equal_double:
- * @expected: integer value.
- * @error: integer value.
- * @actual: integer value.
- * @...: format string, followed by parameters to insert into the format string (as with printf())
+ * @expected: an expected float value.
+ * @error: an float value that specifies error range.
+ * @actual: an actual float value.
+ * @...: format string, followed by parameters to insert
+ * into the format string (as with printf())
  *
- *
+ * Passes if (@expected - @error) <= @actual <= (@expected + @error).
  */
 #define cut_assert_equal_double(expected, error, actual, ...) do        \
 {                                                                       \
@@ -190,11 +211,13 @@ extern "C" {
 
 /**
  * cut_assert_equal_string:
- * @expected: integer value.
- * @actual: integer value.
- * @...: format string, followed by parameters to insert into the format string (as with printf())
+ * @expected: an expected string value.
+ * @actual: an expected string value.
+ * @...: format string, followed by parameters to insert
+ * into the format string (as with printf())
  *
- *
+ * Passes if both @expected and @actual are not NULL and
+ * strcmp(@expected, @actual) == 0.
  */
 #define cut_assert_equal_string(expected, actual, ...) do               \
 {                                                                       \
@@ -212,6 +235,16 @@ extern "C" {
     }                                                                   \
 } while(0)
 
+/**
+ * cut_assert_equal_string_or_null:
+ * @expected: an expected string value.
+ * @actual: an expected string value.
+ * @...: format string, followed by parameters to insert
+ * into the format string (as with printf())
+ *
+ * Passes if both @expected and @actual are NULL or
+ * strcmp(@expected, @actual) == 0.
+ */
 #define cut_assert_equal_string_or_null(expected, actual, ...) do       \
 {                                                                       \
     const char *_expected = (expected);                                 \
@@ -240,6 +273,18 @@ extern "C" {
     }                                                                   \
 } while(0)
 
+/**
+ * cut_assert_equal_memory:
+ * @expected: an expected data.
+ * @expected_size: a size of @expected.
+ * @actual: an actual data.
+ * @actual_size: a size of @actual.
+ * @...: format string, followed by parameters to insert
+ * into the format string (as with printf())
+ *
+ * Passes if @expected_size == @actual_size and
+ * memcmp(@expected, @actual, @expected_size) == 0.
+ */
 #define cut_assert_equal_memory(expected, expected_size,                \
                                 actual, actual_size, ...) do            \
 {                                                                       \
@@ -262,6 +307,16 @@ extern "C" {
     }                                                                   \
 } while(0)
 
+/**
+ * cut_assert_equal_string_array:
+ * @expected: an expected NULL-terminated array of strings.
+ * @actual: an actual NULL-terminated array of strings.
+ * @...: format string, followed by parameters to insert
+ * into the format string (as with printf())
+ *
+ * Passes if both @expected and @actual is not NULL and
+ * have same content (strcmp() == 0) strings.
+ */
 #define cut_assert_equal_string_array(expected, actual, ...) do         \
 {                                                                       \
     const char **_expected = (const char **)(expected);                 \
@@ -280,6 +335,19 @@ extern "C" {
     }                                                                   \
 } while(0)
 
+/**
+ * cut_assert_operator:
+ * @lhs: a left hand side value.
+ * @operator: a binary operator.
+ * @rhs: a right hand side value.
+ * @...: format string, followed by parameters to insert
+ * into the format string (as with printf())
+ *
+ * Passes if (@lhs @operator @rhs) is TRUE.
+ *
+ * e.g.
+ *   cut_assert_operator(1, <, 2) -> (1 < 2)
+ */
 #define cut_assert_operator(lhs, operator, rhs, ...) do                 \
 {                                                                       \
     if ((lhs) operator (rhs)) {                                         \
@@ -292,6 +360,19 @@ extern "C" {
     }                                                                   \
 } while(0)
 
+/**
+ * cut_assert_operator_int:
+ * @lhs: a left hand side integer value.
+ * @operator: a binary operator.
+ * @rhs: a right hand side integer value.
+ * @...: format string, followed by parameters to insert
+ * into the format string (as with printf())
+ *
+ * Passes if (@lhs @operator @rhs) is TRUE.
+ *
+ * e.g.
+ *   cut_assert_operator_int(1, <, 2) -> (1 < 2)
+ */
 #define cut_assert_operator_int(lhs, operator, rhs, ...) do             \
 {                                                                       \
     long _lhs = (lhs);                                                  \
@@ -308,6 +389,19 @@ extern "C" {
     }                                                                   \
 } while(0)
 
+/**
+ * cut_assert_equal:
+ * @function: a function that compares @actual with @expected.
+ * @expected: an expected value.
+ * @actual: an actual value.
+ * @...: format string, followed by parameters to insert
+ * into the format string (as with printf())
+ *
+ * Passes if @function(@expected, @actual) returns TRUE.
+ *
+ * e.g.
+ *   cut_assert_equal(strcmp, "abc", "abc") -> Pass
+ */
 #define cut_assert_equal(function, expected, actual, ...) do            \
 {                                                                       \
     if (function(expected, actual)) {                                   \

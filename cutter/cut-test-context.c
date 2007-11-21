@@ -409,7 +409,7 @@ cut_test_context_inspect_string_array (CutTestContext *context,
     const char **string, **next_string;
 
     if (!strings)
-        return "";
+        return "(null)";
 
     inspected = g_string_new("[");
     string = strings;
