@@ -23,7 +23,7 @@ cut-assertions
 </para>
 
 @format: 
-@...: format string, followed by parameters to insert into the format string (as with printf())
+@...: 
 
 
 <!-- ##### MACRO cut_fail ##### -->
@@ -32,7 +32,7 @@ cut-assertions
 </para>
 
 @format: 
-@...: format string, followed by parameters to insert into the format string (as with printf())
+@...: 
 
 
 <!-- ##### MACRO cut_pending ##### -->
@@ -41,7 +41,7 @@ cut-assertions
 </para>
 
 @format: 
-@...: format string, followed by parameters to insert into the format string (as with printf())
+@...: 
 
 
 <!-- ##### MACRO cut_notify ##### -->
@@ -50,7 +50,7 @@ cut-assertions
 </para>
 
 @format: 
-@...: format string, followed by parameters to insert into the format string (as with printf())
+@...: 
 
 
 <!-- ##### MACRO cut_assert ##### -->
@@ -59,7 +59,7 @@ cut-assertions
 </para>
 
 @expression: 
-@...: optinal format string, followed by parameters to insert into the format string (as with printf())
+@...: 
 
 
 <!-- ##### MACRO cut_assert_null ##### -->
@@ -67,8 +67,8 @@ cut-assertions
 
 </para>
 
-@actual: 
-@...: optinal format string, followed by parameters to insert into the format string (as with printf())
+@expression: 
+@...: 
 
 
 <!-- ##### MACRO cut_assert_not_null ##### -->
@@ -76,7 +76,7 @@ cut-assertions
 
 </para>
 
-@actual: 
+@expression: 
 @...: 
 
 
@@ -87,7 +87,7 @@ cut-assertions
 
 @expected: 
 @actual: 
-@...: optinal format string, followed by parameters to insert into the format string (as with printf())
+@...: 
 
 
 <!-- ##### MACRO cut_assert_equal_double ##### -->
@@ -98,7 +98,7 @@ cut-assertions
 @expected: 
 @error: 
 @actual: 
-@...: optinal format string, followed by parameters to insert into the format string (as with printf())
+@...: 
 
 
 <!-- ##### MACRO cut_assert_equal_string ##### -->
@@ -108,7 +108,7 @@ cut-assertions
 
 @expected: 
 @actual: 
-@...: optinal format string, followed by parameters to insert into the format string (as with printf())
+@...: 
 
 
 <!-- ##### MACRO cut_assert_equal_string_or_null ##### -->
@@ -118,7 +118,7 @@ cut-assertions
 
 @expected: 
 @actual: 
-@...: optinal format string, followed by parameters to insert into the format string (as with printf())
+@...: 
 
 
 <!-- ##### MACRO cut_assert_equal_memory ##### -->
@@ -130,7 +130,7 @@ cut-assertions
 @expected_size: 
 @actual: 
 @actual_size: 
-@...: optinal format string, followed by parameters to insert into the format string (as with printf())
+@...: 
 
 
 <!-- ##### MACRO cut_assert_equal_string_array ##### -->
@@ -140,7 +140,7 @@ cut-assertions
 
 @expected: 
 @actual: 
-@...: optinal format string, followed by parameters to insert into the format string (as with printf())
+@...: 
 
 
 <!-- ##### MACRO cut_assert_operator ##### -->
@@ -151,7 +151,7 @@ cut-assertions
 @lhs: 
 @operator: 
 @rhs: 
-@...: optinal format string, followed by parameters to insert into the format string (as with printf())
+@...: 
 
 
 <!-- ##### MACRO cut_assert_operator_int ##### -->
@@ -162,7 +162,7 @@ cut-assertions
 @lhs: 
 @operator: 
 @rhs: 
-@...: optinal format string, followed by parameters to insert into the format string (as with printf())
+@...: 
 
 
 <!-- ##### MACRO cut_assert_equal ##### -->
@@ -173,6 +173,6 @@ cut-assertions
 @function: 
 @expected: 
 @actual: 
-@...: optinal format string, followed by parameters to insert into the format string (as with printf())
+@...: 
 
 
