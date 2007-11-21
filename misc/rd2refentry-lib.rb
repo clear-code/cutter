@@ -28,7 +28,7 @@ module RD
       ret = ""
       ret << "#{xml_decl}\n"
       ret << "#{doctype_decl}\n"
-      ret << "<refentry id=\"#{ARGF.filename}\">\n"
+      ret << "<refentry id=\"tutorial\">\n"
       ret << "#{ref_meta}\n"
       ret << "#{ref_name_div}\n"
       ret << collect_section_contents(contents).join("\n\n")
@@ -37,6 +37,9 @@ module RD
     end
 
     def apply_to_Headline(element, title)
+      if element.level == 1
+        @title, @purpose = title.join.split(/\B---\B/, 2)
+      end
       [:headline, element.level - 1, title]
     end
 
@@ -103,14 +106,14 @@ module RD
 
     def ref_meta
       tag("refmeta", {},
-          tag("refentrytitle", {}, h(@title)),
+          tag("refentrytitle", {}, @title),
           tag("refmiscinfo", {}, h("Cutter Library")))
     end
 
     def ref_name_div
       tag("refnamediv", {},
-          tag("refname", {}, h(@title)),
-          tag("refpropose", {}, "Puropose"))
+          tag("refname", {}, @title),
+          tag("refpurpose", {}, @purpose))
     end
 
     def is_this_textblock_only_one_block_of_parent_listitem?(element)
@@ -180,7 +183,7 @@ module RD
         end
         if !sub_section_contents.empty?
           tagged_contents = tag("refsect#{level}", {}, *sub_section_contents)
-          section_contents << tagged_contents
+          section_contents << [level, [], tagged_contents]
           if level > 0
             contents = tagged_contents
           else

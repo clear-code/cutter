@@ -1,8 +1,14 @@
+2007-11-21  Kouhei Sutou  <kou@cozmixng.org>
+
+	* doc/reference/: used tutorial.xml.
+
+	* misc/rd2refentry-lib.rb, TUTORIAL.ja: supported title and purpose.
+
 2007-11-21  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/module/runner/cut-runner-gtk.c: Run test suite with thread.
 
-21  Kouhei Sutou  <kou@cozmixng.org>
+2007-11-21  Kouhei Sutou  <kou@cozmixng.org>
 
 	* misc/rd2refentry-lib.rb: added.
 

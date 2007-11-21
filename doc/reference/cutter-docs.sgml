@@ -8,14 +8,13 @@
     <releaseinfo>for Cutter &version;</releaseinfo>
   </bookinfo>
 
-<!--
   <part>
     <title>Tutorial</title>
     <chapter id="Start">
       <title>Getting start</title>
+      <xi:include href="tutorial.xml"/>
     </chapter>
   </part>
--->
 
   <part>
     <title>Reference</title>

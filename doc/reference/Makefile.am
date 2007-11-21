@@ -59,7 +59,8 @@ HTML_IMAGES =
 
 # Extra SGML files that are included by $(DOC_MAIN_SGML_FILE)
 content_files =				\
-	version.xml
+	version.xml			\
+	tutorial.xml
 
 # Extra options to supply to gtkdoc-fixref
 FIXXREF_OPTIONS=
