@@ -53,12 +53,11 @@ After the above, we get the following directory hierarchy:
           |
           +- test/ for tests
 
-== GNUビルドシステム化
+== Use GNU build system
 
-GNUビルドシステムでは、コマンドを実行し、いくつかのファイルを
-自動生成する。これらのコマンドは、autogen.shというシェルスク
-リプトを作成し、そこから呼び出すのが一般的である。ここでも、
-その慣習に従う。
+In GNU build system start-up, some commands are ran and they
+generates some files automatically. They usually are run
+from an authgen.sh shell script. We follow the convention.
 
 autogen.sh:
   #!/bin/sh
@@ -78,26 +77,28 @@ autogen.sh:
   run automake --add-missing --foreign --copy
   run autoconf
 
-autogen.shに実行権を付けることを忘れないこと。
+Don't forget to make the autogen.sh executable.
 
   [stack]% chmod +x autogen.sh
 
-run()はコマンドの実行結果を確認するための便利のための関数で
-ある。実行しているコマンドはそれぞれ以下のためである。
+run() is a convenience function to confirm a result of ran
+command. The following list shows what is done by them:
 
-  * aclocal: Automakeが利用するマクロをaclocal.m4に集める
-  * libtoolize: libtoolを使用するために必要なファイルを用意
-  * autoheader: configureスクリプトが利用するconfig.h.inファイルを作成
-  * automake: configureスクリプトが利用するMakefile.inを生成
-  * autoconf: configureスクリプトを生成
+  * aclocal: collects macros that is used by Automake into aclocal.m4.
+  * libtoolize: prepares files that is needed by libtool.
+  * autoheader: generates config.h.in that is used by
+    configure script.
+  * automake: generates Makefile.in that is used by
+    configure script.
+  * autoconf: generates configure scripts.
 
-この時点でautogen.shを実行すると以下のようになる。
+The following is a result of autogen.sh at this point:
 
   [stack]% ./autogen.sh
   aclocal: `configure.ac' or `configure.in' is required
   Failed aclocal
 
-Autoconf用のファイルであるconfigure.acを用意する必要がある。
+We need to prepare configure.ac that is for Autoconf.
 
 === configure.ac
 
