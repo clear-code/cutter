@@ -152,11 +152,12 @@ point:
 But for now, nothing is to happen because we doesn't have
 any items that are needed to build or install.
 
-== はじめてのテスト作成
+== First test writing
 
-最低限のビルド環境が整ったので、テストの作成にはいる。まずは、
-新しく作ったばかりのスタックは空であることをテストする。コー
-ドにすると以下の通りである。
+We can write a test because we got a minimal build
+environment. First, we test that a newly created statck
+should be empty. The following code representes this test in
+C:
 
   void
   test_new_stack (void)
@@ -169,7 +170,8 @@ any items that are needed to build or install.
           FAIL;
   }
 
-ここでは、上記のテストをCutterのテストとして動作させる。
+We change this test code to be able to run as a test code
+for Cutter.
 
 === テストプログラムの作成
 
