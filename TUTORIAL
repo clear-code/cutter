@@ -36,8 +36,8 @@ There are source codes of this program in sample/stack/.
 First, we need to setup a directory for our stack
 program. We use 'stack' as the directory name.
 
-  % mkdir -p ~/work/c/stack
-  % cd stack
+  % mkdir -p /tmp/stack
+  % cd /tmp/stack
 
 Next, we make some directories: config/ that is for build
 auxiliary files, src/ that is for our source files and test/
@@ -192,6 +192,8 @@ test/test-stack.c:
 Next, we write a test with the stack API:
 
 test/test-stack.c:
+  void test_new_stack (void);
+
   void
   test_new_stack (void)
   {
@@ -222,48 +224,50 @@ test/test-stack.c:
       cut_assert(stack_is_empty(stack));
   }
 
-=== テストのビルド
+=== Build a test
 
-Cutterの各テストは共有ライブラリになる。上記で作成したテスト
-を共有ライブラリとしてビルドするために、Makefile.amを変更す
-る。
+Each test programs for Cutter are shared libraries. To build
+the above test program as shared library, we change
+Makefile.am.
 
-==== test/以下でのビルド設定
+==== Build configuration in test/
 
-現在のMakefile.amは空である。サブディレクトリであるtest/以下
-のtest/test-stack.cをビルドするためにはMakefile.amにtest/以
-下がサブディレクトリとして存在することを指定する。
+Makefile.am is empty for now. To build test/test-stack.c in
+test/ directory, we need to specify that there is test/
+directory as sub directory in Makefile.am.
 
 Makefile.am:
   SUBDIRS = test
 
-Makefile.amを変更した後にmakeを実行すると、makeがMakefile.am
-の変更を検出し、Makefileなどを自動的に更新する。
+make will detect Makefile.am is changed and update Makefile
+and so on automatically after we change Makefile.am and run
+make.
 
   [stack]% % make
-   cd . && /bin/sh /home/kou/work/c/cutter/sample/stack/config/missing --run automake-1.9 --foreign  Makefile
+   cd . && /bin/sh /tmp/stack/config/missing --run automake-1.9 --foreign  Makefile
    cd . && /bin/sh ./config.status Makefile 
   config.status: creating Makefile
   Making all in test
-  make[1]: ディレクトリ `/home/kou/work/c/cutter/sample/stack/test' に入ります
-  make[1]: *** ターゲット `all' を make するルールがありません.  中止.
-  make[1]: ディレクトリ `/home/kou/work/c/cutter/sample/stack/test' から出ます
-  make: *** [all-recursive] エラー 1
+  config.status: creating Makefile
+  Making all in test
+  make[1]: Entering directory `/tmp/stack/test'
+  make[1]: *** No rule to make target `all'.  Stop.
+  make[1]: Leaving directory `/tmp/stack/test'
+  make: *** [all-recursive] Error 1
 
-test/以下もビルドしにいこうとしているのがわかる。ただし、
-test/Makefileがないためtest/以下でのビルドは失敗している。
+We find that make go down to test/ to build. But make is
+failed in test/ because test/Makefile doesn't exist.
 
-test/以下でビルドを行うようにするため、test/Makefile.amを作
-成する。また、configureでtest/Makefileを生成するように指定す
-る。
+To build in test/, we will make test/Makefile.am and indicate
+configure.ac to generate test/Makefile.
 
-test/以下でのmakeが失敗しないようにするには、空の
-test/Makefile.amでもよい。
+An empty test/Makefile.am is OK for just protecting make
+failure in test/.
 
   [stack]% touch test/Makefile.am
 
-あとはconfigure.acにtest/Makefileを生成するように指定すれば
-makeは通るようになる。
+Next, we indicate configure.ac to generate
+test/Makefile. Now, make will be done successfully.
 
 configure.ac:
   ...
@@ -276,17 +280,18 @@ test/Makefileが生成され、test/以下でのmakeが失敗しなくなる。
 
   [stack]% make
   ...
+  config.status: creating Makefile
   config.status: creating test/Makefile
   config.status: creating src/config.h
   config.status: src/config.h is unchanged
   config.status: executing depfiles commands
   Making all in test
-  make[1]: ディレクトリ `/home/kou/work/c/cutter/sample/stack/test' に入ります
-  make[1]: `all' に対して行うべき事はありません.
-  make[1]: ディレクトリ `/home/kou/work/c/cutter/sample/stack/test' から出ます
-  make[1]: ディレクトリ `/home/kou/work/c/cutter/sample/stack' に入ります
-  make[1]: `all-am' に対して行うべき事はありません.
-  make[1]: ディレクトリ `/home/kou/work/c/cutter/sample/stack' から出ます
+  make[1]: Entering directory `/tmp/stack/test'
+  make[1]: Nothing to be done for `all'.
+  make[1]: Leaving directory `/tmp/stack/test'
+  make[1]: Entering directory `/tmp/stack'
+  make[1]: Nothing to be done for `all-am'.
+  make[1]: Leaving directory `/tmp/stack'
 
 ==== test/test_stack.soのビルド
 

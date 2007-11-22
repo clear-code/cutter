@@ -248,9 +248,9 @@ Makefile.amを変更した後にmakeを実行すると、makeがMakefile.am
 test/以下もビルドしにいこうとしているのがわかる。ただし、
 test/Makefileがないためtest/以下でのビルドは失敗している。
 
-test/以下でビルドを行うようにするため、test/Makefile.amを作
-成する。また、configureでtest/Makefileを生成するように指定す
-る。
+test/以下でビルドを行うようにするため、test/Makefile.amを作成
+する。また、configureがtest/Makefileを生成するように
+configure.acに指定する。
 
 test/以下でのmakeが失敗しないようにするには、空の
 test/Makefile.amでもよい。
