@@ -120,7 +120,7 @@ module RD
     end
 
     def pre_collect_section_contents(contents)
-      section_contents = [[0, [], []]]
+      section_contents = [[0, []]]
       contents.each do |content|
         if content.is_a?(Array) and content[0] == :headline
           _, level, title = content
@@ -131,7 +131,8 @@ module RD
             sub_section_contents.unshift(tag("refsect#{sub_level}", {},
                                              *sub_contents.flatten) + "\n")
           end
-          section_contents << [level, [title_tag], sub_section_contents]
+          section_contents.last[1].concat(sub_section_contents)
+          section_contents << [level, [title_tag]]
         else
           section_contents.last[1] << content
         end
@@ -144,13 +145,15 @@ module RD
       section_contents.last[0].downto(0) do |level|
         sub_section_contents = []
         while section_contents.last[0] > level
-          sub_level, *sub_contents = section_contents.pop
+          sub_level, sub_contents = section_contents.pop
           sub_section_contents.unshift(tag("refsect#{sub_level}", {},
-                                           *sub_contents.flatten))
+                                           *sub_contents))
         end
-        if !sub_section_contents.empty?
-          tagged_contents = tag("refsect#{level}", {}, *sub_section_contents)
-          section_contents << [level, [], tagged_contents]
+        unless sub_section_contents.empty?
+          raise "!?" unless section_contents.last[0] == level
+          _, contents = section_contents.pop
+          tagged_contents = tag("refsect#{level}", {},
+                                *(contents + sub_section_contents))
           if level > 0
             contents = tagged_contents
           else
