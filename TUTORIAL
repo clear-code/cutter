@@ -102,7 +102,7 @@ We need to prepare configure.ac that is for Autoconf.
 
 === configure.ac
 
-autogen.shのための最低限のconfigure.acは以下の通りである。
+The following is a minimum configure.ac for our autogen.sh.
 
 configure.ac:
   AC_PREREQ(2.59)
@@ -119,8 +119,8 @@ configure.ac:
 
   AC_OUTPUT
 
-configure.acを用意してもう一度autogen.shを実行すると以下のよ
-うになる。
+The following is a result of autogen after preparing
+configure.ac.
 
   [stack]% ./autogen.sh
   Putting files in AC_CONFIG_AUX_DIR, `config'.
@@ -129,7 +129,7 @@ configure.acを用意してもう一度autogen.shを実行すると以下のよ
   automake: no `Makefile.am' found for any configure output
   Failed automake --add-missing --foreign --copy
 
-今度はAutomakeのためにMakefile.amを用意する必要がある。
+We need to prepare Makefile.am for Automake.
 
 === Makefile.am
 
