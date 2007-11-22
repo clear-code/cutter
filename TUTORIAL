@@ -31,27 +31,27 @@ into your system.
 
 There are source codes of this program in sample/stack/.
 
-== ディレクトリ構成
+== Directory hierarchy
 
-まず、プログラムを作成するためのディレクトリを用意する。ディ
-レクトリはstackとする。
+First, we need to setup a directory for our stack
+program. We use 'stack' as the directory name.
 
   % mkdir -p ~/work/c/stack
   % cd stack
 
-続いて、stack/ディレクトリ以下にビルド補助ファイル用ディレク
-トリconfig/、プログラム用ディレクトリsrc/、テストプログラム用
-ディレクトリtest/を作成する。
+Next, we make some directories: config/ that is for build
+auxiliary files, src/ that is for our source files and test/
+that is for tests.
 
   [stack]% mkdir config src test
 
-つまり、ディレクトリ構成は以下のようになる。
+After the above, we get the following directory hierarchy:
 
-  stack/ -+- config/ ビルド補助用ディレクトリ
+  stack/ -+- config/ for build auxiliary files
           |
-          +- src/ ソースファイル用ディレクトリ
+          +- src/ for source files
           |
-          +- test/ テストプログラム用ディレクトリ
+          +- test/ for tests
 
 == GNUビルドシステム化
 
