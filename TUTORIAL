@@ -133,23 +133,24 @@ We need to prepare Makefile.am for Automake.
 
 === Makefile.am
 
-autogen.shのためだけであれば空のMakefile.amで構わない。
+An empty Makefile.am is enough if the Makefile.am is just
+only for autogen.sh.
 
   [stack]% touch Makefile.am
   [stack]% ./autogen.sh
   Putting files in AC_CONFIG_AUX_DIR, `config'.
 
-これでconfigureスクリプトが生成される。この時点で一般的なソ
-フトウェアのようにconfigure; make; make installができるよう
-になる。
+A configure script can be generated. We can do 'configure;
+make; make install' like many popular softwares at this
+point:
 
   [stack]% ./configure
   ...
   [stack]% make
   [stack]% make install
 
-ただし、ビルドするものもインストールするものも何もないため、
-今は何も起きない。
+But for now, nothing is to happen because we doesn't have
+any items that are needed to build or install.
 
 == はじめてのテスト作成
 
