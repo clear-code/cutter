@@ -2,33 +2,34 @@
 
 = Tutorial --- How to use Cutter
 
-== はじめに
+== Introduction
 
-スタックを実現するプログラム（ライブラリ）をC言語で作成する。
-プログラム作成はテストを作成しながら行う。テストの作成にはC
-言語用のテスティングフレームワークであるCutterを用いる。
+We write a program (library) that implements a stack in C.
+We write a program with writing tests. To write tests, we
+use Cutter that is an unit testing framework for C.
 
-プログラムのビルドシステムにはGNUビルドシステム（GNU
-Autoconf/GNU Automake/GNU Libtool）を使用する。GNUビルドシス
-テムはビルド環境の差異を吸収する。これによりプログラム・テス
-トを複数の環境で容易にビルドできるようになる。
+We use GNU build system (GNU Autoconf/GNU Automake/GNU
+Libtool) for build system. GNU build system lessens
+disparities on build environment. For this reason, we can
+build our program and tests on several environment easily.
 
-大きなコストをかけずにプログラム本体が複数の環境で動作するの
-であれば、その方がよい。さらにテストもその環境で動作するのな
-らば、プログラム本体がその環境で正しく動作することを容易に検
-証できる。プログラム本体だけではなく、テストも複数の環境で容
-易に動作することは重要である。
+It's better that a program works on several environment
+without many costs. If tests of the program works on the
+environment too, we can verify the program works well on the
+environment easily. It's important that both a program and
+tests are works well on several environment easily.
 
-Cutterが依存しているライブラリはGLibのみである。GLibはUNIX系
-のシステムだけではなく、WindowsやMac OS X上でも動作する移植
-性の高いライブラリである。CutterはGLibを利用することにより移
-植性の高い状態を保ちつつ豊富なテスト支援機能を提供するxUnit
-系のテスティングフレームワークである。
+Cutter requires only GLib. GLib is a very portable library
+that works on not only UNIX-like system but also Windows and
+Mac OS X. Cutter provides many useful test support features
+with portability due to GLib. Cutter is a testing framework
+and respects to xUnit style.
 
-以下、スタックを作成しながらCutterの使い方について述べる。
-なお、Cutterはインストールされているものとする。
+We will learn how to use Cutter with writing a stack
+implementation. We assume that Cutter is already installed
+into your system.
 
-このプログラムのソースコード一式はsample/stack/以下にある。
+There are source codes of this program in sample/stack/.
 
 == ディレクトリ構成
 
