@@ -44,13 +44,7 @@ module RD
     end
 
     def apply_to_TextBlock(element, contents)
-      content = contents.join("")
-      if (is_this_textblock_only_one_block_of_parent_listitem?(element) or
-	  is_this_textblock_only_one_block_other_than_sublists_in_parent_listitem?(element))
-	content.chomp
-      else
-	tag("para", {}, *contents)
-      end
+      tag("para", {}, *contents)
     end
 
     def apply_to_Verbatim(element)
@@ -118,37 +112,6 @@ module RD
       tag("refnamediv", {},
           tag("refname", {}, @title),
           tag("refpurpose", {}, @purpose))
-    end
-
-    def is_this_textblock_only_one_block_of_parent_listitem?(element)
-      parent = element.parent
-      (parent.is_a?(ItemListItem) or
-       parent.is_a?(EnumListItem) or
-       parent.is_a?(DescListItem) or
-       parent.is_a?(MethodListItem)) and
-	consist_of_one_textblock?(parent)
-    end
-
-    def is_this_textblock_only_one_block_other_than_sublists_in_parent_listitem?(element)
-      parent = element.parent
-      (parent.is_a?(ItemListItem) or
-       parent.is_a?(EnumListItem) or
-       parent.is_a?(DescListItem) or
-       parent.is_a?(MethodListItem)) and
-	consist_of_one_textblock_and_sublists(element.parent)
-    end
-
-    def consist_of_one_textblock_and_sublists(element)
-      i = 0
-      element.each_child do |child|
-	if i == 0
-	  return false unless child.is_a?(TextBlock)
-	else
-	  return false unless child.is_a?(List)
-	end
-	i += 1
-      end
-      return true
     end
 
     def collect_section_contents(contents)
