@@ -173,23 +173,23 @@ C:
 We change this test code to be able to run as a test code
 for Cutter.
 
-=== テストプログラムの作成
+=== Write a test program
 
-テストプログラムはtest/以下に作成する。ここでは
-test/test-stack.cとして作成するものとする。
+A test program is put into test/. In this tutorial, we make
+a test program as test/test-stack.c.
 
-まず、Cutterを使うためにcutter.hをincludeする。
+First, we need to include cutter.h to use Cutter.
 
 test/test-stack.c:
   #include <cutter.h>
 
-また、テスト対象のスタックの実装のAPIが書かれているstack.hも
-includeする。（stack.hは後で作成する。）
+And we need to include stack.h that declares API for test target
+stack implementation. (stack.h will be made later.)
 
 test/test-stack.c:
   #include <stack.h>
 
-続いて、このスタックのAPIを用いてテストを作成する。
+Next, we write a test with the stack API:
 
 test/test-stack.c:
   void
@@ -200,13 +200,13 @@ test/test-stack.c:
       cut_assert(stack_is_empty(stack));
   }
 
-cut_assert()は引数が0ならテストが失敗、0以外ならテストが成功
-と判断するマクロである。Cutterのテストとはcut_XXX()マクロを使
-用して、特定の状況で望んだ動作をしているかを検証するプログラ
-ムを作成するということである。
+cut_assert() is a macro that fails if the first argument is
+0, passes otherwise. Writing tests with Cutter means that
+writing a program that verifies a target program works as
+we expected at the specific situation.
 
-以下に、「作成したばかりのスタックは空である」ということを検
-証するテストのソースコード全体を示す。
+The following test code is a whole test code to test "a
+newly created stack should be empty".
 
 test/test-stack.c:
   #include <cutter.h>
