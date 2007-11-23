@@ -1,3 +1,7 @@
+2007-11-23  Kouhei Sutou  <kou@cozmixng.org>
+
+	* gtk-doc.make: fixed index.sgml links.
+
 2007-11-22  Kouhei Sutou  <kou@cozmixng.org>
 
 	* misc/rd2refentry-lib.rb: removed needless codes.

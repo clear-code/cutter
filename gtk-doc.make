@@ -138,6 +138,7 @@ html-build.stamp: sgml.stamp $(CATALOGS) $(DOC_MAIN_SGML_FILE) $(content_files)
 	  done;								\
 	  ( cd $(srcdir)/$$lang/html &&					\
 	      gtkdoc-mkhtml $(DOC_MODULE) ../$(DOC_MAIN_SGML_FILE) );	\
+	  sed -i'' -e "s,/,/$$lang/,g" $(srcdir)/$$lang/html/index.sgml;\
 	  test "x$(HTML_IMAGES)" = "x" ||				\
 	    ( cd $(srcdir) && cp $(HTML_IMAGES) $$lang/html/ );		\
 	  echo 'gtk-doc: Fixing cross-references';			\
@@ -181,7 +182,7 @@ install-data-local:
 	      $(INSTALL_DATA) $$i $(DESTDIR)$(TARGET_DIR)$$target_dir;	\
 	    done;							\
 	    echo '-- Installing $(srcdir)$$dir/index.sgml';		\
-	    $(INSTALL_DATA) $(srcdir)$$dir/index.sgml 			\
+	    $(INSTALL_DATA) $(srcdir)$$dir/index.sgml			\
 	      $(DESTDIR)$(TARGET_DIR)$$target_dir || :;			\
 	    if test `which gtkdoc-rebase` != ""; then			\
 	      gtkdoc-rebase --relative --dest-dir=$(DESTDIR)		\
