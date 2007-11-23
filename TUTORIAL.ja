@@ -485,15 +485,11 @@ stack_new()が宣言されていないため警告がでるが共有ライブラ
 
 stack_new()、stack_is_empty()を宣言し、警告を解消する。
 
-  #ifndef __STACK_H__
-  #define __STACK_H__
-
-  typedef struct _Stack Stack;
-
+src/stack.h:
+  ...
   Stack *stack_new      (void);
   int    stack_is_empty (Stack *stack);
-
-  #endif
+  ...
 
 makeをして警告がでないことを確認する。
 

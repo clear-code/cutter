@@ -492,21 +492,17 @@ can build a shared library.
   [stack]% file test/.libs/test_stack.so
   test/.libs/test_stack.so: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), not stripped
 
-==== stack_new()/stack_is_empty()の宣言
+==== Declare stack_new()/stack_is_empty()
 
-stack_new()、stack_is_empty()を宣言し、警告を解消する。
+To suppress a warning, we declare stack_new() and stack_is_empty().
 
-  #ifndef __STACK_H__
-  #define __STACK_H__
-
-  typedef struct _Stack Stack;
-
+src/stack.h:
+  ...
   Stack *stack_new      (void);
   int    stack_is_empty (Stack *stack);
+  ...
 
-  #endif
-
-makeをして警告がでないことを確認する。
+We can confirm that make don't report any warnings now.
 
   [stack]% make
 
