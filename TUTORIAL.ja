@@ -336,10 +336,10 @@ automakeを実行する必要がある。これにはautogen.shを使用でき�
   test-stack.c:1:20: error: cutter.h: No such file or directory
   test-stack.c:2:19: error: stack.h: No such file or directory
   test-stack.c: In function 'test_new_stack':
-  test-stack.c:8: error: 'Stack' undeclared (first use in this function)
-  test-stack.c:8: error: (Each undeclared identifier is reported only once
-  test-stack.c:8: error: for each function it appears in.)
-  test-stack.c:8: error: 'stack' undeclared (first use in this function)
+  test-stack.c:9: error: 'Stack' undeclared (first use in this function)
+  test-stack.c:9: error: (Each undeclared identifier is reported only once
+  test-stack.c:9: error: for each function it appears in.)
+  test-stack.c:9: error: 'stack' undeclared (first use in this function)
   make[1]: *** [test-stack.lo] エラー 1
   make[1]: ディレクトリ `/home/kou/work/c/cutter/sample/stack/test' から出ます
   make: *** [all-recursive] エラー 1
@@ -414,10 +414,10 @@ test/Makefile.am:
   ...
   test-stack.c:2:19: error: stack.h: No such file or directory
   test-stack.c: In function 'test_new_stack':
-  test-stack.c:8: error: 'Stack' undeclared (first use in this function)
-  test-stack.c:8: error: (Each undeclared identifier is reported only once
-  test-stack.c:8: error: for each function it appears in.)
-  test-stack.c:8: error: 'stack' undeclared (first use in this function)
+  test-stack.c:9: error: 'Stack' undeclared (first use in this function)
+  test-stack.c:9: error: (Each undeclared identifier is reported only once
+  test-stack.c:9: error: for each function it appears in.)
+  test-stack.c:9: error: 'stack' undeclared (first use in this function)
   make[1]: *** [test-stack.lo] エラー 1
   make[1]: ディレクトリ `/home/kou/work/c/cutter/sample/stack/test' から出ます
   make: *** [all-recursive] エラー 1
@@ -447,10 +447,10 @@ makeを実行するとstack.hが読み込めないエラーが解消されてい
   [stack]% make
   ...
   test-stack.c: In function 'test_new_stack':
-  test-stack.c:8: error: 'Stack' undeclared (first use in this function)
-  test-stack.c:8: error: (Each undeclared identifier is reported only once
-  test-stack.c:8: error: for each function it appears in.)
-  test-stack.c:8: error: 'stack' undeclared (first use in this function)
+  test-stack.c:9: error: 'Stack' undeclared (first use in this function)
+  test-stack.c:9: error: (Each undeclared identifier is reported only once
+  test-stack.c:9: error: for each function it appears in.)
+  test-stack.c:9: error: 'stack' undeclared (first use in this function)
   make[1]: *** [test-stack.lo] エラー 1
   make[1]: ディレクトリ `/home/kou/work/c/cutter/sample/stack/test' から出ます
   make: *** [all-recursive] エラー 1
@@ -476,7 +476,7 @@ stack_new()が宣言されていないため警告がでるが共有ライブラ
   [stack]% make
   ...
   test-stack.c: In function 'test_new_stack':
-  test-stack.c:9: warning: assignment makes pointer from integer without a cast
+  test-stack.c:10: warning: assignment makes pointer from integer without a cast
   ...
   [stack]% file test/.libs/test_stack.so
   test/.libs/test_stack.so: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), not stripped

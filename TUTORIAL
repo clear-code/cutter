@@ -469,10 +469,9 @@ gone away if we run make again.
 
 There is only an error that Stack type isn't declared.
 
-==== Stack型の宣言
+==== Declare Stack type
 
-src/stack.hにStack型を宣言し、テストプログラムをビルドできる
-ようにする。
+To build our test program, we declare Stack type in src/stack.h.
 
 src/stack.h:
   #ifndef __STACK_H__
@@ -482,13 +481,13 @@ src/stack.h:
 
   #endif
 
-stack_new()が宣言されていないため警告がでるが共有ライブラリ
-を作成することはできる。
+We get a warning because stack_new() isn't declared but we
+can build a shared library.
 
   [stack]% make
   ...
   test-stack.c: In function 'test_new_stack':
-  test-stack.c:9: warning: assignment makes pointer from integer without a cast
+  test-stack.c:10: warning: assignment makes pointer from integer without a cast
   ...
   [stack]% file test/.libs/test_stack.so
   test/.libs/test_stack.so: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), not stripped
