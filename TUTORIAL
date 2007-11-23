@@ -436,38 +436,38 @@ builds with Cutter configuration after the above changes.
 
 An error that reports "cutter.h can't be included" is gone away.
 
-==== スタックAPIの作成
+==== Make stack API
 
-次はstack.hが読み込めないエラーを解消する。
+We will fix an error that stack.h can't be included.
 
-スタックの実装はsrc/以下に作成するので、スタックのAPIである
-stack.hはsrc/stack.hに置く。
+We put stack.h into src/stack.h because we make a stack
+implementation in src/.
 
   [stack]% touch src/stack.h
 
-インクルードパスを設定し、テストプログラムからstack.hを読み
-込めるようにする。
+To include stack.h from test program, we configure include
+path:
 
 test/Makefile.am:
   ...
   INCLUDES = $(CUTTER_CFLAGS) -I$(top_srcdir)/src
   ...
 
-makeを実行するとstack.hが読み込めないエラーが解消されている
-のが分かる。
+We will find that an error that stack.h can't be included is
+gone away if we run make again.
 
   [stack]% make
   ...
   test-stack.c: In function 'test_new_stack':
-  test-stack.c:8: error: 'Stack' undeclared (first use in this function)
-  test-stack.c:8: error: (Each undeclared identifier is reported only once
-  test-stack.c:8: error: for each function it appears in.)
-  test-stack.c:8: error: 'stack' undeclared (first use in this function)
-  make[1]: *** [test-stack.lo] エラー 1
-  make[1]: ディレクトリ `/home/kou/work/c/cutter/sample/stack/test' から出ます
-  make: *** [all-recursive] エラー 1
+  test-stack.c:9: error: 'Stack' undeclared (first use in this function)
+  test-stack.c:9: error: (Each undeclared identifier is reported only once
+  test-stack.c:9: error: for each function it appears in.)
+  test-stack.c:9: error: 'stack' undeclared (first use in this function)
+  make[1]: *** [test-stack.lo] Error 1
+  make[1]: Leaving directory `/tmp/stack/test'
+  make: *** [all-recursive] Error 1
 
-残りのエラーがStack型が宣言されていないことだけになった。
+There is only an error that Stack type isn't declared.
 
 ==== Stack型の宣言
 
