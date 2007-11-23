@@ -360,13 +360,14 @@ But there are the above errors because we don't setup to use
 Cutter yet. And we can't include stack.h because we don't
 have a stack implementation yet.
 
-==== Cutterの使用
+==== Use Cutter
 
-まずは、cutter.hを読み込めるようにする。Cutterは一般的なパッ
-ケージ情報管理ツールpkg-configを使用している。そのため、容易
-にGNUビルドシステムから利用することができる。
+We will support cutter.h including. Cutter uses pkg-config
+that is a popular package information management
+tool. Because of this, we can use Cutter with GNU build
+system.
 
-まず、configure.acにCutterを検出するコードを追加する。
+First, we add a code to detect Cutter into configure.ac.
 
 configure.ac:
   ...
@@ -378,7 +379,7 @@ configure.ac:
                    test/Makefile])
   ...
 
-また、test/Makefile.amでは検出したCutter用の設定を利用する。
+We use detected Cutter information in test/Makefile.am:
 
 test/Makefile.am:
   ...
@@ -386,8 +387,7 @@ test/Makefile.am:
   LIBS = $(CUTTER_LIBS)
   ...
 
-現時点での完全なconfigure.acとtest/Makefile.amは以下のように
-なる。
+The followings are the current whole configure.ac and test/Makefile.am:
 
 configure.ac:
   AC_PREREQ(2.59)
@@ -419,22 +419,22 @@ test/Makefile.am:
 
   test_stack_la_SOURCES = test-stack.c
 
-変更後、makeを実行すると自動的にconfigureが実行され、Cutter
-を利用したビルドが行われる。
+We run make again and make runs configure automatically and
+builds with Cutter configuration after the above changes.
 
   [stack]% make
   ...
   test-stack.c:2:19: error: stack.h: No such file or directory
   test-stack.c: In function 'test_new_stack':
-  test-stack.c:8: error: 'Stack' undeclared (first use in this function)
-  test-stack.c:8: error: (Each undeclared identifier is reported only once
-  test-stack.c:8: error: for each function it appears in.)
-  test-stack.c:8: error: 'stack' undeclared (first use in this function)
-  make[1]: *** [test-stack.lo] エラー 1
-  make[1]: ディレクトリ `/home/kou/work/c/cutter/sample/stack/test' から出ます
-  make: *** [all-recursive] エラー 1
+  test-stack.c:9: error: 'Stack' undeclared (first use in this function)
+  test-stack.c:9: error: (Each undeclared identifier is reported only once
+  test-stack.c:9: error: for each function it appears in.)
+  test-stack.c:9: error: 'stack' undeclared (first use in this function)
+  make[1]: *** [test-stack.lo] Error 1
+  make[1]: Leaving directory `/tmp/stack/test'
+  make: *** [all-recursive] Error 1
 
-cutter.hが読み込めないというエラーがなくなった。
+An error that reports "cutter.h can't be included" is gone away.
 
 ==== スタックAPIの作成
 
