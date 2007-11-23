@@ -506,24 +506,24 @@ We can confirm that make don't report any warnings now.
 
   [stack]% make
 
-=== テスト起動
+=== Run test
 
-共有ライブラリが作成できたので、cutterコマンドでこのテストを
-起動できる。
+Now, we can run a test because we got a shared library.
 
   [stack]% cutter test/
   cutter: symbol lookup error: test/.libs/test_stack.so: undefined symbol: stack_new
 
-stack_new()が定義されていないため読み込みに失敗するが、テス
-トプログラムが読み込まれることは確認できる。
+Loading our test is failed due to undefined stack_new() but
+we can confirm that our test is loaded.
 
-==== テスト起動の自動化
+==== Automate running test
 
-GNUビルドシステムでは一般的にmake checkでテストが起動する。
-スタックの実装でも同様にテストが起動するようにする。
+GNU build system use 'make check' to run test. We follow
+the convention in our stack implementation.
 
-まず、テストを起動するスクリプトtest/run-test.shを作成する。
-cutterコマンドのパスは環境変数CUTTERで受け取ることにする。
+First, we make a script test/run-test.sh that runs our
+test. A path of cutter command is passed from environment
+variable CUTTER.
 
 test/run-test.sh:
   #!/bin/sh
@@ -531,22 +531,22 @@ test/run-test.sh:
   export BASE_DIR="`dirname $0`"
   $CUTTER --color=auto -s $BASE_DIR "$@" $BASE_DIR
 
-実行権を付けることを忘れないこと。
+Don't forget to make the test/run-test.sh executable.
 
   [stack]% chmod +x test/run-test.sh
 
-test/Makefile.amにテスト起動スクリプトとしてtest/run-test.sh
-を使うことを指定する。
+We need to specify that we use test/run-test.sh as a test
+runner script to test/Makefile.am.
 
 test/Makefile.am:
   TESTS = run-test.sh
   TESTS_ENVIRONMENT = CUTTER="$(CUTTER)"
   ...
 
-TESTS_ENVIRONMENTではcutterコマンドのパスを環境変数CUTTERで
-渡している。cutterコマンドのパスはconfigureで検出する。
-cutterコマンドのパスを検出するために、configure.acに以下を追
-加する。
+We pass a path of cutter command via environment variable
+CUTTER in TESTS_ENVIRONMENT. A path of cutter command is
+detected by configure. The following code is for detecting a
+path of cutter command.
 
 configure.ac:
   ...
@@ -581,7 +581,7 @@ configure.ac:
 
   AC_OUTPUT
 
-make checkでテストが走ることを確認する。
+We can confirm that 'make check' runs our test.
 
   [stack]% make check
   ...
