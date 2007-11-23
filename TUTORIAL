@@ -243,7 +243,7 @@ make will detect Makefile.am is changed and update Makefile
 and so on automatically after we change Makefile.am and run
 make.
 
-  [stack]% % make
+  [stack]% make
    cd . && /bin/sh /tmp/stack/config/missing --run automake-1.9 --foreign  Makefile
    cd . && /bin/sh ./config.status Makefile 
   config.status: creating Makefile
@@ -275,8 +275,8 @@ configure.ac:
                    test/Makefile])
   ...
 
-実際にmakeを実行すると自動で再びconfigureが走り、
-test/Makefileが生成され、test/以下でのmakeが失敗しなくなる。
+If we run make again, make re-runs configure and
+test/Makefile is generated. Now make doesn't fail in test/.
 
   [stack]% make
   ...
@@ -293,68 +293,72 @@ test/Makefileが生成され、test/以下でのmakeが失敗しなくなる。
   make[1]: Nothing to be done for `all-am'.
   make[1]: Leaving directory `/tmp/stack'
 
-==== test/test_stack.soのビルド
+==== Build test/test_stack.so
 
-それではtest/test-stack.cを共有ライブラリとしてビルドできる
-ようにtest/Makefile.amを編集する。テスト用の共有ライブラリは
-「test_」から始まる名前にする（「test_」の前に「lib」が付い
-ても良い）。また、テストプログラムはインストールする必要がな
-いため「noinst_」を使う。
+We will edit test/Makefile.am to build test/test-stack.c as
+a shared library. A shared library for test should be named
+as "test_" prefix. (It's OK if "lib" is prepended to "test_"
+prefix.) We use "noinst_" because a test program isn't
+needed to be installed.
 
 test/Makefile.am:
   noinst_LTLIBRARIES = test_stack.la
 
-テストの共有ライブラリはCutterが提供するテスト実行コマンド
-cutterから動的に読み込まれる。動的に読み込まれる共有ライブラ
-リは、libtoolに-moduleオプションを渡す必要がある。ま
-た、-moduleオプションを指定する場合-rpathも指定する必要がある。
-そこで、LDFLAGSを以下のように指定する。-avoid-versionはテスト
-の共有ライブラリにはバージョン番号を付ける必要がないため指定
-している。
+Shared libraries for test are loaded dynamically by cutter
+that is a command included in Cutter to run test. Shared
+libraries that are loaded dynamically should be builded
+libtool with -module option. -rpath option is also required
+by -module option. Because of them LDFLAGS becomes the
+following. The reason why -avoid-version is specified is
+that shared libraries for test aren't needed to have version
+number.
 
 test/Makefile.am:
   LDFLAGS = -module -rpath $(libdir) -avoid-version
 
-test/test_stack.laのビルド（test_stack.soはtest/.libs/以下に
-作成される）にはtest/test-stack.cを使用するので、それを指定す
-る。
+To build test/test_stack.la, test/test-stack.c is
+used. (test_stack.so is generated into test/.libs/.) We need
+to specify this.
 
 test/Makefile.am:
   test_stack_la_SOURCES = test-stack.c
 
-これでtest/test_stack.laがビルドできる。
+Now, we can build test/test_stack.la.
 
   [stack]% make
-   cd . && /bin/sh /home/kou/work/c/cutter/sample/stack/config/missing --run automake-1.9 --foreign  Makefile
-  Makefile.am: required file `config/depcomp' not found
-  make: *** [Makefile.in] エラー 1
+  ...
+   cd .. && /bin/sh /tmp/stack/config/missing --run automake-1.10 --foreign  test/Makefile
+  test/Makefile.am: required file `config/depcomp' not found
+  test/Makefile.am:   `automake --add-missing' can install `depcomp'
+  make[1]: *** [Makefile.in] Error 1
+  make[1]: Leaving directory `/tmp/stack/test'
+  make: *** [all-recursive] Error 1
 
-config/depcompを生成するには--add-missingオプション付きで
-automakeを実行する必要がある。これにはautogen.shを使用できる。
-また、configureを再実行する必要もある。
+To generate config/depcomp, we need to run automake with
+--add-missing option. To do this, we can use
+autogen.sh. Don't forget to re-run configure.
 
   [stack]% ./autogen.sh
   [stack]% ./configure
 
-これでmakeを実行することによりtest/test_stack.laができるよう
-になる。
+Now, we can build test/test_stack.la with make.
 
   [stack]% make
   ...
   test-stack.c:1:20: error: cutter.h: No such file or directory
   test-stack.c:2:19: error: stack.h: No such file or directory
   test-stack.c: In function 'test_new_stack':
-  test-stack.c:8: error: 'Stack' undeclared (first use in this function)
-  test-stack.c:8: error: (Each undeclared identifier is reported only once
-  test-stack.c:8: error: for each function it appears in.)
-  test-stack.c:8: error: 'stack' undeclared (first use in this function)
-  make[1]: *** [test-stack.lo] エラー 1
-  make[1]: ディレクトリ `/home/kou/work/c/cutter/sample/stack/test' から出ます
-  make: *** [all-recursive] エラー 1
+  test-stack.c:9: error: 'Stack' undeclared (first use in this function)
+  test-stack.c:9: error: (Each undeclared identifier is reported only once
+  test-stack.c:9: error: for each function it appears in.)
+  test-stack.c:9: error: 'stack' undeclared (first use in this function)
+  make[1]: *** [test-stack.lo] Error 1
+  make[1]: Leaving directory `/tmp/stack/test'
+  make: *** [all-recursive] Error 1
 
-ただし、上記のようにCutterを使用する設定を行っていないため
-cutter.hが読み込めない。また、スタックの実装もないため
-stack.hの読み込みにも失敗する。
+But there are the above errors because we don't setup to use
+Cutter yet. And we can't include stack.h because we don't
+have a stack implementation yet.
 
 ==== Cutterの使用
 

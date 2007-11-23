@@ -315,9 +315,11 @@ test/Makefile.am:
 これでtest/test_stack.laがビルドできる。
 
   [stack]% make
+  ...
    cd . && /bin/sh /home/kou/work/c/cutter/sample/stack/config/missing --run automake-1.9 --foreign  Makefile
   Makefile.am: required file `config/depcomp' not found
   make: *** [Makefile.in] エラー 1
+  ...
 
 config/depcompを生成するには--add-missingオプション付きで
 automakeを実行する必要がある。これにはautogen.shを使用できる。
