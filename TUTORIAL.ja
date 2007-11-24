@@ -1211,6 +1211,8 @@ popをすると最後にpushした値が順番に返ってくる。また、pop�
 
 test/test-stack.c:
   ...
+  void test_pop (void)
+  ...
   void
   test_pop (void)
   {
