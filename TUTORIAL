@@ -951,14 +951,13 @@ It's failed because our stack_get_size() implementation
 always return 0. We should increment an internal counter
 after stack_push() is called.
 
-=== メモリ開放
+=== Free memory
 
-今まではstack_new()でNULLを返していたが、test_pushテストをパ
-スするためには内部にカウンタを持つ必要があるため、メモリを割
-り当てる必要がある。メモリを割り当てた場合、使用済のメモリを
-開放する必要がある。
+stack_new() always returns NULL for now. Stack needs to allocate
+memory to have an internal counter. Stack should free memory
+that is unused if stack allocate memory.
 
-例えば、test_new_stack()では以下のようにする必要がある。
+For example, test_new_stack() should do like the following.
 
   void
   test_new_stack (void)
@@ -969,18 +968,19 @@ after stack_push() is called.
       stack_free(stack);
   }
 
-しかし、stack_free()の前のcut_assert()が失敗した場合はその時
-点で処理が終了してしまうため、stack_free()が呼ばれずメモリリー
-クが発生する。（ただし、テストプログラムはすぐに終了する短命
-なプログラムため、害が大きくなることは少ない。）
+But stack_free() will never be called if cut_assert() where
+it's the above of the stack_free() fails. Because
+cut_assert() returns the test function immediately if the
+expression (stack_is_empty(stack)) is false. (It will not
+cause big harm because most test programs are short-lived.)
 
-Cutterではテストの前後に必ず実行される関数を設定することがで
-きる。それがsetup()/teardown()である。これらはテストが成功し
-た場合も失敗した場合も呼ばれるためテスト中で割り当てたメモリ
-を確実に開放する処理などに使うことができる。
+Cutter supports registering functions that are surely called
+before/after test. They are setup() and teardown(). They are
+called even if test is failed. We can use them for freeing
+memory allocated in test surely.
 
-test_new_stack()をsetup()/teardown()を使って確実にメモリを開
-放するようにすると以下のようになる。
+To freeing allocated memory for test_new_stack() surely, we
+can use setup() and teardown() like the following.
 
 test/test-stack.c:
   ...
@@ -1007,9 +1007,9 @@ test/test-stack.c:
   }
   ...
 
-同様に、test_push()でも、関数内のローカル変数stackを使わずに
-ファイル中でstaticなstackを使用すれば確実にメモリを開放でき
-る。
+We can also modify test_push() to freeing allocated memory
+in tests by using static stack variable instead of local
+stack variable.
 
 test/test-stack.c:
   ...
@@ -1024,8 +1024,8 @@ test/test-stack.c:
   }
   ...
 
-setup()/teardown()を使用したtest/test-stack.c全体は以下のよ
-うになる。
+Here is whole of the test/test-stack.c that uses
+setup()/teardown().
 
 test/test-stack.c:
   #include <cutter.h>
@@ -1066,7 +1066,8 @@ test/test-stack.c:
       cut_assert(!stack_is_empty(stack));
   }
 
-この変更の後でもテストが変更前と同じ結果を返すことを確認する。
+We can confirm that a result of test isn't changed after
+this change.
 
   [stack]% test/run-test.sh
   F.
