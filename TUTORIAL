@@ -1082,20 +1082,20 @@ this change.
 
   2 test(s), 2 assertion(s), 1 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
 
-=== stack_new()/stack_free()の実装
+=== Implement stack_new() and stack_free()
 
-それでは、stack_new()でメモリを割り当て、stack_free()で開放
-する処理を実装する。
+We will implement stack_new() that allocate memory and
+stack_free() that free allocated memory.
 
-まず、src/stack.hにstack_free()を宣言する。
+First, we will declares stack_free() in src/stack.h.
 
 src/stack.h:
   ...
   void   stack_free     (Stack *stack);
   ...
 
-続いて、src/stack.cにStackを定義する。Stackはスタックのサイズ
-を保存するフィールドを含む。
+Next, we will define Stack type in src/stack.c. Stack type
+has a field that hold stack size.
 
 src/stack.c:
   ...
@@ -1104,8 +1104,8 @@ src/stack.c:
   };
   ...
 
-stack_new()でStackのためのメモリを割り当て、stack_free()で開
-放する。
+stack_new() allocates memory for Stack and stack_free()
+frees memory allocated by stack_new().
 
 src/stack.c:
   ...
@@ -1129,7 +1129,7 @@ src/stack.c:
   }
   ...
 
-この変更の後でもテストが変更前と同じ結果を返すことを確認する。
+We can confirm that test works same as before the changes.
 
   [stack]% test/run-test.sh
   F.
