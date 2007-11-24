@@ -1144,11 +1144,10 @@ We can confirm that test works same as before the changes.
 
   2 test(s), 2 assertion(s), 1 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
 
-=== stack_push()の本実装
+=== Really implement stack_push()
 
-Stackにスタックサイズを持つことができるようになったので、こ
-れを使用してテストをパスするように
-stack_push()/stack_get_size()を実装する。
+We will really implement stack_push() and stack_get_size()
+to pass our tests because a stack can have a stack size.
 
 src/stack.c:
   ...
@@ -1164,9 +1163,9 @@ src/stack.c:
       stack->size++;
   }
 
-pushする毎にスタックサイズを増やし、そのサイズを返すようにし
-た。これで今まで失敗していたstack_get_size()のテストがパスす
-るはずである。
+Stack increments it's size each push and returns the
+size. A test for stack_get_size() that is failed until now
+will be passed.
 
   [stack]% test/run-test.sh
   F.
@@ -1179,13 +1178,14 @@ pushする毎にスタックサイズを増やし、そのサイズを返すよ�
 
   2 test(s), 3 assertion(s), 1 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
 
-期待通りstack_get_size()のテストはパスしたがその後の
-test/test-stack.cの35行目、stack_is_empty()で失敗している。
+The test for stack_get_size() is passed as our expectation
+but there is still a failure. It's a test for
+stack_is_empty() in test/test-stack.c at the 35th line.
 
 test/test-stack.c:35:
   cut_assert(!stack_is_empty(stack));
 
-スタックにpushしたら空ではなくなるはずである。
+A stack should not be empty after push.
 
 === stack_is_empty()の本実装
 
