@@ -719,6 +719,20 @@ src/Makefile.am:
 
   libstack_la_SOURCES = stack.c
 
+makeでlibstack.soが生成できるようになるはずである。
+
+  [stack]% make
+  ...
+  make[1]: ディレクトリ `/tmp/stack/src' に入ります
+  Makefile:273: .deps/stack.Plo: そのようなファイルやディレクトリはありません
+  make[1]: *** ターゲット `.deps/stack.Plo' を make するルールがありません.  中止.
+  ...
+
+上記のエラーを修正するためにconfigureをもう一度実行する必要が
+ある。
+
+  [stack]% ./configure
+
 makeでsrc/.libs/libstack.so.0.0.0を生成することができる。
 
   [stack]% make

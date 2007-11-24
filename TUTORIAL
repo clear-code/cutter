@@ -672,16 +672,17 @@ that is spent for building testing environment. It's
 important that building testing environment at first to
 be developing a high-quality program comfortably.
 
-=== スタックの実装
+=== Implement stack
 
-テスト環境の整備ができたため、スタックの実装に入る。
+We will start implementing stack because we built testing
+environment.
 
-==== 簡単なstack_new()の実装
+==== A straightforward stack_new() implementation
 
-まず、stack_new()を定義し、実行時エラーの原因を解決する。
+We will define stack_new() and resolve run-time error.
 
-スタックの実装はsrc/stack.cで行う。簡単なstack_new()の実装は
-以下の通りである。
+We implement stack in src/stack.c. It's a straightforward
+stack_new() implementation:
 
 src/stack.c:
   #include <stdlib.h>
@@ -693,12 +694,10 @@ src/stack.c:
       return NULL;
   }
 
-==== src/libstack.laのビルド
+==== Build src/libstack.la
 
-それでは、makeでsrc/stack.cをビルドできるようにする。
-
-まず、test/以下をビルド対象に加えたように、src/以下もビルド
-対象とする。
+We will build src/stack.c with make. src/ should be included
+into build targets like test/.
 
 Makefile.am:
   SUBDIRS = src test
@@ -710,31 +709,44 @@ configure.ac:
                    test/Makefile])
   ...
 
-これでsrc/以下もビルド対象となる。
+The above configurations are for what we want to do.
 
   [stack]% test/run-test.sh
   configure.ac:19: required file `src/Makefile.in' not found
-  make: *** [Makefile.in] エラー 1
+  make: *** [Makefile.in] Error 1
 
-src/Makefile.amを作成するとこのエラーはなくなる。
+To resolve the above error, we need to make src/Makefile.am.
 
   [stack]% touch src/Makefile.am
   [stack]% test/run-test.sh
   cutter: symbol lookup error: test/.libs/test_stack.so: undefined symbol: stack_new
 
-makeは通るようになるが、この時点ではsrc/stack.cはビルドされ
-ないし、テストプログラムもlibstack.soをリンクしていないので
-stack_new()が定義されていないエラーは変わらない。
+make doesn't report error but we still have a error that
+stack_new() is undefined. Because we don't build src/stack.c
+and test program also doesn't link libstack.so yet.
 
-src/Makefile.amに以下を追加し、src/stack.cからlibstack.soを
-作成する。
+The following configurations in src/Makefile.am are for
+build libstack.so from src/stack.c.
 
 src/Makefile.am:
   lib_LTLIBRARIES = libstack.la
 
   libstack_la_SOURCES = stack.c
 
-makeでsrc/.libs/libstack.so.0.0.0を生成することができる。
+make will generate libstack.so.
+
+  [stack]% make
+  ...
+  make[1]: Entering directory `/tmp/stack/src'
+  Makefile:273: .deps/stack.Plo: No such file or directory
+  make[1]: *** No rule to make target `.deps/stack.Plo'.  Stop.
+  ...
+
+To resolve the above error, we need to re-run configure.
+
+  [stack]% ./configure
+
+make will generate src/.libs/libstack.so.0.0.0 now.
 
   [stack]% make
   [stack]% file src/.libs/libstack.so.0.0.0
