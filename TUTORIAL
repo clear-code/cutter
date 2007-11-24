@@ -779,18 +779,18 @@ An error message is changed to stack_is_empty() isn't found
 from stack_new() isn't found. We can confirm that
 libstack.so is linked correctly by this change.
 
-==== stack_is_empty()の実装
+==== Implement stack_is_empty()
 
-テストプログラム中ではstack_is_empty()の結果を以下のようにテ
-ストしている。
+We test a result of stack_is_empty() in our test program:
 
 test/test-stack.c:
   ...
   cut_assert(stack_is_empty(stack));
   ...
 
-つまり、stack_is_empty()が真を返すことをテストしている。よっ
-て、src/stack.cでのstack_is_empty()は真を返す必要がある。
+That means that stack_is_empty() should return true. So
+stack_is_empty() implementation in src/stack.c should return
+true.
 
 src/stack.c:
   ...
@@ -803,7 +803,7 @@ src/stack.c:
       return TRUE;
   }
 
-src/stack.c全体は以下のようになる。
+The following is the whole of src/stack.c.
 
 src/stack.c:
   #include <stdlib.h>
@@ -825,8 +825,8 @@ src/stack.c:
   }
 
 
-このstack_is_empty()の実装は常に真を返すため、テストは成功す
-るはずである。
+Our test should pass because the stack_is_empty()
+implementation always returns true.
 
   [stack]% test/run-test.sh
   .
@@ -835,15 +835,17 @@ src/stack.c:
 
   1 test(s), 1 assertion(s), 0 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
 
-「.」がひとつ表示されているのは1つのテストがパスしたことを表
-している。現在は1つしかテストがないので1つのテストにパスした
-ということはすべてのテストにパスしたということである。
+Great! This is the first success!!!
 
-環境によっては表示が緑になっているはずである。これはテストが
-パスしているので次に進んでもよいという意味である。
+Displayed a "." means that a test is passed. The current
+number of tests is just one. So one "." means all tests are
+passed.
 
-テストが動作することが確認できたので、以降ではテストを作成し
-ながらスタックの実装を完成させる。
+The above result may be displayed in green. This means that
+we may go the next step because our all tests are passed.
+
+We confirmed that test is worked. We will complete stack
+implementation with writing tests.
 
 == pushの実装
 
