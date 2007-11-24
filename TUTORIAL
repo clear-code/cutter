@@ -1264,16 +1264,16 @@ There is an error that reports stack_pop() isn't defined. We
 can confirm that existed two tests are passed because there
 are two "." before the error message.
 
-=== stack_pop()の実装
+=== Implement stack_pop()
 
-まず、src/stack.hにstack_pop()の宣言を追加する。
+First, we declare stack_pop() in src/stack.h.
 
 src/stack.h:
   ...
   int    stack_pop      (Stack *stack);
   ...
 
-つづいて、src/stack.cにstack_pop()の実装を追加する。
+Next, we define stack_pop() in src/stack.c.
 
 src/stack.c:
   ...
@@ -1283,14 +1283,14 @@ src/stack.c:
       return 30;
   }
 
-ここで30を返すようにしているのは最初のstack_pop()では30を返
-すことが期待されているからである。
+stack_pop() always returns 30 because the first stack_pop()
+call is required to return 30:
 
 test/test-stack.c:49:
   cut_assert_equal_int(30, stack_pop(stack));
 
-テストを実行し、popのテストもエラーが発生せずに実行されるこ
-とを確認する。
+We can confirm that test can be run and a test for pop
+doesn't report any error.
 
   [stack]% test/run-test.sh
   ..F
@@ -1305,10 +1305,11 @@ test/test-stack.c:49:
 
   3 test(s), 6 assertion(s), 1 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
 
-popのテストが実行された。しかし、現在のstack_pop()ではスタッ
-クサイズを変更していないため、popした後のスタックサイズを確
-認しているtest/test-stack.cの50行目のstack_get_size()で失敗
-している。
+A test for pop is run but failed because the current
+stack_pop() implementation doesn't change stack size.
+The failure is occurred in test/test-stack.c at the 50th
+line and the reason is stack_get_size() in the target line
+returns 3 not expected 2.
 
 test/test-stack.c:50:
   cut_assert_equal_int(2, stack_get_size(stack));
