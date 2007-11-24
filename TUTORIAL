@@ -847,15 +847,15 @@ we may go the next step because our all tests are passed.
 We confirmed that test is worked. We will complete stack
 implementation with writing tests.
 
-== pushの実装
+== Implement push
 
-まずはpushを実装する。今回の実装では、スタックにはintのみを
-格納できることする。
+We will implement push. We only accept integer for values in
+stack in this implementation.
 
-=== pushのテスト
+=== Test for push
 
-pushをした後はスタックのサイズが1になり、スタックは空ではなく
-なるはずである。これをテストにすると以下のようになる。
+A stack should have 1 item and not be empty after we push a
+value. The following is a test for this.
 
 test/test-stack.c:
   ...
@@ -873,13 +873,13 @@ test/test-stack.c:
       cut_assert(!stack_is_empty(stack));
   }
 
-テストを実行すると、stack_get_size()が定義されていないため実
-行時エラーになる。
+We will get an error that says stack_get_size() isn't
+undefined if we run test.
 
   [stack]% test/run-test.sh
   cutter: symbol lookup error: ./test/.libs/test_stack.so: undefined symbol: stack_get_size
 
-このテストをパスするようにpushを実装する。
+We will implement push to pass this test.
 
 === cut_stack_push()の実装
 
