@@ -593,7 +593,7 @@ test/run-test.shを実行できるようにする。
 経由でtest/run-test.shが起動された場合はmakeを実行し、必要な
 ファイルをビルドする。
 
-test/autogen.sh:
+test/run-test.sh:
   #!/bin/sh
 
   export BASE_DIR="`dirname $0`"
@@ -641,7 +641,7 @@ test/run-test.shを直接実行してテストが起動することを確認す�
   [stack]% test/run-test.sh
   cutter: symbol lookup error: test/.libs/test_stack.so: undefined symbol: stack_new
 
-こここからはmake checkではなくtest/run-test.shを使用する。こ
+ここからはmake checkではなくtest/run-test.shを使用する。こ
 れは必要な情報のみが出力され、本当に興味のあるテストの結果が
 埋もれてしまうのを防ぐためである。
 
