@@ -881,12 +881,12 @@ undefined if we run test.
 
 We will implement push to pass this test.
 
-=== cut_stack_push()の実装
+=== Implement cut_stack_push()
 
-まずは、パスしなくても良いのでテストが動くように
-stack_get_size()とstack_push()を実装する。
+We will implement stack_get_size() and stack_push() to be
+able to run test even if tests aren't passed.
 
-まず、src/stack.hに宣言を追加する。
+First, we add declarations to src/stack.h.
 
 src/stack.h:
   ...
@@ -894,7 +894,7 @@ src/stack.h:
   void   stack_push     (Stack *stack, int value);
   ...
 
-続いてsrc/stack.cに定義を追加する。
+And we add definitions to src/stack.c.
 
 src/stack.c:
   ...
@@ -909,8 +909,8 @@ src/stack.c:
   {
   }
 
-stack_get_size()が0を返しているのは、最初のstack_get_size()
-は以下のように0を期待されているからである。
+The reason why stack_get_size() returns 0 is the first
+stack_get_size() call is expected to return 0 like the following.
 
 test/test-stack.c:
   ...
@@ -918,7 +918,7 @@ test/test-stack.c:
   cut_assert_equal_int(0, stack_get_size(stack));
   ...
 
-pushの実装ができたのでテストを実行する。
+We run test because push is implemented.
 
   [stack]% test/run-test.sh
   F.
@@ -933,22 +933,23 @@ pushの実装ができたのでテストを実行する。
 
   2 test(s), 2 assertion(s), 1 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
 
-「F」はテストが失敗（Failure）したことを表している。環境によっ
-ては表示が赤くなっているはずである。これは、テストがパスして
-いないので先に進むことは危険であることを示している。popの実
-装に移る前にテストをパスさせるようにpushを実装を改良するべき
-だということである。
+"F" means that a test is Failed. The result may be showed in
+red. It indicates that it's dangerous to go to next stage
+because all of the current tests aren't passed. In other
+words, we should improve push implementation to pass the
+current tests before we implement pop.
 
-cutterからのメッセージでは、test/test-stack.cの24行目、
-test_push()関数の中でstack_get_size(stack)の値が1ではなく0の
-ために失敗したということを表している。該当する行は以下の通り
-である。
+The message form cutter command shows that the test is
+failed because return value of stack_get_size(stack) is 0
+not 1 in test_push() function at the 24th line in
+test/test-stack.c. The target line is the following.
 
 test/test-stack.c:23:
   cut_assert_equal_int(1, stack_get_size(stack));
 
-これはstack_get_size()が常に0を返しているためである。
-stack_push()された後には内部のカウンタを1つ進める必要がある。
+It's failed because our stack_get_size() implementation
+always return 0. We should increment an internal counter
+after stack_push() is called.
 
 === メモリ開放
 
