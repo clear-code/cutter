@@ -1314,17 +1314,18 @@ returns 3 not expected 2.
 test/test-stack.c:50:
   cut_assert_equal_int(2, stack_get_size(stack));
 
-=== データ領域の確保
+=== Allocate memory for data
 
-テストが実行されることが確認できたのでテストにパスするように
-stack_pop()を実装する。
+We can confirm that the test can be run. We will implement
+stack_pop() to pass the test.
 
-後でpopで取り出すために、pushされたデータを保存しておく必要
-がある。Stackに保存されたデータを示す場所を用意し、
-stack_push()/stack_pop()で動的に必要な領域を割り当てる。
+A stack needs to save pushed data to retrieve by pop.  A
+stack needs to have a new field to hold pushed data and
+stack_push()/stack_pop() allocates/frees memory for pushed
+data dynamically.
 
-まず、Stackに保存されたデータを示す場所を用意し、stack_new()
-で初期化、stack_free()で開放する。
+First, we will add a new field in Stack.  stack_new()
+initializes the field and stack_free() frees the field.
 
 src/stack.c:
   ...
@@ -1349,8 +1350,9 @@ src/stack.c:
   }
   ...
 
-この時点では外部向けの処理の内容は変わっていないはずなので、
-テストを実行して変更前と同じように失敗することを確認する。
+At this point, we don't change any process that effects
+external program. So we can confirm that the test should be
+failed the same as before.
 
   [stack]% test/run-test.sh
   ..F
