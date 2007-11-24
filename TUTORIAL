@@ -1367,11 +1367,11 @@ failed the same as before.
 
   3 test(s), 6 assertion(s), 1 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
 
-=== stack_pop()の本実装
+=== Really implement stack_pop()
 
-保存したデータを示す場所が用意できたので
-stack_push()/stack_pop()でそこに必要な分だけ領域を割り当て、
-データを保存する。
+We added a new field to hold pushed
+data. stack_push()/stack_pop() can allocate needed memory to
+the field and save data.
 
 src/stack.c:
   ...
@@ -1414,7 +1414,7 @@ src/stack.c:
       return value;
   }
 
-テストを実行し、popのテストがパスすることを確認する。
+We can confirm that the test for pop is passed.
 
   [stack]% test/run-test.sh
   ...
