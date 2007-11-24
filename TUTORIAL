@@ -721,7 +721,7 @@ To resolve the above error, we need to make src/Makefile.am.
   [stack]% test/run-test.sh
   cutter: symbol lookup error: test/.libs/test_stack.so: undefined symbol: stack_new
 
-make doesn't report error but we still have a error that
+make doesn't report error but we still have an error that
 stack_new() is undefined. Because we don't build src/stack.c
 and test program also doesn't link libstack.so yet.
 
@@ -752,33 +752,32 @@ make will generate src/.libs/libstack.so.0.0.0 now.
   [stack]% file src/.libs/libstack.so.0.0.0
   src/.libs/libstack.so.0.0.0: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), not stripped
 
-==== src/libstack.laのリンク
+==== Link src/libstack.la
 
-libstack.soはできたがテストプログラムにはリンクしていないの
-で、まだ実行時エラーは発生する。
+libstack.so is generated but it's not linked into test
+program. So there is still run-time error.
 
   [stack]% test/run-test.sh
   cutter: symbol lookup error: test/.libs/test_stack.so: undefined symbol: stack_new
 
-libstack.soをリンクするためにtest/Makefile.amを以下のように
-変更する。
+To link libstack.so, we will change test/Makefile.am like
+the following.
 
 test/Makefile.am:
   ...
   LIBS = $(CUTTER_LIBS) $(top_builddir)/src/libstack.la
   ...
 
-テストプログラムを再リンクする必要があるため、一度make clean
-してからビルドしなおす。
+We need to run 'make clean' to re-link our test program.
 
   [stack]% make clean
   [stack]% make
   [stack]% test/run-test.sh
   cutter: symbol lookup error: test/.libs/test_stack.so: undefined symbol: stack_is_empty
 
-今まではstack_new()が見つからずにエラーが発生していたが、
-stack_is_empty()が見つからないというエラーに変わった。これに
-より、libstack.soがリンクされていることが確認できた。
+An error message is changed to stack_is_empty() isn't found
+from stack_new() isn't found. We can confirm that
+libstack.so is linked correctly by this change.
 
 ==== stack_is_empty()の実装
 
