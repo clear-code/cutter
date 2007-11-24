@@ -1216,18 +1216,20 @@ pass. A result message is back to green because all of tests
 are passed. We can feel safe to go to the next stage; We
 will implement pop.
 
-== popの実装
+== Implement pop
 
-pushが実装できたので、次はpushで入れたデータを取り出すpopを
-実装する。
+We will implement pop that retrieve a value that is inserted
+by push.
 
-=== popのテスト
+=== Test for pop
 
-popをすると最後にpushした値が順番に返ってくる。また、popする
-毎にスタックサイズが減り、最後は空になる。これをテストにする
-と以下のようになる。
+Pop returns a value that is inserted by the last push. Pop
+reduces stack size and finally a stack is empty. The
+following test represents expected push/pop behavior.
 
 test/test-stack.c:
+  ...
+  void test_pop (void)
   ...
   void
   test_pop (void)
@@ -1253,14 +1255,14 @@ test/test-stack.c:
       cut_assert(stack_is_empty(stack));
   }
 
-テストを走らせる。
+We can run test.
 
   [stack]% test/run-test.sh
   ..cutter: symbol lookup error: test/.libs/test_stack.so: undefined symbol: stack_pop
 
-stack_pop()を定義していないためエラーが発生している。エラー
-メッセージの前に「.」が二つ出ているので既存のテストはパスし
-ていることが確認できる。
+There is an error that reports stack_pop() isn't defined. We
+can confirm that existed two tests are passed because there
+are two "." before the error message.
 
 === stack_pop()の実装
 
