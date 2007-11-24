@@ -1187,10 +1187,10 @@ test/test-stack.c:35:
 
 A stack should not be empty after push.
 
-=== stack_is_empty()の本実装
+=== Really implement stack_is_empty()
 
-スタックが空なのはスタックサイズが0のときである。よって、
-stack_is_empty()の実装は以下のようになる。
+A stack should be empty only when a stack size is 0. So
+stack_is_empty() is changed to the following.
 
 src/stack.c:
   ...
@@ -1201,7 +1201,8 @@ src/stack.c:
   }
   ...
 
-テストを実行し、すべてのテストにパスすることを確認する。
+We can run test again and confirm that all of tests are
+passed.
 
   % test/run-test.sh
   ..
@@ -1210,9 +1211,10 @@ src/stack.c:
 
   2 test(s), 4 assertion(s), 0 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
 
-pushのテストもパスし、既存のスタックを作った直後の場合のテス
-トもパスしたままである。すべてのテストがパスしたため、結果表
-示も緑に戻った。これで安心してpopの実装に進むことができる。
+A test for push is passed and the rest of tests are kept to
+pass. A result message is back to green because all of tests
+are passed. We can feel safe to go to the next stage; We
+will implement pop.
 
 == popの実装
 
