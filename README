@@ -1,6 +1,6 @@
 # -*- rd -*-
 
-= README.en
+= README
 
 == Author
 
@@ -15,17 +15,14 @@ LGPL
 
 Cutter is an Unit Testing Framework for C.
 
-The feature of Cutter is to making test as shared library.
+This is a list of features of Cutter:
+  * easy to write tests.
+  * outputs result with useful format for debugging.
+  * tests are build as shared libraries.
 
 == Dependency libraries
 
-  * GLib
-
-=== Suggested programs
-
-  * run-test.el which is attached to
-    ((<GaUnit|URL:http://www.cozmixng.org/~rwiki/?cmd=view;name=GaUnit>)).
-    (If you want to run test with ease on the Emacs.)
+  * GLib >= 2.14
 
 == Get
 
@@ -45,15 +42,13 @@ The feature of Cutter is to making test as shared library.
 
 === Options
 
-: -v LEVEL, --verbose=LEVEL
+: -v[s|silent|n|normal|v|verbose], --verbose=[s|silent|n|normal|v|verbose]
 
-   It specifies verbose level. LEVEL is silent (s), normal (n),
-   progress (p) or verbose (v). Output is more verbosely in
-   the back.
+   It specifies verbose level.
 
 : -s DIRECTORY, --source-directory=DIRECTORY
 
-   Cutter adds DIRECTORY before file name when test fails. This
+   Cutter prepends DIRECTORY to file name when test fails. This
    is for tolls (like Emacs) which have function jumping to
    error line.
 
@@ -83,99 +78,61 @@ The feature of Cutter is to making test as shared library.
 
    Cutter runs a test case in a new thread.
 
-== How to make test
+== How to test
 
 Executing flow of test is the following.
 
-  (1) Make test.
-  (2) Compile it and make libtest_*.so.
-  (3) Execute cutter. It loads libtest_*.so and tests.
+  (1) Write test.
+  (2) Compile it and build libtest_*.so.
+  (3) Execute cutter. It loads libtest_*.so and runs them.
 
-See sample/calc/.
+See TUTORIAL and sample/stack/.
 
 == References
 
 === Assertions
 
-This is the list of assertion functions. (({message})) in the
-arguments is displayed when assertion fails.
-
---- cut_error(message)
-
-    It returns error status. It should be used in setup() or teardown().
-
---- cut_fail(message)
-
-    It always fails.
-
---- cut_pending(message)
-
-    It returns pending status.
-
---- cut_assert(expected, ...)
-
-    It passes when (({expected})) is not 0.
-
---- cut_assert_null(expected, ...)
-
-    It passes when (({expected})) is not NULL.
-
---- cut_assert_equal_int(expected, actual, ...)
-
-    It passes when (({expected})) equals (({actual})). They
-    must be int type or variant of int (like long).
-
---- cut_assert_equal_double(expected, actual, ...)
-
-    It passes when (({expected})) equals (({actual})). They
-    must be float type or variant of double.
-
---- cut_assert_equal_string(expected, actual, ...)
-
-    It passes when (({expected})) and (({actual})) are same
-    content string.
-
---- cut_notify(message)
-
-    It just shows the message.
+See cutter/cut-assertions.h or
+((<URL:http://cutter.sf.net/reference/cutter-cut-assertions.html>)).
 
 === Template
 
-The following is template of test.
+The following is a template of test.
 
   #include <cutter.h>
   
   #include "HEADER_FILE_OF_YOUR_PROGRAM"
   
-  void test_function1(void);
-  void test_function2(void);
+  void test_condition(void);
+  void test_strstr(void);
 
   static int condition = 0;
   
   void
   setup (void)
   {
-    condition = 1;
+      condition = 1;
   }
   
   void
   teardown (void)
   {
-    condition = 2;
+      condition = 0;
   }
 
   void
-  test_function1(void)
+  test_condition(void)
   {
-    cut_assert_equal_int(1, condition,
-                         "The condition value should set 1 in setup() but was: %d.",
-			 condition);
+      cut_assert_equal_int(1, condition,
+                           "The condition value should be set to 1 in setup()");
     ...
   }
   
   void
-  test_function1(void)
+  test_strstr(void)
   {
-    ...
+      cut_assert_equal_string("sub-string",
+                              strstr("string sub-string", "sub"));
+      ...
   }
   

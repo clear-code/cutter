@@ -8,4 +8,5 @@ pkgconfig_DATA = 	\
 EXTRA_DIST =		\
 	autogen.sh	\
 	TUTORIAL	\
-	TUTORIAL.ja
+	TUTORIAL.ja	\
+	README.ja

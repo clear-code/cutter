@@ -6,29 +6,22 @@
 
 Cutter
 
-== 作者
-
-  * Kouhei Sutou <kou@cozmixng.org>
-  * Hiroyuki Ikezoe <poincare@ikezoe.net>
-
 == ライセンス
 
 LGPL
 
-== なにこれ？
+== Cutter?
 
-CのためのUnit Testing Frameworkです．
+CのためのUnit Testing Frameworkです。
 
-テストを共有ライブラリとして作成するのが特長です．
+Cutterの特徴は以下の通りです。
+  * テストが簡単に書ける
+  * 出力結果がデバッグに使いやすい
+  * テストを共有ライブラリとしてビルドする
 
 == 依存ライブラリ
 
-  * GLib
-
-=== あればよいもの
-
-  * ((<GaUnit|URL:http://www.cozmixng.org/~rwiki/?cmd=view;name=GaUnit>))
-    に付いているrun-test.el（Emacs上で楽にテストしたい場合）
+  * GLib >= 2.14
 
 == 入手方法
 
@@ -48,59 +41,56 @@ CのためのUnit Testing Frameworkです．
 
 === オプション
 
-: -vLEVEL, --verbose=LEVEL
+: -v[s|silent|n|normal|v|verbose], --verbose=[s|silent|n|normal|v|verbose]
 
-   出力の詳細さを指定します．LEVELにはsilent, normal,
-   progress, verboseが指定できます（それぞれs, n, p, vでも可）．
-   後ろの方ほど詳細になります．
-   
-: -bBASE, --base=BASE
-   
-   テストが失敗した場合にファイル名の前にBASEを付加します．
-   Cutterの出力からテストが失敗した箇所にジャンプするツール
-   （Emacsなど）と連携するための機能です．
+   出力の詳細さを指定します。
 
-== テストの作り方
+: -s DIRECTORY, --source-directory=DIRECTORY
+
+   テストが失敗した場合にファイル名の前にDIRECTORYを付加しま
+   す。Cutterの出力からテストが失敗した箇所にジャンプするツー
+   ル（Emacsなど）と連携するための機能です。
+
+: -c[yes|true|no|false|auto], --color=[yes|true|no|false|auto]
+
+   yesまたはtrueが指定された場合はCutterはエスケープシーケン
+   スで色付けして出力します。noまたはfalseが指定された場合は
+   色付けしません。autoあるいは値が省略された時は、可能なら
+   色付けをします。
+
+: -t TEST_CASE_NAME1,TEST_CASE_NAME2,..., --test-case=TEST_CASE_NAME1,TEST_CASE_NAME2,...
+
+   TEST_CASE_NAME1、TEST_CASE_NAME2のどれかにマッチしたテス
+   トケースを実行します。もし、TEST_CASE_NAMEが"/"で囲まれて
+   いた場合は（例: /test_/）正規表現として扱います。
+
+: -n TEST_NAME1,TEST_NAME2,..., --name=TEST_NAME1,TEST_NAME2,...
+
+   TEST_NAME1、TEST_NAME2のどれかにマッチしたテストを実行し
+   ます。もし、TEST_NAMEが"/"で囲まれていた場合は（例:
+   /test_/）正規表現として扱います。
+
+: -m, --multi-thread
+
+   各テストケースを新しいスレッドで実行します。
+
+== テストの仕方
 
 テストの実行は以下のような流れになります．
 
   (1) テストを作成する
-  (2) コンパイルし，libtest_*.soを作成する
-  (3) cutterを起動し，libtest_*.soを読み込ませ，テストをする
+  (2) コンパイルし、libtest_*.soを作成する
+  (3) cutterを起動し、libtest_*.soを読み込ませ、テストをする
 
-詳しくはTutorial.jaを参考にして下さい．
+詳しくはTUTORIAL.jaとsample/stack/を参考にしてください。
 
 == リファレンス
 
 === 表明
 
-表明の一覧です．引数にある(({message}))は表明が失敗した場合に
-表示されます．
-
---- cut_fail(message)
-    
-    必ず失敗します．
-
---- cut_assert(expected)
-    
-    (({expected}))が0以外ならパスします．
-
---- cut_assert_equal_int(expected, actual)
-    
-    (({expected}))と(({actual}))が等しければパスします．どちら
-    もint型あるいはその亜種（longとか）である必要があります．
-
---- cut_assert_equal_double(expected, error, actual)
-    
-    (({actual}))が(({expected}))-(({error}))から
-    (({expected}))+(({error}))の間であればパスします．どちら
-    もdouble型あるいはその亜種（floatとか）である必要があり
-    ます．
-
---- cut_assert_equal_string(expected, actual, message)
-    
-    (({expected}))と(({actual}))が同じ内容の文字列であればパス
-    します．
+cutter/cut-assertions.hあるいは
+((<URL:http://cutter.sf.net/reference/ja/cutter-cut-assertions.html>))
+を見てください。
 
 === 雛型
 
@@ -110,30 +100,37 @@ CのためのUnit Testing Frameworkです．
   
   #include "自分のプログラムのヘッダファイル"
   
-  void test_function1(void);
-  void test_function2(void);
+  void test_condition(void);
+  void test_strstr(void);
 
+  static int condition = 0;
+  
   void
   setup (void)
   {
-    /* 初期化用コード */
+      /* 初期化用コード */
+      condition = 1;
   }
   
   void
   teardown (void)
   {
-    /* 後片付け用コード */
+      /* 後片付け用コード */
+      condition = 0;
   }
 
   void
-  test_function1(void)
+  test_condition(void)
   {
-    cut_assert_XXX();
+      cut_assert_equal_int(1, condition,
+                           "conditionの値はsetup()で1に設定されているはず");
     ...
   }
   
   void
-  test_function1(void)
+  test_strstr(void)
   {
-    ...
+      cut_assert_equal_string("sub-string",
+                              strstr("string sub-string", "sub"));
+      ...
   }
