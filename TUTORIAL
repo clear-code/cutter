@@ -1481,10 +1481,11 @@ running tests.
 
 We can go to the next because the result is green.
 
-=== エラー処理部分の重複の除去
+=== Eliminate a duplication in error handling process
 
-次に、以下のメモリ割り当て失敗時のエラー処理部分の重複を除去
-する。
+Next, we will eliminate a duplication in error handling
+process for memory allocation failure. The current
+implementation is the following:
 
 src/stack.c:
   ...
@@ -1516,9 +1517,10 @@ src/stack.c:
       ...
   }
 
-これらのエラー処理をstack_realloc()の中に移動し、
-stack_realloc()は割り当てたメモリを返すのではなく、新しくメ
-モリを割り当てることに成功したかどうかを返すことにする。
+We will move the above error handling process to
+stack_realloc() and stack_realloc() returns whether memory
+allocation is succeeded or failed instead of allocated
+memory.
 
 src/stack.c:
   ...
@@ -1559,7 +1561,8 @@ src/stack.c:
       return value;
   }
 
-この変更の後でも以前と同じ挙動をしているかを確かめる。
+We should confirm that the changes doesn't change existing
+semantics.
 
   [stack]% test/run-test.sh
   ...
@@ -1568,8 +1571,9 @@ src/stack.c:
 
   3 test(s), 15 assertion(s), 0 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
 
-既存の動作を変更することなく、プログラム中の重複部分を取り除
-き、プログラムを改良したことを確認できた。
+We confirmed that we can improve our program by eliminating
+duplications in our program without changing existing
+semantics.
 
 == まとめ
 
