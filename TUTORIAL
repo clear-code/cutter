@@ -1423,25 +1423,27 @@ We can confirm that the test for pop is passed.
 
   3 test(s), 15 assertion(s), 0 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
 
-== 重複の排除
+== Eliminate duplications
 
-stack_push()/stack_pop()の実装では動的なメモリ割り当て部分、
-メモリ割り当て失敗時のエラー処理部分に重複があった。一般的に
-コード中に重複があることは、メンテナンス性の面などの理由で悪
-いこととされている。
+stack_push() and stack_pop() implementations has
+duplications that are dynamic memory allocation process and
+error handling process when memory allocation is
+failed. It's generally not good that duplications exist
+because they may increase maintenance cost and so on.
 
-ここでは、既存の動作を変更せずに重複している悪い部分を修正す
-る。既存の動作が変わっていないことはテストを実行することで確
-認することができる。
+In this section, we will eliminate duplications without
+changing existing semantics. We can confirm that existing
+semantics aren't changed by running our tests.
 
-=== メモリ割り当て部分の重複の除去
+=== Eliminate a duplication in memory allocation process
 
-まず、以下のメモリ割り当て部分の重複を除去する。
+First, we will eliminate a duplication in memory allocation
+process like the following:
 
 src/stack.c:
   new_data = realloc(stack->data, sizeof(*stack->data) * stack->size);
 
-この部分はstack_realloc()として切り出す。
+We will extract the above part as stack_realloc().
 
 src/stack.c:
   ...
@@ -1467,7 +1469,8 @@ src/stack.c:
       ...
   }
 
-この変更の後でも以前と同じ挙動をしているかを確かめる。
+We can confirm that existing semantics aren't changed by
+running tests.
 
   [stack]% test/run-test.sh
   ...
@@ -1476,7 +1479,7 @@ src/stack.c:
 
   3 test(s), 15 assertion(s), 0 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
 
-結果が緑なので次へ進める。
+We can go to the next because the result is green.
 
 === エラー処理部分の重複の除去
 
