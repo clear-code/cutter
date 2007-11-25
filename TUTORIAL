@@ -1619,12 +1619,13 @@ broken by codes for a new feature. Automated tests are
 useful for maintenance, developing new features and keeping
 high-quality.
 
-=== スタックの実装
+=== Stack implementation
 
-最終的なプログラムは以下の通りである。このスタックは素朴な実
-装であるため、エラーの通知方法やパフォーマンスのチューニング
-などの課題が残っているが、テストが示している通りの基本的な機
-能は実装されている。
+The following codes are the final version. This stack
+implementation has some issues that error notification,
+performance tunings and so on because it's straightforward.
+But the implementation has basic features that is shown by
+test.
 
 src/stack.c:
   #include <stdlib.h>
@@ -1708,19 +1709,18 @@ src/stack.c:
       return value;
   }
 
-=== 関連項目
+=== See also
 
-  * xUnit: Cutterも属するassertXXXといった方法で結果を確認し
-    ながらテストを書いていくテストの書き方をサポートするライ
-    ブラリのこと。テスティングフレームワークとも呼ぶ。様々な
-    言語で実装されている。
+  * xUnit: It's a library that supports a test style that
+    uses assertXXX for verifying an actual value is
+    an expected value. It also called testing
+    framework. Cutter is one of xUnit testing
+    framework. xUnit is implemented in many language:
     * SUnit (Smalltalk)
     * JUnit (Java)
     * Test::Unit (Ruby)
     * PyUnit (Pytnon)
     * ...
 
-  * エクストリーム・プログラミング（Extreme Programming, XP）:
-    品質の高いプログラムを開発するための方法を集めたプログラ
-    ミング方法。テストの作成も重要視している。
-
+  * Extreme Programming (XP): It's a programming methodology
+    to develop high-quality software. It's heavy on testing.
