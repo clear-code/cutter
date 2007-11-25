@@ -1575,47 +1575,49 @@ We confirmed that we can improve our program by eliminating
 duplications in our program without changing existing
 semantics.
 
-== まとめ
+== Conclusion
 
-本稿では小さなスタックの実装を例にしてGNUビルドシステムを用い
-たビルド環境の構築方法・Cutterを用いたテストの作成方法・テス
-トのあるプログラムでのプログラムの改良方法を示した。
+This documentation shows how to setup a build environment
+system with GNU build system, write tests with Cutter and
+improve a program that has tests by using a small stack
+implementation.
 
-=== メリット
+=== Merit
 
-GNUビルドシステムを用いることにより、ビルド環境の差異を吸収
-することが比較的容易になる。これはプログラムの移植性を向上さ
-せることにつながる。
+GNU build system provides us portability.
 
-Cutterを用いることにより、簡単にテストが書ける。既存のC言語用
-テスティングフレームワークではテストを定義するために独自のマ
-クロを用いたり、テストの定義とテストの登録を別々に行う必要が
-あるなどテスト以外にも書かなければいけないことが多い。Cutter
-はこの点を改善し、テスト定義のための独自のマクロを提供せず、
-通常どおりに関数を定義するだけでテストを定義できるようにした。
-明示的にテストを定義する必要もない。
+Cutter provides us a method to write tests easily. Existing
+testing frameworks for C require to use macros to define a
+test or to register tests explicitly. We need to write many
+other things except writing tests. Cutter resolves this
+problem. Cutter doesn't require to use original macros to
+define a test. We can write a test as just a normal
+function. We can also write no test registration code.
 
-本稿ではcut_assert()とcut_assert_equal_int()しか使用しなかっ
-たが、cut_assert_equal_string()など期待値と実際の値を比較する
-ための方法を多数用意している。これにより、テストプログラムの
-ための比較方法を定義しなければいけない機会が減り、より簡潔に
-テストプログラムを書けるようになる。
+We only used cut_assert() and cut_assert_equal_int() but
+Cutter provides many assertions to verify actual value is
+expected value like cut_assert_equal_string(). We will be
+able to write tests simply by them because we doesn't need
+to write our assertions for primitive types.
 
-また、Cutterのテスト結果出力は必要のない情報はなるべく表示せ
-ず、必要な情報はできるだけ多く提供する。これは必要な情報が埋
-もれてしまうのを防ぎ、プログラムの修正を支援する。また、C言語
-ではよくある異常終了時には、バックトレースの出力を試み、プロ
-グラム修正のためのより多くの情報を提供する。
+Cutter doesn't show needless information in test result
+message but show useful information as much as
+possible. It supports that we can find useful information
+easily and fix problems easily and rapidly. Cutter also
+tries to show backtraces on segmentation fault that is often
+caused for a program written by C for providing many
+information to fix problems.
 
-既存の機能を変更せずにプログラムの内部構造を改良することはメ
-ンテナンス性を向上させるのに非常に役立つ。自動化されたテスト
-を作成することにより、既存の機能が変更されていないことを容易
-に確認できる。
+It's very helpful for maintenance that improving internal
+structure of a program without changing existing
+semantics. We can easily confirm that existing semantics
+isn't changed with automated tests.
 
-また、新規に機能を追加する場合でも、自動化されたテストがあれ
-ば、既存の機能を壊すことなく機能を追加していることを確認でき
-る。自動化テストを用意することはメンテナンス面でも、新機能開
-発面でも品質の高いプログラムを作成する上で有用である。
+Automated tests also helps us when a new feature is
+developed. We can confirm that existing semantics isn't
+broken by codes for a new feature. Automated tests are
+useful for maintenance, developing new features and keeping
+high-quality.
 
 === スタックの実装
 
