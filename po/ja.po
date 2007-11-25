@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cutter trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-11-16 15:21+0900\n"
+"POT-Creation-Date: 2007-11-25 15:42+0900\n"
 "PO-Revision-Date: 2007-11-16 15:24+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
@@ -16,31 +16,36 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: cutter/cut-main.c:85
+#: cutter/cut-main.c:88
 #, c-format
 msgid "Invalid color value: %s"
 msgstr "不正な色指定です: %s"
 
-#: cutter/cut-main.c:95
+#: cutter/cut-main.c:98
 msgid "Set verbose level"
 msgstr "詳細度を設定"
 
-#: cutter/cut-main.c:97
+#: cutter/cut-main.c:100
 msgid "Set directory of source code"
 msgstr "ソースコードのディレクトリを設定"
 
-#: cutter/cut-main.c:99
+#: cutter/cut-main.c:102
 msgid "Output log with colors"
 msgstr "色付きでログを出力"
 
-#: cutter/cut-main.c:101
+#: cutter/cut-main.c:104
 msgid "Specify tests"
 msgstr "テストを指定"
 
-#: cutter/cut-main.c:103
+#: cutter/cut-main.c:106
 msgid "Specify test cases"
 msgstr "テストケースを指定"
 
-#: cutter/cut-main.c:105
+#: cutter/cut-main.c:108
 msgid "Run test cases with multi-thread"
 msgstr "マルチスレッドでテストケースを実行"
+
+#: cutter/cut-main.c:110
+#, fuzzy
+msgid "Specify test runner"
+msgstr "テストケースを指定"
