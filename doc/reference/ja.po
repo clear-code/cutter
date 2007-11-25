@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 0.1.0\n"
-"POT-Creation-Date: 2007-11-21 17:48+0900\n"
-"PO-Revision-Date: 2007-11-21 17:48+0900\n"
+"POT-Creation-Date: 2007-11-25 17:53+0900\n"
+"PO-Revision-Date: 2007-11-25 17:54+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -24,22 +24,22 @@ msgid "for Cutter &version;"
 msgstr "Cutter &version;用"
 
 #: cutter-docs.sgml:12(title)
-msgid "Tutorial"
-msgstr "チュートリアル"
+msgid "Introduction"
+msgstr "はじめに"
 
 #: cutter-docs.sgml:14(title)
 msgid "Getting start"
 msgstr "はじめよう"
 
-#: cutter-docs.sgml:20(title)
+#: cutter-docs.sgml:22(title)
 msgid "Reference"
 msgstr "リファレンス"
 
-#: cutter-docs.sgml:22(title)
+#: cutter-docs.sgml:24(title)
 msgid "Writing tests"
 msgstr "テスト作成"
 
-#: cutter-docs.sgml:56(title)
+#: cutter-docs.sgml:58(title)
 msgid "Index"
 msgstr "索引"
 
@@ -48,12 +48,32 @@ msgstr "索引"
 msgid "Assertions"
 msgstr "検証"
 
-#: xml/cut-assertions.xml:8(manvolnum) xml/cut-main.xml:8(manvolnum)
+#: xml/cut-assertions.xml:8(manvolnum) xml/cut-context.xml:8(manvolnum)
+#: xml/cut-enum-types.xml:8(manvolnum) xml/cut-loader.xml:8(manvolnum)
+#: xml/cut-main.xml:8(manvolnum) xml/cut-module-impl.xml:8(manvolnum)
+#: xml/cut-module.xml:8(manvolnum) xml/cut-output.xml:8(manvolnum)
+#: xml/cut-private.xml:8(manvolnum) xml/cut-public.xml:8(manvolnum)
+#: xml/cut-repository.xml:8(manvolnum) xml/cut-runner.xml:8(manvolnum)
+#: xml/cut-test-case.xml:8(manvolnum) xml/cut-test-container.xml:8(manvolnum)
+#: xml/cut-test-context.xml:8(manvolnum) xml/cut-test-result.xml:8(manvolnum)
+#: xml/cut-test-suite.xml:8(manvolnum) xml/cut-test.xml:8(manvolnum)
+#: xml/cut-utils.xml:8(manvolnum) xml/cut-verbose-level.xml:8(manvolnum)
 #: xml/cutter.xml:8(manvolnum)
 msgid "3"
 msgstr ""
 
-#: xml/cut-assertions.xml:9(refmiscinfo) xml/cut-main.xml:9(refmiscinfo)
+#: xml/cut-assertions.xml:9(refmiscinfo) xml/cut-context.xml:9(refmiscinfo)
+#: xml/cut-enum-types.xml:9(refmiscinfo) xml/cut-loader.xml:9(refmiscinfo)
+#: xml/cut-main.xml:9(refmiscinfo) xml/cut-module-impl.xml:9(refmiscinfo)
+#: xml/cut-module.xml:9(refmiscinfo) xml/cut-output.xml:9(refmiscinfo)
+#: xml/cut-private.xml:9(refmiscinfo) xml/cut-public.xml:9(refmiscinfo)
+#: xml/cut-repository.xml:9(refmiscinfo) xml/cut-runner.xml:9(refmiscinfo)
+#: xml/cut-test-case.xml:9(refmiscinfo)
+#: xml/cut-test-container.xml:9(refmiscinfo)
+#: xml/cut-test-context.xml:9(refmiscinfo)
+#: xml/cut-test-result.xml:9(refmiscinfo)
+#: xml/cut-test-suite.xml:9(refmiscinfo) xml/cut-test.xml:9(refmiscinfo)
+#: xml/cut-utils.xml:9(refmiscinfo) xml/cut-verbose-level.xml:9(refmiscinfo)
 #: xml/cutter.xml:9(refmiscinfo)
 msgid "CUTTER Library"
 msgstr "Cutterライブラリ"
@@ -62,7 +82,16 @@ msgstr "Cutterライブラリ"
 msgid "Checks that your program works as you expect."
 msgstr "あなたのプログラムが期待通りに動作しているかを検証します。"
 
-#: xml/cut-assertions.xml:19(title) xml/cut-main.xml:19(title)
+#: xml/cut-assertions.xml:19(title) xml/cut-context.xml:19(title)
+#: xml/cut-enum-types.xml:19(title) xml/cut-loader.xml:19(title)
+#: xml/cut-main.xml:19(title) xml/cut-module-impl.xml:19(title)
+#: xml/cut-module.xml:19(title) xml/cut-output.xml:19(title)
+#: xml/cut-private.xml:19(title) xml/cut-public.xml:19(title)
+#: xml/cut-repository.xml:19(title) xml/cut-runner.xml:19(title)
+#: xml/cut-test-case.xml:19(title) xml/cut-test-container.xml:19(title)
+#: xml/cut-test-context.xml:19(title) xml/cut-test-result.xml:19(title)
+#: xml/cut-test-suite.xml:19(title) xml/cut-test.xml:19(title)
+#: xml/cut-utils.xml:19(title) xml/cut-verbose-level.xml:19(title)
 #: xml/cutter.xml:19(title)
 msgid "Synopsis"
 msgstr "概要"
@@ -157,7 +186,16 @@ msgid ""
 "#define             <placeholder-16/>                    (function, expected, actual, ...)\n"
 msgstr ""
 
-#: xml/cut-assertions.xml:54(title) xml/cut-main.xml:44(title)
+#: xml/cut-assertions.xml:54(title) xml/cut-context.xml:38(title)
+#: xml/cut-enum-types.xml:37(title) xml/cut-loader.xml:38(title)
+#: xml/cut-main.xml:44(title) xml/cut-module-impl.xml:37(title)
+#: xml/cut-module.xml:38(title) xml/cut-output.xml:38(title)
+#: xml/cut-private.xml:37(title) xml/cut-public.xml:37(title)
+#: xml/cut-repository.xml:38(title) xml/cut-runner.xml:38(title)
+#: xml/cut-test-case.xml:38(title) xml/cut-test-container.xml:38(title)
+#: xml/cut-test-context.xml:38(title) xml/cut-test-result.xml:38(title)
+#: xml/cut-test-suite.xml:38(title) xml/cut-test.xml:38(title)
+#: xml/cut-utils.xml:37(title) xml/cut-verbose-level.xml:37(title)
 #: xml/cutter.xml:40(title)
 msgid "Description"
 msgstr "説明"
@@ -184,7 +222,16 @@ msgstr ""
 msgid "e.g.: <placeholder-1/>"
 msgstr "例: <placeholder-1/>"
 
-#: xml/cut-assertions.xml:71(title) xml/cut-main.xml:51(title)
+#: xml/cut-assertions.xml:71(title) xml/cut-context.xml:45(title)
+#: xml/cut-enum-types.xml:44(title) xml/cut-loader.xml:45(title)
+#: xml/cut-main.xml:51(title) xml/cut-module-impl.xml:44(title)
+#: xml/cut-module.xml:45(title) xml/cut-output.xml:45(title)
+#: xml/cut-private.xml:44(title) xml/cut-public.xml:44(title)
+#: xml/cut-repository.xml:45(title) xml/cut-runner.xml:45(title)
+#: xml/cut-test-case.xml:45(title) xml/cut-test-container.xml:45(title)
+#: xml/cut-test-context.xml:45(title) xml/cut-test-result.xml:45(title)
+#: xml/cut-test-suite.xml:45(title) xml/cut-test.xml:45(title)
+#: xml/cut-utils.xml:44(title) xml/cut-verbose-level.xml:44(title)
 #: xml/cutter.xml:145(title)
 msgid "Details"
 msgstr "詳細"
@@ -656,6 +703,19 @@ msgstr "期待値。"
 msgid "an actual value."
 msgstr "実測値。"
 
+#: xml/cut-context.xml:7(refentrytitle) xml/cut-context.xml:13(refname)
+#: xml/cut-main.xml:28(link) xml/cut-main.xml:31(link)
+msgid "CutContext"
+msgstr ""
+
+#: xml/cut-enum-types.xml:7(refentrytitle) xml/cut-enum-types.xml:13(refname)
+msgid "cut-enum-types"
+msgstr ""
+
+#: xml/cut-loader.xml:7(refentrytitle) xml/cut-loader.xml:13(refname)
+msgid "CutLoader"
+msgstr ""
+
 #: xml/cut-main.xml:7(refentrytitle) xml/cut-main.xml:13(refname)
 msgid "cut-main"
 msgstr ""
@@ -688,15 +748,12 @@ msgstr ""
 msgid "gchar"
 msgstr ""
 
-#: xml/cut-main.xml:28(link) xml/cut-main.xml:31(link)
-msgid "CutContext"
-msgstr ""
-
 #: xml/cut-main.xml:28(link) xml/cut-main.xml:84(primary)
 msgid "cut_create_context"
 msgstr ""
 
 #: xml/cut-main.xml:29(link) xml/cut-main.xml:30(link)
+#: xml/cut-test-suite.xml:7(refentrytitle) xml/cut-test-suite.xml:13(refname)
 msgid "CutTestSuite"
 msgstr ""
 
@@ -801,6 +858,67 @@ msgstr ""
 
 #: xml/cut-main.xml:117(term)
 msgid "<parameter>context</parameter>&nbsp;:"
+msgstr ""
+
+#: xml/cut-module-impl.xml:7(refentrytitle)
+#: xml/cut-module-impl.xml:13(refname)
+msgid "cut-module-impl"
+msgstr ""
+
+#: xml/cut-module.xml:7(refentrytitle) xml/cut-module.xml:13(refname)
+msgid "CutModule"
+msgstr ""
+
+#: xml/cut-output.xml:7(refentrytitle) xml/cut-output.xml:13(refname)
+msgid "CutOutput"
+msgstr ""
+
+#: xml/cut-private.xml:7(refentrytitle) xml/cut-private.xml:13(refname)
+msgid "cut-private"
+msgstr ""
+
+#: xml/cut-public.xml:7(refentrytitle) xml/cut-public.xml:13(refname)
+msgid "cut-public"
+msgstr ""
+
+#: xml/cut-repository.xml:7(refentrytitle) xml/cut-repository.xml:13(refname)
+msgid "CutRepository"
+msgstr ""
+
+#: xml/cut-runner.xml:7(refentrytitle) xml/cut-runner.xml:13(refname)
+msgid "CutRunner"
+msgstr ""
+
+#: xml/cut-test-case.xml:7(refentrytitle) xml/cut-test-case.xml:13(refname)
+msgid "CutTestCase"
+msgstr ""
+
+#: xml/cut-test-container.xml:7(refentrytitle)
+#: xml/cut-test-container.xml:13(refname)
+msgid "CutTestContainer"
+msgstr ""
+
+#: xml/cut-test-context.xml:7(refentrytitle)
+#: xml/cut-test-context.xml:13(refname)
+msgid "CutTestContext"
+msgstr ""
+
+#: xml/cut-test-result.xml:7(refentrytitle)
+#: xml/cut-test-result.xml:13(refname)
+msgid "CutTestResult"
+msgstr ""
+
+#: xml/cut-test.xml:7(refentrytitle) xml/cut-test.xml:13(refname)
+msgid "CutTest"
+msgstr ""
+
+#: xml/cut-utils.xml:7(refentrytitle) xml/cut-utils.xml:13(refname)
+msgid "cut-utils"
+msgstr ""
+
+#: xml/cut-verbose-level.xml:7(refentrytitle)
+#: xml/cut-verbose-level.xml:13(refname)
+msgid "cut-verbose-level"
 msgstr ""
 
 #: xml/cutter.xml:7(refentrytitle) xml/cutter.xml:13(refname)
@@ -1059,6 +1177,9 @@ msgstr "参考"
 msgid "translator-credits"
 msgstr ""
 
+#~ msgid "Tutorial"
+#~ msgstr "チュートリアル"
+
 #~ msgid "Object Hierarchy"
 #~ msgstr "オブジェクト階層"
 
@@ -1080,10 +1201,6 @@ msgstr ""
 
 #, fuzzy
 #~ msgid "description"
-#~ msgstr "説明"
-
-#, fuzzy
-#~ msgid "CutTest:description"
 #~ msgstr "説明"
 
 #~ msgid ""
