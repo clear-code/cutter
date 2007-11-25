@@ -9,9 +9,10 @@
   </bookinfo>
 
   <part>
-    <title>Tutorial</title>
+    <title>Introduction</title>
     <chapter id="Start">
       <title>Getting start</title>
+      <xi:include href="readme.xml"/>
       <xi:include href="tutorial.xml"/>
     </chapter>
   </part>

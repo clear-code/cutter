@@ -60,6 +60,7 @@ HTML_IMAGES =
 # Extra SGML files that are included by $(DOC_MAIN_SGML_FILE)
 content_files =				\
 	version.xml			\
+	readme.xml			\
 	tutorial.xml
 
 # Extra options to supply to gtkdoc-fixref
@@ -73,6 +74,8 @@ include $(top_srcdir)/gtk-doc.make
 # Other files to distribute
 EXTRA_DIST +=				\
 	version.xml.in			\
+	readme.xml			\
+	readme.xml.ja			\
 	tutorial.xml			\
 	tutorial.xml.ja			\
 	ja.po
@@ -90,6 +93,12 @@ update-po: Makefile sgml.stamp
 	done
 
 RD2REFENTRY_LIB = $(top_srcdir)/misc/rd2refentry-lib.rb
+readme.xml: $(top_srcdir)/README $(RD2REFENTRY_LIB) readme.xml.ja
+	rd2 -r $(RD2REFENTRY_LIB) $(top_srcdir)/README > readme.xml
+
+readme.xml.ja: $(top_srcdir)/README.ja $(RD2REFENTRY_LIB)
+	rd2 -r $(RD2REFENTRY_LIB) $(top_srcdir)/README.ja > readme.xml.ja
+
 tutorial.xml: $(top_srcdir)/TUTORIAL $(RD2REFENTRY_LIB) tutorial.xml.ja
 	rd2 -r $(RD2REFENTRY_LIB) $(top_srcdir)/TUTORIAL > tutorial.xml
 

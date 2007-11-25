@@ -1,3 +1,5 @@
+require "English"
+
 require "erb"
 require "rd/rdvisitor"
 require "rd/version"
@@ -43,16 +45,53 @@ module RD
       [:headline, element.level - 1, title]
     end
 
-    def apply_to_TextBlock(element, contents)
-      tag("para", {}, *contents)
-    end
-
     def apply_to_Verbatim(element)
       contents = []
       element.each_line do |line|
 	contents.push(apply_to_String(line))
       end
       tag("programlisting", {}, contents.join("").chomp)
+    end
+
+    def apply_to_Reference_with_URL(element, contents)
+      if /\Ahttp:\/\/cutter\.sf\.net\/reference\// =~ element.label.url
+        url = File.basename($POSTMATCH)
+        label = url
+      else
+        url = element.label.url
+        label = contents.join("").chomp
+      end
+      tag("ulink", {:url => url}, label)
+    end
+
+    def apply_to_ItemList(element, items)
+      tag("itemizedlist", {}, *items)
+    end
+
+    def apply_to_EnumList(element, items)
+      tag("orderedlist", {}, *items)
+    end
+
+    def apply_to_DescList(element, items)
+      tag("segmentedlist", {}, *items)
+    end
+
+    def apply_to_ItemListItem(element, contents)
+      tag("listitem", {}, *contents)
+    end
+
+    def apply_to_EnumListItem(element, contents)
+      tag("listitem", {}, *contents)
+    end
+
+    def apply_to_DescListItem(element, term, contents)
+      contents = contents.collect {|content| tag("seg", {}, content)}
+      [tag("segtitle", {}, term),
+       tag("seglistitem", {}, *contents)].join("\n")
+    end
+
+    def apply_to_TextBlock(element, contents)
+      tag("para", {}, *contents)
     end
 
     def apply_to_StringElement(element)
@@ -109,9 +148,9 @@ module RD
     end
 
     def ref_name_div
-      tag("refnamediv", {},
-          tag("refname", {}, @title),
-          tag("refpurpose", {}, @purpose))
+      contents = tag("refname", {}, @title)
+      contents << tag("refpurpose", {}, @purpose) if @purpose
+      tag("refnamediv", {}, *contents)
     end
 
     def collect_section_contents(contents)
@@ -163,22 +202,6 @@ module RD
         end
       end
       collected_section_contents
-    end
-
-    def apply_to_ItemList(element, items)
-      tag("itemizedlist", {}, *items)
-    end
-
-    def apply_to_EnumList(element, items)
-      tag("orderedlist", {}, *items)
-    end
-
-    def apply_to_ItemListItem(element, contents)
-      tag("listitem", {}, *contents)
-    end
-
-    def apply_to_EnumListItem(element, content)
-      tag("listitem", {}, *contents)
     end
 
     def consist_of_one_textblock?(listitem)

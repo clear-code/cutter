@@ -1,5 +1,8 @@
 2007-11-25  Kouhei Sutou  <kou@cozmixng.org>
 
+	* misc/rd2refentry-lib.rb, doc/reference/cutter-docs.sgml:
+	included README into gtkdoc documentation.
+
 	* README, README.ja: updated.
 
 	* misc/rd2refentry-lib.rb: added to distributed files.
