@@ -154,6 +154,7 @@ AC_CONFIG_FILES([Makefile
 		 test/loader_test_dir/Makefile
 		 test/repository_test_dir/Makefile
 		 po/Makefile.in
+		 misc/Makefile
 		 doc/Makefile
 		 doc/reference/version.xml
 		 doc/reference/Makefile])
