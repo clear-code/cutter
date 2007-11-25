@@ -74,7 +74,8 @@ include $(top_srcdir)/gtk-doc.make
 EXTRA_DIST +=				\
 	version.xml.in			\
 	tutorial.xml			\
-	tutorial.xml.ja
+	tutorial.xml.ja			\
+	ja.po
 
 $(DOC_MODULE).pot: sgml-build.stamp
 	xml2po -k -o $(DOC_MODULE).pot \

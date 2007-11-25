@@ -1,5 +1,7 @@
 2007-11-25  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/Makefile.am: added missing distributed file.
+
 	* doc/reference/cutter.types: created a needed file.
 
 2007-11-23  Kouhei Sutou  <kou@cozmixng.org>
