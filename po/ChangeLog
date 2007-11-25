@@ -1,0 +1,6 @@
+2007-11-25  Kouhei Sutou  <kou@cozmixng.org>
+
+	* ja.po: updated.
+
+	* POTFILES.in.in: removed nonexistent file.
+
