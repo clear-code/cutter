@@ -9,7 +9,9 @@ EXTRA_DIST =		\
 	autogen.sh	\
 	TUTORIAL	\
 	TUTORIAL.ja	\
-	README.ja
+	README.ja	\
+	NEWS		\
+	NEWS.ja
 
 upload: upload-doc
 

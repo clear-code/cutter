@@ -1,5 +1,9 @@
 2007-11-25  Kouhei Sutou  <kou@cozmixng.org>
 
+	* NEWS, NEWS.ja: added.
+	* Makefile.am, configure.ac, html/index.html, doc/reference/:
+	supported NEWS.
+
 	* Makefile.am, configure.ac, html/, doc/reference/Makefile.am:
 	supported auto documentation updating.
 

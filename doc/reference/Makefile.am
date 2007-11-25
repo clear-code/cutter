@@ -61,6 +61,7 @@ HTML_IMAGES =
 content_files =				\
 	version.xml			\
 	readme.xml			\
+	news.xml			\
 	tutorial.xml
 
 # Extra options to supply to gtkdoc-fixref
@@ -76,6 +77,8 @@ EXTRA_DIST +=				\
 	version.xml.in			\
 	readme.xml			\
 	readme.xml.ja			\
+	news.xml			\
+	news.xml.ja			\
 	tutorial.xml			\
 	tutorial.xml.ja			\
 	ja.po
@@ -93,6 +96,12 @@ update-po: Makefile sgml.stamp
 	done
 
 RD2REFENTRY_LIB = $(top_srcdir)/misc/rd2refentry-lib.rb
+news.xml: $(top_srcdir)/NEWS $(RD2REFENTRY_LIB) news.xml.ja
+	rd2 -r $(RD2REFENTRY_LIB) $(top_srcdir)/NEWS > news.xml
+
+news.xml.ja: $(top_srcdir)/NEWS.ja $(RD2REFENTRY_LIB)
+	rd2 -r $(RD2REFENTRY_LIB) $(top_srcdir)/NEWS.ja > news.xml.ja
+
 readme.xml: $(top_srcdir)/README $(RD2REFENTRY_LIB) readme.xml.ja
 	rd2 -r $(RD2REFENTRY_LIB) $(top_srcdir)/README > readme.xml
 
@@ -107,9 +116,9 @@ tutorial.xml.ja: $(top_srcdir)/TUTORIAL.ja $(RD2REFENTRY_LIB)
 
 upload: docs
 	ssh $(SF_HOST) rm -rf $(SF_HTDOCS_PATH)/reference
-	scp -r $(srcdir)/html $(SF_HTDOCS)/reference
+	scp -r $(srcdir)/html/ $(SF_HTDOCS)/reference/
 	for catalog in $(CATALOGS); do					\
 	  lang=`echo $$catalog | sed 's/.po$$//'`;			\
-	  scp -r $(srcdir)/$$lang/html $(SF_HTDOCS)/reference/$$lang;	\
+	  scp -r $(srcdir)/$$lang/html/ $(SF_HTDOCS)/reference/$$lang/;	\
 	done
 	ssh $(SF_HOST) chmod -R g+w $(SF_HTDOCS_PATH)/reference
