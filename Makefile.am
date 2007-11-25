@@ -5,4 +5,7 @@ pkgconfig_DATA = 	\
 	cutter.pc	\
 	libcutter.pc
 
-EXTRA_DIST = autogen.sh
+EXTRA_DIST =		\
+	autogen.sh	\
+	TUTORIAL	\
+	TUTORIAL.ja

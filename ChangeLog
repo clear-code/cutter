@@ -1,5 +1,7 @@
 2007-11-25  Kouhei Sutou  <kou@cozmixng.org>
 
+	* Makefile.am (EXTRA_DIST): added missing distributed files.
+
 	* doc/reference/Makefile.am: added missing distributed file.
 
 	* doc/reference/cutter.types: created a needed file.
