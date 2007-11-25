@@ -1,5 +1,8 @@
 2007-11-25  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/Makefile.am, doc/reference/sf-logo.html: supported
+	SF.net log embedded.
+
 	* doc/reference/ja.po: updated.
 
 	* NEWS, NEWS.ja: added.

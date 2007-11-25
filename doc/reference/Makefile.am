@@ -81,6 +81,7 @@ EXTRA_DIST +=				\
 	news.xml.ja			\
 	tutorial.xml			\
 	tutorial.xml.ja			\
+	sf-logo.html			\
 	ja.po
 
 $(DOC_MODULE).pot: sgml-build.stamp
@@ -122,3 +123,8 @@ upload: docs
 	  scp -r $(srcdir)/$$lang/html/ $(SF_HTDOCS)/reference/$$lang/;	\
 	done
 	ssh $(SF_HOST) chmod -R g+w $(SF_HTDOCS_PATH)/reference
+	scp $(srcdir)/sf-logo.html $(SF_HOST):
+	ssh $(SF_HOST) ruby -i ''					\
+	   -pe "'\$$_.sub!(/<\\/body>/,					\
+	                    File.read(\"sf-logo.html\") + \"</body>\")'"\
+	   '$(SF_HTDOCS_PATH)/reference/**/*.html'
