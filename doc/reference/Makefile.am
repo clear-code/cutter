@@ -125,6 +125,6 @@ upload: docs
 	ssh $(SF_HOST) chmod -R g+w $(SF_HTDOCS_PATH)/reference
 	scp $(srcdir)/sf-logo.html $(SF_HOST):
 	ssh $(SF_HOST) ruby -i ''					\
-	   -pe "'\$$_.sub!(/<\\/body>/,					\
+	   -pe "'\$$_.sub!(/<\\/body>/u,				\
 	                    File.read(\"sf-logo.html\") + \"</body>\")'"\
 	   '$(SF_HTDOCS_PATH)/reference/**/*.html'
