@@ -104,3 +104,12 @@ tutorial.xml: $(top_srcdir)/TUTORIAL $(RD2REFENTRY_LIB) tutorial.xml.ja
 
 tutorial.xml.ja: $(top_srcdir)/TUTORIAL.ja $(RD2REFENTRY_LIB)
 	rd2 -r $(RD2REFENTRY_LIB) $(top_srcdir)/TUTORIAL.ja > tutorial.xml.ja
+
+upload: docs
+	ssh $(SF_HOST) rm -rf $(SF_HTDOCS_PATH)/reference
+	scp -r $(srcdir)/html $(SF_HTDOCS)/reference
+	for catalog in $(CATALOGS); do					\
+	  lang=`echo $$catalog | sed 's/.po$$//'`;			\
+	  scp -r $(srcdir)/$$lang/html $(SF_HTDOCS)/reference/$$lang;	\
+	done
+	ssh $(SF_HOST) chmod -R g+w $(SF_HTDOCS_PATH)/reference

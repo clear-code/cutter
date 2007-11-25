@@ -1,5 +1,8 @@
 2007-11-25  Kouhei Sutou  <kou@cozmixng.org>
 
+	* Makefile.am, configure.ac, html/, doc/reference/Makefile.am:
+	supported auto documentation updating.
+
 	* misc/Makefile.am: added.
 
 	* misc/rd2refentry-lib.rb, doc/reference/cutter-docs.sgml:

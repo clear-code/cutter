@@ -134,6 +134,28 @@ AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE], ["$GETTEXT_PACKAGE"], [Gettext package])
 ALL_LINGUAS="ja"
 AM_GLIB_GNU_GETTEXT
 
+dnl **************************************************************
+dnl Check for SF.net.
+dnl **************************************************************
+
+AC_ARG_WITH([sf-user],
+            AS_HELP_STRING([--with-sf-user=NAME],
+                           [Use NAME to access sf.net]),
+            [SF_USER="$withval"])
+AC_SUBST(SF_USER)
+
+SF_HOST="shell.sourceforge.net"
+if test -n "$SF_USER"; then
+   SF_HOST="$SF_USER@$SF_HOST"
+fi
+AC_SUBST(SF_HOST)
+
+SF_HTDOCS_PATH="/home/groups/c/cu/cutter/htdocs"
+AC_SUBST(SF_HTDOCS_PATH)
+
+SF_HTDOCS="$SF_HOST:$SF_HTDOCS_PATH"
+AC_SUBST(SF_HTDOCS)
+
 
 CUTTER="\$(top_builddir)/cutter/cutter\$(EXEEXT)"
 AC_SUBST(CUTTER)
@@ -157,6 +179,7 @@ AC_CONFIG_FILES([Makefile
 		 misc/Makefile
 		 doc/Makefile
 		 doc/reference/version.xml
-		 doc/reference/Makefile])
+		 doc/reference/Makefile
+		 html/Makefile])
 
 AC_OUTPUT

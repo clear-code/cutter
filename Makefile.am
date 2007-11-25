@@ -1,4 +1,4 @@
-SUBDIRS = cutter test sample po misc doc
+SUBDIRS = cutter test sample po misc doc html
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = 	\
@@ -10,3 +10,9 @@ EXTRA_DIST =		\
 	TUTORIAL	\
 	TUTORIAL.ja	\
 	README.ja
+
+upload: upload-doc
+
+upload-doc:
+	cd html && $(MAKE) upload
+	cd doc/reference && $(MAKE) $(AM_MAKEFLAGS) upload
