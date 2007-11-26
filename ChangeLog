@@ -1,5 +1,8 @@
 2007-11-26  Kouhei Sutou  <kou@cozmixng.org>
 
+	* sample/Makefile.am: fixed distributed files configuration for
+	stack sample.
+
 	* doc/reference/Makefile.am: added html-build.stamp to distributed
 	files.
 
