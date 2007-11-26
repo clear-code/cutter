@@ -69,11 +69,6 @@ AM_PATH_GLIB_2_0($GLIB_REQUIRED, [], [], [gmodule gobject gthread])
 # Checks for libraries.
 AC_CHECK_LIB(bfd, bfd_init)
 
-AC_ARG_ENABLE([static-binary],
-              AS_HELP_STRING([--enable-static-binary],
-	                     [Create static binary]))
-AM_CONDITIONAL([ENABLE_STATIC_BINARY], [test "$enable_static_binary" = "yes"])
-
 CUTTER_CFLAGS="\$(GLIB_CFLAGS)"
 AC_SUBST(CUTTER_CFLAGS)
 

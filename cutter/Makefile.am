@@ -12,10 +12,6 @@ EXTRA_DIST = config.h.in cut-marshalers.list
 
 lib_LTLIBRARIES = libcutter.la
 
-if ENABLE_STATIC_BINARY
-AM_LDFLAGS = -all-static
-endif
-
 cutterincludedir=$(includedir)/cutter
 cutterinclude_HEADERS = 		\
 	cutter.h
