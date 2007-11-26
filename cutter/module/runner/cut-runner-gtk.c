@@ -55,6 +55,8 @@ struct _CutRunnerGtk
 
     GtkWidget     *window;
     GtkTextBuffer *text_buffer;
+    GtkWidget     *text_view;
+    GtkWidget     *progress_bar;
 
     CutTestSuite  *test_suite;
     CutContext    *context;
@@ -106,6 +108,32 @@ class_init (CutRunnerClass *klass)
     runner_class->run           = run;
 }
 
+static void
+setup_progress_bar (GtkBox *box, CutRunnerGtk *runner)
+{
+    GtkWidget *progress_bar;
+
+    progress_bar = gtk_progress_bar_new();
+    gtk_box_pack_start(box, progress_bar, FALSE, TRUE, 0);
+
+    runner->progress_bar = progress_bar;
+}
+
+static void
+setup_text_view (GtkBox *box, CutRunnerGtk *runner)
+{
+    GtkWidget *text_view, *scrolled_window;
+
+    scrolled_window = gtk_scrolled_window_new(NULL, NULL);
+    gtk_box_pack_start(box, scrolled_window, TRUE, TRUE, 0);
+
+    text_view = gtk_text_view_new();
+    gtk_container_add(GTK_CONTAINER(scrolled_window), text_view);
+
+    runner->text_view = text_view;
+    runner->text_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_view));
+}
+
 static gboolean
 cb_destroy (GtkWidget *widget, gpointer data)
 {
@@ -120,8 +148,7 @@ cb_destroy (GtkWidget *widget, gpointer data)
 static gboolean
 cb_key_press_event (GtkWidget *widget, GdkEventKey *event, gpointer data)
 {
-    if (event->state == GDK_CONTROL_MASK &&
-        event->keyval == GDK_q) {
+    if (event->state == GDK_CONTROL_MASK && event->keyval == GDK_q) {
         gtk_widget_destroy(widget);
         return TRUE;
     }
@@ -129,11 +156,10 @@ cb_key_press_event (GtkWidget *widget, GdkEventKey *event, gpointer data)
     return FALSE;
 }
 
-static GtkWidget *
-create_window (CutRunnerGtk *runner)
+static void
+setup_window (CutRunnerGtk *runner)
 {
-    GtkWidget *window, *scrolled_window;
-    GtkWidget *text_view;
+    GtkWidget *window, *vbox;
 
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_default_size(GTK_WINDOW(window), 400, 300);
@@ -142,28 +168,23 @@ create_window (CutRunnerGtk *runner)
     g_signal_connect(G_OBJECT(window), "key-press-event",
                      G_CALLBACK(cb_key_press_event), NULL);
 
-    scrolled_window = gtk_scrolled_window_new(NULL, NULL);
-    gtk_container_add(GTK_CONTAINER(window), scrolled_window);
-    gtk_widget_show(scrolled_window);
+    runner->window = window;
 
-    text_view = gtk_text_view_new();
-    gtk_container_add(GTK_CONTAINER(scrolled_window), text_view);
-    gtk_widget_show(text_view);
+    vbox = gtk_vbox_new(FALSE, 0);
+    gtk_container_add(GTK_CONTAINER(window), vbox);
 
-    runner->text_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_view));
-
-    gtk_widget_show(window);
-
-    return window;
+    setup_progress_bar(GTK_BOX(vbox), runner);
+    setup_text_view(GTK_BOX(vbox), runner);
 }
 
 static void
 init (CutRunnerGtk *runner)
 {
-    runner->window = create_window(runner);
     runner->test_suite = NULL;
     runner->context = NULL;
     runner->success = TRUE;
+
+    setup_window(runner);
 }
 
 static void
@@ -303,6 +324,8 @@ static void
 cb_start_test_suite (CutContext *context, CutTestSuite *test_suite,
                      CutRunnerGtk *runner)
 {
+    gtk_progress_bar_set_pulse_step(GTK_PROGRESS_BAR(runner->progress_bar), 0.1);
+    gtk_progress_bar_pulse(GTK_PROGRESS_BAR(runner->progress_bar));
 }
 
 static void
@@ -553,14 +576,24 @@ disconnect_from_context (CutRunnerGtk *gtk, CutContext *context)
 #undef DISCONNECT
 }
 
+static gpointer
+run_test_thread_func (gpointer data)
+{
+    CutRunnerGtk *runner = data;
+
+    runner->success = cut_test_suite_run(runner->test_suite, runner->context);
+    disconnect_from_context(runner, runner->context);
+
+    return NULL;
+}
+
 static gboolean
 run_test_source_func (gpointer data)
 {
-    CutRunnerGtk *gtk = data;
+    CutRunnerGtk *runner = data;
 
-    connect_to_context(gtk, gtk->context);
-    gtk->success = cut_test_suite_run(gtk->test_suite, gtk->context);
-    disconnect_from_context(gtk, gtk->context);
+    connect_to_context(runner, runner->context);
+    g_thread_create(run_test_thread_func, runner, TRUE, NULL);
 
     return FALSE;
 }
@@ -582,5 +615,5 @@ run (CutRunner *runner, CutTestSuite *test_suite, CutContext *context)
 
 
 /*
-vi:ts=4:nowrap:ai:expandtab:sw=4
+vi:ts=4:nowrap:ai:expandtab:ow=4
 */

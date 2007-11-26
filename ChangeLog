@@ -4,6 +4,7 @@
 	- cleanup.
 	- removed thread.
 	- supported C-q.
+	- used thread again. :<
 
 	* cutter/module/runner-factory/cut-runner-factory-gtk.c: added.
 
