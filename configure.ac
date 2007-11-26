@@ -11,8 +11,6 @@ AM_CONFIG_HEADER([cutter/config.h])
 
 AM_INIT_AUTOMAKE($PACKAGE_NAME, $PACKAGE_VERSION)
 
-#AC_SUBST(ac_aux_dir)
-
 # Checks for programs.
 AC_PROG_CC
 AC_PROG_INSTALL
@@ -45,18 +43,6 @@ if test "x$GCC" = "xyes"; then
   *[\ \	]-Wcast-align[\ \	]*) ;;
   *) CFLAGS="$CFLAGS -Wcast-align" ;;
   esac
-
-  if test "x$enable_ansi" = "xyes"; then
-    case " $CFLAGS " in
-    *[\ \	]-ansi[\ \	]*) ;;
-    *) CFLAGS="$CFLAGS -ansi" ;;
-    esac
-
-    case " $CFLAGS " in
-    *[\ \	]-pedantic[\ \	]*) ;;
-    *) CFLAGS="$CFLAGS -pedantic" ;;
-    esac
-  fi
 fi
 
 dnl **************************************************************
@@ -78,13 +64,6 @@ dnl **************************************************************
 
 moduledir="\${libdir}/\$(PACKAGE)/module"
 AC_SUBST(moduledir)
-
-dnl **************************************************************
-dnl Configure for runner modules.
-dnl **************************************************************
-
-runner_moduledir="\${moduledir}/runner"
-AC_SUBST(runner_moduledir)
 
 dnl **************************************************************
 dnl Configure for runner modules.
