@@ -12,27 +12,40 @@ EXTRA_DIST = config.h.in cut-marshalers.list
 
 lib_LTLIBRARIES = libcutter.la
 
+cutter_public_headers = 			\
+		cut-assertions.h		\
+		cut-assertions-helper.h		\
+		cut-hidden-definitions.h	\
+		cut-public.h
+
+libcutter_public_headers = 		\
+		cut-verbose-level.h	\
+		cut-private.h		\
+		cut-test.h		\
+		cut-context.h		\
+		cut-test-container.h	\
+		cut-test-case.h		\
+		cut-test-suite.h	\
+		cut-test-result.h	\
+		cut-test-context.h	\
+		cut-main.h
+
 cutterincludedir=$(includedir)/cutter
 cutterinclude_HEADERS = 		\
 	cutter.h
 
 cuttersubincludedir=$(includedir)/cutter/cutter
 cuttersubinclude_HEADERS = 		\
-	cut-assertions.h		\
-	cut-assertions-helper.h		\
-	cut-hidden-definitions.h	\
-	cut-public.h
-
-cutter_h_sources =				\
-	cut-context.h				\
-	cut-public.h				\
-	cut-verbose-level.h			\
-	cut-runner.h
+	$(cutter_public_headers)	\
+	$(libcutter_public_headers)
 
 enum_source_prefix = cut-enum-types
 
-enum_sources_h = \
-	$(cutter_h_sources)
+enum_sources_h = 		\
+	cut-context.h		\
+	cut-public.h		\
+	cut-verbose-level.h	\
+	cut-runner.h
 
 enum_sources =			\
 	$(enum_source_prefix).c	\
@@ -52,38 +65,32 @@ bin_PROGRAMS = cutter
 
 cutter_SOURCES = main.c
 
-libcutter_la_SOURCES =			\
-		$(cutter_h_sources)	\
-		cut-enum-types.h	\
-		cut-enum-types.c	\
-		$(marshal_sources)	\
-		cut-private.h		\
-		cut-test.h		\
-		cut-test.c		\
-		cut-context.c		\
-		cut-test-container.h	\
-		cut-test-container.c	\
-		cut-test-case.h		\
-		cut-test-case.c		\
-		cut-test-suite.h	\
-		cut-test-suite.c	\
-		cut-loader.h		\
-		cut-loader.c		\
-		cut-repository.h	\
-		cut-repository.c	\
-		cut-module.h		\
-		cut-module.c		\
-		cut-module-impl.h	\
-		cut-runner.c		\
-		cut-test-result.c	\
-		cut-test-result.h	\
-		cut-test-context.c	\
-		cut-test-context.h	\
-		cut-utils.h		\
-		cut-utils.c		\
-		cut-verbose-level.c	\
-		cut-main.h		\
-		cut-main.c
+libcutter_la_SOURCES =				\
+		cut-enum-types.h		\
+		cut-enum-types.c		\
+		$(marshal_sources)		\
+		$(cutter_public_headers)	\
+		$(libcutter_public_headers)	\
+		cut-context.c			\
+		cut-main.c			\
+		cut-test.c			\
+		cut-test-context.c		\
+		cut-test-container.c		\
+		cut-test-case.c			\
+		cut-test-result.c		\
+		cut-test-suite.c		\
+		cut-verbose-level.c		\
+		cut-loader.h			\
+		cut-loader.c			\
+		cut-repository.h		\
+		cut-repository.c		\
+		cut-module.h			\
+		cut-module.c			\
+		cut-module-impl.h		\
+		cut-runner.h			\
+		cut-runner.c			\
+		cut-utils.h			\
+		cut-utils.c
 
 libcutter_la_LIBADD =			\
 	$(GLIB_LIBS)

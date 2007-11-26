@@ -1,3 +1,7 @@
+2007-11-26  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/Makefile.am: Install headers for libcutter.
+
 2007-11-26  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-module.c: cleanup.
