@@ -20,7 +20,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#  include <cutter/config.h>
 #endif /* HAVE_CONFIG_H */
 
 #include <stdlib.h>
@@ -30,13 +30,13 @@
 #include <gmodule.h>
 #include <gtk/gtk.h>
 
-#include "cut-module-impl.h"
-#include "cut-runner.h"
-#include "cut-context.h"
-#include "cut-test.h"
-#include "cut-test-case.h"
-#include "cut-verbose-level.h"
-#include "cut-enum-types.h"
+#include <cutter/cut-module-impl.h>
+#include <cutter/cut-runner.h>
+#include <cutter/cut-context.h>
+#include <cutter/cut-test.h>
+#include <cutter/cut-test-case.h>
+#include <cutter/cut-verbose-level.h>
+#include <cutter/cut-enum-types.h>
 
 #define CUT_TYPE_RUNNER_GTK            cut_type_runner_gtk
 #define CUT_RUNNER_GTK(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_RUNNER_GTK, CutRunnerGtk))
@@ -54,6 +54,11 @@ struct _CutRunnerGtk
 
     GtkWidget     *window;
     GtkTextBuffer *text_buffer;
+
+    CutTestSuite  *test_suite;
+    CutContext    *context;
+
+    gboolean       success;
 };
 
 struct _CutRunnerGtkClass
@@ -130,6 +135,9 @@ static void
 init (CutRunnerGtk *runner)
 {
     runner->window = create_window(runner);
+    runner->test_suite = NULL;
+    runner->context = NULL;
+    runner->success = TRUE;
 }
 
 static void
@@ -193,6 +201,16 @@ dispose (GObject *object)
     if (gtk->window) {
         gtk_widget_destroy(gtk->window);
         gtk->window = NULL;
+    }
+
+    if (gtk->test_suite) {
+        g_object_unref(gtk->test_suite);
+        gtk->test_suite = NULL;
+    }
+
+    if (gtk->context) {
+        g_object_unref(gtk->context);
+        gtk->context = NULL;
     }
 
     G_OBJECT_CLASS(parent_class)->dispose(object);
@@ -458,10 +476,10 @@ cb_crashed (CutContext *context, const gchar *stack_trace,
 }
 
 static void
-connect_to_context (CutRunnerGtk *runner, CutContext *context)
+connect_to_context (CutRunnerGtk *gtk, CutContext *context)
 {
 #define CONNECT(name) \
-    g_signal_connect(context, #name, G_CALLBACK(cb_ ## name), runner)
+    g_signal_connect(context, #name, G_CALLBACK(cb_ ## name), gtk)
 
     CONNECT(start_test_suite);
     CONNECT(start_test_case);
@@ -483,12 +501,12 @@ connect_to_context (CutRunnerGtk *runner, CutContext *context)
 }
 
 static void
-disconnect_from_context (CutRunnerGtk *runner, CutContext *context)
+disconnect_from_context (CutRunnerGtk *gtk, CutContext *context)
 {
 #define DISCONNECT(name)                                                \
     g_signal_handlers_disconnect_by_func(context,                       \
                                          G_CALLBACK(cb_ ## name),       \
-                                         runner)
+                                         gtk)
 
     DISCONNECT(start_test_suite);
     DISCONNECT(start_test_case);
@@ -509,60 +527,31 @@ disconnect_from_context (CutRunnerGtk *runner, CutContext *context)
 #undef DISCONNECT
 }
 
-typedef struct _RunTestInfo
+static gboolean
+run_test_source_func (gpointer data)
 {
-    CutRunner    *runner;
-    CutTestSuite *test_suite;
-    CutContext   *context;
-} RunTestInfo;
+    CutRunnerGtk *gtk = data;
 
-static gpointer
-test_run (gpointer data)
-{
-    gboolean success;
-    RunTestInfo *info = data;
-    CutRunner *runner;
-    CutTestSuite *test_suite;
-    CutContext *context;
+    connect_to_context(gtk, gtk->context);
+    gtk->success = cut_test_suite_run(gtk->test_suite, gtk->context);
+    disconnect_from_context(gtk, gtk->context);
 
-    runner = info->runner;
-    test_suite = info->test_suite;
-    context = info->context;
-
-    connect_to_context(CUT_RUNNER_GTK(runner), context);
-    success = cut_test_suite_run(test_suite, context);
-    disconnect_from_context(CUT_RUNNER_GTK(runner), context);
-
-    g_object_unref(runner);
-    g_object_unref(test_suite);
-    g_object_unref(context);
-    g_free(info);
-
-    return GINT_TO_POINTER(success);
+    return FALSE;
 }
 
 static gboolean
 run (CutRunner *runner, CutTestSuite *test_suite, CutContext *context)
 {
     CutRunnerGtk *gtk_runner;
-    gboolean success;
-    RunTestInfo *info;
-    GThread *thread;
-
-    info = g_new0(RunTestInfo, 1);
-    info->runner = g_object_ref(runner);
-    info->test_suite = g_object_ref(test_suite);
-    info->context = g_object_ref(context);
-
-    thread = g_thread_create(test_run, info, TRUE, NULL);
 
     gtk_runner = CUT_RUNNER_GTK(runner);
+    gtk_runner->test_suite = g_object_ref(test_suite);
+    gtk_runner->context = g_object_ref(context);
     gtk_widget_show_all(gtk_runner->window);
+    g_idle_add(run_test_source_func, gtk_runner);
     gtk_main();
 
-    success = GPOINTER_TO_INT(g_thread_join(thread));
-
-    return success;
+    return gtk_runner->success;
 }
 
 

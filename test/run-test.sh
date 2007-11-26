@@ -12,4 +12,11 @@ fi
 
 export CUT_RUNNER_MODULE_DIR=$BASE_DIR/../cutter/module/runner/.libs
 export CUT_RUNNER_FACTORY_MODULE_DIR=$BASE_DIR/../cutter/module/runner-factory/.libs
-$CUTTER --color=auto --multi-thread -s $BASE_DIR "$@" $BASE_DIR
+
+CUTTER_ARGS="--multi-thread -s $BASE_DIR"
+if test x"$USE_GTK" = x"yes"; then
+        CUTTER_ARGS="-r gtk $CUTTER_ARGS"
+else
+        CUTTER_ARGS="--color-auto $CUTTER_ARGS"
+fi
+$CUTTER $CUTTER_ARGS "$@" $BASE_DIR
