@@ -14,13 +14,13 @@ stack_DATA =			\
 	stack/Makefile.am	\
 	stack/configure.ac
 
-stack_srcdir = $(pkgdatadir)/stack/src
+stack_srcdir = $(stackdir)/src
 stack_src_DATA =		\
 	stack/src/Makefile.am	\
 	stack/src/stack.c	\
 	stack/src/stack.h
 
-stack_testdir = $(pkgdatadir)/stack/test
+stack_testdir = $(stackdir)/test
 stack_test_DATA =		\
 	stack/test/Makefile.am	\
 	stack/test/run-test.sh	\
