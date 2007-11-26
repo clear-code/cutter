@@ -1,6 +1,6 @@
-#include "cutter.h"
-#include "cut-test.h"
-#include "cut-context.h"
+#include <cutter.h>
+#include <cutter/cut-test.h>
+#include <cutter/cut-context.h>
 
 void test_get_name(void);
 void test_get_description(void);

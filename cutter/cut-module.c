@@ -265,7 +265,7 @@ _cut_module_open (const gchar *mod_path)
 {
     GModule *module;
 
-    module = g_module_open(mod_path, G_MODULE_BIND_LAZY);
+    module = g_module_open(mod_path, G_MODULE_BIND_LAZY | G_MODULE_BIND_LOCAL);
     if (!module) {
         _cut_module_show_error(NULL);
     }

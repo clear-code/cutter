@@ -50,7 +50,9 @@ cuttersubinclude_HEADERS = 		\
 
 enum_source_prefix = cut-enum-types
 
-enum_sources_h = $(cuttersubinclude_HEADERS)
+enum_sources_h =			\
+	cut-public.h			\
+	$(libcutter_public_headers)
 
 enum_sources =			\
 	$(enum_source_prefix).c	\

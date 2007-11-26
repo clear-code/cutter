@@ -1,5 +1,8 @@
 2007-11-26  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/Makefile.am (enum_sources_h): don't include
+	cut-hidden-definitions.h.
+
 	* configure.ac, cutter/, test/run-test.sh: supported runner factory.
 	You will get SEGV!
 
