@@ -37,7 +37,6 @@
 #include "cut-context.h"
 #include "cut-test-suite.h"
 #include "cut-repository.h"
-#include "cut-verbose-level.h"
 #include "cut-runner.h"
 #include "cut-runner-factory.h"
 
