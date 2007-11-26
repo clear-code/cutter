@@ -24,7 +24,7 @@
 
 #include <glib-object.h>
 
-#include <cut-test-container.h>
+#include <cutter/cut-test-container.h>
 
 G_BEGIN_DECLS
 

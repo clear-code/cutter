@@ -24,10 +24,10 @@
 
 #include <glib-object.h>
 
-#include <cut-private.h>
-#include <cut-assertions.h>
-#include <cut-test-context.h>
-#include <cut-test-result.h>
+#include <cutter/cut-private.h>
+#include <cutter/cut-assertions.h>
+#include <cutter/cut-test-context.h>
+#include <cutter/cut-test-result.h>
 
 G_BEGIN_DECLS
 

@@ -26,8 +26,8 @@
 
 #include <setjmp.h>
 
-#include <cut-private.h>
-#include <cut-assertions.h>
+#include <cutter/cut-private.h>
+#include <cutter/cut-assertions.h>
 
 G_BEGIN_DECLS
 
