@@ -39,67 +39,21 @@
 #include "cut-repository.h"
 #include "cut-verbose-level.h"
 #include "cut-runner.h"
+#include "cut-runner-factory.h"
 
-static CutVerboseLevel verbose_level = CUT_VERBOSE_LEVEL_NORMAL;
+static gboolean initialized = FALSE;
 static gchar *source_directory = NULL;
-static gboolean use_color = FALSE;
 static const gchar **test_case_names = NULL;
 static const gchar **test_names = NULL;
 static gboolean use_multi_thread = FALSE;
 static const gchar *runner_name = NULL;
 
-static gboolean
-parse_verbose_level_arg (const gchar *option_name, const gchar *value,
-                         gpointer data, GError **error)
-{
-    GError *verbose_level_error = NULL;
-
-    verbose_level = cut_verbose_level_parse(value, &verbose_level_error);
-    if (!verbose_level_error)
-        return TRUE;
-
-    g_set_error(error,
-                G_OPTION_ERROR,
-                G_OPTION_ERROR_BAD_VALUE,
-                "%s", verbose_level_error->message);
-    g_error_free(verbose_level_error);
-    return FALSE;
-}
-
-static gboolean
-parse_color_arg (const gchar *option_name, const gchar *value,
-                 gpointer data, GError **error)
-{
-    if (value == NULL ||
-        g_utf8_collate(value, "yes") == 0 ||
-        g_utf8_collate(value, "true") == 0) {
-        use_color = TRUE;
-    } else if (g_utf8_collate(value, "no") == 0 ||
-               g_utf8_collate(value, "false") == 0) {
-        use_color = FALSE;
-    } else if (g_utf8_collate(value, "auto") == 0) {
-        const gchar *term;
-        term = g_getenv("TERM");
-        use_color = term && g_str_has_suffix(term, "term");
-    } else {
-        g_set_error(error,
-                    G_OPTION_ERROR,
-                    G_OPTION_ERROR_BAD_VALUE,
-                    _("Invalid color value: %s"), value);
-        return FALSE;
-    }
-
-    return TRUE;
-}
+static CutRunnerFactory *factory = NULL;
 
 static const GOptionEntry option_entries[] =
 {
-    {"verbose", 'v', 0, G_OPTION_ARG_CALLBACK, parse_verbose_level_arg,
-     N_("Set verbose level"), "[s|silent|n|normal|v|verbose]"},
     {"source-directory", 's', 0, G_OPTION_ARG_STRING, &source_directory,
      N_("Set directory of source code"), "DIRECTORY"},
-    {"color", 'c', G_OPTION_FLAG_OPTIONAL_ARG, G_OPTION_ARG_CALLBACK,
-     parse_color_arg, N_("Output log with colors"), "[yes|true|no|false|auto]"},
     {"name", 'n', 0, G_OPTION_ARG_STRING_ARRAY, &test_names,
      N_("Specify tests"), "TEST_NAME"},
     {"test-case", 't', 0, G_OPTION_ARG_STRING_ARRAY, &test_case_names,
@@ -114,7 +68,6 @@ static const GOptionEntry option_entries[] =
 void
 cut_init (int *argc, char ***argv)
 {
-    static gboolean initialized = FALSE;
     GOptionContext *option_context;
     GError *error = NULL;
 
@@ -134,6 +87,27 @@ cut_init (int *argc, char ***argv)
 
     option_context = g_option_context_new("TEST_DIRECTORY");
     g_option_context_add_main_entries(option_context, option_entries, "cutter");
+    g_option_context_set_help_enabled(option_context, FALSE);
+    g_option_context_set_ignore_unknown_options(option_context, TRUE);
+    if (!g_option_context_parse(option_context, argc, argv, &error)) {
+        g_print("%s\n", error->message);
+        g_error_free(error);
+        g_option_context_free(option_context);
+        exit(1);
+    }
+
+    cut_runner_factory_init();
+    if (!runner_name)
+        runner_name = "console";
+    factory = cut_runner_factory_new(runner_name, NULL);
+    if (!factory) {
+        g_warning("can't find specified runner: %s", runner_name);
+        exit(1);
+    }
+    cut_runner_factory_set_option_group(factory, option_context);
+
+    g_option_context_set_help_enabled(option_context, TRUE);
+    g_option_context_set_ignore_unknown_options(option_context, FALSE);
     if (!g_option_context_parse(option_context, argc, argv, &error)) {
         g_print("%s\n", error->message);
         g_error_free(error);
@@ -157,6 +131,22 @@ cut_init (int *argc, char ***argv)
     cut_runner_init();
 
     g_option_context_free(option_context);
+}
+
+void
+cut_quit (void)
+{
+    if (!initialized)
+        return;
+
+    if (factory)
+        g_object_unref(factory);
+    factory = NULL;
+
+    cut_runner_quit();
+    cut_runner_factory_quit();
+
+    initialized = FALSE;
 }
 
 CutContext *
@@ -193,21 +183,18 @@ cut_run_test_suite (CutTestSuite *suite, CutContext *context)
 {
     CutRunner *runner;
     gboolean success;
-    const gchar *used_runner_name;
+
+    if (!initialized) {
+        g_warning("not initialized");
+        return FALSE;
+    }
 
     if (!suite)
         return TRUE;
 
-    if (runner_name)
-        used_runner_name = runner_name;
-    else
-        used_runner_name = "console";
-    runner = cut_runner_new(used_runner_name,
-                            "use-color", use_color,
-                            "verbose-level", verbose_level,
-                            NULL);
+    runner = cut_runner_factory_create(factory);
     if (!runner) {
-        g_warning("can't create runner: %s", used_runner_name);
+        g_warning("can't create runner: %s", runner_name);
         return FALSE;
     }
 

@@ -73,6 +73,13 @@ runner_moduledir="\${moduledir}/runner"
 AC_SUBST(runner_moduledir)
 
 dnl **************************************************************
+dnl Configure for runner factory modules.
+dnl **************************************************************
+
+runner_factory_moduledir="\${moduledir}/runner-factory"
+AC_SUBST(runner_factory_moduledir)
+
+dnl **************************************************************
 dnl Check for GTK+
 dnl **************************************************************
 AM_PATH_GTK_2_0(2.12.0, [], [], [])
@@ -135,6 +142,7 @@ CUTTER="\$(top_builddir)/cutter/cutter\$(EXEEXT)"
 AC_SUBST(CUTTER)
 
 CUTTER_CFLAGS="$GLIB_CFLAGS -DRUNNER_MODULEDIR=\\\"\"\$(runner_moduledir)\"\\\""
+CUTTER_CFLAGS="$CUTTER_CFLAGS -DRUNNER_FACTORY_MODULEDIR=\\\"\"\$(runner_factory_moduledir)\"\\\""
 
 AC_CONFIG_FILES([Makefile
 		 cutter.pc
@@ -142,7 +150,8 @@ AC_CONFIG_FILES([Makefile
 		 cutter/Makefile
 		 cutter/module/Makefile
 		 cutter/module/runner/Makefile
-                 sample/Makefile
+		 cutter/module/runner-factory/Makefile
+		 sample/Makefile
 		 sample/glib/Makefile
 		 sample/gtk+/Makefile
 		 sample/cairo/Makefile

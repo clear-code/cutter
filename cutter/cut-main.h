@@ -28,6 +28,8 @@
 G_BEGIN_DECLS
 
 void          cut_init              (int *argc, char ***argv);
+void          cut_quit              (void);
+
 gboolean      cut_run               (const gchar *directory);
 
 CutContext   *cut_create_context    (void);

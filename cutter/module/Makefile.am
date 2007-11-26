@@ -1,1 +1,1 @@
-SUBDIRS = runner
+SUBDIRS = runner runner-factory

@@ -29,6 +29,7 @@ libcutter_public_headers = 		\
 		cut-test-suite.h	\
 		cut-test-result.h	\
 		cut-runner.h		\
+		cut-runner-factory.h	\
 		cut-verbose-level.h
 
 noinst_headers = 			\
@@ -49,11 +50,7 @@ cuttersubinclude_HEADERS = 		\
 
 enum_source_prefix = cut-enum-types
 
-enum_sources_h = 		\
-	cut-context.h		\
-	cut-public.h		\
-	cut-verbose-level.h	\
-	cut-runner.h
+enum_sources_h = $(cuttersubinclude_HEADERS)
 
 enum_sources =			\
 	$(enum_source_prefix).c	\
@@ -92,7 +89,9 @@ libcutter_la_SOURCES =				\
 		cut-loader.c			\
 		cut-repository.c		\
 		cut-module.c			\
+		cut-module-impl.h		\
 		cut-runner.c			\
+		cut-runner-factory.c		\
 		cut-utils.c
 
 libcutter_la_LIBADD =			\

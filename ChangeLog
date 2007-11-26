@@ -1,5 +1,8 @@
 2007-11-26  Kouhei Sutou  <kou@cozmixng.org>
 
+	* configure.ac, cutter/, test/run-test.sh: supported runner factory.
+	You will get SEGV!
+
 	* cutter/cut-runner.[ch]: moved verbose_level to ...
 	* cutter/module/runner/cut-runner-console.c: ... here.
 
