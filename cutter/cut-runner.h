@@ -71,19 +71,6 @@ CutRunner   *cut_runner_new (const gchar *name,
                              const gchar *first_property,
                              ...);
 
-void  cut_runner_set_verbose_level         (CutRunner *runner,
-                                            CutVerboseLevel level);
-CutVerboseLevel
-      cut_runner_get_verbose_level         (CutRunner *runner);
-void  cut_runner_set_verbose_level_by_name (CutRunner *runner,
-                                            const gchar *name);
-void  cut_runner_set_source_directory      (CutRunner *runner,
-                                            const gchar *directory);
-const gchar *
-      cut_runner_get_source_directory      (CutRunner *runner);
-void  cut_runner_set_use_color             (CutRunner *runner,
-                                            gboolean   use_color);
-
 gboolean cut_runner_run                    (CutRunner    *runner,
                                             CutTestSuite *test_suite,
                                             CutContext   *context);

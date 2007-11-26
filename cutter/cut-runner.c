@@ -32,25 +32,7 @@
 #include "cut-context.h"
 #include "cut-test.h"
 #include "cut-test-case.h"
-#include "cut-verbose-level.h"
-#include "cut-enum-types.h"
 #include "cut-module.h"
-
-#define CUT_RUNNER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_RUNNER, CutRunnerPrivate))
-
-typedef struct _CutRunnerPrivate	CutRunnerPrivate;
-struct _CutRunnerPrivate
-{
-    CutVerboseLevel verbose_level;
-    gchar *source_directory;
-};
-
-enum
-{
-    PROP_0,
-    PROP_VERBOSE_LEVEL,
-    PROP_SOURCE_DIRECTORY
-};
 
 static GList *runners = NULL;
 static gchar *module_dir = NULL;
@@ -164,46 +146,22 @@ static void
 cut_runner_class_init (CutRunnerClass *klass)
 {
     GObjectClass *gobject_class;
-    GParamSpec *spec;
 
     gobject_class = G_OBJECT_CLASS(klass);
 
     gobject_class->dispose      = dispose;
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
-
-
-    spec = g_param_spec_enum("verbose-level",
-                             "Verbose Level",
-                             "The number of representing verbosity level",
-                             CUT_TYPE_VERBOSE_LEVEL,
-                             CUT_VERBOSE_LEVEL_NORMAL,
-                             G_PARAM_READWRITE);
-    g_object_class_install_property(gobject_class, PROP_VERBOSE_LEVEL, spec);
-
-    g_type_class_add_private(gobject_class, sizeof(CutRunnerPrivate));
 }
 
 static void
 init (CutRunner *runner)
 {
-    CutRunnerPrivate *priv = CUT_RUNNER_GET_PRIVATE(runner);
-
-    priv->verbose_level = CUT_VERBOSE_LEVEL_NORMAL;
-    priv->source_directory = NULL;
 }
 
 static void
 dispose (GObject *object)
 {
-    CutRunnerPrivate *priv = CUT_RUNNER_GET_PRIVATE(object);
-
-    if (priv->source_directory) {
-        g_free(priv->source_directory);
-        priv->source_directory = NULL;
-    }
-
-    G_OBJECT_CLASS(cut_runner_parent_class)->dispose(object);
 }
 
 static void
@@ -212,12 +170,7 @@ set_property (GObject      *object,
               const GValue *value,
               GParamSpec   *pspec)
 {
-    CutRunnerPrivate *priv = CUT_RUNNER_GET_PRIVATE(object);
-
     switch (prop_id) {
-      case PROP_VERBOSE_LEVEL:
-        priv->verbose_level = g_value_get_enum(value);
-        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
@@ -230,12 +183,7 @@ get_property (GObject    *object,
               GValue     *value,
               GParamSpec *pspec)
 {
-    CutRunnerPrivate *priv = CUT_RUNNER_GET_PRIVATE(object);
-
     switch (prop_id) {
-      case PROP_VERBOSE_LEVEL:
-        g_value_set_enum(value, priv->verbose_level);
-        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
@@ -257,57 +205,6 @@ cut_runner_new (const gchar *name, const gchar *first_property, ...)
     va_end(var_args);
 
     return CUT_RUNNER(runner);
-}
-
-void
-cut_runner_set_verbose_level (CutRunner *runner, CutVerboseLevel level)
-{
-    CutRunnerPrivate *priv = CUT_RUNNER_GET_PRIVATE(runner);
-
-    priv->verbose_level = level;
-}
-
-CutVerboseLevel
-cut_runner_get_verbose_level (CutRunner *runner)
-{
-    return CUT_RUNNER_GET_PRIVATE(runner)->verbose_level;
-}
-
-void
-cut_runner_set_verbose_level_by_name (CutRunner *runner, const gchar *name)
-{
-    GError *error = NULL;
-    CutVerboseLevel level;
-
-    level = cut_verbose_level_parse(name, &error);
-
-    if (error) {
-        g_warning("%s\n", error->message);
-        g_error_free(error);
-    } else {
-        cut_runner_set_verbose_level(runner, level);
-    }
-}
-
-void
-cut_runner_set_source_directory (CutRunner *runner, const gchar *directory)
-{
-    CutRunnerPrivate *priv = CUT_RUNNER_GET_PRIVATE(runner);
-
-    if (priv->source_directory) {
-        g_free(priv->source_directory);
-        priv->source_directory = NULL;
-    }
-
-    if (directory) {
-        priv->source_directory = g_strdup(directory);
-    }
-}
-
-const gchar *
-cut_runner_get_source_directory (CutRunner *runner)
-{
-    return CUT_RUNNER_GET_PRIVATE(runner)->source_directory;
 }
 
 gboolean
