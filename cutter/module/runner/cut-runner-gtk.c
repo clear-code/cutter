@@ -51,9 +51,8 @@ typedef struct _CutRunnerGtkClass CutRunnerGtkClass;
 struct _CutRunnerGtk
 {
     CutRunner     object;
-    gchar        *name;
-    gboolean      use_color;
 
+    GtkWidget     *window;
     GtkTextBuffer *text_buffer;
 };
 
@@ -64,8 +63,7 @@ struct _CutRunnerGtkClass
 
 enum
 {
-    PROP_0,
-    PROP_USE_COLOR
+    PROP_0
 };
 
 static GType cut_type_runner_gtk = 0;
@@ -89,7 +87,6 @@ class_init (CutRunnerClass *klass)
 {
     GObjectClass *gobject_class;
     CutRunnerClass *runner_class;
-    GParamSpec *spec;
 
     parent_class = g_type_class_peek_parent(klass);
 
@@ -99,14 +96,8 @@ class_init (CutRunnerClass *klass)
     gobject_class->dispose      = dispose;
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
-    runner_class->run           = run;
 
-    spec = g_param_spec_boolean("use-color",
-                                "Use color",
-                                "Whether use color",
-                                FALSE,
-                                G_PARAM_READWRITE);
-    g_object_class_install_property(gobject_class, PROP_USE_COLOR, spec);
+    runner_class->run           = run;
 }
 
 static GtkWidget *
@@ -138,11 +129,7 @@ create_window (CutRunnerGtk *runner)
 static void
 init (CutRunnerGtk *runner)
 {
-    GtkWidget *window;
-
-    gtk_init(NULL, NULL);
-    window = create_window(runner);
-    gtk_widget_show(window);
+    runner->window = create_window(runner);
 }
 
 static void
@@ -201,6 +188,13 @@ CUT_MODULE_IMPL_GET_LOG_DOMAIN (void)
 static void
 dispose (GObject *object)
 {
+    CutRunnerGtk *gtk = CUT_RUNNER_GTK(object);
+
+    if (gtk->window) {
+        gtk_widget_destroy(gtk->window);
+        gtk->window = NULL;
+    }
+
     G_OBJECT_CLASS(parent_class)->dispose(object);
 }
 
@@ -210,12 +204,7 @@ set_property (GObject      *object,
               const GValue *value,
               GParamSpec   *pspec)
 {
-    CutRunnerGtk *gtk = CUT_RUNNER_GTK(object);
-
     switch (prop_id) {
-      case PROP_USE_COLOR:
-        gtk->use_color = g_value_get_boolean(value);
-        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
@@ -228,12 +217,7 @@ get_property (GObject    *object,
               GValue     *value,
               GParamSpec *pspec)
 {
-    CutRunnerGtk *gtk = CUT_RUNNER_GTK(object);
-
     switch (prop_id) {
-      case PROP_USE_COLOR:
-        g_value_set_boolean(value, gtk->use_color);
-        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
@@ -560,6 +544,7 @@ test_run (gpointer data)
 static gboolean
 run (CutRunner *runner, CutTestSuite *test_suite, CutContext *context)
 {
+    CutRunnerGtk *gtk_runner;
     gboolean success;
     RunTestInfo *info;
     GThread *thread;
@@ -571,6 +556,8 @@ run (CutRunner *runner, CutTestSuite *test_suite, CutContext *context)
 
     thread = g_thread_create(test_run, info, TRUE, NULL);
 
+    gtk_runner = CUT_RUNNER_GTK(runner);
+    gtk_widget_show_all(gtk_runner->window);
     gtk_main();
 
     success = GPOINTER_TO_INT(g_thread_join(thread));

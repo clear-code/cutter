@@ -13,11 +13,11 @@ console_la_SOURCES = \
 	cut-runner-console.c
 console_la_LIBADD = $(GLIB_LIBS)
 
-#if HAVE_GTK
+if HAVE_GTK
 runner_module_LTLIBRARIES += gtk.la
 gtk_la_CPPFLAGS = -DG_LOG_DOMAIN=\"Cut/Runner:Gtk\" \
 		$(GTK_CFLAGS)
 gtk_la_SOURCES = \
 	cut-runner-gtk.c
 gtk_la_LIBADD = $(GTK_LIBS)
-#endif
+endif
