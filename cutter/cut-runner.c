@@ -34,6 +34,7 @@
 #include "cut-test-case.h"
 #include "cut-verbose-level.h"
 #include "cut-enum-types.h"
+#include "cut-module.h"
 
 #define CUT_RUNNER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_RUNNER, CutRunnerPrivate))
 
@@ -115,7 +116,7 @@ cut_runner_load (const gchar *base_dir)
     runners = g_list_concat(cut_module_load_modules(base_dir), runners);
 }
 
-CutModule *
+static CutModule *
 cut_runner_load_module (const gchar *name)
 {
     CutModule *module;

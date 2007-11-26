@@ -1,6 +1,7 @@
 2007-11-26  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/Makefile.am: Install headers for libcutter.
+	* cutter/cut-runner.[c|h]: Declare cut_runner_load_module() as static.
 
 2007-11-26  Kouhei Sutou  <kou@cozmixng.org>
 

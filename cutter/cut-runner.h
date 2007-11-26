@@ -24,10 +24,9 @@
 
 #include <glib-object.h>
 
-#include "cut-module.h"
-#include "cut-private.h"
-#include "cut-test-result.h"
-#include "cut-verbose-level.h"
+#include <cutter/cut-private.h>
+#include <cutter/cut-test-result.h>
+#include <cutter/cut-verbose-level.h>
 
 G_BEGIN_DECLS
 
@@ -64,7 +63,6 @@ const gchar    *cut_runner_get_default_module_dir   (void);
 void            cut_runner_set_default_module_dir   (const gchar *dir);
 
 void            cut_runner_load        (const gchar *base_dir);
-CutModule      *cut_runner_load_module (const gchar *name);
 void            cut_runner_unload      (void);
 GList          *cut_runner_get_registered_types (void);
 GList          *cut_runner_get_log_domains      (void);
