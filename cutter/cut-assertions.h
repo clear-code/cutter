@@ -420,7 +420,7 @@ extern "C" {
  *
  * e.g.:
  * |[
- * cut_assert_equal(strcmp, "abc", "abc") -> Pass
+ * cut_assert_equal(!strcmp, "abc", "abc") -> Pass
  * ]|
  */
 #define cut_assert_equal(function, expected, actual, ...) do            \
