@@ -54,7 +54,7 @@ struct _CutRunnerClass
                                     CutContext   *context);
 };
 
-GType        cut_runner_get_type  (void) G_GNUC_CONST;
+GType           cut_runner_get_type  (void) G_GNUC_CONST;
 
 void            cut_runner_init        (void);
 void            cut_runner_quit        (void);
@@ -67,13 +67,13 @@ void            cut_runner_unload      (void);
 GList          *cut_runner_get_registered_types (void);
 GList          *cut_runner_get_log_domains      (void);
 
-CutRunner   *cut_runner_new (const gchar *name,
-                             const gchar *first_property,
-                             ...);
+CutRunner      *cut_runner_new         (const gchar *name,
+                                        const gchar *first_property,
+                                        ...);
 
-gboolean cut_runner_run                    (CutRunner    *runner,
-                                            CutTestSuite *test_suite,
-                                            CutContext   *context);
+gboolean        cut_runner_run         (CutRunner    *runner,
+                                        CutTestSuite *test_suite,
+                                         CutContext   *context);
 G_END_DECLS
 
 #endif /* __CUT_RUNNER_H__ */

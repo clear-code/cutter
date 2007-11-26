@@ -202,9 +202,9 @@ cut_test_class_init (CutTestClass *klass)
 }
 
 static void
-cut_test_init (CutTest *container)
+cut_test_init (CutTest *test)
 {
-    CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(container);
+    CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(test);
 
     priv->test_function = NULL;
     priv->timer = g_timer_new();
