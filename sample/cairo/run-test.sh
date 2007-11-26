@@ -7,5 +7,6 @@ if test x"$NO_MAKE" != x"yes"; then
 fi
 
 export CUT_RUNNER_MODULE_DIR=$BASE_DIR/../../cutter/module/runner/.libs
+export CUT_RUNNER_FACTORY_MODULE_DIR=$BASE_DIR/../../cutter/module/runner-factory/.libs
 $BASE_DIR/cutter-cairo \
     --color=auto --multi-thread -s $BASE_DIR "$@" $BASE_DIR
