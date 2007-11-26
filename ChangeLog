@@ -1,3 +1,8 @@
+2007-11-26  Kouhei Sutou  <kou@cozmixng.org>
+
+	* doc/reference/Makefile.am: added html-build.stamp to distributed
+	files.
+
 2007-11-25  Kouhei Sutou  <kou@cozmixng.org>
 
 	* doc/reference/Makefile.am, doc/reference/sf-logo.html: supported

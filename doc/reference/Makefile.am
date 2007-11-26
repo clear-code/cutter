@@ -74,6 +74,7 @@ include $(top_srcdir)/gtk-doc.make
 
 # Other files to distribute
 EXTRA_DIST +=				\
+	html-build.stamp		\
 	version.xml.in			\
 	readme.xml			\
 	readme.xml.ja			\
