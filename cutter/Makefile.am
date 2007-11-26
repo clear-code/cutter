@@ -19,16 +19,24 @@ cutter_public_headers = 			\
 		cut-public.h
 
 libcutter_public_headers = 		\
-		cut-verbose-level.h	\
 		cut-private.h		\
-		cut-test.h		\
 		cut-context.h		\
-		cut-test-container.h	\
+		cut-main.h		\
+		cut-test.h		\
 		cut-test-case.h		\
+		cut-test-container.h	\
+		cut-test-context.h	\
 		cut-test-suite.h	\
 		cut-test-result.h	\
-		cut-test-context.h	\
-		cut-main.h
+		cut-runner.h		\
+		cut-verbose-level.h
+
+noinst_headers = 			\
+		cut-loader.h		\
+		cut-module.h		\
+		cut-module-impl.h	\
+		cut-repository.h	\
+		cut-utils.h
 
 cutterincludedir=$(includedir)/cutter
 cutterinclude_HEADERS = 		\
@@ -71,6 +79,7 @@ libcutter_la_SOURCES =				\
 		$(marshal_sources)		\
 		$(cutter_public_headers)	\
 		$(libcutter_public_headers)	\
+		$(noinst_headers)		\
 		cut-context.c			\
 		cut-main.c			\
 		cut-test.c			\
@@ -80,16 +89,10 @@ libcutter_la_SOURCES =				\
 		cut-test-result.c		\
 		cut-test-suite.c		\
 		cut-verbose-level.c		\
-		cut-loader.h			\
 		cut-loader.c			\
-		cut-repository.h		\
 		cut-repository.c		\
-		cut-module.h			\
 		cut-module.c			\
-		cut-module-impl.h		\
-		cut-runner.h			\
 		cut-runner.c			\
-		cut-utils.h			\
 		cut-utils.c
 
 libcutter_la_LIBADD =			\
