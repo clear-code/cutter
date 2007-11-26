@@ -26,4 +26,4 @@ stack_test_DATA =		\
 	stack/test/run-test.sh	\
 	stack/test/test-stack.c
 
-EXTRA_DIST = $(stack_DATA) $(stack_srcDATA) $(stack_testDATA)
+EXTRA_DIST = $(stack_DATA) $(stack_src_DATA) $(stack_test_DATA)
