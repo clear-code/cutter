@@ -6,6 +6,7 @@ cutter/cut-marshalers.c
 cutter/cut-module.c
 cutter/cut-repository.c
 cutter/cut-runner.c
+cutter/cut-runner-factory.c
 cutter/cut-test-case.c
 cutter/cut-test-container.c
 cutter/cut-test-context.c
@@ -15,3 +16,4 @@ cutter/cut-test.c
 cutter/cut-utils.c
 cutter/cut-verbose-level.c
 cutter/main.c
+cutter/module/runner-factory/cut-runner-factory-console.c
