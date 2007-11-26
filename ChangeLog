@@ -1,5 +1,7 @@
 2007-11-26  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/: supported --show-all-runners option.
+
 	* sample/*/run-test.sh: set CUT_RUNNER_FACTORY_MODULE_DIR.
 
 	* cutter/Makefile.am (enum_sources_h): don't include

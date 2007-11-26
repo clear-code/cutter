@@ -206,6 +206,21 @@ cut_module_collect_log_domains (GList *modules)
     return results;
 }
 
+GList *
+cut_module_collect_names (GList *modules)
+{
+    GList *results = NULL;
+    GList *node;
+
+    for (node = modules; node; node = g_list_next(node)) {
+        CutModule *module = node->data;
+
+        results = g_list_prepend(results, G_TYPE_MODULE(module)->name);
+    }
+
+    return results;
+}
+
 static void
 _cut_module_show_error (GModule *module)
 {

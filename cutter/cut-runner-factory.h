@@ -47,9 +47,9 @@ struct _CutRunnerFactoryClass
 {
     GObjectClass parent_class;
 
-    void       (*set_option_group)      (CutRunnerFactory    *factory,
-                                         GOptionContext      *context);
-    CutRunner *(*create)                (CutRunnerFactory    *factory);
+    void         (*set_option_group)    (CutRunnerFactory *factory,
+                                         GOptionContext   *context);
+    CutRunner   *(*create)              (CutRunnerFactory *factory);
 };
 
 GType           cut_runner_factory_get_type    (void) G_GNUC_CONST;
@@ -64,14 +64,16 @@ void            cut_runner_factory_load        (const gchar *base_dir);
 void            cut_runner_factory_unload      (void);
 GList          *cut_runner_factory_get_registered_types (void);
 GList          *cut_runner_factory_get_log_domains      (void);
+GList          *cut_runner_factory_get_names   (void);
 
-CutRunnerFactory   *cut_runner_factory_new (const gchar *name,
-                                            const gchar *first_property,
-                                            ...);
+CutRunnerFactory *cut_runner_factory_new       (const gchar *name,
+                                                const gchar *first_property,
+                                                ...);
 
-void      cut_runner_factory_set_option_group      (CutRunnerFactory *factory,
-                                                    GOptionContext   *context);
-CutRunner *cut_runner_factory_create               (CutRunnerFactory *factory);
+void         cut_runner_factory_set_option_group (CutRunnerFactory *factory,
+                                                  GOptionContext   *context);
+CutRunner   *cut_runner_factory_create           (CutRunnerFactory *factory);
+const gchar *cut_runner_factory_get_name         (CutRunnerFactory *factory);
 
 G_END_DECLS
 

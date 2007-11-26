@@ -46,6 +46,7 @@ static const gchar **test_case_names = NULL;
 static const gchar **test_names = NULL;
 static gboolean use_multi_thread = FALSE;
 static const gchar *runner_name = NULL;
+static gboolean _show_all_runners = FALSE;
 
 static CutRunnerFactory *factory = NULL;
 
@@ -61,8 +62,28 @@ static const GOptionEntry option_entries[] =
      N_("Run test cases with multi-thread"), NULL},
     {"runner", 'r', 0, G_OPTION_ARG_STRING, &runner_name,
      N_("Specify test runner"), "[console|gtk]"},
+    {"show-all-runners", 0, 0, G_OPTION_ARG_NONE, &_show_all_runners,
+     N_("Show all available runners and exit"), NULL},
     {NULL}
 };
+
+static void
+show_all_runners (void)
+{
+    GList *names, *node;
+
+    cut_runner_factory_load(NULL);
+    names = cut_runner_factory_get_names();
+    for (node = names; node; node = g_list_next(node)) {
+        const gchar *name = node->data;
+        if (g_list_next(node))
+            g_print("%s, ", name);
+        else
+            g_print("%s", name);
+    }
+    g_print("\n");
+    g_list_free(names);
+}
 
 void
 cut_init (int *argc, char ***argv)
@@ -92,6 +113,11 @@ cut_init (int *argc, char ***argv)
         g_print("%s\n", error->message);
         g_error_free(error);
         g_option_context_free(option_context);
+        exit(1);
+    }
+
+    if (_show_all_runners) {
+        show_all_runners();
         exit(1);
     }
 

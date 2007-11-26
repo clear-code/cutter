@@ -141,6 +141,12 @@ cut_runner_factory_get_log_domains (void)
     return cut_module_collect_log_domains(factories);
 }
 
+GList *
+cut_runner_factory_get_names (void)
+{
+    return cut_module_collect_names(factories);
+}
+
 #define cut_runner_factory_init init
 G_DEFINE_ABSTRACT_TYPE(CutRunnerFactory, cut_runner_factory, G_TYPE_OBJECT)
 #undef cut_runner_factory_init
