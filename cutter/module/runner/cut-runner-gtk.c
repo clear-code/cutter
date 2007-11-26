@@ -29,6 +29,7 @@
 #include <glib/gstdio.h>
 #include <gmodule.h>
 #include <gtk/gtk.h>
+#include <gdk/gdkkeysyms.h>
 
 #include <cutter/cut-module-impl.h>
 #include <cutter/cut-runner.h>
@@ -105,6 +106,29 @@ class_init (CutRunnerClass *klass)
     runner_class->run           = run;
 }
 
+static gboolean
+cb_destroy (GtkWidget *widget, gpointer data)
+{
+    CutRunnerGtk *runner = data;
+
+    runner->window = NULL;
+    gtk_main_quit();
+
+    return TRUE;
+}
+
+static gboolean
+cb_key_press_event (GtkWidget *widget, GdkEventKey *event, gpointer data)
+{
+    if (event->state == GDK_CONTROL_MASK &&
+        event->keyval == GDK_q) {
+        gtk_widget_destroy(widget);
+        return TRUE;
+    }
+
+    return FALSE;
+}
+
 static GtkWidget *
 create_window (CutRunnerGtk *runner)
 {
@@ -114,7 +138,9 @@ create_window (CutRunnerGtk *runner)
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_default_size(GTK_WINDOW(window), 400, 300);
     g_signal_connect(G_OBJECT(window), "destroy",
-                     G_CALLBACK (gtk_main_quit), NULL);
+                     G_CALLBACK(cb_destroy), runner);
+    g_signal_connect(G_OBJECT(window), "key-press-event",
+                     G_CALLBACK(cb_key_press_event), NULL);
 
     scrolled_window = gtk_scrolled_window_new(NULL, NULL);
     gtk_container_add(GTK_CONTAINER(window), scrolled_window);
@@ -196,21 +222,21 @@ CUT_MODULE_IMPL_GET_LOG_DOMAIN (void)
 static void
 dispose (GObject *object)
 {
-    CutRunnerGtk *gtk = CUT_RUNNER_GTK(object);
+    CutRunnerGtk *runner = CUT_RUNNER_GTK(object);
 
-    if (gtk->window) {
-        gtk_widget_destroy(gtk->window);
-        gtk->window = NULL;
+    if (runner->window) {
+        gtk_widget_destroy(runner->window);
+        runner->window = NULL;
     }
 
-    if (gtk->test_suite) {
-        g_object_unref(gtk->test_suite);
-        gtk->test_suite = NULL;
+    if (runner->test_suite) {
+        g_object_unref(runner->test_suite);
+        runner->test_suite = NULL;
     }
 
-    if (gtk->context) {
-        g_object_unref(gtk->context);
-        gtk->context = NULL;
+    if (runner->context) {
+        g_object_unref(runner->context);
+        runner->context = NULL;
     }
 
     G_OBJECT_CLASS(parent_class)->dispose(object);

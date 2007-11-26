@@ -3,6 +3,7 @@
 	* cutter/module/runner/cut-runner-gtk.c:
 	- cleanup.
 	- removed thread.
+	- supported C-q.
 
 	* cutter/module/runner-factory/cut-runner-factory-gtk.c: added.
 
