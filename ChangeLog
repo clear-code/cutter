@@ -1,5 +1,7 @@
 2007-11-26  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/module/runner-factory/cut-runner-factory-gtk.c: added.
+
 	* cutter/: supported --show-all-runners option.
 
 	* sample/*/run-test.sh: set CUT_RUNNER_FACTORY_MODULE_DIR.

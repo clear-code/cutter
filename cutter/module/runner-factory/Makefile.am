@@ -13,12 +13,12 @@ console_la_SOURCES = \
 	cut-runner-factory-console.c
 console_la_LIBADD = $(GLIB_LIBS)
 
-# if HAVE_GTK
-# runner_factory_module_LTLIBRARIES += gtk.la
-# gtk_la_CPPFLAGS =					\
-# 	-DG_LOG_DOMAIN=\"Cut/RunnerFactory:Gtk\"	\
-# 	$(GTK_CFLAGS)
-# gtk_la_SOURCES = \
-# 	cut-runner-factorry-gtk.c
-# gtk_la_LIBADD = $(GTK_LIBS)
-# endif
+if HAVE_GTK
+runner_factory_module_LTLIBRARIES += gtk.la
+gtk_la_CPPFLAGS =					\
+	-DG_LOG_DOMAIN=\"Cut/RunnerFactory:Gtk\"	\
+	$(GTK_CFLAGS)
+gtk_la_SOURCES = \
+	cut-runner-factory-gtk.c
+gtk_la_LIBADD = $(GTK_LIBS)
+endif
