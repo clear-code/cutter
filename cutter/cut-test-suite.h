@@ -24,8 +24,8 @@
 
 #include <glib-object.h>
 
-#include "cut-test-container.h"
-#include "cut-test-case.h"
+#include <cut-test-container.h>
+#include <cut-test-case.h>
 
 G_BEGIN_DECLS
 

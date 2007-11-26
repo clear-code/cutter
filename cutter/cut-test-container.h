@@ -24,7 +24,7 @@
 
 #include <glib-object.h>
 
-#include "cut-test.h"
+#include <cut-test.h>
 
 G_BEGIN_DECLS
 

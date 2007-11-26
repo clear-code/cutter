@@ -22,8 +22,8 @@
 #ifndef __CUT_MAIN_H__
 #define __CUT_MAIN_H__
 
-#include "cut-context.h"
-#include "cut-test-suite.h"
+#include <cut-context.h>
+#include <cut-test-suite.h>
 
 G_BEGIN_DECLS
 
