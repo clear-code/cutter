@@ -1,5 +1,7 @@
 2007-11-26  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-module.c: cleanup.
+
 	* configure.ac: removed needless lines.
 
 	* configure.ac, NEWS, NEWS.ja: 0.1.0 -> 1.0.0.
