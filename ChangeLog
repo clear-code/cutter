@@ -1,5 +1,8 @@
 2007-11-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/module/ui/cut-ui-gtk.c: used Monospace font for
+	description to be easy to read.
+
 	* cutter/module/ui/cut-ui-gtk.c: supported crash log.
 
 	* cutter/module/ui/cut-ui-gtk.c: used ready-test-suite instead of
