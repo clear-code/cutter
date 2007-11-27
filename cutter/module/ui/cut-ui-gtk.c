@@ -520,6 +520,8 @@ typedef struct _TestCaseRowInfo
     CutUIGtk *ui;
     CutTestCase *test_case;
     gchar *path;
+    guint n_tests;
+    guint n_completed_tests;
 } TestCaseRowInfo;
 
 typedef struct TestRowInfo
@@ -582,7 +584,6 @@ idle_cb_append_test_case_row (gpointer data)
     TestCaseRowInfo *info = data;
     CutUIGtk *ui;
     CutTestCase *test_case;
-
     GtkTreeIter iter;
 
     ui = info->ui;
@@ -595,10 +596,42 @@ idle_cb_append_test_case_row (gpointer data)
                        cut_test_get_name(CUT_TEST(test_case)),
                        COLUMN_DESCRIPTION,
                        cut_test_get_description(CUT_TEST(test_case)),
+                       COLUMN_PROGRESS_PULSE, -1,
                        -1);
     info->path =
         gtk_tree_model_get_string_from_iter(GTK_TREE_MODEL(ui->logs),
                                             &iter);
+    g_mutex_unlock(ui->mutex);
+
+    return FALSE;
+}
+
+static gboolean
+idle_cb_update_test_case_row (gpointer data)
+{
+    TestCaseRowInfo *info = data;
+    CutUIGtk *ui;
+    GtkTreeIter iter;
+
+    ui = info->ui;
+
+    g_mutex_lock(ui->mutex);
+    if (gtk_tree_model_get_iter_from_string(GTK_TREE_MODEL(ui->logs),
+                                            &iter, info->path)) {
+        gdouble fraction;
+        gchar *text;
+
+        fraction = info->n_completed_tests / (gdouble)info->n_tests;
+        text = g_strdup_printf("%d/%d (%d%%)",
+                               info->n_completed_tests,
+                               info->n_tests,
+                               (gint)(fraction * 100));
+        gtk_tree_store_set(ui->logs, &iter,
+                           COLUMN_PROGRESS_TEXT, text,
+                           COLUMN_PROGRESS_VALUE, (gint)(fraction * 100),
+                           -1);
+        g_free(text);
+    }
     g_mutex_unlock(ui->mutex);
 
     return FALSE;
@@ -751,8 +784,12 @@ static void
 cb_complete_test (CutTest *test, gpointer data)
 {
     TestRowInfo *info = data;
+    TestCaseRowInfo *test_case_row_info;
 
-    info->test_case_row_info->ui->n_completed_tests++;
+    test_case_row_info = info->test_case_row_info;
+    test_case_row_info->ui->n_completed_tests++;
+    test_case_row_info->n_completed_tests++;
+    g_idle_add(idle_cb_update_test_case_row, info->test_case_row_info);
     g_idle_add(idle_cb_free_test_row_info, data);
     g_signal_handlers_disconnect_by_func(test, cb_success_test, data);
     g_signal_handlers_disconnect_by_func(test, cb_failure_test, data);
@@ -803,19 +840,17 @@ static void
 cb_ready_test_case (CutContext *context, CutTestCase *test_case, guint n_tests,
                     CutUIGtk *ui)
 {
-    ui->n_tests += n_tests;
-}
-
-static void
-cb_start_test_case (CutContext *context, CutTestCase *test_case,
-                    CutUIGtk *ui)
-{
     TestCaseRowInfo *info;
+
+    ui->n_tests += n_tests;
 
     info = g_new0(TestCaseRowInfo, 1);
     info->ui = g_object_ref(ui);
     info->test_case = g_object_ref(test_case);
     info->path = NULL;
+    info->n_tests = n_tests;
+    info->n_completed_tests = 0;
+
     g_idle_add(idle_cb_append_test_case_row, info);
 
     g_signal_connect(test_case, "start-test",
@@ -937,7 +972,6 @@ connect_to_context (CutUIGtk *ui, CutContext *context)
 
     CONNECT(start_test_suite);
     CONNECT(ready_test_case);
-    CONNECT(start_test_case);
 
     CONNECT(complete_test_suite);
 
@@ -955,7 +989,6 @@ disconnect_from_context (CutUIGtk *ui, CutContext *context)
 
     DISCONNECT(start_test_suite);
     DISCONNECT(ready_test_case);
-    DISCONNECT(start_test_case);
 
     DISCONNECT(complete_test_suite);
 
