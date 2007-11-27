@@ -542,10 +542,14 @@ static void
 cb_success_test (CutTest *test, gpointer data)
 {
     TestRowInfo *info = data;
-    info->status = ".";
-    info->color = "green";
 
-    g_idle_add(idle_cb_update_test_row_status, data);
+    if (!info->status) {
+        info->status = ".";
+        info->color = "green";
+
+        g_idle_add(idle_cb_update_test_row_status, data);
+    }
+
     g_signal_handlers_disconnect_by_func(test, cb_success_test, data);
 }
 
