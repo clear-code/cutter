@@ -707,5 +707,5 @@ run (CutRunner *runner, CutTestSuite *test_suite, CutContext *context)
 
 
 /*
-vi:ts=4:nowrap:ai:expandtab:ow=4
+vi:ts=4:nowrap:ai:expandtab:sw=4
 */
