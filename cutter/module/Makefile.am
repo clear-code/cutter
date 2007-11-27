@@ -1,1 +1,1 @@
-SUBDIRS = ui runner-factory
+SUBDIRS = ui ui-factory
