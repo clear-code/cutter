@@ -391,8 +391,10 @@ idle_cb_setup_progress_bar (gpointer data)
 {
     CutRunnerGtk *runner = data;
 
-    gtk_progress_bar_set_pulse_step(runner->progress_bar, 0.1);
+    gtk_progress_bar_set_pulse_step(runner->progress_bar, 0.01);
     gtk_progress_bar_pulse(runner->progress_bar);
+
+    return FALSE;
 }
 
 static void
