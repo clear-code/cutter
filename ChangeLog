@@ -1,3 +1,8 @@
+2007-11-27  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/module/ui/cut-ui-gtk.c: Show status with
+	GtkCellRenderProgress.
+
 2007-11-27  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/module/ui/cut-ui-gtk.c: kept a status.

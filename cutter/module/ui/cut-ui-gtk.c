@@ -86,7 +86,10 @@ enum
 enum
 {
     COLUMN_COLOR,
-    COLUMN_STATUS,
+    COLUMN_TEST_STATUS,
+    COLUMN_PROGRESS_VALUE,
+    COLUMN_PROGRESS_TEXT,
+    COLUMN_PROGRESS_PULSE,
     COLUMN_NAME,
     COLUMN_DESCRIPTION,
     N_COLUMN
@@ -144,10 +147,11 @@ setup_tree_view_columns (GtkTreeView *tree_view)
     GtkCellRenderer *renderer;
     GtkTreeViewColumn *column;
 
-    renderer = gtk_cell_renderer_text_new();
+    renderer = gtk_cell_renderer_progress_new();
     column = gtk_tree_view_column_new_with_attributes("Status", renderer,
-                                                      "text", COLUMN_STATUS,
-                                                      "background", COLUMN_COLOR,
+                                                      "value", COLUMN_PROGRESS_VALUE,
+                                                      "text", COLUMN_PROGRESS_TEXT,
+                                                      "pulse", COLUMN_PROGRESS_PULSE,
                                                       NULL);
     gtk_tree_view_append_column(tree_view, column);
 
@@ -177,7 +181,12 @@ setup_tree_view (GtkBox *box, CutUIGtk *ui)
 
     tree_store = gtk_tree_store_new(N_COLUMN,
                                     G_TYPE_STRING,
-                                    G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
+                                    G_TYPE_INT,
+                                    G_TYPE_INT,
+                                    G_TYPE_STRING,
+                                    G_TYPE_INT,
+                                    G_TYPE_STRING,
+                                    G_TYPE_STRING, G_TYPE_STRING);
     ui->logs = tree_store;
 
     tree_view = gtk_tree_view_new_with_model(GTK_TREE_MODEL(tree_store));
@@ -287,9 +296,9 @@ register_type (GTypeModule *type_module)
         };
 
     cut_type_ui_gtk = g_type_module_register_type(type_module,
-                                                      CUT_TYPE_UI,
-                                                      "CutUIGtk",
-                                                      &info, 0);
+                                                  CUT_TYPE_UI,
+                                                  "CutUIGtk",
+                                                  &info, 0);
 }
 
 G_MODULE_EXPORT GList *
@@ -447,7 +456,7 @@ typedef struct TestRowInfo
     TestCaseRowInfo *test_case_row_info;
     CutTest *test;
     gchar *path;
-    const gchar *status;
+    CutTestResultStatus status;
     const gchar *color;
 } TestRowInfo;
 
@@ -523,6 +532,8 @@ idle_cb_append_test_row (gpointer data)
                                         info->test_case_row_info->path);
     gtk_tree_store_append(ui->logs, &iter, &test_case_iter);
     gtk_tree_store_set(ui->logs, &iter,
+                       COLUMN_PROGRESS_TEXT, "",
+                       COLUMN_PROGRESS_PULSE, 0,
                        COLUMN_NAME, cut_test_get_name(test),
                        COLUMN_DESCRIPTION, cut_test_get_description(test),
                        -1);
@@ -544,12 +555,13 @@ idle_cb_update_test_row_status (gpointer data)
     ui = info->test_case_row_info->ui;
 
     g_mutex_lock(ui->mutex);
-    if (info->status &&
-        gtk_tree_model_get_iter_from_string(GTK_TREE_MODEL(ui->logs),
+    if (gtk_tree_model_get_iter_from_string(GTK_TREE_MODEL(ui->logs),
                                             &iter, info->path)) {
         gtk_tree_store_set(ui->logs, &iter,
                            COLUMN_COLOR, info->color,
-                           COLUMN_STATUS, info->status,
+                           COLUMN_PROGRESS_TEXT, "",
+                           COLUMN_PROGRESS_VALUE, 100,
+                           COLUMN_PROGRESS_PULSE, -1,
                            -1);
     }
     g_mutex_unlock(ui->mutex);
@@ -562,8 +574,8 @@ cb_success_test (CutTest *test, gpointer data)
 {
     TestRowInfo *info = data;
 
-    if (!info->status) {
-        info->status = ".";
+    if (info->status == -1) {
+        info->status = CUT_TEST_RESULT_SUCCESS;
         info->color = "green";
 
         g_idle_add(idle_cb_update_test_row_status, data);
@@ -576,7 +588,7 @@ static void
 cb_failure_test (CutTest *test, gpointer data)
 {
     TestRowInfo *info = data;
-    info->status = "F";
+    info->status = CUT_TEST_RESULT_FAILURE;
     info->color = "red";
 
     update_status(info->test_case_row_info->ui, CUT_TEST_RESULT_FAILURE);
@@ -590,7 +602,7 @@ cb_error_test (CutTest *test, CutTestContext *context, CutTestResult *result,
                gpointer data)
 {
     TestRowInfo *info = data;
-    info->status = "E";
+    info->status = CUT_TEST_RESULT_ERROR;
     info->color = "purple";
 
     update_status(info->test_case_row_info->ui, CUT_TEST_RESULT_ERROR);
@@ -604,7 +616,7 @@ cb_pending_test (CutTest *test, CutTestContext *context, CutTestResult *result,
                  gpointer data)
 {
     TestRowInfo *info = data;
-    info->status = "P";
+    info->status = CUT_TEST_RESULT_PENDING;
     info->color = "yellow";
 
     update_status(info->test_case_row_info->ui, CUT_TEST_RESULT_PENDING);
@@ -618,7 +630,7 @@ cb_notification_test (CutTest *test, CutTestContext *context,
                       CutTestResult *result, gpointer data)
 {
     TestRowInfo *info = data;
-    info->status = "N";
+    info->status = CUT_TEST_RESULT_NOTIFICATION;
     info->color = "light blue";
 
     update_status(info->test_case_row_info->ui, CUT_TEST_RESULT_NOTIFICATION);
@@ -652,7 +664,7 @@ cb_start_test (CutTestCase *test_case, CutTest *test,
     info->test_case_row_info = data;
     info->test = g_object_ref(test);
     info->path = NULL;
-    info->status = NULL;
+    info->status = -1;
     info->color = NULL;
 
     g_idle_add(idle_cb_append_test_row, info);
