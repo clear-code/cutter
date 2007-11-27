@@ -3,10 +3,10 @@ INCLUDES = $(GLIB_CFLAGS)	\
 	 -I$(top_srcdir)
 
 LDFLAGS =							\
-  -rpath $(runner_factory_moduledir) -avoid-version -module	\
+  -rpath $(ui_factory_moduledir) -avoid-version -module	\
   -export-dynamic $(no_undefined) $(LIBTOOL_EXPORT_OPTIONS)
 
-runner_factory_module_LTLIBRARIES = console.la
+ui_factory_module_LTLIBRARIES = console.la
 
 console_la_CPPFLAGS = -DG_LOG_DOMAIN=\"Cut/RunnerFactory:Console\"
 console_la_SOURCES = \
@@ -14,7 +14,7 @@ console_la_SOURCES = \
 console_la_LIBADD = $(GLIB_LIBS)
 
 if HAVE_GTK
-runner_factory_module_LTLIBRARIES += gtk.la
+ui_factory_module_LTLIBRARIES += gtk.la
 gtk_la_CPPFLAGS =					\
 	-DG_LOG_DOMAIN=\"Cut/RunnerFactory:Gtk\"	\
 	$(GTK_CFLAGS)

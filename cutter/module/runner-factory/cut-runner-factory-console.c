@@ -35,27 +35,27 @@
 #include <cutter/cut-verbose-level.h>
 #include <cutter/cut-enum-types.h>
 
-#define CUT_TYPE_RUNNER_FACTORY_CONSOLE            cut_type_runner_factory_console
-#define CUT_RUNNER_FACTORY_CONSOLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_RUNNER_FACTORY_CONSOLE, CutRunnerFactoryConsole))
-#define CUT_RUNNER_FACTORY_CONSOLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_RUNNER_FACTORY_CONSOLE, CutRunnerFactoryConsoleClass))
-#define CUT_IS_RUNNER_FACTORY_CONSOLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_RUNNER_FACTORY_CONSOLE))
-#define CUT_IS_RUNNER_FACTORY_CONSOLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_RUNNER_FACTORY_CONSOLE))
-#define CUT_RUNNER_FACTORY_CONSOLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_RUNNER_FACTORY_CONSOLE, CutRunnerFactoryConsoleClass))
+#define CUT_TYPE_UI_FACTORY_CONSOLE            cut_type_ui_factory_console
+#define CUT_UI_FACTORY_CONSOLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_UI_FACTORY_CONSOLE, CutUIFactoryConsole))
+#define CUT_UI_FACTORY_CONSOLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_UI_FACTORY_CONSOLE, CutUIFactoryConsoleClass))
+#define CUT_IS_UI_FACTORY_CONSOLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_UI_FACTORY_CONSOLE))
+#define CUT_IS_UI_FACTORY_CONSOLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_UI_FACTORY_CONSOLE))
+#define CUT_UI_FACTORY_CONSOLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_UI_FACTORY_CONSOLE, CutUIFactoryConsoleClass))
 
-typedef struct _CutRunnerFactoryConsole CutRunnerFactoryConsole;
-typedef struct _CutRunnerFactoryConsoleClass CutRunnerFactoryConsoleClass;
+typedef struct _CutUIFactoryConsole CutUIFactoryConsole;
+typedef struct _CutUIFactoryConsoleClass CutUIFactoryConsoleClass;
 
-struct _CutRunnerFactoryConsole
+struct _CutUIFactoryConsole
 {
-    CutRunnerFactory     object;
+    CutUIFactory     object;
 
     gboolean             use_color;
     CutVerboseLevel      verbose_level;
 };
 
-struct _CutRunnerFactoryConsoleClass
+struct _CutUIFactoryConsoleClass
 {
-    CutRunnerFactoryClass parent_class;
+    CutUIFactoryClass parent_class;
 };
 
 enum
@@ -65,8 +65,8 @@ enum
     PROP_VERBOSE_LEVEL
 };
 
-static GType cut_type_runner_factory_console = 0;
-static CutRunnerFactoryClass *parent_class;
+static GType cut_type_ui_factory_console = 0;
+static CutUIFactoryClass *parent_class;
 
 static void dispose        (GObject         *object);
 static void set_property   (GObject         *object,
@@ -78,21 +78,21 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 
-static void       set_option_group (CutRunnerFactory    *factory,
+static void       set_option_group (CutUIFactory    *factory,
                                     GOptionContext      *context);
-static CutRunner *create           (CutRunnerFactory    *factory);
+static CutRunner *create           (CutUIFactory    *factory);
 
 static void
-class_init (CutRunnerFactoryClass *klass)
+class_init (CutUIFactoryClass *klass)
 {
     GObjectClass *gobject_class;
-    CutRunnerFactoryClass *factory_class;
+    CutUIFactoryClass *factory_class;
     GParamSpec *spec;
 
     parent_class = g_type_class_peek_parent(klass);
 
     gobject_class = G_OBJECT_CLASS(klass);
-    factory_class  = CUT_RUNNER_FACTORY_CLASS(klass);
+    factory_class  = CUT_UI_FACTORY_CLASS(klass);
 
     gobject_class->dispose      = dispose;
     gobject_class->set_property = set_property;
@@ -118,7 +118,7 @@ class_init (CutRunnerFactoryClass *klass)
 }
 
 static void
-init (CutRunnerFactoryConsole *console)
+init (CutUIFactoryConsole *console)
 {
     console->use_color = FALSE;
     console->verbose_level = CUT_VERBOSE_LEVEL_NORMAL;
@@ -129,21 +129,21 @@ register_type (GTypeModule *type_module)
 {
     static const GTypeInfo info =
         {
-            sizeof (CutRunnerFactoryConsoleClass),
+            sizeof (CutUIFactoryConsoleClass),
             (GBaseInitFunc) NULL,
             (GBaseFinalizeFunc) NULL,
             (GClassInitFunc) class_init,
             NULL,           /* class_finalize */
             NULL,           /* class_data */
-            sizeof(CutRunnerFactoryConsole),
+            sizeof(CutUIFactoryConsole),
             0,
             (GInstanceInitFunc) init,
         };
 
-    cut_type_runner_factory_console =
+    cut_type_ui_factory_console =
         g_type_module_register_type(type_module,
-                                    CUT_TYPE_RUNNER_FACTORY,
-                                    "CutRunnerFactoryConsole",
+                                    CUT_TYPE_UI_FACTORY,
+                                    "CutUIFactoryConsole",
                                     &info, 0);
 }
 
@@ -153,10 +153,10 @@ CUT_MODULE_IMPL_INIT (GTypeModule *type_module)
     GList *registered_types = NULL;
 
     register_type(type_module);
-    if (cut_type_runner_factory_console)
+    if (cut_type_ui_factory_console)
         registered_types =
             g_list_prepend(registered_types,
-                           (gchar *)g_type_name(cut_type_runner_factory_console));
+                           (gchar *)g_type_name(cut_type_ui_factory_console));
 
     return registered_types;
 }
@@ -169,7 +169,7 @@ CUT_MODULE_IMPL_EXIT (void)
 G_MODULE_EXPORT GObject *
 CUT_MODULE_IMPL_INSTANTIATE (const gchar *first_property, va_list var_args)
 {
-    return g_object_new_valist(CUT_TYPE_RUNNER_FACTORY_CONSOLE, first_property, var_args);
+    return g_object_new_valist(CUT_TYPE_UI_FACTORY_CONSOLE, first_property, var_args);
 }
 
 G_MODULE_EXPORT gchar *
@@ -190,7 +190,7 @@ set_property (GObject      *object,
               const GValue *value,
               GParamSpec   *pspec)
 {
-    CutRunnerFactoryConsole *console = CUT_RUNNER_FACTORY_CONSOLE(object);
+    CutUIFactoryConsole *console = CUT_UI_FACTORY_CONSOLE(object);
 
     switch (prop_id) {
       case PROP_USE_COLOR:
@@ -211,7 +211,7 @@ get_property (GObject    *object,
               GValue     *value,
               GParamSpec *pspec)
 {
-    CutRunnerFactoryConsole *console = CUT_RUNNER_FACTORY_CONSOLE(object);
+    CutUIFactoryConsole *console = CUT_UI_FACTORY_CONSOLE(object);
 
     switch (prop_id) {
       case PROP_USE_COLOR:
@@ -230,7 +230,7 @@ static gboolean
 parse_verbose_level_arg (const gchar *option_name, const gchar *value,
                          gpointer data, GError **error)
 {
-    CutRunnerFactoryConsole *console = data;
+    CutUIFactoryConsole *console = data;
     CutVerboseLevel verbose_level;
     GError *verbose_level_error = NULL;
 
@@ -253,7 +253,7 @@ static gboolean
 parse_color_arg (const gchar *option_name, const gchar *value,
                  gpointer data, GError **error)
 {
-    CutRunnerFactoryConsole *console = data;
+    CutUIFactoryConsole *console = data;
 
     if (value == NULL ||
         g_utf8_collate(value, "yes") == 0 ||
@@ -278,9 +278,9 @@ parse_color_arg (const gchar *option_name, const gchar *value,
 }
 
 static void
-set_option_group (CutRunnerFactory *factory, GOptionContext *context)
+set_option_group (CutUIFactory *factory, GOptionContext *context)
 {
-    CutRunnerFactoryConsole *console = CUT_RUNNER_FACTORY_CONSOLE(factory);
+    CutUIFactoryConsole *console = CUT_UI_FACTORY_CONSOLE(factory);
     GOptionGroup *group;
     GOptionEntry entries[] = {
         {"verbose", 'v', 0, G_OPTION_ARG_CALLBACK, parse_verbose_level_arg,
@@ -291,7 +291,7 @@ set_option_group (CutRunnerFactory *factory, GOptionContext *context)
         {NULL}
     };
 
-    CUT_RUNNER_FACTORY_CLASS(parent_class)->set_option_group(factory, context);
+    CUT_UI_FACTORY_CLASS(parent_class)->set_option_group(factory, context);
 
     group = g_option_group_new(("runner-console"),
                                _("Console Runner Options"),
@@ -303,9 +303,9 @@ set_option_group (CutRunnerFactory *factory, GOptionContext *context)
 }
 
 CutRunner *
-create (CutRunnerFactory *factory)
+create (CutUIFactory *factory)
 {
-    CutRunnerFactoryConsole *console = CUT_RUNNER_FACTORY_CONSOLE(factory);
+    CutUIFactoryConsole *console = CUT_UI_FACTORY_CONSOLE(factory);
 
     return cut_runner_new("console",
                           "use-color", console->use_color,

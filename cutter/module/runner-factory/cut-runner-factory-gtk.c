@@ -35,24 +35,24 @@
 #include <cutter/cut-ui-factory.h>
 #include <cutter/cut-enum-types.h>
 
-#define CUT_TYPE_RUNNER_FACTORY_GTK            cut_type_runner_factory_gtk
-#define CUT_RUNNER_FACTORY_GTK(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_RUNNER_FACTORY_GTK, CutRunnerFactoryGtk))
-#define CUT_RUNNER_FACTORY_GTK_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_RUNNER_FACTORY_GTK, CutRunnerFactoryGtkClass))
-#define CUT_IS_RUNNER_FACTORY_GTK(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_RUNNER_FACTORY_GTK))
-#define CUT_IS_RUNNER_FACTORY_GTK_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_RUNNER_FACTORY_GTK))
-#define CUT_RUNNER_FACTORY_GTK_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_RUNNER_FACTORY_GTK, CutRunnerFactoryGtkClass))
+#define CUT_TYPE_UI_FACTORY_GTK            cut_type_ui_factory_gtk
+#define CUT_UI_FACTORY_GTK(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_UI_FACTORY_GTK, CutUIFactoryGtk))
+#define CUT_UI_FACTORY_GTK_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_UI_FACTORY_GTK, CutUIFactoryGtkClass))
+#define CUT_IS_UI_FACTORY_GTK(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_UI_FACTORY_GTK))
+#define CUT_IS_UI_FACTORY_GTK_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_UI_FACTORY_GTK))
+#define CUT_UI_FACTORY_GTK_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_UI_FACTORY_GTK, CutUIFactoryGtkClass))
 
-typedef struct _CutRunnerFactoryGtk CutRunnerFactoryGtk;
-typedef struct _CutRunnerFactoryGtkClass CutRunnerFactoryGtkClass;
+typedef struct _CutUIFactoryGtk CutUIFactoryGtk;
+typedef struct _CutUIFactoryGtkClass CutUIFactoryGtkClass;
 
-struct _CutRunnerFactoryGtk
+struct _CutUIFactoryGtk
 {
-    CutRunnerFactory     object;
+    CutUIFactory     object;
 };
 
-struct _CutRunnerFactoryGtkClass
+struct _CutUIFactoryGtkClass
 {
-    CutRunnerFactoryClass parent_class;
+    CutUIFactoryClass parent_class;
 };
 
 enum
@@ -60,8 +60,8 @@ enum
     PROP_0
 };
 
-static GType cut_type_runner_factory_gtk = 0;
-static CutRunnerFactoryClass *parent_class;
+static GType cut_type_ui_factory_gtk = 0;
+static CutUIFactoryClass *parent_class;
 
 static void dispose        (GObject         *object);
 static void set_property   (GObject         *object,
@@ -73,20 +73,20 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 
-static void       set_option_group (CutRunnerFactory    *factory,
+static void       set_option_group (CutUIFactory    *factory,
                                     GOptionContext      *context);
-static CutRunner *create           (CutRunnerFactory    *factory);
+static CutRunner *create           (CutUIFactory    *factory);
 
 static void
-class_init (CutRunnerFactoryClass *klass)
+class_init (CutUIFactoryClass *klass)
 {
     GObjectClass *gobject_class;
-    CutRunnerFactoryClass *factory_class;
+    CutUIFactoryClass *factory_class;
 
     parent_class = g_type_class_peek_parent(klass);
 
     gobject_class = G_OBJECT_CLASS(klass);
-    factory_class  = CUT_RUNNER_FACTORY_CLASS(klass);
+    factory_class  = CUT_UI_FACTORY_CLASS(klass);
 
     gobject_class->dispose      = dispose;
     gobject_class->set_property = set_property;
@@ -97,7 +97,7 @@ class_init (CutRunnerFactoryClass *klass)
 }
 
 static void
-init (CutRunnerFactoryGtk *gtk)
+init (CutUIFactoryGtk *gtk)
 {
 }
 
@@ -106,21 +106,21 @@ register_type (GTypeModule *type_module)
 {
     static const GTypeInfo info =
         {
-            sizeof (CutRunnerFactoryGtkClass),
+            sizeof (CutUIFactoryGtkClass),
             (GBaseInitFunc) NULL,
             (GBaseFinalizeFunc) NULL,
             (GClassInitFunc) class_init,
             NULL,           /* class_finalize */
             NULL,           /* class_data */
-            sizeof(CutRunnerFactoryGtk),
+            sizeof(CutUIFactoryGtk),
             0,
             (GInstanceInitFunc) init,
         };
 
-    cut_type_runner_factory_gtk =
+    cut_type_ui_factory_gtk =
         g_type_module_register_type(type_module,
-                                    CUT_TYPE_RUNNER_FACTORY,
-                                    "CutRunnerFactoryGtk",
+                                    CUT_TYPE_UI_FACTORY,
+                                    "CutUIFactoryGtk",
                                     &info, 0);
 }
 
@@ -130,10 +130,10 @@ CUT_MODULE_IMPL_INIT (GTypeModule *type_module)
     GList *registered_types = NULL;
 
     register_type(type_module);
-    if (cut_type_runner_factory_gtk)
+    if (cut_type_ui_factory_gtk)
         registered_types =
             g_list_prepend(registered_types,
-                           (gchar *)g_type_name(cut_type_runner_factory_gtk));
+                           (gchar *)g_type_name(cut_type_ui_factory_gtk));
 
     return registered_types;
 }
@@ -146,7 +146,7 @@ CUT_MODULE_IMPL_EXIT (void)
 G_MODULE_EXPORT GObject *
 CUT_MODULE_IMPL_INSTANTIATE (const gchar *first_property, va_list var_args)
 {
-    return g_object_new_valist(CUT_TYPE_RUNNER_FACTORY_GTK, first_property, var_args);
+    return g_object_new_valist(CUT_TYPE_UI_FACTORY_GTK, first_property, var_args);
 }
 
 G_MODULE_EXPORT gchar *
@@ -188,18 +188,18 @@ get_property (GObject    *object,
 }
 
 static void
-set_option_group (CutRunnerFactory *factory, GOptionContext *context)
+set_option_group (CutUIFactory *factory, GOptionContext *context)
 {
     GOptionGroup *group;
 
-    CUT_RUNNER_FACTORY_CLASS(parent_class)->set_option_group(factory, context);
+    CUT_UI_FACTORY_CLASS(parent_class)->set_option_group(factory, context);
 
     group = gtk_get_option_group(TRUE);
     g_option_context_add_group(context, group);
 }
 
 CutRunner *
-create (CutRunnerFactory *factory)
+create (CutUIFactory *factory)
 {
     return cut_runner_new("gtk", NULL);
 }

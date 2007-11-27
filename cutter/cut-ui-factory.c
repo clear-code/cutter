@@ -47,27 +47,27 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 
-static void real_set_option_group (CutRunnerFactory    *factory,
+static void real_set_option_group (CutUIFactory    *factory,
                                    GOptionContext      *context);
 
-void cut_runner_factory_init (void)
+void cut_ui_factory_init (void)
 {
 }
 
-void cut_runner_factory_quit (void)
+void cut_ui_factory_quit (void)
 {
-    cut_runner_factory_unload();
-    cut_runner_factory_set_default_module_dir(NULL);
+    cut_ui_factory_unload();
+    cut_ui_factory_set_default_module_dir(NULL);
 }
 
 const gchar *
-cut_runner_factory_get_default_module_dir (void)
+cut_ui_factory_get_default_module_dir (void)
 {
     return module_dir;
 }
 
 void
-cut_runner_factory_set_default_module_dir (const gchar *dir)
+cut_ui_factory_set_default_module_dir (const gchar *dir)
 {
     if (module_dir)
         g_free(module_dir);
@@ -78,31 +78,31 @@ cut_runner_factory_set_default_module_dir (const gchar *dir)
 }
 
 static const gchar *
-_cut_runner_factory_module_dir (void)
+_cut_ui_factory_module_dir (void)
 {
     const gchar *dir;
 
     if (module_dir)
         return module_dir;
 
-    dir = g_getenv("CUT_RUNNER_FACTORY_MODULE_DIR");
+    dir = g_getenv("CUT_UI_FACTORY_MODULE_DIR");
     if (dir)
         return dir;
 
-    return RUNNER_FACTORY_MODULEDIR;
+    return UI_FACTORY_MODULEDIR;
 }
 
 void
-cut_runner_factory_load (const gchar *base_dir)
+cut_ui_factory_load (const gchar *base_dir)
 {
     if (!base_dir)
-        base_dir = _cut_runner_factory_module_dir();
+        base_dir = _cut_ui_factory_module_dir();
 
     factories = g_list_concat(cut_module_load_modules(base_dir), factories);
 }
 
 static CutModule *
-cut_runner_factory_load_module (const gchar *name)
+cut_ui_factory_load_module (const gchar *name)
 {
     CutModule *module;
 
@@ -110,7 +110,7 @@ cut_runner_factory_load_module (const gchar *name)
     if (module)
         return module;
 
-    module = cut_module_load_module(_cut_runner_factory_module_dir(), name);
+    module = cut_module_load_module(_cut_ui_factory_module_dir(), name);
     if (module) {
         if (g_type_module_use(G_TYPE_MODULE(module))) {
             factories = g_list_prepend(factories, module);
@@ -122,7 +122,7 @@ cut_runner_factory_load_module (const gchar *name)
 }
 
 void
-cut_runner_factory_unload (void)
+cut_ui_factory_unload (void)
 {
     g_list_foreach(factories, (GFunc)cut_module_unload, NULL);
     g_list_free(factories);
@@ -130,29 +130,29 @@ cut_runner_factory_unload (void)
 }
 
 GList *
-cut_runner_factory_get_registered_types (void)
+cut_ui_factory_get_registered_types (void)
 {
     return cut_module_collect_registered_types(factories);
 }
 
 GList *
-cut_runner_factory_get_log_domains (void)
+cut_ui_factory_get_log_domains (void)
 {
     return cut_module_collect_log_domains(factories);
 }
 
 GList *
-cut_runner_factory_get_names (void)
+cut_ui_factory_get_names (void)
 {
     return cut_module_collect_names(factories);
 }
 
-#define cut_runner_factory_init init
-G_DEFINE_ABSTRACT_TYPE(CutRunnerFactory, cut_runner_factory, G_TYPE_OBJECT)
-#undef cut_runner_factory_init
+#define cut_ui_factory_init init
+G_DEFINE_ABSTRACT_TYPE(CutUIFactory, cut_ui_factory, G_TYPE_OBJECT)
+#undef cut_ui_factory_init
 
 static void
-cut_runner_factory_class_init (CutRunnerFactoryClass *klass)
+cut_ui_factory_class_init (CutUIFactoryClass *klass)
 {
     GObjectClass *gobject_class;
 
@@ -166,14 +166,14 @@ cut_runner_factory_class_init (CutRunnerFactoryClass *klass)
 }
 
 static void
-init (CutRunnerFactory *factory)
+init (CutUIFactory *factory)
 {
 }
 
 static void
 dispose (GObject *object)
 {
-    G_OBJECT_CLASS(cut_runner_factory_parent_class)->dispose(object);
+    G_OBJECT_CLASS(cut_ui_factory_parent_class)->dispose(object);
 }
 
 static void
@@ -202,25 +202,25 @@ get_property (GObject    *object,
     }
 }
 
-CutRunnerFactory *
-cut_runner_factory_new (const gchar *name, const gchar *first_property, ...)
+CutUIFactory *
+cut_ui_factory_new (const gchar *name, const gchar *first_property, ...)
 {
     CutModule *module;
     GObject *factory;
     va_list var_args;
 
-    module = cut_runner_factory_load_module(name);
+    module = cut_ui_factory_load_module(name);
     g_return_val_if_fail(module != NULL, NULL);
 
     va_start(var_args, first_property);
     factory = cut_module_instantiate(module, first_property, var_args);
     va_end(var_args);
 
-    return CUT_RUNNER_FACTORY(factory);
+    return CUT_UI_FACTORY(factory);
 }
 
 static void
-real_set_option_group (CutRunnerFactory *factory, GOptionContext *context)
+real_set_option_group (CutUIFactory *factory, GOptionContext *context)
 {
     GOptionGroup *group;
     GOptionEntry entries[] = {
@@ -237,27 +237,27 @@ real_set_option_group (CutRunnerFactory *factory, GOptionContext *context)
 }
 
 void
-cut_runner_factory_set_option_group (CutRunnerFactory *factory,
+cut_ui_factory_set_option_group (CutUIFactory *factory,
                                      GOptionContext   *context)
 {
-    CutRunnerFactoryClass *klass;
+    CutUIFactoryClass *klass;
 
-    g_return_if_fail(CUT_IS_RUNNER_FACTORY(factory));
+    g_return_if_fail(CUT_IS_UI_FACTORY(factory));
 
-    klass = CUT_RUNNER_FACTORY_GET_CLASS(factory);
+    klass = CUT_UI_FACTORY_GET_CLASS(factory);
     g_return_if_fail(klass->set_option_group);
 
     klass->set_option_group(factory, context);
 }
 
 CutRunner *
-cut_runner_factory_create (CutRunnerFactory *factory)
+cut_ui_factory_create (CutUIFactory *factory)
 {
-    CutRunnerFactoryClass *klass;
+    CutUIFactoryClass *klass;
 
-    g_return_val_if_fail(CUT_IS_RUNNER_FACTORY(factory), NULL);
+    g_return_val_if_fail(CUT_IS_UI_FACTORY(factory), NULL);
 
-    klass = CUT_RUNNER_FACTORY_GET_CLASS(factory);
+    klass = CUT_UI_FACTORY_GET_CLASS(factory);
     g_return_val_if_fail(klass->create, NULL);
 
     return klass->create(factory);

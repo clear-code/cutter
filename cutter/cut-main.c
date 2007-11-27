@@ -48,7 +48,7 @@ static gboolean use_multi_thread = FALSE;
 static const gchar *runner_name = NULL;
 static gboolean _show_all_runners = FALSE;
 
-static CutRunnerFactory *factory = NULL;
+static CutUIFactory *factory = NULL;
 
 static const GOptionEntry option_entries[] =
 {
@@ -72,8 +72,8 @@ show_all_runners (void)
 {
     GList *names, *node;
 
-    cut_runner_factory_load(NULL);
-    names = cut_runner_factory_get_names();
+    cut_ui_factory_load(NULL);
+    names = cut_ui_factory_get_names();
     for (node = names; node; node = g_list_next(node)) {
         const gchar *name = node->data;
         if (g_list_next(node))
@@ -121,15 +121,15 @@ cut_init (int *argc, char ***argv)
         exit(1);
     }
 
-    cut_runner_factory_init();
+    cut_ui_factory_init();
     if (!runner_name)
         runner_name = "console";
-    factory = cut_runner_factory_new(runner_name, NULL);
+    factory = cut_ui_factory_new(runner_name, NULL);
     if (!factory) {
         g_warning("can't find specified runner: %s", runner_name);
         exit(1);
     }
-    cut_runner_factory_set_option_group(factory, option_context);
+    cut_ui_factory_set_option_group(factory, option_context);
 
     g_option_context_set_help_enabled(option_context, TRUE);
     g_option_context_set_ignore_unknown_options(option_context, FALSE);
@@ -169,7 +169,7 @@ cut_quit (void)
     factory = NULL;
 
     cut_ui_quit();
-    cut_runner_factory_quit();
+    cut_ui_factory_quit();
 
     initialized = FALSE;
 }
@@ -217,7 +217,7 @@ cut_run_test_suite (CutTestSuite *suite, CutContext *context)
     if (!suite)
         return TRUE;
 
-    runner = cut_runner_factory_create(factory);
+    runner = cut_ui_factory_create(factory);
     if (!runner) {
         g_warning("can't create runner: %s", runner_name);
         return FALSE;

@@ -2,6 +2,7 @@
 
 	* cutter/cut-runner-factory.[hc] -> cutter/cut-ui-factory.[hc]: Rename
 	filename.
+	* /: CutRunnerFactory -> CutUIFactory.
 
 2007-11-27  Kouhei Sutou  <kou@cozmixng.org>
 

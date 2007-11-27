@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef __CUT_RUNNER_FACTORY_H__
-#define __CUT_RUNNER_FACTORY_H__
+#ifndef __CUT_UI_FACTORY_H__
+#define __CUT_UI_FACTORY_H__
 
 #include <glib-object.h>
 
@@ -28,56 +28,56 @@
 
 G_BEGIN_DECLS
 
-#define CUT_TYPE_RUNNER_FACTORY            (cut_runner_factory_get_type ())
-#define CUT_RUNNER_FACTORY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_RUNNER_FACTORY, CutRunnerFactory))
-#define CUT_RUNNER_FACTORY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_RUNNER_FACTORY, CutRunnerFactoryClass))
-#define CUT_IS_RUNNER_FACTORY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_RUNNER_FACTORY))
-#define CUT_IS_RUNNER_FACTORY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_RUNNER_FACTORY))
-#define CUT_RUNNER_FACTORY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_RUNNER_FACTORY, CutRunnerFactoryClass))
+#define CUT_TYPE_UI_FACTORY            (cut_ui_factory_get_type ())
+#define CUT_UI_FACTORY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_UI_FACTORY, CutUIFactory))
+#define CUT_UI_FACTORY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_UI_FACTORY, CutUIFactoryClass))
+#define CUT_IS_UI_FACTORY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_UI_FACTORY))
+#define CUT_IS_UI_FACTORY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_UI_FACTORY))
+#define CUT_UI_FACTORY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_UI_FACTORY, CutUIFactoryClass))
 
-typedef struct _CutRunnerFactory         CutRunnerFactory;
-typedef struct _CutRunnerFactoryClass    CutRunnerFactoryClass;
+typedef struct _CutUIFactory         CutUIFactory;
+typedef struct _CutUIFactoryClass    CutUIFactoryClass;
 
-struct _CutRunnerFactory
+struct _CutUIFactory
 {
     GObject object;
 };
 
-struct _CutRunnerFactoryClass
+struct _CutUIFactoryClass
 {
     GObjectClass parent_class;
 
-    void         (*set_option_group)    (CutRunnerFactory *factory,
+    void         (*set_option_group)    (CutUIFactory *factory,
                                          GOptionContext   *context);
-    CutRunner   *(*create)              (CutRunnerFactory *factory);
+    CutRunner   *(*create)              (CutUIFactory *factory);
 };
 
-GType           cut_runner_factory_get_type    (void) G_GNUC_CONST;
+GType           cut_ui_factory_get_type    (void) G_GNUC_CONST;
 
-void            cut_runner_factory_init        (void);
-void            cut_runner_factory_quit        (void);
+void            cut_ui_factory_init        (void);
+void            cut_ui_factory_quit        (void);
 
-const gchar    *cut_runner_factory_get_default_module_dir   (void);
-void            cut_runner_factory_set_default_module_dir   (const gchar *dir);
+const gchar    *cut_ui_factory_get_default_module_dir   (void);
+void            cut_ui_factory_set_default_module_dir   (const gchar *dir);
 
-void            cut_runner_factory_load        (const gchar *base_dir);
-void            cut_runner_factory_unload      (void);
-GList          *cut_runner_factory_get_registered_types (void);
-GList          *cut_runner_factory_get_log_domains      (void);
-GList          *cut_runner_factory_get_names   (void);
+void            cut_ui_factory_load        (const gchar *base_dir);
+void            cut_ui_factory_unload      (void);
+GList          *cut_ui_factory_get_registered_types (void);
+GList          *cut_ui_factory_get_log_domains      (void);
+GList          *cut_ui_factory_get_names   (void);
 
-CutRunnerFactory *cut_runner_factory_new       (const gchar *name,
+CutUIFactory *cut_ui_factory_new       (const gchar *name,
                                                 const gchar *first_property,
                                                 ...);
 
-void         cut_runner_factory_set_option_group (CutRunnerFactory *factory,
+void         cut_ui_factory_set_option_group (CutUIFactory *factory,
                                                   GOptionContext   *context);
-CutRunner   *cut_runner_factory_create           (CutRunnerFactory *factory);
-const gchar *cut_runner_factory_get_name         (CutRunnerFactory *factory);
+CutRunner   *cut_ui_factory_create           (CutUIFactory *factory);
+const gchar *cut_ui_factory_get_name         (CutUIFactory *factory);
 
 G_END_DECLS
 
-#endif /* __CUT_RUNNER_FACTORY_H__ */
+#endif /* __CUT_UI_FACTORY_H__ */
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
