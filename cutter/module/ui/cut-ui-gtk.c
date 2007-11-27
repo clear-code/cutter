@@ -399,8 +399,17 @@ idle_cb_pulse (gpointer data)
 
     if (ui->n_tests > 0) {
         gdouble fraction;
+        gchar *text;
+
         fraction = ui->n_completed_tests / (gdouble)ui->n_tests;
         gtk_progress_bar_set_fraction(ui->progress_bar, fraction);
+
+        text = g_strdup_printf("%u/%u (%u%%)",
+                               ui->n_completed_tests,
+                               ui->n_tests,
+                               (guint)(fraction * 100));
+        gtk_progress_bar_set_text(ui->progress_bar, text);
+        g_free(text);
     } else {
         gtk_progress_bar_pulse(ui->progress_bar);
     }

@@ -1,5 +1,7 @@
 2007-11-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/module/ui/cut-ui-gtk.c: showed tests on progress bar.
+
 	* cutter/module/ui/cut-ui-gtk.c (cb_success_test): don't override
 	existing notify information.
 
