@@ -354,23 +354,6 @@ get_property (GObject    *object,
 }
 
 static void
-print_for_status (CutRunnerGtk *runner, CutTestResultStatus status,
-                  gchar const *format, ...)
-{
-    gchar *message;
-    va_list args;
-    GtkTextIter iter;
-
-    return;
-    va_start(args, format);
-    message = g_strdup_vprintf(format, args);
-    gtk_text_buffer_get_end_iter(runner->text_buffer, &iter);
-    gtk_text_buffer_insert(runner->text_buffer, &iter, message, -1);
-    g_free(message);
-    va_end(args);
-}
-
-static void
 print_log (CutRunnerGtk *runner, gchar const *format, ...)
 {
     gchar *message;
@@ -404,7 +387,86 @@ typedef struct _AppendRowInfo
 {
     CutRunnerGtk *runner;
     CutTest *test;
+    gchar *path;
+    const gchar *status;
 } AppendRowInfo;
+
+static gboolean
+idle_cb_update_row_status (gpointer data)
+{
+    AppendRowInfo *info = data;
+    CutRunnerGtk *runner;
+    GtkTreeIter iter;
+
+    runner = info->runner;
+
+    g_mutex_lock(runner->mutex);
+    if (info->status &&
+        gtk_tree_model_get_iter_from_string(GTK_TREE_MODEL(runner->logs),
+                                            &iter, info->path)) {
+        gtk_tree_store_set(runner->logs, &iter,
+                           COLUMN_STATUS, info->status,
+                           -1);
+    }
+    g_mutex_unlock(runner->mutex);
+
+    g_object_unref(runner);
+    g_object_unref(info->test);
+    g_free(info->path);
+    g_free(info);
+
+    return FALSE;
+}
+
+static void
+cb_success_test (CutTest *test, gpointer data)
+{
+    AppendRowInfo *info = data;
+    info->status = ".";
+
+    g_idle_add(idle_cb_update_row_status, data);
+    g_signal_handlers_disconnect_by_func(test, cb_success_test, data);
+}
+
+static void
+cb_failure_test (CutTest *test, gpointer data)
+{
+    AppendRowInfo *info = data;
+    info->status = "F";
+
+    g_idle_add(idle_cb_update_row_status, data);
+    g_signal_handlers_disconnect_by_func(test, cb_failure_test, data);
+}
+
+static void
+cb_error_test (CutTest *test, gpointer data)
+{
+    AppendRowInfo *info = data;
+    info->status = "E";
+
+    g_idle_add(idle_cb_update_row_status, data);
+    g_signal_handlers_disconnect_by_func(test, cb_error_test, data);
+}
+
+static void
+cb_pending_test (CutTest *test, gpointer data)
+{
+    AppendRowInfo *info = data;
+    info->status = "P";
+
+    g_idle_add(idle_cb_update_row_status, data);
+    g_signal_handlers_disconnect_by_func(test, cb_pending_test, data);
+}
+
+static void
+cb_notification_test (CutTest *test, gpointer data)
+{
+    AppendRowInfo *info = data;
+    info->status = "N";
+
+    g_idle_add(idle_cb_update_row_status, data);
+    g_signal_handlers_disconnect_by_func(test, cb_notification_test, data);
+}
 
 static gboolean
 idle_cb_append_row (gpointer data)
@@ -423,11 +485,10 @@ idle_cb_append_row (gpointer data)
                        COLUMN_NAME, cut_test_get_name(test),
                        COLUMN_DESCRIPTION, cut_test_get_description(test),
                        -1);
+    info->path =
+        gtk_tree_model_get_string_from_iter(GTK_TREE_MODEL(runner->logs),
+                                            &iter);
     g_mutex_unlock(runner->mutex);
-
-    g_object_unref(runner);
-    g_object_unref(test);
-    g_free(info);
 
     return FALSE;
 }
@@ -441,7 +502,10 @@ cb_start_test (CutContext *context, CutTest *test, CutTestContext *test_context,
     info = g_new0(AppendRowInfo, 1);
     info->runner = g_object_ref(runner);
     info->test = g_object_ref(test);
+    info->path = NULL;
+    info->status = NULL;
     g_idle_add(idle_cb_append_row, info);
+    g_signal_connect(test, "success", G_CALLBACK(cb_success_test), info);
 }
 
 static void
@@ -462,7 +526,6 @@ cb_failure (CutContext       *context,
             CutTestResult    *result,
             CutRunnerGtk *runner)
 {
-    print_for_status(runner, CUT_TEST_RESULT_FAILURE, "F");
 }
 
 static void
@@ -472,7 +535,6 @@ cb_error (CutContext       *context,
           CutTestResult    *result,
           CutRunnerGtk *runner)
 {
-    print_for_status(runner, CUT_TEST_RESULT_ERROR, "E");
 }
 
 static void
@@ -482,7 +544,6 @@ cb_pending (CutContext       *context,
             CutTestResult    *result,
             CutRunnerGtk *runner)
 {
-    print_for_status(runner, CUT_TEST_RESULT_PENDING, "P");
 }
 
 static void
@@ -492,7 +553,6 @@ cb_notification (CutContext       *context,
                  CutTestResult    *result,
                  CutRunnerGtk *runner)
 {
-    print_for_status(runner, CUT_TEST_RESULT_NOTIFICATION, "N");
 }
 
 static void
