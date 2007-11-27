@@ -67,7 +67,8 @@ CutTestCase *cut_test_case_new            (const gchar *name,
                                            set_current_test_context_function);
 void         cut_test_case_add_test       (CutTestCase *test_case,
                                            CutTest *test);
-guint        cut_test_case_get_test_count (CutTestCase *test_case);
+guint        cut_test_case_get_n_tests    (CutTestCase  *test_case,
+                                           const gchar **test_names);
 gboolean     cut_test_case_run            (CutTestCase *test_case,
                                            CutContext  *context);
 gboolean     cut_test_case_run_test       (CutTestCase *test_case,

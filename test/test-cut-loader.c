@@ -47,15 +47,19 @@ compare_function_name (gconstpointer a, gconstpointer b)
 void
 test_load_function (void)
 {
+    CutTestContainer *container;
     CutTestCase *test_case;
     GList *tests, *list;
+    const gchar *test_names[] = {"/.*/", NULL};
     gint i;
 
     test_case = cut_loader_load_test_case(test_loader);
     cut_assert(test_case);
-    cut_assert_equal_int(4, cut_test_case_get_test_count(test_case));
+    cut_assert_equal_int(4, cut_test_case_get_n_tests(test_case, NULL));
+    cut_assert_equal_int(4, cut_test_case_get_n_tests(test_case, test_names));
 
-    tests = (GList *) cut_test_container_get_children(CUT_TEST_CONTAINER(test_case));
+    container = CUT_TEST_CONTAINER(test_case);
+    tests = (GList *)cut_test_container_get_children(container);
     cut_assert(tests);
 
     tests = g_list_sort(tests, compare_function_name);

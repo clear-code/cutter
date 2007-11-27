@@ -1,5 +1,10 @@
 2007-11-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-case.[ch]: cut_test_get_test_count() ->
+	cut_test_get_n_tests().
+	* test/test-cut-test-case.c, test/test-cut-loader.c: followed the
+	above changes.
+
 	* cutter/cut-test-case.c: used cut_context_get_target_test_names()
 	as default test_names.
 

@@ -267,14 +267,31 @@ cut_test_case_new (const gchar *name,
                         NULL);
 }
 
-guint
-cut_test_case_get_test_count (CutTestCase *test_case)
+static GList *
+get_filtered_tests (CutTestCase *test_case, const gchar **test_names)
 {
-    GList *tests;
+    CutTestContainer *container;
 
-    tests = (GList*) cut_test_container_get_children(CUT_TEST_CONTAINER(test_case));
+    container = CUT_TEST_CONTAINER(test_case);
+    if (test_names && *test_names) {
+        return cut_test_container_filter_children(container, test_names);
+    } else {
+        const gchar *default_test_names[] = {"/^test_/", NULL};
+        return cut_test_container_filter_children(container, default_test_names);
+    }
+}
 
-    return g_list_length(tests);
+guint
+cut_test_case_get_n_tests (CutTestCase *test_case, const gchar **test_names)
+{
+    GList *filtered_tests;
+    guint n_tests;
+
+    filtered_tests = get_filtered_tests(test_case, test_names);
+    n_tests = g_list_length(filtered_tests);
+    g_list_free(filtered_tests);
+
+    return n_tests;
 }
 
 static const gchar *
@@ -386,20 +403,10 @@ cut_test_case_run_with_filter (CutTestCase  *test_case,
                                CutContext   *context,
                                const gchar **test_names)
 {
-    CutTestContainer *container;
-    GList *filtered_tests = NULL;
+    GList *filtered_tests;
     gboolean success = TRUE;
 
-    container = CUT_TEST_CONTAINER(test_case);
-    if (test_names && *test_names) {
-        filtered_tests =
-            cut_test_container_filter_children(container, test_names);
-    } else {
-        const gchar *default_test_names[] = {"/^test_/", NULL};
-        filtered_tests =
-            cut_test_container_filter_children(container, default_test_names);
-    }
-
+    filtered_tests = get_filtered_tests(test_case, test_names);
     success = cut_test_case_run_tests(test_case, context, filtered_tests);
 
     g_list_free(filtered_tests);
