@@ -67,6 +67,7 @@ struct _CutRunnerGtk
     GMutex        *mutex;
 
     gboolean       success;
+    gboolean       running;
 };
 
 struct _CutRunnerGtkClass
@@ -372,12 +373,6 @@ get_property (GObject    *object,
 }
 
 static void
-pulse (CutRunnerGtk *runner)
-{
-    gtk_progress_bar_pulse(runner->progress_bar);
-}
-
-static void
 print_log (CutRunnerGtk *runner, gchar const *format, ...)
 {
     gchar *message;
@@ -393,10 +388,22 @@ print_log (CutRunnerGtk *runner, gchar const *format, ...)
     va_end(args);
 }
 
+static gboolean
+idle_cb_pulse (gpointer data)
+{
+    CutRunnerGtk *runner = data;
+
+    gtk_progress_bar_pulse(runner->progress_bar);
+
+    return runner->running;
+}
+
 static void
 cb_start_test_suite (CutContext *context, CutTestSuite *test_suite,
                      CutRunnerGtk *runner)
 {
+    runner->running = TRUE;
+    g_timeout_add(10, idle_cb_pulse, runner);
 }
 
 typedef struct _TestCaseRowInfo
@@ -467,8 +474,6 @@ idle_cb_append_test_case_row (gpointer data)
                                             &iter);
     g_mutex_unlock(runner->mutex);
 
-    pulse(runner);
-
     return FALSE;
 }
 
@@ -497,8 +502,6 @@ idle_cb_append_test_row (gpointer data)
                                             &iter);
     g_mutex_unlock(runner->mutex);
 
-    pulse(runner);
-
     return FALSE;
 }
 
@@ -521,8 +524,6 @@ idle_cb_update_test_row_status (gpointer data)
                            -1);
     }
     g_mutex_unlock(runner->mutex);
-
-    pulse(runner);
 
     return FALSE;
 }
@@ -743,6 +744,8 @@ cb_complete_test_suite (CutContext *context, CutTestSuite *test_suite,
               cut_test_get_elapsed(CUT_TEST(test_suite)));
 
     print_summary(runner, context, crashed);
+
+    runner->running = FALSE;
 }
 
 static void
