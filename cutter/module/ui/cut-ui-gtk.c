@@ -729,6 +729,8 @@ idle_cb_update_test_row_status (gpointer data)
             GtkTreePath *path;
             path = gtk_tree_model_get_path(GTK_TREE_MODEL(ui->logs), &iter);
             gtk_tree_view_expand_to_path(ui->tree_view, path);
+            gtk_tree_view_scroll_to_cell(ui->tree_view, path, NULL,
+                                         TRUE, 0, 0.5);
             gtk_tree_path_free(path);
         }
     }
