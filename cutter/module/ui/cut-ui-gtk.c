@@ -454,7 +454,7 @@ update_progress_color (GtkProgressBar *bar, CutTestResultStatus status)
     GdkColor color;
 
     gdk_color_parse(status_to_color(status), &color);
-    gtk_widget_modify_bg(GTK_WIDGET(bar), GTK_STATE_PRELIGHT, &color);
+    gtk_widget_modify_bg(GTK_WIDGET(bar), GTK_STATE_SELECTED, &color);
 }
 
 static void
@@ -669,6 +669,9 @@ idle_cb_update_test_row_status (gpointer data)
     g_mutex_lock(ui->mutex);
     if (gtk_tree_model_get_iter_from_string(GTK_TREE_MODEL(ui->logs),
                                             &iter, info->path)) {
+        GdkColor color;
+        gdk_color_parse(status_to_color(info->status), &color);
+        gtk_widget_modify_bg(GTK_WIDGET(ui->tree_view), GTK_STATE_SELECTED, &color);
         gtk_tree_store_set(ui->logs, &iter,
                            COLUMN_COLOR, status_to_color(info->status),
                            COLUMN_PROGRESS_TEXT, status_to_name(info->status),

@@ -11,6 +11,7 @@
 	* cutter/module/ui/cut-ui-gtk.c: Show status with
 	GtkCellRenderProgress.
 	* cutter/module/ui/cut-ui-gtk.c: Set sortable by test name.
+	* cutter/module/ui/cut-ui-gtk.c: Change the progress bar's color.
 
 2007-11-27  Kouhei Sutou  <kou@cozmixng.org>
 
