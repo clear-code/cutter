@@ -7,7 +7,7 @@ if test x"$NO_MAKE" != x"yes"; then
 fi
 
 export CUT_UI_MODULE_DIR=$BASE_DIR/../../cutter/module/ui/.libs
-export CUT_RUNNER_FACTORY_MODULE_DIR=$BASE_DIR/../../cutter/module/runner-factory/.libs
+export CUT_UI_FACTORY_MODULE_DIR=$BASE_DIR/../../cutter/module/ui-factory/.libs
 CUTTER=$BASE_DIR/../../cutter/cutter
 if test x"$CUTTER_DEBUG" = x"yes"; then
     CUTTER="$BASE_DIR/../../libtool --mode=execute gdb --args $CUTTER"

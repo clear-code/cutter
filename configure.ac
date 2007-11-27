@@ -66,11 +66,11 @@ moduledir="\${libdir}/\$(PACKAGE)/module"
 AC_SUBST(moduledir)
 
 dnl **************************************************************
-dnl Configure for runner modules.
+dnl Configure for UI modules.
 dnl **************************************************************
 
-runner_moduledir="\${moduledir}/runner"
-AC_SUBST(runner_moduledir)
+ui_moduledir="\${moduledir}/ui"
+AC_SUBST(ui_moduledir)
 
 dnl **************************************************************
 dnl Configure for ui factory modules.
@@ -152,7 +152,7 @@ AC_SUBST(SF_HTDOCS)
 CUTTER="\$(top_builddir)/cutter/cutter\$(EXEEXT)"
 AC_SUBST(CUTTER)
 
-CUTTER_CFLAGS="$GLIB_CFLAGS -DRUNNER_MODULEDIR=\\\"\"\$(runner_moduledir)\"\\\""
+CUTTER_CFLAGS="$GLIB_CFLAGS -DUI_MODULEDIR=\\\"\"\$(ui_moduledir)\"\\\""
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DUI_FACTORY_MODULEDIR=\\\"\"\$(ui_factory_moduledir)\"\\\""
 
 AC_CONFIG_FILES([Makefile
@@ -160,7 +160,7 @@ AC_CONFIG_FILES([Makefile
 		 libcutter.pc
 		 cutter/Makefile
 		 cutter/module/Makefile
-		 cutter/module/runner/Makefile
+		 cutter/module/ui/Makefile
 		 cutter/module/runner-factory/Makefile
 		 sample/Makefile
 		 sample/glib/Makefile

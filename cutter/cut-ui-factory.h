@@ -24,7 +24,7 @@
 
 #include <glib-object.h>
 
-#include <cutter/cut-runner.h>
+#include <cutter/cut-ui.h>
 
 G_BEGIN_DECLS
 
@@ -49,7 +49,7 @@ struct _CutUIFactoryClass
 
     void         (*set_option_group)    (CutUIFactory *factory,
                                          GOptionContext   *context);
-    CutRunner   *(*create)              (CutUIFactory *factory);
+    CutUI       *(*create)              (CutUIFactory *factory);
 };
 
 GType           cut_ui_factory_get_type    (void) G_GNUC_CONST;
@@ -72,7 +72,7 @@ CutUIFactory *cut_ui_factory_new       (const gchar *name,
 
 void         cut_ui_factory_set_option_group (CutUIFactory *factory,
                                                   GOptionContext   *context);
-CutRunner   *cut_ui_factory_create           (CutUIFactory *factory);
+CutUI       *cut_ui_factory_create           (CutUIFactory *factory);
 const gchar *cut_ui_factory_get_name         (CutUIFactory *factory);
 
 G_END_DECLS

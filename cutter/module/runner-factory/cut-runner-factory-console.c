@@ -30,7 +30,7 @@
 #include <gmodule.h>
 
 #include <cutter/cut-module-impl.h>
-#include <cutter/cut-runner.h>
+#include <cutter/cut-ui.h>
 #include <cutter/cut-ui-factory.h>
 #include <cutter/cut-verbose-level.h>
 #include <cutter/cut-enum-types.h>
@@ -80,7 +80,7 @@ static void get_property   (GObject         *object,
 
 static void       set_option_group (CutUIFactory    *factory,
                                     GOptionContext      *context);
-static CutRunner *create           (CutUIFactory    *factory);
+static CutUI     *create           (CutUIFactory    *factory);
 
 static void
 class_init (CutUIFactoryClass *klass)
@@ -302,15 +302,15 @@ set_option_group (CutUIFactory *factory, GOptionContext *context)
     g_option_context_add_group(context, group);
 }
 
-CutRunner *
+CutUI *
 create (CutUIFactory *factory)
 {
     CutUIFactoryConsole *console = CUT_UI_FACTORY_CONSOLE(factory);
 
-    return cut_runner_new("console",
-                          "use-color", console->use_color,
-                          "verbose-level", console->verbose_level,
-                          NULL);
+    return cut_ui_new("console",
+                      "use-color", console->use_color,
+                      "verbose-level", console->verbose_level,
+                      NULL);
 }
 
 /*

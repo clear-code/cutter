@@ -250,7 +250,7 @@ cut_ui_factory_set_option_group (CutUIFactory *factory,
     klass->set_option_group(factory, context);
 }
 
-CutRunner *
+CutUI *
 cut_ui_factory_create (CutUIFactory *factory)
 {
     CutUIFactoryClass *klass;

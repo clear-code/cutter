@@ -31,7 +31,7 @@
 #include <gtk/gtk.h>
 
 #include <cutter/cut-module-impl.h>
-#include <cutter/cut-runner.h>
+#include <cutter/cut-ui.h>
 #include <cutter/cut-ui-factory.h>
 #include <cutter/cut-enum-types.h>
 
@@ -75,7 +75,7 @@ static void get_property   (GObject         *object,
 
 static void       set_option_group (CutUIFactory    *factory,
                                     GOptionContext      *context);
-static CutRunner *create           (CutUIFactory    *factory);
+static CutUI     *create           (CutUIFactory    *factory);
 
 static void
 class_init (CutUIFactoryClass *klass)
@@ -198,10 +198,10 @@ set_option_group (CutUIFactory *factory, GOptionContext *context)
     g_option_context_add_group(context, group);
 }
 
-CutRunner *
+CutUI *
 create (CutUIFactory *factory)
 {
-    return cut_runner_new("gtk", NULL);
+    return cut_ui_new("gtk", NULL);
 }
 
 /*

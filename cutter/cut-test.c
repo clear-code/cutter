@@ -322,6 +322,8 @@ cut_test_run (CutTest *test, CutTestContext *test_context, CutContext *context)
     }
     g_timer_stop(priv->timer);
 
+    g_usleep(100000);
+
     if (success)
         g_signal_emit_by_name(test, "success");
 

@@ -10,7 +10,7 @@ ui_module_LTLIBRARIES = console.la
 
 console_la_CPPFLAGS = -DG_LOG_DOMAIN=\"Cut/UI:Console\"
 console_la_SOURCES = \
-	cut-runner-console.c
+	cut-ui-console.c
 console_la_LIBADD = $(GLIB_LIBS)
 
 if HAVE_GTK
@@ -18,6 +18,6 @@ ui_module_LTLIBRARIES += gtk.la
 gtk_la_CPPFLAGS = -DG_LOG_DOMAIN=\"Cut/UI:Gtk\" \
 		$(GTK_CFLAGS)
 gtk_la_SOURCES = \
-	cut-runner-gtk.c
+	cut-ui-gtk.c
 gtk_la_LIBADD = $(GTK_LIBS)
 endif
