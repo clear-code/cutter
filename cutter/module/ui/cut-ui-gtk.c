@@ -160,6 +160,7 @@ setup_tree_view_columns (GtkTreeView *tree_view)
                                                       "text", COLUMN_NAME,
                                                       "background", COLUMN_COLOR,
                                                       NULL);
+    gtk_tree_view_column_set_sort_column_id(column, COLUMN_NAME);
     gtk_tree_view_append_column(tree_view, column);
 
     renderer = gtk_cell_renderer_text_new();
