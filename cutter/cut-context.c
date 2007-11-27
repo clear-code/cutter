@@ -70,6 +70,7 @@ enum
     START_SIGNAL,
 
     START_TEST_SUITE,
+    READY_TEST_CASE,
     START_TEST_CASE,
     START_TEST,
 
@@ -166,6 +167,15 @@ cut_context_class_init (CutContextClass *klass)
                         NULL, NULL,
                         g_cclosure_marshal_VOID__OBJECT,
                         G_TYPE_NONE, 1, CUT_TYPE_TEST_SUITE);
+
+	signals[READY_TEST_CASE]
+        = g_signal_new ("ready-test-case",
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutContextClass, ready_test_case),
+                        NULL, NULL,
+                        _cut_marshal_VOID__OBJECT_UINT,
+                        G_TYPE_NONE, 2, CUT_TYPE_TEST_CASE, G_TYPE_UINT);
 
 	signals[START_TEST_CASE]
         = g_signal_new ("start-test-case",
@@ -642,6 +652,14 @@ cb_start_test_case(CutTestCase *test_case, gpointer data)
 }
 
 static void
+cb_ready_test_case(CutTestCase *test_case, guint n_tests, gpointer data)
+{
+    CutContext *context = data;
+
+    g_signal_emit(context, signals[READY_TEST_CASE], 0, test_case, n_tests);
+}
+
+static void
 cb_complete_test_case(CutTestCase *test_case, gpointer data)
 {
     CutContext *context = data;
@@ -660,6 +678,7 @@ cb_complete_test_case(CutTestCase *test_case, gpointer data)
     DISCONNECT(pending);
     DISCONNECT(notification);
 
+    DISCONNECT(ready_test_case);
     DISCONNECT(start_test_case);
     DISCONNECT(complete_test_case);
 
@@ -689,6 +708,7 @@ cut_context_start_test_case (CutContext *context, CutTestCase *test_case)
     g_signal_connect(test_case, #name,                                  \
                      G_CALLBACK(cb_ ## name ## _test_case), context)
 
+    CONNECT(ready);
     CONNECT(start);
     CONNECT(complete);
 

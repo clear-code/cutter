@@ -58,6 +58,7 @@ enum
 
 enum
 {
+    READY_SIGNAL,
     START_TEST_SIGNAL,
     COMPLETE_TEST_SIGNAL,
     LAST_SIGNAL
@@ -130,6 +131,15 @@ cut_test_case_class_init (CutTestCaseClass *klass)
                                     PROP_SET_CURRENT_TEST_CONTEXT_FUNCTION,
                                     spec);
 
+
+	cut_test_case_signals[READY_SIGNAL]
+        = g_signal_new("ready",
+                       G_TYPE_FROM_CLASS(klass),
+                       G_SIGNAL_RUN_LAST,
+                       G_STRUCT_OFFSET(CutTestCaseClass, ready),
+                       NULL, NULL,
+                       g_cclosure_marshal_VOID__UINT,
+                       G_TYPE_NONE, 1, G_TYPE_UINT);
 
 	cut_test_case_signals[START_TEST_SIGNAL]
         = g_signal_new("start-test",
@@ -336,6 +346,7 @@ cut_test_case_run_tests (CutTestCase *test_case, CutContext *context,
     gboolean all_success = TRUE;
 
     cut_context_start_test_case(context, test_case);
+    g_signal_emit_by_name(test_case, "ready", g_list_length((GList *)tests));
     g_signal_emit_by_name(CUT_TEST(test_case), "start");
 
     for (list = tests; list; list = g_list_next(list)) {

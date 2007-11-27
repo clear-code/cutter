@@ -46,6 +46,8 @@ struct _CutTestCaseClass
 {
     CutTestContainerClass parent_class;
 
+    void (*ready)         (CutTestCase    *test_case,
+                           guint           n_tests);
     void (*start_test)    (CutTestCase    *test_case,
                            CutTest        *test,
                            CutTestContext *test_context);

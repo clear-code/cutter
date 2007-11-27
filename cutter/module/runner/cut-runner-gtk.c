@@ -68,6 +68,8 @@ struct _CutRunnerGtk
 
     gboolean       success;
     gboolean       running;
+    guint          n_tests;
+    guint          n_completed_tests;
 };
 
 struct _CutRunnerGtkClass
@@ -259,6 +261,8 @@ init (CutRunnerGtk *runner)
     runner->test_suite = NULL;
     runner->context = NULL;
     runner->success = TRUE;
+    runner->n_tests = 0;
+    runner->n_completed_tests = 0;
 
     runner->mutex = g_mutex_new();
 
@@ -393,7 +397,13 @@ idle_cb_pulse (gpointer data)
 {
     CutRunnerGtk *runner = data;
 
-    gtk_progress_bar_pulse(runner->progress_bar);
+    if (runner->n_tests > 0) {
+        gdouble fraction;
+        fraction = runner->n_completed_tests / (gdouble)runner->n_tests;
+        gtk_progress_bar_set_fraction(runner->progress_bar, fraction);
+    } else {
+        gtk_progress_bar_pulse(runner->progress_bar);
+    }
 
     return runner->running;
 }
@@ -589,6 +599,9 @@ cb_notification_test (CutTest *test, CutTestContext *context,
 static void
 cb_complete_test (CutTest *test, gpointer data)
 {
+    TestRowInfo *info = data;
+
+    info->test_case_row_info->runner->n_completed_tests++;
     g_idle_add(idle_cb_free_test_row_info, data);
     g_signal_handlers_disconnect_by_func(test, cb_success_test, data);
     g_signal_handlers_disconnect_by_func(test, cb_failure_test, data);
@@ -632,6 +645,13 @@ cb_complete_test_case (CutTestCase *test_case, gpointer data)
     g_signal_handlers_disconnect_by_func(test_case,
                                          G_CALLBACK(cb_complete_test_case),
                                          data);
+}
+
+static void
+cb_ready_test_case (CutContext *context, CutTestCase *test_case, guint n_tests,
+                    CutRunnerGtk *runner)
+{
+    runner->n_tests += n_tests;
 }
 
 static void
@@ -764,6 +784,7 @@ connect_to_context (CutRunnerGtk *runner, CutContext *context)
     g_signal_connect(context, #name, G_CALLBACK(cb_ ## name), runner)
 
     CONNECT(start_test_suite);
+    CONNECT(ready_test_case);
     CONNECT(start_test_case);
 
     CONNECT(complete_test_suite);
@@ -781,6 +802,7 @@ disconnect_from_context (CutRunnerGtk *runner, CutContext *context)
                                          runner)
 
     DISCONNECT(start_test_suite);
+    DISCONNECT(ready_test_case);
     DISCONNECT(start_test_case);
 
     DISCONNECT(complete_test_suite);
@@ -796,6 +818,8 @@ run_test_thread_func (gpointer data)
 
     g_print("run\n");
 
+    runner->n_tests = 0;
+    runner->n_completed_tests = 0;
     runner->success = FALSE;
     runner->success = cut_test_suite_run(runner->test_suite, runner->context);
     disconnect_from_context(runner, runner->context);

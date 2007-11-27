@@ -49,6 +49,9 @@ struct _CutContextClass
 
     void (*start_test_suite)    (CutContext     *context,
                                  CutTestSuite   *test_suite);
+    void (*ready_test_case)     (CutContext     *context,
+                                 CutTestCase    *test_case,
+                                 guint           n_tests);
     void (*start_test_case)     (CutContext     *context,
                                  CutTestCase    *test_case);
     void (*start_test)          (CutContext     *context,
