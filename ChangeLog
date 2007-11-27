@@ -5,6 +5,8 @@
 
 2007-11-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* /: runner -> ui.
+
 	* cutter/module/runner/cut-runner-gtk.c: showed progress.
 
 	* cutter/cut-marshalers.list (VOID:OBJECT,UINT): added.

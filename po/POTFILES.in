@@ -5,7 +5,7 @@ cutter/cut-main.c
 cutter/cut-marshalers.c
 cutter/cut-module.c
 cutter/cut-repository.c
-cutter/cut-runner.c
+cutter/cut-ui.c
 cutter/cut-runner-factory.c
 cutter/cut-test-case.c
 cutter/cut-test-container.c

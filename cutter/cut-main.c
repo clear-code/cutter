@@ -37,7 +37,7 @@
 #include "cut-context.h"
 #include "cut-test-suite.h"
 #include "cut-repository.h"
-#include "cut-runner.h"
+#include "cut-ui.h"
 #include "cut-ui-factory.h"
 
 static gboolean initialized = FALSE;
@@ -153,7 +153,7 @@ cut_init (int *argc, char ***argv)
     bfd_init();
 #endif
 
-    cut_runner_init();
+    cut_ui_init();
 
     g_option_context_free(option_context);
 }
@@ -168,7 +168,7 @@ cut_quit (void)
         g_object_unref(factory);
     factory = NULL;
 
-    cut_runner_quit();
+    cut_ui_quit();
     cut_runner_factory_quit();
 
     initialized = FALSE;
@@ -206,7 +206,7 @@ cut_create_test_suite (const gchar *directory)
 gboolean
 cut_run_test_suite (CutTestSuite *suite, CutContext *context)
 {
-    CutRunner *runner;
+    CutUI *runner;
     gboolean success;
 
     if (!initialized) {
@@ -223,7 +223,7 @@ cut_run_test_suite (CutTestSuite *suite, CutContext *context)
         return FALSE;
     }
 
-    success = cut_runner_run(runner, suite, context);
+    success = cut_ui_run(runner, suite, context);
     g_object_unref(runner);
     return success;
 }

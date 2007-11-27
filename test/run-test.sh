@@ -10,7 +10,7 @@ if test -z "$CUTTER"; then
     CUTTER="$BASE_DIR/`make -s -C $BASE_DIR echo-cutter`"
 fi
 
-export CUT_RUNNER_MODULE_DIR=$BASE_DIR/../cutter/module/runner/.libs
+export CUT_UI_MODULE_DIR=$BASE_DIR/../cutter/module/ui/.libs
 export CUT_RUNNER_FACTORY_MODULE_DIR=$BASE_DIR/../cutter/module/runner-factory/.libs
 
 CUTTER_ARGS="--multi-thread -s $BASE_DIR"

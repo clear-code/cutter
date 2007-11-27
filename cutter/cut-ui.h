@@ -19,8 +19,8 @@
  *
  */
 
-#ifndef __CUT_RUNNER_H__
-#define __CUT_RUNNER_H__
+#ifndef __CUT_UI_H__
+#define __CUT_UI_H__
 
 #include <glib-object.h>
 
@@ -30,53 +30,53 @@
 
 G_BEGIN_DECLS
 
-#define CUT_TYPE_RUNNER            (cut_runner_get_type ())
-#define CUT_RUNNER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_RUNNER, CutRunner))
-#define CUT_RUNNER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_RUNNER, CutRunnerClass))
-#define CUT_IS_RUNNER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_RUNNER))
-#define CUT_IS_RUNNER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_RUNNER))
-#define CUT_RUNNER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_RUNNER, CutRunnerClass))
+#define CUT_TYPE_UI            (cut_ui_get_type ())
+#define CUT_UI(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_UI, CutUI))
+#define CUT_UI_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_UI, CutUIClass))
+#define CUT_IS_UI(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_UI))
+#define CUT_IS_UI_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_UI))
+#define CUT_UI_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_UI, CutUIClass))
 
-typedef struct _CutRunner         CutRunner;
-typedef struct _CutRunnerClass    CutRunnerClass;
+typedef struct _CutUI         CutUI;
+typedef struct _CutUIClass    CutUIClass;
 
-struct _CutRunner
+struct _CutUI
 {
     GObject object;
 };
 
-struct _CutRunnerClass
+struct _CutUIClass
 {
     GObjectClass parent_class;
 
-    gboolean (*run)                (CutRunner    *runner,
+    gboolean (*run)                (CutUI    *ui,
                                     CutTestSuite *test_suite,
                                     CutContext   *context);
 };
 
-GType           cut_runner_get_type  (void) G_GNUC_CONST;
+GType           cut_ui_get_type  (void) G_GNUC_CONST;
 
-void            cut_runner_init        (void);
-void            cut_runner_quit        (void);
+void            cut_ui_init        (void);
+void            cut_ui_quit        (void);
 
-const gchar    *cut_runner_get_default_module_dir   (void);
-void            cut_runner_set_default_module_dir   (const gchar *dir);
+const gchar    *cut_ui_get_default_module_dir   (void);
+void            cut_ui_set_default_module_dir   (const gchar *dir);
 
-void            cut_runner_load        (const gchar *base_dir);
-void            cut_runner_unload      (void);
-GList          *cut_runner_get_registered_types (void);
-GList          *cut_runner_get_log_domains      (void);
+void            cut_ui_load        (const gchar *base_dir);
+void            cut_ui_unload      (void);
+GList          *cut_ui_get_registered_types (void);
+GList          *cut_ui_get_log_domains      (void);
 
-CutRunner      *cut_runner_new         (const gchar *name,
+CutUI      *cut_ui_new         (const gchar *name,
                                         const gchar *first_property,
                                         ...);
 
-gboolean        cut_runner_run         (CutRunner    *runner,
+gboolean        cut_ui_run         (CutUI    *ui,
                                         CutTestSuite *test_suite,
                                          CutContext   *context);
 G_END_DECLS
 
-#endif /* __CUT_RUNNER_H__ */
+#endif /* __CUT_UI_H__ */
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

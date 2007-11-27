@@ -28,13 +28,13 @@
 #include <glib.h>
 #include <glib/gstdio.h>
 
-#include "cut-runner.h"
+#include "cut-ui.h"
 #include "cut-context.h"
 #include "cut-test.h"
 #include "cut-test-case.h"
 #include "cut-module.h"
 
-static GList *runners = NULL;
+static GList *uis = NULL;
 static gchar *module_dir = NULL;
 
 static void dispose        (GObject         *object);
@@ -47,24 +47,24 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 
-void cut_runner_init (void)
+void cut_ui_init (void)
 {
 }
 
-void cut_runner_quit (void)
+void cut_ui_quit (void)
 {
-    cut_runner_unload();
-    cut_runner_set_default_module_dir(NULL);
+    cut_ui_unload();
+    cut_ui_set_default_module_dir(NULL);
 }
 
 const gchar *
-cut_runner_get_default_module_dir (void)
+cut_ui_get_default_module_dir (void)
 {
     return module_dir;
 }
 
 void
-cut_runner_set_default_module_dir (const gchar *dir)
+cut_ui_set_default_module_dir (const gchar *dir)
 {
     if (module_dir)
         g_free(module_dir);
@@ -75,42 +75,42 @@ cut_runner_set_default_module_dir (const gchar *dir)
 }
 
 static const gchar *
-_cut_runner_module_dir (void)
+_cut_ui_module_dir (void)
 {
     const gchar *dir;
 
     if (module_dir)
         return module_dir;
 
-    dir = g_getenv("CUT_RUNNER_MODULE_DIR");
+    dir = g_getenv("CUT_UI_MODULE_DIR");
     if (dir)
         return dir;
 
-    return RUNNER_MODULEDIR;
+    return UI_MODULEDIR;
 }
 
 void
-cut_runner_load (const gchar *base_dir)
+cut_ui_load (const gchar *base_dir)
 {
     if (!base_dir)
-        base_dir = _cut_runner_module_dir();
+        base_dir = _cut_ui_module_dir();
 
-    runners = g_list_concat(cut_module_load_modules(base_dir), runners);
+    uis = g_list_concat(cut_module_load_modules(base_dir), uis);
 }
 
 static CutModule *
-cut_runner_load_module (const gchar *name)
+cut_ui_load_module (const gchar *name)
 {
     CutModule *module;
 
-    module = cut_module_find(runners, name);
+    module = cut_module_find(uis, name);
     if (module)
         return module;
 
-    module = cut_module_load_module(_cut_runner_module_dir(), name);
+    module = cut_module_load_module(_cut_ui_module_dir(), name);
     if (module) {
         if (g_type_module_use(G_TYPE_MODULE(module))) {
-            runners = g_list_prepend(runners, module);
+            uis = g_list_prepend(uis, module);
             g_type_module_unuse(G_TYPE_MODULE(module));
         }
     }
@@ -119,31 +119,31 @@ cut_runner_load_module (const gchar *name)
 }
 
 void
-cut_runner_unload (void)
+cut_ui_unload (void)
 {
-    g_list_foreach(runners, (GFunc)cut_module_unload, NULL);
-    g_list_free(runners);
-    runners = NULL;
+    g_list_foreach(uis, (GFunc)cut_module_unload, NULL);
+    g_list_free(uis);
+    uis = NULL;
 }
 
 GList *
-cut_runner_get_registered_types (void)
+cut_ui_get_registered_types (void)
 {
-    return cut_module_collect_registered_types(runners);
+    return cut_module_collect_registered_types(uis);
 }
 
 GList *
-cut_runner_get_log_domains (void)
+cut_ui_get_log_domains (void)
 {
-    return cut_module_collect_log_domains(runners);
+    return cut_module_collect_log_domains(uis);
 }
 
-#define cut_runner_init init
-G_DEFINE_ABSTRACT_TYPE (CutRunner, cut_runner, G_TYPE_OBJECT)
-#undef cut_runner_init
+#define cut_ui_init init
+G_DEFINE_ABSTRACT_TYPE (CutUI, cut_ui, G_TYPE_OBJECT)
+#undef cut_ui_init
 
 static void
-cut_runner_class_init (CutRunnerClass *klass)
+cut_ui_class_init (CutUIClass *klass)
 {
     GObjectClass *gobject_class;
 
@@ -155,7 +155,7 @@ cut_runner_class_init (CutRunnerClass *klass)
 }
 
 static void
-init (CutRunner *runner)
+init (CutUI *ui)
 {
 }
 
@@ -190,33 +190,33 @@ get_property (GObject    *object,
     }
 }
 
-CutRunner *
-cut_runner_new (const gchar *name, const gchar *first_property, ...)
+CutUI *
+cut_ui_new (const gchar *name, const gchar *first_property, ...)
 {
     CutModule *module;
-    GObject *runner;
+    GObject *ui;
     va_list var_args;
 
-    module = cut_runner_load_module(name);
+    module = cut_ui_load_module(name);
     g_return_val_if_fail(module != NULL, NULL);
 
     va_start(var_args, first_property);
-    runner = cut_module_instantiate(module, first_property, var_args);
+    ui = cut_module_instantiate(module, first_property, var_args);
     va_end(var_args);
 
-    return CUT_RUNNER(runner);
+    return CUT_UI(ui);
 }
 
 gboolean
-cut_runner_run (CutRunner *runner, CutTestSuite *test_suite, CutContext *context)
+cut_ui_run (CutUI *ui, CutTestSuite *test_suite, CutContext *context)
 {
-    CutRunnerClass *klass;
+    CutUIClass *klass;
 
-    g_return_val_if_fail(CUT_IS_RUNNER(runner), FALSE);
+    g_return_val_if_fail(CUT_IS_UI(ui), FALSE);
 
-    klass = CUT_RUNNER_GET_CLASS(runner);
+    klass = CUT_UI_GET_CLASS(ui);
     if (klass->run)
-        return klass->run(runner, test_suite, context);
+        return klass->run(ui, test_suite, context);
     else
         return FALSE;
 }

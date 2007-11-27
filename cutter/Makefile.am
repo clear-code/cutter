@@ -28,7 +28,7 @@ libcutter_public_headers = 		\
 		cut-test-context.h	\
 		cut-test-suite.h	\
 		cut-test-result.h	\
-		cut-runner.h		\
+		cut-ui.h		\
 		cut-ui-factory.h	\
 		cut-verbose-level.h
 
@@ -92,7 +92,7 @@ libcutter_la_SOURCES =				\
 		cut-repository.c		\
 		cut-module.c			\
 		cut-module-impl.h		\
-		cut-runner.c			\
+		cut-ui.c			\
 		cut-ui-factory.c		\
 		cut-utils.c
 

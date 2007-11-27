@@ -30,7 +30,7 @@
 #include <gmodule.h>
 
 #include <cutter/cut-module-impl.h>
-#include <cutter/cut-runner.h>
+#include <cutter/cut-ui.h>
 #include <cutter/cut-context.h>
 #include <cutter/cut-test.h>
 #include <cutter/cut-test-suite.h>
@@ -38,12 +38,12 @@
 #include <cutter/cut-verbose-level.h>
 #include <cutter/cut-enum-types.h>
 
-#define CUT_TYPE_RUNNER_CONSOLE            cut_type_runner_console
-#define CUT_RUNNER_CONSOLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_RUNNER_CONSOLE, CutRunnerConsole))
-#define CUT_RUNNER_CONSOLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_RUNNER_CONSOLE, CutRunnerConsoleClass))
-#define CUT_IS_RUNNER_CONSOLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_RUNNER_CONSOLE))
-#define CUT_IS_RUNNER_CONSOLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_RUNNER_CONSOLE))
-#define CUT_RUNNER_CONSOLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_RUNNER_CONSOLE, CutRunnerConsoleClass))
+#define CUT_TYPE_UI_CONSOLE            cut_type_ui_console
+#define CUT_UI_CONSOLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_UI_CONSOLE, CutUIConsole))
+#define CUT_UI_CONSOLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_UI_CONSOLE, CutUIConsoleClass))
+#define CUT_IS_UI_CONSOLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_UI_CONSOLE))
+#define CUT_IS_UI_CONSOLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_UI_CONSOLE))
+#define CUT_UI_CONSOLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_UI_CONSOLE, CutUIConsoleClass))
 
 #define RED_COLOR "\033[01;31m"
 #define RED_BACK_COLOR "\033[41m"
@@ -58,20 +58,20 @@
 
 #define CRASH_COLOR RED_BACK_COLOR WHITE_COLOR
 
-typedef struct _CutRunnerConsole CutRunnerConsole;
-typedef struct _CutRunnerConsoleClass CutRunnerConsoleClass;
+typedef struct _CutUIConsole CutUIConsole;
+typedef struct _CutUIConsoleClass CutUIConsoleClass;
 
-struct _CutRunnerConsole
+struct _CutUIConsole
 {
-    CutRunner     object;
+    CutUI     object;
     gchar        *name;
     gboolean      use_color;
     CutVerboseLevel verbose_level;
 };
 
-struct _CutRunnerConsoleClass
+struct _CutUIConsoleClass
 {
-    CutRunnerClass parent_class;
+    CutUIClass parent_class;
 };
 
 enum
@@ -81,8 +81,8 @@ enum
     PROP_VERBOSE_LEVEL
 };
 
-static GType cut_type_runner_console = 0;
-static CutRunnerClass *parent_class;
+static GType cut_type_ui_console = 0;
+static CutUIClass *parent_class;
 
 static void dispose        (GObject         *object);
 static void set_property   (GObject         *object,
@@ -93,27 +93,27 @@ static void get_property   (GObject         *object,
                             guint            prop_id,
                             GValue          *value,
                             GParamSpec      *pspec);
-static gboolean run        (CutRunner    *runner,
+static gboolean run        (CutUI    *ui,
                             CutTestSuite *test_suite,
                             CutContext   *context);
 
 static void
-class_init (CutRunnerClass *klass)
+class_init (CutUIClass *klass)
 {
     GObjectClass *gobject_class;
-    CutRunnerClass *runner_class;
+    CutUIClass *ui_class;
     GParamSpec *spec;
 
     parent_class = g_type_class_peek_parent(klass);
 
     gobject_class = G_OBJECT_CLASS(klass);
-    runner_class  = CUT_RUNNER_CLASS(klass);
+    ui_class  = CUT_UI_CLASS(klass);
 
     gobject_class->dispose      = dispose;
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
 
-    runner_class->run = run;
+    ui_class->run = run;
 
     spec = g_param_spec_boolean("use-color",
                                 "Use color",
@@ -132,7 +132,7 @@ class_init (CutRunnerClass *klass)
 }
 
 static void
-init (CutRunnerConsole *console)
+init (CutUIConsole *console)
 {
     console->use_color = FALSE;
     console->verbose_level = CUT_VERBOSE_LEVEL_NORMAL;
@@ -143,20 +143,20 @@ register_type (GTypeModule *type_module)
 {
     static const GTypeInfo info =
         {
-            sizeof (CutRunnerConsoleClass),
+            sizeof (CutUIConsoleClass),
             (GBaseInitFunc) NULL,
             (GBaseFinalizeFunc) NULL,
             (GClassInitFunc) class_init,
             NULL,           /* class_finalize */
             NULL,           /* class_data */
-            sizeof(CutRunnerConsole),
+            sizeof(CutUIConsole),
             0,
             (GInstanceInitFunc) init,
         };
 
-    cut_type_runner_console = g_type_module_register_type(type_module,
-                                                          CUT_TYPE_RUNNER,
-                                                          "CutRunnerConsole",
+    cut_type_ui_console = g_type_module_register_type(type_module,
+                                                          CUT_TYPE_UI,
+                                                          "CutUIConsole",
                                                           &info, 0);
 }
 
@@ -166,10 +166,10 @@ CUT_MODULE_IMPL_INIT (GTypeModule *type_module)
     GList *registered_types = NULL;
 
     register_type(type_module);
-    if (cut_type_runner_console)
+    if (cut_type_ui_console)
         registered_types =
             g_list_prepend(registered_types,
-                           (gchar *)g_type_name(cut_type_runner_console));
+                           (gchar *)g_type_name(cut_type_ui_console));
 
     return registered_types;
 }
@@ -182,7 +182,7 @@ CUT_MODULE_IMPL_EXIT (void)
 G_MODULE_EXPORT GObject *
 CUT_MODULE_IMPL_INSTANTIATE (const gchar *first_property, va_list var_args)
 {
-    return g_object_new_valist(CUT_TYPE_RUNNER_CONSOLE, first_property, var_args);
+    return g_object_new_valist(CUT_TYPE_UI_CONSOLE, first_property, var_args);
 }
 
 G_MODULE_EXPORT gchar *
@@ -203,7 +203,7 @@ set_property (GObject      *object,
               const GValue *value,
               GParamSpec   *pspec)
 {
-    CutRunnerConsole *console = CUT_RUNNER_CONSOLE(object);
+    CutUIConsole *console = CUT_UI_CONSOLE(object);
 
     switch (prop_id) {
       case PROP_USE_COLOR:
@@ -224,7 +224,7 @@ get_property (GObject    *object,
               GValue     *value,
               GParamSpec *pspec)
 {
-    CutRunnerConsole *console = CUT_RUNNER_CONSOLE(object);
+    CutUIConsole *console = CUT_UI_CONSOLE(object);
 
     switch (prop_id) {
       case PROP_USE_COLOR:
@@ -298,7 +298,7 @@ status_to_color(CutTestResultStatus status)
 }
 
 static void
-print_with_colorv (CutRunnerConsole *console, const gchar *color,
+print_with_colorv (CutUIConsole *console, const gchar *color,
                    gchar const *format, va_list args)
 {
    if (console->use_color) {
@@ -312,7 +312,7 @@ print_with_colorv (CutRunnerConsole *console, const gchar *color,
 }
 
 static void
-print_with_color (CutRunnerConsole *console, const gchar *color,
+print_with_color (CutUIConsole *console, const gchar *color,
                   gchar const *format, ...)
 {
     va_list args;
@@ -323,7 +323,7 @@ print_with_color (CutRunnerConsole *console, const gchar *color,
 }
 
 static void
-print_for_status (CutRunnerConsole *console, CutTestResultStatus status,
+print_for_status (CutUIConsole *console, CutTestResultStatus status,
                   gchar const *format, ...)
 {
     va_list args;
@@ -335,13 +335,13 @@ print_for_status (CutRunnerConsole *console, CutTestResultStatus status,
 
 static void
 cb_start_test_suite (CutContext *context, CutTestSuite *test_suite,
-                     CutRunnerConsole *console)
+                     CutUIConsole *console)
 {
 }
 
 static void
 cb_start_test_case (CutContext *context, CutTestCase *test_case,
-                    CutRunnerConsole *console)
+                    CutUIConsole *console)
 {
     if (console->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
         return;
@@ -353,7 +353,7 @@ cb_start_test_case (CutContext *context, CutTestCase *test_case,
 
 static void
 cb_start_test (CutContext *context, CutTest *test, CutTestContext *test_context,
-               CutRunnerConsole *console)
+               CutUIConsole *console)
 {
     GString *tab_stop;
     const gchar *name;
@@ -380,7 +380,7 @@ cb_start_test (CutContext *context, CutTest *test, CutTestContext *test_context,
 }
 
 static void
-cb_success (CutContext *context, CutTest *test, CutRunnerConsole *console)
+cb_success (CutContext *context, CutTest *test, CutUIConsole *console)
 {
     if (console->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
@@ -395,7 +395,7 @@ cb_failure (CutContext       *context,
             CutTest          *test,
             CutTestContext   *test_context,
             CutTestResult    *result,
-            CutRunnerConsole *console)
+            CutUIConsole *console)
 {
     if (console->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
@@ -408,7 +408,7 @@ cb_error (CutContext       *context,
           CutTest          *test,
           CutTestContext   *test_context,
           CutTestResult    *result,
-          CutRunnerConsole *console)
+          CutUIConsole *console)
 {
     if (console->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
@@ -421,7 +421,7 @@ cb_pending (CutContext       *context,
             CutTest          *test,
             CutTestContext   *test_context,
             CutTestResult    *result,
-            CutRunnerConsole *console)
+            CutUIConsole *console)
 {
     if (console->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
@@ -434,7 +434,7 @@ cb_notification (CutContext       *context,
                  CutTest          *test,
                  CutTestContext   *test_context,
                  CutTestResult    *result,
-                 CutRunnerConsole *console)
+                 CutUIConsole *console)
 {
     if (console->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
@@ -444,7 +444,7 @@ cb_notification (CutContext       *context,
 
 static void
 cb_complete_test (CutContext *context, CutTest *test,
-                  CutTestContext *test_context, CutRunnerConsole *console)
+                  CutTestContext *test_context, CutUIConsole *console)
 {
     if (console->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
         return;
@@ -455,20 +455,20 @@ cb_complete_test (CutContext *context, CutTest *test,
 
 static void
 cb_complete_test_case (CutContext *context, CutTestCase *test_case,
-                       CutRunnerConsole *console)
+                       CutUIConsole *console)
 {
     if (console->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
         return;
 }
 
 static void
-print_results (CutRunnerConsole *console, CutContext *context)
+print_results (CutUIConsole *console, CutContext *context)
 {
     gint i;
     const GList *node;
-    CutRunner *runner;
+    CutUI *ui;
 
-    runner = CUT_RUNNER(console);
+    ui = CUT_UI(console);
 
     i = 1;
     for (node = cut_context_get_results(context);
@@ -515,7 +515,7 @@ print_results (CutRunnerConsole *console, CutContext *context)
 }
 
 static void
-print_summary (CutRunnerConsole *console, CutContext *context,
+print_summary (CutUIConsole *console, CutContext *context,
                gboolean crashed)
 {
     guint n_tests, n_assertions, n_failures, n_errors;
@@ -556,7 +556,7 @@ print_summary (CutRunnerConsole *console, CutContext *context,
 
 static void
 cb_complete_test_suite (CutContext *context, CutTestSuite *test_suite,
-                        CutRunnerConsole *console)
+                        CutUIConsole *console)
 {
     gboolean crashed;
     CutVerboseLevel verbose_level;
@@ -591,14 +591,14 @@ cb_complete_test_suite (CutContext *context, CutTestSuite *test_suite,
 
 static void
 cb_crashed (CutContext *context, const gchar *stack_trace,
-            CutRunnerConsole *console)
+            CutUIConsole *console)
 {
     print_with_color(console, CRASH_COLOR, "!");
     fflush(stdout);
 }
 
 static void
-connect_to_context (CutRunnerConsole *console, CutContext *context)
+connect_to_context (CutUIConsole *console, CutContext *context)
 {
 #define CONNECT(name) \
     g_signal_connect(context, #name, G_CALLBACK(cb_ ## name), console)
@@ -623,7 +623,7 @@ connect_to_context (CutRunnerConsole *console, CutContext *context)
 }
 
 static void
-disconnect_from_context (CutRunnerConsole *console, CutContext *context)
+disconnect_from_context (CutUIConsole *console, CutContext *context)
 {
 #define DISCONNECT(name)                                                \
     g_signal_handlers_disconnect_by_func(context,                       \
@@ -650,9 +650,9 @@ disconnect_from_context (CutRunnerConsole *console, CutContext *context)
 }
 
 static gboolean
-run (CutRunner *runner, CutTestSuite *test_suite, CutContext *context)
+run (CutUI *ui, CutTestSuite *test_suite, CutContext *context)
 {
-    CutRunnerConsole *console = CUT_RUNNER_CONSOLE(runner);
+    CutUIConsole *console = CUT_UI_CONSOLE(ui);
     gboolean success;
 
     connect_to_context(console, context);
