@@ -508,6 +508,22 @@ timeout_cb_pulse (gpointer data)
     return running;
 }
 
+static gboolean
+idle_cb_push_start_message_to_statusbar (gpointer data)
+{
+    CutUIGtk *ui = data;
+    guint context_id;
+    gchar *message;
+
+    context_id = gtk_statusbar_get_context_id(ui->statusbar, "test-suite");
+    message = g_strdup_printf("Staring test suite %s...",
+                              cut_test_get_name(CUT_TEST(ui->test_suite)));
+    gtk_statusbar_push(ui->statusbar, context_id, message);
+    g_free(message);
+
+    return FALSE;
+}
+
 static void
 cb_ready_test_suite (CutContext *context, CutTestSuite *test_suite,
                      guint n_test_cases, guint n_tests, CutUIGtk *ui)
@@ -515,6 +531,8 @@ cb_ready_test_suite (CutContext *context, CutTestSuite *test_suite,
     ui->running = TRUE;
     ui->n_tests = n_tests;
     ui->update_pulse_id = g_timeout_add(10, timeout_cb_pulse, ui);
+
+    g_idle_add(idle_cb_push_start_message_to_statusbar, ui);
 }
 
 typedef struct _TestCaseRowInfo
@@ -825,6 +843,17 @@ idle_cb_append_test_result_row (gpointer data)
 }
 
 static void
+idle_add_append_test_result_row (TestRowInfo *info, CutTestResult *result)
+{
+    TestResultRowInfo *result_row_info;
+
+    result_row_info = g_new0(TestResultRowInfo, 1);
+    result_row_info->test_row_info = info;
+    result_row_info->result = g_object_ref(result);
+    g_idle_add(idle_cb_append_test_result_row, result_row_info);
+}
+
+static void
 cb_success_test (CutTest *test, gpointer data)
 {
     TestRowInfo *info = data;
@@ -841,18 +870,13 @@ cb_failure_test (CutTest *test, CutTestContext *context, CutTestResult *result,
                  gpointer data)
 {
     TestRowInfo *info = data;
-    TestResultRowInfo *result_row_info;
 
     info->status = CUT_TEST_RESULT_FAILURE;
 
-    update_status(info->test_case_row_info->ui, CUT_TEST_RESULT_FAILURE);
+    update_status(info->test_case_row_info->ui, info->status);
 
     g_idle_add(idle_cb_update_test_row_status, data);
-
-    result_row_info = g_new0(TestResultRowInfo, 1);
-    result_row_info->test_row_info = info;
-    result_row_info->result = g_object_ref(result);
-    g_idle_add(idle_cb_append_test_result_row, result_row_info);
+    idle_add_append_test_result_row(info, result);
 }
 
 static void
@@ -860,18 +884,13 @@ cb_error_test (CutTest *test, CutTestContext *context, CutTestResult *result,
                gpointer data)
 {
     TestRowInfo *info = data;
-    TestResultRowInfo *result_row_info;
 
     info->status = CUT_TEST_RESULT_ERROR;
 
-    update_status(info->test_case_row_info->ui, CUT_TEST_RESULT_ERROR);
+    update_status(info->test_case_row_info->ui, info->status);
 
     g_idle_add(idle_cb_update_test_row_status, data);
-
-    result_row_info = g_new0(TestResultRowInfo, 1);
-    result_row_info->test_row_info = info;
-    result_row_info->result = g_object_ref(result);
-    g_idle_add(idle_cb_append_test_result_row, result_row_info);
+    idle_add_append_test_result_row(info, result);
 }
 
 static void
@@ -879,18 +898,13 @@ cb_pending_test (CutTest *test, CutTestContext *context, CutTestResult *result,
                  gpointer data)
 {
     TestRowInfo *info = data;
-    TestResultRowInfo *result_row_info;
 
     info->status = CUT_TEST_RESULT_PENDING;
 
-    update_status(info->test_case_row_info->ui, CUT_TEST_RESULT_PENDING);
+    update_status(info->test_case_row_info->ui, info->status);
 
     g_idle_add(idle_cb_update_test_row_status, data);
-
-    result_row_info = g_new0(TestResultRowInfo, 1);
-    result_row_info->test_row_info = info;
-    result_row_info->result = g_object_ref(result);
-    g_idle_add(idle_cb_append_test_result_row, result_row_info);
+    idle_add_append_test_result_row(info, result);
 }
 
 static void
@@ -898,18 +912,12 @@ cb_notification_test (CutTest *test, CutTestContext *context,
                       CutTestResult *result, gpointer data)
 {
     TestRowInfo *info = data;
-    TestResultRowInfo *result_row_info;
-
     info->status = CUT_TEST_RESULT_NOTIFICATION;
 
-    update_status(info->test_case_row_info->ui, CUT_TEST_RESULT_NOTIFICATION);
+    update_status(info->test_case_row_info->ui, info->status);
 
     g_idle_add(idle_cb_update_test_row_status, data);
-
-    result_row_info = g_new0(TestResultRowInfo, 1);
-    result_row_info->test_row_info = info;
-    result_row_info->result = g_object_ref(result);
-    g_idle_add(idle_cb_append_test_result_row, result_row_info);
+    idle_add_append_test_result_row(info, result);
 }
 
 static void
