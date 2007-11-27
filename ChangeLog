@@ -1,5 +1,8 @@
 2007-11-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/module/ui/cut-ui-gtk.c: showed running test information
+	in statusbar.
+
 	* cutter/module/ui/cut-ui-gtk.c: showed summary in statusbar.
 
 	* cutter/module/ui/cut-ui-gtk.c: used Monospace font for

@@ -920,6 +920,37 @@ cb_notification_test (CutTest *test, CutTestContext *context,
     idle_add_append_test_result_row(info, result);
 }
 
+static gboolean
+idle_cb_push_running_test_message (gpointer data)
+{
+    TestRowInfo *info = data;
+    CutUIGtk *ui;
+    guint context_id;
+    gchar *message;
+
+    ui = info->test_case_row_info->ui;
+    context_id = gtk_statusbar_get_context_id(ui->statusbar, "test");
+    message = g_strdup_printf("Running: test %s", cut_test_get_name(info->test));
+    gtk_statusbar_push(ui->statusbar, context_id, message);
+    g_free(message);
+
+    return FALSE;
+}
+
+static gboolean
+idle_cb_pop_running_test_message (gpointer data)
+{
+    TestRowInfo *info = data;
+    CutUIGtk *ui;
+    guint context_id;
+
+    ui = info->test_case_row_info->ui;
+    context_id = gtk_statusbar_get_context_id(ui->statusbar, "test");
+    gtk_statusbar_pop(ui->statusbar, context_id);
+
+    return FALSE;
+}
+
 static void
 cb_complete_test (CutTest *test, gpointer data)
 {
@@ -931,6 +962,7 @@ cb_complete_test (CutTest *test, gpointer data)
     test_case_row_info->n_completed_tests++;
 
     g_idle_add(idle_cb_update_test_case_row, info->test_case_row_info);
+    g_idle_add(idle_cb_pop_running_test_message, info);
     g_idle_add(idle_cb_free_test_row_info, data);
 
 #define DISCONNECT(name)                                                \
@@ -960,6 +992,7 @@ cb_start_test (CutTestCase *test_case, CutTest *test,
     info->pulse = 0;
     info->update_pulse_id = 0;
 
+    g_idle_add(idle_cb_push_running_test_message, info);
     g_idle_add(idle_cb_append_test_row, info);
 
 #define CONNECT(name) \
