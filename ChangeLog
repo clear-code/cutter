@@ -1,5 +1,10 @@
 2007-11-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-case.c: used cut_context_get_target_test_names()
+	as default test_names.
+
+	* test/test-cut-test-case.c: set target_test_names.
+
 	* cutter/module/ui/cut-ui-gtk.c: showed test result.
 
 	* cutter/module/ui/cut-ui-gtk.c: showed elapsed time.

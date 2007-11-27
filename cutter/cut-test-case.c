@@ -410,13 +410,10 @@ cut_test_case_run_with_filter (CutTestCase  *test_case,
 gboolean
 cut_test_case_run (CutTestCase *test_case, CutContext *context)
 {
-    CutTestContainer *container;
-    const GList *tests;
+    const gchar **test_names;
 
-    container = CUT_TEST_CONTAINER(test_case);
-    tests = cut_test_container_get_children(container);
-
-    return cut_test_case_run_tests(test_case, context, tests);
+    test_names = cut_context_get_target_test_names(context);
+    return cut_test_case_run_with_filter(test_case, context, test_names);
 }
 
 /*

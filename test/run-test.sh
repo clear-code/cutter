@@ -10,6 +10,10 @@ if test -z "$CUTTER"; then
     CUTTER="$BASE_DIR/`make -s -C $BASE_DIR echo-cutter`"
 fi
 
+if test x"$CUTTER_DEBUG" = x"yes"; then
+	CUTTER="$BASE_DIR/../libtool --mode=execute gdb --args $CUTTER"
+fi
+
 export CUT_UI_MODULE_DIR=$BASE_DIR/../cutter/module/ui/.libs
 export CUT_UI_FACTORY_MODULE_DIR=$BASE_DIR/../cutter/module/ui-factory/.libs
 

@@ -69,6 +69,7 @@ void
 setup (void)
 {
     CutTest *test;
+    const gchar *test_names[] = {"/.*/", NULL};
 
     set_error_on_setup = FALSE;
 
@@ -81,6 +82,7 @@ setup (void)
     n_complete_signal = 0;
 
     test_context = cut_context_new();
+    cut_context_set_target_test_names(test_context, test_names);
 
     test_object = cut_test_case_new("dummy test case",
                                     dummy_setup_function,
