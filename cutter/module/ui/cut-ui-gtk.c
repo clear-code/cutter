@@ -509,7 +509,7 @@ timeout_cb_pulse (gpointer data)
 }
 
 static gboolean
-idle_cb_push_start_message_to_statusbar (gpointer data)
+idle_cb_push_start_test_suite_message (gpointer data)
 {
     CutUIGtk *ui = data;
     guint context_id;
@@ -532,7 +532,7 @@ cb_ready_test_suite (CutContext *context, CutTestSuite *test_suite,
     ui->n_tests = n_tests;
     ui->update_pulse_id = g_timeout_add(10, timeout_cb_pulse, ui);
 
-    g_idle_add(idle_cb_push_start_message_to_statusbar, ui);
+    g_idle_add(idle_cb_push_start_test_suite_message, ui);
 }
 
 typedef struct _TestCaseRowInfo
@@ -1007,10 +1007,43 @@ cb_ready_test_case (CutContext *context, CutTestCase *test_case, guint n_tests,
                      G_CALLBACK(cb_complete_test_case), info);
 }
 
+static gboolean
+idle_cb_push_complete_test_suite_message (gpointer data)
+{
+    CutUIGtk *ui = data;
+    CutContext *context;
+    guint context_id;
+    gchar *message;
+    guint n_tests, n_assertions, n_failures, n_errors;
+    guint n_pendings, n_notifications;
+
+    context = ui->context;
+    n_tests = cut_context_get_n_tests(context);
+    n_assertions = cut_context_get_n_assertions(context);
+    n_failures = cut_context_get_n_failures(context);
+    n_errors = cut_context_get_n_errors(context);
+    n_pendings = cut_context_get_n_pendings(context);
+    n_notifications = cut_context_get_n_notifications(context);
+
+    context_id = gtk_statusbar_get_context_id(ui->statusbar, "test-suite");
+    message = g_strdup_printf("Finished in %0.1f seconds: "
+                              "%d test(s), %d assertion(s), %d failure(s), "
+                              "%d error(s), %d pending(s), %d notification(s)",
+                              cut_test_get_elapsed(CUT_TEST(ui->test_suite)),
+                              n_tests, n_assertions, n_failures, n_errors,
+                              n_pendings, n_notifications),
+    gtk_statusbar_pop(ui->statusbar, context_id);
+    gtk_statusbar_push(ui->statusbar, context_id, message);
+    g_free(message);
+
+    return FALSE;
+}
+
 static void
 cb_complete_test_suite (CutContext *context, CutTestSuite *test_suite,
                         CutUIGtk *ui)
 {
+    g_idle_add(idle_cb_push_complete_test_suite_message, ui);
     ui->running = FALSE;
 }
 
