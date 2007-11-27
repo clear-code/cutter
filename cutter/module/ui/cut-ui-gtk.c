@@ -66,10 +66,11 @@ struct _CutUIGtk
 
     GMutex        *mutex;
 
-    gboolean       success;
     gboolean       running;
     guint          n_tests;
     guint          n_completed_tests;
+
+    CutTestResultStatus status;
 };
 
 struct _CutUIGtkClass
@@ -260,9 +261,9 @@ init (CutUIGtk *ui)
 {
     ui->test_suite = NULL;
     ui->context = NULL;
-    ui->success = TRUE;
     ui->n_tests = 0;
     ui->n_completed_tests = 0;
+    ui->status = CUT_TEST_RESULT_SUCCESS;
 
     ui->mutex = g_mutex_new();
 
@@ -374,6 +375,15 @@ get_property (GObject    *object,
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
     }
+}
+
+static void
+update_status (CutUIGtk *ui, CutTestResultStatus status)
+{
+    g_mutex_lock(ui->mutex);
+    if (ui->status < status)
+        ui->status = status;
+    g_mutex_unlock(ui->mutex);
 }
 
 static void
@@ -569,6 +579,8 @@ cb_failure_test (CutTest *test, gpointer data)
     info->status = "F";
     info->color = "red";
 
+    update_status(info->test_case_row_info->ui, CUT_TEST_RESULT_FAILURE);
+
     g_idle_add(idle_cb_update_test_row_status, data);
     g_signal_handlers_disconnect_by_func(test, cb_failure_test, data);
 }
@@ -580,6 +592,8 @@ cb_error_test (CutTest *test, CutTestContext *context, CutTestResult *result,
     TestRowInfo *info = data;
     info->status = "E";
     info->color = "purple";
+
+    update_status(info->test_case_row_info->ui, CUT_TEST_RESULT_ERROR);
 
     g_idle_add(idle_cb_update_test_row_status, data);
     g_signal_handlers_disconnect_by_func(test, cb_error_test, data);
@@ -593,6 +607,8 @@ cb_pending_test (CutTest *test, CutTestContext *context, CutTestResult *result,
     info->status = "P";
     info->color = "yellow";
 
+    update_status(info->test_case_row_info->ui, CUT_TEST_RESULT_PENDING);
+
     g_idle_add(idle_cb_update_test_row_status, data);
     g_signal_handlers_disconnect_by_func(test, cb_pending_test, data);
 }
@@ -604,6 +620,8 @@ cb_notification_test (CutTest *test, CutTestContext *context,
     TestRowInfo *info = data;
     info->status = "N";
     info->color = "light blue";
+
+    update_status(info->test_case_row_info->ui, CUT_TEST_RESULT_NOTIFICATION);
 
     g_idle_add(idle_cb_update_test_row_status, data);
     g_signal_handlers_disconnect_by_func(test, cb_notification_test, data);
@@ -833,8 +851,8 @@ run_test_thread_func (gpointer data)
 
     ui->n_tests = 0;
     ui->n_completed_tests = 0;
-    ui->success = FALSE;
-    ui->success = cut_test_suite_run(ui->test_suite, ui->context);
+    ui->status = CUT_TEST_RESULT_SUCCESS;
+    cut_test_suite_run(ui->test_suite, ui->context);
     disconnect_from_context(ui, ui->context);
 
     g_print("finished\n");
@@ -865,7 +883,7 @@ run (CutUI *ui, CutTestSuite *test_suite, CutContext *context)
     g_idle_add(run_test_source_func, gtk_ui);
     gtk_main();
 
-    return gtk_ui->success;
+    return gtk_ui->status <= CUT_TEST_RESULT_NOTIFICATION;
 }
 
 
