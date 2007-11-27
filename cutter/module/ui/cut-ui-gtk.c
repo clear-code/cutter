@@ -387,6 +387,32 @@ get_property (GObject    *object,
     }
 }
 
+static const gchar *
+status_to_color (CutTestResultStatus status)
+{
+    const gchar *color = "white";
+
+    switch (status) {
+      case CUT_TEST_RESULT_SUCCESS:
+        color = "green";
+        break;
+      case CUT_TEST_RESULT_NOTIFICATION:
+        color = "light blue";
+        break;
+      case CUT_TEST_RESULT_PENDING:
+        color = "yellow";
+        break;
+      case CUT_TEST_RESULT_FAILURE:
+        color = "red";
+        break;
+      case CUT_TEST_RESULT_ERROR:
+        color = "purple";
+        break;
+    }
+
+    return color;
+}
+
 static void
 update_status (CutUIGtk *ui, CutTestResultStatus status)
 {
@@ -394,6 +420,15 @@ update_status (CutUIGtk *ui, CutTestResultStatus status)
     if (ui->status < status)
         ui->status = status;
     g_mutex_unlock(ui->mutex);
+}
+
+static void
+update_progress_color (GtkProgressBar *bar, CutTestResultStatus status)
+{
+    GdkColor color;
+
+    gdk_color_parse(status_to_color(status), &color);
+    gtk_widget_modify_bg(GTK_WIDGET(bar), GTK_STATE_PRELIGHT, &color);
 }
 
 static void
@@ -416,25 +451,34 @@ static gboolean
 idle_cb_pulse (gpointer data)
 {
     CutUIGtk *ui = data;
+    GtkProgressBar *bar;
+    gboolean running;
+    guint n_tests, n_completed_tests;
 
-    if (ui->n_tests > 0) {
+    running = ui->running;
+    n_tests = ui->n_tests;
+    n_completed_tests = ui->n_completed_tests;
+    bar = ui->progress_bar;
+
+    update_progress_color(bar, ui->status);
+
+    if (n_tests > 0) {
         gdouble fraction;
         gchar *text;
 
-        fraction = ui->n_completed_tests / (gdouble)ui->n_tests;
+        fraction = n_completed_tests / (gdouble)n_tests;
         gtk_progress_bar_set_fraction(ui->progress_bar, fraction);
 
         text = g_strdup_printf("%u/%u (%u%%)",
-                               ui->n_completed_tests,
-                               ui->n_tests,
+                               n_completed_tests, n_tests,
                                (guint)(fraction * 100));
-        gtk_progress_bar_set_text(ui->progress_bar, text);
+        gtk_progress_bar_set_text(bar, text);
         g_free(text);
     } else {
-        gtk_progress_bar_pulse(ui->progress_bar);
+        gtk_progress_bar_pulse(bar);
     }
 
-    return ui->running;
+    return running;
 }
 
 static void
