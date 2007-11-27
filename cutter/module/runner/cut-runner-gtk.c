@@ -59,6 +59,7 @@ struct _CutRunnerGtk
     GtkProgressBar *progress_bar;
     GtkTreeView   *tree_view;
     GtkTreeStore  *logs;
+    GtkStatusbar  *statusbar;
 
     CutTestSuite  *test_suite;
     CutContext    *context;
@@ -195,6 +196,16 @@ setup_text_view (GtkBox *box, CutRunnerGtk *runner)
     runner->text_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_view));
 }
 
+static void
+setup_statusbar (GtkBox *box, CutRunnerGtk *runner)
+{
+    GtkWidget *statusbar;
+
+    statusbar = gtk_statusbar_new();
+    gtk_box_pack_start(box, statusbar, FALSE, FALSE, 0);
+    runner->statusbar = GTK_STATUSBAR(statusbar);
+}
+
 static gboolean
 cb_destroy (GtkWidget *widget, gpointer data)
 {
@@ -237,6 +248,7 @@ setup_window (CutRunnerGtk *runner)
     setup_progress_bar(GTK_BOX(vbox), runner);
     setup_tree_view(GTK_BOX(vbox), runner);
     setup_text_view(GTK_BOX(vbox), runner);
+    setup_statusbar(GTK_BOX(vbox), runner);
 }
 
 static void
@@ -374,12 +386,20 @@ print_log (CutRunnerGtk *runner, gchar const *format, ...)
     va_end(args);
 }
 
+static gboolean
+idle_cb_setup_progress_bar (gpointer data)
+{
+    CutRunnerGtk *runner = data;
+
+    gtk_progress_bar_set_pulse_step(runner->progress_bar, 0.1);
+    gtk_progress_bar_pulse(runner->progress_bar);
+}
+
 static void
 cb_start_test_suite (CutContext *context, CutTestSuite *test_suite,
                      CutRunnerGtk *runner)
 {
-    gtk_progress_bar_set_pulse_step(runner->progress_bar, 0.1);
-    gtk_progress_bar_pulse(runner->progress_bar);
+    g_idle_add(idle_cb_setup_progress_bar, runner);
 }
 
 typedef struct _TestCaseRowInfo
