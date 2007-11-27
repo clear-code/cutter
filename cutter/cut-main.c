@@ -45,8 +45,8 @@ static gchar *source_directory = NULL;
 static const gchar **test_case_names = NULL;
 static const gchar **test_names = NULL;
 static gboolean use_multi_thread = FALSE;
-static const gchar *runner_name = NULL;
-static gboolean _show_all_runners = FALSE;
+static const gchar *ui_name = NULL;
+static gboolean _show_all_uis = FALSE;
 
 static CutUIFactory *factory = NULL;
 
@@ -60,15 +60,15 @@ static const GOptionEntry option_entries[] =
      N_("Specify test cases"), "TEST_CASE_NAME"},
     {"multi-thread", 'm', 0, G_OPTION_ARG_NONE, &use_multi_thread,
      N_("Run test cases with multi-thread"), NULL},
-    {"runner", 'r', 0, G_OPTION_ARG_STRING, &runner_name,
-     N_("Specify test runner"), "[console|gtk]"},
-    {"show-all-runners", 0, 0, G_OPTION_ARG_NONE, &_show_all_runners,
-     N_("Show all available runners and exit"), NULL},
+    {"ui", 'u', 0, G_OPTION_ARG_STRING, &ui_name,
+     N_("Specify test ui"), "[console|gtk]"},
+    {"show-all-uis", 0, 0, G_OPTION_ARG_NONE, &_show_all_uis,
+     N_("Show all available UIs and exit"), NULL},
     {NULL}
 };
 
 static void
-show_all_runners (void)
+show_all_uis (void)
 {
     GList *names, *node;
 
@@ -116,17 +116,17 @@ cut_init (int *argc, char ***argv)
         exit(1);
     }
 
-    if (_show_all_runners) {
-        show_all_runners();
+    if (_show_all_uis) {
+        show_all_uis();
         exit(1);
     }
 
     cut_ui_factory_init();
-    if (!runner_name)
-        runner_name = "console";
-    factory = cut_ui_factory_new(runner_name, NULL);
+    if (!ui_name)
+        ui_name = "console";
+    factory = cut_ui_factory_new(ui_name, NULL);
     if (!factory) {
-        g_warning("can't find specified runner: %s", runner_name);
+        g_warning("can't find specified UI: %s", ui_name);
         exit(1);
     }
     cut_ui_factory_set_option_group(factory, option_context);
@@ -206,7 +206,7 @@ cut_create_test_suite (const gchar *directory)
 gboolean
 cut_run_test_suite (CutTestSuite *suite, CutContext *context)
 {
-    CutUI *runner;
+    CutUI *ui;
     gboolean success;
 
     if (!initialized) {
@@ -217,14 +217,14 @@ cut_run_test_suite (CutTestSuite *suite, CutContext *context)
     if (!suite)
         return TRUE;
 
-    runner = cut_ui_factory_create(factory);
-    if (!runner) {
-        g_warning("can't create runner: %s", runner_name);
+    ui = cut_ui_factory_create(factory);
+    if (!ui) {
+        g_warning("can't create UI: %s", ui_name);
         return FALSE;
     }
 
-    success = cut_ui_run(runner, suite, context);
-    g_object_unref(runner);
+    success = cut_ui_run(ui, suite, context);
+    g_object_unref(ui);
     return success;
 }
 

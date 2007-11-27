@@ -14,7 +14,7 @@ if test x"$CUTTER_DEBUG" = x"yes"; then
 fi
 CUTTER_ARGS="-s $BASE_DIR"
 if test x"$USE_GTK" = x"yes"; then
-        CUTTER_ARGS="-r gtk $CUTTER_ARGS"
+        CUTTER_ARGS="-u gtk $CUTTER_ARGS"
 else
         CUTTER_ARGS="--color=auto $CUTTER_ARGS"
 fi

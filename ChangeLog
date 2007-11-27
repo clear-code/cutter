@@ -1,3 +1,7 @@
+2007-11-27  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-main.c: -r/--runner -> -u/--ui.
+
 2007-11-27  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-runner-factory.[hc] -> cutter/cut-ui-factory.[hc]: Rename
