@@ -38,7 +38,7 @@
 #include "cut-test-suite.h"
 #include "cut-repository.h"
 #include "cut-runner.h"
-#include "cut-runner-factory.h"
+#include "cut-ui-factory.h"
 
 static gboolean initialized = FALSE;
 static gchar *source_directory = NULL;

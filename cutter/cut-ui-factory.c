@@ -30,7 +30,7 @@
 #include <glib/gi18n-lib.h>
 
 #include "cut-module.h"
-#include "cut-runner-factory.h"
+#include "cut-ui-factory.h"
 #include "cut-verbose-level.h"
 #include "cut-enum-types.h"
 

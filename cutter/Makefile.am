@@ -29,7 +29,7 @@ libcutter_public_headers = 		\
 		cut-test-suite.h	\
 		cut-test-result.h	\
 		cut-runner.h		\
-		cut-runner-factory.h	\
+		cut-ui-factory.h	\
 		cut-verbose-level.h
 
 noinst_headers = 			\
@@ -93,7 +93,7 @@ libcutter_la_SOURCES =				\
 		cut-module.c			\
 		cut-module-impl.h		\
 		cut-runner.c			\
-		cut-runner-factory.c		\
+		cut-ui-factory.c		\
 		cut-utils.c
 
 libcutter_la_LIBADD =			\

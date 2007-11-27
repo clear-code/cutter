@@ -32,7 +32,7 @@
 
 #include <cutter/cut-module-impl.h>
 #include <cutter/cut-runner.h>
-#include <cutter/cut-runner-factory.h>
+#include <cutter/cut-ui-factory.h>
 #include <cutter/cut-enum-types.h>
 
 #define CUT_TYPE_RUNNER_FACTORY_GTK            cut_type_runner_factory_gtk

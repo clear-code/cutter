@@ -31,7 +31,7 @@
 
 #include <cutter/cut-module-impl.h>
 #include <cutter/cut-runner.h>
-#include <cutter/cut-runner-factory.h>
+#include <cutter/cut-ui-factory.h>
 #include <cutter/cut-verbose-level.h>
 #include <cutter/cut-enum-types.h>
 
