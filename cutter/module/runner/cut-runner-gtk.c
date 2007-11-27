@@ -551,7 +551,8 @@ cb_failure_test (CutTest *test, gpointer data)
 }
 
 static void
-cb_error_test (CutTest *test, gpointer data)
+cb_error_test (CutTest *test, CutTestContext *context, CutTestResult *result,
+               gpointer data)
 {
     TestRowInfo *info = data;
     info->status = "E";
@@ -562,7 +563,8 @@ cb_error_test (CutTest *test, gpointer data)
 }
 
 static void
-cb_pending_test (CutTest *test, gpointer data)
+cb_pending_test (CutTest *test, CutTestContext *context, CutTestResult *result,
+                 gpointer data)
 {
     TestRowInfo *info = data;
     info->status = "P";
@@ -573,7 +575,8 @@ cb_pending_test (CutTest *test, gpointer data)
 }
 
 static void
-cb_notification_test (CutTest *test, gpointer data)
+cb_notification_test (CutTest *test, CutTestContext *context,
+                      CutTestResult *result, gpointer data)
 {
     TestRowInfo *info = data;
     info->status = "N";

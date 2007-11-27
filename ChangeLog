@@ -1,5 +1,7 @@
 2007-11-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/module/runner/cut-runner-gtk.c: fixed wrong signatures.
+
 	* cutter/module/runner/cut-runner-gtk.c: pulse!
 
 	* cutter/module/runner/cut-runner-gtk.c: stop!
