@@ -227,9 +227,9 @@ real_set_option_group (CutUIFactory *factory, GOptionContext *context)
         {NULL}
     };
 
-    group = g_option_group_new(("runner-common"),
-                               _("Common Runner Options"),
-                               _("Show Common Runner Options"),
+    group = g_option_group_new(("ui-common"),
+                               _("Common UI Options"),
+                               _("Show Common UI Options"),
                                factory, NULL);
     g_option_group_add_entries(group, entries);
     g_option_group_set_translation_domain(group, GETTEXT_PACKAGE);
@@ -238,7 +238,7 @@ real_set_option_group (CutUIFactory *factory, GOptionContext *context)
 
 void
 cut_ui_factory_set_option_group (CutUIFactory *factory,
-                                     GOptionContext   *context)
+                                 GOptionContext   *context)
 {
     CutUIFactoryClass *klass;
 

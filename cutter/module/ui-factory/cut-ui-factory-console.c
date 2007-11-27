@@ -293,9 +293,9 @@ set_option_group (CutUIFactory *factory, GOptionContext *context)
 
     CUT_UI_FACTORY_CLASS(parent_class)->set_option_group(factory, context);
 
-    group = g_option_group_new(("runner-console"),
-                               _("Console Runner Options"),
-                               _("Show Console Runner Options"),
+    group = g_option_group_new(("ui-console"),
+                               _("Console UI Options"),
+                               _("Show Console UI Options"),
                                console, NULL);
     g_option_group_add_entries(group, entries);
     g_option_group_set_translation_domain(group, GETTEXT_PACKAGE);
