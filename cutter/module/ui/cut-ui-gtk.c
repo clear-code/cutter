@@ -824,14 +824,21 @@ cb_complete_test (CutTest *test, gpointer data)
     test_case_row_info = info->test_case_row_info;
     test_case_row_info->ui->n_completed_tests++;
     test_case_row_info->n_completed_tests++;
+
     g_idle_add(idle_cb_update_test_case_row, info->test_case_row_info);
     g_idle_add(idle_cb_free_test_row_info, data);
-    g_signal_handlers_disconnect_by_func(test, cb_success_test, data);
-    g_signal_handlers_disconnect_by_func(test, cb_failure_test, data);
-    g_signal_handlers_disconnect_by_func(test, cb_error_test, data);
-    g_signal_handlers_disconnect_by_func(test, cb_pending_test, data);
-    g_signal_handlers_disconnect_by_func(test, cb_notification_test, data);
-    g_signal_handlers_disconnect_by_func(test, cb_complete_test, data);
+
+#define DISCONNECT(name)                                                \
+    g_signal_handlers_disconnect_by_func(test,                          \
+                                         G_CALLBACK(cb_ ## name ## _test ), \
+                                         data)
+    DISCONNECT(success);
+    DISCONNECT(failure);
+    DISCONNECT(error);
+    DISCONNECT(pending);
+    DISCONNECT(notification);
+    DISCONNECT(complete);
+#undef DISCONNECT
 }
 
 static void
@@ -850,13 +857,16 @@ cb_start_test (CutTestCase *test_case, CutTest *test,
 
     g_idle_add(idle_cb_append_test_row, info);
 
-    g_signal_connect(test, "success", G_CALLBACK(cb_success_test), info);
-    g_signal_connect(test, "failure", G_CALLBACK(cb_failure_test), info);
-    g_signal_connect(test, "error", G_CALLBACK(cb_error_test), info);
-    g_signal_connect(test, "pending", G_CALLBACK(cb_pending_test), info);
-    g_signal_connect(test, "notification", G_CALLBACK(cb_notification_test),
-                     info);
-    g_signal_connect(test, "complete", G_CALLBACK(cb_complete_test), info);
+#define CONNECT(name) \
+    g_signal_connect(test, #name, G_CALLBACK(cb_ ## name ## _test), info)
+
+    CONNECT(success);
+    CONNECT(failure);
+    CONNECT(error);
+    CONNECT(pending);
+    CONNECT(notification);
+    CONNECT(complete);
+#undef CONNECT
 }
 
 static void
