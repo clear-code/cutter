@@ -470,22 +470,6 @@ update_progress_color (GtkProgressBar *bar, CutTestResultStatus status)
     g_object_unref(style);
 }
 
-static void
-print_log (CutUIGtk *ui, gchar const *format, ...)
-{
-    gchar *message;
-    va_list args;
-    GtkTextIter iter;
-
-    return;
-    va_start(args, format);
-    message = g_strdup_vprintf(format, args);
-    gtk_text_buffer_get_end_iter(ui->text_buffer, &iter);
-    gtk_text_buffer_insert(ui->text_buffer, &iter, message, -1);
-    g_free(message);
-    va_end(args);
-}
-
 static gboolean
 timeout_cb_pulse (gpointer data)
 {
@@ -1015,63 +999,53 @@ cb_ready_test_case (CutContext *context, CutTestCase *test_case, guint n_tests,
 }
 
 static void
-print_summary (CutUIGtk *ui, CutContext *context,
-               gboolean crashed)
-{
-    guint n_tests, n_assertions, n_failures, n_errors;
-    guint n_pendings, n_notifications;
-
-    n_tests = cut_context_get_n_tests(context);
-    n_assertions = cut_context_get_n_assertions(context);
-    n_failures = cut_context_get_n_failures(context);
-    n_errors = cut_context_get_n_errors(context);
-    n_pendings = cut_context_get_n_pendings(context);
-    n_notifications = cut_context_get_n_notifications(context);
-
-    if (crashed) {
-    } else {
-        CutTestResultStatus status;
-        if (n_errors > 0) {
-            status = CUT_TEST_RESULT_ERROR;
-        } else if (n_failures > 0) {
-            status = CUT_TEST_RESULT_FAILURE;
-        } else if (n_pendings > 0) {
-            status = CUT_TEST_RESULT_PENDING;
-        } else if (n_notifications > 0) {
-            status = CUT_TEST_RESULT_NOTIFICATION;
-        } else {
-            status = CUT_TEST_RESULT_SUCCESS;
-        }
-    }
-}
-
-static void
 cb_complete_test_suite (CutContext *context, CutTestSuite *test_suite,
                         CutUIGtk *ui)
 {
-    gboolean crashed;
-
-    crashed = cut_context_is_crashed(context);
-    if (crashed) {
-        const gchar *stack_trace;
-
-        stack_trace = cut_context_get_stack_trace(context);
-        if (stack_trace)
-            print_log(ui, "%s\n", stack_trace);
-    }
-
-    print_log(ui, "Finished in %f seconds",
-              cut_test_get_elapsed(CUT_TEST(test_suite)));
-
-    print_summary(ui, context, crashed);
-
     ui->running = FALSE;
 }
 
-static void
-cb_crashed (CutContext *context, const gchar *stack_trace,
-            CutUIGtk *ui)
+typedef struct _CrashRowInfo
 {
+    CutUIGtk *ui;
+    gchar *stack_trace;
+} CrashRowInfo;
+
+static gboolean
+idle_cb_append_crash_row (gpointer data)
+{
+    CrashRowInfo *info = data;
+    CutUIGtk *ui;
+    GtkTreeIter iter;
+
+    ui = info->ui;
+
+    g_mutex_lock(ui->mutex);
+    gtk_tree_store_append(ui->logs, &iter, NULL);
+    gtk_tree_store_set(ui->logs, &iter,
+                       COLUMN_NAME, "CRASHED!!!",
+                       COLUMN_DESCRIPTION, info->stack_trace,
+                       COLUMN_COLOR, "red",
+                       -1);
+    g_mutex_unlock(ui->mutex);
+
+    g_object_unref(ui);
+    g_free(info->stack_trace);
+    g_free(info);
+
+    return FALSE;
+}
+
+static void
+cb_crashed (CutContext *context, const gchar *stack_trace, CutUIGtk *ui)
+{
+    CrashRowInfo *info;
+
+    info = g_new0(CrashRowInfo, 1);
+    info->ui = g_object_ref(ui);
+    info->stack_trace = g_strdup(stack_trace);
+
+    g_idle_add(idle_cb_append_crash_row, info);
 }
 
 static void
