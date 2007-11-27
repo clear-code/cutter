@@ -80,6 +80,7 @@ enum
 
 enum
 {
+    COLUMN_COLOR,
     COLUMN_STATUS,
     COLUMN_NAME,
     COLUMN_DESCRIPTION,
@@ -140,18 +141,21 @@ setup_tree_view_columns (GtkTreeView *tree_view)
     renderer = gtk_cell_renderer_text_new();
     column = gtk_tree_view_column_new_with_attributes("Status", renderer,
                                                       "text", COLUMN_STATUS,
+                                                      "background", COLUMN_COLOR,
                                                       NULL);
     gtk_tree_view_append_column(tree_view, column);
 
     renderer = gtk_cell_renderer_text_new();
     column = gtk_tree_view_column_new_with_attributes("Name", renderer,
                                                       "text", COLUMN_NAME,
+                                                      "background", COLUMN_COLOR,
                                                       NULL);
     gtk_tree_view_append_column(tree_view, column);
 
     renderer = gtk_cell_renderer_text_new();
     column = gtk_tree_view_column_new_with_attributes("Description", renderer,
                                                       "text", COLUMN_DESCRIPTION,
+                                                      "background", COLUMN_COLOR,
                                                       NULL);
     gtk_tree_view_append_column(tree_view, column);
 }
@@ -166,6 +170,7 @@ setup_tree_view (GtkBox *box, CutRunnerGtk *runner)
     gtk_box_pack_start(box, scrolled_window, TRUE, TRUE, 0);
 
     tree_store = gtk_tree_store_new(N_COLUMN,
+                                    G_TYPE_STRING,
                                     G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
     runner->logs = tree_store;
 
@@ -389,6 +394,7 @@ typedef struct _AppendRowInfo
     CutTest *test;
     gchar *path;
     const gchar *status;
+    const gchar *color;
 } AppendRowInfo;
 
 static gboolean
@@ -405,6 +411,7 @@ idle_cb_update_row_status (gpointer data)
         gtk_tree_model_get_iter_from_string(GTK_TREE_MODEL(runner->logs),
                                             &iter, info->path)) {
         gtk_tree_store_set(runner->logs, &iter,
+                           COLUMN_COLOR, info->color,
                            COLUMN_STATUS, info->status,
                            -1);
     }
@@ -423,6 +430,7 @@ cb_success_test (CutTest *test, gpointer data)
 {
     AppendRowInfo *info = data;
     info->status = ".";
+    info->color = "green";
 
     g_idle_add(idle_cb_update_row_status, data);
     g_signal_handlers_disconnect_by_func(test, cb_success_test, data);
@@ -504,6 +512,7 @@ cb_start_test (CutContext *context, CutTest *test, CutTestContext *test_context,
     info->test = g_object_ref(test);
     info->path = NULL;
     info->status = NULL;
+    info->color = NULL;
     g_idle_add(idle_cb_append_row, info);
     g_signal_connect(test, "success", G_CALLBACK(cb_success_test), info);
 }

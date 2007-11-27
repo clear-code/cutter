@@ -1,5 +1,7 @@
 2007-11-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/module/runner/cut-runner-gtk.c: supported color.
+
 	* cutter/module/runner/cut-runner-gtk.c: supported status update.
 
 	* cutter/module/runner/cut-runner-gtk.c: showed test info.
