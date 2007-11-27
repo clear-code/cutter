@@ -1,5 +1,7 @@
 2007-11-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/module/ui/cut-ui-gtk.c: forced changing status bar color.
+
 	* cutter/module/ui/cut-ui-gtk.c: worked progress for test case.
 
 	* cutter/module/ui/cut-ui-gtk.c: updated pulse for each test.

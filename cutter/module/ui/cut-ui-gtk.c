@@ -451,10 +451,12 @@ update_status (CutUIGtk *ui, CutTestResultStatus status)
 static void
 update_progress_color (GtkProgressBar *bar, CutTestResultStatus status)
 {
-    GdkColor color;
+    GtkStyle *style;
 
-    gdk_color_parse(status_to_color(status), &color);
-    gtk_widget_modify_bg(GTK_WIDGET(bar), GTK_STATE_SELECTED, &color);
+    style = gtk_style_new();
+    gdk_color_parse(status_to_color(status), &(style->bg[GTK_STATE_PRELIGHT]));
+    gtk_widget_set_style(GTK_WIDGET(bar), style);
+    g_object_unref(style);
 }
 
 static void
@@ -704,7 +706,8 @@ idle_cb_update_test_row_status (gpointer data)
                                             &iter, info->path)) {
         GdkColor color;
         gdk_color_parse(status_to_color(info->status), &color);
-        gtk_widget_modify_bg(GTK_WIDGET(ui->tree_view), GTK_STATE_SELECTED, &color);
+        gtk_widget_modify_bg(GTK_WIDGET(ui->tree_view),
+                             GTK_STATE_SELECTED, &color);
         gtk_tree_store_set(ui->logs, &iter,
                            COLUMN_COLOR, status_to_color(info->status),
                            COLUMN_PROGRESS_TEXT, status_to_name(info->status),
