@@ -54,8 +54,6 @@ struct _CutUIGtk
     CutUI     object;
 
     GtkWidget     *window;
-    GtkTextBuffer *text_buffer;
-    GtkWidget     *text_view;
     GtkProgressBar *progress_bar;
     GtkTreeView   *tree_view;
     GtkTreeStore  *logs;
@@ -184,6 +182,9 @@ setup_tree_view (GtkBox *box, CutUIGtk *ui)
     GtkTreeStore *tree_store;
 
     scrolled_window = gtk_scrolled_window_new(NULL, NULL);
+    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolled_window),
+                                   GTK_POLICY_AUTOMATIC,
+                                   GTK_POLICY_AUTOMATIC);
     gtk_box_pack_start(box, scrolled_window, TRUE, TRUE, 0);
 
     tree_store = gtk_tree_store_new(N_COLUMN,
@@ -200,21 +201,6 @@ setup_tree_view (GtkBox *box, CutUIGtk *ui)
     gtk_container_add(GTK_CONTAINER(scrolled_window), tree_view);
     ui->tree_view = GTK_TREE_VIEW(tree_view);
     setup_tree_view_columns(ui->tree_view);
-}
-
-static void
-setup_text_view (GtkBox *box, CutUIGtk *ui)
-{
-    GtkWidget *text_view, *scrolled_window;
-
-    scrolled_window = gtk_scrolled_window_new(NULL, NULL);
-    gtk_box_pack_start(box, scrolled_window, FALSE, TRUE, 0);
-
-    text_view = gtk_text_view_new();
-    gtk_container_add(GTK_CONTAINER(scrolled_window), text_view);
-
-    ui->text_view = text_view;
-    ui->text_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_view));
 }
 
 static void
@@ -268,7 +254,6 @@ setup_window (CutUIGtk *ui)
 
     setup_progress_bar(GTK_BOX(vbox), ui);
     setup_tree_view(GTK_BOX(vbox), ui);
-    setup_text_view(GTK_BOX(vbox), ui);
     setup_statusbar(GTK_BOX(vbox), ui);
 }
 
