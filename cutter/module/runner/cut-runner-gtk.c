@@ -236,7 +236,7 @@ setup_window (CutRunnerGtk *runner)
     GtkWidget *window, *vbox;
 
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_default_size(GTK_WINDOW(window), 400, 300);
+    gtk_window_set_default_size(GTK_WINDOW(window), 600, 500);
     g_signal_connect(G_OBJECT(window), "destroy",
                      G_CALLBACK(cb_destroy), runner);
     g_signal_connect(G_OBJECT(window), "key-press-event",
