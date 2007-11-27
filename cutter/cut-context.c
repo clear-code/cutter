@@ -764,16 +764,18 @@ cb_complete_test_suite(CutTestSuite *test_suite, gpointer data)
 {
     CutContext *context = data;
 
-    g_signal_handlers_disconnect_by_func(test_suite,
-                                         G_CALLBACK(cb_ready_test_suite), data);
-    g_signal_handlers_disconnect_by_func(test_suite,
-                                         G_CALLBACK(cb_start_test_suite), data);
-    g_signal_handlers_disconnect_by_func(test_suite,
-                                         G_CALLBACK(cb_complete_test_suite),
-                                         data);
-    g_signal_handlers_disconnect_by_func(test_suite,
-                                         G_CALLBACK(cb_crashed_test_suite),
-                                         data);
+#define DISCONNECT(name)                                                \
+    g_signal_handlers_disconnect_by_func(test_suite,                    \
+                                         G_CALLBACK(cb_ ##              \
+                                                    name ##             \
+                                                    _test_suite),       \
+                                         data)
+
+    DISCONNECT(ready);
+    DISCONNECT(start);
+    DISCONNECT(complete);
+    DISCONNECT(crashed);
+#undef DISCONNECT
 
     g_signal_emit(context, signals[COMPLETE_TEST_SUITE], 0, test_suite);
 }
@@ -781,14 +783,16 @@ cb_complete_test_suite(CutTestSuite *test_suite, gpointer data)
 void
 cut_context_start_test_suite (CutContext *context, CutTestSuite *test_suite)
 {
-    g_signal_connect(test_suite, "ready",
-                     G_CALLBACK(cb_ready_test_suite), context);
-    g_signal_connect(test_suite, "start",
-                     G_CALLBACK(cb_start_test_suite), context);
-    g_signal_connect(test_suite, "complete",
-                     G_CALLBACK(cb_complete_test_suite), context);
-    g_signal_connect(test_suite, "crashed",
-                     G_CALLBACK(cb_crashed_test_suite), context);
+#define CONNECT(name)                                                \
+    g_signal_connect(test_suite, #name,                              \
+                     G_CALLBACK(cb_ ## name ## _test_suite),         \
+                     context)
+
+    CONNECT(ready);
+    CONNECT(start);
+    CONNECT(complete);
+    CONNECT(crashed);
+#undef CONNECT
 }
 
 

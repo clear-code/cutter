@@ -1111,15 +1111,11 @@ run_test_thread_func (gpointer data)
 {
     CutUIGtk *ui = data;
 
-    g_print("run\n");
-
     ui->n_tests = 0;
     ui->n_completed_tests = 0;
     ui->status = CUT_TEST_RESULT_SUCCESS;
     cut_test_suite_run(ui->test_suite, ui->context);
     disconnect_from_context(ui, ui->context);
-
-    g_print("finished\n");
 
     return NULL;
 }
