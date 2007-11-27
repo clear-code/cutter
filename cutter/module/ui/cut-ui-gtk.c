@@ -148,11 +148,12 @@ setup_tree_view_columns (GtkTreeView *tree_view)
     GtkTreeViewColumn *column;
 
     renderer = gtk_cell_renderer_progress_new();
-    column = gtk_tree_view_column_new_with_attributes("Status", renderer,
-                                                      "value", COLUMN_PROGRESS_VALUE,
-                                                      "text", COLUMN_PROGRESS_TEXT,
-                                                      "pulse", COLUMN_PROGRESS_PULSE,
-                                                      NULL);
+    column =
+        gtk_tree_view_column_new_with_attributes("Status", renderer,
+                                                 "value", COLUMN_PROGRESS_VALUE,
+                                                 "text", COLUMN_PROGRESS_TEXT,
+                                                 "pulse", COLUMN_PROGRESS_PULSE,
+                                                 NULL);
     gtk_tree_view_append_column(tree_view, column);
 
     renderer = gtk_cell_renderer_text_new();
@@ -186,7 +187,6 @@ setup_tree_view (GtkBox *box, CutUIGtk *ui)
                                     G_TYPE_INT,
                                     G_TYPE_STRING,
                                     G_TYPE_INT,
-                                    G_TYPE_STRING,
                                     G_TYPE_STRING, G_TYPE_STRING);
     ui->logs = tree_store;
 
@@ -502,7 +502,6 @@ typedef struct TestRowInfo
     CutTest *test;
     gchar *path;
     CutTestResultStatus status;
-    const gchar *color;
 } TestRowInfo;
 
 static gboolean
@@ -603,7 +602,7 @@ idle_cb_update_test_row_status (gpointer data)
     if (gtk_tree_model_get_iter_from_string(GTK_TREE_MODEL(ui->logs),
                                             &iter, info->path)) {
         gtk_tree_store_set(ui->logs, &iter,
-                           COLUMN_COLOR, info->color,
+                           COLUMN_COLOR, status_to_color(info->status),
                            COLUMN_PROGRESS_TEXT, "",
                            COLUMN_PROGRESS_VALUE, 100,
                            COLUMN_PROGRESS_PULSE, -1,
@@ -621,7 +620,6 @@ cb_success_test (CutTest *test, gpointer data)
 
     if (info->status == -1) {
         info->status = CUT_TEST_RESULT_SUCCESS;
-        info->color = "green";
 
         g_idle_add(idle_cb_update_test_row_status, data);
     }
@@ -634,7 +632,6 @@ cb_failure_test (CutTest *test, gpointer data)
 {
     TestRowInfo *info = data;
     info->status = CUT_TEST_RESULT_FAILURE;
-    info->color = "red";
 
     update_status(info->test_case_row_info->ui, CUT_TEST_RESULT_FAILURE);
 
@@ -648,7 +645,6 @@ cb_error_test (CutTest *test, CutTestContext *context, CutTestResult *result,
 {
     TestRowInfo *info = data;
     info->status = CUT_TEST_RESULT_ERROR;
-    info->color = "purple";
 
     update_status(info->test_case_row_info->ui, CUT_TEST_RESULT_ERROR);
 
@@ -662,7 +658,6 @@ cb_pending_test (CutTest *test, CutTestContext *context, CutTestResult *result,
 {
     TestRowInfo *info = data;
     info->status = CUT_TEST_RESULT_PENDING;
-    info->color = "yellow";
 
     update_status(info->test_case_row_info->ui, CUT_TEST_RESULT_PENDING);
 
@@ -676,7 +671,6 @@ cb_notification_test (CutTest *test, CutTestContext *context,
 {
     TestRowInfo *info = data;
     info->status = CUT_TEST_RESULT_NOTIFICATION;
-    info->color = "light blue";
 
     update_status(info->test_case_row_info->ui, CUT_TEST_RESULT_NOTIFICATION);
 
@@ -710,7 +704,6 @@ cb_start_test (CutTestCase *test_case, CutTest *test,
     info->test = g_object_ref(test);
     info->path = NULL;
     info->status = -1;
-    info->color = NULL;
 
     g_idle_add(idle_cb_append_test_row, info);
 
