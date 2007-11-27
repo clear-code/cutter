@@ -394,7 +394,7 @@ status_to_color (CutTestResultStatus status)
 
     switch (status) {
       case CUT_TEST_RESULT_SUCCESS:
-        color = "green";
+        color = "light green";
         break;
       case CUT_TEST_RESULT_NOTIFICATION:
         color = "light blue";
@@ -707,6 +707,9 @@ idle_cb_update_test_row_status (gpointer data)
         GdkColor color;
         gdk_color_parse(status_to_color(info->status), &color);
         gtk_widget_modify_bg(GTK_WIDGET(ui->tree_view),
+                             GTK_STATE_SELECTED, &color);
+        gdk_color_parse("black", &color);
+        gtk_widget_modify_fg(GTK_WIDGET(ui->tree_view),
                              GTK_STATE_SELECTED, &color);
         gtk_tree_store_set(ui->logs, &iter,
                            COLUMN_COLOR, status_to_color(info->status),
