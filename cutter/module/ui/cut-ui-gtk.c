@@ -58,6 +58,7 @@ struct _CutUIGtk
     GtkTreeView   *tree_view;
     GtkTreeStore  *logs;
     GtkStatusbar  *statusbar;
+    GtkLabel      *summary;
 
     CutTestSuite  *test_suite;
     CutContext    *context;
@@ -140,6 +141,17 @@ setup_progress_bar (GtkBox *box, CutUIGtk *ui)
 
     ui->progress_bar = GTK_PROGRESS_BAR(progress_bar);
     gtk_progress_bar_set_pulse_step(ui->progress_bar, 0.01);
+}
+
+static void
+setup_summary_label (GtkBox *box, CutUIGtk *ui)
+{
+    GtkWidget *summary;
+
+    summary = gtk_label_new("Ready");
+    gtk_box_pack_start(box, summary, FALSE, TRUE, 0);
+
+    ui->summary = GTK_LABEL(summary);
 }
 
 static void
@@ -253,6 +265,7 @@ setup_window (CutUIGtk *ui)
     gtk_container_add(GTK_CONTAINER(window), vbox);
 
     setup_progress_bar(GTK_BOX(vbox), ui);
+    setup_summary_label(GTK_BOX(vbox), ui);
     setup_tree_view(GTK_BOX(vbox), ui);
     setup_statusbar(GTK_BOX(vbox), ui);
 
@@ -436,6 +449,25 @@ status_to_name (CutTestResultStatus status)
     }
 
     return name;
+}
+
+static gchar *
+generate_summary_message (CutContext *context)
+{
+    guint n_tests, n_assertions, n_failures, n_errors;
+    guint n_pendings, n_notifications;
+
+    n_tests = cut_context_get_n_tests(context);
+    n_assertions = cut_context_get_n_assertions(context);
+    n_failures = cut_context_get_n_failures(context);
+    n_errors = cut_context_get_n_errors(context);
+    n_pendings = cut_context_get_n_pendings(context);
+    n_notifications = cut_context_get_n_notifications(context);
+
+    return g_strdup_printf("%d test(s), %d assertion(s), %d failure(s), "
+                           "%d error(s), %d pending(s), %d notification(s)",
+                           n_tests, n_assertions, n_failures, n_errors,
+                           n_pendings, n_notifications);
 }
 
 static void
@@ -840,6 +872,30 @@ idle_add_append_test_result_row (TestRowInfo *info, CutTestResult *result)
     g_idle_add(idle_cb_append_test_result_row, result_row_info);
 }
 
+static gboolean
+idle_cb_update_summary (gpointer data)
+{
+    CutUIGtk *ui = data;
+    gchar *summary;
+
+    summary = generate_summary_message(ui->context);
+    gtk_label_set_text(ui->summary, summary);
+    g_free(summary);
+
+    return FALSE;
+}
+
+static void
+cb_pass_assertion_test (CutTest *test, CutTestContext *test_context,
+                        gpointer data)
+{
+    TestRowInfo *info = data;
+
+    /* slow */
+    if (g_random_int_range(0, 1000) == 0)
+        g_idle_add(idle_cb_update_summary, info->test_case_row_info->ui);
+}
+
 static void
 cb_success_test (CutTest *test, gpointer data)
 {
@@ -943,11 +999,14 @@ cb_complete_test (CutTest *test, gpointer data)
 {
     TestRowInfo *info = data;
     TestCaseRowInfo *test_case_row_info;
+    CutUIGtk *ui;
 
     test_case_row_info = info->test_case_row_info;
-    test_case_row_info->ui->n_completed_tests++;
+    ui = test_case_row_info->ui;
+    ui->n_completed_tests++;
     test_case_row_info->n_completed_tests++;
 
+    g_idle_add(idle_cb_update_summary, ui);
     g_idle_add(idle_cb_update_test_case_row, info->test_case_row_info);
     g_idle_add(idle_cb_pop_running_test_message, info);
     g_idle_add(idle_cb_free_test_row_info, data);
@@ -956,6 +1015,7 @@ cb_complete_test (CutTest *test, gpointer data)
     g_signal_handlers_disconnect_by_func(test,                          \
                                          G_CALLBACK(cb_ ## name ## _test ), \
                                          data)
+    DISCONNECT(pass_assertion);
     DISCONNECT(success);
     DISCONNECT(failure);
     DISCONNECT(error);
@@ -985,6 +1045,7 @@ cb_start_test (CutTestCase *test_case, CutTest *test,
 #define CONNECT(name) \
     g_signal_connect(test, #name, G_CALLBACK(cb_ ## name ## _test), info)
 
+    CONNECT(pass_assertion);
     CONNECT(success);
     CONNECT(failure);
     CONNECT(error);
@@ -997,6 +1058,9 @@ cb_start_test (CutTestCase *test_case, CutTest *test,
 static void
 cb_complete_test_case (CutTestCase *test_case, gpointer data)
 {
+    TestCaseRowInfo *info = data;
+
+    g_idle_add(idle_cb_update_summary, info->ui);
     g_idle_add(idle_cb_free_test_case_row_info, data);
     g_signal_handlers_disconnect_by_func(test_case,
                                          G_CALLBACK(cb_start_test),
@@ -1031,27 +1095,15 @@ static gboolean
 idle_cb_push_complete_test_suite_message (gpointer data)
 {
     CutUIGtk *ui = data;
-    CutContext *context;
     guint context_id;
-    gchar *message;
-    guint n_tests, n_assertions, n_failures, n_errors;
-    guint n_pendings, n_notifications;
-
-    context = ui->context;
-    n_tests = cut_context_get_n_tests(context);
-    n_assertions = cut_context_get_n_assertions(context);
-    n_failures = cut_context_get_n_failures(context);
-    n_errors = cut_context_get_n_errors(context);
-    n_pendings = cut_context_get_n_pendings(context);
-    n_notifications = cut_context_get_n_notifications(context);
+    gchar *message, *summary;
 
     context_id = gtk_statusbar_get_context_id(ui->statusbar, "test-suite");
-    message = g_strdup_printf("Finished in %0.1f seconds: "
-                              "%d test(s), %d assertion(s), %d failure(s), "
-                              "%d error(s), %d pending(s), %d notification(s)",
+    summary = generate_summary_message(ui->context);
+    message = g_strdup_printf("Finished in %0.1f seconds: %s",
                               cut_test_get_elapsed(CUT_TEST(ui->test_suite)),
-                              n_tests, n_assertions, n_failures, n_errors,
-                              n_pendings, n_notifications),
+                              summary);
+    g_free(summary);
     gtk_statusbar_pop(ui->statusbar, context_id);
     gtk_statusbar_push(ui->statusbar, context_id, message);
     g_free(message);

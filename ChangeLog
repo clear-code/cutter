@@ -1,5 +1,8 @@
 2007-11-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/module/ui/cut-ui-gtk.c: showed summary but slow for many
+	assertions.
+
 	* cutter/module/ui/cut-ui-gtk.c: set default focus to tree view.
 
 	* cutter/module/ui/cut-ui-gtk.c: removed text buffer.
