@@ -715,6 +715,13 @@ idle_cb_update_test_row_status (gpointer data)
                            COLUMN_COLOR, status_to_color(info->status),
                            COLUMN_PROGRESS_TEXT, status_to_name(info->status),
                            -1);
+
+        if (info->status != CUT_TEST_RESULT_SUCCESS) {
+            GtkTreePath *path;
+            path = gtk_tree_model_get_path(GTK_TREE_MODEL(ui->logs), &iter);
+            gtk_tree_view_expand_to_path(ui->tree_view, path);
+            gtk_tree_path_free(path);
+        }
     }
     g_mutex_unlock(ui->mutex);
 

@@ -1,5 +1,7 @@
 2007-11-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/module/ui/cut-ui-gtk.c: expanded non-success path.
+
 	* cutter/module/ui/cut-ui-gtk.c: improved color.
 
 	* cutter/module/ui/cut-ui-gtk.c: worked progress for test case.
