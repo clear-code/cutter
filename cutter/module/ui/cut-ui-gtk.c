@@ -413,6 +413,32 @@ status_to_color (CutTestResultStatus status)
     return color;
 }
 
+static const gchar *
+status_to_name (CutTestResultStatus status)
+{
+    const gchar *name = "?";
+
+    switch (status) {
+      case CUT_TEST_RESULT_SUCCESS:
+        name = ".";
+        break;
+      case CUT_TEST_RESULT_NOTIFICATION:
+        name = "N";
+        break;
+      case CUT_TEST_RESULT_PENDING:
+        name = "P";
+        break;
+      case CUT_TEST_RESULT_FAILURE:
+        name = "F";
+        break;
+      case CUT_TEST_RESULT_ERROR:
+        name = "E";
+        break;
+    }
+
+    return name;
+}
+
 static void
 update_status (CutUIGtk *ui, CutTestResultStatus status)
 {
@@ -501,6 +527,8 @@ typedef struct TestRowInfo
     TestCaseRowInfo *test_case_row_info;
     CutTest *test;
     gchar *path;
+    gint pulse;
+    guint update_pulse_id;
     CutTestResultStatus status;
 } TestRowInfo;
 
@@ -522,6 +550,23 @@ static gboolean
 idle_cb_free_test_row_info (gpointer data)
 {
     TestRowInfo *info = data;
+    CutUIGtk *ui;
+    GtkTreeIter iter;
+
+    if (info->update_pulse_id)
+        g_source_remove(info->update_pulse_id);
+
+    ui = info->test_case_row_info->ui;
+
+    g_mutex_lock(ui->mutex);
+    if (gtk_tree_model_get_iter_from_string(GTK_TREE_MODEL(ui->logs),
+                                            &iter, info->path)) {
+        gtk_tree_store_set(ui->logs, &iter,
+                           COLUMN_PROGRESS_VALUE, 100,
+                           COLUMN_PROGRESS_PULSE, -1,
+                           -1);
+    }
+    g_mutex_unlock(ui->mutex);
 
     g_object_unref(info->test);
     g_free(info->path);
@@ -560,6 +605,28 @@ idle_cb_append_test_case_row (gpointer data)
 }
 
 static gboolean
+timeout_cb_pulse_test (gpointer data)
+{
+    TestRowInfo *info = data;
+    CutUIGtk *ui;
+    GtkTreeIter iter;
+
+    ui = info->test_case_row_info->ui;
+
+    g_mutex_lock(ui->mutex);
+    info->pulse++;
+    if (gtk_tree_model_get_iter_from_string(GTK_TREE_MODEL(ui->logs),
+                                            &iter, info->path)) {
+        gtk_tree_store_set(ui->logs, &iter,
+                           COLUMN_PROGRESS_PULSE, info->pulse,
+                           -1);
+    }
+    g_mutex_unlock(ui->mutex);
+
+    return TRUE;
+}
+
+static gboolean
 idle_cb_append_test_row (gpointer data)
 {
     TestRowInfo *info = data;
@@ -584,6 +651,7 @@ idle_cb_append_test_row (gpointer data)
     info->path =
         gtk_tree_model_get_string_from_iter(GTK_TREE_MODEL(ui->logs),
                                             &iter);
+    info->update_pulse_id = g_timeout_add(10, timeout_cb_pulse_test, info);
     g_mutex_unlock(ui->mutex);
 
     return FALSE;
@@ -603,9 +671,7 @@ idle_cb_update_test_row_status (gpointer data)
                                             &iter, info->path)) {
         gtk_tree_store_set(ui->logs, &iter,
                            COLUMN_COLOR, status_to_color(info->status),
-                           COLUMN_PROGRESS_TEXT, "",
-                           COLUMN_PROGRESS_VALUE, 100,
-                           COLUMN_PROGRESS_PULSE, -1,
+                           COLUMN_PROGRESS_TEXT, status_to_name(info->status),
                            -1);
     }
     g_mutex_unlock(ui->mutex);
@@ -704,6 +770,8 @@ cb_start_test (CutTestCase *test_case, CutTest *test,
     info->test = g_object_ref(test);
     info->path = NULL;
     info->status = -1;
+    info->pulse = 0;
+    info->update_pulse_id = 0;
 
     g_idle_add(idle_cb_append_test_row, info);
 

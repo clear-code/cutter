@@ -1,5 +1,7 @@
 2007-11-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/module/ui/cut-ui-gtk.c: updated pulse for each test.
+
 	* cutter/module/ui/cut-ui-gtk.c: removed needless variable.
 
 	* cutter/module/ui/cut-ui-gtk.c: updated progress color.
