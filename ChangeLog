@@ -1,5 +1,7 @@
 2007-11-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/module/ui/cut-ui-gtk.c: showed test result.
+
 	* cutter/module/ui/cut-ui-gtk.c: showed elapsed time.
 
 	* cutter/cut-test.c: cut_test_get_elapsed() works fine anytime.

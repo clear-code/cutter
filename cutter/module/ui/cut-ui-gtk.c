@@ -92,6 +92,7 @@ enum
     COLUMN_PROGRESS_VALUE,
     COLUMN_PROGRESS_TEXT,
     COLUMN_PROGRESS_PULSE,
+    COLUMN_PROGRESS_VISIBLE,
     COLUMN_NAME,
     COLUMN_DESCRIPTION,
     N_COLUMN
@@ -155,6 +156,7 @@ setup_tree_view_columns (GtkTreeView *tree_view)
                                                  "value", COLUMN_PROGRESS_VALUE,
                                                  "text", COLUMN_PROGRESS_TEXT,
                                                  "pulse", COLUMN_PROGRESS_PULSE,
+                                                 "visible", COLUMN_PROGRESS_VISIBLE,
                                                  NULL);
     gtk_tree_view_append_column(tree_view, column);
 
@@ -189,6 +191,7 @@ setup_tree_view (GtkBox *box, CutUIGtk *ui)
                                     G_TYPE_INT,
                                     G_TYPE_STRING,
                                     G_TYPE_INT,
+                                    G_TYPE_BOOLEAN,
                                     G_TYPE_STRING, G_TYPE_STRING);
     ui->logs = tree_store;
 
@@ -610,6 +613,7 @@ idle_cb_append_test_case_row (gpointer data)
                        COLUMN_DESCRIPTION,
                        cut_test_get_description(CUT_TEST(test_case)),
                        COLUMN_PROGRESS_PULSE, -1,
+                       COLUMN_PROGRESS_VISIBLE, TRUE,
                        -1);
     info->path =
         gtk_tree_model_get_string_from_iter(GTK_TREE_MODEL(ui->logs),
@@ -691,6 +695,7 @@ idle_cb_append_test_row (gpointer data)
     gtk_tree_store_set(ui->logs, &iter,
                        COLUMN_PROGRESS_TEXT, "",
                        COLUMN_PROGRESS_PULSE, 0,
+                       COLUMN_PROGRESS_VISIBLE, TRUE,
                        COLUMN_NAME, cut_test_get_name(test),
                        COLUMN_DESCRIPTION, cut_test_get_description(test),
                        -1);
@@ -750,6 +755,89 @@ idle_cb_update_test_row_status (gpointer data)
     return FALSE;
 }
 
+
+typedef struct _TestResultRowInfo
+{
+    TestRowInfo *test_row_info;
+    CutTestResult *result;
+} TestResultRowInfo;
+
+static void
+append_test_result_row (CutUIGtk *ui, CutTestResult *result,
+                        GtkTreeIter *test_row_iter,
+                        GtkTreeIter *result_row_iter)
+{
+    CutTestResultStatus status;
+    gchar *filename, *name;
+    const gchar *message;
+    const gchar *source_directory;
+    const gchar *test_name;
+
+    source_directory = cut_context_get_source_directory(ui->context);
+    if (source_directory)
+        filename = g_build_filename(source_directory,
+                                    cut_test_result_get_filename(result),
+                                    NULL);
+    else
+        filename = g_strdup(cut_test_result_get_filename(result));
+    status = cut_test_result_get_status(result);
+    message = cut_test_result_get_message(result);
+    test_name = cut_test_result_get_test_name(result);
+    if (!test_name)
+        test_name = cut_test_result_get_test_case_name(result);
+    if (!test_name)
+        test_name = cut_test_result_get_test_suite_name(result);
+    name = g_strdup_printf("%s:%d: %s()",
+                           filename,
+                           cut_test_result_get_line(result),
+                           cut_test_result_get_function_name(result));
+    g_free(filename);
+
+    gtk_tree_store_append(ui->logs, result_row_iter, test_row_iter);
+    gtk_tree_store_set(ui->logs, result_row_iter,
+                       COLUMN_PROGRESS_VISIBLE, FALSE,
+                       COLUMN_COLOR, status_to_color(status),
+                       COLUMN_NAME, name,
+                       COLUMN_DESCRIPTION, message,
+                       -1);
+    g_free(name);
+}
+
+static gboolean
+idle_cb_append_test_result_row (gpointer data)
+{
+    TestResultRowInfo *info = data;
+    CutTestResult *result;
+    CutUIGtk *ui;
+    GtkTreeIter test_row_iter;
+    gchar *test_row_path;
+
+    ui = info->test_row_info->test_case_row_info->ui;
+    result = info->result;
+    test_row_path = info->test_row_info->path;
+
+    g_mutex_lock(ui->mutex);
+    if (gtk_tree_model_get_iter_from_string(GTK_TREE_MODEL(ui->logs),
+                                            &test_row_iter, test_row_path)) {
+        GtkTreePath *path;
+        GtkTreeIter iter;
+
+        append_test_result_row(ui, result, &test_row_iter, &iter);
+
+        path = gtk_tree_model_get_path(GTK_TREE_MODEL(ui->logs), &iter);
+        gtk_tree_view_expand_to_path(ui->tree_view, path);
+        gtk_tree_view_scroll_to_cell(ui->tree_view, path, NULL,
+                                     TRUE, 0, 0.5);
+        gtk_tree_path_free(path);
+    }
+    g_mutex_unlock(ui->mutex);
+
+    g_object_unref(result);
+    g_free(info);
+
+    return FALSE;
+}
+
 static void
 cb_success_test (CutTest *test, gpointer data)
 {
@@ -763,14 +851,22 @@ cb_success_test (CutTest *test, gpointer data)
 }
 
 static void
-cb_failure_test (CutTest *test, gpointer data)
+cb_failure_test (CutTest *test, CutTestContext *context, CutTestResult *result,
+                 gpointer data)
 {
     TestRowInfo *info = data;
+    TestResultRowInfo *result_row_info;
+
     info->status = CUT_TEST_RESULT_FAILURE;
 
     update_status(info->test_case_row_info->ui, CUT_TEST_RESULT_FAILURE);
 
     g_idle_add(idle_cb_update_test_row_status, data);
+
+    result_row_info = g_new0(TestResultRowInfo, 1);
+    result_row_info->test_row_info = info;
+    result_row_info->result = g_object_ref(result);
+    g_idle_add(idle_cb_append_test_result_row, result_row_info);
 }
 
 static void
@@ -778,11 +874,18 @@ cb_error_test (CutTest *test, CutTestContext *context, CutTestResult *result,
                gpointer data)
 {
     TestRowInfo *info = data;
+    TestResultRowInfo *result_row_info;
+
     info->status = CUT_TEST_RESULT_ERROR;
 
     update_status(info->test_case_row_info->ui, CUT_TEST_RESULT_ERROR);
 
     g_idle_add(idle_cb_update_test_row_status, data);
+
+    result_row_info = g_new0(TestResultRowInfo, 1);
+    result_row_info->test_row_info = info;
+    result_row_info->result = g_object_ref(result);
+    g_idle_add(idle_cb_append_test_result_row, result_row_info);
 }
 
 static void
@@ -790,11 +893,18 @@ cb_pending_test (CutTest *test, CutTestContext *context, CutTestResult *result,
                  gpointer data)
 {
     TestRowInfo *info = data;
+    TestResultRowInfo *result_row_info;
+
     info->status = CUT_TEST_RESULT_PENDING;
 
     update_status(info->test_case_row_info->ui, CUT_TEST_RESULT_PENDING);
 
     g_idle_add(idle_cb_update_test_row_status, data);
+
+    result_row_info = g_new0(TestResultRowInfo, 1);
+    result_row_info->test_row_info = info;
+    result_row_info->result = g_object_ref(result);
+    g_idle_add(idle_cb_append_test_result_row, result_row_info);
 }
 
 static void
@@ -802,11 +912,18 @@ cb_notification_test (CutTest *test, CutTestContext *context,
                       CutTestResult *result, gpointer data)
 {
     TestRowInfo *info = data;
+    TestResultRowInfo *result_row_info;
+
     info->status = CUT_TEST_RESULT_NOTIFICATION;
 
     update_status(info->test_case_row_info->ui, CUT_TEST_RESULT_NOTIFICATION);
 
     g_idle_add(idle_cb_update_test_row_status, data);
+
+    result_row_info = g_new0(TestResultRowInfo, 1);
+    result_row_info->test_row_info = info;
+    result_row_info->result = g_object_ref(result);
+    g_idle_add(idle_cb_append_test_result_row, result_row_info);
 }
 
 static void
@@ -896,49 +1013,6 @@ cb_ready_test_case (CutContext *context, CutTestCase *test_case, guint n_tests,
                      G_CALLBACK(cb_start_test), info);
     g_signal_connect(test_case, "complete",
                      G_CALLBACK(cb_complete_test_case), info);
-}
-
-static void
-print_results (CutUIGtk *ui, CutContext *context)
-{
-    gint i;
-    const GList *node;
-
-    i = 1;
-    for (node = cut_context_get_results(context);
-         node;
-         node = g_list_next(node)) {
-        CutTestResult *result = node->data;
-        CutTestResultStatus status;
-        gchar *filename;
-        const gchar *message;
-        const gchar *source_directory;
-        const gchar *name;
-
-        source_directory = cut_context_get_source_directory(context);
-        if (source_directory)
-            filename = g_build_filename(source_directory,
-                                        cut_test_result_get_filename(result),
-                                        NULL);
-        else
-            filename = g_strdup(cut_test_result_get_filename(result));
-
-        status = cut_test_result_get_status(result);
-        message = cut_test_result_get_message(result);
-        name = cut_test_result_get_test_name(result);
-        if (!name)
-            name = cut_test_result_get_test_case_name(result);
-        if (!name)
-            name = cut_test_result_get_test_suite_name(result);
-
-
-        print_log(ui, "\n%s:%d: %s()\n",
-                  filename,
-                  cut_test_result_get_line(result),
-                  cut_test_result_get_function_name(result));
-        i++;
-        g_free(filename);
-    }
 }
 
 static void
