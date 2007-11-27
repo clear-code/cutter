@@ -621,16 +621,16 @@ idle_cb_update_test_case_row (gpointer data)
     if (gtk_tree_model_get_iter_from_string(GTK_TREE_MODEL(ui->logs),
                                             &iter, info->path)) {
         gdouble fraction;
+        gint percent;
         gchar *text;
 
         fraction = info->n_completed_tests / (gdouble)info->n_tests;
+        percent = (gint)(fraction * 100);
         text = g_strdup_printf("%d/%d (%d%%)",
-                               info->n_completed_tests,
-                               info->n_tests,
-                               (gint)(fraction * 100));
+                               info->n_completed_tests, info->n_tests, percent);
         gtk_tree_store_set(ui->logs, &iter,
                            COLUMN_PROGRESS_TEXT, text,
-                           COLUMN_PROGRESS_VALUE, (gint)(fraction * 100),
+                           COLUMN_PROGRESS_VALUE, percent,
                            -1);
         g_free(text);
     }
