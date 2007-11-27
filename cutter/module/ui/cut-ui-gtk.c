@@ -255,6 +255,8 @@ setup_window (CutUIGtk *ui)
     setup_progress_bar(GTK_BOX(vbox), ui);
     setup_tree_view(GTK_BOX(vbox), ui);
     setup_statusbar(GTK_BOX(vbox), ui);
+
+    gtk_window_set_focus(GTK_WINDOW(window), GTK_WIDGET(ui->tree_view));
 }
 
 static void
