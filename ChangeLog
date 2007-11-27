@@ -1,3 +1,7 @@
+2007-11-28  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/module/ui/cut-ui-gtk.c: Added pixbuf column.
+
 2007-11-27  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/module/ui/cut-ui-gtk.c: showed summary but slow for many

@@ -88,6 +88,7 @@ enum
 {
     COLUMN_COLOR,
     COLUMN_TEST_STATUS,
+    COLUMN_STATUS_ICON,
     COLUMN_PROGRESS_VALUE,
     COLUMN_PROGRESS_TEXT,
     COLUMN_PROGRESS_PULSE,
@@ -160,14 +161,21 @@ setup_tree_view_columns (GtkTreeView *tree_view)
     GtkCellRenderer *renderer;
     GtkTreeViewColumn *column;
 
+    renderer = gtk_cell_renderer_pixbuf_new();
+    column = gtk_tree_view_column_new();
+    gtk_tree_view_column_set_title(column, "Status");
+    gtk_tree_view_column_pack_start(column, renderer, FALSE);
+    gtk_tree_view_column_add_attribute(column, renderer,
+                                       "pixbuf", COLUMN_STATUS_ICON);
+
     renderer = gtk_cell_renderer_progress_new();
-    column =
-        gtk_tree_view_column_new_with_attributes("Status", renderer,
-                                                 "value", COLUMN_PROGRESS_VALUE,
-                                                 "text", COLUMN_PROGRESS_TEXT,
-                                                 "pulse", COLUMN_PROGRESS_PULSE,
-                                                 "visible", COLUMN_PROGRESS_VISIBLE,
-                                                 NULL);
+    gtk_tree_view_column_pack_start(column, renderer, TRUE);
+    gtk_tree_view_column_set_attributes(column, renderer,
+                                        "value", COLUMN_PROGRESS_VALUE,
+                                        "text", COLUMN_PROGRESS_TEXT,
+                                        "pulse", COLUMN_PROGRESS_PULSE,
+                                        "visible", COLUMN_PROGRESS_VISIBLE,
+                                        NULL);
     gtk_tree_view_append_column(tree_view, column);
 
     renderer = gtk_cell_renderer_text_new();
@@ -203,6 +211,7 @@ setup_tree_view (GtkBox *box, CutUIGtk *ui)
     tree_store = gtk_tree_store_new(N_COLUMN,
                                     G_TYPE_STRING,
                                     G_TYPE_INT,
+                                    GDK_TYPE_PIXBUF,
                                     G_TYPE_INT,
                                     G_TYPE_STRING,
                                     G_TYPE_INT,
