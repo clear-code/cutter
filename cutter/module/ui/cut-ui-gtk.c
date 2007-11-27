@@ -71,6 +71,8 @@ struct _CutUIGtk
     guint          n_completed_tests;
 
     CutTestResultStatus status;
+
+    guint          update_pulse_id;
 };
 
 struct _CutUIGtkClass
@@ -274,6 +276,7 @@ init (CutUIGtk *ui)
     ui->n_tests = 0;
     ui->n_completed_tests = 0;
     ui->status = CUT_TEST_RESULT_SUCCESS;
+    ui->update_pulse_id = 0;
 
     ui->mutex = g_mutex_new();
 
@@ -337,6 +340,11 @@ static void
 dispose (GObject *object)
 {
     CutUIGtk *ui = CUT_UI_GTK(object);
+
+    if (ui->update_pulse_id) {
+        g_source_remove(ui->update_pulse_id);
+        ui->update_pulse_id = 0;
+    }
 
     if (ui->window) {
         gtk_widget_destroy(ui->window);
@@ -476,7 +484,7 @@ print_log (CutUIGtk *ui, gchar const *format, ...)
 }
 
 static gboolean
-idle_cb_pulse (gpointer data)
+timeout_cb_pulse (gpointer data)
 {
     CutUIGtk *ui = data;
     GtkProgressBar *bar;
@@ -497,15 +505,18 @@ idle_cb_pulse (gpointer data)
         fraction = n_completed_tests / (gdouble)n_tests;
         gtk_progress_bar_set_fraction(ui->progress_bar, fraction);
 
-        text = g_strdup_printf("%u/%u (%u%%)",
+        text = g_strdup_printf("%u/%u (%u%%): %.1fs",
                                n_completed_tests, n_tests,
-                               (guint)(fraction * 100));
+                               (guint)(fraction * 100),
+                               cut_test_get_elapsed(CUT_TEST(ui->test_suite)));
         gtk_progress_bar_set_text(bar, text);
         g_free(text);
     } else {
         gtk_progress_bar_pulse(bar);
     }
 
+    if (!running)
+        ui->update_pulse_id = 0;
     return running;
 }
 
@@ -514,7 +525,7 @@ cb_start_test_suite (CutContext *context, CutTestSuite *test_suite,
                      CutUIGtk *ui)
 {
     ui->running = TRUE;
-    g_timeout_add(10, idle_cb_pulse, ui);
+    ui->update_pulse_id = g_timeout_add(10, timeout_cb_pulse, ui);
 }
 
 typedef struct _TestCaseRowInfo

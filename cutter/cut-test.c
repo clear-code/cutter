@@ -207,7 +207,7 @@ cut_test_init (CutTest *test)
     CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(test);
 
     priv->test_function = NULL;
-    priv->timer = g_timer_new();
+    priv->timer = NULL;
 }
 
 static void
@@ -314,7 +314,11 @@ cut_test_run (CutTest *test, CutTestContext *test_context, CutContext *context)
 
     cut_test_context_set_jump(test_context, &jump_buffer);
     if (setjmp(jump_buffer) == 0) {
-        g_timer_start(priv->timer);
+        if (priv->timer) {
+            g_timer_start(priv->timer);
+        } else {
+            priv->timer = g_timer_new();
+        }
         priv->test_function();
         success = TRUE;
     } else {
@@ -351,7 +355,13 @@ cut_test_get_description (CutTest *test)
 static gdouble
 real_get_elapsed (CutTest *test)
 {
-    return g_timer_elapsed(CUT_TEST_GET_PRIVATE(test)->timer, NULL);
+    CutTestPrivate *priv;
+
+    priv = CUT_TEST_GET_PRIVATE(test);
+    if (priv->timer)
+        return g_timer_elapsed(priv->timer, NULL);
+    else
+        return 0.0;
 }
 
 gdouble
