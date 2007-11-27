@@ -12,4 +12,10 @@ CUTTER=$BASE_DIR/../../cutter/cutter
 if test x"$CUTTER_DEBUG" = x"yes"; then
     CUTTER="$BASE_DIR/../../libtool --mode=execute gdb --args $CUTTER"
 fi
-$CUTTER --color=auto -s $BASE_DIR "$@" $BASE_DIR
+CUTTER_ARGS="--multi-thread -s $BASE_DIR"
+if test x"$USE_GTK" = x"yes"; then
+        CUTTER_ARGS="-r gtk $CUTTER_ARGS"
+else
+        CUTTER_ARGS="--color-auto $CUTTER_ARGS"
+fi
+$CUTTER $CUTTER_ARGS "$@" $BASE_DIR
