@@ -47,8 +47,8 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 
-static void real_set_option_group (CutUIFactory    *factory,
-                                   GOptionContext      *context);
+static void real_set_option_group (CutUIFactory   *factory,
+                                   GOptionContext *context);
 
 void cut_ui_factory_init (void)
 {

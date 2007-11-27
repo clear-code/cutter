@@ -48,7 +48,7 @@ struct _CutUIFactoryClass
     GObjectClass parent_class;
 
     void         (*set_option_group)    (CutUIFactory *factory,
-                                         GOptionContext   *context);
+                                         GOptionContext *context);
     CutUI       *(*create)              (CutUIFactory *factory);
 };
 
@@ -66,12 +66,12 @@ GList          *cut_ui_factory_get_registered_types (void);
 GList          *cut_ui_factory_get_log_domains      (void);
 GList          *cut_ui_factory_get_names   (void);
 
-CutUIFactory *cut_ui_factory_new       (const gchar *name,
-                                                const gchar *first_property,
-                                                ...);
+CutUIFactory   *cut_ui_factory_new         (const gchar *name,
+                                            const gchar *first_property,
+                                            ...);
 
 void         cut_ui_factory_set_option_group (CutUIFactory *factory,
-                                                  GOptionContext   *context);
+                                              GOptionContext *context);
 CutUI       *cut_ui_factory_create           (CutUIFactory *factory);
 const gchar *cut_ui_factory_get_name         (CutUIFactory *factory);
 
