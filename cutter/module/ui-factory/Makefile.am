@@ -10,7 +10,7 @@ ui_factory_module_LTLIBRARIES = console.la
 
 console_la_CPPFLAGS = -DG_LOG_DOMAIN=\"Cut/UIFactory:Console\"
 console_la_SOURCES = \
-	cut-runner-factory-console.c
+	cut-ui-factory-console.c
 console_la_LIBADD = $(GLIB_LIBS)
 
 if HAVE_GTK
@@ -19,6 +19,6 @@ gtk_la_CPPFLAGS =					\
 	-DG_LOG_DOMAIN=\"Cut/UIFactory:Gtk\"	\
 	$(GTK_CFLAGS)
 gtk_la_SOURCES = \
-	cut-runner-factory-gtk.c
+	cut-ui-factory-gtk.c
 gtk_la_LIBADD = $(GTK_LIBS)
 endif
