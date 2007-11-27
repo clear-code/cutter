@@ -47,6 +47,10 @@ struct _CutContextClass
 {
     GObjectClass parent_class;
 
+    void (*ready_test_suite)    (CutContext     *context,
+                                 CutTestCase    *test_case,
+                                 guint           n_test_cases,
+                                 guint           n_tests);
     void (*start_test_suite)    (CutContext     *context,
                                  CutTestSuite   *test_suite);
     void (*ready_test_case)     (CutContext     *context,

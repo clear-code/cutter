@@ -69,6 +69,7 @@ enum
 {
     START_SIGNAL,
 
+    READY_TEST_SUITE,
     START_TEST_SUITE,
     READY_TEST_CASE,
     START_TEST_CASE,
@@ -158,6 +159,16 @@ cut_context_class_init (CutContextClass *klass)
                                 G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class, PROP_USE_MULTI_THREAD, spec);
 
+
+	signals[READY_TEST_SUITE]
+        = g_signal_new ("ready-test-suite",
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutContextClass, ready_test_suite),
+                        NULL, NULL,
+                        _cut_marshal_VOID__OBJECT_UINT_UINT,
+                        G_TYPE_NONE, 3,
+                        CUT_TYPE_TEST_SUITE, G_TYPE_UINT, G_TYPE_UINT);
 
 	signals[START_TEST_SUITE]
         = g_signal_new ("start-test-suite",
@@ -716,6 +727,16 @@ cut_context_start_test_case (CutContext *context, CutTestCase *test_case)
 }
 
 static void
+cb_ready_test_suite(CutTestSuite *test_suite, guint n_test_cases,
+                    guint n_tests, gpointer data)
+{
+    CutContext *context = data;
+
+    g_signal_emit(context, signals[READY_TEST_SUITE], 0, test_suite,
+                  n_test_cases, n_tests);
+}
+
+static void
 cb_start_test_suite(CutTestSuite *test_suite, gpointer data)
 {
     CutContext *context = data;
@@ -744,6 +765,8 @@ cb_complete_test_suite(CutTestSuite *test_suite, gpointer data)
     CutContext *context = data;
 
     g_signal_handlers_disconnect_by_func(test_suite,
+                                         G_CALLBACK(cb_ready_test_suite), data);
+    g_signal_handlers_disconnect_by_func(test_suite,
                                          G_CALLBACK(cb_start_test_suite), data);
     g_signal_handlers_disconnect_by_func(test_suite,
                                          G_CALLBACK(cb_complete_test_suite),
@@ -758,6 +781,8 @@ cb_complete_test_suite(CutTestSuite *test_suite, gpointer data)
 void
 cut_context_start_test_suite (CutContext *context, CutTestSuite *test_suite)
 {
+    g_signal_connect(test_suite, "ready",
+                     G_CALLBACK(cb_ready_test_suite), context);
     g_signal_connect(test_suite, "start",
                      G_CALLBACK(cb_start_test_suite), context);
     g_signal_connect(test_suite, "complete",

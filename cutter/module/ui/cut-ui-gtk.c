@@ -524,10 +524,11 @@ timeout_cb_pulse (gpointer data)
 }
 
 static void
-cb_start_test_suite (CutContext *context, CutTestSuite *test_suite,
-                     CutUIGtk *ui)
+cb_ready_test_suite (CutContext *context, CutTestSuite *test_suite,
+                     guint n_test_cases, guint n_tests, CutUIGtk *ui)
 {
     ui->running = TRUE;
+    ui->n_tests = n_tests;
     ui->update_pulse_id = g_timeout_add(10, timeout_cb_pulse, ui);
 }
 
@@ -998,8 +999,6 @@ cb_ready_test_case (CutContext *context, CutTestCase *test_case, guint n_tests,
 {
     TestCaseRowInfo *info;
 
-    ui->n_tests += n_tests;
-
     info = g_new0(TestCaseRowInfo, 1);
     info->ui = g_object_ref(ui);
     info->test_case = g_object_ref(test_case);
@@ -1081,7 +1080,7 @@ connect_to_context (CutUIGtk *ui, CutContext *context)
 #define CONNECT(name) \
     g_signal_connect(context, #name, G_CALLBACK(cb_ ## name), ui)
 
-    CONNECT(start_test_suite);
+    CONNECT(ready_test_suite);
     CONNECT(ready_test_case);
 
     CONNECT(complete_test_suite);
@@ -1098,7 +1097,7 @@ disconnect_from_context (CutUIGtk *ui, CutContext *context)
                                          G_CALLBACK(cb_ ## name),       \
                                          ui)
 
-    DISCONNECT(start_test_suite);
+    DISCONNECT(ready_test_suite);
     DISCONNECT(ready_test_case);
 
     DISCONNECT(complete_test_suite);

@@ -1,5 +1,11 @@
 2007-11-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/module/ui/cut-ui-gtk.c: used ready-test-suite instead of
+	start-test-suite.
+
+	* cutter/cut-context.[ch], cutter/cut-test-suite.[ch]: emitted
+	ready signal.
+
 	* cutter/cut-test-case.[ch]: cut_test_get_test_count() ->
 	cut_test_get_n_tests().
 	* test/test-cut-test-case.c, test/test-cut-loader.c: followed the

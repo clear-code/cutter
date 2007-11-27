@@ -40,6 +40,7 @@
 #include "cut-test-case.h"
 #include "cut-context.h"
 #include "cut-utils.h"
+#include "cut-marshalers.h"
 
 #define CUT_TEST_SUITE_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_SUITE, CutTestSuitePrivate))
 
@@ -55,6 +56,7 @@ enum
 
 enum
 {
+    READY_SIGNAL,
     START_TEST_CASE_SIGNAL,
     COMPLETE_TEST_CASE_SIGNAL,
     LAST_SIGNAL
@@ -87,6 +89,15 @@ cut_test_suite_class_init (CutTestSuiteClass *klass)
     gobject_class->dispose      = dispose;
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
+
+	cut_test_suite_signals[READY_SIGNAL]
+        = g_signal_new("ready",
+                       G_TYPE_FROM_CLASS(klass),
+                       G_SIGNAL_RUN_LAST,
+                       G_STRUCT_OFFSET(CutTestSuiteClass, ready),
+                       NULL, NULL,
+                       _cut_marshal_VOID__UINT_UINT,
+                       G_TYPE_NONE, 2, G_TYPE_UINT, G_TYPE_UINT);
 
 	cut_test_suite_signals[START_TEST_CASE_SIGNAL]
         = g_signal_new("start-test-case",
@@ -286,9 +297,29 @@ ill_be_back_handler (int signum)
     longjmp(jump_buffer, signum);
 }
 
+static void
+emit_ready_signal (CutTestSuite *test_suite, const GList *test_cases,
+                   const gchar **test_names)
+{
+    const GList *node;
+    guint n_test_cases, n_tests;
+
+    n_test_cases = 0;
+    n_tests = 0;
+
+    for (node = test_cases; node; node = g_list_next(node)) {
+        CutTestCase *test_case = node->data;
+
+        n_test_cases++;
+        n_tests += cut_test_case_get_n_tests(test_case, test_names);
+    }
+
+    g_signal_emit_by_name(test_suite, "ready", n_test_cases, n_tests);
+}
+
 static gboolean
 cut_test_suite_run_test_cases (CutTestSuite *test_suite, CutContext *context,
-                               const GList *tests, const gchar **test_names)
+                               const GList *test_cases, const gchar **test_names)
 {
     const GList *list;
     GList *node, *threads = NULL;
@@ -303,14 +334,17 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite, CutContext *context,
     switch (signum) {
       case 0:
         cut_context_start_test_suite(context, test_suite);
+        emit_ready_signal(test_suite, test_cases, test_names);
         g_signal_emit_by_name(CUT_TEST(test_suite), "start");
 
         try_thread = cut_context_get_multi_thread(context);
-        for (list = tests; list; list = g_list_next(list)) {
-            if (!list->data)
+        for (list = test_cases; list; list = g_list_next(list)) {
+            CutTestCase *test_case = list->data;
+
+            if (!test_case)
                 continue;
-            if (CUT_IS_TEST_CASE(list->data)) {
-                run_with_thread(test_suite, list->data, context, test_names,
+            if (CUT_IS_TEST_CASE(test_case)) {
+                run_with_thread(test_suite, test_case, context, test_names,
                                 try_thread, &threads, &all_success);
             } else {
                 g_warning("This object is not test case!");
