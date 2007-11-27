@@ -8,6 +8,10 @@ if HAVE_CAIRO
 SUBDIRS += cairo
 endif
 
+if HAVE_GIO
+SUBDIRS += gio
+endif
+
 stackdir = $(pkgdatadir)/stack
 stack_DATA =			\
 	stack/autogen.sh	\

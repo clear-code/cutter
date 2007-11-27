@@ -99,6 +99,17 @@ AC_SUBST([CAIRO_LIBS])
 AM_CONDITIONAL([HAVE_CAIRO], [test $cairo_exists = "yes"])
 
 dnl **************************************************************
+dnl Check for GIO
+dnl **************************************************************
+gio_exists=no
+PKG_CHECK_MODULES(GIO, gio-2.0,
+		  [gio_exists=yes], [gio_exists=no])
+AC_SUBST([GIO_CFLAGS])
+AC_SUBST([GIO_LIBS])
+
+AM_CONDITIONAL([HAVE_GIO], [test $gio_exists = "yes"])
+
+dnl **************************************************************
 dnl Checks for gtk-doc
 dnl **************************************************************
 
@@ -155,6 +166,7 @@ AC_CONFIG_FILES([Makefile
 		 sample/glib/Makefile
 		 sample/gtk+/Makefile
 		 sample/cairo/Makefile
+		 sample/gio/Makefile
                  test/Makefile
 		 test/loader_test_dir/Makefile
 		 test/repository_test_dir/Makefile

@@ -1,3 +1,7 @@
+2007-11-27  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* sample/gio/*: Added GIO sample.
+
 2007-11-26  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/module/runner/cut-runner-gtk.c:
