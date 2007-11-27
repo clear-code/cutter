@@ -56,10 +56,14 @@ struct _CutRunnerGtk
     GtkWidget     *window;
     GtkTextBuffer *text_buffer;
     GtkWidget     *text_view;
-    GtkWidget     *progress_bar;
+    GtkProgressBar *progress_bar;
+    GtkTreeView   *tree_view;
+    GtkTreeStore  *logs;
 
     CutTestSuite  *test_suite;
     CutContext    *context;
+
+    GMutex        *mutex;
 
     gboolean       success;
 };
@@ -72,6 +76,14 @@ struct _CutRunnerGtkClass
 enum
 {
     PROP_0
+};
+
+enum
+{
+    COLUMN_STATUS,
+    COLUMN_NAME,
+    COLUMN_DESCRIPTION,
+    N_COLUMN
 };
 
 static GType cut_type_runner_gtk = 0;
@@ -116,7 +128,51 @@ setup_progress_bar (GtkBox *box, CutRunnerGtk *runner)
     progress_bar = gtk_progress_bar_new();
     gtk_box_pack_start(box, progress_bar, FALSE, TRUE, 0);
 
-    runner->progress_bar = progress_bar;
+    runner->progress_bar = GTK_PROGRESS_BAR(progress_bar);
+}
+
+static void
+setup_tree_view_columns (GtkTreeView *tree_view)
+{
+    GtkCellRenderer *renderer;
+    GtkTreeViewColumn *column;
+
+    renderer = gtk_cell_renderer_text_new();
+    column = gtk_tree_view_column_new_with_attributes("Status", renderer,
+                                                      "text", COLUMN_STATUS,
+                                                      NULL);
+    gtk_tree_view_append_column(tree_view, column);
+
+    renderer = gtk_cell_renderer_text_new();
+    column = gtk_tree_view_column_new_with_attributes("Name", renderer,
+                                                      "text", COLUMN_NAME,
+                                                      NULL);
+    gtk_tree_view_append_column(tree_view, column);
+
+    renderer = gtk_cell_renderer_text_new();
+    column = gtk_tree_view_column_new_with_attributes("Description", renderer,
+                                                      "text", COLUMN_DESCRIPTION,
+                                                      NULL);
+    gtk_tree_view_append_column(tree_view, column);
+}
+
+static void
+setup_tree_view (GtkBox *box, CutRunnerGtk *runner)
+{
+    GtkWidget *tree_view, *scrolled_window;
+    GtkTreeStore *tree_store;
+
+    scrolled_window = gtk_scrolled_window_new(NULL, NULL);
+    gtk_box_pack_start(box, scrolled_window, TRUE, TRUE, 0);
+
+    tree_store = gtk_tree_store_new(N_COLUMN,
+                                    G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
+    runner->logs = tree_store;
+
+    tree_view = gtk_tree_view_new_with_model(GTK_TREE_MODEL(tree_store));
+    gtk_container_add(GTK_CONTAINER(scrolled_window), tree_view);
+    runner->tree_view = GTK_TREE_VIEW(tree_view);
+    setup_tree_view_columns(runner->tree_view);
 }
 
 static void
@@ -125,7 +181,7 @@ setup_text_view (GtkBox *box, CutRunnerGtk *runner)
     GtkWidget *text_view, *scrolled_window;
 
     scrolled_window = gtk_scrolled_window_new(NULL, NULL);
-    gtk_box_pack_start(box, scrolled_window, TRUE, TRUE, 0);
+    gtk_box_pack_start(box, scrolled_window, FALSE, TRUE, 0);
 
     text_view = gtk_text_view_new();
     gtk_container_add(GTK_CONTAINER(scrolled_window), text_view);
@@ -174,6 +230,7 @@ setup_window (CutRunnerGtk *runner)
     gtk_container_add(GTK_CONTAINER(window), vbox);
 
     setup_progress_bar(GTK_BOX(vbox), runner);
+    setup_tree_view(GTK_BOX(vbox), runner);
     setup_text_view(GTK_BOX(vbox), runner);
 }
 
@@ -183,6 +240,8 @@ init (CutRunnerGtk *runner)
     runner->test_suite = NULL;
     runner->context = NULL;
     runner->success = TRUE;
+
+    runner->mutex = g_mutex_new();
 
     setup_window(runner);
 }
@@ -260,6 +319,11 @@ dispose (GObject *object)
         runner->context = NULL;
     }
 
+    if (runner->mutex) {
+        g_mutex_free(runner->mutex);
+        runner->mutex = NULL;
+    }
+
     G_OBJECT_CLASS(parent_class)->dispose(object);
 }
 
@@ -297,6 +361,7 @@ print_for_status (CutRunnerGtk *runner, CutTestResultStatus status,
     va_list args;
     GtkTextIter iter;
 
+    return;
     va_start(args, format);
     message = g_strdup_vprintf(format, args);
     gtk_text_buffer_get_end_iter(runner->text_buffer, &iter);
@@ -312,6 +377,7 @@ print_log (CutRunnerGtk *runner, gchar const *format, ...)
     va_list args;
     GtkTextIter iter;
 
+    return;
     va_start(args, format);
     message = g_strdup_vprintf(format, args);
     gtk_text_buffer_get_end_iter(runner->text_buffer, &iter);
@@ -324,8 +390,8 @@ static void
 cb_start_test_suite (CutContext *context, CutTestSuite *test_suite,
                      CutRunnerGtk *runner)
 {
-    gtk_progress_bar_set_pulse_step(GTK_PROGRESS_BAR(runner->progress_bar), 0.1);
-    gtk_progress_bar_pulse(GTK_PROGRESS_BAR(runner->progress_bar));
+    gtk_progress_bar_set_pulse_step(runner->progress_bar, 0.1);
+    gtk_progress_bar_pulse(runner->progress_bar);
 }
 
 static void
@@ -334,33 +400,54 @@ cb_start_test_case (CutContext *context, CutTestCase *test_case,
 {
 }
 
+typedef struct _AppendRowInfo
+{
+    CutRunnerGtk *runner;
+    CutTest *test;
+} AppendRowInfo;
+
+static gboolean
+idle_cb_append_row (gpointer data)
+{
+    AppendRowInfo *info = data;
+    CutRunnerGtk *runner;
+    CutTest *test;
+    GtkTreeIter iter;
+
+    runner = info->runner;
+    test = info->test;
+
+    g_mutex_lock(runner->mutex);
+    gtk_tree_store_append(runner->logs, &iter, NULL);
+    gtk_tree_store_set(runner->logs, &iter,
+                       COLUMN_NAME, cut_test_get_name(test),
+                       COLUMN_DESCRIPTION, cut_test_get_description(test),
+                       -1);
+    g_mutex_unlock(runner->mutex);
+
+    g_object_unref(runner);
+    g_object_unref(test);
+    g_free(info);
+
+    return FALSE;
+}
+
 static void
 cb_start_test (CutContext *context, CutTest *test, CutTestContext *test_context,
                CutRunnerGtk *runner)
 {
-    GString *tab_stop;
-    const gchar *name;
-    gint name_length;
-    const gchar *description;
+    AppendRowInfo *info;
 
-    description = cut_test_get_description(test);
-    if (description)
-        print_log(runner, "  %s\n", description);
-
-    name = cut_test_get_name(test);
-    name_length = strlen(name) + 2;
-    tab_stop = g_string_new("");
-    while (name_length < (8 * 7 - 1)) {
-        g_string_append_c(tab_stop, '\t');
-        name_length += 8;
-    }
-    print_log(runner, "  %s:%s", name, tab_stop->str);
-    g_string_free(tab_stop, TRUE);
+    info = g_new0(AppendRowInfo, 1);
+    info->runner = g_object_ref(runner);
+    info->test = g_object_ref(test);
+    g_idle_add(idle_cb_append_row, info);
 }
 
 static void
 cb_success (CutContext *context, CutTest *test, CutRunnerGtk *runner)
 {
+    return;
     if (!CUT_IS_TEST_CONTAINER(test)) {
         GtkTextIter iter;
         gtk_text_buffer_get_end_iter(runner->text_buffer, &iter);
@@ -525,10 +612,10 @@ cb_crashed (CutContext *context, const gchar *stack_trace,
 }
 
 static void
-connect_to_context (CutRunnerGtk *gtk, CutContext *context)
+connect_to_context (CutRunnerGtk *runner, CutContext *context)
 {
 #define CONNECT(name) \
-    g_signal_connect(context, #name, G_CALLBACK(cb_ ## name), gtk)
+    g_signal_connect(context, #name, G_CALLBACK(cb_ ## name), runner)
 
     CONNECT(start_test_suite);
     CONNECT(start_test_case);
@@ -550,12 +637,12 @@ connect_to_context (CutRunnerGtk *gtk, CutContext *context)
 }
 
 static void
-disconnect_from_context (CutRunnerGtk *gtk, CutContext *context)
+disconnect_from_context (CutRunnerGtk *runner, CutContext *context)
 {
 #define DISCONNECT(name)                                                \
     g_signal_handlers_disconnect_by_func(context,                       \
                                          G_CALLBACK(cb_ ## name),       \
-                                         gtk)
+                                         runner)
 
     DISCONNECT(start_test_suite);
     DISCONNECT(start_test_case);
@@ -581,8 +668,13 @@ run_test_thread_func (gpointer data)
 {
     CutRunnerGtk *runner = data;
 
+    g_print("run\n");
+
+    runner->success = FALSE;
     runner->success = cut_test_suite_run(runner->test_suite, runner->context);
     disconnect_from_context(runner, runner->context);
+
+    g_print("finished\n");
 
     return NULL;
 }

@@ -1,3 +1,7 @@
+2007-11-27  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/module/runner/cut-runner-gtk.c: showed test info.
+
 2007-11-27  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* sample/gio/*: Added GIO sample.
@@ -8,7 +12,7 @@
 	- cleanup.
 	- removed thread.
 	- supported C-q.
-	- used thread again. :<
+	- used thread again.
 
 	* cutter/module/runner-factory/cut-runner-factory-gtk.c: added.
 
