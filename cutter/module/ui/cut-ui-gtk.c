@@ -760,8 +760,6 @@ cb_success_test (CutTest *test, gpointer data)
 
         g_idle_add(idle_cb_update_test_row_status, data);
     }
-
-    g_signal_handlers_disconnect_by_func(test, cb_success_test, data);
 }
 
 static void
@@ -773,7 +771,6 @@ cb_failure_test (CutTest *test, gpointer data)
     update_status(info->test_case_row_info->ui, CUT_TEST_RESULT_FAILURE);
 
     g_idle_add(idle_cb_update_test_row_status, data);
-    g_signal_handlers_disconnect_by_func(test, cb_failure_test, data);
 }
 
 static void
@@ -786,7 +783,6 @@ cb_error_test (CutTest *test, CutTestContext *context, CutTestResult *result,
     update_status(info->test_case_row_info->ui, CUT_TEST_RESULT_ERROR);
 
     g_idle_add(idle_cb_update_test_row_status, data);
-    g_signal_handlers_disconnect_by_func(test, cb_error_test, data);
 }
 
 static void
@@ -799,7 +795,6 @@ cb_pending_test (CutTest *test, CutTestContext *context, CutTestResult *result,
     update_status(info->test_case_row_info->ui, CUT_TEST_RESULT_PENDING);
 
     g_idle_add(idle_cb_update_test_row_status, data);
-    g_signal_handlers_disconnect_by_func(test, cb_pending_test, data);
 }
 
 static void
@@ -812,7 +807,6 @@ cb_notification_test (CutTest *test, CutTestContext *context,
     update_status(info->test_case_row_info->ui, CUT_TEST_RESULT_NOTIFICATION);
 
     g_idle_add(idle_cb_update_test_row_status, data);
-    g_signal_handlers_disconnect_by_func(test, cb_notification_test, data);
 }
 
 static void
