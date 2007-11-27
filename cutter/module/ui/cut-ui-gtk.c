@@ -1061,8 +1061,6 @@ cb_complete_test_suite (CutContext *context, CutTestSuite *test_suite,
             print_log(ui, "%s\n", stack_trace);
     }
 
-    print_results(ui, context);
-
     print_log(ui, "Finished in %f seconds",
               cut_test_get_elapsed(CUT_TEST(test_suite)));
 
