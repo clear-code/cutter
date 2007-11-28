@@ -162,17 +162,15 @@ setup_tree_view_columns (GtkTreeView *tree_view)
     GtkCellRenderer *renderer;
     GtkTreeViewColumn *column;
 
-    renderer = gtk_cell_renderer_pixbuf_new();
     column = gtk_tree_view_column_new();
-    gtk_tree_view_column_set_title(column, _("Result"));
+
+    renderer = gtk_cell_renderer_pixbuf_new();
+    gtk_tree_view_column_set_title(column, _("Name"));
     gtk_tree_view_column_pack_start(column, renderer, FALSE);
     gtk_tree_view_column_add_attribute(column, renderer,
                                        "pixbuf", COLUMN_STATUS_ICON);
-    gtk_tree_view_append_column(tree_view, column);
 
     renderer = gtk_cell_renderer_progress_new();
-    column = gtk_tree_view_column_new();
-    gtk_tree_view_column_set_title(column, _("Name"));
     gtk_tree_view_column_pack_end(column, renderer, FALSE);
     gtk_tree_view_column_set_attributes(column, renderer,
                                         "text", COLUMN_PROGRESS_TEXT,
@@ -180,6 +178,7 @@ setup_tree_view_columns (GtkTreeView *tree_view)
                                         "pulse", COLUMN_PROGRESS_PULSE,
                                         "visible", COLUMN_PROGRESS_VISIBLE,
                                         NULL);
+
     renderer = gtk_cell_renderer_text_new();
     gtk_tree_view_column_pack_start(column, renderer, TRUE);
     gtk_tree_view_column_set_attributes(column, renderer,
