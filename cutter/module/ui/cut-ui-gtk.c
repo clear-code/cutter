@@ -266,6 +266,8 @@ setup_window (CutUIGtk *ui)
 
     window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
     gtk_window_set_default_size(GTK_WINDOW(window), 600, 500);
+    gtk_window_set_title(GTK_WINDOW(window), "Cutter");
+
     g_signal_connect(G_OBJECT(window), "destroy",
                      G_CALLBACK(cb_destroy), ui);
     g_signal_connect(G_OBJECT(window), "key-press-event",
@@ -485,6 +487,24 @@ generate_summary_message (CutContext *context)
 
     return g_strdup_printf(_("%d test(s), %d assertion(s), %d failure(s), "
                              "%d error(s), %d pending(s), %d notification(s)"),
+                           n_tests, n_assertions, n_failures, n_errors,
+                           n_pendings, n_notifications);
+}
+
+static gchar *
+generate_short_summary_message (CutContext *context)
+{
+    guint n_tests, n_assertions, n_failures, n_errors;
+    guint n_pendings, n_notifications;
+
+    n_tests = cut_context_get_n_tests(context);
+    n_assertions = cut_context_get_n_assertions(context);
+    n_failures = cut_context_get_n_failures(context);
+    n_errors = cut_context_get_n_errors(context);
+    n_pendings = cut_context_get_n_pendings(context);
+    n_notifications = cut_context_get_n_notifications(context);
+
+    return g_strdup_printf(_("%dT:%dA:%dF:%d:E:%dP:%dN"),
                            n_tests, n_assertions, n_failures, n_errors,
                            n_pendings, n_notifications);
 }
@@ -927,11 +947,17 @@ static gboolean
 idle_cb_update_summary (gpointer data)
 {
     CutUIGtk *ui = data;
-    gchar *summary;
+    gchar *summary, *short_summary, *title;
 
     summary = generate_summary_message(ui->context);
     gtk_label_set_text(ui->summary, summary);
     g_free(summary);
+
+    short_summary = generate_short_summary_message(ui->context);
+    title = g_strdup_printf("Cutter - %s", short_summary);
+    gtk_window_set_title(GTK_WINDOW(ui->window), title);
+    g_free(short_summary);
+    g_free(title);
 
     return FALSE;
 }

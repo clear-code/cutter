@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cutter trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-11-28 11:33+0900\n"
-"PO-Revision-Date: 2007-11-28 11:33+0900\n"
+"POT-Creation-Date: 2007-11-28 17:41+0900\n"
+"PO-Revision-Date: 2007-11-28 17:41+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -52,34 +52,39 @@ msgstr "名前"
 msgid "Description"
 msgstr "説明"
 
-#: cutter/module/ui/cut-ui-gtk.c:486
+#: cutter/module/ui/cut-ui-gtk.c:488
 #, c-format
 msgid ""
 "%d test(s), %d assertion(s), %d failure(s), %d error(s), %d pending(s), %d "
 "notification(s)"
 msgstr "%dテスト、%d表明、%d失敗、%dエラー、%d保留、%d通知"
 
-#: cutter/module/ui/cut-ui-gtk.c:526
+#: cutter/module/ui/cut-ui-gtk.c:507
+#, c-format
+msgid "%dT:%dA:%dF:%d:E:%dP:%dN"
+msgstr "%dテ:%d表:%d失:%d:エ:%d保:%d通"
+
+#: cutter/module/ui/cut-ui-gtk.c:546
 #, c-format
 msgid "%u/%u (%u%%): %.1fs"
 msgstr "%u/%u (%u%%): %.1f秒"
 
-#: cutter/module/ui/cut-ui-gtk.c:549
+#: cutter/module/ui/cut-ui-gtk.c:569
 #, c-format
 msgid "Staring test suite %s..."
 msgstr "テストスイート%sを開始..."
 
-#: cutter/module/ui/cut-ui-gtk.c:1020
+#: cutter/module/ui/cut-ui-gtk.c:1046
 #, c-format
 msgid "Running test: %s"
 msgstr "テストを実行中: %s"
 
-#: cutter/module/ui/cut-ui-gtk.c:1174
+#: cutter/module/ui/cut-ui-gtk.c:1200
 #, c-format
 msgid "Finished in %0.1f seconds: %s"
 msgstr "%0.1f秒で終了: %s"
 
-#: cutter/module/ui/cut-ui-gtk.c:1211
+#: cutter/module/ui/cut-ui-gtk.c:1237
 msgid "CRASHED!!!"
 msgstr "異常終了！！！"
 

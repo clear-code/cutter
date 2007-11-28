@@ -1,5 +1,7 @@
 2007-11-28  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/module/ui/cut-ui-gtk.c: set title.
+
 	* README*: updated options.
 
 	* cutter/module/ui/cut-ui-gtk.c: colorized again.
