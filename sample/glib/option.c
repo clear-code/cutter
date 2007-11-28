@@ -76,6 +76,7 @@ setup (void)
   argv = NULL;
   error = NULL;
   test_string = NULL;
+  callback_test2_int = 0;
 }
 
 void
