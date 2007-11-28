@@ -183,6 +183,7 @@ setup_tree_view_columns (GtkTreeView *tree_view)
     gtk_tree_view_column_pack_start(column, renderer, TRUE);
     gtk_tree_view_column_set_attributes(column, renderer,
                                         "text", COLUMN_NAME,
+                                        "background", COLUMN_COLOR,
                                         NULL);
     gtk_tree_view_column_set_sort_column_id(column, COLUMN_NAME);
     gtk_tree_view_append_column(tree_view, column);
@@ -411,13 +412,16 @@ get_property (GObject    *object,
 }
 
 static const gchar *
-status_to_color (CutTestResultStatus status)
+status_to_color (CutTestResultStatus status, gboolean only_if_not_success)
 {
     const gchar *color = "white";
 
     switch (status) {
       case CUT_TEST_RESULT_SUCCESS:
-        color = "light green";
+        if (only_if_not_success)
+            color = NULL;
+        else
+            color = "light green";
         break;
       case CUT_TEST_RESULT_NOTIFICATION:
         color = "light blue";
@@ -491,7 +495,8 @@ update_progress_color (GtkProgressBar *bar, CutTestResultStatus status)
     GtkStyle *style;
 
     style = gtk_style_new();
-    gdk_color_parse(status_to_color(status), &(style->bg[GTK_STATE_PRELIGHT]));
+    gdk_color_parse(status_to_color(status, FALSE),
+                    &(style->bg[GTK_STATE_PRELIGHT]));
     gtk_widget_set_style(GTK_WIDGET(bar), style);
     g_object_unref(style);
 }
@@ -714,6 +719,7 @@ idle_cb_update_test_case_row (gpointer data)
                            COLUMN_PROGRESS_TEXT, text,
                            COLUMN_PROGRESS_VALUE, percent,
                            COLUMN_STATUS_ICON, icon,
+                           COLUMN_COLOR, status_to_color(info->status, TRUE),
                            -1);
         g_free(text);
         g_object_unref(icon);
@@ -801,6 +807,7 @@ idle_cb_update_test_row_status (gpointer data)
         gtk_tree_store_set(ui->logs, &iter,
                            COLUMN_STATUS_ICON, icon,
                            COLUMN_PROGRESS_VISIBLE, FALSE,
+                           COLUMN_COLOR, status_to_color(info->status, TRUE),
                            -1);
         g_object_unref(icon);
 
@@ -864,6 +871,7 @@ append_test_result_row (CutUIGtk *ui, CutTestResult *result,
                        COLUMN_NAME, name,
                        COLUMN_DESCRIPTION, message,
                        COLUMN_STATUS_ICON, icon,
+                       COLUMN_COLOR, status_to_color(status, TRUE),
                        -1);
     g_free(name);
     g_object_unref(icon);

@@ -1,5 +1,7 @@
 2007-11-28  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/module/ui/cut-ui-gtk.c: colorized again.
+
 	* cutter/module/ui/cut-ui-gtk.c: packed.
 
 	* cutter/module/ui/cut-ui-gtk.c: showed icon in test result row.
