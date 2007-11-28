@@ -167,7 +167,9 @@ setup_tree_view_columns (GtkTreeView *tree_view)
                                        "pixbuf", COLUMN_STATUS_ICON);
     gtk_tree_view_append_column(tree_view, column);
 
-    renderer = gtk_cell_renderer_progress_new();
+    renderer = g_object_new(GTK_TYPE_CELL_RENDERER_PROGRESS, 
+                            "text-xalign", 0.0f,
+                            NULL);
     column = gtk_tree_view_column_new_with_attributes("Name", renderer,
                                                       "text", COLUMN_NAME,
                                                       "value", COLUMN_PROGRESS_VALUE,
