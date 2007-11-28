@@ -61,7 +61,7 @@ static const GOptionEntry option_entries[] =
     {"multi-thread", 'm', 0, G_OPTION_ARG_NONE, &use_multi_thread,
      N_("Run test cases with multi-thread"), NULL},
     {"ui", 'u', 0, G_OPTION_ARG_STRING, &ui_name,
-     N_("Specify test ui"), "[console|gtk]"},
+     N_("Specify UI"), "[console|gtk]"},
     {"show-all-uis", 0, 0, G_OPTION_ARG_NONE, &_show_all_uis,
      N_("Show all available UIs and exit"), NULL},
     {NULL}

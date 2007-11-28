@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cutter trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-11-26 15:45+0900\n"
-"PO-Revision-Date: 2007-11-26 15:45+0900\n"
+"POT-Creation-Date: 2007-11-28 09:18+0900\n"
+"PO-Revision-Date: 2007-11-28 09:19+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -33,38 +33,38 @@ msgid "Run test cases with multi-thread"
 msgstr "マルチスレッドでテストケースを実行"
 
 #: cutter/cut-main.c:64
-msgid "Specify test runner"
-msgstr "テスト起動インターフェイスを指定"
+msgid "Specify UI"
+msgstr "UIを指定"
 
 #: cutter/cut-main.c:66
-msgid "Show all available runners and exit"
-msgstr "すべての利用可能なテスト起動UIを表示し、終了する"
+msgid "Show all available UIs and exit"
+msgstr "すべての利用可能なUIを表示し、終了する"
 
-#: cutter/cut-runner-factory.c:231
-msgid "Common Runner Options"
-msgstr "UI共通のオプション"
-
-#: cutter/cut-runner-factory.c:232
-msgid "Show Common Runner Options"
-msgstr "UI共通のオプションの表示"
-
-#: cutter/module/runner-factory/cut-runner-factory-console.c:273
+#: cutter/module/ui-factory/cut-ui-factory-console.c:273
 #, c-format
 msgid "Invalid color value: %s"
 msgstr "不正な色指定です: %s"
 
-#: cutter/module/runner-factory/cut-runner-factory-console.c:287
+#: cutter/module/ui-factory/cut-ui-factory-console.c:287
 msgid "Set verbose level"
 msgstr "詳細度を設定"
 
-#: cutter/module/runner-factory/cut-runner-factory-console.c:289
+#: cutter/module/ui-factory/cut-ui-factory-console.c:289
 msgid "Output log with colors"
 msgstr "色付きでログを出力"
 
-#: cutter/module/runner-factory/cut-runner-factory-console.c:297
-msgid "Console Runner Options"
+#: cutter/module/ui-factory/cut-ui-factory-console.c:297
+msgid "Console UI Options"
 msgstr "コンソールUIのオプション"
 
-#: cutter/module/runner-factory/cut-runner-factory-console.c:298
-msgid "Show Console Runner Options"
+#: cutter/module/ui-factory/cut-ui-factory-console.c:298
+msgid "Show Console UI Options"
 msgstr "コンソールUIのオプションの表示"
+
+#: cutter/cut-ui-factory.c:231
+msgid "Common UI Options"
+msgstr "UI共通のオプション"
+
+#: cutter/cut-ui-factory.c:232
+msgid "Show Common UI Options"
+msgstr "UI共通のオプションの表示"

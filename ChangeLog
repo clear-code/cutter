@@ -1,3 +1,8 @@
+2007-11-28  Kouhei Sutou  <kou@cozmixng.org>
+
+	* Makefile.am: added update-po.
+	* po/: updated.
+
 2007-11-28  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/module/ui/cut-ui-gtk.c: Added pixbuf column.

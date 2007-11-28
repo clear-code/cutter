@@ -18,3 +18,8 @@ upload: upload-doc
 upload-doc:
 	cd html && $(MAKE) upload
 	cd doc/reference && $(MAKE) $(AM_MAKEFLAGS) upload
+
+update-po:
+	find cutter -name '*.c' > po/POTFILES.in
+	cd po && $(MAKE) $(AM_MAKEFLAGS) update-po
+	cd doc/reference && $(MAKE) $(AM_MAKEFLAGS) update-po
