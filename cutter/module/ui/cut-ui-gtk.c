@@ -90,7 +90,6 @@ enum
     COLUMN_TEST_STATUS,
     COLUMN_STATUS_ICON,
     COLUMN_PROGRESS_VALUE,
-    COLUMN_PROGRESS_TEXT,
     COLUMN_PROGRESS_PULSE,
     COLUMN_PROGRESS_VISIBLE,
     COLUMN_NAME,
@@ -167,21 +166,14 @@ setup_tree_view_columns (GtkTreeView *tree_view)
     gtk_tree_view_column_pack_start(column, renderer, FALSE);
     gtk_tree_view_column_add_attribute(column, renderer,
                                        "pixbuf", COLUMN_STATUS_ICON);
-
-    renderer = gtk_cell_renderer_progress_new();
-    gtk_tree_view_column_pack_start(column, renderer, TRUE);
-    gtk_tree_view_column_set_attributes(column, renderer,
-                                        "value", COLUMN_PROGRESS_VALUE,
-                                        "text", COLUMN_PROGRESS_TEXT,
-                                        "pulse", COLUMN_PROGRESS_PULSE,
-                                        "visible", COLUMN_PROGRESS_VISIBLE,
-                                        NULL);
     gtk_tree_view_append_column(tree_view, column);
 
-    renderer = gtk_cell_renderer_text_new();
+    renderer = gtk_cell_renderer_progress_new();
     column = gtk_tree_view_column_new_with_attributes("Name", renderer,
                                                       "text", COLUMN_NAME,
-                                                      "background", COLUMN_COLOR,
+                                                      "value", COLUMN_PROGRESS_VALUE,
+                                                      "pulse", COLUMN_PROGRESS_PULSE,
+                                                      "visible", COLUMN_PROGRESS_VISIBLE,
                                                       NULL);
     gtk_tree_view_column_set_sort_column_id(column, COLUMN_NAME);
     gtk_tree_view_append_column(tree_view, column);
@@ -213,7 +205,6 @@ setup_tree_view (GtkBox *box, CutUIGtk *ui)
                                     G_TYPE_INT,
                                     GDK_TYPE_PIXBUF,
                                     G_TYPE_INT,
-                                    G_TYPE_STRING,
                                     G_TYPE_INT,
                                     G_TYPE_BOOLEAN,
                                     G_TYPE_STRING, G_TYPE_STRING);
@@ -435,32 +426,6 @@ status_to_color (CutTestResultStatus status)
     return color;
 }
 
-static const gchar *
-status_to_name (CutTestResultStatus status)
-{
-    const gchar *name = "?";
-
-    switch (status) {
-      case CUT_TEST_RESULT_SUCCESS:
-        name = ".";
-        break;
-      case CUT_TEST_RESULT_NOTIFICATION:
-        name = "N";
-        break;
-      case CUT_TEST_RESULT_PENDING:
-        name = "P";
-        break;
-      case CUT_TEST_RESULT_FAILURE:
-        name = "F";
-        break;
-      case CUT_TEST_RESULT_ERROR:
-        name = "E";
-        break;
-    }
-
-    return name;
-}
-
 static gchar *
 generate_summary_message (CutContext *context)
 {
@@ -674,10 +639,11 @@ idle_cb_update_test_case_row (gpointer data)
 
         fraction = info->n_completed_tests / (gdouble)info->n_tests;
         percent = (gint)(fraction * 100);
-        text = g_strdup_printf("%d/%d (%d%%)",
+        text = g_strdup_printf("%s [%d/%d (%d%%)]",
+                               cut_test_get_name(CUT_TEST(info->test_case)),
                                info->n_completed_tests, info->n_tests, percent);
         gtk_tree_store_set(ui->logs, &iter,
-                           COLUMN_PROGRESS_TEXT, text,
+                           COLUMN_NAME, text,
                            COLUMN_PROGRESS_VALUE, percent,
                            -1);
         g_free(text);
@@ -726,7 +692,6 @@ idle_cb_append_test_row (gpointer data)
                                         info->test_case_row_info->path);
     gtk_tree_store_append(ui->logs, &iter, &test_case_iter);
     gtk_tree_store_set(ui->logs, &iter,
-                       COLUMN_PROGRESS_TEXT, "",
                        COLUMN_PROGRESS_PULSE, 0,
                        COLUMN_PROGRESS_VISIBLE, TRUE,
                        COLUMN_NAME, cut_test_get_name(test),
@@ -760,7 +725,7 @@ static GdkPixbuf *
 get_status_icon (GtkTreeView *tree_view, CutTestResultStatus status)
 {
     GdkPixbuf *icon;
-    const gchar *stock_id;
+    const gchar *stock_id = "";
 
     switch (status) {
       case CUT_TEST_RESULT_SUCCESS:
@@ -802,9 +767,6 @@ idle_cb_update_test_row_status (gpointer data)
         icon = get_status_icon(ui->tree_view, info->status);
         update_test_row_progress_color(info);
         gtk_tree_store_set(ui->logs, &iter,
-                           COLUMN_COLOR, status_to_color(info->status),
-                           COLUMN_PROGRESS_TEXT, status_to_name(info->status),
-                           COLUMN_PROGRESS_VISIBLE, FALSE,
                            COLUMN_STATUS_ICON, icon,
                            -1);
         g_object_unref(icon);
@@ -863,8 +825,6 @@ append_test_result_row (CutUIGtk *ui, CutTestResult *result,
 
     gtk_tree_store_append(ui->logs, result_row_iter, test_row_iter);
     gtk_tree_store_set(ui->logs, result_row_iter,
-                       COLUMN_PROGRESS_VISIBLE, FALSE,
-                       COLUMN_COLOR, status_to_color(status),
                        COLUMN_NAME, name,
                        COLUMN_DESCRIPTION, message,
                        -1);
