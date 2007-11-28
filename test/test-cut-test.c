@@ -1,6 +1,6 @@
 #include <cutter.h>
 #include <cutter/cut-test.h>
-#include <cutter/cut-context.h>
+#include <cutter/cut-runner.h>
 
 void test_get_name(void);
 void test_get_description(void);
@@ -14,7 +14,7 @@ void test_failure_signal(void);
 void test_pending_signal(void);
 void test_notification_signal(void);
 
-static CutContext *context;
+static CutRunner *runner;
 static CutTest *test_object;
 static gboolean run_test_flag = FALSE;
 static gint n_start_signal = 0;
@@ -72,7 +72,7 @@ setup (void)
     n_notification_signal = 0;
     n_pass_assertion_signal = 0;
 
-    context = cut_context_new();
+    runner = cut_runner_new();
 
     test_object = cut_test_new("dummy-test", "Dummy Test", dummy_test_function);
 }
@@ -81,7 +81,7 @@ void
 teardown (void)
 {
     g_object_unref(test_object);
-    g_object_unref(context);
+    g_object_unref(runner);
 }
 
 static void
@@ -136,7 +136,7 @@ run (CutTest *test)
     test_context = cut_test_context_new(NULL, NULL, test);
     original_test_context = get_current_test_context();
     set_current_test_context(test_context);
-    success = cut_test_run(test, test_context, context);
+    success = cut_test_run(test, test_context, runner);
     set_current_test_context(original_test_context);
 
     g_object_unref(test_context);

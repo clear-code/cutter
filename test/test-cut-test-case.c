@@ -1,6 +1,6 @@
 #include "cutter.h"
 #include "cut-test-case.h"
-#include "cut-context.h"
+#include "cut-runner.h"
 
 void test_setup(void);
 void test_teardown(void);
@@ -17,7 +17,7 @@ void test_start_signal(void);
 void test_complete_signal(void);
 
 static CutTestCase *test_object;
-static CutContext *test_context;
+static CutRunner *runner;
 
 static gboolean set_error_on_setup = FALSE;
 
@@ -81,8 +81,8 @@ setup (void)
     n_start_signal = 0;
     n_complete_signal = 0;
 
-    test_context = cut_context_new();
-    cut_context_set_target_test_names(test_context, test_names);
+    runner = cut_runner_new();
+    cut_runner_set_target_test_names(runner, test_names);
 
     test_object = cut_test_case_new("dummy test case",
                                     dummy_setup_function,
@@ -101,7 +101,7 @@ void
 teardown (void)
 {
     g_object_unref(test_object);
-    g_object_unref(test_context);
+    g_object_unref(runner);
 }
 
 static void
@@ -119,7 +119,7 @@ cb_complete_signal (CutTestCase *test_case, gpointer data)
 static gboolean
 run_the_test (void)
 {
-    return cut_test_case_run(test_object, test_context);
+    return cut_test_case_run(test_object, runner);
 }
 
 void
@@ -165,7 +165,7 @@ test_run_with_setup_error (void)
 void
 test_run_this_function (void)
 {
-    cut_assert(cut_test_case_run_test(test_object, test_context,
+    cut_assert(cut_test_case_run_test(test_object, runner,
                                       "run_test_function"));
 
     cut_assert_equal_int(1, n_run_dummy_run_test_function);
@@ -175,7 +175,7 @@ test_run_this_function (void)
 void
 test_run_tests_with_regex (void)
 {
-    cut_assert(cut_test_case_run_test(test_object, test_context, "/dummy/"));
+    cut_assert(cut_test_case_run_test(test_object, runner, "/dummy/"));
     cut_assert_equal_int(0, n_run_dummy_run_test_function);
     cut_assert_equal_int(1, n_run_dummy_test_function1);
     cut_assert_equal_int(1, n_run_dummy_test_function2);
@@ -186,7 +186,7 @@ test_run_with_name_filter (void)
 {
     const gchar *names[] = {"dummy_test_1", "run_test_function", NULL};
 
-    cut_assert(cut_test_case_run_with_filter(test_object, test_context, names));
+    cut_assert(cut_test_case_run_with_filter(test_object, runner, names));
     cut_assert_equal_int(1, n_run_dummy_run_test_function);
     cut_assert_equal_int(1, n_run_dummy_test_function1);
     cut_assert_equal_int(0, n_run_dummy_test_function2);
@@ -197,7 +197,7 @@ test_run_with_regex_filter (void)
 {
     const gchar *regex[] = {"/dummy/", NULL};
 
-    cut_assert(cut_test_case_run_with_filter(test_object, test_context, regex));
+    cut_assert(cut_test_case_run_with_filter(test_object, runner, regex));
     cut_assert_equal_int(0, n_run_dummy_run_test_function);
     cut_assert_equal_int(1, n_run_dummy_test_function1);
     cut_assert_equal_int(1, n_run_dummy_test_function2);
@@ -208,7 +208,7 @@ test_run_with_name_and_regex_filter (void)
 {
     const gchar *name_and_regex[] = {"/dummy/", "run_test_function", NULL};
 
-    cut_assert(cut_test_case_run_with_filter(test_object, test_context,
+    cut_assert(cut_test_case_run_with_filter(test_object, runner,
                                              name_and_regex));
     cut_assert_equal_int(1, n_run_dummy_run_test_function);
     cut_assert_equal_int(1, n_run_dummy_test_function1);
@@ -227,7 +227,7 @@ test_start_signal (void)
 {
     g_signal_connect(test_object, "start-test", G_CALLBACK(cb_start_signal),
                      NULL);
-    cut_assert(cut_test_case_run(test_object, test_context));
+    cut_assert(cut_test_case_run(test_object, runner));
     g_signal_handlers_disconnect_by_func(test_object,
                                          G_CALLBACK(cb_start_signal),
                                          NULL);
@@ -239,7 +239,7 @@ test_complete_signal (void)
 {
     g_signal_connect(test_object, "complete-test",
                      G_CALLBACK(cb_complete_signal), NULL);
-    cut_assert(cut_test_case_run(test_object, test_context));
+    cut_assert(cut_test_case_run(test_object, runner));
     g_signal_handlers_disconnect_by_func(test_object,
                                          G_CALLBACK(cb_complete_signal),
                                          NULL);

@@ -2,7 +2,7 @@
 #include "cut-test.h"
 #include "cut-test-result.h"
 #include "cut-utils.h"
-#include "cut-context.h"
+#include "cut-runner.h"
 
 void test_equal_int(void);
 void test_equal_string(void);
@@ -25,7 +25,7 @@ static gboolean need_cleanup;
 static gboolean compare_function_is_called;
 
 static CutTest *test_object;
-static CutContext *context;
+static CutRunner *runner;
 static CutTestContext *test_context;
 static CutTestResult *test_result;
 
@@ -97,12 +97,12 @@ run (CutTest *test)
 
     test_object = test;
 
-    context = cut_context_new();
+    runner = cut_runner_new();
 
     test_context = cut_test_context_new(NULL, NULL, test_object);
     original_test_context = get_current_test_context();
     set_current_test_context(test_context);
-    success = cut_test_run(test_object, test_context, context);
+    success = cut_test_run(test_object, test_context, runner);
     set_current_test_context(original_test_context);
 
     return success;
@@ -114,7 +114,7 @@ setup (void)
     need_cleanup = FALSE;
     compare_function_is_called = FALSE;
     test_object = NULL;
-    context = NULL;
+    runner = NULL;
     test_context = NULL;
     test_result = NULL;
 }
@@ -127,8 +127,8 @@ teardown (void)
 
     if (test_object)
         g_object_unref(test_object);
-    if (context)
-        g_object_unref(context);
+    if (runner)
+        g_object_unref(runner);
     if (test_context)
         g_object_unref(test_context);
     if (test_result)
@@ -213,13 +213,13 @@ cut_assert_test_result_summary (gint n_tests, gint n_assertions,
                                 gint n_failures, gint n_errors,
                                 gint n_pendings, gint n_notifications)
 {
-    cut_assert_equal_int(n_tests, cut_context_get_n_tests(context));
-    cut_assert_equal_int(n_assertions, cut_context_get_n_assertions(context));
-    cut_assert_equal_int(n_failures, cut_context_get_n_failures(context));
-    cut_assert_equal_int(n_errors, cut_context_get_n_errors(context));
-    cut_assert_equal_int(n_pendings, cut_context_get_n_pendings(context));
+    cut_assert_equal_int(n_tests, cut_runner_get_n_tests(runner));
+    cut_assert_equal_int(n_assertions, cut_runner_get_n_assertions(runner));
+    cut_assert_equal_int(n_failures, cut_runner_get_n_failures(runner));
+    cut_assert_equal_int(n_errors, cut_runner_get_n_errors(runner));
+    cut_assert_equal_int(n_pendings, cut_runner_get_n_pendings(runner));
     cut_assert_equal_int(n_notifications,
-                         cut_context_get_n_notifications(context));
+                         cut_runner_get_n_notifications(runner));
 }
 
 static void
@@ -231,7 +231,7 @@ cut_assert_test_result (gint i, CutTestResultStatus status,
     const GList *results;
     CutTestResult *result;
 
-    results = cut_context_get_results(context);
+    results = cut_runner_get_results(runner);
     cut_assert_operator_int(i, <, g_list_length((GList *)results));
 
     result = g_list_nth_data((GList *)results, i);
@@ -418,13 +418,13 @@ test_failure_from_nested_function (void)
 
     cut_assert(!run(test));
 
-    cut_assert(context);
-    cut_assert(1, cut_context_get_n_tests(context));
-    cut_assert(1, cut_context_get_n_assertions(context));
-    cut_assert(1, g_list_length((GList *)cut_context_get_results(context)));
-    cut_assert(1, cut_context_get_n_failures(context));
+    cut_assert(runner);
+    cut_assert(1, cut_runner_get_n_tests(runner));
+    cut_assert(1, cut_runner_get_n_assertions(runner));
+    cut_assert(1, g_list_length((GList *)cut_runner_get_results(runner)));
+    cut_assert(1, cut_runner_get_n_failures(runner));
 
-    result = cut_context_get_results(context)->data;
+    result = cut_runner_get_results(runner)->data;
     cut_assert_equal_string("Fail from nested function",
                             cut_test_result_get_user_message(result));
 }

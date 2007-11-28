@@ -19,20 +19,20 @@
 static gboolean
 run_test (const gchar *directory, GCallback create_surface)
 {
-    CutContext *context;
+    CutRunner *runner;
     CutTestSuite *suite;
     gboolean success;
     cairo_surface_t *surface;
 
-    context = cut_create_context ();
-    g_signal_connect (context, "start-test", create_surface, &surface);
+    runner = cut_create_runner ();
+    g_signal_connect (runner, "start-test", create_surface, &surface);
 
     suite = cut_create_test_suite (directory);
-    success = cut_run_test_suite (suite, context);
+    success = cut_run_test_suite (suite, runner);
     g_object_unref (suite);
 
-    g_signal_handlers_disconnect_by_func (context, create_surface, &surface);
-    g_object_unref (context);
+    g_signal_handlers_disconnect_by_func (runner, create_surface, &surface);
+    g_object_unref (runner);
 
     return success;
 }
@@ -48,7 +48,7 @@ destroy_surface (gpointer data)
 }
 
 static void
-create_image_surface (CutContext *context, CutTest *test,
+create_image_surface (CutRunner *runner, CutTest *test,
                       CutTestContext *test_context, gpointer data)
 {
     cairo_surface_t **surface = data;
@@ -59,7 +59,7 @@ create_image_surface (CutContext *context, CutTest *test,
 
 #ifdef CAIRO_HAS_SVG_SURFACE
 static void
-create_svg_surface (CutContext *context, CutTest *test,
+create_svg_surface (CutRunner *runner, CutTest *test,
                     CutTestContext *test_context, gpointer data)
 {
     cairo_surface_t **surface = data;
@@ -71,7 +71,7 @@ create_svg_surface (CutContext *context, CutTest *test,
 
 #ifdef CAIRO_HAS_PDF_SURFACE
 static void
-create_pdf_surface (CutContext *context, CutTest *test,
+create_pdf_surface (CutRunner *runner, CutTest *test,
                     CutTestContext *test_context, gpointer data)
 {
     cairo_surface_t **surface = data;
@@ -83,7 +83,7 @@ create_pdf_surface (CutContext *context, CutTest *test,
 
 #ifdef CAIRO_HAS_PS_SURFACE
 static void
-create_ps_surface (CutContext *context, CutTest *test,
+create_ps_surface (CutRunner *runner, CutTest *test,
                    CutTestContext *test_context, gpointer data)
 {
     cairo_surface_t **surface = data;

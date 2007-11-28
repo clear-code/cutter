@@ -51,7 +51,7 @@ struct _CutUIClass
 
     gboolean (*run)                (CutUI    *ui,
                                     CutTestSuite *test_suite,
-                                    CutContext   *context);
+                                    CutRunner   *runner);
 };
 
 GType           cut_ui_get_type  (void) G_GNUC_CONST;
@@ -67,13 +67,13 @@ void            cut_ui_unload      (void);
 GList          *cut_ui_get_registered_types (void);
 GList          *cut_ui_get_log_domains      (void);
 
-CutUI      *cut_ui_new         (const gchar *name,
-                                        const gchar *first_property,
-                                        ...);
+CutUI          *cut_ui_new         (const gchar *name,
+                                    const gchar *first_property,
+                                    ...);
 
-gboolean        cut_ui_run         (CutUI    *ui,
-                                        CutTestSuite *test_suite,
-                                         CutContext   *context);
+gboolean        cut_ui_run         (CutUI        *ui,
+                                    CutTestSuite *test_suite,
+                                    CutRunner    *runner);
 G_END_DECLS
 
 #endif /* __CUT_UI_H__ */

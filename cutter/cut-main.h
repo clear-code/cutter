@@ -22,7 +22,7 @@
 #ifndef __CUT_MAIN_H__
 #define __CUT_MAIN_H__
 
-#include <cutter/cut-context.h>
+#include <cutter/cut-runner.h>
 #include <cutter/cut-test-suite.h>
 
 G_BEGIN_DECLS
@@ -32,10 +32,10 @@ void          cut_quit              (void);
 
 gboolean      cut_run               (const gchar *directory);
 
-CutContext   *cut_create_context    (void);
+CutRunner    *cut_create_runner     (void);
 CutTestSuite *cut_create_test_suite (const gchar *directory);
 gboolean      cut_run_test_suite    (CutTestSuite *suite,
-                                     CutContext   *context);
+                                     CutRunner    *runner);
 
 G_END_DECLS
 

@@ -30,7 +30,7 @@
 #include "cut-test-case.h"
 
 #include "cut-test.h"
-#include "cut-context.h"
+#include "cut-runner.h"
 
 #include "cut-marshalers.h"
 
@@ -307,14 +307,14 @@ cut_test_case_add_test (CutTestCase *test_case, CutTest *test)
 }
 
 static gboolean
-run (CutTestCase *test_case, CutTest *test, CutContext *context)
+run (CutTestCase *test_case, CutTest *test, CutRunner *runner)
 {
     CutTestCasePrivate *priv;
     CutTestContext *original_test_context, *test_context;
     gboolean success = TRUE;
     jmp_buf jump_buffer;
 
-    if (cut_context_is_canceled(context))
+    if (cut_runner_is_canceled(runner))
         return TRUE;
 
     priv = CUT_TEST_CASE_GET_PRIVATE(test_case);
@@ -340,7 +340,7 @@ run (CutTestCase *test_case, CutTest *test, CutContext *context)
         success = FALSE;
     } else {
         cut_test_context_set_test(test_context, test);
-        success = cut_test_run(test, test_context, context);
+        success = cut_test_run(test, test_context, runner);
         cut_test_context_set_test(test_context, NULL);
     }
 
@@ -359,13 +359,13 @@ run (CutTestCase *test_case, CutTest *test, CutContext *context)
 }
 
 static gboolean
-cut_test_case_run_tests (CutTestCase *test_case, CutContext *context,
+cut_test_case_run_tests (CutTestCase *test_case, CutRunner *runner,
                          const GList *tests)
 {
     const GList *list;
     gboolean all_success = TRUE;
 
-    cut_context_start_test_case(context, test_case);
+    cut_runner_start_test_case(runner, test_case);
     g_signal_emit_by_name(test_case, "ready", g_list_length((GList *)tests));
     g_signal_emit_by_name(CUT_TEST(test_case), "start");
 
@@ -374,7 +374,7 @@ cut_test_case_run_tests (CutTestCase *test_case, CutContext *context,
             continue;
 
         if (CUT_IS_TEST(list->data)) {
-            if (!run(test_case, CUT_TEST(list->data), context))
+            if (!run(test_case, CUT_TEST(list->data), runner))
                 all_success = FALSE;
         } else {
             g_warning("This object is not CutTest object");
@@ -390,7 +390,7 @@ cut_test_case_run_tests (CutTestCase *test_case, CutContext *context,
 }
 
 gboolean
-cut_test_case_run_test (CutTestCase *test_case, CutContext *context,
+cut_test_case_run_test (CutTestCase *test_case, CutRunner *runner,
                         const gchar *name)
 {
     const gchar *test_names[] = {NULL, NULL};
@@ -398,19 +398,19 @@ cut_test_case_run_test (CutTestCase *test_case, CutContext *context,
     g_return_val_if_fail(CUT_IS_TEST_CASE(test_case), FALSE);
 
     test_names[0] = name;
-    return cut_test_case_run_with_filter(test_case, context, test_names);
+    return cut_test_case_run_with_filter(test_case, runner, test_names);
 }
 
 gboolean
 cut_test_case_run_with_filter (CutTestCase  *test_case,
-                               CutContext   *context,
+                               CutRunner   *runner,
                                const gchar **test_names)
 {
     GList *filtered_tests;
     gboolean success = TRUE;
 
     filtered_tests = get_filtered_tests(test_case, test_names);
-    success = cut_test_case_run_tests(test_case, context, filtered_tests);
+    success = cut_test_case_run_tests(test_case, runner, filtered_tests);
 
     g_list_free(filtered_tests);
 
@@ -418,12 +418,12 @@ cut_test_case_run_with_filter (CutTestCase  *test_case,
 }
 
 gboolean
-cut_test_case_run (CutTestCase *test_case, CutContext *context)
+cut_test_case_run (CutTestCase *test_case, CutRunner *runner)
 {
     const gchar **test_names;
 
-    test_names = cut_context_get_target_test_names(context);
-    return cut_test_case_run_with_filter(test_case, context, test_names);
+    test_names = cut_runner_get_target_test_names(runner);
+    return cut_test_case_run_with_filter(test_case, runner, test_names);
 }
 
 /*

@@ -29,7 +29,7 @@
 
 #include "cut-test.h"
 #include "cut-test-container.h"
-#include "cut-context.h"
+#include "cut-runner.h"
 #include "cut-marshalers.h"
 
 #define CUT_TEST_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST, CutTestPrivate))
@@ -299,7 +299,7 @@ cut_test_new (const gchar *function_name, const gchar *description,
 }
 
 gboolean
-cut_test_run (CutTest *test, CutTestContext *test_context, CutContext *context)
+cut_test_run (CutTest *test, CutTestContext *test_context, CutRunner *runner)
 {
     CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(test);
     gboolean success = TRUE;
@@ -308,7 +308,7 @@ cut_test_run (CutTest *test, CutTestContext *test_context, CutContext *context)
     if (!priv->test_function)
         return FALSE;
 
-    cut_context_start_test(context, test);
+    cut_runner_start_test(runner, test);
 
     g_signal_emit_by_name(test, "start");
 

@@ -29,7 +29,7 @@
 #include <glib/gstdio.h>
 
 #include "cut-ui.h"
-#include "cut-context.h"
+#include "cut-runner.h"
 #include "cut-test.h"
 #include "cut-test-case.h"
 #include "cut-module.h"
@@ -208,7 +208,7 @@ cut_ui_new (const gchar *name, const gchar *first_property, ...)
 }
 
 gboolean
-cut_ui_run (CutUI *ui, CutTestSuite *test_suite, CutContext *context)
+cut_ui_run (CutUI *ui, CutTestSuite *test_suite, CutRunner *runner)
 {
     CutUIClass *klass;
 
@@ -216,7 +216,7 @@ cut_ui_run (CutUI *ui, CutTestSuite *test_suite, CutContext *context)
 
     klass = CUT_UI_GET_CLASS(ui);
     if (klass->run)
-        return klass->run(ui, test_suite, context);
+        return klass->run(ui, test_suite, runner);
     else
         return FALSE;
 }

@@ -1,5 +1,5 @@
 #include "cutter.h"
-#include "cut-context.h"
+#include "cut-runner.h"
 #include "cut-test-case.h"
 #include "cut-test-suite.h"
 #include "cut-loader.h"
@@ -17,7 +17,7 @@ void test_run_test_with_regex_in_test_case_with_regex (void);
 void test_run_test_in_test_case_with_null (void);
 void test_run_test_with_filter_with_null (void);
 
-static CutContext *test_context;
+static CutRunner *runner;
 static CutTestSuite *test_object;
 static CutLoader *loader;
 
@@ -84,7 +84,7 @@ setup (void)
     n_run_bummy_test_function2 = 0;
     n_run_bummy_run_test_function = 0;
 
-    test_context = cut_context_new();
+    runner = cut_runner_new();
 
     test_object = cut_test_suite_new();
 
@@ -127,14 +127,14 @@ teardown (void)
 {
     g_object_unref(loader);
     g_object_unref(test_object);
-    g_object_unref(test_context);
+    g_object_unref(runner);
 }
 
 static gboolean
 run_test_case (const gchar *test_case_name)
 {
     return cut_test_suite_run_test_in_test_case(test_object,
-                                                test_context,
+                                                runner,
                                                 "/.*/",
                                                 test_case_name);
 }
@@ -142,14 +142,14 @@ run_test_case (const gchar *test_case_name)
 static gboolean
 run_test (const gchar *test_name)
 {
-    return cut_test_suite_run_test(test_object, test_context, test_name);
+    return cut_test_suite_run_test(test_object, runner, test_name);
 }
 
 static gboolean
 run_test_in_test_case (const gchar *test_name, const gchar *test_case_name)
 {
     return cut_test_suite_run_test_in_test_case(test_object,
-                                                test_context,
+                                                runner,
                                                 test_name,
                                                 test_case_name);
 }
@@ -158,7 +158,7 @@ static gboolean
 run_test_with_filter (const gchar **test_case_names, const gchar **test_names)
 {
     return cut_test_suite_run_with_filter(test_object,
-                                          test_context,
+                                          runner,
                                           test_case_names,
                                           test_names);
 }

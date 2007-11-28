@@ -84,9 +84,9 @@ GType        cut_test_get_type  (void) G_GNUC_CONST;
 CutTest     *cut_test_new                 (const gchar *function_name,
                                            const gchar *description,
                                            CutTestFunction function);
-gboolean     cut_test_run                 (CutTest *test,
+gboolean     cut_test_run                 (CutTest        *test,
                                            CutTestContext *test_context,
-                                           CutContext *context);
+                                           CutRunner      *runner);
 
 const gchar *cut_test_get_name            (CutTest *test);
 const gchar *cut_test_get_description     (CutTest *test);

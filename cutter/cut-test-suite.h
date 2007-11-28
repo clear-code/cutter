@@ -58,23 +58,23 @@ GType           cut_test_suite_get_type      (void) G_GNUC_CONST;
 
 CutTestSuite   *cut_test_suite_new           (void);
 void            cut_test_suite_add_test_case (CutTestSuite *suite,
-                                              CutTestCase *test_case);
+                                              CutTestCase  *test_case);
 gboolean        cut_test_suite_run           (CutTestSuite *suite,
-                                              CutContext   *context);
+                                              CutRunner    *runner);
 gboolean        cut_test_suite_run_test_case (CutTestSuite *suite,
-                                              CutContext   *context,
+                                              CutRunner    *runner,
                                               const gchar  *test_case_name);
 gboolean        cut_test_suite_run_test      (CutTestSuite *suite,
-                                              CutContext   *context,
+                                              CutRunner    *runner,
                                               const gchar  *name);
 gboolean        cut_test_suite_run_test_in_test_case
                                              (CutTestSuite *suite,
-                                              CutContext   *context,
-                                              const gchar *name,
-                                              const gchar *test_case_name);
+                                              CutRunner    *runner,
+                                              const gchar  *name,
+                                              const gchar  *test_case_name);
 gboolean        cut_test_suite_run_with_filter
                                              (CutTestSuite *test_suite,
-                                              CutContext   *context,
+                                              CutRunner    *runner,
                                               const gchar **test_case_names,
                                               const gchar **test_names);
 

@@ -34,7 +34,7 @@
 
 #include "cut-main.h"
 
-#include "cut-context.h"
+#include "cut-runner.h"
 #include "cut-test-suite.h"
 #include "cut-repository.h"
 #include "cut-ui.h"
@@ -175,20 +175,20 @@ cut_quit (void)
     initialized = FALSE;
 }
 
-CutContext *
-cut_create_context (void)
+CutRunner *
+cut_create_runner (void)
 {
-    CutContext *context;
+    CutRunner *runner;
 
-    context = cut_context_new();
+    runner = cut_runner_new();
 
     if (source_directory)
-        cut_context_set_source_directory(context, source_directory);
-    cut_context_set_multi_thread(context, use_multi_thread);
-    cut_context_set_target_test_case_names(context, test_case_names);
-    cut_context_set_target_test_names(context, test_names);
+        cut_runner_set_source_directory(runner, source_directory);
+    cut_runner_set_multi_thread(runner, use_multi_thread);
+    cut_runner_set_target_test_case_names(runner, test_case_names);
+    cut_runner_set_target_test_names(runner, test_names);
 
-    return context;
+    return runner;
 }
 
 CutTestSuite *
@@ -205,7 +205,7 @@ cut_create_test_suite (const gchar *directory)
 }
 
 gboolean
-cut_run_test_suite (CutTestSuite *suite, CutContext *context)
+cut_run_test_suite (CutTestSuite *suite, CutRunner *runner)
 {
     CutUI *ui;
     gboolean success;
@@ -224,7 +224,7 @@ cut_run_test_suite (CutTestSuite *suite, CutContext *context)
         return FALSE;
     }
 
-    success = cut_ui_run(ui, suite, context);
+    success = cut_ui_run(ui, suite, runner);
     g_object_unref(ui);
     return success;
 }
@@ -232,21 +232,21 @@ cut_run_test_suite (CutTestSuite *suite, CutContext *context)
 gboolean
 cut_run (const gchar *directory)
 {
-    CutContext *context;
+    CutRunner *runner;
     CutTestSuite *suite;
     gboolean success = TRUE;
 
-    context = cut_create_context();
-    if (!cut_context_get_source_directory(context))
-        cut_context_set_source_directory(context, directory);
+    runner = cut_create_runner();
+    if (!cut_runner_get_source_directory(runner))
+        cut_runner_set_source_directory(runner, directory);
 
     suite = cut_create_test_suite(directory);
     if (suite) {
-        success = cut_run_test_suite(suite, context);
+        success = cut_run_test_suite(suite, runner);
         g_object_unref(suite);
     }
 
-    g_object_unref(context);
+    g_object_unref(runner);
 
     return success;
 }

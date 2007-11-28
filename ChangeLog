@@ -1,5 +1,7 @@
 2007-11-28  Kouhei Sutou  <kou@cozmixng.org>
 
+	* ./: CutContext -> CutRunner.
+
 	* cutter/cut-context.[ch], cutter/cut-test-suite.c,
 	cutter/cut-test-case.c, cutter/module/ui/cut-ui/gtk.c: supported stop.
 
