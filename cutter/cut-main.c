@@ -103,7 +103,8 @@ cut_init (int *argc, char ***argv)
     setlocale(LC_ALL, "");
 
     g_type_init();
-	if (!g_thread_supported()) g_thread_init(NULL);
+    if (!g_thread_supported())
+        g_thread_init(NULL);
 
     option_context = g_option_context_new("TEST_DIRECTORY");
     g_option_context_add_main_entries(option_context, option_entries, "cutter");
