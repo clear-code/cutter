@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cutter trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-11-28 17:41+0900\n"
+"POT-Creation-Date: 2007-11-28 21:40+0900\n"
 "PO-Revision-Date: 2007-11-28 17:41+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
@@ -16,75 +16,51 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: cutter/cut-main.c:56
-msgid "Set directory of source code"
-msgstr "ソースコードのディレクトリを設定"
-
-#: cutter/cut-main.c:58
-msgid "Specify tests"
-msgstr "テストを指定"
-
-#: cutter/cut-main.c:60
-msgid "Specify test cases"
-msgstr "テストケースを指定"
-
-#: cutter/cut-main.c:62
-msgid "Run test cases with multi-thread"
-msgstr "マルチスレッドでテストケースを実行"
-
-#: cutter/cut-main.c:64
-msgid "Specify UI"
-msgstr "UIを指定"
-
-#: cutter/cut-main.c:66
-msgid "Show all available UIs and exit"
-msgstr "すべての利用可能なUIを表示し、終了する"
-
-#: cutter/module/ui/cut-ui-gtk.c:153
+#: cutter/module/ui/cut-ui-gtk.c:192
 msgid "Ready"
 msgstr "準備完了"
 
-#: cutter/module/ui/cut-ui-gtk.c:168
+#: cutter/module/ui/cut-ui-gtk.c:207
 msgid "Name"
 msgstr "名前"
 
-#: cutter/module/ui/cut-ui-gtk.c:194
+#: cutter/module/ui/cut-ui-gtk.c:233
 msgid "Description"
 msgstr "説明"
 
-#: cutter/module/ui/cut-ui-gtk.c:488
+#: cutter/module/ui/cut-ui-gtk.c:527
 #, c-format
 msgid ""
 "%d test(s), %d assertion(s), %d failure(s), %d error(s), %d pending(s), %d "
 "notification(s)"
 msgstr "%dテスト、%d表明、%d失敗、%dエラー、%d保留、%d通知"
 
-#: cutter/module/ui/cut-ui-gtk.c:507
+#: cutter/module/ui/cut-ui-gtk.c:546
 #, c-format
 msgid "%dT:%dA:%dF:%d:E:%dP:%dN"
 msgstr "%dテ:%d表:%d失:%d:エ:%d保:%d通"
 
-#: cutter/module/ui/cut-ui-gtk.c:546
+#: cutter/module/ui/cut-ui-gtk.c:595
 #, c-format
 msgid "%u/%u (%u%%): %.1fs"
 msgstr "%u/%u (%u%%): %.1f秒"
 
-#: cutter/module/ui/cut-ui-gtk.c:569
+#: cutter/module/ui/cut-ui-gtk.c:618
 #, c-format
 msgid "Staring test suite %s..."
 msgstr "テストスイート%sを開始..."
 
-#: cutter/module/ui/cut-ui-gtk.c:1046
+#: cutter/module/ui/cut-ui-gtk.c:1096
 #, c-format
 msgid "Running test: %s"
 msgstr "テストを実行中: %s"
 
-#: cutter/module/ui/cut-ui-gtk.c:1200
+#: cutter/module/ui/cut-ui-gtk.c:1250
 #, c-format
 msgid "Finished in %0.1f seconds: %s"
 msgstr "%0.1f秒で終了: %s"
 
-#: cutter/module/ui/cut-ui-gtk.c:1237
+#: cutter/module/ui/cut-ui-gtk.c:1289
 msgid "CRASHED!!!"
 msgstr "異常終了！！！"
 
@@ -116,3 +92,27 @@ msgstr "UI共通のオプション"
 #: cutter/cut-ui-factory.c:232
 msgid "Show Common UI Options"
 msgstr "UI共通のオプションの表示"
+
+#: cutter/cut-main.c:56
+msgid "Set directory of source code"
+msgstr "ソースコードのディレクトリを設定"
+
+#: cutter/cut-main.c:58
+msgid "Specify tests"
+msgstr "テストを指定"
+
+#: cutter/cut-main.c:60
+msgid "Specify test cases"
+msgstr "テストケースを指定"
+
+#: cutter/cut-main.c:62
+msgid "Run test cases with multi-thread"
+msgstr "マルチスレッドでテストケースを実行"
+
+#: cutter/cut-main.c:64
+msgid "Specify UI"
+msgstr "UIを指定"
+
+#: cutter/cut-main.c:66
+msgid "Show all available UIs and exit"
+msgstr "すべての利用可能なUIを表示し、終了する"
