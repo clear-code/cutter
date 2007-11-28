@@ -51,6 +51,7 @@ struct _CutContextPrivate
     gchar *source_directory;
     gchar **target_test_case_names;
     gchar **target_test_names;
+    gboolean canceled;
 };
 
 enum
@@ -326,6 +327,7 @@ cut_context_init (CutContext *context)
     priv->source_directory = NULL;
     priv->target_test_case_names = NULL;
     priv->target_test_names = NULL;
+    priv->canceled = FALSE;
 }
 
 static void
@@ -848,6 +850,18 @@ const gchar *
 cut_context_get_stack_trace (CutContext *context)
 {
     return CUT_CONTEXT_GET_PRIVATE(context)->stack_trace;
+};
+
+void
+cut_context_cancel (CutContext *context)
+{
+    CUT_CONTEXT_GET_PRIVATE(context)->canceled = TRUE;
+};
+
+gboolean
+cut_context_is_canceled (CutContext *context)
+{
+    return CUT_CONTEXT_GET_PRIVATE(context)->canceled;
 };
 
 /*

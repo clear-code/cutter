@@ -60,6 +60,7 @@ struct _CutUIGtk
     GtkTreeStore  *logs;
     GtkStatusbar  *statusbar;
     GtkLabel      *summary;
+    GtkWidget     *cancel_button;
 
     CutTestSuite  *test_suite;
     CutContext    *context;
@@ -139,10 +140,48 @@ setup_progress_bar (GtkBox *box, CutUIGtk *ui)
     GtkWidget *progress_bar;
 
     progress_bar = gtk_progress_bar_new();
-    gtk_box_pack_start(box, progress_bar, FALSE, TRUE, 0);
+    gtk_box_pack_start(box, progress_bar, TRUE, TRUE, 0);
 
     ui->progress_bar = GTK_PROGRESS_BAR(progress_bar);
     gtk_progress_bar_set_pulse_step(ui->progress_bar, 0.01);
+}
+
+static void
+cb_cancel (GtkToolButton *button, gpointer data)
+{
+    CutUIGtk *ui = data;
+
+    cut_context_cancel(ui->context);
+    gtk_widget_set_sensitive(GTK_WIDGET(button), FALSE);
+}
+
+static void
+setup_cancel_button (GtkToolbar *toolbar, CutUIGtk *ui)
+{
+    GtkToolItem *cancel_button;
+
+    cancel_button = gtk_tool_button_new_from_stock(GTK_STOCK_STOP);
+    gtk_toolbar_insert(toolbar, cancel_button, -1);
+
+    g_signal_connect(cancel_button, "clicked", G_CALLBACK(cb_cancel), ui);
+
+    ui->cancel_button = GTK_WIDGET(cancel_button);
+}
+
+static void
+setup_top_bar (GtkBox *box, CutUIGtk *ui)
+{
+    GtkWidget *hbox, *toolbar;
+
+    hbox = gtk_hbox_new(FALSE, 0);
+    gtk_box_pack_start(box, hbox, FALSE, TRUE, 0);
+
+    setup_progress_bar(GTK_BOX(hbox), ui);
+
+    toolbar = gtk_toolbar_new();
+    gtk_toolbar_set_show_arrow(GTK_TOOLBAR(toolbar), FALSE);
+    gtk_box_pack_end(GTK_BOX(hbox), toolbar, FALSE, FALSE, 0);
+    setup_cancel_button(GTK_TOOLBAR(toolbar), ui);
 }
 
 static void
@@ -278,7 +317,7 @@ setup_window (CutUIGtk *ui)
     vbox = gtk_vbox_new(FALSE, 0);
     gtk_container_add(GTK_CONTAINER(window), vbox);
 
-    setup_progress_bar(GTK_BOX(vbox), ui);
+    setup_top_bar(GTK_BOX(vbox), ui);
     setup_summary_label(GTK_BOX(vbox), ui);
     setup_tree_view(GTK_BOX(vbox), ui);
     setup_statusbar(GTK_BOX(vbox), ui);
@@ -509,6 +548,16 @@ generate_short_summary_message (CutContext *context)
                            n_pendings, n_notifications);
 }
 
+static gboolean
+idle_cb_update_button_sensitive (gpointer data)
+{
+    CutUIGtk *ui = data;
+
+    gtk_widget_set_sensitive(ui->cancel_button, ui->running);
+
+    return FALSE;
+}
+
 static void
 update_progress_color (GtkProgressBar *bar, CutTestResultStatus status)
 {
@@ -582,6 +631,7 @@ cb_ready_test_suite (CutContext *context, CutTestSuite *test_suite,
     ui->n_tests = n_tests;
     ui->update_pulse_id = g_timeout_add(10, timeout_cb_pulse, ui);
 
+    g_idle_add(idle_cb_update_button_sensitive, ui);
     g_idle_add(idle_cb_push_start_test_suite_message, ui);
 }
 
@@ -1212,8 +1262,10 @@ static void
 cb_complete_test_suite (CutContext *context, CutTestSuite *test_suite,
                         CutUIGtk *ui)
 {
-    g_idle_add(idle_cb_push_complete_test_suite_message, ui);
     ui->running = FALSE;
+
+    g_idle_add(idle_cb_push_complete_test_suite_message, ui);
+    g_idle_add(idle_cb_update_button_sensitive, ui);
 }
 
 typedef struct _CrashRowInfo

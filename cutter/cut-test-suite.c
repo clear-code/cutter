@@ -206,6 +206,9 @@ run_with_thread (CutTestSuite *test_suite, CutTestCase *test_case,
     RunTestInfo *info;
     gboolean need_no_thread_run = TRUE;
 
+    if (cut_context_is_canceled(context))
+        return;
+
     info = g_new0(RunTestInfo, 1);
     info->test_suite = g_object_ref(test_suite);
     info->test_case = g_object_ref(test_case);

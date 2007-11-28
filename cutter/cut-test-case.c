@@ -314,6 +314,9 @@ run (CutTestCase *test_case, CutTest *test, CutContext *context)
     gboolean success = TRUE;
     jmp_buf jump_buffer;
 
+    if (cut_context_is_canceled(context))
+        return TRUE;
+
     priv = CUT_TEST_CASE_GET_PRIVATE(test_case);
     if (!priv->get_current_test_context ||
         !priv->set_current_test_context) {

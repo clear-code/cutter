@@ -1,5 +1,8 @@
 2007-11-28  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-context.[ch], cutter/cut-test-suite.c,
+	cutter/cut-test-case.c, cutter/module/ui/cut-ui/gtk.c: supported stop.
+
 	* cutter/module/ui/cut-ui-gtk.c: set title.
 
 	* README*: updated options.
