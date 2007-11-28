@@ -100,18 +100,18 @@ GType        cut_runner_get_type  (void) G_GNUC_CONST;
 
 CutRunner    *cut_runner_new (void);
 
-void          cut_runner_set_test_directory        (CutRunner *runner,
-                                                    const gchar *directory);
-const gchar  *cut_runner_get_test_directory        (CutRunner *runner);
-void          cut_runner_set_source_directory      (CutRunner *runner,
-                                                    const gchar *directory);
-const gchar  *cut_runner_get_source_directory      (CutRunner *runner);
-void          cut_runner_set_use_color             (CutRunner *runner,
-                                                    gboolean    use_color);
+CutRunner    *cut_runner_copy                      (CutRunner   *runner);
 
-void          cut_runner_set_multi_thread          (CutRunner *runner,
-                                                    gboolean    use_multi_thread);
-gboolean      cut_runner_get_multi_thread          (CutRunner *runner);
+void          cut_runner_set_test_directory        (CutRunner   *runner,
+                                                    const gchar *directory);
+const gchar  *cut_runner_get_test_directory        (CutRunner   *runner);
+void          cut_runner_set_source_directory      (CutRunner   *runner,
+                                                    const gchar *directory);
+const gchar  *cut_runner_get_source_directory      (CutRunner   *runner);
+
+void          cut_runner_set_multi_thread          (CutRunner   *runner,
+                                                    gboolean     use_multi_thread);
+gboolean      cut_runner_get_multi_thread          (CutRunner   *runner);
 
 void          cut_runner_set_target_test_case_names(CutRunner   *runner,
                                                     const gchar **names);
@@ -120,11 +120,11 @@ void          cut_runner_set_target_test_names     (CutRunner   *runner,
                                                     const gchar **names);
 const gchar **cut_runner_get_target_test_names     (CutRunner   *runner);
 
-void          cut_runner_start_test                (CutRunner *runner,
-                                                    CutTest    *test);
-void          cut_runner_start_test_case           (CutRunner *runner,
+void          cut_runner_start_test                (CutRunner   *runner,
+                                                    CutTest     *test);
+void          cut_runner_start_test_case           (CutRunner   *runner,
                                                     CutTestCase *test_case);
-void          cut_runner_start_test_suite          (CutRunner *runner,
+void          cut_runner_start_test_suite          (CutRunner   *runner,
                                                     CutTestSuite *test_suite);
 
 guint         cut_runner_get_n_tests               (CutRunner *runner);

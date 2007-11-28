@@ -61,9 +61,10 @@ struct _CutUIGtk
     GtkStatusbar  *statusbar;
     GtkLabel      *summary;
     GtkWidget     *cancel_button;
+    GtkWidget     *restart_button;
 
     CutTestSuite  *test_suite;
-    CutRunner    *runner;
+    CutRunner     *runner;
 
     GMutex        *mutex;
 
@@ -116,6 +117,8 @@ static gboolean run        (CutUI    *ui,
                             CutTestSuite *test_suite,
                             CutRunner   *runner);
 
+static gboolean idle_cb_run_test (gpointer data);
+
 static void
 class_init (CutUIClass *klass)
 {
@@ -151,8 +154,9 @@ cb_cancel (GtkToolButton *button, gpointer data)
 {
     CutUIGtk *ui = data;
 
-    cut_runner_cancel(ui->runner);
     gtk_widget_set_sensitive(GTK_WIDGET(button), FALSE);
+
+    cut_runner_cancel(ui->runner);
 }
 
 static void
@@ -160,12 +164,41 @@ setup_cancel_button (GtkToolbar *toolbar, CutUIGtk *ui)
 {
     GtkToolItem *cancel_button;
 
-    cancel_button = gtk_tool_button_new_from_stock(GTK_STOCK_STOP);
+    cancel_button = gtk_tool_button_new_from_stock(GTK_STOCK_CANCEL);
     gtk_toolbar_insert(toolbar, cancel_button, -1);
 
     g_signal_connect(cancel_button, "clicked", G_CALLBACK(cb_cancel), ui);
 
     ui->cancel_button = GTK_WIDGET(cancel_button);
+}
+
+static void
+cb_restart (GtkToolButton *button, gpointer data)
+{
+    CutUIGtk *ui = data;
+    CutRunner *runner;
+
+    gtk_widget_set_sensitive(GTK_WIDGET(button), FALSE);
+
+    runner = cut_runner_copy(ui->runner);
+    g_object_unref(ui->runner);
+    ui->runner = runner;
+    g_object_unref(ui->test_suite);
+    ui->test_suite = cut_runner_create_test_suite(ui->runner);
+    g_idle_add(idle_cb_run_test, ui);
+}
+
+static void
+setup_restart_button (GtkToolbar *toolbar, CutUIGtk *ui)
+{
+    GtkToolItem *restart_button;
+
+    restart_button = gtk_tool_button_new_from_stock(GTK_STOCK_REDO);
+    gtk_toolbar_insert(toolbar, restart_button, -1);
+
+    g_signal_connect(restart_button, "clicked", G_CALLBACK(cb_restart), ui);
+
+    ui->restart_button = GTK_WIDGET(restart_button);
 }
 
 static void
@@ -182,6 +215,7 @@ setup_top_bar (GtkBox *box, CutUIGtk *ui)
     gtk_toolbar_set_show_arrow(GTK_TOOLBAR(toolbar), FALSE);
     gtk_box_pack_end(GTK_BOX(hbox), toolbar, FALSE, FALSE, 0);
     setup_cancel_button(GTK_TOOLBAR(toolbar), ui);
+    setup_restart_button(GTK_TOOLBAR(toolbar), ui);
 }
 
 static void
@@ -554,6 +588,7 @@ idle_cb_update_button_sensitive (gpointer data)
     CutUIGtk *ui = data;
 
     gtk_widget_set_sensitive(ui->cancel_button, ui->running);
+    gtk_widget_set_sensitive(ui->restart_button, !ui->running);
 
     return FALSE;
 }
@@ -1347,21 +1382,27 @@ static gpointer
 run_test_thread_func (gpointer data)
 {
     CutUIGtk *ui = data;
+    CutRunner *runner;
+
+    runner = g_object_ref(ui->runner);
 
     ui->n_tests = 0;
     ui->n_completed_tests = 0;
     ui->status = CUT_TEST_RESULT_SUCCESS;
-    cut_test_suite_run(ui->test_suite, ui->runner);
-    disconnect_from_runner(ui, ui->runner);
+    cut_test_suite_run(ui->test_suite, runner);
+    disconnect_from_runner(ui, runner);
+
+    g_object_unref(runner);
 
     return NULL;
 }
 
 static gboolean
-run_test_source_func (gpointer data)
+idle_cb_run_test (gpointer data)
 {
     CutUIGtk *ui = data;
 
+    gtk_tree_store_clear(ui->logs);
     connect_to_runner(ui, ui->runner);
     g_thread_create(run_test_thread_func, ui, TRUE, NULL);
 
@@ -1377,7 +1418,7 @@ run (CutUI *ui, CutTestSuite *test_suite, CutRunner *runner)
     gtk_ui->test_suite = g_object_ref(test_suite);
     gtk_ui->runner = g_object_ref(runner);
     gtk_widget_show_all(gtk_ui->window);
-    g_idle_add(run_test_source_func, gtk_ui);
+    g_idle_add(idle_cb_run_test, gtk_ui);
     gtk_main();
 
     return gtk_ui->status <= CUT_TEST_RESULT_NOTIFICATION;

@@ -442,6 +442,29 @@ cut_runner_new (void)
     return g_object_new(CUT_TYPE_RUNNER, NULL);
 }
 
+CutRunner *
+cut_runner_copy (CutRunner *runner)
+{
+    CutRunnerPrivate *priv, *copied_priv;
+    CutRunner *copied;
+
+    copied = cut_runner_new();
+
+    priv = CUT_RUNNER_GET_PRIVATE(runner);
+    copied_priv = CUT_RUNNER_GET_PRIVATE(copied);
+
+    copied_priv->use_multi_thread = priv->use_multi_thread;
+
+    copied_priv->test_directory = g_strdup(priv->test_directory);
+    copied_priv->source_directory = g_strdup(priv->source_directory);
+
+    copied_priv->target_test_case_names =
+        g_strdupv(priv->target_test_case_names);
+    copied_priv->target_test_names = g_strdupv(priv->target_test_names);
+
+    return copied;
+}
+
 void
 cut_runner_set_test_directory (CutRunner *runner, const gchar *directory)
 {
