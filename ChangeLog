@@ -1,5 +1,7 @@
 2007-11-28  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/: cut_run_test_suite() -> cut_run_runner().
+
 	* sample/glib/option.c (setup): reset callback_test2_int.
 
 	* cutter/cut-runner.[ch]: added cut_runner_copy().

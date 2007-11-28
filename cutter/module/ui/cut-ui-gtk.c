@@ -114,7 +114,6 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 static gboolean run        (CutUI    *ui,
-                            CutTestSuite *test_suite,
                             CutRunner   *runner);
 
 static gboolean idle_cb_run_test (gpointer data);
@@ -181,10 +180,13 @@ cb_restart (GtkToolButton *button, gpointer data)
     gtk_widget_set_sensitive(GTK_WIDGET(button), FALSE);
 
     runner = cut_runner_copy(ui->runner);
+    cut_runner_set_test_suite(ui->runner, NULL);
     g_object_unref(ui->runner);
     ui->runner = runner;
+
     g_object_unref(ui->test_suite);
-    ui->test_suite = cut_runner_create_test_suite(ui->runner);
+    ui->test_suite = g_object_ref(cut_runner_get_test_suite(ui->runner));
+
     g_idle_add(idle_cb_run_test, ui);
 }
 
@@ -1410,12 +1412,12 @@ idle_cb_run_test (gpointer data)
 }
 
 static gboolean
-run (CutUI *ui, CutTestSuite *test_suite, CutRunner *runner)
+run (CutUI *ui, CutRunner *runner)
 {
     CutUIGtk *gtk_ui;
 
     gtk_ui = CUT_UI_GTK(ui);
-    gtk_ui->test_suite = g_object_ref(test_suite);
+    gtk_ui->test_suite = g_object_ref(cut_runner_get_test_suite(runner));
     gtk_ui->runner = g_object_ref(runner);
     gtk_widget_show_all(gtk_ui->window);
     g_idle_add(idle_cb_run_test, gtk_ui);

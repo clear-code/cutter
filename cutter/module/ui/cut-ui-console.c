@@ -94,7 +94,6 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 static gboolean run        (CutUI    *ui,
-                            CutTestSuite *test_suite,
                             CutRunner   *runner);
 
 static void
@@ -650,13 +649,13 @@ disconnect_from_runner (CutUIConsole *console, CutRunner *runner)
 }
 
 static gboolean
-run (CutUI *ui, CutTestSuite *test_suite, CutRunner *runner)
+run (CutUI *ui, CutRunner *runner)
 {
     CutUIConsole *console = CUT_UI_CONSOLE(ui);
     gboolean success;
 
     connect_to_runner(console, runner);
-    success = cut_test_suite_run(test_suite, runner);
+    success = cut_runner_run(runner);
     disconnect_from_runner(console, runner);
 
     return success;

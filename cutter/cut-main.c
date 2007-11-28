@@ -195,7 +195,7 @@ cut_create_runner (void)
 }
 
 gboolean
-cut_run_test_suite (CutTestSuite *suite, CutRunner *runner)
+cut_run_runner (CutRunner *runner)
 {
     CutUI *ui;
     gboolean success;
@@ -205,16 +205,13 @@ cut_run_test_suite (CutTestSuite *suite, CutRunner *runner)
         return FALSE;
     }
 
-    if (!suite)
-        return TRUE;
-
     ui = cut_ui_factory_create(factory);
     if (!ui) {
         g_warning("can't create UI: %s", ui_name);
         return FALSE;
     }
 
-    success = cut_ui_run(ui, suite, runner);
+    success = cut_ui_run(ui, runner);
     g_object_unref(ui);
     return success;
 }
@@ -223,15 +220,10 @@ gboolean
 cut_run (void)
 {
     CutRunner *runner;
-    CutTestSuite *suite;
     gboolean success = TRUE;
 
     runner = cut_create_runner();
-    suite = cut_runner_create_test_suite(runner);
-    if (suite) {
-        success = cut_run_test_suite(suite, runner);
-        g_object_unref(suite);
-    }
+    success = cut_run_runner(runner);
     g_object_unref(runner);
 
     return success;

@@ -33,8 +33,7 @@ void          cut_quit              (void);
 gboolean      cut_run               (void);
 
 CutRunner    *cut_create_runner     (void);
-gboolean      cut_run_test_suite    (CutTestSuite *suite,
-                                     CutRunner    *runner);
+gboolean      cut_run_runner        (CutRunner    *runner);
 
 G_END_DECLS
 

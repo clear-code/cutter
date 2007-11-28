@@ -208,7 +208,7 @@ cut_ui_new (const gchar *name, const gchar *first_property, ...)
 }
 
 gboolean
-cut_ui_run (CutUI *ui, CutTestSuite *test_suite, CutRunner *runner)
+cut_ui_run (CutUI *ui, CutRunner *runner)
 {
     CutUIClass *klass;
 
@@ -216,7 +216,7 @@ cut_ui_run (CutUI *ui, CutTestSuite *test_suite, CutRunner *runner)
 
     klass = CUT_UI_GET_CLASS(ui);
     if (klass->run)
-        return klass->run(ui, test_suite, runner);
+        return klass->run(ui, runner);
     else
         return FALSE;
 }

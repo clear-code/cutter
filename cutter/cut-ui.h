@@ -50,7 +50,6 @@ struct _CutUIClass
     GObjectClass parent_class;
 
     gboolean (*run)                (CutUI    *ui,
-                                    CutTestSuite *test_suite,
                                     CutRunner   *runner);
 };
 
@@ -72,7 +71,6 @@ CutUI          *cut_ui_new         (const gchar *name,
                                     ...);
 
 gboolean        cut_ui_run         (CutUI        *ui,
-                                    CutTestSuite *test_suite,
                                     CutRunner    *runner);
 G_END_DECLS
 

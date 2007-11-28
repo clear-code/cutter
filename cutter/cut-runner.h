@@ -141,7 +141,12 @@ const gchar  *cut_runner_get_stack_trace           (CutRunner *runner);
 
 void          cut_runner_cancel                    (CutRunner *runner);
 gboolean      cut_runner_is_canceled               (CutRunner *runner);
+
 CutTestSuite *cut_runner_create_test_suite         (CutRunner *runner);
+CutTestSuite *cut_runner_get_test_suite            (CutRunner *runner);
+void          cut_runner_set_test_suite            (CutRunner *runner,
+                                                    CutTestSuite *suite);
+gboolean      cut_runner_run                       (CutRunner *runner);
 
 
 G_END_DECLS

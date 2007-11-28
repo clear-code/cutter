@@ -54,6 +54,7 @@ struct _CutRunnerPrivate
     gchar **target_test_case_names;
     gchar **target_test_names;
     gboolean canceled;
+    CutTestSuite *test_suite;
 };
 
 enum
@@ -331,6 +332,7 @@ cut_runner_init (CutRunner *runner)
     priv->target_test_case_names = NULL;
     priv->target_test_names = NULL;
     priv->canceled = FALSE;
+    priv->test_suite = NULL;
 }
 
 static void
@@ -347,6 +349,11 @@ dispose (GObject *object)
     if (priv->mutex) {
         g_mutex_free(priv->mutex);
         priv->mutex = NULL;
+    }
+
+    if (priv->test_suite) {
+        g_object_unref(priv->test_suite);
+        priv->test_suite = NULL;
     }
 
     g_free(priv->stack_trace);
@@ -918,6 +925,41 @@ cut_runner_create_test_suite (CutRunner *runner)
     g_object_unref(repository);
 
     return suite;
+}
+
+CutTestSuite *
+cut_runner_get_test_suite (CutRunner *runner)
+{
+    CutRunnerPrivate *priv;
+
+    priv = CUT_RUNNER_GET_PRIVATE(runner);
+    if (!priv->test_suite)
+        priv->test_suite = cut_runner_create_test_suite(runner);
+
+    return priv->test_suite;
+}
+
+void
+cut_runner_set_test_suite (CutRunner *runner, CutTestSuite *suite)
+{
+    CutRunnerPrivate *priv;
+
+    priv = CUT_RUNNER_GET_PRIVATE(runner);
+    if (priv->test_suite)
+        g_object_unref(priv->test_suite);
+
+    if (suite)
+        g_object_ref(suite);
+    priv->test_suite = suite;
+}
+
+gboolean
+cut_runner_run (CutRunner *runner)
+{
+    CutTestSuite *suite;
+
+    suite = cut_runner_get_test_suite(runner);
+    return cut_test_suite_run(suite, runner);
 }
 
 /*
