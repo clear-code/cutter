@@ -785,21 +785,6 @@ idle_cb_append_test_row (gpointer data)
     return FALSE;
 }
 
-static void
-update_test_row_progress_color (TestRowInfo *info)
-{
-    GdkColor color;
-    GtkWidget *tree_view;
-
-    tree_view = GTK_WIDGET(info->test_case_row_info->ui->tree_view);
-
-    gdk_color_parse(status_to_color(info->status), &color);
-    gtk_widget_modify_bg(tree_view, GTK_STATE_SELECTED, &color);
-
-    gdk_color_parse("black", &color);
-    gtk_widget_modify_fg(tree_view, GTK_STATE_SELECTED, &color);
-}
-
 static gboolean
 idle_cb_update_test_row_status (gpointer data)
 {
@@ -814,7 +799,6 @@ idle_cb_update_test_row_status (gpointer data)
                                             &iter, info->path)) {
         GdkPixbuf *icon;
         icon = get_status_icon(ui->tree_view, info->status);
-        update_test_row_progress_color(info);
         gtk_tree_store_set(ui->logs, &iter,
                            COLUMN_STATUS_ICON, icon,
                            COLUMN_PROGRESS_VISIBLE, FALSE,
