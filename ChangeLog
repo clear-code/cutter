@@ -1,6 +1,7 @@
 2007-11-28  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/module/ui/cut-ui-gtk.c: Added pixbuf column.
+	* cutter/module/ui/cut-ui-gtk.c: Show icon.
 
 2007-11-27  Kouhei Sutou  <kou@cozmixng.org>
 
