@@ -21,6 +21,7 @@
 	progress.
 	* cutter/module/ui/cut-ui-gtk.c: Show progress bar at the right of
 	test name.
+	* cutter/module/ui/cut-ui-gtk.c: Show icon for test case.
 
 2007-11-27  Kouhei Sutou  <kou@cozmixng.org>
 

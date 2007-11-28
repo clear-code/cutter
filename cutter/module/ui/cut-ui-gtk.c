@@ -581,10 +581,56 @@ typedef struct TestRowInfo
     CutTestResultStatus status;
 } TestRowInfo;
 
+static GdkPixbuf *
+get_status_icon (GtkTreeView *tree_view, CutTestResultStatus status)
+{
+    GdkPixbuf *icon;
+    const gchar *stock_id = "";
+
+    switch (status) {
+      case CUT_TEST_RESULT_SUCCESS:
+        stock_id = GTK_STOCK_APPLY;
+        break;
+      case CUT_TEST_RESULT_NOTIFICATION:
+        stock_id = GTK_STOCK_DIALOG_WARNING;
+        break;
+      case CUT_TEST_RESULT_PENDING:
+        stock_id = GTK_STOCK_DIALOG_ERROR;
+        break;
+      case CUT_TEST_RESULT_FAILURE:
+        stock_id = GTK_STOCK_STOP;
+        break;
+      case CUT_TEST_RESULT_ERROR:
+        stock_id = GTK_STOCK_CANCEL;
+        break;
+    }
+    icon = gtk_widget_render_icon(GTK_WIDGET(tree_view),
+                                  stock_id, GTK_ICON_SIZE_MENU,
+                                  NULL);
+
+    return icon;
+}
+
 static gboolean
 idle_cb_free_test_case_row_info (gpointer data)
 {
     TestCaseRowInfo *info = data;
+    CutUIGtk *ui;
+    GtkTreeIter iter;
+
+    ui = info->ui;
+
+    g_mutex_lock(ui->mutex);
+    if (gtk_tree_model_get_iter_from_string(GTK_TREE_MODEL(ui->logs),
+                                            &iter, info->path)) {
+        GdkPixbuf *icon;
+        icon = get_status_icon(ui->tree_view, info->status);
+        gtk_tree_store_set(ui->logs, &iter,
+                           COLUMN_STATUS_ICON, icon,
+                           -1);
+        g_object_unref(icon);
+    }
+    g_mutex_unlock(ui->mutex);
 
     g_object_unref(info->ui);
     g_object_unref(info->test_case);
