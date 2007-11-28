@@ -27,6 +27,7 @@
 #include <string.h>
 #include <glib.h>
 #include <glib/gstdio.h>
+#include <glib/gi18n-lib.h>
 #include <gmodule.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
@@ -147,7 +148,7 @@ setup_summary_label (GtkBox *box, CutUIGtk *ui)
 {
     GtkWidget *summary;
 
-    summary = gtk_label_new("Ready");
+    summary = gtk_label_new(_("Ready"));
     gtk_box_pack_start(box, summary, FALSE, TRUE, 0);
 
     ui->summary = GTK_LABEL(summary);
@@ -161,16 +162,16 @@ setup_tree_view_columns (GtkTreeView *tree_view)
 
     renderer = gtk_cell_renderer_pixbuf_new();
     column = gtk_tree_view_column_new();
-    gtk_tree_view_column_set_title(column, "Status");
+    gtk_tree_view_column_set_title(column, _("Status"));
     gtk_tree_view_column_pack_start(column, renderer, FALSE);
     gtk_tree_view_column_add_attribute(column, renderer,
                                        "pixbuf", COLUMN_STATUS_ICON);
     gtk_tree_view_append_column(tree_view, column);
 
-    renderer = g_object_new(GTK_TYPE_CELL_RENDERER_PROGRESS, 
+    renderer = g_object_new(GTK_TYPE_CELL_RENDERER_PROGRESS,
                             "text-xalign", 0.0f,
                             NULL);
-    column = gtk_tree_view_column_new_with_attributes("Name", renderer,
+    column = gtk_tree_view_column_new_with_attributes(_("Name"), renderer,
                                                       "text", COLUMN_NAME,
                                                       "value", COLUMN_PROGRESS_VALUE,
                                                       "pulse", COLUMN_PROGRESS_PULSE,
@@ -181,7 +182,7 @@ setup_tree_view_columns (GtkTreeView *tree_view)
     renderer = g_object_new(GTK_TYPE_CELL_RENDERER_TEXT,
                             "font", "Monospace",
                             NULL);
-    column = gtk_tree_view_column_new_with_attributes("Description", renderer,
+    column = gtk_tree_view_column_new_with_attributes(_("Description"), renderer,
                                                       "text", COLUMN_DESCRIPTION,
                                                       "background", COLUMN_COLOR,
                                                       NULL);
@@ -438,8 +439,8 @@ generate_summary_message (CutContext *context)
     n_pendings = cut_context_get_n_pendings(context);
     n_notifications = cut_context_get_n_notifications(context);
 
-    return g_strdup_printf("%d test(s), %d assertion(s), %d failure(s), "
-                           "%d error(s), %d pending(s), %d notification(s)",
+    return g_strdup_printf(_("%d test(s), %d assertion(s), %d failure(s), "
+                             "%d error(s), %d pending(s), %d notification(s)"),
                            n_tests, n_assertions, n_failures, n_errors,
                            n_pendings, n_notifications);
 }
@@ -477,7 +478,7 @@ timeout_cb_pulse (gpointer data)
         fraction = n_completed_tests / (gdouble)n_tests;
         gtk_progress_bar_set_fraction(ui->progress_bar, fraction);
 
-        text = g_strdup_printf("%u/%u (%u%%): %.1fs",
+        text = g_strdup_printf(_("%u/%u (%u%%): %.1fs"),
                                n_completed_tests, n_tests,
                                (guint)(fraction * 100),
                                cut_test_get_elapsed(CUT_TEST(ui->test_suite)));
@@ -500,7 +501,7 @@ idle_cb_push_start_test_suite_message (gpointer data)
     gchar *message;
 
     context_id = gtk_statusbar_get_context_id(ui->statusbar, "test-suite");
-    message = g_strdup_printf("Staring test suite %s...",
+    message = g_strdup_printf(_("Staring test suite %s..."),
                               cut_test_get_name(CUT_TEST(ui->test_suite)));
     gtk_statusbar_push(ui->statusbar, context_id, message);
     g_free(message);
@@ -590,9 +591,10 @@ update_status (TestRowInfo *info, CutTestResultStatus status)
     CutUIGtk *ui;
 
     info->status = status;
+    test_case_row_info = info->test_case_row_info;
+    ui = test_case_row_info->ui;
 
     g_mutex_lock(ui->mutex);
-    test_case_row_info = info->test_case_row_info;
     if (test_case_row_info->status < status)
         test_case_row_info->status = status;
 
@@ -985,7 +987,8 @@ idle_cb_push_running_test_message (gpointer data)
 
     ui = info->test_case_row_info->ui;
     context_id = gtk_statusbar_get_context_id(ui->statusbar, "test");
-    message = g_strdup_printf("Running: test %s", cut_test_get_name(info->test));
+    message = g_strdup_printf(_("Running test: %s"),
+                              cut_test_get_name(info->test));
     gtk_statusbar_push(ui->statusbar, context_id, message);
     g_free(message);
 
@@ -1138,7 +1141,7 @@ idle_cb_push_complete_test_suite_message (gpointer data)
 
     context_id = gtk_statusbar_get_context_id(ui->statusbar, "test-suite");
     summary = generate_summary_message(ui->context);
-    message = g_strdup_printf("Finished in %0.1f seconds: %s",
+    message = g_strdup_printf(_("Finished in %0.1f seconds: %s"),
                               cut_test_get_elapsed(CUT_TEST(ui->test_suite)),
                               summary);
     g_free(summary);
@@ -1175,7 +1178,7 @@ idle_cb_append_crash_row (gpointer data)
     g_mutex_lock(ui->mutex);
     gtk_tree_store_append(ui->logs, &iter, NULL);
     gtk_tree_store_set(ui->logs, &iter,
-                       COLUMN_NAME, "CRASHED!!!",
+                       COLUMN_NAME, _("CRASHED!!!"),
                        COLUMN_DESCRIPTION, info->stack_trace,
                        COLUMN_COLOR, "red",
                        -1);
