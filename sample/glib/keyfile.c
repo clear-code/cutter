@@ -30,6 +30,9 @@ static GKeyFile *keyfile;
 
 static GLogFunc default_log_func;
 
+static const gchar *original_language;
+static char *original_locale;
+
 static void
 log_func (const gchar   *log_domain,
 	  GLogLevelFlags log_level,
@@ -43,12 +46,23 @@ setup (void)
 {
   keyfile = NULL;
   keyfile = g_key_file_new ();
+  original_language = g_getenv ("LANGUAGE");
+  original_locale = NULL;
   default_log_func = g_log_set_default_handler (log_func, NULL);
 }
 
 void
 teardown (void)
 {
+  if (original_language)
+    g_setenv ("LANGUAGE", original_language, TRUE);
+  else
+    g_unsetenv ("LANGUAGE");
+  if (original_locale)
+    {
+      setlocale (LC_ALL, original_locale);
+      g_free(original_locale);
+    }
   if (keyfile)
     g_key_file_free (keyfile);
   g_log_set_default_handler (default_log_func, NULL);
@@ -673,7 +687,7 @@ test_locale_string (void)
   /* now test that translations are thrown away */
 
   g_setenv ("LANGUAGE", "de", TRUE);
-  setlocale (LC_ALL, "");
+  original_locale = setlocale (LC_ALL, "");
 
   keyfile = g_key_file_new ();
   cut_assert (g_key_file_load_from_data (keyfile, data, -1, 0, NULL));

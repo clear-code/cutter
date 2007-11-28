@@ -1,5 +1,7 @@
 2007-11-28  Kouhei Sutou  <kou@cozmixng.org>
 
+	* sample/glib/keyfile.c: ensured reverting locale set.
+
 	* cutter/module/ui/cut-ui-gtk.c: set status icon to test case row.
 
 	* configure.ac: 1.0.0 -> 0.2.0.
