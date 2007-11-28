@@ -8,6 +8,7 @@
 	* cutter/module/ui/cut-ui-gtk.c: Added pixbuf column.
 	* cutter/module/ui/cut-ui-gtk.c: Show icon.
 	* cutter/module/ui/cut-ui-gtk.c: Show progress in test name field.
+	* cutter/module/ui/cut-ui-gtk.c: Remove PROGRESS_VISIBLE column.
 
 2007-11-27  Kouhei Sutou  <kou@cozmixng.org>
 
