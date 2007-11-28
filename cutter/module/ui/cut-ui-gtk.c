@@ -836,6 +836,7 @@ append_test_result_row (CutUIGtk *ui, CutTestResult *result,
     const gchar *message;
     const gchar *source_directory;
     const gchar *test_name;
+    GdkPixbuf *icon;
 
     source_directory = cut_context_get_source_directory(ui->context);
     if (source_directory)
@@ -857,12 +858,16 @@ append_test_result_row (CutUIGtk *ui, CutTestResult *result,
                            cut_test_result_get_function_name(result));
     g_free(filename);
 
+    icon = get_status_icon(ui->tree_view, status);
+
     gtk_tree_store_append(ui->logs, result_row_iter, test_row_iter);
     gtk_tree_store_set(ui->logs, result_row_iter,
                        COLUMN_NAME, name,
                        COLUMN_DESCRIPTION, message,
+                       COLUMN_STATUS_ICON, icon,
                        -1);
     g_free(name);
+    g_object_unref(icon);
 }
 
 static gboolean
