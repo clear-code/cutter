@@ -581,36 +581,6 @@ typedef struct TestRowInfo
     CutTestResultStatus status;
 } TestRowInfo;
 
-static GdkPixbuf *
-get_status_icon (GtkTreeView *tree_view, CutTestResultStatus status)
-{
-    GdkPixbuf *icon;
-    const gchar *stock_id = "";
-
-    switch (status) {
-      case CUT_TEST_RESULT_SUCCESS:
-        stock_id = GTK_STOCK_APPLY;
-        break;
-      case CUT_TEST_RESULT_NOTIFICATION:
-        stock_id = GTK_STOCK_DIALOG_WARNING;
-        break;
-      case CUT_TEST_RESULT_PENDING:
-        stock_id = GTK_STOCK_DIALOG_ERROR;
-        break;
-      case CUT_TEST_RESULT_FAILURE:
-        stock_id = GTK_STOCK_STOP;
-        break;
-      case CUT_TEST_RESULT_ERROR:
-        stock_id = GTK_STOCK_CANCEL;
-        break;
-    }
-    icon = gtk_widget_render_icon(GTK_WIDGET(tree_view),
-                                  stock_id, GTK_ICON_SIZE_MENU,
-                                  NULL);
-
-    return icon;
-}
-
 static gboolean
 idle_cb_free_test_case_row_info (gpointer data)
 {
@@ -798,7 +768,8 @@ idle_cb_append_test_row (gpointer data)
                        COLUMN_NAME, cut_test_get_name(test),
                        COLUMN_DESCRIPTION, cut_test_get_description(test),
                        -1);
-    if (ui->status == CUT_TEST_RESULT_SUCCESS) {
+    /* Always expand running test case row. Is it OK? */
+    if (TRUE || info->status == CUT_TEST_RESULT_SUCCESS) {
         GtkTreePath *path;
         path = gtk_tree_model_get_path(GTK_TREE_MODEL(ui->logs), &iter);
         gtk_tree_view_expand_to_path(ui->tree_view, path);
