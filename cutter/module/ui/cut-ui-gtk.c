@@ -164,7 +164,7 @@ setup_tree_view_columns (GtkTreeView *tree_view)
 
     renderer = gtk_cell_renderer_pixbuf_new();
     column = gtk_tree_view_column_new();
-    gtk_tree_view_column_set_title(column, _("Status"));
+    gtk_tree_view_column_set_title(column, _("Result"));
     gtk_tree_view_column_pack_start(column, renderer, FALSE);
     gtk_tree_view_column_add_attribute(column, renderer,
                                        "pixbuf", COLUMN_STATUS_ICON);
