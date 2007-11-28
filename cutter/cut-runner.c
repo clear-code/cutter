@@ -28,6 +28,7 @@
 #include <glib.h>
 
 #include "cut-runner.h"
+#include "cut-repository.h"
 #include "cut-test-case.h"
 
 #include "cut-marshalers.h"
@@ -48,6 +49,7 @@ struct _CutRunnerPrivate
     GMutex *mutex;
     gboolean crashed;
     gchar *stack_trace;
+    gchar *test_directory;
     gchar *source_directory;
     gchar **target_test_case_names;
     gchar **target_test_names;
@@ -324,6 +326,7 @@ cut_runner_init (CutRunner *runner)
     priv->mutex = g_mutex_new();
     priv->crashed = FALSE;
     priv->stack_trace = NULL;
+    priv->test_directory = NULL;
     priv->source_directory = NULL;
     priv->target_test_case_names = NULL;
     priv->target_test_names = NULL;
@@ -437,6 +440,21 @@ CutRunner *
 cut_runner_new (void)
 {
     return g_object_new(CUT_TYPE_RUNNER, NULL);
+}
+
+void
+cut_runner_set_test_directory (CutRunner *runner, const gchar *directory)
+{
+    CutRunnerPrivate *priv = CUT_RUNNER_GET_PRIVATE(runner);
+
+    g_free(priv->test_directory);
+    priv->test_directory = g_strdup(directory);
+}
+
+const gchar *
+cut_runner_get_test_directory (CutRunner *runner)
+{
+    return CUT_RUNNER_GET_PRIVATE(runner)->test_directory;
 }
 
 void
@@ -838,31 +856,46 @@ const GList *
 cut_runner_get_results (CutRunner *runner)
 {
     return CUT_RUNNER_GET_PRIVATE(runner)->results;
-};
+}
 
 gboolean
 cut_runner_is_crashed (CutRunner *runner)
 {
     return CUT_RUNNER_GET_PRIVATE(runner)->crashed;
-};
+}
 
 const gchar *
 cut_runner_get_stack_trace (CutRunner *runner)
 {
     return CUT_RUNNER_GET_PRIVATE(runner)->stack_trace;
-};
+}
 
 void
 cut_runner_cancel (CutRunner *runner)
 {
     CUT_RUNNER_GET_PRIVATE(runner)->canceled = TRUE;
-};
+}
 
 gboolean
 cut_runner_is_canceled (CutRunner *runner)
 {
     return CUT_RUNNER_GET_PRIVATE(runner)->canceled;
-};
+}
+
+CutTestSuite *
+cut_runner_create_test_suite (CutRunner *runner)
+{
+    CutRunnerPrivate *priv;
+    CutRepository *repository;
+    CutTestSuite *suite;
+
+    priv = CUT_RUNNER_GET_PRIVATE(runner);
+    repository = cut_repository_new(priv->test_directory);
+    suite = cut_repository_create_test_suite(repository);
+    g_object_unref(repository);
+
+    return suite;
+}
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

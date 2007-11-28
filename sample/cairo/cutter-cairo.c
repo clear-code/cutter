@@ -17,7 +17,7 @@
 #endif
 
 static gboolean
-run_test (const gchar *directory, GCallback create_surface)
+run_test (GCallback create_surface)
 {
     CutRunner *runner;
     CutTestSuite *suite;
@@ -27,7 +27,7 @@ run_test (const gchar *directory, GCallback create_surface)
     runner = cut_create_runner ();
     g_signal_connect (runner, "start-test", create_surface, &surface);
 
-    suite = cut_create_test_suite (directory);
+    suite = cut_runner_create_test_suite (runner);
     success = cut_run_test_suite (suite, runner);
     g_object_unref (suite);
 
@@ -100,18 +100,18 @@ main (int argc, char *argv[])
 
     cut_init (&argc, &argv);
 
-    if (!run_test (argv[1], G_CALLBACK(create_image_surface)))
+    if (!run_test (G_CALLBACK(create_image_surface)))
         success = FALSE;
 #ifdef CAIRO_HAS_SVG_SURFACE
-    if (!run_test (argv[1], G_CALLBACK(create_svg_surface)))
+    if (!run_test (G_CALLBACK(create_svg_surface)))
         success = FALSE;
 #endif
 #ifdef CAIRO_HAS_PDF_SURFACE
-    if (!run_test (argv[1], G_CALLBACK(create_pdf_surface)))
+    if (!run_test (G_CALLBACK(create_pdf_surface)))
         success = FALSE;
 #endif
 #ifdef CAIRO_HAS_PS_SURFACE
-    if (!run_test (argv[1], G_CALLBACK(create_ps_surface)))
+    if (!run_test (G_CALLBACK(create_ps_surface)))
         success = FALSE;
 #endif
 

@@ -36,11 +36,11 @@
 
 #include "cut-runner.h"
 #include "cut-test-suite.h"
-#include "cut-repository.h"
 #include "cut-ui.h"
 #include "cut-ui-factory.h"
 
 static gboolean initialized = FALSE;
+static gchar *test_directory = NULL;
 static gchar *source_directory = NULL;
 static const gchar **test_case_names = NULL;
 static const gchar **test_names = NULL;
@@ -150,6 +150,8 @@ cut_init (int *argc, char ***argv)
         exit(1);
     }
 
+    test_directory = (*argv)[1];
+
 #ifdef HAVE_LIBBFD
     bfd_init();
 #endif
@@ -182,6 +184,7 @@ cut_create_runner (void)
 
     runner = cut_runner_new();
 
+    cut_runner_set_test_directory(runner, test_directory);
     if (source_directory)
         cut_runner_set_source_directory(runner, source_directory);
     cut_runner_set_multi_thread(runner, use_multi_thread);
@@ -189,19 +192,6 @@ cut_create_runner (void)
     cut_runner_set_target_test_names(runner, test_names);
 
     return runner;
-}
-
-CutTestSuite *
-cut_create_test_suite (const gchar *directory)
-{
-    CutRepository *repository;
-    CutTestSuite *suite;
-
-    repository = cut_repository_new(directory);
-    suite = cut_repository_create_test_suite(repository);
-    g_object_unref(repository);
-
-    return suite;
 }
 
 gboolean
@@ -230,22 +220,18 @@ cut_run_test_suite (CutTestSuite *suite, CutRunner *runner)
 }
 
 gboolean
-cut_run (const gchar *directory)
+cut_run (void)
 {
     CutRunner *runner;
     CutTestSuite *suite;
     gboolean success = TRUE;
 
     runner = cut_create_runner();
-    if (!cut_runner_get_source_directory(runner))
-        cut_runner_set_source_directory(runner, directory);
-
-    suite = cut_create_test_suite(directory);
+    suite = cut_runner_create_test_suite(runner);
     if (suite) {
         success = cut_run_test_suite(suite, runner);
         g_object_unref(suite);
     }
-
     g_object_unref(runner);
 
     return success;

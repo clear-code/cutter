@@ -34,7 +34,7 @@ main (int argc, char *argv[])
     gboolean success = TRUE;
 
     cut_init(&argc, &argv);
-    success = cut_run(argv[1]);
+    success = cut_run();
     cut_quit();
 
     exit(success ? 0 : 1);

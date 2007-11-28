@@ -12,5 +12,5 @@ main (int argc, char *argv[])
   gtk_init (&argc, &argv);
   cut_init (&argc, &argv);
 
-  exit (cut_run (argv[1]) ? 0 : 1);
+  exit (cut_run () ? 0 : 1);
 }

@@ -30,10 +30,9 @@ G_BEGIN_DECLS
 void          cut_init              (int *argc, char ***argv);
 void          cut_quit              (void);
 
-gboolean      cut_run               (const gchar *directory);
+gboolean      cut_run               (void);
 
 CutRunner    *cut_create_runner     (void);
-CutTestSuite *cut_create_test_suite (const gchar *directory);
 gboolean      cut_run_test_suite    (CutTestSuite *suite,
                                      CutRunner    *runner);
 

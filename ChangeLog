@@ -1,5 +1,8 @@
 2007-11-28  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-main.[ch]: removed cut_create_test_suite().
+	* cutter/cut-runner.[ch]: added cut_runner_create_test_suite().
+
 	* ./: CutContext -> CutRunner.
 
 	* cutter/cut-context.[ch], cutter/cut-test-suite.c,

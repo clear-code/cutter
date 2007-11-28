@@ -100,12 +100,9 @@ GType        cut_runner_get_type  (void) G_GNUC_CONST;
 
 CutRunner    *cut_runner_new (void);
 
-CutVerboseLevel cut_runner_parse_verbose_level     (CutRunner *runner,
-                                                    const gchar *name);
-void          cut_runner_set_verbose_level         (CutRunner *runner,
-                                                    CutVerboseLevel level);
-void          cut_runner_set_verbose_level_by_name (CutRunner *runner,
-                                                    const gchar *name);
+void          cut_runner_set_test_directory        (CutRunner *runner,
+                                                    const gchar *directory);
+const gchar  *cut_runner_get_test_directory        (CutRunner *runner);
 void          cut_runner_set_source_directory      (CutRunner *runner,
                                                     const gchar *directory);
 const gchar  *cut_runner_get_source_directory      (CutRunner *runner);
@@ -144,6 +141,7 @@ const gchar  *cut_runner_get_stack_trace           (CutRunner *runner);
 
 void          cut_runner_cancel                    (CutRunner *runner);
 gboolean      cut_runner_is_canceled               (CutRunner *runner);
+CutTestSuite *cut_runner_create_test_suite         (CutRunner *runner);
 
 
 G_END_DECLS
