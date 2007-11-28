@@ -437,6 +437,36 @@ status_to_color (CutTestResultStatus status)
     return color;
 }
 
+static GdkPixbuf *
+get_status_icon (GtkTreeView *tree_view, CutTestResultStatus status)
+{
+    GdkPixbuf *icon;
+    const gchar *stock_id = "";
+
+    switch (status) {
+      case CUT_TEST_RESULT_SUCCESS:
+        stock_id = GTK_STOCK_APPLY;
+        break;
+      case CUT_TEST_RESULT_NOTIFICATION:
+        stock_id = GTK_STOCK_DIALOG_WARNING;
+        break;
+      case CUT_TEST_RESULT_PENDING:
+        stock_id = GTK_STOCK_DIALOG_ERROR;
+        break;
+      case CUT_TEST_RESULT_FAILURE:
+        stock_id = GTK_STOCK_STOP;
+        break;
+      case CUT_TEST_RESULT_ERROR:
+        stock_id = GTK_STOCK_CANCEL;
+        break;
+    }
+    icon = gtk_widget_render_icon(GTK_WIDGET(tree_view),
+                                  stock_id, GTK_ICON_SIZE_MENU,
+                                  NULL);
+
+    return icon;
+}
+
 static gchar *
 generate_summary_message (CutContext *context)
 {
@@ -658,16 +688,20 @@ idle_cb_update_test_case_row (gpointer data)
         gdouble fraction;
         gint percent;
         gchar *text;
+        GdkPixbuf *icon;
 
         fraction = info->n_completed_tests / (gdouble)info->n_tests;
         percent = (gint)(fraction * 100);
         text = g_strdup_printf("%d/%d (%d%%)",
                                info->n_completed_tests, info->n_tests, percent);
+        icon = get_status_icon(ui->tree_view, info->status);
         gtk_tree_store_set(ui->logs, &iter,
                            COLUMN_PROGRESS_TEXT, text,
                            COLUMN_PROGRESS_VALUE, percent,
+                           COLUMN_STATUS_ICON, icon,
                            -1);
         g_free(text);
+        g_object_unref(icon);
     }
     g_mutex_unlock(ui->mutex);
 
@@ -747,36 +781,6 @@ update_test_row_progress_color (TestRowInfo *info)
 
     gdk_color_parse("black", &color);
     gtk_widget_modify_fg(tree_view, GTK_STATE_SELECTED, &color);
-}
-
-static GdkPixbuf *
-get_status_icon (GtkTreeView *tree_view, CutTestResultStatus status)
-{
-    GdkPixbuf *icon;
-    const gchar *stock_id = "";
-
-    switch (status) {
-      case CUT_TEST_RESULT_SUCCESS:
-        stock_id = GTK_STOCK_APPLY;
-        break;
-      case CUT_TEST_RESULT_NOTIFICATION:
-        stock_id = GTK_STOCK_DIALOG_WARNING;
-        break;
-      case CUT_TEST_RESULT_PENDING:
-        stock_id = GTK_STOCK_DIALOG_ERROR;
-        break;
-      case CUT_TEST_RESULT_FAILURE:
-        stock_id = GTK_STOCK_STOP;
-        break;
-      case CUT_TEST_RESULT_ERROR:
-        stock_id = GTK_STOCK_CANCEL;
-        break;
-    }
-    icon = gtk_widget_render_icon(GTK_WIDGET(tree_view),
-                                  stock_id, GTK_ICON_SIZE_MENU,
-                                  NULL);
-
-    return icon;
 }
 
 static gboolean

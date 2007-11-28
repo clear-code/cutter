@@ -1,5 +1,7 @@
 2007-11-28  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/module/ui/cut-ui-gtk.c: set status icon to test case row.
+
 	* configure.ac: 1.0.0 -> 0.2.0.
 
 	* cutter/module/ui/cut-ui-gtk.c: i18ned.
