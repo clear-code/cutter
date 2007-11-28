@@ -41,22 +41,11 @@ Cutterの特徴は以下の通りです。
 
 === オプション
 
-: -v[s|silent|n|normal|v|verbose], --verbose=[s|silent|n|normal|v|verbose]
-
-   出力の詳細さを指定します。
-
 : -s DIRECTORY, --source-directory=DIRECTORY
 
    テストが失敗した場合にファイル名の前にDIRECTORYを付加しま
    す。Cutterの出力からテストが失敗した箇所にジャンプするツー
    ル（Emacsなど）と連携するための機能です。
-
-: -c[yes|true|no|false|auto], --color=[yes|true|no|false|auto]
-
-   yesまたはtrueが指定された場合はCutterはエスケープシーケン
-   スで色付けして出力します。noまたはfalseが指定された場合は
-   色付けしません。autoあるいは値が省略された時は、可能なら
-   色付けをします。
 
 : -t TEST_CASE_NAME1,TEST_CASE_NAME2,..., --test-case=TEST_CASE_NAME1,TEST_CASE_NAME2,...
 
@@ -73,6 +62,29 @@ Cutterの特徴は以下の通りです。
 : -m, --multi-thread
 
    各テストケースを新しいスレッドで実行します。
+
+: --show-all-uis
+
+   すべての利用可能なUIを表示し、終了します。
+
+: -u=[console|gtk], --ui=[console|gtk]
+
+   UIを指定します。デフォルトはコンソールUIです。
+
+: -v[s|silent|n|normal|v|verbose], --verbose=[s|silent|n|normal|v|verbose]
+
+   出力の詳細さを指定します。
+
+   このオプションはコンソールUIを使用する場合だけ有効です。
+
+: -c[yes|true|no|false|auto], --color=[yes|true|no|false|auto]
+
+   yesまたはtrueが指定された場合はCutterはエスケープシーケン
+   スで色付けして出力します。noまたはfalseが指定された場合は
+   色付けしません。autoあるいは値が省略された時は、可能なら
+   色付けをします。
+
+   このオプションはコンソールUIを使用する場合だけ有効です。
 
 == テストの仕方
 

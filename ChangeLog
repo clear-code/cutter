@@ -1,5 +1,7 @@
 2007-11-28  Kouhei Sutou  <kou@cozmixng.org>
 
+	* README*: updated options.
+
 	* cutter/module/ui/cut-ui-gtk.c: colorized again.
 
 	* cutter/module/ui/cut-ui-gtk.c: packed.

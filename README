@@ -42,23 +42,11 @@ This is a list of features of Cutter:
 
 === Options
 
-: -v[s|silent|n|normal|v|verbose], --verbose=[s|silent|n|normal|v|verbose]
-
-   It specifies verbose level.
-
 : -s DIRECTORY, --source-directory=DIRECTORY
 
    Cutter prepends DIRECTORY to file name when test fails. This
    is for tolls (like Emacs) which have function jumping to
    error line.
-
-: -c[yes|true|no|false|auto], --color=[yes|true|no|false|auto]
-
-   If 'yes' or 'true' is specified, Cutter uses colorized
-   output by escape sequence. If 'no' or 'false' is
-   specified, Cutter never use colorized output. If 'auto'
-   or option is omitted, Cutter uses colorized output if
-   available.
 
 : -t TEST_CASE_NAME1,TEST_CASE_NAME2,..., --test-case=TEST_CASE_NAME1,TEST_CASE_NAME2,...
 
@@ -77,6 +65,31 @@ This is a list of features of Cutter:
 : -m, --multi-thread
 
    Cutter runs a test case in a new thread.
+
+: --show-all-uis
+
+   Cutter shows all available UIs and exits.
+
+: -u=[console|gtk], --ui=[console|gtk]
+
+   It specifies UI. The default is console UI.
+
+: -v[s|silent|n|normal|v|verbose], --verbose=[s|silent|n|normal|v|verbose]
+
+   It specifies verbose level.
+
+   This option is only for console UI.
+
+: -c[yes|true|no|false|auto], --color=[yes|true|no|false|auto]
+
+   If 'yes' or 'true' is specified, Cutter uses colorized
+   output by escape sequence. If 'no' or 'false' is
+   specified, Cutter never use colorized output. If 'auto'
+   or option is omitted, Cutter uses colorized output if
+   available.
+
+   This option is only for console UI.
+
 
 == How to test
 
