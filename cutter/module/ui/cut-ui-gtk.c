@@ -855,7 +855,7 @@ timeout_cb_pulse_test (gpointer data)
     }
     g_mutex_unlock(ui->mutex);
 
-    return TRUE;
+    return ui->running;
 }
 
 static gboolean

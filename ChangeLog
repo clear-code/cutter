@@ -1,5 +1,8 @@
 2007-11-29  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/module/ui/cut-ui-gtk.c: finished test pulse if test suite
+	is finished.
+
 	* cutter/module/ui-factory/cut-ui-factory-console.c: set default
 	--color value is auto.
 
