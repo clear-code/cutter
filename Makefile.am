@@ -25,8 +25,8 @@ update-po:
 	cd doc/reference && $(MAKE) $(AM_MAKEFLAGS) update-po
 
 tag:
-	svn ls $(SF_REPOS)/tags/$(VERSION) > /dev/null 2&>1; 	\
-	  if test $$? = 0; then					\
+	svn ls $(SF_REPOS)/tags/$(VERSION) > /dev/null 2>&1; 	\
+	  if test "$$?" = "0"; then				\
 	    echo "$(VERSION) is already versioned";		\
 	    exit 1;						\
 	  fi
