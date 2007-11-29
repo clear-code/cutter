@@ -840,10 +840,12 @@ static gboolean
 timeout_cb_pulse_test (gpointer data)
 {
     TestRowInfo *info = data;
+    TestCaseRowInfo *test_case_row_info;
     CutUIGtk *ui;
     GtkTreeIter iter;
 
-    ui = info->test_case_row_info->ui;
+    test_case_row_info = info->test_case_row_info;
+    ui = test_case_row_info->ui;
 
     g_mutex_lock(ui->mutex);
     info->pulse++;
@@ -854,6 +856,11 @@ timeout_cb_pulse_test (gpointer data)
                            -1);
     }
     g_mutex_unlock(ui->mutex);
+
+    if (!ui->running) {
+        g_idle_add(idle_cb_free_test_row_info, info);
+        g_idle_add(idle_cb_free_test_case_row_info, test_case_row_info);
+    }
 
     return ui->running;
 }

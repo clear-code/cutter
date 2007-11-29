@@ -1,5 +1,8 @@
 2007-11-29  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/module/ui/cut-ui-gtk.c: ensured free row info even if
+	crashed.
+
 	* cutter/module/ui/cut-ui-gtk.c: finished test pulse if test suite
 	is finished.
 
