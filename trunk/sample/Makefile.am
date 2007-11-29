@@ -1,0 +1,33 @@
+SUBDIRS = glib
+
+if HAVE_GTK
+SUBDIRS += gtk+
+endif
+
+if HAVE_CAIRO
+SUBDIRS += cairo
+endif
+
+if HAVE_GIO
+SUBDIRS += gio
+endif
+
+stackdir = $(pkgdatadir)/stack
+stack_DATA =			\
+	stack/autogen.sh	\
+	stack/Makefile.am	\
+	stack/configure.ac
+
+stack_srcdir = $(stackdir)/src
+stack_src_DATA =		\
+	stack/src/Makefile.am	\
+	stack/src/stack.c	\
+	stack/src/stack.h
+
+stack_testdir = $(stackdir)/test
+stack_test_DATA =		\
+	stack/test/Makefile.am	\
+	stack/test/run-test.sh	\
+	stack/test/test-stack.c
+
+EXTRA_DIST = $(stack_DATA) $(stack_src_DATA) $(stack_test_DATA)

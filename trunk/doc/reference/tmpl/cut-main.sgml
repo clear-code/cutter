@@ -1,0 +1,64 @@
+<!-- ##### SECTION Title ##### -->
+cut-main
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### FUNCTION cut_init ##### -->
+<para>
+
+</para>
+
+@argc: 
+@argv: 
+
+
+<!-- ##### FUNCTION cut_run ##### -->
+<para>
+
+</para>
+
+@directory: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_create_context ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_create_test_suite ##### -->
+<para>
+
+</para>
+
+@directory: 
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_run_test_suite ##### -->
+<para>
+
+</para>
+
+@suite: 
+@context: 
+@Returns: 
+
+

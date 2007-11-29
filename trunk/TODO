@@ -1,0 +1,11 @@
+== Assigned to ikezoe
+
+* Write tests
+* GTK+ interface
+
+== Assigned to ktou
+
+* cut_pending(cut_fork());
+* introduce priority system.
+* supported metadata for test. describe_TEST_NAME().
+* CutRunnerFuctory.

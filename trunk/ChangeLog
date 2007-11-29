@@ -1,0 +1,2318 @@
+2007-11-29  Kouhei Sutou  <kou@cozmixng.org>
+
+	* Makefile.am (tag): added.
+
+	* test/run-test.sh: fixed indentation.
+
+	* sample/glib/Makefile.am (EXTRA_DIST): added a missing file.
+
+2007-11-28  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/: cut_run_test_suite() -> cut_run_runner().
+
+	* sample/glib/option.c (setup): reset callback_test2_int.
+
+	* cutter/cut-runner.[ch]: added cut_runner_copy().
+	* cutter/module/ui/cut-ui-gtk.c: supported redo.
+
+	* cutter/cut-main.[ch]: removed cut_create_test_suite().
+	* cutter/cut-runner.[ch]: added cut_runner_create_test_suite().
+
+	* ./: CutContext -> CutRunner.
+
+	* cutter/cut-context.[ch], cutter/cut-test-suite.c,
+	cutter/cut-test-case.c, cutter/module/ui/cut-ui/gtk.c: supported stop.
+
+	* cutter/module/ui/cut-ui-gtk.c: set title.
+
+	* README*: updated options.
+
+	* cutter/module/ui/cut-ui-gtk.c: colorized again.
+
+	* cutter/module/ui/cut-ui-gtk.c: packed.
+
+	* cutter/module/ui/cut-ui-gtk.c: showed icon in test result row.
+
+	* cutter/module/ui/cut-ui-gtk.c: always expand running test case row.
+
+	* sample/glib/keyfile.c: ensured reverting locale set.
+
+	* cutter/module/ui/cut-ui-gtk.c: set status icon to test case row.
+
+	* configure.ac: 1.0.0 -> 0.2.0.
+
+	* cutter/module/ui/cut-ui-gtk.c: i18ned.
+
+	* cutter/module/ui/cut-ui-gtk.c: showed running test.
+
+	* Makefile.am: added update-po.
+	* po/: updated.
+
+2007-11-28  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/module/ui/cut-ui-gtk.c: Added pixbuf column.
+	* cutter/module/ui/cut-ui-gtk.c: Show icon.
+	* cutter/module/ui/cut-ui-gtk.c: Show progress in test name field.
+	* cutter/module/ui/cut-ui-gtk.c: Remove PROGRESS_VISIBLE column.
+	* cutter/module/ui/cut-ui-gtk.c: Test name is shown at the left edge of
+	progress.
+	* cutter/module/ui/cut-ui-gtk.c: Show progress bar at the right of
+	test name.
+	* cutter/module/ui/cut-ui-gtk.c: Show icon for test case.
+
+2007-11-27  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/module/ui/cut-ui-gtk.c: showed summary but slow for many
+	assertions.
+
+	* cutter/module/ui/cut-ui-gtk.c: set default focus to tree view.
+
+	* cutter/module/ui/cut-ui-gtk.c: removed text buffer.
+
+	* cutter/module/ui/cut-ui-gtk.c: showed running test information
+	in statusbar.
+
+	* cutter/module/ui/cut-ui-gtk.c: showed summary in statusbar.
+
+	* cutter/module/ui/cut-ui-gtk.c: used Monospace font for
+	description to be easy to read.
+
+	* cutter/module/ui/cut-ui-gtk.c: supported crash log.
+
+	* cutter/module/ui/cut-ui-gtk.c: used ready-test-suite instead of
+	start-test-suite.
+
+	* cutter/cut-context.[ch], cutter/cut-test-suite.[ch]: emitted
+	ready signal.
+
+	* cutter/cut-test-case.[ch]: cut_test_get_test_count() ->
+	cut_test_get_n_tests().
+	* test/test-cut-test-case.c, test/test-cut-loader.c: followed the
+	above changes.
+
+	* cutter/cut-test-case.c: used cut_context_get_target_test_names()
+	as default test_names.
+
+	* test/test-cut-test-case.c: set target_test_names.
+
+	* cutter/module/ui/cut-ui-gtk.c: showed test result.
+
+	* cutter/module/ui/cut-ui-gtk.c: showed elapsed time.
+
+	* cutter/cut-test.c: cut_test_get_elapsed() works fine anytime.
+
+	* cutter/module/ui/cut-ui-gtk.c: showed non-success path.
+
+	* cutter/module/ui/cut-ui-gtk.c: expanded non-success path.
+
+	* cutter/module/ui/cut-ui-gtk.c: improved color.
+
+	* cutter/module/ui/cut-ui-gtk.c: worked progress for test case.
+
+	* cutter/module/ui/cut-ui-gtk.c: updated pulse for each test.
+
+	* cutter/module/ui/cut-ui-gtk.c: removed needless variable.
+
+	* cutter/module/ui/cut-ui-gtk.c: updated progress color.
+
+2007-11-27  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/module/ui/cut-ui-gtk.c: Show status with
+	GtkCellRenderProgress.
+	* cutter/module/ui/cut-ui-gtk.c: Set sortable by test name.
+	* cutter/module/ui/cut-ui-gtk.c: Change the progress bar's color.
+
+2007-11-27  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/module/ui/cut-ui-gtk.c: kept a status.
+
+	* cutter/cut-public.h: ordered for easy comparison.
+
+	* cutter/module/ui/cut-ui-gtk.c: showed tests on progress bar.
+
+	* cutter/module/ui/cut-ui-gtk.c (cb_success_test): don't override
+	existing notify information.
+
+	* cutter/cut-main.c: -r/--runner -> -u/--ui.
+
+2007-11-27  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-runner-factory.[hc] -> cutter/cut-ui-factory.[hc]: Rename
+	filename.
+	* /: CutRunnerFactory -> CutUIFactory.
+
+2007-11-27  Kouhei Sutou  <kou@cozmixng.org>
+
+	* /: runner -> ui.
+
+	* cutter/module/runner/cut-runner-gtk.c: showed progress.
+
+	* cutter/cut-marshalers.list (VOID:OBJECT,UINT): added.
+
+	* cutter/cut-test-case.[ch]: added ready signal.
+
+	* cutter/cut-context.[ch]: added ready-test-case signal.
+
+	* cutter/module/runner/cut-runner-gtk.c: fixed wrong signatures.
+
+	* cutter/module/runner/cut-runner-gtk.c: pulse!
+
+	* cutter/module/runner/cut-runner-gtk.c: stop!
+
+	* cutter/module/runner/cut-runner-gtk.c: fixed broken display.
+
+	* cutter/module/runner/cut-runner-gtk.c: supported test case.
+
+	* cutter/module/runner/cut-runner-gtk.c: supported color.
+
+	* cutter/module/runner/cut-runner-gtk.c: supported status update.
+
+	* cutter/module/runner/cut-runner-gtk.c: showed test info.
+
+2007-11-27  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* sample/gio/*: Added GIO sample.
+
+2007-11-26  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/module/runner/cut-runner-gtk.c:
+	- cleanup.
+	- removed thread.
+	- supported C-q.
+	- used thread again.
+
+	* cutter/module/runner-factory/cut-runner-factory-gtk.c: added.
+
+	* cutter/: supported --show-all-runners option.
+
+	* sample/*/run-test.sh: set CUT_RUNNER_FACTORY_MODULE_DIR.
+
+	* cutter/Makefile.am (enum_sources_h): don't include
+	cut-hidden-definitions.h.
+
+	* configure.ac, cutter/, test/run-test.sh: supported runner factory.
+	You will get SEGV!
+
+	* cutter/cut-runner.[ch]: moved verbose_level to ...
+	* cutter/module/runner/cut-runner-console.c: ... here.
+
+2007-11-26  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/Makefile.am: Install headers for libcutter.
+	* cutter/cut-runner.[c|h]: Declare cut_runner_load_module() as static.
+
+2007-11-26  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-module.c: cleanup.
+
+	* configure.ac: removed needless lines.
+
+	* configure.ac, NEWS, NEWS.ja: 0.1.0 -> 1.0.0.
+
+	* sample/Makefile.am: fixed distributed files configuration for
+	stack sample.
+
+	* doc/reference/Makefile.am: added html-build.stamp to distributed
+	files.
+
+2007-11-25  Kouhei Sutou  <kou@cozmixng.org>
+
+	* doc/reference/Makefile.am, doc/reference/sf-logo.html: supported
+	SF.net logo embedded.
+
+	* doc/reference/ja.po: updated.
+
+	* NEWS, NEWS.ja: added.
+	* Makefile.am, configure.ac, html/index.html, doc/reference/:
+	supported NEWS.
+
+	* Makefile.am, configure.ac, html/, doc/reference/Makefile.am:
+	supported auto documentation updating.
+
+	* misc/Makefile.am: added.
+
+	* misc/rd2refentry-lib.rb, doc/reference/cutter-docs.sgml:
+	included README into gtkdoc documentation.
+
+	* README, README.ja: updated.
+
+	* misc/rd2refentry-lib.rb: added to distributed files.
+
+	* Makefile.am (EXTRA_DIST): added missing distributed files.
+
+	* doc/reference/Makefile.am: added missing distributed file.
+
+	* doc/reference/cutter.types: created a needed file.
+
+2007-11-23  Kouhei Sutou  <kou@cozmixng.org>
+
+	* gtk-doc.make: fixed index.sgml links.
+
+2007-11-22  Kouhei Sutou  <kou@cozmixng.org>
+
+	* misc/rd2refentry-lib.rb: removed needless codes.
+
+2007-11-21  Kouhei Sutou  <kou@cozmixng.org>
+
+	* doc/reference/ja.po: updated messages.
+
+	* doc/reference/tmpl/cut-assertions.sgml: updated.
+
+	* doc/reference/Makefile.am: updated DIST files.
+
+	* cutter/cutter.h, cutter/cut-assertions.h: added documentations.
+
+	* cutter/cut-assertions.h: added documentations.
+
+	* TUTORIAL, misc/rd2refentry-lib.rb, gtk-doc.make, doc/reference/:
+	supported tutorial XML build.
+
+	* doc/reference/: used tutorial.xml.
+
+	* misc/rd2refentry-lib.rb, TUTORIAL.ja: supported title and purpose.
+
+2007-11-21  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/module/runner/cut-runner-gtk.c: Run test suite with thread.
+
+2007-11-21  Kouhei Sutou  <kou@cozmixng.org>
+
+	* misc/rd2refentry-lib.rb: added.
+
+2007-11-21  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-runner.h: Cleanup.
+	* cutter/module/runner/cut-runner-gtk.c: Reenablded CutRunnerGtk.
+	* cutter/module/runner/cut-runner-gtk.c: Show window.
+
+2007-11-20  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/module/runner/cut-runner-console.c: fixed callback arguments.
+
+	* cutter/module/runner/cut-runner-console.c: used
+	cut_context_get_source_directory() not
+	cut_runner_get_source_directory().
+
+	* cutter/module/runner/cut-runner-console.c (cb_success): only
+	show "." for CutTest.
+
+	* test/test-cut-test-result.c (test_get_line): fixed test case.
+
+	* cutter/cut-assertions.h (cut_assert_equal_uint): added.
+
+	* cutter/cut-assertions.h (cut_assert_equal_int): don't evaluate
+	twice.
+
+	* configure.ac: exported cutter program path for internal test.
+	* test/run-test.s, test/Makefile.am: used CUTTER.
+
+	* cutter.pc.in: exported cutter program.
+
+	* libcutter.pc.in (Requires): added gmodule-2.0 and removed glib-2.0.
+	* cutter.pc.in: don't need -lcutter.
+
+	* cutter/Makefile.am: installed libcutter.so into $(libdir).
+
+2007-11-20  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* sample/glib/thread.c: Code cleanup. remove main(). Set
+	g_thread_default_impl FALSE, the change fixes a crash
+	test_g_static_private() but test_g_static_rec_mutex() is locked!?
+
+2007-11-19  Kouhei Sutou  <kou@cozmixng.org>
+
+	* Tutorial.ja: started updating to stack from calc .
+	* sample/stack/: added.
+
+2007-11-19  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-context.c: (cut_test_context_inspect_string_array):
+	Return "" if strings is NULL.
+
+2007-11-19  Kouhei Sutou  <kou@cozmixng.org>
+
+	* configure.ac, sample/Makefile.am: removed calc.
+
+	* sample/calc/: removed.
+
+	* sample/glib/run-test.sh: supported easy gdb invoking.
+
+2007-11-18  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-main.c: added --runner option but console backend is
+	only available for now.
+
+	* cutter/module/runner/cut-runner-console.c: cleanup.
+
+	* Cutter/module/runner/cut-runner-console.c: used test_case_name
+	if test_name isn't available.
+
+	* cutter/cut-test-result.[ch]: exported test_case_name and
+	test_suite_name.
+
+	* cutter/cut-context.c, cutter/module/runner/cut-runner-console.c:
+	cleanup.
+
+	* cutter/cut-context.c: cleanup.
+
+	* cutter/cut-test-case.c, cutter/cut-test-suite.c: cleanup.
+
+	* test/test-cut-test-suite.c: expected value should be at the left
+	most position.
+
+	* cutter/cut-test-suite.c: used /^test_/ for default test case
+	name filter.
+	* test/test-cut-test-suite.c: added a test for default test filter.
+
+	* **/run-test.sh: output -> runner.
+
+	* cutter/cut-context.c: removed too much signal emitting.
+
+	* cutter/, test/: output -> runner. worked again.
+
+	* cutter/: output -> runner.
+
+	* cutter/cut-runner.[ch]: removed.
+
+	* cutter/cut-test-container.c: implemented intuitive test refinement.
+
+	* cutter/cut-assertions.h: readded 'format' parameter name.
+
+	* cutter/: added const to gchar **.
+
+	* cutter/: run tests whose name is started with 'test_' by default.
+	* test/test-cut-test-suite.c (run_test_case): passed '/.*/' to run
+	all tests.
+
+2007-11-16  Kouhei Sutou  <kou@cozmixng.org>
+
+	* doc/reference/Makefile.am: checked cutter.h.
+
+	* cutter/cutter.h (cut_user_data): moved from cut-assertions.h
+
+	* doc/reference/ja.po: updated.
+	* doc/reference/cutter-docs.sgml: improved structure.
+
+	* cutter/cutter.h, cutter/cut-hidden-definitions.h,
+	doc/reference/Makefile.am: hide [sg]et_current_test_context() from
+	user.
+
+	* cutter/cut-assertions-helper.h, cutter/cut-assertions.h,
+	doc/reference/: hid helper macros from user.
+
+	* doc/reference/Makefile.am (update-po): fixed a typo.
+	* doc/reference/ja.po: updated.
+
+	* doc/reference/: hide non-public functions.
+
+	* cutter/cut-assertions.h: cleanup.
+
+	* doc/reference/ja.po: updated.
+
+	* cutter/cut-assertions.h (cut_assert_not_null): added.
+
+	* autogen.sh: don't use gtkdocize because we have customoized
+	gtk-doc.make.
+
+	* doc/reference/ja.po: updated.
+
+	* gtk-doc.make: supported install.
+
+	* gtk-doc.make, doc/references/: supported multi po.
+
+	* doc/reference/: supported reference manual for Japanese. (but dirty)
+
+	* ./: supported gettext.
+
+2007-11-16  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* configure.ac: Use gtk-doc.
+
+2007-11-16  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-public.h: removed CRASH result.
+	* cutter/module/output/cut-output-console.c: printed test case name
+	with color.
+
+2007-11-16  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-repository.c: Load only so file which has "test" prefix.
+
+2007-11-16  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/: fixed setjmp() usage.
+
+2007-11-16  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-utils.[hc], cutter/cut-test-suite.c: union ->
+	intersection.
+	* cutter/cut-test-case.c: Use cut_utils_list_intersection() instead of
+	g_list_concat().
+	* cutter/cut-utils.c: NULL check barrier.
+	* cutter/cut-test-container.h: The second argument of
+	cut_test_container_filter_children() is gchar **.
+	* cutter/cut-test-container.c: Use cut_utils_list_intersection().
+	* cutter/cut-test-case.c, cutter/cut-test-suite.c: Use
+	cut_test_container_filter_children() directly.
+	* cutter/cut-test-case.h: Remove cut_test_case_has_children().
+	* test/test-cut-test-case.c: Remove a test for
+	cut_test_case_has_children().
+	* cutter/cut-utils.[hc]: Remove cut_utils_list_intersection().
+	* cutter/cut-test-container.c: Do not use
+	cut_utils_list_intersection().
+
+2007-11-15  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-main.c: cleanup.
+
+	* configure.ac: removed runner.
+
+	* cutter/Makefile.am: fixed dependencies.
+
+	* cutter/cut-main.c:
+	- -t/--test -> -n/--name
+	- -n/--name -> -t/--test-case
+	* README, test/run-test.sh: followed the above changes.
+
+	* cutter/Makefile.am: don't use variable.
+
+	* cutter/: implemented user data in test case.
+	* sample/cairo/: used the above feature.
+
+	* cutter/module/output/cut-output-console.c: supported tab stop.
+
+	* cutter/cut-main.[ch]: split functions.
+
+	* cutter/cut-main.c: added initialized check.
+
+	* cutter/cut-main.c: CutContext is not static.
+
+2007-11-15  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-utils.[hc]: Added cut_utils_list_union().
+	* cutter/cut-test-suite.c: (cut_test_suite_run_with_filter): shorten test
+	cases.
+
+2007-11-15  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-main.c: cleanup.
+
+	* cutter/cut-loader.c: closed module on test case is completed.
+
+	* cutter/cut-loader.c: creanup.
+
+	* cutter/: showed stack trace on SEGV.
+
+2007-11-15  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* sample/cairo/*: Added sample test for cairo.
+
+2007-11-15  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-test-suite.c: supported interrupting.
+
+	* cutter/: supported showing summary on SEGV.
+
+	* cutter/cut-test-context.c, cutter/cut-assertions.h,
+	cutter/cut-public.h: supported inspecting string array.
+
+2007-11-15  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* sample/glib/test-keyfile.c: Restore original log function.
+	* sample/glib/test-properties.c: Do not use g_log_set_always_fatal()
+	since it causes crash.
+
+2007-11-15  Kouhei Sutou  <kou@cozmixng.org>
+
+	* sample/glib/test-regex.c: cutterlized.
+	* sample/glib/test-regex.c: cleanup.
+
+2007-11-15  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* sample/gtk+/test-builder.c: (test_connect_signals): Check GTK+
+	version.
+
+2007-11-15  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/Makefile.am: Remove "lib" prefix.
+	* test/loader_test_dir/Makefile.am,
+	test/repository_test_dir/Makefile.am: Remove "lib" prefix.
+	* test/test-cut-loader.c, test/test-cut-test-suite.c: Follow the above
+	change.
+
+2007-11-15  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-public.h, cutter/cut-utils.h: Moved
+	cut_utils_compare_string_array into cut-public.h.
+	* cutter/cut-utils.c: include "cut-public.h".
+
+2007-11-15  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-public.h: Append __attribute__((__noreturn__)) to
+	cut_text_context_long_jump().
+
+2007-11-14  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-assertions.h (cut_assert_operator_int): fixed a
+	string literal bug.
+
+	* cutter/cut-assertions.h (cut_assert_equal_string_or_null): added.
+	* test/test-cut-assertions.c: cleanup.
+
+	* test/test-cut-assertions.c (test_failure_from_nested_function):
+	added a test for setjmp/longjmp for CutTest.
+
+	* test/test-cut-assertions.c (test_assert_equal_function):
+	improved test.
+
+	* sample/glib/test-regex.c (test_match): used function instead of macro.
+
+	* cutter/: used setjmp/longjmp to terminate test by failure.
+	* test/: followed the above changes.
+
+	* test/run-test.sh: cleanup.
+
+	* cutter/cut-output.c, cutter/module/output/cut-output-console.c:
+	worked use_color again.
+
+2007-11-14  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-result.[c|h]: Added cut_test_result_get_test_name().
+	* cutter/module/output/cut-output-console.c: Show test name if the
+	test fails.
+
+2007-11-14  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-result.[c|h]: cut_test_result_new() needs test and
+	test case and test suite name.
+	* cutter/cut-test-context.c, test/test-cut-test-result.c: Follow the
+	change.
+
+2007-11-14  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* module/runner/cut-ruuner-gtk.c: Call gtk_main().
+
+2007-11-14  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-runner.[c|h]: Added.
+	* cutter/module/runner/*: Added.
+
+2007-11-14  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-main.c: Remove main() function.
+	* cutter/main.c: cleanup.
+
+2007-11-14  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/module/output/cut-output-gtk.c: Added skelton.
+
+2007-11-14  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-output.[c|h], cutter/cut-context.c,cutter/cut-main.c:
+	Modularization of CutOutput.
+	* cutter/module/output/cut-output-console.c: "use-color" property.
+
+2007-11-14  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-module.[c|h], cutter/cut-module-impl.h: Added files for
+	modularization of CutOutput, but not used yet.
+	* cutter/cut-output.[c|h]: Added cut_output_get_verbose_level().
+	* cutter/cut-output.[c|h]: Added cut_output_get_source_directory().
+	* cutter/module/*: Added a CutOutput module for console, but not used
+	yet.
+
+2007-11-13  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/main.c: Added.
+	* cutter/Makefile.am: Create cutter library.
+	* sample/gtk+/cutter-gtk.c: Added a program for running tests of GTK+.
+	* cutter/main.c: Plugged memory leak.
+	* cutter/cut-main.c (cut-run): Return success.
+
+2007-11-13  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-main.[c|h]: Added cut_init() and cut_run() for cutter
+	library.
+
+2007-11-13  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* libcutter.pc.in: Added pkgconfig file for cutter library.
+
+2007-11-13  Kouhei Sutou  <kou@cozmixng.org>
+
+	* **/run-test.sh: run make in top directory.
+
+2007-11-13  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* sample/gtk+/*: Added a test for GtkBuilder but not worked yet.
+
+2007-11-13  Kouhei Sutou  <kou@cozmixng.org>
+
+	* sample/glib/test-regex.c (test_match_next): added.
+
+2007-11-13  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-assertions.c: Added cut_assert_equal().
+	* test/test-cut-assertions.c: Added test for
+	cut_assert_equal().
+
+2007-11-13  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* sample/glib/test-regex.c: Added but not completed yet.
+
+2007-11-13  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-utils.c (cut_utils_compare_string_array): cleanup.
+
+2007-11-13  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-utils.[c|h]: Added cut_utils_compare_string_array().
+	* cutter/cut-assertions.c: Added cut_assert_equal_string_array(), but
+	the function is exposured...
+	* test/test-cut-assertions.c: Added test for
+	cut_assert_equal_string_array().
+
+2007-11-12  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-assertions.h: used "[]" for representing size.
+
+	* cutter/cut-assertions.h: added cut_assert_equal_memory().
+	* sample/glib/test-base64.c: used cut_assert_equal_memory().
+
+	* sample/glib/test-glib-option.c: removed needless \n.
+
+2007-11-12  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* sample/glib/test-glib-option.c: Added. All tests are picked from
+	test/test-option.c:
+	* test/test-cut-assertions.c: Added tests for error case.
+
+2007-11-12  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-assertions.h: removed needless NULL.
+	* cutter/cut-output.c: added missing "%s".
+	* test/test-cut-assertions.c: fixed expected output.
+
+	* test/test-cut-assertions.c
+	(test_assert_message_with_format_string): added a test for assert
+	message with format string.
+
+2007-11-09  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-context.c: made thread safe.
+
+	* README: fixed lazy copy-and-paste.
+
+	* cutter.pc.in: don't require glib-2.0.
+
+	* cutter/cut-assertions.h: re-added needed "%s". This is needed
+	when expected or actual include format string like "%s".
+
+2007-11-09  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* configure.ac, cutter/Makefile.am: Support for static binary.
+
+2007-11-09  Kouhei Sutou  <kou@cozmixng.org>
+
+	* configure.ac, cutter/cut-loader.c, cutter/cut-main.c: BFD is optional.
+
+2007-11-09  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/Makefile.am, cutter/cuttter.h, cutter/cut-assertions.h:
+	cut-public.h and cut-assertions.h are installed in
+	$INCLUDE_DIR/cuttter/cutter/.
+
+2007-11-09  Kouhei Sutou  <kou@cozmixng.org>
+
+	* test/test-cut-test-case.c: added NULL to indicate end of array.
+
+2007-11-09  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-assertions.h: Removed <glib.h>.
+
+2007-11-09  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cutter.h: Removed <glib.h>.
+
+2007-11-09  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-public.h: New file for declarations of function and
+	struct which is used in cut_assertions.h.
+	* cutter/cut-assersions.h: Moved some functions and struct into
+	cut-public.h.
+	* cutter/cutter.h: Include "cut-public.h".
+
+2007-11-09  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/configure.ac, cutter/cutter.pc.in: Set requirement version of
+	GLib in cutter.pc.
+
+2007-11-09  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/Makefile.am: Added cut-private.h into cutter_SOURCES.
+
+2007-11-09  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test-cut-test-case.c: Added tests for
+	cut_test_case_run_with_filter().
+
+2007-11-09  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test-cut-test-case.c: Added tests for "start-test" and
+	"complete-test" signal.
+
+2007-11-09  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test-cut-test.c: Added test for "notification" signal.
+
+2007-11-09  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-assertions.c: (cut_assert), (cut_assert_null): Remove
+	needless %s.
+
+2007-11-09  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test-cut-repository.c: Fix comparison.
+
+2007-11-08  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-output.c: added notification message.
+
+2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test-cut-repository.c: Check expected_test_case_name length.
+
+2007-11-08  Kouhei Sutou  <kou@cozmixng.org>
+
+	* test/test-cut-assertions.c: added a test for cut_notify().
+
+	* cutter/: supported cut_notify().
+
+	* cutter/cut-context.c: supported property to avoid warnings.
+
+	* cutter/cut-test-context.c: supported multiple vprintf arguments.
+	* cutter/cut-assertions.h: used the above feature.
+
+	* cutter/cut-test-context.c (status_to_signal_name): extracted.
+
+	* cutter/cut-output.c: avoided to spread color effect.
+
+	* cutter/cut-repository.c: created empty suite.
+
+	* test/test-cut-test-case.c, cutter/cut-test-case.[ch]: removed
+	'_function'.
+
+	* cutter/cut-test-suite.[ch], test/test-cut-test-suite.c: removed
+	'_function'.
+
+2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test-cut-test.c: Added some signal tests.
+
+2007-11-08  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-main.c: moved run tests related codes to ...
+	* cutter/cut-test-suite.[ch], cutter/cut-test-case.[ch]: ... here.
+
+2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test-cut-test.c, test/test-cut-assertions.c: Moved signal test
+	into test-cut-test.c.
+
+2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test-cut-test-case.c: Added an assertion for regex filter of
+	has_function().
+
+2007-11-08  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-utils.c: escaped regexp.
+
+	* cutter/cut-test-suite.c: cleanup cut_test_suite_run_test_cases().
+
+	* test/test-cut-repository.c: cut_test_case_name -> cut_test_name().
+
+2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-container.[c|h]: Added
+	cut_test_container_filter_children().
+	* cutter/cut-test-suite.c, cutter/cut-test-case.c: Use
+	cut_test_container_filter_children().
+
+2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-case.[c|h]: Removed cut_test_case_get_name().
+	* cutter/cut-test-suite.c, cutter/cut-output.c: Use cut_test_get_name()
+	instead of cut_test_case_get_name().
+	* test/test-cut-test-case.c. test/test-cut-repository.c: Use
+	cut_test_get_name() instead of cut_test_case_get_name().
+
+2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test.[c|h]: cut_test_get_function_name ->
+	cut_test_get_name.
+	* cutter/cut-test-case.c, cutter/cut-output.c: Use cut_test_get_name()
+	instead of cut_test_get_function_name().
+	* test/test-cut-test.c. test/test-cut-loader.c: Use
+	cut_test_get_name() instead of cut_test_get_function_name().
+
+2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-assertions.c: (cut_assert_equal_int): Cast glong.
+
+2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test-cut-test-case.c, test/test-cut-test-suite.c: Change
+	regular expression. ^dummy.* -> dummy 
+
+2007-11-08  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-loader.c: used BFD!!!
+
+2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* sample/glib/test_glib_utf8_validate.c: Added.
+
+2007-11-08  Kouhei Sutou  <kou@cozmixng.org>
+
+	* configure.ac: added -lbfd check.
+	* cutter/cut-main.c: called bfd_init(). But BFD isn't used yet.
+
+2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* sample/glib/test_glib_utf8_pointer.c: Added.
+
+2007-11-08  Kouhei Sutou  <kou@cozmixng.org>
+
+	* configure.ac: added -lbfd check.
+
+	* cutter/cutter-test.[ch]: added description.
+	* test/test-cut-test.c: added a test for description.
+	* cutter/cut-output.c: showed description if available.
+
+	* cutter/cut-output.c: showed elapsed time for each test.
+
+	* test/run-test.sh, sample/glib/run-test.sh: used --multi-thread option.
+
+	* cutter/: supported multi-thread mode.
+
+	* cutter/: improved option handling for verbose level.
+
+	* cutter/cut-main.c: improved option handling.
+
+	* test/test-cut-assertion.c: added 's'.
+
+	* cutter/cut-test.[ch]: re-supported success signal.
+	* cutter/cut-test-suite.c: emitted success signal again.
+	* cutter/cut-context.c (cut_context_start_test): used success
+	signal again.
+
+2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* sample/glib/test_glib_uri.c: Separate test that
+	g_filename_from_uri() does not return hostname.
+
+2007-11-08  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-assertions.h (cut_assert_null): added.
+	* test/test-cut-assertion.c: added a test for cut_assert_null().
+
+2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/run-tests.sh: Added ^ at regex head.
+
+2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test-cut-repositry.c, test/repository_test_dir/Makefile.am:
+	Change test case name.
+
+2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/run-tests.sh: Added --name option.
+
+2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test-cut-test-suite.c: enable all tests.
+
+2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-suite.c: support regular expression for
+	cut_test_suite_run_function_in_test_case().
+
+2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-suite.c: support regular expression for
+	cut_test_suite_run_test_case().
+	Where has "success" signal gnone?
+
+2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-case.c: Use cut_utils_create_regex_pattern().
+
+2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test-cut-test-suite.c: enable test for
+	cut_test_suite_run_function().
+
+2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-utils.[c|h]: Added.
+
+2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-case.c: Code cleanup. Added some utility functions.
+
+2007-11-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-case.c: (create_regex_pattern): Added utility
+	function. The function should be moved into cut-utils.h.
+
+2007-11-08  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-assertions.h: cleanup.
+
+	* cutter/: cut-assertion.h -> cut-assertions.h.
+
+2007-11-07  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-assertion.h (cut_assert_operator): added.
+	* cutter/cut-assertion.h: cleanup.
+
+	* cutter/cut-main.c: removed needless codes.
+
+	* cutter/cut-main.c: detected color mode automatically.
+
+	* test/test-cut-assertion.c (test_assert_message): used
+	user_message not message.
+
+	* cutter/cut-test-result.[ch]: added user_message and system_message.
+	* cutter/cut-test-context.c: followed the above changes.
+	* test/test-cut-test-result.c: added tests for message.
+
+2007-11-07  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-case.c: Implement regex match for
+	cut_test_case_run_function().
+	* test/test-cut-test-case.c: Enable regex match test.
+
+2007-11-07  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test.c, cutter/cut-test-case.c, cutter/cut-test-suite.c:
+	Removed G_SIGNAL_DETAILED.
+
+2007-11-07  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test-cut-test-assertion.c: Added test for assertion message.
+	Hmm, why this test fails?
+
+2007-11-07  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test-cut-test-result.c: Added tests.
+
+2007-11-07  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test-cut-assertion.c: Added tests for signals.
+
+2007-11-07  Kouhei Sutou  <kou@cozmixng.org>
+
+	* test/test-cut-test-case.c: suppressed warnings.
+
+	* test/test-cut-test.c: suppress warnings.
+
+	* test/loader_test_dir/dummy-test-functions.c: suppress warnings.
+
+	* cutter/cut-output.c: improved output.
+
+	* test/test-cut-assertion.c: worked again.
+
+	* cutter/cut-context.c: fixed free function.
+
+2007-11-07  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test-cut-assertion.c: Show significant message if cut_assert()
+	failed.
+
+2007-11-07  Kouhei Sutou  <kou@cozmixng.org>
+
+	* test/test-cut-assertion.c: suppressed warnings.
+
+	* test/test-cut-test-suite.c: marked as pending.
+
+	* test/test-cut-test-suite.c: suppressed warnings.
+
+	* cutter/cut-test.c: checked whether the test was successfully
+	finished or not.
+
+	* cutter/cut-assertion.h: improved message.
+
+	* cutter/cut-output.c: improved format.
+
+	* test/test-cut-test-case.c: marked as pending.
+
+	* cutter/cut-test-case.c: supported nested run.
+	* test/test-cut-test-case.c: used the above feature.
+
+	* cutter/cut-test-context.[ch]: added cut_test_context_is_failed().
+
+	* cutter/cut-test-case.c: emitted signals when invoking with -n option.
+
+	* cutter/cut-test-suite.c: emitted signals when invoking with -n option.
+
+	* cutter/cut-test-context.c, cutter/cut-assertion.h: supported
+	optional user message.
+
+	* test/test-cut-test.c: removed needless tests.
+
+	* cutter/cut-test-result.c: fixed typos.
+
+	* cutter/cut-context.[ch]: exported inner variables.
+	* cutter/cut-output.[ch]: showed summary again.
+
+	* cutter/cut-context.c, cutter/cut-output.c: showed failure
+	details again.
+
+	* cutter/cut-context-private.h: removed.
+	* cutter/, test/: followed the above change.
+
+	* cutter/cut-output.c: showed elapsed time again.
+	* cutter/cut-test-case.c, cutter/cut-test-suite.c: emitted signals.
+
+2007-11-07  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test-cut-test.c: Remove test_result().
+	* test/test-cut-test-result.c: Added get_status test.
+
+2007-11-07  Kouhei Sutou  <kou@cozmixng.org>
+
+	* test/test-cut-test-case.c: removed needless tests.
+
+	* test/test-cut-test.c: removed a needless test.
+
+2007-11-07  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-assertion.h, cutter/cut-test-context.c:
+	cut_test_context_register_result() now accepts varargs.
+
+2007-11-07  Kouhei Sutou  <kou@cozmixng.org>
+
+	* test/test-cut-test.c: removed a needless test.
+
+	* test/test-cut-test-suite.c: removed a needless test.
+
+	* cutter/cut-context.c: re-supported '.' on success.
+
+	* test/Makefile.am: fixed utility link.
+
+	* test/test-cut-assertion.c: followed the recent changes.
+
+	* cutter/cut-context.c: worked signals again.
+
+	* cutter/cut-test-case.c: fixed a silly bug.
+
+	* cutter/cut-test.[ch]: defined missing signal.
+
+	* cutter/cut-loader.c (cut_loader_load_test_case): don't spread
+	symbol name to global.
+
+	* cutter/cut-test.c (cut_test_run): run test.
+
+	* test/, cutter/: fixed SEGV bugs.
+
+	* cutter/cut-test-case.c (run): unified test run process.
+
+	* cutter/cut-test-context.c: defined missing properties.
+
+	* cutter/cut-test.c, cutter/cut-test-context.c: moved callback
+	functions from test.
+
+	* cutter/, test/: introduced CutterTestContext. not work yet.
+
+	* test/test-cut-test-suite.c (setup): used cut_error() not
+	cut_assert(). But not work yet.
+
+	* cutter/, test/: published TestCase not TestContext.
+
+	* cutter/, test/: test run requires context. NOT WORK!
+
+2007-11-07  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test-cut-test.c: Plugged memory leak.
+
+2007-11-07  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test-cut-test-suite.c: more assertions.
+
+2007-11-07  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-assertion.h: improved error messages.
+
+	* sample/glib/run-test.sh, sample/glib/Makefile.am,
+	test/run-test.sh, test/Makefile.am: don't run make when invoked
+	from 'make check'.
+
+2007-11-07  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* configure.ac: version 0.1.0.
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test-cut-test-suite.c: Added tests for regular expression
+	filter.
+
+2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
+
+	* test/test-cut-test-case.c, test/test-cut-test-suite.c: added
+	tests for test_get_n_failures().
+	* test/test-cut-test.c: fixed expected value. This is my answer.
+
+	* cutter/cut-assertion.h: surrounded with do {} while(0).
+
+	* cutter/cut-test.[ch], cutter/cut-test-container.c: added
+	cut_test_get_n_tests().
+	* test/test-cut-test.c, test/test-cut-test-case.c,
+	test/test-cut-test-suite.c: added tests for cut_test_get_n_tests().
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test-cut-test.c: Added test for cut_test_get_n_failures().
+	I think the number of cut_fail() can not be above 1.
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test-cut-test.c: Added test for cut_test_is_success().
+
+2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-output.c: used cut_test_get_n_tests().
+
+	* test/test-cut-test-case.c: fixed a typo.
+
+	* cutter/cut-test-container.[ch]: added new signals on
+	start/complete test.
+	* cutter/cut-context.c: used start/complete-test signals of test case
+	instead of start/complete signals of test.
+	* cutter/cut-output.c: improved output.
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test-cut-test-case.c: Added test for regular expression filter
+	to running tests.
+
+2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-test.[ch] (cut_test_is_success): added.
+	* cutter/cut-test-case.c: don't run test when setup fails.
+	* test/test-cut-test-case.c: added a test for the above case.
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test.c: Emit "start" and "complete" signals in
+	cut_test_run().
+
+2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-test.[ch], cutter/cut-test-container.c: added n_XXX getter.
+	* test/test-cut-test.c: followed the above changes.
+	* cutter/cut-output.c: used n_XXX getter.
+
+	* cutter/cut-test.[ch], cutter/cut-test-container.c: added timer.
+	* cutter/cut-output.c: showed elapsed time in test.
+
+	* cutter/cut-assertion.h (cut_error): added.
+	* test/test-cut-assertion.c: added a test for cut_error().
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-output.c: (status_to_name), (status_to_color): Write
+	default case for suppress compiler warning.
+
+2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-assertion.h: improved format.
+	* test/test-cut-test-case.c: improved test approach.
+
+	* test/test-cut-test-suite.c, test/test-cut-loader.c,
+	test/test-cut-repository.c, test/Makefile.am: used utility library.
+
+	* test/cuttest-utils.[ch]: added utility library for test.
+
+	* test/test-cut-test-suite.c: used base directory for searching.
+
+	* test/run-test.sh: passed base directory.
+	* test/test-cut-loader.c, test/test-cut-repository.c: used base
+	directory for searching.
+
+	* cutter/cut-output.c:
+	- showed summary.
+	- showed failure details even if normal	verbose mode.
+	- showed number of tests.
+
+	* test/run-test.sh: used normal verbose mode.
+
+	* cutter/cut-assertion.h: improved error message.
+	* cutter/cut-output.c: improved format.
+
+	* cutter/cut-output.c: removed needless variables.
+
+	* cutter/cut-output.c: suppressed warnings.
+
+	* cutter/cut-output.c: showed status label.
+
+2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-output.c: showed error summary.
+
+	* cutter/cut-assertion.h: added CUT_TEST_RESULT_SUCCESS.
+	* cutter/cut-test.c: followed the above change.
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-main.c: (run_tests): Return value of
+	return the value of cut_test_suite_run().
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-suite.[c|h]: Added cut_test_suite_run().
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/loader_test_dir/*.c, test/repository_test_dir/*.c: Renamed. Use
+	"-" for conjunction character.
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/*.c: Renamed. Use "-" for conjunction character.
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test_cut_test_case.c: Added test for
+	cut_test_case_has_function().
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-suite.c: Use cut_test_case_run() instead of
+	cut_test_run().
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-suite.c: Check the test case has the function before
+	run the test.
+
+2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-main.c: made context explicitly.
+
+	* cutter/cut-repository.[ch]: required context for initialize function.
+
+	* cutter/cut-context.[ch], cutter/cut-output.[ch]: added callback
+	on start/complete test case/suite.
+
+	* test/test_cut_repository.c: followed the above changes.
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-case.[c|h]: Added cut_test_case_has_function().
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-main.c: Use cut_test_suite_run_test_function() and so on.
+	We need a function which checks test case has function.
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test_cut_test_case.c: Use cut_test_case_run() instead of
+	cut_test_run().
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-main.c: Added --name and --test options.
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-case.[c|h]: Added cut_test_case_run().
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test_cut_test_suite.c: Added tests for
+	cut_test_suite_run_test_function() and
+	cut_test_suite_fun_test_function_in_test_case().
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-suite.[c|h]: Added
+	cut_test_suite_run_test_function() and
+	cut_test_suite_fun_test_function_in_test_case().
+
+2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-test-case.c, cutter/cut-test-container.c: emitted signals.
+
+	* cutter/cut-output.c: used purple for error.
+
+	* cutter/cut-output.[ch], cutter/cut-test.[ch],
+	cutter/cut-context.c, cutter/cut-test-case.c: used signal for
+	output trigger.
+
+	* cutter/cut-context.c, cutter/cut-output.[ch]: used start signal.
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-repository.c: Search directory recursively.
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-loader.c: Remove G_MODULE_SUFFIX and "lib" prefix from
+	test case name.
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test_cut_test.c: Added cut_test_get_result() test.
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test_cut_assertion.c: Added cut_pending() test.
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-assertion.h: (cut_pending): Set CUT_TEST_RESULT_PENDING.
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test_cut_test_suite.c: Use test own CutContext.
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test_cut_test_case.c: Use test own CutContext.
+
+2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-output.c, cutter/cut-test.[ch], cutter/cut-context.c,
+	  cutter/cut-assertion.h: CutTestError -> CutTestResult.
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test_cut_test.c: Use test own CutContext.
+
+2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-output.[ch]: split from CutContext.
+	* cutter/Makefile.am, cutter/cut-context.[ch]: used CutOutput.
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-main.c: Show error message if directory is not specified.
+
+2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-main.c, cutter/cut-context.[ch]: base_dir ->
+	source_directory.
+	* test/run-test.sh: used -s option.
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-main.c: Plugged memory leak.
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-assertion.h, cutter/cut-context-private.h:
+	Moved cut_context_set_current().
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test_cut_test_suite.c: Use cut_test_suite_add_test_case() instead
+	of cut_test_container_add_test().
+
+2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-context.c, cutter/cut-assertion.h: exported context
+	change API.
+	* test/test_cut_assertion.c: replaces context not test.
+
+	* cutter/cut-context.c: improved format.
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-repository.c: Use cut_test_suite_add_test_case() instead
+	of cut_test_container_add_test().
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-suite.[c|h]: Added cut_test_suite_add_test_case().
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test_cut_repository.c: Create CutRepositry from
+	repository_test_dir.
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/repository_test_dir: Added dir for storing test data CutRepository.
+
+2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-context.c: used CutVerboseLevel not integer.
+
+	* cutter/cut-main.c, cutter/cut-context.h, cutter/cut-context.c,
+	  cutter/Makefile.am: specify verbose level as string.
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test_cut_repository.c: Added.
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test_cut_test.c: Added get error, set error test.
+
+2007-11-06  Kouhei Sutou  <kou@cozmixng.org>
+
+	* test/run-test.sh: more generalize.
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test_cut_test_case.c: Added run test.
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test_cut_test.c: Added increment_assertion_count test.
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test_cut_test.c: Added get_name test and run test.
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test_cut_test_case.c: Added get_name test.
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-suite.[c|h]: Added cut_test_suite_run_test_case().
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test_cut_test_suite.c: Implement test for cut_test_suite_run_test_case().
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test_cut_test_suite.c: Added test for cut_test_suite_run_test_case().
+
+2007-11-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-case.c: Implement cut_test_case_run_function().
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-assertion.h: Added cut_pending().
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-case.[c|h]: Added cut_test_case_run_function().
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test_cut_test_suite.c: Added.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test_cut_test_case.c: Added cut_test_case_run_function() test.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test_assertion.c: Added cut_pending() test.
+
+2007-11-05  Kouhei Sutou  <kou@cozmixng.org>
+
+	* README, README.ja: updated.
+
+	* cutter/, test/, sample/: cut.h -> cutter.h.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* sample/glib/test_glib_uri.c: Change NULL to "".
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* sample/glib/test_glib_uri.c: Separate some tests.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* sample/glib/test_glib_uri.c: Added.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-assertion.h, cutter/cut-context.h: Moved
+	cut_context_get_current(), cut_context_set_error() and
+	cut_context_increment_assertion_count().
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-assertion.h: (cut_assert_equal_string): NULL check.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-context.h: cut-test.h is not needed.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-context.c: Silent mode outputs nothing.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-case.c: (real_run): Return FALSE if fails.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-container.c: Return reliable gboolean value.
+
+2007-11-05  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-main.c (option_entries): NULL terminated.
+	* cutter/cut-main.c (main): exit(0) on exit successfully.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* Remove old cutter files.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-context.c: verbose level 2.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/Makefile.am: Run run-test.sh when make check.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-assertion.h:(cut_fail): Show message which is given in
+	test code.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-case[c|h]: Added cut_test_case_get_name().
+	cut_test_case_new() now needs its name.
+	* cutter/cut-loader.c, test/test_cut_test_case.c: Follow the above
+	change.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-assertion.h: Remove filename, line number and function
+	name from rrror message.
+	* cutter/cut-context.c: Make error message.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-main.c: Set color option.
+	* cutter/cut-context.c: Output "F" with red color.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-context.[c|h]: Added cut_context_set_use_color().
+	* cutter/cut-main.c: Added color option.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-context-private.h: Added. Declare get_test() and
+	set_test() method.
+	* cutter/cut-test-case.c, test/test_cut_test.c,
+	test/test_cut_assertion.c: include "cut-context-private.h".
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut.h: Do not include "cut-test.h" and "cut-context.h".
+	* test/test_cut_test.c: include "cut-test.h".
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test-cut-test.h: Restore original test after running dummy
+	test.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test-cut-assrtion.h: Added a test for cut_fail().
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-assertion.h: Added cut_fail().
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-context.[c|h]: Added cut_context_get_current_test().
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-context.[c|h]: Removed cut_context_set_current().
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-context.[c|h]: Added cut_context_set_current().
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-main.c: Added base_dir option.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-context.[c|h]: Added cut_context_set_base_dir().
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-main.c: Added verbose option.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/loader_test_dir/dummy_test_functions.c: Remove type check
+	functions. CutLoader now cannot check value type.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test_cut_loader.c: Load so file.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-context.c: Output error message.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/loader_test_dir/dummy_test_functions.c: gboolean -> int.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test_cut_loader.c: Check loaded functions.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-case.[c|h]: Now CutTestCase is a child of
+	CutTestContainer.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-container.[c|h]: Added
+	cut_test_container_get_children().
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test_cut_loader.c: Check test count which is owned by TestCase.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test_cut_loader.c: Added CutLoader test.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/loader_test_dir/Makefile.am: Use LD_FLAGS. added -avoid-version option.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/Makefile.am: Use LD_FLAGS. added -avoid-version option.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-context.c: Added a line-feed at the end of error message.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/loader_test_case -> test/loader_test_dir: Renamed.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/dummy_test_functions.c -> test/loader_test_case/: Moved.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/dummy_test_functions.c: Added test case for CutLoader.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-context.[c|h]: Added "verbose-level" property.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-context.[c|h]: Removed
+	cut_context_reset_assertion_count().
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-context.[c|h]: Added cut_context_set_verbose_level().
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-context.c: Fix misspelling.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-context.c: Output test function name if verbose level
+	equals 1.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test.[c|h]: Added cut_test_get_function_name().
+	And plugged memory leak.
+
+2007-11-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test.c: Added "function-name" property for obtain test
+	information because CutTest can now out put its information only if error
+	occurs.
+	* cutter/cut-loader.c, test/test-cut-test.c, test-cut-test-case.c:
+	Follow the above change.
+
+2007-11-04  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-loader.c (is_test_function_name_consisted_of): used
+	g_ascii_isanum.
+
+2007-11-04  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-loader.c: >.
+
+2007-11-04  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-loader.c: 9.
+
+2007-11-04  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/run-tests.sh: Run cutter2.
+
+2007-11-02  Kouhei Sutou  <kou@cozmixng.org>
+
+	* TODO: added.
+
+	* cutter/cut-main.c, cutter/cut-context.[ch]:
+	private_thread_context -> cut_context_private.
+
+	* cutter/cut.h: included glib.h.
+	* cutter/cut-assertion.h: removed "#include glib.h".
+
+	* test/test_cut_*.c: added prototype declarations.
+
+	* cutter/cut-context.c: removed unused variable.
+
+	* cutter/*.h: made cut.h as the header for user.
+	* test/test_cut_*.c: included "cut.h".
+
+	* cutter/cut-test.h, cutter/cut-loader.c: removed CutTestEntry.
+
+	* test/test_cut_*.c: removed needless test registration.
+
+	* cutter/cut-loader.c: detected test function names that should
+	start with "test_".
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-assertion.h: Return if fail.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test.[c|h]: Added cut_test_get_error().
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test_cut_test_case.c: Added setup teardown tests.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test_cut_test.c: Added cut_assert().
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test.c: (real_run): return value depends on error
+	existence.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-case.c: Error if not success!
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-assertion.h: Added cut_assert().
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test_cut_test.c, test/test_cut_test_case.c: Follow API
+	changes.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test.[c|h], cutter/cut-test-case.c,
+	cutter/cut-test-container.c, cutter/cut-main.c: run method now returns
+	gboolean value.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test.[c|h]: test name is not needed any more.
+	* cutter/cut-loader.c, test/test_cut_assertion.c,
+	test/test_cut_test.c: Follow the above change.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-context.[c|h]: Added cut_context_output_error_log() and
+	cut_context_output_normal_log().
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-context.c: Added verborse mode.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test_triv.c: Removed.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-assertion.c, cutter/cut-test.c: Set error.
+	* cutter/cut-context.c: Output message.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test.[c|h], cutter/cut-context.[c|h]: Implement set error
+	function.
+
+2007-11-02  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-assertion.h: improved log format.
+
+2007-11-02  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-assertion.h: improved log format.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test.[c|h]: Added "start" and "complete" signals.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-context.[c|h]: Added cut_context_set_test().
+	* cutter/cut-test-case.c: Invoke cut_context_set_test() before
+	setup().
+
+2007-11-02  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-test-case.c: used C style.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test.[c|h]: Added cut_test_increment_assertion_count().
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-context.[c|h] -> cutter/cut-context.[c|h]: Renamed.
+	* cutter/cut.h, cutter/cut-assertion.h, cutter/cut-test.c: Follow the
+	above change.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut.h, cuttter/cut-test-context.[ch}, cutter/cut-assertion.h,
+	cutter/cut-test.c, cutter/cut-main.c: Be thread safe.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-case.c: Rerturn correct number of test cases.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-assertion.c: Increment assertion count.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test.c: Control assertion count in run method.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-context.[c|h]: Added
+	cut_test_context_get_assertion_count(),
+	cut_test_context_reset_assertion_count(),
+	cut_test_context_increment_assertion_count().
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut.h: New file. declare global context.
+	* cutter/cut-main.c: Create a global context and unreference it.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-case.[c|h]: Now CutTestCase is a child of CutTest.
+	* cutter/cut-loader.c, test/test_cut_test_case.c: Follow the above
+	change.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-loader.[c|h] -> cutter/cut-loader.[c|h]: Renamed.
+	* cutter/cut-test-repository.[c|h] -> cutter/cut-repository.[c|h]:
+	Renamed.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test_cut_test.c, test/test_cut_test_case.c: Join tear and
+	down. tear_down -> teardown.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-case.[c|h], cutter/cut-test-load.c: Join tear and
+	down. tear_down -> teardown.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-assertion.h: Output filname and line number.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test_sample.c: Removed.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test_cut_test_case.c: Added tests for CutTestCase.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-assertion.h: define cut_assert_equal_double.
+	* test/test_cut_assertion.h: double value test.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-assertion.h: !strcmp -> strcmp.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-assertion.h: Output error message.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-text-context.[c|h]: New object.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-main.c: Remove needless header.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test_cut_assertion.c: Added string test.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/Makefile.am, test/test_cut_assertion.c: make cut_assertion test.
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-loader.h: Fix typo. !
+
+2007-11-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-assertion.h: Added.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test.[c|h]: Added cut_test_get_name().
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test_cut_test.c: Fix cut_test_new() fitst argument.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-loader.c: Load "setup" and "tear-down" symbols.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-case.c: "setup-function" and "tear-down-function"
+	property.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-case.[c|h]: Now cut_test_case_new() needs CutSetupFunction and
+	CutTearDownFunction.
+	* cutter/cut-test-loader.c: Follow the above change.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test.h: typedef CutSetupFunction and CutTearDownFunction.
+	* cutter/cut-test-case.c: Use CutSetupFunction and
+	CutTearDownFunction.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-loader.c: NULL check barrier.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-case.c: Invoke setup() and tear_down() in run()
+	method.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-case.[c|h]: Declare cut_test_case_get_test_count().
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-loader.c: Initialize tests_len with NULL.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test_cut_test.c: Added name test.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test_cut_assertion.c: Tests for cut_assertionXX().
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test_cut_test.c: Tests for CutTest.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test.h: CutTestStruct -> CutTestEntry.
+	* cutter/cut-test-loader.c, test/test_sample.c: Follow the above
+	change.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-repository.c: Preserve each loader until running
+	tests.
+	* cutter/cut-main.c: Unref CutTestRepositry before exit().
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-loader.c: tests_len should be a pointer.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-case.c, cutter/cut-test-suite.c: Remove
+	g_type_class_add_private().
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test.c: Added "test-name" property.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test_sample.c: Not static.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-repository.c: Give a full-path filename to
+	cut_test_loader_new().
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-main.c: Run tests.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-container.c: Delete cut_test_container_run().
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test.c, cutter/cut-test-loader.c,
+	cutter/cut-test-repository.c: Not abstract type.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/Makefile.am, cutter/cut-main.c: Make cutter2. cutter will be
+	replaced bt cutter2.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/Makefile.am: Compile test_sample.c.
+	* test/test_sample.c: #include "cut-test.h".
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-loader.h, cutter/cut-test.h: CutTestStruct was moved
+	into cut-test.h.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-suite.[c|h]: Added
+	cut_test_repository_create_test_suite().
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-suite.[c|h]: New object.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-repository.[c|h]: New object.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-loader.c: Remove constructor().
+	Added cut_test_loader_load_test_case() to load each CutTest and create
+	a CutTestCase object from these CutTest objects.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-loader.c: Create CutTestCase which has CutTest
+	objects.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-case.[c|h]: New object.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-loader.h: Delete CutTestRegisterFunction.
+	* cutter/cut-test-loader.c: Get "cut_tests" and "cut_tests_len"
+	symbol.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-loader.h: typedef CutTestStruct. It is temporary.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-loader.h: typedef CutTestRegisterFunction.
+	* cutter/cut-test-loader.c: Load "cut_test_register" symbol.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-loader.c: Open so file with g_module_open().
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-loader.c: (constructor): Added.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-loader.c: Added a property for filename of shared
+	object.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-loader.[c|h]: New object for collection test
+	functions from shared object (i.e. .so file).
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test.h: CutTestFuncion returns nothing.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test.[c|h]: run method returns nothing. If error occurs,
+	CutTestError stores error information.
+	* cutter/cut-test-container.c: Follow the above changed.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test.c: "assertion-count" property.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-container.c: (cut_test_container_class_init):Assign
+	test_class value.
+	(real_run): Get assertion count.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-container.c: (dispose): Unref each CutTest object.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-container.c: Implement run method of CutTestClass.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-container.c: Now CutTestContainer is a child of
+	CutTest.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test.c: Added a virtual function for running test.
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-container.c: Added cut_test_container_add().
+	CutTestContainer should be a child of CutTest?
+
+2007-11-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test.c: "test-function" property.
+
+2007-10-31  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-test-container.[ch]: cut_test_container_run_tests()
+	-> cut_test_container_run().
+
+2007-10-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test.[c|h]: Added cut_test_get_assertion_count().
+
+2007-10-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test.c: (cut_test_run): Invoke test_function().
+
+2007-10-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test.[c|h]: Added cut_test_new().
+
+2007-10-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-container.c: Run cut_test_run() if test object is
+	CutTest.
+
+2007-10-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test.[c|h]: Added CutTest object.
+
+2007-10-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-container.c: Run cut_test_container_run_tests() for
+	eatch test object.
+
+2007-10-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-container.[c|h]: Declare cut_test_container_run_tests()
+
+2007-10-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/main.c: Renamed from cutter/cutter.c:
+
+2007-10-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-container.c: Added a GList for storing test objects.
+
+2007-10-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-container.[c|h]: Remove cut_test_container_new()
+	since CutTestContainer is an abstract object.
+
+2007-10-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-container.[c|h]: Add skelton of GObject.
+
+2007-10-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cutter.c: RunTester() -> run_tester().
+
+2007-10-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* sample/calc/test/test_calc.c: CT_DEF -> CUT_DEFINE_TEST. UT -> CUT.
+
+2007-10-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cutter.h, test/test_triv.c: CT_DEF -> CUT_DEFINE_TEST.
+
+2007-10-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/*.[c|h}, test/test_triv.c: UT -> CUT.
+
+2007-10-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/*.h: Added G_BEGIN_DECLS and G_END_DECLS.
+
+2007-10-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cutter.h: #include <glib.h>.
+	* cutter/*.c: #include "cutter.h" instead of <cutter/cutter.h>.
+
+2007-10-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cutter.h: Define CUTTER_BANNER.
+	* curret/cutter.c, cutter/show.[c|h]: ShowUsage -> show_usage(). And
+	moved into cutter.c
+	* configure.ac, test/Makefile.am: Define CUTTER_CFLAGS.
+
+2007-10-24  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* autogen.sh: Brand new.
+	* configure.ac: Requirement of glib.
+
+2007-10-23  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* bootstrap -> autogen.sh.

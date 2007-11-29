@@ -1,0 +1,151 @@
+# -*- rd -*-
+
+= README
+
+== Author
+
+  * Kouhei Sutou <kou@cozmixng.org>
+  * Hiroyuki Ikezoe <poincare@ikezoe.net>
+
+== License
+
+LGPL
+
+== What's this?
+
+Cutter is an Unit Testing Framework for C.
+
+This is a list of features of Cutter:
+  * easy to write tests.
+  * outputs result with useful format for debugging.
+  * tests are build as shared libraries.
+
+== Dependency libraries
+
+  * GLib >= 2.14
+
+== Get
+
+((<URL:http://sourceforge.net/project/showfiles.php?group_id=208375>))
+
+  % svn co https://cutter.svn.sourceforge.net/svnroot/cutter/trunk cutter
+
+== Install
+
+  % ./configure
+  % make
+  # make install
+
+== Usage
+
+  % cutter [Options] [Directory which has libtest_*.so]
+
+=== Options
+
+: -s DIRECTORY, --source-directory=DIRECTORY
+
+   Cutter prepends DIRECTORY to file name when test fails. This
+   is for tolls (like Emacs) which have function jumping to
+   error line.
+
+: -t TEST_CASE_NAME1,TEST_CASE_NAME2,..., --test-case=TEST_CASE_NAME1,TEST_CASE_NAME2,...
+
+   Cutter runs test cases that is matched with
+   TEST_CASE_NAME1, TEST_CASE_NAME2 or .... If
+   TEST_CASE_NAME is surrounded by "/" (e.g. /test_/),
+   TEST_CASE_NAME is handled as regular expression.
+
+: -n TEST_NAME1,TEST_NAME2,..., --name=TEST_NAME1,TEST_NAME2,...
+
+   Cutter runs tests that is matched with TEST_NAME1,
+   TEST_NAME2 or .... If TEST_NAME is surrounded by "/"
+   (e.g. /test_/), TEST_NAME is handled as regular
+   expression.
+
+: -m, --multi-thread
+
+   Cutter runs a test case in a new thread.
+
+: --show-all-uis
+
+   Cutter shows all available UIs and exits.
+
+: -u=[console|gtk], --ui=[console|gtk]
+
+   It specifies UI. The default is console UI.
+
+: -v[s|silent|n|normal|v|verbose], --verbose=[s|silent|n|normal|v|verbose]
+
+   It specifies verbose level.
+
+   This option is only for console UI.
+
+: -c[yes|true|no|false|auto], --color=[yes|true|no|false|auto]
+
+   If 'yes' or 'true' is specified, Cutter uses colorized
+   output by escape sequence. If 'no' or 'false' is
+   specified, Cutter never use colorized output. If 'auto'
+   or option is omitted, Cutter uses colorized output if
+   available.
+
+   This option is only for console UI.
+
+
+== How to test
+
+Executing flow of test is the following.
+
+  (1) Write test.
+  (2) Compile it and build libtest_*.so.
+  (3) Execute cutter. It loads libtest_*.so and runs them.
+
+See TUTORIAL and sample/stack/.
+
+== References
+
+=== Assertions
+
+See cutter/cut-assertions.h or
+((<URL:http://cutter.sf.net/reference/cutter-cut-assertions.html>)).
+
+=== Template
+
+The following is a template of test.
+
+  #include <cutter.h>
+  
+  #include "HEADER_FILE_OF_YOUR_PROGRAM"
+  
+  void test_condition(void);
+  void test_strstr(void);
+
+  static int condition = 0;
+  
+  void
+  setup (void)
+  {
+      condition = 1;
+  }
+  
+  void
+  teardown (void)
+  {
+      condition = 0;
+  }
+
+  void
+  test_condition(void)
+  {
+      cut_assert_equal_int(1, condition,
+                           "The condition value should be set to 1 in setup()");
+    ...
+  }
+  
+  void
+  test_strstr(void)
+  {
+      cut_assert_equal_string("sub-string",
+                              strstr("string sub-string", "sub"));
+      ...
+  }
+  
