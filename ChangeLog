@@ -1,5 +1,7 @@
 2007-11-29  Kouhei Sutou  <kou@cozmixng.org>
 
+	* Makefile.am (tag): added.
+
 	* test/run-test.sh: fixed indentation.
 
 	* sample/glib/Makefile.am (EXTRA_DIST): added a missing file.
