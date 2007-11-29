@@ -1,5 +1,8 @@
 2007-11-29  Kouhei Sutou  <kou@cozmixng.org>
 
+	* Makefile.am (upload-file), misc/upload-files.rb: added for easy
+	uploading.
+
 	* ./: released 0.0.2.
 
 	* Makefile.am (tag): added.

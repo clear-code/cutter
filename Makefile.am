@@ -13,7 +13,10 @@ EXTRA_DIST =		\
 	NEWS		\
 	NEWS.ja
 
-upload: upload-doc
+upload: upload-file upload-doc
+
+upload-file: cutter-$(VERSION).tar.gz
+	$(srcdir)/misc/upload-files.rb cutter-$(VERSION).tar.gz
 
 upload-doc:
 	cd html && $(MAKE) upload
