@@ -1,5 +1,7 @@
 2007-11-29  Kouhei Sutou  <kou@cozmixng.org>
 
+	* ./: released 0.0.2.
+
 	* Makefile.am (tag): added.
 
 	* test/run-test.sh: fixed indentation.
