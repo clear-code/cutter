@@ -1,3 +1,7 @@
+2007-11-29  Kouhei Sutou  <kou@cozmixng.org>
+
+	* sample/glib/Makefile.am (EXTRA_DIST): added a missing file.
+
 2007-11-28  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/: cut_run_test_suite() -> cut_run_runner().

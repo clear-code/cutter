@@ -2,7 +2,9 @@ INCLUDES = $(CUTTER_CFLAGS)	\
 	-I$(top_builddir)	\
 	-I$(top_srcdir)
 
-EXTRA_DIST = run-test.sh
+EXTRA_DIST =			\
+	run-test.sh		\
+	iochannel-test-infile
 
 TESTS = run-test.sh
 TESTS_ENVIRONMENT = NO_MAKE=yes
