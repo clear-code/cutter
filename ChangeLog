@@ -1,5 +1,8 @@
 2007-11-29  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/module/ui-factory/cut-ui-factory-console.c: set default
+	--color value is auto.
+
 	* Makefile.am (upload-file), misc/upload-files.rb: added for easy
 	uploading.
 

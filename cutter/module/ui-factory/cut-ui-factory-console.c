@@ -227,6 +227,14 @@ get_property (GObject    *object,
 }
 
 static gboolean
+guess_color_usability (void)
+{
+    const gchar *term;
+    term = g_getenv("TERM");
+    return term && g_str_has_suffix(term, "term");
+}
+
+static gboolean
 parse_verbose_level_arg (const gchar *option_name, const gchar *value,
                          gpointer data, GError **error)
 {
@@ -263,9 +271,7 @@ parse_color_arg (const gchar *option_name, const gchar *value,
                g_utf8_collate(value, "false") == 0) {
         console->use_color = FALSE;
     } else if (g_utf8_collate(value, "auto") == 0) {
-        const gchar *term;
-        term = g_getenv("TERM");
-        console->use_color = term && g_str_has_suffix(term, "term");
+        console->use_color = guess_color_usability();
     } else {
         g_set_error(error,
                     G_OPTION_ERROR,
@@ -275,6 +281,15 @@ parse_color_arg (const gchar *option_name, const gchar *value,
     }
 
     return TRUE;
+}
+
+static gboolean
+pre_parse (GOptionContext *context, GOptionGroup *group, gpointer data,
+           GError **error)
+{
+    CutUIFactoryConsole *console = data;
+
+    console->use_color = guess_color_usability();
 }
 
 static void
@@ -298,6 +313,7 @@ set_option_group (CutUIFactory *factory, GOptionContext *context)
                                _("Show Console UI Options"),
                                console, NULL);
     g_option_group_add_entries(group, entries);
+    g_option_group_set_parse_hooks(group, pre_parse, NULL);
     g_option_group_set_translation_domain(group, GETTEXT_PACKAGE);
     g_option_context_add_group(context, group);
 }

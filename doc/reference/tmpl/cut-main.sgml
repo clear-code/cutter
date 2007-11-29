@@ -31,34 +31,6 @@ cut-main
 
 </para>
 
-@directory: 
-@Returns: 
-
-
-<!-- ##### FUNCTION cut_create_context ##### -->
-<para>
-
-</para>
-
-@Returns: 
-
-
-<!-- ##### FUNCTION cut_create_test_suite ##### -->
-<para>
-
-</para>
-
-@directory: 
-@Returns: 
-
-
-<!-- ##### FUNCTION cut_run_test_suite ##### -->
-<para>
-
-</para>
-
-@suite: 
-@context: 
 @Returns: 
 
 
