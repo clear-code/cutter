@@ -1,3 +1,8 @@
+2007-11-30  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/module/ui-factory/cut-ui-factory-console.c (pre_parse):
+	returned TRUE.
+
 2007-11-29  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/module/ui/cut-ui-gtk.c: ensured free row info even if

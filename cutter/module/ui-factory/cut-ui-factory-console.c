@@ -290,6 +290,8 @@ pre_parse (GOptionContext *context, GOptionGroup *group, gpointer data,
     CutUIFactoryConsole *console = data;
 
     console->use_color = guess_color_usability();
+
+    return TRUE;
 }
 
 static void
