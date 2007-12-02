@@ -18,7 +18,7 @@ Cutter is an Unit Testing Framework for C.
 This is a list of features of Cutter:
   * easy to write tests.
   * outputs result with useful format for debugging.
-  * tests are build as shared libraries.
+  * tests are built as shared libraries.
 
 == Dependency libraries
 
