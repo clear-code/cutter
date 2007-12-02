@@ -1589,6 +1589,73 @@ Cutterを用いることにより、簡単にテストが書ける。既存のC�
 る。自動化テストを用意することはメンテナンス面でも、新機能開
 発面でも品質の高いプログラムを作成する上で有用である。
 
+=== スタックのテスト
+
+最終的なテストは以下の通りである。
+
+test/test-stack.c
+  #include <cutter.h>
+  #include <stack.h>
+
+  void test_new_stack (void);
+  void test_push (void);
+
+  static Stack *stack;
+
+  void
+  setup (void)
+  {
+      stack = NULL;
+  }
+
+  void
+  teardown (void)
+  {
+      if (stack)
+          stack_free(stack);
+  }
+
+  void
+  test_new_stack (void)
+  {
+      stack = stack_new();
+      cut_assert(stack_is_empty(stack));
+  }
+
+  void
+  test_push (void)
+  {
+      stack = stack_new();
+      cut_assert_equal_int(0, stack_get_size(stack));
+      stack_push(stack, 100);
+      cut_assert_equal_int(1, stack_get_size(stack));
+      cut_assert(!stack_is_empty(stack));
+  }
+
+  void
+  test_pop (void)
+  {
+      stack = stack_new();
+
+      stack_push(stack, 10);
+      stack_push(stack, 20);
+      stack_push(stack, 30);
+
+      cut_assert_equal_int(3, stack_get_size(stack));
+      cut_assert_equal_int(30, stack_pop(stack));
+      cut_assert_equal_int(2, stack_get_size(stack));
+      cut_assert_equal_int(20, stack_pop(stack));
+      cut_assert_equal_int(1, stack_get_size(stack));
+
+      stack_push(stack, 40);
+      cut_assert_equal_int(2, stack_get_size(stack));
+      cut_assert_equal_int(40, stack_pop(stack));
+      cut_assert_equal_int(1, stack_get_size(stack));
+      cut_assert_equal_int(10, stack_pop(stack));
+      cut_assert_equal_int(0, stack_get_size(stack));
+      cut_assert(stack_is_empty(stack));
+  }
+
 === スタックの実装
 
 最終的なプログラムは以下の通りである。このスタックは素朴な実
