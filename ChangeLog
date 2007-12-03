@@ -1,3 +1,8 @@
+2007-12-03  Kouhei Sutou  <kou@cozmixng.org>
+
+	* TUTORIAL, TUTORIAL.ja, cutter/sample/stack/test/test-stack.c:
+	added missing test_pop().
+
 2007-11-30  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/module/ui-factory/cut-ui-factory-console.c (pre_parse):
