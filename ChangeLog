@@ -1,3 +1,7 @@
+2007-12-07  Kouhei Sutou  <kou@cozmixng.org>
+
+	* configure.ac: cleanup.
+
 2007-12-03  Kouhei Sutou  <kou@cozmixng.org>
 
 	* TUTORIAL, TUTORIAL.ja, cutter/sample/stack/test/test-stack.c:

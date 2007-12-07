@@ -55,9 +55,6 @@ AM_PATH_GLIB_2_0($GLIB_REQUIRED, [], [], [gmodule gobject gthread])
 # Checks for libraries.
 AC_CHECK_LIB(bfd, bfd_init)
 
-CUTTER_CFLAGS="\$(GLIB_CFLAGS)"
-AC_SUBST(CUTTER_CFLAGS)
-
 dnl **************************************************************
 dnl Configure for modules.
 dnl **************************************************************
@@ -160,6 +157,7 @@ AC_SUBST(CUTTER)
 
 CUTTER_CFLAGS="$GLIB_CFLAGS -DUI_MODULEDIR=\\\"\"\$(ui_moduledir)\"\\\""
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DUI_FACTORY_MODULEDIR=\\\"\"\$(ui_factory_moduledir)\"\\\""
+AC_SUBST(CUTTER_CFLAGS)
 
 AC_CONFIG_FILES([Makefile
 		 cutter.pc
