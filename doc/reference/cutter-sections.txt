@@ -57,6 +57,7 @@ cut_pending
 cut_notify
 cut_assert
 cut_assert_null
+cut_assert_null_string
 cut_assert_not_null
 cut_assert_equal_int
 cut_assert_equal_uint

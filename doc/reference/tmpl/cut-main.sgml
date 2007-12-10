@@ -26,11 +26,35 @@ cut-main
 @argv: 
 
 
+<!-- ##### FUNCTION cut_quit ##### -->
+<para>
+
+</para>
+
+
+
 <!-- ##### FUNCTION cut_run ##### -->
 <para>
 
 </para>
 
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_create_runner ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
+<!-- ##### FUNCTION cut_run_runner ##### -->
+<para>
+
+</para>
+
+@runner: 
 @Returns: 
 
 

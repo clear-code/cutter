@@ -1,5 +1,8 @@
 2007-12-10  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertions.h, test/test-cut-assertions.c,
+	doc/reference/ja.po: added cut_assert_null_string().
+
 	* cutter/cut-assertions.h, doc/reference/Makefile.am,
 	doc/reference/cutter-docs.sgml, doc/reference/ja.po: marked
 	cut_assert_equal_string_or_null() as deprecated. Use

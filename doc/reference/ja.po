@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 0.1.0\n"
-"POT-Creation-Date: 2007-12-10 14:35+0900\n"
-"PO-Revision-Date: 2007-12-10 14:36+0900\n"
+"POT-Creation-Date: 2007-12-10 14:57+0900\n"
+"PO-Revision-Date: 2007-12-10 14:59+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -45,11 +45,11 @@ msgstr "索引"
 
 #: cutter-docs.sgml:61(title)
 msgid "Index of deprecated symbols"
-msgstr ""
+msgstr "非推奨のシンボル一覧"
 
 #: cutter-docs.sgml:64(title)
 msgid "Index of new symbols in 0.3"
-msgstr ""
+msgstr "0.3での新しいシンボル一覧"
 
 #: xml/cut-assertions.xml:7(refentrytitle) xml/cut-assertions.xml:13(refname)
 #: xml/cutter.xml:186(link)
@@ -78,71 +78,75 @@ msgstr "あなたのプログラムが期待通りに動作しているかを検
 msgid "Synopsis"
 msgstr "概要"
 
-#: xml/cut-assertions.xml:25(link) xml/cut-assertions.xml:75(primary)
+#: xml/cut-assertions.xml:25(link) xml/cut-assertions.xml:76(primary)
 msgid "cut_error"
 msgstr ""
 
-#: xml/cut-assertions.xml:26(link) xml/cut-assertions.xml:90(primary)
+#: xml/cut-assertions.xml:26(link) xml/cut-assertions.xml:91(primary)
 msgid "cut_fail"
 msgstr ""
 
-#: xml/cut-assertions.xml:27(link) xml/cut-assertions.xml:105(primary)
+#: xml/cut-assertions.xml:27(link) xml/cut-assertions.xml:106(primary)
 msgid "cut_pending"
 msgstr ""
 
-#: xml/cut-assertions.xml:28(link) xml/cut-assertions.xml:121(primary)
+#: xml/cut-assertions.xml:28(link) xml/cut-assertions.xml:122(primary)
 msgid "cut_notify"
 msgstr ""
 
-#: xml/cut-assertions.xml:29(link) xml/cut-assertions.xml:136(primary)
+#: xml/cut-assertions.xml:29(link) xml/cut-assertions.xml:137(primary)
 msgid "cut_assert"
 msgstr ""
 
-#: xml/cut-assertions.xml:30(link) xml/cut-assertions.xml:152(primary)
+#: xml/cut-assertions.xml:30(link) xml/cut-assertions.xml:153(primary)
 msgid "cut_assert_null"
 msgstr ""
 
-#: xml/cut-assertions.xml:31(link) xml/cut-assertions.xml:168(primary)
+#: xml/cut-assertions.xml:31(link) xml/cut-assertions.xml:169(primary)
+msgid "cut_assert_null_string"
+msgstr ""
+
+#: xml/cut-assertions.xml:32(link) xml/cut-assertions.xml:186(primary)
 msgid "cut_assert_not_null"
 msgstr ""
 
-#: xml/cut-assertions.xml:32(link) xml/cut-assertions.xml:184(primary)
+#: xml/cut-assertions.xml:33(link) xml/cut-assertions.xml:202(primary)
 msgid "cut_assert_equal_int"
 msgstr ""
 
-#: xml/cut-assertions.xml:33(link) xml/cut-assertions.xml:203(primary)
+#: xml/cut-assertions.xml:34(link) xml/cut-assertions.xml:221(primary)
 msgid "cut_assert_equal_uint"
 msgstr ""
 
-#: xml/cut-assertions.xml:34(link) xml/cut-assertions.xml:222(primary)
+#: xml/cut-assertions.xml:35(link) xml/cut-assertions.xml:240(primary)
 msgid "cut_assert_equal_double"
 msgstr ""
 
-#: xml/cut-assertions.xml:35(link) xml/cut-assertions.xml:244(primary)
+#: xml/cut-assertions.xml:36(link) xml/cut-assertions.xml:262(primary)
 msgid "cut_assert_equal_string"
 msgstr ""
 
-#: xml/cut-assertions.xml:36(link) xml/cut-assertions.xml:264(primary)
+#: xml/cut-assertions.xml:37(link) xml/cut-assertions.xml:282(primary)
 msgid "cut_assert_equal_string_or_null"
 msgstr ""
 
-#: xml/cut-assertions.xml:37(link) xml/cut-assertions.xml:288(primary)
+#: xml/cut-assertions.xml:38(link) xml/cut-assertions.xml:303(primary)
 msgid "cut_assert_equal_memory"
 msgstr ""
 
-#: xml/cut-assertions.xml:39(link) xml/cut-assertions.xml:315(primary)
+#: xml/cut-assertions.xml:40(link) xml/cut-assertions.xml:330(primary)
 msgid "cut_assert_equal_string_array"
 msgstr ""
 
-#: xml/cut-assertions.xml:40(link) xml/cut-assertions.xml:335(primary)
+#: xml/cut-assertions.xml:41(link) xml/cut-assertions.xml:350(primary)
 msgid "cut_assert_operator"
 msgstr ""
 
-#: xml/cut-assertions.xml:41(link) xml/cut-assertions.xml:363(primary)
+#: xml/cut-assertions.xml:42(link) xml/cut-assertions.xml:378(primary)
 msgid "cut_assert_operator_int"
 msgstr ""
 
-#: xml/cut-assertions.xml:42(link) xml/cut-assertions.xml:391(primary)
+#: xml/cut-assertions.xml:43(link) xml/cut-assertions.xml:406(primary)
 msgid "cut_assert_equal"
 msgstr ""
 
@@ -159,27 +163,28 @@ msgid ""
 "#define             <placeholder-4/>                          (format, ...)\n"
 "#define             <placeholder-5/>                          (expression, ...)\n"
 "#define             <placeholder-6/>                     (expression, ...)\n"
-"#define             <placeholder-7/>                 (expression, ...)\n"
-"#define             <placeholder-8/>                (expected, actual, ...)\n"
-"#define             <placeholder-9/>               (expected, actual, ...)\n"
-"#define             <placeholder-10/>             (expected, error, actual, ...)\n"
-"#define             <placeholder-11/>             (expected, actual, ...)\n"
-"#define             <placeholder-12/>     (expected, actual, ...)\n"
-"#define             <placeholder-13/>             (expected, expected_size,\n"
+"#define             <placeholder-7/>              (expression, ...)\n"
+"#define             <placeholder-8/>                 (expression, ...)\n"
+"#define             <placeholder-9/>                (expected, actual, ...)\n"
+"#define             <placeholder-10/>               (expected, actual, ...)\n"
+"#define             <placeholder-11/>             (expected, error, actual, ...)\n"
+"#define             <placeholder-12/>             (expected, actual, ...)\n"
+"#define             <placeholder-13/>     (expected, actual, ...)\n"
+"#define             <placeholder-14/>             (expected, expected_size,\n"
 "                                                         actual, actual_size, ...)\n"
-"#define             <placeholder-14/>       (expected, actual, ...)\n"
-"#define             <placeholder-15/>                 (lhs, operator, rhs, ...)\n"
-"#define             <placeholder-16/>             (lhs, operator, rhs, ...)\n"
-"#define             <placeholder-17/>                    (function, expected, actual, ...)\n"
+"#define             <placeholder-15/>       (expected, actual, ...)\n"
+"#define             <placeholder-16/>                 (lhs, operator, rhs, ...)\n"
+"#define             <placeholder-17/>             (lhs, operator, rhs, ...)\n"
+"#define             <placeholder-18/>                    (function, expected, actual, ...)\n"
 msgstr ""
 
-#: xml/cut-assertions.xml:55(title) xml/cut-main.xml:43(title)
+#: xml/cut-assertions.xml:56(title) xml/cut-main.xml:43(title)
 #: xml/cut-ui-factory.xml:57(title) xml/cut-ui.xml:52(title)
 #: xml/cutter.xml:40(title)
 msgid "Description"
 msgstr "説明"
 
-#: xml/cut-assertions.xml:56(para)
+#: xml/cut-assertions.xml:57(para)
 msgid ""
 "To check that your program works as you expect, you use <link linkend=\"cut-"
 "assert-XXX\"><function>cut_assert_XXX()</function></link> where you want to "
@@ -189,44 +194,44 @@ msgstr ""
 "られていることを検証したい箇所で<link linkend=\"cut-assert-XXX"
 "\"><function>cut_assert_XXX()</function></link>を使います。"
 
-#: xml/cut-assertions.xml:63(programlisting)
+#: xml/cut-assertions.xml:64(programlisting)
 #, no-wrap
 msgid ""
 "\n"
 "cut_assert_equal_int(3, 1 + 2);\n"
 msgstr ""
 
-#: xml/cut-assertions.xml:61(para) xml/cut-assertions.xml:339(para)
-#: xml/cut-assertions.xml:367(para) xml/cut-assertions.xml:395(para)
+#: xml/cut-assertions.xml:62(para) xml/cut-assertions.xml:354(para)
+#: xml/cut-assertions.xml:382(para) xml/cut-assertions.xml:410(para)
 msgid "e.g.: <placeholder-1/>"
 msgstr "例: <placeholder-1/>"
 
-#: xml/cut-assertions.xml:72(title) xml/cut-main.xml:50(title)
+#: xml/cut-assertions.xml:73(title) xml/cut-main.xml:50(title)
 #: xml/cut-ui-factory.xml:64(title) xml/cut-ui.xml:59(title)
 #: xml/cutter.xml:145(title)
 msgid "Details"
 msgstr "詳細"
 
-#: xml/cut-assertions.xml:74(title)
+#: xml/cut-assertions.xml:75(title)
 msgid "<anchor id=\"cut-error\" role=\"macro\"/>cut_error()"
 msgstr ""
 
-#: xml/cut-assertions.xml:75(programlisting)
+#: xml/cut-assertions.xml:76(programlisting)
 #, no-wrap
 msgid "#define             cut_error(format, ...)"
 msgstr ""
 
-#: xml/cut-assertions.xml:76(para)
+#: xml/cut-assertions.xml:77(para)
 msgid "Raises an error with message."
 msgstr "メッセージ付きでエラーを発生させます。"
 
-#: xml/cut-assertions.xml:81(term) xml/cut-assertions.xml:96(term)
-#: xml/cut-assertions.xml:112(term) xml/cut-assertions.xml:127(term)
+#: xml/cut-assertions.xml:82(term) xml/cut-assertions.xml:97(term)
+#: xml/cut-assertions.xml:113(term) xml/cut-assertions.xml:128(term)
 msgid "<parameter>format</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-assertions.xml:82(simpara) xml/cut-assertions.xml:97(simpara)
-#: xml/cut-assertions.xml:113(simpara) xml/cut-assertions.xml:128(simpara)
+#: xml/cut-assertions.xml:83(simpara) xml/cut-assertions.xml:98(simpara)
+#: xml/cut-assertions.xml:114(simpara) xml/cut-assertions.xml:129(simpara)
 msgid ""
 "the message format. See the <link linkend=\"printf\"><function>printf()</"
 "function></link> documentation."
@@ -234,95 +239,95 @@ msgstr ""
 "整形文字列。<link linkend=\"printf\"><function>printf()</function></link>のド"
 "キュメントを見てください。"
 
-#: xml/cut-assertions.xml:84(term) xml/cut-assertions.xml:99(term)
-#: xml/cut-assertions.xml:115(term) xml/cut-assertions.xml:130(term)
-#: xml/cut-assertions.xml:145(term) xml/cut-assertions.xml:161(term)
-#: xml/cut-assertions.xml:177(term) xml/cut-assertions.xml:196(term)
-#: xml/cut-assertions.xml:215(term) xml/cut-assertions.xml:237(term)
-#: xml/cut-assertions.xml:257(term) xml/cut-assertions.xml:281(term)
-#: xml/cut-assertions.xml:308(term) xml/cut-assertions.xml:328(term)
-#: xml/cut-assertions.xml:356(term) xml/cut-assertions.xml:384(term)
-#: xml/cut-assertions.xml:412(term) xml/cut-ui-factory.xml:176(term)
-#: xml/cut-ui.xml:158(term)
+#: xml/cut-assertions.xml:85(term) xml/cut-assertions.xml:100(term)
+#: xml/cut-assertions.xml:116(term) xml/cut-assertions.xml:131(term)
+#: xml/cut-assertions.xml:146(term) xml/cut-assertions.xml:162(term)
+#: xml/cut-assertions.xml:178(term) xml/cut-assertions.xml:195(term)
+#: xml/cut-assertions.xml:214(term) xml/cut-assertions.xml:233(term)
+#: xml/cut-assertions.xml:255(term) xml/cut-assertions.xml:275(term)
+#: xml/cut-assertions.xml:296(term) xml/cut-assertions.xml:323(term)
+#: xml/cut-assertions.xml:343(term) xml/cut-assertions.xml:371(term)
+#: xml/cut-assertions.xml:399(term) xml/cut-assertions.xml:427(term)
+#: xml/cut-ui-factory.xml:176(term) xml/cut-ui.xml:158(term)
 msgid "<parameter>...</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-assertions.xml:85(simpara) xml/cut-assertions.xml:100(simpara)
-#: xml/cut-assertions.xml:116(simpara) xml/cut-assertions.xml:131(simpara)
+#: xml/cut-assertions.xml:86(simpara) xml/cut-assertions.xml:101(simpara)
+#: xml/cut-assertions.xml:117(simpara) xml/cut-assertions.xml:132(simpara)
 msgid "the parameters to insert into the format string."
 msgstr "整形文字列に挿入されるパラメータ。"
 
-#: xml/cut-assertions.xml:89(title)
+#: xml/cut-assertions.xml:90(title)
 msgid "<anchor id=\"cut-fail\" role=\"macro\"/>cut_fail()"
 msgstr ""
 
-#: xml/cut-assertions.xml:90(programlisting)
+#: xml/cut-assertions.xml:91(programlisting)
 #, no-wrap
 msgid "#define             cut_fail(format, ...)"
 msgstr ""
 
-#: xml/cut-assertions.xml:91(para)
+#: xml/cut-assertions.xml:92(para)
 msgid "Raises a failure with message."
 msgstr "メッセージ付きでテストを失敗させます。"
 
-#: xml/cut-assertions.xml:104(title)
+#: xml/cut-assertions.xml:105(title)
 msgid "<anchor id=\"cut-pending\" role=\"macro\"/>cut_pending()"
 msgstr ""
 
-#: xml/cut-assertions.xml:105(programlisting)
+#: xml/cut-assertions.xml:106(programlisting)
 #, no-wrap
 msgid "#define             cut_pending(format, ...)"
 msgstr ""
 
-#: xml/cut-assertions.xml:106(para)
+#: xml/cut-assertions.xml:107(para)
 msgid "Marks the test is pending with message. The test is stopped."
 msgstr ""
 "メッセージ付きでこのテストが未解決であると印を付けます。テストはここで中断し"
 "ます。"
 
-#: xml/cut-assertions.xml:120(title)
+#: xml/cut-assertions.xml:121(title)
 msgid "<anchor id=\"cut-notify\" role=\"macro\"/>cut_notify()"
 msgstr ""
 
-#: xml/cut-assertions.xml:121(programlisting)
+#: xml/cut-assertions.xml:122(programlisting)
 #, no-wrap
 msgid "#define             cut_notify(format, ...)"
 msgstr ""
 
-#: xml/cut-assertions.xml:122(para)
+#: xml/cut-assertions.xml:123(para)
 msgid "Leaves a notification message. The test is continued."
 msgstr "通知用のメッセージを残します。テストは続行します。"
 
-#: xml/cut-assertions.xml:135(title)
+#: xml/cut-assertions.xml:136(title)
 msgid "<anchor id=\"cut-assert\" role=\"macro\"/>cut_assert()"
 msgstr ""
 
-#: xml/cut-assertions.xml:136(programlisting)
+#: xml/cut-assertions.xml:137(programlisting)
 #, no-wrap
 msgid "#define             cut_assert(expression, ...)"
 msgstr ""
 
-#: xml/cut-assertions.xml:137(para)
+#: xml/cut-assertions.xml:138(para)
 msgid "Passes if <parameter>expression</parameter> is not 0 or NULL."
 msgstr "<parameter>expression</parameter>が0でもNULLでもないときにパスします。"
 
-#: xml/cut-assertions.xml:142(term) xml/cut-assertions.xml:158(term)
-#: xml/cut-assertions.xml:174(term)
+#: xml/cut-assertions.xml:143(term) xml/cut-assertions.xml:159(term)
+#: xml/cut-assertions.xml:175(term) xml/cut-assertions.xml:192(term)
 msgid "<parameter>expression</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-assertions.xml:143(simpara) xml/cut-assertions.xml:159(simpara)
-#: xml/cut-assertions.xml:175(simpara)
+#: xml/cut-assertions.xml:144(simpara) xml/cut-assertions.xml:160(simpara)
+#: xml/cut-assertions.xml:193(simpara)
 msgid "the expression to check."
 msgstr "チェックする式。"
 
-#: xml/cut-assertions.xml:146(simpara) xml/cut-assertions.xml:162(simpara)
-#: xml/cut-assertions.xml:178(simpara) xml/cut-assertions.xml:197(simpara)
-#: xml/cut-assertions.xml:216(simpara) xml/cut-assertions.xml:238(simpara)
-#: xml/cut-assertions.xml:258(simpara) xml/cut-assertions.xml:282(simpara)
-#: xml/cut-assertions.xml:309(simpara) xml/cut-assertions.xml:329(simpara)
-#: xml/cut-assertions.xml:357(simpara) xml/cut-assertions.xml:385(simpara)
-#: xml/cut-assertions.xml:413(simpara)
+#: xml/cut-assertions.xml:147(simpara) xml/cut-assertions.xml:163(simpara)
+#: xml/cut-assertions.xml:179(simpara) xml/cut-assertions.xml:196(simpara)
+#: xml/cut-assertions.xml:215(simpara) xml/cut-assertions.xml:234(simpara)
+#: xml/cut-assertions.xml:256(simpara) xml/cut-assertions.xml:276(simpara)
+#: xml/cut-assertions.xml:297(simpara) xml/cut-assertions.xml:324(simpara)
+#: xml/cut-assertions.xml:344(simpara) xml/cut-assertions.xml:372(simpara)
+#: xml/cut-assertions.xml:400(simpara) xml/cut-assertions.xml:428(simpara)
 msgid ""
 "optional format string, followed by parameters to insert into the format "
 "string (as with <link linkend=\"printf\"><function>printf()</function></"
@@ -331,102 +336,121 @@ msgstr ""
 "省略可能な整形文字列。以降のパラメータが整形文字列に挿入されます。（<link "
 "linkend=\"printf\"><function>printf()</function></link>と同じ）"
 
-#: xml/cut-assertions.xml:151(title)
+#: xml/cut-assertions.xml:152(title)
 msgid "<anchor id=\"cut-assert-null\" role=\"macro\"/>cut_assert_null()"
 msgstr ""
 
-#: xml/cut-assertions.xml:152(programlisting)
+#: xml/cut-assertions.xml:153(programlisting)
 #, no-wrap
 msgid "#define             cut_assert_null(expression, ...)"
 msgstr ""
 
-#: xml/cut-assertions.xml:153(para)
+#: xml/cut-assertions.xml:154(para) xml/cut-assertions.xml:170(para)
 msgid "Passes if <parameter>expression</parameter> is NULL."
 msgstr "<parameter>expression</parameter>がNULLのときにパスします。"
 
-#: xml/cut-assertions.xml:167(title)
+#: xml/cut-assertions.xml:168(title)
+msgid ""
+"<anchor id=\"cut-assert-null-string\" role=\"macro\" condition=\"since:0.3\"/"
+">cut_assert_null_string()"
+msgstr ""
+
+#: xml/cut-assertions.xml:169(programlisting)
+#, no-wrap
+msgid "#define             cut_assert_null_string(expression, ...)"
+msgstr ""
+
+#: xml/cut-assertions.xml:176(simpara)
+msgid "the expression that returns string."
+msgstr "文字列を返す式。"
+
+#: xml/cut-assertions.xml:182(para)
+msgid "Since 0.3"
+msgstr "0.3から"
+
+#: xml/cut-assertions.xml:185(title)
 msgid ""
 "<anchor id=\"cut-assert-not-null\" role=\"macro\"/>cut_assert_not_null()"
 msgstr ""
 
-#: xml/cut-assertions.xml:168(programlisting)
+#: xml/cut-assertions.xml:186(programlisting)
 #, no-wrap
 msgid "#define             cut_assert_not_null(expression, ...)"
 msgstr ""
 
-#: xml/cut-assertions.xml:169(para)
+#: xml/cut-assertions.xml:187(para)
 msgid "Passes if <parameter>expression</parameter> is not NULL."
 msgstr "<parameter>expression</parameter>がNULLではないときにパスします。"
 
-#: xml/cut-assertions.xml:183(title)
+#: xml/cut-assertions.xml:201(title)
 msgid ""
 "<anchor id=\"cut-assert-equal-int\" role=\"macro\"/>cut_assert_equal_int()"
 msgstr ""
 
-#: xml/cut-assertions.xml:184(programlisting)
+#: xml/cut-assertions.xml:202(programlisting)
 #, no-wrap
 msgid "#define             cut_assert_equal_int(expected, actual, ...)"
 msgstr ""
 
-#: xml/cut-assertions.xml:185(para) xml/cut-assertions.xml:204(para)
+#: xml/cut-assertions.xml:203(para) xml/cut-assertions.xml:222(para)
 msgid ""
 "Passes if <parameter>expected</parameter> == <parameter>actual</parameter>."
 msgstr ""
 "<parameter>expected</parameter> == <parameter>actual</parameter>が成り立つと"
 "きパスします。"
 
-#: xml/cut-assertions.xml:190(term) xml/cut-assertions.xml:209(term)
-#: xml/cut-assertions.xml:228(term) xml/cut-assertions.xml:251(term)
-#: xml/cut-assertions.xml:275(term) xml/cut-assertions.xml:296(term)
-#: xml/cut-assertions.xml:322(term) xml/cut-assertions.xml:406(term)
+#: xml/cut-assertions.xml:208(term) xml/cut-assertions.xml:227(term)
+#: xml/cut-assertions.xml:246(term) xml/cut-assertions.xml:269(term)
+#: xml/cut-assertions.xml:290(term) xml/cut-assertions.xml:311(term)
+#: xml/cut-assertions.xml:337(term) xml/cut-assertions.xml:421(term)
 msgid "<parameter>expected</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-assertions.xml:191(simpara)
+#: xml/cut-assertions.xml:209(simpara)
 msgid "an expected integer value."
 msgstr "期待する整数の値。"
 
-#: xml/cut-assertions.xml:193(term) xml/cut-assertions.xml:212(term)
-#: xml/cut-assertions.xml:234(term) xml/cut-assertions.xml:254(term)
-#: xml/cut-assertions.xml:278(term) xml/cut-assertions.xml:302(term)
-#: xml/cut-assertions.xml:325(term) xml/cut-assertions.xml:409(term)
+#: xml/cut-assertions.xml:211(term) xml/cut-assertions.xml:230(term)
+#: xml/cut-assertions.xml:252(term) xml/cut-assertions.xml:272(term)
+#: xml/cut-assertions.xml:293(term) xml/cut-assertions.xml:317(term)
+#: xml/cut-assertions.xml:340(term) xml/cut-assertions.xml:424(term)
 msgid "<parameter>actual</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-assertions.xml:194(simpara)
+#: xml/cut-assertions.xml:212(simpara)
 msgid "an actual integer value."
 msgstr "実際の整数の値。"
 
-#: xml/cut-assertions.xml:202(title)
+#: xml/cut-assertions.xml:220(title)
 msgid ""
 "<anchor id=\"cut-assert-equal-uint\" role=\"macro\"/>cut_assert_equal_uint()"
 msgstr ""
 
-#: xml/cut-assertions.xml:203(programlisting)
+#: xml/cut-assertions.xml:221(programlisting)
 #, no-wrap
 msgid "#define             cut_assert_equal_uint(expected, actual, ...)"
 msgstr ""
 
-#: xml/cut-assertions.xml:210(simpara)
+#: xml/cut-assertions.xml:228(simpara)
 msgid "an expected unsigned integer value."
 msgstr "期待する符号無し整数の値。"
 
-#: xml/cut-assertions.xml:213(simpara)
+#: xml/cut-assertions.xml:231(simpara)
 msgid "an actual unsigned integer value."
 msgstr "実際の符号無し符号整数の値。"
 
-#: xml/cut-assertions.xml:221(title)
+#: xml/cut-assertions.xml:239(title)
 msgid ""
 "<anchor id=\"cut-assert-equal-double\" role=\"macro\"/"
 ">cut_assert_equal_double()"
 msgstr ""
 
-#: xml/cut-assertions.xml:222(programlisting)
+#: xml/cut-assertions.xml:240(programlisting)
 #, no-wrap
 msgid "#define             cut_assert_equal_double(expected, error, actual, ...)"
 msgstr ""
 
-#: xml/cut-assertions.xml:223(para)
+#: xml/cut-assertions.xml:241(para)
 msgid ""
 "Passes if (<parameter>expected</parameter> - <parameter>error</parameter>) "
 "&lt;= <parameter>actual</parameter> &lt;= (<parameter>expected</parameter> + "
@@ -436,34 +460,34 @@ msgstr ""
 "<parameter>actual</parameter> &lt;= (<parameter>expected</parameter> + "
 "<parameter>error</parameter>)が成り立つときパスします。"
 
-#: xml/cut-assertions.xml:229(simpara)
+#: xml/cut-assertions.xml:247(simpara)
 msgid "an expected float value."
 msgstr "期待される浮動小数点数。"
 
-#: xml/cut-assertions.xml:231(term)
+#: xml/cut-assertions.xml:249(term)
 msgid "<parameter>error</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-assertions.xml:232(simpara)
+#: xml/cut-assertions.xml:250(simpara)
 msgid "an float value that specifies error range."
 msgstr "誤差範囲を示す浮動小数点数。"
 
-#: xml/cut-assertions.xml:235(simpara)
+#: xml/cut-assertions.xml:253(simpara)
 msgid "an actual float value."
 msgstr "実際の浮動小数点数。"
 
-#: xml/cut-assertions.xml:243(title)
+#: xml/cut-assertions.xml:261(title)
 msgid ""
 "<anchor id=\"cut-assert-equal-string\" role=\"macro\"/"
 ">cut_assert_equal_string()"
 msgstr ""
 
-#: xml/cut-assertions.xml:244(programlisting)
+#: xml/cut-assertions.xml:262(programlisting)
 #, no-wrap
 msgid "#define             cut_assert_equal_string(expected, actual, ...)"
 msgstr ""
 
-#: xml/cut-assertions.xml:245(para) xml/cut-assertions.xml:266(para)
+#: xml/cut-assertions.xml:263(para) xml/cut-assertions.xml:284(para)
 msgid ""
 "Passes if both <parameter>expected</parameter> and <parameter>actual</"
 "parameter> are NULL or strcmp(<parameter>expected</parameter>, "
@@ -473,53 +497,45 @@ msgstr ""
 "NULL、あるいはstrcmp(<parameter>expected</parameter>, <parameter>actual</"
 "parameter>) == 0が成り立つときにパスします。"
 
-#: xml/cut-assertions.xml:252(simpara) xml/cut-assertions.xml:255(simpara)
-#: xml/cut-assertions.xml:276(simpara) xml/cut-assertions.xml:279(simpara)
+#: xml/cut-assertions.xml:270(simpara) xml/cut-assertions.xml:273(simpara)
+#: xml/cut-assertions.xml:291(simpara) xml/cut-assertions.xml:294(simpara)
 msgid "an expected string value."
 msgstr "期待される文字列。"
 
-#: xml/cut-assertions.xml:263(title)
+#: xml/cut-assertions.xml:281(title)
 msgid ""
 "<anchor id=\"cut-assert-equal-string-or-null\" role=\"macro\" condition="
-"\"deprecated:\"/>cut_assert_equal_string_or_null()"
+"\"deprecated:0.3: Use cut_assert_equal_string() instead.\"/"
+">cut_assert_equal_string_or_null()"
 msgstr ""
 
-#: xml/cut-assertions.xml:264(programlisting)
+#: xml/cut-assertions.xml:282(programlisting)
 #, no-wrap
 msgid "#define             cut_assert_equal_string_or_null(expected, actual, ...)"
 msgstr ""
 
-#: xml/cut-assertions.xml:265(para)
+#: xml/cut-assertions.xml:283(para)
 msgid ""
-"<literal>cut_assert_equal_string_or_null</literal> is deprecated and should "
-"not be used in newly-written code."
-msgstr ""
-"<literal>cut_assert_equal_string_or_null</literal>は非推奨です。新しく書く"
-"コードでは使わないでください。"
+"<literal>cut_assert_equal_string_or_null</literal> has been deprecated since "
+"version 0.3 and should not be used in newly-written code. Use <link linkend="
+"\"cut-assert-equal-string\"><function>cut_assert_equal_string()</function></"
+"link> instead."
+msgstr "<literal>cut_assert_equal_string_or_null</literal>はバージョン0.3から非推奨になりました。新しく書くコードでは使わないでください。代わりに<link linkend=\"cut-assert-equal-string\"><function>cut_assert_equal_string()</function></link>を使ってください。"
 
-#: xml/cut-assertions.xml:270(para)
-msgid ""
-"<parameter>Deprecated</parameter>: 0.3: Use <link linkend=\"cut-assert-equal-"
-"string\"><function>cut_assert_equal_string()</function></link> instead."
-msgstr ""
-"<parameter>非推奨</parameter>: 0.3: 代わりに<link linkend=\"cut-assert-equal-"
-"string\"><function>cut_assert_equal_string()</function></link>を使ってくださ"
-"い。"
-
-#: xml/cut-assertions.xml:287(title)
+#: xml/cut-assertions.xml:302(title)
 msgid ""
 "<anchor id=\"cut-assert-equal-memory\" role=\"macro\"/"
 ">cut_assert_equal_memory()"
 msgstr ""
 
-#: xml/cut-assertions.xml:288(programlisting)
+#: xml/cut-assertions.xml:303(programlisting)
 #, no-wrap
 msgid ""
 "#define             cut_assert_equal_memory(expected, expected_size,                \\\n"
 "                                            actual, actual_size, ...)"
 msgstr ""
 
-#: xml/cut-assertions.xml:290(para)
+#: xml/cut-assertions.xml:305(para)
 msgid ""
 "Passes if <parameter>expected_size</parameter> == <parameter>actual_size</"
 "parameter> and memcmp(<parameter>expected</parameter>, <parameter>actual</"
@@ -530,42 +546,42 @@ msgstr ""
 "parameter>, <parameter>expected_size</parameter>) == 0が成り立つときにパスし"
 "ます。"
 
-#: xml/cut-assertions.xml:297(simpara)
+#: xml/cut-assertions.xml:312(simpara)
 msgid "an expected data."
 msgstr "期待するデータ。"
 
-#: xml/cut-assertions.xml:299(term)
+#: xml/cut-assertions.xml:314(term)
 msgid "<parameter>expected_size</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-assertions.xml:300(simpara)
+#: xml/cut-assertions.xml:315(simpara)
 msgid "a size of <parameter>expected</parameter>."
 msgstr "<parameter>expected</parameter>のサイズ。"
 
-#: xml/cut-assertions.xml:303(simpara)
+#: xml/cut-assertions.xml:318(simpara)
 msgid "an actual data."
 msgstr "実際のデータ。"
 
-#: xml/cut-assertions.xml:305(term)
+#: xml/cut-assertions.xml:320(term)
 msgid "<parameter>actual_size</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-assertions.xml:306(simpara)
+#: xml/cut-assertions.xml:321(simpara)
 msgid "a size of <parameter>actual</parameter>."
 msgstr "<parameter>actual</parameter>のサイズ。"
 
-#: xml/cut-assertions.xml:314(title)
+#: xml/cut-assertions.xml:329(title)
 msgid ""
 "<anchor id=\"cut-assert-equal-string-array\" role=\"macro\"/"
 ">cut_assert_equal_string_array()"
 msgstr ""
 
-#: xml/cut-assertions.xml:315(programlisting)
+#: xml/cut-assertions.xml:330(programlisting)
 #, no-wrap
 msgid "#define             cut_assert_equal_string_array(expected, actual, ...)"
 msgstr ""
 
-#: xml/cut-assertions.xml:316(para)
+#: xml/cut-assertions.xml:331(para)
 msgid ""
 "Passes if both <parameter>expected</parameter> and <parameter>actual</"
 "parameter> are not NULL and have same content (<link linkend=\"strcmp"
@@ -575,25 +591,25 @@ msgstr ""
 "NULLではなく、どちらも同じ内容の文字列(<link linkend=\"strcmp"
 "\"><function>strcmp()</function></link> == 0)を持つときにパスします。"
 
-#: xml/cut-assertions.xml:323(simpara)
+#: xml/cut-assertions.xml:338(simpara)
 msgid "an expected NULL-terminated array of strings."
 msgstr "期待する文字列の配列。配列はNULL終端。"
 
-#: xml/cut-assertions.xml:326(simpara)
+#: xml/cut-assertions.xml:341(simpara)
 msgid "an actual NULL-terminated array of strings."
 msgstr "実際の文字列の配列。配列はNULL終端。"
 
-#: xml/cut-assertions.xml:334(title)
+#: xml/cut-assertions.xml:349(title)
 msgid ""
 "<anchor id=\"cut-assert-operator\" role=\"macro\"/>cut_assert_operator()"
 msgstr ""
 
-#: xml/cut-assertions.xml:335(programlisting)
+#: xml/cut-assertions.xml:350(programlisting)
 #, no-wrap
 msgid "#define             cut_assert_operator(lhs, operator, rhs, ...)"
 msgstr ""
 
-#: xml/cut-assertions.xml:336(para) xml/cut-assertions.xml:364(para)
+#: xml/cut-assertions.xml:351(para) xml/cut-assertions.xml:379(para)
 msgid ""
 "Passes if (<parameter>lhs</parameter> <parameter>operator</parameter> "
 "<parameter>rhs</parameter>) is TRUE."
@@ -601,73 +617,73 @@ msgstr ""
 "(<parameter>lhs</parameter> <parameter>operator</parameter> <parameter>rhs</"
 "parameter>)が真のときにパスします。"
 
-#: xml/cut-assertions.xml:341(programlisting)
+#: xml/cut-assertions.xml:356(programlisting)
 #, no-wrap
 msgid ""
 "\n"
 "cut_assert_operator(1, &lt;, 2) -&gt; (1 &lt; 2)\n"
 msgstr ""
 
-#: xml/cut-assertions.xml:347(term) xml/cut-assertions.xml:375(term)
+#: xml/cut-assertions.xml:362(term) xml/cut-assertions.xml:390(term)
 msgid "<parameter>lhs</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-assertions.xml:348(simpara)
+#: xml/cut-assertions.xml:363(simpara)
 msgid "a left hand side value."
 msgstr "左辺値。"
 
-#: xml/cut-assertions.xml:350(term) xml/cut-assertions.xml:378(term)
+#: xml/cut-assertions.xml:365(term) xml/cut-assertions.xml:393(term)
 msgid "<parameter>operator</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-assertions.xml:351(simpara) xml/cut-assertions.xml:379(simpara)
+#: xml/cut-assertions.xml:366(simpara) xml/cut-assertions.xml:394(simpara)
 msgid "a binary operator."
 msgstr "二項演算子。"
 
-#: xml/cut-assertions.xml:353(term) xml/cut-assertions.xml:381(term)
+#: xml/cut-assertions.xml:368(term) xml/cut-assertions.xml:396(term)
 msgid "<parameter>rhs</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-assertions.xml:354(simpara)
+#: xml/cut-assertions.xml:369(simpara)
 msgid "a right hand side value."
 msgstr "右辺値。"
 
-#: xml/cut-assertions.xml:362(title)
+#: xml/cut-assertions.xml:377(title)
 msgid ""
 "<anchor id=\"cut-assert-operator-int\" role=\"macro\"/"
 ">cut_assert_operator_int()"
 msgstr ""
 
-#: xml/cut-assertions.xml:363(programlisting)
+#: xml/cut-assertions.xml:378(programlisting)
 #, no-wrap
 msgid "#define             cut_assert_operator_int(lhs, operator, rhs, ...)"
 msgstr ""
 
-#: xml/cut-assertions.xml:369(programlisting)
+#: xml/cut-assertions.xml:384(programlisting)
 #, no-wrap
 msgid ""
 "\n"
 "cut_assert_operator_int(1, &lt;, 2) -&gt; (1 &lt; 2)\n"
 msgstr ""
 
-#: xml/cut-assertions.xml:376(simpara)
+#: xml/cut-assertions.xml:391(simpara)
 msgid "a left hand side integer value."
 msgstr "左辺の整数の値。"
 
-#: xml/cut-assertions.xml:382(simpara)
+#: xml/cut-assertions.xml:397(simpara)
 msgid "a right hand side integer value."
 msgstr "右辺の整数の値。"
 
-#: xml/cut-assertions.xml:390(title)
+#: xml/cut-assertions.xml:405(title)
 msgid "<anchor id=\"cut-assert-equal\" role=\"macro\"/>cut_assert_equal()"
 msgstr ""
 
-#: xml/cut-assertions.xml:391(programlisting)
+#: xml/cut-assertions.xml:406(programlisting)
 #, no-wrap
 msgid "#define             cut_assert_equal(function, expected, actual, ...)"
 msgstr ""
 
-#: xml/cut-assertions.xml:392(para)
+#: xml/cut-assertions.xml:407(para)
 msgid ""
 "Passes if <parameter>function</parameter>(<parameter>expected</parameter>, "
 "<parameter>actual</parameter>) returns TRUE."
@@ -675,18 +691,18 @@ msgstr ""
 "<parameter>function</parameter>(<parameter>expected</parameter>, "
 "<parameter>actual</parameter>)が真を返すときパスします。"
 
-#: xml/cut-assertions.xml:397(programlisting)
+#: xml/cut-assertions.xml:412(programlisting)
 #, no-wrap
 msgid ""
 "\n"
 "cut_assert_equal(!strcmp, \"abc\", \"abc\") -&gt; Pass\n"
 msgstr ""
 
-#: xml/cut-assertions.xml:403(term)
+#: xml/cut-assertions.xml:418(term)
 msgid "<parameter>function</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-assertions.xml:404(simpara)
+#: xml/cut-assertions.xml:419(simpara)
 msgid ""
 "a function that compares <parameter>actual</parameter> with "
 "<parameter>expected</parameter>."
@@ -694,11 +710,11 @@ msgstr ""
 "<parameter>actual</parameter>と<parameter>expected</parameter>を比較する関"
 "数。"
 
-#: xml/cut-assertions.xml:407(simpara)
+#: xml/cut-assertions.xml:422(simpara)
 msgid "an expected value."
 msgstr "期待値。"
 
-#: xml/cut-assertions.xml:410(simpara)
+#: xml/cut-assertions.xml:425(simpara)
 msgid "an actual value."
 msgstr "実測値。"
 
@@ -1572,6 +1588,13 @@ msgstr "参考"
 #: xml/cutter.xml:0(None)
 msgid "translator-credits"
 msgstr ""
+
+#~ msgid ""
+#~ "<literal>cut_assert_equal_string_or_null</literal> is deprecated and "
+#~ "should not be used in newly-written code."
+#~ msgstr ""
+#~ "<literal>cut_assert_equal_string_or_null</literal>は非推奨です。新しく書く"
+#~ "コードでは使わないでください。"
 
 #~ msgid ""
 #~ "Passes if both <parameter>expected</parameter> and <parameter>actual</"

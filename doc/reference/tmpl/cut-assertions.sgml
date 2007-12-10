@@ -71,6 +71,15 @@ cut-assertions
 @...: 
 
 
+<!-- ##### MACRO cut_assert_null_string ##### -->
+<para>
+
+</para>
+
+@expression: 
+@...: 
+
+
 <!-- ##### MACRO cut_assert_not_null ##### -->
 <para>
 
@@ -81,6 +90,16 @@ cut-assertions
 
 
 <!-- ##### MACRO cut_assert_equal_int ##### -->
+<para>
+
+</para>
+
+@expected: 
+@actual: 
+@...: 
+
+
+<!-- ##### MACRO cut_assert_equal_uint ##### -->
 <para>
 
 </para>

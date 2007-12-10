@@ -127,6 +127,30 @@ extern "C" {
 } while(0)
 
 /**
+ * cut_assert_null_string:
+ * @expression: the expression that returns string.
+ * @...: optional format string, followed by parameters to insert
+ * into the format string (as with printf())
+ *
+ * Passes if @expression is NULL.
+ *
+ * Since: 0.3
+ */
+#define cut_assert_null_string(expression, ...) do          \
+{                                                           \
+    const char *_expression = (expression);                 \
+    if (_expression == NULL) {                              \
+        cut_test_pass();                                    \
+    } else {                                                \
+        cut_test_fail(FAILURE,                              \
+                      "expected: <%s> is NULL\n"            \
+                      " but was: <%s>",                     \
+                      #expression, _expression,             \
+                      NULL, ## __VA_ARGS__);                \
+    }                                                       \
+} while(0)
+
+/**
  * cut_assert_not_null:
  * @expression: the expression to check.
  * @...: optional format string, followed by parameters to insert
@@ -262,7 +286,7 @@ extern "C" {
     }                                                                   \
 } while(0)
 
-#ifdef CUTTER_DISABLE_DEPRECATED
+#ifndef CUTTER_DISABLE_DEPRECATED
 /**
  * cut_assert_equal_string_or_null:
  * @expected: an expected string value.
@@ -274,7 +298,7 @@ extern "C" {
  * strcmp(@expected, @actual) == 0.
  *
  *
- * @Deprecated: 0.3: Use cut_assert_equal_string() instead.
+ * Deprecated: 0.3: Use cut_assert_equal_string() instead.
  */
 #define cut_assert_equal_string_or_null(expected, actual, ...) \
     cut_assert_equal_string(expected, actual, ## __VA_ARGS__)

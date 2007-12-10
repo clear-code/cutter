@@ -10,6 +10,7 @@ void test_equal_double(void);
 void test_operator(void);
 void test_equal_string_array (void);
 void test_null(void);
+void test_null_string(void);
 void test_error(void);
 void test_fail(void);
 void test_pending(void);
@@ -428,6 +429,24 @@ test_failure_from_nested_function (void)
     cut_assert_equal_string("Fail from nested function",
                             cut_test_result_get_user_message(result));
 }
+
+static void
+null_string_assertions ()
+{
+    cut_assert_null_string(NULL);
+    cut_assert_null_string("");
+}
+
+void
+test_null_string (void)
+{
+    CutTest *test;
+
+    test = cut_test_new("assert-null-string", NULL, null_string_assertions);
+    cut_assert(!run(test));
+    cut_assert_test_result_summary(1, 1, 1, 0, 0, 0);
+}
+
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
