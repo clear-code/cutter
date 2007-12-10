@@ -98,7 +98,7 @@ cut_test_class_init (CutTestClass *klass)
     klass->get_name    = real_get_name;
 
     spec = g_param_spec_string("function-name",
-                               "Fcuntion name",
+                               "Function name",
                                "The function name of the test",
                                NULL,
                                G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);

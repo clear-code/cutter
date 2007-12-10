@@ -1,3 +1,7 @@
+2007-12-10  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-test.c: fixed a typo.
+
 2007-12-07  Kouhei Sutou  <kou@cozmixng.org>
 
 	* configure.ac: cleanup.
