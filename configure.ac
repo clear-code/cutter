@@ -3,7 +3,7 @@
 
 AC_PREREQ(2.59)
 
-AC_INIT(cutter, 0.2.0, kou@cozmixng.org)
+AC_INIT(cutter, 0.3.0, kou@cozmixng.org)
 AC_CONFIG_AUX_DIR([config])
 
 AC_CONFIG_SRCDIR([cutter/cut-main.c])
