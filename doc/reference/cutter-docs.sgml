@@ -57,4 +57,10 @@
   <index>
     <title id="index-all">Index</title>
   </index>
+  <index role="deprecated">
+    <title>Index of deprecated symbols</title>
+  </index>
+  <index role="0.3">
+    <title>Index of new symbols in 0.3</title>
+  </index>
 </book>

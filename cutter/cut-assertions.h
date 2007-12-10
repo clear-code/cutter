@@ -231,36 +231,10 @@ extern "C" {
  * @...: optional format string, followed by parameters to insert
  * into the format string (as with printf())
  *
- * Passes if both @expected and @actual are not NULL and
- * strcmp(@expected, @actual) == 0.
- */
-#define cut_assert_equal_string(expected, actual, ...) do               \
-{                                                                       \
-    const char *_expected = (expected);                                 \
-    const char *_actual = (actual);                                     \
-    if (_expected && _actual && strcmp(_expected, _actual) == 0) {      \
-        cut_test_pass();                                                \
-    } else {                                                            \
-        cut_test_fail(FAILURE,                                          \
-                      "<%s == %s>\n"                                    \
-                      "expected: <%s>\n but was: <%s>",                 \
-                      #expected, #actual,                               \
-                      _expected, _actual,                               \
-                      NULL, ## __VA_ARGS__);                            \
-    }                                                                   \
-} while(0)
-
-/**
- * cut_assert_equal_string_or_null:
- * @expected: an expected string value.
- * @actual: an expected string value.
- * @...: optional format string, followed by parameters to insert
- * into the format string (as with printf())
- *
  * Passes if both @expected and @actual are NULL or
  * strcmp(@expected, @actual) == 0.
  */
-#define cut_assert_equal_string_or_null(expected, actual, ...) do       \
+#define cut_assert_equal_string(expected, actual, ...) do               \
 {                                                                       \
     const char *_expected = (expected);                                 \
     const char *_actual = (actual);                                     \
@@ -287,6 +261,24 @@ extern "C" {
         }                                                               \
     }                                                                   \
 } while(0)
+
+#ifdef CUTTER_DISABLE_DEPRECATED
+/**
+ * cut_assert_equal_string_or_null:
+ * @expected: an expected string value.
+ * @actual: an expected string value.
+ * @...: optional format string, followed by parameters to insert
+ * into the format string (as with printf())
+ *
+ * Passes if both @expected and @actual are NULL or
+ * strcmp(@expected, @actual) == 0.
+ *
+ *
+ * @Deprecated: 0.3: Use cut_assert_equal_string() instead.
+ */
+#define cut_assert_equal_string_or_null(expected, actual, ...) \
+    cut_assert_equal_string(expected, actual, ## __VA_ARGS__)
+#endif
 
 /**
  * cut_assert_equal_memory:
