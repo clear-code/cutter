@@ -101,6 +101,111 @@ Executing flow of test is the following.
 
 See TUTORIAL and sample/stack/.
 
+== Test result
+
+Here is an example test result:
+
+  ..........F.................................................
+
+  1) Failure: test_test_case_count
+  <1 == cut_test_case_get_n_tests(test_object, NULL)>
+  expected: <1>
+   but was: <0>
+  test/test-cut-test-case.c:143: test_test_case_count()
+
+  Finished in 0.020857 seconds
+
+  60 test(s), 253 assertion(s), 1 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
+
+=== Progress
+
+A part that contains "." and "F" of the test result shows
+test progress:
+
+  ..........F.................................................
+
+Each "." and "F" shows a test case (test function). "."
+shows a test case that is succeeded and "F" shows a test
+case that is failed. There are "E", "P" and "N". They shows
+error, pending and notification respectively. Here is a
+summary of test case marks:
+
+: .
+   A succeeded test
+
+: F
+   A failed test
+
+: E
+   A test that had an error
+
+: P
+   A test that is marked as pending
+
+: N
+   A test that had an notification
+
+The above marks are showed after each test is finished. We
+can confirm the test progress from the output in testing.
+
+=== Summary of test result
+
+Cutter outputs a summary of test result after all tests are
+finished. The first of a summary is a list of a detail of
+test result of non-succeeded test. In the example, cutter
+outputs a detail of test result because there is a failure.
+
+  1) Failure: test_test_case_count
+  <1 == cut_test_case_get_n_tests(test_object, NULL)>
+  expected: <1>
+   but was: <0>
+  test/test-cut-test-case.c:143: test_test_case_count()
+
+In the example, test_test_case_count test case is failed. We
+expected that cut_test_case_get_n_tests(test_object, NULL)
+is 1 but was 0. The failed assertion is in
+test_test_case_count() function in test/test-cut-test-case.c
+at 143th line.
+
+Elapsed time for testing is showed after a list of a detail
+of test result:
+
+  Finished in 0.020857 seconds
+
+The last line is an summary of test result:
+
+  60 test(s), 253 assertion(s), 1 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
+
+Here are the means of each output:
+
+: n test(s)
+
+   n test case(s) (test function(s)) are run.
+
+: n assertion(s)
+
+   n assertion(s) are passed.
+
+: n failure(s)
+
+   n assertion(s) are failed.
+
+: n error(s)
+
+   n error(s) are occurred (cut_error() is used n times)
+
+: n pending(s)
+
+   n test case(s) are pending (cut_pending() is used n times)
+
+: n notification(s)
+
+   n notification(s) are occurred (cut_notification() is used n times)
+
+In the example, 60 test cases are run, 253 assertions are
+passed and an assertion is failed. There are no error,
+pending, notification.
+
 == References
 
 === Assertions

@@ -96,6 +96,109 @@ Cutterの特徴は以下の通りです。
 
 詳しくはTUTORIAL.jaとsample/stack/を参考にしてください。
 
+== テスト結果
+
+テスト結果は例えば以下のようになります。
+
+  ..........F.................................................
+
+  1) Failure: test_test_case_count
+  <1 == cut_test_case_get_n_tests(test_object, NULL)>
+  expected: <1>
+   but was: <0>
+  test/test-cut-test-case.c:143: test_test_case_count()
+
+  Finished in 0.020857 seconds
+
+  60 test(s), 253 assertion(s), 1 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
+
+=== 進行状況
+
+一番上にある「.」と「F」の部分がテストの進行状況を示していま
+す。
+
+  ..........F.................................................
+
+各「.」、「F」が1つのテストケース（テスト関数）を表していま
+す。「.」が成功したテストケース、「F」が失敗したテストケース
+を表しています。他にも「E」、「P」、「N」があり、それぞれエ
+ラー、保留、通知を表しています。まとめると以下のようになりま
+す。
+
+: .
+   成功したテスト
+
+: F
+   表明が失敗したテスト
+
+: E
+   異常終了したテスト
+
+: P
+   保留マークがついているテスト
+
+: N
+   通知が行われたテスト
+
+上記のテストを表す印はテストが実行される毎に出力されます。テ
+スト実行中は、この出力で実行状況を確認できます。
+
+=== テスト結果のまとめ
+
+テストが終了すると、テスト結果のまとめを出力します。まとめは、
+まず、成功しなかったテストの詳細をそれぞれ表示します。例では
+1つ失敗があったのでそれを表示しています。
+
+  1) Failure: test_test_case_count
+  <1 == cut_test_case_get_n_tests(test_object, NULL)>
+  expected: <1>
+   but was: <0>
+  test/test-cut-test-case.c:143: test_test_case_count()
+
+この例ではtest_test_case_countテストケースが失敗し、
+cut_test_case_get_n_tests(test_object, NULL)が1になって欲し
+かったのに実際は0になっていることを表しています。また、この
+失敗した表明はtest/test-cut-test-case.cの143行目、
+test_test_case_count()関数内で起こったことがわかります。
+
+テスト結果の詳細一覧の後はテストにかかった時間が表示されます。
+
+  Finished in 0.020857 seconds
+
+最後にテスト結果の要約が表示されます。
+
+  60 test(s), 253 assertion(s), 1 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
+
+それぞれは以下のような意味です。
+
+: n test(s)
+
+   n個のテストケース（テスト関数）を実行した
+
+: n assertion(s)
+
+   n個の表明にパスした
+
+: n failure(s)
+
+   n個の表明に失敗した
+
+: n error(s)
+
+   n個の異常事態が発生した（cut_error()を使用した）
+
+: n pending(s)
+
+   n個のテストケースを保留にした（cut_pending()を使用した）
+
+: n notification(s)
+
+   n個の通知が発生した（cut_notification()を使用した）
+
+この例では60個のテストケースを実行し、253個の表明にパスし、1
+個の表明に失敗したということになります。異常事態や保留にした
+テストケースなどはありませんでした。
+
 == リファレンス
 
 === 表明
