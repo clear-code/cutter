@@ -7,7 +7,8 @@ DOC_MODULE=cutter
 DOC_MAIN_SGML_FILE=cutter-docs.sgml
 
 # Extra options to supply to gtkdoc-scan
-SCAN_OPTIONS = --deprecated-guards="CUTTER_DISABLE_DEPRECATED"
+SCAN_OPTIONS =							\
+	--deprecated-guards="CUTTER_DISABLE_DEPRECATED"
 
 # The directory containing the source code. Relative to $(srcdir)
 DOC_SOURCE_DIR=../../cutter
@@ -39,6 +40,7 @@ IGNORE_HFILES=			\
 	cut-test.h		\
 	cut-utils.h		\
 	cut-verbose-level.h	\
+	cut-experimental.h	\
 	config.h
 
 INCLUDES = \

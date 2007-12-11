@@ -24,6 +24,7 @@
 
 #include <cutter/cut-assertions.h>
 #include <cutter/cut-hidden-definitions.h>
+#include <cutter/cut-experimental.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -150,19 +151,6 @@ void setup(void);
  * a test is failed.
  */
 void teardown(void);
-
-/**
- * cut_user_data:
- *
- * This is only useful only if you make a custom test runner
- * like cutter command. You can pass a data from your custom
- * test runner to test programs. They will receive your data
- * through this.
- *
- * Returns: a data from a program who invokes your test.
- */
-#define cut_user_data                                               \
-    (cut_test_context_get_user_data(get_current_test_context()))
 
 
 #ifdef __cplusplus

@@ -1,3 +1,9 @@
+2007-12-12  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cutter.h, cutter/cut-experimental.h, cutter/Makefile.am:
+	moved cut_user_data to cut-experimental.h.
+	* doc/reference/Makefile.am: ignored cut-experimental.h.
+
 2007-12-11  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-main.h, sample/gtk+/cutter-gtk.c,

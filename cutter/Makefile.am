@@ -15,6 +15,7 @@ lib_LTLIBRARIES = libcutter.la
 cutter_public_headers = 			\
 		cut-assertions.h		\
 		cut-assertions-helper.h		\
+		cut-experimental.h		\
 		cut-hidden-definitions.h	\
 		cut-public.h
 
