@@ -73,7 +73,7 @@ module RD
     end
 
     def apply_to_DescList(element, items)
-      tag("segmentedlist", {}, *items)
+      tag("variablelist", {}, *items)
     end
 
     def apply_to_ItemListItem(element, contents)
@@ -85,9 +85,9 @@ module RD
     end
 
     def apply_to_DescListItem(element, term, contents)
-      contents = contents.collect {|content| tag("seg", {}, content)}
-      [tag("segtitle", {}, term),
-       tag("seglistitem", {}, *contents)].join("\n")
+      tag("varlistentry", {},
+          tag("term", {}, term),
+          tag("listitem", {}, *contents))
     end
 
     def apply_to_TextBlock(element, contents)
