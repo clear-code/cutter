@@ -22,6 +22,10 @@
 #ifndef __CUT_MAIN_H__
 #define __CUT_MAIN_H__
 
+#ifdef __CUT_HIDDEN_DEFINITIONS_H__
+#  error "don't include cutter.h with test runner program!"
+#endif
+
 #include <cutter/cut-runner.h>
 #include <cutter/cut-test-suite.h>
 

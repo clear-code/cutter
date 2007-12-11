@@ -2,7 +2,6 @@
 
 #include <stdlib.h>
 
-#include <cutter.h>
 #include <cut-main.h>
 
 #include <cairo.h>
