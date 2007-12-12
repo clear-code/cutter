@@ -159,6 +159,11 @@ cut_init (int *argc, char ***argv)
     cut_ui_init();
 
     g_option_context_free(option_context);
+
+
+    /* to avoid CutTestContextClass initialization is done
+     * in multi threads. */
+    g_type_class_unref(g_type_class_ref(CUT_TYPE_TEST_CONTEXT));
 }
 
 void
