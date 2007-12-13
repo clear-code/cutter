@@ -2,7 +2,8 @@ SUBDIRS = loader_test_dir repository_test_dir
 
 INCLUDES = $(CUTTER_CFLAGS)	\
 	-I$(top_builddir)	\
-	-I$(top_srcdir)
+	-I$(top_srcdir)		\
+	-I$(top_srcdir)/cutter
 
 EXTRA_DIST = run-test.sh
 

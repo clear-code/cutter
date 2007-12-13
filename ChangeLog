@@ -1,5 +1,7 @@
 2007-12-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* **/Makefile.am: added missing include path.
+
 	* misc/Makefile.am: updated-files.rb -> release.rb.
 
 	* misc/release.rb: supported News post.

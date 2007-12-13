@@ -1,8 +1,9 @@
 INCLUDES = $(CUTTER_CFLAGS)	\
 	-I$(top_builddir)	\
-	-I$(top_srcdir)
+	-I$(top_srcdir)		\
+	-I$(top_srcdir)/cutter
 
-noinst_LTLIBRARIES = 				\
+noinst_LTLIBRARIES = 					\
 		repository_test_case1.la		\
 		repository_test_case2.la		\
 		repository_test_case3.la
