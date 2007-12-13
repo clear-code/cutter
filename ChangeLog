@@ -1,5 +1,7 @@
 2007-12-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* NEWS, NEWS.ja: updated.
+
 	* doc/reference/tmpl/cut-ui.sgml,
 	doc/reference/tmpl/cut-ui-factory.sgml: added.
 

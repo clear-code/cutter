@@ -2,6 +2,13 @@
 
 = NEWS --- The history of Cutter
 
+== 0.3.0: 2007-12-14
+
+  * Fixed documentation.
+  * Marked cut_assert_equal_string_or_null() as deprecated.
+  * cut_assert_equal_string() accepted NULL.
+  * Removed an experimental API from document.
+
 == 0.2.0: 2007-11-29
 
   * Initial release on SF.net.

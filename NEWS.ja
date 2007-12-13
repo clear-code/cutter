@@ -2,6 +2,14 @@
 
 = NEWS --- Cutterの歴史
 
+== 0.3.0: 2007-12-14
+
+  * ドキュメントの修正。
+  * cut_assert_equal_string_or_null()を非推奨に変更。
+  * 代わりにcut_assert_equal_string()がNULLを受け付けるよう
+    に変更。
+  * 実験的なAPIをドキュメントから除外。
+
 == 0.2.0: 2007-11-29
 
   * SF.netでの最初のリリース。
