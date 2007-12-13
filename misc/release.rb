@@ -124,10 +124,10 @@ end
 
 def submit_news(agent, submit_news_page, project_name, release_name,
                 readme, news)
-  submit_news_form = edit_release_page.forms.action(/\bnews\b/)[0]
+  submit_news_form = submit_news_page.forms.action(/\bnews\b/)[0]
   submit_news_form.summary = "#{project_name} #{release_name} Released"
-  submit_news_form.detail = [project_summary(readme),
-                             latest_release_changes(news)].join("\n\n")
+  submit_news_form.details = [project_summary(readme),
+                              latest_release_changes(news)].join("\n\n")
   agent.submit(submit_news_form, submit_news_form.buttons.first)
 end
 
