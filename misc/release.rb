@@ -87,8 +87,8 @@ def latest_release_changes(news)
 end
 
 def update_release_info(agent, edit_release_page, news)
-  edit_release_info_form = edit_release_page.forms.action(/editreleases/)[1]
-  edit_release_info_form.upload_changes = latest_release_changes(news)
+  edit_release_info_form = edit_release_page.forms.action(/editreleases/)[0]
+  edit_release_info_form.release_changes = latest_release_changes(news)
 
   agent.submit(edit_release_info_form, edit_release_info_form.buttons.first)
 end
@@ -139,10 +139,10 @@ def main(sf_user_name, project_name, release_name, file_name, readme, news)
 
   project_page = go_project_page(agent, my_page, project_name)
   file_releases_page = go_file_releases_page(agent, project_page)
-  upload_file(file_name)
+  #upload_file(file_name)
   edit_release_page = go_edit_release_page(agent, file_releases_page,
                                            release_name)
-  edit_release_page = update_release_info(agent, file_releases_page, news)
+  edit_release_page = update_release_info(agent, edit_release_page, news)
   edit_release_page = register_file(agent, edit_release_page, file_name)
   set_release_property(agent, edit_release_page)
 

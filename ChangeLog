@@ -2,7 +2,7 @@
 
 	* ./: released 0.3.0.
 
-	* misc/release.rb: fixed a typo.
+	* misc/release.rb: fixed typos.
 
 	* Makefile.am: fixed typos.
 
