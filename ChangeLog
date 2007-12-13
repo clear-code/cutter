@@ -1,3 +1,9 @@
+2007-12-14  Kouhei Sutou  <kou@cozmixng.org>
+
+	* Makefile.am: fixed typos.
+
+	* html/index.html: updated.
+
 2007-12-13  Kouhei Sutou  <kou@cozmixng.org>
 
 	* **/Makefile.am: added missing include path.

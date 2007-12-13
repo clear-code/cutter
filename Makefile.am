@@ -15,10 +15,10 @@ EXTRA_DIST =		\
 
 upload: upload-doc
 
-release: $(PACKAGE_NAME)-$(PAKCAGE_VERSION).tar.gz
-	$(srcdir)/misc/release.rb				\
-	  $(SF_USER_NAME) $(SF_PROJECT_NAME) $(PACKAGE_VERSION)	\
-	  $(PACKAGE_NAME)-$(PACKAGE_VERSION).tar.gz README NEWS
+release: $(PACKAGE)-$(VERSION).tar.gz
+	$(srcdir)/misc/release.rb			\
+	  $(SF_USER) $(SF_PROJECT_NAME) $(VERSION)	\
+	  $(PACKAGE)-$(VERSION).tar.gz README NEWS
 
 upload-doc:
 	cd html && $(MAKE) upload
