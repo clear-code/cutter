@@ -102,7 +102,7 @@ end
 
 def select_option(select_field, option_text)
   option = select_field.options.find do |option|
-    option.text == "Platform-Independent"
+    option.text == option_text
   end
   select_field.value = option.value
 end
@@ -139,7 +139,7 @@ def main(sf_user_name, project_name, release_name, file_name, readme, news)
 
   project_page = go_project_page(agent, my_page, project_name)
   file_releases_page = go_file_releases_page(agent, project_page)
-  #upload_file(file_name)
+  upload_file(file_name)
   edit_release_page = go_edit_release_page(agent, file_releases_page,
                                            release_name)
   edit_release_page = update_release_info(agent, edit_release_page, news)
