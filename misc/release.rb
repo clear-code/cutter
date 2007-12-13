@@ -6,13 +6,14 @@ require 'logger'
 
 require 'net/ftp'
 
-if ARGV.size < 3
-  puts "Usage: #{$0} SF_USER_NAME PROJECT_NAME RELEASE_NAME FILE_NAME"
-  puts " e.g.: #{$0} ktou cutter 0.3.0 cutter-0.3.0.tar.gz"
+if ARGV.size < 5
+  puts "Usage: #{$0} " +
+         "SF_USER_NAME PROJECT_NAME RELEASE_NAME FILE_NAME README NEWS"
+  puts " e.g.: #{$0} ktou Cutter 0.3.0 cutter-0.3.0.tar.gz README NEWS"
   exit(1)
 end
 
-sf_user_name, project_name, release_name, file_name, = ARGV
+sf_user_name, project_name, release_name, file_name, readme, news, = ARGV
 
 def read_password(prompt, input=$stdin, output=$stdout)
   output.print(prompt)
@@ -77,6 +78,21 @@ def go_edit_release_page(agent, file_releases_page, release_name)
   end
 end
 
+def project_summary(readme)
+  File.read(readme).split(/^==.*\n*/)[3].split(/\n\n/)[0].chomp
+end
+
+def latest_release_changes(news)
+  File.read(news).split(/^==.*\n*/)[1].chomp
+end
+
+def update_release_info(agent, edit_release_page, news)
+  edit_release_info_form = page.forms.action(/editreleases/)[1]
+  edit_release_info_form.upload_changes = latest_release_changes(news)
+
+  agent.submit(edit_release_info_form, edit_release_info_form.buttons.first)
+end
+
 def register_file(agent, edit_release_page, file_name)
   add_file_form = page.forms.action(/editreleases/)[1]
   add_file_form["file_list[]"] = file_name
@@ -98,7 +114,24 @@ def set_release_property(agent, edit_release_page)
   agent.submit(edit_file_form, edit_file_form.buttons.first)
 end
 
-def main(sf_user_name, project_name, release_name, file_name)
+def go_news_page(agent, project_page)
+  agent.click(project_page.links.text(/\ANews\z/))
+end
+
+def go_submit_news_page(agent, news_page)
+  agent.click(news_page.links.text(/\ASubmit\z/))
+end
+
+def submit_news(agent, submit_news_page, project_name, release_name,
+                readme, news)
+  submit_news_form = edit_release_page.forms.action(/\bnews\b/)[0]
+  submit_news_form.summary = "#{project_name} #{release_name} Released"
+  submit_news_form.detail = [project_summary(readme),
+                             latest_release_changes(news)].join("\n\n")
+  agent.submit(submit_news_form, submit_news_form.buttons.first)
+end
+
+def main(sf_user_name, project_name, release_name, file_name, readme, news)
   agent = WWW::Mechanize.new
   my_page = login(agent, sf_user_name) do
     read_password("SF.net password for [#{sf_user_name}]: ")
@@ -109,9 +142,13 @@ def main(sf_user_name, project_name, release_name, file_name)
   upload_file(file_name)
   edit_release_page = go_edit_release_page(agent, file_releases_page,
                                            release_name)
-return
+  edit_release_page = update_release_info(agent, file_releases_page, news)
   edit_release_page = register_file(agent, edit_release_page, file_name)
   set_release_property(agent, edit_release_page)
+
+  news_page = go_news_page(agent, project_page)
+  submit_news_page = go_submit_news_page(agent, news_page)
+  submit_news(agent, submit_news_page, project_name, release_name, readme, news)
 end
 
-main(sf_user_name, project_name, release_name, file_name)
+main(sf_user_name, project_name, release_name, file_name, readme, news)

@@ -127,6 +127,9 @@ dnl **************************************************************
 dnl Check for SF.net.
 dnl **************************************************************
 
+SF_PROJECT_NAME=Cutter
+AC_SUBST(SF_PROJECT_NAME)
+
 AC_ARG_WITH([sf-user],
             AS_HELP_STRING([--with-sf-user=NAME],
                            [Use NAME to access sf.net]),

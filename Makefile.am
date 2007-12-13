@@ -13,10 +13,12 @@ EXTRA_DIST =		\
 	NEWS		\
 	NEWS.ja
 
-upload: upload-file upload-doc
+upload: upload-doc
 
-upload-file: cutter-$(VERSION).tar.gz
-	$(srcdir)/misc/upload-files.rb cutter-$(VERSION).tar.gz
+release: $(PACKAGE_NAME)-$(PAKCAGE_VERSION).tar.gz
+	$(srcdir)/misc/release.rb				\
+	  $(SF_USER_NAME) $(SF_PROJECT_NAME) $(PACKAGE_VERSION)	\
+	  $(PACKAGE_NAME)-$(PACKAGE_VERSION).tar.gz README NEWS
 
 upload-doc:
 	cd html && $(MAKE) upload

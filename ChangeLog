@@ -1,5 +1,8 @@
 2007-12-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* misc/release.rb: supported News post.
+	* configure.ac, Makefile.am: followed the above changes.
+
 	* NEWS, NEWS.ja: updated.
 
 	* doc/reference/tmpl/cut-ui.sgml,
