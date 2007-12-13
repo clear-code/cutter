@@ -1,5 +1,7 @@
 2007-12-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* ./: released 0.3.0.
+
 	* Makefile.am: fixed typos.
 
 	* html/index.html: updated.
