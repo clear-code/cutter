@@ -1,3 +1,8 @@
+2007-12-13  Kouhei Sutou  <kou@cozmixng.org>
+
+	* misc/upload-files.rb: removed.
+	* misc/release.rb: added automated release script.
+
 2007-12-12  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-main.c (cut_init): avoided CutTestContextClass
