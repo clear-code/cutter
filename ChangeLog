@@ -1,5 +1,8 @@
 2007-12-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/tmpl/cut-ui.sgml,
+	doc/reference/tmpl/cut-ui-factory.sgml: added.
+
 	* misc/upload-files.rb: removed.
 	* misc/release.rb: added automated release script.
 
