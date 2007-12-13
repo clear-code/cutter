@@ -87,7 +87,7 @@ def latest_release_changes(news)
 end
 
 def update_release_info(agent, edit_release_page, news)
-  edit_release_info_form = page.forms.action(/editreleases/)[1]
+  edit_release_info_form = edit_release_page.forms.action(/editreleases/)[1]
   edit_release_info_form.upload_changes = latest_release_changes(news)
 
   agent.submit(edit_release_info_form, edit_release_info_form.buttons.first)

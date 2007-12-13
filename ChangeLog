@@ -2,6 +2,8 @@
 
 	* ./: released 0.3.0.
 
+	* misc/release.rb: fixed a typo.
+
 	* Makefile.am: fixed typos.
 
 	* html/index.html: updated.
