@@ -94,7 +94,7 @@ def update_release_info(agent, edit_release_page, news)
 end
 
 def register_file(agent, edit_release_page, file_name)
-  add_file_form = page.forms.action(/editreleases/)[1]
+  add_file_form = edit_release_page.forms.action(/editreleases/)[1]
   add_file_form["file_list[]"] = file_name
 
   agent.submit(add_file_form, add_file_form.buttons.first)
