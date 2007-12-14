@@ -1,5 +1,5 @@
-#ifndef __TEST_CUT_UTILS_H__
-#define __TEST_CUT_UTILS_H__
+#ifndef __CUTTEST__UTILS_H__
+#define __CUTTEST__UTILS_H__
 
 #include <glib.h>
 
