@@ -6,11 +6,14 @@
 #include "cuttest-assertions.h"
 
 void test_equal_g_type(void);
+void test_equal_g_value(void);
 
 static CutTest *test;
 static CutRunner *runner;
 static CutTestContext *test_context;
 static CutTestResult *test_result;
+
+static GValue *value1, *value2;
 
 static gboolean
 run (CutTest *_test)
@@ -38,6 +41,9 @@ setup (void)
     runner = NULL;
     test_context = NULL;
     test_result = NULL;
+
+    value1 = g_new0(GValue, 1);
+    value2 = g_new0(GValue, 1);
 }
 
 void
@@ -51,6 +57,14 @@ teardown (void)
         g_object_unref(test_context);
     if (test_result)
         g_object_unref(test_result);
+
+    if (G_IS_VALUE(value1))
+        g_value_unset(value1);
+    if (G_IS_VALUE(value2))
+        g_value_unset(value2);
+
+    g_free(value1);
+    g_free(value2);
 }
 
 
@@ -78,6 +92,40 @@ test_equal_g_type (void)
                            "expected: <gint>\n"
                            " but was: <gchararray>",
                            "equal_g_type_test");
+}
+
+
+static void
+equal_g_value_test (void)
+{
+    g_value_init(value1, G_TYPE_INT);
+    g_value_set_int(value1, 10);
+    g_value_init(value2, G_TYPE_STRING);
+    g_value_set_string(value2, "String");
+
+    cut_assert_equal_g_value(value1, value1);
+    cut_assert_equal_g_value(value2, value2);
+
+    cut_assert_equal_g_value(value1, value2);
+}
+
+void
+test_equal_g_value (void)
+{
+    CutTest *test;
+
+    test = cut_test_new("equal_g_value test", NULL, equal_g_value_test);
+    cut_assert(test);
+
+    cut_assert(!run(test));
+    cut_assert_test_result_summary(runner, 1, 2, 1, 0, 0, 0);
+    cut_assert_test_result(runner, 0, CUT_TEST_RESULT_FAILURE,
+                           "equal_g_value test",
+                           NULL,
+                           "<value1 == value2>\n"
+                           "expected: <10> (gint)\n"
+                           " but was: <\"String\"> (gchararray)",
+                           "equal_g_value_test");
 }
 
 /*

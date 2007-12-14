@@ -1,5 +1,8 @@
 2007-12-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-gassertions.c, cutter/cut-gassertions.h: added a
+	test for cut_assert_equal_g_value().
+
 	* test/cuttest-assertions.h: added.
 	* test/test-cut-assersions.c, test/test-cut-gassertions.c: used
 	cuttest-assertions.h.

@@ -37,3 +37,4 @@ test_equal (void)
 
     cut_assert(!cut_value_equal(value1, value2));
 }
+

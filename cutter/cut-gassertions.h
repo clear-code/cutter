@@ -24,6 +24,7 @@
 
 #include <glib.h>
 
+#include <cutter/cut-value-equal.h>
 #include <cutter/cut-assertions.h>
 
 G_BEGIN_DECLS
@@ -61,6 +62,40 @@ G_BEGIN_DECLS
                       g_type_name(_actual),                     \
                       NULL, ## __VA_ARGS__);                    \
     }                                                           \
+} while(0)
+
+/**
+ * cut_assert_equal_g_value:
+ * @expected: an expected GValue *.
+ * @actual: an actual GValue *.
+ * @...: optional format string, followed by parameters to insert
+ * into the format string (as with printf())
+ *
+ * Passes if @expected == @actual.
+ */
+#define cut_assert_equal_g_value(expected, actual, ...) do              \
+{                                                                       \
+    GValue *_expected = (expected);                                     \
+    GValue *_actual = (actual);                                         \
+    if (cut_value_equal(expected, actual)) {                            \
+        cut_test_pass();                                                \
+    } else {                                                            \
+        const gchar *inspected_expected, *inspected_actual;             \
+        inspected_expected =                                            \
+            cut_take_string(g_strdup_value_contents(_expected));        \
+        inspected_actual =                                              \
+            cut_take_string(g_strdup_value_contents(_actual));          \
+        cut_test_fail(FAILURE,                                          \
+                      "<%s == %s>\n"                                    \
+                      "expected: <%s> (%s)\n"                           \
+                      " but was: <%s> (%s)",                            \
+                      #expected, #actual,                               \
+                      inspected_expected,                               \
+                      g_type_name(G_VALUE_TYPE(_expected)),             \
+                      inspected_actual,                                 \
+                      g_type_name(G_VALUE_TYPE(_actual)),               \
+                      NULL, ## __VA_ARGS__);                            \
+    }                                                                   \
 } while(0)
 
 G_END_DECLS
