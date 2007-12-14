@@ -14,13 +14,14 @@ TESTS_ENVIRONMENT = \
 
 noinst_LTLIBRARIES = 				\
 		cuttest_utils.la		\
-		test_cut_assertions.la	\
+		test_cut_assertions.la		\
 		test_cut_test.la		\
-		test_cut_test_result.la	\
-		test_cut_test_case.la	\
-		test_cut_test_suite.la	\
+		test_cut_test_result.la		\
+		test_cut_test_case.la		\
+		test_cut_test_suite.la		\
 		test_cut_loader.la		\
-		test_cut_repository.la
+		test_cut_repository.la		\
+		test_cut_value_equal.la
 
 LDFLAGS =			\
 	-module			\
@@ -41,6 +42,7 @@ test_cut_loader_la_SOURCES      = test-cut-loader.c
 test_cut_loader_la_LIBADD       = cuttest_utils.la
 test_cut_repository_la_SOURCES  = test-cut-repository.c
 test_cut_repository_la_LIBADD   = cuttest_utils.la
+test_cut_value_equal_la_SOURCES  = test-cut-value-equal.c
 
 echo-cutter:
 	@echo $(CUTTER)

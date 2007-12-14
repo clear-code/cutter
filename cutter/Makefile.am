@@ -14,11 +14,14 @@ lib_LTLIBRARIES = libcutter.la
 
 cutter_public_headers = 			\
 		cut-assertions.h		\
-		cut-gassertions.h		\
 		cut-assertions-helper.h		\
 		cut-experimental.h		\
 		cut-hidden-definitions.h	\
 		cut-public.h
+
+gcutter_public_headers =			\
+		cut-gassertions.h		\
+		cut-value-equal.h
 
 libcutter_public_headers = 		\
 		cut-private.h		\
@@ -35,6 +38,7 @@ libcutter_public_headers = 		\
 		cut-verbose-level.h
 
 noinst_headers = 			\
+		gbseracharray.h		\
 		cut-loader.h		\
 		cut-module.h		\
 		cut-module-impl.h	\
@@ -49,6 +53,7 @@ cutterinclude_HEADERS = 		\
 cuttersubincludedir=$(includedir)/cutter/cutter
 cuttersubinclude_HEADERS = 		\
 	$(cutter_public_headers)	\
+	$(gcutter_public_headers)	\
 	$(libcutter_public_headers)
 
 enum_source_prefix = cut-enum-types
@@ -80,6 +85,7 @@ libcutter_la_SOURCES =				\
 		cut-enum-types.c		\
 		$(marshal_sources)		\
 		$(cutter_public_headers)	\
+		$(gcutter_public_headers)	\
 		$(libcutter_public_headers)	\
 		$(noinst_headers)		\
 		cut-runner.c			\
@@ -97,7 +103,8 @@ libcutter_la_SOURCES =				\
 		cut-module-impl.h		\
 		cut-ui.c			\
 		cut-ui-factory.c		\
-		cut-utils.c
+		cut-utils.c			\
+		cut-value-equal.c
 
 libcutter_la_LIBADD =			\
 	$(GLIB_LIBS)

@@ -38,6 +38,7 @@
 #include "cut-test-suite.h"
 #include "cut-ui.h"
 #include "cut-ui-factory.h"
+#include "cut-value-equal.h"
 
 static gboolean initialized = FALSE;
 static gchar *test_directory = NULL;
@@ -105,6 +106,8 @@ cut_init (int *argc, char ***argv)
     g_type_init();
     if (!g_thread_supported())
         g_thread_init(NULL);
+
+    cut_value_equal_init();
 
     option_context = g_option_context_new("TEST_DIRECTORY");
     g_option_context_add_main_entries(option_context, option_entries, "cutter");

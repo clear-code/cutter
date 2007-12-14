@@ -1,5 +1,8 @@
 2007-12-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-value-equal.[ch], test/cut-value-equal.c,
+	cutter/gbseracharray.h: implemented g_value_equal().
+
 	* cutter/Makefile.am, cutter/gcutter.h: added.
 
 	* gcutter.pc.in, cutter/cut-gassertions.h: added gcutter.
