@@ -1,5 +1,9 @@
 2007-12-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* configure.ac: 0.3.0 -> 0.4.0.
+
+2007-12-14  Kouhei Sutou  <kou@cozmixng.org>
+
 	* ./: released 0.3.0.
 
 	* misc/release.rb: fixed typos.

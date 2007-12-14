@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 0.3.0\n"
-"POT-Creation-Date: 2007-12-12 08:06+0900\n"
+"POT-Creation-Date: 2007-12-14 10:18+0900\n"
 "PO-Revision-Date: 2007-12-12 08:09+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
@@ -52,7 +52,7 @@ msgid "Index of new symbols in 0.3"
 msgstr "0.3での新しいシンボル一覧"
 
 #: xml/cut-assertions.xml:7(refentrytitle) xml/cut-assertions.xml:13(refname)
-#: xml/cutter.xml:186(link)
+#: xml/cutter.xml:171(link)
 msgid "Assertions"
 msgstr "検証"
 
@@ -180,7 +180,7 @@ msgstr ""
 
 #: xml/cut-assertions.xml:56(title) xml/cut-main.xml:43(title)
 #: xml/cut-ui-factory.xml:57(title) xml/cut-ui.xml:52(title)
-#: xml/cutter.xml:40(title)
+#: xml/cutter.xml:39(title)
 msgid "Description"
 msgstr "説明"
 
@@ -208,7 +208,7 @@ msgstr "例: <placeholder-1/>"
 
 #: xml/cut-assertions.xml:73(title) xml/cut-main.xml:50(title)
 #: xml/cut-ui-factory.xml:64(title) xml/cut-ui.xml:59(title)
-#: xml/cutter.xml:145(title)
+#: xml/cutter.xml:144(title)
 msgid "Details"
 msgstr "詳細"
 
@@ -830,7 +830,7 @@ msgstr ""
 #: xml/cut-ui-factory.xml:157(term) xml/cut-ui-factory.xml:179(term)
 #: xml/cut-ui-factory.xml:209(term) xml/cut-ui-factory.xml:223(term)
 #: xml/cut-ui.xml:87(term) xml/cut-ui.xml:128(term) xml/cut-ui.xml:139(term)
-#: xml/cut-ui.xml:161(term) xml/cut-ui.xml:179(term) xml/cutter.xml:176(term)
+#: xml/cut-ui.xml:161(term) xml/cut-ui.xml:179(term)
 msgid "<emphasis>Returns</emphasis>&nbsp;:"
 msgstr "<emphasis>戻り値</emphasis>&nbsp;:"
 
@@ -1345,16 +1345,12 @@ msgstr ""
 msgid "An Unit Testing Framework for C."
 msgstr "C言語用単体テストフレームワーク"
 
-#: xml/cutter.xml:25(link) xml/cutter.xml:148(primary)
+#: xml/cutter.xml:25(link) xml/cutter.xml:147(primary)
 msgid "setup"
 msgstr ""
 
-#: xml/cutter.xml:26(link) xml/cutter.xml:157(primary)
+#: xml/cutter.xml:26(link) xml/cutter.xml:156(primary)
 msgid "teardown"
-msgstr ""
-
-#: xml/cutter.xml:27(link) xml/cutter.xml:167(primary)
-msgid "cut_user_data"
 msgstr ""
 
 #: xml/cutter.xml:21(synopsis)
@@ -1366,10 +1362,9 @@ msgid ""
 "\n"
 "<placeholder-1/>                <placeholder-2/>                               (void);\n"
 "<placeholder-3/>                <placeholder-4/>                            (void);\n"
-"#define             <placeholder-5/>\n"
 msgstr ""
 
-#: xml/cutter.xml:51(programlisting)
+#: xml/cutter.xml:50(programlisting)
 #, no-wrap
 msgid ""
 "\n"
@@ -1402,7 +1397,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: xml/cutter.xml:45(para)
+#: xml/cutter.xml:44(para)
 msgid ""
 "Easy to use. Cutter doesn't introduce any magic macros like "
 "CUTTER_DEFINE_TEST_START and CUTTER_DEFINE_TEST_END into your test program. "
@@ -1417,7 +1412,7 @@ msgstr ""
 "XXX\"><function>cut_assert_XXX()</function></link>を使う必要があります。"
 "<placeholder-1/>"
 
-#: xml/cutter.xml:85(programlisting)
+#: xml/cutter.xml:84(programlisting)
 #, no-wrap
 msgid ""
 "\n"
@@ -1428,7 +1423,7 @@ msgid ""
 "59 test(s), 246 assertion(s), 0 failure(s), 0 error(s), 0 pending(s), 0 notification(s)\n"
 msgstr ""
 
-#: xml/cutter.xml:81(para)
+#: xml/cutter.xml:80(para)
 msgid ""
 "Simple but useful output. Cutter works quietly if tests are running without "
 "any problems by default. The following is an output of self test: "
@@ -1443,7 +1438,7 @@ msgstr ""
 "かなどの情報は表示しません。これは、テスト成功時にはこれらの情報は必要ないか"
 "らです。"
 
-#: xml/cutter.xml:98(programlisting)
+#: xml/cutter.xml:97(programlisting)
 #, no-wrap
 msgid ""
 "\n"
@@ -1460,14 +1455,14 @@ msgid ""
 "59 test(s), 242 assertion(s), 1 failure(s), 0 error(s), 0 pending(s), 0 notification(s)\n"
 msgstr ""
 
-#: xml/cutter.xml:113(programlisting)
+#: xml/cutter.xml:112(programlisting)
 #, no-wrap
 msgid ""
 "\n"
 "cut_assert_equal_string(\"Strange!!!\", cut_test_result_get_test_name(result));\n"
 msgstr ""
 
-#: xml/cutter.xml:96(para)
+#: xml/cutter.xml:95(para)
 msgid ""
 "Cutter outputs many information on failure: <placeholder-1/> The above "
 "result is happened because I add a strange expected staring in Cutter's self "
@@ -1489,7 +1484,7 @@ msgstr ""
 "上記のCutterの出力から得ることができます。これはデバッグの手助けになるでしょ"
 "う。"
 
-#: xml/cutter.xml:124(para)
+#: xml/cutter.xml:123(para)
 msgid ""
 "Cutter's output format is pragmatic. ' but was:' is indented and aligned "
 "with the above 'expected:'. This helps that you find difference between "
@@ -1507,13 +1502,13 @@ msgstr ""
 "「行」へジャンプすることができます。これは問題行を素早く見つける手助けをしま"
 "す。"
 
-#: xml/cutter.xml:134(para)
+#: xml/cutter.xml:133(para)
 msgid "Cutter supports not only easy test writing but also easy debugging."
 msgstr ""
 "Cutterは簡単にテストを書くことを支援するだけではなく、簡単にデバッグをできる"
 "ことも支援します。"
 
-#: xml/cutter.xml:41(para)
+#: xml/cutter.xml:40(para)
 msgid ""
 "Cutter is an Unit Testing Framework for C and has the following features: "
 "<placeholder-1/>"
@@ -1521,16 +1516,16 @@ msgstr ""
 "Cutterは以下のような特徴をもったC用の単体テストフレームワークです。"
 "<placeholder-1/>"
 
-#: xml/cutter.xml:147(title)
+#: xml/cutter.xml:146(title)
 msgid "<anchor id=\"setup\" role=\"function\"/>setup ()"
 msgstr ""
 
-#: xml/cutter.xml:148(programlisting)
+#: xml/cutter.xml:147(programlisting)
 #, no-wrap
 msgid "<link linkend=\"void\">void</link>                setup                               (void);"
 msgstr ""
 
-#: xml/cutter.xml:149(para)
+#: xml/cutter.xml:148(para)
 msgid ""
 "If you define <link linkend=\"setup\"><function>setup()</function></link> in "
 "your test program, cutter will call your <link linkend=\"setup"
@@ -1540,16 +1535,16 @@ msgstr ""
 "link>を定義していたら、cutterは各テストが実行される前に定義された<link "
 "linkend=\"setup\"><function>setup()</function></link>を呼びだします。"
 
-#: xml/cutter.xml:156(title)
+#: xml/cutter.xml:155(title)
 msgid "<anchor id=\"teardown\" role=\"function\"/>teardown ()"
 msgstr ""
 
-#: xml/cutter.xml:157(programlisting)
+#: xml/cutter.xml:156(programlisting)
 #, no-wrap
 msgid "<link linkend=\"void\">void</link>                teardown                            (void);"
 msgstr ""
 
-#: xml/cutter.xml:158(para)
+#: xml/cutter.xml:157(para)
 msgid ""
 "If you define <link linkend=\"teardown\"><function>teardown()</function></"
 "link> in your test program, cutter will call your <link linkend=\"teardown"
@@ -1561,30 +1556,7 @@ msgstr ""
 "していた時でも、<link linkend=\"teardown\"><function>teardown()</function></"
 "link>を呼びだします。"
 
-#: xml/cutter.xml:166(title)
-msgid "<anchor id=\"cut-user-data\" role=\"macro\"/>cut_user_data"
-msgstr ""
-
-#: xml/cutter.xml:167(programlisting)
-#, no-wrap
-msgid "#define             cut_user_data"
-msgstr ""
-
-#: xml/cutter.xml:168(para)
-msgid ""
-"This is useful only if you make a custom test runner like cutter command. "
-"You can pass a data from your custom test runner to test programs. They will "
-"receive your data through this."
-msgstr ""
-"cutterコマンドのようなテスト起動コマンドを独自に作ったときにだけ役にたちま"
-"す。独自のテスト起動コマンドからテストプログラムにデータを渡すことができま"
-"す。テストプログラムはこのマクロを使ってデータを受け取ることができます。"
-
-#: xml/cutter.xml:176(simpara)
-msgid "a data from a program who invokes your test."
-msgstr "テストを実行したプログラムからのデータ。"
-
-#: xml/cutter.xml:185(title)
+#: xml/cutter.xml:170(title)
 msgid "See Also"
 msgstr "参考"
 
@@ -1592,6 +1564,18 @@ msgstr "参考"
 #: xml/cutter.xml:0(None)
 msgid "translator-credits"
 msgstr ""
+
+#~ msgid ""
+#~ "This is useful only if you make a custom test runner like cutter command. "
+#~ "You can pass a data from your custom test runner to test programs. They "
+#~ "will receive your data through this."
+#~ msgstr ""
+#~ "cutterコマンドのようなテスト起動コマンドを独自に作ったときにだけ役にたちま"
+#~ "す。独自のテスト起動コマンドからテストプログラムにデータを渡すことができま"
+#~ "す。テストプログラムはこのマクロを使ってデータを受け取ることができます。"
+
+#~ msgid "a data from a program who invokes your test."
+#~ msgstr "テストを実行したプログラムからのデータ。"
 
 #~ msgid "Tutorial"
 #~ msgstr "チュートリアル"
