@@ -43,7 +43,8 @@ noinst_headers = 			\
 
 cutterincludedir=$(includedir)/cutter
 cutterinclude_HEADERS = 		\
-	cutter.h
+	cutter.h			\
+	gcutter.h
 
 cuttersubincludedir=$(includedir)/cutter/cutter
 cuttersubinclude_HEADERS = 		\
