@@ -106,35 +106,6 @@ cut_value_register_equal_func (GType type1, GType type2, GEqualFunc equal_func)
                                             &entry);
 }
 
-static gboolean
-value_equal_int_int (gconstpointer val1, gconstpointer val2)
-{
-    const GValue *value1 = val1;
-    const GValue *value2 = val2;
-
-    return g_value_get_int(value1) == g_value_get_int(value2);
-}
-
-static gboolean
-value_equal_string_string (gconstpointer val1, gconstpointer val2)
-{
-    const GValue *value1 = val1;
-    const GValue *value2 = val2;
-
-    return g_str_equal(g_value_get_string(value1),
-                       g_value_get_string(value2));
-}
-
-void
-cut_value_equal_init (void)
-{
-    equal_entries = g_bsearch_array_create(&equal_bconfig);
-
-    cut_value_register_equal_func(G_TYPE_INT, G_TYPE_INT, value_equal_int_int);
-    cut_value_register_equal_func(G_TYPE_STRING, G_TYPE_STRING,
-                                   value_equal_string_string);
-}
-
 gboolean
 cut_value_equal (GValue *value1, GValue *value2)
 {
@@ -159,6 +130,67 @@ cut_value_equal (GValue *value1, GValue *value2)
         return func(value2, value1);
 
     return FALSE;
+}
+
+#define DEFINE_SAME_TYPE_EQUAL_FUNC(type)                               \
+static gboolean                                                         \
+value_equal_ ## type ## _ ## type (gconstpointer val1,                  \
+                                   gconstpointer val2)                  \
+{                                                                       \
+    const GValue *value1 = val1;                                        \
+    const GValue *value2 = val2;                                        \
+                                                                        \
+    return g_value_get_ ## type(value1) ==                              \
+        g_value_get_ ## type(value2);                                   \
+}
+
+DEFINE_SAME_TYPE_EQUAL_FUNC(char)
+DEFINE_SAME_TYPE_EQUAL_FUNC(uchar)
+DEFINE_SAME_TYPE_EQUAL_FUNC(boolean)
+DEFINE_SAME_TYPE_EQUAL_FUNC(int)
+DEFINE_SAME_TYPE_EQUAL_FUNC(uint)
+DEFINE_SAME_TYPE_EQUAL_FUNC(long)
+DEFINE_SAME_TYPE_EQUAL_FUNC(ulong)
+DEFINE_SAME_TYPE_EQUAL_FUNC(int64)
+DEFINE_SAME_TYPE_EQUAL_FUNC(uint64)
+DEFINE_SAME_TYPE_EQUAL_FUNC(float)
+DEFINE_SAME_TYPE_EQUAL_FUNC(double)
+DEFINE_SAME_TYPE_EQUAL_FUNC(pointer)
+DEFINE_SAME_TYPE_EQUAL_FUNC(gtype)
+
+static gboolean
+value_equal_string_string (gconstpointer val1, gconstpointer val2)
+{
+    const GValue *value1 = val1;
+    const GValue *value2 = val2;
+
+    return g_str_equal(g_value_get_string(value1),
+                       g_value_get_string(value2));
+}
+
+void
+cut_value_equal_init (void)
+{
+    equal_entries = g_bsearch_array_create(&equal_bconfig);
+
+#define REGISTER_SAME_TYPE_EQUAL_FUNC(g_type, type)                     \
+    cut_value_register_equal_func(g_type, g_type,                       \
+                                  value_equal_ ## type ## _ ## type)
+
+    REGISTER_SAME_TYPE_EQUAL_FUNC(G_TYPE_CHAR, char);
+    REGISTER_SAME_TYPE_EQUAL_FUNC(G_TYPE_UCHAR, uchar);
+    REGISTER_SAME_TYPE_EQUAL_FUNC(G_TYPE_BOOLEAN, boolean);
+    REGISTER_SAME_TYPE_EQUAL_FUNC(G_TYPE_INT, int);
+    REGISTER_SAME_TYPE_EQUAL_FUNC(G_TYPE_UINT, uint);
+    REGISTER_SAME_TYPE_EQUAL_FUNC(G_TYPE_LONG, long);
+    REGISTER_SAME_TYPE_EQUAL_FUNC(G_TYPE_ULONG, ulong);
+    REGISTER_SAME_TYPE_EQUAL_FUNC(G_TYPE_INT64, int64);
+    REGISTER_SAME_TYPE_EQUAL_FUNC(G_TYPE_UINT64, uint64);
+    REGISTER_SAME_TYPE_EQUAL_FUNC(G_TYPE_FLOAT, float);
+    REGISTER_SAME_TYPE_EQUAL_FUNC(G_TYPE_DOUBLE, double);
+    REGISTER_SAME_TYPE_EQUAL_FUNC(G_TYPE_POINTER, pointer);
+    REGISTER_SAME_TYPE_EQUAL_FUNC(G_TYPE_GTYPE, gtype);
+    REGISTER_SAME_TYPE_EQUAL_FUNC(G_TYPE_STRING, string);
 }
 
 /*
