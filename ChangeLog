@@ -1,5 +1,8 @@
 2007-12-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-value-equal.c, cutter/cut-value-equal.c: added a
+	test for uninitialized value equality.
+
 	* test/test-cut-gassertions.c, cutter/cut-gassertions.h: added a
 	test for cut_assert_equal_g_value().
 

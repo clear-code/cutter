@@ -139,12 +139,22 @@ gboolean
 cut_value_equal (GValue *value1, GValue *value2)
 {
     GEqualFunc func;
+    GType type1, type2;
 
-    func = equal_func_lookup(G_VALUE_TYPE(value1), G_VALUE_TYPE(value2));
+    type1 = G_VALUE_TYPE(value1);
+    type2 = G_VALUE_TYPE(value2);
+
+    if (type1 == 0 && type2 == 0)
+        return TRUE;
+
+    if (type1 == 0 || type2 == 0)
+        return FALSE;
+
+    func = equal_func_lookup(type1, type2);
     if (func)
         return func(value1, value2);
 
-    func = equal_func_lookup(G_VALUE_TYPE(value2), G_VALUE_TYPE(value1));
+    func = equal_func_lookup(type2, type1);
     if (func)
         return func(value2, value1);
 
