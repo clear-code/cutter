@@ -1,5 +1,7 @@
 2007-12-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter.pc.in, cutter/cut-gassertions.h: added gcutter.
+
 	* cutter/cut-test-context.c, cutter/cut-public.h
 	(cut_test_context_take_string): added.
 

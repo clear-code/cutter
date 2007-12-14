@@ -164,6 +164,7 @@ AC_SUBST(CUTTER_CFLAGS)
 
 AC_CONFIG_FILES([Makefile
 		 cutter.pc
+		 gcutter.pc
 		 libcutter.pc
 		 cutter/Makefile
 		 cutter/module/Makefile

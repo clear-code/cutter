@@ -4,7 +4,7 @@ libdir=@libdir@
 includedir=@includedir@
 
 Name: Cutter Library
-Description: Cutter is Unit Testing Framework for C.
+Description: Cutter Command Tool Kit.
 Version: @VERSION@
 Requires: cutter >= @VERSION@, gmodule-2.0 >= @GLIB_REQUIRED@, gobject-2.0 >= @GLIB_REQUIRED@
 Libs: -L${libdir} -lcutter

@@ -507,6 +507,12 @@ cut-verbose-level
 @status: 
 @...: 
 
+<!-- ##### MACRO cut_user_data ##### -->
+<para>
+
+</para>
+
+
 <!-- ##### FUNCTION get_current_test_context ##### -->
 <para>
 

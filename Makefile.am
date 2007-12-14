@@ -3,6 +3,7 @@ SUBDIRS = cutter test sample po misc doc html
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = 	\
 	cutter.pc	\
+	gcutter.pc	\
 	libcutter.pc
 
 EXTRA_DIST =		\

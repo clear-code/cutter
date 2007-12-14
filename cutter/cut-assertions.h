@@ -251,7 +251,7 @@ extern "C" {
 /**
  * cut_assert_equal_string:
  * @expected: an expected string value.
- * @actual: an expected string value.
+ * @actual: an actual string value.
  * @...: optional format string, followed by parameters to insert
  * into the format string (as with printf())
  *
@@ -290,7 +290,7 @@ extern "C" {
 /**
  * cut_assert_equal_string_or_null:
  * @expected: an expected string value.
- * @actual: an expected string value.
+ * @actual: an actual string value.
  * @...: optional format string, followed by parameters to insert
  * into the format string (as with printf())
  *
