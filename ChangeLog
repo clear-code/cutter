@@ -1,5 +1,8 @@
 2007-12-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-gassertions.c: added a test for
+	cut_assert_equal_g_type().
+
 	* cutter/cut-value-equal.[ch], test/cut-value-equal.c,
 	cutter/gbseracharray.h: implemented g_value_equal().
 
