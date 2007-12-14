@@ -30,6 +30,9 @@ extern "C" {
     cut_test_context_inspect_string_array(get_current_test_context(),   \
                                           strings)
 
+#define cut_take_string(string)                                         \
+    cut_test_context_take_string(get_current_test_context(), string)
+
 #define cut_test_pass() \
     cut_test_context_pass_assertion(get_current_test_context())
 

@@ -1,5 +1,8 @@
 2007-12-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-context.c, cutter/cut-public.h
+	(cut_test_context_take_string): added.
+
 	* configure.ac: 0.3.0 -> 0.4.0.
 
 2007-12-14  Kouhei Sutou  <kou@cozmixng.org>

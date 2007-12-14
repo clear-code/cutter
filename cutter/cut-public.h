@@ -46,6 +46,8 @@ void  cut_test_context_register_result      (CutTestContext *context,
                                              ...);
 void  cut_test_context_long_jump            (CutTestContext *context) __attribute__((__noreturn__));
 
+const char *cut_test_context_take_string    (CutTestContext *context,
+                                             char           *string);
 const char *cut_test_context_inspect_string_array (CutTestContext *context,
                                                    const char    **strings);
 

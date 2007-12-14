@@ -41,7 +41,7 @@ struct _CutTestContextPrivate
     CutTest *test;
     gboolean failed;
     jmp_buf *jump_buffer;
-    GList *inspected_strings;
+    GList *taken_strings;
     gpointer user_data;
     GDestroyNotify user_data_destroy_notify;
 };
@@ -113,7 +113,7 @@ cut_test_context_init (CutTestContext *context)
 
     priv->failed = FALSE;
 
-    priv->inspected_strings = NULL;
+    priv->taken_strings = NULL;
 
     priv->user_data = NULL;
     priv->user_data_destroy_notify = NULL;
@@ -139,9 +139,9 @@ dispose (GObject *object)
         priv->test = NULL;
     }
 
-    g_list_foreach(priv->inspected_strings, (GFunc)g_free, NULL);
-    g_list_free(priv->inspected_strings);
-    priv->inspected_strings = NULL;
+    g_list_foreach(priv->taken_strings, (GFunc)g_free, NULL);
+    g_list_free(priv->taken_strings);
+    priv->taken_strings = NULL;
 
     if (priv->user_data && priv->user_data_destroy_notify)
         priv->user_data_destroy_notify(priv->user_data);
@@ -401,10 +401,23 @@ cut_test_context_is_failed (CutTestContext *context)
 }
 
 const char *
+cut_test_context_take_string (CutTestContext *context,
+                              char           *string)
+{
+    CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+    char *taken_string;
+
+    taken_string = g_strdup(string);
+    priv->taken_strings = g_list_prepend(priv->taken_strings, taken_string);
+    g_free(string);
+
+    return taken_string;
+}
+
+const char *
 cut_test_context_inspect_string_array (CutTestContext *context,
                                        const char    **strings)
 {
-    CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
     GString *inspected;
     const char **string, **next_string;
 
@@ -422,10 +435,8 @@ cut_test_context_inspect_string_array (CutTestContext *context,
     }
     g_string_append(inspected, "]");
 
-    priv->inspected_strings = g_list_prepend(priv->inspected_strings,
-                                             inspected->str);
-
-    return g_string_free(inspected, FALSE);
+    return cut_test_context_take_string(context,
+                                        g_string_free(inspected, FALSE));
 }
 
 /*
