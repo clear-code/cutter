@@ -1,5 +1,7 @@
 2007-12-17  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertions.h: added Since 0.3 mark.
+
 	* test/test-cut-assertions.c, cutter/cut-assertions.h: added a
 	test for cut_assert_equal_string_with_free().
 

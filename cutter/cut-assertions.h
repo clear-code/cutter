@@ -295,6 +295,8 @@ extern "C" {
  *
  * Passes if both @expected and @actual are NULL or
  * strcmp(@expected, @actual) == 0.
+ *
+ * Since: 0.3
  */
 #define cut_assert_equal_string_with_free(expected, actual, ...)        \
     cut_assert_equal_string(expected,                                   \
