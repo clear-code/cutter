@@ -74,6 +74,8 @@ CATALOGS=ja.po
 # include common portion ...
 include $(top_srcdir)/gtk-doc.make
 
+CLEANFILES += $(DOC_MODULE)-sections.txt
+
 # Other files to distribute
 EXTRA_DIST +=				\
 	html-build.stamp		\
