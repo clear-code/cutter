@@ -107,7 +107,7 @@ cut_value_register_equal_func (GType type1, GType type2, GEqualFunc equal_func)
 }
 
 gboolean
-cut_value_equal (GValue *value1, GValue *value2)
+cut_value_equal (const GValue *value1, const GValue *value2)
 {
     GEqualFunc func;
     GType type1, type2;

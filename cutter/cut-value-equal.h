@@ -28,8 +28,8 @@ G_BEGIN_DECLS
 
 void             cut_value_equal_init          (void);
 
-gboolean         cut_value_equal               (GValue *value1,
-                                                GValue *value2);
+gboolean         cut_value_equal               (const GValue *value1,
+                                                const GValue *value2);
 
 void             cut_value_register_equal_func (GType type1,
                                                 GType type2,

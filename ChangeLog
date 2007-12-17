@@ -1,5 +1,7 @@
 2007-12-17  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-value-equal.[ch]: added const.
+
 	* doc/reference/tmpl/: removed.
 
 	* cutter/cut-gassertions.h: improved document.
