@@ -31,7 +31,7 @@ G_BEGIN_DECLS
 
 /**
  * SECTION: cut-gassertions
- * @title: Assertions
+ * @title: Assertions with GLib support
  * @short_description: Checks that your program works as you
  * expect with GLib support.
  *

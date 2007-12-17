@@ -14,6 +14,7 @@ cutter/cut-test.c
 cutter/cut-ui-factory.c
 cutter/cut-ui.c
 cutter/cut-utils.c
+cutter/cut-value-equal.c
 cutter/cut-verbose-level.c
 cutter/main.c
 cutter/module/ui-factory/cut-ui-factory-console.c

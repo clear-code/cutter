@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 0.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-13 09:40+0900\n"
+"POT-Creation-Date: 2007-12-17 14:39+0900\n"
 "PO-Revision-Date: 2007-12-14 10:18+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
@@ -16,27 +16,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: cutter/cut-main.c:56
+#: cutter/cut-main.c:57
 msgid "Set directory of source code"
 msgstr "ソースコードのディレクトリを設定"
 
-#: cutter/cut-main.c:58
+#: cutter/cut-main.c:59
 msgid "Specify tests"
 msgstr "テストを指定"
 
-#: cutter/cut-main.c:60
+#: cutter/cut-main.c:61
 msgid "Specify test cases"
 msgstr "テストケースを指定"
 
-#: cutter/cut-main.c:62
+#: cutter/cut-main.c:63
 msgid "Run test cases with multi-thread"
 msgstr "マルチスレッドでテストケースを実行"
 
-#: cutter/cut-main.c:64
+#: cutter/cut-main.c:65
 msgid "Specify UI"
 msgstr "UIを指定"
 
-#: cutter/cut-main.c:66
+#: cutter/cut-main.c:67
 msgid "Show all available UIs and exit"
 msgstr "すべての利用可能なUIを表示し、終了する"
 

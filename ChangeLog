@@ -1,5 +1,7 @@
 2007-12-17  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-gassertions.h: improved document.
+
 	* doc/reference/Makefile.am, doc/reference/cutter-docs.sgml: added
 	cut-gassertions.h documents.
 
