@@ -130,6 +130,16 @@ cut-assertions
 @...: 
 
 
+<!-- ##### MACRO cut_assert_equal_string_with_free ##### -->
+<para>
+
+</para>
+
+@expected: 
+@actual: 
+@...: 
+
+
 <!-- ##### MACRO cut_assert_equal_string_or_null ##### -->
 <para>
 

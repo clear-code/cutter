@@ -24,6 +24,7 @@
       <title>Writing tests</title>
       <xi:include href="xml/cutter.xml"/>
       <xi:include href="xml/cut-assertions.xml"/>
+      <xi:include href="xml/cut-gassertions.xml"/>
     </chapter>
 <!--
     <chapter id="Invoking">
