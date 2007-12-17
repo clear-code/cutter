@@ -286,6 +286,21 @@ extern "C" {
     }                                                                   \
 } while(0)
 
+/**
+ * cut_assert_equal_string_with_free:
+ * @expected: an expected string value.
+ * @actual: an actual string value that is freed.
+ * @...: optional format string, followed by parameters to insert
+ * into the format string (as with printf())
+ *
+ * Passes if both @expected and @actual are NULL or
+ * strcmp(@expected, @actual) == 0.
+ */
+#define cut_assert_equal_string_with_free(expected, actual, ...)        \
+    cut_assert_equal_string(expected,                                   \
+                            cut_take_string(actual),                    \
+                            ## __VA_ARGS__);
+
 #ifndef CUTTER_DISABLE_DEPRECATED
 /**
  * cut_assert_equal_string_or_null:

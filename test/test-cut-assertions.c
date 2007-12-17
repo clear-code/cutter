@@ -12,6 +12,7 @@ void test_operator(void);
 void test_equal_string_array (void);
 void test_null(void);
 void test_null_string(void);
+void test_equal_string_with_free(void);
 void test_error(void);
 void test_fail(void);
 void test_pending(void);
@@ -410,6 +411,25 @@ test_null_string (void)
     cut_assert_test_result_summary(runner, 1, 1, 1, 0, 0, 0);
 }
 
+static void
+equal_string_with_free_assertions ()
+{
+    cut_assert_equal_string_with_free(NULL, NULL);
+    cut_assert_equal_string_with_free("", g_strdup(""));
+    cut_assert_equal_string_with_free("xxx", g_strdup("xxx"));
+    cut_assert_equal_string_with_free("xxx", g_strdup("zzz"));
+}
+
+void
+test_equal_string_with_free (void)
+{
+    CutTest *test;
+
+    test = cut_test_new("assert-string-equal-string-with-free",
+                        NULL, equal_string_with_free_assertions);
+    cut_assert(!run(test));
+    cut_assert_test_result_summary(runner, 1, 3, 1, 0, 0, 0);
+}
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

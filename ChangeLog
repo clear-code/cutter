@@ -1,3 +1,8 @@
+2007-12-17  Kouhei Sutou  <kou@cozmixng.org>
+
+	* test/test-cut-assertions.c, cutter/cut-assertions.h: added a
+	test for cut_assert_equal_string_with_free().
+
 2007-12-14  Kouhei Sutou  <kou@cozmixng.org>
 
 	* test/test-cut-value-equal.c, cutter/cut-value-equal.c: added a
