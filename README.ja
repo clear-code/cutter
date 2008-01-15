@@ -35,6 +35,29 @@ Cutterの特徴は以下の通りです。
   % make
   # make install
 
+=== GLibを別途インストールする場合
+
+システムにインストールされているGLibが2.14より古い場合はGLib
+>= 2.14を別途インストールし、それを用いてCutterをインストー
+ルすることができる。その場合は以下のようになる。この例で
+は~/local/以下にGLibをインストールしている。
+
+  % wget ftp://ftp.gtk.org/pub/glib/2.14/glib-2.14.5.tar.gz
+  % tar xvfz glib-2.14.5.tar.gz
+  % cd glib-2.14.5
+  % ./configure --prefix=$HOME/local
+  % make
+  % make install
+
+このGLibを用いてCutterをビルド・インストールする場合は以下の
+ようになる。
+
+  % export PKG_CONFIG_PATH=$HOME/local/lib/pkgconfig
+  % export LD_LIBRARY_PATH=$HOME/local/lib
+  % ./configure
+  % make
+  # make install
+
 == 使い方
 
   % cutter [オプション] [libtest_*.soがあるディレクトリ]
