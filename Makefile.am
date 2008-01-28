@@ -22,7 +22,7 @@ release: $(PACKAGE)-$(VERSION).tar.gz
 	  $(PACKAGE)-$(VERSION).tar.gz README NEWS
 
 upload-doc:
-	cd html && $(MAKE) upload
+	cd html && $(MAKE) $(AM_MAKEFLAGS) upload
 	cd doc/reference && $(MAKE) $(AM_MAKEFLAGS) upload
 
 update-po:
