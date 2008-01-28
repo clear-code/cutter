@@ -79,11 +79,11 @@ def go_edit_release_page(agent, file_releases_page, release_name)
 end
 
 def project_summary(readme)
-  File.read(readme).split(/^==.*\n*/)[3].split(/\n\n/)[0].chomp
+  File.read(readme).split(/^==.*\n\n\n*/)[4].split(/\n\n/)[0].chomp
 end
 
 def latest_release_changes(news)
-  File.read(news).split(/^==.*\n*/)[1].chomp
+  File.read(news).split(/^==.*\n\n\n*/)[1].chomp
 end
 
 def update_release_info(agent, edit_release_page, news)
