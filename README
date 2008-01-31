@@ -74,7 +74,7 @@ This is a list of features of Cutter:
 
    Cutter shows all available UIs and exits.
 
-: -u=[console|gtk], --ui=[console|gtk]
+: -u[console|gtk], --ui=[console|gtk]
 
    It specifies UI. The default is console UI.
 
