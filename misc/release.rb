@@ -109,6 +109,8 @@ end
 
 def set_release_property(agent, edit_release_page)
   edit_file_form = edit_release_page.forms.action(/editreleases/)[2]
+  if edit_file_form.nil?
+    puts edit_release_page
   select_option(edit_file_form.field("processor_id"), "Platform-Independent")
   select_option(edit_file_form.field("type_id"), "Source .gz")
   agent.submit(edit_file_form, edit_file_form.buttons.first)
