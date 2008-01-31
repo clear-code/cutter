@@ -41,10 +41,13 @@ def go_project_page(agent, my_page, project_name)
 end
 
 def upload_file(file)
-  Net::FTP.open("upload.sourceforge.net") do |ftp|
-    ftp.login
-    ftp.chdir("/incoming")
-    ftp.putbinaryfile(file)
+  dir, base = File.split(file)
+  Dir.chdir(dir) do
+    Net::FTP.open("upload.sourceforge.net") do |ftp|
+      ftp.login
+      ftp.chdir("/incoming")
+      ftp.putbinaryfile(base)
+    end
   end
 end
 
@@ -146,7 +149,8 @@ def main(sf_user_name, project_name, release_name, file_name, readme, news)
   edit_release_page = go_edit_release_page(agent, file_releases_page,
                                            release_name)
   edit_release_page = update_release_info(agent, edit_release_page, news)
-  edit_release_page = register_file(agent, edit_release_page, file_name)
+  edit_release_page = register_file(agent, edit_release_page,
+                                    File.basename(file_name))
   set_release_property(agent, edit_release_page)
 
   news_page = go_news_page(agent, project_page)
