@@ -1,3 +1,8 @@
+2008-02-05  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/module/ui-factory/cut-ui-factory-console.c
+	(guess_color_usability): supported screen as colorable terminal type.
+
 2007-12-17  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-value-equal.[ch]: added const.

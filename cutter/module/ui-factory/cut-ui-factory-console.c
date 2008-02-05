@@ -231,7 +231,8 @@ guess_color_usability (void)
 {
     const gchar *term;
     term = g_getenv("TERM");
-    return term && g_str_has_suffix(term, "term");
+    if (!term) return FALSE;
+    return g_str_has_suffix(term, "term") || g_str_equal(term, "screen");
 }
 
 static gboolean
