@@ -57,15 +57,15 @@ dummy_fail_test_function (void)
 }
 
 static void
-dummy_pending_test_function (void)
+dummy_pend_test_function (void)
 {
-    cut_pending("This test has been pending ever!");
+    cut_pend("This test has been pending ever!");
 }
 
 static void
 dummy_notify_test_function (void)
 {
-    cut_notify("This test has been notify ever!");
+    cut_notify("This test has been notifying ever!");
 }
 
 static void
@@ -231,12 +231,12 @@ test_pending (void)
 {
     CutTest *test;
 
-    test = cut_test_new("dummy-pending-test", NULL, dummy_pending_test_function);
+    test = cut_test_new("dummy-pend-test", NULL, dummy_pend_test_function);
     cut_assert(test, "Creating a new CutTest object failed");
 
     g_signal_connect(test, "pending", G_CALLBACK(cb_collect_result),
                      &test_result);
-    cut_assert(!run(test), "cut_pending() did not return FALSE!");
+    cut_assert(!run(test), "cut_pend() did not return FALSE!");
     g_signal_handlers_disconnect_by_func(test,
                                          G_CALLBACK(cb_collect_result),
                                          &test_result);

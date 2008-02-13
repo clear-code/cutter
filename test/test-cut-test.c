@@ -44,13 +44,13 @@ dummy_fail_function (void)
 static void
 dummy_pending_function (void)
 {
-    cut_pending("This test has been pending ever!");
+    cut_pend("This test has been pending ever!");
 }
 
 static void
 dummy_notification_function (void)
 {
-    cut_notify("This test has been notification ever!");
+    cut_notify("This test has been notifying ever!");
 }
 
 static void

@@ -1,3 +1,9 @@
+2008-02-13  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-assertions.h, test/test-cut-assertions.c,
+	test/test-cut-test.c: cut_pending() -> cut_pend(). cut_pending()
+	is deprecated.
+
 2008-02-05  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/module/ui-factory/cut-ui-factory-console.c

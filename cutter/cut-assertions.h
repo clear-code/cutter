@@ -66,15 +66,29 @@ extern "C" {
     cut_test_fail(FAILURE, NULL, format, ## __VA_ARGS__)
 
 /**
- * cut_pending:
+ * cut_pend:
  * @format: the message format. See the printf() documentation.
  * @...: the parameters to insert into the format string.
  *
  * Marks the test is pending with message. The test is
  * stopped.
  */
-#define cut_pending(format, ...)                 \
+#define cut_pend(format, ...)                               \
     cut_test_fail(PENDING, NULL, format, ## __VA_ARGS__)
+
+#ifndef CUTTER_DISABLE_DEPRECATED
+/**
+ * cut_pending:
+ * @format: the message format. See the printf() documentation.
+ * @...: the parameters to insert into the format string.
+ *
+ * Marks the test is pending with message. The test is
+ * stopped.
+ *
+ * Deprecated: 0.4: Use cut_pend() instead.
+ */
+#define cut_pending(format, ...) cut_pend(format, ## __VA_ARGS__)
+#endif
 
 /**
  * cut_notify:
