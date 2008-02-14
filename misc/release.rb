@@ -90,7 +90,7 @@ def project_summary(readme)
 end
 
 def latest_release_changes(news)
-  extract_sections(readme)[1].chomp
+  extract_sections(news)[1].chomp
 end
 
 def update_release_info(agent, edit_release_page, news)
