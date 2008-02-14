@@ -8,12 +8,13 @@ require 'net/ftp'
 
 if ARGV.size < 5
   puts "Usage: #{$0} " +
-         "SF_USER_NAME PROJECT_NAME RELEASE_NAME FILE_NAME README NEWS"
-  puts " e.g.: #{$0} ktou Cutter 0.3.0 cutter-0.3.0.tar.gz README NEWS"
+         "SF_USER_NAME PROJECT_NAME PACKAGE_NAME RELEASE_NAME FILE_NAME README NEWS"
+  puts " e.g.: #{$0} ktou cutter Cutter 0.3.0 cutter-0.3.0.tar.gz README NEWS"
   exit(1)
 end
 
-sf_user_name, project_name, release_name, file_name, readme, news, = ARGV
+sf_user_name, project_name, package_name, release_name, file_name, \
+  readme, news, = ARGV
 
 def read_password(prompt, input=$stdin, output=$stdout)
   output.print(prompt)
@@ -130,17 +131,19 @@ def go_submit_news_page(agent, news_page)
   agent.click(news_page.links.text(/\ASubmit\z/))
 end
 
-def submit_news(agent, submit_news_page, project_name, release_name,
-                readme, news)
+def submit_news(agent, submit_news_page, project_name, package_name,
+                release_name, readme, news)
   submit_news_form = submit_news_page.forms.action(/\bnews\b/)[0]
-  submit_news_form.summary = "#{project_name} #{release_name} Released"
+  summary = "#{project_name}: #{package_name} #{release_name} Released"
+  submit_news_form.summary = summary
   details = [project_summary(readme),
              latest_release_changes(news)].join("\n\n")
   submit_news_form.details = details.gsub(/\n/, "\r\n")
   agent.submit(submit_news_form, submit_news_form.buttons.first)
 end
 
-def main(sf_user_name, project_name, release_name, file_name, readme, news)
+def main(sf_user_name, project_name, package_name, release_name, file_name,
+         readme, news)
   agent = WWW::Mechanize.new
   my_page = login(agent, sf_user_name) do
     read_password("SF.net password for [#{sf_user_name}]: ")
@@ -158,7 +161,9 @@ def main(sf_user_name, project_name, release_name, file_name, readme, news)
 
   news_page = go_news_page(agent, project_page)
   submit_news_page = go_submit_news_page(agent, news_page)
-  submit_news(agent, submit_news_page, project_name, release_name, readme, news)
+  submit_news(agent, submit_news_page, project_name, package_name,
+              release_name, readme, news)
 end
 
-main(sf_user_name, project_name, release_name, file_name, readme, news)
+main(sf_user_name, project_name, package_name, release_name, file_name,
+     readme, news)
