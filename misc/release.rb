@@ -74,9 +74,9 @@ def go_edit_release_page(agent, file_releases_page, release_name)
     add_release(agent, file_releases_page, release_name)
   else
     edit_release_link = (edit_current_release_row / "a")[0]
-    edit_release_link = WWW::Mechanize::Link.new(edit_release_link,
-                                                 file_releases_page.mech,
-                                                 file_releases_page)
+    edit_release_link = WWW::Mechanize::Page::Link.new(edit_release_link,
+                                                       file_releases_page.mech,
+                                                       file_releases_page)
     agent.click(edit_release_link)
   end
 end
