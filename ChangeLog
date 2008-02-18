@@ -1,3 +1,9 @@
+2008-02-18  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-test.[ch]: added cut_test_set_metadata.
+
+	* test/test-cut-metadata.c, test/Makefile.am: added a test for metadata.
+
 2008-02-14  Kouhei Sutou  <kou@cozmixng.org>
 
 	* configure.ac, Makefile.am: added PACKAGE_TITLE.

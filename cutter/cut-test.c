@@ -41,6 +41,7 @@ struct _CutTestPrivate
     gchar *description;
     CutTestFunction test_function;
     GTimer *timer;
+    GHashTable *metadata;
 };
 
 enum
@@ -208,6 +209,8 @@ cut_test_init (CutTest *test)
 
     priv->test_function = NULL;
     priv->timer = NULL;
+    priv->metadata = g_hash_table_new_full(g_str_hash, g_str_equal,
+                                           g_free, g_free);
 }
 
 static void
@@ -230,6 +233,11 @@ dispose (GObject *object)
     if (priv->timer) {
         g_timer_destroy(priv->timer);
         priv->timer = NULL;
+    }
+
+    if (priv->metadata) {
+        g_hash_table_unref(priv->metadata);
+        priv->metadata = NULL;
     }
 
     G_OBJECT_CLASS(cut_test_parent_class)->dispose(object);
@@ -368,6 +376,20 @@ gdouble
 cut_test_get_elapsed (CutTest *test)
 {
     return CUT_TEST_GET_CLASS(test)->get_elapsed(test);
+}
+
+const gchar *
+cut_test_get_metadata (CutTest *test, const gchar *name)
+{
+    return g_hash_table_lookup(CUT_TEST_GET_PRIVATE(test)->metadata, name);
+}
+
+void
+cut_test_set_metadata (CutTest *test, const gchar *name, const gchar *value)
+{
+    g_hash_table_replace(CUT_TEST_GET_PRIVATE(test)->metadata,
+                         g_strdup(name),
+                         g_strdup(value));
 }
 
 /*

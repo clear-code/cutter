@@ -93,6 +93,12 @@ const gchar *cut_test_get_description     (CutTest *test);
 
 gdouble      cut_test_get_elapsed         (CutTest *test);
 
+const gchar *cut_test_get_metadata        (CutTest     *test,
+                                           const gchar *name);
+void         cut_test_set_metadata        (CutTest     *test,
+                                           const gchar *name,
+                                           const gchar *value);
+
 G_END_DECLS
 
 #endif /* __CUT_TEST_H__ */
