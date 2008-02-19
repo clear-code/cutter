@@ -229,10 +229,17 @@ get_property (GObject    *object,
 static gboolean
 guess_color_usability (void)
 {
-    const gchar *term;
+    const gchar *term, *emacs;
+
     term = g_getenv("TERM");
-    if (!term) return FALSE;
-    return g_str_has_suffix(term, "term") || g_str_equal(term, "screen");
+    if (term && (g_str_has_suffix(term, "term") || g_str_equal(term, "screen")))
+        return TRUE;
+
+    emacs = g_getenv("EMACS");
+    if (emacs && (g_str_equal(emacs, "t")))
+        return TRUE;
+
+    return FALSE;
 }
 
 static gboolean
