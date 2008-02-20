@@ -1,5 +1,7 @@
 2008-02-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-loader.c: cleanup.
+
 	* cutter/module/ui/cut-ui-console.c: changed colors:
 	- error: magenta -> yellow.
 	- pending: yellow -> magenta.

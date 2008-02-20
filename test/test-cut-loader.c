@@ -6,6 +6,8 @@
 void test_load_function (void);
 
 static CutLoader *test_loader;
+static CutTestCase *test_case;
+static gchar **test_names;
 
 void
 setup (void)
@@ -19,19 +21,27 @@ setup (void)
                                  NULL);
     test_loader = cut_loader_new(test_path);
     g_free(test_path);
+
+    test_case = NULL;
+    test_names = NULL;
 }
 
 void
 teardown (void)
 {
-    g_object_unref(test_loader);
+    if (test_loader)
+        g_object_unref(test_loader);
+    if (test_case)
+        g_object_unref(test_case);
+    g_strfreev(test_names);
 }
 
 static const gchar *expected_functions[] = {
-"test_abcdefghijklmnopqratuvwzyz_ABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789",
-"test_dummy_function1",
-"test_dummy_function2",
-"test_dummy_function3"
+    "test_abcdefghijklmnopqratuvwzyz_ABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789",
+    "test_dummy_function1",
+    "test_dummy_function2",
+    "test_dummy_function3",
+    NULL
 };
 
 static gint
@@ -48,21 +58,22 @@ void
 test_load_function (void)
 {
     CutTestContainer *container;
-    CutTestCase *test_case;
     GList *tests, *list;
-    const gchar *test_names[] = {"/.*/", NULL};
+    const gchar *target_test_names[] = {"/.*/", NULL};
     gint i;
 
     test_case = cut_loader_load_test_case(test_loader);
     cut_assert(test_case);
     cut_assert_equal_int(4, cut_test_case_get_n_tests(test_case, NULL));
-    cut_assert_equal_int(4, cut_test_case_get_n_tests(test_case, test_names));
+    cut_assert_equal_int(4, cut_test_case_get_n_tests(test_case,
+                                                      target_test_names));
 
     container = CUT_TEST_CONTAINER(test_case);
     tests = (GList *)cut_test_container_get_children(container);
     cut_assert(tests);
 
     tests = g_list_sort(tests, compare_function_name);
+    test_names = g_new0(gchar *, g_list_length(tests) + 1);
     for (list = tests, i = 0; list; list = g_list_next(list), i++) {
         CutTest *test;
 
@@ -70,10 +81,9 @@ test_load_function (void)
         cut_assert(CUT_IS_TEST(list->data));
 
         test = CUT_TEST(list->data);
-        cut_assert_equal_string(expected_functions[i], cut_test_get_name(test));
+        test_names[i] = g_strdup(cut_test_get_name(test));
     }
-
-    g_object_unref(test_case);
+    cut_assert_equal_string_array(expected_functions, test_names);
 }
 
 /*
