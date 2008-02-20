@@ -51,7 +51,7 @@
 #define GREEN_BACK_COLOR "\033[01;42m"
 #define YELLOW_COLOR "\033[01;33m"
 #define BLUE_COLOR "\033[01;34m"
-#define PURPLE_COLOR "\033[01;35m"
+#define MAGENTA_COLOR "\033[01;35m"
 #define CYAN_COLOR "\033[01;36m"
 #define WHITE_COLOR "\033[01;37m"
 #define NORMAL_COLOR "\033[00m"
@@ -280,10 +280,10 @@ status_to_color(CutTestResultStatus status)
         color = RED_COLOR;
         break;
       case CUT_TEST_RESULT_ERROR:
-        color = PURPLE_COLOR;
+        color = YELLOW_COLOR;
         break;
       case CUT_TEST_RESULT_PENDING:
-        color = YELLOW_COLOR;
+        color = MAGENTA_COLOR;
         break;
       case CUT_TEST_RESULT_NOTIFICATION:
         color = CYAN_COLOR;
