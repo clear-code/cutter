@@ -432,6 +432,6 @@ test_equal_string_with_free (void)
 }
 
 /*
-vi:ts=4:nowrap:ai:expandtab:sw=4
+vi:nowrap:ai:expandtab:sw=4
 */
 

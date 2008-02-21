@@ -1,3 +1,7 @@
+2008-02-21  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/, test/: don't set tab width because we don't use tab.
+
 2008-02-20  Kouhei Sutou  <kou@cozmixng.org>
 
 	* test/test-cut-loader.c: cleanup.

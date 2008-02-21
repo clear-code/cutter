@@ -284,6 +284,6 @@ test_run_test_with_filter_with_null (void)
 }
 
 /*
-vi:ts=4:nowrap:ai:expandtab:sw=4
+vi:nowrap:ai:expandtab:sw=4
 */
 

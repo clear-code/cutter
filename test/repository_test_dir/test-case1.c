@@ -20,5 +20,5 @@ test_dummy_function3 (void)
 }
 
 /*
-vi:ts=4:nowrap:ai:expandtab:sw=4
+vi:nowrap:ai:expandtab:sw=4
 */

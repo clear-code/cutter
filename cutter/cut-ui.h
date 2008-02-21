@@ -1,4 +1,4 @@
-/* -*- Mode: C; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+/* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
  *  Copyright (C) 2007  Kouhei Sutou <kou@cozmixng.org>
  *
@@ -77,5 +77,5 @@ G_END_DECLS
 #endif /* __CUT_UI_H__ */
 
 /*
-vi:ts=4:nowrap:ai:expandtab:sw=4
+vi:nowrap:ai:expandtab:sw=4
 */

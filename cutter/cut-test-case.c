@@ -1,4 +1,4 @@
-/* -*- Mode: C; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+/* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
  *  Copyright (C) 2007  Kouhei Sutou <kou@cozmixng.org>
  *
@@ -132,7 +132,7 @@ cut_test_case_class_init (CutTestCaseClass *klass)
                                     spec);
 
 
-	cut_test_case_signals[READY_SIGNAL]
+    cut_test_case_signals[READY_SIGNAL]
         = g_signal_new("ready",
                        G_TYPE_FROM_CLASS(klass),
                        G_SIGNAL_RUN_LAST,
@@ -141,7 +141,7 @@ cut_test_case_class_init (CutTestCaseClass *klass)
                        g_cclosure_marshal_VOID__UINT,
                        G_TYPE_NONE, 1, G_TYPE_UINT);
 
-	cut_test_case_signals[START_TEST_SIGNAL]
+    cut_test_case_signals[START_TEST_SIGNAL]
         = g_signal_new("start-test",
                 G_TYPE_FROM_CLASS(klass),
                 G_SIGNAL_RUN_LAST,
@@ -150,7 +150,7 @@ cut_test_case_class_init (CutTestCaseClass *klass)
                 _cut_marshal_VOID__OBJECT_OBJECT,
                 G_TYPE_NONE, 2, CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT);
 
-	cut_test_case_signals[COMPLETE_TEST_SIGNAL]
+    cut_test_case_signals[COMPLETE_TEST_SIGNAL]
         = g_signal_new("complete-test",
                 G_TYPE_FROM_CLASS(klass),
                 G_SIGNAL_RUN_LAST,
@@ -427,5 +427,5 @@ cut_test_case_run (CutTestCase *test_case, CutRunner *runner)
 }
 
 /*
-vi:ts=4:nowrap:ai:expandtab:sw=4
+vi:nowrap:ai:expandtab:sw=4
 */
