@@ -1,3 +1,7 @@
+2008-02-25  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* configure.ac: Remove sample/gio.
+
 2008-02-21  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/, test/: don't set tab width because we don't use tab.
