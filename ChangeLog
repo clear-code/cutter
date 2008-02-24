@@ -1,6 +1,7 @@
 2008-02-25  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* configure.ac: Remove sample/gio.
+	* sample/glib/properties.c: Removed.
 
 2008-02-21  Kouhei Sutou  <kou@cozmixng.org>
 
