@@ -55,14 +55,14 @@ enum
 enum
 {
     START_SIGNAL,
-    PASS_ASSERTION_SIGNAL,
-    SUCCESS_SIGNAL,
-    FAILURE_SIGNAL,
-    ERROR_SIGNAL,
-    PENDING_SIGNAL,
-    NOTIFICATION_SIGNAL,
-    COMPLETE_SIGNAL,
-    CRASHED_SIGNAL,
+    PASS_ASSERTION,
+    SUCCESS,
+    FAILURE,
+    ERROR,
+    PENDING,
+    NOTIFICATION,
+    COMPLETE,
+    CRASHED,
     LAST_SIGNAL
 };
 
@@ -118,7 +118,7 @@ cut_test_class_init (CutTestClass *klass)
                                 G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class, PROP_TEST_FUNCTION, spec);
 
-	cut_test_signals[START_SIGNAL]
+	cut_test_signals[START]
         = g_signal_new ("start",
                 G_TYPE_FROM_CLASS (klass),
                 G_SIGNAL_RUN_LAST,
@@ -127,7 +127,7 @@ cut_test_class_init (CutTestClass *klass)
                 g_cclosure_marshal_VOID__VOID,
                 G_TYPE_NONE, 0);
 
-	cut_test_signals[PASS_ASSERTION_SIGNAL]
+	cut_test_signals[PASS_ASSERTION]
         = g_signal_new ("pass-assertion",
                 G_TYPE_FROM_CLASS (klass),
                 G_SIGNAL_RUN_LAST,
@@ -136,7 +136,7 @@ cut_test_class_init (CutTestClass *klass)
                 g_cclosure_marshal_VOID__OBJECT,
                 G_TYPE_NONE, 1, CUT_TYPE_TEST_CONTEXT);
 
-	cut_test_signals[SUCCESS_SIGNAL]
+	cut_test_signals[SUCCESS]
         = g_signal_new ("success",
                 G_TYPE_FROM_CLASS (klass),
                 G_SIGNAL_RUN_LAST,
@@ -145,7 +145,7 @@ cut_test_class_init (CutTestClass *klass)
                 g_cclosure_marshal_VOID__VOID,
                 G_TYPE_NONE, 0);
 
-	cut_test_signals[FAILURE_SIGNAL]
+	cut_test_signals[FAILURE]
         = g_signal_new ("failure",
                 G_TYPE_FROM_CLASS (klass),
                 G_SIGNAL_RUN_LAST,
@@ -154,7 +154,7 @@ cut_test_class_init (CutTestClass *klass)
                 _cut_marshal_VOID__OBJECT_OBJECT,
                 G_TYPE_NONE, 2, CUT_TYPE_TEST_CONTEXT, CUT_TYPE_TEST_RESULT);
 
-	cut_test_signals[ERROR_SIGNAL]
+	cut_test_signals[ERROR]
         = g_signal_new ("error",
                 G_TYPE_FROM_CLASS (klass),
                 G_SIGNAL_RUN_LAST,
@@ -163,7 +163,7 @@ cut_test_class_init (CutTestClass *klass)
                 _cut_marshal_VOID__OBJECT_OBJECT,
                 G_TYPE_NONE, 2, CUT_TYPE_TEST_CONTEXT, CUT_TYPE_TEST_RESULT);
 
-	cut_test_signals[PENDING_SIGNAL]
+	cut_test_signals[PENDING]
         = g_signal_new ("pending",
                 G_TYPE_FROM_CLASS (klass),
                 G_SIGNAL_RUN_LAST,
@@ -172,7 +172,7 @@ cut_test_class_init (CutTestClass *klass)
                 _cut_marshal_VOID__OBJECT_OBJECT,
                 G_TYPE_NONE, 2, CUT_TYPE_TEST_CONTEXT, CUT_TYPE_TEST_RESULT);
 
-	cut_test_signals[NOTIFICATION_SIGNAL]
+	cut_test_signals[NOTIFICATION]
         = g_signal_new ("notification",
                 G_TYPE_FROM_CLASS (klass),
                 G_SIGNAL_RUN_LAST,
@@ -181,7 +181,7 @@ cut_test_class_init (CutTestClass *klass)
                 _cut_marshal_VOID__OBJECT_OBJECT,
                 G_TYPE_NONE, 2, CUT_TYPE_TEST_CONTEXT, CUT_TYPE_TEST_RESULT);
 
-	cut_test_signals[COMPLETE_SIGNAL]
+	cut_test_signals[COMPLETE]
         = g_signal_new ("complete",
                 G_TYPE_FROM_CLASS (klass),
                 G_SIGNAL_RUN_LAST,
@@ -190,7 +190,7 @@ cut_test_class_init (CutTestClass *klass)
                 g_cclosure_marshal_VOID__VOID,
                 G_TYPE_NONE, 0);
 
-	cut_test_signals[CRASHED_SIGNAL]
+	cut_test_signals[CRASHED]
         = g_signal_new ("crashed",
                 G_TYPE_FROM_CLASS (klass),
                 G_SIGNAL_RUN_LAST,
