@@ -414,6 +414,12 @@ cut_test_result_get_line (CutTestResult *result)
     return CUT_TEST_RESULT_GET_PRIVATE(result)->line;
 }
 
+gchar *
+cut_test_result_to_xml (CutTestResult *result)
+{
+    return strdup("_Not implemented yet");
+}
+
 /*
-vi:nowrap:ai:expandtab:sw=4
+vi:ts=4:nowrap:ai:expandtab:sw=4
 */

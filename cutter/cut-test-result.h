@@ -70,6 +70,7 @@ const gchar         *cut_test_result_get_system_message(CutTestResult *result);
 const gchar         *cut_test_result_get_function_name (CutTestResult *result);
 const gchar         *cut_test_result_get_filename      (CutTestResult *result);
 guint                cut_test_result_get_line          (CutTestResult *result);
+gchar               *cut_test_result_to_xml            (CutTestResult *result);
 
 G_END_DECLS
 

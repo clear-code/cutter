@@ -23,7 +23,8 @@ noinst_LTLIBRARIES = 				\
 		test_cut_test_suite.la		\
 		test_cut_loader.la		\
 		test_cut_repository.la		\
-		test_cut_value_equal.la
+		test_cut_value_equal.la		\
+		test_cut_log.la
 
 LDFLAGS =			\
 	-module			\
@@ -48,6 +49,7 @@ test_cut_loader_la_LIBADD       = cuttest_utils.la
 test_cut_repository_la_SOURCES  = test-cut-repository.c
 test_cut_repository_la_LIBADD   = cuttest_utils.la
 test_cut_value_equal_la_SOURCES = test-cut-value-equal.c
+test_cut_log_la_SOURCES         = test-cut-log.c
 
 echo-cutter:
 	@echo $(CUTTER)
