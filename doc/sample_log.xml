@@ -10,9 +10,11 @@
       <name>category</name>
       <value>initialization</value>
     </metadata>
-    <result>success</result>
-    <detail></detail>
-    <elapsed>0.0001</elapsed>
+    <result>
+      <status>success</status>
+      <detail></detail>
+      <elapsed>0.0001</elapsed>
+    </result>
   </test_log>
   <test_log>
     <test_case>
@@ -25,19 +27,21 @@
       <name>bug</name>
       <value>1234</value>
     </metadata>
-    <result>failure</result>
-    <detail>
+    <result>
+      <status>failure</status>
+      <detail>
 &lt;"1234" == cut_test_get_metadata(CUT_TEST(tests-&gt;data), "bug")&gt;
 expected: &lt;1234&gt;
  but was: &lt;(null)&gt;
-    </detail>
-    <backtrace>
-      <entry>
-        <file>/home/zoe/svn/cutter/test/test_get_metadata.c</file>
-        <line>12</line>
-        <info>test_get_bug_id()</info>
-      </entry>
-    </backtrace>
-    <elapsed>0.002</elapsed>
+      </detail>
+      <backtrace>
+        <entry>
+          <file>/home/zoe/svn/cutter/test/test_get_metadata.c</file>
+          <line>12</line>
+          <info>test_get_bug_id()</info>
+        </entry>
+      </backtrace>
+      <elapsed>0.002</elapsed>
+    </result>
   </test_log>
 </test_logs>
