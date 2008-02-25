@@ -36,9 +36,35 @@ expected: &lt;1234&gt;
       </detail>
       <backtrace>
         <entry>
-          <file>/home/zoe/svn/cutter/test/test_get_metadata.c</file>
+          <file>./test_get_metadata.c</file>
           <line>12</line>
           <info>test_get_bug_id()</info>
+        </entry>
+      </backtrace>
+      <elapsed>0.002</elapsed>
+    </result>
+  </test_log>
+  <test_log>
+    <test_case>
+      <name>MyTestCase</name>
+      <description>Test case for my library</descrption>
+    </test_case>
+    <name>test_my_pending_test</name>
+    <description>My Penging Test</description>
+    <metadata>
+      <name>bug</name>
+      <value>1235</value>
+    </metadata>
+    <result>
+      <status>pending</status>
+      <detail>
+Cannot set locale to de_DE, skipping
+      </detail>
+      <backtrace>
+        <entry>
+          <file>./option.c</file>
+          <line>396</line>
+          <info>test_arg_double_de_DE_locale()</info>
         </entry>
       </backtrace>
       <elapsed>0.002</elapsed>
