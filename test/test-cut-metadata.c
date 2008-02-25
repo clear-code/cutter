@@ -5,6 +5,10 @@
 #include "cut-runner.h"
 #include "cuttest-assertions.h"
 
+/* BUG entries */
+const char *bug_set_metadata (void);
+
+/* tests */
 void test_set_metadata(void);
 
 static CutTest *test;
@@ -28,6 +32,7 @@ teardown (void)
         g_object_unref(test);
 }
 
+const char *bug_set_metadata (void) { return "1234567890"; }
 void
 test_set_metadata (void)
 {
@@ -42,5 +47,5 @@ test_set_metadata (void)
 }
 
 /*
-vi:nowrap:ai:expandtab:sw=4
+vi:ts=4:nowrap:ai:expandtab:sw=4
 */

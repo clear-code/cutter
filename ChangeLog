@@ -2,6 +2,7 @@
 
 	* configure.ac: Remove sample/gio.
 	* sample/glib/properties.c: Removed.
+	* test/test-cut-metadata.c: Added BUG id sample.
 
 2008-02-21  Kouhei Sutou  <kou@cozmixng.org>
 
