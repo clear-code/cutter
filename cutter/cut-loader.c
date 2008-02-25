@@ -178,9 +178,9 @@ is_test_function_name (const gchar *name)
 
 #ifdef HAVE_LIBBFD
 static GList *
-collect_test_functions (CutLoaderPrivate *priv)
+collect_symbols (CutLoaderPrivate *priv)
 {
-    GList *test_names = NULL;
+    GList *symbols = NULL;
     long storage_needed;
     asymbol **symbol_table;
     long number_of_symbols;
@@ -209,16 +209,17 @@ collect_test_functions (CutLoaderPrivate *priv)
         symbol_info info;
 
         bfd_symbol_info(symbol_table[i], &info);
-        if (info.type == 'T' && is_test_function_name(info.name)) {
-            test_names = g_list_prepend(test_names, g_strdup(info.name));
+        if (info.type == 'T') {
+            symbols = g_list_prepend(symbols, g_strdup(info.name));
         }
     }
 
     g_free(symbol_table);
     bfd_close(abfd);
 
-    return test_names;
+    return symbols;
 }
+
 #else
 
 static inline gboolean
@@ -268,6 +269,7 @@ collect_symbols (CutLoaderPrivate *priv)
 
     return symbols;
 }
+#endif
 
 static GList *
 collect_test_functions (CutLoaderPrivate *priv)
@@ -290,7 +292,6 @@ is_valid_metadata_name (const gchar *metadata_name, const gchar *test_name)
 }
 
 typedef const gchar *(*CutMetadataFunction)     (void);
-/* typedef CutTestMetadata *(*CutMetadataFunction) (void);*/
 
 static GList *
 collect_metadata (CutLoaderPrivate *priv, const gchar *test_name)
@@ -316,7 +317,6 @@ collect_metadata (CutLoaderPrivate *priv, const gchar *test_name)
     }
     return metadata_list;
 }
-#endif
 
 static void
 cb_complete (CutTestCase *test_case, gpointer data)
