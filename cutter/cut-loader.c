@@ -34,6 +34,7 @@
 #endif
 
 #include "cut-loader.h"
+#include "cut-experimental.h"
 
 #define CUT_LOADER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_LOADER, CutLoaderPrivate))
 
@@ -41,6 +42,7 @@ typedef struct _CutLoaderPrivate	CutLoaderPrivate;
 struct _CutLoaderPrivate
 {
     gchar *so_filename;
+    GList *symbols;
     GModule *module;
 };
 
@@ -93,6 +95,16 @@ cut_loader_init (CutLoader *loader)
 }
 
 static void
+free_symbols (CutLoaderPrivate *priv)
+{
+    if (priv->symbols) {
+        g_list_foreach(priv->symbols, (GFunc)g_free, NULL);
+        g_list_free(priv->symbols);
+        priv->symbols = NULL;
+    }
+}
+
+static void
 dispose (GObject *object)
 {
     CutLoaderPrivate *priv = CUT_LOADER_GET_PRIVATE(object);
@@ -106,6 +118,8 @@ dispose (GObject *object)
         g_module_close(priv->module);
         priv->module = NULL;
     }
+
+    free_symbols(priv);
 
     G_OBJECT_CLASS(cut_loader_parent_class)->dispose(object);
 }
@@ -206,42 +220,39 @@ collect_test_functions (CutLoaderPrivate *priv)
     return test_names;
 }
 #else
+
+typedef gboolean (*CutCheckFunctionNameString) (GString *name);
+
 static inline gboolean
-is_test_function_name_consisted_of (char c)
+is_valid_char_for_cutter_symbol (char c)
 {
     return g_ascii_isalnum(c) || '_' == c;
 }
 
-static inline gboolean
-is_test_function_name_string (GString *name)
-{
-    return name->len > 4 && is_test_function_name(name->str);
-}
-
 static GList *
-collect_test_functions (CutLoaderPrivate *priv)
+collect_symbols (CutLoaderPrivate *priv)
 {
     FILE *input;
     GString *name;
     char buffer[4096];
     size_t size;
-    GList *test_names;
-    GHashTable *test_name_table;
+    GHashTable *symbol_name_table;
+    GList *symbols;
 
     input = g_fopen(priv->so_filename, "rb");
     if (!input)
         return NULL;
 
-    test_name_table = g_hash_table_new(g_str_hash, g_str_equal);
+    symbol_name_table = g_hash_table_new(g_str_hash, g_str_equal);
     name = g_string_new("");
     while ((size = fread(buffer, sizeof(*buffer), sizeof(buffer), input)) > 0) {
         size_t i;
         for (i = 0; i < size; i++) {
-            if (is_test_function_name_consisted_of(buffer[i])) {
+            if (is_valid_char_for_cutter_symbol(buffer[i])) {
                 g_string_append_c(name, buffer[i]);
-            } else if (name->len) {
-                if (is_test_function_name_string(name)) {
-                    g_hash_table_insert(test_name_table,
+            } else if (name->len > 0) {
+                if (name->len > 1) {
+                    g_hash_table_insert(symbol_name_table,
                                         g_strdup(name->str), NULL);
                 }
                 g_string_truncate(name, 0);
@@ -249,17 +260,63 @@ collect_test_functions (CutLoaderPrivate *priv)
         }
     }
 
-    if (is_test_function_name_string(name)) {
-        g_hash_table_insert(test_name_table, g_strdup(name->str), NULL);
-    }
+    g_hash_table_insert(symbol_name_table, g_strdup(name->str), NULL);
     g_string_free(name, TRUE);
 
-    test_names = g_hash_table_get_keys(test_name_table);
-    g_hash_table_unref(test_name_table);
+    symbols = g_hash_table_get_keys(symbol_name_table);
+    g_hash_table_unref(symbol_name_table);
 
     fclose(input);
 
+    return symbols;
+}
+
+static GList *
+collect_test_functions (CutLoaderPrivate *priv)
+{
+    GList *node, *test_names = NULL;
+
+    for (node = priv->symbols; node; node = g_list_next(node)) {
+        gchar *name = node->data;
+        if (is_test_function_name(name)) {
+            test_names = g_list_prepend(test_names, name);
+        }
+    }
     return test_names;
+}
+
+static gboolean
+is_valid_metadata_name (const gchar *metadata_name, const gchar *test_name)
+{
+    return g_str_has_suffix(metadata_name, test_name);
+}
+
+typedef const gchar *(*CutMetadataFunction)     (void);
+/* typedef CutTestMetadata *(*CutMetadataFunction) (void);*/
+
+static GList *
+collect_metadata (CutLoaderPrivate *priv, const gchar *test_name)
+{
+    GList *metadata_list = NULL, *node;
+    if (!test_name)
+        return NULL;
+
+    for (node = priv->symbols; node; node = g_list_next(node)) {
+        gchar *name = node->data;
+        if (!is_test_function_name(name) &&
+            is_valid_metadata_name(name, test_name)) {
+            CutMetadataFunction function = NULL;
+            g_module_symbol(priv->module, name, (gpointer)&function);
+            if (function) {
+                CutTestMetadata *metadata = g_new0(CutTestMetadata, 1);
+                const gchar *value = function();
+                metadata->name = g_strdup(name);
+                metadata->value = g_strdup(value);
+                metadata_list = g_list_prepend(metadata_list, metadata);
+            }
+        }
+    }
+    return metadata_list;
 }
 #endif
 
@@ -319,6 +376,19 @@ create_test_case (CutLoader *loader)
     return test_case;
 }
 
+static void
+set_metadata (CutTest *test, GList *metadata_list)
+{
+    GList *node;
+    for (node = metadata_list; node; node = g_list_next(node)) {
+        CutTestMetadata *metadata = (CutTestMetadata *)node->data;
+        cut_test_set_metadata(test, metadata->name, metadata->value);
+        g_free((gchar *)metadata->name);
+        g_free((gchar *)metadata->value);
+    }
+    g_list_free(metadata_list);
+}
+
 CutTestCase *
 cut_loader_load_test_case (CutLoader *loader)
 {
@@ -335,6 +405,10 @@ cut_loader_load_test_case (CutLoader *loader)
     if (!priv->module)
         return NULL;
 
+    priv->symbols = collect_symbols(priv);
+    if (!priv->symbols)
+        return NULL;
+
     test_names = collect_test_functions(priv);
     if (!test_names)
         return NULL;
@@ -348,10 +422,14 @@ cut_loader_load_test_case (CutLoader *loader)
         name = node->data;
         g_module_symbol(priv->module, name, (gpointer)&function);
         if (function) {
+            GList *metadata_list;
             test = cut_test_new(name, NULL, function);
+            metadata_list = collect_metadata(priv, name);
+            if (metadata_list) {
+                set_metadata(test, metadata_list);
+            }
             cut_test_case_add_test(test_case, test);
         }
-        g_free(name);
     }
     g_list_free(test_names);
 
@@ -359,5 +437,5 @@ cut_loader_load_test_case (CutLoader *loader)
 }
 
 /*
-vi:nowrap:ai:expandtab:sw=4
+vi:ts=4:nowrap:ai:expandtab:sw=4
 */

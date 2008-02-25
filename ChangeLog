@@ -9,6 +9,8 @@
 	* test/test-cut-metadata.c,
 	test/metadata_test_dir/dummy-test-functions.c: Added a test for
 	getting metadata.
+	* cutter/cut-loader.c: Extract metadata from .so file. Not worked
+	yet.
 
 2008-02-21  Kouhei Sutou  <kou@cozmixng.org>
 
