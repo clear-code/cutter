@@ -1,4 +1,4 @@
-SUBDIRS = loader_test_dir repository_test_dir
+SUBDIRS = loader_test_dir repository_test_dir metadata_test_dir
 
 INCLUDES = $(CUTTER_CFLAGS)	\
 	-I$(top_builddir)	\
@@ -37,6 +37,7 @@ cuttest_utils_la_SOURCES = 		\
 test_cut_assertions_la_SOURCES  = test-cut-assertions.c cuttest-assertions.h
 test_cut_gassertions_la_SOURCES = test-cut-gassertions.c cuttest-assertions.h
 test_cut_metadata_la_SOURCES    = test-cut-metadata.c
+test_cut_metadata_la_LIBADD     = cuttest_utils.la
 test_cut_test_la_SOURCES        = test-cut-test.c
 test_cut_test_result_la_SOURCES = test-cut-test-result.c
 test_cut_test_case_la_SOURCES   = test-cut-test-case.c

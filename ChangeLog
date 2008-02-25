@@ -3,6 +3,8 @@
 	* configure.ac: Remove sample/gio.
 	* sample/glib/properties.c: Removed.
 	* test/test-cut-metadata.c: Added BUG id sample.
+	* test/metadata_test_dir: Added for metada tests.
+	* test/test-cut-metadata.c: Added a test for getting BUG id.
 
 2008-02-21  Kouhei Sutou  <kou@cozmixng.org>
 
