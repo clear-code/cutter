@@ -31,13 +31,13 @@
 expected: &lt;1234&gt;
  but was: &lt;(null)&gt;
     </detail>
-    <backtraces>
-      <backtrace>
+    <backtrace>
+      <entry>
         <file>/home/zoe/svn/cutter/test/test_get_metadata.c</file>
         <line>12</line>
         <info>test_get_bug_id()</info>
-      </backtrace>
-    </backtraces>
+      </entry>
+    </backtrace>
     <elapsed>0.002</elapsed>
   </test_log>
 </test_logs>
