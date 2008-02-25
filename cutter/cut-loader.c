@@ -221,8 +221,6 @@ collect_test_functions (CutLoaderPrivate *priv)
 }
 #else
 
-typedef gboolean (*CutCheckFunctionNameString) (GString *name);
-
 static inline gboolean
 is_valid_char_for_cutter_symbol (char c)
 {
