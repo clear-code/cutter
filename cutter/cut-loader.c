@@ -286,12 +286,47 @@ collect_test_functions (CutLoaderPrivate *priv)
 }
 
 static gboolean
-is_valid_metadata_name (const gchar *metadata_name, const gchar *test_name)
+is_including_test_name (const gchar *function_name, const gchar *test_name)
 {
-    return g_str_has_suffix(metadata_name, test_name);
+    return (strlen(function_name) > strlen(test_name) - strlen("test_")) &&
+           g_str_has_suffix(function_name, test_name + strlen("test_"));
 }
 
-typedef const gchar *(*CutMetadataFunction)     (void);
+static gboolean
+is_valid_metadata_item_function_name (const gchar *function_name, const gchar *test_name)
+{
+    return !g_str_has_prefix(function_name, "meta_") && 
+           is_including_test_name(function_name, test_name);
+}
+
+static gboolean
+is_valid_metadata_function_name (const gchar *function_name, const gchar *test_name)
+{
+    return g_str_has_prefix(function_name, "meta_") &&
+           is_including_test_name(function_name, test_name);
+}
+
+static gchar *
+get_metadata_name (const gchar *metadata_function_name, const gchar *test_name)
+{
+    gchar *pos;
+
+    pos = g_strrstr(metadata_function_name, test_name + strlen("test"));
+
+    return g_strndup(metadata_function_name, pos - metadata_function_name);
+}
+
+typedef const gchar *(*CutMetadataItemFunction)     (void);
+typedef CutTestMetadata *(*CutMetadataFunction)     (void);
+
+static CutTestMetadata *
+cut_test_metadata_new (const gchar *name, const gchar *value)
+{
+    CutTestMetadata *metadata = g_new0(CutTestMetadata, 1);
+    metadata->name = g_strdup(name);
+    metadata->value = g_strdup(value);
+    return metadata;
+}
 
 static GList *
 collect_metadata (CutLoaderPrivate *priv, const gchar *test_name)
@@ -301,17 +336,33 @@ collect_metadata (CutLoaderPrivate *priv, const gchar *test_name)
         return NULL;
 
     for (node = priv->symbols; node; node = g_list_next(node)) {
-        gchar *name = node->data;
-        if (!is_test_function_name(name) &&
-            is_valid_metadata_name(name, test_name)) {
-            CutMetadataFunction function = NULL;
-            g_module_symbol(priv->module, name, (gpointer)&function);
+        gchar *function_name = node->data;
+        if (is_test_function_name(function_name))
+            continue;
+        if (is_valid_metadata_item_function_name(function_name, test_name)) {
+            CutMetadataItemFunction function = NULL;
+            g_module_symbol(priv->module, function_name, (gpointer)&function);
             if (function) {
-                CutTestMetadata *metadata = g_new0(CutTestMetadata, 1);
+                CutTestMetadata *metadata;
+                gchar *name = get_metadata_name(function_name, test_name);
                 const gchar *value = function();
-                metadata->name = g_strdup(name);
-                metadata->value = g_strdup(value);
+                metadata = cut_test_metadata_new(name, value);
+                g_free(name);
                 metadata_list = g_list_prepend(metadata_list, metadata);
+            }
+        } else if (is_valid_metadata_function_name(function_name, test_name)) {
+            CutMetadataFunction function = NULL;
+            g_module_symbol(priv->module, function_name, (gpointer)&function);
+            if (function) {
+                CutTestMetadata *metadata = function();
+                while (TRUE) {
+                    CutTestMetadata *new_metadata;
+                    if (!metadata->name || !metadata->value)
+                        break;
+                    new_metadata = cut_test_metadata_new(metadata->name, metadata->value);
+                    metadata_list = g_list_prepend(metadata_list, new_metadata);
+                    metadata++;
+                }
             }
         }
     }

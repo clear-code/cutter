@@ -15,6 +15,9 @@
 	getting metadata.
 	* cutter/cut-loader.c: Extract metadata from .so file. Not worked
 	yet.
+	* cutter/cut-loader.c: Set metadata.
+	* test/metadata_test_dir/dummy-test-functions.c: CutTestMetadata data
+	should be NULL terminate.
 
 2008-02-21  Kouhei Sutou  <kou@cozmixng.org>
 

@@ -22,9 +22,9 @@ meta_metadata (void)
 {
     static const CutTestMetadata metadata[] = {
         {"bug", "1234"},
-        {"priority", "5678"}
+        {"priority", "5678"},
+        {NULL, NULL}
     };
-
 
     return metadata;
 }
