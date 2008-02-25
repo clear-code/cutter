@@ -3,6 +3,7 @@
 
 void test_result_success_log (void);
 void test_result_failure_log (void);
+void test_result_penging_log (void);
 
 static CutTestResult *result;
 static gchar *log;
@@ -56,7 +57,7 @@ test_result_failure_log (void)
                        "  </detail>"
                        "  <backtrace>"
                        "    <entry>"
-                       "      <file>/home/zoe/svn/cutter/test/test_get_metadata.c</file>"
+                       "      <file>./test_get_metadata.c</file>"
                        "      <line>12</line>"
                        "      <info>test_get_bug_id()</info>"
                        "    </entry>"
@@ -70,8 +71,38 @@ test_result_failure_log (void)
                                  "<\"1234\" == cut_test_get_metadata(CUT_TEST(tests->data), \"bug\")>;\n expected: <1234>;\n but was: <(null)>;",
                                  "<\"1234\" == cut_test_get_metadata(CUT_TEST(tests->data), \"bug\")>;\n expected: <1234>;\n but was: <(null)>;",
                                  "test_get_bug_id()",
-                                 "./cutter/test/test_get_metadata.c",
+                                 "./test_get_metadata.c",
                                  12);
+    cut_assert(result);
+    cut_assert_equal_string(expected, cut_test_result_to_xml(result));
+}
+
+void
+test_result_penging_log (void)
+{
+    gchar expected[] = "<result>"
+                       "  <status>penging</status>"
+                       "  <detail>"
+                       "Cannot set locale to de_DE, skipping"
+                       "  </detail>"
+                       "  <backtrace>"
+                       "    <entry>"
+                       "      <file>./option.c</file>"
+                       "      <line>396</line>"
+                       "      <info>test_arg_double_de_DE_locale()</info>"
+                       "    </entry>"
+                       "  </backtrace>"
+                       "  <elapsed>0.001</elapsed>"
+                       "</result>";
+    result = cut_test_result_new(CUT_TEST_RESULT_FAILURE,
+                                 "test_my_pending_test",
+                                 "MyTestCase",
+                                 "MyTestSuite",
+                                 "Cannot set locale to de_DE, skipping",
+                                 "Cannot set locale to de_DE, skipping",
+                                 "test_arg_double_de_DE_locale()",
+                                 "./option.c",
+                                 396);
     cut_assert(result);
     cut_assert_equal_string(expected, cut_test_result_to_xml(result));
 }
