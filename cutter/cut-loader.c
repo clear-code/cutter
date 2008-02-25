@@ -36,6 +36,8 @@
 #include "cut-loader.h"
 #include "cut-experimental.h"
 
+#define TEST_NAME_PREFIX "test_"
+#define METADATA_PREFIX "meta_"
 #define CUT_LOADER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_LOADER, CutLoaderPrivate))
 
 typedef struct _CutLoaderPrivate	CutLoaderPrivate;
@@ -173,7 +175,7 @@ cut_loader_new (const gchar *soname)
 static inline gboolean
 is_test_function_name (const gchar *name)
 {
-    return name && g_str_has_prefix(name, "test_");
+    return name && g_str_has_prefix(name, TEST_NAME_PREFIX);
 }
 
 #ifdef HAVE_LIBBFD
@@ -288,21 +290,21 @@ collect_test_functions (CutLoaderPrivate *priv)
 static gboolean
 is_including_test_name (const gchar *function_name, const gchar *test_name)
 {
-    return (strlen(function_name) > strlen(test_name) - strlen("test_")) &&
-           g_str_has_suffix(function_name, test_name + strlen("test_"));
+    return (strlen(function_name) > strlen(test_name) - strlen(TEST_NAME_PREFIX)) &&
+           g_str_has_suffix(function_name, test_name + strlen(TEST_NAME_PREFIX));
 }
 
 static gboolean
 is_valid_metadata_item_function_name (const gchar *function_name, const gchar *test_name)
 {
-    return !g_str_has_prefix(function_name, "meta_") && 
+    return !g_str_has_prefix(function_name, METADATA_PREFIX) && 
            is_including_test_name(function_name, test_name);
 }
 
 static gboolean
 is_valid_metadata_function_name (const gchar *function_name, const gchar *test_name)
 {
-    return g_str_has_prefix(function_name, "meta_") &&
+    return g_str_has_prefix(function_name, METADATA_PREFIX) &&
            is_including_test_name(function_name, test_name);
 }
 
@@ -311,7 +313,7 @@ get_metadata_name (const gchar *metadata_function_name, const gchar *test_name)
 {
     gchar *pos;
 
-    pos = g_strrstr(metadata_function_name, test_name + strlen("test"));
+    pos = g_strrstr(metadata_function_name, test_name + strlen(TEST_NAME_PREFIX)) - 1;
 
     return g_strndup(metadata_function_name, pos - metadata_function_name);
 }
