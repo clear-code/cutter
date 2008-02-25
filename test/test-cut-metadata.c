@@ -13,7 +13,6 @@ void test_get_bug_id(void);
 static CutTest *test;
 static CutLoader *test_loader;
 static CutTestCase *test_case;
-static gchar **test_names;
 
 static void
 fail_test (void)
@@ -35,7 +34,6 @@ setup (void)
     g_free(test_path);
 
     test_case = NULL;
-    test_names = NULL;
     test = NULL;
 }
 
@@ -48,7 +46,6 @@ teardown (void)
         g_object_unref(test_loader);
     if (test_case)
         g_object_unref(test_case);
-    g_strfreev(test_names);
 }
 
 void
