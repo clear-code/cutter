@@ -7,8 +7,9 @@
 #include "cuttest-utils.h"
 #include "cuttest-assertions.h"
 
-void test_set_metadata(void);
-void test_get_bug_id(void);
+void test_set_metadata (void);
+void test_get_bug_id (void);
+void test_get_metadata (void);
 
 static CutTest *test;
 static CutLoader *test_loader;
@@ -77,6 +78,25 @@ test_get_bug_id (void)
 
     cut_assert(1, g_list_length(tests));
     cut_assert_equal_string("1234567890", cut_test_get_metadata(CUT_TEST(tests->data), "bug"));
+}
+
+void
+test_get_metadata (void)
+{
+    CutTestContainer *container;
+    GList *tests;
+    const gchar *filter[] = {"/test_metadata/", NULL};
+
+    test_case = cut_loader_load_test_case(test_loader);
+    cut_assert(test_case);
+
+    container = CUT_TEST_CONTAINER(test_case);
+    tests = (GList *)cut_test_container_filter_children(container, filter);
+    cut_assert(tests);
+
+    cut_assert(1, g_list_length(tests));
+    cut_assert_equal_string("1234", cut_test_get_metadata(CUT_TEST(tests->data), "bug"));
+    cut_assert_equal_string("5678", cut_test_get_metadata(CUT_TEST(tests->data), "priority"));
 }
 
 /*

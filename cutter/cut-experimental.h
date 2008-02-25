@@ -39,6 +39,11 @@ extern "C" {
 #define cut_user_data                                               \
     (cut_test_context_get_user_data(get_current_test_context()))
 
+typedef struct _CutTestMetadata {
+    const char *name;
+    const char *value;
+} CutTestMetadata;
+
 #ifdef __cplusplus
 }
 #endif
@@ -46,5 +51,5 @@ extern "C" {
 #endif /* __CUT_EXPERIMENTAL_H__ */
 
 /*
-vi:nowrap:ai:expandtab:sw=4
+vi:ts=4:nowrap:ai:expandtab:sw=4
 */
