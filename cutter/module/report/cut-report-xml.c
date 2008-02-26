@@ -77,19 +77,42 @@ static void get_property   (GObject         *object,
 static void cut_report_xml_set_runner (CutReportXML *report,
                                        CutRunner    *runner);
 
+static gboolean result_to_file           (CutReport        *report,
+                                          const gchar      *filename,
+                                          CutReportFileMode mode);
+static gchar   *get_all_results          (CutReport   *report);
+static gchar   *get_success_results      (CutReport   *report);
+static gchar   *get_error_results        (CutReport   *report);
+static gchar   *get_failure_results      (CutReport   *report);
+static gchar   *get_pending_results      (CutReport   *report);
+static gchar   *get_notification_results (CutReport   *report);
+static gchar   *get_test_result          (CutReport   *report,
+                                          const gchar *test_name);
+
 static void
 class_init (CutReportXMLClass *klass)
 {
     GObjectClass *gobject_class;
     GParamSpec *spec;
+    CutReportClass *report_class;
 
     parent_class = g_type_class_peek_parent(klass);
 
     gobject_class = G_OBJECT_CLASS(klass);
+    report_class = CUT_REPORT_CLASS(klass);
 
     gobject_class->dispose      = dispose;
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
+
+    report_class->result_to_file           = result_to_file;
+    report_class->get_all_results          = get_all_results;
+    report_class->get_success_results      = get_success_results;
+    report_class->get_error_results        = get_error_results;
+    report_class->get_failure_results      = get_failure_results;
+    report_class->get_pending_results      = get_pending_results;
+    report_class->get_notification_results = get_notification_results;
+    report_class->get_test_result          = get_test_result;
 
     spec = g_param_spec_object("cut-runner",
                                "CutRunner object",
@@ -353,6 +376,56 @@ cut_report_xml_set_runner (CutReportXML *report, CutRunner *runner)
         report->runner = g_object_ref(runner);
         connect_to_runner(report, runner);
     }
+}
+
+static gboolean
+result_to_file (CutReport        *report,
+                const gchar      *filename,
+                CutReportFileMode mode)
+{
+    return FALSE;
+}
+
+static gchar *
+get_all_results (CutReport *report)
+{
+    return NULL;
+}
+
+static gchar *
+get_success_results (CutReport *report)
+{
+    return NULL;
+}
+
+static gchar *
+get_error_results (CutReport *report)
+{
+    return NULL;
+}
+
+static gchar *
+get_failure_results (CutReport *report)
+{
+    return NULL;
+}
+
+static gchar *
+get_pending_results (CutReport *report)
+{
+    return NULL;
+}
+
+static gchar *
+get_notification_results (CutReport *report)
+{
+    return NULL;
+}
+
+static gchar *
+get_test_result (CutReport *report, const gchar *test_name)
+{
+    return NULL;
 }
 
 /*
