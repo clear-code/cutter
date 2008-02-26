@@ -1,6 +1,7 @@
 2008-02-27  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/module/report/cut-report-xml.c: Added some utility functions.
+	* cutter/cut-test-result.[c|h]; Added a property of elapsed time.
 
 2008-02-26  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 

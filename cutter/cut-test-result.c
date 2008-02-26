@@ -45,6 +45,7 @@ struct _CutTestResultPrivate
     gchar *function_name;
     gchar *filename;
     guint line;
+    gdouble elapsed;
 };
 
 enum
@@ -59,6 +60,7 @@ enum
     PROP_FUNCTION_NAME,
     PROP_FILENAME,
     PROP_LINE,
+    PROP_ELAPSED,
 };
 
 
@@ -150,6 +152,13 @@ cut_test_result_class_init (CutTestResultClass *klass)
                              G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_LINE, spec);
 
+    spec = g_param_spec_double("elapsed",
+                               "Elapsed time",
+                               "The time of the result",
+                               0, G_MAXDOUBLE, 0,
+                               G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_ELAPSED, spec);
+
     g_type_class_add_private(gobject_class, sizeof(CutTestResultPrivate));
 }
 
@@ -168,6 +177,7 @@ cut_test_result_init (CutTestResult *result)
     priv->function_name = NULL;
     priv->filename = NULL;
     priv->line = 0;
+    priv->elapsed = 0.0;
 }
 
 static void
@@ -268,6 +278,9 @@ set_property (GObject      *object,
       case PROP_LINE:
         priv->line = g_value_get_uint(value);
         break;
+      case PROP_ELAPSED:
+        priv->elapsed = g_value_get_double(value);
+        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
@@ -309,6 +322,9 @@ get_property (GObject    *object,
         break;
       case PROP_LINE:
         g_value_set_uint(value, priv->line);
+        break;
+      case PROP_ELAPSED:
+        g_value_set_double(value, priv->elapsed);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -412,6 +428,12 @@ guint
 cut_test_result_get_line (CutTestResult *result)
 {
     return CUT_TEST_RESULT_GET_PRIVATE(result)->line;
+}
+
+gdouble
+cut_test_result_get_elapsed (CutTestResult *result)
+{
+    return CUT_TEST_RESULT_GET_PRIVATE(result)->elapsed;
 }
 
 gchar *
