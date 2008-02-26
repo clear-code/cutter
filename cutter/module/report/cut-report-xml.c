@@ -418,11 +418,20 @@ result_status_to_name (CutTestResultStatus status)
 }
 
 static void
-append_element_with_value (GString *string, const gchar *element_name, const gchar *value)
+append_indent (GString *string, guint indent)
+{
+    guint i;
+    for (i = 0; i < indent; i++)
+        g_string_append_c(string, ' ');
+
+}
+
+static void
+append_element_with_value (GString *string, guint indent, const gchar *element_name, const gchar *value)
 {
     gchar *escaped;
-
-    escaped = g_markup_printf_escaped("      <%s>%s</%s>\n", 
+    append_indent(string, indent);
+    escaped = g_markup_printf_escaped("<%s>%s</%s>\n", 
                                       element_name,
                                       value,
                                       element_name);
@@ -431,23 +440,56 @@ append_element_with_value (GString *string, const gchar *element_name, const gch
 }
 
 static void
+append_element_valist (GString *string, guint indent, const gchar *element_name, va_list var_args)
+{
+  	const gchar *name;
+  
+  	name = element_name;
+  
+  	while (name) {
+		const gchar *value = va_arg(var_args, gchar*);
+        append_element_with_value(string, indent, name, value);
+		name = va_arg(var_args, gchar*);
+    }
+}
+
+static void
+append_element_with_children (GString *string, guint indent, const gchar *element_name, 
+                              const gchar *first_child_element, ...)
+{
+    gchar *escaped;
+    va_list var_args;
+
+    escaped = g_markup_escape_text(element_name, -1);
+    append_indent(string, indent);
+    g_string_append_printf(string, "<%s>\n", escaped);
+
+    va_start(var_args, first_child_element);
+    append_element_valist(string, indent + 2, first_child_element, var_args);
+    va_end(var_args);
+
+    append_indent(string, indent);
+    g_string_append_printf(string, "</%s>\n", escaped);
+    g_free(escaped);
+}
+
+static void
 /* append_test_case_info_to_string (GString *string, CutTestCase *test_case)*/
 append_test_case_info_to_string (GString *string, const gchar *test_case_name)
 {
-    g_string_append(string, "    <test_case>\n");
-    append_element_with_value(string, "name", test_case_name);
-    g_string_append(string, "    </test_case>\n");
+    append_element_with_children(string, 4, "test_case",
+                                 "name", test_case_name,
+                                 NULL);
 }
 
 static void
 append_test_result_to_string (GString *string, CutTestResult *result)
 {
-    g_string_append(string, "    <result>\n");
-    append_element_with_value(string, "status",
-                              result_status_to_name(cut_test_result_get_status(result)));
-    append_element_with_value(string, "detail", "");
-    append_element_with_value(string, "elapsed", "");
-    g_string_append(string, "    </result>\n");
+    append_element_with_children(string, 4, "result",
+                                 "status", result_status_to_name(cut_test_result_get_status(result)),
+                                 "detaul", "",
+                                 "elapsed", "",
+                                 NULL);
 }
 
 static gchar *
@@ -461,7 +503,7 @@ get_result (CutTestResult *result)
     g_string_append(xml, "  <test_log>\n");
     append_test_case_info_to_string(xml, 
                                     cut_test_result_get_test_case_name(result));
-    append_element_with_value(xml, "name", cut_test_result_get_test_name(result));
+    append_element_with_value(xml, 4, "name", cut_test_result_get_test_name(result));
     /* append_test_description_to_string(xml, cut_test_result_get_test_description(result)); */
     /* append_test_metadata_to_string(xml, cut_test_result_get_test_metadata(result)); */
     append_test_result_to_string(xml, result);

@@ -1,3 +1,7 @@
+2008-02-27  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/module/report/cut-report-xml.c: Added some utility functions.
+
 2008-02-26  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-loader.c: Define TEST_NAME_PREFIX and METADATA_PREFIX.
