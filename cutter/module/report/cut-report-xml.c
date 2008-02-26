@@ -487,7 +487,7 @@ append_test_result_to_string (GString *string, CutTestResult *result)
 {
     append_element_with_children(string, 4, "result",
                                  "status", result_status_to_name(cut_test_result_get_status(result)),
-                                 "detaul", "",
+                                 "detail", "",
                                  "elapsed", "",
                                  NULL);
 }
