@@ -54,7 +54,7 @@ enum
 
 enum
 {
-    START_SIGNAL,
+    START,
     PASS_ASSERTION,
     SUCCESS,
     FAILURE,
