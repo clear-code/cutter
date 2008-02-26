@@ -1,25 +1,28 @@
 #include "cutter.h"
-#include "cut-test-result.h"
+#include "cut-runner.h"
+#include "cut-report.h"
 
 void test_result_success_log (void);
-void test_result_failure_log (void);
-void test_result_penging_log (void);
 
-static CutTestResult *result;
+static CutRunner *runner;
+static CutReport *report;
 static gchar *log;
 
 void
 setup (void)
 {
-    result = NULL;
+    runner = NULL;
+    report = NULL;
     log = NULL;
 }
 
 void
 teardown (void)
 {
-    if (result)
-        g_object_unref(result);
+    if (runner)
+        g_object_unref(runner);
+    if (report)
+        g_object_unref(report);
     if (log)
         g_free(log);
 }
@@ -32,79 +35,13 @@ test_result_success_log (void)
                        "  <detail></detail>"
                        "  <elapsed>0.0001</elapsed>"
                        "</result>";
-    result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
-                                 "test_my_name",
-                                 "MyTestCase",
-                                 "MyTestSuite",
-                                 "",
-                                 "",
-                                 "",
-                                 "",
-                                 0);
-    cut_assert(result);
-    cut_assert_equal_string(expected, cut_test_result_to_xml(result));
-}
 
-void
-test_result_failure_log (void)
-{
-    gchar expected[] = "<result>"
-                       "  <status>failure</status>"
-                       "  <detail>"
-                       "&lt;\"1234\" == cut_test_get_metadata(CUT_TEST(tests-&gt;data), \"bug\")&gt;"
-                       "expected: &lt;1234&gt;"
-                       "but was: &lt;(null)&gt;"
-                       "  </detail>"
-                       "  <backtrace>"
-                       "    <entry>"
-                       "      <file>./test_get_metadata.c</file>"
-                       "      <line>12</line>"
-                       "      <info>test_get_bug_id()</info>"
-                       "    </entry>"
-                       "  </backtrace>"
-                       "  <elapsed>0.002</elapsed>"
-                       "</result>";
-    result = cut_test_result_new(CUT_TEST_RESULT_FAILURE,
-                                 "test_my_name",
-                                 "MyTestCase",
-                                 "MyTestSuite",
-                                 "<\"1234\" == cut_test_get_metadata(CUT_TEST(tests->data), \"bug\")>;\n expected: <1234>;\n but was: <(null)>;",
-                                 "<\"1234\" == cut_test_get_metadata(CUT_TEST(tests->data), \"bug\")>;\n expected: <1234>;\n but was: <(null)>;",
-                                 "test_get_bug_id()",
-                                 "./test_get_metadata.c",
-                                 12);
-    cut_assert(result);
-    cut_assert_equal_string(expected, cut_test_result_to_xml(result));
-}
+    runner = cut_runner_new();
+    cut_runner_set_test_directory(runner, "report_test_dir");
+    report = cut_report_new("xml", runner, NULL);
+    cut_runner_run(runner);
 
-void
-test_result_penging_log (void)
-{
-    gchar expected[] = "<result>"
-                       "  <status>penging</status>"
-                       "  <detail>"
-                       "Cannot set locale to de_DE, skipping"
-                       "  </detail>"
-                       "  <backtrace>"
-                       "    <entry>"
-                       "      <file>./option.c</file>"
-                       "      <line>396</line>"
-                       "      <info>test_arg_double_de_DE_locale()</info>"
-                       "    </entry>"
-                       "  </backtrace>"
-                       "  <elapsed>0.001</elapsed>"
-                       "</result>";
-    result = cut_test_result_new(CUT_TEST_RESULT_FAILURE,
-                                 "test_my_pending_test",
-                                 "MyTestCase",
-                                 "MyTestSuite",
-                                 "Cannot set locale to de_DE, skipping",
-                                 "Cannot set locale to de_DE, skipping",
-                                 "test_arg_double_de_DE_locale()",
-                                 "./option.c",
-                                 396);
-    cut_assert(result);
-    cut_assert_equal_string(expected, cut_test_result_to_xml(result));
+    cut_assert_equal_string_with_free(expected, cut_report_get_success_results(report));
 }
 
 /*
