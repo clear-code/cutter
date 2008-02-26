@@ -102,6 +102,7 @@ class_init (CutReportXMLClass *klass)
 static void
 init (CutReportXML *report)
 {
+    report->runner = NULL;
 }
 
 static void
@@ -343,7 +344,7 @@ static void
 cut_report_xml_set_runner (CutReportXML *report, CutRunner *runner)
 {
     if (report->runner) {
-        disconnect_from_runner(report, runner);
+        disconnect_from_runner(report, report->runner);
         g_object_unref(report->runner);
         report->runner = NULL;
     }
