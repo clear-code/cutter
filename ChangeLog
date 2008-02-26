@@ -10,6 +10,7 @@
 	object.
 	* test/test-cut-log.c -> test/test-cut-report-xml.c: Renamed.
 	* test/report_test_dir:Added.
+	* cutter/cut-report.[c|h]: Added some functions.
 
 2008-02-25  Kouhei Sutou  <kou@cozmixng.org>
 

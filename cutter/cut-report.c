@@ -212,6 +212,65 @@ cut_report_new (const gchar *name, CutRunner *runner,
     return CUT_REPORT(report);
 }
 
+gboolean
+cut_report_result_to_file (CutReport *report,
+                           const gchar *filename,
+                           CutReportFileMode mode)
+{
+    CutReportClass *klass;
+
+    g_return_val_if_fail(CUT_IS_REPORT(report), FALSE);
+    g_return_val_if_fail(filename, FALSE);
+
+    if (g_file_test(filename, G_FILE_TEST_EXISTS) &&
+        mode != CUT_REPORT_FILE_OVERWRITE)
+        return FALSE;
+
+    klass = CUT_REPORT_GET_CLASS(report);
+    if (klass->result_to_file)
+        return klass->result_to_file(report, filename, mode);
+    else
+        return FALSE;
+}
+
+#define GET_RESULTS(name)                               \
+gchar *                                                 \
+cut_report_get_ ## name ## _results (CutReport *report) \
+{                                                       \
+    CutReportClass *klass;                              \
+                                                        \
+    g_return_val_if_fail(CUT_IS_REPORT(report), NULL);  \
+                                                        \
+    klass = CUT_REPORT_GET_CLASS(report);               \
+    if (klass->get_ ## name ## _results)                \
+        return klass->get_ ## name ## _results(report); \
+    else                                                \
+        return NULL;                                    \
+}
+
+GET_RESULTS(all)
+GET_RESULTS(success)
+GET_RESULTS(error)
+GET_RESULTS(failure)
+GET_RESULTS(pending)
+GET_RESULTS(notification)
+
+gchar *
+cut_report_get_test_result(CutReport *report,
+                           const gchar *test_name)
+{
+    CutReportClass *klass;
+
+    g_return_val_if_fail(CUT_IS_REPORT(report), NULL);
+    g_return_val_if_fail(test_name, NULL);
+
+    klass = CUT_REPORT_GET_CLASS(report);
+    if (klass->get_test_result)
+        return klass->get_test_result(report, test_name);
+    else
+        return NULL;
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */

@@ -40,6 +40,11 @@ G_BEGIN_DECLS
 typedef struct _CutReport         CutReport;
 typedef struct _CutReportClass    CutReportClass;
 
+typedef enum {
+    CUT_REPORT_FILE_OVERWRITE,
+    CUT_REPORT_FILE_APPEND
+} CutReportFileMode;
+
 struct _CutReport
 {
     GObject object;
@@ -48,25 +53,49 @@ struct _CutReport
 struct _CutReportClass
 {
     GObjectClass parent_class;
+    gboolean (*result_to_file)     (CutReport        *report,
+                                    const gchar      *filename,
+                                    CutReportFileMode mode);
+    gchar   *(*get_all_results)    (CutReport        *report);
+    gchar   *(*get_success_results)(CutReport        *report);
+    gchar   *(*get_error_results)  (CutReport        *report);
+    gchar   *(*get_failure_results)(CutReport        *report);
+    gchar   *(*get_pending_results)(CutReport        *report);
+    gchar   *(*get_notification_results) (CutReport  *report);
+    gchar   *(*get_test_result)    (CutReport        *report,
+                                    const gchar      *test_name);
 };
 
-GType           cut_report_get_type  (void) G_GNUC_CONST;
+GType        cut_report_get_type  (void) G_GNUC_CONST;
 
-void            cut_report_init        (void);
-void            cut_report_quit        (void);
+void         cut_report_init        (void);
+void         cut_report_quit        (void);
 
-const gchar    *cut_report_get_default_module_dir   (void);
-void            cut_report_set_default_module_dir   (const gchar *dir);
+const gchar *cut_report_get_default_module_dir   (void);
+void         cut_report_set_default_module_dir   (const gchar *dir);
 
-void            cut_report_load        (const gchar *base_dir);
-void            cut_report_unload      (void);
-GList          *cut_report_get_registered_types (void);
-GList          *cut_report_get_log_domains      (void);
+void         cut_report_load        (const gchar *base_dir);
+void         cut_report_unload      (void);
+GList       *cut_report_get_registered_types (void);
+GList       *cut_report_get_log_domains      (void);
 
-CutReport      *cut_report_new         (const gchar *name,
-                                        CutRunner   *runner,
-                                        const gchar *first_property,
-                                        ...);
+CutReport   *cut_report_new             (const gchar *name,
+                                         CutRunner   *runner,
+                                         const gchar *first_property,
+                                         ...);
+gboolean     cut_report_result_to_file  (CutReport        *report,
+                                         const gchar      *filename,
+                                         CutReportFileMode mode);
+gchar       *cut_report_get_all_results (CutReport   *report);
+gchar       *cut_report_get_test_result (CutReport   *report,
+                                         const gchar *test_name);
+
+gchar       *cut_report_get_success_results      (CutReport *report);
+gchar       *cut_report_get_error_results        (CutReport *report);
+gchar       *cut_report_get_failure_results      (CutReport *report);
+gchar       *cut_report_get_pending_results      (CutReport *report);
+gchar       *cut_report_get_notification_results (CutReport *report);
+
 G_END_DECLS
 
 #endif /* __CUT_REPORT_H__ */
