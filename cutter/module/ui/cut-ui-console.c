@@ -390,11 +390,11 @@ cb_success (CutRunner *runner, CutTest *test, CutUIConsole *console)
 }
 
 static void
-cb_failure (CutRunner       *runner,
-            CutTest          *test,
-            CutTestContext   *test_context,
-            CutTestResult    *result,
-            CutUIConsole *console)
+cb_failure (CutRunner      *runner,
+            CutTest        *test,
+            CutTestContext *test_context,
+            CutTestResult  *result,
+            CutUIConsole   *console)
 {
     if (console->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
@@ -403,11 +403,11 @@ cb_failure (CutRunner       *runner,
 }
 
 static void
-cb_error (CutRunner       *runner,
-          CutTest          *test,
-          CutTestContext   *test_context,
-          CutTestResult    *result,
-          CutUIConsole *console)
+cb_error (CutRunner      *runner,
+          CutTest        *test,
+          CutTestContext *test_context,
+          CutTestResult  *result,
+          CutUIConsole   *console)
 {
     if (console->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
@@ -416,11 +416,11 @@ cb_error (CutRunner       *runner,
 }
 
 static void
-cb_pending (CutRunner       *runner,
-            CutTest          *test,
-            CutTestContext   *test_context,
-            CutTestResult    *result,
-            CutUIConsole *console)
+cb_pending (CutRunner      *runner,
+            CutTest        *test,
+            CutTestContext *test_context,
+            CutTestResult  *result,
+            CutUIConsole   *console)
 {
     if (console->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
@@ -429,11 +429,11 @@ cb_pending (CutRunner       *runner,
 }
 
 static void
-cb_notification (CutRunner       *runner,
-                 CutTest          *test,
-                 CutTestContext   *test_context,
-                 CutTestResult    *result,
-                 CutUIConsole *console)
+cb_notification (CutRunner      *runner,
+                 CutTest        *test,
+                 CutTestContext *test_context,
+                 CutTestResult  *result,
+                 CutUIConsole   *console)
 {
     if (console->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
