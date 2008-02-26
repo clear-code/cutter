@@ -6,14 +6,13 @@ void test_result_success_log (void);
 
 static CutRunner *runner;
 static CutReport *report;
-static gchar *log;
 
 void
 setup (void)
 {
     runner = NULL;
     report = NULL;
-    log = NULL;
+    cut_report_load(NULL);
 }
 
 void
@@ -23,8 +22,7 @@ teardown (void)
         g_object_unref(runner);
     if (report)
         g_object_unref(report);
-    if (log)
-        g_free(log);
+    cut_report_unload();
 }
 
 void
