@@ -80,6 +80,13 @@ ui_factory_moduledir="\${moduledir}/ui-factory"
 AC_SUBST(ui_factory_moduledir)
 
 dnl **************************************************************
+dnl Configure for Report modules.
+dnl **************************************************************
+
+report_moduledir="\${moduledir}/report"
+AC_SUBST(report_moduledir)
+
+dnl **************************************************************
 dnl Check for GTK+
 dnl **************************************************************
 AM_PATH_GTK_2_0(2.12.0, [], [], [])
@@ -152,6 +159,7 @@ AC_SUBST(CUTTER)
 
 CUTTER_CFLAGS="$GLIB_CFLAGS -DUI_MODULEDIR=\\\"\"\$(ui_moduledir)\"\\\""
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DUI_FACTORY_MODULEDIR=\\\"\"\$(ui_factory_moduledir)\"\\\""
+CUTTER_CFLAGS="$CUTTER_CFLAGS -DREPORT_MODULEDIR=\\\"\"\$(report_factory_moduledir)\"\\\""
 AC_SUBST(CUTTER_CFLAGS)
 
 AC_CONFIG_FILES([Makefile

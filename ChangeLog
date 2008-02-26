@@ -4,6 +4,7 @@
 	* cutter/cut-test-result.[c|h]: Added cut_test_result_to_xml().
 	* test/test-cut-log.c: Added.
 	* cutter/cut-test.c: Remove "_SIGNAL" suffix from signal id.
+	* cutter/cut-report.[c|h]: Added.
 
 2008-02-25  Kouhei Sutou  <kou@cozmixng.org>
 
