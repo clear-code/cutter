@@ -9,6 +9,7 @@
 	* cutter/cut-report.[c|h]: cut_report_new() needs now CutRunner
 	object.
 	* test/test-cut-log.c -> test/test-cut-report-xml.c: Renamed.
+	* test/report_test_dir:Added.
 
 2008-02-25  Kouhei Sutou  <kou@cozmixng.org>
 
