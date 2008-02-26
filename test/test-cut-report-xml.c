@@ -28,11 +28,17 @@ teardown (void)
 void
 test_result_success_log (void)
 {
-    gchar expected[] = "<result>"
-                       "  <status>success</status>"
-                       "  <detail></detail>"
-                       "  <elapsed>0.0001</elapsed>"
-                       "</result>";
+    gchar expected[] = "<test_log>"
+                       "  <test_case>"
+                       "    <name>MyTestCase</name>"
+                       "    <description>MyTestCase</description>"
+                       "  </test_case>"
+                       "  <result>"
+                       "    <status>success</status>"
+                       "    <detail></detail>"
+                       "    <elapsed>0.0001</elapsed>"
+                       "  </result>"
+                       "</test_log>";
 
     runner = cut_runner_new();
     cut_runner_set_test_directory(runner, "report_test_dir");
