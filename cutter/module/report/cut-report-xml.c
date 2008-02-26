@@ -122,7 +122,7 @@ register_type (GTypeModule *type_module)
 
     cut_type_report_xml =
         g_type_module_register_type(type_module,
-                                    CUT_TYPE_REPORT_XML,
+                                    CUT_TYPE_REPORT,
                                     "CutReportXML",
                                     &info, 0);
 }
