@@ -2,6 +2,7 @@
 
 	* cutter/module/report/cut-report-xml.c: Added some utility functions.
 	* cutter/cut-test-result.[c|h]; Added a property of elapsed time.
+	* cutter/cut-test.[c|h]: Added cut_test_stop_timer().
 
 2008-02-26  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 

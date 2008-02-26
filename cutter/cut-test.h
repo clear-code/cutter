@@ -87,6 +87,7 @@ CutTest     *cut_test_new                 (const gchar *function_name,
 gboolean     cut_test_run                 (CutTest        *test,
                                            CutTestContext *test_context,
                                            CutRunner      *runner);
+void         cut_test_stop_timer          (CutTest *test);        
 
 const gchar *cut_test_get_name            (CutTest *test);
 const gchar *cut_test_get_description     (CutTest *test);
@@ -104,5 +105,5 @@ G_END_DECLS
 #endif /* __CUT_TEST_H__ */
 
 /*
-vi:nowrap:ai:expandtab:sw=4
+vi:ts=4:nowrap:ai:expandtab:sw=4
 */

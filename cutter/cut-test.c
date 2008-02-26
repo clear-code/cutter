@@ -392,6 +392,17 @@ cut_test_set_metadata (CutTest *test, const gchar *name, const gchar *value)
                          g_strdup(value));
 }
 
+void
+cut_test_stop_timer (CutTest *test)
+{
+    CutTestPrivate *priv;
+
+    priv = CUT_TEST_GET_PRIVATE(test);
+
+    if (priv->timer)
+        g_timer_stop(priv->timer);
+}
+
 /*
 vi:nowrap:ai:expandtab:sw=4
 */
