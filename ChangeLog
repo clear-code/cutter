@@ -8,6 +8,7 @@
 	* cutter/module/report: Added.
 	* cutter/cut-report.[c|h]: cut_report_new() needs now CutRunner
 	object.
+	* test/test-cut-log.c -> test/test-cut-report-xml.c: Renamed.
 
 2008-02-25  Kouhei Sutou  <kou@cozmixng.org>
 
