@@ -30,8 +30,7 @@ test_result_success_log (void)
 {
     gchar expected[] = "<test_log>"
                        "  <test_case>"
-                       "    <name>MyTestCase</name>"
-                       "    <description>MyTestCase</description>"
+                       "    <name>dummy_report_test</name>"
                        "  </test_case>"
                        "  <result>"
                        "    <status>success</status>"
