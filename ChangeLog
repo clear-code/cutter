@@ -13,6 +13,7 @@
 	* cutter/cut-report.[c|h]: Added some functions.
 	* cutter/module/report/cut-report-xml.c: Added skeltons.
 	* test/test-cut-report-xml.c: Switch test context. Added failure test.
+	* cutter/module/report/cut-report-xml.c: Impelement get_XX_results().
 
 2008-02-25  Kouhei Sutou  <kou@cozmixng.org>
 

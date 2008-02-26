@@ -392,34 +392,136 @@ get_all_results (CutReport *report)
     return NULL;
 }
 
+static const gchar *
+result_status_to_name (CutTestResultStatus status)
+{
+    switch (status) {
+      case CUT_TEST_RESULT_SUCCESS:
+        return "success";
+        break;
+      case CUT_TEST_RESULT_FAILURE:
+        return "failure";
+        break;
+      case CUT_TEST_RESULT_ERROR:
+        return "error";
+        break;
+      case CUT_TEST_RESULT_PENDING:
+        return "pending";
+        break;
+      case CUT_TEST_RESULT_NOTIFICATION:
+        return "notification";
+        break;
+      default:
+        return "unknown status";
+        break;
+    }
+}
+
+static void
+append_element_with_value (GString *string, const gchar *element_name, const gchar *value)
+{
+    gchar *escaped;
+
+    escaped = g_markup_printf_escaped("      <%s>%s</%s>\n", 
+                                      element_name,
+                                      value,
+                                      element_name);
+    g_string_append(string, escaped);
+    g_free(escaped);
+}
+
+static void
+/* append_test_case_info_to_string (GString *string, CutTestCase *test_case)*/
+append_test_case_info_to_string (GString *string, const gchar *test_case_name)
+{
+    g_string_append(string, "    <test_case>\n");
+    append_element_with_value(string, "name", test_case_name);
+    g_string_append(string, "    </test_case>\n");
+}
+
+static void
+append_test_result_to_string (GString *string, CutTestResult *result)
+{
+    g_string_append(string, "    <result>\n");
+    append_element_with_value(string, "status",
+                              result_status_to_name(cut_test_result_get_status(result)));
+    append_element_with_value(string, "detail", "");
+    append_element_with_value(string, "elapsed", "");
+    g_string_append(string, "    </result>\n");
+}
+
+static gchar *
+get_result (CutTestResult *result)
+{
+    CutTestResultStatus status;
+    GString *xml = g_string_new("");
+
+    status = cut_test_result_get_status(result);
+
+    g_string_append(xml, "  <test_log>\n");
+    append_test_case_info_to_string(xml, 
+                                    cut_test_result_get_test_case_name(result));
+    append_element_with_value(xml, "name", cut_test_result_get_test_name(result));
+    /* append_test_description_to_string(xml, cut_test_result_get_test_description(result)); */
+    /* append_test_metadata_to_string(xml, cut_test_result_get_test_metadata(result)); */
+    append_test_result_to_string(xml, result);
+    g_string_append(xml, "  </test_log>\n");
+
+    return g_string_free(xml, FALSE);
+}
+
+static gchar *
+get_status_results (CutReportXML *report, CutTestResultStatus status)
+{
+    const GList *node;
+    GString *xml = g_string_new("");
+    CutReportXML *report_xml = CUT_REPORT_XML(report);
+
+    for (node = cut_runner_get_results(report_xml->runner);
+         node;
+         node = g_list_next(node)) {
+        CutTestResult *result = node->data;
+        gchar *result_string;
+
+        if (status != cut_test_result_get_status(result))
+            continue;
+
+        result_string = get_result(result);
+        g_string_append(xml, result_string);
+        g_free(result_string);
+    }
+
+    return g_string_free(xml, FALSE);
+}
+
 static gchar *
 get_success_results (CutReport *report)
 {
-    return NULL;
+    return get_status_results(CUT_REPORT_XML(report), CUT_TEST_RESULT_SUCCESS);
 }
 
 static gchar *
 get_error_results (CutReport *report)
 {
-    return NULL;
+    return get_status_results(CUT_REPORT_XML(report), CUT_TEST_RESULT_ERROR);
 }
 
 static gchar *
 get_failure_results (CutReport *report)
 {
-    return NULL;
+    return get_status_results(CUT_REPORT_XML(report), CUT_TEST_RESULT_FAILURE);
 }
 
 static gchar *
 get_pending_results (CutReport *report)
 {
-    return NULL;
+    return get_status_results(CUT_REPORT_XML(report), CUT_TEST_RESULT_PENDING);
 }
 
 static gchar *
 get_notification_results (CutReport *report)
 {
-    return NULL;
+    return get_status_results(CUT_REPORT_XML(report), CUT_TEST_RESULT_NOTIFICATION);
 }
 
 static gchar *
