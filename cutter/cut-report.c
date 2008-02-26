@@ -255,6 +255,8 @@ GET_RESULTS(failure)
 GET_RESULTS(pending)
 GET_RESULTS(notification)
 
+#undef GET_RESULTS
+
 gchar *
 cut_report_get_test_result(CutReport *report,
                            const gchar *test_name)
