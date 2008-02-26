@@ -170,6 +170,7 @@ AC_CONFIG_FILES([Makefile
 		 cutter/module/Makefile
 		 cutter/module/ui/Makefile
 		 cutter/module/ui-factory/Makefile
+		 cutter/module/report/Makefile
 		 sample/Makefile
 		 sample/glib/Makefile
 		 sample/gtk+/Makefile

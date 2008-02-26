@@ -191,7 +191,8 @@ get_property (GObject    *object,
 }
 
 CutReport *
-cut_report_new (const gchar *name, const gchar *first_property, ...)
+cut_report_new (const gchar *name, CutRunner *runner,
+                const gchar *first_property, ...)
 {
     CutModule *module;
     GObject *report;
@@ -201,12 +202,16 @@ cut_report_new (const gchar *name, const gchar *first_property, ...)
     g_return_val_if_fail(module != NULL, NULL);
 
     va_start(var_args, first_property);
-    report = cut_module_instantiate(module, first_property, var_args);
+    report = cut_module_instantiate(module,
+                                    first_property, var_args);
     va_end(var_args);
+
+    /* workdaround for setting CurRunner */
+    g_object_set(report, "cut-runner", runner, NULL);
 
     return CUT_REPORT(report);
 }
 
 /*
-vi:nowrap:ai:expandtab:sw=4
+vi:ts=4:nowrap:ai:expandtab:sw=4
 */

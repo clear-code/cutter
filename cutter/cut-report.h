@@ -64,13 +64,13 @@ GList          *cut_report_get_registered_types (void);
 GList          *cut_report_get_log_domains      (void);
 
 CutReport      *cut_report_new         (const gchar *name,
+                                        CutRunner   *runner,
                                         const gchar *first_property,
                                         ...);
-
 G_END_DECLS
 
 #endif /* __CUT_REPORT_H__ */
 
 /*
-vi:nowrap:ai:expandtab:sw=4
+vi:ts=4:nowrap:ai:expandtab:sw=4
 */

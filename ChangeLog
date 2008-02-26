@@ -5,6 +5,9 @@
 	* test/test-cut-log.c: Added.
 	* cutter/cut-test.c: Remove "_SIGNAL" suffix from signal id.
 	* cutter/cut-report.[c|h]: Added.
+	* cutter/module/report: Added.
+	* cutter/cut-report.[c|h]: cut_report_new() needs now CutRunner
+	object.
 
 2008-02-25  Kouhei Sutou  <kou@cozmixng.org>
 
