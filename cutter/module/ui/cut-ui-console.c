@@ -460,6 +460,33 @@ cb_complete_test_case (CutRunner *runner, CutTestCase *test_case,
         return;
 }
 
+typedef struct _ConsoleAndStatus {
+    CutUIConsole *console;
+    CutTestResultStatus status;
+} ConsoleAndStatus;
+
+static void
+print_each_metadata (gpointer key, gpointer value, gpointer data)
+{
+    ConsoleAndStatus *info = (ConsoleAndStatus*)data;
+    g_print("\n");
+    print_with_color(info->console, status_to_color(info->status),
+                     "  %s: %s",
+                     (const gchar*)key, (const gchar*)value,
+                     NULL);
+}
+
+static void
+print_test_metadata (CutUIConsole *console, CutTestResultStatus status,
+                     CutTest *test)
+{
+    ConsoleAndStatus info;
+    info.console = console;
+    info.status = status;
+    g_hash_table_foreach((GHashTable*)cut_test_get_all_metadata(test),
+                         (GHFunc)print_each_metadata, &info);
+}
+
 static void
 print_results (CutUIConsole *console, CutRunner *runner)
 {
@@ -475,6 +502,7 @@ print_results (CutUIConsole *console, CutRunner *runner)
          node = g_list_next(node)) {
         CutTestResult *result = node->data;
         CutTestResultStatus status;
+        CutTest *test;
         gchar *filename;
         const gchar *message;
         const gchar *source_directory;
@@ -502,6 +530,10 @@ print_results (CutUIConsole *console, CutRunner *runner)
         g_print("\n%d) ", i);
         print_for_status(console, status, "%s: %s",
                          status_to_name(status), name);
+
+        test = cut_test_result_get_test(result);
+        if (test) 
+            print_test_metadata(console, status, test);
 
         if (message) {
             g_print("\n");
@@ -666,5 +698,5 @@ run (CutUI *ui, CutRunner *runner)
 
 
 /*
-vi:nowrap:ai:expandtab:sw=4
+vi:ts=4:nowrap:ai:expandtab:sw=4
 */
