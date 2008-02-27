@@ -47,7 +47,6 @@ teardown (void)
         g_object_unref(test_object);
     if (test_context)
         g_object_unref(test_context);
-    g_object_unref(test_case);
     g_object_unref(report);
     g_object_unref(runner);
     cut_report_unload();
@@ -80,6 +79,7 @@ run_the_test (CutTest *test)
     set_current_test_context(original_test_context);
 
     g_object_unref(test_context);
+    test_context = NULL;
     return success;
 }
 
