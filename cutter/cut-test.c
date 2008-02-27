@@ -31,6 +31,7 @@
 #include "cut-test-container.h"
 #include "cut-runner.h"
 #include "cut-marshalers.h"
+#include "cut-test-result.h"
 
 #define CUT_TEST_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST, CutTestPrivate))
 
@@ -337,7 +338,7 @@ cut_test_run (CutTest *test, CutTestContext *test_context, CutRunner *runner)
     if (success) {
         CutTestResult *result;
         result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
-                                     cut_test_get_name(test),
+                                     test,
                                      NULL, NULL,
                                      NULL, NULL, 
                                      NULL, NULL, 0);

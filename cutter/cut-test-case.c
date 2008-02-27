@@ -33,6 +33,7 @@
 #include "cut-runner.h"
 
 #include "cut-marshalers.h"
+#include "cut-test-result.h"
 
 #define CUT_TEST_CASE_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_CASE, CutTestCasePrivate))
 
@@ -385,7 +386,7 @@ cut_test_case_run_tests (CutTestCase *test_case, CutRunner *runner,
         CutTestResult *result;
         result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
                                      NULL,
-                                     cut_test_get_name(CUT_TEST(test_case)),
+                                     test_case,
                                      NULL,
                                      NULL, NULL, 
                                      NULL, NULL, 0);

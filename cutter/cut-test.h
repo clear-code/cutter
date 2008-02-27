@@ -27,7 +27,6 @@
 #include <cutter/cut-private.h>
 #include <cutter/cut-assertions.h>
 #include <cutter/cut-test-context.h>
-#include <cutter/cut-test-result.h>
 
 G_BEGIN_DECLS
 
@@ -39,6 +38,9 @@ G_BEGIN_DECLS
 #define CUT_TEST_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_TEST, CutTestClass))
 
 typedef struct _CutTestClass    CutTestClass;
+
+typedef struct _CutTestResult         CutTestResult;
+typedef struct _CutTestResultClass    CutTestResultClass;
 
 typedef void    (*CutTestFunction)     (void);
 typedef void    (*CutSetupFunction)    (void);

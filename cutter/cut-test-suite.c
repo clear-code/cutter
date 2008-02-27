@@ -41,6 +41,7 @@
 #include "cut-runner.h"
 #include "cut-utils.h"
 #include "cut-marshalers.h"
+#include "cut-test-result.h"
 
 #define CUT_TEST_SUITE_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_SUITE, CutTestSuitePrivate))
 
@@ -364,11 +365,11 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite, CutRunner *runner,
         if (all_success) {
             CutTestResult *result;
             result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
-                    NULL,
-                    NULL,
-                    cut_test_get_name(CUT_TEST(test_suite)),
-                    NULL, NULL, 
-                    NULL, NULL, 0);
+                                         NULL,
+                                         NULL,
+                                         test_suite,
+                                         NULL, NULL, 
+                                         NULL, NULL, 0);
             g_signal_emit_by_name(CUT_TEST(test_suite), "success", result);
             g_object_unref(result);
         }
@@ -488,5 +489,5 @@ cut_test_suite_add_test_case (CutTestSuite *suite, CutTestCase *test_case)
 }
 
 /*
-vi:nowrap:ai:expandtab:sw=4
+vi:ts=4:nowrap:ai:expandtab:sw=4
 */

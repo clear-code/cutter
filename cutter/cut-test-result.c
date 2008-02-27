@@ -42,9 +42,6 @@ struct _CutTestResultPrivate
     CutTest *test;
     CutTestCase *test_case;
     CutTestSuite *test_suite;
-    gchar *test_name;
-    gchar *test_case_name;
-    gchar *test_suite_name;
     gchar *message;
     gchar *user_message;
     gchar *system_message;
@@ -61,9 +58,6 @@ enum
     PROP_TEST,
     PROP_TEST_CASE,
     PROP_TEST_SUITE,
-    PROP_TEST_NAME,
-    PROP_TEST_CASE_NAME,
-    PROP_TEST_SUITE_NAME,
     PROP_USER_MESSAGE,
     PROP_SYSTEM_MESSAGE,
     PROP_FUNCTION_NAME,
@@ -105,47 +99,26 @@ cut_test_result_class_init (CutTestResultClass *klass)
                              G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class, PROP_STATUS, spec);
 
-    spec = g_param_spec_object("cut-test",
+    spec = g_param_spec_object("test",
                                "CutTest object",
                                "A CutTest object",
                                CUT_TYPE_TEST,
-                               G_PARAM_READWRITE);
+                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class, PROP_TEST, spec);
 
-    spec = g_param_spec_object("cut-test-case",
+    spec = g_param_spec_object("test-case",
                                "CutTestCase object",
                                "A CutTestCase object",
                                CUT_TYPE_TEST_CASE,
-                               G_PARAM_READWRITE);
+                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class, PROP_TEST_CASE, spec);
 
-    spec = g_param_spec_object("cut-test-suite",
+    spec = g_param_spec_object("test-suite",
                                "CutTestSuite object",
                                "A CutTestSuite object",
                                CUT_TYPE_TEST_SUITE,
-                               G_PARAM_READWRITE);
+                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class, PROP_TEST_SUITE, spec);
-
-    spec = g_param_spec_string("test-name",
-                               "Test Name",
-                               "The name of the test",
-                               NULL,
-                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
-    g_object_class_install_property(gobject_class, PROP_TEST_NAME, spec);
-
-    spec = g_param_spec_string("test-case-name",
-                               "Test Case Name",
-                               "The name of the test case",
-                               NULL,
-                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
-    g_object_class_install_property(gobject_class, PROP_TEST_CASE_NAME, spec);
-
-    spec = g_param_spec_string("test-suite-name",
-                               "Test Suite Name",
-                               "The name of the test suite",
-                               NULL,
-                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
-    g_object_class_install_property(gobject_class, PROP_TEST_SUITE_NAME, spec);
 
     spec = g_param_spec_string("user-message",
                                "User Message",
@@ -198,9 +171,9 @@ cut_test_result_init (CutTestResult *result)
     CutTestResultPrivate *priv = CUT_TEST_RESULT_GET_PRIVATE(result);
 
     priv->status = CUT_TEST_RESULT_SUCCESS;
-    priv->test_name = NULL;
-    priv->test_case_name = NULL;
-    priv->test_suite_name = NULL;
+    priv->test = NULL;
+    priv->test_case = NULL;
+    priv->test_suite = NULL;
     priv->message = NULL;
     priv->user_message = NULL;
     priv->system_message = NULL;
@@ -228,21 +201,6 @@ dispose (GObject *object)
     if (priv->test_suite) {
         g_object_unref(priv->test_suite);
         priv->test_suite = NULL;
-    }
-
-    if (priv->test_name) {
-        g_free(priv->test_name);
-        priv->test_name = NULL;
-    }
-
-    if (priv->test_case_name) {
-        g_free(priv->test_case_name);
-        priv->test_case_name = NULL;
-    }
-
-    if (priv->test_suite_name) {
-        g_free(priv->test_suite_name);
-        priv->test_suite_name = NULL;
     }
 
     if (priv->message) {
@@ -288,30 +246,21 @@ set_property (GObject      *object,
       case PROP_TEST:
         if (priv->test)
             g_object_unref(priv->test);
-        priv->test = g_object_ref(g_value_get_object(value));
+        if (g_value_get_object(value))
+            priv->test = g_object_ref(g_value_get_object(value));
         break;
       case PROP_TEST_CASE:
         if (priv->test_case)
             g_object_unref(priv->test_case);
-        priv->test_case = g_object_ref(g_value_get_object(value));
+        if (g_value_get_object(value))
+            priv->test_case = g_object_ref(g_value_get_object(value));
         break;
       case PROP_TEST_SUITE:
         if (priv->test_suite)
             g_object_unref(priv->test_suite);
-        priv->test_suite = g_object_ref(g_value_get_object(value));
+        if (g_value_get_object(value))
+            priv->test_suite = g_object_ref(g_value_get_object(value));
         break;
-      case PROP_TEST_NAME:
-        if (priv->test_name)
-            g_free(priv->test_name);
-        priv->test_name = g_value_dup_string(value);
-      case PROP_TEST_CASE_NAME:
-        if (priv->test_case_name)
-            g_free(priv->test_case_name);
-        priv->test_case_name = g_value_dup_string(value);
-      case PROP_TEST_SUITE_NAME:
-        if (priv->test_suite_name)
-            g_free(priv->test_suite_name);
-        priv->test_suite_name = g_value_dup_string(value);
       case PROP_USER_MESSAGE:
         if (priv->user_message)
             g_free(priv->user_message);
@@ -368,15 +317,6 @@ get_property (GObject    *object,
       case PROP_TEST_SUITE:
         g_value_set_object(value, G_OBJECT(priv->test_suite));
         break;
-      case PROP_TEST_NAME:
-        g_value_set_string(value, priv->test_name);
-        break;
-      case PROP_TEST_CASE_NAME:
-        g_value_set_string(value, priv->test_case_name);
-        break;
-      case PROP_TEST_SUITE_NAME:
-        g_value_set_string(value, priv->test_suite_name);
-        break;
       case PROP_USER_MESSAGE:
         g_value_set_string(value, priv->user_message);
         break;
@@ -403,9 +343,9 @@ get_property (GObject    *object,
 
 CutTestResult *
 cut_test_result_new (CutTestResultStatus status,
-                     const gchar *test_name,
-                     const gchar *test_case_name,
-                     const gchar *test_suite_name,
+                     CutTest *test,
+                     CutTestCase *test_case,
+                     CutTestSuite *test_suite,
                      const gchar *user_message,
                      const gchar *system_message,
                      const gchar *function_name,
@@ -414,9 +354,9 @@ cut_test_result_new (CutTestResultStatus status,
 {
     return g_object_new(CUT_TYPE_TEST_RESULT,
                         "status", status,
-                        "test-name", test_name,
-                        "test-case-name", test_case_name,
-                        "test-suite-name", test_suite_name,
+                        "test", test,
+                        "test-case", test_case,
+                        "test-suite", test_suite,
                         "user-message", user_message,
                         "system-message", system_message,
                         "function-name", function_name,
@@ -454,19 +394,31 @@ cut_test_result_get_message (CutTestResult *result)
 const gchar *
 cut_test_result_get_test_name (CutTestResult *result)
 {
-    return CUT_TEST_RESULT_GET_PRIVATE(result)->test_name;
+    CutTestResultPrivate *priv = CUT_TEST_RESULT_GET_PRIVATE(result);
+
+    if (priv->test)
+        return cut_test_get_name(priv->test);
+    return NULL;
 }
 
 const gchar *
 cut_test_result_get_test_case_name (CutTestResult *result)
 {
-    return CUT_TEST_RESULT_GET_PRIVATE(result)->test_case_name;
+    CutTestResultPrivate *priv = CUT_TEST_RESULT_GET_PRIVATE(result);
+
+    if (priv->test_case)
+        return cut_test_get_name(CUT_TEST(priv->test_case));
+    return NULL;
 }
 
 const gchar *
 cut_test_result_get_test_suite_name (CutTestResult *result)
 {
-    return CUT_TEST_RESULT_GET_PRIVATE(result)->test_suite_name;
+    CutTestResultPrivate *priv = CUT_TEST_RESULT_GET_PRIVATE(result);
+
+    if (priv->test_suite)
+        return cut_test_get_name(CUT_TEST(priv->test_suite));
+    return NULL;
 }
 
 const gchar *

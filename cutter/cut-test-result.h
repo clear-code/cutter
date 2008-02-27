@@ -25,6 +25,9 @@
 #include <glib-object.h>
 
 #include <cutter/cut-assertions.h>
+#include <cutter/cut-test.h>
+#include <cutter/cut-test-case.h>
+#include <cutter/cut-test-suite.h>
 
 G_BEGIN_DECLS
 
@@ -34,9 +37,6 @@ G_BEGIN_DECLS
 #define CUT_IS_TEST_RESULT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_TEST_RESULT))
 #define CUT_IS_TEST_RESULT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_TEST_RESULT))
 #define CUT_TEST_RESULT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_TEST_RESULT, CutTestResultClass))
-
-typedef struct _CutTestResult         CutTestResult;
-typedef struct _CutTestResultClass    CutTestResultClass;
 
 struct _CutTestResult
 {
@@ -51,9 +51,9 @@ struct _CutTestResultClass
 GType          cut_test_result_get_type   (void) G_GNUC_CONST;
 
 CutTestResult *cut_test_result_new        (CutTestResultStatus status,
-                                           const gchar *test_name,
-                                           const gchar *test_case_name,
-                                           const gchar *test_suite_name,
+                                           CutTest *test,
+                                           CutTestCase *test_case,
+                                           CutTestSuite *test_suite,
                                            const gchar *user_message,
                                            const gchar *system_message,
                                            const gchar *function_name,

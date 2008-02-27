@@ -30,6 +30,7 @@
 
 #include "cut-test-context.h"
 #include "cut-test-suite.h"
+#include "cut-test-result.h"
 
 #define CUT_TEST_CONTEXT_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_CONTEXT, CutTestContextPrivate))
 
@@ -347,8 +348,6 @@ cut_test_context_register_result (CutTestContext *context,
     CutTestResult *result;
     const gchar *status_signal_name = NULL;
     gchar *user_message = NULL, *system_message = NULL;
-    const gchar *test_suite_name = NULL, *test_case_name = NULL;
-    const gchar *test_name = NULL;
     const gchar *format;
     va_list args;
 
@@ -367,14 +366,8 @@ cut_test_context_register_result (CutTestContext *context,
     }
     va_end(args);
 
-    if (priv->test)
-        test_name = cut_test_get_name(priv->test);
-    if (priv->test_case)
-        test_case_name = cut_test_get_name(CUT_TEST(priv->test_case));
-    if (priv->test_suite)
-        test_suite_name = cut_test_get_name(CUT_TEST(priv->test_suite));
     result = cut_test_result_new(status,
-                                 test_name, test_case_name, test_suite_name,
+                                 priv->test, priv->test_case, priv->test_suite,
                                  user_message, system_message,
                                  function_name, filename, line);
     if (system_message)

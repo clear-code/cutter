@@ -30,6 +30,7 @@
 #include "cut-runner.h"
 #include "cut-repository.h"
 #include "cut-test-case.h"
+#include "cut-test-result.h"
 
 #include "cut-marshalers.h"
 
