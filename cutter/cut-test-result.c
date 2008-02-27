@@ -29,6 +29,9 @@
 
 #include "cut-test-result.h"
 #include "cut-enum-types.h"
+#include "cut-test.h"
+#include "cut-test-case.h"
+#include "cut-test-suite.h"
 
 #define CUT_TEST_RESULT_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_RESULT, CutTestResultPrivate))
 
@@ -36,6 +39,9 @@ typedef struct _CutTestResultPrivate	CutTestResultPrivate;
 struct _CutTestResultPrivate
 {
     CutTestResultStatus status;
+    CutTest *test;
+    CutTestCase *test_case;
+    CutTestSuite *test_suite;
     gchar *test_name;
     gchar *test_case_name;
     gchar *test_suite_name;
@@ -52,6 +58,9 @@ enum
 {
     PROP_0,
     PROP_STATUS,
+    PROP_TEST,
+    PROP_TEST_CASE,
+    PROP_TEST_SUITE,
     PROP_TEST_NAME,
     PROP_TEST_CASE_NAME,
     PROP_TEST_SUITE_NAME,
@@ -95,6 +104,27 @@ cut_test_result_class_init (CutTestResultClass *klass)
                              CUT_TEST_RESULT_SUCCESS,
                              G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class, PROP_STATUS, spec);
+
+    spec = g_param_spec_object("cut-test",
+                               "CutTest object",
+                               "A CutTest object",
+                               CUT_TYPE_TEST,
+                               G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_TEST, spec);
+
+    spec = g_param_spec_object("cut-test-case",
+                               "CutTestCase object",
+                               "A CutTestCase object",
+                               CUT_TYPE_TEST_CASE,
+                               G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_TEST_CASE, spec);
+
+    spec = g_param_spec_object("cut-test-suite",
+                               "CutTestSuite object",
+                               "A CutTestSuite object",
+                               CUT_TYPE_TEST_SUITE,
+                               G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_TEST_SUITE, spec);
 
     spec = g_param_spec_string("test-name",
                                "Test Name",
@@ -185,6 +215,21 @@ dispose (GObject *object)
 {
     CutTestResultPrivate *priv = CUT_TEST_RESULT_GET_PRIVATE(object);
 
+    if (priv->test) {
+        g_object_unref(priv->test);
+        priv->test = NULL;
+    }
+
+    if (priv->test_case) {
+        g_object_unref(priv->test_case);
+        priv->test_case = NULL;
+    }
+
+    if (priv->test_suite) {
+        g_object_unref(priv->test_suite);
+        priv->test_suite = NULL;
+    }
+
     if (priv->test_name) {
         g_free(priv->test_name);
         priv->test_name = NULL;
@@ -239,6 +284,21 @@ set_property (GObject      *object,
     switch (prop_id) {
       case PROP_STATUS:
         priv->status = g_value_get_enum(value);
+        break;
+      case PROP_TEST:
+        if (priv->test)
+            g_object_unref(priv->test);
+        priv->test = g_object_ref(g_value_get_object(value));
+        break;
+      case PROP_TEST_CASE:
+        if (priv->test_case)
+            g_object_unref(priv->test_case);
+        priv->test_case = g_object_ref(g_value_get_object(value));
+        break;
+      case PROP_TEST_SUITE:
+        if (priv->test_suite)
+            g_object_unref(priv->test_suite);
+        priv->test_suite = g_object_ref(g_value_get_object(value));
         break;
       case PROP_TEST_NAME:
         if (priv->test_name)
@@ -298,6 +358,15 @@ get_property (GObject    *object,
     switch (prop_id) {
       case PROP_STATUS:
         g_value_set_enum(value, priv->status);
+        break;
+      case PROP_TEST:
+        g_value_set_object(value, G_OBJECT(priv->test));
+        break;
+      case PROP_TEST_CASE:
+        g_value_set_object(value, G_OBJECT(priv->test_case));
+        break;
+      case PROP_TEST_SUITE:
+        g_value_set_object(value, G_OBJECT(priv->test_suite));
         break;
       case PROP_TEST_NAME:
         g_value_set_string(value, priv->test_name);
