@@ -21,6 +21,7 @@
 	* cutter/module/ui/cut-ui-console.c: Show each metadata if the test
 	failed.
 	* cutter/module/report/cut-report-xml.c: Output elapsed time.
+	* cutter/cut-test-result.c: Set elapsed time to CutTestResult.
 
 2008-02-26  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 

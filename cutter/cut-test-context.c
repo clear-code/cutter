@@ -377,6 +377,8 @@ cut_test_context_register_result (CutTestContext *context,
 
     status_signal_name = status_to_signal_name(status);
     if (priv->test) {
+        cut_test_stop_timer(priv->test);
+        g_object_set(result, "elapsed", cut_test_get_elapsed(priv->test), NULL);
         g_signal_emit_by_name(priv->test, status_signal_name,
                               context, result);
     } else if (priv->test_case) {
