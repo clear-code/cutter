@@ -401,6 +401,12 @@ cut_test_set_metadata (CutTest *test, const gchar *name, const gchar *value)
                          g_strdup(value));
 }
 
+const GHashTable *
+cut_test_get_all_metadata (CutTest *test)
+{
+    return CUT_TEST_GET_PRIVATE(test)->metadata;
+}
+
 void
 cut_test_stop_timer (CutTest *test)
 {

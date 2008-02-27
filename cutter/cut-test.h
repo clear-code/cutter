@@ -103,6 +103,8 @@ void         cut_test_set_metadata        (CutTest     *test,
                                            const gchar *name,
                                            const gchar *value);
 
+const GHashTable *cut_test_get_all_metadata (CutTest   *test);
+
 G_END_DECLS
 
 #endif /* __CUT_TEST_H__ */
