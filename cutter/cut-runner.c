@@ -567,12 +567,16 @@ cb_pass_assertion (CutTest *test, CutTestContext *test_context, gpointer data)
 }
 
 static void
-cb_success (CutTest *test, gpointer data)
+cb_success (CutTest *test, CutTestResult *result, gpointer data)
 {
     CutRunner *runner = data;
     CutRunnerPrivate *priv;
 
     priv = CUT_RUNNER_GET_PRIVATE(runner);
+    g_mutex_lock(priv->mutex);
+    priv->results = g_list_prepend(priv->results, g_object_ref(result));
+    g_mutex_unlock(priv->mutex);
+
     g_signal_emit(runner, signals[SUCCESS], 0, test);
 }
 

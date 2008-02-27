@@ -381,8 +381,17 @@ cut_test_case_run_tests (CutTestCase *test_case, CutRunner *runner,
         }
     }
 
-    if (all_success)
-        g_signal_emit_by_name(CUT_TEST(test_case), "success");
+    if (all_success) {
+        CutTestResult *result;
+        result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
+                                     NULL,
+                                     cut_test_get_name(CUT_TEST(test_case)),
+                                     NULL,
+                                     NULL, NULL, 
+                                     NULL, NULL, 0);
+        g_signal_emit_by_name(CUT_TEST(test_case), "success", result);
+        g_object_unref(result);
+    }
 
     g_signal_emit_by_name(CUT_TEST(test_case), "complete");
 

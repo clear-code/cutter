@@ -480,6 +480,10 @@ print_results (CutUIConsole *console, CutRunner *runner)
         const gchar *source_directory;
         const gchar *name;
 
+        status = cut_test_result_get_status(result);
+        if (status == CUT_TEST_RESULT_SUCCESS)
+            continue; 
+
         source_directory = cut_runner_get_source_directory(runner);
         if (source_directory)
             filename = g_build_filename(source_directory,
@@ -488,7 +492,6 @@ print_results (CutUIConsole *console, CutRunner *runner)
         else
             filename = g_strdup(cut_test_result_get_filename(result));
 
-        status = cut_test_result_get_status(result);
         message = cut_test_result_get_message(result);
         name = cut_test_result_get_test_name(result);
         if (!name)

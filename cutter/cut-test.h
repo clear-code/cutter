@@ -58,7 +58,8 @@ struct _CutTestClass
     void (*start)          (CutTest        *test);
     void (*pass_assertion) (CutTest        *test,
                             CutTestContext *context);
-    void (*success)        (CutTest        *test);
+    void (*success)        (CutTest        *test,
+                            CutTestResult  *result);
     void (*failure)        (CutTest        *test,
                             CutTestContext *context,
                             CutTestResult  *result);

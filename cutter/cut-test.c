@@ -142,8 +142,8 @@ cut_test_class_init (CutTestClass *klass)
                 G_SIGNAL_RUN_LAST,
                 G_STRUCT_OFFSET (CutTestClass, success),
                 NULL, NULL,
-                g_cclosure_marshal_VOID__VOID,
-                G_TYPE_NONE, 0);
+                g_cclosure_marshal_VOID__OBJECT,
+                G_TYPE_NONE, 1, CUT_TYPE_TEST_RESULT);
 
 	cut_test_signals[FAILURE]
         = g_signal_new ("failure",
@@ -334,8 +334,16 @@ cut_test_run (CutTest *test, CutTestContext *test_context, CutRunner *runner)
     }
     g_timer_stop(priv->timer);
 
-    if (success)
-        g_signal_emit_by_name(test, "success");
+    if (success) {
+        CutTestResult *result;
+        result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
+                                     cut_test_get_name(test),
+                                     NULL, NULL,
+                                     NULL, NULL, 
+                                     NULL, NULL, 0);
+        g_signal_emit_by_name(test, "success", result);
+        g_object_unref(result);
+    }
 
     g_signal_emit_by_name(test, "complete");
 
@@ -404,5 +412,5 @@ cut_test_stop_timer (CutTest *test)
 }
 
 /*
-vi:nowrap:ai:expandtab:sw=4
+vi:ts=4:nowrap:ai:expandtab:sw=4
 */

@@ -3,6 +3,11 @@
 	* cutter/module/report/cut-report-xml.c: Added some utility functions.
 	* cutter/cut-test-result.[c|h]; Added a property of elapsed time.
 	* cutter/cut-test.[c|h]: Added cut_test_stop_timer().
+	* cutter/cut-test.[c|h]: "success" signal is accompanied with
+	CutTestResult.
+	* cutter/cut-test-case.c, cutter/cut-test-suite.c,
+	cutter/cut-runner.c, cutter/module/ui/cut-ui-console.c: Receive
+	CutTestResult from "success" signal.
 
 2008-02-26  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
