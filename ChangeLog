@@ -15,6 +15,7 @@
 	cutter/cut-test-suite.c, cutter/cut-runner.c: cut_test_result_new()
 	need now CutTest, CutTestCase and CutTestSuite objects instead of
 	their name.
+	* test/test-cut-test-result.c: NULL.
 
 2008-02-26  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
