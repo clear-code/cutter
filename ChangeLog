@@ -9,6 +9,7 @@
 	since metadata order should be preserved.
 	* cutter/module/report/cut-report-xml.c: Use %g instead of %f for
 	output elapsed time.
+	* cutter/module/report/cut-report-xml.c: Do not register type twice.
 
 2008-02-27  Kouhei Sutou  <kou@cozmixng.org>
 
