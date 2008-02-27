@@ -1,6 +1,7 @@
 2008-02-28  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* test/test-cut-report-xml.c: Set elapsed time explicitly.
+	* test/test-cut-report-xml.c: Set independent test context.
 
 2008-02-27  Kouhei Sutou  <kou@cozmixng.org>
 
