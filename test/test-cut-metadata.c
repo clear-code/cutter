@@ -95,7 +95,7 @@ test_get_metadata (void)
     cut_assert(tests);
 
     cut_assert(1, g_list_length(tests));
-    cut_assert_equal_string("1234", cut_test_get_metadata(CUT_TEST(tests->data), "bug"));
+    cut_assert_equal_string("9", cut_test_get_metadata(CUT_TEST(tests->data), "bug"));
     cut_assert_equal_string("5678", cut_test_get_metadata(CUT_TEST(tests->data), "priority"));
 }
 

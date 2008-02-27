@@ -350,7 +350,7 @@ collect_metadata (CutLoaderPrivate *priv, const gchar *test_name)
                 const gchar *value = function();
                 metadata = cut_test_metadata_new(name, value);
                 g_free(name);
-                metadata_list = g_list_prepend(metadata_list, metadata);
+                metadata_list = g_list_append(metadata_list, metadata);
             }
         } else if (is_valid_metadata_function_name(function_name, test_name)) {
             CutMetadataFunction function = NULL;
@@ -362,7 +362,7 @@ collect_metadata (CutLoaderPrivate *priv, const gchar *test_name)
                     if (!metadata->name || !metadata->value)
                         break;
                     new_metadata = cut_test_metadata_new(metadata->name, metadata->value);
-                    metadata_list = g_list_prepend(metadata_list, new_metadata);
+                    metadata_list = g_list_append(metadata_list, new_metadata);
                     metadata++;
                 }
             }

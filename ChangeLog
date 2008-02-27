@@ -2,6 +2,11 @@
 
 	* test/test-cut-report-xml.c: Set elapsed time explicitly.
 	* test/test-cut-report-xml.c: Set independent test context.
+	* test/test-cut-metadata.c,
+	test/metadata_test_dir/dummy-test-functions.c: Added data replacing
+	test.
+	* cutter/cut-loader.c: Use g_list_append() instead of g_list_prepend()
+	since metadata order should be preserved.
 
 2008-02-27  Kouhei Sutou  <kou@cozmixng.org>
 
