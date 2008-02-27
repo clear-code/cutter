@@ -485,11 +485,14 @@ append_test_case_info_to_string (GString *string, const gchar *test_case_name)
 static void
 append_test_result_to_string (GString *string, CutTestResult *result)
 {
+    gchar *elapsed_string;
+    elapsed_string = g_strdup_printf("%f", cut_test_result_get_elapsed(result));
     append_element_with_children(string, 4, "result",
                                  "status", result_status_to_name(cut_test_result_get_status(result)),
                                  "detail", "",
-                                 "elapsed", "",
+                                 "elapsed", elapsed_string,
                                  NULL);
+    g_free(elapsed_string);
 }
 
 static gchar *
