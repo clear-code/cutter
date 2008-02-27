@@ -6,6 +6,7 @@
     </test_case>
     <name>test_my_test</name>
     <description>My Test</description>
+    <!-- n metadata support? -->
     <metadata>
       <name>category</name>
       <value>initialization</value>
