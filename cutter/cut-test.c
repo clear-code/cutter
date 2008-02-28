@@ -339,7 +339,8 @@ cut_test_run (CutTest *test, CutTestContext *test_context, CutRunner *runner)
         CutTestResult *result;
         result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
                                      test,
-                                     NULL, NULL,
+                                     cut_test_context_get_test_case(test_context),
+                                     NULL,
                                      NULL, NULL, 
                                      NULL, NULL, 0);
         g_signal_emit_by_name(test, "success", result);

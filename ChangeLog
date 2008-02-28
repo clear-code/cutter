@@ -14,6 +14,7 @@
 	* test/cut-test-report-xml.c: Load report module in initialize().
 	* cutter/moculle/report/cut-report-xml.c: register "CutReportXML" type
 	many many times.
+	* cutter/cut-test.c: Set test_case to CutTestResult.
 
 2008-02-28  Kouhei Sutou  <kou@cozmixng.org>
 
