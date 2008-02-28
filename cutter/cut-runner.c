@@ -165,7 +165,7 @@ cut_runner_class_init (CutRunnerClass *klass)
     g_object_class_install_property(gobject_class, PROP_USE_MULTI_THREAD, spec);
 
 
-	signals[READY_TEST_SUITE]
+    signals[READY_TEST_SUITE]
         = g_signal_new ("ready-test-suite",
                         G_TYPE_FROM_CLASS (klass),
                         G_SIGNAL_RUN_LAST,
@@ -175,7 +175,7 @@ cut_runner_class_init (CutRunnerClass *klass)
                         G_TYPE_NONE, 3,
                         CUT_TYPE_TEST_SUITE, G_TYPE_UINT, G_TYPE_UINT);
 
-	signals[START_TEST_SUITE]
+    signals[START_TEST_SUITE]
         = g_signal_new ("start-test-suite",
                         G_TYPE_FROM_CLASS (klass),
                         G_SIGNAL_RUN_LAST,
@@ -184,7 +184,7 @@ cut_runner_class_init (CutRunnerClass *klass)
                         g_cclosure_marshal_VOID__OBJECT,
                         G_TYPE_NONE, 1, CUT_TYPE_TEST_SUITE);
 
-	signals[READY_TEST_CASE]
+    signals[READY_TEST_CASE]
         = g_signal_new ("ready-test-case",
                         G_TYPE_FROM_CLASS (klass),
                         G_SIGNAL_RUN_LAST,
@@ -193,7 +193,7 @@ cut_runner_class_init (CutRunnerClass *klass)
                         _cut_marshal_VOID__OBJECT_UINT,
                         G_TYPE_NONE, 2, CUT_TYPE_TEST_CASE, G_TYPE_UINT);
 
-	signals[START_TEST_CASE]
+    signals[START_TEST_CASE]
         = g_signal_new ("start-test-case",
                         G_TYPE_FROM_CLASS (klass),
                         G_SIGNAL_RUN_LAST,
@@ -202,7 +202,7 @@ cut_runner_class_init (CutRunnerClass *klass)
                         g_cclosure_marshal_VOID__OBJECT,
                         G_TYPE_NONE, 1, CUT_TYPE_TEST_CASE);
 
-	signals[START_TEST]
+    signals[START_TEST]
         = g_signal_new ("start-test",
                         G_TYPE_FROM_CLASS (klass),
                         G_SIGNAL_RUN_LAST,
@@ -211,7 +211,7 @@ cut_runner_class_init (CutRunnerClass *klass)
                         _cut_marshal_VOID__OBJECT_OBJECT,
                         G_TYPE_NONE, 2, CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT);
 
-	signals[PASS]
+    signals[PASS]
         = g_signal_new ("pass",
                         G_TYPE_FROM_CLASS (klass),
                         G_SIGNAL_RUN_LAST,
@@ -220,7 +220,7 @@ cut_runner_class_init (CutRunnerClass *klass)
                         _cut_marshal_VOID__OBJECT_OBJECT,
                         G_TYPE_NONE, 2, CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT);
 
-	signals[SUCCESS]
+    signals[SUCCESS]
         = g_signal_new ("success",
                         G_TYPE_FROM_CLASS (klass),
                         G_SIGNAL_RUN_LAST,
@@ -229,7 +229,7 @@ cut_runner_class_init (CutRunnerClass *klass)
                         g_cclosure_marshal_VOID__OBJECT,
                         G_TYPE_NONE, 1, CUT_TYPE_TEST);
 
-	signals[FAILURE]
+    signals[FAILURE]
         = g_signal_new ("failure",
                         G_TYPE_FROM_CLASS (klass),
                         G_SIGNAL_RUN_LAST,
@@ -240,7 +240,7 @@ cut_runner_class_init (CutRunnerClass *klass)
                         CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT,
                         CUT_TYPE_TEST_RESULT);
 
-	signals[ERROR]
+    signals[ERROR]
         = g_signal_new ("error",
                         G_TYPE_FROM_CLASS (klass),
                         G_SIGNAL_RUN_LAST,
@@ -251,7 +251,7 @@ cut_runner_class_init (CutRunnerClass *klass)
                         CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT,
                         CUT_TYPE_TEST_RESULT);
 
-	signals[PENDING]
+    signals[PENDING]
         = g_signal_new ("pending",
                         G_TYPE_FROM_CLASS (klass),
                         G_SIGNAL_RUN_LAST,
@@ -262,7 +262,7 @@ cut_runner_class_init (CutRunnerClass *klass)
                         CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT,
                         CUT_TYPE_TEST_RESULT);
 
-	signals[NOTIFICATION]
+    signals[NOTIFICATION]
         = g_signal_new ("notification",
                         G_TYPE_FROM_CLASS (klass),
                         G_SIGNAL_RUN_LAST,
@@ -282,7 +282,7 @@ cut_runner_class_init (CutRunnerClass *klass)
                         _cut_marshal_VOID__OBJECT_OBJECT,
                         G_TYPE_NONE, 2, CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT);
 
-	signals[COMPLETE_TEST_CASE]
+    signals[COMPLETE_TEST_CASE]
         = g_signal_new ("complete-test-case",
                         G_TYPE_FROM_CLASS (klass),
                         G_SIGNAL_RUN_LAST,
@@ -291,7 +291,7 @@ cut_runner_class_init (CutRunnerClass *klass)
                         g_cclosure_marshal_VOID__OBJECT,
                         G_TYPE_NONE, 1, CUT_TYPE_TEST_CASE);
 
-	signals[COMPLETE_TEST_SUITE]
+    signals[COMPLETE_TEST_SUITE]
         = g_signal_new ("complete-test-suite",
                         G_TYPE_FROM_CLASS (klass),
                         G_SIGNAL_RUN_LAST,
@@ -300,7 +300,7 @@ cut_runner_class_init (CutRunnerClass *klass)
                         g_cclosure_marshal_VOID__OBJECT,
                         G_TYPE_NONE, 1, CUT_TYPE_TEST_SUITE);
 
-	signals[CRASHED]
+    signals[CRASHED]
         = g_signal_new ("crashed",
                         G_TYPE_FROM_CLASS (klass),
                         G_SIGNAL_RUN_LAST,
@@ -968,5 +968,5 @@ cut_runner_run (CutRunner *runner)
 }
 
 /*
-vi:nowrap:ai:expandtab:sw=4
+vi:ts=4:nowrap:ai:expandtab:sw=4
 */
