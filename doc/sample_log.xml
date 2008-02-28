@@ -1,74 +1,79 @@
-<test_logs>
-  <test_log>
+<report>
+  <result>
     <test_case>
       <name>MyTestCase</name>
       <description>Test case for my library</descrption>
     </test_case>
-    <name>test_my_test</name>
-    <description>My Test</description>
-    <!-- n metadata support? -->
-    <metadata>
-      <name>category</name>
-      <value>initialization</value>
-    </metadata>
-    <result>
-      <status>success</status>
-      <detail></detail>
-      <elapsed>0.0001</elapsed>
-    </result>
-  </test_log>
-  <test_log>
+    <test>
+      <name>test_my_test</name>
+      <description>My Test</description>
+      <attributes>
+        <attribute>
+          <name>category</name>
+          <value>initialization</value>
+        </attribute>
+      </attributes>
+    </test>
+    <status>success</status>
+    <detail></detail>
+    <elapsed>0.0001</elapsed>
+  </result>
+  <result>
     <test_case>
       <name>MyTestCase</name>
       <description>Test case for my library</descrption>
     </test_case>
-    <name>test_my_test2</name>
-    <description>My Test2</description>
-    <metadata>
-      <name>bug</name>
-      <value>1234</value>
-    </metadata>
-    <result>
-      <status>failure</status>
-      <detail>
+    <test>
+      <name>test_my_test2</name>
+      <description>My Test2</description>
+      <attributes>
+        <attribute>
+          <name>bug</name>
+          <value>1234</value>
+        </attribute>
+      </attributes>
+    </test>
+    <status>failure</status>
+    <detail>
 &lt;"1234" == cut_test_get_metadata(CUT_TEST(tests-&gt;data), "bug")&gt;
 expected: &lt;1234&gt;
  but was: &lt;(null)&gt;
-      </detail>
-      <backtrace>
-        <entry>
-          <file>./test_get_metadata.c</file>
-          <line>12</line>
-          <info>test_get_bug_id()</info>
-        </entry>
-      </backtrace>
-      <elapsed>0.002</elapsed>
-    </result>
-  </test_log>
-  <test_log>
+    </detail>
+    <backtrace>
+      <entry>
+        <file>./test_get_metadata.c</file>
+        <line>12</line>
+        <info>test_get_bug_id()</info>
+      </entry>
+    </backtrace>
+    <elapsed>0.002</elapsed>
+  </result>
+  <result>
     <test_case>
       <name>MyTestCase</name>
       <description>Test case for my library</descrption>
     </test_case>
-    <name>test_my_pending_test</name>
-    <description>My Penging Test</description>
-    <metadata>
-      <name>bug</name>
-      <value>1235</value>
-    </metadata>
-    <result>
-      <status>pending</status>
-      <detail>
+    <test>
+      <name>test_my_pending_test</name>
+      <description>My Penging Test</description>
+      <attributes>
+        <attribute>
+          <name>bug</name>
+          <value>1235</value>
+        </attribute>
+      </attributes>
+    <test>
+    <status>pending</status>
+    <detail>
 Cannot set locale to de_DE, skipping
-      </detail>
-      <backtrace>
-        <entry>
-          <file>./option.c</file>
-          <line>396</line>
-          <info>test_arg_double_de_DE_locale()</info>
-        </entry>
-      </backtrace>
-      <elapsed>0.002</elapsed>
-    </result>
-  </test_log>
-</test_logs>
+    </detail>
+    <backtrace>
+      <entry>
+        <file>./option.c</file>
+        <line>396</line>
+        <info>test_arg_double_de_DE_locale()</info>
+      </entry>
+    </backtrace>
+    <elapsed>0.002</elapsed>
+  </result>
+</report>

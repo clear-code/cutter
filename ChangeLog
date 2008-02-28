@@ -1,3 +1,7 @@
+2008-02-28  Kouhei Sutou  <kou@cozmixng.org>
+
+	* doc/sample_log.xml: updated.
+
 2008-02-28  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-test-case.[c|h], cutter/cut-loader.c,
