@@ -295,10 +295,8 @@ cut_test_case_new (const gchar *name,
                         get_current_test_context_function,
                         "set-current-test-context-function",
                         set_current_test_context_function,
-                        "initialize-function",
-                        initialize_function,
-                        "finalize-function",
-                        finalize_function,
+                        "initialize-function", initialize_function,
+                        "finalize-function", finalize_function,
                         NULL);
 }
 

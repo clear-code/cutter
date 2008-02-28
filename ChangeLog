@@ -4,6 +4,9 @@
 	test/cut-test-case.c, test/test-cut-test-suite.c,
 	test/test-cut-report-xml.c: cut_test_case_new() needs now
 	initialization and finalization functions.
+	* cutter/cut-loader.c, test/test-cut-loader.c,
+	test/loader_test_dir/dummy-test-functions.c: Load initialize() and
+	finalize() symbols. 
 
 2008-02-28  Kouhei Sutou  <kou@cozmixng.org>
 

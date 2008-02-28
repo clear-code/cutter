@@ -386,6 +386,8 @@ create_test_case (CutLoader *loader)
     CutSetupFunction setup_function = NULL;
     CutGetCurrentTestContextFunction get_current_test_context_function = NULL;
     CutSetCurrentTestContextFunction set_current_test_context_function = NULL;
+    CutInitializeFunction initialize_function = NULL;
+    CutFinalizeFunction finalize_function = NULL;
     CutTearDownFunction teardown_function = NULL;
     gchar *test_case_name, *filename;
 
@@ -403,6 +405,12 @@ create_test_case (CutLoader *loader)
     g_module_symbol(priv->module,
                     "set_current_test_context",
                     (gpointer)&set_current_test_context_function);
+    g_module_symbol(priv->module,
+                    "initialize",
+                    (gpointer)&initialize_function);
+    g_module_symbol(priv->module,
+                    "finalize",
+                    (gpointer)&finalize_function);
 
     filename = g_path_get_basename(priv->so_filename);
     if (g_str_has_prefix(filename, "lib")) {
@@ -419,7 +427,8 @@ create_test_case (CutLoader *loader)
                                   teardown_function,
                                   get_current_test_context_function,
                                   set_current_test_context_function,
-                                  NULL, NULL);
+                                  initialize_function,
+                                  finalize_function);
     g_free(test_case_name);
 
     g_object_ref(loader);

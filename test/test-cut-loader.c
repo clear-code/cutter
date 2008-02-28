@@ -4,6 +4,7 @@
 #include "cuttest-utils.h"
 
 void test_load_function (void);
+void test_load_initialize_and_finalize_function (void);
 
 static CutLoader *test_loader;
 static CutTestCase *test_case;
@@ -33,7 +34,8 @@ teardown (void)
         g_object_unref(test_loader);
     if (test_case)
         g_object_unref(test_case);
-    g_strfreev(test_names);
+    if (test_names)
+        g_strfreev(test_names);
 }
 
 static const gchar *expected_functions[] = {
@@ -86,6 +88,23 @@ test_load_function (void)
     cut_assert_equal_string_array(expected_functions, test_names);
 }
 
+void
+test_load_initialize_and_finalize_function (void)
+{
+    CutInitializeFunction initialize_function = NULL;
+    CutFinalizeFunction finalize_function = NULL;
+
+    test_case = cut_loader_load_test_case(test_loader);
+    cut_assert(test_case);
+
+    g_object_get(G_OBJECT(test_case),
+                 "initialize-function", &initialize_function,
+                 "finalize-function", &finalize_function,
+                 NULL);
+    cut_assert(initialize_function);
+    cut_assert(finalize_function);
+}
+
 /*
-vi:nowrap:ai:expandtab:sw=4
+vi:ts=4:nowrap:ai:expandtab:sw=4
 */

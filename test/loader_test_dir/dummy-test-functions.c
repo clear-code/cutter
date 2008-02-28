@@ -4,6 +4,8 @@ void test_abcdefghijklmnopqratuvwzyz_ABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789 (void
 void test_dummy_function1 (void);
 void test_dummy_function2 (void);
 void test_dummy_function3 (void);
+void initialize (void);
+void finalize (void);
 
 /*
 int  test_invalid_return_value_function (void);
@@ -43,6 +45,16 @@ text_invalid_prefix_function (void)
     cut_error("This test name does not have \"test_\" prefix,"
               "should not be loaded!");
     test_static_function(); /* must not called! */
+}
+
+void
+initialize (void)
+{
+}
+
+void
+finalize (void)
+{
 }
 
 /*
