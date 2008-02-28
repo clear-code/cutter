@@ -395,12 +395,19 @@ static gboolean
 cut_test_case_run_tests (CutTestCase *test_case, CutRunner *runner,
                          const GList *tests)
 {
+    CutTestCasePrivate *priv;
     const GList *list;
     gboolean all_success = TRUE;
 
     cut_runner_start_test_case(runner, test_case);
     g_signal_emit_by_name(test_case, "ready", g_list_length((GList *)tests));
     g_signal_emit_by_name(CUT_TEST(test_case), "start");
+
+    priv = CUT_TEST_CASE_GET_PRIVATE(test_case);
+
+    if (priv->initialize) {
+        priv->initialize();
+    }
 
     for (list = tests; list; list = g_list_next(list)) {
         if (!list->data)
@@ -426,6 +433,9 @@ cut_test_case_run_tests (CutTestCase *test_case, CutRunner *runner,
         g_object_unref(result);
     }
 
+    if (priv->finalize) {
+        priv->finalize();
+    }
     g_signal_emit_by_name(CUT_TEST(test_case), "complete");
 
     return all_success;
