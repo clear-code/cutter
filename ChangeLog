@@ -1,3 +1,9 @@
+2008-02-28  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/Makefile.am: removed needless header file.
+
+	* README*, NEWS*: updated.
+
 2008-02-28  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-test.[c|h], cutter/cut-experimental.h,

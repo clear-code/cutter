@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 0.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-12-17 14:39+0900\n"
+"POT-Creation-Date: 2008-02-28 10:00+0900\n"
 "PO-Revision-Date: 2007-12-14 10:18+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
@@ -48,24 +48,24 @@ msgstr "UI共通のオプション"
 msgid "Show Common UI Options"
 msgstr "UI共通のオプションの表示"
 
-#: cutter/module/ui-factory/cut-ui-factory-console.c:279
+#: cutter/module/ui-factory/cut-ui-factory-console.c:287
 #, c-format
 msgid "Invalid color value: %s"
 msgstr "不正な色指定です: %s"
 
-#: cutter/module/ui-factory/cut-ui-factory-console.c:304
+#: cutter/module/ui-factory/cut-ui-factory-console.c:312
 msgid "Set verbose level"
 msgstr "詳細度を設定"
 
-#: cutter/module/ui-factory/cut-ui-factory-console.c:306
+#: cutter/module/ui-factory/cut-ui-factory-console.c:314
 msgid "Output log with colors"
 msgstr "色付きでログを出力"
 
-#: cutter/module/ui-factory/cut-ui-factory-console.c:314
+#: cutter/module/ui-factory/cut-ui-factory-console.c:322
 msgid "Console UI Options"
 msgstr "コンソールUIのオプション"
 
-#: cutter/module/ui-factory/cut-ui-factory-console.c:315
+#: cutter/module/ui-factory/cut-ui-factory-console.c:323
 msgid "Show Console UI Options"
 msgstr "コンソールUIのオプションの表示"
 
