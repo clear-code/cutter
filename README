@@ -217,6 +217,36 @@ pending, notification.
 See cutter/cut-assertions.h or
 ((<URL:http://cutter.sf.net/reference/cutter-cut-assertions.html>)).
 
+=== Attributes
+
+You can add attributes to your test to get more useful
+information on failure. For example, you can add Bug ID like
+the following
+
+  const char *bug_invalid_input(void);
+  void test_invalid_input(void);
+
+  const char *
+  bug_invalid_input (void)
+  {
+       return "123";
+  }
+
+  void
+  test_invalid_input (void)
+  {
+       cut_assert_equal("OK", get_input());
+  }
+
+In the above example, test_invalid_input test has an
+attribute that the test is for Bug #123.
+
+You need to define a function that returns const char * and
+has name "#{ATTRIBUTE_NAME}_#{TEST_NAME - 'test_' PREFIX}"
+to add an attribute to a test. In the above example,
+an attribute set function, "bug_invalid_input", is defined
+to add "bug" attribute to "test_invalid_input" test.
+
 === Template
 
 The following is a template of test.

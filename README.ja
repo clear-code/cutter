@@ -230,6 +230,36 @@ cutter/cut-assertions.hあるいは
 ((<URL:http://cutter.sf.net/reference/ja/cutter-cut-assertions.html>))
 を見てください。
 
+=== 属性
+
+テストに属性を加えて、テスト失敗時により有益な情報を利用する
+ことができます。例えば、以下のようにテストにBug IDの情報を付
+加することができます。
+
+  const char *bug_invalid_input(void);
+  void test_invalid_input(void);
+
+  const char *
+  bug_invalid_input (void)
+  {
+       return "123";
+  }
+
+  void
+  test_invalid_input (void)
+  {
+       cut_assert_equal("OK", get_input());
+  }
+
+この例では、test_invalid_inputテストがBug #123のテストである
+という情報を付加しています。
+
+属性は"「属性名」_「テスト名からtest_を除いたもの」"という名
+前のconst char *を返す関数を定義することで追加できます。上記
+の例では「bug」属性を「test_invalid_input」テストに追加する
+ために「bug_invalid_input」という属性設定関数を定義していま
+す。
+
 === 雛型
 
 テストの雛型は以下のようになります．
