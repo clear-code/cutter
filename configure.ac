@@ -161,7 +161,7 @@ AC_SUBST(CUTTER)
 
 CUTTER_CFLAGS="$GLIB_CFLAGS -DUI_MODULEDIR=\\\"\"\$(ui_moduledir)\"\\\""
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DUI_FACTORY_MODULEDIR=\\\"\"\$(ui_factory_moduledir)\"\\\""
-CUTTER_CFLAGS="$CUTTER_CFLAGS -DREPORT_MODULEDIR=\\\"\"\$(report_factory_moduledir)\"\\\""
+CUTTER_CFLAGS="$CUTTER_CFLAGS -DREPORT_MODULEDIR=\\\"\"\$(report_moduledir)\"\\\""
 AC_SUBST(CUTTER_CFLAGS)
 
 AC_CONFIG_FILES([Makefile
@@ -181,7 +181,6 @@ AC_CONFIG_FILES([Makefile
 		 test/loader_test_dir/Makefile
 		 test/repository_test_dir/Makefile
 		 test/attribute_test_dir/Makefile
-		 test/report_test_dir/Makefile
 		 po/Makefile.in
 		 misc/Makefile
 		 doc/Makefile

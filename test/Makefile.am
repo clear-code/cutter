@@ -1,7 +1,6 @@
 SUBDIRS = 			\
 	loader_test_dir		\
 	attribute_test_dir	\
-	report_test_dir		\
 	repository_test_dir
 
 INCLUDES = $(CUTTER_CFLAGS)	\
