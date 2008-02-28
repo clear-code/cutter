@@ -483,15 +483,22 @@ append_test_case_info_to_string (GString *string, const gchar *test_case_name)
 }
 
 static void
+append_test_info_to_string (GString *string, CutTest *test)
+{
+    append_element_with_children(string, 4, "test",
+                                 "name", cut_test_get_name(test),
+                                 NULL);
+}
+
+static void
 append_test_result_to_string (GString *string, CutTestResult *result)
 {
     gchar *elapsed_string;
     elapsed_string = g_strdup_printf("%g", cut_test_result_get_elapsed(result));
-    append_element_with_children(string, 4, "result",
-                                 "status", result_status_to_name(cut_test_result_get_status(result)),
-                                 "detail", "",
-                                 "elapsed", elapsed_string,
-                                 NULL);
+    append_element_with_value(string, 4,
+                              "status", result_status_to_name(cut_test_result_get_status(result)));
+    append_element_with_value(string, 4, "detail", "");
+    append_element_with_value(string, 4, "elapsed", elapsed_string);
     g_free(elapsed_string);
 }
 
@@ -503,14 +510,14 @@ get_result (CutTestResult *result)
 
     status = cut_test_result_get_status(result);
 
-    g_string_append(xml, "  <test_log>\n");
+    g_string_append(xml, "  <result>\n");
     append_test_case_info_to_string(xml, 
                                     cut_test_result_get_test_case_name(result));
-    append_element_with_value(xml, 4, "name", cut_test_result_get_test_name(result));
+    append_test_info_to_string(xml, cut_test_result_get_test(result));
     /* append_test_description_to_string(xml, cut_test_result_get_test_description(result)); */
     /* append_test_attributes(xml, cut_test_result_get_test_attributes(result)); */
     append_test_result_to_string(xml, result);
-    g_string_append(xml, "  </test_log>\n");
+    g_string_append(xml, "  </result>\n");
 
     return g_string_free(xml, FALSE);
 }
