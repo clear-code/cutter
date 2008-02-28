@@ -152,6 +152,22 @@ void setup(void);
  */
 void teardown(void);
 
+/**
+ * initialize:
+ *
+ * If you define initialize() in your test program, cutter will
+ * call your initialize() before each your test case is run.
+ */
+void initialize(void);
+
+/**
+ * finalize:
+ *
+ * If you define finalize() in your test program, cutter will
+ * call your finalize() after each your test case is run.
+ */
+void finalize(void);
+
 
 #ifdef __cplusplus
 }

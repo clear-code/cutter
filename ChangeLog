@@ -10,6 +10,7 @@
 	* cutter/cut-test-case.c: Invoke initialize() and finalize() functions
 	at the beggining and the ending of TestCase respectively. These are
 	not barriered by setjmp() yet.
+	* cutter/cutter.h: Define prototype of initialize() and finalize().
 
 2008-02-28  Kouhei Sutou  <kou@cozmixng.org>
 
