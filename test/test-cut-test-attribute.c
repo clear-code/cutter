@@ -7,9 +7,9 @@
 #include "cuttest-utils.h"
 #include "cuttest-assertions.h"
 
-void test_set_metadata (void);
+void test_set_attribute (void);
 void test_get_bug_id (void);
-void test_get_metadata (void);
+void test_get_attribute (void);
 
 static CutTest *test;
 static CutLoader *test_loader;
@@ -27,9 +27,9 @@ setup (void)
     gchar *test_path;
 
     test_path = g_build_filename(cuttest_get_base_dir(),
-                                 "metadata_test_dir",
+                                 "attribute_test_dir",
                                  ".libs",
-                                 "dummy_metadata_test.so",
+                                 "dummy_attribute_test.so",
                                  NULL);
     test_loader = cut_loader_new(test_path);
     g_free(test_path);
@@ -50,16 +50,16 @@ teardown (void)
 }
 
 void
-test_set_metadata (void)
+test_set_attribute (void)
 {
     test = cut_test_new("fail-test", NULL, fail_test);
     cut_assert(test);
-    cut_assert_null(cut_test_get_metadata(test, "category"));
-    cut_test_set_metadata(test, "category", "assertion");
+    cut_assert_null(cut_test_get_attribute(test, "category"));
+    cut_test_set_attribute(test, "category", "assertion");
     cut_assert_equal_string("assertion",
-                            cut_test_get_metadata(test, "category"));
-    cut_test_set_metadata(test, "category", "test");
-    cut_assert_equal_string("test", cut_test_get_metadata(test, "category"));
+                            cut_test_get_attribute(test, "category"));
+    cut_test_set_attribute(test, "category", "test");
+    cut_assert_equal_string("test", cut_test_get_attribute(test, "category"));
 }
 
 void
@@ -77,15 +77,15 @@ test_get_bug_id (void)
     cut_assert(tests);
 
     cut_assert(1, g_list_length(tests));
-    cut_assert_equal_string("1234567890", cut_test_get_metadata(CUT_TEST(tests->data), "bug"));
+    cut_assert_equal_string("1234567890", cut_test_get_attribute(CUT_TEST(tests->data), "bug"));
 }
 
 void
-test_get_metadata (void)
+test_get_attribute (void)
 {
     CutTestContainer *container;
     GList *tests;
-    const gchar *filter[] = {"/test_metadata/", NULL};
+    const gchar *filter[] = {"/test_attribute/", NULL};
 
     test_case = cut_loader_load_test_case(test_loader);
     cut_assert(test_case);
@@ -95,8 +95,8 @@ test_get_metadata (void)
     cut_assert(tests);
 
     cut_assert(1, g_list_length(tests));
-    cut_assert_equal_string("9", cut_test_get_metadata(CUT_TEST(tests->data), "bug"));
-    cut_assert_equal_string("5678", cut_test_get_metadata(CUT_TEST(tests->data), "priority"));
+    cut_assert_equal_string("9", cut_test_get_attribute(CUT_TEST(tests->data), "bug"));
+    cut_assert_equal_string("5678", cut_test_get_attribute(CUT_TEST(tests->data), "priority"));
 }
 
 /*

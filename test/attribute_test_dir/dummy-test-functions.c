@@ -3,12 +3,12 @@
 /* BUG entries */
 const char *bug_get_bug_id (void);
 
-/* metadata */
-const CutTestMetadata *meta_metadata (void);
+/* attribute */
+const CutTestAttribute *attributes_attribute (void);
 
 /* tests */
 void test_get_bug_id (void);
-void test_metadata (void);
+void test_attribute (void);
 
 const char *bug_get_bug_id (void) { return "1234567890"; }
 void
@@ -17,21 +17,21 @@ test_get_bug_id (void)
 }
 
 
-const CutTestMetadata *
-meta_metadata (void)
+const CutTestAttribute *
+attributes_attribute (void)
 {
-    static const CutTestMetadata metadata[] = {
+    static const CutTestAttribute attributes[] = {
         {"bug", "1234"},
         {"priority", "5678"},
         {"bug", "9"},
         {NULL, NULL}
     };
 
-    return metadata;
+    return attributes;
 }
 
 void
-test_metadata (void)
+test_attribute (void)
 {
 }
 

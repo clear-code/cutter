@@ -37,7 +37,7 @@
 #include "cut-experimental.h"
 
 #define TEST_NAME_PREFIX "test_"
-#define METADATA_PREFIX "meta_"
+#define ATTRIBUTE_PREFIX "attributes_"
 #define CUT_LOADER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_LOADER, CutLoaderPrivate))
 
 typedef struct _CutLoaderPrivate	CutLoaderPrivate;
@@ -295,45 +295,45 @@ is_including_test_name (const gchar *function_name, const gchar *test_name)
 }
 
 static gboolean
-is_valid_metadata_item_function_name (const gchar *function_name, const gchar *test_name)
+is_valid_attribute_function_name (const gchar *function_name, const gchar *test_name)
 {
-    return !g_str_has_prefix(function_name, METADATA_PREFIX) && 
+    return !g_str_has_prefix(function_name, ATTRIBUTE_PREFIX) && 
            is_including_test_name(function_name, test_name);
 }
 
 static gboolean
-is_valid_metadata_function_name (const gchar *function_name, const gchar *test_name)
+is_valid_attributes_function_name (const gchar *function_name, const gchar *test_name)
 {
-    return g_str_has_prefix(function_name, METADATA_PREFIX) &&
+    return g_str_has_prefix(function_name, ATTRIBUTE_PREFIX) &&
            is_including_test_name(function_name, test_name);
 }
 
 static gchar *
-get_metadata_name (const gchar *metadata_function_name, const gchar *test_name)
+get_attribute_name (const gchar *attribute_function_name, const gchar *test_name)
 {
     gchar *pos;
 
-    pos = g_strrstr(metadata_function_name, test_name + strlen(TEST_NAME_PREFIX)) - 1;
+    pos = g_strrstr(attribute_function_name, test_name + strlen(TEST_NAME_PREFIX)) - 1;
 
-    return g_strndup(metadata_function_name, pos - metadata_function_name);
+    return g_strndup(attribute_function_name, pos - attribute_function_name);
 }
 
-typedef const gchar *(*CutMetadataItemFunction)     (void);
-typedef CutTestMetadata *(*CutMetadataFunction)     (void);
+typedef const gchar *(*CutAttributeItemFunction)     (void);
+typedef CutTestAttribute *(*CutAttributeFunction)     (void);
 
-static CutTestMetadata *
-cut_test_metadata_new (const gchar *name, const gchar *value)
+static CutTestAttribute *
+cut_test_attribute_new (const gchar *name, const gchar *value)
 {
-    CutTestMetadata *metadata = g_new0(CutTestMetadata, 1);
-    metadata->name = g_strdup(name);
-    metadata->value = g_strdup(value);
-    return metadata;
+    CutTestAttribute *attribute = g_new0(CutTestAttribute, 1);
+    attribute->name = g_strdup(name);
+    attribute->value = g_strdup(value);
+    return attribute;
 }
 
 static GList *
-collect_metadata (CutLoaderPrivate *priv, const gchar *test_name)
+collect_attributes (CutLoaderPrivate *priv, const gchar *test_name)
 {
-    GList *metadata_list = NULL, *node;
+    GList *attributes = NULL, *node;
     if (!test_name)
         return NULL;
 
@@ -341,34 +341,34 @@ collect_metadata (CutLoaderPrivate *priv, const gchar *test_name)
         gchar *function_name = node->data;
         if (is_test_function_name(function_name))
             continue;
-        if (is_valid_metadata_item_function_name(function_name, test_name)) {
-            CutMetadataItemFunction function = NULL;
+        if (is_valid_attribute_function_name(function_name, test_name)) {
+            CutAttributeItemFunction function = NULL;
             g_module_symbol(priv->module, function_name, (gpointer)&function);
             if (function) {
-                CutTestMetadata *metadata;
-                gchar *name = get_metadata_name(function_name, test_name);
+                CutTestAttribute *attribute;
+                gchar *name = get_attribute_name(function_name, test_name);
                 const gchar *value = function();
-                metadata = cut_test_metadata_new(name, value);
+                attribute = cut_test_attribute_new(name, value);
                 g_free(name);
-                metadata_list = g_list_append(metadata_list, metadata);
+                attributes = g_list_append(attributes, attribute);
             }
-        } else if (is_valid_metadata_function_name(function_name, test_name)) {
-            CutMetadataFunction function = NULL;
+        } else if (is_valid_attributes_function_name(function_name, test_name)) {
+            CutAttributeFunction function = NULL;
             g_module_symbol(priv->module, function_name, (gpointer)&function);
             if (function) {
-                CutTestMetadata *metadata = function();
+                CutTestAttribute *attribute = function();
                 while (TRUE) {
-                    CutTestMetadata *new_metadata;
-                    if (!metadata->name || !metadata->value)
+                    CutTestAttribute *new_attribute;
+                    if (!attribute->name || !attribute->value)
                         break;
-                    new_metadata = cut_test_metadata_new(metadata->name, metadata->value);
-                    metadata_list = g_list_append(metadata_list, new_metadata);
-                    metadata++;
+                    new_attribute = cut_test_attribute_new(attribute->name, attribute->value);
+                    attributes = g_list_append(attributes, new_attribute);
+                    attribute++;
                 }
             }
         }
     }
-    return metadata_list;
+    return attributes;
 }
 
 static void
@@ -428,16 +428,16 @@ create_test_case (CutLoader *loader)
 }
 
 static void
-set_metadata (CutTest *test, GList *metadata_list)
+set_attributes (CutTest *test, GList *attributes)
 {
     GList *node;
-    for (node = metadata_list; node; node = g_list_next(node)) {
-        CutTestMetadata *metadata = (CutTestMetadata *)node->data;
-        cut_test_set_metadata(test, metadata->name, metadata->value);
-        g_free((gchar *)metadata->name);
-        g_free((gchar *)metadata->value);
+    for (node = attributes; node; node = g_list_next(node)) {
+        CutTestAttribute *attribute = (CutTestAttribute *)node->data;
+        cut_test_set_attribute(test, attribute->name, attribute->value);
+        g_free((gchar *)attribute->name);
+        g_free((gchar *)attribute->value);
     }
-    g_list_free(metadata_list);
+    g_list_free(attributes);
 }
 
 CutTestCase *
@@ -473,11 +473,11 @@ cut_loader_load_test_case (CutLoader *loader)
         name = node->data;
         g_module_symbol(priv->module, name, (gpointer)&function);
         if (function) {
-            GList *metadata_list;
+            GList *attributes;
             test = cut_test_new(name, NULL, function);
-            metadata_list = collect_metadata(priv, name);
-            if (metadata_list) {
-                set_metadata(test, metadata_list);
+            attributes = collect_attributes(priv, name);
+            if (attributes) {
+                set_attributes(test, attributes);
             }
             cut_test_case_add_test(test_case, test);
         }

@@ -1,6 +1,6 @@
 SUBDIRS = 			\
 	loader_test_dir		\
-	metadata_test_dir	\
+	attribute_test_dir	\
 	report_test_dir		\
 	repository_test_dir
 
@@ -20,7 +20,7 @@ noinst_LTLIBRARIES = 				\
 		cuttest_utils.la		\
 		test_cut_assertions.la		\
 		test_cut_gassertions.la		\
-		test_cut_metadata.la		\
+		test_cut_test_attribute.la	\
 		test_cut_test.la		\
 		test_cut_test_result.la		\
 		test_cut_test_case.la		\
@@ -41,8 +41,6 @@ cuttest_utils_la_SOURCES = 		\
 
 test_cut_assertions_la_SOURCES  = test-cut-assertions.c cuttest-assertions.h
 test_cut_gassertions_la_SOURCES = test-cut-gassertions.c cuttest-assertions.h
-test_cut_metadata_la_SOURCES    = test-cut-metadata.c
-test_cut_metadata_la_LIBADD     = cuttest_utils.la
 test_cut_test_la_SOURCES        = test-cut-test.c
 test_cut_test_result_la_SOURCES = test-cut-test-result.c
 test_cut_test_case_la_SOURCES   = test-cut-test-case.c
@@ -54,6 +52,8 @@ test_cut_repository_la_SOURCES  = test-cut-repository.c
 test_cut_repository_la_LIBADD   = cuttest_utils.la
 test_cut_value_equal_la_SOURCES = test-cut-value-equal.c
 test_cut_report_xml_la_SOURCES  = test-cut-report-xml.c
+test_cut_test_attribute_la_SOURCES = test-cut-test-attribute.c
+test_cut_test_attribute_la_LIBADD  = cuttest_utils.la
 
 echo-cutter:
 	@echo $(CUTTER)

@@ -178,7 +178,7 @@ AC_CONFIG_FILES([Makefile
                  test/Makefile
 		 test/loader_test_dir/Makefile
 		 test/repository_test_dir/Makefile
-		 test/metadata_test_dir/Makefile
+		 test/attribute_test_dir/Makefile
 		 test/report_test_dir/Makefile
 		 po/Makefile.in
 		 misc/Makefile

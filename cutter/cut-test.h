@@ -97,13 +97,12 @@ const gchar *cut_test_get_description     (CutTest *test);
 
 gdouble      cut_test_get_elapsed         (CutTest *test);
 
-const gchar *cut_test_get_metadata        (CutTest     *test,
-                                           const gchar *name);
-void         cut_test_set_metadata        (CutTest     *test,
-                                           const gchar *name,
-                                           const gchar *value);
-
-const GHashTable *cut_test_get_all_metadata (CutTest   *test);
+const gchar *cut_test_get_attribute       (CutTest    *test,
+                                          const gchar *name);
+void         cut_test_set_attribute       (CutTest    *test,
+                                          const gchar *name,
+                                          const gchar *value);
+const GHashTable *cut_test_get_attributes (CutTest    *test);
 
 G_END_DECLS
 

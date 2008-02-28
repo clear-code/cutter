@@ -42,7 +42,7 @@ struct _CutTestPrivate
     gchar *description;
     CutTestFunction test_function;
     GTimer *timer;
-    GHashTable *metadata;
+    GHashTable *attributes;
 };
 
 enum
@@ -210,8 +210,8 @@ cut_test_init (CutTest *test)
 
     priv->test_function = NULL;
     priv->timer = NULL;
-    priv->metadata = g_hash_table_new_full(g_str_hash, g_str_equal,
-                                           g_free, g_free);
+    priv->attributes = g_hash_table_new_full(g_str_hash, g_str_equal,
+                                             g_free, g_free);
 }
 
 static void
@@ -236,9 +236,9 @@ dispose (GObject *object)
         priv->timer = NULL;
     }
 
-    if (priv->metadata) {
-        g_hash_table_unref(priv->metadata);
-        priv->metadata = NULL;
+    if (priv->attributes) {
+        g_hash_table_unref(priv->attributes);
+        priv->attributes = NULL;
     }
 
     G_OBJECT_CLASS(cut_test_parent_class)->dispose(object);
@@ -388,23 +388,23 @@ cut_test_get_elapsed (CutTest *test)
 }
 
 const gchar *
-cut_test_get_metadata (CutTest *test, const gchar *name)
+cut_test_get_attribute (CutTest *test, const gchar *name)
 {
-    return g_hash_table_lookup(CUT_TEST_GET_PRIVATE(test)->metadata, name);
+    return g_hash_table_lookup(CUT_TEST_GET_PRIVATE(test)->attributes, name);
 }
 
 void
-cut_test_set_metadata (CutTest *test, const gchar *name, const gchar *value)
+cut_test_set_attribute (CutTest *test, const gchar *name, const gchar *value)
 {
-    g_hash_table_replace(CUT_TEST_GET_PRIVATE(test)->metadata,
+    g_hash_table_replace(CUT_TEST_GET_PRIVATE(test)->attributes,
                          g_strdup(name),
                          g_strdup(value));
 }
 
 const GHashTable *
-cut_test_get_all_metadata (CutTest *test)
+cut_test_get_attributes (CutTest *test)
 {
-    return CUT_TEST_GET_PRIVATE(test)->metadata;
+    return CUT_TEST_GET_PRIVATE(test)->attributes;
 }
 
 void

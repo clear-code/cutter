@@ -466,7 +466,7 @@ typedef struct _ConsoleAndStatus {
 } ConsoleAndStatus;
 
 static void
-print_each_metadata (gpointer key, gpointer value, gpointer data)
+print_each_attribute (gpointer key, gpointer value, gpointer data)
 {
     ConsoleAndStatus *info = (ConsoleAndStatus*)data;
     g_print("\n");
@@ -477,14 +477,14 @@ print_each_metadata (gpointer key, gpointer value, gpointer data)
 }
 
 static void
-print_test_metadata (CutUIConsole *console, CutTestResultStatus status,
+print_test_attributes (CutUIConsole *console, CutTestResultStatus status,
                      CutTest *test)
 {
     ConsoleAndStatus info;
     info.console = console;
     info.status = status;
-    g_hash_table_foreach((GHashTable*)cut_test_get_all_metadata(test),
-                         (GHFunc)print_each_metadata, &info);
+    g_hash_table_foreach((GHashTable*)cut_test_get_attributes(test),
+                         (GHFunc)print_each_attribute, &info);
 }
 
 static void
@@ -533,7 +533,7 @@ print_results (CutUIConsole *console, CutRunner *runner)
 
         test = cut_test_result_get_test(result);
         if (test) 
-            print_test_metadata(console, status, test);
+            print_test_attributes(console, status, test);
 
         if (message) {
             g_print("\n");

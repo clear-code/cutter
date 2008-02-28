@@ -1,5 +1,11 @@
 2008-02-28  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
+	* cutter/cut-test.[c|h], cutter/cut-experimental.h,
+	cutter/cut-loader.c, cutter/module/ui/cut-ui-console.c,
+	test/*: metadata -> attribute.
+
+2008-02-28  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
 	* test/test-cut-report-xml.c: Set elapsed time explicitly.
 	* test/test-cut-report-xml.c: Set independent test context.
 	* test/test-cut-metadata.c,
