@@ -135,6 +135,12 @@ AC_ARG_WITH([sf-user],
             [SF_USER="$withval"])
 AC_SUBST(SF_USER)
 
+SF_USER_OPTION=""
+if test -n "$SF_USER"; then
+   SF_USER_OPTION="--username $SF_USER"
+fi
+AC_SUBST(SF_USER_OPTION)
+
 SF_HOST="shell.sourceforge.net"
 if test -n "$SF_USER"; then
    SF_HOST="$SF_USER@$SF_HOST"
@@ -147,11 +153,7 @@ AC_SUBST(SF_HTDOCS_PATH)
 SF_HTDOCS="$SF_HOST:$SF_HTDOCS_PATH"
 AC_SUBST(SF_HTDOCS)
 
-SF_REPOS="cutter.svn.sourceforge.net/svnroot/cutter"
-if test -n "$SF_USER"; then
-   SF_REPOS="$SF_USER@$SF_REPOS"
-fi
-SF_REPOS="https://$SF_REPOS"
+SF_REPOS="https://cutter.svn.sourceforge.net/svnroot/cutter"
 AC_SUBST(SF_REPOS)
 
 CUTTER="\$(top_builddir)/cutter/cutter\$(EXEEXT)"

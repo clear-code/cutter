@@ -37,5 +37,5 @@ tag:
 	    echo "$(VERSION) is already tagged";		\
 	    exit 1;						\
 	  fi
-	svn cp -m "released $(VERSION)!!!" \
+	svn cp -m "released $(VERSION)!!!" $(SF_USER_OPTION) \
 	  $(SF_REPOS)/trunk $(SF_REPOS)/tags/$(VERSION)
