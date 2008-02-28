@@ -11,6 +11,9 @@
 	at the beggining and the ending of TestCase respectively. These are
 	not barriered by setjmp() yet.
 	* cutter/cutter.h: Define prototype of initialize() and finalize().
+	* test/cut-test-report-xml.c: Load report module in initialize().
+	* cutter/moculle/report/cut-report-xml.c: register "CutReportXML" type
+	many many times.
 
 2008-02-28  Kouhei Sutou  <kou@cozmixng.org>
 

@@ -23,20 +23,31 @@ dummy_failure_test (void)
 }
 
 void
+initialize (void)
+{
+    cut_report_load(NULL);
+}
+
+void
+finalize (void)
+{
+    cut_report_unload();
+}
+
+void
 setup (void)
 {
     const gchar *test_names[] = {"/.*/", NULL};
     test_object = NULL;
     test_context = NULL;
-    cut_report_load(NULL);
     runner = cut_runner_new();
+    report = cut_report_new("xml", runner, NULL);
     cut_runner_set_target_test_names(runner, test_names);
     test_case = cut_test_case_new("dummy test case",
                                   NULL, NULL, 
                                   get_current_test_context,
                                   set_current_test_context,
                                   NULL, NULL);
-    report = cut_report_new("xml", runner, NULL);
 }
 
 void
@@ -48,7 +59,6 @@ teardown (void)
         g_object_unref(test_context);
     g_object_unref(report);
     g_object_unref(runner);
-    cut_report_unload();
 }
 
 static void

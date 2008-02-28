@@ -144,9 +144,6 @@ register_type (GTypeModule *type_module)
             (GInstanceInitFunc) init,
         };
 
-    if (g_type_from_name("CutReportXML"))
-        return;
-
     cut_type_report_xml =
         g_type_module_register_type(type_module,
                                     CUT_TYPE_REPORT,
