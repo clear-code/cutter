@@ -2,7 +2,7 @@
 #include "cut-runner.h"
 #include "cut-report.h"
 
-/* void test_report_success (void); */
+void test_report_success (void);
 void test_report_failure (void);
 
 static CutRunner *runner;
@@ -11,12 +11,10 @@ static CutTest *test_object;
 static CutTestCase *test_case;
 static CutTestContext *test_context;
 
-#if 0
 static void
 dummy_success_test (void)
 {
 }
-#endif
 
 static void
 dummy_failure_test (void)
@@ -36,7 +34,8 @@ setup (void)
     test_case = cut_test_case_new("dummy test case",
                                   NULL, NULL, 
                                   get_current_test_context,
-                                  set_current_test_context);
+                                  set_current_test_context,
+                                  NULL, NULL);
     report = cut_report_new("xml", runner, NULL);
 }
 
@@ -52,13 +51,11 @@ teardown (void)
     cut_report_unload();
 }
 
-#if 0
 static void
 cb_success_signal (CutTest *test, CutTestResult *result, gpointer data)
 {
     g_object_set(G_OBJECT(result), "elapsed", 0.0001, NULL);
 }
-#endif
 
 static void
 cb_failure_signal (CutTest *test, CutTestContext *context, CutTestResult *result, gpointer data)
@@ -83,7 +80,6 @@ run_the_test (CutTest *test)
     return success;
 }
 
-#if 0
 void
 test_report_success (void)
 {
@@ -108,7 +104,6 @@ test_report_success (void)
 
     cut_assert_equal_string_with_free(expected, cut_report_get_success_results(report));
 }
-#endif
 
 void
 test_report_failure (void)

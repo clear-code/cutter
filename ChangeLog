@@ -1,3 +1,10 @@
+2008-02-28  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-case.[c|h], cutter/cut-loader.c,
+	test/cut-test-case.c, test/test-cut-test-suite.c,
+	test/test-cut-report-xml.c: cut_test_case_new() needs now
+	initialization and finalization functions.
+
 2008-02-28  Kouhei Sutou  <kou@cozmixng.org>
 
 	* Makefile.am, configure.ac: fixed Subversion user name

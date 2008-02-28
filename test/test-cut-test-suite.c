@@ -100,7 +100,8 @@ setup (void)
 
     test_case = cut_test_case_new("dummy_test_case", NULL, NULL,
                                   get_current_test_context,
-                                  set_current_test_context);
+                                  set_current_test_context,
+                                  NULL, NULL);
     test = cut_test_new("dummy_test_1", NULL, dummy_test_function1);
     cut_test_case_add_test(test_case, test);
     test = cut_test_new("dummy_test_2", NULL, dummy_test_function2);
@@ -111,7 +112,8 @@ setup (void)
 
     test_case = cut_test_case_new("bummy_test_case", NULL, NULL,
                                   get_current_test_context,
-                                  set_current_test_context);
+                                  set_current_test_context,
+                                  NULL, NULL);
     test = cut_test_new("bummy_test_1", NULL, bummy_test_function1);
     cut_test_case_add_test(test_case, test);
     test = cut_test_new("bummy_test_2", NULL, bummy_test_function2);

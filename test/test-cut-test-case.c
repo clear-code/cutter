@@ -88,7 +88,8 @@ setup (void)
                                     dummy_setup_function,
                                     dummy_teardown_function,
                                     get_current_test_context,
-                                    set_current_test_context);
+                                    set_current_test_context,
+                                    NULL, NULL);
     test = cut_test_new("dummy_test_1", NULL, dummy_test_function1);
     cut_test_case_add_test(test_object, test);
     test = cut_test_new("dummy_test_2", NULL, dummy_test_function2);

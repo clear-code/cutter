@@ -418,7 +418,8 @@ create_test_case (CutLoader *loader)
                                   setup_function,
                                   teardown_function,
                                   get_current_test_context_function,
-                                  set_current_test_context_function);
+                                  set_current_test_context_function,
+                                  NULL, NULL);
     g_free(test_case_name);
 
     g_object_ref(loader);
