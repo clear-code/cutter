@@ -505,20 +505,14 @@ print_results (CutUIConsole *console, CutRunner *runner)
         CutTest *test;
         gchar *filename;
         const gchar *message;
-        const gchar *source_directory;
         const gchar *name;
 
         status = cut_test_result_get_status(result);
         if (status == CUT_TEST_RESULT_SUCCESS)
             continue; 
 
-        source_directory = cut_runner_get_source_directory(runner);
-        if (source_directory)
-            filename = g_build_filename(source_directory,
-                                        cut_test_result_get_filename(result),
-                                        NULL);
-        else
-            filename = g_strdup(cut_test_result_get_filename(result));
+        filename = cut_runner_build_source_filename(runner,
+                                             cut_test_result_get_filename(result));
 
         message = cut_test_result_get_message(result);
         name = cut_test_result_get_test_name(result);

@@ -148,11 +148,14 @@ void          cut_runner_set_test_suite            (CutRunner *runner,
                                                     CutTestSuite *suite);
 gboolean      cut_runner_run                       (CutRunner *runner);
 
+gchar        *cut_runner_build_source_filename     (CutRunner *runner,
+                                                    const gchar *filename);
+
 
 G_END_DECLS
 
 #endif /* __CUT_RUNNER_H__ */
 
 /*
-vi:nowrap:ai:expandtab:sw=4
+vi:ts=4:nowrap:ai:expandtab:sw=4
 */

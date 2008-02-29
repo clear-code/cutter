@@ -954,17 +954,11 @@ append_test_result_row (CutUIGtk *ui, CutTestResult *result,
     CutTestResultStatus status;
     gchar *filename, *name;
     const gchar *message;
-    const gchar *source_directory;
     const gchar *test_name;
     GdkPixbuf *icon;
 
-    source_directory = cut_runner_get_source_directory(ui->runner);
-    if (source_directory)
-        filename = g_build_filename(source_directory,
-                                    cut_test_result_get_filename(result),
-                                    NULL);
-    else
-        filename = g_strdup(cut_test_result_get_filename(result));
+    filename = cut_runner_build_source_filename(ui->runner, 
+                                                cut_test_result_get_filename(result));
     status = cut_test_result_get_status(result);
     message = cut_test_result_get_message(result);
     test_name = cut_test_result_get_test_name(result);

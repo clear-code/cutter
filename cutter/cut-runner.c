@@ -967,6 +967,23 @@ cut_runner_run (CutRunner *runner)
     return cut_test_suite_run(suite, runner);
 }
 
+gchar *
+cut_runner_build_source_filename (CutRunner *runner, const gchar *filename)
+{
+    const gchar *source_directory;
+    gchar *source_filename;
+
+    source_directory = cut_runner_get_source_directory(runner);
+    if (source_directory) {
+        source_filename = g_build_filename(source_directory,
+                                          filename,
+                                            NULL);
+    } else {
+        source_filename = g_strdup(filename);
+    }
+    return source_filename;
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */

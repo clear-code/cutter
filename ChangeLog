@@ -9,6 +9,9 @@
 	* cutter/cut-test-result.[c|h]: Added cut_test_result_get_test_case().
 	* module/report/cut-report-xml.c: Use cut_test_result_get_test_case().
 	Cleanup.
+	* cutter/cut-runner.[c|h]: Added cut_runner_build_source_filename().
+	* module/ui/cut-ui-console.c, module/ui/cut-ui-gtk.c: Use
+	cut_runner_build_source_filename().
 
 2008-02-28  Kouhei Sutou  <kou@cozmixng.org>
 
