@@ -397,6 +397,12 @@ cut_test_result_get_test (CutTestResult *result)
     return CUT_TEST_RESULT_GET_PRIVATE(result)->test;
 }
 
+CutTestCase *
+cut_test_result_get_test_case (CutTestResult *result)
+{
+    return CUT_TEST_RESULT_GET_PRIVATE(result)->test_case;
+}
+
 const gchar *
 cut_test_result_get_test_name (CutTestResult *result)
 {

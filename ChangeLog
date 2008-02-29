@@ -6,6 +6,7 @@
 	* module/report/cut-report-xml.c: Output message in detail element.
 	* module/report/cut-report-xml.c, test/test-report-xml.c: Output test
 	description.
+	* cutter/cut-test-result.[c|h]: Added cut_test_result_get_test_case().
 
 2008-02-28  Kouhei Sutou  <kou@cozmixng.org>
 
