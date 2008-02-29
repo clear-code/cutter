@@ -99,11 +99,12 @@ test_report_success (void)
                        "    </test_case>\n"
                        "    <test>\n"
                        "      <name>dummy-success-test</name>\n"
+                       "      <description>A success test</description>\n"
                        "    </test>\n"
                        "    <status>success</status>\n"
                        "    <elapsed>0.0001</elapsed>\n"
                        "  </result>\n";
-    test_object = cut_test_new("dummy-success-test", NULL, dummy_success_test);
+    test_object = cut_test_new("dummy-success-test", "A success test", dummy_success_test);
     g_signal_connect_after(test_object, "success", G_CALLBACK(cb_success_signal), NULL);
     cut_test_case_add_test(test_case, test_object);
     cut_assert(run_the_test(test_object));

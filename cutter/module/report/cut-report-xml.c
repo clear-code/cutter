@@ -448,7 +448,8 @@ append_element_valist (GString *string, guint indent, const gchar *element_name,
   
   	while (name) {
 		const gchar *value = va_arg(var_args, gchar*);
-        append_element_with_value(string, indent, name, value);
+        if (value)
+            append_element_with_value(string, indent, name, value);
 		name = va_arg(var_args, gchar*);
     }
 }
@@ -485,8 +486,12 @@ append_test_case_info_to_string (GString *string, const gchar *test_case_name)
 static void
 append_test_info_to_string (GString *string, CutTest *test)
 {
+    const gchar *description;
+
+    description = cut_test_get_description(test);
     append_element_with_children(string, 4, "test",
                                  "name", cut_test_get_name(test),
+                                 "description", description,
                                  NULL);
 }
 
