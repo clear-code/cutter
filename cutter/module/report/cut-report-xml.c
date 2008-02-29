@@ -475,21 +475,12 @@ append_element_with_children (GString *string, guint indent, const gchar *elemen
 }
 
 static void
-/* append_test_case_info_to_string (GString *string, CutTestCase *test_case)*/
-append_test_case_info_to_string (GString *string, const gchar *test_case_name)
-{
-    append_element_with_children(string, 4, "test_case",
-                                 "name", test_case_name,
-                                 NULL);
-}
-
-static void
-append_test_info_to_string (GString *string, CutTest *test)
+append_test_info_to_string (GString *string, const gchar *element_name, CutTest *test)
 {
     const gchar *description;
 
     description = cut_test_get_description(test);
-    append_element_with_children(string, 4, "test",
+    append_element_with_children(string, 4, element_name,
                                  "name", cut_test_get_name(test),
                                  "description", description,
                                  NULL);
@@ -519,9 +510,8 @@ get_result (CutTestResult *result)
     status = cut_test_result_get_status(result);
 
     g_string_append(xml, "  <result>\n");
-    append_test_case_info_to_string(xml, 
-                                    cut_test_result_get_test_case_name(result));
-    append_test_info_to_string(xml, cut_test_result_get_test(result));
+    append_test_info_to_string(xml, "test_case", CUT_TEST(cut_test_result_get_test_case(result)));
+    append_test_info_to_string(xml, "test", cut_test_result_get_test(result));
     /* append_test_description_to_string(xml, cut_test_result_get_test_description(result)); */
     /* append_test_attributes(xml, cut_test_result_get_test_attributes(result)); */
     append_test_result_to_string(xml, result);
