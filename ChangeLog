@@ -12,6 +12,8 @@
 	* cutter/cut-runner.[c|h]: Added cut_runner_build_source_filename().
 	* module/ui/cut-ui-console.c, module/ui/cut-ui-gtk.c: Use
 	cut_runner_build_source_filename().
+	* module/report/cut-report-xml.c, test/test-report-xml.c: Output
+	backtrace.
 
 2008-02-28  Kouhei Sutou  <kou@cozmixng.org>
 

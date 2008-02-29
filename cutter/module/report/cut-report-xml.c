@@ -487,16 +487,39 @@ append_test_info_to_string (GString *string, const gchar *element_name, CutTest 
 }
 
 static void
+append_backtrace_to_string (GString *string, CutTestResult *result)
+{
+    gchar *line_string, *info_string;
+
+    line_string = g_strdup_printf("%d", cut_test_result_get_line(result));
+    info_string = g_strdup_printf("%s()", cut_test_result_get_function_name(result));
+
+    append_element_with_children(string, 4, "backtrace",
+                                 "file", cut_test_result_get_filename(result),
+                                 "line", line_string,
+                                 "info", info_string,
+                                 NULL);
+    g_free(line_string);
+    g_free(info_string);
+}
+
+static void
 append_test_result_to_string (GString *string, CutTestResult *result)
 {
+    CutTestResultStatus status;
     gchar *elapsed_string;
     const gchar *message;
+
     elapsed_string = g_strdup_printf("%g", cut_test_result_get_elapsed(result));
+    message = cut_test_result_get_message(result);
+    status = cut_test_result_get_status(result);
+
     append_element_with_value(string, 4,
                               "status", result_status_to_name(cut_test_result_get_status(result)));
-    message = cut_test_result_get_message(result);
     if (message)
         append_element_with_value(string, 4, "detail", message);
+    if (status != CUT_TEST_RESULT_SUCCESS)
+        append_backtrace_to_string(string, result);
     append_element_with_value(string, 4, "elapsed", elapsed_string);
     g_free(elapsed_string);
 }
@@ -504,15 +527,11 @@ append_test_result_to_string (GString *string, CutTestResult *result)
 static gchar *
 get_result (CutTestResult *result)
 {
-    CutTestResultStatus status;
     GString *xml = g_string_new("");
-
-    status = cut_test_result_get_status(result);
 
     g_string_append(xml, "  <result>\n");
     append_test_info_to_string(xml, "test_case", CUT_TEST(cut_test_result_get_test_case(result)));
     append_test_info_to_string(xml, "test", cut_test_result_get_test(result));
-    /* append_test_description_to_string(xml, cut_test_result_get_test_description(result)); */
     /* append_test_attributes(xml, cut_test_result_get_test_attributes(result)); */
     append_test_result_to_string(xml, result);
     g_string_append(xml, "  </result>\n");

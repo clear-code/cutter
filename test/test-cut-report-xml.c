@@ -127,6 +127,11 @@ test_report_failure (void)
                        "    </test>\n"
                        "    <status>failure</status>\n"
                        "    <detail>This test should fail</detail>\n"
+                       "    <backtrace>\n"
+                       "      <file>test-cut-report-xml.c</file>\n"
+                       "      <line>22</line>\n"
+                       "      <info>dummy_failure_test()</info>\n"
+                       "    </backtrace>\n"
                        "    <elapsed>0.0001</elapsed>\n"
                        "  </result>\n";
 
