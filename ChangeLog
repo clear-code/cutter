@@ -14,6 +14,7 @@
 	cut_runner_build_source_filename().
 	* module/report/cut-report-xml.c, test/test-report-xml.c: Output
 	backtrace.
+	* cutter/cut-module-factory.[c|h]: Added. Not used yet.
 
 2008-02-28  Kouhei Sutou  <kou@cozmixng.org>
 
