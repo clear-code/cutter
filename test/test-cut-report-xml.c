@@ -101,7 +101,6 @@ test_report_success (void)
                        "      <name>dummy-success-test</name>\n"
                        "    </test>\n"
                        "    <status>success</status>\n"
-                       "    <detail></detail>\n"
                        "    <elapsed>0.0001</elapsed>\n"
                        "  </result>\n";
     test_object = cut_test_new("dummy-success-test", NULL, dummy_success_test);
@@ -126,7 +125,7 @@ test_report_failure (void)
                        "      <name>dummy-failure-test</name>\n"
                        "    </test>\n"
                        "    <status>failure</status>\n"
-                       "    <detail></detail>\n"
+                       "    <detail>This test should fail</detail>\n"
                        "    <elapsed>0.0001</elapsed>\n"
                        "  </result>\n";
 
