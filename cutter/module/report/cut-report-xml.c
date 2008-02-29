@@ -494,10 +494,13 @@ static void
 append_test_result_to_string (GString *string, CutTestResult *result)
 {
     gchar *elapsed_string;
+    const gchar *message;
     elapsed_string = g_strdup_printf("%g", cut_test_result_get_elapsed(result));
     append_element_with_value(string, 4,
                               "status", result_status_to_name(cut_test_result_get_status(result)));
-    append_element_with_value(string, 4, "detail", "");
+    message = cut_test_result_get_message(result);
+    if (message)
+        append_element_with_value(string, 4, "detail", message);
     append_element_with_value(string, 4, "elapsed", elapsed_string);
     g_free(elapsed_string);
 }

@@ -3,6 +3,7 @@
 	* test/test-cut-report-xml.c: Adapt to new format.
 	* module/report/cut-report-xml.c: Adapt to new format.
 	* test/report-test-dir: Removed.
+	* module/report/cut-report-xml.c: Output message in detail element.
 
 2008-02-28  Kouhei Sutou  <kou@cozmixng.org>
 
