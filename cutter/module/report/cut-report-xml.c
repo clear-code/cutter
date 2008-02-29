@@ -514,8 +514,7 @@ append_test_result_to_string (GString *string, CutTestResult *result)
     message = cut_test_result_get_message(result);
     status = cut_test_result_get_status(result);
 
-    append_element_with_value(string, 4,
-                              "status", result_status_to_name(cut_test_result_get_status(result)));
+    append_element_with_value(string, 4, "status", result_status_to_name(status));
     if (message)
         append_element_with_value(string, 4, "detail", message);
     if (status != CUT_TEST_RESULT_SUCCESS)
