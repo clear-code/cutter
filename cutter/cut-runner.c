@@ -976,8 +976,8 @@ cut_runner_build_source_filename (CutRunner *runner, const gchar *filename)
     source_directory = cut_runner_get_source_directory(runner);
     if (source_directory) {
         source_filename = g_build_filename(source_directory,
-                                          filename,
-                                            NULL);
+                                           filename,
+                                           NULL);
     } else {
         source_filename = g_strdup(filename);
     }
