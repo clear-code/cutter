@@ -87,6 +87,13 @@ report_moduledir="\${moduledir}/report"
 AC_SUBST(report_moduledir)
 
 dnl **************************************************************
+dnl Configure for factory modules.
+dnl **************************************************************
+
+factory_moduledir="\${moduledir}/factory"
+AC_SUBST(factory_moduledir)
+
+dnl **************************************************************
 dnl Check for GTK+
 dnl **************************************************************
 AM_PATH_GTK_2_0(2.12.0, [], [], [])
@@ -162,6 +169,7 @@ AC_SUBST(CUTTER)
 CUTTER_CFLAGS="$GLIB_CFLAGS -DUI_MODULEDIR=\\\"\"\$(ui_moduledir)\"\\\""
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DUI_FACTORY_MODULEDIR=\\\"\"\$(ui_factory_moduledir)\"\\\""
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DREPORT_MODULEDIR=\\\"\"\$(report_moduledir)\"\\\""
+CUTTER_CFLAGS="$CUTTER_CFLAGS -DFACTORY_MODULEDIR=\\\"\"\$(factory_moduledir)\"\\\""
 AC_SUBST(CUTTER_CFLAGS)
 
 AC_CONFIG_FILES([Makefile
@@ -181,6 +189,9 @@ AC_CONFIG_FILES([Makefile
 		 test/loader_test_dir/Makefile
 		 test/repository_test_dir/Makefile
 		 test/attribute_test_dir/Makefile
+		 test/factory_test_dir/Makefile
+		 test/factory_test_dir/type1/Makefile
+		 test/factory_test_dir/type2/Makefile
 		 po/Makefile.in
 		 misc/Makefile
 		 doc/Makefile

@@ -1,7 +1,8 @@
 SUBDIRS = 			\
 	loader_test_dir		\
 	attribute_test_dir	\
-	repository_test_dir
+	repository_test_dir	\
+	factory_test_dir
 
 INCLUDES = $(CUTTER_CFLAGS)	\
 	-I$(top_builddir)	\
@@ -27,6 +28,7 @@ noinst_LTLIBRARIES = 				\
 		test_cut_loader.la		\
 		test_cut_repository.la		\
 		test_cut_value_equal.la		\
+		test_cut_module_factory.la	\
 		test_cut_report_xml.la
 
 LDFLAGS =			\
@@ -51,6 +53,7 @@ test_cut_repository_la_SOURCES  = test-cut-repository.c
 test_cut_repository_la_LIBADD   = cuttest_utils.la
 test_cut_value_equal_la_SOURCES = test-cut-value-equal.c
 test_cut_report_xml_la_SOURCES  = test-cut-report-xml.c
+test_cut_module_factory_la_SOURCES = test-cut-module-factory.c
 test_cut_test_attribute_la_SOURCES = test-cut-test-attribute.c
 test_cut_test_attribute_la_LIBADD  = cuttest_utils.la
 
