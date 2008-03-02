@@ -46,8 +46,8 @@ unload_modules (gpointer data)
 
 void cut_module_factory_init (void)
 {
-    factories = g_hash_table_new_full(g_direct_hash,
-                                      g_direct_equal,
+    factories = g_hash_table_new_full(g_str_hash,
+                                      g_str_equal,
                                       g_free,
                                       unload_modules);
 }
@@ -106,9 +106,11 @@ cut_module_factory_load (const gchar *base_dir)
         gchar *dir_name;
         dir_name = g_build_filename(base_dir, entry, NULL);
 
-        if (g_file_test(dir_name, G_FILE_TEST_IS_DIR))
-            g_hash_table_replace(factories, (gpointer)entry, cut_module_load_modules(dir_name));
-
+        if (g_file_test(dir_name, G_FILE_TEST_IS_DIR)) {
+            GList *modules = cut_module_load_modules(dir_name);
+            if (modules)
+                g_hash_table_replace(factories, g_strdup(entry), modules);
+        }
         g_free(dir_name);
     }
     g_dir_close(gdir);
@@ -133,24 +135,19 @@ cut_module_factory_load_module (const gchar *type, const gchar *name)
         if (g_type_module_use(G_TYPE_MODULE(module))) {
             modules = g_list_prepend(modules, module);
             g_type_module_unuse(G_TYPE_MODULE(module));
-            g_hash_table_replace(factories, (gpointer)type, modules);
+            g_hash_table_replace(factories, g_strdup(type), modules);
         }
     }
 
     return module;
 }
 
-static void
-unload_each_modules (gpointer key, GList *modules, gpointer data)
-{
-    g_list_foreach(modules, (GFunc)cut_module_unload, NULL);
-    g_list_free(modules);
-}
-
 void
 cut_module_factory_unload (void)
 {
-    g_hash_table_foreach(factories, (GHFunc)unload_each_modules, NULL);
+    if (!factories)
+        return;
+
     g_hash_table_unref(factories);
     factories = NULL;
 }
