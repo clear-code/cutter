@@ -189,6 +189,7 @@ AC_CONFIG_FILES([Makefile
 		 test/loader_test_dir/Makefile
 		 test/repository_test_dir/Makefile
 		 test/attribute_test_dir/Makefile
+		 test/module_test_dir/Makefile
 		 test/factory_test_dir/Makefile
 		 test/factory_test_dir/type1/Makefile
 		 test/factory_test_dir/type2/Makefile

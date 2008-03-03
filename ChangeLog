@@ -8,6 +8,8 @@
 	for CutModuleFactory.
 	* cutter/cut-module-factory.c: Stores modules in each directory into
 	hash table.
+	* test/test-cut-module.c, test/module_test_dir: Added tests for
+	CutModule.
 
 2008-02-29  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
