@@ -38,7 +38,7 @@
 typedef struct _CutTestPrivate	CutTestPrivate;
 struct _CutTestPrivate
 {
-    gchar *function_name;
+    gchar *name;
     gchar *description;
     CutTestFunction test_function;
     GTimer *timer;
@@ -48,7 +48,7 @@ struct _CutTestPrivate
 enum
 {
     PROP_0,
-    PROP_FUNCTION_NAME,
+    PROP_NAME,
     PROP_DESCRIPTION,
     PROP_TEST_FUNCTION
 };
@@ -82,7 +82,6 @@ static void get_property   (GObject         *object,
                             GParamSpec      *pspec);
 
 static gdouble      real_get_elapsed  (CutTest  *test);
-static const gchar *real_get_name     (CutTest  *test);
 
 static void
 cut_test_class_init (CutTestClass *klass)
@@ -97,14 +96,13 @@ cut_test_class_init (CutTestClass *klass)
     gobject_class->get_property = get_property;
 
     klass->get_elapsed = real_get_elapsed;
-    klass->get_name    = real_get_name;
 
-    spec = g_param_spec_string("function-name",
-                               "Function name",
-                               "The function name of the test",
+    spec = g_param_spec_string("name",
+                               "Test name",
+                               "The name of the test",
                                NULL,
                                G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
-    g_object_class_install_property(gobject_class, PROP_FUNCTION_NAME, spec);
+    g_object_class_install_property(gobject_class, PROP_NAME, spec);
 
     spec = g_param_spec_string("description",
                                "Description",
@@ -219,9 +217,9 @@ dispose (GObject *object)
 {
     CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(object);
 
-    if (priv->function_name) {
-        g_free(priv->function_name);
-        priv->function_name = NULL;
+    if (priv->name) {
+        g_free(priv->name);
+        priv->name = NULL;
     }
 
     if (priv->description) {
@@ -253,10 +251,10 @@ set_property (GObject      *object,
     CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(object);
 
     switch (prop_id) {
-      case PROP_FUNCTION_NAME:
-        if (priv->function_name)
-            g_free(priv->function_name);
-        priv->function_name = g_value_dup_string(value);
+      case PROP_NAME:
+        if (priv->name)
+            g_free(priv->name);
+        priv->name = g_value_dup_string(value);
         break;
       case PROP_DESCRIPTION:
         if (priv->description)
@@ -281,8 +279,8 @@ get_property (GObject    *object,
     CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(object);
 
     switch (prop_id) {
-      case PROP_FUNCTION_NAME:
-        g_value_set_string(value, priv->function_name);
+      case PROP_NAME:
+        g_value_set_string(value, priv->name);
         break;
       case PROP_DESCRIPTION:
         g_value_set_string(value, priv->description);
@@ -297,11 +295,11 @@ get_property (GObject    *object,
 }
 
 CutTest *
-cut_test_new (const gchar *function_name, const gchar *description,
+cut_test_new (const gchar *name, const gchar *description,
               CutTestFunction function)
 {
     return g_object_new(CUT_TYPE_TEST,
-                        "function-name", function_name,
+                        "name", name,
                         "description", description,
                         "test-function", function,
                         NULL);
@@ -355,13 +353,7 @@ cut_test_run (CutTest *test, CutTestContext *test_context, CutRunner *runner)
 const gchar *
 cut_test_get_name (CutTest *test)
 {
-    return CUT_TEST_GET_CLASS(test)->get_name(test);
-}
-
-static const gchar *
-real_get_name (CutTest *test)
-{
-    return CUT_TEST_GET_PRIVATE(test)->function_name;
+    return CUT_TEST_GET_PRIVATE(test)->name;
 }
 
 const gchar *

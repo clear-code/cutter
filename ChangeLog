@@ -1,6 +1,10 @@
 2008-03-04  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* test/test-cut-module.c: Added a test for cut_module_collect_names().
+	* cutter/cut-test.[c|h]: Rename "function-name" property to "name".
+	* cutter/cut-test-case.c, test/test-cut-module-factory.c,
+	test/factory_test_dir/type1/factory-module1.c: Follow the above
+	change.
 
 2008-03-03  Kouhei Sutou  <kou@cozmixng.org>
 

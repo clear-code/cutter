@@ -40,7 +40,6 @@
 typedef struct _CutTestCasePrivate	CutTestCasePrivate;
 struct _CutTestCasePrivate
 {
-    gchar *name;
     CutSetupFunction setup;
     CutTearDownFunction teardown;
     CutGetCurrentTestContextFunction get_current_test_context;
@@ -52,7 +51,6 @@ struct _CutTestCasePrivate
 enum
 {
     PROP_0,
-    PROP_NAME,
     PROP_SETUP_FUNCTION,
     PROP_TEAR_DOWN_FUNCTION,
     PROP_GET_CURRENT_TEST_CONTEXT_FUNCTION,
@@ -83,8 +81,6 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 
-static const gchar *real_get_name     (CutTest  *test);
-
 static void
 cut_test_case_class_init (CutTestCaseClass *klass)
 {
@@ -98,15 +94,6 @@ cut_test_case_class_init (CutTestCaseClass *klass)
     gobject_class->dispose      = dispose;
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
-
-    test_class->get_name = real_get_name;
-
-    spec = g_param_spec_string("name",
-                               "name",
-                               "The name of the test case",
-                               NULL,
-                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
-    g_object_class_install_property(gobject_class, PROP_NAME, spec);
 
     spec = g_param_spec_pointer("setup-function",
                                 "Setup Function",
@@ -194,19 +181,11 @@ cut_test_case_init (CutTestCase *test_case)
     priv->set_current_test_context = NULL;
     priv->initialize = NULL;
     priv->finalize = NULL;
-    priv->name = NULL;
 }
 
 static void
 dispose (GObject *object)
 {
-    CutTestCasePrivate *priv = CUT_TEST_CASE_GET_PRIVATE(object);
-
-    if (priv->name) {
-        g_free(priv->name);
-        priv->name = NULL;
-    }
-
     G_OBJECT_CLASS(cut_test_case_parent_class)->dispose(object);
 }
 
@@ -219,11 +198,6 @@ set_property (GObject      *object,
     CutTestCasePrivate *priv = CUT_TEST_CASE_GET_PRIVATE(object);
 
     switch (prop_id) {
-      case PROP_NAME:
-        if (priv->name)
-            g_free(priv->name);
-        priv->name = g_value_dup_string(value);
-        break;
       case PROP_SETUP_FUNCTION:
         priv->setup = g_value_get_pointer(value);
         break;
@@ -257,9 +231,6 @@ get_property (GObject    *object,
     CutTestCasePrivate *priv = CUT_TEST_CASE_GET_PRIVATE(object);
 
     switch (prop_id) {
-      case PROP_NAME:
-        g_value_set_string(value, priv->name);
-        break;
       case PROP_SETUP_FUNCTION:
         g_value_set_pointer(value, priv->setup);
         break;
@@ -325,12 +296,6 @@ cut_test_case_get_n_tests (CutTestCase *test_case, const gchar **test_names)
     g_list_free(filtered_tests);
 
     return n_tests;
-}
-
-static const gchar *
-real_get_name (CutTest *test)
-{
-    return CUT_TEST_CASE_GET_PRIVATE(test)->name;
 }
 
 void

@@ -130,7 +130,7 @@ GObject *
 create (CutModuleFactory *factory)
 {
     return g_object_new(CUT_TYPE_TEST,
-                        "function-name", function_name,
+                        "name", function_name,
                         "description", description,
                         NULL);
 }

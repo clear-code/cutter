@@ -79,13 +79,12 @@ struct _CutTestClass
                             const gchar    *stack_trace);
 
     gdouble      (*get_elapsed)  (CutTest *test);
-    const gchar *(*get_name)     (CutTest *test);
 };
 
 GType        cut_test_get_type  (void) G_GNUC_CONST;
 
-CutTest     *cut_test_new                 (const gchar *function_name,
-                                           const gchar *description,
+CutTest     *cut_test_new                 (const gchar    *name,
+                                           const gchar    *description,
                                            CutTestFunction function);
 gboolean     cut_test_run                 (CutTest        *test,
                                            CutTestContext *test_context,
