@@ -27,10 +27,20 @@ struct _CutModuleFactoryType1Test1Class
 static GType cut_type_module_factory_type1_test1 = 0;
 static CutModuleFactoryClass *parent_class;
 
+static void       set_option_group (CutModuleFactory *factory,
+                                    GOptionContext   *context);
+static CutModule *create           (CutModuleFactory *factory);
+
 static void
 class_init (CutModuleFactoryClass *klass)
 {
+    CutModuleFactoryClass *factory_class;
+
     parent_class = g_type_class_peek_parent(klass);
+    factory_class  = CUT_MODULE_FACTORY_CLASS(klass);
+
+    factory_class->set_option_group = set_option_group;
+    factory_class->create           = create;
 }
 
 static void
@@ -90,5 +100,30 @@ G_MODULE_EXPORT gchar *
 CUT_MODULE_IMPL_GET_LOG_DOMAIN (void)
 {
     return g_strdup(G_LOG_DOMAIN);
+}
+
+
+static void
+set_option_group (CutModuleFactory *factory, GOptionContext *context)
+{
+    GOptionGroup *group;
+    GOptionEntry entries[] = {
+        {NULL}
+    };
+
+    CUT_MODULE_FACTORY_CLASS(parent_class)->set_option_group(factory, context);
+
+    group = g_option_group_new(("type1-module"),
+                               ("Type1 Module Options"),
+                               ("TYpe1 Module Options"),
+                               factory, NULL);
+    g_option_group_add_entries(group, entries);
+    g_option_context_add_group(context, group);
+}
+
+CutModule *
+create (CutModuleFactory *factory)
+{
+    return NULL;
 }
 
