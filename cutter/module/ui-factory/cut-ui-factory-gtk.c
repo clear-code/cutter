@@ -32,7 +32,7 @@
 
 #include <cutter/cut-module-impl.h>
 #include <cutter/cut-ui.h>
-#include <cutter/cut-ui-factory.h>
+#include <cutter/cut-module-factory.h>
 #include <cutter/cut-enum-types.h>
 
 #define CUT_TYPE_UI_FACTORY_GTK            cut_type_ui_factory_gtk
@@ -47,12 +47,12 @@ typedef struct _CutUIFactoryGtkClass CutUIFactoryGtkClass;
 
 struct _CutUIFactoryGtk
 {
-    CutUIFactory     object;
+    CutModuleFactory     object;
 };
 
 struct _CutUIFactoryGtkClass
 {
-    CutUIFactoryClass parent_class;
+    CutModuleFactoryClass parent_class;
 };
 
 enum
@@ -61,7 +61,7 @@ enum
 };
 
 static GType cut_type_ui_factory_gtk = 0;
-static CutUIFactoryClass *parent_class;
+static CutModuleFactoryClass *parent_class;
 
 static void dispose        (GObject         *object);
 static void set_property   (GObject         *object,
@@ -73,20 +73,20 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 
-static void       set_option_group (CutUIFactory    *factory,
+static void       set_option_group (CutModuleFactory    *factory,
                                     GOptionContext      *context);
-static CutUI     *create           (CutUIFactory    *factory);
+static GObject   *create           (CutModuleFactory    *factory);
 
 static void
-class_init (CutUIFactoryClass *klass)
+class_init (CutModuleFactoryClass *klass)
 {
     GObjectClass *gobject_class;
-    CutUIFactoryClass *factory_class;
+    CutModuleFactoryClass *factory_class;
 
     parent_class = g_type_class_peek_parent(klass);
 
     gobject_class = G_OBJECT_CLASS(klass);
-    factory_class  = CUT_UI_FACTORY_CLASS(klass);
+    factory_class  = CUT_MODULE_FACTORY_CLASS(klass);
 
     gobject_class->dispose      = dispose;
     gobject_class->set_property = set_property;
@@ -119,7 +119,7 @@ register_type (GTypeModule *type_module)
 
     cut_type_ui_factory_gtk =
         g_type_module_register_type(type_module,
-                                    CUT_TYPE_UI_FACTORY,
+                                    CUT_TYPE_MODULE_FACTORY,
                                     "CutUIFactoryGtk",
                                     &info, 0);
 }
@@ -188,22 +188,23 @@ get_property (GObject    *object,
 }
 
 static void
-set_option_group (CutUIFactory *factory, GOptionContext *context)
+set_option_group (CutModuleFactory *factory, GOptionContext *context)
 {
     GOptionGroup *group;
 
-    CUT_UI_FACTORY_CLASS(parent_class)->set_option_group(factory, context);
+    if (CUT_MODULE_FACTORY_CLASS(parent_class)->set_option_group)
+        CUT_MODULE_FACTORY_CLASS(parent_class)->set_option_group(factory, context);
 
     group = gtk_get_option_group(TRUE);
     g_option_context_add_group(context, group);
 }
 
-CutUI *
-create (CutUIFactory *factory)
+GObject *
+create (CutModuleFactory *factory)
 {
-    return cut_ui_new("gtk", NULL);
+    return G_OBJECT(cut_ui_new("gtk", NULL));
 }
 
 /*
-vi:nowrap:ai:expandtab:sw=4
+vi:ts=4:nowrap:ai:expandtab:sw=4
 */

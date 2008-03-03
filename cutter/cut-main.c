@@ -37,7 +37,7 @@
 #include "cut-runner.h"
 #include "cut-test-suite.h"
 #include "cut-ui.h"
-#include "cut-ui-factory.h"
+#include "cut-module-factory.h"
 #include "cut-value-equal.h"
 
 static gboolean initialized = FALSE;
@@ -49,7 +49,7 @@ static gboolean use_multi_thread = FALSE;
 static const gchar *ui_name = NULL;
 static gboolean _show_all_uis = FALSE;
 
-static CutUIFactory *factory = NULL;
+static CutModuleFactory *factory = NULL;
 
 static const GOptionEntry option_entries[] =
 {
@@ -73,8 +73,8 @@ show_all_uis (void)
 {
     GList *names, *node;
 
-    cut_ui_factory_load(NULL);
-    names = cut_ui_factory_get_names();
+    cut_module_factory_load(NULL);
+    names = cut_module_factory_get_names("ui");
     for (node = names; node; node = g_list_next(node)) {
         const gchar *name = node->data;
         if (g_list_next(node))
@@ -83,6 +83,7 @@ show_all_uis (void)
             g_print("%s", name);
     }
     g_print("\n");
+    g_list_foreach(names, (GFunc)g_free, NULL);
     g_list_free(names);
 }
 
@@ -120,20 +121,21 @@ cut_init (int *argc, char ***argv)
         exit(1);
     }
 
+    cut_module_factory_init();
+    cut_module_factory_load(NULL);
     if (_show_all_uis) {
         show_all_uis();
         exit(1);
     }
 
-    cut_ui_factory_init();
     if (!ui_name)
         ui_name = "console";
-    factory = cut_ui_factory_new(ui_name, NULL);
+    factory = cut_module_factory_new("ui", ui_name, NULL);
     if (!factory) {
         g_warning("can't find specified UI: %s", ui_name);
         exit(1);
     }
-    cut_ui_factory_set_option_group(factory, option_context);
+    cut_module_factory_set_option_group(factory, option_context);
 
     g_option_context_set_help_enabled(option_context, TRUE);
     g_option_context_set_ignore_unknown_options(option_context, FALSE);
@@ -180,7 +182,7 @@ cut_quit (void)
     factory = NULL;
 
     cut_ui_quit();
-    cut_ui_factory_quit();
+    cut_module_factory_quit();
 
     initialized = FALSE;
 }
@@ -213,7 +215,7 @@ cut_run_runner (CutRunner *runner)
         return FALSE;
     }
 
-    ui = cut_ui_factory_create(factory);
+    ui = CUT_UI(cut_module_factory_create(factory));
     if (!ui) {
         g_warning("can't create UI: %s", ui_name);
         return FALSE;
