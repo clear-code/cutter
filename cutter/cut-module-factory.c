@@ -155,13 +155,23 @@ cut_module_factory_unload (void)
 GList *
 cut_module_factory_get_names (const gchar *type)
 {
-    GList *modules;
+    GList *modules, *orig_names, *node, *names = NULL;
 
     modules = g_hash_table_lookup(factories, type);
     if (!modules)
         return NULL;
 
-    return cut_module_collect_names(modules);
+    orig_names = cut_module_collect_names(modules);
+    for (node = orig_names; node; node = g_list_next(node)) {
+        const gchar *name = node->data;
+        gchar *p;
+        if (!g_str_has_suffix(name, "_factory"))
+            continue;
+        p = g_strrstr(name, "_factory");
+        names = g_list_prepend(names, g_strndup(name, p - name));
+    }
+    g_list_free(orig_names);
+    return names;
 }
 
 #define cut_module_factory_init init

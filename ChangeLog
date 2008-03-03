@@ -28,6 +28,8 @@
 	instead of cutter/module/factory.
 	* cutter/cut-module-factory.[c|h]: cut_module_factory_get_names()
 	returns name list instead of module list.
+	* cutter/cut-module-factory.c: (cut_module_factory_get_names): Chomp
+	"_factory" from module names.
 
 2008-02-29  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
