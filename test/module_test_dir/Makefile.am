@@ -4,7 +4,8 @@ INCLUDES = $(CUTTER_CFLAGS)	\
 	-I$(top_srcdir)/cutter
 
 noinst_LTLIBRARIES =		\
-		test1.la
+		test1.la	\
+		test2.la
 
 LDFLAGS =			\
 	-module			\
@@ -12,3 +13,4 @@ LDFLAGS =			\
 	-avoid-version
 
 test1_la_SOURCES = test1.c
+test2_la_SOURCES = test2.c

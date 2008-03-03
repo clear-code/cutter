@@ -1,3 +1,7 @@
+2008-03-04  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test-cut-module.c: Added a test for cut_module_collect_names().
+
 2008-03-03  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/module/ui/Makefile.am: created symbolic links for test.
