@@ -15,7 +15,7 @@ LDFLAGS =			\
 
 factory_module1_la_SOURCES = factory-module1.c
 factory_module2_la_SOURCES = factory-module2.c
-factory_module3_la_SOURCES = factory-module2.c
+factory_module3_la_SOURCES = factory-module3.c
 
 check_DATA = 			\
 	factory_module1.so	\
