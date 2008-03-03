@@ -1,3 +1,7 @@
+2008-03-03  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/module/ui/Makefile.am: created symbolic links for test.
+
 2008-03-03  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* test/test-cut-module-factory.c, test/factory_test_dir/: Added tests

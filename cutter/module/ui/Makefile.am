@@ -13,6 +13,11 @@ console_la_SOURCES = \
 	cut-ui-console.c
 console_la_LIBADD = $(GLIB_LIBS)
 
+check_DATA = console.so
+console.so: .libs/console.so
+	ln -s $< $@
+CLEANFILES = console.so
+
 if HAVE_GTK
 ui_module_LTLIBRARIES += gtk.la
 gtk_la_CPPFLAGS = -DG_LOG_DOMAIN=\"Cut/UI:Gtk\" \
@@ -20,4 +25,9 @@ gtk_la_CPPFLAGS = -DG_LOG_DOMAIN=\"Cut/UI:Gtk\" \
 gtk_la_SOURCES = \
 	cut-ui-gtk.c
 gtk_la_LIBADD = $(GTK_LIBS)
+
+check_DATA += gtk.so
+gtk.so: .libs/gtk.so
+	ln -s $< $@
+CLEANFILES += gtk.so
 endif
