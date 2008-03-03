@@ -3,6 +3,10 @@
 
 #include <cutter/cut-module-impl.h>
 #include <cutter/cut-module-factory.h>
+#include <cutter/cut-test.h>
+
+static gchar *function_name = NULL;
+static gchar *description = NULL;
 
 #define CUT_TYPE_MODULE_FACTORY_TYPE1_TEST1            cut_type_module_factory_type1_test1
 #define CUT_MODULE_FACTORY_TYPE1_TEST1(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_MODULE_FACTORY_TYPE1_TEST1, CutModuleFactoryType1Test1))
@@ -29,7 +33,7 @@ static CutModuleFactoryClass *parent_class;
 
 static void       set_option_group (CutModuleFactory *factory,
                                     GOptionContext   *context);
-static CutModule *create           (CutModuleFactory *factory);
+static GObject   *create           (CutModuleFactory *factory);
 
 static void
 class_init (CutModuleFactoryClass *klass)
@@ -102,12 +106,15 @@ CUT_MODULE_IMPL_GET_LOG_DOMAIN (void)
     return g_strdup(G_LOG_DOMAIN);
 }
 
-
 static void
 set_option_group (CutModuleFactory *factory, GOptionContext *context)
 {
     GOptionGroup *group;
     GOptionEntry entries[] = {
+        {"function", 'f', 0, G_OPTION_ARG_STRING, &function_name,
+         "Set function name", "FUNCTION_NAME"},
+        {"decription", 'd', 0, G_OPTION_ARG_STRING, &description,
+         "Set description", "DESCRIPTION"},
         {NULL}
     };
 
@@ -121,9 +128,16 @@ set_option_group (CutModuleFactory *factory, GOptionContext *context)
     g_option_context_add_group(context, group);
 }
 
-CutModule *
+GObject *
 create (CutModuleFactory *factory)
 {
-    return NULL;
+    return g_object_new(CUT_TYPE_TEST,
+                        "function-name", function_name,
+                        "description", description,
+                        NULL);
 }
+
+/*
+vi:ts=4:nowrap:ai:expandtab:sw=4
+*/
 

@@ -14,6 +14,8 @@
 	* test/factory_test_dir/type1/factory-module[1-3].c: Update.
 	* cutter/cut-module-factory.[c|h]: cut_module_factory_create() should
 	return GObject*.
+	* test/factory_test_dir/type1/factory-module1.c: create() returnr
+	CutTest object.
 
 2008-02-29  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
