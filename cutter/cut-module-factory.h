@@ -49,7 +49,7 @@ struct _CutModuleFactoryClass
 
     void         (*set_option_group)    (CutModuleFactory *factory,
                                          GOptionContext *context);
-    CutModule   *(*create)              (CutModuleFactory *factory);
+    GObject     *(*create)              (CutModuleFactory *factory);
 };
 
 GType        cut_module_factory_get_type    (void) G_GNUC_CONST;
@@ -70,7 +70,7 @@ CutModuleFactory *cut_module_factory_new    (const gchar *type,
 
 void         cut_module_factory_set_option_group (CutModuleFactory *factory,
                                                   GOptionContext *context);
-CutModule   *cut_module_factory_create           (CutModuleFactory *factory);
+GObject     *cut_module_factory_create           (CutModuleFactory *factory);
 const gchar *cut_module_factory_get_name         (CutModuleFactory *factory);
 
 G_END_DECLS

@@ -199,7 +199,7 @@ cut_module_factory_set_option_group (CutModuleFactory *factory,
     klass->set_option_group(factory, context);
 }
 
-CutModule *
+GObject *
 cut_module_factory_create (CutModuleFactory *factory)
 {
     CutModuleFactoryClass *klass;
