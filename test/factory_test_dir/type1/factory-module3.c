@@ -29,7 +29,7 @@ static CutModuleFactoryClass *parent_class;
 
 static void       set_option_group (CutModuleFactory *factory,
                                     GOptionContext   *context);
-static CutModule *create           (CutModuleFactory *factory);
+static GObject   *create           (CutModuleFactory *factory);
 
 static void
 class_init (CutModuleFactoryClass *klass)
@@ -121,7 +121,7 @@ set_option_group (CutModuleFactory *factory, GOptionContext *context)
     g_option_context_add_group(context, group);
 }
 
-CutModule *
+GObject *
 create (CutModuleFactory *factory)
 {
     return NULL;
