@@ -46,20 +46,20 @@ teardown (void)
 void
 test_module_names (void)
 {
-    factory = cut_module_factory_new("type1", "factory_module1", NULL);
+    factory = cut_module_factory_new("type1", "module1", NULL);
     cut_assert(factory);
     g_object_unref(factory);
 
-    factory = cut_module_factory_new("type1", "factory_module2", NULL);
+    factory = cut_module_factory_new("type1", "module2", NULL);
     cut_assert(factory);
     g_object_unref(factory);
 
-    factory = cut_module_factory_new("type1", "factory_module3", NULL);
+    factory = cut_module_factory_new("type1", "module3", NULL);
     cut_assert(factory);
     g_object_unref(factory);
     factory = NULL;
 
-    factory = cut_module_factory_new("type1", "factory_module4", NULL);
+    factory = cut_module_factory_new("type1", "module4", NULL);
     cut_assert(!factory);
 }
 
@@ -77,7 +77,7 @@ test_module_arguments (void)
     gchar **copy_argv;
     copy_argv = g_strdupv(argv);
 
-    factory = cut_module_factory_new("type1", "factory_module1", NULL);
+    factory = cut_module_factory_new("type1", "module1", NULL);
     cut_assert(factory);
 
     option_context = g_option_context_new(NULL);
