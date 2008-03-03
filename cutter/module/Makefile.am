@@ -1,1 +1,1 @@
-SUBDIRS = ui ui-factory report
+SUBDIRS = ui report
