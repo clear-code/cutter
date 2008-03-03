@@ -22,6 +22,8 @@
 	tests.
 	* cutter/cut-module-factory.[c|h]: Added
 	cut_module_factory_get_names().
+	* configure.ac: Install UI factory modules in cutter/module/factory
+	instead of cutter/module/ui-factory.
 
 2008-02-29  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
