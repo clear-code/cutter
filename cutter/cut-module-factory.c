@@ -152,10 +152,16 @@ cut_module_factory_unload (void)
     factories = NULL;
 }
 
-const GList *
+GList *
 cut_module_factory_get_names (const gchar *type)
 {
-    return g_hash_table_lookup(factories, type);
+    GList *modules;
+
+    modules = g_hash_table_lookup(factories, type);
+    if (!modules)
+        return NULL;
+
+    return cut_module_collect_names(modules);
 }
 
 #define cut_module_factory_init init

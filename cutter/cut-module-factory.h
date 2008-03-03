@@ -62,7 +62,7 @@ void         cut_module_factory_set_default_module_dir   (const gchar *dir);
 
 void         cut_module_factory_load        (const gchar *base_dir);
 void         cut_module_factory_unload      (void);
-const GList *cut_module_factory_get_names   (const gchar *type);
+GList       *cut_module_factory_get_names   (const gchar *type);
 
 CutModuleFactory *cut_module_factory_new    (const gchar *type,
                                              const gchar *name,
