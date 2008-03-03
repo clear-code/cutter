@@ -121,16 +121,19 @@ cut_module_factory_load_module (const gchar *type, const gchar *name)
 {
     CutModule *module;
     GList *modules = NULL;
+    gchar *real_name;
 
     modules = g_hash_table_lookup(factories, type);
     if (!modules)
         return NULL;
 
-    module = cut_module_find(modules, name);
-    if (module)
-        return module;
+    real_name = g_strconcat(name, "_factory", NULL);
 
-    module = cut_module_load_module(_cut_module_factory_module_dir(), name);
+    module = cut_module_find(modules, real_name);
+    if (module)
+        goto END;
+
+    module = cut_module_load_module(_cut_module_factory_module_dir(), real_name);
     if (module) {
         if (g_type_module_use(G_TYPE_MODULE(module))) {
             modules = g_list_prepend(modules, module);
@@ -138,6 +141,9 @@ cut_module_factory_load_module (const gchar *type, const gchar *name)
             g_hash_table_replace(factories, g_strdup(type), modules);
         }
     }
+
+END:
+    g_free(real_name);
 
     return module;
 }
