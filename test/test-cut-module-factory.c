@@ -89,7 +89,7 @@ test_module_arguments (void)
     cut_assert(object);
 
     g_object_get(object,
-                 "function-name", &function_name,
+                 "name", &function_name,
                  "description", &description,
                  NULL);
     cut_assert_equal_string_with_free("dummy_function", function_name);
