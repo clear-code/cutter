@@ -16,6 +16,10 @@
 	return GObject*.
 	* test/factory_test_dir/type1/factory-module1.c: create() returnr
 	CutTest object.
+	* test/factory_test_dir/type1/factory-module1.c: Do not invoke parent
+	set_option_group().
+	* test/test-cut-module-factory.c: Parsing options and creating object
+	tests.
 
 2008-02-29  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 

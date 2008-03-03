@@ -118,8 +118,6 @@ set_option_group (CutModuleFactory *factory, GOptionContext *context)
         {NULL}
     };
 
-    CUT_MODULE_FACTORY_CLASS(parent_class)->set_option_group(factory, context);
-
     group = g_option_group_new(("type1-module"),
                                ("Type1 Module Options"),
                                ("TYpe1 Module Options"),
