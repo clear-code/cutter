@@ -35,6 +35,7 @@
 #include <cutter/cut-module-impl.h>
 #include <cutter/cut-ui.h>
 #include <cutter/cut-runner.h>
+#include <cutter/cut-test-result.h>
 #include <cutter/cut-test.h>
 #include <cutter/cut-test-case.h>
 #include <cutter/cut-verbose-level.h>
