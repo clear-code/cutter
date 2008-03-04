@@ -10,6 +10,7 @@
 void test_set_attribute (void);
 void test_get_bug_id (void);
 void test_get_attribute (void);
+void test_get_description (void);
 
 static CutTest *test;
 static CutLoader *test_loader;
@@ -97,6 +98,25 @@ test_get_attribute (void)
     cut_assert(1, g_list_length(tests));
     cut_assert_equal_string("9", cut_test_get_attribute(CUT_TEST(tests->data), "bug"));
     cut_assert_equal_string("5678", cut_test_get_attribute(CUT_TEST(tests->data), "priority"));
+}
+
+void
+test_get_description (void)
+{
+    CutTestContainer *container;
+    GList *tests;
+    const gchar *filter[] = {"/test_description/", NULL};
+
+    test_case = cut_loader_load_test_case(test_loader);
+    cut_assert(test_case);
+
+    container = CUT_TEST_CONTAINER(test_case);
+    tests = (GList *)cut_test_container_filter_children(container, filter);
+    cut_assert(tests);
+
+    cut_assert(1, g_list_length(tests));
+    cut_assert_equal_string("This message is the description of test_description()", 
+                            cut_test_get_description(CUT_TEST(tests->data)));
 }
 
 /*
