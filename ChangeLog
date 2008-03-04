@@ -1,3 +1,7 @@
+2008-03-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-runner.[c|h]: Reverted rev. 1198.
+
 2008-03-04  Kouhei Sutou  <kou@cozmixng.org>
 
 	* doc/sample_log.xml: improved XML format.

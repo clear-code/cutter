@@ -70,6 +70,35 @@ enum
     PROP_USE_MULTI_THREAD
 };
 
+enum
+{
+    START_SIGNAL,
+
+    READY_TEST_SUITE,
+    START_TEST_SUITE,
+    READY_TEST_CASE,
+    START_TEST_CASE,
+    START_TEST,
+
+    PASS,
+    SUCCESS,
+    FAILURE,
+    ERROR,
+    PENDING,
+    NOTIFICATION,
+
+    COMPLETE_TEST,
+    COMPLETE_TEST_CASE,
+    COMPLETE_TEST_SUITE,
+
+    CRASHED,
+
+    LAST_SIGNAL
+};
+
+static gint signals[LAST_SIGNAL] = {0};
+
+G_DEFINE_TYPE (CutRunner, cut_runner, G_TYPE_OBJECT)
 
 static void dispose        (GObject         *object);
 static void set_property   (GObject         *object,
@@ -81,11 +110,6 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 
-static void cut_runner_listener_init (CutListenerClass *listener_class);
-
-G_DEFINE_TYPE_WITH_CODE (CutRunner, cut_runner, G_TYPE_OBJECT,
-                         G_IMPLEMENT_INTERFACE (CUT_TYPE_LISTENER,
-                                                cut_runner_listener_init))
 static void
 cut_runner_class_init (CutRunnerClass *klass)
 {
@@ -141,27 +165,151 @@ cut_runner_class_init (CutRunnerClass *klass)
     g_object_class_install_property(gobject_class, PROP_USE_MULTI_THREAD, spec);
 
 
-    g_type_class_add_private(gobject_class, sizeof(CutRunnerPrivate));
-}
+    signals[READY_TEST_SUITE]
+        = g_signal_new ("ready-test-suite",
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutRunnerClass, ready_test_suite),
+                        NULL, NULL,
+                        _cut_marshal_VOID__OBJECT_UINT_UINT,
+                        G_TYPE_NONE, 3,
+                        CUT_TYPE_TEST_SUITE, G_TYPE_UINT, G_TYPE_UINT);
 
-static void
-cut_runner_listener_init (CutListenerClass *listener_class)
-{
-    listener_class->ready_test_suite = NULL;
-    listener_class->start_test_suite = NULL;
-    listener_class->ready_test_case = NULL;
-    listener_class->start_test_case = NULL;
-    listener_class->start_test = NULL;
-    listener_class->pass = NULL;
-    listener_class->success = NULL;
-    listener_class->failure = NULL;
-    listener_class->error = NULL;
-    listener_class->pending = NULL;
-    listener_class->notification = NULL;
-    listener_class->complete_test = NULL;
-    listener_class->complete_test_case = NULL;
-    listener_class->complete_test_suite = NULL;
-    listener_class->crashed = NULL;
+    signals[START_TEST_SUITE]
+        = g_signal_new ("start-test-suite",
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutRunnerClass, start_test_suite),
+                        NULL, NULL,
+                        g_cclosure_marshal_VOID__OBJECT,
+                        G_TYPE_NONE, 1, CUT_TYPE_TEST_SUITE);
+
+    signals[READY_TEST_CASE]
+        = g_signal_new ("ready-test-case",
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutRunnerClass, ready_test_case),
+                        NULL, NULL,
+                        _cut_marshal_VOID__OBJECT_UINT,
+                        G_TYPE_NONE, 2, CUT_TYPE_TEST_CASE, G_TYPE_UINT);
+
+    signals[START_TEST_CASE]
+        = g_signal_new ("start-test-case",
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutRunnerClass, start_test_case),
+                        NULL, NULL,
+                        g_cclosure_marshal_VOID__OBJECT,
+                        G_TYPE_NONE, 1, CUT_TYPE_TEST_CASE);
+
+    signals[START_TEST]
+        = g_signal_new ("start-test",
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutRunnerClass, start_test),
+                        NULL, NULL,
+                        _cut_marshal_VOID__OBJECT_OBJECT,
+                        G_TYPE_NONE, 2, CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT);
+
+    signals[PASS]
+        = g_signal_new ("pass",
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutRunnerClass, pass),
+                        NULL, NULL,
+                        _cut_marshal_VOID__OBJECT_OBJECT,
+                        G_TYPE_NONE, 2, CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT);
+
+    signals[SUCCESS]
+        = g_signal_new ("success",
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutRunnerClass, success),
+                        NULL, NULL,
+                        g_cclosure_marshal_VOID__OBJECT,
+                        G_TYPE_NONE, 1, CUT_TYPE_TEST);
+
+    signals[FAILURE]
+        = g_signal_new ("failure",
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutRunnerClass, failure),
+                        NULL, NULL,
+                        _cut_marshal_VOID__OBJECT_OBJECT_OBJECT,
+                        G_TYPE_NONE, 3,
+                        CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT,
+                        CUT_TYPE_TEST_RESULT);
+
+    signals[ERROR]
+        = g_signal_new ("error",
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutRunnerClass, error),
+                        NULL, NULL,
+                        _cut_marshal_VOID__OBJECT_OBJECT_OBJECT,
+                        G_TYPE_NONE, 3,
+                        CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT,
+                        CUT_TYPE_TEST_RESULT);
+
+    signals[PENDING]
+        = g_signal_new ("pending",
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutRunnerClass, pending),
+                        NULL, NULL,
+                        _cut_marshal_VOID__OBJECT_OBJECT_OBJECT,
+                        G_TYPE_NONE, 3,
+                        CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT,
+                        CUT_TYPE_TEST_RESULT);
+
+    signals[NOTIFICATION]
+        = g_signal_new ("notification",
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutRunnerClass, notification),
+                        NULL, NULL,
+                        _cut_marshal_VOID__OBJECT_OBJECT_OBJECT,
+                        G_TYPE_NONE, 3,
+                        CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT,
+                        CUT_TYPE_TEST_RESULT);
+
+    signals[COMPLETE_TEST]
+        = g_signal_new ("complete-test",
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutRunnerClass, complete_test),
+                        NULL, NULL,
+                        _cut_marshal_VOID__OBJECT_OBJECT,
+                        G_TYPE_NONE, 2, CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT);
+
+    signals[COMPLETE_TEST_CASE]
+        = g_signal_new ("complete-test-case",
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutRunnerClass, complete_test_case),
+                        NULL, NULL,
+                        g_cclosure_marshal_VOID__OBJECT,
+                        G_TYPE_NONE, 1, CUT_TYPE_TEST_CASE);
+
+    signals[COMPLETE_TEST_SUITE]
+        = g_signal_new ("complete-test-suite",
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutRunnerClass, complete_test_suite),
+                        NULL, NULL,
+                        g_cclosure_marshal_VOID__OBJECT,
+                        G_TYPE_NONE, 1, CUT_TYPE_TEST_SUITE);
+
+    signals[CRASHED]
+        = g_signal_new ("crashed",
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutRunnerClass, crashed),
+                        NULL, NULL,
+                        g_cclosure_marshal_VOID__STRING,
+                        G_TYPE_NONE, 1, G_TYPE_STRING);
+
+    g_type_class_add_private(gobject_class, sizeof(CutRunnerPrivate));
 }
 
 static void
@@ -408,93 +556,93 @@ cut_runner_get_target_test_names (CutRunner *runner)
 static void
 cb_pass_assertion (CutTest *test, CutTestContext *test_context, gpointer data)
 {
-    CutListener *listener = CUT_LISTENER(data);
+    CutRunner *runner = data;
     CutRunnerPrivate *priv;
 
-    priv = CUT_RUNNER_GET_PRIVATE(data);
+    priv = CUT_RUNNER_GET_PRIVATE(runner);
     g_mutex_lock(priv->mutex);
     priv->n_assertions++;
     g_mutex_unlock(priv->mutex);
 
-    g_signal_emit_by_name(listener, "pass", test, test_context);
+    g_signal_emit(runner, signals[PASS], 0, test, test_context);
 }
 
 static void
 cb_success (CutTest *test, CutTestResult *result, gpointer data)
 {
-    CutListener *listener = CUT_LISTENER(data);
+    CutRunner *runner = data;
     CutRunnerPrivate *priv;
 
-    priv = CUT_RUNNER_GET_PRIVATE(data);
+    priv = CUT_RUNNER_GET_PRIVATE(runner);
     g_mutex_lock(priv->mutex);
     priv->results = g_list_prepend(priv->results, g_object_ref(result));
     g_mutex_unlock(priv->mutex);
 
-    g_signal_emit_by_name(listener, "success", test);
+    g_signal_emit(runner, signals[SUCCESS], 0, test);
 }
 
 static void
 cb_failure (CutTest *test, CutTestContext *test_context, CutTestResult *result,
             gpointer data)
 {
-    CutListener *listener = CUT_LISTENER(data);
+    CutRunner *runner = data;
     CutRunnerPrivate *priv;
 
-    priv = CUT_RUNNER_GET_PRIVATE(data);
+    priv = CUT_RUNNER_GET_PRIVATE(runner);
     g_mutex_lock(priv->mutex);
     priv->results = g_list_prepend(priv->results, g_object_ref(result));
     priv->n_failures++;
     g_mutex_unlock(priv->mutex);
 
-    g_signal_emit_by_name(listener, "failure", test, test_context, result);
+    g_signal_emit(runner, signals[FAILURE], 0, test, test_context, result);
 }
 
 static void
 cb_error (CutTest *test, CutTestContext *test_context, CutTestResult *result,
           gpointer data)
 {
-    CutListener *listener = CUT_LISTENER(data);
+    CutRunner *runner = data;
     CutRunnerPrivate *priv;
 
-    priv = CUT_RUNNER_GET_PRIVATE(data);
+    priv = CUT_RUNNER_GET_PRIVATE(runner);
     g_mutex_lock(priv->mutex);
     priv->results = g_list_prepend(priv->results, g_object_ref(result));
     priv->n_errors++;
     g_mutex_unlock(priv->mutex);
 
-    g_signal_emit_by_name(listener, "error", test, test_context, result);
+    g_signal_emit(runner, signals[ERROR], 0, test, test_context, result);
 }
 
 static void
 cb_pending (CutTest *test, CutTestContext *test_context, CutTestResult *result,
             gpointer data)
 {
-    CutListener *listener = CUT_LISTENER(data);
+    CutRunner *runner = data;
     CutRunnerPrivate *priv;
 
-    priv = CUT_RUNNER_GET_PRIVATE(data);
+    priv = CUT_RUNNER_GET_PRIVATE(runner);
     g_mutex_lock(priv->mutex);
     priv->results = g_list_prepend(priv->results, g_object_ref(result));
     priv->n_pendings++;
     g_mutex_unlock(priv->mutex);
 
-    g_signal_emit_by_name(listener, "pending", test, test_context, result);
+    g_signal_emit(runner, signals[PENDING], 0, test, test_context, result);
 }
 
 static void
 cb_notification (CutTest *test, CutTestContext *test_context,
                  CutTestResult *result, gpointer data)
 {
-    CutListener *listener = CUT_LISTENER(data);
+    CutRunner *runner = data;
     CutRunnerPrivate *priv;
 
-    priv = CUT_RUNNER_GET_PRIVATE(data);
+    priv = CUT_RUNNER_GET_PRIVATE(runner);
     g_mutex_lock(priv->mutex);
     priv->results = g_list_prepend(priv->results, g_object_ref(result));
     priv->n_notifications++;
     g_mutex_unlock(priv->mutex);
 
-    g_signal_emit_by_name(listener, "notification", test, test_context, result);
+    g_signal_emit(runner, signals[NOTIFICATION], 0, test, test_context, result);
 }
 
 static void
@@ -547,40 +695,40 @@ static void
 cb_start_test (CutTestCase *test_case, CutTest *test,
                CutTestContext *test_context, gpointer data)
 {
-    CutListener *listener = CUT_LISTENER(data);
+    CutRunner *runner = data;
 
-    g_signal_emit_by_name(listener, "start-test", test, test_context);
+    g_signal_emit(runner, signals[START_TEST], 0, test, test_context);
 }
 
 static void
 cb_complete_test(CutTestCase *test_case, CutTest *test,
                  CutTestContext *test_context, gpointer data)
 {
-    CutListener *listener = CUT_LISTENER(data);
+    CutRunner *runner = data;
 
-    g_signal_emit_by_name(listener, "complete-test", test, test_context);
+    g_signal_emit(runner, signals[COMPLETE_TEST], 0, test, test_context);
 }
 
 static void
 cb_start_test_case(CutTestCase *test_case, gpointer data)
 {
-    CutListener *listener = CUT_LISTENER(data);
+    CutRunner *runner = data;
 
-    g_signal_emit_by_name(listener, "start-test-case", test_case);
+    g_signal_emit(runner, signals[START_TEST_CASE], 0, test_case);
 }
 
 static void
 cb_ready_test_case(CutTestCase *test_case, guint n_tests, gpointer data)
 {
-    CutListener *listener = CUT_LISTENER(data);
+    CutRunner *runner = data;
 
-    g_signal_emit_by_name(listener, "ready-test-case", test_case, n_tests);
+    g_signal_emit(runner, signals[READY_TEST_CASE], 0, test_case, n_tests);
 }
 
 static void
 cb_complete_test_case(CutTestCase *test_case, gpointer data)
 {
-    CutListener *listener = CUT_LISTENER(data);
+    CutRunner *runner = data;
 
 #define DISCONNECT(name)                                                \
     g_signal_handlers_disconnect_by_func(test_case,                     \
@@ -602,7 +750,7 @@ cb_complete_test_case(CutTestCase *test_case, gpointer data)
 
 #undef DISCONNECT
 
-    g_signal_emit_by_name(listener, "complete-test-case", test_case);
+    g_signal_emit(runner, signals[COMPLETE_TEST_CASE], 0, test_case);
 }
 
 void
@@ -637,39 +785,39 @@ static void
 cb_ready_test_suite(CutTestSuite *test_suite, guint n_test_cases,
                     guint n_tests, gpointer data)
 {
-    CutListener *listener = CUT_LISTENER(data);
+    CutRunner *runner = data;
 
-    g_signal_emit_by_name(listener, "ready-test-suite", test_suite,
-                          n_test_cases, n_tests);
+    g_signal_emit(runner, signals[READY_TEST_SUITE], 0, test_suite,
+                  n_test_cases, n_tests);
 }
 
 static void
 cb_start_test_suite(CutTestSuite *test_suite, gpointer data)
 {
-    CutListener *listener = CUT_LISTENER(data);
+    CutRunner *runner = data;
 
-    g_signal_emit_by_name(listener, "start-test-suite", test_suite);
+    g_signal_emit(runner, signals[START_TEST_SUITE], 0, test_suite);
 }
 
 static void
 cb_crashed_test_suite(CutTestSuite *test_suite, const gchar *stack_trace,
                       gpointer data)
 {
-    CutListener *listener = CUT_LISTENER(data);
+    CutRunner *runner = data;
     CutRunnerPrivate *priv;
 
-    priv = CUT_RUNNER_GET_PRIVATE(data);
+    priv = CUT_RUNNER_GET_PRIVATE(runner);
     priv->crashed = TRUE;
     g_free(priv->stack_trace);
     priv->stack_trace = g_strdup(stack_trace);
 
-    g_signal_emit_by_name(listener, "crashed", priv->stack_trace);
+    g_signal_emit(runner, signals[CRASHED], 0, priv->stack_trace);
 }
 
 static void
 cb_complete_test_suite(CutTestSuite *test_suite, gpointer data)
 {
-    CutListener *listener = CUT_LISTENER(data);
+    CutRunner *runner = data;
 
 #define DISCONNECT(name)                                                \
     g_signal_handlers_disconnect_by_func(test_suite,                    \
@@ -684,7 +832,7 @@ cb_complete_test_suite(CutTestSuite *test_suite, gpointer data)
     DISCONNECT(crashed);
 #undef DISCONNECT
 
-    g_signal_emit_by_name(listener, "complete-test-suite", test_suite);
+    g_signal_emit(runner, signals[COMPLETE_TEST_SUITE], 0, test_suite);
 }
 
 void
