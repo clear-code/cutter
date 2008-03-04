@@ -16,6 +16,7 @@
 	test/attribute_test_dir/dummy-test-functions.c: Added a test for
 	setting description.
 	* cutter/cut-module-factory.[c|h]: Added cut_module_factory_newv().
+	* cutter/cut-report-factory.[c|h]: Added.
 
 2008-03-03  Kouhei Sutou  <kou@cozmixng.org>
 
