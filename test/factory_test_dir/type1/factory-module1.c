@@ -6,7 +6,6 @@
 #include <cutter/cut-test.h>
 
 static gchar *function_name = NULL;
-static gchar *description = NULL;
 
 #define CUT_TYPE_MODULE_FACTORY_TYPE1_TEST1            cut_type_module_factory_type1_test1
 #define CUT_MODULE_FACTORY_TYPE1_TEST1(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_MODULE_FACTORY_TYPE1_TEST1, CutModuleFactoryType1Test1))
@@ -113,8 +112,6 @@ set_option_group (CutModuleFactory *factory, GOptionContext *context)
     GOptionEntry entries[] = {
         {"function", 'f', 0, G_OPTION_ARG_STRING, &function_name,
          "Set function name", "FUNCTION_NAME"},
-        {"decription", 'd', 0, G_OPTION_ARG_STRING, &description,
-         "Set description", "DESCRIPTION"},
         {NULL}
     };
 
@@ -131,7 +128,6 @@ create (CutModuleFactory *factory)
 {
     return g_object_new(CUT_TYPE_TEST,
                         "name", function_name,
-                        "description", description,
                         NULL);
 }
 
