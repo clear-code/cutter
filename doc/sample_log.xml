@@ -1,9 +1,9 @@
 <report>
   <result>
-    <test_case>
+    <test-case>
       <name>MyTestCase</name>
       <description>Test case for my library</description>
-    </test_case>
+    </test-case>
     <test>
       <name>test_my_test</name>
       <description>My Test</description>
@@ -18,10 +18,10 @@
     <elapsed>0.0001</elapsed>
   </result>
   <result>
-    <test_case>
+    <test-case>
       <name>MyTestCase</name>
       <description>Test case for my library</description>
-    </test_case>
+    </test-case>
     <test>
       <name>test_my_test2</name>
       <description>My Test2</description>
@@ -46,10 +46,10 @@ expected: &lt;1234&gt;
     <elapsed>0.002</elapsed>
   </result>
   <result>
-    <test_case>
+    <test-case>
       <name>MyTestCase</name>
       <description>Test case for my library</description>
-    </test_case>
+    </test-case>
     <test>
       <name>test_my_pending_test</name>
       <description>My Pending Test</description>
