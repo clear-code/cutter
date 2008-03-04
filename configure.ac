@@ -86,6 +86,9 @@ dnl **************************************************************
 report_moduledir="\${moduledir}/report"
 AC_SUBST(report_moduledir)
 
+report_factory_moduledir="\${moduledir}/factory/report"
+AC_SUBST(report_factory_moduledir)
+
 dnl **************************************************************
 dnl Configure for factory modules.
 dnl **************************************************************
@@ -179,7 +182,6 @@ AC_CONFIG_FILES([Makefile
 		 cutter/Makefile
 		 cutter/module/Makefile
 		 cutter/module/ui/Makefile
-		 cutter/module/ui-factory/Makefile
 		 cutter/module/report/Makefile
 		 sample/Makefile
 		 sample/glib/Makefile

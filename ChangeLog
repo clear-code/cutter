@@ -17,6 +17,8 @@
 	setting description.
 	* cutter/cut-module-factory.[c|h]: Added cut_module_factory_newv().
 	* cutter/cut-report-factory.[c|h]: Added.
+	* configure.ac: Remove cutter/module/ui-factory/Makefile. Define
+	report_factory_moduledir.
 
 2008-03-03  Kouhei Sutou  <kou@cozmixng.org>
 
