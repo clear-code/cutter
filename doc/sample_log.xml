@@ -7,12 +7,10 @@
     <test>
       <name>test_my_test</name>
       <description>My Test</description>
-      <attributes>
-        <attribute>
-          <name>category</name>
-          <value>initialization</value>
-        </attribute>
-      </attributes>
+      <option>
+        <name>category</name>
+        <value>initialization</value>
+      </option>
     </test>
     <status>success</status>
     <elapsed>0.0001</elapsed>
@@ -25,12 +23,10 @@
     <test>
       <name>test_my_test2</name>
       <description>My Test2</description>
-      <attributes>
-        <attribute>
-          <name>bug</name>
-          <value>1234</value>
-        </attribute>
-      </attributes>
+      <option>
+        <name>bug</name>
+        <value>1234</value>
+      </option>
     </test>
     <status>failure</status>
     <detail>&lt;"1234" == cut_test_get_metadata(CUT_TEST(tests-&gt;data), "bug")&gt;
@@ -53,12 +49,10 @@ expected: &lt;1234&gt;
     <test>
       <name>test_my_pending_test</name>
       <description>My Pending Test</description>
-      <attributes>
-        <attribute>
-          <name>bug</name>
-          <value>1235</value>
-        </attribute>
-      </attributes>
+      <option>
+        <name>bug</name>
+        <value>1235</value>
+      </option>
     </test>
     <status>pending</status>
     <detail>Cannot set locale to de_DE, skipping</detail>
