@@ -52,7 +52,7 @@ expected: &lt;1234&gt;
     </test_case>
     <test>
       <name>test_my_pending_test</name>
-      <description>My Penging Test</description>
+      <description>My Pending Test</description>
       <attributes>
         <attribute>
           <name>bug</name>
