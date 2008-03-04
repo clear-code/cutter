@@ -24,6 +24,7 @@
 	cut_module_factory_newv() -> cut_module_factory_new_valist().
 	* cutter/cut-listener.[c|h]: Added an interface for listening runner
 	status. CutRunner, CutReport, etc. should use this interface.
+	* cutter/cut-runner.[c|h]: Use CutListener interface.
 
 2008-03-03  Kouhei Sutou  <kou@cozmixng.org>
 

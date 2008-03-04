@@ -25,6 +25,7 @@
 #include <glib-object.h>
 
 #include <cutter/cut-test-suite.h>
+#include <cutter/cut-listener.h>
 #include <cutter/cut-verbose-level.h>
 
 G_BEGIN_DECLS
@@ -46,54 +47,6 @@ struct _CutRunner
 struct _CutRunnerClass
 {
     GObjectClass parent_class;
-
-    void (*ready_test_suite)    (CutRunner      *runner,
-                                 CutTestCase    *test_case,
-                                 guint           n_test_cases,
-                                 guint           n_tests);
-    void (*start_test_suite)    (CutRunner      *runner,
-                                 CutTestSuite   *test_suite);
-    void (*ready_test_case)     (CutRunner      *runner,
-                                 CutTestCase    *test_case,
-                                 guint           n_tests);
-    void (*start_test_case)     (CutRunner      *runner,
-                                 CutTestCase    *test_case);
-    void (*start_test)          (CutRunner      *runner,
-                                 CutTest        *test,
-                                 CutTestContext *test_context);
-
-    void (*pass)                (CutRunner      *runner,
-                                 CutTest        *test,
-                                 CutTestContext *test_context);
-    void (*success)             (CutRunner      *runner,
-                                 CutTest        *test);
-    void (*failure)             (CutRunner      *runner,
-                                 CutTest        *test,
-                                 CutTestContext *test_context,
-                                 CutTestResult  *result);
-    void (*error)               (CutRunner      *runner,
-                                 CutTest        *test,
-                                 CutTestContext *test_context,
-                                 CutTestResult  *result);
-    void (*pending)             (CutRunner      *runner,
-                                 CutTest        *test,
-                                 CutTestContext *test_context,
-                                 CutTestResult  *result);
-    void (*notification)        (CutRunner      *runner,
-                                 CutTest        *test,
-                                 CutTestContext *test_context,
-                                 CutTestResult  *result);
-
-    void (*complete_test)       (CutRunner      *runner,
-                                 CutTest        *test,
-                                 CutTestContext *test_context);
-    void (*complete_test_case)  (CutRunner      *runner,
-                                 CutTestCase    *test_case);
-    void (*complete_test_suite) (CutRunner      *runner,
-                                 CutTestSuite   *test_suite);
-
-    void (*crashed)             (CutRunner      *runner,
-                                 const gchar    *stack_trace);
 };
 
 GType        cut_runner_get_type  (void) G_GNUC_CONST;
