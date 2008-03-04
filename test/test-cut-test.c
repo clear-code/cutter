@@ -74,7 +74,7 @@ setup (void)
 
     runner = cut_runner_new();
 
-    test_object = cut_test_new("dummy-test", "Dummy Test", dummy_test_function);
+    test_object = cut_test_new("dummy-test", dummy_test_function);
 }
 
 void
@@ -154,6 +154,7 @@ test_get_name (void)
 void
 test_get_description (void)
 {
+    cut_test_set_attribute(test_object, "description", "Dummy Test");
     cut_assert_equal_string("Dummy Test",
                             cut_test_get_description(test_object));
 }
@@ -192,7 +193,7 @@ test_error_signal (void)
 {
     CutTest *test;
 
-    test = cut_test_new("dummy-error-test", NULL, dummy_error_function);
+    test = cut_test_new("dummy-error-test", dummy_error_function);
     cut_assert(test);
 
     g_signal_connect(test, "error", G_CALLBACK(cb_error_signal), NULL);
@@ -209,7 +210,7 @@ test_failure_signal (void)
 {
     CutTest *test;
 
-    test = cut_test_new("dummy-failure-test", NULL, dummy_fail_function);
+    test = cut_test_new("dummy-failure-test", dummy_fail_function);
     cut_assert(test);
 
     g_signal_connect(test, "failure", G_CALLBACK(cb_failure_signal), NULL);
@@ -226,7 +227,7 @@ test_pending_signal (void)
 {
     CutTest *test;
 
-    test = cut_test_new("dummy-pending-test", NULL, dummy_pending_function);
+    test = cut_test_new("dummy-pending-test", dummy_pending_function);
     cut_assert(test);
 
     g_signal_connect(test, "pending", G_CALLBACK(cb_pending_signal), NULL);
@@ -243,7 +244,7 @@ test_notification_signal (void)
 {
     CutTest *test;
 
-    test = cut_test_new("dummy-notification-test", NULL, dummy_notification_function);
+    test = cut_test_new("dummy-notification-test", dummy_notification_function);
     cut_assert(test);
 
     g_signal_connect(test, "notification", G_CALLBACK(cb_notification_signal), NULL);

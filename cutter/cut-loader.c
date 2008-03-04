@@ -484,7 +484,7 @@ cut_loader_load_test_case (CutLoader *loader)
         g_module_symbol(priv->module, name, (gpointer)&function);
         if (function) {
             GList *attributes;
-            test = cut_test_new(name, NULL, function);
+            test = cut_test_new(name, function);
             attributes = collect_attributes(priv, name);
             if (attributes) {
                 set_attributes(test, attributes);

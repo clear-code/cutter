@@ -80,7 +80,7 @@ test_equal_g_type (void)
 {
     CutTest *test;
 
-    test = cut_test_new("equal_g_type test", NULL, equal_g_type_test);
+    test = cut_test_new("equal_g_type test", equal_g_type_test);
     cut_assert(test);
 
     cut_assert(!run(test));
@@ -114,7 +114,7 @@ test_equal_g_value (void)
 {
     CutTest *test;
 
-    test = cut_test_new("equal_g_value test", NULL, equal_g_value_test);
+    test = cut_test_new("equal_g_value test", equal_g_value_test);
     cut_assert(test);
 
     cut_assert(!run(test));

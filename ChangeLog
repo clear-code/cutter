@@ -5,6 +5,13 @@
 	* cutter/cut-test-case.c, test/test-cut-module-factory.c,
 	test/factory_test_dir/type1/factory-module1.c: Follow the above
 	change.
+	* cutter/cut-test.[c|h]: cut_test_new() does not need description
+	anymore. Description is now set by invoking cut_test_set_attribute().
+	* cutter/cut-loader.c, test/test-cut-test-case.c,
+	test/test-cut-assertions.c, test/test-cut-test-suite.c,
+	test/test-cut-report-xml.c, test/test-cut-test.c,
+	test/test-cut-test-attribute.c, test/test-cut-gassertions.c: Follow
+	the above change.
 
 2008-03-03  Kouhei Sutou  <kou@cozmixng.org>
 

@@ -192,7 +192,7 @@ test_error_equal_string_with_null (void)
 {
     CutTest *test;
 
-    test = cut_test_new("error-equal-string-with-null", NULL,
+    test = cut_test_new("error-equal-string-with-null",
                         error_equal_string_with_null);
     cut_assert(test, "Creating a new CutTest object failed");
 
@@ -204,7 +204,7 @@ test_error_equal_string (void)
 {
     CutTest *test;
 
-    test = cut_test_new("error-equal-string", NULL,
+    test = cut_test_new("error-equal-string",
                         error_equal_string);
     cut_assert(test, "Creating a new CutTest object failed");
 
@@ -216,7 +216,7 @@ test_error (void)
 {
     CutTest *test;
 
-    test = cut_test_new("dummy-error-test", NULL, dummy_error_test_function);
+    test = cut_test_new("dummy-error-test", dummy_error_test_function);
     cut_assert(test, "Creating a new CutTest object failed");
 
     cut_assert(!run(test));
@@ -231,7 +231,7 @@ test_pending (void)
 {
     CutTest *test;
 
-    test = cut_test_new("dummy-pend-test", NULL, dummy_pend_test_function);
+    test = cut_test_new("dummy-pend-test", dummy_pend_test_function);
     cut_assert(test, "Creating a new CutTest object failed");
 
     g_signal_connect(test, "pending", G_CALLBACK(cb_collect_result),
@@ -253,7 +253,7 @@ test_notification (void)
 {
     CutTest *test;
 
-    test = cut_test_new("dummy-notify-test", NULL, dummy_notify_test_function);
+    test = cut_test_new("dummy-notify-test", dummy_notify_test_function);
     cut_assert(test, "Creating a new CutTest object failed");
 
     g_signal_connect(test, "notification", G_CALLBACK(cb_collect_result),
@@ -275,7 +275,7 @@ test_fail (void)
 {
     CutTest *test;
 
-    test = cut_test_new("dummy-fail-test", NULL, dummy_fail_test_function);
+    test = cut_test_new("dummy-fail-test", dummy_fail_test_function);
     cut_assert(test);
 
     g_signal_connect(test, "failure", G_CALLBACK(cb_collect_result),
@@ -296,7 +296,7 @@ test_assert_message (void)
 {
     CutTest *test;
 
-    test = cut_test_new("dummy-assertion-message-test", NULL,
+    test = cut_test_new("dummy-assertion-message-test",
                         dummy_assert_message_test_function);
     cut_assert(test);
 
@@ -320,7 +320,7 @@ test_assert_message_with_format_string (void)
 {
     CutTest *test;
 
-    test = cut_test_new("dummy-assert-message-with-string", NULL,
+    test = cut_test_new("dummy-assert-message-with-string",
                         dummy_assert_message_with_format_string);
     cut_assert(test);
 
@@ -377,7 +377,7 @@ test_failure_from_nested_function (void)
     CutTest *test;
     CutTestResult *result;
 
-    test = cut_test_new("fail from nested function", NULL,
+    test = cut_test_new("fail from nested function",
                         just_call_fail_in_nested_function);
     cut_assert(test);
 
@@ -406,7 +406,7 @@ test_null_string (void)
 {
     CutTest *test;
 
-    test = cut_test_new("assert-null-string", NULL, null_string_assertions);
+    test = cut_test_new("assert-null-string", null_string_assertions);
     cut_assert(!run(test));
     cut_assert_test_result_summary(runner, 1, 1, 1, 0, 0, 0);
 }
@@ -426,7 +426,7 @@ test_equal_string_with_free (void)
     CutTest *test;
 
     test = cut_test_new("assert-string-equal-string-with-free",
-                        NULL, equal_string_with_free_assertions);
+                        equal_string_with_free_assertions);
     cut_assert(!run(test));
     cut_assert_test_result_summary(runner, 1, 3, 1, 0, 0, 0);
 }

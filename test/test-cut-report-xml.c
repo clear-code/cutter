@@ -100,11 +100,24 @@ test_report_success (void)
                        "    <test>\n"
                        "      <name>dummy-success-test</name>\n"
                        "      <description>A success test</description>\n"
+                       "      <attributes>\n"
+                       "        <attribute>\n"
+                       "          <name>bug</name>\n"
+                       "          <value>1234</value>\n"
+                       "        </attribute>\n"
+                       "        <attribute>\n"
+                       "          <name>price</name>\n"
+                       "          <value>$199</value>\n"
+                       "        </attribute>\n"
+                       "      </attributes>\n"
                        "    </test>\n"
                        "    <status>success</status>\n"
                        "    <elapsed>0.0001</elapsed>\n"
                        "  </result>\n";
-    test_object = cut_test_new("dummy-success-test", "A success test", dummy_success_test);
+    test_object = cut_test_new("dummy-success-test", dummy_success_test);
+    cut_test_set_attribute(test_object, "description", "A success test");
+    cut_test_set_attribute(test_object, "bug", "1234");
+    cut_test_set_attribute(test_object, "price", "$199");
     g_signal_connect_after(test_object, "success", G_CALLBACK(cb_success_signal), NULL);
     cut_test_case_add_test(test_case, test_object);
     cut_assert(run_the_test(test_object));
@@ -135,7 +148,7 @@ test_report_failure (void)
                        "    <elapsed>0.0001</elapsed>\n"
                        "  </result>\n";
 
-    test_object = cut_test_new("dummy-failure-test", NULL, dummy_failure_test);
+    test_object = cut_test_new("dummy-failure-test", dummy_failure_test);
     g_signal_connect_after(test_object, "failure", G_CALLBACK(cb_failure_signal), NULL);
     cut_test_case_add_test(test_case, test_object);
     cut_assert(!run_the_test(test_object));

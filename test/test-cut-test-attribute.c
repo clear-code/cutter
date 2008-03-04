@@ -52,7 +52,7 @@ teardown (void)
 void
 test_set_attribute (void)
 {
-    test = cut_test_new("fail-test", NULL, fail_test);
+    test = cut_test_new("fail-test", fail_test);
     cut_assert(test);
     cut_assert_null(cut_test_get_attribute(test, "category"));
     cut_test_set_attribute(test, "category", "assertion");
