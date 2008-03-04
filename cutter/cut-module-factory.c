@@ -196,8 +196,8 @@ init (CutModuleFactory *factory)
 }
 
 CutModuleFactory *
-cut_module_factory_newv (const gchar *type, const gchar *name,
-                         const gchar *first_property, va_list var_args)
+cut_module_factory_new_valist (const gchar *type, const gchar *name,
+                               const gchar *first_property, va_list var_args)
 {
     CutModule *module;
     GObject *factory;

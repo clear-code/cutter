@@ -75,7 +75,8 @@ cut_report_factory_new (const gchar *name, const gchar *first_property, ...)
     va_list var_args;
 
     va_start(var_args, first_property);
-    factory = cut_module_factory_newv("report", name, first_property, var_args);
+    factory = cut_module_factory_new_valist("report", name,
+                                            first_property, var_args);
     va_end(var_args);
 
     return factory;
