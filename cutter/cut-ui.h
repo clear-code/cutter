@@ -25,8 +25,7 @@
 #include <glib-object.h>
 
 #include <cutter/cut-private.h>
-#include <cutter/cut-test-result.h>
-#include <cutter/cut-verbose-level.h>
+#include <cutter/cut-listener.h>
 
 G_BEGIN_DECLS
 
@@ -42,12 +41,12 @@ typedef struct _CutUIClass    CutUIClass;
 
 struct _CutUI
 {
-    GObject object;
+    CutListener object;
 };
 
 struct _CutUIClass
 {
-    GObjectClass parent_class;
+    CutListenerClass parent_class;
 
     gboolean (*run)                (CutUI    *ui,
                                     CutRunner   *runner);

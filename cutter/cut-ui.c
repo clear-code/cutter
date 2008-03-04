@@ -139,19 +139,24 @@ cut_ui_get_log_domains (void)
 }
 
 #define cut_ui_init init
-G_DEFINE_ABSTRACT_TYPE (CutUI, cut_ui, G_TYPE_OBJECT)
+G_DEFINE_ABSTRACT_TYPE (CutUI, cut_ui, CUT_TYPE_LISTENER)
 #undef cut_ui_init
 
 static void
 cut_ui_class_init (CutUIClass *klass)
 {
     GObjectClass *gobject_class;
+    CutListenerClass *listener_class;
 
     gobject_class = G_OBJECT_CLASS(klass);
+    listener_class = CUT_LISTENER_CLASS(klass);
 
     gobject_class->dispose      = dispose;
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
+
+    listener_class->attach_to_runner   = NULL;
+    listener_class->detach_from_runner = NULL;
 }
 
 static void

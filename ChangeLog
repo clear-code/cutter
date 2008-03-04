@@ -6,6 +6,7 @@
 	* cutter/cut-report.[c|h], module/report/cut-report-xml.c: CutReport
 	is now a child of CutListener.
 	* test/test-cut-report-xml.c: Follow the above change.
+	* cutter/cut-ui.[c|h]: CutUI is now a child of CutListener.
 
 2008-03-04  Kouhei Sutou  <kou@cozmixng.org>
 
