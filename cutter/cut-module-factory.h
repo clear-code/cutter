@@ -68,6 +68,10 @@ CutModuleFactory *cut_module_factory_new    (const gchar *type,
                                              const gchar *name,
                                              const gchar *first_property,
                                              ...);
+CutModuleFactory *cut_module_factory_newv   (const gchar *type,
+                                             const gchar *name,
+                                             const gchar *first_property,
+                                             va_list      var_args);
 
 void         cut_module_factory_set_option_group (CutModuleFactory *factory,
                                                   GOptionContext *context);

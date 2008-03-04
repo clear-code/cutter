@@ -196,6 +196,21 @@ init (CutModuleFactory *factory)
 }
 
 CutModuleFactory *
+cut_module_factory_newv (const gchar *type, const gchar *name,
+                         const gchar *first_property, va_list var_args)
+{
+    CutModule *module;
+    GObject *factory;
+
+    module = cut_module_factory_load_module(type, name);
+    g_return_val_if_fail(module != NULL, NULL);
+
+    factory = cut_module_instantiate(module, first_property, var_args);
+
+    return CUT_MODULE_FACTORY(factory);
+}
+
+CutModuleFactory *
 cut_module_factory_new (const gchar *type, const gchar *name,
                         const gchar *first_property, ...)
 {
