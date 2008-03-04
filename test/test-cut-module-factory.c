@@ -66,12 +66,11 @@ test_module_names (void)
 void
 test_module_arguments (void)
 {
-    gchar *function_name = NULL, *description = NULL;
-    gint argc = 5;
+    gchar *function_name = NULL;
+    gint argc = 3;
     gchar *argv[] = {
         "test program",
         "-f", "dummy_function",
-        "-d", "This test is a dummy",
         NULL,
     };
     gchar **copy_argv;
@@ -90,10 +89,8 @@ test_module_arguments (void)
 
     g_object_get(object,
                  "name", &function_name,
-                 "description", &description,
                  NULL);
     cut_assert_equal_string_with_free("dummy_function", function_name);
-    cut_assert_equal_string_with_free("This test is a dummy", description);
 
     g_object_unref(factory);
     factory = NULL;
