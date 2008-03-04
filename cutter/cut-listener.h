@@ -23,7 +23,7 @@
 #define __CUT_LISTENER_H__
 
 #include <glib-object.h>
-#include <cutter/cut-test-suite.h>
+#include <cutter/cut-runner.h>
 
 G_BEGIN_DECLS
 
@@ -37,106 +37,27 @@ G_BEGIN_DECLS
 typedef struct _CutListener CutListener;
 typedef struct _CutListenerClass CutListenerClass;
 
+struct _CutListener
+{
+    GObject object;
+};
+
 struct _CutListenerClass
 {
-    GTypeInterface base_iface;
+    GObjectClass parent_class;
 
-    void (*ready_test_suite)    (CutListener    *listener,
-                                 CutTestCase    *test_case,
-                                 guint           n_test_cases,
-                                 guint           n_tests);
-    void (*start_test_suite)    (CutListener    *listener,
-                                 CutTestSuite   *test_suite);
-    void (*ready_test_case)     (CutListener    *listener,
-                                 CutTestCase    *test_case,
-                                 guint           n_tests);
-    void (*start_test_case)     (CutListener    *listener,
-                                 CutTestCase    *test_case);
-    void (*start_test)          (CutListener    *listener,
-                                 CutTest        *test,
-                                 CutTestContext *test_context);
-
-    void (*pass)                (CutListener    *listener,
-                                 CutTest        *test,
-                                 CutTestContext *test_context);
-    void (*success)             (CutListener    *listener,
-                                 CutTest        *test);
-    void (*failure)             (CutListener    *listener,
-                                 CutTest        *test,
-                                 CutTestContext *test_context,
-                                 CutTestResult  *result);
-    void (*error)               (CutListener    *listener,
-                                 CutTest        *test,
-                                 CutTestContext *test_context,
-                                 CutTestResult  *result);
-    void (*pending)             (CutListener    *listener,
-                                 CutTest        *test,
-                                 CutTestContext *test_context,
-                                 CutTestResult  *result);
-    void (*notification)        (CutListener    *listener,
-                                 CutTest        *test,
-                                 CutTestContext *test_context,
-                                 CutTestResult  *result);
-
-    void (*complete_test)       (CutListener    *listener,
-                                 CutTest        *test,
-                                 CutTestContext *test_context);
-    void (*complete_test_case)  (CutListener    *listener,
-                                 CutTestCase    *test_case);
-    void (*complete_test_suite) (CutListener    *listener,
-                                 CutTestSuite   *test_suite);
-
-    void (*crashed)             (CutListener    *listener,
-                                 const gchar    *stack_trace);
+    void (*attach_to_runner)    (CutListener *listener,
+                                 CutRunner   *runner);
+    void (*detach_from_runner)  (CutListener *listener,
+                                 CutRunner   *runner);
 };
 
 GType        cut_listener_get_type  (void) G_GNUC_CONST;
 
-
-void cut_listener_ready_test_suite   (CutListener    *listener,
-                                      CutTestCase    *test_case,
-                                      guint           n_test_cases,
-                                      guint           n_tests);
-void cut_listener_start_test_suite   (CutListener    *listener,
-                                      CutTestSuite   *test_suite);
-void cut_listener_ready_test_case    (CutListener    *listener,
-                                      CutTestCase    *test_case,
-                                      guint           n_tests);
-void cut_listener_start_test_case    (CutListener    *listener,
-                                      CutTestCase    *test_case);
-void cut_listener_start_test         (CutListener    *listener,
-                                      CutTest        *test,
-                                      CutTestContext *test_context);
-void cut_listener_pass               (CutListener    *listener,
-                                      CutTest        *test,
-                                      CutTestContext *test_context);
-void cut_listener_success            (CutListener    *listener,
-                                      CutTest        *test);
-void cut_listener_failure            (CutListener    *listener,
-                                      CutTest        *test,
-                                      CutTestContext *test_context,
-                                      CutTestResult  *result);
-void cut_listener_error              (CutListener    *listener,
-                                      CutTest        *test,
-                                      CutTestContext *test_context,
-                                      CutTestResult  *result);
-void cut_listener_pending            (CutListener    *listener,
-                                      CutTest        *test,
-                                      CutTestContext *test_context,
-                                      CutTestResult  *result);
-void cut_listener_notification       (CutListener    *listener,
-                                      CutTest        *test,
-                                      CutTestContext *test_context,
-                                      CutTestResult  *result);
-void cut_listener_complete_test       (CutListener    *listener,
-                                      CutTest        *test,
-                                      CutTestContext *test_context);
-void cut_listener_complete_test_case (CutListener    *listener,
-                                      CutTestCase    *test_case);
-void cut_listener_complete_test_suite(CutListener    *listener,
-                                      CutTestSuite   *test_suite);
-void cut_listener_crashed            (CutListener    *listener,
-                                      const gchar    *stack_trace);
+void cut_listener_attach_to_runner  (CutListener *listener,
+                                     CutRunner   *runner);
+void cut_listener_detach_from_runner(CutListener *listener,
+                                     CutRunner   *runner);
 
 G_END_DECLS
 

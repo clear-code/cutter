@@ -1,6 +1,8 @@
 2008-03-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-runner.[c|h]: Reverted rev. 1198.
+	* cutter/cut-listener.[c|h]: CutListener has now just two interfaces,
+	attach_to_runner() and detach_from_runner().
 
 2008-03-04  Kouhei Sutou  <kou@cozmixng.org>
 
