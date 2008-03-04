@@ -25,8 +25,7 @@
 #include <glib-object.h>
 
 #include <cutter/cut-private.h>
-#include <cutter/cut-test-result.h>
-#include <cutter/cut-verbose-level.h>
+#include <cutter/cut-listener.h>
 
 G_BEGIN_DECLS
 
@@ -47,12 +46,12 @@ typedef enum {
 
 struct _CutReport
 {
-    GObject object;
+    CutListener object;
 };
 
 struct _CutReportClass
 {
-    GObjectClass parent_class;
+    CutListenerClass parent_class;
     gboolean (*result_to_file)     (CutReport        *report,
                                     const gchar      *filename,
                                     CutReportFileMode mode);
@@ -80,7 +79,6 @@ GList       *cut_report_get_registered_types (void);
 GList       *cut_report_get_log_domains      (void);
 
 CutReport   *cut_report_new             (const gchar *name,
-                                         CutRunner   *runner,
                                          const gchar *first_property,
                                          ...);
 gboolean     cut_report_result_to_file  (CutReport        *report,

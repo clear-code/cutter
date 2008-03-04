@@ -3,6 +3,9 @@
 	* cutter/cut-runner.[c|h]: Reverted rev. 1198.
 	* cutter/cut-listener.[c|h]: CutListener has now just two interfaces,
 	attach_to_runner() and detach_from_runner().
+	* cutter/cut-report.[c|h], module/report/cut-report-xml.c: CutReport
+	is now a child of CutListener.
+	* test/test-cut-report-xml.c: Follow the above change.
 
 2008-03-04  Kouhei Sutou  <kou@cozmixng.org>
 

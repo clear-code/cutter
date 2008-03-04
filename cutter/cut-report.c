@@ -29,7 +29,6 @@
 #include <glib/gstdio.h>
 
 #include "cut-report.h"
-#include "cut-runner.h"
 #include "cut-test.h"
 #include "cut-test-case.h"
 #include "cut-module.h"
@@ -139,19 +138,24 @@ cut_report_get_log_domains (void)
 }
 
 #define cut_report_init init
-G_DEFINE_ABSTRACT_TYPE (CutReport, cut_report, G_TYPE_OBJECT)
+G_DEFINE_ABSTRACT_TYPE (CutReport, cut_report, CUT_TYPE_LISTENER)
 #undef cut_report_init
 
 static void
 cut_report_class_init (CutReportClass *klass)
 {
     GObjectClass *gobject_class;
+    CutListenerClass *listener_class;
 
     gobject_class = G_OBJECT_CLASS(klass);
+    listener_class = CUT_LISTENER_CLASS(klass);
 
     gobject_class->dispose      = dispose;
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
+
+    listener_class->attach_to_runner   = NULL;
+    listener_class->detach_from_runner = NULL;
 }
 
 static void
@@ -191,7 +195,7 @@ get_property (GObject    *object,
 }
 
 CutReport *
-cut_report_new (const gchar *name, CutRunner *runner,
+cut_report_new (const gchar *name,
                 const gchar *first_property, ...)
 {
     CutModule *module;
@@ -205,9 +209,6 @@ cut_report_new (const gchar *name, CutRunner *runner,
     report = cut_module_instantiate(module,
                                     first_property, var_args);
     va_end(var_args);
-
-    /* workdaround for setting CurRunner */
-    g_object_set(report, "cut-runner", runner, NULL);
 
     return CUT_REPORT(report);
 }

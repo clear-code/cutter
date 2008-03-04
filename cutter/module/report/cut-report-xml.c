@@ -32,6 +32,7 @@
 #include <cutter/cut-module-impl.h>
 #include <cutter/cut-report.h>
 #include <cutter/cut-runner.h>
+#include <cutter/cut-test-result.h>
 #include <cutter/cut-enum-types.h>
 
 #define CUT_TYPE_REPORT_XML            cut_type_report_xml
@@ -74,8 +75,10 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 
-static void cut_report_xml_set_runner (CutReportXML *report,
-                                       CutRunner    *runner);
+static void attach_to_runner             (CutListener *listener,
+                                          CutRunner   *runner);
+static void detach_from_runner           (CutListener *listener,
+                                          CutRunner   *runner);
 
 static gboolean result_to_file           (CutReport        *report,
                                           const gchar      *filename,
@@ -94,16 +97,21 @@ class_init (CutReportXMLClass *klass)
 {
     GObjectClass *gobject_class;
     GParamSpec *spec;
+    CutListenerClass *listener_class;
     CutReportClass *report_class;
 
     parent_class = g_type_class_peek_parent(klass);
 
     gobject_class = G_OBJECT_CLASS(klass);
+    listener_class = CUT_LISTENER_CLASS(klass);
     report_class = CUT_REPORT_CLASS(klass);
 
     gobject_class->dispose      = dispose;
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
+
+    listener_class->attach_to_runner   = attach_to_runner;
+    listener_class->detach_from_runner = detach_from_runner;
 
     report_class->result_to_file           = result_to_file;
     report_class->get_all_results          = get_all_results;
@@ -187,7 +195,10 @@ dispose (GObject *object)
 {
     CutReportXML *report = CUT_REPORT_XML(object);
 
-    cut_report_xml_set_runner(report, NULL);
+    if (report->runner) {
+        g_object_unref(report->runner);
+        report->runner = NULL;
+    }
 
     G_OBJECT_CLASS(parent_class)->dispose(object);
 }
@@ -202,7 +213,7 @@ set_property (GObject      *object,
 
     switch (prop_id) {
       case PROP_RUNNER:
-        cut_report_xml_set_runner(report, CUT_RUNNER(g_value_get_object(value)));
+        attach_to_runner(CUT_LISTENER(report), CUT_RUNNER(g_value_get_object(value)));
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -364,18 +375,30 @@ disconnect_from_runner (CutReportXML *report, CutRunner *runner)
 }
 
 static void
-cut_report_xml_set_runner (CutReportXML *report, CutRunner *runner)
+attach_to_runner (CutListener *listener,
+                  CutRunner   *runner)
 {
-    if (report->runner) {
-        disconnect_from_runner(report, report->runner);
-        g_object_unref(report->runner);
-        report->runner = NULL;
-    }
-
+    CutReportXML *report = CUT_REPORT_XML(listener);
+    if (report->runner)
+        detach_from_runner(listener, report->runner);
+    
     if (runner) {
         report->runner = g_object_ref(runner);
-        connect_to_runner(report, runner);
+        connect_to_runner(CUT_REPORT_XML(listener), runner);
     }
+}
+
+static void
+detach_from_runner (CutListener *listener,
+                    CutRunner   *runner)
+{
+    CutReportXML *report = CUT_REPORT_XML(listener);
+    if (report->runner != runner)
+        return;
+
+    disconnect_from_runner(report, runner);
+    g_object_unref(report->runner);
+    report->runner = NULL;
 }
 
 static gboolean
