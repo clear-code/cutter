@@ -2,7 +2,7 @@
   <result>
     <test_case>
       <name>MyTestCase</name>
-      <description>Test case for my library</descrption>
+      <description>Test case for my library</description>
     </test_case>
     <test>
       <name>test_my_test</name>
@@ -20,7 +20,7 @@
   <result>
     <test_case>
       <name>MyTestCase</name>
-      <description>Test case for my library</descrption>
+      <description>Test case for my library</description>
     </test_case>
     <test>
       <name>test_my_test2</name>
@@ -33,11 +33,9 @@
       </attributes>
     </test>
     <status>failure</status>
-    <detail>
-&lt;"1234" == cut_test_get_metadata(CUT_TEST(tests-&gt;data), "bug")&gt;
+    <detail>&lt;"1234" == cut_test_get_metadata(CUT_TEST(tests-&gt;data), "bug")&gt;
 expected: &lt;1234&gt;
- but was: &lt;(null)&gt;
-    </detail>
+ but was: &lt;(null)&gt;</detail>
     <backtrace>
       <entry>
         <file>./test_get_metadata.c</file>
@@ -50,7 +48,7 @@ expected: &lt;1234&gt;
   <result>
     <test_case>
       <name>MyTestCase</name>
-      <description>Test case for my library</descrption>
+      <description>Test case for my library</description>
     </test_case>
     <test>
       <name>test_my_pending_test</name>
@@ -61,11 +59,9 @@ expected: &lt;1234&gt;
           <value>1235</value>
         </attribute>
       </attributes>
-    <test>
+    </test>
     <status>pending</status>
-    <detail>
-Cannot set locale to de_DE, skipping
-    </detail>
+    <detail>Cannot set locale to de_DE, skipping</detail>
     <backtrace>
       <entry>
         <file>./option.c</file>
