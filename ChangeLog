@@ -19,6 +19,7 @@
 	* cutter/cut-report-factory.[c|h]: Added.
 	* configure.ac: Remove cutter/module/ui-factory/Makefile. Define
 	report_factory_moduledir.
+	* cutter/module/report/cut-report-factory-xml.c: Added.
 
 2008-03-03  Kouhei Sutou  <kou@cozmixng.org>
 
