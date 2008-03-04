@@ -17,7 +17,7 @@ cutter/cut-utils.c
 cutter/cut-value-equal.c
 cutter/cut-verbose-level.c
 cutter/main.c
-cutter/module/ui-factory/cut-ui-factory-console.c
-cutter/module/ui-factory/cut-ui-factory-gtk.c
+cutter/module/ui/cut-ui-factory-console.c
+cutter/module/ui/cut-ui-factory-gtk.c
 cutter/module/ui/cut-ui-console.c
 cutter/module/ui/cut-ui-gtk.c
