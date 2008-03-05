@@ -1020,7 +1020,7 @@ cut_runner_add_listener (CutRunner *runner,
 {
     CutRunnerPrivate *priv = CUT_RUNNER_GET_PRIVATE(runner);
 
-    priv->listeners = g_list_prepend(priv->listeners, listener);
+    priv->listeners = g_list_prepend(priv->listeners, g_object_ref(listener));
 }
 
 void
@@ -1029,6 +1029,7 @@ cut_runner_remove_listener (CutRunner *runner, CutListener *listener)
     CutRunnerPrivate *priv = CUT_RUNNER_GET_PRIVATE(runner);
     remove_listener(listener, runner);
     priv->listeners = g_list_remove(priv->listeners, listener);
+    g_object_unref(listener);
 }
 
 gchar *

@@ -27,6 +27,8 @@
 	hash table does not care it. We need a XML parser.
 	* cutter/cut-report.c: Added "filename" property.
 	* cutter/cut-report-factory.[c|h]: Added cut_report_factory_create().
+	* cutter/cut-runner.c: Increment reference count of CutListener in
+	CutRunner.
 
 2008-03-04  Kouhei Sutou  <kou@cozmixng.org>
 
