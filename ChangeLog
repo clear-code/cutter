@@ -19,6 +19,8 @@
 	* cutter/cut-main.c: Use cut_runner_run() instead of cut_ui_run().
 	* cutter/cut-runner.c: Attach listers and detach listers around
 	running test case.
+	* cutter/module/report/cut-report-xml.c: Change element name.
+	"test_case" -> "test-case".
 
 2008-03-04  Kouhei Sutou  <kou@cozmixng.org>
 

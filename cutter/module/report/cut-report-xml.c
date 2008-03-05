@@ -552,7 +552,7 @@ get_result (CutTestResult *result)
     GString *xml = g_string_new("");
 
     g_string_append(xml, "  <result>\n");
-    append_test_info_to_string(xml, "test_case", CUT_TEST(cut_test_result_get_test_case(result)));
+    append_test_info_to_string(xml, "test-case", CUT_TEST(cut_test_result_get_test_case(result)));
     append_test_info_to_string(xml, "test", cut_test_result_get_test(result));
     /* append_test_attributes(xml, cut_test_result_get_test_attributes(result)); */
     append_test_result_to_string(xml, result);

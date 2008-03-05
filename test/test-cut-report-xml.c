@@ -98,9 +98,9 @@ void
 test_report_success (void)
 {
     gchar expected[] = "  <result>\n"
-                       "    <test_case>\n"
+                       "    <test-case>\n"
                        "      <name>dummy test case</name>\n"
-                       "    </test_case>\n"
+                       "    </test-case>\n"
                        "    <test>\n"
                        "      <name>dummy-success-test</name>\n"
                        "      <description>A success test</description>\n"
@@ -136,9 +136,9 @@ void
 test_report_failure (void)
 {
     gchar expected[] = "  <result>\n"
-                       "    <test_case>\n"
+                       "    <test-case>\n"
                        "      <name>dummy test case</name>\n"
-                       "    </test_case>\n"
+                       "    </test-case>\n"
                        "    <test>\n"
                        "      <name>dummy-failure-test</name>\n"
                        "    </test>\n"
