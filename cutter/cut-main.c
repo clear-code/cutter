@@ -221,7 +221,8 @@ cut_run_runner (CutRunner *runner)
         return FALSE;
     }
 
-    success = cut_ui_run(ui, runner);
+    cut_runner_add_listener(runner, CUT_LISTENER(ui)); 
+    success = cut_runner_run(runner);
     g_object_unref(ui);
     return success;
 }
@@ -240,5 +241,5 @@ cut_run (void)
 }
 
 /*
-vi:nowrap:ai:expandtab:sw=4
+vi:ts=4:nowrap:ai:expandtab:sw=4
 */

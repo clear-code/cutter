@@ -47,9 +47,6 @@ struct _CutUI
 struct _CutUIClass
 {
     CutListenerClass parent_class;
-
-    gboolean (*run)                (CutUI    *ui,
-                                    CutRunner   *runner);
 };
 
 GType           cut_ui_get_type  (void) G_GNUC_CONST;
@@ -69,8 +66,6 @@ CutUI          *cut_ui_new         (const gchar *name,
                                     const gchar *first_property,
                                     ...);
 
-gboolean        cut_ui_run         (CutUI        *ui,
-                                    CutRunner    *runner);
 G_END_DECLS
 
 #endif /* __CUT_UI_H__ */

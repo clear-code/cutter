@@ -118,8 +118,6 @@ static void attach_to_runner   (CutListener *listener,
                                 CutRunner   *runner);
 static void detach_from_runner (CutListener *listener,
                                 CutRunner   *runner);
-static gboolean run        (CutUI    *ui,
-                            CutRunner   *runner);
 
 static gboolean idle_cb_run_test (gpointer data);
 
@@ -128,13 +126,11 @@ class_init (CutUIClass *klass)
 {
     GObjectClass *gobject_class;
     CutListenerClass *listener_class;
-    CutUIClass *ui_class;
 
     parent_class = g_type_class_peek_parent(klass);
 
     gobject_class = G_OBJECT_CLASS(klass);
     listener_class = CUT_LISTENER_CLASS(klass);
-    ui_class  = CUT_UI_CLASS(klass);
 
     gobject_class->dispose      = dispose;
     gobject_class->set_property = set_property;
@@ -142,8 +138,6 @@ class_init (CutUIClass *klass)
 
     listener_class->attach_to_runner   = attach_to_runner;
     listener_class->detach_from_runner = detach_from_runner;
-
-    ui_class->run           = run;
 }
 
 static void
@@ -1442,22 +1436,6 @@ detach_from_runner (CutListener *listener,
     disconnect_from_runner(CUT_UI_GTK(listener), runner);
 }
 
-static gboolean
-run (CutUI *ui, CutRunner *runner)
-{
-    CutUIGtk *gtk_ui;
-
-    gtk_ui = CUT_UI_GTK(ui);
-    gtk_ui->test_suite = g_object_ref(cut_runner_get_test_suite(runner));
-    gtk_ui->runner = g_object_ref(runner);
-    gtk_widget_show_all(gtk_ui->window);
-    g_idle_add(idle_cb_run_test, gtk_ui);
-    gtk_main();
-
-    return gtk_ui->status <= CUT_TEST_RESULT_NOTIFICATION;
-}
-
-
 /*
-vi:nowrap:ai:expandtab:sw=4
+vi:ts=4:nowrap:ai:expandtab:sw=4
 */

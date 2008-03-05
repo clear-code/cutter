@@ -13,6 +13,12 @@
 	detach_from_runner().
 	* cutter/module/ui/cut-ui-gtk.c: Link to attach_to_runner() and
 	detach_from_runner().
+	* cutter/cut-ui.[c|h]: Remove cut_ui_run().
+	* cutter/module/ui/cut-ui-console.c, cutter/module/ui/cut-ui-gtk.c:
+	Remove run() method.
+	* cutter/cut-main.c: Use cut_runner_run() instead of cut_ui_run().
+	* cutter/cut-runner.c: Attach listers and detach listers around
+	running test case.
 
 2008-03-04  Kouhei Sutou  <kou@cozmixng.org>
 

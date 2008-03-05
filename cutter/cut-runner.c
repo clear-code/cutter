@@ -972,13 +972,46 @@ cut_runner_set_test_suite (CutRunner *runner, CutTestSuite *suite)
     priv->test_suite = suite;
 }
 
+static void
+attach_listener (CutListener *listener, CutRunner *runner)
+{
+    cut_listener_attach_to_runner(listener, runner);
+}
+
+static void
+attach_all_listeners (CutRunner *runner)
+{
+    CutRunnerPrivate *priv = CUT_RUNNER_GET_PRIVATE(runner);
+
+    g_list_foreach(priv->listeners, (GFunc)attach_listener, runner);
+}
+
+static void
+detach_listener (CutListener *listener, CutRunner *runner)
+{
+    cut_listener_detach_from_runner(listener, runner);
+}
+
+static void
+detach_all_listeners (CutRunner *runner)
+{
+    CutRunnerPrivate *priv = CUT_RUNNER_GET_PRIVATE(runner);
+
+    g_list_foreach(priv->listeners, (GFunc)detach_listener, runner);
+}
+
 gboolean
 cut_runner_run (CutRunner *runner)
 {
     CutTestSuite *suite;
+    gboolean success;
 
     suite = cut_runner_get_test_suite(runner);
-    return cut_test_suite_run(suite, runner);
+    attach_all_listeners(runner);
+    success = cut_test_suite_run(suite, runner);
+    detach_all_listeners(runner);
+
+    return success;
 }
 
 void

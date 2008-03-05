@@ -100,22 +100,17 @@ static void attach_to_runner   (CutListener *listener,
 static void detach_from_runner (CutListener *listener,
                                 CutRunner   *runner);
 
-static gboolean run        (CutUI    *ui,
-                            CutRunner   *runner);
-
 static void
 class_init (CutUIClass *klass)
 {
     GObjectClass *gobject_class;
     CutListenerClass *listener_class;
-    CutUIClass *ui_class;
     GParamSpec *spec;
 
     parent_class = g_type_class_peek_parent(klass);
 
     gobject_class = G_OBJECT_CLASS(klass);
     listener_class = CUT_LISTENER_CLASS(klass);
-    ui_class  = CUT_UI_CLASS(klass);
 
     gobject_class->dispose      = dispose;
     gobject_class->set_property = set_property;
@@ -123,8 +118,6 @@ class_init (CutUIClass *klass)
 
     listener_class->attach_to_runner   = attach_to_runner;
     listener_class->detach_from_runner = detach_from_runner;
-
-    ui_class->run = run;
 
     spec = g_param_spec_boolean("use-color",
                                 "Use color",
@@ -702,20 +695,6 @@ detach_from_runner (CutListener *listener,
 {
     disconnect_from_runner(CUT_UI_CONSOLE(listener), runner);
 }
-
-static gboolean
-run (CutUI *ui, CutRunner *runner)
-{
-    CutUIConsole *console = CUT_UI_CONSOLE(ui);
-    gboolean success;
-
-    connect_to_runner(console, runner);
-    success = cut_runner_run(runner);
-    disconnect_from_runner(console, runner);
-
-    return success;
-}
-
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

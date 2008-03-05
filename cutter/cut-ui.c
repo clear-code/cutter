@@ -212,20 +212,6 @@ cut_ui_new (const gchar *name, const gchar *first_property, ...)
     return CUT_UI(ui);
 }
 
-gboolean
-cut_ui_run (CutUI *ui, CutRunner *runner)
-{
-    CutUIClass *klass;
-
-    g_return_val_if_fail(CUT_IS_UI(ui), FALSE);
-
-    klass = CUT_UI_GET_CLASS(ui);
-    if (klass->run)
-        return klass->run(ui, runner);
-    else
-        return FALSE;
-}
-
 /*
 vi:nowrap:ai:expandtab:sw=4
 */
