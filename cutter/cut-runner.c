@@ -990,7 +990,7 @@ cut_runner_add_listener (CutRunner *runner,
     priv->listeners = g_list_prepend(priv->listeners, listener);
 }
 
-static void
+void
 cut_runner_remove_listener (CutRunner *runner, CutListener *listener)
 {
     CutRunnerPrivate *priv = CUT_RUNNER_GET_PRIVATE(runner);
