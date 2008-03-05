@@ -498,15 +498,50 @@ append_element_with_children (GString *string, guint indent, const gchar *elemen
 }
 
 static void
+append_attribute (const gchar *key, const gchar *value, GString *string)
+{
+    guint indent = 6;
+
+    if (!strcmp(key, "description"))
+        return;
+
+    append_indent(string, indent);
+    g_string_append(string, "<option>\n");
+
+    append_element_with_value(string, indent + 2, "name", key);
+    append_element_with_value(string, indent + 2, "value", value);
+
+    append_indent(string, indent);
+    g_string_append(string, "</option>\n");
+}
+
+static void
 append_test_info_to_string (GString *string, const gchar *element_name, CutTest *test)
 {
-    const gchar *description;
+    gchar *escaped;
+    const gchar *description, *name;
+    guint indent = 4;
+    GHashTable *attributes;
+
+    escaped = g_markup_escape_text(element_name, -1);
+    append_indent(string, indent);
+    g_string_append_printf(string, "<%s>\n", escaped);
+
+    name = cut_test_get_name(test);
+    if (name)
+        append_element_with_value(string, indent + 2, "name", name);
 
     description = cut_test_get_description(test);
-    append_element_with_children(string, 4, element_name,
-                                 "name", cut_test_get_name(test),
-                                 "description", description,
-                                 NULL);
+    if (description)
+        append_element_with_value(string, indent + 2, "description", description);
+
+    attributes = (GHashTable*)cut_test_get_attributes(test);
+    if (attributes)
+        g_hash_table_foreach(attributes, (GHFunc)append_attribute, string);
+
+    append_indent(string, indent);
+    g_string_append_printf(string, "</%s>\n", escaped);
+    g_free(escaped);
 }
 
 static void
@@ -554,7 +589,6 @@ get_result (CutTestResult *result)
     g_string_append(xml, "  <result>\n");
     append_test_info_to_string(xml, "test-case", CUT_TEST(cut_test_result_get_test_case(result)));
     append_test_info_to_string(xml, "test", cut_test_result_get_test(result));
-    /* append_test_attributes(xml, cut_test_result_get_test_attributes(result)); */
     append_test_result_to_string(xml, result);
     g_string_append(xml, "  </result>\n");
 
