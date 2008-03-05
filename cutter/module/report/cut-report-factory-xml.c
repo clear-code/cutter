@@ -157,7 +157,7 @@ set_option_group (CutModuleFactory *factory, GOptionContext *context)
 GObject *
 create (CutModuleFactory *factory)
 {
-    return G_OBJECT(cut_report_new("xml", NULL, NULL));
+    return G_OBJECT(cut_report_new("xml", NULL));
 }
 
 /*
