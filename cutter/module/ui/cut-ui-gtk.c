@@ -114,6 +114,10 @@ static void get_property   (GObject         *object,
                             guint            prop_id,
                             GValue          *value,
                             GParamSpec      *pspec);
+static void attach_to_runner   (CutListener *listener,
+                                CutRunner   *runner);
+static void detach_from_runner (CutListener *listener,
+                                CutRunner   *runner);
 static gboolean run        (CutUI    *ui,
                             CutRunner   *runner);
 
@@ -123,16 +127,21 @@ static void
 class_init (CutUIClass *klass)
 {
     GObjectClass *gobject_class;
+    CutListenerClass *listener_class;
     CutUIClass *ui_class;
 
     parent_class = g_type_class_peek_parent(klass);
 
     gobject_class = G_OBJECT_CLASS(klass);
+    listener_class = CUT_LISTENER_CLASS(klass);
     ui_class  = CUT_UI_CLASS(klass);
 
     gobject_class->dispose      = dispose;
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
+
+    listener_class->attach_to_runner   = attach_to_runner;
+    listener_class->detach_from_runner = detach_from_runner;
 
     ui_class->run           = run;
 }
@@ -1411,6 +1420,26 @@ idle_cb_run_test (gpointer data)
     g_thread_create(run_test_thread_func, ui, TRUE, NULL);
 
     return FALSE;
+}
+
+static void
+attach_to_runner (CutListener *listener,
+                  CutRunner   *runner)
+{
+    CutUIGtk *gtk_ui = CUT_UI_GTK(listener);
+
+    gtk_ui->test_suite = g_object_ref(cut_runner_get_test_suite(runner));
+    gtk_ui->runner = g_object_ref(runner);
+    gtk_widget_show_all(gtk_ui->window);
+    g_idle_add(idle_cb_run_test, gtk_ui);
+    gtk_main();
+}
+
+static void
+detach_from_runner (CutListener *listener,
+                    CutRunner   *runner)
+{
+    disconnect_from_runner(CUT_UI_GTK(listener), runner);
 }
 
 static gboolean

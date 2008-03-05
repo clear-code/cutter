@@ -11,6 +11,8 @@
 	cut_runner_remove_listener().
 	* cutter/module/ui/cut-ui-console.c: Link to attach_to_runner() and
 	detach_from_runner().
+	* cutter/module/ui/cut-ui-gtk.c: Link to attach_to_runner() and
+	detach_from_runner().
 
 2008-03-04  Kouhei Sutou  <kou@cozmixng.org>
 
