@@ -56,6 +56,7 @@ struct _CutRunnerPrivate
     gchar **target_test_names;
     gboolean canceled;
     CutTestSuite *test_suite;
+    GList *listeners;
 };
 
 enum
@@ -334,6 +335,13 @@ cut_runner_init (CutRunner *runner)
     priv->target_test_names = NULL;
     priv->canceled = FALSE;
     priv->test_suite = NULL;
+    priv->listeners = NULL;
+}
+
+static void
+remove_listener (CutListener *listener, CutRunner *runner)
+{
+    cut_listener_detach_from_runner(listener, runner);
 }
 
 static void
@@ -355,6 +363,12 @@ dispose (GObject *object)
     if (priv->test_suite) {
         g_object_unref(priv->test_suite);
         priv->test_suite = NULL;
+    }
+
+    if (priv->listeners) {
+        g_list_foreach(priv->listeners, (GFunc)remove_listener, CUT_RUNNER(object));
+        g_list_free(priv->listeners);
+        priv->listeners = NULL;
     }
 
     g_free(priv->stack_trace);
@@ -965,6 +979,23 @@ cut_runner_run (CutRunner *runner)
 
     suite = cut_runner_get_test_suite(runner);
     return cut_test_suite_run(suite, runner);
+}
+
+void
+cut_runner_add_listener (CutRunner *runner,
+                         CutListener *listener)
+{
+    CutRunnerPrivate *priv = CUT_RUNNER_GET_PRIVATE(runner);
+
+    priv->listeners = g_list_prepend(priv->listeners, listener);
+}
+
+static void
+cut_runner_remove_listener (CutRunner *runner, CutListener *listener)
+{
+    CutRunnerPrivate *priv = CUT_RUNNER_GET_PRIVATE(runner);
+    remove_listener(listener, runner);
+    priv->listeners = g_list_remove(priv->listeners, listener);
 }
 
 gchar *

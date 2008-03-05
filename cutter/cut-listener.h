@@ -34,7 +34,6 @@ G_BEGIN_DECLS
 #define CUT_IS_LISTENER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_LISTENER))
 #define CUT_LISTENER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_LISTENER, CutListenerClass))
 
-typedef struct _CutListener CutListener;
 typedef struct _CutListenerClass CutListenerClass;
 
 struct _CutListener

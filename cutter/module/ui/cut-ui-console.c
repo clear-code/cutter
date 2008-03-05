@@ -94,6 +94,12 @@ static void get_property   (GObject         *object,
                             guint            prop_id,
                             GValue          *value,
                             GParamSpec      *pspec);
+
+static void attach_to_runner   (CutListener *listener,
+                                CutRunner   *runner);
+static void detach_from_runner (CutListener *listener,
+                                CutRunner   *runner);
+
 static gboolean run        (CutUI    *ui,
                             CutRunner   *runner);
 
@@ -101,17 +107,22 @@ static void
 class_init (CutUIClass *klass)
 {
     GObjectClass *gobject_class;
+    CutListenerClass *listener_class;
     CutUIClass *ui_class;
     GParamSpec *spec;
 
     parent_class = g_type_class_peek_parent(klass);
 
     gobject_class = G_OBJECT_CLASS(klass);
+    listener_class = CUT_LISTENER_CLASS(klass);
     ui_class  = CUT_UI_CLASS(klass);
 
     gobject_class->dispose      = dispose;
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
+
+    listener_class->attach_to_runner   = attach_to_runner;
+    listener_class->detach_from_runner = detach_from_runner;
 
     ui_class->run = run;
 
@@ -676,6 +687,20 @@ disconnect_from_runner (CutUIConsole *console, CutRunner *runner)
     DISCONNECT(crashed);
 
 #undef DISCONNECT
+}
+
+static void
+attach_to_runner (CutListener *listener,
+                  CutRunner   *runner)
+{
+    connect_to_runner(CUT_UI_CONSOLE(listener), runner);
+}
+
+static void
+detach_from_runner (CutListener *listener,
+                    CutRunner   *runner)
+{
+    disconnect_from_runner(CUT_UI_CONSOLE(listener), runner);
 }
 
 static gboolean

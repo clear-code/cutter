@@ -26,6 +26,7 @@
 
 #include <cutter/cut-test-suite.h>
 #include <cutter/cut-verbose-level.h>
+#include <cutter/cut-listener.h>
 
 G_BEGIN_DECLS
 
@@ -147,6 +148,11 @@ CutTestSuite *cut_runner_get_test_suite            (CutRunner *runner);
 void          cut_runner_set_test_suite            (CutRunner *runner,
                                                     CutTestSuite *suite);
 gboolean      cut_runner_run                       (CutRunner *runner);
+
+void          cut_runner_add_listener              (CutRunner   *runner,
+                                                    CutListener *listener);
+void          cut_runner_remove_listener           (CutRunner   *runner,
+                                                    CutListener *listener);
 
 gchar        *cut_runner_build_source_filename     (CutRunner *runner,
                                                     const gchar *filename);
