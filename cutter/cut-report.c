@@ -33,6 +33,20 @@
 #include "cut-test-case.h"
 #include "cut-module.h"
 
+#define CUT_REPORT_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_REPORT, CutReportPrivate))
+
+typedef struct _CutReportPrivate	CutReportPrivate;
+struct _CutReportPrivate
+{
+    gchar *filename;
+};
+
+enum
+{
+    PROP_0,
+    PROP_FILENAME
+};
+
 static GList *modules = NULL;
 static gchar *module_dir = NULL;
 
@@ -146,6 +160,7 @@ cut_report_class_init (CutReportClass *klass)
 {
     GObjectClass *gobject_class;
     CutListenerClass *listener_class;
+    GParamSpec *spec;
 
     gobject_class = G_OBJECT_CLASS(klass);
     listener_class = CUT_LISTENER_CLASS(klass);
@@ -156,16 +171,34 @@ cut_report_class_init (CutReportClass *klass)
 
     listener_class->attach_to_runner   = NULL;
     listener_class->detach_from_runner = NULL;
+
+    spec = g_param_spec_string("filename",
+                               "Filename",
+                               "The name of output file",
+                               NULL,
+                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
+    g_object_class_install_property(gobject_class, PROP_FILENAME, spec);
+
+    g_type_class_add_private(gobject_class, sizeof(CutReportPrivate));
 }
 
 static void
 init (CutReport *report)
 {
+    CutReportPrivate *priv = CUT_REPORT_GET_PRIVATE(report);
+
+    priv->filename = NULL;
 }
 
 static void
 dispose (GObject *object)
 {
+    CutReportPrivate *priv = CUT_REPORT_GET_PRIVATE(object);
+
+    if (priv->filename) {
+        g_free(priv->filename);
+        priv->filename = NULL;
+    }
 }
 
 static void
@@ -174,7 +207,14 @@ set_property (GObject      *object,
               const GValue *value,
               GParamSpec   *pspec)
 {
+    CutReportPrivate *priv = CUT_REPORT_GET_PRIVATE(object);
+
     switch (prop_id) {
+      case PROP_FILENAME:
+        if (priv->filename)
+            g_free(priv->filename);
+        priv->filename = g_value_dup_string(value);
+        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
@@ -187,7 +227,12 @@ get_property (GObject    *object,
               GValue     *value,
               GParamSpec *pspec)
 {
+    CutReportPrivate *priv = CUT_REPORT_GET_PRIVATE(object);
+
     switch (prop_id) {
+      case PROP_FILENAME:
+        g_value_set_string(value, priv->filename);
+        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;

@@ -25,6 +25,7 @@
 #include <glib-object.h>
 
 #include <cutter/cut-module-factory.h>
+#include <cutter/cut-report.h>
 
 G_BEGIN_DECLS
 
@@ -53,6 +54,7 @@ GType             cut_report_factory_get_type (void) G_GNUC_CONST;
 CutModuleFactory *cut_report_factory_new      (const gchar *name,
                                                const gchar *first_property,
                                                ...);
+CutReport        *cut_report_factory_create   (CutReportFactory *factory);
 
 G_END_DECLS
 

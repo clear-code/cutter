@@ -25,6 +25,8 @@
 	code is very ugly. sigh.
 	* test/test-cut-report-xml.c: Change the order of option element since
 	hash table does not care it. We need a XML parser.
+	* cutter/cut-report.c: Added "filename" property.
+	* cutter/cut-report-factory.[c|h]: Added cut_report_factory_create().
 
 2008-03-04  Kouhei Sutou  <kou@cozmixng.org>
 

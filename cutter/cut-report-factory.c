@@ -31,6 +31,7 @@
 
 #include "cut-module.h"
 #include "cut-report-factory.h"
+#include "cut-report.h"
 #include "cut-enum-types.h"
 
 #define CUT_REPORT_FACTORY_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_REPORT_FACTORY, CutReportFactoryPrivate))
@@ -100,6 +101,24 @@ real_set_option_group (CutModuleFactory *factory, GOptionContext *context)
     g_option_group_add_entries(group, entries);
     g_option_group_set_translation_domain(group, GETTEXT_PACKAGE);
     g_option_context_add_group(context, group);
+}
+
+CutReport *
+cut_report_factory_create (CutReportFactory *factory)
+{
+    CutReportFactoryPrivate *priv = CUT_REPORT_FACTORY_GET_PRIVATE(factory);
+    CutModuleFactoryClass *klass;
+    GObject *report;
+
+    g_return_val_if_fail(CUT_IS_REPORT_FACTORY(factory), NULL);
+
+    klass = CUT_MODULE_FACTORY_GET_CLASS(factory);
+    g_return_val_if_fail(klass->create, NULL);
+
+    report = klass->create(CUT_MODULE_FACTORY(factory));
+    g_object_set(report, "filename", priv->filename, NULL);
+
+    return CUT_REPORT(report);
 }
 
 /*
