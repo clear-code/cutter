@@ -31,94 +31,101 @@
 
 #include "cut-module.h"
 #include "cut-report-factory.h"
+#include "cut-module-factory.h"
 #include "cut-report.h"
 #include "cut-enum-types.h"
 
-#define CUT_REPORT_FACTORY_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_REPORT_FACTORY, CutReportFactoryPrivate))
+static const gchar **filenames;
+static CutReportFactory *the_factory = NULL;
 
-typedef struct _CutReportFactoryPrivate	CutReportFactoryPrivate;
-struct _CutReportFactoryPrivate
-{
-    const gchar *filename;
-};
+static GObject *constructor  (GType                  type,
+                              guint                  n_props,
+                              GObjectConstructParam *props);
 
-static void real_set_option_group (CutModuleFactory *factory,
-                                   GOptionContext   *context);
+static void set_option_context (CutListenerFactory *factory,
+                                GOptionContext   *context);
+static void activate           (CutListenerFactory *factory);
 
-G_DEFINE_ABSTRACT_TYPE(CutReportFactory, cut_report_factory, CUT_TYPE_MODULE_FACTORY)
+G_DEFINE_TYPE(CutReportFactory, cut_report_factory, CUT_TYPE_LISTENER_FACTORY)
 
 static void
 cut_report_factory_class_init (CutReportFactoryClass *klass)
 {
     GObjectClass *gobject_class;
-    CutModuleFactoryClass *factory_class;
+    CutListenerFactoryClass *factory_class;
 
     gobject_class = G_OBJECT_CLASS(klass);
-    factory_class = CUT_MODULE_FACTORY_CLASS(klass);
+    factory_class = CUT_LISTENER_FACTORY_CLASS(klass);
 
-    factory_class->set_option_group = real_set_option_group;
+    gobject_class->constructor = constructor;
 
-    g_type_class_add_private(gobject_class, sizeof(CutReportFactoryPrivate));
+    factory_class->set_option_context = set_option_context;
+    factory_class->activate           = activate;
+}
+
+static GObject *
+constructor (GType type, guint n_props, GObjectConstructParam *props)
+{
+    GObject *object;
+
+    if (!the_factory) {
+        GObjectClass *klass = G_OBJECT_CLASS(cut_report_factory_parent_class);
+        object = klass->constructor(type, n_props, props);
+    } else {
+        object = g_object_ref(G_OBJECT(the_factory));
+    }
+
+    return object;
 }
 
 static void
 cut_report_factory_init (CutReportFactory *factory)
 {
-    CutReportFactoryPrivate *priv = CUT_REPORT_FACTORY_GET_PRIVATE(factory);
-
-    priv->filename = NULL;
-}
-
-CutModuleFactory *
-cut_report_factory_new (const gchar *name, const gchar *first_property, ...)
-{
-    CutModuleFactory *factory;
-    va_list var_args;
-
-    va_start(var_args, first_property);
-    factory = cut_module_factory_new_valist("report", name,
-                                            first_property, var_args);
-    va_end(var_args);
-
-    return factory;
 }
 
 static void
-real_set_option_group (CutModuleFactory *factory, GOptionContext *context)
+set_option_context (CutListenerFactory *factory, GOptionContext *context)
 {
-    CutReportFactoryPrivate *priv = CUT_REPORT_FACTORY_GET_PRIVATE(factory);
-    GOptionGroup *group;
     GOptionEntry entries[] = {
-        {"output-file", 'o', 0, G_OPTION_ARG_STRING, &priv->filename,
-         N_("Set filename of the report"), "OUTPUT_FILENAME"},
+        {"output-files", 'o', 0, G_OPTION_ARG_STRING_ARRAY, &filenames,
+         N_("Set filenames of the report"), "OUTPUT_FILENAME"},
         {NULL}
     };
 
-    group = g_option_group_new(("report-common"),
-                               _("Common Report Options"),
-                               _("Show Common Report Options"),
-                               factory, NULL);
-    g_option_group_add_entries(group, entries);
-    g_option_group_set_translation_domain(group, GETTEXT_PACKAGE);
-    g_option_context_add_group(context, group);
+    g_option_context_add_main_entries(context, entries, NULL);
 }
 
-CutReport *
-cut_report_factory_create (CutReportFactory *factory)
+static void
+activate (CutListenerFactory *factory)
 {
-    CutReportFactoryPrivate *priv = CUT_REPORT_FACTORY_GET_PRIVATE(factory);
-    CutModuleFactoryClass *klass;
-    GObject *report;
+    if (!filenames || !*filenames)
+        return;
 
-    g_return_val_if_fail(CUT_IS_REPORT_FACTORY(factory), NULL);
+    while (*filenames) {
+        gchar *basename, *type;
+        CutModuleFactory *module_factory;
 
-    klass = CUT_MODULE_FACTORY_GET_CLASS(factory);
-    g_return_val_if_fail(klass->create, NULL);
+        basename = g_path_get_basename(*filenames);
+        if (!strchr(basename, '.')) {
+            g_free(basename);
+            continue; /* skip unspecified type */
+        }
 
-    report = klass->create(CUT_MODULE_FACTORY(factory));
-    g_object_set(report, "filename", priv->filename, NULL);
+        type = g_strdup(strrchr(basename, '.'));
+        if (cut_module_factory_exist_module("report", type)) {
+            GOptionContext *option_context;
+            module_factory = cut_module_factory_new("report", type, NULL);
+            g_object_get(factory,
+                         "option-context", &option_context,
+                         NULL);
+            cut_module_factory_set_option_group(module_factory,
+                                                option_context);
+        }
 
-    return CUT_REPORT(report);
+        g_free(type);
+        g_free(basename);
+        filenames++;
+    }
 }
 
 /*

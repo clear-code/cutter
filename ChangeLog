@@ -4,6 +4,11 @@
 	parent is CutModuleFactory.
 	* cutter/cut-module-factory.[c|h]: Added
 	cut_module_factory_exist_module().
+	* cutter/cut-listener-factory.[c|h]: Added CutListenerFactory.
+	* cutter/cut-report-factory.[c|h]: CutReportFactory is now a child of
+	CutListenerFactory and a singleton. It is a factory(i.e. generator) of
+	report module factories. For example, it generates
+	CutReportFactoryXML, CutReportFactoryPDF, etc.
 
 2008-03-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
