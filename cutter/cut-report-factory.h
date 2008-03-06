@@ -24,7 +24,7 @@
 
 #include <glib-object.h>
 
-#include <cutter/cut-listener-factory.h>
+#include <cutter/cut-factory-builder.h>
 
 G_BEGIN_DECLS
 
@@ -40,12 +40,12 @@ typedef struct _CutReportFactoryClass    CutReportFactoryClass;
 
 struct _CutReportFactory
 {
-    CutListenerFactory object;
+    CutFactoryBuilder object;
 };
 
 struct _CutReportFactoryClass
 {
-    CutListenerFactoryClass parent_class;
+    CutFactoryBuilderClass parent_class;
 };
 
 GType cut_report_factory_get_type (void) G_GNUC_CONST;

@@ -9,6 +9,9 @@
 	CutListenerFactory and a singleton. It is a factory(i.e. generator) of
 	report module factories. For example, it generates
 	CutReportFactoryXML, CutReportFactoryPDF, etc.
+	* cutter/cut-listener-factory.[c|h] ->
+	cutter/cut-factory-builder.[c|h]: Renamed. CutListenerFactory ->
+	CutFactoryBuilder.
 
 2008-03-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 

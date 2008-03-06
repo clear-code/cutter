@@ -36,7 +36,7 @@ libcutter_public_headers = 		\
 		cut-test-result.h	\
 		cut-ui.h		\
 		cut-ui-factory.h	\
-		cut-listener-factory.h	\
+		cut-factory-builder.h	\
 		cut-report-factory.h	\
 		cut-module-factory.h	\
 		cut-report.h		\
@@ -108,7 +108,7 @@ libcutter_la_SOURCES =				\
 		cut-module-impl.h		\
 		cut-ui.c			\
 		cut-ui-factory.c		\
-		cut-listener-factory.c		\
+		cut-factory-builder.c		\
 		cut-report-factory.c		\
 		cut-module-factory.c		\
 		cut-report.c			\

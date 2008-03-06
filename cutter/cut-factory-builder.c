@@ -29,14 +29,14 @@
 #include <glib/gi18n-lib.h>
 
 #include "cut-module.h"
-#include "cut-listener-factory.h"
+#include "cut-factory-builder.h"
 #include "cut-listener.h"
 #include "cut-enum-types.h"
 
-#define CUT_LISTENER_FACTORY_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_LISTENER_FACTORY, CutListenerFactoryPrivate))
+#define CUT_FACTORY_BUILDER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_FACTORY_BUILDER, CutFactoryBuilderPrivate))
 
-typedef struct _CutListenerFactoryPrivate    CutListenerFactoryPrivate;
-struct _CutListenerFactoryPrivate
+typedef struct _CutFactoryBuilderPrivate    CutFactoryBuilderPrivate;
+struct _CutFactoryBuilderPrivate
 {
     GOptionContext *option_context;
 };
@@ -47,7 +47,7 @@ enum
     PROP_OPTION_CONTEXT
 };
 
-G_DEFINE_ABSTRACT_TYPE(CutListenerFactory, cut_listener_factory, G_TYPE_OBJECT)
+G_DEFINE_ABSTRACT_TYPE(CutFactoryBuilder, cut_factory_builder, G_TYPE_OBJECT)
 
 static void dispose        (GObject         *object);
 static void set_property   (GObject         *object,
@@ -59,7 +59,7 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 static void
-cut_listener_factory_class_init (CutListenerFactoryClass *klass)
+cut_factory_builder_class_init (CutFactoryBuilderClass *klass)
 {
     GObjectClass *gobject_class;
     GParamSpec *spec;
@@ -76,13 +76,13 @@ cut_listener_factory_class_init (CutListenerFactoryClass *klass)
                                 G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_OPTION_CONTEXT, spec);
 
-    g_type_class_add_private(gobject_class, sizeof(CutListenerFactoryPrivate));
+    g_type_class_add_private(gobject_class, sizeof(CutFactoryBuilderPrivate));
 }
 
 static void
-cut_listener_factory_init (CutListenerFactory *factory)
+cut_factory_builder_init (CutFactoryBuilder *builder)
 {
-    CutListenerFactoryPrivate *priv = CUT_LISTENER_FACTORY_GET_PRIVATE(factory);
+    CutFactoryBuilderPrivate *priv = CUT_FACTORY_BUILDER_GET_PRIVATE(builder);
 
     priv->option_context = NULL;
 }
@@ -90,11 +90,11 @@ cut_listener_factory_init (CutListenerFactory *factory)
 static void
 dispose (GObject *object)
 {
-    CutListenerFactoryPrivate *priv = CUT_LISTENER_FACTORY_GET_PRIVATE(object);
+    CutFactoryBuilderPrivate *priv = CUT_FACTORY_BUILDER_GET_PRIVATE(object);
 
     priv->option_context = NULL;
 
-    G_OBJECT_CLASS(cut_listener_factory_parent_class)->dispose(object);
+    G_OBJECT_CLASS(cut_factory_builder_parent_class)->dispose(object);
 }
 
 static void
@@ -103,7 +103,7 @@ set_property (GObject      *object,
               const GValue *value,
               GParamSpec   *pspec)
 {
-    CutListenerFactoryPrivate *priv = CUT_LISTENER_FACTORY_GET_PRIVATE(object);
+    CutFactoryBuilderPrivate *priv = CUT_FACTORY_BUILDER_GET_PRIVATE(object);
 
     switch (prop_id) {
       case PROP_OPTION_CONTEXT:
@@ -121,7 +121,7 @@ get_property (GObject    *object,
               GValue     *value,
               GParamSpec *pspec)
 {
-    CutListenerFactoryPrivate *priv = CUT_LISTENER_FACTORY_GET_PRIVATE(object);
+    CutFactoryBuilderPrivate *priv = CUT_FACTORY_BUILDER_GET_PRIVATE(object);
 
     switch (prop_id) {
       case PROP_OPTION_CONTEXT:
@@ -134,32 +134,32 @@ get_property (GObject    *object,
 }
 
 void
-cut_listener_factory_set_option_context (CutListenerFactory *factory,
+cut_factory_builder_set_option_context (CutFactoryBuilder *builder,
                                          GOptionContext *context)
 {
-    CutListenerFactoryClass *klass;
-    CutListenerFactoryPrivate *priv = CUT_LISTENER_FACTORY_GET_PRIVATE(factory);
+    CutFactoryBuilderClass *klass;
+    CutFactoryBuilderPrivate *priv = CUT_FACTORY_BUILDER_GET_PRIVATE(builder);
 
-    g_return_if_fail(CUT_IS_LISTENER_FACTORY(factory));
+    g_return_if_fail(CUT_IS_FACTORY_BUILDER(builder));
 
-    klass = CUT_LISTENER_FACTORY_GET_CLASS(factory);
+    klass = CUT_FACTORY_BUILDER_GET_CLASS(builder);
     g_return_if_fail(klass->set_option_context);
 
     priv->option_context = context;
-    klass->set_option_context(factory, context);
+    klass->set_option_context(builder, context);
 }
 
 void
-cut_listener_factory_activate (CutListenerFactory *factory)
+cut_factory_builder_build (CutFactoryBuilder *builder)
 {
-    CutListenerFactoryClass *klass;
+    CutFactoryBuilderClass *klass;
 
-    g_return_if_fail(CUT_IS_LISTENER_FACTORY(factory));
+    g_return_if_fail(CUT_IS_FACTORY_BUILDER(builder));
 
-    klass = CUT_LISTENER_FACTORY_GET_CLASS(factory);
-    g_return_if_fail(klass->activate);
+    klass = CUT_FACTORY_BUILDER_GET_CLASS(builder);
+    g_return_if_fail(klass->build);
 
-    klass->activate(factory);
+    klass->build(builder);
 }
 
 /*

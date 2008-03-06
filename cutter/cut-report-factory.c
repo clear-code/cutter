@@ -36,31 +36,31 @@
 #include "cut-enum-types.h"
 
 static const gchar **filenames;
-static CutReportFactory *the_factory = NULL;
+static CutReportFactory *the_builder = NULL;
 
 static GObject *constructor  (GType                  type,
                               guint                  n_props,
                               GObjectConstructParam *props);
 
-static void set_option_context (CutListenerFactory *factory,
-                                GOptionContext   *context);
-static void activate           (CutListenerFactory *factory);
+static void set_option_context (CutFactoryBuilder *builder,
+                                GOptionContext    *context);
+static void build              (CutFactoryBuilder *builder);
 
-G_DEFINE_TYPE(CutReportFactory, cut_report_factory, CUT_TYPE_LISTENER_FACTORY)
+G_DEFINE_TYPE(CutReportFactory, cut_report_factory, CUT_TYPE_FACTORY_BUILDER)
 
 static void
 cut_report_factory_class_init (CutReportFactoryClass *klass)
 {
     GObjectClass *gobject_class;
-    CutListenerFactoryClass *factory_class;
+    CutFactoryBuilderClass *builder_class;
 
     gobject_class = G_OBJECT_CLASS(klass);
-    factory_class = CUT_LISTENER_FACTORY_CLASS(klass);
+    builder_class = CUT_FACTORY_BUILDER_CLASS(klass);
 
     gobject_class->constructor = constructor;
 
-    factory_class->set_option_context = set_option_context;
-    factory_class->activate           = activate;
+    builder_class->set_option_context = set_option_context;
+    builder_class->build              = build;
 }
 
 static GObject *
@@ -68,23 +68,23 @@ constructor (GType type, guint n_props, GObjectConstructParam *props)
 {
     GObject *object;
 
-    if (!the_factory) {
+    if (!the_builder) {
         GObjectClass *klass = G_OBJECT_CLASS(cut_report_factory_parent_class);
         object = klass->constructor(type, n_props, props);
     } else {
-        object = g_object_ref(G_OBJECT(the_factory));
+        object = g_object_ref(G_OBJECT(the_builder));
     }
 
     return object;
 }
 
 static void
-cut_report_factory_init (CutReportFactory *factory)
+cut_report_factory_init (CutReportFactory *builder)
 {
 }
 
 static void
-set_option_context (CutListenerFactory *factory, GOptionContext *context)
+set_option_context (CutFactoryBuilder *builder, GOptionContext *context)
 {
     GOptionEntry entries[] = {
         {"output-files", 'o', 0, G_OPTION_ARG_STRING_ARRAY, &filenames,
@@ -96,7 +96,7 @@ set_option_context (CutListenerFactory *factory, GOptionContext *context)
 }
 
 static void
-activate (CutListenerFactory *factory)
+build (CutFactoryBuilder *builder)
 {
     if (!filenames || !*filenames)
         return;
@@ -115,7 +115,7 @@ activate (CutListenerFactory *factory)
         if (cut_module_factory_exist_module("report", type)) {
             GOptionContext *option_context;
             module_factory = cut_module_factory_new("report", type, NULL);
-            g_object_get(factory,
+            g_object_get(builder,
                          "option-context", &option_context,
                          NULL);
             cut_module_factory_set_option_group(module_factory,
