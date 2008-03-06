@@ -31,6 +31,7 @@
 #include "cut-module.h"
 #include "cut-factory-builder.h"
 #include "cut-report-factory-builder.h"
+#include "cut-ui-factory-builder.h"
 #include "cut-listener.h"
 #include "cut-enum-types.h"
 
@@ -197,7 +198,7 @@ void
 cut_factory_builder_register_builder (void)
 {
     g_type_class_unref(g_type_class_ref(CUT_TYPE_REPORT_FACTORY_BUILDER));
-    /* g_type_class_unref(g_type_class_ref(CUT_TYPE_UI_FACTORY_BUILDER)); */
+    g_type_class_unref(g_type_class_ref(CUT_TYPE_UI_FACTORY_BUILDER));
 }
 
 /*
