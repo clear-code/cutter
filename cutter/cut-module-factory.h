@@ -65,6 +65,8 @@ void         cut_module_factory_unload      (void);
 GList       *cut_module_factory_get_names   (const gchar *type);
 gboolean     cut_module_factory_exist_module(const gchar *type,
                                              const gchar *name);
+void         cut_module_factory_set_option_context
+                                            (GOptionContext *context);
 
 CutModuleFactory *cut_module_factory_new    (const gchar *type,
                                              const gchar *name,

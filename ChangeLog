@@ -19,6 +19,16 @@
 	cutter/cut-report-factory-builder.c: build() returns CutModuleFactory
 	list.
 	* cutter/cut-main.c: Do not invoke cut_module_factory_load().
+	* cutter/cut-module-factory.[c|h]: Added
+	cut_module_factory_set_option_context() for obtaining selector options
+	of module factory like "-u, --ui=[console|gtk]".
+	* cutter/cut-module-factory.c: (cut_module_factory_init): Invoke
+	cut_factory_builde_register_builder().
+	* cutter/cut-factory-builder.[c|h]: Added
+	cut_factory_builder_get_child_type_from_name() and
+	cut_factory_builder_register_builder().
+	* cutter/cut-main.c: (cut_init): Invoke
+	cut_module_factory_set_option_context().
 
 2008-03-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 

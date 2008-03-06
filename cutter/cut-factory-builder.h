@@ -51,6 +51,10 @@ struct _CutFactoryBuilderClass
 
 GType cut_factory_builder_get_type (void) G_GNUC_CONST;
 
+void  cut_factory_builder_register_builder (void);
+
+GType cut_factory_builder_get_child_type_from_name (const gchar *type_name);
+
 void  cut_factory_builder_set_option_context
                                     (CutFactoryBuilder *factory,
                                      GOptionContext *context);

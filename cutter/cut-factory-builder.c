@@ -30,6 +30,7 @@
 
 #include "cut-module.h"
 #include "cut-factory-builder.h"
+#include "cut-report-factory-builder.h"
 #include "cut-listener.h"
 #include "cut-enum-types.h"
 
@@ -167,6 +168,34 @@ cut_factory_builder_build (CutFactoryBuilder *builder)
     g_return_if_fail(klass->build);
 
     priv->factories = klass->build(builder);
+}
+
+GType
+cut_factory_builder_get_child_type_from_name (const gchar *type_name)
+{
+    GType *children;
+    GType type = 0;
+    guint n_children, i;
+
+    children = g_type_children(CUT_TYPE_FACTORY_BUILDER, &n_children);
+
+    for (i = 0; i < n_children; i++) {
+        GType child = children[i];
+        const gchar *name = g_type_name(child);
+        if (g_ascii_strcasecmp(name, type_name))
+            type = child;
+    }
+
+    g_free(children);
+
+    return type;
+}
+
+void
+cut_factory_builder_register_builder (void)
+{
+    g_type_class_unref(g_type_class_ref(CUT_TYPE_REPORT_FACTORY_BUILDER));
+    /* g_type_class_unref(g_type_class_ref(CUT_TYPE_UI_FACTORY_BUILDER)); */
 }
 
 /*

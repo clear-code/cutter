@@ -122,6 +122,7 @@ cut_init (int *argc, char ***argv)
 
     cut_module_factory_init();
     cut_module_factory_load(NULL);
+    cut_module_factory_set_option_context(option_context);
     if (_show_all_uis) {
         show_all_uis();
         exit(1);

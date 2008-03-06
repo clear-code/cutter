@@ -31,6 +31,7 @@
 
 #include "cut-module.h"
 #include "cut-module-factory.h"
+#include "cut-factory-builder.h"
 #include "cut-enum-types.h"
 
 static GHashTable *factories = NULL;
@@ -46,6 +47,7 @@ unload_modules (gpointer data)
 
 void cut_module_factory_init (void)
 {
+    cut_factory_builder_register_builder();
     factories = g_hash_table_new_full(g_str_hash,
                                       g_str_equal,
                                       g_free,
@@ -189,6 +191,32 @@ cut_module_factory_exist_module(const gchar *type, const gchar *name)
     if (!names)
         return FALSE;
     return (!g_list_find_custom(names, name, (GCompareFunc)strcmp));
+}
+
+void
+cut_module_factory_set_option_context (GOptionContext *context)
+{
+    GList *factory_types, *node;
+
+    factory_types = g_hash_table_get_keys(factories);
+    if (!factory_types)
+        return;
+
+    for (node = factory_types; node; node = g_list_next(node)) {
+        GType type;
+        gchar *type_name;
+        type_name = g_strconcat("Cut",
+                                node->data, "FactoryBuilder",
+                                NULL);
+        type = cut_factory_builder_get_child_type_from_name(type_name);
+        g_free(type_name);
+        if (type) {
+            GObject *builder;
+            builder = g_object_new(type, NULL);
+            cut_factory_builder_set_option_context(CUT_FACTORY_BUILDER(builder), context);
+        }
+    }
+    g_list_free(factory_types);
 }
 
 #define cut_module_factory_init init
