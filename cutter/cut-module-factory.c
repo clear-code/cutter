@@ -23,16 +23,13 @@
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
 
-#include <stdlib.h>
 #include <string.h>
 #include <glib.h>
-#include <glib/gstdio.h>
 #include <glib/gi18n-lib.h>
 
 #include "cut-module.h"
 #include "cut-module-factory.h"
 #include "cut-factory-builder.h"
-#include "cut-enum-types.h"
 
 static GHashTable *factories = NULL;
 static GList *builders = NULL;
