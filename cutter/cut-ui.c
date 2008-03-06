@@ -23,29 +23,13 @@
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
 
-#include <stdlib.h>
-#include <string.h>
 #include <glib.h>
-#include <glib/gstdio.h>
 
 #include "cut-ui.h"
-#include "cut-runner.h"
-#include "cut-test.h"
-#include "cut-test-case.h"
 #include "cut-module.h"
 
 static GList *uis = NULL;
 static gchar *module_dir = NULL;
-
-static void dispose        (GObject         *object);
-static void set_property   (GObject         *object,
-                            guint            prop_id,
-                            const GValue    *value,
-                            GParamSpec      *pspec);
-static void get_property   (GObject         *object,
-                            guint            prop_id,
-                            GValue          *value,
-                            GParamSpec      *pspec);
 
 void cut_ui_init (void)
 {
@@ -145,15 +129,9 @@ G_DEFINE_ABSTRACT_TYPE (CutUI, cut_ui, CUT_TYPE_LISTENER)
 static void
 cut_ui_class_init (CutUIClass *klass)
 {
-    GObjectClass *gobject_class;
     CutListenerClass *listener_class;
 
-    gobject_class = G_OBJECT_CLASS(klass);
     listener_class = CUT_LISTENER_CLASS(klass);
-
-    gobject_class->dispose      = dispose;
-    gobject_class->set_property = set_property;
-    gobject_class->get_property = get_property;
 
     listener_class->attach_to_runner   = NULL;
     listener_class->detach_from_runner = NULL;
@@ -162,37 +140,6 @@ cut_ui_class_init (CutUIClass *klass)
 static void
 init (CutUI *ui)
 {
-}
-
-static void
-dispose (GObject *object)
-{
-}
-
-static void
-set_property (GObject      *object,
-              guint         prop_id,
-              const GValue *value,
-              GParamSpec   *pspec)
-{
-    switch (prop_id) {
-      default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
-        break;
-    }
-}
-
-static void
-get_property (GObject    *object,
-              guint       prop_id,
-              GValue     *value,
-              GParamSpec *pspec)
-{
-    switch (prop_id) {
-      default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
-        break;
-    }
 }
 
 CutUI *
