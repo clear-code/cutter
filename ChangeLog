@@ -1,3 +1,8 @@
+2008-03-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/module/report/cut-report-factory-xml.c: CutReportFactoryXML
+	parent is CutModuleFactory.
+
 2008-03-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-runner.[c|h]: Reverted rev. 1198.

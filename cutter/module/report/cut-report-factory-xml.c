@@ -97,7 +97,7 @@ register_type (GTypeModule *type_module)
 
     cut_type_report_factory_xml =
         g_type_module_register_type(type_module,
-                                    CUT_TYPE_REPORT_FACTORY,
+                                    CUT_TYPE_MODULE_FACTORY,
                                     "CutReportFactoryXML",
                                     &info, 0);
 }
