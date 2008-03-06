@@ -156,18 +156,20 @@ cut_factory_builder_set_option_context (CutFactoryBuilder *builder,
     klass->set_option_context(builder, context);
 }
 
-void
+GList *
 cut_factory_builder_build (CutFactoryBuilder *builder)
 {
     CutFactoryBuilderClass *klass;
     CutFactoryBuilderPrivate *priv = CUT_FACTORY_BUILDER_GET_PRIVATE(builder);
 
-    g_return_if_fail(CUT_IS_FACTORY_BUILDER(builder));
+    g_return_val_if_fail(CUT_IS_FACTORY_BUILDER(builder), NULL);
 
     klass = CUT_FACTORY_BUILDER_GET_CLASS(builder);
-    g_return_if_fail(klass->build);
+    g_return_val_if_fail(klass->build, NULL);
 
     priv->factories = klass->build(builder);
+
+    return priv->factories;
 }
 
 GType

@@ -29,6 +29,8 @@
 	cut_factory_builder_register_builder().
 	* cutter/cut-main.c: (cut_init): Invoke
 	cut_module_factory_set_option_context().
+	* cutter/cut-factory-builder.[c|h]: cut_factory_builder_build()
+	returns list of CutModuleFactory.
 
 2008-03-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
