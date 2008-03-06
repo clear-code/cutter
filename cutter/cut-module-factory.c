@@ -35,6 +35,7 @@
 #include "cut-enum-types.h"
 
 static GHashTable *factories = NULL;
+static GList *builders = NULL;
 static gchar *module_dir = NULL;
 
 static void
@@ -56,6 +57,9 @@ void cut_module_factory_init (void)
 
 void cut_module_factory_quit (void)
 {
+    g_list_foreach(builders, (GFunc)g_object_unref, NULL);
+    g_list_free(builders);
+
     cut_module_factory_unload();
     cut_module_factory_set_default_module_dir(NULL);
 }
@@ -214,9 +218,21 @@ cut_module_factory_set_option_context (GOptionContext *context)
             GObject *builder;
             builder = g_object_new(type, NULL);
             cut_factory_builder_set_option_context(CUT_FACTORY_BUILDER(builder), context);
+            builders = g_list_prepend(builders, builder);
         }
     }
     g_list_free(factory_types);
+}
+
+GList *
+cut_module_factory_build_factories (void)
+{
+    GList *factories = NULL, *node;
+
+    for (node = builders; node; node = g_list_next(node)) {
+        factories = g_list_concat(cut_factory_builder_build(CUT_FACTORY_BUILDER(node->data)), factories);
+    }
+    return factories;
 }
 
 #define cut_module_factory_init init

@@ -31,6 +31,8 @@
 	cut_module_factory_set_option_context().
 	* cutter/cut-factory-builder.[c|h]: cut_factory_builder_build()
 	returns list of CutModuleFactory.
+	* cutter/cut-module-factory.[c|h]: Added
+	cut_module_factory_build_factories().
 
 2008-03-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
