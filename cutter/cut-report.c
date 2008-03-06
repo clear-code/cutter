@@ -23,14 +23,9 @@
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
 
-#include <stdlib.h>
-#include <string.h>
 #include <glib.h>
-#include <glib/gstdio.h>
 
 #include "cut-report.h"
-#include "cut-test.h"
-#include "cut-test-case.h"
 #include "cut-module.h"
 
 #define CUT_REPORT_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_REPORT, CutReportPrivate))
