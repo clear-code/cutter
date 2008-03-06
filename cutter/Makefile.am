@@ -23,23 +23,23 @@ gcutter_public_headers =			\
 		cut-gassertions.h		\
 		cut-value-equal.h
 
-libcutter_public_headers = 		\
-		cut-private.h		\
-		cut-runner.h		\
-		cut-listener.h		\
-		cut-main.h		\
-		cut-test.h		\
-		cut-test-case.h		\
-		cut-test-container.h	\
-		cut-test-context.h	\
-		cut-test-suite.h	\
-		cut-test-result.h	\
-		cut-ui.h		\
-		cut-ui-factory.h	\
-		cut-factory-builder.h	\
-		cut-report-factory.h	\
-		cut-module-factory.h	\
-		cut-report.h		\
+libcutter_public_headers = 			\
+		cut-private.h			\
+		cut-runner.h			\
+		cut-listener.h			\
+		cut-main.h			\
+		cut-test.h			\
+		cut-test-case.h			\
+		cut-test-container.h		\
+		cut-test-context.h		\
+		cut-test-suite.h		\
+		cut-test-result.h		\
+		cut-ui.h			\
+		cut-ui-factory.h		\
+		cut-factory-builder.h		\
+		cut-report-factory-builder.h	\
+		cut-module-factory.h		\
+		cut-report.h			\
 		cut-verbose-level.h
 
 noinst_headers = 			\
@@ -109,7 +109,7 @@ libcutter_la_SOURCES =				\
 		cut-ui.c			\
 		cut-ui-factory.c		\
 		cut-factory-builder.c		\
-		cut-report-factory.c		\
+		cut-report-factory-builder.c	\
 		cut-module-factory.c		\
 		cut-report.c			\
 		cut-utils.c			\

@@ -30,13 +30,13 @@
 #include <glib/gi18n-lib.h>
 
 #include "cut-module.h"
-#include "cut-report-factory.h"
+#include "cut-report-factory-builder.h"
 #include "cut-module-factory.h"
 #include "cut-report.h"
 #include "cut-enum-types.h"
 
 static const gchar **filenames;
-static CutReportFactory *the_builder = NULL;
+static CutReportFactoryBuilder *the_builder = NULL;
 
 static GObject *constructor  (GType                  type,
                               guint                  n_props,
@@ -46,10 +46,10 @@ static void set_option_context (CutFactoryBuilder *builder,
                                 GOptionContext    *context);
 static void build              (CutFactoryBuilder *builder);
 
-G_DEFINE_TYPE(CutReportFactory, cut_report_factory, CUT_TYPE_FACTORY_BUILDER)
+G_DEFINE_TYPE(CutReportFactoryBuilder, cut_report_factory_builder, CUT_TYPE_FACTORY_BUILDER)
 
 static void
-cut_report_factory_class_init (CutReportFactoryClass *klass)
+cut_report_factory_builder_class_init (CutReportFactoryBuilderClass *klass)
 {
     GObjectClass *gobject_class;
     CutFactoryBuilderClass *builder_class;
@@ -69,7 +69,7 @@ constructor (GType type, guint n_props, GObjectConstructParam *props)
     GObject *object;
 
     if (!the_builder) {
-        GObjectClass *klass = G_OBJECT_CLASS(cut_report_factory_parent_class);
+        GObjectClass *klass = G_OBJECT_CLASS(cut_report_factory_builder_parent_class);
         object = klass->constructor(type, n_props, props);
     } else {
         object = g_object_ref(G_OBJECT(the_builder));
@@ -79,7 +79,7 @@ constructor (GType type, guint n_props, GObjectConstructParam *props)
 }
 
 static void
-cut_report_factory_init (CutReportFactory *builder)
+cut_report_factory_builder_init (CutReportFactoryBuilder *builder)
 {
 }
 

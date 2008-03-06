@@ -12,6 +12,9 @@
 	* cutter/cut-listener-factory.[c|h] ->
 	cutter/cut-factory-builder.[c|h]: Renamed. CutListenerFactory ->
 	CutFactoryBuilder.
+	* cutter/cut-report-factory.[c|h] ->
+	cutter/cut-report-factory-builder.[c|h]: CutReportFactory ->
+	CutReportFactoryBuilder.
 
 2008-03-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
