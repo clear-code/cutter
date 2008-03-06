@@ -31,7 +31,7 @@
 
 #include <cutter/cut-module-impl.h>
 #include <cutter/cut-report.h>
-#include <cutter/cut-report-factory.h>
+#include <cutter/cut-module-factory.h>
 #include <cutter/cut-enum-types.h>
 
 #define CUT_TYPE_REPORT_FACTORY_XML            cut_type_report_factory_xml
