@@ -50,9 +50,6 @@ struct _CutReportFactoryClass
 
 GType cut_report_factory_get_type (void) G_GNUC_CONST;
 
-void  cut_report_factory_activate (CutReportFactory *factory);
-
-
 G_END_DECLS
 
 #endif /* __CUT_REPORT_FACTORY_H__ */
