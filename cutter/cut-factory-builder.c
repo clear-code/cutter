@@ -23,17 +23,12 @@
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
 
-#include <stdlib.h>
-#include <string.h>
 #include <glib.h>
 #include <glib/gi18n-lib.h>
 
-#include "cut-module.h"
 #include "cut-factory-builder.h"
 #include "cut-report-factory-builder.h"
 #include "cut-ui-factory-builder.h"
-#include "cut-listener.h"
-#include "cut-enum-types.h"
 
 #define CUT_FACTORY_BUILDER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_FACTORY_BUILDER, CutFactoryBuilderPrivate))
 
