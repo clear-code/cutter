@@ -46,10 +46,8 @@ static gchar *source_directory = NULL;
 static const gchar **test_case_names = NULL;
 static const gchar **test_names = NULL;
 static gboolean use_multi_thread = FALSE;
-static const gchar *ui_name = NULL;
 static gboolean _show_all_uis = FALSE;
-
-static CutModuleFactory *factory = NULL;
+static GList *factories = NULL;
 
 static const GOptionEntry option_entries[] =
 {
@@ -61,8 +59,6 @@ static const GOptionEntry option_entries[] =
      N_("Specify test cases"), "TEST_CASE_NAME"},
     {"multi-thread", 'm', 0, G_OPTION_ARG_NONE, &use_multi_thread,
      N_("Run test cases with multi-thread"), NULL},
-    {"ui", 'u', 0, G_OPTION_ARG_STRING, &ui_name,
-     N_("Specify UI"), "[console|gtk]"},
     {"show-all-uis", 0, 0, G_OPTION_ARG_NONE, &_show_all_uis,
      N_("Show all available UIs and exit"), NULL},
     {NULL}
@@ -128,14 +124,16 @@ cut_init (int *argc, char ***argv)
         exit(1);
     }
 
-    if (!ui_name)
-        ui_name = "console";
-    factory = cut_module_factory_new("ui", ui_name, NULL);
-    if (!factory) {
-        g_warning("can't find specified UI: %s", ui_name);
+    g_option_context_set_help_enabled(option_context, TRUE);
+    g_option_context_set_ignore_unknown_options(option_context, TRUE);
+    if (!g_option_context_parse(option_context, argc, argv, &error)) {
+        g_print("%s\n", error->message);
+        g_error_free(error);
+        g_option_context_free(option_context);
         exit(1);
     }
-    cut_module_factory_set_option_group(factory, option_context);
+
+    factories = cut_module_factory_build_factories();
 
     g_option_context_set_help_enabled(option_context, TRUE);
     g_option_context_set_ignore_unknown_options(option_context, FALSE);
@@ -177,10 +175,6 @@ cut_quit (void)
     if (!initialized)
         return;
 
-    if (factory)
-        g_object_unref(factory);
-    factory = NULL;
-
     cut_ui_quit();
     cut_module_factory_quit();
 
@@ -204,26 +198,60 @@ cut_create_runner (void)
     return runner;
 }
 
+static GList *
+create_listeners (void)
+{
+    GList *listeners = NULL, *node;
+
+    for (node = factories; node; node = g_list_next(node)) {
+        GObject *listener;
+        listener = cut_module_factory_create(CUT_MODULE_FACTORY(node->data));
+        listeners = g_list_prepend(listeners, listener);
+    }
+
+    return listeners;
+}
+
+static void
+add_listeners (CutRunner *runner, GList *listeners)
+{
+    GList *node;
+
+    for (node = listeners; node; node = g_list_next(node)) {
+        CutListener *listener = CUT_LISTENER(node->data);
+        cut_runner_add_listener(runner, listener);
+    }
+}
+
+static void
+remove_listeners (CutRunner *runner, GList *listeners)
+{
+    GList *node;
+
+    for (node = listeners; node; node = g_list_next(node)) {
+        CutListener *listener = CUT_LISTENER(node->data);
+        cut_runner_remove_listener(runner, listener);
+        g_object_unref(listener);
+    }
+}
+
 gboolean
 cut_run_runner (CutRunner *runner)
 {
-    CutUI *ui;
     gboolean success;
+    GList *listeners;
 
     if (!initialized) {
         g_warning("not initialized");
         return FALSE;
     }
 
-    ui = CUT_UI(cut_module_factory_create(factory));
-    if (!ui) {
-        g_warning("can't create UI: %s", ui_name);
-        return FALSE;
-    }
-
-    cut_runner_add_listener(runner, CUT_LISTENER(ui)); 
+    listeners = create_listeners();
+    add_listeners(runner, listeners);
     success = cut_runner_run(runner);
-    g_object_unref(ui);
+    remove_listeners(runner, listeners);
+    g_list_free(listeners);
+
     return success;
 }
 

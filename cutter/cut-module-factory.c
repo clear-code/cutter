@@ -189,12 +189,16 @@ cut_module_factory_get_names (const gchar *type)
 gboolean
 cut_module_factory_exist_module(const gchar *type, const gchar *name)
 {
-    GList *names;
+    GList *names, *list;
 
     names = cut_module_factory_get_names(type);
     if (!names)
         return FALSE;
-    return (!g_list_find_custom(names, name, (GCompareFunc)strcmp));
+    list= g_list_find_custom(names, name, (GCompareFunc)strcmp);
+
+    g_list_free(names);
+
+    return (list != NULL);
 }
 
 void
