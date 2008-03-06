@@ -103,7 +103,7 @@ build (CutFactoryBuilder *builder)
 
     if (!ui_name)
         ui_name = "console";
-g_warning("hoge");
+
     if (cut_module_factory_exist_module("ui", ui_name)) {
         GOptionContext *option_context;
         module_factory = cut_module_factory_new("ui", ui_name, NULL);
