@@ -25,7 +25,6 @@
 #include <glib-object.h>
 
 #include <cutter/cut-test-suite.h>
-#include <cutter/cut-verbose-level.h>
 #include <cutter/cut-listener.h>
 
 G_BEGIN_DECLS
