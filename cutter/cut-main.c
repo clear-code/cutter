@@ -73,7 +73,6 @@ show_all_uis (void)
 {
     GList *names, *node;
 
-    cut_module_factory_load(NULL);
     names = cut_module_factory_get_names("ui");
     for (node = names; node; node = g_list_next(node)) {
         const gchar *name = node->data;

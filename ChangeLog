@@ -18,6 +18,7 @@
 	* cutter/cut-factory-builder.[c|h],
 	cutter/cut-report-factory-builder.c: build() returns CutModuleFactory
 	list.
+	* cutter/cut-main.c: Do not invoke cut_module_factory_load().
 
 2008-03-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
