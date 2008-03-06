@@ -28,7 +28,7 @@
 
 G_BEGIN_DECLS
 
-#define CUT_TYPE_REPORT_FACTORY_BUILDER            (cut_report_factory_get_type ())
+#define CUT_TYPE_REPORT_FACTORY_BUILDER            (cut_report_factory_builder_get_type ())
 #define CUT_REPORT_FACTORY_BUILDER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_REPORT_FACTORY_BUILDER, CutReportFactoryBuilder))
 #define CUT_REPORT_FACTORY_BUILDER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_REPORT_FACTORY_BUILDER, CutReportFactoryBuilderClass))
 #define CUT_IS_REPORT_FACTORY_BUILDER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_REPORT_FACTORY_BUILDER))
