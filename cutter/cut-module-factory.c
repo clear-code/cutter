@@ -187,7 +187,7 @@ cut_module_factory_get_names (const gchar *type)
 }
 
 gboolean
-cut_module_factory_exist_module(const gchar *type, const gchar *name)
+cut_module_factory_exist_module (const gchar *type, const gchar *name)
 {
     GList *names, *list;
 
