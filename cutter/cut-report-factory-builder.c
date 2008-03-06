@@ -42,9 +42,9 @@ static GObject *constructor  (GType                  type,
                               guint                  n_props,
                               GObjectConstructParam *props);
 
-static void set_option_context (CutFactoryBuilder *builder,
-                                GOptionContext    *context);
-static void build              (CutFactoryBuilder *builder);
+static void   set_option_context (CutFactoryBuilder *builder,
+                                  GOptionContext    *context);
+static GList *build              (CutFactoryBuilder *builder);
 
 G_DEFINE_TYPE(CutReportFactoryBuilder, cut_report_factory_builder, CUT_TYPE_FACTORY_BUILDER)
 
@@ -95,11 +95,13 @@ set_option_context (CutFactoryBuilder *builder, GOptionContext *context)
     g_option_context_add_main_entries(context, entries, NULL);
 }
 
-static void
+static GList *
 build (CutFactoryBuilder *builder)
 {
+    GList *factories = NULL;
+
     if (!filenames || !*filenames)
-        return;
+        return NULL;
 
     while (*filenames) {
         gchar *basename, *type;
@@ -120,12 +122,15 @@ build (CutFactoryBuilder *builder)
                          NULL);
             cut_module_factory_set_option_group(module_factory,
                                                 option_context);
+            factories = g_list_prepend(factories, module_factory);
         }
 
         g_free(type);
         g_free(basename);
         filenames++;
     }
+
+    return factories;
 }
 
 /*

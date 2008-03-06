@@ -39,6 +39,7 @@ typedef struct _CutFactoryBuilderPrivate    CutFactoryBuilderPrivate;
 struct _CutFactoryBuilderPrivate
 {
     GOptionContext *option_context;
+    GList *factories;
 };
 
 enum
@@ -85,6 +86,7 @@ cut_factory_builder_init (CutFactoryBuilder *builder)
     CutFactoryBuilderPrivate *priv = CUT_FACTORY_BUILDER_GET_PRIVATE(builder);
 
     priv->option_context = NULL;
+    priv->factories = NULL;
 }
 
 static void
@@ -92,6 +94,10 @@ dispose (GObject *object)
 {
     CutFactoryBuilderPrivate *priv = CUT_FACTORY_BUILDER_GET_PRIVATE(object);
 
+    if (priv->factories) {
+        g_list_free(priv->factories);
+        priv->factories = NULL;
+    }
     priv->option_context = NULL;
 
     G_OBJECT_CLASS(cut_factory_builder_parent_class)->dispose(object);
@@ -153,13 +159,14 @@ void
 cut_factory_builder_build (CutFactoryBuilder *builder)
 {
     CutFactoryBuilderClass *klass;
+    CutFactoryBuilderPrivate *priv = CUT_FACTORY_BUILDER_GET_PRIVATE(builder);
 
     g_return_if_fail(CUT_IS_FACTORY_BUILDER(builder));
 
     klass = CUT_FACTORY_BUILDER_GET_CLASS(builder);
     g_return_if_fail(klass->build);
 
-    klass->build(builder);
+    priv->factories = klass->build(builder);
 }
 
 /*
