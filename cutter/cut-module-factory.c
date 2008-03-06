@@ -180,6 +180,17 @@ cut_module_factory_get_names (const gchar *type)
     return names;
 }
 
+gboolean
+cut_module_factory_exist_module(const gchar *type, const gchar *name)
+{
+    GList *names;
+
+    names = cut_module_factory_get_names(type);
+    if (!names)
+        return FALSE;
+    return (!g_list_find_custom(names, name, (GCompareFunc)strcmp));
+}
+
 #define cut_module_factory_init init
 G_DEFINE_ABSTRACT_TYPE(CutModuleFactory, cut_module_factory, G_TYPE_OBJECT)
 #undef cut_module_factory_init

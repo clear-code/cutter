@@ -2,6 +2,8 @@
 
 	* cutter/module/report/cut-report-factory-xml.c: CutReportFactoryXML
 	parent is CutModuleFactory.
+	* cutter/cut-module-factory.[c|h]: Added
+	cut_module_factory_exist_module().
 
 2008-03-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
