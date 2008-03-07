@@ -43,6 +43,7 @@ libcutter_public_headers = 			\
 		cut-verbose-level.h
 
 noinst_headers = 			\
+		gbsearcharray.h		\
 		cut-loader.h		\
 		cut-module.h		\
 		cut-module-impl.h	\

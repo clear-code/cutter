@@ -1,3 +1,8 @@
+2008-03-07  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/Makefile.am (noinst_headers): gbsearcharray.h is needed!
+	Bug #1909448. Thanks to makeinu!
+
 2008-03-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/module/report/cut-report-factory-xml.c: CutReportFactoryXML
