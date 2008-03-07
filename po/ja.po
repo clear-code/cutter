@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 0.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-02-28 10:00+0900\n"
+"POT-Creation-Date: 2008-03-07 23:28+0900\n"
 "PO-Revision-Date: 2007-12-14 10:18+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
@@ -16,103 +16,111 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: cutter/cut-main.c:57
+#: cutter/cut-main.c:55
 msgid "Set directory of source code"
 msgstr "ソースコードのディレクトリを設定"
 
-#: cutter/cut-main.c:59
+#: cutter/cut-main.c:57
 msgid "Specify tests"
 msgstr "テストを指定"
 
-#: cutter/cut-main.c:61
+#: cutter/cut-main.c:59
 msgid "Specify test cases"
 msgstr "テストケースを指定"
 
-#: cutter/cut-main.c:63
+#: cutter/cut-main.c:61
 msgid "Run test cases with multi-thread"
 msgstr "マルチスレッドでテストケースを実行"
 
-#: cutter/cut-main.c:65
-msgid "Specify UI"
-msgstr "UIを指定"
-
-#: cutter/cut-main.c:67
+#: cutter/cut-main.c:63
 msgid "Show all available UIs and exit"
 msgstr "すべての利用可能なUIを表示し、終了する"
 
-#: cutter/cut-ui-factory.c:231
-msgid "Common UI Options"
-msgstr "UI共通のオプション"
+#: cutter/cut-report-factory-builder.c:86
+msgid "Set filenames of the report"
+msgstr ""
 
-#: cutter/cut-ui-factory.c:232
-msgid "Show Common UI Options"
+#: cutter/cut-ui-factory-builder.c:85
+msgid "Specify UI"
+msgstr "UIを指定"
+
+#: cutter/module/report/cut-report-factory-xml.c:149
+msgid "XML Report Options"
+msgstr ""
+
+#: cutter/module/report/cut-report-factory-xml.c:150
+#, fuzzy
+msgid "Show XML Report Options"
 msgstr "UI共通のオプションの表示"
 
-#: cutter/module/ui-factory/cut-ui-factory-console.c:287
+#: cutter/module/ui/cut-ui-factory-console.c:287
 #, c-format
 msgid "Invalid color value: %s"
 msgstr "不正な色指定です: %s"
 
-#: cutter/module/ui-factory/cut-ui-factory-console.c:312
+#: cutter/module/ui/cut-ui-factory-console.c:312
 msgid "Set verbose level"
 msgstr "詳細度を設定"
 
-#: cutter/module/ui-factory/cut-ui-factory-console.c:314
+#: cutter/module/ui/cut-ui-factory-console.c:314
 msgid "Output log with colors"
 msgstr "色付きでログを出力"
 
-#: cutter/module/ui-factory/cut-ui-factory-console.c:322
+#: cutter/module/ui/cut-ui-factory-console.c:323
 msgid "Console UI Options"
 msgstr "コンソールUIのオプション"
 
-#: cutter/module/ui-factory/cut-ui-factory-console.c:323
+#: cutter/module/ui/cut-ui-factory-console.c:324
 msgid "Show Console UI Options"
 msgstr "コンソールUIのオプションの表示"
 
-#: cutter/module/ui/cut-ui-gtk.c:228
+#: cutter/module/ui/cut-ui-gtk.c:232
 msgid "Ready"
 msgstr "準備完了"
 
-#: cutter/module/ui/cut-ui-gtk.c:243
+#: cutter/module/ui/cut-ui-gtk.c:247
 msgid "Name"
 msgstr "名前"
 
-#: cutter/module/ui/cut-ui-gtk.c:269
+#: cutter/module/ui/cut-ui-gtk.c:273
 msgid "Description"
 msgstr "説明"
 
-#: cutter/module/ui/cut-ui-gtk.c:563
+#: cutter/module/ui/cut-ui-gtk.c:567
 #, c-format
 msgid ""
 "%d test(s), %d assertion(s), %d failure(s), %d error(s), %d pending(s), %d "
 "notification(s)"
 msgstr "%dテスト、%d表明、%d失敗、%dエラー、%d保留、%d通知"
 
-#: cutter/module/ui/cut-ui-gtk.c:582
+#: cutter/module/ui/cut-ui-gtk.c:586
 #, c-format
 msgid "%dT:%dA:%dF:%d:E:%dP:%dN"
 msgstr "%dテ:%d表:%d失:%d:エ:%d保:%d通"
 
-#: cutter/module/ui/cut-ui-gtk.c:632
+#: cutter/module/ui/cut-ui-gtk.c:636
 #, c-format
 msgid "%u/%u (%u%%): %.1fs"
 msgstr "%u/%u (%u%%): %.1f秒"
 
-#: cutter/module/ui/cut-ui-gtk.c:655
+#: cutter/module/ui/cut-ui-gtk.c:659
 #, c-format
 msgid "Staring test suite %s..."
 msgstr "テストスイート%sを開始..."
 
-#: cutter/module/ui/cut-ui-gtk.c:1140
+#: cutter/module/ui/cut-ui-gtk.c:1138
 #, c-format
 msgid "Running test: %s"
 msgstr "テストを実行中: %s"
 
-#: cutter/module/ui/cut-ui-gtk.c:1294
+#: cutter/module/ui/cut-ui-gtk.c:1292
 #, c-format
 msgid "Finished in %0.1f seconds: %s"
 msgstr "%0.1f秒で終了: %s"
 
-#: cutter/module/ui/cut-ui-gtk.c:1333
+#: cutter/module/ui/cut-ui-gtk.c:1331
 msgid "CRASHED!!!"
 msgstr "異常終了！！！"
+
+#~ msgid "Common UI Options"
+#~ msgstr "UI共通のオプション"
