@@ -114,7 +114,7 @@ test_report_success (void)
                        "      </option>\n"
                        "    </test>\n"
                        "    <status>success</status>\n"
-                       "    <elapsed>0.0001</elapsed>\n"
+                       "    <elapsed>0.000100</elapsed>\n"
                        "  </result>\n";
     test_object = cut_test_new("dummy-success-test", dummy_success_test);
     cut_test_set_attribute(test_object, "description", "A success test");
@@ -147,7 +147,7 @@ test_report_failure (void)
                        "      <line>22</line>\n"
                        "      <info>dummy_failure_test()</info>\n"
                        "    </backtrace>\n"
-                       "    <elapsed>0.0001</elapsed>\n"
+                       "    <elapsed>0.000100</elapsed>\n"
                        "  </result>\n";
 
     test_object = cut_test_new("dummy-failure-test", dummy_failure_test);
