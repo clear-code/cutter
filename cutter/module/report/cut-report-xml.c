@@ -261,8 +261,6 @@ cb_start_test (CutRunner *runner, CutTest *test, CutTestContext *test_context,
 static void
 cb_success_test (CutRunner *runner, CutTest *test, CutReportXML *report)
 {
-    gchar *xml = get_result(result);
-    g_warning("%s", xml);
 }
 
 static void
@@ -272,8 +270,6 @@ cb_failure_test (CutRunner      *runner,
                  CutTestResult  *result,
                  CutReportXML   *report)
 {
-    gchar *xml = get_result(result);
-    g_warning("%s", xml);
 }
 
 static void
@@ -283,8 +279,6 @@ cb_error_test (CutRunner      *runner,
                CutTestResult  *result,
                CutReportXML   *report)
 {
-    gchar *xml = get_result(result);
-    g_warning("%s", xml);
 }
 
 static void
@@ -294,8 +288,6 @@ cb_pending_test (CutRunner      *runner,
                  CutTestResult  *result,
                  CutReportXML   *report)
 {
-    gchar *xml = get_result(result);
-    g_warning("%s", xml);
 }
 
 static void
