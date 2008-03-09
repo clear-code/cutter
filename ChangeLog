@@ -1,3 +1,10 @@
+2008-03-07  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* curter/cut-runner.[c|h]: Append "-test" suffix to signal name. Ex. "success" ->
+	"success-test". But I prefer "test-success".
+	* cutter/module/report/cut-report-xml.c,
+	cutter/module/ui/cut-ui-console.c: Follow the above change.
+
 2008-03-07  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/Makefile.am (noinst_headers): gbsearcharray.h is needed!

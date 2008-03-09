@@ -384,7 +384,7 @@ cb_start_test (CutRunner *runner, CutTest *test, CutTestContext *test_context,
 }
 
 static void
-cb_success (CutRunner *runner, CutTest *test, CutUIConsole *console)
+cb_success_test (CutRunner *runner, CutTest *test, CutUIConsole *console)
 {
     if (console->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
@@ -395,11 +395,11 @@ cb_success (CutRunner *runner, CutTest *test, CutUIConsole *console)
 }
 
 static void
-cb_failure (CutRunner      *runner,
-            CutTest        *test,
-            CutTestContext *test_context,
-            CutTestResult  *result,
-            CutUIConsole   *console)
+cb_failure_test (CutRunner      *runner,
+                 CutTest        *test,
+                 CutTestContext *test_context,
+                 CutTestResult  *result,
+                 CutUIConsole   *console)
 {
     if (console->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
@@ -408,11 +408,11 @@ cb_failure (CutRunner      *runner,
 }
 
 static void
-cb_error (CutRunner      *runner,
-          CutTest        *test,
-          CutTestContext *test_context,
-          CutTestResult  *result,
-          CutUIConsole   *console)
+cb_error_test (CutRunner      *runner,
+               CutTest        *test,
+               CutTestContext *test_context,
+               CutTestResult  *result,
+               CutUIConsole   *console)
 {
     if (console->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
@@ -421,11 +421,11 @@ cb_error (CutRunner      *runner,
 }
 
 static void
-cb_pending (CutRunner      *runner,
-            CutTest        *test,
-            CutTestContext *test_context,
-            CutTestResult  *result,
-            CutUIConsole   *console)
+cb_pending_test (CutRunner      *runner,
+                 CutTest        *test,
+                 CutTestContext *test_context,
+                 CutTestResult  *result,
+                 CutUIConsole   *console)
 {
     if (console->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
@@ -434,11 +434,11 @@ cb_pending (CutRunner      *runner,
 }
 
 static void
-cb_notification (CutRunner      *runner,
-                 CutTest        *test,
-                 CutTestContext *test_context,
-                 CutTestResult  *result,
-                 CutUIConsole   *console)
+cb_notification_test (CutRunner      *runner,
+                      CutTest        *test,
+                      CutTestContext *test_context,
+                      CutTestResult  *result,
+                      CutUIConsole   *console)
 {
     if (console->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
@@ -640,11 +640,11 @@ connect_to_runner (CutUIConsole *console, CutRunner *runner)
     CONNECT(start_test_case);
     CONNECT(start_test);
 
-    CONNECT(success);
-    CONNECT(failure);
-    CONNECT(error);
-    CONNECT(pending);
-    CONNECT(notification);
+    CONNECT(success_test);
+    CONNECT(failure_test);
+    CONNECT(error_test);
+    CONNECT(pending_test);
+    CONNECT(notification_test);
 
     CONNECT(complete_test);
     CONNECT(complete_test_case);
@@ -667,11 +667,11 @@ disconnect_from_runner (CutUIConsole *console, CutRunner *runner)
     DISCONNECT(start_test_case);
     DISCONNECT(start_test);
 
-    DISCONNECT(success);
-    DISCONNECT(failure);
-    DISCONNECT(error);
-    DISCONNECT(pending);
-    DISCONNECT(notification);
+    DISCONNECT(success_test);
+    DISCONNECT(failure_test);
+    DISCONNECT(error_test);
+    DISCONNECT(pending_test);
+    DISCONNECT(notification_test);
 
     DISCONNECT(complete_test);
     DISCONNECT(complete_test_case);

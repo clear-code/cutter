@@ -83,6 +83,7 @@ static void detach_from_runner           (CutListener *listener,
 static gboolean result_to_file           (CutReport        *report,
                                           const gchar      *filename,
                                           CutReportFileMode mode);
+static gchar   *get_result               (CutTestResult *result);
 static gchar   *get_all_results          (CutReport   *report);
 static gchar   *get_success_results      (CutReport   *report);
 static gchar   *get_error_results        (CutReport   *report);
@@ -258,43 +259,51 @@ cb_start_test (CutRunner *runner, CutTest *test, CutTestContext *test_context,
 }
 
 static void
-cb_success (CutRunner *runner, CutTest *test, CutReportXML *report)
+cb_success_test (CutRunner *runner, CutTest *test, CutReportXML *report)
 {
+    gchar *xml = get_result(result);
+    g_warning("%s", xml);
 }
 
 static void
-cb_failure (CutRunner       *runner,
-            CutTest          *test,
-            CutTestContext   *test_context,
-            CutTestResult    *result,
-            CutReportXML *report)
+cb_failure_test (CutRunner      *runner,
+                 CutTest        *test,
+                 CutTestContext *test_context,
+                 CutTestResult  *result,
+                 CutReportXML   *report)
 {
+    gchar *xml = get_result(result);
+    g_warning("%s", xml);
 }
 
 static void
-cb_error (CutRunner       *runner,
-          CutTest          *test,
-          CutTestContext   *test_context,
-          CutTestResult    *result,
-          CutReportXML *report)
+cb_error_test (CutRunner      *runner,
+               CutTest        *test,
+               CutTestContext *test_context,
+               CutTestResult  *result,
+               CutReportXML   *report)
 {
+    gchar *xml = get_result(result);
+    g_warning("%s", xml);
 }
 
 static void
-cb_pending (CutRunner       *runner,
-            CutTest          *test,
-            CutTestContext   *test_context,
-            CutTestResult    *result,
-            CutReportXML *report)
+cb_pending_test (CutRunner      *runner,
+                 CutTest        *test,
+                 CutTestContext *test_context,
+                 CutTestResult  *result,
+                 CutReportXML   *report)
 {
+    gchar *xml = get_result(result);
+    g_warning("%s", xml);
 }
 
 static void
-cb_notification (CutRunner       *runner,
-                 CutTest          *test,
-                 CutTestContext   *test_context,
-                 CutTestResult    *result,
-                 CutReportXML *report)
+cb_notification_test (CutRunner      *runner,
+                      CutTest        *test,
+                      CutTestContext *test_context,
+                      CutTestResult  *result,
+                      CutReportXML   *report)
 {
 }
 
@@ -332,11 +341,11 @@ connect_to_runner (CutReportXML *report, CutRunner *runner)
     CONNECT(start_test_case);
     CONNECT(start_test);
 
-    CONNECT(success);
-    CONNECT(failure);
-    CONNECT(error);
-    CONNECT(pending);
-    CONNECT(notification);
+    CONNECT(success_test);
+    CONNECT(failure_test);
+    CONNECT(error_test);
+    CONNECT(pending_test);
+    CONNECT(notification_test);
 
     CONNECT(complete_test);
     CONNECT(complete_test_case);
@@ -359,11 +368,11 @@ disconnect_from_runner (CutReportXML *report, CutRunner *runner)
     DISCONNECT(start_test_case);
     DISCONNECT(start_test);
 
-    DISCONNECT(success);
-    DISCONNECT(failure);
-    DISCONNECT(error);
-    DISCONNECT(pending);
-    DISCONNECT(notification);
+    DISCONNECT(success_test);
+    DISCONNECT(failure_test);
+    DISCONNECT(error_test);
+    DISCONNECT(pending_test);
+    DISCONNECT(notification_test);
 
     DISCONNECT(complete_test);
     DISCONNECT(complete_test_case);
@@ -568,7 +577,7 @@ append_test_result_to_string (GString *string, CutTestResult *result)
     gchar *elapsed_string;
     const gchar *message;
 
-    elapsed_string = g_strdup_printf("%g", cut_test_result_get_elapsed(result));
+    elapsed_string = g_strdup_printf("%f", cut_test_result_get_elapsed(result));
     message = cut_test_result_get_message(result);
     status = cut_test_result_get_status(result);
 

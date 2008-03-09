@@ -62,24 +62,24 @@ struct _CutRunnerClass
                                  CutTest        *test,
                                  CutTestContext *test_context);
 
-    void (*pass)                (CutRunner      *runner,
+    void (*pass_test)           (CutRunner      *runner,
                                  CutTest        *test,
                                  CutTestContext *test_context);
-    void (*success)             (CutRunner      *runner,
+    void (*success_test)        (CutRunner      *runner,
                                  CutTest        *test);
-    void (*failure)             (CutRunner      *runner,
+    void (*failure_test)        (CutRunner      *runner,
                                  CutTest        *test,
                                  CutTestContext *test_context,
                                  CutTestResult  *result);
-    void (*error)               (CutRunner      *runner,
+    void (*error_test)          (CutRunner      *runner,
                                  CutTest        *test,
                                  CutTestContext *test_context,
                                  CutTestResult  *result);
-    void (*pending)             (CutRunner      *runner,
+    void (*pending_test)        (CutRunner      *runner,
                                  CutTest        *test,
                                  CutTestContext *test_context,
                                  CutTestResult  *result);
-    void (*notification)        (CutRunner      *runner,
+    void (*notification_test)   (CutRunner      *runner,
                                  CutTest        *test,
                                  CutTestContext *test_context,
                                  CutTestResult  *result);
