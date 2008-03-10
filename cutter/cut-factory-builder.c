@@ -166,8 +166,8 @@ get_property (GObject    *object,
     }
 }
 
-static const gchar *
-get_module_dir (CutFactoryBuilder *builder)
+const gchar *
+cut_factory_builder_get_module_dir (CutFactoryBuilder *builder)
 {
     return CUT_FACTORY_BUILDER_GET_PRIVATE(builder)->module_dir;
 }

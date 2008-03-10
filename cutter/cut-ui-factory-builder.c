@@ -75,6 +75,12 @@ constructor (GType type, guint n_props, GObjectConstructParam *props)
 static void
 cut_ui_factory_builder_init (CutUIFactoryBuilder *builder)
 {
+    const gchar *dir;
+
+    dir = g_getenv("CUT_REPORT_FACTORY_MODULE_DIR");
+    g_object_set(G_OBJECT(builder),
+                 "module-dir", dir,
+                 NULL);
 }
 
 static void

@@ -47,8 +47,6 @@ struct _CutFactoryBuilderClass
     void   (*set_option_context) (CutFactoryBuilder *builder,
                                   GOptionContext *context);
     GList *(*build)              (CutFactoryBuilder *builder);
-    /* Use only tests of Cutter itself */
-    const gchar *(*get_module_dir) (CutFactoryBuilder *builder);
 };
 
 void     cut_factory_builder_register_builder (void);
@@ -59,10 +57,12 @@ const gchar  **cut_factory_builder_get_builders     (void);
 
 GType cut_factory_builder_get_type (void) G_GNUC_CONST;
 
-void   cut_factory_builder_set_option_context
-                                     (CutFactoryBuilder *builder,
-                                      GOptionContext *context);
-GList *cut_factory_builder_build     (CutFactoryBuilder *builder);
+const gchar *cut_factory_builder_get_module_dir (CutFactoryBuilder *builder);
+
+void         cut_factory_builder_set_option_context
+                                                (CutFactoryBuilder *builder,
+                                                 GOptionContext *context);
+GList       *cut_factory_builder_build          (CutFactoryBuilder *builder);
 
 G_END_DECLS
 

@@ -15,6 +15,9 @@
 	cleanup.
 	* cutter/cut-module-factory.c: Create CutFactoryBuilder when loading
 	modules. this change causes 2 test failures.
+	* cutter/cut-factory-builder.[c|h], cutter/cut-ui-factory-builder.c,
+	cutter/cut-report-factory-builder.c:
+	cut_factory_builder_get_module_dir() for getting own directory.
 
 2008-03-10  Kouhei Sutou  <kou@cozmixng.org>
 
