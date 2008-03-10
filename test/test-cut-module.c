@@ -4,7 +4,7 @@
 #include "cuttest-utils.h"
 
 void test_load_module (void);
-/* void test_collect_names (void); */
+void test_collect_names (void);
 
 static GList *modules;
 static CutModule *module;
@@ -43,7 +43,7 @@ test_load_module (void)
     module = cut_module_find(modules, "test1");
     cut_assert(module);
 }
-#if 0
+
 void
 test_collect_names (void)
 {
@@ -60,7 +60,7 @@ test_collect_names (void)
 
     g_list_free(names);
 }
-#endif
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */
