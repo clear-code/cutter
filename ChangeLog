@@ -10,6 +10,7 @@
 	Follow the above changes.
 	* cutter/cut-module-factory.c: (cut_module_factory_new): Return NULL
 	if the module does not exist.
+	* test/test-cut-factory-builde.c: Added.
 
 2008-03-10  Kouhei Sutou  <kou@cozmixng.org>
 

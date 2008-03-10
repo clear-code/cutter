@@ -31,6 +31,7 @@ noinst_LTLIBRARIES = 				\
 		test_cut_value_equal.la		\
 		test_cut_module.la		\
 		test_cut_module_factory.la	\
+		test_cut_factory_builder.la	\
 		test_cut_report_xml.la
 
 LDFLAGS =			\
@@ -59,6 +60,7 @@ test_cut_module_la_SOURCES      = test-cut-module.c
 test_cut_module_factory_la_SOURCES = test-cut-module-factory.c
 test_cut_test_attribute_la_SOURCES = test-cut-test-attribute.c
 test_cut_test_attribute_la_LIBADD  = cuttest_utils.la
+test_cut_factory_builder_la_SOURCES = test-cut-factory-builder.c
 
 echo-cutter:
 	@echo $(CUTTER)
