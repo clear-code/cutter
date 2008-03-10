@@ -1,6 +1,10 @@
 2008-03-11  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-factory-builder.[c|h]: Added get_type_name().
+	* cutter/cut-factory-builder.[c|h], cutter/cut-module-factory.c,
+	test/test-cut-factory-builder.c, test/runtests.sh: Create
+	CutUIFactoryBuilder and CutReportFactoryBuilder by default for loading
+	each factories in build directory.
 
 2008-03-10  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 

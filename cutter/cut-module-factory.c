@@ -46,7 +46,7 @@ unload_modules (gpointer data)
 void
 cut_module_factory_init (void)
 {
-    cut_factory_builder_register_builder();
+    builders = cut_factory_builder_create_default();
     factories = g_hash_table_new_full(g_str_hash,
                                       g_str_equal,
                                       g_free,
@@ -95,11 +95,34 @@ _cut_module_factory_module_dir (void)
     return FACTORY_MODULEDIR;
 }
 
+static void
+load_default_factory (void)
+{
+    GList *node;
+
+    for (node = builders; node; node = g_list_next(node)) {
+        const gchar *module_dir, *type_name;
+        CutFactoryBuilder *builder = CUT_FACTORY_BUILDER(node->data);
+        GList *modules;
+      
+        module_dir = cut_factory_builder_get_module_dir(builder);
+        if (!module_dir)
+            continue;
+        type_name = cut_factory_builder_get_type_name(builder);
+
+        modules = cut_module_load_modules(module_dir);
+        if (modules)
+            g_hash_table_replace(factories, g_strdup(type_name), modules);
+    }
+}
+
 void
 cut_module_factory_load (const gchar *base_dir)
 {
     GDir *gdir;
     const gchar *entry;
+
+    load_default_factory();
 
     if (!base_dir)
         base_dir = _cut_module_factory_module_dir();
@@ -109,18 +132,11 @@ cut_module_factory_load (const gchar *base_dir)
 
     while ((entry = g_dir_read_name(gdir))) {
         gchar *dir_name;
-        GObject *builder;
 
-        if (!cut_factory_builder_has_builder(entry))
-            continue;
-
-        builder = cut_factory_builder_create(entry);
-        if (!builder)
-            continue;
+        if (cut_factory_builder_has_builder(entry))
+            continue; 
 
         dir_name = g_build_filename(base_dir, entry, NULL);
-
-        builders = g_list_prepend(builders, builder);
 
         if (g_file_test(dir_name, G_FILE_TEST_IS_DIR)) {
             GList *modules = cut_module_load_modules(dir_name);

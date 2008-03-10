@@ -31,13 +31,9 @@
 #include "cut-report-factory-builder.h"
 #include "cut-ui-factory-builder.h"
 
-/* FIXME! */
-static const gchar *builders[] = {
-    "ui",
-    "report",
-    NULL
-};
 #define CUT_FACTORY_BUILDER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_FACTORY_BUILDER, CutFactoryBuilderPrivate))
+
+static GList *builders = NULL;
 
 typedef struct _CutFactoryBuilderPrivate    CutFactoryBuilderPrivate;
 struct _CutFactoryBuilderPrivate
@@ -245,46 +241,49 @@ cut_factory_builder_get_child_type_from_name (const gchar *type_name)
     return type;
 }
 
-void
-cut_factory_builder_register_builder (void)
-{
-    g_type_class_unref(g_type_class_ref(CUT_TYPE_REPORT_FACTORY_BUILDER));
-    g_type_class_unref(g_type_class_ref(CUT_TYPE_UI_FACTORY_BUILDER));
-}
-
 gboolean
-cut_factory_builder_has_builder (const gchar *builder_name)
+cut_factory_builder_has_builder (const gchar *type_name)
 {
-    gint i = 0;
+    GList *node;
 
-    while (builders[i]) {
-        if (!strcmp(builder_name, builders[i]))
+    for (node = builders; node; node = g_list_next(node)) {
+        CutFactoryBuilder *builder = CUT_FACTORY_BUILDER(node->data);
+        const gchar *name;
+        name = cut_factory_builder_get_type_name(builder);
+        if (!strcmp(type_name, name))
             return TRUE;
-        i++;
     }
 
     return FALSE;
 }
 
 GObject *
-cut_factory_builder_create (const gchar *builder_name)
+cut_factory_builder_create (const gchar *type_name)
 {
-    gchar *type_name;
+    gchar *gtype_name;
     GType type;
+    GObject *builder;
 
-    type_name = cut_factory_builder_create_type_name(builder_name);
-    type = cut_factory_builder_get_child_type_from_name(type_name);
+    gtype_name = cut_factory_builder_create_type_name(type_name);
+    type = cut_factory_builder_get_child_type_from_name(gtype_name);
 
-    g_free(type_name);
+    g_free(gtype_name);
 
     if (!type)
         return NULL;
-    return g_object_new(type, NULL);
+    builder = g_object_new(type, NULL);
+    if (builder)
+        builders = g_list_prepend(builders, builder);
+
+    return builder;
 }
 
-const gchar **
-cut_factory_builder_get_builders (void)
+GList *
+cut_factory_builder_create_default (void)
 {
+    builders = g_list_prepend(builders, g_object_new(CUT_TYPE_UI_FACTORY_BUILDER, NULL));
+    builders = g_list_prepend(builders, g_object_new(CUT_TYPE_REPORT_FACTORY_BUILDER, NULL));
+
     return builders;
 }
 
