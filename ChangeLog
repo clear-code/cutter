@@ -1,3 +1,14 @@
+2008-03-10  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test.[c|h]: "success" signal is accompanied with
+	CutTestContext.
+	* cutter/cut-runner.[c|h]: "success-test" is accompanied with
+	CutTestResult.
+	* cutter/cut-test-case.c, cutter/cut-test-suite.c,
+	cutter/module/ui/cut-ui-console.c, cutter/module/ui/cut-ui-gtk.c,
+	cutter/module/report/cut-report-xml.c, test/test-cut-report-xml.c:
+	Follow the above changes.
+
 2008-03-10  Kouhei Sutou  <kou@cozmixng.org>
 
 	* configure.ac: 0.5.0 -> 0.6.0.

@@ -1066,7 +1066,8 @@ cb_pass_assertion_test (CutTest *test, CutTestContext *test_context,
 }
 
 static void
-cb_success_test (CutTest *test, gpointer data)
+cb_success_test (CutTest *test, CutTestContext *context, CutTestResult *result,
+                 gpointer data)
 {
     TestRowInfo *info = data;
 

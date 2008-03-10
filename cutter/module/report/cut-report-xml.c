@@ -259,7 +259,11 @@ cb_start_test (CutRunner *runner, CutTest *test, CutTestContext *test_context,
 }
 
 static void
-cb_success_test (CutRunner *runner, CutTest *test, CutReportXML *report)
+cb_success_test (CutRunner      *runner,
+                 CutTest        *test,
+                 CutTestContext *test_context,
+                 CutTestResult  *result,
+                 CutReportXML   *report)
 {
 }
 

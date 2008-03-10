@@ -132,8 +132,8 @@ cut_test_class_init (CutTestClass *klass)
                 G_SIGNAL_RUN_LAST,
                 G_STRUCT_OFFSET (CutTestClass, success),
                 NULL, NULL,
-                g_cclosure_marshal_VOID__OBJECT,
-                G_TYPE_NONE, 1, CUT_TYPE_TEST_RESULT);
+                _cut_marshal_VOID__OBJECT_OBJECT,
+                G_TYPE_NONE, 2, CUT_TYPE_TEST_CONTEXT, CUT_TYPE_TEST_RESULT);
 
 	cut_test_signals[FAILURE]
         = g_signal_new ("failure",
@@ -317,7 +317,7 @@ cut_test_run (CutTest *test, CutTestContext *test_context, CutRunner *runner)
                                      NULL,
                                      NULL, NULL, 
                                      NULL, NULL, 0);
-        g_signal_emit_by_name(test, "success", result);
+        g_signal_emit_by_name(test, "success", test_context, result);
         g_object_unref(result);
     }
 

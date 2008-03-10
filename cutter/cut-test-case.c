@@ -394,7 +394,7 @@ cut_test_case_run_tests (CutTestCase *test_case, CutRunner *runner,
                                      NULL,
                                      NULL, NULL, 
                                      NULL, NULL, 0);
-        g_signal_emit_by_name(CUT_TEST(test_case), "success", result);
+        g_signal_emit_by_name(CUT_TEST(test_case), "success", NULL, result);
         g_object_unref(result);
     }
 

@@ -208,7 +208,8 @@ cut_runner_class_init (CutRunnerClass *klass)
                         G_STRUCT_OFFSET (CutRunnerClass, start_test),
                         NULL, NULL,
                         _cut_marshal_VOID__OBJECT_OBJECT,
-                        G_TYPE_NONE, 2, CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT);
+                        G_TYPE_NONE, 2,
+                        CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT);
 
     signals[PASS_TEST]
         = g_signal_new ("pass-test",
@@ -225,8 +226,10 @@ cut_runner_class_init (CutRunnerClass *klass)
                         G_SIGNAL_RUN_LAST,
                         G_STRUCT_OFFSET (CutRunnerClass, success_test),
                         NULL, NULL,
-                        g_cclosure_marshal_VOID__OBJECT,
-                        G_TYPE_NONE, 1, CUT_TYPE_TEST);
+                        _cut_marshal_VOID__OBJECT_OBJECT_OBJECT,
+                        G_TYPE_NONE, 3,
+                        CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT,
+                        CUT_TYPE_TEST_RESULT);
 
     signals[FAILURE_TEST]
         = g_signal_new ("failure-test",
@@ -580,7 +583,8 @@ cb_pass_assertion (CutTest *test, CutTestContext *test_context, gpointer data)
 }
 
 static void
-cb_success (CutTest *test, CutTestResult *result, gpointer data)
+cb_success (CutTest *test, CutTestContext *test_context, CutTestResult *result,
+            gpointer data)
 {
     CutRunner *runner = data;
     CutRunnerPrivate *priv;
@@ -590,7 +594,7 @@ cb_success (CutTest *test, CutTestResult *result, gpointer data)
     priv->results = g_list_prepend(priv->results, g_object_ref(result));
     g_mutex_unlock(priv->mutex);
 
-    g_signal_emit(runner, signals[SUCCESS_TEST], 0, test);
+    g_signal_emit(runner, signals[SUCCESS_TEST], 0, test, test_context, result);
 }
 
 static void

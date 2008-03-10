@@ -66,7 +66,7 @@ teardown (void)
 }
 
 static void
-cb_success_signal (CutTest *test, CutTestResult *result, gpointer data)
+cb_success_signal (CutTest *test, CutTestContext *context, CutTestResult *result, gpointer data)
 {
     g_object_set(G_OBJECT(result), "elapsed", 0.0001, NULL);
 }

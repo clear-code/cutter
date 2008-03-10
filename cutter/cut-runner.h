@@ -66,7 +66,9 @@ struct _CutRunnerClass
                                  CutTest        *test,
                                  CutTestContext *test_context);
     void (*success_test)        (CutRunner      *runner,
-                                 CutTest        *test);
+                                 CutTest        *test,
+                                 CutTestContext *test_context,
+                                 CutTestResult  *result);
     void (*failure_test)        (CutRunner      *runner,
                                  CutTest        *test,
                                  CutTestContext *test_context,

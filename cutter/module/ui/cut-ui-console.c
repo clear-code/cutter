@@ -384,7 +384,11 @@ cb_start_test (CutRunner *runner, CutTest *test, CutTestContext *test_context,
 }
 
 static void
-cb_success_test (CutRunner *runner, CutTest *test, CutUIConsole *console)
+cb_success_test (CutRunner      *runner,
+                 CutTest        *test,
+                 CutTestContext *context,
+                 CutTestResult  *result,
+                 CutUIConsole   *console)
 {
     if (console->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
