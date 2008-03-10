@@ -58,6 +58,9 @@ test_module_names (void)
     cut_assert(factory);
     g_object_unref(factory);
     factory = NULL;
+
+    factory = cut_module_factory_new("type1", "module4", NULL);
+    cut_assert(!factory);
 }
 
 void
