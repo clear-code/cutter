@@ -23,6 +23,7 @@
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
 
+#include <string.h>
 #include <glib.h>
 #include <glib/gi18n-lib.h>
 
@@ -30,11 +31,18 @@
 #include "cut-report-factory-builder.h"
 #include "cut-ui-factory-builder.h"
 
+/* FIXME! */
+static const gchar *builders[] = {
+    "ui",
+    "report",
+    NULL
+};
 #define CUT_FACTORY_BUILDER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_FACTORY_BUILDER, CutFactoryBuilderPrivate))
 
 typedef struct _CutFactoryBuilderPrivate    CutFactoryBuilderPrivate;
 struct _CutFactoryBuilderPrivate
 {
+    gchar *module_dir;
     GOptionContext *option_context;
     GList *factories;
 };
@@ -42,6 +50,7 @@ struct _CutFactoryBuilderPrivate
 enum
 {
     PROP_0,
+    PROP_MODULE_DIR,
     PROP_OPTION_CONTEXT
 };
 
@@ -68,6 +77,13 @@ cut_factory_builder_class_init (CutFactoryBuilderClass *klass)
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
 
+    spec = g_param_spec_string("module-dir",
+                               "The name of the directory",
+                               "The name of the directory in which includes target factory",
+                               NULL,
+                               G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_MODULE_DIR, spec);
+
     spec = g_param_spec_pointer("option-context",
                                 "GOptionContext",
                                 "GOptionContext",
@@ -82,6 +98,7 @@ cut_factory_builder_init (CutFactoryBuilder *builder)
 {
     CutFactoryBuilderPrivate *priv = CUT_FACTORY_BUILDER_GET_PRIVATE(builder);
 
+    priv->module_dir = NULL;
     priv->option_context = NULL;
     priv->factories = NULL;
 }
@@ -90,6 +107,11 @@ static void
 dispose (GObject *object)
 {
     CutFactoryBuilderPrivate *priv = CUT_FACTORY_BUILDER_GET_PRIVATE(object);
+
+    if (priv->module_dir) {
+        g_free(priv->module_dir);
+        priv->module_dir = NULL;
+    }
 
     if (priv->factories) {
         g_list_free(priv->factories);
@@ -109,6 +131,11 @@ set_property (GObject      *object,
     CutFactoryBuilderPrivate *priv = CUT_FACTORY_BUILDER_GET_PRIVATE(object);
 
     switch (prop_id) {
+      case PROP_MODULE_DIR:
+        if (priv->module_dir)
+            g_free(priv->module_dir);
+        priv->module_dir = g_value_dup_string(value);
+        break;
       case PROP_OPTION_CONTEXT:
         priv->option_context = g_value_get_pointer(value);
         break;
@@ -127,6 +154,9 @@ get_property (GObject    *object,
     CutFactoryBuilderPrivate *priv = CUT_FACTORY_BUILDER_GET_PRIVATE(object);
 
     switch (prop_id) {
+      case PROP_MODULE_DIR:
+        g_value_set_string(value, priv->module_dir);
+        break;
       case PROP_OPTION_CONTEXT:
         g_value_set_pointer(value, priv->option_context);
         break;
@@ -134,6 +164,12 @@ get_property (GObject    *object,
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
     }
+}
+
+static const gchar *
+get_module_dir (CutFactoryBuilder *builder)
+{
+    return CUT_FACTORY_BUILDER_GET_PRIVATE(builder)->module_dir;
 }
 
 void
@@ -168,7 +204,13 @@ cut_factory_builder_build (CutFactoryBuilder *builder)
     return priv->factories;
 }
 
-GType
+static gchar *
+cut_factory_builder_create_type_name (const gchar *builder_name)
+{
+    return  g_strconcat("Cut", builder_name, "FactoryBuilder", NULL);
+}
+
+static GType
 cut_factory_builder_get_child_type_from_name (const gchar *type_name)
 {
     GType *children;
@@ -196,6 +238,42 @@ cut_factory_builder_register_builder (void)
     g_type_class_unref(g_type_class_ref(CUT_TYPE_UI_FACTORY_BUILDER));
 }
 
+gboolean
+cut_factory_builder_has_builder (const gchar *builder_name)
+{
+    gint i = 0;
+
+    while (builders[i]) {
+        if (!strcmp(builder_name, builders[i]))
+            return TRUE;
+        i++;
+    }
+
+    return FALSE;
+}
+
+GObject *
+cut_factory_builder_create (const gchar *builder_name)
+{
+    gchar *type_name;
+    GType type;
+
+    type_name = cut_factory_builder_create_type_name(builder_name);
+    type = cut_factory_builder_get_child_type_from_name(type_name);
+
+    g_free(type_name);
+
+    if (!type)
+        return NULL;
+    return g_object_new(type, NULL);
+}
+
+const gchar **
+cut_factory_builder_get_builders (void)
+{
+    return builders;
+}
+;
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */

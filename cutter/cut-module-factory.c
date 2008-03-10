@@ -43,7 +43,8 @@ unload_modules (gpointer data)
     g_list_free(modules);
 }
 
-void cut_module_factory_init (void)
+void
+cut_module_factory_init (void)
 {
     cut_factory_builder_register_builder();
     factories = g_hash_table_new_full(g_str_hash,
@@ -52,7 +53,8 @@ void cut_module_factory_init (void)
                                       unload_modules);
 }
 
-void cut_module_factory_quit (void)
+void
+cut_module_factory_quit (void)
 {
     /* g_list_foreach(builders, (GFunc)g_object_unref, NULL);*/
     g_list_free(builders);
@@ -107,7 +109,18 @@ cut_module_factory_load (const gchar *base_dir)
 
     while ((entry = g_dir_read_name(gdir))) {
         gchar *dir_name;
+        GObject *builder;
+
+        if (!cut_factory_builder_has_builder(entry))
+            continue;
+
+        builder = cut_factory_builder_create(entry);
+        if (!builder)
+            continue;
+
         dir_name = g_build_filename(base_dir, entry, NULL);
+
+        builders = g_list_prepend(builders, builder);
 
         if (g_file_test(dir_name, G_FILE_TEST_IS_DIR)) {
             GList *modules = cut_module_load_modules(dir_name);
@@ -201,28 +214,12 @@ cut_module_factory_exist_module (const gchar *type, const gchar *name)
 void
 cut_module_factory_set_option_context (GOptionContext *context)
 {
-    GList *factory_types, *node;
+    GList *node;
 
-    factory_types = g_hash_table_get_keys(factories);
-    if (!factory_types)
-        return;
-
-    for (node = factory_types; node; node = g_list_next(node)) {
-        GType type;
-        gchar *type_name;
-        type_name = g_strconcat("Cut",
-                                node->data, "FactoryBuilder",
-                                NULL);
-        type = cut_factory_builder_get_child_type_from_name(type_name);
-        g_free(type_name);
-        if (type) {
-            GObject *builder;
-            builder = g_object_new(type, NULL);
-            cut_factory_builder_set_option_context(CUT_FACTORY_BUILDER(builder), context);
-            builders = g_list_prepend(builders, builder);
-        }
+    for (node = builders; node; node = g_list_next(node)) {
+        CutFactoryBuilder *builder = CUT_FACTORY_BUILDER(node->data);
+        cut_factory_builder_set_option_context(builder, context);
     }
-    g_list_free(factory_types);
 }
 
 GList *
@@ -231,7 +228,8 @@ cut_module_factory_build_factories (void)
     GList *factories = NULL, *node;
 
     for (node = builders; node; node = g_list_next(node)) {
-        factories = g_list_concat(cut_factory_builder_build(CUT_FACTORY_BUILDER(node->data)), factories);
+        CutFactoryBuilder *builder = CUT_FACTORY_BUILDER(node->data);
+        factories = g_list_concat(cut_factory_builder_build(builder), factories);
     }
     return factories;
 }

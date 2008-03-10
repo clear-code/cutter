@@ -44,21 +44,25 @@ struct _CutFactoryBuilder
 struct _CutFactoryBuilderClass
 {
     GObjectClass parent_class;
-    void   (*set_option_context) (CutFactoryBuilder *factory,
+    void   (*set_option_context) (CutFactoryBuilder *builder,
                                   GOptionContext *context);
-    GList *(*build)              (CutFactoryBuilder *factory);
+    GList *(*build)              (CutFactoryBuilder *builder);
+    /* Use only tests of Cutter itself */
+    const gchar *(*get_module_dir) (CutFactoryBuilder *builder);
 };
+
+void     cut_factory_builder_register_builder (void);
+gboolean cut_factory_builder_has_builder      (const gchar *biulder_name);
+GObject *cut_factory_builder_create           (const gchar *builder_name);
+
+const gchar  **cut_factory_builder_get_builders     (void);
 
 GType cut_factory_builder_get_type (void) G_GNUC_CONST;
 
-void  cut_factory_builder_register_builder (void);
-
-GType cut_factory_builder_get_child_type_from_name (const gchar *type_name);
-
 void   cut_factory_builder_set_option_context
-                                     (CutFactoryBuilder *factory,
+                                     (CutFactoryBuilder *builder,
                                       GOptionContext *context);
-GList *cut_factory_builder_build     (CutFactoryBuilder *factory);
+GList *cut_factory_builder_build     (CutFactoryBuilder *builder);
 
 G_END_DECLS
 
