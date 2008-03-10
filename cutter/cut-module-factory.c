@@ -54,7 +54,7 @@ void cut_module_factory_init (void)
 
 void cut_module_factory_quit (void)
 {
-    g_list_foreach(builders, (GFunc)g_object_unref, NULL);
+    /* g_list_foreach(builders, (GFunc)g_object_unref, NULL);*/
     g_list_free(builders);
 
     cut_module_factory_unload();
