@@ -139,7 +139,7 @@ build (CutFactoryBuilder *builder)
 const gchar *
 get_type_name (CutFactoryBuilder *builder)
 {
-    return "ui";
+    return "report";
 }
 
 /*
