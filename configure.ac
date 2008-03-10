@@ -76,7 +76,7 @@ dnl **************************************************************
 dnl Configure for ui factory modules.
 dnl **************************************************************
 
-ui_factory_moduledir="\${moduledir}/factory"
+ui_factory_moduledir="\${moduledir}/factory/ui"
 AC_SUBST(ui_factory_moduledir)
 
 dnl **************************************************************
