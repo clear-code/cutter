@@ -275,7 +275,8 @@ cut_module_factory_new (const gchar *type, const gchar *name,
     va_list var_args;
 
     module = cut_module_factory_load_module(type, name);
-    g_return_val_if_fail(module != NULL, NULL);
+    if (!module)
+        return;
 
     va_start(var_args, first_property);
     factory = cut_module_instantiate(module, first_property, var_args);

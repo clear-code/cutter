@@ -8,6 +8,8 @@
 	cutter/module/ui/cut-ui-console.c, cutter/module/ui/cut-ui-gtk.c,
 	cutter/module/report/cut-report-xml.c, test/test-cut-report-xml.c:
 	Follow the above changes.
+	* cutter/cut-module-factory.c: (cut_module_factory_new): Return NULL
+	if the module does not exist.
 
 2008-03-10  Kouhei Sutou  <kou@cozmixng.org>
 
