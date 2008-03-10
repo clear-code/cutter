@@ -1,3 +1,7 @@
+2008-03-10  Kouhei Sutou  <kou@cozmixng.org>
+
+	* configure.ac: 0.5.0 -> 0.6.0.
+
 2008-03-07  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* curter/cut-runner.[c|h]: Append "-test" suffix to signal name. Ex. "success" ->
