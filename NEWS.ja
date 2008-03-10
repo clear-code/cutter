@@ -2,6 +2,10 @@
 
 = NEWS --- Cutterの歴史
 
+== 0.5.0: 2008-03-10
+
+  * パッケージもれのcutter/gbsearcharray.hを追加。
+
 == 0.4.0: 2008-02-28
 
   * cut_pending() -> cut_pend()。
