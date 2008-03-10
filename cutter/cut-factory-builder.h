@@ -44,9 +44,10 @@ struct _CutFactoryBuilder
 struct _CutFactoryBuilderClass
 {
     GObjectClass parent_class;
-    void   (*set_option_context) (CutFactoryBuilder *builder,
-                                  GOptionContext *context);
-    GList *(*build)              (CutFactoryBuilder *builder);
+    void         (*set_option_context) (CutFactoryBuilder *builder,
+                                        GOptionContext *context);
+    GList       *(*build)              (CutFactoryBuilder *builder);
+    const gchar *(*get_type_name)      (CutFactoryBuilder *builder);
 };
 
 void         cut_factory_builder_register_builder (void);
@@ -55,6 +56,7 @@ GObject     *cut_factory_builder_create           (const gchar *builder_name);
 const gchar **cut_factory_builder_get_builders    (void);
 
 GType        cut_factory_builder_get_type       (void) G_GNUC_CONST;
+const gchar *cut_factory_builder_get_type_name  (CutFactoryBuilder *builder);
 const gchar *cut_factory_builder_get_module_dir (CutFactoryBuilder *builder);
 void         cut_factory_builder_set_option_context
                                                 (CutFactoryBuilder *builder,

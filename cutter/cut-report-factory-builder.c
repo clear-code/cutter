@@ -37,9 +37,10 @@ static GObject *constructor  (GType                  type,
                               guint                  n_props,
                               GObjectConstructParam *props);
 
-static void   set_option_context (CutFactoryBuilder *builder,
-                                  GOptionContext    *context);
-static GList *build              (CutFactoryBuilder *builder);
+static void         set_option_context (CutFactoryBuilder *builder,
+                                        GOptionContext    *context);
+static GList       *build              (CutFactoryBuilder *builder);
+static const gchar *get_type_name      (CutFactoryBuilder *builder);
 
 G_DEFINE_TYPE(CutReportFactoryBuilder, cut_report_factory_builder, CUT_TYPE_FACTORY_BUILDER)
 
@@ -56,6 +57,7 @@ cut_report_factory_builder_class_init (CutReportFactoryBuilderClass *klass)
 
     builder_class->set_option_context = set_option_context;
     builder_class->build              = build;
+    builder_class->get_type_name      = get_type_name;
 }
 
 static GObject *
@@ -132,6 +134,12 @@ build (CutFactoryBuilder *builder)
     }
 
     return factories;
+}
+
+const gchar *
+get_type_name (CutFactoryBuilder *builder)
+{
+    return "ui";
 }
 
 /*

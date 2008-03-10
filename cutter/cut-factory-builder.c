@@ -167,6 +167,20 @@ get_property (GObject    *object,
 }
 
 const gchar *
+cut_factory_builder_get_type_name (CutFactoryBuilder *builder)
+{
+    CutFactoryBuilderClass *klass;
+
+    g_return_val_if_fail(CUT_IS_FACTORY_BUILDER(builder), NULL);
+
+    klass = CUT_FACTORY_BUILDER_GET_CLASS(builder);
+    if (klass->get_type_name)
+        return klass->get_type_name(builder);
+
+    return NULL;
+}
+
+const gchar *
 cut_factory_builder_get_module_dir (CutFactoryBuilder *builder)
 {
     return CUT_FACTORY_BUILDER_GET_PRIVATE(builder)->module_dir;
@@ -174,7 +188,7 @@ cut_factory_builder_get_module_dir (CutFactoryBuilder *builder)
 
 void
 cut_factory_builder_set_option_context (CutFactoryBuilder *builder,
-                                         GOptionContext *context)
+                                        GOptionContext *context)
 {
     CutFactoryBuilderClass *klass;
     CutFactoryBuilderPrivate *priv = CUT_FACTORY_BUILDER_GET_PRIVATE(builder);
