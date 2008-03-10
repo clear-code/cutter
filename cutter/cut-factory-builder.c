@@ -273,7 +273,7 @@ cut_factory_builder_get_builders (void)
 {
     return builders;
 }
-;
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */
