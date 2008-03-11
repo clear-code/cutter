@@ -56,7 +56,18 @@ AC_SUBST(GLIB_REQUIRED)
 AM_PATH_GLIB_2_0($GLIB_REQUIRED, [], [], [gmodule gobject gthread])
 
 # Checks for libraries.
-AC_CHECK_LIB(bfd, bfd_init)
+AC_ARG_ENABLE([bfd],
+              AS_HELP_STRING([--disable-bfd],
+                             [Disable BFD support]),
+              [ac_cv_enable_bfd=$enableval],
+              [ac_cv_enable_bfd=yes])
+AC_CACHE_CHECK([whether to try to use BFD],
+               [ac_cv_enable_bfd],
+               [ac_cv_enable_bfd=yes])
+
+if test x"$ac_cv_enable_bfd" = "xyes"; then
+  AC_CHECK_LIB(bfd, bfd_init)
+fi
 
 dnl **************************************************************
 dnl Configure for modules.
