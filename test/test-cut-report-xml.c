@@ -4,6 +4,9 @@
 
 void test_report_success (void);
 void test_report_failure (void);
+void test_report_error (void);
+void test_report_pending (void);
+void test_report_notification (void);
 
 static CutRunner *runner;
 static CutReport *report;
@@ -20,6 +23,24 @@ static void
 dummy_failure_test (void)
 {
     cut_fail("This test should fail");
+}
+
+static void
+dummy_error_test (void)
+{
+    cut_error("This test should error");
+}
+
+static void
+dummy_pending_test (void)
+{
+    cut_pend("This test has been pending ever!");
+}
+
+static void
+dummy_notification_test (void)
+{
+    cut_notify("This test has been notifable ever!");
 }
 
 void
@@ -126,7 +147,7 @@ test_report_failure (void)
                        "    <detail>This test should fail</detail>\n"
                        "    <backtrace>\n"
                        "      <file>test-cut-report-xml.c</file>\n"
-                       "      <line>22</line>\n"
+                       "      <line>25</line>\n"
                        "      <info>dummy_failure_test()</info>\n"
                        "    </backtrace>\n"
                        "    <elapsed>0.000100</elapsed>\n"
@@ -141,6 +162,99 @@ test_report_failure (void)
                                          NULL);
 
     cut_assert_equal_string_with_free(expected, cut_report_get_failure_results(report));
+}
+
+void
+test_report_pending (void)
+{
+    gchar expected[] = "  <result>\n"
+                       "    <test-case>\n"
+                       "      <name>dummy test case</name>\n"
+                       "    </test-case>\n"
+                       "    <test>\n"
+                       "      <name>dummy-pending-test</name>\n"
+                       "    </test>\n"
+                       "    <status>pending</status>\n"
+                       "    <detail>This test has been pending ever!</detail>\n"
+                       "    <backtrace>\n"
+                       "      <file>test-cut-report-xml.c</file>\n"
+                       "      <line>37</line>\n"
+                       "      <info>dummy_pending_test()</info>\n"
+                       "    </backtrace>\n"
+                       "    <elapsed>0.000100</elapsed>\n"
+                       "  </result>\n";
+
+    test_object = cut_test_new("dummy-pending-test", dummy_pending_test);
+    g_signal_connect_after(test_object, "pending", G_CALLBACK(cb_test_signal), NULL);
+    cut_test_case_add_test(test_case, test_object);
+    cut_assert(!run_the_test(test_object));
+    g_signal_handlers_disconnect_by_func(test_object,
+                                         G_CALLBACK(cb_test_signal),
+                                         NULL);
+
+    cut_assert_equal_string_with_free(expected, cut_report_get_pending_results(report));
+}
+
+void
+test_report_notification (void)
+{
+    gchar expected[] = "  <result>\n"
+                       "    <test-case>\n"
+                       "      <name>dummy test case</name>\n"
+                       "    </test-case>\n"
+                       "    <test>\n"
+                       "      <name>dummy-notification-test</name>\n"
+                       "    </test>\n"
+                       "    <status>notification</status>\n"
+                       "    <detail>This test has been notifable ever!</detail>\n"
+                       "    <backtrace>\n"
+                       "      <file>test-cut-report-xml.c</file>\n"
+                       "      <line>43</line>\n"
+                       "      <info>dummy_notification_test()</info>\n"
+                       "    </backtrace>\n"
+                       "    <elapsed>0.000100</elapsed>\n"
+                       "  </result>\n";
+
+    test_object = cut_test_new("dummy-notification-test", dummy_notification_test);
+    g_signal_connect_after(test_object, "notification", G_CALLBACK(cb_test_signal), NULL);
+    cut_test_case_add_test(test_case, test_object);
+    cut_assert(run_the_test(test_object));
+    g_signal_handlers_disconnect_by_func(test_object,
+                                         G_CALLBACK(cb_test_signal),
+                                         NULL);
+
+    cut_assert_equal_string_with_free(expected, cut_report_get_notification_results(report));
+}
+
+void
+test_report_error (void)
+{
+    gchar expected[] = "  <result>\n"
+                       "    <test-case>\n"
+                       "      <name>dummy test case</name>\n"
+                       "    </test-case>\n"
+                       "    <test>\n"
+                       "      <name>dummy-error-test</name>\n"
+                       "    </test>\n"
+                       "    <status>error</status>\n"
+                       "    <detail>This test should error</detail>\n"
+                       "    <backtrace>\n"
+                       "      <file>test-cut-report-xml.c</file>\n"
+                       "      <line>31</line>\n"
+                       "      <info>dummy_error_test()</info>\n"
+                       "    </backtrace>\n"
+                       "    <elapsed>0.000100</elapsed>\n"
+                       "  </result>\n";
+
+    test_object = cut_test_new("dummy-error-test", dummy_error_test);
+    g_signal_connect_after(test_object, "error", G_CALLBACK(cb_test_signal), NULL);
+    cut_test_case_add_test(test_case, test_object);
+    cut_assert(!run_the_test(test_object));
+    g_signal_handlers_disconnect_by_func(test_object,
+                                         G_CALLBACK(cb_test_signal),
+                                         NULL);
+
+    cut_assert_equal_string_with_free(expected, cut_report_get_error_results(report));
 }
 
 /*
