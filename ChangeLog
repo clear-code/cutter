@@ -21,6 +21,8 @@
 	* cutter/cut-runner.h: "ready-test-suite" signal is accompanied with
 	CutTestSuite not CutTestCase.
 	* cutter/module/cut-report-xml.c: Output to the file.
+	* test/test-cut-report-xml.c: To invoke cut_report_load() is not
+	needed.
 
 2008-03-10  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 

@@ -23,18 +23,6 @@ dummy_failure_test (void)
 }
 
 void
-initialize (void)
-{
-    cut_report_load(NULL);
-}
-
-void
-finalize (void)
-{
-    cut_report_unload();
-}
-
-void
 setup (void)
 {
     const gchar *test_names[] = {"/.*/", NULL};
