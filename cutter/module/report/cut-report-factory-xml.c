@@ -47,6 +47,7 @@ typedef struct _CutReportFactoryXMLClass CutReportFactoryXMLClass;
 struct _CutReportFactoryXML
 {
     CutModuleFactory     object;
+    gchar *filename;
 };
 
 struct _CutReportFactoryXMLClass
@@ -54,9 +55,24 @@ struct _CutReportFactoryXMLClass
     CutModuleFactoryClass parent_class;
 };
 
+enum
+{
+    PROP_0,
+    PROP_FILENAME
+};
+
 static GType cut_type_report_factory_xml = 0;
 static CutModuleFactoryClass *parent_class;
 
+static void     dispose          (GObject         *object);
+static void     set_property     (GObject         *object,
+                                  guint            prop_id,
+                                  const GValue    *value,
+                                  GParamSpec      *pspec);
+static void     get_property     (GObject         *object,
+                                  guint            prop_id,
+                                  GValue          *value,
+                                  GParamSpec      *pspec);
 static void     set_option_group (CutModuleFactory *factory,
                                   GOptionContext   *context);
 static GObject *create           (CutModuleFactory *factory);
@@ -65,18 +81,81 @@ static void
 class_init (CutModuleFactoryClass *klass)
 {
     CutModuleFactoryClass *factory_class;
+    GObjectClass *gobject_class;
+    GParamSpec *spec;
 
     parent_class = g_type_class_peek_parent(klass);
-
+    gobject_class = G_OBJECT_CLASS(klass);
     factory_class  = CUT_MODULE_FACTORY_CLASS(klass);
+
+    gobject_class->dispose      = dispose;
+    gobject_class->set_property = set_property;
+    gobject_class->get_property = get_property;
 
     factory_class->set_option_group = set_option_group;
     factory_class->create           = create;
+
+    spec = g_param_spec_string("filename",
+                               "Filename",
+                               "The name of output file",
+                               NULL,
+                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
+    g_object_class_install_property(gobject_class, PROP_FILENAME, spec);
 }
 
 static void
 init (CutReportFactoryXML *xml)
 {
+    xml->filename = NULL;
+}
+
+static void
+dispose (GObject *object)
+{
+    CutReportFactoryXML *xml = CUT_REPORT_FACTORY_XML(object);
+
+    if (xml->filename) {
+        g_free(xml->filename);
+        xml->filename = NULL;
+    }
+}
+
+static void
+set_property (GObject      *object,
+              guint         prop_id,
+              const GValue *value,
+              GParamSpec   *pspec)
+{
+    CutReportFactoryXML *xml = CUT_REPORT_FACTORY_XML(object);
+
+    switch (prop_id) {
+      case PROP_FILENAME:
+        if (xml->filename)
+            g_free(xml->filename);
+        xml->filename = g_value_dup_string(value);
+        break;
+      default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
+        break;
+    }
+}
+
+static void
+get_property (GObject    *object,
+              guint       prop_id,
+              GValue     *value,
+              GParamSpec *pspec)
+{
+    CutReportFactoryXML *xml = CUT_REPORT_FACTORY_XML(object);
+
+    switch (prop_id) {
+      case PROP_FILENAME:
+        g_value_set_string(value, xml->filename);
+        break;
+      default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
+        break;
+    }
 }
 
 static void
@@ -157,7 +236,11 @@ set_option_group (CutModuleFactory *factory, GOptionContext *context)
 GObject *
 create (CutModuleFactory *factory)
 {
-    return G_OBJECT(cut_report_new("xml", NULL));
+    CutReportFactoryXML *xml = CUT_REPORT_FACTORY_XML(factory);
+
+    return G_OBJECT(cut_report_new("xml", 
+                                   "filename", xml->filename,
+                                   NULL));
 }
 
 /*

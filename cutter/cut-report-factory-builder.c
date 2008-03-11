@@ -119,7 +119,9 @@ build (CutFactoryBuilder *builder)
         type = g_strdup(strrchr(basename, '.'));
         if (cut_module_factory_exist_module("report", type)) {
             GOptionContext *option_context;
-            module_factory = cut_module_factory_new("report", type, NULL);
+            module_factory = cut_module_factory_new("report", type,
+                                                    "filename", *filenames,
+                                                    NULL);
             g_object_get(builder,
                          "option-context", &option_context,
                          NULL);

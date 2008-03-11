@@ -5,6 +5,9 @@
 	test/test-cut-factory-builder.c, test/runtests.sh: Create
 	CutUIFactoryBuilder and CutReportFactoryBuilder by default for loading
 	each factories in build directory.
+	* cutter/cut-report-factory-builder.c,
+	cutter/module/report/cut-report-factory-xml.c: Set filename to the
+	property of CutReport.
 
 2008-03-10  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
