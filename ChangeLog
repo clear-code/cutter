@@ -15,6 +15,8 @@
 	property of CutReport.
 	* cutter/cut-report-factory-builder.c: +1. report type is "xml" not
 	".xml".
+	* cutter/module/report/cut-report-xml.c: Do not output result entry if
+	CutTest is NULL.
 
 2008-03-10  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 

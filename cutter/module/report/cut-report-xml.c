@@ -528,6 +528,9 @@ append_test_info_to_string (GString *string, const gchar *element_name, CutTest 
     guint indent = 4;
     GHashTable *attributes;
 
+    if (!test)
+        return;
+
     escaped = g_markup_escape_text(element_name, -1);
     append_indent(string, indent);
     g_string_append_printf(string, "<%s>\n", escaped);
