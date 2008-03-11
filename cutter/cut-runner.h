@@ -48,7 +48,7 @@ struct _CutRunnerClass
     GObjectClass parent_class;
 
     void (*ready_test_suite)    (CutRunner      *runner,
-                                 CutTestCase    *test_case,
+                                 CutTestSuite   *test_suite,
                                  guint           n_test_cases,
                                  guint           n_tests);
     void (*start_test_suite)    (CutRunner      *runner,
