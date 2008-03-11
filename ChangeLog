@@ -1,3 +1,8 @@
+2008-03-12  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test-cut-report-xml.c: Use same callback function for "success"
+	and "failure" signals.
+
 2008-03-11  Kouhei Sutou  <kou@cozmixng.org>
 
 	* configure.ac: added --disable-bfd option.

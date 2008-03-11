@@ -54,13 +54,7 @@ teardown (void)
 }
 
 static void
-cb_success_signal (CutTest *test, CutTestContext *context, CutTestResult *result, gpointer data)
-{
-    g_object_set(G_OBJECT(result), "elapsed", 0.0001, NULL);
-}
-
-static void
-cb_failure_signal (CutTest *test, CutTestContext *context, CutTestResult *result, gpointer data)
+cb_test_signal (CutTest *test, CutTestContext *context, CutTestResult *result, gpointer data)
 {
     g_object_set(G_OBJECT(result), "elapsed", 0.0001, NULL);
 }
@@ -108,11 +102,11 @@ test_report_success (void)
     cut_test_set_attribute(test_object, "description", "A success test");
     cut_test_set_attribute(test_object, "bug", "1234");
     cut_test_set_attribute(test_object, "price", "$199");
-    g_signal_connect_after(test_object, "success", G_CALLBACK(cb_success_signal), NULL);
+    g_signal_connect_after(test_object, "success", G_CALLBACK(cb_test_signal), NULL);
     cut_test_case_add_test(test_case, test_object);
     cut_assert(run_the_test(test_object));
     g_signal_handlers_disconnect_by_func(test_object,
-                                         G_CALLBACK(cb_success_signal),
+                                         G_CALLBACK(cb_test_signal),
                                          NULL);
 
     cut_assert_equal_string_with_free(expected, cut_report_get_success_results(report));
@@ -139,11 +133,11 @@ test_report_failure (void)
                        "  </result>\n";
 
     test_object = cut_test_new("dummy-failure-test", dummy_failure_test);
-    g_signal_connect_after(test_object, "failure", G_CALLBACK(cb_failure_signal), NULL);
+    g_signal_connect_after(test_object, "failure", G_CALLBACK(cb_test_signal), NULL);
     cut_test_case_add_test(test_case, test_object);
     cut_assert(!run_the_test(test_object));
     g_signal_handlers_disconnect_by_func(test_object,
-                                         G_CALLBACK(cb_failure_signal),
+                                         G_CALLBACK(cb_test_signal),
                                          NULL);
 
     cut_assert_equal_string_with_free(expected, cut_report_get_failure_results(report));
