@@ -67,12 +67,6 @@ struct _CutReportClass
 
 GType        cut_report_get_type  (void) G_GNUC_CONST;
 
-void         cut_report_init        (void);
-void         cut_report_quit        (void);
-
-const gchar *cut_report_get_default_module_dir   (void);
-void         cut_report_set_default_module_dir   (const gchar *dir);
-
 void         cut_report_load        (const gchar *base_dir);
 void         cut_report_unload      (void);
 GList       *cut_report_get_registered_types (void);
@@ -81,6 +75,7 @@ GList       *cut_report_get_log_domains      (void);
 CutReport   *cut_report_new             (const gchar *name,
                                          const gchar *first_property,
                                          ...);
+const gchar *cut_report_get_filename    (CutReport *report);
 gboolean     cut_report_result_to_file  (CutReport        *report,
                                          const gchar      *filename,
                                          CutReportFileMode mode);

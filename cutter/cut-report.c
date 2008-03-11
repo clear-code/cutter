@@ -55,33 +55,6 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 
-void cut_report_init (void)
-{
-}
-
-void cut_report_quit (void)
-{
-    cut_report_unload();
-    cut_report_set_default_module_dir(NULL);
-}
-
-const gchar *
-cut_report_get_default_module_dir (void)
-{
-    return module_dir;
-}
-
-void
-cut_report_set_default_module_dir (const gchar *dir)
-{
-    if (module_dir)
-        g_free(module_dir);
-    module_dir = NULL;
-
-    if (dir)
-        module_dir = g_strdup(dir);
-}
-
 static const gchar *
 _cut_report_module_dir (void)
 {
@@ -251,6 +224,12 @@ cut_report_new (const gchar *name,
     va_end(var_args);
 
     return CUT_REPORT(report);
+}
+
+const gchar *
+cut_report_get_filename (CutReport *report)
+{
+    return CUT_REPORT_GET_PRIVATE(report)->filename;
 }
 
 gboolean

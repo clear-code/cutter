@@ -17,6 +17,7 @@
 	".xml".
 	* cutter/module/report/cut-report-xml.c: Do not output result entry if
 	CutTest is NULL.
+	* cutter/cut-report.[c|h]: Added cut_report_get_filename(). Cleanup.
 
 2008-03-10  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
