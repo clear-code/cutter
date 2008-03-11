@@ -116,7 +116,7 @@ build (CutFactoryBuilder *builder)
             continue; /* skip unspecified type */
         }
 
-        type = g_strdup(strrchr(basename, '.'));
+        type = g_strdup(strrchr(basename, '.') + 1);
         if (cut_module_factory_exist_module("report", type)) {
             GOptionContext *option_context;
             module_factory = cut_module_factory_new("report", type,
