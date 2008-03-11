@@ -20,6 +20,7 @@
 	* cutter/cut-report.[c|h]: Added cut_report_get_filename(). Cleanup.
 	* cutter/cut-runner.h: "ready-test-suite" signal is accompanied with
 	CutTestSuite not CutTestCase.
+	* cutter/module/cut-report-xml.c: Output to the file.
 
 2008-03-10  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 

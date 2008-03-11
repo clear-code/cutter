@@ -27,6 +27,7 @@
 #include <string.h>
 #include <glib.h>
 #include <glib/gi18n-lib.h>
+#include <glib/gstdio.h>
 #include <gmodule.h>
 
 #include <cutter/cut-module-impl.h>
@@ -241,9 +242,46 @@ get_property (GObject    *object,
 }
 
 static void
+output_to_file (CutReportXML *report, gchar *string)
+{
+    const gchar *filename;
+    FILE *fp;
+
+    if (!string)
+        return;
+
+    filename = cut_report_get_filename(CUT_REPORT(report));
+    if (!filename)
+        return;
+
+    fp = g_fopen(filename ,"a");
+    if (!fp)
+        return;
+
+    fwrite(string, strlen(string), 1, fp);
+
+    fclose(fp);
+}
+
+static void
+cb_ready_test_suite (CutRunner *runner, CutTestSuite *test_suite,
+                     guint n_test_cases, guint n_tests,
+                     CutReportXML *report)
+{
+    const gchar *filename;
+
+    filename = cut_report_get_filename(CUT_REPORT(report));
+    if (!filename)
+        return;
+    if (g_file_test(filename, G_FILE_TEST_EXISTS))
+        g_unlink(filename);
+}
+
+static void
 cb_start_test_suite (CutRunner *runner, CutTestSuite *test_suite,
                      CutReportXML *report)
 {
+    output_to_file(report, "<report>\n");
 }
 
 static void
@@ -259,48 +297,16 @@ cb_start_test (CutRunner *runner, CutTest *test, CutTestContext *test_context,
 }
 
 static void
-cb_success_test (CutRunner      *runner,
-                 CutTest        *test,
-                 CutTestContext *test_context,
-                 CutTestResult  *result,
-                 CutReportXML   *report)
+cb_test_signal (CutRunner      *runner,
+                CutTest        *test,
+                CutTestContext *test_context,
+                CutTestResult  *result,
+                CutReportXML   *report)
 {
-}
-
-static void
-cb_failure_test (CutRunner      *runner,
-                 CutTest        *test,
-                 CutTestContext *test_context,
-                 CutTestResult  *result,
-                 CutReportXML   *report)
-{
-}
-
-static void
-cb_error_test (CutRunner      *runner,
-               CutTest        *test,
-               CutTestContext *test_context,
-               CutTestResult  *result,
-               CutReportXML   *report)
-{
-}
-
-static void
-cb_pending_test (CutRunner      *runner,
-                 CutTest        *test,
-                 CutTestContext *test_context,
-                 CutTestResult  *result,
-                 CutReportXML   *report)
-{
-}
-
-static void
-cb_notification_test (CutRunner      *runner,
-                      CutTest        *test,
-                      CutTestContext *test_context,
-                      CutTestResult  *result,
-                      CutReportXML   *report)
-{
+    gchar *string;
+    string = get_result(result);
+    output_to_file(report, string);
+    g_free(string);
 }
 
 static void
@@ -319,6 +325,7 @@ static void
 cb_complete_test_suite (CutRunner *runner, CutTestSuite *test_suite,
                         CutReportXML *report)
 {
+    output_to_file(report, "</report>");
 }
 
 static void
@@ -333,15 +340,19 @@ connect_to_runner (CutReportXML *report, CutRunner *runner)
 #define CONNECT(name) \
     g_signal_connect(runner, #name, G_CALLBACK(cb_ ## name), report)
 
+#define CONNECT_TO_TEST(name) \
+    g_signal_connect(runner, #name, G_CALLBACK(cb_test_signal), report)
+
+    CONNECT(ready_test_suite);
     CONNECT(start_test_suite);
     CONNECT(start_test_case);
     CONNECT(start_test);
 
-    CONNECT(success_test);
-    CONNECT(failure_test);
-    CONNECT(error_test);
-    CONNECT(pending_test);
-    CONNECT(notification_test);
+    CONNECT_TO_TEST(success_test);
+    CONNECT_TO_TEST(failure_test);
+    CONNECT_TO_TEST(error_test);
+    CONNECT_TO_TEST(pending_test);
+    CONNECT_TO_TEST(notification_test);
 
     CONNECT(complete_test);
     CONNECT(complete_test_case);
@@ -364,17 +375,15 @@ disconnect_from_runner (CutReportXML *report, CutRunner *runner)
     DISCONNECT(start_test_case);
     DISCONNECT(start_test);
 
-    DISCONNECT(success_test);
-    DISCONNECT(failure_test);
-    DISCONNECT(error_test);
-    DISCONNECT(pending_test);
-    DISCONNECT(notification_test);
-
     DISCONNECT(complete_test);
     DISCONNECT(complete_test_case);
     DISCONNECT(complete_test_suite);
 
     DISCONNECT(crashed);
+
+    g_signal_handlers_disconnect_by_func(runner,
+                                         G_CALLBACK(cb_test_signal),
+                                         report);
 
 #undef DISCONNECT
 }
