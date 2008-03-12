@@ -91,7 +91,7 @@ cut_test_suite_class_init (CutTestSuiteClass *klass)
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
 
-	cut_test_suite_signals[READY_SIGNAL]
+    cut_test_suite_signals[READY_SIGNAL]
         = g_signal_new("ready",
                        G_TYPE_FROM_CLASS(klass),
                        G_SIGNAL_RUN_LAST,
@@ -100,23 +100,23 @@ cut_test_suite_class_init (CutTestSuiteClass *klass)
                        _cut_marshal_VOID__UINT_UINT,
                        G_TYPE_NONE, 2, G_TYPE_UINT, G_TYPE_UINT);
 
-	cut_test_suite_signals[START_TEST_CASE_SIGNAL]
+    cut_test_suite_signals[START_TEST_CASE_SIGNAL]
         = g_signal_new("start-test-case",
-                G_TYPE_FROM_CLASS(klass),
-                G_SIGNAL_RUN_LAST,
-                G_STRUCT_OFFSET(CutTestSuiteClass, start_test_case),
-                NULL, NULL,
-                g_cclosure_marshal_VOID__OBJECT,
-                G_TYPE_NONE, 1, CUT_TYPE_TEST_CASE);
+                       G_TYPE_FROM_CLASS(klass),
+                       G_SIGNAL_RUN_LAST,
+                       G_STRUCT_OFFSET(CutTestSuiteClass, start_test_case),
+                       NULL, NULL,
+                       g_cclosure_marshal_VOID__OBJECT,
+                       G_TYPE_NONE, 1, CUT_TYPE_TEST_CASE);
 
-	cut_test_suite_signals[COMPLETE_TEST_CASE_SIGNAL]
+    cut_test_suite_signals[COMPLETE_TEST_CASE_SIGNAL]
         = g_signal_new("complete-test-case",
-                G_TYPE_FROM_CLASS(klass),
-                G_SIGNAL_RUN_LAST,
-                G_STRUCT_OFFSET(CutTestSuiteClass, complete_test_case),
-                NULL, NULL,
-                g_cclosure_marshal_VOID__OBJECT,
-                G_TYPE_NONE, 1, CUT_TYPE_TEST_CASE);
+                       G_TYPE_FROM_CLASS(klass),
+                       G_SIGNAL_RUN_LAST,
+                       G_STRUCT_OFFSET(CutTestSuiteClass, complete_test_case),
+                       NULL, NULL,
+                       g_cclosure_marshal_VOID__OBJECT,
+                       G_TYPE_NONE, 1, CUT_TYPE_TEST_CASE);
 }
 
 static void
