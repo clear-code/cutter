@@ -293,7 +293,7 @@ collect_stack_trace (void)
 }
 
 static void
-ill_be_back_handler (int signum)
+i_will_be_back_handler (int signum)
 {
     g_free(stack_trace);
     stack_trace = NULL;
@@ -332,8 +332,8 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite, CutRunner *runner,
     gint signum;
     sighandler_t previous_segv_handler, previous_int_handler;
 
-    previous_segv_handler = signal(SIGSEGV, ill_be_back_handler);
-    previous_int_handler = signal(SIGINT, ill_be_back_handler);
+    previous_segv_handler = signal(SIGSEGV, i_will_be_back_handler);
+    previous_int_handler = signal(SIGINT, i_will_be_back_handler);
     signum = setjmp(jump_buffer);
     switch (signum) {
       case 0:
@@ -368,7 +368,7 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite, CutRunner *runner,
                                          NULL,
                                          NULL,
                                          test_suite,
-                                         NULL, NULL, 
+                                         NULL, NULL,
                                          NULL, NULL, 0);
             g_signal_emit_by_name(CUT_TEST(test_suite), "success", NULL, result);
             g_object_unref(result);
