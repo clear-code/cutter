@@ -1,5 +1,7 @@
 2008-03-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/run-test.sh: cleanup.
+
 	* cutter/cut-test-suite.c: ill_be_back_handler -> i_will_be_back_handler.
 
 2008-03-12  Hiroyuki Ikezoe  <poincare@ikezoe.net>
