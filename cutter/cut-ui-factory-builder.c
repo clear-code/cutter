@@ -80,6 +80,9 @@ cut_ui_factory_builder_init (CutUIFactoryBuilder *builder)
     const gchar *dir;
 
     dir = g_getenv("CUT_UI_FACTORY_MODULE_DIR");
+    if (!dir)
+        dir = UI_FACTORY_MODULEDIR;
+
     g_object_set(G_OBJECT(builder),
                  "module-dir", dir,
                  NULL);

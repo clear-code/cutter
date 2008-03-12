@@ -8,6 +8,8 @@
 
 	* test/test-cut-report-xml.c: Use same callback function for "success"
 	and "failure" signals.
+	* cutter/cut-ui-factory-builder.c: Use UI_FACTORY_MODULEDIR if
+	CUT_UI_FACTORY_MODULE_DIR environment value is not defined.
 
 2008-03-11  Kouhei Sutou  <kou@cozmixng.org>
 
