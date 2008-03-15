@@ -13,8 +13,15 @@ static GObject *object;
 void
 initialize (void)
 {
+    gchar *factory_dir;
+
     cut_module_factory_init();
-    cut_module_factory_load("./factory_test_dir");
+
+    factory_dir = g_build_filename(cuttest_get_base_dir(),
+                                   "factory_test_dir",
+                                   NULL);
+    cut_module_factory_load(factory_dir);
+    g_free(factory_dir);
 }
 
 void
@@ -57,10 +64,9 @@ test_module_names (void)
     factory = cut_module_factory_new("type1", "module3", NULL);
     cut_assert(factory);
     g_object_unref(factory);
-    factory = NULL;
 
     factory = cut_module_factory_new("type1", "module4", NULL);
-    cut_assert(!factory);
+    cut_assert_null(factory);
 }
 
 void

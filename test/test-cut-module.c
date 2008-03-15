@@ -6,33 +6,27 @@
 void test_load_module (void);
 void test_collect_names (void);
 
-static GList *modules;
-static CutModule *module;
+static GList *modules = NULL;
 
 void
 initialize (void)
 {
-    modules = cut_module_load_modules("./module_test_dir/.libs");
+    gchar *modules_dir;
+
+    modules_dir = g_build_filename(cuttest_get_base_dir(),
+                                   "module_test_dir",
+                                   ".libs",
+                                   NULL);
+    modules = cut_module_load_modules(modules_dir);
+    g_free(modules_dir);
 }
 
 void
 finalize (void)
 {
+    g_list_foreach(modules, (GFunc)g_object_unref, NULL);
     g_list_free(modules);
     modules = NULL;
-}
-
-void
-setup (void)
-{
-    module = NULL;
-}
-
-void
-teardown (void)
-{
-    if (module)
-        g_object_unref(module);
 }
 
 void
@@ -40,8 +34,7 @@ test_load_module (void)
 {
     cut_assert(modules);
 
-    module = cut_module_find(modules, "test1");
-    cut_assert(module);
+    cut_assert(cut_module_find(modules, "test1"));
 }
 
 void

@@ -1,3 +1,13 @@
+2008-03-15  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-module-factory.c: searched ".libs" too.
+
+	* test/Makefile.am, test/test-cut-module.c,
+	test/test-cut-module-factory.c: used cuttest_get_base_dir().
+
+	* test/test-cut-module.c: should not free a module in
+	modules. It's reused in the test case.
+
 2008-03-12  Kouhei Sutou  <kou@cozmixng.org>
 
 	* test/run-test.sh: cleanup.

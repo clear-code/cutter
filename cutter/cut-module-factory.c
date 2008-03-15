@@ -56,8 +56,9 @@ cut_module_factory_init (void)
 void
 cut_module_factory_quit (void)
 {
+    /* builders should be managed by cut-module-factory-builder */
     /* g_list_foreach(builders, (GFunc)g_object_unref, NULL);*/
-    g_list_free(builders);
+    /* g_list_free(builders); */
 
     cut_module_factory_unload();
     cut_module_factory_set_default_module_dir(NULL);
@@ -128,18 +129,31 @@ cut_module_factory_load (const gchar *base_dir)
         base_dir = _cut_module_factory_module_dir();
 
     gdir = g_dir_open(base_dir, 0, NULL);
-    if (!gdir) return;
+    if (!gdir)
+        return;
 
     while ((entry = g_dir_read_name(gdir))) {
         gchar *dir_name;
 
         if (cut_factory_builder_has_builder(entry))
-            continue; 
+            continue;
 
         dir_name = g_build_filename(base_dir, entry, NULL);
 
         if (g_file_test(dir_name, G_FILE_TEST_IS_DIR)) {
-            GList *modules = cut_module_load_modules(dir_name);
+            GList *modules;
+
+            modules = cut_module_load_modules(dir_name);
+
+            if (!modules) {
+                gchar *libs_dir;
+
+                libs_dir = g_build_filename(dir_name, ".libs", NULL);
+                if (g_file_test(libs_dir, G_FILE_TEST_IS_DIR))
+                    modules = cut_module_load_modules(libs_dir);
+                g_free(libs_dir);
+            }
+
             if (modules)
                 g_hash_table_replace(factories, g_strdup(entry), modules);
         }

@@ -213,8 +213,9 @@ cut_module_collect_names (GList *modules)
     GList *node;
 
     for (node = modules; node; node = g_list_next(node)) {
-        CutModule *module = node->data;
+        CutModule *module;
 
+        module = node->data;
         results = g_list_prepend(results, G_TYPE_MODULE(module)->name);
     }
 
