@@ -325,25 +325,27 @@ static gboolean
 cut_test_suite_run_test_cases (CutTestSuite *test_suite, CutRunner *runner,
                                GList *test_cases, const gchar **test_names)
 {
-    GList *list;
     GList *node, *threads = NULL;
+    GList *sorted_test_cases;
     gboolean try_thread;
     gboolean all_success = TRUE;
     gint signum;
     sighandler_t previous_segv_handler, previous_int_handler;
 
+    sorted_test_cases = g_list_copy(test_cases);
+    sorted_test_cases = cut_runner_sort_test_cases(runner, sorted_test_cases);
     previous_segv_handler = signal(SIGSEGV, i_will_be_back_handler);
     previous_int_handler = signal(SIGINT, i_will_be_back_handler);
     signum = setjmp(jump_buffer);
     switch (signum) {
       case 0:
         cut_runner_start_test_suite(runner, test_suite);
-        emit_ready_signal(test_suite, test_cases, test_names);
+        emit_ready_signal(test_suite, sorted_test_cases, test_names);
         g_signal_emit_by_name(CUT_TEST(test_suite), "start");
 
         try_thread = cut_runner_get_multi_thread(runner);
-        for (list = test_cases; list; list = g_list_next(list)) {
-            CutTestCase *test_case = list->data;
+        for (node = sorted_test_cases; node; node = g_list_next(node)) {
+            CutTestCase *test_case = node->data;
 
             if (!test_case)
                 continue;
@@ -386,6 +388,8 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite, CutRunner *runner,
     signal(SIGSEGV, previous_segv_handler);
 
     g_signal_emit_by_name(CUT_TEST(test_suite), "complete");
+
+    g_list_free(sorted_test_cases);
 
     return all_success;
 }

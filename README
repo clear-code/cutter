@@ -70,6 +70,15 @@ This is a list of features of Cutter:
 
    Cutter runs a test case in a new thread.
 
+: --test-case-order=[none|name|name-desc]
+
+   It specifies test case order. Cutter doesn't sort by
+   default. (none)
+
+   If 'name' is specified, Cutter sorts test cases by name in
+   ascending order. If 'name-desc' is specified, Cutter
+   sorts test cases by name in descending order.
+
 : --show-all-uis
 
    Cutter shows all available UIs and exits.

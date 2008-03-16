@@ -45,9 +45,31 @@ static gchar *test_directory = NULL;
 static gchar *source_directory = NULL;
 static const gchar **test_case_names = NULL;
 static const gchar **test_names = NULL;
+static CutOrder test_case_order = CUT_ORDER_NONE_SPECIFIED;
 static gboolean use_multi_thread = FALSE;
 static gboolean _show_all_uis = FALSE;
 static GList *factories = NULL;
+
+static gboolean
+parse_test_case_order (const gchar *option_name, const gchar *value,
+                       gpointer data, GError **error)
+{
+    if (g_utf8_collate(value, "none") == 0) {
+        test_case_order = CUT_ORDER_NONE_SPECIFIED;
+    } else if (g_utf8_collate(value, "name") == 0) {
+        test_case_order = CUT_ORDER_NAME_ASCENDING;
+    } else if (g_utf8_collate(value, "name-desc") == 0) {
+        test_case_order = CUT_ORDER_NAME_DESCENDING;
+    } else {
+        g_set_error(error,
+                    G_OPTION_ERROR,
+                    G_OPTION_ERROR_BAD_VALUE,
+                    _("Invalid test case order value: %s"), value);
+        return FALSE;
+    }
+
+    return TRUE;
+}
 
 static const GOptionEntry option_entries[] =
 {
@@ -59,6 +81,8 @@ static const GOptionEntry option_entries[] =
      N_("Specify test cases"), "TEST_CASE_NAME"},
     {"multi-thread", 'm', 0, G_OPTION_ARG_NONE, &use_multi_thread,
      N_("Run test cases with multi-thread"), NULL},
+    {"test-case-order", 0, 0, G_OPTION_ARG_CALLBACK, parse_test_case_order,
+     N_("Sort test case by. Default is 'none'."), "[none|name|name-desc]"},
     {"show-all-uis", 0, 0, G_OPTION_ARG_NONE, &_show_all_uis,
      N_("Show all available UIs and exit"), NULL},
     {NULL}
@@ -194,6 +218,7 @@ cut_create_runner (void)
     cut_runner_set_multi_thread(runner, use_multi_thread);
     cut_runner_set_target_test_case_names(runner, test_case_names);
     cut_runner_set_target_test_names(runner, test_names);
+    cut_runner_set_test_case_order(runner, test_case_order);
 
     return runner;
 }

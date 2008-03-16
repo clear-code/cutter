@@ -1,5 +1,10 @@
 2008-03-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-main.c, README, README.ja: added --test-case-order
+	option.
+	* cutter/cut-test-suite.c: supported test case sort by name.
+	[#1912459]
+
 	* cutter/cut-test-container.[ch], cutter/cut-test-suite.c: removed
 	const from GList * return value.
 
