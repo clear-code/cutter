@@ -28,6 +28,7 @@ noinst_LTLIBRARIES = 				\
 		test_cut_test_suite.la		\
 		test_cut_loader.la		\
 		test_cut_repository.la		\
+		test_cut_runner.la		\
 		test_cut_value_equal.la		\
 		test_cut_module.la		\
 		test_cut_module_factory.la	\
@@ -54,6 +55,7 @@ test_cut_loader_la_SOURCES      = test-cut-loader.c
 test_cut_loader_la_LIBADD       = cuttest_utils.la
 test_cut_repository_la_SOURCES  = test-cut-repository.c
 test_cut_repository_la_LIBADD   = cuttest_utils.la
+test_cut_runner_la_SOURCES      = test-cut-runner.c
 test_cut_value_equal_la_SOURCES = test-cut-value-equal.c
 test_cut_report_xml_la_SOURCES  = test-cut-report-xml.c
 test_cut_module_la_SOURCES      = test-cut-module.c

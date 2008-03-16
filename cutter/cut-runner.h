@@ -36,6 +36,12 @@ G_BEGIN_DECLS
 #define CUT_IS_RUNNER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_RUNNER))
 #define CUT_RUNNER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_RUNNER, CutRunnerClass))
 
+typedef enum {
+    CUT_ORDER_NONE_SPECIFIED,
+    CUT_ORDER_NAME_ASCENDING,
+    CUT_ORDER_NAME_DESCENDING
+} CutOrder;
+
 typedef struct _CutRunnerClass    CutRunnerClass;
 
 struct _CutRunner
@@ -148,6 +154,13 @@ CutTestSuite *cut_runner_create_test_suite         (CutRunner *runner);
 CutTestSuite *cut_runner_get_test_suite            (CutRunner *runner);
 void          cut_runner_set_test_suite            (CutRunner *runner,
                                                     CutTestSuite *suite);
+
+void          cut_runner_set_test_case_order       (CutRunner *runner,
+                                                    CutOrder   order);
+CutOrder      cut_runner_get_test_case_order       (CutRunner *runner);
+GList        *cut_runner_sort_test_cases           (CutRunner *runner,
+                                                    GList     *test_cases);
+
 gboolean      cut_runner_run                       (CutRunner *runner);
 
 void          cut_runner_add_listener              (CutRunner   *runner,

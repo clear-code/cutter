@@ -31,6 +31,7 @@
 #include "cut-test-result.h"
 
 #include "cut-marshalers.h"
+#include "cut-enum-types.h"
 
 #define CUT_RUNNER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_RUNNER, CutRunnerPrivate))
 
@@ -55,6 +56,7 @@ struct _CutRunnerPrivate
     gboolean canceled;
     CutTestSuite *test_suite;
     GList *listeners;
+    CutOrder test_case_order;
 };
 
 enum
@@ -66,7 +68,8 @@ enum
     PROP_N_ERRORS,
     PROP_N_PENDINGS,
     PROP_N_NOTIFICATIONS,
-    PROP_USE_MULTI_THREAD
+    PROP_USE_MULTI_THREAD,
+    PROP_TEST_CASE_ORDER
 };
 
 enum
@@ -162,6 +165,14 @@ cut_runner_class_init (CutRunnerClass *klass)
                                 FALSE,
                                 G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class, PROP_USE_MULTI_THREAD, spec);
+
+    spec = g_param_spec_enum("test-case-order",
+                             "Test case order",
+                             "Sort key for test case",
+                             CUT_TYPE_ORDER,
+                             CUT_ORDER_NONE_SPECIFIED,
+                             G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+    g_object_class_install_property(gobject_class, PROP_TEST_CASE_ORDER, spec);
 
 
     signals[READY_TEST_SUITE]
@@ -417,6 +428,9 @@ set_property (GObject      *object,
       case PROP_USE_MULTI_THREAD:
         priv->use_multi_thread = g_value_get_boolean(value);
         break;
+      case PROP_TEST_CASE_ORDER:
+        priv->test_case_order = g_value_get_enum(value);
+        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
@@ -452,6 +466,9 @@ get_property (GObject    *object,
         break;
       case PROP_USE_MULTI_THREAD:
         g_value_set_boolean(value, priv->use_multi_thread);
+        break;
+      case PROP_TEST_CASE_ORDER:
+        g_value_set_enum(value, priv->test_case_order);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -1049,6 +1066,71 @@ cut_runner_build_source_filename (CutRunner *runner, const gchar *filename)
         source_filename = g_strdup(filename);
     }
     return source_filename;
+}
+
+void
+cut_runner_set_test_case_order (CutRunner *runner, CutOrder order)
+{
+    CutRunnerPrivate *priv;
+
+    priv = CUT_RUNNER_GET_PRIVATE(runner);
+    g_mutex_lock(priv->mutex);
+    priv->test_case_order = order;
+    g_mutex_unlock(priv->mutex);
+}
+
+CutOrder
+cut_runner_get_test_case_order (CutRunner *runner)
+{
+    return CUT_RUNNER_GET_PRIVATE(runner)->test_case_order;
+}
+
+static gint
+compare_test_cases_by_name (gconstpointer a, gconstpointer b, gpointer user_data)
+{
+    CutTestCase *test_case1, *test_case2;
+    const gchar *test_case_name1, *test_case_name2;
+    gboolean ascending;
+
+    test_case1 = CUT_TEST_CASE(a);
+    test_case2 = CUT_TEST_CASE(b);
+    test_case_name1 = cut_test_get_name(CUT_TEST(test_case1));
+    test_case_name2 = cut_test_get_name(CUT_TEST(test_case2));
+    ascending = *(gboolean *)user_data;
+
+    if (ascending)
+        return strcmp(test_case_name1, test_case_name2);
+    else
+        return strcmp(test_case_name2, test_case_name1);
+}
+
+GList *
+cut_runner_sort_test_cases (CutRunner *runner, GList *test_cases)
+{
+    CutRunnerPrivate *priv;
+    GList *sorted_test_cases;
+    gboolean ascending;
+
+    priv = CUT_RUNNER_GET_PRIVATE(runner);
+    switch (priv->test_case_order) {
+      case CUT_ORDER_NONE_SPECIFIED:
+        sorted_test_cases = test_cases;
+        break;
+      case CUT_ORDER_NAME_ASCENDING:
+        ascending = TRUE;
+        sorted_test_cases = g_list_sort_with_data(test_cases,
+                                                  compare_test_cases_by_name,
+                                                  &ascending);
+        break;
+      case CUT_ORDER_NAME_DESCENDING:
+        ascending = FALSE;
+        sorted_test_cases = g_list_sort_with_data(test_cases,
+                                                  compare_test_cases_by_name,
+                                                  &ascending);
+        break;
+    }
+
+    return sorted_test_cases;
 }
 
 /*

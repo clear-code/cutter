@@ -1,5 +1,8 @@
 2008-03-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-runner.c, cutter/cut-runner.[ch]
+	(cut_runner_sort_test_cases): added.
+
 	* cutter/module/ui/Makefile.am, cutter/module/report/Makefile.am:
 	removed needless -rpath.
 
