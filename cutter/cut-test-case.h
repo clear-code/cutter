@@ -62,14 +62,16 @@ struct _CutTestCaseClass
 GType        cut_test_case_get_type       (void) G_GNUC_CONST;
 
 CutTestCase *cut_test_case_new            (const gchar *name,
-                                           CutSetupFunction setup_funcion,
+                                           CutSetupFunction setup_function,
                                            CutTearDownFunction teardown_function,
                                            CutGetCurrentTestContextFunction
                                            get_current_test_context_function,
                                            CutSetCurrentTestContextFunction
                                            set_current_test_context_function,
-                                           CutInitializeFunction initialize_function,
-                                           CutFinalizeFunction finalize_function);
+                                           CutInitializeFunction
+                                           initialize_function,
+                                           CutFinalizeFunction
+                                           finalize_function);
 void         cut_test_case_add_test       (CutTestCase *test_case,
                                            CutTest *test);
 guint        cut_test_case_get_n_tests    (CutTestCase  *test_case,
