@@ -1,3 +1,8 @@
+2008-03-16  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/module/ui/Makefile.am, cutter/module/report/Makefile.am:
+	removed needless -rpath.
+
 2008-03-15  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-module-factory.c: searched ".libs" too.

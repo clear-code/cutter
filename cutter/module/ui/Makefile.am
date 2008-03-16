@@ -3,7 +3,7 @@ INCLUDES = $(GLIB_CFLAGS)	\
 	 -I$(top_srcdir)
 
 LDFLAGS =							\
-  -rpath $(ui_moduledir) -avoid-version -module			\
+  -avoid-version -module					\
   -export-dynamic $(no_undefined) $(LIBTOOL_EXPORT_OPTIONS)
 
 ui_module_LTLIBRARIES = console.la
