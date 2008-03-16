@@ -135,7 +135,7 @@ cut_test_container_add_test (CutTestContainer *container, CutTest *test)
     }
 }
 
-const GList *
+GList *
 cut_test_container_get_children (CutTestContainer *container)
 {
     return CUT_TEST_CONTAINER_GET_PRIVATE(container)->tests;
@@ -145,7 +145,7 @@ static gdouble
 real_get_elapsed (CutTest *test)
 {
     gdouble result = 0.0;
-    const GList *child;
+    GList *child;
     CutTestContainerPrivate *priv;
 
     g_return_val_if_fail(CUT_IS_TEST_CONTAINER(test), FALSE);

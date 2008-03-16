@@ -1,5 +1,8 @@
 2008-03-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-container.[ch], cutter/cut-test-suite.c: removed
+	const from GList * return value.
+
 	* test/test-cut-runner.c, cutter/cut-runner.[ch]
 	(cut_runner_sort_test_cases): added.
 

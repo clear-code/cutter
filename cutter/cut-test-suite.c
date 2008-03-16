@@ -302,10 +302,10 @@ i_will_be_back_handler (int signum)
 }
 
 static void
-emit_ready_signal (CutTestSuite *test_suite, const GList *test_cases,
+emit_ready_signal (CutTestSuite *test_suite, GList *test_cases,
                    const gchar **test_names)
 {
-    const GList *node;
+    GList *node;
     guint n_test_cases, n_tests;
 
     n_test_cases = 0;
@@ -323,9 +323,9 @@ emit_ready_signal (CutTestSuite *test_suite, const GList *test_cases,
 
 static gboolean
 cut_test_suite_run_test_cases (CutTestSuite *test_suite, CutRunner *runner,
-                               const GList *test_cases, const gchar **test_names)
+                               GList *test_cases, const gchar **test_names)
 {
-    const GList *list;
+    GList *list;
     GList *node, *threads = NULL;
     gboolean try_thread;
     gboolean all_success = TRUE;
@@ -419,7 +419,7 @@ gboolean
 cut_test_suite_run_test (CutTestSuite *suite, CutRunner *runner,
                          const gchar *test_name)
 {
-    const GList *test_cases;
+    GList *test_cases;
     const gchar *test_names[] = {NULL, NULL};
 
     g_return_val_if_fail(CUT_IS_TEST_SUITE(suite), FALSE);
@@ -469,11 +469,12 @@ cut_test_suite_run_with_filter (CutTestSuite *test_suite,
                                                default_test_case_names);
     }
 
+    if (!filtered_test_cases)
+        return success;
+
     success = cut_test_suite_run_test_cases(test_suite, runner,
                                             filtered_test_cases, test_names);
-
-    if (filtered_test_cases)
-        g_list_free(filtered_test_cases);
+    g_list_free(filtered_test_cases);
 
     return success;
 }
