@@ -1,3 +1,9 @@
+2008-03-19  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-ui-factory-builder.c: constructed --ui argument
+	description dynamically.
+	* cutter/cut-main.c: removed --show-all-uis.
+
 2008-03-16  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-main.c, README, README.ja: added --test-case-order

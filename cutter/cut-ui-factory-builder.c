@@ -91,12 +91,32 @@ cut_ui_factory_builder_init (CutUIFactoryBuilder *builder)
 static void
 set_option_context (CutFactoryBuilder *builder, GOptionContext *context)
 {
+    static gchar *arg_description = NULL;
     GOptionEntry entries[] = {
         {"ui", 'u', 0, G_OPTION_ARG_STRING, &ui_name,
-         N_("Specify UI"), "[console|gtk]"},
+         N_("Specify UI"), NULL},
         {NULL}
     };
 
+    if (!arg_description) {
+        GString *available_uis;
+        GList *names, *node;
+
+        available_uis = g_string_new("[");
+        names = cut_module_factory_get_names("ui");
+        for (node = names; node; node = g_list_next(node)) {
+            const gchar *name = node->data;
+            g_string_append(available_uis, name);
+            if (g_list_next(node))
+                g_string_append(available_uis, "|");
+        }
+        g_string_append(available_uis, "]");
+        arg_description = g_string_free(available_uis, FALSE);
+
+        g_list_foreach(names, (GFunc)g_free, NULL);
+        g_list_free(names);
+    }
+    entries[0].arg_description = arg_description;
     g_option_context_add_main_entries(context, entries, NULL);
 }
 

@@ -47,7 +47,6 @@ static const gchar **test_case_names = NULL;
 static const gchar **test_names = NULL;
 static CutOrder test_case_order = CUT_ORDER_NONE_SPECIFIED;
 static gboolean use_multi_thread = FALSE;
-static gboolean _show_all_uis = FALSE;
 static GList *factories = NULL;
 
 static gboolean
@@ -83,28 +82,8 @@ static const GOptionEntry option_entries[] =
      N_("Run test cases with multi-thread"), NULL},
     {"test-case-order", 0, 0, G_OPTION_ARG_CALLBACK, parse_test_case_order,
      N_("Sort test case by. Default is 'none'."), "[none|name|name-desc]"},
-    {"show-all-uis", 0, 0, G_OPTION_ARG_NONE, &_show_all_uis,
-     N_("Show all available UIs and exit"), NULL},
     {NULL}
 };
-
-static void
-show_all_uis (void)
-{
-    GList *names, *node;
-
-    names = cut_module_factory_get_names("ui");
-    for (node = names; node; node = g_list_next(node)) {
-        const gchar *name = node->data;
-        if (g_list_next(node))
-            g_print("%s, ", name);
-        else
-            g_print("%s", name);
-    }
-    g_print("\n");
-    g_list_foreach(names, (GFunc)g_free, NULL);
-    g_list_free(names);
-}
 
 void
 cut_init (int *argc, char ***argv)
@@ -131,31 +110,20 @@ cut_init (int *argc, char ***argv)
 
     option_context = g_option_context_new("TEST_DIRECTORY");
     g_option_context_add_main_entries(option_context, option_entries, "cutter");
-    g_option_context_set_help_enabled(option_context, FALSE);
+    g_option_context_set_help_enabled(option_context, TRUE);
     g_option_context_set_ignore_unknown_options(option_context, TRUE);
-    if (!g_option_context_parse(option_context, argc, argv, &error)) {
-        g_print("%s\n", error->message);
-        g_error_free(error);
-        g_option_context_free(option_context);
-        exit(1);
-    }
 
     cut_module_factory_init();
     cut_module_factory_load(NULL);
     cut_module_factory_set_option_context(option_context);
-    if (_show_all_uis) {
-        show_all_uis();
-        exit(1);
-    }
 
-    g_option_context_set_help_enabled(option_context, TRUE);
-    g_option_context_set_ignore_unknown_options(option_context, TRUE);
     if (!g_option_context_parse(option_context, argc, argv, &error)) {
         g_print("%s\n", error->message);
         g_error_free(error);
         g_option_context_free(option_context);
         exit(1);
     }
+
 
     factories = cut_module_factory_build_factories();
 
