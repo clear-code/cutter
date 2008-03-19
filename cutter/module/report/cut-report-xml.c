@@ -254,7 +254,7 @@ output_to_file (CutReportXML *report, gchar *string)
     if (!filename)
         return;
 
-    fp = g_fopen(filename ,"a");
+    fp = g_fopen(filename, "a");
     if (!fp)
         return;
 
@@ -468,7 +468,7 @@ append_element_with_value (GString *string, guint indent, const gchar *element_n
 {
     gchar *escaped;
     append_indent(string, indent);
-    escaped = g_markup_printf_escaped("<%s>%s</%s>\n", 
+    escaped = g_markup_printf_escaped("<%s>%s</%s>\n",
                                       element_name,
                                       value,
                                       element_name);
@@ -479,20 +479,21 @@ append_element_with_value (GString *string, guint indent, const gchar *element_n
 static void
 append_element_valist (GString *string, guint indent, const gchar *element_name, va_list var_args)
 {
-  	const gchar *name;
-  
-  	name = element_name;
-  
-  	while (name) {
-		const gchar *value = va_arg(var_args, gchar*);
+    const gchar *name;
+
+    name = element_name;
+
+    while (name) {
+        const gchar *value = va_arg(var_args, gchar *);
         if (value)
             append_element_with_value(string, indent, name, value);
-		name = va_arg(var_args, gchar*);
+        name = va_arg(var_args, gchar *);
     }
 }
 
 static void
-append_element_with_children (GString *string, guint indent, const gchar *element_name, 
+append_element_with_children (GString *string, guint indent,
+                              const gchar *element_name,
                               const gchar *first_child_element, ...)
 {
     gchar *escaped;
@@ -552,7 +553,7 @@ append_test_info_to_string (GString *string, const gchar *element_name, CutTest 
     if (description)
         append_element_with_value(string, indent + 2, "description", description);
 
-    attributes = (GHashTable*)cut_test_get_attributes(test);
+    attributes = (GHashTable *)cut_test_get_attributes(test);
     if (attributes)
         g_hash_table_foreach(attributes, (GHFunc)append_attribute, string);
 
@@ -604,7 +605,8 @@ get_result (CutTestResult *result)
     GString *xml = g_string_new("");
 
     g_string_append(xml, "  <result>\n");
-    append_test_info_to_string(xml, "test-case", CUT_TEST(cut_test_result_get_test_case(result)));
+    append_test_info_to_string(xml, "test-case",
+                               CUT_TEST(cut_test_result_get_test_case(result)));
     append_test_info_to_string(xml, "test", cut_test_result_get_test(result));
     append_test_result_to_string(xml, result);
     g_string_append(xml, "  </result>\n");

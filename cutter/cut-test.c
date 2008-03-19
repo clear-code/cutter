@@ -320,7 +320,7 @@ cut_test_run (CutTest *test, CutTestContext *test_context, CutRunner *runner)
                                      test,
                                      cut_test_context_get_test_case(test_context),
                                      NULL,
-                                     NULL, NULL, 
+                                     NULL, NULL,
                                      NULL, NULL, 0);
         g_object_set(result, "elapsed", cut_test_get_elapsed(test), NULL);
         g_signal_emit_by_name(test, "success", test_context, result);
