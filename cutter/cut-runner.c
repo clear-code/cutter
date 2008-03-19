@@ -89,6 +89,12 @@ enum
     PENDING_TEST,
     NOTIFICATION_TEST,
 
+    SUCCESS_TEST_CASE,
+    FAILURE_TEST_CASE,
+    ERROR_TEST_CASE,
+    PENDING_TEST_CASE,
+    NOTIFICATION_TEST_CASE,
+
     COMPLETE_TEST,
     COMPLETE_TEST_CASE,
     COMPLETE_TEST_SUITE,
@@ -294,6 +300,61 @@ cut_runner_class_init (CutRunnerClass *klass)
                         NULL, NULL,
                         _cut_marshal_VOID__OBJECT_OBJECT,
                         G_TYPE_NONE, 2, CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT);
+
+    signals[SUCCESS_TEST_CASE]
+        = g_signal_new ("success-test-case",
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutRunnerClass, success_test_case),
+                        NULL, NULL,
+                        _cut_marshal_VOID__OBJECT_OBJECT_OBJECT,
+                        G_TYPE_NONE, 3,
+                        CUT_TYPE_TEST_CASE, CUT_TYPE_TEST_CONTEXT,
+                        CUT_TYPE_TEST_RESULT);
+
+    signals[FAILURE_TEST_CASE]
+        = g_signal_new ("failure-test-case",
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutRunnerClass, failure_test_case),
+                        NULL, NULL,
+                        _cut_marshal_VOID__OBJECT_OBJECT_OBJECT,
+                        G_TYPE_NONE, 3,
+                        CUT_TYPE_TEST_CASE, CUT_TYPE_TEST_CONTEXT,
+                        CUT_TYPE_TEST_RESULT);
+
+    signals[ERROR_TEST_CASE]
+        = g_signal_new ("error-test-case",
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutRunnerClass, error_test_case),
+                        NULL, NULL,
+                        _cut_marshal_VOID__OBJECT_OBJECT_OBJECT,
+                        G_TYPE_NONE, 3,
+                        CUT_TYPE_TEST_CASE, CUT_TYPE_TEST_CONTEXT,
+                        CUT_TYPE_TEST_RESULT);
+
+    signals[PENDING_TEST_CASE]
+        = g_signal_new ("pending-test-case",
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutRunnerClass, pending_test_case),
+                        NULL, NULL,
+                        _cut_marshal_VOID__OBJECT_OBJECT_OBJECT,
+                        G_TYPE_NONE, 3,
+                        CUT_TYPE_TEST_CASE, CUT_TYPE_TEST_CONTEXT,
+                        CUT_TYPE_TEST_RESULT);
+
+    signals[NOTIFICATION_TEST_CASE]
+        = g_signal_new ("notification-test-case",
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutRunnerClass, notification_test_case),
+                        NULL, NULL,
+                        _cut_marshal_VOID__OBJECT_OBJECT_OBJECT,
+                        G_TYPE_NONE, 3,
+                        CUT_TYPE_TEST_CASE, CUT_TYPE_TEST_CONTEXT,
+                        CUT_TYPE_TEST_RESULT);
 
     signals[COMPLETE_TEST_CASE]
         = g_signal_new ("complete-test-case",
@@ -743,6 +804,56 @@ cb_complete_test(CutTestCase *test_case, CutTest *test,
 }
 
 static void
+cb_success_test_case (CutTestCase *test_case, CutTestContext *test_context,
+                      CutTestResult *result, gpointer data)
+{
+    CutRunner *runner = data;
+
+    g_signal_emit(runner, signals[SUCCESS_TEST_CASE], 0,
+                  test_case, test_context, result);
+}
+
+static void
+cb_failure_test_case (CutTestCase *test_case, CutTestContext *test_context,
+                      CutTestResult *result, gpointer data)
+{
+    CutRunner *runner = data;
+
+    g_signal_emit(runner, signals[FAILURE_TEST_CASE], 0,
+                  test_case, test_context, result);
+}
+
+static void
+cb_error_test_case (CutTestCase *test_case, CutTestContext *test_context,
+                    CutTestResult *result, gpointer data)
+{
+    CutRunner *runner = data;
+
+    g_signal_emit(runner, signals[ERROR_TEST_CASE], 0,
+                  test_case, test_context, result);
+}
+
+static void
+cb_pending_test_case (CutTestCase *test_case, CutTestContext *test_context,
+                      CutTestResult *result, gpointer data)
+{
+    CutRunner *runner = data;
+
+    g_signal_emit(runner, signals[PENDING_TEST_CASE], 0,
+                  test_case, test_context, result);
+}
+
+static void
+cb_notification_test_case (CutTestCase *test_case, CutTestContext *test_context,
+                           CutTestResult *result, gpointer data)
+{
+    CutRunner *runner = data;
+
+    g_signal_emit(runner, signals[NOTIFICATION_TEST_CASE], 0,
+                  test_case, test_context, result);
+}
+
+static void
 cb_start_test_case(CutTestCase *test_case, gpointer data)
 {
     CutRunner *runner = data;
@@ -770,6 +881,12 @@ cb_complete_test_case(CutTestCase *test_case, gpointer data)
 
     DISCONNECT(start_test);
     DISCONNECT(complete_test);
+#undef DISCONNECT
+
+#define DISCONNECT(name)                                                \
+    g_signal_handlers_disconnect_by_func(test_case,                     \
+                                         G_CALLBACK(cb_ ## name ## _test_case), \
+                                         data)
 
     DISCONNECT(success);
     DISCONNECT(failure);
@@ -777,10 +894,9 @@ cb_complete_test_case(CutTestCase *test_case, gpointer data)
     DISCONNECT(pending);
     DISCONNECT(notification);
 
-    DISCONNECT(ready_test_case);
-    DISCONNECT(start_test_case);
-    DISCONNECT(complete_test_case);
-
+    DISCONNECT(ready);
+    DISCONNECT(start);
+    DISCONNECT(complete);
 #undef DISCONNECT
 
     g_signal_emit(runner, signals[COMPLETE_TEST_CASE], 0, test_case);
@@ -794,6 +910,11 @@ cut_runner_start_test_case (CutRunner *runner, CutTestCase *test_case)
 
     CONNECT(start_test);
     CONNECT(complete_test);
+#undef CONNECT
+
+#define CONNECT(name)                                                   \
+    g_signal_connect(test_case, #name,                                  \
+                     G_CALLBACK(cb_ ## name ## _test_case), runner)
 
     CONNECT(success);
     CONNECT(failure);
@@ -801,16 +922,9 @@ cut_runner_start_test_case (CutRunner *runner, CutTestCase *test_case)
     CONNECT(pending);
     CONNECT(notification);
 
-#undef CONNECT
-
-#define CONNECT(name)                                                   \
-    g_signal_connect(test_case, #name,                                  \
-                     G_CALLBACK(cb_ ## name ## _test_case), runner)
-
     CONNECT(ready);
     CONNECT(start);
     CONNECT(complete);
-
 #undef CONNECT
 }
 

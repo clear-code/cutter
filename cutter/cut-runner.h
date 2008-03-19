@@ -91,12 +91,33 @@ struct _CutRunnerClass
                                  CutTest        *test,
                                  CutTestContext *test_context,
                                  CutTestResult  *result);
-
     void (*complete_test)       (CutRunner      *runner,
                                  CutTest        *test,
                                  CutTestContext *test_context);
+
+    void (*success_test_case)   (CutRunner      *runner,
+                                 CutTestCase    *test_case,
+                                 CutTestContext *test_context,
+                                 CutTestResult  *result);
+    void (*failure_test_case)   (CutRunner      *runner,
+                                 CutTestCase    *test_case,
+                                 CutTestContext *test_context,
+                                 CutTestResult  *result);
+    void (*error_test_case)     (CutRunner      *runner,
+                                 CutTestCase    *test_case,
+                                 CutTestContext *test_context,
+                                 CutTestResult  *result);
+    void (*pending_test_case)   (CutRunner      *runner,
+                                 CutTestCase    *test_case,
+                                 CutTestContext *test_context,
+                                 CutTestResult  *result);
+    void (*notification_test_case) (CutRunner      *runner,
+                                    CutTestCase    *test_case,
+                                    CutTestContext *test_context,
+                                    CutTestResult  *result);
     void (*complete_test_case)  (CutRunner      *runner,
                                  CutTestCase    *test_case);
+
     void (*complete_test_suite) (CutRunner      *runner,
                                  CutTestSuite   *test_suite);
 

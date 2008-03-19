@@ -1,5 +1,9 @@
 2008-03-19  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-runner.[ch]: emitted signal STATUS_test_case for test
+	case not STATUS_test.
+	* cutter/module/ui/cut-ui-console.c: removed needless check.
+
 	* cutter/cut-test.c: fixed indentation.
 
 	* README, README.ja: updated options.

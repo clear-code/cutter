@@ -392,10 +392,8 @@ cb_success_test (CutRunner      *runner,
 {
     if (console->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
-    if (!CUT_IS_TEST_CONTAINER(test)) {
-        print_for_status(console, CUT_TEST_RESULT_SUCCESS, ".");
-        fflush(stdout);
-    }
+    print_for_status(console, CUT_TEST_RESULT_SUCCESS, ".");
+    fflush(stdout);
 }
 
 static void
