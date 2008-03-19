@@ -50,6 +50,15 @@ static gboolean use_multi_thread = FALSE;
 static GList *factories = NULL;
 
 static gboolean
+print_version (const gchar *option_name, const gchar *value,
+               gpointer data, GError **error)
+{
+    g_print("%s\n", VERSION);
+    exit(0);
+    return TRUE;
+}
+
+static gboolean
 parse_test_case_order (const gchar *option_name, const gchar *value,
                        gpointer data, GError **error)
 {
@@ -72,6 +81,8 @@ parse_test_case_order (const gchar *option_name, const gchar *value,
 
 static const GOptionEntry option_entries[] =
 {
+    {"version", 0, 0, G_OPTION_ARG_CALLBACK, print_version,
+     N_("Show version"), NULL},
     {"source-directory", 's', 0, G_OPTION_ARG_STRING, &source_directory,
      N_("Set directory of source code"), "DIRECTORY"},
     {"name", 'n', 0, G_OPTION_ARG_STRING_ARRAY, &test_names,
