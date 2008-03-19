@@ -46,6 +46,10 @@ This is a list of features of Cutter:
 
 === Options
 
+: --version
+
+   Cutter shows its own version and exit.
+
 : -s DIRECTORY, --source-directory=DIRECTORY
 
    Cutter prepends DIRECTORY to file name when test fails. This
@@ -78,10 +82,6 @@ This is a list of features of Cutter:
    If 'name' is specified, Cutter sorts test cases by name in
    ascending order. If 'name-desc' is specified, Cutter
    sorts test cases by name in descending order.
-
-: --show-all-uis
-
-   Cutter shows all available UIs and exits.
 
 : -u[console|gtk], --ui=[console|gtk]
 

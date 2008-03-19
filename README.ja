@@ -64,6 +64,10 @@ Cutterの特徴は以下の通りです。
 
 === オプション
 
+: --version
+
+   バージョンを表示して終了します。
+
 : -s DIRECTORY, --source-directory=DIRECTORY
 
    テストが失敗した場合にファイル名の前にDIRECTORYを付加しま
@@ -93,10 +97,6 @@ Cutterの特徴は以下の通りです。
 
    nameを指定するとテストケース名で昇順に並び替えます。
    name-descを指定するとテストケース名で降順に並び替えます。
-
-: --show-all-uis
-
-   すべての利用可能なUIを表示し、終了します。
 
 : -u=[console|gtk], --ui=[console|gtk]
 
