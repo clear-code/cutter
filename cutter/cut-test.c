@@ -108,86 +108,91 @@ cut_test_class_init (CutTestClass *klass)
                                 G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class, PROP_TEST_FUNCTION, spec);
 
-	cut_test_signals[START]
+    cut_test_signals[START]
         = g_signal_new ("start",
-                G_TYPE_FROM_CLASS (klass),
-                G_SIGNAL_RUN_LAST,
-                G_STRUCT_OFFSET (CutTestClass, start),
-                NULL, NULL,
-                g_cclosure_marshal_VOID__VOID,
-                G_TYPE_NONE, 0);
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutTestClass, start),
+                        NULL, NULL,
+                        g_cclosure_marshal_VOID__VOID,
+                        G_TYPE_NONE, 0);
 
-	cut_test_signals[PASS_ASSERTION]
+    cut_test_signals[PASS_ASSERTION]
         = g_signal_new ("pass-assertion",
-                G_TYPE_FROM_CLASS (klass),
-                G_SIGNAL_RUN_LAST,
-                G_STRUCT_OFFSET (CutTestClass, pass_assertion),
-                NULL, NULL,
-                g_cclosure_marshal_VOID__OBJECT,
-                G_TYPE_NONE, 1, CUT_TYPE_TEST_CONTEXT);
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutTestClass, pass_assertion),
+                        NULL, NULL,
+                        g_cclosure_marshal_VOID__OBJECT,
+                        G_TYPE_NONE, 1, CUT_TYPE_TEST_CONTEXT);
 
-	cut_test_signals[SUCCESS]
+    cut_test_signals[SUCCESS]
         = g_signal_new ("success",
-                G_TYPE_FROM_CLASS (klass),
-                G_SIGNAL_RUN_LAST,
-                G_STRUCT_OFFSET (CutTestClass, success),
-                NULL, NULL,
-                _cut_marshal_VOID__OBJECT_OBJECT,
-                G_TYPE_NONE, 2, CUT_TYPE_TEST_CONTEXT, CUT_TYPE_TEST_RESULT);
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutTestClass, success),
+                        NULL, NULL,
+                        _cut_marshal_VOID__OBJECT_OBJECT,
+                        G_TYPE_NONE, 2,
+                        CUT_TYPE_TEST_CONTEXT, CUT_TYPE_TEST_RESULT);
 
-	cut_test_signals[FAILURE]
+    cut_test_signals[FAILURE]
         = g_signal_new ("failure",
-                G_TYPE_FROM_CLASS (klass),
-                G_SIGNAL_RUN_LAST,
-                G_STRUCT_OFFSET (CutTestClass, failure),
-                NULL, NULL,
-                _cut_marshal_VOID__OBJECT_OBJECT,
-                G_TYPE_NONE, 2, CUT_TYPE_TEST_CONTEXT, CUT_TYPE_TEST_RESULT);
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutTestClass, failure),
+                        NULL, NULL,
+                        _cut_marshal_VOID__OBJECT_OBJECT,
+                        G_TYPE_NONE, 2,
+                        CUT_TYPE_TEST_CONTEXT, CUT_TYPE_TEST_RESULT);
 
-	cut_test_signals[ERROR]
+    cut_test_signals[ERROR]
         = g_signal_new ("error",
-                G_TYPE_FROM_CLASS (klass),
-                G_SIGNAL_RUN_LAST,
-                G_STRUCT_OFFSET (CutTestClass, error),
-                NULL, NULL,
-                _cut_marshal_VOID__OBJECT_OBJECT,
-                G_TYPE_NONE, 2, CUT_TYPE_TEST_CONTEXT, CUT_TYPE_TEST_RESULT);
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutTestClass, error),
+                        NULL, NULL,
+                        _cut_marshal_VOID__OBJECT_OBJECT,
+                        G_TYPE_NONE, 2,
+                        CUT_TYPE_TEST_CONTEXT, CUT_TYPE_TEST_RESULT);
 
-	cut_test_signals[PENDING]
+    cut_test_signals[PENDING]
         = g_signal_new ("pending",
-                G_TYPE_FROM_CLASS (klass),
-                G_SIGNAL_RUN_LAST,
-                G_STRUCT_OFFSET (CutTestClass, pending),
-                NULL, NULL,
-                _cut_marshal_VOID__OBJECT_OBJECT,
-                G_TYPE_NONE, 2, CUT_TYPE_TEST_CONTEXT, CUT_TYPE_TEST_RESULT);
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutTestClass, pending),
+                        NULL, NULL,
+                        _cut_marshal_VOID__OBJECT_OBJECT,
+                        G_TYPE_NONE, 2,
+                        CUT_TYPE_TEST_CONTEXT, CUT_TYPE_TEST_RESULT);
 
-	cut_test_signals[NOTIFICATION]
+    cut_test_signals[NOTIFICATION]
         = g_signal_new ("notification",
-                G_TYPE_FROM_CLASS (klass),
-                G_SIGNAL_RUN_LAST,
-                G_STRUCT_OFFSET (CutTestClass, notification),
-                NULL, NULL,
-                _cut_marshal_VOID__OBJECT_OBJECT,
-                G_TYPE_NONE, 2, CUT_TYPE_TEST_CONTEXT, CUT_TYPE_TEST_RESULT);
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutTestClass, notification),
+                        NULL, NULL,
+                        _cut_marshal_VOID__OBJECT_OBJECT,
+                        G_TYPE_NONE, 2,
+                        CUT_TYPE_TEST_CONTEXT, CUT_TYPE_TEST_RESULT);
 
-	cut_test_signals[COMPLETE]
+    cut_test_signals[COMPLETE]
         = g_signal_new ("complete",
-                G_TYPE_FROM_CLASS (klass),
-                G_SIGNAL_RUN_LAST,
-                G_STRUCT_OFFSET (CutTestClass, complete),
-                NULL, NULL,
-                g_cclosure_marshal_VOID__VOID,
-                G_TYPE_NONE, 0);
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutTestClass, complete),
+                        NULL, NULL,
+                        g_cclosure_marshal_VOID__VOID,
+                        G_TYPE_NONE, 0);
 
-	cut_test_signals[CRASHED]
+    cut_test_signals[CRASHED]
         = g_signal_new ("crashed",
-                G_TYPE_FROM_CLASS (klass),
-                G_SIGNAL_RUN_LAST,
-                G_STRUCT_OFFSET (CutTestClass, crashed),
-                NULL, NULL,
-                g_cclosure_marshal_VOID__STRING,
-                G_TYPE_NONE, 1, G_TYPE_STRING);
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutTestClass, crashed),
+                        NULL, NULL,
+                        g_cclosure_marshal_VOID__STRING,
+                        G_TYPE_NONE, 1, G_TYPE_STRING);
 
     g_type_class_add_private(gobject_class, sizeof(CutTestPrivate));
 }

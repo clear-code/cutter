@@ -1,5 +1,7 @@
 2008-03-19  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test.c: fixed indentation.
+
 	* README, README.ja: updated options.
 
 	* cutter/cut-main.c: added --version.
