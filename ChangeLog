@@ -1,3 +1,7 @@
+2008-03-19  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test.c: Set elapsed time to CutTestResult.
+
 2008-03-19  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-report-factory-builder.c: --output-files -> --xml-report.
