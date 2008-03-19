@@ -1,5 +1,7 @@
 2008-03-19  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-report-factory-builder.c: --output-files -> --xml-report.
+
 	* cutter/cut-ui-factory-builder.c: constructed --ui argument
 	description dynamically.
 	* cutter/cut-main.c: removed --show-all-uis.

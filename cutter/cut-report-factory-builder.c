@@ -30,7 +30,7 @@
 #include "cut-report-factory-builder.h"
 #include "cut-module-factory.h"
 
-static const gchar **filenames;
+static const gchar *xml_report;
 static CutReportFactoryBuilder *the_builder = NULL;
 
 static GObject *constructor  (GType                  type,
@@ -90,8 +90,8 @@ static void
 set_option_context (CutFactoryBuilder *builder, GOptionContext *context)
 {
     GOptionEntry entries[] = {
-        {"output-files", 'o', 0, G_OPTION_ARG_STRING_ARRAY, &filenames,
-         N_("Set filenames of the report"), "OUTPUT_FILENAME"},
+        {"xml-report", 0, 0, G_OPTION_ARG_STRING, &xml_report,
+         N_("Set filename of XML report"), "FILE"},
         {NULL}
     };
 
@@ -101,38 +101,22 @@ set_option_context (CutFactoryBuilder *builder, GOptionContext *context)
 static GList *
 build (CutFactoryBuilder *builder)
 {
+    const gchar *report_type;
     GList *factories = NULL;
 
-    if (!filenames || !*filenames)
+    if (!xml_report)
         return NULL;
 
-    while (*filenames) {
-        gchar *basename, *type;
+    report_type = "xml";
+    if (cut_module_factory_exist_module("report", report_type)) {
         CutModuleFactory *module_factory;
-
-        basename = g_path_get_basename(*filenames);
-        if (!strchr(basename, '.')) {
-            g_free(basename);
-            continue; /* skip unspecified type */
-        }
-
-        type = g_strdup(strrchr(basename, '.') + 1);
-        if (cut_module_factory_exist_module("report", type)) {
-            GOptionContext *option_context;
-            module_factory = cut_module_factory_new("report", type,
-                                                    "filename", *filenames,
-                                                    NULL);
-            g_object_get(builder,
-                         "option-context", &option_context,
-                         NULL);
-            cut_module_factory_set_option_group(module_factory,
-                                                option_context);
-            factories = g_list_prepend(factories, module_factory);
-        }
-
-        g_free(type);
-        g_free(basename);
-        filenames++;
+        GOptionContext *option_context;
+        module_factory = cut_module_factory_new("report", report_type,
+                                                "filename", xml_report,
+                                                NULL);
+        g_object_get(builder, "option-context", &option_context, NULL);
+        cut_module_factory_set_option_group(module_factory, option_context);
+        factories = g_list_prepend(factories, module_factory);
     }
 
     return factories;
