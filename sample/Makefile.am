@@ -9,8 +9,11 @@ SUBDIRS += cairo
 endif
 
 stackdir = $(pkgdatadir)/stack
+
+stack_SCRIPTS =			\
+	stack/autogen.sh
+
 stack_DATA =			\
-	stack/autogen.sh	\
 	stack/Makefile.am	\
 	stack/configure.ac
 
