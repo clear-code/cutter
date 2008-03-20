@@ -1,5 +1,8 @@
 2008-03-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* configure.ac, cutter/cut-report-factory-builder.c: fixed
+	a bug that installed report can't be found.
+
 	* cutter/cut-test-result.c (cut_test_result_status_to_signal_name),
 	cutter/cut-runner.c (cut_runner_sort_test_cases): suppressed warnings.
 

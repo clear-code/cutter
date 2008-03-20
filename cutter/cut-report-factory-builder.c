@@ -81,6 +81,9 @@ cut_report_factory_builder_init (CutReportFactoryBuilder *builder)
     const gchar *dir;
 
     dir = g_getenv("CUT_REPORT_FACTORY_MODULE_DIR");
+    if (!dir)
+        dir = REPORT_FACTORY_MODULEDIR;
+
     g_object_set(G_OBJECT(builder),
                  "module-dir", dir,
                  NULL);

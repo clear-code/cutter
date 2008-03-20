@@ -105,7 +105,7 @@ load_default_factory (void)
         const gchar *module_dir, *type_name;
         CutFactoryBuilder *builder = CUT_FACTORY_BUILDER(node->data);
         GList *modules;
-      
+
         module_dir = cut_factory_builder_get_module_dir(builder);
         if (!module_dir)
             continue;
