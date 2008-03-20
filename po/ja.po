@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Cutter 0.6.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-03-20 21:24+0900\n"
-"PO-Revision-Date: 2008-03-20 21:24+0900\n"
+"PO-Revision-Date: 2008-03-20 21:38+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -63,7 +63,7 @@ msgstr "UIを指定"
 
 #: cutter/cut-ui-factory-builder.c:123
 msgid "UI Options"
-msgstr "UI共通のオプション"
+msgstr "UIのオプション"
 
 #: cutter/cut-ui-factory-builder.c:124
 msgid "Show UI options"
