@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Cutter 0.3.0\n"
-"POT-Creation-Date: 2007-12-17 15:03+0900\n"
-"PO-Revision-Date: 2007-12-17 15:03+0900\n"
+"Project-Id-Version: Cutter 0.6.0\n"
+"POT-Creation-Date: 2008-03-20 21:23+0900\n"
+"PO-Revision-Date: 2008-03-20 21:23+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -48,25 +48,69 @@ msgid "Index of deprecated symbols"
 msgstr "非推奨のシンボル一覧"
 
 #: cutter-docs.sgml:65(title)
+msgid "Index of new symbols in 0.6"
+msgstr "0.6での新しいシンボル一覧"
+
+#: cutter-docs.sgml:68(title)
+msgid "Index of new symbols in 0.5"
+msgstr "0.5での新しいシンボル一覧"
+
+#: cutter-docs.sgml:71(title)
+msgid "Index of new symbols in 0.4"
+msgstr "0.4での新しいシンボル一覧"
+
+#: cutter-docs.sgml:74(title)
 msgid "Index of new symbols in 0.3"
 msgstr "0.3での新しいシンボル一覧"
 
 #: xml/cut-assertions.xml:7(refentrytitle) xml/cut-assertions.xml:13(refname)
-#: xml/cutter.xml:171(link)
+#: xml/cutter.xml:188(link)
 msgid "Assertions"
 msgstr "検証"
 
-#: xml/cut-assertions.xml:8(manvolnum) xml/cut-gassertions.xml:8(manvolnum)
-#: xml/cut-main.xml:8(manvolnum) xml/cut-ui-factory.xml:8(manvolnum)
-#: xml/cut-ui.xml:8(manvolnum) xml/cut-value-equal.xml:8(manvolnum)
-#: xml/cutter.xml:8(manvolnum) xml/gbsearcharray.xml:8(manvolnum)
+#: xml/cut-assertions.xml:8(manvolnum) xml/cut-context.xml:8(manvolnum)
+#: xml/cut-enum-types.xml:8(manvolnum)
+#: xml/cut-factory-builder.xml:8(manvolnum)
+#: xml/cut-gassertions.xml:8(manvolnum) xml/cut-listener.xml:8(manvolnum)
+#: xml/cut-loader.xml:8(manvolnum) xml/cut-main.xml:8(manvolnum)
+#: xml/cut-module-factory.xml:8(manvolnum)
+#: xml/cut-module-impl.xml:8(manvolnum) xml/cut-module.xml:8(manvolnum)
+#: xml/cut-output.xml:8(manvolnum) xml/cut-private.xml:8(manvolnum)
+#: xml/cut-public.xml:8(manvolnum)
+#: xml/cut-report-factory-builder.xml:8(manvolnum)
+#: xml/cut-report.xml:8(manvolnum) xml/cut-repository.xml:8(manvolnum)
+#: xml/cut-runner.xml:8(manvolnum) xml/cut-test-case.xml:8(manvolnum)
+#: xml/cut-test-container.xml:8(manvolnum)
+#: xml/cut-test-context.xml:8(manvolnum) xml/cut-test-result.xml:8(manvolnum)
+#: xml/cut-test-suite.xml:8(manvolnum) xml/cut-test.xml:8(manvolnum)
+#: xml/cut-ui-factory-builder.xml:8(manvolnum)
+#: xml/cut-ui-factory.xml:8(manvolnum) xml/cut-ui.xml:8(manvolnum)
+#: xml/cut-utils.xml:8(manvolnum) xml/cut-value-equal.xml:8(manvolnum)
+#: xml/cut-verbose-level.xml:8(manvolnum) xml/cutter.xml:8(manvolnum)
+#: xml/gbsearcharray.xml:8(manvolnum)
 msgid "3"
 msgstr ""
 
-#: xml/cut-assertions.xml:9(refmiscinfo)
-#: xml/cut-gassertions.xml:9(refmiscinfo) xml/cut-main.xml:9(refmiscinfo)
+#: xml/cut-assertions.xml:9(refmiscinfo) xml/cut-context.xml:9(refmiscinfo)
+#: xml/cut-enum-types.xml:9(refmiscinfo)
+#: xml/cut-factory-builder.xml:9(refmiscinfo)
+#: xml/cut-gassertions.xml:9(refmiscinfo) xml/cut-listener.xml:9(refmiscinfo)
+#: xml/cut-loader.xml:9(refmiscinfo) xml/cut-main.xml:9(refmiscinfo)
+#: xml/cut-module-factory.xml:9(refmiscinfo)
+#: xml/cut-module-impl.xml:9(refmiscinfo) xml/cut-module.xml:9(refmiscinfo)
+#: xml/cut-output.xml:9(refmiscinfo) xml/cut-private.xml:9(refmiscinfo)
+#: xml/cut-public.xml:9(refmiscinfo)
+#: xml/cut-report-factory-builder.xml:9(refmiscinfo)
+#: xml/cut-report.xml:9(refmiscinfo) xml/cut-repository.xml:9(refmiscinfo)
+#: xml/cut-runner.xml:9(refmiscinfo) xml/cut-test-case.xml:9(refmiscinfo)
+#: xml/cut-test-container.xml:9(refmiscinfo)
+#: xml/cut-test-context.xml:9(refmiscinfo)
+#: xml/cut-test-result.xml:9(refmiscinfo)
+#: xml/cut-test-suite.xml:9(refmiscinfo) xml/cut-test.xml:9(refmiscinfo)
+#: xml/cut-ui-factory-builder.xml:9(refmiscinfo)
 #: xml/cut-ui-factory.xml:9(refmiscinfo) xml/cut-ui.xml:9(refmiscinfo)
-#: xml/cut-value-equal.xml:9(refmiscinfo) xml/cutter.xml:9(refmiscinfo)
+#: xml/cut-utils.xml:9(refmiscinfo) xml/cut-value-equal.xml:9(refmiscinfo)
+#: xml/cut-verbose-level.xml:9(refmiscinfo) xml/cutter.xml:9(refmiscinfo)
 #: xml/gbsearcharray.xml:9(refmiscinfo)
 msgid "CUTTER Library"
 msgstr "Cutterライブラリ"
@@ -75,86 +119,102 @@ msgstr "Cutterライブラリ"
 msgid "Checks that your program works as you expect."
 msgstr "あなたのプログラムが期待通りに動作しているかを検証します。"
 
-#: xml/cut-assertions.xml:19(title) xml/cut-gassertions.xml:20(title)
-#: xml/cut-main.xml:19(title) xml/cut-ui-factory.xml:19(title)
-#: xml/cut-ui.xml:19(title) xml/cut-value-equal.xml:19(title)
+#: xml/cut-assertions.xml:19(title) xml/cut-context.xml:19(title)
+#: xml/cut-enum-types.xml:19(title) xml/cut-factory-builder.xml:19(title)
+#: xml/cut-gassertions.xml:20(title) xml/cut-listener.xml:19(title)
+#: xml/cut-loader.xml:19(title) xml/cut-main.xml:19(title)
+#: xml/cut-module-factory.xml:19(title) xml/cut-module-impl.xml:19(title)
+#: xml/cut-module.xml:19(title) xml/cut-output.xml:19(title)
+#: xml/cut-private.xml:19(title) xml/cut-public.xml:19(title)
+#: xml/cut-report-factory-builder.xml:19(title) xml/cut-report.xml:19(title)
+#: xml/cut-repository.xml:19(title) xml/cut-runner.xml:19(title)
+#: xml/cut-test-case.xml:19(title) xml/cut-test-container.xml:19(title)
+#: xml/cut-test-context.xml:19(title) xml/cut-test-result.xml:19(title)
+#: xml/cut-test-suite.xml:19(title) xml/cut-test.xml:19(title)
+#: xml/cut-ui-factory-builder.xml:19(title) xml/cut-ui-factory.xml:19(title)
+#: xml/cut-ui.xml:19(title) xml/cut-utils.xml:19(title)
+#: xml/cut-value-equal.xml:19(title) xml/cut-verbose-level.xml:19(title)
 #: xml/cutter.xml:19(title) xml/gbsearcharray.xml:19(title)
 msgid "Synopsis"
 msgstr "概要"
 
-#: xml/cut-assertions.xml:25(link) xml/cut-assertions.xml:77(primary)
+#: xml/cut-assertions.xml:22(link) xml/cut-assertions.xml:75(primary)
 msgid "cut_error"
 msgstr ""
 
-#: xml/cut-assertions.xml:26(link) xml/cut-assertions.xml:92(primary)
+#: xml/cut-assertions.xml:23(link) xml/cut-assertions.xml:90(primary)
 msgid "cut_fail"
 msgstr ""
 
-#: xml/cut-assertions.xml:27(link) xml/cut-assertions.xml:107(primary)
+#: xml/cut-assertions.xml:24(link) xml/cut-assertions.xml:105(primary)
+msgid "cut_pend"
+msgstr ""
+
+#: xml/cut-assertions.xml:25(link) xml/cut-assertions.xml:121(primary)
 msgid "cut_pending"
 msgstr ""
 
-#: xml/cut-assertions.xml:28(link) xml/cut-assertions.xml:123(primary)
+#: xml/cut-assertions.xml:26(link) xml/cut-assertions.xml:139(primary)
 msgid "cut_notify"
 msgstr ""
 
-#: xml/cut-assertions.xml:29(link) xml/cut-assertions.xml:138(primary)
+#: xml/cut-assertions.xml:27(link) xml/cut-assertions.xml:154(primary)
 msgid "cut_assert"
 msgstr ""
 
-#: xml/cut-assertions.xml:30(link) xml/cut-assertions.xml:154(primary)
+#: xml/cut-assertions.xml:28(link) xml/cut-assertions.xml:170(primary)
 msgid "cut_assert_null"
 msgstr ""
 
-#: xml/cut-assertions.xml:31(link) xml/cut-assertions.xml:170(primary)
+#: xml/cut-assertions.xml:29(link) xml/cut-assertions.xml:186(primary)
 msgid "cut_assert_null_string"
 msgstr ""
 
-#: xml/cut-assertions.xml:32(link) xml/cut-assertions.xml:187(primary)
+#: xml/cut-assertions.xml:30(link) xml/cut-assertions.xml:203(primary)
 msgid "cut_assert_not_null"
 msgstr ""
 
-#: xml/cut-assertions.xml:33(link) xml/cut-assertions.xml:203(primary)
+#: xml/cut-assertions.xml:31(link) xml/cut-assertions.xml:219(primary)
 msgid "cut_assert_equal_int"
 msgstr ""
 
-#: xml/cut-assertions.xml:34(link) xml/cut-assertions.xml:222(primary)
+#: xml/cut-assertions.xml:32(link) xml/cut-assertions.xml:238(primary)
 msgid "cut_assert_equal_uint"
 msgstr ""
 
-#: xml/cut-assertions.xml:35(link) xml/cut-assertions.xml:241(primary)
+#: xml/cut-assertions.xml:33(link) xml/cut-assertions.xml:257(primary)
 msgid "cut_assert_equal_double"
 msgstr ""
 
-#: xml/cut-assertions.xml:36(link) xml/cut-assertions.xml:263(primary)
+#: xml/cut-assertions.xml:34(link) xml/cut-assertions.xml:279(primary)
 msgid "cut_assert_equal_string"
 msgstr ""
 
-#: xml/cut-assertions.xml:37(link) xml/cut-assertions.xml:283(primary)
+#: xml/cut-assertions.xml:35(link) xml/cut-assertions.xml:299(primary)
 msgid "cut_assert_equal_string_with_free"
 msgstr ""
 
-#: xml/cut-assertions.xml:38(link) xml/cut-assertions.xml:304(primary)
+#: xml/cut-assertions.xml:36(link) xml/cut-assertions.xml:320(primary)
 msgid "cut_assert_equal_string_or_null"
 msgstr ""
 
-#: xml/cut-assertions.xml:39(link) xml/cut-assertions.xml:325(primary)
+#: xml/cut-assertions.xml:37(link) xml/cut-assertions.xml:341(primary)
 msgid "cut_assert_equal_memory"
 msgstr ""
 
-#: xml/cut-assertions.xml:41(link) xml/cut-assertions.xml:352(primary)
+#: xml/cut-assertions.xml:39(link) xml/cut-assertions.xml:368(primary)
 msgid "cut_assert_equal_string_array"
 msgstr ""
 
-#: xml/cut-assertions.xml:42(link) xml/cut-assertions.xml:372(primary)
+#: xml/cut-assertions.xml:40(link) xml/cut-assertions.xml:388(primary)
 msgid "cut_assert_operator"
 msgstr ""
 
-#: xml/cut-assertions.xml:43(link) xml/cut-assertions.xml:400(primary)
+#: xml/cut-assertions.xml:41(link) xml/cut-assertions.xml:416(primary)
 msgid "cut_assert_operator_int"
 msgstr ""
 
-#: xml/cut-assertions.xml:44(link) xml/cut-assertions.xml:428(primary)
+#: xml/cut-assertions.xml:42(link) xml/cut-assertions.xml:444(primary)
 msgid "cut_assert_equal"
 msgstr ""
 
@@ -162,39 +222,49 @@ msgstr ""
 #, no-wrap
 msgid ""
 "\n"
-"\n"
-"\n"
-"\n"
 "#define             <placeholder-1/>                           (format, ...)\n"
 "#define             <placeholder-2/>                            (format, ...)\n"
-"#define             <placeholder-3/>                         (format, ...)\n"
-"#define             <placeholder-4/>                          (format, ...)\n"
-"#define             <placeholder-5/>                          (expression, ...)\n"
-"#define             <placeholder-6/>                     (expression, ...)\n"
-"#define             <placeholder-7/>              (expression, ...)\n"
-"#define             <placeholder-8/>                 (expression, ...)\n"
-"#define             <placeholder-9/>                (expected, actual, ...)\n"
-"#define             <placeholder-10/>               (expected, actual, ...)\n"
-"#define             <placeholder-11/>             (expected, error, actual, ...)\n"
-"#define             <placeholder-12/>             (expected, actual, ...)\n"
-"#define             <placeholder-13/>   (expected, actual, ...)\n"
-"#define             <placeholder-14/>     (expected, actual, ...)\n"
-"#define             <placeholder-15/>             (expected, expected_size,\n"
+"#define             <placeholder-3/>                            (format, ...)\n"
+"#define             <placeholder-4/>                         (format, ...)\n"
+"#define             <placeholder-5/>                          (format, ...)\n"
+"#define             <placeholder-6/>                          (expression, ...)\n"
+"#define             <placeholder-7/>                     (expression, ...)\n"
+"#define             <placeholder-8/>              (expression, ...)\n"
+"#define             <placeholder-9/>                 (expression, ...)\n"
+"#define             <placeholder-10/>                (expected, actual, ...)\n"
+"#define             <placeholder-11/>               (expected, actual, ...)\n"
+"#define             <placeholder-12/>             (expected, error, actual, ...)\n"
+"#define             <placeholder-13/>             (expected, actual, ...)\n"
+"#define             <placeholder-14/>   (expected, actual, ...)\n"
+"#define             <placeholder-15/>     (expected, actual, ...)\n"
+"#define             <placeholder-16/>             (expected, expected_size,\n"
 "                                                         actual, actual_size, ...)\n"
-"#define             <placeholder-16/>       (expected, actual, ...)\n"
-"#define             <placeholder-17/>                 (lhs, operator, rhs, ...)\n"
-"#define             <placeholder-18/>             (lhs, operator, rhs, ...)\n"
-"#define             <placeholder-19/>                    (function, expected, actual, ...)\n"
+"#define             <placeholder-17/>       (expected, actual, ...)\n"
+"#define             <placeholder-18/>                 (lhs, operator, rhs, ...)\n"
+"#define             <placeholder-19/>             (lhs, operator, rhs, ...)\n"
+"#define             <placeholder-20/>                    (function, expected, actual, ...)\n"
 msgstr ""
 
-#: xml/cut-assertions.xml:57(title) xml/cut-gassertions.xml:40(title)
-#: xml/cut-main.xml:43(title) xml/cut-ui-factory.xml:57(title)
-#: xml/cut-ui.xml:52(title) xml/cut-value-equal.xml:43(title)
-#: xml/cutter.xml:39(title) xml/gbsearcharray.xml:48(title)
+#: xml/cut-assertions.xml:55(title) xml/cut-context.xml:38(title)
+#: xml/cut-enum-types.xml:37(title) xml/cut-factory-builder.xml:44(title)
+#: xml/cut-gassertions.xml:37(title) xml/cut-listener.xml:39(title)
+#: xml/cut-loader.xml:38(title) xml/cut-main.xml:40(title)
+#: xml/cut-module-factory.xml:61(title) xml/cut-module-impl.xml:37(title)
+#: xml/cut-module.xml:38(title) xml/cut-output.xml:38(title)
+#: xml/cut-private.xml:37(title) xml/cut-public.xml:37(title)
+#: xml/cut-report-factory-builder.xml:35(title) xml/cut-report.xml:55(title)
+#: xml/cut-repository.xml:38(title) xml/cut-runner.xml:38(title)
+#: xml/cut-test-case.xml:38(title) xml/cut-test-container.xml:38(title)
+#: xml/cut-test-context.xml:38(title) xml/cut-test-result.xml:38(title)
+#: xml/cut-test-suite.xml:38(title) xml/cut-test.xml:38(title)
+#: xml/cut-ui-factory-builder.xml:35(title) xml/cut-ui-factory.xml:38(title)
+#: xml/cut-ui.xml:46(title) xml/cut-utils.xml:37(title)
+#: xml/cut-value-equal.xml:40(title) xml/cut-verbose-level.xml:37(title)
+#: xml/cutter.xml:38(title) xml/gbsearcharray.xml:45(title)
 msgid "Description"
 msgstr "説明"
 
-#: xml/cut-assertions.xml:58(para)
+#: xml/cut-assertions.xml:56(para)
 msgid ""
 "To check that your program works as you expect, you use <link linkend=\"cut-"
 "assert-XXX\"><function>cut_assert_XXX()</function></link> where you want to "
@@ -204,45 +274,59 @@ msgstr ""
 "られていることを検証したい箇所で<link linkend=\"cut-assert-XXX"
 "\"><function>cut_assert_XXX()</function></link>を使います。"
 
-#: xml/cut-assertions.xml:65(programlisting)
+#: xml/cut-assertions.xml:63(programlisting)
 #, no-wrap
 msgid ""
 "\n"
 "cut_assert_equal_int(3, 1 + 2);\n"
 msgstr ""
 
-#: xml/cut-assertions.xml:63(para) xml/cut-assertions.xml:376(para)
-#: xml/cut-assertions.xml:404(para) xml/cut-assertions.xml:432(para)
+#: xml/cut-assertions.xml:61(para) xml/cut-assertions.xml:392(para)
+#: xml/cut-assertions.xml:420(para) xml/cut-assertions.xml:448(para)
 msgid "e.g.: <placeholder-1/>"
 msgstr "例: <placeholder-1/>"
 
-#: xml/cut-assertions.xml:74(title) xml/cut-gassertions.xml:49(title)
-#: xml/cut-main.xml:50(title) xml/cut-ui-factory.xml:64(title)
-#: xml/cut-ui.xml:59(title) xml/cut-value-equal.xml:50(title)
-#: xml/cutter.xml:144(title) xml/gbsearcharray.xml:55(title)
+#: xml/cut-assertions.xml:72(title) xml/cut-context.xml:45(title)
+#: xml/cut-enum-types.xml:44(title) xml/cut-factory-builder.xml:51(title)
+#: xml/cut-gassertions.xml:46(title) xml/cut-listener.xml:46(title)
+#: xml/cut-loader.xml:45(title) xml/cut-main.xml:47(title)
+#: xml/cut-module-factory.xml:68(title) xml/cut-module-impl.xml:44(title)
+#: xml/cut-module.xml:45(title) xml/cut-output.xml:45(title)
+#: xml/cut-private.xml:44(title) xml/cut-public.xml:44(title)
+#: xml/cut-report-factory-builder.xml:42(title) xml/cut-report.xml:62(title)
+#: xml/cut-repository.xml:45(title) xml/cut-runner.xml:45(title)
+#: xml/cut-test-case.xml:45(title) xml/cut-test-container.xml:45(title)
+#: xml/cut-test-context.xml:45(title) xml/cut-test-result.xml:45(title)
+#: xml/cut-test-suite.xml:45(title) xml/cut-test.xml:45(title)
+#: xml/cut-ui-factory-builder.xml:42(title) xml/cut-ui-factory.xml:45(title)
+#: xml/cut-ui.xml:53(title) xml/cut-utils.xml:44(title)
+#: xml/cut-value-equal.xml:47(title) xml/cut-verbose-level.xml:44(title)
+#: xml/cutter.xml:143(title) xml/gbsearcharray.xml:52(title)
 msgid "Details"
 msgstr "詳細"
 
-#: xml/cut-assertions.xml:76(title)
-msgid "<anchor id=\"cut-error\" role=\"macro\"/>cut_error()"
+#: xml/cut-assertions.xml:74(title)
+msgid "cut_error()"
 msgstr ""
 
-#: xml/cut-assertions.xml:77(programlisting)
+#: xml/cut-assertions.xml:75(programlisting)
 #, no-wrap
 msgid "#define             cut_error(format, ...)"
 msgstr ""
 
-#: xml/cut-assertions.xml:78(para)
+#: xml/cut-assertions.xml:76(para)
 msgid "Raises an error with message."
 msgstr "メッセージ付きでエラーを発生させます。"
 
-#: xml/cut-assertions.xml:83(term) xml/cut-assertions.xml:98(term)
-#: xml/cut-assertions.xml:114(term) xml/cut-assertions.xml:129(term)
+#: xml/cut-assertions.xml:81(term) xml/cut-assertions.xml:96(term)
+#: xml/cut-assertions.xml:112(term) xml/cut-assertions.xml:130(term)
+#: xml/cut-assertions.xml:145(term)
 msgid "<parameter>format</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-assertions.xml:84(simpara) xml/cut-assertions.xml:99(simpara)
-#: xml/cut-assertions.xml:115(simpara) xml/cut-assertions.xml:130(simpara)
+#: xml/cut-assertions.xml:82(simpara) xml/cut-assertions.xml:97(simpara)
+#: xml/cut-assertions.xml:113(simpara) xml/cut-assertions.xml:131(simpara)
+#: xml/cut-assertions.xml:146(simpara)
 msgid ""
 "the message format. See the <link linkend=\"printf\"><function>printf()</"
 "function></link> documentation."
@@ -250,99 +334,120 @@ msgstr ""
 "整形文字列。<link linkend=\"printf\"><function>printf()</function></link>のド"
 "キュメントを見てください。"
 
-#: xml/cut-assertions.xml:86(term) xml/cut-assertions.xml:101(term)
-#: xml/cut-assertions.xml:117(term) xml/cut-assertions.xml:132(term)
-#: xml/cut-assertions.xml:147(term) xml/cut-assertions.xml:163(term)
-#: xml/cut-assertions.xml:179(term) xml/cut-assertions.xml:196(term)
-#: xml/cut-assertions.xml:215(term) xml/cut-assertions.xml:234(term)
-#: xml/cut-assertions.xml:256(term) xml/cut-assertions.xml:276(term)
-#: xml/cut-assertions.xml:296(term) xml/cut-assertions.xml:318(term)
-#: xml/cut-assertions.xml:345(term) xml/cut-assertions.xml:365(term)
-#: xml/cut-assertions.xml:393(term) xml/cut-assertions.xml:421(term)
-#: xml/cut-assertions.xml:449(term) xml/cut-gassertions.xml:64(term)
-#: xml/cut-gassertions.xml:83(term) xml/cut-ui-factory.xml:176(term)
-#: xml/cut-ui.xml:158(term)
+#: xml/cut-assertions.xml:84(term) xml/cut-assertions.xml:99(term)
+#: xml/cut-assertions.xml:115(term) xml/cut-assertions.xml:133(term)
+#: xml/cut-assertions.xml:148(term) xml/cut-assertions.xml:163(term)
+#: xml/cut-assertions.xml:179(term) xml/cut-assertions.xml:195(term)
+#: xml/cut-assertions.xml:212(term) xml/cut-assertions.xml:231(term)
+#: xml/cut-assertions.xml:250(term) xml/cut-assertions.xml:272(term)
+#: xml/cut-assertions.xml:292(term) xml/cut-assertions.xml:312(term)
+#: xml/cut-assertions.xml:334(term) xml/cut-assertions.xml:361(term)
+#: xml/cut-assertions.xml:381(term) xml/cut-assertions.xml:409(term)
+#: xml/cut-assertions.xml:437(term) xml/cut-assertions.xml:465(term)
+#: xml/cut-gassertions.xml:61(term) xml/cut-gassertions.xml:80(term)
+#: xml/cut-module-factory.xml:207(term) xml/cut-report.xml:136(term)
+#: xml/cut-ui.xml:152(term)
 msgid "<parameter>...</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-assertions.xml:87(simpara) xml/cut-assertions.xml:102(simpara)
-#: xml/cut-assertions.xml:118(simpara) xml/cut-assertions.xml:133(simpara)
+#: xml/cut-assertions.xml:85(simpara) xml/cut-assertions.xml:100(simpara)
+#: xml/cut-assertions.xml:116(simpara) xml/cut-assertions.xml:134(simpara)
+#: xml/cut-assertions.xml:149(simpara)
 msgid "the parameters to insert into the format string."
 msgstr "整形文字列に挿入されるパラメータ。"
 
-#: xml/cut-assertions.xml:91(title)
-msgid "<anchor id=\"cut-fail\" role=\"macro\"/>cut_fail()"
+#: xml/cut-assertions.xml:89(title)
+msgid "cut_fail()"
 msgstr ""
 
-#: xml/cut-assertions.xml:92(programlisting)
+#: xml/cut-assertions.xml:90(programlisting)
 #, no-wrap
 msgid "#define             cut_fail(format, ...)"
 msgstr ""
 
-#: xml/cut-assertions.xml:93(para)
+#: xml/cut-assertions.xml:91(para)
 msgid "Raises a failure with message."
 msgstr "メッセージ付きでテストを失敗させます。"
 
-#: xml/cut-assertions.xml:106(title)
-msgid "<anchor id=\"cut-pending\" role=\"macro\"/>cut_pending()"
+#: xml/cut-assertions.xml:104(title)
+msgid "cut_pend()"
 msgstr ""
 
-#: xml/cut-assertions.xml:107(programlisting)
+#: xml/cut-assertions.xml:105(programlisting)
 #, no-wrap
-msgid "#define             cut_pending(format, ...)"
+msgid "#define             cut_pend(format, ...)"
 msgstr ""
 
-#: xml/cut-assertions.xml:108(para)
+#: xml/cut-assertions.xml:106(para) xml/cut-assertions.xml:124(para)
 msgid "Marks the test is pending with message. The test is stopped."
 msgstr ""
 "メッセージ付きでこのテストが未解決であると印を付けます。テストはここで中断し"
 "ます。"
 
-#: xml/cut-assertions.xml:122(title)
-msgid "<anchor id=\"cut-notify\" role=\"macro\"/>cut_notify()"
+#: xml/cut-assertions.xml:120(title)
+msgid "cut_pending()"
 msgstr ""
 
-#: xml/cut-assertions.xml:123(programlisting)
+#: xml/cut-assertions.xml:121(programlisting)
+#, no-wrap
+msgid "#define cut_pending(format, ...) cut_pend(format, ## __VA_ARGS__)\n"
+msgstr ""
+
+#: xml/cut-assertions.xml:123(para)
+msgid ""
+"<literal>cut_pending</literal> has been deprecated since version 0.4 and "
+"should not be used in newly-written code. Use <link linkend=\"cut-pend"
+"\"><function>cut_pend()</function></link> instead."
+msgstr ""
+"<literal>cut_pending</literal>はバージョン0.4から非推奨になりました。新しく書"
+"くコードでは使わないでください。代わりに<link linkend=\"cut-pend"
+"\"><function>cut_pend()</function></link>を使ってください。"
+
+#: xml/cut-assertions.xml:138(title)
+msgid "cut_notify()"
+msgstr ""
+
+#: xml/cut-assertions.xml:139(programlisting)
 #, no-wrap
 msgid "#define             cut_notify(format, ...)"
 msgstr ""
 
-#: xml/cut-assertions.xml:124(para)
+#: xml/cut-assertions.xml:140(para)
 msgid "Leaves a notification message. The test is continued."
 msgstr "通知用のメッセージを残します。テストは続行します。"
 
-#: xml/cut-assertions.xml:137(title)
-msgid "<anchor id=\"cut-assert\" role=\"macro\"/>cut_assert()"
+#: xml/cut-assertions.xml:153(title)
+msgid "cut_assert()"
 msgstr ""
 
-#: xml/cut-assertions.xml:138(programlisting)
+#: xml/cut-assertions.xml:154(programlisting)
 #, no-wrap
 msgid "#define             cut_assert(expression, ...)"
 msgstr ""
 
-#: xml/cut-assertions.xml:139(para)
+#: xml/cut-assertions.xml:155(para)
 msgid "Passes if <parameter>expression</parameter> is not 0 or NULL."
 msgstr "<parameter>expression</parameter>が0でもNULLでもないときにパスします。"
 
-#: xml/cut-assertions.xml:144(term) xml/cut-assertions.xml:160(term)
-#: xml/cut-assertions.xml:176(term) xml/cut-assertions.xml:193(term)
+#: xml/cut-assertions.xml:160(term) xml/cut-assertions.xml:176(term)
+#: xml/cut-assertions.xml:192(term) xml/cut-assertions.xml:209(term)
 msgid "<parameter>expression</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-assertions.xml:145(simpara) xml/cut-assertions.xml:161(simpara)
-#: xml/cut-assertions.xml:194(simpara)
+#: xml/cut-assertions.xml:161(simpara) xml/cut-assertions.xml:177(simpara)
+#: xml/cut-assertions.xml:210(simpara)
 msgid "the expression to check."
 msgstr "チェックする式。"
 
-#: xml/cut-assertions.xml:148(simpara) xml/cut-assertions.xml:164(simpara)
-#: xml/cut-assertions.xml:180(simpara) xml/cut-assertions.xml:197(simpara)
-#: xml/cut-assertions.xml:216(simpara) xml/cut-assertions.xml:235(simpara)
-#: xml/cut-assertions.xml:257(simpara) xml/cut-assertions.xml:277(simpara)
-#: xml/cut-assertions.xml:297(simpara) xml/cut-assertions.xml:319(simpara)
-#: xml/cut-assertions.xml:346(simpara) xml/cut-assertions.xml:366(simpara)
-#: xml/cut-assertions.xml:394(simpara) xml/cut-assertions.xml:422(simpara)
-#: xml/cut-assertions.xml:450(simpara) xml/cut-gassertions.xml:65(simpara)
-#: xml/cut-gassertions.xml:84(simpara)
+#: xml/cut-assertions.xml:164(simpara) xml/cut-assertions.xml:180(simpara)
+#: xml/cut-assertions.xml:196(simpara) xml/cut-assertions.xml:213(simpara)
+#: xml/cut-assertions.xml:232(simpara) xml/cut-assertions.xml:251(simpara)
+#: xml/cut-assertions.xml:273(simpara) xml/cut-assertions.xml:293(simpara)
+#: xml/cut-assertions.xml:313(simpara) xml/cut-assertions.xml:335(simpara)
+#: xml/cut-assertions.xml:362(simpara) xml/cut-assertions.xml:382(simpara)
+#: xml/cut-assertions.xml:410(simpara) xml/cut-assertions.xml:438(simpara)
+#: xml/cut-assertions.xml:466(simpara) xml/cut-gassertions.xml:62(simpara)
+#: xml/cut-gassertions.xml:81(simpara)
 msgid ""
 "optional format string, followed by parameters to insert into the format "
 "string (as with <link linkend=\"printf\"><function>printf()</function></"
@@ -351,126 +456,119 @@ msgstr ""
 "省略可能な整形文字列。以降のパラメータが整形文字列に挿入されます。（<link "
 "linkend=\"printf\"><function>printf()</function></link>と同じ）"
 
-#: xml/cut-assertions.xml:153(title)
-msgid "<anchor id=\"cut-assert-null\" role=\"macro\"/>cut_assert_null()"
-msgstr ""
-
-#: xml/cut-assertions.xml:154(programlisting)
-#, no-wrap
-msgid "#define             cut_assert_null(expression, ...)"
-msgstr ""
-
-#: xml/cut-assertions.xml:155(para) xml/cut-assertions.xml:171(para)
-msgid "Passes if <parameter>expression</parameter> is NULL."
-msgstr "<parameter>expression</parameter>がNULLのときにパスします。"
-
 #: xml/cut-assertions.xml:169(title)
-msgid ""
-"<anchor id=\"cut-assert-null-string\" role=\"macro\" condition=\"since:0.3\"/"
-">cut_assert_null_string()"
+msgid "cut_assert_null()"
 msgstr ""
 
 #: xml/cut-assertions.xml:170(programlisting)
 #, no-wrap
+msgid "#define             cut_assert_null(expression, ...)"
+msgstr ""
+
+#: xml/cut-assertions.xml:171(para) xml/cut-assertions.xml:187(para)
+msgid "Passes if <parameter>expression</parameter> is NULL."
+msgstr "<parameter>expression</parameter>がNULLのときにパスします。"
+
+#: xml/cut-assertions.xml:185(title)
+msgid "cut_assert_null_string()"
+msgstr ""
+
+#: xml/cut-assertions.xml:186(programlisting)
+#, no-wrap
 msgid "#define             cut_assert_null_string(expression, ...)"
 msgstr ""
 
-#: xml/cut-assertions.xml:177(simpara)
+#: xml/cut-assertions.xml:193(simpara)
 msgid "the expression that returns string."
 msgstr "文字列を返す式。"
 
-#: xml/cut-assertions.xml:183(para) xml/cut-assertions.xml:300(para)
+#: xml/cut-assertions.xml:199(para) xml/cut-assertions.xml:316(para)
 msgid "Since 0.3"
 msgstr "0.3から"
 
-#: xml/cut-assertions.xml:186(title)
-msgid ""
-"<anchor id=\"cut-assert-not-null\" role=\"macro\"/>cut_assert_not_null()"
-msgstr ""
-
-#: xml/cut-assertions.xml:187(programlisting)
-#, no-wrap
-msgid "#define             cut_assert_not_null(expression, ...)"
-msgstr ""
-
-#: xml/cut-assertions.xml:188(para)
-msgid "Passes if <parameter>expression</parameter> is not NULL."
-msgstr "<parameter>expression</parameter>がNULLではないときにパスします。"
-
 #: xml/cut-assertions.xml:202(title)
-msgid ""
-"<anchor id=\"cut-assert-equal-int\" role=\"macro\"/>cut_assert_equal_int()"
+msgid "cut_assert_not_null()"
 msgstr ""
 
 #: xml/cut-assertions.xml:203(programlisting)
 #, no-wrap
+msgid "#define             cut_assert_not_null(expression, ...)"
+msgstr ""
+
+#: xml/cut-assertions.xml:204(para)
+msgid "Passes if <parameter>expression</parameter> is not NULL."
+msgstr "<parameter>expression</parameter>がNULLではないときにパスします。"
+
+#: xml/cut-assertions.xml:218(title)
+msgid "cut_assert_equal_int()"
+msgstr ""
+
+#: xml/cut-assertions.xml:219(programlisting)
+#, no-wrap
 msgid "#define             cut_assert_equal_int(expected, actual, ...)"
 msgstr ""
 
-#: xml/cut-assertions.xml:204(para) xml/cut-assertions.xml:223(para)
-#: xml/cut-gassertions.xml:53(para) xml/cut-gassertions.xml:72(para)
+#: xml/cut-assertions.xml:220(para) xml/cut-assertions.xml:239(para)
+#: xml/cut-gassertions.xml:50(para) xml/cut-gassertions.xml:69(para)
 msgid ""
 "Passes if <parameter>expected</parameter> == <parameter>actual</parameter>."
 msgstr ""
 "<parameter>expected</parameter> == <parameter>actual</parameter>が成り立つと"
 "きパスします。"
 
-#: xml/cut-assertions.xml:209(term) xml/cut-assertions.xml:228(term)
-#: xml/cut-assertions.xml:247(term) xml/cut-assertions.xml:270(term)
-#: xml/cut-assertions.xml:290(term) xml/cut-assertions.xml:312(term)
-#: xml/cut-assertions.xml:333(term) xml/cut-assertions.xml:359(term)
-#: xml/cut-assertions.xml:443(term) xml/cut-gassertions.xml:58(term)
-#: xml/cut-gassertions.xml:77(term)
+#: xml/cut-assertions.xml:225(term) xml/cut-assertions.xml:244(term)
+#: xml/cut-assertions.xml:263(term) xml/cut-assertions.xml:286(term)
+#: xml/cut-assertions.xml:306(term) xml/cut-assertions.xml:328(term)
+#: xml/cut-assertions.xml:349(term) xml/cut-assertions.xml:375(term)
+#: xml/cut-assertions.xml:459(term) xml/cut-gassertions.xml:55(term)
+#: xml/cut-gassertions.xml:74(term)
 msgid "<parameter>expected</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-assertions.xml:210(simpara)
+#: xml/cut-assertions.xml:226(simpara)
 msgid "an expected integer value."
 msgstr "期待する整数の値。"
 
-#: xml/cut-assertions.xml:212(term) xml/cut-assertions.xml:231(term)
-#: xml/cut-assertions.xml:253(term) xml/cut-assertions.xml:273(term)
-#: xml/cut-assertions.xml:293(term) xml/cut-assertions.xml:315(term)
-#: xml/cut-assertions.xml:339(term) xml/cut-assertions.xml:362(term)
-#: xml/cut-assertions.xml:446(term) xml/cut-gassertions.xml:61(term)
-#: xml/cut-gassertions.xml:80(term)
+#: xml/cut-assertions.xml:228(term) xml/cut-assertions.xml:247(term)
+#: xml/cut-assertions.xml:269(term) xml/cut-assertions.xml:289(term)
+#: xml/cut-assertions.xml:309(term) xml/cut-assertions.xml:331(term)
+#: xml/cut-assertions.xml:355(term) xml/cut-assertions.xml:378(term)
+#: xml/cut-assertions.xml:462(term) xml/cut-gassertions.xml:58(term)
+#: xml/cut-gassertions.xml:77(term)
 msgid "<parameter>actual</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-assertions.xml:213(simpara)
+#: xml/cut-assertions.xml:229(simpara)
 msgid "an actual integer value."
 msgstr "実際の整数の値。"
 
-#: xml/cut-assertions.xml:221(title)
-msgid ""
-"<anchor id=\"cut-assert-equal-uint\" role=\"macro\"/>cut_assert_equal_uint()"
+#: xml/cut-assertions.xml:237(title)
+msgid "cut_assert_equal_uint()"
 msgstr ""
 
-#: xml/cut-assertions.xml:222(programlisting)
+#: xml/cut-assertions.xml:238(programlisting)
 #, no-wrap
 msgid "#define             cut_assert_equal_uint(expected, actual, ...)"
 msgstr ""
 
-#: xml/cut-assertions.xml:229(simpara)
+#: xml/cut-assertions.xml:245(simpara)
 msgid "an expected unsigned integer value."
 msgstr "期待する符号無し整数の値。"
 
-#: xml/cut-assertions.xml:232(simpara)
+#: xml/cut-assertions.xml:248(simpara)
 msgid "an actual unsigned integer value."
 msgstr "実際の符号無し符号整数の値。"
 
-#: xml/cut-assertions.xml:240(title)
-msgid ""
-"<anchor id=\"cut-assert-equal-double\" role=\"macro\"/"
-">cut_assert_equal_double()"
+#: xml/cut-assertions.xml:256(title)
+msgid "cut_assert_equal_double()"
 msgstr ""
 
-#: xml/cut-assertions.xml:241(programlisting)
+#: xml/cut-assertions.xml:257(programlisting)
 #, no-wrap
 msgid "#define             cut_assert_equal_double(expected, error, actual, ...)"
 msgstr ""
 
-#: xml/cut-assertions.xml:242(para)
+#: xml/cut-assertions.xml:258(para)
 msgid ""
 "Passes if (<parameter>expected</parameter> - <parameter>error</parameter>) "
 "&lt;= <parameter>actual</parameter> &lt;= (<parameter>expected</parameter> + "
@@ -480,35 +578,33 @@ msgstr ""
 "<parameter>actual</parameter> &lt;= (<parameter>expected</parameter> + "
 "<parameter>error</parameter>)が成り立つときパスします。"
 
-#: xml/cut-assertions.xml:248(simpara)
+#: xml/cut-assertions.xml:264(simpara)
 msgid "an expected float value."
 msgstr "期待される浮動小数点数。"
 
-#: xml/cut-assertions.xml:250(term)
+#: xml/cut-assertions.xml:266(term)
 msgid "<parameter>error</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-assertions.xml:251(simpara)
+#: xml/cut-assertions.xml:267(simpara)
 msgid "an float value that specifies error range."
 msgstr "誤差範囲を示す浮動小数点数。"
 
-#: xml/cut-assertions.xml:254(simpara)
+#: xml/cut-assertions.xml:270(simpara)
 msgid "an actual float value."
 msgstr "実際の浮動小数点数。"
 
-#: xml/cut-assertions.xml:262(title)
-msgid ""
-"<anchor id=\"cut-assert-equal-string\" role=\"macro\"/"
-">cut_assert_equal_string()"
+#: xml/cut-assertions.xml:278(title)
+msgid "cut_assert_equal_string()"
 msgstr ""
 
-#: xml/cut-assertions.xml:263(programlisting)
+#: xml/cut-assertions.xml:279(programlisting)
 #, no-wrap
 msgid "#define             cut_assert_equal_string(expected, actual, ...)"
 msgstr ""
 
-#: xml/cut-assertions.xml:264(para) xml/cut-assertions.xml:284(para)
-#: xml/cut-assertions.xml:306(para)
+#: xml/cut-assertions.xml:280(para) xml/cut-assertions.xml:300(para)
+#: xml/cut-assertions.xml:322(para)
 msgid ""
 "Passes if both <parameter>expected</parameter> and <parameter>actual</"
 "parameter> are NULL or strcmp(<parameter>expected</parameter>, "
@@ -518,43 +614,38 @@ msgstr ""
 "NULL、あるいはstrcmp(<parameter>expected</parameter>, <parameter>actual</"
 "parameter>) == 0が成り立つときにパスします。"
 
-#: xml/cut-assertions.xml:271(simpara) xml/cut-assertions.xml:291(simpara)
-#: xml/cut-assertions.xml:313(simpara)
+#: xml/cut-assertions.xml:287(simpara) xml/cut-assertions.xml:307(simpara)
+#: xml/cut-assertions.xml:329(simpara)
 msgid "an expected string value."
 msgstr "期待される文字列。"
 
-#: xml/cut-assertions.xml:274(simpara) xml/cut-assertions.xml:316(simpara)
+#: xml/cut-assertions.xml:290(simpara) xml/cut-assertions.xml:332(simpara)
 msgid "an actual string value."
 msgstr "実際の文字列の値。"
 
-#: xml/cut-assertions.xml:282(title)
-msgid ""
-"<anchor id=\"cut-assert-equal-string-with-free\" role=\"macro\" condition="
-"\"since:0.3\"/>cut_assert_equal_string_with_free()"
+#: xml/cut-assertions.xml:298(title)
+msgid "cut_assert_equal_string_with_free()"
 msgstr ""
 
-#: xml/cut-assertions.xml:283(programlisting)
+#: xml/cut-assertions.xml:299(programlisting)
 #, no-wrap
 msgid "#define             cut_assert_equal_string_with_free(expected, actual, ...)"
 msgstr ""
 
-#: xml/cut-assertions.xml:294(simpara)
+#: xml/cut-assertions.xml:310(simpara)
 msgid "an actual string value that is freed."
 msgstr "実際の文字列の値（メモリは開放される）。"
 
-#: xml/cut-assertions.xml:303(title)
-msgid ""
-"<anchor id=\"cut-assert-equal-string-or-null\" role=\"macro\" condition="
-"\"deprecated:0.3: Use cut_assert_equal_string() instead.\"/"
-">cut_assert_equal_string_or_null()"
+#: xml/cut-assertions.xml:319(title)
+msgid "cut_assert_equal_string_or_null()"
 msgstr ""
 
-#: xml/cut-assertions.xml:304(programlisting)
+#: xml/cut-assertions.xml:320(programlisting)
 #, no-wrap
 msgid "#define             cut_assert_equal_string_or_null(expected, actual, ...)"
 msgstr ""
 
-#: xml/cut-assertions.xml:305(para)
+#: xml/cut-assertions.xml:321(para)
 msgid ""
 "<literal>cut_assert_equal_string_or_null</literal> has been deprecated since "
 "version 0.3 and should not be used in newly-written code. Use <link linkend="
@@ -566,20 +657,18 @@ msgstr ""
 "\"cut-assert-equal-string\"><function>cut_assert_equal_string()</function></"
 "link>を使ってください。"
 
-#: xml/cut-assertions.xml:324(title)
-msgid ""
-"<anchor id=\"cut-assert-equal-memory\" role=\"macro\"/"
-">cut_assert_equal_memory()"
+#: xml/cut-assertions.xml:340(title)
+msgid "cut_assert_equal_memory()"
 msgstr ""
 
-#: xml/cut-assertions.xml:325(programlisting)
+#: xml/cut-assertions.xml:341(programlisting)
 #, no-wrap
 msgid ""
 "#define             cut_assert_equal_memory(expected, expected_size,                \\\n"
 "                                            actual, actual_size, ...)"
 msgstr ""
 
-#: xml/cut-assertions.xml:327(para)
+#: xml/cut-assertions.xml:343(para)
 msgid ""
 "Passes if <parameter>expected_size</parameter> == <parameter>actual_size</"
 "parameter> and memcmp(<parameter>expected</parameter>, <parameter>actual</"
@@ -590,42 +679,40 @@ msgstr ""
 "parameter>, <parameter>expected_size</parameter>) == 0が成り立つときにパスし"
 "ます。"
 
-#: xml/cut-assertions.xml:334(simpara)
+#: xml/cut-assertions.xml:350(simpara)
 msgid "an expected data."
 msgstr "期待するデータ。"
 
-#: xml/cut-assertions.xml:336(term)
+#: xml/cut-assertions.xml:352(term)
 msgid "<parameter>expected_size</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-assertions.xml:337(simpara)
+#: xml/cut-assertions.xml:353(simpara)
 msgid "a size of <parameter>expected</parameter>."
 msgstr "<parameter>expected</parameter>のサイズ。"
 
-#: xml/cut-assertions.xml:340(simpara)
+#: xml/cut-assertions.xml:356(simpara)
 msgid "an actual data."
 msgstr "実際のデータ。"
 
-#: xml/cut-assertions.xml:342(term)
+#: xml/cut-assertions.xml:358(term)
 msgid "<parameter>actual_size</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-assertions.xml:343(simpara)
+#: xml/cut-assertions.xml:359(simpara)
 msgid "a size of <parameter>actual</parameter>."
 msgstr "<parameter>actual</parameter>のサイズ。"
 
-#: xml/cut-assertions.xml:351(title)
-msgid ""
-"<anchor id=\"cut-assert-equal-string-array\" role=\"macro\"/"
-">cut_assert_equal_string_array()"
+#: xml/cut-assertions.xml:367(title)
+msgid "cut_assert_equal_string_array()"
 msgstr ""
 
-#: xml/cut-assertions.xml:352(programlisting)
+#: xml/cut-assertions.xml:368(programlisting)
 #, no-wrap
 msgid "#define             cut_assert_equal_string_array(expected, actual, ...)"
 msgstr ""
 
-#: xml/cut-assertions.xml:353(para)
+#: xml/cut-assertions.xml:369(para)
 msgid ""
 "Passes if both <parameter>expected</parameter> and <parameter>actual</"
 "parameter> are not NULL and have same content (<link linkend=\"strcmp"
@@ -635,25 +722,24 @@ msgstr ""
 "NULLではなく、どちらも同じ内容の文字列(<link linkend=\"strcmp"
 "\"><function>strcmp()</function></link> == 0)を持つときにパスします。"
 
-#: xml/cut-assertions.xml:360(simpara)
+#: xml/cut-assertions.xml:376(simpara)
 msgid "an expected NULL-terminated array of strings."
 msgstr "期待する文字列の配列。配列はNULL終端。"
 
-#: xml/cut-assertions.xml:363(simpara)
+#: xml/cut-assertions.xml:379(simpara)
 msgid "an actual NULL-terminated array of strings."
 msgstr "実際の文字列の配列。配列はNULL終端。"
 
-#: xml/cut-assertions.xml:371(title)
-msgid ""
-"<anchor id=\"cut-assert-operator\" role=\"macro\"/>cut_assert_operator()"
+#: xml/cut-assertions.xml:387(title)
+msgid "cut_assert_operator()"
 msgstr ""
 
-#: xml/cut-assertions.xml:372(programlisting)
+#: xml/cut-assertions.xml:388(programlisting)
 #, no-wrap
 msgid "#define             cut_assert_operator(lhs, operator, rhs, ...)"
 msgstr ""
 
-#: xml/cut-assertions.xml:373(para) xml/cut-assertions.xml:401(para)
+#: xml/cut-assertions.xml:389(para) xml/cut-assertions.xml:417(para)
 msgid ""
 "Passes if (<parameter>lhs</parameter> <parameter>operator</parameter> "
 "<parameter>rhs</parameter>) is TRUE."
@@ -661,73 +747,71 @@ msgstr ""
 "(<parameter>lhs</parameter> <parameter>operator</parameter> <parameter>rhs</"
 "parameter>)が真のときにパスします。"
 
-#: xml/cut-assertions.xml:378(programlisting)
+#: xml/cut-assertions.xml:394(programlisting)
 #, no-wrap
 msgid ""
 "\n"
 "cut_assert_operator(1, &lt;, 2) -&gt; (1 &lt; 2)\n"
 msgstr ""
 
-#: xml/cut-assertions.xml:384(term) xml/cut-assertions.xml:412(term)
+#: xml/cut-assertions.xml:400(term) xml/cut-assertions.xml:428(term)
 msgid "<parameter>lhs</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-assertions.xml:385(simpara)
+#: xml/cut-assertions.xml:401(simpara)
 msgid "a left hand side value."
 msgstr "左辺値。"
 
-#: xml/cut-assertions.xml:387(term) xml/cut-assertions.xml:415(term)
+#: xml/cut-assertions.xml:403(term) xml/cut-assertions.xml:431(term)
 msgid "<parameter>operator</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-assertions.xml:388(simpara) xml/cut-assertions.xml:416(simpara)
+#: xml/cut-assertions.xml:404(simpara) xml/cut-assertions.xml:432(simpara)
 msgid "a binary operator."
 msgstr "二項演算子。"
 
-#: xml/cut-assertions.xml:390(term) xml/cut-assertions.xml:418(term)
+#: xml/cut-assertions.xml:406(term) xml/cut-assertions.xml:434(term)
 msgid "<parameter>rhs</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-assertions.xml:391(simpara)
+#: xml/cut-assertions.xml:407(simpara)
 msgid "a right hand side value."
 msgstr "右辺値。"
 
-#: xml/cut-assertions.xml:399(title)
-msgid ""
-"<anchor id=\"cut-assert-operator-int\" role=\"macro\"/"
-">cut_assert_operator_int()"
+#: xml/cut-assertions.xml:415(title)
+msgid "cut_assert_operator_int()"
 msgstr ""
 
-#: xml/cut-assertions.xml:400(programlisting)
+#: xml/cut-assertions.xml:416(programlisting)
 #, no-wrap
 msgid "#define             cut_assert_operator_int(lhs, operator, rhs, ...)"
 msgstr ""
 
-#: xml/cut-assertions.xml:406(programlisting)
+#: xml/cut-assertions.xml:422(programlisting)
 #, no-wrap
 msgid ""
 "\n"
 "cut_assert_operator_int(1, &lt;, 2) -&gt; (1 &lt; 2)\n"
 msgstr ""
 
-#: xml/cut-assertions.xml:413(simpara)
+#: xml/cut-assertions.xml:429(simpara)
 msgid "a left hand side integer value."
 msgstr "左辺の整数の値。"
 
-#: xml/cut-assertions.xml:419(simpara)
+#: xml/cut-assertions.xml:435(simpara)
 msgid "a right hand side integer value."
 msgstr "右辺の整数の値。"
 
-#: xml/cut-assertions.xml:427(title)
-msgid "<anchor id=\"cut-assert-equal\" role=\"macro\"/>cut_assert_equal()"
+#: xml/cut-assertions.xml:443(title)
+msgid "cut_assert_equal()"
 msgstr ""
 
-#: xml/cut-assertions.xml:428(programlisting)
+#: xml/cut-assertions.xml:444(programlisting)
 #, no-wrap
 msgid "#define             cut_assert_equal(function, expected, actual, ...)"
 msgstr ""
 
-#: xml/cut-assertions.xml:429(para)
+#: xml/cut-assertions.xml:445(para)
 msgid ""
 "Passes if <parameter>function</parameter>(<parameter>expected</parameter>, "
 "<parameter>actual</parameter>) returns TRUE."
@@ -735,18 +819,18 @@ msgstr ""
 "<parameter>function</parameter>(<parameter>expected</parameter>, "
 "<parameter>actual</parameter>)が真を返すときパスします。"
 
-#: xml/cut-assertions.xml:434(programlisting)
+#: xml/cut-assertions.xml:450(programlisting)
 #, no-wrap
 msgid ""
 "\n"
 "cut_assert_equal(!strcmp, \"abc\", \"abc\") -&gt; Pass\n"
 msgstr ""
 
-#: xml/cut-assertions.xml:440(term)
+#: xml/cut-assertions.xml:456(term)
 msgid "<parameter>function</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-assertions.xml:441(simpara)
+#: xml/cut-assertions.xml:457(simpara)
 msgid ""
 "a function that compares <parameter>actual</parameter> with "
 "<parameter>expected</parameter>."
@@ -754,13 +838,247 @@ msgstr ""
 "<parameter>actual</parameter>と<parameter>expected</parameter>を比較する関"
 "数。"
 
-#: xml/cut-assertions.xml:444(simpara)
+#: xml/cut-assertions.xml:460(simpara)
 msgid "an expected value."
 msgstr "期待値。"
 
-#: xml/cut-assertions.xml:447(simpara)
+#: xml/cut-assertions.xml:463(simpara)
 msgid "an actual value."
 msgstr "実測値。"
+
+#: xml/cut-context.xml:7(refentrytitle) xml/cut-context.xml:13(refname)
+msgid "CutContext"
+msgstr ""
+
+#: xml/cut-enum-types.xml:7(refentrytitle) xml/cut-enum-types.xml:13(refname)
+msgid "cut-enum-types"
+msgstr ""
+
+#: xml/cut-factory-builder.xml:7(refentrytitle)
+#: xml/cut-factory-builder.xml:13(refname)
+#: xml/cut-factory-builder.xml:22(link) xml/cut-factory-builder.xml:26(link)
+#: xml/cut-factory-builder.xml:27(link) xml/cut-factory-builder.xml:29(link)
+#: xml/cut-factory-builder.xml:31(link) xml/cut-factory-builder.xml:53(title)
+#: xml/cut-factory-builder.xml:54(primary)
+msgid "CutFactoryBuilder"
+msgstr ""
+
+#: xml/cut-factory-builder.xml:23(link) xml/cut-main.xml:25(link)
+#: xml/cut-main.xml:27(link) xml/cut-module-factory.xml:32(link)
+#: xml/cut-report.xml:32(link) xml/cut-value-equal.xml:23(link)
+msgid "gboolean"
+msgstr ""
+
+#: xml/cut-factory-builder.xml:23(link)
+#: xml/cut-factory-builder.xml:63(primary)
+msgid "cut_factory_builder_has_builder"
+msgstr ""
+
+#: xml/cut-factory-builder.xml:23(link) xml/cut-factory-builder.xml:24(link)
+#: xml/cut-factory-builder.xml:26(link) xml/cut-factory-builder.xml:27(link)
+#: xml/cut-module-factory.xml:25(link) xml/cut-module-factory.xml:28(link)
+#: xml/cut-module-factory.xml:29(link) xml/cut-module-factory.xml:31(link)
+#: xml/cut-module-factory.xml:32(link) xml/cut-module-factory.xml:33(link)
+#: xml/cut-module-factory.xml:37(link) xml/cut-module-factory.xml:38(link)
+#: xml/cut-module-factory.xml:39(link) xml/cut-module-factory.xml:41(link)
+#: xml/cut-module-factory.xml:42(link) xml/cut-module-factory.xml:43(link)
+#: xml/cut-module-factory.xml:48(link) xml/cut-report.xml:24(link)
+#: xml/cut-report.xml:28(link) xml/cut-report.xml:29(link)
+#: xml/cut-report.xml:31(link) xml/cut-report.xml:33(link)
+#: xml/cut-report.xml:35(link) xml/cut-report.xml:36(link)
+#: xml/cut-report.xml:37(link) xml/cut-report.xml:38(link)
+#: xml/cut-report.xml:39(link) xml/cut-report.xml:40(link)
+#: xml/cut-report.xml:41(link) xml/cut-report.xml:42(link)
+#: xml/cut-ui.xml:25(link) xml/cut-ui.xml:26(link) xml/cut-ui.xml:27(link)
+#: xml/cut-ui.xml:31(link) xml/cut-ui.xml:32(link)
+msgid "gchar"
+msgstr ""
+
+#: xml/cut-factory-builder.xml:24(link) xml/cut-module-factory.xml:47(link)
+msgid "GObject"
+msgstr ""
+
+#: xml/cut-factory-builder.xml:24(link)
+#: xml/cut-factory-builder.xml:77(primary)
+msgid "cut_factory_builder_create"
+msgstr ""
+
+#: xml/cut-factory-builder.xml:25(link) xml/cut-factory-builder.xml:31(link)
+#: xml/cut-module-factory.xml:31(link) xml/cut-module-factory.xml:36(link)
+#: xml/cut-report.xml:26(link) xml/cut-report.xml:27(link)
+#: xml/cut-ui.xml:29(link) xml/cut-ui.xml:30(link)
+msgid "GList"
+msgstr ""
+
+#: xml/cut-factory-builder.xml:25(link)
+#: xml/cut-factory-builder.xml:91(primary)
+msgid "cut_factory_builder_create_default"
+msgstr ""
+
+#: xml/cut-factory-builder.xml:26(link)
+#: xml/cut-factory-builder.xml:102(primary)
+msgid "cut_factory_builder_get_type_name"
+msgstr ""
+
+#: xml/cut-factory-builder.xml:27(link)
+#: xml/cut-factory-builder.xml:116(primary)
+msgid "cut_factory_builder_get_module_dir"
+msgstr ""
+
+#: xml/cut-factory-builder.xml:28(link) xml/cut-listener.xml:23(link)
+#: xml/cut-listener.xml:25(link) xml/cut-main.xml:22(link)
+#: xml/cut-main.xml:24(link) xml/cut-module-factory.xml:23(link)
+#: xml/cut-module-factory.xml:24(link) xml/cut-module-factory.xml:27(link)
+#: xml/cut-module-factory.xml:29(link) xml/cut-module-factory.xml:30(link)
+#: xml/cut-module-factory.xml:34(link) xml/cut-module-factory.xml:45(link)
+#: xml/cut-report.xml:24(link) xml/cut-report.xml:25(link)
+#: xml/cut-ui.xml:23(link) xml/cut-ui.xml:24(link) xml/cut-ui.xml:26(link)
+#: xml/cut-ui.xml:27(link) xml/cut-ui.xml:28(link)
+#: xml/cut-value-equal.xml:22(link) xml/cut-value-equal.xml:25(link)
+#: xml/cutter.xml:22(link) xml/cutter.xml:23(link) xml/cutter.xml:24(link)
+#: xml/cutter.xml:25(link)
+msgid "void"
+msgstr ""
+
+#: xml/cut-factory-builder.xml:28(link)
+#: xml/cut-factory-builder.xml:130(primary)
+msgid "cut_factory_builder_set_option_context"
+msgstr ""
+
+#: xml/cut-factory-builder.xml:30(link) xml/cut-module-factory.xml:35(link)
+#: xml/cut-module-factory.xml:46(link)
+msgid "GOptionContext"
+msgstr ""
+
+#: xml/cut-factory-builder.xml:31(link)
+#: xml/cut-factory-builder.xml:147(primary)
+msgid "cut_factory_builder_build"
+msgstr ""
+
+#: xml/cut-factory-builder.xml:21(synopsis)
+#, no-wrap
+msgid ""
+"\n"
+"                    <placeholder-1/>;\n"
+"<placeholder-2/>            <placeholder-3/>     (const <placeholder-4/> *type_name);\n"
+"<placeholder-5/>*            <placeholder-6/>          (const <placeholder-7/> *type_name);\n"
+"<placeholder-8/>*              <placeholder-9/>  (void);\n"
+"const <placeholder-10/>*        <placeholder-11/>   (<placeholder-12/> *builder);\n"
+"const <placeholder-13/>*        <placeholder-14/>  (<placeholder-15/> *builder);\n"
+"<placeholder-16/>                <placeholder-17/>\n"
+"                                                        (<placeholder-18/> *builder,\n"
+"                                                         <placeholder-19/> *context);\n"
+"<placeholder-20/>*              <placeholder-21/>           (<placeholder-22/> *builder);\n"
+msgstr ""
+
+#: xml/cut-factory-builder.xml:54(programlisting)
+#, no-wrap
+msgid ""
+"typedef struct {\n"
+"    GObject object;\n"
+"} CutFactoryBuilder;\n"
+msgstr ""
+
+#: xml/cut-factory-builder.xml:62(title)
+msgid "cut_factory_builder_has_builder ()"
+msgstr ""
+
+#: xml/cut-factory-builder.xml:63(programlisting)
+#, no-wrap
+msgid "<link linkend=\"gboolean\">gboolean</link>            cut_factory_builder_has_builder     (const <link linkend=\"gchar\">gchar</link> *type_name);"
+msgstr ""
+
+#: xml/cut-factory-builder.xml:67(term) xml/cut-factory-builder.xml:81(term)
+msgid "<parameter>type_name</parameter>&nbsp;:"
+msgstr "<parameter>type_name</parameter>&nbsp;:"
+
+#: xml/cut-factory-builder.xml:70(term) xml/cut-factory-builder.xml:84(term)
+#: xml/cut-factory-builder.xml:95(term) xml/cut-factory-builder.xml:109(term)
+#: xml/cut-factory-builder.xml:123(term) xml/cut-factory-builder.xml:154(term)
+#: xml/cut-main.xml:76(term) xml/cut-main.xml:87(term)
+#: xml/cut-main.xml:101(term) xml/cut-module-factory.xml:97(term)
+#: xml/cut-module-factory.xml:142(term) xml/cut-module-factory.xml:160(term)
+#: xml/cut-module-factory.xml:184(term) xml/cut-module-factory.xml:210(term)
+#: xml/cut-module-factory.xml:236(term) xml/cut-module-factory.xml:266(term)
+#: xml/cut-module-factory.xml:280(term) xml/cut-report.xml:106(term)
+#: xml/cut-report.xml:117(term) xml/cut-report.xml:139(term)
+#: xml/cut-report.xml:153(term) xml/cut-report.xml:175(term)
+#: xml/cut-report.xml:189(term) xml/cut-report.xml:207(term)
+#: xml/cut-report.xml:221(term) xml/cut-report.xml:235(term)
+#: xml/cut-report.xml:249(term) xml/cut-report.xml:263(term)
+#: xml/cut-report.xml:277(term) xml/cut-ui.xml:81(term)
+#: xml/cut-ui.xml:122(term) xml/cut-ui.xml:133(term) xml/cut-ui.xml:155(term)
+#: xml/cut-value-equal.xml:67(term) xml/gbsearcharray.xml:78(term)
+#: xml/gbsearcharray.xml:191(term) xml/gbsearcharray.xml:205(term)
+msgid "<emphasis>Returns</emphasis>&nbsp;:"
+msgstr "<emphasis>戻り値</emphasis>&nbsp;:"
+
+#: xml/cut-factory-builder.xml:76(title)
+msgid "cut_factory_builder_create ()"
+msgstr ""
+
+#: xml/cut-factory-builder.xml:77(programlisting)
+#, no-wrap
+msgid "<link linkend=\"GObject\">GObject</link>*            cut_factory_builder_create          (const <link linkend=\"gchar\">gchar</link> *type_name);"
+msgstr ""
+
+#: xml/cut-factory-builder.xml:90(title)
+msgid "cut_factory_builder_create_default ()"
+msgstr ""
+
+#: xml/cut-factory-builder.xml:91(programlisting)
+#, no-wrap
+msgid "<link linkend=\"GList\">GList</link>*              cut_factory_builder_create_default  (void);"
+msgstr ""
+
+#: xml/cut-factory-builder.xml:101(title)
+msgid "cut_factory_builder_get_type_name ()"
+msgstr ""
+
+#: xml/cut-factory-builder.xml:102(programlisting)
+#, no-wrap
+msgid "const <link linkend=\"gchar\">gchar</link>*        cut_factory_builder_get_type_name   (<link linkend=\"CutFactoryBuilder\">CutFactoryBuilder</link> *builder);"
+msgstr ""
+
+#: xml/cut-factory-builder.xml:106(term) xml/cut-factory-builder.xml:120(term)
+#: xml/cut-factory-builder.xml:136(term) xml/cut-factory-builder.xml:151(term)
+msgid "<parameter>builder</parameter>&nbsp;:"
+msgstr ""
+
+#: xml/cut-factory-builder.xml:115(title)
+msgid "cut_factory_builder_get_module_dir ()"
+msgstr ""
+
+#: xml/cut-factory-builder.xml:116(programlisting)
+#, no-wrap
+msgid "const <link linkend=\"gchar\">gchar</link>*        cut_factory_builder_get_module_dir  (<link linkend=\"CutFactoryBuilder\">CutFactoryBuilder</link> *builder);"
+msgstr ""
+
+#: xml/cut-factory-builder.xml:129(title)
+msgid "cut_factory_builder_set_option_context ()"
+msgstr ""
+
+#: xml/cut-factory-builder.xml:130(programlisting)
+#, no-wrap
+msgid ""
+"<link linkend=\"void\">void</link>                cut_factory_builder_set_option_context\n"
+"                                                        (<link linkend=\"CutFactoryBuilder\">CutFactoryBuilder</link> *builder,\n"
+"                                                         <link linkend=\"GOptionContext\">GOptionContext</link> *context);"
+msgstr ""
+
+#: xml/cut-factory-builder.xml:139(term) xml/cut-module-factory.xml:172(term)
+#: xml/cut-module-factory.xml:251(term)
+msgid "<parameter>context</parameter>&nbsp;:"
+msgstr ""
+
+#: xml/cut-factory-builder.xml:146(title)
+msgid "cut_factory_builder_build ()"
+msgstr ""
+
+#: xml/cut-factory-builder.xml:147(programlisting)
+#, no-wrap
+msgid "<link linkend=\"GList\">GList</link>*              cut_factory_builder_build           (<link linkend=\"CutFactoryBuilder\">CutFactoryBuilder</link> *builder);"
+msgstr ""
 
 #: xml/cut-gassertions.xml:7(refentrytitle)
 #: xml/cut-gassertions.xml:13(refname)
@@ -772,11 +1090,11 @@ msgid "Checks that your program works as you expect with GLib support."
 msgstr ""
 "GLibサポート付きであなたのプログラムが期待通りに動作しているかを検証します。"
 
-#: xml/cut-gassertions.xml:26(link) xml/cut-gassertions.xml:52(primary)
+#: xml/cut-gassertions.xml:23(link) xml/cut-gassertions.xml:49(primary)
 msgid "cut_assert_equal_g_type"
 msgstr ""
 
-#: xml/cut-gassertions.xml:27(link) xml/cut-gassertions.xml:71(primary)
+#: xml/cut-gassertions.xml:24(link) xml/cut-gassertions.xml:68(primary)
 msgid "cut_assert_equal_g_value"
 msgstr ""
 
@@ -784,109 +1102,157 @@ msgstr ""
 #, no-wrap
 msgid ""
 "\n"
-"\n"
-"\n"
-"\n"
 "#define             <placeholder-1/>             (expected, actual, ...)\n"
 "#define             <placeholder-2/>            (expected, actual, ...)\n"
 msgstr ""
 
-#: xml/cut-gassertions.xml:51(title)
-msgid ""
-"<anchor id=\"cut-assert-equal-g-type\" role=\"macro\"/"
-">cut_assert_equal_g_type()"
+#: xml/cut-gassertions.xml:48(title)
+msgid "cut_assert_equal_g_type()"
 msgstr ""
 
-#: xml/cut-gassertions.xml:52(programlisting)
+#: xml/cut-gassertions.xml:49(programlisting)
 #, no-wrap
 msgid "#define             cut_assert_equal_g_type(expected, actual, ...)"
 msgstr ""
 
-#: xml/cut-gassertions.xml:59(simpara)
+#: xml/cut-gassertions.xml:56(simpara)
 msgid "an expected GType."
 msgstr "期待するGType。"
 
-#: xml/cut-gassertions.xml:62(simpara)
+#: xml/cut-gassertions.xml:59(simpara)
 msgid "an actual GType."
 msgstr "実際のGType。"
 
-#: xml/cut-gassertions.xml:70(title)
-msgid ""
-"<anchor id=\"cut-assert-equal-g-value\" role=\"macro\"/"
-">cut_assert_equal_g_value()"
+#: xml/cut-gassertions.xml:67(title)
+msgid "cut_assert_equal_g_value()"
 msgstr ""
 
-#: xml/cut-gassertions.xml:71(programlisting)
+#: xml/cut-gassertions.xml:68(programlisting)
 #, no-wrap
 msgid "#define             cut_assert_equal_g_value(expected, actual, ...)"
 msgstr ""
 
-#: xml/cut-gassertions.xml:78(simpara)
+#: xml/cut-gassertions.xml:75(simpara)
 msgid "an expected GValue *."
 msgstr "期待するGValue *。"
 
-#: xml/cut-gassertions.xml:81(simpara)
+#: xml/cut-gassertions.xml:78(simpara)
 msgid "an actual GValue *."
 msgstr "実際のGValue *。"
+
+#: xml/cut-listener.xml:7(refentrytitle) xml/cut-listener.xml:13(refname)
+#: xml/cut-listener.xml:22(link) xml/cut-listener.xml:23(link)
+#: xml/cut-listener.xml:25(link) xml/cut-listener.xml:49(primary)
+msgid "CutListener"
+msgstr ""
+
+#: xml/cut-listener.xml:23(link) xml/cut-listener.xml:58(primary)
+msgid "cut_listener_attach_to_runner"
+msgstr ""
+
+#: xml/cut-listener.xml:24(link) xml/cut-listener.xml:26(link)
+#: xml/cut-main.xml:26(link) xml/cut-main.xml:27(link)
+#: xml/cut-runner.xml:7(refentrytitle) xml/cut-runner.xml:13(refname)
+msgid "CutRunner"
+msgstr ""
+
+#: xml/cut-listener.xml:25(link) xml/cut-listener.xml:74(primary)
+msgid "cut_listener_detach_from_runner"
+msgstr ""
+
+#: xml/cut-listener.xml:21(synopsis)
+#, no-wrap
+msgid ""
+"\n"
+"struct              <placeholder-1/>;\n"
+"<placeholder-2/>                <placeholder-3/>       (<placeholder-4/> *listener,\n"
+"                                                         <placeholder-5/> *runner);\n"
+"<placeholder-6/>                <placeholder-7/>     (<placeholder-8/> *listener,\n"
+"                                                         <placeholder-9/> *runner);\n"
+msgstr ""
+
+#: xml/cut-listener.xml:48(title)
+msgid "struct CutListener"
+msgstr ""
+
+#: xml/cut-listener.xml:49(programlisting)
+#, no-wrap
+msgid ""
+"struct CutListener {\n"
+"    GObject object;\n"
+"};\n"
+msgstr ""
+
+#: xml/cut-listener.xml:57(title)
+msgid "cut_listener_attach_to_runner ()"
+msgstr ""
+
+#: xml/cut-listener.xml:58(programlisting)
+#, no-wrap
+msgid ""
+"<link linkend=\"void\">void</link>                cut_listener_attach_to_runner       (<link linkend=\"CutListener\">CutListener</link> *listener,\n"
+"                                                         <link linkend=\"CutRunner\">CutRunner</link> *runner);"
+msgstr ""
+
+#: xml/cut-listener.xml:63(term) xml/cut-listener.xml:79(term)
+msgid "<parameter>listener</parameter>&nbsp;:"
+msgstr ""
+
+#: xml/cut-listener.xml:66(term) xml/cut-listener.xml:82(term)
+#: xml/cut-main.xml:98(term)
+msgid "<parameter>runner</parameter>&nbsp;:"
+msgstr ""
+
+#: xml/cut-listener.xml:73(title)
+msgid "cut_listener_detach_from_runner ()"
+msgstr ""
+
+#: xml/cut-listener.xml:74(programlisting)
+#, no-wrap
+msgid ""
+"<link linkend=\"void\">void</link>                cut_listener_detach_from_runner     (<link linkend=\"CutListener\">CutListener</link> *listener,\n"
+"                                                         <link linkend=\"CutRunner\">CutRunner</link> *runner);"
+msgstr ""
+
+#: xml/cut-loader.xml:7(refentrytitle) xml/cut-loader.xml:13(refname)
+msgid "CutLoader"
+msgstr ""
 
 #: xml/cut-main.xml:7(refentrytitle) xml/cut-main.xml:13(refname)
 msgid "cut-main"
 msgstr ""
 
-#: xml/cut-main.xml:25(link) xml/cut-main.xml:27(link)
-#: xml/cut-ui-factory.xml:26(link) xml/cut-ui-factory.xml:27(link)
-#: xml/cut-ui-factory.xml:30(link) xml/cut-ui-factory.xml:32(link)
-#: xml/cut-ui-factory.xml:33(link) xml/cut-ui-factory.xml:40(link)
-#: xml/cut-ui.xml:26(link) xml/cut-ui.xml:27(link) xml/cut-ui.xml:29(link)
-#: xml/cut-ui.xml:30(link) xml/cut-ui.xml:31(link)
-#: xml/cut-value-equal.xml:25(link) xml/cut-value-equal.xml:28(link)
-#: xml/cutter.xml:25(link) xml/cutter.xml:26(link)
-msgid "void"
-msgstr ""
-
-#: xml/cut-main.xml:25(link) xml/cut-main.xml:53(primary)
+#: xml/cut-main.xml:22(link) xml/cut-main.xml:50(primary)
 msgid "cut_init"
 msgstr ""
 
-#: xml/cut-main.xml:25(link)
+#: xml/cut-main.xml:22(link)
 msgid "int"
 msgstr ""
 
-#: xml/cut-main.xml:26(link)
+#: xml/cut-main.xml:23(link)
 msgid "char"
 msgstr ""
 
-#: xml/cut-main.xml:27(link) xml/cut-main.xml:69(primary)
+#: xml/cut-main.xml:24(link) xml/cut-main.xml:66(primary)
 msgid "cut_quit"
 msgstr ""
 
-#: xml/cut-main.xml:28(link) xml/cut-main.xml:30(link) xml/cut-ui.xml:37(link)
-#: xml/cut-value-equal.xml:26(link)
-msgid "gboolean"
-msgstr ""
-
-#: xml/cut-main.xml:28(link) xml/cut-main.xml:75(primary)
+#: xml/cut-main.xml:25(link) xml/cut-main.xml:72(primary)
 msgid "cut_run"
 msgstr ""
 
-#: xml/cut-main.xml:29(link) xml/cut-main.xml:30(link) xml/cut-ui.xml:38(link)
-msgid "CutRunner"
-msgstr ""
-
-#: xml/cut-main.xml:29(link) xml/cut-main.xml:86(primary)
+#: xml/cut-main.xml:26(link) xml/cut-main.xml:83(primary)
 msgid "cut_create_runner"
 msgstr ""
 
-#: xml/cut-main.xml:30(link) xml/cut-main.xml:97(primary)
+#: xml/cut-main.xml:27(link) xml/cut-main.xml:94(primary)
 msgid "cut_run_runner"
 msgstr ""
 
 #: xml/cut-main.xml:21(synopsis)
 #, no-wrap
 msgid ""
-"\n"
-"\n"
-"\n"
 "\n"
 "<placeholder-1/>                <placeholder-2/>                            (<placeholder-3/> *argc,\n"
 "                                                         <placeholder-4/> ***argv);\n"
@@ -896,421 +1262,777 @@ msgid ""
 "<placeholder-11/>            <placeholder-12/>                      (<placeholder-13/> *runner);\n"
 msgstr ""
 
-#: xml/cut-main.xml:52(title)
-msgid "<anchor id=\"cut-init\" role=\"function\"/>cut_init ()"
+#: xml/cut-main.xml:49(title)
+msgid "cut_init ()"
 msgstr ""
 
-#: xml/cut-main.xml:53(programlisting)
+#: xml/cut-main.xml:50(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"void\">void</link>                cut_init                            (<link linkend=\"int\">int</link> *argc,\n"
 "                                                         <link linkend=\"char\">char</link> ***argv);"
 msgstr ""
 
-#: xml/cut-main.xml:58(term)
+#: xml/cut-main.xml:55(term)
 msgid "<parameter>argc</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-main.xml:61(term)
+#: xml/cut-main.xml:58(term)
 msgid "<parameter>argv</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-main.xml:68(title)
-msgid "<anchor id=\"cut-quit\" role=\"function\"/>cut_quit ()"
+#: xml/cut-main.xml:65(title)
+msgid "cut_quit ()"
 msgstr ""
 
-#: xml/cut-main.xml:69(programlisting)
+#: xml/cut-main.xml:66(programlisting)
 #, no-wrap
 msgid "<link linkend=\"void\">void</link>                cut_quit                            (void);"
 msgstr ""
 
-#: xml/cut-main.xml:74(title)
-msgid "<anchor id=\"cut-run\" role=\"function\"/>cut_run ()"
+#: xml/cut-main.xml:71(title)
+msgid "cut_run ()"
 msgstr ""
 
-#: xml/cut-main.xml:75(programlisting)
+#: xml/cut-main.xml:72(programlisting)
 #, no-wrap
 msgid "<link linkend=\"gboolean\">gboolean</link>            cut_run                             (void);"
 msgstr ""
 
-#: xml/cut-main.xml:79(term) xml/cut-main.xml:90(term)
-#: xml/cut-main.xml:104(term) xml/cut-ui-factory.xml:93(term)
-#: xml/cut-ui-factory.xml:135(term) xml/cut-ui-factory.xml:146(term)
-#: xml/cut-ui-factory.xml:157(term) xml/cut-ui-factory.xml:179(term)
-#: xml/cut-ui-factory.xml:209(term) xml/cut-ui-factory.xml:223(term)
-#: xml/cut-ui.xml:87(term) xml/cut-ui.xml:128(term) xml/cut-ui.xml:139(term)
-#: xml/cut-ui.xml:161(term) xml/cut-ui.xml:179(term)
-#: xml/cut-value-equal.xml:70(term) xml/gbsearcharray.xml:81(term)
-#: xml/gbsearcharray.xml:194(term) xml/gbsearcharray.xml:208(term)
-msgid "<emphasis>Returns</emphasis>&nbsp;:"
-msgstr "<emphasis>戻り値</emphasis>&nbsp;:"
-
-#: xml/cut-main.xml:85(title)
-msgid ""
-"<anchor id=\"cut-create-runner\" role=\"function\"/>cut_create_runner ()"
+#: xml/cut-main.xml:82(title)
+msgid "cut_create_runner ()"
 msgstr ""
 
-#: xml/cut-main.xml:86(programlisting)
+#: xml/cut-main.xml:83(programlisting)
 #, no-wrap
 msgid "<link linkend=\"CutRunner\">CutRunner</link>*          cut_create_runner                   (void);"
 msgstr ""
 
-#: xml/cut-main.xml:96(title)
-msgid "<anchor id=\"cut-run-runner\" role=\"function\"/>cut_run_runner ()"
+#: xml/cut-main.xml:93(title)
+msgid "cut_run_runner ()"
 msgstr ""
 
-#: xml/cut-main.xml:97(programlisting)
+#: xml/cut-main.xml:94(programlisting)
 #, no-wrap
 msgid "<link linkend=\"gboolean\">gboolean</link>            cut_run_runner                      (<link linkend=\"CutRunner\">CutRunner</link> *runner);"
 msgstr ""
 
-#: xml/cut-main.xml:101(term) xml/cut-ui.xml:176(term)
-msgid "<parameter>runner</parameter>&nbsp;:"
+#: xml/cut-module-factory.xml:7(refentrytitle)
+#: xml/cut-module-factory.xml:13(refname) xml/cut-module-factory.xml:22(link)
+#: xml/cut-module-factory.xml:37(link) xml/cut-module-factory.xml:41(link)
+#: xml/cut-module-factory.xml:45(link) xml/cut-module-factory.xml:47(link)
+#: xml/cut-module-factory.xml:48(link) xml/cut-module-factory.xml:70(title)
+#: xml/cut-module-factory.xml:71(primary)
+msgid "CutModuleFactory"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:7(refentrytitle) xml/cut-ui-factory.xml:13(refname)
-#: xml/cut-ui-factory.xml:25(link) xml/cut-ui-factory.xml:37(link)
-#: xml/cut-ui-factory.xml:40(link) xml/cut-ui-factory.xml:42(link)
-#: xml/cut-ui-factory.xml:43(link) xml/cut-ui-factory.xml:67(primary)
-msgid "CutUIFactory"
+#: xml/cut-module-factory.xml:23(link) xml/cut-module-factory.xml:80(primary)
+msgid "cut_module_factory_init"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:26(link) xml/cut-ui-factory.xml:76(primary)
-msgid "cut_ui_factory_init"
+#: xml/cut-module-factory.xml:24(link) xml/cut-module-factory.xml:86(primary)
+msgid "cut_module_factory_quit"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:27(link) xml/cut-ui-factory.xml:82(primary)
-msgid "cut_ui_factory_quit"
+#: xml/cut-module-factory.xml:25(link) xml/cut-module-factory.xml:92(primary)
+msgid "cut_module_factory_get_default_module_dir"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:28(link) xml/cut-ui-factory.xml:31(link)
-#: xml/cut-ui-factory.xml:32(link) xml/cut-ui-factory.xml:37(link)
-#: xml/cut-ui-factory.xml:38(link) xml/cut-ui-factory.xml:43(link)
-#: xml/cut-ui.xml:28(link) xml/cut-ui.xml:29(link) xml/cut-ui.xml:30(link)
-#: xml/cut-ui.xml:34(link) xml/cut-ui.xml:35(link)
-msgid "gchar"
+#: xml/cut-module-factory.xml:27(link) xml/cut-module-factory.xml:104(primary)
+msgid "cut_module_factory_set_default_module_dir"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:28(link) xml/cut-ui-factory.xml:88(primary)
-msgid "cut_ui_factory_get_default_module_dir"
+#: xml/cut-module-factory.xml:29(link) xml/cut-module-factory.xml:117(primary)
+msgid "cut_module_factory_load"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:30(link) xml/cut-ui-factory.xml:100(primary)
-msgid "cut_ui_factory_set_default_module_dir"
+#: xml/cut-module-factory.xml:30(link) xml/cut-module-factory.xml:129(primary)
+msgid "cut_module_factory_unload"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:32(link) xml/cut-ui-factory.xml:113(primary)
-msgid "cut_ui_factory_load"
+#: xml/cut-module-factory.xml:31(link) xml/cut-module-factory.xml:135(primary)
+msgid "cut_module_factory_get_names"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:33(link) xml/cut-ui-factory.xml:125(primary)
-msgid "cut_ui_factory_unload"
+#: xml/cut-module-factory.xml:32(link) xml/cut-module-factory.xml:149(primary)
+msgid "cut_module_factory_exist_module"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:34(link) xml/cut-ui-factory.xml:35(link)
-#: xml/cut-ui-factory.xml:36(link) xml/cut-ui.xml:32(link)
-#: xml/cut-ui.xml:33(link)
-msgid "GList"
+#: xml/cut-module-factory.xml:34(link) xml/cut-module-factory.xml:167(primary)
+msgid "cut_module_factory_set_option_context"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:34(link) xml/cut-ui-factory.xml:131(primary)
-msgid "cut_ui_factory_get_registered_types"
+#: xml/cut-module-factory.xml:36(link) xml/cut-module-factory.xml:180(primary)
+msgid "cut_module_factory_build_factories"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:35(link) xml/cut-ui-factory.xml:142(primary)
-msgid "cut_ui_factory_get_log_domains"
+#: xml/cut-module-factory.xml:37(link) xml/cut-module-factory.xml:191(primary)
+msgid "cut_module_factory_new"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:36(link) xml/cut-ui-factory.xml:153(primary)
-msgid "cut_ui_factory_get_names"
+#: xml/cut-module-factory.xml:41(link) xml/cut-module-factory.xml:217(primary)
+msgid "cut_module_factory_new_valist"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:37(link) xml/cut-ui-factory.xml:164(primary)
-msgid "cut_ui_factory_new"
+#: xml/cut-module-factory.xml:44(link)
+msgid "va_list"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:40(link) xml/cut-ui-factory.xml:186(primary)
-msgid "cut_ui_factory_set_option_group"
+#: xml/cut-module-factory.xml:45(link) xml/cut-module-factory.xml:243(primary)
+msgid "cut_module_factory_set_option_group"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:41(link)
-msgid "GOptionContext"
+#: xml/cut-module-factory.xml:47(link) xml/cut-module-factory.xml:259(primary)
+msgid "cut_module_factory_create"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:42(link) xml/cut-ui.xml:7(refentrytitle)
-#: xml/cut-ui.xml:13(refname) xml/cut-ui.xml:25(link) xml/cut-ui.xml:34(link)
-#: xml/cut-ui.xml:37(link) xml/cut-ui.xml:62(primary)
-msgid "CutUI"
+#: xml/cut-module-factory.xml:48(link) xml/cut-module-factory.xml:273(primary)
+msgid "cut_module_factory_get_name"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:42(link) xml/cut-ui-factory.xml:202(primary)
-msgid "cut_ui_factory_create"
-msgstr ""
-
-#: xml/cut-ui-factory.xml:43(link) xml/cut-ui-factory.xml:216(primary)
-msgid "cut_ui_factory_get_name"
-msgstr ""
-
-#: xml/cut-ui-factory.xml:21(synopsis)
+#: xml/cut-module-factory.xml:21(synopsis)
 #, no-wrap
 msgid ""
 "\n"
-"\n"
-"\n"
-"\n"
 "                    <placeholder-1/>;\n"
-"<placeholder-2/>                <placeholder-3/>                 (void);\n"
-"<placeholder-4/>                <placeholder-5/>                 (void);\n"
+"<placeholder-2/>                <placeholder-3/>             (void);\n"
+"<placeholder-4/>                <placeholder-5/>             (void);\n"
 "const <placeholder-6/>*        <placeholder-7/>\n"
 "                                                        (void);\n"
 "<placeholder-8/>                <placeholder-9/>\n"
 "                                                        (const <placeholder-10/> *dir);\n"
-"<placeholder-11/>                <placeholder-12/>                 (const <placeholder-13/> *base_dir);\n"
-"<placeholder-14/>                <placeholder-15/>               (void);\n"
-"<placeholder-16/>*              <placeholder-17/> (void);\n"
-"<placeholder-18/>*              <placeholder-19/>      (void);\n"
-"<placeholder-20/>*              <placeholder-21/>            (void);\n"
-"<placeholder-22/>*       <placeholder-23/>                  (const <placeholder-24/> *name,\n"
-"                                                         const <placeholder-25/> *first_property,\n"
+"<placeholder-11/>                <placeholder-12/>             (const <placeholder-13/> *base_dir);\n"
+"<placeholder-14/>                <placeholder-15/>           (void);\n"
+"<placeholder-16/>*              <placeholder-17/>        (const <placeholder-18/> *type);\n"
+"<placeholder-19/>            <placeholder-20/>     (const <placeholder-21/> *type,\n"
+"                                                         const <placeholder-22/> *name);\n"
+"<placeholder-23/>                <placeholder-24/>\n"
+"                                                        (<placeholder-25/> *context);\n"
+"<placeholder-26/>*              <placeholder-27/>  (void);\n"
+"<placeholder-28/>*   <placeholder-29/>              (const <placeholder-30/> *type,\n"
+"                                                         const <placeholder-31/> *name,\n"
+"                                                         const <placeholder-32/> *first_property,\n"
 "                                                         ...);\n"
-"<placeholder-26/>                <placeholder-27/>     (<placeholder-28/> *factory,\n"
-"                                                         <placeholder-29/> *context);\n"
-"<placeholder-30/>*              <placeholder-31/>               (<placeholder-32/> *factory);\n"
-"const <placeholder-33/>*        <placeholder-34/>             (<placeholder-35/> *factory);\n"
-"\n"
+"<placeholder-33/>*   <placeholder-34/>       (const <placeholder-35/> *type,\n"
+"                                                         const <placeholder-36/> *name,\n"
+"                                                         const <placeholder-37/> *first_property,\n"
+"                                                         <placeholder-38/> var_args);\n"
+"<placeholder-39/>                <placeholder-40/> (<placeholder-41/> *factory,\n"
+"                                                         <placeholder-42/> *context);\n"
+"<placeholder-43/>*            <placeholder-44/>           (<placeholder-45/> *factory);\n"
+"const <placeholder-46/>*        <placeholder-47/>         (<placeholder-48/> *factory);\n"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:66(title)
-msgid "<anchor id=\"CutUIFactory\" role=\"struct\"/>CutUIFactory"
-msgstr ""
-
-#: xml/cut-ui-factory.xml:67(programlisting)
+#: xml/cut-module-factory.xml:71(programlisting)
 #, no-wrap
 msgid ""
 "typedef struct {\n"
 "    GObject object;\n"
-"} CutUIFactory;\n"
+"} CutModuleFactory;\n"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:75(title)
-msgid ""
-"<anchor id=\"cut-ui-factory-init\" role=\"function\"/>cut_ui_factory_init ()"
+#: xml/cut-module-factory.xml:79(title)
+msgid "cut_module_factory_init ()"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:76(programlisting)
+#: xml/cut-module-factory.xml:80(programlisting)
 #, no-wrap
-msgid "<link linkend=\"void\">void</link>                cut_ui_factory_init                 (void);"
+msgid "<link linkend=\"void\">void</link>                cut_module_factory_init             (void);"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:81(title)
-msgid ""
-"<anchor id=\"cut-ui-factory-quit\" role=\"function\"/>cut_ui_factory_quit ()"
+#: xml/cut-module-factory.xml:85(title)
+msgid "cut_module_factory_quit ()"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:82(programlisting)
+#: xml/cut-module-factory.xml:86(programlisting)
 #, no-wrap
-msgid "<link linkend=\"void\">void</link>                cut_ui_factory_quit                 (void);"
+msgid "<link linkend=\"void\">void</link>                cut_module_factory_quit             (void);"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:87(title)
-msgid ""
-"<anchor id=\"cut-ui-factory-get-default-module-dir\" role=\"function\"/"
-">cut_ui_factory_get_default_module_dir ()"
+#: xml/cut-module-factory.xml:91(title)
+msgid "cut_module_factory_get_default_module_dir ()"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:88(programlisting)
+#: xml/cut-module-factory.xml:92(programlisting)
 #, no-wrap
 msgid ""
-"const <link linkend=\"gchar\">gchar</link>*        cut_ui_factory_get_default_module_dir\n"
+"const <link linkend=\"gchar\">gchar</link>*        cut_module_factory_get_default_module_dir\n"
 "                                                        (void);"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:99(title)
-msgid ""
-"<anchor id=\"cut-ui-factory-set-default-module-dir\" role=\"function\"/"
-">cut_ui_factory_set_default_module_dir ()"
+#: xml/cut-module-factory.xml:103(title)
+msgid "cut_module_factory_set_default_module_dir ()"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:100(programlisting)
+#: xml/cut-module-factory.xml:104(programlisting)
 #, no-wrap
 msgid ""
-"<link linkend=\"void\">void</link>                cut_ui_factory_set_default_module_dir\n"
+"<link linkend=\"void\">void</link>                cut_module_factory_set_default_module_dir\n"
 "                                                        (const <link linkend=\"gchar\">gchar</link> *dir);"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:105(term) xml/cut-ui.xml:98(term)
+#: xml/cut-module-factory.xml:109(term) xml/cut-ui.xml:92(term)
 msgid "<parameter>dir</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:112(title)
-msgid ""
-"<anchor id=\"cut-ui-factory-load\" role=\"function\"/>cut_ui_factory_load ()"
+#: xml/cut-module-factory.xml:116(title)
+msgid "cut_module_factory_load ()"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:113(programlisting)
+#: xml/cut-module-factory.xml:117(programlisting)
 #, no-wrap
-msgid "<link linkend=\"void\">void</link>                cut_ui_factory_load                 (const <link linkend=\"gchar\">gchar</link> *base_dir);"
+msgid "<link linkend=\"void\">void</link>                cut_module_factory_load             (const <link linkend=\"gchar\">gchar</link> *base_dir);"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:117(term) xml/cut-ui.xml:110(term)
+#: xml/cut-module-factory.xml:121(term) xml/cut-report.xml:88(term)
+#: xml/cut-ui.xml:104(term)
 msgid "<parameter>base_dir</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:124(title)
-msgid ""
-"<anchor id=\"cut-ui-factory-unload\" role=\"function\"/"
-">cut_ui_factory_unload ()"
+#: xml/cut-module-factory.xml:128(title)
+msgid "cut_module_factory_unload ()"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:125(programlisting)
+#: xml/cut-module-factory.xml:129(programlisting)
 #, no-wrap
-msgid "<link linkend=\"void\">void</link>                cut_ui_factory_unload               (void);"
+msgid "<link linkend=\"void\">void</link>                cut_module_factory_unload           (void);"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:130(title)
-msgid ""
-"<anchor id=\"cut-ui-factory-get-registered-types\" role=\"function\"/"
-">cut_ui_factory_get_registered_types ()"
+#: xml/cut-module-factory.xml:134(title)
+msgid "cut_module_factory_get_names ()"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:131(programlisting)
+#: xml/cut-module-factory.xml:135(programlisting)
 #, no-wrap
-msgid "<link linkend=\"GList\">GList</link>*              cut_ui_factory_get_registered_types (void);"
+msgid "<link linkend=\"GList\">GList</link>*              cut_module_factory_get_names        (const <link linkend=\"gchar\">gchar</link> *type);"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:141(title)
-msgid ""
-"<anchor id=\"cut-ui-factory-get-log-domains\" role=\"function\"/"
-">cut_ui_factory_get_log_domains ()"
+#: xml/cut-module-factory.xml:139(term) xml/cut-module-factory.xml:154(term)
+#: xml/cut-module-factory.xml:198(term) xml/cut-module-factory.xml:224(term)
+msgid "<parameter>type</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:142(programlisting)
-#, no-wrap
-msgid "<link linkend=\"GList\">GList</link>*              cut_ui_factory_get_log_domains      (void);"
+#: xml/cut-module-factory.xml:148(title)
+msgid "cut_module_factory_exist_module ()"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:152(title)
-msgid ""
-"<anchor id=\"cut-ui-factory-get-names\" role=\"function\"/"
-">cut_ui_factory_get_names ()"
-msgstr ""
-
-#: xml/cut-ui-factory.xml:153(programlisting)
-#, no-wrap
-msgid "<link linkend=\"GList\">GList</link>*              cut_ui_factory_get_names            (void);"
-msgstr ""
-
-#: xml/cut-ui-factory.xml:163(title)
-msgid ""
-"<anchor id=\"cut-ui-factory-new\" role=\"function\"/>cut_ui_factory_new ()"
-msgstr ""
-
-#: xml/cut-ui-factory.xml:164(programlisting)
+#: xml/cut-module-factory.xml:149(programlisting)
 #, no-wrap
 msgid ""
-"<link linkend=\"CutUIFactory\">CutUIFactory</link>*       cut_ui_factory_new                  (const <link linkend=\"gchar\">gchar</link> *name,\n"
+"<link linkend=\"gboolean\">gboolean</link>            cut_module_factory_exist_module     (const <link linkend=\"gchar\">gchar</link> *type,\n"
+"                                                         const <link linkend=\"gchar\">gchar</link> *name);"
+msgstr ""
+
+#: xml/cut-module-factory.xml:157(term) xml/cut-module-factory.xml:201(term)
+#: xml/cut-module-factory.xml:227(term) xml/cut-report.xml:130(term)
+#: xml/cut-ui.xml:146(term)
+msgid "<parameter>name</parameter>&nbsp;:"
+msgstr ""
+
+#: xml/cut-module-factory.xml:166(title)
+msgid "cut_module_factory_set_option_context ()"
+msgstr ""
+
+#: xml/cut-module-factory.xml:167(programlisting)
+#, no-wrap
+msgid ""
+"<link linkend=\"void\">void</link>                cut_module_factory_set_option_context\n"
+"                                                        (<link linkend=\"GOptionContext\">GOptionContext</link> *context);"
+msgstr ""
+
+#: xml/cut-module-factory.xml:179(title)
+msgid "cut_module_factory_build_factories ()"
+msgstr ""
+
+#: xml/cut-module-factory.xml:180(programlisting)
+#, no-wrap
+msgid "<link linkend=\"GList\">GList</link>*              cut_module_factory_build_factories  (void);"
+msgstr ""
+
+#: xml/cut-module-factory.xml:190(title)
+msgid "cut_module_factory_new ()"
+msgstr ""
+
+#: xml/cut-module-factory.xml:191(programlisting)
+#, no-wrap
+msgid ""
+"<link linkend=\"CutModuleFactory\">CutModuleFactory</link>*   cut_module_factory_new              (const <link linkend=\"gchar\">gchar</link> *type,\n"
+"                                                         const <link linkend=\"gchar\">gchar</link> *name,\n"
 "                                                         const <link linkend=\"gchar\">gchar</link> *first_property,\n"
 "                                                         ...);"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:170(term) xml/cut-ui.xml:152(term)
-msgid "<parameter>name</parameter>&nbsp;:"
-msgstr ""
-
-#: xml/cut-ui-factory.xml:173(term) xml/cut-ui.xml:155(term)
+#: xml/cut-module-factory.xml:204(term) xml/cut-module-factory.xml:230(term)
+#: xml/cut-report.xml:133(term) xml/cut-ui.xml:149(term)
 msgid "<parameter>first_property</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:185(title)
-msgid ""
-"<anchor id=\"cut-ui-factory-set-option-group\" role=\"function\"/"
-">cut_ui_factory_set_option_group ()"
+#: xml/cut-module-factory.xml:216(title)
+msgid "cut_module_factory_new_valist ()"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:186(programlisting)
+#: xml/cut-module-factory.xml:217(programlisting)
 #, no-wrap
 msgid ""
-"<link linkend=\"void\">void</link>                cut_ui_factory_set_option_group     (<link linkend=\"CutUIFactory\">CutUIFactory</link> *factory,\n"
+"<link linkend=\"CutModuleFactory\">CutModuleFactory</link>*   cut_module_factory_new_valist       (const <link linkend=\"gchar\">gchar</link> *type,\n"
+"                                                         const <link linkend=\"gchar\">gchar</link> *name,\n"
+"                                                         const <link linkend=\"gchar\">gchar</link> *first_property,\n"
+"                                                         <link linkend=\"va-list\">va_list</link> var_args);"
+msgstr ""
+
+#: xml/cut-module-factory.xml:233(term)
+msgid "<parameter>var_args</parameter>&nbsp;:"
+msgstr ""
+
+#: xml/cut-module-factory.xml:242(title)
+msgid "cut_module_factory_set_option_group ()"
+msgstr ""
+
+#: xml/cut-module-factory.xml:243(programlisting)
+#, no-wrap
+msgid ""
+"<link linkend=\"void\">void</link>                cut_module_factory_set_option_group (<link linkend=\"CutModuleFactory\">CutModuleFactory</link> *factory,\n"
 "                                                         <link linkend=\"GOptionContext\">GOptionContext</link> *context);"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:191(term) xml/cut-ui-factory.xml:206(term)
-#: xml/cut-ui-factory.xml:220(term)
+#: xml/cut-module-factory.xml:248(term) xml/cut-module-factory.xml:263(term)
+#: xml/cut-module-factory.xml:277(term)
 msgid "<parameter>factory</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:194(term)
-msgid "<parameter>context</parameter>&nbsp;:"
+#: xml/cut-module-factory.xml:258(title)
+msgid "cut_module_factory_create ()"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:201(title)
-msgid ""
-"<anchor id=\"cut-ui-factory-create\" role=\"function\"/"
-">cut_ui_factory_create ()"
-msgstr ""
-
-#: xml/cut-ui-factory.xml:202(programlisting)
+#: xml/cut-module-factory.xml:259(programlisting)
 #, no-wrap
-msgid "<link linkend=\"CutUI\">CutUI</link>*              cut_ui_factory_create               (<link linkend=\"CutUIFactory\">CutUIFactory</link> *factory);"
+msgid "<link linkend=\"GObject\">GObject</link>*            cut_module_factory_create           (<link linkend=\"CutModuleFactory\">CutModuleFactory</link> *factory);"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:215(title)
-msgid ""
-"<anchor id=\"cut-ui-factory-get-name\" role=\"function\"/"
-">cut_ui_factory_get_name ()"
+#: xml/cut-module-factory.xml:272(title)
+msgid "cut_module_factory_get_name ()"
 msgstr ""
 
-#: xml/cut-ui-factory.xml:216(programlisting)
+#: xml/cut-module-factory.xml:273(programlisting)
 #, no-wrap
-msgid "const <link linkend=\"gchar\">gchar</link>*        cut_ui_factory_get_name             (<link linkend=\"CutUIFactory\">CutUIFactory</link> *factory);"
+msgid "const <link linkend=\"gchar\">gchar</link>*        cut_module_factory_get_name         (<link linkend=\"CutModuleFactory\">CutModuleFactory</link> *factory);"
 msgstr ""
 
-#: xml/cut-ui.xml:26(link) xml/cut-ui.xml:71(primary)
+#: xml/cut-module-impl.xml:7(refentrytitle)
+#: xml/cut-module-impl.xml:13(refname)
+msgid "cut-module-impl"
+msgstr ""
+
+#: xml/cut-module.xml:7(refentrytitle) xml/cut-module.xml:13(refname)
+msgid "CutModule"
+msgstr ""
+
+#: xml/cut-output.xml:7(refentrytitle) xml/cut-output.xml:13(refname)
+msgid "CutOutput"
+msgstr ""
+
+#: xml/cut-private.xml:7(refentrytitle) xml/cut-private.xml:13(refname)
+msgid "cut-private"
+msgstr ""
+
+#: xml/cut-public.xml:7(refentrytitle) xml/cut-public.xml:13(refname)
+msgid "cut-public"
+msgstr ""
+
+#: xml/cut-report-factory-builder.xml:7(refentrytitle)
+#: xml/cut-report-factory-builder.xml:13(refname)
+#: xml/cut-report-factory-builder.xml:22(link)
+#: xml/cut-report-factory-builder.xml:44(title)
+#: xml/cut-report-factory-builder.xml:45(primary)
+msgid "CutReportFactoryBuilder"
+msgstr ""
+
+#: xml/cut-report-factory-builder.xml:21(synopsis)
+#: xml/cut-ui-factory-builder.xml:21(synopsis)
+#, no-wrap
+msgid ""
+"\n"
+"                    <placeholder-1/>;\n"
+msgstr ""
+
+#: xml/cut-report-factory-builder.xml:45(programlisting)
+#, no-wrap
+msgid ""
+"typedef struct {\n"
+"    CutFactoryBuilder object;\n"
+"} CutReportFactoryBuilder;\n"
+msgstr ""
+
+#: xml/cut-report.xml:7(refentrytitle) xml/cut-report.xml:13(refname)
+#: xml/cut-report.xml:23(link) xml/cut-report.xml:28(link)
+#: xml/cut-report.xml:31(link) xml/cut-report.xml:32(link)
+#: xml/cut-report.xml:35(link) xml/cut-report.xml:36(link)
+#: xml/cut-report.xml:38(link) xml/cut-report.xml:39(link)
+#: xml/cut-report.xml:40(link) xml/cut-report.xml:41(link)
+#: xml/cut-report.xml:42(link) xml/cut-report.xml:74(title)
+#: xml/cut-report.xml:75(primary)
+msgid "CutReport"
+msgstr ""
+
+#: xml/cut-report.xml:22(link) xml/cut-report.xml:34(link)
+#: xml/cut-report.xml:65(primary)
+msgid "CutReportFileMode"
+msgstr ""
+
+#: xml/cut-report.xml:24(link) xml/cut-report.xml:84(primary)
+msgid "cut_report_load"
+msgstr ""
+
+#: xml/cut-report.xml:25(link) xml/cut-report.xml:96(primary)
+msgid "cut_report_unload"
+msgstr ""
+
+#: xml/cut-report.xml:26(link) xml/cut-report.xml:102(primary)
+msgid "cut_report_get_registered_types"
+msgstr ""
+
+#: xml/cut-report.xml:27(link) xml/cut-report.xml:113(primary)
+msgid "cut_report_get_log_domains"
+msgstr ""
+
+#: xml/cut-report.xml:28(link) xml/cut-report.xml:124(primary)
+msgid "cut_report_new"
+msgstr ""
+
+#: xml/cut-report.xml:31(link) xml/cut-report.xml:146(primary)
+msgid "cut_report_get_filename"
+msgstr ""
+
+#: xml/cut-report.xml:32(link) xml/cut-report.xml:160(primary)
+msgid "cut_report_result_to_file"
+msgstr ""
+
+#: xml/cut-report.xml:35(link) xml/cut-report.xml:182(primary)
+msgid "cut_report_get_all_results"
+msgstr ""
+
+#: xml/cut-report.xml:36(link) xml/cut-report.xml:196(primary)
+msgid "cut_report_get_test_result"
+msgstr ""
+
+#: xml/cut-report.xml:38(link) xml/cut-report.xml:214(primary)
+msgid "cut_report_get_success_results"
+msgstr ""
+
+#: xml/cut-report.xml:39(link) xml/cut-report.xml:228(primary)
+msgid "cut_report_get_error_results"
+msgstr ""
+
+#: xml/cut-report.xml:40(link) xml/cut-report.xml:242(primary)
+msgid "cut_report_get_failure_results"
+msgstr ""
+
+#: xml/cut-report.xml:41(link) xml/cut-report.xml:256(primary)
+msgid "cut_report_get_pending_results"
+msgstr ""
+
+#: xml/cut-report.xml:42(link) xml/cut-report.xml:270(primary)
+msgid "cut_report_get_notification_results"
+msgstr ""
+
+#: xml/cut-report.xml:21(synopsis)
+#, no-wrap
+msgid ""
+"\n"
+"enum                <placeholder-1/>;\n"
+"                    <placeholder-2/>;\n"
+"<placeholder-3/>                <placeholder-4/>                     (const <placeholder-5/> *base_dir);\n"
+"<placeholder-6/>                <placeholder-7/>                   (void);\n"
+"<placeholder-8/>*              <placeholder-9/>     (void);\n"
+"<placeholder-10/>*              <placeholder-11/>          (void);\n"
+"<placeholder-12/>*          <placeholder-13/>                      (const <placeholder-14/> *name,\n"
+"                                                         const <placeholder-15/> *first_property,\n"
+"                                                         ...);\n"
+"const <placeholder-16/>*        <placeholder-17/>             (<placeholder-18/> *report);\n"
+"<placeholder-19/>            <placeholder-20/>           (<placeholder-21/> *report,\n"
+"                                                         const <placeholder-22/> *filename,\n"
+"                                                         <placeholder-23/> mode);\n"
+"<placeholder-24/>*              <placeholder-25/>          (<placeholder-26/> *report);\n"
+"<placeholder-27/>*              <placeholder-28/>          (<placeholder-29/> *report,\n"
+"                                                         const <placeholder-30/> *test_name);\n"
+"<placeholder-31/>*              <placeholder-32/>      (<placeholder-33/> *report);\n"
+"<placeholder-34/>*              <placeholder-35/>        (<placeholder-36/> *report);\n"
+"<placeholder-37/>*              <placeholder-38/>      (<placeholder-39/> *report);\n"
+"<placeholder-40/>*              <placeholder-41/>      (<placeholder-42/> *report);\n"
+"<placeholder-43/>*              <placeholder-44/> (<placeholder-45/> *report);\n"
+msgstr ""
+
+#: xml/cut-report.xml:64(title)
+msgid "enum CutReportFileMode"
+msgstr ""
+
+#: xml/cut-report.xml:65(programlisting)
+#, no-wrap
+msgid ""
+"typedef enum {\n"
+"    CUT_REPORT_FILE_OVERWRITE,\n"
+"    CUT_REPORT_FILE_APPEND\n"
+"} CutReportFileMode;\n"
+msgstr ""
+
+#: xml/cut-report.xml:75(programlisting)
+#, no-wrap
+msgid ""
+"typedef struct {\n"
+"    CutListener object;\n"
+"} CutReport;\n"
+msgstr ""
+
+#: xml/cut-report.xml:83(title)
+msgid "cut_report_load ()"
+msgstr ""
+
+#: xml/cut-report.xml:84(programlisting)
+#, no-wrap
+msgid "<link linkend=\"void\">void</link>                cut_report_load                     (const <link linkend=\"gchar\">gchar</link> *base_dir);"
+msgstr ""
+
+#: xml/cut-report.xml:95(title)
+msgid "cut_report_unload ()"
+msgstr ""
+
+#: xml/cut-report.xml:96(programlisting)
+#, no-wrap
+msgid "<link linkend=\"void\">void</link>                cut_report_unload                   (void);"
+msgstr ""
+
+#: xml/cut-report.xml:101(title)
+msgid "cut_report_get_registered_types ()"
+msgstr ""
+
+#: xml/cut-report.xml:102(programlisting)
+#, no-wrap
+msgid "<link linkend=\"GList\">GList</link>*              cut_report_get_registered_types     (void);"
+msgstr ""
+
+#: xml/cut-report.xml:112(title)
+msgid "cut_report_get_log_domains ()"
+msgstr ""
+
+#: xml/cut-report.xml:113(programlisting)
+#, no-wrap
+msgid "<link linkend=\"GList\">GList</link>*              cut_report_get_log_domains          (void);"
+msgstr ""
+
+#: xml/cut-report.xml:123(title)
+msgid "cut_report_new ()"
+msgstr ""
+
+#: xml/cut-report.xml:124(programlisting)
+#, no-wrap
+msgid ""
+"<link linkend=\"CutReport\">CutReport</link>*          cut_report_new                      (const <link linkend=\"gchar\">gchar</link> *name,\n"
+"                                                         const <link linkend=\"gchar\">gchar</link> *first_property,\n"
+"                                                         ...);"
+msgstr ""
+
+#: xml/cut-report.xml:145(title)
+msgid "cut_report_get_filename ()"
+msgstr ""
+
+#: xml/cut-report.xml:146(programlisting)
+#, no-wrap
+msgid "const <link linkend=\"gchar\">gchar</link>*        cut_report_get_filename             (<link linkend=\"CutReport\">CutReport</link> *report);"
+msgstr ""
+
+#: xml/cut-report.xml:150(term) xml/cut-report.xml:166(term)
+#: xml/cut-report.xml:186(term) xml/cut-report.xml:201(term)
+#: xml/cut-report.xml:218(term) xml/cut-report.xml:232(term)
+#: xml/cut-report.xml:246(term) xml/cut-report.xml:260(term)
+#: xml/cut-report.xml:274(term)
+msgid "<parameter>report</parameter>&nbsp;:"
+msgstr ""
+
+#: xml/cut-report.xml:159(title)
+msgid "cut_report_result_to_file ()"
+msgstr ""
+
+#: xml/cut-report.xml:160(programlisting)
+#, no-wrap
+msgid ""
+"<link linkend=\"gboolean\">gboolean</link>            cut_report_result_to_file           (<link linkend=\"CutReport\">CutReport</link> *report,\n"
+"                                                         const <link linkend=\"gchar\">gchar</link> *filename,\n"
+"                                                         <link linkend=\"CutReportFileMode\">CutReportFileMode</link> mode);"
+msgstr ""
+
+#: xml/cut-report.xml:169(term)
+msgid "<parameter>filename</parameter>&nbsp;:"
+msgstr ""
+
+#: xml/cut-report.xml:172(term)
+msgid "<parameter>mode</parameter>&nbsp;:"
+msgstr ""
+
+#: xml/cut-report.xml:181(title)
+msgid "cut_report_get_all_results ()"
+msgstr ""
+
+#: xml/cut-report.xml:182(programlisting)
+#, no-wrap
+msgid "<link linkend=\"gchar\">gchar</link>*              cut_report_get_all_results          (<link linkend=\"CutReport\">CutReport</link> *report);"
+msgstr ""
+
+#: xml/cut-report.xml:195(title)
+msgid "cut_report_get_test_result ()"
+msgstr ""
+
+#: xml/cut-report.xml:196(programlisting)
+#, no-wrap
+msgid ""
+"<link linkend=\"gchar\">gchar</link>*              cut_report_get_test_result          (<link linkend=\"CutReport\">CutReport</link> *report,\n"
+"                                                         const <link linkend=\"gchar\">gchar</link> *test_name);"
+msgstr ""
+
+#: xml/cut-report.xml:204(term)
+msgid "<parameter>test_name</parameter>&nbsp;:"
+msgstr ""
+
+#: xml/cut-report.xml:213(title)
+msgid "cut_report_get_success_results ()"
+msgstr ""
+
+#: xml/cut-report.xml:214(programlisting)
+#, no-wrap
+msgid "<link linkend=\"gchar\">gchar</link>*              cut_report_get_success_results      (<link linkend=\"CutReport\">CutReport</link> *report);"
+msgstr ""
+
+#: xml/cut-report.xml:227(title)
+msgid "cut_report_get_error_results ()"
+msgstr ""
+
+#: xml/cut-report.xml:228(programlisting)
+#, no-wrap
+msgid "<link linkend=\"gchar\">gchar</link>*              cut_report_get_error_results        (<link linkend=\"CutReport\">CutReport</link> *report);"
+msgstr ""
+
+#: xml/cut-report.xml:241(title)
+msgid "cut_report_get_failure_results ()"
+msgstr ""
+
+#: xml/cut-report.xml:242(programlisting)
+#, no-wrap
+msgid "<link linkend=\"gchar\">gchar</link>*              cut_report_get_failure_results      (<link linkend=\"CutReport\">CutReport</link> *report);"
+msgstr ""
+
+#: xml/cut-report.xml:255(title)
+msgid "cut_report_get_pending_results ()"
+msgstr ""
+
+#: xml/cut-report.xml:256(programlisting)
+#, no-wrap
+msgid "<link linkend=\"gchar\">gchar</link>*              cut_report_get_pending_results      (<link linkend=\"CutReport\">CutReport</link> *report);"
+msgstr ""
+
+#: xml/cut-report.xml:269(title)
+msgid "cut_report_get_notification_results ()"
+msgstr ""
+
+#: xml/cut-report.xml:270(programlisting)
+#, no-wrap
+msgid "<link linkend=\"gchar\">gchar</link>*              cut_report_get_notification_results (<link linkend=\"CutReport\">CutReport</link> *report);"
+msgstr ""
+
+#: xml/cut-repository.xml:7(refentrytitle) xml/cut-repository.xml:13(refname)
+msgid "CutRepository"
+msgstr ""
+
+#: xml/cut-test-case.xml:7(refentrytitle) xml/cut-test-case.xml:13(refname)
+msgid "CutTestCase"
+msgstr ""
+
+#: xml/cut-test-container.xml:7(refentrytitle)
+#: xml/cut-test-container.xml:13(refname)
+msgid "CutTestContainer"
+msgstr ""
+
+#: xml/cut-test-context.xml:7(refentrytitle)
+#: xml/cut-test-context.xml:13(refname)
+msgid "CutTestContext"
+msgstr ""
+
+#: xml/cut-test-result.xml:7(refentrytitle)
+#: xml/cut-test-result.xml:13(refname)
+msgid "CutTestResult"
+msgstr ""
+
+#: xml/cut-test-suite.xml:7(refentrytitle) xml/cut-test-suite.xml:13(refname)
+msgid "CutTestSuite"
+msgstr ""
+
+#: xml/cut-test.xml:7(refentrytitle) xml/cut-test.xml:13(refname)
+msgid "CutTest"
+msgstr ""
+
+#: xml/cut-ui-factory-builder.xml:7(refentrytitle)
+#: xml/cut-ui-factory-builder.xml:13(refname)
+#: xml/cut-ui-factory-builder.xml:22(link)
+#: xml/cut-ui-factory-builder.xml:44(title)
+#: xml/cut-ui-factory-builder.xml:45(primary)
+msgid "CutUIFactoryBuilder"
+msgstr ""
+
+#: xml/cut-ui-factory-builder.xml:45(programlisting)
+#, no-wrap
+msgid ""
+"typedef struct {\n"
+"    CutFactoryBuilder object;\n"
+"} CutUIFactoryBuilder;\n"
+msgstr ""
+
+#: xml/cut-ui-factory.xml:7(refentrytitle) xml/cut-ui-factory.xml:13(refname)
+msgid "CutUIFactory"
+msgstr ""
+
+#: xml/cut-ui.xml:7(refentrytitle) xml/cut-ui.xml:13(refname)
+#: xml/cut-ui.xml:22(link) xml/cut-ui.xml:31(link) xml/cut-ui.xml:55(title)
+#: xml/cut-ui.xml:56(primary)
+msgid "CutUI"
+msgstr ""
+
+#: xml/cut-ui.xml:23(link) xml/cut-ui.xml:65(primary)
 msgid "cut_ui_init"
 msgstr ""
 
-#: xml/cut-ui.xml:27(link) xml/cut-ui.xml:77(primary)
+#: xml/cut-ui.xml:24(link) xml/cut-ui.xml:71(primary)
 msgid "cut_ui_quit"
 msgstr ""
 
-#: xml/cut-ui.xml:28(link) xml/cut-ui.xml:83(primary)
+#: xml/cut-ui.xml:25(link) xml/cut-ui.xml:77(primary)
 msgid "cut_ui_get_default_module_dir"
 msgstr ""
 
-#: xml/cut-ui.xml:29(link) xml/cut-ui.xml:94(primary)
+#: xml/cut-ui.xml:26(link) xml/cut-ui.xml:88(primary)
 msgid "cut_ui_set_default_module_dir"
 msgstr ""
 
-#: xml/cut-ui.xml:30(link) xml/cut-ui.xml:106(primary)
+#: xml/cut-ui.xml:27(link) xml/cut-ui.xml:100(primary)
 msgid "cut_ui_load"
 msgstr ""
 
-#: xml/cut-ui.xml:31(link) xml/cut-ui.xml:118(primary)
+#: xml/cut-ui.xml:28(link) xml/cut-ui.xml:112(primary)
 msgid "cut_ui_unload"
 msgstr ""
 
-#: xml/cut-ui.xml:32(link) xml/cut-ui.xml:124(primary)
+#: xml/cut-ui.xml:29(link) xml/cut-ui.xml:118(primary)
 msgid "cut_ui_get_registered_types"
 msgstr ""
 
-#: xml/cut-ui.xml:33(link) xml/cut-ui.xml:135(primary)
+#: xml/cut-ui.xml:30(link) xml/cut-ui.xml:129(primary)
 msgid "cut_ui_get_log_domains"
 msgstr ""
 
-#: xml/cut-ui.xml:34(link) xml/cut-ui.xml:146(primary)
+#: xml/cut-ui.xml:31(link) xml/cut-ui.xml:140(primary)
 msgid "cut_ui_new"
-msgstr ""
-
-#: xml/cut-ui.xml:37(link) xml/cut-ui.xml:168(primary)
-msgid "cut_ui_run"
 msgstr ""
 
 #: xml/cut-ui.xml:21(synopsis)
 #, no-wrap
 msgid ""
-"\n"
-"\n"
-"\n"
 "\n"
 "                    <placeholder-1/>;\n"
 "<placeholder-2/>                <placeholder-3/>                         (void);\n"
@@ -1324,108 +2046,93 @@ msgid ""
 "<placeholder-20/>*              <placeholder-21/>                          (const <placeholder-22/> *name,\n"
 "                                                         const <placeholder-23/> *first_property,\n"
 "                                                         ...);\n"
-"<placeholder-24/>            <placeholder-25/>                          (<placeholder-26/> *ui,\n"
-"                                                         <placeholder-27/> *runner);\n"
-"\n"
 msgstr ""
 
-#: xml/cut-ui.xml:61(title)
-msgid "<anchor id=\"CutUI\" role=\"struct\"/>CutUI"
-msgstr ""
-
-#: xml/cut-ui.xml:62(programlisting)
+#: xml/cut-ui.xml:56(programlisting)
 #, no-wrap
 msgid ""
 "typedef struct {\n"
-"    GObject object;\n"
+"    CutListener object;\n"
 "} CutUI;\n"
 msgstr ""
 
-#: xml/cut-ui.xml:70(title)
-msgid "<anchor id=\"cut-ui-init\" role=\"function\"/>cut_ui_init ()"
+#: xml/cut-ui.xml:64(title)
+msgid "cut_ui_init ()"
 msgstr ""
 
-#: xml/cut-ui.xml:71(programlisting)
+#: xml/cut-ui.xml:65(programlisting)
 #, no-wrap
 msgid "<link linkend=\"void\">void</link>                cut_ui_init                         (void);"
 msgstr ""
 
-#: xml/cut-ui.xml:76(title)
-msgid "<anchor id=\"cut-ui-quit\" role=\"function\"/>cut_ui_quit ()"
+#: xml/cut-ui.xml:70(title)
+msgid "cut_ui_quit ()"
 msgstr ""
 
-#: xml/cut-ui.xml:77(programlisting)
+#: xml/cut-ui.xml:71(programlisting)
 #, no-wrap
 msgid "<link linkend=\"void\">void</link>                cut_ui_quit                         (void);"
 msgstr ""
 
-#: xml/cut-ui.xml:82(title)
-msgid ""
-"<anchor id=\"cut-ui-get-default-module-dir\" role=\"function\"/"
-">cut_ui_get_default_module_dir ()"
+#: xml/cut-ui.xml:76(title)
+msgid "cut_ui_get_default_module_dir ()"
 msgstr ""
 
-#: xml/cut-ui.xml:83(programlisting)
+#: xml/cut-ui.xml:77(programlisting)
 #, no-wrap
 msgid "const <link linkend=\"gchar\">gchar</link>*        cut_ui_get_default_module_dir       (void);"
 msgstr ""
 
-#: xml/cut-ui.xml:93(title)
-msgid ""
-"<anchor id=\"cut-ui-set-default-module-dir\" role=\"function\"/"
-">cut_ui_set_default_module_dir ()"
+#: xml/cut-ui.xml:87(title)
+msgid "cut_ui_set_default_module_dir ()"
 msgstr ""
 
-#: xml/cut-ui.xml:94(programlisting)
+#: xml/cut-ui.xml:88(programlisting)
 #, no-wrap
 msgid "<link linkend=\"void\">void</link>                cut_ui_set_default_module_dir       (const <link linkend=\"gchar\">gchar</link> *dir);"
 msgstr ""
 
-#: xml/cut-ui.xml:105(title)
-msgid "<anchor id=\"cut-ui-load\" role=\"function\"/>cut_ui_load ()"
+#: xml/cut-ui.xml:99(title)
+msgid "cut_ui_load ()"
 msgstr ""
 
-#: xml/cut-ui.xml:106(programlisting)
+#: xml/cut-ui.xml:100(programlisting)
 #, no-wrap
 msgid "<link linkend=\"void\">void</link>                cut_ui_load                         (const <link linkend=\"gchar\">gchar</link> *base_dir);"
 msgstr ""
 
-#: xml/cut-ui.xml:117(title)
-msgid "<anchor id=\"cut-ui-unload\" role=\"function\"/>cut_ui_unload ()"
+#: xml/cut-ui.xml:111(title)
+msgid "cut_ui_unload ()"
 msgstr ""
 
-#: xml/cut-ui.xml:118(programlisting)
+#: xml/cut-ui.xml:112(programlisting)
 #, no-wrap
 msgid "<link linkend=\"void\">void</link>                cut_ui_unload                       (void);"
 msgstr ""
 
-#: xml/cut-ui.xml:123(title)
-msgid ""
-"<anchor id=\"cut-ui-get-registered-types\" role=\"function\"/"
-">cut_ui_get_registered_types ()"
+#: xml/cut-ui.xml:117(title)
+msgid "cut_ui_get_registered_types ()"
 msgstr ""
 
-#: xml/cut-ui.xml:124(programlisting)
+#: xml/cut-ui.xml:118(programlisting)
 #, no-wrap
 msgid "<link linkend=\"GList\">GList</link>*              cut_ui_get_registered_types         (void);"
 msgstr ""
 
-#: xml/cut-ui.xml:134(title)
-msgid ""
-"<anchor id=\"cut-ui-get-log-domains\" role=\"function\"/"
-">cut_ui_get_log_domains ()"
+#: xml/cut-ui.xml:128(title)
+msgid "cut_ui_get_log_domains ()"
 msgstr ""
 
-#: xml/cut-ui.xml:135(programlisting)
+#: xml/cut-ui.xml:129(programlisting)
 #, no-wrap
 msgid "<link linkend=\"GList\">GList</link>*              cut_ui_get_log_domains              (void);"
 msgstr ""
 
-#: xml/cut-ui.xml:145(title)
-msgid "<anchor id=\"cut-ui-new\" role=\"function\"/>cut_ui_new ()"
+#: xml/cut-ui.xml:139(title)
+msgid "cut_ui_new ()"
 msgstr ""
 
-#: xml/cut-ui.xml:146(programlisting)
+#: xml/cut-ui.xml:140(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"CutUI\">CutUI</link>*              cut_ui_new                          (const <link linkend=\"gchar\">gchar</link> *name,\n"
@@ -1433,19 +2140,8 @@ msgid ""
 "                                                         ...);"
 msgstr ""
 
-#: xml/cut-ui.xml:167(title)
-msgid "<anchor id=\"cut-ui-run\" role=\"function\"/>cut_ui_run ()"
-msgstr ""
-
-#: xml/cut-ui.xml:168(programlisting)
-#, no-wrap
-msgid ""
-"<link linkend=\"gboolean\">gboolean</link>            cut_ui_run                          (<link linkend=\"CutUI\">CutUI</link> *ui,\n"
-"                                                         <link linkend=\"CutRunner\">CutRunner</link> *runner);"
-msgstr ""
-
-#: xml/cut-ui.xml:173(term)
-msgid "<parameter>ui</parameter>&nbsp;:"
+#: xml/cut-utils.xml:7(refentrytitle) xml/cut-utils.xml:13(refname)
+msgid "cut-utils"
 msgstr ""
 
 #: xml/cut-value-equal.xml:7(refentrytitle)
@@ -1453,27 +2149,27 @@ msgstr ""
 msgid "cut-value-equal"
 msgstr ""
 
-#: xml/cut-value-equal.xml:25(link) xml/cut-value-equal.xml:53(primary)
+#: xml/cut-value-equal.xml:22(link) xml/cut-value-equal.xml:50(primary)
 msgid "cut_value_equal_init"
 msgstr ""
 
-#: xml/cut-value-equal.xml:26(link) xml/cut-value-equal.xml:59(primary)
+#: xml/cut-value-equal.xml:23(link) xml/cut-value-equal.xml:56(primary)
 msgid "cut_value_equal"
 msgstr ""
 
-#: xml/cut-value-equal.xml:26(link) xml/cut-value-equal.xml:27(link)
+#: xml/cut-value-equal.xml:23(link) xml/cut-value-equal.xml:24(link)
 msgid "GValue"
 msgstr ""
 
-#: xml/cut-value-equal.xml:28(link) xml/cut-value-equal.xml:77(primary)
+#: xml/cut-value-equal.xml:25(link) xml/cut-value-equal.xml:74(primary)
 msgid "cut_value_register_equal_func"
 msgstr ""
 
-#: xml/cut-value-equal.xml:28(link) xml/cut-value-equal.xml:29(link)
+#: xml/cut-value-equal.xml:25(link) xml/cut-value-equal.xml:26(link)
 msgid "GType"
 msgstr ""
 
-#: xml/cut-value-equal.xml:30(link)
+#: xml/cut-value-equal.xml:27(link)
 msgid "GEqualFunc"
 msgstr ""
 
@@ -1481,54 +2177,47 @@ msgstr ""
 #, no-wrap
 msgid ""
 "\n"
-"\n"
-"\n"
-"\n"
 "<placeholder-1/>                <placeholder-2/>                (void);\n"
-"<placeholder-3/>            <placeholder-4/>                     (<placeholder-5/> *value1,\n"
-"                                                         <placeholder-6/> *value2);\n"
+"<placeholder-3/>            <placeholder-4/>                     (const <placeholder-5/> *value1,\n"
+"                                                         const <placeholder-6/> *value2);\n"
 "<placeholder-7/>                <placeholder-8/>       (<placeholder-9/> type1,\n"
 "                                                         <placeholder-10/> type2,\n"
 "                                                         <placeholder-11/> equal_func);\n"
 msgstr ""
 
-#: xml/cut-value-equal.xml:52(title)
-msgid ""
-"<anchor id=\"cut-value-equal-init\" role=\"function\"/>cut_value_equal_init "
-"()"
+#: xml/cut-value-equal.xml:49(title)
+msgid "cut_value_equal_init ()"
 msgstr ""
 
-#: xml/cut-value-equal.xml:53(programlisting)
+#: xml/cut-value-equal.xml:50(programlisting)
 #, no-wrap
 msgid "<link linkend=\"void\">void</link>                cut_value_equal_init                (void);"
 msgstr ""
 
-#: xml/cut-value-equal.xml:58(title)
-msgid "<anchor id=\"cut-value-equal\" role=\"function\"/>cut_value_equal ()"
+#: xml/cut-value-equal.xml:55(title)
+msgid "cut_value_equal ()"
 msgstr ""
 
-#: xml/cut-value-equal.xml:59(programlisting)
+#: xml/cut-value-equal.xml:56(programlisting)
 #, no-wrap
 msgid ""
-"<link linkend=\"gboolean\">gboolean</link>            cut_value_equal                     (<link linkend=\"GValue\">GValue</link> *value1,\n"
-"                                                         <link linkend=\"GValue\">GValue</link> *value2);"
+"<link linkend=\"gboolean\">gboolean</link>            cut_value_equal                     (const <link linkend=\"GValue\">GValue</link> *value1,\n"
+"                                                         const <link linkend=\"GValue\">GValue</link> *value2);"
 msgstr ""
 
-#: xml/cut-value-equal.xml:64(term)
+#: xml/cut-value-equal.xml:61(term)
 msgid "<parameter>value1</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-value-equal.xml:67(term)
+#: xml/cut-value-equal.xml:64(term)
 msgid "<parameter>value2</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-value-equal.xml:76(title)
-msgid ""
-"<anchor id=\"cut-value-register-equal-func\" role=\"function\"/"
-">cut_value_register_equal_func ()"
+#: xml/cut-value-equal.xml:73(title)
+msgid "cut_value_register_equal_func ()"
 msgstr ""
 
-#: xml/cut-value-equal.xml:77(programlisting)
+#: xml/cut-value-equal.xml:74(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"void\">void</link>                cut_value_register_equal_func       (<link linkend=\"GType\">GType</link> type1,\n"
@@ -1536,16 +2225,21 @@ msgid ""
 "                                                         <link linkend=\"GEqualFunc\">GEqualFunc</link> equal_func);"
 msgstr ""
 
-#: xml/cut-value-equal.xml:83(term)
+#: xml/cut-value-equal.xml:80(term)
 msgid "<parameter>type1</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-value-equal.xml:86(term)
+#: xml/cut-value-equal.xml:83(term)
 msgid "<parameter>type2</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-value-equal.xml:89(term)
+#: xml/cut-value-equal.xml:86(term)
 msgid "<parameter>equal_func</parameter>&nbsp;:"
+msgstr ""
+
+#: xml/cut-verbose-level.xml:7(refentrytitle)
+#: xml/cut-verbose-level.xml:13(refname)
+msgid "cut-verbose-level"
 msgstr ""
 
 #: xml/cutter.xml:7(refentrytitle) xml/cutter.xml:13(refname)
@@ -1556,26 +2250,33 @@ msgstr ""
 msgid "An Unit Testing Framework for C."
 msgstr "C言語用単体テストフレームワーク"
 
-#: xml/cutter.xml:25(link) xml/cutter.xml:147(primary)
+#: xml/cutter.xml:22(link) xml/cutter.xml:146(primary)
 msgid "setup"
 msgstr ""
 
-#: xml/cutter.xml:26(link) xml/cutter.xml:156(primary)
+#: xml/cutter.xml:23(link) xml/cutter.xml:155(primary)
 msgid "teardown"
+msgstr ""
+
+#: xml/cutter.xml:24(link) xml/cutter.xml:165(primary)
+msgid "initialize"
+msgstr ""
+
+#: xml/cutter.xml:25(link) xml/cutter.xml:174(primary)
+msgid "finalize"
 msgstr ""
 
 #: xml/cutter.xml:21(synopsis)
 #, no-wrap
 msgid ""
 "\n"
-"\n"
-"\n"
-"\n"
 "<placeholder-1/>                <placeholder-2/>                               (void);\n"
 "<placeholder-3/>                <placeholder-4/>                            (void);\n"
+"<placeholder-5/>                <placeholder-6/>                          (void);\n"
+"<placeholder-7/>                <placeholder-8/>                            (void);\n"
 msgstr ""
 
-#: xml/cutter.xml:50(programlisting)
+#: xml/cutter.xml:49(programlisting)
 #, no-wrap
 msgid ""
 "\n"
@@ -1608,7 +2309,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: xml/cutter.xml:44(para)
+#: xml/cutter.xml:43(para)
 msgid ""
 "Easy to use. Cutter doesn't introduce any magic macros like "
 "CUTTER_DEFINE_TEST_START and CUTTER_DEFINE_TEST_END into your test program. "
@@ -1623,7 +2324,7 @@ msgstr ""
 "XXX\"><function>cut_assert_XXX()</function></link>を使う必要があります。"
 "<placeholder-1/>"
 
-#: xml/cutter.xml:84(programlisting)
+#: xml/cutter.xml:83(programlisting)
 #, no-wrap
 msgid ""
 "\n"
@@ -1634,7 +2335,7 @@ msgid ""
 "59 test(s), 246 assertion(s), 0 failure(s), 0 error(s), 0 pending(s), 0 notification(s)\n"
 msgstr ""
 
-#: xml/cutter.xml:80(para)
+#: xml/cutter.xml:79(para)
 msgid ""
 "Simple but useful output. Cutter works quietly if tests are running without "
 "any problems by default. The following is an output of self test: "
@@ -1649,7 +2350,7 @@ msgstr ""
 "かなどの情報は表示しません。これは、テスト成功時にはこれらの情報は必要ないか"
 "らです。"
 
-#: xml/cutter.xml:97(programlisting)
+#: xml/cutter.xml:96(programlisting)
 #, no-wrap
 msgid ""
 "\n"
@@ -1666,14 +2367,14 @@ msgid ""
 "59 test(s), 242 assertion(s), 1 failure(s), 0 error(s), 0 pending(s), 0 notification(s)\n"
 msgstr ""
 
-#: xml/cutter.xml:112(programlisting)
+#: xml/cutter.xml:111(programlisting)
 #, no-wrap
 msgid ""
 "\n"
 "cut_assert_equal_string(\"Strange!!!\", cut_test_result_get_test_name(result));\n"
 msgstr ""
 
-#: xml/cutter.xml:95(para)
+#: xml/cutter.xml:94(para)
 msgid ""
 "Cutter outputs many information on failure: <placeholder-1/> The above "
 "result is happened because I add a strange expected staring in Cutter's self "
@@ -1695,7 +2396,7 @@ msgstr ""
 "上記のCutterの出力から得ることができます。これはデバッグの手助けになるでしょ"
 "う。"
 
-#: xml/cutter.xml:123(para)
+#: xml/cutter.xml:122(para)
 msgid ""
 "Cutter's output format is pragmatic. ' but was:' is indented and aligned "
 "with the above 'expected:'. This helps that you find difference between "
@@ -1713,13 +2414,13 @@ msgstr ""
 "「行」へジャンプすることができます。これは問題行を素早く見つける手助けをしま"
 "す。"
 
-#: xml/cutter.xml:133(para)
+#: xml/cutter.xml:132(para)
 msgid "Cutter supports not only easy test writing but also easy debugging."
 msgstr ""
 "Cutterは簡単にテストを書くことを支援するだけではなく、簡単にデバッグをできる"
 "ことも支援します。"
 
-#: xml/cutter.xml:40(para)
+#: xml/cutter.xml:39(para)
 msgid ""
 "Cutter is an Unit Testing Framework for C and has the following features: "
 "<placeholder-1/>"
@@ -1727,16 +2428,16 @@ msgstr ""
 "Cutterは以下のような特徴をもったC用の単体テストフレームワークです。"
 "<placeholder-1/>"
 
-#: xml/cutter.xml:146(title)
-msgid "<anchor id=\"setup\" role=\"function\"/>setup ()"
+#: xml/cutter.xml:145(title)
+msgid "setup ()"
 msgstr ""
 
-#: xml/cutter.xml:147(programlisting)
+#: xml/cutter.xml:146(programlisting)
 #, no-wrap
 msgid "<link linkend=\"void\">void</link>                setup                               (void);"
 msgstr ""
 
-#: xml/cutter.xml:148(para)
+#: xml/cutter.xml:147(para)
 msgid ""
 "If you define <link linkend=\"setup\"><function>setup()</function></link> in "
 "your test program, cutter will call your <link linkend=\"setup"
@@ -1746,16 +2447,16 @@ msgstr ""
 "link>を定義していたら、cutterは各テストが実行される前に定義された<link "
 "linkend=\"setup\"><function>setup()</function></link>を呼びだします。"
 
-#: xml/cutter.xml:155(title)
-msgid "<anchor id=\"teardown\" role=\"function\"/>teardown ()"
+#: xml/cutter.xml:154(title)
+msgid "teardown ()"
 msgstr ""
 
-#: xml/cutter.xml:156(programlisting)
+#: xml/cutter.xml:155(programlisting)
 #, no-wrap
 msgid "<link linkend=\"void\">void</link>                teardown                            (void);"
 msgstr ""
 
-#: xml/cutter.xml:157(para)
+#: xml/cutter.xml:156(para)
 msgid ""
 "If you define <link linkend=\"teardown\"><function>teardown()</function></"
 "link> in your test program, cutter will call your <link linkend=\"teardown"
@@ -1767,7 +2468,48 @@ msgstr ""
 "していた時でも、<link linkend=\"teardown\"><function>teardown()</function></"
 "link>を呼びだします。"
 
-#: xml/cutter.xml:170(title)
+#: xml/cutter.xml:164(title)
+msgid "initialize ()"
+msgstr ""
+
+#: xml/cutter.xml:165(programlisting)
+#, no-wrap
+msgid "<link linkend=\"void\">void</link>                initialize                          (void);"
+msgstr ""
+
+#: xml/cutter.xml:166(para)
+msgid ""
+"If you define <link linkend=\"initialize\"><function>initialize()</"
+"function></link> in your test program, cutter will call your <link linkend="
+"\"initialize\"><function>initialize()</function></link> before each your "
+"test case is run."
+msgstr ""
+"テストプログラム中で<link linkend=\"initialize\"><function>initialize()</"
+"function></link>を定義していたら、cutterは各テストケースが実行される前に定義"
+"された<link linkend=\"initialize\"><function>initialize()</function></link>を"
+"呼びだします。"
+
+#: xml/cutter.xml:173(title)
+msgid "finalize ()"
+msgstr ""
+
+#: xml/cutter.xml:174(programlisting)
+#, no-wrap
+msgid "<link linkend=\"void\">void</link>                finalize                            (void);"
+msgstr ""
+
+#: xml/cutter.xml:175(para)
+msgid ""
+"If you define <link linkend=\"finalize\"><function>finalize()</function></"
+"link> in your test program, cutter will call your <link linkend=\"finalize"
+"\"><function>finalize()</function></link> after each your test case is run."
+msgstr ""
+"テストプログラム中で<link linkend=\"finalize\"><function>finalize()</"
+"function></link>を定義していたら、cutterは各テストケースが実行された後に定義"
+"された<link linkend=\"finalize\"><function>finalize()</function></link>を呼び"
+"だします。"
+
+#: xml/cutter.xml:187(title)
 msgid "See Also"
 msgstr "参考"
 
@@ -1775,76 +2517,73 @@ msgstr "参考"
 msgid "gbsearcharray"
 msgstr ""
 
-#: xml/gbsearcharray.xml:25(link) xml/gbsearcharray.xml:58(primary)
+#: xml/gbsearcharray.xml:22(link) xml/gbsearcharray.xml:55(primary)
 msgid "G_BSEARCH_ARRAY_CMP"
 msgstr ""
 
-#: xml/gbsearcharray.xml:26(link)
+#: xml/gbsearcharray.xml:23(link)
 msgid "gint"
 msgstr ""
 
-#: xml/gbsearcharray.xml:26(link)
+#: xml/gbsearcharray.xml:23(link)
 msgid "*GBSearchCompareFunc"
 msgstr ""
 
-#: xml/gbsearcharray.xml:26(link)
+#: xml/gbsearcharray.xml:23(link)
 msgid "gconstpointer"
 msgstr ""
 
-#: xml/gbsearcharray.xml:27(link) xml/gbsearcharray.xml:88(primary)
+#: xml/gbsearcharray.xml:24(link) xml/gbsearcharray.xml:85(primary)
 msgid "GBSearchArrayFlags"
 msgstr ""
 
-#: xml/gbsearcharray.xml:28(link) xml/gbsearcharray.xml:99(primary)
+#: xml/gbsearcharray.xml:25(link) xml/gbsearcharray.xml:96(primary)
 msgid "g_bsearch_array_get_n_nodes"
 msgstr ""
 
-#: xml/gbsearcharray.xml:29(link) xml/gbsearcharray.xml:111(primary)
+#: xml/gbsearcharray.xml:26(link) xml/gbsearcharray.xml:108(primary)
 msgid "g_bsearch_array_lookup"
 msgstr ""
 
-#: xml/gbsearcharray.xml:30(link) xml/gbsearcharray.xml:129(primary)
+#: xml/gbsearcharray.xml:27(link) xml/gbsearcharray.xml:126(primary)
 msgid "g_bsearch_array_lookup_sibling"
 msgstr ""
 
-#: xml/gbsearcharray.xml:31(link) xml/gbsearcharray.xml:147(primary)
+#: xml/gbsearcharray.xml:28(link) xml/gbsearcharray.xml:144(primary)
 msgid "g_bsearch_array_lookup_insertion"
 msgstr ""
 
-#: xml/gbsearcharray.xml:32(link) xml/gbsearcharray.xml:165(primary)
+#: xml/gbsearcharray.xml:29(link) xml/gbsearcharray.xml:162(primary)
 msgid "G_BSEARCH_UPPER_POWER2"
 msgstr ""
 
-#: xml/gbsearcharray.xml:33(link) xml/gbsearcharray.xml:177(primary)
+#: xml/gbsearcharray.xml:30(link) xml/gbsearcharray.xml:174(primary)
 msgid "G_BSEARCH_ARRAY_NODES"
 msgstr ""
 
-#: xml/gbsearcharray.xml:34(link)
+#: xml/gbsearcharray.xml:31(link)
 msgid "else"
 msgstr ""
 
-#: xml/gbsearcharray.xml:34(link) xml/gbsearcharray.xml:190(primary)
+#: xml/gbsearcharray.xml:31(link) xml/gbsearcharray.xml:187(primary)
 msgid "if"
 msgstr ""
 
-#: xml/gbsearcharray.xml:35(link)
+#: xml/gbsearcharray.xml:32(link)
 msgid "return"
 msgstr ""
 
-#: xml/gbsearcharray.xml:35(link) xml/gbsearcharray.xml:201(primary)
+#: xml/gbsearcharray.xml:32(link) xml/gbsearcharray.xml:198(primary)
 msgid "MIN"
 msgstr ""
 
-#: xml/gbsearcharray.xml:35(link)
+#: xml/gbsearcharray.xml:32(link)
 msgid "distance"
 msgstr ""
 
 #: xml/gbsearcharray.xml:21(synopsis)
 #, no-wrap
 msgid ""
-"\n"
-"\n"
-"\n"
 "\n"
 "#define             <placeholder-1/>                 (v1,v2)\n"
 "<placeholder-2/>                (<placeholder-3/>)              (<placeholder-4/> bsearch_node1);\n"
@@ -1859,48 +2598,45 @@ msgid ""
 "<placeholder-14/>              <placeholder-15/>                                 (<placeholder-16/> );\n"
 msgstr ""
 
-#: xml/gbsearcharray.xml:57(title)
-msgid ""
-"<anchor id=\"G-BSEARCH-ARRAY-CMP:CAPS\" role=\"macro\"/>G_BSEARCH_ARRAY_CMP()"
+#: xml/gbsearcharray.xml:54(title)
+msgid "G_BSEARCH_ARRAY_CMP()"
 msgstr ""
 
-#: xml/gbsearcharray.xml:58(programlisting)
+#: xml/gbsearcharray.xml:55(programlisting)
 #, no-wrap
 msgid "#define G_BSEARCH_ARRAY_CMP(v1,v2) ((v1) &gt; (v2) ? +1 : (v1) == (v2) ? 0 : -1)\n"
 msgstr ""
 
-#: xml/gbsearcharray.xml:63(term)
+#: xml/gbsearcharray.xml:60(term)
 msgid "<parameter>v1</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/gbsearcharray.xml:66(term)
+#: xml/gbsearcharray.xml:63(term)
 msgid "<parameter>v2</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/gbsearcharray.xml:73(title)
-msgid ""
-"<anchor id=\"GBSearchCompareFunc\" role=\"function\"/>GBSearchCompareFunc ()"
+#: xml/gbsearcharray.xml:70(title)
+msgid "GBSearchCompareFunc ()"
 msgstr ""
 
-#: xml/gbsearcharray.xml:74(primary)
+#: xml/gbsearcharray.xml:71(primary)
 msgid "GBSearchCompareFunc"
 msgstr ""
 
-#: xml/gbsearcharray.xml:74(programlisting)
+#: xml/gbsearcharray.xml:71(programlisting)
 #, no-wrap
 msgid "<link linkend=\"gint\">gint</link>                (*GBSearchCompareFunc)              (<link linkend=\"gconstpointer\">gconstpointer</link> bsearch_node1);"
 msgstr ""
 
-#: xml/gbsearcharray.xml:78(term)
+#: xml/gbsearcharray.xml:75(term)
 msgid "<parameter>bsearch_node1</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/gbsearcharray.xml:87(title)
-msgid ""
-"<anchor id=\"GBSearchArrayFlags\" role=\"enum\"/>enum GBSearchArrayFlags"
+#: xml/gbsearcharray.xml:84(title)
+msgid "enum GBSearchArrayFlags"
 msgstr ""
 
-#: xml/gbsearcharray.xml:88(programlisting)
+#: xml/gbsearcharray.xml:85(programlisting)
 #, no-wrap
 msgid ""
 "typedef enum\n"
@@ -1910,111 +2646,99 @@ msgid ""
 "} GBSearchArrayFlags;\n"
 msgstr ""
 
-#: xml/gbsearcharray.xml:98(title)
-msgid ""
-"<anchor id=\"g-bsearch-array-get-n-nodes\" role=\"macro\"/"
-">g_bsearch_array_get_n_nodes()"
+#: xml/gbsearcharray.xml:95(title)
+msgid "g_bsearch_array_get_n_nodes()"
 msgstr ""
 
-#: xml/gbsearcharray.xml:99(programlisting)
+#: xml/gbsearcharray.xml:96(programlisting)
 #, no-wrap
 msgid "#define             g_bsearch_array_get_n_nodes(barray)"
 msgstr ""
 
-#: xml/gbsearcharray.xml:103(term) xml/gbsearcharray.xml:115(term)
-#: xml/gbsearcharray.xml:133(term) xml/gbsearcharray.xml:151(term)
-#: xml/gbsearcharray.xml:182(term)
+#: xml/gbsearcharray.xml:100(term) xml/gbsearcharray.xml:112(term)
+#: xml/gbsearcharray.xml:130(term) xml/gbsearcharray.xml:148(term)
+#: xml/gbsearcharray.xml:179(term)
 msgid "<parameter>barray</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/gbsearcharray.xml:110(title)
-msgid ""
-"<anchor id=\"g-bsearch-array-lookup\" role=\"macro\"/>g_bsearch_array_lookup"
-"()"
+#: xml/gbsearcharray.xml:107(title)
+msgid "g_bsearch_array_lookup()"
 msgstr ""
 
-#: xml/gbsearcharray.xml:111(programlisting)
+#: xml/gbsearcharray.xml:108(programlisting)
 #, no-wrap
 msgid "#define             g_bsearch_array_lookup(barray, bconfig, key_node)"
 msgstr ""
 
-#: xml/gbsearcharray.xml:118(term) xml/gbsearcharray.xml:136(term)
-#: xml/gbsearcharray.xml:154(term)
+#: xml/gbsearcharray.xml:115(term) xml/gbsearcharray.xml:133(term)
+#: xml/gbsearcharray.xml:151(term)
 msgid "<parameter>bconfig</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/gbsearcharray.xml:121(term) xml/gbsearcharray.xml:139(term)
-#: xml/gbsearcharray.xml:157(term)
+#: xml/gbsearcharray.xml:118(term) xml/gbsearcharray.xml:136(term)
+#: xml/gbsearcharray.xml:154(term)
 msgid "<parameter>key_node</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/gbsearcharray.xml:128(title)
-msgid ""
-"<anchor id=\"g-bsearch-array-lookup-sibling\" role=\"macro\"/"
-">g_bsearch_array_lookup_sibling()"
+#: xml/gbsearcharray.xml:125(title)
+msgid "g_bsearch_array_lookup_sibling()"
 msgstr ""
 
-#: xml/gbsearcharray.xml:129(programlisting)
+#: xml/gbsearcharray.xml:126(programlisting)
 #, no-wrap
 msgid "#define             g_bsearch_array_lookup_sibling(barray, bconfig, key_node)"
 msgstr ""
 
-#: xml/gbsearcharray.xml:146(title)
-msgid ""
-"<anchor id=\"g-bsearch-array-lookup-insertion\" role=\"macro\"/"
-">g_bsearch_array_lookup_insertion()"
+#: xml/gbsearcharray.xml:143(title)
+msgid "g_bsearch_array_lookup_insertion()"
 msgstr ""
 
-#: xml/gbsearcharray.xml:147(programlisting)
+#: xml/gbsearcharray.xml:144(programlisting)
 #, no-wrap
 msgid "#define             g_bsearch_array_lookup_insertion(barray, bconfig, key_node)"
 msgstr ""
 
-#: xml/gbsearcharray.xml:164(title)
-msgid ""
-"<anchor id=\"G-BSEARCH-UPPER-POWER2:CAPS\" role=\"macro\"/"
-">G_BSEARCH_UPPER_POWER2()"
+#: xml/gbsearcharray.xml:161(title)
+msgid "G_BSEARCH_UPPER_POWER2()"
 msgstr ""
 
-#: xml/gbsearcharray.xml:165(programlisting)
+#: xml/gbsearcharray.xml:162(programlisting)
 #, no-wrap
 msgid "#define             G_BSEARCH_UPPER_POWER2(n)"
 msgstr ""
 
-#: xml/gbsearcharray.xml:169(term)
+#: xml/gbsearcharray.xml:166(term)
 msgid "<parameter>n</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/gbsearcharray.xml:176(title)
-msgid ""
-"<anchor id=\"G-BSEARCH-ARRAY-NODES:CAPS\" role=\"macro\"/"
-">G_BSEARCH_ARRAY_NODES()"
+#: xml/gbsearcharray.xml:173(title)
+msgid "G_BSEARCH_ARRAY_NODES()"
 msgstr ""
 
-#: xml/gbsearcharray.xml:177(programlisting)
+#: xml/gbsearcharray.xml:174(programlisting)
 #, no-wrap
 msgid "#define G_BSEARCH_ARRAY_NODES(barray)    (((guint8*) (barray)) + sizeof (GBSearchArray))\n"
 msgstr ""
 
-#: xml/gbsearcharray.xml:189(title)
-msgid "<anchor id=\"if\" role=\"function\"/>if ()"
+#: xml/gbsearcharray.xml:186(title)
+msgid "if ()"
 msgstr ""
 
-#: xml/gbsearcharray.xml:190(programlisting)
+#: xml/gbsearcharray.xml:187(programlisting)
 #, no-wrap
 msgid "<link linkend=\"else\">else</link>                if                                  ();"
 msgstr ""
 
-#: xml/gbsearcharray.xml:200(title)
-msgid "<anchor id=\"MIN:CAPS\" role=\"function\"/>MIN ()"
+#: xml/gbsearcharray.xml:197(title)
+msgid "MIN ()"
 msgstr ""
 
-#: xml/gbsearcharray.xml:201(programlisting)
+#: xml/gbsearcharray.xml:198(programlisting)
 #, no-wrap
 msgid "<link linkend=\"return\">return</link>              MIN                                 (<link linkend=\"distance\">distance</link> );"
 msgstr ""
 
-#: xml/gbsearcharray.xml:205(term)
+#: xml/gbsearcharray.xml:202(term)
 msgid "<parameter>Param1</parameter>&nbsp;:"
 msgstr ""
 
@@ -2044,9 +2768,8 @@ msgstr ""
 #~ msgid "Properties"
 #~ msgstr "プロパティ"
 
-#, fuzzy
 #~ msgid "n-tests"
-#~ msgstr "テスト作成"
+#~ msgstr "テスト数"
 
 #~ msgid "Signals"
 #~ msgstr "シグナル"
@@ -2057,7 +2780,6 @@ msgstr ""
 #~ msgid "Signal Details"
 #~ msgstr "シグナル詳細"
 
-#, fuzzy
 #~ msgid "description"
 #~ msgstr "説明"
 
