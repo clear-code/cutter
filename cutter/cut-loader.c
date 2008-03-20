@@ -490,6 +490,7 @@ cut_loader_load_test_case (CutLoader *loader)
                 set_attributes(test, attributes);
             }
             cut_test_case_add_test(test_case, test);
+            g_object_unref(test);
         }
     }
     g_list_free(test_names);

@@ -1,8 +1,8 @@
-#include "cutter.h"
-#include "cut-runner.h"
-#include "cut-test-case.h"
-#include "cut-test-suite.h"
-#include "cut-loader.h"
+#include <cutter.h>
+#include <cutter/cut-runner.h>
+#include <cutter/cut-test-case.h>
+#include <cutter/cut-test-suite.h>
+#include <cutter/cut-loader.h>
 
 #include "cuttest-utils.h"
 
@@ -74,7 +74,6 @@ void
 setup (void)
 {
     CutTestCase *test_case;
-    CutTest *test;
     gchar *test_path;
 
     n_run_dummy_test_function1 = 0;
@@ -97,31 +96,28 @@ setup (void)
     g_free(test_path);
     test_case = cut_loader_load_test_case(loader);
     cut_test_suite_add_test_case(test_object, test_case);
+    g_object_unref(test_case);
 
     test_case = cut_test_case_new("dummy_test_case", NULL, NULL,
                                   get_current_test_context,
                                   set_current_test_context,
                                   NULL, NULL);
-    test = cut_test_new("dummy_test_1", dummy_test_function1);
-    cut_test_case_add_test(test_case, test);
-    test = cut_test_new("dummy_test_2", dummy_test_function2);
-    cut_test_case_add_test(test_case, test);
-    test = cut_test_new("run_test_function", dummy_run_test_function);
-    cut_test_case_add_test(test_case, test);
+    cuttest_add_test(test_case, "dummy_test_1", dummy_test_function1);
+    cuttest_add_test(test_case, "dummy_test_2", dummy_test_function2);
+    cuttest_add_test(test_case, "run_test_function", dummy_run_test_function);
     cut_test_suite_add_test_case(test_object, test_case);
+    g_object_unref(test_case);
 
     test_case = cut_test_case_new("bummy_test_case", NULL, NULL,
                                   get_current_test_context,
                                   set_current_test_context,
                                   NULL, NULL);
-    test = cut_test_new("bummy_test_1", bummy_test_function1);
-    cut_test_case_add_test(test_case, test);
-    test = cut_test_new("bummy_test_2", bummy_test_function2);
-    cut_test_case_add_test(test_case, test);
-    test = cut_test_new("bummy_run_test_function",
-                        bummy_run_test_function);
-    cut_test_case_add_test(test_case, test);
+    cuttest_add_test(test_case, "bummy_test_1", bummy_test_function1);
+    cuttest_add_test(test_case, "bummy_test_2", bummy_test_function2);
+    cuttest_add_test(test_case, "bummy_run_test_function",
+                     bummy_run_test_function);
     cut_test_suite_add_test_case(test_object, test_case);
+    g_object_unref(test_case);
 }
 
 void

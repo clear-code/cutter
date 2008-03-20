@@ -1,6 +1,8 @@
-#include "cutter.h"
-#include "cut-test-case.h"
-#include "cut-runner.h"
+#include <cutter.h>
+#include <cutter/cut-test-case.h>
+#include <cutter/cut-runner.h>
+
+#include "cuttest-utils.h"
 
 void test_setup(void);
 void test_teardown(void);
@@ -15,6 +17,7 @@ void test_run_with_name_and_regex_filter(void);
 void test_get_name(void);
 void test_start_signal(void);
 void test_success_signal(void);
+void test_failure_signal(void);
 void test_complete_signal(void);
 
 static CutTestCase *test_object;
@@ -93,7 +96,6 @@ dummy_teardown_function (void)
 void
 setup (void)
 {
-    CutTest *test;
     const gchar *test_names[] = {"/.*/", NULL};
 
     set_error_on_setup = FALSE;
@@ -115,12 +117,9 @@ setup (void)
                                     get_current_test_context,
                                     set_current_test_context,
                                     NULL, NULL);
-    test = cut_test_new("dummy_test_1", dummy_test_function1);
-    cut_test_case_add_test(test_object, test);
-    test = cut_test_new("dummy_test_2",  dummy_test_function2);
-    cut_test_case_add_test(test_object, test);
-    test = cut_test_new("run_test_function", dummy_run_test_function);
-    cut_test_case_add_test(test_object, test);
+    cuttest_add_test(test_object, "dummy_test_1", dummy_test_function1);
+    cuttest_add_test(test_object, "dummy_test_2", dummy_test_function2);
+    cuttest_add_test(test_object, "run_test_function", dummy_run_test_function);
 }
 
 void
@@ -137,8 +136,8 @@ cb_start_signal (CutTestCase *test_case, gpointer data)
 }
 
 static void
-cb_success_signal (CutTest *test, CutTestContext *test_context,
-                   CutTestResult *result, gpointer data)
+cb_count_status (CutTest *test, CutTestContext *test_context,
+                 CutTestResult *result, gpointer data)
 {
     gint *count = data;
     *count += 1;
@@ -271,14 +270,28 @@ test_start_signal (void)
 void
 test_success_signal (void)
 {
-    gint n_success_signal = 0;
+    gint n_successes = 0;
     g_signal_connect(test_object, "success",
-                     G_CALLBACK(cb_success_signal), &n_success_signal);
+                     G_CALLBACK(cb_count_status), &n_successes);
     cut_assert(cut_test_case_run(test_object, runner));
     g_signal_handlers_disconnect_by_func(test_object,
-                                         G_CALLBACK(cb_success_signal),
-                                         &n_success_signal);
-    cut_assert_equal_int(1, n_success_signal);
+                                         G_CALLBACK(cb_count_status),
+                                         &n_successes);
+    cut_assert_equal_int(1, n_successes);
+}
+
+void
+test_failure_signal (void)
+{
+    gint n_failures = 0;
+    g_signal_connect(test_object, "failure",
+                     G_CALLBACK(cb_count_status), &n_failures);
+    cuttest_add_test(test_object, "dummy_failure_test", dummy_failure_test);
+    cut_assert(!cut_test_case_run(test_object, runner));
+    g_signal_handlers_disconnect_by_func(test_object,
+                                         G_CALLBACK(cb_count_status),
+                                         &n_failures);
+    cut_assert_equal_int(1, n_failures);
 }
 
 void

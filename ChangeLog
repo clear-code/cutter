@@ -1,5 +1,18 @@
 2008-03-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-container.c: referenced an added test.
+
+	* cutter/cut-loader.c, cutter/cut-repository.c: unreferenced an added
+	test.
+
+	* test/test-cut-test-case.c (test_failure_signal): added.
+
+	* test/test-cut-test-case.c, test/test-cut-test-suite.c: used
+	#include <...> not #include "...".
+
+	* test/test-cut-test-case.c (add_test): moved to ...
+	* test/cuttest-utils.[ch] (cuttest_add_test): ... here.
+
 	* test/test-cut-test-case.c (test_success_signal): added a test
 	for confirming test case emits "success" signal.
 

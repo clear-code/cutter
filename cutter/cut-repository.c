@@ -206,6 +206,7 @@ cut_repository_create_test_suite (CutRepository *repository)
         test_case = cut_loader_load_test_case(loader);
         if (test_case) {
             cut_test_suite_add_test_case(suite, test_case);
+            g_object_unref(test_case);
         }
     }
     return suite;
