@@ -1,5 +1,8 @@
 2008-03-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-test-case.c: don't use static variables for counting
+	called count.
+
 	* test/test-cut-test-case.c (test_error_signal, test_pending_signal,
 	test_notification_signal): added.
 

@@ -33,8 +33,6 @@ static gint n_teardown = 0;
 static gint n_run_dummy_run_test_function = 0;
 static gint n_run_dummy_test_function1 = 0;
 static gint n_run_dummy_test_function2 = 0;
-static gint n_start_signal = 0;
-static gint n_complete_signal = 0;
 
 static void
 dummy_test_function1 (void)
@@ -108,8 +106,6 @@ setup (void)
     n_run_dummy_run_test_function = 0;
     n_run_dummy_test_function1 = 0;
     n_run_dummy_test_function2 = 0;
-    n_start_signal = 0;
-    n_complete_signal = 0;
 
     runner = cut_runner_new();
     cut_runner_set_target_test_names(runner, test_names);
@@ -133,9 +129,11 @@ teardown (void)
 }
 
 static void
-cb_start_signal (CutTestCase *test_case, gpointer data)
+cb_count_around_test (CutTestCase *test_case, CutTest *test,
+                      CutTestContext *test_context, gpointer data)
 {
-    n_start_signal++;
+    gint *count = data;
+    *count += 1;
 }
 
 static void
@@ -144,12 +142,6 @@ cb_count_status (CutTest *test, CutTestContext *test_context,
 {
     gint *count = data;
     *count += 1;
-}
-
-static void
-cb_complete_signal (CutTestCase *test_case, gpointer data)
-{
-    n_complete_signal++;
 }
 
 static gboolean
@@ -261,13 +253,14 @@ test_get_name (void)
 void
 test_start_signal (void)
 {
-    g_signal_connect(test_object, "start-test", G_CALLBACK(cb_start_signal),
-                     NULL);
+    gint n_start_tests = 0;
+    g_signal_connect(test_object, "start-test",
+                     G_CALLBACK(cb_count_around_test), &n_start_tests);
     cut_assert(cut_test_case_run(test_object, runner));
     g_signal_handlers_disconnect_by_func(test_object,
-                                         G_CALLBACK(cb_start_signal),
-                                         NULL);
-    cut_assert_equal_int(3, n_start_signal);
+                                         G_CALLBACK(cb_count_around_test),
+                                         &n_start_tests);
+    cut_assert_equal_int(3, n_start_tests);
 }
 
 void
@@ -343,13 +336,14 @@ test_notification_signal (void)
 void
 test_complete_signal (void)
 {
+    gint n_complete_tests = 0;
     g_signal_connect(test_object, "complete-test",
-                     G_CALLBACK(cb_complete_signal), NULL);
+                     G_CALLBACK(cb_count_around_test), &n_complete_tests);
     cut_assert(cut_test_case_run(test_object, runner));
     g_signal_handlers_disconnect_by_func(test_object,
-                                         G_CALLBACK(cb_complete_signal),
-                                         NULL);
-    cut_assert_equal_int(3, n_complete_signal);
+                                         G_CALLBACK(cb_count_around_test),
+                                         &n_complete_tests);
+    cut_assert_equal_int(3, n_complete_tests);
 }
 
 /*
