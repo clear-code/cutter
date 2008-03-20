@@ -121,7 +121,7 @@ cut_init (int *argc, char ***argv)
 
     option_context = g_option_context_new("TEST_DIRECTORY");
     g_option_context_add_main_entries(option_context, option_entries, "cutter");
-    g_option_context_set_help_enabled(option_context, TRUE);
+    g_option_context_set_help_enabled(option_context, FALSE);
     g_option_context_set_ignore_unknown_options(option_context, TRUE);
 
     cut_module_factory_init();

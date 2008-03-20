@@ -1,5 +1,10 @@
 2008-03-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-main.c: don't handle --help in the first path.
+
+	* cutter/cut-report-factory-builder.c,
+	cutter/cut-ui-factory-builder.c: added option group.
+
 	* configure.ac, cutter/cut-report-factory-builder.c: fixed
 	a bug that installed report can't be found.
 

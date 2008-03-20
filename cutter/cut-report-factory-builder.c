@@ -92,13 +92,20 @@ cut_report_factory_builder_init (CutReportFactoryBuilder *builder)
 static void
 set_option_context (CutFactoryBuilder *builder, GOptionContext *context)
 {
+    GOptionGroup *group;
     GOptionEntry entries[] = {
         {"xml-report", 0, 0, G_OPTION_ARG_STRING, &xml_report,
          N_("Set filename of XML report"), "FILE"},
         {NULL}
     };
 
-    g_option_context_add_main_entries(context, entries, NULL);
+    group = g_option_group_new(("report"),
+                               _("Report Options"),
+                               _("Show report options"),
+                               builder, NULL);
+    g_option_group_add_entries(group, entries);
+    g_option_group_set_translation_domain(group, GETTEXT_PACKAGE);
+    g_option_context_add_group(context, group);
 }
 
 static GList *

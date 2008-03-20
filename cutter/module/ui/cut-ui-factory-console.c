@@ -321,7 +321,7 @@ set_option_group (CutModuleFactory *factory, GOptionContext *context)
 
     group = g_option_group_new(("ui-console"),
                                _("Console UI Options"),
-                               _("Show Console UI Options"),
+                               _("Show console UI options"),
                                console, NULL);
     g_option_group_add_entries(group, entries);
     g_option_group_set_parse_hooks(group, pre_parse, NULL);

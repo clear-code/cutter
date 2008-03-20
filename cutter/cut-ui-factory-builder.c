@@ -92,6 +92,7 @@ static void
 set_option_context (CutFactoryBuilder *builder, GOptionContext *context)
 {
     static gchar *arg_description = NULL;
+    GOptionGroup *group;
     GOptionEntry entries[] = {
         {"ui", 'u', 0, G_OPTION_ARG_STRING, &ui_name,
          N_("Specify UI"), NULL},
@@ -117,7 +118,14 @@ set_option_context (CutFactoryBuilder *builder, GOptionContext *context)
         g_list_free(names);
     }
     entries[0].arg_description = arg_description;
-    g_option_context_add_main_entries(context, entries, NULL);
+
+    group = g_option_group_new(("ui"),
+                               _("UI Options"),
+                               _("Show UI options"),
+                               builder, NULL);
+    g_option_group_add_entries(group, entries);
+    g_option_group_set_translation_domain(group, GETTEXT_PACKAGE);
+    g_option_context_add_group(context, group);
 }
 
 static GList *

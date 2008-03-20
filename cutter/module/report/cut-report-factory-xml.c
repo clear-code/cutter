@@ -226,7 +226,7 @@ set_option_group (CutModuleFactory *factory, GOptionContext *context)
 
     group = g_option_group_new(("report-xml"),
                                _("XML Report Options"),
-                               _("Show XML Report Options"),
+                               _("Show XML report options"),
                                xml, NULL);
     g_option_group_add_entries(group, entries);
     g_option_group_set_translation_domain(group, GETTEXT_PACKAGE);
