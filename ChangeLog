@@ -1,5 +1,8 @@
 2008-03-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* sample/Makefile.am (stack_test_SCRIPTS): moved test/run-test.sh
+	to here to added executable permission.
+
 	* sample/Makefile.am (stack_config_DATA): added a dummy rule to
 	create config/ directory.
 

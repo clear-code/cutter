@@ -24,9 +24,12 @@ stack_src_DATA =		\
 	stack/src/stack.h
 
 stack_testdir = $(stackdir)/test
+
+stack_test_SCRIPTS =		\
+	stack/test/run-test.sh
+
 stack_test_DATA =		\
 	stack/test/Makefile.am	\
-	stack/test/run-test.sh	\
 	stack/test/test-stack.c
 
 stack_configdir = $(stackdir)/config
