@@ -254,7 +254,8 @@ test_report_error (void)
                                          G_CALLBACK(cb_test_signal),
                                          NULL);
 
-    cut_assert_equal_string_with_free(expected, cut_report_get_error_results(report));
+    cut_assert_equal_string_with_free(expected,
+                                      cut_report_get_error_results(report));
 }
 
 /*

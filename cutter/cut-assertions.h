@@ -108,16 +108,17 @@ extern "C" {
  *
  * Passes if @expression is not 0 or NULL.
  */
-#define cut_assert(expression, ...) do                      \
-{                                                           \
-    if (expression) {                                       \
-        cut_test_pass();                                    \
-    } else {                                                \
-        cut_test_fail(                                      \
-            FAILURE,                                        \
-            "expected: <%s> is not TRUE/NULL", #expression, \
-            NULL, ## __VA_ARGS__);                          \
-    }                                                       \
+#define cut_assert(expression, ...) do                          \
+{                                                               \
+    if (expression) {                                           \
+        cut_test_pass();                                        \
+    } else {                                                    \
+        cut_test_fail(FAILURE,                                  \
+                      cut_take_printf("expected: <%s>"          \
+                                      " is not FALSE/NULL",     \
+                                      #expression),             \
+                      ## __VA_ARGS__);                          \
+    }                                                           \
 } while(0)
 
 /**
@@ -128,17 +129,17 @@ extern "C" {
  *
  * Passes if @expression is NULL.
  */
-#define cut_assert_null(expression, ...) do                 \
-{                                                           \
-    if ((expression) == NULL) {                             \
-        cut_test_pass();                                    \
-    } else {                                                \
-        cut_test_fail(                                      \
-            FAILURE,                                        \
-            "expected: <%s> is NULL", #expression,          \
-            NULL, ## __VA_ARGS__);                          \
-    }                                                       \
-} while(0)
+#define cut_assert_null(expression, ...) do                     \
+{                                                               \
+    if ((expression) == NULL) {                                 \
+        cut_test_pass();                                        \
+    } else {                                                    \
+        cut_test_fail(FAILURE,                                  \
+                      cut_take_printf("expected: <%s> is NULL", \
+                                      #expression),             \
+                      ## __VA_ARGS__);                          \
+    }                                                           \
+} while(0)                                                      \
 
 /**
  * cut_assert_null_string:
@@ -150,18 +151,18 @@ extern "C" {
  *
  * Since: 0.3
  */
-#define cut_assert_null_string(expression, ...) do          \
-{                                                           \
-    const char *_expression = (expression);                 \
-    if (_expression == NULL) {                              \
-        cut_test_pass();                                    \
-    } else {                                                \
-        cut_test_fail(FAILURE,                              \
-                      "expected: <%s> is NULL\n"            \
-                      " but was: <%s>",                     \
-                      #expression, _expression,             \
-                      NULL, ## __VA_ARGS__);                \
-    }                                                       \
+#define cut_assert_null_string(expression, ...) do                      \
+{                                                                       \
+    const char *_expression = (expression);                             \
+    if (_expression == NULL) {                                          \
+        cut_test_pass();                                                \
+    } else {                                                            \
+        cut_test_fail(FAILURE,                                          \
+                      cut_take_printf("expected: <%s> is NULL\n"        \
+                                      " but was: <%s>",                 \
+                                      #expression, _expression),        \
+                      ## __VA_ARGS__);                                  \
+    }                                                                   \
 } while(0)
 
 /**
@@ -172,16 +173,16 @@ extern "C" {
  *
  * Passes if @expression is not NULL.
  */
-#define cut_assert_not_null(expression, ...) do             \
-{                                                           \
-    if ((expression) != NULL) {                             \
-        cut_test_pass();                                    \
-    } else {                                                \
-        cut_test_fail(FAILURE,                              \
-                      "expected: <%s> is not NULL",         \
-                      #expression,                          \
-                      NULL, ## __VA_ARGS__);                \
-    }                                                       \
+#define cut_assert_not_null(expression, ...) do                         \
+{                                                                       \
+    if ((expression) != NULL) {                                         \
+        cut_test_pass();                                                \
+    } else {                                                            \
+        cut_test_fail(FAILURE,                                          \
+                      cut_take_printf("expected: <%s> is not NULL",     \
+                                      #expression),                     \
+                      ## __VA_ARGS__);                                  \
+    }                                                                   \
 } while(0)
 
 /**
@@ -193,20 +194,21 @@ extern "C" {
  *
  * Passes if @expected == @actual.
  */
-#define cut_assert_equal_int(expected, actual, ...) do      \
-{                                                           \
-    long _expected = (long)(expected);                      \
-    long _actual = (long)(actual);                          \
-    if (_expected == _actual) {                             \
-        cut_test_pass();                                    \
-    } else {                                                \
-        cut_test_fail(FAILURE,                              \
-                      "<%s == %s>\n"                        \
-                      "expected: <%ld>\n but was: <%ld>",   \
-                      #expected, #actual,                   \
-                      _expected, _actual,                   \
-                      NULL, ## __VA_ARGS__);                \
-    }                                                       \
+#define cut_assert_equal_int(expected, actual, ...) do          \
+{                                                               \
+    long _expected = (long)(expected);                          \
+    long _actual = (long)(actual);                              \
+    if (_expected == _actual) {                                 \
+        cut_test_pass();                                        \
+    } else {                                                    \
+        cut_test_fail(FAILURE,                                  \
+                      cut_take_printf("<%s == %s>\n"            \
+                                      "expected: <%ld>\n"       \
+                                      " but was: <%ld>",        \
+                                      #expected, #actual,       \
+                                      _expected, _actual),      \
+                      ## __VA_ARGS__);                          \
+    }                                                           \
 } while(0)
 
 /**
@@ -226,11 +228,12 @@ extern "C" {
         cut_test_pass();                                    \
     } else {                                                \
         cut_test_fail(FAILURE,                              \
-                      "<%s == %s>\n"                        \
-                      "expected: <%lu>\n but was: <%lu>",   \
-                      #expected, #actual,                   \
-                      _expected, _actual,                   \
-                      NULL, ## __VA_ARGS__);                \
+                      cut_take_printf("<%s == %s>\n"        \
+                                      "expected: <%lu>\n"   \
+                                      " but was: <%lu>",    \
+                                      #expected, #actual,   \
+                                      _expected, _actual),  \
+                      ## __VA_ARGS__);                      \
     }                                                       \
 } while(0)
 
@@ -254,11 +257,13 @@ extern "C" {
         cut_test_pass();                                                \
     } else {                                                            \
         cut_test_fail(FAILURE,                                          \
-                      "<%s-%s <= %s <= %s+%s>\n"                        \
-                      "expected: <%g +/- %g>\n but was: <%g>",          \
-                      #expected, #error, #actual, #expected, #error,    \
-                      _expected, _error, _actual,                       \
-                      NULL, ## __VA_ARGS__);                            \
+                      cut_take_printf("<%s-%s <= %s <= %s+%s>\n"        \
+                                      "expected: <%g +/- %g>\n"         \
+                                      " but was: <%g>",                 \
+                                      #expected, #error,                \
+                                      #actual, #expected, #error,       \
+                                      _expected, _error, _actual),      \
+                      ## __VA_ARGS__);                                  \
     }                                                                   \
 } while(0)
 
@@ -281,21 +286,22 @@ extern "C" {
             cut_test_pass();                                            \
         } else {                                                        \
             cut_test_fail(FAILURE,                                      \
-                          "expected: <%s> is NULL\n"                    \
-                          " but was: <%s>",                             \
-                          #actual, _actual,                             \
-                          NULL, ## __VA_ARGS__);                        \
+                          cut_take_printf("expected: <%s> is NULL\n"    \
+                                          " but was: <%s>",             \
+                                          #actual, _actual),            \
+                          ## __VA_ARGS__);                              \
         }                                                               \
     } else {                                                            \
         if (_actual && strcmp(_expected, _actual) == 0) {               \
             cut_test_pass();                                            \
         } else {                                                        \
             cut_test_fail(FAILURE,                                      \
-                          "<%s == %s>\n"                                \
-                          "expected: <%s>\n but was: <%s>",             \
-                          #expected, #actual,                           \
-                          _expected, _actual,                           \
-                          NULL, ## __VA_ARGS__);                        \
+                          cut_take_printf("<%s == %s>\n"                \
+                                          "expected: <%s>\n"            \
+                                          " but was: <%s>",             \
+                                          #expected, #actual,           \
+                                          _expected, _actual),          \
+                          ## __VA_ARGS__);                              \
         }                                                               \
     }                                                                   \
 } while(0)
@@ -359,13 +365,14 @@ extern "C" {
         cut_test_pass();                                                \
     } else {                                                            \
         cut_test_fail(FAILURE,                                          \
-                      "<%s[%s] == %s[%s]>\n"                            \
-                      "expected: <%p[%ld]>\n but was: <%p[%ld]>",       \
-                      #expected, #expected_size,                        \
-                      #actual, #actual_size,                            \
-                      _expected, (long)_expected_size,                  \
-                      _actual, (long)_actual_size,                      \
-                      NULL, ## __VA_ARGS__);                            \
+                      cut_take_printf("<%s[%s] == %s[%s]>\n"            \
+                                      "expected: <%p[%ld]>\n"           \
+                                      " but was: <%p[%ld]>",            \
+                                      #expected, #expected_size,        \
+                                      #actual, #actual_size,            \
+                                      _expected, (long)_expected_size,  \
+                                      _actual, (long)_actual_size),     \
+                      ## __VA_ARGS__);                                  \
     }                                                                   \
 } while(0)
 
@@ -388,12 +395,13 @@ extern "C" {
         cut_test_pass();                                                \
     } else {                                                            \
         cut_test_fail(FAILURE,                                          \
-                      "<%s == %s>\n"                                    \
-                      "expected: <%s>\n but was: <%s>",                 \
-                      #expected, #actual,                               \
-                      cut_inspect_string_array(_expected),              \
-                      cut_inspect_string_array(_actual),                \
-                      NULL, ## __VA_ARGS__);                            \
+                      cut_take_printf("<%s == %s>\n"                    \
+                                      "expected: <%s>\n"                \
+                                      " but was: <%s>",                 \
+                                      #expected, #actual,               \
+                                      cut_inspect_string_array(_expected), \
+                                      cut_inspect_string_array(_actual)), \
+                      ## __VA_ARGS__);                                  \
     }                                                                   \
 } while(0)
 
@@ -418,9 +426,9 @@ extern "C" {
         cut_test_pass();                                                \
     } else {                                                            \
         cut_test_fail(FAILURE,                                          \
-                      "expected: <%s %s %s> is TRUE",                   \
-                      #lhs, #operator, #rhs,                            \
-                      NULL, ## __VA_ARGS__);                            \
+                      cut_take_printf("expected: <%s %s %s> is TRUE",   \
+                                      #lhs, #operator, #rhs),           \
+                      ## __VA_ARGS__);                                  \
     }                                                                   \
 } while(0)
 
@@ -447,11 +455,11 @@ extern "C" {
         cut_test_pass();                                                \
     } else {                                                            \
         cut_test_fail(FAILURE,                                          \
-                      "expected: <%s> %s <%s>\n"                        \
-                      " but was: <%ld> %s <%ld>",                       \
-                      #lhs, #operator, #rhs,                            \
-                      _lhs, #operator, _rhs,                            \
-                      NULL, ## __VA_ARGS__);                            \
+                      cut_take_printf("expected: <%s> %s <%s>\n"        \
+                                      " but was: <%ld> %s <%ld>",       \
+                                      #lhs, #operator, #rhs,            \
+                                      _lhs, #operator, _rhs),           \
+                      ## __VA_ARGS__);                                  \
     }                                                                   \
 } while(0)
 
@@ -475,11 +483,10 @@ extern "C" {
     if (function(expected, actual)) {                                   \
         cut_test_pass();                                                \
     } else {                                                            \
-        cut_test_fail(                                                  \
-            FAILURE,                                                    \
-            "expected: <%s(%s, %s)> is TRUE",                           \
-            #function, #expected, #actual,                              \
-            NULL, ## __VA_ARGS__);                                      \
+        cut_test_fail(FAILURE,                                          \
+                      cut_take_printf("expected: <%s(%s, %s)> is TRUE", \
+                                      #function, #expected, #actual),   \
+                      ## __VA_ARGS__);                                  \
     }                                                                   \
 } while(0)
 

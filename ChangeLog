@@ -1,3 +1,14 @@
+2008-03-20  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-test-context.c (cut_test_context_register_result):
+	removed dangerous message construction.
+
+	* cutter/cut-public.h (cut_test_context_take_printf): added.
+	* cutter/cut-assertions-helper.h (cut_take_printf): added.
+
+	* cutter/cut-assertions.h, cutter/cut-gassertions.h: used
+	cut_take_printf().
+
 2008-03-19  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-runner.[ch]: emitted signal STATUS_test_case for test

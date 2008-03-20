@@ -48,6 +48,9 @@ void  cut_test_context_long_jump            (CutTestContext *context) __attribut
 
 const char *cut_test_context_take_string    (CutTestContext *context,
                                              char           *string);
+const char *cut_test_context_take_printf    (CutTestContext *context,
+                                             char           *format,
+                                             ...);
 const char *cut_test_context_inspect_string_array (CutTestContext *context,
                                                    const char    **strings);
 

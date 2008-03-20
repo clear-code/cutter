@@ -33,21 +33,25 @@ extern "C" {
 #define cut_take_string(string)                                         \
     cut_test_context_take_string(get_current_test_context(), string)
 
+#define cut_take_printf(format, ...)                                    \
+    cut_test_context_take_printf(get_current_test_context(),            \
+                                 format, __VA_ARGS__)
+
 #define cut_test_pass() \
     cut_test_context_pass_assertion(get_current_test_context())
 
-#define cut_test_register_result(status, ...) do            \
-{                                                           \
-    cut_test_context_register_result(                       \
-        get_current_test_context(),                         \
-        CUT_TEST_RESULT_ ## status,                         \
-        __PRETTY_FUNCTION__, __FILE__, __LINE__,            \
-        __VA_ARGS__, NULL);                                 \
+#define cut_test_register_result(status, message, ...) do               \
+{                                                                       \
+    cut_test_context_register_result(                                   \
+        get_current_test_context(),                                     \
+        CUT_TEST_RESULT_ ## status,                                     \
+        __PRETTY_FUNCTION__, __FILE__, __LINE__,                        \
+        message, ## __VA_ARGS__, NULL);                                 \
 } while (0)
 
-#define cut_test_fail(status, ...) do                               \
+#define cut_test_fail(status, message, ...) do                      \
 {                                                                   \
-    cut_test_register_result(status, ## __VA_ARGS__);               \
+    cut_test_register_result(status, message, ## __VA_ARGS__);      \
     cut_test_context_long_jump(get_current_test_context());         \
 } while (0)
 

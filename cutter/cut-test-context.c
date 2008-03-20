@@ -347,22 +347,17 @@ cut_test_context_register_result (CutTestContext *context,
     CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
     CutTestResult *result;
     const gchar *status_signal_name = NULL;
-    gchar *user_message = NULL, *system_message = NULL;
-    const gchar *format;
+    const gchar *system_message;
+    gchar *user_message = NULL, *user_message_format;
     va_list args;
 
     priv->failed = TRUE;
 
+    system_message = message;
     va_start(args, message);
-    if (message) {
-        system_message = g_strdup_vprintf(message, args);
-    }
-    while (message) {
-        message = va_arg(args, gchar *); /* FIXME */
-    }
-    format = va_arg(args, gchar *);
-    if (format) {
-        user_message = g_strdup_vprintf(format, args);
+    user_message_format = va_arg(args, gchar *);
+    if (user_message_format) {
+        user_message = g_strdup_vprintf(user_message_format, args);
     }
     va_end(args);
 
@@ -370,8 +365,6 @@ cut_test_context_register_result (CutTestContext *context,
                                  priv->test, priv->test_case, priv->test_suite,
                                  user_message, system_message,
                                  function_name, filename, line);
-    if (system_message)
-        g_free(system_message);
     if (user_message)
         g_free(user_message);
 
@@ -405,6 +398,23 @@ cut_test_context_take_string (CutTestContext *context,
     taken_string = g_strdup(string);
     priv->taken_strings = g_list_prepend(priv->taken_strings, taken_string);
     g_free(string);
+
+    return taken_string;
+}
+
+const char *
+cut_test_context_take_printf (CutTestContext *context, char *format, ...)
+{
+    const char *taken_string = NULL;
+    va_list args;
+
+    va_start(args, format);
+    if (format) {
+        char *formatted_string;
+        formatted_string = g_strdup_vprintf(format, args);
+        taken_string = cut_test_context_take_string(context, formatted_string);
+    }
+    va_end(args);
 
     return taken_string;
 }

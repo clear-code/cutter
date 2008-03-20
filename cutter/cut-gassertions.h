@@ -54,13 +54,13 @@ G_BEGIN_DECLS
         cut_test_pass();                                        \
     } else {                                                    \
         cut_test_fail(FAILURE,                                  \
-                      "<%s == %s>\n"                            \
-                      "expected: <%s>\n"                        \
-                      " but was: <%s>",                         \
-                      #expected, #actual,                       \
-                      g_type_name(_expected),                   \
-                      g_type_name(_actual),                     \
-                      NULL, ## __VA_ARGS__);                    \
+                      cut_take_printf("<%s == %s>\n"            \
+                                      "expected: <%s>\n"        \
+                                      " but was: <%s>",         \
+                                      #expected, #actual,       \
+                                      g_type_name(_expected),   \
+                                      g_type_name(_actual)),    \
+                      ## __VA_ARGS__);                          \
     }                                                           \
 } while(0)
 
@@ -81,20 +81,23 @@ G_BEGIN_DECLS
         cut_test_pass();                                                \
     } else {                                                            \
         const gchar *inspected_expected, *inspected_actual;             \
+        const gchar *expected_type_name, *actual_type_name;             \
         inspected_expected =                                            \
             cut_take_string(g_strdup_value_contents(_expected));        \
         inspected_actual =                                              \
             cut_take_string(g_strdup_value_contents(_actual));          \
+        expected_type_name = g_type_name(G_VALUE_TYPE(_expected));      \
+        actual_type_name = g_type_name(G_VALUE_TYPE(_actual));          \
         cut_test_fail(FAILURE,                                          \
-                      "<%s == %s>\n"                                    \
-                      "expected: <%s> (%s)\n"                           \
-                      " but was: <%s> (%s)",                            \
-                      #expected, #actual,                               \
-                      inspected_expected,                               \
-                      g_type_name(G_VALUE_TYPE(_expected)),             \
-                      inspected_actual,                                 \
-                      g_type_name(G_VALUE_TYPE(_actual)),               \
-                      NULL, ## __VA_ARGS__);                            \
+                      cut_take_printf("<%s == %s>\n"                    \
+                                      "expected: <%s> (%s)\n"           \
+                                      " but was: <%s> (%s)",            \
+                                      #expected, #actual,               \
+                                      inspected_expected,               \
+                                      expected_type_name,               \
+                                      inspected_actual,                 \
+                                      actual_type_name),                \
+                      ## __VA_ARGS__);                                  \
     }                                                                   \
 } while(0)
 
