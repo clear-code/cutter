@@ -14,6 +14,7 @@ void test_run_with_regex_filter(void);
 void test_run_with_name_and_regex_filter(void);
 void test_get_name(void);
 void test_start_signal(void);
+void test_success_signal(void);
 void test_complete_signal(void);
 
 static CutTestCase *test_object;
@@ -49,6 +50,30 @@ static void
 dummy_run_test_function (void)
 {
     n_run_dummy_run_test_function++;
+}
+
+static void
+dummy_failure_test (void)
+{
+    cut_fail("Failed!!!");
+}
+
+static void
+dummy_error_test (void)
+{
+    cut_error("Error!!!");
+}
+
+static void
+dummy_pending_test (void)
+{
+    cut_pend("Pend!!!");
+}
+
+static void
+dummy_notification_test (void)
+{
+    cut_notify("Notify!!!");
 }
 
 static void
@@ -109,6 +134,14 @@ static void
 cb_start_signal (CutTestCase *test_case, gpointer data)
 {
     n_start_signal++;
+}
+
+static void
+cb_success_signal (CutTest *test, CutTestContext *test_context,
+                   CutTestResult *result, gpointer data)
+{
+    gint *count = data;
+    *count += 1;
 }
 
 static void
@@ -233,6 +266,19 @@ test_start_signal (void)
                                          G_CALLBACK(cb_start_signal),
                                          NULL);
     cut_assert_equal_int(3, n_start_signal);
+}
+
+void
+test_success_signal (void)
+{
+    gint n_success_signal = 0;
+    g_signal_connect(test_object, "success",
+                     G_CALLBACK(cb_success_signal), &n_success_signal);
+    cut_assert(cut_test_case_run(test_object, runner));
+    g_signal_handlers_disconnect_by_func(test_object,
+                                         G_CALLBACK(cb_success_signal),
+                                         &n_success_signal);
+    cut_assert_equal_int(1, n_success_signal);
 }
 
 void

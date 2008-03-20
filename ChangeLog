@@ -1,5 +1,8 @@
 2008-03-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-test-case.c (test_success_signal): added a test
+	for confirming test case emits "success" signal.
+
 	* cutter/cut-test-case.c: emitted a signal that is corresponding
 	to test result status.
 
