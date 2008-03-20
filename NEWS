@@ -2,6 +2,13 @@
 
 = NEWS --- The history of Cutter
 
+== 0.6.0: 2008-03-21
+
+  * Added --xml-report option for reporting test result as XML.
+  * Added --test-case-order option for sorting test case by name.
+  * Added --version option for outputting Cutter version.
+  * Added --disable-bfd option to configure.
+
 == 0.5.0: 2008-03-10
 
   * Included missing cutter/gbsearcharray.h.

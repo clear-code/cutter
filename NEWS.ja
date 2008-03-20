@@ -2,6 +2,14 @@
 
 = NEWS --- Cutterの歴史
 
+== 0.6.0: 2008-03-21
+
+  * XMLで結果を出力する-xml-reportオプションの追加。
+  * テストケース名で実行するテストケースを並び替え
+    る--test-case-orderオプションの追加。
+  * バージョンを表示する--versionオプションの追加。
+  * configureに--disable-bfdオプションの追加
+
 == 0.5.0: 2008-03-10
 
   * パッケージもれのcutter/gbsearcharray.hを追加。
