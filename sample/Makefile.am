@@ -29,4 +29,7 @@ stack_test_DATA =		\
 	stack/test/run-test.sh	\
 	stack/test/test-stack.c
 
+stack_configdir = $(stackdir)/config
+stack_config_DATA = # for creating an empty directory
+
 EXTRA_DIST = $(stack_DATA) $(stack_src_DATA) $(stack_test_DATA)

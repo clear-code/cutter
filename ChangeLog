@@ -1,5 +1,8 @@
 2008-03-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* sample/Makefile.am (stack_config_DATA): added a dummy rule to
+	create config/ directory.
+
 	* sample/Makefile.am: used SCRIPTS instead of DATA for autogen.sh.
 
 	* test/test-cut-test-case.c: don't use static variables for counting
