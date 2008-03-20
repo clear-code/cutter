@@ -1,5 +1,12 @@
 2008-03-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-case.c: emitted a signal that is corresponding
+	to test result status.
+
+	* cutter/cut-test-result.[ch] (cut_test_result_status_to_signal_name):
+	moved from ...
+	* cutter/cut-test-context.c: ... here.
+
 	* cutter/cut-test-context.c (cut_test_context_register_result):
 	removed dangerous message construction.
 

@@ -356,12 +356,23 @@ run (CutTestCase *test_case, CutTest *test, CutRunner *runner)
     return success;
 }
 
+static void
+cb_test_status (CutTest *test, CutTestContext *context, CutTestResult *result,
+                gpointer data)
+{
+    CutTestResultStatus *status = data;
+
+    *status = MAX(*status, cut_test_result_get_status(result));
+}
+
 static gboolean
 cut_test_case_run_tests (CutTestCase *test_case, CutRunner *runner,
                          const GList *tests)
 {
     CutTestCasePrivate *priv;
     const GList *list;
+    CutTestResultStatus status = CUT_TEST_RESULT_SUCCESS;
+    CutTestResult *result;
     gboolean all_success = TRUE;
 
     cut_runner_start_test_case(runner, test_case);
@@ -379,24 +390,39 @@ cut_test_case_run_tests (CutTestCase *test_case, CutRunner *runner,
             continue;
 
         if (CUT_IS_TEST(list->data)) {
-            if (!run(test_case, CUT_TEST(list->data), runner))
+            CutTest *test;
+
+            test = CUT_TEST(list->data);
+            g_signal_connect(test, "success", G_CALLBACK(cb_test_status),
+                             &status);
+            g_signal_connect(test, "failure", G_CALLBACK(cb_test_status),
+                             &status);
+            g_signal_connect(test, "error", G_CALLBACK(cb_test_status),
+                             &status);
+            g_signal_connect(test, "pending", G_CALLBACK(cb_test_status),
+                             &status);
+            g_signal_connect(test, "notification", G_CALLBACK(cb_test_status),
+                             &status);
+            if (!run(test_case, test, runner))
                 all_success = FALSE;
+            g_signal_handlers_disconnect_by_func(test,
+                                                 G_CALLBACK(cb_test_status),
+                                                 &status);
         } else {
             g_warning("This object is not CutTest object");
         }
     }
 
-    if (all_success) {
-        CutTestResult *result;
-        result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
-                                     NULL,
-                                     test_case,
-                                     NULL,
-                                     NULL, NULL,
-                                     NULL, NULL, 0);
-        g_signal_emit_by_name(CUT_TEST(test_case), "success", NULL, result);
-        g_object_unref(result);
-    }
+    result = cut_test_result_new(status,
+                                 NULL,
+                                 test_case,
+                                 NULL,
+                                 NULL, NULL,
+                                 NULL, NULL, 0);
+    g_signal_emit_by_name(CUT_TEST(test_case),
+                          cut_test_result_status_to_signal_name(status),
+                          NULL, result);
+    g_object_unref(result);
 
     if (priv->finalize) {
         priv->finalize();

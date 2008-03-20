@@ -475,6 +475,33 @@ cut_test_result_to_xml (CutTestResult *result)
     return strdup("_Not implemented yet");
 }
 
+const gchar *
+cut_test_result_status_to_signal_name (CutTestResultStatus status)
+{
+    const gchar *signal_name;
+
+    switch (status) {
+      case CUT_TEST_RESULT_SUCCESS:
+        signal_name = "success";
+        break;
+      case CUT_TEST_RESULT_FAILURE:
+        signal_name = "failure";
+        break;
+      case CUT_TEST_RESULT_ERROR:
+        signal_name = "error";
+        break;
+      case CUT_TEST_RESULT_PENDING:
+        signal_name = "pending";
+        break;
+      case CUT_TEST_RESULT_NOTIFICATION:
+        signal_name = "notification";
+        break;
+    }
+
+    return signal_name;
+}
+
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */

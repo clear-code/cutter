@@ -75,6 +75,8 @@ guint                cut_test_result_get_line          (CutTestResult *result);
 gdouble              cut_test_result_get_elapsed       (CutTestResult *result);
 gchar               *cut_test_result_to_xml            (CutTestResult *result);
 
+const gchar *cut_test_result_status_to_signal_name (CutTestResultStatus status);
+
 G_END_DECLS
 
 #endif /* __CUT_TEST_RESULT_H__ */
