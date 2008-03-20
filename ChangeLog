@@ -1,5 +1,8 @@
 2008-03-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-result.c (cut_test_result_status_to_signal_name),
+	cutter/cut-runner.c (cut_runner_sort_test_cases): suppressed warnings.
+
 	* sample/Makefile.am (stack_test_SCRIPTS): moved test/run-test.sh
 	to here to added executable permission.
 

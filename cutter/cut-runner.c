@@ -1222,7 +1222,7 @@ GList *
 cut_runner_sort_test_cases (CutRunner *runner, GList *test_cases)
 {
     CutRunnerPrivate *priv;
-    GList *sorted_test_cases;
+    GList *sorted_test_cases = NULL;
     gboolean ascending;
 
     priv = CUT_RUNNER_GET_PRIVATE(runner);

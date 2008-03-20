@@ -478,7 +478,7 @@ cut_test_result_to_xml (CutTestResult *result)
 const gchar *
 cut_test_result_status_to_signal_name (CutTestResultStatus status)
 {
-    const gchar *signal_name;
+    const gchar *signal_name = NULL;
 
     switch (status) {
       case CUT_TEST_RESULT_SUCCESS:
