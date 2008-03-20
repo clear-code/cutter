@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 0.4.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-03-10 11:17+0900\n"
-"PO-Revision-Date: 2007-12-14 10:18+0900\n"
+"POT-Creation-Date: 2008-03-20 21:16+0900\n"
+"PO-Revision-Date: 2008-03-20 21:17+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -16,42 +16,66 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: cutter/cut-main.c:55
+#: cutter/cut-main.c:75
+#, c-format
+msgid "Invalid test case order value: %s"
+msgstr "不正なテストケース順序指定です: %s"
+
+#: cutter/cut-main.c:85
+msgid "Show version"
+msgstr "バージョンを表示"
+
+#: cutter/cut-main.c:87
 msgid "Set directory of source code"
 msgstr "ソースコードのディレクトリを設定"
 
-#: cutter/cut-main.c:57
+#: cutter/cut-main.c:89
 msgid "Specify tests"
 msgstr "テストを指定"
 
-#: cutter/cut-main.c:59
+#: cutter/cut-main.c:91
 msgid "Specify test cases"
 msgstr "テストケースを指定"
 
-#: cutter/cut-main.c:61
+#: cutter/cut-main.c:93
 msgid "Run test cases with multi-thread"
 msgstr "マルチスレッドでテストケースを実行"
 
-#: cutter/cut-main.c:63
-msgid "Show all available UIs and exit"
-msgstr "すべての利用可能なUIを表示し、終了する"
+#: cutter/cut-main.c:95
+msgid "Sort test case by. Default is 'none'."
+msgstr "テストケースを並び替える。既定値は'none'（並び替えない）"
 
-#: cutter/cut-report-factory-builder.c:86
-msgid "Set filenames of the report"
-msgstr ""
+#: cutter/cut-report-factory-builder.c:98
+msgid "Set filename of XML report"
+msgstr "XMLレポートのファイル名を指定"
 
-#: cutter/cut-ui-factory-builder.c:85
+#: cutter/cut-report-factory-builder.c:103
+msgid "Report Options"
+msgstr "レポートのオプション"
+
+#: cutter/cut-report-factory-builder.c:104
+msgid "Show report options"
+msgstr "レポートのオプションを表示"
+
+#: cutter/cut-ui-factory-builder.c:98
 msgid "Specify UI"
 msgstr "UIを指定"
 
-#: cutter/module/report/cut-report-factory-xml.c:149
-msgid "XML Report Options"
-msgstr ""
+#: cutter/cut-ui-factory-builder.c:123
+msgid "UI Options"
+msgstr "UI共通のオプション"
 
-#: cutter/module/report/cut-report-factory-xml.c:150
-#, fuzzy
-msgid "Show XML Report Options"
-msgstr "UI共通のオプションの表示"
+#: cutter/cut-ui-factory-builder.c:124
+msgid "Show UI options"
+msgstr "コンソールUIのオプションの表示"
+
+#: cutter/module/report/cut-report-factory-xml.c:229
+msgid "XML Report Options"
+msgstr "XMLレポートのオプション"
+
+#: cutter/module/report/cut-report-factory-xml.c:230
+msgid "Show XML report options"
+msgstr "XMLレポートのオプションを表示"
 
 #: cutter/module/ui/cut-ui-factory-console.c:287
 #, c-format
@@ -71,7 +95,7 @@ msgid "Console UI Options"
 msgstr "コンソールUIのオプション"
 
 #: cutter/module/ui/cut-ui-factory-console.c:324
-msgid "Show Console UI Options"
+msgid "Show Console UI options"
 msgstr "コンソールUIのオプションの表示"
 
 #: cutter/module/ui/cut-ui-gtk.c:232
@@ -108,19 +132,16 @@ msgstr "%u/%u (%u%%): %.1f秒"
 msgid "Staring test suite %s..."
 msgstr "テストスイート%sを開始..."
 
-#: cutter/module/ui/cut-ui-gtk.c:1138
+#: cutter/module/ui/cut-ui-gtk.c:1139
 #, c-format
 msgid "Running test: %s"
 msgstr "テストを実行中: %s"
 
-#: cutter/module/ui/cut-ui-gtk.c:1292
+#: cutter/module/ui/cut-ui-gtk.c:1293
 #, c-format
 msgid "Finished in %0.1f seconds: %s"
 msgstr "%0.1f秒で終了: %s"
 
-#: cutter/module/ui/cut-ui-gtk.c:1331
+#: cutter/module/ui/cut-ui-gtk.c:1332
 msgid "CRASHED!!!"
 msgstr "異常終了！！！"
-
-#~ msgid "Common UI Options"
-#~ msgstr "UI共通のオプション"

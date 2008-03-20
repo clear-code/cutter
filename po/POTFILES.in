@@ -1,3 +1,4 @@
+cutter/cut-contractor.c
 cutter/cut-enum-types.c
 cutter/cut-factory-builder.c
 cutter/cut-listener.c
