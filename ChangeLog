@@ -1,5 +1,7 @@
 2008-03-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/run-test.sh: removed needless arguments.
+
 	* cutter/cut-main.c: don't handle --help in the first path.
 
 	* cutter/cut-report-factory-builder.c,
