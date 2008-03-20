@@ -18,6 +18,9 @@ void test_get_name(void);
 void test_start_signal(void);
 void test_success_signal(void);
 void test_failure_signal(void);
+void test_error_signal(void);
+void test_pending_signal(void);
+void test_notification_signal(void);
 void test_complete_signal(void);
 
 static CutTestCase *test_object;
@@ -292,6 +295,49 @@ test_failure_signal (void)
                                          G_CALLBACK(cb_count_status),
                                          &n_failures);
     cut_assert_equal_int(1, n_failures);
+}
+
+void
+test_error_signal (void)
+{
+    gint n_errors = 0;
+    g_signal_connect(test_object, "error",
+                     G_CALLBACK(cb_count_status), &n_errors);
+    cuttest_add_test(test_object, "dummy_error_test", dummy_error_test);
+    cut_assert(!cut_test_case_run(test_object, runner));
+    g_signal_handlers_disconnect_by_func(test_object,
+                                         G_CALLBACK(cb_count_status),
+                                         &n_errors);
+    cut_assert_equal_int(1, n_errors);
+}
+
+void
+test_pending_signal (void)
+{
+    gint n_pendings = 0;
+    g_signal_connect(test_object, "pending",
+                     G_CALLBACK(cb_count_status), &n_pendings);
+    cuttest_add_test(test_object, "dummy_pending_test", dummy_pending_test);
+    cut_assert(!cut_test_case_run(test_object, runner));
+    g_signal_handlers_disconnect_by_func(test_object,
+                                         G_CALLBACK(cb_count_status),
+                                         &n_pendings);
+    cut_assert_equal_int(1, n_pendings);
+}
+
+void
+test_notification_signal (void)
+{
+    gint n_notifications = 0;
+    g_signal_connect(test_object, "notification",
+                     G_CALLBACK(cb_count_status), &n_notifications);
+    cuttest_add_test(test_object, "dummy_notification_test",
+                     dummy_notification_test);
+    cut_assert(cut_test_case_run(test_object, runner));
+    g_signal_handlers_disconnect_by_func(test_object,
+                                         G_CALLBACK(cb_count_status),
+                                         &n_notifications);
+    cut_assert_equal_int(1, n_notifications);
 }
 
 void
