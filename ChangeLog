@@ -1,5 +1,7 @@
 2008-03-21  Kouhei Sutou  <kou@cozmixng.org>
 
+	* configure.ac: 0.6.0 -> 0.7.0.
+
 	* README{,.ja}: added --xml-report.
 
 	* NEWS{,.ja}: updated.
