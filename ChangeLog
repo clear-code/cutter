@@ -1,5 +1,7 @@
 2008-03-21  Kouhei Sutou  <kou@cozmixng.org>
 
+	* README{,.ja}: added --xml-report.
+
 	* NEWS{,.ja}: updated.
 
 2008-03-20  Kouhei Sutou  <kou@cozmixng.org>

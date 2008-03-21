@@ -103,6 +103,9 @@ This is a list of features of Cutter:
 
    This option is only for console UI.
 
+: --xml-report=FILE
+
+   Cutter outputs a test report to FILE as XML format.
 
 == How to test
 
