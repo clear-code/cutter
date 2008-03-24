@@ -4,6 +4,9 @@
 	cut_factory_builder_has_builder() test.
 	cut_factory_builder_has_builder() will be moved to CutContractor.
 	Added cut_factory_builder_get_type_name() test.
+	* cutter/cut-contractor.[c|h], cutter/cut-factory-builder.[c|h],
+	cutter/cut-module-factory.[c|h], cutter/cut-main.c: Some functions
+	were moved to CutContractor.
 
 2008-03-21  Kouhei Sutou  <kou@cozmixng.org>
 

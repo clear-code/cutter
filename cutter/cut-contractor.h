@@ -50,8 +50,11 @@ GType          cut_contractor_get_type    (void) G_GNUC_CONST;
 
 CutContractor *cut_contractor_new         (void);
 
-gboolean       cut_contractor_has_builder (CutContractor *contractor, 
-                                           const gchar *type_name);
+GList         *cut_contractor_build_factories    (CutContractor *contractor);
+gboolean       cut_contractor_has_builder        (CutContractor *contractor, 
+                                                  const gchar *type_name);
+void           cut_contractor_set_option_context (CutContractor *contractor,
+                                                  GOptionContext *context);
 
 
 G_END_DECLS

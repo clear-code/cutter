@@ -27,8 +27,11 @@
 #include <glib.h>
 #include <glib/gi18n-lib.h>
 
-#include "cut-factory-builder.h"
 #include "cut-contractor.h"
+#include "cut-module-factory.h"
+#include "cut-factory-builder.h"
+#include "cut-report-factory-builder.h"
+#include "cut-ui-factory-builder.h"
 
 #define CUT_CONTRACTOR_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_CONTRACTOR, CutContractorPrivate))
 
@@ -54,12 +57,51 @@ cut_contractor_class_init (CutContractorClass *klass)
     g_type_class_add_private(gobject_class, sizeof(CutContractorPrivate));
 }
 
-static void
-cut_contractor_init (CutContractor *builder)
+static GList *
+create_default_builders (void)
 {
-    CutContractorPrivate *priv = CUT_CONTRACTOR_GET_PRIVATE(builder);
+    GList *list = NULL;
 
-    priv->builders = NULL;
+    list = g_list_prepend(list, g_object_new(CUT_TYPE_UI_FACTORY_BUILDER, NULL));
+    list = g_list_prepend(list, g_object_new(CUT_TYPE_REPORT_FACTORY_BUILDER, NULL));
+
+    return list;
+}
+
+#if 0
+static void
+load_default_factory (CutContractor *contractor)
+{
+    GList *node;
+    CutContractorPrivate *priv = CUT_CONTRACTOR_GET_PRIVATE(contractor);
+
+    for (node = priv->builders; node; node = g_list_next(node)) {
+        const gchar *module_dir, *type_name;
+        CutFactoryBuilder *builder = CUT_FACTORY_BUILDER(node->data);
+        GList *modules;
+
+        module_dir = cut_factory_builder_get_module_dir(builder);
+        if (!module_dir)
+            continue;
+        type_name = cut_factory_builder_get_type_name(builder);
+
+        modules = cut_module_load_modules(module_dir);
+        if (modules)
+            g_hash_table_replace(factories, g_strdup(type_name), modules);
+    }
+}
+#endif
+
+static void
+cut_contractor_init (CutContractor *contractor)
+{
+    CutContractorPrivate *priv = CUT_CONTRACTOR_GET_PRIVATE(contractor);
+
+    cut_module_factory_init();
+    /* load_default_factory(contractor); */
+    cut_module_factory_load(NULL);
+
+    priv->builders = create_default_builders();
 }
 
 static void
@@ -68,9 +110,12 @@ dispose (GObject *object)
     CutContractorPrivate *priv = CUT_CONTRACTOR_GET_PRIVATE(object);
 
     if (priv->builders) {
+        g_list_foreach(priv->builders, (GFunc)g_object_unref, NULL);
         g_list_free(priv->builders);
         priv->builders = NULL;
     }
+
+    cut_module_factory_quit();
 
     G_OBJECT_CLASS(cut_contractor_parent_class)->dispose(object);
 }
@@ -96,6 +141,82 @@ cut_contractor_has_builder (CutContractor *contractor, const gchar *type_name)
     }
 
     return FALSE;
+}
+
+#if 0
+static gchar *
+create_builder_type_name (const gchar *builder_name)
+{
+    return  g_strconcat("Cut", builder_name, "FactoryBuilder", NULL);
+}
+
+static GType
+get_builder_type_from_name (const gchar *type_name)
+{
+    GType *children;
+    GType type = 0;
+    guint n_children, i;
+
+    children = g_type_children(CUT_TYPE_FACTORY_BUILDER, &n_children);
+
+    for (i = 0; i < n_children; i++) {
+        GType child = children[i];
+        const gchar *name = g_type_name(child);
+        if (g_ascii_strcasecmp(name, type_name))
+            type = child;
+    }
+
+    g_free(children);
+
+    return type;
+}
+
+GObject *
+cut_contractor_create_builder (CutContractor *contractor, const gchar *type_name)
+{
+    CutContractorPrivate *priv = CUT_CONTRACTOR_GET_PRIVATE(contractor);
+    gchar *gtype_name;
+    GType type;
+    GObject *builder;
+
+    gtype_name = create_builder_type_name(type_name);
+    type = get_builder_type_from_name(gtype_name);
+
+    g_free(gtype_name);
+
+    if (!type)
+        return NULL;
+    builder = g_object_new(type, NULL);
+    if (builder)
+        priv->builders = g_list_prepend(priv->builders, builder);
+
+    return builder;
+}
+#endif
+
+GList *
+cut_contractor_build_factories (CutContractor *contractor)
+{
+    GList *factories = NULL, *node;
+    CutContractorPrivate *priv = CUT_CONTRACTOR_GET_PRIVATE(contractor);
+
+    for (node = priv->builders; node; node = g_list_next(node)) {
+        CutFactoryBuilder *builder = CUT_FACTORY_BUILDER(node->data);
+        factories = g_list_concat(cut_factory_builder_build(builder), factories);
+    }
+    return factories;
+}
+
+void
+cut_contractor_set_option_context (CutContractor *contractor, GOptionContext *context)
+{
+    GList *node;
+    CutContractorPrivate *priv = CUT_CONTRACTOR_GET_PRIVATE(contractor);
+
+    for (node = priv->builders; node; node = g_list_next(node)) {
+        CutFactoryBuilder *builder = CUT_FACTORY_BUILDER(node->data);
+        cut_factory_builder_set_option_context(builder, context);
+    }
 }
 
 /*

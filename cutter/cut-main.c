@@ -38,6 +38,7 @@
 #include "cut-test-suite.h"
 #include "cut-ui.h"
 #include "cut-module-factory.h"
+#include "cut-contractor.h"
 #include "cut-value-equal.h"
 
 static gboolean initialized = FALSE;
@@ -48,6 +49,7 @@ static const gchar **test_names = NULL;
 static CutOrder test_case_order = CUT_ORDER_NONE_SPECIFIED;
 static gboolean use_multi_thread = FALSE;
 static GList *factories = NULL;
+static CutContractor *contractor = NULL;
 
 static gboolean
 print_version (const gchar *option_name, const gchar *value,
@@ -124,9 +126,8 @@ cut_init (int *argc, char ***argv)
     g_option_context_set_help_enabled(option_context, FALSE);
     g_option_context_set_ignore_unknown_options(option_context, TRUE);
 
-    cut_module_factory_init();
-    cut_module_factory_load(NULL);
-    cut_module_factory_set_option_context(option_context);
+    contractor = cut_contractor_new();
+    cut_contractor_set_option_context(contractor, option_context);
 
     if (!g_option_context_parse(option_context, argc, argv, &error)) {
         g_print("%s\n", error->message);
@@ -135,8 +136,7 @@ cut_init (int *argc, char ***argv)
         exit(1);
     }
 
-
-    factories = cut_module_factory_build_factories();
+    factories = cut_contractor_build_factories(contractor);
 
     g_option_context_set_help_enabled(option_context, TRUE);
     g_option_context_set_ignore_unknown_options(option_context, FALSE);
@@ -179,7 +179,11 @@ cut_quit (void)
         return;
 
     cut_ui_quit();
-    cut_module_factory_quit();
+
+    if (contractor) {
+        g_object_unref(contractor);
+        contractor = NULL;
+    }
 
     initialized = FALSE;
 }

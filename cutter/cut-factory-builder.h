@@ -50,10 +50,6 @@ struct _CutFactoryBuilderClass
     const gchar *(*get_type_name)      (CutFactoryBuilder *builder);
 };
 
-gboolean      cut_factory_builder_has_builder    (const gchar *type_name);
-GObject      *cut_factory_builder_create         (const gchar *type_name);
-GList        *cut_factory_builder_create_default (void);
-
 GType        cut_factory_builder_get_type       (void) G_GNUC_CONST;
 const gchar *cut_factory_builder_get_type_name  (CutFactoryBuilder *builder);
 const gchar *cut_factory_builder_get_module_dir (CutFactoryBuilder *builder);
