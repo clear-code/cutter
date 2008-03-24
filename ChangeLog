@@ -1,5 +1,7 @@
 2008-03-24  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/module/ui/Makefile.am: removed needless links.
+
 	* sample/glib/run-test.sh: cleanup.
 
 	* sample/Makefile.am (EXTRA_DIST): added missing stack_SCRIPTS and

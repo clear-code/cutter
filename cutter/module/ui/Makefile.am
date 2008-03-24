@@ -19,11 +19,6 @@ console_factory_la_SOURCES = \
 	cut-ui-factory-console.c
 console_factory_la_LIBADD = $(GLIB_LIBS)
 
-check_DATA = console.so
-console.so: .libs/console.so
-	ln -s $< $@
-CLEANFILES = console.so
-
 if HAVE_GTK
 ui_module_LTLIBRARIES += gtk.la
 ui_factory_module_LTLIBRARIES += gtk_factory.la
@@ -40,9 +35,4 @@ gtk_factory_la_CPPFLAGS =			\
 gtk_factory_la_SOURCES = \
 	cut-ui-factory-gtk.c
 gtk_factory_la_LIBADD = $(GTK_LIBS)
-
-check_DATA += gtk.so
-gtk.so: .libs/gtk.so
-	ln -s $< $@
-CLEANFILES += gtk.so
 endif
