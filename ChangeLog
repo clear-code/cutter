@@ -1,6 +1,7 @@
 2008-03-24  Kouhei Sutou  <kou@cozmixng.org>
 
 	* sample/Makefile.am (EXTRA_DIST): added missing stack_SCRIPTS.
+	Bug #1924245. Thanks to makeinu!!!
 
 2008-03-24  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
