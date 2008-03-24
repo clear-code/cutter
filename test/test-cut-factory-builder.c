@@ -3,29 +3,37 @@
 #include "cut-ui-factory-builder.h"
 #include "cut-report-factory-builder.h"
 
-void test_has_builder (void);
+void test_type_name (void);
 
-void
-initialize (void)
-{
-}
+static GObject *builder;
 
 void
 setup (void)
 {
+    builder = NULL;
 }
 
 void
 teardown (void)
 {
+    if (builder)
+        g_object_unref(builder);
 }
 
 void
-test_has_builder (void)
+test_type_name (void)
 {
-    cut_assert(cut_factory_builder_has_builder("ui"));
-    cut_assert(cut_factory_builder_has_builder("report"));
-    cut_assert(!cut_factory_builder_has_builder("XXXX"));
+    builder = g_object_new(CUT_TYPE_UI_FACTORY_BUILDER, NULL);
+    cut_assert(builder);
+    cut_assert_equal_string("ui",
+                            cut_factory_builder_get_type_name(CUT_FACTORY_BUILDER(builder)));
+    g_object_unref(builder);
+    builder = NULL;
+
+    builder = g_object_new(CUT_TYPE_REPORT_FACTORY_BUILDER, NULL);
+    cut_assert(builder);
+    cut_assert_equal_string("report",
+                            cut_factory_builder_get_type_name(CUT_FACTORY_BUILDER(builder)));
 }
 
 /*

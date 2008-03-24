@@ -1,3 +1,10 @@
+2008-03-24  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test-cut-factory-builder.c: Removed
+	cut_factory_builder_has_builder() test.
+	cut_factory_builder_has_builder() will be moved to CutContractor.
+	Added cut_factory_builder_get_type_name() test.
+
 2008-03-21  Kouhei Sutou  <kou@cozmixng.org>
 
 	* configure.ac: 0.6.0 -> 0.7.0.
