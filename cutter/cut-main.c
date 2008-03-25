@@ -50,7 +50,6 @@ static CutOrder test_case_order = CUT_ORDER_NONE_SPECIFIED;
 static gboolean use_multi_thread = FALSE;
 static GList *factories = NULL;
 static CutContractor *contractor = NULL;
-static gboolean help_all = FALSE;
 
 static gboolean
 print_version (const gchar *option_name, const gchar *value,
@@ -83,20 +82,21 @@ parse_test_case_order (const gchar *option_name, const gchar *value,
 }
 
 static gboolean
-parse_help_all (const gchar *option_name, const gchar *value,
+print_help_all (const gchar *option_name, const gchar *value,
                 gpointer data, GError **error)
 {
-    help_all = TRUE;
-    return TRUE;
-}
-
-static void
-print_help_all (GOptionContext *context)
-{
+    GOptionContext *context = data;
     gchar *help;
+
+    cut_contractor_build_all_factories(contractor);
+
     help = g_option_context_get_help(context, FALSE, NULL);
     g_print("%s", help);
     g_free(help);
+    g_option_context_free(context);
+    exit(0);
+
+    return TRUE;
 }
 
 static const GOptionEntry option_entries[] =
@@ -113,8 +113,8 @@ static const GOptionEntry option_entries[] =
      N_("Run test cases with multi-thread"), NULL},
     {"test-case-order", 0, 0, G_OPTION_ARG_CALLBACK, parse_test_case_order,
      N_("Sort test case by. Default is 'none'."), "[none|name|name-desc]"},
-    {"help-all", 0, G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_CALLBACK, parse_help_all,
-     N_("Sort test case by. Default is 'none'."), NULL},
+    {"help-all", 0, G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_CALLBACK, print_help_all,
+     NULL, NULL},
     {NULL}
 };
 
@@ -122,6 +122,7 @@ void
 cut_init (int *argc, char ***argv)
 {
     GOptionContext *option_context;
+    GOptionGroup *main_group;
     GError *error = NULL;
 
     if (initialized)
@@ -142,25 +143,22 @@ cut_init (int *argc, char ***argv)
     cut_value_equal_init();
 
     option_context = g_option_context_new("TEST_DIRECTORY");
-    g_option_context_add_main_entries(option_context, option_entries, "cutter");
     g_option_context_set_help_enabled(option_context, FALSE);
     g_option_context_set_ignore_unknown_options(option_context, TRUE);
 
     contractor = cut_contractor_new();
     cut_contractor_set_option_context(contractor, option_context);
 
+    main_group = g_option_group_new(NULL, NULL, NULL, option_context, NULL);
+    g_option_group_add_entries(main_group, option_entries);
+    g_option_group_set_translation_domain(main_group, "cutter");
+    g_option_context_set_main_group(option_context, main_group);
+
     if (!g_option_context_parse(option_context, argc, argv, &error)) {
         g_print("%s\n", error->message);
         g_error_free(error);
         g_option_context_free(option_context);
         exit(1);
-    }
-
-    if (help_all) {
-        cut_contractor_build_all_factories(contractor);
-        print_help_all(option_context);
-        g_option_context_free(option_context);
-        exit(0);
     }
 
     factories = cut_contractor_build_factories(contractor);
