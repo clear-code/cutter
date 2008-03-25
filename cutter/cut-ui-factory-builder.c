@@ -69,6 +69,7 @@ constructor (GType type, guint n_props, GObjectConstructParam *props)
     if (!the_builder) {
         GObjectClass *klass = G_OBJECT_CLASS(cut_ui_factory_builder_parent_class);
         object = klass->constructor(type, n_props, props);
+        the_builder = CUT_UI_FACTORY_BUILDER(object);
     } else {
         object = g_object_ref(G_OBJECT(the_builder));
     }

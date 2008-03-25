@@ -93,9 +93,9 @@ cut_contractor_init (CutContractor *contractor)
 {
     CutContractorPrivate *priv = CUT_CONTRACTOR_GET_PRIVATE(contractor);
 
+    cut_module_factory_init();
     priv->builders = create_default_builders();
 
-    cut_module_factory_init();
     load_ui_factory(contractor);
 }
 

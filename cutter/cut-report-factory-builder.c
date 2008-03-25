@@ -70,6 +70,7 @@ constructor (GType type, guint n_props, GObjectConstructParam *props)
     if (!the_builder) {
         GObjectClass *klass = G_OBJECT_CLASS(cut_report_factory_builder_parent_class);
         object = klass->constructor(type, n_props, props);
+        the_builder = CUT_REPORT_FACTORY_BUILDER(object);
     } else {
         object = g_object_ref(G_OBJECT(the_builder));
     }
@@ -89,6 +90,7 @@ cut_report_factory_builder_init (CutReportFactoryBuilder *builder)
     g_object_set(G_OBJECT(builder),
                  "module-dir", dir,
                  NULL);
+    cut_module_factory_load(dir, "report");
 }
 
 static void
@@ -120,6 +122,7 @@ build (CutFactoryBuilder *builder)
         return NULL;
 
     report_type = "xml";
+
     if (cut_module_factory_exist_module("report", report_type)) {
         CutModuleFactory *module_factory;
         GOptionContext *option_context;
