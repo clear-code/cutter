@@ -114,7 +114,7 @@ static const GOptionEntry option_entries[] =
     {"test-case-order", 0, 0, G_OPTION_ARG_CALLBACK, parse_test_case_order,
      N_("Sort test case by. Default is 'none'."), "[none|name|name-desc]"},
     {"help-all", 0, 0, G_OPTION_ARG_CALLBACK, parse_help_all,
-     N_("Sort test case by. Default is 'none'."), "[none|name|name-desc]"},
+     N_("Sort test case by. Default is 'none'."), NULL},
     {NULL}
 };
 
