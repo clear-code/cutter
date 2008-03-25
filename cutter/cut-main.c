@@ -50,6 +50,7 @@ static CutOrder test_case_order = CUT_ORDER_NONE_SPECIFIED;
 static gboolean use_multi_thread = FALSE;
 static GList *factories = NULL;
 static CutContractor *contractor = NULL;
+static gboolean help_all = FALSE;
 
 static gboolean
 print_version (const gchar *option_name, const gchar *value,
@@ -81,6 +82,23 @@ parse_test_case_order (const gchar *option_name, const gchar *value,
     return TRUE;
 }
 
+static gboolean
+parse_help_all (const gchar *option_name, const gchar *value,
+                gpointer data, GError **error)
+{
+    help_all = TRUE;
+    return TRUE;
+}
+
+static void
+print_help_all (GOptionContext *context)
+{
+    gchar *help;
+    help = g_option_context_get_help(context, FALSE, NULL);
+    g_print("%s", help);
+    g_free(help);
+}
+
 static const GOptionEntry option_entries[] =
 {
     {"version", 0, 0, G_OPTION_ARG_CALLBACK, print_version,
@@ -94,6 +112,8 @@ static const GOptionEntry option_entries[] =
     {"multi-thread", 'm', 0, G_OPTION_ARG_NONE, &use_multi_thread,
      N_("Run test cases with multi-thread"), NULL},
     {"test-case-order", 0, 0, G_OPTION_ARG_CALLBACK, parse_test_case_order,
+     N_("Sort test case by. Default is 'none'."), "[none|name|name-desc]"},
+    {"help-all", 0, 0, G_OPTION_ARG_CALLBACK, parse_help_all,
      N_("Sort test case by. Default is 'none'."), "[none|name|name-desc]"},
     {NULL}
 };
@@ -134,6 +154,12 @@ cut_init (int *argc, char ***argv)
         g_error_free(error);
         g_option_context_free(option_context);
         exit(1);
+    }
+
+    if (help_all) {
+        print_help_all(option_context);
+        g_option_context_free(option_context);
+        exit(0);
     }
 
     factories = cut_contractor_build_factories(contractor);

@@ -1,3 +1,7 @@
+2008-03-25  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-main.c: Handle --help-all option.
+
 2008-03-24  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/module/ui/Makefile.am: removed needless links.
