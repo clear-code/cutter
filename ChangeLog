@@ -1,5 +1,7 @@
 2008-03-25  Kouhei Sutou  <kou@cozmixng.org>
 
+	* README*: updated.
+
 	* cutter/cut-main.c: cleanup --help-all.
 
 2008-03-25  Hiroyuki Ikezoe  <poincare@ikezoe.net>

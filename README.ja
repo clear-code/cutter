@@ -60,7 +60,9 @@ Cutterの特徴は以下の通りです。
 
 == 使い方
 
-  % cutter [オプション] [libtest_*.soがあるディレクトリ]
+  % cutter [オプション] [test_*.soがあるディレクトリ]
+
+注: test_*.soはディレクトリを再帰的にたどって検索されます。
 
 === オプション
 
@@ -74,17 +76,23 @@ Cutterの特徴は以下の通りです。
    す。Cutterの出力からテストが失敗した箇所にジャンプするツー
    ル（Emacsなど）と連携するための機能です。
 
-: -t TEST_CASE_NAME1,TEST_CASE_NAME2,..., --test-case=TEST_CASE_NAME1,TEST_CASE_NAME2,...
+: -t TEST_CASE_NAME, --test-case=TEST_CASE_NAME
 
-   TEST_CASE_NAME1、TEST_CASE_NAME2のどれかにマッチしたテス
-   トケースを実行します。もし、TEST_CASE_NAMEが"/"で囲まれて
-   いた場合は（例: /test_/）正規表現として扱います。
+   TEST_CASE_NAMEにマッチしたテストケースを実行します。もし、
+   TEST_CASE_NAMEが"/"で囲まれていた場合は（例: /test_/）正
+   規表現として扱います。
 
-: -n TEST_NAME1,TEST_NAME2,..., --name=TEST_NAME1,TEST_NAME2,...
+   このオプションは複数回指定できます。その場合は、どれかの
+   TEST_CASE_NAMEにマッチしたテストケースを実行します。（OR）
 
-   TEST_NAME1、TEST_NAME2のどれかにマッチしたテストを実行し
-   ます。もし、TEST_NAMEが"/"で囲まれていた場合は（例:
-   /test_/）正規表現として扱います。
+: -n TEST_NAME, --name=TEST_NAME
+
+   TEST_NAMEにマッチしたテストを実行します。もし、TEST_NAME
+   が"/"で囲まれていた場合は（例: /test_/）正規表現として扱
+   います。
+
+   このオプションは複数回指定できます。その場合は、どれかの
+   TEST_NAMEにマッチしたテストケースを実行します。（OR）
 
 : -m, --multi-thread
 
@@ -121,13 +129,22 @@ Cutterの特徴は以下の通りです。
 
    FILEにXML形式でテスト結果を出力します。
 
+: -?, --help
+
+   UIやテスト結果レポート機能に依存しないオプションを表示し
+   ます。
+
+: --help-all
+
+   すべてのオプションを表示します。
+
 == テストの仕方
 
 テストの実行は以下のような流れになります．
 
   (1) テストを作成する
-  (2) コンパイルし、libtest_*.soを作成する
-  (3) cutterを起動し、libtest_*.soを読み込ませ、テストをする
+  (2) コンパイルし、test_*.soを作成する
+  (3) cutterを起動し、test_*.soを読み込ませ、テストをする
 
 詳しくはTUTORIAL.jaとsample/stack/を参考にしてください。
 
@@ -271,6 +288,49 @@ cutter/cut-assertions.hあるいは
 の例では「bug」属性を「test_invalid_input」テストに追加する
 ために「bug_invalid_input」という属性設定関数を定義していま
 す。
+
+=== XML出力
+
+--xml-reportオプションを指定することでテスト結果をXML形式で
+出力することができる。出力されるXMLは以下のような構造になっ
+ている。
+
+  <report>
+    <result>
+      <test-case>
+        <name>テストケース名</name>
+        <description>テストケースの説明（もしあれば）</description>
+      </test-case>
+      <test>
+        <name>テスト名</name>
+        <description>テストの説明（もしあれば）</description>
+        <option><!-- 属性情報（もしあれば） -->
+          <name>属性名（例: bug）</name>
+          <value>属性値（例: 1234）</value>
+        </option>
+        <option>
+          ...
+        </option>
+      </test>
+      <status>テスト結果（[success|failure|error|pending|notification]）</status>
+      <detail>テスト結果の詳細（もしあれば）</detail>
+      <backtrace><!-- バックトレース（もしあれば） -->
+        <entry>
+          <file>ファイル名</file>
+          <line>行</line>
+          <info>付加情報</info>
+        </entry>
+        <entry>
+          ...
+        </entry>
+      </backtrace>
+      <elapsed>実行時間（例: 0.000010）</elapsed>
+    </result>
+    <result>
+      ...
+    </result>
+    ...
+  </report>
 
 === 雛型
 
