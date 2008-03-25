@@ -113,7 +113,7 @@ static const GOptionEntry option_entries[] =
      N_("Run test cases with multi-thread"), NULL},
     {"test-case-order", 0, 0, G_OPTION_ARG_CALLBACK, parse_test_case_order,
      N_("Sort test case by. Default is 'none'."), "[none|name|name-desc]"},
-    {"help-all", 0, 0, G_OPTION_ARG_CALLBACK, parse_help_all,
+    {"help-all", 0, G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_CALLBACK, parse_help_all,
      N_("Sort test case by. Default is 'none'."), NULL},
     {NULL}
 };

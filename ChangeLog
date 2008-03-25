@@ -6,6 +6,7 @@
 	cutter/cut-report-factory-builder.c: Show all factory options.
 	* cutter/cut-contractor.c, cutter/cut-module-factory.[c|h]: Load
 	ui/console factory by default.
+	* cutter/cut-main.c: Hide --help-all.
 
 2008-03-24  Kouhei Sutou  <kou@cozmixng.org>
 
