@@ -68,9 +68,8 @@ create_default_builders (void)
     return list;
 }
 
-#if 0
 static void
-load_default_factory (CutContractor *contractor)
+load_ui_factory (CutContractor *contractor)
 {
     GList *node;
     CutContractorPrivate *priv = CUT_CONTRACTOR_GET_PRIVATE(contractor);
@@ -78,30 +77,26 @@ load_default_factory (CutContractor *contractor)
     for (node = priv->builders; node; node = g_list_next(node)) {
         const gchar *module_dir, *type_name;
         CutFactoryBuilder *builder = CUT_FACTORY_BUILDER(node->data);
-        GList *modules;
+
+        type_name = cut_factory_builder_get_type_name(builder);
+        if (strcmp(type_name, "ui"))
+            continue;
 
         module_dir = cut_factory_builder_get_module_dir(builder);
-        if (!module_dir)
-            continue;
-        type_name = cut_factory_builder_get_type_name(builder);
 
-        modules = cut_module_load_modules(module_dir);
-        if (modules)
-            g_hash_table_replace(factories, g_strdup(type_name), modules);
+        cut_module_factory_load(module_dir, "ui");
     }
 }
-#endif
 
 static void
 cut_contractor_init (CutContractor *contractor)
 {
     CutContractorPrivate *priv = CUT_CONTRACTOR_GET_PRIVATE(contractor);
 
-    cut_module_factory_init();
-    /* load_default_factory(contractor); */
-    cut_module_factory_load(NULL);
-
     priv->builders = create_default_builders();
+
+    cut_module_factory_init();
+    load_ui_factory(contractor);
 }
 
 static void

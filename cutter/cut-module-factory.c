@@ -91,7 +91,20 @@ _cut_module_factory_module_dir (void)
 }
 
 void
-cut_module_factory_load (const gchar *base_dir)
+cut_module_factory_load (const gchar *dir, const gchar *type)
+{
+    if (g_file_test(dir, G_FILE_TEST_IS_DIR)) {
+        GList *modules;
+
+        modules = cut_module_load_modules(dir);
+
+        if (modules)
+            g_hash_table_replace(factories, g_strdup(type), modules);
+    }
+}
+
+void
+cut_module_factory_load_all (const gchar *base_dir)
 {
     GDir *gdir;
     const gchar *entry;

@@ -20,7 +20,7 @@ initialize (void)
     factory_dir = g_build_filename(cuttest_get_base_dir(),
                                    "factory_test_dir",
                                    NULL);
-    cut_module_factory_load(factory_dir);
+    cut_module_factory_load_all(factory_dir);
     g_free(factory_dir);
 }
 

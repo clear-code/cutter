@@ -60,7 +60,9 @@ void         cut_module_factory_quit        (void);
 const gchar *cut_module_factory_get_default_module_dir   (void);
 void         cut_module_factory_set_default_module_dir   (const gchar *dir);
 
-void         cut_module_factory_load        (const gchar *base_dir);
+void         cut_module_factory_load        (const gchar *dir,
+                                             const gchar *type);
+void         cut_module_factory_load_all    (const gchar *base_dir);
 void         cut_module_factory_unload      (void);
 GList       *cut_module_factory_get_names   (const gchar *type);
 gboolean     cut_module_factory_exist_module(const gchar *type,
