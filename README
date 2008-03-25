@@ -50,7 +50,7 @@ Note: test_*.so are searched recursively.
 
 : --version
 
-   Cutter shows its own version and exit.
+   Cutter shows its own version and exits.
 
 : -s DIRECTORY, --source-directory=DIRECTORY
 
