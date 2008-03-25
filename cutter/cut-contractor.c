@@ -207,6 +207,19 @@ cut_contractor_build_factories (CutContractor *contractor)
     return factories;
 }
 
+GList *
+cut_contractor_build_all_factories (CutContractor *contractor)
+{
+    GList *factories = NULL, *node;
+    CutContractorPrivate *priv = CUT_CONTRACTOR_GET_PRIVATE(contractor);
+
+    for (node = priv->builders; node; node = g_list_next(node)) {
+        CutFactoryBuilder *builder = CUT_FACTORY_BUILDER(node->data);
+        factories = g_list_concat(cut_factory_builder_build_all(builder), factories);
+    }
+    return factories;
+}
+
 void
 cut_contractor_set_option_context (CutContractor *contractor, GOptionContext *context)
 {

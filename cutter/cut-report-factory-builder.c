@@ -40,6 +40,7 @@ static GObject *constructor  (GType                  type,
 static void         set_option_context (CutFactoryBuilder *builder,
                                         GOptionContext    *context);
 static GList       *build              (CutFactoryBuilder *builder);
+static GList       *build_all          (CutFactoryBuilder *builder);
 static const gchar *get_type_name      (CutFactoryBuilder *builder);
 
 G_DEFINE_TYPE(CutReportFactoryBuilder, cut_report_factory_builder, CUT_TYPE_FACTORY_BUILDER)
@@ -57,6 +58,7 @@ cut_report_factory_builder_class_init (CutReportFactoryBuilderClass *klass)
 
     builder_class->set_option_context = set_option_context;
     builder_class->build              = build;
+    builder_class->build_all          = build_all;
     builder_class->get_type_name      = get_type_name;
 }
 
@@ -132,7 +134,30 @@ build (CutFactoryBuilder *builder)
     return factories;
 }
 
-const gchar *
+static GList *
+build_all (CutFactoryBuilder *builder)
+{
+    GList *factories = NULL, *node;
+    GList *factory_names;
+
+    factory_names = cut_module_factory_get_names("report");
+
+    for (node = factory_names; node; node = g_list_next(node)) {
+        CutModuleFactory *module_factory;
+        GOptionContext *option_context;
+        module_factory = cut_module_factory_new("report", node->data, NULL);
+        g_object_get(builder,
+                     "option-context", &option_context,
+                     NULL);
+        cut_module_factory_set_option_group(module_factory,
+                                            option_context);
+        factories = g_list_prepend(factories, module_factory);
+    }
+
+    return factories;
+}
+
+static const gchar *
 get_type_name (CutFactoryBuilder *builder)
 {
     return "report";

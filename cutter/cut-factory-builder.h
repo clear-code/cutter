@@ -47,6 +47,7 @@ struct _CutFactoryBuilderClass
     void         (*set_option_context) (CutFactoryBuilder *builder,
                                         GOptionContext *context);
     GList       *(*build)              (CutFactoryBuilder *builder);
+    GList       *(*build_all)          (CutFactoryBuilder *builder);
     const gchar *(*get_type_name)      (CutFactoryBuilder *builder);
 };
 
@@ -57,6 +58,7 @@ void         cut_factory_builder_set_option_context
                                                 (CutFactoryBuilder *builder,
                                                  GOptionContext *context);
 GList       *cut_factory_builder_build          (CutFactoryBuilder *builder);
+GList       *cut_factory_builder_build_all      (CutFactoryBuilder *builder);
 
 G_END_DECLS
 

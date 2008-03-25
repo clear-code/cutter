@@ -212,6 +212,22 @@ cut_factory_builder_build (CutFactoryBuilder *builder)
     return priv->factories;
 }
 
+GList *
+cut_factory_builder_build_all (CutFactoryBuilder *builder)
+{
+    CutFactoryBuilderClass *klass;
+    CutFactoryBuilderPrivate *priv = CUT_FACTORY_BUILDER_GET_PRIVATE(builder);
+
+    g_return_val_if_fail(CUT_IS_FACTORY_BUILDER(builder), NULL);
+
+    klass = CUT_FACTORY_BUILDER_GET_CLASS(builder);
+    g_return_val_if_fail(klass->build_all, NULL);
+
+    priv->factories = klass->build_all(builder);
+
+    return priv->factories;
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */

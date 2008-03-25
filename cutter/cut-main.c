@@ -157,6 +157,7 @@ cut_init (int *argc, char ***argv)
     }
 
     if (help_all) {
+        cut_contractor_build_all_factories(contractor);
         print_help_all(option_context);
         g_option_context_free(option_context);
         exit(0);
