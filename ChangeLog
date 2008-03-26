@@ -7,6 +7,9 @@
 	* cutter/cut-ui.[c|h]: CutUI is now an interface.
 	* cutter/module/ui/cut-ui-console.c, cutter/module/ui/cut-ui-gtk.c:
 	CutUIConsole and CutUIGtk have CutUI interface. Not used yet.
+	* cutter/module/ui/cut-ui-gtk.c, cutter/module/ui/cut-ui-console.c:
+	Implement run method.
+	* cutter/cut-main.c: Use cut_ui_run().
 
 2008-03-26  Kouhei Sutou  <kou@cozmixng.org>
 

@@ -115,10 +115,13 @@ static void get_property   (GObject         *object,
                             guint            prop_id,
                             GValue          *value,
                             GParamSpec      *pspec);
-static void attach_to_runner   (CutListener *listener,
-                                CutRunner   *runner);
-static void detach_from_runner (CutListener *listener,
-                                CutRunner   *runner);
+
+static void     attach_to_runner   (CutListener *listener,
+                                    CutRunner   *runner);
+static void     detach_from_runner (CutListener *listener,
+                                    CutRunner   *runner);
+static gboolean run                (CutUI       *ui,
+                                    CutRunner   *runner);
 
 static gboolean idle_cb_run_test (gpointer data);
 
@@ -384,7 +387,7 @@ init (CutUIGtk *ui)
 static void
 ui_init (CutUIClass *ui)
 {
-    ui->run = NULL;
+    ui->run = run;
 }
 
 static void
@@ -1416,8 +1419,7 @@ run_test_thread_func (gpointer data)
     ui->n_tests = 0;
     ui->n_completed_tests = 0;
     ui->status = CUT_TEST_RESULT_SUCCESS;
-    cut_test_suite_run(ui->test_suite, runner);
-    disconnect_from_runner(ui, runner);
+    cut_runner_run(runner);
 
     g_object_unref(runner);
 
@@ -1430,7 +1432,6 @@ idle_cb_run_test (gpointer data)
     CutUIGtk *ui = data;
 
     gtk_tree_store_clear(ui->logs);
-    connect_to_runner(ui, ui->runner);
     g_thread_create(run_test_thread_func, ui, TRUE, NULL);
 
     return FALSE;
@@ -1440,13 +1441,7 @@ static void
 attach_to_runner (CutListener *listener,
                   CutRunner   *runner)
 {
-    CutUIGtk *gtk_ui = CUT_UI_GTK(listener);
-
-    gtk_ui->test_suite = g_object_ref(cut_runner_get_test_suite(runner));
-    gtk_ui->runner = g_object_ref(runner);
-    gtk_widget_show_all(gtk_ui->window);
-    g_idle_add(idle_cb_run_test, gtk_ui);
-    gtk_main();
+    connect_to_runner(CUT_UI_GTK(listener), runner);
 }
 
 static void
@@ -1454,6 +1449,21 @@ detach_from_runner (CutListener *listener,
                     CutRunner   *runner)
 {
     disconnect_from_runner(CUT_UI_GTK(listener), runner);
+}
+
+static gboolean
+run (CutUI *ui, CutRunner *runner)
+{
+    CutUIGtk *gtk_ui = CUT_UI_GTK(ui);
+    gboolean success = FALSE;
+
+    gtk_ui->test_suite = g_object_ref(cut_runner_get_test_suite(runner));
+    gtk_ui->runner = g_object_ref(runner);
+    gtk_widget_show_all(gtk_ui->window);
+    g_idle_add(idle_cb_run_test, gtk_ui);
+    gtk_main();
+
+    return success;
 }
 
 /*

@@ -96,10 +96,12 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 
-static void attach_to_runner   (CutListener *listener,
-                                CutRunner   *runner);
-static void detach_from_runner (CutListener *listener,
-                                CutRunner   *runner);
+static void     attach_to_runner   (CutListener *listener,
+                                    CutRunner   *runner);
+static void     detach_from_runner (CutListener *listener,
+                                    CutRunner   *runner);
+static gboolean run                (CutUI       *ui,
+                                    CutRunner   *runner);
 
 static void
 class_init (CutListenerClass *klass)
@@ -146,7 +148,7 @@ init (CutUIConsole *console)
 static void
 ui_init (CutUIClass *ui)
 {
-    ui->run = NULL;
+    ui->run = run;
 }
 
 static void
@@ -712,6 +714,12 @@ detach_from_runner (CutListener *listener,
                     CutRunner   *runner)
 {
     disconnect_from_runner(CUT_UI_CONSOLE(listener), runner);
+}
+
+static gboolean
+run (CutUI *ui, CutRunner *runner)
+{
+    return cut_runner_run(runner);
 }
 
 /*

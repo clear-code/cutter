@@ -268,11 +268,27 @@ remove_listeners (CutRunner *runner, GList *listeners)
     }
 }
 
+static CutUI *
+get_cut_ui (GList *listeners)
+{
+    GList *node;
+
+    for (node = listeners; node; node = g_list_next(node)) {
+        if (!strcmp("CutUIConsole", G_OBJECT_TYPE_NAME(node->data)) ||
+            !strcmp("CutUIGtk", G_OBJECT_TYPE_NAME(node->data))) {
+            return CUT_UI(node->data);
+        }
+    }
+
+    return NULL;
+}
+
 gboolean
 cut_run_runner (CutRunner *runner)
 {
     gboolean success;
     GList *listeners;
+    CutUI *ui;
 
     if (!initialized) {
         g_warning("not initialized");
@@ -281,7 +297,13 @@ cut_run_runner (CutRunner *runner)
 
     listeners = create_listeners();
     add_listeners(runner, listeners);
-    success = cut_runner_run(runner);
+
+    ui = get_cut_ui(listeners);
+    if (ui)
+        success = cut_ui_run(ui, runner);
+    else
+        success = cut_runner_run(runner);
+
     remove_listeners(runner, listeners);
     g_list_free(listeners);
 
