@@ -1,5 +1,7 @@
 2008-03-26  Kouhei Sutou  <kou@cozmixng.org>
 
+	* sample/glib/iochannel.c (test_small_writes): set initial value.
+
 	* NEWS{,.ja}: updated.
 
 2008-03-25  Kouhei Sutou  <kou@cozmixng.org>

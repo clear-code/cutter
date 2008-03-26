@@ -34,7 +34,7 @@ static void
 test_small_writes (void)
 {
   GIOChannel *io;
-  GIOStatus status;
+  GIOStatus status = G_IO_STATUS_NORMAL;
   guint cnt; 
   gchar tmp;
 
