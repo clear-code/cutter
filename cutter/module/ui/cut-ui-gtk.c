@@ -33,7 +33,7 @@
 #include <gdk/gdkkeysyms.h>
 
 #include <cutter/cut-module-impl.h>
-#include <cutter/cut-ui.h>
+#include <cutter/cut-listener.h>
 #include <cutter/cut-runner.h>
 #include <cutter/cut-test-result.h>
 #include <cutter/cut-test.h>
@@ -53,7 +53,7 @@ typedef struct _CutUIGtkClass CutUIGtkClass;
 
 struct _CutUIGtk
 {
-    CutUI     object;
+    CutListener     object;
 
     GtkWidget     *window;
     GtkProgressBar *progress_bar;
@@ -80,7 +80,7 @@ struct _CutUIGtk
 
 struct _CutUIGtkClass
 {
-    CutUIClass parent_class;
+    CutListenerClass parent_class;
 };
 
 enum
@@ -103,7 +103,7 @@ enum
 };
 
 static GType cut_type_ui_gtk = 0;
-static CutUIClass *parent_class;
+static CutListenerClass *parent_class;
 
 static void dispose        (GObject         *object);
 static void set_property   (GObject         *object,
@@ -122,7 +122,7 @@ static void detach_from_runner (CutListener *listener,
 static gboolean idle_cb_run_test (gpointer data);
 
 static void
-class_init (CutUIClass *klass)
+class_init (CutListenerClass *klass)
 {
     GObjectClass *gobject_class;
     CutListenerClass *listener_class;
@@ -397,7 +397,7 @@ register_type (GTypeModule *type_module)
         };
 
     cut_type_ui_gtk = g_type_module_register_type(type_module,
-                                                  CUT_TYPE_UI,
+                                                  CUT_TYPE_LISTENER,
                                                   "CutUIGtk",
                                                   &info, 0);
 }

@@ -30,7 +30,7 @@
 #include <gmodule.h>
 
 #include <cutter/cut-module-impl.h>
-#include <cutter/cut-ui.h>
+#include <cutter/cut-listener.h>
 #include <cutter/cut-runner.h>
 #include <cutter/cut-test-result.h>
 #include <cutter/cut-test.h>
@@ -64,7 +64,7 @@ typedef struct _CutUIConsoleClass CutUIConsoleClass;
 
 struct _CutUIConsole
 {
-    CutUI     object;
+    CutListener object;
     gchar        *name;
     gboolean      use_color;
     CutVerboseLevel verbose_level;
@@ -72,7 +72,7 @@ struct _CutUIConsole
 
 struct _CutUIConsoleClass
 {
-    CutUIClass parent_class;
+    CutListenerClass parent_class;
 };
 
 enum
@@ -83,7 +83,7 @@ enum
 };
 
 static GType cut_type_ui_console = 0;
-static CutUIClass *parent_class;
+static CutListenerClass *parent_class;
 
 static void dispose        (GObject         *object);
 static void set_property   (GObject         *object,
@@ -101,7 +101,7 @@ static void detach_from_runner (CutListener *listener,
                                 CutRunner   *runner);
 
 static void
-class_init (CutUIClass *klass)
+class_init (CutListenerClass *klass)
 {
     GObjectClass *gobject_class;
     CutListenerClass *listener_class;
@@ -159,9 +159,9 @@ register_type (GTypeModule *type_module)
         };
 
     cut_type_ui_console = g_type_module_register_type(type_module,
-                                                          CUT_TYPE_UI,
-                                                          "CutUIConsole",
-                                                          &info, 0);
+                                                      CUT_TYPE_LISTENER,
+                                                      "CutUIConsole",
+                                                      &info, 0);
 }
 
 G_MODULE_EXPORT GList *
@@ -499,9 +499,6 @@ print_results (CutUIConsole *console, CutRunner *runner)
 {
     gint i;
     const GList *node;
-    CutUI *ui;
-
-    ui = CUT_UI(console);
 
     i = 1;
     for (node = cut_runner_get_results(runner);
