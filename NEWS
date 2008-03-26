@@ -2,6 +2,12 @@
 
 = NEWS --- The history of Cutter
 
+== 0.7.0: 2008-03-26
+
+  * Fixed packaging failure.
+  * Fixed --help-all.
+  * Added a document for XML format reported by Cutter.
+
 == 0.6.0: 2008-03-21
 
   * Added --xml-report option for reporting test result as XML.
