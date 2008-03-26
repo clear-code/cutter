@@ -24,9 +24,6 @@
 
 #include <glib-object.h>
 
-#include <cutter/cut-private.h>
-#include <cutter/cut-listener.h>
-
 G_BEGIN_DECLS
 
 #define CUT_TYPE_REPORT            (cut_report_get_type ())
@@ -46,12 +43,12 @@ typedef enum {
 
 struct _CutReport
 {
-    CutListener object;
+    GObject object;
 };
 
 struct _CutReportClass
 {
-    CutListenerClass parent_class;
+    GObjectClass parent_class;
     gboolean (*result_to_file)     (CutReport        *report,
                                     const gchar      *filename,
                                     CutReportFileMode mode);

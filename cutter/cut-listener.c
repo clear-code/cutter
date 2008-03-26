@@ -27,18 +27,23 @@
 
 #include "cut-listener.h"
 
-G_DEFINE_ABSTRACT_TYPE (CutListener, cut_listener, G_TYPE_OBJECT)
-
-static void
-cut_listener_class_init (CutListenerClass *klass)
+GType
+cut_listener_get_type (void)
 {
-    klass->attach_to_runner   = NULL;
-    klass->detach_from_runner = NULL;
-}
+    static GType listener_type = 0;
 
-static void
-cut_listener_init (CutListener *listener)
-{
+    if (!listener_type) {
+        const GTypeInfo listener_info = {
+            sizeof(CutListenerClass), /* class_size */
+            NULL,                     /* base_init */
+            NULL,                     /* base_finalize */
+        };
+
+        listener_type = g_type_register_static(G_TYPE_INTERFACE, "CutListener",
+                                               &listener_info, 0);
+    }
+
+    return listener_type;
 }
 
 void

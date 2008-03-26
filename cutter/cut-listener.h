@@ -32,18 +32,13 @@ G_BEGIN_DECLS
 #define CUT_LISTENER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_LISTENER, CutListenerClass))
 #define CUT_IS_LISTENER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_LISTENER))
 #define CUT_IS_LISTENER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_LISTENER))
-#define CUT_LISTENER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_LISTENER, CutListenerClass))
+#define CUT_LISTENER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_INTERFACE((obj), CUT_TYPE_LISTENER, CutListenerClass))
 
 typedef struct _CutListenerClass CutListenerClass;
 
-struct _CutListener
-{
-    GObject object;
-};
-
 struct _CutListenerClass
 {
-    GObjectClass parent_class;
+    GTypeInterface base_iface;
 
     void (*attach_to_runner)    (CutListener *listener,
                                  CutRunner   *runner);

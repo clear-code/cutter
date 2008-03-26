@@ -54,7 +54,7 @@ typedef struct _CutUIGtkClass CutUIGtkClass;
 
 struct _CutUIGtk
 {
-    CutListener     object;
+    GObject        object;
 
     GtkWidget     *window;
     GtkProgressBar *progress_bar;
@@ -81,7 +81,7 @@ struct _CutUIGtk
 
 struct _CutUIGtkClass
 {
-    CutListenerClass parent_class;
+    GObjectClass parent_class;
 };
 
 enum
@@ -104,7 +104,7 @@ enum
 };
 
 static GType cut_type_ui_gtk = 0;
-static CutListenerClass *parent_class;
+static GObjectClass *parent_class;
 
 static void dispose        (GObject         *object);
 static void set_property   (GObject         *object,
@@ -126,22 +126,17 @@ static gboolean run                (CutUI       *ui,
 static gboolean idle_cb_run_test (gpointer data);
 
 static void
-class_init (CutListenerClass *klass)
+class_init (CutUIGtkClass *klass)
 {
     GObjectClass *gobject_class;
-    CutListenerClass *listener_class;
 
     parent_class = g_type_class_peek_parent(klass);
 
     gobject_class = G_OBJECT_CLASS(klass);
-    listener_class = CUT_LISTENER_CLASS(klass);
 
     gobject_class->dispose      = dispose;
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
-
-    listener_class->attach_to_runner   = attach_to_runner;
-    listener_class->detach_from_runner = detach_from_runner;
 }
 
 static void
@@ -385,6 +380,13 @@ init (CutUIGtk *ui)
 }
 
 static void
+listener_init (CutListenerClass *listener)
+{
+    listener->attach_to_runner   = attach_to_runner;
+    listener->detach_from_runner = detach_from_runner;
+}
+
+static void
 ui_init (CutUIClass *ui)
 {
     ui->run = run;
@@ -393,7 +395,7 @@ ui_init (CutUIClass *ui)
 static void
 register_type (GTypeModule *type_module)
 {
-    static const GTypeInfo listener_info =
+    static const GTypeInfo info =
         {
             sizeof (CutUIGtkClass),
             (GBaseInitFunc) NULL,
@@ -413,15 +415,27 @@ register_type (GTypeModule *type_module)
             NULL
         };
 
+	static const GInterfaceInfo listener_info =
+	    {
+            (GInterfaceInitFunc) listener_init,
+            NULL,
+            NULL
+        };
+
     cut_type_ui_gtk = g_type_module_register_type(type_module,
-                                                  CUT_TYPE_LISTENER,
+                                                  G_TYPE_OBJECT,
                                                   "CutUIGtk",
-                                                  &listener_info, 0);
+                                                  &info, 0);
 
     g_type_module_add_interface(type_module,
                                 cut_type_ui_gtk,
                                 CUT_TYPE_UI,
                                 &ui_info);
+
+    g_type_module_add_interface(type_module,
+                                cut_type_ui_gtk,
+                                CUT_TYPE_LISTENER,
+                                &listener_info);
 }
 
 G_MODULE_EXPORT GList *

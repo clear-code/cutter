@@ -99,21 +99,16 @@ class_init (CutReportXMLClass *klass)
 {
     GObjectClass *gobject_class;
     GParamSpec *spec;
-    CutListenerClass *listener_class;
     CutReportClass *report_class;
 
     parent_class = g_type_class_peek_parent(klass);
 
     gobject_class = G_OBJECT_CLASS(klass);
-    listener_class = CUT_LISTENER_CLASS(klass);
     report_class = CUT_REPORT_CLASS(klass);
 
     gobject_class->dispose      = dispose;
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
-
-    listener_class->attach_to_runner   = attach_to_runner;
-    listener_class->detach_from_runner = detach_from_runner;
 
     report_class->result_to_file           = result_to_file;
     report_class->get_all_results          = get_all_results;
@@ -139,6 +134,13 @@ init (CutReportXML *report)
 }
 
 static void
+listener_init (CutListenerClass *listener)
+{
+    listener->attach_to_runner   = attach_to_runner;
+    listener->detach_from_runner = detach_from_runner;
+}
+
+static void
 register_type (GTypeModule *type_module)
 {
     static const GTypeInfo info =
@@ -154,11 +156,23 @@ register_type (GTypeModule *type_module)
             (GInstanceInitFunc) init,
         };
 
+	static const GInterfaceInfo listener_info =
+	    {
+            (GInterfaceInitFunc) listener_init,
+            NULL,
+            NULL
+        };
+
     cut_type_report_xml =
         g_type_module_register_type(type_module,
                                     CUT_TYPE_REPORT,
                                     "CutReportXML",
                                     &info, 0);
+
+    g_type_module_add_interface(type_module,
+                                cut_type_report_xml,
+                                CUT_TYPE_LISTENER,
+                                &listener_info);
 }
 
 G_MODULE_EXPORT GList *
