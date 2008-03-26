@@ -180,7 +180,7 @@ register_type (GTypeModule *type_module)
                                                       &listener_info, 0);
 
     g_type_module_add_interface(type_module,
-                                CUT_TYPE_LISTENER,
+                                cut_type_ui_console,
                                 CUT_TYPE_UI,
                                 &ui_info);
 }

@@ -1,3 +1,10 @@
+2008-03-26  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-main.c: used CUT_UI().
+
+	* cutter/module/ui/cut-ui-gtk.c,
+	cutter/module/ui/cut-ui-console.c: fixed wrong gtype.
+
 2008-03-26  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/module/ui/cut-ui-console.c, cutter/module/ui/cut-ui-gtk.c:

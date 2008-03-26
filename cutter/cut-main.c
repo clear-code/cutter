@@ -274,9 +274,10 @@ get_cut_ui (GList *listeners)
     GList *node;
 
     for (node = listeners; node; node = g_list_next(node)) {
-        if (!strcmp("CutUIConsole", G_OBJECT_TYPE_NAME(node->data)) ||
-            !strcmp("CutUIGtk", G_OBJECT_TYPE_NAME(node->data))) {
-            return CUT_UI(node->data);
+        CutListener *listener = node->data;
+
+        if (CUT_IS_UI(listener)) {
+            return CUT_UI(listener);
         }
     }
 
