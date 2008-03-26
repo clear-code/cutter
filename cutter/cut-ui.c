@@ -31,14 +31,6 @@
 static GList *uis = NULL;
 static gchar *module_dir = NULL;
 
-gboolean
-cut_ui_run (CutUI *ui, CutRunner *runner)
-{
-    if (CUT_UI_GET_CLASS(ui)->run)
-        return CUT_UI_GET_CLASS(ui)->run(ui, runner);
-    return FALSE;
-}
-
 void
 cut_ui_init (void)
 {
@@ -151,6 +143,15 @@ cut_ui_get_type (void)
 
     return ui_type;
 }
+
+gboolean
+cut_ui_run (CutUI *ui, CutRunner *runner)
+{
+    if (CUT_UI_GET_CLASS(ui)->run)
+        return CUT_UI_GET_CLASS(ui)->run(ui, runner);
+    return FALSE;
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */
