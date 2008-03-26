@@ -31,23 +31,20 @@
 static GList *uis = NULL;
 static gchar *module_dir = NULL;
 
-void cut_ui_init (void)
+gboolean
+cut_ui_run (CutUI *ui, CutRunner *runner)
 {
-}
-
-void cut_ui_quit (void)
-{
-    cut_ui_unload();
-    cut_ui_set_default_module_dir(NULL);
-}
-
-const gchar *
-cut_ui_get_default_module_dir (void)
-{
-    return module_dir;
+    if (CUT_UI_GET_CLASS(ui)->run)
+        return CUT_UI_GET_CLASS(ui)->run(ui, runner);
+    return FALSE;
 }
 
 void
+cut_ui_init (void)
+{
+}
+
+static void
 cut_ui_set_default_module_dir (const gchar *dir)
 {
     if (module_dir)
@@ -56,6 +53,21 @@ cut_ui_set_default_module_dir (const gchar *dir)
 
     if (dir)
         module_dir = g_strdup(dir);
+}
+
+static void
+cut_ui_unload (void)
+{
+    g_list_foreach(uis, (GFunc)cut_module_unload, NULL);
+    g_list_free(uis);
+    uis = NULL;
+}
+
+void
+cut_ui_quit (void)
+{
+    cut_ui_unload();
+    cut_ui_set_default_module_dir(NULL);
 }
 
 static const gchar *
@@ -71,15 +83,6 @@ _cut_ui_module_dir (void)
         return dir;
 
     return UI_MODULEDIR;
-}
-
-void
-cut_ui_load (const gchar *base_dir)
-{
-    if (!base_dir)
-        base_dir = _cut_ui_module_dir();
-
-    uis = g_list_concat(cut_module_load_modules(base_dir), uis);
 }
 
 static CutModule *
@@ -102,47 +105,7 @@ cut_ui_load_module (const gchar *name)
     return module;
 }
 
-void
-cut_ui_unload (void)
-{
-    g_list_foreach(uis, (GFunc)cut_module_unload, NULL);
-    g_list_free(uis);
-    uis = NULL;
-}
-
-GList *
-cut_ui_get_registered_types (void)
-{
-    return cut_module_collect_registered_types(uis);
-}
-
-GList *
-cut_ui_get_log_domains (void)
-{
-    return cut_module_collect_log_domains(uis);
-}
-
-#define cut_ui_init init
-G_DEFINE_ABSTRACT_TYPE (CutUI, cut_ui, CUT_TYPE_LISTENER)
-#undef cut_ui_init
-
-static void
-cut_ui_class_init (CutUIClass *klass)
-{
-    CutListenerClass *listener_class;
-
-    listener_class = CUT_LISTENER_CLASS(klass);
-
-    listener_class->attach_to_runner   = NULL;
-    listener_class->detach_from_runner = NULL;
-}
-
-static void
-init (CutUI *ui)
-{
-}
-
-CutUI *
+GObject *
 cut_ui_new (const gchar *name, const gchar *first_property, ...)
 {
     CutModule *module;
@@ -156,9 +119,38 @@ cut_ui_new (const gchar *name, const gchar *first_property, ...)
     ui = cut_module_instantiate(module, first_property, var_args);
     va_end(var_args);
 
-    return CUT_UI(ui);
+    return ui;
 }
 
+
+static void
+cut_ui_base_init (gpointer g_class)
+{
+    static gboolean initialized = FALSE;
+
+    if (! initialized)
+        initialized = TRUE;
+}
+
+
+GType
+cut_ui_get_type (void)
+{
+    static GType ui_type = 0;
+
+    if (!ui_type) {
+        const GTypeInfo ui_info = {
+            sizeof(CutUIClass), /* class_size */
+            cut_ui_base_init,	/* base_init */
+            NULL,			    /* base_finalize */
+        };
+
+        ui_type = g_type_register_static(G_TYPE_INTERFACE, "CutUI",
+                                         &ui_info, 0);
+    }
+
+    return ui_type;
+}
 /*
-vi:nowrap:ai:expandtab:sw=4
+vi:ts=4:nowrap:ai:expandtab:sw=4
 */

@@ -31,6 +31,7 @@
 
 #include <cutter/cut-module-impl.h>
 #include <cutter/cut-listener.h>
+#include <cutter/cut-ui.h>
 #include <cutter/cut-runner.h>
 #include <cutter/cut-test-result.h>
 #include <cutter/cut-test.h>
@@ -143,9 +144,15 @@ init (CutUIConsole *console)
 }
 
 static void
+ui_init (CutUIClass *ui)
+{
+    ui->run = NULL;
+}
+
+static void
 register_type (GTypeModule *type_module)
 {
-    static const GTypeInfo info =
+    static const GTypeInfo listener_info =
         {
             sizeof (CutUIConsoleClass),
             (GBaseInitFunc) NULL,
@@ -158,10 +165,22 @@ register_type (GTypeModule *type_module)
             (GInstanceInitFunc) init,
         };
 
+	static const GInterfaceInfo ui_info =
+	    {
+            (GInterfaceInitFunc) ui_init,
+            NULL,
+            NULL
+        };
+
     cut_type_ui_console = g_type_module_register_type(type_module,
                                                       CUT_TYPE_LISTENER,
                                                       "CutUIConsole",
-                                                      &info, 0);
+                                                      &listener_info, 0);
+
+    g_type_module_add_interface(type_module,
+                                CUT_TYPE_LISTENER,
+                                CUT_TYPE_UI,
+                                &ui_info);
 }
 
 G_MODULE_EXPORT GList *

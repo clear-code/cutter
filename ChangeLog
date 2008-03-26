@@ -4,6 +4,9 @@
 	CutUIConsole and CutUIGtk are children of CutListener instead of
 	CutUI. CutUI will be an interface which has run method. CutListner
 	should be also an interface.
+	* cutter/cut-ui.[c|h]: CutUI is now an interface.
+	* cutter/module/ui/cut-ui-console.c, cutter/module/ui/cut-ui-gtk.c:
+	CutUIConsole and CutUIGtk have CutUI interface. Not used yet.
 
 2008-03-26  Kouhei Sutou  <kou@cozmixng.org>
 

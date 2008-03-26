@@ -23,53 +23,41 @@
 #define __CUT_UI_H__
 
 #include <glib-object.h>
-
-#include <cutter/cut-private.h>
-#include <cutter/cut-listener.h>
+#include <cutter/cut-runner.h>
 
 G_BEGIN_DECLS
 
-#define CUT_TYPE_UI            (cut_ui_get_type ())
-#define CUT_UI(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_UI, CutUI))
-#define CUT_UI_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_UI, CutUIClass))
-#define CUT_IS_UI(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_UI))
-#define CUT_IS_UI_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_UI))
-#define CUT_UI_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_UI, CutUIClass))
+#define CUT_TYPE_UI             (cut_ui_get_type ())
+#define CUT_UI(obj)             (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_UI, CutUI))
+#define CUT_UI_CLASS(vtable)    (G_TYPE_CHECK_CLASS_CAST ((vtable), CUT_TYPE_UI, CutUIClass))
+#define CUT_IS_UI(obj)          (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_UI))
+#define CUT_IS_UI_CLASS(vtable) (G_TYPE_CHECK_CLASS_TYPE ((vtable), CUT_TYPE_UI))
+#define CUT_UI_GET_CLASS(inst)  (G_TYPE_INSTANCE_GET_INTERFACE ((inst), CUT_TYPE_UI, CutUIClass))
 
-typedef struct _CutUI         CutUI;
-typedef struct _CutUIClass    CutUIClass;
-
-struct _CutUI
-{
-    CutListener object;
-};
+typedef struct _CutUI       CutUI;         /* Dummy typedef */
+typedef struct _CutUIClass  CutUIClass;
 
 struct _CutUIClass
 {
-    CutListenerClass parent_class;
+    GTypeInterface base_iface;
+
+    gboolean (*run) (CutUI *ui, CutRunner *runner);
 };
 
-GType           cut_ui_get_type  (void) G_GNUC_CONST;
+GType    cut_ui_get_type (void) G_GNUC_CONST;
 
-void            cut_ui_init        (void);
-void            cut_ui_quit        (void);
+void     cut_ui_init        (void);
+void     cut_ui_quit        (void);
+GObject *cut_ui_new         (const gchar *name,
+                             const gchar *first_property,
+                             ...);
 
-const gchar    *cut_ui_get_default_module_dir   (void);
-void            cut_ui_set_default_module_dir   (const gchar *dir);
-
-void            cut_ui_load        (const gchar *base_dir);
-void            cut_ui_unload      (void);
-GList          *cut_ui_get_registered_types (void);
-GList          *cut_ui_get_log_domains      (void);
-
-CutUI          *cut_ui_new         (const gchar *name,
-                                    const gchar *first_property,
-                                    ...);
+gboolean cut_ui_run (CutUI *ui, CutRunner *runner);
 
 G_END_DECLS
 
 #endif /* __CUT_UI_H__ */
 
 /*
-vi:nowrap:ai:expandtab:sw=4
+vi:ts=4:nowrap:ai:expandtab:sw=4
 */
