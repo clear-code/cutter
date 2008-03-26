@@ -114,17 +114,6 @@ cut_ui_new (const gchar *name, const gchar *first_property, ...)
     return ui;
 }
 
-
-static void
-cut_ui_base_init (gpointer g_class)
-{
-    static gboolean initialized = FALSE;
-
-    if (! initialized)
-        initialized = TRUE;
-}
-
-
 GType
 cut_ui_get_type (void)
 {
@@ -133,7 +122,7 @@ cut_ui_get_type (void)
     if (!ui_type) {
         const GTypeInfo ui_info = {
             sizeof(CutUIClass), /* class_size */
-            cut_ui_base_init,	/* base_init */
+            NULL,           	/* base_init */
             NULL,			    /* base_finalize */
         };
 
