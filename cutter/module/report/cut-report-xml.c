@@ -64,7 +64,7 @@ enum
 };
 
 static GType cut_type_report_xml = 0;
-static CutReportXMLClass *parent_class;
+static CutReportClass *parent_class;
 
 static void dispose        (GObject         *object);
 static void set_property   (GObject         *object,
