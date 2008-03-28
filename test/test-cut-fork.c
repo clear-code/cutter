@@ -23,7 +23,7 @@ test_fork (void)
     pid_t pid;
     int status;
 
-    pid = fork();
+    pid = cut_fork(10);
 
     if (pid == 0) {
         cut_notify("Walk in child process");
