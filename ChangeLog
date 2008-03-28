@@ -1,3 +1,7 @@
+2008-03-28  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test-cut-fork.c: Added sample test.
+
 2008-03-27  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* module/report/cut-report-xml.c: Fix typo.
