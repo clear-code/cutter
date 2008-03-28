@@ -44,6 +44,9 @@ typedef struct _CutTestAttribute {
     const char *value;
 } CutTestAttribute;
 
+#define cut_fork(time_out)                                          \
+    cut_test_context_trap_fork(get_current_test_context(), time_out)
+
 #ifdef __cplusplus
 }
 #endif
