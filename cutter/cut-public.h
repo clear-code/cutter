@@ -26,6 +26,16 @@
 extern "C" {
 #endif
 
+#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ > 4)
+#  define CUT_GNUC_PRINTF(format_index, arg_index)                      \
+    __attribute__((__format__ (__printf__, format_index, arg_index)))
+#  define CUT_GNUC_NORETURN                     \
+    __attribute__((__noreturn__))
+#else
+#  define CUT_GNUC_PRINTF(format_index, arg_index)
+#  define CUT_GNUC_NORETURN
+#endif
+
 typedef struct _CutTestContext     CutTestContext;
 
 typedef enum {
@@ -43,14 +53,14 @@ void  cut_test_context_register_result      (CutTestContext *context,
                                              const char *filename,
                                              unsigned int line,
                                              const char *message,
-                                             ...);
-void  cut_test_context_long_jump            (CutTestContext *context) __attribute__((__noreturn__));
+                                             ...) /* CUT_GNUC_PRINTF(7, 8) */;
+void  cut_test_context_long_jump            (CutTestContext *context) CUT_GNUC_NORETURN;
 
 const char *cut_test_context_take_string    (CutTestContext *context,
                                              char           *string);
 const char *cut_test_context_take_printf    (CutTestContext *context,
                                              char           *format,
-                                             ...);
+                                             ...) CUT_GNUC_PRINTF(2, 3);
 const char *cut_test_context_inspect_string_array (CutTestContext *context,
                                                    const char    **strings);
 
@@ -60,7 +70,7 @@ int   cut_utils_compare_string_array        (const char **strings1,
 
 void *cut_test_context_get_user_data        (CutTestContext *context);
 int   cut_test_context_trap_fork            (CutTestContext *context,
-                                             unsigned int time_out); 
+                                             unsigned int time_out);
 
 #ifdef __cplusplus
 }
