@@ -3,6 +3,7 @@
 	* test/test-cut-fork.c: Added sample test.
 	* cutter/cut-experimental.h, cutter/cut-public.h: Declare fork
 	function.
+	* cutter/cut-test-context.c: Just fork.
 
 2008-03-27  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
