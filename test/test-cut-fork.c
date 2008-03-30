@@ -20,7 +20,7 @@ teardown (void)
 void
 test_fork (void)
 {
-    pid_t pid;
+    int pid;
     int status;
 
     pid = cut_fork(10);
