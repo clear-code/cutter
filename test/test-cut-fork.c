@@ -32,13 +32,11 @@ test_fork (void)
         _exit(0);
     } else if (pid > 0) {
         int wr;
-        cut_notify("Go on parent process");
         do
             wr = waitpid(pid, &status, 0);
         while (wr < 0 && errno == EINTR);
         cut_assert_equal_string("Walk in child process", cut_fork_get_stdout_message(pid));
         cut_assert_equal_string("An error was occured", cut_fork_get_stderr_message(pid));
-        cut_notify("End of child process");
     } else {
         cut_fail("Failed to create a child process");
     }
