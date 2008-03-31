@@ -481,7 +481,7 @@ cut_test_context_get_forked_stderr_message (CutTestContext *context,
 
     process = get_process_from_pid(context, pid);
     if (process)
-        return cut_process_get_stdout_message(process);
+        return cut_process_get_stderr_message(process);
 
     return NULL;
 }
