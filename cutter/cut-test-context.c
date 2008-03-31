@@ -27,14 +27,12 @@
 #include <string.h>
 #include <setjmp.h>
 #include <sys/types.h>
-#include <signal.h>
-#include <unistd.h>
-#include <errno.h>
 #include <glib.h>
 
 #include "cut-test-context.h"
 #include "cut-test-suite.h"
 #include "cut-test-result.h"
+#include "cut-proccess.h"
 
 #define CUT_TEST_CONTEXT_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_CONTEXT, CutTestContextPrivate))
 
@@ -49,7 +47,7 @@ struct _CutTestContextPrivate
     GList *taken_strings;
     gpointer user_data;
     GDestroyNotify user_data_destroy_notify;
-    GArray *forks;
+    GList *proccesses;
 };
 
 enum
@@ -124,17 +122,7 @@ cut_test_context_init (CutTestContext *context)
     priv->user_data = NULL;
     priv->user_data_destroy_notify = NULL;
 
-    priv->forks = g_array_new(FALSE, FALSE, sizeof(gint));
-}
-
-static void
-close_all_pids (GArray *forks)
-{
-    gint i;
-
-    for (i = 0; i < forks->len; i++) {
-        kill(g_array_index(forks, gint, i), SIGKILL);
-    }
+    priv->proccesses = NULL;
 }
 
 static void
@@ -157,10 +145,10 @@ dispose (GObject *object)
         priv->test = NULL;
     }
 
-    if (priv->forks) {
-        close_all_pids(priv->forks);
-        g_array_free(priv->forks, TRUE);
-        priv->forks = NULL;
+    if (priv->proccesses) {
+        g_list_foreach(priv->proccesses, (GFunc)g_object_unref, NULL);
+        g_list_free(priv->proccesses);
+        priv->proccesses = NULL;
     }
 
     g_list_foreach(priv->taken_strings, (GFunc)g_free, NULL);
@@ -441,66 +429,61 @@ cut_test_context_inspect_string_array (CutTestContext *context,
                                         g_string_free(inspected, FALSE));
 }
 
-
-static int
-sane_dup2 (int fd1, int fd2)
-{
-    int ret;
-    do
-        ret = dup2 (fd1, fd2);
-    while (ret < 0 && errno == EINTR);
-    return ret;
-}
-
 int
 cut_test_context_trap_fork (CutTestContext *context,
                             unsigned int time_out)
 {
-    CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
-    pid_t pid;
+    CutProccess *proccess;
+    int pid;
 
-    int stdout_pipe[2] = { -1, -1 };
-    int stderr_pipe[2] = { -1, -1 };
-    int stdtst_pipe[2] = { -1, -1 };
+    proccess = cut_proccess_new();
 
-    if (pipe(stdout_pipe) < 0 ||
-        pipe(stderr_pipe) < 0 ||
-        pipe(stdtst_pipe) < 0) {
-        return -1;
-    }
+    pid = cut_proccess_fork(proccess); 
 
-    pid = fork();
-    if (pid < 0)
-        return -1;
-
-    if (pid == 0) {
-        int fd0 = -1;
-        close(stdout_pipe[0]);
-        close(stderr_pipe[0]);
-        close(stdtst_pipe[0]);
-
-        if (sane_dup2(stdout_pipe[1], 1) < 0 ||
-            sane_dup2(stderr_pipe[1], 2) < 0 ||
-            (fd0 >= 0 && sane_dup2(fd0, 0) < 0)) {
-        }
-
-        if (fd0 >= 3)
-            close(fd0);
-        if (stdout_pipe[1] >= 3)
-            close(stdout_pipe[1]);
-        if (stderr_pipe[1] >= 3)
-            close(stderr_pipe[1]);
-        return 0;
-    } else {
-        g_array_append_val(priv->forks, pid);
-
-        close(stdout_pipe[1]);
-        close(stderr_pipe[1]);
-        close(stdtst_pipe[1]);
-        return pid;
-    }
+    return pid;
 }
-                             
+
+static CutProccess *
+get_proccess_from_pid (CutTestContext *context, int pid)
+{
+    GList *node;
+    CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+
+    for (node = priv->proccesses; node; node = g_list_next(node)) {
+        CutProccess *proccess = CUT_PROCCESS(node->data);
+        if (pid == cut_proccess_get_pid(proccess))
+            return proccess;
+    }
+
+    return NULL;
+}
+
+const char *
+cut_test_context_get_forked_stdout_message (CutTestContext *context,
+                                            int pid)
+{
+    CutProccess *proccess;
+
+    proccess = get_proccess_from_pid(context, pid);
+    if (proccess)
+        return cut_proccess_get_stdout_message(proccess);
+
+    return NULL;
+}
+
+const char *
+cut_test_context_get_forked_stderr_message (CutTestContext *context,
+                                            int pid)
+{
+    CutProccess *proccess;
+
+    proccess = get_proccess_from_pid(context, pid);
+    if (proccess)
+        return cut_proccess_get_stdout_message(proccess);
+
+    return NULL;
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */

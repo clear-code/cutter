@@ -2,6 +2,7 @@
 
 	* cutter/cut-public.h, cutter/cut-experimental.h: Define APIs to
 	obtain messages from forked proccess.
+	* cutter/cut-proccess.[c|h]: Added.
 
 2008-03-28  Kouhei Sutou  <kou@cozmixng.org>
 
