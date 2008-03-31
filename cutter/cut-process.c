@@ -109,7 +109,6 @@ read_from_pipe (CutProcess *process, int pipe, int type)
         GString *string;
         string = get_string(process, type);
         g_string_append_len(string, buf, len);
-        g_warning("%s", string->str);
         return TRUE;
     }
     return FALSE;
