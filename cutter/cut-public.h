@@ -71,6 +71,12 @@ int   cut_utils_compare_string_array        (const char **strings1,
 void *cut_test_context_get_user_data        (CutTestContext *context);
 int   cut_test_context_trap_fork            (CutTestContext *context,
                                              unsigned int time_out);
+const char *cut_test_context_get_forked_stdout_message
+                                            (CutTestContext *context,
+                                             int             pid);
+const char *cut_test_context_get_forked_stderr_message
+                                            (CutTestContext *context,
+                                             int             pid);
 
 #ifdef __cplusplus
 }

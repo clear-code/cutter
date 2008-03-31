@@ -47,6 +47,11 @@ typedef struct _CutTestAttribute {
 #define cut_fork(time_out)                                          \
     cut_test_context_trap_fork(get_current_test_context(), time_out)
 
+#define cut_fork_get_stdout_message(pid)                            \
+    cut_test_context_get_forked_stdout_message(get_current_test_context(), pid)
+#define cut_fork_get_stderr_message(pid)                            \
+    cut_test_context_get_forked_stderr_message(get_current_test_context(), pid)
+
 #ifdef __cplusplus
 }
 #endif

@@ -1,3 +1,8 @@
+2008-03-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-public.h, cutter/cut-experimental.h: Define APIs to
+	obtain messages from forked proccess.
+
 2008-03-28  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-public.h: added CUT_GNUC_PRINTF(). Bug #1927725.
