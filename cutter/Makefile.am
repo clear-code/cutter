@@ -41,7 +41,7 @@ libcutter_public_headers = 			\
 		cut-ui-factory-builder.h	\
 		cut-module-factory.h		\
 		cut-report.h			\
-		cut-proccess.h			\
+		cut-process.h			\
 		cut-verbose-level.h
 
 noinst_headers = 			\
@@ -116,7 +116,7 @@ libcutter_la_SOURCES =				\
 		cut-ui-factory-builder.c	\
 		cut-module-factory.c		\
 		cut-report.c			\
-		cut-proccess.c			\
+		cut-process.c			\
 		cut-utils.c			\
 		cut-value-equal.c
 

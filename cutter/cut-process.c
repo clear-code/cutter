@@ -32,13 +32,13 @@
 #include <glib/gstdio.h>
 #include <gmodule.h>
 
-#include "cut-proccess.h"
+#include "cut-process.h"
 #include "cut-experimental.h"
 
-#define CUT_PROCCESS_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_PROCCESS, CutProccessPrivate))
+#define CUT_PROCESS_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_PROCESS, CutProcessPrivate))
 
-typedef struct _CutProccessPrivate	CutProccessPrivate;
-struct _CutProccessPrivate
+typedef struct _CutProcessPrivate	CutProcessPrivate;
+struct _CutProcessPrivate
 {
     pid_t pid;
     GString *stdout_string;
@@ -52,12 +52,12 @@ enum
     CUTTER_PIPE
 };
 
-G_DEFINE_TYPE (CutProccess, cut_proccess, G_TYPE_OBJECT)
+G_DEFINE_TYPE (CutProcess, cut_process, G_TYPE_OBJECT)
 
 static void dispose         (GObject               *object);
 
 static void
-cut_proccess_class_init (CutProccessClass *klass)
+cut_process_class_init (CutProcessClass *klass)
 {
     GObjectClass *gobject_class;
 
@@ -65,7 +65,7 @@ cut_proccess_class_init (CutProccessClass *klass)
 
     gobject_class->dispose      = dispose;
 
-    g_type_class_add_private(gobject_class, sizeof(CutProccessPrivate));
+    g_type_class_add_private(gobject_class, sizeof(CutProcessPrivate));
 }
 
 static int
@@ -79,9 +79,9 @@ sane_dup2 (int fd1, int fd2)
 }
 
 static GString *
-get_string (CutProccess *proccess, int type)
+get_string (CutProcess *process, int type)
 {
-    CutProccessPrivate *priv = CUT_PROCCESS_GET_PRIVATE(proccess);
+    CutProcessPrivate *priv = CUT_PROCESS_GET_PRIVATE(process);
     GString *string;
 
     switch (type) {
@@ -99,7 +99,7 @@ get_string (CutProccess *proccess, int type)
 }
 
 static gboolean
-read_from_pipe (CutProccess *proccess, int pipe, int type)
+read_from_pipe (CutProcess *process, int pipe, int type)
 {
     gchar buf[4096];
     ssize_t len;
@@ -107,17 +107,18 @@ read_from_pipe (CutProccess *proccess, int pipe, int type)
     len = read(pipe, buf, sizeof(buf));
     if (len > 0) {
         GString *string;
-        string = get_string(proccess, type);
+        string = get_string(process, type);
         g_string_append_len(string, buf, len);
+        g_warning("%s", string->str);
         return TRUE;
     }
     return FALSE;
 }
 
 static pid_t
-prepare_pipes (CutProccess *proccess)
+prepare_pipes (CutProcess *process)
 {
-    CutProccessPrivate *priv = CUT_PROCCESS_GET_PRIVATE(proccess);
+    CutProcessPrivate *priv = CUT_PROCESS_GET_PRIVATE(process);
     pid_t pid;
     int stdout_pipe[2] = { -1, -1 };
     int stderr_pipe[2] = { -1, -1 };
@@ -159,15 +160,15 @@ prepare_pipes (CutProccess *proccess)
                stdtst_pipe[0] > 0) {
 
             if (stdout_pipe[0] >=0 && 
-                !read_from_pipe(proccess, stdout_pipe[0], STDOUT)) {
+                !read_from_pipe(process, stdout_pipe[0], STDOUT)) {
                 stdout_pipe[0] = -1;
             }
             if (stderr_pipe[0] >=0 &&
-                !read_from_pipe(proccess, stderr_pipe[0], STDERR)) {
+                !read_from_pipe(process, stderr_pipe[0], STDERR)) {
                 stderr_pipe[0] = -1;
             }
             if (stdtst_pipe[0] >=0 &&
-                !read_from_pipe(proccess, stdtst_pipe[0], CUTTER_PIPE)) {
+                !read_from_pipe(process, stdtst_pipe[0], CUTTER_PIPE)) {
                 stdtst_pipe[0] = -1;
             }
         }
@@ -181,9 +182,9 @@ prepare_pipes (CutProccess *proccess)
 }
 
 static void
-cut_proccess_init (CutProccess *proccess)
+cut_process_init (CutProcess *process)
 {
-    CutProccessPrivate *priv = CUT_PROCCESS_GET_PRIVATE(proccess);
+    CutProcessPrivate *priv = CUT_PROCESS_GET_PRIVATE(process);
 
     priv->pid = 0;
     priv->stdout_string = g_string_new(NULL);
@@ -193,7 +194,7 @@ cut_proccess_init (CutProccess *proccess)
 static void
 dispose (GObject *object)
 {
-    CutProccessPrivate *priv = CUT_PROCCESS_GET_PRIVATE(object);
+    CutProcessPrivate *priv = CUT_PROCESS_GET_PRIVATE(object);
 
     if (priv->pid) {
         kill(priv->pid, SIGKILL);
@@ -210,39 +211,39 @@ dispose (GObject *object)
         priv->stderr_string = NULL;
     }
 
-    G_OBJECT_CLASS(cut_proccess_parent_class)->dispose(object);
+    G_OBJECT_CLASS(cut_process_parent_class)->dispose(object);
 }
 
-CutProccess *
-cut_proccess_new ()
+CutProcess *
+cut_process_new ()
 {
-    return g_object_new(CUT_TYPE_PROCCESS,
+    return g_object_new(CUT_TYPE_PROCESS,
                         NULL);
 }
 
 
 int
-cut_proccess_fork (CutProccess *proccess)
+cut_process_fork (CutProcess *process)
 {
-    return prepare_pipes(proccess);
+    return prepare_pipes(process);
 }
 
 int
-cut_proccess_get_pid (CutProccess *proccess)
+cut_process_get_pid (CutProcess *process)
 {
-    return CUT_PROCCESS_GET_PRIVATE(proccess)->pid;
+    return CUT_PROCESS_GET_PRIVATE(process)->pid;
 }
 
 const gchar *
-cut_proccess_get_stdout_message (CutProccess *proccess)
+cut_process_get_stdout_message (CutProcess *process)
 {
-    return CUT_PROCCESS_GET_PRIVATE(proccess)->stdout_string->str;
+    return CUT_PROCESS_GET_PRIVATE(process)->stdout_string->str;
 }
 
 const gchar *
-cut_proccess_get_stderr_message (CutProccess *proccess)
+cut_process_get_stderr_message (CutProcess *process)
 {
-    return CUT_PROCCESS_GET_PRIVATE(proccess)->stderr_string->str;
+    return CUT_PROCESS_GET_PRIVATE(process)->stderr_string->str;
 }
 
 /*

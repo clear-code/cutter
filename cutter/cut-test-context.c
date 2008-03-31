@@ -32,7 +32,7 @@
 #include "cut-test-context.h"
 #include "cut-test-suite.h"
 #include "cut-test-result.h"
-#include "cut-proccess.h"
+#include "cut-process.h"
 
 #define CUT_TEST_CONTEXT_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_CONTEXT, CutTestContextPrivate))
 
@@ -47,7 +47,7 @@ struct _CutTestContextPrivate
     GList *taken_strings;
     gpointer user_data;
     GDestroyNotify user_data_destroy_notify;
-    GList *proccesses;
+    GList *processes;
 };
 
 enum
@@ -122,7 +122,7 @@ cut_test_context_init (CutTestContext *context)
     priv->user_data = NULL;
     priv->user_data_destroy_notify = NULL;
 
-    priv->proccesses = NULL;
+    priv->processes = NULL;
 }
 
 static void
@@ -145,10 +145,10 @@ dispose (GObject *object)
         priv->test = NULL;
     }
 
-    if (priv->proccesses) {
-        g_list_foreach(priv->proccesses, (GFunc)g_object_unref, NULL);
-        g_list_free(priv->proccesses);
-        priv->proccesses = NULL;
+    if (priv->processes) {
+        g_list_foreach(priv->processes, (GFunc)g_object_unref, NULL);
+        g_list_free(priv->processes);
+        priv->processes = NULL;
     }
 
     g_list_foreach(priv->taken_strings, (GFunc)g_free, NULL);
@@ -433,26 +433,28 @@ int
 cut_test_context_trap_fork (CutTestContext *context,
                             unsigned int time_out)
 {
-    CutProccess *proccess;
+    CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+    CutProcess *process;
     int pid;
 
-    proccess = cut_proccess_new();
+    process = cut_process_new();
+    priv->processes = g_list_prepend(priv->processes, process);
 
-    pid = cut_proccess_fork(proccess); 
+    pid = cut_process_fork(process); 
 
     return pid;
 }
 
-static CutProccess *
-get_proccess_from_pid (CutTestContext *context, int pid)
+static CutProcess *
+get_process_from_pid (CutTestContext *context, int pid)
 {
     GList *node;
     CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
 
-    for (node = priv->proccesses; node; node = g_list_next(node)) {
-        CutProccess *proccess = CUT_PROCCESS(node->data);
-        if (pid == cut_proccess_get_pid(proccess))
-            return proccess;
+    for (node = priv->processes; node; node = g_list_next(node)) {
+        CutProcess *process = CUT_PROCESS(node->data);
+        if (pid == cut_process_get_pid(process))
+            return process;
     }
 
     return NULL;
@@ -462,11 +464,11 @@ const char *
 cut_test_context_get_forked_stdout_message (CutTestContext *context,
                                             int pid)
 {
-    CutProccess *proccess;
+    CutProcess *process;
 
-    proccess = get_proccess_from_pid(context, pid);
-    if (proccess)
-        return cut_proccess_get_stdout_message(proccess);
+    process = get_process_from_pid(context, pid);
+    if (process)
+        return cut_process_get_stdout_message(process);
 
     return NULL;
 }
@@ -475,11 +477,11 @@ const char *
 cut_test_context_get_forked_stderr_message (CutTestContext *context,
                                             int pid)
 {
-    CutProccess *proccess;
+    CutProcess *process;
 
-    proccess = get_proccess_from_pid(context, pid);
-    if (proccess)
-        return cut_proccess_get_stdout_message(proccess);
+    process = get_process_from_pid(context, pid);
+    if (process)
+        return cut_process_get_stdout_message(process);
 
     return NULL;
 }
