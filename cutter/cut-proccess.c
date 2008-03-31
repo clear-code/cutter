@@ -236,23 +236,13 @@ cut_proccess_get_pid (CutProccess *proccess)
 const gchar *
 cut_proccess_get_stdout_message (CutProccess *proccess)
 {
-    CutProccessPrivate *priv = CUT_PROCCESS_GET_PRIVATE(proccess);
-
-    if (priv->stdout_string)
-        return priv->stdout_string->str;
-
-    return NULL;
+    return CUT_PROCCESS_GET_PRIVATE(proccess)->stdout_string->str;
 }
 
 const gchar *
 cut_proccess_get_stderr_message (CutProccess *proccess)
 {
-    CutProccessPrivate *priv = CUT_PROCCESS_GET_PRIVATE(proccess);
-
-    if (priv->stderr_string)
-        return priv->stderr_string->str;
-
-    return NULL;
+    return CUT_PROCCESS_GET_PRIVATE(proccess)->stderr_string->str;
 }
 
 /*
