@@ -1,3 +1,7 @@
+2008-03-31  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/: LGPL2 -> LGPL3.
+
 2008-03-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-public.h, cutter/cut-experimental.h: Define APIs to
