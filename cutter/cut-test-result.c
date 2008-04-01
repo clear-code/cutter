@@ -363,6 +363,23 @@ cut_test_result_new (CutTestResultStatus status,
                         NULL);
 }
 
+static CutTestResult *
+parse_xml (const gchar *xml, gssize len)
+{
+    return g_object_new(CUT_TYPE_TEST_RESULT, NULL);
+}
+
+CutTestResult *
+cut_test_result_new_from_xml (const gchar *xml, gssize len)
+{
+    gsize length = len;
+
+    if (length < 0)
+        length = strlen(xml);
+
+    return parse_xml(xml, length);
+}
+
 CutTestResultStatus
 cut_test_result_get_status (CutTestResult *result)
 {

@@ -57,6 +57,9 @@ CutTestResult *cut_test_result_new        (CutTestResultStatus status,
                                            const gchar *function_name,
                                            const gchar *filename,
                                            guint line);
+CutTestResult *cut_test_result_new_from_xml
+                                          (const gchar *xml,
+                                           gssize len);
 
 CutTestResultStatus  cut_test_result_get_status        (CutTestResult *result);
 CutTest             *cut_test_result_get_test          (CutTestResult *result);
@@ -80,5 +83,5 @@ G_END_DECLS
 #endif /* __CUT_TEST_RESULT_H__ */
 
 /*
-vi:nowrap:ai:expandtab:sw=4
+vi:ts=4:nowrap:ai:expandtab:sw=4
 */
