@@ -31,6 +31,7 @@ typedef enum {
     STATE_NONE,
     STATE_RESULT,
     STATE_TEST_CASE,
+    STATE_TEST_CASE_NAME,
     STATE_TEST,
     STATE_TEST_NAME,
     STATE_DESCRIPTION,
@@ -85,7 +86,7 @@ start_element_handler (GMarkupParseContext *context,
         push_state(data, STATE_RESULT);
     }
 
-    if (!strcmp("test_case", element_name)) {
+    if (!strcmp("test-case", element_name)) {
         CutTestCase *test_case;
         test_case = cut_test_case_new(NULL,
                                       NULL, NULL,
@@ -106,10 +107,20 @@ start_element_handler (GMarkupParseContext *context,
     }
 
     if (!strcmp("name", element_name)) {
-        if (get_current_state(data) == STATE_OPTION)
+        switch (get_current_state(data)) {
+          case STATE_OPTION:
             push_state(data, STATE_OPTION_NAME);
-        else
+            break;
+          case STATE_TEST:
             push_state(data, STATE_TEST_NAME);
+            break;
+          case STATE_TEST_CASE:
+            push_state(data, STATE_TEST_CASE_NAME);
+            break;
+          default:
+            /* error */
+            break;
+        }
     }
 
     if (!strcmp("description", element_name)) {
@@ -194,6 +205,10 @@ text_handler (GMarkupParseContext *context,
     switch(get_current_state(data)) {
       case STATE_TEST_NAME:
         g_object_set(cut_test_result_get_test(data->result),
+                     "name", text, NULL);
+        break;
+      case STATE_TEST_CASE_NAME:
+        g_object_set(cut_test_result_get_test_case(data->result),
                      "name", text, NULL);
         break;
       case STATE_FILE:

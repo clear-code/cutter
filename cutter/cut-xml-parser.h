@@ -26,7 +26,7 @@
 
 G_BEGIN_DECLS
 
-CutTestResult *cut_xml_parse_test_result_xml(const gchar *xml, gssize len);
+CutTestResult *cut_xml_parse_test_result_xml (const gchar *xml, gssize len);
 
 G_END_DECLS
 
