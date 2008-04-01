@@ -342,9 +342,6 @@ cut_test_context_emit_signal (CutTestContext *context,
     const gchar *status_signal_name = NULL;
     CutTestResultStatus status;
 
-    if (!result)
-        return;
-
     status = cut_test_result_get_status(result);
     status_signal_name = cut_test_result_status_to_signal_name(status);
 
