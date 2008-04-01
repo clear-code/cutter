@@ -269,6 +269,12 @@ cut_process_send_test_result_to_parent (CutProcess *process, CutTestResult *resu
     return TRUE;
 }
 
+const gchar *
+cut_process_get_result_from_child (CutProcess *process)
+{
+    return CUT_PROCESS_GET_PRIVATE(process)->cutter_string->str;
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */

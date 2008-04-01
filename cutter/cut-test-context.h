@@ -74,11 +74,13 @@ gboolean      cut_test_context_is_failed      (CutTestContext *context);
 
 void          cut_test_context_set_jump       (CutTestContext *context,
                                                jmp_buf        *buffer);
+void           cut_test_context_emit_signal   (CutTestContext *context,
+                                               CutTestResult  *result);
 
 G_END_DECLS
 
 #endif /* __CUT_TEST_CONTEXT_H__ */
 
 /*
-vi:nowrap:ai:expandtab:sw=4
+vi:ts=4:nowrap:ai:expandtab:sw=4
 */

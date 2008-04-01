@@ -335,6 +335,28 @@ get_process_from_pid (CutTestContext *context, int pid)
 }
 
 void
+cut_test_context_emit_signal (CutTestContext *context,
+                              CutTestResult *result)
+{
+    CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+    const gchar *status_signal_name = NULL;
+    CutTestResultStatus status;
+
+    status = cut_test_result_get_status(result);
+    status_signal_name = cut_test_result_status_to_signal_name(status);
+
+    if (priv->test) {
+        cut_test_stop_timer(priv->test);
+        g_object_set(result, "elapsed", cut_test_get_elapsed(priv->test), NULL);
+        g_signal_emit_by_name(priv->test, status_signal_name,
+                              context, result);
+    } else if (priv->test_case) {
+        g_signal_emit_by_name(priv->test_case, status_signal_name,
+                              context, result);
+    }
+}
+
+void
 cut_test_context_register_result (CutTestContext *context,
                                   CutTestResultStatus status,
                                   const gchar *function_name,
@@ -345,7 +367,6 @@ cut_test_context_register_result (CutTestContext *context,
 {
     CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
     CutTestResult *result;
-    const gchar *status_signal_name = NULL;
     const gchar *system_message;
     gchar *user_message = NULL, *user_message_format;
     va_list args;
@@ -367,7 +388,6 @@ cut_test_context_register_result (CutTestContext *context,
     if (user_message)
         g_free(user_message);
 
-    status_signal_name = cut_test_result_status_to_signal_name(status);
     if (priv->test) {
         CutProcess *process;
         /* If the current procss is a child process, the pid is 0. */
@@ -377,15 +397,9 @@ cut_test_context_register_result (CutTestContext *context,
             g_object_unref(result);
             return;
         }
-
-        cut_test_stop_timer(priv->test);
-        g_object_set(result, "elapsed", cut_test_get_elapsed(priv->test), NULL);
-        g_signal_emit_by_name(priv->test, status_signal_name,
-                              context, result);
-    } else if (priv->test_case) {
-        g_signal_emit_by_name(priv->test_case, status_signal_name,
-                              context, result);
     }
+
+    cut_test_context_emit_signal(context, result);
 
     g_object_unref(result);
 }
@@ -464,6 +478,16 @@ cut_test_context_trap_fork (CutTestContext *context,
     priv->processes = g_list_prepend(priv->processes, process);
 
     pid = cut_process_fork(process); 
+    if (pid > 0) {
+        CutTestResult *result;
+        const gchar *xml;
+        xml = cut_process_get_result_from_child(process);
+        if (xml) {
+            result = cut_test_result_new_from_xml(xml, -1);
+            cut_test_context_emit_signal(context, result);
+            g_object_unref(result);
+        }
+    }
 
     return pid;
 }

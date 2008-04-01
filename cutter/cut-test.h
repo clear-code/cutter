@@ -37,7 +37,6 @@ G_BEGIN_DECLS
 
 typedef struct _CutTestClass    CutTestClass;
 
-typedef struct _CutTestResult         CutTestResult;
 typedef struct _CutTestResultClass    CutTestResultClass;
 
 typedef void    (*CutTestFunction)     (void);

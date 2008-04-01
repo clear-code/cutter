@@ -57,7 +57,8 @@ const gchar *cut_process_get_stderr_message
 gboolean     cut_process_send_test_result_to_parent
                                   (CutProcess *process,
                                    CutTestResult *result);
-
+const gchar *cut_process_get_result_from_child
+                                  (CutProcess *process);
 G_END_DECLS
 
 #endif /* __CUT_PROCESS_H__ */

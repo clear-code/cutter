@@ -10,6 +10,9 @@
 	* cutter/cut-test-result.[c|h]: Define cut_test_result_new_from_xml().
 	* cutter/cut-test-result.c, cutte/module/report/cut-report-xml.c: XML
 	related code were moved into cut-test-result.c.
+	* cutter/cut-test-context.[c|h], cutter/cut-process.[c|h],
+	cutter/cut-test.h, cutter/cut-private.h: Emit signal in parent process
+	when something is happen in child process.
 
 2008-03-31  Kouhei Sutou  <kou@cozmixng.org>
 

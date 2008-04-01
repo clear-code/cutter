@@ -29,6 +29,7 @@ typedef struct _CutListener        CutListener;
 typedef struct _CutTestSuite       CutTestSuite;
 typedef struct _CutTestCase        CutTestCase;
 typedef struct _CutTest            CutTest;
+typedef struct _CutTestResult      CutTestResult;
 
 G_END_DECLS
 
