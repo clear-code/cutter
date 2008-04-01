@@ -336,6 +336,20 @@ cut_test_get_name (CutTest *test)
     return CUT_TEST_GET_PRIVATE(test)->name;
 }
 
+void
+cut_test_set_name (CutTest *test, const gchar *name)
+{
+    CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(test);
+
+    if (priv->name) {
+        g_free(priv->name);
+        priv->name = NULL;
+    }
+    
+    if (name)
+        priv->name = g_strdup(name);
+}
+
 const gchar *
 cut_test_get_description (CutTest *test)
 {
@@ -345,9 +359,8 @@ cut_test_get_description (CutTest *test)
 static gdouble
 real_get_elapsed (CutTest *test)
 {
-    CutTestPrivate *priv;
+    CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(test);
 
-    priv = CUT_TEST_GET_PRIVATE(test);
     if (priv->timer)
         return g_timer_elapsed(priv->timer, NULL);
     else

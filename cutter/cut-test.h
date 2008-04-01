@@ -86,19 +86,19 @@ CutTest     *cut_test_new                 (const gchar    *name,
 gboolean     cut_test_run                 (CutTest        *test,
                                            CutTestContext *test_context,
                                            CutRunner      *runner);
-void         cut_test_stop_timer          (CutTest *test);        
 
-const gchar *cut_test_get_name            (CutTest *test);
-const gchar *cut_test_get_description     (CutTest *test);
-
-gdouble      cut_test_get_elapsed         (CutTest *test);
-
-const gchar *cut_test_get_attribute       (CutTest    *test,
-                                          const gchar *name);
-void         cut_test_set_attribute       (CutTest    *test,
-                                          const gchar *name,
-                                          const gchar *value);
-const GHashTable *cut_test_get_attributes (CutTest    *test);
+void         cut_test_stop_timer          (CutTest     *test);        
+const gchar *cut_test_get_name            (CutTest     *test);
+void         cut_test_set_name            (CutTest     *test,
+                                           const gchar *name);
+const gchar *cut_test_get_description     (CutTest     *test);
+gdouble      cut_test_get_elapsed         (CutTest     *test);
+const gchar *cut_test_get_attribute       (CutTest     *test,
+                                           const gchar *name);
+void         cut_test_set_attribute       (CutTest     *test,
+                                           const gchar *name,
+                                           const gchar *value);
+const GHashTable *cut_test_get_attributes (CutTest     *test);
 
 G_END_DECLS
 

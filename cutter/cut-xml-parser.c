@@ -204,12 +204,11 @@ text_handler (GMarkupParseContext *context,
 
     switch(get_current_state(data)) {
       case STATE_TEST_NAME:
-        g_object_set(cut_test_result_get_test(data->result),
-                     "name", text, NULL);
+        cut_test_set_name(cut_test_result_get_test(data->result), text);
         break;
       case STATE_TEST_CASE_NAME:
-        g_object_set(cut_test_result_get_test_case(data->result),
-                     "name", text, NULL);
+        cut_test_set_name(CUT_TEST(cut_test_result_get_test_case(data->result)),
+                          text);
         break;
       case STATE_FILE:
         cut_test_result_set_filename(data->result, text);
