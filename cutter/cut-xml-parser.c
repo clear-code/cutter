@@ -37,6 +37,9 @@ typedef enum {
     STATE_OPTION,
     STATE_OPTION_NAME,
     STATE_OPTION_VALUE,
+    STATE_BACKTRACE,
+    STATE_FILE,
+    STATE_LINE,
     STATE_STATUS,
     STATE_ELAPSED,
 } CutXMLState;
@@ -121,6 +124,18 @@ start_element_handler (GMarkupParseContext *context,
         push_state(data, STATE_OPTION_VALUE);
     }
 
+    if (!strcmp("backtrace", element_name)) {
+        push_state(data, STATE_BACKTRACE);
+    }
+
+    if (!strcmp("file", element_name)) {
+        push_state(data, STATE_FILE);
+    }
+
+    if (!strcmp("line", element_name)) {
+        push_state(data, STATE_LINE);
+    }
+
     if (!strcmp("status", element_name)) {
         push_state(data, STATE_STATUS);
     }
@@ -177,6 +192,16 @@ text_handler (GMarkupParseContext *context,
     ParseData *data = (ParseData *)user_data;
 
     switch(get_current_state(data)) {
+      case STATE_TEST_NAME:
+        g_object_set(cut_test_result_get_test(data->result),
+                     "name", text, NULL);
+        break;
+      case STATE_FILE:
+        cut_test_result_set_filename(data->result, text);
+        break;
+      case STATE_LINE:
+        cut_test_result_set_line(data->result, atoi(text));
+        break;
       case STATE_STATUS:
         cut_test_result_set_status(data->result, result_name_to_status(text));
         break;

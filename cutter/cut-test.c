@@ -97,7 +97,7 @@ cut_test_class_init (CutTestClass *klass)
                                "Test name",
                                "The name of the test",
                                NULL,
-                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+                               G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_NAME, spec);
 
     spec = g_param_spec_pointer("test-function",
