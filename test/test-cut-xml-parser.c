@@ -32,8 +32,10 @@ test_xml (void)
                             cut_test_result_get_test_name(result));
     cut_assert_equal_int(CUT_TEST_RESULT_ERROR,
                          cut_test_result_get_status(result));
-    cut_assert_equal_double(0.0001, 0.0,
-                            cut_test_result_get_elapsed(result));
+    cut_assert_equal_double(0.0001, 0.0, cut_test_result_get_elapsed(result));
+    cut_assert_equal_int(31, cut_test_result_get_line(result));
+    cut_assert_equal_string("test-cut-report-xml.c",
+                            cut_test_result_get_filename(result));
 }
 
 /*
