@@ -41,6 +41,7 @@ typedef enum {
     STATE_BACKTRACE,
     STATE_FILE,
     STATE_LINE,
+    STATE_INFO,
     STATE_STATUS,
     STATE_ELAPSED,
 } CutXMLState;
@@ -147,6 +148,10 @@ start_element_handler (GMarkupParseContext *context,
         push_state(data, STATE_LINE);
     }
 
+    if (!strcmp("info", element_name)) {
+        push_state(data, STATE_INFO);
+    }
+
     if (!strcmp("status", element_name)) {
         push_state(data, STATE_STATUS);
     }
@@ -215,6 +220,9 @@ text_handler (GMarkupParseContext *context,
         break;
       case STATE_LINE:
         cut_test_result_set_line(data->result, atoi(text));
+        break;
+      case STATE_INFO:
+        cut_test_result_set_message(data->result, text);
         break;
       case STATE_STATUS:
         cut_test_result_set_status(data->result, result_name_to_status(text));

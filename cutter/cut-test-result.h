@@ -83,6 +83,8 @@ void cut_test_result_set_test_case       (CutTestResult *result,
                                           CutTestCase *test_case);
 void cut_test_result_set_test_suite      (CutTestResult *result,
                                           CutTestCase *test_suite);
+void cut_test_result_set_message         (CutTestResult *result,
+                                          const gchar *message);
 void cut_test_result_set_user_message    (CutTestResult *result,
                                           const gchar *user_message);
 void cut_test_result_set_system_message  (CutTestResult *result,

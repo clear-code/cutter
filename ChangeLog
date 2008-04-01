@@ -5,6 +5,9 @@
 	* cutter/cut-test.[c|h]: Added cut_test_set_name().
 	* cutter/cut-xml-parser.c: Use cut_test_set_name() instead of
 	g_object_set().
+	* cutter/cut-xml-parser.c: Handle <info> element.
+	* cutter/cut-test-result.[c|h]: Added cut_test_result_set_message().
+	* test/test-cut-xml-parser.c: <info> element test.
 
 2008-04-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 

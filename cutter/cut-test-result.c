@@ -750,6 +750,20 @@ cut_test_result_set_user_message (CutTestResult *result,
 }
 
 void
+cut_test_result_set_message (CutTestResult *result,
+                             const gchar *message)
+{
+    CutTestResultPrivate *priv = CUT_TEST_RESULT_GET_PRIVATE(result);
+
+    if (priv->message) {
+        g_free(priv->message);
+        priv->message = NULL;
+    }
+    if (message)
+        priv->message = g_strdup(message);
+}
+
+void
 cut_test_result_set_system_message (CutTestResult *result,
                                     const gchar *system_message)
 {
