@@ -82,12 +82,12 @@ start_element_handler (GMarkupParseContext *context,
 {
     ParseData *data = (ParseData *)user_data;
 
-    if (!strcmp("result", element_name)) {
+    if (!g_ascii_strcasecmp("result", element_name)) {
         data->result = g_object_new(CUT_TYPE_TEST_RESULT, NULL);
         push_state(data, STATE_RESULT);
     }
 
-    if (!strcmp("test-case", element_name)) {
+    if (!g_ascii_strcasecmp("test-case", element_name)) {
         CutTestCase *test_case;
         test_case = cut_test_case_new(NULL,
                                       NULL, NULL,
@@ -99,7 +99,7 @@ start_element_handler (GMarkupParseContext *context,
         push_state(data, STATE_TEST_CASE);
     }
 
-    if (!strcmp("test", element_name)) {
+    if (!g_ascii_strcasecmp("test", element_name)) {
         CutTest *test;
         test = cut_test_new(NULL, NULL);
         cut_test_result_set_test(data->result, test);
@@ -107,7 +107,7 @@ start_element_handler (GMarkupParseContext *context,
         push_state(data, STATE_TEST);
     }
 
-    if (!strcmp("name", element_name)) {
+    if (!g_ascii_strcasecmp("name", element_name)) {
         switch (get_current_state(data)) {
           case STATE_OPTION:
             push_state(data, STATE_OPTION_NAME);
@@ -124,39 +124,39 @@ start_element_handler (GMarkupParseContext *context,
         }
     }
 
-    if (!strcmp("description", element_name)) {
+    if (!g_ascii_strcasecmp("description", element_name)) {
         push_state(data, STATE_DESCRIPTION);
     }
 
-    if (!strcmp("option", element_name)) {
+    if (!g_ascii_strcasecmp("option", element_name)) {
         push_state(data, STATE_OPTION);
     }
 
-    if (!strcmp("value", element_name)) {
+    if (!g_ascii_strcasecmp("value", element_name)) {
         push_state(data, STATE_OPTION_VALUE);
     }
 
-    if (!strcmp("backtrace", element_name)) {
+    if (!g_ascii_strcasecmp("backtrace", element_name)) {
         push_state(data, STATE_BACKTRACE);
     }
 
-    if (!strcmp("file", element_name)) {
+    if (!g_ascii_strcasecmp("file", element_name)) {
         push_state(data, STATE_FILE);
     }
 
-    if (!strcmp("line", element_name)) {
+    if (!g_ascii_strcasecmp("line", element_name)) {
         push_state(data, STATE_LINE);
     }
 
-    if (!strcmp("info", element_name)) {
+    if (!g_ascii_strcasecmp("info", element_name)) {
         push_state(data, STATE_INFO);
     }
 
-    if (!strcmp("status", element_name)) {
+    if (!g_ascii_strcasecmp("status", element_name)) {
         push_state(data, STATE_STATUS);
     }
 
-    if (!strcmp("elapsed", element_name)) {
+    if (!g_ascii_strcasecmp("elapsed", element_name)) {
         push_state(data, STATE_ELAPSED);
     }
 }
@@ -169,7 +169,7 @@ end_element_handler (GMarkupParseContext *context,
 {
     ParseData *data = (ParseData *)user_data;
 
-    if (!strcmp("result", element_name)) {
+    if (!g_ascii_strcasecmp("result", element_name)) {
         if (pop_state(data) != STATE_RESULT) {
             *error = g_error_new (G_MARKUP_ERROR,
                                   G_MARKUP_ERROR_INVALID_CONTENT,
@@ -184,15 +184,15 @@ end_element_handler (GMarkupParseContext *context,
 static CutTestResultStatus
 result_name_to_status (const gchar *name)
 {
-    if (!strcmp(name, "success"))
+    if (!g_ascii_strcasecmp(name, "success"))
         return CUT_TEST_RESULT_SUCCESS;
-    if (!strcmp(name, "failure"))
+    if (!g_ascii_strcasecmp(name, "failure"))
         return CUT_TEST_RESULT_FAILURE;
-    if (!strcmp(name, "error"))
+    if (!g_ascii_strcasecmp(name, "error"))
         return CUT_TEST_RESULT_ERROR;
-    if (!strcmp(name, "pending"))
+    if (!g_ascii_strcasecmp(name, "pending"))
         return CUT_TEST_RESULT_PENDING;
-    if (!strcmp(name, "notification"))
+    if (!g_ascii_strcasecmp(name, "notification"))
         return CUT_TEST_RESULT_NOTIFICATION;
 
     return -1;
@@ -214,6 +214,10 @@ text_handler (GMarkupParseContext *context,
       case STATE_TEST_CASE_NAME:
         cut_test_set_name(CUT_TEST(cut_test_result_get_test_case(data->result)),
                           text);
+        break;
+      case STATE_OPTION_NAME:
+        break;
+      case STATE_OPTION_VALUE:
         break;
       case STATE_FILE:
         cut_test_result_set_filename(data->result, text);
