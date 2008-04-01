@@ -42,6 +42,7 @@ libcutter_public_headers = 			\
 		cut-module-factory.h		\
 		cut-report.h			\
 		cut-process.h			\
+		cut-xml-parser.h		\
 		cut-verbose-level.h
 
 noinst_headers = 			\
@@ -118,6 +119,7 @@ libcutter_la_SOURCES =				\
 		cut-report.c			\
 		cut-process.c			\
 		cut-utils.c			\
+		cut-xml-parser.c		\
 		cut-value-equal.c
 
 libcutter_la_LIBADD =			\

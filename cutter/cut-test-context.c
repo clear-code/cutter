@@ -342,6 +342,9 @@ cut_test_context_emit_signal (CutTestContext *context,
     const gchar *status_signal_name = NULL;
     CutTestResultStatus status;
 
+    if (!result)
+        return;
+
     status = cut_test_result_get_status(result);
     status_signal_name = cut_test_result_status_to_signal_name(status);
 
@@ -484,8 +487,10 @@ cut_test_context_trap_fork (CutTestContext *context,
         xml = cut_process_get_result_from_child(process);
         if (xml) {
             result = cut_test_result_new_from_xml(xml, -1);
-            cut_test_context_emit_signal(context, result);
-            g_object_unref(result);
+            if (result) {
+                cut_test_context_emit_signal(context, result);
+                g_object_unref(result);
+            }
         }
     }
 

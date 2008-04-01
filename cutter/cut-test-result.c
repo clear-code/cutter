@@ -30,7 +30,7 @@
 #include "cut-test.h"
 #include "cut-test-case.h"
 #include "cut-test-suite.h"
-/* #include "cut-xml-parser.h" */
+#include "cut-xml-parser.h"
 
 #define CUT_TEST_RESULT_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_RESULT, CutTestResultPrivate))
 
@@ -372,8 +372,7 @@ cut_test_result_new_from_xml (const gchar *xml, gssize len)
     if (length < 0)
         length = strlen(xml);
 
-    return g_object_new(CUT_TYPE_TEST_RESULT, NULL);
-    /* return cut_xml_parse_test_result_xml(xml, length); */
+    return cut_xml_parse_test_result_xml(xml, length);
 }
 
 CutTestResultStatus
