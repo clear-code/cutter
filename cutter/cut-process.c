@@ -41,6 +41,7 @@ struct _CutProcessPrivate
     pid_t pid;
     GString *stdout_string;
     GString *stderr_string;
+    GString *cutter_string;
     int cutter_pipe[2];
 };
 
@@ -89,6 +90,9 @@ get_string (CutProcess *process, int type)
             break;
         case STDERR:
             string = priv->stderr_string;
+            break;
+        case CUTTER_PIPE:
+            string = priv->cutter_string;
             break;
         default: /* Unknown type */
             string = NULL;
@@ -186,6 +190,7 @@ cut_process_init (CutProcess *process)
     priv->pid = 0;
     priv->stdout_string = g_string_new(NULL);
     priv->stderr_string = g_string_new(NULL);
+    priv->cutter_string = g_string_new(NULL);
     priv->cutter_pipe[0] = -1;
     priv->cutter_pipe[1] = -1;
 }
@@ -208,6 +213,11 @@ dispose (GObject *object)
     if (priv->stderr_string) {
         g_string_free(priv->stderr_string, TRUE);
         priv->stderr_string = NULL;
+    }
+
+    if (priv->cutter_string) {
+        g_string_free(priv->cutter_string, TRUE);
+        priv->cutter_string = NULL;
     }
 
     G_OBJECT_CLASS(cut_process_parent_class)->dispose(object);
@@ -249,6 +259,12 @@ gboolean
 cut_process_send_test_result_to_parent (CutProcess *process, CutTestResult *result)
 {
     CutProcessPrivate *priv = CUT_PROCESS_GET_PRIVATE(process);
+    gchar *xml;
+
+    xml = cut_test_result_to_xml(result);
+
+    write(priv->cutter_pipe[1], xml, strlen(xml));
+    g_free(xml);
 
     return TRUE;
 }

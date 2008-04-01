@@ -5,6 +5,8 @@
 	child process to parent Cutter process.
 	* cutter/cut-test-context.c: Invoke
 	cut_process_send_test_result_to_parent().
+	* cutter/cut-process.c: Send the test result to parent process pipe as
+	XML.
 
 2008-03-31  Kouhei Sutou  <kou@cozmixng.org>
 
