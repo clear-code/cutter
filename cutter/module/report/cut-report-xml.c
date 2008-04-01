@@ -82,7 +82,6 @@ static void detach_from_runner           (CutListener *listener,
 static gboolean result_to_file           (CutReport        *report,
                                           const gchar      *filename,
                                           CutReportFileMode mode);
-static gchar   *get_result               (CutTestResult *result);
 static gchar   *get_all_results          (CutReport   *report);
 static gchar   *get_success_results      (CutReport   *report);
 static gchar   *get_error_results        (CutReport   *report);
@@ -316,7 +315,7 @@ cb_test_signal (CutRunner      *runner,
                 CutReportXML   *report)
 {
     gchar *string;
-    string = get_result(result);
+    string = cut_test_result_to_xml(result);
     output_to_file(report, string);
     g_free(string);
 }
@@ -441,191 +440,6 @@ get_all_results (CutReport *report)
     return NULL;
 }
 
-static const gchar *
-result_status_to_name (CutTestResultStatus status)
-{
-    switch (status) {
-      case CUT_TEST_RESULT_SUCCESS:
-        return "success";
-        break;
-      case CUT_TEST_RESULT_FAILURE:
-        return "failure";
-        break;
-      case CUT_TEST_RESULT_ERROR:
-        return "error";
-        break;
-      case CUT_TEST_RESULT_PENDING:
-        return "pending";
-        break;
-      case CUT_TEST_RESULT_NOTIFICATION:
-        return "notification";
-        break;
-      default:
-        return "unknown status";
-        break;
-    }
-}
-
-static void
-append_indent (GString *string, guint indent)
-{
-    guint i;
-    for (i = 0; i < indent; i++)
-        g_string_append_c(string, ' ');
-
-}
-
-static void
-append_element_with_value (GString *string, guint indent, const gchar *element_name, const gchar *value)
-{
-    gchar *escaped;
-    append_indent(string, indent);
-    escaped = g_markup_printf_escaped("<%s>%s</%s>\n",
-                                      element_name,
-                                      value,
-                                      element_name);
-    g_string_append(string, escaped);
-    g_free(escaped);
-}
-
-static void
-append_element_valist (GString *string, guint indent, const gchar *element_name, va_list var_args)
-{
-    const gchar *name;
-
-    name = element_name;
-
-    while (name) {
-        const gchar *value = va_arg(var_args, gchar *);
-        if (value)
-            append_element_with_value(string, indent, name, value);
-        name = va_arg(var_args, gchar *);
-    }
-}
-
-static void
-append_element_with_children (GString *string, guint indent,
-                              const gchar *element_name,
-                              const gchar *first_child_element, ...)
-{
-    gchar *escaped;
-    va_list var_args;
-
-    escaped = g_markup_escape_text(element_name, -1);
-    append_indent(string, indent);
-    g_string_append_printf(string, "<%s>\n", escaped);
-
-    va_start(var_args, first_child_element);
-    append_element_valist(string, indent + 2, first_child_element, var_args);
-    va_end(var_args);
-
-    append_indent(string, indent);
-    g_string_append_printf(string, "</%s>\n", escaped);
-    g_free(escaped);
-}
-
-static void
-append_attribute (const gchar *key, const gchar *value, GString *string)
-{
-    guint indent = 6;
-
-    if (!strcmp(key, "description"))
-        return;
-
-    append_indent(string, indent);
-    g_string_append(string, "<option>\n");
-
-    append_element_with_value(string, indent + 2, "name", key);
-    append_element_with_value(string, indent + 2, "value", value);
-
-    append_indent(string, indent);
-    g_string_append(string, "</option>\n");
-}
-
-static void
-append_test_info_to_string (GString *string, const gchar *element_name, CutTest *test)
-{
-    gchar *escaped;
-    const gchar *description, *name;
-    guint indent = 4;
-    GHashTable *attributes;
-
-    if (!test)
-        return;
-
-    escaped = g_markup_escape_text(element_name, -1);
-    append_indent(string, indent);
-    g_string_append_printf(string, "<%s>\n", escaped);
-
-    name = cut_test_get_name(test);
-    if (name)
-        append_element_with_value(string, indent + 2, "name", name);
-
-    description = cut_test_get_description(test);
-    if (description)
-        append_element_with_value(string, indent + 2, "description", description);
-
-    attributes = (GHashTable *)cut_test_get_attributes(test);
-    if (attributes)
-        g_hash_table_foreach(attributes, (GHFunc)append_attribute, string);
-
-    append_indent(string, indent);
-    g_string_append_printf(string, "</%s>\n", escaped);
-    g_free(escaped);
-}
-
-static void
-append_backtrace_to_string (GString *string, CutTestResult *result)
-{
-    gchar *line_string, *info_string;
-
-    line_string = g_strdup_printf("%d", cut_test_result_get_line(result));
-    info_string = g_strdup_printf("%s()", cut_test_result_get_function_name(result));
-
-    append_element_with_children(string, 4, "backtrace",
-                                 "file", cut_test_result_get_filename(result),
-                                 "line", line_string,
-                                 "info", info_string,
-                                 NULL);
-    g_free(line_string);
-    g_free(info_string);
-}
-
-static void
-append_test_result_to_string (GString *string, CutTestResult *result)
-{
-    CutTestResultStatus status;
-    gchar *elapsed_string;
-    const gchar *message;
-
-    elapsed_string = g_strdup_printf("%f", cut_test_result_get_elapsed(result));
-    message = cut_test_result_get_message(result);
-    status = cut_test_result_get_status(result);
-
-    append_element_with_value(string, 4, "status", result_status_to_name(status));
-    if (message)
-        append_element_with_value(string, 4, "detail", message);
-    if (status != CUT_TEST_RESULT_SUCCESS)
-        append_backtrace_to_string(string, result);
-    append_element_with_value(string, 4, "elapsed", elapsed_string);
-    g_free(elapsed_string);
-}
-
-static gchar *
-get_result (CutTestResult *result)
-{
-    GString *xml = g_string_new("");
-
-    g_string_append(xml, "  <result>\n");
-    append_test_info_to_string(xml, "test-case",
-                               CUT_TEST(cut_test_result_get_test_case(result)));
-    append_test_info_to_string(xml, "test", cut_test_result_get_test(result));
-    append_test_result_to_string(xml, result);
-    g_string_append(xml, "  </result>\n");
-
-    return g_string_free(xml, FALSE);
-}
-
 static gchar *
 get_status_results (CutReportXML *report, CutTestResultStatus status)
 {
@@ -642,7 +456,7 @@ get_status_results (CutReportXML *report, CutTestResultStatus status)
         if (status != cut_test_result_get_status(result))
             continue;
 
-        result_string = get_result(result);
+        result_string = cut_test_result_to_xml(result);
         g_string_append(xml, result_string);
         g_free(result_string);
     }

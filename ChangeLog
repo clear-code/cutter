@@ -8,6 +8,8 @@
 	* cutter/cut-process.c: Send the test result to parent process pipe as
 	XML.
 	* cutter/cut-test-result.[c|h]: Define cut_test_result_new_from_xml().
+	* cutter/cut-test-result.c, cutte/module/report/cut-report-xml.c: XML
+	related code were moved into cut-test-result.c.
 
 2008-03-31  Kouhei Sutou  <kou@cozmixng.org>
 
