@@ -1,3 +1,11 @@
+2008-04-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-process.[c|h]: Define
+	cut_process_send_test_result_to_parent() for send the result of tests in
+	child process to parent Cutter process.
+	* cutter/cut-test-context.c: Invoke
+	cut_process_send_test_result_to_parent().
+
 2008-03-31  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/: LGPL2 -> LGPL3.

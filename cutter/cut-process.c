@@ -41,6 +41,7 @@ struct _CutProcessPrivate
     pid_t pid;
     GString *stdout_string;
     GString *stderr_string;
+    int cutter_pipe[2];
 };
 
 enum
@@ -119,13 +120,12 @@ prepare_pipes (CutProcess *process)
     pid_t pid;
     int stdout_pipe[2] = { -1, -1 };
     int stderr_pipe[2] = { -1, -1 };
-    int cutter_pipe[2] = { -1, -1 };
 
     priv->pid = 0;
 
     if (pipe(stdout_pipe) < 0 ||
         pipe(stderr_pipe) < 0 ||
-        pipe(cutter_pipe) < 0) {
+        pipe(priv->cutter_pipe) < 0) {
         return -1;
     }
 
@@ -134,7 +134,7 @@ prepare_pipes (CutProcess *process)
     if (pid == 0) {
         close(stdout_pipe[0]);
         close(stderr_pipe[0]);
-        close(cutter_pipe[0]);
+        close(priv->cutter_pipe[0]);
 
         if (sane_dup2(stdout_pipe[1], 1) < 0 ||
             sane_dup2(stderr_pipe[1], 2) < 0) {
@@ -150,11 +150,11 @@ prepare_pipes (CutProcess *process)
 
         close(stdout_pipe[1]);
         close(stderr_pipe[1]);
-        close(cutter_pipe[1]);
+        close(priv->cutter_pipe[1]);
 
         while (stdout_pipe[0] >= 0 ||
                stderr_pipe[0] >= 0 ||
-               cutter_pipe[0] > 0) {
+               priv->cutter_pipe[0] > 0) {
 
             if (stdout_pipe[0] >=0 && 
                 !read_from_pipe(process, stdout_pipe[0], STDOUT)) {
@@ -164,15 +164,15 @@ prepare_pipes (CutProcess *process)
                 !read_from_pipe(process, stderr_pipe[0], STDERR)) {
                 stderr_pipe[0] = -1;
             }
-            if (cutter_pipe[0] >=0 &&
-                !read_from_pipe(process, cutter_pipe[0], CUTTER_PIPE)) {
-                cutter_pipe[0] = -1;
+            if (priv->cutter_pipe[0] >=0 &&
+                !read_from_pipe(process, priv->cutter_pipe[0], CUTTER_PIPE)) {
+                priv->cutter_pipe[0] = -1;
             }
         }
 
         close(stdout_pipe[0]);
         close(stderr_pipe[0]);
-        close(cutter_pipe[0]);
+        close(priv->cutter_pipe[0]);
 
         return pid;
     }
@@ -186,6 +186,8 @@ cut_process_init (CutProcess *process)
     priv->pid = 0;
     priv->stdout_string = g_string_new(NULL);
     priv->stderr_string = g_string_new(NULL);
+    priv->cutter_pipe[0] = -1;
+    priv->cutter_pipe[1] = -1;
 }
 
 static void
@@ -241,6 +243,14 @@ const gchar *
 cut_process_get_stderr_message (CutProcess *process)
 {
     return CUT_PROCESS_GET_PRIVATE(process)->stderr_string->str;
+}
+
+gboolean
+cut_process_send_test_result_to_parent (CutProcess *process, CutTestResult *result)
+{
+    CutProcessPrivate *priv = CUT_PROCESS_GET_PRIVATE(process);
+
+    return TRUE;
 }
 
 /*

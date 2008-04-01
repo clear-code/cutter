@@ -25,6 +25,7 @@
 #include <string.h>
 #include <setjmp.h>
 #include <sys/types.h>
+#include <unistd.h>
 #include <glib.h>
 
 #include "cut-test-context.h"
@@ -318,6 +319,21 @@ cut_test_context_pass_assertion (CutTestContext *context)
     g_signal_emit_by_name(priv->test, "pass-assertion", context);
 }
 
+static CutProcess *
+get_process_from_pid (CutTestContext *context, int pid)
+{
+    GList *node;
+    CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+
+    for (node = priv->processes; node; node = g_list_next(node)) {
+        CutProcess *process = CUT_PROCESS(node->data);
+        if (pid == cut_process_get_pid(process))
+            return process;
+    }
+
+    return NULL;
+}
+
 void
 cut_test_context_register_result (CutTestContext *context,
                                   CutTestResultStatus status,
@@ -353,6 +369,15 @@ cut_test_context_register_result (CutTestContext *context,
 
     status_signal_name = cut_test_result_status_to_signal_name(status);
     if (priv->test) {
+        CutProcess *process;
+        /* If the current procss is a child process, the pid is 0. */
+        process = get_process_from_pid(context, 0);
+        if (process) {
+            cut_process_send_test_result_to_parent(process, result);
+            g_object_unref(result);
+            return;
+        }
+
         cut_test_stop_timer(priv->test);
         g_object_set(result, "elapsed", cut_test_get_elapsed(priv->test), NULL);
         g_signal_emit_by_name(priv->test, status_signal_name,
@@ -441,21 +466,6 @@ cut_test_context_trap_fork (CutTestContext *context,
     pid = cut_process_fork(process); 
 
     return pid;
-}
-
-static CutProcess *
-get_process_from_pid (CutTestContext *context, int pid)
-{
-    GList *node;
-    CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
-
-    for (node = priv->processes; node; node = g_list_next(node)) {
-        CutProcess *process = CUT_PROCESS(node->data);
-        if (pid == cut_process_get_pid(process))
-            return process;
-    }
-
-    return NULL;
 }
 
 const char *

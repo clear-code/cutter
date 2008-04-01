@@ -21,6 +21,7 @@
 #define __CUT_PROCESS_H__
 
 #include <glib-object.h>
+#include "cut-test-result.h"
 
 G_BEGIN_DECLS
 
@@ -53,6 +54,9 @@ const gchar *cut_process_get_stdout_message
                                   (CutProcess *process);
 const gchar *cut_process_get_stderr_message
                                   (CutProcess *process);
+gboolean     cut_process_send_test_result_to_parent
+                                  (CutProcess *process,
+                                   CutTestResult *result);
 
 G_END_DECLS
 
