@@ -74,8 +74,29 @@ const gchar         *cut_test_result_get_function_name (CutTestResult *result);
 const gchar         *cut_test_result_get_filename      (CutTestResult *result);
 guint                cut_test_result_get_line          (CutTestResult *result);
 gdouble              cut_test_result_get_elapsed       (CutTestResult *result);
-gchar               *cut_test_result_to_xml            (CutTestResult *result);
 
+void cut_test_result_set_status          (CutTestResult *result,
+                                          CutTestResultStatus status);
+void cut_test_result_set_test            (CutTestResult *result,
+                                          CutTest *test);
+void cut_test_result_set_test_case       (CutTestResult *result,
+                                          CutTestCase *test_case);
+void cut_test_result_set_test_suite      (CutTestResult *result,
+                                          CutTestCase *test_suite);
+void cut_test_result_set_user_message    (CutTestResult *result,
+                                          const gchar *user_message);
+void cut_test_result_set_system_message  (CutTestResult *result,
+                                          const gchar *system_message);
+void cut_test_result_set_function_name   (CutTestResult *result,
+                                          const gchar *function_name);
+void cut_test_result_set_filename        (CutTestResult *result,
+                                          const gchar *filename);
+void cut_test_result_set_line            (CutTestResult *result,
+                                          guint line);
+void cut_test_result_set_elapsed         (CutTestResult *result,
+                                          gdouble elapsed);
+
+gchar               *cut_test_result_to_xml            (CutTestResult *result);
 const gchar *cut_test_result_status_to_signal_name (CutTestResultStatus status);
 
 G_END_DECLS

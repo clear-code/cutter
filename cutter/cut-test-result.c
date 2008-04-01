@@ -30,6 +30,7 @@
 #include "cut-test.h"
 #include "cut-test-case.h"
 #include "cut-test-suite.h"
+/* #include "cut-xml-parser.h" */
 
 #define CUT_TEST_RESULT_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_RESULT, CutTestResultPrivate))
 
@@ -94,56 +95,56 @@ cut_test_result_class_init (CutTestResultClass *klass)
                              "The status of the result",
                              CUT_TYPE_TEST_RESULT_STATUS,
                              CUT_TEST_RESULT_SUCCESS,
-                             G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+                             G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_STATUS, spec);
 
     spec = g_param_spec_object("test",
                                "CutTest object",
                                "A CutTest object",
                                CUT_TYPE_TEST,
-                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+                               G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_TEST, spec);
 
     spec = g_param_spec_object("test-case",
                                "CutTestCase object",
                                "A CutTestCase object",
                                CUT_TYPE_TEST_CASE,
-                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+                               G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_TEST_CASE, spec);
 
     spec = g_param_spec_object("test-suite",
                                "CutTestSuite object",
                                "A CutTestSuite object",
                                CUT_TYPE_TEST_SUITE,
-                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+                               G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_TEST_SUITE, spec);
 
     spec = g_param_spec_string("user-message",
                                "User Message",
                                "The message from user of the result",
                                NULL,
-                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+                               G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_USER_MESSAGE, spec);
 
     spec = g_param_spec_string("system-message",
                                "System Message",
                                "The message from system of the result",
                                NULL,
-                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+                               G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_SYSTEM_MESSAGE, spec);
 
     spec = g_param_spec_string("function-name",
                                "Function name",
                                "The function name of the result",
                                NULL,
-                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+                               G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_FUNCTION_NAME, spec);
 
     spec = g_param_spec_string("filename",
                                "Filename",
                                "The filename of the result",
                                NULL,
-                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+                               G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_FILENAME, spec);
 
     spec = g_param_spec_uint("line",
@@ -363,12 +364,6 @@ cut_test_result_new (CutTestResultStatus status,
                         NULL);
 }
 
-static CutTestResult *
-parse_xml (const gchar *xml, gssize len)
-{
-    return g_object_new(CUT_TYPE_TEST_RESULT, NULL);
-}
-
 CutTestResult *
 cut_test_result_new_from_xml (const gchar *xml, gssize len)
 {
@@ -377,7 +372,8 @@ cut_test_result_new_from_xml (const gchar *xml, gssize len)
     if (length < 0)
         length = strlen(xml);
 
-    return parse_xml(xml, length);
+    return g_object_new(CUT_TYPE_TEST_RESULT, NULL);
+    /* return cut_xml_parse_test_result_xml(xml, length); */
 }
 
 CutTestResultStatus
@@ -693,6 +689,121 @@ cut_test_result_status_to_signal_name (CutTestResultStatus status)
     }
 
     return signal_name;
+}
+
+void
+cut_test_result_set_status (CutTestResult *result, CutTestResultStatus status)
+{
+    CUT_TEST_RESULT_GET_PRIVATE(result)->status = status;
+}
+
+void
+cut_test_result_set_test (CutTestResult *result, CutTest *test)
+{
+    CutTestResultPrivate *priv = CUT_TEST_RESULT_GET_PRIVATE(result);
+
+    if (priv->test) {
+        g_object_unref(priv->test);
+        priv->test = NULL;
+    }
+    if (test)
+        priv->test = g_object_ref(test);
+}
+
+void
+cut_test_result_set_test_case (CutTestResult *result, CutTestCase *test_case)
+{
+    CutTestResultPrivate *priv = CUT_TEST_RESULT_GET_PRIVATE(result);
+
+    if (priv->test_case) {
+        g_object_unref(priv->test_case);
+        priv->test_case = NULL;
+    }
+    if (test_case)
+        priv->test_case = g_object_ref(test_case);
+}
+
+void
+cut_test_result_set_test_suite (CutTestResult *result, CutTestCase *test_suite)
+{
+    CutTestResultPrivate *priv = CUT_TEST_RESULT_GET_PRIVATE(result);
+
+    if (priv->test_suite) {
+        g_object_unref(priv->test_suite);
+        priv->test_suite = NULL;
+    }
+    if (test_suite)
+        priv->test_suite = g_object_ref(test_suite);
+}
+
+void
+cut_test_result_set_user_message (CutTestResult *result,
+                                  const gchar *user_message)
+{
+    CutTestResultPrivate *priv = CUT_TEST_RESULT_GET_PRIVATE(result);
+
+    if (priv->user_message) {
+        g_free(priv->user_message);
+        priv->user_message = NULL;
+    }
+    if (user_message)
+        priv->user_message = g_strdup(user_message);
+}
+
+void
+cut_test_result_set_system_message (CutTestResult *result,
+                                    const gchar *system_message)
+{
+    CutTestResultPrivate *priv = CUT_TEST_RESULT_GET_PRIVATE(result);
+
+    if (priv->system_message) {
+        g_free(priv->system_message);
+        priv->system_message = NULL;
+    }
+    if (system_message)
+        priv->system_message = g_strdup(system_message);
+}
+
+void
+cut_test_result_set_function_name (CutTestResult *result,
+                                   const gchar *function_name)
+{
+    CutTestResultPrivate *priv = CUT_TEST_RESULT_GET_PRIVATE(result);
+
+    if (priv->function_name) {
+        g_free(priv->function_name);
+        priv->function_name = NULL;
+    }
+    if (function_name)
+        priv->function_name = g_strdup(function_name);
+}
+
+void
+cut_test_result_set_filename (CutTestResult *result,
+                              const gchar *filename)
+{
+    CutTestResultPrivate *priv = CUT_TEST_RESULT_GET_PRIVATE(result);
+
+    if (priv->filename) {
+        g_free(priv->filename);
+        priv->filename = NULL;
+    }
+    if (filename)
+        priv->filename = g_strdup(filename);
+}
+
+void
+cut_test_result_set_line (CutTestResult *result,
+                          guint line)
+{
+    CUT_TEST_RESULT_GET_PRIVATE(result)->line = line;
+}
+
+void
+cut_test_result_set_elapsed (CutTestResult *result,
+                             gdouble elapsed)
+{
+    CUT_TEST_RESULT_GET_PRIVATE(result)->elapsed = elapsed;
 }
 
 

@@ -13,6 +13,9 @@
 	* cutter/cut-test-context.[c|h], cutter/cut-process.[c|h],
 	cutter/cut-test.h, cutter/cut-private.h: Emit signal in parent process
 	when something is happen in child process.
+	* cutter/cut-test-result.[c|h]: Added setter functions.
+	* cutter/cut-test.c, cutter/cut-test-context.c: Use
+	cut_test_result_set_elapsed().
 
 2008-03-31  Kouhei Sutou  <kou@cozmixng.org>
 
