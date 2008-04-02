@@ -196,13 +196,13 @@ text_handler (GMarkupParseContext *context,
     } else if (!g_ascii_strcasecmp("value", element)) {
         set_option_value(context, data, text, error);
     } else if (!g_ascii_strcasecmp("detail", element)) {
-        cut_test_result_set_system_message(data->result, text);
+        cut_test_result_set_message(data->result, text);
     } else if (!g_ascii_strcasecmp("file", element)) {
         cut_test_result_set_filename(data->result, text);
     } else if (!g_ascii_strcasecmp("line", element)) {
         cut_test_result_set_line(data->result, atoi(text));
     } else if (!g_ascii_strcasecmp("info", element)) {
-        cut_test_result_set_message(data->result, text);
+        cut_test_result_set_function_name(data->result, text);
     } else if (!g_ascii_strcasecmp("status", element)) {
         cut_test_result_set_status(data->result, result_name_to_status(text));
     } else if (!g_ascii_strcasecmp("elapsed", element)) {

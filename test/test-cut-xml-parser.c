@@ -46,9 +46,9 @@ test_xml (void)
     cut_assert_equal_string("test-cut-report-xml.c",
                             cut_test_result_get_filename(result));
     cut_assert_equal_string("dummy_error_test()",
-                            cut_test_result_get_message(result));
+                            cut_test_result_get_function_name(result));
     cut_assert_equal_string("This test should error",
-                            cut_test_result_get_system_message(result));
+                            cut_test_result_get_message(result));
     cut_assert_equal_string("1234",
                             cut_test_get_attribute(test, "bug"));
     cut_assert_equal_string("Error Test",

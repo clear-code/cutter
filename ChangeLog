@@ -13,6 +13,7 @@
 	* cutter/cut-xml-parser.c: Handle <option> element.
 	* cutter/cut-xml-parser.c: Cleanup. Remove state. Handle <description>
 	element.
+	* cutter/cut-xml-parser.c: I am confused <info> and <detail>.
 
 2008-04-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
