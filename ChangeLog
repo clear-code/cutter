@@ -1,5 +1,7 @@
 2008-04-02  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/ja.po: updated.
+
 	* test/test-cut-module-factory.c, test/test-cut-loader.c,
 	test/loader_test_dir/dummy-test-functions.c,
 	test/test-cut-module.c, cutter/cutter.h, cutter/cut-test-case.c,

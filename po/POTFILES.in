@@ -7,6 +7,7 @@ cutter/cut-main.c
 cutter/cut-marshalers.c
 cutter/cut-module-factory.c
 cutter/cut-module.c
+cutter/cut-process.c
 cutter/cut-report-factory-builder.c
 cutter/cut-report.c
 cutter/cut-repository.c
@@ -22,6 +23,7 @@ cutter/cut-ui.c
 cutter/cut-utils.c
 cutter/cut-value-equal.c
 cutter/cut-verbose-level.c
+cutter/cut-xml-parser.c
 cutter/main.c
 cutter/module/report/cut-report-factory-xml.c
 cutter/module/report/cut-report-xml.c
