@@ -144,6 +144,29 @@ set_option_name (ParseData *data, const gchar *option_name)
 }
 
 static void
+set_various_name (GMarkupParseContext *context,
+                  ParseData *data,
+                  const gchar *value,
+                  GError **error)
+{
+    const gchar *parent;
+
+    parent = get_parent_element(context);
+
+    if (!g_ascii_strcasecmp("test-case", parent)) {
+        cut_test_set_name(CUT_TEST(cut_test_result_get_test_case(data->result)),
+                          value);
+    } else if (!g_ascii_strcasecmp("test", parent)) {
+        cut_test_set_name(cut_test_result_get_test(data->result), value);
+    } else if (!g_ascii_strcasecmp("option", parent)) {
+        set_option_name(data, value);
+    } else {
+        set_parse_error(context, error, 
+                        "Whose name is %s?", value);
+    }
+}
+
+static void
 set_option_value (GMarkupParseContext *context,
                   ParseData *data,
                   const gchar *value,
@@ -179,6 +202,7 @@ is_integer (const gchar *str)
     while (str[i]) {
         if (!g_ascii_isdigit(str[i]))
             return FALSE;
+        i++;
     }
     return TRUE;
 }
@@ -222,20 +246,12 @@ text_handler (GMarkupParseContext *context,
               GError             **error)
 {
     ParseData *data = (ParseData *)user_data;
-    const gchar *element, *parent;
+    const gchar *element;
 
     element = g_markup_parse_context_get_element(context);
-    parent = get_parent_element(context);
     
     if (!g_ascii_strcasecmp("name", element)) {
-        if (!g_ascii_strcasecmp("test-case", parent)) {
-            cut_test_set_name(CUT_TEST(cut_test_result_get_test_case(data->result)),
-                              text);
-        } else if (!g_ascii_strcasecmp("test", parent)) {
-            cut_test_set_name(cut_test_result_get_test(data->result), text);
-        } else if (!g_ascii_strcasecmp("option", parent)) {
-            set_option_name(data, text);
-        }
+        set_various_name(context, data, text, error);
     } else if (!g_ascii_strcasecmp("description", element)) {
         cut_test_set_attribute(cut_test_result_get_test(data->result),
                                "description", text);
