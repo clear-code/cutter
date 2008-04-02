@@ -15,6 +15,8 @@
 	element.
 	* cutter/cut-xml-parser.c: I am confused <info> and <detail>.
 	* cutter/cut-xml-parser.c: Remove "()" from function name.
+	* test/test-cut-fork.c: Added test invoking cut_fail() in child
+	process.
 
 2008-04-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
