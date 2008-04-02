@@ -46,12 +46,12 @@ text_invalid_prefix_function (void)
 }
 
 void
-initialize (void)
+startup (void)
 {
 }
 
 void
-finalize (void)
+shutdown (void)
 {
 }
 

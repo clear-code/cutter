@@ -151,20 +151,20 @@ void setup(void);
 void teardown(void);
 
 /**
- * initialize:
+ * startup:
  *
- * If you define initialize() in your test program, cutter will
- * call your initialize() before each your test case is run.
+ * If you define startup() in your test program, cutter will
+ * call your startup() before each your test case is run.
  */
-void initialize(void);
+void startup(void);
 
 /**
- * finalize:
+ * shutdown:
  *
- * If you define finalize() in your test program, cutter will
- * call your finalize() after each your test case is run.
+ * If you define shutdown() in your test program, cutter will
+ * call your shutdown() after each your test case is run.
  */
-void finalize(void);
+void shutdown(void);
 
 
 #ifdef __cplusplus

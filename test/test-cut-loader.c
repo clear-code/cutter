@@ -4,7 +4,7 @@
 #include "cuttest-utils.h"
 
 void test_load_function (void);
-void test_load_initialize_and_finalize_function (void);
+void test_load_startup_and_shutdown_function (void);
 
 static CutLoader *test_loader;
 static CutTestCase *test_case;
@@ -89,20 +89,20 @@ test_load_function (void)
 }
 
 void
-test_load_initialize_and_finalize_function (void)
+test_load_startup_and_shutdown_function (void)
 {
-    CutInitializeFunction initialize_function = NULL;
-    CutFinalizeFunction finalize_function = NULL;
+    CutStartupFunction startup_function = NULL;
+    CutShutdownFunction shutdown_function = NULL;
 
     test_case = cut_loader_load_test_case(test_loader);
     cut_assert(test_case);
 
     g_object_get(G_OBJECT(test_case),
-                 "initialize-function", &initialize_function,
-                 "finalize-function", &finalize_function,
+                 "startup-function", &startup_function,
+                 "shutdown-function", &shutdown_function,
                  NULL);
-    cut_assert(initialize_function);
-    cut_assert(finalize_function);
+    cut_assert(startup_function);
+    cut_assert(shutdown_function);
 }
 
 /*

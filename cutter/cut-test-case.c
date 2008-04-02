@@ -39,11 +39,11 @@ typedef struct _CutTestCasePrivate	CutTestCasePrivate;
 struct _CutTestCasePrivate
 {
     CutSetupFunction setup;
-    CutTearDownFunction teardown;
+    CutTeardownFunction teardown;
     CutGetCurrentTestContextFunction get_current_test_context;
     CutSetCurrentTestContextFunction set_current_test_context;
-    CutInitializeFunction initialize;
-    CutFinalizeFunction finalize;
+    CutStartupFunction startup;
+    CutShutdownFunction shutdown;
 };
 
 enum
@@ -53,8 +53,8 @@ enum
     PROP_TEAR_DOWN_FUNCTION,
     PROP_GET_CURRENT_TEST_CONTEXT_FUNCTION,
     PROP_SET_CURRENT_TEST_CONTEXT_FUNCTION,
-    PROP_INITIALIZE_FUNCTION,
-    PROP_FINALIZE_FUNCTION
+    PROP_STARTUP_FUNCTION,
+    PROP_SHUTDOWN_FUNCTION
 };
 
 enum
@@ -100,7 +100,7 @@ cut_test_case_class_init (CutTestCaseClass *klass)
     g_object_class_install_property(gobject_class, PROP_SETUP_FUNCTION, spec);
 
     spec = g_param_spec_pointer("tear-down-function",
-                                "TearDown Function",
+                                "Teardown Function",
                                 "The function for tear down",
                                 G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class, PROP_TEAR_DOWN_FUNCTION, spec);
@@ -121,20 +121,20 @@ cut_test_case_class_init (CutTestCaseClass *klass)
                                     PROP_SET_CURRENT_TEST_CONTEXT_FUNCTION,
                                     spec);
 
-    spec = g_param_spec_pointer("initialize-function",
-                                "Initialize Function",
+    spec = g_param_spec_pointer("startup-function",
+                                "Startup Function",
                                 "The function for initialization of TestCase",
                                 G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class,
-                                    PROP_INITIALIZE_FUNCTION,
+                                    PROP_STARTUP_FUNCTION,
                                     spec);
 
-    spec = g_param_spec_pointer("finalize-function",
-                                "Finalize Function",
+    spec = g_param_spec_pointer("shutdown-function",
+                                "Shutdown Function",
                                 "The function for finalization of TestCase",
                                 G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class,
-                                    PROP_FINALIZE_FUNCTION,
+                                    PROP_SHUTDOWN_FUNCTION,
                                     spec);
 
 
@@ -177,8 +177,8 @@ cut_test_case_init (CutTestCase *test_case)
     priv->teardown = NULL;
     priv->get_current_test_context = NULL;
     priv->set_current_test_context = NULL;
-    priv->initialize = NULL;
-    priv->finalize = NULL;
+    priv->startup = NULL;
+    priv->shutdown = NULL;
 }
 
 static void
@@ -208,11 +208,11 @@ set_property (GObject      *object,
       case PROP_SET_CURRENT_TEST_CONTEXT_FUNCTION:
         priv->set_current_test_context = g_value_get_pointer(value);
         break;
-      case PROP_INITIALIZE_FUNCTION:
-        priv->initialize = g_value_get_pointer(value);
+      case PROP_STARTUP_FUNCTION:
+        priv->startup = g_value_get_pointer(value);
         break;
-      case PROP_FINALIZE_FUNCTION:
-        priv->finalize = g_value_get_pointer(value);
+      case PROP_SHUTDOWN_FUNCTION:
+        priv->shutdown = g_value_get_pointer(value);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -235,11 +235,11 @@ get_property (GObject    *object,
       case PROP_TEAR_DOWN_FUNCTION:
         g_value_set_pointer(value, priv->teardown);
         break;
-      case PROP_INITIALIZE_FUNCTION:
-        g_value_set_pointer(value, priv->initialize);
+      case PROP_STARTUP_FUNCTION:
+        g_value_set_pointer(value, priv->startup);
         break;
-      case PROP_FINALIZE_FUNCTION:
-        g_value_set_pointer(value, priv->finalize);
+      case PROP_SHUTDOWN_FUNCTION:
+        g_value_set_pointer(value, priv->shutdown);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -250,11 +250,11 @@ get_property (GObject    *object,
 CutTestCase *
 cut_test_case_new (const gchar *name,
                    CutSetupFunction setup_function,
-                   CutTearDownFunction teardown_function,
+                   CutTeardownFunction teardown_function,
                    CutGetCurrentTestContextFunction get_current_test_context_function,
                    CutSetCurrentTestContextFunction set_current_test_context_function,
-                   CutInitializeFunction initialize_function,
-                   CutFinalizeFunction finalize_function)
+                   CutStartupFunction startup_function,
+                   CutShutdownFunction shutdown_function)
 {
     return g_object_new(CUT_TYPE_TEST_CASE,
                         "name", name,
@@ -264,8 +264,8 @@ cut_test_case_new (const gchar *name,
                         get_current_test_context_function,
                         "set-current-test-context-function",
                         set_current_test_context_function,
-                        "initialize-function", initialize_function,
-                        "finalize-function", finalize_function,
+                        "startup-function", startup_function,
+                        "shutdown-function", shutdown_function,
                         NULL);
 }
 
@@ -379,8 +379,8 @@ cut_test_case_run_tests (CutTestCase *test_case, CutRunner *runner,
 
     priv = CUT_TEST_CASE_GET_PRIVATE(test_case);
 
-    if (priv->initialize) {
-        priv->initialize();
+    if (priv->startup) {
+        priv->startup();
     }
 
     for (list = tests; list; list = g_list_next(list)) {
@@ -422,8 +422,8 @@ cut_test_case_run_tests (CutTestCase *test_case, CutRunner *runner,
                           NULL, result);
     g_object_unref(result);
 
-    if (priv->finalize) {
-        priv->finalize();
+    if (priv->shutdown) {
+        priv->shutdown();
     }
     g_signal_emit_by_name(CUT_TEST(test_case), "complete");
 

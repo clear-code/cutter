@@ -9,7 +9,7 @@ void test_collect_names (void);
 static GList *modules = NULL;
 
 void
-initialize (void)
+startup (void)
 {
     gchar *modules_dir;
 
@@ -22,7 +22,7 @@ initialize (void)
 }
 
 void
-finalize (void)
+shutdown (void)
 {
     g_list_foreach(modules, (GFunc)g_object_unref, NULL);
     g_list_free(modules);

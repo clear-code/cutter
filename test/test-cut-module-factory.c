@@ -11,7 +11,7 @@ static GOptionContext *option_context;
 static GObject *object;
 
 void
-initialize (void)
+startup (void)
 {
     gchar *factory_dir;
 
@@ -25,7 +25,7 @@ initialize (void)
 }
 
 void
-finalize (void)
+shutdown (void)
 {
     cut_module_factory_unload();
     cut_module_factory_quit();

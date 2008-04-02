@@ -1,3 +1,12 @@
+2008-04-02  Kouhei Sutou  <kou@cozmixng.org>
+
+	* test/test-cut-module-factory.c, test/test-cut-loader.c,
+	test/loader_test_dir/dummy-test-functions.c,
+	test/test-cut-module.c, cutter/cutter.h, cutter/cut-test-case.c,
+	cutter/cut-test-case.h, cutter/cut-loader.c:
+	- initialize/finalize -> startup/shutdown.
+	- TearDown -> Teardown.
+
 2008-04-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* test/test-cut-xml-parser.c: Added.
