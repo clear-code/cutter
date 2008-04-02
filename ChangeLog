@@ -11,6 +11,8 @@
 	* cutter/cut-xml-parser.c: Use g_ascii_strcasecmp() instead of strcmp.
 	* cutter/cut-xml-parser.c: Set GError.
 	* cutter/cut-xml-parser.c: Handle <option> element.
+	* cutter/cut-xml-parser.c: Cleanup. Remove state. Handle <description>
+	element.
 
 2008-04-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 

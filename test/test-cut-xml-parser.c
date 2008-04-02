@@ -14,6 +14,7 @@ test_xml (void)
                         "  </test-case>\n"
                         "  <test>\n"
                         "    <name>dummy-error-test</name>\n"
+                        "    <description>Error Test</description>\n"
                         "    <option>\n"
                         "      <name>bug</name>\n"
                         "      <value>1234</value>\n"
@@ -50,6 +51,8 @@ test_xml (void)
                             cut_test_result_get_system_message(result));
     cut_assert_equal_string("1234",
                             cut_test_get_attribute(test, "bug"));
+    cut_assert_equal_string("Error Test",
+                            cut_test_get_description(test));
 }
 
 /*
