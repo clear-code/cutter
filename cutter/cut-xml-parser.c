@@ -226,7 +226,6 @@ text_handler (GMarkupParseContext *context,
     parent = get_parent_element(context);
     
     if (!g_ascii_strcasecmp("name", element)) {
-        
         if (!g_ascii_strcasecmp("test-case", parent)) {
             cut_test_set_name(CUT_TEST(cut_test_result_get_test_case(data->result)),
                               text);
@@ -242,6 +241,8 @@ text_handler (GMarkupParseContext *context,
             set_parse_error(context, error, 
                             "<value> element should be in <option>.");
         }
+    } else if (!g_ascii_strcasecmp("detail", element)) {
+        cut_test_result_set_system_message(data->result, text);
     } else if (!g_ascii_strcasecmp("file", element)) {
         cut_test_result_set_filename(data->result, text);
     } else if (!g_ascii_strcasecmp("line", element)) {
