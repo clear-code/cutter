@@ -50,6 +50,7 @@ typedef struct _ParseData
 {
     GQueue *states;
     CutTestResult *result;
+    gchar *option_name;
 
 } ParseData;
 
@@ -213,6 +214,49 @@ get_parent_element (GMarkupParseContext *context)
 }
 
 static void
+free_option_name (ParseData *data)
+{
+    if (data->option_name) {
+        g_free(data->option_name);
+        data->option_name = NULL;
+    }
+}
+
+static void
+set_option_name (ParseData *data, const gchar *option_name)
+{
+    free_option_name(data);
+
+    if (option_name)
+        data->option_name = g_strdup(option_name);
+}
+
+static void
+set_option_value (GMarkupParseContext *context,
+                  ParseData *data,
+                  const gchar *value,
+                  GError **error)
+{
+    const gchar *parent;
+
+    parent = get_parent_element(context);
+
+    if (!g_ascii_strcasecmp("option", parent)) {
+        if (data->option_name) {
+            CutTest *test;
+            test = cut_test_result_get_test(data->result);
+            cut_test_set_attribute(test, data->option_name, value);
+        } else {
+            set_parse_error(context, error, 
+                            "option name is not set.");
+        }
+    } else {
+        set_parse_error(context, error, 
+                        "<value> element should be in <option>.");
+    }
+}
+
+static void
 text_handler (GMarkupParseContext *context,
               const gchar         *text,
               gsize                text_len,
@@ -232,15 +276,12 @@ text_handler (GMarkupParseContext *context,
         } else if (!g_ascii_strcasecmp("test", parent)) {
             cut_test_set_name(cut_test_result_get_test(data->result), text);
         } else if (!g_ascii_strcasecmp("option", parent)) {
+            set_option_name(data, text);
         }
     } else if (!g_ascii_strcasecmp("description", element)) {
         push_state(data, STATE_DESCRIPTION);
     } else if (!g_ascii_strcasecmp("value", element)) {
-        if (!g_ascii_strcasecmp("option", parent)) {
-        } else {
-            set_parse_error(context, error, 
-                            "<value> element should be in <option>.");
-        }
+        set_option_value(context, data, text, error);
     } else if (!g_ascii_strcasecmp("detail", element)) {
         cut_test_result_set_system_message(data->result, text);
     } else if (!g_ascii_strcasecmp("file", element)) {
@@ -285,12 +326,15 @@ init_parse_data (ParseData *data)
 {
     data->result = NULL;
     data->states = g_queue_new();
+    data->option_name = NULL;
 }
 
 static void
 free_parse_data (ParseData *data)
 {
     g_queue_free(data->states);
+    if (data->option_name)
+        g_free(data->option_name);
 }
 
 CutTestResult *
