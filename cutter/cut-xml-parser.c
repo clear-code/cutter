@@ -73,6 +73,31 @@ pop_state (ParseData *data)
 }
 
 static void
+set_parse_error (GMarkupParseContext *context,
+                 GError             **error,
+                 const gchar         *format, ...)
+{
+    gint line = 0, chr = 0;
+    gchar *message, *user_message;
+    va_list var_args;
+
+    va_start(var_args, format);
+    user_message = g_strdup_vprintf(format, var_args);
+    va_end(var_args);
+
+    g_markup_parse_context_get_position(context, &line, &chr);
+
+    message = g_strdup_printf("%s\n at line %d char %d.",
+                              user_message, line, chr);
+
+    *error = g_error_new(G_MARKUP_ERROR,
+                         G_MARKUP_ERROR_INVALID_CONTENT,
+                         message);
+    g_free(message);
+    g_free(user_message);
+}
+
+static void
 start_element_handler (GMarkupParseContext *context,
                        const gchar         *element_name,
                        const gchar        **attr_names,
@@ -85,9 +110,7 @@ start_element_handler (GMarkupParseContext *context,
     if (!g_ascii_strcasecmp("result", element_name)) {
         data->result = g_object_new(CUT_TYPE_TEST_RESULT, NULL);
         push_state(data, STATE_RESULT);
-    }
-
-    if (!g_ascii_strcasecmp("test-case", element_name)) {
+    } else if (!g_ascii_strcasecmp("test-case", element_name)) {
         CutTestCase *test_case;
         test_case = cut_test_case_new(NULL,
                                       NULL, NULL,
@@ -97,17 +120,13 @@ start_element_handler (GMarkupParseContext *context,
                                       test_case);
         g_object_unref(test_case); 
         push_state(data, STATE_TEST_CASE);
-    }
-
-    if (!g_ascii_strcasecmp("test", element_name)) {
+    } else if (!g_ascii_strcasecmp("test", element_name)) {
         CutTest *test;
         test = cut_test_new(NULL, NULL);
         cut_test_result_set_test(data->result, test);
         g_object_unref(test); 
         push_state(data, STATE_TEST);
-    }
-
-    if (!g_ascii_strcasecmp("name", element_name)) {
+    } else if (!g_ascii_strcasecmp("name", element_name)) {
         switch (get_current_state(data)) {
           case STATE_OPTION:
             push_state(data, STATE_OPTION_NAME);
@@ -119,44 +138,27 @@ start_element_handler (GMarkupParseContext *context,
             push_state(data, STATE_TEST_CASE_NAME);
             break;
           default:
-            /* error */
+            set_parse_error(context, error, 
+                            "<name> element should be in <option> or <test-case> or <test>.");
             break;
         }
-    }
-
-    if (!g_ascii_strcasecmp("description", element_name)) {
+    } else if (!g_ascii_strcasecmp("description", element_name)) {
         push_state(data, STATE_DESCRIPTION);
-    }
-
-    if (!g_ascii_strcasecmp("option", element_name)) {
+    } else if (!g_ascii_strcasecmp("option", element_name)) {
         push_state(data, STATE_OPTION);
-    }
-
-    if (!g_ascii_strcasecmp("value", element_name)) {
+    } else if (!g_ascii_strcasecmp("value", element_name)) {
         push_state(data, STATE_OPTION_VALUE);
-    }
-
-    if (!g_ascii_strcasecmp("backtrace", element_name)) {
+    } else if (!g_ascii_strcasecmp("backtrace", element_name)) {
         push_state(data, STATE_BACKTRACE);
-    }
-
-    if (!g_ascii_strcasecmp("file", element_name)) {
+    } else if (!g_ascii_strcasecmp("file", element_name)) {
         push_state(data, STATE_FILE);
-    }
-
-    if (!g_ascii_strcasecmp("line", element_name)) {
+    } else if (!g_ascii_strcasecmp("line", element_name)) {
         push_state(data, STATE_LINE);
-    }
-
-    if (!g_ascii_strcasecmp("info", element_name)) {
+    } else if (!g_ascii_strcasecmp("info", element_name)) {
         push_state(data, STATE_INFO);
-    }
-
-    if (!g_ascii_strcasecmp("status", element_name)) {
+    } else if (!g_ascii_strcasecmp("status", element_name)) {
         push_state(data, STATE_STATUS);
-    }
-
-    if (!g_ascii_strcasecmp("elapsed", element_name)) {
+    } else if (!g_ascii_strcasecmp("elapsed", element_name)) {
         push_state(data, STATE_ELAPSED);
     }
 }
@@ -171,9 +173,8 @@ end_element_handler (GMarkupParseContext *context,
 
     if (!g_ascii_strcasecmp("result", element_name)) {
         if (pop_state(data) != STATE_RESULT) {
-            *error = g_error_new (G_MARKUP_ERROR,
-                                  G_MARKUP_ERROR_INVALID_CONTENT,
-                                  "result element is not closed");
+            set_parse_error(context, error,
+                            "<result> is not closed");
             return;  
         }
     }
@@ -186,16 +187,29 @@ result_name_to_status (const gchar *name)
 {
     if (!g_ascii_strcasecmp(name, "success"))
         return CUT_TEST_RESULT_SUCCESS;
-    if (!g_ascii_strcasecmp(name, "failure"))
+    else if (!g_ascii_strcasecmp(name, "failure"))
         return CUT_TEST_RESULT_FAILURE;
-    if (!g_ascii_strcasecmp(name, "error"))
-        return CUT_TEST_RESULT_ERROR;
-    if (!g_ascii_strcasecmp(name, "pending"))
-        return CUT_TEST_RESULT_PENDING;
-    if (!g_ascii_strcasecmp(name, "notification"))
+    else if (!g_ascii_strcasecmp(name, "error"))
+         return CUT_TEST_RESULT_ERROR;
+    else if (!g_ascii_strcasecmp(name, "pending"))
+         return CUT_TEST_RESULT_PENDING;
+    else if (!g_ascii_strcasecmp(name, "notification"))
         return CUT_TEST_RESULT_NOTIFICATION;
 
     return -1;
+}
+
+static const gchar *
+get_parent_element (GMarkupParseContext *context)
+{
+    const GSList *elements, *node;
+
+    elements = g_markup_parse_context_get_element_stack(context);
+
+
+    node = g_slist_next(elements);
+
+    return node ? node->data : NULL;
 }
 
 static void
@@ -206,36 +220,38 @@ text_handler (GMarkupParseContext *context,
               GError             **error)
 {
     ParseData *data = (ParseData *)user_data;
+    const gchar *element, *parent;
 
-    switch(get_current_state(data)) {
-      case STATE_TEST_NAME:
-        cut_test_set_name(cut_test_result_get_test(data->result), text);
-        break;
-      case STATE_TEST_CASE_NAME:
-        cut_test_set_name(CUT_TEST(cut_test_result_get_test_case(data->result)),
-                          text);
-        break;
-      case STATE_OPTION_NAME:
-        break;
-      case STATE_OPTION_VALUE:
-        break;
-      case STATE_FILE:
+    element = g_markup_parse_context_get_element(context);
+    parent = get_parent_element(context);
+    
+    if (!g_ascii_strcasecmp("name", element)) {
+        
+        if (!g_ascii_strcasecmp("test-case", parent)) {
+            cut_test_set_name(CUT_TEST(cut_test_result_get_test_case(data->result)),
+                              text);
+        } else if (!g_ascii_strcasecmp("test", parent)) {
+            cut_test_set_name(cut_test_result_get_test(data->result), text);
+        } else if (!g_ascii_strcasecmp("option", parent)) {
+        }
+    } else if (!g_ascii_strcasecmp("description", element)) {
+        push_state(data, STATE_DESCRIPTION);
+    } else if (!g_ascii_strcasecmp("value", element)) {
+        if (!g_ascii_strcasecmp("option", parent)) {
+        } else {
+            set_parse_error(context, error, 
+                            "<value> element should be in <option>.");
+        }
+    } else if (!g_ascii_strcasecmp("file", element)) {
         cut_test_result_set_filename(data->result, text);
-        break;
-      case STATE_LINE:
+    } else if (!g_ascii_strcasecmp("line", element)) {
         cut_test_result_set_line(data->result, atoi(text));
-        break;
-      case STATE_INFO:
+    } else if (!g_ascii_strcasecmp("info", element)) {
         cut_test_result_set_message(data->result, text);
-        break;
-      case STATE_STATUS:
+    } else if (!g_ascii_strcasecmp("status", element)) {
         cut_test_result_set_status(data->result, result_name_to_status(text));
-        break;
-      case STATE_ELAPSED:
+    } else if (!g_ascii_strcasecmp("elapsed", element)) {
         cut_test_result_set_elapsed(data->result, g_ascii_strtod(text, NULL));
-        break;
-      default:
-        break;
     }
 }
 
