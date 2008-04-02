@@ -1,5 +1,9 @@
 2008-04-02  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-main.c (option_entries): --version and --help-all
+	doesn't require any argument. Bug #1931954.
+	Reported by makeinu. Thanks!!!
+
 	* doc/reference/ja.po: updated.
 
 	* test/test-cut-module-factory.c, test/test-cut-loader.c,

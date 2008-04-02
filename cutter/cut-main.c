@@ -99,7 +99,7 @@ print_help_all (const gchar *option_name, const gchar *value,
 
 static const GOptionEntry option_entries[] =
 {
-    {"version", 0, 0, G_OPTION_ARG_CALLBACK, print_version,
+    {"version", 0, G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_CALLBACK, print_version,
      N_("Show version"), NULL},
     {"source-directory", 's', 0, G_OPTION_ARG_STRING, &source_directory,
      N_("Set directory of source code"), "DIRECTORY"},
@@ -111,7 +111,8 @@ static const GOptionEntry option_entries[] =
      N_("Run test cases with multi-thread"), NULL},
     {"test-case-order", 0, 0, G_OPTION_ARG_CALLBACK, parse_test_case_order,
      N_("Sort test case by. Default is 'none'."), "[none|name|name-desc]"},
-    {"help-all", 0, G_OPTION_FLAG_HIDDEN, G_OPTION_ARG_CALLBACK, print_help_all,
+    {"help-all", 0, G_OPTION_FLAG_HIDDEN | G_OPTION_FLAG_NO_ARG,
+     G_OPTION_ARG_CALLBACK, print_help_all,
      NULL, NULL},
     {NULL}
 };
