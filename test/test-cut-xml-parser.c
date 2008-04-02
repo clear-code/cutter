@@ -45,7 +45,7 @@ test_xml (void)
     cut_assert_equal_int(31, cut_test_result_get_line(result));
     cut_assert_equal_string("test-cut-report-xml.c",
                             cut_test_result_get_filename(result));
-    cut_assert_equal_string("dummy_error_test()",
+    cut_assert_equal_string("dummy_error_test",
                             cut_test_result_get_function_name(result));
     cut_assert_equal_string("This test should error",
                             cut_test_result_get_message(result));

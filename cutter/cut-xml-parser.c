@@ -202,7 +202,15 @@ text_handler (GMarkupParseContext *context,
     } else if (!g_ascii_strcasecmp("line", element)) {
         cut_test_result_set_line(data->result, atoi(text));
     } else if (!g_ascii_strcasecmp("info", element)) {
-        cut_test_result_set_function_name(data->result, text);
+        if (g_str_has_suffix(text, "()")) {
+            gchar *real_name;
+            real_name = g_strndup(text, strlen(text) - 2);
+            cut_test_result_set_function_name(data->result, real_name);
+            g_free(real_name);
+        } else {
+            set_parse_error(context, error,
+                            "%s does not seem be function name", text);
+        }
     } else if (!g_ascii_strcasecmp("status", element)) {
         cut_test_result_set_status(data->result, result_name_to_status(text));
     } else if (!g_ascii_strcasecmp("elapsed", element)) {
