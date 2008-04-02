@@ -53,7 +53,7 @@ set_parse_error (GMarkupParseContext *context,
                               user_message, line, chr);
 
     *error = g_error_new(G_MARKUP_ERROR,
-                         G_MARKUP_ERROR_INVALID_CONTENT,
+                         G_MARKUP_ERROR_PARSE,
                          message);
     g_free(message);
     g_free(user_message);
@@ -168,6 +168,52 @@ set_option_value (GMarkupParseContext *context,
     }
 }
 
+static gboolean
+is_integer (const gchar *str)
+{
+    gint i = 0;
+
+    if (!str)
+        return FALSE;
+
+    while (str[i]) {
+        if (!g_ascii_isdigit(str[i]))
+            return FALSE;
+    }
+    return TRUE;
+}
+
+static void
+set_line (GMarkupParseContext *context,
+          ParseData *data,
+          const gchar *text,
+          GError **error)
+{
+    if (is_integer(text)) {
+        cut_test_result_set_line(data->result, atoi(text));
+    } else {
+        set_parse_error(context, error,
+                        "%s does not seem be line number", text);
+    }
+}
+
+static void
+set_function_name (GMarkupParseContext *context,
+                   ParseData *data,
+                   const gchar *name,
+                   GError **error)
+{
+    if (g_str_has_suffix(name, "()")) {
+        gchar *real_name;
+        real_name = g_strndup(name, strlen(name) - 2);
+        cut_test_result_set_function_name(data->result, real_name);
+        g_free(real_name);
+    } else {
+        set_parse_error(context, error,
+                        "%s does not seem be function name", name);
+    }
+}
+
 static void
 text_handler (GMarkupParseContext *context,
               const gchar         *text,
@@ -200,17 +246,9 @@ text_handler (GMarkupParseContext *context,
     } else if (!g_ascii_strcasecmp("file", element)) {
         cut_test_result_set_filename(data->result, text);
     } else if (!g_ascii_strcasecmp("line", element)) {
-        cut_test_result_set_line(data->result, atoi(text));
+        set_line(context, data, text, error);
     } else if (!g_ascii_strcasecmp("info", element)) {
-        if (g_str_has_suffix(text, "()")) {
-            gchar *real_name;
-            real_name = g_strndup(text, strlen(text) - 2);
-            cut_test_result_set_function_name(data->result, real_name);
-            g_free(real_name);
-        } else {
-            set_parse_error(context, error,
-                            "%s does not seem be function name", text);
-        }
+        set_function_name(context, data, text, error);
     } else if (!g_ascii_strcasecmp("status", element)) {
         cut_test_result_set_status(data->result, result_name_to_status(text));
     } else if (!g_ascii_strcasecmp("elapsed", element)) {
