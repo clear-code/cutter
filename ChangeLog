@@ -1,3 +1,7 @@
+2008-04-04  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-process.c: Set some conditions to GIOChannel.
+
 2008-04-03  Kouhei Sutou  <kou@cozmixng.org>
 
 	* test/run-test.sh: run only non --multi-thread mode is passed.

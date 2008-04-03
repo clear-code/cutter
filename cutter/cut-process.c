@@ -167,6 +167,9 @@ prepare_pipes (CutProcess *process)
         }
 
         priv->child_io = g_io_channel_unix_new(priv->cutter_pipe[WRITE]);
+        g_io_channel_set_flags(priv->child_io, G_IO_FLAG_IS_WRITEABLE, NULL);
+        g_io_channel_set_encoding(priv->child_io, NULL, NULL);
+        g_io_channel_set_close_on_unref(priv->child_io, TRUE);
 
         if (priv->stdout_pipe[WRITE] >= 3)
             close_pipe(priv->stdout_pipe, WRITE);
