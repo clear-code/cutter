@@ -124,7 +124,7 @@ test_fail_in_forked_process (void)
     g_signal_connect(test_object, "failure", G_CALLBACK(cb_failure_signal), NULL);
     cut_assert(run(test_object));
     cut_assert_equal_string("Failure in child process", failure_message);
-    cut_assert_equal_string("Nofitication in child process", notification_message);
+    cut_assert_equal_string("Notification in child process", notification_message);
     g_signal_handlers_disconnect_by_func(test_object,
                                          G_CALLBACK(cb_notification_signal),
                                          NULL);
