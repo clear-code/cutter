@@ -1,5 +1,8 @@
 2008-04-03  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-main.c (cut_init): loaded all modules if --help-XXX
+	is specified.
+
 	* cutter/cut-assertions.h, test/test-cut-assertions.c: added
 	cut_assert_errno().
 

@@ -79,24 +79,6 @@ parse_test_case_order (const gchar *option_name, const gchar *value,
     return TRUE;
 }
 
-static gboolean
-print_help_all (const gchar *option_name, const gchar *value,
-                gpointer data, GError **error)
-{
-    GOptionContext *context = data;
-    gchar *help;
-
-    cut_contractor_build_all_factories(contractor);
-
-    help = g_option_context_get_help(context, FALSE, NULL);
-    g_print("%s", help);
-    g_free(help);
-    g_option_context_free(context);
-    exit(0);
-
-    return TRUE;
-}
-
 static const GOptionEntry option_entries[] =
 {
     {"version", 0, G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_CALLBACK, print_version,
@@ -111,15 +93,13 @@ static const GOptionEntry option_entries[] =
      N_("Run test cases with multi-thread"), NULL},
     {"test-case-order", 0, 0, G_OPTION_ARG_CALLBACK, parse_test_case_order,
      N_("Sort test case by. Default is 'none'."), "[none|name|name-desc]"},
-    {"help-all", 0, G_OPTION_FLAG_HIDDEN | G_OPTION_FLAG_NO_ARG,
-     G_OPTION_ARG_CALLBACK, print_help_all,
-     NULL, NULL},
     {NULL}
 };
 
 void
 cut_init (int *argc, char ***argv)
 {
+    int i;
     GOptionContext *option_context;
     GOptionGroup *main_group;
     GError *error = NULL;
@@ -160,7 +140,15 @@ cut_init (int *argc, char ***argv)
         exit(1);
     }
 
-    factories = cut_contractor_build_factories(contractor);
+    for (i = 1; i < *argc; i++) {
+        if (g_str_has_prefix((*argv)[i], "--help-")) {
+            factories = cut_contractor_build_all_factories(contractor);
+            break;
+        }
+    }
+
+    if (!factories)
+        factories = cut_contractor_build_factories(contractor);
 
     g_option_context_set_help_enabled(option_context, TRUE);
     g_option_context_set_ignore_unknown_options(option_context, FALSE);
