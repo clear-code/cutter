@@ -128,7 +128,7 @@ read_from_pipe (CutProcess *process, int pipe, int type)
 }
 
 static void
-close_pipe (int pipe[2], PipeMode mode)
+close_pipe (int *pipe, PipeMode mode)
 {
     if (pipe[mode] == -1)
         return;

@@ -1,5 +1,7 @@
 2008-04-03  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-process.c (close_pipe): *.
+
 	* cutter/cut-process.[ch]: added cut_process_wait().
 
 	* test/test-cut-fork.c: used cut_wait_process().
