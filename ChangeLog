@@ -1,6 +1,7 @@
 2008-04-03  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-process.c (close_pipe): *.
+	(ensure_collect_result): fixed a typo.
 
 	* cutter/cut-process.[ch]: added cut_process_wait().
 

@@ -214,7 +214,7 @@ ensure_collect_result (CutProcess *process, unsigned int usec_timeout)
         if (n_fds == 0)
             break;
 
-        if (n_fds == -10 && errno != EINTR) {
+        if (n_fds == -1 && errno != EINTR) {
             g_warning("Unexpected error in select() while "
                       "reading from child process (%d): %s",
                       priv->pid, g_strerror(errno));
