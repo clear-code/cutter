@@ -308,10 +308,13 @@ run (CutTestCase *test_case, CutTest *test, CutRunner *runner)
     CutTestCasePrivate *priv;
     CutTestContext *original_test_context, *test_context;
     gboolean success = TRUE;
+    gboolean is_multi_thread;
     jmp_buf jump_buffer;
 
     if (cut_runner_is_canceled(runner))
         return TRUE;
+
+    is_multi_thread = cut_runner_get_multi_thread(runner);
 
     priv = CUT_TEST_CASE_GET_PRIVATE(test_case);
     if (!priv->get_current_test_context ||
@@ -321,6 +324,7 @@ run (CutTestCase *test_case, CutTest *test, CutRunner *runner)
     }
 
     test_context = cut_test_context_new(NULL, test_case, NULL);
+    cut_test_context_set_multi_thread(test_context, is_multi_thread);
     original_test_context = priv->get_current_test_context();
     priv->set_current_test_context(test_context);
 

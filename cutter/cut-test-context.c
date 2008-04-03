@@ -42,6 +42,7 @@ struct _CutTestContextPrivate
     CutTestCase *test_case;
     CutTest *test;
     gboolean failed;
+    gboolean is_multi_thread;
     jmp_buf *jump_buffer;
     GList *taken_strings;
     gpointer user_data;
@@ -115,6 +116,7 @@ cut_test_context_init (CutTestContext *context)
     priv->test = NULL;
 
     priv->failed = FALSE;
+    priv->is_multi_thread = FALSE;
 
     priv->taken_strings = NULL;
 
@@ -532,6 +534,19 @@ cut_test_context_get_forked_stderr_message (CutTestContext *context,
         return cut_process_get_stderr_message(process);
 
     return NULL;
+}
+
+void
+cut_test_context_set_multi_thread (CutTestContext *context,
+                                   gboolean is_multi_thread)
+{
+    CUT_TEST_CONTEXT_GET_PRIVATE(context)->is_multi_thread = is_multi_thread;
+}
+
+gboolean
+cut_test_context_get_multi_thread (CutTestContext *context)
+{
+    return CUT_TEST_CONTEXT_GET_PRIVATE(context)->is_multi_thread;
 }
 
 /*
