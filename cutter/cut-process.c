@@ -44,6 +44,8 @@ struct _CutProcessPrivate
     GString *stdout_string;
     GString *stderr_string;
     GString *cutter_string;
+    GIOChannel *child_io;
+    GIOChannel *parent_io;
     int stdout_pipe[2];
     int stderr_pipe[2];
     int cutter_pipe[2];
@@ -164,6 +166,8 @@ prepare_pipes (CutProcess *process)
             sane_dup2(priv->stderr_pipe[WRITE], STDERR_FILENO) < 0) {
         }
 
+        priv->child_io = g_io_channel_unix_new(priv->cutter_pipe[WRITE]);
+
         if (priv->stdout_pipe[WRITE] >= 3)
             close_pipe(priv->stdout_pipe, WRITE);
         if (priv->stderr_pipe[WRITE] >= 3)
@@ -252,6 +256,8 @@ cut_process_init (CutProcess *process)
     priv->stdout_string = g_string_new(NULL);
     priv->stderr_string = g_string_new(NULL);
     priv->cutter_string = g_string_new(NULL);
+    priv->child_io = NULL;
+    priv->parent_io = NULL;
 
     priv->stdout_pipe[READ] = -1;
     priv->stdout_pipe[WRITE] = -1;
@@ -286,6 +292,16 @@ dispose (GObject *object)
     if (priv->cutter_string) {
         g_string_free(priv->cutter_string, TRUE);
         priv->cutter_string = NULL;
+    }
+
+    if (priv->child_io) {
+        g_io_channel_unref(priv->child_io);
+        priv->child_io = NULL;
+    }
+
+    if (priv->parent_io) {
+        g_io_channel_unref(priv->parent_io);
+        priv->parent_io = NULL;
     }
 
     G_OBJECT_CLASS(cut_process_parent_class)->dispose(object);
@@ -346,11 +362,32 @@ gboolean
 cut_process_send_test_result_to_parent (CutProcess *process, CutTestResult *result)
 {
     CutProcessPrivate *priv = CUT_PROCESS_GET_PRIVATE(process);
-    gchar *xml;
+    gchar *xml, *buffer;
+    gsize bytes_written, length;
+    GError *error = NULL;
 
     xml = cut_test_result_to_xml(result);
+    if (!xml)
+        return FALSE;
 
-    write(priv->cutter_pipe[1], xml, strlen(xml));
+    length = strlen(xml);
+    buffer = xml;
+
+    while (length > 0) {
+        g_io_channel_write_chars(priv->child_io,
+                                 buffer, length,
+                                 &bytes_written, &error);
+        if (error) {
+            g_error_free (error);
+            return FALSE;
+        }
+
+        buffer += bytes_written;
+        length -= bytes_written;
+    }
+
+    g_io_channel_flush(priv->child_io, NULL);
+
     g_free(xml);
 
     return TRUE;
@@ -367,7 +404,8 @@ cut_process_exit (CutProcess *process)
 {
     CutProcessPrivate *priv = CUT_PROCESS_GET_PRIVATE(process);
 
-    close_pipe(priv->cutter_pipe, WRITE);
+    g_io_channel_unref(priv->child_io);
+    priv->child_io = NULL;
     _exit(EXIT_SUCCESS);
 }
 

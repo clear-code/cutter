@@ -32,6 +32,7 @@
 	does not work yet.
 	* cutter/cut-test-context.c, cutter/cut-process.c,
 	cutter/cut-process.h: Added cut_process_exit();
+	* cutter/cut-process.c: Use GIOChannel for child process.
 
 2008-04-02  Kouhei Sutou  <kou@cozmixng.org>
 
