@@ -72,6 +72,9 @@ struct _CutTestClass
     void (*notification)   (CutTest        *test,
                             CutTestContext *context,
                             CutTestResult  *result);
+    void (*omission)       (CutTest        *test,
+                            CutTestContext *context,
+                            CutTestResult  *result);
     void (*complete)       (CutTest        *test);
     void (*crashed)        (CutTest        *test,
                             const gchar    *stack_trace);

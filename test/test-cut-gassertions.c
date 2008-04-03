@@ -84,7 +84,7 @@ test_equal_g_type (void)
     cut_assert(test);
 
     cut_assert(!run(test));
-    cut_assert_test_result_summary(runner, 1, 1, 1, 0, 0, 0);
+    cut_assert_test_result_summary(runner, 1, 1, 1, 0, 0, 0, 0);
     cut_assert_test_result(runner, 0, CUT_TEST_RESULT_FAILURE,
                            "equal_g_type test",
                            NULL,
@@ -118,7 +118,7 @@ test_equal_g_value (void)
     cut_assert(test);
 
     cut_assert(!run(test));
-    cut_assert_test_result_summary(runner, 1, 2, 1, 0, 0, 0);
+    cut_assert_test_result_summary(runner, 1, 2, 1, 0, 0, 0, 0);
     cut_assert_test_result(runner, 0, CUT_TEST_RESULT_FAILURE,
                            "equal_g_value test",
                            NULL,

@@ -20,8 +20,8 @@
 #ifndef __CUTTER_H__
 #define __CUTTER_H__
 
-#include <cutter/cut-assertions.h>
 #include <cutter/cut-hidden-definitions.h>
+#include <cutter/cut-assertions.h>
 #include <cutter/cut-experimental.h>
 
 #ifdef __cplusplus

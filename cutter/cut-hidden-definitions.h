@@ -20,6 +20,7 @@
 #ifndef __CUT_HIDDEN_DEFINITIONS_H__
 #define __CUT_HIDDEN_DEFINITIONS_H__
 
+#include <stdlib.h>
 #include <cutter/cut-public.h>
 
 #ifdef __cplusplus

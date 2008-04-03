@@ -42,6 +42,7 @@ struct _CutRunnerPrivate
     guint n_errors;
     guint n_pendings;
     guint n_notifications;
+    guint n_omissions;
     GList *results;
     gboolean use_multi_thread;
     GMutex *mutex;
@@ -66,6 +67,7 @@ enum
     PROP_N_ERRORS,
     PROP_N_PENDINGS,
     PROP_N_NOTIFICATIONS,
+    PROP_N_OMISSIONS,
     PROP_USE_MULTI_THREAD,
     PROP_TEST_CASE_ORDER
 };
@@ -86,12 +88,14 @@ enum
     ERROR_TEST,
     PENDING_TEST,
     NOTIFICATION_TEST,
+    OMISSION_TEST,
 
     SUCCESS_TEST_CASE,
     FAILURE_TEST_CASE,
     ERROR_TEST_CASE,
     PENDING_TEST_CASE,
     NOTIFICATION_TEST_CASE,
+    OMISSION_TEST_CASE,
 
     COMPLETE_TEST,
     COMPLETE_TEST_CASE,
@@ -162,6 +166,20 @@ cut_runner_class_init (CutRunnerClass *klass)
                              0, G_MAXUINT32, 0,
                              G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class, PROP_N_PENDINGS, spec);
+
+    spec = g_param_spec_uint("n-notifications",
+                             "Number of notifications",
+                             "The number of notifications of the runner",
+                             0, G_MAXUINT32, 0,
+                             G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+    g_object_class_install_property(gobject_class, PROP_N_NOTIFICATIONS, spec);
+
+    spec = g_param_spec_uint("n-omissions",
+                             "Number of omissions",
+                             "The number of omissions of the runner",
+                             0, G_MAXUINT32, 0,
+                             G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+    g_object_class_install_property(gobject_class, PROP_N_OMISSIONS, spec);
 
     spec = g_param_spec_boolean("use-multi-thread",
                                 "Use multi thread",
@@ -290,6 +308,17 @@ cut_runner_class_init (CutRunnerClass *klass)
                         CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT,
                         CUT_TYPE_TEST_RESULT);
 
+    signals[OMISSION_TEST]
+        = g_signal_new("omission-test",
+                       G_TYPE_FROM_CLASS(klass),
+                       G_SIGNAL_RUN_LAST,
+                       G_STRUCT_OFFSET(CutRunnerClass, omission_test),
+                       NULL, NULL,
+                       _cut_marshal_VOID__OBJECT_OBJECT_OBJECT,
+                       G_TYPE_NONE, 3,
+                       CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT,
+                       CUT_TYPE_TEST_RESULT);
+
     signals[COMPLETE_TEST]
         = g_signal_new ("complete-test",
                         G_TYPE_FROM_CLASS (klass),
@@ -354,6 +383,17 @@ cut_runner_class_init (CutRunnerClass *klass)
                         CUT_TYPE_TEST_CASE, CUT_TYPE_TEST_CONTEXT,
                         CUT_TYPE_TEST_RESULT);
 
+    signals[OMISSION_TEST_CASE]
+        = g_signal_new("omission-test-case",
+                       G_TYPE_FROM_CLASS (klass),
+                       G_SIGNAL_RUN_LAST,
+                       G_STRUCT_OFFSET(CutRunnerClass, omission_test_case),
+                       NULL, NULL,
+                       _cut_marshal_VOID__OBJECT_OBJECT_OBJECT,
+                       G_TYPE_NONE, 3,
+                       CUT_TYPE_TEST_CASE, CUT_TYPE_TEST_CONTEXT,
+                       CUT_TYPE_TEST_RESULT);
+
     signals[COMPLETE_TEST_CASE]
         = g_signal_new ("complete-test-case",
                         G_TYPE_FROM_CLASS (klass),
@@ -395,6 +435,7 @@ cut_runner_init (CutRunner *runner)
     priv->n_errors = 0;
     priv->n_pendings = 0;
     priv->n_notifications = 0;
+    priv->n_omissions = 0;
     priv->results = NULL;
     priv->use_multi_thread = FALSE;
     priv->mutex = g_mutex_new();
@@ -484,6 +525,9 @@ set_property (GObject      *object,
       case PROP_N_NOTIFICATIONS:
         priv->n_notifications = g_value_get_uint(value);
         break;
+      case PROP_N_OMISSIONS:
+        priv->n_omissions = g_value_get_uint(value);
+        break;
       case PROP_USE_MULTI_THREAD:
         priv->use_multi_thread = g_value_get_boolean(value);
         break;
@@ -522,6 +566,9 @@ get_property (GObject    *object,
         break;
       case PROP_N_NOTIFICATIONS:
         g_value_set_uint(value, priv->n_notifications);
+        break;
+      case PROP_N_OMISSIONS:
+        g_value_set_uint(value, priv->n_omissions);
         break;
       case PROP_USE_MULTI_THREAD:
         g_value_set_boolean(value, priv->use_multi_thread);
@@ -738,6 +785,22 @@ cb_notification (CutTest *test, CutTestContext *test_context,
 }
 
 static void
+cb_omission (CutTest *test, CutTestContext *test_context,
+             CutTestResult *result, gpointer data)
+{
+    CutRunner *runner = data;
+    CutRunnerPrivate *priv;
+
+    priv = CUT_RUNNER_GET_PRIVATE(runner);
+    g_mutex_lock(priv->mutex);
+    priv->results = g_list_prepend(priv->results, g_object_ref(result));
+    priv->n_omissions++;
+    g_mutex_unlock(priv->mutex);
+
+    g_signal_emit(runner, signals[OMISSION_TEST], 0, test, test_context, result);
+}
+
+static void
 cb_complete (CutTest *test, gpointer data)
 {
     g_signal_handlers_disconnect_by_func(test,
@@ -757,6 +820,9 @@ cb_complete (CutTest *test, gpointer data)
                                          data);
     g_signal_handlers_disconnect_by_func(test,
                                          G_CALLBACK(cb_notification),
+                                         data);
+    g_signal_handlers_disconnect_by_func(test,
+                                         G_CALLBACK(cb_omission),
                                          data);
     g_signal_handlers_disconnect_by_func(test,
                                          G_CALLBACK(cb_complete),
@@ -780,6 +846,7 @@ cut_runner_start_test (CutRunner *runner, CutTest *test)
     g_signal_connect(test, "error", G_CALLBACK(cb_error), runner);
     g_signal_connect(test, "pending", G_CALLBACK(cb_pending), runner);
     g_signal_connect(test, "notification", G_CALLBACK(cb_notification), runner);
+    g_signal_connect(test, "omission", G_CALLBACK(cb_omission), runner);
     g_signal_connect(test, "complete", G_CALLBACK(cb_complete), runner);
 }
 
@@ -852,6 +919,16 @@ cb_notification_test_case (CutTestCase *test_case, CutTestContext *test_context,
 }
 
 static void
+cb_omission_test_case (CutTestCase *test_case, CutTestContext *test_context,
+                       CutTestResult *result, gpointer data)
+{
+    CutRunner *runner = data;
+
+    g_signal_emit(runner, signals[OMISSION_TEST_CASE], 0,
+                  test_case, test_context, result);
+}
+
+static void
 cb_start_test_case(CutTestCase *test_case, gpointer data)
 {
     CutRunner *runner = data;
@@ -891,6 +968,7 @@ cb_complete_test_case(CutTestCase *test_case, gpointer data)
     DISCONNECT(error);
     DISCONNECT(pending);
     DISCONNECT(notification);
+    DISCONNECT(omission);
 
     DISCONNECT(ready);
     DISCONNECT(start);
@@ -919,6 +997,7 @@ cut_runner_start_test_case (CutRunner *runner, CutTestCase *test_case)
     CONNECT(error);
     CONNECT(pending);
     CONNECT(notification);
+    CONNECT(omission);
 
     CONNECT(ready);
     CONNECT(start);
@@ -1030,6 +1109,12 @@ guint
 cut_runner_get_n_notifications (CutRunner *runner)
 {
     return CUT_RUNNER_GET_PRIVATE(runner)->n_notifications;
+}
+
+guint
+cut_runner_get_n_omissions (CutRunner *runner)
+{
+    return CUT_RUNNER_GET_PRIVATE(runner)->n_omissions;
 }
 
 const GList *

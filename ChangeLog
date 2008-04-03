@@ -1,5 +1,7 @@
 2008-04-03  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/, test/: added cut_omit().
+
 	* cutter/cut-process.c (close_pipe): *.
 	(ensure_collect_result): fixed a typo.
 

@@ -517,6 +517,9 @@ extern "C" {
     }                                                                   \
 } while(0)
 
+#define cut_omit(format, ...)                           \
+    cut_test_fail(OMISSION, NULL, format, ## __VA_ARGS__)
+
 #ifdef __cplusplus
 }
 #endif

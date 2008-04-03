@@ -89,6 +89,10 @@ struct _CutRunnerClass
                                  CutTest        *test,
                                  CutTestContext *test_context,
                                  CutTestResult  *result);
+    void (*omission_test)       (CutRunner      *runner,
+                                 CutTest        *test,
+                                 CutTestContext *test_context,
+                                 CutTestResult  *result);
     void (*complete_test)       (CutRunner      *runner,
                                  CutTest        *test,
                                  CutTestContext *test_context);
@@ -113,6 +117,10 @@ struct _CutRunnerClass
                                     CutTestCase    *test_case,
                                     CutTestContext *test_context,
                                     CutTestResult  *result);
+    void (*omission_test_case)  (CutRunner      *runner,
+                                 CutTestCase    *test_case,
+                                 CutTestContext *test_context,
+                                 CutTestResult  *result);
     void (*complete_test_case)  (CutRunner      *runner,
                                  CutTestCase    *test_case);
 
@@ -160,6 +168,7 @@ guint         cut_runner_get_n_failures            (CutRunner *runner);
 guint         cut_runner_get_n_errors              (CutRunner *runner);
 guint         cut_runner_get_n_pendings            (CutRunner *runner);
 guint         cut_runner_get_n_notifications       (CutRunner *runner);
+guint         cut_runner_get_n_omissions           (CutRunner *runner);
 
 const GList  *cut_runner_get_results               (CutRunner *runner);
 

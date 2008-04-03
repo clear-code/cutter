@@ -58,6 +58,7 @@ enum
     ERROR,
     PENDING,
     NOTIFICATION,
+    OMISSION,
     COMPLETE,
     CRASHED,
     LAST_SIGNAL
@@ -169,6 +170,16 @@ cut_test_class_init (CutTestClass *klass)
                         G_TYPE_FROM_CLASS (klass),
                         G_SIGNAL_RUN_LAST,
                         G_STRUCT_OFFSET (CutTestClass, notification),
+                        NULL, NULL,
+                        _cut_marshal_VOID__OBJECT_OBJECT,
+                        G_TYPE_NONE, 2,
+                        CUT_TYPE_TEST_CONTEXT, CUT_TYPE_TEST_RESULT);
+
+    cut_test_signals[OMISSION]
+        = g_signal_new("omission",
+                        G_TYPE_FROM_CLASS(klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET(CutTestClass, omission),
                         NULL, NULL,
                         _cut_marshal_VOID__OBJECT_OBJECT,
                         G_TYPE_NONE, 2,

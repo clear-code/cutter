@@ -80,7 +80,7 @@ gboolean      cut_test_context_is_failed      (CutTestContext *context);
 
 void          cut_test_context_set_jump       (CutTestContext *context,
                                                jmp_buf        *buffer);
-void           cut_test_context_emit_signal   (CutTestContext *context,
+void          cut_test_context_emit_signal    (CutTestContext *context,
                                                CutTestResult  *result);
 
 G_END_DECLS

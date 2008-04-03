@@ -285,17 +285,20 @@ status_to_name(CutTestResultStatus status)
       case CUT_TEST_RESULT_SUCCESS:
         name = "Success";
         break;
+      case CUT_TEST_RESULT_NOTIFICATION:
+        name = "Notification";
+        break;
+      case CUT_TEST_RESULT_OMISSION:
+        name = "Omission";
+        break;
+      case CUT_TEST_RESULT_PENDING:
+        name = "Pending";
+        break;
       case CUT_TEST_RESULT_FAILURE:
         name = "Failure";
         break;
       case CUT_TEST_RESULT_ERROR:
         name = "Error";
-        break;
-      case CUT_TEST_RESULT_PENDING:
-        name = "Pending";
-        break;
-      case CUT_TEST_RESULT_NOTIFICATION:
-        name = "Notification";
         break;
       default:
         name = "MUST NOT HAPPEN!!!";
@@ -314,17 +317,20 @@ status_to_color(CutTestResultStatus status)
       case CUT_TEST_RESULT_SUCCESS:
         color = GREEN_COLOR;
         break;
+      case CUT_TEST_RESULT_NOTIFICATION:
+        color = CYAN_COLOR;
+        break;
+      case CUT_TEST_RESULT_OMISSION:
+        color = BLUE_COLOR;
+        break;
+      case CUT_TEST_RESULT_PENDING:
+        color = MAGENTA_COLOR;
+        break;
       case CUT_TEST_RESULT_FAILURE:
         color = RED_COLOR;
         break;
       case CUT_TEST_RESULT_ERROR:
         color = YELLOW_COLOR;
-        break;
-      case CUT_TEST_RESULT_PENDING:
-        color = MAGENTA_COLOR;
-        break;
-      case CUT_TEST_RESULT_NOTIFICATION:
-        color = CYAN_COLOR;
         break;
       default:
         color = "";
@@ -430,6 +436,45 @@ cb_success_test (CutRunner      *runner,
 }
 
 static void
+cb_notification_test (CutRunner      *runner,
+                      CutTest        *test,
+                      CutTestContext *test_context,
+                      CutTestResult  *result,
+                      CutUIConsole   *console)
+{
+    if (console->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
+        return;
+    print_for_status(console, CUT_TEST_RESULT_NOTIFICATION, "N");
+    fflush(stdout);
+}
+
+static void
+cb_omission_test (CutRunner      *runner,
+                  CutTest        *test,
+                  CutTestContext *test_context,
+                  CutTestResult  *result,
+                  CutUIConsole   *console)
+{
+    if (console->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
+        return;
+    print_for_status(console, CUT_TEST_RESULT_OMISSION, "O");
+    fflush(stdout);
+}
+
+static void
+cb_pending_test (CutRunner      *runner,
+                 CutTest        *test,
+                 CutTestContext *test_context,
+                 CutTestResult  *result,
+                 CutUIConsole   *console)
+{
+    if (console->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
+        return;
+    print_for_status(console, CUT_TEST_RESULT_PENDING, "P");
+    fflush(stdout);
+}
+
+static void
 cb_failure_test (CutRunner      *runner,
                  CutTest        *test,
                  CutTestContext *test_context,
@@ -452,32 +497,6 @@ cb_error_test (CutRunner      *runner,
     if (console->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
     print_for_status(console, CUT_TEST_RESULT_ERROR, "E");
-    fflush(stdout);
-}
-
-static void
-cb_pending_test (CutRunner      *runner,
-                 CutTest        *test,
-                 CutTestContext *test_context,
-                 CutTestResult  *result,
-                 CutUIConsole   *console)
-{
-    if (console->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
-        return;
-    print_for_status(console, CUT_TEST_RESULT_PENDING, "P");
-    fflush(stdout);
-}
-
-static void
-cb_notification_test (CutRunner      *runner,
-                      CutTest        *test,
-                      CutTestContext *test_context,
-                      CutTestResult  *result,
-                      CutUIConsole   *console)
-{
-    if (console->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
-        return;
-    print_for_status(console, CUT_TEST_RESULT_NOTIFICATION, "N");
     fflush(stdout);
 }
 
@@ -584,7 +603,7 @@ print_summary (CutUIConsole *console, CutRunner *runner,
                gboolean crashed)
 {
     guint n_tests, n_assertions, n_failures, n_errors;
-    guint n_pendings, n_notifications;
+    guint n_pendings, n_notifications, n_omissions;
     const gchar *color;
 
     n_tests = cut_runner_get_n_tests(runner);
@@ -593,6 +612,7 @@ print_summary (CutUIConsole *console, CutRunner *runner,
     n_errors = cut_runner_get_n_errors(runner);
     n_pendings = cut_runner_get_n_pendings(runner);
     n_notifications = cut_runner_get_n_notifications(runner);
+    n_omissions = cut_runner_get_n_omissions(runner);
 
     if (crashed) {
         color = CRASH_COLOR;
@@ -604,6 +624,8 @@ print_summary (CutUIConsole *console, CutRunner *runner,
             status = CUT_TEST_RESULT_FAILURE;
         } else if (n_pendings > 0) {
             status = CUT_TEST_RESULT_PENDING;
+        } else if (n_omissions > 0) {
+            status = CUT_TEST_RESULT_OMISSION;
         } else if (n_notifications > 0) {
             status = CUT_TEST_RESULT_NOTIFICATION;
         } else {
@@ -613,9 +635,10 @@ print_summary (CutUIConsole *console, CutRunner *runner,
     }
     print_with_color(console, color,
                      "%d test(s), %d assertion(s), %d failure(s), "
-                     "%d error(s), %d pending(s), %d notification(s)",
+                     "%d error(s), %d pending(s), %d omission(s), "
+                     "%d notification(s)",
                      n_tests, n_assertions, n_failures, n_errors,
-                     n_pendings, n_notifications);
+                     n_pendings, n_omissions, n_notifications);
     g_print("\n");
 }
 
@@ -673,10 +696,11 @@ connect_to_runner (CutUIConsole *console, CutRunner *runner)
     CONNECT(start_test);
 
     CONNECT(success_test);
+    CONNECT(notification_test);
+    CONNECT(omission_test);
+    CONNECT(pending_test);
     CONNECT(failure_test);
     CONNECT(error_test);
-    CONNECT(pending_test);
-    CONNECT(notification_test);
 
     CONNECT(complete_test);
     CONNECT(complete_test_case);
@@ -700,10 +724,11 @@ disconnect_from_runner (CutUIConsole *console, CutRunner *runner)
     DISCONNECT(start_test);
 
     DISCONNECT(success_test);
+    DISCONNECT(notification_test);
+    DISCONNECT(omission_test);
+    DISCONNECT(pending_test);
     DISCONNECT(failure_test);
     DISCONNECT(error_test);
-    DISCONNECT(pending_test);
-    DISCONNECT(notification_test);
 
     DISCONNECT(complete_test);
     DISCONNECT(complete_test_case);

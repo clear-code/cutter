@@ -24,6 +24,7 @@ void test_error_equal_string_with_null (void);
 void test_assert_equal_function (void);
 void test_failure_from_nested_function (void);
 void test_assert_errno (void);
+void test_omit (void);
 
 static gboolean need_cleanup;
 static gboolean compare_function_is_called;
@@ -221,7 +222,7 @@ test_error (void)
     cut_assert(test, "Creating a new CutTest object failed");
 
     cut_assert(!run(test));
-    cut_assert_test_result_summary(runner, 1, 0, 0, 1, 0, 0);
+    cut_assert_test_result_summary(runner, 1, 0, 0, 1, 0, 0, 0);
     cut_assert_test_result(runner, 0, CUT_TEST_RESULT_ERROR, "dummy-error-test",
                            "This test should error", NULL,
                            "dummy_error_test_function");
@@ -409,7 +410,7 @@ test_null_string (void)
 
     test = cut_test_new("assert-null-string", null_string_assertions);
     cut_assert(!run(test));
-    cut_assert_test_result_summary(runner, 1, 1, 1, 0, 0, 0);
+    cut_assert_test_result_summary(runner, 1, 1, 1, 0, 0, 0, 0);
 }
 
 static void
@@ -429,7 +430,7 @@ test_equal_string_with_free (void)
     test = cut_test_new("assert-string-equal-string-with-free",
                         equal_string_with_free_assertions);
     cut_assert(!run(test));
-    cut_assert_test_result_summary(runner, 1, 3, 1, 0, 0, 0);
+    cut_assert_test_result_summary(runner, 1, 3, 1, 0, 0, 0, 0);
 }
 
 static void
@@ -449,8 +450,27 @@ test_assert_errno (void)
 
     test = cut_test_new("assert-errno-for-eacces", assert_errno_for_eacces);
     cut_assert(!run(test));
-    cut_assert_test_result_summary(runner, 1, 1, 1, 0, 0, 0);
+    cut_assert_test_result_summary(runner, 1, 1, 1, 0, 0, 0, 0);
 }
+
+static void
+omit_test (void)
+{
+    cut_assert_equal_int(1, 1);
+    cut_omit("Omit the following tests");
+    cut_assert_equal_int(2, 2);
+}
+
+void
+test_omit (void)
+{
+    CutTest *test;
+
+    test = cut_test_new("omit-test", omit_test);
+    cut_assert(!run(test));
+    cut_assert_test_result_summary(runner, 1, 1, 0, 0, 0, 0, 1);
+}
+
 
 /*
 vi:nowrap:ai:expandtab:sw=4

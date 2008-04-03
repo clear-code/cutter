@@ -6,17 +6,19 @@
 
 static inline void
 cut_assert_test_result_summary (CutRunner *runner,
-                                gint n_tests, gint n_assertions,
-                                gint n_failures, gint n_errors,
-                                gint n_pendings, gint n_notifications)
+                                guint n_tests, guint n_assertions,
+                                guint n_failures, guint n_errors,
+                                guint n_pendings, guint n_notifications,
+                                guint n_omissions)
 {
-    cut_assert_equal_int(n_tests, cut_runner_get_n_tests(runner));
-    cut_assert_equal_int(n_assertions, cut_runner_get_n_assertions(runner));
-    cut_assert_equal_int(n_failures, cut_runner_get_n_failures(runner));
-    cut_assert_equal_int(n_errors, cut_runner_get_n_errors(runner));
-    cut_assert_equal_int(n_pendings, cut_runner_get_n_pendings(runner));
-    cut_assert_equal_int(n_notifications,
-                         cut_runner_get_n_notifications(runner));
+    cut_assert_equal_uint(n_tests, cut_runner_get_n_tests(runner));
+    cut_assert_equal_uint(n_assertions, cut_runner_get_n_assertions(runner));
+    cut_assert_equal_uint(n_failures, cut_runner_get_n_failures(runner));
+    cut_assert_equal_uint(n_errors, cut_runner_get_n_errors(runner));
+    cut_assert_equal_uint(n_pendings, cut_runner_get_n_pendings(runner));
+    cut_assert_equal_uint(n_notifications,
+                          cut_runner_get_n_notifications(runner));
+    cut_assert_equal_uint(n_omissions, cut_runner_get_n_omissions(runner));
 }
 
 static inline void

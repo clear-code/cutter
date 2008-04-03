@@ -541,6 +541,9 @@ status_to_color (CutTestResultStatus status, gboolean only_if_not_success)
       case CUT_TEST_RESULT_NOTIFICATION:
         color = "light blue";
         break;
+      case CUT_TEST_RESULT_OMISSION:
+        color = "blue";
+        break;
       case CUT_TEST_RESULT_PENDING:
         color = "yellow";
         break;
@@ -568,6 +571,9 @@ get_status_icon (GtkTreeView *tree_view, CutTestResultStatus status)
       case CUT_TEST_RESULT_NOTIFICATION:
         stock_id = GTK_STOCK_DIALOG_WARNING;
         break;
+      case CUT_TEST_RESULT_OMISSION:
+        stock_id = GTK_STOCK_DIALOG_ERROR;
+        break;
       case CUT_TEST_RESULT_PENDING:
         stock_id = GTK_STOCK_DIALOG_ERROR;
         break;
@@ -589,7 +595,7 @@ static gchar *
 generate_summary_message (CutRunner *runner)
 {
     guint n_tests, n_assertions, n_failures, n_errors;
-    guint n_pendings, n_notifications;
+    guint n_pendings, n_notifications, n_omissions;
 
     n_tests = cut_runner_get_n_tests(runner);
     n_assertions = cut_runner_get_n_assertions(runner);
@@ -597,18 +603,20 @@ generate_summary_message (CutRunner *runner)
     n_errors = cut_runner_get_n_errors(runner);
     n_pendings = cut_runner_get_n_pendings(runner);
     n_notifications = cut_runner_get_n_notifications(runner);
+    n_omissions = cut_runner_get_n_omissions(runner);
 
     return g_strdup_printf(_("%d test(s), %d assertion(s), %d failure(s), "
-                             "%d error(s), %d pending(s), %d notification(s)"),
+                             "%d error(s), %d pending(s), %d omission(s), "
+                             "%d notification(s)"),
                            n_tests, n_assertions, n_failures, n_errors,
-                           n_pendings, n_notifications);
+                           n_pendings, n_omissions, n_notifications);
 }
 
 static gchar *
 generate_short_summary_message (CutRunner *runner)
 {
     guint n_tests, n_assertions, n_failures, n_errors;
-    guint n_pendings, n_notifications;
+    guint n_pendings, n_notifications, n_omissions;
 
     n_tests = cut_runner_get_n_tests(runner);
     n_assertions = cut_runner_get_n_assertions(runner);
@@ -617,9 +625,9 @@ generate_short_summary_message (CutRunner *runner)
     n_pendings = cut_runner_get_n_pendings(runner);
     n_notifications = cut_runner_get_n_notifications(runner);
 
-    return g_strdup_printf(_("%dT:%dA:%dF:%d:E:%dP:%dN"),
+    return g_strdup_printf(_("%dT:%dA:%dF:%d:E:%dP:%dO:%dN"),
                            n_tests, n_assertions, n_failures, n_errors,
-                           n_pendings, n_notifications);
+                           n_pendings, n_omissions, n_notifications);
 }
 
 static gboolean
@@ -1160,6 +1168,18 @@ cb_notification_test (CutTest *test, CutTestContext *context,
     idle_add_append_test_result_row(info, result);
 }
 
+static void
+cb_omission_test (CutTest *test, CutTestContext *context,
+                  CutTestResult *result, gpointer data)
+{
+    TestRowInfo *info = data;
+
+    update_status(info, CUT_TEST_RESULT_OMISSION);
+
+    g_idle_add(idle_cb_update_test_row_status, data);
+    idle_add_append_test_result_row(info, result);
+}
+
 static gboolean
 idle_cb_push_running_test_message (gpointer data)
 {
@@ -1219,6 +1239,7 @@ cb_complete_test (CutTest *test, gpointer data)
     DISCONNECT(error);
     DISCONNECT(pending);
     DISCONNECT(notification);
+    DISCONNECT(omission);
     DISCONNECT(complete);
 #undef DISCONNECT
 }
@@ -1249,6 +1270,7 @@ cb_start_test (CutTestCase *test_case, CutTest *test,
     CONNECT(error);
     CONNECT(pending);
     CONNECT(notification);
+    CONNECT(omission);
     CONNECT(complete);
 #undef CONNECT
 }

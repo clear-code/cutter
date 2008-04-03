@@ -673,17 +673,20 @@ cut_test_result_status_to_signal_name (CutTestResultStatus status)
       case CUT_TEST_RESULT_SUCCESS:
         signal_name = "success";
         break;
+      case CUT_TEST_RESULT_NOTIFICATION:
+        signal_name = "notification";
+        break;
+      case CUT_TEST_RESULT_PENDING:
+        signal_name = "pending";
+        break;
+      case CUT_TEST_RESULT_OMISSION:
+        signal_name = "omission";
+        break;
       case CUT_TEST_RESULT_FAILURE:
         signal_name = "failure";
         break;
       case CUT_TEST_RESULT_ERROR:
         signal_name = "error";
-        break;
-      case CUT_TEST_RESULT_PENDING:
-        signal_name = "pending";
-        break;
-      case CUT_TEST_RESULT_NOTIFICATION:
-        signal_name = "notification";
         break;
     }
 
