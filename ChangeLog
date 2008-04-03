@@ -1,5 +1,7 @@
 2008-04-03  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/run-test.sh: run only non --multi-thread mode is passed.
+
 	* cutter/cut-test-context.c, cutter/cut-public.h,
 	cutter/cut-experimental.h (cut_fork): don't fork() when
 	--multi-thread mode.
