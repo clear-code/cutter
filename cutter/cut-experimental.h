@@ -43,7 +43,10 @@ typedef struct _CutTestAttribute {
 } CutTestAttribute;
 
 #define cut_fork()                                              \
-    cut_test_context_trap_fork(get_current_test_context())
+    cut_test_context_trap_fork(get_current_test_context(),      \
+                               __PRETTY_FUNCTION__,             \
+                               __FILE__,                        \
+                               __LINE__)
 
 #define cut_wait_process(pid, usec_timeout)                     \
     cut_test_context_wait_process(get_current_test_context(),   \

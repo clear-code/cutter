@@ -471,11 +471,24 @@ cut_test_context_inspect_string_array (CutTestContext *context,
 }
 
 int
-cut_test_context_trap_fork (CutTestContext *context)
+cut_test_context_trap_fork (CutTestContext *context,
+                            const gchar *function_name,
+                            const gchar *filename,
+                            guint line)
 {
     CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
     CutProcess *process;
     int pid;
+
+    if (cut_test_context_get_multi_thread(context)) {
+        cut_test_context_register_result(context,
+                                         CUT_TEST_RESULT_OMISSION,
+                                         function_name, filename, line,
+                                         "can't use cut_fork() "
+                                         "in multi thread mode",
+                                         NULL);
+        cut_test_context_long_jump(context);
+    }
 
     process = cut_process_new();
     priv->processes = g_list_prepend(priv->processes, process);

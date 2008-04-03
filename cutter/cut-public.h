@@ -68,7 +68,10 @@ int   cut_utils_compare_string_array        (const char **strings1,
                                              const char **strings2);
 
 void *cut_test_context_get_user_data        (CutTestContext *context);
-int   cut_test_context_trap_fork            (CutTestContext *context);
+int   cut_test_context_trap_fork            (CutTestContext *context,
+                                             const char     *function_name,
+                                             const char     *filename,
+                                             unsigned int    line);
 int   cut_test_context_wait_process         (CutTestContext *context,
                                              int             pid,
                                              unsigned int    usec_timeout);
