@@ -49,6 +49,8 @@ GType cut_process_get_type  (void) G_GNUC_CONST;
 
 CutProcess *cut_process_new (void);
 int          cut_process_fork    (CutProcess *process);
+int          cut_process_wait    (CutProcess *process,
+                                  unsigned int usec_timeout);
 int          cut_process_get_pid (CutProcess *process);
 const gchar *cut_process_get_stdout_message
                                   (CutProcess *process);

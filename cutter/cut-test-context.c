@@ -469,8 +469,7 @@ cut_test_context_inspect_string_array (CutTestContext *context,
 }
 
 int
-cut_test_context_trap_fork (CutTestContext *context,
-                            unsigned int time_out)
+cut_test_context_trap_fork (CutTestContext *context)
 {
     CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
     CutProcess *process;
@@ -494,6 +493,19 @@ cut_test_context_trap_fork (CutTestContext *context,
     }
 
     return pid;
+}
+
+int
+cut_test_context_wait_process (CutTestContext *context,
+                               int pid, unsigned int timeout)
+{
+    CutProcess *process;
+
+    process = get_process_from_pid(context, pid);
+    if (process)
+        return cut_process_wait(process, timeout);
+
+    return EXIT_SUCCESS;
 }
 
 const char *

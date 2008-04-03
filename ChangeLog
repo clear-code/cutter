@@ -1,5 +1,16 @@
 2008-04-03  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-process.[ch]: added cut_process_wait().
+
+	* test/test-cut-fork.c: used cut_wait_process().
+
+	* cutter/cut-test-context.c, cutter/cut-experimental.h,
+	cutter/cut-public.h: added cut_wait_process().
+
+	* cutter/cut-process.c (prepare_pipes): kept errno from fork().
+
+	* test/test-cut-fork.c: used cut_assert_errno().
+
 	* cutter/cut-main.c (cut_init): loaded all modules if --help-XXX
 	is specified. Bug #1932062.
 	Reported by makeinu. Thanks!!!

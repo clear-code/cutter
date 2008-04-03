@@ -67,8 +67,10 @@ int   cut_utils_compare_string_array        (const char **strings1,
                                              const char **strings2);
 
 void *cut_test_context_get_user_data        (CutTestContext *context);
-int   cut_test_context_trap_fork            (CutTestContext *context,
-                                             unsigned int time_out);
+int   cut_test_context_trap_fork            (CutTestContext *context);
+int   cut_test_context_wait_process         (CutTestContext *context,
+                                             int             pid,
+                                             unsigned int    usec_timeout);
 const char *cut_test_context_get_forked_stdout_message
                                             (CutTestContext *context,
                                              int             pid);

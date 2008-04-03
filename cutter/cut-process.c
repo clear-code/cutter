@@ -26,6 +26,8 @@
 #include <signal.h>
 #include <unistd.h>
 #include <errno.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 #include <glib.h>
 #include <glib/gstdio.h>
 #include <gmodule.h>
@@ -42,8 +44,16 @@ struct _CutProcessPrivate
     GString *stdout_string;
     GString *stderr_string;
     GString *cutter_string;
+    int stdout_pipe[2];
+    int stderr_pipe[2];
     int cutter_pipe[2];
 };
+
+typedef enum
+{
+    READ,
+    WRITE
+} PipeMode;
 
 enum
 {
@@ -117,19 +127,26 @@ read_from_pipe (CutProcess *process, int pipe, int type)
     return FALSE;
 }
 
+static void
+close_pipe (int pipe[2], PipeMode mode)
+{
+    if (pipe[mode] == -1)
+        return;
+    close(pipe[mode]);
+    pipe[mode] = -1;
+}
+
 static pid_t
 prepare_pipes (CutProcess *process)
 {
     CutProcessPrivate *priv = CUT_PROCESS_GET_PRIVATE(process);
     pid_t pid;
     int fork_errno = 0;
-    int stdout_pipe[2] = { -1, -1 };
-    int stderr_pipe[2] = { -1, -1 };
 
     priv->pid = 0;
 
-    if (pipe(stdout_pipe) < 0 ||
-        pipe(stderr_pipe) < 0 ||
+    if (pipe(priv->stdout_pipe) < 0 ||
+        pipe(priv->stderr_pipe) < 0 ||
         pipe(priv->cutter_pipe) < 0) {
         return -1;
     }
@@ -139,53 +156,91 @@ prepare_pipes (CutProcess *process)
         fork_errno = errno;
 
     if (pid == 0) {
-        close(stdout_pipe[0]);
-        close(stderr_pipe[0]);
-        close(priv->cutter_pipe[0]);
+        close_pipe(priv->stdout_pipe, READ);
+        close_pipe(priv->stderr_pipe, READ);
+        close_pipe(priv->cutter_pipe, READ);
 
-        if (sane_dup2(stdout_pipe[1], 1) < 0 ||
-            sane_dup2(stderr_pipe[1], 2) < 0) {
+        if (sane_dup2(priv->stdout_pipe[WRITE], STDOUT_FILENO) < 0 ||
+            sane_dup2(priv->stderr_pipe[WRITE], STDERR_FILENO) < 0) {
         }
 
-        if (stdout_pipe[1] >= 3)
-            close(stdout_pipe[1]);
-        if (stderr_pipe[1] >= 3)
-            close(stderr_pipe[1]);
+        if (priv->stdout_pipe[WRITE] >= 3)
+            close_pipe(priv->stdout_pipe, WRITE);
+        if (priv->stderr_pipe[WRITE] >= 3)
+            close_pipe(priv->stderr_pipe, WRITE);
     } else {
         priv->pid = pid;
 
-        close(stdout_pipe[1]);
-        close(stderr_pipe[1]);
-        close(priv->cutter_pipe[1]);
-
-        while (stdout_pipe[0] >= 0 ||
-               stderr_pipe[0] >= 0 ||
-               priv->cutter_pipe[0] > 0) {
-
-            if (stdout_pipe[0] >=0 && 
-                !read_from_pipe(process, stdout_pipe[0], STDOUT)) {
-                close(stdout_pipe[0]);
-                stdout_pipe[0] = -1;
-            }
-            if (stderr_pipe[0] >=0 &&
-                !read_from_pipe(process, stderr_pipe[0], STDERR)) {
-                close(stderr_pipe[0]);
-                stderr_pipe[0] = -1;
-            }
-            if (priv->cutter_pipe[0] >=0 &&
-                !read_from_pipe(process, priv->cutter_pipe[0], CUTTER_PIPE)) {
-                close(priv->cutter_pipe[0]);
-                priv->cutter_pipe[0] = -1;
-            }
-        }
-
-        close(stdout_pipe[0]);
-        close(stderr_pipe[0]);
-        close(priv->cutter_pipe[0]);
+        close_pipe(priv->stdout_pipe, WRITE);
+        close_pipe(priv->stderr_pipe, WRITE);
+        close_pipe(priv->cutter_pipe, WRITE);
     }
 
     errno = fork_errno;
     return pid;
+}
+
+static void
+set_pipe_fd (int fd, fd_set *fds)
+{
+    if (fd >= 0)
+        FD_SET(fd, fds);
+}
+
+static void
+ensure_collect_result (CutProcess *process, unsigned int usec_timeout)
+{
+    CutProcessPrivate *priv = CUT_PROCESS_GET_PRIVATE(process);
+
+    while (priv->stdout_pipe[READ] >= 0 ||
+           priv->stderr_pipe[READ] >= 0 ||
+           priv->cutter_pipe[READ] > 0) {
+
+        fd_set fds;
+        struct timeval tv;
+        int n_fds;
+
+        FD_ZERO(&fds);
+        set_pipe_fd(priv->stdout_pipe[READ], &fds);
+        set_pipe_fd(priv->stderr_pipe[READ], &fds);
+        set_pipe_fd(priv->cutter_pipe[READ], &fds);
+
+        tv.tv_sec = 0;
+        tv.tv_usec = usec_timeout;
+        n_fds = select(MAX(MAX(priv->stdout_pipe[READ],
+                               priv->stderr_pipe[READ]),
+                           priv->cutter_pipe[READ]) + 1,
+                       &fds, NULL, NULL, &tv);
+        if (n_fds == 0)
+            break;
+
+        if (n_fds == -10 && errno != EINTR) {
+            g_warning("Unexpected error in select() while "
+                      "reading from child process (%d): %s",
+                      priv->pid, g_strerror(errno));
+            break;
+        }
+
+        if (priv->stdout_pipe[READ] >= 0 &&
+            FD_ISSET(priv->stdout_pipe[READ], &fds) &&
+            !read_from_pipe(process, priv->stdout_pipe[READ], STDOUT)) {
+            close_pipe(priv->stdout_pipe, READ);
+        }
+        if (priv->stderr_pipe[READ] >= 0 &&
+            FD_ISSET(priv->stderr_pipe[READ], &fds) &&
+            !read_from_pipe(process, priv->stderr_pipe[READ], STDERR)) {
+            close_pipe(priv->stderr_pipe, READ);
+        }
+        if (priv->cutter_pipe[READ] >= 0 &&
+            FD_ISSET(priv->cutter_pipe[READ], &fds) &&
+            !read_from_pipe(process, priv->cutter_pipe[READ], CUTTER_PIPE)) {
+            close_pipe(priv->cutter_pipe, READ);
+        }
+    }
+
+    close_pipe(priv->stdout_pipe, READ);
+    close_pipe(priv->stderr_pipe, READ);
+    close_pipe(priv->cutter_pipe, READ);
 }
 
 static void
@@ -197,8 +252,15 @@ cut_process_init (CutProcess *process)
     priv->stdout_string = g_string_new(NULL);
     priv->stderr_string = g_string_new(NULL);
     priv->cutter_string = g_string_new(NULL);
-    priv->cutter_pipe[0] = -1;
-    priv->cutter_pipe[1] = -1;
+
+    priv->stdout_pipe[READ] = -1;
+    priv->stdout_pipe[WRITE] = -1;
+
+    priv->stderr_pipe[READ] = -1;
+    priv->stderr_pipe[WRITE] = -1;
+
+    priv->cutter_pipe[READ] = -1;
+    priv->cutter_pipe[WRITE] = -1;
 }
 
 static void
@@ -244,6 +306,25 @@ cut_process_fork (CutProcess *process)
 }
 
 int
+cut_process_wait (CutProcess *process, unsigned int usec_timeout)
+{
+    int status;
+    pid_t pid;
+
+    pid = CUT_PROCESS_GET_PRIVATE(process)->pid;
+
+    if (pid == 0)
+        return 0;
+
+    while (waitpid(pid, &status, 0) == -1 && errno == EINTR)
+        /* do nothing */;
+
+    ensure_collect_result(process, usec_timeout);
+
+    return status;
+}
+
+int
 cut_process_get_pid (CutProcess *process)
 {
     return CUT_PROCESS_GET_PRIVATE(process)->pid;
@@ -286,8 +367,8 @@ cut_process_exit (CutProcess *process)
 {
     CutProcessPrivate *priv = CUT_PROCESS_GET_PRIVATE(process);
 
-    close(priv->cutter_pipe[1]);
-    _exit(0);
+    close_pipe(priv->cutter_pipe, WRITE);
+    _exit(EXIT_SUCCESS);
 }
 
 /*
