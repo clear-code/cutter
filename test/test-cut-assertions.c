@@ -23,6 +23,7 @@ void test_error_equal_string (void);
 void test_error_equal_string_with_null (void);
 void test_assert_equal_function (void);
 void test_failure_from_nested_function (void);
+void test_assert_errno (void);
 
 static gboolean need_cleanup;
 static gboolean compare_function_is_called;
@@ -431,7 +432,26 @@ test_equal_string_with_free (void)
     cut_assert_test_result_summary(runner, 1, 3, 1, 0, 0, 0);
 }
 
+static void
+assert_errno_for_eacces (void)
+{
+    errno = 0;
+    cut_assert_errno("Passed");
+
+    errno = EACCES;
+    cut_assert_errno("Failed");
+}
+
+void
+test_assert_errno (void)
+{
+    CutTest *test;
+
+    test = cut_test_new("assert-errno-for-eacces", assert_errno_for_eacces);
+    cut_assert(!run(test));
+    cut_assert_test_result_summary(runner, 1, 1, 1, 0, 0, 0);
+}
+
 /*
 vi:nowrap:ai:expandtab:sw=4
 */
-

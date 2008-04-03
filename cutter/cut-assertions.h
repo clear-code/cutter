@@ -21,6 +21,7 @@
 #define __CUT_ASSERTIONS_H__
 
 #include <string.h>
+#include <errno.h>
 #include <cutter/cut-public.h>
 #include <cutter/cut-assertions-helper.h>
 
@@ -415,7 +416,7 @@ extern "C" {
  *
  * e.g.:
  * |[
- * cut_assert_operator(1, <, 2) -> (1 < 2)
+ * cut_assert_operator(1, <, 2) -> (1 < 2);
  * ]|
  */
 #define cut_assert_operator(lhs, operator, rhs, ...) do                 \
@@ -442,7 +443,7 @@ extern "C" {
  *
  * e.g.:
  * |[
- * cut_assert_operator_int(1, <, 2) -> (1 < 2)
+ * cut_assert_operator_int(1, <, 2) -> (1 < 2);
  * ]|
  */
 #define cut_assert_operator_int(lhs, operator, rhs, ...) do             \
@@ -473,7 +474,7 @@ extern "C" {
  *
  * e.g.:
  * |[
- * cut_assert_equal(!strcmp, "abc", "abc") -> Pass
+ * cut_assert_equal(!strcmp, "abc", "abc"); -> Pass
  * ]|
  */
 #define cut_assert_equal(function, expected, actual, ...) do            \
@@ -484,6 +485,34 @@ extern "C" {
         cut_test_fail(FAILURE,                                          \
                       cut_take_printf("expected: <%s(%s, %s)> is TRUE", \
                                       #function, #expected, #actual),   \
+                      ## __VA_ARGS__);                                  \
+    }                                                                   \
+} while(0)
+
+/**
+ * cut_assert_errno:
+ * @...: the parameters to insert into the format string.
+ * @...: optional format string, followed by parameters to insert
+ * into the format string (as with printf())
+ *
+ * Passes if errno is 0.
+ *
+ * e.g.:
+ * |[
+ * count = write(stdout, buffer, strlen(buffer));
+ * cut_assert_errno("Failed to write");            -> Pass when count != -1
+ * ]|
+ */
+#define cut_assert_errno(...) do                                        \
+{                                                                       \
+    int _errno = errno;                                                 \
+    if (_errno == 0) {                                                  \
+        cut_test_pass();                                                \
+    } else {                                                            \
+        cut_test_fail(FAILURE,                                          \
+                      cut_take_printf("expected: <0> (errno)\n"         \
+                                      " but was: <%d> (%s)",            \
+                                      _errno, strerror(_errno)),        \
                       ## __VA_ARGS__);                                  \
     }                                                                   \
 } while(0)

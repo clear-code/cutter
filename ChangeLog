@@ -1,5 +1,8 @@
 2008-04-03  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertions.h, test/test-cut-assertions.c: added
+	cut_assert_errno().
+
 	* cutter/cut-process.c (prepare_pipes): closed finished pipe.
 
 2008-04-03  Hiroyuki Ikezoe  <poincare@ikezoe.net>
