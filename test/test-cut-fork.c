@@ -14,6 +14,8 @@ void test_fail_in_forked_process (void);
 
 static CutRunner *runner;
 static CutTest *test_object;
+static gchar *notification_message;
+static gchar *failure_message;
 
 void
 setup (void)
@@ -21,6 +23,8 @@ setup (void)
     runner = cut_runner_new();
 
     test_object = NULL;
+    notification_message = NULL;
+    failure_message = NULL;
 }
 
 void
@@ -28,6 +32,11 @@ teardown (void)
 {
     if (test_object)
         g_object_unref(test_object);
+    if (notification_message)
+        g_free(notification_message);
+    if (failure_message)
+        g_free(failure_message);
+
     g_object_unref(runner);
 }
 
@@ -98,8 +107,13 @@ cut_fail_in_forked_process (void)
 static void
 cb_notification_signal (CutTest *test, CutTestContext *context, CutTestResult *result, gpointer data)
 {
-    cut_assert_equal_string("Notification in child process",
-                            cut_test_result_get_user_message(result));
+    notification_message = g_strdup(cut_test_result_get_message(result));
+}
+
+static void
+cb_failure_signal (CutTest *test, CutTestContext *context, CutTestResult *result, gpointer data)
+{
+    failure_message = g_strdup(cut_test_result_get_message(result));
 }
 
 void
@@ -107,9 +121,15 @@ test_fail_in_forked_process (void)
 {
     test_object = cut_test_new("failure", cut_fail_in_forked_process);
     g_signal_connect(test_object, "notification", G_CALLBACK(cb_notification_signal), NULL);
+    g_signal_connect(test_object, "failure", G_CALLBACK(cb_failure_signal), NULL);
     cut_assert(run(test_object));
+    cut_assert_equal_string("Failure in child process", failure_message);
+    cut_assert_equal_string("Nofitication in child process", notification_message);
     g_signal_handlers_disconnect_by_func(test_object,
                                          G_CALLBACK(cb_notification_signal),
+                                         NULL);
+    g_signal_handlers_disconnect_by_func(test_object,
+                                         G_CALLBACK(cb_failure_signal),
                                          NULL);
 }
 
