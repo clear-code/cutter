@@ -122,6 +122,7 @@ prepare_pipes (CutProcess *process)
 {
     CutProcessPrivate *priv = CUT_PROCESS_GET_PRIVATE(process);
     pid_t pid;
+    int fork_errno = 0;
     int stdout_pipe[2] = { -1, -1 };
     int stderr_pipe[2] = { -1, -1 };
 
@@ -134,6 +135,8 @@ prepare_pipes (CutProcess *process)
     }
 
     pid = fork();
+    if (pid == -1)
+        fork_errno = errno;
 
     if (pid == 0) {
         close(stdout_pipe[0]);
@@ -148,7 +151,6 @@ prepare_pipes (CutProcess *process)
             close(stdout_pipe[1]);
         if (stderr_pipe[1] >= 3)
             close(stderr_pipe[1]);
-        return 0;
     } else {
         priv->pid = pid;
 
@@ -180,9 +182,10 @@ prepare_pipes (CutProcess *process)
         close(stdout_pipe[0]);
         close(stderr_pipe[0]);
         close(priv->cutter_pipe[0]);
-
-        return pid;
     }
+
+    errno = fork_errno;
+    return pid;
 }
 
 static void
