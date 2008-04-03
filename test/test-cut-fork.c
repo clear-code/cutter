@@ -2,6 +2,7 @@
 #include <cutter/cut-test.h>
 #include <cutter/cut-runner.h>
 #include <cutter/cut-test-result.h>
+#include <cutter/cut-test-context.h>
 
 #include <unistd.h>
 #include <stdlib.h>
@@ -13,8 +14,6 @@ void test_fail_in_forked_process (void);
 
 static CutRunner *runner;
 static CutTest *test_object;
-static gchar *notification_message;
-static gchar *failure_message;
 
 void
 setup (void)
@@ -22,8 +21,6 @@ setup (void)
     runner = cut_runner_new();
 
     test_object = NULL;
-    notification_message = NULL;
-    failure_message = NULL;
 }
 
 void
@@ -31,10 +28,6 @@ teardown (void)
 {
     if (test_object)
         g_object_unref(test_object);
-    if (notification_message)
-        g_free(notification_message);
-    if (failure_message)
-        g_free(failure_message);
 
     g_object_unref(runner);
 }
@@ -97,32 +90,52 @@ cut_fail_in_forked_process (void)
 }
 
 static void
-cb_notification_signal (CutTest *test, CutTestContext *context, CutTestResult *result, gpointer data)
+cb_collect_message (CutTest *test, CutTestContext *context,
+                    CutTestResult *result, gpointer data)
 {
-    notification_message = g_strdup(cut_test_result_get_message(result));
-}
-
-static void
-cb_failure_signal (CutTest *test, CutTestContext *context, CutTestResult *result, gpointer data)
-{
-    failure_message = g_strdup(cut_test_result_get_message(result));
+    const gchar **message = data;
+    *message = cut_take_string(g_strdup(cut_test_result_get_message(result)));
 }
 
 void
 test_fail_in_forked_process (void)
 {
+    const gchar *failure_message = NULL;
+    const gchar *notification_message = NULL;
+    const gchar *omission_message = NULL;
+
     test_object = cut_test_new("failure", cut_fail_in_forked_process);
-    g_signal_connect(test_object, "notification", G_CALLBACK(cb_notification_signal), NULL);
-    g_signal_connect(test_object, "failure", G_CALLBACK(cb_failure_signal), NULL);
+
+    g_signal_connect(test_object, "notification",
+                     G_CALLBACK(cb_collect_message), &notification_message);
+    g_signal_connect(test_object, "failure",
+                     G_CALLBACK(cb_collect_message), &failure_message);
+    g_signal_connect(test_object, "omission",
+                     G_CALLBACK(cb_collect_message), &omission_message);
+
     cut_assert(run(test_object));
-    cut_assert_equal_string("Failure in child process", failure_message);
-    cut_assert_equal_string("Notification in child process", notification_message);
+
     g_signal_handlers_disconnect_by_func(test_object,
-                                         G_CALLBACK(cb_notification_signal),
-                                         NULL);
+                                         G_CALLBACK(cb_collect_message),
+                                         &notification_message);
     g_signal_handlers_disconnect_by_func(test_object,
-                                         G_CALLBACK(cb_failure_signal),
-                                         NULL);
+                                         G_CALLBACK(cb_collect_message),
+                                         &failure_message);
+    g_signal_handlers_disconnect_by_func(test_object,
+                                         G_CALLBACK(cb_collect_message),
+                                         &omission_message);
+
+    if (cut_test_context_get_multi_thread(get_current_test_context())) {
+        cut_assert_null(failure_message);
+        cut_assert_null(notification_message);
+        cut_assert_equal_string("can't use cut_fork() in multi thread mode",
+                                omission_message);
+    } else {
+        cut_assert_equal_string("Failure in child process", failure_message);
+        cut_assert_equal_string("Notification in child process",
+                                notification_message);
+        cut_assert_null(omission_message);
+    }
 }
 
 /*
