@@ -161,8 +161,7 @@ set_various_name (GMarkupParseContext *context,
     } else if (!g_ascii_strcasecmp("option", parent)) {
         set_option_name(data, value);
     } else {
-        set_parse_error(context, error, 
-                        "Whose name is %s?", value);
+        set_parse_error(context, error, "Whose name is %s?", value);
     }
 }
 
