@@ -479,7 +479,7 @@ cut_test_context_trap_fork (CutTestContext *context,
     process = cut_process_new();
     priv->processes = g_list_prepend(priv->processes, process);
 
-    pid = cut_process_fork(process); 
+    pid = cut_process_fork(process);
     if (pid > 0) {
         CutTestResult *result;
         const gchar *xml;
