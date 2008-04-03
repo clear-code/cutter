@@ -1,3 +1,8 @@
+2008-04-03  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-context.c: _exit(0) if cut_test_register_result() is
+	invoked from cut_test_fail() in child process.
+
 2008-04-02  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-main.c (option_entries): --version and --help-all
