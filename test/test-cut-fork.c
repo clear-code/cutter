@@ -1,4 +1,7 @@
 #include "cutter.h"
+#include <cutter/cut-test.h>
+#include <cutter/cut-runner.h>
+#include <cutter/cut-test-result.h>
 
 #include <unistd.h>
 #include <errno.h>
@@ -9,14 +12,23 @@
 void test_message_from_forked_process (void);
 void test_fail_in_forked_process (void);
 
+static CutRunner *runner;
+static CutTest *test_object;
+
 void
 setup (void)
 {
+    runner = cut_runner_new();
+
+    test_object = NULL;
 }
 
 void
 teardown (void)
 {
+    if (test_object)
+        g_object_unref(test_object);
+    g_object_unref(runner);
 }
 
 void
@@ -43,8 +55,26 @@ test_message_from_forked_process (void)
     }
 }
 
-void
-test_fail_in_forked_process (void)
+static gboolean
+run (CutTest *test)
+{
+    gboolean success;
+    CutTestContext *original_test_context;
+    CutTestContext *test_context;
+
+    test_context = cut_test_context_new(NULL, NULL, test);
+    original_test_context = get_current_test_context();
+    set_current_test_context(test_context);
+    success = cut_test_run(test, test_context, runner);
+    set_current_test_context(original_test_context);
+
+    g_object_unref(test_context);
+
+    return success;
+}
+
+static void
+cut_fail_in_forked_process (void)
 {
     int pid;
     int status;
@@ -63,6 +93,24 @@ test_fail_in_forked_process (void)
     } else {
         cut_fail("Failed to create a child process");
     }
+}
+
+static void
+cb_notification_signal (CutTest *test, CutTestContext *context, CutTestResult *result, gpointer data)
+{
+    cut_assert_equal_string("Notification in child process",
+                            cut_test_result_get_user_message(result));
+}
+
+void
+test_fail_in_forked_process (void)
+{
+    test_object = cut_test_new("failure", cut_fail_in_forked_process);
+    g_signal_connect(test_object, "notification", G_CALLBACK(cb_notification_signal), NULL);
+    cut_assert(run(test_object));
+    g_signal_handlers_disconnect_by_func(test_object,
+                                         G_CALLBACK(cb_notification_signal),
+                                         NULL);
 }
 
 /*
