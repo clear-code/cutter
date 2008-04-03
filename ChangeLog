@@ -1,3 +1,7 @@
+2008-04-03  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-process.c (prepare_pipes): closed finished pipe.
+
 2008-04-03  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-test-context.c: _exit(0) if cut_test_register_result() is

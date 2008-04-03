@@ -162,14 +162,17 @@ prepare_pipes (CutProcess *process)
 
             if (stdout_pipe[0] >=0 && 
                 !read_from_pipe(process, stdout_pipe[0], STDOUT)) {
+                close(stdout_pipe[0]);
                 stdout_pipe[0] = -1;
             }
             if (stderr_pipe[0] >=0 &&
                 !read_from_pipe(process, stderr_pipe[0], STDERR)) {
+                close(stderr_pipe[0]);
                 stderr_pipe[0] = -1;
             }
             if (priv->cutter_pipe[0] >=0 &&
                 !read_from_pipe(process, priv->cutter_pipe[0], CUTTER_PIPE)) {
+                close(priv->cutter_pipe[0]);
                 priv->cutter_pipe[0] = -1;
             }
         }
