@@ -59,6 +59,7 @@ gboolean     cut_process_send_test_result_to_parent
                                    CutTestResult *result);
 const gchar *cut_process_get_result_from_child
                                   (CutProcess *process);
+void         cut_process_exit     (CutProcess *process);
 G_END_DECLS
 
 #endif /* __CUT_PROCESS_H__ */

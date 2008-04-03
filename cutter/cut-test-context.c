@@ -397,7 +397,7 @@ cut_test_context_register_result (CutTestContext *context,
             g_object_unref(result);
             if (status == CUT_TEST_RESULT_NOTIFICATION)
                 return;
-            _exit(0);
+            cut_process_exit(process);
         }
     }
 

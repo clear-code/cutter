@@ -281,6 +281,15 @@ cut_process_get_result_from_child (CutProcess *process)
     return CUT_PROCESS_GET_PRIVATE(process)->cutter_string->str;
 }
 
+void
+cut_process_exit (CutProcess *process)
+{
+    CutProcessPrivate *priv = CUT_PROCESS_GET_PRIVATE(process);
+
+    close(priv->cutter_pipe[1]);
+    _exit(0);
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */
