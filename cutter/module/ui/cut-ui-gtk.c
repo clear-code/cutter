@@ -624,6 +624,7 @@ generate_short_summary_message (CutRunner *runner)
     n_errors = cut_runner_get_n_errors(runner);
     n_pendings = cut_runner_get_n_pendings(runner);
     n_notifications = cut_runner_get_n_notifications(runner);
+    n_omissions = cut_runner_get_n_omissions(runner);
 
     return g_strdup_printf(_("%dT:%dA:%dF:%d:E:%dP:%dO:%dN"),
                            n_tests, n_assertions, n_failures, n_errors,
