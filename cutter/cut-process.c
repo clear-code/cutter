@@ -46,9 +46,8 @@ struct _CutProcessPrivate
     GString *cutter_string;
     GIOChannel *child_io;
     GIOChannel *parent_io;
-    int stdout_pipe[2];
-    int stderr_pipe[2];
-    int cutter_pipe[2];
+    GIOChannel *stdout_read_io;
+    GIOChannel *stderr_read_io;
 };
 
 typedef enum
@@ -90,45 +89,6 @@ sane_dup2 (int fd1, int fd2)
     return ret;
 }
 
-static GString *
-get_string (CutProcess *process, int type)
-{
-    CutProcessPrivate *priv = CUT_PROCESS_GET_PRIVATE(process);
-    GString *string;
-
-    switch (type) {
-        case STDOUT:
-            string = priv->stdout_string;
-            break;
-        case STDERR:
-            string = priv->stderr_string;
-            break;
-        case CUTTER_PIPE:
-            string = priv->cutter_string;
-            break;
-        default: /* Unknown type */
-            string = NULL;
-    }
-
-    return string;
-}
-
-static gboolean
-read_from_pipe (CutProcess *process, int pipe, int type)
-{
-    gchar buf[4096];
-    ssize_t len;
-
-    len = read(pipe, buf, sizeof(buf));
-    if (len > 0) {
-        GString *string;
-        string = get_string(process, type);
-        g_string_append_len(string, buf, len);
-        return TRUE;
-    }
-    return FALSE;
-}
-
 static void
 close_pipe (int *pipe, PipeMode mode)
 {
@@ -138,18 +98,113 @@ close_pipe (int *pipe, PipeMode mode)
     pipe[mode] = -1;
 }
 
+static GIOChannel *
+create_io_channel (int pipe, GIOFlags flag)
+{
+    GIOChannel *channel;
+
+    channel = g_io_channel_unix_new(pipe);
+    g_io_channel_set_encoding(channel, NULL, NULL);
+    g_io_channel_set_flags(channel, flag, NULL);
+    g_io_channel_set_close_on_unref(channel, TRUE);
+
+    return channel;
+}
+
+static GIOChannel *
+create_read_io_channel (int pipe, GIOFunc read_func, CutProcess *process)
+{
+    GIOChannel *channel;
+
+    channel = create_io_channel(pipe, G_IO_FLAG_IS_READABLE);
+    g_io_add_watch(channel,
+                   G_IO_IN | G_IO_PRI | G_IO_ERR | G_IO_HUP,
+                   (GIOFunc)read_func, process);
+
+    return channel;
+}
+
+static GIOChannel *
+create_write_io_channel (int pipe)
+{
+    return create_io_channel(pipe, G_IO_FLAG_IS_WRITEABLE);
+}
+
+static gboolean
+read_from_stdout (GIOChannel *source, GIOCondition *condition,
+                  gpointer data)
+{
+    CutProcessPrivate *priv = CUT_PROCESS_GET_PRIVATE(data);
+    GIOStatus status;
+    gsize bytes_read;
+    gchar buffer[4096];
+
+    status = g_io_channel_read_chars(source, buffer, 
+                                     sizeof(buffer),
+                                     &bytes_read,
+                                     NULL);
+    g_string_append_len(priv->stdout_string, buffer, bytes_read);
+    if (status == G_IO_STATUS_EOF)
+        return FALSE;
+
+    return TRUE;
+}
+
+static gboolean
+read_from_stderr (GIOChannel *source, GIOCondition *condition,
+                  gpointer data)
+{
+    CutProcessPrivate *priv = CUT_PROCESS_GET_PRIVATE(data);
+    GIOStatus status;
+    gsize bytes_read;
+    gchar buffer[4096];
+
+    status = g_io_channel_read_chars(source, buffer, 
+                                     sizeof(buffer),
+                                     &bytes_read,
+                                     NULL);
+    g_string_append_len(priv->stderr_string, buffer, bytes_read);
+    if (status == G_IO_STATUS_EOF)
+        return FALSE;
+
+    return TRUE;
+}
+
+static gboolean
+read_from_child (GIOChannel *source, GIOCondition *condition,
+                 gpointer data)
+{
+    CutProcessPrivate *priv = CUT_PROCESS_GET_PRIVATE(data);
+    GIOStatus status;
+    gsize bytes_read;
+    gchar buffer[4096];
+
+    status = g_io_channel_read_chars(source, buffer, 
+                                     sizeof(buffer),
+                                     &bytes_read,
+                                     NULL);
+    g_string_append_len(priv->cutter_string, buffer, bytes_read);
+    if (status == G_IO_STATUS_EOF)
+        return FALSE;
+
+    return TRUE;
+}
+
 static pid_t
 prepare_pipes (CutProcess *process)
 {
     CutProcessPrivate *priv = CUT_PROCESS_GET_PRIVATE(process);
     pid_t pid;
     int fork_errno = 0;
+    int stdout_pipe[2];
+    int stderr_pipe[2];
+    int cutter_pipe[2];
 
     priv->pid = 0;
 
-    if (pipe(priv->stdout_pipe) < 0 ||
-        pipe(priv->stderr_pipe) < 0 ||
-        pipe(priv->cutter_pipe) < 0) {
+    if (pipe(stdout_pipe) < 0 ||
+        pipe(stderr_pipe) < 0 ||
+        pipe(cutter_pipe) < 0) {
         return -1;
     }
 
@@ -158,29 +213,33 @@ prepare_pipes (CutProcess *process)
         fork_errno = errno;
 
     if (pid == 0) {
-        close_pipe(priv->stdout_pipe, READ);
-        close_pipe(priv->stderr_pipe, READ);
-        close_pipe(priv->cutter_pipe, READ);
+        close_pipe(stdout_pipe, READ);
+        close_pipe(stderr_pipe, READ);
+        close_pipe(cutter_pipe, READ);
 
-        if (sane_dup2(priv->stdout_pipe[WRITE], STDOUT_FILENO) < 0 ||
-            sane_dup2(priv->stderr_pipe[WRITE], STDERR_FILENO) < 0) {
+        if (sane_dup2(stdout_pipe[WRITE], STDOUT_FILENO) < 0 ||
+            sane_dup2(stderr_pipe[WRITE], STDERR_FILENO) < 0) {
         }
 
-        priv->child_io = g_io_channel_unix_new(priv->cutter_pipe[WRITE]);
-        g_io_channel_set_flags(priv->child_io, G_IO_FLAG_IS_WRITEABLE, NULL);
-        g_io_channel_set_encoding(priv->child_io, NULL, NULL);
-        g_io_channel_set_close_on_unref(priv->child_io, TRUE);
+        priv->child_io = create_write_io_channel(cutter_pipe[WRITE]);
 
-        if (priv->stdout_pipe[WRITE] >= 3)
-            close_pipe(priv->stdout_pipe, WRITE);
-        if (priv->stderr_pipe[WRITE] >= 3)
-            close_pipe(priv->stderr_pipe, WRITE);
+        if (stdout_pipe[WRITE] >= 3)
+            close_pipe(stdout_pipe, WRITE);
+        if (stderr_pipe[WRITE] >= 3)
+            close_pipe(stderr_pipe, WRITE);
     } else {
         priv->pid = pid;
 
-        close_pipe(priv->stdout_pipe, WRITE);
-        close_pipe(priv->stderr_pipe, WRITE);
-        close_pipe(priv->cutter_pipe, WRITE);
+        close_pipe(stdout_pipe, WRITE);
+        close_pipe(stderr_pipe, WRITE);
+        close_pipe(cutter_pipe, WRITE);
+
+        priv->parent_io = create_read_io_channel(cutter_pipe[READ],
+                                                 (GIOFunc)read_from_child, process);
+        priv->stdout_read_io = create_read_io_channel(stdout_pipe[READ],
+                                                      (GIOFunc)read_from_stdout, process);
+        priv->stderr_read_io = create_read_io_channel(stderr_pipe[READ],
+                                                      (GIOFunc)read_from_stderr, process);
     }
 
     errno = fork_errno;
@@ -188,66 +247,14 @@ prepare_pipes (CutProcess *process)
 }
 
 static void
-set_pipe_fd (int fd, fd_set *fds)
-{
-    if (fd >= 0)
-        FD_SET(fd, fds);
-}
-
-static void
 ensure_collect_result (CutProcess *process, unsigned int usec_timeout)
 {
     CutProcessPrivate *priv = CUT_PROCESS_GET_PRIVATE(process);
 
-    while (priv->stdout_pipe[READ] >= 0 ||
-           priv->stderr_pipe[READ] >= 0 ||
-           priv->cutter_pipe[READ] > 0) {
-
-        fd_set fds;
-        struct timeval tv;
-        int n_fds;
-
-        FD_ZERO(&fds);
-        set_pipe_fd(priv->stdout_pipe[READ], &fds);
-        set_pipe_fd(priv->stderr_pipe[READ], &fds);
-        set_pipe_fd(priv->cutter_pipe[READ], &fds);
-
-        tv.tv_sec = 0;
-        tv.tv_usec = usec_timeout;
-        n_fds = select(MAX(MAX(priv->stdout_pipe[READ],
-                               priv->stderr_pipe[READ]),
-                           priv->cutter_pipe[READ]) + 1,
-                       &fds, NULL, NULL, &tv);
-        if (n_fds == 0)
-            break;
-
-        if (n_fds == -1 && errno != EINTR) {
-            g_warning("Unexpected error in select() while "
-                      "reading from child process (%d): %s",
-                      priv->pid, g_strerror(errno));
-            break;
-        }
-
-        if (priv->stdout_pipe[READ] >= 0 &&
-            FD_ISSET(priv->stdout_pipe[READ], &fds) &&
-            !read_from_pipe(process, priv->stdout_pipe[READ], STDOUT)) {
-            close_pipe(priv->stdout_pipe, READ);
-        }
-        if (priv->stderr_pipe[READ] >= 0 &&
-            FD_ISSET(priv->stderr_pipe[READ], &fds) &&
-            !read_from_pipe(process, priv->stderr_pipe[READ], STDERR)) {
-            close_pipe(priv->stderr_pipe, READ);
-        }
-        if (priv->cutter_pipe[READ] >= 0 &&
-            FD_ISSET(priv->cutter_pipe[READ], &fds) &&
-            !read_from_pipe(process, priv->cutter_pipe[READ], CUTTER_PIPE)) {
-            close_pipe(priv->cutter_pipe, READ);
-        }
-    }
-
-    close_pipe(priv->stdout_pipe, READ);
-    close_pipe(priv->stderr_pipe, READ);
-    close_pipe(priv->cutter_pipe, READ);
+    /* workaround since g_io_add_watch() does not work I expect. */
+    read_from_stdout(priv->stdout_read_io, NULL, process);
+    read_from_stderr(priv->stderr_read_io, NULL, process);
+    read_from_child(priv->parent_io, NULL, process);
 }
 
 static void
@@ -261,15 +268,6 @@ cut_process_init (CutProcess *process)
     priv->cutter_string = g_string_new(NULL);
     priv->child_io = NULL;
     priv->parent_io = NULL;
-
-    priv->stdout_pipe[READ] = -1;
-    priv->stdout_pipe[WRITE] = -1;
-
-    priv->stderr_pipe[READ] = -1;
-    priv->stderr_pipe[WRITE] = -1;
-
-    priv->cutter_pipe[READ] = -1;
-    priv->cutter_pipe[WRITE] = -1;
 }
 
 static void
@@ -305,6 +303,16 @@ dispose (GObject *object)
     if (priv->parent_io) {
         g_io_channel_unref(priv->parent_io);
         priv->parent_io = NULL;
+    }
+
+    if (priv->stdout_read_io) {
+        g_io_channel_unref(priv->stdout_read_io);
+        priv->stdout_read_io = NULL;
+    }
+
+    if (priv->stderr_read_io) {
+        g_io_channel_unref(priv->stderr_read_io);
+        priv->stderr_read_io = NULL;
     }
 
     G_OBJECT_CLASS(cut_process_parent_class)->dispose(object);
