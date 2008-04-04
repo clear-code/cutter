@@ -10,6 +10,8 @@
 
 	* cutter/cut-process.c: Set some conditions to GIOChannel.
 	* cutter/cut-process.c: Use GIOChannel.
+	* test/test-cut-work.c: Workaround for nonpersistence of
+	CutTestContext.
 
 2008-04-03  Kouhei Sutou  <kou@cozmixng.org>
 

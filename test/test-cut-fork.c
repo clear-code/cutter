@@ -13,6 +13,7 @@ void test_fail_in_forked_process (void);
 
 static CutRunner *runner;
 static CutTest *test_object;
+static CutTestContext *test_context;
 
 void
 setup (void)
@@ -20,6 +21,7 @@ setup (void)
     runner = cut_runner_new();
 
     test_object = NULL;
+    test_context = NULL;
 }
 
 void
@@ -27,6 +29,9 @@ teardown (void)
 {
     if (test_object)
         g_object_unref(test_object);
+
+    if (test_context)
+        g_object_unref(test_context);
 
     g_object_unref(runner);
 }
@@ -57,15 +62,12 @@ run (CutTest *test)
 {
     gboolean success;
     CutTestContext *original_test_context;
-    CutTestContext *test_context;
 
     test_context = cut_test_context_new(NULL, NULL, test);
     original_test_context = get_current_test_context();
     set_current_test_context(test_context);
     success = cut_test_run(test, test_context, runner);
     set_current_test_context(original_test_context);
-
-    g_object_unref(test_context);
 
     return success;
 }
