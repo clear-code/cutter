@@ -374,7 +374,7 @@ cut_test_context_register_result (CutTestContext *context,
     gchar *user_message = NULL, *user_message_format;
     va_list args;
 
-    if (status > CUT_TEST_RESULT_OMISSION)
+    if (cut_test_result_status_is_critical(status))
         priv->failed = TRUE;
 
     system_message = message;

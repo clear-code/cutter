@@ -98,8 +98,10 @@ void cut_test_result_set_line            (CutTestResult *result,
 void cut_test_result_set_elapsed         (CutTestResult *result,
                                           gdouble elapsed);
 
-gchar               *cut_test_result_to_xml            (CutTestResult *result);
+gchar       *cut_test_result_to_xml                (CutTestResult *result);
+
 const gchar *cut_test_result_status_to_signal_name (CutTestResultStatus status);
+gboolean     cut_test_result_status_is_critical    (CutTestResultStatus status);
 
 G_END_DECLS
 

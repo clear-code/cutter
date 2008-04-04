@@ -1,5 +1,13 @@
 2008-04-04  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-context.c (cut_test_context_register_result):
+	use cut_test_result_status_is_critical().
+
+	* cutter/cut-test-result.[ch]: add cut_test_result_status_is_critical().
+
+	* test/test-cut-test-result.c (test_status_to_signal_name)
+	(test_status_is_critical): add.
+
 	* cutter/cut-test.c: use cut_test_context_is_failed().
 
 	* cutter/cut-test-context.c: improve fail detection.
