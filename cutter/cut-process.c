@@ -252,9 +252,12 @@ ensure_collect_result (CutProcess *process, unsigned int usec_timeout)
     CutProcessPrivate *priv = CUT_PROCESS_GET_PRIVATE(process);
 
     /* workaround since g_io_add_watch() does not work I expect. */
-    read_from_stdout(priv->stdout_read_io, NULL, process);
-    read_from_stderr(priv->stderr_read_io, NULL, process);
-    read_from_child(priv->parent_io, NULL, process);
+    while(read_from_stdout(priv->stdout_read_io, NULL, process))
+        ;
+    while(read_from_stderr(priv->stderr_read_io, NULL, process))
+        ;
+    while(read_from_child(priv->parent_io, NULL, process))
+        ;
 }
 
 static void
