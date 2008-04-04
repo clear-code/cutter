@@ -321,12 +321,9 @@ cut_xml_parse_test_result_xml (const gchar *xml, gssize len)
     parse_context = g_markup_parse_context_new(&parser,
                                                G_MARKUP_TREAT_CDATA_AS_TEXT,
                                                &data, NULL);
-    if (len > 0)
-        g_print("[%s]\n", g_strndup(xml, len));
-    else
-        g_print("[%s]\n", xml);
     if (!g_markup_parse_context_parse(parse_context, xml, len, &error)) {
-        g_error("ERROR: %s", error->message);
+        /* Should we make a TestResult? */
+        /* g_error("ERROR: %s", error->message); */
         g_error_free(error);
     }
 
