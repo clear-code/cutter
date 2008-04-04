@@ -393,7 +393,7 @@ test_arg_double_de_DE_locale (void)
   current_locale = setlocale (LC_NUMERIC, NULL);
   if (strcmp (current_locale, locale) != 0)
     {
-      cut_notify ("Cannot set locale to %s, skipping", locale);
+      cut_omit ("Cannot set locale to %s, skipping", locale);
       goto cleanup;
     }
 
