@@ -1,5 +1,7 @@
 2008-04-04  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-result.c: remove needless codes.
+
 	* cutter/cut-test-context.c:
 	- split result XML.
 	- fix wrong result receive place.

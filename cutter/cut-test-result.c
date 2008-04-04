@@ -365,13 +365,8 @@ cut_test_result_new (CutTestResultStatus status,
 }
 
 CutTestResult *
-cut_test_result_new_from_xml (const gchar *xml, gssize len)
+cut_test_result_new_from_xml (const gchar *xml, gssize length)
 {
-    gsize length = len;
-
-    if (length < 0)
-        length = strlen(xml);
-
     return cut_xml_parse_test_result_xml(xml, length);
 }
 
