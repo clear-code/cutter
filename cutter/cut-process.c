@@ -41,8 +41,8 @@ typedef struct _CutProcessPrivate	CutProcessPrivate;
 struct _CutProcessPrivate
 {
     pid_t pid;
-    GString *stdout_string;
-    GString *stderr_string;
+    gchar *stdout_string;
+    gchar *stderr_string;
     GString *cutter_string;
     GIOChannel *child_io;
     GIOChannel *parent_io;
@@ -117,9 +117,11 @@ create_read_io_channel (int pipe, GIOFunc read_func, CutProcess *process)
     GIOChannel *channel;
 
     channel = create_io_channel(pipe, G_IO_FLAG_IS_READABLE);
-    g_io_add_watch(channel,
-                   G_IO_IN | G_IO_PRI | G_IO_ERR | G_IO_HUP,
-                   (GIOFunc)read_func, process);
+    if (read_func) {
+        g_io_add_watch(channel,
+                       G_IO_IN | G_IO_PRI | G_IO_ERR | G_IO_HUP,
+                       (GIOFunc)read_func, process);
+    }
 
     return channel;
 }
@@ -128,46 +130,6 @@ static GIOChannel *
 create_write_io_channel (int pipe)
 {
     return create_io_channel(pipe, G_IO_FLAG_IS_WRITEABLE);
-}
-
-static gboolean
-read_from_stdout (GIOChannel *source, GIOCondition *condition,
-                  gpointer data)
-{
-    CutProcessPrivate *priv = CUT_PROCESS_GET_PRIVATE(data);
-    GIOStatus status;
-    gsize bytes_read;
-    gchar buffer[4096];
-
-    status = g_io_channel_read_chars(source, buffer, 
-                                     sizeof(buffer),
-                                     &bytes_read,
-                                     NULL);
-    g_string_append_len(priv->stdout_string, buffer, bytes_read);
-    if (status == G_IO_STATUS_EOF)
-        return FALSE;
-
-    return TRUE;
-}
-
-static gboolean
-read_from_stderr (GIOChannel *source, GIOCondition *condition,
-                  gpointer data)
-{
-    CutProcessPrivate *priv = CUT_PROCESS_GET_PRIVATE(data);
-    GIOStatus status;
-    gsize bytes_read;
-    gchar buffer[4096];
-
-    status = g_io_channel_read_chars(source, buffer, 
-                                     sizeof(buffer),
-                                     &bytes_read,
-                                     NULL);
-    g_string_append_len(priv->stderr_string, buffer, bytes_read);
-    if (status == G_IO_STATUS_EOF)
-        return FALSE;
-
-    return TRUE;
 }
 
 static gboolean
@@ -237,9 +199,9 @@ prepare_pipes (CutProcess *process)
         priv->parent_io = create_read_io_channel(cutter_pipe[READ],
                                                  (GIOFunc)read_from_child, process);
         priv->stdout_read_io = create_read_io_channel(stdout_pipe[READ],
-                                                      (GIOFunc)read_from_stdout, process);
+                                                      NULL, process);
         priv->stderr_read_io = create_read_io_channel(stderr_pipe[READ],
-                                                      (GIOFunc)read_from_stderr, process);
+                                                      NULL, process);
     }
 
     errno = fork_errno;
@@ -252,10 +214,6 @@ ensure_collect_result (CutProcess *process, unsigned int usec_timeout)
     CutProcessPrivate *priv = CUT_PROCESS_GET_PRIVATE(process);
 
     /* workaround since g_io_add_watch() does not work I expect. */
-    while(read_from_stdout(priv->stdout_read_io, NULL, process))
-        ;
-    while(read_from_stderr(priv->stderr_read_io, NULL, process))
-        ;
     while(read_from_child(priv->parent_io, NULL, process))
         ;
 }
@@ -266,8 +224,8 @@ cut_process_init (CutProcess *process)
     CutProcessPrivate *priv = CUT_PROCESS_GET_PRIVATE(process);
 
     priv->pid = 0;
-    priv->stdout_string = g_string_new(NULL);
-    priv->stderr_string = g_string_new(NULL);
+    priv->stdout_string = NULL;
+    priv->stderr_string = NULL;;
     priv->cutter_string = g_string_new(NULL);
     priv->child_io = NULL;
     priv->parent_io = NULL;
@@ -284,12 +242,12 @@ dispose (GObject *object)
     }
 
     if (priv->stdout_string) {
-        g_string_free(priv->stdout_string, TRUE);
+        g_free(priv->stdout_string);
         priv->stdout_string = NULL;
     }
 
     if (priv->stderr_string) {
-        g_string_free(priv->stderr_string, TRUE);
+        g_free(priv->stderr_string);
         priv->stderr_string = NULL;
     }
 
@@ -360,16 +318,43 @@ cut_process_get_pid (CutProcess *process)
     return CUT_PROCESS_GET_PRIVATE(process)->pid;
 }
 
+static gchar *
+read_from_channel (GIOChannel *source)
+{
+    GIOStatus status;
+    gsize bytes_read;
+    gchar *buffer = NULL;
+
+    status = g_io_channel_read_to_end(source, &buffer, 
+                                      &bytes_read,
+                                      NULL);
+    return buffer;
+}
+
 const gchar *
 cut_process_get_stdout_message (CutProcess *process)
 {
-    return CUT_PROCESS_GET_PRIVATE(process)->stdout_string->str;
+    CutProcessPrivate *priv = CUT_PROCESS_GET_PRIVATE(process);
+
+    if (priv->stdout_string)
+        g_free(priv->stdout_string);
+
+    priv->stdout_string = read_from_channel(priv->stdout_read_io);
+
+    return (const gchar*)priv->stdout_string;
 }
 
 const gchar *
 cut_process_get_stderr_message (CutProcess *process)
 {
-    return CUT_PROCESS_GET_PRIVATE(process)->stderr_string->str;
+    CutProcessPrivate *priv = CUT_PROCESS_GET_PRIVATE(process);
+
+    if (priv->stderr_string)
+        g_free(priv->stderr_string);
+
+    priv->stderr_string = read_from_channel(priv->stderr_read_io);
+
+    return (const gchar*)priv->stderr_string;
 }
 
 gboolean

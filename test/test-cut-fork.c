@@ -50,11 +50,11 @@ test_message_from_forked_process (void)
         _exit(EXIT_SUCCESS);
     }
 
-    cut_assert_equal_int(EXIT_SUCCESS, cut_wait_process(pid, 100));
     cut_assert_equal_string("Walk in child process",
                             cut_fork_get_stdout_message(pid));
     cut_assert_equal_string("An error was occured",
                             cut_fork_get_stderr_message(pid));
+    cut_assert_equal_int(EXIT_SUCCESS, cut_wait_process(pid, 100));
 }
 
 static gboolean

@@ -32,6 +32,9 @@
 	* cutter/cut-process.c: Use GIOChannel.
 	* test/test-cut-work.c: Workaround for nonpersistence of
 	CutTestContext.
+	* cutter/cut-process.c: Read from stdout and stderr pipes when
+	cut_process_get_stdout/stderr_message() is invoked instead of
+	cut_process_wait().
 
 2008-04-03  Kouhei Sutou  <kou@cozmixng.org>
 
