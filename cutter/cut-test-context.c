@@ -374,7 +374,8 @@ cut_test_context_register_result (CutTestContext *context,
     gchar *user_message = NULL, *user_message_format;
     va_list args;
 
-    priv->failed = TRUE;
+    if (status > CUT_TEST_RESULT_OMISSION)
+        priv->failed = TRUE;
 
     system_message = message;
     va_start(args, message);

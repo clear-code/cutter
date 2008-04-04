@@ -467,7 +467,7 @@ test_omit (void)
     CutTest *test;
 
     test = cut_test_new("omit-test", omit_test);
-    cut_assert(!run(test));
+    cut_assert(run(test));
     cut_assert_test_result_summary(runner, 1, 1, 0, 0, 0, 0, 1);
 }
 

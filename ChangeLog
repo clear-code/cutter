@@ -1,5 +1,15 @@
 2008-04-04  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test.c: use cut_test_context_is_failed().
+
+	* cutter/cut-test-context.c: improve fail detection.
+
+	* test/test-cut-fork.c:
+	- set multi thread mode.
+	- improve assertions.
+
+	* test/test-cut-assertions.c: fix a test.
+
 	* cutter/cut-test-result.c: remove needless codes.
 
 	* cutter/cut-test-context.c:

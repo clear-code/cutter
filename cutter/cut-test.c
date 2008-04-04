@@ -317,12 +317,10 @@ cut_test_run (CutTest *test, CutTestContext *test_context, CutRunner *runner)
             priv->timer = g_timer_new();
         }
         priv->test_function();
-        success = TRUE;
-    } else {
-        success = FALSE;
     }
     g_timer_stop(priv->timer);
 
+    success = !cut_test_context_is_failed(test_context);
     if (success) {
         CutTestResult *result;
         result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,

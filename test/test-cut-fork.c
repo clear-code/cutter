@@ -60,11 +60,16 @@ test_message_from_forked_process (void)
 static gboolean
 run (CutTest *test)
 {
-    gboolean success;
+    gboolean success, is_multi_thread;
     CutTestContext *original_test_context;
 
-    test_context = cut_test_context_new(NULL, NULL, test);
     original_test_context = get_current_test_context();
+    test_context = cut_test_context_new(NULL, NULL, test);
+
+    is_multi_thread = cut_test_context_get_multi_thread(original_test_context);
+    cut_runner_set_multi_thread(runner, is_multi_thread);
+    cut_test_context_set_multi_thread(test_context, is_multi_thread);
+
     set_current_test_context(test_context);
     success = cut_test_run(test, test_context, runner);
     set_current_test_context(original_test_context);
@@ -126,15 +131,15 @@ test_fail_in_forked_process (void)
                                          &omission_message);
 
     if (cut_test_context_get_multi_thread(get_current_test_context())) {
-        cut_assert_null(failure_message);
-        cut_assert_null(notification_message);
+        cut_assert_equal_string(NULL, failure_message);
+        cut_assert_equal_string(NULL, notification_message);
         cut_assert_equal_string("can't use cut_fork() in multi thread mode",
                                 omission_message);
     } else {
         cut_assert_equal_string("Failure in child process", failure_message);
         cut_assert_equal_string("Notification in child process",
                                 notification_message);
-        cut_assert_null(omission_message);
+        cut_assert_equal_string(NULL, omission_message);
     }
 }
 
