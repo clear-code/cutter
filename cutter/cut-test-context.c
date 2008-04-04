@@ -25,6 +25,7 @@
 #include <string.h>
 #include <setjmp.h>
 #include <sys/types.h>
+#include <sys/wait.h>
 #include <unistd.h>
 #include <glib.h>
 
@@ -478,7 +479,6 @@ cut_test_context_trap_fork (CutTestContext *context,
 {
     CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
     CutProcess *process;
-    int pid;
 
     if (cut_test_context_get_multi_thread(context)) {
         cut_test_context_register_result(context,
@@ -493,32 +493,45 @@ cut_test_context_trap_fork (CutTestContext *context,
     process = cut_process_new();
     priv->processes = g_list_prepend(priv->processes, process);
 
-    pid = cut_process_fork(process);
-    if (pid > 0) {
-        CutTestResult *result;
-        const gchar *xml;
-        xml = cut_process_get_result_from_child(process);
-        if (xml) {
-            result = cut_test_result_new_from_xml(xml, -1);
-            if (result) {
-                cut_test_context_emit_signal(context, result);
-                g_object_unref(result);
-            }
-        }
-    }
-
-    return pid;
+    return cut_process_fork(process);
 }
 
 int
 cut_test_context_wait_process (CutTestContext *context,
                                int pid, unsigned int timeout)
 {
+    int status = EXIT_SUCCESS;
     CutProcess *process;
 
     process = get_process_from_pid(context, pid);
-    if (process)
-        return cut_process_wait(process, timeout);
+    if (process) {
+        const gchar *xml;
+
+        status = WEXITSTATUS(cut_process_wait(process, timeout));
+        xml = cut_process_get_result_from_child(process);
+        if (xml)
+            xml = strstr(xml, "<result>");
+        while (xml) {
+            CutTestResult *result;
+            gchar *next_result_xml;
+            gint result_xml_length = -1;
+
+            next_result_xml = strstr(xml + 1, "<result>");
+            if (next_result_xml)
+                result_xml_length = next_result_xml - xml;
+
+            result = cut_test_result_new_from_xml(xml, result_xml_length);
+            if (result) {
+                cut_test_context_emit_signal(context, result);
+                g_object_unref(result);
+            }
+
+            if (result_xml_length == -1)
+                xml = NULL;
+            else
+                xml += result_xml_length;
+        }
+    }
 
     return EXIT_SUCCESS;
 }
