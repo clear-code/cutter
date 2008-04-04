@@ -1,3 +1,11 @@
+2008-04-04  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-test-context.c:
+	- split result XML.
+	- fix wrong result receive place.
+	- return WEXITSTATUS-ed status.
+	* test/test-cut-fork.c: follow the above changes.
+
 2008-04-04  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-process.c: Set some conditions to GIOChannel.
