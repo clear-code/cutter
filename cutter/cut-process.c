@@ -112,18 +112,9 @@ create_io_channel (int pipe, GIOFlags flag)
 }
 
 static GIOChannel *
-create_read_io_channel (int pipe, GIOFunc read_func, CutProcess *process)
+create_read_io_channel (int pipe)
 {
-    GIOChannel *channel;
-
-    channel = create_io_channel(pipe, G_IO_FLAG_IS_READABLE);
-    if (read_func) {
-        g_io_add_watch(channel,
-                       G_IO_IN | G_IO_PRI | G_IO_ERR | G_IO_HUP,
-                       (GIOFunc)read_func, process);
-    }
-
-    return channel;
+    return create_io_channel(pipe, G_IO_FLAG_IS_READABLE);
 }
 
 static GIOChannel *
@@ -196,12 +187,9 @@ prepare_pipes (CutProcess *process)
         close_pipe(stderr_pipe, WRITE);
         close_pipe(cutter_pipe, WRITE);
 
-        priv->parent_io = create_read_io_channel(cutter_pipe[READ],
-                                                 (GIOFunc)read_from_child, process);
-        priv->stdout_read_io = create_read_io_channel(stdout_pipe[READ],
-                                                      NULL, process);
-        priv->stderr_read_io = create_read_io_channel(stderr_pipe[READ],
-                                                      NULL, process);
+        priv->parent_io = create_read_io_channel(cutter_pipe[READ]);
+        priv->stdout_read_io = create_read_io_channel(stdout_pipe[READ]);
+        priv->stderr_read_io = create_read_io_channel(stderr_pipe[READ]);
     }
 
     errno = fork_errno;
@@ -282,8 +270,7 @@ dispose (GObject *object)
 CutProcess *
 cut_process_new ()
 {
-    return g_object_new(CUT_TYPE_PROCESS,
-                        NULL);
+    return g_object_new(CUT_TYPE_PROCESS, NULL);
 }
 
 

@@ -1,3 +1,8 @@
+2008-04-07  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-process.c: Do not use g_io_add_watch() since the function
+	causes crash with GTK+.
+
 2008-04-04  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-test-context.c (cut_test_context_register_result):
