@@ -1492,6 +1492,7 @@ run (CutUI *ui, CutRunner *runner)
     CutUIGtk *gtk_ui = CUT_UI_GTK(ui);
     gboolean success = FALSE;
 
+    cut_runner_set_multi_thread(runner, TRUE);
     gtk_ui->test_suite = g_object_ref(cut_runner_get_test_suite(runner));
     gtk_ui->runner = g_object_ref(runner);
     gtk_widget_show_all(gtk_ui->window);

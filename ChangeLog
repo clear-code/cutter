@@ -2,6 +2,7 @@
 
 	* cutter/cut-process.c: Do not use g_io_add_watch() since the function
 	causes crash with GTK+.
+	* cutter/ui/cut-ui-gtk.c: Set multi thread mode.
 
 2008-04-04  Kouhei Sutou  <kou@cozmixng.org>
 
