@@ -272,6 +272,15 @@ init_page (CutReportPDF *report)
 }
 
 static void
+relative_move_to (CutReportPDF *report, double x, double y)
+{
+    double current_x, current_y;
+
+    cairo_get_current_point(report->context, &current_x, &current_y);
+    cairo_move_to(report->context, current_x + x, current_y + y);
+}
+
+static void
 cb_ready_test_suite (CutRunner *runner, CutTestSuite *test_suite,
                      guint n_test_cases, guint n_tests,
                      CutReportPDF *report)
@@ -314,7 +323,8 @@ show_text (CutReportPDF *report, const gchar *utf8)
     if (A4_HEIGHT < y + height) {
         cairo_show_page(report->context);
         init_page(report);
-        cairo_get_current_point(report->context, &x, &y);
+        cairo_get_current_point(report->context, NULL, &y);
+        cairo_move_to(report->context, x, y);
     }
 
     pango_cairo_show_layout(report->context, layout);
@@ -334,6 +344,7 @@ cb_start_test_case (CutRunner *runner, CutTestCase *test_case,
                     CutReportPDF *report)
 {
     show_text(report, cut_test_get_name(CUT_TEST(test_case)));
+    relative_move_to(report, 10, 0);
 }
 
 static void
@@ -362,6 +373,7 @@ static void
 cb_complete_test_case (CutRunner *runner, CutTestCase *test_case,
                        CutReportPDF *report)
 {
+    relative_move_to(report, -10, 5);
 }
 
 static void

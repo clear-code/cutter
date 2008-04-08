@@ -1,5 +1,7 @@
 2008-04-08  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/module/report/cut-report-pdf.c: indent tests.
+
 	* configure.ac, cutter/module/report/cut-report-pdf.c,
 	cutter/module/report/Makefile.am: use pangocairo.
 
