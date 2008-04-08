@@ -236,7 +236,7 @@ create (CutModuleFactory *factory)
 {
     CutReportFactoryPDF *pdf = CUT_REPORT_FACTORY_PDF(factory);
 
-    return G_OBJECT(cut_report_new("pdf", 
+    return G_OBJECT(cut_report_new("pdf",
                                    "filename", pdf->filename,
                                    NULL));
 }
