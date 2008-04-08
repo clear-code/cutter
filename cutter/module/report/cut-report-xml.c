@@ -153,8 +153,8 @@ register_type (GTypeModule *type_module)
             (GInstanceInitFunc) init,
         };
 
-	static const GInterfaceInfo listener_info =
-	    {
+    static const GInterfaceInfo listener_info =
+        {
             (GInterfaceInitFunc) listener_init,
             NULL,
             NULL
