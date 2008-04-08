@@ -308,6 +308,7 @@ static void
 show_text (CutReportPDF *report, const gchar *utf8)
 {
     PangoLayout *layout;
+    PangoFontDescription *description;
     double x, y;
     int width, height;
 
@@ -316,6 +317,10 @@ show_text (CutReportPDF *report, const gchar *utf8)
 
     layout = pango_cairo_create_layout(report->context);
     pango_layout_set_text(layout, utf8, -1);
+
+    description = pango_font_description_from_string("Mono");
+    pango_layout_set_font_description(layout, description);
+    pango_font_description_free(description);
 
     cairo_get_current_point(report->context, &x, &y);
     pango_layout_get_pixel_size(layout, &width, &height);
