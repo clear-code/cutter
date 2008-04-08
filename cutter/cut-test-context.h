@@ -69,7 +69,7 @@ void          cut_test_context_set_test       (CutTestContext *context,
 void          cut_test_context_set_multi_thread
                                               (CutTestContext *context,
                                                gboolean        use_multi_thread);
-gboolean      cut_test_context_get_multi_thread
+gboolean      cut_test_context_is_multi_thread
                                               (CutTestContext *context);
 
 void          cut_test_context_set_user_data  (CutTestContext *context,

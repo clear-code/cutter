@@ -1,3 +1,18 @@
+2008-04-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-runner.[c|h]: Added cut_runner_is_multi_thread() to
+	obtain the situation that the current test is runnering with multi
+	thread or not.
+	* cutter/cut-test-context.[c|h]: cut_test_context_get_multi_thread()
+	-> cut_test_context_is_multi_thread().
+	* cutter/cut-test-case.c, test/test-cut-fork.c: Use
+	cut_test_context_is_multi_thread() instead of
+	cut_text_context_get_multi_thread().
+	* cuttter/module/ui/cut-ui-gtk.c: Set "is-multi-thread" property of
+	CutRunner TRUE with g_object_set(). cut_runner_set_is_multi_thread()
+	does not exist yet. I think the function does not needed since the
+	name is confused cut_runner_set_multi_thread().
+
 2008-04-07  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-process.c: Do not use g_io_add_watch() since the function

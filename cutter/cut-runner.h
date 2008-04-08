@@ -147,6 +147,7 @@ const gchar  *cut_runner_get_source_directory      (CutRunner   *runner);
 void          cut_runner_set_multi_thread          (CutRunner   *runner,
                                                     gboolean     use_multi_thread);
 gboolean      cut_runner_get_multi_thread          (CutRunner   *runner);
+gboolean      cut_runner_is_multi_thread           (CutRunner   *runner);
 
 void          cut_runner_set_target_test_case_names(CutRunner   *runner,
                                                     const gchar **names);

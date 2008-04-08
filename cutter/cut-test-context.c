@@ -481,7 +481,7 @@ cut_test_context_trap_fork (CutTestContext *context,
     CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
     CutProcess *process;
 
-    if (cut_test_context_get_multi_thread(context)) {
+    if (cut_test_context_is_multi_thread(context)) {
         cut_test_context_register_result(context,
                                          CUT_TEST_RESULT_OMISSION,
                                          function_name, filename, line,
@@ -571,7 +571,7 @@ cut_test_context_set_multi_thread (CutTestContext *context,
 }
 
 gboolean
-cut_test_context_get_multi_thread (CutTestContext *context)
+cut_test_context_is_multi_thread (CutTestContext *context)
 {
     return CUT_TEST_CONTEXT_GET_PRIVATE(context)->is_multi_thread;
 }

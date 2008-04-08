@@ -45,6 +45,7 @@ struct _CutRunnerPrivate
     guint n_omissions;
     GList *results;
     gboolean use_multi_thread;
+    gboolean is_multi_thread;
     GMutex *mutex;
     gboolean crashed;
     gchar *stack_trace;
@@ -69,6 +70,7 @@ enum
     PROP_N_NOTIFICATIONS,
     PROP_N_OMISSIONS,
     PROP_USE_MULTI_THREAD,
+    PROP_IS_MULTI_THREAD,
     PROP_TEST_CASE_ORDER
 };
 
@@ -187,6 +189,13 @@ cut_runner_class_init (CutRunnerClass *klass)
                                 FALSE,
                                 G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class, PROP_USE_MULTI_THREAD, spec);
+
+    spec = g_param_spec_boolean("is-multi-thread",
+                                "Is multi thread?",
+                                "Whether the runner is running tests with multi thread",
+                                FALSE,
+                                G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_IS_MULTI_THREAD, spec);
 
     spec = g_param_spec_enum("test-case-order",
                              "Test case order",
@@ -438,6 +447,7 @@ cut_runner_init (CutRunner *runner)
     priv->n_omissions = 0;
     priv->results = NULL;
     priv->use_multi_thread = FALSE;
+    priv->is_multi_thread = FALSE;
     priv->mutex = g_mutex_new();
     priv->crashed = FALSE;
     priv->stack_trace = NULL;
@@ -531,6 +541,9 @@ set_property (GObject      *object,
       case PROP_USE_MULTI_THREAD:
         priv->use_multi_thread = g_value_get_boolean(value);
         break;
+      case PROP_IS_MULTI_THREAD:
+        priv->is_multi_thread = g_value_get_boolean(value);
+        break;
       case PROP_TEST_CASE_ORDER:
         priv->test_case_order = g_value_get_enum(value);
         break;
@@ -573,6 +586,9 @@ get_property (GObject    *object,
       case PROP_USE_MULTI_THREAD:
         g_value_set_boolean(value, priv->use_multi_thread);
         break;
+      case PROP_IS_MULTI_THREAD:
+        g_value_set_boolean(value, priv->is_multi_thread);
+        break;
       case PROP_TEST_CASE_ORDER:
         g_value_set_enum(value, priv->test_case_order);
         break;
@@ -600,6 +616,7 @@ cut_runner_copy (CutRunner *runner)
     copied_priv = CUT_RUNNER_GET_PRIVATE(copied);
 
     copied_priv->use_multi_thread = priv->use_multi_thread;
+    copied_priv->is_multi_thread = priv->is_multi_thread;
 
     copied_priv->test_directory = g_strdup(priv->test_directory);
     copied_priv->source_directory = g_strdup(priv->source_directory);
@@ -648,6 +665,8 @@ cut_runner_set_multi_thread (CutRunner *runner, gboolean use_multi_thread)
 
     g_mutex_lock(priv->mutex);
     priv->use_multi_thread = use_multi_thread;
+    if (use_multi_thread)
+        priv->is_multi_thread = TRUE;
     g_mutex_unlock(priv->mutex);
 }
 
@@ -655,6 +674,12 @@ gboolean
 cut_runner_get_multi_thread (CutRunner *runner)
 {
     return CUT_RUNNER_GET_PRIVATE(runner)->use_multi_thread;
+}
+
+gboolean
+cut_runner_is_multi_thread (CutRunner *runner)
+{
+    return CUT_RUNNER_GET_PRIVATE(runner)->is_multi_thread;
 }
 
 void

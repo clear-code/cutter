@@ -314,7 +314,7 @@ run (CutTestCase *test_case, CutTest *test, CutRunner *runner)
     if (cut_runner_is_canceled(runner))
         return TRUE;
 
-    is_multi_thread = cut_runner_get_multi_thread(runner);
+    is_multi_thread = cut_runner_is_multi_thread(runner);
 
     priv = CUT_TEST_CASE_GET_PRIVATE(test_case);
     if (!priv->get_current_test_context ||
