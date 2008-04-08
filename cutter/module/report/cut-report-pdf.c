@@ -25,6 +25,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 #include <glib.h>
 #include <glib/gi18n-lib.h>
 #include <glib/gstdio.h>
@@ -316,11 +317,12 @@ show_text (CutReportPDF *report, const gchar *utf8)
         return;
 
     layout = pango_cairo_create_layout(report->context);
-    pango_layout_set_text(layout, utf8, -1);
 
     description = pango_font_description_from_string("Mono");
     pango_layout_set_font_description(layout, description);
     pango_font_description_free(description);
+
+    pango_layout_set_text(layout, utf8, -1);
 
     cairo_get_current_point(report->context, &x, &y);
     pango_layout_get_pixel_size(layout, &width, &height);
@@ -385,6 +387,25 @@ static void
 cb_complete_test_suite (CutRunner *runner, CutTestSuite *test_suite,
                         CutReportPDF *report)
 {
+    double start, end;
+
+    cairo_show_page(report->context);
+
+    cairo_move_to(report->context, 100, 100);
+    start = 2 * M_PI * 0.75;
+    end = start + 2 * M_PI * ((gdouble)cut_runner_get_n_successes(runner) /
+                              (gdouble)cut_runner_get_n_tests(runner));
+    cairo_arc(report->context, 100, 100, 50, start, end);
+    cairo_set_source_rgba(report->context, 0, 1.0, 0, 0.8);
+    cairo_fill(report->context);
+
+    cairo_move_to(report->context, 100, 100);
+    start = end;
+    end = start + 2 * M_PI * ((gdouble)cut_runner_get_n_failures(runner) /
+                              (gdouble)cut_runner_get_n_tests(runner));
+    cairo_arc(report->context, 100, 100, 50, start, end);
+    cairo_set_source_rgba(report->context, 1.0, 0, 0, 0.8);
+    cairo_fill(report->context);
 }
 
 static void
