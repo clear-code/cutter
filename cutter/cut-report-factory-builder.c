@@ -91,20 +91,45 @@ cut_report_factory_builder_init (CutReportFactoryBuilder *builder)
     cut_module_factory_load(dir, "report");
 }
 
+static GOptionEntry *
+create_option_entries (CutFactoryBuilder *builder)
+{
+    GList *names;
+    guint n_reports, i;
+    GOptionEntry *entries;
+
+    names = cut_module_factory_get_names("report");
+    if (!names)
+        return NULL;
+
+    n_reports = g_list_length(names);
+    entries = g_new0(GOptionEntry, n_reports + 1);
+
+    for (i = 0; i < n_reports; i++) {
+        const gchar *name = g_list_nth_data(names, i);
+        entries[i].long_name = g_strconcat(name, "-report", NULL);
+        entries[i].arg = G_OPTION_ARG_STRING;
+        entries[i].description = g_strdup_printf("Set filename of %s report", name);
+        entries[i].arg_description = "FILE";
+    }
+
+    g_list_foreach(names, (GFunc)g_free, NULL);
+    g_list_free(names);
+
+    return entries;
+}
+
 static void
 set_option_context (CutFactoryBuilder *builder, GOptionContext *context)
 {
     GOptionGroup *group;
-    GOptionEntry entries[] = {
-        {"xml-report", 0, 0, G_OPTION_ARG_STRING, &xml_report,
-         N_("Set filename of XML report"), "FILE"},
-        {NULL}
-    };
+    GOptionEntry *entries;
 
     group = g_option_group_new(("report"),
                                _("Report Options"),
                                _("Show report options"),
                                builder, NULL);
+    entries = create_option_entries(builder);
     g_option_group_add_entries(group, entries);
     g_option_group_set_translation_domain(group, GETTEXT_PACKAGE);
     g_option_context_add_group(context, group);
