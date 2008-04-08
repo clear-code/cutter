@@ -123,7 +123,9 @@ PKG_CHECK_MODULES(CAIRO, cairo,
 		  [cairo_exists=yes], [cairo_exists=no])
 AC_SUBST([CAIRO_CFLAGS])
 AC_SUBST([CAIRO_LIBS])
-
+if test x"$cairo_exists" = "xyes"; then
+  AC_DEFINE(HAVE_CAIRO, 1, [Define to 1 if you have cairo installed])
+fi
 AM_CONDITIONAL([HAVE_CAIRO], [test $cairo_exists = "yes"])
 
 dnl **************************************************************

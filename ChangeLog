@@ -12,6 +12,7 @@
 	CutRunner TRUE with g_object_set(). cut_runner_set_is_multi_thread()
 	does not exist yet. I think the function does not needed since the
 	name is confused cut_runner_set_multi_thread().
+	* configure.ac: Define HAVE_CAIRO.
 
 2008-04-07  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
