@@ -31,6 +31,7 @@
 #include <gmodule.h>
 #include <cairo.h>
 #include <cairo-pdf.h>
+#include <pango/pangocairo.h>
 
 #include <cutter/cut-module-impl.h>
 #include <cutter/cut-report.h>
@@ -55,7 +56,7 @@ struct _CutReportPDF
 {
     CutReport object;
     CutRunner *runner;
-    cairo_surface_t *surface;
+    cairo_t *context;
 };
 
 struct _CutReportPDFClass
@@ -136,7 +137,7 @@ static void
 init (CutReportPDF *report)
 {
     report->runner = NULL;
-    report->surface = NULL;
+    report->context = NULL;
 }
 
 static void
@@ -220,9 +221,9 @@ dispose (GObject *object)
         g_object_unref(report->runner);
         report->runner = NULL;
     }
-    if (report->surface) {
-        cairo_surface_destroy(report->surface);
-        report->surface = NULL;
+    if (report->context) {
+        cairo_destroy(report->context);
+        report->context = NULL;
     }
 
     G_OBJECT_CLASS(parent_class)->dispose(object);
@@ -265,35 +266,81 @@ get_property (GObject    *object,
 }
 
 static void
+init_page (CutReportPDF *report)
+{
+    cairo_move_to(report->context, 10, 10);
+}
+
+static void
 cb_ready_test_suite (CutRunner *runner, CutTestSuite *test_suite,
                      guint n_test_cases, guint n_tests,
                      CutReportPDF *report)
 {
     const gchar *filename;
+    cairo_surface_t *surface;
 
     filename = cut_report_get_filename(CUT_REPORT(report));
     if (!filename)
         return;
 
-    report->surface = cairo_pdf_surface_create(filename, A4_WIDTH, A4_HEIGHT);
+    if (report->context) {
+        cairo_destroy(report->context);
+        report->context = NULL;
+    }
+
+    surface = cairo_pdf_surface_create(filename, A4_WIDTH, A4_HEIGHT);
+    report->context = cairo_create(surface);
+    cairo_surface_destroy(surface);
+
+    init_page(report);
+}
+
+static void
+show_text (CutReportPDF *report, const gchar *utf8)
+{
+    PangoLayout *layout;
+    double x, y;
+    int width, height;
+
+    if (!utf8)
+        return;
+
+    layout = pango_cairo_create_layout(report->context);
+    pango_layout_set_text(layout, utf8, -1);
+
+    cairo_get_current_point(report->context, &x, &y);
+    pango_layout_get_pixel_size(layout, &width, &height);
+
+    if (A4_HEIGHT < y + height) {
+        cairo_show_page(report->context);
+        init_page(report);
+        cairo_get_current_point(report->context, &x, &y);
+    }
+
+    pango_cairo_show_layout(report->context, layout);
+    cairo_move_to(report->context, x, y + height);
+    g_object_unref(layout);
 }
 
 static void
 cb_start_test_suite (CutRunner *runner, CutTestSuite *test_suite,
                      CutReportPDF *report)
 {
+    show_text(report, cut_test_get_name(CUT_TEST(test_suite)));
 }
 
 static void
 cb_start_test_case (CutRunner *runner, CutTestCase *test_case,
                     CutReportPDF *report)
 {
+    show_text(report, cut_test_get_name(CUT_TEST(test_case)));
 }
 
 static void
 cb_start_test (CutRunner *runner, CutTest *test, CutTestContext *test_context,
                CutReportPDF *report)
 {
+    show_text(report, cut_test_get_name(test));
 }
 
 static void

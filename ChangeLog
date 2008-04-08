@@ -1,6 +1,9 @@
 2008-04-08  Kouhei Sutou  <kou@cozmixng.org>
 
 	* configure.ac, cutter/module/report/cut-report-pdf.c,
+	cutter/module/report/Makefile.am: use pangocairo.
+
+	* configure.ac, cutter/module/report/cut-report-pdf.c,
 	cutter/module/report/Makefile.am: require cairo PDF backend.
 
 	* cutter/cut-report-factory-builder.c: support multiple report type.

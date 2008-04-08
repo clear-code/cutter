@@ -142,6 +142,25 @@ fi
 AM_CONDITIONAL([HAVE_CAIRO_PDF], [test $cairo_pdf_exists = "yes"])
 
 dnl **************************************************************
+dnl Check for Pango cairo support
+dnl **************************************************************
+pango_cairo_exists=no
+PKG_CHECK_MODULES(PANGO_CAIRO, pangocairo,
+		  [pango_cairo_exists=yes], [pango_cairo_exists=no])
+AC_SUBST([PANGO_CAIRO_CFLAGS])
+AC_SUBST([PANGO_CAIRO_LIBS])
+if test x"$pango_cairo_exists" = "xyes"; then
+  AC_DEFINE(HAVE_PANGO_CAIRO, 1, [Define to 1 if you have Pango cairo supprot installed])
+fi
+AM_CONDITIONAL([HAVE_PANGO_CAIRO], [test $pango_cairo_exists = "yes"])
+
+dnl **************************************************************
+dnl Check for PDF report
+dnl **************************************************************
+AM_CONDITIONAL([PDF_REPORT_AVAILABLE],
+               [test $pango_cairo_exists = "yes" -a $cairo_pdf_exists = "yes"])
+
+dnl **************************************************************
 dnl Checks for gtk-doc
 dnl **************************************************************
 
