@@ -37,7 +37,7 @@
 #include <cutter/cut-test-result.h>
 #include <cutter/cut-enum-types.h>
 
-#define CUT_TYPE_REPORT_PDF            cut_type_report_xml
+#define CUT_TYPE_REPORT_PDF            cut_type_report_pdf
 #define CUT_REPORT_PDF(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_REPORT_PDF, CutReportPDF))
 #define CUT_REPORT_PDF_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_REPORT_PDF, CutReportPDFClass))
 #define CUT_IS_REPORT_PDF(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_REPORT_PDF))
@@ -65,7 +65,7 @@ enum
     PROP_RUNNER
 };
 
-static GType cut_type_report_xml = 0;
+static GType cut_type_report_pdf = 0;
 static CutReportPDFClass *parent_class;
 
 static void dispose        (GObject         *object);
@@ -156,7 +156,7 @@ register_type (GTypeModule *type_module)
             (GInstanceInitFunc) init,
         };
 
-    cut_type_report_xml =
+    cut_type_report_pdf =
         g_type_module_register_type(type_module,
                                     CUT_TYPE_REPORT,
                                     "CutReportPDF",
@@ -169,10 +169,10 @@ CUT_MODULE_IMPL_INIT (GTypeModule *type_module)
     GList *registered_types = NULL;
 
     register_type(type_module);
-    if (cut_type_report_xml)
+    if (cut_type_report_pdf)
         registered_types =
             g_list_prepend(registered_types,
-                           (gchar *)g_type_name(cut_type_report_xml));
+                           (gchar *)g_type_name(cut_type_report_pdf));
 
     return registered_types;
 }
