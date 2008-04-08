@@ -129,6 +129,19 @@ fi
 AM_CONDITIONAL([HAVE_CAIRO], [test $cairo_exists = "yes"])
 
 dnl **************************************************************
+dnl Check for Cairo PDF backend
+dnl **************************************************************
+cairo_pdf_exists=no
+PKG_CHECK_MODULES(CAIRO_PDF, cairo-pdf,
+		  [cairo_pdf_exists=yes], [cairo_pdf_exists=no])
+AC_SUBST([CAIRO_PDF_CFLAGS])
+AC_SUBST([CAIRO_PDF_LIBS])
+if test x"$cairo_pdf_exists" = "xyes"; then
+  AC_DEFINE(HAVE_CAIRO_PDF, 1, [Define to 1 if you have cairo PDF backend installed])
+fi
+AM_CONDITIONAL([HAVE_CAIRO_PDF], [test $cairo_pdf_exists = "yes"])
+
+dnl **************************************************************
 dnl Checks for gtk-doc
 dnl **************************************************************
 

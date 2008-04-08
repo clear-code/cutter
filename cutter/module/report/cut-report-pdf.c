@@ -30,6 +30,7 @@
 #include <glib/gstdio.h>
 #include <gmodule.h>
 #include <cairo.h>
+#include <cairo-pdf.h>
 
 #include <cutter/cut-module-impl.h>
 #include <cutter/cut-report.h>
@@ -43,6 +44,9 @@
 #define CUT_IS_REPORT_PDF(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_REPORT_PDF))
 #define CUT_IS_REPORT_PDF_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_REPORT_PDF))
 #define CUT_REPORT_PDF_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_REPORT_PDF, CutReportPDFClass))
+
+#define A4_WIDTH 596
+#define A4_HEIGHT 842
 
 typedef struct _CutReportPDF CutReportPDF;
 typedef struct _CutReportPDFClass CutReportPDFClass;
@@ -158,8 +162,8 @@ register_type (GTypeModule *type_module)
             (GInstanceInitFunc) init,
         };
 
-	static const GInterfaceInfo listener_info =
-	    {
+    static const GInterfaceInfo listener_info =
+        {
             (GInterfaceInitFunc) listener_init,
             NULL,
             NULL
@@ -182,10 +186,10 @@ CUT_MODULE_IMPL_INIT (GTypeModule *type_module)
     GList *registered_types = NULL;
 
     register_type(type_module);
-    if (cut_type_report_pdf)
+    if (CUT_TYPE_REPORT_PDF)
         registered_types =
             g_list_prepend(registered_types,
-                           (gchar *)g_type_name(cut_type_report_pdf));
+                           (gchar *)g_type_name(CUT_TYPE_REPORT_PDF));
 
     return registered_types;
 }
@@ -265,6 +269,13 @@ cb_ready_test_suite (CutRunner *runner, CutTestSuite *test_suite,
                      guint n_test_cases, guint n_tests,
                      CutReportPDF *report)
 {
+    const gchar *filename;
+
+    filename = cut_report_get_filename(CUT_REPORT(report));
+    if (!filename)
+        return;
+
+    report->surface = cairo_pdf_surface_create(filename, A4_WIDTH, A4_HEIGHT);
 }
 
 static void
@@ -304,7 +315,6 @@ static void
 cb_complete_test_case (CutRunner *runner, CutTestCase *test_case,
                        CutReportPDF *report)
 {
-g_warning("hoge");
 }
 
 static void
@@ -378,14 +388,14 @@ attach_to_runner (CutListener *listener,
                   CutRunner   *runner)
 {
     CutReportPDF *report = CUT_REPORT_PDF(listener);
+
     if (report->runner)
         detach_from_runner(listener, report->runner);
-    
+
     if (runner) {
         report->runner = g_object_ref(runner);
         connect_to_runner(CUT_REPORT_PDF(listener), runner);
     }
-    g_warning("hoge");
 }
 
 static void
