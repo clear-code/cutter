@@ -14,6 +14,7 @@
 	name is confused cut_runner_set_multi_thread().
 	* configure.ac: Define HAVE_CAIRO.
 	* cutter/cut-report-factory-builder.c: Create GOptionEntry at runtime.
+	* cutter/cut-report-factory-builder.c: Handle filename.
 
 2008-04-07  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 

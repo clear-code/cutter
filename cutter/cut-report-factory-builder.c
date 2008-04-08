@@ -28,12 +28,20 @@
 #include "cut-report-factory-builder.h"
 #include "cut-module-factory.h"
 
-static const gchar *xml_report;
 static CutReportFactoryBuilder *the_builder = NULL;
+
+#define CUT_REPORT_FACTORY_BUILDER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_REPORT_FACTORY_BUILDER, CutReportFactoryBuilderPrivate))
+
+typedef struct _CutReportFactoryBuilderPrivate	CutReportFactoryBuilderPrivate;
+struct _CutReportFactoryBuilderPrivate
+{
+    gchar **filenames;
+};
 
 static GObject *constructor  (GType                  type,
                               guint                  n_props,
                               GObjectConstructParam *props);
+static void     dispose      (GObject               *object);
 
 static void         set_option_context (CutFactoryBuilder *builder,
                                         GOptionContext    *context);
@@ -53,11 +61,14 @@ cut_report_factory_builder_class_init (CutReportFactoryBuilderClass *klass)
     builder_class = CUT_FACTORY_BUILDER_CLASS(klass);
 
     gobject_class->constructor = constructor;
+    gobject_class->dispose     = dispose;
 
     builder_class->set_option_context = set_option_context;
     builder_class->build              = build;
     builder_class->build_all          = build_all;
     builder_class->get_type_name      = get_type_name;
+
+    g_type_class_add_private(gobject_class, sizeof(CutReportFactoryBuilderPrivate));
 }
 
 static GObject *
@@ -79,7 +90,10 @@ constructor (GType type, guint n_props, GObjectConstructParam *props)
 static void
 cut_report_factory_builder_init (CutReportFactoryBuilder *builder)
 {
+    CutReportFactoryBuilderPrivate *priv = CUT_REPORT_FACTORY_BUILDER_GET_PRIVATE(builder);
     const gchar *dir;
+
+    priv->filenames = NULL;
 
     dir = g_getenv("CUT_REPORT_FACTORY_MODULE_DIR");
     if (!dir)
@@ -91,12 +105,26 @@ cut_report_factory_builder_init (CutReportFactoryBuilder *builder)
     cut_module_factory_load(dir, "report");
 }
 
+static void
+dispose (GObject *object)
+{
+    CutReportFactoryBuilderPrivate *priv = CUT_REPORT_FACTORY_BUILDER_GET_PRIVATE(object);
+
+    if (priv->filenames) {
+        g_strfreev(priv->filenames);
+        priv->filenames = NULL;
+    }
+
+    G_OBJECT_CLASS(cut_report_factory_builder_parent_class)->dispose(object);
+}
+
 static GOptionEntry *
 create_option_entries (CutFactoryBuilder *builder)
 {
     GList *names;
     guint n_reports, i;
     GOptionEntry *entries;
+    CutReportFactoryBuilderPrivate *priv = CUT_REPORT_FACTORY_BUILDER_GET_PRIVATE(builder);
 
     names = cut_module_factory_get_names("report");
     if (!names)
@@ -104,11 +132,14 @@ create_option_entries (CutFactoryBuilder *builder)
 
     n_reports = g_list_length(names);
     entries = g_new0(GOptionEntry, n_reports + 1);
+    priv->filenames = g_new0(gchar*, n_reports + 1);
+    priv->filenames[n_reports] = NULL;
 
     for (i = 0; i < n_reports; i++) {
         const gchar *name = g_list_nth_data(names, i);
         entries[i].long_name = g_strconcat(name, "-report", NULL);
         entries[i].arg = G_OPTION_ARG_STRING;
+        entries[i].arg_data = &priv->filenames[i];
         entries[i].description = g_strdup_printf("Set filename of %s report", name);
         entries[i].arg_description = "FILE";
     }
@@ -133,6 +164,7 @@ set_option_context (CutFactoryBuilder *builder, GOptionContext *context)
     g_option_group_add_entries(group, entries);
     g_option_group_set_translation_domain(group, GETTEXT_PACKAGE);
     g_option_context_add_group(context, group);
+    g_free(entries);
 }
 
 static CutModuleFactory *
@@ -159,18 +191,22 @@ build_factory (CutFactoryBuilder *builder, const gchar *report_type,
 static GList *
 build (CutFactoryBuilder *builder)
 {
-    const gchar *report_type;
     GList *factories = NULL;
-    CutModuleFactory *factory;
+    CutReportFactoryBuilderPrivate *priv = CUT_REPORT_FACTORY_BUILDER_GET_PRIVATE(builder);
+    const gchar **filename;
 
-    if (!xml_report)
-        return NULL;
+    filename = (const gchar **)priv->filenames; 
+    while (*filename) {
+        CutModuleFactory *factory;
+        const gchar *report_type;
 
-    report_type = "xml";
+        report_type = "xml"; /* wrkaround */
+        factory = build_factory(builder, report_type, "filename", *filename, NULL);
+        if (factory)
+            factories = g_list_prepend(factories, factory);
 
-    factory = build_factory(builder, report_type, "filename", xml_report, NULL);
-    if (factory)
-        factories = g_list_prepend(factories, factory);
+        filename++;
+    }
 
     return factories;
 }
