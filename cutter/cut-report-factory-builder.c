@@ -110,27 +110,42 @@ set_option_context (CutFactoryBuilder *builder, GOptionContext *context)
     g_option_context_add_group(context, group);
 }
 
+static CutModuleFactory *
+build_factory (CutFactoryBuilder *builder, const gchar *report_type, 
+               const gchar *first_property, ...)
+{
+    CutModuleFactory *factory = NULL;
+
+    if (cut_module_factory_exist_module("report", report_type)) {
+        GOptionContext *option_context;
+        va_list var_args;
+        va_start(var_args, first_property);
+        factory = cut_module_factory_new_valist("report", report_type,
+                                                first_property, var_args);
+        va_end(var_args);
+
+        g_object_get(builder, "option-context", &option_context, NULL);
+        cut_module_factory_set_option_group(factory, option_context);
+    }
+
+    return factory;
+}
+
 static GList *
 build (CutFactoryBuilder *builder)
 {
     const gchar *report_type;
     GList *factories = NULL;
+    CutModuleFactory *factory;
 
     if (!xml_report)
         return NULL;
 
     report_type = "xml";
 
-    if (cut_module_factory_exist_module("report", report_type)) {
-        CutModuleFactory *module_factory;
-        GOptionContext *option_context;
-        module_factory = cut_module_factory_new("report", report_type,
-                                                "filename", xml_report,
-                                                NULL);
-        g_object_get(builder, "option-context", &option_context, NULL);
-        cut_module_factory_set_option_group(module_factory, option_context);
-        factories = g_list_prepend(factories, module_factory);
-    }
+    factory = build_factory(builder, report_type, "filename", xml_report, NULL);
+    if (factory)
+        factories = g_list_prepend(factories, factory);
 
     return factories;
 }
