@@ -35,6 +35,7 @@ static CutReportFactoryBuilder *the_builder = NULL;
 typedef struct _CutReportFactoryBuilderPrivate	CutReportFactoryBuilderPrivate;
 struct _CutReportFactoryBuilderPrivate
 {
+    GList *names;
     gchar **filenames;
 };
 
@@ -68,7 +69,8 @@ cut_report_factory_builder_class_init (CutReportFactoryBuilderClass *klass)
     builder_class->build_all          = build_all;
     builder_class->get_type_name      = get_type_name;
 
-    g_type_class_add_private(gobject_class, sizeof(CutReportFactoryBuilderPrivate));
+    g_type_class_add_private(gobject_class,
+                             sizeof(CutReportFactoryBuilderPrivate));
 }
 
 static GObject *
@@ -77,7 +79,8 @@ constructor (GType type, guint n_props, GObjectConstructParam *props)
     GObject *object;
 
     if (!the_builder) {
-        GObjectClass *klass = G_OBJECT_CLASS(cut_report_factory_builder_parent_class);
+        GObjectClass *klass;
+        klass = G_OBJECT_CLASS(cut_report_factory_builder_parent_class);
         object = klass->constructor(type, n_props, props);
         the_builder = CUT_REPORT_FACTORY_BUILDER(object);
     } else {
@@ -90,9 +93,11 @@ constructor (GType type, guint n_props, GObjectConstructParam *props)
 static void
 cut_report_factory_builder_init (CutReportFactoryBuilder *builder)
 {
-    CutReportFactoryBuilderPrivate *priv = CUT_REPORT_FACTORY_BUILDER_GET_PRIVATE(builder);
+    CutReportFactoryBuilderPrivate *priv;
     const gchar *dir;
 
+    priv = CUT_REPORT_FACTORY_BUILDER_GET_PRIVATE(builder);
+    priv->names = NULL;
     priv->filenames = NULL;
 
     dir = g_getenv("CUT_REPORT_FACTORY_MODULE_DIR");
@@ -108,7 +113,15 @@ cut_report_factory_builder_init (CutReportFactoryBuilder *builder)
 static void
 dispose (GObject *object)
 {
-    CutReportFactoryBuilderPrivate *priv = CUT_REPORT_FACTORY_BUILDER_GET_PRIVATE(object);
+    CutReportFactoryBuilderPrivate *priv;
+
+    priv = CUT_REPORT_FACTORY_BUILDER_GET_PRIVATE(object);
+
+    if (priv->names) {
+        g_list_foreach(priv->names, (GFunc)g_free, NULL);
+        g_list_free(priv->names);
+        priv->names = NULL;
+    }
 
     if (priv->filenames) {
         g_strfreev(priv->filenames);
@@ -121,31 +134,33 @@ dispose (GObject *object)
 static GOptionEntry *
 create_option_entries (CutFactoryBuilder *builder)
 {
-    GList *names;
+    GList *node;
     guint n_reports, i;
     GOptionEntry *entries;
-    CutReportFactoryBuilderPrivate *priv = CUT_REPORT_FACTORY_BUILDER_GET_PRIVATE(builder);
+    CutReportFactoryBuilderPrivate *priv;
 
-    names = cut_module_factory_get_names("report");
-    if (!names)
+    priv = CUT_REPORT_FACTORY_BUILDER_GET_PRIVATE(builder);
+    if (!priv->names)
+        priv->names = cut_module_factory_get_names("report");
+    if (!priv->names)
         return NULL;
 
-    n_reports = g_list_length(names);
+    n_reports = g_list_length(priv->names);
     entries = g_new0(GOptionEntry, n_reports + 1);
     priv->filenames = g_new0(gchar*, n_reports + 1);
     priv->filenames[n_reports] = NULL;
 
-    for (i = 0; i < n_reports; i++) {
-        const gchar *name = g_list_nth_data(names, i);
+    for (i = 0, node = priv->names;
+         i < n_reports && node;
+         i++, node = g_list_next(node)) {
+        const gchar *name = node->data;
         entries[i].long_name = g_strconcat(name, "-report", NULL);
         entries[i].arg = G_OPTION_ARG_STRING;
         entries[i].arg_data = &priv->filenames[i];
-        entries[i].description = g_strdup_printf("Set filename of %s report", name);
+        entries[i].description = g_strdup_printf("Set filename of %s report",
+                                                 name);
         entries[i].arg_description = "FILE";
     }
-
-    g_list_foreach(names, (GFunc)g_free, NULL);
-    g_list_free(names);
 
     return entries;
 }
@@ -168,7 +183,7 @@ set_option_context (CutFactoryBuilder *builder, GOptionContext *context)
 }
 
 static CutModuleFactory *
-build_factory (CutFactoryBuilder *builder, const gchar *report_type, 
+build_factory (CutFactoryBuilder *builder, const gchar *report_type,
                const gchar *first_property, ...)
 {
     CutModuleFactory *factory = NULL;
@@ -192,20 +207,25 @@ static GList *
 build (CutFactoryBuilder *builder)
 {
     GList *factories = NULL;
-    CutReportFactoryBuilderPrivate *priv = CUT_REPORT_FACTORY_BUILDER_GET_PRIVATE(builder);
+    CutReportFactoryBuilderPrivate *priv;
     const gchar **filename;
+    GList *node;
 
-    filename = (const gchar **)priv->filenames; 
-    while (*filename) {
+    priv = CUT_REPORT_FACTORY_BUILDER_GET_PRIVATE(builder);
+    for (filename = (const gchar **)priv->filenames, node = priv->names;
+         node;
+         filename++, node = g_list_next(node)) {
         CutModuleFactory *factory;
         const gchar *report_type;
 
-        report_type = "xml"; /* wrkaround */
-        factory = build_factory(builder, report_type, "filename", *filename, NULL);
+        if (!*filename)
+            continue;
+        report_type = node->data;
+        factory = build_factory(builder, report_type,
+                                "filename", *filename,
+                                NULL);
         if (factory)
             factories = g_list_prepend(factories, factory);
-
-        filename++;
     }
 
     return factories;
