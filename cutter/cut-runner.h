@@ -164,6 +164,7 @@ void          cut_runner_start_test_suite          (CutRunner   *runner,
                                                     CutTestSuite *test_suite);
 
 guint         cut_runner_get_n_tests               (CutRunner *runner);
+guint         cut_runner_get_n_successes           (CutRunner *runner);
 guint         cut_runner_get_n_assertions          (CutRunner *runner);
 guint         cut_runner_get_n_failures            (CutRunner *runner);
 guint         cut_runner_get_n_errors              (CutRunner *runner);

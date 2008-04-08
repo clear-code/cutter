@@ -38,6 +38,7 @@ struct _CutRunnerPrivate
 {
     guint n_tests;
     guint n_assertions;
+    guint n_successes;
     guint n_failures;
     guint n_errors;
     guint n_pendings;
@@ -64,6 +65,7 @@ enum
     PROP_0,
     PROP_N_TESTS,
     PROP_N_ASSERTIONS,
+    PROP_N_SUCCESSES,
     PROP_N_FAILURES,
     PROP_N_ERRORS,
     PROP_N_PENDINGS,
@@ -147,6 +149,13 @@ cut_runner_class_init (CutRunnerClass *klass)
                              0, G_MAXUINT32, 0,
                              G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class, PROP_N_ASSERTIONS, spec);
+
+    spec = g_param_spec_uint("n-successes",
+                             "Number of successes",
+                             "The number of successes of the runner",
+                             0, G_MAXUINT32, 0,
+                             G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+    g_object_class_install_property(gobject_class, PROP_N_SUCCESSES, spec);
 
     spec = g_param_spec_uint("n-failures",
                              "Number of failures",
@@ -440,6 +449,7 @@ cut_runner_init (CutRunner *runner)
 
     priv->n_tests = 0;
     priv->n_assertions = 0;
+    priv->n_successes = 0;
     priv->n_failures = 0;
     priv->n_errors = 0;
     priv->n_pendings = 0;
@@ -523,6 +533,9 @@ set_property (GObject      *object,
       case PROP_N_ASSERTIONS:
         priv->n_assertions = g_value_get_uint(value);
         break;
+      case PROP_N_SUCCESSES:
+        priv->n_successes = g_value_get_uint(value);
+        break;
       case PROP_N_FAILURES:
         priv->n_failures = g_value_get_uint(value);
         break;
@@ -567,6 +580,9 @@ get_property (GObject    *object,
         break;
       case PROP_N_ASSERTIONS:
         g_value_set_uint(value, priv->n_assertions);
+        break;
+      case PROP_N_SUCCESSES:
+        g_value_set_uint(value, priv->n_successes);
         break;
       case PROP_N_FAILURES:
         g_value_set_uint(value, priv->n_failures);
@@ -740,6 +756,7 @@ cb_success (CutTest *test, CutTestContext *test_context, CutTestResult *result,
     priv = CUT_RUNNER_GET_PRIVATE(runner);
     g_mutex_lock(priv->mutex);
     priv->results = g_list_prepend(priv->results, g_object_ref(result));
+    priv->n_successes++;
     g_mutex_unlock(priv->mutex);
 
     g_signal_emit(runner, signals[SUCCESS_TEST], 0, test, test_context, result);
@@ -1110,6 +1127,12 @@ guint
 cut_runner_get_n_assertions (CutRunner *runner)
 {
     return CUT_RUNNER_GET_PRIVATE(runner)->n_assertions;
+}
+
+guint
+cut_runner_get_n_successes (CutRunner *runner)
+{
+    return CUT_RUNNER_GET_PRIVATE(runner)->n_successes;
 }
 
 guint
