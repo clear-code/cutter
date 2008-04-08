@@ -22,12 +22,13 @@ xml_factory_la_CPPFLAGS = -DG_LOG_DOMAIN=\"Cut/ReportFactory:XML\"
 xml_factory_la_SOURCES = cut-report-factory-xml.c
 xml_factory_la_LIBADD = $(GLIB_LIBS)
 
-if HAVE_CAIRO
+if HAVE_CAIRO_PDF
 pdf_la_CPPFLAGS = -DG_LOG_DOMAIN=\"Cut/Report:PDF\"	\
-	$(CAIRO_CFLAGS)
+	$(CAIRO_PDF_CFLAGS)
 pdf_la_SOURCES = cut-report-pdf.c
-pdf_la_LIBADD = $(GLIB_LIBS)	\
-	$(CAIRO_LDFLAGS)
+pdf_la_LIBADD =		\
+	$(GLIB_LIBS)	\
+	$(CAIRO_PDF_LIBS)
 
 pdf_factory_la_CPPFLAGS = -DG_LOG_DOMAIN=\"Cut/ReportFactory:PDF\"
 pdf_factory_la_SOURCES = cut-report-factory-pdf.c
