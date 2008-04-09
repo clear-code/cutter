@@ -462,54 +462,105 @@ show_pie_piece (CutReportPDF *report,
 }
 
 static void
+get_color_from_test_status (CutTestResultStatus status,
+                            gdouble *red, gdouble *green, gdouble *blue)
+{
+    switch (status) {
+      case CUT_TEST_RESULT_SUCCESS:
+        *red = 0x8a / (gdouble)0xff;
+        *green = 0xe2 / (gdouble)0xff;
+        *blue = 0x34 / (gdouble)0xff;
+        break;
+      case CUT_TEST_RESULT_NOTIFICATION:
+        *red = 0x72 / (gdouble)0xff;
+        *green = 0x9f / (gdouble)0xff;
+        *blue = 0xcf / (gdouble)0xff;
+        break;
+      case CUT_TEST_RESULT_OMISSION:
+        *red = 0x20 / (gdouble)0xff;
+        *green = 0x4a / (gdouble)0xff;
+        *blue = 0x87 / (gdouble)0xff;
+        break;
+      case CUT_TEST_RESULT_PENDING:
+        *red = 0x5c / (gdouble)0xff;
+        *green = 0x35 / (gdouble)0xff;
+        *blue = 0x66 / (gdouble)0xff;
+        break;
+      case CUT_TEST_RESULT_FAILURE:
+        *red = 0xef / (gdouble)0xff;
+        *green = 0x29 / (gdouble)0xff;
+        *blue = 0x29 / (gdouble)0xff;
+        break;
+      case CUT_TEST_RESULT_ERROR:
+        *red = 0xfc / (gdouble)0xff;
+        *green = 0xe9 / (gdouble)0xff;
+        *blue = 0x4f / (gdouble)0xff;
+        break;
+      default:
+        break;
+    }
+}
+
+static gdouble
+show_status_pie_piece (CutReportPDF *report, CutRunner *runner,
+                       gdouble start, CutTestResultStatus status)
+{
+    gdouble red, green, blue;
+    guint n_tests = 0, n_results;
+    gdouble end;
+
+    get_color_from_test_status(status,
+                               &red, &green, &blue);
+    n_tests = cut_runner_get_n_tests(runner);
+
+    switch (status) {
+      case CUT_TEST_RESULT_SUCCESS:
+        n_results = cut_runner_get_n_successes(runner);
+        break;
+      case CUT_TEST_RESULT_NOTIFICATION:
+        n_results = cut_runner_get_n_notifications(runner);
+        break;
+      case CUT_TEST_RESULT_OMISSION:
+        n_results = cut_runner_get_n_omissions(runner);
+        break;
+      case CUT_TEST_RESULT_PENDING:
+        n_results = cut_runner_get_n_pendings(runner);
+        break;
+      case CUT_TEST_RESULT_FAILURE:
+        n_results = cut_runner_get_n_failures(runner);
+        break;
+      case CUT_TEST_RESULT_ERROR:
+        n_results = cut_runner_get_n_errors(runner);
+        break;
+      default:
+        return start;
+        break;
+    }
+
+    end = show_pie_piece(report, start,
+                         ((gdouble)n_results / (gdouble)n_tests),
+                         red, green, blue);
+
+    return end;
+}
+
+static void
 cb_complete_test_suite (CutRunner *runner, CutTestSuite *test_suite,
                         CutReportPDF *report)
 {
     double start;
-    guint n_tests;
 
     cairo_show_page(report->context);
 
     cairo_set_line_width(report->context, 0.75);
 
     start = 2 * M_PI * 0.75;
-    n_tests = cut_runner_get_n_tests(runner);
-    start = show_pie_piece(report,
-                           start, ((gdouble)cut_runner_get_n_successes(runner) /
-                                   (gdouble)n_tests),
-                           0x8a / (gdouble)0xff,
-                           0xe2 / (gdouble)0xff,
-                           0x34 / (gdouble)0xff);
-    start = show_pie_piece(report,
-                           start, ((gdouble)cut_runner_get_n_failures(runner) /
-                                   (gdouble)n_tests),
-                           0xef / (gdouble)0xff,
-                           0x29 / (gdouble)0xff,
-                           0x29 / (gdouble)0xff);
-    start = show_pie_piece(report,
-                           start, ((gdouble)cut_runner_get_n_errors(runner) /
-                                   (gdouble)n_tests),
-                           0xfc / (gdouble)0xff,
-                           0xe9 / (gdouble)0xff,
-                           0x4f / (gdouble)0xff);
-    start = show_pie_piece(report,
-                           start, ((gdouble)cut_runner_get_n_pendings(runner) /
-                                   (gdouble)n_tests),
-                           0x5c / (gdouble)0xff,
-                           0x35 / (gdouble)0xff,
-                           0x66 / (gdouble)0xff);
-    start = show_pie_piece(report,
-                           start, ((gdouble)cut_runner_get_n_notifications(runner) /
-                                   (gdouble)n_tests),
-                           0x72 / (gdouble)0xff,
-                           0x9f / (gdouble)0xff,
-                           0xcf / (gdouble)0xff);
-    start = show_pie_piece(report,
-                           start, ((gdouble)cut_runner_get_n_omissions(runner) /
-                                   (gdouble)n_tests),
-                           0x20 / (gdouble)0xff,
-                           0x4a / (gdouble)0xff,
-                           0x87 / (gdouble)0xff);
+    start = show_status_pie_piece(report, runner, start, CUT_TEST_RESULT_SUCCESS);
+    start = show_status_pie_piece(report, runner, start, CUT_TEST_RESULT_FAILURE);
+    start = show_status_pie_piece(report, runner, start, CUT_TEST_RESULT_ERROR);
+    start = show_status_pie_piece(report, runner, start, CUT_TEST_RESULT_PENDING);
+    start = show_status_pie_piece(report, runner, start, CUT_TEST_RESULT_NOTIFICATION);
+    start = show_status_pie_piece(report, runner, start, CUT_TEST_RESULT_OMISSION);
 }
 
 static void
