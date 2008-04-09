@@ -356,7 +356,7 @@ show_text_at_center (CutReportPDF *report, const gchar *utf8,
 }
 
 static void
-show_text (CutReportPDF *report, const gchar *utf8)
+show_text_at_current_position_with_page_feed (CutReportPDF *report, const gchar *utf8)
 {
     PangoLayout *layout;
     double x, y;
@@ -388,14 +388,14 @@ static void
 cb_start_test_suite (CutRunner *runner, CutTestSuite *test_suite,
                      CutReportPDF *report)
 {
-    show_text(report, cut_test_get_name(CUT_TEST(test_suite)));
+    show_text_at_current_position_with_page_feed(report, cut_test_get_name(CUT_TEST(test_suite)));
 }
 
 static void
 cb_start_test_case (CutRunner *runner, CutTestCase *test_case,
                     CutReportPDF *report)
 {
-    show_text(report, cut_test_get_name(CUT_TEST(test_case)));
+    show_text_at_current_position_with_page_feed(report, cut_test_get_name(CUT_TEST(test_case)));
     relative_move_to(report, 10, 0);
 }
 
@@ -403,7 +403,7 @@ static void
 cb_start_test (CutRunner *runner, CutTest *test, CutTestContext *test_context,
                CutReportPDF *report)
 {
-    show_text(report, cut_test_get_name(test));
+    show_text_at_current_position_with_page_feed(report, cut_test_get_name(test));
 }
 
 static void
