@@ -383,29 +383,77 @@ cb_complete_test_case (CutRunner *runner, CutTestCase *test_case,
     relative_move_to(report, -10, 5);
 }
 
+#define CENTER_X 100
+#define CENTER_Y 100
+#define RADIUS 50
+
+static gdouble
+show_pie_piece (CutReportPDF *report,
+                gdouble start, gdouble percent,
+                gdouble red, gdouble green, gdouble blue)
+{
+    gdouble end;
+
+    cairo_move_to(report->context, CENTER_X, CENTER_Y);
+    end = start + 2 * M_PI * percent;
+    cairo_arc(report->context, CENTER_X, CENTER_Y, RADIUS, start, end);
+    cairo_set_source_rgba(report->context, red, green, blue, 0.8);
+    cairo_fill_preserve(report->context);
+    cairo_set_source_rgba(report->context, 0, 0, 0, 0.8);
+    cairo_stroke(report->context);
+
+    return end;
+}
+
 static void
 cb_complete_test_suite (CutRunner *runner, CutTestSuite *test_suite,
                         CutReportPDF *report)
 {
-    double start, end;
+    double start;
+    guint n_tests;
 
     cairo_show_page(report->context);
 
-    cairo_move_to(report->context, 100, 100);
-    start = 2 * M_PI * 0.75;
-    end = start + 2 * M_PI * ((gdouble)cut_runner_get_n_successes(runner) /
-                              (gdouble)cut_runner_get_n_tests(runner));
-    cairo_arc(report->context, 100, 100, 50, start, end);
-    cairo_set_source_rgba(report->context, 0, 1.0, 0, 0.8);
-    cairo_fill(report->context);
+    cairo_set_line_width(report->context, 0.75);
 
-    cairo_move_to(report->context, 100, 100);
-    start = end;
-    end = start + 2 * M_PI * ((gdouble)cut_runner_get_n_failures(runner) /
-                              (gdouble)cut_runner_get_n_tests(runner));
-    cairo_arc(report->context, 100, 100, 50, start, end);
-    cairo_set_source_rgba(report->context, 1.0, 0, 0, 0.8);
-    cairo_fill(report->context);
+    start = 2 * M_PI * 0.75;
+    n_tests = cut_runner_get_n_tests(runner);
+    start = show_pie_piece(report,
+                           start, ((gdouble)cut_runner_get_n_successes(runner) /
+                                   (gdouble)n_tests),
+                           0x4e / (gdouble)0xff,
+                           0x9a / (gdouble)0xff,
+                           0x06 / (gdouble)0xff);
+    start = show_pie_piece(report,
+                           start, ((gdouble)cut_runner_get_n_failures(runner) /
+                                   (gdouble)n_tests),
+                           0xa4 / (gdouble)0xff,
+                           0x00 / (gdouble)0xff,
+                           0x00 / (gdouble)0xff);
+    start = show_pie_piece(report,
+                           start, ((gdouble)cut_runner_get_n_errors(runner) /
+                                   (gdouble)n_tests),
+                           0xfc / (gdouble)0xff,
+                           0xe9 / (gdouble)0xff,
+                           0x4f / (gdouble)0xff);
+    start = show_pie_piece(report,
+                           start, ((gdouble)cut_runner_get_n_pendings(runner) /
+                                   (gdouble)n_tests),
+                           0x5c / (gdouble)0xff,
+                           0x35 / (gdouble)0xff,
+                           0x66 / (gdouble)0xff);
+    start = show_pie_piece(report,
+                           start, ((gdouble)cut_runner_get_n_notifications(runner) /
+                                   (gdouble)n_tests),
+                           0x72 / (gdouble)0xff,
+                           0x9f / (gdouble)0xff,
+                           0xcf / (gdouble)0xff);
+    start = show_pie_piece(report,
+                           start, ((gdouble)cut_runner_get_n_omissions(runner) /
+                                   (gdouble)n_tests),
+                           0x20 / (gdouble)0xff,
+                           0x4a / (gdouble)0xff,
+                           0x87 / (gdouble)0xff);
 }
 
 static void
