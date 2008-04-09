@@ -208,31 +208,39 @@ show_text_at_center (cairo_t *cr, const gchar *utf8,
 
 #define CENTER_X 100
 #define CENTER_Y 100
-#define RADIUS 50
 
 static gdouble
-show_pie_piece (cairo_t *cr, gdouble start, gdouble percent,
+get_pie_radius (CutCairoPieChart *chart)
+{
+    return CUT_CAIRO_PIE_CHART_GET_PRIVATE(chart)->height / 2.0;
+}
+
+static gdouble
+show_pie_piece (CutCairoPieChart *chart,
+                cairo_t *cr, gdouble start, gdouble percent,
                 CutTestResultStatus status)
 {
     gdouble end;
     gdouble text_x, text_y;
-    gdouble radian;
+    gdouble radian, radius;
     gchar *string;
 
     if (percent == 0.0)
         return start;
 
+    radius = get_pie_radius(chart);
+
     cairo_move_to(cr, CENTER_X, CENTER_Y);
     end = start + 2 * M_PI * percent;
-    cairo_arc(cr, CENTER_X, CENTER_Y, RADIUS, start, end);
+    cairo_arc(cr, CENTER_X, CENTER_Y, radius, start, end);
     cut_cairo_set_source_result_color(cr, status);
     cairo_fill_preserve(cr);
     cairo_set_source_rgba(cr, 0, 0, 0, 0.8);
     cairo_stroke(cr);
 
     radian = start + ((end - start) / 2.0);
-    text_x = CENTER_X + cos(radian) * (RADIUS + 15);
-    text_y = CENTER_Y + sin(radian) * (RADIUS + 15);
+    text_x = CENTER_X + cos(radian) * (radius + 15);
+    text_y = CENTER_Y + sin(radian) * (radius + 15);
     string = g_strdup_printf("%.1f%%", percent * 100);
     show_text_at_center(cr, string, text_x, text_y);
     g_free(string);
@@ -261,10 +269,13 @@ show_legend (CutCairoPieChart *chart, cairo_t *cr, CutTestResultStatus status)
     PangoLayout *layout;
     const gchar *text;
     gdouble x, y;
+    gdouble radius;
 
     priv = CUT_CAIRO_PIE_CHART_GET_PRIVATE(chart);
-    x = CENTER_X + RADIUS + 10;
-    y = CENTER_Y - RADIUS + priv->n_legends * 10;
+
+    radius = get_pie_radius(chart);
+    x = CENTER_X + radius + 10;
+    y = CENTER_Y - radius + priv->n_legends * 10;
     show_legend_square(cr, x, y, status);
 
     text = cut_test_result_status_to_signal_name(status);
@@ -315,7 +326,7 @@ show_status_pie_piece (CutCairoPieChart *chart,
     if (n_results == 0)
         return start;
 
-    end = show_pie_piece(cr, start,
+    end = show_pie_piece(chart, cr, start,
                          ((gdouble)n_results / (gdouble)n_tests),
                          status);
     show_legend(chart, cr, status);

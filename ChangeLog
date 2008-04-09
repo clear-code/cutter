@@ -2,6 +2,8 @@
 
 	* cutter/module/report/cut-cairo-pie-chart.c: Added some functions to
 	get chart size.
+	* cutter/module/report/cut-cairo-pie-chart.c: Calculate pie radius
+	from chart height.
 
 2008-04-09  Kouhei Sutou  <kou@cozmixng.org>
 
