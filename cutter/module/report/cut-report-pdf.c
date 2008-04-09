@@ -276,15 +276,6 @@ init_page (cairo_t *cr)
 }
 
 static void
-relative_move_to (cairo_t *cr, double x, double y)
-{
-    double current_x, current_y;
-
-    cairo_get_current_point(cr, &current_x, &current_y);
-    cairo_move_to(cr, current_x + x, current_y + y);
-}
-
-static void
 cb_ready_test_suite (CutRunner *runner, CutTestSuite *test_suite,
                      guint n_test_cases, guint n_tests,
                      CutReportPDF *report)
@@ -383,6 +374,7 @@ cb_complete_test_suite (CutRunner *runner, CutTestSuite *test_suite,
 {
     CutCairoPieChart *chart;
 
+    cairo_move_to(report->context, 50, 50);
     chart = cut_cairo_pie_chart_new(100, 100);
     cut_cairo_pie_chart_draw(chart, report->context, runner);
     g_object_unref(chart);

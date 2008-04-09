@@ -206,8 +206,17 @@ show_text_at_center (cairo_t *cr, const gchar *utf8,
     g_object_unref(layout);
 }
 
-#define CENTER_X 100
-#define CENTER_Y 100
+static void
+get_pie_center_position (CutCairoPieChart *chart,
+                         gdouble *x, gdouble *y)
+{
+    CutCairoPieChartPrivate *priv;
+    
+    priv = CUT_CAIRO_PIE_CHART_GET_PRIVATE(chart);
+
+    *x = priv->width / 2.0;
+    *y = priv->height / 2.0;
+}
 
 static gdouble
 get_pie_radius (CutCairoPieChart *chart)
@@ -221,6 +230,7 @@ show_pie_piece (CutCairoPieChart *chart,
                 CutTestResultStatus status)
 {
     gdouble end;
+    gdouble center_x, center_y;
     gdouble text_x, text_y;
     gdouble radian, radius;
     gchar *string;
@@ -228,19 +238,20 @@ show_pie_piece (CutCairoPieChart *chart,
     if (percent == 0.0)
         return start;
 
+    get_pie_center_position(chart, &center_x, &center_y);
     radius = get_pie_radius(chart);
 
-    cairo_move_to(cr, CENTER_X, CENTER_Y);
+    cairo_move_to(cr, center_x, center_y);
     end = start + 2 * M_PI * percent;
-    cairo_arc(cr, CENTER_X, CENTER_Y, radius, start, end);
+    cairo_arc(cr, center_x, center_y, radius, start, end);
     cut_cairo_set_source_result_color(cr, status);
     cairo_fill_preserve(cr);
     cairo_set_source_rgba(cr, 0, 0, 0, 0.8);
     cairo_stroke(cr);
 
     radian = start + ((end - start) / 2.0);
-    text_x = CENTER_X + cos(radian) * (radius + 15);
-    text_y = CENTER_Y + sin(radian) * (radius + 15);
+    text_x = center_x + cos(radian) * (radius + 15);
+    text_y = center_y + sin(radian) * (radius + 15);
     string = g_strdup_printf("%.1f%%", percent * 100);
     show_text_at_center(cr, string, text_x, text_y);
     g_free(string);
@@ -269,13 +280,16 @@ show_legend (CutCairoPieChart *chart, cairo_t *cr, CutTestResultStatus status)
     PangoLayout *layout;
     const gchar *text;
     gdouble x, y;
+    gdouble center_x, center_y;
     gdouble radius;
 
     priv = CUT_CAIRO_PIE_CHART_GET_PRIVATE(chart);
 
     radius = get_pie_radius(chart);
-    x = CENTER_X + radius + 10;
-    y = CENTER_Y - radius + priv->n_legends * 10;
+    get_pie_center_position(chart, &center_x, &center_y);
+
+    x = center_x + radius + 10;
+    y = center_y - radius + priv->n_legends * 10;
     show_legend_square(cr, x, y, status);
 
     text = cut_test_result_status_to_signal_name(status);
@@ -339,9 +353,13 @@ cut_cairo_pie_chart_draw (CutCairoPieChart *chart,
                           cairo_t *cr, CutRunner *runner)
 {
     double start;
+    double current_x, current_y;
+
+    cairo_get_current_point(cr, &current_x, &current_y);
 
     cairo_save(cr);
     cairo_set_line_width(cr, 0.75);
+    cairo_translate(cr, current_x, current_y);
 
     start = 2 * M_PI * 0.75;
     start = show_status_pie_piece(chart, cr, runner, start,
