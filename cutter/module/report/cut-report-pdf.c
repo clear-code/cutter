@@ -387,6 +387,34 @@ cb_complete_test_case (CutRunner *runner, CutTestCase *test_case,
 #define CENTER_Y 100
 #define RADIUS 50
 
+static void
+show_text_at_center (CutReportPDF *report, const gchar *utf8,
+                     guint center_x, guint center_y)
+{
+    PangoLayout *layout;
+    PangoFontDescription *description;
+    int width, height;
+
+    if (!utf8)
+        return;
+
+    layout = pango_cairo_create_layout(report->context);
+
+    description = pango_font_description_from_string("Mono 10");
+    pango_layout_set_font_description(layout, description);
+    pango_font_description_free(description);
+
+    pango_layout_set_text(layout, utf8, -1);
+
+    pango_layout_get_pixel_size(layout, &width, &height);
+
+    cairo_move_to(report->context,
+                  center_x - (width / 2),
+                  center_y - (height / 2));
+    pango_cairo_show_layout(report->context, layout);
+    g_object_unref(layout);
+}
+
 static gdouble
 show_pie_piece (CutReportPDF *report,
                 gdouble start, gdouble percent,
@@ -395,6 +423,9 @@ show_pie_piece (CutReportPDF *report,
     gdouble end;
     gdouble text_x, text_y;
     gchar *string;
+
+    if (percent == 0.0)
+        return start;
 
     cairo_move_to(report->context, CENTER_X, CENTER_Y);
     end = start + 2 * M_PI * percent;
@@ -406,9 +437,8 @@ show_pie_piece (CutReportPDF *report,
 
     text_x = CENTER_X + sin((end - start) / 2) * (RADIUS + 10);
     text_y = CENTER_Y - cos((end - start) / 2) * (RADIUS + 10);
-    cairo_move_to(report->context, text_x, text_y);
     string = g_strdup_printf("%.1f%%", percent * 100);
-    show_text(report, string);
+    show_text_at_center(report, string, text_x, text_y);
     g_free(string);
 
     return end;

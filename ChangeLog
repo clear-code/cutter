@@ -11,6 +11,8 @@
 
 	* test/test-cut-runner.c: Added test for cut_runner_get_n_().
 	* cutter/module/report/cut-report-pdf.c: Show percentage on pie chart.
+	* cutter/module/report/cut-report-pdf.c: Show percentage text outside
+	of pie chart.
 
 2008-04-09  Kouhei Sutou  <kou@cozmixng.org>
 
