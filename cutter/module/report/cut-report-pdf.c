@@ -580,9 +580,8 @@ show_status_pie_piece (CutReportPDF *report, CutRunner *runner,
         break;
     }
 
-    if (n_results == 0) {
+    if (n_results == 0)
         return start;
-    }
 
     end = show_pie_piece(report, start,
                          ((gdouble)n_results / (gdouble)n_tests),
@@ -607,7 +606,6 @@ cb_complete_test_suite (CutRunner *runner, CutTestSuite *test_suite,
     start = show_status_pie_piece(report, runner, start, CUT_TEST_RESULT_FAILURE);
     start = show_status_pie_piece(report, runner, start, CUT_TEST_RESULT_ERROR);
     start = show_status_pie_piece(report, runner, start, CUT_TEST_RESULT_PENDING);
-    /* start = show_status_pie_piece(report, runner, start, CUT_TEST_RESULT_NOTIFICATION); */
     start = show_status_pie_piece(report, runner, start, CUT_TEST_RESULT_OMISSION);
 }
 
