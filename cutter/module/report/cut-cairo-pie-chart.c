@@ -23,7 +23,6 @@
 
 #include <math.h>
 #include <glib.h>
-#include <cairo.h>
 
 #include "cut-cairo-pie-chart.h"
 
@@ -144,6 +143,12 @@ CutCairoPieChart *
 cut_cairo_pie_chart_new (void)
 {
     return g_object_new(CUT_TYPE_CAIRO_PIE_CHART, NULL);
+}
+
+void
+cut_cairo_pie_chart_draw (CutCairoPieChart *chart,
+                          cairo_t *cr)
+{
 }
 
 /*

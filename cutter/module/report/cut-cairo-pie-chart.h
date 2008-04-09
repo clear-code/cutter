@@ -21,6 +21,7 @@
 #define __CUT_CAIRO_PIE_CHART_H__
 
 #include <glib-object.h>
+#include <cairo.h>
 
 G_BEGIN_DECLS
 
@@ -47,6 +48,8 @@ struct _CutCairoPieChartClass
 GType             cut_cairo_pie_chart_get_type  (void) G_GNUC_CONST;
 
 CutCairoPieChart *cut_cairo_pie_chart_new       (void);
+void              cut_cairo_pie_chart_draw      (CutCairoPieChart *chart,
+                                                 cairo_t *cr);
 
 G_END_DECLS
 
