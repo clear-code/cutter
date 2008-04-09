@@ -29,6 +29,7 @@ pdf_la_CPPFLAGS =				\
 	$(PANGO_CAIRO_CFLAGS)
 pdf_la_SOURCES = 		\
 	cut-report-pdf.c 	\
+	cut-cairo.c		\
 	cut-cairo-pie-chart.c
 pdf_la_LIBADD =			\
 	$(GLIB_LIBS)		\

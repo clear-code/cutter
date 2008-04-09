@@ -1,5 +1,7 @@
 2008-04-09  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/module/report/: use CutCairoPieChart to render a pie chart.
+
 	* cutter/module/report/cut-report-pdf.c: show all results in pie chart.
 
 	* cutter/module/ui/cut-ui-console.c: show percentage of passed tests.

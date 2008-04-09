@@ -23,6 +23,11 @@
 
 #include <math.h>
 #include <glib.h>
+#include <cairo-pdf.h>
+#include <pango/pangocairo.h>
+
+#include <cutter/cut-test-result.h>
+#include <cutter/cut-runner.h>
 
 #include "cut-cairo-pie-chart.h"
 
@@ -33,6 +38,7 @@ struct _CutCairoPieChartPrivate
 {
     gdouble width;
     gdouble height;
+    guint n_legends;
 };
 
 enum
@@ -88,8 +94,9 @@ cut_cairo_pie_chart_class_init (CutCairoPieChartClass *klass)
 }
 
 static void
-cut_cairo_pie_chart_init (CutCairoPieChart *cairo_pie_chart)
+cut_cairo_pie_chart_init (CutCairoPieChart *chart)
 {
+    CUT_CAIRO_PIE_CHART_GET_PRIVATE(chart)->n_legends = 0;
 }
 
 static void
@@ -145,10 +152,240 @@ cut_cairo_pie_chart_new (void)
     return g_object_new(CUT_TYPE_CAIRO_PIE_CHART, NULL);
 }
 
+static PangoLayout *
+create_pango_layout (cairo_t *cr, const gchar *utf8, gint font_size)
+{
+    PangoLayout *layout;
+    PangoFontDescription *description;
+    gchar *description_string;
+
+    if (!utf8)
+        return NULL;
+
+    layout = pango_cairo_create_layout(cr);
+
+    if (font_size < 0)
+        description_string = g_strdup("Mono");
+    else
+        description_string = g_strdup_printf("Mono %d", font_size);
+    description = pango_font_description_from_string(description_string);
+    g_free(description_string);
+
+    pango_layout_set_font_description(layout, description);
+    pango_font_description_free(description);
+
+    pango_layout_set_text(layout, utf8, -1);
+
+    return layout;
+}
+
+static void
+show_text_at_center (cairo_t *cr, const gchar *utf8,
+                     gdouble center_x, gdouble center_y)
+{
+    PangoLayout *layout;
+    int width, height;
+
+    if (!utf8)
+        return;
+
+    layout = create_pango_layout(cr, utf8, 8);
+    if (!layout)
+        return;
+
+    pango_layout_get_pixel_size(layout, &width, &height);
+
+    cairo_move_to(cr,
+                  center_x - (width / 2.0),
+                  center_y - (height / 2.0));
+    pango_cairo_show_layout(cr, layout);
+    g_object_unref(layout);
+}
+
+#define CENTER_X 100
+#define CENTER_Y 100
+#define RADIUS 50
+
+static gdouble
+show_pie_piece (cairo_t *cr,
+                gdouble start, gdouble percent,
+                gdouble red, gdouble green, gdouble blue)
+{
+    gdouble end;
+    gdouble text_x, text_y;
+    gdouble radian;
+    gchar *string;
+
+    if (percent == 0.0)
+        return start;
+
+    cairo_move_to(cr, CENTER_X, CENTER_Y);
+    end = start + 2 * M_PI * percent;
+    cairo_arc(cr, CENTER_X, CENTER_Y, RADIUS, start, end);
+    cairo_set_source_rgba(cr, red, green, blue, 0.8);
+    cairo_fill_preserve(cr);
+    cairo_set_source_rgba(cr, 0, 0, 0, 0.8);
+    cairo_stroke(cr);
+
+    radian = start + ((end - start) / 2.0);
+    text_x = CENTER_X + cos(radian) * (RADIUS + 15);
+    text_y = CENTER_Y + sin(radian) * (RADIUS + 15);
+    string = g_strdup_printf("%.1f%%", percent * 100);
+    show_text_at_center(cr, string, text_x, text_y);
+    g_free(string);
+
+    return end;
+}
+
+#define LEGEND_X 200
+#define LEGEND_Y 50
+
+static void
+get_color_from_test_status (CutTestResultStatus status,
+                            gdouble *red, gdouble *green, gdouble *blue)
+{
+    switch (status) {
+      case CUT_TEST_RESULT_SUCCESS:
+        *red = 0x8a / (gdouble)0xff;
+        *green = 0xe2 / (gdouble)0xff;
+        *blue = 0x34 / (gdouble)0xff;
+        break;
+      case CUT_TEST_RESULT_NOTIFICATION:
+        *red = 0x72 / (gdouble)0xff;
+        *green = 0x9f / (gdouble)0xff;
+        *blue = 0xcf / (gdouble)0xff;
+        break;
+      case CUT_TEST_RESULT_OMISSION:
+        *red = 0x20 / (gdouble)0xff;
+        *green = 0x4a / (gdouble)0xff;
+        *blue = 0x87 / (gdouble)0xff;
+        break;
+      case CUT_TEST_RESULT_PENDING:
+        *red = 0x5c / (gdouble)0xff;
+        *green = 0x35 / (gdouble)0xff;
+        *blue = 0x66 / (gdouble)0xff;
+        break;
+      case CUT_TEST_RESULT_FAILURE:
+        *red = 0xef / (gdouble)0xff;
+        *green = 0x29 / (gdouble)0xff;
+        *blue = 0x29 / (gdouble)0xff;
+        break;
+      case CUT_TEST_RESULT_ERROR:
+        *red = 0xfc / (gdouble)0xff;
+        *green = 0xe9 / (gdouble)0xff;
+        *blue = 0x4f / (gdouble)0xff;
+        break;
+      default:
+        break;
+    }
+}
+
+static void
+show_legend_square (cairo_t *cr, gdouble x, gdouble y,
+                    CutTestResultStatus status)
+{
+    gdouble red, green, blue;
+
+    get_color_from_test_status(status, &red, &green, &blue);
+
+    cairo_rectangle(cr, x, y, 10, 10);
+    cairo_set_source_rgba(cr, red, green, blue, 0.8);
+    cairo_fill_preserve(cr);
+    cairo_set_source_rgba(cr, 0, 0, 0, 0.8);
+    cairo_stroke(cr);
+}
+
+static void
+show_legend (CutCairoPieChart *chart, cairo_t *cr, CutTestResultStatus status)
+{
+    CutCairoPieChartPrivate *priv;
+    PangoLayout *layout;
+    const gchar *text;
+    gdouble x, y;
+
+    priv = CUT_CAIRO_PIE_CHART_GET_PRIVATE(chart);
+    x = CENTER_X + RADIUS + 10;
+    y = CENTER_Y - RADIUS + priv->n_legends * 10;
+    show_legend_square(cr, x, y, status);
+
+    text = cut_test_result_status_to_signal_name(status);
+    layout = create_pango_layout(cr, text, 8);
+    if (!layout)
+        return;
+
+    cairo_move_to(cr, x + 12, y);
+    pango_cairo_show_layout(cr, layout);
+    g_object_unref(layout);
+
+    priv->n_legends++;
+}
+
+static gdouble
+show_status_pie_piece (CutCairoPieChart *chart,
+                       cairo_t *cr, CutRunner *runner,
+                       gdouble start, CutTestResultStatus status)
+{
+    gdouble red, green, blue;
+    guint n_tests = 0, n_results = 0;
+    gdouble end;
+
+    get_color_from_test_status(status, &red, &green, &blue);
+    n_tests = cut_runner_get_n_tests(runner);
+
+    switch (status) {
+      case CUT_TEST_RESULT_SUCCESS:
+        n_results = cut_runner_get_n_successes(runner);
+        break;
+      case CUT_TEST_RESULT_NOTIFICATION:
+        n_results = cut_runner_get_n_notifications(runner);
+        break;
+      case CUT_TEST_RESULT_OMISSION:
+        n_results = cut_runner_get_n_omissions(runner);
+        break;
+      case CUT_TEST_RESULT_PENDING:
+        n_results = cut_runner_get_n_pendings(runner);
+        break;
+      case CUT_TEST_RESULT_FAILURE:
+        n_results = cut_runner_get_n_failures(runner);
+        break;
+      case CUT_TEST_RESULT_ERROR:
+        n_results = cut_runner_get_n_errors(runner);
+        break;
+      default:
+        break;
+    }
+
+    if (n_results == 0)
+        return start;
+
+    end = show_pie_piece(cr, start,
+                         ((gdouble)n_results / (gdouble)n_tests),
+                         red, green, blue);
+    show_legend(chart, cr, status);
+
+    return end;
+}
+
 void
 cut_cairo_pie_chart_draw (CutCairoPieChart *chart,
-                          cairo_t *cr)
+                          cairo_t *cr, CutRunner *runner)
 {
+
+    double start;
+
+    cairo_set_line_width(cr, 0.75);
+
+    start = 2 * M_PI * 0.75;
+    start = show_status_pie_piece(chart, cr, runner, start,
+                                  CUT_TEST_RESULT_SUCCESS);
+    start = show_status_pie_piece(chart, cr, runner, start,
+                                  CUT_TEST_RESULT_FAILURE);
+    start = show_status_pie_piece(chart, cr, runner, start,
+                                  CUT_TEST_RESULT_ERROR);
+    start = show_status_pie_piece(chart, cr, runner, start,
+                                  CUT_TEST_RESULT_PENDING);
+    start = show_status_pie_piece(chart, cr, runner, start,
+                                  CUT_TEST_RESULT_OMISSION);
 }
 
 /*

@@ -40,6 +40,9 @@
 #include <cutter/cut-test-result.h>
 #include <cutter/cut-enum-types.h>
 
+#include "cut-cairo.h"
+#include "cut-cairo-pie-chart.h"
+
 #define CUT_TYPE_REPORT_PDF            cut_type_report_pdf
 #define CUT_REPORT_PDF(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_REPORT_PDF, CutReportPDF))
 #define CUT_REPORT_PDF_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_REPORT_PDF, CutReportPDFClass))
@@ -58,7 +61,6 @@ struct _CutReportPDF
     CutReport object;
     CutRunner *runner;
     cairo_t *context;
-    guint n_legends;
 };
 
 struct _CutReportPDFClass
@@ -140,7 +142,6 @@ init (CutReportPDF *report)
 {
     report->runner = NULL;
     report->context = NULL;
-    report->n_legends = 0;
 }
 
 static void
@@ -269,18 +270,18 @@ get_property (GObject    *object,
 }
 
 static void
-init_page (CutReportPDF *report)
+init_page (cairo_t *cr)
 {
-    cairo_move_to(report->context, 10, 10);
+    cairo_move_to(cr, 10, 10);
 }
 
 static void
-relative_move_to (CutReportPDF *report, double x, double y)
+relative_move_to (cairo_t *cr, double x, double y)
 {
     double current_x, current_y;
 
-    cairo_get_current_point(report->context, &current_x, &current_y);
-    cairo_move_to(report->context, current_x + x, current_y + y);
+    cairo_get_current_point(cr, &current_x, &current_y);
+    cairo_move_to(cr, current_x + x, current_y + y);
 }
 
 static void
@@ -304,61 +305,12 @@ cb_ready_test_suite (CutRunner *runner, CutTestSuite *test_suite,
     report->context = cairo_create(surface);
     cairo_surface_destroy(surface);
 
-    init_page(report);
-}
-
-static PangoLayout *
-create_pango_layout (CutReportPDF *report, const gchar *utf8, gint font_size)
-{
-    PangoLayout *layout;
-    PangoFontDescription *description;
-    gchar *description_string;
-
-    if (!utf8)
-        return NULL;
-
-    layout = pango_cairo_create_layout(report->context);
-
-    if (font_size < 0)
-        description_string = g_strdup("Mono");
-    else
-        description_string = g_strdup_printf("Mono %d", font_size);
-    description = pango_font_description_from_string(description_string);
-    g_free(description_string);
-
-    pango_layout_set_font_description(layout, description);
-    pango_font_description_free(description);
-
-    pango_layout_set_text(layout, utf8, -1);
-
-    return layout;
+    init_page(report->context);
 }
 
 static void
-show_text_at_center (CutReportPDF *report, const gchar *utf8,
-                     gdouble center_x, gdouble center_y)
-{
-    PangoLayout *layout;
-    int width, height;
-
-    if (!utf8)
-        return;
-
-    layout = create_pango_layout(report, utf8, 8);
-    if (!layout)
-        return;
-
-    pango_layout_get_pixel_size(layout, &width, &height);
-
-    cairo_move_to(report->context,
-                  center_x - (width / 2.0),
-                  center_y - (height / 2.0));
-    pango_cairo_show_layout(report->context, layout);
-    g_object_unref(layout);
-}
-
-static void
-show_text_at_current_position_with_page_feed (CutReportPDF *report, const gchar *utf8)
+show_text_at_current_position_with_page_feed (cairo_t *cr,
+                                              const gchar *utf8)
 {
     PangoLayout *layout;
     double x, y;
@@ -367,22 +319,22 @@ show_text_at_current_position_with_page_feed (CutReportPDF *report, const gchar 
     if (!utf8)
         return;
 
-    layout = create_pango_layout(report, utf8, 10);
+    layout = cut_cairo_create_pango_layout(cr, utf8, 10);
     if (!layout)
         return;
 
-    cairo_get_current_point(report->context, &x, &y);
+    cairo_get_current_point(cr, &x, &y);
     pango_layout_get_pixel_size(layout, &width, &height);
 
     if (A4_HEIGHT < y + height) {
-        cairo_show_page(report->context);
-        init_page(report);
-        cairo_get_current_point(report->context, NULL, &y);
-        cairo_move_to(report->context, x, y);
+        cairo_show_page(cr);
+        init_page(cr);
+        cairo_get_current_point(cr, NULL, &y);
+        cairo_move_to(cr, x, y);
     }
 
-    pango_cairo_show_layout(report->context, layout);
-    cairo_move_to(report->context, x, y + height);
+    pango_cairo_show_layout(cr, layout);
+    cairo_move_to(cr, x, y + height);
     g_object_unref(layout);
 }
 
@@ -390,22 +342,18 @@ static void
 cb_start_test_suite (CutRunner *runner, CutTestSuite *test_suite,
                      CutReportPDF *report)
 {
-    show_text_at_current_position_with_page_feed(report, cut_test_get_name(CUT_TEST(test_suite)));
 }
 
 static void
 cb_start_test_case (CutRunner *runner, CutTestCase *test_case,
                     CutReportPDF *report)
 {
-    show_text_at_current_position_with_page_feed(report, cut_test_get_name(CUT_TEST(test_case)));
-    relative_move_to(report, 10, 0);
 }
 
 static void
 cb_start_test (CutRunner *runner, CutTest *test, CutTestContext *test_context,
                CutReportPDF *report)
 {
-    show_text_at_current_position_with_page_feed(report, cut_test_get_name(test));
 }
 
 static void
@@ -427,186 +375,17 @@ static void
 cb_complete_test_case (CutRunner *runner, CutTestCase *test_case,
                        CutReportPDF *report)
 {
-    relative_move_to(report, -10, 5);
-}
-
-#define CENTER_X 100
-#define CENTER_Y 100
-#define RADIUS 50
-
-static gdouble
-show_pie_piece (CutReportPDF *report,
-                gdouble start, gdouble percent,
-                gdouble red, gdouble green, gdouble blue)
-{
-    gdouble end;
-    gdouble text_x, text_y;
-    gdouble radian;
-    gchar *string;
-
-    if (percent == 0.0)
-        return start;
-
-    cairo_move_to(report->context, CENTER_X, CENTER_Y);
-    end = start + 2 * M_PI * percent;
-    cairo_arc(report->context, CENTER_X, CENTER_Y, RADIUS, start, end);
-    cairo_set_source_rgba(report->context, red, green, blue, 0.8);
-    cairo_fill_preserve(report->context);
-    cairo_set_source_rgba(report->context, 0, 0, 0, 0.8);
-    cairo_stroke(report->context);
-
-    radian = start + ((end - start) / 2.0);
-    text_x = CENTER_X + cos(radian) * (RADIUS + 15);
-    text_y = CENTER_Y + sin(radian) * (RADIUS + 15);
-    string = g_strdup_printf("%.1f%%", percent * 100);
-    show_text_at_center(report, string, text_x, text_y);
-    g_free(string);
-
-    return end;
-}
-
-#define LEGEND_X 200
-#define LEGEND_Y 50
-
-static void
-get_color_from_test_status (CutTestResultStatus status,
-                            gdouble *red, gdouble *green, gdouble *blue)
-{
-    switch (status) {
-      case CUT_TEST_RESULT_SUCCESS:
-        *red = 0x8a / (gdouble)0xff;
-        *green = 0xe2 / (gdouble)0xff;
-        *blue = 0x34 / (gdouble)0xff;
-        break;
-      case CUT_TEST_RESULT_NOTIFICATION:
-        *red = 0x72 / (gdouble)0xff;
-        *green = 0x9f / (gdouble)0xff;
-        *blue = 0xcf / (gdouble)0xff;
-        break;
-      case CUT_TEST_RESULT_OMISSION:
-        *red = 0x20 / (gdouble)0xff;
-        *green = 0x4a / (gdouble)0xff;
-        *blue = 0x87 / (gdouble)0xff;
-        break;
-      case CUT_TEST_RESULT_PENDING:
-        *red = 0x5c / (gdouble)0xff;
-        *green = 0x35 / (gdouble)0xff;
-        *blue = 0x66 / (gdouble)0xff;
-        break;
-      case CUT_TEST_RESULT_FAILURE:
-        *red = 0xef / (gdouble)0xff;
-        *green = 0x29 / (gdouble)0xff;
-        *blue = 0x29 / (gdouble)0xff;
-        break;
-      case CUT_TEST_RESULT_ERROR:
-        *red = 0xfc / (gdouble)0xff;
-        *green = 0xe9 / (gdouble)0xff;
-        *blue = 0x4f / (gdouble)0xff;
-        break;
-      default:
-        break;
-    }
-}
-
-static void
-show_legend_square (CutReportPDF *report, gdouble x, gdouble y,
-                    CutTestResultStatus status)
-{
-    gdouble red, green, blue;
-
-    get_color_from_test_status(status, &red, &green, &blue);
-
-    cairo_rectangle(report->context, x, y, 10, 10);
-    cairo_set_source_rgba(report->context, red, green, blue, 0.8);
-    cairo_fill_preserve(report->context);
-    cairo_set_source_rgba(report->context, 0, 0, 0, 0.8);
-    cairo_stroke(report->context);
-}
-
-static void
-show_legend (CutReportPDF *report, CutTestResultStatus status)
-{
-    PangoLayout *layout;
-    const gchar *text;
-    gdouble x, y;
-
-    x = CENTER_X + RADIUS + 10;
-    y = CENTER_Y - RADIUS + report->n_legends * 10;
-    show_legend_square(report, x, y, status);
-
-    text = cut_test_result_status_to_signal_name(status);
-    layout = create_pango_layout(report, text, 8);
-    if (!layout)
-        return;
-
-    cairo_move_to(report->context, x + 12, y);
-    pango_cairo_show_layout(report->context, layout);
-    g_object_unref(layout);
-
-    report->n_legends++;
-}
-
-static gdouble
-show_status_pie_piece (CutReportPDF *report, CutRunner *runner,
-                       gdouble start, CutTestResultStatus status)
-{
-    gdouble red, green, blue;
-    guint n_tests = 0, n_results = 0;
-    gdouble end;
-
-    get_color_from_test_status(status, &red, &green, &blue);
-    n_tests = cut_runner_get_n_tests(runner);
-
-    switch (status) {
-      case CUT_TEST_RESULT_SUCCESS:
-        n_results = cut_runner_get_n_successes(runner);
-        break;
-      case CUT_TEST_RESULT_NOTIFICATION:
-        n_results = cut_runner_get_n_notifications(runner);
-        break;
-      case CUT_TEST_RESULT_OMISSION:
-        n_results = cut_runner_get_n_omissions(runner);
-        break;
-      case CUT_TEST_RESULT_PENDING:
-        n_results = cut_runner_get_n_pendings(runner);
-        break;
-      case CUT_TEST_RESULT_FAILURE:
-        n_results = cut_runner_get_n_failures(runner);
-        break;
-      case CUT_TEST_RESULT_ERROR:
-        n_results = cut_runner_get_n_errors(runner);
-        break;
-      default:
-        break;
-    }
-
-    if (n_results == 0)
-        return start;
-
-    end = show_pie_piece(report, start,
-                         ((gdouble)n_results / (gdouble)n_tests),
-                         red, green, blue);
-    show_legend(report, status);
-
-    return end;
 }
 
 static void
 cb_complete_test_suite (CutRunner *runner, CutTestSuite *test_suite,
                         CutReportPDF *report)
 {
-    double start;
+    CutCairoPieChart *chart;
 
-    cairo_show_page(report->context);
-
-    cairo_set_line_width(report->context, 0.75);
-
-    start = 2 * M_PI * 0.75;
-    start = show_status_pie_piece(report, runner, start, CUT_TEST_RESULT_SUCCESS);
-    start = show_status_pie_piece(report, runner, start, CUT_TEST_RESULT_FAILURE);
-    start = show_status_pie_piece(report, runner, start, CUT_TEST_RESULT_ERROR);
-    start = show_status_pie_piece(report, runner, start, CUT_TEST_RESULT_PENDING);
-    start = show_status_pie_piece(report, runner, start, CUT_TEST_RESULT_OMISSION);
+    chart = cut_cairo_pie_chart_new();
+    cut_cairo_pie_chart_draw(chart, report->context, runner);
+    g_object_unref(chart);
 }
 
 static void
