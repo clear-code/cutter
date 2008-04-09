@@ -13,6 +13,8 @@
 	* cutter/module/report/cut-report-pdf.c: Show percentage on pie chart.
 	* cutter/module/report/cut-report-pdf.c: Show percentage text outside
 	of pie chart.
+	* cutter/module/report/cut-report-pdf.c: Do not draw pie piece if the
+	number of result correspond to CutTestStatus is zero.
 
 2008-04-09  Kouhei Sutou  <kou@cozmixng.org>
 

@@ -537,6 +537,10 @@ show_status_pie_piece (CutReportPDF *report, CutRunner *runner,
         break;
     }
 
+    if (n_results == 0) {
+        return start;
+    }
+
     end = show_pie_piece(report, start,
                          ((gdouble)n_results / (gdouble)n_tests),
                          red, green, blue);
