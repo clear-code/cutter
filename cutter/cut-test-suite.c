@@ -337,7 +337,7 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite, CutRunner *runner,
     signum = setjmp(jump_buffer);
     switch (signum) {
       case 0:
-        cut_runner_start_test_suite(runner, test_suite);
+        cut_runner_prepare_test_suite(runner, test_suite);
         emit_ready_signal(test_suite, sorted_test_cases, test_names);
         g_signal_emit_by_name(CUT_TEST(test_suite), "start");
 

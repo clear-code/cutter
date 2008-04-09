@@ -305,7 +305,7 @@ cut_test_run (CutTest *test, CutTestContext *test_context, CutRunner *runner)
     if (!priv->test_function)
         return FALSE;
 
-    cut_runner_start_test(runner, test);
+    cut_runner_prepare_test(runner, test);
 
     g_signal_emit_by_name(test, "start");
 

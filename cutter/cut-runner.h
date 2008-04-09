@@ -156,11 +156,11 @@ void          cut_runner_set_target_test_names     (CutRunner   *runner,
                                                     const gchar **names);
 const gchar **cut_runner_get_target_test_names     (CutRunner   *runner);
 
-void          cut_runner_start_test                (CutRunner   *runner,
+void          cut_runner_prepare_test              (CutRunner   *runner,
                                                     CutTest     *test);
-void          cut_runner_start_test_case           (CutRunner   *runner,
+void          cut_runner_prepare_test_case         (CutRunner   *runner,
                                                     CutTestCase *test_case);
-void          cut_runner_start_test_suite          (CutRunner   *runner,
+void          cut_runner_prepare_test_suite        (CutRunner   *runner,
                                                     CutTestSuite *test_suite);
 
 guint         cut_runner_get_n_tests               (CutRunner *runner);

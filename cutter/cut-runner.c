@@ -872,7 +872,7 @@ cb_complete (CutTest *test, gpointer data)
 }
 
 void
-cut_runner_start_test (CutRunner *runner, CutTest *test)
+cut_runner_prepare_test (CutRunner *runner, CutTest *test)
 {
     CutRunnerPrivate *priv;
 
@@ -1021,7 +1021,7 @@ cb_complete_test_case(CutTestCase *test_case, gpointer data)
 }
 
 void
-cut_runner_start_test_case (CutRunner *runner, CutTestCase *test_case)
+cut_runner_prepare_test_case (CutRunner *runner, CutTestCase *test_case)
 {
 #define CONNECT(name) \
     g_signal_connect(test_case, #name, G_CALLBACK(cb_ ## name), runner)
@@ -1102,7 +1102,7 @@ cb_complete_test_suite(CutTestSuite *test_suite, gpointer data)
 }
 
 void
-cut_runner_start_test_suite (CutRunner *runner, CutTestSuite *test_suite)
+cut_runner_prepare_test_suite (CutRunner *runner, CutTestSuite *test_suite)
 {
 #define CONNECT(name)                                                \
     g_signal_connect(test_suite, #name,                              \

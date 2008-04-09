@@ -1,3 +1,8 @@
+2008-04-09  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-runner.[ch], cutter/cut-test-suite.c,
+	cutter/cut-test.c, cutter/cut-test-case.c: start -> prepare.
+
 2008-04-09  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* test/test-cut-runner.c: Added test for cut_runner_get_n_().

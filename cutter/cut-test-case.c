@@ -377,7 +377,7 @@ cut_test_case_run_tests (CutTestCase *test_case, CutRunner *runner,
     CutTestResult *result;
     gboolean all_success = TRUE;
 
-    cut_runner_start_test_case(runner, test_case);
+    cut_runner_prepare_test_case(runner, test_case);
     g_signal_emit_by_name(test_case, "ready", g_list_length((GList *)tests));
     g_signal_emit_by_name(CUT_TEST(test_case), "start");
 
