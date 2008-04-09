@@ -58,6 +58,7 @@ struct _CutReportPDF
     CutReport object;
     CutRunner *runner;
     cairo_t *context;
+    guint n_legends;
 };
 
 struct _CutReportPDFClass
@@ -139,6 +140,7 @@ init (CutReportPDF *report)
 {
     report->runner = NULL;
     report->context = NULL;
+    report->n_legends = 0;
 }
 
 static void
@@ -461,6 +463,9 @@ show_pie_piece (CutReportPDF *report,
     return end;
 }
 
+#define LEGEND_X 200
+#define LEGEND_Y 50
+
 static void
 get_color_from_test_status (CutTestResultStatus status,
                             gdouble *red, gdouble *green, gdouble *blue)
@@ -501,16 +506,53 @@ get_color_from_test_status (CutTestResultStatus status,
     }
 }
 
+static void
+show_legend_square (CutReportPDF *report, gdouble x, gdouble y,
+                    CutTestResultStatus status)
+{
+    gdouble red, green, blue;
+
+    get_color_from_test_status(status, &red, &green, &blue);
+
+    cairo_rectangle(report->context, x, y, 10, 10);
+    cairo_set_source_rgba(report->context, red, green, blue, 0.8);
+    cairo_fill_preserve(report->context);
+    cairo_set_source_rgba(report->context, 0, 0, 0, 0.8);
+    cairo_stroke(report->context);
+}
+
+static void
+show_legend (CutReportPDF *report, CutTestResultStatus status)
+{
+    PangoLayout *layout;
+    const gchar *text;
+    gdouble x, y;
+
+    x = LEGEND_X;
+    y = LEGEND_Y + report->n_legends * 10;
+    show_legend_square(report, x, y, status);
+
+    text = cut_test_result_status_to_signal_name(status);
+    layout = create_pango_layout(report, text, 10);
+    if (!layout)
+        return;
+
+    cairo_move_to(report->context, x + 20, y);
+    pango_cairo_show_layout(report->context, layout);
+    g_object_unref(layout);
+
+    report->n_legends++;
+}
+
 static gdouble
 show_status_pie_piece (CutReportPDF *report, CutRunner *runner,
                        gdouble start, CutTestResultStatus status)
 {
     gdouble red, green, blue;
-    guint n_tests = 0, n_results;
+    guint n_tests = 0, n_results = 0;
     gdouble end;
 
-    get_color_from_test_status(status,
-                               &red, &green, &blue);
+    get_color_from_test_status(status, &red, &green, &blue);
     n_tests = cut_runner_get_n_tests(runner);
 
     switch (status) {
@@ -543,6 +585,7 @@ show_status_pie_piece (CutReportPDF *report, CutRunner *runner,
     end = show_pie_piece(report, start,
                          ((gdouble)n_results / (gdouble)n_tests),
                          red, green, blue);
+    show_legend(report, status);
 
     return end;
 }
