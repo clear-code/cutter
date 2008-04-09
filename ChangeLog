@@ -1,3 +1,7 @@
+2008-04-09  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test-cut-runner.c: Added test for cut_runner_get_n_().
+
 2008-04-09  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/module/report/cut-report-pdf.c: show a pie chart.
