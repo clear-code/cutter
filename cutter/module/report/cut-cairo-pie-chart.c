@@ -21,10 +21,11 @@
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
 
+#include <math.h>
 #include <glib.h>
+#include <cairo.h>
 
 #include "cut-cairo-pie-chart.h"
-#include "cut-module.h"
 
 #define CUT_CAIRO_PIE_CHART_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_CAIRO_PIE_CHART, CutCairoPieChartPrivate))
 
@@ -75,6 +76,15 @@ cut_cairo_pie_chart_class_init (CutCairoPieChartClass *klass)
                                G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_WIDTH, spec);
 
+    spec = g_param_spec_double("height",
+                               "Height",
+                               "Height",
+                               0.0,
+                               G_MAXDOUBLE,
+                               0.0,
+                               G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_HEIGHT, spec);
+
     g_type_class_add_private(gobject_class, sizeof(CutCairoPieChartPrivate));
 }
 
@@ -100,6 +110,9 @@ set_property (GObject      *object,
       case PROP_WIDTH:
         priv->width = g_value_get_double(value);
         break;
+      case PROP_HEIGHT:
+        priv->height = g_value_get_double(value);
+        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
@@ -117,6 +130,9 @@ get_property (GObject    *object,
     switch (prop_id) {
       case PROP_WIDTH:
         g_value_set_double(value, priv->width);
+        break;
+      case PROP_HEIGHT:
+        g_value_set_double(value, priv->height);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
