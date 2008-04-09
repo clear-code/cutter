@@ -427,9 +427,9 @@ cb_complete_test_suite (CutRunner *runner, CutTestSuite *test_suite,
     start = show_pie_piece(report,
                            start, ((gdouble)cut_runner_get_n_failures(runner) /
                                    (gdouble)n_tests),
-                           0xa4 / (gdouble)0xff,
-                           0x00 / (gdouble)0xff,
-                           0x00 / (gdouble)0xff);
+                           0xef / (gdouble)0xff,
+                           0x29 / (gdouble)0xff,
+                           0x29 / (gdouble)0xff);
     start = show_pie_piece(report,
                            start, ((gdouble)cut_runner_get_n_errors(runner) /
                                    (gdouble)n_tests),
