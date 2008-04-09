@@ -207,9 +207,8 @@ show_text_at_center (cairo_t *cr, const gchar *utf8,
 #define RADIUS 50
 
 static gdouble
-show_pie_piece (cairo_t *cr,
-                gdouble start, gdouble percent,
-                gdouble red, gdouble green, gdouble blue)
+show_pie_piece (cairo_t *cr, gdouble start, gdouble percent,
+                CutTestResultStatus status)
 {
     gdouble end;
     gdouble text_x, text_y;
@@ -222,7 +221,7 @@ show_pie_piece (cairo_t *cr,
     cairo_move_to(cr, CENTER_X, CENTER_Y);
     end = start + 2 * M_PI * percent;
     cairo_arc(cr, CENTER_X, CENTER_Y, RADIUS, start, end);
-    cairo_set_source_rgba(cr, red, green, blue, 0.8);
+    cut_cairo_set_source_result_color(cr, status);
     cairo_fill_preserve(cr);
     cairo_set_source_rgba(cr, 0, 0, 0, 0.8);
     cairo_stroke(cr);
@@ -241,55 +240,11 @@ show_pie_piece (cairo_t *cr,
 #define LEGEND_Y 50
 
 static void
-get_color_from_test_status (CutTestResultStatus status,
-                            gdouble *red, gdouble *green, gdouble *blue)
-{
-    switch (status) {
-      case CUT_TEST_RESULT_SUCCESS:
-        *red = 0x8a / (gdouble)0xff;
-        *green = 0xe2 / (gdouble)0xff;
-        *blue = 0x34 / (gdouble)0xff;
-        break;
-      case CUT_TEST_RESULT_NOTIFICATION:
-        *red = 0x72 / (gdouble)0xff;
-        *green = 0x9f / (gdouble)0xff;
-        *blue = 0xcf / (gdouble)0xff;
-        break;
-      case CUT_TEST_RESULT_OMISSION:
-        *red = 0x20 / (gdouble)0xff;
-        *green = 0x4a / (gdouble)0xff;
-        *blue = 0x87 / (gdouble)0xff;
-        break;
-      case CUT_TEST_RESULT_PENDING:
-        *red = 0x5c / (gdouble)0xff;
-        *green = 0x35 / (gdouble)0xff;
-        *blue = 0x66 / (gdouble)0xff;
-        break;
-      case CUT_TEST_RESULT_FAILURE:
-        *red = 0xef / (gdouble)0xff;
-        *green = 0x29 / (gdouble)0xff;
-        *blue = 0x29 / (gdouble)0xff;
-        break;
-      case CUT_TEST_RESULT_ERROR:
-        *red = 0xfc / (gdouble)0xff;
-        *green = 0xe9 / (gdouble)0xff;
-        *blue = 0x4f / (gdouble)0xff;
-        break;
-      default:
-        break;
-    }
-}
-
-static void
 show_legend_square (cairo_t *cr, gdouble x, gdouble y,
                     CutTestResultStatus status)
 {
-    gdouble red, green, blue;
-
-    get_color_from_test_status(status, &red, &green, &blue);
-
     cairo_rectangle(cr, x, y, 10, 10);
-    cairo_set_source_rgba(cr, red, green, blue, 0.8);
+    cut_cairo_set_source_result_color(cr, status);
     cairo_fill_preserve(cr);
     cairo_set_source_rgba(cr, 0, 0, 0, 0.8);
     cairo_stroke(cr);
@@ -325,11 +280,9 @@ show_status_pie_piece (CutCairoPieChart *chart,
                        cairo_t *cr, CutRunner *runner,
                        gdouble start, CutTestResultStatus status)
 {
-    gdouble red, green, blue;
     guint n_tests = 0, n_results = 0;
     gdouble end;
 
-    get_color_from_test_status(status, &red, &green, &blue);
     n_tests = cut_runner_get_n_tests(runner);
 
     switch (status) {
@@ -360,7 +313,7 @@ show_status_pie_piece (CutCairoPieChart *chart,
 
     end = show_pie_piece(cr, start,
                          ((gdouble)n_results / (gdouble)n_tests),
-                         red, green, blue);
+                         status);
     show_legend(chart, cr, status);
 
     return end;
@@ -373,6 +326,7 @@ cut_cairo_pie_chart_draw (CutCairoPieChart *chart,
 
     double start;
 
+    cairo_save(cr);
     cairo_set_line_width(cr, 0.75);
 
     start = 2 * M_PI * 0.75;
@@ -386,6 +340,7 @@ cut_cairo_pie_chart_draw (CutCairoPieChart *chart,
                                   CUT_TEST_RESULT_PENDING);
     start = show_status_pie_piece(chart, cr, runner, start,
                                   CUT_TEST_RESULT_OMISSION);
+    cairo_restore(cr);
 }
 
 /*

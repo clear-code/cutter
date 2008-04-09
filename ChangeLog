@@ -1,5 +1,11 @@
 2008-04-09  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/module/report/cut-cairo.[ch]
+	(cut_cairo_set_source_result_color): add.
+
+	* cutter/module/report/cut-cairo-pie-chart.c: use
+	cut_cairo_set_source_result_color().
+
 	* cutter/module/report/: use CutCairoPieChart to render a pie chart.
 
 	* cutter/module/report/cut-report-pdf.c: show all results in pie chart.

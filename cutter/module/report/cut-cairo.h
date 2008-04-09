@@ -24,11 +24,15 @@
 #include <cairo.h>
 #include <pango/pangocairo.h>
 
+#include <cutter/cut-test-result.h>
+
 G_BEGIN_DECLS
 
-PangoLayout *cut_cairo_create_pango_layout (cairo_t *cr,
-                                            const gchar *utf8,
-                                            gint font_size);
+PangoLayout *cut_cairo_create_pango_layout        (cairo_t *cr,
+                                                   const gchar *utf8,
+                                                   gint font_size);
+void         cut_cairo_set_source_result_color    (cairo_t *cr,
+                                                   CutTestResultStatus status);
 #endif /* __CUT_CAIRO_H__ */
 
 /*
