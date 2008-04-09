@@ -27,15 +27,15 @@ pdf_la_CPPFLAGS =				\
 	-DG_LOG_DOMAIN=\"Cut/Report:PDF\"	\
 	$(CAIRO_PDF_CFLAGS)			\
 	$(PANGO_CAIRO_CFLAGS)
-pdf_la_SOURCES = cut-report-pdf.c
+pdf_la_SOURCES = 		\
+	cut-report-pdf.c 	\
+	cut-cairo-pie-chart.c
 pdf_la_LIBADD =			\
 	$(GLIB_LIBS)		\
 	$(CAIRO_PDF_LIBS)	\
 	$(PANGO_CAIRO_LIBS)
 
 pdf_factory_la_CPPFLAGS = -DG_LOG_DOMAIN=\"Cut/ReportFactory:PDF\"
-pdf_factory_la_SOURCES =		\
-	cut-report-factory-pdf.c	\
-	cut-cairo-pie-chart.c
+pdf_factory_la_SOURCES = cut-report-factory-pdf.c
 pdf_factory_la_LIBADD = $(GLIB_LIBS)
 endif
