@@ -305,24 +305,69 @@ cb_ready_test_suite (CutRunner *runner, CutTestSuite *test_suite,
     init_page(report);
 }
 
+static PangoLayout *
+create_pango_layout (CutReportPDF *report, const gchar *utf8, gint font_size)
+{
+    PangoLayout *layout;
+    PangoFontDescription *description;
+    gchar *description_string;
+
+    if (!utf8)
+        return NULL;
+
+    layout = pango_cairo_create_layout(report->context);
+
+    if (font_size < 0)
+        description_string = g_strdup("Mono");
+    else
+        description_string = g_strdup_printf("Mono %d", font_size);
+    description = pango_font_description_from_string(description_string);
+    g_free(description_string);
+
+    pango_layout_set_font_description(layout, description);
+    pango_font_description_free(description);
+
+    pango_layout_set_text(layout, utf8, -1);
+
+    return layout;
+}
+
+static void
+show_text_at_center (CutReportPDF *report, const gchar *utf8,
+                     guint center_x, guint center_y)
+{
+    PangoLayout *layout;
+    int width, height;
+
+    if (!utf8)
+        return;
+
+    layout = create_pango_layout(report, utf8, 10);
+    if (!layout)
+        return;
+
+    pango_layout_get_pixel_size(layout, &width, &height);
+
+    cairo_move_to(report->context,
+                  center_x - (width / 2),
+                  center_y - (height / 2));
+    pango_cairo_show_layout(report->context, layout);
+    g_object_unref(layout);
+}
+
 static void
 show_text (CutReportPDF *report, const gchar *utf8)
 {
     PangoLayout *layout;
-    PangoFontDescription *description;
     double x, y;
     int width, height;
 
     if (!utf8)
         return;
 
-    layout = pango_cairo_create_layout(report->context);
-
-    description = pango_font_description_from_string("Mono");
-    pango_layout_set_font_description(layout, description);
-    pango_font_description_free(description);
-
-    pango_layout_set_text(layout, utf8, -1);
+    layout = create_pango_layout(report, utf8, 10);
+    if (!layout)
+        return;
 
     cairo_get_current_point(report->context, &x, &y);
     pango_layout_get_pixel_size(layout, &width, &height);
@@ -386,34 +431,6 @@ cb_complete_test_case (CutRunner *runner, CutTestCase *test_case,
 #define CENTER_X 100
 #define CENTER_Y 100
 #define RADIUS 50
-
-static void
-show_text_at_center (CutReportPDF *report, const gchar *utf8,
-                     guint center_x, guint center_y)
-{
-    PangoLayout *layout;
-    PangoFontDescription *description;
-    int width, height;
-
-    if (!utf8)
-        return;
-
-    layout = pango_cairo_create_layout(report->context);
-
-    description = pango_font_description_from_string("Mono 10");
-    pango_layout_set_font_description(layout, description);
-    pango_font_description_free(description);
-
-    pango_layout_set_text(layout, utf8, -1);
-
-    pango_layout_get_pixel_size(layout, &width, &height);
-
-    cairo_move_to(report->context,
-                  center_x - (width / 2),
-                  center_y - (height / 2));
-    pango_cairo_show_layout(report->context, layout);
-    g_object_unref(layout);
-}
 
 static gdouble
 show_pie_piece (CutReportPDF *report,
