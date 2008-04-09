@@ -528,16 +528,16 @@ show_legend (CutReportPDF *report, CutTestResultStatus status)
     const gchar *text;
     gdouble x, y;
 
-    x = LEGEND_X;
-    y = LEGEND_Y + report->n_legends * 10;
+    x = CENTER_X + RADIUS + 10;
+    y = CENTER_Y - RADIUS + report->n_legends * 10;
     show_legend_square(report, x, y, status);
 
     text = cut_test_result_status_to_signal_name(status);
-    layout = create_pango_layout(report, text, 10);
+    layout = create_pango_layout(report, text, 8);
     if (!layout)
         return;
 
-    cairo_move_to(report->context, x + 20, y);
+    cairo_move_to(report->context, x + 12, y);
     pango_cairo_show_layout(report->context, layout);
     g_object_unref(layout);
 
