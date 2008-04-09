@@ -1,5 +1,7 @@
 2008-04-09  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/module/ui/cut-ui-console.c: show percentage of passed tests.
+
 	* cutter/cut-runner.[ch], cutter/cut-test-suite.c,
 	cutter/cut-test.c, cutter/cut-test-case.c: start -> prepare.
 

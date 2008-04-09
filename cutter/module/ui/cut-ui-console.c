@@ -602,12 +602,13 @@ static void
 print_summary (CutUIConsole *console, CutRunner *runner,
                gboolean crashed)
 {
-    guint n_tests, n_assertions, n_failures, n_errors;
+    guint n_tests, n_assertions, n_successes, n_failures, n_errors;
     guint n_pendings, n_notifications, n_omissions;
     const gchar *color;
 
     n_tests = cut_runner_get_n_tests(runner);
     n_assertions = cut_runner_get_n_assertions(runner);
+    n_successes = cut_runner_get_n_successes(runner);
     n_failures = cut_runner_get_n_failures(runner);
     n_errors = cut_runner_get_n_errors(runner);
     n_pendings = cut_runner_get_n_pendings(runner);
@@ -639,6 +640,10 @@ print_summary (CutUIConsole *console, CutRunner *runner,
                      "%d notification(s)",
                      n_tests, n_assertions, n_failures, n_errors,
                      n_pendings, n_omissions, n_notifications);
+    g_print("\n");
+    print_with_color(console, color,
+                     "%g%% passed",
+                     100.0 * ((gdouble)n_successes / (gdouble)n_tests));
     g_print("\n");
 }
 
