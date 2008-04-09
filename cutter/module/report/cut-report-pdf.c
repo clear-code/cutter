@@ -393,6 +393,8 @@ show_pie_piece (CutReportPDF *report,
                 gdouble red, gdouble green, gdouble blue)
 {
     gdouble end;
+    gdouble text_x, text_y;
+    gchar *string;
 
     cairo_move_to(report->context, CENTER_X, CENTER_Y);
     end = start + 2 * M_PI * percent;
@@ -401,6 +403,13 @@ show_pie_piece (CutReportPDF *report,
     cairo_fill_preserve(report->context);
     cairo_set_source_rgba(report->context, 0, 0, 0, 0.8);
     cairo_stroke(report->context);
+
+    text_x = CENTER_X + sin((end - start) / 2) * (RADIUS + 10);
+    text_y = CENTER_Y - cos((end - start) / 2) * (RADIUS + 10);
+    cairo_move_to(report->context, text_x, text_y);
+    string = g_strdup_printf("%.1f%%", percent * 100);
+    show_text(report, string);
+    g_free(string);
 
     return end;
 }
