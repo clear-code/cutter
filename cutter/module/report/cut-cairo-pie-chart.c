@@ -30,6 +30,7 @@
 #include <cutter/cut-runner.h>
 
 #include "cut-cairo-pie-chart.h"
+#include "cut-cairo.h"
 
 #define CUT_CAIRO_PIE_CHART_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_CAIRO_PIE_CHART, CutCairoPieChartPrivate))
 
@@ -147,9 +148,12 @@ get_property (GObject    *object,
 }
 
 CutCairoPieChart *
-cut_cairo_pie_chart_new (void)
+cut_cairo_pie_chart_new (gdouble width, gdouble height)
 {
-    return g_object_new(CUT_TYPE_CAIRO_PIE_CHART, NULL);
+    return g_object_new(CUT_TYPE_CAIRO_PIE_CHART,
+                        "width", width,
+                        "height", height,
+                        NULL);
 }
 
 static PangoLayout *
@@ -323,7 +327,6 @@ void
 cut_cairo_pie_chart_draw (CutCairoPieChart *chart,
                           cairo_t *cr, CutRunner *runner)
 {
-
     double start;
 
     cairo_save(cr);
@@ -341,6 +344,30 @@ cut_cairo_pie_chart_draw (CutCairoPieChart *chart,
     start = show_status_pie_piece(chart, cr, runner, start,
                                   CUT_TEST_RESULT_OMISSION);
     cairo_restore(cr);
+}
+
+void
+cut_cairo_pie_chart_get_size (CutCairoPieChart *chart,
+                              gdouble *width, gdouble *height)
+{
+    CutCairoPieChartPrivate *priv;
+    
+    priv = CUT_CAIRO_PIE_CHART_GET_PRIVATE(chart);
+
+    *width = priv->width;
+    *height = priv->height;
+}
+
+gdouble
+cut_cairo_pie_chart_get_width (CutCairoPieChart *chart)
+{
+    return CUT_CAIRO_PIE_CHART_GET_PRIVATE(chart)->width;
+}
+
+gdouble
+cut_cairo_pie_chart_get_height (CutCairoPieChart *chart)
+{
+    return CUT_CAIRO_PIE_CHART_GET_PRIVATE(chart)->height;
 }
 
 /*

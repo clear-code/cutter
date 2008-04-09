@@ -47,10 +47,14 @@ struct _CutCairoPieChartClass
 
 GType             cut_cairo_pie_chart_get_type  (void) G_GNUC_CONST;
 
-CutCairoPieChart *cut_cairo_pie_chart_new       (void);
+CutCairoPieChart *cut_cairo_pie_chart_new       (gdouble width, gdouble height);
 void              cut_cairo_pie_chart_draw      (CutCairoPieChart *chart,
                                                  cairo_t *cr,
                                                  CutRunner *runner);
+void              cut_cairo_pie_chart_get_size  (CutCairoPieChart *chart,
+                                                 gdouble *width, gdouble *height);
+gdouble           cut_cairo_pie_chart_get_width (CutCairoPieChart *chart);
+gdouble           cut_cairo_pie_chart_get_height(CutCairoPieChart *chart);
 
 G_END_DECLS
 

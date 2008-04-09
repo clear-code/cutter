@@ -383,7 +383,7 @@ cb_complete_test_suite (CutRunner *runner, CutTestSuite *test_suite,
 {
     CutCairoPieChart *chart;
 
-    chart = cut_cairo_pie_chart_new();
+    chart = cut_cairo_pie_chart_new(100, 100);
     cut_cairo_pie_chart_draw(chart, report->context, runner);
     g_object_unref(chart);
 }
