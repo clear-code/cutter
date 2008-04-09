@@ -533,7 +533,6 @@ show_status_pie_piece (CutReportPDF *report, CutRunner *runner,
         n_results = cut_runner_get_n_errors(runner);
         break;
       default:
-        return start;
         break;
     }
 
