@@ -336,7 +336,7 @@ create_pango_layout (CutReportPDF *report, const gchar *utf8, gint font_size)
 
 static void
 show_text_at_center (CutReportPDF *report, const gchar *utf8,
-                     guint center_x, guint center_y)
+                     gdouble center_x, gdouble center_y)
 {
     PangoLayout *layout;
     int width, height;
@@ -344,15 +344,15 @@ show_text_at_center (CutReportPDF *report, const gchar *utf8,
     if (!utf8)
         return;
 
-    layout = create_pango_layout(report, utf8, 10);
+    layout = create_pango_layout(report, utf8, 8);
     if (!layout)
         return;
 
     pango_layout_get_pixel_size(layout, &width, &height);
 
     cairo_move_to(report->context,
-                  center_x - (width / 2),
-                  center_y - (height / 2));
+                  center_x - (width / 2.0),
+                  center_y - (height / 2.0));
     pango_cairo_show_layout(report->context, layout);
     g_object_unref(layout);
 }
@@ -441,6 +441,7 @@ show_pie_piece (CutReportPDF *report,
 {
     gdouble end;
     gdouble text_x, text_y;
+    gdouble radian;
     gchar *string;
 
     if (percent == 0.0)
@@ -454,8 +455,9 @@ show_pie_piece (CutReportPDF *report,
     cairo_set_source_rgba(report->context, 0, 0, 0, 0.8);
     cairo_stroke(report->context);
 
-    text_x = CENTER_X + sin((end - start) / 2) * (RADIUS + 10);
-    text_y = CENTER_Y - cos((end - start) / 2) * (RADIUS + 10);
+    radian = start + ((end - start) / 2.0);
+    text_x = CENTER_X + cos(radian) * (RADIUS + 15);
+    text_y = CENTER_Y + sin(radian) * (RADIUS + 15);
     string = g_strdup_printf("%.1f%%", percent * 100);
     show_text_at_center(report, string, text_x, text_y);
     g_free(string);
@@ -605,7 +607,7 @@ cb_complete_test_suite (CutRunner *runner, CutTestSuite *test_suite,
     start = show_status_pie_piece(report, runner, start, CUT_TEST_RESULT_FAILURE);
     start = show_status_pie_piece(report, runner, start, CUT_TEST_RESULT_ERROR);
     start = show_status_pie_piece(report, runner, start, CUT_TEST_RESULT_PENDING);
-    start = show_status_pie_piece(report, runner, start, CUT_TEST_RESULT_NOTIFICATION);
+    /* start = show_status_pie_piece(report, runner, start, CUT_TEST_RESULT_NOTIFICATION); */
     start = show_status_pie_piece(report, runner, start, CUT_TEST_RESULT_OMISSION);
 }
 
