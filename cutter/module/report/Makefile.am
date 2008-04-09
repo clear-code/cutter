@@ -34,6 +34,8 @@ pdf_la_LIBADD =			\
 	$(PANGO_CAIRO_LIBS)
 
 pdf_factory_la_CPPFLAGS = -DG_LOG_DOMAIN=\"Cut/ReportFactory:PDF\"
-pdf_factory_la_SOURCES = cut-report-factory-pdf.c
+pdf_factory_la_SOURCES =		\
+	cut-report-factory-pdf.c	\
+	cut-cairo-pie-chart.c
 pdf_factory_la_LIBADD = $(GLIB_LIBS)
 endif
