@@ -8,6 +8,8 @@
 	center from chart width and height. 
 	* cutter/module/report/cut-cairo-pie-chart.c: Draw percentage text on
 	the edge of pie circle.
+	* cutter/module/report/cut-cairo-pie-chart.c: Draw each parts(chart,
+	legend and ratio text) from data series.
 
 2008-04-09  Kouhei Sutou  <kou@cozmixng.org>
 
