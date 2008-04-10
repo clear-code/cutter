@@ -40,6 +40,7 @@ struct _CutCairoPieChartPrivate
     gdouble width;
     gdouble height;
     guint n_legends;
+    gboolean show_data_label;
     GList *series;
 };
 
@@ -104,6 +105,7 @@ cut_cairo_pie_chart_init (CutCairoPieChart *chart)
 
     priv->n_legends = 0;
     priv->series = NULL;
+    priv->show_data_label = TRUE;
 }
 
 static void
@@ -193,8 +195,7 @@ show_text_at_center (cairo_t *cr, const gchar *utf8,
 
     if (cos(radian) < 0.0)
         center_x -= width;
-    if (sin(radian) < 0.0)
-        center_y -= height;
+    center_y -= height / 2;
     cairo_move_to(cr, center_x, center_y);
     pango_cairo_show_layout(cr, layout);
     g_object_unref(layout);
@@ -339,6 +340,51 @@ calculate_sum (CutCairoPieChart *chart, CutRunner *runner)
 }
 
 static void
+draw_data_label (CutCairoPieChart *chart, cairo_t *cr, CutRunner *runner)
+{
+    CutCairoPieChartPrivate *priv;
+    GList *node;
+    gdouble sum, start;
+    gdouble center_x, center_y, radius;
+
+    priv = CUT_CAIRO_PIE_CHART_GET_PRIVATE(chart);
+
+    sum = calculate_sum(chart, runner);
+    start = 2 * M_PI * 0.75;
+    get_pie_center_position(chart, &center_x, &center_y);
+    radius = get_pie_radius(chart);
+
+    for (node = priv->series; node; node = g_list_next(node)) {
+        CutTestResultStatus status;
+        gint n_results;
+        gdouble x, y;
+        gdouble ratio, radian;
+        const gchar *label;
+
+        status = GPOINTER_TO_INT(node->data);
+        n_results = get_status_result_number(runner, status);
+
+        ratio = n_results / sum;
+        radian = start + M_PI * ratio;
+        start += 2 * M_PI * ratio;
+        if (cos(radian) > 0.0)
+            x = center_x + radius + 20;
+        else
+            x = center_x - radius - 20;
+
+        y = center_y + sin(radian) * radius;
+        label = cut_test_result_status_to_signal_name(status);
+        show_text_at_center(cr, label, x, y, radian, 6);
+
+        y = center_y + sin(radian) * radius;
+        cairo_move_to(cr, x, y);
+        x = center_x + cos(radian) * radius;
+        cairo_line_to(cr, x, y);
+        cairo_stroke(cr);
+    }
+}
+
+static void
 draw_chart (CutCairoPieChart *chart, cairo_t *cr, CutRunner *runner)
 {
     CutCairoPieChartPrivate *priv;
@@ -356,12 +402,14 @@ draw_chart (CutCairoPieChart *chart, cairo_t *cr, CutRunner *runner)
     for (node = priv->series; node; node = g_list_next(node)) {
         CutTestResultStatus status;
         gint n_results;
+        gdouble ratio;
 
         status = GPOINTER_TO_INT(node->data);
         cut_cairo_set_source_result_color(cr, status);
         n_results = get_status_result_number(runner, status);
 
-        start = draw_pie_piece(chart, cr, start, ((gdouble)n_results / (gdouble)sum));
+        ratio = (gdouble)n_results / (gdouble)sum;
+        start = draw_pie_piece(chart, cr, start, ratio);
     }
 }
 
@@ -383,42 +431,6 @@ draw_legend (CutCairoPieChart *chart, cairo_t *cr)
 }
 
 static void
-draw_ratio_number (CutCairoPieChart *chart, cairo_t *cr, CutRunner *runner)
-{
-    CutCairoPieChartPrivate *priv;
-    GList *node;
-    gdouble sum, start;
-    gdouble center_x, center_y, radius;
-
-    priv = CUT_CAIRO_PIE_CHART_GET_PRIVATE(chart);
-
-    sum = calculate_sum(chart, runner);
-    start = 2 * M_PI * 0.75;
-    get_pie_center_position(chart, &center_x, &center_y);
-    radius = get_pie_radius(chart);
-
-    for (node = priv->series; node; node = g_list_next(node)) {
-        CutTestResultStatus status;
-        gint n_results;
-        gdouble x, y;
-        gdouble ratio, radian;
-        gchar *string;
-
-        status = GPOINTER_TO_INT(node->data);
-        n_results = get_status_result_number(runner, status);
-
-        ratio = n_results / sum;
-        string = g_strdup_printf("%.1f%%", ratio * 100);
-        radian = start + M_PI * ratio ;
-        start += 2 * M_PI * ratio;
-        x = center_x + cos(radian) * radius;
-        y = center_y + sin(radian) * radius;
-        show_text_at_center(cr, string, x, y, radian, 6);
-        g_free(string);
-    }
-}
-
-static void
 create_series (CutCairoPieChart *chart)
 {
     CutCairoPieChartPrivate *priv;
@@ -436,8 +448,10 @@ void
 cut_cairo_pie_chart_draw (CutCairoPieChart *chart,
                           cairo_t *cr, CutRunner *runner)
 {
+    CutCairoPieChartPrivate *priv;
     double current_x, current_y;
 
+    priv = CUT_CAIRO_PIE_CHART_GET_PRIVATE(chart);
     cairo_get_current_point(cr, &current_x, &current_y);
 
     cairo_save(cr);
@@ -446,8 +460,9 @@ cut_cairo_pie_chart_draw (CutCairoPieChart *chart,
     /* tentative */ 
     create_series(chart);
     draw_chart(chart, cr, runner);
-    draw_ratio_number(chart, cr, runner);
     draw_legend(chart, cr);
+    if (priv->show_data_label)
+        draw_data_label(chart, cr, runner);
 
     cairo_restore(cr);
 }
