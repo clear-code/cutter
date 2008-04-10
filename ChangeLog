@@ -12,6 +12,7 @@
 	legend and ratio text) from data series.
 	* cutter/module/report/cut-cairo-pie-chart.c: Show data label instead
 	of percentage value.
+	* cutter/module/report/cut-cair-chart-data.[c|h]: Added.
 
 2008-04-09  Kouhei Sutou  <kou@cozmixng.org>
 

@@ -30,7 +30,11 @@ pdf_la_CPPFLAGS =				\
 pdf_la_SOURCES = 		\
 	cut-report-pdf.c 	\
 	cut-cairo.c		\
-	cut-cairo-pie-chart.c
+	cut-cairo.h		\
+	cut-cairo-pie-chart.c	\
+	cut-cairo-pie-chart.h	\
+	cut-cairo-chart-data.c	\
+	cut-cairo-chart-data.h
 pdf_la_LIBADD =			\
 	$(GLIB_LIBS)		\
 	$(CAIRO_PDF_LIBS)	\
