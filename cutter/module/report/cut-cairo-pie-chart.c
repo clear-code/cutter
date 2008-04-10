@@ -156,6 +156,8 @@ cut_cairo_pie_chart_new (gdouble width, gdouble height)
                         NULL);
 }
 
+#define SQUARE_LENGTH(x, y) ((x) * (x) + (y) * (y))
+
 static void
 show_text_at_center (cairo_t *cr, const gchar *utf8,
                      gdouble center_x, gdouble center_y,
@@ -208,6 +210,7 @@ show_pie_piece (CutCairoPieChart *chart,
     gdouble text_x, text_y;
     gdouble radian, radius;
     gchar *string;
+    gint font_size = 6;
 
     if (percent == 0.0)
         return start;
@@ -224,10 +227,10 @@ show_pie_piece (CutCairoPieChart *chart,
     cairo_stroke(cr);
 
     radian = start + ((end - start) / 2.0);
-    text_x = center_x + cos(radian) * (radius + 15);
-    text_y = center_y + sin(radian) * (radius + 15);
+    text_x = center_x + cos(radian) * (radius + font_size);
+    text_y = center_y + sin(radian) * (radius + font_size);
     string = g_strdup_printf("%.1f%%", percent * 100);
-    show_text_at_center(cr, string, text_x, text_y, 6);
+    show_text_at_center(cr, string, text_x, text_y, font_size);
     g_free(string);
 
     return end;
