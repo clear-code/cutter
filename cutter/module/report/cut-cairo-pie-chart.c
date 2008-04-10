@@ -161,7 +161,7 @@ cut_cairo_pie_chart_new (gdouble width, gdouble height)
 static void
 show_text_at_center (cairo_t *cr, const gchar *utf8,
                      gdouble center_x, gdouble center_y,
-                     gint font_size)
+                     gdouble radian, gint font_size)
 {
     PangoLayout *layout;
     int width, height;
@@ -175,9 +175,11 @@ show_text_at_center (cairo_t *cr, const gchar *utf8,
 
     pango_layout_get_pixel_size(layout, &width, &height);
 
-    cairo_move_to(cr,
-                  center_x - (width / 2.0),
-                  center_y - (height / 2.0));
+    if (cos(radian) < 0.0)
+        center_x -= width;
+    if (sin(radian) < 0.0)
+        center_y -= height;
+    cairo_move_to(cr, center_x, center_y);
     pango_cairo_show_layout(cr, layout);
     g_object_unref(layout);
 }
@@ -227,10 +229,10 @@ show_pie_piece (CutCairoPieChart *chart,
     cairo_stroke(cr);
 
     radian = start + ((end - start) / 2.0);
-    text_x = center_x + cos(radian) * (radius + font_size);
-    text_y = center_y + sin(radian) * (radius + font_size);
+    text_x = center_x + cos(radian) * radius;
+    text_y = center_y + sin(radian) * radius;
     string = g_strdup_printf("%.1f%%", percent * 100);
-    show_text_at_center(cr, string, text_x, text_y, font_size);
+    show_text_at_center(cr, string, text_x, text_y, radian, font_size);
     g_free(string);
 
     return end;
