@@ -293,7 +293,7 @@ show_legend (CutCairoPieChart *chart, cairo_t *cr, CutTestResultStatus status)
     show_legend_square(cr, x, y, status);
 
     text = cut_test_result_status_to_signal_name(status);
-    layout = create_pango_layout(cr, text, 8);
+    layout = create_pango_layout(cr, text, 6);
     if (!layout)
         return;
 
