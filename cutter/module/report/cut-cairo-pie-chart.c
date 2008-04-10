@@ -363,6 +363,8 @@ draw_data_label (CutCairoPieChart *chart, cairo_t *cr, CutRunner *runner)
 
         status = GPOINTER_TO_INT(node->data);
         n_results = get_status_result_number(runner, status);
+        if (n_results == 0)
+            continue;
 
         ratio = n_results / sum;
         radian = start + M_PI * ratio;
@@ -408,6 +410,8 @@ draw_chart (CutCairoPieChart *chart, cairo_t *cr, CutRunner *runner)
         status = GPOINTER_TO_INT(node->data);
         cut_cairo_set_source_result_color(cr, status);
         n_results = get_status_result_number(runner, status);
+        if (n_results == 0)
+            continue;
 
         ratio = (gdouble)n_results / (gdouble)sum;
         start = draw_pie_piece(chart, cr, start, ratio);
