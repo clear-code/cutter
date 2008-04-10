@@ -156,33 +156,6 @@ cut_cairo_pie_chart_new (gdouble width, gdouble height)
                         NULL);
 }
 
-static PangoLayout *
-create_pango_layout (cairo_t *cr, const gchar *utf8, gint font_size)
-{
-    PangoLayout *layout;
-    PangoFontDescription *description;
-    gchar *description_string;
-
-    if (!utf8)
-        return NULL;
-
-    layout = pango_cairo_create_layout(cr);
-
-    if (font_size < 0)
-        description_string = g_strdup("Mono");
-    else
-        description_string = g_strdup_printf("Mono %d", font_size);
-    description = pango_font_description_from_string(description_string);
-    g_free(description_string);
-
-    pango_layout_set_font_description(layout, description);
-    pango_font_description_free(description);
-
-    pango_layout_set_text(layout, utf8, -1);
-
-    return layout;
-}
-
 static void
 show_text_at_center (cairo_t *cr, const gchar *utf8,
                      gdouble center_x, gdouble center_y,
@@ -194,7 +167,7 @@ show_text_at_center (cairo_t *cr, const gchar *utf8,
     if (!utf8)
         return;
 
-    layout = create_pango_layout(cr, utf8, font_size);
+    layout = cut_cairo_create_pango_layout(cr, utf8, font_size);
     if (!layout)
         return;
 
@@ -294,7 +267,7 @@ show_legend (CutCairoPieChart *chart, cairo_t *cr, CutTestResultStatus status)
     draw_legend_mark(cr, x, y, status);
 
     text = cut_test_result_status_to_signal_name(status);
-    layout = create_pango_layout(cr, text, 6);
+    layout = cut_cairo_create_pango_layout(cr, text, 6);
     if (!layout)
         return;
 
