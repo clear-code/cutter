@@ -1,3 +1,7 @@
+2008-04-10  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/module/report/cut-report-pdf.c: show test case result.
+
 2008-04-10  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/module/report/cut-cairo-pie-chart.c: Added some functions to
@@ -5,7 +9,7 @@
 	* cutter/module/report/cut-cairo-pie-chart.c: Calculate pie radius
 	from chart height.
 	* cutter/module/report/cut-cairo-pie-chart.c: Calculate chart circle
-	center from chart width and height. 
+	center from chart width and height.
 	* cutter/module/report/cut-cairo-pie-chart.c: Draw percentage text on
 	the edge of pie circle.
 	* cutter/module/report/cut-cairo-pie-chart.c: Draw each parts(chart,

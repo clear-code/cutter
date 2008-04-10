@@ -299,20 +299,19 @@ cb_ready_test_suite (CutRunner *runner, CutTestSuite *test_suite,
     init_page(report->context);
 }
 
-static void
-show_text_at_current_position_with_page_feed (cairo_t *cr,
-                                              const gchar *utf8)
+static PangoLayout *
+show_text_with_page_feed (cairo_t *cr, const gchar *utf8)
 {
     PangoLayout *layout;
     double x, y;
     int width, height;
 
     if (!utf8)
-        return;
+        return NULL;
 
     layout = cut_cairo_create_pango_layout(cr, utf8, 10);
     if (!layout)
-        return;
+        return NULL;
 
     cairo_get_current_point(cr, &x, &y);
     pango_layout_get_pixel_size(layout, &width, &height);
@@ -325,8 +324,7 @@ show_text_at_current_position_with_page_feed (cairo_t *cr,
     }
 
     pango_cairo_show_layout(cr, layout);
-    cairo_move_to(cr, x, y + height);
-    g_object_unref(layout);
+    return layout;
 }
 
 static void
@@ -369,6 +367,104 @@ cb_complete_test_case (CutRunner *runner, CutTestCase *test_case,
 }
 
 static void
+show_test_case (cairo_t *cr, CutTestCase *test_case, CutTestResultStatus status,
+                guint n_tests, guint n_successes, guint n_failures,
+                guint n_errors, guint n_pendings, guint n_omissions)
+{
+    PangoLayout *layout;
+    const gchar *utf8;
+    int width, height;
+    gdouble x, y;
+
+    utf8 = cut_test_get_name(CUT_TEST(test_case));
+    layout = show_text_with_page_feed(cr, utf8);
+    if (!layout)
+        return;
+
+    cairo_get_current_point(cr, &x, &y);
+    cairo_save(cr);
+    pango_layout_get_pixel_size(layout, &width, &height);
+    cairo_rectangle(cr, A4_WIDTH - 100 - 10, y + 2, 100, height - 4);
+    cut_cairo_set_source_result_color(cr, status);
+    cairo_fill_preserve(cr);
+    cairo_set_line_width(cr, 0.5);
+    cairo_set_source_rgb(cr, 0, 0, 0);
+    cairo_stroke(cr);
+    cairo_restore(cr);
+
+    cairo_move_to(cr, x, y + height);
+    g_object_unref(layout);
+}
+
+static void
+show_summary (CutReportPDF *report, CutRunner *runner)
+{
+    const GList *node;
+    CutTestCase *test_case = NULL;
+    cairo_t *cr;
+    gdouble x, y, after_x, after_y, width, height;
+    guint n_tests, n_successes, n_failures, n_errors, n_pendings, n_omissions;
+    CutTestResultStatus test_case_status;
+
+    cr = report->context;
+    n_tests = n_successes = n_failures = n_errors = n_pendings = n_omissions = 0;
+    test_case_status = CUT_TEST_RESULT_SUCCESS;
+    cairo_get_current_point(cr, &x, &y);
+    for (node = cut_runner_get_results(runner); node; node = g_list_next(node)) {
+        CutTestResult *result = node->data;
+        CutTestCase *current_test_case;
+        CutTestResultStatus status;
+
+        status = cut_test_result_get_status(result);
+        current_test_case = cut_test_result_get_test_case(result);
+        if (!test_case)
+            test_case = current_test_case;
+
+        if (test_case != current_test_case) {
+            show_test_case(cr, test_case, test_case_status,
+                           n_tests, n_successes, n_failures,
+                           n_errors, n_pendings, n_omissions);
+            n_tests = n_successes = n_failures =
+                n_errors = n_pendings = n_omissions = 0;
+            test_case_status = CUT_TEST_RESULT_SUCCESS;
+            test_case = current_test_case;
+        }
+
+        n_tests++;
+        switch (status) {
+          case CUT_TEST_RESULT_SUCCESS:
+            n_successes++;
+            break;
+          case CUT_TEST_RESULT_FAILURE:
+            n_failures++;
+            break;
+          case CUT_TEST_RESULT_ERROR:
+            n_errors++;
+            break;
+          case CUT_TEST_RESULT_PENDING:
+            n_pendings++;
+            break;
+          case CUT_TEST_RESULT_OMISSION:
+            n_omissions++;
+            break;
+          default:
+            break;
+        }
+        if (test_case_status < status)
+            test_case_status = status;
+    }
+
+    if (test_case)
+        show_test_case(cr, test_case, test_case_status,
+                       n_tests, n_successes, n_failures,
+                       n_errors, n_pendings, n_omissions);
+
+    cairo_get_current_point(cr, &after_x, &after_y);
+    width = A4_WIDTH - x * 2;
+    height = after_y - y;
+}
+
+static void
 cb_complete_test_suite (CutRunner *runner, CutTestSuite *test_suite,
                         CutReportPDF *report)
 {
@@ -378,6 +474,10 @@ cb_complete_test_suite (CutRunner *runner, CutTestSuite *test_suite,
     chart = cut_cairo_pie_chart_new(400, 300);
     cut_cairo_pie_chart_draw(chart, report->context, runner);
     g_object_unref(chart);
+
+    cairo_show_page(report->context);
+    init_page(report->context);
+    show_summary(report, runner);
 }
 
 static void
