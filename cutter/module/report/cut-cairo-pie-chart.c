@@ -376,6 +376,7 @@ draw_data_label (CutCairoPieChart *chart, cairo_t *cr, CutRunner *runner)
         label = cut_test_result_status_to_signal_name(status);
         show_text_at_center(cr, label, x, y, radian, 6);
 
+        cairo_set_line_width(cr, 0.50);
         y = center_y + sin(radian) * radius;
         cairo_move_to(cr, x, y);
         x = center_x + cos(radian) * radius;
