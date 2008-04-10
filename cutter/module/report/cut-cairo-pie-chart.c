@@ -429,6 +429,7 @@ create_series (CutCairoPieChart *chart)
     priv->series = g_list_append(priv->series, GINT_TO_POINTER(CUT_TEST_RESULT_FAILURE));
     priv->series = g_list_append(priv->series, GINT_TO_POINTER(CUT_TEST_RESULT_ERROR));
     priv->series = g_list_append(priv->series, GINT_TO_POINTER(CUT_TEST_RESULT_PENDING));
+    priv->series = g_list_append(priv->series, GINT_TO_POINTER(CUT_TEST_RESULT_OMISSION));
 }
 
 void
