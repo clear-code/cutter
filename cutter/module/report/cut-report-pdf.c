@@ -375,7 +375,7 @@ cb_complete_test_suite (CutRunner *runner, CutTestSuite *test_suite,
     CutCairoPieChart *chart;
 
     cairo_move_to(report->context, 50, 50);
-    chart = cut_cairo_pie_chart_new(100, 100);
+    chart = cut_cairo_pie_chart_new(400, 300);
     cut_cairo_pie_chart_draw(chart, report->context, runner);
     g_object_unref(chart);
 }
