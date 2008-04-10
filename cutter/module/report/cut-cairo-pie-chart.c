@@ -264,8 +264,8 @@ show_pie_piece (CutCairoPieChart *chart,
 #define LEGEND_Y 50
 
 static void
-show_legend_square (cairo_t *cr, gdouble x, gdouble y,
-                    CutTestResultStatus status)
+draw_legend_mark (cairo_t *cr, gdouble x, gdouble y,
+                  CutTestResultStatus status)
 {
     cairo_rectangle(cr, x, y, 10, 10);
     cut_cairo_set_source_result_color(cr, status);
@@ -291,7 +291,7 @@ show_legend (CutCairoPieChart *chart, cairo_t *cr, CutTestResultStatus status)
 
     x = center_x + radius + 10;
     y = center_y - radius + priv->n_legends * 10;
-    show_legend_square(cr, x, y, status);
+    draw_legend_mark(cr, x, y, status);
 
     text = cut_test_result_status_to_signal_name(status);
     layout = create_pango_layout(cr, text, 6);
