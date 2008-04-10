@@ -158,6 +158,8 @@ dispose (GObject *object)
         g_free(priv->filename);
         priv->filename = NULL;
     }
+
+    G_OBJECT_CLASS(cut_report_parent_class)->dispose(object);
 }
 
 static void
