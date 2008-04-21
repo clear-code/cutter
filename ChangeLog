@@ -1,5 +1,7 @@
 2008-04-21  Kouhei Sutou  <kou@cozmixng.org>
 
+	* configure.ac: report error if required GLib version isn't found.
+
 	* autogen.sh: accept ACLOCAL_OPTIONS environment variable.
 
 2008-04-10  Kouhei Sutou  <kou@cozmixng.org>

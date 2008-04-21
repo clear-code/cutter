@@ -53,7 +53,10 @@ dnl Check for GLib.
 dnl **************************************************************
 GLIB_REQUIRED=2.14.0
 AC_SUBST(GLIB_REQUIRED)
-AM_PATH_GLIB_2_0($GLIB_REQUIRED, [], [], [gmodule gobject gthread])
+AM_PATH_GLIB_2_0($GLIB_REQUIRED,
+                 [],
+                 [AC_MSG_ERROR([GLib >= $GLIB_REQUIRED required.])],
+                 [gmodule gobject gthread])
 
 # Checks for libraries.
 AC_ARG_ENABLE([bfd],
