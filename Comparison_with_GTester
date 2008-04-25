@@ -1,21 +1,9 @@
 == Cutter
 
-=== Pros.
-
 * Easy to write (No need to register each test explicitly)
 * Fast (One process per test suite)
-* 
-
-=== Cons.
-
-* No fixtures yet 
+* Output stack trace when crashed 
 
 == GTester
-
-=== Pros.
-
-* Fixutures
-
-=== Cons.
 
 * Relatively slow (One process per test case)
