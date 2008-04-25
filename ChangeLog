@@ -1,5 +1,7 @@
 2008-04-25  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gtk-doc.make: fix make uninstall.
+
 	* configure.ac: require cairo >= 1.4 for cairo test.
 
 2008-04-25  Hiroyuki Ikezoe  <poincare@ikezoe.net>
