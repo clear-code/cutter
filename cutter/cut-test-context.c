@@ -431,7 +431,7 @@ cut_test_context_take_string (CutTestContext *context,
 }
 
 const char *
-cut_test_context_take_printf (CutTestContext *context, char *format, ...)
+cut_test_context_take_printf (CutTestContext *context, const char *format, ...)
 {
     const char *taken_string = NULL;
     va_list args;
