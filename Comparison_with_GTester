@@ -6,4 +6,5 @@
 
 == GTester
 
+* Supplied with GLib.
 * Relatively slow (One process per test case)
