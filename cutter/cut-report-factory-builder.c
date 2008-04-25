@@ -175,7 +175,11 @@ set_option_context (CutFactoryBuilder *builder, GOptionContext *context)
                                _("Report Options"),
                                _("Show report options"),
                                builder, NULL);
+
     entries = create_option_entries(builder);
+    if (!entries)
+        return;
+
     g_option_group_add_entries(group, entries);
     g_option_group_set_translation_domain(group, GETTEXT_PACKAGE);
     g_option_context_add_group(context, group);

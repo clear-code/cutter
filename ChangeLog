@@ -1,3 +1,8 @@
+2008-04-25  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-report-factory-builder.c: NULL check barrier of
+	GOptionEntry.
+
 2008-04-21  Kouhei Sutou  <kou@cozmixng.org>
 
 	* configure.ac: report error if required GLib version isn't found.
