@@ -1,7 +1,7 @@
 == Cutter
 
 * Easy to write (No need to register each test explicitly)
-* Fast (One process per test suite)
+* Fast (One process per test suite, each test case can be run on multithread)
 * Output stack trace when crashed 
 
 == GTester
