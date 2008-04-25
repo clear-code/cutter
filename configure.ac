@@ -122,7 +122,7 @@ dnl **************************************************************
 dnl Check for Cairo
 dnl **************************************************************
 cairo_exists=no
-PKG_CHECK_MODULES(CAIRO, cairo,
+PKG_CHECK_MODULES(CAIRO, cairo >= 1.4,
 		  [cairo_exists=yes], [cairo_exists=no])
 AC_SUBST([CAIRO_CFLAGS])
 AC_SUBST([CAIRO_LIBS])
