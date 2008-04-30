@@ -7,6 +7,7 @@
 
 #include "cuttest-utils.h"
 
+void test_run_test (void);
 void test_run_test_case (void);
 void test_run_test_case_with_regex (void);
 void test_run_test (void);

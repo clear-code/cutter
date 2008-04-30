@@ -1,3 +1,7 @@
+2008-05-01  Kouhei Sutou  <kou@cozmixng.org>
+
+	* test/test-cut-test-suite.c: add prototype declaration.
+
 2008-04-30  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/module/ui/cut-ui-gtk.c: handle CUT_TEST_RESULT_INVALID.
