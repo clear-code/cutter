@@ -1,5 +1,7 @@
 2008-04-30  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/module/ui/cut-ui-gtk.c: handle CUT_TEST_RESULT_INVALID.
+
 	* configure.ac: use --coverage instead of -fprofile-arcs and
 	-ftest-coverage.
 

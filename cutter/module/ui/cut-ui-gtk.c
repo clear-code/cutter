@@ -553,6 +553,8 @@ status_to_color (CutTestResultStatus status, gboolean only_if_not_success)
       case CUT_TEST_RESULT_ERROR:
         color = "purple";
         break;
+      case CUT_TEST_RESULT_INVALID:
+        break;
     }
 
     return color;
@@ -582,6 +584,9 @@ get_status_icon (GtkTreeView *tree_view, CutTestResultStatus status)
         break;
       case CUT_TEST_RESULT_ERROR:
         stock_id = GTK_STOCK_CANCEL;
+        break;
+      case CUT_TEST_RESULT_INVALID:
+        stock_id = GTK_STOCK_INFO;
         break;
     }
     icon = gtk_widget_render_icon(GTK_WIDGET(tree_view),
