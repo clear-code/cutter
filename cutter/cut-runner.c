@@ -717,7 +717,7 @@ cut_runner_get_target_test_case_names (CutRunner *runner)
 
 void
 cut_runner_set_target_test_names (CutRunner *runner,
-                                   const gchar **names)
+                                  const gchar **names)
 {
     CutRunnerPrivate *priv = CUT_RUNNER_GET_PRIVATE(runner);
 
