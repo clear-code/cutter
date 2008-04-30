@@ -87,6 +87,7 @@ test_invalid_xml (void)
     g_object_unref(result);
 
     xml = "<result>\n"
+          "  <status>success</status>\n"
           "  <name>test name</name>\n"
           "</result>\n";
     result = cut_xml_parse_test_result_xml(xml, -1);
@@ -114,6 +115,13 @@ test_invalid_xml (void)
           "    <name>option name1</name>\n"
           "    <name>option name2</name>\n"
           "  </option>\n"
+          "</result>\n";
+    result = cut_xml_parse_test_result_xml(xml, -1);
+    cut_assert(result);
+    g_object_unref(result);
+
+    xml = "<result>\n"
+          "  <status>XXXXXX</status>\n"
           "</result>\n";
     result = cut_xml_parse_test_result_xml(xml, -1);
     cut_assert(result);
