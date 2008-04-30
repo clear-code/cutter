@@ -36,7 +36,7 @@ cut_verbose_level_error_quark (void)
 CutVerboseLevel
 cut_verbose_level_parse (const gchar *name, GError **error)
 {
-    CutVerboseLevel level = CUT_VERBOSE_LEVEL_NORMAL;
+    CutVerboseLevel level = CUT_VERBOSE_LEVEL_INVALID;
 
     if (name == NULL) {
         level = CUT_VERBOSE_LEVEL_NORMAL;

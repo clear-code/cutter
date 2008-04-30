@@ -25,6 +25,7 @@
 G_BEGIN_DECLS
 
 typedef enum {
+    CUT_VERBOSE_LEVEL_INVALID = -1, 
     CUT_VERBOSE_LEVEL_SILENT,
     CUT_VERBOSE_LEVEL_NORMAL,
     CUT_VERBOSE_LEVEL_VERBOSE
@@ -46,5 +47,5 @@ G_END_DECLS
 #endif /* __CUT_VERBOSE_LEVEL_H__ */
 
 /*
-vi:nowrap:ai:expandtab:sw=4
+vi:ts=4:nowrap:ai:expandtab:sw=4
 */

@@ -1,3 +1,7 @@
+2008-04-30  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-verbose-level.[c|h]: Added CUT_VERBOSE_LEVEL_INVALID.
+
 2008-04-25  Kouhei Sutou  <kou@cozmixng.org>
 
 	* gtk-doc.make: fix make uninstall.
