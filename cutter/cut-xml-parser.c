@@ -110,7 +110,7 @@ result_name_to_status (const gchar *name)
     else if (!g_ascii_strcasecmp(name, "notification"))
         return CUT_TEST_RESULT_NOTIFICATION;
 
-    return -1;
+    return CUT_TEST_RESULT_INVALID;
 }
 
 static const gchar *
@@ -275,15 +275,6 @@ text_handler (GMarkupParseContext *context,
 }
 
 static void
-passthrough_handler (GMarkupParseContext *context,
-                     const gchar         *text,
-                     gsize                text_len,
-                     gpointer             user_data,
-                     GError             **error)
-{
-}
-
-static void
 error_handler (GMarkupParseContext *context,
                GError              *error,
                gpointer             user_data)
@@ -294,7 +285,7 @@ static GMarkupParser parser = {
     start_element_handler,
     end_element_handler,
     text_handler,
-    passthrough_handler,
+    NULL, 
     error_handler,
 };
 

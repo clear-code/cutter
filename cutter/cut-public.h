@@ -37,6 +37,7 @@ extern "C" {
 typedef struct _CutTestContext     CutTestContext;
 
 typedef enum {
+    CUT_TEST_RESULT_INVALID = -1,
     CUT_TEST_RESULT_SUCCESS,
     CUT_TEST_RESULT_NOTIFICATION,
     CUT_TEST_RESULT_OMISSION,
