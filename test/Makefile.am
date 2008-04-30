@@ -36,7 +36,8 @@ noinst_LTLIBRARIES = 				\
 		test_cut_contractor.la		\
 		test_cut_fork.la		\
 		test_cut_xml_parser.la		\
-		test_cut_report_xml.la
+		test_cut_report_xml.la		\
+		test_cut_verbose_level.la
 
 LDFLAGS =			\
 	-module			\
@@ -73,6 +74,7 @@ test_cut_factory_builder_la_SOURCES = test-cut-factory-builder.c
 test_cut_contractor_la_SOURCES  = test-cut-contractor.c
 test_cut_fork_la_SOURCES  	= test-cut-fork.c
 test_cut_xml_parser_la_SOURCES	= test-cut-xml-parser.c
+test_cut_verbose_level_la_SOURCES = test-cut-verbose-level.c
 
 echo-cutter:
 	@echo $(CUTTER)
