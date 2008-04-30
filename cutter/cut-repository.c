@@ -115,8 +115,6 @@ set_property (GObject      *object,
 
     switch (prop_id) {
       case PROP_DIRECTORY:
-        if (priv->directory)
-            g_free(priv->directory);
         priv->directory = g_value_dup_string(value);
         break;
       default:
