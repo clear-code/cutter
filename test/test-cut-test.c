@@ -13,6 +13,7 @@ void test_pass_assertion_signal(void);
 void test_failure_signal(void);
 void test_pending_signal(void);
 void test_notification_signal(void);
+void test_omission_signal(void);
 
 static CutRunner *runner;
 static CutTest *test_object;
@@ -25,6 +26,7 @@ static gint n_error_signal = 0;
 static gint n_pending_signal = 0;
 static gint n_pass_assertion_signal = 0;
 static gint n_notification_signal = 0;
+static gint n_omission_signal = 0;
 
 static void
 dummy_test_function (void)
@@ -59,6 +61,12 @@ dummy_error_function (void)
     cut_error("This test should error");
 }
 
+static void
+dummy_omission_function (void)
+{
+    cut_omit("This test should be omitted");
+}
+
 void
 setup (void)
 {
@@ -71,6 +79,7 @@ setup (void)
     n_pending_signal = 0;
     n_notification_signal = 0;
     n_pass_assertion_signal = 0;
+    n_omission_signal = 0;
 
     runner = cut_runner_new();
 
@@ -124,6 +133,12 @@ static void
 cb_pass_assertion_signal (CutTest *test, gpointer data)
 {
     n_pass_assertion_signal++;
+}
+
+static void
+cb_omission_signal (CutTest *test, gpointer data)
+{
+    n_omission_signal++;
 }
 
 static gboolean
@@ -256,6 +271,23 @@ test_notification_signal (void)
                                          G_CALLBACK(cb_notification_signal),
                                          NULL);
     cut_assert_equal_int(1, n_notification_signal);
+    g_object_unref(test);
+}
+
+void
+test_omission_signal (void)
+{
+    CutTest *test;
+
+    test = cut_test_new("dummy-omission-test", dummy_omission_function);
+    cut_assert(test);
+
+    g_signal_connect(test, "omission", G_CALLBACK(cb_omission_signal), NULL);
+    cut_assert(run(test));
+    g_signal_handlers_disconnect_by_func(test,
+                                         G_CALLBACK(cb_omission_signal),
+                                         NULL);
+    cut_assert_equal_int(1, n_omission_signal);
     g_object_unref(test);
 }
 
