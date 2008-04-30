@@ -5,6 +5,7 @@
 
 void test_module_names (void);
 void test_module_arguments (void);
+void test_default_module_dir (void);
 
 static CutModuleFactory *factory;
 static GOptionContext *option_context;
@@ -100,6 +101,18 @@ test_module_arguments (void)
 
     g_object_unref(factory);
     factory = NULL;
+}
+
+void
+test_default_module_dir (void)
+{
+    const gchar *orig_dir;
+    orig_dir = cut_module_factory_get_default_module_dir();
+
+    cut_module_factory_set_default_module_dir("default_dir");
+    cut_assert_equal_string("default_dir",
+                            cut_module_factory_get_default_module_dir());
+    cut_module_factory_set_default_module_dir(orig_dir);
 }
 
 /*
