@@ -3,6 +3,7 @@
 #include <cutter/cut-test-case.h>
 #include <cutter/cut-test-suite.h>
 #include <cutter/cut-loader.h>
+#include <signal.h>
 
 #include "cuttest-utils.h"
 
@@ -16,6 +17,7 @@ void test_run_test_in_test_case_with_regex (void);
 void test_run_test_with_regex_in_test_case_with_regex (void);
 void test_run_test_in_test_case_with_null (void);
 void test_run_test_with_filter_with_null (void);
+void test_crashed_signal (void);
 
 static CutRunner *runner;
 static CutTestSuite *test_object;
@@ -29,6 +31,7 @@ static gint n_run_bummy_run_test_function = 0;
 static gint n_run_bummy_test_function1 = 0;
 static gint n_run_bummy_test_function2 = 0;
 
+static gint n_crashed_signal = 0;
 
 static void
 dummy_test_function1 (void)
@@ -70,6 +73,18 @@ bummy_run_test_function (void)
     n_run_bummy_run_test_function++;
 }
 
+static void
+dummy_crashed_function (void)
+{
+    raise(SIGSEGV);
+}
+
+static void
+cb_crashed_signal (CutTest *test, gpointer data)
+{
+    n_crashed_signal++;
+}
+
 void
 setup (void)
 {
@@ -82,6 +97,7 @@ setup (void)
     n_run_bummy_test_function1 = 0;
     n_run_bummy_test_function2 = 0;
     n_run_bummy_run_test_function = 0;
+    n_crashed_signal = 0;
 
     runner = cut_runner_new();
 
@@ -281,7 +297,35 @@ test_run_test_with_filter_with_null (void)
     cut_assert_equal_int(0, n_run_bummy_run_test_function);
 }
 
+static void
+segv_handler (int signum)
+{
+    return;
+}
+
+void
+test_crashed_signal (void)
+{
+    CutTestCase *test_case;
+
+    test_case = cut_test_case_new("crash_test_case", NULL, NULL,
+                                  get_current_test_context,
+                                  set_current_test_context,
+                                  NULL, NULL);
+    cuttest_add_test(test_case, "crash_test", dummy_crashed_function);
+    cut_test_suite_add_test_case(test_object, test_case);
+    g_object_unref(test_case);
+
+    signal(SIGSEGV, segv_handler);
+    g_signal_connect(test_object, "crashed", G_CALLBACK(cb_crashed_signal), NULL);
+    cut_assert(!run_test_in_test_case("crash_test", "crash_test_case"));
+    g_signal_handlers_disconnect_by_func(test_object,
+                                         G_CALLBACK(cb_crashed_signal),
+                                         NULL);
+    cut_assert_equal_int(1, n_crashed_signal);
+}
+
 /*
-vi:nowrap:ai:expandtab:sw=4
+vi:ts=4:nowrap:ai:expandtab:sw=4
 */
 
