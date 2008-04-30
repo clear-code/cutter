@@ -61,29 +61,63 @@ void
 test_invalid_xml (void)
 {
     CutTestResult *result;
-    const gchar xml[] = "<1result>\n"
-                        "  <test-case>\n"
-                        "    <name>dummy test case</name>\n"
-                        "  </test-case>\n"
-                        "  <test>\n"
-                        "    <name>dummy-error-test</name>\n"
-                        "    <description>Error Test</description>\n"
-                        "    <option>\n"
-                        "      <name>bug</name>\n"
-                        "      <value>1234</value>\n"
-                        "    </option>\n"
-                        "  </test>\n"
-                        "  <status>error</status>\n"
-                        "  <detail>This test should error</detail>\n"
-                        "  <backtrace>\n"
-                        "    <file>test-cut-report-xml.c</file>\n"
-                        "    <line>31</line>\n"
-                        "    <info>dummy_error_test()</info>\n"
-                        "  </backtrace>\n"
-                        "  <elapsed>0.000100</elapsed>\n"
-                        "</result>\n";
+    const gchar *xml = "<gresult>\n"
+                       "  <status>success</status>\n"
+                       "</result>\n";
     result = cut_xml_parse_test_result_xml(xml, -1);
     cut_assert_null(result);
+
+    xml = "<result>\n"
+          "  <status>pending</status>\n"
+          "  <backtrace>\n"
+          "    <line>XXX</line>\n"
+          "  </backtrace>\n"
+          "</result>\n";
+    result = cut_xml_parse_test_result_xml(xml, -1);
+    cut_assert(result);
+    g_object_unref(result);
+
+    xml = "<result>\n"
+          "  <backtrace>\n"
+          "    <info>dummy_error_test</info>\n"
+          "  </backtrace>\n"
+          "</result>\n";
+    result = cut_xml_parse_test_result_xml(xml, -1);
+    cut_assert(result);
+    g_object_unref(result);
+
+    xml = "<result>\n"
+          "  <name>test name</name>\n"
+          "</result>\n";
+    result = cut_xml_parse_test_result_xml(xml, -1);
+    cut_assert(result);
+    g_object_unref(result);
+
+    xml = "<result>\n"
+          "  <value>value</value>\n"
+          "</result>\n";
+    result = cut_xml_parse_test_result_xml(xml, -1);
+    cut_assert(result);
+    g_object_unref(result);
+
+    xml = "<result>\n"
+          "  <option>\n"
+          "    <value>value</value>\n"
+          "  </option>\n"
+          "</result>\n";
+    result = cut_xml_parse_test_result_xml(xml, -1);
+    cut_assert(result);
+    g_object_unref(result);
+
+    xml = "<result>\n"
+          "  <option>\n"
+          "    <name>option name1</name>\n"
+          "    <name>option name2</name>\n"
+          "  </option>\n"
+          "</result>\n";
+    result = cut_xml_parse_test_result_xml(xml, -1);
+    cut_assert(result);
+    g_object_unref(result);
 }
 
 /*
