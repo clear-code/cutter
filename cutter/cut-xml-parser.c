@@ -268,7 +268,10 @@ text_handler (GMarkupParseContext *context,
     } else if (!g_ascii_strcasecmp("info", element)) {
         set_function_name(context, data, text, error);
     } else if (!g_ascii_strcasecmp("status", element)) {
-        cut_test_result_set_status(data->result, result_name_to_status(text));
+        CutTestResultStatus status;
+        status = result_name_to_status(text);
+        if (status >= 0)
+            cut_test_result_set_status(data->result, status);
     } else if (!g_ascii_strcasecmp("elapsed", element)) {
         cut_test_result_set_elapsed(data->result, g_ascii_strtod(text, NULL));
     }
