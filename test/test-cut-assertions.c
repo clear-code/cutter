@@ -159,7 +159,7 @@ void
 test_equal_double (void)
 {
     cut_assert_equal_double(1.0, 0.1, 1.0);
-    cut_assert_equal_double(1.0, 0.01, 1.01);
+    cut_assert_equal_double(1.01, 0.01, 1.01);
 }
 
 void
