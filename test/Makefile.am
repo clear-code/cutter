@@ -26,6 +26,7 @@ noinst_LTLIBRARIES = 				\
 		test_cut_test_result.la		\
 		test_cut_test_case.la		\
 		test_cut_test_suite.la		\
+		test_cut_test_context.la	\
 		test_cut_loader.la		\
 		test_cut_repository.la		\
 		test_cut_runner.la		\
@@ -75,6 +76,7 @@ test_cut_contractor_la_SOURCES  = test-cut-contractor.c
 test_cut_fork_la_SOURCES  	= test-cut-fork.c
 test_cut_xml_parser_la_SOURCES	= test-cut-xml-parser.c
 test_cut_verbose_level_la_SOURCES = test-cut-verbose-level.c
+test_cut_test_context_la_SOURCES = test-cut-test-context.c
 
 echo-cutter:
 	@echo $(CUTTER)
