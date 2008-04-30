@@ -178,6 +178,18 @@ run_test_with_filter (const gchar **test_case_names, const gchar **test_names)
 }
 
 void
+test_run (void)
+{
+    cut_assert(cut_test_suite_run(test_object, runner));
+    cut_assert_equal_int(1, n_run_dummy_test_function1);
+    cut_assert_equal_int(1, n_run_dummy_test_function2);
+    cut_assert_equal_int(1, n_run_dummy_run_test_function);
+    cut_assert_equal_int(0, n_run_bummy_test_function1);
+    cut_assert_equal_int(0, n_run_bummy_test_function2);
+    cut_assert_equal_int(0, n_run_bummy_run_test_function);
+}
+
+void
 test_run_test_case (void)
 {
     cut_assert(run_test_case("dummy_test_case"));
