@@ -42,4 +42,4 @@ tag:
 
 coverage:
 	cd test && ./run-test.sh
-	cd cutter && lcov -d .libs -b . -c -o coverage.info && genhtml -o html coverage.html
+	cd cutter && lcov -d .libs -b . -c -o coverage.info && genhtml -o html coverage.info
