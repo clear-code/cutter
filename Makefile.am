@@ -40,6 +40,9 @@ tag:
 	svn cp -m "released $(VERSION)!!!" $(SF_USER_OPTION) \
 	  $(SF_REPOS)/trunk $(SF_REPOS)/tags/$(VERSION)
 
-coverage:
-	cd test && ./run-test.sh
-	cd cutter && lcov -d .libs -b . -c -o coverage.info && genhtml -o html coverage.info
+if ENABLE_COVERAGE
+coverage: check
+	cd cutter && \
+	  lcov -d .libs -b . -c -o coverage.info && \
+	  genhtml -o html coverage.info
+endif
