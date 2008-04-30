@@ -7,6 +7,7 @@ void test_sort_test_cases(void);
 void test_n_ (void);
 void test_get_test_directory(void);
 void test_get_source_directory(void);
+void test_copy (void);
 
 static CutRunner *runner;
 static CutTestCase *test_case;
@@ -179,6 +180,27 @@ test_get_source_directory (void)
 {
     cut_runner_set_source_directory(runner, ".");
     cut_assert_equal_string(".", cut_runner_get_source_directory(runner));
+}
+
+void
+test_copy (void)
+{
+    CutRunner *new_runner;
+
+    new_runner = cut_runner_copy(runner);
+    cut_assert(new_runner);
+
+    cut_assert_equal_int(cut_runner_get_multi_thread(runner),
+                         cut_runner_get_multi_thread(new_runner));
+    cut_assert_equal_int(cut_runner_is_multi_thread(runner),
+                         cut_runner_is_multi_thread(new_runner));
+
+    cut_assert_equal_string(cut_runner_get_test_directory(runner),
+                            cut_runner_get_test_directory(new_runner));
+    cut_assert_equal_string(cut_runner_get_source_directory(runner),
+                            cut_runner_get_source_directory(new_runner));
+
+    g_object_unref(new_runner);
 }
 
 /*
