@@ -6,6 +6,7 @@ void test_parse (void);
 void
 test_parse (void)
 {
+    GError *error = NULL;
     cut_assert_equal_int(CUT_VERBOSE_LEVEL_NORMAL,
                          cut_verbose_level_parse(NULL, NULL));
     cut_assert_equal_int(CUT_VERBOSE_LEVEL_NORMAL,
@@ -20,6 +21,10 @@ test_parse (void)
                          cut_verbose_level_parse("v", NULL));
     cut_assert_equal_int(CUT_VERBOSE_LEVEL_VERBOSE,
                          cut_verbose_level_parse("verbose", NULL));
+    cut_assert_equal_int(CUT_VERBOSE_LEVEL_INVALID,
+                         cut_verbose_level_parse("XXXXXX", &error));
+    cut_assert(error);
+    cut_assert_equal_int(CUT_VERBOSE_LEVEL_ERROR_BAD_VALUE, error->code);
 }
 
 /*
