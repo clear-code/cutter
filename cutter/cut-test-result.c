@@ -683,6 +683,9 @@ cut_test_result_status_to_signal_name (CutTestResultStatus status)
       case CUT_TEST_RESULT_ERROR:
         signal_name = "error";
         break;
+      case CUT_TEST_RESULT_INVALID:
+        signal_name = "invalid status";
+        break;
     }
 
     return signal_name;
