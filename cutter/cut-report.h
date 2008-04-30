@@ -62,8 +62,6 @@ struct _CutReportClass
 
 GType        cut_report_get_type  (void) G_GNUC_CONST;
 
-void         cut_report_load        (const gchar *base_dir);
-void         cut_report_unload      (void);
 GList       *cut_report_get_registered_types (void);
 GList       *cut_report_get_log_domains      (void);
 

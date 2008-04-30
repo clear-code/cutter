@@ -68,15 +68,6 @@ _cut_report_module_dir (void)
     return REPORT_MODULEDIR;
 }
 
-void
-cut_report_load (const gchar *base_dir)
-{
-    if (!base_dir)
-        base_dir = _cut_report_module_dir();
-
-    modules = g_list_concat(cut_module_load_modules(base_dir), modules);
-}
-
 static CutModule *
 cut_report_load_module (const gchar *name)
 {
@@ -95,14 +86,6 @@ cut_report_load_module (const gchar *name)
     }
 
     return module;
-}
-
-void
-cut_report_unload (void)
-{
-    g_list_foreach(modules, (GFunc)cut_module_unload, NULL);
-    g_list_free(modules);
-    modules = NULL;
 }
 
 GList *
