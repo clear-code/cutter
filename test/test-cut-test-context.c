@@ -22,6 +22,8 @@ test_inspect_string_array (void)
 {
     const gchar *strings[] = {"a", "b", "c", NULL};
 
+    cut_assert_equal_string("(null)", 
+                            cut_test_context_inspect_string_array(context, NULL));
     cut_assert_equal_string("[\"a\", \"b\", \"c\"]",
                             cut_test_context_inspect_string_array(context, strings));
 }
