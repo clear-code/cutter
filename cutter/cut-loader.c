@@ -134,8 +134,6 @@ set_property (GObject      *object,
 
     switch (prop_id) {
       case PROP_SO_FILENAME:
-        if (priv->so_filename)
-            g_free(priv->so_filename);
         priv->so_filename = g_value_dup_string(value);
         break;
       default:
