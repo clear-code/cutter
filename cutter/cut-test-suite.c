@@ -41,18 +41,6 @@
 #include "cut-marshalers.h"
 #include "cut-test-result.h"
 
-#define CUT_TEST_SUITE_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_SUITE, CutTestSuitePrivate))
-
-typedef struct _CutTestSuitePrivate	CutTestSuitePrivate;
-struct _CutTestSuitePrivate
-{
-};
-
-enum
-{
-    PROP_0
-};
-
 enum
 {
     READY_SIGNAL,
@@ -68,26 +56,12 @@ static gint cut_test_suite_signals[LAST_SIGNAL] = {0};
 
 G_DEFINE_TYPE (CutTestSuite, cut_test_suite, CUT_TYPE_TEST_CONTAINER)
 
-static void dispose        (GObject         *object);
-static void set_property   (GObject         *object,
-                            guint            prop_id,
-                            const GValue    *value,
-                            GParamSpec      *pspec);
-static void get_property   (GObject         *object,
-                            guint            prop_id,
-                            GValue          *value,
-                            GParamSpec      *pspec);
-
 static void
 cut_test_suite_class_init (CutTestSuiteClass *klass)
 {
     GObjectClass *gobject_class;
 
     gobject_class = G_OBJECT_CLASS(klass);
-
-    gobject_class->dispose      = dispose;
-    gobject_class->set_property = set_property;
-    gobject_class->get_property = get_property;
 
     cut_test_suite_signals[READY_SIGNAL]
         = g_signal_new("ready",
@@ -120,38 +94,6 @@ cut_test_suite_class_init (CutTestSuiteClass *klass)
 static void
 cut_test_suite_init (CutTestSuite *test_suite)
 {
-}
-
-static void
-dispose (GObject *object)
-{
-    G_OBJECT_CLASS(cut_test_suite_parent_class)->dispose(object);
-}
-
-static void
-set_property (GObject      *object,
-              guint         prop_id,
-              const GValue *value,
-              GParamSpec   *pspec)
-{
-    switch (prop_id) {
-      default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
-        break;
-    }
-}
-
-static void
-get_property (GObject    *object,
-              guint       prop_id,
-              GValue     *value,
-              GParamSpec *pspec)
-{
-    switch (prop_id) {
-      default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
-        break;
-    }
 }
 
 CutTestSuite *
