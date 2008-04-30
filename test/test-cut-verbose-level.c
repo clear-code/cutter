@@ -25,6 +25,7 @@ test_parse (void)
                          cut_verbose_level_parse("XXXXXX", &error));
     cut_assert(error);
     cut_assert_equal_int(CUT_VERBOSE_LEVEL_ERROR_BAD_VALUE, error->code);
+    g_error_free(error);
 }
 
 /*
