@@ -2,6 +2,7 @@
 #include "cut-xml-parser.h"
 
 void test_xml (void);
+void test_invalid_xml (void);
 
 void
 test_xml (void)
@@ -53,6 +54,36 @@ test_xml (void)
                             cut_test_get_attribute(test, "bug"));
     cut_assert_equal_string("Error Test",
                             cut_test_get_description(test));
+    g_object_unref(result);
+}
+
+void
+test_invalid_xml (void)
+{
+    CutTestResult *result;
+    const gchar xml[] = "<1result>\n"
+                        "  <test-case>\n"
+                        "    <name>dummy test case</name>\n"
+                        "  </test-case>\n"
+                        "  <test>\n"
+                        "    <name>dummy-error-test</name>\n"
+                        "    <description>Error Test</description>\n"
+                        "    <option>\n"
+                        "      <name>bug</name>\n"
+                        "      <value>1234</value>\n"
+                        "    </option>\n"
+                        "  </test>\n"
+                        "  <status>error</status>\n"
+                        "  <detail>This test should error</detail>\n"
+                        "  <backtrace>\n"
+                        "    <file>test-cut-report-xml.c</file>\n"
+                        "    <line>31</line>\n"
+                        "    <info>dummy_error_test()</info>\n"
+                        "  </backtrace>\n"
+                        "  <elapsed>0.000100</elapsed>\n"
+                        "</result>\n";
+    result = cut_xml_parse_test_result_xml(xml, -1);
+    cut_assert_null(result);
 }
 
 /*
