@@ -50,16 +50,17 @@ cut_verbose_level_parse (const gchar *name, GError **error)
                g_utf8_collate(name, "verbose") == 0) {
         level = CUT_VERBOSE_LEVEL_VERBOSE;
     } else {
-        if (error)
+        if (error) {
             g_set_error(error,
                         CUT_VERBOSE_LEVEL_ERROR,
                         CUT_VERBOSE_LEVEL_ERROR_BAD_VALUE,
                         "Invalid verbose level name: %s", name);
+        }
     }
 
     return level;
 }
 
 /*
-vi:nowrap:ai:expandtab:sw=4
+vi:ts=4:nowrap:ai:expandtab:sw=4
 */
