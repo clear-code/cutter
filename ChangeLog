@@ -1,5 +1,8 @@
 2008-04-30  Kouhei Sutou  <kou@cozmixng.org>
 
+	* configure.ac: use --coverage instead of -fprofile-arcs and
+	-ftest-coverage.
+
 	* Makefile.am (coverage):
 	- change output directory to ./coverage/ from cutter/html/.
 	- add some options.

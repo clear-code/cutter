@@ -87,7 +87,7 @@ fi
 
 COVERAGE_CFLAGS=
 if test "x$ac_cv_enable_coverage" = "xyes"; then
-  COVERAGE_CFLAGS="$CFLAGS -fprofile-arcs -ftest-coverage"
+  COVERAGE_CFLAGS="$CFLAGS --coverage"
 fi
 AC_SUBST(COVERAGE_CFLAGS)
 AM_CONDITIONAL([ENABLE_COVERAGE], [test "x$ac_cv_enable_coverage" = "xyes"])
