@@ -5,6 +5,8 @@
 
 void test_sort_test_cases(void);
 void test_n_ (void);
+void test_get_test_directory(void);
+void test_get_source_directory(void);
 
 static CutRunner *runner;
 static CutTestCase *test_case;
@@ -163,6 +165,20 @@ test_n_ (void)
 
     g_object_unref(test_case);
     test_case = NULL;
+}
+ 
+void
+test_get_test_directory (void)
+{
+    cut_runner_set_test_directory(runner, ".");
+    cut_assert_equal_string(".", cut_runner_get_test_directory(runner));
+}
+
+void
+test_get_source_directory (void)
+{
+    cut_runner_set_source_directory(runner, ".");
+    cut_assert_equal_string(".", cut_runner_get_source_directory(runner));
 }
 
 /*
