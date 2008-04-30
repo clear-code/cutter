@@ -7,7 +7,9 @@ INCLUDES = $(CUTTER_CFLAGS)	\
 
 EXTRA_DIST = run-test.sh
 
+if MAINTAINER_MODE
 TESTS = run-test.sh
+endif
 TESTS_ENVIRONMENT = NO_MAKE=yes
 
 noinst_PROGRAMS = cutter-gtk

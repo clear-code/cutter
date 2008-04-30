@@ -91,6 +91,18 @@ fi
 AM_CONDITIONAL([ENABLE_COVERAGE], [test "x$ac_cv_enable_coverage" = "xyes"])
 
 dnl **************************************************************
+dnl Configure for maintainer mode.
+dnl **************************************************************
+
+AC_ARG_ENABLE([maintainer-mode],
+              AS_HELP_STRING([--enable-maintainer-mode],
+                             [Enable maintainer mode]),
+              [ac_cv_enable_maintainer_mode=$enableval],
+              [ac_cv_enable_maintainer_mode=no])
+AM_CONDITIONAL([MAINTAINER_MODE],
+               [test "x$ac_cv_enable_maintainer_mode" = "xyes"])
+
+dnl **************************************************************
 dnl Configure for modules.
 dnl **************************************************************
 

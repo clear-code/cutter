@@ -1,5 +1,10 @@
 2008-04-30  Kouhei Sutou  <kou@cozmixng.org>
 
+	* configure.ac: add --enable-maintainer-mode.
+
+	* sample/*/Makefile.am: run only --enable-maintainer-mode
+	environment.
+
 	* Makefile.am (coverage): enable only --enable-coverage environment.
 
 	* configure.ac: add --enable-coverage.

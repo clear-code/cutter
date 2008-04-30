@@ -7,7 +7,9 @@ EXTRA_DIST =			\
 	run-test.sh		\
 	iochannel-test-infile
 
+if MAINTAINER_MODE
 TESTS = run-test.sh
+endif
 TESTS_ENVIRONMENT = NO_MAKE=yes
 
 noinst_LTLIBRARIES = 			\
