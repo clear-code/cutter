@@ -8,6 +8,7 @@ void test_n_ (void);
 void test_get_test_directory(void);
 void test_get_source_directory(void);
 void test_copy (void);
+void test_order (void);
 
 static CutRunner *runner;
 static CutTestCase *test_case;
@@ -93,6 +94,17 @@ collect_test_case_names (GList *test_cases)
     names[i] = NULL;
 
     return names;
+}
+
+void
+test_order (void)
+{
+    cut_runner_set_test_case_order(runner, CUT_ORDER_NAME_ASCENDING);
+    cut_assert_equal_int(CUT_ORDER_NAME_ASCENDING,
+                         cut_runner_get_test_case_order(runner));
+    cut_runner_set_test_case_order(runner, CUT_ORDER_NAME_DESCENDING);
+    cut_assert_equal_int(CUT_ORDER_NAME_DESCENDING,
+                         cut_runner_get_test_case_order(runner));
 }
 
 void
