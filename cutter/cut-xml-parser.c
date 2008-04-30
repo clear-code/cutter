@@ -247,6 +247,9 @@ text_handler (GMarkupParseContext *context,
     ParseData *data = (ParseData *)user_data;
     const gchar *element;
 
+    if (!data->result)
+        return;
+
     element = g_markup_parse_context_get_element(context);
     
     if (!g_ascii_strcasecmp("name", element)) {
