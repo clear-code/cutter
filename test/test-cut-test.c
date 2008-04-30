@@ -149,6 +149,9 @@ test_get_name (void)
 {
     cut_assert_equal_string("dummy-test",
                             cut_test_get_name(test_object));
+    cut_test_set_name(test_object, "new-name");
+    cut_assert_equal_string("new-name",
+                            cut_test_get_name(test_object));
 }
 
 void
@@ -268,5 +271,5 @@ test_pass_assertion_signal (void)
 }
 
 /*
-vi:nowrap:ai:expandtab:sw=4
+vi:ts=4:nowrap:ai:expandtab:sw=4
 */
