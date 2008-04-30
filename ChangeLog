@@ -1,5 +1,11 @@
 2008-04-30  Kouhei Sutou  <kou@cozmixng.org>
 
+	* Makefile.am (coverage): change output directory to ./coverage/
+	from cutter/html/.
+
+	* configure.ac, **/Makefile.am (COVERAGE_CFLAGS): use coverage
+	related options only for cutter itself.
+
 	* cutter/**/Makefile.am: clean CFLAGS.
 
 	* configure.ac: add --enable-maintainer-mode.

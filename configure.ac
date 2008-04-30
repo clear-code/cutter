@@ -85,9 +85,11 @@ if test "x$GCC" != "xyes"; then
   ac_cv_enable_coverage=no
 fi
 
+COVERAGE_CFLAGS=
 if test "x$ac_cv_enable_coverage" = "xyes"; then
-  CFLAGS="$CFLAGS -fprofile-arcs -ftest-coverage"
+  COVERAGE_CFLAGS="$CFLAGS -fprofile-arcs -ftest-coverage"
 fi
+AC_SUBST(COVERAGE_CFLAGS)
 AM_CONDITIONAL([ENABLE_COVERAGE], [test "x$ac_cv_enable_coverage" = "xyes"])
 
 dnl **************************************************************

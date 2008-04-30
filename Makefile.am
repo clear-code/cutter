@@ -42,7 +42,6 @@ tag:
 
 if ENABLE_COVERAGE
 coverage: check
-	cd cutter && \
-	  lcov -d .libs -b . -c -o coverage.info && \
-	  genhtml -o html coverage.info
+	lcov -d cutter/.libs -b cutter -c -o coverage.info && \
+	  genhtml -o coverage coverage.info
 endif

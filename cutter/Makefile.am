@@ -4,9 +4,10 @@ INCLUDES = 			\
 	 -I$(top_builddir)	\
 	 -I$(top_srcdir)
 
-AM_CPPFLAGS = 						\
+AM_CFLAGS = 						\
 	-DLOCALEDIR=\""$(localedir)"\"			\
-	$(CUTTER_CFLAGS)
+	$(CUTTER_CFLAGS)				\
+	$(COVERAGE_CFLAGS)
 
 EXTRA_DIST = config.h.in cut-marshalers.list
 

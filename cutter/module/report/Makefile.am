@@ -2,7 +2,9 @@ INCLUDES = 			\
 	 -I$(top_builddir)	\
 	 -I$(top_srcdir)
 
-AM_CFLAGS = $(GLIB_CFLAGS)
+AM_CFLAGS =			\
+	$(GLIB_CFLAGS)		\
+	$(COVERAGE_CFLAGS)
 
 LDFLAGS =							\
   -avoid-version -module					\
