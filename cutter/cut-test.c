@@ -252,9 +252,8 @@ set_property (GObject      *object,
 
     switch (prop_id) {
       case PROP_NAME:
-        if (priv->name)
-            g_free(priv->name);
-        priv->name = g_value_dup_string(value);
+        cut_test_set_name(CUT_TEST(object),
+                          g_value_dup_string(value));
         break;
       case PROP_TEST_FUNCTION:
         priv->test_function = g_value_get_pointer(value);
