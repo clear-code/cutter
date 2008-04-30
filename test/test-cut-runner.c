@@ -9,11 +9,14 @@ void test_get_test_directory(void);
 void test_get_source_directory(void);
 void test_copy (void);
 void test_order (void);
+void test_ready_signal (void);
 
 static CutRunner *runner;
 static CutTestCase *test_case;
 static GList *test_cases;
 static gchar **expected_names, **actual_names;
+
+static gint n_ready_test_suite_signals = 0;
 
 void
 setup (void)
@@ -23,6 +26,8 @@ setup (void)
     test_cases = NULL;
     expected_names = NULL;
     actual_names = NULL;
+
+    n_ready_test_suite_signals = 0;
 }
 
 void
@@ -213,6 +218,46 @@ test_copy (void)
                             cut_runner_get_source_directory(new_runner));
 
     g_object_unref(new_runner);
+}
+
+static void
+cb_ready_test_suite_signal (CutRunner *runner,
+                            CutTestSuite *suite,
+                            guint n_test_cases,
+                            guint n_tests,
+                            gpointer data)
+{
+    n_ready_test_suite_signals++;
+}
+
+void
+test_ready_signal (void)
+{
+    CutTestSuite *suite;
+    CutTestCase *test_case;
+
+    suite = cut_test_suite_new();
+
+    test_case = cut_test_case_new("dummy test case",
+                                  NULL,
+                                  NULL,
+                                  get_current_test_context,
+                                  set_current_test_context,
+                                  NULL, NULL);
+    cuttest_add_test(test_case, "test_1", dummy_success_function);
+    cut_test_suite_add_test_case(suite, test_case);
+    g_object_unref(test_case);
+    test_case = NULL;
+
+    cut_runner_set_test_suite(runner, suite);
+    g_signal_connect(runner, "ready-test-suite", G_CALLBACK(cb_ready_test_suite_signal), NULL);
+    cut_assert(cut_test_suite_run(suite, runner));
+    g_signal_handlers_disconnect_by_func(runner,
+                                         G_CALLBACK(cb_ready_test_suite_signal),
+                                         NULL);
+
+    cut_assert_equal_int(1, n_ready_test_suite_signals);
+    g_object_unref(suite);
 }
 
 /*
