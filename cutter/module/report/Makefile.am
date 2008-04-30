@@ -1,6 +1,8 @@
-INCLUDES = $(GLIB_CFLAGS)	\
+INCLUDES = 			\
 	 -I$(top_builddir)	\
 	 -I$(top_srcdir)
+
+AM_CFLAGS = $(GLIB_CFLAGS)
 
 LDFLAGS =							\
   -avoid-version -module					\

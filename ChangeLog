@@ -1,5 +1,7 @@
 2008-04-30  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/**/Makefile.am: clean CFLAGS.
+
 	* configure.ac: add --enable-maintainer-mode.
 
 	* sample/*/Makefile.am: run only --enable-maintainer-mode
