@@ -9,6 +9,7 @@
 void test_help (void);
 void test_help_all (void);
 void test_version (void);
+void test_invalid_option (void);
 
 static gchar *stdout_string = NULL;
 static gchar *stderr_string = NULL;
@@ -146,6 +147,14 @@ test_help_all (void)
     cut_assert(run_cutter("--help-all"));
     cut_assert_equal_int(exit_status, 0);
     cut_assert_equal_string(expected, stdout_string);
+}
+
+void
+test_invalid_option (void)
+{
+    cut_assert(run_cutter("--XXXX"));
+    cut_assert_equal_int(exit_status, 256);
+    cut_assert_equal_string("Unknown option --XXXX\n", stdout_string);
 }
 
 /*
