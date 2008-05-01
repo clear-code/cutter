@@ -404,6 +404,8 @@ cut_test_case_run_tests (CutTestCase *test_case, CutRunner *runner,
                              &status);
             g_signal_connect(test, "notification", G_CALLBACK(cb_test_status),
                              &status);
+            g_signal_connect(test, "omission", G_CALLBACK(cb_test_status),
+                             &status);
             if (!run(test_case, test, runner))
                 all_success = FALSE;
             g_signal_handlers_disconnect_by_func(test,

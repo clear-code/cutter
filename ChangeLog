@@ -2,6 +2,7 @@
 
 	* cutter/module/report/cut-report-xml.c: Implement get_all_results().
 	Stupid code!
+	* cutter/cut-test-case.c: Handle "omission" signal.
 
 2008-05-01  Kouhei Sutou  <kou@cozmixng.org>
 

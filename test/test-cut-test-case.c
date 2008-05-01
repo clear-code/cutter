@@ -22,6 +22,7 @@ void test_error_signal(void);
 void test_pending_signal(void);
 void test_notification_signal(void);
 void test_complete_signal(void);
+void test_omission_signal(void);
 
 static CutTestCase *test_object;
 static CutRunner *runner;
@@ -78,6 +79,12 @@ static void
 dummy_notification_test (void)
 {
     cut_notify("Notify!!!");
+}
+
+static void
+dummy_omission_test (void)
+{
+    cut_omit("Omit!!!");
 }
 
 static void
@@ -344,6 +351,21 @@ test_complete_signal (void)
                                          G_CALLBACK(cb_count_around_test),
                                          &n_complete_tests);
     cut_assert_equal_int(3, n_complete_tests);
+}
+
+void
+test_omission_signal (void)
+{
+    gint n_omissions = 0;
+    g_signal_connect(test_object, "omission",
+                     G_CALLBACK(cb_count_status), &n_omissions);
+    cuttest_add_test(test_object, "dummy_omission_test",
+                     dummy_omission_test);
+    cut_assert(cut_test_case_run(test_object, runner));
+    g_signal_handlers_disconnect_by_func(test_object,
+                                         G_CALLBACK(cb_count_status),
+                                         &n_omissions);
+    cut_assert_equal_int(1, n_omissions);
 }
 
 /*
