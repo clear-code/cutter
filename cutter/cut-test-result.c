@@ -243,22 +243,16 @@ set_property (GObject      *object,
         priv->status = g_value_get_enum(value);
         break;
       case PROP_TEST:
-        if (priv->test)
-            g_object_unref(priv->test);
-        if (g_value_get_object(value))
-            priv->test = g_object_ref(g_value_get_object(value));
+        cut_test_result_set_test(CUT_TEST_RESULT(object),
+                                 g_value_get_object(value));
         break;
       case PROP_TEST_CASE:
-        if (priv->test_case)
-            g_object_unref(priv->test_case);
-        if (g_value_get_object(value))
-            priv->test_case = g_object_ref(g_value_get_object(value));
+        cut_test_result_set_test_case(CUT_TEST_RESULT(object),
+                                      g_value_get_object(value));
         break;
       case PROP_TEST_SUITE:
-        if (priv->test_suite)
-            g_object_unref(priv->test_suite);
-        if (g_value_get_object(value))
-            priv->test_suite = g_object_ref(g_value_get_object(value));
+        cut_test_result_set_test_suite(CUT_TEST_RESULT(object),
+                                       g_value_get_object(value));
         break;
       case PROP_USER_MESSAGE:
         if (priv->user_message)
@@ -275,13 +269,11 @@ set_property (GObject      *object,
             g_free(priv->message);
         priv->message = NULL;
       case PROP_FUNCTION_NAME:
-        if (priv->function_name)
-            g_free(priv->function_name);
-        priv->function_name = g_value_dup_string(value);
+        cut_test_result_set_function_name(CUT_TEST_RESULT(object),
+                                          g_value_get_string(value));
       case PROP_FILENAME:
-        if (priv->filename)
-            g_free(priv->filename);
-        priv->filename = g_value_dup_string(value);
+        cut_test_result_set_filename(CUT_TEST_RESULT(object),
+                                     g_value_get_string(value));
         break;
       case PROP_LINE:
         priv->line = g_value_get_uint(value);
