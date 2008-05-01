@@ -3,10 +3,11 @@
 
 #include "cuttest-utils.h"
 
-void test_sort_test_cases(void);
+void test_sort_test_cases (void);
 void test_n_ (void);
-void test_get_test_directory(void);
-void test_get_source_directory(void);
+void test_get_test_directory (void);
+void test_get_source_directory (void);
+void test_build_source_filename (void);
 void test_copy (void);
 void test_order (void);
 void test_ready_signal (void);
@@ -199,6 +200,20 @@ test_get_source_directory (void)
 {
     cut_runner_set_source_directory(runner, ".");
     cut_assert_equal_string(".", cut_runner_get_source_directory(runner));
+}
+
+void
+test_build_source_filename (void)
+{
+    gchar *filename;
+
+    filename = cut_runner_build_source_filename(runner, "source1.c");
+    cut_assert_equal_string_with_free("source1.c", filename);
+    cut_runner_set_source_directory(runner, "base_directory");
+
+    filename = cut_runner_build_source_filename(runner, "source2.c");
+    cut_assert_equal_string_with_free("base_directory" G_DIR_SEPARATOR_S "source2.c",
+                                      filename);
 }
 
 void
