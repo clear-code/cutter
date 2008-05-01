@@ -278,8 +278,7 @@ get_filtered_tests (CutTestCase *test_case, const gchar **test_names)
     if (test_names && *test_names) {
         return cut_test_container_filter_children(container, test_names);
     } else {
-        const gchar *default_test_names[] = {"/^test_/", NULL};
-        return cut_test_container_filter_children(container, default_test_names);
+        return g_list_copy(cut_test_container_get_children(container));
     }
 }
 

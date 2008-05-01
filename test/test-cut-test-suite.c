@@ -185,9 +185,9 @@ test_run (void)
     cut_assert_equal_int(1, n_run_dummy_test_function1);
     cut_assert_equal_int(1, n_run_dummy_test_function2);
     cut_assert_equal_int(1, n_run_dummy_run_test_function);
-    cut_assert_equal_int(0, n_run_bummy_test_function1);
-    cut_assert_equal_int(0, n_run_bummy_test_function2);
-    cut_assert_equal_int(0, n_run_bummy_run_test_function);
+    cut_assert_equal_int(1, n_run_bummy_test_function1);
+    cut_assert_equal_int(1, n_run_bummy_test_function2);
+    cut_assert_equal_int(1, n_run_bummy_run_test_function);
 }
 
 void
@@ -290,24 +290,24 @@ void
 test_run_test_in_test_case_with_null (void)
 {
     cut_assert(run_test(NULL));
-    cut_assert_equal_int(0, n_run_dummy_test_function1);
-    cut_assert_equal_int(0, n_run_dummy_test_function2);
-    cut_assert_equal_int(0, n_run_dummy_run_test_function);
-    cut_assert_equal_int(0, n_run_bummy_test_function1);
-    cut_assert_equal_int(0, n_run_bummy_test_function2);
-    cut_assert_equal_int(0, n_run_bummy_run_test_function);
+    cut_assert_equal_int(1, n_run_dummy_test_function1);
+    cut_assert_equal_int(1, n_run_dummy_test_function2);
+    cut_assert_equal_int(1, n_run_dummy_run_test_function);
+    cut_assert_equal_int(1, n_run_bummy_test_function1);
+    cut_assert_equal_int(1, n_run_bummy_test_function2);
+    cut_assert_equal_int(1, n_run_bummy_run_test_function);
 }
 
 void
 test_run_test_with_filter_with_null (void)
 {
     cut_assert(run_test_with_filter(NULL, NULL));
-    cut_assert_equal_int(0, n_run_dummy_test_function1);
-    cut_assert_equal_int(0, n_run_dummy_test_function2);
-    cut_assert_equal_int(0, n_run_dummy_run_test_function);
-    cut_assert_equal_int(0, n_run_bummy_test_function1);
-    cut_assert_equal_int(0, n_run_bummy_test_function2);
-    cut_assert_equal_int(0, n_run_bummy_run_test_function);
+    cut_assert_equal_int(1, n_run_dummy_test_function1);
+    cut_assert_equal_int(1, n_run_dummy_test_function2);
+    cut_assert_equal_int(1, n_run_dummy_run_test_function);
+    cut_assert_equal_int(1, n_run_bummy_test_function1);
+    cut_assert_equal_int(1, n_run_bummy_test_function2);
+    cut_assert_equal_int(1, n_run_bummy_run_test_function);
 }
 
 static void

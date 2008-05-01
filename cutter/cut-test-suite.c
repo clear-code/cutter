@@ -407,10 +407,11 @@ cut_test_suite_run_with_filter (CutTestSuite *test_suite,
         filtered_test_cases =
             cut_test_container_filter_children(container, test_case_names);
     } else {
-        const gchar *default_test_case_names[] = {"/^test_/", NULL};
+        CutTestContainer *container;
+
+        container = CUT_TEST_CONTAINER(test_suite);
         filtered_test_cases =
-            cut_test_container_filter_children(container,
-                                               default_test_case_names);
+            g_list_copy(cut_test_container_get_children(container));
     }
 
     if (!filtered_test_cases)
