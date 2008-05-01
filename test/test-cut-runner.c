@@ -267,6 +267,9 @@ test_ready_signal (void)
     g_signal_handlers_disconnect_by_func(runner,
                                          G_CALLBACK(cb_ready_test_suite_signal),
                                          NULL);
+    g_signal_handlers_disconnect_by_func(runner,
+                                         G_CALLBACK(cb_ready_test_case_signal),
+                                         NULL);
 
     cut_assert_equal_int(1, n_ready_test_suite_signals);
     g_object_unref(suite);
