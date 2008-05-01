@@ -1,5 +1,6 @@
 #include "cutter.h"
 #include "cut-module-factory.h"
+#include "cut-module-factory-utils.h"
 
 #include "cuttest-utils.h"
 
