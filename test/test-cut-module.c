@@ -7,20 +7,19 @@ void test_load_module (void);
 void test_collect_names (void);
 void test_collect_log_domains (void);
 void test_collect_registered_types (void);
+void test_load_modules_unique (void);
 
 static GList *modules = NULL;
+static gchar *modules_dir = NULL;
 
 void
 startup (void)
 {
-    gchar *modules_dir;
-
     modules_dir = g_build_filename(cuttest_get_base_dir(),
                                    "module_test_dir",
                                    ".libs",
                                    NULL);
     modules = cut_module_load_modules(modules_dir);
-    g_free(modules_dir);
 }
 
 void
@@ -28,6 +27,8 @@ shutdown (void)
 {
     g_list_free(modules);
     modules = NULL;
+
+    g_free(modules_dir);
 }
 
 void
@@ -88,6 +89,18 @@ test_collect_registered_types (void)
     cut_assert_equal_string("CutModuleTest2", g_list_next(registered_types)->data);
 
     g_list_free(registered_types);
+}
+
+void
+test_load_modules_unique (void)
+{
+    GList *reloaded_modules;
+
+    cut_assert(modules);
+
+    reloaded_modules = cut_module_load_modules_unique(modules_dir, modules);
+    cut_assert(reloaded_modules);
+    g_list_free(reloaded_modules);
 }
 
 /*
