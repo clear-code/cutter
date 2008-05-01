@@ -8,6 +8,8 @@
 
 2008-05-01  Kouhei Sutou  <kou@cozmixng.org>
 
+	* configure.ac: remove needless variable.
+
 	* cutter/cut-test-suite.c, cutter/cut-test-case.c: don't use
 	filter for NULL input.
 
