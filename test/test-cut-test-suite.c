@@ -193,7 +193,8 @@ test_run (void)
 void
 test_run_test_case (void)
 {
-    cut_assert(run_test_case("dummy_test_case"));
+    cut_assert(cut_test_suite_run_test_case(test_object, runner,
+                                            "dummy_test_case"));
     cut_assert_equal_int(1, n_run_dummy_test_function1);
     cut_assert_equal_int(1, n_run_dummy_test_function2);
     cut_assert_equal_int(1, n_run_dummy_run_test_function);
