@@ -255,16 +255,14 @@ set_property (GObject      *object,
                                        g_value_get_object(value));
         break;
       case PROP_USER_MESSAGE:
-        if (priv->user_message)
-            g_free(priv->user_message);
-        priv->user_message = g_value_dup_string(value);
+        cut_test_result_set_user_message(CUT_TEST_RESULT(object),
+                                         g_value_get_string(value));
         if (priv->message)
             g_free(priv->message);
         priv->message = NULL;
       case PROP_SYSTEM_MESSAGE:
-        if (priv->system_message)
-            g_free(priv->system_message);
-        priv->system_message = g_value_dup_string(value);
+        cut_test_result_set_system_message(CUT_TEST_RESULT(object),
+                                           g_value_get_string(value));
         if (priv->message)
             g_free(priv->message);
         priv->message = NULL;
