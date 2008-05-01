@@ -437,7 +437,22 @@ result_to_file (CutReport        *report,
 static gchar *
 get_all_results (CutReport *report)
 {
-    return NULL;
+    const GList *node;
+    GString *xml = g_string_new("");
+    CutReportXML *report_xml = CUT_REPORT_XML(report);
+
+    for (node = cut_runner_get_results(report_xml->runner);
+         node;
+         node = g_list_next(node)) {
+        CutTestResult *result = node->data;
+        gchar *result_string;
+
+        result_string = cut_test_result_to_xml(result);
+        g_string_append(xml, result_string);
+        g_free(result_string);
+    }
+
+    return g_string_free(xml, FALSE);
 }
 
 static gchar *

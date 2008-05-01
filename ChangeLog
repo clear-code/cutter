@@ -1,3 +1,8 @@
+2008-05-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/module/report/cut-report-xml.c: Implement get_all_results().
+	Stupid code!
+
 2008-05-01  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-test-suite.c, cutter/cut-test-case.c: don't use

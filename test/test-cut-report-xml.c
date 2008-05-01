@@ -7,6 +7,7 @@ void test_report_failure (void);
 void test_report_error (void);
 void test_report_pending (void);
 void test_report_notification (void);
+void test_plural_reports (void);
 
 static CutRunner *runner;
 static CutReport *report;
@@ -147,7 +148,7 @@ test_report_failure (void)
                        "    <detail>This test should fail</detail>\n"
                        "    <backtrace>\n"
                        "      <file>test-cut-report-xml.c</file>\n"
-                       "      <line>25</line>\n"
+                       "      <line>26</line>\n"
                        "      <info>dummy_failure_test()</info>\n"
                        "    </backtrace>\n"
                        "    <elapsed>0.000100</elapsed>\n"
@@ -178,7 +179,7 @@ test_report_pending (void)
                        "    <detail>This test has been pending ever!</detail>\n"
                        "    <backtrace>\n"
                        "      <file>test-cut-report-xml.c</file>\n"
-                       "      <line>37</line>\n"
+                       "      <line>38</line>\n"
                        "      <info>dummy_pending_test()</info>\n"
                        "    </backtrace>\n"
                        "    <elapsed>0.000100</elapsed>\n"
@@ -209,7 +210,7 @@ test_report_notification (void)
                        "    <detail>This test has been notifable ever!</detail>\n"
                        "    <backtrace>\n"
                        "      <file>test-cut-report-xml.c</file>\n"
-                       "      <line>43</line>\n"
+                       "      <line>44</line>\n"
                        "      <info>dummy_notification_test()</info>\n"
                        "    </backtrace>\n"
                        "    <elapsed>0.000100</elapsed>\n"
@@ -240,7 +241,7 @@ test_report_error (void)
                        "    <detail>This test should error</detail>\n"
                        "    <backtrace>\n"
                        "      <file>test-cut-report-xml.c</file>\n"
-                       "      <line>31</line>\n"
+                       "      <line>32</line>\n"
                        "      <info>dummy_error_test()</info>\n"
                        "    </backtrace>\n"
                        "    <elapsed>0.000100</elapsed>\n"
@@ -256,6 +257,53 @@ test_report_error (void)
 
     cut_assert_equal_string_with_free(expected,
                                       cut_report_get_error_results(report));
+}
+
+void
+test_plural_reports (void)
+{
+    gchar expected[] = "  <result>\n"
+                       "    <test-case>\n"
+                       "      <name>dummy test case</name>\n"
+                       "    </test-case>\n"
+                       "    <test>\n"
+                       "      <name>dummy-error-test</name>\n"
+                       "    </test>\n"
+                       "    <status>error</status>\n"
+                       "    <detail>This test should error</detail>\n"
+                       "    <backtrace>\n"
+                       "      <file>test-cut-report-xml.c</file>\n"
+                       "      <line>32</line>\n"
+                       "      <info>dummy_error_test()</info>\n"
+                       "    </backtrace>\n"
+                       "    <elapsed>0.000100</elapsed>\n"
+                       "  </result>\n"
+                       "  <result>\n"
+                       "    <test-case>\n"
+                       "      <name>dummy test case</name>\n"
+                       "    </test-case>\n"
+                       "    <test>\n"
+                       "      <name>dummy-success-test</name>\n"
+                       "    </test>\n"
+                       "    <status>success</status>\n"
+                       "    <elapsed>0.000100</elapsed>\n"
+                       "  </result>\n";
+
+    test_object = cut_test_new("dummy-success-test", dummy_success_test);
+    g_signal_connect_after(test_object, "success", G_CALLBACK(cb_test_signal), NULL);
+    cut_test_case_add_test(test_case, test_object);
+
+    test_object = cut_test_new("dummy-error-test", dummy_error_test);
+    g_signal_connect_after(test_object, "error", G_CALLBACK(cb_test_signal), NULL);
+    cut_test_case_add_test(test_case, test_object);
+    cut_assert(!cut_test_case_run(test_case, runner));
+
+    g_signal_handlers_disconnect_by_func(test_object,
+                                         G_CALLBACK(cb_test_signal),
+                                         NULL);
+
+    cut_assert_equal_string_with_free(expected,
+                                      cut_report_get_all_results(report));
 }
 
 /*
