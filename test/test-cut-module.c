@@ -97,10 +97,12 @@ test_load_modules_unique (void)
     GList *reloaded_modules;
 
     cut_assert(modules);
+    cut_assert_equal_int(2, g_list_length(modules));
 
     reloaded_modules = cut_module_load_modules_unique(modules_dir, modules);
     cut_assert(reloaded_modules);
-    g_list_free(reloaded_modules);
+
+    cut_assert_equal_int(2, g_list_length(reloaded_modules));
 }
 
 /*
