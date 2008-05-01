@@ -17,6 +17,7 @@ static GList *test_cases;
 static gchar **expected_names, **actual_names;
 
 static gint n_ready_test_suite_signals = 0;
+static gint n_ready_test_case_signals = 0;
 
 void
 setup (void)
@@ -28,6 +29,7 @@ setup (void)
     actual_names = NULL;
 
     n_ready_test_suite_signals = 0;
+    n_ready_test_case_signals = 0;
 }
 
 void
@@ -230,6 +232,15 @@ cb_ready_test_suite_signal (CutRunner *runner,
     n_ready_test_suite_signals++;
 }
 
+static void
+cb_ready_test_case_signal (CutRunner *runner,
+                           CutTestCase *test_case,
+                           guint n_tests,
+                           gpointer data)
+{
+    n_ready_test_case_signals++;
+}
+
 void
 test_ready_signal (void)
 {
@@ -251,6 +262,7 @@ test_ready_signal (void)
 
     cut_runner_set_test_suite(runner, suite);
     g_signal_connect(runner, "ready-test-suite", G_CALLBACK(cb_ready_test_suite_signal), NULL);
+    g_signal_connect(runner, "ready-test-case", G_CALLBACK(cb_ready_test_case_signal), NULL);
     cut_assert(cut_test_suite_run(suite, runner));
     g_signal_handlers_disconnect_by_func(runner,
                                          G_CALLBACK(cb_ready_test_suite_signal),
