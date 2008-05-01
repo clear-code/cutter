@@ -10,10 +10,31 @@ void test_help (void);
 void test_help_all (void);
 void test_version (void);
 void test_invalid_option (void);
+void test_no_option (void);
 
 static gchar *stdout_string = NULL;
 static gchar *stderr_string = NULL;
 static gint exit_status = 0;
+
+static const gchar *help_message = 
+        "Usage:\n"
+        "  lt-cutter [OPTION...] TEST_DIRECTORY\n"
+        "\n"
+        "Help Options:\n"
+        "  -?, --help                                      Show help options\n"
+        "  --help-all                                      Show all help options\n"
+        "  --help-report                                   Show report options\n"
+        "  --help-ui                                       Show UI options\n"
+        "  --help-ui-console                               Show console UI options\n"
+        "\n"
+        "Application Options:\n"
+        "  --version                                       Show version\n"
+        "  -s, --source-directory=DIRECTORY                Set directory of source code\n"
+        "  -n, --name=TEST_NAME                            Specify tests\n"
+        "  -t, --test-case=TEST_CASE_NAME                  Specify test cases\n"
+        "  -m, --multi-thread                              Run test cases with multi-thread\n"
+        "  --test-case-order=[none|name|name-desc]         Sort test case by. Default is 'none'.\n"
+        "\n";
 
 void
 setup (void)
@@ -45,7 +66,10 @@ run_cutter (const gchar *options)
     cutter_command = g_getenv("CUTTER");
     cut_assert(cutter_command);
 
-    command = g_strdup_printf("%s %s", cutter_command, options);
+    if (options)
+        command = g_strdup_printf("%s %s", cutter_command, options);
+    else
+        command = g_strdup(cutter_command);
     g_shell_parse_argv(command, &argc, &argv, NULL);
     g_free(command);
 
@@ -75,29 +99,17 @@ test_version (void)
 void
 test_help (void)
 {
-    const gchar *expected = 
-        "Usage:\n"
-        "  lt-cutter [OPTION...] TEST_DIRECTORY\n"
-        "\n"
-        "Help Options:\n"
-        "  -?, --help                                      Show help options\n"
-        "  --help-all                                      Show all help options\n"
-        "  --help-report                                   Show report options\n"
-        "  --help-ui                                       Show UI options\n"
-        "  --help-ui-console                               Show console UI options\n"
-        "\n"
-        "Application Options:\n"
-        "  --version                                       Show version\n"
-        "  -s, --source-directory=DIRECTORY                Set directory of source code\n"
-        "  -n, --name=TEST_NAME                            Specify tests\n"
-        "  -t, --test-case=TEST_CASE_NAME                  Specify test cases\n"
-        "  -m, --multi-thread                              Run test cases with multi-thread\n"
-        "  --test-case-order=[none|name|name-desc]         Sort test case by. Default is 'none'.\n"
-        "\n";
-
     cut_assert(run_cutter("--help"));
     cut_assert_equal_int(exit_status, 0);
-    cut_assert_equal_string(expected, stdout_string);
+    cut_assert_equal_string(help_message, stdout_string);
+}
+
+void
+test_no_option (void)
+{
+    cut_assert(run_cutter(NULL));
+    cut_assert_equal_int(exit_status, 256);
+    cut_assert_equal_string(help_message, stdout_string);
 }
 
 void
