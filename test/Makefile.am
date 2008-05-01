@@ -19,6 +19,7 @@ TESTS_ENVIRONMENT = \
 
 noinst_LTLIBRARIES = 				\
 		cuttest_utils.la		\
+		test_cutter.la			\
 		test_cut_assertions.la		\
 		test_cut_gassertions.la		\
 		test_cut_test_attribute.la	\
@@ -50,6 +51,7 @@ cuttest_utils_la_SOURCES = 		\
 			cuttest-utils.c	\
 			cuttest-utils.h
 
+test_cutter_la_SOURCES		= test-cutter.c
 test_cut_assertions_la_SOURCES  = test-cut-assertions.c cuttest-assertions.h
 test_cut_gassertions_la_SOURCES = test-cut-gassertions.c cuttest-assertions.h
 test_cut_test_la_SOURCES        = test-cut-test.c

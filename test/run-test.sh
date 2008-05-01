@@ -14,6 +14,7 @@ if test x"$CUTTER_DEBUG" = x"yes"; then
     CUTTER="$BASE_DIR/../libtool --mode=execute gdb --args $CUTTER"
 fi
 
+export CUTTER
 export CUT_UI_MODULE_DIR=$BASE_DIR/../cutter/module/ui/.libs
 export CUT_UI_FACTORY_MODULE_DIR=$BASE_DIR/../cutter/module/ui/.libs
 export CUT_REPORT_MODULE_DIR=$BASE_DIR/../cutter/module/report/.libs
