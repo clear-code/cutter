@@ -27,6 +27,7 @@
 
 #include "cut-module.h"
 #include "cut-module-factory.h"
+#include "cut-module-factory-utils.h"
 #include "cut-factory-builder.h"
 
 #define cut_module_factory_init init
