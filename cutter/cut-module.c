@@ -366,7 +366,7 @@ cut_module_load_modules_unique (const gchar *base_dir, GList *exist_modules)
 
     dir = g_dir_open(base_dir, 0, NULL);
     if (!dir)
-        return modules;
+        return exist_modules;
 
     while ((entry = g_dir_read_name(dir))) {
         CutModule *module;
@@ -384,7 +384,7 @@ cut_module_load_modules_unique (const gchar *base_dir, GList *exist_modules)
     }
     g_dir_close(dir);
 
-    return modules;
+    return g_list_concat(modules, exist_modules);
 }
 
 static gboolean
