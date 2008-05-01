@@ -5,6 +5,8 @@
 
 void test_load_module (void);
 void test_collect_names (void);
+void test_collect_log_domains (void);
+void test_collect_registered_types (void);
 
 static GList *modules = NULL;
 
@@ -24,7 +26,6 @@ startup (void)
 void
 shutdown (void)
 {
-    g_list_foreach(modules, (GFunc)g_object_unref, NULL);
     g_list_free(modules);
     modules = NULL;
 }
@@ -48,10 +49,45 @@ test_collect_names (void)
     cut_assert(names);
     cut_assert_equal_int(2, g_list_length(names));
 
-    cut_assert("test1", names->data);
-    cut_assert("test2", g_list_next(names)->data);
+    cut_assert_equal_string("test1", names->data);
+    cut_assert_equal_string("test2", g_list_next(names)->data);
 
     g_list_free(names);
+}
+
+void
+test_collect_log_domains (void)
+{
+    GList *log_domains;
+
+    cut_assert(modules);
+
+    log_domains = cut_module_collect_log_domains(modules);
+    cut_assert(log_domains);
+    cut_assert_equal_int(2, g_list_length(log_domains));
+
+    cut_assert_equal_string("TestDomain1", log_domains->data);
+    cut_assert_equal_string("TestDomain2", g_list_next(log_domains)->data);
+
+    g_list_foreach(log_domains, (GFunc)g_free, NULL);
+    g_list_free(log_domains);
+}
+
+void
+test_collect_registered_types (void)
+{
+    GList *registered_types;
+
+    cut_assert(modules);
+
+    registered_types = cut_module_collect_registered_types(modules);
+    cut_assert(registered_types);
+    cut_assert_equal_int(2, g_list_length(registered_types));
+
+    cut_assert_equal_string("CutModuleTest1", registered_types->data);
+    cut_assert_equal_string("CutModuleTest2", g_list_next(registered_types)->data);
+
+    g_list_free(registered_types);
 }
 
 /*
