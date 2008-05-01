@@ -27,6 +27,7 @@
 
 #include "cut-report-factory-builder.h"
 #include "cut-module-factory.h"
+#include "cut-module-factory-utils.h"
 
 static CutReportFactoryBuilder *the_builder = NULL;
 

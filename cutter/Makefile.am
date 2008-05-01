@@ -41,6 +41,7 @@ libcutter_public_headers = 			\
 		cut-report-factory-builder.h	\
 		cut-ui-factory-builder.h	\
 		cut-module-factory.h		\
+		cut-module-factory-utils.h	\
 		cut-report.h			\
 		cut-process.h			\
 		cut-xml-parser.h		\
@@ -117,6 +118,7 @@ libcutter_la_SOURCES =				\
 		cut-report-factory-builder.c	\
 		cut-ui-factory-builder.c	\
 		cut-module-factory.c		\
+		cut-module-factory-utils.c	\
 		cut-report.c			\
 		cut-process.c			\
 		cut-utils.c			\

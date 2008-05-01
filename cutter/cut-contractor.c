@@ -26,7 +26,7 @@
 #include <glib/gi18n-lib.h>
 
 #include "cut-contractor.h"
-#include "cut-module-factory.h"
+#include "cut-module-factory-utils.h"
 #include "cut-factory-builder.h"
 #include "cut-report-factory-builder.h"
 #include "cut-ui-factory-builder.h"

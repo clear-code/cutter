@@ -26,6 +26,7 @@
 
 #include "cut-ui-factory-builder.h"
 #include "cut-module-factory.h"
+#include "cut-module-factory-utils.h"
 
 static const gchar *ui_name = NULL;
 static CutUIFactoryBuilder *the_builder = NULL;
