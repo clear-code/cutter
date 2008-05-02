@@ -8,6 +8,7 @@ void test_collect_names (void);
 void test_collect_log_domains (void);
 void test_collect_registered_types (void);
 void test_load_modules_unique (void);
+void test_fail_to_load_module (void);
 
 static GList *modules = NULL;
 static gchar *modules_dir = NULL;
@@ -37,6 +38,14 @@ test_load_module (void)
     cut_assert(modules);
 
     cut_assert(cut_module_find(modules, "test1"));
+}
+
+void
+test_fail_to_load_module (void)
+{
+    cut_assert(modules);
+
+    cut_assert(!cut_module_find(modules, "XXX"));
 }
 
 void
