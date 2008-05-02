@@ -71,6 +71,7 @@ teardown (void)
         g_object_unref(test_object);
     if (test_context)
         g_object_unref(test_context);
+    cut_listener_detach_from_runner(CUT_LISTENER(report), runner);
     g_object_unref(report);
     g_object_unref(runner);
 }
