@@ -8,6 +8,7 @@
 void test_equal_g_type(void);
 void test_equal_g_value(void);
 void test_equal_int_g_list(void);
+void test_equal_string_g_list(void);
 
 static CutTest *test;
 static CutRunner *runner;
@@ -16,6 +17,8 @@ static CutTestResult *test_result;
 
 static GValue *value1, *value2;
 static GList *list1, *list2;
+
+static gboolean need_to_free_list_contents;
 
 static gboolean
 run (CutTest *_test)
@@ -46,6 +49,10 @@ setup (void)
 
     value1 = g_new0(GValue, 1);
     value2 = g_new0(GValue, 1);
+
+    list1 = NULL;
+    list2 = NULL;
+    need_to_free_list_contents = FALSE;
 }
 
 void
@@ -68,6 +75,10 @@ teardown (void)
     g_free(value1);
     g_free(value2);
 
+    if (need_to_free_list_contents) {
+        g_list_foreach(list1, (GFunc)g_free, NULL);
+        g_list_foreach(list2, (GFunc)g_free, NULL);
+    }
     g_list_free(list1);
     g_list_free(list2);
 }
@@ -166,7 +177,41 @@ test_equal_int_g_list (void)
                            "equal_int_g_list_test");
 }
 
-/*
-vi:nowrap:ai:expandtab:sw=4
-*/
+static void
+equal_string_g_list_test (void)
+{
+    need_to_free_list_contents = TRUE;
 
+    list1 = g_list_append(list1, g_strdup("abc"));
+    list1 = g_list_append(list1, g_strdup("def"));
+    list2 = g_list_append(list2, g_strdup("zyx"));
+    list2 = g_list_append(list2, g_strdup("wvu"));
+
+    cut_assert_equal_string_g_list(list1, list1);
+    cut_assert_equal_string_g_list(list2, list2);
+
+    cut_assert_equal_string_g_list(list1, list2);
+}
+
+void
+test_equal_string_g_list (void)
+{
+    CutTest *test;
+
+    test = cut_test_new("equal_string_g_list test", equal_string_g_list_test);
+    cut_assert(test);
+
+    cut_assert(!run(test));
+    cut_assert_test_result_summary(runner, 1, 2, 1, 0, 0, 0, 0);
+    cut_assert_test_result(runner, 0, CUT_TEST_RESULT_FAILURE,
+                           "equal_string_g_list test",
+                           NULL,
+                           "<list1 == list2>\n"
+                           "expected: <(\"abc\", \"def\")>\n"
+                           " but was: <(\"zyx\", \"wvu\")>",
+                           "equal_string_g_list_test");
+}
+
+/*
+vi:nowrap:ai:expandtab:sw=4:ts=4
+*/
