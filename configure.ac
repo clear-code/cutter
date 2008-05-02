@@ -260,6 +260,7 @@ AC_CONFIG_FILES([Makefile
 		 cutter.pc
 		 gcutter.pc
 		 libcutter.pc
+		 m4macros/Makefile
 		 cutter/Makefile
 		 cutter/module/Makefile
 		 cutter/module/ui/Makefile

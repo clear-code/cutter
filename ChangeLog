@@ -14,6 +14,7 @@
 	* cutter/cut-report.[c|h], cutter/module/cut-report-xml.c,
 	cutter/module/cut-report-pdf.c: Remove result_to_file(). It is not
 	used yet.
+	* m4macros/cutter.m4: Added m4 macro file.
 
 2008-05-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
