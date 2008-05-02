@@ -34,11 +34,6 @@ G_BEGIN_DECLS
 typedef struct _CutReport         CutReport;
 typedef struct _CutReportClass    CutReportClass;
 
-typedef enum {
-    CUT_REPORT_FILE_OVERWRITE,
-    CUT_REPORT_FILE_APPEND
-} CutReportFileMode;
-
 struct _CutReport
 {
     GObject object;
@@ -47,9 +42,6 @@ struct _CutReport
 struct _CutReportClass
 {
     GObjectClass parent_class;
-    gboolean (*result_to_file)     (CutReport        *report,
-                                    const gchar      *filename,
-                                    CutReportFileMode mode);
     gchar   *(*get_all_results)    (CutReport        *report);
     gchar   *(*get_success_results)(CutReport        *report);
     gchar   *(*get_error_results)  (CutReport        *report);
@@ -69,9 +61,6 @@ CutReport   *cut_report_new             (const gchar *name,
                                          const gchar *first_property,
                                          ...);
 const gchar *cut_report_get_filename    (CutReport *report);
-gboolean     cut_report_result_to_file  (CutReport        *report,
-                                         const gchar      *filename,
-                                         CutReportFileMode mode);
 gchar       *cut_report_get_all_results (CutReport   *report);
 gchar       *cut_report_get_test_result (CutReport   *report,
                                          const gchar *test_name);

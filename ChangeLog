@@ -1,6 +1,9 @@
 2008-05-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* test/test-cutter.c: Added tests for cutter command.
+	* cutter/cut-report.[c|h], cutter/module/cut-report-xml.c,
+	cutter/module/cut-report-pdf.c: Remove result_to_file(). It is not
+	used yet.
 
 2008-05-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 

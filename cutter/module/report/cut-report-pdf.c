@@ -92,9 +92,6 @@ static void attach_to_runner             (CutListener *listener,
 static void detach_from_runner           (CutListener *listener,
                                           CutRunner   *runner);
 
-static gboolean result_to_file           (CutReport        *report,
-                                          const gchar      *filename,
-                                          CutReportFileMode mode);
 static gchar   *get_all_results          (CutReport   *report);
 static gchar   *get_success_results      (CutReport   *report);
 static gchar   *get_error_results        (CutReport   *report);
@@ -120,7 +117,6 @@ class_init (CutReportPDFClass *klass)
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
 
-    report_class->result_to_file           = result_to_file;
     report_class->get_all_results          = get_all_results;
     report_class->get_success_results      = get_success_results;
     report_class->get_error_results        = get_error_results;
@@ -566,14 +562,6 @@ detach_from_runner (CutListener *listener,
     disconnect_from_runner(report, runner);
     g_object_unref(report->runner);
     report->runner = NULL;
-}
-
-static gboolean
-result_to_file (CutReport        *report,
-                const gchar      *filename,
-                CutReportFileMode mode)
-{
-    return FALSE;
 }
 
 static gchar *

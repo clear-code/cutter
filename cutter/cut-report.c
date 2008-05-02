@@ -208,27 +208,6 @@ cut_report_get_filename (CutReport *report)
     return CUT_REPORT_GET_PRIVATE(report)->filename;
 }
 
-gboolean
-cut_report_result_to_file (CutReport *report,
-                           const gchar *filename,
-                           CutReportFileMode mode)
-{
-    CutReportClass *klass;
-
-    g_return_val_if_fail(CUT_IS_REPORT(report), FALSE);
-    g_return_val_if_fail(filename, FALSE);
-
-    if (g_file_test(filename, G_FILE_TEST_EXISTS) &&
-        mode != CUT_REPORT_FILE_OVERWRITE)
-        return FALSE;
-
-    klass = CUT_REPORT_GET_CLASS(report);
-    if (klass->result_to_file)
-        return klass->result_to_file(report, filename, mode);
-    else
-        return FALSE;
-}
-
 #define GET_RESULTS(name)                               \
 gchar *                                                 \
 cut_report_get_ ## name ## _results (CutReport *report) \
