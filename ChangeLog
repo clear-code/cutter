@@ -1,5 +1,7 @@
 2008-05-02  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-gassertions.h: add missing include.
+
 	* cutter/cut-gassertions.h (cut_assert_equal_int_g_type): add.
 	* test/test-cut-gassertions.c: add a test for
 	cut_assert_equal_int_g_type().

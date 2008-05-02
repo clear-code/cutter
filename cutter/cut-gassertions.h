@@ -23,6 +23,7 @@
 #include <glib.h>
 
 #include <cutter/cut-value-equal.h>
+#include <cutter/cut-list.h>
 #include <cutter/cut-assertions.h>
 
 G_BEGIN_DECLS
@@ -112,7 +113,7 @@ G_BEGIN_DECLS
 {                                                                       \
     GList *_expected = (expected);                                      \
     GList *_actual = (actual);                                          \
-    if (cut_list_equal_int(expected, actual)) {                         \
+    if (cut_list_equal_int(_expected, _actual)) {                       \
         cut_test_pass();                                                \
     } else {                                                            \
         const gchar *inspected_expected, *inspected_actual;             \
