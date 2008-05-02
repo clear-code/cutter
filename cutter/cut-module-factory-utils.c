@@ -201,7 +201,7 @@ cut_module_factory_get_names (const gchar *type)
         names = g_list_prepend(names, g_strndup(name, p - name));
     }
     g_list_free(orig_names);
-    return names;
+    return g_list_reverse(names);
 }
 
 gboolean

@@ -28,7 +28,7 @@ static gchar *stdout_string = NULL;
 static gchar *stderr_string = NULL;
 static gint exit_status = 0;
 
-static const gchar *help_message = 
+static const gchar *help_message =
         "Usage:\n"
         "  lt-cutter [OPTION...] TEST_DIRECTORY\n"
         "\n"
@@ -151,15 +151,19 @@ test_help_all (void)
         "  --help-all                                      Show all help options\n"
         "  --help-report                                   Show report options\n"
         "  --help-ui                                       Show UI options\n"
-        "  --help-gtk                                      Show GTK+ Options\n"
         "  --help-ui-console                               Show console UI options\n"
+        "  --help-gtk                                      Show GTK+ Options\n"
         "\n"
         "Report Options\n"
         "  --pdf-report=FILE                               Set filename of pdf report\n"
         "  --xml-report=FILE                               Set filename of xml report\n"
         "\n"
         "UI Options\n"
-        "  -u, --ui=[gtk|console]                          Specify UI\n"
+        "  -u, --ui=[console|gtk]                          Specify UI\n"
+        "\n"
+        "Console UI Options\n"
+        "  -v, --verbose=[s|silent|n|normal|v|verbose]     Set verbose level\n"
+        "  -c, --color=[yes|true|no|false|auto]            Output log with colors\n"
         "\n"
         "GTK+ Options\n"
         "  --class=CLASS                                   Program class as used by the window manager\n"
@@ -168,10 +172,6 @@ test_help_all (void)
         "  --sync                                          Make X calls synchronous\n"
         "  --gtk-module=MODULES                            Load additional GTK+ modules\n"
         "  --g-fatal-warnings                              Make all warnings fatal\n"
-        "\n"
-        "Console UI Options\n"
-        "  -v, --verbose=[s|silent|n|normal|v|verbose]     Set verbose level\n"
-        "  -c, --color=[yes|true|no|false|auto]            Output log with colors\n"
         "\n"
         "Application Options:\n"
         "  --version                                       Show version\n"

@@ -233,7 +233,7 @@ build (CutFactoryBuilder *builder)
             factories = g_list_prepend(factories, factory);
     }
 
-    return factories;
+    return g_list_reverse(factories);
 }
 
 static GList *
@@ -256,7 +256,7 @@ build_all (CutFactoryBuilder *builder)
         factories = g_list_prepend(factories, module_factory);
     }
 
-    return factories;
+    return g_list_reverse(factories);
 }
 
 static const gchar *

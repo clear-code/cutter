@@ -1,5 +1,11 @@
 2008-05-02  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-module-factory-utils.c,
+	cutter/cut-ui-factory-builder.c, cutter/cut-module.c: sort modules
+	by name.
+
+	* test/test-cutter.c: follow the above changes.
+
 	* test/test-cutter.c: set environment for internal cutter run.
 
 2008-05-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>

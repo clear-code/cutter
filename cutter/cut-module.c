@@ -361,6 +361,8 @@ GList *
 cut_module_load_modules_unique (const gchar *base_dir, GList *exist_modules)
 {
     GDir *dir;
+    GSList *sorted_entries = NULL;
+    GSList *node = NULL;
     GList *modules = NULL;
     const gchar *entry;
 
@@ -369,9 +371,14 @@ cut_module_load_modules_unique (const gchar *base_dir, GList *exist_modules)
         return exist_modules;
 
     while ((entry = g_dir_read_name(dir))) {
+        sorted_entries = g_slist_prepend(sorted_entries, (gpointer)entry);
+    }
+    sorted_entries = g_slist_sort(sorted_entries, (GCompareFunc)strcmp);
+    for (node = sorted_entries; node; node = g_slist_next(node)) {
         CutModule *module;
         GTypeModule *g_module;
 
+        entry = node->data;
         module = cut_module_load_module(base_dir, entry);
         if (!module)
             continue;
@@ -382,6 +389,7 @@ cut_module_load_modules_unique (const gchar *base_dir, GList *exist_modules)
         else
             modules = g_list_prepend(modules, module);
     }
+    g_slist_free(sorted_entries);
     g_dir_close(dir);
 
     return g_list_concat(modules, exist_modules);
