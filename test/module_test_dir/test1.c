@@ -86,9 +86,3 @@ CUT_MODULE_IMPL_INSTANTIATE (const gchar *first_property, va_list var_args)
     return g_object_new_valist(CUT_TYPE_MODULE_TEST1, first_property, var_args);
 }
 
-G_MODULE_EXPORT gchar *
-CUT_MODULE_IMPL_GET_LOG_DOMAIN (void)
-{
-    return g_strdup(G_LOG_DOMAIN);
-}
-

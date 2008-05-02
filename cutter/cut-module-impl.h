@@ -30,19 +30,15 @@ typedef GList   *(*CutModuleInitFunc)         (GTypeModule *module);
 typedef void     (*CutModuleExitFunc)         (void);
 typedef GObject *(*CutModuleInstantiateFunc)  (const gchar *first_property,
                                                va_list      var_args);
-typedef gchar   *(*CutModuleGetLogDomainFunc) (void);
 
 #define CUT_MODULE_IMPL_INIT           cut_module_impl_init
 #define CUT_MODULE_IMPL_EXIT           cut_module_impl_exit
 #define CUT_MODULE_IMPL_INSTANTIATE    cut_module_impl_instantiate
-#define CUT_MODULE_IMPL_GET_LOG_DOMAIN cut_module_impl_get_log_domain
-
 
 GList   *CUT_MODULE_IMPL_INIT           (GTypeModule  *module);
 void     CUT_MODULE_IMPL_EXIT           (void);
 GObject *CUT_MODULE_IMPL_INSTANTIATE    (const gchar *first_property,
                                          va_list      var_args);
-gchar   *CUT_MODULE_IMPL_GET_LOG_DOMAIN (void);
 
 G_END_DECLS
 

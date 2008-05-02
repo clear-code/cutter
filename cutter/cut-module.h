@@ -58,7 +58,6 @@ GObject     *cut_module_instantiate         (CutModule      *module,
                                              va_list         var_args);
 
 GList    *cut_module_collect_registered_types (GList *modules);
-GList    *cut_module_collect_log_domains      (GList *modules);
 GList    *cut_module_collect_names            (GList *modules);
 void      cut_module_unload                   (CutModule *module);
 

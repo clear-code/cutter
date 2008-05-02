@@ -15,6 +15,7 @@
 	cutter/module/cut-report-pdf.c: Remove result_to_file(). It is not
 	used yet.
 	* m4macros/cutter.m4: Added m4 macro file.
+	* cutter/*, test/*: Remove get_log_domains() function.
 
 2008-05-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 

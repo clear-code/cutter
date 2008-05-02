@@ -13,12 +13,12 @@ LDFLAGS =							\
 ui_module_LTLIBRARIES = console.la
 ui_factory_module_LTLIBRARIES = console_factory.la
 
-console_la_CPPFLAGS = -DG_LOG_DOMAIN=\"Cut/UI:Console\"
+console_la_CPPFLAGS =
 console_la_SOURCES = \
 	cut-ui-console.c
 console_la_LIBADD = $(GLIB_LIBS)
 
-console_factory_la_CPPFLAGS = -DG_LOG_DOMAIN=\"Cut/UIFactory:Console\"
+console_factory_la_CPPFLAGS =
 console_factory_la_SOURCES = \
 	cut-ui-factory-console.c
 console_factory_la_LIBADD = $(GLIB_LIBS)
@@ -27,14 +27,13 @@ if HAVE_GTK
 ui_module_LTLIBRARIES += gtk.la
 ui_factory_module_LTLIBRARIES += gtk_factory.la
 
-gtk_la_CPPFLAGS = -DG_LOG_DOMAIN=\"Cut/UI:Gtk\" \
+gtk_la_CPPFLAGS = \
 		$(GTK_CFLAGS)
 gtk_la_SOURCES = \
 	cut-ui-gtk.c
 gtk_la_LIBADD = $(GTK_LIBS)
 
 gtk_factory_la_CPPFLAGS =			\
-	-DG_LOG_DOMAIN=\"Cut/UIFactory:Gtk\"	\
 	$(GTK_CFLAGS)
 gtk_factory_la_SOURCES = \
 	cut-ui-factory-gtk.c

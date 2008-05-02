@@ -18,17 +18,16 @@ report_factory_module_LTLIBRARIES =	\
 		xml_factory.la		\
 		pdf_factory.la
 
-xml_la_CPPFLAGS = -DG_LOG_DOMAIN=\"Cut/Report:XML\"
+xml_la_CPPFLAGS =
 xml_la_SOURCES = cut-report-xml.c
 xml_la_LIBADD = $(GLIB_LIBS)
 
-xml_factory_la_CPPFLAGS = -DG_LOG_DOMAIN=\"Cut/ReportFactory:XML\"
+xml_factory_la_CPPFLAGS =
 xml_factory_la_SOURCES = cut-report-factory-xml.c
 xml_factory_la_LIBADD = $(GLIB_LIBS)
 
 if PDF_REPORT_AVAILABLE
 pdf_la_CPPFLAGS =				\
-	-DG_LOG_DOMAIN=\"Cut/Report:PDF\"	\
 	$(CAIRO_PDF_CFLAGS)			\
 	$(PANGO_CAIRO_CFLAGS)
 pdf_la_SOURCES = 		\
@@ -44,7 +43,7 @@ pdf_la_LIBADD =			\
 	$(CAIRO_PDF_LIBS)	\
 	$(PANGO_CAIRO_LIBS)
 
-pdf_factory_la_CPPFLAGS = -DG_LOG_DOMAIN=\"Cut/ReportFactory:PDF\"
+pdf_factory_la_CPPFLAGS =
 pdf_factory_la_SOURCES = cut-report-factory-pdf.c
 pdf_factory_la_LIBADD = $(GLIB_LIBS)
 endif

@@ -5,7 +5,6 @@
 
 void test_load_module (void);
 void test_collect_names (void);
-void test_collect_log_domains (void);
 void test_collect_registered_types (void);
 void test_load_modules_unique (void);
 void test_fail_to_load_module (void);
@@ -63,24 +62,6 @@ test_collect_names (void)
     cut_assert_equal_string("test2", g_list_next(names)->data);
 
     g_list_free(names);
-}
-
-void
-test_collect_log_domains (void)
-{
-    GList *log_domains;
-
-    cut_assert(modules);
-
-    log_domains = cut_module_collect_log_domains(modules);
-    cut_assert(log_domains);
-    cut_assert_equal_int(2, g_list_length(log_domains));
-
-    cut_assert_equal_string("TestDomain1", log_domains->data);
-    cut_assert_equal_string("TestDomain2", g_list_next(log_domains)->data);
-
-    g_list_foreach(log_domains, (GFunc)g_free, NULL);
-    g_list_free(log_domains);
 }
 
 void

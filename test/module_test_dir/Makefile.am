@@ -12,9 +12,5 @@ LDFLAGS =			\
 	-rpath $(libdir)	\
 	-avoid-version
 
-test1_la_CPPFLAGS =			\
-	-DG_LOG_DOMAIN=\"TestDomain1\"
 test1_la_SOURCES = test1.c
-test2_la_CPPFLAGS =			\
-	-DG_LOG_DOMAIN=\"TestDomain2\"
 test2_la_SOURCES = test2.c
