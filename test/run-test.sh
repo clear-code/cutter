@@ -24,5 +24,4 @@ CUTTER_ARGS="-s $BASE_DIR"
 if test x"$USE_GTK" = x"yes"; then
     CUTTER_ARGS="-u gtk $CUTTER_ARGS"
 fi
-$CUTTER $CUTTER_ARGS "$@" $BASE_DIR 
-
+$CUTTER $CUTTER_ARGS "$@" $BASE_DIR

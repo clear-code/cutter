@@ -1,3 +1,7 @@
+2008-05-02  Kouhei Sutou  <kou@cozmixng.org>
+
+	* test/test-cutter.c: set environment for internal cutter run.
+
 2008-05-02  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* test/test-cutter.c: Added tests for cutter command.

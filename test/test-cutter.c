@@ -6,6 +6,15 @@
 
 #include <glib.h>
 
+enum {
+    ENV_LANG,
+    ENV_CUT_UI_MODULE_DIR,
+    ENV_CUT_UI_FACTORY_MODULE_DIR,
+    ENV_CUT_REPORT_MODULE_DIR,
+    ENV_CUT_REPORT_FACTORY_MODULE_DIR,
+    ENV_LAST
+};
+
 void test_help (void);
 void test_help_all (void);
 void test_version (void);
@@ -61,13 +70,27 @@ run_cutter (const gchar *options)
 {
     const gchar *cutter_command;
     gchar *command;
-    const gchar *envp[] = {"LANG=C", NULL};
+    gchar **envp;
     gint argc;
     gchar **argv;
     gboolean ret;
 
     cutter_command = g_getenv("CUTTER");
     cut_assert(cutter_command);
+
+    envp = g_new0(gchar *, ENV_LAST + 1);
+    envp[ENV_LANG] = g_strdup("LANG=C");
+
+#define SET_ENV(name)                                                   \
+    envp[ENV_ ## name] = g_strdup_printf("%s=%s", #name, g_getenv(#name))
+
+    SET_ENV(CUT_UI_MODULE_DIR);
+    SET_ENV(CUT_UI_FACTORY_MODULE_DIR);
+    SET_ENV(CUT_REPORT_MODULE_DIR);
+    SET_ENV(CUT_REPORT_FACTORY_MODULE_DIR);
+#undef SET_ENV
+
+    envp[ENV_LAST] = NULL;
 
     if (options)
         command = g_strdup_printf("%s %s", cutter_command, options);
@@ -85,8 +108,9 @@ run_cutter (const gchar *options)
                        &stdout_string,
                        &stderr_string,
                        &exit_status,
-                       NULL); 
+                       NULL);
     g_strfreev(argv);
+    g_strfreev(envp);
 
     return ret;
 }
