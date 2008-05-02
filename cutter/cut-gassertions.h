@@ -99,6 +99,38 @@ G_BEGIN_DECLS
     }                                                                   \
 } while(0)
 
+/**
+ * cut_assert_equal_int_g_value:
+ * @expected: an expected GList * of integer.
+ * @actual: an actual GList * of integer.
+ * @...: optional format string, followed by parameters to insert
+ * into the format string (as with printf())
+ *
+ * Passes if @expected == @actual.
+ */
+#define cut_assert_equal_int_g_list(expected, actual, ...) do           \
+{                                                                       \
+    GList *_expected = (expected);                                      \
+    GList *_actual = (actual);                                          \
+    if (cut_list_equal_int(expected, actual)) {                         \
+        cut_test_pass();                                                \
+    } else {                                                            \
+        const gchar *inspected_expected, *inspected_actual;             \
+        inspected_expected =                                            \
+            cut_take_string(cut_list_inspect_int(_expected));           \
+        inspected_actual =                                              \
+            cut_take_string(cut_list_inspect_int(_actual));             \
+        cut_test_fail(FAILURE,                                          \
+                      cut_take_printf("<%s == %s>\n"                    \
+                                      "expected: <%s>\n"                \
+                                      " but was: <%s>",                 \
+                                      #expected, #actual,               \
+                                      inspected_expected,               \
+                                      inspected_actual),                \
+                      ## __VA_ARGS__);                                  \
+    }                                                                   \
+} while(0)
+
 G_END_DECLS
 
 #endif /* __CUT_GASSERTIONS_H__ */

@@ -1,5 +1,12 @@
 2008-05-02  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-gassertions.h (cut_assert_equal_int_g_type): add.
+	* test/test-cut-gassertions.c: add a test for
+	cut_assert_equal_int_g_type().
+
+	* cutter/cut-list.[ch]: add.
+	* cutter/Makefile.am: add cut-list.[ch].
+
 	* cutter/cut-module-factory-utils.c,
 	cutter/cut-ui-factory-builder.c, cutter/cut-module.c: sort modules
 	by name.
