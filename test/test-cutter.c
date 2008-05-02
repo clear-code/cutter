@@ -28,7 +28,7 @@ static gchar *stdout_string = NULL;
 static gchar *stderr_string = NULL;
 static gint exit_status = 0;
 
-static const gchar *help_message =
+static const gchar help_message[] =
         "Usage:\n"
         "  lt-cutter [OPTION...] TEST_DIRECTORY\n"
         "\n"
@@ -142,7 +142,7 @@ test_no_option (void)
 void
 test_help_all (void)
 {
-    const gchar *expected = 
+    const gchar expected[] = 
         "Usage:\n"
         "  lt-cutter [OPTION...] TEST_DIRECTORY\n"
         "\n"
