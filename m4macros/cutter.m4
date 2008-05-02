@@ -15,13 +15,13 @@ AC_DEFUN([AC_CHECK_COVERAGE],
   
   cutter_has_lcov=no
   ltp_version_list="1.6"
-  AC_CHECK_PROG(LTP, lcov, lcov)
-  AC_CHECK_PROG(LTP_GENHTML, genhtml, genhtml)
+  AC_CHECK_PROG(LCOV, lcov, lcov)
+  AC_CHECK_PROG(GENHTML, genhtml, genhtml)
 
-  if test "$LTP"; then
+  if test "$LCOV"; then
     AC_CACHE_CHECK([for ltp version], cutter_cv_ltp_version, [
       cutter_cv_ltp_version=invalid
-      ltp_version=`$LTP -v 2>/dev/null | $SED -e 's/^.* //'`
+      ltp_version=`$LCOV -v 2>/dev/null | $SED -e 's/^.* //'`
       for ltp_check_version in $ltp_version_list; do
         if test "$ltp_version" = "$ltp_check_version"; then
           cutter_cv_ltp_version="$ltp_check_version (ok)"
