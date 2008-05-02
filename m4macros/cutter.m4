@@ -1,4 +1,4 @@
-AC_DEFUN([AM_PROG_CUTTER],
+AC_DEFUN([AC_CHECK_COVERAGE],
 [
   dnl **************************************************************
   dnl Configure for coverage.
@@ -19,5 +19,15 @@ AC_DEFUN([AM_PROG_CUTTER],
   fi
   AC_SUBST(COVERAGE_CFLAGS)
   AM_CONDITIONAL([ENABLE_COVERAGE], [test "x$ac_cv_enable_coverage" = "xyes"])
+])
 
+AC_DEFUN([AC_CHECK_CUTTER],
+[
+  PKG_CHECK_MODULES(CUTTER, cutter)
+  AC_SUBST([CUTTER_CFLAGS])
+  AC_SUBST([CUTTER_LIBS])
+
+  _PKG_CONFIG(CUTTER, variable=cutter, cutter)
+  CUTTER=$pkg_cv_CUTTER
+  AC_SUBST([CUTTER])
 ])
