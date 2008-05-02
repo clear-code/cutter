@@ -9,7 +9,7 @@ run()
     fi
 }
 
-run aclocal $ACLOCAL_OPTIONS
+run aclocal -I m4macros $ACLOCAL_OPTIONS
 run libtoolize --copy --force
 run glib-gettextize --force --copy
 #run gtkdocize --copy
