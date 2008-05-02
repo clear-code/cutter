@@ -88,18 +88,6 @@ cut_report_load_module (const gchar *name)
     return module;
 }
 
-GList *
-cut_report_get_registered_types (void)
-{
-    return cut_module_collect_registered_types(modules);
-}
-
-GList *
-cut_report_get_log_domains (void)
-{
-    return cut_module_collect_log_domains(modules);
-}
-
 G_DEFINE_ABSTRACT_TYPE (CutReport, cut_report, G_TYPE_OBJECT)
 
 static void

@@ -54,9 +54,6 @@ struct _CutReportClass
 
 GType        cut_report_get_type  (void) G_GNUC_CONST;
 
-GList       *cut_report_get_registered_types (void);
-GList       *cut_report_get_log_domains      (void);
-
 CutReport   *cut_report_new             (const gchar *name,
                                          const gchar *first_property,
                                          ...);
