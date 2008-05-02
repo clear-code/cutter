@@ -1,9 +1,11 @@
-INCLUDES = $(CUTTER_CFLAGS)	\
-	$(GTK_CFLAGS)		\
-	$(GTK_PRINT_CFLAGS)	\
+INCLUDES =			\
 	-I$(top_builddir)	\
 	-I$(top_srcdir)		\
 	-I$(top_srcdir)/cutter
+
+AM_CFLAGS = $(CUTTER_CFLAGS)	\
+	$(GTK_CFLAGS)		\
+	$(GTK_PRINT_CFLAGS)
 
 EXTRA_DIST = run-test.sh
 
