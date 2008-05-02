@@ -56,10 +56,11 @@ test_collect_names (void)
 
     names = cut_module_collect_names(modules);
     cut_assert(names);
-    cut_assert_equal_int(2, g_list_length(names));
+    cut_assert_equal_int(3, g_list_length(names));
 
-    cut_assert_equal_string("test1", names->data);
-    cut_assert_equal_string("test2", g_list_next(names)->data);
+    cut_assert_equal_string("cannot_load_module", names->data);
+    cut_assert_equal_string("test1", g_list_nth_data(names, 1));
+    cut_assert_equal_string("test2", g_list_nth_data(names, 2));
 
     g_list_free(names);
 }
@@ -87,12 +88,12 @@ test_load_modules_unique (void)
     GList *reloaded_modules;
 
     cut_assert(modules);
-    cut_assert_equal_int(2, g_list_length(modules));
+    cut_assert_equal_int(3, g_list_length(modules));
 
     reloaded_modules = cut_module_load_modules_unique(modules_dir, modules);
     cut_assert(reloaded_modules);
 
-    cut_assert_equal_int(2, g_list_length(reloaded_modules));
+    cut_assert_equal_int(3, g_list_length(reloaded_modules));
 }
 
 /*

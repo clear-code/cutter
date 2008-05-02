@@ -5,7 +5,8 @@ INCLUDES = $(CUTTER_CFLAGS)	\
 
 noinst_LTLIBRARIES =		\
 		test1.la	\
-		test2.la
+		test2.la	\
+		cannot_load_module.la
 
 LDFLAGS =			\
 	-module			\
@@ -14,3 +15,5 @@ LDFLAGS =			\
 
 test1_la_SOURCES = test1.c
 test2_la_SOURCES = test2.c
+
+cannot_load_module_la_SOURCES = cannot_load_module.c
