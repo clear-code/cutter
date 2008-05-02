@@ -38,22 +38,9 @@ struct _CutTestContainerPrivate
     GList *tests;
 };
 
-enum
-{
-    PROP_0
-};
-
 G_DEFINE_ABSTRACT_TYPE (CutTestContainer, cut_test_container, CUT_TYPE_TEST)
 
 static void dispose        (GObject         *object);
-static void set_property   (GObject         *object,
-                            guint            prop_id,
-                            const GValue    *value,
-                            GParamSpec      *pspec);
-static void get_property   (GObject         *object,
-                            guint            prop_id,
-                            GValue          *value,
-                            GParamSpec      *pspec);
 
 static gdouble  real_get_elapsed  (CutTest  *test);
 
@@ -67,8 +54,6 @@ cut_test_container_class_init (CutTestContainerClass *klass)
     test_class = CUT_TEST_CLASS(klass);
 
     gobject_class->dispose      = dispose;
-    gobject_class->set_property = set_property;
-    gobject_class->get_property = get_property;
 
     test_class->get_elapsed = real_get_elapsed;
 
@@ -95,32 +80,6 @@ dispose (GObject *object)
     }
 
     G_OBJECT_CLASS(cut_test_container_parent_class)->dispose(object);
-}
-
-static void
-set_property (GObject      *object,
-              guint         prop_id,
-              const GValue *value,
-              GParamSpec   *pspec)
-{
-    switch (prop_id) {
-      default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
-        break;
-    }
-}
-
-static void
-get_property (GObject    *object,
-              guint       prop_id,
-              GValue     *value,
-              GParamSpec *pspec)
-{
-    switch (prop_id) {
-      default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
-        break;
-    }
 }
 
 void
