@@ -12,6 +12,7 @@ void test_version (void);
 void test_invalid_option (void);
 void test_invalid_color_option (void);
 void test_invalid_order_option (void);
+void test_invalid_verbose_option (void);
 void test_no_option (void);
 
 static gchar *stdout_string = NULL;
@@ -185,6 +186,14 @@ test_invalid_order_option (void)
     cut_assert(run_cutter("--test-case-order=XXX"));
     cut_assert_equal_int(exit_status, 256);
     cut_assert_equal_string("Invalid test case order value: XXX\n", stdout_string);
+}
+
+void
+test_invalid_verbose_option (void)
+{
+    cut_assert(run_cutter("--verbose=XXX"));
+    cut_assert_equal_int(exit_status, 256);
+    cut_assert_equal_string("Invalid verbose level name: XXX\n", stdout_string);
 }
 
 /*
