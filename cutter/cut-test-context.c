@@ -447,31 +447,6 @@ cut_test_context_take_printf (CutTestContext *context, const char *format, ...)
     return taken_string;
 }
 
-const char *
-cut_test_context_inspect_string_array (CutTestContext *context,
-                                       const char    **strings)
-{
-    GString *inspected;
-    const char **string, **next_string;
-
-    if (!strings)
-        return "(null)";
-
-    inspected = g_string_new("[");
-    string = strings;
-    while (*string) {
-        g_string_append_printf(inspected, "\"%s\"", *string);
-        next_string = string + 1;
-        if (*next_string)
-            g_string_append(inspected, ", ");
-        string = next_string;
-    }
-    g_string_append(inspected, "]");
-
-    return cut_test_context_take_string(context,
-                                        g_string_free(inspected, FALSE));
-}
-
 int
 cut_test_context_trap_fork (CutTestContext *context,
                             const gchar *function_name,

@@ -71,6 +71,29 @@ cut_utils_compare_string_array (const gchar **strings1, const gchar **strings2)
     return TRUE;
 }
 
+char *
+cut_utils_inspect_string_array (const char **strings)
+{
+    GString *inspected;
+    const char **string, **next_string;
+
+    if (!strings)
+        return g_strdup("(null)");
+
+    inspected = g_string_new("[");
+    string = strings;
+    while (*string) {
+        g_string_append_printf(inspected, "\"%s\"", *string);
+        next_string = string + 1;
+        if (*next_string)
+            g_string_append(inspected, ", ");
+        string = next_string;
+    }
+    g_string_append(inspected, "]");
+
+    return g_string_free(inspected, FALSE);
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */

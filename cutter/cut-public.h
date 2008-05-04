@@ -61,12 +61,11 @@ const char *cut_test_context_take_string    (CutTestContext *context,
 const char *cut_test_context_take_printf    (CutTestContext *context,
                                              const char     *format,
                                              ...) CUT_GNUC_PRINTF(2, 3);
-const char *cut_test_context_inspect_string_array (CutTestContext *context,
-                                                   const char    **strings);
 
 
 int   cut_utils_compare_string_array        (const char **strings1,
                                              const char **strings2);
+char *cut_utils_inspect_string_array        (const char **strings);
 
 void *cut_test_context_get_user_data        (CutTestContext *context);
 int   cut_test_context_trap_fork            (CutTestContext *context,

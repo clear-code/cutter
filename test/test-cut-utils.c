@@ -1,7 +1,8 @@
-#include "cutter.h"
+#include <cutter.h>
 #include <cutter/cut-utils.h>
 
 void test_compare_string_array (void);
+void test_inspect_string_array (void);
 
 void
 test_compare_string_array (void)
@@ -16,6 +17,18 @@ test_compare_string_array (void)
     cut_assert(cut_utils_compare_string_array(NULL, NULL));
     cut_assert(!cut_utils_compare_string_array(strings1, strings3));
     cut_assert(!cut_utils_compare_string_array(strings1, strings4));
+}
+
+
+void
+test_inspect_string_array (void)
+{
+    const gchar *strings[] = {"a", "b", "c", NULL};
+
+    cut_assert_equal_string_with_free("(null)",
+                                      cut_utils_inspect_string_array(NULL));
+    cut_assert_equal_string_with_free("[\"a\", \"b\", \"c\"]",
+                                      cut_utils_inspect_string_array(strings));
 }
 
 /*

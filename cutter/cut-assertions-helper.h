@@ -24,16 +24,15 @@
 extern "C" {
 #endif
 
-#define cut_inspect_string_array(strings)                               \
-    cut_test_context_inspect_string_array(get_current_test_context(),   \
-                                          strings)
-
 #define cut_take_string(string)                                         \
-    cut_test_context_take_string(get_current_test_context(), string)
+    cut_test_context_take_string(get_current_test_context(), (string))
 
 #define cut_take_printf(format, ...)                                    \
     cut_test_context_take_printf(get_current_test_context(),            \
-                                 format, __VA_ARGS__)
+                                 (format), __VA_ARGS__)
+
+#define cut_inspect_string_array(strings)                               \
+    cut_take_string(cut_utils_inspect_string_array(strings))
 
 #define cut_test_pass() \
     cut_test_context_pass_assertion(get_current_test_context())
