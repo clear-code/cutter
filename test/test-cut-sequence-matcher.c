@@ -14,7 +14,7 @@ void test_get_matches_for_char_sequence(void);
 static CutSequenceMatcher *matcher;
 static GList *expected_indexes;
 static CutSequenceMatchInfo *actual_info;
-static GList *expected_matches, *actual_matches;
+static GList *expected_matches;
 
 static void
 free_matches (GList *matches)
@@ -30,7 +30,6 @@ setup (void)
     expected_indexes = NULL;
     actual_info = NULL;
     expected_matches = NULL;
-    actual_matches = NULL;
 }
 
 void
@@ -44,7 +43,6 @@ teardown (void)
     g_free(actual_info);
 
     free_matches(expected_matches);
-    free_matches(actual_matches);
 }
 
 static gboolean
@@ -275,27 +273,31 @@ append_match_info (GList *list, gint begin, gint end, gint size)
                            sequence_matcher,                            \
                            sequence_matcher_inspect) do                 \
 {                                                                       \
-    GList *_expected_matches = (expected_matches);                      \
+    GList *_expected_matches;                                           \
+    const GList *actual_matches;                                        \
                                                                         \
+    _expected_matches = (expected_matches);                             \
     matcher = (sequence_matcher);                                       \
     actual_matches = cut_sequence_matcher_get_matches(matcher);         \
     if (equal_matches(_expected_matches, actual_matches)) {             \
         cut_test_pass();                                                \
     } else {                                                            \
+        const gchar *inspected_expected, *inspected_actual;             \
+                                                                        \
+        inspected_expected = inspect_matches(_expected_matches);        \
+        inspected_actual = inspect_matches(actual_matches);             \
         cut_test_fail(FAILURE,                                          \
                       cut_take_printf("cut_sequence_matcher_"           \
                                       "get_matches(%s)\n"               \
                                       "expected: <%s>\n"                \
                                       " but was: <%s>",                 \
                                       sequence_matcher_inspect,         \
-                                      inspect_matches(_expected_matches), \
-                                      inspect_matches(actual_matches))); \
+                                      inspected_expected,               \
+                                      inspected_actual));               \
     }                                                                   \
                                                                         \
     g_object_unref(matcher);                                            \
     matcher = NULL;                                                     \
-    free_matches(actual_matches);                                       \
-    actual_matches = NULL;                                              \
 } while (0)
 
 #define cut_assert_matches_string(expected_matches, from, to) do        \

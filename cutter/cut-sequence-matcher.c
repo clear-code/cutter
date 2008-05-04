@@ -38,6 +38,7 @@ struct _CutSequenceMatcherPrivate
     GSequenceIterCompareFunc compare_func;
     gpointer user_data;
     GHashTable *to_indexes;
+    GList *matches;
 };
 
 G_DEFINE_TYPE (CutSequenceMatcher, cut_sequence_matcher, G_TYPE_OBJECT)
@@ -66,6 +67,7 @@ cut_sequence_matcher_init (CutSequenceMatcher *sequence_matcher)
     priv->from = NULL;
     priv->to = NULL;
     priv->to_indexes = NULL;
+    priv->matches = NULL;
 }
 
 static void
@@ -88,6 +90,12 @@ dispose (GObject *object)
     if (priv->to_indexes) {
         g_hash_table_unref(priv->to_indexes);
         priv->to_indexes = NULL;
+    }
+
+    if (priv->matches) {
+        g_list_foreach(priv->matches, (GFunc)g_free, NULL);
+        g_list_free(priv->matches);
+        priv->matches = NULL;
     }
 
     G_OBJECT_CLASS(cut_sequence_matcher_parent_class)->dispose(object);
@@ -318,7 +326,7 @@ pop_matching_info (GQueue *queue, MatchingInfo *info)
     g_slice_free(MatchingInfo, popped_info);
 }
 
-GList *
+const GList *
 cut_sequence_matcher_get_matches (CutSequenceMatcher *matcher)
 {
     CutSequenceMatcherPrivate *priv;
@@ -326,6 +334,9 @@ cut_sequence_matcher_get_matches (CutSequenceMatcher *matcher)
     GQueue *queue;
 
     priv = CUT_SEQUENCE_MATCHER_GET_PRIVATE(matcher);
+    if (priv->matches)
+        return priv->matches;
+
     queue = g_queue_new();
     push_matching_info(queue,
                        0, g_sequence_get_length(priv->from),
@@ -362,7 +373,9 @@ cut_sequence_matcher_get_matches (CutSequenceMatcher *matcher)
     }
 
     g_queue_free(queue);
-    return g_list_reverse(matches);
+    priv->matches = g_list_reverse(matches);
+
+    return priv->matches;
 }
 
 /*

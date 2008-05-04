@@ -1,6 +1,9 @@
 2008-05-04  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-sequence-matcher.[ch],
+	test/test-cut-sequence-matcher.c: cache matched.
+
+	* cutter/cut-sequence-matcher.[ch],
 	test/test-cut-sequence-matcher.c: add cut_sequence_matcher_get_matches().
 
 	* cutter/cut-list.[ch]: make cut_list_equal() and
