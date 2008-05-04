@@ -22,7 +22,8 @@ cutter_public_headers = 			\
 
 gcutter_public_headers =			\
 		cut-gassertions.h		\
-		cut-value-equal.h
+		cut-value-equal.h		\
+		cut-list.h
 
 libcutter_public_headers = 			\
 		cut-private.h			\
@@ -45,8 +46,7 @@ libcutter_public_headers = 			\
 		cut-report.h			\
 		cut-process.h			\
 		cut-xml-parser.h		\
-		cut-verbose-level.h		\
-		cut-list.h
+		cut-verbose-level.h
 
 noinst_headers = 			\
 		gbsearcharray.h		\

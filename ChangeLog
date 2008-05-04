@@ -1,3 +1,7 @@
+2008-05-04  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/Makefile.am: public cut-list.h.
+
 2008-05-02  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-gassertions.h (cut_assert_equal_string_g_type): add.
