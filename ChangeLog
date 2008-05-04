@@ -1,5 +1,8 @@
 2008-05-04  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-sequence-matcher.c: cut_assert_equal_to_index() ->
+	cut_assert_to_index().
+
 	* cutter/Makefile.am, cutter/cut-sequence-matcher.[ch],
 	test/Makefile.am, test/test-cut-sequence-matcher.c: add
 	CutSequenceMatcher.
