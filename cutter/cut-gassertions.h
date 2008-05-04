@@ -101,7 +101,7 @@ G_BEGIN_DECLS
 } while(0)
 
 /**
- * cut_assert_equal_int_g_value:
+ * cut_assert_equal_g_list_int:
  * @expected: an expected GList * of integer.
  * @actual: an actual GList * of integer.
  * @...: optional format string, followed by parameters to insert
@@ -109,7 +109,7 @@ G_BEGIN_DECLS
  *
  * Passes if @expected == @actual.
  */
-#define cut_assert_equal_int_g_list(expected, actual, ...) do           \
+#define cut_assert_equal_g_list_int(expected, actual, ...) do           \
 {                                                                       \
     GList *_expected = (expected);                                      \
     GList *_actual = (actual);                                          \
@@ -133,7 +133,7 @@ G_BEGIN_DECLS
 } while(0)
 
 /**
- * cut_assert_equal_string_g_value:
+ * cut_assert_equal_g_list_string:
  * @expected: an expected GList * of string.
  * @actual: an actual GList * of string.
  * @...: optional format string, followed by parameters to insert
@@ -141,7 +141,7 @@ G_BEGIN_DECLS
  *
  * Passes if @expected == @actual.
  */
-#define cut_assert_equal_string_g_list(expected, actual, ...) do        \
+#define cut_assert_equal_g_list_string(expected, actual, ...) do        \
 {                                                                       \
     GList *_expected = (expected);                                      \
     GList *_actual = (actual);                                          \

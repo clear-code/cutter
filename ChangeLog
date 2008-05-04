@@ -1,5 +1,9 @@
 2008-05-04  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-gassertions.h:
+	- cut_assert_equal_int_g_list() -> cut_assert_equal_g_list_int().
+	- cut_assert_equal_string_g_list() -> cut_assert_equal_g_list_string().
+
 	* cutter/Makefile.am: public cut-list.h.
 
 2008-05-02  Kouhei Sutou  <kou@cozmixng.org>
