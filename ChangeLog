@@ -1,5 +1,9 @@
 2008-05-04  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/Makefile.am, cutter/cut-sequence-matcher.[ch],
+	test/Makefile.am, test/test-cut-sequence-matcher.c: add
+	CutSequenceMatcher.
+
 	* cutter/cut-gassertions.h: add const.
 
 	* cutter/cut-gassertions.h, test/text-cut-gassertions.c:

@@ -42,7 +42,8 @@ noinst_LTLIBRARIES = 				\
 		test_cut_xml_parser.la		\
 		test_cut_report_xml.la		\
 		test_cut_verbose_level.la	\
-		test_cut_utils.la
+		test_cut_utils.la		\
+		test_cut_sequence_matcher.la
 
 LDFLAGS =			\
 	-module			\
@@ -83,6 +84,7 @@ test_cut_xml_parser_la_SOURCES	= test-cut-xml-parser.c
 test_cut_verbose_level_la_SOURCES = test-cut-verbose-level.c
 test_cut_test_context_la_SOURCES = test-cut-test-context.c
 test_cut_utils_la_SOURCES       = test-cut-utils.c
+test_cut_sequence_matcher_la_SOURCES = test-cut-sequence-matcher.c
 
 echo-cutter:
 	@echo $(CUTTER)
