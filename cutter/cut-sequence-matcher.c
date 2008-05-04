@@ -157,6 +157,70 @@ cut_sequence_matcher_get_to_index (CutSequenceMatcher *matcher,
     return g_hash_table_lookup(priv->to_indexes, to_content);
 }
 
+CutSequenceMatchInfo *
+cut_sequence_matcher_longest_match (CutSequenceMatcher *matcher,
+                                    gint from_begin,
+                                    gint from_end,
+                                    gint to_begin,
+                                    gint to_end)
+{
+    CutSequenceMatcherPrivate *priv;
+    CutSequenceMatchInfo *info;
+    GSequenceIter *iter, *begin, *end;
+    GHashTable *sizes, *current_sizes;
+
+    priv = CUT_SEQUENCE_MATCHER_GET_PRIVATE(matcher);
+
+    info = g_new(CutSequenceMatchInfo, 1);
+    info->begin = from_begin;
+    info->end = to_begin;
+    info->size = 0;
+
+    sizes = g_hash_table_new(g_direct_hash, g_direct_equal);
+
+    begin = g_sequence_get_iter_at_pos(priv->from, from_begin);
+    end = g_sequence_get_iter_at_pos(priv->from, from_end + 1);
+    for (iter = begin; iter != end; iter = g_sequence_iter_next(iter)) {
+        gint from_index;
+        const GList *node;
+
+        from_index = g_sequence_iter_get_position(iter);
+        current_sizes = g_hash_table_new(g_direct_hash, g_direct_equal);
+        for (node = cut_sequence_matcher_get_to_index(matcher,
+                                                      g_sequence_get(iter));
+             node;
+             node = g_list_next(node)) {
+            gint size, to_index;
+            gpointer size_as_pointer;
+
+            to_index = GPOINTER_TO_INT(node->data);
+            if (to_index < to_begin)
+                continue;
+            if (to_index > to_end)
+                break;
+
+            size_as_pointer = g_hash_table_lookup(sizes,
+                                                  GINT_TO_POINTER(to_index - 1));
+            size = GPOINTER_TO_INT(size_as_pointer);
+            size++;
+            size_as_pointer = GINT_TO_POINTER(size);
+            g_hash_table_insert(current_sizes,
+                                GINT_TO_POINTER(to_index),
+                                size_as_pointer);
+            if (size > info->size) {
+                info->begin = from_index - size + 1;
+                info->end = to_index - size + 1;
+                info->size = size;
+            }
+        }
+        g_hash_table_unref(sizes);
+        sizes = current_sizes;
+    }
+    g_hash_table_unref(sizes);
+
+    return info;
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */

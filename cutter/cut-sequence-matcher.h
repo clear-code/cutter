@@ -34,6 +34,8 @@ G_BEGIN_DECLS
 typedef struct _CutSequenceMatcher         CutSequenceMatcher;
 typedef struct _CutSequenceMatcherClass    CutSequenceMatcherClass;
 
+typedef struct _CutSequenceMatchInfo       CutSequenceMatchInfo;
+
 struct _CutSequenceMatcher
 {
     GObject object;
@@ -42,6 +44,13 @@ struct _CutSequenceMatcher
 struct _CutSequenceMatcherClass
 {
     GObjectClass parent_class;
+};
+
+struct _CutSequenceMatchInfo
+{
+    gint begin;
+    gint end;
+    gint size;
 };
 
 GType               cut_sequence_matcher_get_type       (void) G_GNUC_CONST;
@@ -54,6 +63,11 @@ CutSequenceMatcher *cut_sequence_matcher_new   (GSequence *from,
                                                 GEqualFunc content_equal_func);
 const GList *cut_sequence_matcher_get_to_index (CutSequenceMatcher *matcher,
                                                 gpointer to_content);
+CutSequenceMatchInfo *cut_sequence_matcher_longest_match (CutSequenceMatcher *matcher,
+                                                          gint from_begin,
+                                                          gint from_end,
+                                                          gint to_begin,
+                                                          gint to_end);
 
 G_END_DECLS
 

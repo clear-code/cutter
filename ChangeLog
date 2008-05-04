@@ -1,5 +1,9 @@
 2008-05-04  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-sequence-matcher.[ch],
+	test/test-cut-sequence-matcher.c: implement
+	cut_sequence_matcher_longest_match().
+
 	* cutter/cut-assertions.h, cutter/cut-gassertions.h: add 'Since:
 	0.8' markup.
 
