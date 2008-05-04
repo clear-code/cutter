@@ -1,5 +1,8 @@
 2008-05-04  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertions.h, cutter/cut-gassertions.h: add 'Since:
+	0.8' markup.
+
 	* cutter/cut-public.h, cutter/cut-utils.c, cutter/cut-test-context.c:
 	- remove cut_test_context_inspect_string_array().
 	- add cut_utils_inspect_string_array().

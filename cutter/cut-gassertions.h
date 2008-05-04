@@ -108,6 +108,8 @@ G_BEGIN_DECLS
  * into the format string (as with printf())
  *
  * Passes if @expected == @actual.
+ *
+ * Since: 0.8
  */
 #define cut_assert_equal_g_list_int(expected, actual, ...) do           \
 {                                                                       \
@@ -140,6 +142,8 @@ G_BEGIN_DECLS
  * into the format string (as with printf())
  *
  * Passes if @expected == @actual.
+ *
+ * Since: 0.8
  */
 #define cut_assert_equal_g_list_string(expected, actual, ...) do        \
 {                                                                       \

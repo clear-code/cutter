@@ -502,6 +502,8 @@ extern "C" {
  * count = write(stdout, buffer, strlen(buffer));
  * cut_assert_errno("Failed to write");            -> Pass when count != -1
  * ]|
+ *
+ * Since: 0.8
  */
 #define cut_assert_errno(...) do                                        \
 {                                                                       \
