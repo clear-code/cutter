@@ -73,6 +73,7 @@ CutSequenceMatchInfo *cut_sequence_matcher_get_longest_match (CutSequenceMatcher
                                                               gint from_end,
                                                               gint to_begin,
                                                               gint to_end);
+GList       *cut_sequence_matcher_get_matches  (CutSequenceMatcher *matcher);
 
 G_END_DECLS
 

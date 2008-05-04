@@ -284,6 +284,87 @@ cut_sequence_matcher_get_longest_match (CutSequenceMatcher *matcher,
     return info;
 }
 
+typedef struct _MatchingInfo MatchingInfo;
+struct _MatchingInfo {
+    gint from_begin;
+    gint from_end;
+    gint to_begin;
+    gint to_end;
+};
+
+static void
+push_matching_info (GQueue *queue,
+                    gint from_begin, gint from_end,
+                    gint to_begin, gint to_end)
+{
+    MatchingInfo *info;
+
+    info = g_slice_new(MatchingInfo);
+    info->from_begin = from_begin;
+    info->from_end = from_end;
+    info->to_begin = to_begin;
+    info->to_end = to_end;
+
+    g_queue_push_tail(queue, info);
+}
+
+static void
+pop_matching_info (GQueue *queue, MatchingInfo *info)
+{
+    MatchingInfo *popped_info;
+
+    popped_info = g_queue_pop_head(queue);
+    *info = *popped_info;
+    g_slice_free(MatchingInfo, popped_info);
+}
+
+GList *
+cut_sequence_matcher_get_matches (CutSequenceMatcher *matcher)
+{
+    CutSequenceMatcherPrivate *priv;
+    GList *matches = NULL;
+    GQueue *queue;
+
+    priv = CUT_SEQUENCE_MATCHER_GET_PRIVATE(matcher);
+    queue = g_queue_new();
+    push_matching_info(queue,
+                       0, g_sequence_get_length(priv->from),
+                       0, g_sequence_get_length(priv->to));
+
+    while (!g_queue_is_empty(queue)) {
+        MatchingInfo info;
+        CutSequenceMatchInfo *match_info;
+
+        pop_matching_info(queue, &info);
+        match_info = cut_sequence_matcher_get_longest_match(matcher,
+                                                            info.from_begin,
+                                                            info.from_end - 1,
+                                                            info.to_begin,
+                                                            info.to_end - 1);
+        if (match_info->size == 0) {
+            g_free(match_info);
+            continue;
+        }
+
+        if (info.from_begin < match_info->begin &&
+            info.to_begin < match_info->end)
+            push_matching_info(queue,
+                               info.from_begin, match_info->begin,
+                               info.to_begin, match_info->end);
+        matches = g_list_prepend(matches, match_info);
+        if (match_info->begin + match_info->size < info.from_end &&
+            match_info->end + match_info->size < info.to_end)
+            push_matching_info(queue,
+                               match_info->begin + match_info->size,
+                               info.from_end,
+                               match_info->end + match_info->size,
+                               info.to_end);
+    }
+
+    g_queue_free(queue);
+    return g_list_reverse(matches);
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */
