@@ -1,9 +1,12 @@
+/* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+
 #include <cutter.h>
 #include <cutter/cut-gassertions.h>
 #include <cutter/cut-sequence-matcher.h>
 
 void test_to_indexes_for_string_sequence(void);
 void test_to_indexes_for_char_sequence(void);
+void test_longest_match(void);
 
 static CutSequenceMatcher *matcher;
 static GList *expected_indexes;
@@ -52,6 +55,13 @@ string_sequence_matcher_new (GSequence *from, GSequence *to)
                                     g_str_hash, g_str_equal);
 }
 
+static CutSequenceMatcher *
+create_string_sequence_matcher (gchar **from_strings, gchar **to_strings)
+{
+    return string_sequence_matcher_new(string_sequence_new(from_strings),
+                                       string_sequence_new(to_strings));
+}
+
 static GSequence *
 char_sequence_new (gchar *string)
 {
@@ -89,16 +99,20 @@ char_sequence_matcher_new (GSequence *from, GSequence *to)
     return cut_sequence_matcher_new(from, to, NULL, NULL, int_hash, int_equal);
 }
 
+static CutSequenceMatcher *
+create_char_sequence_matcher (gchar *from_string, gchar *to_string)
+{
+    return char_sequence_matcher_new(char_sequence_new(from_string),
+                                       char_sequence_new(to_string));
+}
+
 void
 test_to_indexes_for_string_sequence (void)
 {
     gchar *from[] = {"", NULL};
     gchar *to[] = {"abc def", "abc", "abc def", NULL};
-    GSequence *from_sequence, *to_sequence;
 
-    from_sequence = string_sequence_new(from);
-    to_sequence = string_sequence_new(to);
-    matcher = string_sequence_matcher_new(from_sequence, to_sequence);
+    matcher = create_string_sequence_matcher(from, to);
 
     expected_indexes = g_list_append(expected_indexes, GINT_TO_POINTER(0));
     expected_indexes = g_list_append(expected_indexes, GINT_TO_POINTER(2));
@@ -112,11 +126,7 @@ test_to_indexes_for_string_sequence (void)
 void
 test_to_indexes_for_char_sequence (void)
 {
-    GSequence *from_sequence, *to_sequence;
-
-    from_sequence = char_sequence_new("");
-    to_sequence = char_sequence_new("abcad");
-    matcher = char_sequence_matcher_new(from_sequence, to_sequence);
+    matcher = create_char_sequence_matcher("", "abcad");
 
     expected_indexes = g_list_append(expected_indexes, GINT_TO_POINTER(0));
     expected_indexes = g_list_append(expected_indexes, GINT_TO_POINTER(3));
@@ -134,3 +144,7 @@ test_to_indexes_for_char_sequence (void)
     expected_indexes = g_list_append(NULL, GINT_TO_POINTER(4));
     cut_assert_equal_to_index(expected_indexes, matcher, GINT_TO_POINTER('d'));
 }
+
+/*
+vi:ts=4:nowrap:ai:expandtab:sw=4
+*/
