@@ -24,6 +24,18 @@
 
 G_BEGIN_DECLS
 
+typedef void   (*CutInspectFunc) (GString *string,
+                                  gconstpointer data,
+                                  gpointer user_data);
+
+gboolean         cut_list_equal                (const GList *list1,
+                                                const GList *list2,
+                                                GCompareDataFunc compare_func,
+                                                gpointer user_data);
+gchar           *cut_list_inspect              (const GList *list,
+                                                CutInspectFunc inspect_func,
+                                                gpointer user_data);
+
 gboolean         cut_list_equal_int            (const GList *list1,
                                                 const GList *list2);
 gchar           *cut_list_inspect_int          (const GList *list);
