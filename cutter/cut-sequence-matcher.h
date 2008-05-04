@@ -68,11 +68,11 @@ CutSequenceMatcher *cut_sequence_matcher_string_new (const gchar **from,
 
 const GList *cut_sequence_matcher_get_to_index (CutSequenceMatcher *matcher,
                                                 gpointer to_content);
-CutSequenceMatchInfo *cut_sequence_matcher_longest_match (CutSequenceMatcher *matcher,
-                                                          gint from_begin,
-                                                          gint from_end,
-                                                          gint to_begin,
-                                                          gint to_end);
+CutSequenceMatchInfo *cut_sequence_matcher_get_longest_match (CutSequenceMatcher *matcher,
+                                                              gint from_begin,
+                                                              gint from_end,
+                                                              gint to_begin,
+                                                              gint to_end);
 
 G_END_DECLS
 

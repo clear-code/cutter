@@ -6,8 +6,8 @@
 
 void test_to_indexes_for_string_sequence(void);
 void test_to_indexes_for_char_sequence(void);
-void test_longest_match_for_string_sequence(void);
-void test_longest_match_for_char_sequence(void);
+void test_get_longest_match_for_string_sequence(void);
+void test_get_longest_match_for_char_sequence(void);
 
 static CutSequenceMatcher *matcher;
 static GList *expected_indexes;
@@ -90,18 +90,19 @@ test_to_indexes_for_char_sequence (void)
     gint _expected_size = (expected_size);                              \
                                                                         \
     matcher = (sequence_matcher);                                       \
-    actual_info = cut_sequence_matcher_longest_match(matcher,           \
-                                                     from_begin,        \
-                                                     from_end,          \
-                                                     to_begin,          \
-                                                     to_end);           \
+    actual_info = cut_sequence_matcher_get_longest_match(matcher,       \
+                                                         from_begin,    \
+                                                         from_end,      \
+                                                         to_begin,      \
+                                                         to_end);       \
     if (_expected_begin == actual_info->begin &&                        \
         _expected_end == actual_info->end &&                            \
         _expected_size == actual_info->size) {                          \
         cut_test_pass();                                                \
     } else {                                                            \
         cut_test_fail(FAILURE,                                          \
-                      cut_take_printf("cut_sequence_matcher_longest_match(" \
+                      cut_take_printf("cut_sequence_matcher_" \
+                                      "get_longest_match("              \
                                       "%s, %s, %s, %s, %s)\n"           \
                                       " ==\n"                           \
                                       "<begin: %s, end: %s, size: %s>"  \
@@ -157,7 +158,7 @@ test_to_indexes_for_char_sequence (void)
 } while (0)
 
 void
-test_longest_match_for_string_sequence (void)
+test_get_longest_match_for_string_sequence (void)
 {
     const gchar *bcd[] = {"b", "c", "d", NULL};
     const gchar *abcdxyz[] = {"a", "b", "c", "d", "x", "y", "z", NULL};
@@ -186,7 +187,7 @@ test_longest_match_for_string_sequence (void)
                              from_begin,from_end, to_begin, to_end)
 
 void
-test_longest_match_for_char_sequence (void)
+test_get_longest_match_for_char_sequence (void)
 {
     cut_assert_longest_match_char(0, 1, 3, "bcd", "abcdxyz", 0, 2, 0, 7);
     cut_assert_longest_match_char(1, 2, 2, "bcd", "abcdxyz", 1, 2, 0, 6);

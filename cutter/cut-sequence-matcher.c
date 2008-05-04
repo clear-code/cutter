@@ -221,11 +221,11 @@ cut_sequence_matcher_get_to_index (CutSequenceMatcher *matcher,
 }
 
 CutSequenceMatchInfo *
-cut_sequence_matcher_longest_match (CutSequenceMatcher *matcher,
-                                    gint from_begin,
-                                    gint from_end,
-                                    gint to_begin,
-                                    gint to_end)
+cut_sequence_matcher_get_longest_match (CutSequenceMatcher *matcher,
+                                        gint from_begin,
+                                        gint from_end,
+                                        gint to_begin,
+                                        gint to_end)
 {
     CutSequenceMatcherPrivate *priv;
     CutSequenceMatchInfo *info;
