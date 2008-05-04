@@ -30,80 +30,6 @@ teardown (void)
     g_free(actual_info);
 }
 
-static GSequence *
-string_sequence_new (const gchar **strings)
-{
-    GSequence *sequence;
-
-    sequence = g_sequence_new(g_free);
-
-    for (; *strings; strings++) {
-        g_sequence_append(sequence, g_strdup(*strings));
-    }
-
-    return sequence;
-}
-
-static CutSequenceMatcher *
-string_sequence_matcher_new (GSequence *from, GSequence *to)
-{
-    return cut_sequence_matcher_new(from, to, NULL, NULL,
-                                    g_str_hash, g_str_equal);
-}
-
-static CutSequenceMatcher *
-create_string_sequence_matcher (const gchar **from_strings,
-                                const gchar **to_strings)
-{
-    return string_sequence_matcher_new(string_sequence_new(from_strings),
-                                       string_sequence_new(to_strings));
-}
-
-static GSequence *
-char_sequence_new (gchar *string)
-{
-    GSequence *sequence;
-
-    sequence = g_sequence_new(NULL);
-
-    for (; *string != '\0'; string++) {
-        g_sequence_append(sequence, GINT_TO_POINTER(*string));
-    }
-
-    return sequence;
-}
-
-static guint
-int_hash (gconstpointer v)
-{
-    gint integer;
-    integer = GPOINTER_TO_INT(v);
-    return g_int_hash(&integer);
-}
-
-static gboolean
-int_equal (gconstpointer v1, gconstpointer v2)
-{
-    gint integer1, integer2;
-    integer1 = GPOINTER_TO_INT(v1);
-    integer2 = GPOINTER_TO_INT(v2);
-    return g_int_equal(&integer1, &integer2);
-}
-
-static CutSequenceMatcher *
-char_sequence_matcher_new (GSequence *from, GSequence *to)
-{
-    return cut_sequence_matcher_new(from, to, NULL, NULL, int_hash, int_equal);
-}
-
-static CutSequenceMatcher *
-create_char_sequence_matcher (gchar *from_string, gchar *to_string)
-{
-    return char_sequence_matcher_new(char_sequence_new(from_string),
-                                       char_sequence_new(to_string));
-}
-
-
 #define cut_assert_to_index(expected, matcher, to_content) do           \
 {                                                                       \
     const GList *indexes;                                               \
@@ -118,7 +44,7 @@ test_to_indexes_for_string_sequence (void)
     const gchar *from[] = {"", NULL};
     const gchar *to[] = {"abc def", "abc", "abc def", NULL};
 
-    matcher = create_string_sequence_matcher(from, to);
+    matcher = cut_sequence_matcher_string_new(from, to);
 
     expected_indexes = g_list_append(expected_indexes, GINT_TO_POINTER(0));
     expected_indexes = g_list_append(expected_indexes, GINT_TO_POINTER(2));
@@ -132,7 +58,7 @@ test_to_indexes_for_string_sequence (void)
 void
 test_to_indexes_for_char_sequence (void)
 {
-    matcher = create_char_sequence_matcher("", "abcad");
+    matcher = cut_sequence_matcher_char_new("", "abcad");
 
     expected_indexes = g_list_append(expected_indexes, GINT_TO_POINTER(0));
     expected_indexes = g_list_append(expected_indexes, GINT_TO_POINTER(3));
@@ -219,7 +145,7 @@ test_to_indexes_for_char_sequence (void)
     CutSequenceMatcher *matcher;                                        \
     const gchar *inspected_matcher;                                     \
                                                                         \
-    matcher = create_string_sequence_matcher(_from, _to);               \
+    matcher = cut_sequence_matcher_string_new(_from, _to);              \
     inspected_matcher =                                                 \
         cut_take_printf("[%s, %s]",                                     \
                         cut_inspect_string_array(_from),                \
@@ -255,7 +181,7 @@ test_longest_match_for_string_sequence (void)
                                       to_begin, to_end)                 \
     cut_assert_longest_match(expected_begin, expected_end,              \
                              expected_size,                             \
-                             create_char_sequence_matcher(from, to),    \
+                             cut_sequence_matcher_char_new(from, to),   \
                              cut_take_printf("[%s, %s]", #from, #to),   \
                              from_begin,from_end, to_begin, to_end)
 

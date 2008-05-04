@@ -1,5 +1,13 @@
 2008-05-04  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-sequence-matcher.[ch]: add
+	cut_sequence_matcher_char_new() and
+	cut_sequence_matcher_string_new().
+
+	* test/test-cut-sequence-matcher.c: use
+	cut_sequence_matcher_char_new() and
+	cut_sequence_matcher_string_new().
+
 	* cutter/cut-sequence-matcher.[ch],
 	test/test-cut-sequence-matcher.c: implement
 	cut_sequence_matcher_longest_match().

@@ -144,6 +144,69 @@ cut_sequence_matcher_new (GSequence *from, GSequence *to,
     return matcher;
 }
 
+static GSequence *
+char_sequence_new (const gchar *string)
+{
+    GSequence *sequence;
+
+    sequence = g_sequence_new(NULL);
+
+    for (; *string != '\0'; string++) {
+        g_sequence_append(sequence, GINT_TO_POINTER(*string));
+    }
+
+    return sequence;
+}
+
+static guint
+int_value_hash (gconstpointer v)
+{
+    gint integer;
+    integer = GPOINTER_TO_INT(v);
+    return g_int_hash(&integer);
+}
+
+static gboolean
+int_value_equal (gconstpointer v1, gconstpointer v2)
+{
+    gint integer1, integer2;
+    integer1 = GPOINTER_TO_INT(v1);
+    integer2 = GPOINTER_TO_INT(v2);
+    return g_int_equal(&integer1, &integer2);
+}
+
+CutSequenceMatcher *
+cut_sequence_matcher_char_new (const gchar *from, const gchar *to)
+{
+    return cut_sequence_matcher_new(char_sequence_new(from),
+                                    char_sequence_new(to),
+                                    NULL, NULL,
+                                    int_value_hash, int_value_equal);
+}
+
+static GSequence *
+string_sequence_new (const gchar **strings)
+{
+    GSequence *sequence;
+
+    sequence = g_sequence_new(g_free);
+
+    for (; *strings; strings++) {
+        g_sequence_append(sequence, g_strdup(*strings));
+    }
+
+    return sequence;
+}
+
+CutSequenceMatcher *
+cut_sequence_matcher_string_new (const gchar **from, const gchar **to)
+{
+    return cut_sequence_matcher_new(string_sequence_new(from),
+                                    string_sequence_new(to),
+                                    NULL, NULL,
+                                    g_str_hash, g_str_equal);
+}
+
 const GList *
 cut_sequence_matcher_get_to_index (CutSequenceMatcher *matcher,
                                    gpointer to_content)

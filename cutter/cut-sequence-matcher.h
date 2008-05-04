@@ -61,6 +61,11 @@ CutSequenceMatcher *cut_sequence_matcher_new   (GSequence *from,
                                                 gpointer user_data,
                                                 GHashFunc content_hash_func,
                                                 GEqualFunc content_equal_func);
+CutSequenceMatcher *cut_sequence_matcher_char_new   (const gchar *from,
+                                                     const gchar *to);
+CutSequenceMatcher *cut_sequence_matcher_string_new (const gchar **from,
+                                                     const gchar **to);
+
 const GList *cut_sequence_matcher_get_to_index (CutSequenceMatcher *matcher,
                                                 gpointer to_content);
 CutSequenceMatchInfo *cut_sequence_matcher_longest_match (CutSequenceMatcher *matcher,
