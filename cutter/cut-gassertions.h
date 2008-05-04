@@ -111,8 +111,8 @@ G_BEGIN_DECLS
  */
 #define cut_assert_equal_g_list_int(expected, actual, ...) do           \
 {                                                                       \
-    GList *_expected = (expected);                                      \
-    GList *_actual = (actual);                                          \
+    const GList *_expected = (expected);                                \
+    const GList *_actual = (actual);                                    \
     if (cut_list_equal_int(_expected, _actual)) {                       \
         cut_test_pass();                                                \
     } else {                                                            \
@@ -143,8 +143,8 @@ G_BEGIN_DECLS
  */
 #define cut_assert_equal_g_list_string(expected, actual, ...) do        \
 {                                                                       \
-    GList *_expected = (expected);                                      \
-    GList *_actual = (actual);                                          \
+    const GList *_expected = (expected);                                \
+    const GList *_actual = (actual);                                    \
     if (cut_list_equal_string(_expected, _actual)) {                    \
         cut_test_pass();                                                \
     } else {                                                            \
