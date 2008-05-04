@@ -7,8 +7,8 @@
 
 void test_equal_g_type(void);
 void test_equal_g_value(void);
-void test_equal_int_g_list(void);
-void test_equal_string_g_list(void);
+void test_equal_g_list_int(void);
+void test_equal_g_list_string(void);
 
 static CutTest *test;
 static CutRunner *runner;
@@ -145,40 +145,40 @@ test_equal_g_value (void)
 }
 
 static void
-equal_int_g_list_test (void)
+equal_g_list_int_test (void)
 {
     list1 = g_list_append(list1, GINT_TO_POINTER(100));
     list1 = g_list_append(list1, GINT_TO_POINTER(200));
     list2 = g_list_append(list2, GINT_TO_POINTER(1000));
     list2 = g_list_append(list2, GINT_TO_POINTER(2000));
 
-    cut_assert_equal_int_g_list(list1, list1);
-    cut_assert_equal_int_g_list(list2, list2);
+    cut_assert_equal_g_list_int(list1, list1);
+    cut_assert_equal_g_list_int(list2, list2);
 
-    cut_assert_equal_int_g_list(list1, list2);
+    cut_assert_equal_g_list_int(list1, list2);
 }
 
 void
-test_equal_int_g_list (void)
+test_equal_g_list_int (void)
 {
     CutTest *test;
 
-    test = cut_test_new("equal_int_g_list test", equal_int_g_list_test);
+    test = cut_test_new("equal_g_list_int test", equal_g_list_int_test);
     cut_assert(test);
 
     cut_assert(!run(test));
     cut_assert_test_result_summary(runner, 1, 2, 1, 0, 0, 0, 0);
     cut_assert_test_result(runner, 0, CUT_TEST_RESULT_FAILURE,
-                           "equal_int_g_list test",
+                           "equal_g_list_int test",
                            NULL,
                            "<list1 == list2>\n"
                            "expected: <(100, 200)>\n"
                            " but was: <(1000, 2000)>",
-                           "equal_int_g_list_test");
+                           "equal_g_list_int_test");
 }
 
 static void
-equal_string_g_list_test (void)
+equal_g_list_string_test (void)
 {
     need_to_free_list_contents = TRUE;
 
@@ -187,29 +187,29 @@ equal_string_g_list_test (void)
     list2 = g_list_append(list2, g_strdup("zyx"));
     list2 = g_list_append(list2, g_strdup("wvu"));
 
-    cut_assert_equal_string_g_list(list1, list1);
-    cut_assert_equal_string_g_list(list2, list2);
+    cut_assert_equal_g_list_string(list1, list1);
+    cut_assert_equal_g_list_string(list2, list2);
 
-    cut_assert_equal_string_g_list(list1, list2);
+    cut_assert_equal_g_list_string(list1, list2);
 }
 
 void
-test_equal_string_g_list (void)
+test_equal_g_list_string (void)
 {
     CutTest *test;
 
-    test = cut_test_new("equal_string_g_list test", equal_string_g_list_test);
+    test = cut_test_new("equal_g_list_string test", equal_g_list_string_test);
     cut_assert(test);
 
     cut_assert(!run(test));
     cut_assert_test_result_summary(runner, 1, 2, 1, 0, 0, 0, 0);
     cut_assert_test_result(runner, 0, CUT_TEST_RESULT_FAILURE,
-                           "equal_string_g_list test",
+                           "equal_g_list_string test",
                            NULL,
                            "<list1 == list2>\n"
                            "expected: <(\"abc\", \"def\")>\n"
                            " but was: <(\"zyx\", \"wvu\")>",
-                           "equal_string_g_list_test");
+                           "equal_g_list_string_test");
 }
 
 /*
