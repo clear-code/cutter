@@ -50,13 +50,13 @@ G_DEFINE_TYPE (CutSequenceMatcher, cut_sequence_matcher, G_TYPE_OBJECT)
 static void dispose        (GObject         *object);
 
 CutSequenceMatchInfo *
-cut_sequence_match_info_new (gint begin, gint end, gint size)
+cut_sequence_match_info_new (gint from_index, gint to_index, gint size)
 {
     CutSequenceMatchInfo *info;
 
     info = g_slice_new(CutSequenceMatchInfo);
-    info->begin = begin;
-    info->end = end;
+    info->from_index = from_index;
+    info->to_index = to_index;
     info->size = size;
     return info;
 }
@@ -358,8 +358,8 @@ find_best_match_position (CutSequenceMatcher *matcher,
     priv = CUT_SEQUENCE_MATCHER_GET_PRIVATE(matcher);
 
     info = g_new(CutSequenceMatchInfo, 1);
-    info->begin = from_begin;
-    info->end = to_begin;
+    info->from_index = from_begin;
+    info->to_index = to_begin;
     info->size = 0;
 
     sizes = g_hash_table_new(g_direct_hash, g_direct_equal);
@@ -394,8 +394,8 @@ find_best_match_position (CutSequenceMatcher *matcher,
                                 GINT_TO_POINTER(to_index),
                                 size_as_pointer);
             if (size > info->size) {
-                info->begin = from_index - size + 1;
-                info->end = to_index - size + 1;
+                info->from_index = from_index - size + 1;
+                info->to_index = to_index - size + 1;
                 info->size = size;
             }
         }
@@ -441,21 +441,25 @@ adjust_best_info_with_junk_predicate (CutSequenceMatcher *matcher,
 
     priv = CUT_SEQUENCE_MATCHER_GET_PRIVATE(matcher);
 
-    while (best_info->begin > from_begin &&
-           best_info->end > to_begin &&
-           check_junk(priv, should_junk, best_info->end - 1) &&
-           equal_content(priv, best_info->begin - 1, best_info->end - 1)) {
-        best_info->begin--;
-        best_info->end--;
+    while (best_info->from_index > from_begin &&
+           best_info->to_index > to_begin &&
+           check_junk(priv, should_junk, best_info->to_index - 1) &&
+           equal_content(priv,
+                         best_info->from_index - 1,
+                         best_info->to_index - 1)) {
+        best_info->from_index--;
+        best_info->to_index--;
         best_info->size++;
     }
 
-    while (best_info->begin + best_info->size < from_end &&
-           best_info->end + best_info->size < to_end &&
-           check_junk(priv, should_junk, best_info->end + best_info->size) &&
+    while (best_info->from_index + best_info->size < from_end &&
+           best_info->to_index + best_info->size < to_end &&
+           check_junk(priv,
+                      should_junk,
+                      best_info->to_index + best_info->size) &&
            equal_content(priv,
-                         best_info->begin + best_info->size,
-                         best_info->end + best_info->size)) {
+                         best_info->from_index + best_info->size,
+                         best_info->to_index + best_info->size)) {
         best_info->size++;
     }
 }
@@ -550,18 +554,18 @@ cut_sequence_matcher_get_matches (CutSequenceMatcher *matcher)
             continue;
         }
 
-        if (info.from_begin < match_info->begin &&
-            info.to_begin < match_info->end)
+        if (info.from_begin < match_info->from_index &&
+            info.to_begin < match_info->to_index)
             push_matching_info(queue,
-                               info.from_begin, match_info->begin,
-                               info.to_begin, match_info->end);
+                               info.from_begin, match_info->from_index,
+                               info.to_begin, match_info->to_index);
         matches = g_list_prepend(matches, match_info);
-        if (match_info->begin + match_info->size < info.from_end &&
-            match_info->end + match_info->size < info.to_end)
+        if (match_info->from_index + match_info->size < info.from_end &&
+            match_info->to_index + match_info->size < info.to_end)
             push_matching_info(queue,
-                               match_info->begin + match_info->size,
+                               match_info->from_index + match_info->size,
                                info.from_end,
-                               match_info->end + match_info->size,
+                               match_info->to_index + match_info->size,
                                info.to_end);
     }
 
@@ -581,7 +585,7 @@ const GList *
 cut_sequence_matcher_get_blocks (CutSequenceMatcher *matcher)
 {
     CutSequenceMatcherPrivate *priv;
-    gint begin, end, size;
+    gint from_index, to_index, size;
     const GList *node;
     GList *blocks = NULL;
 
@@ -589,25 +593,26 @@ cut_sequence_matcher_get_blocks (CutSequenceMatcher *matcher)
     if (priv->blocks)
         return priv->blocks;
 
-    begin = end = size = 0;
+    from_index = to_index = size = 0;
     for (node = cut_sequence_matcher_get_matches(matcher);
          node;
          node = g_list_next(node)) {
         CutSequenceMatchInfo *info = node->data;
 
-        if (begin + size == info->begin && end + size == info->end) {
+        if (from_index + size == info->from_index &&
+            to_index + size == info->to_index) {
             size += info->size;
         } else {
             if (size > 0)
-                blocks = prepend_match_info(blocks, begin, end, size);
-            begin = info->begin;
-            end = info->end;
+                blocks = prepend_match_info(blocks, from_index, to_index, size);
+            from_index = info->from_index;
+            to_index = info->to_index;
             size = info->size;
         }
     }
 
     if (size > 0)
-        blocks = prepend_match_info(blocks, begin, end, size);
+        blocks = prepend_match_info(blocks, from_index, to_index, size);
 
     blocks = prepend_match_info(blocks,
                                 g_sequence_get_length(priv->from),
@@ -622,11 +627,11 @@ static CutSequenceMatchOperationType
 determine_operation_type (gint from_index, gint to_index,
                           CutSequenceMatchInfo *info)
 {
-    if (from_index < info->begin && to_index < info->end) {
+    if (from_index < info->from_index && to_index < info->to_index) {
         return CUT_SEQUENCE_MATCH_OPERATION_REPLACE;
-    } else if (from_index < info->begin) {
+    } else if (from_index < info->from_index) {
         return CUT_SEQUENCE_MATCH_OPERATION_DELETE;
-    } else if (to_index < info->end) {
+    } else if (to_index < info->to_index) {
         return CUT_SEQUENCE_MATCH_OPERATION_INSERT;
     } else {
         return CUT_SEQUENCE_MATCH_OPERATION_EQUAL;
@@ -667,16 +672,16 @@ cut_sequence_matcher_get_operations (CutSequenceMatcher *matcher)
         type = determine_operation_type(from_index, to_index, info);
         if (type != CUT_SEQUENCE_MATCH_OPERATION_EQUAL)
             operations = prepend_operation(operations, type,
-                                           from_index, info->begin,
-                                           to_index, info->end);
+                                           from_index, info->from_index,
+                                           to_index, info->to_index);
 
-        from_index = info->begin + info->size;
-        to_index = info->end + info->size;
+        from_index = info->from_index + info->size;
+        to_index = info->to_index + info->size;
         if (info->size > 0)
             operations = prepend_operation(operations,
                                            CUT_SEQUENCE_MATCH_OPERATION_EQUAL,
-                                           info->begin, from_index,
-                                           info->end, to_index);
+                                           info->from_index, from_index,
+                                           info->to_index, to_index);
     }
 
     priv->operations = g_list_reverse(operations);

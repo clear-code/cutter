@@ -58,8 +58,8 @@ struct _CutSequenceMatcherClass
 
 struct _CutSequenceMatchInfo
 {
-    gint begin;
-    gint end;
+    gint from_index;
+    gint to_index;
     gint size;
 };
 

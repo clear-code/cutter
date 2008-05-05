@@ -111,8 +111,8 @@ static gboolean
 equal_match (const CutSequenceMatchInfo *info1,
              const CutSequenceMatchInfo *info2)
 {
-    return (info1->begin == info2->begin &&
-            info1->end == info2->end &&
+    return (info1->from_index == info2->from_index &&
+            info1->to_index == info2->to_index &&
             info1->size == info2->size);
 }
 
@@ -132,9 +132,9 @@ equal_matches (const GList *matches1, const GList *matches2)
 static gchar *
 _inspect_match (CutSequenceMatchInfo *info)
 {
-    return g_strdup_printf("<begin: %d, end: %d, size: %d>",
-                           info->begin,
-                           info->end,
+    return g_strdup_printf("<from: %d, to: %d, size: %d>",
+                           info->from_index,
+                           info->to_index,
                            info->size);
 }
 
@@ -203,8 +203,8 @@ test_to_indexes_for_char_sequence (void)
     cut_assert_to_index(expected_indexes, matcher, GINT_TO_POINTER('d'));
 }
 
-#define cut_assert_longest_match(expected_begin,                        \
-                                 expected_end,                          \
+#define cut_assert_longest_match(expected_from_index,                   \
+                                 expected_to_index,                     \
                                  expected_size,                         \
                                  sequence_matcher,                      \
                                  sequence_matcher_inspect,              \
@@ -213,8 +213,8 @@ test_to_indexes_for_char_sequence (void)
 {                                                                       \
     CutSequenceMatchInfo info;                                          \
                                                                         \
-    info.begin = (expected_begin);                                      \
-    info.end = (expected_end);                                          \
+    info.from_index = (expected_from_index);                            \
+    info.to_index = (expected_to_index);                                \
     info.size = (expected_size);                                        \
     matcher = (sequence_matcher);                                       \
     actual_info = cut_sequence_matcher_get_longest_match(matcher,       \
@@ -226,24 +226,22 @@ test_to_indexes_for_char_sequence (void)
         cut_test_pass();                                                \
     } else {                                                            \
         cut_test_fail(FAILURE,                                          \
-                      cut_take_printf("cut_sequence_matcher_"           \
-                                      "get_longest_match("              \
-                                      "%s, %s, %s, %s, %s)\n"           \
-                                      " ==\n"                           \
-                                      "<begin: %s, end: %s, size: %s>"  \
-                                      "\n"                              \
-                                      "expected: %s\n"                  \
+                      cut_take_printf("expected: %s\n"                  \
                                       " but was: %s",                   \
-                                      sequence_matcher_inspect,         \
-                                      #from_begin,                      \
-                                      #from_end,                        \
-                                      #to_begin,                        \
-                                      #to_end,                          \
-                                      #expected_begin,                  \
-                                      #expected_end,                    \
-                                      #expected_size,                   \
                                       inspect_match(&info),             \
-                                      inspect_match(actual_info)));     \
+                                      inspect_match(actual_info)),      \
+                      "cut_sequence_matcher_get_longest_match"          \
+                      "(%s, %s, %s, %s, %s)\n"                          \
+                      " ==\n"                                           \
+                      "<from: %s, end: %s, size: %s>",                  \
+                      sequence_matcher_inspect,                         \
+                      #from_begin,                                      \
+                      #from_end,                                        \
+                      #to_begin,                                        \
+                      #to_end,                                          \
+                      #expected_from_index,                             \
+                      #expected_to_index,                               \
+                      #expected_size);                                  \
     }                                                                   \
                                                                         \
     g_object_unref(matcher);                                            \
