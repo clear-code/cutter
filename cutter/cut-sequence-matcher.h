@@ -53,6 +53,12 @@ struct _CutSequenceMatchInfo
     gint size;
 };
 
+CutSequenceMatchInfo *cut_sequence_match_info_new  (gint begin,
+                                                    gint end,
+                                                    gint size);
+void                  cut_sequence_match_info_free (CutSequenceMatchInfo *info);
+
+
 GType               cut_sequence_matcher_get_type       (void) G_GNUC_CONST;
 
 CutSequenceMatcher *cut_sequence_matcher_new   (GSequence *from,
@@ -74,6 +80,7 @@ CutSequenceMatchInfo *cut_sequence_matcher_get_longest_match (CutSequenceMatcher
                                                               gint to_begin,
                                                               gint to_end);
 const GList *cut_sequence_matcher_get_matches  (CutSequenceMatcher *matcher);
+const GList *cut_sequence_matcher_get_blocks   (CutSequenceMatcher *matcher);
 
 G_END_DECLS
 

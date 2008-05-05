@@ -10,6 +10,8 @@ void test_get_longest_match_for_string_sequence(void);
 void test_get_longest_match_for_char_sequence(void);
 void test_get_matches_for_string_sequence(void);
 void test_get_matches_for_char_sequence(void);
+void test_get_blocks_for_string_sequence(void);
+void test_get_blocks_for_char_sequence(void);
 
 static CutSequenceMatcher *matcher;
 static GList *expected_indexes;
@@ -19,7 +21,7 @@ static GList *expected_matches;
 static void
 free_matches (GList *matches)
 {
-    g_list_foreach(matches, (GFunc)g_free, NULL);
+    g_list_foreach(matches, (GFunc)cut_sequence_match_info_free, NULL);
     g_list_free(matches);
 }
 
@@ -259,43 +261,40 @@ test_get_longest_match_for_char_sequence (void)
 static GList *
 append_match_info (GList *list, gint begin, gint end, gint size)
 {
-    CutSequenceMatchInfo *info;
-
-    info = g_new(CutSequenceMatchInfo, 1);
-    info->begin = begin;
-    info->end = end;
-    info->size = size;
-
-    return g_list_append(list, info);
+    return g_list_append(list, cut_sequence_match_info_new(begin, end, size));
 }
+
+#define cut_assert_equal_matches(expected, actual, ...) do              \
+{                                                                       \
+    const GList *_expected, *_actual;                                   \
+                                                                        \
+    _expected = (expected);                                             \
+    _actual = (actual);                                                 \
+    if (equal_matches(_expected, _actual)) {                            \
+        cut_test_pass();                                                \
+    } else {                                                            \
+        const gchar *inspected_expected, *inspected_actual;             \
+                                                                        \
+        inspected_expected = inspect_matches(_expected);                \
+        inspected_actual = inspect_matches(actual);                     \
+        cut_test_fail(FAILURE,                                          \
+                      cut_take_printf("expected: <%s>\n"                \
+                                      " but was: <%s>",                 \
+                                      inspected_expected,               \
+                                      inspected_actual),                \
+                      ## __VA_ARGS__);                                  \
+    }                                                                   \
+} while (0)
 
 #define cut_assert_matches(expected_matches,                            \
                            sequence_matcher,                            \
                            sequence_matcher_inspect) do                 \
 {                                                                       \
-    GList *_expected_matches;                                           \
-    const GList *actual_matches;                                        \
-                                                                        \
-    _expected_matches = (expected_matches);                             \
     matcher = (sequence_matcher);                                       \
-    actual_matches = cut_sequence_matcher_get_matches(matcher);         \
-    if (equal_matches(_expected_matches, actual_matches)) {             \
-        cut_test_pass();                                                \
-    } else {                                                            \
-        const gchar *inspected_expected, *inspected_actual;             \
-                                                                        \
-        inspected_expected = inspect_matches(_expected_matches);        \
-        inspected_actual = inspect_matches(actual_matches);             \
-        cut_test_fail(FAILURE,                                          \
-                      cut_take_printf("cut_sequence_matcher_"           \
-                                      "get_matches(%s)\n"               \
-                                      "expected: <%s>\n"                \
-                                      " but was: <%s>",                 \
-                                      sequence_matcher_inspect,         \
-                                      inspected_expected,               \
-                                      inspected_actual));               \
-    }                                                                   \
-                                                                        \
+    cut_assert_equal_matches(expected_matches,                          \
+                             cut_sequence_matcher_get_matches(matcher), \
+                             "cut_sequence_matcher_get_matches(%s)",    \
+                             sequence_matcher_inspect);                 \
     g_object_unref(matcher);                                            \
     matcher = NULL;                                                     \
 } while (0)
@@ -359,6 +358,86 @@ test_get_matches_for_char_sequence (void)
     expected_matches = append_match_info(NULL, 0, 0, 1);
     expected_matches = append_match_info(expected_matches, 2, 1, 1);
     cut_assert_matches_char(expected_matches, "efg", "eg");
+}
+
+#define cut_assert_blocks(expected_matches,                             \
+                          sequence_matcher,                             \
+                          sequence_matcher_inspect) do                  \
+{                                                                       \
+    matcher = (sequence_matcher);                                       \
+    cut_assert_equal_matches(expected_matches,                          \
+                             cut_sequence_matcher_get_blocks(matcher),  \
+                             "cut_sequence_matcher_get_blocks(%s)",     \
+                             sequence_matcher_inspect);                 \
+    g_object_unref(matcher);                                            \
+    matcher = NULL;                                                     \
+} while (0)
+
+#define cut_assert_blocks_string(expected_matches, from, to) do         \
+{                                                                       \
+    const gchar **_from, **_to;                                         \
+    _from = (from);                                                     \
+    _to = (to);                                                         \
+                                                                        \
+    cut_assert_blocks(expected_matches,                                 \
+                      cut_sequence_matcher_string_new(_from, _to),      \
+                      cut_take_printf("[%s, %s]",                       \
+                                      cut_inspect_string_array(_from),  \
+                                      cut_inspect_string_array(_to)));  \
+} while (0)
+
+void
+test_get_blocks_for_string_sequence (void)
+{
+    const gchar *abxcd[] = {"a", "b", "x", "c", "d", NULL};
+    const gchar *abcd[] = {"a", "b", "c", "d", NULL};
+    const gchar *qabxcd[] = {"q", "a", "b", "x", "c", "d", NULL};
+    const gchar *abycdf[] = {"a", "b", "y", "c", "d", "f", NULL};
+    const gchar *efg[] = {"e", "f", "g", NULL};
+    const gchar *eg[] = {"e", "g", NULL};
+
+    expected_matches = append_match_info(NULL, 0, 0, 2);
+    expected_matches = append_match_info(expected_matches, 3, 2, 2);
+    expected_matches = append_match_info(expected_matches, 5, 4, 0);
+    cut_assert_blocks_string(expected_matches, abxcd, abcd);
+    free_matches(expected_matches);
+
+    expected_matches = append_match_info(NULL, 1, 0, 2);
+    expected_matches = append_match_info(expected_matches, 4, 3, 2);
+    expected_matches = append_match_info(expected_matches, 6, 6, 0);
+    cut_assert_blocks_string(expected_matches, qabxcd, abycdf);
+    free_matches(expected_matches);
+
+    expected_matches = append_match_info(NULL, 0, 0, 1);
+    expected_matches = append_match_info(expected_matches, 2, 1, 1);
+    expected_matches = append_match_info(expected_matches, 3, 2, 0);
+    cut_assert_blocks_string(expected_matches, efg, eg);
+}
+
+#define cut_assert_blocks_char(expected_matches, from, to)              \
+    cut_assert_blocks(expected_matches,                                 \
+                      cut_sequence_matcher_char_new(from, to),          \
+                      cut_take_printf("[%s, %s]", #from, #to))
+
+void
+test_get_blocks_for_char_sequence (void)
+{
+    expected_matches = append_match_info(NULL, 0, 0, 2);
+    expected_matches = append_match_info(expected_matches, 3, 2, 2);
+    expected_matches = append_match_info(expected_matches, 5, 4, 0);
+    cut_assert_blocks_char(expected_matches, "abxcd", "abcd");
+    free_matches(expected_matches);
+
+    expected_matches = append_match_info(NULL, 1, 0, 2);
+    expected_matches = append_match_info(expected_matches, 4, 3, 2);
+    expected_matches = append_match_info(expected_matches, 6, 6, 0);
+    cut_assert_blocks_char(expected_matches, "qabxcd", "abycdf");
+    free_matches(expected_matches);
+
+    expected_matches = append_match_info(NULL, 0, 0, 1);
+    expected_matches = append_match_info(expected_matches, 2, 1, 1);
+    expected_matches = append_match_info(expected_matches, 3, 2, 0);
+    cut_assert_blocks_char(expected_matches, "efg", "eg");
 }
 
 /*

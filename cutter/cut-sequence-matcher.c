@@ -39,11 +39,30 @@ struct _CutSequenceMatcherPrivate
     gpointer user_data;
     GHashTable *to_indexes;
     GList *matches;
+    GList *blocks;
 };
 
 G_DEFINE_TYPE (CutSequenceMatcher, cut_sequence_matcher, G_TYPE_OBJECT)
 
 static void dispose        (GObject         *object);
+
+CutSequenceMatchInfo *
+cut_sequence_match_info_new (gint begin, gint end, gint size)
+{
+    CutSequenceMatchInfo *info;
+
+    info = g_slice_new(CutSequenceMatchInfo);
+    info->begin = begin;
+    info->end = end;
+    info->size = size;
+    return info;
+}
+
+void
+cut_sequence_match_info_free (CutSequenceMatchInfo *info)
+{
+    g_slice_free(CutSequenceMatchInfo, info);
+}
 
 static void
 cut_sequence_matcher_class_init (CutSequenceMatcherClass *klass)
@@ -68,6 +87,7 @@ cut_sequence_matcher_init (CutSequenceMatcher *sequence_matcher)
     priv->to = NULL;
     priv->to_indexes = NULL;
     priv->matches = NULL;
+    priv->blocks = NULL;
 }
 
 static void
@@ -93,9 +113,15 @@ dispose (GObject *object)
     }
 
     if (priv->matches) {
-        g_list_foreach(priv->matches, (GFunc)g_free, NULL);
+        g_list_foreach(priv->matches, (GFunc)cut_sequence_match_info_free, NULL);
         g_list_free(priv->matches);
         priv->matches = NULL;
+    }
+
+    if (priv->blocks) {
+        g_list_foreach(priv->blocks, (GFunc)cut_sequence_match_info_free, NULL);
+        g_list_free(priv->blocks);
+        priv->blocks = NULL;
     }
 
     G_OBJECT_CLASS(cut_sequence_matcher_parent_class)->dispose(object);
@@ -376,6 +402,53 @@ cut_sequence_matcher_get_matches (CutSequenceMatcher *matcher)
     priv->matches = g_list_reverse(matches);
 
     return priv->matches;
+}
+
+static GList *
+prepend_match_info (GList *list, gint begin, gint end, gint size)
+{
+    return g_list_prepend(list, cut_sequence_match_info_new(begin, end, size));
+}
+
+const GList *
+cut_sequence_matcher_get_blocks (CutSequenceMatcher *matcher)
+{
+    CutSequenceMatcherPrivate *priv;
+    gint begin, end, size;
+    const GList *node;
+    GList *blocks = NULL;
+
+    priv = CUT_SEQUENCE_MATCHER_GET_PRIVATE(matcher);
+    if (priv->blocks)
+        return priv->blocks;
+
+    begin = end = size = 0;
+    for (node = cut_sequence_matcher_get_matches(matcher);
+         node;
+         node = g_list_next(node)) {
+        CutSequenceMatchInfo *info = node->data;
+
+        if (begin + size == info->begin && end + size == info->end) {
+            size += info->size;
+        } else {
+            if (size > 0)
+                blocks = prepend_match_info(blocks, begin, end, size);
+            begin = info->begin;
+            end = info->end;
+            size = info->size;
+        }
+    }
+
+    if (size > 0)
+        blocks = prepend_match_info(blocks, begin, end, size);
+
+    blocks = prepend_match_info(blocks,
+                                g_sequence_get_length(priv->from),
+                                g_sequence_get_length(priv->to),
+                                0);
+    priv->blocks = g_list_reverse(blocks);
+
+    return priv->blocks;
 }
 
 /*
