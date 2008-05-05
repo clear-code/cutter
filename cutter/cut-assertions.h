@@ -248,9 +248,11 @@ extern "C" {
  */
 #define cut_assert_equal_double(expected, error, actual, ...) do        \
 {                                                                       \
-    double _expected = (expected);                                      \
-    double _actual = (actual);                                          \
-    double _error = (error);                                            \
+    double _expected, _error, _actual;                                  \
+                                                                        \
+    _expected = (expected);                                             \
+    _error = (error);                                                   \
+    _actual = (actual);                                                 \
     if (_expected - _error <= _actual &&                                \
         _actual <= _expected + _error) {                                \
         cut_test_pass();                                                \
