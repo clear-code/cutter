@@ -36,8 +36,9 @@ struct _CutSequenceMatcherPrivate
     GSequence *from;
     GSequence *to;
     GSequenceIterCompareFunc compare_func;
-    gpointer user_data;
+    gpointer compare_func_user_data;
     GHashTable *to_indexes;
+    GHashTable *junks;
     GList *matches;
     GList *blocks;
     GList *operations;
@@ -110,6 +111,7 @@ cut_sequence_matcher_init (CutSequenceMatcher *sequence_matcher)
     priv->from = NULL;
     priv->to = NULL;
     priv->to_indexes = NULL;
+    priv->junks = NULL;
     priv->matches = NULL;
     priv->blocks = NULL;
     priv->operations = NULL;
@@ -138,6 +140,11 @@ dispose (GObject *object)
         priv->to_indexes = NULL;
     }
 
+    if (priv->junks) {
+        g_hash_table_unref(priv->junks);
+        priv->junks = NULL;
+    }
+
     if (priv->matches) {
         g_list_foreach(priv->matches, (GFunc)cut_sequence_match_info_free, NULL);
         g_list_free(priv->matches);
@@ -162,7 +169,29 @@ dispose (GObject *object)
 }
 
 static void
-update_to_indexes (CutSequenceMatcher *matcher)
+remove_junks_from_to_indexes (CutSequenceMatcher *matcher,
+                              CutJunkFilterFunc junk_filter_func,
+                              gpointer junk_filter_func_user_data)
+{
+    CutSequenceMatcherPrivate *priv;
+    GHashTableIter iter;
+    gpointer key, value;
+
+    priv = CUT_SEQUENCE_MATCHER_GET_PRIVATE(matcher);
+
+    g_hash_table_iter_init(&iter, priv->to_indexes);
+    while (g_hash_table_iter_next(&iter, &key, &value)) {
+        if (junk_filter_func(key, junk_filter_func_user_data)) {
+            g_hash_table_insert(priv->junks, key, GINT_TO_POINTER(TRUE));
+            g_hash_table_iter_remove(&iter);
+        }
+    }
+}
+
+static void
+update_to_indexes (CutSequenceMatcher *matcher,
+                   CutJunkFilterFunc junk_filter_func,
+                   gpointer junk_filter_func_user_data)
 {
     CutSequenceMatcherPrivate *priv;
     int i;
@@ -186,14 +215,21 @@ update_to_indexes (CutSequenceMatcher *matcher)
         indexes = g_list_append(indexes, GINT_TO_POINTER(i));
         g_hash_table_replace(priv->to_indexes, data, g_list_copy(indexes));
     }
+
+    if (junk_filter_func)
+        remove_junks_from_to_indexes(matcher,
+                                     junk_filter_func,
+                                     junk_filter_func_user_data);
 }
 
 CutSequenceMatcher *
 cut_sequence_matcher_new (GSequence *from, GSequence *to,
                           GSequenceIterCompareFunc compare_func,
-                          gpointer user_data,
+                          gpointer compare_func_user_data,
                           GHashFunc content_hash_func,
-                          GEqualFunc content_equal_func)
+                          GEqualFunc content_equal_func,
+                          CutJunkFilterFunc junk_filter_func,
+                          gpointer junk_filter_func_user_data)
 {
     CutSequenceMatcher *matcher;
     CutSequenceMatcherPrivate *priv;
@@ -203,12 +239,13 @@ cut_sequence_matcher_new (GSequence *from, GSequence *to,
     priv->from = from;
     priv->to = to;
     priv->compare_func = compare_func;
-    priv->user_data = user_data;
+    priv->compare_func_user_data = compare_func_user_data;
     priv->to_indexes = g_hash_table_new_full(content_hash_func,
                                              content_equal_func,
                                              NULL,
                                              (GDestroyNotify)g_list_free);
-    update_to_indexes(matcher);
+    priv->junks = g_hash_table_new(content_hash_func, content_equal_func);
+    update_to_indexes(matcher, junk_filter_func, junk_filter_func_user_data);
     return matcher;
 }
 
@@ -246,10 +283,20 @@ int_value_equal (gconstpointer v1, gconstpointer v2)
 CutSequenceMatcher *
 cut_sequence_matcher_char_new (const gchar *from, const gchar *to)
 {
+    return cut_sequence_matcher_char_new_full(from, to, NULL, NULL);
+}
+
+CutSequenceMatcher *
+cut_sequence_matcher_char_new_full (const gchar *from, const gchar *to,
+                                    CutJunkFilterFunc junk_filter_func,
+                                    gpointer junk_filter_func_user_data)
+{
     return cut_sequence_matcher_new(char_sequence_new(from),
                                     char_sequence_new(to),
                                     NULL, NULL,
-                                    int_value_hash, int_value_equal);
+                                    int_value_hash, int_value_equal,
+                                    junk_filter_func,
+                                    junk_filter_func_user_data);
 }
 
 static GSequence *
@@ -269,10 +316,20 @@ string_sequence_new (const gchar **strings)
 CutSequenceMatcher *
 cut_sequence_matcher_string_new (const gchar **from, const gchar **to)
 {
+    return cut_sequence_matcher_string_new_full(from, to, NULL, NULL);
+}
+
+CutSequenceMatcher *
+cut_sequence_matcher_string_new_full (const gchar **from, const gchar **to,
+                                      CutJunkFilterFunc junk_filter_func,
+                                      gpointer junk_filter_func_user_data)
+{
     return cut_sequence_matcher_new(string_sequence_new(from),
                                     string_sequence_new(to),
                                     NULL, NULL,
-                                    g_str_hash, g_str_equal);
+                                    g_str_hash, g_str_equal,
+                                    junk_filter_func,
+                                    junk_filter_func_user_data);
 }
 
 const GList *
@@ -288,12 +345,10 @@ cut_sequence_matcher_get_to_index (CutSequenceMatcher *matcher,
     return g_hash_table_lookup(priv->to_indexes, to_content);
 }
 
-CutSequenceMatchInfo *
-cut_sequence_matcher_get_longest_match (CutSequenceMatcher *matcher,
-                                        gint from_begin,
-                                        gint from_end,
-                                        gint to_begin,
-                                        gint to_end)
+static CutSequenceMatchInfo *
+find_best_match_position (CutSequenceMatcher *matcher,
+                          gint from_begin, gint from_end,
+                          gint to_begin, gint to_end)
 {
     CutSequenceMatcherPrivate *priv;
     CutSequenceMatchInfo *info;
@@ -348,6 +403,84 @@ cut_sequence_matcher_get_longest_match (CutSequenceMatcher *matcher,
         sizes = current_sizes;
     }
     g_hash_table_unref(sizes);
+
+    return info;
+}
+
+static gboolean
+check_junk (CutSequenceMatcherPrivate *priv, gboolean should_junk, gint index)
+{
+    gpointer key;
+    gboolean is_junk;
+
+    key = g_sequence_get(g_sequence_get_iter_at_pos(priv->to, index));
+    is_junk = GPOINTER_TO_INT(g_hash_table_lookup(priv->junks, key));
+    return should_junk ? is_junk : !is_junk;
+}
+
+static gboolean
+equal_content (CutSequenceMatcherPrivate *priv, gint from_index, gint to_index)
+{
+    GSequenceIter *from_iter, *to_iter;
+
+    from_iter = g_sequence_get_iter_at_pos(priv->from, from_index);
+    to_iter = g_sequence_get_iter_at_pos(priv->to, to_index);
+    return priv->compare_func(from_iter, to_iter,
+                              priv->compare_func_user_data) == 0;
+}
+
+
+static void
+adjust_best_info_with_junk_predicate (CutSequenceMatcher *matcher,
+                                      gboolean should_junk,
+                                      CutSequenceMatchInfo *best_info,
+                                      gint from_begin, gint from_end,
+                                      gint to_begin, gint to_end)
+{
+    CutSequenceMatcherPrivate *priv;
+
+    priv = CUT_SEQUENCE_MATCHER_GET_PRIVATE(matcher);
+
+    while (best_info->begin > from_begin &&
+           best_info->end > to_begin &&
+           check_junk(priv, should_junk, best_info->end - 1) &&
+           equal_content(priv, best_info->begin - 1, best_info->end - 1)) {
+        best_info->begin--;
+        best_info->end--;
+        best_info->size++;
+    }
+
+    while (best_info->begin + best_info->size < from_end &&
+           best_info->end + best_info->size < to_end &&
+           check_junk(priv, should_junk, best_info->end + best_info->size) &&
+           equal_content(priv,
+                         best_info->begin + best_info->size,
+                         best_info->end + best_info->size)) {
+        best_info->size++;
+    }
+}
+
+CutSequenceMatchInfo *
+cut_sequence_matcher_get_longest_match (CutSequenceMatcher *matcher,
+                                        gint from_begin, gint from_end,
+                                        gint to_begin, gint to_end)
+{
+    CutSequenceMatcherPrivate *priv;
+    CutSequenceMatchInfo *info;
+
+    priv = CUT_SEQUENCE_MATCHER_GET_PRIVATE(matcher);
+
+    info = find_best_match_position(matcher,
+                                    from_begin, from_end,
+                                    to_begin, to_end);
+    if (g_hash_table_size(priv->junks) > 0) {
+        adjust_best_info_with_junk_predicate(matcher, FALSE, info,
+                                             from_begin, from_end,
+                                             to_begin, to_end);
+        adjust_best_info_with_junk_predicate(matcher, TRUE, info,
+                                             from_begin, from_end,
+                                             to_begin, to_end);
+    }
 
     return info;
 }

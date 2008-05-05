@@ -37,6 +37,8 @@ typedef struct _CutSequenceMatcherClass    CutSequenceMatcherClass;
 typedef struct _CutSequenceMatchInfo       CutSequenceMatchInfo;
 typedef struct _CutSequenceMatchOperation  CutSequenceMatchOperation;
 
+typedef gboolean (*CutJunkFilterFunc)      (gpointer data, gpointer user_data);
+
 typedef enum {
     CUT_SEQUENCE_MATCH_OPERATION_EQUAL,
     CUT_SEQUENCE_MATCH_OPERATION_INSERT,
@@ -88,13 +90,23 @@ GType               cut_sequence_matcher_get_type       (void) G_GNUC_CONST;
 CutSequenceMatcher *cut_sequence_matcher_new   (GSequence *from,
                                                 GSequence *to,
                                                 GSequenceIterCompareFunc compare_func,
-                                                gpointer user_data,
+                                                gpointer compare_func_user_data,
                                                 GHashFunc content_hash_func,
-                                                GEqualFunc content_equal_func);
+                                                GEqualFunc content_equal_func,
+                                                CutJunkFilterFunc junk_filter_func,
+                                                gpointer user_data);
 CutSequenceMatcher *cut_sequence_matcher_char_new   (const gchar *from,
                                                      const gchar *to);
+CutSequenceMatcher *cut_sequence_matcher_char_new_full(const gchar *from,
+                                                       const gchar *to,
+                                                       CutJunkFilterFunc junk_filter_func,
+                                                       gpointer junk_filter_func_user_data);
 CutSequenceMatcher *cut_sequence_matcher_string_new (const gchar **from,
                                                      const gchar **to);
+CutSequenceMatcher *cut_sequence_matcher_string_new_full (const gchar **from,
+                                                          const gchar **to,
+                                                          CutJunkFilterFunc junk_filter_func,
+                                                          gpointer junk_filter_func_user_data);
 
 const GList *cut_sequence_matcher_get_to_index (CutSequenceMatcher *matcher,
                                                 gpointer to_content);

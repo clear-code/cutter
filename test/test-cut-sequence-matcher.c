@@ -8,6 +8,8 @@ void test_to_indexes_for_string_sequence(void);
 void test_to_indexes_for_char_sequence(void);
 void test_get_longest_match_for_string_sequence(void);
 void test_get_longest_match_for_char_sequence(void);
+void test_get_longest_match_with_junk_filter_for_string_sequence(void);
+void test_get_longest_match_with_junk_filter_for_char_sequence(void);
 void test_get_matches_for_string_sequence(void);
 void test_get_matches_for_char_sequence(void);
 void test_get_blocks_for_string_sequence(void);
@@ -22,6 +24,8 @@ static GList *expected_indexes;
 static CutSequenceMatchInfo *actual_info;
 static GList *expected_matches;
 static GList *expected_operations;
+static CutJunkFilterFunc junk_filter_func;
+static gpointer junk_filter_func_user_data;
 
 static void
 free_matches (GList *matches)
@@ -45,6 +49,8 @@ setup (void)
     actual_info = NULL;
     expected_matches = NULL;
     expected_operations = NULL;
+    junk_filter_func = NULL;
+    junk_filter_func_user_data = NULL;
 }
 
 void
@@ -60,6 +66,34 @@ teardown (void)
     free_matches(expected_matches);
 
     free_operations(expected_operations);
+}
+
+static gboolean
+space_string_is_junk (gpointer data, gpointer user_data)
+{
+    return g_str_equal(data, " ");
+}
+
+static gboolean
+space_char_is_junk (gpointer data, gpointer user_data)
+{
+    return GPOINTER_TO_INT(data) == ' ';
+}
+
+static CutSequenceMatcher *
+string_matcher_new (const gchar **from, const gchar **to)
+{
+    return cut_sequence_matcher_string_new_full(from, to,
+                                                junk_filter_func,
+                                                junk_filter_func_user_data);
+}
+
+static CutSequenceMatcher *
+char_matcher_new (const gchar *from, const gchar *to)
+{
+    return cut_sequence_matcher_char_new_full(from, to,
+                                              junk_filter_func,
+                                              junk_filter_func_user_data);
 }
 
 static const gchar *
@@ -136,7 +170,7 @@ test_to_indexes_for_string_sequence (void)
     const gchar *from[] = {"", NULL};
     const gchar *to[] = {"abc def", "abc", "abc def", NULL};
 
-    matcher = cut_sequence_matcher_string_new(from, to);
+    matcher = string_matcher_new(from, to);
 
     expected_indexes = g_list_append(expected_indexes, GINT_TO_POINTER(0));
     expected_indexes = g_list_append(expected_indexes, GINT_TO_POINTER(2));
@@ -150,7 +184,7 @@ test_to_indexes_for_string_sequence (void)
 void
 test_to_indexes_for_char_sequence (void)
 {
-    matcher = cut_sequence_matcher_char_new("", "abcad");
+    matcher = char_matcher_new("", "abcad");
 
     expected_indexes = g_list_append(expected_indexes, GINT_TO_POINTER(0));
     expected_indexes = g_list_append(expected_indexes, GINT_TO_POINTER(3));
@@ -230,7 +264,7 @@ test_to_indexes_for_char_sequence (void)
                                                                         \
     _from = (from);                                                     \
     _to = (to);                                                         \
-    matcher = cut_sequence_matcher_string_new(_from, _to);              \
+    matcher = string_matcher_new(_from, _to);                           \
     cut_assert_longest_match(expected_begin, expected_end,              \
                              expected_size,                             \
                              matcher,                                   \
@@ -263,7 +297,7 @@ test_get_longest_match_for_string_sequence (void)
                                       to_begin, to_end)                 \
     cut_assert_longest_match(expected_begin, expected_end,              \
                              expected_size,                             \
-                             cut_sequence_matcher_char_new(from, to),   \
+                             char_matcher_new(from, to),                \
                              inspect_char_matcher(from, to),            \
                              from_begin,from_end, to_begin, to_end)
 
@@ -278,6 +312,27 @@ test_get_longest_match_for_char_sequence (void)
 
     cut_assert_longest_match_char(0, 0, 1, "efg", "eg", 0, 2, 0, 1);
     cut_assert_longest_match_char(2, 1, 1, "efg", "eg", 1, 2, 1, 1);
+}
+
+void
+test_get_longest_match_with_junk_filter_for_string_sequence (void)
+{
+    const gchar *_abcd[] = {" ", "a", "b", "c", "d", NULL};
+    const gchar *abcd_abcd[] = {
+        "a", "b", "c", "d", " ", "a", "b", "c", "d", NULL
+    };
+
+    cut_assert_longest_match_string(0, 4, 5, _abcd, abcd_abcd, 0, 4, 0, 8);
+    junk_filter_func = space_string_is_junk;
+    cut_assert_longest_match_string(1, 0, 4, _abcd, abcd_abcd, 0, 4, 0, 8);
+}
+
+void
+test_get_longest_match_with_junk_filter_for_char_sequence (void)
+{
+    cut_assert_longest_match_char(0, 4, 5, " abcd", "abcd abcd", 0, 4, 0, 8);
+    junk_filter_func = space_char_is_junk;
+    cut_assert_longest_match_char(1, 0, 4, " abcd", "abcd abcd", 0, 4, 0, 8);
 }
 
 static GList *
@@ -328,7 +383,7 @@ append_match_info (GList *list, gint begin, gint end, gint size)
     _to = (to);                                                         \
                                                                         \
     cut_assert_matches(expected_matches,                                \
-                       cut_sequence_matcher_string_new(_from, _to),     \
+                       string_matcher_new(_from, _to),                  \
                        inspect_string_matcher(_from, _to));             \
 } while (0)
 
@@ -359,7 +414,7 @@ test_get_matches_for_string_sequence (void)
 
 #define cut_assert_matches_char(expected_matches, from, to)             \
     cut_assert_matches(expected_matches,                                \
-                       cut_sequence_matcher_char_new(from, to),         \
+                       char_matcher_new(from, to),                      \
                        inspect_char_matcher(from, to))
 
 void
@@ -400,7 +455,7 @@ test_get_matches_for_char_sequence (void)
     _to = (to);                                                         \
                                                                         \
     cut_assert_blocks(expected_matches,                                 \
-                      cut_sequence_matcher_string_new(_from, _to),      \
+                      string_matcher_new(_from, _to),                   \
                       inspect_string_matcher(_from, _to));              \
 } while (0)
 
@@ -434,7 +489,7 @@ test_get_blocks_for_string_sequence (void)
 
 #define cut_assert_blocks_char(expected_matches, from, to)              \
     cut_assert_blocks(expected_matches,                                 \
-                      cut_sequence_matcher_char_new(from, to),          \
+                      char_matcher_new(from, to),                       \
                       inspect_char_matcher(from, to))
 
 void
@@ -555,7 +610,7 @@ inspect_operations (const GList *operations)
     _to = (to);                                                         \
                                                                         \
     cut_assert_operations(expected_operations,                          \
-                          cut_sequence_matcher_string_new(_from, _to),  \
+                          string_matcher_new(_from, _to),               \
                           inspect_string_matcher(_from, _to));          \
 } while (0)
 
@@ -624,7 +679,7 @@ test_get_operations_for_string_sequence (void)
 
 #define cut_assert_operations_char(expected_operations, from, to)       \
     cut_assert_operations(expected_operations,                          \
-                          cut_sequence_matcher_char_new(from, to),      \
+                          char_matcher_new(from, to),                   \
                           inspect_char_matcher(from, to))
 
 void
@@ -679,7 +734,7 @@ test_get_operations_for_char_sequence (void)
     _to = (to);                                                         \
                                                                         \
     cut_assert_ratio(expected,                                          \
-                     cut_sequence_matcher_string_new(_from, _to),       \
+                     string_matcher_new(_from, _to),                    \
                      inspect_string_matcher(_from, _to));               \
 } while (0)
 
@@ -697,7 +752,7 @@ test_get_ratio_for_string_sequence (void)
 
 #define cut_assert_ratio_char(expected, from, to)                       \
     cut_assert_ratio(expected,                                          \
-                     cut_sequence_matcher_char_new(from, to),           \
+                     char_matcher_new(from, to),                        \
                      inspect_char_matcher(from, to))
 
 void

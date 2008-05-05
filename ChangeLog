@@ -1,6 +1,9 @@
 2008-05-05  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-sequence-matcher.[ch],
+	test/test-cut-sequence-matcher.c: support junk filter.
+
+	* cutter/cut-sequence-matcher.[ch],
 	test/test-cut-sequence-matcher.c: add cut_sequence_matcher_get_ratio().
 
 	* cutter/cut-assertions.h (cut_assert_equal_double): fix
