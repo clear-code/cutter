@@ -106,6 +106,7 @@ CutSequenceMatchInfo *cut_sequence_matcher_get_longest_match (CutSequenceMatcher
 const GList *cut_sequence_matcher_get_matches  (CutSequenceMatcher *matcher);
 const GList *cut_sequence_matcher_get_blocks   (CutSequenceMatcher *matcher);
 const GList *cut_sequence_matcher_get_operations (CutSequenceMatcher *matcher);
+gdouble      cut_sequence_matcher_get_ratio    (CutSequenceMatcher *matcher);
 
 G_END_DECLS
 

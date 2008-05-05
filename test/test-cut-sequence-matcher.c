@@ -14,6 +14,8 @@ void test_get_blocks_for_string_sequence(void);
 void test_get_blocks_for_char_sequence(void);
 void test_get_operations_for_string_sequence(void);
 void test_get_operations_for_char_sequence(void);
+void test_get_ratio_for_string_sequence(void);
+void test_get_ratio_for_char_sequence(void);
 
 static CutSequenceMatcher *matcher;
 static GList *expected_indexes;
@@ -654,6 +656,55 @@ test_get_operations_for_char_sequence (void)
     cut_assert_operations_char(expected_operations,
                                "1 tests, 0 assertions, 1 failures, 0 pendings",
                                "1 tests, 0 assertions, 0 failures, 1 pendings");
+}
+
+#define cut_assert_ratio(expected,                                      \
+                         sequence_matcher,                              \
+                         sequence_matcher_inspect) do                   \
+{                                                                       \
+    matcher = (sequence_matcher);                                       \
+    cut_assert_equal_double(expected,                                   \
+                            0.01,                                       \
+                            cut_sequence_matcher_get_ratio(matcher),    \
+                            "cut_sequence_matcher_get_ratio(%s)",       \
+                            sequence_matcher_inspect);                  \
+    g_object_unref(matcher);                                            \
+    matcher = NULL;                                                     \
+} while (0)
+
+#define cut_assert_ratio_string(expected, from, to) do                  \
+{                                                                       \
+    const gchar **_from, **_to;                                         \
+    _from = (from);                                                     \
+    _to = (to);                                                         \
+                                                                        \
+    cut_assert_ratio(expected,                                          \
+                     cut_sequence_matcher_string_new(_from, _to),       \
+                     inspect_string_matcher(_from, _to));               \
+} while (0)
+
+void
+test_get_ratio_for_string_sequence (void)
+{
+    const gchar *abcd[] = {"a", "b", "c", "d", NULL};
+    const gchar *bcde[] = {"b", "c", "d", "e", NULL};
+    const gchar *efg[] = {"e", "f", "g", NULL};
+    const gchar *eg[] = {"e", "g", NULL};
+
+    cut_assert_ratio_string(0.75, abcd, bcde);
+    cut_assert_ratio_string(0.80, efg, eg);
+}
+
+#define cut_assert_ratio_char(expected, from, to)                       \
+    cut_assert_ratio(expected,                                          \
+                     cut_sequence_matcher_char_new(from, to),           \
+                     inspect_char_matcher(from, to))
+
+void
+test_get_ratio_for_char_sequence (void)
+{
+    cut_assert_ratio_char(0.75, "abcd", "bcde");
+    cut_assert_ratio_char(0.80, "efg", "eg");
 }
 
 /*

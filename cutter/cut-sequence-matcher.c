@@ -41,6 +41,7 @@ struct _CutSequenceMatcherPrivate
     GList *matches;
     GList *blocks;
     GList *operations;
+    gdouble ratio;
 };
 
 G_DEFINE_TYPE (CutSequenceMatcher, cut_sequence_matcher, G_TYPE_OBJECT)
@@ -112,6 +113,7 @@ cut_sequence_matcher_init (CutSequenceMatcher *sequence_matcher)
     priv->matches = NULL;
     priv->blocks = NULL;
     priv->operations = NULL;
+    priv->ratio = -1.0;
 }
 
 static void
@@ -546,6 +548,36 @@ cut_sequence_matcher_get_operations (CutSequenceMatcher *matcher)
 
     priv->operations = g_list_reverse(operations);
     return priv->operations;
+}
+
+gdouble
+cut_sequence_matcher_get_ratio (CutSequenceMatcher *matcher)
+{
+    CutSequenceMatcherPrivate *priv;
+    const GList *node;
+    gint length;
+
+    priv = CUT_SEQUENCE_MATCHER_GET_PRIVATE(matcher);
+    if (priv->ratio >= 0.0)
+        return priv->ratio;
+
+    length = g_sequence_get_length(priv->from) + g_sequence_get_length(priv->to);
+    if (length == 0) {
+        priv->ratio = 1.0;
+    } else {
+        gint matches = 0;
+
+        for (node = cut_sequence_matcher_get_blocks(matcher);
+             node;
+             node = g_list_next(node)) {
+            CutSequenceMatchInfo *info = node->data;
+
+            matches += info->size;
+        }
+        priv->ratio = 2.0 * matches / length;
+    }
+
+    return priv->ratio;
 }
 
 /*
