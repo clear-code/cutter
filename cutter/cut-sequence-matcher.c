@@ -40,6 +40,7 @@ struct _CutSequenceMatcherPrivate
     GHashTable *to_indexes;
     GList *matches;
     GList *blocks;
+    GList *operations;
 };
 
 G_DEFINE_TYPE (CutSequenceMatcher, cut_sequence_matcher, G_TYPE_OBJECT)
@@ -62,6 +63,28 @@ void
 cut_sequence_match_info_free (CutSequenceMatchInfo *info)
 {
     g_slice_free(CutSequenceMatchInfo, info);
+}
+
+CutSequenceMatchOperation *
+cut_sequence_match_operation_new (CutSequenceMatchOperationType type,
+                                  gint from_begin, gint from_end,
+                                  gint to_begin, gint to_end)
+{
+    CutSequenceMatchOperation *operation;
+
+    operation = g_slice_new(CutSequenceMatchOperation);
+    operation->type = type;
+    operation->from_begin = from_begin;
+    operation->from_end = from_end;
+    operation->to_begin = to_begin;
+    operation->to_end = to_end;
+    return operation;
+}
+
+void
+cut_sequence_match_operation_free (CutSequenceMatchOperation *operation)
+{
+    g_slice_free(CutSequenceMatchOperation, operation);
 }
 
 static void
@@ -88,6 +111,7 @@ cut_sequence_matcher_init (CutSequenceMatcher *sequence_matcher)
     priv->to_indexes = NULL;
     priv->matches = NULL;
     priv->blocks = NULL;
+    priv->operations = NULL;
 }
 
 static void
@@ -122,6 +146,14 @@ dispose (GObject *object)
         g_list_foreach(priv->blocks, (GFunc)cut_sequence_match_info_free, NULL);
         g_list_free(priv->blocks);
         priv->blocks = NULL;
+    }
+
+
+    if (priv->operations) {
+        g_list_foreach(priv->operations,
+                       (GFunc)cut_sequence_match_operation_free, NULL);
+        g_list_free(priv->operations);
+        priv->operations = NULL;
     }
 
     G_OBJECT_CLASS(cut_sequence_matcher_parent_class)->dispose(object);
@@ -449,6 +481,71 @@ cut_sequence_matcher_get_blocks (CutSequenceMatcher *matcher)
     priv->blocks = g_list_reverse(blocks);
 
     return priv->blocks;
+}
+
+static CutSequenceMatchOperationType
+determine_operation_type (gint from_index, gint to_index,
+                          CutSequenceMatchInfo *info)
+{
+    if (from_index < info->begin && to_index < info->end) {
+        return CUT_SEQUENCE_MATCH_OPERATION_REPLACE;
+    } else if (from_index < info->begin) {
+        return CUT_SEQUENCE_MATCH_OPERATION_DELETE;
+    } else if (to_index < info->end) {
+        return CUT_SEQUENCE_MATCH_OPERATION_INSERT;
+    } else {
+        return CUT_SEQUENCE_MATCH_OPERATION_EQUAL;
+    }
+}
+
+static GList *
+prepend_operation (GList *list, CutSequenceMatchOperationType type,
+                   gint from_begin, gint from_end, gint to_begin, gint to_end)
+{
+    return g_list_prepend(list,
+                          cut_sequence_match_operation_new(type,
+                                                           from_begin,
+                                                           from_end,
+                                                           to_begin,
+                                                           to_end));
+}
+
+const GList *
+cut_sequence_matcher_get_operations (CutSequenceMatcher *matcher)
+{
+    CutSequenceMatcherPrivate *priv;
+    const GList *node;
+    GList *operations = NULL;
+    gint from_index = 0;
+    gint to_index = 0;
+
+    priv = CUT_SEQUENCE_MATCHER_GET_PRIVATE(matcher);
+    if (priv->operations)
+        return priv->operations;
+
+    for (node = cut_sequence_matcher_get_blocks(matcher);
+         node;
+         node = g_list_next(node)) {
+        CutSequenceMatchInfo *info = node->data;
+        CutSequenceMatchOperationType type;
+
+        type = determine_operation_type(from_index, to_index, info);
+        if (type != CUT_SEQUENCE_MATCH_OPERATION_EQUAL)
+            operations = prepend_operation(operations, type,
+                                           from_index, info->begin,
+                                           to_index, info->end);
+
+        from_index = info->begin + info->size;
+        to_index = info->end + info->size;
+        if (info->size > 0)
+            operations = prepend_operation(operations,
+                                           CUT_SEQUENCE_MATCH_OPERATION_EQUAL,
+                                           info->begin, from_index,
+                                           info->end, to_index);
+    }
+
+    priv->operations = g_list_reverse(operations);
+    return priv->operations;
 }
 
 /*

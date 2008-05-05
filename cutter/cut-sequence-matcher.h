@@ -35,6 +35,14 @@ typedef struct _CutSequenceMatcher         CutSequenceMatcher;
 typedef struct _CutSequenceMatcherClass    CutSequenceMatcherClass;
 
 typedef struct _CutSequenceMatchInfo       CutSequenceMatchInfo;
+typedef struct _CutSequenceMatchOperation  CutSequenceMatchOperation;
+
+typedef enum {
+    CUT_SEQUENCE_MATCH_OPERATION_EQUAL,
+    CUT_SEQUENCE_MATCH_OPERATION_INSERT,
+    CUT_SEQUENCE_MATCH_OPERATION_DELETE,
+    CUT_SEQUENCE_MATCH_OPERATION_REPLACE
+} CutSequenceMatchOperationType;
 
 struct _CutSequenceMatcher
 {
@@ -53,10 +61,26 @@ struct _CutSequenceMatchInfo
     gint size;
 };
 
+struct _CutSequenceMatchOperation
+{
+    CutSequenceMatchOperationType type;
+    gint from_begin;
+    gint from_end;
+    gint to_begin;
+    gint to_end;
+};
+
 CutSequenceMatchInfo *cut_sequence_match_info_new  (gint begin,
                                                     gint end,
                                                     gint size);
 void                  cut_sequence_match_info_free (CutSequenceMatchInfo *info);
+
+CutSequenceMatchOperation *cut_sequence_match_operation_new (CutSequenceMatchOperationType type,
+                                                             gint from_begin,
+                                                             gint from_end,
+                                                             gint to_begin,
+                                                             gint to_end);
+void                       cut_sequence_match_operation_free (CutSequenceMatchOperation *operation);
 
 
 GType               cut_sequence_matcher_get_type       (void) G_GNUC_CONST;
@@ -81,6 +105,7 @@ CutSequenceMatchInfo *cut_sequence_matcher_get_longest_match (CutSequenceMatcher
                                                               gint to_end);
 const GList *cut_sequence_matcher_get_matches  (CutSequenceMatcher *matcher);
 const GList *cut_sequence_matcher_get_blocks   (CutSequenceMatcher *matcher);
+const GList *cut_sequence_matcher_get_operations (CutSequenceMatcher *matcher);
 
 G_END_DECLS
 
