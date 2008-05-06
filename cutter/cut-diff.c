@@ -35,7 +35,6 @@ struct _CutDifferPrivate
 {
     gchar **from;
     gchar **to;
-    GArray *result;
 };
 
 G_DEFINE_TYPE(CutDiffer, cut_differ, G_TYPE_OBJECT)
