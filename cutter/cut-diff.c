@@ -149,7 +149,7 @@ tag_difference (CutDiffer *differ, gchar **lines, gint begin, gint end)
 static gboolean
 is_space_character (gpointer data, gpointer user_data)
 {
-    gchar character;
+    gint character;
 
     character = GPOINTER_TO_INT(data);
     return character == ' ' || character == '\t';

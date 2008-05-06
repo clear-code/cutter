@@ -8,6 +8,7 @@ void test_same_contents_readable_diff(void);
 void test_inserted_readable_diff(void);
 void test_deleted_readable_diff(void);
 void test_replace_readable_diff(void);
+void test_difference_readable_diff(void);
 
 void
 setup (void)
@@ -108,6 +109,19 @@ test_replace_readable_diff (void)
                              " abcd xyz abc",
 
                              "abcd abcd xyz abc");
+}
+
+void
+test_difference_readable_diff (void)
+{
+    cut_assert_readable_diff("- 1 tests, 0 assertions, 1 failures, 0 pendings\n"
+                             "?                        ^           ^\n"
+                             "+ 1 tests, 0 assertions, 0 failures, 1 pendings\n"
+                             "?                        ^           ^",
+
+                             "1 tests, 0 assertions, 1 failures, 0 pendings",
+
+                             "1 tests, 0 assertions, 0 failures, 1 pendings");
 }
 
 /*
