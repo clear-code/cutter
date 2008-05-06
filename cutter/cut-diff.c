@@ -37,18 +37,44 @@ struct _CutDifferPrivate
     gchar **to;
 };
 
+enum {
+    PROP_0,
+    PROP_FROM,
+    PROP_TO
+};
+
 G_DEFINE_TYPE(CutDiffer, cut_differ, G_TYPE_OBJECT)
 
-static void   dispose        (GObject         *object);
+static void dispose        (GObject         *object);
+static void set_property   (GObject         *object,
+                            guint            prop_id,
+                            const GValue    *value,
+                            GParamSpec      *pspec);
 
 static void
 cut_differ_class_init (CutDifferClass *klass)
 {
     GObjectClass *gobject_class;
+    GParamSpec *spec;
 
     gobject_class = G_OBJECT_CLASS(klass);
 
     gobject_class->dispose = dispose;
+    gobject_class->set_property = set_property;
+
+    spec = g_param_spec_string("from",
+                               "Original text",
+                               "The original text",
+                               NULL,
+                               G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
+    g_object_class_install_property(gobject_class, PROP_FROM, spec);
+
+    spec = g_param_spec_string("to",
+                               "Modified text",
+                               "The modified text",
+                               NULL,
+                               G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
+    g_object_class_install_property(gobject_class, PROP_TO, spec);
 
     g_type_class_add_private(gobject_class, sizeof(CutDifferPrivate));
 }
@@ -81,6 +107,33 @@ dispose (GObject *object)
     }
 
     G_OBJECT_CLASS(cut_differ_parent_class)->dispose(object);
+}
+
+static gchar **
+split_to_lines (const gchar *string)
+{
+    return g_regex_split_simple("\r?\n", string, 0, 0);
+}
+
+static void
+set_property (GObject      *object,
+              guint         prop_id,
+              const GValue *value,
+              GParamSpec   *pspec)
+{
+    CutDifferPrivate *priv = CUT_DIFFER_GET_PRIVATE(object);
+
+    switch (prop_id) {
+      case PROP_FROM:
+        priv->from = split_to_lines(g_value_get_string(value));
+        break;
+      case PROP_TO:
+        priv->to = split_to_lines(g_value_get_string(value));
+        break;
+      default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
+        break;
+    }
 }
 
 gchar *
@@ -141,12 +194,6 @@ cut_differ_readable_class_init (CutDifferReadableClass *klass)
 static void
 cut_differ_readable_init (CutDifferReadable *differ)
 {
-}
-
-static gchar **
-split_to_lines (const gchar *string)
-{
-    return g_regex_split_simple("\r?\n", string, 0, 0);
 }
 
 static void
@@ -421,13 +468,12 @@ gchar *
 cut_diff_readable (const gchar *from, const gchar *to)
 {
     CutDiffer *differ;
-    CutDifferPrivate *priv;
     gchar *result;
 
-    differ = g_object_new(CUT_TYPE_DIFFER_READABLE, NULL);
-    priv = CUT_DIFFER_GET_PRIVATE(differ);
-    priv->from = split_to_lines(from);
-    priv->to = split_to_lines(to);
+    differ = g_object_new(CUT_TYPE_DIFFER_READABLE,
+                          "from", from,
+                          "to", to,
+                          NULL);
     result = cut_differ_diff(differ);
     g_object_unref(differ);
     return result;
