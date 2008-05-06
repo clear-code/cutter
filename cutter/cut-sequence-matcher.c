@@ -263,21 +263,39 @@ char_sequence_new (const gchar *string)
     return sequence;
 }
 
-static guint
-int_value_hash (gconstpointer v)
+static gint
+char_sequence_iter_compare (GSequenceIter *data1, GSequenceIter *data2,
+                            gpointer user_data)
 {
-    gint integer;
-    integer = GPOINTER_TO_INT(v);
-    return g_int_hash(&integer);
+    gint character1, character2;
+
+    character1 = GPOINTER_TO_INT(g_sequence_get(data1));
+    character2 = GPOINTER_TO_INT(g_sequence_get(data2));
+
+    if (character1 < character2) {
+        return -1;
+    } else if (character1 == character2) {
+        return 0;
+    } else {
+        return 1;
+    }
+}
+
+static guint
+char_value_hash (gconstpointer v)
+{
+    gint character;
+    character = GPOINTER_TO_INT(v);
+    return g_int_hash(&character);
 }
 
 static gboolean
-int_value_equal (gconstpointer v1, gconstpointer v2)
+char_value_equal (gconstpointer v1, gconstpointer v2)
 {
-    gint integer1, integer2;
-    integer1 = GPOINTER_TO_INT(v1);
-    integer2 = GPOINTER_TO_INT(v2);
-    return g_int_equal(&integer1, &integer2);
+    gint character1, character2;
+    character1 = GPOINTER_TO_INT(v1);
+    character2 = GPOINTER_TO_INT(v2);
+    return g_int_equal(&character1, &character2);
 }
 
 CutSequenceMatcher *
@@ -293,8 +311,8 @@ cut_sequence_matcher_char_new_full (const gchar *from, const gchar *to,
 {
     return cut_sequence_matcher_new(char_sequence_new(from),
                                     char_sequence_new(to),
-                                    NULL, NULL,
-                                    int_value_hash, int_value_equal,
+                                    char_sequence_iter_compare, NULL,
+                                    char_value_hash, char_value_equal,
                                     junk_filter_func,
                                     junk_filter_func_user_data);
 }
@@ -313,6 +331,18 @@ string_sequence_new (gchar **strings)
     return sequence;
 }
 
+static gint
+string_sequence_iter_compare (GSequenceIter *data1, GSequenceIter *data2,
+                              gpointer user_data)
+{
+    gchar *string1, *string2;
+
+    string1 = g_sequence_get(data1);
+    string2 = g_sequence_get(data2);
+
+    return strcmp(string1, string2);
+}
+
 CutSequenceMatcher *
 cut_sequence_matcher_string_new (gchar **from, gchar **to)
 {
@@ -326,7 +356,7 @@ cut_sequence_matcher_string_new_full (gchar **from, gchar **to,
 {
     return cut_sequence_matcher_new(string_sequence_new(from),
                                     string_sequence_new(to),
-                                    NULL, NULL,
+                                    string_sequence_iter_compare, NULL,
                                     g_str_hash, g_str_equal,
                                     junk_filter_func,
                                     junk_filter_func_user_data);

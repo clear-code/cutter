@@ -1,5 +1,7 @@
 2008-05-06  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-sequence-matcher.c: set compare func.
+
 	* test/test-cut-sequence-matcher.c: remove const.
 
 	* cutter/cut-diff.c, test/test-cut-diff.c: support inserted.
