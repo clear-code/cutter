@@ -31,6 +31,9 @@ extern "C" {
     cut_test_context_take_printf(get_current_test_context(),            \
                                  (format), __VA_ARGS__)
 
+#define cut_take_diff(from, to)                                         \
+    cut_take_string(cut_diff_readable(from, to))
+
 #define cut_inspect_string_array(strings)                               \
     cut_take_string(cut_utils_inspect_string_array(strings))
 

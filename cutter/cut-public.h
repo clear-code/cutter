@@ -63,9 +63,9 @@ const char *cut_test_context_take_printf    (CutTestContext *context,
                                              ...) CUT_GNUC_PRINTF(2, 3);
 
 
-int   cut_utils_compare_string_array        (const char **strings1,
-                                             const char **strings2);
-char *cut_utils_inspect_string_array        (const char **strings);
+int   cut_utils_compare_string_array        (char **strings1,
+                                             char **strings2);
+char *cut_utils_inspect_string_array        (char **strings);
 
 void *cut_test_context_get_user_data        (CutTestContext *context);
 int   cut_test_context_trap_fork            (CutTestContext *context,
@@ -81,6 +81,10 @@ const char *cut_test_context_get_forked_stdout_message
 const char *cut_test_context_get_forked_stderr_message
                                             (CutTestContext *context,
                                              int             pid);
+
+char       *cut_diff_readable               (const char     *from,
+                                             const char     *to);
+
 
 #ifdef __cplusplus
 }

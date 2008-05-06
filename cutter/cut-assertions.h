@@ -296,13 +296,23 @@ extern "C" {
         if (_actual && strcmp(_expected, _actual) == 0) {               \
             cut_test_pass();                                            \
         } else {                                                        \
-            cut_test_fail(FAILURE,                                      \
-                          cut_take_printf("<%s == %s>\n"                \
-                                          "expected: <%s>\n"            \
-                                          " but was: <%s>",             \
-                                          #expected, #actual,           \
-                                          _expected, _actual),          \
-                          ## __VA_ARGS__);                              \
+            const char *message;                                        \
+                                                                        \
+            message = cut_take_printf("<%s == %s>\n"                    \
+                                      "expected: <%s>\n"                \
+                                      " but was: <%s>",                 \
+                                      #expected, #actual,               \
+                                      _expected, _actual);              \
+            if (_expected && _actual) {                                 \
+                const char *diff;                                       \
+                                                                        \
+                diff = cut_take_diff(_expected, _actual);               \
+                message = cut_take_printf("%s\n"                        \
+                                          "diff:\n"                     \
+                                          "%s",                         \
+                                          message, diff);               \
+            }                                                           \
+            cut_test_fail(FAILURE, message, ## __VA_ARGS__);            \
         }                                                               \
     }                                                                   \
 } while(0)
@@ -389,8 +399,8 @@ extern "C" {
  */
 #define cut_assert_equal_string_array(expected, actual, ...) do         \
 {                                                                       \
-    const char **_expected = (const char **)(expected);                 \
-    const char **_actual = (const char **)(actual);                     \
+    char **_expected = (expected);                                      \
+    char **_actual = (actual);                                          \
     if (_expected && _actual &&                                         \
         cut_utils_compare_string_array(_expected, _actual)) {           \
         cut_test_pass();                                                \

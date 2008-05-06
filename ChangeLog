@@ -1,5 +1,13 @@
 2008-05-06  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-public.h, cutter/cut-diff.h (cut_diff_readable): make
+	public.
+
+	* cutter/cut-assertions.h (cut_assert_equal_string): support diff.
+	* cutter/cut-assertions-helper.h (cut_take_diff): add.
+	* test/test-cut-assertions.c
+	(test_assert_message_with_format_string): follow the above changes.
+
 	* cutter/cut-diff.[ch], test/test-cut-diff.c: support deleted.
 
 	* cutter/Makefile.am cutter/cut-diff.[ch], test/Makefile.am,

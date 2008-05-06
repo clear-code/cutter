@@ -21,10 +21,9 @@
 #define __CUT_DIFF_H__
 
 #include <glib-object.h>
+#include "cut-public.h"
 
 G_BEGIN_DECLS
-
-gchar         *cut_diff_readable         (const gchar *from, const gchar *to);
 
 G_END_DECLS
 
