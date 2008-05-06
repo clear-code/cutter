@@ -1,3 +1,7 @@
+2008-05-07  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-sequence-matcher.c: Use properties.
+
 2008-05-06  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/, test/: remove const from gchar ** and some gchar *.

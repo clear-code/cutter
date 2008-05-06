@@ -37,7 +37,7 @@ struct _CutSequenceMatcherPrivate
     GSequence *to;
     GSequenceIterCompareFunc compare_func;
     gpointer compare_func_user_data;
-    GHashTable *to_indexes;
+    GHashTable *to_indices;
     GHashTable *junks;
     GList *matches;
     GList *blocks;
@@ -45,9 +45,28 @@ struct _CutSequenceMatcherPrivate
     gdouble ratio;
 };
 
+enum
+{
+    PROP_0,
+    PROP_FROM_SEQUENCE,
+    PROP_TO_SEQUENCE,
+    PROP_COMPARE_FUNC,
+    PROP_COMPARE_FUNC_USER_DATA,
+    PROP_TO_INDICES,
+    PROP_JUNKS
+};
+
 G_DEFINE_TYPE (CutSequenceMatcher, cut_sequence_matcher, G_TYPE_OBJECT)
 
 static void dispose        (GObject         *object);
+static void set_property   (GObject         *object,
+                            guint            prop_id,
+                            const GValue    *value,
+                            GParamSpec      *pspec);
+static void get_property   (GObject         *object,
+                            guint            prop_id,
+                            GValue          *value,
+                            GParamSpec      *pspec);
 
 CutSequenceMatchInfo *
 cut_sequence_match_info_new (gint from_index, gint to_index, gint size)
@@ -93,10 +112,49 @@ static void
 cut_sequence_matcher_class_init (CutSequenceMatcherClass *klass)
 {
     GObjectClass *gobject_class;
+    GParamSpec *spec;
 
     gobject_class = G_OBJECT_CLASS(klass);
 
     gobject_class->dispose = dispose;
+    gobject_class->set_property = set_property;
+    gobject_class->get_property = get_property;
+
+    spec = g_param_spec_pointer("from-sequence",
+                                "From Sequence",
+                                "From Sequence",
+                                G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
+    g_object_class_install_property(gobject_class, PROP_FROM_SEQUENCE, spec);
+
+    spec = g_param_spec_pointer("to-sequence",
+                                "To Sequence",
+                                "To Sequence",
+                                G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
+    g_object_class_install_property(gobject_class, PROP_TO_SEQUENCE, spec);
+
+    spec = g_param_spec_pointer("compare-function",
+                                "Compare Fcuntion",
+                                "Compare Fcuntion",
+                                G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
+    g_object_class_install_property(gobject_class, PROP_COMPARE_FUNC, spec);
+
+    spec = g_param_spec_pointer("compare-function-user-data",
+                                "Compare Fcuntion User Data",
+                                "Compare Fcuntion User Data",
+                                G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
+    g_object_class_install_property(gobject_class, PROP_COMPARE_FUNC_USER_DATA, spec);
+
+    spec = g_param_spec_pointer("to-indices",
+                                "To Indecies",
+                                "To Indecies",
+                                G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
+    g_object_class_install_property(gobject_class, PROP_TO_INDICES, spec);
+
+    spec = g_param_spec_pointer("junks",
+                                "Junks",
+                                "Junks",
+                                G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
+    g_object_class_install_property(gobject_class, PROP_JUNKS, spec);
 
     g_type_class_add_private(gobject_class, sizeof(CutSequenceMatcherPrivate));
 }
@@ -110,7 +168,7 @@ cut_sequence_matcher_init (CutSequenceMatcher *sequence_matcher)
 
     priv->from = NULL;
     priv->to = NULL;
-    priv->to_indexes = NULL;
+    priv->to_indices = NULL;
     priv->junks = NULL;
     priv->matches = NULL;
     priv->blocks = NULL;
@@ -135,9 +193,9 @@ dispose (GObject *object)
         priv->to = NULL;
     }
 
-    if (priv->to_indexes) {
-        g_hash_table_unref(priv->to_indexes);
-        priv->to_indexes = NULL;
+    if (priv->to_indices) {
+        g_hash_table_unref(priv->to_indices);
+        priv->to_indices = NULL;
     }
 
     if (priv->junks) {
@@ -169,7 +227,75 @@ dispose (GObject *object)
 }
 
 static void
-remove_junks_from_to_indexes (CutSequenceMatcher *matcher,
+set_property (GObject      *object,
+              guint         prop_id,
+              const GValue *value,
+              GParamSpec   *pspec)
+{
+    CutSequenceMatcherPrivate *priv;
+    priv = CUT_SEQUENCE_MATCHER_GET_PRIVATE(object);
+
+    switch (prop_id) {
+      case PROP_FROM_SEQUENCE:
+        priv->from = g_value_get_pointer(value);
+        break;
+      case PROP_TO_SEQUENCE:
+        priv->to = g_value_get_pointer(value);
+        break;
+      case PROP_COMPARE_FUNC:
+        priv->compare_func = g_value_get_pointer(value);
+        break;
+      case PROP_COMPARE_FUNC_USER_DATA:
+        priv->compare_func_user_data = g_value_get_pointer(value);
+        break;
+      case PROP_TO_INDICES:
+        priv->to_indices = g_value_get_pointer(value);
+        break;
+      case PROP_JUNKS:
+        priv->junks = g_value_get_pointer(value);
+        break;
+      default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
+        break;
+    }
+}
+
+static void
+get_property (GObject    *object,
+              guint       prop_id,
+              GValue     *value,
+              GParamSpec *pspec)
+{
+    CutSequenceMatcherPrivate *priv;
+    priv = CUT_SEQUENCE_MATCHER_GET_PRIVATE(object);
+
+    switch (prop_id) {
+      case PROP_FROM_SEQUENCE:
+        g_value_set_pointer(value, priv->from);
+        break;
+      case PROP_TO_SEQUENCE:
+        g_value_set_pointer(value, priv->to);
+        break;
+      case PROP_COMPARE_FUNC:
+        g_value_set_pointer(value, priv->compare_func);
+        break;
+      case PROP_COMPARE_FUNC_USER_DATA:
+        g_value_set_pointer(value, priv->compare_func_user_data);
+        break;
+      case PROP_TO_INDICES:
+        g_value_set_pointer(value, priv->to_indices);
+        break;
+      case PROP_JUNKS:
+        g_value_set_pointer(value, priv->junks);
+        break;
+      default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
+        break;
+    }
+}
+
+static void
+remove_junks_from_to_indices (CutSequenceMatcher *matcher,
                               CutJunkFilterFunc junk_filter_func,
                               gpointer junk_filter_func_user_data)
 {
@@ -179,7 +305,7 @@ remove_junks_from_to_indexes (CutSequenceMatcher *matcher,
 
     priv = CUT_SEQUENCE_MATCHER_GET_PRIVATE(matcher);
 
-    g_hash_table_iter_init(&iter, priv->to_indexes);
+    g_hash_table_iter_init(&iter, priv->to_indices);
     while (g_hash_table_iter_next(&iter, &key, &value)) {
         if (junk_filter_func(key, junk_filter_func_user_data)) {
             g_hash_table_insert(priv->junks, key, GINT_TO_POINTER(TRUE));
@@ -189,7 +315,7 @@ remove_junks_from_to_indexes (CutSequenceMatcher *matcher,
 }
 
 static void
-update_to_indexes (CutSequenceMatcher *matcher,
+update_to_indices (CutSequenceMatcher *matcher,
                    CutJunkFilterFunc junk_filter_func,
                    gpointer junk_filter_func_user_data)
 {
@@ -208,16 +334,16 @@ update_to_indexes (CutSequenceMatcher *matcher,
          iter != end;
          i++, iter = g_sequence_iter_next(iter)) {
         gchar *data;
-        GList *indexes;
+        GList *indices;
 
         data = g_sequence_get(iter);
-        indexes = g_hash_table_lookup(priv->to_indexes, data);
-        indexes = g_list_append(indexes, GINT_TO_POINTER(i));
-        g_hash_table_replace(priv->to_indexes, data, g_list_copy(indexes));
+        indices = g_hash_table_lookup(priv->to_indices, data);
+        indices = g_list_append(indices, GINT_TO_POINTER(i));
+        g_hash_table_replace(priv->to_indices, data, g_list_copy(indices));
     }
 
     if (junk_filter_func)
-        remove_junks_from_to_indexes(matcher,
+        remove_junks_from_to_indices(matcher,
                                      junk_filter_func,
                                      junk_filter_func_user_data);
 }
@@ -232,20 +358,19 @@ cut_sequence_matcher_new (GSequence *from, GSequence *to,
                           gpointer junk_filter_func_user_data)
 {
     CutSequenceMatcher *matcher;
-    CutSequenceMatcherPrivate *priv;
 
-    matcher = g_object_new(CUT_TYPE_SEQUENCE_MATCHER, NULL);
-    priv = CUT_SEQUENCE_MATCHER_GET_PRIVATE(matcher);
-    priv->from = from;
-    priv->to = to;
-    priv->compare_func = compare_func;
-    priv->compare_func_user_data = compare_func_user_data;
-    priv->to_indexes = g_hash_table_new_full(content_hash_func,
-                                             content_equal_func,
-                                             NULL,
-                                             (GDestroyNotify)g_list_free);
-    priv->junks = g_hash_table_new(content_hash_func, content_equal_func);
-    update_to_indexes(matcher, junk_filter_func, junk_filter_func_user_data);
+    matcher = g_object_new(CUT_TYPE_SEQUENCE_MATCHER,
+                           "from-sequence", from,
+                           "to-sequence", to,
+                           "compare-function", compare_func,
+                           "compare-function-user-data", compare_func_user_data,
+                           "to_indices", g_hash_table_new_full(content_hash_func,
+                                                               content_equal_func,
+                                                               NULL,
+                                                               (GDestroyNotify)g_list_free),
+                           "junks", g_hash_table_new(content_hash_func, content_equal_func),
+                           NULL);
+    update_to_indices(matcher, junk_filter_func, junk_filter_func_user_data);
     return matcher;
 }
 
@@ -372,7 +497,7 @@ cut_sequence_matcher_get_to_index (CutSequenceMatcher *matcher,
     if (!priv->to)
         return NULL;
 
-    return g_hash_table_lookup(priv->to_indexes, to_content);
+    return g_hash_table_lookup(priv->to_indices, to_content);
 }
 
 static CutSequenceMatchInfo *
