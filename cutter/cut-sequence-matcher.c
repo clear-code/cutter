@@ -300,7 +300,7 @@ cut_sequence_matcher_char_new_full (const gchar *from, const gchar *to,
 }
 
 static GSequence *
-string_sequence_new (const gchar **strings)
+string_sequence_new (gchar **strings)
 {
     GSequence *sequence;
 
@@ -314,13 +314,13 @@ string_sequence_new (const gchar **strings)
 }
 
 CutSequenceMatcher *
-cut_sequence_matcher_string_new (const gchar **from, const gchar **to)
+cut_sequence_matcher_string_new (gchar **from, gchar **to)
 {
     return cut_sequence_matcher_string_new_full(from, to, NULL, NULL);
 }
 
 CutSequenceMatcher *
-cut_sequence_matcher_string_new_full (const gchar **from, const gchar **to,
+cut_sequence_matcher_string_new_full (gchar **from, gchar **to,
                                       CutJunkFilterFunc junk_filter_func,
                                       gpointer junk_filter_func_user_data)
 {

@@ -101,10 +101,10 @@ CutSequenceMatcher *cut_sequence_matcher_char_new_full(const gchar *from,
                                                        const gchar *to,
                                                        CutJunkFilterFunc junk_filter_func,
                                                        gpointer junk_filter_func_user_data);
-CutSequenceMatcher *cut_sequence_matcher_string_new (const gchar **from,
-                                                     const gchar **to);
-CutSequenceMatcher *cut_sequence_matcher_string_new_full (const gchar **from,
-                                                          const gchar **to,
+CutSequenceMatcher *cut_sequence_matcher_string_new (gchar **from,
+                                                     gchar **to);
+CutSequenceMatcher *cut_sequence_matcher_string_new_full (gchar **from,
+                                                          gchar **to,
                                                           CutJunkFilterFunc junk_filter_func,
                                                           gpointer junk_filter_func_user_data);
 
