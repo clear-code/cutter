@@ -6,6 +6,7 @@
 
 void test_to_indexes_for_string_sequence(void);
 void test_to_indexes_for_char_sequence(void);
+void test_to_indexes_complex_for_char_sequence(void);
 void test_get_longest_match_for_string_sequence(void);
 void test_get_longest_match_for_char_sequence(void);
 void test_get_longest_match_with_junk_filter_for_string_sequence(void);
@@ -207,6 +208,102 @@ test_to_indexes_for_char_sequence (void)
 
     expected_indexes = g_list_append(NULL, GINT_TO_POINTER(4));
     cut_assert_to_index(expected_indexes, matcher, GINT_TO_POINTER('d'));
+}
+
+void
+test_to_indexes_complex_for_char_sequence (void)
+{
+    junk_filter_func = space_char_is_junk;
+    matcher = char_matcher_new("",
+                               "1 tests, 0 assertions, 0 failures, 1 pendings");
+
+    expected_indexes = g_list_append(expected_indexes, GINT_TO_POINTER(0));
+    expected_indexes = g_list_append(expected_indexes, GINT_TO_POINTER(35));
+    cut_assert_to_index(expected_indexes, matcher, GINT_TO_POINTER('1'));
+    g_list_free(expected_indexes);
+
+    expected_indexes = g_list_append(NULL, GINT_TO_POINTER(2));
+    expected_indexes = g_list_append(expected_indexes, GINT_TO_POINTER(5));
+    expected_indexes = g_list_append(expected_indexes, GINT_TO_POINTER(16));
+    cut_assert_to_index(expected_indexes, matcher, GINT_TO_POINTER('t'));
+    g_list_free(expected_indexes);
+
+    expected_indexes = g_list_append(NULL, GINT_TO_POINTER(3));
+    expected_indexes = g_list_append(expected_indexes, GINT_TO_POINTER(14));
+    expected_indexes = g_list_append(expected_indexes, GINT_TO_POINTER(31));
+    expected_indexes = g_list_append(expected_indexes, GINT_TO_POINTER(38));
+    cut_assert_to_index(expected_indexes, matcher, GINT_TO_POINTER('e'));
+    g_list_free(expected_indexes);
+
+    expected_indexes = g_list_append(NULL, GINT_TO_POINTER(4));
+    expected_indexes = g_list_append(expected_indexes, GINT_TO_POINTER(6));
+    expected_indexes = g_list_append(expected_indexes, GINT_TO_POINTER(12));
+    expected_indexes = g_list_append(expected_indexes, GINT_TO_POINTER(13));
+    expected_indexes = g_list_append(expected_indexes, GINT_TO_POINTER(20));
+    expected_indexes = g_list_append(expected_indexes, GINT_TO_POINTER(32));
+    expected_indexes = g_list_append(expected_indexes, GINT_TO_POINTER(44));
+    cut_assert_to_index(expected_indexes, matcher, GINT_TO_POINTER('s'));
+    g_list_free(expected_indexes);
+
+    expected_indexes = g_list_append(NULL, GINT_TO_POINTER(7));
+    expected_indexes = g_list_append(expected_indexes, GINT_TO_POINTER(21));
+    expected_indexes = g_list_append(expected_indexes, GINT_TO_POINTER(33));
+    cut_assert_to_index(expected_indexes, matcher, GINT_TO_POINTER(','));
+    g_list_free(expected_indexes);
+
+    expected_indexes = g_list_append(NULL, GINT_TO_POINTER(9));
+    expected_indexes = g_list_append(expected_indexes, GINT_TO_POINTER(23));
+    cut_assert_to_index(expected_indexes, matcher, GINT_TO_POINTER('0'));
+    g_list_free(expected_indexes);
+
+    expected_indexes = g_list_append(NULL, GINT_TO_POINTER(11));
+    expected_indexes = g_list_append(expected_indexes, GINT_TO_POINTER(26));
+    cut_assert_to_index(expected_indexes, matcher, GINT_TO_POINTER('a'));
+    g_list_free(expected_indexes);
+
+    expected_indexes = g_list_append(NULL, GINT_TO_POINTER(15));
+    expected_indexes = g_list_append(expected_indexes, GINT_TO_POINTER(30));
+    cut_assert_to_index(expected_indexes, matcher, GINT_TO_POINTER('r'));
+    g_list_free(expected_indexes);
+
+    expected_indexes = g_list_append(NULL, GINT_TO_POINTER(17));
+    expected_indexes = g_list_append(expected_indexes, GINT_TO_POINTER(27));
+    expected_indexes = g_list_append(expected_indexes, GINT_TO_POINTER(41));
+    cut_assert_to_index(expected_indexes, matcher, GINT_TO_POINTER('i'));
+    g_list_free(expected_indexes);
+
+    expected_indexes = g_list_append(NULL, GINT_TO_POINTER(18));
+    cut_assert_to_index(expected_indexes, matcher, GINT_TO_POINTER('o'));
+    g_list_free(expected_indexes);
+
+    expected_indexes = g_list_append(NULL, GINT_TO_POINTER(19));
+    expected_indexes = g_list_append(expected_indexes, GINT_TO_POINTER(39));
+    expected_indexes = g_list_append(expected_indexes, GINT_TO_POINTER(42));
+    cut_assert_to_index(expected_indexes, matcher, GINT_TO_POINTER('n'));
+    g_list_free(expected_indexes);
+
+    expected_indexes = g_list_append(NULL, GINT_TO_POINTER(25));
+    cut_assert_to_index(expected_indexes, matcher, GINT_TO_POINTER('f'));
+    g_list_free(expected_indexes);
+
+    expected_indexes = g_list_append(NULL, GINT_TO_POINTER(28));
+    cut_assert_to_index(expected_indexes, matcher, GINT_TO_POINTER('l'));
+    g_list_free(expected_indexes);
+
+    expected_indexes = g_list_append(NULL, GINT_TO_POINTER(29));
+    cut_assert_to_index(expected_indexes, matcher, GINT_TO_POINTER('u'));
+    g_list_free(expected_indexes);
+
+    expected_indexes = g_list_append(NULL, GINT_TO_POINTER(37));
+    cut_assert_to_index(expected_indexes, matcher, GINT_TO_POINTER('p'));
+    g_list_free(expected_indexes);
+
+    expected_indexes = g_list_append(NULL, GINT_TO_POINTER(40));
+    cut_assert_to_index(expected_indexes, matcher, GINT_TO_POINTER('d'));
+    g_list_free(expected_indexes);
+
+    expected_indexes = g_list_append(NULL, GINT_TO_POINTER(43));
+    cut_assert_to_index(expected_indexes, matcher, GINT_TO_POINTER('g'));
 }
 
 #define cut_assert_longest_match(expected_from_index,                   \
