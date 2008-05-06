@@ -47,7 +47,8 @@ libcutter_public_headers = 			\
 		cut-process.h			\
 		cut-xml-parser.h		\
 		cut-verbose-level.h		\
-		cut-sequence-matcher.h
+		cut-sequence-matcher.h		\
+		cut-diff.h
 
 noinst_headers = 			\
 		gbsearcharray.h		\
@@ -127,7 +128,8 @@ libcutter_la_SOURCES =				\
 		cut-xml-parser.c		\
 		cut-value-equal.c		\
 		cut-list.c			\
-		cut-sequence-matcher.c
+		cut-sequence-matcher.c		\
+		cut-diff.c
 
 libcutter_la_LIBADD =			\
 	$(GLIB_LIBS)
