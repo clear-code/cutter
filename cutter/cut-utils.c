@@ -48,7 +48,7 @@ cut_utils_create_regex_pattern (const gchar *string)
 }
 
 gboolean
-cut_utils_compare_string_array (const gchar **strings1, const gchar **strings2)
+cut_utils_compare_string_array (gchar **strings1, gchar **strings2)
 {
     gint i, length;
 
@@ -58,9 +58,9 @@ cut_utils_compare_string_array (const gchar **strings1, const gchar **strings2)
     if (!strings1 || !strings2)
         return FALSE;
 
-    length = g_strv_length((gchar **)strings1);
+    length = g_strv_length(strings1);
 
-    if (length != g_strv_length((gchar **)strings2))
+    if (length != g_strv_length(strings2))
         return FALSE;
 
     for (i = 0; i < length; i++) {
@@ -71,11 +71,11 @@ cut_utils_compare_string_array (const gchar **strings1, const gchar **strings2)
     return TRUE;
 }
 
-char *
-cut_utils_inspect_string_array (const char **strings)
+gchar *
+cut_utils_inspect_string_array (gchar **strings)
 {
     GString *inspected;
-    const char **string, **next_string;
+    gchar **string, **next_string;
 
     if (!strings)
         return g_strdup("(null)");

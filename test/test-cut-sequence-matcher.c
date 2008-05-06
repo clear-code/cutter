@@ -81,7 +81,7 @@ space_char_is_junk (gpointer data, gpointer user_data)
 }
 
 static CutSequenceMatcher *
-string_matcher_new (const gchar **from, const gchar **to)
+string_matcher_new (gchar **from, gchar **to)
 {
     return cut_sequence_matcher_string_new_full(from, to,
                                                 junk_filter_func,
@@ -97,7 +97,7 @@ char_matcher_new (const gchar *from, const gchar *to)
 }
 
 static const gchar *
-inspect_string_matcher (const gchar **from, const gchar **to)
+inspect_string_matcher (gchar **from, gchar **to)
 {
     return cut_take_printf("[%s, %s]",
                            cut_inspect_string_array(from),
@@ -167,8 +167,8 @@ inspect_matches (const GList *matches)
 void
 test_to_indexes_for_string_sequence (void)
 {
-    const gchar *from[] = {"", NULL};
-    const gchar *to[] = {"abc def", "abc", "abc def", NULL};
+    gchar *from[] = {"", NULL};
+    gchar *to[] = {"abc def", "abc", "abc def", NULL};
 
     matcher = string_matcher_new(from, to);
 
@@ -257,7 +257,7 @@ test_to_indexes_for_char_sequence (void)
                                         from_begin, from_end,           \
                                         to_begin, to_end) do            \
 {                                                                       \
-    const gchar **_from, **_to;                                         \
+    gchar **_from, **_to;                                               \
     CutSequenceMatcher *matcher;                                        \
                                                                         \
     _from = (from);                                                     \
@@ -273,12 +273,12 @@ test_to_indexes_for_char_sequence (void)
 void
 test_get_longest_match_for_string_sequence (void)
 {
-    const gchar *bcd[] = {"b", "c", "d", NULL};
-    const gchar *abcdxyz[] = {"a", "b", "c", "d", "x", "y", "z", NULL};
-    const gchar *ab[] = {"a", "b", NULL};
-    const gchar *c[] = {"c", NULL};
-    const gchar *qabxcd[] = {"q", "a", "b", "x", "c", "d", NULL};
-    const gchar *abycdf[] = {"a", "b", "y", "c", "d", "f", NULL};
+    gchar *bcd[] = {"b", "c", "d", NULL};
+    gchar *abcdxyz[] = {"a", "b", "c", "d", "x", "y", "z", NULL};
+    gchar *ab[] = {"a", "b", NULL};
+    gchar *c[] = {"c", NULL};
+    gchar *qabxcd[] = {"q", "a", "b", "x", "c", "d", NULL};
+    gchar *abycdf[] = {"a", "b", "y", "c", "d", "f", NULL};
 
     cut_assert_longest_match_string(0, 1, 3, bcd, abcdxyz, 0, 2, 0, 7);
     cut_assert_longest_match_string(1, 2, 2, bcd, abcdxyz, 1, 2, 0, 6);
@@ -315,10 +315,8 @@ test_get_longest_match_for_char_sequence (void)
 void
 test_get_longest_match_with_junk_filter_for_string_sequence (void)
 {
-    const gchar *_abcd[] = {" ", "a", "b", "c", "d", NULL};
-    const gchar *abcd_abcd[] = {
-        "a", "b", "c", "d", " ", "a", "b", "c", "d", NULL
-    };
+    gchar *_abcd[] = {" ", "a", "b", "c", "d", NULL};
+    gchar *abcd_abcd[] = {"a", "b", "c", "d", " ", "a", "b", "c", "d", NULL};
 
     cut_assert_longest_match_string(0, 4, 5, _abcd, abcd_abcd, 0, 4, 0, 8);
     junk_filter_func = space_string_is_junk;
@@ -376,7 +374,7 @@ append_match_info (GList *list, gint begin, gint end, gint size)
 
 #define cut_assert_matches_string(expected_matches, from, to) do        \
 {                                                                       \
-    const gchar **_from, **_to;                                         \
+    gchar **_from, **_to;                                               \
     _from = (from);                                                     \
     _to = (to);                                                         \
                                                                         \
@@ -388,12 +386,12 @@ append_match_info (GList *list, gint begin, gint end, gint size)
 void
 test_get_matches_for_string_sequence (void)
 {
-    const gchar *abxcd[] = {"a", "b", "x", "c", "d", NULL};
-    const gchar *abcd[] = {"a", "b", "c", "d", NULL};
-    const gchar *qabxcd[] = {"q", "a", "b", "x", "c", "d", NULL};
-    const gchar *abycdf[] = {"a", "b", "y", "c", "d", "f", NULL};
-    const gchar *efg[] = {"e", "f", "g", NULL};
-    const gchar *eg[] = {"e", "g", NULL};
+    gchar *abxcd[] = {"a", "b", "x", "c", "d", NULL};
+    gchar *abcd[] = {"a", "b", "c", "d", NULL};
+    gchar *qabxcd[] = {"q", "a", "b", "x", "c", "d", NULL};
+    gchar *abycdf[] = {"a", "b", "y", "c", "d", "f", NULL};
+    gchar *efg[] = {"e", "f", "g", NULL};
+    gchar *eg[] = {"e", "g", NULL};
 
     expected_matches = append_match_info(NULL, 0, 0, 2);
     expected_matches = append_match_info(expected_matches, 3, 2, 2);
@@ -448,7 +446,7 @@ test_get_matches_for_char_sequence (void)
 
 #define cut_assert_blocks_string(expected_matches, from, to) do         \
 {                                                                       \
-    const gchar **_from, **_to;                                         \
+    gchar **_from, **_to;                                               \
     _from = (from);                                                     \
     _to = (to);                                                         \
                                                                         \
@@ -460,12 +458,12 @@ test_get_matches_for_char_sequence (void)
 void
 test_get_blocks_for_string_sequence (void)
 {
-    const gchar *abxcd[] = {"a", "b", "x", "c", "d", NULL};
-    const gchar *abcd[] = {"a", "b", "c", "d", NULL};
-    const gchar *qabxcd[] = {"q", "a", "b", "x", "c", "d", NULL};
-    const gchar *abycdf[] = {"a", "b", "y", "c", "d", "f", NULL};
-    const gchar *efg[] = {"e", "f", "g", NULL};
-    const gchar *eg[] = {"e", "g", NULL};
+    gchar *abxcd[] = {"a", "b", "x", "c", "d", NULL};
+    gchar *abcd[] = {"a", "b", "c", "d", NULL};
+    gchar *qabxcd[] = {"q", "a", "b", "x", "c", "d", NULL};
+    gchar *abycdf[] = {"a", "b", "y", "c", "d", "f", NULL};
+    gchar *efg[] = {"e", "f", "g", NULL};
+    gchar *eg[] = {"e", "g", NULL};
 
     expected_matches = append_match_info(NULL, 0, 0, 2);
     expected_matches = append_match_info(expected_matches, 3, 2, 2);
@@ -603,7 +601,7 @@ inspect_operations (const GList *operations)
 
 #define cut_assert_operations_string(expected_operations, from, to) do  \
 {                                                                       \
-    const gchar **_from, **_to;                                         \
+    gchar **_from, **_to;                                               \
     _from = (from);                                                     \
     _to = (to);                                                         \
                                                                         \

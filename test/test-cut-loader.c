@@ -61,7 +61,7 @@ test_load_function (void)
 {
     CutTestContainer *container;
     GList *tests, *list;
-    const gchar *target_test_names[] = {"/.*/", NULL};
+    gchar *target_test_names[] = {"/.*/", NULL};
     gint i;
 
     test_case = cut_loader_load_test_case(test_loader);
