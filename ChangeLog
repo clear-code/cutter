@@ -1,5 +1,9 @@
 2008-05-06  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-diff.[ch]:
+	- make CutDiffer public.
+	- create CutDifferReadable.
+
 	* test/test-cut-diff.c: add tests for readable diff.
 
 	* cutter/cut-diff.c, test/test-cut-diff.c: add a test for readable diff.
