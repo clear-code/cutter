@@ -340,7 +340,9 @@ test_assert_message_with_format_string (void)
     cut_assert_equal_string("<\"%s\" == \"%d\">\n"
                             "expected: <%s>\n"
                             " but was: <%d>\n"
-                            "diff:\n",
+                            "diff:\n"
+                            "- %s\n"
+                            "+ %d",
                             cut_test_result_get_system_message(test_result));
     cut_assert_equal_string("expected and actual have format string",
                             cut_test_result_get_user_message(test_result));

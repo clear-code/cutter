@@ -7,6 +7,7 @@
 void test_same_contents_readable_diff(void);
 void test_inserted_readable_diff(void);
 void test_deleted_readable_diff(void);
+void test_replace_readable_diff(void);
 
 void
 setup (void)
@@ -74,6 +75,39 @@ test_deleted_readable_diff(void)
                              "ddd",
 
                              "aaa");
+}
+
+void
+test_replace_readable_diff (void)
+{
+    cut_assert_readable_diff("  aaa\n"
+                             "- bbb\n"
+                             "+ BbB\n"
+                             "  ccc\n"
+                             "- ddd\n"
+                             "- efg\n"
+                             "?  -\n"
+                             "+ eg",
+
+                             "aaa\n"
+                             "bbb\n"
+                             "ccc\n"
+                             "ddd\n"
+                             "efg",
+
+                             "aaa\n"
+                             "BbB\n"
+                             "ccc\n"
+                             "eg");
+
+    cut_assert_readable_diff("-  abcd xyz abc\n"
+                             "? -\n"
+                             "+ abcd abcd xyz abc\n"
+                             "?      +++++",
+
+                             " abcd xyz abc",
+
+                             "abcd abcd xyz abc");
 }
 
 /*
