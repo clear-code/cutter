@@ -9,16 +9,8 @@ void test_inserted_readable_diff(void);
 void test_deleted_readable_diff(void);
 void test_replace_readable_diff(void);
 void test_difference_readable_diff(void);
-
-void
-setup (void)
-{
-}
-
-void
-teardown (void)
-{
-}
+void test_complex_readable_diff(void);
+void test_empty_readable_diff(void);
 
 #define cut_assert_readable_diff(expected, from, to)    \
     cut_assert_equal_string_with_free(expected, cut_diff_readable(from, to))
@@ -122,6 +114,51 @@ test_difference_readable_diff (void)
                              "1 tests, 0 assertions, 1 failures, 0 pendings",
 
                              "1 tests, 0 assertions, 0 failures, 1 pendings");
+}
+
+void
+test_complex_readable_diff (void)
+{
+    cut_assert_readable_diff("  aaa\n"
+                             "- bbb\n"
+                             "- ccc\n"
+                             "+ \n"
+                             "+   # \n"
+                             "  ddd",
+
+                             "aaa\n"
+                             "bbb\n"
+                             "ccc\n"
+                             "ddd",
+
+                             "aaa\n"
+                             "\n"
+                             "  # \n"
+                             "ddd");
+
+    cut_assert_readable_diff("- one1\n"
+                             "?  ^\n"
+                             "+ ore1\n"
+                             "?  ^\n"
+                             "- two2\n"
+                             "- three3\n"
+                             "?  -   -\n"
+                             "+ tree\n"
+                             "+ emu",
+
+                             "one1\n"
+                             "two2\n"
+                             "three3",
+
+                             "ore1\n"
+                             "tree\n"
+                             "emu");
+}
+
+void
+test_empty_readable_diff (void)
+{
+    cut_assert_readable_diff("", "", "");
 }
 
 /*
