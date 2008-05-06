@@ -72,53 +72,60 @@ struct _CutSequenceMatchOperation
     gint to_end;
 };
 
-CutSequenceMatchInfo *cut_sequence_match_info_new  (gint begin,
-                                                    gint end,
-                                                    gint size);
-void                  cut_sequence_match_info_free (CutSequenceMatchInfo *info);
+CutSequenceMatchInfo *cut_sequence_match_info_new(gint begin,
+                                                  gint end,
+                                                  gint size);
+void                  cut_sequence_match_info_free
+                                                 (CutSequenceMatchInfo *info);
 
-CutSequenceMatchOperation *cut_sequence_match_operation_new (CutSequenceMatchOperationType type,
-                                                             gint from_begin,
-                                                             gint from_end,
-                                                             gint to_begin,
-                                                             gint to_end);
-void                       cut_sequence_match_operation_free (CutSequenceMatchOperation *operation);
+CutSequenceMatchOperation *cut_sequence_match_operation_new
+                                                 (CutSequenceMatchOperationType type,
+                                                  gint from_begin,
+                                                  gint from_end,
+                                                  gint to_begin,
+                                                  gint to_end);
+void                       cut_sequence_match_operation_free
+                                                 (CutSequenceMatchOperation *operation);
 
 
-GType               cut_sequence_matcher_get_type       (void) G_GNUC_CONST;
+GType               cut_sequence_matcher_get_type(void) G_GNUC_CONST;
 
-CutSequenceMatcher *cut_sequence_matcher_new   (GSequence *from,
-                                                GSequence *to,
-                                                GSequenceIterCompareFunc compare_func,
-                                                gpointer compare_func_user_data,
-                                                GHashFunc content_hash_func,
-                                                GEqualFunc content_equal_func,
-                                                CutJunkFilterFunc junk_filter_func,
-                                                gpointer user_data);
-CutSequenceMatcher *cut_sequence_matcher_char_new   (const gchar *from,
-                                                     const gchar *to);
-CutSequenceMatcher *cut_sequence_matcher_char_new_full(const gchar *from,
-                                                       const gchar *to,
-                                                       CutJunkFilterFunc junk_filter_func,
-                                                       gpointer junk_filter_func_user_data);
-CutSequenceMatcher *cut_sequence_matcher_string_new (gchar **from,
-                                                     gchar **to);
-CutSequenceMatcher *cut_sequence_matcher_string_new_full (gchar **from,
-                                                          gchar **to,
-                                                          CutJunkFilterFunc junk_filter_func,
-                                                          gpointer junk_filter_func_user_data);
+CutSequenceMatcher *cut_sequence_matcher_new     (GSequence *from,
+                                                  GSequence *to,
+                                                  GSequenceIterCompareFunc compare_func,
+                                                  gpointer compare_func_user_data,
+                                                  GHashFunc content_hash_func,
+                                                  GEqualFunc content_equal_func,
+                                                  CutJunkFilterFunc junk_filter_func,
+                                                  gpointer user_data);
+CutSequenceMatcher *cut_sequence_matcher_char_new(const gchar *from,
+                                                  const gchar *to);
+CutSequenceMatcher *cut_sequence_matcher_char_new_full
+                                                 (const gchar *from,
+                                                  const gchar *to,
+                                                  CutJunkFilterFunc junk_filter_func,
+                                                  gpointer junk_filter_func_user_data);
+CutSequenceMatcher *cut_sequence_matcher_string_new
+                                                 (gchar **from,
+                                                  gchar **to);
+CutSequenceMatcher *cut_sequence_matcher_string_new_full
+                                                 (gchar **from,
+                                                  gchar **to,
+                                                  CutJunkFilterFunc junk_filter_func,
+                                                  gpointer junk_filter_func_user_data);
 
-const GList *cut_sequence_matcher_get_to_index (CutSequenceMatcher *matcher,
-                                                gpointer to_content);
-CutSequenceMatchInfo *cut_sequence_matcher_get_longest_match (CutSequenceMatcher *matcher,
-                                                              gint from_begin,
-                                                              gint from_end,
-                                                              gint to_begin,
-                                                              gint to_end);
-const GList *cut_sequence_matcher_get_matches  (CutSequenceMatcher *matcher);
-const GList *cut_sequence_matcher_get_blocks   (CutSequenceMatcher *matcher);
+const GList *cut_sequence_matcher_get_to_index   (CutSequenceMatcher *matcher,
+                                                  gpointer to_content);
+CutSequenceMatchInfo *cut_sequence_matcher_get_longest_match
+                                                 (CutSequenceMatcher *matcher,
+                                                  gint from_begin,
+                                                  gint from_end,
+                                                  gint to_begin,
+                                                  gint to_end);
+const GList *cut_sequence_matcher_get_matches    (CutSequenceMatcher *matcher);
+const GList *cut_sequence_matcher_get_blocks     (CutSequenceMatcher *matcher);
 const GList *cut_sequence_matcher_get_operations (CutSequenceMatcher *matcher);
-gdouble      cut_sequence_matcher_get_ratio    (CutSequenceMatcher *matcher);
+gdouble      cut_sequence_matcher_get_ratio      (CutSequenceMatcher *matcher);
 
 G_END_DECLS
 
