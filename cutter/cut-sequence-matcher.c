@@ -553,6 +553,23 @@ pop_matching_info (GQueue *queue, MatchingInfo *info)
     g_slice_free(MatchingInfo, popped_info);
 }
 
+static gint
+compare_match_info (gconstpointer data1, gconstpointer data2)
+{
+    const CutSequenceMatchInfo *info1, *info2;
+
+    info1 = data1;
+    info2 = data2;
+
+    if (info1->from_index < info2->from_index) {
+        return -1;
+    } else if (info1->from_index == info2->from_index) {
+        return 0;
+    } else {
+        return 1;
+    }
+}
+
 const GList *
 cut_sequence_matcher_get_matches (CutSequenceMatcher *matcher)
 {
@@ -600,7 +617,7 @@ cut_sequence_matcher_get_matches (CutSequenceMatcher *matcher)
     }
 
     g_queue_free(queue);
-    priv->matches = g_list_reverse(matches);
+    priv->matches = g_list_sort(matches, compare_match_info);
 
     return priv->matches;
 }

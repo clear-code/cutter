@@ -1,5 +1,8 @@
 2008-05-06  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-sequence-matcher.c, test/test-cut-sequence-matcher.c:
+	sort matched info.
+
 	* test/test-cut-sequence-matcher.c: add a test for to_indexes with
 	junk filter.
 

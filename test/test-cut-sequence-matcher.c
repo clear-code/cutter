@@ -13,8 +13,10 @@ void test_get_longest_match_with_junk_filter_for_string_sequence(void);
 void test_get_longest_match_with_junk_filter_for_char_sequence(void);
 void test_get_matches_for_string_sequence(void);
 void test_get_matches_for_char_sequence(void);
+void test_get_matches_complex_for_char_sequence(void);
 void test_get_blocks_for_string_sequence(void);
 void test_get_blocks_for_char_sequence(void);
+void test_get_blocks_complex_for_char_sequence(void);
 void test_get_operations_for_string_sequence(void);
 void test_get_operations_for_char_sequence(void);
 void test_get_ratio_for_string_sequence(void);
@@ -534,6 +536,29 @@ test_get_matches_for_char_sequence (void)
     cut_assert_matches_char(expected_matches, "efg", "eg");
 }
 
+void
+test_get_matches_complex_for_char_sequence (void)
+{
+    expected_matches = append_match_info(NULL, 0, 0, 23);
+    expected_matches = append_match_info(expected_matches, 24, 24, 11);
+    expected_matches = append_match_info(expected_matches, 36, 36, 9);
+    cut_assert_matches_char(expected_matches,
+                            "1 tests, 0 assertions, 1 failures, 0 pendings",
+                            "1 tests, 0 assertions, 0 failures, 1 pendings");
+    free_matches(expected_matches);
+
+    expected_matches = append_match_info(NULL, 0, 0, 1);
+    expected_matches = append_match_info(expected_matches, 1, 1, 8);
+    expected_matches = append_match_info(expected_matches, 9, 9, 1);
+    expected_matches = append_match_info(expected_matches, 10, 10, 13);
+    expected_matches = append_match_info(expected_matches, 24, 24, 11);
+    expected_matches = append_match_info(expected_matches, 36, 36, 9);
+    junk_filter_func = space_char_is_junk;
+    cut_assert_matches_char(expected_matches,
+                            "1 tests, 0 assertions, 1 failures, 0 pendings",
+                            "1 tests, 0 assertions, 0 failures, 1 pendings");
+}
+
 #define cut_assert_blocks(expected_matches,                             \
                           sequence_matcher,                             \
                           sequence_matcher_inspect) do                  \
@@ -610,6 +635,23 @@ test_get_blocks_for_char_sequence (void)
     expected_matches = append_match_info(expected_matches, 2, 1, 1);
     expected_matches = append_match_info(expected_matches, 3, 2, 0);
     cut_assert_blocks_char(expected_matches, "efg", "eg");
+}
+
+void
+test_get_blocks_complex_for_char_sequence (void)
+{
+    expected_matches = append_match_info(NULL, 0, 0, 23);
+    expected_matches = append_match_info(expected_matches, 24, 24, 11);
+    expected_matches = append_match_info(expected_matches, 36, 36, 9);
+    expected_matches = append_match_info(expected_matches, 45, 45, 0);
+    cut_assert_blocks_char(expected_matches,
+                           "1 tests, 0 assertions, 1 failures, 0 pendings",
+                           "1 tests, 0 assertions, 0 failures, 1 pendings");
+
+    junk_filter_func = space_char_is_junk;
+    cut_assert_blocks_char(expected_matches,
+                           "1 tests, 0 assertions, 1 failures, 0 pendings",
+                           "1 tests, 0 assertions, 0 failures, 1 pendings");
 }
 
 static gboolean
@@ -774,6 +816,10 @@ test_get_operations_for_string_sequence (void)
                                            36, 45, 36, 45);
     cut_assert_operations_string(expected_operations,
                                  summary_1010, summary_1001);
+
+    junk_filter_func = space_string_is_junk;
+    cut_assert_operations_string(expected_operations,
+                                 summary_1010, summary_1001);
 }
 
 #define cut_assert_operations_char(expected_operations, from, to)       \
@@ -807,6 +853,11 @@ test_get_operations_for_char_sequence (void)
                                            35, 36, 35, 36);
     expected_operations = append_operation(expected_operations, EQUAL,
                                            36, 45, 36, 45);
+    cut_assert_operations_char(expected_operations,
+                               "1 tests, 0 assertions, 1 failures, 0 pendings",
+                               "1 tests, 0 assertions, 0 failures, 1 pendings");
+
+    junk_filter_func = space_char_is_junk;
     cut_assert_operations_char(expected_operations,
                                "1 tests, 0 assertions, 1 failures, 0 pendings",
                                "1 tests, 0 assertions, 0 failures, 1 pendings");
