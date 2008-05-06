@@ -83,17 +83,23 @@ space_char_is_junk (gpointer data, gpointer user_data)
 static CutSequenceMatcher *
 string_matcher_new (gchar **from, gchar **to)
 {
-    return cut_sequence_matcher_string_new_full(from, to,
-                                                junk_filter_func,
-                                                junk_filter_func_user_data);
+    if (junk_filter_func)
+        return cut_sequence_matcher_string_new_full(from, to,
+                                                    junk_filter_func,
+                                                    junk_filter_func_user_data);
+    else
+        return cut_sequence_matcher_string_new(from, to);
 }
 
 static CutSequenceMatcher *
 char_matcher_new (const gchar *from, const gchar *to)
 {
-    return cut_sequence_matcher_char_new_full(from, to,
-                                              junk_filter_func,
-                                              junk_filter_func_user_data);
+    if (junk_filter_func)
+        return cut_sequence_matcher_char_new_full(from, to,
+                                                  junk_filter_func,
+                                                  junk_filter_func_user_data);
+    else
+        return cut_sequence_matcher_char_new(from, to);
 }
 
 static const gchar *
@@ -630,16 +636,16 @@ _append_operation (GList *list, CutSequenceMatchOperationType type,
 void
 test_get_operations_for_string_sequence (void)
 {
-    const gchar *empty[] = {NULL};
-    const gchar *qabxcd[] = {"q", "a", "b", "x", "c", "d", NULL};
-    const gchar *abycdf[] = {"a", "b", "y", "c", "d", "f", NULL};
-    const gchar *summary_1010[] = {
+    gchar *empty[] = {NULL};
+    gchar *qabxcd[] = {"q", "a", "b", "x", "c", "d", NULL};
+    gchar *abycdf[] = {"a", "b", "y", "c", "d", "f", NULL};
+    gchar *summary_1010[] = {
         "1", " ", "t", "e", "s", "t", "s", ",", " ",
         "0", " ", "a", "s", "s", "e", "r", "t", "i", "o", "n", "s", ",", " ",
         "1", " ", "f", "a", "i", "l", "u", "r", "e", "s", ",", " ",
         "0", " ", "p", "e", "n", "d", "i", "n", "g", "s",
         NULL};
-    const gchar *summary_1001[] = {
+    gchar *summary_1001[] = {
         "1", " ", "t", "e", "s", "t", "s", ",", " ",
         "0", " ", "a", "s", "s", "e", "r", "t", "i", "o", "n", "s", ",", " ",
         "0", " ", "f", "a", "i", "l", "u", "r", "e", "s", ",", " ",
@@ -725,7 +731,7 @@ test_get_operations_for_char_sequence (void)
 
 #define cut_assert_ratio_string(expected, from, to) do                  \
 {                                                                       \
-    const gchar **_from, **_to;                                         \
+    gchar **_from, **_to;                                               \
     _from = (from);                                                     \
     _to = (to);                                                         \
                                                                         \
@@ -737,10 +743,10 @@ test_get_operations_for_char_sequence (void)
 void
 test_get_ratio_for_string_sequence (void)
 {
-    const gchar *abcd[] = {"a", "b", "c", "d", NULL};
-    const gchar *bcde[] = {"b", "c", "d", "e", NULL};
-    const gchar *efg[] = {"e", "f", "g", NULL};
-    const gchar *eg[] = {"e", "g", NULL};
+    gchar *abcd[] = {"a", "b", "c", "d", NULL};
+    gchar *bcde[] = {"b", "c", "d", "e", NULL};
+    gchar *efg[] = {"e", "f", "g", NULL};
+    gchar *eg[] = {"e", "g", NULL};
 
     cut_assert_ratio_string(0.75, abcd, bcde);
     cut_assert_ratio_string(0.80, efg, eg);

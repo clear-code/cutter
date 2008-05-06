@@ -1,6 +1,8 @@
 2008-05-06  Kouhei Sutou  <kou@cozmixng.org>
 
-	* cutter/cut-diff.[ch], test/test-cut-diff.c: support inserted.
+	* test/test-cut-sequence-matcher.c: remove const.
+
+	* cutter/cut-diff.c, test/test-cut-diff.c: support inserted.
 
 	* cutter/, test/: remove const from gchar **.
 
@@ -12,7 +14,7 @@
 	* test/test-cut-assertions.c
 	(test_assert_message_with_format_string): follow the above changes.
 
-	* cutter/cut-diff.[ch], test/test-cut-diff.c: support deleted.
+	* cutter/cut-diff.c, test/test-cut-diff.c: support deleted.
 
 	* cutter/Makefile.am cutter/cut-diff.[ch], test/Makefile.am,
 	test/test-cut-diff.c: add.
