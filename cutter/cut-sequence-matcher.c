@@ -257,7 +257,7 @@ char_sequence_new (const gchar *string)
     sequence = g_sequence_new(NULL);
 
     for (; *string != '\0'; string++) {
-        g_sequence_append(sequence, GINT_TO_POINTER(*string));
+        g_sequence_append(sequence, GINT_TO_POINTER((gint)*string));
     }
 
     return sequence;
