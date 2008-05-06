@@ -1,5 +1,7 @@
 2008-05-06  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-diff.[ch], test/test-cut-diff.c: support inserted.
+
 	* cutter/, test/: remove const from gchar **.
 
 	* cutter/cut-public.h, cutter/cut-diff.h (cut_diff_readable): make

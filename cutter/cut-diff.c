@@ -140,6 +140,8 @@ readable_diff (CutDiffer *differ)
                 operation->from_begin, operation->from_end);
             break;
           case CUT_SEQUENCE_MATCH_OPERATION_INSERT:
+            tag(differ, "+ ", differ->to,
+                operation->to_begin, operation->to_end);
             break;
           case CUT_SEQUENCE_MATCH_OPERATION_DELETE:
             tag(differ, "- ", differ->from,

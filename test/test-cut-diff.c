@@ -5,6 +5,7 @@
 #include <cutter/cut-diff.h>
 
 void test_same_contents_readable_diff(void);
+void test_inserted_readable_diff(void);
 void test_deleted_readable_diff(void);
 
 void
@@ -33,6 +34,22 @@ test_same_contents_readable_diff (void)
 
                              "aaa\n"
                              "bbb");
+}
+
+void
+test_inserted_readable_diff(void)
+{
+    cut_assert_readable_diff("  aaa\n"
+                             "+ bbb\n"
+                             "+ ccc\n"
+                             "+ ddd",
+
+                             "aaa",
+
+                             "aaa\n"
+                             "bbb\n"
+                             "ccc\n"
+                             "ddd");
 }
 
 void
