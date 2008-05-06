@@ -47,7 +47,7 @@ dummy_notification_test (void)
 void
 setup (void)
 {
-    const gchar *test_names[] = {"/.*/", NULL};
+    gchar *test_names[] = {"/.*/", NULL};
     test_object = NULL;
     test_context = NULL;
 
@@ -58,7 +58,7 @@ setup (void)
     cut_listener_attach_to_runner(CUT_LISTENER(report), runner);
 
     test_case = cut_test_case_new("dummy test case",
-                                  NULL, NULL, 
+                                  NULL, NULL,
                                   get_current_test_context,
                                   set_current_test_context,
                                   NULL, NULL);
@@ -77,7 +77,8 @@ teardown (void)
 }
 
 static void
-cb_test_signal (CutTest *test, CutTestContext *context, CutTestResult *result, gpointer data)
+cb_test_signal (CutTest *test, CutTestContext *context, CutTestResult *result,
+                gpointer data)
 {
     g_object_set(G_OBJECT(result), "elapsed", 0.0001, NULL);
 }
@@ -125,14 +126,16 @@ test_report_success (void)
     cut_test_set_attribute(test_object, "description", "A success test");
     cut_test_set_attribute(test_object, "bug", "1234");
     cut_test_set_attribute(test_object, "price", "$199");
-    g_signal_connect_after(test_object, "success", G_CALLBACK(cb_test_signal), NULL);
+    g_signal_connect_after(test_object, "success",
+                           G_CALLBACK(cb_test_signal), NULL);
     cut_test_case_add_test(test_case, test_object);
     cut_assert(run_the_test(test_object));
     g_signal_handlers_disconnect_by_func(test_object,
                                          G_CALLBACK(cb_test_signal),
                                          NULL);
 
-    cut_assert_equal_string_with_free(expected, cut_report_get_success_results(report));
+    cut_assert_equal_string_with_free(expected,
+                                      cut_report_get_success_results(report));
 }
 
 void

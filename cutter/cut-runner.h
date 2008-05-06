@@ -150,11 +150,11 @@ gboolean      cut_runner_get_multi_thread          (CutRunner   *runner);
 gboolean      cut_runner_is_multi_thread           (CutRunner   *runner);
 
 void          cut_runner_set_target_test_case_names(CutRunner   *runner,
-                                                    const gchar **names);
-const gchar **cut_runner_get_target_test_case_names(CutRunner   *runner);
+                                                    gchar      **names);
+gchar       **cut_runner_get_target_test_case_names(CutRunner   *runner);
 void          cut_runner_set_target_test_names     (CutRunner   *runner,
-                                                    const gchar **names);
-const gchar **cut_runner_get_target_test_names     (CutRunner   *runner);
+                                                    gchar      **names);
+gchar       **cut_runner_get_target_test_names     (CutRunner   *runner);
 
 void          cut_runner_prepare_test              (CutRunner   *runner,
                                                     CutTest     *test);

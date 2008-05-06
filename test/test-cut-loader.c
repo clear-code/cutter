@@ -38,7 +38,7 @@ teardown (void)
         g_strfreev(test_names);
 }
 
-static const gchar *expected_functions[] = {
+static gchar *expected_functions[] = {
     "test_abcdefghijklmnopqratuvwzyz_ABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789",
     "test_dummy_function1",
     "test_dummy_function2",

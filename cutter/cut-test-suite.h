@@ -61,20 +61,20 @@ gboolean        cut_test_suite_run           (CutTestSuite *suite,
                                               CutRunner    *runner);
 gboolean        cut_test_suite_run_test_case (CutTestSuite *suite,
                                               CutRunner    *runner,
-                                              const gchar  *test_case_name);
+                                              gchar       *test_case_name);
 gboolean        cut_test_suite_run_test      (CutTestSuite *suite,
                                               CutRunner    *runner,
-                                              const gchar  *name);
+                                              gchar        *name);
 gboolean        cut_test_suite_run_test_in_test_case
                                              (CutTestSuite *suite,
                                               CutRunner    *runner,
-                                              const gchar  *name,
-                                              const gchar  *test_case_name);
+                                              gchar        *name,
+                                              gchar       *test_case_name);
 gboolean        cut_test_suite_run_with_filter
                                              (CutTestSuite *test_suite,
                                               CutRunner    *runner,
-                                              const gchar **test_case_names,
-                                              const gchar **test_names);
+                                              gchar       **test_case_names,
+                                              gchar       **test_names);
 
 G_END_DECLS
 

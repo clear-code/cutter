@@ -146,7 +146,7 @@ teardown (void)
 }
 
 static gboolean
-run_test_case (const gchar *test_case_name)
+run_test_case (gchar *test_case_name)
 {
     return cut_test_suite_run_test_in_test_case(test_object,
                                                 runner,
@@ -155,13 +155,13 @@ run_test_case (const gchar *test_case_name)
 }
 
 static gboolean
-run_test (const gchar *test_name)
+run_test (gchar *test_name)
 {
     return cut_test_suite_run_test(test_object, runner, test_name);
 }
 
 static gboolean
-run_test_in_test_case (const gchar *test_name, const gchar *test_case_name)
+run_test_in_test_case (gchar *test_name, gchar *test_case_name)
 {
     return cut_test_suite_run_test_in_test_case(test_object,
                                                 runner,
@@ -170,7 +170,7 @@ run_test_in_test_case (const gchar *test_name, const gchar *test_case_name)
 }
 
 static gboolean
-run_test_with_filter (const gchar **test_case_names, const gchar **test_names)
+run_test_with_filter (gchar **test_case_names, gchar **test_names)
 {
     return cut_test_suite_run_with_filter(test_object,
                                           runner,

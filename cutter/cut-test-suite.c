@@ -126,8 +126,7 @@ run (gpointer data)
     test_names = info->test_names;
 
     g_signal_emit_by_name(test_suite, "start-test-case", test_case);
-    success = cut_test_case_run_with_filter(test_case, runner,
-                                            (const gchar **)test_names);
+    success = cut_test_case_run_with_filter(test_case, runner, test_names);
     g_signal_emit_by_name(test_suite, "complete-test-case", test_case);
 
     g_object_unref(test_suite);
@@ -141,7 +140,7 @@ run (gpointer data)
 
 static void
 run_with_thread (CutTestSuite *test_suite, CutTestCase *test_case,
-                 CutRunner *runner, const gchar **test_names,
+                 CutRunner *runner, gchar **test_names,
                  gboolean try_thread, GList **threads, gboolean *success)
 {
     RunTestInfo *info;
@@ -243,7 +242,7 @@ i_will_be_back_handler (int signum)
 
 static void
 emit_ready_signal (CutTestSuite *test_suite, GList *test_cases,
-                   const gchar **test_names)
+                   gchar **test_names)
 {
     GList *node;
     guint n_test_cases, n_tests;
@@ -263,7 +262,7 @@ emit_ready_signal (CutTestSuite *test_suite, GList *test_cases,
 
 static gboolean
 cut_test_suite_run_test_cases (CutTestSuite *test_suite, CutRunner *runner,
-                               GList *test_cases, const gchar **test_names)
+                               GList *test_cases, gchar **test_names)
 {
     GList *node, *threads = NULL;
     GList *sorted_test_cases;
@@ -337,8 +336,8 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite, CutRunner *runner,
 gboolean
 cut_test_suite_run (CutTestSuite *suite, CutRunner *runner)
 {
-    const gchar **test_case_names;
-    const gchar **test_names;
+    gchar **test_case_names;
+    gchar **test_names;
 
     test_case_names = cut_runner_get_target_test_case_names(runner);
     test_names = cut_runner_get_target_test_names(runner);
@@ -348,9 +347,9 @@ cut_test_suite_run (CutTestSuite *suite, CutRunner *runner)
 
 gboolean
 cut_test_suite_run_test_case (CutTestSuite *suite, CutRunner *runner,
-                              const gchar *test_case_name)
+                              gchar *test_case_name)
 {
-    const gchar *test_case_names[] = {NULL, NULL};
+    gchar *test_case_names[] = {NULL, NULL};
 
     g_return_val_if_fail(CUT_IS_TEST_SUITE(suite), FALSE);
 
@@ -361,10 +360,10 @@ cut_test_suite_run_test_case (CutTestSuite *suite, CutRunner *runner,
 
 gboolean
 cut_test_suite_run_test (CutTestSuite *suite, CutRunner *runner,
-                         const gchar *test_name)
+                         gchar *test_name)
 {
     GList *test_cases;
-    const gchar *test_names[] = {NULL, NULL};
+    gchar *test_names[] = {NULL, NULL};
 
     g_return_val_if_fail(CUT_IS_TEST_SUITE(suite), FALSE);
 
@@ -376,12 +375,12 @@ cut_test_suite_run_test (CutTestSuite *suite, CutRunner *runner,
 
 gboolean
 cut_test_suite_run_test_in_test_case (CutTestSuite *suite,
-                                      CutRunner   *runner,
-                                      const gchar  *test_name,
-                                      const gchar  *test_case_name)
+                                      CutRunner    *runner,
+                                      gchar        *test_name,
+                                      gchar        *test_case_name)
 {
-    const gchar *test_names[] = {NULL, NULL};
-    const gchar *test_case_names[] = {NULL, NULL};
+    gchar *test_names[] = {NULL, NULL};
+    gchar *test_case_names[] = {NULL, NULL};
 
     g_return_val_if_fail(CUT_IS_TEST_SUITE(suite), FALSE);
 
@@ -395,8 +394,8 @@ cut_test_suite_run_test_in_test_case (CutTestSuite *suite,
 gboolean
 cut_test_suite_run_with_filter (CutTestSuite *test_suite,
                                 CutRunner   *runner,
-                                const gchar **test_case_names,
-                                const gchar **test_names)
+                                gchar **test_case_names,
+                                gchar **test_names)
 {
     CutTestContainer *container;
     GList *filtered_test_cases = NULL;

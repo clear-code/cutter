@@ -42,8 +42,8 @@
 static gboolean initialized = FALSE;
 static gchar *test_directory = NULL;
 static gchar *source_directory = NULL;
-static const gchar **test_case_names = NULL;
-static const gchar **test_names = NULL;
+static gchar **test_case_names = NULL;
+static gchar **test_names = NULL;
 static CutOrder test_case_order = CUT_ORDER_NONE_SPECIFIED;
 static gboolean use_multi_thread = FALSE;
 static GList *factories = NULL;

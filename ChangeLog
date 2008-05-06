@@ -1,5 +1,7 @@
 2008-05-06  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/, test/: remove const from gchar ** and some gchar *.
+
 	* cutter/cut-diff.c: make from and to property.
 
 	* cutter/cut-diff.[ch]:

@@ -68,7 +68,7 @@ test_get_bug_id (void)
 {
     CutTestContainer *container;
     GList *tests;
-    const gchar *filter[] = {"/test_get_bug_id/", NULL};
+    gchar *filter[] = {"/test_get_bug_id/", NULL};
 
     test_case = cut_loader_load_test_case(test_loader);
     cut_assert(test_case);
@@ -86,7 +86,7 @@ test_get_attribute (void)
 {
     CutTestContainer *container;
     GList *tests;
-    const gchar *filter[] = {"/test_attribute/", NULL};
+    gchar *filter[] = {"/test_attribute/", NULL};
 
     test_case = cut_loader_load_test_case(test_loader);
     cut_assert(test_case);
@@ -96,8 +96,10 @@ test_get_attribute (void)
     cut_assert(tests);
 
     cut_assert(1, g_list_length(tests));
-    cut_assert_equal_string("9", cut_test_get_attribute(CUT_TEST(tests->data), "bug"));
-    cut_assert_equal_string("5678", cut_test_get_attribute(CUT_TEST(tests->data), "priority"));
+    cut_assert_equal_string("9", cut_test_get_attribute(CUT_TEST(tests->data),
+                                                        "bug"));
+    cut_assert_equal_string("5678", cut_test_get_attribute(CUT_TEST(tests->data),
+                                                           "priority"));
 }
 
 void
@@ -105,7 +107,7 @@ test_get_description (void)
 {
     CutTestContainer *container;
     GList *tests;
-    const gchar *filter[] = {"/test_description/", NULL};
+    gchar *filter[] = {"/test_description/", NULL};
 
     test_case = cut_loader_load_test_case(test_loader);
     cut_assert(test_case);

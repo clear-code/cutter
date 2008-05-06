@@ -119,7 +119,7 @@ real_get_elapsed (CutTest *test)
 }
 
 static GList *
-filter_to_regexs (const gchar **filter)
+filter_to_regexs (gchar **filter)
 {
     GList *regexs = NULL;
 
@@ -157,7 +157,7 @@ match (GList *regexs, const gchar *name)
 
 GList *
 cut_test_container_filter_children (CutTestContainer *container,
-                                    const gchar **filter)
+                                    gchar **filter)
 {
     GList *original, *node, *regexs;
     GList *matched_tests = NULL;

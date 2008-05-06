@@ -104,7 +104,7 @@ dummy_teardown_function (void)
 void
 setup (void)
 {
-    const gchar *test_names[] = {"/.*/", NULL};
+    gchar *test_names[] = {"/.*/", NULL};
 
     set_error_on_setup = FALSE;
 
@@ -174,7 +174,7 @@ test_teardown (void)
 void
 test_test_case_count (void)
 {
-    const gchar *test_names[] = {"/.*/", NULL};
+    gchar *test_names[] = {"/.*/", NULL};
     cut_assert_equal_int(3, cut_test_case_get_n_tests(test_object, NULL));
     cut_assert_equal_int(3, cut_test_case_get_n_tests(test_object, test_names));
 }
@@ -219,7 +219,7 @@ test_run_tests_with_regex (void)
 void
 test_run_with_name_filter (void)
 {
-    const gchar *names[] = {"dummy_test_1", "run_test_function", NULL};
+    gchar *names[] = {"dummy_test_1", "run_test_function", NULL};
 
     cut_assert(cut_test_case_run_with_filter(test_object, runner, names));
     cut_assert_equal_int(1, n_run_dummy_run_test_function);
@@ -230,7 +230,7 @@ test_run_with_name_filter (void)
 void
 test_run_with_regex_filter (void)
 {
-    const gchar *regex[] = {"/dummy/", NULL};
+    gchar *regex[] = {"/dummy/", NULL};
 
     cut_assert(cut_test_case_run_with_filter(test_object, runner, regex));
     cut_assert_equal_int(0, n_run_dummy_run_test_function);
@@ -241,7 +241,7 @@ test_run_with_regex_filter (void)
 void
 test_run_with_name_and_regex_filter (void)
 {
-    const gchar *name_and_regex[] = {"/dummy/", "run_test_function", NULL};
+    gchar *name_and_regex[] = {"/dummy/", "run_test_function", NULL};
 
     cut_assert(cut_test_case_run_with_filter(test_object, runner,
                                              name_and_regex));

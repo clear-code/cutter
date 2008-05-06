@@ -699,37 +699,35 @@ cut_runner_is_multi_thread (CutRunner *runner)
 }
 
 void
-cut_runner_set_target_test_case_names (CutRunner *runner,
-                                        const gchar **names)
+cut_runner_set_target_test_case_names (CutRunner *runner, gchar **names)
 {
     CutRunnerPrivate *priv = CUT_RUNNER_GET_PRIVATE(runner);
 
     g_strfreev(priv->target_test_case_names);
-    priv->target_test_case_names = g_strdupv((gchar **)names);
+    priv->target_test_case_names = g_strdupv(names);
 }
 
-const gchar **
+gchar **
 cut_runner_get_target_test_case_names (CutRunner *runner)
 {
     CutRunnerPrivate *priv = CUT_RUNNER_GET_PRIVATE(runner);
-    return (const gchar **)(priv->target_test_case_names);
+    return priv->target_test_case_names;
 }
 
 void
-cut_runner_set_target_test_names (CutRunner *runner,
-                                  const gchar **names)
+cut_runner_set_target_test_names (CutRunner *runner, gchar **names)
 {
     CutRunnerPrivate *priv = CUT_RUNNER_GET_PRIVATE(runner);
 
     g_strfreev(priv->target_test_names);
-    priv->target_test_names = g_strdupv((gchar **)names);
+    priv->target_test_names = g_strdupv(names);
 }
 
-const gchar **
+gchar **
 cut_runner_get_target_test_names (CutRunner *runner)
 {
     CutRunnerPrivate *priv = CUT_RUNNER_GET_PRIVATE(runner);
-    return (const gchar **)(priv->target_test_names);
+    return priv->target_test_names;
 }
 
 static void
