@@ -5,6 +5,7 @@
 
 void test_load_function (void);
 void test_load_startup_and_shutdown_function (void);
+void test_fail_to_load (void);
 
 static CutLoader *test_loader;
 static CutTestCase *test_case;
@@ -103,6 +104,25 @@ test_load_startup_and_shutdown_function (void)
                  NULL);
     cut_assert(startup_function);
     cut_assert(shutdown_function);
+}
+
+void
+test_fail_to_load (void)
+{
+    CutLoader *loader;
+    gchar *test_path;
+
+    test_path = g_build_filename(cuttest_get_base_dir(),
+                                 "module_test_dir",
+                                 ".libs",
+                                 "cannot_load_module.so",
+                                 NULL);
+    loader = cut_loader_new(test_path);
+    g_free(test_path);
+
+    cut_assert(loader);
+    cut_assert_null(cut_loader_load_test_case(loader));
+    g_object_unref(loader);
 }
 
 /*
