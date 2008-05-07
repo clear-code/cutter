@@ -1,5 +1,7 @@
 2008-05-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* configure.ac: 0.8.0 -> 0.9.0.
+
 	* misc/release.rb: follow the recent SF.net HTML changes.
 
 	* NEWS*: update.
