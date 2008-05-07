@@ -28,7 +28,7 @@ end
 def login(agent, user_name, password=nil)
   page = agent.get("https://sourceforge.net/account/login.php")
 
-  login_form = page.form("login")
+  login_form = page.form("login_userpw")
   login_form.form_loginname = user_name
   login_form.form_pw = password || yield
 

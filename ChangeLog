@@ -1,5 +1,7 @@
 2008-05-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* misc/release.rb: follow the recent SF.net HTML changes.
+
 	* NEWS*: update.
 
 	* cutter/cutter.h: mark 'Since: 0.8'.
