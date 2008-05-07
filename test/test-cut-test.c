@@ -14,6 +14,7 @@ void test_failure_signal(void);
 void test_pending_signal(void);
 void test_notification_signal(void);
 void test_omission_signal(void);
+void test_test_function (void);
 
 static CutRunner *runner;
 static CutTest *test_object;
@@ -157,6 +158,18 @@ run (CutTest *test)
     g_object_unref(test_context);
 
     return success;
+}
+
+void 
+test_test_function (void)
+{
+    CutTestFunction test_function;
+
+    g_object_get(test_object,
+                 "test-function", &test_function,
+                 NULL);
+    cut_assert_equal_int(GPOINTER_TO_UINT(dummy_test_function),
+                         GPOINTER_TO_UINT(test_function));
 }
 
 void
