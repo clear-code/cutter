@@ -53,7 +53,10 @@ AC_DEFUN([AC_CHECK_COVERAGE],
     AC_CONFIG_COMMANDS([coverage], [
       cat >>Makefile <<EOS
 
-coverage: check
+coverage-clean: 
+	\$(LCOV) --compat-libtool --zerocounters -d . -o coverage.info
+
+coverage: coverage-clean check
 	\$(LCOV) --compat-libtool -d . -c -o coverage.info && \\
 	  \$(GENHTML) --highlight --legend -o coverage coverage.info
 EOS

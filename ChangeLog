@@ -1,3 +1,7 @@
+2008-05-07  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* m4macros/cutter.m4: Added "coverage-clean" target.
+
 2008-05-07  Kouhei Sutou  <kou@cozmixng.org>
 
 	* configure.ac: 0.8.0 -> 0.9.0.
