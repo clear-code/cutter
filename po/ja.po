@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Cutter 0.8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-05-07 13:27+0900\n"
-"PO-Revision-Date: 2008-05-07 13:29+0900\n"
+"PO-Revision-Date: 2008-05-07 14:22+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -111,12 +111,12 @@ msgstr "説明"
 msgid ""
 "%d test(s), %d assertion(s), %d failure(s), %d error(s), %d pending(s), %d "
 "omission(s), %d notification(s)"
-msgstr "%dテスト、%d表明、%d失敗、%dエラー、%d保留、%d省略、%d通知"
+msgstr "%dテスト、%d検証、%d失敗、%dエラー、%d保留、%d省略、%d通知"
 
 #: cutter/module/ui/cut-ui-gtk.c:628
 #, c-format
 msgid "%dT:%dA:%dF:%d:E:%dP:%dO:%dN"
-msgstr "%dテ:%d表:%d失:%d:エ:%d保:%d略:%d通"
+msgstr "%dテ:%d検:%d失:%d:エ:%d保:%d略:%d通"
 
 #: cutter/module/ui/cut-ui-gtk.c:678
 #, c-format

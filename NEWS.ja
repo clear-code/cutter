@@ -2,6 +2,17 @@
 
 = NEWS --- Cutterの歴史
 
+== 0.8.0: 2008-05-07
+
+  * LGPL2 -> LGPL3
+  * 表明の追加
+    * cut_assert_equal_g_list_int
+    * cut_assert_equal_g_list_string
+    * cut_assert_errno
+  * テストケースの最初と最後に実行するフックstartup/shutdownの追加
+  * 実験的: forkのサポート
+    * cut_fork
+
 == 0.7.0: 2008-03-26
 
   * パッケージの修正
