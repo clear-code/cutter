@@ -48,6 +48,17 @@ AC_DEFUN([AC_CHECK_COVERAGE],
   fi
   AC_SUBST(COVERAGE_CFLAGS)
   AM_CONDITIONAL([ENABLE_COVERAGE], [test "x$ac_cv_enable_coverage" = "xyes"])
+
+  if test "x$ac_cv_enable_coverage" = "xyes"; then
+    AC_CONFIG_COMMANDS([coverage], [
+      cat >>Makefile <<EOS
+
+coverage: check
+	\$(LCOV) --compat-libtool -d . -c -o coverage.info && \\
+	  \$(GENHTML) --highlight --legend -o coverage coverage.info
+EOS
+    ])
+  fi
 ])
 
 AC_DEFUN([AC_CHECK_CUTTER],

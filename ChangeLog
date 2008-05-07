@@ -1,5 +1,8 @@
 2008-05-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* Makefile.am: move coverage target to ...
+	* m4macros/cutter.m4: ... here.
+
 	* configure.ac: use AM_MAINTAINER_MODE.
 
 	* cutter/cut-sequence-matcher.c, test/test-cut-sequence-matcher.c:
