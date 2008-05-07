@@ -84,13 +84,9 @@ dnl **************************************************************
 dnl Configure for maintainer mode.
 dnl **************************************************************
 
-AC_ARG_ENABLE([maintainer-mode],
-              AS_HELP_STRING([--enable-maintainer-mode],
-                             [Enable maintainer mode]),
-              [ac_cv_enable_maintainer_mode=$enableval],
-              [ac_cv_enable_maintainer_mode=no])
+AM_MAINTAINER_MODE
 AM_CONDITIONAL([MAINTAINER_MODE],
-               [test "x$ac_cv_enable_maintainer_mode" = "xyes"])
+               [test "x$USE_MAINTAINER_MODE" = "xyes"])
 
 dnl **************************************************************
 dnl Configure for modules.

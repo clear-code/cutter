@@ -1,5 +1,7 @@
 2008-05-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* configure.ac: use AM_MAINTAINER_MODE.
+
 	* cutter/cut-sequence-matcher.c, test/test-cut-sequence-matcher.c:
 	use g_slice.
 
