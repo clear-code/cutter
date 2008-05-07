@@ -155,6 +155,8 @@ void teardown(void);
  *
  * If you define startup() in your test program, cutter will
  * call your startup() before each your test case is run.
+ *
+ * Since: 0.8
  */
 void startup(void);
 
@@ -163,6 +165,8 @@ void startup(void);
  *
  * If you define shutdown() in your test program, cutter will
  * call your shutdown() after each your test case is run.
+ *
+ * Since: 0.8
  */
 void shutdown(void);
 
