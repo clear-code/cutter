@@ -1,5 +1,7 @@
 2008-05-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* NEWS*: update.
+
 	* cutter/cutter.h: mark 'Since: 0.8'.
 
 	* cutter/cut-assertions.h, doc/reference/ja.po: add documents for

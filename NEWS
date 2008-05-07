@@ -2,6 +2,24 @@
 
 = NEWS --- The history of Cutter
 
+== 0.8.0: 2008-05-07
+
+  * LGPL2 -> LGPL3
+  * Add assertions.
+    * cut_assert_equal_g_list_int()
+    * cut_assert_equal_g_list_string()
+    * cut_assert_errno()
+  * Support omission: cut_omit()
+  * Support startup/shutdown hooks that are ran on before
+    test case start and end.
+  * Support diff.
+  * Support gcov.
+  * Experimental: Support fork:
+    * cut_fork()
+    * cut_wait_process()
+    * cut_fork_get_stdout_message()
+    * cut_fork_get_stderr_message()
+
 == 0.7.0: 2008-03-26
 
   * Fixed packaging failure.
