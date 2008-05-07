@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Cutter 0.6.0\n"
+"Project-Id-Version: Cutter 0.8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-02 10:35+0900\n"
-"PO-Revision-Date: 2008-03-20 21:38+0900\n"
+"POT-Creation-Date: 2008-05-07 13:27+0900\n"
+"PO-Revision-Date: 2008-05-07 13:29+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -21,80 +21,76 @@ msgstr ""
 msgid "Invalid test case order value: %s"
 msgstr "不正なテストケース順序指定です: %s"
 
-#: cutter/cut-main.c:103
+#: cutter/cut-main.c:85
 msgid "Show version"
 msgstr "バージョンを表示"
 
-#: cutter/cut-main.c:105
+#: cutter/cut-main.c:87
 msgid "Set directory of source code"
 msgstr "ソースコードのディレクトリを設定"
 
-#: cutter/cut-main.c:107
+#: cutter/cut-main.c:89
 msgid "Specify tests"
 msgstr "テストを指定"
 
-#: cutter/cut-main.c:109
+#: cutter/cut-main.c:91
 msgid "Specify test cases"
 msgstr "テストケースを指定"
 
-#: cutter/cut-main.c:111
+#: cutter/cut-main.c:93
 msgid "Run test cases with multi-thread"
 msgstr "マルチスレッドでテストケースを実行"
 
-#: cutter/cut-main.c:113
+#: cutter/cut-main.c:95
 msgid "Sort test case by. Default is 'none'."
 msgstr "テストケースを並び替える。既定値は'none'（並び替えない）"
 
-#: cutter/cut-report-factory-builder.c:100
-msgid "Set filename of XML report"
-msgstr "XMLレポートのファイル名を指定"
-
-#: cutter/cut-report-factory-builder.c:105
+#: cutter/cut-report-factory-builder.c:176
 msgid "Report Options"
 msgstr "レポートのオプション"
 
-#: cutter/cut-report-factory-builder.c:106
+#: cutter/cut-report-factory-builder.c:177
 msgid "Show report options"
 msgstr "レポートのオプションを表示"
 
-#: cutter/cut-ui-factory-builder.c:99
+#: cutter/cut-ui-factory-builder.c:100
 msgid "Specify UI"
 msgstr "UIを指定"
 
-#: cutter/cut-ui-factory-builder.c:124
+#: cutter/cut-ui-factory-builder.c:125
 msgid "UI Options"
 msgstr "UIのオプション"
 
-#: cutter/cut-ui-factory-builder.c:125
+#: cutter/cut-ui-factory-builder.c:126
 msgid "Show UI options"
 msgstr "コンソールUIのオプションの表示"
 
-#: cutter/module/report/cut-report-factory-xml.c:226
+#: cutter/module/report/cut-report-factory-xml.c:220
 msgid "XML Report Options"
 msgstr "XMLレポートのオプション"
 
-#: cutter/module/report/cut-report-factory-xml.c:227
+#: cutter/module/report/cut-report-factory-xml.c:221
 msgid "Show XML report options"
 msgstr "XMLレポートのオプションを表示"
 
-#: cutter/module/ui/cut-ui-factory-console.c:285
+#: cutter/module/ui/cut-ui-factory-console.c:279
 #, c-format
 msgid "Invalid color value: %s"
 msgstr "不正な色指定です: %s"
 
-#: cutter/module/ui/cut-ui-factory-console.c:310
+#: cutter/module/ui/cut-ui-factory-console.c:304
 msgid "Set verbose level"
 msgstr "詳細度を設定"
 
-#: cutter/module/ui/cut-ui-factory-console.c:312
+#: cutter/module/ui/cut-ui-factory-console.c:306
 msgid "Output log with colors"
 msgstr "色付きでログを出力"
 
-#: cutter/module/ui/cut-ui-factory-console.c:321
+#: cutter/module/ui/cut-ui-factory-console.c:315
 msgid "Console UI Options"
 msgstr "コンソールUIのオプション"
 
-#: cutter/module/ui/cut-ui-factory-console.c:322
+#: cutter/module/ui/cut-ui-factory-console.c:316
 msgid "Show console UI options"
 msgstr "コンソールUIのオプションの表示"
 
@@ -110,38 +106,38 @@ msgstr "名前"
 msgid "Description"
 msgstr "説明"
 
-#: cutter/module/ui/cut-ui-gtk.c:601
+#: cutter/module/ui/cut-ui-gtk.c:607
 #, c-format
 msgid ""
 "%d test(s), %d assertion(s), %d failure(s), %d error(s), %d pending(s), %d "
-"notification(s)"
-msgstr "%dテスト、%d表明、%d失敗、%dエラー、%d保留、%d通知"
+"omission(s), %d notification(s)"
+msgstr "%dテスト、%d表明、%d失敗、%dエラー、%d保留、%d省略、%d通知"
 
-#: cutter/module/ui/cut-ui-gtk.c:620
+#: cutter/module/ui/cut-ui-gtk.c:628
 #, c-format
-msgid "%dT:%dA:%dF:%d:E:%dP:%dN"
-msgstr "%dテ:%d表:%d失:%d:エ:%d保:%d通"
+msgid "%dT:%dA:%dF:%d:E:%dP:%dO:%dN"
+msgstr "%dテ:%d表:%d失:%d:エ:%d保:%d略:%d通"
 
-#: cutter/module/ui/cut-ui-gtk.c:670
+#: cutter/module/ui/cut-ui-gtk.c:678
 #, c-format
 msgid "%u/%u (%u%%): %.1fs"
 msgstr "%u/%u (%u%%): %.1f秒"
 
-#: cutter/module/ui/cut-ui-gtk.c:693
+#: cutter/module/ui/cut-ui-gtk.c:701
 #, c-format
 msgid "Staring test suite %s..."
 msgstr "テストスイート%sを開始..."
 
-#: cutter/module/ui/cut-ui-gtk.c:1173
+#: cutter/module/ui/cut-ui-gtk.c:1193
 #, c-format
 msgid "Running test: %s"
 msgstr "テストを実行中: %s"
 
-#: cutter/module/ui/cut-ui-gtk.c:1327
+#: cutter/module/ui/cut-ui-gtk.c:1349
 #, c-format
 msgid "Finished in %0.1f seconds: %s"
 msgstr "%0.1f秒で終了: %s"
 
-#: cutter/module/ui/cut-ui-gtk.c:1366
+#: cutter/module/ui/cut-ui-gtk.c:1388
 msgid "CRASHED!!!"
 msgstr "異常終了！！！"
