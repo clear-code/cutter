@@ -364,11 +364,13 @@ cut_sequence_matcher_new (GSequence *from, GSequence *to,
                            "to-sequence", to,
                            "compare-function", compare_func,
                            "compare-function-user-data", compare_func_user_data,
-                           "to_indices", g_hash_table_new_full(content_hash_func,
-                                                               content_equal_func,
-                                                               NULL,
-                                                               (GDestroyNotify)g_list_free),
-                           "junks", g_hash_table_new(content_hash_func, content_equal_func),
+                           "to_indices",
+                           g_hash_table_new_full(content_hash_func,
+                                                 content_equal_func,
+                                                 NULL,
+                                                 (GDestroyNotify)g_list_free),
+                           "junks", g_hash_table_new(content_hash_func,
+                                                     content_equal_func),
                            NULL);
     update_to_indices(matcher, junk_filter_func, junk_filter_func_user_data);
     return matcher;
@@ -512,10 +514,7 @@ find_best_match_position (CutSequenceMatcher *matcher,
 
     priv = CUT_SEQUENCE_MATCHER_GET_PRIVATE(matcher);
 
-    info = g_new(CutSequenceMatchInfo, 1);
-    info->from_index = from_begin;
-    info->to_index = to_begin;
-    info->size = 0;
+    info = cut_sequence_match_info_new(from_begin, to_begin, 0);
 
     sizes = g_hash_table_new(g_direct_hash, g_direct_equal);
 
@@ -722,7 +721,7 @@ cut_sequence_matcher_get_matches (CutSequenceMatcher *matcher)
                                                             info.to_begin,
                                                             info.to_end - 1);
         if (match_info->size == 0) {
-            g_free(match_info);
+            cut_sequence_match_info_free(match_info);
             continue;
         }
 

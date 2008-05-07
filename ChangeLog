@@ -1,3 +1,8 @@
+2008-05-07  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-sequence-matcher.c, test/test-cut-sequence-matcher.c:
+	use g_slice.
+
 2008-05-07  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-sequence-matcher.c: Use properties.

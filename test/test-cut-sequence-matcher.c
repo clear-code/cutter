@@ -64,7 +64,7 @@ teardown (void)
 
     g_list_free(expected_indexes);
 
-    g_free(actual_info);
+    cut_sequence_match_info_free(actual_info);
 
     free_matches(expected_matches);
 
@@ -351,7 +351,7 @@ test_to_indexes_complex_for_char_sequence (void)
                                                                         \
     g_object_unref(matcher);                                            \
     matcher = NULL;                                                     \
-    g_free(actual_info);                                                \
+    cut_sequence_match_info_free(actual_info);                          \
     actual_info = NULL;                                                 \
 } while (0)
 
