@@ -77,9 +77,6 @@ dnl for coverage
 dnl **************************************************************
 AC_CHECK_COVERAGE
 
-automakedir="/usr/share/automake-${am__api_version}"
-AC_SUBST(automakedir)
-
 dnl **************************************************************
 dnl Configure for maintainer mode.
 dnl **************************************************************
@@ -245,7 +242,6 @@ AC_CONFIG_FILES([Makefile
 		 gcutter.pc
 		 libcutter.pc
 		 m4macros/Makefile
-		 am/Makefile
 		 cutter/Makefile
 		 cutter/module/Makefile
 		 cutter/module/ui/Makefile
