@@ -77,6 +77,9 @@ dnl for coverage
 dnl **************************************************************
 AC_CHECK_COVERAGE
 
+automakedir="/usr/share/automake-${am__api_version}"
+AC_SUBST(automakedir)
+
 dnl **************************************************************
 dnl Configure for maintainer mode.
 dnl **************************************************************

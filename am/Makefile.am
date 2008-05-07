@@ -1,3 +1,3 @@
-amdir = $(pkgvdatadir)/am
+amdir = $(automakedir)/am
 
 dist_am_DATA = coverage.am
