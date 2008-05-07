@@ -36,6 +36,12 @@ extern "C" {
 
 typedef struct _CutTestContext     CutTestContext;
 
+typedef struct _CutTestAttribute CutTestAttribute;
+struct _CutTestAttribute {
+    const char *name;
+    const char *value;
+};
+
 typedef enum {
     CUT_TEST_RESULT_INVALID = -1,
     CUT_TEST_RESULT_SUCCESS,

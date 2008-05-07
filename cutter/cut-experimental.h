@@ -45,11 +45,6 @@ extern "C" {
 #define cut_user_data                                               \
     (cut_test_context_get_user_data(get_current_test_context()))
 
-typedef struct _CutTestAttribute {
-    const char *name;
-    const char *value;
-} CutTestAttribute;
-
 /**
  * cut_fork:
  *

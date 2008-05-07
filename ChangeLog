@@ -1,5 +1,8 @@
 2008-05-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-experimental.h: move CutTestAttribute to ...
+	* cutter/cut-public.h: ... here.
+
 	* doc/reference/ja.po: update.
 
 	* doc/reference/Makefile.am, doc/reference/cutter-docs.sgml: add
