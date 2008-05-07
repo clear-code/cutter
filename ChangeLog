@@ -1,5 +1,9 @@
 2008-05-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-experimental.h: add document.
+
+	* configure.ac: 0.7.0 -> 0.8.0.
+
 	* Makefile.am: move coverage target to ...
 	* m4macros/cutter.m4: ... here.
 
