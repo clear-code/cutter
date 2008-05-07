@@ -1,5 +1,10 @@
 2008-05-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/ja.po: update.
+
+	* doc/reference/Makefile.am, doc/reference/cutter-docs.sgml: add
+	cut-experimental.h.
+
 	* cutter/cut-experimental.h: add document.
 
 	* configure.ac: 0.7.0 -> 0.8.0.

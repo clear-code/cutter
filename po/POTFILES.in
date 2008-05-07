@@ -1,10 +1,13 @@
 cutter/cut-contractor.c
+cutter/cut-diff.c
 cutter/cut-enum-types.c
 cutter/cut-factory-builder.c
+cutter/cut-list.c
 cutter/cut-listener.c
 cutter/cut-loader.c
 cutter/cut-main.c
 cutter/cut-marshalers.c
+cutter/cut-module-factory-utils.c
 cutter/cut-module-factory.c
 cutter/cut-module.c
 cutter/cut-process.c
@@ -12,6 +15,7 @@ cutter/cut-report-factory-builder.c
 cutter/cut-report.c
 cutter/cut-repository.c
 cutter/cut-runner.c
+cutter/cut-sequence-matcher.c
 cutter/cut-test-case.c
 cutter/cut-test-container.c
 cutter/cut-test-context.c
@@ -25,7 +29,12 @@ cutter/cut-value-equal.c
 cutter/cut-verbose-level.c
 cutter/cut-xml-parser.c
 cutter/main.c
+cutter/module/report/cut-cairo-chart-data.c
+cutter/module/report/cut-cairo-pie-chart.c
+cutter/module/report/cut-cairo.c
+cutter/module/report/cut-report-factory-pdf.c
 cutter/module/report/cut-report-factory-xml.c
+cutter/module/report/cut-report-pdf.c
 cutter/module/report/cut-report-xml.c
 cutter/module/ui/cut-ui-console.c
 cutter/module/ui/cut-ui-factory-console.c
