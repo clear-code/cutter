@@ -100,6 +100,24 @@ extern "C" {
     cut_test_register_result(NOTIFICATION, NULL, format, ## __VA_ARGS__)
 
 /**
+ * cut_omit:
+ * @format: the message format. See the printf() documentation.
+ * @...: the parameters to insert into the format string.
+ *
+ * Omit the test.
+ *
+ * e.g.:
+ * |[
+ * if (version < 2.0)
+ *   cut_omit("Require >= 2.0");
+ * ]|
+ *
+ * Since: 0.8
+ */
+#define cut_omit(format, ...)                           \
+    cut_test_fail(OMISSION, NULL, format, ## __VA_ARGS__)
+
+/**
  * cut_assert:
  * @expression: the expression to check.
  * @...: optional format string, followed by parameters to insert
@@ -530,9 +548,6 @@ extern "C" {
                       ## __VA_ARGS__);                                  \
     }                                                                   \
 } while(0)
-
-#define cut_omit(format, ...)                           \
-    cut_test_fail(OMISSION, NULL, format, ## __VA_ARGS__)
 
 #ifdef __cplusplus
 }

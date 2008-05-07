@@ -1,5 +1,8 @@
 2008-05-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertions.h, doc/reference/ja.po: add documents for
+	cut_omit().
+
 	* cutter/cut-experimental.h: move CutTestAttribute to ...
 	* cutter/cut-public.h: ... here.
 
