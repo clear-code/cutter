@@ -142,7 +142,7 @@ test_no_option (void)
 void
 test_help_all (void)
 {
-    const gchar expected[] = 
+    const gchar expected[] =
         "Usage:\n"
         "  lt-cutter [OPTION...] TEST_DIRECTORY\n"
         "\n"
@@ -152,19 +152,26 @@ test_help_all (void)
         "  --help-report                                   Show report options\n"
         "  --help-ui                                       Show UI options\n"
         "  --help-ui-console                               Show console UI options\n"
+#if HAVE_GTK
         "  --help-gtk                                      Show GTK+ Options\n"
+#endif
         "\n"
         "Report Options\n"
         "  --pdf-report=FILE                               Set filename of pdf report\n"
         "  --xml-report=FILE                               Set filename of xml report\n"
         "\n"
         "UI Options\n"
+#if HAVE_GTK
         "  -u, --ui=[console|gtk]                          Specify UI\n"
+#else
+        "  -u, --ui=[console]                              Specify UI\n"
+#endif
         "\n"
         "Console UI Options\n"
         "  -v, --verbose=[s|silent|n|normal|v|verbose]     Set verbose level\n"
         "  -c, --color=[yes|true|no|false|auto]            Output log with colors\n"
         "\n"
+#if HAVE_GTK
         "GTK+ Options\n"
         "  --class=CLASS                                   Program class as used by the window manager\n"
         "  --gtk-name=NAME                                 Program name as used by the window manager\n"
@@ -173,6 +180,7 @@ test_help_all (void)
         "  --gtk-module=MODULES                            Load additional GTK+ modules\n"
         "  --g-fatal-warnings                              Make all warnings fatal\n"
         "\n"
+#endif
         "Application Options:\n"
         "  --version                                       Show version\n"
         "  -s, --source-directory=DIRECTORY                Set directory of source code\n"
@@ -180,7 +188,9 @@ test_help_all (void)
         "  -t, --test-case=TEST_CASE_NAME                  Specify test cases\n"
         "  -m, --multi-thread                              Run test cases with multi-thread\n"
         "  --test-case-order=[none|name|name-desc]         Sort test case by. Default is 'none'.\n"
+#if HAVE_GTK
         "  --display=DISPLAY                               X display to use\n"
+#endif
         "\n";
 
     cut_assert(run_cutter("--help-all"));
