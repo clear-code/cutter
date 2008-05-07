@@ -17,7 +17,8 @@ DOC_SOURCE_DIR=../../cutter
 HFILE_GLOB =					\
 	$(top_srcdir)/cutter/cutter.h		\
 	$(top_srcdir)/cutter/cut-assertions.h	\
-	$(top_srcdir)/cutter/cut-gassertions.h
+	$(top_srcdir)/cutter/cut-gassertions.h	\
+	$(top_srcdir)/cutter/cut-experimental.h
 #CFILE_GLOB=$(top_srcdir)/cutter/*.c
 
 # Headers to ignore
@@ -42,7 +43,6 @@ IGNORE_HFILES=			\
 	cut-test.h		\
 	cut-utils.h		\
 	cut-verbose-level.h	\
-	cut-experimental.h	\
 	config.h
 
 INCLUDES = \

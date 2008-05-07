@@ -64,7 +64,7 @@ extern "C" {
  * do_something_for_parent_process();
  * ]|
  *
- * Returns: pid.
+ * Returns: Process ID.
  *
  * Since: 0.8
  */
@@ -77,7 +77,7 @@ extern "C" {
 /**
  * cut_wait_process:
  * @pid: Process ID to wait.
- * @uesc_timeout: Timeout in usec.
+ * @usec_timeout: Timeout in usec.
  *
  * Waits a process specified by @pid.
  *
@@ -104,7 +104,7 @@ extern "C" {
 
 /**
  * cut_fork_get_stdout_message:
- * @pid: Process ID to be read from stdout.
+ * @pid: Process ID.
  *
  * Reads a message from a process specified by @pid.
  *
@@ -132,7 +132,7 @@ extern "C" {
 
 /**
  * cut_fork_get_stderr_message:
- * @pid: Process ID to be read from stderr.
+ * @pid: Process ID.
  *
  * Reads a message from a process specified by @pid.
  *
