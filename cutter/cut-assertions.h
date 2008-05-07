@@ -326,6 +326,7 @@ extern "C" {
                                                                         \
                 diff = cut_take_diff(_expected, _actual);               \
                 message = cut_take_printf("%s\n"                        \
+                                          "\n"                          \
                                           "diff:\n"                     \
                                           "%s",                         \
                                           message, diff);               \
