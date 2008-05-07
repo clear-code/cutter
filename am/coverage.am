@@ -1,0 +1,3 @@
+coverage: check
+	lcov --compat-libtool -d . -c -o coverage.info && \
+	  genhtml --highlight --legend -o coverage coverage.info

@@ -6,6 +6,7 @@
 2008-05-07  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-sequence-matcher.c: Use properties.
+	* am/coverage.am: Added to do "make coverage"
 
 2008-05-06  Kouhei Sutou  <kou@cozmixng.org>
 
