@@ -1,7 +1,7 @@
-#include "cutter.h"
+#include <cutter.h>
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#  include <cutter/config.h>
 #endif /* HAVE_CONFIG_H */
 
 #include <glib.h>

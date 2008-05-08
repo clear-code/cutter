@@ -129,7 +129,16 @@ dnl **************************************************************
 AM_PATH_GTK_2_0(2.12.0, [], [], [])
 PKG_CHECK_MODULES(GTK_PRINT, gtk+-unix-print-2.0,
                   [gtk_print=yes], [gtk_print=no])
-AM_CONDITIONAL([HAVE_GTK], [test "x$no_gtk" = x -a "x$gtk_print" = xyes])
+
+if test "x$no_gtk" = x -a "x$gtk_print" = xyes; then
+  gtk_exists=yes
+else
+  gtk_exists=no
+fi
+if test x"$gtk_exists" = "xyes"; then
+  AC_DEFINE(HAVE_GTK, 1, [Define to 1 if you have GTK+ installed])
+fi
+AM_CONDITIONAL([HAVE_GTK], [test x"$gtk_exists" = "xyes"])
 
 dnl **************************************************************
 dnl Check for Cairo
