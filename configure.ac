@@ -128,10 +128,10 @@ dnl Check for GTK+
 dnl **************************************************************
 AM_PATH_GTK_2_0(2.12.0, [], [], [])
 
-if test -n "$no_gtk"; then
+if test -z "$no_gtk"; then
   AC_DEFINE(HAVE_GTK, 1, [Define to 1 if you have GTK+ installed])
 fi
-AM_CONDITIONAL([HAVE_GTK], [test -n "$no_gtk"])
+AM_CONDITIONAL([HAVE_GTK], [test -z "$no_gtk"])
 
 dnl **************************************************************
 dnl Check for Cairo
