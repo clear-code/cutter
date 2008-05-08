@@ -1,3 +1,4 @@
+AC_PROVIDE(AC_CHECK_COVERAGE)
 AC_DEFUN([AC_CHECK_COVERAGE],
 [
   dnl **************************************************************
