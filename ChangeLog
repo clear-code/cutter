@@ -1,3 +1,8 @@
+2008-05-08  Kouhei Sutou  <kou@cozmixng.org>
+
+	* test/test-cut-assertions.c
+	(test_assert_message_with_format_string): add missing newline.
+
 2008-05-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* m4macros/cutter.m4: AC_PROVIDE(AC_CHECK_CUTTER) for check whether

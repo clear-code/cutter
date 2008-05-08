@@ -340,6 +340,7 @@ test_assert_message_with_format_string (void)
     cut_assert_equal_string("<\"%s\" == \"%d\">\n"
                             "expected: <%s>\n"
                             " but was: <%d>\n"
+                            "\n"
                             "diff:\n"
                             "- %s\n"
                             "+ %d",
