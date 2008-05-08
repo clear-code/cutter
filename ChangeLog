@@ -1,3 +1,11 @@
+2008-05-08  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* m4macros/cutter.m4: AC_PROVIDE(AC_CHECK_CUTTER) for check whether
+	cutter.m4 is installed or not.
+	To check cutter.m4 installation, use
+	AC_PROVIDE_IFELSE([AC_CHECK_CUTTER], [AC_CHECK_CUTTER]) in your
+	configure.ac.
+
 2008-05-07  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-assertions.h (cut_assert_equal_string): more new line.
