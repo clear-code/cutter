@@ -447,8 +447,7 @@ extern "C" {
  *
  * Since: 0.9
  */
-#define cut_assert_equal_string_array_with_free(expected, actual, ...) do \
-{                                                                       \
+#define cut_assert_equal_string_array_with_free(expected, actual, ...)  \
     cut_assert_equal_string_array(expected,                             \
                                   cut_take_string_array(actual),        \
                                   ## __VA_ARGS__);

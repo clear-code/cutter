@@ -10,6 +10,8 @@
 	taken_string_arrays. Use g_strfreev().
 	* cutter/cut-assertions.c: Added
 	cut_assert_equal_string_array_with_free().
+	* cutter/cut-assersions-helper.h: Added cut_take_string_array().
+	* cutter/cut-assersions.h: Remove "do {".
 
 2008-05-08  Kouhei Sutou  <kou@cozmixng.org>
 
