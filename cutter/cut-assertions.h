@@ -409,7 +409,7 @@ extern "C" {
 /**
  * cut_assert_equal_string_array:
  * @expected: an expected NULL-terminated array of strings.
- * @actual: an actual NULL-terminated array of strings that are freed..
+ * @actual: an actual NULL-terminated array of strings that are freed.
  * @...: optional format string, followed by parameters to insert
  * into the format string (as with printf())
  *
