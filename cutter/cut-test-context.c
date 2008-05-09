@@ -46,7 +46,7 @@ struct _CutTestContextPrivate
     gboolean is_multi_thread;
     jmp_buf *jump_buffer;
     GList *taken_strings;
-    GList *taken_strings_list;
+    GList *taken_string_arrays;
     gpointer user_data;
     GDestroyNotify user_data_destroy_notify;
     GList *processes;
@@ -121,7 +121,7 @@ cut_test_context_init (CutTestContext *context)
     priv->is_multi_thread = FALSE;
 
     priv->taken_strings = NULL;
-    priv->taken_strings_list = NULL;
+    priv->taken_string_arrays = NULL;
 
     priv->user_data = NULL;
     priv->user_data_destroy_notify = NULL;
@@ -159,10 +159,10 @@ dispose (GObject *object)
     g_list_free(priv->taken_strings);
     priv->taken_strings = NULL;
 
-    if (priv->taken_strings_list) {
-        g_list_foreach(priv->taken_strings_list, (GFunc)g_strfreev, NULL);
-        g_list_free(priv->taken_strings_list);
-        priv->taken_strings_list = NULL;
+    if (priv->taken_string_arrays) {
+        g_list_foreach(priv->taken_string_arrays, (GFunc)g_strfreev, NULL);
+        g_list_free(priv->taken_string_arrays);
+        priv->taken_string_arrays = NULL;
     }
 
     if (priv->user_data && priv->user_data_destroy_notify)
@@ -463,10 +463,10 @@ cut_test_context_take_string_array (CutTestContext *context,
     char **taken_strings;
 
     taken_strings = g_strdupv(strings);
-    priv->taken_strings_list = g_list_prepend(priv->taken_strings_list, taken_strings);
-    g_free(strings);
+    priv->taken_string_arrays = g_list_prepend(priv->taken_string_arrays, taken_strings);
+    g_strfreev(strings);
 
-    return taken_strings;
+    return (const char **)taken_strings;
 }
 
 int
