@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 0.8.0\n"
-"POT-Creation-Date: 2008-05-07 14:28+0900\n"
-"PO-Revision-Date: 2008-05-07 14:28+0900\n"
+"POT-Creation-Date: 2008-05-09 14:05+0900\n"
+"PO-Revision-Date: 2008-05-09 14:05+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -48,31 +48,35 @@ msgid "Index of deprecated symbols"
 msgstr "非推奨のシンボル一覧"
 
 #: cutter-docs.sgml:66(title)
+msgid "Index of new symbols in 0.9"
+msgstr "0.9での新しいシンボル一覧"
+
+#: cutter-docs.sgml:69(title)
 msgid "Index of new symbols in 0.8"
 msgstr "0.8での新しいシンボル一覧"
 
-#: cutter-docs.sgml:69(title)
+#: cutter-docs.sgml:72(title)
 msgid "Index of new symbols in 0.7"
 msgstr "0.7での新しいシンボル一覧"
 
-#: cutter-docs.sgml:72(title)
+#: cutter-docs.sgml:75(title)
 msgid "Index of new symbols in 0.6"
 msgstr "0.6での新しいシンボル一覧"
 
-#: cutter-docs.sgml:75(title)
+#: cutter-docs.sgml:78(title)
 msgid "Index of new symbols in 0.5"
 msgstr "0.5での新しいシンボル一覧"
 
-#: cutter-docs.sgml:78(title)
+#: cutter-docs.sgml:81(title)
 msgid "Index of new symbols in 0.4"
 msgstr "0.4での新しいシンボル一覧"
 
-#: cutter-docs.sgml:81(title)
+#: cutter-docs.sgml:84(title)
 msgid "Index of new symbols in 0.3"
 msgstr "0.3での新しいシンボル一覧"
 
 #: xml/cut-assertions.xml:7(refentrytitle) xml/cut-assertions.xml:13(refname)
-#: xml/cutter.xml:188(link)
+#: xml/cutter.xml:190(link)
 msgid "Assertions"
 msgstr "検証"
 
@@ -448,6 +452,7 @@ msgstr ""
 #: xml/cut-experimental.xml:89(para) xml/cut-experimental.xml:121(para)
 #: xml/cut-experimental.xml:150(para) xml/cut-experimental.xml:179(para)
 #: xml/cut-gassertions.xml:105(para) xml/cut-gassertions.xml:125(para)
+#: xml/cutter.xml:171(para) xml/cutter.xml:181(para)
 msgid "Since 0.8"
 msgstr "0.8から"
 
@@ -766,7 +771,7 @@ msgid "an expected NULL-terminated array of strings."
 msgstr "期待する文字列の配列。配列はNULL終端。"
 
 #: xml/cut-assertions.xml:404(simpara)
-msgid "an actual NULL-terminated array of strings."
+msgid "an actual NULL-terminated array of strings that are freed."
 msgstr "実際の文字列の配列。配列はNULL終端。"
 
 #: xml/cut-assertions.xml:412(title)
@@ -3753,7 +3758,7 @@ msgstr ""
 msgid "startup"
 msgstr ""
 
-#: xml/cutter.xml:25(link) xml/cutter.xml:174(primary)
+#: xml/cutter.xml:25(link) xml/cutter.xml:175(primary)
 msgid "shutdown"
 msgstr ""
 
@@ -3979,16 +3984,16 @@ msgstr ""
 "された<link linkend=\"startup\"><function>startup()</function></link>を呼びだ"
 "します。"
 
-#: xml/cutter.xml:173(title)
+#: xml/cutter.xml:174(title)
 msgid "shutdown ()"
 msgstr ""
 
-#: xml/cutter.xml:174(programlisting)
+#: xml/cutter.xml:175(programlisting)
 #, no-wrap
 msgid "<link linkend=\"void\">void</link>                shutdown                            (void);"
 msgstr ""
 
-#: xml/cutter.xml:175(para)
+#: xml/cutter.xml:176(para)
 msgid ""
 "If you define <link linkend=\"shutdown\"><function>shutdown()</function></"
 "link> in your test program, cutter will call your <link linkend=\"shutdown"
@@ -3999,7 +4004,7 @@ msgstr ""
 "された<link linkend=\"shutdown\"><function>shutdown()</function></link>を呼び"
 "だします。"
 
-#: xml/cutter.xml:187(title)
+#: xml/cutter.xml:189(title)
 msgid "See Also"
 msgstr "参考"
 

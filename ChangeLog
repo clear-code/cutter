@@ -1,5 +1,7 @@
 2008-05-09  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/: update.
+
 	* cutter/cut-gassertions.h, cutter/cut-gpublic.h,
 	cutter/cut-gassertions-helper.h, test/test-cut-gassertions-helper.c: add.
 
