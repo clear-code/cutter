@@ -47,6 +47,7 @@ struct _CutTestContextPrivate
     jmp_buf *jump_buffer;
     GList *taken_strings;
     GList *taken_string_arrays;
+    GList *taken_objects;
     gpointer user_data;
     GDestroyNotify user_data_destroy_notify;
     GList *processes;
@@ -163,6 +164,12 @@ dispose (GObject *object)
         g_list_foreach(priv->taken_string_arrays, (GFunc)g_strfreev, NULL);
         g_list_free(priv->taken_string_arrays);
         priv->taken_string_arrays = NULL;
+    }
+
+    if (priv->taken_objects) {
+        g_list_foreach(priv->taken_objects, (GFunc)g_object_unref, NULL);
+        g_list_free(priv->taken_objects);
+        priv->taken_objects = NULL;
     }
 
     if (priv->user_data && priv->user_data_destroy_notify)
@@ -467,6 +474,17 @@ cut_test_context_take_string_array (CutTestContext *context,
     g_strfreev(strings);
 
     return (const char **)taken_strings;
+}
+
+GObject *
+cut_test_context_take_g_object (CutTestContext *context,
+                                GObject        *object)
+{
+    CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+
+    priv->taken_objects = g_list_prepend(priv->taken_objects, object);
+
+    return object;
 }
 
 int

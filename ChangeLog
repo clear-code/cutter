@@ -1,5 +1,13 @@
 2008-05-09  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-gassertions.h, cutter/cut-gpublic.h,
+	cutter/cut-gassertions-helper.h, test/test-cut-gassertions-helper.c: add.
+
+	* cutter/cut-test-context.c, cutter/cut-test-context.h,
+	cutter/cut-gassertions.h: add cut_take_g_object().
+
+	* cutter/Makefile.am, test/Makefile.am: follow the above changes.
+
 	* sample/gtk+/builder.c: remove gtkprintjob.h.
 
 2008-05-09  Hiroyuki Ikezoe  <poincare@ikezoe.net>

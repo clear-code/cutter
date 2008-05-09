@@ -22,6 +22,8 @@ cutter_public_headers = 			\
 
 gcutter_public_headers =			\
 		cut-gassertions.h		\
+		cut-gassertions-helper.h	\
+		cut-gpublic.h			\
 		cut-value-equal.h		\
 		cut-list.h
 

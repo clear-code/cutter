@@ -44,7 +44,8 @@ noinst_LTLIBRARIES = 				\
 		test_cut_verbose_level.la	\
 		test_cut_utils.la		\
 		test_cut_sequence_matcher.la	\
-		test_cut_diff.la
+		test_cut_diff.la		\
+		test_cut_gassertions_helper.la
 
 LDFLAGS =			\
 	-module			\
@@ -87,6 +88,7 @@ test_cut_test_context_la_SOURCES = test-cut-test-context.c
 test_cut_utils_la_SOURCES       = test-cut-utils.c
 test_cut_sequence_matcher_la_SOURCES = test-cut-sequence-matcher.c
 test_cut_diff_la_SOURCES        = test-cut-diff.c
+test_cut_gassertions_helper_la_SOURCES = test-cut-gassertions-helper.c
 
 echo-cutter:
 	@echo $(CUTTER)
