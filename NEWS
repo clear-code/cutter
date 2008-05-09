@@ -2,6 +2,13 @@
 
 = NEWS --- The history of Cutter
 
+== 0.9.0: 2008-05-09
+
+  * Add assertions.
+    * cut_assert_equal_string_array_with_free()
+  * Experimental:
+    * cut_take_g_object()
+
 == 0.8.0: 2008-05-07
 
   * LGPL2 -> LGPL3
