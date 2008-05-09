@@ -8,6 +8,8 @@
 	cut_test_context_taken_string_array().
 	* cutter/cut-test-context.c: taken_strings_list ->
 	taken_string_arrays. Use g_strfreev().
+	* cutter/cut-assertions.c: Added
+	cut_assert_equal_string_array_with_free().
 
 2008-05-08  Kouhei Sutou  <kou@cozmixng.org>
 

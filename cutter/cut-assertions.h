@@ -409,7 +409,7 @@ extern "C" {
 /**
  * cut_assert_equal_string_array:
  * @expected: an expected NULL-terminated array of strings.
- * @actual: an actual NULL-terminated array of strings.
+ * @actual: an actual NULL-terminated array of strings that are freed..
  * @...: optional format string, followed by parameters to insert
  * into the format string (as with printf())
  *
@@ -434,6 +434,24 @@ extern "C" {
                       ## __VA_ARGS__);                                  \
     }                                                                   \
 } while(0)
+
+/**
+ * cut_assert_equal_string_array_with_free:
+ * @expected: an expected NULL-terminated array of strings.
+ * @actual: an actual NULL-terminated array of strings.
+ * @...: optional format string, followed by parameters to insert
+ * into the format string (as with printf())
+ *
+ * Passes if both @expected and @actual are not NULL and
+ * have same content (strcmp() == 0) strings.
+ *
+ * Since: 0.9
+ */
+#define cut_assert_equal_string_array_with_free(expected, actual, ...) do \
+{                                                                       \
+    cut_assert_equal_string_array(expected,                             \
+                                  cut_take_string_array(actual),        \
+                                  ## __VA_ARGS__);
 
 /**
  * cut_assert_operator:
