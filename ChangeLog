@@ -1,3 +1,7 @@
+2008-05-09  Kouhei Sutou  <kou@cozmixng.org>
+
+	* sample/gtk+/builder.c: remove gtkprintjob.h.
+
 2008-05-09  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-public.h, cutter/cut-test-context.c: Added

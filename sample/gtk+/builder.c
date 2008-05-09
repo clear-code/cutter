@@ -29,7 +29,6 @@
 
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
-#include <gtk/gtkprintjob.h>
 
 void test_parser (void);
 void test_connect_signals (void);
