@@ -1,3 +1,17 @@
+2008-05-11  Kouhei Sutou  <kou@cozmixng.org>
+
+	* test/test-cut-assertions.c (test_equal_string_with_diff): add.
+
+	* cutter/cut-assertions.h (cut_assert_true, cut_assert_false): add.
+
+	* cutter/cut-assertions.h (cut_assert_equal_string): ignore
+	trivial diff.
+
+	* cutter/cut-utils.c, cutter/cut-public.h
+	(cut_utils_is_interested_diff): add.
+
+	* test/test-cut-utils.c (test_is_interested_diff): add.
+
 2008-05-09  Kouhei Sutou  <kou@cozmixng.org>
 
 	* doc/reference/: update.

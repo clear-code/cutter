@@ -139,6 +139,52 @@ extern "C" {
 } while(0)
 
 /**
+ * cut_assert_true:
+ * @expression: the expression to check.
+ * @...: optional format string, followed by parameters to insert
+ * into the format string (as with printf())
+ *
+ * Passes if @expression is TRUE value (not 0 or NULL).
+ *
+ * Since: 0.9
+ */
+#define cut_assert_true(expression, ...) do                     \
+{                                                               \
+    if (expression) {                                           \
+        cut_test_pass();                                        \
+    } else {                                                    \
+        cut_test_fail(FAILURE,                                  \
+                      cut_take_printf("expected: <%s>"          \
+                                      " is TRUE value",         \
+                                      #expression),             \
+                      ## __VA_ARGS__);                          \
+    }                                                           \
+} while(0)
+
+/**
+ * cut_assert_false:
+ * @expression: the expression to check.
+ * @...: optional format string, followed by parameters to insert
+ * into the format string (as with printf())
+ *
+ * Passes if @expression is 0 or NULL.
+ *
+ * Since: 0.9
+ */
+#define cut_assert_false(expression, ...) do                    \
+{                                                               \
+    if (expression) {                                           \
+        cut_test_fail(FAILURE,                                  \
+                      cut_take_printf("expected: <%s>"          \
+                                      " is FALSE/NULL",         \
+                                      #expression),             \
+                      ## __VA_ARGS__);                          \
+    } else {                                                    \
+        cut_test_pass();                                        \
+    }                                                           \
+} while(0)
+
+/**
  * cut_assert_null:
  * @expression: the expression to check.
  * @...: optional format string, followed by parameters to insert
@@ -325,11 +371,13 @@ extern "C" {
                 const char *diff;                                       \
                                                                         \
                 diff = cut_take_diff(_expected, _actual);               \
-                message = cut_take_printf("%s\n"                        \
-                                          "\n"                          \
-                                          "diff:\n"                     \
-                                          "%s",                         \
-                                          message, diff);               \
+                if (cut_utils_is_interested_diff(diff)) {               \
+                    message = cut_take_printf("%s\n"                    \
+                                              "\n"                      \
+                                              "diff:\n"                 \
+                                              "%s",                     \
+                                              message, diff);           \
+                }                                                       \
             }                                                           \
             cut_test_fail(FAILURE, message, ## __VA_ARGS__);            \
         }                                                               \

@@ -75,6 +75,7 @@ const char **cut_test_context_take_string_array
 int   cut_utils_compare_string_array        (char **strings1,
                                              char **strings2);
 char *cut_utils_inspect_string_array        (char **strings);
+int   cut_utils_is_interested_diff          (const char *diff);
 
 void *cut_test_context_get_user_data        (CutTestContext *context);
 int   cut_test_context_trap_fork            (CutTestContext *context,

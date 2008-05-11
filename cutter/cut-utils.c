@@ -94,6 +94,24 @@ cut_utils_inspect_string_array (gchar **strings)
     return g_string_free(inspected, FALSE);
 }
 
+gboolean
+cut_utils_is_interested_diff (const gchar *diff)
+{
+    if (!diff)
+        return FALSE;
+
+    if (!g_regex_match_simple("^[-+]", diff, 0, 0))
+        return FALSE;
+
+    if (g_regex_match_simple("^[ ?]", diff, 0, 0))
+        return TRUE;
+
+    if (g_regex_match_simple("(?:.*\n){2,}", diff, 0, 0))
+        return TRUE;
+
+    return FALSE;
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */

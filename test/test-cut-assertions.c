@@ -7,6 +7,7 @@
 
 void test_equal_int(void);
 void test_equal_string(void);
+void test_equal_string_with_diff(void);
 void test_equal_double(void);
 void test_operator(void);
 void test_equal_string_array (void);
@@ -153,6 +154,36 @@ test_equal_string (void)
 {
     cut_assert_equal_string("", "");
     cut_assert_equal_string("a", "a");
+}
+
+static void
+equal_string_with_diff (void)
+{
+    cut_assert_equal_string("abc def ghi jkl",
+                            "abc DEF ghi jkl");
+}
+
+void
+test_equal_string_with_diff (void)
+{
+    CutTest *test;
+
+    test = cut_test_new("assert-equal-string-with-diff",
+                        equal_string_with_diff);
+    g_signal_connect(test, "failure", G_CALLBACK(cb_collect_result),
+                     &test_result);
+    cut_assert(!run(test));
+    cut_assert_test_result_summary(runner, 1, 0, 1, 0, 0, 0, 0);
+    cut_assert_equal_string("<\"abc def ghi jkl\" == \"abc DEF ghi jkl\">\n"
+                            "expected: <abc def ghi jkl>\n"
+                            " but was: <abc DEF ghi jkl>\n"
+                            "\n"
+                            "diff:\n"
+                            "- abc def ghi jkl\n"
+                            "?     ^^^\n"
+                            "+ abc DEF ghi jkl\n"
+                            "?     ^^^",
+                            cut_test_result_get_system_message(test_result));
 }
 
 void
@@ -339,11 +370,7 @@ test_assert_message_with_format_string (void)
                          cut_test_result_get_status(test_result));
     cut_assert_equal_string("<\"%s\" == \"%d\">\n"
                             "expected: <%s>\n"
-                            " but was: <%d>\n"
-                            "\n"
-                            "diff:\n"
-                            "- %s\n"
-                            "+ %d",
+                            " but was: <%d>",
                             cut_test_result_get_system_message(test_result));
     cut_assert_equal_string("expected and actual have format string",
                             cut_test_result_get_user_message(test_result));
@@ -403,7 +430,7 @@ test_failure_from_nested_function (void)
 }
 
 static void
-null_string_assertions ()
+null_string_assertions (void)
 {
     cut_assert_null_string(NULL);
     cut_assert_null_string("");
@@ -420,7 +447,7 @@ test_null_string (void)
 }
 
 static void
-equal_string_with_free_assertions ()
+equal_string_with_free_assertions (void)
 {
     cut_assert_equal_string_with_free(NULL, NULL);
     cut_assert_equal_string_with_free("", g_strdup(""));

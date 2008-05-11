@@ -3,6 +3,7 @@
 
 void test_compare_string_array (void);
 void test_inspect_string_array (void);
+void test_is_interested_diff (void);
 
 void
 test_compare_string_array (void)
@@ -30,6 +31,29 @@ test_inspect_string_array (void)
     cut_assert_equal_string_with_free("[\"a\", \"b\", \"c\"]",
                                       cut_utils_inspect_string_array(strings));
 }
+
+void
+test_is_interested_diff (void)
+{
+    cut_assert_false(cut_utils_is_interested_diff(NULL));
+    cut_assert_false(cut_utils_is_interested_diff(""));
+    cut_assert_false(cut_utils_is_interested_diff(" a\n"
+                                                  " b\n"
+                                                  " c"));
+    cut_assert_false(cut_utils_is_interested_diff("- abc\n"
+                                                  "+ abc"));
+    cut_assert_true(cut_utils_is_interested_diff("- a\n"
+                                                 "+ b\n"
+                                                 "+ c"));
+    cut_assert_true(cut_utils_is_interested_diff("- abc\n"
+                                                 "+ abc\n"
+                                                 "  xyz"));
+    cut_assert_true(cut_utils_is_interested_diff("- abc def ghi xyz\n"
+                                                 "?     ^^^\n"
+                                                 "+ abc DEF ghi xyz\n"
+                                                 "?     ^^^"));
+}
+
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
