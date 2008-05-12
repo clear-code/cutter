@@ -1,5 +1,7 @@
 2008-05-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* NEWS*: update.
+
 	* doc/reference/ja.po: update.
 
 	* test/test-cut-assertions.c (test_file_exist): add.

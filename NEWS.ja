@@ -2,6 +2,17 @@
 
 = NEWS --- Cutterの歴史
 
+== 0.9.0: 2008-05-12
+
+  * 検証の追加
+    * cut_assert_equal_string_array_with_free()
+    * cut_assert_true()
+    * cut_assert_false()
+    * cut_assert_file_exist()
+  * AC_CHECK_GCUTTERの追加
+  * 実験的: GObjectサポート:
+    * cut_take_g_object()
+
 == 0.8.0: 2008-05-07
 
   * LGPL2 -> LGPL3
@@ -13,7 +24,7 @@
   * テストケースの最初と最後に実行するフックstartup/shutdownの追加
   * diffのサポート
   * gcovのサポート
-  * 実験的: forkのサポート
+  * 実験的: forkのサポート:
     * cut_fork()
     * cut_wait_process()
     * cut_fork_get_stdout_message()

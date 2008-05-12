@@ -2,11 +2,15 @@
 
 = NEWS --- The history of Cutter
 
-== 0.9.0: 2008-05-09
+== 0.9.0: 2008-05-12
 
   * Add assertions.
     * cut_assert_equal_string_array_with_free()
-  * Experimental:
+    * cut_assert_true()
+    * cut_assert_false()
+    * cut_assert_file_exist()
+  * Add AC_CHECK_GCUTTER
+  * Experimental: Support GObject:
     * cut_take_g_object()
 
 == 0.8.0: 2008-05-07
