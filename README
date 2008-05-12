@@ -281,10 +281,12 @@ structure:
     ...
   </report>
 
-=== Test coverage 
+=== Test coverage
 
-You can see the code coverage with Cutter if your system have LTP tools <http://ltp.sourceforge.net/>.
-To see the coverage, add the followling line in your configure.ac and type "make coverage".
+You can see the code coverage with Cutter if your system
+have ((<LTP tools|URL:http://ltp.sourceforge.net/>)).  To
+see the coverage, add the followling line in your
+configure.ac and type "make coverage".
 
   AC_CHECK_COVERAGE
 

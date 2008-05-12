@@ -294,6 +294,16 @@ test_test_case_count()関数内で起こったことがわかります。
     ...
   </report>
 
+=== テストカバレッジ
+
+システムに((<LTP tools|URL:http://ltp.sourceforge.net/>))がイ
+ンストールされている場合は、Cutterを使ったテストを用いてコー
+ドカバレッジを出力することができます。カバレッジを出力するに
+はconfigure.acに以下を追加して、"make coverage"を実行してくだ
+さい。
+
+  AC_CHECK_COVERAGE
+
 == リファレンス
 
 === 表明
