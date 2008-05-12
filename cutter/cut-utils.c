@@ -112,6 +112,12 @@ cut_utils_is_interested_diff (const gchar *diff)
     return FALSE;
 }
 
+gboolean
+cut_utils_file_exist (const gchar *path)
+{
+    return g_file_test(path, G_FILE_TEST_EXISTS);
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */

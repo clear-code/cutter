@@ -1,9 +1,18 @@
+#ifdef HAVE_CONFIG_H
+#  include <config.h>
+#endif
+
 #include "cutter.h"
 #include "cut-test.h"
 #include "cut-test-result.h"
 #include "cut-utils.h"
 #include "cut-runner.h"
 #include "cuttest-assertions.h"
+
+#include <glib/gstdio.h>
+#ifdef HAVE_UNISTD_H
+#  include <unistd.h>
+#endif
 
 void test_equal_int(void);
 void test_equal_string(void);
@@ -26,9 +35,11 @@ void test_assert_equal_function (void);
 void test_failure_from_nested_function (void);
 void test_assert_errno (void);
 void test_omit (void);
+void test_file_exist (void);
 
 static gboolean need_cleanup;
 static gboolean compare_function_is_called;
+static gchar *tmp_file_name;
 
 static CutTest *test_object;
 static CutRunner *runner;
@@ -119,6 +130,7 @@ setup (void)
 {
     need_cleanup = FALSE;
     compare_function_is_called = FALSE;
+    tmp_file_name = NULL;
     test_object = NULL;
     runner = NULL;
     test_context = NULL;
@@ -128,6 +140,11 @@ setup (void)
 void
 teardown (void)
 {
+    if (tmp_file_name) {
+        g_remove(tmp_file_name);
+        g_free(tmp_file_name);
+    }
+
     if (!need_cleanup)
         return;
 
@@ -502,6 +519,36 @@ test_omit (void)
     test = cut_test_new("omit-test", omit_test);
     cut_assert(run(test));
     cut_assert_test_result_summary(runner, 1, 1, 0, 0, 0, 0, 1);
+}
+
+static void
+file_exist_test (void)
+{
+    gint fd;
+    GError *error = NULL;
+
+    fd = g_file_open_tmp(NULL, &tmp_file_name, &error);
+    if (fd == -1) {
+        const gchar *message;
+        message = cut_take_string(g_strdup(error->message));
+        g_error_free(error);
+        cut_error("can't create temporary file: %s", message);
+    }
+    close(fd);
+
+    cut_assert_file_exist(tmp_file_name);
+    g_remove(tmp_file_name);
+    cut_assert_file_exist(tmp_file_name);
+}
+
+void
+test_file_exist (void)
+{
+    CutTest *test;
+
+    test = cut_test_new("file-exist-test", file_exist_test);
+    cut_assert(!run(test));
+    cut_assert_test_result_summary(runner, 1, 1, 1, 0, 0, 0, 0);
 }
 
 

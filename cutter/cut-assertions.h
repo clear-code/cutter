@@ -587,7 +587,6 @@ extern "C" {
 
 /**
  * cut_assert_errno:
- * @...: the parameters to insert into the format string.
  * @...: optional format string, followed by parameters to insert
  * into the format string (as with printf())
  *
@@ -611,6 +610,34 @@ extern "C" {
                       cut_take_printf("expected: <0> (errno)\n"         \
                                       " but was: <%d> (%s)",            \
                                       _errno, strerror(_errno)),        \
+                      ## __VA_ARGS__);                                  \
+    }                                                                   \
+} while(0)
+
+/**
+ * cut_assert_file_exist:
+ * @path: the path to test.
+ * @...: optional format string, followed by parameters to insert
+ * into the format string (as with printf())
+ *
+ * Passes if @path is exist. It may or may not be a regular file.
+ *
+ * e.g.:
+ * |[
+ * cut_assert_file_exist("/tmp");             -> Pass on many environment.
+ * cut_assert_file_exist("/non-existent");    -> Fail
+ * ]|
+ *
+ * Since: 0.9
+ */
+#define cut_assert_file_exist(path, ...) do                             \
+{                                                                       \
+    const char *_path = (path);                                         \
+    if (cut_utils_file_exist(_path)) {                                  \
+        cut_test_pass();                                                \
+    } else {                                                            \
+        cut_test_fail(FAILURE,                                          \
+                      cut_take_printf("expected: <%s> exist", _path),   \
                       ## __VA_ARGS__);                                  \
     }                                                                   \
 } while(0)
