@@ -54,7 +54,7 @@ AC_DEFUN([AC_CHECK_COVERAGE],
     AC_CONFIG_COMMANDS([coverage], [
       cat >>Makefile <<EOS
 
-coverage-clean: 
+coverage-clean:
 	\$(LCOV) --compat-libtool --zerocounters -d . -o coverage.info
 
 coverage: coverage-clean check
@@ -68,11 +68,20 @@ EOS
 AC_PROVIDE(AC_CHECK_CUTTER)
 AC_DEFUN([AC_CHECK_CUTTER],
 [
-  PKG_CHECK_MODULES(CUTTER, cutter)
+  PKG_CHECK_MODULES(CUTTER, cutter, [], [:])
   AC_SUBST([CUTTER_CFLAGS])
   AC_SUBST([CUTTER_LIBS])
 
   _PKG_CONFIG(CUTTER, variable=cutter, cutter)
   CUTTER=$pkg_cv_CUTTER
   AC_SUBST([CUTTER])
+])
+
+AC_PROVIDE(AC_CHECK_GCUTTER)
+AC_DEFUN([AC_CHECK_GCUTTER],
+[
+  AC_REQUIRE([AC_CHECK_CUTTER])
+  PKG_CHECK_MODULES(GCUTTER, gcutter, [], [:])
+  AC_SUBST([CUTTER_CFLAGS])
+  AC_SUBST([CUTTER_LIBS])
 ])
