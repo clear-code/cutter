@@ -16,7 +16,7 @@ EXTRA_DIST =		\
 
 upload: upload-doc
 
-release: $(PACKAGE)-$(VERSION).tar.gz
+release: dist
 	$(srcdir)/misc/release.rb				\
 	  $(SF_USER) $(SF_PROJECT_NAME) $(PACKAGE_TITLE)	\
 	  $(VERSION) $(PACKAGE)-$(VERSION).tar.gz       	\

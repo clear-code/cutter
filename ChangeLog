@@ -1,5 +1,7 @@
 2008-05-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* Makefile.am (release): depend dist.
+
 	* README*: update.
 
 	* NEWS*: update.
