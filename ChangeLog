@@ -3,6 +3,7 @@
 	* m4macros/cutter.m4:
 	- add AC_CHECK_GCUTTER.
 	- don't require CUTTER/GCUTTER package.
+	- add _AC_CHECK_CUTTER and _AC_CHECK_GCUTTER for AC_REQUIRE.
 
 2008-05-11  Kouhei Sutou  <kou@cozmixng.org>
 
