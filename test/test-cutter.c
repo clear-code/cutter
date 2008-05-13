@@ -6,6 +6,10 @@
 
 #include <glib.h>
 
+#if HAVE_GTK
+#  include <gtk/gtk.h>
+#endif
+
 enum {
     ENV_LANG,
     ENV_CUT_UI_MODULE_DIR,

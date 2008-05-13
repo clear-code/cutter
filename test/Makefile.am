@@ -10,7 +10,7 @@ INCLUDES = 			\
 	-I$(top_srcdir)		\
 	-I$(top_srcdir)/cutter
 
-AM_CFLAGS = $(CUTTER_CFLAGS)
+AM_CFLAGS = $(CUTTER_CFLAGS) $(GTK_CFLAGS)
 
 EXTRA_DIST = run-test.sh
 
