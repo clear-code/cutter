@@ -28,9 +28,7 @@
 #include <glib.h>
 
 #include <setjmp.h>
-#define __USE_GNU
 #include <signal.h>
-#undef __USE_GNU
 
 #include "cut-test-suite.h"
 
@@ -269,12 +267,20 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite, CutRunner *runner,
     gboolean try_thread;
     gboolean all_success = TRUE;
     gint signum;
-    sighandler_t previous_segv_handler, previous_int_handler;
+    struct sigaction i_will_be_back_action;
+    struct sigaction previous_segv_action, previous_int_action;
+    gboolean set_segv_action = TRUE;
+    gboolean set_int_action = TRUE;
 
     sorted_test_cases = g_list_copy(test_cases);
     sorted_test_cases = cut_runner_sort_test_cases(runner, sorted_test_cases);
-    previous_segv_handler = signal(SIGSEGV, i_will_be_back_handler);
-    previous_int_handler = signal(SIGINT, i_will_be_back_handler);
+    i_will_be_back_action.sa_handler = i_will_be_back_handler;
+    sigemptyset(&i_will_be_back_action.sa_mask);
+    i_will_be_back_action.sa_flags = 0;
+    if (sigaction(SIGSEGV, &i_will_be_back_action, &previous_segv_action) == -1)
+        set_segv_action = FALSE;
+    if (sigaction(SIGINT, &i_will_be_back_action, &previous_int_action) == -1)
+        set_int_action = FALSE;
     signum = setjmp(jump_buffer);
     switch (signum) {
       case 0:
@@ -323,8 +329,10 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite, CutRunner *runner,
       default:
         break;
     }
-    signal(SIGINT, previous_int_handler);
-    signal(SIGSEGV, previous_segv_handler);
+    if (set_int_action)
+        sigaction(SIGINT, &previous_int_action, NULL);
+    if (set_segv_action)
+        sigaction(SIGSEGV, &previous_segv_action, NULL);
 
     g_signal_emit_by_name(CUT_TEST(test_suite), "complete");
 

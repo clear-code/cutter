@@ -1,5 +1,7 @@
 2008-05-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-suite.c: use sigaction() instead of signal().
+
 	* cutter/cut-test-context.c: assign cut_process_wait() result to a
 	variable for BSD system.
 
