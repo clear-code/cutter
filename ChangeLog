@@ -1,5 +1,8 @@
 2008-05-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-context.c: assign cut_process_wait() result to a
+	variable for BSD system.
+
 	* autogen.sh: make customizable.
 
 2008-05-13  Hiroyuki Ikezoe  <poincare@ikezoe.net>

@@ -516,14 +516,16 @@ int
 cut_test_context_wait_process (CutTestContext *context,
                                int pid, unsigned int timeout)
 {
-    int status = EXIT_SUCCESS;
+    int exit_status = EXIT_SUCCESS;
     CutProcess *process;
 
     process = get_process_from_pid(context, pid);
     if (process) {
+        int process_status;
         const gchar *xml;
 
-        status = WEXITSTATUS(cut_process_wait(process, timeout));
+        process_status = cut_process_wait(process, timeout);
+        exit_status = WEXITSTATUS(process_status);
         xml = cut_process_get_result_from_child(process);
         if (xml)
             xml = strstr(xml, "<result>");
@@ -549,7 +551,7 @@ cut_test_context_wait_process (CutTestContext *context,
         }
     }
 
-    return EXIT_SUCCESS;
+    return exit_status;
 }
 
 const char *
