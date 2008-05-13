@@ -100,13 +100,13 @@ cut_utils_is_interested_diff (const gchar *diff)
     if (!diff)
         return FALSE;
 
-    if (!g_regex_match_simple("^[-+]", diff, 0, 0))
+    if (!g_regex_match_simple("^[-+]", diff, G_REGEX_MULTILINE, 0))
         return FALSE;
 
-    if (g_regex_match_simple("^[ ?]", diff, 0, 0))
+    if (g_regex_match_simple("^[ ?]", diff, G_REGEX_MULTILINE, 0))
         return TRUE;
 
-    if (g_regex_match_simple("(?:.*\n){2,}", diff, 0, 0))
+    if (g_regex_match_simple("(?:.*\n){2,}", diff, G_REGEX_MULTILINE, 0))
         return TRUE;
 
     return FALSE;

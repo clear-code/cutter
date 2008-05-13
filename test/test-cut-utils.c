@@ -52,6 +52,11 @@ test_is_interested_diff (void)
                                                  "?     ^^^\n"
                                                  "+ abc DEF ghi xyz\n"
                                                  "?     ^^^"));
+    cut_assert_true(cut_utils_is_interested_diff("  a\n"
+                                                 "- abc def ghi xyz\n"
+                                                 "?     ^^^\n"
+                                                 "+ abc DEF ghi xyz\n"
+                                                 "?     ^^^"));
 }
 
 
