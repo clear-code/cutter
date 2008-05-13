@@ -52,7 +52,8 @@ AC_DEFUN([AC_CHECK_COVERAGE],
 
   if test "x$ac_cv_enable_coverage" = "xyes"; then
     AC_CONFIG_COMMANDS([coverage], [
-      cat >>Makefile <<EOS
+      if grep -v coverage Makefile >/dev/null; then
+        cat >>Makefile <<EOS
 
 coverage-clean:
 	\$(LCOV) --compat-libtool --zerocounters -d . -o coverage.info
@@ -61,6 +62,7 @@ coverage: coverage-clean check
 	\$(LCOV) --compat-libtool -d . -c -o coverage.info && \\
 	  \$(GENHTML) --highlight --legend -o coverage coverage.info
 EOS
+      fi
     ])
   fi
 ])

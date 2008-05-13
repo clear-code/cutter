@@ -1,3 +1,8 @@
+2008-05-13  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* m4macros/cutter.m4: Check "coverage" target existence before
+	adding the target.
+
 2008-05-12  Kouhei Sutou  <kou@cozmixng.org>
 
 	* configure.ac: 0.9.0 -> 1.0.0.
