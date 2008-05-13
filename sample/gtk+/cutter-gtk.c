@@ -1,6 +1,6 @@
 /* -*- c-file-style: "gnu" -*- */
 
-#include <cut-main.h>
+#include <cutter/cut-main.h>
 
 #include <stdlib.h>
 #include <gtk/gtk.h>

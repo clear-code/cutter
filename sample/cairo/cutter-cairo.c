@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 
-#include <cut-main.h>
+#include <cutter/cut-main.h>
 
 #include <cairo.h>
 #ifdef CAIRO_HAS_SVG_SURFACE
