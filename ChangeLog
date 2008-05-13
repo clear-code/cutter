@@ -1,3 +1,7 @@
+2008-05-13  Kouhei Sutou  <kou@cozmixng.org>
+
+	* autogen.sh: make customizable.
+
 2008-05-13  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* m4macros/cutter.m4: Check "coverage" target existence before

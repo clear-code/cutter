@@ -9,10 +9,10 @@ run()
     fi
 }
 
-run aclocal -I m4macros $ACLOCAL_OPTIONS
-run libtoolize --copy --force
-run glib-gettextize --force --copy
-#run gtkdocize --copy
-run autoheader
-run automake --add-missing --foreign --copy
-run autoconf
+run ${ACLOCAL:-aclocal} -I m4macros $ACLOCAL_OPTIONS
+run ${LIBTOOLIZE:-libtoolize} --copy --force
+run ${GLIB_GETTEXTIZE:-glib-gettextize} --force --copy
+#run ${GTKDOCIZE:-gtkdocize} --copy
+run ${AUTOHEADER:-autoheader}
+run ${AUTOMAKE:-automake} --add-missing --foreign --copy
+run ${AUTOCONF:-autoconf}
