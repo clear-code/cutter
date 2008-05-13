@@ -181,7 +181,9 @@ test_help_all (void)
         "  --class=CLASS                                   Program class as used by the window manager\n"
         "  --gtk-name=NAME                                 Program name as used by the window manager\n"
         "  --screen=SCREEN                                 X screen to use\n"
+#  ifdef GDK_WINDOWING_X11
         "  --sync                                          Make X calls synchronous\n"
+#  endif
         "  --gtk-module=MODULES                            Load additional GTK+ modules\n"
         "  --g-fatal-warnings                              Make all warnings fatal\n"
         "\n"
