@@ -28,9 +28,18 @@ static gchar *stdout_string = NULL;
 static gchar *stderr_string = NULL;
 static gint exit_status = 0;
 
-static const gchar help_message[] =
+static const gchar *help_message;
+
+void
+setup (void)
+{
+    stdout_string = NULL;
+    stderr_string = NULL;
+    exit_status = 0;
+
+    help_message = cut_take_printf(
         "Usage:\n"
-        "  lt-cutter [OPTION...] TEST_DIRECTORY\n"
+        "  %s [OPTION...] TEST_DIRECTORY\n"
         "\n"
         "Help Options:\n"
         "  -?, --help                                      Show help options\n"
@@ -46,14 +55,8 @@ static const gchar help_message[] =
         "  -t, --test-case=TEST_CASE_NAME                  Specify test cases\n"
         "  -m, --multi-thread                              Run test cases with multi-thread\n"
         "  --test-case-order=[none|name|name-desc]         Sort test case by. Default is 'none'.\n"
-        "\n";
-
-void
-setup (void)
-{
-    stdout_string = NULL;
-    stderr_string = NULL;
-    exit_status = 0;
+        "\n",
+        g_get_prgname());
 }
 
 void
@@ -142,9 +145,11 @@ test_no_option (void)
 void
 test_help_all (void)
 {
-    const gchar expected[] =
+    const gchar *help_all_message;
+
+    help_all_message = cut_take_printf(
         "Usage:\n"
-        "  lt-cutter [OPTION...] TEST_DIRECTORY\n"
+        "  %s [OPTION...] TEST_DIRECTORY\n"
         "\n"
         "Help Options:\n"
         "  -?, --help                                      Show help options\n"
@@ -191,11 +196,12 @@ test_help_all (void)
 #if HAVE_GTK
         "  --display=DISPLAY                               X display to use\n"
 #endif
-        "\n";
+        "\n",
+        g_get_prgname());
 
     cut_assert(run_cutter("--help-all"));
     cut_assert_equal_int(exit_status, 0);
-    cut_assert_equal_string(expected, stdout_string);
+    cut_assert_equal_string(help_all_message, stdout_string);
 }
 
 void

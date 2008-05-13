@@ -1,5 +1,7 @@
 2008-05-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cutter.c: use g_get_prgname() not lt-cutter.
+
 	* cutter/cut-utils.c, test/test-cut-utils.c: improve trivial check.
 
 	* cutter/cut-test-suite.c: use sigaction() instead of signal().
