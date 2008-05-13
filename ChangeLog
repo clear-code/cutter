@@ -19,6 +19,7 @@
 
 	* m4macros/cutter.m4: Check "coverage" target existence before
 	adding the target.
+	* m4macros/cutter.m4: Remove AC_PROVIDE.
 
 2008-05-12  Kouhei Sutou  <kou@cozmixng.org>
 
