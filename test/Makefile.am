@@ -11,6 +11,9 @@ INCLUDES = 			\
 	-I$(top_srcdir)/cutter
 
 AM_CFLAGS = $(CUTTER_CFLAGS) $(GTK_CFLAGS)
+if HAVE_GTK
+AM_CFLAGS += $(GTK_CFLAGS)
+endif
 
 EXTRA_DIST = run-test.sh
 
