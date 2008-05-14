@@ -66,7 +66,7 @@ EOS
   fi
 ])
 
-AC_DEFUN([_AC_CHECK_CUTTER],
+AC_DEFUN([AC_CHECK_CUTTER],
 [
   AC_ARG_WITH([cutter],
               AS_HELP_STRING([--with-cutter],
@@ -88,22 +88,12 @@ AC_DEFUN([_AC_CHECK_CUTTER],
   fi
 ])
 
-AC_DEFUN([AC_CHECK_CUTTER],
+AC_DEFUN([AC_CHECK_GCUTTER],
 [
-  _AC_CHECK_CUTTER
-])
-
-AC_DEFUN([_AC_CHECK_GCUTTER],
-[
-  AC_REQUIRE([_AC_CHECK_CUTTER])
+  AC_REQUIRE([AC_CHECK_CUTTER])
   if test "$ac_cv_use_cutter" != "no"; then
     PKG_CHECK_MODULES(GCUTTER, gcutter, [], [:])
     AC_SUBST([GCUTTER_CFLAGS])
     AC_SUBST([GCUTTER_LIBS])
   fi
-])
-
-AC_DEFUN([AC_CHECK_GCUTTER],
-[
-  _AC_CHECK_GCUTTER
 ])
