@@ -185,8 +185,13 @@ install-data-local:
 	    $(INSTALL_DATA) $(srcdir)$$dir/index.sgml			\
 	      $(DESTDIR)$(TARGET_DIR)$$target_dir || :;			\
 	    if test `which gtkdoc-rebase` != ""; then			\
-	      gtkdoc-rebase --relative --dest-dir=$(DESTDIR)		\
-	        --html-dir=$(DESTDIR)$(TARGET_DIR)$$target_dir;		\
+	      if test "$(DESTDIR)" = ""; then				\
+	        gtkdoc-rebase --relative 				\
+	          --html-dir=$(DESTDIR)$(TARGET_DIR)$$target_dir;	\
+	      else							\
+	        gtkdoc-rebase --relative --dest-dir=$(DESTDIR)		\
+	          --html-dir=$(DESTDIR)$(TARGET_DIR)$$target_dir;	\
+	      fi;							\
 	    fi;								\
 	  fi;								\
 	done

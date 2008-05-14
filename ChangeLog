@@ -1,5 +1,7 @@
 2008-05-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gtk-doc.make: suppress warnings.
+
 	* m4macros/cutter.m4: remove temporary function.
 
 	* m4macros/cutter.m4: add --without-cutter.
