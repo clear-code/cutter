@@ -1,5 +1,7 @@
 2008-05-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-loader.c: detect Mach-O bundle.
+
 	* cutter/cut-loader.c (is_valid_symbol_name): add.
 
 	* test/test-cut-test-attribute.c: remove needless casts.

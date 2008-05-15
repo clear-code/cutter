@@ -220,9 +220,31 @@ collect_symbols (CutLoaderPrivate *priv)
 
 #else
 
-static inline gboolean
-is_valid_char_for_cutter_symbol (char c)
+typedef enum {
+    CUT_BINARY_TYPE_UNKNOWN,
+    CUT_BINARY_TYPE_MACH_O_BUNDLE
+} CutBinaryType;
+
+static inline CutBinaryType
+guess_binary_type (char *buffer, size_t size)
 {
+    if (size >= 4 && ((unsigned int *)buffer)[0] == 0xfeedface)
+        return CUT_BINARY_TYPE_MACH_O_BUNDLE;
+    return CUT_BINARY_TYPE_UNKNOWN;
+}
+
+static inline gboolean
+is_valid_char_for_cutter_symbol (GString *name, char *buffer,
+                                 int i, size_t size, CutBinaryType binary_type)
+{
+    char c;
+
+    c = buffer[i];
+    if (binary_type == CUT_BINARY_TYPE_MACH_O_BUNDLE) {
+        if (name->len == 0 && i > 0 && buffer[i - 1] == '\0' && c == '_')
+            return FALSE;
+    }
+
     return g_ascii_isalnum(c) || '_' == c;
 }
 
@@ -241,6 +263,8 @@ collect_symbols (CutLoaderPrivate *priv)
     size_t size;
     GHashTable *symbol_name_table;
     GList *symbols;
+    gboolean first_buffer = TRUE;
+    CutBinaryType binary_type = CUT_BINARY_TYPE_UNKNOWN;
 
     input = g_fopen(priv->so_filename, "rb");
     if (!input)
@@ -250,8 +274,15 @@ collect_symbols (CutLoaderPrivate *priv)
     name = g_string_new("");
     while ((size = fread(buffer, sizeof(*buffer), sizeof(buffer), input)) > 0) {
         size_t i;
+
+        if (first_buffer) {
+            binary_type = guess_binary_type(buffer, size);
+            first_buffer = FALSE;
+        }
+
         for (i = 0; i < size; i++) {
-            if (is_valid_char_for_cutter_symbol(buffer[i])) {
+            if (is_valid_char_for_cutter_symbol(name, buffer, i,
+                                                size, binary_type)) {
                 g_string_append_c(name, buffer[i]);
             } else if (name->len > 0) {
                 if (is_valid_symbol_name(name)) {
