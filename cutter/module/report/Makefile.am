@@ -19,11 +19,11 @@ report_factory_module_LTLIBRARIES =	\
 		pdf_factory.la
 
 xml_la_CPPFLAGS =
-xml_la_SOURCES = cut-report-xml.c
+xml_la_SOURCES = cut-xml-report.c
 xml_la_LIBADD = $(GLIB_LIBS)
 
 xml_factory_la_CPPFLAGS =
-xml_factory_la_SOURCES = cut-report-factory-xml.c
+xml_factory_la_SOURCES = cut-xml-report-factory.c
 xml_factory_la_LIBADD = $(GLIB_LIBS)
 
 if PDF_REPORT_AVAILABLE
@@ -31,7 +31,7 @@ pdf_la_CPPFLAGS =				\
 	$(CAIRO_PDF_CFLAGS)			\
 	$(PANGO_CAIRO_CFLAGS)
 pdf_la_SOURCES = 		\
-	cut-report-pdf.c 	\
+	cut-pdf-report.c 	\
 	cut-cairo.c		\
 	cut-cairo.h		\
 	cut-cairo-pie-chart.c	\
@@ -44,6 +44,6 @@ pdf_la_LIBADD =			\
 	$(PANGO_CAIRO_LIBS)
 
 pdf_factory_la_CPPFLAGS =
-pdf_factory_la_SOURCES = cut-report-factory-pdf.c
+pdf_factory_la_SOURCES = cut-pdf-report-factory.c
 pdf_factory_la_LIBADD = $(GLIB_LIBS)
 endif

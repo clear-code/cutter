@@ -1,6 +1,9 @@
 2008-05-15  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-stream.[c|h]: Added. It has no method yet.
+	* cutter/module/ui/*.c. cutter/module/report/*.c: Rename filename.
+	cut-(ui|report)-XX.c -> cut-XX-(ui|report).c,
+	cut-(ui|report)-factory-XX.c -> cut-XX-(ui|report)-factory.c.
 
 2008-05-14  Kouhei Sutou  <kou@cozmixng.org>
 
