@@ -663,7 +663,7 @@ extern "C" {
 {                                                                       \
     const char *_pattern = (pattern);                                   \
     const char *_actual = (actual);                                     \
-    if (cut_utils_regex_match(_pattern, actual)) {                      \
+    if (cut_utils_regex_match(_pattern, _actual)) {                     \
         cut_test_pass();                                                \
     } else {                                                            \
         cut_test_fail(FAILURE,                                          \

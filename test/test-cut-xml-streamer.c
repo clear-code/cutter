@@ -83,7 +83,7 @@ test_streamer_success (void)
                        "      <name>dummy-success-test</name>\n"
                        "    </test>\n"
                        "    <status>success</status>\n"
-                       "    <elapsed>0.000100</elapsed>\n"
+                       "    <elapsed>.*?</elapsed>\n"
                        "  </result>\n"
                        "\n";
     int pid;
@@ -107,8 +107,7 @@ test_streamer_success (void)
         _exit(EXIT_SUCCESS);
     }
 
-    cut_assert_equal_string(expected,
-                            cut_fork_get_stdout_message(pid));
+    cut_assert_match(expected, cut_fork_get_stdout_message(pid));
     cut_assert_equal_int(EXIT_SUCCESS, cut_wait_process(pid, 0));
 }
 
