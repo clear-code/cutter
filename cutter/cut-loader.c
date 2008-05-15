@@ -226,6 +226,12 @@ is_valid_char_for_cutter_symbol (char c)
     return g_ascii_isalnum(c) || '_' == c;
 }
 
+static inline gboolean
+is_valid_symbol_name (GString *name)
+{
+    return name->len > 1;
+}
+
 static GList *
 collect_symbols (CutLoaderPrivate *priv)
 {
@@ -248,7 +254,7 @@ collect_symbols (CutLoaderPrivate *priv)
             if (is_valid_char_for_cutter_symbol(buffer[i])) {
                 g_string_append_c(name, buffer[i]);
             } else if (name->len > 0) {
-                if (name->len > 1) {
+                if (is_valid_symbol_name(name)) {
                     g_hash_table_insert(symbol_name_table,
                                         g_strdup(name->str), NULL);
                 }
@@ -257,7 +263,8 @@ collect_symbols (CutLoaderPrivate *priv)
         }
     }
 
-    g_hash_table_insert(symbol_name_table, g_strdup(name->str), NULL);
+    if (is_valid_symbol_name(name))
+        g_hash_table_insert(symbol_name_table, g_strdup(name->str), NULL);
     g_string_free(name, TRUE);
 
     symbols = g_hash_table_get_keys(symbol_name_table);
@@ -287,14 +294,14 @@ static gboolean
 is_including_test_name (const gchar *function_name, const gchar *test_name)
 {
     return (strlen(function_name) > strlen(test_name) - strlen(TEST_NAME_PREFIX)) &&
-           g_str_has_suffix(function_name, test_name + strlen(TEST_NAME_PREFIX));
+        g_str_has_suffix(function_name, test_name + strlen(TEST_NAME_PREFIX));
 }
 
 static gboolean
 is_valid_attribute_function_name (const gchar *function_name, const gchar *test_name)
 {
-    return !g_str_has_prefix(function_name, ATTRIBUTE_PREFIX) && 
-           is_including_test_name(function_name, test_name);
+    return !g_str_has_prefix(function_name, ATTRIBUTE_PREFIX) &&
+        is_including_test_name(function_name, test_name);
 }
 
 static gboolean
