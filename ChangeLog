@@ -38,6 +38,8 @@
 	* cutter/cut-pipeline.[c|h]: Added.
 	* cutter/cut-pipeline.[c|h]: Added cut_pipeline_run() and emit
 	"complete" signal.
+	* cutter/cut-pipeline.c: Create CutTestResult object from child
+	process stdout text.
 
 2008-05-14  Kouhei Sutou  <kou@cozmixng.org>
 

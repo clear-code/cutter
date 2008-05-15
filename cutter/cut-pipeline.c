@@ -23,16 +23,12 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include <signal.h>
-#include <unistd.h>
-#include <errno.h>
-#include <sys/types.h>
-#include <sys/wait.h>
+#include <wait.h>
 #include <glib.h>
 #include <glib/gstdio.h>
-#include <gmodule.h>
 
 #include "cut-pipeline.h"
+#include "cut-test-result.h"
 #include "cut-experimental.h"
 
 #define CUT_PIPELINE_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_PIPELINE, CutPipelinePrivate))
@@ -45,6 +41,7 @@ struct _CutPipelinePrivate
     guint io_source_id;
     gchar *target_directory;
     GIOChannel *stdout_io;
+    GString *cutter_string;
 };
 
 enum
@@ -116,6 +113,8 @@ cut_pipeline_init (CutPipeline *pipeline)
 
     priv->target_directory = NULL;
     priv->stdout_io        = NULL;
+
+    priv->cutter_string = g_string_new(NULL);
 }
 
 static void
@@ -204,6 +203,11 @@ dispose (GObject *object)
         priv->target_directory = NULL;
     }
 
+    if (priv->cutter_string) {
+        g_string_free(priv->cutter_string, TRUE);
+        priv->cutter_string = NULL;
+    }
+
     G_OBJECT_CLASS(cut_pipeline_parent_class)->dispose(object);
 }
 
@@ -247,6 +251,41 @@ child_watch_func (GPid pid, gint status, gpointer data)
     }
 }
 
+static GIOStatus
+read_line (CutPipeline *pipeline, GIOChannel *channel)
+{
+    GIOStatus status;
+    gchar *line_string = NULL;
+    CutPipelinePrivate *priv = CUT_PIPELINE_GET_PRIVATE(pipeline);
+
+    status = g_io_channel_read_line(channel,
+                                    &line_string,
+                                    NULL,
+                                    NULL,
+                                    NULL);
+    if (status == G_IO_STATUS_NORMAL ||
+        status == G_IO_STATUS_EOF) {
+        g_string_append(priv->cutter_string, line_string);
+        if (strcmp(line_string, "</result>")) {
+            CutTestResult *result;
+            gchar *xml = g_string_free(priv->cutter_string, FALSE);
+
+            result = cut_test_result_new_from_xml (xml, -1);
+            if (result) {
+                /* cut_test_context_emit_signal(context, result); */
+                g_object_unref(result);
+            }
+            g_free(xml);
+            priv->cutter_string = g_string_new(NULL);
+        }
+    }
+
+    if (line_string)
+        g_free(line_string);
+    
+    return status;
+}
+
 static gboolean
 io_watch_func (GIOChannel *channel, GIOCondition condition, gpointer data)
 {
@@ -255,16 +294,17 @@ io_watch_func (GIOChannel *channel, GIOCondition condition, gpointer data)
     if (!CUT_IS_PIPELINE(data))
         return FALSE;
 
-    switch (condition) {
-      case G_IO_IN:
-      case G_IO_PRI:
-        break;
-      case G_IO_ERR:
-      case G_IO_HUP:
-      default:
+    pipeline = CUT_PIPELINE(data);
+
+    if (condition & G_IO_IN ||
+        condition & G_IO_PRI) {
+        read_line(pipeline, channel);
+    }
+    
+    if (condition & G_IO_ERR ||
+        condition & G_IO_HUP) {
         emit_complete_signal(CUT_PIPELINE(data), FALSE);
         return FALSE;
-        break;
     }
 
     return TRUE;
@@ -276,8 +316,6 @@ create_io_channel (CutPipeline *pipeline, gint pipe)
     GIOChannel *channel;
 
     channel = g_io_channel_unix_new(pipe);
-    g_io_channel_set_encoding(channel, NULL, NULL);
-    g_io_channel_set_flags(channel, G_IO_FLAG_IS_READABLE, NULL);
     g_io_channel_set_close_on_unref(channel, TRUE);
     g_io_add_watch(channel,
                    G_IO_IN | G_IO_PRI | G_IO_ERR | G_IO_HUP,
@@ -301,7 +339,7 @@ cut_pipeline_run (CutPipeline *pipeline)
     if (!cutter_command)
         cutter_command = g_get_prgname();
 
-    command_line = g_strdup_printf("%s -v s --streamer=xml %s",
+    command_line = g_strdup_printf("%s -v v --streamer=xml %s",
                                    cutter_command,
                                    priv->target_directory);
 
