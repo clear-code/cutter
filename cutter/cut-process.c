@@ -213,7 +213,7 @@ cut_process_init (CutProcess *process)
 
     priv->pid = 0;
     priv->stdout_string = NULL;
-    priv->stderr_string = NULL;;
+    priv->stderr_string = NULL;
     priv->cutter_string = g_string_new(NULL);
     priv->child_io = NULL;
     priv->parent_io = NULL;
