@@ -16,6 +16,8 @@ enum {
     ENV_CUT_UI_FACTORY_MODULE_DIR,
     ENV_CUT_REPORT_MODULE_DIR,
     ENV_CUT_REPORT_FACTORY_MODULE_DIR,
+    ENV_CUT_STREAMER_MODULE_DIR,
+    ENV_CUT_STREAMER_FACTORY_MODULE_DIR,
     ENV_LAST
 };
 
@@ -48,6 +50,7 @@ setup (void)
         "Help Options:\n"
         "  -?, --help                                      Show help options\n"
         "  --help-all                                      Show all help options\n"
+        "  --help-streamer                                 Show streamer options\n"
         "  --help-report                                   Show report options\n"
         "  --help-ui                                       Show UI options\n"
         "  --help-console-ui                               Show console UI options\n"
@@ -95,6 +98,8 @@ run_cutter (const gchar *options)
     SET_ENV(CUT_UI_FACTORY_MODULE_DIR);
     SET_ENV(CUT_REPORT_MODULE_DIR);
     SET_ENV(CUT_REPORT_FACTORY_MODULE_DIR);
+    SET_ENV(CUT_STREAMER_MODULE_DIR);
+    SET_ENV(CUT_STREAMER_FACTORY_MODULE_DIR);
 #undef SET_ENV
 
     envp[ENV_LAST] = NULL;
@@ -158,12 +163,16 @@ test_help_all (void)
         "Help Options:\n"
         "  -?, --help                                      Show help options\n"
         "  --help-all                                      Show all help options\n"
+        "  --help-streamer                                 Show streamer options\n"
         "  --help-report                                   Show report options\n"
         "  --help-ui                                       Show UI options\n"
         "  --help-console-ui                               Show console UI options\n"
 #ifdef HAVE_GTK
         "  --help-gtk                                      Show GTK+ Options\n"
 #endif
+        "\n"
+        "Streamer Options\n"
+        "  --streamer=[xml]                                Specify streamer\n"
         "\n"
         "Report Options\n"
         "  --pdf-report=FILE                               Set filename of pdf report\n"

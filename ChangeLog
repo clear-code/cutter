@@ -6,6 +6,10 @@
 	cut-(ui|report)-factory-XX.c -> cut-XX-(ui|report)-factory.c.
 	* cutter/module/ui/*.c. cutter/module/report/*.c: Rename object name
 	correspond to filename.
+	* cutter/module/streamer/, cutter/cut-streamer-factory-builder.[c|h],
+	cuttter/cut-contractory.c: Added CutXMLStreamer module.
+	* test/run-test.sh, test/test-cutter.c: modify test data adapt to new
+	streamer module.
 
 2008-05-14  Kouhei Sutou  <kou@cozmixng.org>
 

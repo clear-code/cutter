@@ -29,6 +29,7 @@
 #include "cut-module-factory-utils.h"
 #include "cut-factory-builder.h"
 #include "cut-report-factory-builder.h"
+#include "cut-streamer-factory-builder.h"
 #include "cut-ui-factory-builder.h"
 
 #define CUT_CONTRACTOR_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_CONTRACTOR, CutContractorPrivate))
@@ -62,6 +63,7 @@ create_default_builders (void)
 
     list = g_list_prepend(list, g_object_new(CUT_TYPE_UI_FACTORY_BUILDER, NULL));
     list = g_list_prepend(list, g_object_new(CUT_TYPE_REPORT_FACTORY_BUILDER, NULL));
+    list = g_list_prepend(list, g_object_new(CUT_TYPE_STREAMER_FACTORY_BUILDER, NULL));
 
     return list;
 }
