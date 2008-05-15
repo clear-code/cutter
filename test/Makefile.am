@@ -45,6 +45,7 @@ noinst_LTLIBRARIES = 				\
 		test_cut_process.la		\
 		test_cut_xml_parser.la		\
 		test_cut_report_xml.la		\
+		test_cut_xml_streamer.la	\
 		test_cut_verbose_level.la	\
 		test_cut_utils.la		\
 		test_cut_sequence_matcher.la	\
@@ -77,6 +78,7 @@ test_cut_runner_la_SOURCES      = test-cut-runner.c
 test_cut_runner_la_LIBADD       = cuttest_utils.la
 test_cut_value_equal_la_SOURCES = test-cut-value-equal.c
 test_cut_report_xml_la_SOURCES  = test-cut-report-xml.c
+test_cut_xml_streamer_la_SOURCES= test-cut-xml-streamer.c
 test_cut_module_la_SOURCES      = test-cut-module.c
 test_cut_module_la_LIBADD       = cuttest_utils.la
 test_cut_module_factory_la_SOURCES = test-cut-module-factory.c
