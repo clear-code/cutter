@@ -1,5 +1,8 @@
 2008-05-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-streamer-factory-builder.c (set_option_context): use
+	0 not NULL for char.
+
 	* cutter/, test/: create CutRunContext.
 
 	* test/test-cut-xml-streamer.c (test_streamer_success): use

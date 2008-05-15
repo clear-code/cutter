@@ -139,7 +139,7 @@ set_option_context (CutFactoryBuilder *builder, GOptionContext *context)
     static gchar *arg_description = NULL;
     GOptionGroup *group;
     GOptionEntry entries[] = {
-        {"streamer", NULL, 0, G_OPTION_ARG_STRING, &streamer_name,
+        {"streamer", 0, 0, G_OPTION_ARG_STRING, &streamer_name,
          N_("Specify streamer"), NULL},
         {NULL}
     };
