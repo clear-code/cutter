@@ -30,7 +30,8 @@
 
 #include <cutter/cut-module-impl.h>
 #include <cutter/cut-report.h>
-#include <cutter/cut-runner.h>
+#include <cutter/cut-listener.h>
+#include <cutter/cut-run-context.h>
 #include <cutter/cut-test-result.h>
 #include <cutter/cut-enum-types.h>
 
@@ -47,7 +48,7 @@ typedef struct _CutXMLReportClass CutXMLReportClass;
 struct _CutXMLReport
 {
     CutReport     object;
-    CutRunner    *runner;
+    CutRunContext    *run_context;
 };
 
 struct _CutXMLReportClass
@@ -58,7 +59,7 @@ struct _CutXMLReportClass
 enum
 {
     PROP_0,
-    PROP_RUNNER
+    PROP_RUN_CONTEXT
 };
 
 static GType cut_type_xml_report = 0;
@@ -74,10 +75,10 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 
-static void attach_to_runner             (CutListener *listener,
-                                          CutRunner   *runner);
-static void detach_from_runner           (CutListener *listener,
-                                          CutRunner   *runner);
+static void attach_to_run_context             (CutListener *listener,
+                                          CutRunContext   *run_context);
+static void detach_from_run_context           (CutListener *listener,
+                                          CutRunContext   *run_context);
 
 static gchar   *get_all_results          (CutReport   *report);
 static gchar   *get_success_results      (CutReport   *report);
@@ -112,25 +113,25 @@ class_init (CutXMLReportClass *klass)
     report_class->get_notification_results = get_notification_results;
     report_class->get_test_result          = get_test_result;
 
-    spec = g_param_spec_object("cut-runner",
-                               "CutRunner object",
-                               "A CutRunner object",
-                               CUT_TYPE_RUNNER,
+    spec = g_param_spec_object("cut-run-context",
+                               "CutRunContext object",
+                               "A CutRunContext object",
+                               CUT_TYPE_RUN_CONTEXT,
                                G_PARAM_READWRITE);
-    g_object_class_install_property(gobject_class, PROP_RUNNER, spec);
+    g_object_class_install_property(gobject_class, PROP_RUN_CONTEXT, spec);
 }
 
 static void
 init (CutXMLReport *report)
 {
-    report->runner = NULL;
+    report->run_context = NULL;
 }
 
 static void
 listener_init (CutListenerClass *listener)
 {
-    listener->attach_to_runner   = attach_to_runner;
-    listener->detach_from_runner = detach_from_runner;
+    listener->attach_to_run_context   = attach_to_run_context;
+    listener->detach_from_run_context = detach_from_run_context;
 }
 
 static void
@@ -198,9 +199,9 @@ dispose (GObject *object)
 {
     CutXMLReport *report = CUT_XML_REPORT(object);
 
-    if (report->runner) {
-        g_object_unref(report->runner);
-        report->runner = NULL;
+    if (report->run_context) {
+        g_object_unref(report->run_context);
+        report->run_context = NULL;
     }
 
     G_OBJECT_CLASS(parent_class)->dispose(object);
@@ -215,8 +216,8 @@ set_property (GObject      *object,
     CutXMLReport *report = CUT_XML_REPORT(object);
 
     switch (prop_id) {
-      case PROP_RUNNER:
-        attach_to_runner(CUT_LISTENER(report), CUT_RUNNER(g_value_get_object(value)));
+      case PROP_RUN_CONTEXT:
+        attach_to_run_context(CUT_LISTENER(report), CUT_RUN_CONTEXT(g_value_get_object(value)));
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -233,8 +234,8 @@ get_property (GObject    *object,
     CutXMLReport *report = CUT_XML_REPORT(object);
 
     switch (prop_id) {
-      case PROP_RUNNER:
-        g_value_set_object(value, G_OBJECT(report->runner));
+      case PROP_RUN_CONTEXT:
+        g_value_set_object(value, G_OBJECT(report->run_context));
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -265,7 +266,7 @@ output_to_file (CutXMLReport *report, gchar *string)
 }
 
 static void
-cb_ready_test_suite (CutRunner *runner, CutTestSuite *test_suite,
+cb_ready_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
                      guint n_test_cases, guint n_tests,
                      CutXMLReport *report)
 {
@@ -279,26 +280,26 @@ cb_ready_test_suite (CutRunner *runner, CutTestSuite *test_suite,
 }
 
 static void
-cb_start_test_suite (CutRunner *runner, CutTestSuite *test_suite,
+cb_start_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
                      CutXMLReport *report)
 {
     output_to_file(report, "<report>\n");
 }
 
 static void
-cb_start_test_case (CutRunner *runner, CutTestCase *test_case,
+cb_start_test_case (CutRunContext *run_context, CutTestCase *test_case,
                     CutXMLReport *report)
 {
 }
 
 static void
-cb_start_test (CutRunner *runner, CutTest *test, CutTestContext *test_context,
+cb_start_test (CutRunContext *run_context, CutTest *test, CutTestContext *test_context,
                CutXMLReport *report)
 {
 }
 
 static void
-cb_test_signal (CutRunner      *runner,
+cb_test_signal (CutRunContext      *run_context,
                 CutTest        *test,
                 CutTestContext *test_context,
                 CutTestResult  *result,
@@ -311,38 +312,38 @@ cb_test_signal (CutRunner      *runner,
 }
 
 static void
-cb_complete_test (CutRunner *runner, CutTest *test,
+cb_complete_test (CutRunContext *run_context, CutTest *test,
                   CutTestContext *test_context, CutXMLReport *report)
 {
 }
 
 static void
-cb_complete_test_case (CutRunner *runner, CutTestCase *test_case,
+cb_complete_test_case (CutRunContext *run_context, CutTestCase *test_case,
                        CutXMLReport *report)
 {
 }
 
 static void
-cb_complete_test_suite (CutRunner *runner, CutTestSuite *test_suite,
+cb_complete_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
                         CutXMLReport *report)
 {
     output_to_file(report, "</report>");
 }
 
 static void
-cb_crashed (CutRunner *runner, const gchar *stack_trace,
+cb_crashed (CutRunContext *run_context, const gchar *stack_trace,
             CutXMLReport *report)
 {
 }
 
 static void
-connect_to_runner (CutXMLReport *report, CutRunner *runner)
+connect_to_run_context (CutXMLReport *report, CutRunContext *run_context)
 {
 #define CONNECT(name) \
-    g_signal_connect(runner, #name, G_CALLBACK(cb_ ## name), report)
+    g_signal_connect(run_context, #name, G_CALLBACK(cb_ ## name), report)
 
 #define CONNECT_TO_TEST(name) \
-    g_signal_connect(runner, #name, G_CALLBACK(cb_test_signal), report)
+    g_signal_connect(run_context, #name, G_CALLBACK(cb_test_signal), report)
 
     CONNECT(ready_test_suite);
     CONNECT(start_test_suite);
@@ -365,10 +366,10 @@ connect_to_runner (CutXMLReport *report, CutRunner *runner)
 }
 
 static void
-disconnect_from_runner (CutXMLReport *report, CutRunner *runner)
+disconnect_from_run_context (CutXMLReport *report, CutRunContext *run_context)
 {
 #define DISCONNECT(name)                                               \
-    g_signal_handlers_disconnect_by_func(runner,                       \
+    g_signal_handlers_disconnect_by_func(run_context,                       \
                                          G_CALLBACK(cb_ ## name),      \
                                          report)
 
@@ -382,7 +383,7 @@ disconnect_from_runner (CutXMLReport *report, CutRunner *runner)
 
     DISCONNECT(crashed);
 
-    g_signal_handlers_disconnect_by_func(runner,
+    g_signal_handlers_disconnect_by_func(run_context,
                                          G_CALLBACK(cb_test_signal),
                                          report);
 
@@ -390,30 +391,30 @@ disconnect_from_runner (CutXMLReport *report, CutRunner *runner)
 }
 
 static void
-attach_to_runner (CutListener *listener,
-                  CutRunner   *runner)
+attach_to_run_context (CutListener *listener,
+                  CutRunContext   *run_context)
 {
     CutXMLReport *report = CUT_XML_REPORT(listener);
-    if (report->runner)
-        detach_from_runner(listener, report->runner);
+    if (report->run_context)
+        detach_from_run_context(listener, report->run_context);
     
-    if (runner) {
-        report->runner = g_object_ref(runner);
-        connect_to_runner(CUT_XML_REPORT(listener), runner);
+    if (run_context) {
+        report->run_context = g_object_ref(run_context);
+        connect_to_run_context(CUT_XML_REPORT(listener), run_context);
     }
 }
 
 static void
-detach_from_runner (CutListener *listener,
-                    CutRunner   *runner)
+detach_from_run_context (CutListener *listener,
+                    CutRunContext   *run_context)
 {
     CutXMLReport *report = CUT_XML_REPORT(listener);
-    if (report->runner != runner)
+    if (report->run_context != run_context)
         return;
 
-    disconnect_from_runner(report, runner);
-    g_object_unref(report->runner);
-    report->runner = NULL;
+    disconnect_from_run_context(report, run_context);
+    g_object_unref(report->run_context);
+    report->run_context = NULL;
 }
 
 static gchar *
@@ -423,7 +424,7 @@ get_all_results (CutReport *report)
     GString *xml = g_string_new("");
     CutXMLReport *xml_report = CUT_XML_REPORT(report);
 
-    for (node = cut_runner_get_results(xml_report->runner);
+    for (node = cut_run_context_get_results(xml_report->run_context);
          node;
          node = g_list_next(node)) {
         CutTestResult *result = node->data;
@@ -444,7 +445,7 @@ get_status_results (CutXMLReport *report, CutTestResultStatus status)
     GString *xml = g_string_new("");
     CutXMLReport *xml_report = CUT_XML_REPORT(report);
 
-    for (node = cut_runner_get_results(xml_report->runner);
+    for (node = cut_run_context_get_results(xml_report->run_context);
          node;
          node = g_list_next(node)) {
         CutTestResult *result = node->data;

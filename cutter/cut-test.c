@@ -27,7 +27,7 @@
 
 #include "cut-test.h"
 #include "cut-test-container.h"
-#include "cut-runner.h"
+#include "cut-run-context.h"
 #include "cut-marshalers.h"
 #include "cut-test-result.h"
 
@@ -294,7 +294,7 @@ cut_test_new (const gchar *name, CutTestFunction function)
 }
 
 gboolean
-cut_test_run (CutTest *test, CutTestContext *test_context, CutRunner *runner)
+cut_test_run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
 {
     CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(test);
     gboolean success = TRUE;
@@ -303,7 +303,7 @@ cut_test_run (CutTest *test, CutTestContext *test_context, CutRunner *runner)
     if (!priv->test_function)
         return FALSE;
 
-    cut_runner_prepare_test(runner, test);
+    cut_run_context_prepare_test(run_context, test);
 
     g_signal_emit_by_name(test, "start");
 

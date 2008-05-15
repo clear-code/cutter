@@ -32,6 +32,7 @@
 
 #include "cut-main.h"
 
+#include "cut-listener.h"
 #include "cut-runner.h"
 #include "cut-test-suite.h"
 #include "cut-ui.h"
@@ -204,16 +205,18 @@ CutRunner *
 cut_create_runner (void)
 {
     CutRunner *runner;
+    CutRunContext *run_context;
 
     runner = cut_runner_new();
+    run_context = CUT_RUN_CONTEXT(runner);
 
-    cut_runner_set_test_directory(runner, test_directory);
+    cut_run_context_set_test_directory(run_context, test_directory);
     if (source_directory)
-        cut_runner_set_source_directory(runner, source_directory);
-    cut_runner_set_multi_thread(runner, use_multi_thread);
-    cut_runner_set_target_test_case_names(runner, test_case_names);
-    cut_runner_set_target_test_names(runner, test_names);
-    cut_runner_set_test_case_order(runner, test_case_order);
+        cut_run_context_set_source_directory(run_context, source_directory);
+    cut_run_context_set_multi_thread(run_context, use_multi_thread);
+    cut_run_context_set_target_test_case_names(run_context, test_case_names);
+    cut_run_context_set_target_test_names(run_context, test_names);
+    cut_run_context_set_test_case_order(run_context, test_case_order);
 
     return runner;
 }
@@ -233,24 +236,24 @@ create_listeners (void)
 }
 
 static void
-add_listeners (CutRunner *runner, GList *listeners)
+add_listeners (CutRunContext *run_context, GList *listeners)
 {
     GList *node;
 
     for (node = listeners; node; node = g_list_next(node)) {
         CutListener *listener = CUT_LISTENER(node->data);
-        cut_runner_add_listener(runner, listener);
+        cut_run_context_add_listener(run_context, listener);
     }
 }
 
 static void
-remove_listeners (CutRunner *runner, GList *listeners)
+remove_listeners (CutRunContext *run_context, GList *listeners)
 {
     GList *node;
 
     for (node = listeners; node; node = g_list_next(node)) {
         CutListener *listener = CUT_LISTENER(node->data);
-        cut_runner_remove_listener(runner, listener);
+        cut_run_context_remove_listener(run_context, listener);
         g_object_unref(listener);
     }
 }
@@ -274,6 +277,7 @@ get_cut_ui (GList *listeners)
 gboolean
 cut_run_runner (CutRunner *runner)
 {
+    CutRunContext *run_context;
     gboolean success;
     GList *listeners;
     CutUI *ui;
@@ -283,16 +287,18 @@ cut_run_runner (CutRunner *runner)
         return FALSE;
     }
 
+    run_context = CUT_RUN_CONTEXT(runner);
+
     listeners = create_listeners();
-    add_listeners(runner, listeners);
+    add_listeners(run_context, listeners);
 
     ui = get_cut_ui(listeners);
     if (ui)
-        success = cut_ui_run(ui, runner);
+        success = cut_ui_run(ui, run_context);
     else
         success = cut_runner_run(runner);
 
-    remove_listeners(runner, listeners);
+    remove_listeners(run_context, listeners);
     g_list_free(listeners);
 
     return success;

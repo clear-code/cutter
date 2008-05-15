@@ -24,6 +24,7 @@
 
 G_BEGIN_DECLS
 
+typedef struct _CutRunContext      CutRunContext;
 typedef struct _CutRunner          CutRunner;
 typedef struct _CutListener        CutListener;
 typedef struct _CutTestSuite       CutTestSuite;

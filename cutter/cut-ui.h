@@ -21,7 +21,7 @@
 #define __CUT_UI_H__
 
 #include <glib-object.h>
-#include <cutter/cut-runner.h>
+#include <cutter/cut-run-context.h>
 
 G_BEGIN_DECLS
 
@@ -39,7 +39,7 @@ struct _CutUIClass
 {
     GTypeInterface base_iface;
 
-    gboolean (*run) (CutUI *ui, CutRunner *runner);
+    gboolean (*run) (CutUI *ui, CutRunContext *run_context);
 };
 
 GType    cut_ui_get_type (void) G_GNUC_CONST;
@@ -50,7 +50,7 @@ GObject *cut_ui_new         (const gchar *name,
                              const gchar *first_property,
                              ...);
 
-gboolean cut_ui_run (CutUI *ui, CutRunner *runner);
+gboolean cut_ui_run (CutUI *ui, CutRunContext *run_context);
 
 G_END_DECLS
 

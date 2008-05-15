@@ -21,7 +21,7 @@
 #define __CUT_LISTENER_H__
 
 #include <glib-object.h>
-#include <cutter/cut-runner.h>
+#include <cutter/cut-private.h>
 
 G_BEGIN_DECLS
 
@@ -38,18 +38,18 @@ struct _CutListenerClass
 {
     GTypeInterface base_iface;
 
-    void (*attach_to_runner)    (CutListener *listener,
-                                 CutRunner   *runner);
-    void (*detach_from_runner)  (CutListener *listener,
-                                 CutRunner   *runner);
+    void (*attach_to_run_context)    (CutListener   *listener,
+                                      CutRunContext *run_context);
+    void (*detach_from_run_context)  (CutListener   *listener,
+                                      CutRunContext *run_context);
 };
 
 GType        cut_listener_get_type  (void) G_GNUC_CONST;
 
-void cut_listener_attach_to_runner  (CutListener *listener,
-                                     CutRunner   *runner);
-void cut_listener_detach_from_runner(CutListener *listener,
-                                     CutRunner   *runner);
+void cut_listener_attach_to_run_context  (CutListener   *listener,
+                                          CutRunContext *run_context);
+void cut_listener_detach_from_run_context(CutListener   *listener,
+                                          CutRunContext *run_context);
 
 G_END_DECLS
 

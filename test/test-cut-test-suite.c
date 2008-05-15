@@ -20,7 +20,7 @@ void test_run_test_in_test_case_with_null (void);
 void test_run_test_with_filter_with_null (void);
 void test_crashed_signal (void);
 
-static CutRunner *runner;
+static CutRunContext *run_context;
 static CutTestSuite *test_object;
 static CutLoader *loader;
 
@@ -100,7 +100,7 @@ setup (void)
     n_run_bummy_run_test_function = 0;
     n_crashed_signal = 0;
 
-    runner = cut_runner_new();
+    run_context = CUT_RUN_CONTEXT(cut_runner_new());
 
     test_object = cut_test_suite_new();
 
@@ -142,14 +142,14 @@ teardown (void)
 {
     g_object_unref(loader);
     g_object_unref(test_object);
-    g_object_unref(runner);
+    g_object_unref(run_context);
 }
 
 static gboolean
 run_test_case (gchar *test_case_name)
 {
     return cut_test_suite_run_test_in_test_case(test_object,
-                                                runner,
+                                                run_context,
                                                 "/.*/",
                                                 test_case_name);
 }
@@ -157,14 +157,14 @@ run_test_case (gchar *test_case_name)
 static gboolean
 run_test (gchar *test_name)
 {
-    return cut_test_suite_run_test(test_object, runner, test_name);
+    return cut_test_suite_run_test(test_object, run_context, test_name);
 }
 
 static gboolean
 run_test_in_test_case (gchar *test_name, gchar *test_case_name)
 {
     return cut_test_suite_run_test_in_test_case(test_object,
-                                                runner,
+                                                run_context,
                                                 test_name,
                                                 test_case_name);
 }
@@ -173,7 +173,7 @@ static gboolean
 run_test_with_filter (gchar **test_case_names, gchar **test_names)
 {
     return cut_test_suite_run_with_filter(test_object,
-                                          runner,
+                                          run_context,
                                           test_case_names,
                                           test_names);
 }
@@ -181,7 +181,7 @@ run_test_with_filter (gchar **test_case_names, gchar **test_names)
 void
 test_run (void)
 {
-    cut_assert(cut_test_suite_run(test_object, runner));
+    cut_assert(cut_test_suite_run(test_object, run_context));
     cut_assert_equal_int(1, n_run_dummy_test_function1);
     cut_assert_equal_int(1, n_run_dummy_test_function2);
     cut_assert_equal_int(1, n_run_dummy_run_test_function);
@@ -193,7 +193,7 @@ test_run (void)
 void
 test_run_test_case (void)
 {
-    cut_assert(cut_test_suite_run_test_case(test_object, runner,
+    cut_assert(cut_test_suite_run_test_case(test_object, run_context,
                                             "dummy_test_case"));
     cut_assert_equal_int(1, n_run_dummy_test_function1);
     cut_assert_equal_int(1, n_run_dummy_test_function2);

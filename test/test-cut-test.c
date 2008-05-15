@@ -16,7 +16,7 @@ void test_notification_signal(void);
 void test_omission_signal(void);
 void test_test_function (void);
 
-static CutRunner *runner;
+static CutRunContext *run_context;
 static CutTest *test_object;
 static gboolean run_test_flag = FALSE;
 static gint n_start_signal = 0;
@@ -82,7 +82,7 @@ setup (void)
     n_pass_assertion_signal = 0;
     n_omission_signal = 0;
 
-    runner = cut_runner_new();
+    run_context = CUT_RUN_CONTEXT(cut_runner_new());
 
     test_object = cut_test_new("dummy-test", dummy_test_function);
 }
@@ -91,7 +91,7 @@ void
 teardown (void)
 {
     g_object_unref(test_object);
-    g_object_unref(runner);
+    g_object_unref(run_context);
 }
 
 static void
@@ -152,7 +152,7 @@ run (CutTest *test)
     test_context = cut_test_context_new(NULL, NULL, test);
     original_test_context = get_current_test_context();
     set_current_test_context(test_context);
-    success = cut_test_run(test, test_context, runner);
+    success = cut_test_run(test, test_context, run_context);
     set_current_test_context(original_test_context);
 
     g_object_unref(test_context);

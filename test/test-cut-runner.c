@@ -12,7 +12,7 @@ void test_copy (void);
 void test_order (void);
 void test_ready_signal (void);
 
-static CutRunner *runner;
+static CutRunContext *run_context;
 static CutTestCase *test_case;
 static GList *test_cases;
 static gchar **expected_names, **actual_names;
@@ -23,7 +23,7 @@ static gint n_ready_test_case_signals = 0;
 void
 setup (void)
 {
-    runner = cut_runner_new();
+    run_context = CUT_RUN_CONTEXT(cut_runner_new());
     test_case = NULL;
     test_cases = NULL;
     expected_names = NULL;
@@ -36,7 +36,7 @@ setup (void)
 void
 teardown (void)
 {
-    g_object_unref(runner);
+    g_object_unref(run_context);
     if (test_case)
         g_object_unref(test_case);
 
@@ -107,12 +107,12 @@ collect_test_case_names (GList *test_cases)
 void
 test_order (void)
 {
-    cut_runner_set_test_case_order(runner, CUT_ORDER_NAME_ASCENDING);
+    cut_run_context_set_test_case_order(run_context, CUT_ORDER_NAME_ASCENDING);
     cut_assert_equal_int(CUT_ORDER_NAME_ASCENDING,
-                         cut_runner_get_test_case_order(runner));
-    cut_runner_set_test_case_order(runner, CUT_ORDER_NAME_DESCENDING);
+                         cut_run_context_get_test_case_order(run_context));
+    cut_run_context_set_test_case_order(run_context, CUT_ORDER_NAME_DESCENDING);
     cut_assert_equal_int(CUT_ORDER_NAME_DESCENDING,
-                         cut_runner_get_test_case_order(runner));
+                         cut_run_context_get_test_case_order(run_context));
 }
 
 void
@@ -136,22 +136,22 @@ test_sort_test_cases (void)
     cut_assert_equal_string_array(expected_names, actual_names);
     g_strfreev(actual_names);
 
-    test_cases = cut_runner_sort_test_cases(runner, test_cases);
+    test_cases = cut_run_context_sort_test_cases(run_context, test_cases);
     actual_names = collect_test_case_names(test_cases);
     cut_assert_equal_string_array(expected_names, actual_names);
     g_strfreev(expected_names);
     g_strfreev(actual_names);
 
-    cut_runner_set_test_case_order(runner, CUT_ORDER_NAME_ASCENDING);
-    test_cases = cut_runner_sort_test_cases(runner, test_cases);
+    cut_run_context_set_test_case_order(run_context, CUT_ORDER_NAME_ASCENDING);
+    test_cases = cut_run_context_sort_test_cases(run_context, test_cases);
     expected_names = g_strsplit("123 XYZ abc xyz", " ", -1);
     actual_names = collect_test_case_names(test_cases);
     cut_assert_equal_string_array(expected_names, actual_names);
     g_strfreev(expected_names);
     g_strfreev(actual_names);
 
-    cut_runner_set_test_case_order(runner, CUT_ORDER_NAME_DESCENDING);
-    test_cases = cut_runner_sort_test_cases(runner, test_cases);
+    cut_run_context_set_test_case_order(run_context, CUT_ORDER_NAME_DESCENDING);
+    test_cases = cut_run_context_sort_test_cases(run_context, test_cases);
     expected_names = g_strsplit("xyz abc XYZ 123", " ", -1);
     actual_names = collect_test_case_names(test_cases);
     cut_assert_equal_string_array(expected_names, actual_names);
@@ -173,16 +173,16 @@ test_n_ (void)
     cuttest_add_test(test_case, "test_5", dummy_notification_function);
     cuttest_add_test(test_case, "test_6", dummy_error_function);
 
-    cut_assert(!cut_test_case_run(test_case, runner));
+    cut_assert(!cut_test_case_run(test_case, run_context));
 
-    cut_assert_equal_int(3, cut_runner_get_n_successes(runner));
-    cut_assert_equal_int(1, cut_runner_get_n_failures(runner));
-    cut_assert_equal_int(1, cut_runner_get_n_errors(runner));
-    cut_assert_equal_int(1, cut_runner_get_n_pendings(runner));
-    cut_assert_equal_int(1, cut_runner_get_n_notifications(runner));
-    cut_assert_equal_int(1, cut_runner_get_n_omissions(runner));
-    cut_assert_equal_int(6, cut_runner_get_n_tests(runner));
-    cut_assert_equal_int(1, cut_runner_get_n_assertions(runner));
+    cut_assert_equal_int(3, cut_run_context_get_n_successes(run_context));
+    cut_assert_equal_int(1, cut_run_context_get_n_failures(run_context));
+    cut_assert_equal_int(1, cut_run_context_get_n_errors(run_context));
+    cut_assert_equal_int(1, cut_run_context_get_n_pendings(run_context));
+    cut_assert_equal_int(1, cut_run_context_get_n_notifications(run_context));
+    cut_assert_equal_int(1, cut_run_context_get_n_omissions(run_context));
+    cut_assert_equal_int(6, cut_run_context_get_n_tests(run_context));
+    cut_assert_equal_int(1, cut_run_context_get_n_assertions(run_context));
 
     g_object_unref(test_case);
     test_case = NULL;
@@ -191,15 +191,15 @@ test_n_ (void)
 void
 test_get_test_directory (void)
 {
-    cut_runner_set_test_directory(runner, ".");
-    cut_assert_equal_string(".", cut_runner_get_test_directory(runner));
+    cut_run_context_set_test_directory(run_context, ".");
+    cut_assert_equal_string(".", cut_run_context_get_test_directory(run_context));
 }
 
 void
 test_get_source_directory (void)
 {
-    cut_runner_set_source_directory(runner, ".");
-    cut_assert_equal_string(".", cut_runner_get_source_directory(runner));
+    cut_run_context_set_source_directory(run_context, ".");
+    cut_assert_equal_string(".", cut_run_context_get_source_directory(run_context));
 }
 
 void
@@ -207,11 +207,11 @@ test_build_source_filename (void)
 {
     gchar *filename;
 
-    filename = cut_runner_build_source_filename(runner, "source1.c");
+    filename = cut_run_context_build_source_filename(run_context, "source1.c");
     cut_assert_equal_string_with_free("source1.c", filename);
-    cut_runner_set_source_directory(runner, "base_directory");
+    cut_run_context_set_source_directory(run_context, "base_directory");
 
-    filename = cut_runner_build_source_filename(runner, "source2.c");
+    filename = cut_run_context_build_source_filename(run_context, "source2.c");
     cut_assert_equal_string_with_free("base_directory" G_DIR_SEPARATOR_S "source2.c",
                                       filename);
 }
@@ -219,26 +219,26 @@ test_build_source_filename (void)
 void
 test_copy (void)
 {
-    CutRunner *new_runner;
+    CutRunContext *new_run_context;
 
-    new_runner = cut_runner_copy(runner);
-    cut_assert(new_runner);
+    new_run_context = cut_run_context_copy(run_context);
+    cut_assert(new_run_context);
 
-    cut_assert_equal_int(cut_runner_get_multi_thread(runner),
-                         cut_runner_get_multi_thread(new_runner));
-    cut_assert_equal_int(cut_runner_is_multi_thread(runner),
-                         cut_runner_is_multi_thread(new_runner));
+    cut_assert_equal_int(cut_run_context_get_multi_thread(run_context),
+                         cut_run_context_get_multi_thread(new_run_context));
+    cut_assert_equal_int(cut_run_context_is_multi_thread(run_context),
+                         cut_run_context_is_multi_thread(new_run_context));
 
-    cut_assert_equal_string(cut_runner_get_test_directory(runner),
-                            cut_runner_get_test_directory(new_runner));
-    cut_assert_equal_string(cut_runner_get_source_directory(runner),
-                            cut_runner_get_source_directory(new_runner));
+    cut_assert_equal_string(cut_run_context_get_test_directory(run_context),
+                            cut_run_context_get_test_directory(new_run_context));
+    cut_assert_equal_string(cut_run_context_get_source_directory(run_context),
+                            cut_run_context_get_source_directory(new_run_context));
 
-    g_object_unref(new_runner);
+    g_object_unref(new_run_context);
 }
 
 static void
-cb_ready_test_suite_signal (CutRunner *runner,
+cb_ready_test_suite_signal (CutRunContext *run_context,
                             CutTestSuite *suite,
                             guint n_test_cases,
                             guint n_tests,
@@ -248,7 +248,7 @@ cb_ready_test_suite_signal (CutRunner *runner,
 }
 
 static void
-cb_ready_test_case_signal (CutRunner *runner,
+cb_ready_test_case_signal (CutRunContext *run_context,
                            CutTestCase *test_case,
                            guint n_tests,
                            gpointer data)
@@ -275,14 +275,14 @@ test_ready_signal (void)
     g_object_unref(test_case);
     test_case = NULL;
 
-    cut_runner_set_test_suite(runner, suite);
-    g_signal_connect(runner, "ready-test-suite", G_CALLBACK(cb_ready_test_suite_signal), NULL);
-    g_signal_connect(runner, "ready-test-case", G_CALLBACK(cb_ready_test_case_signal), NULL);
-    cut_assert(cut_test_suite_run(suite, runner));
-    g_signal_handlers_disconnect_by_func(runner,
+    cut_run_context_set_test_suite(run_context, suite);
+    g_signal_connect(run_context, "ready-test-suite", G_CALLBACK(cb_ready_test_suite_signal), NULL);
+    g_signal_connect(run_context, "ready-test-case", G_CALLBACK(cb_ready_test_case_signal), NULL);
+    cut_assert(cut_test_suite_run(suite, run_context));
+    g_signal_handlers_disconnect_by_func(run_context,
                                          G_CALLBACK(cb_ready_test_suite_signal),
                                          NULL);
-    g_signal_handlers_disconnect_by_func(runner,
+    g_signal_handlers_disconnect_by_func(run_context,
                                          G_CALLBACK(cb_ready_test_case_signal),
                                          NULL);
 

@@ -11,7 +11,7 @@ void test_equal_g_list_int(void);
 void test_equal_g_list_string(void);
 
 static CutTest *test;
-static CutRunner *runner;
+static CutRunContext *run_context;
 static CutTestContext *test_context;
 static CutTestResult *test_result;
 
@@ -28,12 +28,12 @@ run (CutTest *_test)
 
     test = _test;
 
-    runner = cut_runner_new();
+    run_context = CUT_RUN_CONTEXT(cut_runner_new());
 
     test_context = cut_test_context_new(NULL, NULL, test);
     original_test_context = get_current_test_context();
     set_current_test_context(test_context);
-    success = cut_test_run(test, test_context, runner);
+    success = cut_test_run(test, test_context, run_context);
     set_current_test_context(original_test_context);
 
     return success;
@@ -43,7 +43,7 @@ void
 setup (void)
 {
     test = NULL;
-    runner = NULL;
+    run_context = NULL;
     test_context = NULL;
     test_result = NULL;
 
@@ -60,8 +60,8 @@ teardown (void)
 {
     if (test)
         g_object_unref(test);
-    if (runner)
-        g_object_unref(runner);
+    if (run_context)
+        g_object_unref(run_context);
     if (test_context)
         g_object_unref(test_context);
     if (test_result)
@@ -100,8 +100,8 @@ test_equal_g_type (void)
     cut_assert(test);
 
     cut_assert(!run(test));
-    cut_assert_test_result_summary(runner, 1, 1, 1, 0, 0, 0, 0);
-    cut_assert_test_result(runner, 0, CUT_TEST_RESULT_FAILURE,
+    cut_assert_test_result_summary(run_context, 1, 1, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "equal_g_type test",
                            NULL,
                            "<G_TYPE_INT == G_TYPE_STRING>\n"
@@ -134,8 +134,8 @@ test_equal_g_value (void)
     cut_assert(test);
 
     cut_assert(!run(test));
-    cut_assert_test_result_summary(runner, 1, 2, 1, 0, 0, 0, 0);
-    cut_assert_test_result(runner, 0, CUT_TEST_RESULT_FAILURE,
+    cut_assert_test_result_summary(run_context, 1, 2, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "equal_g_value test",
                            NULL,
                            "<value1 == value2>\n"
@@ -167,8 +167,8 @@ test_equal_g_list_int (void)
     cut_assert(test);
 
     cut_assert(!run(test));
-    cut_assert_test_result_summary(runner, 1, 2, 1, 0, 0, 0, 0);
-    cut_assert_test_result(runner, 0, CUT_TEST_RESULT_FAILURE,
+    cut_assert_test_result_summary(run_context, 1, 2, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "equal_g_list_int test",
                            NULL,
                            "<list1 == list2>\n"
@@ -202,8 +202,8 @@ test_equal_g_list_string (void)
     cut_assert(test);
 
     cut_assert(!run(test));
-    cut_assert_test_result_summary(runner, 1, 2, 1, 0, 0, 0, 0);
-    cut_assert_test_result(runner, 0, CUT_TEST_RESULT_FAILURE,
+    cut_assert_test_result_summary(run_context, 1, 2, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "equal_g_list_string test",
                            NULL,
                            "<list1 == list2>\n"

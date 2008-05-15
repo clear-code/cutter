@@ -27,7 +27,7 @@
 #include <pango/pangocairo.h>
 
 #include <cutter/cut-test-result.h>
-#include <cutter/cut-runner.h>
+#include <cutter/cut-run-context.h>
 
 #include "cut-cairo-pie-chart.h"
 #include "cut-cairo.h"
@@ -289,29 +289,29 @@ draw_pie_piece (CutCairoPieChart *chart,
 }
 
 static gdouble
-get_status_result_number (CutRunner *runner,
+get_status_result_number (CutRunContext *run_context,
                           CutTestResultStatus status)
 {
     guint n_results = 0;
 
     switch (status) {
       case CUT_TEST_RESULT_SUCCESS:
-        n_results = cut_runner_get_n_successes(runner);
+        n_results = cut_run_context_get_n_successes(run_context);
         break;
       case CUT_TEST_RESULT_NOTIFICATION:
-        n_results = cut_runner_get_n_notifications(runner);
+        n_results = cut_run_context_get_n_notifications(run_context);
         break;
       case CUT_TEST_RESULT_OMISSION:
-        n_results = cut_runner_get_n_omissions(runner);
+        n_results = cut_run_context_get_n_omissions(run_context);
         break;
       case CUT_TEST_RESULT_PENDING:
-        n_results = cut_runner_get_n_pendings(runner);
+        n_results = cut_run_context_get_n_pendings(run_context);
         break;
       case CUT_TEST_RESULT_FAILURE:
-        n_results = cut_runner_get_n_failures(runner);
+        n_results = cut_run_context_get_n_failures(run_context);
         break;
       case CUT_TEST_RESULT_ERROR:
-        n_results = cut_runner_get_n_errors(runner);
+        n_results = cut_run_context_get_n_errors(run_context);
         break;
       default:
         break;
@@ -321,7 +321,7 @@ get_status_result_number (CutRunner *runner,
 }
 
 static gdouble
-calculate_sum (CutCairoPieChart *chart, CutRunner *runner)
+calculate_sum (CutCairoPieChart *chart, CutRunContext *run_context)
 {
     CutCairoPieChartPrivate *priv;
     GList *node;
@@ -333,14 +333,14 @@ calculate_sum (CutCairoPieChart *chart, CutRunner *runner)
         CutTestResultStatus status;
 
         status = GPOINTER_TO_INT(node->data);
-        sum += get_status_result_number(runner, status);
+        sum += get_status_result_number(run_context, status);
     }
 
     return sum;
 }
 
 static void
-draw_data_label (CutCairoPieChart *chart, cairo_t *cr, CutRunner *runner)
+draw_data_label (CutCairoPieChart *chart, cairo_t *cr, CutRunContext *run_context)
 {
     CutCairoPieChartPrivate *priv;
     GList *node;
@@ -349,7 +349,7 @@ draw_data_label (CutCairoPieChart *chart, cairo_t *cr, CutRunner *runner)
 
     priv = CUT_CAIRO_PIE_CHART_GET_PRIVATE(chart);
 
-    sum = calculate_sum(chart, runner);
+    sum = calculate_sum(chart, run_context);
     start = 2 * M_PI * 0.75;
     get_pie_center_position(chart, &center_x, &center_y);
     radius = get_pie_radius(chart);
@@ -362,7 +362,7 @@ draw_data_label (CutCairoPieChart *chart, cairo_t *cr, CutRunner *runner)
         const gchar *label;
 
         status = GPOINTER_TO_INT(node->data);
-        n_results = get_status_result_number(runner, status);
+        n_results = get_status_result_number(run_context, status);
         if (n_results == 0)
             continue;
 
@@ -388,7 +388,7 @@ draw_data_label (CutCairoPieChart *chart, cairo_t *cr, CutRunner *runner)
 }
 
 static void
-draw_chart (CutCairoPieChart *chart, cairo_t *cr, CutRunner *runner)
+draw_chart (CutCairoPieChart *chart, cairo_t *cr, CutRunContext *run_context)
 {
     CutCairoPieChartPrivate *priv;
     GList *node;
@@ -399,7 +399,7 @@ draw_chart (CutCairoPieChart *chart, cairo_t *cr, CutRunner *runner)
 
     cairo_set_line_width(cr, 0.75);
 
-    sum = calculate_sum(chart, runner);
+    sum = calculate_sum(chart, run_context);
     start = 2 * M_PI * 0.75;
 
     for (node = priv->series; node; node = g_list_next(node)) {
@@ -409,7 +409,7 @@ draw_chart (CutCairoPieChart *chart, cairo_t *cr, CutRunner *runner)
 
         status = GPOINTER_TO_INT(node->data);
         cut_cairo_set_source_result_color(cr, status);
-        n_results = get_status_result_number(runner, status);
+        n_results = get_status_result_number(run_context, status);
         if (n_results == 0)
             continue;
 
@@ -451,7 +451,7 @@ create_series (CutCairoPieChart *chart)
 
 void
 cut_cairo_pie_chart_draw (CutCairoPieChart *chart,
-                          cairo_t *cr, CutRunner *runner)
+                          cairo_t *cr, CutRunContext *run_context)
 {
     CutCairoPieChartPrivate *priv;
     double current_x, current_y;
@@ -464,10 +464,10 @@ cut_cairo_pie_chart_draw (CutCairoPieChart *chart,
 
     /* tentative */ 
     create_series(chart);
-    draw_chart(chart, cr, runner);
+    draw_chart(chart, cr, run_context);
     draw_legend(chart, cr);
     if (priv->show_data_label)
-        draw_data_label(chart, cr, runner);
+        draw_data_label(chart, cr, run_context);
 
     cairo_restore(cr);
 }

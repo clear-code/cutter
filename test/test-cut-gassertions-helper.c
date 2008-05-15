@@ -39,7 +39,7 @@ cut_simple_object_init (CutSimpleObject *object)
 }
 
 static CutTest *test;
-static CutRunner *runner;
+static CutRunContext *run_context;
 static CutTestContext *test_context;
 static CutTestResult *test_result;
 
@@ -53,12 +53,12 @@ run (CutTest *_test)
 
     test = _test;
 
-    runner = cut_runner_new();
+    run_context = CUT_RUN_CONTEXT(cut_runner_new());
 
     test_context = cut_test_context_new(NULL, NULL, test);
     original_test_context = get_current_test_context();
     set_current_test_context(test_context);
-    success = cut_test_run(test, test_context, runner);
+    success = cut_test_run(test, test_context, run_context);
     set_current_test_context(original_test_context);
 
     return success;
@@ -68,7 +68,7 @@ void
 setup (void)
 {
     test = NULL;
-    runner = NULL;
+    run_context = NULL;
     test_context = NULL;
     test_result = NULL;
 
@@ -80,8 +80,8 @@ teardown (void)
 {
     if (test)
         g_object_unref(test);
-    if (runner)
-        g_object_unref(runner);
+    if (run_context)
+        g_object_unref(run_context);
     if (test_context)
         g_object_unref(test_context);
     if (test_result)

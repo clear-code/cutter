@@ -45,19 +45,19 @@ cut_listener_get_type (void)
 }
 
 void
-cut_listener_attach_to_runner (CutListener *listener,
-                               CutRunner   *runner)
+cut_listener_attach_to_run_context (CutListener *listener,
+                               CutRunContext   *run_context)
 {
-    if (CUT_LISTENER_GET_CLASS(listener)->attach_to_runner)
-        CUT_LISTENER_GET_CLASS(listener)->attach_to_runner(listener, runner);
+    if (CUT_LISTENER_GET_CLASS(listener)->attach_to_run_context)
+        CUT_LISTENER_GET_CLASS(listener)->attach_to_run_context(listener, run_context);
 }
 
 void
-cut_listener_detach_from_runner (CutListener *listener,
-                                 CutRunner   *runner)
+cut_listener_detach_from_run_context (CutListener *listener,
+                                 CutRunContext   *run_context)
 {
-    if (CUT_LISTENER_GET_CLASS(listener)->detach_from_runner)
-        CUT_LISTENER_GET_CLASS(listener)->detach_from_runner(listener, runner);
+    if (CUT_LISTENER_GET_CLASS(listener)->detach_from_run_context)
+        CUT_LISTENER_GET_CLASS(listener)->detach_from_run_context(listener, run_context);
 }
 
 /*

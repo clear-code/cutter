@@ -30,7 +30,8 @@
 
 #include <cutter/cut-module-impl.h>
 #include <cutter/cut-streamer.h>
-#include <cutter/cut-runner.h>
+#include <cutter/cut-listener.h>
+#include <cutter/cut-run-context.h>
 #include <cutter/cut-test-result.h>
 #include <cutter/cut-enum-types.h>
 
@@ -47,7 +48,7 @@ typedef struct _CutXMLStreamerClass CutXMLStreamerClass;
 struct _CutXMLStreamer
 {
     CutStreamer   object;
-    CutRunner    *runner;
+    CutRunContext    *run_context;
 };
 
 struct _CutXMLStreamerClass
@@ -58,7 +59,7 @@ struct _CutXMLStreamerClass
 enum
 {
     PROP_0,
-    PROP_RUNNER
+    PROP_RUN_CONTEXT
 };
 
 static GType cut_type_xml_streamer = 0;
@@ -74,10 +75,10 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 
-static void attach_to_runner             (CutListener *listener,
-                                          CutRunner   *runner);
-static void detach_from_runner           (CutListener *listener,
-                                          CutRunner   *runner);
+static void attach_to_run_context             (CutListener *listener,
+                                          CutRunContext   *run_context);
+static void detach_from_run_context           (CutListener *listener,
+                                          CutRunContext   *run_context);
 
 static void
 class_init (CutXMLStreamerClass *klass)
@@ -95,25 +96,25 @@ class_init (CutXMLStreamerClass *klass)
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
 
-    spec = g_param_spec_object("cut-runner",
-                               "CutRunner object",
-                               "A CutRunner object",
-                               CUT_TYPE_RUNNER,
+    spec = g_param_spec_object("cut-run-context",
+                               "CutRunContext object",
+                               "A CutRunContext object",
+                               CUT_TYPE_RUN_CONTEXT,
                                G_PARAM_READWRITE);
-    g_object_class_install_property(gobject_class, PROP_RUNNER, spec);
+    g_object_class_install_property(gobject_class, PROP_RUN_CONTEXT, spec);
 }
 
 static void
 init (CutXMLStreamer *streamer)
 {
-    streamer->runner = NULL;
+    streamer->run_context = NULL;
 }
 
 static void
 listener_init (CutListenerClass *listener)
 {
-    listener->attach_to_runner   = attach_to_runner;
-    listener->detach_from_runner = detach_from_runner;
+    listener->attach_to_run_context   = attach_to_run_context;
+    listener->detach_from_run_context = detach_from_run_context;
 }
 
 static void
@@ -181,9 +182,9 @@ dispose (GObject *object)
 {
     CutXMLStreamer *streamer = CUT_XML_STREAMER(object);
 
-    if (streamer->runner) {
-        g_object_unref(streamer->runner);
-        streamer->runner = NULL;
+    if (streamer->run_context) {
+        g_object_unref(streamer->run_context);
+        streamer->run_context = NULL;
     }
 
     G_OBJECT_CLASS(parent_class)->dispose(object);
@@ -198,8 +199,8 @@ set_property (GObject      *object,
     CutXMLStreamer *streamer = CUT_XML_STREAMER(object);
 
     switch (prop_id) {
-      case PROP_RUNNER:
-        attach_to_runner(CUT_LISTENER(streamer), CUT_RUNNER(g_value_get_object(value)));
+      case PROP_RUN_CONTEXT:
+        attach_to_run_context(CUT_LISTENER(streamer), CUT_RUN_CONTEXT(g_value_get_object(value)));
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -216,8 +217,8 @@ get_property (GObject    *object,
     CutXMLStreamer *streamer = CUT_XML_STREAMER(object);
 
     switch (prop_id) {
-      case PROP_RUNNER:
-        g_value_set_object(value, G_OBJECT(streamer->runner));
+      case PROP_RUN_CONTEXT:
+        g_value_set_object(value, G_OBJECT(streamer->run_context));
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -226,33 +227,33 @@ get_property (GObject    *object,
 }
 
 static void
-cb_ready_test_suite (CutRunner *runner, CutTestSuite *test_suite,
+cb_ready_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
                      guint n_test_cases, guint n_tests,
                      CutXMLStreamer *streamer)
 {
 }
 
 static void
-cb_start_test_suite (CutRunner *runner, CutTestSuite *test_suite,
+cb_start_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
                      CutXMLStreamer *streamer)
 {
     g_print("<streamer>\n");
 }
 
 static void
-cb_start_test_case (CutRunner *runner, CutTestCase *test_case,
+cb_start_test_case (CutRunContext *run_context, CutTestCase *test_case,
                     CutXMLStreamer *streamer)
 {
 }
 
 static void
-cb_start_test (CutRunner *runner, CutTest *test, CutTestContext *test_context,
+cb_start_test (CutRunContext *run_context, CutTest *test, CutTestContext *test_context,
                CutXMLStreamer *streamer)
 {
 }
 
 static void
-cb_test_signal (CutRunner      *runner,
+cb_test_signal (CutRunContext      *run_context,
                 CutTest        *test,
                 CutTestContext *test_context,
                 CutTestResult  *result,
@@ -265,38 +266,38 @@ cb_test_signal (CutRunner      *runner,
 }
 
 static void
-cb_complete_test (CutRunner *runner, CutTest *test,
+cb_complete_test (CutRunContext *run_context, CutTest *test,
                   CutTestContext *test_context, CutXMLStreamer *streamer)
 {
 }
 
 static void
-cb_complete_test_case (CutRunner *runner, CutTestCase *test_case,
+cb_complete_test_case (CutRunContext *run_context, CutTestCase *test_case,
                        CutXMLStreamer *streamer)
 {
 }
 
 static void
-cb_complete_test_suite (CutRunner *runner, CutTestSuite *test_suite,
+cb_complete_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
                         CutXMLStreamer *streamer)
 {
     g_print("</streamer>\n");
 }
 
 static void
-cb_crashed (CutRunner *runner, const gchar *stack_trace,
+cb_crashed (CutRunContext *run_context, const gchar *stack_trace,
             CutXMLStreamer *streamer)
 {
 }
 
 static void
-connect_to_runner (CutXMLStreamer *streamer, CutRunner *runner)
+connect_to_run_context (CutXMLStreamer *streamer, CutRunContext *run_context)
 {
 #define CONNECT(name) \
-    g_signal_connect(runner, #name, G_CALLBACK(cb_ ## name), streamer)
+    g_signal_connect(run_context, #name, G_CALLBACK(cb_ ## name), streamer)
 
 #define CONNECT_TO_TEST(name) \
-    g_signal_connect(runner, #name, G_CALLBACK(cb_test_signal), streamer)
+    g_signal_connect(run_context, #name, G_CALLBACK(cb_test_signal), streamer)
 
     CONNECT(ready_test_suite);
     CONNECT(start_test_suite);
@@ -319,10 +320,10 @@ connect_to_runner (CutXMLStreamer *streamer, CutRunner *runner)
 }
 
 static void
-disconnect_from_runner (CutXMLStreamer *streamer, CutRunner *runner)
+disconnect_from_run_context (CutXMLStreamer *streamer, CutRunContext *run_context)
 {
 #define DISCONNECT(name)                                               \
-    g_signal_handlers_disconnect_by_func(runner,                       \
+    g_signal_handlers_disconnect_by_func(run_context,                       \
                                          G_CALLBACK(cb_ ## name),      \
                                          streamer)
 
@@ -336,7 +337,7 @@ disconnect_from_runner (CutXMLStreamer *streamer, CutRunner *runner)
 
     DISCONNECT(crashed);
 
-    g_signal_handlers_disconnect_by_func(runner,
+    g_signal_handlers_disconnect_by_func(run_context,
                                          G_CALLBACK(cb_test_signal),
                                          streamer);
 
@@ -344,30 +345,30 @@ disconnect_from_runner (CutXMLStreamer *streamer, CutRunner *runner)
 }
 
 static void
-attach_to_runner (CutListener *listener,
-                  CutRunner   *runner)
+attach_to_run_context (CutListener *listener,
+                  CutRunContext   *run_context)
 {
     CutXMLStreamer *streamer = CUT_XML_STREAMER(listener);
-    if (streamer->runner)
-        detach_from_runner(listener, streamer->runner);
+    if (streamer->run_context)
+        detach_from_run_context(listener, streamer->run_context);
     
-    if (runner) {
-        streamer->runner = g_object_ref(runner);
-        connect_to_runner(CUT_XML_STREAMER(listener), runner);
+    if (run_context) {
+        streamer->run_context = g_object_ref(run_context);
+        connect_to_run_context(CUT_XML_STREAMER(listener), run_context);
     }
 }
 
 static void
-detach_from_runner (CutListener *listener,
-                    CutRunner   *runner)
+detach_from_run_context (CutListener *listener,
+                    CutRunContext   *run_context)
 {
     CutXMLStreamer *streamer = CUT_XML_STREAMER(listener);
-    if (streamer->runner != runner)
+    if (streamer->run_context != run_context)
         return;
 
-    disconnect_from_runner(streamer, runner);
-    g_object_unref(streamer->runner);
-    streamer->runner = NULL;
+    disconnect_from_run_context(streamer, run_context);
+    g_object_unref(streamer->run_context);
+    streamer->run_context = NULL;
 }
 
 /*

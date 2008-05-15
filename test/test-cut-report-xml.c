@@ -1,5 +1,6 @@
 #include "cutter.h"
 #include "cut-runner.h"
+#include "cut-listener.h"
 #include "cut-report.h"
 
 void test_report_success (void);
@@ -9,7 +10,7 @@ void test_report_pending (void);
 void test_report_notification (void);
 void test_plural_reports (void);
 
-static CutRunner *runner;
+static CutRunContext *run_context;
 static CutReport *report;
 static CutTest *test_object;
 static CutTestCase *test_case;
@@ -51,11 +52,11 @@ setup (void)
     test_object = NULL;
     test_context = NULL;
 
-    runner = cut_runner_new();
-    cut_runner_set_target_test_names(runner, test_names);
+    run_context = CUT_RUN_CONTEXT(cut_runner_new());
+    cut_run_context_set_target_test_names(run_context, test_names);
 
     report = cut_report_new("xml", NULL);
-    cut_listener_attach_to_runner(CUT_LISTENER(report), runner);
+    cut_listener_attach_to_run_context(CUT_LISTENER(report), run_context);
 
     test_case = cut_test_case_new("dummy test case",
                                   NULL, NULL,
@@ -71,9 +72,9 @@ teardown (void)
         g_object_unref(test_object);
     if (test_context)
         g_object_unref(test_context);
-    cut_listener_detach_from_runner(CUT_LISTENER(report), runner);
+    cut_listener_detach_from_run_context(CUT_LISTENER(report), run_context);
     g_object_unref(report);
-    g_object_unref(runner);
+    g_object_unref(run_context);
 }
 
 static void
@@ -92,7 +93,7 @@ run_the_test (CutTest *test)
     test_context = cut_test_context_new(NULL, test_case, test);
     original_test_context = get_current_test_context();
     set_current_test_context(test_context);
-    success = cut_test_run(test, test_context, runner);
+    success = cut_test_run(test, test_context, run_context);
     set_current_test_context(original_test_context);
 
     g_object_unref(test_context);
@@ -152,21 +153,23 @@ test_report_failure (void)
                        "    <detail>This test should fail</detail>\n"
                        "    <backtrace>\n"
                        "      <file>test-cut-report-xml.c</file>\n"
-                       "      <line>26</line>\n"
+                       "      <line>27</line>\n"
                        "      <info>dummy_failure_test()</info>\n"
                        "    </backtrace>\n"
                        "    <elapsed>0.000100</elapsed>\n"
                        "  </result>\n";
 
     test_object = cut_test_new("dummy-failure-test", dummy_failure_test);
-    g_signal_connect_after(test_object, "failure", G_CALLBACK(cb_test_signal), NULL);
+    g_signal_connect_after(test_object, "failure",
+                           G_CALLBACK(cb_test_signal), NULL);
     cut_test_case_add_test(test_case, test_object);
     cut_assert(!run_the_test(test_object));
     g_signal_handlers_disconnect_by_func(test_object,
                                          G_CALLBACK(cb_test_signal),
                                          NULL);
 
-    cut_assert_equal_string_with_free(expected, cut_report_get_failure_results(report));
+    cut_assert_equal_string_with_free(expected,
+                                      cut_report_get_failure_results(report));
 }
 
 void
@@ -183,21 +186,23 @@ test_report_pending (void)
                        "    <detail>This test has been pending ever!</detail>\n"
                        "    <backtrace>\n"
                        "      <file>test-cut-report-xml.c</file>\n"
-                       "      <line>38</line>\n"
+                       "      <line>39</line>\n"
                        "      <info>dummy_pending_test()</info>\n"
                        "    </backtrace>\n"
                        "    <elapsed>0.000100</elapsed>\n"
                        "  </result>\n";
 
     test_object = cut_test_new("dummy-pending-test", dummy_pending_test);
-    g_signal_connect_after(test_object, "pending", G_CALLBACK(cb_test_signal), NULL);
+    g_signal_connect_after(test_object, "pending",
+                           G_CALLBACK(cb_test_signal), NULL);
     cut_test_case_add_test(test_case, test_object);
     cut_assert(!run_the_test(test_object));
     g_signal_handlers_disconnect_by_func(test_object,
                                          G_CALLBACK(cb_test_signal),
                                          NULL);
 
-    cut_assert_equal_string_with_free(expected, cut_report_get_pending_results(report));
+    cut_assert_equal_string_with_free(expected,
+                                      cut_report_get_pending_results(report));
 }
 
 void
@@ -214,21 +219,23 @@ test_report_notification (void)
                        "    <detail>This test has been notifable ever!</detail>\n"
                        "    <backtrace>\n"
                        "      <file>test-cut-report-xml.c</file>\n"
-                       "      <line>44</line>\n"
+                       "      <line>45</line>\n"
                        "      <info>dummy_notification_test()</info>\n"
                        "    </backtrace>\n"
                        "    <elapsed>0.000100</elapsed>\n"
                        "  </result>\n";
 
     test_object = cut_test_new("dummy-notification-test", dummy_notification_test);
-    g_signal_connect_after(test_object, "notification", G_CALLBACK(cb_test_signal), NULL);
+    g_signal_connect_after(test_object, "notification",
+                           G_CALLBACK(cb_test_signal), NULL);
     cut_test_case_add_test(test_case, test_object);
     cut_assert(run_the_test(test_object));
     g_signal_handlers_disconnect_by_func(test_object,
                                          G_CALLBACK(cb_test_signal),
                                          NULL);
 
-    cut_assert_equal_string_with_free(expected, cut_report_get_notification_results(report));
+    cut_assert_equal_string_with_free(expected,
+                                      cut_report_get_notification_results(report));
 }
 
 void
@@ -245,14 +252,15 @@ test_report_error (void)
                        "    <detail>This test should error</detail>\n"
                        "    <backtrace>\n"
                        "      <file>test-cut-report-xml.c</file>\n"
-                       "      <line>32</line>\n"
+                       "      <line>33</line>\n"
                        "      <info>dummy_error_test()</info>\n"
                        "    </backtrace>\n"
                        "    <elapsed>0.000100</elapsed>\n"
                        "  </result>\n";
 
     test_object = cut_test_new("dummy-error-test", dummy_error_test);
-    g_signal_connect_after(test_object, "error", G_CALLBACK(cb_test_signal), NULL);
+    g_signal_connect_after(test_object, "error",
+                           G_CALLBACK(cb_test_signal), NULL);
     cut_test_case_add_test(test_case, test_object);
     cut_assert(!run_the_test(test_object));
     g_signal_handlers_disconnect_by_func(test_object,
@@ -277,7 +285,7 @@ test_plural_reports (void)
                        "    <detail>This test should error</detail>\n"
                        "    <backtrace>\n"
                        "      <file>test-cut-report-xml.c</file>\n"
-                       "      <line>32</line>\n"
+                       "      <line>33</line>\n"
                        "      <info>dummy_error_test()</info>\n"
                        "    </backtrace>\n"
                        "    <elapsed>0.000100</elapsed>\n"
@@ -298,9 +306,10 @@ test_plural_reports (void)
     cut_test_case_add_test(test_case, test_object);
 
     test_object = cut_test_new("dummy-error-test", dummy_error_test);
-    g_signal_connect_after(test_object, "error", G_CALLBACK(cb_test_signal), NULL);
+    g_signal_connect_after(test_object, "error",
+                           G_CALLBACK(cb_test_signal), NULL);
     cut_test_case_add_test(test_case, test_object);
-    cut_assert(!cut_test_case_run(test_case, runner));
+    cut_assert(!cut_test_case_run(test_case, run_context));
 
     g_signal_handlers_disconnect_by_func(test_object,
                                          G_CALLBACK(cb_test_signal),

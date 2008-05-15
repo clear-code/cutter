@@ -1,5 +1,7 @@
 2008-05-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/, test/: create CutRunContext.
+
 	* test/test-cut-xml-streamer.c (test_streamer_success): use
 	cut_assert_match().
 

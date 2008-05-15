@@ -50,7 +50,7 @@ GType             cut_cairo_pie_chart_get_type  (void) G_GNUC_CONST;
 CutCairoPieChart *cut_cairo_pie_chart_new       (gdouble width, gdouble height);
 void              cut_cairo_pie_chart_draw      (CutCairoPieChart *chart,
                                                  cairo_t *cr,
-                                                 CutRunner *runner);
+                                                 CutRunContext *run_context);
 void              cut_cairo_pie_chart_get_size  (CutCairoPieChart *chart,
                                                  gdouble *width, gdouble *height);
 gdouble           cut_cairo_pie_chart_get_width (CutCairoPieChart *chart);

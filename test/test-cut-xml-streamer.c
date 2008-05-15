@@ -1,5 +1,6 @@
 #include "cutter.h"
 #include "cut-runner.h"
+#include "cut-listener.h"
 #include "cut-streamer.h"
 
 #include <unistd.h>
@@ -8,7 +9,7 @@
 void test_streamer_success (void);
 
 static CutStreamer *streamer;
-static CutRunner *runner;
+static CutRunContext *run_context;
 static CutTest *test_object;
 static CutTestCase *test_case;
 static CutTestContext *test_context;
@@ -26,8 +27,8 @@ setup (void)
     test_context = NULL;
     streamer = NULL;
 
-    runner = cut_runner_new();
-    cut_runner_set_target_test_names(runner, test_names);
+    run_context = CUT_RUN_CONTEXT(cut_runner_new());
+    cut_run_context_set_target_test_names(run_context, test_names);
 
     test_case = cut_test_case_new("dummy test case",
                                   NULL, NULL,
@@ -45,7 +46,7 @@ teardown (void)
         g_object_unref(test_context);
     if (streamer)
         g_object_unref(streamer);
-    g_object_unref(runner);
+    g_object_unref(run_context);
 }
 
 static void
@@ -64,7 +65,7 @@ run_the_test (CutTest *test)
     test_context = cut_test_context_new(NULL, test_case, test);
     original_test_context = get_current_test_context();
     set_current_test_context(test_context);
-    success = cut_test_run(test, test_context, runner);
+    success = cut_test_run(test, test_context, run_context);
     set_current_test_context(original_test_context);
 
     g_object_unref(test_context);
@@ -98,12 +99,13 @@ test_streamer_success (void)
         g_signal_connect_after(test_object, "success",
                                G_CALLBACK(cb_test_signal), NULL);
         cut_test_case_add_test(test_case, test_object);
-        cut_listener_attach_to_runner(CUT_LISTENER(streamer), runner);
+        cut_listener_attach_to_run_context(CUT_LISTENER(streamer), run_context);
         cut_assert(run_the_test(test_object));
         g_signal_handlers_disconnect_by_func(test_object,
                                              G_CALLBACK(cb_test_signal),
                                              NULL);
-        cut_listener_detach_from_runner(CUT_LISTENER(streamer), runner);
+        cut_listener_detach_from_run_context(CUT_LISTENER(streamer),
+                                             run_context);
         _exit(EXIT_SUCCESS);
     }
 

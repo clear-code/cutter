@@ -132,10 +132,10 @@ cut_ui_get_type (void)
 }
 
 gboolean
-cut_ui_run (CutUI *ui, CutRunner *runner)
+cut_ui_run (CutUI *ui, CutRunContext *run_context)
 {
     if (CUT_UI_GET_CLASS(ui)->run)
-        return CUT_UI_GET_CLASS(ui)->run(ui, runner);
+        return CUT_UI_GET_CLASS(ui)->run(ui, run_context);
     return FALSE;
 }
 

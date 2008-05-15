@@ -57,24 +57,24 @@ GType           cut_test_suite_get_type      (void) G_GNUC_CONST;
 CutTestSuite   *cut_test_suite_new           (void);
 void            cut_test_suite_add_test_case (CutTestSuite *suite,
                                               CutTestCase  *test_case);
-gboolean        cut_test_suite_run           (CutTestSuite *suite,
-                                              CutRunner    *runner);
-gboolean        cut_test_suite_run_test_case (CutTestSuite *suite,
-                                              CutRunner    *runner,
-                                              gchar       *test_case_name);
-gboolean        cut_test_suite_run_test      (CutTestSuite *suite,
-                                              CutRunner    *runner,
-                                              gchar        *name);
+gboolean        cut_test_suite_run           (CutTestSuite  *suite,
+                                              CutRunContext *run_context);
+gboolean        cut_test_suite_run_test_case (CutTestSuite  *suite,
+                                              CutRunContext *run_context,
+                                              gchar         *test_case_name);
+gboolean        cut_test_suite_run_test      (CutTestSuite  *suite,
+                                              CutRunContext *run_context,
+                                              gchar         *name);
 gboolean        cut_test_suite_run_test_in_test_case
-                                             (CutTestSuite *suite,
-                                              CutRunner    *runner,
-                                              gchar        *name,
-                                              gchar       *test_case_name);
+                                             (CutTestSuite  *suite,
+                                              CutRunContext *run_context,
+                                              gchar         *name,
+                                              gchar         *test_case_name);
 gboolean        cut_test_suite_run_with_filter
-                                             (CutTestSuite *test_suite,
-                                              CutRunner    *runner,
-                                              gchar       **test_case_names,
-                                              gchar       **test_names);
+                                             (CutTestSuite   *test_suite,
+                                              CutRunContext  *run_context,
+                                              gchar         **test_case_names,
+                                              gchar         **test_names);
 
 G_END_DECLS
 

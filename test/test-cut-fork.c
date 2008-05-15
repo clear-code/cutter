@@ -11,14 +11,14 @@
 void test_message_from_forked_process (void);
 void test_fail_in_forked_process (void);
 
-static CutRunner *runner;
+static CutRunContext *run_context;
 static CutTest *test_object;
 static CutTestContext *test_context;
 
 void
 setup (void)
 {
-    runner = cut_runner_new();
+    run_context = CUT_RUN_CONTEXT(cut_runner_new());
 
     test_object = NULL;
     test_context = NULL;
@@ -33,7 +33,7 @@ teardown (void)
     if (test_context)
         g_object_unref(test_context);
 
-    g_object_unref(runner);
+    g_object_unref(run_context);
 }
 
 void
@@ -67,11 +67,11 @@ run (CutTest *test)
     test_context = cut_test_context_new(NULL, NULL, test);
 
     is_multi_thread = cut_test_context_is_multi_thread(original_test_context);
-    cut_runner_set_multi_thread(runner, is_multi_thread);
+    cut_run_context_set_multi_thread(run_context, is_multi_thread);
     cut_test_context_set_multi_thread(test_context, is_multi_thread);
 
     set_current_test_context(test_context);
-    success = cut_test_run(test, test_context, runner);
+    success = cut_test_run(test, test_context, run_context);
     set_current_test_context(original_test_context);
 
     return success;

@@ -289,8 +289,6 @@ read_line (CutPipeline *pipeline, GIOChannel *channel)
 static gboolean
 io_watch_func (GIOChannel *channel, GIOCondition condition, gpointer data)
 {
-    CutPipeline *pipeline;
-
     if (!CUT_IS_PIPELINE(data))
         return FALSE;
 

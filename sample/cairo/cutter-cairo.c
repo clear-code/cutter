@@ -24,7 +24,7 @@ run_test (GCallback create_surface)
 
     runner = cut_create_runner ();
     g_signal_connect (runner, "start-test", create_surface, &surface);
-    success = cut_runner_run (runner);
+    success = cut_run_runner (runner);
     g_signal_handlers_disconnect_by_func (runner, create_surface, &surface);
     g_object_unref (runner);
 
@@ -42,7 +42,7 @@ destroy_surface (gpointer data)
 }
 
 static void
-create_image_surface (CutRunner *runner, CutTest *test,
+create_image_surface (CutRunContext *run_context, CutTest *test,
                       CutTestContext *test_context, gpointer data)
 {
     cairo_surface_t **surface = data;
@@ -53,7 +53,7 @@ create_image_surface (CutRunner *runner, CutTest *test,
 
 #ifdef CAIRO_HAS_SVG_SURFACE
 static void
-create_svg_surface (CutRunner *runner, CutTest *test,
+create_svg_surface (CutRunContext *run_context, CutTest *test,
                     CutTestContext *test_context, gpointer data)
 {
     cairo_surface_t **surface = data;
@@ -65,7 +65,7 @@ create_svg_surface (CutRunner *runner, CutTest *test,
 
 #ifdef CAIRO_HAS_PDF_SURFACE
 static void
-create_pdf_surface (CutRunner *runner, CutTest *test,
+create_pdf_surface (CutRunContext *run_context, CutTest *test,
                     CutTestContext *test_context, gpointer data)
 {
     cairo_surface_t **surface = data;
@@ -77,7 +77,7 @@ create_pdf_surface (CutRunner *runner, CutTest *test,
 
 #ifdef CAIRO_HAS_PS_SURFACE
 static void
-create_ps_surface (CutRunner *runner, CutTest *test,
+create_ps_surface (CutRunContext *run_context, CutTest *test,
                    CutTestContext *test_context, gpointer data)
 {
     cairo_surface_t **surface = data;

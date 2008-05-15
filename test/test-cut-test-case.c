@@ -25,7 +25,7 @@ void test_complete_signal(void);
 void test_omission_signal(void);
 
 static CutTestCase *test_object;
-static CutRunner *runner;
+static CutRunContext *run_context;
 
 static gboolean set_error_on_setup = FALSE;
 
@@ -114,8 +114,8 @@ setup (void)
     n_run_dummy_test_function1 = 0;
     n_run_dummy_test_function2 = 0;
 
-    runner = cut_runner_new();
-    cut_runner_set_target_test_names(runner, test_names);
+    run_context = CUT_RUN_CONTEXT(cut_runner_new());
+    cut_run_context_set_target_test_names(run_context, test_names);
 
     test_object = cut_test_case_new("dummy test case",
                                     dummy_setup_function,
@@ -132,7 +132,7 @@ void
 teardown (void)
 {
     g_object_unref(test_object);
-    g_object_unref(runner);
+    g_object_unref(run_context);
 }
 
 static void
@@ -154,7 +154,7 @@ cb_count_status (CutTest *test, CutTestContext *test_context,
 static gboolean
 run_the_test (void)
 {
-    return cut_test_case_run(test_object, runner);
+    return cut_test_case_run(test_object, run_context);
 }
 
 void
@@ -200,7 +200,7 @@ test_run_with_setup_error (void)
 void
 test_run_this_function (void)
 {
-    cut_assert(cut_test_case_run_test(test_object, runner,
+    cut_assert(cut_test_case_run_test(test_object, run_context,
                                       "run_test_function"));
 
     cut_assert_equal_int(1, n_run_dummy_run_test_function);
@@ -210,7 +210,7 @@ test_run_this_function (void)
 void
 test_run_tests_with_regex (void)
 {
-    cut_assert(cut_test_case_run_test(test_object, runner, "/dummy/"));
+    cut_assert(cut_test_case_run_test(test_object, run_context, "/dummy/"));
     cut_assert_equal_int(0, n_run_dummy_run_test_function);
     cut_assert_equal_int(1, n_run_dummy_test_function1);
     cut_assert_equal_int(1, n_run_dummy_test_function2);
@@ -221,7 +221,7 @@ test_run_with_name_filter (void)
 {
     gchar *names[] = {"dummy_test_1", "run_test_function", NULL};
 
-    cut_assert(cut_test_case_run_with_filter(test_object, runner, names));
+    cut_assert(cut_test_case_run_with_filter(test_object, run_context, names));
     cut_assert_equal_int(1, n_run_dummy_run_test_function);
     cut_assert_equal_int(1, n_run_dummy_test_function1);
     cut_assert_equal_int(0, n_run_dummy_test_function2);
@@ -232,7 +232,7 @@ test_run_with_regex_filter (void)
 {
     gchar *regex[] = {"/dummy/", NULL};
 
-    cut_assert(cut_test_case_run_with_filter(test_object, runner, regex));
+    cut_assert(cut_test_case_run_with_filter(test_object, run_context, regex));
     cut_assert_equal_int(0, n_run_dummy_run_test_function);
     cut_assert_equal_int(1, n_run_dummy_test_function1);
     cut_assert_equal_int(1, n_run_dummy_test_function2);
@@ -243,7 +243,7 @@ test_run_with_name_and_regex_filter (void)
 {
     gchar *name_and_regex[] = {"/dummy/", "run_test_function", NULL};
 
-    cut_assert(cut_test_case_run_with_filter(test_object, runner,
+    cut_assert(cut_test_case_run_with_filter(test_object, run_context,
                                              name_and_regex));
     cut_assert_equal_int(1, n_run_dummy_run_test_function);
     cut_assert_equal_int(1, n_run_dummy_test_function1);
@@ -263,7 +263,7 @@ test_start_signal (void)
     gint n_start_tests = 0;
     g_signal_connect(test_object, "start-test",
                      G_CALLBACK(cb_count_around_test), &n_start_tests);
-    cut_assert(cut_test_case_run(test_object, runner));
+    cut_assert(cut_test_case_run(test_object, run_context));
     g_signal_handlers_disconnect_by_func(test_object,
                                          G_CALLBACK(cb_count_around_test),
                                          &n_start_tests);
@@ -276,7 +276,7 @@ test_success_signal (void)
     gint n_successes = 0;
     g_signal_connect(test_object, "success",
                      G_CALLBACK(cb_count_status), &n_successes);
-    cut_assert(cut_test_case_run(test_object, runner));
+    cut_assert(cut_test_case_run(test_object, run_context));
     g_signal_handlers_disconnect_by_func(test_object,
                                          G_CALLBACK(cb_count_status),
                                          &n_successes);
@@ -290,7 +290,7 @@ test_failure_signal (void)
     g_signal_connect(test_object, "failure",
                      G_CALLBACK(cb_count_status), &n_failures);
     cuttest_add_test(test_object, "dummy_failure_test", dummy_failure_test);
-    cut_assert(!cut_test_case_run(test_object, runner));
+    cut_assert(!cut_test_case_run(test_object, run_context));
     g_signal_handlers_disconnect_by_func(test_object,
                                          G_CALLBACK(cb_count_status),
                                          &n_failures);
@@ -304,7 +304,7 @@ test_error_signal (void)
     g_signal_connect(test_object, "error",
                      G_CALLBACK(cb_count_status), &n_errors);
     cuttest_add_test(test_object, "dummy_error_test", dummy_error_test);
-    cut_assert(!cut_test_case_run(test_object, runner));
+    cut_assert(!cut_test_case_run(test_object, run_context));
     g_signal_handlers_disconnect_by_func(test_object,
                                          G_CALLBACK(cb_count_status),
                                          &n_errors);
@@ -318,7 +318,7 @@ test_pending_signal (void)
     g_signal_connect(test_object, "pending",
                      G_CALLBACK(cb_count_status), &n_pendings);
     cuttest_add_test(test_object, "dummy_pending_test", dummy_pending_test);
-    cut_assert(!cut_test_case_run(test_object, runner));
+    cut_assert(!cut_test_case_run(test_object, run_context));
     g_signal_handlers_disconnect_by_func(test_object,
                                          G_CALLBACK(cb_count_status),
                                          &n_pendings);
@@ -333,7 +333,7 @@ test_notification_signal (void)
                      G_CALLBACK(cb_count_status), &n_notifications);
     cuttest_add_test(test_object, "dummy_notification_test",
                      dummy_notification_test);
-    cut_assert(cut_test_case_run(test_object, runner));
+    cut_assert(cut_test_case_run(test_object, run_context));
     g_signal_handlers_disconnect_by_func(test_object,
                                          G_CALLBACK(cb_count_status),
                                          &n_notifications);
@@ -346,7 +346,7 @@ test_complete_signal (void)
     gint n_complete_tests = 0;
     g_signal_connect(test_object, "complete-test",
                      G_CALLBACK(cb_count_around_test), &n_complete_tests);
-    cut_assert(cut_test_case_run(test_object, runner));
+    cut_assert(cut_test_case_run(test_object, run_context));
     g_signal_handlers_disconnect_by_func(test_object,
                                          G_CALLBACK(cb_count_around_test),
                                          &n_complete_tests);
@@ -361,7 +361,7 @@ test_omission_signal (void)
                      G_CALLBACK(cb_count_status), &n_omissions);
     cuttest_add_test(test_object, "dummy_omission_test",
                      dummy_omission_test);
-    cut_assert(cut_test_case_run(test_object, runner));
+    cut_assert(cut_test_case_run(test_object, run_context));
     g_signal_handlers_disconnect_by_func(test_object,
                                          G_CALLBACK(cb_count_status),
                                          &n_omissions);

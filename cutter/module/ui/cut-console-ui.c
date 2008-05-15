@@ -94,12 +94,12 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 
-static void     attach_to_runner   (CutListener *listener,
-                                    CutRunner   *runner);
-static void     detach_from_runner (CutListener *listener,
-                                    CutRunner   *runner);
+static void     attach_to_run_context   (CutListener *listener,
+                                    CutRunContext   *run_context);
+static void     detach_from_run_context (CutListener *listener,
+                                    CutRunContext   *run_context);
 static gboolean run                (CutUI       *ui,
-                                    CutRunner   *runner);
+                                    CutRunContext   *run_context);
 
 static void
 class_init (CutConsoleUIClass *klass)
@@ -141,8 +141,8 @@ init (CutConsoleUI *console)
 static void
 listener_init (CutListenerClass *listener)
 {
-    listener->attach_to_runner   = attach_to_runner;
-    listener->detach_from_runner = detach_from_runner;
+    listener->attach_to_run_context   = attach_to_run_context;
+    listener->detach_from_run_context = detach_from_run_context;
 }
 
 static void
@@ -371,13 +371,13 @@ print_for_status (CutConsoleUI *console, CutTestResultStatus status,
 }
 
 static void
-cb_start_test_suite (CutRunner *runner, CutTestSuite *test_suite,
+cb_start_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
                      CutConsoleUI *console)
 {
 }
 
 static void
-cb_start_test_case (CutRunner *runner, CutTestCase *test_case,
+cb_start_test_case (CutRunContext *run_context, CutTestCase *test_case,
                     CutConsoleUI *console)
 {
     if (console->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
@@ -389,7 +389,7 @@ cb_start_test_case (CutRunner *runner, CutTestCase *test_case,
 }
 
 static void
-cb_start_test (CutRunner *runner, CutTest *test, CutTestContext *test_context,
+cb_start_test (CutRunContext *run_context, CutTest *test, CutTestContext *test_context,
                CutConsoleUI *console)
 {
     GString *tab_stop;
@@ -417,7 +417,7 @@ cb_start_test (CutRunner *runner, CutTest *test, CutTestContext *test_context,
 }
 
 static void
-cb_success_test (CutRunner      *runner,
+cb_success_test (CutRunContext      *run_context,
                  CutTest        *test,
                  CutTestContext *context,
                  CutTestResult  *result,
@@ -430,7 +430,7 @@ cb_success_test (CutRunner      *runner,
 }
 
 static void
-cb_notification_test (CutRunner      *runner,
+cb_notification_test (CutRunContext      *run_context,
                       CutTest        *test,
                       CutTestContext *test_context,
                       CutTestResult  *result,
@@ -443,7 +443,7 @@ cb_notification_test (CutRunner      *runner,
 }
 
 static void
-cb_omission_test (CutRunner      *runner,
+cb_omission_test (CutRunContext      *run_context,
                   CutTest        *test,
                   CutTestContext *test_context,
                   CutTestResult  *result,
@@ -456,7 +456,7 @@ cb_omission_test (CutRunner      *runner,
 }
 
 static void
-cb_pending_test (CutRunner      *runner,
+cb_pending_test (CutRunContext      *run_context,
                  CutTest        *test,
                  CutTestContext *test_context,
                  CutTestResult  *result,
@@ -469,7 +469,7 @@ cb_pending_test (CutRunner      *runner,
 }
 
 static void
-cb_failure_test (CutRunner      *runner,
+cb_failure_test (CutRunContext      *run_context,
                  CutTest        *test,
                  CutTestContext *test_context,
                  CutTestResult  *result,
@@ -482,7 +482,7 @@ cb_failure_test (CutRunner      *runner,
 }
 
 static void
-cb_error_test (CutRunner      *runner,
+cb_error_test (CutRunContext      *run_context,
                CutTest        *test,
                CutTestContext *test_context,
                CutTestResult  *result,
@@ -495,7 +495,7 @@ cb_error_test (CutRunner      *runner,
 }
 
 static void
-cb_complete_test (CutRunner *runner, CutTest *test,
+cb_complete_test (CutRunContext *run_context, CutTest *test,
                   CutTestContext *test_context, CutConsoleUI *console)
 {
     if (console->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
@@ -506,7 +506,7 @@ cb_complete_test (CutRunner *runner, CutTest *test,
 }
 
 static void
-cb_complete_test_case (CutRunner *runner, CutTestCase *test_case,
+cb_complete_test_case (CutRunContext *run_context, CutTestCase *test_case,
                        CutConsoleUI *console)
 {
     if (console->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
@@ -541,13 +541,13 @@ print_test_attributes (CutConsoleUI *console, CutTestResultStatus status,
 }
 
 static void
-print_results (CutConsoleUI *console, CutRunner *runner)
+print_results (CutConsoleUI *console, CutRunContext *run_context)
 {
     gint i;
     const GList *node;
 
     i = 1;
-    for (node = cut_runner_get_results(runner);
+    for (node = cut_run_context_get_results(run_context);
          node;
          node = g_list_next(node)) {
         CutTestResult *result = node->data;
@@ -561,7 +561,7 @@ print_results (CutConsoleUI *console, CutRunner *runner)
         if (status == CUT_TEST_RESULT_SUCCESS)
             continue; 
 
-        filename = cut_runner_build_source_filename(runner,
+        filename = cut_run_context_build_source_filename(run_context,
                                              cut_test_result_get_filename(result));
 
         message = cut_test_result_get_message(result);
@@ -593,21 +593,21 @@ print_results (CutConsoleUI *console, CutRunner *runner)
 }
 
 static void
-print_summary (CutConsoleUI *console, CutRunner *runner,
+print_summary (CutConsoleUI *console, CutRunContext *run_context,
                gboolean crashed)
 {
     guint n_tests, n_assertions, n_successes, n_failures, n_errors;
     guint n_pendings, n_notifications, n_omissions;
     const gchar *color;
 
-    n_tests = cut_runner_get_n_tests(runner);
-    n_assertions = cut_runner_get_n_assertions(runner);
-    n_successes = cut_runner_get_n_successes(runner);
-    n_failures = cut_runner_get_n_failures(runner);
-    n_errors = cut_runner_get_n_errors(runner);
-    n_pendings = cut_runner_get_n_pendings(runner);
-    n_notifications = cut_runner_get_n_notifications(runner);
-    n_omissions = cut_runner_get_n_omissions(runner);
+    n_tests = cut_run_context_get_n_tests(run_context);
+    n_assertions = cut_run_context_get_n_assertions(run_context);
+    n_successes = cut_run_context_get_n_successes(run_context);
+    n_failures = cut_run_context_get_n_failures(run_context);
+    n_errors = cut_run_context_get_n_errors(run_context);
+    n_pendings = cut_run_context_get_n_pendings(run_context);
+    n_notifications = cut_run_context_get_n_notifications(run_context);
+    n_omissions = cut_run_context_get_n_omissions(run_context);
 
     if (crashed) {
         color = CRASH_COLOR;
@@ -642,7 +642,7 @@ print_summary (CutConsoleUI *console, CutRunner *runner,
 }
 
 static void
-cb_complete_test_suite (CutRunner *runner, CutTestSuite *test_suite,
+cb_complete_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
                         CutConsoleUI *console)
 {
     gboolean crashed;
@@ -655,29 +655,29 @@ cb_complete_test_suite (CutRunner *runner, CutTestSuite *test_suite,
     if (verbose_level == CUT_VERBOSE_LEVEL_NORMAL)
         g_print("\n");
 
-    crashed = cut_runner_is_crashed(runner);
+    crashed = cut_run_context_is_crashed(run_context);
     if (crashed) {
         const gchar *stack_trace;
         print_with_color(console, CRASH_COLOR, "CRASH!!!");
         g_print("\n");
 
-        stack_trace = cut_runner_get_stack_trace(runner);
+        stack_trace = cut_run_context_get_stack_trace(run_context);
         if (stack_trace)
             g_print("%s\n", stack_trace);
     }
 
-    print_results(console, runner);
+    print_results(console, run_context);
 
     g_print("\n");
     g_print("Finished in %f seconds",
             cut_test_get_elapsed(CUT_TEST(test_suite)));
     g_print("\n\n");
 
-    print_summary(console, runner, crashed);
+    print_summary(console, run_context, crashed);
 }
 
 static void
-cb_crashed (CutRunner *runner, const gchar *stack_trace,
+cb_crashed (CutRunContext *run_context, const gchar *stack_trace,
             CutConsoleUI *console)
 {
     print_with_color(console, CRASH_COLOR, "!");
@@ -685,10 +685,10 @@ cb_crashed (CutRunner *runner, const gchar *stack_trace,
 }
 
 static void
-connect_to_runner (CutConsoleUI *console, CutRunner *runner)
+connect_to_run_context (CutConsoleUI *console, CutRunContext *run_context)
 {
 #define CONNECT(name) \
-    g_signal_connect(runner, #name, G_CALLBACK(cb_ ## name), console)
+    g_signal_connect(run_context, #name, G_CALLBACK(cb_ ## name), console)
 
     CONNECT(start_test_suite);
     CONNECT(start_test_case);
@@ -711,10 +711,10 @@ connect_to_runner (CutConsoleUI *console, CutRunner *runner)
 }
 
 static void
-disconnect_from_runner (CutConsoleUI *console, CutRunner *runner)
+disconnect_from_run_context (CutConsoleUI *console, CutRunContext *run_context)
 {
 #define DISCONNECT(name)                                                \
-    g_signal_handlers_disconnect_by_func(runner,                       \
+    g_signal_handlers_disconnect_by_func(run_context,                       \
                                          G_CALLBACK(cb_ ## name),       \
                                          console)
 
@@ -739,22 +739,25 @@ disconnect_from_runner (CutConsoleUI *console, CutRunner *runner)
 }
 
 static void
-attach_to_runner (CutListener *listener,
-                  CutRunner   *runner)
+attach_to_run_context (CutListener *listener,
+                  CutRunContext   *run_context)
 {
-    connect_to_runner(CUT_CONSOLE_UI(listener), runner);
+    connect_to_run_context(CUT_CONSOLE_UI(listener), run_context);
 }
 
 static void
-detach_from_runner (CutListener *listener,
-                    CutRunner   *runner)
+detach_from_run_context (CutListener *listener,
+                    CutRunContext   *run_context)
 {
-    disconnect_from_runner(CUT_CONSOLE_UI(listener), runner);
+    disconnect_from_run_context(CUT_CONSOLE_UI(listener), run_context);
 }
 
 static gboolean
-run (CutUI *ui, CutRunner *runner)
+run (CutUI *ui, CutRunContext *run_context)
 {
+    CutRunner *runner;
+
+    runner = CUT_RUNNER(run_context);
     return cut_runner_run(runner);
 }
 

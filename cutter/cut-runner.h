@@ -22,8 +22,7 @@
 
 #include <glib-object.h>
 
-#include <cutter/cut-test-suite.h>
-#include <cutter/cut-listener.h>
+#include <cutter/cut-run-context.h>
 
 G_BEGIN_DECLS
 
@@ -34,173 +33,23 @@ G_BEGIN_DECLS
 #define CUT_IS_RUNNER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_RUNNER))
 #define CUT_RUNNER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_RUNNER, CutRunnerClass))
 
-typedef enum {
-    CUT_ORDER_NONE_SPECIFIED,
-    CUT_ORDER_NAME_ASCENDING,
-    CUT_ORDER_NAME_DESCENDING
-} CutOrder;
-
 typedef struct _CutRunnerClass    CutRunnerClass;
 
 struct _CutRunner
 {
-    GObject object;
+    CutRunContext object;
 };
 
 struct _CutRunnerClass
 {
-    GObjectClass parent_class;
-
-    void (*ready_test_suite)    (CutRunner      *runner,
-                                 CutTestSuite   *test_suite,
-                                 guint           n_test_cases,
-                                 guint           n_tests);
-    void (*start_test_suite)    (CutRunner      *runner,
-                                 CutTestSuite   *test_suite);
-    void (*ready_test_case)     (CutRunner      *runner,
-                                 CutTestCase    *test_case,
-                                 guint           n_tests);
-    void (*start_test_case)     (CutRunner      *runner,
-                                 CutTestCase    *test_case);
-    void (*start_test)          (CutRunner      *runner,
-                                 CutTest        *test,
-                                 CutTestContext *test_context);
-
-    void (*pass_test)           (CutRunner      *runner,
-                                 CutTest        *test,
-                                 CutTestContext *test_context);
-    void (*success_test)        (CutRunner      *runner,
-                                 CutTest        *test,
-                                 CutTestContext *test_context,
-                                 CutTestResult  *result);
-    void (*failure_test)        (CutRunner      *runner,
-                                 CutTest        *test,
-                                 CutTestContext *test_context,
-                                 CutTestResult  *result);
-    void (*error_test)          (CutRunner      *runner,
-                                 CutTest        *test,
-                                 CutTestContext *test_context,
-                                 CutTestResult  *result);
-    void (*pending_test)        (CutRunner      *runner,
-                                 CutTest        *test,
-                                 CutTestContext *test_context,
-                                 CutTestResult  *result);
-    void (*notification_test)   (CutRunner      *runner,
-                                 CutTest        *test,
-                                 CutTestContext *test_context,
-                                 CutTestResult  *result);
-    void (*omission_test)       (CutRunner      *runner,
-                                 CutTest        *test,
-                                 CutTestContext *test_context,
-                                 CutTestResult  *result);
-    void (*complete_test)       (CutRunner      *runner,
-                                 CutTest        *test,
-                                 CutTestContext *test_context);
-
-    void (*success_test_case)   (CutRunner      *runner,
-                                 CutTestCase    *test_case,
-                                 CutTestContext *test_context,
-                                 CutTestResult  *result);
-    void (*failure_test_case)   (CutRunner      *runner,
-                                 CutTestCase    *test_case,
-                                 CutTestContext *test_context,
-                                 CutTestResult  *result);
-    void (*error_test_case)     (CutRunner      *runner,
-                                 CutTestCase    *test_case,
-                                 CutTestContext *test_context,
-                                 CutTestResult  *result);
-    void (*pending_test_case)   (CutRunner      *runner,
-                                 CutTestCase    *test_case,
-                                 CutTestContext *test_context,
-                                 CutTestResult  *result);
-    void (*notification_test_case) (CutRunner      *runner,
-                                    CutTestCase    *test_case,
-                                    CutTestContext *test_context,
-                                    CutTestResult  *result);
-    void (*omission_test_case)  (CutRunner      *runner,
-                                 CutTestCase    *test_case,
-                                 CutTestContext *test_context,
-                                 CutTestResult  *result);
-    void (*complete_test_case)  (CutRunner      *runner,
-                                 CutTestCase    *test_case);
-
-    void (*complete_test_suite) (CutRunner      *runner,
-                                 CutTestSuite   *test_suite);
-
-    void (*crashed)             (CutRunner      *runner,
-                                 const gchar    *stack_trace);
+    CutRunContextClass parent_class;
 };
 
-GType        cut_runner_get_type  (void) G_GNUC_CONST;
+GType         cut_runner_get_type  (void) G_GNUC_CONST;
 
 CutRunner    *cut_runner_new (void);
 
-CutRunner    *cut_runner_copy                      (CutRunner   *runner);
-
-void          cut_runner_set_test_directory        (CutRunner   *runner,
-                                                    const gchar *directory);
-const gchar  *cut_runner_get_test_directory        (CutRunner   *runner);
-void          cut_runner_set_source_directory      (CutRunner   *runner,
-                                                    const gchar *directory);
-const gchar  *cut_runner_get_source_directory      (CutRunner   *runner);
-
-void          cut_runner_set_multi_thread          (CutRunner   *runner,
-                                                    gboolean     use_multi_thread);
-gboolean      cut_runner_get_multi_thread          (CutRunner   *runner);
-gboolean      cut_runner_is_multi_thread           (CutRunner   *runner);
-
-void          cut_runner_set_target_test_case_names(CutRunner   *runner,
-                                                    gchar      **names);
-gchar       **cut_runner_get_target_test_case_names(CutRunner   *runner);
-void          cut_runner_set_target_test_names     (CutRunner   *runner,
-                                                    gchar      **names);
-gchar       **cut_runner_get_target_test_names     (CutRunner   *runner);
-
-void          cut_runner_prepare_test              (CutRunner   *runner,
-                                                    CutTest     *test);
-void          cut_runner_prepare_test_case         (CutRunner   *runner,
-                                                    CutTestCase *test_case);
-void          cut_runner_prepare_test_suite        (CutRunner   *runner,
-                                                    CutTestSuite *test_suite);
-
-guint         cut_runner_get_n_tests               (CutRunner *runner);
-guint         cut_runner_get_n_successes           (CutRunner *runner);
-guint         cut_runner_get_n_assertions          (CutRunner *runner);
-guint         cut_runner_get_n_failures            (CutRunner *runner);
-guint         cut_runner_get_n_errors              (CutRunner *runner);
-guint         cut_runner_get_n_pendings            (CutRunner *runner);
-guint         cut_runner_get_n_notifications       (CutRunner *runner);
-guint         cut_runner_get_n_omissions           (CutRunner *runner);
-
-const GList  *cut_runner_get_results               (CutRunner *runner);
-
-gboolean      cut_runner_is_crashed                (CutRunner *runner);
-const gchar  *cut_runner_get_stack_trace           (CutRunner *runner);
-
-void          cut_runner_cancel                    (CutRunner *runner);
-gboolean      cut_runner_is_canceled               (CutRunner *runner);
-
-CutTestSuite *cut_runner_create_test_suite         (CutRunner *runner);
-CutTestSuite *cut_runner_get_test_suite            (CutRunner *runner);
-void          cut_runner_set_test_suite            (CutRunner *runner,
-                                                    CutTestSuite *suite);
-
-void          cut_runner_set_test_case_order       (CutRunner *runner,
-                                                    CutOrder   order);
-CutOrder      cut_runner_get_test_case_order       (CutRunner *runner);
-GList        *cut_runner_sort_test_cases           (CutRunner *runner,
-                                                    GList     *test_cases);
-
 gboolean      cut_runner_run                       (CutRunner *runner);
-
-void          cut_runner_add_listener              (CutRunner   *runner,
-                                                    CutListener *listener);
-void          cut_runner_remove_listener           (CutRunner   *runner,
-                                                    CutListener *listener);
-
-gchar        *cut_runner_build_source_filename     (CutRunner *runner,
-                                                    const gchar *filename);
-
 
 G_END_DECLS
 

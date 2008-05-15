@@ -88,9 +88,9 @@ CutTest     *cut_test_new                 (const gchar    *name,
                                            CutTestFunction function);
 gboolean     cut_test_run                 (CutTest        *test,
                                            CutTestContext *test_context,
-                                           CutRunner      *runner);
+                                           CutRunContext  *run_context);
 
-void         cut_test_stop_timer          (CutTest     *test);        
+void         cut_test_stop_timer          (CutTest     *test);
 const gchar *cut_test_get_name            (CutTest     *test);
 void         cut_test_set_name            (CutTest     *test,
                                            const gchar *name);

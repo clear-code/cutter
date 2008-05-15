@@ -28,7 +28,7 @@
 #include "cut-test-case.h"
 
 #include "cut-test.h"
-#include "cut-runner.h"
+#include "cut-run-context.h"
 
 #include "cut-marshalers.h"
 #include "cut-test-result.h"
@@ -302,7 +302,7 @@ cut_test_case_add_test (CutTestCase *test_case, CutTest *test)
 }
 
 static gboolean
-run (CutTestCase *test_case, CutTest *test, CutRunner *runner)
+run (CutTestCase *test_case, CutTest *test, CutRunContext *run_context)
 {
     CutTestCasePrivate *priv;
     CutTestContext *original_test_context, *test_context;
@@ -310,10 +310,10 @@ run (CutTestCase *test_case, CutTest *test, CutRunner *runner)
     gboolean is_multi_thread;
     jmp_buf jump_buffer;
 
-    if (cut_runner_is_canceled(runner))
+    if (cut_run_context_is_canceled(run_context))
         return TRUE;
 
-    is_multi_thread = cut_runner_is_multi_thread(runner);
+    is_multi_thread = cut_run_context_is_multi_thread(run_context);
 
     priv = CUT_TEST_CASE_GET_PRIVATE(test_case);
     if (!priv->get_current_test_context ||
@@ -339,7 +339,7 @@ run (CutTestCase *test_case, CutTest *test, CutRunner *runner)
         success = FALSE;
     } else {
         cut_test_context_set_test(test_context, test);
-        success = cut_test_run(test, test_context, runner);
+        success = cut_test_run(test, test_context, run_context);
         cut_test_context_set_test(test_context, NULL);
     }
 
@@ -367,7 +367,7 @@ cb_test_status (CutTest *test, CutTestContext *context, CutTestResult *result,
 }
 
 static gboolean
-cut_test_case_run_tests (CutTestCase *test_case, CutRunner *runner,
+cut_test_case_run_tests (CutTestCase *test_case, CutRunContext *run_context,
                          const GList *tests)
 {
     CutTestCasePrivate *priv;
@@ -376,7 +376,7 @@ cut_test_case_run_tests (CutTestCase *test_case, CutRunner *runner,
     CutTestResult *result;
     gboolean all_success = TRUE;
 
-    cut_runner_prepare_test_case(runner, test_case);
+    cut_run_context_prepare_test_case(run_context, test_case);
     g_signal_emit_by_name(test_case, "ready", g_list_length((GList *)tests));
     g_signal_emit_by_name(CUT_TEST(test_case), "start");
 
@@ -406,7 +406,7 @@ cut_test_case_run_tests (CutTestCase *test_case, CutRunner *runner,
                              &status);
             g_signal_connect(test, "omission", G_CALLBACK(cb_test_status),
                              &status);
-            if (!run(test_case, test, runner))
+            if (!run(test_case, test, run_context))
                 all_success = FALSE;
             g_signal_handlers_disconnect_by_func(test,
                                                  G_CALLBACK(cb_test_status),
@@ -436,26 +436,26 @@ cut_test_case_run_tests (CutTestCase *test_case, CutRunner *runner,
 }
 
 gboolean
-cut_test_case_run_test (CutTestCase *test_case, CutRunner *runner, gchar *name)
+cut_test_case_run_test (CutTestCase *test_case, CutRunContext *run_context, gchar *name)
 {
     gchar *test_names[] = {NULL, NULL};
 
     g_return_val_if_fail(CUT_IS_TEST_CASE(test_case), FALSE);
 
     test_names[0] = name;
-    return cut_test_case_run_with_filter(test_case, runner, test_names);
+    return cut_test_case_run_with_filter(test_case, run_context, test_names);
 }
 
 gboolean
 cut_test_case_run_with_filter (CutTestCase  *test_case,
-                               CutRunner   *runner,
+                               CutRunContext   *run_context,
                                gchar **test_names)
 {
     GList *filtered_tests;
     gboolean success = TRUE;
 
     filtered_tests = get_filtered_tests(test_case, test_names);
-    success = cut_test_case_run_tests(test_case, runner, filtered_tests);
+    success = cut_test_case_run_tests(test_case, run_context, filtered_tests);
 
     g_list_free(filtered_tests);
 
@@ -463,12 +463,12 @@ cut_test_case_run_with_filter (CutTestCase  *test_case,
 }
 
 gboolean
-cut_test_case_run (CutTestCase *test_case, CutRunner *runner)
+cut_test_case_run (CutTestCase *test_case, CutRunContext *run_context)
 {
     gchar **test_names;
 
-    test_names = cut_runner_get_target_test_names(runner);
-    return cut_test_case_run_with_filter(test_case, runner, test_names);
+    test_names = cut_run_context_get_target_test_names(run_context);
+    return cut_test_case_run_with_filter(test_case, run_context, test_names);
 }
 
 /*

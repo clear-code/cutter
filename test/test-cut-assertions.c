@@ -6,7 +6,7 @@
 #include "cut-test.h"
 #include "cut-test-result.h"
 #include "cut-utils.h"
-#include "cut-runner.h"
+#include "cut-run-context.h"
 #include "cuttest-assertions.h"
 
 #include <glib/gstdio.h>
@@ -43,7 +43,7 @@ static gboolean compare_function_is_called;
 static gchar *tmp_file_name;
 
 static CutTest *test_object;
-static CutRunner *runner;
+static CutRunContext *run_context;
 static CutTestContext *test_context;
 static CutTestResult *test_result;
 
@@ -115,12 +115,12 @@ run (CutTest *test)
 
     test_object = test;
 
-    runner = cut_runner_new();
+    run_context = cut_run_context_new();
 
     test_context = cut_test_context_new(NULL, NULL, test_object);
     original_test_context = get_current_test_context();
     set_current_test_context(test_context);
-    success = cut_test_run(test_object, test_context, runner);
+    success = cut_test_run(test_object, test_context, run_context);
     set_current_test_context(original_test_context);
 
     return success;
@@ -133,7 +133,7 @@ setup (void)
     compare_function_is_called = FALSE;
     tmp_file_name = NULL;
     test_object = NULL;
-    runner = NULL;
+    run_context = NULL;
     test_context = NULL;
     test_result = NULL;
 }
@@ -151,8 +151,8 @@ teardown (void)
 
     if (test_object)
         g_object_unref(test_object);
-    if (runner)
-        g_object_unref(runner);
+    if (run_context)
+        g_object_unref(run_context);
     if (test_context)
         g_object_unref(test_context);
     if (test_result)
@@ -191,7 +191,7 @@ test_equal_string_with_diff (void)
     g_signal_connect(test, "failure", G_CALLBACK(cb_collect_result),
                      &test_result);
     cut_assert(!run(test));
-    cut_assert_test_result_summary(runner, 1, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result_summary(run_context, 1, 0, 1, 0, 0, 0, 0);
     cut_assert_equal_string("<\"abc def ghi jkl\" == \"abc DEF ghi jkl\">\n"
                             "expected: <abc def ghi jkl>\n"
                             " but was: <abc DEF ghi jkl>\n"
@@ -271,8 +271,8 @@ test_error (void)
     cut_assert(test, "Creating a new CutTest object failed");
 
     cut_assert(!run(test));
-    cut_assert_test_result_summary(runner, 1, 0, 0, 1, 0, 0, 0);
-    cut_assert_test_result(runner, 0, CUT_TEST_RESULT_ERROR, "dummy-error-test",
+    cut_assert_test_result_summary(run_context, 1, 0, 0, 1, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_ERROR, "dummy-error-test",
                            "This test should error", NULL,
                            "dummy_error_test_function");
 }
@@ -429,6 +429,7 @@ test_failure_from_nested_function (void)
 {
     CutTest *test;
     CutTestResult *result;
+    const GList *results;
 
     test = cut_test_new("fail from nested function",
                         just_call_fail_in_nested_function);
@@ -436,13 +437,14 @@ test_failure_from_nested_function (void)
 
     cut_assert(!run(test));
 
-    cut_assert(runner);
-    cut_assert(1, cut_runner_get_n_tests(runner));
-    cut_assert(1, cut_runner_get_n_assertions(runner));
-    cut_assert(1, g_list_length((GList *)cut_runner_get_results(runner)));
-    cut_assert(1, cut_runner_get_n_failures(runner));
+    cut_assert(run_context);
+    cut_assert(1, cut_run_context_get_n_tests(run_context));
+    cut_assert(1, cut_run_context_get_n_assertions(run_context));
+    results = cut_run_context_get_results(run_context);
+    cut_assert(1, g_list_length((GList *)results));
+    cut_assert(1, cut_run_context_get_n_failures(run_context));
 
-    result = cut_runner_get_results(runner)->data;
+    result = cut_run_context_get_results(run_context)->data;
     cut_assert_equal_string("Fail from nested function",
                             cut_test_result_get_user_message(result));
 }
@@ -461,7 +463,7 @@ test_null_string (void)
 
     test = cut_test_new("assert-null-string", null_string_assertions);
     cut_assert(!run(test));
-    cut_assert_test_result_summary(runner, 1, 1, 1, 0, 0, 0, 0);
+    cut_assert_test_result_summary(run_context, 1, 1, 1, 0, 0, 0, 0);
 }
 
 static void
@@ -481,7 +483,7 @@ test_equal_string_with_free (void)
     test = cut_test_new("assert-string-equal-string-with-free",
                         equal_string_with_free_assertions);
     cut_assert(!run(test));
-    cut_assert_test_result_summary(runner, 1, 3, 1, 0, 0, 0, 0);
+    cut_assert_test_result_summary(run_context, 1, 3, 1, 0, 0, 0, 0);
 }
 
 static void
@@ -501,7 +503,7 @@ test_assert_errno (void)
 
     test = cut_test_new("assert-errno-for-eacces", assert_errno_for_eacces);
     cut_assert(!run(test));
-    cut_assert_test_result_summary(runner, 1, 1, 1, 0, 0, 0, 0);
+    cut_assert_test_result_summary(run_context, 1, 1, 1, 0, 0, 0, 0);
 }
 
 static void
@@ -519,7 +521,7 @@ test_omit (void)
 
     test = cut_test_new("omit-test", omit_test);
     cut_assert(run(test));
-    cut_assert_test_result_summary(runner, 1, 1, 0, 0, 0, 0, 1);
+    cut_assert_test_result_summary(run_context, 1, 1, 0, 0, 0, 0, 1);
 }
 
 static void
@@ -549,7 +551,7 @@ test_file_exist (void)
 
     test = cut_test_new("file-exist-test", file_exist_test);
     cut_assert(!run(test));
-    cut_assert_test_result_summary(runner, 1, 1, 1, 0, 0, 0, 0);
+    cut_assert_test_result_summary(run_context, 1, 1, 1, 0, 0, 0, 0);
 }
 
 static void
@@ -566,7 +568,7 @@ test_match (void)
 
     test = cut_test_new("match-test", match_test);
     cut_assert(!run(test));
-    cut_assert_test_result_summary(runner, 1, 1, 1, 0, 0, 0, 0);
+    cut_assert_test_result_summary(run_context, 1, 1, 1, 0, 0, 0, 0);
 }
 
 
