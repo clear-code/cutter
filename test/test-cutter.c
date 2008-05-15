@@ -50,7 +50,7 @@ setup (void)
         "  --help-all                                      Show all help options\n"
         "  --help-report                                   Show report options\n"
         "  --help-ui                                       Show UI options\n"
-        "  --help-ui-console                               Show console UI options\n"
+        "  --help-console-ui                               Show console UI options\n"
         "\n"
         "Application Options:\n"
         "  --version                                       Show version\n"
@@ -160,7 +160,7 @@ test_help_all (void)
         "  --help-all                                      Show all help options\n"
         "  --help-report                                   Show report options\n"
         "  --help-ui                                       Show UI options\n"
-        "  --help-ui-console                               Show console UI options\n"
+        "  --help-console-ui                               Show console UI options\n"
 #ifdef HAVE_GTK
         "  --help-gtk                                      Show GTK+ Options\n"
 #endif
