@@ -324,13 +324,13 @@ test_match_simple (void)
 }
 
 static void
-cut_assert_match (const gchar        *pattern,
-                  GRegexCompileFlags  compile_options,
-                  GRegexMatchFlags    pattern_match_options,
-                  const gchar        *string,
-                  gssize              length,
-                  gint                start_position,
-                  GRegexMatchFlags    match_options)
+cut_assert_match_full (const gchar        *pattern,
+                       GRegexCompileFlags  compile_options,
+                       GRegexMatchFlags    pattern_match_options,
+                       const gchar        *string,
+                       gssize              length,
+                       gint                start_position,
+                       GRegexMatchFlags    match_options)
 {
   cut_assert_regex_new_without_free (pattern, compile_options,
                                      pattern_match_options);
@@ -349,37 +349,37 @@ cut_assert_match (const gchar        *pattern,
 void
 test_match (void)
 {
-  cut_assert_match ("a", 0, 0, "a", -1, 0, 0);
-  cut_assert_match ("a", G_REGEX_CASELESS, 0, "A", -1, 0, 0);
-  cut_assert_match ("a", 0, 0, "bab", -1, 0, 0);
-  cut_assert_match ("a", 0, G_REGEX_ANCHORED, "a", -1, 0, 0);
-  cut_assert_match ("a|b", 0, 0, "a", -1, 0, 0);
-  cut_assert_match ("^.$", 0, 0, EURO, -1, 0, 0);
-  cut_assert_match ("^.{3}$", G_REGEX_RAW, 0, EURO, -1, 0, 0);
-  cut_assert_match (AGRAVE, G_REGEX_CASELESS, 0, AGRAVE_UPPER, -1, 0, 0);
-  cut_assert_match ("a", 0, 0, "a", -1, 0, G_REGEX_ANCHORED);
+  cut_assert_match_full ("a", 0, 0, "a", -1, 0, 0);
+  cut_assert_match_full ("a", G_REGEX_CASELESS, 0, "A", -1, 0, 0);
+  cut_assert_match_full ("a", 0, 0, "bab", -1, 0, 0);
+  cut_assert_match_full ("a", 0, G_REGEX_ANCHORED, "a", -1, 0, 0);
+  cut_assert_match_full ("a|b", 0, 0, "a", -1, 0, 0);
+  cut_assert_match_full ("^.$", 0, 0, EURO, -1, 0, 0);
+  cut_assert_match_full ("^.{3}$", G_REGEX_RAW, 0, EURO, -1, 0, 0);
+  cut_assert_match_full (AGRAVE, G_REGEX_CASELESS, 0, AGRAVE_UPPER, -1, 0, 0);
+  cut_assert_match_full ("a", 0, 0, "a", -1, 0, G_REGEX_ANCHORED);
 
   /* New lines handling. */
-  cut_assert_match ("^a\\Rb$", 0, 0, "a\r\nb", -1, 0, 0);
-  cut_assert_match ("^a\\Rb$", 0, 0, "a\nb", -1, 0, 0);
-  cut_assert_match ("^a\\Rb$", 0, 0, "a\rb", -1, 0, 0);
-  cut_assert_match ("^a\\R\\Rb$", 0, 0, "a\n\rb", -1, 0, 0);
-  cut_assert_match ("^a\\r\\nb$", 0, 0, "a\r\nb", -1, 0, 0);
-  cut_assert_match ("^b$", G_REGEX_MULTILINE, 0, "a\nb\nc", -1, 0, 0);
-  cut_assert_match ("^b$", G_REGEX_MULTILINE, 0, "a\r\nb\r\nc", -1, 0, 0);
-  cut_assert_match ("^b$", G_REGEX_MULTILINE, 0, "a\rb\rc", -1, 0, 0);
-  cut_assert_match ("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_LF, 0, "a\nb\nc", -1, 0, 0);
-  cut_assert_match ("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CRLF, 0, "a\r\nb\r\nc", -1, 0, 0);
-  cut_assert_match ("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CR, 0, "a\rb\rc", -1, 0, 0);
-  cut_assert_match ("^b$", G_REGEX_MULTILINE, G_REGEX_MATCH_NEWLINE_LF, "a\nb\nc", -1, 0, 0);
-  cut_assert_match ("^b$", G_REGEX_MULTILINE, G_REGEX_MATCH_NEWLINE_CRLF, "a\r\nb\r\nc", -1, 0, 0);
-  cut_assert_match ("^b$", G_REGEX_MULTILINE, G_REGEX_MATCH_NEWLINE_CR, "a\rb\rc", -1, 0, 0);
-  cut_assert_match ("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CR, G_REGEX_MATCH_NEWLINE_ANY, "a\nb\nc", -1, 0, 0);
-  cut_assert_match ("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CR, G_REGEX_MATCH_NEWLINE_ANY, "a\rb\rc", -1, 0, 0);
-  cut_assert_match ("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CR, G_REGEX_MATCH_NEWLINE_ANY, "a\r\nb\r\nc", -1, 0, 0);
-  cut_assert_match ("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CR, G_REGEX_MATCH_NEWLINE_LF, "a\nb\nc", -1, 0, 0);
-  cut_assert_match ("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CR, G_REGEX_MATCH_NEWLINE_CRLF, "a\r\nb\r\nc", -1, 0, 0);
-  cut_assert_match ("a#\nb", G_REGEX_EXTENDED | G_REGEX_NEWLINE_CR, 0, "a", -1, 0, 0);
+  cut_assert_match_full ("^a\\Rb$", 0, 0, "a\r\nb", -1, 0, 0);
+  cut_assert_match_full ("^a\\Rb$", 0, 0, "a\nb", -1, 0, 0);
+  cut_assert_match_full ("^a\\Rb$", 0, 0, "a\rb", -1, 0, 0);
+  cut_assert_match_full ("^a\\R\\Rb$", 0, 0, "a\n\rb", -1, 0, 0);
+  cut_assert_match_full ("^a\\r\\nb$", 0, 0, "a\r\nb", -1, 0, 0);
+  cut_assert_match_full ("^b$", G_REGEX_MULTILINE, 0, "a\nb\nc", -1, 0, 0);
+  cut_assert_match_full ("^b$", G_REGEX_MULTILINE, 0, "a\r\nb\r\nc", -1, 0, 0);
+  cut_assert_match_full ("^b$", G_REGEX_MULTILINE, 0, "a\rb\rc", -1, 0, 0);
+  cut_assert_match_full ("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_LF, 0, "a\nb\nc", -1, 0, 0);
+  cut_assert_match_full ("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CRLF, 0, "a\r\nb\r\nc", -1, 0, 0);
+  cut_assert_match_full ("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CR, 0, "a\rb\rc", -1, 0, 0);
+  cut_assert_match_full ("^b$", G_REGEX_MULTILINE, G_REGEX_MATCH_NEWLINE_LF, "a\nb\nc", -1, 0, 0);
+  cut_assert_match_full ("^b$", G_REGEX_MULTILINE, G_REGEX_MATCH_NEWLINE_CRLF, "a\r\nb\r\nc", -1, 0, 0);
+  cut_assert_match_full ("^b$", G_REGEX_MULTILINE, G_REGEX_MATCH_NEWLINE_CR, "a\rb\rc", -1, 0, 0);
+  cut_assert_match_full ("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CR, G_REGEX_MATCH_NEWLINE_ANY, "a\nb\nc", -1, 0, 0);
+  cut_assert_match_full ("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CR, G_REGEX_MATCH_NEWLINE_ANY, "a\rb\rc", -1, 0, 0);
+  cut_assert_match_full ("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CR, G_REGEX_MATCH_NEWLINE_ANY, "a\r\nb\r\nc", -1, 0, 0);
+  cut_assert_match_full ("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CR, G_REGEX_MATCH_NEWLINE_LF, "a\nb\nc", -1, 0, 0);
+  cut_assert_match_full ("^b$", G_REGEX_MULTILINE | G_REGEX_NEWLINE_CR, G_REGEX_MATCH_NEWLINE_CRLF, "a\r\nb\r\nc", -1, 0, 0);
+  cut_assert_match_full ("a#\nb", G_REGEX_EXTENDED | G_REGEX_NEWLINE_CR, 0, "a", -1, 0, 0);
 }
 
 static void

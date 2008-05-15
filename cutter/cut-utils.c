@@ -118,6 +118,12 @@ cut_utils_file_exist (const gchar *path)
     return g_file_test(path, G_FILE_TEST_EXISTS);
 }
 
+gboolean
+cut_utils_regex_match (const gchar *pattern, const gchar *string)
+{
+    return g_regex_match_simple(pattern, string, G_REGEX_MULTILINE, 0);
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */

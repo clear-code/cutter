@@ -78,6 +78,9 @@ char *cut_utils_inspect_string_array        (char **strings);
 int   cut_utils_is_interested_diff          (const char *diff);
 int   cut_utils_file_exist                  (const char *path);
 
+int   cut_utils_regex_match                 (const char *pattern,
+                                             const char *string);
+
 void *cut_test_context_get_user_data        (CutTestContext *context);
 int   cut_test_context_trap_fork            (CutTestContext *context,
                                              const char     *function_name,

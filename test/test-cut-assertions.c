@@ -36,6 +36,7 @@ void test_failure_from_nested_function (void);
 void test_assert_errno (void);
 void test_omit (void);
 void test_file_exist (void);
+void test_match (void);
 
 static gboolean need_cleanup;
 static gboolean compare_function_is_called;
@@ -547,6 +548,23 @@ test_file_exist (void)
     CutTest *test;
 
     test = cut_test_new("file-exist-test", file_exist_test);
+    cut_assert(!run(test));
+    cut_assert_test_result_summary(runner, 1, 1, 1, 0, 0, 0, 0);
+}
+
+static void
+match_test (void)
+{
+    cut_assert_match("^abc", "abc");
+    cut_assert_match("^abc", " abc", "FAILED");
+}
+
+void
+test_match (void)
+{
+    CutTest *test;
+
+    test = cut_test_new("match-test", match_test);
     cut_assert(!run(test));
     cut_assert_test_result_summary(runner, 1, 1, 1, 0, 0, 0, 0);
 }

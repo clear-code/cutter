@@ -642,6 +642,38 @@ extern "C" {
     }                                                                   \
 } while(0)
 
+/**
+ * cut_assert_match:
+ * @pattern: the regular expression as string.
+ * @actual: the string to be matched.
+ * @...: optional format string, followed by parameters to insert
+ * into the format string (as with printf())
+ *
+ * Passes if @regex matches @string.
+ *
+ * e.g.:
+ * |[
+ * cut_assert_match("^abc", "abc");            -> Pass
+ * cut_assert_match("^abc", " abc");           -> Fail
+ * ]|
+ *
+ * Since: 1.0
+ */
+#define cut_assert_match(pattern, actual, ...) do                       \
+{                                                                       \
+    const char *_pattern = (pattern);                                   \
+    const char *_actual = (actual);                                     \
+    if (cut_utils_regex_match(_pattern, actual)) {                      \
+        cut_test_pass();                                                \
+    } else {                                                            \
+        cut_test_fail(FAILURE,                                          \
+                      cut_take_printf("expected: <%s> matches to\n"     \
+                                      "          <%s>",                 \
+                                      _pattern, _actual),               \
+                      ## __VA_ARGS__);                                  \
+    }                                                                   \
+} while(0)
+
 #ifdef __cplusplus
 }
 #endif
