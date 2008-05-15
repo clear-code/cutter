@@ -43,6 +43,7 @@ noinst_LTLIBRARIES = 				\
 		test_cut_contractor.la		\
 		test_cut_fork.la		\
 		test_cut_process.la		\
+		test_cut_pipeline.la		\
 		test_cut_xml_parser.la		\
 		test_cut_report_xml.la		\
 		test_cut_xml_streamer.la	\
@@ -89,6 +90,7 @@ test_cut_factory_builder_la_SOURCES = test-cut-factory-builder.c
 test_cut_contractor_la_SOURCES  = test-cut-contractor.c
 test_cut_fork_la_SOURCES  	= test-cut-fork.c
 test_cut_process_la_SOURCES  	= test-cut-process.c
+test_cut_pipeline_la_SOURCES  	= test-cut-pipeline.c
 test_cut_xml_parser_la_SOURCES	= test-cut-xml-parser.c
 test_cut_verbose_level_la_SOURCES = test-cut-verbose-level.c
 test_cut_test_context_la_SOURCES = test-cut-test-context.c

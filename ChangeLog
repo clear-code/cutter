@@ -19,6 +19,7 @@
 	* test/run-test.sh, test/test-cutter.c: modify test data adapt to new
 	streamer module.
 	* test/test-cut-xml-streamer.c: Added.
+	* cutter/cut-pipeline.[c|h]: Added.
 
 2008-05-14  Kouhei Sutou  <kou@cozmixng.org>
 
