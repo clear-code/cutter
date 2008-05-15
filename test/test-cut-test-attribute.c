@@ -74,7 +74,7 @@ test_get_bug_id (void)
     cut_assert(test_case);
 
     container = CUT_TEST_CONTAINER(test_case);
-    tests = (GList *)cut_test_container_filter_children(container, filter);
+    tests = cut_test_container_filter_children(container, filter);
     cut_assert(tests);
 
     cut_assert(1, g_list_length(tests));
@@ -92,7 +92,7 @@ test_get_attribute (void)
     cut_assert(test_case);
 
     container = CUT_TEST_CONTAINER(test_case);
-    tests = (GList *)cut_test_container_filter_children(container, filter);
+    tests = cut_test_container_filter_children(container, filter);
     cut_assert(tests);
 
     cut_assert(1, g_list_length(tests));
@@ -113,7 +113,7 @@ test_get_description (void)
     cut_assert(test_case);
 
     container = CUT_TEST_CONTAINER(test_case);
-    tests = (GList *)cut_test_container_filter_children(container, filter);
+    tests = cut_test_container_filter_children(container, filter);
     cut_assert(tests);
 
     cut_assert(1, g_list_length(tests));
