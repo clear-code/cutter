@@ -32,23 +32,23 @@
 #include <cutter/cut-module-factory.h>
 #include <cutter/cut-enum-types.h>
 
-#define CUT_TYPE_REPORT_FACTORY_PDF            cut_type_report_factory_pdf
-#define CUT_REPORT_FACTORY_PDF(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_REPORT_FACTORY_PDF, CutReportFactoryPDF))
-#define CUT_REPORT_FACTORY_PDF_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_REPORT_FACTORY_PDF, CutReportFactoryPDFClass))
-#define CUT_IS_REPORT_FACTORY_PDF(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_REPORT_FACTORY_PDF))
-#define CUT_IS_REPORT_FACTORY_PDF_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_REPORT_FACTORY_PDF))
-#define CUT_REPORT_FACTORY_PDF_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_REPORT_FACTORY_PDF, CutReportFactoryPDFClass))
+#define CUT_TYPE_PDF_REPORT_FACTORY            cut_type_pdf_factory_report
+#define CUT_PDF_REPORT_FACTORY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_PDF_REPORT_FACTORY, CutPDFReportFactory))
+#define CUT_PDF_REPORT_FACTORY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_PDF_REPORT_FACTORY, CutPDFReportFactoryClass))
+#define CUT_IS_PDF_REPORT_FACTORY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_PDF_REPORT_FACTORY))
+#define CUT_IS_PDF_REPORT_FACTORY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_PDF_REPORT_FACTORY))
+#define CUT_PDF_REPORT_FACTORY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_PDF_REPORT_FACTORY, CutPDFReportFactoryClass))
 
-typedef struct _CutReportFactoryPDF CutReportFactoryPDF;
-typedef struct _CutReportFactoryPDFClass CutReportFactoryPDFClass;
+typedef struct _CutPDFReportFactory CutPDFReportFactory;
+typedef struct _CutPDFReportFactoryClass CutPDFReportFactoryClass;
 
-struct _CutReportFactoryPDF
+struct _CutPDFReportFactory
 {
     CutModuleFactory     object;
     gchar *filename;
 };
 
-struct _CutReportFactoryPDFClass
+struct _CutPDFReportFactoryClass
 {
     CutModuleFactoryClass parent_class;
 };
@@ -59,7 +59,7 @@ enum
     PROP_FILENAME
 };
 
-static GType cut_type_report_factory_pdf = 0;
+static GType cut_type_pdf_factory_report = 0;
 static CutModuleFactoryClass *parent_class;
 
 static void     dispose          (GObject         *object);
@@ -102,7 +102,7 @@ class_init (CutModuleFactoryClass *klass)
 }
 
 static void
-init (CutReportFactoryPDF *pdf)
+init (CutPDFReportFactory *pdf)
 {
     pdf->filename = NULL;
 }
@@ -110,7 +110,7 @@ init (CutReportFactoryPDF *pdf)
 static void
 dispose (GObject *object)
 {
-    CutReportFactoryPDF *pdf = CUT_REPORT_FACTORY_PDF(object);
+    CutPDFReportFactory *pdf = CUT_PDF_REPORT_FACTORY(object);
 
     if (pdf->filename) {
         g_free(pdf->filename);
@@ -124,7 +124,7 @@ set_property (GObject      *object,
               const GValue *value,
               GParamSpec   *pspec)
 {
-    CutReportFactoryPDF *pdf = CUT_REPORT_FACTORY_PDF(object);
+    CutPDFReportFactory *pdf = CUT_PDF_REPORT_FACTORY(object);
 
     switch (prop_id) {
       case PROP_FILENAME:
@@ -144,7 +144,7 @@ get_property (GObject    *object,
               GValue     *value,
               GParamSpec *pspec)
 {
-    CutReportFactoryPDF *pdf = CUT_REPORT_FACTORY_PDF(object);
+    CutPDFReportFactory *pdf = CUT_PDF_REPORT_FACTORY(object);
 
     switch (prop_id) {
       case PROP_FILENAME:
@@ -161,21 +161,21 @@ register_type (GTypeModule *type_module)
 {
     static const GTypeInfo info =
         {
-            sizeof (CutReportFactoryPDFClass),
+            sizeof (CutPDFReportFactoryClass),
             (GBaseInitFunc) NULL,
             (GBaseFinalizeFunc) NULL,
             (GClassInitFunc) class_init,
             NULL,           /* class_finalize */
             NULL,           /* class_data */
-            sizeof(CutReportFactoryPDF),
+            sizeof(CutPDFReportFactory),
             0,
             (GInstanceInitFunc) init,
         };
 
-    cut_type_report_factory_pdf =
+    cut_type_pdf_factory_report =
         g_type_module_register_type(type_module,
                                     CUT_TYPE_MODULE_FACTORY,
-                                    "CutReportFactoryPDF",
+                                    "CutPDFReportFactory",
                                     &info, 0);
 }
 
@@ -185,10 +185,10 @@ CUT_MODULE_IMPL_INIT (GTypeModule *type_module)
     GList *registered_types = NULL;
 
     register_type(type_module);
-    if (cut_type_report_factory_pdf)
+    if (cut_type_pdf_factory_report)
         registered_types =
             g_list_prepend(registered_types,
-                           (gchar *)g_type_name(cut_type_report_factory_pdf));
+                           (gchar *)g_type_name(cut_type_pdf_factory_report));
 
     return registered_types;
 }
@@ -201,13 +201,13 @@ CUT_MODULE_IMPL_EXIT (void)
 G_MODULE_EXPORT GObject *
 CUT_MODULE_IMPL_INSTANTIATE (const gchar *first_property, va_list var_args)
 {
-    return g_object_new_valist(CUT_TYPE_REPORT_FACTORY_PDF, first_property, var_args);
+    return g_object_new_valist(CUT_TYPE_PDF_REPORT_FACTORY, first_property, var_args);
 }
 
 static void
 set_option_group (CutModuleFactory *factory, GOptionContext *context)
 {
-    CutReportFactoryPDF *pdf = CUT_REPORT_FACTORY_PDF(factory);
+    CutPDFReportFactory *pdf = CUT_PDF_REPORT_FACTORY(factory);
     GOptionGroup *group;
     GOptionEntry entries[] = {
         {NULL}
@@ -216,7 +216,7 @@ set_option_group (CutModuleFactory *factory, GOptionContext *context)
     if (CUT_MODULE_FACTORY_CLASS(parent_class)->set_option_group)
         CUT_MODULE_FACTORY_CLASS(parent_class)->set_option_group(factory, context);
 
-    group = g_option_group_new(("report-pdf"),
+    group = g_option_group_new(("pdf-report"),
                                _("PDF Report Options"),
                                _("Show PDF report options"),
                                pdf, NULL);
@@ -228,7 +228,7 @@ set_option_group (CutModuleFactory *factory, GOptionContext *context)
 GObject *
 create (CutModuleFactory *factory)
 {
-    CutReportFactoryPDF *pdf = CUT_REPORT_FACTORY_PDF(factory);
+    CutPDFReportFactory *pdf = CUT_PDF_REPORT_FACTORY(factory);
 
     return G_OBJECT(cut_report_new("pdf",
                                    "filename", pdf->filename,

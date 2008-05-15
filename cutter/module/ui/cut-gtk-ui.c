@@ -40,17 +40,17 @@
 #include <cutter/cut-verbose-level.h>
 #include <cutter/cut-enum-types.h>
 
-#define CUT_TYPE_UI_GTK            cut_type_ui_gtk
-#define CUT_UI_GTK(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_UI_GTK, CutUIGtk))
-#define CUT_UI_GTK_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_UI_GTK, CutUIGtkClass))
-#define CUT_IS_UI_GTK(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_UI_GTK))
-#define CUT_IS_UI_GTK_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_UI_GTK))
-#define CUT_UI_GTK_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_UI_GTK, CutUIGtkClass))
+#define CUT_TYPE_GTK_UI            cut_type_gtk_ui
+#define CUT_GTK_UI(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_GTK_UI, CutGtkUI))
+#define CUT_GTK_UI_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_GTK_UI, CutGtkUIClass))
+#define CUT_IS_GTK_UI(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_GTK_UI))
+#define CUT_IS_GTK_UI_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_GTK_UI))
+#define CUT_GTK_UI_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_GTK_UI, CutGtkUIClass))
 
-typedef struct _CutUIGtk CutUIGtk;
-typedef struct _CutUIGtkClass CutUIGtkClass;
+typedef struct _CutGtkUI CutGtkUI;
+typedef struct _CutGtkUIClass CutGtkUIClass;
 
-struct _CutUIGtk
+struct _CutGtkUI
 {
     GObject        object;
 
@@ -77,7 +77,7 @@ struct _CutUIGtk
     guint          update_pulse_id;
 };
 
-struct _CutUIGtkClass
+struct _CutGtkUIClass
 {
     GObjectClass parent_class;
 };
@@ -101,7 +101,7 @@ enum
     N_COLUMN
 };
 
-static GType cut_type_ui_gtk = 0;
+static GType cut_type_gtk_ui = 0;
 static GObjectClass *parent_class;
 
 static void dispose        (GObject         *object);
@@ -124,7 +124,7 @@ static gboolean run                (CutUI       *ui,
 static gboolean idle_cb_run_test (gpointer data);
 
 static void
-class_init (CutUIGtkClass *klass)
+class_init (CutGtkUIClass *klass)
 {
     GObjectClass *gobject_class;
 
@@ -138,7 +138,7 @@ class_init (CutUIGtkClass *klass)
 }
 
 static void
-setup_progress_bar (GtkBox *box, CutUIGtk *ui)
+setup_progress_bar (GtkBox *box, CutGtkUI *ui)
 {
     GtkWidget *progress_bar;
 
@@ -152,7 +152,7 @@ setup_progress_bar (GtkBox *box, CutUIGtk *ui)
 static void
 cb_cancel (GtkToolButton *button, gpointer data)
 {
-    CutUIGtk *ui = data;
+    CutGtkUI *ui = data;
 
     gtk_widget_set_sensitive(GTK_WIDGET(button), FALSE);
 
@@ -160,7 +160,7 @@ cb_cancel (GtkToolButton *button, gpointer data)
 }
 
 static void
-setup_cancel_button (GtkToolbar *toolbar, CutUIGtk *ui)
+setup_cancel_button (GtkToolbar *toolbar, CutGtkUI *ui)
 {
     GtkToolItem *cancel_button;
 
@@ -175,7 +175,7 @@ setup_cancel_button (GtkToolbar *toolbar, CutUIGtk *ui)
 static void
 cb_restart (GtkToolButton *button, gpointer data)
 {
-    CutUIGtk *ui = data;
+    CutGtkUI *ui = data;
     CutRunner *runner;
 
     gtk_widget_set_sensitive(GTK_WIDGET(button), FALSE);
@@ -192,7 +192,7 @@ cb_restart (GtkToolButton *button, gpointer data)
 }
 
 static void
-setup_restart_button (GtkToolbar *toolbar, CutUIGtk *ui)
+setup_restart_button (GtkToolbar *toolbar, CutGtkUI *ui)
 {
     GtkToolItem *restart_button;
 
@@ -205,7 +205,7 @@ setup_restart_button (GtkToolbar *toolbar, CutUIGtk *ui)
 }
 
 static void
-setup_top_bar (GtkBox *box, CutUIGtk *ui)
+setup_top_bar (GtkBox *box, CutGtkUI *ui)
 {
     GtkWidget *hbox, *toolbar;
 
@@ -222,7 +222,7 @@ setup_top_bar (GtkBox *box, CutUIGtk *ui)
 }
 
 static void
-setup_summary_label (GtkBox *box, CutUIGtk *ui)
+setup_summary_label (GtkBox *box, CutGtkUI *ui)
 {
     GtkWidget *summary;
 
@@ -275,7 +275,7 @@ setup_tree_view_columns (GtkTreeView *tree_view)
 }
 
 static void
-setup_tree_view (GtkBox *box, CutUIGtk *ui)
+setup_tree_view (GtkBox *box, CutGtkUI *ui)
 {
     GtkWidget *tree_view, *scrolled_window;
     GtkTreeStore *tree_store;
@@ -304,7 +304,7 @@ setup_tree_view (GtkBox *box, CutUIGtk *ui)
 }
 
 static void
-setup_statusbar (GtkBox *box, CutUIGtk *ui)
+setup_statusbar (GtkBox *box, CutGtkUI *ui)
 {
     GtkWidget *statusbar;
 
@@ -316,7 +316,7 @@ setup_statusbar (GtkBox *box, CutUIGtk *ui)
 static gboolean
 cb_destroy (GtkWidget *widget, gpointer data)
 {
-    CutUIGtk *ui = data;
+    CutGtkUI *ui = data;
 
     ui->window = NULL;
     gtk_main_quit();
@@ -336,7 +336,7 @@ cb_key_press_event (GtkWidget *widget, GdkEventKey *event, gpointer data)
 }
 
 static void
-setup_window (CutUIGtk *ui)
+setup_window (CutGtkUI *ui)
 {
     GtkWidget *window, *vbox;
 
@@ -363,7 +363,7 @@ setup_window (CutUIGtk *ui)
 }
 
 static void
-init (CutUIGtk *ui)
+init (CutGtkUI *ui)
 {
     ui->test_suite = NULL;
     ui->runner = NULL;
@@ -395,13 +395,13 @@ register_type (GTypeModule *type_module)
 {
     static const GTypeInfo info =
         {
-            sizeof (CutUIGtkClass),
+            sizeof (CutGtkUIClass),
             (GBaseInitFunc) NULL,
             (GBaseFinalizeFunc) NULL,
             (GClassInitFunc) class_init,
             NULL,           /* class_finalize */
             NULL,           /* class_data */
-            sizeof(CutUIGtk),
+            sizeof(CutGtkUI),
             0,
             (GInstanceInitFunc) init,
         };
@@ -420,18 +420,18 @@ register_type (GTypeModule *type_module)
             NULL
         };
 
-    cut_type_ui_gtk = g_type_module_register_type(type_module,
+    cut_type_gtk_ui = g_type_module_register_type(type_module,
                                                   G_TYPE_OBJECT,
-                                                  "CutUIGtk",
+                                                  "CutGtkUI",
                                                   &info, 0);
 
     g_type_module_add_interface(type_module,
-                                cut_type_ui_gtk,
+                                cut_type_gtk_ui,
                                 CUT_TYPE_UI,
                                 &ui_info);
 
     g_type_module_add_interface(type_module,
-                                cut_type_ui_gtk,
+                                cut_type_gtk_ui,
                                 CUT_TYPE_LISTENER,
                                 &listener_info);
 }
@@ -442,10 +442,10 @@ CUT_MODULE_IMPL_INIT (GTypeModule *type_module)
     GList *registered_types = NULL;
 
     register_type(type_module);
-    if (cut_type_ui_gtk)
+    if (cut_type_gtk_ui)
         registered_types =
             g_list_prepend(registered_types,
-                           (gchar *)g_type_name(cut_type_ui_gtk));
+                           (gchar *)g_type_name(cut_type_gtk_ui));
 
     return registered_types;
 }
@@ -458,13 +458,13 @@ CUT_MODULE_IMPL_EXIT (void)
 G_MODULE_EXPORT GObject *
 CUT_MODULE_IMPL_INSTANTIATE (const gchar *first_property, va_list var_args)
 {
-    return g_object_new_valist(CUT_TYPE_UI_GTK, first_property, var_args);
+    return g_object_new_valist(CUT_TYPE_GTK_UI, first_property, var_args);
 }
 
 static void
 dispose (GObject *object)
 {
-    CutUIGtk *ui = CUT_UI_GTK(object);
+    CutGtkUI *ui = CUT_GTK_UI(object);
 
     if (ui->update_pulse_id) {
         g_source_remove(ui->update_pulse_id);
@@ -633,7 +633,7 @@ generate_short_summary_message (CutRunner *runner)
 static gboolean
 idle_cb_update_button_sensitive (gpointer data)
 {
-    CutUIGtk *ui = data;
+    CutGtkUI *ui = data;
 
     gtk_widget_set_sensitive(ui->cancel_button, ui->running);
     gtk_widget_set_sensitive(ui->restart_button, !ui->running);
@@ -656,7 +656,7 @@ update_progress_color (GtkProgressBar *bar, CutTestResultStatus status)
 static gboolean
 timeout_cb_pulse (gpointer data)
 {
-    CutUIGtk *ui = data;
+    CutGtkUI *ui = data;
     GtkProgressBar *bar;
     gboolean running;
     guint n_tests, n_completed_tests;
@@ -693,7 +693,7 @@ timeout_cb_pulse (gpointer data)
 static gboolean
 idle_cb_push_start_test_suite_message (gpointer data)
 {
-    CutUIGtk *ui = data;
+    CutGtkUI *ui = data;
     guint context_id;
     gchar *message;
 
@@ -708,7 +708,7 @@ idle_cb_push_start_test_suite_message (gpointer data)
 
 static void
 cb_ready_test_suite (CutRunner *runner, CutTestSuite *test_suite,
-                     guint n_test_cases, guint n_tests, CutUIGtk *ui)
+                     guint n_test_cases, guint n_tests, CutGtkUI *ui)
 {
     ui->running = TRUE;
     ui->n_tests = n_tests;
@@ -720,7 +720,7 @@ cb_ready_test_suite (CutRunner *runner, CutTestSuite *test_suite,
 
 typedef struct _TestCaseRowInfo
 {
-    CutUIGtk *ui;
+    CutGtkUI *ui;
     CutTestCase *test_case;
     gchar *path;
     guint n_tests;
@@ -742,7 +742,7 @@ static gboolean
 idle_cb_free_test_case_row_info (gpointer data)
 {
     TestCaseRowInfo *info = data;
-    CutUIGtk *ui;
+    CutGtkUI *ui;
     GtkTreeIter iter;
 
     ui = info->ui;
@@ -772,7 +772,7 @@ static gboolean
 idle_cb_free_test_row_info (gpointer data)
 {
     TestRowInfo *info = data;
-    CutUIGtk *ui;
+    CutGtkUI *ui;
     GtkTreeIter iter;
 
     if (info->update_pulse_id)
@@ -802,7 +802,7 @@ static void
 update_status (TestRowInfo *info, CutTestResultStatus status)
 {
     TestCaseRowInfo *test_case_row_info;
-    CutUIGtk *ui;
+    CutGtkUI *ui;
 
     info->status = status;
     test_case_row_info = info->test_case_row_info;
@@ -821,7 +821,7 @@ static gboolean
 idle_cb_append_test_case_row (gpointer data)
 {
     TestCaseRowInfo *info = data;
-    CutUIGtk *ui;
+    CutGtkUI *ui;
     CutTestCase *test_case;
     GtkTreeIter iter;
 
@@ -850,7 +850,7 @@ static gboolean
 idle_cb_update_test_case_row (gpointer data)
 {
     TestCaseRowInfo *info = data;
-    CutUIGtk *ui;
+    CutGtkUI *ui;
     GtkTreeIter iter;
 
     ui = info->ui;
@@ -887,7 +887,7 @@ timeout_cb_pulse_test (gpointer data)
 {
     TestRowInfo *info = data;
     TestCaseRowInfo *test_case_row_info;
-    CutUIGtk *ui;
+    CutGtkUI *ui;
     GtkTreeIter iter;
 
     test_case_row_info = info->test_case_row_info;
@@ -915,7 +915,7 @@ static gboolean
 idle_cb_append_test_row (gpointer data)
 {
     TestRowInfo *info = data;
-    CutUIGtk *ui;
+    CutGtkUI *ui;
     CutTest *test;
     GtkTreeIter test_case_iter, iter;
 
@@ -954,7 +954,7 @@ static gboolean
 idle_cb_update_test_row_status (gpointer data)
 {
     TestRowInfo *info = data;
-    CutUIGtk *ui;
+    CutGtkUI *ui;
     GtkTreeIter iter;
 
     ui = info->test_case_row_info->ui;
@@ -993,7 +993,7 @@ typedef struct _TestResultRowInfo
 } TestResultRowInfo;
 
 static void
-append_test_result_row (CutUIGtk *ui, CutTestResult *result,
+append_test_result_row (CutGtkUI *ui, CutTestResult *result,
                         GtkTreeIter *test_row_iter,
                         GtkTreeIter *result_row_iter)
 {
@@ -1036,7 +1036,7 @@ idle_cb_append_test_result_row (gpointer data)
 {
     TestResultRowInfo *info = data;
     CutTestResult *result;
-    CutUIGtk *ui;
+    CutGtkUI *ui;
     GtkTreeIter test_row_iter;
     gchar *test_row_path;
 
@@ -1080,7 +1080,7 @@ idle_add_append_test_result_row (TestRowInfo *info, CutTestResult *result)
 static gboolean
 idle_cb_update_summary (gpointer data)
 {
-    CutUIGtk *ui = data;
+    CutGtkUI *ui = data;
     gchar *summary, *short_summary, *title;
 
     summary = generate_summary_message(ui->runner);
@@ -1184,7 +1184,7 @@ static gboolean
 idle_cb_push_running_test_message (gpointer data)
 {
     TestRowInfo *info = data;
-    CutUIGtk *ui;
+    CutGtkUI *ui;
     guint context_id;
     gchar *message;
 
@@ -1202,7 +1202,7 @@ static gboolean
 idle_cb_pop_running_test_message (gpointer data)
 {
     TestRowInfo *info = data;
-    CutUIGtk *ui;
+    CutGtkUI *ui;
     guint context_id;
 
     ui = info->test_case_row_info->ui;
@@ -1217,7 +1217,7 @@ cb_complete_test (CutTest *test, gpointer data)
 {
     TestRowInfo *info = data;
     TestCaseRowInfo *test_case_row_info;
-    CutUIGtk *ui;
+    CutGtkUI *ui;
 
     test_case_row_info = info->test_case_row_info;
     ui = test_case_row_info->ui;
@@ -1279,7 +1279,7 @@ static gboolean
 idle_cb_collapse_test_case_row (gpointer data)
 {
     TestCaseRowInfo *info = data;
-    CutUIGtk *ui;
+    CutGtkUI *ui;
     GtkTreeIter iter;
 
     ui = info->ui;
@@ -1317,7 +1317,7 @@ cb_complete_test_case (CutTestCase *test_case, gpointer data)
 
 static void
 cb_ready_test_case (CutRunner *runner, CutTestCase *test_case, guint n_tests,
-                    CutUIGtk *ui)
+                    CutGtkUI *ui)
 {
     TestCaseRowInfo *info;
 
@@ -1340,7 +1340,7 @@ cb_ready_test_case (CutRunner *runner, CutTestCase *test_case, guint n_tests,
 static gboolean
 idle_cb_push_complete_test_suite_message (gpointer data)
 {
-    CutUIGtk *ui = data;
+    CutGtkUI *ui = data;
     guint context_id;
     gchar *message, *summary;
 
@@ -1359,7 +1359,7 @@ idle_cb_push_complete_test_suite_message (gpointer data)
 
 static void
 cb_complete_test_suite (CutRunner *runner, CutTestSuite *test_suite,
-                        CutUIGtk *ui)
+                        CutGtkUI *ui)
 {
     ui->running = FALSE;
 
@@ -1369,7 +1369,7 @@ cb_complete_test_suite (CutRunner *runner, CutTestSuite *test_suite,
 
 typedef struct _CrashRowInfo
 {
-    CutUIGtk *ui;
+    CutGtkUI *ui;
     gchar *stack_trace;
 } CrashRowInfo;
 
@@ -1377,7 +1377,7 @@ static gboolean
 idle_cb_append_crash_row (gpointer data)
 {
     CrashRowInfo *info = data;
-    CutUIGtk *ui;
+    CutGtkUI *ui;
     GtkTreeIter iter;
 
     ui = info->ui;
@@ -1399,7 +1399,7 @@ idle_cb_append_crash_row (gpointer data)
 }
 
 static void
-cb_crashed (CutRunner *runner, const gchar *stack_trace, CutUIGtk *ui)
+cb_crashed (CutRunner *runner, const gchar *stack_trace, CutGtkUI *ui)
 {
     CrashRowInfo *info;
 
@@ -1411,7 +1411,7 @@ cb_crashed (CutRunner *runner, const gchar *stack_trace, CutUIGtk *ui)
 }
 
 static void
-connect_to_runner (CutUIGtk *ui, CutRunner *runner)
+connect_to_runner (CutGtkUI *ui, CutRunner *runner)
 {
 #define CONNECT(name) \
     g_signal_connect(runner, #name, G_CALLBACK(cb_ ## name), ui)
@@ -1426,7 +1426,7 @@ connect_to_runner (CutUIGtk *ui, CutRunner *runner)
 }
 
 static void
-disconnect_from_runner (CutUIGtk *ui, CutRunner *runner)
+disconnect_from_runner (CutGtkUI *ui, CutRunner *runner)
 {
 #define DISCONNECT(name)                                                \
     g_signal_handlers_disconnect_by_func(runner,                       \
@@ -1445,7 +1445,7 @@ disconnect_from_runner (CutUIGtk *ui, CutRunner *runner)
 static gpointer
 run_test_thread_func (gpointer data)
 {
-    CutUIGtk *ui = data;
+    CutGtkUI *ui = data;
     CutRunner *runner;
 
     runner = g_object_ref(ui->runner);
@@ -1463,7 +1463,7 @@ run_test_thread_func (gpointer data)
 static gboolean
 idle_cb_run_test (gpointer data)
 {
-    CutUIGtk *ui = data;
+    CutGtkUI *ui = data;
 
     gtk_tree_store_clear(ui->logs);
     g_thread_create(run_test_thread_func, ui, TRUE, NULL);
@@ -1475,20 +1475,20 @@ static void
 attach_to_runner (CutListener *listener,
                   CutRunner   *runner)
 {
-    connect_to_runner(CUT_UI_GTK(listener), runner);
+    connect_to_runner(CUT_GTK_UI(listener), runner);
 }
 
 static void
 detach_from_runner (CutListener *listener,
                     CutRunner   *runner)
 {
-    disconnect_from_runner(CUT_UI_GTK(listener), runner);
+    disconnect_from_runner(CUT_GTK_UI(listener), runner);
 }
 
 static gboolean
 run (CutUI *ui, CutRunner *runner)
 {
-    CutUIGtk *gtk_ui = CUT_UI_GTK(ui);
+    CutGtkUI *gtk_ui = CUT_GTK_UI(ui);
     gboolean success = FALSE;
 
     g_object_set(runner, "is_multi_thread", TRUE, NULL);

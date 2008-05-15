@@ -43,27 +43,27 @@
 #include "cut-cairo.h"
 #include "cut-cairo-pie-chart.h"
 
-#define CUT_TYPE_REPORT_PDF            cut_type_report_pdf
-#define CUT_REPORT_PDF(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_REPORT_PDF, CutReportPDF))
-#define CUT_REPORT_PDF_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_REPORT_PDF, CutReportPDFClass))
-#define CUT_IS_REPORT_PDF(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_REPORT_PDF))
-#define CUT_IS_REPORT_PDF_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_REPORT_PDF))
-#define CUT_REPORT_PDF_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_REPORT_PDF, CutReportPDFClass))
+#define CUT_TYPE_PDF_REPORT            cut_type_pdf_report
+#define CUT_PDF_REPORT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_PDF_REPORT, CutPDFReport))
+#define CUT_PDF_REPORT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_PDF_REPORT, CutPDFReportClass))
+#define CUT_IS_PDF_REPORT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_PDF_REPORT))
+#define CUT_IS_PDF_REPORT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_PDF_REPORT))
+#define CUT_PDF_REPORT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_PDF_REPORT, CutPDFReportClass))
 
 #define A4_WIDTH 596
 #define A4_HEIGHT 842
 
-typedef struct _CutReportPDF CutReportPDF;
-typedef struct _CutReportPDFClass CutReportPDFClass;
+typedef struct _CutPDFReport CutPDFReport;
+typedef struct _CutPDFReportClass CutPDFReportClass;
 
-struct _CutReportPDF
+struct _CutPDFReport
 {
     CutReport object;
     CutRunner *runner;
     cairo_t *context;
 };
 
-struct _CutReportPDFClass
+struct _CutPDFReportClass
 {
     CutReportClass parent_class;
 };
@@ -74,8 +74,8 @@ enum
     PROP_RUNNER
 };
 
-static GType cut_type_report_pdf = 0;
-static CutReportPDFClass *parent_class;
+static GType cut_type_pdf_report = 0;
+static CutPDFReportClass *parent_class;
 
 static void dispose        (GObject         *object);
 static void set_property   (GObject         *object,
@@ -102,7 +102,7 @@ static gchar   *get_test_result          (CutReport   *report,
                                           const gchar *test_name);
 
 static void
-class_init (CutReportPDFClass *klass)
+class_init (CutPDFReportClass *klass)
 {
     GObjectClass *gobject_class;
     GParamSpec *spec;
@@ -134,7 +134,7 @@ class_init (CutReportPDFClass *klass)
 }
 
 static void
-init (CutReportPDF *report)
+init (CutPDFReport *report)
 {
     report->runner = NULL;
     report->context = NULL;
@@ -152,13 +152,13 @@ register_type (GTypeModule *type_module)
 {
     static const GTypeInfo info =
         {
-            sizeof (CutReportPDFClass),
+            sizeof (CutPDFReportClass),
             (GBaseInitFunc) NULL,
             (GBaseFinalizeFunc) NULL,
             (GClassInitFunc) class_init,
             NULL,           /* class_finalize */
             NULL,           /* class_data */
-            sizeof(CutReportPDF),
+            sizeof(CutPDFReport),
             0,
             (GInstanceInitFunc) init,
         };
@@ -170,13 +170,13 @@ register_type (GTypeModule *type_module)
             NULL
         };
 
-    cut_type_report_pdf =
+    cut_type_pdf_report =
         g_type_module_register_type(type_module,
                                     CUT_TYPE_REPORT,
-                                    "CutReportPDF",
+                                    "CutPDFReport",
                                     &info, 0);
     g_type_module_add_interface(type_module,
-                                cut_type_report_pdf,
+                                cut_type_pdf_report,
                                 CUT_TYPE_LISTENER,
                                 &listener_info);
 }
@@ -187,10 +187,10 @@ CUT_MODULE_IMPL_INIT (GTypeModule *type_module)
     GList *registered_types = NULL;
 
     register_type(type_module);
-    if (CUT_TYPE_REPORT_PDF)
+    if (CUT_TYPE_PDF_REPORT)
         registered_types =
             g_list_prepend(registered_types,
-                           (gchar *)g_type_name(CUT_TYPE_REPORT_PDF));
+                           (gchar *)g_type_name(CUT_TYPE_PDF_REPORT));
 
     return registered_types;
 }
@@ -203,13 +203,13 @@ CUT_MODULE_IMPL_EXIT (void)
 G_MODULE_EXPORT GObject *
 CUT_MODULE_IMPL_INSTANTIATE (const gchar *first_property, va_list var_args)
 {
-    return g_object_new_valist(CUT_TYPE_REPORT_PDF, first_property, var_args);
+    return g_object_new_valist(CUT_TYPE_PDF_REPORT, first_property, var_args);
 }
 
 static void
 dispose (GObject *object)
 {
-    CutReportPDF *report = CUT_REPORT_PDF(object);
+    CutPDFReport *report = CUT_PDF_REPORT(object);
 
     if (report->runner) {
         g_object_unref(report->runner);
@@ -229,7 +229,7 @@ set_property (GObject      *object,
               const GValue *value,
               GParamSpec   *pspec)
 {
-    CutReportPDF *report = CUT_REPORT_PDF(object);
+    CutPDFReport *report = CUT_PDF_REPORT(object);
 
     switch (prop_id) {
       case PROP_RUNNER:
@@ -247,7 +247,7 @@ get_property (GObject    *object,
               GValue     *value,
               GParamSpec *pspec)
 {
-    CutReportPDF *report = CUT_REPORT_PDF(object);
+    CutPDFReport *report = CUT_PDF_REPORT(object);
 
     switch (prop_id) {
       case PROP_RUNNER:
@@ -268,7 +268,7 @@ init_page (cairo_t *cr)
 static void
 cb_ready_test_suite (CutRunner *runner, CutTestSuite *test_suite,
                      guint n_test_cases, guint n_tests,
-                     CutReportPDF *report)
+                     CutPDFReport *report)
 {
     const gchar *filename;
     cairo_surface_t *surface;
@@ -319,19 +319,19 @@ show_text_with_page_feed (cairo_t *cr, const gchar *utf8)
 
 static void
 cb_start_test_suite (CutRunner *runner, CutTestSuite *test_suite,
-                     CutReportPDF *report)
+                     CutPDFReport *report)
 {
 }
 
 static void
 cb_start_test_case (CutRunner *runner, CutTestCase *test_case,
-                    CutReportPDF *report)
+                    CutPDFReport *report)
 {
 }
 
 static void
 cb_start_test (CutRunner *runner, CutTest *test, CutTestContext *test_context,
-               CutReportPDF *report)
+               CutPDFReport *report)
 {
 }
 
@@ -340,19 +340,19 @@ cb_test_signal (CutRunner      *runner,
                 CutTest        *test,
                 CutTestContext *test_context,
                 CutTestResult  *result,
-                CutReportPDF   *report)
+                CutPDFReport   *report)
 {
 }
 
 static void
 cb_complete_test (CutRunner *runner, CutTest *test,
-                  CutTestContext *test_context, CutReportPDF *report)
+                  CutTestContext *test_context, CutPDFReport *report)
 {
 }
 
 static void
 cb_complete_test_case (CutRunner *runner, CutTestCase *test_case,
-                       CutReportPDF *report)
+                       CutPDFReport *report)
 {
 }
 
@@ -387,7 +387,7 @@ show_test_case (cairo_t *cr, CutTestCase *test_case, CutTestResultStatus status,
 }
 
 static void
-show_summary (CutReportPDF *report, CutRunner *runner)
+show_summary (CutPDFReport *report, CutRunner *runner)
 {
     const GList *node;
     CutTestCase *test_case = NULL;
@@ -456,7 +456,7 @@ show_summary (CutReportPDF *report, CutRunner *runner)
 
 static void
 cb_complete_test_suite (CutRunner *runner, CutTestSuite *test_suite,
-                        CutReportPDF *report)
+                        CutPDFReport *report)
 {
     CutCairoPieChart *chart;
 
@@ -472,12 +472,12 @@ cb_complete_test_suite (CutRunner *runner, CutTestSuite *test_suite,
 
 static void
 cb_crashed (CutRunner *runner, const gchar *stack_trace,
-            CutReportPDF *report)
+            CutPDFReport *report)
 {
 }
 
 static void
-connect_to_runner (CutReportPDF *report, CutRunner *runner)
+connect_to_runner (CutPDFReport *report, CutRunner *runner)
 {
 #define CONNECT(name) \
     g_signal_connect(runner, #name, G_CALLBACK(cb_ ## name), report)
@@ -506,7 +506,7 @@ connect_to_runner (CutReportPDF *report, CutRunner *runner)
 }
 
 static void
-disconnect_from_runner (CutReportPDF *report, CutRunner *runner)
+disconnect_from_runner (CutPDFReport *report, CutRunner *runner)
 {
 #define DISCONNECT(name)                                               \
     g_signal_handlers_disconnect_by_func(runner,                       \
@@ -534,14 +534,14 @@ static void
 attach_to_runner (CutListener *listener,
                   CutRunner   *runner)
 {
-    CutReportPDF *report = CUT_REPORT_PDF(listener);
+    CutPDFReport *report = CUT_PDF_REPORT(listener);
 
     if (report->runner)
         detach_from_runner(listener, report->runner);
 
     if (runner) {
         report->runner = g_object_ref(runner);
-        connect_to_runner(CUT_REPORT_PDF(listener), runner);
+        connect_to_runner(CUT_PDF_REPORT(listener), runner);
     }
 }
 
@@ -549,7 +549,7 @@ static void
 detach_from_runner (CutListener *listener,
                     CutRunner   *runner)
 {
-    CutReportPDF *report = CUT_REPORT_PDF(listener);
+    CutPDFReport *report = CUT_PDF_REPORT(listener);
     if (report->runner != runner)
         return;
 

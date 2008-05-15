@@ -33,17 +33,17 @@
 #include <cutter/cut-verbose-level.h>
 #include <cutter/cut-enum-types.h>
 
-#define CUT_TYPE_UI_FACTORY_CONSOLE            cut_type_ui_factory_console
-#define CUT_UI_FACTORY_CONSOLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_UI_FACTORY_CONSOLE, CutUIFactoryConsole))
-#define CUT_UI_FACTORY_CONSOLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_UI_FACTORY_CONSOLE, CutUIFactoryConsoleClass))
-#define CUT_IS_UI_FACTORY_CONSOLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_UI_FACTORY_CONSOLE))
-#define CUT_IS_UI_FACTORY_CONSOLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_UI_FACTORY_CONSOLE))
-#define CUT_UI_FACTORY_CONSOLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_UI_FACTORY_CONSOLE, CutUIFactoryConsoleClass))
+#define CUT_TYPE_CONSOLE_UI_FACTORY            cut_type_console_ui_factory
+#define CUT_CONSOLE_UI_FACTORY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_CONSOLE_UI_FACTORY, CutConsoleUIFactory))
+#define CUT_CONSOLE_UI_FACTORY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_CONSOLE_UI_FACTORY, CutConsoleUIFactoryClass))
+#define CUT_IS_CONSOLE_UI_FACTORY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_CONSOLE_UI_FACTORY))
+#define CUT_IS_CONSOLE_UI_FACTORY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_CONSOLE_UI_FACTORY))
+#define CUT_CONSOLE_UI_FACTORY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_CONSOLE_UI_FACTORY, CutConsoleUIFactoryClass))
 
-typedef struct _CutUIFactoryConsole CutUIFactoryConsole;
-typedef struct _CutUIFactoryConsoleClass CutUIFactoryConsoleClass;
+typedef struct _CutConsoleUIFactory CutConsoleUIFactory;
+typedef struct _CutConsoleUIFactoryClass CutConsoleUIFactoryClass;
 
-struct _CutUIFactoryConsole
+struct _CutConsoleUIFactory
 {
     CutModuleFactory     object;
 
@@ -51,7 +51,7 @@ struct _CutUIFactoryConsole
     CutVerboseLevel      verbose_level;
 };
 
-struct _CutUIFactoryConsoleClass
+struct _CutConsoleUIFactoryClass
 {
     CutModuleFactoryClass parent_class;
 };
@@ -63,7 +63,7 @@ enum
     PROP_VERBOSE_LEVEL
 };
 
-static GType cut_type_ui_factory_console = 0;
+static GType cut_type_console_ui_factory = 0;
 static CutModuleFactoryClass *parent_class;
 
 static void dispose        (GObject         *object);
@@ -116,7 +116,7 @@ class_init (CutModuleFactoryClass *klass)
 }
 
 static void
-init (CutUIFactoryConsole *console)
+init (CutConsoleUIFactory *console)
 {
     console->use_color = FALSE;
     console->verbose_level = CUT_VERBOSE_LEVEL_NORMAL;
@@ -127,21 +127,21 @@ register_type (GTypeModule *type_module)
 {
     static const GTypeInfo info =
         {
-            sizeof (CutUIFactoryConsoleClass),
+            sizeof (CutConsoleUIFactoryClass),
             (GBaseInitFunc) NULL,
             (GBaseFinalizeFunc) NULL,
             (GClassInitFunc) class_init,
             NULL,           /* class_finalize */
             NULL,           /* class_data */
-            sizeof(CutUIFactoryConsole),
+            sizeof(CutConsoleUIFactory),
             0,
             (GInstanceInitFunc) init,
         };
 
-    cut_type_ui_factory_console =
+    cut_type_console_ui_factory =
         g_type_module_register_type(type_module,
                                     CUT_TYPE_MODULE_FACTORY,
-                                    "CutUIFactoryConsole",
+                                    "CutConsoleUIFactory",
                                     &info, 0);
 }
 
@@ -151,10 +151,10 @@ CUT_MODULE_IMPL_INIT (GTypeModule *type_module)
     GList *registered_types = NULL;
 
     register_type(type_module);
-    if (cut_type_ui_factory_console)
+    if (cut_type_console_ui_factory)
         registered_types =
             g_list_prepend(registered_types,
-                           (gchar *)g_type_name(cut_type_ui_factory_console));
+                           (gchar *)g_type_name(cut_type_console_ui_factory));
 
     return registered_types;
 }
@@ -167,7 +167,7 @@ CUT_MODULE_IMPL_EXIT (void)
 G_MODULE_EXPORT GObject *
 CUT_MODULE_IMPL_INSTANTIATE (const gchar *first_property, va_list var_args)
 {
-    return g_object_new_valist(CUT_TYPE_UI_FACTORY_CONSOLE, first_property, var_args);
+    return g_object_new_valist(CUT_TYPE_CONSOLE_UI_FACTORY, first_property, var_args);
 }
 
 static void
@@ -182,7 +182,7 @@ set_property (GObject      *object,
               const GValue *value,
               GParamSpec   *pspec)
 {
-    CutUIFactoryConsole *console = CUT_UI_FACTORY_CONSOLE(object);
+    CutConsoleUIFactory *console = CUT_CONSOLE_UI_FACTORY(object);
 
     switch (prop_id) {
       case PROP_USE_COLOR:
@@ -203,7 +203,7 @@ get_property (GObject    *object,
               GValue     *value,
               GParamSpec *pspec)
 {
-    CutUIFactoryConsole *console = CUT_UI_FACTORY_CONSOLE(object);
+    CutConsoleUIFactory *console = CUT_CONSOLE_UI_FACTORY(object);
 
     switch (prop_id) {
       case PROP_USE_COLOR:
@@ -238,7 +238,7 @@ static gboolean
 parse_verbose_level_arg (const gchar *option_name, const gchar *value,
                          gpointer data, GError **error)
 {
-    CutUIFactoryConsole *console = data;
+    CutConsoleUIFactory *console = data;
     CutVerboseLevel verbose_level;
     GError *verbose_level_error = NULL;
 
@@ -261,7 +261,7 @@ static gboolean
 parse_color_arg (const gchar *option_name, const gchar *value,
                  gpointer data, GError **error)
 {
-    CutUIFactoryConsole *console = data;
+    CutConsoleUIFactory *console = data;
 
     if (value == NULL ||
         g_utf8_collate(value, "yes") == 0 ||
@@ -287,7 +287,7 @@ static gboolean
 pre_parse (GOptionContext *context, GOptionGroup *group, gpointer data,
            GError **error)
 {
-    CutUIFactoryConsole *console = data;
+    CutConsoleUIFactory *console = data;
 
     console->use_color = guess_color_usability();
 
@@ -297,7 +297,7 @@ pre_parse (GOptionContext *context, GOptionGroup *group, gpointer data,
 static void
 set_option_group (CutModuleFactory *factory, GOptionContext *context)
 {
-    CutUIFactoryConsole *console = CUT_UI_FACTORY_CONSOLE(factory);
+    CutConsoleUIFactory *console = CUT_CONSOLE_UI_FACTORY(factory);
     GOptionGroup *group;
     GOptionEntry entries[] = {
         {"verbose", 'v', 0, G_OPTION_ARG_CALLBACK, parse_verbose_level_arg,
@@ -311,7 +311,7 @@ set_option_group (CutModuleFactory *factory, GOptionContext *context)
     if (CUT_MODULE_FACTORY_CLASS(parent_class)->set_option_group)
         CUT_MODULE_FACTORY_CLASS(parent_class)->set_option_group(factory, context);
 
-    group = g_option_group_new(("ui-console"),
+    group = g_option_group_new(("console-ui"),
                                _("Console UI Options"),
                                _("Show console UI options"),
                                console, NULL);
@@ -324,7 +324,7 @@ set_option_group (CutModuleFactory *factory, GOptionContext *context)
 GObject *
 create (CutModuleFactory *factory)
 {
-    CutUIFactoryConsole *console = CUT_UI_FACTORY_CONSOLE(factory);
+    CutConsoleUIFactory *console = CUT_CONSOLE_UI_FACTORY(factory);
 
     return G_OBJECT(cut_ui_new("console",
                                "use-color", console->use_color,

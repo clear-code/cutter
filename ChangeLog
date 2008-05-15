@@ -4,6 +4,8 @@
 	* cutter/module/ui/*.c. cutter/module/report/*.c: Rename filename.
 	cut-(ui|report)-XX.c -> cut-XX-(ui|report).c,
 	cut-(ui|report)-factory-XX.c -> cut-XX-(ui|report)-factory.c.
+	* cutter/module/ui/*.c. cutter/module/report/*.c: Rename object name
+	correspond to filename.
 
 2008-05-14  Kouhei Sutou  <kou@cozmixng.org>
 

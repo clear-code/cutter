@@ -32,23 +32,23 @@
 #include <cutter/cut-module-factory.h>
 #include <cutter/cut-enum-types.h>
 
-#define CUT_TYPE_REPORT_FACTORY_XML            cut_type_report_factory_xml
-#define CUT_REPORT_FACTORY_XML(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_REPORT_FACTORY_XML, CutReportFactoryXML))
-#define CUT_REPORT_FACTORY_XML_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_REPORT_FACTORY_XML, CutReportFactoryXMLClass))
-#define CUT_IS_REPORT_FACTORY_XML(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_REPORT_FACTORY_XML))
-#define CUT_IS_REPORT_FACTORY_XML_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_REPORT_FACTORY_XML))
-#define CUT_REPORT_FACTORY_XML_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_REPORT_FACTORY_XML, CutReportFactoryXMLClass))
+#define CUT_TYPE_XML_REPORT_FACTORY            cut_type_xml_report_factory
+#define CUT_XML_REPORT_FACTORY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_XML_REPORT_FACTORY, CutXMLReportFactory))
+#define CUT_XML_REPORT_FACTORY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_XML_REPORT_FACTORY, CutXMLReportFactoryClass))
+#define CUT_IS_XML_REPORT_FACTORY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_XML_REPORT_FACTORY))
+#define CUT_IS_XML_REPORT_FACTORY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_XML_REPORT_FACTORY))
+#define CUT_XML_REPORT_FACTORY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_XML_REPORT_FACTORY, CutXMLReportFactoryClass))
 
-typedef struct _CutReportFactoryXML CutReportFactoryXML;
-typedef struct _CutReportFactoryXMLClass CutReportFactoryXMLClass;
+typedef struct _CutXMLReportFactory CutXMLReportFactory;
+typedef struct _CutXMLReportFactoryClass CutXMLReportFactoryClass;
 
-struct _CutReportFactoryXML
+struct _CutXMLReportFactory
 {
     CutModuleFactory     object;
     gchar *filename;
 };
 
-struct _CutReportFactoryXMLClass
+struct _CutXMLReportFactoryClass
 {
     CutModuleFactoryClass parent_class;
 };
@@ -59,7 +59,7 @@ enum
     PROP_FILENAME
 };
 
-static GType cut_type_report_factory_xml = 0;
+static GType cut_type_xml_report_factory = 0;
 static CutModuleFactoryClass *parent_class;
 
 static void     dispose          (GObject         *object);
@@ -102,7 +102,7 @@ class_init (CutModuleFactoryClass *klass)
 }
 
 static void
-init (CutReportFactoryXML *xml)
+init (CutXMLReportFactory *xml)
 {
     xml->filename = NULL;
 }
@@ -110,7 +110,7 @@ init (CutReportFactoryXML *xml)
 static void
 dispose (GObject *object)
 {
-    CutReportFactoryXML *xml = CUT_REPORT_FACTORY_XML(object);
+    CutXMLReportFactory *xml = CUT_XML_REPORT_FACTORY(object);
 
     if (xml->filename) {
         g_free(xml->filename);
@@ -124,7 +124,7 @@ set_property (GObject      *object,
               const GValue *value,
               GParamSpec   *pspec)
 {
-    CutReportFactoryXML *xml = CUT_REPORT_FACTORY_XML(object);
+    CutXMLReportFactory *xml = CUT_XML_REPORT_FACTORY(object);
 
     switch (prop_id) {
       case PROP_FILENAME:
@@ -144,7 +144,7 @@ get_property (GObject    *object,
               GValue     *value,
               GParamSpec *pspec)
 {
-    CutReportFactoryXML *xml = CUT_REPORT_FACTORY_XML(object);
+    CutXMLReportFactory *xml = CUT_XML_REPORT_FACTORY(object);
 
     switch (prop_id) {
       case PROP_FILENAME:
@@ -161,21 +161,21 @@ register_type (GTypeModule *type_module)
 {
     static const GTypeInfo info =
         {
-            sizeof (CutReportFactoryXMLClass),
+            sizeof (CutXMLReportFactoryClass),
             (GBaseInitFunc) NULL,
             (GBaseFinalizeFunc) NULL,
             (GClassInitFunc) class_init,
             NULL,           /* class_finalize */
             NULL,           /* class_data */
-            sizeof(CutReportFactoryXML),
+            sizeof(CutXMLReportFactory),
             0,
             (GInstanceInitFunc) init,
         };
 
-    cut_type_report_factory_xml =
+    cut_type_xml_report_factory =
         g_type_module_register_type(type_module,
                                     CUT_TYPE_MODULE_FACTORY,
-                                    "CutReportFactoryXML",
+                                    "CutXMLReportFactory",
                                     &info, 0);
 }
 
@@ -185,10 +185,10 @@ CUT_MODULE_IMPL_INIT (GTypeModule *type_module)
     GList *registered_types = NULL;
 
     register_type(type_module);
-    if (cut_type_report_factory_xml)
+    if (cut_type_xml_report_factory)
         registered_types =
             g_list_prepend(registered_types,
-                           (gchar *)g_type_name(cut_type_report_factory_xml));
+                           (gchar *)g_type_name(cut_type_xml_report_factory));
 
     return registered_types;
 }
@@ -201,13 +201,13 @@ CUT_MODULE_IMPL_EXIT (void)
 G_MODULE_EXPORT GObject *
 CUT_MODULE_IMPL_INSTANTIATE (const gchar *first_property, va_list var_args)
 {
-    return g_object_new_valist(CUT_TYPE_REPORT_FACTORY_XML, first_property, var_args);
+    return g_object_new_valist(CUT_TYPE_XML_REPORT_FACTORY, first_property, var_args);
 }
 
 static void
 set_option_group (CutModuleFactory *factory, GOptionContext *context)
 {
-    CutReportFactoryXML *xml = CUT_REPORT_FACTORY_XML(factory);
+    CutXMLReportFactory *xml = CUT_XML_REPORT_FACTORY(factory);
     GOptionGroup *group;
     GOptionEntry entries[] = {
         {NULL}
@@ -216,7 +216,7 @@ set_option_group (CutModuleFactory *factory, GOptionContext *context)
     if (CUT_MODULE_FACTORY_CLASS(parent_class)->set_option_group)
         CUT_MODULE_FACTORY_CLASS(parent_class)->set_option_group(factory, context);
 
-    group = g_option_group_new(("report-xml"),
+    group = g_option_group_new(("xml-report"),
                                _("XML Report Options"),
                                _("Show XML report options"),
                                xml, NULL);
@@ -228,7 +228,7 @@ set_option_group (CutModuleFactory *factory, GOptionContext *context)
 GObject *
 create (CutModuleFactory *factory)
 {
-    CutReportFactoryXML *xml = CUT_REPORT_FACTORY_XML(factory);
+    CutXMLReportFactory *xml = CUT_XML_REPORT_FACTORY(factory);
 
     return G_OBJECT(cut_report_new("xml", 
                                    "filename", xml->filename,
