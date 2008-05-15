@@ -42,11 +42,13 @@ struct _CutPipeline
 struct _CutPipelineClass
 {
     GObjectClass parent_class;
+    void (*complete) (CutPipeline *pipeline, gboolean success);
 };
 
 GType cut_pipeline_get_type  (void) G_GNUC_CONST;
 
 CutPipeline *cut_pipeline_new   (const gchar *directory);
+void         cut_pipeline_run   (CutPipeline *pipeline);
 
 G_END_DECLS
 

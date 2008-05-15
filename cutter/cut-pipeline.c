@@ -41,7 +41,8 @@ typedef struct _CutPipelinePrivate	CutPipelinePrivate;
 struct _CutPipelinePrivate
 {
     GPid pid;
-    guint source_id;
+    guint process_source_id;
+    guint io_source_id;
     gchar *target_directory;
     GIOChannel *stdout_io;
 };
@@ -52,11 +53,16 @@ enum
     PROP_TARGET_DIRECTORY
 };
 
+enum
+{
+    COMPLETE,
+    LAST_SIGNAL
+};
+
+static gint cut_pipeline_signals[LAST_SIGNAL] = {0};
+
 G_DEFINE_TYPE (CutPipeline, cut_pipeline, G_TYPE_OBJECT)
 
-static GObject *constructor  (GType                  type,
-                              guint                  n_props,
-                              GObjectConstructParam *props);
 static void     dispose      (GObject         *object);
 static void     set_property (GObject         *object,
                               guint            prop_id,
@@ -67,8 +73,6 @@ static void     get_property (GObject         *object,
                               GValue          *value,
                               GParamSpec      *pspec);
 
-static gboolean cut_pipeline_spawn (CutPipeline *pipeline);
-
 static void
 cut_pipeline_class_init (CutPipelineClass *klass)
 {
@@ -77,7 +81,6 @@ cut_pipeline_class_init (CutPipelineClass *klass)
 
     gobject_class = G_OBJECT_CLASS(klass);
 
-    gobject_class->constructor  = constructor;
     gobject_class->dispose      = dispose;
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
@@ -89,20 +92,17 @@ cut_pipeline_class_init (CutPipelineClass *klass)
                                G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class, PROP_TARGET_DIRECTORY, spec);
 
+    cut_pipeline_signals[COMPLETE]
+        = g_signal_new ("complete",
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutPipelineClass, complete),
+                        NULL, NULL,
+                        g_cclosure_marshal_VOID__BOOLEAN,
+                        G_TYPE_NONE, 1,
+                        G_TYPE_BOOLEAN);
+
     g_type_class_add_private(gobject_class, sizeof(CutPipelinePrivate));
-}
-
-static GObject *
-constructor (GType type, guint n_props, GObjectConstructParam *props)
-{
-    GObject *object;
-    GObjectClass *klass = G_OBJECT_CLASS(cut_pipeline_parent_class);
-
-    object = klass->constructor(type, n_props, props);
-
-    cut_pipeline_spawn(CUT_PIPELINE(object));
-
-    return object;
 }
 
 static void
@@ -110,8 +110,9 @@ cut_pipeline_init (CutPipeline *pipeline)
 {
     CutPipelinePrivate *priv = CUT_PIPELINE_GET_PRIVATE(pipeline);
 
-    priv->source_id     = 0;
-    priv->pid           = 0;
+    priv->process_source_id = 0;
+    priv->io_source_id      = 0;
+    priv->pid               = 0;
 
     priv->target_directory = NULL;
     priv->stdout_io        = NULL;
@@ -156,8 +157,15 @@ get_property (GObject    *object,
 static void
 remove_child_watch_func (CutPipelinePrivate *priv)
 {
-    g_source_remove(priv->source_id);
-    priv->source_id = 0;
+    g_source_remove(priv->process_source_id);
+    priv->process_source_id = 0;
+}
+
+static void
+remove_io_watch_func (CutPipelinePrivate *priv)
+{
+    g_source_remove(priv->io_source_id);
+    priv->io_source_id = 0;
 }
 
 static void
@@ -179,8 +187,11 @@ dispose (GObject *object)
 {
     CutPipelinePrivate *priv = CUT_PIPELINE_GET_PRIVATE(object);
 
-    if (priv->source_id)
+    if (priv->process_source_id)
         remove_child_watch_func(priv);
+
+    if (priv->io_source_id)
+        remove_io_watch_func(priv);
 
     if (priv->pid)
         close_child(priv);
@@ -218,19 +229,49 @@ reap_child (CutPipeline *pipeline, GPid pid)
 }
 
 static void
+emit_complete_signal (CutPipeline *pipeline, gboolean success)
+{
+    g_signal_emit_by_name(pipeline, "complete", success);
+}
+
+static void
 child_watch_func (GPid pid, gint status, gpointer data)
 {
     switch (status) {
       case WEXITED:
         reap_child (CUT_PIPELINE(data), pid);
+        emit_complete_signal(CUT_PIPELINE(data), TRUE);
         break;
       default:
         break;
     }
 }
 
+static gboolean
+io_watch_func (GIOChannel *channel, GIOCondition condition, gpointer data)
+{
+    CutPipeline *pipeline;
+
+    if (!CUT_IS_PIPELINE(data))
+        return FALSE;
+
+    switch (condition) {
+      case G_IO_IN:
+      case G_IO_PRI:
+        break;
+      case G_IO_ERR:
+      case G_IO_HUP:
+      default:
+        emit_complete_signal(CUT_PIPELINE(data), FALSE);
+        return FALSE;
+        break;
+    }
+
+    return TRUE;
+}
+
 static GIOChannel *
-create_io_channel (gint pipe)
+create_io_channel (CutPipeline *pipeline, gint pipe)
 {
     GIOChannel *channel;
 
@@ -238,12 +279,15 @@ create_io_channel (gint pipe)
     g_io_channel_set_encoding(channel, NULL, NULL);
     g_io_channel_set_flags(channel, G_IO_FLAG_IS_READABLE, NULL);
     g_io_channel_set_close_on_unref(channel, TRUE);
+    g_io_add_watch(channel,
+                   G_IO_IN | G_IO_PRI | G_IO_ERR | G_IO_HUP,
+                   io_watch_func, pipeline);
 
     return channel;
 }
 
-static gboolean
-cut_pipeline_spawn (CutPipeline *pipeline)
+void
+cut_pipeline_run (CutPipeline *pipeline)
 {
     gchar *command_line;
     const gchar *cutter_command;
@@ -263,8 +307,10 @@ cut_pipeline_spawn (CutPipeline *pipeline)
 
     ret = g_shell_parse_argv(command_line, &argc, &argv, NULL);
     g_free(command_line);
-    if (!ret)
-        return FALSE;
+    if (!ret) {
+        emit_complete_signal(pipeline, FALSE);
+        return;
+    }
 
     ret = g_spawn_async_with_pipes(NULL,
                                    argv,
@@ -278,13 +324,13 @@ cut_pipeline_spawn (CutPipeline *pipeline)
                                    NULL,
                                    NULL);
     g_strfreev(argv);
-    if (!ret)
-        return FALSE;
+    if (!ret) {
+        emit_complete_signal(pipeline, FALSE);
+        return;
+    }
 
-    priv->source_id = g_child_watch_add(priv->pid, child_watch_func, pipeline);
-    priv->stdout_io = create_io_channel(std_out);
-
-    return TRUE;
+    priv->process_source_id = g_child_watch_add(priv->pid, child_watch_func, pipeline);
+    priv->stdout_io = create_io_channel(pipeline, std_out);
 }
 
 /*

@@ -20,6 +20,8 @@
 	streamer module.
 	* test/test-cut-xml-streamer.c: Added.
 	* cutter/cut-pipeline.[c|h]: Added.
+	* cutter/cut-pipeline.[c|h]: Added cut_pipeline_run() and emit
+	"complete" signal.
 
 2008-05-14  Kouhei Sutou  <kou@cozmixng.org>
 
