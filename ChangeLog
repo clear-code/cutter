@@ -1,3 +1,7 @@
+2008-05-15  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-stream.[c|h]: Added. It has no method yet.
+
 2008-05-14  Kouhei Sutou  <kou@cozmixng.org>
 
 	* gtk-doc.make: suppress warnings.

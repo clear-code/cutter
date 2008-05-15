@@ -46,6 +46,7 @@ libcutter_public_headers = 			\
 		cut-module-factory.h		\
 		cut-module-factory-utils.h	\
 		cut-report.h			\
+		cut-streamer.h			\
 		cut-process.h			\
 		cut-xml-parser.h		\
 		cut-verbose-level.h		\
@@ -125,6 +126,7 @@ libcutter_la_SOURCES =				\
 		cut-module-factory.c		\
 		cut-module-factory-utils.c	\
 		cut-report.c			\
+		cut-streamer.c			\
 		cut-process.c			\
 		cut-utils.c			\
 		cut-xml-parser.c		\
