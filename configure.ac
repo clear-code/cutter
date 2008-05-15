@@ -260,6 +260,7 @@ AC_CONFIG_FILES([Makefile
 		 cutter/module/Makefile
 		 cutter/module/ui/Makefile
 		 cutter/module/report/Makefile
+		 cutter/module/streamer/Makefile
 		 sample/Makefile
 		 sample/glib/Makefile
 		 sample/gtk+/Makefile
