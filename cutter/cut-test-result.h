@@ -66,6 +66,7 @@ CutTest             *cut_test_result_get_test          (CutTestResult *result);
 CutTestCase         *cut_test_result_get_test_case     (CutTestResult *result);
 const gchar         *cut_test_result_get_test_name     (CutTestResult *result);
 const gchar         *cut_test_result_get_test_case_name(CutTestResult *result);
+CutTestSuite        *cut_test_result_get_test_suite    (CutTestResult *result);
 const gchar         *cut_test_result_get_test_suite_name(CutTestResult *result);
 const gchar         *cut_test_result_get_message       (CutTestResult *result);
 const gchar         *cut_test_result_get_user_message  (CutTestResult *result);
@@ -82,7 +83,7 @@ void cut_test_result_set_test            (CutTestResult *result,
 void cut_test_result_set_test_case       (CutTestResult *result,
                                           CutTestCase *test_case);
 void cut_test_result_set_test_suite      (CutTestResult *result,
-                                          CutTestCase *test_suite);
+                                          CutTestSuite  *test_suite);
 void cut_test_result_set_message         (CutTestResult *result,
                                           const gchar *message);
 void cut_test_result_set_user_message    (CutTestResult *result,

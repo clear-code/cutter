@@ -418,6 +418,12 @@ cut_test_result_get_test_case_name (CutTestResult *result)
     return NULL;
 }
 
+CutTestSuite *
+cut_test_result_get_test_suite (CutTestResult *result)
+{
+    return CUT_TEST_RESULT_GET_PRIVATE(result)->test_suite;
+}
+
 const gchar *
 cut_test_result_get_test_suite_name (CutTestResult *result)
 {
@@ -720,7 +726,7 @@ cut_test_result_set_test_case (CutTestResult *result, CutTestCase *test_case)
 }
 
 void
-cut_test_result_set_test_suite (CutTestResult *result, CutTestCase *test_suite)
+cut_test_result_set_test_suite (CutTestResult *result, CutTestSuite *test_suite)
 {
     CutTestResultPrivate *priv = CUT_TEST_RESULT_GET_PRIVATE(result);
 
