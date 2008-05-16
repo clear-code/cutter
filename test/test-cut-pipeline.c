@@ -81,48 +81,48 @@ test_exit_status_success (void)
                                          &success);
 }
 
-#define DEFINE_ERROR_SIGNAL_TEST(signal_name)           \
-static void                                             \
-cb_##signal_name##_signal (CutRunContext *run_context,  \
-                   CutTest *test,                       \
-                   CutTestContext *test_context,        \
-                   CutTestResult *result,               \
-                   gpointer data)                       \
-{                                                       \
-    gint *n_signal;                                     \
-                                                        \
-    n_signal = (gint*)data;                             \
-    n_signal++;                                         \
-}                                                       \
-                                                        \
-void                                                    \
-test_##signal_name##_signal (void)                      \
-{                                                       \
-    gboolean success = FALSE;                           \
-    gint n_signal = 0;                                  \
-                                                        \
-    pipeline = cut_pipeline_new("./pipeline_test_dir/error_test/"); \
-    cut_assert(pipeline);                               \
-                                                        \
-    g_signal_connect(pipeline, "complete-run",          \
-                     G_CALLBACK(cb_complete_run_signal), &success); \
-    g_signal_connect(pipeline, #signal_name"-test",     \
-                     G_CALLBACK(cb_##signal_name##_signal), &n_signal); \
-                                                        \
-    cut_runner_run_async(CUT_RUNNER(pipeline));         \
-    while (!received_complete_signal) {                 \
-        g_main_context_iteration(NULL, FALSE);          \
-    }                                                   \
-                                                        \
-    cut_assert_false(success);                          \
-    cut_assert_equal_int(1, n_signal);                  \
-                                                        \
-    g_signal_handlers_disconnect_by_func(pipeline,      \
-                                         G_CALLBACK(cb_complete_run_signal),    \
-                                         &success);     \
-    g_signal_handlers_disconnect_by_func(pipeline,      \
-                                         G_CALLBACK(cb_##signal_name##_signal), \
-                                         &n_signal);    \
+#define DEFINE_ERROR_SIGNAL_TEST(signal_name)                           \
+static void                                                             \
+cb_ ## signal_name ## _signal (CutRunContext *run_context,              \
+                               CutTest *test,                           \
+                               CutTestContext *test_context,            \
+                               CutTestResult *result,                   \
+                               gpointer data)                           \
+{                                                                       \
+    gint *n_signal;                                                     \
+                                                                        \
+    n_signal = (gint *)data;                                            \
+    n_signal++;                                                         \
+}                                                                       \
+                                                                        \
+void                                                                    \
+test_ ## signal_name ## _signal (void)                                  \
+{                                                                       \
+    gboolean success = FALSE;                                           \
+    gint n_signal = 0;                                                  \
+                                                                        \
+    pipeline = cut_pipeline_new("./pipeline_test_dir/error_test/");     \
+    cut_assert(pipeline);                                               \
+                                                                        \
+    g_signal_connect(pipeline, "complete-run",                          \
+                     G_CALLBACK(cb_complete_run_signal), &success);     \
+    g_signal_connect(pipeline, #signal_name "-test",                    \
+                     G_CALLBACK(cb_ ## signal_name ## _signal),         \
+                     &n_signal);                                        \
+                                                                        \
+    cut_runner_run_async(CUT_RUNNER(pipeline));                         \
+    while (!received_complete_signal) {                                 \
+        g_main_context_iteration(NULL, FALSE);                          \
+    }                                                                   \
+                                                                        \
+    cut_assert_false(success);                                          \
+    cut_assert_equal_int(1, n_signal);                                  \
+                                                                        \
+    g_signal_handlers_disconnect_by_func(                               \
+        pipeline, G_CALLBACK(cb_complete_run_signal), &success);        \
+    g_signal_handlers_disconnect_by_func(                               \
+        pipeline, G_CALLBACK(cb_ ## signal_name ## _signal),            \
+        &n_signal);                                                     \
 }
 
 DEFINE_ERROR_SIGNAL_TEST(failure)

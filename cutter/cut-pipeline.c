@@ -267,7 +267,26 @@ read_line (CutPipeline *pipeline, GIOChannel *channel)
             result = cut_test_result_new_from_xml(priv->cutter_string->str,
                                                   priv->cutter_string->len);
             if (result) {
-                /* cut_test_context_emit_signal(context, result); */
+                CutTest *test;
+                CutTestCase *test_case;
+                CutTestSuite *test_suite;
+                CutTestContext *context;
+                CutTestResultStatus status;
+                gboolean failed;
+                const gchar *signal_name;
+
+                test = cut_test_result_get_test(result);
+                test_case = cut_test_result_get_test_case(result);
+                test_suite = cut_test_result_get_test_suite(result);
+                status = cut_test_result_get_status(result);
+                signal_name = cut_test_result_status_to_signal_name(status);
+
+                context = cut_test_context_new(test_suite, test_case, test);
+                failed = cut_test_result_status_is_critical(status);
+                cut_test_context_set_failed(context, failed);
+                g_signal_emit_by_name(test, signal_name, context, result);
+
+                g_object_unref(context);
                 g_object_unref(result);
             }
             g_string_truncate(priv->cutter_string, 0);

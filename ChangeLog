@@ -1,5 +1,9 @@
 2008-05-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-pipeline.c: format.
+
+	* cutter/cut-pipeline.c (read_line): emit result signal.
+
 	* test/test-cut-test-result.c (test_get_test_suite): use
 	cut_assert_equal_pointer().
 
