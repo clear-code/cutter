@@ -13,11 +13,25 @@ void test_get_line(void);
 void test_status_to_signal_name(void);
 void test_status_is_critical(void);
 
+static CutTestResult *result;
+
+void
+setup (void)
+{
+    result = NULL;
+}
+
+void
+teardown (void)
+{
+    if (result)
+        g_object_unref(result);
+}
+
+
 void
 test_get_status (void)
 {
-    CutTestResult *result;
-
     result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
                                  NULL, NULL, NULL,
                                  "user-message",
@@ -60,14 +74,11 @@ test_get_status (void)
                                  999);
     cut_assert_equal_int(CUT_TEST_RESULT_PENDING,
                          cut_test_result_get_status(result));
-    g_object_unref(result);
 }
 
 void
 test_get_message_full (void)
 {
-    CutTestResult *result;
-
     result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
                                  NULL, NULL, NULL,
                                  "user-message",
@@ -81,14 +92,11 @@ test_get_message_full (void)
                             cut_test_result_get_user_message(result));
     cut_assert_equal_string("system-message",
                             cut_test_result_get_system_message(result));
-    g_object_unref(result);
 }
 
 void
 test_get_message_only_user (void)
 {
-    CutTestResult *result;
-
     result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
                                  NULL, NULL, NULL,
                                  "user-message",
@@ -101,14 +109,11 @@ test_get_message_only_user (void)
     cut_assert_equal_string("user-message",
                             cut_test_result_get_user_message(result));
     cut_assert(cut_test_result_get_system_message(result) == NULL);
-    g_object_unref(result);
 }
 
 void
 test_get_message_only_system (void)
 {
-    CutTestResult *result;
-
     result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
                                  NULL, NULL, NULL,
                                  NULL,
@@ -121,14 +126,11 @@ test_get_message_only_system (void)
     cut_assert(cut_test_result_get_user_message(result) == NULL);
     cut_assert_equal_string("system-message",
                             cut_test_result_get_system_message(result));
-    g_object_unref(result);
 }
 
 void
 test_get_message_none (void)
 {
-    CutTestResult *result;
-
     result = cut_test_result_new(CUT_TEST_RESULT_FAILURE,
                                  NULL, NULL, NULL,
                                  NULL,
@@ -136,26 +138,25 @@ test_get_message_none (void)
                                  "function-name",
                                  "filename",
                                  999);
-    cut_assert(cut_test_result_get_message(result) == NULL,
-               "cut_test_result_get_message() should return NULL!");
+    cut_assert_null(cut_test_result_get_message(result));
+
     cut_test_result_set_message(result, "message");
-    cut_assert("message", cut_test_result_get_message(result));
-    cut_assert(cut_test_result_get_user_message(result) == NULL,
-               "cut_test_result_get_user_message() should return NULL!");
+    cut_assert_equal_string("message", cut_test_result_get_message(result));
+    cut_assert_null(cut_test_result_get_user_message(result));
+
     cut_test_result_set_user_message(result, "user message");
-    cut_assert("user message", cut_test_result_get_user_message(result));
-    cut_assert(cut_test_result_get_system_message(result) == NULL,
-               "cut_test_result_get_system_message() should return NULL!");
+    cut_assert_equal_string("user message",
+                            cut_test_result_get_user_message(result));
+    cut_assert_null(cut_test_result_get_system_message(result));
+
     cut_test_result_set_system_message(result, "system message");
-    cut_assert("system message", cut_test_result_get_system_message(result));
-    g_object_unref(result);
+    cut_assert_equal_string("system message",
+                            cut_test_result_get_system_message(result));
 }
 
 void
 test_set_messages (void)
 {
-    CutTestResult *result;
-
     result = cut_test_result_new(CUT_TEST_RESULT_FAILURE,
                                  NULL, NULL, NULL,
                                  "user-message",
@@ -163,23 +164,28 @@ test_set_messages (void)
                                  "function-name",
                                  "filename",
                                  999);
-    cut_assert("user-message\nsystem-message", cut_test_result_get_message(result));
+    cut_assert_equal_string("user-message\nsystem-message",
+                            cut_test_result_get_message(result));
+
     cut_test_result_set_message(result, "message");
-    cut_assert("message", cut_test_result_get_message(result));
-    cut_assert("user-message", cut_test_result_get_user_message(result));
+    cut_assert_equal_string("message", cut_test_result_get_message(result));
+    cut_assert_equal_string("user-message",
+                            cut_test_result_get_user_message(result));
+
     cut_test_result_set_user_message(result, "user message");
-    cut_assert("user message", cut_test_result_get_user_message(result));
-    cut_assert("system-message", cut_test_result_get_system_message(result));
+    cut_assert_equal_string("user message",
+                            cut_test_result_get_user_message(result));
+    cut_assert_equal_string("system-message",
+                            cut_test_result_get_system_message(result));
+
     cut_test_result_set_system_message(result, "system message");
-    cut_assert("system message", cut_test_result_get_system_message(result));
-    g_object_unref(result);
+    cut_assert_equal_string("system message",
+                            cut_test_result_get_system_message(result));
 }
 
 void
 test_get_function_name (void)
 {
-    CutTestResult *result;
-
     result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
                                  NULL, NULL, NULL,
                                  "user-message",
@@ -203,14 +209,11 @@ test_get_function_name (void)
                                  999);
     cut_assert(cut_test_result_get_function_name(result) == NULL,
                "cut_test_result_get_function_name() should return NULL!");
-    g_object_unref(result);
 }
 
 void
 test_get_filename (void)
 {
-    CutTestResult *result;
-
     result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
                                  NULL, NULL, NULL,
                                  "user-message",
@@ -219,8 +222,10 @@ test_get_filename (void)
                                  "filename",
                                  999);
     cut_assert_equal_string("filename", cut_test_result_get_filename(result));
+
     cut_test_result_set_filename(result, "another-filename");
-    cut_assert_equal_string("another-filename", cut_test_result_get_filename(result));
+    cut_assert_equal_string("another-filename",
+                            cut_test_result_get_filename(result));
     g_object_unref(result);
 
     result = cut_test_result_new(CUT_TEST_RESULT_FAILURE,
@@ -230,16 +235,12 @@ test_get_filename (void)
                                  NULL,
                                  NULL,
                                  999);
-    cut_assert(cut_test_result_get_filename(result) == NULL,
-               "cut_test_result_get_filename() should return NULL!");
-    g_object_unref(result);
+    cut_assert_null(cut_test_result_get_filename(result));
 }
 
 void
 test_get_line (void)
 {
-    CutTestResult *result;
-
     result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
                                  NULL, NULL, NULL,
                                  "user-message",
@@ -248,6 +249,7 @@ test_get_line (void)
                                  "filename",
                                  999);
     cut_assert_equal_int(999, cut_test_result_get_line(result));
+
     cut_test_result_set_line(result, 9999);
     cut_assert_equal_int(9999, cut_test_result_get_line(result));
     g_object_unref(result);
@@ -270,7 +272,6 @@ test_get_line (void)
                                  NULL,
                                  G_MAXUINT);
     cut_assert_equal_int(G_MAXUINT, cut_test_result_get_line(result));
-    g_object_unref(result);
 }
 
 void

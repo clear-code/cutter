@@ -1,5 +1,7 @@
 2008-05-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-test-result.c: fix strange tests.
+
 	* cutter/cut-test-context.[ch] (cut_test_context_set_failed): add.
 
 	* test/test-cut-test-context.c: add a test for the above change.
