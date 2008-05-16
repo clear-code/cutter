@@ -1,5 +1,10 @@
 2008-05-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-runner.c (cut_runner_run): use run_async as default
+	implementation.
+
+	* cutter/cut-pipeline.c: remove run.
+
 	* test/test-cut-pipeline.c: use cut_assert_{true,false}().
 
 	* Makefile.am (ACLOCAL_AMFLAGS): add.

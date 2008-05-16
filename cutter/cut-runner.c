@@ -40,6 +40,22 @@ cut_runner_get_type (void)
     return runner_type;
 }
 
+typedef struct _CollectRunResultInfo CollectRunResultInfo;
+struct _CollectRunResultInfo {
+    gboolean success;
+    gboolean received;
+};
+
+static void
+cb_collect_run_result (CutRunContext *context, gboolean success,
+                       gpointer user_data)
+{
+    CollectRunResultInfo *info = user_data;
+
+    info->success = success;
+    info->received = TRUE;
+}
+
 gboolean
 cut_runner_run (CutRunner *runner)
 {
@@ -49,11 +65,21 @@ cut_runner_run (CutRunner *runner)
     iface = CUT_RUNNER_GET_IFACE(runner);
     if (iface->run) {
         success = iface->run(runner);
-    } /*else if (iface->run_async) {
+    } else if (iface->run_async) {
+        CollectRunResultInfo info;
+
+        info.received = FALSE;
+        g_signal_connect(runner, "complete-run",
+                         G_CALLBACK(cb_collect_run_result), &info);
         iface->run_async(runner);
-        
-        return success;
-    }*/
+        while (!info.received) {
+            g_main_context_iteration(NULL, FALSE);
+        }
+        g_signal_handlers_disconnect_by_func(runner,
+                                             G_CALLBACK(cb_collect_run_result),
+                                             &info);
+        return info.success;
+    }
 
     g_signal_emit_by_name(CUT_RUN_CONTEXT(runner), "complete-run", success);
     return success;

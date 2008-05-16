@@ -68,7 +68,6 @@ static void     get_property (GObject         *object,
                               GValue          *value,
                               GParamSpec      *pspec);
 
-static gboolean runner_run       (CutRunner *runner);
 static void     runner_run_async (CutRunner *runner);
 
 static void
@@ -112,7 +111,6 @@ static void
 runner_init (CutRunnerIface *iface)
 {
     parent_runner_iface = g_type_interface_peek_parent(iface);
-    iface->run = runner_run;
     iface->run_async = runner_run_async;
 }
 
@@ -259,6 +257,7 @@ read_line (CutPipeline *pipeline, GIOChannel *channel)
                                     NULL,
                                     NULL);
 
+    g_print("xxx: %s\n", line_string);
     if (status == G_IO_STATUS_NORMAL ||
         status == G_IO_STATUS_EOF) {
         g_string_append(priv->cutter_string, line_string);
@@ -363,13 +362,9 @@ run_async (CutPipeline *pipeline)
     }
 
     priv->stdout_io = create_io_channel(pipeline, std_out);
-    priv->process_source_id = g_child_watch_add(priv->pid, child_watch_func, pipeline);
-}
-
-static gboolean
-runner_run (CutRunner *runner)
-{
-    return FALSE;
+    priv->process_source_id = g_child_watch_add(priv->pid,
+                                                child_watch_func,
+                                                pipeline);
 }
 
 static void
