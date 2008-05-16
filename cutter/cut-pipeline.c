@@ -239,7 +239,8 @@ static void
 child_watch_func (GPid pid, gint status, gpointer data)
 {
     if (WIFEXITED(status)) {
-        emit_complete_signal(CUT_PIPELINE(data), WEXITSTATUS(status) ? FALSE : TRUE);
+        emit_complete_signal(CUT_PIPELINE(data),
+                             WEXITSTATUS(status) == EXIT_SUCCESS);
         reap_child(CUT_PIPELINE(data), pid);
     }
 }

@@ -1,5 +1,7 @@
 2008-05-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-pipeline.c (child_watch_func): use EXIT_SUCCESS.
+
 	* cutter/cut-runner.c (cut_runner_run): use run_async as default
 	implementation.
 
