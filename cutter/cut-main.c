@@ -45,6 +45,7 @@ static gchar *test_directory = NULL;
 static gchar *source_directory = NULL;
 static gchar **test_case_names = NULL;
 static gchar **test_names = NULL;
+static gchar **exclude_names = NULL;
 static CutOrder test_case_order = CUT_ORDER_NONE_SPECIFIED;
 static gboolean use_multi_thread = FALSE;
 static GList *factories = NULL;
@@ -94,6 +95,8 @@ static const GOptionEntry option_entries[] =
      N_("Run test cases with multi-thread"), NULL},
     {"test-case-order", 0, 0, G_OPTION_ARG_CALLBACK, parse_test_case_order,
      N_("Sort test case by. Default is 'none'."), "[none|name|name-desc]"},
+    {"exclude", 'x', 0, G_OPTION_ARG_STRING_ARRAY, &exclude_names,
+     N_("Skip files and directories"), "NAME"},
     {NULL}
 };
 
@@ -214,6 +217,7 @@ cut_create_test_runner (void)
     if (source_directory)
         cut_run_context_set_source_directory(run_context, source_directory);
     cut_run_context_set_multi_thread(run_context, use_multi_thread);
+    cut_run_context_set_exclude_names(run_context, exclude_names);
     cut_run_context_set_target_test_case_names(run_context, test_case_names);
     cut_run_context_set_target_test_names(run_context, test_names);
     cut_run_context_set_test_case_order(run_context, test_case_order);

@@ -149,6 +149,9 @@ void           cut_run_context_set_multi_thread     (CutRunContext *context,
 gboolean       cut_run_context_get_multi_thread     (CutRunContext *context);
 gboolean       cut_run_context_is_multi_thread      (CutRunContext *context);
 
+void           cut_run_context_set_exclude_names    (CutRunContext *context,
+                                                     gchar        **excludes);
+gchar        **cut_run_context_get_exclude_names    (CutRunContext *context);
 void           cut_run_context_set_target_test_case_names(CutRunContext *context,
                                                           gchar      **names);
 gchar        **cut_run_context_get_target_test_case_names(CutRunContext *context);

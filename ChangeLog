@@ -6,6 +6,8 @@
 
 	* cutter/cut-listener-utils.h: Added utility macro.
 	* test/Makefile.am, cutter/Makefile.am: cleanup files related to gcov.
+	* cutter/cut-main.c, cutter/cut-run-context.[c|h]: Added --exclude
+	option.
 
 2008-05-15  Kouhei Sutou  <kou@cozmixng.org>
 

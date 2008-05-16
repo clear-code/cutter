@@ -52,6 +52,7 @@ struct _CutRunContextPrivate
     gboolean crashed;
     gchar *stack_trace;
     gchar *test_directory;
+    gchar **exclude_names;
     gchar *source_directory;
     gchar **target_test_case_names;
     gchar **target_test_names;
@@ -464,6 +465,7 @@ cut_run_context_init (CutRunContext *context)
     priv->stack_trace = NULL;
     priv->test_directory = NULL;
     priv->source_directory = NULL;
+    priv->exclude_names = NULL;
     priv->target_test_case_names = NULL;
     priv->target_test_names = NULL;
     priv->canceled = FALSE;
@@ -509,6 +511,9 @@ dispose (GObject *object)
 
     g_free(priv->source_directory);
     priv->source_directory = NULL;
+
+    g_strfreev(priv->exclude_names);
+    priv->exclude_names = NULL;
 
     g_strfreev(priv->target_test_case_names);
     priv->target_test_case_names = NULL;
@@ -697,6 +702,22 @@ gboolean
 cut_run_context_is_multi_thread (CutRunContext *context)
 {
     return CUT_RUN_CONTEXT_GET_PRIVATE(context)->is_multi_thread;
+}
+
+void
+cut_run_context_set_exclude_names (CutRunContext *context, gchar **names)
+{
+    CutRunContextPrivate *priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
+
+    g_strfreev(priv->exclude_names);
+    priv->exclude_names = g_strdupv(names);
+}
+
+gchar **
+cut_run_context_get_exclude_names (CutRunContext *context)
+{
+    CutRunContextPrivate *priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
+    return priv->exclude_names;
 }
 
 void
