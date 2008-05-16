@@ -293,13 +293,7 @@ io_watch_func (GIOChannel *channel, GIOCondition condition, gpointer data)
 
     if (condition & G_IO_IN ||
         condition & G_IO_PRI) {
-        GIOStatus status;
-
-        status = read_line(pipeline, channel);
-        if (status == G_IO_STATUS_ERROR) {
-            emit_complete_signal(pipeline, FALSE);
-            return FALSE;
-        }
+        read_line(pipeline, channel);
     }
 
     if (condition & G_IO_ERR ||
