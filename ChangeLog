@@ -1,6 +1,7 @@
 2008-05-16  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-listener-utils.h: Added utility macro.
+	* test/Makefile.am, cutter/Makefile.am: cleanup files related to gcov.
 
 2008-05-15  Kouhei Sutou  <kou@cozmixng.org>
 

@@ -16,6 +16,7 @@ AM_CFLAGS += $(GTK_CFLAGS)
 endif
 
 EXTRA_DIST = run-test.sh
+CLEANFILES = *.gcno *.gcda
 
 TESTS = run-test.sh
 TESTS_ENVIRONMENT = \

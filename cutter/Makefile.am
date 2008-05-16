@@ -10,6 +10,7 @@ AM_CFLAGS = 						\
 	$(COVERAGE_CFLAGS)
 
 EXTRA_DIST = config.h.in cut-marshalers.list
+CLEANFILES = *.gcno *.gcda
 
 lib_LTLIBRARIES = libcutter.la
 
