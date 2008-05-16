@@ -1,5 +1,12 @@
 2008-05-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-test-result.c (test_get_test_suite): use
+	cut_assert_equal_pointer().
+
+	* cutter/cut-assertions.h (cut_assert_equal_pointer): add.
+
+	* test/test-cut-assertions.c (test_equal_pointer): add.
+
 	* cutter/cut-test-result.[ch] (cut_test_result_get_test_suite): add.
 
 	* test/test-cut-test-result.c (test_get_test_suite): add.

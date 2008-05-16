@@ -674,6 +674,34 @@ extern "C" {
     }                                                                   \
 } while(0)
 
+/**
+ * cut_assert_equal_pointer:
+ * @expected: an expected pointer.
+ * @actual: an actual pointer.
+ * @...: optional format string, followed by parameters to insert
+ * into the format string (as with printf())
+ *
+ * Passes if @expected == @actual.
+ *
+ * Since: 1.0
+ */
+#define cut_assert_equal_pointer(expected, actual, ...) do      \
+{                                                               \
+    void *_expected = (expected);                               \
+    void *_actual = (actual);                                   \
+    if (_expected == _actual) {                                 \
+        cut_test_pass();                                        \
+    } else {                                                    \
+        cut_test_fail(FAILURE,                                  \
+                      cut_take_printf("<%s == %s>\n"            \
+                                      "expected: <%p>\n"        \
+                                      " but was: <%p>",         \
+                                      #expected, #actual,       \
+                                      _expected, _actual),      \
+                      ## __VA_ARGS__);                          \
+    }                                                           \
+} while(0)
+
 #ifdef __cplusplus
 }
 #endif

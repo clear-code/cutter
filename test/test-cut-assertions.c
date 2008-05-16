@@ -37,6 +37,7 @@ void test_assert_errno (void);
 void test_omit (void);
 void test_file_exist (void);
 void test_match (void);
+void test_equal_pointer (void);
 
 static gboolean need_cleanup;
 static gboolean compare_function_is_called;
@@ -571,6 +572,24 @@ test_match (void)
     cut_assert_test_result_summary(run_context, 1, 1, 1, 0, 0, 0, 0);
 }
 
+static void
+equal_pointer_test (void)
+{
+    int int1, int2;
+
+    cut_assert_equal_pointer(&int1, &int1);
+    cut_assert_equal_pointer(&int1, &int2);
+}
+
+void
+test_equal_pointer (void)
+{
+    CutTest *test;
+
+    test = cut_test_new("equal-pointer-test", equal_pointer_test);
+    cut_assert(!run(test));
+    cut_assert_test_result_summary(run_context, 1, 1, 1, 0, 0, 0, 0);
+}
 
 /*
 vi:nowrap:ai:expandtab:sw=4
