@@ -38,6 +38,7 @@
 	* cutter/cut-pipeline.c: Obtain source id of g_io_watch_add().
 	* cutter/cut-pipeline.c: Create io channel before invoke
 	g_child_watch_add().
+	* cutter/cut-streamer-factory-builder.c: Create CutStreamer correctly.
 
 2008-05-15  Kouhei Sutou  <kou@cozmixng.org>
 

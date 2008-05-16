@@ -38,7 +38,6 @@ typedef struct _CutStreamerFactoryBuilderPrivate	CutStreamerFactoryBuilderPrivat
 struct _CutStreamerFactoryBuilderPrivate
 {
     GList *names;
-    gchar **filenames;
 };
 
 static GObject *constructor  (GType                  type,
@@ -100,7 +99,6 @@ cut_streamer_factory_builder_init (CutStreamerFactoryBuilder *builder)
 
     priv = CUT_STREAMER_FACTORY_BUILDER_GET_PRIVATE(builder);
     priv->names = NULL;
-    priv->filenames = NULL;
 
     dir = g_getenv("CUT_STREAMER_FACTORY_MODULE_DIR");
     if (!dir)
@@ -125,10 +123,6 @@ dispose (GObject *object)
         priv->names = NULL;
     }
 
-    if (priv->filenames) {
-        g_strfreev(priv->filenames);
-        priv->filenames = NULL;
-    }
 
     G_OBJECT_CLASS(cut_streamer_factory_builder_parent_class)->dispose(object);
 }
@@ -199,25 +193,16 @@ build (CutFactoryBuilder *builder)
 {
     GList *factories = NULL;
     CutStreamerFactoryBuilderPrivate *priv;
-    const gchar **filename;
-    GList *node;
+    CutModuleFactory *factory;
+
+    if (!streamer_name)
+        return NULL;
 
     priv = CUT_STREAMER_FACTORY_BUILDER_GET_PRIVATE(builder);
-    for (filename = (const gchar **)priv->filenames, node = priv->names;
-         node;
-         filename++, node = g_list_next(node)) {
-        CutModuleFactory *factory;
-        const gchar *streamer_type;
+    factory = build_factory(builder, streamer_name, NULL);
 
-        if (!*filename)
-            continue;
-        streamer_type = node->data;
-        factory = build_factory(builder, streamer_type,
-                                "filename", *filename,
-                                NULL);
-        if (factory)
-            factories = g_list_prepend(factories, factory);
-    }
+    if (factory)
+        factories = g_list_prepend(factories, factory);
 
     return g_list_reverse(factories);
 }
