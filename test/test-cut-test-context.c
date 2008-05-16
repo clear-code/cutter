@@ -2,6 +2,7 @@
 #include <cutter/cut-test-context.h>
 
 void test_user_data (void);
+void test_set_failed (void);
 
 static CutTestContext *context;
 
@@ -40,6 +41,18 @@ test_user_data (void)
                          cut_test_context_get_user_data(context));
 
     cut_test_context_set_user_data(context, 0, NULL);
+}
+
+void
+test_set_failed (void)
+{
+    cut_assert_false(cut_test_context_is_failed(context));
+
+    cut_test_context_set_failed(context, TRUE);
+    cut_assert_true(cut_test_context_is_failed(context));
+
+    cut_test_context_set_failed(context, FALSE);
+    cut_assert_false(cut_test_context_is_failed(context));
 }
 
 /*

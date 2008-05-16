@@ -425,6 +425,12 @@ cut_test_context_register_result (CutTestContext *context,
     g_object_unref(result);
 }
 
+void
+cut_test_context_set_failed (CutTestContext *context, gboolean failed)
+{
+    CUT_TEST_CONTEXT_GET_PRIVATE(context)->failed = failed;
+}
+
 gboolean
 cut_test_context_is_failed (CutTestContext *context)
 {

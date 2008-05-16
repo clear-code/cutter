@@ -77,6 +77,8 @@ void          cut_test_context_set_user_data  (CutTestContext *context,
                                                gpointer        user_data,
                                                GDestroyNotify  notify);
 
+void          cut_test_context_set_failed     (CutTestContext *context,
+                                               gboolean        failed);
 gboolean      cut_test_context_is_failed      (CutTestContext *context);
 
 void          cut_test_context_set_jump       (CutTestContext *context,

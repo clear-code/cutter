@@ -1,5 +1,9 @@
 2008-05-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-context.[ch] (cut_test_context_set_failed): add.
+
+	* test/test-cut-test-context.c: add a test for the above change.
+
 	* cutter/cut-pipeline.c (child_watch_func): use EXIT_SUCCESS.
 
 	* cutter/cut-runner.c (cut_runner_run): use run_async as default
