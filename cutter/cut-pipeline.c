@@ -240,13 +240,9 @@ emit_complete_signal (CutPipeline *pipeline, gboolean success)
 static void
 child_watch_func (GPid pid, gint status, gpointer data)
 {
-    switch (status) {
-      case WEXITED:
+    if (WIFEXITED(status)) {
+        emit_complete_signal(CUT_PIPELINE(data), WEXITSTATUS(status) ? FALSE : TRUE);
         reap_child(CUT_PIPELINE(data), pid);
-        emit_complete_signal(CUT_PIPELINE(data), TRUE);
-        break;
-      default:
-        break;
     }
 }
 

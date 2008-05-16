@@ -32,6 +32,7 @@
 	* cutter/cut-repository.c: Filter exclude files and directories.
 	* test/pipiline_test_dir/: Added.
 	* test/run-test.sh: Added --exclude-dir=pipeline_test_dir.
+	* cutter/cut-pipeline.c: Use WIFEXITED() and WEXITSTATUS().
 
 2008-05-15  Kouhei Sutou  <kou@cozmixng.org>
 
