@@ -1,5 +1,7 @@
 2008-05-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-pipeline.c: add signals.
+
 	* test/test-cut-pipeline.c: fix increment.
 
 	* test/test-cut-pipeline.c: format.

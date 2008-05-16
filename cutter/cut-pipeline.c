@@ -284,7 +284,11 @@ read_line (CutPipeline *pipeline, GIOChannel *channel)
                 context = cut_test_context_new(test_suite, test_case, test);
                 failed = cut_test_result_status_is_critical(status);
                 cut_test_context_set_failed(context, failed);
+
+                cut_run_context_prepare_test(CUT_RUN_CONTEXT(pipeline), test);
+                g_signal_emit_by_name(test, "start");
                 g_signal_emit_by_name(test, signal_name, context, result);
+                g_signal_emit_by_name(test, "complete");
 
                 g_object_unref(context);
                 g_object_unref(result);
