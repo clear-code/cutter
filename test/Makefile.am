@@ -3,7 +3,8 @@ SUBDIRS = 			\
 	attribute_test_dir	\
 	repository_test_dir	\
 	module_test_dir		\
-	factory_test_dir
+	factory_test_dir	\
+	pipeline_test_dir
 
 INCLUDES = 			\
 	-I$(top_builddir)	\

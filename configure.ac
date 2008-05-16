@@ -273,6 +273,9 @@ AC_CONFIG_FILES([Makefile
 		 test/factory_test_dir/Makefile
 		 test/factory_test_dir/type1/Makefile
 		 test/factory_test_dir/type2/Makefile
+		 test/pipeline_test_dir/Makefile
+		 test/pipeline_test_dir/error_test/Makefile
+		 test/pipeline_test_dir/success_test/Makefile
 		 po/Makefile.in
 		 misc/Makefile
 		 doc/Makefile

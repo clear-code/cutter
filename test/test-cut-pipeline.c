@@ -31,7 +31,7 @@ cb_complete_signal (CutPipeline *pipeline, gboolean success)
 void
 test_fork (void)
 {
-    pipeline = cut_pipeline_new("../sample/stack/test/.libs");
+    pipeline = cut_pipeline_new("./pipeline_test_dir");
     cut_assert(pipeline);
 
     g_signal_connect(pipeline, "complete", G_CALLBACK(cb_complete_signal), NULL);
