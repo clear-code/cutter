@@ -27,6 +27,7 @@
 
 #include "cut-repository.h"
 #include "cut-loader.h"
+#include "cut-utils.h"
 
 #define CUT_REPOSITORY_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_REPOSITORY, CutRepositoryPrivate))
 
@@ -34,6 +35,8 @@ typedef struct _CutRepositoryPrivate	CutRepositoryPrivate;
 struct _CutRepositoryPrivate
 {
     gchar *directory;
+    GList *exclude_files_regexs;
+    GList *exclude_dirs_regexs;
     GList *loaders;
 };
 
@@ -84,6 +87,15 @@ cut_repository_init (CutRepository *repository)
 
     priv->directory = NULL;
     priv->loaders = NULL;
+    priv->exclude_files_regexs = NULL;
+    priv->exclude_dirs_regexs = NULL;
+}
+
+static void
+free_regexs (GList *regexs)
+{
+    g_list_foreach(regexs, (GFunc)g_regex_unref, NULL);
+    g_list_free(regexs);
 }
 
 static void
@@ -100,6 +112,16 @@ dispose (GObject *object)
         g_list_foreach(priv->loaders, (GFunc)g_object_unref, NULL);
         g_list_free(priv->loaders);
         priv->loaders = NULL;
+    }
+
+    if (priv->exclude_files_regexs) {
+        free_regexs(priv->exclude_files_regexs);
+        priv->exclude_files_regexs = NULL;
+    }
+
+    if (priv->exclude_dirs_regexs) {
+        free_regexs(priv->exclude_dirs_regexs);
+        priv->exclude_dirs_regexs = NULL;
     }
 
     G_OBJECT_CLASS(cut_repository_parent_class)->dispose(object);
@@ -208,6 +230,30 @@ cut_repository_create_test_suite (CutRepository *repository)
     return suite;
 }
 
+void
+cut_repository_set_exclude_files (CutRepository *repository, gchar **files)
+{
+    CutRepositoryPrivate *priv = CUT_REPOSITORY_GET_PRIVATE(repository);
+
+    if (priv->exclude_files_regexs)
+        free_regexs(priv->exclude_files_regexs);
+
+    if (files)
+        priv->exclude_files_regexs = cut_utils_filter_to_regexs(files);
+}
+
+void
+cut_repository_set_exclude_dirs (CutRepository *repository, gchar **dirs)
+{
+    CutRepositoryPrivate *priv = CUT_REPOSITORY_GET_PRIVATE(repository);
+
+    if (priv->exclude_dirs_regexs)
+        free_regexs(priv->exclude_dirs_regexs);
+
+    if (dirs)
+        priv->exclude_dirs_regexs = cut_utils_filter_to_regexs(dirs);
+}
+
 /*
-vi:nowrap:ai:expandtab:sw=4
+vi:ts=4:nowrap:ai:expandtab:sw=4
 */

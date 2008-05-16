@@ -118,28 +118,6 @@ real_get_elapsed (CutTest *test)
     return result;
 }
 
-static GList *
-filter_to_regexs (gchar **filter)
-{
-    GList *regexs = NULL;
-
-    for (; *filter; filter++) {
-        GRegex *regex;
-        gchar *pattern;
-
-        if (*filter[0] == '\0')
-            continue;
-
-        pattern = cut_utils_create_regex_pattern(*filter);
-        regex = g_regex_new(pattern, G_REGEX_EXTENDED, 0, NULL);
-        if (regex)
-            regexs = g_list_prepend(regexs, regex);
-        g_free(pattern);
-    }
-
-    return regexs;
-}
-
 static inline gboolean
 match (GList *regexs, const gchar *name)
 {
@@ -168,7 +146,7 @@ cut_test_container_filter_children (CutTestContainer *container,
     if (!filter)
         return g_list_copy(original);
 
-    regexs = filter_to_regexs(filter);
+    regexs = cut_utils_filter_to_regexs(filter);
     if (!regexs)
         return g_list_copy(original);
 

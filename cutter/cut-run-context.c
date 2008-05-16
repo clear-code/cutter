@@ -1239,6 +1239,8 @@ cut_run_context_create_test_suite (CutRunContext *context)
 
     priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
     repository = cut_repository_new(priv->test_directory);
+    cut_repository_set_exclude_files(repository, priv->exclude_files);
+    cut_repository_set_exclude_dirs(repository, priv->exclude_dirs);
     suite = cut_repository_create_test_suite(repository);
     g_object_unref(repository);
 
