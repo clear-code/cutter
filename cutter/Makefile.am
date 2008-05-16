@@ -32,6 +32,7 @@ libcutter_public_headers = 			\
 		cut-run-context.h		\
 		cut-runner.h			\
 		cut-listener.h			\
+		cut-listener-utils.h		\
 		cut-main.h			\
 		cut-test.h			\
 		cut-test-case.h			\

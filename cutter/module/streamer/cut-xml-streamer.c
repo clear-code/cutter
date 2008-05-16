@@ -238,6 +238,7 @@ cb_start_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
                      CutXMLStreamer *streamer)
 {
     g_print("<streamer>\n");
+    fflush(stdout);
 }
 
 static void
@@ -263,6 +264,7 @@ cb_test_signal (CutRunContext      *run_context,
     string = cut_test_result_to_xml(result);
     g_print("%s\n", string);
     g_free(string);
+    fflush(stdout);
 }
 
 static void
@@ -282,6 +284,7 @@ cb_complete_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
                         CutXMLStreamer *streamer)
 {
     g_print("</streamer>\n");
+    fflush(stdout);
 }
 
 static void

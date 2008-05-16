@@ -25,48 +25,12 @@
 
 #include "cut-streamer.h"
 #include "cut-module.h"
-
-static GList *modules = NULL;
-static gchar *module_dir = NULL;
+#include "cut-listener-utils.h"
 
 static void dispose        (GObject         *object);
 
-static const gchar *
-_cut_streamer_module_dir (void)
-{
-    const gchar *dir;
-
-    if (module_dir)
-        return module_dir;
-
-    dir = g_getenv("CUT_STREAMER_MODULE_DIR");
-    if (dir)
-        return dir;
-
-    return STREAMER_MODULEDIR;
-}
-
-static CutModule *
-cut_streamer_load_module (const gchar *name)
-{
-    CutModule *module;
-
-    module = cut_module_find(modules, name);
-    if (module)
-        return module;
-
-    module = cut_module_load_module(_cut_streamer_module_dir(), name);
-    if (module) {
-        if (g_type_module_use(G_TYPE_MODULE(module))) {
-            modules = g_list_prepend(modules, module);
-            g_type_module_unuse(G_TYPE_MODULE(module));
-        }
-    }
-
-    return module;
-}
-
 G_DEFINE_ABSTRACT_TYPE (CutStreamer, cut_streamer, G_TYPE_OBJECT)
+CUT_DEFINE_LISTENER_MODULE(streamer, STREAMER)
 
 static void
 cut_streamer_class_init (CutStreamerClass *klass)

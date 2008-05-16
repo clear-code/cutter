@@ -1,3 +1,7 @@
+2008-05-16  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-listener-utils.h: Added utility macro.
+
 2008-05-15  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-streamer-factory-builder.c (set_option_context): use

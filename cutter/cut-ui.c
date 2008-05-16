@@ -25,9 +25,9 @@
 
 #include "cut-ui.h"
 #include "cut-module.h"
+#include "cut-listener-utils.h"
 
-static GList *uis = NULL;
-static gchar *module_dir = NULL;
+CUT_DEFINE_LISTENER_MODULE(ui, UI)
 
 void
 cut_ui_init (void)
@@ -37,12 +37,12 @@ cut_ui_init (void)
 static void
 cut_ui_set_default_module_dir (const gchar *dir)
 {
-    if (module_dir)
-        g_free(module_dir);
-    module_dir = NULL;
+    if (ui_module_dir)
+        g_free(ui_module_dir);
+    ui_module_dir = NULL;
 
     if (dir)
-        module_dir = g_strdup(dir);
+        ui_module_dir = g_strdup(dir);
 }
 
 static void
@@ -58,41 +58,6 @@ cut_ui_quit (void)
 {
     cut_ui_unload();
     cut_ui_set_default_module_dir(NULL);
-}
-
-static const gchar *
-_cut_ui_module_dir (void)
-{
-    const gchar *dir;
-
-    if (module_dir)
-        return module_dir;
-
-    dir = g_getenv("CUT_UI_MODULE_DIR");
-    if (dir)
-        return dir;
-
-    return UI_MODULEDIR;
-}
-
-static CutModule *
-cut_ui_load_module (const gchar *name)
-{
-    CutModule *module;
-
-    module = cut_module_find(uis, name);
-    if (module)
-        return module;
-
-    module = cut_module_load_module(_cut_ui_module_dir(), name);
-    if (module) {
-        if (g_type_module_use(G_TYPE_MODULE(module))) {
-            uis = g_list_prepend(uis, module);
-            g_type_module_unuse(G_TYPE_MODULE(module));
-        }
-    }
-
-    return module;
 }
 
 GObject *

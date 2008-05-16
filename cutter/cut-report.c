@@ -25,6 +25,7 @@
 
 #include "cut-report.h"
 #include "cut-module.h"
+#include "cut-listener-utils.h"
 
 #define CUT_REPORT_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_REPORT, CutReportPrivate))
 
@@ -40,9 +41,6 @@ enum
     PROP_FILENAME
 };
 
-static GList *modules = NULL;
-static gchar *module_dir = NULL;
-
 static void dispose        (GObject         *object);
 static void set_property   (GObject         *object,
                             guint            prop_id,
@@ -53,42 +51,8 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 
-static const gchar *
-_cut_report_module_dir (void)
-{
-    const gchar *dir;
-
-    if (module_dir)
-        return module_dir;
-
-    dir = g_getenv("CUT_REPORT_MODULE_DIR");
-    if (dir)
-        return dir;
-
-    return REPORT_MODULEDIR;
-}
-
-static CutModule *
-cut_report_load_module (const gchar *name)
-{
-    CutModule *module;
-
-    module = cut_module_find(modules, name);
-    if (module)
-        return module;
-
-    module = cut_module_load_module(_cut_report_module_dir(), name);
-    if (module) {
-        if (g_type_module_use(G_TYPE_MODULE(module))) {
-            modules = g_list_prepend(modules, module);
-            g_type_module_unuse(G_TYPE_MODULE(module));
-        }
-    }
-
-    return module;
-}
-
 G_DEFINE_ABSTRACT_TYPE (CutReport, cut_report, G_TYPE_OBJECT)
+CUT_DEFINE_LISTENER_MODULE(report, REPORT)
 
 static void
 cut_report_class_init (CutReportClass *klass)
