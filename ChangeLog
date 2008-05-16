@@ -10,6 +10,8 @@
 	option.
 	* cutter/cut-main.c, cutter/cut-run-context.[c|h]: Separate --exclude
 	option --exclude-file and --exclude-dir options.
+	* cutter/cut-utils.[c|h], cutter/cut-container.c: filter_to_regexs()
+	-> cut_utils_filter_to_regex() to use --exclude-XX options.
 
 2008-05-15  Kouhei Sutou  <kou@cozmixng.org>
 

@@ -25,11 +25,12 @@
 G_BEGIN_DECLS
 
 gchar *cut_utils_create_regex_pattern (const gchar *string);
+GList *cut_utils_filter_to_regexs     (gchar **filters);
 
 G_END_DECLS
 
 #endif /* __CUT_UTILS_H__ */
 
 /*
-vi:nowrap:ai:expandtab:sw=4
+vi:ts=4:nowrap:ai:expandtab:sw=4
 */

@@ -47,6 +47,28 @@ cut_utils_create_regex_pattern (const gchar *string)
     return pattern;
 }
 
+GList *
+cut_utils_filter_to_regexs (gchar **filter)
+{
+    GList *regexs = NULL;
+
+    for (; *filter; filter++) {
+        GRegex *regex;
+        gchar *pattern;
+
+        if (*filter[0] == '\0')
+            continue;
+
+        pattern = cut_utils_create_regex_pattern(*filter);
+        regex = g_regex_new(pattern, G_REGEX_EXTENDED, 0, NULL);
+        if (regex)
+            regexs = g_list_prepend(regexs, regex);
+        g_free(pattern);
+    }
+
+    return regexs;
+}
+
 gboolean
 cut_utils_compare_string_array (gchar **strings1, gchar **strings2)
 {
