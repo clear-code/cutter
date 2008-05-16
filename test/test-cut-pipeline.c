@@ -33,7 +33,7 @@ cb_complete_run_signal (CutPipeline *pipeline, gboolean success, gpointer user_d
     gboolean *is_success;
     received_complete_signal = TRUE;
 
-    is_success = (gboolean*)user_data;
+    is_success = (gboolean *)user_data;
     *is_success = success;
 }
 
@@ -92,7 +92,7 @@ cb_ ## signal_name ## _signal (CutRunContext *run_context,              \
     gint *n_signal;                                                     \
                                                                         \
     n_signal = (gint *)data;                                            \
-    n_signal++;                                                         \
+    (*n_signal)++;                                                      \
 }                                                                       \
                                                                         \
 void                                                                    \
