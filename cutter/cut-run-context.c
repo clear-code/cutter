@@ -52,7 +52,8 @@ struct _CutRunContextPrivate
     gboolean crashed;
     gchar *stack_trace;
     gchar *test_directory;
-    gchar **exclude_names;
+    gchar **exclude_files;
+    gchar **exclude_dirs;
     gchar *source_directory;
     gchar **target_test_case_names;
     gchar **target_test_names;
@@ -465,7 +466,8 @@ cut_run_context_init (CutRunContext *context)
     priv->stack_trace = NULL;
     priv->test_directory = NULL;
     priv->source_directory = NULL;
-    priv->exclude_names = NULL;
+    priv->exclude_files = NULL;
+    priv->exclude_dirs = NULL;
     priv->target_test_case_names = NULL;
     priv->target_test_names = NULL;
     priv->canceled = FALSE;
@@ -512,8 +514,11 @@ dispose (GObject *object)
     g_free(priv->source_directory);
     priv->source_directory = NULL;
 
-    g_strfreev(priv->exclude_names);
-    priv->exclude_names = NULL;
+    g_strfreev(priv->exclude_files);
+    priv->exclude_files = NULL;
+
+    g_strfreev(priv->exclude_dirs);
+    priv->exclude_dirs = NULL;
 
     g_strfreev(priv->target_test_case_names);
     priv->target_test_case_names = NULL;
@@ -705,19 +710,35 @@ cut_run_context_is_multi_thread (CutRunContext *context)
 }
 
 void
-cut_run_context_set_exclude_names (CutRunContext *context, gchar **names)
+cut_run_context_set_exclude_files (CutRunContext *context, gchar **files)
 {
     CutRunContextPrivate *priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
 
-    g_strfreev(priv->exclude_names);
-    priv->exclude_names = g_strdupv(names);
+    g_strfreev(priv->exclude_files);
+    priv->exclude_files = g_strdupv(files);
 }
 
 gchar **
-cut_run_context_get_exclude_names (CutRunContext *context)
+cut_run_context_get_exclude_files (CutRunContext *context)
 {
     CutRunContextPrivate *priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
-    return priv->exclude_names;
+    return priv->exclude_files;
+}
+
+void
+cut_run_context_set_exclude_dirs (CutRunContext *context, gchar **dirs)
+{
+    CutRunContextPrivate *priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
+
+    g_strfreev(priv->exclude_dirs);
+    priv->exclude_dirs = g_strdupv(dirs);
+}
+
+gchar **
+cut_run_context_get_exclude_dirs (CutRunContext *context)
+{
+    CutRunContextPrivate *priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
+    return priv->exclude_dirs;
 }
 
 void

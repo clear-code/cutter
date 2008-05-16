@@ -62,7 +62,8 @@ setup (void)
         "  -t, --test-case=TEST_CASE_NAME                  Specify test cases\n"
         "  -m, --multi-thread                              Run test cases with multi-thread\n"
         "  --test-case-order=[none|name|name-desc]         Sort test case by. Default is 'none'.\n"
-        "  -x, --exclude=NAME                              Skip files and directories\n"
+        "  --exclude-file=FILE_NAME                        Skip files\n"
+        "  --exclude-dir=DIRECTORY_NAME                    Skip directories\n"
         "\n",
         g_get_prgname());
 }
@@ -209,7 +210,8 @@ test_help_all (void)
         "  -t, --test-case=TEST_CASE_NAME                  Specify test cases\n"
         "  -m, --multi-thread                              Run test cases with multi-thread\n"
         "  --test-case-order=[none|name|name-desc]         Sort test case by. Default is 'none'.\n"
-        "  -x, --exclude=NAME                              Skip files and directories\n"
+        "  --exclude-file=FILE_NAME                        Skip files\n"
+        "  --exclude-dir=DIRECTORY_NAME                    Skip directories\n"
 #ifdef HAVE_GTK
         "  --display=DISPLAY                               X display to use\n"
 #endif

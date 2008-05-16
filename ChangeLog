@@ -8,6 +8,8 @@
 	* test/Makefile.am, cutter/Makefile.am: cleanup files related to gcov.
 	* cutter/cut-main.c, cutter/cut-run-context.[c|h]: Added --exclude
 	option.
+	* cutter/cut-main.c, cutter/cut-run-context.[c|h]: Separate --exclude
+	option --exclude-file and --exclude-dir options.
 
 2008-05-15  Kouhei Sutou  <kou@cozmixng.org>
 
