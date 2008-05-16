@@ -258,6 +258,7 @@ read_line (CutPipeline *pipeline, GIOChannel *channel)
                                     NULL,
                                     NULL,
                                     NULL);
+
     if (status == G_IO_STATUS_NORMAL ||
         status == G_IO_STATUS_EOF) {
         g_string_append(priv->cutter_string, line_string);
@@ -292,12 +293,18 @@ io_watch_func (GIOChannel *channel, GIOCondition condition, gpointer data)
 
     if (condition & G_IO_IN ||
         condition & G_IO_PRI) {
-        read_line(pipeline, channel);
+        GIOStatus status;
+
+        status = read_line(pipeline, channel);
+        if (status == G_IO_STATUS_ERROR) {
+            emit_complete_signal(pipeline, FALSE);
+            return FALSE;
+        }
     }
 
     if (condition & G_IO_ERR ||
         condition & G_IO_HUP) {
-        emit_complete_signal(CUT_PIPELINE(data), FALSE);
+        emit_complete_signal(pipeline, FALSE);
         return FALSE;
     }
 
@@ -334,10 +341,9 @@ run_async (CutPipeline *pipeline)
     if (!cutter_command)
         cutter_command = g_get_prgname();
 
-    command_line = g_strdup_printf("%s -v v --streamer=xml %s",
+    command_line = g_strdup_printf("%s -v s --streamer=xml %s",
                                    cutter_command,
                                    priv->target_directory);
-
     ret = g_shell_parse_argv(command_line, &argc, &argv, NULL);
     g_free(command_line);
     if (!ret) {
@@ -362,8 +368,8 @@ run_async (CutPipeline *pipeline)
         return;
     }
 
-    priv->process_source_id = g_child_watch_add(priv->pid, child_watch_func, pipeline);
     priv->stdout_io = create_io_channel(pipeline, std_out);
+    priv->process_source_id = g_child_watch_add(priv->pid, child_watch_func, pipeline);
 }
 
 static gboolean

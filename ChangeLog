@@ -34,6 +34,8 @@
 	* test/run-test.sh: Added --exclude-dir=pipeline_test_dir.
 	* cutter/cut-pipeline.c: Use WIFEXITED() and WEXITSTATUS().
 	* cutter/cut-pipeline.c: Obtain source id of g_io_watch_add().
+	* cutter/cut-pipeline.c: Create io channel before invoke
+	g_child_watch_add().
 
 2008-05-15  Kouhei Sutou  <kou@cozmixng.org>
 
