@@ -24,8 +24,10 @@
 
 G_BEGIN_DECLS
 
-gchar *cut_utils_create_regex_pattern (const gchar *string);
-GList *cut_utils_filter_to_regexs     (gchar **filters);
+gchar   *cut_utils_create_regex_pattern (const gchar *string);
+GList   *cut_utils_filter_to_regexs     (gchar **filters);
+gboolean cut_filter_match               (GList *regexs,
+                                         const gchar *name);
 
 G_END_DECLS
 

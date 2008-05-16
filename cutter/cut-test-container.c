@@ -118,21 +118,6 @@ real_get_elapsed (CutTest *test)
     return result;
 }
 
-static inline gboolean
-match (GList *regexs, const gchar *name)
-{
-    GList *node;
-
-    for (node = regexs; node; node = g_list_next(node)) {
-        GRegex *regex = node->data;
-
-        if (g_regex_match(regex, name, 0, NULL))
-            return TRUE;
-    }
-
-    return FALSE;
-}
-
 GList *
 cut_test_container_filter_children (CutTestContainer *container,
                                     gchar **filter)
@@ -153,7 +138,7 @@ cut_test_container_filter_children (CutTestContainer *container,
     for (node = original; node; node = g_list_next(node)) {
         CutTest *test = node->data;
 
-        if (match(regexs, cut_test_get_name(test)))
+        if (cut_filter_match(regexs, cut_test_get_name(test)))
             matched_tests = g_list_prepend(matched_tests, test);
     }
 

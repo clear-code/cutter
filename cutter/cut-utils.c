@@ -70,6 +70,21 @@ cut_utils_filter_to_regexs (gchar **filter)
 }
 
 gboolean
+cut_filter_match (GList *regexs, const gchar *name)
+{
+    GList *node;
+
+    for (node = regexs; node; node = g_list_next(node)) {
+        GRegex *regex = node->data;
+
+        if (g_regex_match(regex, name, 0, NULL))
+            return TRUE;
+    }
+
+    return FALSE;
+}
+
+gboolean
 cut_utils_compare_string_array (gchar **strings1, gchar **strings2)
 {
     gint i, length;

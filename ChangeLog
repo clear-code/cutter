@@ -16,6 +16,8 @@
 	-> cut_utils_filter_to_regex() to use --exclude-XX options.
 	* cutter/cut-repository.[c|h], cutter/cut-run-context.c: Set
 	exclude-dir and exclude-file before create test suite.
+	* cutter/cut-utils.[c|h], cutter/cut-test-container.c: match() ->
+	cut_filter_match().
 
 2008-05-15  Kouhei Sutou  <kou@cozmixng.org>
 
