@@ -50,7 +50,7 @@ test_error (void)
         g_main_context_iteration(NULL, FALSE);
     }
 
-    cut_assert(!success);
+    cut_assert_false(success);
     g_signal_handlers_disconnect_by_func(pipeline,
                                          G_CALLBACK(cb_complete_run_signal),
                                          &success);
@@ -72,7 +72,7 @@ test_success (void)
         g_main_context_iteration(NULL, FALSE);
     }
 
-    cut_assert(success);
+    cut_assert_true(success);
     g_signal_handlers_disconnect_by_func(pipeline,
                                          G_CALLBACK(cb_complete_run_signal),
                                          &success);

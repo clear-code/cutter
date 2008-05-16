@@ -1,5 +1,7 @@
 2008-05-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-pipeline.c: use cut_assert_{true,false}().
+
 	* Makefile.am (ACLOCAL_AMFLAGS): add.
 
 	* cutter/cut-pipeline.[ch]: use CutRunContext as parent.
