@@ -12,13 +12,16 @@ void test_get_filename(void);
 void test_get_line(void);
 void test_status_to_signal_name(void);
 void test_status_is_critical(void);
+void test_get_test_suite(void);
 
 static CutTestResult *result;
+static CutTestSuite *suite;
 
 void
 setup (void)
 {
     result = NULL;
+    suite = NULL;
 }
 
 void
@@ -26,6 +29,8 @@ teardown (void)
 {
     if (result)
         g_object_unref(result);
+    if (suite)
+        g_object_unref(suite);
 }
 
 
@@ -304,6 +309,22 @@ test_status_is_critical (void)
     cut_assert(STATUS_IS_CRITICAL(ERROR));
 
 #undef STATUS_IS_CRITICAL
+}
+
+void
+test_get_test_suite (void)
+{
+    result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
+                                 NULL, NULL, NULL,
+                                 NULL, NULL, NULL, NULL, 0);
+    cut_assert_null(cut_test_result_get_test_suite(result));
+
+    suite = cut_test_suite_new();
+    cut_test_result_set_test_suite(result, suite);
+    cut_assert_equal_int(suite, cut_test_result_get_test_suite(result));
+
+    cut_test_result_set_test_suite(result, NULL);
+    cut_assert_null(cut_test_result_get_test_suite(result));
 }
 
 /*
