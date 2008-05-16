@@ -308,12 +308,13 @@ static GIOChannel *
 create_io_channel (CutPipeline *pipeline, gint pipe)
 {
     GIOChannel *channel;
+    CutPipelinePrivate *priv = CUT_PIPELINE_GET_PRIVATE(pipeline);
 
     channel = g_io_channel_unix_new(pipe);
     g_io_channel_set_close_on_unref(channel, TRUE);
-    g_io_add_watch(channel,
-                   G_IO_IN | G_IO_PRI | G_IO_ERR | G_IO_HUP,
-                   io_watch_func, pipeline);
+    priv->io_source_id = g_io_add_watch(channel,
+                                        G_IO_IN | G_IO_PRI | G_IO_ERR | G_IO_HUP,
+                                        io_watch_func, pipeline);
 
     return channel;
 }
