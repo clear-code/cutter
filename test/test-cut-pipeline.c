@@ -4,8 +4,8 @@
 
 #include <unistd.h>
 
-void test_error (void);
-void test_success (void);
+void test_exit_status_error (void);
+void test_exit_status_success (void);
 
 static CutRunContext *pipeline;
 static gboolean received_complete_signal = FALSE;
@@ -35,7 +35,7 @@ cb_complete_run_signal (CutPipeline *pipeline, gboolean success, gpointer user_d
 }
 
 void
-test_error (void)
+test_exit_status_error (void)
 {
     gboolean success = TRUE;
 
@@ -57,7 +57,7 @@ test_error (void)
 }
 
 void
-test_success (void)
+test_exit_status_success (void)
 {
     gboolean success = FALSE;
 
