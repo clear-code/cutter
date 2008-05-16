@@ -66,7 +66,7 @@ cut_streamer_new (const gchar *name,
 
     va_start(var_args, first_property);
     streamer = cut_module_instantiate(module,
-                                    first_property, var_args);
+                                      first_property, var_args);
     va_end(var_args);
 
     return CUT_STREAMER(streamer);
