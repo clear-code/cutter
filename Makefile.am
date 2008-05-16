@@ -1,3 +1,5 @@
+ACLOCAL_AMFLAGS = -I m4macros
+
 SUBDIRS = m4macros cutter test sample po misc doc html
 
 pkgconfigdir = $(libdir)/pkgconfig

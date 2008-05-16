@@ -1,5 +1,7 @@
 2008-05-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* Makefile.am (ACLOCAL_AMFLAGS): add.
+
 	* cutter/cut-pipeline.[ch]: use CutRunContext as parent.
 
 	* test/test-cut-pipeline.c: follow the above change.
