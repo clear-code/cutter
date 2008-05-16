@@ -258,7 +258,6 @@ read_line (CutPipeline *pipeline, GIOChannel *channel)
                                     NULL,
                                     NULL);
 
-    g_print("xxx: %s\n", line_string);
     if (status == G_IO_STATUS_NORMAL ||
         status == G_IO_STATUS_EOF) {
         g_string_append(priv->cutter_string, line_string);
