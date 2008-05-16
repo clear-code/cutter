@@ -38,12 +38,14 @@ struct _CutRunnerIface
 {
     GTypeInterface base_iface;
 
-    gboolean (*run)    (CutRunner   *runner);
+    gboolean (*run)       (CutRunner   *runner);
+    void     (*run_async) (CutRunner   *runner);
 };
 
 GType           cut_runner_get_type  (void) G_GNUC_CONST;
 
 gboolean        cut_runner_run       (CutRunner *runner);
+void            cut_runner_run_async (CutRunner *runner);
 
 G_END_DECLS
 

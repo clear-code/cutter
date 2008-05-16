@@ -24,6 +24,7 @@
 #include <glib.h>
 
 #include "cut-runner.h"
+#include "cut-run-context.h"
 
 GType
 cut_runner_get_type (void)
@@ -42,13 +43,30 @@ cut_runner_get_type (void)
 gboolean
 cut_runner_run (CutRunner *runner)
 {
+    gboolean success = TRUE;
     CutRunnerIface *iface;
 
     iface = CUT_RUNNER_GET_IFACE(runner);
-    if (iface->run)
-        return iface->run(runner);
+    if (iface->run) {
+        success = iface->run(runner);
+    } /*else if (iface->run_async) {
+        iface->run_async(runner);
+        
+        return success;
+    }*/
 
-    return TRUE;
+    g_signal_emit_by_name(CUT_RUN_CONTEXT(runner), "complete-run", success);
+    return success;
+}
+
+void
+cut_runner_run_async (CutRunner *runner)
+{
+    CutRunnerIface *iface;
+
+    iface = CUT_RUNNER_GET_IFACE(runner);
+    if (iface->run_async)
+        iface->run_async(runner);
 }
 
 /*

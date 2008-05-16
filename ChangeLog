@@ -1,5 +1,14 @@
 2008-05-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-pipeline.[ch]: use CutRunContext as parent.
+
+	* test/test-cut-pipeline.c: follow the above change.
+
+	* cutter/cut-run-context.[ch]: add start-run and complete-run
+	signals.
+
+	* cutter/cut-runner.[ch]: add run_async.
+
 	* cutter/, test/, sample/cairo/: add CutRunner interface.
 
 	* cutter/, test/, sample/cairo/: CutRunner -> CutTestRunner.

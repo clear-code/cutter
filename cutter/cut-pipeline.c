@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -29,6 +29,7 @@
 
 #include "cut-pipeline.h"
 #include "cut-test-result.h"
+#include "cut-runner.h"
 #include "cut-experimental.h"
 
 #define CUT_PIPELINE_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_PIPELINE, CutPipelinePrivate))
@@ -50,15 +51,12 @@ enum
     PROP_TARGET_DIRECTORY
 };
 
-enum
-{
-    COMPLETE,
-    LAST_SIGNAL
-};
+static CutRunnerIface *parent_runner_iface;
 
-static gint cut_pipeline_signals[LAST_SIGNAL] = {0};
+static void runner_init (CutRunnerIface *iface);
 
-G_DEFINE_TYPE (CutPipeline, cut_pipeline, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_CODE(CutPipeline, cut_pipeline, CUT_TYPE_RUN_CONTEXT,
+                        G_IMPLEMENT_INTERFACE(CUT_TYPE_RUNNER, runner_init))
 
 static void     dispose      (GObject         *object);
 static void     set_property (GObject         *object,
@@ -69,6 +67,9 @@ static void     get_property (GObject         *object,
                               guint            prop_id,
                               GValue          *value,
                               GParamSpec      *pspec);
+
+static gboolean runner_run       (CutRunner *runner);
+static void     runner_run_async (CutRunner *runner);
 
 static void
 cut_pipeline_class_init (CutPipelineClass *klass)
@@ -89,16 +90,6 @@ cut_pipeline_class_init (CutPipelineClass *klass)
                                G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class, PROP_TARGET_DIRECTORY, spec);
 
-    cut_pipeline_signals[COMPLETE]
-        = g_signal_new ("complete",
-                        G_TYPE_FROM_CLASS (klass),
-                        G_SIGNAL_RUN_LAST,
-                        G_STRUCT_OFFSET (CutPipelineClass, complete),
-                        NULL, NULL,
-                        g_cclosure_marshal_VOID__BOOLEAN,
-                        G_TYPE_NONE, 1,
-                        G_TYPE_BOOLEAN);
-
     g_type_class_add_private(gobject_class, sizeof(CutPipelinePrivate));
 }
 
@@ -115,6 +106,14 @@ cut_pipeline_init (CutPipeline *pipeline)
     priv->stdout_io        = NULL;
 
     priv->cutter_string = g_string_new(NULL);
+}
+
+static void
+runner_init (CutRunnerIface *iface)
+{
+    parent_runner_iface = g_type_interface_peek_parent(iface);
+    iface->run = runner_run;
+    iface->run_async = runner_run_async;
 }
 
 static void
@@ -211,7 +210,7 @@ dispose (GObject *object)
     G_OBJECT_CLASS(cut_pipeline_parent_class)->dispose(object);
 }
 
-CutPipeline *
+CutRunContext *
 cut_pipeline_new (const gchar *target_directory)
 {
     return g_object_new(CUT_TYPE_PIPELINE,
@@ -235,7 +234,7 @@ reap_child (CutPipeline *pipeline, GPid pid)
 static void
 emit_complete_signal (CutPipeline *pipeline, gboolean success)
 {
-    g_signal_emit_by_name(pipeline, "complete", success);
+    g_signal_emit_by_name(pipeline, "complete-run", success);
 }
 
 static void
@@ -243,7 +242,7 @@ child_watch_func (GPid pid, gint status, gpointer data)
 {
     switch (status) {
       case WEXITED:
-        reap_child (CUT_PIPELINE(data), pid);
+        reap_child(CUT_PIPELINE(data), pid);
         emit_complete_signal(CUT_PIPELINE(data), TRUE);
         break;
       default:
@@ -266,23 +265,22 @@ read_line (CutPipeline *pipeline, GIOChannel *channel)
     if (status == G_IO_STATUS_NORMAL ||
         status == G_IO_STATUS_EOF) {
         g_string_append(priv->cutter_string, line_string);
-        if (strcmp(line_string, "</result>")) {
+        if (g_regex_match_simple("</result>", line_string, 0, 0)) {
             CutTestResult *result;
-            gchar *xml = g_string_free(priv->cutter_string, FALSE);
 
-            result = cut_test_result_new_from_xml (xml, -1);
+            result = cut_test_result_new_from_xml(priv->cutter_string->str,
+                                                  priv->cutter_string->len);
             if (result) {
                 /* cut_test_context_emit_signal(context, result); */
                 g_object_unref(result);
             }
-            g_free(xml);
-            priv->cutter_string = g_string_new(NULL);
+            g_string_truncate(priv->cutter_string, 0);
         }
     }
 
     if (line_string)
         g_free(line_string);
-    
+
     return status;
 }
 
@@ -324,8 +322,8 @@ create_io_channel (CutPipeline *pipeline, gint pipe)
     return channel;
 }
 
-void
-cut_pipeline_run (CutPipeline *pipeline)
+static void
+run_async (CutPipeline *pipeline)
 {
     gchar *command_line;
     const gchar *cutter_command;
@@ -369,6 +367,21 @@ cut_pipeline_run (CutPipeline *pipeline)
 
     priv->process_source_id = g_child_watch_add(priv->pid, child_watch_func, pipeline);
     priv->stdout_io = create_io_channel(pipeline, std_out);
+}
+
+static gboolean
+runner_run (CutRunner *runner)
+{
+    return FALSE;
+}
+
+static void
+runner_run_async (CutRunner *runner)
+{
+    CutPipeline *pipeline;
+
+    pipeline = CUT_PIPELINE(runner);
+    run_async(pipeline);
 }
 
 /*

@@ -84,6 +84,7 @@ enum
 {
     START_SIGNAL,
 
+    START_RUN,
     READY_TEST_SUITE,
     START_TEST_SUITE,
     READY_TEST_CASE,
@@ -108,6 +109,7 @@ enum
     COMPLETE_TEST,
     COMPLETE_TEST_CASE,
     COMPLETE_TEST_SUITE,
+    COMPLETE_RUN,
 
     CRASHED,
 
@@ -225,6 +227,15 @@ cut_run_context_class_init (CutRunContextClass *klass)
                              G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class, PROP_TEST_CASE_ORDER, spec);
 
+
+    signals[START_RUN]
+        = g_signal_new("start-run",
+                       G_TYPE_FROM_CLASS(klass),
+                       G_SIGNAL_RUN_LAST,
+                       G_STRUCT_OFFSET(CutRunContextClass, start_run),
+                       NULL, NULL,
+                       g_cclosure_marshal_VOID__VOID,
+                       G_TYPE_NONE, 0);
 
     signals[READY_TEST_SUITE]
         = g_signal_new ("ready-test-suite",
@@ -440,6 +451,15 @@ cut_run_context_class_init (CutRunContextClass *klass)
                         NULL, NULL,
                         g_cclosure_marshal_VOID__OBJECT,
                         G_TYPE_NONE, 1, CUT_TYPE_TEST_SUITE);
+
+    signals[COMPLETE_RUN]
+        = g_signal_new("complete-run",
+                       G_TYPE_FROM_CLASS(klass),
+                       G_SIGNAL_RUN_LAST,
+                       G_STRUCT_OFFSET(CutRunContextClass, complete_run),
+                       NULL, NULL,
+                       g_cclosure_marshal_VOID__BOOLEAN,
+                       G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
 
     signals[CRASHED]
         = g_signal_new ("crashed",
@@ -1406,6 +1426,7 @@ cut_run_context_start (CutRunContext *context)
     gboolean success;
 
     cut_run_context_attach_listeners(context);
+    g_signal_emit_by_name(context, "start-run");
     success = cut_runner_run(CUT_RUNNER(context));
     cut_run_context_detach_listeners(context);
 

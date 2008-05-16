@@ -51,6 +51,7 @@ struct _CutRunContextClass
 {
     GObjectClass parent_class;
 
+    void (*start_run)           (CutRunContext  *context);
     void (*ready_test_suite)    (CutRunContext  *context,
                                  CutTestSuite   *test_suite,
                                  guint           n_test_cases,
@@ -126,6 +127,9 @@ struct _CutRunContextClass
 
     void (*complete_test_suite) (CutRunContext  *context,
                                  CutTestSuite   *test_suite);
+
+    void (*complete_run)        (CutRunContext  *context,
+                                 gboolean        success);
 
     void (*crashed)             (CutRunContext  *context,
                                  const gchar    *stack_trace);

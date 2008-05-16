@@ -1,11 +1,12 @@
 #include "cutter.h"
 #include <cutter/cut-pipeline.h>
+#include <cutter/cut-runner.h>
 
 #include <unistd.h>
 
 void test_fork (void);
 
-static CutPipeline *pipeline;
+static CutRunContext *pipeline;
 static gboolean received_complete_signal = FALSE;
 
 void
@@ -23,7 +24,7 @@ teardown (void)
 }
 
 static void
-cb_complete_signal (CutPipeline *pipeline, gboolean success)
+cb_complete_run_signal (CutPipeline *pipeline, gboolean success)
 {
     received_complete_signal = TRUE;
 }
@@ -34,15 +35,16 @@ test_fork (void)
     pipeline = cut_pipeline_new("./pipeline_test_dir");
     cut_assert(pipeline);
 
-    g_signal_connect(pipeline, "complete", G_CALLBACK(cb_complete_signal), NULL);
+    g_signal_connect(pipeline, "complete-run",
+                     G_CALLBACK(cb_complete_run_signal), NULL);
 
-    cut_pipeline_run(pipeline);
+    cut_runner_run_async(CUT_RUNNER(pipeline));
     while (!received_complete_signal) {
         g_main_context_iteration(NULL, FALSE);
     }
 
     g_signal_handlers_disconnect_by_func(pipeline,
-                                         G_CALLBACK(cb_complete_signal),
+                                         G_CALLBACK(cb_complete_run_signal),
                                          NULL);
 }
 

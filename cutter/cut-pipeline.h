@@ -22,6 +22,8 @@
 
 #include <glib-object.h>
 
+#include <cutter/cut-run-context.h>
+
 G_BEGIN_DECLS
 
 #define CUT_TYPE_PIPELINE            (cut_pipeline_get_type ())
@@ -36,19 +38,17 @@ typedef struct _CutPipelineClass CutPipelineClass;
 
 struct _CutPipeline
 {
-    GObject object;
+    CutRunContext object;
 };
 
 struct _CutPipelineClass
 {
-    GObjectClass parent_class;
-    void (*complete) (CutPipeline *pipeline, gboolean success);
+    CutRunContextClass parent_class;
 };
 
-GType cut_pipeline_get_type  (void) G_GNUC_CONST;
+GType          cut_pipeline_get_type  (void) G_GNUC_CONST;
 
-CutPipeline *cut_pipeline_new   (const gchar *directory);
-void         cut_pipeline_run   (CutPipeline *pipeline);
+CutRunContext *cut_pipeline_new       (const gchar *directory);
 
 G_END_DECLS
 
