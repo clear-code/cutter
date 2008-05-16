@@ -2,6 +2,8 @@
 #include <cutter/cut-pipeline.h>
 #include <cutter/cut-runner.h>
 
+#include "cuttest-utils.h"
+
 #include <unistd.h>
 
 void test_exit_status_error (void);
@@ -12,6 +14,27 @@ void test_pending_signal(void);
 
 static CutRunContext *pipeline;
 static gboolean received_complete_signal = FALSE;
+static gchar *success_test_dir, *error_test_dir;
+
+void
+startup (void)
+{
+    success_test_dir = g_build_filename(cuttest_get_base_dir(),
+                                        "pipeline_test_dir",
+                                        "success_test",
+                                        NULL);
+    error_test_dir = g_build_filename(cuttest_get_base_dir(),
+                                      "pipeline_test_dir",
+                                      "error_test",
+                                      NULL);
+}
+
+void
+shutdown (void)
+{
+    g_free(success_test_dir);
+    g_free(error_test_dir);
+}
 
 void
 setup (void)
@@ -42,7 +65,7 @@ test_exit_status_error (void)
 {
     gboolean success = TRUE;
 
-    pipeline = cut_pipeline_new("./pipeline_test_dir/error_test/");
+    pipeline = cut_pipeline_new(error_test_dir);
     cut_assert(pipeline);
 
     g_signal_connect(pipeline, "complete-run",
@@ -64,7 +87,7 @@ test_exit_status_success (void)
 {
     gboolean success = FALSE;
 
-    pipeline = cut_pipeline_new("./pipeline_test_dir/success_test/");
+    pipeline = cut_pipeline_new(success_test_dir);
     cut_assert(pipeline);
 
     g_signal_connect(pipeline, "complete-run",
@@ -101,7 +124,7 @@ test_ ## signal_name ## _signal (void)                                  \
     gboolean success = FALSE;                                           \
     gint n_signal = 0;                                                  \
                                                                         \
-    pipeline = cut_pipeline_new("./pipeline_test_dir/error_test/");     \
+    pipeline = cut_pipeline_new(error_test_dir);                        \
     cut_assert(pipeline);                                               \
                                                                         \
     g_signal_connect(pipeline, "complete-run",                          \

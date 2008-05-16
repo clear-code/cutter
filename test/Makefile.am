@@ -93,6 +93,7 @@ test_cut_contractor_la_SOURCES  = test-cut-contractor.c
 test_cut_fork_la_SOURCES  	= test-cut-fork.c
 test_cut_process_la_SOURCES  	= test-cut-process.c
 test_cut_pipeline_la_SOURCES  	= test-cut-pipeline.c
+test_cut_pipeline_la_LIBADD  	= cuttest_utils.la
 test_cut_xml_parser_la_SOURCES	= test-cut-xml-parser.c
 test_cut_verbose_level_la_SOURCES = test-cut-verbose-level.c
 test_cut_test_context_la_SOURCES = test-cut-test-context.c
