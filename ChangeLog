@@ -18,6 +18,7 @@
 	exclude-dir and exclude-file before create test suite.
 	* cutter/cut-utils.[c|h], cutter/cut-test-container.c: match() ->
 	cut_filter_match().
+	* cutter/cut-repository.c: Filter exclude files and directories.
 
 2008-05-15  Kouhei Sutou  <kou@cozmixng.org>
 

@@ -188,10 +188,12 @@ cut_repository_collect_loader (CutRepository *repository, const gchar *dir_name)
 
         path_name = g_build_filename(dir_name, entry, NULL);
 
-        if (g_file_test(path_name, G_FILE_TEST_IS_DIR))
+        if (g_file_test(path_name, G_FILE_TEST_IS_DIR) &&
+            !cut_filter_match(priv->exclude_dirs_regexs, entry))
             cut_repository_collect_loader(repository, path_name);
 
-        if (!g_str_has_suffix(entry, "."G_MODULE_SUFFIX)) {
+        if (cut_filter_match(priv->exclude_files_regexs, entry) ||
+            !g_str_has_suffix(entry, "."G_MODULE_SUFFIX)) {
             g_free(path_name);
             continue;
         }
