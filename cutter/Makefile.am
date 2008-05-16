@@ -30,6 +30,7 @@ gcutter_public_headers =			\
 
 libcutter_public_headers = 			\
 		cut-private.h			\
+		cut-runner.h			\
 		cut-run-context.h		\
 		cut-test-runner.h		\
 		cut-listener.h			\
@@ -110,6 +111,7 @@ libcutter_la_SOURCES =				\
 		$(libcutter_public_headers)	\
 		$(noinst_headers)		\
 		cut-run-context.c		\
+		cut-runner.c			\
 		cut-test-runner.c		\
 		cut-listener.c			\
 		cut-main.c			\

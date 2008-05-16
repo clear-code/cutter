@@ -6,7 +6,7 @@
 #include "cut-test.h"
 #include "cut-test-result.h"
 #include "cut-utils.h"
-#include "cut-run-context.h"
+#include "cut-test-runner.h"
 #include "cuttest-assertions.h"
 
 #include <glib/gstdio.h>
@@ -115,7 +115,7 @@ run (CutTest *test)
 
     test_object = test;
 
-    run_context = cut_run_context_new();
+    run_context = cut_test_runner_new();
 
     test_context = cut_test_context_new(NULL, NULL, test_object);
     original_test_context = get_current_test_context();

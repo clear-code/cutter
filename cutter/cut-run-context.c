@@ -24,6 +24,7 @@
 #include <glib.h>
 
 #include "cut-run-context.h"
+#include "cut-runner.h"
 #include "cut-listener.h"
 #include "cut-repository.h"
 #include "cut-test-case.h"
@@ -114,8 +115,13 @@ enum
 };
 
 static gint signals[LAST_SIGNAL] = {0};
+static CutRunnerIface *parent_runner_iface;
 
-G_DEFINE_TYPE (CutRunContext, cut_run_context, G_TYPE_OBJECT)
+static void runner_init (CutRunnerIface *iface);
+
+G_DEFINE_ABSTRACT_TYPE_WITH_CODE(CutRunContext, cut_run_context, G_TYPE_OBJECT,
+                                 G_IMPLEMENT_INTERFACE(CUT_TYPE_RUNNER,
+                                                       runner_init));
 
 static void dispose        (GObject         *object);
 static void set_property   (GObject         *object,
@@ -126,6 +132,8 @@ static void get_property   (GObject         *object,
                             guint            prop_id,
                             GValue          *value,
                             GParamSpec      *pspec);
+
+static gboolean runner_run (CutRunner *runner);
 
 static void
 cut_run_context_class_init (CutRunContextClass *klass)
@@ -625,34 +633,20 @@ get_property (GObject    *object,
     }
 }
 
-CutRunContext *
-cut_run_context_new (void)
+static void
+runner_init (CutRunnerIface *iface)
 {
-    return g_object_new(CUT_TYPE_RUN_CONTEXT, NULL);
+    parent_runner_iface = g_type_interface_peek_parent(iface);
+    iface->run = runner_run;
 }
 
-CutRunContext *
-cut_run_context_copy (CutRunContext *context)
+static gboolean
+runner_run (CutRunner *runner)
 {
-    CutRunContextPrivate *priv, *copied_priv;
-    CutRunContext *copied;
+    if (parent_runner_iface->run)
+        return parent_runner_iface->run(runner);
 
-    copied = cut_run_context_new();
-
-    priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
-    copied_priv = CUT_RUN_CONTEXT_GET_PRIVATE(copied);
-
-    copied_priv->use_multi_thread = priv->use_multi_thread;
-    copied_priv->is_multi_thread = priv->is_multi_thread;
-
-    copied_priv->test_directory = g_strdup(priv->test_directory);
-    copied_priv->source_directory = g_strdup(priv->source_directory);
-
-    copied_priv->target_test_case_names =
-        g_strdupv(priv->target_test_case_names);
-    copied_priv->target_test_names = g_strdupv(priv->target_test_names);
-
-    return copied;
+    return FALSE;
 }
 
 void
@@ -1402,6 +1396,18 @@ cut_run_context_sort_test_cases (CutRunContext *context, GList *test_cases)
     }
 
     return sorted_test_cases;
+}
+
+gboolean
+cut_run_context_start (CutRunContext *context)
+{
+    gboolean success;
+
+    cut_run_context_attach_listeners(context);
+    success = cut_runner_run(CUT_RUNNER(context));
+    cut_run_context_detach_listeners(context);
+
+    return success;
 }
 
 /*

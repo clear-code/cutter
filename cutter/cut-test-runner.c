@@ -24,6 +24,7 @@
 #include <glib.h>
 
 #include "cut-test-runner.h"
+#include "cut-runner.h"
 #include "cut-repository.h"
 #include "cut-test-case.h"
 #include "cut-test-result.h"
@@ -31,7 +32,14 @@
 #include "cut-marshalers.h"
 #include "cut-enum-types.h"
 
-G_DEFINE_TYPE (CutTestRunner, cut_test_runner, CUT_TYPE_RUN_CONTEXT)
+static void runner_init (CutRunnerIface *iface);
+
+static CutRunnerIface *parent_runner_iface;
+
+G_DEFINE_TYPE_WITH_CODE(CutTestRunner, cut_test_runner, CUT_TYPE_RUN_CONTEXT,
+                        G_IMPLEMENT_INTERFACE(CUT_TYPE_RUNNER, runner_init))
+
+static gboolean runner_run (CutRunner *runner);
 
 static void
 cut_test_runner_class_init (CutTestRunnerClass *klass)
@@ -43,26 +51,28 @@ cut_test_runner_init (CutTestRunner *runner)
 {
 }
 
-CutTestRunner *
+static void
+runner_init (CutRunnerIface *iface)
+{
+    parent_runner_iface = g_type_interface_peek_parent(iface);
+    iface->run = runner_run;
+}
+
+CutRunContext *
 cut_test_runner_new (void)
 {
     return g_object_new(CUT_TYPE_TEST_RUNNER, NULL);
 }
 
-gboolean
-cut_test_runner_run (CutTestRunner *runner)
+static gboolean
+runner_run (CutRunner *runner)
 {
     CutRunContext *context;
     CutTestSuite *suite;
-    gboolean success;
 
     context = CUT_RUN_CONTEXT(runner);
     suite = cut_run_context_get_test_suite(context);
-    cut_run_context_attach_listeners(context);
-    success = cut_test_suite_run(suite, context);
-    cut_run_context_detach_listeners(context);
-
-    return success;
+    return cut_test_suite_run(suite, context);
 }
 
 /*

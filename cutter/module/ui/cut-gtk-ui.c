@@ -33,7 +33,6 @@
 #include <cutter/cut-module-impl.h>
 #include <cutter/cut-listener.h>
 #include <cutter/cut-ui.h>
-#include <cutter/cut-test-runner.h>
 #include <cutter/cut-test-result.h>
 #include <cutter/cut-test.h>
 #include <cutter/cut-test-case.h>
@@ -175,6 +174,7 @@ setup_cancel_button (GtkToolbar *toolbar, CutGtkUI *ui)
 static void
 cb_restart (GtkToolButton *button, gpointer data)
 {
+/*
     CutGtkUI *ui = data;
     CutRunContext *run_context;
 
@@ -189,6 +189,7 @@ cb_restart (GtkToolButton *button, gpointer data)
     ui->test_suite = g_object_ref(cut_run_context_get_test_suite(ui->run_context));
 
     g_idle_add(idle_cb_run_test, ui);
+*/
 }
 
 static void
@@ -1447,15 +1448,13 @@ run_test_thread_func (gpointer data)
 {
     CutGtkUI *ui = data;
     CutRunContext *run_context;
-    CutTestRunner *runner;
 
     run_context = g_object_ref(ui->run_context);
 
     ui->n_tests = 0;
     ui->n_completed_tests = 0;
     ui->status = CUT_TEST_RESULT_SUCCESS;
-    runner = CUT_TEST_RUNNER(run_context);
-    cut_test_runner_run(runner);
+    cut_run_context_start(run_context);
 
     g_object_unref(run_context);
 

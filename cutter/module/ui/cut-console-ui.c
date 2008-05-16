@@ -755,10 +755,7 @@ detach_from_run_context (CutListener *listener,
 static gboolean
 run (CutUI *ui, CutRunContext *run_context)
 {
-    CutTestRunner *runner;
-
-    runner = CUT_TEST_RUNNER(run_context);
-    return cut_test_runner_run(runner);
+    return cut_run_context_start(run_context);
 }
 
 /*

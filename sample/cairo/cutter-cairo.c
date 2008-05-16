@@ -18,15 +18,15 @@
 static gboolean
 run_test (GCallback create_surface)
 {
-    CutTestRunner *runner;
+    CutRunContext *run_context;
     gboolean success;
     cairo_surface_t *surface;
 
-    runner = cut_create_test_runner ();
-    g_signal_connect (runner, "start-test", create_surface, &surface);
-    success = cut_run_test_runner (runner);
-    g_signal_handlers_disconnect_by_func (runner, create_surface, &surface);
-    g_object_unref (runner);
+    run_context = cut_create_run_context ();
+    g_signal_connect (run_context, "start-test", create_surface, &surface);
+    success = cut_start_run_context (run_context);
+    g_signal_handlers_disconnect_by_func (run_context, create_surface, &surface);
+    g_object_unref (run_context);
 
     return success;
 }

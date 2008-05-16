@@ -34,8 +34,8 @@ void          cut_quit               (void);
 
 gboolean      cut_run                (void);
 
-CutTestRunner *cut_create_test_runner (void);
-gboolean       cut_run_test_runner    (CutTestRunner *runner);
+CutRunContext *cut_create_run_context(void);
+gboolean       cut_start_run_context (CutRunContext *run_context);
 
 G_END_DECLS
 

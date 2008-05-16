@@ -8,7 +8,6 @@ void test_n_ (void);
 void test_get_test_directory (void);
 void test_get_source_directory (void);
 void test_build_source_filename (void);
-void test_copy (void);
 void test_order (void);
 void test_ready_signal (void);
 
@@ -214,27 +213,6 @@ test_build_source_filename (void)
     filename = cut_run_context_build_source_filename(run_context, "source2.c");
     cut_assert_equal_string_with_free("base_directory" G_DIR_SEPARATOR_S "source2.c",
                                       filename);
-}
-
-void
-test_copy (void)
-{
-    CutRunContext *new_run_context;
-
-    new_run_context = cut_run_context_copy(run_context);
-    cut_assert(new_run_context);
-
-    cut_assert_equal_int(cut_run_context_get_multi_thread(run_context),
-                         cut_run_context_get_multi_thread(new_run_context));
-    cut_assert_equal_int(cut_run_context_is_multi_thread(run_context),
-                         cut_run_context_is_multi_thread(new_run_context));
-
-    cut_assert_equal_string(cut_run_context_get_test_directory(run_context),
-                            cut_run_context_get_test_directory(new_run_context));
-    cut_assert_equal_string(cut_run_context_get_source_directory(run_context),
-                            cut_run_context_get_source_directory(new_run_context));
-
-    g_object_unref(new_run_context);
 }
 
 static void

@@ -133,10 +133,6 @@ struct _CutRunContextClass
 
 GType          cut_run_context_get_type  (void) G_GNUC_CONST;
 
-CutRunContext *cut_run_context_new (void);
-
-CutRunContext *cut_run_context_copy                 (CutRunContext *context);
-
 void           cut_run_context_set_test_directory   (CutRunContext *context,
                                                      const gchar   *directory);
 const gchar   *cut_run_context_get_test_directory   (CutRunContext *context);
@@ -207,6 +203,8 @@ void           cut_run_context_detach_listeners     (CutRunContext *context);
 
 gchar         *cut_run_context_build_source_filename(CutRunContext *context,
                                                      const gchar   *filename);
+
+gboolean       cut_run_context_start                (CutRunContext *context);
 
 
 G_END_DECLS

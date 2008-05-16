@@ -207,14 +207,12 @@ cut_quit (void)
     initialized = FALSE;
 }
 
-CutTestRunner *
-cut_create_test_runner (void)
+CutRunContext *
+cut_create_run_context (void)
 {
-    CutTestRunner *runner;
     CutRunContext *run_context;
 
-    runner = cut_test_runner_new();
-    run_context = CUT_RUN_CONTEXT(runner);
+    run_context = cut_test_runner_new();
 
     cut_run_context_set_test_directory(run_context, test_directory);
     if (source_directory)
@@ -226,7 +224,7 @@ cut_create_test_runner (void)
     cut_run_context_set_target_test_names(run_context, test_names);
     cut_run_context_set_test_case_order(run_context, test_case_order);
 
-    return runner;
+    return run_context;
 }
 
 static GList *
@@ -283,9 +281,8 @@ get_cut_ui (GList *listeners)
 }
 
 gboolean
-cut_run_test_runner (CutTestRunner *runner)
+cut_start_run_context (CutRunContext *run_context)
 {
-    CutRunContext *run_context;
     gboolean success;
     GList *listeners;
     CutUI *ui;
@@ -295,8 +292,6 @@ cut_run_test_runner (CutTestRunner *runner)
         return FALSE;
     }
 
-    run_context = CUT_RUN_CONTEXT(runner);
-
     listeners = create_listeners();
     add_listeners(run_context, listeners);
 
@@ -304,7 +299,7 @@ cut_run_test_runner (CutTestRunner *runner)
     if (ui)
         success = cut_ui_run(ui, run_context);
     else
-        success = cut_test_runner_run(runner);
+        success = cut_run_context_start(run_context);
 
     remove_listeners(run_context, listeners);
     g_list_free(listeners);
@@ -315,12 +310,12 @@ cut_run_test_runner (CutTestRunner *runner)
 gboolean
 cut_run (void)
 {
-    CutTestRunner *runner;
+    CutRunContext *run_context;
     gboolean success = TRUE;
 
-    runner = cut_create_test_runner();
-    success = cut_run_test_runner(runner);
-    g_object_unref(runner);
+    run_context = cut_create_run_context();
+    success = cut_start_run_context(run_context);
+    g_object_unref(run_context);
 
     return success;
 }
