@@ -235,12 +235,20 @@ emit_complete_signal (CutPipeline *pipeline, gboolean success)
     g_signal_emit_by_name(pipeline, "complete-run", success);
 }
 
+static GIOStatus read_line (CutPipeline *pipeline, GIOChannel *channel);
+
 static void
 child_watch_func (GPid pid, gint status, gpointer data)
 {
     if (WIFEXITED(status)) {
         emit_complete_signal(CUT_PIPELINE(data),
                              WEXITSTATUS(status) == EXIT_SUCCESS);
+        CutPipelinePrivate *priv = CUT_PIPELINE_GET_PRIVATE(data);
+        GIOStatus status = G_IO_STATUS_NORMAL;
+
+        while (status == G_IO_STATUS_NORMAL)
+            status = read_line(CUT_PIPELINE(data), priv->stdout_io);
+
         reap_child(CUT_PIPELINE(data), pid);
     }
 }
@@ -320,7 +328,6 @@ io_watch_func (GIOChannel *channel, GIOCondition condition, gpointer data)
 
     if (condition & G_IO_ERR ||
         condition & G_IO_HUP) {
-        emit_complete_signal(pipeline, FALSE);
         return FALSE;
     }
 

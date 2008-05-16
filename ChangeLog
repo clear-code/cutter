@@ -75,6 +75,9 @@
 	* cutter/cut-streamer-factory-builder.c: Create CutStreamer correctly.
 	* cutter/cut-pipe.c: Do not return FALSE even if read_line() fails.
 	Why?
+	* cutter/cut-pipe.c: Read rest characters from pipe when exit child
+	process. There are some GLib-CRITICAL errors, but all tests are passed
+	now.
 
 2008-05-15  Kouhei Sutou  <kou@cozmixng.org>
 
