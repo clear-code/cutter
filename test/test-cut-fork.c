@@ -1,6 +1,6 @@
 #include "cutter.h"
 #include <cutter/cut-test.h>
-#include <cutter/cut-runner.h>
+#include <cutter/cut-test-runner.h>
 #include <cutter/cut-test-result.h>
 #include <cutter/cut-test-context.h>
 
@@ -18,7 +18,7 @@ static CutTestContext *test_context;
 void
 setup (void)
 {
-    run_context = CUT_RUN_CONTEXT(cut_runner_new());
+    run_context = CUT_RUN_CONTEXT(cut_test_runner_new());
 
     test_object = NULL;
     test_context = NULL;

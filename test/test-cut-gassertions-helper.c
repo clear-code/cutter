@@ -1,5 +1,5 @@
 #include <gcutter.h>
-#include <cutter/cut-runner.h>
+#include <cutter/cut-test-runner.h>
 
 void test_take_g_object(void);
 
@@ -53,7 +53,7 @@ run (CutTest *_test)
 
     test = _test;
 
-    run_context = CUT_RUN_CONTEXT(cut_runner_new());
+    run_context = CUT_RUN_CONTEXT(cut_test_runner_new());
 
     test_context = cut_test_context_new(NULL, NULL, test);
     original_test_context = get_current_test_context();

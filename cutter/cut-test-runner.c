@@ -23,7 +23,7 @@
 
 #include <glib.h>
 
-#include "cut-runner.h"
+#include "cut-test-runner.h"
 #include "cut-repository.h"
 #include "cut-test-case.h"
 #include "cut-test-result.h"
@@ -31,26 +31,26 @@
 #include "cut-marshalers.h"
 #include "cut-enum-types.h"
 
-G_DEFINE_TYPE (CutRunner, cut_runner, CUT_TYPE_RUN_CONTEXT)
+G_DEFINE_TYPE (CutTestRunner, cut_test_runner, CUT_TYPE_RUN_CONTEXT)
 
 static void
-cut_runner_class_init (CutRunnerClass *klass)
+cut_test_runner_class_init (CutTestRunnerClass *klass)
 {
 }
 
 static void
-cut_runner_init (CutRunner *runner)
+cut_test_runner_init (CutTestRunner *runner)
 {
 }
 
-CutRunner *
-cut_runner_new (void)
+CutTestRunner *
+cut_test_runner_new (void)
 {
-    return g_object_new(CUT_TYPE_RUNNER, NULL);
+    return g_object_new(CUT_TYPE_TEST_RUNNER, NULL);
 }
 
 gboolean
-cut_runner_run (CutRunner *runner)
+cut_test_runner_run (CutTestRunner *runner)
 {
     CutRunContext *context;
     CutTestSuite *suite;

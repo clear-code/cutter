@@ -1,5 +1,5 @@
 #include <cutter.h>
-#include <cutter/cut-runner.h>
+#include <cutter/cut-test-runner.h>
 #include <cutter/cut-test-case.h>
 #include <cutter/cut-test-suite.h>
 #include <cutter/cut-loader.h>
@@ -100,7 +100,7 @@ setup (void)
     n_run_bummy_run_test_function = 0;
     n_crashed_signal = 0;
 
-    run_context = CUT_RUN_CONTEXT(cut_runner_new());
+    run_context = CUT_RUN_CONTEXT(cut_test_runner_new());
 
     test_object = cut_test_suite_new();
 

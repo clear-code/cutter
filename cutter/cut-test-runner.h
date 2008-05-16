@@ -17,8 +17,8 @@
  *
  */
 
-#ifndef __CUT_RUNNER_H__
-#define __CUT_RUNNER_H__
+#ifndef __CUT_TEST_RUNNER_H__
+#define __CUT_TEST_RUNNER_H__
 
 #include <glib-object.h>
 
@@ -26,34 +26,34 @@
 
 G_BEGIN_DECLS
 
-#define CUT_TYPE_RUNNER            (cut_runner_get_type ())
-#define CUT_RUNNER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_RUNNER, CutRunner))
-#define CUT_RUNNER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_RUNNER, CutRunnerClass))
-#define CUT_IS_RUNNER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_RUNNER))
-#define CUT_IS_RUNNER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_RUNNER))
-#define CUT_RUNNER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_RUNNER, CutRunnerClass))
+#define CUT_TYPE_TEST_RUNNER            (cut_test_runner_get_type ())
+#define CUT_TEST_RUNNER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_TEST_RUNNER, CutTestRunner))
+#define CUT_TEST_RUNNER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_TEST_RUNNER, CutTestRunnerClass))
+#define CUT_IS_TEST_RUNNER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_TEST_RUNNER))
+#define CUT_IS_TEST_RUNNER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_TEST_RUNNER))
+#define CUT_TEST_RUNNER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_TEST_RUNNER, CutTestRunnerClass))
 
-typedef struct _CutRunnerClass    CutRunnerClass;
+typedef struct _CutTestRunnerClass    CutTestRunnerClass;
 
-struct _CutRunner
+struct _CutTestRunner
 {
     CutRunContext object;
 };
 
-struct _CutRunnerClass
+struct _CutTestRunnerClass
 {
     CutRunContextClass parent_class;
 };
 
-GType         cut_runner_get_type  (void) G_GNUC_CONST;
+GType          cut_test_runner_get_type  (void) G_GNUC_CONST;
 
-CutRunner    *cut_runner_new (void);
+CutTestRunner *cut_test_runner_new       (void);
 
-gboolean      cut_runner_run                       (CutRunner *runner);
+gboolean       cut_test_runner_run       (CutTestRunner *runner);
 
 G_END_DECLS
 
-#endif /* __CUT_RUNNER_H__ */
+#endif /* __CUT_TEST_RUNNER_H__ */
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

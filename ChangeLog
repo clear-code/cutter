@@ -1,3 +1,7 @@
+2008-05-16  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/, test/, sample/cairo/: CutRunner -> CutTestRunner.
+
 2008-05-16  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-listener-utils.h: Added utility macro.

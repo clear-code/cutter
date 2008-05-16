@@ -1,6 +1,6 @@
 #include <cutter.h>
 #include <cutter/cut-test.h>
-#include <cutter/cut-runner.h>
+#include <cutter/cut-test-runner.h>
 
 void test_get_name(void);
 void test_get_description(void);
@@ -82,7 +82,7 @@ setup (void)
     n_pass_assertion_signal = 0;
     n_omission_signal = 0;
 
-    run_context = CUT_RUN_CONTEXT(cut_runner_new());
+    run_context = CUT_RUN_CONTEXT(cut_test_runner_new());
 
     test_object = cut_test_new("dummy-test", dummy_test_function);
 }

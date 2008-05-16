@@ -3,7 +3,6 @@
 #include "cut-test-result.h"
 #include "cut-loader.h"
 #include "cut-utils.h"
-#include "cut-runner.h"
 #include "cuttest-utils.h"
 #include "cuttest-assertions.h"
 

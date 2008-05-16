@@ -24,7 +24,7 @@
 #  error "don't include cutter.h with test runner program!"
 #endif
 
-#include <cutter/cut-runner.h>
+#include <cutter/cut-test-runner.h>
 #include <cutter/cut-test-suite.h>
 
 G_BEGIN_DECLS
@@ -34,8 +34,8 @@ void          cut_quit               (void);
 
 gboolean      cut_run                (void);
 
-CutRunner    *cut_create_runner      (void);
-gboolean      cut_run_runner         (CutRunner *runner);
+CutTestRunner *cut_create_test_runner (void);
+gboolean       cut_run_test_runner    (CutTestRunner *runner);
 
 G_END_DECLS
 

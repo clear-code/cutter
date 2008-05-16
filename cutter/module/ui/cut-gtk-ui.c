@@ -33,7 +33,7 @@
 #include <cutter/cut-module-impl.h>
 #include <cutter/cut-listener.h>
 #include <cutter/cut-ui.h>
-#include <cutter/cut-runner.h>
+#include <cutter/cut-test-runner.h>
 #include <cutter/cut-test-result.h>
 #include <cutter/cut-test.h>
 #include <cutter/cut-test-case.h>
@@ -1447,15 +1447,15 @@ run_test_thread_func (gpointer data)
 {
     CutGtkUI *ui = data;
     CutRunContext *run_context;
-    CutRunner *runner;
+    CutTestRunner *runner;
 
     run_context = g_object_ref(ui->run_context);
 
     ui->n_tests = 0;
     ui->n_completed_tests = 0;
     ui->status = CUT_TEST_RESULT_SUCCESS;
-    runner = CUT_RUNNER(run_context);
-    cut_runner_run(runner);
+    runner = CUT_TEST_RUNNER(run_context);
+    cut_test_runner_run(runner);
 
     g_object_unref(run_context);
 

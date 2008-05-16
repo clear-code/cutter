@@ -2,7 +2,7 @@
 #include "cut-test.h"
 #include "cut-test-result.h"
 #include "cut-utils.h"
-#include "cut-runner.h"
+#include "cut-test-runner.h"
 #include "cuttest-assertions.h"
 
 void test_equal_g_type(void);
@@ -28,7 +28,7 @@ run (CutTest *_test)
 
     test = _test;
 
-    run_context = CUT_RUN_CONTEXT(cut_runner_new());
+    run_context = CUT_RUN_CONTEXT(cut_test_runner_new());
 
     test_context = cut_test_context_new(NULL, NULL, test);
     original_test_context = get_current_test_context();

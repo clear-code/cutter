@@ -33,7 +33,7 @@
 #include "cut-main.h"
 
 #include "cut-listener.h"
-#include "cut-runner.h"
+#include "cut-test-runner.h"
 #include "cut-test-suite.h"
 #include "cut-ui.h"
 #include "cut-module-factory.h"
@@ -201,13 +201,13 @@ cut_quit (void)
     initialized = FALSE;
 }
 
-CutRunner *
-cut_create_runner (void)
+CutTestRunner *
+cut_create_test_runner (void)
 {
-    CutRunner *runner;
+    CutTestRunner *runner;
     CutRunContext *run_context;
 
-    runner = cut_runner_new();
+    runner = cut_test_runner_new();
     run_context = CUT_RUN_CONTEXT(runner);
 
     cut_run_context_set_test_directory(run_context, test_directory);
@@ -275,7 +275,7 @@ get_cut_ui (GList *listeners)
 }
 
 gboolean
-cut_run_runner (CutRunner *runner)
+cut_run_test_runner (CutTestRunner *runner)
 {
     CutRunContext *run_context;
     gboolean success;
@@ -296,7 +296,7 @@ cut_run_runner (CutRunner *runner)
     if (ui)
         success = cut_ui_run(ui, run_context);
     else
-        success = cut_runner_run(runner);
+        success = cut_test_runner_run(runner);
 
     remove_listeners(run_context, listeners);
     g_list_free(listeners);
@@ -307,11 +307,11 @@ cut_run_runner (CutRunner *runner)
 gboolean
 cut_run (void)
 {
-    CutRunner *runner;
+    CutTestRunner *runner;
     gboolean success = TRUE;
 
-    runner = cut_create_runner();
-    success = cut_run_runner(runner);
+    runner = cut_create_test_runner();
+    success = cut_run_test_runner(runner);
     g_object_unref(runner);
 
     return success;

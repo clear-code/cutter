@@ -1,5 +1,5 @@
 #include <cutter.h>
-#include <cutter/cut-runner.h>
+#include <cutter/cut-test-runner.h>
 
 #include "cuttest-utils.h"
 
@@ -23,7 +23,7 @@ static gint n_ready_test_case_signals = 0;
 void
 setup (void)
 {
-    run_context = CUT_RUN_CONTEXT(cut_runner_new());
+    run_context = CUT_RUN_CONTEXT(cut_test_runner_new());
     test_case = NULL;
     test_cases = NULL;
     expected_names = NULL;

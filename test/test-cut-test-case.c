@@ -1,6 +1,6 @@
 #include <cutter.h>
 #include <cutter/cut-test-case.h>
-#include <cutter/cut-runner.h>
+#include <cutter/cut-test-runner.h>
 
 #include "cuttest-utils.h"
 
@@ -114,7 +114,7 @@ setup (void)
     n_run_dummy_test_function1 = 0;
     n_run_dummy_test_function2 = 0;
 
-    run_context = CUT_RUN_CONTEXT(cut_runner_new());
+    run_context = CUT_RUN_CONTEXT(cut_test_runner_new());
     cut_run_context_set_target_test_names(run_context, test_names);
 
     test_object = cut_test_case_new("dummy test case",

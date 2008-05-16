@@ -131,7 +131,7 @@ struct _CutRunContextClass
                                  const gchar    *stack_trace);
 };
 
-GType        cut_run_context_get_type  (void) G_GNUC_CONST;
+GType          cut_run_context_get_type  (void) G_GNUC_CONST;
 
 CutRunContext *cut_run_context_new (void);
 

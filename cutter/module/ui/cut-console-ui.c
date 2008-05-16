@@ -30,7 +30,7 @@
 #include <cutter/cut-module-impl.h>
 #include <cutter/cut-listener.h>
 #include <cutter/cut-ui.h>
-#include <cutter/cut-runner.h>
+#include <cutter/cut-test-runner.h>
 #include <cutter/cut-test-result.h>
 #include <cutter/cut-test.h>
 #include <cutter/cut-test-suite.h>
@@ -755,10 +755,10 @@ detach_from_run_context (CutListener *listener,
 static gboolean
 run (CutUI *ui, CutRunContext *run_context)
 {
-    CutRunner *runner;
+    CutTestRunner *runner;
 
-    runner = CUT_RUNNER(run_context);
-    return cut_runner_run(runner);
+    runner = CUT_TEST_RUNNER(run_context);
+    return cut_test_runner_run(runner);
 }
 
 /*
