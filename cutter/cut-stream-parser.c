@@ -36,6 +36,7 @@ struct _CutStreamParserPrivate
     CutRunContext *run_context;
     CutTestResult *result;
     gchar *option_name;
+    gboolean success;
 };
 
 enum
@@ -133,6 +134,7 @@ cut_stream_parser_init (CutStreamParser *stream_parser)
     priv->run_context = NULL;
     priv->result = NULL;
     priv->option_name = NULL;
+    priv->success = TRUE;
 }
 
 static void
@@ -249,6 +251,18 @@ set_parse_error (GMarkupParseContext *context,
     g_free(user_message);
 }
 
+static const gchar *
+get_parent_element (GMarkupParseContext *context)
+{
+    const GSList *elements, *node;
+
+    elements = g_markup_parse_context_get_element_stack(context);
+
+    node = g_slist_next(elements);
+
+    return node ? node->data : NULL;
+}
+
 static void
 start_element_handler (GMarkupParseContext *context,
                        const gchar         *element_name,
@@ -292,10 +306,16 @@ end_element_handler (GMarkupParseContext *context,
 {
     CutStreamParser *parser = user_data;
     CutStreamParserPrivate *priv;
+    const gchar *parent_name;
 
     priv = CUT_STREAM_PARSER_GET_PRIVATE(parser);
 
-    if (g_ascii_strcasecmp("result", element_name) == 0) {
+    parent_name = get_parent_element(context);
+    if (parent_name == NULL && g_ascii_strcasecmp("stream", element_name) == 0) {
+        if (priv->run_context)
+            g_signal_emit_by_name(priv->run_context,
+                                  "complete-run", priv->success);
+    } else if (g_ascii_strcasecmp("result", element_name) == 0) {
         if (priv->result) {
             g_signal_emit_by_name(parser, "result", priv->result);
             g_object_unref(priv->result);
@@ -319,18 +339,6 @@ result_name_to_status (const gchar *name)
         return CUT_TEST_RESULT_NOTIFICATION;
 
     return CUT_TEST_RESULT_INVALID;
-}
-
-static const gchar *
-get_parent_element (GMarkupParseContext *context)
-{
-    const GSList *elements, *node;
-
-    elements = g_markup_parse_context_get_element_stack(context);
-
-    node = g_slist_next(elements);
-
-    return node ? node->data : NULL;
 }
 
 static void
@@ -475,8 +483,11 @@ text_handler (GMarkupParseContext *context,
     } else if (g_ascii_strcasecmp("status", element) == 0) {
         CutTestResultStatus status;
         status = result_name_to_status(text);
-        if (status != CUT_TEST_RESULT_INVALID)
+        if (status != CUT_TEST_RESULT_INVALID) {
             cut_test_result_set_status(priv->result, status);
+            if (cut_test_result_status_is_critical(status))
+                priv->success = FALSE;
+        }
     } else if (g_ascii_strcasecmp("elapsed", element) == 0) {
         cut_test_result_set_elapsed(priv->result, g_ascii_strtod(text, NULL));
     }

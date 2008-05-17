@@ -3,6 +3,7 @@
 
 void test_parse (void);
 void test_start_run (void);
+void test_complete_run (void);
 
 #define CUTTEST_TYPE_EVENT_RECEIVER            (cuttest_event_receiver_get_type ())
 #define CUTTEST_EVENT_RECEIVER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUTTEST_TYPE_EVENT_RECEIVER, CuttestEventReceiver))
@@ -19,6 +20,7 @@ struct _CuttestEventReceiver
     CutRunContext object;
 
     gint n_start_runs;
+    GList *complete_runs;
 };
 
 struct _CuttestEventReceiverClass
@@ -35,6 +37,14 @@ G_DEFINE_TYPE(CuttestEventReceiver, cuttest_event_receiver, CUT_TYPE_RUN_CONTEXT
 static void
 dispose (GObject *object)
 {
+    CuttestEventReceiver *receiver;
+
+    receiver = CUTTEST_EVENT_RECEIVER(object);
+
+    if (receiver->complete_runs) {
+        g_list_free(receiver->complete_runs);
+        receiver->complete_runs = NULL;
+    }
 }
 
 static void
@@ -44,6 +54,16 @@ start_run (CutRunContext *context)
 
     receiver = CUTTEST_EVENT_RECEIVER(context);
     receiver->n_start_runs++;
+}
+
+static void
+complete_run (CutRunContext *context, gboolean success)
+{
+    CuttestEventReceiver *receiver;
+
+    receiver = CUTTEST_EVENT_RECEIVER(context);
+    receiver->complete_runs = g_list_append(receiver->complete_runs,
+                                            GINT_TO_POINTER(success));
 }
 
 static void
@@ -58,12 +78,14 @@ cuttest_event_receiver_class_init (CuttestEventReceiverClass *klass)
     gobject_class->dispose = dispose;
 
     run_context_class->start_run = start_run;
+    run_context_class->complete_run = complete_run;
 }
 
 static void
 cuttest_event_receiver_init (CuttestEventReceiver *receiver)
 {
     receiver->n_start_runs = 0;
+    receiver->complete_runs = NULL;
 }
 
 static CutRunContext *
@@ -168,6 +190,18 @@ test_start_run (void)
     cut_assert_equal_int(0, receiver->n_start_runs);
     cut_assert_true(cut_stream_parser_parse(parser, ">", -1, NULL));
     cut_assert_equal_int(1, receiver->n_start_runs);
+}
+
+void
+test_complete_run (void)
+{
+    cut_assert_true(cut_stream_parser_parse(parser, "<stream>", -1, NULL));
+    cut_assert_equal_int(1, receiver->n_start_runs);
+
+    cut_assert_null(0, receiver->complete_runs);
+    cut_assert_true(cut_stream_parser_parse(parser, "</stream>", -1, NULL));
+    cut_assert_equal_int(1, g_list_length(receiver->complete_runs));
+    cut_assert_true(GPOINTER_TO_INT(receiver->complete_runs->data));
 }
 
 /*
