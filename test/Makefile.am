@@ -47,6 +47,7 @@ noinst_LTLIBRARIES = 				\
 		test_cut_process.la		\
 		test_cut_pipeline.la		\
 		test_cut_xml_parser.la		\
+		test_cut_stream_parser.la	\
 		test_cut_report_xml.la		\
 		test_cut_xml_streamer.la	\
 		test_cut_verbose_level.la	\
@@ -95,6 +96,7 @@ test_cut_process_la_SOURCES  	= test-cut-process.c
 test_cut_pipeline_la_SOURCES  	= test-cut-pipeline.c
 test_cut_pipeline_la_LIBADD  	= cuttest_utils.la
 test_cut_xml_parser_la_SOURCES	= test-cut-xml-parser.c
+test_cut_stream_parser_la_SOURCES = test-cut-stream-parser.c
 test_cut_verbose_level_la_SOURCES = test-cut-verbose-level.c
 test_cut_test_context_la_SOURCES = test-cut-test-context.c
 test_cut_utils_la_SOURCES       = test-cut-utils.c

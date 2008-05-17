@@ -55,6 +55,7 @@ libcutter_public_headers = 			\
 		cut-process.h			\
 		cut-pipeline.h			\
 		cut-xml-parser.h		\
+		cut-stream-parser.h		\
 		cut-verbose-level.h		\
 		cut-sequence-matcher.h		\
 		cut-diff.h
@@ -140,6 +141,7 @@ libcutter_la_SOURCES =				\
 		cut-pipeline.c			\
 		cut-utils.c			\
 		cut-xml-parser.c		\
+		cut-stream-parser.c		\
 		cut-value-equal.c		\
 		cut-list.c			\
 		cut-sequence-matcher.c		\

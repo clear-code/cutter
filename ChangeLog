@@ -1,3 +1,10 @@
+2008-05-17  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/Makefile.am, cutter/cut-stream-parser.[ch]: add
+	CutStreamParser.
+
+	* test/Makefile.am, test/test-cut-stream-parser.c: add.
+
 2008-05-16  Kouhei Sutou  <kou@cozmixng.org>
 
 	* test/test-cut-pipeline.c, test/Makefile.am: use cuttest_get_base_dir().
