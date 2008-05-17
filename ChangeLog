@@ -1,5 +1,7 @@
 2008-05-17  Kouhei Sutou  <kou@cozmixng.org>
 
+	* TODO: add cut_assert_g_error().
+
 	* cutter/cut-stream-parser.c, test/test-cut-stream-parser.c:
 	support ready-test-suite.
 
