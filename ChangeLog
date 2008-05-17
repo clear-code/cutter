@@ -1,5 +1,11 @@
 2008-05-17  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-utils.[ch] (cut_utils_filter_match): add _utils.
+
+	* cutter/cut-test-container.c (cut_test_container_filter_children):
+	follow the above change.
+	* cutter/cut-repository.c (cut_repository_collect_loader): ditto.
+
 	* cutter/cut-test.[ch] (cut_test_to_xml, cut_test_to_xml_string): add.
 
 	* cutter/cut-test-case.c, cutter/cut-test-suite.c: follow the

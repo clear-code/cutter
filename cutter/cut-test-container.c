@@ -138,7 +138,7 @@ cut_test_container_filter_children (CutTestContainer *container,
     for (node = original; node; node = g_list_next(node)) {
         CutTest *test = node->data;
 
-        if (cut_filter_match(regexs, cut_test_get_name(test)))
+        if (cut_utils_filter_match(regexs, cut_test_get_name(test)))
             matched_tests = g_list_prepend(matched_tests, test);
     }
 

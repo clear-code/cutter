@@ -70,7 +70,7 @@ cut_utils_filter_to_regexs (gchar **filter)
 }
 
 gboolean
-cut_filter_match (GList *regexs, const gchar *name)
+cut_utils_filter_match (GList *regexs, const gchar *name)
 {
     GList *node;
 
