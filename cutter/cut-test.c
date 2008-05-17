@@ -420,7 +420,7 @@ cut_test_set_attribute (CutTest *test, const gchar *name, const gchar *value)
                          g_strdup(value));
 }
 
-const GHashTable *
+GHashTable *
 cut_test_get_attributes (CutTest *test)
 {
     return CUT_TEST_GET_PRIVATE(test)->attributes;
@@ -495,7 +495,7 @@ cut_test_to_xml_string (CutTest *test, GString *string, guint indent)
         cut_utils_append_xml_element_with_value(string, indent + 2,
                                                 "description", description);
 
-    attributes = (GHashTable *)cut_test_get_attributes(test);
+    attributes = cut_test_get_attributes(test);
     if (attributes) {
         AppendAttributeInfo info;
 

@@ -1,5 +1,7 @@
 2008-05-17  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test.[ch], cutter/module/ui/cut-console-ui.c: remove const.
+
 	* cutter/module/streamer/cut-xml-streamer.c,
 	test/test-cut-xml-streamer.c: output <read-test-suite>.
 

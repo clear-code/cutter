@@ -536,7 +536,7 @@ print_test_attributes (CutConsoleUI *console, CutTestResultStatus status,
     ConsoleAndStatus info;
     info.console = console;
     info.status = status;
-    g_hash_table_foreach((GHashTable*)cut_test_get_attributes(test),
+    g_hash_table_foreach(cut_test_get_attributes(test),
                          (GHFunc)print_each_attribute, &info);
 }
 

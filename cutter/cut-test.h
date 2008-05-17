@@ -101,7 +101,7 @@ const gchar *cut_test_get_attribute       (CutTest     *test,
 void         cut_test_set_attribute       (CutTest     *test,
                                            const gchar *name,
                                            const gchar *value);
-const GHashTable *cut_test_get_attributes (CutTest     *test);
+GHashTable  *cut_test_get_attributes      (CutTest     *test);
 
 gchar       *cut_test_to_xml              (CutTest     *test);
 void         cut_test_to_xml_string       (CutTest     *test,
