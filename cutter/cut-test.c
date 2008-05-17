@@ -37,6 +37,7 @@ typedef struct _CutTestPrivate	CutTestPrivate;
 struct _CutTestPrivate
 {
     gchar *name;
+    gchar *element_name;
     CutTestFunction test_function;
     GTimer *timer;
     GHashTable *attributes;
@@ -46,6 +47,7 @@ enum
 {
     PROP_0,
     PROP_NAME,
+    PROP_ELEMENT_NAME,
     PROP_TEST_FUNCTION
 };
 
@@ -100,6 +102,13 @@ cut_test_class_init (CutTestClass *klass)
                                NULL,
                                G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_NAME, spec);
+
+    spec = g_param_spec_string("element-name",
+                               "Element name",
+                               "The element name of the test",
+                               NULL,
+                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+    g_object_class_install_property(gobject_class, PROP_ELEMENT_NAME, spec);
 
     spec = g_param_spec_pointer("test-function",
                                 "Test Function",
@@ -227,6 +236,11 @@ dispose (GObject *object)
         priv->name = NULL;
     }
 
+    if (priv->element_name) {
+        g_free(priv->element_name);
+        priv->element_name = NULL;
+    }
+
     priv->test_function = NULL;
 
     if (priv->timer) {
@@ -254,6 +268,13 @@ set_property (GObject      *object,
       case PROP_NAME:
         cut_test_set_name(CUT_TEST(object), g_value_get_string(value));
         break;
+      case PROP_ELEMENT_NAME:
+        if (priv->element_name) {
+            g_free(priv->element_name);
+            priv->element_name = NULL;
+        }
+        priv->element_name = g_value_dup_string(value);
+        break;
       case PROP_TEST_FUNCTION:
         priv->test_function = g_value_get_pointer(value);
         break;
@@ -275,6 +296,9 @@ get_property (GObject    *object,
       case PROP_NAME:
         g_value_set_string(value, priv->name);
         break;
+      case PROP_ELEMENT_NAME:
+        g_value_set_string(value, priv->element_name);
+        break;
       case PROP_TEST_FUNCTION:
         g_value_set_pointer(value, priv->test_function);
         break;
@@ -288,6 +312,7 @@ CutTest *
 cut_test_new (const gchar *name, CutTestFunction function)
 {
     return g_object_new(CUT_TYPE_TEST,
+                        "element-name", "test",
                         "name", name,
                         "test-function", function,
                         NULL);
@@ -409,6 +434,98 @@ cut_test_stop_timer (CutTest *test)
 
     if (priv->timer)
         g_timer_stop(priv->timer);
+}
+
+gchar *
+cut_test_to_xml (CutTest *test)
+{
+    GString *string;
+
+    string = g_string_new(NULL);
+    cut_test_to_xml_string(test, string, 0);
+    return g_string_free(string, FALSE);
+}
+
+static void
+append_indent (GString *string, guint indent)
+{
+    guint i;
+    for (i = 0; i < indent; i++)
+        g_string_append_c(string, ' ');
+
+}
+
+static void
+append_element_with_value (GString *string, guint indent,
+                           const gchar *element_name, const gchar *value)
+{
+    gchar *escaped;
+    append_indent(string, indent);
+    escaped = g_markup_printf_escaped("<%s>%s</%s>\n",
+                                      element_name,
+                                      value,
+                                      element_name);
+    g_string_append(string, escaped);
+    g_free(escaped);
+}
+
+typedef struct _AppendAttributeInfo {
+    GString *string;
+    guint indent;
+} AppendAttributeInfo;
+
+static void
+append_attribute (const gchar *key, const gchar *value,
+                  AppendAttributeInfo *info)
+{
+    if (strcmp(key, "description") == 0)
+        return;
+
+    append_indent(info->string, info->indent);
+    g_string_append(info->string, "<option>\n");
+
+    append_element_with_value(info->string, info->indent + 2, "name", key);
+    append_element_with_value(info->string, info->indent + 2, "value", value);
+
+    append_indent(info->string, info->indent);
+    g_string_append(info->string, "</option>\n");
+}
+
+void
+cut_test_to_xml_string (CutTest *test, GString *string, guint indent)
+{
+    CutTestPrivate *priv;
+    gchar *escaped;
+    const gchar *description, *name;
+    GHashTable *attributes;
+
+    priv = CUT_TEST_GET_PRIVATE(test);
+
+    escaped = g_markup_escape_text(priv->element_name, -1);
+    append_indent(string, indent);
+    g_string_append_printf(string, "<%s>\n", escaped);
+
+    name = cut_test_get_name(test);
+    if (name)
+        append_element_with_value(string, indent + 2, "name", name);
+
+    description = cut_test_get_description(test);
+    if (description)
+        append_element_with_value(string, indent + 2,
+                                  "description", description);
+
+    attributes = (GHashTable *)cut_test_get_attributes(test);
+    if (attributes) {
+        AppendAttributeInfo info;
+
+        info.string = string;
+        info.indent = indent + 2;
+        g_hash_table_foreach(attributes, (GHFunc)append_attribute, &info);
+    }
+
+    append_indent(string, indent);
+    g_string_append_printf(string, "</%s>\n", escaped);
+    g_free(escaped);
 }
 
 /*

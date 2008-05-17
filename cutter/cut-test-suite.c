@@ -97,7 +97,9 @@ cut_test_suite_init (CutTestSuite *test_suite)
 CutTestSuite *
 cut_test_suite_new (void)
 {
-    return g_object_new(CUT_TYPE_TEST_SUITE, NULL);
+    return g_object_new(CUT_TYPE_TEST_SUITE,
+                        "element-name", "test-suite",
+                        NULL);
 }
 
 typedef struct _RunTestInfo

@@ -103,6 +103,11 @@ void         cut_test_set_attribute       (CutTest     *test,
                                            const gchar *value);
 const GHashTable *cut_test_get_attributes (CutTest     *test);
 
+gchar       *cut_test_to_xml              (CutTest     *test);
+void         cut_test_to_xml_string       (CutTest     *test,
+                                           GString     *string,
+                                           guint        indent);
+
 G_END_DECLS
 
 #endif /* __CUT_TEST_H__ */

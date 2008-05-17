@@ -258,6 +258,7 @@ cut_test_case_new (const gchar *name,
 {
     return g_object_new(CUT_TYPE_TEST_CASE,
                         "name", name,
+                        "element-name", "test-case",
                         "setup-function", setup_function,
                         "tear-down-function", teardown_function,
                         "get-current-test-context-function",

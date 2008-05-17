@@ -1,5 +1,12 @@
 2008-05-17  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test.[ch] (cut_test_to_xml, cut_test_to_xml_string): add.
+
+	* cutter/cut-test-case.c, cutter/cut-test-suite.c: follow the
+	above changes.
+
+	* cutter/cut-test-result.c: use cut_test_to_xml_string().
+
 	* cutter/module/streamer/cut-xml-streamer.c: <streamer> -> <stream>.
 
 	* cutter/cut-stream-parser.c, test/test-cut-stream-parser.c: emit
