@@ -6,6 +6,7 @@ void test_start_run (void);
 void test_complete_run_without_success_tag (void);
 void test_complete_run_with_success_true (void);
 void test_complete_run_with_success_false (void);
+void test_ready_test_suite (void);
 
 #define CUTTEST_TYPE_EVENT_RECEIVER            (cuttest_event_receiver_get_type ())
 #define CUTTEST_EVENT_RECEIVER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUTTEST_TYPE_EVENT_RECEIVER, CuttestEventReceiver))
@@ -22,6 +23,7 @@ struct _CuttestEventReceiver
     CutRunContext object;
 
     gint n_start_runs;
+    GList *ready_test_suites;
     GList *complete_runs;
 };
 
@@ -43,6 +45,12 @@ dispose (GObject *object)
 
     receiver = CUTTEST_EVENT_RECEIVER(object);
 
+    if (receiver->ready_test_suites) {
+        g_list_foreach(receiver->ready_test_suites, (GFunc)g_free, NULL);
+        g_list_free(receiver->ready_test_suites);
+        receiver->ready_test_suites = NULL;
+    }
+
     if (receiver->complete_runs) {
         g_list_free(receiver->complete_runs);
         receiver->complete_runs = NULL;
@@ -56,6 +64,31 @@ start_run (CutRunContext *context)
 
     receiver = CUTTEST_EVENT_RECEIVER(context);
     receiver->n_start_runs++;
+}
+
+typedef struct _ReadyTestSuiteInfo
+{
+    const gchar *test_suite_name;
+    gint n_test_cases;
+    gint n_tests;
+} ReadyTestSuiteInfo;
+
+static void
+ready_test_suite (CutRunContext *context, CutTestSuite *test_suite,
+                  guint n_test_cases, guint n_tests)
+{
+    CuttestEventReceiver *receiver;
+    ReadyTestSuiteInfo *info;
+
+    info = g_new(ReadyTestSuiteInfo, 1);
+    info->test_suite_name =
+        cut_take_string(g_strdup(cut_test_get_name(CUT_TEST(test_suite))));
+    info->n_test_cases = n_test_cases;
+    info->n_tests = n_tests;
+
+    receiver = CUTTEST_EVENT_RECEIVER(context);
+    receiver->ready_test_suites =
+        g_list_append(receiver->ready_test_suites, info);
 }
 
 static void
@@ -80,6 +113,7 @@ cuttest_event_receiver_class_init (CuttestEventReceiverClass *klass)
     gobject_class->dispose = dispose;
 
     run_context_class->start_run = start_run;
+    run_context_class->ready_test_suite = ready_test_suite;
     run_context_class->complete_run = complete_run;
 }
 
@@ -132,27 +166,30 @@ collect_result (CutStreamParser *parser, CutTestResult *test_result,
 void
 test_parse (void)
 {
-    const gchar xml[] = "<result>\n"
-                        "  <test-case>\n"
-                        "    <name>dummy test case</name>\n"
-                        "  </test-case>\n"
-                        "  <test>\n"
-                        "    <name>dummy-error-test</name>\n"
-                        "    <description>Error Test</description>\n"
-                        "    <option>\n"
-                        "      <name>bug</name>\n"
-                        "      <value>1234</value>\n"
-                        "    </option>\n"
-                        "  </test>\n"
-                        "  <status>error</status>\n"
-                        "  <detail>This test should error</detail>\n"
-                        "  <backtrace>\n"
-                        "    <file>test-cut-report-xml.c</file>\n"
-                        "    <line>31</line>\n"
-                        "    <info>dummy_error_test()</info>\n"
-                        "  </backtrace>\n"
-                        "  <elapsed>0.000100</elapsed>\n"
-                        "</result>\n";
+    const gchar xml[] =
+        "<stream>\n"
+        "  <result>\n"
+        "    <test-case>\n"
+        "      <name>dummy test case</name>\n"
+        "    </test-case>\n"
+        "    <test>\n"
+        "      <name>dummy-error-test</name>\n"
+        "      <description>Error Test</description>\n"
+        "      <option>\n"
+        "        <name>bug</name>\n"
+        "        <value>1234</value>\n"
+        "      </option>\n"
+        "    </test>\n"
+        "    <status>error</status>\n"
+        "    <detail>This test should error</detail>\n"
+        "    <backtrace>\n"
+        "      <file>test-cut-report-xml.c</file>\n"
+        "      <line>31</line>\n"
+        "      <info>dummy_error_test()</info>\n"
+        "    </backtrace>\n"
+        "    <elapsed>0.000100</elapsed>\n"
+        "  </result>\n"
+        "</stream>\n";
     CutTest *test;
 
     g_signal_connect(parser, "result",
@@ -234,6 +271,35 @@ test_complete_run_with_success_false (void)
     cut_assert_true(cut_stream_parser_parse(parser, "</stream>", -1, NULL));
     cut_assert_equal_int(1, g_list_length(receiver->complete_runs));
     cut_assert_false(GPOINTER_TO_INT(receiver->complete_runs->data));
+}
+
+void
+test_ready_test_suite (void)
+{
+    ReadyTestSuiteInfo *info;
+
+    cut_assert_true(cut_stream_parser_parse(parser, "<stream>\n", -1, NULL));
+    cut_assert_true(cut_stream_parser_parse(parser, "<ready-test-suite>\n",
+                                            -1, NULL));
+    cut_assert_true(cut_stream_parser_parse(parser, "<test-suite>\n",
+                                            -1, NULL));
+    cut_assert_true(cut_stream_parser_parse(parser, "</test-suite>\n",
+                                            -1, NULL));
+    cut_assert_true(cut_stream_parser_parse(parser,
+                                            "<n-test-cases>3</n-test-cases>",
+                                            -1, NULL));
+    cut_assert_true(cut_stream_parser_parse(parser,
+                                            "<n-tests>7</n-tests>", -1, NULL));
+    cut_assert_null(0, receiver->ready_test_suites);
+    cut_assert_true(cut_stream_parser_parse(parser, "</ready-test-suite>",
+                                            -1, NULL));
+
+    cut_assert_equal_int(1, g_list_length(receiver->ready_test_suites));
+
+    info = receiver->ready_test_suites->data;
+    cut_assert_equal_string(NULL, info->test_suite_name);
+    cut_assert_equal_int(3, info->n_test_cases);
+    cut_assert_equal_int(7, info->n_tests);
 }
 
 /*

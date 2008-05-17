@@ -29,6 +29,14 @@
 
 #define CUT_STREAM_PARSER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_STREAM_PARSER, CutStreamParserPrivate))
 
+typedef struct _ReadyTestSuite ReadyTestSuite;
+struct _ReadyTestSuite
+{
+    CutTestSuite *test_suite;
+    gint n_test_cases;
+    gint n_tests;
+};
+
 typedef struct _CutStreamParserPrivate	CutStreamParserPrivate;
 struct _CutStreamParserPrivate
 {
@@ -37,6 +45,7 @@ struct _CutStreamParserPrivate
     CutTestResult *result;
     gchar *option_name;
     gboolean success;
+    ReadyTestSuite *ready_test_suite;
 };
 
 enum
@@ -135,6 +144,15 @@ cut_stream_parser_init (CutStreamParser *stream_parser)
     priv->result = NULL;
     priv->option_name = NULL;
     priv->success = TRUE;
+    priv->ready_test_suite = NULL;
+}
+
+static void
+free_ready_test_suite (ReadyTestSuite *ready_test_suite)
+{
+    if (ready_test_suite->test_suite)
+        g_object_unref(ready_test_suite->test_suite);
+    g_slice_free(ReadyTestSuite, ready_test_suite);
 }
 
 static void
@@ -160,6 +178,11 @@ dispose (GObject *object)
     if (priv->option_name) {
         g_free(priv->option_name);
         priv->option_name = NULL;
+    }
+
+    if (priv->ready_test_suite) {
+        free_ready_test_suite(priv->ready_test_suite);
+        priv->ready_test_suite = NULL;
     }
 
     G_OBJECT_CLASS(cut_stream_parser_parent_class)->dispose(object);
@@ -276,25 +299,33 @@ start_element_handler (GMarkupParseContext *context,
 
     priv = CUT_STREAM_PARSER_GET_PRIVATE(parser);
 
-    if (g_ascii_strcasecmp("stream", element_name) == 0) {
-        if (priv->run_context) {
-            g_signal_emit_by_name(priv->run_context, "start-run");
+    if (priv->ready_test_suite) {
+        if (g_ascii_strcasecmp("test-suite", element_name) == 0) {
+            priv->ready_test_suite->test_suite = cut_test_suite_new();
         }
-    } else if (g_ascii_strcasecmp("result", element_name) == 0) {
-        priv->result = g_object_new(CUT_TYPE_TEST_RESULT, NULL);
-    } else if (g_ascii_strcasecmp("test-case", element_name) == 0) {
-        CutTestCase *test_case;
-        test_case = cut_test_case_new(NULL,
-                                      NULL, NULL,
-                                      NULL, NULL,
-                                      NULL, NULL);
-        cut_test_result_set_test_case(priv->result, test_case);
-        g_object_unref(test_case);
-    } else if (g_ascii_strcasecmp("test", element_name) == 0) {
-        CutTest *test;
-        test = cut_test_new(NULL, NULL);
-        cut_test_result_set_test(priv->result, test);
-        g_object_unref(test);
+    } else {
+        if (g_ascii_strcasecmp("stream", element_name) == 0) {
+            if (priv->run_context) {
+                g_signal_emit_by_name(priv->run_context, "start-run");
+            }
+        } else if (g_ascii_strcasecmp("result", element_name) == 0) {
+            priv->result = g_object_new(CUT_TYPE_TEST_RESULT, NULL);
+        } else if (g_ascii_strcasecmp("test-case", element_name) == 0) {
+            CutTestCase *test_case;
+            test_case = cut_test_case_new(NULL,
+                                          NULL, NULL,
+                                          NULL, NULL,
+                                          NULL, NULL);
+            cut_test_result_set_test_case(priv->result, test_case);
+            g_object_unref(test_case);
+        } else if (g_ascii_strcasecmp("test", element_name) == 0) {
+            CutTest *test;
+            test = cut_test_new(NULL, NULL);
+            cut_test_result_set_test(priv->result, test);
+            g_object_unref(test);
+        } else if (g_ascii_strcasecmp("ready-test-suite", element_name) == 0) {
+            priv->ready_test_suite = g_slice_new0(ReadyTestSuite);
+        }
     }
 }
 
@@ -311,15 +342,30 @@ end_element_handler (GMarkupParseContext *context,
     priv = CUT_STREAM_PARSER_GET_PRIVATE(parser);
 
     parent_name = get_parent_element(context);
-    if (parent_name == NULL && g_ascii_strcasecmp("stream", element_name) == 0) {
-        if (priv->run_context)
-            g_signal_emit_by_name(priv->run_context,
-                                  "complete-run", priv->success);
+    if (parent_name == NULL) {
+        if (g_ascii_strcasecmp("stream", element_name) == 0) {
+            if (priv->run_context)
+                g_signal_emit_by_name(priv->run_context,
+                                      "complete-run", priv->success);
+        } else {
+            set_parse_error(context, error,
+                            "root element should be <stream>: %s", element_name);
+        }
     } else if (g_ascii_strcasecmp("result", element_name) == 0) {
         if (priv->result) {
             g_signal_emit_by_name(parser, "result", priv->result);
             g_object_unref(priv->result);
             priv->result = NULL;
+        }
+    } else if (g_ascii_strcasecmp("ready-test-suite", element_name) == 0) {
+        if (priv->ready_test_suite) {
+            if (priv->run_context)
+                g_signal_emit_by_name(priv->run_context, "ready-test-suite",
+                                      priv->ready_test_suite->test_suite,
+                                      priv->ready_test_suite->n_test_cases,
+                                      priv->ready_test_suite->n_tests);
+            free_ready_test_suite(priv->ready_test_suite);
+            priv->ready_test_suite = NULL;
         }
     }
 }
@@ -486,6 +532,12 @@ text_handler (GMarkupParseContext *context,
         } else if (g_ascii_strcasecmp("elapsed", element) == 0) {
             cut_test_result_set_elapsed(priv->result,
                                         g_ascii_strtod(text, NULL));
+        }
+    } else if (priv->ready_test_suite) {
+        if (g_ascii_strcasecmp("n-tests", element) == 0) {
+            priv->ready_test_suite->n_tests = atoi(text);
+        } else if (g_ascii_strcasecmp("n-test-cases", element) == 0) {
+            priv->ready_test_suite->n_test_cases = atoi(text);
         }
     } else {
         if (g_ascii_strcasecmp("success", element) == 0) {
