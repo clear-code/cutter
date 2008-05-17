@@ -186,7 +186,14 @@ cut_utils_append_xml_element_with_value (GString *string, guint indent,
     g_free(escaped);
 }
 
-
+void
+cut_utils_append_xml_element_with_boolean_value (GString *string, guint indent,
+                                                 const gchar *element_name,
+                                                 gboolean boolean)
+{
+    cut_utils_append_xml_element_with_value(string, indent, element_name,
+                                            boolean ? "TRUE" : "FALSE");
+}
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

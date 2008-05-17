@@ -1,5 +1,13 @@
 2008-05-17  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-context.[ch] (cut_test_context_to_xml,
+	cut_test_context_to_xml_string): add.
+
+	* cutter/cut-utils.[ch]
+	(cut_utils_append_xml_element_with_boolean_value): add.
+
+	* test/test-cut-test-context.c: add tests for XML serialization.
+
 	* cutter/cut-stream-parser.c, test/test-cut-stream-parser.c: add
 	<success>.
 

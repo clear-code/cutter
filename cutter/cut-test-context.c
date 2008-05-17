@@ -33,6 +33,7 @@
 #include "cut-test-suite.h"
 #include "cut-test-result.h"
 #include "cut-process.h"
+#include "cut-utils.h"
 
 #define CUT_TEST_CONTEXT_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_CONTEXT, CutTestContextPrivate))
 
@@ -598,6 +599,43 @@ cut_test_context_is_multi_thread (CutTestContext *context)
 {
     return CUT_TEST_CONTEXT_GET_PRIVATE(context)->is_multi_thread;
 }
+
+gchar *
+cut_test_context_to_xml (CutTestContext *context)
+{
+    GString *string;
+
+    string = g_string_new(NULL);
+    cut_test_context_to_xml_string(context, string, 0);
+    return g_string_free(string, FALSE);
+}
+
+void
+cut_test_context_to_xml_string (CutTestContext *context, GString *string,
+                                guint indent)
+{
+    CutTestContextPrivate *priv;
+
+    priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+
+    cut_utils_append_indent(string, indent);
+    g_string_append(string, "<test-context>\n");
+
+    if (priv->test_suite)
+        cut_test_to_xml_string(CUT_TEST(priv->test_suite), string, indent + 2);
+    if (priv->test_case)
+        cut_test_to_xml_string(CUT_TEST(priv->test_case), string, indent + 2);
+    if (priv->test)
+        cut_test_to_xml_string(priv->test, string, indent + 2);
+
+    cut_utils_append_xml_element_with_boolean_value(string, indent + 2,
+                                                    "failed", priv->failed);
+
+
+    cut_utils_append_indent(string, indent);
+    g_string_append(string, "</test-context>\n");
+}
+
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

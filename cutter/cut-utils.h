@@ -35,6 +35,11 @@ void     cut_utils_append_xml_element_with_value
                                          guint        indent,
                                          const gchar *element_name,
                                          const gchar *value);
+void     cut_utils_append_xml_element_with_boolean_value
+                                        (GString     *string,
+                                         guint        indent,
+                                         const gchar *element_name,
+                                         gboolean     boolean);
 
 G_END_DECLS
 

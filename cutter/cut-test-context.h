@@ -86,6 +86,11 @@ void          cut_test_context_set_jump       (CutTestContext *context,
 void          cut_test_context_emit_signal    (CutTestContext *context,
                                                CutTestResult  *result);
 
+gchar        *cut_test_context_to_xml         (CutTestContext *context);
+void          cut_test_context_to_xml_string  (CutTestContext *context,
+                                               GString        *string,
+                                               guint           indent);
+
 G_END_DECLS
 
 #endif /* __CUT_TEST_CONTEXT_H__ */
