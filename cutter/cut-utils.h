@@ -28,6 +28,8 @@ gchar   *cut_utils_create_regex_pattern (const gchar *string);
 GList   *cut_utils_filter_to_regexs     (gchar **filters);
 gboolean cut_utils_filter_match         (GList *regexs,
                                          const gchar *name);
+void     cut_utils_append_indent        (GString *string,
+                                         guint    size);
 
 G_END_DECLS
 

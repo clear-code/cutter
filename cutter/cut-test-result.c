@@ -31,6 +31,7 @@
 #include "cut-test-case.h"
 #include "cut-test-suite.h"
 #include "cut-xml-parser.h"
+#include "cut-utils.h"
 
 #define CUT_TEST_RESULT_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_RESULT, CutTestResultPrivate))
 
@@ -471,19 +472,10 @@ cut_test_result_get_elapsed (CutTestResult *result)
 }
 
 static void
-append_indent (GString *string, guint indent)
-{
-    guint i;
-    for (i = 0; i < indent; i++)
-        g_string_append_c(string, ' ');
-
-}
-
-static void
 append_element_with_value (GString *string, guint indent, const gchar *element_name, const gchar *value)
 {
     gchar *escaped;
-    append_indent(string, indent);
+    cut_utils_append_indent(string, indent);
     escaped = g_markup_printf_escaped("<%s>%s</%s>\n",
                                       element_name,
                                       value,
@@ -541,14 +533,14 @@ append_element_with_children (GString *string, guint indent,
     va_list var_args;
 
     escaped = g_markup_escape_text(element_name, -1);
-    append_indent(string, indent);
+    cut_utils_append_indent(string, indent);
     g_string_append_printf(string, "<%s>\n", escaped);
 
     va_start(var_args, first_child_element);
     append_element_valist(string, indent + 2, first_child_element, var_args);
     va_end(var_args);
 
-    append_indent(string, indent);
+    cut_utils_append_indent(string, indent);
     g_string_append_printf(string, "</%s>\n", escaped);
     g_free(escaped);
 }

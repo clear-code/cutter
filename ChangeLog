@@ -1,5 +1,10 @@
 2008-05-17  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-utils.[ch] (cut_utils_append_indent): add.
+
+	* cutter/cut-test.c, cutter/cut-test-result.c: use
+	cut_utils_append_indent().
+
 	* cutter/cut-utils.[ch] (cut_utils_filter_match): add _utils.
 
 	* cutter/cut-test-container.c (cut_test_container_filter_children):

@@ -161,6 +161,15 @@ cut_utils_regex_match (const gchar *pattern, const gchar *string)
     return g_regex_match_simple(pattern, string, G_REGEX_MULTILINE, 0);
 }
 
+void
+cut_utils_append_indent (GString *string, guint size)
+{
+    guint i;
+
+    for (i = 0; i < size; i++)
+        g_string_append_c(string, ' ');
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */

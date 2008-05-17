@@ -30,6 +30,7 @@
 #include "cut-run-context.h"
 #include "cut-marshalers.h"
 #include "cut-test-result.h"
+#include "cut-utils.h"
 
 #define CUT_TEST_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST, CutTestPrivate))
 
@@ -447,20 +448,11 @@ cut_test_to_xml (CutTest *test)
 }
 
 static void
-append_indent (GString *string, guint indent)
-{
-    guint i;
-    for (i = 0; i < indent; i++)
-        g_string_append_c(string, ' ');
-
-}
-
-static void
 append_element_with_value (GString *string, guint indent,
                            const gchar *element_name, const gchar *value)
 {
     gchar *escaped;
-    append_indent(string, indent);
+    cut_utils_append_indent(string, indent);
     escaped = g_markup_printf_escaped("<%s>%s</%s>\n",
                                       element_name,
                                       value,
@@ -481,13 +473,13 @@ append_attribute (const gchar *key, const gchar *value,
     if (strcmp(key, "description") == 0)
         return;
 
-    append_indent(info->string, info->indent);
+    cut_utils_append_indent(info->string, info->indent);
     g_string_append(info->string, "<option>\n");
 
     append_element_with_value(info->string, info->indent + 2, "name", key);
     append_element_with_value(info->string, info->indent + 2, "value", value);
 
-    append_indent(info->string, info->indent);
+    cut_utils_append_indent(info->string, info->indent);
     g_string_append(info->string, "</option>\n");
 }
 
@@ -502,7 +494,7 @@ cut_test_to_xml_string (CutTest *test, GString *string, guint indent)
     priv = CUT_TEST_GET_PRIVATE(test);
 
     escaped = g_markup_escape_text(priv->element_name, -1);
-    append_indent(string, indent);
+    cut_utils_append_indent(string, indent);
     g_string_append_printf(string, "<%s>\n", escaped);
 
     name = cut_test_get_name(test);
@@ -523,7 +515,7 @@ cut_test_to_xml_string (CutTest *test, GString *string, guint indent)
         g_hash_table_foreach(attributes, (GHFunc)append_attribute, &info);
     }
 
-    append_indent(string, indent);
+    cut_utils_append_indent(string, indent);
     g_string_append_printf(string, "</%s>\n", escaped);
     g_free(escaped);
 }
