@@ -42,6 +42,7 @@ struct _CutPipelinePrivate
     guint io_source_id;
     gchar *target_directory;
     GIOChannel *stdout_io;
+    gboolean eof;
     GString *cutter_string;
 };
 
@@ -103,6 +104,7 @@ cut_pipeline_init (CutPipeline *pipeline)
 
     priv->target_directory = NULL;
     priv->stdout_io        = NULL;
+    priv->eof              = FALSE;
 
     priv->cutter_string = g_string_new(NULL);
 }
@@ -169,6 +171,7 @@ close_child (CutPipelinePrivate *priv)
 {
     g_spawn_close_pid(priv->pid);
     priv->pid = 0;
+    priv->eof = FALSE;
 }
 
 static void
@@ -241,15 +244,18 @@ static void
 child_watch_func (GPid pid, gint status, gpointer data)
 {
     if (WIFEXITED(status)) {
-        emit_complete_signal(CUT_PIPELINE(data),
-                             WEXITSTATUS(status) == EXIT_SUCCESS);
-        CutPipelinePrivate *priv = CUT_PIPELINE_GET_PRIVATE(data);
-        GIOStatus status = G_IO_STATUS_NORMAL;
+        CutPipeline *pipeline = data;
+        CutPipelinePrivate *priv;
 
-        while (status == G_IO_STATUS_NORMAL)
-            status = read_line(CUT_PIPELINE(data), priv->stdout_io);
-
-        reap_child(CUT_PIPELINE(data), pid);
+        priv = CUT_PIPELINE_GET_PRIVATE(pipeline);
+        while (g_io_channel_get_buffer_condition(priv->stdout_io) & G_IO_IN) {
+            read_line(pipeline, priv->stdout_io);
+        }
+        while (!priv->eof) {
+            read_line(pipeline, priv->stdout_io);
+        }
+        emit_complete_signal(pipeline, WEXITSTATUS(status) == EXIT_SUCCESS);
+        reap_child(pipeline, pid);
     }
 }
 
@@ -266,8 +272,8 @@ read_line (CutPipeline *pipeline, GIOChannel *channel)
                                     NULL,
                                     NULL);
 
-    if (status == G_IO_STATUS_NORMAL ||
-        status == G_IO_STATUS_EOF) {
+    if ((status == G_IO_STATUS_NORMAL || status == G_IO_STATUS_EOF) &&
+        line_string) {
         g_string_append(priv->cutter_string, line_string);
         if (g_regex_match_simple("</result>", line_string, 0, 0)) {
             CutTestResult *result;
@@ -305,6 +311,9 @@ read_line (CutPipeline *pipeline, GIOChannel *channel)
         }
     }
 
+    if (status == G_IO_STATUS_EOF)
+        priv->eof = TRUE;
+
     if (line_string)
         g_free(line_string);
 
@@ -328,6 +337,7 @@ io_watch_func (GIOChannel *channel, GIOCondition condition, gpointer data)
 
     if (condition & G_IO_ERR ||
         condition & G_IO_HUP) {
+        CUT_PIPELINE_GET_PRIVATE(pipeline)->eof = TRUE;
         return FALSE;
     }
 
@@ -391,6 +401,7 @@ run_async (CutPipeline *pipeline)
         return;
     }
 
+    priv->eof = FALSE;
     priv->stdout_io = create_io_channel(pipeline, std_out);
     priv->process_source_id = g_child_watch_add(priv->pid,
                                                 child_watch_func,
