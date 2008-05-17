@@ -1,5 +1,8 @@
 2008-05-17  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/module/streamer/cut-xml-streamer.c,
+	test/test-cut-xml-streamer.c: output <read-test-suite>.
+
 	* cutter/cut-utils.[ch] (cut_utils_append_xml_element_with_value): add.
 
 	* cutter/cut-test.c, cutter/cut-test-result.c: use

@@ -6,12 +6,14 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+void test_ready_test_suite (void);
 void test_streamer_success (void);
 
 static CutStreamer *streamer;
 static CutRunContext *run_context;
 static CutTest *test_object;
 static CutTestCase *test_case;
+static CutTestSuite *test_suite;
 static CutTestContext *test_context;
 
 static void
@@ -35,6 +37,8 @@ setup (void)
                                   get_current_test_context,
                                   set_current_test_context,
                                   NULL, NULL);
+    test_suite = cut_test_suite_new();
+    cut_test_suite_add_test_case(test_suite, test_case);
 }
 
 void
@@ -46,6 +50,10 @@ teardown (void)
         g_object_unref(test_context);
     if (streamer)
         g_object_unref(streamer);
+    if (test_case)
+        g_object_unref(test_case);
+    if (test_suite)
+        g_object_unref(test_suite);
     g_object_unref(run_context);
 }
 
@@ -71,6 +79,48 @@ run_the_test (CutTest *test)
     g_object_unref(test_context);
     test_context = NULL;
     return success;
+}
+
+void
+test_ready_test_suite (void)
+{
+    int pid;
+    gchar expected[] =
+        "  <ready-test-suite>\n"
+        "    <test-suite>\n"
+        "    </test-suite>\n"
+        "    <n-test-cases>1</n-test-cases>\n"
+        "    <n-tests>1</n-tests>\n"
+        "  </ready-test-suite>\n"
+        "  <result>\n"
+        "    <test-case>\n"
+        "      <name>dummy test case</name>\n"
+        "    </test-case>\n"
+        "    <test>\n"
+        "      <name>dummy-success-test</name>\n"
+        "    </test>\n"
+        "    <status>success</status>\n"
+        "    <elapsed>.*?</elapsed>\n"
+        "  </result>\n"
+        "\n";
+
+    pid = cut_fork();
+    cut_assert_errno();
+
+    if (pid == 0) {
+        streamer = cut_streamer_new("xml", NULL);
+
+        test_object = cut_test_new("dummy-success-test", dummy_success_test);
+        cut_test_case_add_test(test_case, test_object);
+        cut_listener_attach_to_run_context(CUT_LISTENER(streamer), run_context);
+        cut_assert(cut_test_suite_run(test_suite, run_context));
+        cut_listener_detach_from_run_context(CUT_LISTENER(streamer),
+                                             run_context);
+        _exit(EXIT_SUCCESS);
+    }
+
+    cut_assert_match(expected, cut_fork_get_stdout_message(pid));
+    cut_assert_equal_int(EXIT_SUCCESS, cut_wait_process(pid, 0));
 }
 
 void

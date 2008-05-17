@@ -34,6 +34,7 @@
 #include <cutter/cut-run-context.h>
 #include <cutter/cut-test-result.h>
 #include <cutter/cut-enum-types.h>
+#include <cutter/cut-utils.h>
 
 #define CUT_TYPE_XML_STREAMER            cut_type_xml_streamer
 #define CUT_XML_STREAMER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_XML_STREAMER, CutXMLStreamer))
@@ -238,6 +239,29 @@ cb_ready_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
                      guint n_test_cases, guint n_tests,
                      CutXMLStreamer *streamer)
 {
+    GString *string;
+    gchar *str;
+
+    string = g_string_new(NULL);
+
+    g_string_append(string, "  <ready-test-suite>\n");
+
+    cut_test_to_xml_string(CUT_TEST(test_suite), string, 4);
+
+    str = g_strdup_printf("%d", n_test_cases);
+    cut_utils_append_xml_element_with_value(string, 4, "n-test-cases", str);
+    g_free(str);
+
+    str = g_strdup_printf("%d", n_tests);
+    cut_utils_append_xml_element_with_value(string, 4, "n-tests", str);
+    g_free(str);
+
+    g_string_append(string, "  </ready-test-suite>\n");
+
+    g_print(string->str);
+    fflush(stdout);
+
+    g_string_free(string, TRUE);
 }
 
 static void
