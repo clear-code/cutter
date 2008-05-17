@@ -1,5 +1,10 @@
 2008-05-17  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-utils.[ch] (cut_utils_append_xml_element_with_value): add.
+
+	* cutter/cut-test.c, cutter/cut-test-result.c: use
+	cut_utils_append_xml_element_with_value().
+
 	* cutter/cut-utils.[ch] (cut_utils_append_indent): add.
 
 	* cutter/cut-test.c, cutter/cut-test-result.c: use

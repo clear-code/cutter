@@ -170,6 +170,24 @@ cut_utils_append_indent (GString *string, guint size)
         g_string_append_c(string, ' ');
 }
 
+void
+cut_utils_append_xml_element_with_value (GString *string, guint indent,
+                                         const gchar *element_name,
+                                         const gchar *value)
+{
+    gchar *escaped;
+
+    cut_utils_append_indent(string, indent);
+    escaped = g_markup_printf_escaped("<%s>%s</%s>\n",
+                                      element_name,
+                                      value,
+                                      element_name);
+    g_string_append(string, escaped);
+    g_free(escaped);
+}
+
+
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */

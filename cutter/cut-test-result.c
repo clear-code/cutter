@@ -471,19 +471,6 @@ cut_test_result_get_elapsed (CutTestResult *result)
     return CUT_TEST_RESULT_GET_PRIVATE(result)->elapsed;
 }
 
-static void
-append_element_with_value (GString *string, guint indent, const gchar *element_name, const gchar *value)
-{
-    gchar *escaped;
-    cut_utils_append_indent(string, indent);
-    escaped = g_markup_printf_escaped("<%s>%s</%s>\n",
-                                      element_name,
-                                      value,
-                                      element_name);
-    g_string_append(string, escaped);
-    g_free(escaped);
-}
-
 static const gchar *
 result_status_to_name (CutTestResultStatus status)
 {
@@ -519,7 +506,7 @@ append_element_valist (GString *string, guint indent, const gchar *element_name,
     while (name) {
         const gchar *value = va_arg(var_args, gchar *);
         if (value)
-            append_element_with_value(string, indent, name, value);
+            cut_utils_append_xml_element_with_value(string, indent, name, value);
         name = va_arg(var_args, gchar *);
     }
 }
@@ -573,12 +560,14 @@ append_test_result_to_string (GString *string, CutTestResult *result)
     message = cut_test_result_get_message(result);
     status = cut_test_result_get_status(result);
 
-    append_element_with_value(string, 4, "status", result_status_to_name(status));
+    cut_utils_append_xml_element_with_value(string, 4, "status",
+                                            result_status_to_name(status));
     if (message)
-        append_element_with_value(string, 4, "detail", message);
+        cut_utils_append_xml_element_with_value(string, 4, "detail", message);
     if (status != CUT_TEST_RESULT_SUCCESS)
         append_backtrace_to_string(string, result);
-    append_element_with_value(string, 4, "elapsed", elapsed_string);
+    cut_utils_append_xml_element_with_value(string, 4, "elapsed",
+                                            elapsed_string);
     g_free(elapsed_string);
 }
 

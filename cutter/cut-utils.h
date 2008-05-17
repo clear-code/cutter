@@ -30,6 +30,11 @@ gboolean cut_utils_filter_match         (GList *regexs,
                                          const gchar *name);
 void     cut_utils_append_indent        (GString *string,
                                          guint    size);
+void     cut_utils_append_xml_element_with_value
+                                        (GString     *string,
+                                         guint        indent,
+                                         const gchar *element_name,
+                                         const gchar *value);
 
 G_END_DECLS
 

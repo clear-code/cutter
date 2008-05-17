@@ -447,20 +447,6 @@ cut_test_to_xml (CutTest *test)
     return g_string_free(string, FALSE);
 }
 
-static void
-append_element_with_value (GString *string, guint indent,
-                           const gchar *element_name, const gchar *value)
-{
-    gchar *escaped;
-    cut_utils_append_indent(string, indent);
-    escaped = g_markup_printf_escaped("<%s>%s</%s>\n",
-                                      element_name,
-                                      value,
-                                      element_name);
-    g_string_append(string, escaped);
-    g_free(escaped);
-}
-
 typedef struct _AppendAttributeInfo {
     GString *string;
     guint indent;
@@ -476,8 +462,10 @@ append_attribute (const gchar *key, const gchar *value,
     cut_utils_append_indent(info->string, info->indent);
     g_string_append(info->string, "<option>\n");
 
-    append_element_with_value(info->string, info->indent + 2, "name", key);
-    append_element_with_value(info->string, info->indent + 2, "value", value);
+    cut_utils_append_xml_element_with_value(info->string, info->indent + 2,
+                                            "name", key);
+    cut_utils_append_xml_element_with_value(info->string, info->indent + 2,
+                                            "value", value);
 
     cut_utils_append_indent(info->string, info->indent);
     g_string_append(info->string, "</option>\n");
@@ -499,12 +487,13 @@ cut_test_to_xml_string (CutTest *test, GString *string, guint indent)
 
     name = cut_test_get_name(test);
     if (name)
-        append_element_with_value(string, indent + 2, "name", name);
+        cut_utils_append_xml_element_with_value(string, indent + 2,
+                                                "name", name);
 
     description = cut_test_get_description(test);
     if (description)
-        append_element_with_value(string, indent + 2,
-                                  "description", description);
+        cut_utils_append_xml_element_with_value(string, indent + 2,
+                                                "description", description);
 
     attributes = (GHashTable *)cut_test_get_attributes(test);
     if (attributes) {
