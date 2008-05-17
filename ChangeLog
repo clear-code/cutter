@@ -1,5 +1,7 @@
 2008-05-17  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/module/streamer/cut-xml-streamer.c: <streamer> -> <stream>.
+
 	* cutter/cut-stream-parser.c, test/test-cut-stream-parser.c: emit
 	complete-run signal on <stream> end.
 

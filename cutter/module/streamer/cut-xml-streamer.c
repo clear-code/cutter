@@ -227,6 +227,13 @@ get_property (GObject    *object,
 }
 
 static void
+cb_start_run (CutRunContext *run_context, CutXMLStreamer *streamer)
+{
+    g_print("<stream>\n");
+    fflush(stdout);
+}
+
+static void
 cb_ready_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
                      guint n_test_cases, guint n_tests,
                      CutXMLStreamer *streamer)
@@ -237,8 +244,6 @@ static void
 cb_start_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
                      CutXMLStreamer *streamer)
 {
-    g_print("<streamer>\n");
-    fflush(stdout);
 }
 
 static void
@@ -283,7 +288,13 @@ static void
 cb_complete_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
                         CutXMLStreamer *streamer)
 {
-    g_print("</streamer>\n");
+}
+
+static void
+cb_complete_run (CutRunContext *run_context, gboolean success,
+                 CutXMLStreamer *streamer)
+{
+    g_print("</stream>\n");
     fflush(stdout);
 }
 
@@ -302,6 +313,7 @@ connect_to_run_context (CutXMLStreamer *streamer, CutRunContext *run_context)
 #define CONNECT_TO_TEST(name) \
     g_signal_connect(run_context, #name, G_CALLBACK(cb_test_signal), streamer)
 
+    CONNECT(start_run);
     CONNECT(ready_test_suite);
     CONNECT(start_test_suite);
     CONNECT(start_test_case);
@@ -316,6 +328,7 @@ connect_to_run_context (CutXMLStreamer *streamer, CutRunContext *run_context)
     CONNECT(complete_test);
     CONNECT(complete_test_case);
     CONNECT(complete_test_suite);
+    CONNECT(complete_run);
 
     CONNECT(crashed);
 
@@ -330,6 +343,8 @@ disconnect_from_run_context (CutXMLStreamer *streamer, CutRunContext *run_contex
                                          G_CALLBACK(cb_ ## name),      \
                                          streamer)
 
+    DISCONNECT(start_run);
+    DISCONNECT(ready_test_suite);
     DISCONNECT(start_test_suite);
     DISCONNECT(start_test_case);
     DISCONNECT(start_test);
@@ -337,6 +352,7 @@ disconnect_from_run_context (CutXMLStreamer *streamer, CutRunContext *run_contex
     DISCONNECT(complete_test);
     DISCONNECT(complete_test_case);
     DISCONNECT(complete_test_suite);
+    DISCONNECT(complete_run);
 
     DISCONNECT(crashed);
 
