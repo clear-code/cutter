@@ -91,18 +91,7 @@ test_ready_test_suite (void)
         "    </test-suite>\n"
         "    <n-test-cases>1</n-test-cases>\n"
         "    <n-tests>1</n-tests>\n"
-        "  </ready-test-suite>\n"
-        "  <result>\n"
-        "    <test-case>\n"
-        "      <name>dummy test case</name>\n"
-        "    </test-case>\n"
-        "    <test>\n"
-        "      <name>dummy-success-test</name>\n"
-        "    </test>\n"
-        "    <status>success</status>\n"
-        "    <elapsed>.*?</elapsed>\n"
-        "  </result>\n"
-        "\n";
+        "  </ready-test-suite>\n";
 
     pid = cut_fork();
     cut_assert_errno();
@@ -135,8 +124,7 @@ test_streamer_success (void)
                        "    </test>\n"
                        "    <status>success</status>\n"
                        "    <elapsed>.*?</elapsed>\n"
-                       "  </result>\n"
-                       "\n";
+                       "  </result>\n";
     int pid;
 
     pid = cut_fork();

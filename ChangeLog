@@ -1,5 +1,11 @@
 2008-05-17  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-xml-parser.c: add NULL check.
+
+	* cutter/module/streamer/cut-xml-streamer.c: stream all events.
+
+	* test/test-cut-xml-streamer.c: follow the above changes.
+
 	* cutter/cut-test-context.[ch] (cut_test_context_to_xml,
 	cut_test_context_to_xml_string): add.
 

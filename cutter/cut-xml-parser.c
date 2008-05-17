@@ -77,14 +77,15 @@ start_element_handler (GMarkupParseContext *context,
                                       NULL, NULL,
                                       NULL, NULL,
                                       NULL, NULL);
-        cut_test_result_set_test_case(data->result,
-                                      test_case);
-        g_object_unref(test_case); 
+        if (data->result)
+            cut_test_result_set_test_case(data->result, test_case);
+        g_object_unref(test_case);
     } else if (!g_ascii_strcasecmp("test", element_name)) {
         CutTest *test;
         test = cut_test_new(NULL, NULL);
-        cut_test_result_set_test(data->result, test);
-        g_object_unref(test); 
+        if (data->result)
+            cut_test_result_set_test(data->result, test);
+        g_object_unref(test);
     }
 }
 
@@ -157,7 +158,8 @@ set_various_name (GMarkupParseContext *context,
         cut_test_set_name(CUT_TEST(cut_test_result_get_test_case(data->result)),
                           value);
     } else if (!g_ascii_strcasecmp("test", parent)) {
-        cut_test_set_name(cut_test_result_get_test(data->result), value);
+        if (data->result)
+            cut_test_set_name(cut_test_result_get_test(data->result), value);
     } else if (!g_ascii_strcasecmp("option", parent)) {
         set_option_name(data, value);
     } else {

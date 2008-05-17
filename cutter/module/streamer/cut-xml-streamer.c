@@ -201,7 +201,8 @@ set_property (GObject      *object,
 
     switch (prop_id) {
       case PROP_RUN_CONTEXT:
-        attach_to_run_context(CUT_LISTENER(streamer), CUT_RUN_CONTEXT(g_value_get_object(value)));
+        attach_to_run_context(CUT_LISTENER(streamer),
+                              CUT_RUN_CONTEXT(g_value_get_object(value)));
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -268,30 +269,67 @@ static void
 cb_start_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
                      CutXMLStreamer *streamer)
 {
+    GString *string;
+
+    string = g_string_new(NULL);
+
+    g_string_append(string, "  <start-test-suite>\n");
+    cut_test_to_xml_string(CUT_TEST(test_suite), string, 4);
+    g_string_append(string, "  </start-test-suite>\n");
+
+    g_print(string->str);
+    fflush(stdout);
+
+    g_string_free(string, TRUE);
 }
 
 static void
 cb_start_test_case (CutRunContext *run_context, CutTestCase *test_case,
                     CutXMLStreamer *streamer)
 {
+    GString *string;
+
+    string = g_string_new(NULL);
+
+    g_string_append(string, "  <start-test-case>\n");
+    cut_test_to_xml_string(CUT_TEST(test_case), string, 4);
+    g_string_append(string, "  </start-test-case>\n");
+
+    g_print(string->str);
+    fflush(stdout);
+
+    g_string_free(string, TRUE);
 }
 
 static void
-cb_start_test (CutRunContext *run_context, CutTest *test, CutTestContext *test_context,
-               CutXMLStreamer *streamer)
+cb_start_test (CutRunContext *run_context, CutTest *test,
+               CutTestContext *test_context, CutXMLStreamer *streamer)
 {
+    GString *string;
+
+    string = g_string_new(NULL);
+
+    g_string_append(string, "  <start-test>\n");
+    cut_test_to_xml_string(test, string, 4);
+    cut_test_context_to_xml_string(test_context, string, 4);
+    g_string_append(string, "  </start-test>\n");
+
+    g_print(string->str);
+    fflush(stdout);
+
+    g_string_free(string, TRUE);
 }
 
 static void
-cb_test_signal (CutRunContext      *run_context,
+cb_test_signal (CutRunContext  *run_context,
                 CutTest        *test,
                 CutTestContext *test_context,
                 CutTestResult  *result,
-                CutXMLStreamer   *streamer)
+                CutXMLStreamer *streamer)
 {
     gchar *string;
     string = cut_test_result_to_xml(result);
-    g_print("%s\n", string);
+    g_print("%s", string);
     g_free(string);
     fflush(stdout);
 }
@@ -300,18 +338,54 @@ static void
 cb_complete_test (CutRunContext *run_context, CutTest *test,
                   CutTestContext *test_context, CutXMLStreamer *streamer)
 {
+    GString *string;
+
+    string = g_string_new(NULL);
+
+    g_string_append(string, "  <complete-test>\n");
+    cut_test_to_xml_string(test, string, 4);
+    g_string_append(string, "  </complete-test>\n");
+
+    g_print(string->str);
+    fflush(stdout);
+
+    g_string_free(string, TRUE);
 }
 
 static void
 cb_complete_test_case (CutRunContext *run_context, CutTestCase *test_case,
                        CutXMLStreamer *streamer)
 {
+    GString *string;
+
+    string = g_string_new(NULL);
+
+    g_string_append(string, "  <complete-test-case>\n");
+    cut_test_to_xml_string(CUT_TEST(test_case), string, 4);
+    g_string_append(string, "  </complete-test-case>\n");
+
+    g_print(string->str);
+    fflush(stdout);
+
+    g_string_free(string, TRUE);
 }
 
 static void
 cb_complete_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
                         CutXMLStreamer *streamer)
 {
+    GString *string;
+
+    string = g_string_new(NULL);
+
+    g_string_append(string, "  <complete-test-suite>\n");
+    cut_test_to_xml_string(CUT_TEST(test_suite), string, 4);
+    g_string_append(string, "  </complete-test-suite>\n");
+
+    g_print(string->str);
+    fflush(stdout);
+
+    g_string_free(string, TRUE);
 }
 
 static void
@@ -327,6 +401,19 @@ static void
 cb_crashed (CutRunContext *run_context, const gchar *stack_trace,
             CutXMLStreamer *streamer)
 {
+    GString *string;
+
+    string = g_string_new(NULL);
+
+    g_string_append(string, "  <crashed>\n");
+    cut_utils_append_xml_element_with_value(string, 4,
+                                            "stack-trace", stack_trace);
+    g_string_append(string, "  </crashed>\n");
+
+    g_print(string->str);
+    fflush(stdout);
+
+    g_string_free(string, TRUE);
 }
 
 static void
@@ -361,11 +448,12 @@ connect_to_run_context (CutXMLStreamer *streamer, CutRunContext *run_context)
 }
 
 static void
-disconnect_from_run_context (CutXMLStreamer *streamer, CutRunContext *run_context)
+disconnect_from_run_context (CutXMLStreamer *streamer,
+                             CutRunContext *run_context)
 {
-#define DISCONNECT(name)                                               \
-    g_signal_handlers_disconnect_by_func(run_context,                       \
-                                         G_CALLBACK(cb_ ## name),      \
+#define DISCONNECT(name)                                                \
+    g_signal_handlers_disconnect_by_func(run_context,                   \
+                                         G_CALLBACK(cb_ ## name),       \
                                          streamer)
 
     DISCONNECT(start_run);
