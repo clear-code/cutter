@@ -318,6 +318,7 @@ static void
 cb_complete_run (CutRunContext *run_context, gboolean success,
                  CutXMLStreamer *streamer)
 {
+    g_print("  <success>%s</success>\n", success ? "TRUE" : "FALSE");
     g_print("</stream>\n");
     fflush(stdout);
 }

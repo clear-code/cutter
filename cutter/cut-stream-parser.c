@@ -459,37 +459,38 @@ text_handler (GMarkupParseContext *context,
     const gchar *element;
 
     priv = CUT_STREAM_PARSER_GET_PRIVATE(parser);
-
-    if (!priv->result)
-        return;
-
     element = g_markup_parse_context_get_element(context);
 
-    if (g_ascii_strcasecmp("name", element) == 0) {
-        set_various_name(context, priv, text, error);
-    } else if (g_ascii_strcasecmp("description", element) == 0) {
-        cut_test_set_attribute(cut_test_result_get_test(priv->result),
-                               "description", text);
-    } else if (g_ascii_strcasecmp("value", element) == 0) {
-        set_option_value(context, priv, text, error);
-    } else if (g_ascii_strcasecmp("detail", element) == 0) {
-        cut_test_result_set_message(priv->result, text);
-    } else if (g_ascii_strcasecmp("file", element) == 0) {
-        cut_test_result_set_filename(priv->result, text);
-    } else if (g_ascii_strcasecmp("line", element) == 0) {
-        set_line(context, priv, text, error);
-    } else if (g_ascii_strcasecmp("info", element) == 0) {
-        set_function_name(context, priv, text, error);
-    } else if (g_ascii_strcasecmp("status", element) == 0) {
-        CutTestResultStatus status;
-        status = result_name_to_status(text);
-        if (status != CUT_TEST_RESULT_INVALID) {
-            cut_test_result_set_status(priv->result, status);
-            if (cut_test_result_status_is_critical(status))
-                priv->success = FALSE;
+    if (priv->result) {
+        if (g_ascii_strcasecmp("name", element) == 0) {
+            set_various_name(context, priv, text, error);
+        } else if (g_ascii_strcasecmp("description", element) == 0) {
+            cut_test_set_attribute(cut_test_result_get_test(priv->result),
+                                   "description", text);
+        } else if (g_ascii_strcasecmp("value", element) == 0) {
+            set_option_value(context, priv, text, error);
+        } else if (g_ascii_strcasecmp("detail", element) == 0) {
+            cut_test_result_set_message(priv->result, text);
+        } else if (g_ascii_strcasecmp("file", element) == 0) {
+            cut_test_result_set_filename(priv->result, text);
+        } else if (g_ascii_strcasecmp("line", element) == 0) {
+            set_line(context, priv, text, error);
+        } else if (g_ascii_strcasecmp("info", element) == 0) {
+            set_function_name(context, priv, text, error);
+        } else if (g_ascii_strcasecmp("status", element) == 0) {
+            CutTestResultStatus status;
+            status = result_name_to_status(text);
+            if (status != CUT_TEST_RESULT_INVALID) {
+                cut_test_result_set_status(priv->result, status);
+            }
+        } else if (g_ascii_strcasecmp("elapsed", element) == 0) {
+            cut_test_result_set_elapsed(priv->result,
+                                        g_ascii_strtod(text, NULL));
         }
-    } else if (g_ascii_strcasecmp("elapsed", element) == 0) {
-        cut_test_result_set_elapsed(priv->result, g_ascii_strtod(text, NULL));
+    } else {
+        if (g_ascii_strcasecmp("success", element) == 0) {
+            priv->success = g_ascii_strcasecmp("TRUE", text) == 0;
+        }
     }
 }
 

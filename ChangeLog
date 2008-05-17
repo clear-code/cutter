@@ -1,5 +1,10 @@
 2008-05-17  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-stream-parser.c, test/test-cut-stream-parser.c: add
+	<success>.
+
+	* cutter/module/streamer/cut-xml-streamer.c: print <success>.
+
 	* cutter/cut-test.[ch], cutter/module/ui/cut-console-ui.c: remove const.
 
 	* cutter/module/streamer/cut-xml-streamer.c,
