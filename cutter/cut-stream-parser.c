@@ -262,7 +262,11 @@ start_element_handler (GMarkupParseContext *context,
 
     priv = CUT_STREAM_PARSER_GET_PRIVATE(parser);
 
-    if (g_ascii_strcasecmp("result", element_name) == 0) {
+    if (g_ascii_strcasecmp("stream", element_name) == 0) {
+        if (priv->run_context) {
+            g_signal_emit_by_name(priv->run_context, "start-run");
+        }
+    } else if (g_ascii_strcasecmp("result", element_name) == 0) {
         priv->result = g_object_new(CUT_TYPE_TEST_RESULT, NULL);
     } else if (g_ascii_strcasecmp("test-case", element_name) == 0) {
         CutTestCase *test_case;
