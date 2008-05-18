@@ -31,6 +31,7 @@ typedef enum {
     IN_TOP_LEVEL,
 
     IN_STREAM,
+    IN_STREAM_SUCCESS,
 
     IN_TEST_SUITE,
     IN_TEST_CASE,
@@ -68,7 +69,7 @@ typedef enum {
     IN_RESULT_BACKTRACE_INFO,
     IN_RESULT_ELAPSED,
 
-    IN_SUCCESS
+    IN_COMPLETE_TEST
 } ParseState;
 
 #define CUT_STREAM_PARSER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_STREAM_PARSER, CutStreamParserPrivate))
@@ -95,6 +96,13 @@ struct _StartTest
     CutTestContext *test_context;
 };
 
+typedef struct _CompleteTest CompleteTest;
+struct _CompleteTest
+{
+    CutTest *test;
+    CutTestContext *test_context;
+};
+
 typedef struct _CutStreamParserPrivate	CutStreamParserPrivate;
 struct _CutStreamParserPrivate
 {
@@ -107,6 +115,7 @@ struct _CutStreamParserPrivate
     ReadyTestSuite *ready_test_suite;
     ReadyTestCase *ready_test_case;
     StartTest *start_test;
+    CompleteTest *complete_test;
     CutTestSuite *test_suite;
     CutTestCase *test_case;
     CutTest *test;
@@ -223,6 +232,7 @@ cut_stream_parser_init (CutStreamParser *stream_parser)
     priv->ready_test_suite = NULL;
     priv->ready_test_case = NULL;
     priv->start_test = NULL;
+    priv->complete_test = NULL;
     priv->test_suite = NULL;
     priv->test_case = NULL;
     priv->test = NULL;
@@ -273,6 +283,22 @@ start_test_free (StartTest *start_test)
     g_slice_free(StartTest, start_test);
 }
 
+static CompleteTest *
+complete_test_new (void)
+{
+    return g_slice_new0(CompleteTest);
+}
+
+static void
+complete_test_free (CompleteTest *complete_test)
+{
+    if (complete_test->test)
+        g_object_unref(complete_test->test);
+    if (complete_test->test_context)
+        g_object_unref(complete_test->test_context);
+    g_slice_free(CompleteTest, complete_test);
+}
+
 static void
 dispose (GObject *object)
 {
@@ -316,6 +342,11 @@ dispose (GObject *object)
     if (priv->start_test) {
         start_test_free(priv->start_test);
         priv->start_test = NULL;
+    }
+
+    if (priv->complete_test) {
+        complete_test_free(priv->complete_test);
+        priv->complete_test = NULL;
     }
 
     G_OBJECT_CLASS(cut_stream_parser_parent_class)->dispose(object);
@@ -487,8 +518,11 @@ start_element_handler (GMarkupParseContext *context,
         } else if (g_ascii_strcasecmp("start-test", element_name) == 0) {
             PUSH_STATE(priv, IN_START_TEST);
             priv->start_test = start_test_new();
+        } else if (g_ascii_strcasecmp("complete-test", element_name) == 0) {
+            PUSH_STATE(priv, IN_COMPLETE_TEST);
+            priv->complete_test = complete_test_new();
         } else if (g_ascii_strcasecmp("success", element_name) == 0) {
-            PUSH_STATE(priv, IN_SUCCESS);
+            PUSH_STATE(priv, IN_STREAM_SUCCESS);
         } else {
             invalid_element(context, error);
         }
@@ -571,6 +605,19 @@ start_element_handler (GMarkupParseContext *context,
             PUSH_STATE(priv, IN_RESULT_BACKTRACE);
         } else if (g_ascii_strcasecmp("elapsed", element_name) == 0) {
             PUSH_STATE(priv, IN_RESULT_ELAPSED);
+        } else {
+            invalid_element(context, error);
+        }
+        break;
+      case IN_COMPLETE_TEST:
+        if (g_ascii_strcasecmp("test", element_name) == 0) {
+            PUSH_STATE(priv, IN_TEST);
+            priv->complete_test->test = cut_test_new_empty();
+            priv->test = priv->complete_test->test;
+        } else if (g_ascii_strcasecmp("test-context", element_name) == 0) {
+            PUSH_STATE(priv, IN_TEST_CONTEXT);
+            priv->complete_test->test_context = cut_test_context_new_empty();
+            priv->test_context = priv->complete_test->test_context;
         } else {
             invalid_element(context, error);
         }
@@ -713,6 +760,16 @@ end_element_handler (GMarkupParseContext *context,
                                       priv->start_test->test_context);
             start_test_free(priv->start_test);
             priv->start_test = NULL;
+        }
+        break;
+      case IN_COMPLETE_TEST:
+        if (priv->complete_test) {
+            if (priv->run_context)
+                g_signal_emit_by_name(priv->run_context, "complete-test",
+                                      priv->complete_test->test,
+                                      priv->complete_test->test_context);
+            complete_test_free(priv->complete_test);
+            priv->complete_test = NULL;
         }
         break;
       default:
@@ -936,7 +993,7 @@ text_handler (GMarkupParseContext *context,
       case IN_TEST_CONTEXT_FAILED:
         cut_test_context_set_failed(priv->test_context, string_to_boolean(text));
         break;
-      case IN_SUCCESS:
+      case IN_STREAM_SUCCESS:
         priv->success = string_to_boolean(text);
       default:
         break;
