@@ -1,5 +1,7 @@
 2008-05-18  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-pipeline.c: use CutStreamParser.
+
 	* cutter/cut-stream-parser.c, test/test-cut-stream-parser.c:
 	support <test-result> and <test-case-result>.
 

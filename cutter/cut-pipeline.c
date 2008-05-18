@@ -30,6 +30,7 @@
 #include "cut-pipeline.h"
 #include "cut-test-result.h"
 #include "cut-runner.h"
+#include "cut-stream-parser.h"
 #include "cut-experimental.h"
 
 #define CUT_PIPELINE_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_PIPELINE, CutPipelinePrivate))
@@ -43,7 +44,7 @@ struct _CutPipelinePrivate
     gchar *target_directory;
     GIOChannel *stdout_io;
     gboolean eof;
-    GString *cutter_string;
+    CutStreamParser *parser;
 };
 
 enum
@@ -106,7 +107,7 @@ cut_pipeline_init (CutPipeline *pipeline)
     priv->stdout_io        = NULL;
     priv->eof              = FALSE;
 
-    priv->cutter_string = g_string_new(NULL);
+    priv->parser = NULL;
 }
 
 static void
@@ -203,9 +204,9 @@ dispose (GObject *object)
         priv->target_directory = NULL;
     }
 
-    if (priv->cutter_string) {
-        g_string_free(priv->cutter_string, TRUE);
-        priv->cutter_string = NULL;
+    if (priv->parser) {
+        g_object_unref(priv->parser);
+        priv->parser = NULL;
     }
 
     G_OBJECT_CLASS(cut_pipeline_parent_class)->dispose(object);
@@ -230,6 +231,10 @@ reap_child (CutPipeline *pipeline, GPid pid)
     remove_child_watch_func(priv);
     shutdown_io_channel(priv);
     close_child(priv);
+    if (priv->parser) {
+        g_object_unref(priv->parser);
+        priv->parser = NULL;
+    }
 }
 
 static void
@@ -274,41 +279,7 @@ read_line (CutPipeline *pipeline, GIOChannel *channel)
 
     if ((status == G_IO_STATUS_NORMAL || status == G_IO_STATUS_EOF) &&
         line_string) {
-        g_string_append(priv->cutter_string, line_string);
-        if (g_regex_match_simple("</result>", line_string, 0, 0)) {
-            CutTestResult *result;
-
-            result = cut_test_result_new_from_xml(priv->cutter_string->str,
-                                                  priv->cutter_string->len);
-            if (result) {
-                CutTest *test;
-                CutTestCase *test_case;
-                CutTestSuite *test_suite;
-                CutTestContext *context;
-                CutTestResultStatus status;
-                gboolean failed;
-                const gchar *signal_name;
-
-                test = cut_test_result_get_test(result);
-                test_case = cut_test_result_get_test_case(result);
-                test_suite = cut_test_result_get_test_suite(result);
-                status = cut_test_result_get_status(result);
-                signal_name = cut_test_result_status_to_signal_name(status);
-
-                context = cut_test_context_new(test_suite, test_case, test);
-                failed = cut_test_result_status_is_critical(status);
-                cut_test_context_set_failed(context, failed);
-
-                cut_run_context_prepare_test(CUT_RUN_CONTEXT(pipeline), test);
-                g_signal_emit_by_name(test, "start");
-                g_signal_emit_by_name(test, signal_name, context, result);
-                g_signal_emit_by_name(test, "complete");
-
-                g_object_unref(context);
-                g_object_unref(result);
-            }
-            g_string_truncate(priv->cutter_string, 0);
-        }
+        cut_stream_parser_parse(priv->parser, line_string, -1, NULL);
     }
 
     if (status == G_IO_STATUS_EOF)
@@ -401,6 +372,7 @@ run_async (CutPipeline *pipeline)
         return;
     }
 
+    priv->parser = cut_stream_parser_new(CUT_RUN_CONTEXT(pipeline));
     priv->eof = FALSE;
     priv->stdout_io = create_io_channel(pipeline, std_out);
     priv->process_source_id = g_child_watch_add(priv->pid,
