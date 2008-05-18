@@ -38,6 +38,37 @@ static CutRunContext *cuttest_event_receiver_new       (void);
 
 G_DEFINE_TYPE(CuttestEventReceiver, cuttest_event_receiver, CUT_TYPE_RUN_CONTEXT)
 
+typedef struct _ReadyTestSuiteInfo
+{
+    CutTestSuite *test_suite;
+    gint n_test_cases;
+    gint n_tests;
+} ReadyTestSuiteInfo;
+
+static ReadyTestSuiteInfo *
+ready_test_suite_info_new (CutTestSuite *test_suite, gint n_test_cases,
+                           gint n_tests)
+{
+    ReadyTestSuiteInfo *info;
+
+    info = g_slice_new(ReadyTestSuiteInfo);
+    info->test_suite = test_suite;
+    if (info->test_suite)
+        g_object_ref(info->test_suite);
+    info->n_test_cases = n_test_cases;
+    info->n_tests = n_tests;
+
+    return info;
+}
+
+static void
+ready_test_suite_info_free (ReadyTestSuiteInfo *info)
+{
+    if (info->test_suite)
+        g_object_unref(info->test_suite);
+    g_slice_free(ReadyTestSuiteInfo, info);
+}
+
 static void
 dispose (GObject *object)
 {
@@ -46,7 +77,8 @@ dispose (GObject *object)
     receiver = CUTTEST_EVENT_RECEIVER(object);
 
     if (receiver->ready_test_suites) {
-        g_list_foreach(receiver->ready_test_suites, (GFunc)g_free, NULL);
+        g_list_foreach(receiver->ready_test_suites,
+                       (GFunc)ready_test_suite_info_free, NULL);
         g_list_free(receiver->ready_test_suites);
         receiver->ready_test_suites = NULL;
     }
@@ -66,13 +98,6 @@ start_run (CutRunContext *context)
     receiver->n_start_runs++;
 }
 
-typedef struct _ReadyTestSuiteInfo
-{
-    const gchar *test_suite_name;
-    gint n_test_cases;
-    gint n_tests;
-} ReadyTestSuiteInfo;
-
 static void
 ready_test_suite (CutRunContext *context, CutTestSuite *test_suite,
                   guint n_test_cases, guint n_tests)
@@ -80,13 +105,8 @@ ready_test_suite (CutRunContext *context, CutTestSuite *test_suite,
     CuttestEventReceiver *receiver;
     ReadyTestSuiteInfo *info;
 
-    info = g_new(ReadyTestSuiteInfo, 1);
-    info->test_suite_name =
-        cut_take_string(g_strdup(cut_test_get_name(CUT_TEST(test_suite))));
-    info->n_test_cases = n_test_cases;
-    info->n_tests = n_tests;
-
     receiver = CUTTEST_EVENT_RECEIVER(context);
+    info = ready_test_suite_info_new(test_suite, n_test_cases, n_tests);
     receiver->ready_test_suites =
         g_list_append(receiver->ready_test_suites, info);
 }
@@ -297,7 +317,8 @@ test_ready_test_suite (void)
     cut_assert_equal_int(1, g_list_length(receiver->ready_test_suites));
 
     info = receiver->ready_test_suites->data;
-    cut_assert_equal_string(NULL, info->test_suite_name);
+    cut_assert_not_null(info->test_suite);
+    cut_assert_equal_string(NULL, cut_test_get_name(CUT_TEST(info->test_suite)));
     cut_assert_equal_int(3, info->n_test_cases);
     cut_assert_equal_int(7, info->n_tests);
 }
