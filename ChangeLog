@@ -1,3 +1,8 @@
+2008-05-19  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-runner.c, cutter/cut-pipeline.c: Nullify unused
+	interface function to fix seg fault.
+
 2008-05-19  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-test-result.c: add <entry> into <backtrace>.

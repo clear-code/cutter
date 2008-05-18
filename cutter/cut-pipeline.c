@@ -115,6 +115,7 @@ runner_init (CutRunnerIface *iface)
 {
     parent_runner_iface = g_type_interface_peek_parent(iface);
     iface->run_async = runner_run_async;
+    iface->run       = NULL;
 }
 
 static void
