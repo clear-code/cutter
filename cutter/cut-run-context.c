@@ -960,8 +960,7 @@ cb_success_test_case (CutTestCase *test_case, CutTestContext *test_context,
 {
     CutRunContext *context = data;
 
-    g_signal_emit(context, signals[SUCCESS_TEST_CASE], 0,
-                  test_case, test_context, result);
+    g_signal_emit(context, signals[SUCCESS_TEST_CASE], 0, test_case, result);
 }
 
 static void
