@@ -593,7 +593,6 @@ _invalid_element (GMarkupParseContext *context, GError **error,
         g_string_prepend(string, "/");
     }
 
-    g_print("invalid element: %s: %s:%d:", string->str, file, line);
     set_parse_error(context, error,
                     "invalid element: %s: %s:%d:", string->str, file, line);
     g_string_free(string, TRUE);
