@@ -142,22 +142,25 @@ test_report_success (void)
 void
 test_report_failure (void)
 {
-    gchar expected[] = "  <result>\n"
-                       "    <test-case>\n"
-                       "      <name>dummy test case</name>\n"
-                       "    </test-case>\n"
-                       "    <test>\n"
-                       "      <name>dummy-failure-test</name>\n"
-                       "    </test>\n"
-                       "    <status>failure</status>\n"
-                       "    <detail>This test should fail</detail>\n"
-                       "    <backtrace>\n"
-                       "      <file>test-cut-report-xml.c</file>\n"
-                       "      <line>27</line>\n"
-                       "      <info>dummy_failure_test()</info>\n"
-                       "    </backtrace>\n"
-                       "    <elapsed>0.000100</elapsed>\n"
-                       "  </result>\n";
+    gchar expected[] =
+        "  <result>\n"
+        "    <test-case>\n"
+        "      <name>dummy test case</name>\n"
+        "    </test-case>\n"
+        "    <test>\n"
+        "      <name>dummy-failure-test</name>\n"
+        "    </test>\n"
+        "    <status>failure</status>\n"
+        "    <detail>This test should fail</detail>\n"
+        "    <backtrace>\n"
+        "      <entry>\n"
+        "        <file>test-cut-report-xml.c</file>\n"
+        "        <line>27</line>\n"
+        "        <info>dummy_failure_test()</info>\n"
+        "      </entry>\n"
+        "    </backtrace>\n"
+        "    <elapsed>0.000100</elapsed>\n"
+        "  </result>\n";
 
     test_object = cut_test_new("dummy-failure-test", dummy_failure_test);
     g_signal_connect_after(test_object, "failure",
@@ -175,22 +178,25 @@ test_report_failure (void)
 void
 test_report_pending (void)
 {
-    gchar expected[] = "  <result>\n"
-                       "    <test-case>\n"
-                       "      <name>dummy test case</name>\n"
-                       "    </test-case>\n"
-                       "    <test>\n"
-                       "      <name>dummy-pending-test</name>\n"
-                       "    </test>\n"
-                       "    <status>pending</status>\n"
-                       "    <detail>This test has been pending ever!</detail>\n"
-                       "    <backtrace>\n"
-                       "      <file>test-cut-report-xml.c</file>\n"
-                       "      <line>39</line>\n"
-                       "      <info>dummy_pending_test()</info>\n"
-                       "    </backtrace>\n"
-                       "    <elapsed>0.000100</elapsed>\n"
-                       "  </result>\n";
+    gchar expected[] =
+        "  <result>\n"
+        "    <test-case>\n"
+        "      <name>dummy test case</name>\n"
+        "    </test-case>\n"
+        "    <test>\n"
+        "      <name>dummy-pending-test</name>\n"
+        "    </test>\n"
+        "    <status>pending</status>\n"
+        "    <detail>This test has been pending ever!</detail>\n"
+        "    <backtrace>\n"
+        "      <entry>\n"
+        "        <file>test-cut-report-xml.c</file>\n"
+        "        <line>39</line>\n"
+        "        <info>dummy_pending_test()</info>\n"
+        "      </entry>\n"
+        "    </backtrace>\n"
+        "    <elapsed>0.000100</elapsed>\n"
+        "  </result>\n";
 
     test_object = cut_test_new("dummy-pending-test", dummy_pending_test);
     g_signal_connect_after(test_object, "pending",
@@ -208,22 +214,25 @@ test_report_pending (void)
 void
 test_report_notification (void)
 {
-    gchar expected[] = "  <result>\n"
-                       "    <test-case>\n"
-                       "      <name>dummy test case</name>\n"
-                       "    </test-case>\n"
-                       "    <test>\n"
-                       "      <name>dummy-notification-test</name>\n"
-                       "    </test>\n"
-                       "    <status>notification</status>\n"
-                       "    <detail>This test has been notifable ever!</detail>\n"
-                       "    <backtrace>\n"
-                       "      <file>test-cut-report-xml.c</file>\n"
-                       "      <line>45</line>\n"
-                       "      <info>dummy_notification_test()</info>\n"
-                       "    </backtrace>\n"
-                       "    <elapsed>0.000100</elapsed>\n"
-                       "  </result>\n";
+    gchar expected[] =
+        "  <result>\n"
+        "    <test-case>\n"
+        "      <name>dummy test case</name>\n"
+        "    </test-case>\n"
+        "    <test>\n"
+        "      <name>dummy-notification-test</name>\n"
+        "    </test>\n"
+        "    <status>notification</status>\n"
+        "    <detail>This test has been notifable ever!</detail>\n"
+        "    <backtrace>\n"
+        "      <entry>\n"
+        "        <file>test-cut-report-xml.c</file>\n"
+        "        <line>45</line>\n"
+        "        <info>dummy_notification_test()</info>\n"
+        "      </entry>\n"
+        "    </backtrace>\n"
+        "    <elapsed>0.000100</elapsed>\n"
+        "  </result>\n";
 
     test_object = cut_test_new("dummy-notification-test", dummy_notification_test);
     g_signal_connect_after(test_object, "notification",
@@ -241,22 +250,25 @@ test_report_notification (void)
 void
 test_report_error (void)
 {
-    gchar expected[] = "  <result>\n"
-                       "    <test-case>\n"
-                       "      <name>dummy test case</name>\n"
-                       "    </test-case>\n"
-                       "    <test>\n"
-                       "      <name>dummy-error-test</name>\n"
-                       "    </test>\n"
-                       "    <status>error</status>\n"
-                       "    <detail>This test should error</detail>\n"
-                       "    <backtrace>\n"
-                       "      <file>test-cut-report-xml.c</file>\n"
-                       "      <line>33</line>\n"
-                       "      <info>dummy_error_test()</info>\n"
-                       "    </backtrace>\n"
-                       "    <elapsed>0.000100</elapsed>\n"
-                       "  </result>\n";
+    gchar expected[] =
+        "  <result>\n"
+        "    <test-case>\n"
+        "      <name>dummy test case</name>\n"
+        "    </test-case>\n"
+        "    <test>\n"
+        "      <name>dummy-error-test</name>\n"
+        "    </test>\n"
+        "    <status>error</status>\n"
+        "    <detail>This test should error</detail>\n"
+        "    <backtrace>\n"
+        "      <entry>\n"
+        "        <file>test-cut-report-xml.c</file>\n"
+        "        <line>33</line>\n"
+        "        <info>dummy_error_test()</info>\n"
+        "      </entry>\n"
+        "    </backtrace>\n"
+        "    <elapsed>0.000100</elapsed>\n"
+        "  </result>\n";
 
     test_object = cut_test_new("dummy-error-test", dummy_error_test);
     g_signal_connect_after(test_object, "error",
@@ -274,32 +286,35 @@ test_report_error (void)
 void
 test_plural_reports (void)
 {
-    gchar expected[] = "  <result>\n"
-                       "    <test-case>\n"
-                       "      <name>dummy test case</name>\n"
-                       "    </test-case>\n"
-                       "    <test>\n"
-                       "      <name>dummy-error-test</name>\n"
-                       "    </test>\n"
-                       "    <status>error</status>\n"
-                       "    <detail>This test should error</detail>\n"
-                       "    <backtrace>\n"
-                       "      <file>test-cut-report-xml.c</file>\n"
-                       "      <line>33</line>\n"
-                       "      <info>dummy_error_test()</info>\n"
-                       "    </backtrace>\n"
-                       "    <elapsed>0.000100</elapsed>\n"
-                       "  </result>\n"
-                       "  <result>\n"
-                       "    <test-case>\n"
-                       "      <name>dummy test case</name>\n"
-                       "    </test-case>\n"
-                       "    <test>\n"
-                       "      <name>dummy-success-test</name>\n"
-                       "    </test>\n"
-                       "    <status>success</status>\n"
-                       "    <elapsed>0.000100</elapsed>\n"
-                       "  </result>\n";
+    gchar expected[] =
+        "  <result>\n"
+        "    <test-case>\n"
+        "      <name>dummy test case</name>\n"
+        "    </test-case>\n"
+        "    <test>\n"
+        "      <name>dummy-error-test</name>\n"
+        "    </test>\n"
+        "    <status>error</status>\n"
+        "    <detail>This test should error</detail>\n"
+        "    <backtrace>\n"
+        "      <entry>\n"
+        "        <file>test-cut-report-xml.c</file>\n"
+        "        <line>33</line>\n"
+        "        <info>dummy_error_test()</info>\n"
+        "      </entry>\n"
+        "    </backtrace>\n"
+        "    <elapsed>0.000100</elapsed>\n"
+        "  </result>\n"
+        "  <result>\n"
+        "    <test-case>\n"
+        "      <name>dummy test case</name>\n"
+        "    </test-case>\n"
+        "    <test>\n"
+        "      <name>dummy-success-test</name>\n"
+        "    </test>\n"
+        "    <status>success</status>\n"
+        "    <elapsed>0.000100</elapsed>\n"
+        "  </result>\n";
 
     test_object = cut_test_new("dummy-success-test", dummy_success_test);
     g_signal_connect_after(test_object, "success", G_CALLBACK(cb_test_signal), NULL);

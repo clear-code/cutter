@@ -66,9 +66,10 @@ typedef enum {
     IN_RESULT_STATUS,
     IN_RESULT_DETAIL,
     IN_RESULT_BACKTRACE,
-    IN_RESULT_BACKTRACE_FILE,
-    IN_RESULT_BACKTRACE_LINE,
-    IN_RESULT_BACKTRACE_INFO,
+    IN_RESULT_BACKTRACE_ENTRY,
+    IN_RESULT_BACKTRACE_ENTRY_FILE,
+    IN_RESULT_BACKTRACE_ENTRY_LINE,
+    IN_RESULT_BACKTRACE_ENTRY_INFO,
     IN_RESULT_ELAPSED,
 
     IN_COMPLETE_TEST,
@@ -835,12 +836,19 @@ start_element_handler (GMarkupParseContext *context,
         }
         break;
       case IN_RESULT_BACKTRACE:
+        if (g_str_equal("entry", element_name)) {
+            PUSH_STATE(priv, IN_RESULT_BACKTRACE_ENTRY);
+        } else {
+            invalid_element(context, error);
+        }
+        break;
+      case IN_RESULT_BACKTRACE_ENTRY:
         if (g_str_equal("file", element_name)) {
-            PUSH_STATE(priv, IN_RESULT_BACKTRACE_FILE);
+            PUSH_STATE(priv, IN_RESULT_BACKTRACE_ENTRY_FILE);
         } else if (g_str_equal("line", element_name)) {
-            PUSH_STATE(priv, IN_RESULT_BACKTRACE_LINE);
+            PUSH_STATE(priv, IN_RESULT_BACKTRACE_ENTRY_LINE);
         } else if (g_str_equal("info", element_name)) {
-            PUSH_STATE(priv, IN_RESULT_BACKTRACE_INFO);
+            PUSH_STATE(priv, IN_RESULT_BACKTRACE_ENTRY_INFO);
         } else {
             invalid_element(context, error);
         }
@@ -1257,13 +1265,13 @@ text_handler (GMarkupParseContext *context,
       case IN_RESULT_DETAIL:
         cut_test_result_set_message(priv->result, text);
         break;
-      case IN_RESULT_BACKTRACE_FILE:
+      case IN_RESULT_BACKTRACE_ENTRY_FILE:
         cut_test_result_set_filename(priv->result, text);
         break;
-      case IN_RESULT_BACKTRACE_LINE:
+      case IN_RESULT_BACKTRACE_ENTRY_LINE:
         set_line(context, priv, text, error);
         break;
-      case IN_RESULT_BACKTRACE_INFO:
+      case IN_RESULT_BACKTRACE_ENTRY_INFO:
         set_function_name(context, priv, text, error);
         break;
       case IN_RESULT_ELAPSED:

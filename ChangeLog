@@ -1,3 +1,9 @@
+2008-05-19  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-test-result.c: add <entry> into <backtrace>.
+	* test/test-cut-test-result.c, cutter/cut-stream-parser.c,
+	test/test-cut-stream-parser.c: follow the above change.
+
 2008-05-18  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-stream-parser.c, cutter/cut-pipeline.c: fix circular

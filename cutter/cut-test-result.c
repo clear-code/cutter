@@ -568,11 +568,16 @@ append_backtrace_to_string (GString *string, CutTestResult *result, guint indent
     if (priv->function_name)
         info_string = g_strdup_printf("%s()", priv->function_name);
 
-    append_element_with_children(string, indent, "backtrace",
+    cut_utils_append_indent(string, indent);
+    g_string_append(string, "<backtrace>\n");
+    append_element_with_children(string, indent + 2, "entry",
                                  "file", priv->filename,
                                  "line", line_string,
                                  "info", info_string,
                                  NULL);
+    cut_utils_append_indent(string, indent);
+    g_string_append(string, "</backtrace>\n");
+
     if (line_string)
         g_free(line_string);
     if (info_string)
