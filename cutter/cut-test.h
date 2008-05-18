@@ -77,7 +77,7 @@ struct _CutTestClass
                             CutTestResult  *result);
     void (*complete)       (CutTest        *test);
     void (*crashed)        (CutTest        *test,
-                            const gchar    *stack_trace);
+                            const gchar    *backtrace);
 
     gdouble      (*get_elapsed)  (CutTest *test);
 };

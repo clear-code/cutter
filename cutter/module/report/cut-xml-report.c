@@ -331,7 +331,7 @@ cb_complete_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
 }
 
 static void
-cb_crashed (CutRunContext *run_context, const gchar *stack_trace,
+cb_crashed (CutRunContext *run_context, const gchar *backtrace,
             CutXMLReport *report)
 {
 }

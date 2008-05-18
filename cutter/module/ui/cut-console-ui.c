@@ -657,13 +657,13 @@ cb_complete_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
 
     crashed = cut_run_context_is_crashed(run_context);
     if (crashed) {
-        const gchar *stack_trace;
+        const gchar *backtrace;
         print_with_color(console, CRASH_COLOR, "CRASH!!!");
         g_print("\n");
 
-        stack_trace = cut_run_context_get_stack_trace(run_context);
-        if (stack_trace)
-            g_print("%s\n", stack_trace);
+        backtrace = cut_run_context_get_backtrace(run_context);
+        if (backtrace)
+            g_print("%s\n", backtrace);
     }
 
     print_results(console, run_context);
@@ -677,7 +677,7 @@ cb_complete_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
 }
 
 static void
-cb_crashed (CutRunContext *run_context, const gchar *stack_trace,
+cb_crashed (CutRunContext *run_context, const gchar *backtrace,
             CutConsoleUI *console)
 {
     print_with_color(console, CRASH_COLOR, "!");

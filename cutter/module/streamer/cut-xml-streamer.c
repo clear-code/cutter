@@ -472,7 +472,7 @@ cb_complete_run (CutRunContext *run_context, gboolean success,
 }
 
 static void
-cb_crashed (CutRunContext *run_context, const gchar *stack_trace,
+cb_crashed (CutRunContext *run_context, const gchar *backtrace,
             CutXMLStreamer *streamer)
 {
     GString *string;
@@ -480,8 +480,7 @@ cb_crashed (CutRunContext *run_context, const gchar *stack_trace,
     string = g_string_new(NULL);
 
     g_string_append(string, "  <crashed>\n");
-    cut_utils_append_xml_element_with_value(string, 4,
-                                            "stack-trace", stack_trace);
+    cut_utils_append_xml_element_with_value(string, 4, "backtrace", backtrace);
     g_string_append(string, "  </crashed>\n");
 
     g_print(string->str);

@@ -51,7 +51,7 @@ struct _CutRunContextPrivate
     gboolean is_multi_thread;
     GMutex *mutex;
     gboolean crashed;
-    gchar *stack_trace;
+    gchar *backtrace;
     gchar *test_directory;
     gchar **exclude_files;
     gchar **exclude_dirs;
@@ -480,7 +480,7 @@ cut_run_context_init (CutRunContext *context)
     priv->is_multi_thread = FALSE;
     priv->mutex = g_mutex_new();
     priv->crashed = FALSE;
-    priv->stack_trace = NULL;
+    priv->backtrace = NULL;
     priv->test_directory = NULL;
     priv->source_directory = NULL;
     priv->exclude_files = NULL;
@@ -525,8 +525,8 @@ dispose (GObject *object)
         priv->listeners = NULL;
     }
 
-    g_free(priv->stack_trace);
-    priv->stack_trace = NULL;
+    g_free(priv->backtrace);
+    priv->backtrace = NULL;
 
     g_free(priv->source_directory);
     priv->source_directory = NULL;
@@ -1105,7 +1105,7 @@ cb_start_test_suite(CutTestSuite *test_suite, gpointer data)
 }
 
 static void
-cb_crashed_test_suite(CutTestSuite *test_suite, const gchar *stack_trace,
+cb_crashed_test_suite(CutTestSuite *test_suite, const gchar *backtrace,
                       gpointer data)
 {
     CutRunContext *context = data;
@@ -1113,10 +1113,10 @@ cb_crashed_test_suite(CutTestSuite *test_suite, const gchar *stack_trace,
 
     priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
     priv->crashed = TRUE;
-    g_free(priv->stack_trace);
-    priv->stack_trace = g_strdup(stack_trace);
+    g_free(priv->backtrace);
+    priv->backtrace = g_strdup(backtrace);
 
-    g_signal_emit(context, signals[CRASHED], 0, priv->stack_trace);
+    g_signal_emit(context, signals[CRASHED], 0, priv->backtrace);
 }
 
 static void
@@ -1217,9 +1217,9 @@ cut_run_context_is_crashed (CutRunContext *context)
 }
 
 const gchar *
-cut_run_context_get_stack_trace (CutRunContext *context)
+cut_run_context_get_backtrace (CutRunContext *context)
 {
-    return CUT_RUN_CONTEXT_GET_PRIVATE(context)->stack_trace;
+    return CUT_RUN_CONTEXT_GET_PRIVATE(context)->backtrace;
 }
 
 void

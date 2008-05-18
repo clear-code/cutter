@@ -48,7 +48,7 @@ enum
 };
 
 static jmp_buf jump_buffer;
-static gchar *stack_trace = NULL;
+static gchar *backtrace = NULL;
 
 static gint cut_test_suite_signals[LAST_SIGNAL] = {0};
 
@@ -176,7 +176,7 @@ run_with_thread (CutTestSuite *test_suite, CutTestCase *test_case,
 }
 
 static void
-read_stack_trace (int in_fd)
+read_backtrace (int in_fd)
 {
     GRegex *regex;
     GString *buffer;
@@ -192,17 +192,17 @@ read_stack_trace (int in_fd)
                         G_REGEX_MULTILINE | G_REGEX_DOTALL,
                         G_REGEX_MATCH_NEWLINE_ANY, NULL);
     if (regex) {
-        stack_trace = g_regex_replace(regex, buffer->str, buffer->len, 0,
-                                      "", 0, NULL);
+        backtrace = g_regex_replace(regex, buffer->str, buffer->len, 0,
+                                    "", 0, NULL);
         g_regex_unref(regex);
         g_string_free(buffer, TRUE);
     } else {
-        stack_trace = g_string_free(buffer, FALSE);
+        backtrace = g_string_free(buffer, FALSE);
     }
 }
 
 static void
-collect_stack_trace (void)
+collect_backtrace (void)
 {
     int fds[2];
     FILE *original_stdout, *pseudo_stdout;
@@ -225,7 +225,7 @@ collect_stack_trace (void)
     stdout = original_stdout;
     fclose(pseudo_stdout);
 
-    read_stack_trace(fds[0]);
+    read_backtrace(fds[0]);
 
     close(fds[0]);
     close(fds[1]);
@@ -234,9 +234,9 @@ collect_stack_trace (void)
 static void
 i_will_be_back_handler (int signum)
 {
-    g_free(stack_trace);
-    stack_trace = NULL;
-    collect_stack_trace();
+    g_free(backtrace);
+    backtrace = NULL;
+    collect_backtrace();
     longjmp(jump_buffer, signum);
 }
 
@@ -325,8 +325,8 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite, CutRunContext *run_cont
         break;
       case SIGSEGV:
         all_success = FALSE;
-        g_signal_emit_by_name(CUT_TEST(test_suite), "crashed", stack_trace);
-        g_free(stack_trace);
+        g_signal_emit_by_name(CUT_TEST(test_suite), "crashed", backtrace);
+        g_free(backtrace);
         break;
       default:
         break;

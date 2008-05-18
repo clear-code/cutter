@@ -126,7 +126,7 @@ struct _CutRunContextClass
                                  gboolean        success);
 
     void (*crashed)             (CutRunContext  *context,
-                                 const gchar    *stack_trace);
+                                 const gchar    *backtrace);
 };
 
 GType          cut_run_context_get_type  (void) G_GNUC_CONST;
@@ -175,7 +175,7 @@ guint          cut_run_context_get_n_omissions      (CutRunContext *context);
 const GList   *cut_run_context_get_results          (CutRunContext *context);
 
 gboolean       cut_run_context_is_crashed           (CutRunContext *context);
-const gchar   *cut_run_context_get_stack_trace      (CutRunContext *context);
+const gchar   *cut_run_context_get_backtrace        (CutRunContext *context);
 
 void           cut_run_context_cancel               (CutRunContext *context);
 gboolean       cut_run_context_is_canceled          (CutRunContext *context);

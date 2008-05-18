@@ -1371,7 +1371,7 @@ cb_complete_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
 typedef struct _CrashRowInfo
 {
     CutGtkUI *ui;
-    gchar *stack_trace;
+    gchar *backtrace;
 } CrashRowInfo;
 
 static gboolean
@@ -1387,26 +1387,26 @@ idle_cb_append_crash_row (gpointer data)
     gtk_tree_store_append(ui->logs, &iter, NULL);
     gtk_tree_store_set(ui->logs, &iter,
                        COLUMN_NAME, _("CRASHED!!!"),
-                       COLUMN_DESCRIPTION, info->stack_trace,
+                       COLUMN_DESCRIPTION, info->backtrace,
                        COLUMN_COLOR, "red",
                        -1);
     g_mutex_unlock(ui->mutex);
 
     g_object_unref(ui);
-    g_free(info->stack_trace);
+    g_free(info->backtrace);
     g_free(info);
 
     return FALSE;
 }
 
 static void
-cb_crashed (CutRunContext *run_context, const gchar *stack_trace, CutGtkUI *ui)
+cb_crashed (CutRunContext *run_context, const gchar *backtrace, CutGtkUI *ui)
 {
     CrashRowInfo *info;
 
     info = g_new0(CrashRowInfo, 1);
     info->ui = g_object_ref(ui);
-    info->stack_trace = g_strdup(stack_trace);
+    info->backtrace = g_strdup(backtrace);
 
     g_idle_add(idle_cb_append_crash_row, info);
 }
