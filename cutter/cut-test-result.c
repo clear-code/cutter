@@ -555,19 +555,28 @@ append_element_with_children (GString *string, guint indent,
 static void
 append_backtrace_to_string (GString *string, CutTestResult *result, guint indent)
 {
-    gchar *line_string, *info_string;
+    CutTestResultPrivate *priv;
+    gchar *line_string = NULL;
+    gchar *info_string = NULL;
 
-    line_string = g_strdup_printf("%d", cut_test_result_get_line(result));
-    info_string = g_strdup_printf("%s()",
-                                  cut_test_result_get_function_name(result));
+    priv = CUT_TEST_RESULT_GET_PRIVATE(result);
+    if (priv->filename == NULL && priv->function_name == NULL)
+        return;
+
+    if (priv->line > 0)
+        line_string = g_strdup_printf("%d", priv->line);
+    if (priv->function_name)
+        info_string = g_strdup_printf("%s()", priv->function_name);
 
     append_element_with_children(string, indent, "backtrace",
-                                 "file", cut_test_result_get_filename(result),
+                                 "file", priv->filename,
                                  "line", line_string,
                                  "info", info_string,
                                  NULL);
-    g_free(line_string);
-    g_free(info_string);
+    if (line_string)
+        g_free(line_string);
+    if (info_string)
+        g_free(info_string);
 }
 
 static void

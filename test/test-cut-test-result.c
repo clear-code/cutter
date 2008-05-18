@@ -13,6 +13,8 @@ void test_get_line(void);
 void test_status_to_signal_name(void);
 void test_status_is_critical(void);
 void test_get_test_suite(void);
+void test_to_xml_empty(void);
+void test_to_xml_empty_failure(void);
 
 static CutTestResult *result;
 static CutTestSuite *suite;
@@ -325,6 +327,33 @@ test_get_test_suite (void)
 
     cut_test_result_set_test_suite(result, NULL);
     cut_assert_null(cut_test_result_get_test_suite(result));
+}
+
+void
+test_to_xml_empty (void)
+{
+    gchar expected[] =
+        "<result>\n"
+        "  <status>success</status>\n"
+        "  <elapsed>0.000000</elapsed>\n"
+        "</result>\n";
+
+    result = cut_test_result_new_empty();
+    cut_assert_equal_string_with_free(expected, cut_test_result_to_xml(result));
+}
+
+void
+test_to_xml_empty_failure (void)
+{
+    gchar expected[] =
+        "<result>\n"
+        "  <status>failure</status>\n"
+        "  <elapsed>0.000000</elapsed>\n"
+        "</result>\n";
+
+    result = cut_test_result_new_empty();
+    cut_test_result_set_status(result, CUT_TEST_RESULT_FAILURE);
+    cut_assert_equal_string_with_free(expected, cut_test_result_to_xml(result));
 }
 
 /*
