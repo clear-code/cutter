@@ -67,7 +67,7 @@ struct _CutRunContextClass
                                  CutTest        *test,
                                  CutTestContext *test_context);
 
-    void (*pass_test)           (CutRunContext  *context,
+    void (*pass_assertion)      (CutRunContext  *context,
                                  CutTest        *test,
                                  CutTestContext *test_context);
     void (*success_test)        (CutRunContext  *context,

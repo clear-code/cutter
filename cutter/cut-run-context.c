@@ -91,7 +91,8 @@ enum
     START_TEST_CASE,
     START_TEST,
 
-    PASS_TEST,
+    PASS_ASSERTION,
+
     SUCCESS_TEST,
     FAILURE_TEST,
     ERROR_TEST,
@@ -284,11 +285,11 @@ cut_run_context_class_init (CutRunContextClass *klass)
                         G_TYPE_NONE, 2,
                         CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT);
 
-    signals[PASS_TEST]
-        = g_signal_new ("pass-test",
+    signals[PASS_ASSERTION]
+        = g_signal_new ("pass-assertion",
                         G_TYPE_FROM_CLASS (klass),
                         G_SIGNAL_RUN_LAST,
-                        G_STRUCT_OFFSET (CutRunContextClass, pass_test),
+                        G_STRUCT_OFFSET (CutRunContextClass, pass_assertion),
                         NULL, NULL,
                         _cut_marshal_VOID__OBJECT_OBJECT,
                         G_TYPE_NONE, 2, CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT);
@@ -798,7 +799,7 @@ cb_pass_assertion (CutTest *test, CutTestContext *test_context, gpointer data)
     priv->n_assertions++;
     g_mutex_unlock(priv->mutex);
 
-    g_signal_emit(context, signals[PASS_TEST], 0, test, test_context);
+    g_signal_emit(context, signals[PASS_ASSERTION], 0, test, test_context);
 }
 
 static void

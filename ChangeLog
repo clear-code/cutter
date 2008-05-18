@@ -1,5 +1,7 @@
 2008-05-18  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-run-context.[ch]: pass_test -> pass_assertion.
+
 	* cutter/cut-stream-parser.c, test/cut-test-stream-parser.c:
 	add multiple option name check.
 
