@@ -822,30 +822,22 @@ end_element_handler (GMarkupParseContext *context,
 static CutTestResultStatus
 result_name_to_status (const gchar *name)
 {
-    if (g_ascii_strcasecmp(name, "success")  == 0)
+    if (g_str_equal(name, "success"))
         return CUT_TEST_RESULT_SUCCESS;
-    else if (g_ascii_strcasecmp(name, "failure") == 0)
+    else if (g_str_equal(name, "failure"))
         return CUT_TEST_RESULT_FAILURE;
-    else if (g_ascii_strcasecmp(name, "error") == 0)
+    else if (g_str_equal(name, "error"))
          return CUT_TEST_RESULT_ERROR;
-    else if (g_ascii_strcasecmp(name, "pending") == 0)
+    else if (g_str_equal(name, "pending"))
          return CUT_TEST_RESULT_PENDING;
-    else if (g_ascii_strcasecmp(name, "notification") == 0)
+    else if (g_str_equal(name, "notification"))
         return CUT_TEST_RESULT_NOTIFICATION;
+    else if (g_str_equal(name, "notification"))
+        return CUT_TEST_RESULT_NOTIFICATION;
+    else if (g_str_equal(name, "omission"))
+        return CUT_TEST_RESULT_OMISSION;
 
     return CUT_TEST_RESULT_INVALID;
-}
-
-static void
-set_option_name (CutStreamParserPrivate *priv, const gchar *option_name)
-{
-    if (priv->option_name) {
-        g_free(priv->option_name);
-        priv->option_name = NULL;
-    }
-
-    if (option_name)
-        priv->option_name = g_strdup(option_name);
 }
 
 static void
@@ -863,6 +855,8 @@ set_option_value (GMarkupParseContext *context,
             CutTest *test;
             test = cut_test_result_get_test(priv->result);
             cut_test_set_attribute(test, priv->option_name, value);
+            g_free(priv->option_name);
+            priv->option_name = NULL;
         } else {
             set_parse_error(context, error, "option name is not set.");
         }
@@ -993,7 +987,11 @@ text_handler (GMarkupParseContext *context,
         }
         break;
       case IN_TEST_OPTION_NAME:
-        set_option_name(priv, text);
+        if (priv->option_name) {
+            set_parse_error(context, error, "multiple option name: %s", text);
+        } else {
+            priv->option_name = g_strdup(text);
+        }
         break;
       case IN_TEST_OPTION_VALUE:
         set_option_value(context, priv, text, error);

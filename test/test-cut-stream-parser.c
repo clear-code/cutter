@@ -1,13 +1,14 @@
 #include <gcutter.h>
 #include <cutter/cut-stream-parser.h>
 
-void test_parse (void);
 void test_start_run (void);
 void test_ready_test_suite (void);
 void test_start_test_suite (void);
 void test_ready_test_case (void);
 void test_start_test_case (void);
 void test_start_test (void);
+void test_start_test_with_multiple_option_names (void);
+void test_error_result (void);
 void test_complete_test (void);
 void test_complete_test_case (void);
 void test_complete_test_suite (void);
@@ -414,6 +415,17 @@ teardown (void)
     cut_assert_g_error(error);                                  \
 } while (0)
 
+#define cut_assert_parse_error(expected_message, string) do     \
+{                                                               \
+    GError *error = NULL;                                       \
+    const GError *taken_error = NULL;                           \
+    cut_stream_parser_parse(parser, (string), -1, &error);      \
+    cut_assert_not_null(error);                                 \
+    taken_error = cut_take_g_error(error);                      \
+    cut_assert_equal_string((expected_message),                 \
+                            taken_error->message);              \
+} while (0)
+
 static void
 collect_result (CutStreamParser *parser, CutTestResult *test_result,
                 gpointer user_data)
@@ -424,63 +436,6 @@ collect_result (CutStreamParser *parser, CutTestResult *test_result,
     *data = test_result;
 }
 
-void
-test_parse (void)
-{
-    const gchar xml[] =
-        "<stream>\n"
-        "  <result>\n"
-        "    <test-case>\n"
-        "      <name>dummy test case</name>\n"
-        "    </test-case>\n"
-        "    <test>\n"
-        "      <name>dummy-error-test</name>\n"
-        "      <description>Error Test</description>\n"
-        "      <option>\n"
-        "        <name>bug</name>\n"
-        "        <value>1234</value>\n"
-        "      </option>\n"
-        "    </test>\n"
-        "    <status>error</status>\n"
-        "    <detail>This test should error</detail>\n"
-        "    <backtrace>\n"
-        "      <file>test-cut-report-xml.c</file>\n"
-        "      <line>31</line>\n"
-        "      <info>dummy_error_test()</info>\n"
-        "    </backtrace>\n"
-        "    <elapsed>0.000100</elapsed>\n"
-        "  </result>\n"
-        "</stream>\n";
-    CutTest *test;
-
-    g_signal_connect(parser, "result",
-                     G_CALLBACK(collect_result), (gpointer)&result);
-
-    cut_assert_parse(xml);
-    cut_assert(result);
-
-    test = cut_test_result_get_test(result);
-    cut_assert(test);
-
-    cut_assert_equal_string("dummy test case",
-                            cut_test_result_get_test_case_name(result));
-    cut_assert_equal_string("dummy-error-test",
-                            cut_test_result_get_test_name(result));
-    cut_assert_equal_int(CUT_TEST_RESULT_ERROR,
-                         cut_test_result_get_status(result));
-    cut_assert_equal_double(0.0001, 0.0, cut_test_result_get_elapsed(result));
-    cut_assert_equal_int(31, cut_test_result_get_line(result));
-    cut_assert_equal_string("test-cut-report-xml.c",
-                            cut_test_result_get_filename(result));
-    cut_assert_equal_string("dummy_error_test",
-                            cut_test_result_get_function_name(result));
-    cut_assert_equal_string("This test should error",
-                            cut_test_result_get_message(result));
-    cut_assert_equal_string("1234",
-                            cut_test_get_attribute(test, "bug"));
-    cut_assert_equal_string("Error Test",
-                            cut_test_get_description(test));
-}
 
 void
 test_start_run (void)
@@ -491,7 +446,6 @@ test_start_run (void)
     cut_assert_true(cut_stream_parser_parse(parser, ">", -1, NULL));
     cut_assert_equal_int(1, receiver->n_start_runs);
 }
-
 
 void
 test_ready_test_suite (void)
@@ -700,6 +654,120 @@ test_start_test (void)
     test = cut_test_context_get_test(context);
     cut_assert_not_null(test);
     cut_assert_equal_string("my test", cut_test_get_name(test));
+}
+
+void
+test_start_test_with_multiple_option_names (void)
+{
+    gchar header[] =
+        "<stream>\n"
+        "  <ready-test-suite>\n"
+        "    <test-suite>\n"
+        "    </test-suite>\n"
+        "    <n-test-cases>3</n-test-cases>\n"
+        "    <n-tests>7</n-tests>\n"
+        "  </ready-test-suite>\n"
+        "  <start-test-suite>\n"
+        "    <test-suite>\n"
+        "    </test-suite>\n"
+        "  </start-test-suite>\n"
+        "  <ready-test-case>\n"
+        "    <test-case>\n"
+        "      <name>my test case</name>\n"
+        "    </test-case>\n"
+        "    <n-tests>2</n-tests>\n"
+        "  </ready-test-case>\n"
+        "  <start-test-case>\n"
+        "    <test-case>\n"
+        "      <name>my test case</name>\n"
+        "    </test-case>\n"
+        "  </start-test-case>\n";
+    gchar start_test[] =
+        "  <start-test>\n"
+        "    <test>\n"
+        "      <name>my test</name>\n"
+        "      <option>\n"
+        "        <name>name1</name>\n"
+        "        <name>name2</name>\n"
+        "        <value>value</value>\n"
+        "      </option>\n"
+        "    </test>\n"
+        "    <test-context>\n"
+        "      <test-suite>\n"
+        "      </test-suite>\n"
+        "      <test-case>\n"
+        "        <name>my test case</name>\n"
+        "      </test-case>\n"
+        "      <test>\n"
+        "        <name>my test</name>\n"
+        "      </test>\n"
+        "      <failed>FALSE</failed>\n"
+        "    </test-context>\n"
+        "  </start-test>\n";
+
+    cut_assert_parse(header);
+    cut_assert_null(0, receiver->start_tests);
+
+    cut_assert_parse_error("multiple option name: name2 at line 28 char 21.",
+                           start_test);
+}
+
+void
+test_error_result (void)
+{
+    const gchar xml[] =
+        "<stream>\n"
+        "  <result>\n"
+        "    <test-case>\n"
+        "      <name>dummy test case</name>\n"
+        "    </test-case>\n"
+        "    <test>\n"
+        "      <name>dummy-error-test</name>\n"
+        "      <description>Error Test</description>\n"
+        "      <option>\n"
+        "        <name>bug</name>\n"
+        "        <value>1234</value>\n"
+        "      </option>\n"
+        "    </test>\n"
+        "    <status>error</status>\n"
+        "    <detail>This test should error</detail>\n"
+        "    <backtrace>\n"
+        "      <file>test-cut-report-xml.c</file>\n"
+        "      <line>31</line>\n"
+        "      <info>dummy_error_test()</info>\n"
+        "    </backtrace>\n"
+        "    <elapsed>0.000100</elapsed>\n"
+        "  </result>\n"
+        "</stream>\n";
+    CutTest *test;
+
+    g_signal_connect(parser, "result",
+                     G_CALLBACK(collect_result), (gpointer)&result);
+
+    cut_assert_parse(xml);
+    cut_assert(result);
+
+    test = cut_test_result_get_test(result);
+    cut_assert(test);
+
+    cut_assert_equal_string("dummy test case",
+                            cut_test_result_get_test_case_name(result));
+    cut_assert_equal_string("dummy-error-test",
+                            cut_test_result_get_test_name(result));
+    cut_assert_equal_int(CUT_TEST_RESULT_ERROR,
+                         cut_test_result_get_status(result));
+    cut_assert_equal_double(0.0001, 0.0, cut_test_result_get_elapsed(result));
+    cut_assert_equal_int(31, cut_test_result_get_line(result));
+    cut_assert_equal_string("test-cut-report-xml.c",
+                            cut_test_result_get_filename(result));
+    cut_assert_equal_string("dummy_error_test",
+                            cut_test_result_get_function_name(result));
+    cut_assert_equal_string("This test should error",
+                            cut_test_result_get_message(result));
+    cut_assert_equal_string("1234",
+                            cut_test_get_attribute(test, "bug"));
+    cut_assert_equal_string("Error Test",
+                            cut_test_get_description(test));
 }
 
 void

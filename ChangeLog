@@ -1,5 +1,8 @@
 2008-05-18  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-stream-parser.c, test/cut-test-stream-parser.c:
+	add multiple option name check.
+
 	* cutter/cut-gassertions-helper.h (cut_take_g_error): add.
 
 	* cutter/cut-test-context.c, cutter/cut-gpublic.h
