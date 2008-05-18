@@ -70,6 +70,7 @@ CutTestCase *cut_test_case_new            (const gchar *name,
                                            startup_function,
                                            CutShutdownFunction
                                            shutdown_function);
+CutTestCase *cut_test_case_new_empty      (void);
 void         cut_test_case_add_test       (CutTestCase *test_case,
                                            CutTest *test);
 guint        cut_test_case_get_n_tests    (CutTestCase   *test_case,

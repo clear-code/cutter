@@ -270,6 +270,12 @@ cut_test_case_new (const gchar *name,
                         NULL);
 }
 
+CutTestCase *
+cut_test_case_new_empty (void)
+{
+    return g_object_new(CUT_TYPE_TEST_CASE, NULL);
+}
+
 static GList *
 get_filtered_tests (CutTestCase *test_case, gchar **test_names)
 {

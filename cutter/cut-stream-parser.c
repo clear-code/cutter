@@ -49,6 +49,9 @@ typedef enum {
 
     IN_START_TEST_SUITE,
 
+    IN_READY_TEST_CASE,
+    IN_READY_TEST_CASE_N_TESTS,
+
     IN_RESULT,
     IN_RESULT_STATUS,
     IN_RESULT_DETAIL,
@@ -71,6 +74,13 @@ struct _ReadyTestSuite
     gint n_tests;
 };
 
+typedef struct _ReadyTestCase ReadyTestCase;
+struct _ReadyTestCase
+{
+    CutTestCase *test_case;
+    gint n_tests;
+};
+
 typedef struct _CutStreamParserPrivate	CutStreamParserPrivate;
 struct _CutStreamParserPrivate
 {
@@ -81,6 +91,7 @@ struct _CutStreamParserPrivate
     gchar *option_name;
     gboolean success;
     ReadyTestSuite *ready_test_suite;
+    ReadyTestCase *ready_test_case;
     CutTestSuite *test_suite;
     CutTestCase *test_case;
     CutTest *test;
@@ -194,17 +205,38 @@ cut_stream_parser_init (CutStreamParser *stream_parser)
     priv->option_name = NULL;
     priv->success = TRUE;
     priv->ready_test_suite = NULL;
+    priv->ready_test_case = NULL;
     priv->test_suite = NULL;
     priv->test_case = NULL;
     priv->test = NULL;
 }
 
+static ReadyTestSuite *
+ready_test_suite_new (void)
+{
+    return g_slice_new0(ReadyTestSuite);
+}
+
 static void
-free_ready_test_suite (ReadyTestSuite *ready_test_suite)
+ready_test_suite_free (ReadyTestSuite *ready_test_suite)
 {
     if (ready_test_suite->test_suite)
         g_object_unref(ready_test_suite->test_suite);
     g_slice_free(ReadyTestSuite, ready_test_suite);
+}
+
+static ReadyTestCase *
+ready_test_case_new (void)
+{
+    return g_slice_new0(ReadyTestCase);
+}
+
+static void
+ready_test_case_free (ReadyTestCase *ready_test_case)
+{
+    if (ready_test_case->test_case)
+        g_object_unref(ready_test_case->test_case);
+    g_slice_free(ReadyTestCase, ready_test_case);
 }
 
 static void
@@ -238,8 +270,13 @@ dispose (GObject *object)
     }
 
     if (priv->ready_test_suite) {
-        free_ready_test_suite(priv->ready_test_suite);
+        ready_test_suite_free(priv->ready_test_suite);
         priv->ready_test_suite = NULL;
+    }
+
+    if (priv->ready_test_case) {
+        ready_test_case_free(priv->ready_test_case);
+        priv->ready_test_case = NULL;
     }
 
     G_OBJECT_CLASS(cut_stream_parser_parent_class)->dispose(object);
@@ -398,10 +435,13 @@ start_element_handler (GMarkupParseContext *context,
             priv->result = g_object_new(CUT_TYPE_TEST_RESULT, NULL);
         } else if (g_ascii_strcasecmp("ready-test-suite", element_name) == 0) {
             PUSH_STATE(priv, IN_READY_TEST_SUITE);
-            priv->ready_test_suite = g_slice_new0(ReadyTestSuite);
+            priv->ready_test_suite = ready_test_suite_new();
         } else if (g_ascii_strcasecmp("start-test-suite", element_name) == 0) {
             PUSH_STATE(priv, IN_START_TEST_SUITE);
-            priv->test_suite = NULL;
+            priv->test_suite = cut_test_suite_new();
+        } else if (g_ascii_strcasecmp("ready-test-case", element_name) == 0) {
+            PUSH_STATE(priv, IN_READY_TEST_CASE);
+            priv->ready_test_case = ready_test_case_new();;
         } else if (g_ascii_strcasecmp("success", element_name) == 0) {
             PUSH_STATE(priv, IN_SUCCESS);
         } else {
@@ -429,15 +469,23 @@ start_element_handler (GMarkupParseContext *context,
             invalid_element(context, error);
         }
         break;
+      case IN_READY_TEST_CASE:
+        if (g_ascii_strcasecmp("test-case", element_name) == 0) {
+            PUSH_STATE(priv, IN_TEST_CASE);
+            priv->ready_test_case->test_case = cut_test_case_new_empty();
+            priv->test_case = priv->ready_test_case->test_case;
+        } else if (g_ascii_strcasecmp("n-tests", element_name) == 0) {
+            PUSH_STATE(priv, IN_READY_TEST_CASE_N_TESTS);
+        } else {
+            invalid_element(context, error);
+        }
+        break;
       case IN_RESULT:
         if (g_ascii_strcasecmp("test-case", element_name) == 0) {
             CutTestCase *test_case;
 
             PUSH_STATE(priv, IN_TEST_CASE);
-            test_case = cut_test_case_new(NULL,
-                                          NULL, NULL,
-                                          NULL, NULL,
-                                          NULL, NULL);
+            test_case = cut_test_case_new_empty();
             cut_test_result_set_test_case(priv->result, test_case);
             priv->test_case = test_case;
             g_object_unref(test_case);
@@ -536,7 +584,7 @@ end_element_handler (GMarkupParseContext *context,
                                       priv->ready_test_suite->test_suite,
                                       priv->ready_test_suite->n_test_cases,
                                       priv->ready_test_suite->n_tests);
-            free_ready_test_suite(priv->ready_test_suite);
+            ready_test_suite_free(priv->ready_test_suite);
             priv->ready_test_suite = NULL;
         }
         break;
@@ -547,6 +595,16 @@ end_element_handler (GMarkupParseContext *context,
                                       priv->test_suite);
             g_object_unref(priv->test_suite);
             priv->test_suite = NULL;
+        }
+        break;
+      case IN_READY_TEST_CASE:
+        if (priv->ready_test_case) {
+            if (priv->run_context)
+                g_signal_emit_by_name(priv->run_context, "ready-test-case",
+                                      priv->ready_test_case->test_case,
+                                      priv->ready_test_case->n_tests);
+            ready_test_case_free(priv->ready_test_case);
+            priv->ready_test_case = NULL;
         }
         break;
       default:
@@ -757,6 +815,9 @@ text_handler (GMarkupParseContext *context,
         break;
       case IN_READY_TEST_SUITE_N_TESTS:
         priv->ready_test_suite->n_tests = atoi(text);
+        break;
+      case IN_READY_TEST_CASE_N_TESTS:
+        priv->ready_test_case->n_tests = atoi(text);
         break;
       case IN_SUCCESS:
         priv->success = g_ascii_strcasecmp("TRUE", text) == 0;

@@ -5,6 +5,7 @@ void test_parse (void);
 void test_start_run (void);
 void test_ready_test_suite (void);
 void test_start_test_suite (void);
+void test_ready_test_case (void);
 void test_complete_run_without_success_tag (void);
 void test_complete_run_with_success_true (void);
 void test_complete_run_with_success_false (void);
@@ -26,6 +27,7 @@ struct _CuttestEventReceiver
     gint n_start_runs;
     GList *ready_test_suites;
     GList *start_test_suites;
+    GList *ready_test_cases;
     GList *complete_runs;
 };
 
@@ -71,6 +73,34 @@ ready_test_suite_info_free (ReadyTestSuiteInfo *info)
     g_slice_free(ReadyTestSuiteInfo, info);
 }
 
+typedef struct _ReadyTestCaseInfo
+{
+    CutTestCase *test_case;
+    gint n_tests;
+} ReadyTestCaseInfo;
+
+static ReadyTestCaseInfo *
+ready_test_case_info_new (CutTestCase *test_case, gint n_tests)
+{
+    ReadyTestCaseInfo *info;
+
+    info = g_slice_new(ReadyTestCaseInfo);
+    info->test_case = test_case;
+    if (info->test_case)
+        g_object_ref(info->test_case);
+    info->n_tests = n_tests;
+
+    return info;
+}
+
+static void
+ready_test_case_info_free (ReadyTestCaseInfo *info)
+{
+    if (info->test_case)
+        g_object_unref(info->test_case);
+    g_slice_free(ReadyTestCaseInfo, info);
+}
+
 static void
 dispose (GObject *object)
 {
@@ -89,6 +119,13 @@ dispose (GObject *object)
         g_list_foreach(receiver->start_test_suites, (GFunc)g_object_unref, NULL);
         g_list_free(receiver->start_test_suites);
         receiver->start_test_suites = NULL;
+    }
+
+    if (receiver->ready_test_cases) {
+        g_list_foreach(receiver->ready_test_cases,
+                       (GFunc)ready_test_case_info_free, NULL);
+        g_list_free(receiver->ready_test_cases);
+        receiver->ready_test_cases = NULL;
     }
 
     if (receiver->complete_runs) {
@@ -130,6 +167,17 @@ start_test_suite (CutRunContext *context, CutTestSuite *test_suite)
 }
 
 static void
+ready_test_case (CutRunContext *context, CutTestCase *test_case, guint n_tests)
+{
+    CuttestEventReceiver *receiver;
+    ReadyTestCaseInfo *info;
+
+    receiver = CUTTEST_EVENT_RECEIVER(context);
+    info = ready_test_case_info_new(test_case, n_tests);
+    receiver->ready_test_cases = g_list_append(receiver->ready_test_cases, info);
+}
+
+static void
 complete_run (CutRunContext *context, gboolean success)
 {
     CuttestEventReceiver *receiver;
@@ -153,6 +201,7 @@ cuttest_event_receiver_class_init (CuttestEventReceiverClass *klass)
     run_context_class->start_run = start_run;
     run_context_class->ready_test_suite = ready_test_suite;
     run_context_class->start_test_suite = start_test_suite;
+    run_context_class->ready_test_case = ready_test_case;
     run_context_class->complete_run = complete_run;
 }
 
@@ -328,6 +377,35 @@ test_start_test_suite (void)
     test_suite = receiver->start_test_suites->data;
     cut_assert_not_null(test_suite);
     cut_assert_equal_string(NULL, cut_test_get_name(CUT_TEST(test_suite)));
+}
+
+void
+test_ready_test_case (void)
+{
+    ReadyTestCaseInfo *info;
+
+    cut_assert_parse("<stream>\n");
+    cut_assert_parse("  <ready-test-suite>\n");
+    cut_assert_parse("    <test-suite>\n");
+    cut_assert_parse("    </test-suite>\n");
+    cut_assert_parse("    <n-test-cases>3</n-test-cases>\n");
+    cut_assert_parse("    <n-tests>7</n-tests>\n");
+    cut_assert_parse("  </ready-test-suite>");
+    cut_assert_parse("  <ready-test-case>\n");
+    cut_assert_parse("    <test-case>\n");
+    cut_assert_parse("      <name>my test case</name>\n");
+    cut_assert_parse("    </test-case>\n");
+    cut_assert_parse("    <n-tests>2</n-tests>\n");
+
+    cut_assert_null(0, receiver->ready_test_cases);
+    cut_assert_parse("  </ready-test-case>");
+    cut_assert_equal_int(1, g_list_length(receiver->ready_test_cases));
+
+    info = receiver->ready_test_cases->data;
+    cut_assert_not_null(info->test_case);
+    cut_assert_equal_string("my test case",
+                            cut_test_get_name(CUT_TEST(info->test_case)));
+    cut_assert_equal_int(2, info->n_tests);
 }
 
 void
