@@ -26,6 +26,8 @@ G_BEGIN_DECLS
 
 GObject *cut_test_context_take_g_object (CutTestContext *context,
                                          GObject        *object);
+const GError *cut_test_context_take_g_error (CutTestContext *context,
+                                             GError         *error);
 
 G_END_DECLS
 

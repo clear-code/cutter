@@ -27,6 +27,9 @@ extern "C" {
 #define cut_take_g_object(object)                                       \
     cut_test_context_take_g_object(get_current_test_context(), (object))
 
+#define cut_take_g_error(error)                                         \
+    cut_test_context_take_g_error(get_current_test_context(), (error))
+
 #ifdef __cplusplus
 }
 #endif

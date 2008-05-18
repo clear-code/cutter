@@ -49,6 +49,7 @@ struct _CutTestContextPrivate
     GList *taken_strings;
     GList *taken_string_arrays;
     GList *taken_objects;
+    GList *taken_errors;
     gpointer user_data;
     GDestroyNotify user_data_destroy_notify;
     GList *processes;
@@ -125,6 +126,9 @@ cut_test_context_init (CutTestContext *context)
     priv->taken_strings = NULL;
     priv->taken_string_arrays = NULL;
 
+    priv->taken_objects = NULL;
+    priv->taken_errors = NULL;
+
     priv->user_data = NULL;
     priv->user_data_destroy_notify = NULL;
 
@@ -171,6 +175,12 @@ dispose (GObject *object)
         g_list_foreach(priv->taken_objects, (GFunc)g_object_unref, NULL);
         g_list_free(priv->taken_objects);
         priv->taken_objects = NULL;
+    }
+
+    if (priv->taken_errors) {
+        g_list_foreach(priv->taken_errors, (GFunc)g_error_free, NULL);
+        g_list_free(priv->taken_errors);
+        priv->taken_errors = NULL;
     }
 
     if (priv->user_data && priv->user_data_destroy_notify)
@@ -498,6 +508,20 @@ cut_test_context_take_g_object (CutTestContext *context,
     priv->taken_objects = g_list_prepend(priv->taken_objects, object);
 
     return object;
+}
+
+const GError *
+cut_test_context_take_g_error (CutTestContext *context, GError *error)
+{
+    CutTestContextPrivate *priv;
+    GError *taken_error;
+
+    priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+    taken_error = g_error_copy(error);
+    g_error_free(error);
+    priv->taken_errors = g_list_prepend(priv->taken_errors, taken_error);
+
+    return taken_error;
 }
 
 int
