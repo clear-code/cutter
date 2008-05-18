@@ -1,6 +1,9 @@
 2008-05-18  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-stream-parser.c, test/cut-test-stream-parser.c:
+	support <complete-test-case> and <complete-test-suite>.
+
+	* cutter/cut-stream-parser.c, test/cut-test-stream-parser.c:
 	support <complete-test>.
 
 	* cutter/cut-stream-parser.c, test/cut-test-stream-parser.c:

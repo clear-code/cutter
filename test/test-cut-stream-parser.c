@@ -9,6 +9,8 @@ void test_ready_test_case (void);
 void test_start_test_case (void);
 void test_start_test (void);
 void test_complete_test (void);
+void test_complete_test_case (void);
+void test_complete_test_suite (void);
 void test_complete_run_without_success_tag (void);
 void test_complete_run_with_success_true (void);
 void test_complete_run_with_success_false (void);
@@ -34,6 +36,8 @@ struct _CuttestEventReceiver
     GList *start_test_cases;
     GList *start_tests;
     GList *complete_tests;
+    GList *complete_test_cases;
+    GList *complete_test_suites;
     GList *complete_runs;
 };
 
@@ -198,6 +202,12 @@ dispose (GObject *object)
         receiver->ready_test_cases = NULL;
     }
 
+    if (receiver->start_test_cases) {
+        g_list_foreach(receiver->start_test_cases, (GFunc)g_object_unref, NULL);
+        g_list_free(receiver->start_test_cases);
+        receiver->start_test_cases = NULL;
+    }
+
     if (receiver->start_tests) {
         g_list_foreach(receiver->start_tests,
                        (GFunc)start_test_info_free, NULL);
@@ -210,6 +220,20 @@ dispose (GObject *object)
                        (GFunc)complete_test_info_free, NULL);
         g_list_free(receiver->complete_tests);
         receiver->complete_tests = NULL;
+    }
+
+    if (receiver->complete_test_cases) {
+        g_list_foreach(receiver->complete_test_cases,
+                       (GFunc)g_object_unref, NULL);
+        g_list_free(receiver->complete_test_cases);
+        receiver->complete_test_cases = NULL;
+    }
+
+    if (receiver->complete_test_suites) {
+        g_list_foreach(receiver->complete_test_suites,
+                       (GFunc)g_object_unref, NULL);
+        g_list_free(receiver->complete_test_suites);
+        receiver->complete_test_suites = NULL;
     }
 
     if (receiver->complete_runs) {
@@ -295,6 +319,26 @@ complete_test (CutRunContext *context, CutTest *test,
 }
 
 static void
+complete_test_case (CutRunContext *context, CutTestCase *test_case)
+{
+    CuttestEventReceiver *receiver;
+
+    receiver = CUTTEST_EVENT_RECEIVER(context);
+    receiver->complete_test_cases =
+        g_list_append(receiver->complete_test_cases, g_object_ref(test_case));
+}
+
+static void
+complete_test_suite (CutRunContext *context, CutTestSuite *test_suite)
+{
+    CuttestEventReceiver *receiver;
+
+    receiver = CUTTEST_EVENT_RECEIVER(context);
+    receiver->complete_test_suites =
+        g_list_append(receiver->complete_test_suites, g_object_ref(test_suite));
+}
+
+static void
 complete_run (CutRunContext *context, gboolean success)
 {
     CuttestEventReceiver *receiver;
@@ -322,6 +366,8 @@ cuttest_event_receiver_class_init (CuttestEventReceiverClass *klass)
     run_context_class->start_test_case = start_test_case;
     run_context_class->start_test = start_test;
     run_context_class->complete_test = complete_test;
+    run_context_class->complete_test_case = complete_test_case;
+    run_context_class->complete_test_suite = complete_test_suite;
     run_context_class->complete_run = complete_run;
 }
 
@@ -749,6 +795,165 @@ test_complete_test (void)
     test = cut_test_context_get_test(context);
     cut_assert_not_null(test);
     cut_assert_equal_string("my test", cut_test_get_name(test));
+}
+
+void
+test_complete_test_case (void)
+{
+    CutTestCase *test_case;
+    gchar header[] =
+        "<stream>\n"
+        "  <ready-test-suite>\n"
+        "    <test-suite>\n"
+        "    </test-suite>\n"
+        "    <n-test-cases>3</n-test-cases>\n"
+        "    <n-tests>7</n-tests>\n"
+        "  </ready-test-suite>\n"
+        "  <start-test-suite>\n"
+        "    <test-suite>\n"
+        "    </test-suite>\n"
+        "  </start-test-suite>\n"
+        "  <ready-test-case>\n"
+        "    <test-case>\n"
+        "      <name>my test case</name>\n"
+        "    </test-case>\n"
+        "    <n-tests>2</n-tests>\n"
+        "  </ready-test-case>\n"
+        "  <start-test-case>\n"
+        "    <test-case>\n"
+        "      <name>my test case</name>\n"
+        "    </test-case>\n"
+        "  </start-test-case>\n"
+        "  <start-test>\n"
+        "    <test>\n"
+        "      <name>my test</name>\n"
+        "    </test>\n"
+        "    <test-context>\n"
+        "      <test-suite>\n"
+        "      </test-suite>\n"
+        "      <test-case>\n"
+        "        <name>my test case</name>\n"
+        "      </test-case>\n"
+        "      <test>\n"
+        "        <name>my test</name>\n"
+        "      </test>\n"
+        "      <failed>FALSE</failed>\n"
+        "    </test-context>\n"
+        "  </start-test>\n"
+        "  <complete-test>\n"
+        "    <test>\n"
+        "      <name>my test</name>\n"
+        "    </test>\n"
+        "    <test-context>\n"
+        "      <test-suite>\n"
+        "      </test-suite>\n"
+        "      <test-case>\n"
+        "        <name>my test case</name>\n"
+        "      </test-case>\n"
+        "      <test>\n"
+        "        <name>my test</name>\n"
+        "      </test>\n"
+        "      <failed>TRUE</failed>\n"
+        "    </test-context>\n"
+        "  </complete-test>\n";
+    gchar complete_test_case[] =
+        "  <complete-test-case>\n"
+        "    <test-case>\n"
+        "      <name>my test case</name>\n"
+        "    </test-case>\n"
+        "  </complete-test-case>\n";
+
+    cut_assert_parse(header);
+    cut_assert_null(0, receiver->complete_test_cases);
+
+    cut_assert_parse(complete_test_case);
+    cut_assert_equal_int(1, g_list_length(receiver->complete_test_cases));
+
+    test_case = receiver->complete_test_cases->data;
+    cut_assert_not_null(test_case);
+    cut_assert_equal_string("my test case",
+                            cut_test_get_name(CUT_TEST(test_case)));
+}
+
+void
+test_complete_test_suite (void)
+{
+    CutTestSuite *test_suite;
+    gchar header[] =
+        "<stream>\n"
+        "  <ready-test-suite>\n"
+        "    <test-suite>\n"
+        "    </test-suite>\n"
+        "    <n-test-cases>3</n-test-cases>\n"
+        "    <n-tests>7</n-tests>\n"
+        "  </ready-test-suite>\n"
+        "  <start-test-suite>\n"
+        "    <test-suite>\n"
+        "    </test-suite>\n"
+        "  </start-test-suite>\n"
+        "  <ready-test-case>\n"
+        "    <test-case>\n"
+        "      <name>my test case</name>\n"
+        "    </test-case>\n"
+        "    <n-tests>2</n-tests>\n"
+        "  </ready-test-case>\n"
+        "  <start-test-case>\n"
+        "    <test-case>\n"
+        "      <name>my test case</name>\n"
+        "    </test-case>\n"
+        "  </start-test-case>\n"
+        "  <start-test>\n"
+        "    <test>\n"
+        "      <name>my test</name>\n"
+        "    </test>\n"
+        "    <test-context>\n"
+        "      <test-suite>\n"
+        "      </test-suite>\n"
+        "      <test-case>\n"
+        "        <name>my test case</name>\n"
+        "      </test-case>\n"
+        "      <test>\n"
+        "        <name>my test</name>\n"
+        "      </test>\n"
+        "      <failed>FALSE</failed>\n"
+        "    </test-context>\n"
+        "  </start-test>\n"
+        "  <complete-test>\n"
+        "    <test>\n"
+        "      <name>my test</name>\n"
+        "    </test>\n"
+        "    <test-context>\n"
+        "      <test-suite>\n"
+        "      </test-suite>\n"
+        "      <test-case>\n"
+        "        <name>my test case</name>\n"
+        "      </test-case>\n"
+        "      <test>\n"
+        "        <name>my test</name>\n"
+        "      </test>\n"
+        "      <failed>TRUE</failed>\n"
+        "    </test-context>\n"
+        "  </complete-test>\n"
+        "  <complete-test-case>\n"
+        "    <test-case>\n"
+        "      <name>my test case</name>\n"
+        "    </test-case>\n"
+        "  </complete-test-case>\n";
+    gchar complete_test_suite[] =
+        "  <complete-test-suite>\n"
+        "    <test-suite>\n"
+        "    </test-suite>\n"
+        "  </complete-test-suite>\n";
+
+    cut_assert_parse(header);
+    cut_assert_null(0, receiver->complete_test_suites);
+
+    cut_assert_parse(complete_test_suite);
+    cut_assert_equal_int(1, g_list_length(receiver->complete_test_suites));
+
+    test_suite = receiver->complete_test_suites->data;
+    cut_assert_not_null(test_suite);
+    cut_assert_equal_string(NULL, cut_test_get_name(CUT_TEST(test_suite)));
 }
 
 void
