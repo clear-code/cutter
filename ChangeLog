@@ -1,5 +1,8 @@
 2008-05-18  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/module/streamer/cut-xml-streamer.c: cb_test_signal ->
+	cb_test_result.
+
 	* cutter/module/streamer/cut-xml-streamer.c: stream <pass-assertion>.
 
 	* cutter/cut-run-context.[ch]: pass_test -> pass_assertion.

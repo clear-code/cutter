@@ -365,7 +365,7 @@ cb_pass_assertion (CutRunContext *run_context, CutTest *test,
 }
 
 static void
-cb_test_signal (CutRunContext  *run_context,
+cb_test_result (CutRunContext  *run_context,
                 CutTest        *test,
                 CutTestContext *test_context,
                 CutTestResult  *result,
@@ -467,7 +467,7 @@ connect_to_run_context (CutXMLStreamer *streamer, CutRunContext *run_context)
     g_signal_connect(run_context, #name, G_CALLBACK(cb_ ## name), streamer)
 
 #define CONNECT_TO_TEST(name) \
-    g_signal_connect(run_context, #name, G_CALLBACK(cb_test_signal), streamer)
+    g_signal_connect(run_context, #name, G_CALLBACK(cb_test_result), streamer)
 
     CONNECT(start_run);
     CONNECT(ready_test_suite);
@@ -512,7 +512,7 @@ disconnect_from_run_context (CutXMLStreamer *streamer,
     DISCONNECT(pass_assertion);
 
     g_signal_handlers_disconnect_by_func(run_context,
-                                         G_CALLBACK(cb_test_signal),
+                                         G_CALLBACK(cb_test_result),
                                          streamer);
 
     DISCONNECT(complete_test);
