@@ -471,6 +471,16 @@ cut_test_result_get_elapsed (CutTestResult *result)
     return CUT_TEST_RESULT_GET_PRIVATE(result)->elapsed;
 }
 
+gchar *
+cut_test_result_to_xml (CutTestResult *result)
+{
+    GString *string;
+
+    string = g_string_new(NULL);
+    cut_test_result_to_xml_string(result, string, 0);
+    return g_string_free(string, FALSE);
+}
+
 static const gchar *
 result_status_to_name (CutTestResultStatus status)
 {
@@ -497,7 +507,8 @@ result_status_to_name (CutTestResultStatus status)
 }
 
 static void
-append_element_valist (GString *string, guint indent, const gchar *element_name, va_list var_args)
+append_element_valist (GString *string, guint indent,
+                       const gchar *element_name, va_list var_args)
 {
     const gchar *name;
 
@@ -533,14 +544,15 @@ append_element_with_children (GString *string, guint indent,
 }
 
 static void
-append_backtrace_to_string (GString *string, CutTestResult *result)
+append_backtrace_to_string (GString *string, CutTestResult *result, guint indent)
 {
     gchar *line_string, *info_string;
 
     line_string = g_strdup_printf("%d", cut_test_result_get_line(result));
-    info_string = g_strdup_printf("%s()", cut_test_result_get_function_name(result));
+    info_string = g_strdup_printf("%s()",
+                                  cut_test_result_get_function_name(result));
 
-    append_element_with_children(string, 4, "backtrace",
+    append_element_with_children(string, indent, "backtrace",
                                  "file", cut_test_result_get_filename(result),
                                  "line", line_string,
                                  "info", info_string,
@@ -550,7 +562,8 @@ append_backtrace_to_string (GString *string, CutTestResult *result)
 }
 
 static void
-append_test_result_to_string (GString *string, CutTestResult *result)
+append_test_result_to_string (GString *string, CutTestResult *result,
+                              guint indent)
 {
     CutTestResultStatus status;
     gchar *elapsed_string;
@@ -560,41 +573,38 @@ append_test_result_to_string (GString *string, CutTestResult *result)
     message = cut_test_result_get_message(result);
     status = cut_test_result_get_status(result);
 
-    cut_utils_append_xml_element_with_value(string, 4, "status",
+    cut_utils_append_xml_element_with_value(string, indent, "status",
                                             result_status_to_name(status));
     if (message)
-        cut_utils_append_xml_element_with_value(string, 4, "detail", message);
+        cut_utils_append_xml_element_with_value(string, indent,
+                                                "detail", message);
     if (status != CUT_TEST_RESULT_SUCCESS)
-        append_backtrace_to_string(string, result);
-    cut_utils_append_xml_element_with_value(string, 4, "elapsed",
+        append_backtrace_to_string(string, result, indent);
+    cut_utils_append_xml_element_with_value(string, indent, "elapsed",
                                             elapsed_string);
     g_free(elapsed_string);
 }
 
-static void
-append_test_info_to_string (GString *string, CutTest *test)
+void
+cut_test_result_to_xml_string (CutTestResult *result, GString *string,
+                               guint indent)
 {
-    if (!test)
-        return;
-
-    cut_test_to_xml_string(test, string, 4);
-}
-
-gchar *
-cut_test_result_to_xml (CutTestResult *result)
-{
-    GString *xml;
     CutTestCase *test_case;
+    CutTest *test;
 
-    xml = g_string_new("");
-    g_string_append(xml, "  <result>\n");
+    cut_utils_append_indent(string, indent);
+    g_string_append(string, "<result>\n");
+
     test_case = cut_test_result_get_test_case(result);
-    append_test_info_to_string(xml, CUT_TEST(test_case));
-    append_test_info_to_string(xml, cut_test_result_get_test(result));
-    append_test_result_to_string(xml, result);
-    g_string_append(xml, "  </result>\n");
+    if (test_case)
+        cut_test_to_xml_string(CUT_TEST(test_case), string, indent + 2);
+    test = cut_test_result_get_test(result);
+    if (test)
+        cut_test_to_xml_string(test, string, indent + 2);
+    append_test_result_to_string(string, result, indent + 2);
 
-    return g_string_free(xml, FALSE);
+    cut_utils_append_indent(string, indent);
+    g_string_append(string, "</result>\n");
 }
 
 const gchar *

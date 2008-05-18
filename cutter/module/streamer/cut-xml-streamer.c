@@ -371,11 +371,14 @@ cb_test_result (CutRunContext  *run_context,
                 CutTestResult  *result,
                 CutXMLStreamer *streamer)
 {
-    gchar *string;
-    string = cut_test_result_to_xml(result);
-    g_print("%s", string);
-    g_free(string);
+    GString *string;
+
+    string = g_string_new(NULL);
+    cut_test_result_to_xml_string(result, string, 2);
+    g_print("%s", string->str);
     fflush(stdout);
+
+    g_string_free(string, TRUE);
 }
 
 static void

@@ -428,11 +428,8 @@ get_all_results (CutReport *report)
          node;
          node = g_list_next(node)) {
         CutTestResult *result = node->data;
-        gchar *result_string;
 
-        result_string = cut_test_result_to_xml(result);
-        g_string_append(xml, result_string);
-        g_free(result_string);
+        cut_test_result_to_xml_string(result, xml, 2);
     }
 
     return g_string_free(xml, FALSE);
@@ -449,14 +446,11 @@ get_status_results (CutXMLReport *report, CutTestResultStatus status)
          node;
          node = g_list_next(node)) {
         CutTestResult *result = node->data;
-        gchar *result_string;
 
         if (status != cut_test_result_get_status(result))
             continue;
 
-        result_string = cut_test_result_to_xml(result);
-        g_string_append(xml, result_string);
-        g_free(result_string);
+        cut_test_result_to_xml_string(result, xml, 2);
     }
 
     return g_string_free(xml, FALSE);

@@ -1,5 +1,11 @@
 2008-05-18  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-result.[ch] (cut_test_result_to_xml): add.
+
+	* cutter/module/report/cut-xml-report.c,
+	cutter/module/streamer/cut-xml-streamer.c: use
+	cut_test_result_to_xml().
+
 	* cutter/module/streamer/cut-xml-streamer.c: cb_test_signal ->
 	cb_test_result.
 
