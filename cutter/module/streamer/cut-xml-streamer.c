@@ -346,6 +346,25 @@ cb_start_test (CutRunContext *run_context, CutTest *test,
 }
 
 static void
+cb_pass_assertion (CutRunContext *run_context, CutTest *test,
+                   CutTestContext *test_context)
+{
+    GString *string;
+
+    string = g_string_new(NULL);
+
+    g_string_append(string, "  <pass-assertion>\n");
+    cut_test_to_xml_string(test, string, 4);
+    cut_test_context_to_xml_string(test_context, string, 4);
+    g_string_append(string, "  </pass-assertion>\n");
+
+    g_print(string->str);
+    fflush(stdout);
+
+    g_string_free(string, TRUE);
+}
+
+static void
 cb_test_signal (CutRunContext  *run_context,
                 CutTest        *test,
                 CutTestContext *test_context,
@@ -457,6 +476,8 @@ connect_to_run_context (CutXMLStreamer *streamer, CutRunContext *run_context)
     CONNECT(start_test_case);
     CONNECT(start_test);
 
+    CONNECT(pass_assertion);
+
     CONNECT_TO_TEST(success_test);
     CONNECT_TO_TEST(failure_test);
     CONNECT_TO_TEST(error_test);
@@ -481,7 +502,6 @@ disconnect_from_run_context (CutXMLStreamer *streamer,
     g_signal_handlers_disconnect_by_func(run_context,                   \
                                          G_CALLBACK(cb_ ## name),       \
                                          streamer)
-
     DISCONNECT(start_run);
     DISCONNECT(ready_test_suite);
     DISCONNECT(start_test_suite);
@@ -489,16 +509,18 @@ disconnect_from_run_context (CutXMLStreamer *streamer,
     DISCONNECT(start_test_case);
     DISCONNECT(start_test);
 
+    DISCONNECT(pass_assertion);
+
+    g_signal_handlers_disconnect_by_func(run_context,
+                                         G_CALLBACK(cb_test_signal),
+                                         streamer);
+
     DISCONNECT(complete_test);
     DISCONNECT(complete_test_case);
     DISCONNECT(complete_test_suite);
     DISCONNECT(complete_run);
 
     DISCONNECT(crashed);
-
-    g_signal_handlers_disconnect_by_func(run_context,
-                                         G_CALLBACK(cb_test_signal),
-                                         streamer);
 
 #undef DISCONNECT
 }
