@@ -284,6 +284,31 @@ cb_start_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
 }
 
 static void
+cb_ready_test_case (CutRunContext *run_context, CutTestCase *test_case,
+                    guint n_tests, CutXMLStreamer *streamer)
+{
+    GString *string;
+    gchar *str;
+
+    string = g_string_new(NULL);
+
+    g_string_append(string, "  <ready-test-case>\n");
+
+    cut_test_to_xml_string(CUT_TEST(test_case), string, 4);
+
+    str = g_strdup_printf("%d", n_tests);
+    cut_utils_append_xml_element_with_value(string, 4, "n-tests", str);
+    g_free(str);
+
+    g_string_append(string, "  </ready-test-case>\n");
+
+    g_print(string->str);
+    fflush(stdout);
+
+    g_string_free(string, TRUE);
+}
+
+static void
 cb_start_test_case (CutRunContext *run_context, CutTestCase *test_case,
                     CutXMLStreamer *streamer)
 {
@@ -428,6 +453,7 @@ connect_to_run_context (CutXMLStreamer *streamer, CutRunContext *run_context)
     CONNECT(start_run);
     CONNECT(ready_test_suite);
     CONNECT(start_test_suite);
+    CONNECT(ready_test_case);
     CONNECT(start_test_case);
     CONNECT(start_test);
 
@@ -459,6 +485,7 @@ disconnect_from_run_context (CutXMLStreamer *streamer,
     DISCONNECT(start_run);
     DISCONNECT(ready_test_suite);
     DISCONNECT(start_test_suite);
+    DISCONNECT(ready_test_case);
     DISCONNECT(start_test_case);
     DISCONNECT(start_test);
 

@@ -1,7 +1,10 @@
 2008-05-18  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/module/streamer/cut-xml-streamer.c,
+	test/test-cut-xml-streamer.c: stream <ready-test-case>.
+
 	* cutter/cut-stream-parser.c, test/cut-test-stream-parser.c:
-	support start-test-suite.
+	support <start-test-suite>.
 
 	* test/test-cut-stream-parser.c: cleanup.
 
