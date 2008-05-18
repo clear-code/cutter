@@ -356,6 +356,15 @@ cut_test_result_new (CutTestResultStatus status,
 }
 
 CutTestResult *
+cut_test_result_new_empty (void)
+{
+    return cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
+                               NULL, NULL, NULL,
+                               NULL, NULL,
+                               NULL, NULL, 0);
+}
+
+CutTestResult *
 cut_test_result_new_from_xml (const gchar *xml, gssize length)
 {
     return cut_xml_parse_test_result_xml(xml, length);
