@@ -100,27 +100,21 @@ struct _CutRunContextClass
 
     void (*success_test_case)   (CutRunContext  *context,
                                  CutTestCase    *test_case,
-                                 CutTestContext *test_context,
                                  CutTestResult  *result);
     void (*failure_test_case)   (CutRunContext  *context,
                                  CutTestCase    *test_case,
-                                 CutTestContext *test_context,
                                  CutTestResult  *result);
     void (*error_test_case)     (CutRunContext  *context,
                                  CutTestCase    *test_case,
-                                 CutTestContext *test_context,
                                  CutTestResult  *result);
     void (*pending_test_case)   (CutRunContext  *context,
                                  CutTestCase    *test_case,
-                                 CutTestContext *test_context,
                                  CutTestResult  *result);
     void (*notification_test_case) (CutRunContext  *context,
                                     CutTestCase    *test_case,
-                                    CutTestContext *test_context,
                                     CutTestResult  *result);
     void (*omission_test_case)  (CutRunContext  *context,
                                  CutTestCase    *test_case,
-                                 CutTestContext *test_context,
                                  CutTestResult  *result);
     void (*complete_test_case)  (CutRunContext  *context,
                                  CutTestCase    *test_case);

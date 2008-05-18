@@ -370,59 +370,49 @@ cut_run_context_class_init (CutRunContextClass *klass)
                         G_TYPE_NONE, 2, CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT);
 
     signals[SUCCESS_TEST_CASE]
-        = g_signal_new ("success-test-case",
-                        G_TYPE_FROM_CLASS (klass),
-                        G_SIGNAL_RUN_LAST,
-                        G_STRUCT_OFFSET (CutRunContextClass, success_test_case),
-                        NULL, NULL,
-                        _cut_marshal_VOID__OBJECT_OBJECT_OBJECT,
-                        G_TYPE_NONE, 3,
-                        CUT_TYPE_TEST_CASE, CUT_TYPE_TEST_CONTEXT,
-                        CUT_TYPE_TEST_RESULT);
+        = g_signal_new("success-test-case",
+                       G_TYPE_FROM_CLASS(klass),
+                       G_SIGNAL_RUN_LAST,
+                       G_STRUCT_OFFSET(CutRunContextClass, success_test_case),
+                       NULL, NULL,
+                       _cut_marshal_VOID__OBJECT_OBJECT,
+                       G_TYPE_NONE, 2, CUT_TYPE_TEST_CASE, CUT_TYPE_TEST_RESULT);
 
     signals[FAILURE_TEST_CASE]
-        = g_signal_new ("failure-test-case",
-                        G_TYPE_FROM_CLASS (klass),
-                        G_SIGNAL_RUN_LAST,
-                        G_STRUCT_OFFSET (CutRunContextClass, failure_test_case),
-                        NULL, NULL,
-                        _cut_marshal_VOID__OBJECT_OBJECT_OBJECT,
-                        G_TYPE_NONE, 3,
-                        CUT_TYPE_TEST_CASE, CUT_TYPE_TEST_CONTEXT,
-                        CUT_TYPE_TEST_RESULT);
+        = g_signal_new("failure-test-case",
+                       G_TYPE_FROM_CLASS(klass),
+                       G_SIGNAL_RUN_LAST,
+                       G_STRUCT_OFFSET(CutRunContextClass, failure_test_case),
+                       NULL, NULL,
+                       _cut_marshal_VOID__OBJECT_OBJECT,
+                       G_TYPE_NONE, 2, CUT_TYPE_TEST_CASE, CUT_TYPE_TEST_RESULT);
 
     signals[ERROR_TEST_CASE]
-        = g_signal_new ("error-test-case",
-                        G_TYPE_FROM_CLASS (klass),
-                        G_SIGNAL_RUN_LAST,
-                        G_STRUCT_OFFSET (CutRunContextClass, error_test_case),
-                        NULL, NULL,
-                        _cut_marshal_VOID__OBJECT_OBJECT_OBJECT,
-                        G_TYPE_NONE, 3,
-                        CUT_TYPE_TEST_CASE, CUT_TYPE_TEST_CONTEXT,
-                        CUT_TYPE_TEST_RESULT);
+        = g_signal_new("error-test-case",
+                       G_TYPE_FROM_CLASS(klass),
+                       G_SIGNAL_RUN_LAST,
+                       G_STRUCT_OFFSET(CutRunContextClass, error_test_case),
+                       NULL, NULL,
+                       _cut_marshal_VOID__OBJECT_OBJECT,
+                       G_TYPE_NONE, 2, CUT_TYPE_TEST_CASE, CUT_TYPE_TEST_RESULT);
 
     signals[PENDING_TEST_CASE]
-        = g_signal_new ("pending-test-case",
-                        G_TYPE_FROM_CLASS (klass),
-                        G_SIGNAL_RUN_LAST,
-                        G_STRUCT_OFFSET (CutRunContextClass, pending_test_case),
-                        NULL, NULL,
-                        _cut_marshal_VOID__OBJECT_OBJECT_OBJECT,
-                        G_TYPE_NONE, 3,
-                        CUT_TYPE_TEST_CASE, CUT_TYPE_TEST_CONTEXT,
-                        CUT_TYPE_TEST_RESULT);
+        = g_signal_new("pending-test-case",
+                       G_TYPE_FROM_CLASS(klass),
+                       G_SIGNAL_RUN_LAST,
+                       G_STRUCT_OFFSET(CutRunContextClass, pending_test_case),
+                       NULL, NULL,
+                       _cut_marshal_VOID__OBJECT_OBJECT,
+                       G_TYPE_NONE, 2, CUT_TYPE_TEST_CASE, CUT_TYPE_TEST_RESULT);
 
     signals[NOTIFICATION_TEST_CASE]
-        = g_signal_new ("notification-test-case",
-                        G_TYPE_FROM_CLASS (klass),
-                        G_SIGNAL_RUN_LAST,
-                        G_STRUCT_OFFSET (CutRunContextClass, notification_test_case),
-                        NULL, NULL,
-                        _cut_marshal_VOID__OBJECT_OBJECT_OBJECT,
-                        G_TYPE_NONE, 3,
-                        CUT_TYPE_TEST_CASE, CUT_TYPE_TEST_CONTEXT,
-                        CUT_TYPE_TEST_RESULT);
+        = g_signal_new("notification-test-case",
+                       G_TYPE_FROM_CLASS(klass),
+                       G_SIGNAL_RUN_LAST,
+                       G_STRUCT_OFFSET(CutRunContextClass, notification_test_case),
+                       NULL, NULL,
+                       _cut_marshal_VOID__OBJECT_OBJECT,
+                       G_TYPE_NONE, 2, CUT_TYPE_TEST_CASE, CUT_TYPE_TEST_RESULT);
 
     signals[OMISSION_TEST_CASE]
         = g_signal_new("omission-test-case",
@@ -430,10 +420,8 @@ cut_run_context_class_init (CutRunContextClass *klass)
                        G_SIGNAL_RUN_LAST,
                        G_STRUCT_OFFSET(CutRunContextClass, omission_test_case),
                        NULL, NULL,
-                       _cut_marshal_VOID__OBJECT_OBJECT_OBJECT,
-                       G_TYPE_NONE, 3,
-                       CUT_TYPE_TEST_CASE, CUT_TYPE_TEST_CONTEXT,
-                       CUT_TYPE_TEST_RESULT);
+                       _cut_marshal_VOID__OBJECT_OBJECT,
+                       G_TYPE_NONE, 2, CUT_TYPE_TEST_CASE, CUT_TYPE_TEST_RESULT);
 
     signals[COMPLETE_TEST_CASE]
         = g_signal_new ("complete-test-case",
@@ -982,8 +970,7 @@ cb_failure_test_case (CutTestCase *test_case, CutTestContext *test_context,
 {
     CutRunContext *context = data;
 
-    g_signal_emit(context, signals[FAILURE_TEST_CASE], 0,
-                  test_case, test_context, result);
+    g_signal_emit(context, signals[FAILURE_TEST_CASE], 0, test_case, result);
 }
 
 static void
@@ -992,8 +979,7 @@ cb_error_test_case (CutTestCase *test_case, CutTestContext *test_context,
 {
     CutRunContext *context = data;
 
-    g_signal_emit(context, signals[ERROR_TEST_CASE], 0,
-                  test_case, test_context, result);
+    g_signal_emit(context, signals[ERROR_TEST_CASE], 0, test_case, result);
 }
 
 static void
@@ -1002,8 +988,7 @@ cb_pending_test_case (CutTestCase *test_case, CutTestContext *test_context,
 {
     CutRunContext *context = data;
 
-    g_signal_emit(context, signals[PENDING_TEST_CASE], 0,
-                  test_case, test_context, result);
+    g_signal_emit(context, signals[PENDING_TEST_CASE], 0, test_case, result);
 }
 
 static void
@@ -1013,7 +998,7 @@ cb_notification_test_case (CutTestCase *test_case, CutTestContext *test_context,
     CutRunContext *context = data;
 
     g_signal_emit(context, signals[NOTIFICATION_TEST_CASE], 0,
-                  test_case, test_context, result);
+                  test_case, result);
 }
 
 static void
@@ -1022,8 +1007,7 @@ cb_omission_test_case (CutTestCase *test_case, CutTestContext *test_context,
 {
     CutRunContext *context = data;
 
-    g_signal_emit(context, signals[OMISSION_TEST_CASE], 0,
-                  test_case, test_context, result);
+    g_signal_emit(context, signals[OMISSION_TEST_CASE], 0, test_case, result);
 }
 
 static void

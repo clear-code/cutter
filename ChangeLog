@@ -1,5 +1,8 @@
 2008-05-18  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-run-context.[ch]: remove CutTestContext * from
+	*_test_case signal.
+
 	* cutter/cut-test-result.[ch] (cut_test_result_to_xml): add.
 
 	* cutter/module/report/cut-xml-report.c,
