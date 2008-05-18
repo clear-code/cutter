@@ -1,5 +1,9 @@
 2008-05-18  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/module/streamer/cut-xml-streamer.c,
+	test/test-cut-xml-streamer.c: stream <test-result> and
+	<test-case-result>.
+
 	* cutter/cut-test-result.[ch] (cut_test_result_new_empty): add.
 
 	* cutter/cut-run-context.[ch]: remove CutTestContext * from

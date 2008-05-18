@@ -147,17 +147,32 @@ test_ready_test_case (void)
 void
 test_streamer_success (void)
 {
-    gchar expected[] = "  <result>\n"
-                       "    <test-case>\n"
-                       "      <name>dummy test case</name>\n"
-                       "    </test-case>\n"
-                       "    <test>\n"
-                       "      <name>dummy-success-test</name>\n"
-                       "    </test>\n"
-                       "    <status>success</status>\n"
-                       "    <elapsed>.*?</elapsed>\n"
-                       "  </result>\n";
     int pid;
+    gchar expected[] =
+        "  <test-result>\n"
+        "    <test>\n"
+        "      <name>dummy-success-test</name>\n"
+        "    </test>\n"
+        "    <test-context>\n"
+        "      <test-case>\n"
+        "        <name>dummy test case</name>\n"
+        "      </test-case>\n"
+        "      <test>\n"
+        "        <name>dummy-success-test</name>\n"
+        "      </test>\n"
+        "      <failed>FALSE</failed>\n"
+        "    </test-context>\n"
+        "    <result>\n"
+        "      <test-case>\n"
+        "        <name>dummy test case</name>\n"
+        "      </test-case>\n"
+        "      <test>\n"
+        "        <name>dummy-success-test</name>\n"
+        "      </test>\n"
+        "      <status>success</status>\n"
+        "      <elapsed>.*?</elapsed>\n"
+        "    </result>\n"
+        "  </test-result>\n";
 
     pid = cut_fork();
     cut_assert_errno();

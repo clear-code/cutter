@@ -374,7 +374,13 @@ cb_test_result (CutRunContext  *run_context,
     GString *string;
 
     string = g_string_new(NULL);
-    cut_test_result_to_xml_string(result, string, 2);
+
+    g_string_append(string, "  <test-result>\n");
+    cut_test_to_xml_string(test, string, 4);
+    cut_test_context_to_xml_string(test_context, string, 4);
+    cut_test_result_to_xml_string(result, string, 4);
+    g_string_append(string, "  </test-result>\n");
+
     g_print("%s", string->str);
     fflush(stdout);
 
@@ -394,6 +400,27 @@ cb_complete_test (CutRunContext *run_context, CutTest *test,
     g_string_append(string, "  </complete-test>\n");
 
     g_print(string->str);
+    fflush(stdout);
+
+    g_string_free(string, TRUE);
+}
+
+static void
+cb_test_case_result (CutRunContext  *run_context,
+                     CutTestCase    *test_case,
+                     CutTestResult  *result,
+                     CutXMLStreamer *streamer)
+{
+    GString *string;
+
+    string = g_string_new(NULL);
+
+    g_string_append(string, "  <test-case-result>\n");
+    cut_test_to_xml_string(CUT_TEST(test_case), string, 4);
+    cut_test_result_to_xml_string(result, string, 4);
+    g_string_append(string, "  </test-case-result>\n");
+
+    g_print("%s", string->str);
     fflush(stdout);
 
     g_string_free(string, TRUE);
@@ -466,11 +493,16 @@ cb_crashed (CutRunContext *run_context, const gchar *stack_trace,
 static void
 connect_to_run_context (CutXMLStreamer *streamer, CutRunContext *run_context)
 {
-#define CONNECT(name) \
+#define CONNECT(name)                                                   \
     g_signal_connect(run_context, #name, G_CALLBACK(cb_ ## name), streamer)
 
-#define CONNECT_TO_TEST(name) \
-    g_signal_connect(run_context, #name, G_CALLBACK(cb_test_result), streamer)
+#define CONNECT_TO_TEST(name)                                           \
+    g_signal_connect(run_context, #name "_test",                        \
+                     G_CALLBACK(cb_test_result), streamer)
+
+#define CONNECT_TO_TEST_CASE(name)                                      \
+    g_signal_connect(run_context, #name "_test_case",                   \
+                     G_CALLBACK(cb_test_case_result), streamer)
 
     CONNECT(start_run);
     CONNECT(ready_test_suite);
@@ -481,11 +513,17 @@ connect_to_run_context (CutXMLStreamer *streamer, CutRunContext *run_context)
 
     CONNECT(pass_assertion);
 
-    CONNECT_TO_TEST(success_test);
-    CONNECT_TO_TEST(failure_test);
-    CONNECT_TO_TEST(error_test);
-    CONNECT_TO_TEST(pending_test);
-    CONNECT_TO_TEST(notification_test);
+    CONNECT_TO_TEST(success);
+    CONNECT_TO_TEST(failure);
+    CONNECT_TO_TEST(error);
+    CONNECT_TO_TEST(pending);
+    CONNECT_TO_TEST(notification);
+
+    CONNECT_TO_TEST_CASE(success);
+    CONNECT_TO_TEST_CASE(failure);
+    CONNECT_TO_TEST_CASE(error);
+    CONNECT_TO_TEST_CASE(pending);
+    CONNECT_TO_TEST_CASE(notification);
 
     CONNECT(complete_test);
     CONNECT(complete_test_case);
@@ -516,6 +554,10 @@ disconnect_from_run_context (CutXMLStreamer *streamer,
 
     g_signal_handlers_disconnect_by_func(run_context,
                                          G_CALLBACK(cb_test_result),
+                                         streamer);
+
+    g_signal_handlers_disconnect_by_func(run_context,
+                                         G_CALLBACK(cb_test_case_result),
                                          streamer);
 
     DISCONNECT(complete_test);
