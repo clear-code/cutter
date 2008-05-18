@@ -4,6 +4,7 @@
 void test_parse (void);
 void test_start_run (void);
 void test_ready_test_suite (void);
+void test_start_test_suite (void);
 void test_complete_run_without_success_tag (void);
 void test_complete_run_with_success_true (void);
 void test_complete_run_with_success_false (void);
@@ -24,6 +25,7 @@ struct _CuttestEventReceiver
 
     gint n_start_runs;
     GList *ready_test_suites;
+    GList *start_test_suites;
     GList *complete_runs;
 };
 
@@ -83,6 +85,12 @@ dispose (GObject *object)
         receiver->ready_test_suites = NULL;
     }
 
+    if (receiver->start_test_suites) {
+        g_list_foreach(receiver->start_test_suites, (GFunc)g_object_unref, NULL);
+        g_list_free(receiver->start_test_suites);
+        receiver->start_test_suites = NULL;
+    }
+
     if (receiver->complete_runs) {
         g_list_free(receiver->complete_runs);
         receiver->complete_runs = NULL;
@@ -112,6 +120,16 @@ ready_test_suite (CutRunContext *context, CutTestSuite *test_suite,
 }
 
 static void
+start_test_suite (CutRunContext *context, CutTestSuite *test_suite)
+{
+    CuttestEventReceiver *receiver;
+
+    receiver = CUTTEST_EVENT_RECEIVER(context);
+    receiver->start_test_suites =
+        g_list_append(receiver->start_test_suites, g_object_ref(test_suite));
+}
+
+static void
 complete_run (CutRunContext *context, gboolean success)
 {
     CuttestEventReceiver *receiver;
@@ -134,6 +152,7 @@ cuttest_event_receiver_class_init (CuttestEventReceiverClass *klass)
 
     run_context_class->start_run = start_run;
     run_context_class->ready_test_suite = ready_test_suite;
+    run_context_class->start_test_suite = start_test_suite;
     run_context_class->complete_run = complete_run;
 }
 
@@ -280,6 +299,35 @@ test_ready_test_suite (void)
     cut_assert_equal_string(NULL, cut_test_get_name(CUT_TEST(info->test_suite)));
     cut_assert_equal_int(3, info->n_test_cases);
     cut_assert_equal_int(7, info->n_tests);
+}
+
+void
+test_start_test_suite (void)
+{
+    CutTestSuite *test_suite;
+    gchar header[] =
+        "<stream>\n"
+        "  <ready-test-suite>\n"
+        "    <test-suite>\n"
+        "    </test-suite>\n"
+        "    <n-test-cases>3</n-test-cases>\n"
+        "    <n-tests>7</n-tests>\n"
+        "  </ready-test-suite>\n";
+    gchar start_test_suite[] =
+        "  <start-test-suite>\n"
+        "    <test-suite>\n"
+        "    </test-suite>\n"
+        "  </start-test-suite>\n";
+
+    cut_assert_parse(header);
+    cut_assert_null(0, receiver->start_test_suites);
+
+    cut_assert_parse(start_test_suite);
+    cut_assert_equal_int(1, g_list_length(receiver->start_test_suites));
+
+    test_suite = receiver->start_test_suites->data;
+    cut_assert_not_null(test_suite);
+    cut_assert_equal_string(NULL, cut_test_get_name(CUT_TEST(test_suite)));
 }
 
 void
