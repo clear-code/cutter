@@ -1,6 +1,13 @@
 2008-05-18  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-stream-parser.c, test/cut-test-stream-parser.c:
+	support <start-test>.
+
+	* cutter/cut-test.[ch] (cut_test_new_empty): add.
+
+	* cutter/cut-test-context.[ch] (cut_test_context_new_empty): add.
+
+	* cutter/cut-stream-parser.c, test/cut-test-stream-parser.c:
 	support <start-test-case>.
 
 	* cutter/cut-test-case.[ch] (cut_test_case_new_empty): add.

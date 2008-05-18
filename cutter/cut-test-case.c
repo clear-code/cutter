@@ -273,7 +273,10 @@ cut_test_case_new (const gchar *name,
 CutTestCase *
 cut_test_case_new_empty (void)
 {
-    return g_object_new(CUT_TYPE_TEST_CASE, NULL);
+    return cut_test_case_new(NULL,
+                             NULL, NULL,
+                             NULL, NULL,
+                             NULL, NULL);
 }
 
 static GList *

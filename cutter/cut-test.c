@@ -319,6 +319,12 @@ cut_test_new (const gchar *name, CutTestFunction function)
                         NULL);
 }
 
+CutTest *
+cut_test_new_empty (void)
+{
+    return cut_test_new(NULL, NULL);
+}
+
 gboolean
 cut_test_run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
 {

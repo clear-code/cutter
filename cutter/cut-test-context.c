@@ -239,6 +239,12 @@ cut_test_context_new (CutTestSuite *test_suite, CutTestCase *test_case,
                         NULL);
 }
 
+CutTestContext *
+cut_test_context_new_empty (void)
+{
+    return cut_test_context_new(NULL, NULL, NULL);
+}
+
 CutTestSuite *
 cut_test_context_get_test_suite (CutTestContext *context)
 {
