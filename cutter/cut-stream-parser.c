@@ -52,6 +52,8 @@ typedef enum {
     IN_READY_TEST_CASE,
     IN_READY_TEST_CASE_N_TESTS,
 
+    IN_START_TEST_CASE,
+
     IN_RESULT,
     IN_RESULT_STATUS,
     IN_RESULT_DETAIL,
@@ -442,6 +444,9 @@ start_element_handler (GMarkupParseContext *context,
         } else if (g_ascii_strcasecmp("ready-test-case", element_name) == 0) {
             PUSH_STATE(priv, IN_READY_TEST_CASE);
             priv->ready_test_case = ready_test_case_new();;
+        } else if (g_ascii_strcasecmp("start-test-case", element_name) == 0) {
+            PUSH_STATE(priv, IN_START_TEST_CASE);
+            priv->test_case = cut_test_case_new_empty();
         } else if (g_ascii_strcasecmp("success", element_name) == 0) {
             PUSH_STATE(priv, IN_SUCCESS);
         } else {
@@ -476,6 +481,14 @@ start_element_handler (GMarkupParseContext *context,
             priv->test_case = priv->ready_test_case->test_case;
         } else if (g_ascii_strcasecmp("n-tests", element_name) == 0) {
             PUSH_STATE(priv, IN_READY_TEST_CASE_N_TESTS);
+        } else {
+            invalid_element(context, error);
+        }
+        break;
+      case IN_START_TEST_CASE:
+        if (g_ascii_strcasecmp("test-case", element_name) == 0) {
+            PUSH_STATE(priv, IN_TEST_CASE);
+            priv->test_case = cut_test_case_new_empty();
         } else {
             invalid_element(context, error);
         }
@@ -605,6 +618,15 @@ end_element_handler (GMarkupParseContext *context,
                                       priv->ready_test_case->n_tests);
             ready_test_case_free(priv->ready_test_case);
             priv->ready_test_case = NULL;
+        }
+        break;
+      case IN_START_TEST_CASE:
+        if (priv->test_case) {
+            if (priv->run_context)
+                g_signal_emit_by_name(priv->run_context, "start-test-case",
+                                      priv->test_case);
+            g_object_unref(priv->test_case);
+            priv->test_case = NULL;
         }
         break;
       default:
