@@ -1,5 +1,10 @@
 2008-05-18  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-gassertions.h, test/test-cut-gassertions.c: add
+	cut_assert_g_error().
+
+	* TODO: remove cut_assert_g_error().
+
 	* test/test-cut-stream-parser.c: more strict.
 
 2008-05-17  Kouhei Sutou  <kou@cozmixng.org>

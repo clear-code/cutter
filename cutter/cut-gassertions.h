@@ -170,6 +170,39 @@ G_BEGIN_DECLS
     }                                                                   \
 } while(0)
 
+/**
+ * cut_assert_g_error:
+ * @error: a GError *.
+ * @...: optional format string, followed by parameters to insert
+ * into the format string (as with printf())
+ *
+ * Passes if @error == NULL.
+ *
+ * Since: 1.0
+ */
+#define cut_assert_g_error(g_error, ...) do                             \
+{                                                                       \
+    GError *_g_error = (g_error);                                       \
+    if (_g_error == NULL) {                                             \
+        cut_test_pass();                                                \
+    } else {                                                            \
+        const gchar *inspected, *domain_name;                           \
+        domain_name = g_quark_to_string(_g_error->domain);              \
+        inspected = cut_take_printf("%s:%d",                            \
+                                    domain_name,                        \
+                                    _g_error->code);                    \
+        if (_g_error->message)                                          \
+            inspected = cut_take_printf("%s: %s",                       \
+                                        inspected, _g_error->message);  \
+        g_error_free(_g_error);                                         \
+        cut_test_fail(FAILURE,                                          \
+                      cut_take_printf("expected: <%s> is NULL\n"        \
+                                      " but was: <%s>",                 \
+                                      #g_error, inspected),             \
+                      ## __VA_ARGS__);                                  \
+    }                                                                   \
+} while(0)
+
 G_END_DECLS
 
 #endif /* __CUT_GASSERTIONS_H__ */

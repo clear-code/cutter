@@ -1,4 +1,3 @@
 * priority mode.
 * streamer modules.
   * connect to GStreamer.
-* cut_assert_g_error().

@@ -9,6 +9,7 @@ void test_equal_g_type(void);
 void test_equal_g_value(void);
 void test_equal_g_list_int(void);
 void test_equal_g_list_string(void);
+void test_g_error(void);
 
 static CutTest *test;
 static CutRunContext *run_context;
@@ -17,8 +18,10 @@ static CutTestResult *test_result;
 
 static GValue *value1, *value2;
 static GList *list1, *list2;
-
 static gboolean need_to_free_list_contents;
+
+static GError *error;
+static gboolean need_to_free_error;
 
 static gboolean
 run (CutTest *_test)
@@ -53,6 +56,9 @@ setup (void)
     list1 = NULL;
     list2 = NULL;
     need_to_free_list_contents = FALSE;
+
+    error = NULL;
+    need_to_free_error = FALSE;
 }
 
 void
@@ -81,6 +87,9 @@ teardown (void)
     }
     g_list_free(list1);
     g_list_free(list2);
+
+    if (error && need_to_free_error)
+        g_error_free(error);
 }
 
 
@@ -210,6 +219,33 @@ test_equal_g_list_string (void)
                            "expected: <(\"abc\", \"def\")>\n"
                            " but was: <(\"zyx\", \"wvu\")>",
                            "equal_g_list_string_test");
+}
+
+static void
+g_error_test (void)
+{
+    cut_assert_g_error(error);
+
+    error = g_error_new(G_FILE_ERROR, G_FILE_ERROR_NOENT, "not found");
+    cut_assert_g_error(error);
+}
+
+void
+test_g_error (void)
+{
+    CutTest *test;
+
+    test = cut_test_new("cut_assert_g_error test", g_error_test);
+    cut_assert(test);
+
+    cut_assert(!run(test));
+    cut_assert_test_result_summary(run_context, 1, 1, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_g_error test",
+                           NULL,
+                           "expected: <error> is NULL\n"
+                           " but was: <g-file-error-quark:4: not found>",
+                           "g_error_test");
 }
 
 /*
