@@ -1,5 +1,8 @@
 2008-05-18  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-stream-parser.c, cutter/cut-pipeline.c: fix circular
+	reference problem.
+
 	* cutter/cut-test-result.c, test/test-cut-test-result.c: don't
 	output empty information.
 

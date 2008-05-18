@@ -415,8 +415,11 @@ dispose (GObject *object)
     }
 
     if (priv->run_context) {
-        g_object_unref(priv->run_context);
+        CutRunContext *run_context;
+
+        run_context = priv->run_context;
         priv->run_context = NULL;
+        g_object_unref(run_context);
     }
 
     if (priv->states) {

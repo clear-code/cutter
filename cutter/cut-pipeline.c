@@ -183,6 +183,18 @@ shutdown_io_channel (CutPipelinePrivate *priv)
 }
 
 static void
+dispose_parser (CutPipelinePrivate *priv)
+{
+    if (priv->parser) {
+        CutStreamParser *parser;
+
+        parser = priv->parser;
+        priv->parser = NULL;
+        g_object_unref(parser);
+    }
+}
+
+static void
 dispose (GObject *object)
 {
     CutPipelinePrivate *priv = CUT_PIPELINE_GET_PRIVATE(object);
@@ -204,10 +216,7 @@ dispose (GObject *object)
         priv->target_directory = NULL;
     }
 
-    if (priv->parser) {
-        g_object_unref(priv->parser);
-        priv->parser = NULL;
-    }
+    dispose_parser(priv);
 
     G_OBJECT_CLASS(cut_pipeline_parent_class)->dispose(object);
 }
@@ -231,10 +240,7 @@ reap_child (CutPipeline *pipeline, GPid pid)
     remove_child_watch_func(priv);
     shutdown_io_channel(priv);
     close_child(priv);
-    if (priv->parser) {
-        g_object_unref(priv->parser);
-        priv->parser = NULL;
-    }
+    dispose_parser(priv);
 }
 
 static void
