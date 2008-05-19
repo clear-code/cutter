@@ -172,6 +172,8 @@ static void omission_test  (CutRunContext   *context,
                             CutTest         *test,
                             CutTestContext  *test_context,
                             CutTestResult   *result);
+static void crashed        (CutRunContext   *context,
+                            const gchar     *backtrace);
 
 static gboolean runner_run (CutRunner *runner);
 
@@ -194,6 +196,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     klass->pending_test      = pending_test;
     klass->notification_test = notification_test;
     klass->omission_test     = omission_test;
+    klass->crashed           = crashed;
 
     spec = g_param_spec_uint("n-tests",
                              "Number of tests",
@@ -842,9 +845,9 @@ failure_test (CutRunContext   *context,
 
 static void 
 error_test (CutRunContext   *context,
-              CutTest         *test,
-              CutTestContext  *test_context,
-              CutTestResult   *result)
+            CutTest         *test,
+            CutTestContext  *test_context,
+            CutTestResult   *result)
 {
     CutRunContextPrivate *priv;
 
@@ -886,9 +889,9 @@ notification_test (CutRunContext   *context,
 
 static void 
 omission_test (CutRunContext   *context,
-              CutTest         *test,
-              CutTestContext  *test_context,
-              CutTestResult   *result)
+               CutTest         *test,
+               CutTestContext  *test_context,
+               CutTestResult   *result)
 {
     CutRunContextPrivate *priv;
 
@@ -897,6 +900,17 @@ omission_test (CutRunContext   *context,
     priv->results = g_list_prepend(priv->results, g_object_ref(result));
     priv->n_omissions++;
     g_mutex_unlock(priv->mutex);
+}
+
+static void
+crashed (CutRunContext *context, const gchar *backtrace)
+{
+    CutRunContextPrivate *priv;
+
+    priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
+    priv->crashed = TRUE;
+    g_free(priv->backtrace);
+    priv->backtrace = g_strdup(backtrace);
 }
 
 void
@@ -1303,14 +1317,8 @@ cb_crashed_test_suite(CutTestSuite *test_suite, const gchar *backtrace,
                       gpointer data)
 {
     CutRunContext *context = data;
-    CutRunContextPrivate *priv;
 
-    priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
-    priv->crashed = TRUE;
-    g_free(priv->backtrace);
-    priv->backtrace = g_strdup(backtrace);
-
-    g_signal_emit(context, signals[CRASHED], 0, priv->backtrace);
+    g_signal_emit(context, signals[CRASHED], 0, backtrace);
 }
 
 static void
