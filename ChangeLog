@@ -1,5 +1,7 @@
 2008-05-19  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cutter.c (test_help_all): add --stream-fd option.
+
 	* cutter/cut-process.c: use cut_utils_close_pipe().
 
 	* cutter/cut-utils.[ch] (cut_utils_close_pipe): add.

@@ -168,6 +168,7 @@ test_help_all (void)
         "  --help-streamer                                 Show streamer options\n"
         "  --help-report                                   Show report options\n"
         "  --help-ui                                       Show UI options\n"
+        "  --help-xml-streamer                             Show XML streamer options\n"
         "  --help-console-ui                               Show console UI options\n"
 #ifdef HAVE_GTK
         "  --help-gtk                                      Show GTK+ Options\n"
@@ -186,6 +187,9 @@ test_help_all (void)
 #else
         "  -u, --ui=[console]                              Specify UI\n"
 #endif
+        "\n"
+        "XML Streamer Options\n"
+        "  --stream-fd=FILE_DESCRIPTOR                     Stream to FILE_DESCRIPTOR (default: stdout)\n"
         "\n"
         "Console UI Options\n"
         "  -v, --verbose=[s|silent|n|normal|v|verbose]     Set verbose level\n"
