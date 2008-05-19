@@ -250,13 +250,13 @@ cut_run_context_class_init (CutRunContextClass *klass)
                                G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_SOURCE_DIRECTORY, spec);
 
-    spec = g_param_spec_pointer("test-case-names",
+    spec = g_param_spec_pointer("target-test-case-names",
                                 "Test case names",
                                 "The names of the target test case",
                                 G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_TARGET_TEST_CASE_NAMES, spec);
 
-    spec = g_param_spec_pointer("test-names",
+    spec = g_param_spec_pointer("target-test-names",
                                 "Test names",
                                 "The names of the target test",
                                 G_PARAM_READWRITE);
