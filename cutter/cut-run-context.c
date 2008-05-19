@@ -78,7 +78,13 @@ enum
     PROP_N_OMISSIONS,
     PROP_USE_MULTI_THREAD,
     PROP_IS_MULTI_THREAD,
-    PROP_TEST_CASE_ORDER
+    PROP_TEST_CASE_ORDER,
+    PROP_TEST_DIRECTORY,
+    PROP_SOURCE_DIRECTORY,
+    PROP_TARGET_TEST_CASE_NAMES,
+    PROP_TARGET_TEST_NAMES,
+    PROP_EXCLUDE_FILES,
+    PROP_EXCLUDE_DIRECTORIES
 };
 
 enum
@@ -230,6 +236,43 @@ cut_run_context_class_init (CutRunContextClass *klass)
                              G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class, PROP_TEST_CASE_ORDER, spec);
 
+    spec = g_param_spec_string("test-directory",
+                               "Test directory",
+                               "The directory name in which test cases are stored",
+                               NULL,
+                               G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_TEST_DIRECTORY, spec);
+
+    spec = g_param_spec_string("source-directory",
+                               "Source directory",
+                               "The directory name in which source files are stored",
+                               NULL,
+                               G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_SOURCE_DIRECTORY, spec);
+
+    spec = g_param_spec_pointer("test-case-names",
+                                "Test case names",
+                                "The names of the target test case",
+                                G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_TARGET_TEST_CASE_NAMES, spec);
+
+    spec = g_param_spec_pointer("test-names",
+                                "Test names",
+                                "The names of the target test",
+                                G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_TARGET_TEST_NAMES, spec);
+
+    spec = g_param_spec_pointer("exclude-files",
+                                "Exclude files",
+                                "The file names of excluding from the target",
+                                G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_EXCLUDE_FILES, spec);
+
+    spec = g_param_spec_pointer("exclude-directorys",
+                                "Exclude directorys",
+                                "The directory names of excluding from target",
+                                G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_EXCLUDE_DIRECTORIES, spec);
 
     signals[START_RUN]
         = g_signal_new("start-run",
