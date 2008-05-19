@@ -1,5 +1,8 @@
 2008-05-19  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-pipeline.c: use g_io_channel_read_to_end() instead of
+	g_io_channel_read_line().
+
 	* cutter/cut-stream-parser.c, test/test-cut-stream-parser.c:
 	support <crashed>.
 
