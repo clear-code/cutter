@@ -51,6 +51,7 @@ static CutOrder test_case_order = CUT_ORDER_NONE_SPECIFIED;
 static gboolean use_multi_thread = FALSE;
 static GList *factories = NULL;
 static CutContractor *contractor = NULL;
+static gchar **original_argv = NULL;
 
 static gboolean
 print_version (const gchar *option_name, const gchar *value,
@@ -115,6 +116,8 @@ cut_init (int *argc, char ***argv)
         return;
 
     initialized = TRUE;
+
+    original_argv = g_strdupv(*argv);
 
     bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
     bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
@@ -223,6 +226,7 @@ cut_create_run_context (void)
     cut_run_context_set_target_test_case_names(run_context, test_case_names);
     cut_run_context_set_target_test_names(run_context, test_names);
     cut_run_context_set_test_case_order(run_context, test_case_order);
+    cut_run_context_set_command_line_args(run_context, original_argv);
 
     return run_context;
 }

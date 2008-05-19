@@ -330,16 +330,23 @@ static void
 run_async (CutPipeline *pipeline)
 {
     gchar *command_line;
-    const gchar *cutter_command;
+    const gchar *cutter_command = NULL;
     gchar **argv = NULL;
+    const gchar **original_argv;
     gint argc;
     gint std_out;
     gboolean ret;
+    CutRunContext *run_context = CUT_RUN_CONTEXT(pipeline);
     CutPipelinePrivate *priv = CUT_PIPELINE_GET_PRIVATE(pipeline);
 
-    cutter_command = g_getenv("CUTTER");
-    if (!cutter_command)
-        cutter_command = g_get_prgname();
+    original_argv = cut_run_context_get_command_line_args(run_context);
+    if (original_argv) {
+        cutter_command = original_argv[0];
+    } else {
+        cutter_command = g_getenv("CUTTER");
+        if (!cutter_command)
+            cutter_command = g_get_prgname();
+    }
 
     command_line = g_strdup_printf("%s -v s --streamer=xml %s",
                                    cutter_command,

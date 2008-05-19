@@ -12,6 +12,8 @@
 	interface function to fix seg fault.
 	* cutter/cut-run-context.[c|h]
 	(cut_run_context_set_command_line_args): Added.
+	* cutter/cut-main.c, cutter/cut-pipeline.c: Pass original command line
+	args to child cutter.
 
 2008-05-19  Kouhei Sutou  <kou@cozmixng.org>
 
