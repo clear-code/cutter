@@ -23,6 +23,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include <glib.h>
 #include <glib/gi18n-lib.h>
 #include <glib/gstdio.h>
@@ -50,6 +51,8 @@ struct _CutXMLStreamer
 {
     CutStreamer   object;
     CutRunContext    *run_context;
+    gint fd;
+    GIOChannel *channel;
 };
 
 struct _CutXMLStreamerClass
@@ -60,7 +63,8 @@ struct _CutXMLStreamerClass
 enum
 {
     PROP_0,
-    PROP_RUN_CONTEXT
+    PROP_RUN_CONTEXT,
+    PROP_FD
 };
 
 static GType cut_type_xml_streamer = 0;
@@ -103,12 +107,23 @@ class_init (CutXMLStreamerClass *klass)
                                CUT_TYPE_RUN_CONTEXT,
                                G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_RUN_CONTEXT, spec);
+
+    spec = g_param_spec_int("fd",
+                            "FD",
+                            "A file descriptor to stream",
+                            -1,
+                            G_MAXINT,
+                            -1,
+                            G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_FD, spec);
 }
 
 static void
 init (CutXMLStreamer *streamer)
 {
     streamer->run_context = NULL;
+    streamer->fd = -1;
+    streamer->channel = NULL;
 }
 
 static void
@@ -204,6 +219,9 @@ set_property (GObject      *object,
         attach_to_run_context(CUT_LISTENER(streamer),
                               CUT_RUN_CONTEXT(g_value_get_object(value)));
         break;
+      case PROP_FD:
+        streamer->fd = g_value_get_int(value);
+        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
@@ -222,17 +240,77 @@ get_property (GObject    *object,
       case PROP_RUN_CONTEXT:
         g_value_set_object(value, G_OBJECT(streamer->run_context));
         break;
+      case PROP_FD:
+        g_value_set_int(value, streamer->fd);
+        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
     }
 }
 
+static GIOChannel *
+create_channel (CutXMLStreamer *streamer)
+{
+    gint fd;
+    GIOChannel *channel;
+
+    if (streamer->fd == -1)
+        fd = STDOUT_FILENO;
+    else
+        fd = streamer->fd;
+    channel = g_io_channel_unix_new(fd);
+    g_io_channel_set_close_on_unref(channel, TRUE);
+
+    return channel;
+}
+
+static void
+stream (CutXMLStreamer *streamer, const gchar *format, ...)
+{
+    gchar *message, *snippet;
+    gsize length, written;
+    va_list va_args;
+
+    if (!streamer->channel)
+        streamer->channel = create_channel(streamer);
+
+    if (!streamer->channel)
+        return;
+
+    va_start(va_args, format);
+    message = g_strdup_vprintf(format, va_args);
+    va_end(va_args);
+
+    length = strlen(message);
+    written = 0;
+    snippet = message;
+    while (length > 0) {
+        GError *error = NULL;
+
+        g_io_channel_write_chars(streamer->channel, snippet, length, &written,
+                                 &error);
+        if (error) {
+            g_warning("WriteError: %s:%d: %s",
+                      g_quark_to_string(error->domain),
+                      error->code,
+                      error->message);
+            g_error_free(error);
+            break;
+        }
+
+        snippet += written;
+        length -= written;
+    }
+    g_io_channel_flush(streamer->channel, NULL);
+
+    g_free(message);
+}
+
 static void
 cb_start_run (CutRunContext *run_context, CutXMLStreamer *streamer)
 {
-    g_print("<stream>\n");
-    fflush(stdout);
+    stream(streamer, "<stream>\n");
 }
 
 static void
@@ -259,8 +337,7 @@ cb_ready_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
 
     g_string_append(string, "  </ready-test-suite>\n");
 
-    g_print(string->str);
-    fflush(stdout);
+    stream(streamer, "%s", string->str);
 
     g_string_free(string, TRUE);
 }
@@ -277,8 +354,7 @@ cb_start_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
     cut_test_to_xml_string(CUT_TEST(test_suite), string, 4);
     g_string_append(string, "  </start-test-suite>\n");
 
-    g_print(string->str);
-    fflush(stdout);
+    stream(streamer, "%s", string->str);
 
     g_string_free(string, TRUE);
 }
@@ -302,8 +378,7 @@ cb_ready_test_case (CutRunContext *run_context, CutTestCase *test_case,
 
     g_string_append(string, "  </ready-test-case>\n");
 
-    g_print(string->str);
-    fflush(stdout);
+    stream(streamer, "%s", string->str);
 
     g_string_free(string, TRUE);
 }
@@ -320,8 +395,7 @@ cb_start_test_case (CutRunContext *run_context, CutTestCase *test_case,
     cut_test_to_xml_string(CUT_TEST(test_case), string, 4);
     g_string_append(string, "  </start-test-case>\n");
 
-    g_print(string->str);
-    fflush(stdout);
+    stream(streamer, "%s", string->str);
 
     g_string_free(string, TRUE);
 }
@@ -339,8 +413,7 @@ cb_start_test (CutRunContext *run_context, CutTest *test,
     cut_test_context_to_xml_string(test_context, string, 4);
     g_string_append(string, "  </start-test>\n");
 
-    g_print(string->str);
-    fflush(stdout);
+    stream(streamer, "%s", string->str);
 
     g_string_free(string, TRUE);
 }
@@ -381,8 +454,7 @@ cb_test_result (CutRunContext  *run_context,
     cut_test_result_to_xml_string(result, string, 4);
     g_string_append(string, "  </test-result>\n");
 
-    g_print("%s", string->str);
-    fflush(stdout);
+    stream(streamer, "%s", string->str);
 
     g_string_free(string, TRUE);
 }
@@ -399,8 +471,7 @@ cb_complete_test (CutRunContext *run_context, CutTest *test,
     cut_test_to_xml_string(test, string, 4);
     g_string_append(string, "  </complete-test>\n");
 
-    g_print(string->str);
-    fflush(stdout);
+    stream(streamer, "%s", string->str);
 
     g_string_free(string, TRUE);
 }
@@ -420,8 +491,7 @@ cb_test_case_result (CutRunContext  *run_context,
     cut_test_result_to_xml_string(result, string, 4);
     g_string_append(string, "  </test-case-result>\n");
 
-    g_print("%s", string->str);
-    fflush(stdout);
+    stream(streamer, "%s", string->str);
 
     g_string_free(string, TRUE);
 }
@@ -438,8 +508,7 @@ cb_complete_test_case (CutRunContext *run_context, CutTestCase *test_case,
     cut_test_to_xml_string(CUT_TEST(test_case), string, 4);
     g_string_append(string, "  </complete-test-case>\n");
 
-    g_print(string->str);
-    fflush(stdout);
+    stream(streamer, "%s", string->str);
 
     g_string_free(string, TRUE);
 }
@@ -456,8 +525,7 @@ cb_complete_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
     cut_test_to_xml_string(CUT_TEST(test_suite), string, 4);
     g_string_append(string, "  </complete-test-suite>\n");
 
-    g_print(string->str);
-    fflush(stdout);
+    stream(streamer, "%s", string->str);
 
     g_string_free(string, TRUE);
 }
@@ -466,9 +534,13 @@ static void
 cb_complete_run (CutRunContext *run_context, gboolean success,
                  CutXMLStreamer *streamer)
 {
-    g_print("  <success>%s</success>\n", success ? "TRUE" : "FALSE");
-    g_print("</stream>\n");
-    fflush(stdout);
+    stream(streamer, "  <success>%s</success>\n", success ? "true" : "false");
+    stream(streamer, "</stream>\n");
+
+    if (streamer->channel) {
+        g_io_channel_unref(streamer->channel);
+        streamer->channel = NULL;
+    }
 }
 
 static void
@@ -483,8 +555,7 @@ cb_crashed (CutRunContext *run_context, const gchar *backtrace,
     cut_utils_append_xml_element_with_value(string, 4, "backtrace", backtrace);
     g_string_append(string, "  </crashed>\n");
 
-    g_print(string->str);
-    fflush(stdout);
+    stream(streamer, "%s", string->str);
 
     g_string_free(string, TRUE);
 }

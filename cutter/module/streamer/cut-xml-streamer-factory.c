@@ -45,6 +45,8 @@ typedef struct _CutXMLStreamerFactoryClass CutXMLStreamerFactoryClass;
 struct _CutXMLStreamerFactory
 {
     CutModuleFactory     object;
+
+    gint                 fd;
 };
 
 struct _CutXMLStreamerFactoryClass
@@ -79,6 +81,7 @@ class_init (CutModuleFactoryClass *klass)
 static void
 init (CutXMLStreamerFactory *xml)
 {
+    xml->fd = -1;
 }
 
 static void
@@ -140,6 +143,8 @@ set_option_group (CutModuleFactory *factory, GOptionContext *context)
     CutXMLStreamerFactory *xml = CUT_XML_STREAMER_FACTORY(factory);
     GOptionGroup *group;
     GOptionEntry entries[] = {
+        {"stream-fd", 0, 0, G_OPTION_ARG_INT, &(xml->fd),
+         N_("Stream to FILE_DESCRIPTOR (default: stdout)"), "FILE_DESCRIPTOR"},
         {NULL}
     };
 
@@ -158,7 +163,9 @@ set_option_group (CutModuleFactory *factory, GOptionContext *context)
 GObject *
 create (CutModuleFactory *factory)
 {
-    return G_OBJECT(cut_streamer_new("xml", NULL));
+    return G_OBJECT(cut_streamer_new("xml",
+                                     "fd", CUT_XML_STREAMER_FACTORY(factory)->fd,
+                                     NULL));
 }
 
 /*
