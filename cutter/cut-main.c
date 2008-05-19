@@ -221,8 +221,8 @@ cut_create_run_context (void)
     if (source_directory)
         cut_run_context_set_source_directory(run_context, source_directory);
     cut_run_context_set_multi_thread(run_context, use_multi_thread);
-    cut_run_context_set_exclude_files(run_context, exclude_files);
-    cut_run_context_set_exclude_dirs(run_context, exclude_dirs);
+    cut_run_context_set_exclude_files(run_context, (const gchar **)exclude_files);
+    cut_run_context_set_exclude_directories(run_context, (const gchar **)exclude_dirs);
     cut_run_context_set_target_test_case_names(run_context, test_case_names);
     cut_run_context_set_target_test_names(run_context, test_names);
     cut_run_context_set_test_case_order(run_context, test_case_order);

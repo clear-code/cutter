@@ -54,7 +54,7 @@ struct _CutRunContextPrivate
     gchar *backtrace;
     gchar *test_directory;
     gchar **exclude_files;
-    gchar **exclude_dirs;
+    gchar **exclude_directories;
     gchar *source_directory;
     gchar **target_test_case_names;
     gchar **target_test_names;
@@ -268,8 +268,8 @@ cut_run_context_class_init (CutRunContextClass *klass)
                                 G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_EXCLUDE_FILES, spec);
 
-    spec = g_param_spec_pointer("exclude-directorys",
-                                "Exclude directorys",
+    spec = g_param_spec_pointer("exclude-directories",
+                                "Exclude directories",
                                 "The directory names of excluding from target",
                                 G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_EXCLUDE_DIRECTORIES, spec);
@@ -538,7 +538,7 @@ cut_run_context_init (CutRunContext *context)
     priv->test_directory = NULL;
     priv->source_directory = NULL;
     priv->exclude_files = NULL;
-    priv->exclude_dirs = NULL;
+    priv->exclude_directories = NULL;
     priv->target_test_case_names = NULL;
     priv->target_test_names = NULL;
     priv->canceled = FALSE;
@@ -589,8 +589,8 @@ dispose (GObject *object)
     g_strfreev(priv->exclude_files);
     priv->exclude_files = NULL;
 
-    g_strfreev(priv->exclude_dirs);
-    priv->exclude_dirs = NULL;
+    g_strfreev(priv->exclude_directories);
+    priv->exclude_directories = NULL;
 
     g_strfreev(priv->target_test_case_names);
     priv->target_test_case_names = NULL;
@@ -646,6 +646,24 @@ set_property (GObject      *object,
       case PROP_TEST_CASE_ORDER:
         priv->test_case_order = g_value_get_enum(value);
         break;
+      case PROP_TEST_DIRECTORY:
+        priv->test_directory = g_value_dup_string(value);
+        break;
+      case PROP_SOURCE_DIRECTORY:
+        priv->source_directory = g_value_dup_string(value);
+        break;
+      case PROP_TARGET_TEST_CASE_NAMES:
+        priv->target_test_case_names = g_strdupv(g_value_get_pointer(value));
+        break;
+      case PROP_TARGET_TEST_NAMES:
+        priv->target_test_names = g_strdupv(g_value_get_pointer(value));
+        break;
+      case PROP_EXCLUDE_FILES:
+        priv->exclude_files = g_strdupv(g_value_get_pointer(value));
+        break;
+      case PROP_EXCLUDE_DIRECTORIES:
+        priv->exclude_directories = g_strdupv(g_value_get_pointer(value));
+        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
@@ -693,6 +711,21 @@ get_property (GObject    *object,
         break;
       case PROP_TEST_CASE_ORDER:
         g_value_set_enum(value, priv->test_case_order);
+        break;
+      case PROP_TEST_DIRECTORY:
+        g_value_set_string(value, priv->test_directory);
+      case PROP_SOURCE_DIRECTORY:
+        g_value_set_string(value, priv->source_directory);
+      case PROP_TARGET_TEST_CASE_NAMES:
+        g_value_set_pointer(value, priv->target_test_case_names);
+      case PROP_TARGET_TEST_NAMES:
+        g_value_set_pointer(value, priv->target_test_names);
+        break;
+      case PROP_EXCLUDE_FILES:
+        g_value_set_pointer(value, priv->exclude_files);
+        break;
+      case PROP_EXCLUDE_DIRECTORIES:
+        g_value_set_pointer(value, priv->exclude_directories);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -771,35 +804,36 @@ cut_run_context_is_multi_thread (CutRunContext *context)
 }
 
 void
-cut_run_context_set_exclude_files (CutRunContext *context, gchar **files)
+cut_run_context_set_exclude_files (CutRunContext *context, const gchar **files)
 {
     CutRunContextPrivate *priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
 
     g_strfreev(priv->exclude_files);
-    priv->exclude_files = g_strdupv(files);
+    priv->exclude_files = g_strdupv((gchar **)files);
 }
 
-gchar **
+const gchar **
 cut_run_context_get_exclude_files (CutRunContext *context)
 {
     CutRunContextPrivate *priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
-    return priv->exclude_files;
+    return (const gchar **)priv->exclude_files;
 }
 
 void
-cut_run_context_set_exclude_dirs (CutRunContext *context, gchar **dirs)
+cut_run_context_set_exclude_directories (CutRunContext *context,
+                                         const gchar **directories)
 {
     CutRunContextPrivate *priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
 
-    g_strfreev(priv->exclude_dirs);
-    priv->exclude_dirs = g_strdupv(dirs);
+    g_strfreev(priv->exclude_directories);
+    priv->exclude_directories = g_strdupv((gchar **)directories);
 }
 
-gchar **
-cut_run_context_get_exclude_dirs (CutRunContext *context)
+const gchar **
+cut_run_context_get_exclude_directories (CutRunContext *context)
 {
     CutRunContextPrivate *priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
-    return priv->exclude_dirs;
+    return (const gchar **)priv->exclude_directories;
 }
 
 void
@@ -1301,8 +1335,8 @@ cut_run_context_create_test_suite (CutRunContext *context)
 
     priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
     repository = cut_repository_new(priv->test_directory);
-    cut_repository_set_exclude_files(repository, priv->exclude_files);
-    cut_repository_set_exclude_dirs(repository, priv->exclude_dirs);
+    cut_repository_set_exclude_files(repository, (const gchar **)priv->exclude_files);
+    cut_repository_set_exclude_directories(repository, (const gchar **)priv->exclude_directories);
     suite = cut_repository_create_test_suite(repository);
     g_object_unref(repository);
 

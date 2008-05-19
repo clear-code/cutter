@@ -233,7 +233,7 @@ cut_repository_create_test_suite (CutRepository *repository)
 }
 
 void
-cut_repository_set_exclude_files (CutRepository *repository, gchar **files)
+cut_repository_set_exclude_files (CutRepository *repository, const gchar **files)
 {
     CutRepositoryPrivate *priv = CUT_REPOSITORY_GET_PRIVATE(repository);
 
@@ -241,11 +241,11 @@ cut_repository_set_exclude_files (CutRepository *repository, gchar **files)
         free_regexs(priv->exclude_files_regexs);
 
     if (files)
-        priv->exclude_files_regexs = cut_utils_filter_to_regexs(files);
+        priv->exclude_files_regexs = cut_utils_filter_to_regexs((gchar **)files);
 }
 
 void
-cut_repository_set_exclude_dirs (CutRepository *repository, gchar **dirs)
+cut_repository_set_exclude_directories (CutRepository *repository, const gchar **dirs)
 {
     CutRepositoryPrivate *priv = CUT_REPOSITORY_GET_PRIVATE(repository);
 
@@ -253,7 +253,7 @@ cut_repository_set_exclude_dirs (CutRepository *repository, gchar **dirs)
         free_regexs(priv->exclude_dirs_regexs);
 
     if (dirs)
-        priv->exclude_dirs_regexs = cut_utils_filter_to_regexs(dirs);
+        priv->exclude_dirs_regexs = cut_utils_filter_to_regexs((gchar **)dirs);
 }
 
 /*

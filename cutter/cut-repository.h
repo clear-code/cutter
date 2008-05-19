@@ -52,9 +52,10 @@ GType cut_repository_get_type  (void) G_GNUC_CONST;
 CutRepository *cut_repository_new               (const gchar *directory);
 CutTestSuite  *cut_repository_create_test_suite (CutRepository *repository);
 void           cut_repository_set_exclude_files (CutRepository *repository,
-                                                 gchar        **filenames);
-void           cut_repository_set_exclude_dirs  (CutRepository *repository,
-                                                 gchar        **directory_names);
+                                                 const gchar  **filenames);
+void           cut_repository_set_exclude_directories
+                                                (CutRepository *repository,
+                                                 const gchar  **directory_names);
 
 G_END_DECLS
 

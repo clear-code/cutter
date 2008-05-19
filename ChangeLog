@@ -40,6 +40,11 @@
 	test directory is obtain cut_run_context_get_test_directory().
 	* cutter/cut-utils.[c|h]: Added cut_utils_strv_concat().
 	* cutter/cut-pipeline.c: Pass original command line args.
+	* cutter/cut-repository.[c|h]: cut_repository_set_dirs() ->
+	cut_repository_set_directories() and const cast.
+	* cutter/cut-run-context.[c|h]: cut_run_context_set_dirs() ->
+	cut_run_context_set_directories() and const cast.
+	* cutter/cut-main.c: Use cut_run_context_set_directories() and cast.
 
 2008-05-19  Kouhei Sutou  <kou@cozmixng.org>
 
