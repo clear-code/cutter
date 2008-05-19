@@ -61,6 +61,8 @@ typedef enum {
 
     IN_START_TEST,
 
+    IN_PASS_ASSERTION,
+
     IN_TEST_RESULT,
 
     IN_RESULT,
@@ -109,6 +111,13 @@ struct _StartTest
     CutTestContext *test_context;
 };
 
+typedef struct _PassAssertion PassAssertion;
+struct _PassAssertion
+{
+    CutTest *test;
+    CutTestContext *test_context;
+};
+
 typedef struct _TestResult TestResult;
 struct _TestResult
 {
@@ -146,6 +155,7 @@ struct _CutStreamParserPrivate
     ReadyTestSuite *ready_test_suite;
     ReadyTestCase *ready_test_case;
     StartTest *start_test;
+    PassAssertion *pass_assertion;
     TestResult *test_result;
     CompleteTest *complete_test;
     TestCaseResult *test_case_result;
@@ -308,6 +318,7 @@ cut_stream_parser_init (CutStreamParser *stream_parser)
     priv->ready_test_suite = NULL;
     priv->ready_test_case = NULL;
     priv->start_test = NULL;
+    priv->pass_assertion = NULL;
     priv->complete_test = NULL;
     priv->test_result = NULL;
     priv->test_case_result = NULL;
@@ -361,6 +372,22 @@ start_test_free (StartTest *start_test)
     if (start_test->test_context)
         g_object_unref(start_test->test_context);
     g_slice_free(StartTest, start_test);
+}
+
+static PassAssertion *
+pass_assertion_new (void)
+{
+    return g_slice_new0(PassAssertion);
+}
+
+static void
+pass_assertion_free (PassAssertion *pass_assertion)
+{
+    if (pass_assertion->test)
+        g_object_unref(pass_assertion->test);
+    if (pass_assertion->test_context)
+        g_object_unref(pass_assertion->test_context);
+    g_slice_free(PassAssertion, pass_assertion);
 }
 
 static TestResult *
@@ -473,6 +500,11 @@ dispose (GObject *object)
     if (priv->start_test) {
         start_test_free(priv->start_test);
         priv->start_test = NULL;
+    }
+
+    if (priv->pass_assertion) {
+        pass_assertion_free(priv->pass_assertion);
+        priv->pass_assertion = NULL;
     }
 
     if (priv->test_result) {
@@ -664,7 +696,10 @@ start_stream (CutStreamParserPrivate *priv,
                       GMarkupParseContext *context,
                       const gchar *element_name, GError **error)
 {
-    if (g_str_equal("test-result", element_name)) {
+    if (g_str_equal("pass-assertion", element_name)) {
+        PUSH_STATE(priv, IN_PASS_ASSERTION);
+        priv->pass_assertion = pass_assertion_new();
+    } else if (g_str_equal("test-result", element_name)) {
         PUSH_STATE(priv, IN_TEST_RESULT);
         priv->test_result = test_result_new();
     } else if (g_str_equal("ready-test-suite", element_name)) {
@@ -763,8 +798,8 @@ start_start_test_case (CutStreamParserPrivate *priv,
 
 static void
 start_start_test (CutStreamParserPrivate *priv,
-                          GMarkupParseContext *context,
-                          const gchar *element_name, GError **error)
+                  GMarkupParseContext *context,
+                  const gchar *element_name, GError **error)
 {
     if (g_str_equal("test", element_name)) {
         PUSH_STATE(priv, IN_TEST);
@@ -774,6 +809,24 @@ start_start_test (CutStreamParserPrivate *priv,
         PUSH_STATE(priv, IN_TEST_CONTEXT);
         priv->start_test->test_context = cut_test_context_new_empty();
         PUSH_TEST_CONTEXT(priv,  priv->start_test->test_context);
+    } else {
+        invalid_element(context, error);
+    }
+}
+
+static void
+start_pass_assertion (CutStreamParserPrivate *priv,
+                      GMarkupParseContext *context,
+                      const gchar *element_name, GError **error)
+{
+    if (g_str_equal("test", element_name)) {
+        PUSH_STATE(priv, IN_TEST);
+        priv->pass_assertion->test = cut_test_new_empty();
+        PUSH_TEST(priv, priv->pass_assertion->test);
+    } else if (g_str_equal("test-context", element_name)) {
+        PUSH_STATE(priv, IN_TEST_CONTEXT);
+        priv->pass_assertion->test_context = cut_test_context_new_empty();
+        PUSH_TEST_CONTEXT(priv,  priv->pass_assertion->test_context);
     } else {
         invalid_element(context, error);
     }
@@ -1047,6 +1100,9 @@ start_element_handler (GMarkupParseContext *context,
       case IN_START_TEST:
         start_start_test(priv, context, element_name, error);
         break;
+      case IN_PASS_ASSERTION:
+        start_pass_assertion(priv, context, element_name, error);
+        break;
       case IN_TEST_RESULT:
         start_test_result(priv, context, element_name, error);
         break;
@@ -1231,7 +1287,7 @@ end_start_test (CutStreamParser *parser, CutStreamParserPrivate *priv,
         return;
 
     if (priv->run_context)
-        g_signal_emit_by_name(priv->run_context, "start-test",
+        g_signal_emit_by_name(priv->run_context, "pass-assertion",
                               priv->start_test->test,
                               priv->start_test->test_context);
 
@@ -1241,6 +1297,27 @@ end_start_test (CutStreamParser *parser, CutStreamParserPrivate *priv,
         DROP_TEST_CONTEXT(priv);
     start_test_free(priv->start_test);
     priv->start_test = NULL;
+}
+
+static void
+end_pass_assertion (CutStreamParser *parser, CutStreamParserPrivate *priv,
+                GMarkupParseContext *context,
+                const gchar *element_name, GError **error)
+{
+    if (!priv->pass_assertion)
+        return;
+
+    if (priv->run_context)
+        g_signal_emit_by_name(priv->run_context, "start-test",
+                              priv->pass_assertion->test,
+                              priv->pass_assertion->test_context);
+
+    if (priv->pass_assertion->test)
+        DROP_TEST(priv);
+    if (priv->pass_assertion->test_context)
+        DROP_TEST_CONTEXT(priv);
+    pass_assertion_free(priv->pass_assertion);
+    priv->pass_assertion = NULL;
 }
 
 static void
@@ -1421,6 +1498,9 @@ end_element_handler (GMarkupParseContext *context,
         break;
       case IN_START_TEST:
         end_start_test(parser, priv, context, element_name, error);
+        break;
+      case IN_PASS_ASSERTION:
+        end_pass_assertion(parser, priv, context, element_name, error);
         break;
       case IN_TEST_RESULT:
         end_test_result(parser, priv, context, element_name, error);
