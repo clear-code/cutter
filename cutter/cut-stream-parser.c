@@ -1301,8 +1301,8 @@ end_start_test (CutStreamParser *parser, CutStreamParserPrivate *priv,
 
 static void
 end_pass_assertion (CutStreamParser *parser, CutStreamParserPrivate *priv,
-                GMarkupParseContext *context,
-                const gchar *element_name, GError **error)
+                    GMarkupParseContext *context,
+                    const gchar *element_name, GError **error)
 {
     if (!priv->pass_assertion)
         return;
