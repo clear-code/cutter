@@ -1,5 +1,5 @@
-#include "cutter.h"
-#include "cut-test-result.h"
+#include <gcutter.h>
+#include <cutter/cut-test-result.h>
 
 void test_get_status(void);
 void test_get_message_full(void);
@@ -15,15 +15,26 @@ void test_status_is_critical(void);
 void test_get_test_suite(void);
 void test_to_xml_empty(void);
 void test_to_xml_empty_failure(void);
+void test_new_from_xml(void);
+void test_new_from_xml_with_invalid_top_level_tag_name(void);
+void test_new_from_xml_with_invalid_line(void);
+void test_new_from_xml_invalid(void);
+void test_new_from_xml_with_unexpected_name_tag(void);
+void test_new_from_xml_with_unexpected_value_tag(void);
+void test_new_from_xml_without_option_name(void);
+void test_new_from_xml_with_multiple_option_names(void);
+void test_new_from_xml_invalid_status(void);
 
 static CutTestResult *result;
 static CutTestSuite *suite;
+static GError *error;
 
 void
 setup (void)
 {
     result = NULL;
     suite = NULL;
+    error = NULL;
 }
 
 void
@@ -33,6 +44,8 @@ teardown (void)
         g_object_unref(result);
     if (suite)
         g_object_unref(suite);
+    if (error)
+        g_error_free(error);
 }
 
 
@@ -354,6 +367,194 @@ test_to_xml_empty_failure (void)
     result = cut_test_result_new_empty();
     cut_test_result_set_status(result, CUT_TEST_RESULT_FAILURE);
     cut_assert_equal_string_with_free(expected, cut_test_result_to_xml(result));
+}
+
+void
+test_new_from_xml (void)
+{
+    GError *error = NULL;
+    CutTest *test;
+    const gchar xml[] =
+        "<result>\n"
+        "  <test-case>\n"
+        "    <name>dummy test case</name>\n"
+        "  </test-case>\n"
+        "  <test>\n"
+        "    <name>dummy-error-test</name>\n"
+        "    <description>Error Test</description>\n"
+        "    <option>\n"
+        "      <name>bug</name>\n"
+        "      <value>1234</value>\n"
+        "    </option>\n"
+        "  </test>\n"
+        "  <status>error</status>\n"
+        "  <detail>This test should error</detail>\n"
+        "  <backtrace>\n"
+        "    <entry>\n"
+        "      <file>test-cut-report-xml.c</file>\n"
+        "      <line>31</line>\n"
+        "      <info>dummy_error_test()</info>\n"
+        "    </entry>\n"
+        "  </backtrace>\n"
+        "  <elapsed>0.000100</elapsed>\n"
+        "</result>\n";
+
+    result = cut_test_result_new_from_xml(xml, -1, &error);
+    cut_assert_g_error(error);
+    cut_assert(result);
+
+    test = cut_test_result_get_test(result);
+    cut_assert(test);
+
+    cut_assert_equal_string("dummy test case",
+                            cut_test_result_get_test_case_name(result));
+    cut_assert_equal_string("dummy-error-test",
+                            cut_test_result_get_test_name(result));
+    cut_assert_equal_int(CUT_TEST_RESULT_ERROR,
+                         cut_test_result_get_status(result));
+    cut_assert_equal_double(0.0001, 0.0, cut_test_result_get_elapsed(result));
+    cut_assert_equal_int(31, cut_test_result_get_line(result));
+    cut_assert_equal_string("test-cut-report-xml.c",
+                            cut_test_result_get_filename(result));
+    cut_assert_equal_string("dummy_error_test",
+                            cut_test_result_get_function_name(result));
+    cut_assert_equal_string("This test should error",
+                            cut_test_result_get_message(result));
+    cut_assert_equal_string("1234",
+                            cut_test_get_attribute(test, "bug"));
+    cut_assert_equal_string("Error Test",
+                            cut_test_get_description(test));
+}
+
+#define cut_assert_new_from_xml_error(expected, xml) do         \
+{                                                               \
+    result = cut_test_result_new_from_xml(xml, -1, &error);     \
+    cut_assert_null(result);                                    \
+    cut_assert_not_null(error);                                 \
+    cut_assert_equal_string((expected), error->message);        \
+} while (0)
+
+void
+test_new_from_xml_with_invalid_top_level_tag_name (void)
+{
+    const gchar xml[] =
+        "<gresult>\n"
+        "  <status>success</status>\n"
+        "</result>\n";
+
+    cut_assert_new_from_xml_error("Error on line 2 char 1: "
+                                  "invalid element: /gresult",
+                                  xml);
+}
+
+void
+test_new_from_xml_with_invalid_line (void)
+{
+    const gchar xml[] =
+        "<result>\n"
+        "  <status>pending</status>\n"
+        "  <backtrace>\n"
+        "    <entry>\n"
+        "      <line>XXX</line>\n"
+        "    </entry>\n"
+        "  </backtrace>\n"
+        "</result>\n";
+
+    cut_assert_new_from_xml_error("Error on line 5 char 17: "
+                                  "invalid line number: XXX",
+                                  xml);
+}
+
+void
+test_new_from_xml_invalid (void)
+{
+    const gchar xml[] =
+        "<result>\n"
+        "  <backtrace>\n"
+        "    <entry>\n"
+        "      <info>dummy_error_test</info>\n"
+        "    </entry>\n"
+        "  </backtrace>\n"
+        "</result>\n";
+
+    cut_assert_new_from_xml_error("Error on line 4 char 30: "
+                                  "invalid function name: dummy_error_test",
+                                  xml);
+}
+
+void
+test_new_from_xml_with_unexpected_name_tag (void)
+{
+    const gchar xml[] =
+        "<result>\n"
+        "  <status>success</status>\n"
+        "  <name>test name</name>\n"
+        "</result>\n";
+
+    cut_assert_new_from_xml_error("Error on line 3 char 10: "
+                                  "invalid element: /result/name",
+                                  xml);
+}
+
+void
+test_new_from_xml_with_unexpected_value_tag (void)
+{
+    const gchar xml[] =
+        "<result>\n"
+        "  <value>value</value>\n"
+        "</result>\n";
+
+    cut_assert_new_from_xml_error("Error on line 2 char 11: "
+                                  "invalid element: /result/value",
+                                  xml);
+}
+
+void
+test_new_from_xml_without_option_name (void)
+{
+    const gchar xml[] =
+        "<result>\n"
+        "  <test>\n"
+        "    <option>\n"
+        "      <value>value</value>\n"
+        "    </option>\n"
+        "  </test>\n"
+        "</result>\n";
+
+    cut_assert_new_from_xml_error("Error on line 4 char 20: "
+                                  "option name is not set",
+                                  xml);
+}
+
+void
+test_new_from_xml_with_multiple_option_names (void)
+{
+    const gchar xml[] =
+        "<result>\n"
+        "  <test>\n"
+        "    <option>\n"
+        "      <name>option name1</name>\n"
+        "      <name>option name2</name>\n"
+        "    </option>\n"
+        "  </test>\n"
+        "</result>\n";
+
+    cut_assert_new_from_xml_error("Error on line 5 char 26: "
+                                  "multiple option name: option name2",
+                                  xml);
+}
+
+void
+test_new_from_xml_invalid_status (void)
+{
+    const gchar xml[] =
+        "<result>\n"
+        "  <status>XXXXXX</status>\n"
+        "</result>\n";
+
+    cut_assert_new_from_xml_error("Error on line 2 char 18: "
+                                  "invalid status: XXXXXX",
+                                  xml);
 }
 
 /*

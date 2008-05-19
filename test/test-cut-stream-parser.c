@@ -737,7 +737,8 @@ test_start_test_with_multiple_option_names (void)
     cut_assert_parse(header);
     cut_assert_null(0, receiver->start_tests);
 
-    cut_assert_parse_error("multiple option name: name2 at line 28 char 21.",
+    cut_assert_parse_error("Error on line 28 char 21: "
+                           "multiple option name: name2",
                            start_test);
 }
 

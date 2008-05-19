@@ -1,5 +1,14 @@
 2008-05-19  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-xml-parser.[ch], test/test-cut-xml-parser.c: remove.
+
+	* cutter/Makefile.am, test/Makefile.am, cutter/cut-test-result.c:
+	remove CutXMLParser.
+
+	* cutter/cut-stream-parser.[ch]: support top level <result>.
+
+	* cutter/cut-test-result.[ch]: use CutStreamParser not CutXMLParser.
+
 	* cutter/cut-run-context.[ch]: add error signal.
 
 	* cutter/cut-marshalers.list (VOID:STRING,STRING): add.

@@ -53,6 +53,7 @@ struct _CutStreamParserClass
 GType            cut_stream_parser_get_type  (void) G_GNUC_CONST;
 
 CutStreamParser *cut_stream_parser_new       (CutRunContext   *run_context);
+CutStreamParser *cut_test_result_parser_new  (void);
 
 gboolean         cut_stream_parser_parse     (CutStreamParser *parser,
                                               const gchar     *text,

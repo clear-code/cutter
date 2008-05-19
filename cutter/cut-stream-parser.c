@@ -29,6 +29,7 @@
 
 typedef enum {
     IN_TOP_LEVEL,
+    IN_TOP_LEVEL_RESULT,
 
     IN_STREAM,
     IN_STREAM_SUCCESS,
@@ -159,6 +160,8 @@ struct _CutStreamParserPrivate
     (g_queue_push_head((priv)->states, GINT_TO_POINTER(state)))
 #define POP_STATE(priv)                                 \
     (GPOINTER_TO_INT(g_queue_pop_head((priv)->states)))
+#define DROP_STATE(priv)                        \
+    (g_queue_pop_head((priv)->states))
 #define PEEK_STATE(priv)                                        \
     (GPOINTER_TO_INT(g_queue_peek_head((priv)->states)))
 #define PEEK_NTH_STATE(priv, n)                                 \
@@ -455,11 +458,6 @@ dispose (GObject *object)
         priv->test_contexts = NULL;
     }
 
-    if (priv->option_name) {
-        g_free(priv->option_name);
-        priv->option_name = NULL;
-    }
-
     if (priv->ready_test_suite) {
         ready_test_suite_free(priv->ready_test_suite);
         priv->ready_test_suite = NULL;
@@ -488,6 +486,16 @@ dispose (GObject *object)
     if (priv->test_case_result) {
         test_case_result_free(priv->test_case_result);
         priv->test_case_result = NULL;
+    }
+
+    if (priv->result) {
+        g_object_unref(priv->result);
+        priv->result = NULL;
+    }
+
+    if (priv->option_name) {
+        g_free(priv->option_name);
+        priv->option_name = NULL;
     }
 
     if (priv->crashed_backtrace) {
@@ -548,6 +556,21 @@ cut_stream_parser_new (CutRunContext *run_context)
                         NULL);
 }
 
+CutStreamParser *
+cut_test_result_parser_new (void)
+{
+    CutStreamParser *parser;
+    CutStreamParserPrivate *priv;
+
+    parser = cut_stream_parser_new(NULL);
+    priv = CUT_STREAM_PARSER_GET_PRIVATE(parser);
+
+    DROP_STATE(priv);
+    PUSH_STATE(priv, IN_TOP_LEVEL_RESULT);
+
+    return parser;
+}
+
 gboolean
 cut_stream_parser_parse (CutStreamParser *stream_parser,
                          const gchar *text, gsize text_len, GError **error)
@@ -574,8 +597,8 @@ set_parse_error (GMarkupParseContext *context,
 
     g_markup_parse_context_get_position(context, &line, &chr);
 
-    message = g_strdup_printf("%s at line %d char %d.",
-                              user_message, line, chr);
+    message = g_strdup_printf("Error on line %d char %d: %s",
+                              line, chr, user_message);
 
     *error = g_error_new(G_MARKUP_ERROR,
                          G_MARKUP_ERROR_PARSE,
@@ -584,12 +607,8 @@ set_parse_error (GMarkupParseContext *context,
     g_free(user_message);
 }
 
-#define invalid_element(context, error)                         \
-    _invalid_element(context, error, __FILE__, __LINE__)
-
 static void
-_invalid_element (GMarkupParseContext *context, GError **error,
-                  const gchar *file, gint line)
+invalid_element (GMarkupParseContext *context, GError **error)
 {
     GString *string;
     const GSList *node;
@@ -602,8 +621,7 @@ _invalid_element (GMarkupParseContext *context, GError **error,
         g_string_prepend(string, "/");
     }
 
-    set_parse_error(context, error,
-                    "invalid element: %s: %s:%d:", string->str, file, line);
+    set_parse_error(context, error, "invalid element: %s", string->str);
     g_string_free(string, TRUE);
 }
 
@@ -748,6 +766,14 @@ start_element_handler (GMarkupParseContext *context,
             PUSH_STATE(priv, IN_RESULT);
             priv->test_result->result = cut_test_result_new_empty();
             priv->result = priv->test_result->result;
+        } else {
+            invalid_element(context, error);
+        }
+        break;
+      case IN_TOP_LEVEL_RESULT:
+        if (g_str_equal("result", element_name)) {
+            PUSH_STATE(priv, IN_RESULT);
+            priv->result = cut_test_result_new_empty();
         } else {
             invalid_element(context, error);
         }
@@ -924,6 +950,12 @@ end_element_handler (GMarkupParseContext *context,
     parent_name = get_parent_element(context);
     state = POP_STATE(priv);
     switch (state) {
+      case IN_TOP_LEVEL_RESULT:
+        if (priv->result) {
+            g_object_unref(priv->result);
+            priv->result = NULL;
+        }
+        break;
       case IN_STREAM:
         if (priv->run_context)
             g_signal_emit_by_name(priv->run_context,
@@ -1141,11 +1173,11 @@ set_option_value (GMarkupParseContext *context,
             g_free(priv->option_name);
             priv->option_name = NULL;
         } else {
-            set_parse_error(context, error, "option name is not set.");
+            set_parse_error(context, error, "option name is not set");
         }
     } else {
         set_parse_error(context, error,
-                        "<value> element should be in <option>.");
+                        "<value> element should be in <option>");
     }
 }
 
@@ -1174,9 +1206,7 @@ set_line (GMarkupParseContext *context,
     if (is_integer(text)) {
         cut_test_result_set_line(priv->result, atoi(text));
     } else {
-        set_parse_error(context, error,
-                        "%s does not seem be line number",
-                        text);
+        set_parse_error(context, error, "invalid line number: %s", text);
     }
 }
 
@@ -1192,8 +1222,7 @@ set_function_name (GMarkupParseContext *context,
         cut_test_result_set_function_name(priv->result, real_name);
         g_free(real_name);
     } else {
-        set_parse_error(context, error,
-                        "%s does not seem be function name", name);
+        set_parse_error(context, error, "invalid function name: %s", name);
     }
 }
 
@@ -1282,8 +1311,11 @@ text_handler (GMarkupParseContext *context,
       case IN_RESULT_STATUS:
         {
             CutTestResultStatus result_status;
+
             result_status = result_name_to_status(text);
-            if (result_status != CUT_TEST_RESULT_INVALID) {
+            if (result_status == CUT_TEST_RESULT_INVALID) {
+                set_parse_error(context, error, "invalid status: %s", text);
+            } else {
                 cut_test_result_set_status(priv->result, result_status);
             }
         }

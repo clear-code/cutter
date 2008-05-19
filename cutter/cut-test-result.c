@@ -30,7 +30,7 @@
 #include "cut-test.h"
 #include "cut-test-case.h"
 #include "cut-test-suite.h"
-#include "cut-xml-parser.h"
+#include "cut-stream-parser.h"
 #include "cut-utils.h"
 
 #define CUT_TEST_RESULT_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_RESULT, CutTestResultPrivate))
@@ -364,10 +364,37 @@ cut_test_result_new_empty (void)
                                NULL, NULL, 0);
 }
 
-CutTestResult *
-cut_test_result_new_from_xml (const gchar *xml, gssize length)
+static void
+collect_result (CutStreamParser *parser, CutTestResult *result,
+                gpointer user_data)
 {
-    return cut_xml_parse_test_result_xml(xml, length);
+    CutTestResult **result_store = (CutTestResult **)user_data;
+
+    *result_store = result;
+    g_object_ref(*result_store);
+}
+
+CutTestResult *
+cut_test_result_new_from_xml (const gchar *xml, gssize length, GError **error)
+{
+    CutStreamParser *parser;
+    CutTestResult *result = NULL;
+
+    if (!xml)
+        return NULL;
+
+    parser = cut_test_result_parser_new();
+    g_signal_connect(parser, "result",
+                     G_CALLBACK(collect_result), (gpointer)(&result));
+
+    cut_stream_parser_parse(parser, xml, length, error);
+
+    g_signal_handlers_disconnect_by_func(parser,
+                                         collect_result,
+                                         (gpointer)&result);
+    g_object_unref(parser);
+
+    return result;
 }
 
 CutTestResultStatus

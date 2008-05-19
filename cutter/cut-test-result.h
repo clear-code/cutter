@@ -60,7 +60,8 @@ CutTestResult *cut_test_result_new        (CutTestResultStatus status,
 CutTestResult *cut_test_result_new_empty  (void);
 CutTestResult *cut_test_result_new_from_xml
                                           (const gchar *xml,
-                                           gssize len);
+                                           gssize       len,
+                                           GError     **error);
 
 CutTestResultStatus  cut_test_result_get_status        (CutTestResult *result);
 CutTest             *cut_test_result_get_test          (CutTestResult *result);

@@ -575,7 +575,7 @@ cut_test_context_wait_process (CutTestContext *context,
             if (next_result_xml)
                 result_xml_length = next_result_xml - xml;
 
-            result = cut_test_result_new_from_xml(xml, result_xml_length);
+            result = cut_test_result_new_from_xml(xml, result_xml_length, NULL);
             if (result) {
                 cut_test_context_emit_signal(context, result);
                 g_object_unref(result);
