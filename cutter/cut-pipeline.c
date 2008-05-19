@@ -24,6 +24,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/wait.h>
+#include <unistd.h>
 #include <glib.h>
 #include <glib/gstdio.h>
 
@@ -41,8 +42,9 @@ struct _CutPipelinePrivate
 {
     GPid pid;
     guint process_source_id;
-    guint io_source_id;
-    GIOChannel *stdout_io;
+    guint child_out_source_id;
+    GIOChannel *child_out;
+    gint child_pipe[2];
     CutStreamParser *parser;
     gboolean error_emitted;
 };
@@ -82,10 +84,12 @@ cut_pipeline_init (CutPipeline *pipeline)
     CutPipelinePrivate *priv = CUT_PIPELINE_GET_PRIVATE(pipeline);
 
     priv->process_source_id = 0;
-    priv->io_source_id      = 0;
+    priv->child_out_source_id = 0;
     priv->pid               = 0;
 
-    priv->stdout_io        = NULL;
+    priv->child_out         = NULL;
+    priv->child_pipe[0] = -1;
+    priv->child_pipe[1] = -1;
 
     priv->parser = NULL;
     priv->error_emitted = FALSE;
@@ -107,10 +111,10 @@ remove_child_watch_func (CutPipelinePrivate *priv)
 }
 
 static void
-remove_io_watch_func (CutPipelinePrivate *priv)
+remove_child_out_watch_func (CutPipelinePrivate *priv)
 {
-    g_source_remove(priv->io_source_id);
-    priv->io_source_id = 0;
+    g_source_remove(priv->child_out_source_id);
+    priv->child_out_source_id = 0;
 }
 
 static void
@@ -121,10 +125,10 @@ close_child (CutPipelinePrivate *priv)
 }
 
 static void
-shutdown_io_channel (CutPipelinePrivate *priv)
+shutdown_child_out_channel (CutPipelinePrivate *priv)
 {
-    g_io_channel_shutdown(priv->stdout_io, TRUE, NULL);
-    priv->stdout_io = NULL;
+    g_io_channel_shutdown(priv->child_out, TRUE, NULL);
+    priv->child_out = NULL;
 }
 
 static void
@@ -147,14 +151,14 @@ dispose (GObject *object)
     if (priv->process_source_id)
         remove_child_watch_func(priv);
 
-    if (priv->io_source_id)
-        remove_io_watch_func(priv);
+    if (priv->child_out_source_id)
+        remove_child_out_watch_func(priv);
 
     if (priv->pid)
         close_child(priv);
 
-    if (priv->stdout_io)
-        shutdown_io_channel(priv);
+    if (priv->child_out)
+        shutdown_child_out_channel(priv);
 
     dispose_parser(priv);
 
@@ -170,7 +174,7 @@ cut_pipeline_new (void)
 CutRunContext *
 cut_pipeline_new_from_run_context (CutRunContext *run_context)
 {
-    return g_object_new(CUT_TYPE_PIPELINE, 
+    return g_object_new(CUT_TYPE_PIPELINE,
                         "test-directory", cut_run_context_get_test_directory(run_context),
                         "use-multi-thread", cut_run_context_get_multi_thread(run_context),
                         "exclude-files", cut_run_context_get_exclude_files(run_context),
@@ -205,7 +209,7 @@ reap_child (CutPipeline *pipeline, GPid pid)
         return;
 
     remove_child_watch_func(priv);
-    shutdown_io_channel(priv);
+    shutdown_child_out_channel(priv);
     close_child(priv);
     dispose_parser(priv);
 }
@@ -246,7 +250,7 @@ read_stream (CutPipeline *pipeline, GIOChannel *channel)
 }
 
 static gboolean
-io_watch_func (GIOChannel *channel, GIOCondition condition, gpointer data)
+child_out_watch_func (GIOChannel *channel, GIOCondition condition, gpointer data)
 {
     CutPipeline *pipeline;
 
@@ -277,7 +281,7 @@ child_watch_func (GPid pid, gint status, gpointer data)
 
         priv = CUT_PIPELINE_GET_PRIVATE(pipeline);
         if (!priv->error_emitted)
-            read_stream(pipeline, priv->stdout_io);
+            read_stream(pipeline, priv->child_out);
         if (!priv->error_emitted)
             emit_complete_signal(pipeline, WEXITSTATUS(status) == EXIT_SUCCESS);
         reap_child(pipeline, pid);
@@ -285,16 +289,18 @@ child_watch_func (GPid pid, gint status, gpointer data)
 }
 
 static GIOChannel *
-create_io_channel (CutPipeline *pipeline, gint pipe)
+create_child_out_channel (CutPipeline *pipeline)
 {
     GIOChannel *channel;
-    CutPipelinePrivate *priv = CUT_PIPELINE_GET_PRIVATE(pipeline);
+    CutPipelinePrivate *priv;
 
-    channel = g_io_channel_unix_new(pipe);
+    priv = CUT_PIPELINE_GET_PRIVATE(pipeline);
+    channel = g_io_channel_unix_new(priv->child_pipe[CUT_READ]);
     g_io_channel_set_close_on_unref(channel, TRUE);
-    priv->io_source_id = g_io_add_watch(channel,
-                                        G_IO_IN | G_IO_PRI | G_IO_ERR | G_IO_HUP,
-                                        io_watch_func, pipeline);
+    priv->child_out_source_id = g_io_add_watch(channel,
+                                               G_IO_IN | G_IO_PRI |
+                                               G_IO_ERR | G_IO_HUP,
+                                               child_out_watch_func, pipeline);
 
     return channel;
 }
@@ -306,12 +312,15 @@ create_command_line_args (CutPipeline *pipeline)
     gchar **new_args = NULL;
     const gchar *test_directory;
     CutRunContext *run_context = CUT_RUN_CONTEXT(pipeline);
+    CutPipelinePrivate *priv;
 
+    priv = CUT_PIPELINE_GET_PRIVATE(pipeline);
     test_directory = cut_run_context_get_test_directory(run_context);
     original_argv = cut_run_context_get_command_line_args(run_context);
 
     if (original_argv) {
         gchar **copy;
+        gchar *stream_fd;
         guint i;
         guint length = g_strv_length((gchar **)original_argv);
 
@@ -322,12 +331,16 @@ create_command_line_args (CutPipeline *pipeline)
         }
         copy[i] = NULL;
 
+        stream_fd = g_strdup_printf("--stream-fd=%d",
+                                    priv->child_pipe[CUT_WRITE]);
         new_args = cut_utils_strv_concat((const gchar **)copy,
                                          "--ui=console",
                                          "-v", "s",
                                          "--streamer=xml",
+                                         stream_fd,
                                          test_directory,
                                          NULL);
+        g_free(stream_fd);
         g_strfreev(copy);
     } else {
         gboolean result;
@@ -340,8 +353,13 @@ create_command_line_args (CutPipeline *pipeline)
         if (!cutter_command)
             cutter_command = g_get_prgname();
 
-        command_line = g_strdup_printf("%s -v s --streamer=xml %s",
+        command_line = g_strdup_printf("%s "
+                                       "-v s "
+                                       "--streamer=xml "
+                                       "--stream-fd=%d "
+                                       "%s",
                                        cutter_command,
+                                       priv->child_pipe[CUT_WRITE],
                                        test_directory);
         result = g_shell_parse_argv(command_line, &argc, &new_args, NULL);
         g_free(command_line);
@@ -351,40 +369,60 @@ create_command_line_args (CutPipeline *pipeline)
 }
 
 static void
+setup_child (gpointer user_data)
+{
+    CutPipeline *pipeline = user_data;
+    CutPipelinePrivate *priv;
+
+    priv = CUT_PIPELINE_GET_PRIVATE(pipeline);
+
+    cut_utils_close_pipe(priv->child_pipe, CUT_READ);
+}
+
+static void
 run_async (CutPipeline *pipeline)
 {
     gchar **command_line_args;
-    gint std_out;
     gboolean result;
-    CutPipelinePrivate *priv = CUT_PIPELINE_GET_PRIVATE(pipeline);
+    GError *error = NULL;
+    CutPipelinePrivate *priv;
+
+    priv = CUT_PIPELINE_GET_PRIVATE(pipeline);
+
+    if (pipe(priv->child_pipe) < 0) {
+        emit_error(pipeline, NULL, "can't create pipe: %s", strerror(errno));
+        return;
+    }
 
     command_line_args = create_command_line_args(pipeline);
-
     if (!command_line_args) {
-        emit_complete_signal(pipeline, FALSE);
+        emit_error(pipeline, NULL, "failed to generate command line");
         return;
     }
 
     result = g_spawn_async_with_pipes(NULL,
                                       command_line_args,
                                       NULL,
+                                      G_SPAWN_LEAVE_DESCRIPTORS_OPEN |
                                       G_SPAWN_DO_NOT_REAP_CHILD,
-                                      NULL,
-                                      NULL,
+                                      setup_child,
+                                      pipeline,
                                       &priv->pid,
                                       NULL,
-                                      &std_out,
                                       NULL,
-                                      NULL);
+                                      NULL,
+                                      &error);
     g_strfreev(command_line_args);
+    cut_utils_close_pipe(priv->child_pipe, CUT_WRITE);
+
     if (!result) {
-        emit_complete_signal(pipeline, FALSE);
+        emit_error(pipeline, error, "failed to spawn child process");
         return;
     }
 
     priv->error_emitted = FALSE;
     priv->parser = cut_stream_parser_new(CUT_RUN_CONTEXT(pipeline));
-    priv->stdout_io = create_io_channel(pipeline, std_out);
+    priv->child_out = create_child_out_channel(pipeline);
     priv->process_source_id = g_child_watch_add(priv->pid,
                                                 child_watch_func,
                                                 pipeline);
