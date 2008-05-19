@@ -1102,6 +1102,298 @@ start_element_handler (GMarkupParseContext *context,
 }
 
 static void
+end_top_level (CutStreamParser *parser, CutStreamParserPrivate *priv,
+               GMarkupParseContext *context,
+               const gchar *element_name, GError **error)
+{
+    if (priv->result) {
+        g_object_unref(priv->result);
+        priv->result = NULL;
+    }
+}
+
+static void
+end_stream (CutStreamParser *parser, CutStreamParserPrivate *priv,
+            GMarkupParseContext *context,
+            const gchar *element_name, GError **error)
+{
+    if (priv->run_context)
+        g_signal_emit_by_name(priv->run_context, "complete-run", priv->success);
+
+}
+
+static void
+end_result (CutStreamParser *parser, CutStreamParserPrivate *priv,
+            GMarkupParseContext *context,
+            const gchar *element_name, GError **error)
+{
+    if (priv->result)
+        g_signal_emit_by_name(parser, "result", priv->result);
+}
+
+static void
+end_test_option (CutStreamParser *parser, CutStreamParserPrivate *priv,
+                 GMarkupParseContext *context,
+                 const gchar *element_name, GError **error)
+{
+    gchar *path = NULL;
+
+    if (!priv->option_name) {
+        path = element_path(context);
+        set_parse_error(context, error, "option name is not set: %s", path);
+    } else if (!priv->option_value) {
+        path = element_path(context);
+        set_parse_error(context, error, "option value is not set: %s", path);
+    } else {
+        cut_test_set_attribute(PEEK_TEST(priv),
+                               priv->option_name,
+                               priv->option_value);
+    }
+
+    if (path)
+        g_free(path);
+
+    if (priv->option_name) {
+        g_free(priv->option_name);
+        priv->option_name = NULL;
+    }
+
+    if (priv->option_value) {
+        g_free(priv->option_value);
+        priv->option_value = NULL;
+    }
+}
+
+static void
+end_ready_test_suite (CutStreamParser *parser, CutStreamParserPrivate *priv,
+                      GMarkupParseContext *context,
+                      const gchar *element_name, GError **error)
+{
+    if (!priv->ready_test_suite)
+        return;
+
+    if (priv->run_context)
+        g_signal_emit_by_name(priv->run_context, "ready-test-suite",
+                              priv->ready_test_suite->test_suite,
+                              priv->ready_test_suite->n_test_cases,
+                              priv->ready_test_suite->n_tests);
+
+    if (priv->ready_test_suite->test_suite)
+        DROP_TEST_SUITE(priv);
+    ready_test_suite_free(priv->ready_test_suite);
+    priv->ready_test_suite = NULL;
+}
+
+static void
+end_start_test_suite (CutStreamParser *parser, CutStreamParserPrivate *priv,
+                      GMarkupParseContext *context,
+                      const gchar *element_name, GError **error)
+{
+    CutTestSuite *test_suite;
+
+    test_suite = POP_TEST_SUITE(priv);
+    if (!test_suite)
+        return;
+
+    if (priv->run_context)
+        g_signal_emit_by_name(priv->run_context, "start-test-suite", test_suite);
+    g_object_unref(test_suite);
+}
+
+static void
+end_ready_test_case (CutStreamParser *parser, CutStreamParserPrivate *priv,
+                     GMarkupParseContext *context,
+                     const gchar *element_name, GError **error)
+{
+    if (!priv->ready_test_case)
+        return;
+
+    if (priv->run_context)
+        g_signal_emit_by_name(priv->run_context, "ready-test-case",
+                              priv->ready_test_case->test_case,
+                              priv->ready_test_case->n_tests);
+
+    if (priv->ready_test_case->test_case)
+        DROP_TEST_CASE(priv);
+    ready_test_case_free(priv->ready_test_case);
+    priv->ready_test_case = NULL;
+}
+
+static void
+end_start_test_case (CutStreamParser *parser, CutStreamParserPrivate *priv,
+                     GMarkupParseContext *context,
+                     const gchar *element_name, GError **error)
+{
+    CutTestCase *test_case;
+
+    test_case = POP_TEST_CASE(priv);
+    if (!test_case)
+        return;
+
+    if (priv->run_context)
+        g_signal_emit_by_name(priv->run_context, "start-test-case", test_case);
+
+    g_object_unref(test_case);
+}
+
+static void
+end_start_test (CutStreamParser *parser, CutStreamParserPrivate *priv,
+                GMarkupParseContext *context,
+                const gchar *element_name, GError **error)
+{
+    if (!priv->start_test)
+        return;
+
+    if (priv->run_context)
+        g_signal_emit_by_name(priv->run_context, "start-test",
+                              priv->start_test->test,
+                              priv->start_test->test_context);
+
+    if (priv->start_test->test)
+        DROP_TEST(priv);
+    if (priv->start_test->test_context)
+        DROP_TEST_CONTEXT(priv);
+    start_test_free(priv->start_test);
+    priv->start_test = NULL;
+}
+
+static void
+end_test_result (CutStreamParser *parser, CutStreamParserPrivate *priv,
+                 GMarkupParseContext *context,
+                 const gchar *element_name, GError **error)
+{
+    if (!priv->test_result)
+        return;
+
+    if (priv->run_context) {
+        CutTestResult *result;
+        CutTestResultStatus status;
+        const gchar *signal_name;
+        gchar *full_signal_name;
+
+        result = priv->test_result->result;
+        status = cut_test_result_get_status(result);
+        signal_name = cut_test_result_status_to_signal_name(status);
+        full_signal_name = g_strdup_printf("%s-test", signal_name);
+        g_signal_emit_by_name(priv->run_context, full_signal_name,
+                              priv->test_result->test,
+                              priv->test_result->test_context,
+                              result);
+        g_free(full_signal_name);
+    }
+
+    if (priv->test_result->test)
+        DROP_TEST(priv);
+    if (priv->test_result->test_context)
+        DROP_TEST_CONTEXT(priv);
+    test_result_free(priv->test_result);
+    priv->test_result = NULL;
+    priv->result = NULL;
+}
+
+static void
+end_complete_test (CutStreamParser *parser, CutStreamParserPrivate *priv,
+                   GMarkupParseContext *context,
+                   const gchar *element_name, GError **error)
+{
+    if (!priv->complete_test)
+        return;
+
+    if (priv->run_context)
+        g_signal_emit_by_name(priv->run_context, "complete-test",
+                              priv->complete_test->test,
+                              priv->complete_test->test_context);
+
+    if (priv->complete_test->test)
+        DROP_TEST(priv);
+    if (priv->complete_test->test_context)
+        DROP_TEST_CONTEXT(priv);
+    complete_test_free(priv->complete_test);
+    priv->complete_test = NULL;
+}
+
+static void
+end_test_case_result (CutStreamParser *parser, CutStreamParserPrivate *priv,
+                      GMarkupParseContext *context,
+                      const gchar *element_name, GError **error)
+{
+    if (!priv->test_case_result)
+        return;
+
+    if (priv->run_context) {
+        CutTestResult *result;
+        CutTestResultStatus status;
+        const gchar *signal_name;
+        gchar *full_signal_name;
+
+        result = priv->test_case_result->result;
+        status = cut_test_result_get_status(result);
+        signal_name = cut_test_result_status_to_signal_name(status);
+        full_signal_name = g_strdup_printf("%s-test-case", signal_name);
+        g_signal_emit_by_name(priv->run_context, full_signal_name,
+                              priv->test_case_result->test_case,
+                              priv->test_case_result->result);
+        g_free(full_signal_name);
+    }
+
+    if (priv->test_case_result->test_case)
+        DROP_TEST_CASE(priv);
+    test_case_result_free(priv->test_case_result);
+    priv->test_case_result = NULL;
+    priv->result = NULL;
+}
+
+static void
+end_complete_test_case (CutStreamParser *parser, CutStreamParserPrivate *priv,
+                        GMarkupParseContext *context,
+                        const gchar *element_name, GError **error)
+{
+    CutTestCase *test_case;
+
+    test_case = POP_TEST_CASE(priv);
+    if (!test_case)
+        return;
+
+    if (priv->run_context)
+        g_signal_emit_by_name(priv->run_context,
+                              "complete-test-case", test_case);
+    g_object_unref(test_case);
+}
+
+static void
+end_complete_test_suite (CutStreamParser *parser, CutStreamParserPrivate *priv,
+                         GMarkupParseContext *context,
+                         const gchar *element_name, GError **error)
+{
+    CutTestSuite *test_suite;
+
+    test_suite = POP_TEST_SUITE(priv);
+    if (!test_suite)
+        return;
+
+    if (priv->run_context)
+        g_signal_emit_by_name(priv->run_context,
+                              "complete-test-suite", test_suite);
+    g_object_unref(test_suite);
+}
+
+static void
+end_crashed (CutStreamParser *parser, CutStreamParserPrivate *priv,
+             GMarkupParseContext *context,
+             const gchar *element_name, GError **error)
+{
+    if (priv->run_context)
+        g_signal_emit_by_name(priv->run_context,
+                              "crashed", priv->crashed_backtrace);
+
+    if (!priv->crashed_backtrace)
+        return;
+
+    g_free(priv->crashed_backtrace);
+    priv->crashed_backtrace = NULL;
+}
+
+static void
 end_element_handler (GMarkupParseContext *context,
                      const gchar         *element_name,
                      gpointer             user_data,
@@ -1118,217 +1410,49 @@ end_element_handler (GMarkupParseContext *context,
     state = POP_STATE(priv);
     switch (state) {
       case IN_TOP_LEVEL_RESULT:
-        if (priv->result) {
-            g_object_unref(priv->result);
-            priv->result = NULL;
-        }
+        end_top_level(parser, priv, context, element_name, error);
         break;
       case IN_STREAM:
-        if (priv->run_context)
-            g_signal_emit_by_name(priv->run_context,
-                                  "complete-run", priv->success);
+        end_stream(parser, priv, context, element_name, error);
         break;
       case IN_RESULT:
-        if (priv->result) {
-            g_signal_emit_by_name(parser, "result", priv->result);
-        }
+        end_result(parser, priv, context, element_name, error);
         break;
       case IN_TEST_OPTION:
-        {
-            gchar *path = NULL;
-
-            if (!priv->option_name) {
-                path = element_path(context);
-                set_parse_error(context, error,
-                                "option name is not set: %s", path);
-            } else if (!priv->option_value) {
-                path = element_path(context);
-                set_parse_error(context, error,
-                                "option value is not set: %s", path);
-            } else {
-                cut_test_set_attribute(PEEK_TEST(priv),
-                                       priv->option_name,
-                                       priv->option_value);
-            }
-
-            if (path)
-                g_free(path);
-
-            if (priv->option_name) {
-                g_free(priv->option_name);
-                priv->option_name = NULL;
-            }
-
-            if (priv->option_value) {
-                g_free(priv->option_value);
-                priv->option_value = NULL;
-            }
-        }
+        end_test_option(parser, priv, context, element_name, error);
         break;
       case IN_READY_TEST_SUITE:
-        if (priv->ready_test_suite) {
-            if (priv->run_context)
-                g_signal_emit_by_name(priv->run_context, "ready-test-suite",
-                                      priv->ready_test_suite->test_suite,
-                                      priv->ready_test_suite->n_test_cases,
-                                      priv->ready_test_suite->n_tests);
-            if (priv->ready_test_suite->test_suite)
-                DROP_TEST_SUITE(priv);
-            ready_test_suite_free(priv->ready_test_suite);
-            priv->ready_test_suite = NULL;
-        }
+        end_ready_test_suite(parser, priv, context, element_name, error);
         break;
       case IN_START_TEST_SUITE:
-        {
-            CutTestSuite *test_suite;
-
-            test_suite = POP_TEST_SUITE(priv);
-            if (test_suite) {
-                if (priv->run_context)
-                    g_signal_emit_by_name(priv->run_context, "start-test-suite",
-                                          test_suite);
-                g_object_unref(test_suite);
-            }
-        }
+        end_start_test_suite(parser, priv, context, element_name, error);
         break;
       case IN_READY_TEST_CASE:
-        if (priv->ready_test_case) {
-            if (priv->run_context)
-                g_signal_emit_by_name(priv->run_context, "ready-test-case",
-                                      priv->ready_test_case->test_case,
-                                      priv->ready_test_case->n_tests);
-            if (priv->ready_test_case->test_case)
-                DROP_TEST_CASE(priv);
-            ready_test_case_free(priv->ready_test_case);
-            priv->ready_test_case = NULL;
-        }
+        end_ready_test_case(parser, priv, context, element_name, error);
         break;
       case IN_START_TEST_CASE:
-        {
-            CutTestCase *test_case;
-
-            test_case = POP_TEST_CASE(priv);
-            if (test_case) {
-                if (priv->run_context)
-                    g_signal_emit_by_name(priv->run_context, "start-test-case",
-                                          test_case);
-                g_object_unref(test_case);
-            }
-        }
+        end_start_test_case(parser, priv, context, element_name, error);
         break;
       case IN_START_TEST:
-        if (priv->start_test) {
-            if (priv->run_context)
-                g_signal_emit_by_name(priv->run_context, "start-test",
-                                      priv->start_test->test,
-                                      priv->start_test->test_context);
-            if (priv->start_test->test)
-                DROP_TEST(priv);
-            if (priv->start_test->test_context)
-                DROP_TEST_CONTEXT(priv);
-            start_test_free(priv->start_test);
-            priv->start_test = NULL;
-        }
+        end_start_test(parser, priv, context, element_name, error);
         break;
       case IN_TEST_RESULT:
-        if (priv->test_result) {
-            if (priv->run_context) {
-                CutTestResult *result;
-                CutTestResultStatus status;
-                const gchar *signal_name;
-                gchar *full_signal_name;
-
-                result = priv->test_result->result;
-                status = cut_test_result_get_status(result);
-                signal_name = cut_test_result_status_to_signal_name(status);
-                full_signal_name = g_strdup_printf("%s-test", signal_name);
-                g_signal_emit_by_name(priv->run_context, full_signal_name,
-                                      priv->test_result->test,
-                                      priv->test_result->test_context,
-                                      result);
-                g_free(full_signal_name);
-            }
-            if (priv->test_result->test)
-                DROP_TEST(priv);
-            if (priv->test_result->test_context)
-                DROP_TEST_CONTEXT(priv);
-            test_result_free(priv->test_result);
-            priv->test_result = NULL;
-            priv->result = NULL;
-        }
+        end_test_result(parser, priv, context, element_name, error);
         break;
       case IN_COMPLETE_TEST:
-        if (priv->complete_test) {
-            if (priv->run_context)
-                g_signal_emit_by_name(priv->run_context, "complete-test",
-                                      priv->complete_test->test,
-                                      priv->complete_test->test_context);
-            if (priv->complete_test->test)
-                DROP_TEST(priv);
-            if (priv->complete_test->test_context)
-                DROP_TEST_CONTEXT(priv);
-            complete_test_free(priv->complete_test);
-            priv->complete_test = NULL;
-        }
+        end_complete_test(parser, priv, context, element_name, error);
         break;
       case IN_TEST_CASE_RESULT:
-        if (priv->test_case_result) {
-            if (priv->run_context) {
-                CutTestResult *result;
-                CutTestResultStatus status;
-                const gchar *signal_name;
-                gchar *full_signal_name;
-
-                result = priv->test_case_result->result;
-                status = cut_test_result_get_status(result);
-                signal_name = cut_test_result_status_to_signal_name(status);
-                full_signal_name = g_strdup_printf("%s-test-case", signal_name);
-                g_signal_emit_by_name(priv->run_context, full_signal_name,
-                                      priv->test_case_result->test_case,
-                                      priv->test_case_result->result);
-                g_free(full_signal_name);
-            }
-            if (priv->test_case_result->test_case)
-                DROP_TEST_CASE(priv);
-            test_case_result_free(priv->test_case_result);
-            priv->test_case_result = NULL;
-            priv->result = NULL;
-        }
+        end_test_case_result(parser, priv, context, element_name, error);
         break;
       case IN_COMPLETE_TEST_CASE:
-        {
-            CutTestCase *test_case;
-
-            test_case = POP_TEST_CASE(priv);
-            if (test_case) {
-                if (priv->run_context)
-                    g_signal_emit_by_name(priv->run_context,
-                                          "complete-test-case", test_case);
-                g_object_unref(test_case);
-            }
-        }
+        end_complete_test_case(parser, priv, context, element_name, error);
         break;
       case IN_COMPLETE_TEST_SUITE:
-        {
-            CutTestSuite *test_suite;
-
-            test_suite = POP_TEST_SUITE(priv);
-            if (test_suite) {
-                if (priv->run_context)
-                    g_signal_emit_by_name(priv->run_context,
-                                          "complete-test-suite", test_suite);
-                g_object_unref(test_suite);
-            }
-        }
+        end_complete_test_suite(parser, priv, context, element_name, error);
         break;
-      case IN_CRASHED_BACKTRACE:
-        if (priv->crashed_backtrace) {
-            if (priv->run_context)
-                g_signal_emit_by_name(priv->run_context,
-                                      "crashed", priv->crashed_backtrace);
-            g_free(priv->crashed_backtrace);
-            priv->crashed_backtrace = NULL;
-        }
+      case IN_CRASHED:
+        end_crashed(parser, priv, context, element_name, error);
         break;
       default:
         break;
