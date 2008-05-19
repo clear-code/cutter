@@ -72,6 +72,9 @@
 	* cutter/module/ui/cut-gtk-ui.c: Use CutPipeline.
 	* cutter/module/ui/cut-gtk-ui.c: Connect to "complete-run" signal
 	instead of "complete-test-suite".
+	* cutter/module/ui/cut-gtk-ui.c: "complete-run" signal accompany with
+	gboolean value.
+	instead of "complete-test-suite".
 
 2008-05-19  Kouhei Sutou  <kou@cozmixng.org>
 

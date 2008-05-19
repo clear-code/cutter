@@ -1342,10 +1342,16 @@ idle_cb_push_complete_test_suite_message (gpointer data)
 }
 
 static void
-cb_complete_run (CutRunContext *run_context, CutGtkUI *ui)
+cb_complete_run (CutRunContext *run_context, gboolean success, CutGtkUI *ui)
 {
     ui->running = FALSE;
+}
 
+static void
+cb_complete_test_suite (CutRunContext *run_context,
+                        CutTestSuite *test_suite,
+                        CutGtkUI *ui)
+{
     g_idle_add(idle_cb_push_complete_test_suite_message, ui);
     g_idle_add(idle_cb_update_button_sensitive, ui);
 }
@@ -1407,6 +1413,7 @@ connect_to_run_context (CutGtkUI *ui, CutRunContext *run_context)
     CONNECT(ready_test_suite);
     CONNECT(ready_test_case);
 
+    CONNECT(complete_test_suite);
     CONNECT(complete_run);
 
     CONNECT(error);
@@ -1425,6 +1432,7 @@ disconnect_from_run_context (CutGtkUI *ui, CutRunContext *run_context)
     DISCONNECT(ready_test_suite);
     DISCONNECT(ready_test_case);
 
+    DISCONNECT(complete_test_suite);
     DISCONNECT(complete_run);
 
     DISCONNECT(error);
