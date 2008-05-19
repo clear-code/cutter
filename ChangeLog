@@ -1,6 +1,8 @@
 2008-05-19  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-stream-parser.c: cleanup.
+	* test/test-cut-test-result.c, test/test-cut-stream-parser.c:
+	follow the above change.
 
 	* cutter/cut-stream-parser.c, test/test-cut-test-result.c: improve
 	option parsing.
