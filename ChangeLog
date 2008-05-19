@@ -1,5 +1,7 @@
 2008-05-19  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-test-suite.c (run_test_with_filter): add const.
+
 	* cutter/cut-stream-parser.c: cleanup.
 	* test/test-cut-test-result.c, test/test-cut-stream-parser.c:
 	follow the above change.

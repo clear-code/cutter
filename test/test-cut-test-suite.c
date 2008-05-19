@@ -170,7 +170,7 @@ run_test_in_test_case (gchar *test_name, gchar *test_case_name)
 }
 
 static gboolean
-run_test_with_filter (gchar **test_case_names, gchar **test_names)
+run_test_with_filter (const gchar **test_case_names, const gchar **test_names)
 {
     return cut_test_suite_run_with_filter(test_object,
                                           run_context,
