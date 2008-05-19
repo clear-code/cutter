@@ -300,7 +300,7 @@ create_command_line_args (CutPipeline *pipeline)
         guint length = g_strv_length((gchar **)original_argv);
 
         /* remove the last argumen in which test directory is stored */
-        copy = g_new(gchar*, length);
+        copy = g_new(gchar *, length);
         for (i = 0; i < length - 1; i++) {
             copy[i] = g_strdup(original_argv[i]);
         }

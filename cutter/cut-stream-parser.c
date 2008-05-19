@@ -152,6 +152,7 @@ struct _CutStreamParserPrivate
 
     CutTestResult *result;
     gchar *option_name;
+    gchar *option_value;
     gboolean success;
     gchar *crashed_backtrace;
 };
@@ -314,6 +315,7 @@ cut_stream_parser_init (CutStreamParser *stream_parser)
 
     priv->result = NULL;
     priv->option_name = NULL;
+    priv->option_value = NULL;
     priv->success = TRUE;
 }
 
@@ -498,6 +500,11 @@ dispose (GObject *object)
         priv->option_name = NULL;
     }
 
+    if (priv->option_value) {
+        g_free(priv->option_value);
+        priv->option_value = NULL;
+    }
+
     if (priv->crashed_backtrace) {
         g_free(priv->crashed_backtrace);
         priv->crashed_backtrace = NULL;
@@ -607,8 +614,8 @@ set_parse_error (GMarkupParseContext *context,
     g_free(user_message);
 }
 
-static void
-invalid_element (GMarkupParseContext *context, GError **error)
+static gchar *
+element_path (GMarkupParseContext *context)
 {
     GString *string;
     const GSList *node;
@@ -621,8 +628,17 @@ invalid_element (GMarkupParseContext *context, GError **error)
         g_string_prepend(string, "/");
     }
 
-    set_parse_error(context, error, "invalid element: %s", string->str);
-    g_string_free(string, TRUE);
+    return g_string_free(string, FALSE);
+}
+
+static void
+invalid_element (GMarkupParseContext *context, GError **error)
+{
+    gchar *path;
+
+    path = element_path(context);
+    set_parse_error(context, error, "invalid element: %s", path);
+    g_free(path);
 }
 
 static const gchar *
@@ -966,6 +982,38 @@ end_element_handler (GMarkupParseContext *context,
             g_signal_emit_by_name(parser, "result", priv->result);
         }
         break;
+      case IN_TEST_OPTION:
+        {
+            gchar *path = NULL;
+
+            if (!priv->option_name) {
+                path = element_path(context);
+                set_parse_error(context, error,
+                                "option name is not set: %s", path);
+            } else if (!priv->option_value) {
+                path = element_path(context);
+                set_parse_error(context, error,
+                                "option value is not set: %s", path);
+            } else {
+                cut_test_set_attribute(PEEK_TEST(priv),
+                                       priv->option_name,
+                                       priv->option_value);
+            }
+
+            if (path)
+                g_free(path);
+
+            if (priv->option_name) {
+                g_free(priv->option_name);
+                priv->option_name = NULL;
+            }
+
+            if (priv->option_value) {
+                g_free(priv->option_value);
+                priv->option_value = NULL;
+            }
+        }
+        break;
       case IN_READY_TEST_SUITE:
         if (priv->ready_test_suite) {
             if (priv->run_context)
@@ -1157,30 +1205,6 @@ result_name_to_status (const gchar *name)
     return CUT_TEST_RESULT_INVALID;
 }
 
-static void
-set_option_value (GMarkupParseContext *context,
-                  CutStreamParserPrivate *priv,
-                  const gchar *value,
-                  GError **error)
-{
-    const gchar *parent;
-
-    parent = get_parent_element(context);
-
-    if (g_str_equal("option", parent)) {
-        if (priv->option_name) {
-            cut_test_set_attribute(PEEK_TEST(priv), priv->option_name, value);
-            g_free(priv->option_name);
-            priv->option_name = NULL;
-        } else {
-            set_parse_error(context, error, "option name is not set");
-        }
-    } else {
-        set_parse_error(context, error,
-                        "<value> element should be in <option>");
-    }
-}
-
 static gboolean
 is_integer (const gchar *str)
 {
@@ -1306,7 +1330,11 @@ text_handler (GMarkupParseContext *context,
         }
         break;
       case IN_TEST_OPTION_VALUE:
-        set_option_value(context, priv, text, error);
+        if (priv->option_value) {
+            set_parse_error(context, error, "multiple option value: %s", text);
+        } else {
+            priv->option_value = g_strdup(text);
+        }
         break;
       case IN_RESULT_STATUS:
         {

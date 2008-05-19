@@ -22,6 +22,7 @@ void test_new_from_xml_invalid(void);
 void test_new_from_xml_with_unexpected_name_tag(void);
 void test_new_from_xml_with_unexpected_value_tag(void);
 void test_new_from_xml_without_option_name(void);
+void test_new_from_xml_without_option_value(void);
 void test_new_from_xml_with_multiple_option_names(void);
 void test_new_from_xml_invalid_status(void);
 
@@ -521,8 +522,27 @@ test_new_from_xml_without_option_name (void)
         "  </test>\n"
         "</result>\n";
 
-    cut_assert_new_from_xml_error("Error on line 4 char 20: "
-                                  "option name is not set",
+    cut_assert_new_from_xml_error("Error on line 6 char 1: "
+                                  "option name is not set: "
+                                  "/result/test/option",
+                                  xml);
+}
+
+void
+test_new_from_xml_without_option_value (void)
+{
+    const gchar xml[] =
+        "<result>\n"
+        "  <test>\n"
+        "    <option>\n"
+        "      <name>name</name>\n"
+        "    </option>\n"
+        "  </test>\n"
+        "</result>\n";
+
+    cut_assert_new_from_xml_error("Error on line 6 char 1: "
+                                  "option value is not set: "
+                                  "/result/test/option",
                                   xml);
 }
 
