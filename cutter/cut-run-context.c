@@ -113,6 +113,7 @@ enum
     COMPLETE_TEST_SUITE,
     COMPLETE_RUN,
 
+    ERROR,
     CRASHED,
 
     LAST_SIGNAL
@@ -451,14 +452,23 @@ cut_run_context_class_init (CutRunContextClass *klass)
                        g_cclosure_marshal_VOID__BOOLEAN,
                        G_TYPE_NONE, 1, G_TYPE_BOOLEAN);
 
+    signals[ERROR]
+        = g_signal_new("error",
+                       G_TYPE_FROM_CLASS(klass),
+                       G_SIGNAL_RUN_LAST,
+                       G_STRUCT_OFFSET(CutRunContextClass, error),
+                       NULL, NULL,
+                       _cut_marshal_VOID__STRING_STRING,
+                       G_TYPE_NONE, 2, G_TYPE_STRING, G_TYPE_STRING);
+
     signals[CRASHED]
-        = g_signal_new ("crashed",
-                        G_TYPE_FROM_CLASS (klass),
-                        G_SIGNAL_RUN_LAST,
-                        G_STRUCT_OFFSET (CutRunContextClass, crashed),
-                        NULL, NULL,
-                        g_cclosure_marshal_VOID__STRING,
-                        G_TYPE_NONE, 1, G_TYPE_STRING);
+        = g_signal_new("crashed",
+                       G_TYPE_FROM_CLASS(klass),
+                       G_SIGNAL_RUN_LAST,
+                       G_STRUCT_OFFSET(CutRunContextClass, crashed),
+                       NULL, NULL,
+                       g_cclosure_marshal_VOID__STRING,
+                       G_TYPE_NONE, 1, G_TYPE_STRING);
 
     g_type_class_add_private(gobject_class, sizeof(CutRunContextPrivate));
 }
@@ -1420,6 +1430,38 @@ cut_run_context_start (CutRunContext *context)
     cut_run_context_detach_listeners(context);
 
     return success;
+}
+
+void
+cut_run_context_emit_error (CutRunContext *context,
+                            const gchar   *name,
+                            GError        *error,
+                            const gchar   *format,
+                            ...)
+{
+    GString *message;
+    va_list var_args;
+
+    message = g_string_new(NULL);
+
+    if (error) {
+        g_string_append_printf(message, "%s:%d",
+                               g_quark_to_string(error->domain), error->code);
+        if (error->message)
+            g_string_append_printf(message, ": %s", error->message);
+
+        g_string_append(message, ": ");
+    }
+
+    va_start(var_args, format);
+    g_string_append_vprintf(message, format, var_args);
+    va_end(var_args);
+
+    g_signal_emit(context, signals[ERROR], 0, name, message->str);
+
+    if (error)
+        g_error_free(error);
+    g_string_free(message, TRUE);
 }
 
 void

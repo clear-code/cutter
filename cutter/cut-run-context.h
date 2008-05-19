@@ -125,6 +125,9 @@ struct _CutRunContextClass
     void (*complete_run)        (CutRunContext  *context,
                                  gboolean        success);
 
+    void (*error)               (CutRunContext  *context,
+                                 const gchar    *name,
+                                 const gchar    *detail);
     void (*crashed)             (CutRunContext  *context,
                                  const gchar    *backtrace);
 };
@@ -204,9 +207,16 @@ gchar         *cut_run_context_build_source_filename(CutRunContext *context,
 
 gboolean       cut_run_context_start                (CutRunContext *context);
 
+void           cut_run_context_emit_error           (CutRunContext *context,
+                                                     const gchar   *name,
+                                                     GError        *error,
+                                                     const gchar   *format,
+                                                     ...) G_GNUC_PRINTF(4, 5);
+
 void           cut_run_context_set_command_line_args(CutRunContext *context,
                                                      gchar        **args);
 const gchar  **cut_run_context_get_command_line_args(CutRunContext *context);
+
 
 G_END_DECLS
 
