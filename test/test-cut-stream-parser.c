@@ -656,7 +656,7 @@ test_start_test (void)
         "  </start-test>\n";
 
     cut_assert_parse(header);
-    cut_assert_null(0, receiver->start_tests);
+    cut_assert_equal_int(0, receiver->start_tests);
 
     cut_assert_parse(start_test);
     cut_assert_equal_int(1, g_list_length(receiver->start_tests));
