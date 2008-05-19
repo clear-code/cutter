@@ -2,6 +2,22 @@
 
 = NEWS --- Cutterの歴史
 
+== 1.0.0: 2008-05-20
+
+  * 検証の追加
+    * cut_assert_equal_pointer()
+    * cut_assert_g_error()
+    * cut_assert_match()
+  * テスト対象から除外するファイルを指定する--exclude-fileオ
+    プションの追加
+  * テスト対象から除外するディレクトリを指定する--exclude-dirオ
+    プションの追加
+  * cutter.m4に--without-cutterを追加（configureのオプション）
+  * 実験的:
+    * Cutterプロトコルの実装（CutXMLStreamerとCutStreamParser）
+    * cut_take_g_error()の追加
+    * Mac OS Xのサポート
+
 == 0.9.0: 2008-05-12
 
   * 検証の追加

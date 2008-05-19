@@ -2,6 +2,22 @@
 
 = NEWS --- The history of Cutter
 
+== 1.0.0: 2008-05-20
+
+  * Add assertions:
+    * cut_assert_equal_pointer()
+    * cut_assert_g_error()
+    * cut_assert_match()
+  * Add --exclude-file option that specifies excluded files
+    from test targets
+  * Add --exclude-dir option that specifies excluded directories
+    from test targets
+  * Add --without-cutter to cutter.m4 (configure option)
+  * Experimental:
+    * Implement Cutter protocol (CutXMLStreamer and CutStreamParser)
+    * Add cut_take_g_error()
+    * Support Mac OS X
+
 == 0.9.0: 2008-05-12
 
   * Add assertions.
