@@ -49,6 +49,7 @@ struct _CutPipelineClass
 GType          cut_pipeline_get_type  (void) G_GNUC_CONST;
 
 CutRunContext *cut_pipeline_new       (void);
+CutRunContext *cut_pipeline_new_from_run_context (CutRunContext *run_context);
 
 G_END_DECLS
 

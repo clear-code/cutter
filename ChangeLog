@@ -45,6 +45,8 @@
 	* cutter/cut-run-context.[c|h]: cut_run_context_set_dirs() ->
 	cut_run_context_set_directories() and const cast.
 	* cutter/cut-main.c: Use cut_run_context_set_directories() and cast.
+	* cutter/cut-pipeline.[c|h]: Added
+	cut_pipeline_new_from_run_context().
 
 2008-05-19  Kouhei Sutou  <kou@cozmixng.org>
 

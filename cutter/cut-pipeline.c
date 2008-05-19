@@ -167,6 +167,22 @@ cut_pipeline_new (void)
     return g_object_new(CUT_TYPE_PIPELINE, NULL);
 }
 
+CutRunContext *
+cut_pipeline_new_from_run_context (CutRunContext *run_context)
+{
+    return g_object_new(CUT_TYPE_PIPELINE, 
+                        "test-directory", cut_run_context_get_test_directory(run_context),
+                        "use-multi-thread", cut_run_context_get_multi_thread(run_context),
+                        "exclude-files", cut_run_context_get_exclude_files(run_context),
+                        "exclude-directories", cut_run_context_get_exclude_directories(run_context),
+                        "test-directory", cut_run_context_get_test_directory(run_context),
+                        "source-directory", cut_run_context_get_source_directory(run_context),
+                        "target-test-case-names", cut_run_context_get_target_test_case_names(run_context),
+                        "target-test-names", cut_run_context_get_target_test_names(run_context),
+                        "test-case-order", cut_run_context_get_test_case_order(run_context),
+                        NULL);
+}
+
 #define emit_error(pipeline, error, format, ...) do                     \
 {                                                                       \
     CutPipelinePrivate *_priv;                                          \
