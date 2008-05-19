@@ -1,5 +1,7 @@
 2008-05-19  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-pipeline.c: <sys/wait.h> not <wait.h>.
+
 	* test/test-cut-test-suite.c (run_test_with_filter): add const.
 
 	* cutter/cut-stream-parser.c: cleanup.
