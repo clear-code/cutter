@@ -80,7 +80,8 @@ typedef enum {
 
     IN_COMPLETE_TEST_SUITE,
 
-    IN_CRASHED
+    IN_CRASHED,
+    IN_CRASHED_BACKTRACE
 } ParseState;
 
 #define CUT_STREAM_PARSER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_STREAM_PARSER, CutStreamParserPrivate))
@@ -151,6 +152,7 @@ struct _CutStreamParserPrivate
     CutTestResult *result;
     gchar *option_name;
     gboolean success;
+    gchar *crashed_backtrace;
 };
 
 #define PUSH_STATE(priv, state)                                 \
@@ -305,6 +307,7 @@ cut_stream_parser_init (CutStreamParser *stream_parser)
     priv->complete_test = NULL;
     priv->test_result = NULL;
     priv->test_case_result = NULL;
+    priv->crashed_backtrace = NULL;
 
     priv->result = NULL;
     priv->option_name = NULL;
@@ -485,6 +488,11 @@ dispose (GObject *object)
     if (priv->test_case_result) {
         test_case_result_free(priv->test_case_result);
         priv->test_case_result = NULL;
+    }
+
+    if (priv->crashed_backtrace) {
+        g_free(priv->crashed_backtrace);
+        priv->crashed_backtrace = NULL;
     }
 
     G_OBJECT_CLASS(cut_stream_parser_parent_class)->dispose(object);
@@ -668,6 +676,8 @@ start_element_handler (GMarkupParseContext *context,
             PUSH_STATE(priv, IN_COMPLETE_TEST_SUITE);
         } else if (g_str_equal("success", element_name)) {
             PUSH_STATE(priv, IN_STREAM_SUCCESS);
+        } else if (g_str_equal("crashed", element_name)) {
+            PUSH_STATE(priv, IN_CRASHED);
         } else {
             invalid_element(context, error);
         }
@@ -809,6 +819,13 @@ start_element_handler (GMarkupParseContext *context,
         if (g_str_equal("test-suite", element_name)) {
             PUSH_STATE(priv, IN_TEST_SUITE);
             PUSH_TEST_SUITE(priv, cut_test_suite_new());
+        } else {
+            invalid_element(context, error);
+        }
+        break;
+      case IN_CRASHED:
+        if (g_str_equal("backtrace", element_name)) {
+            PUSH_STATE(priv, IN_CRASHED_BACKTRACE);
         } else {
             invalid_element(context, error);
         }
@@ -1073,6 +1090,15 @@ end_element_handler (GMarkupParseContext *context,
             }
         }
         break;
+      case IN_CRASHED_BACKTRACE:
+        if (priv->crashed_backtrace) {
+            if (priv->run_context)
+                g_signal_emit_by_name(priv->run_context,
+                                      "crashed", priv->crashed_backtrace);
+            g_free(priv->crashed_backtrace);
+            priv->crashed_backtrace = NULL;
+        }
+        break;
       default:
         break;
     }
@@ -1293,6 +1319,8 @@ text_handler (GMarkupParseContext *context,
         break;
       case IN_STREAM_SUCCESS:
         priv->success = string_to_boolean(text);
+      case IN_CRASHED_BACKTRACE:
+        priv->crashed_backtrace = g_strdup(text);
       default:
         break;
     }

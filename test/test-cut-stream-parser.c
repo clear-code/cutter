@@ -15,6 +15,7 @@ void test_complete_test_suite (void);
 void test_complete_run_without_success_tag (void);
 void test_complete_run_with_success_true (void);
 void test_complete_run_with_success_false (void);
+void test_crashed (void);
 
 #define CUTTEST_TYPE_EVENT_RECEIVER            (cuttest_event_receiver_get_type ())
 #define CUTTEST_EVENT_RECEIVER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUTTEST_TYPE_EVENT_RECEIVER, CuttestEventReceiver))
@@ -40,6 +41,7 @@ struct _CuttestEventReceiver
     GList *complete_test_cases;
     GList *complete_test_suites;
     GList *complete_runs;
+    GList *crasheds;
 };
 
 struct _CuttestEventReceiverClass
@@ -241,6 +243,14 @@ dispose (GObject *object)
         g_list_free(receiver->complete_runs);
         receiver->complete_runs = NULL;
     }
+
+    if (receiver->crasheds) {
+        g_list_foreach(receiver->crasheds, (GFunc)g_free, NULL);
+        g_list_free(receiver->crasheds);
+        receiver->crasheds = NULL;
+    }
+
+    G_OBJECT_CLASS(cuttest_event_receiver_parent_class)->dispose(object);
 }
 
 static void
@@ -350,6 +360,15 @@ complete_run (CutRunContext *context, gboolean success)
 }
 
 static void
+crashed (CutRunContext *context, const gchar *backtrace)
+{
+    CuttestEventReceiver *receiver;
+
+    receiver = CUTTEST_EVENT_RECEIVER(context);
+    receiver->crasheds = g_list_append(receiver->crasheds, g_strdup(backtrace));
+}
+
+static void
 cuttest_event_receiver_class_init (CuttestEventReceiverClass *klass)
 {
     GObjectClass *gobject_class;
@@ -370,13 +389,23 @@ cuttest_event_receiver_class_init (CuttestEventReceiverClass *klass)
     run_context_class->complete_test_case = complete_test_case;
     run_context_class->complete_test_suite = complete_test_suite;
     run_context_class->complete_run = complete_run;
+    run_context_class->crashed = crashed;
 }
 
 static void
 cuttest_event_receiver_init (CuttestEventReceiver *receiver)
 {
     receiver->n_start_runs = 0;
+    receiver->ready_test_suites = NULL;
+    receiver->start_test_suites = NULL;
+    receiver->ready_test_cases = NULL;
+    receiver->start_test_cases = NULL;
+    receiver->start_tests = NULL;
+    receiver->complete_tests = NULL;
+    receiver->complete_test_cases = NULL;
+    receiver->complete_test_suites = NULL;
     receiver->complete_runs = NULL;
+    receiver->crasheds = NULL;
 }
 
 static CutRunContext *
@@ -1088,6 +1117,38 @@ test_complete_run_with_success_false (void)
     cut_assert_parse("</stream>");
     cut_assert_equal_int(1, g_list_length(receiver->complete_runs));
     cut_assert_false(GPOINTER_TO_INT(receiver->complete_runs->data));
+}
+
+void
+test_crashed (void)
+{
+    gchar header[] =
+        "<stream>\n";
+    gchar crashed_backtrace[] =
+        "#4  0x00007fd67b4fbfc5 in test_crashed () at test-cut-stream-parser.c:1099\n"
+        "#5  0x00007fd68285ea77 in cut_test_run (test=0xfc0e30, test_context=0xf90840, \n"
+        "#6  0x00007fd682860cc4 in run (test_case=0xfb3400, test=0xfc0e30, \n"
+        "#7  0x00007fd682860e9d in cut_test_case_run_with_filter (test_case=0xfb3400, \n"
+        "#8  0x00007fd682862c66 in run (data=0xfc3560) at cut-test-suite.c:129\n"
+        "#9  0x00007fd68286313e in cut_test_suite_run_test_cases (test_suite=0xf88c60, \n"
+        "#10 0x00007fd6828631e0 in cut_test_suite_run_with_filter (test_suite=0xf88c60, \n"
+        "#11 0x00007fd68285dbe8 in cut_runner_run (runner=0xf8d840) at cut-runner.c:67\n"
+        "#12 0x00007fd68285bc7f in cut_run_context_start (context=0xf8d840)\n"
+        "#13 0x00007fd68285e072 in cut_start_run_context (run_context=0xf8d840)\n"
+        "#14 0x00007fd68285e1be in cut_run () at cut-main.c:317\n";
+
+
+    cut_assert_parse(header);
+
+    cut_assert_parse("  <crashed>\n");
+    cut_assert_parse("    <backtrace>");
+    cut_assert_parse(crashed_backtrace);
+    cut_assert_parse("</backtrace>\n");
+    cut_assert_null(0, receiver->crasheds);
+    cut_assert_parse("  </crashed>\n");
+    cut_assert_equal_int(1, g_list_length(receiver->crasheds));
+
+    cut_assert_equal_string(crashed_backtrace, receiver->crasheds->data);
 }
 
 /*
