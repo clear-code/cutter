@@ -1381,6 +1381,13 @@ idle_cb_append_crash_row (gpointer data)
 }
 
 static void
+cb_error (CutRunContext *run_context, const gchar *name, const gchar *detail,
+          CutGtkUI *ui)
+{
+    g_print("SystemError: %s: %s\n", name, detail);
+}
+
+static void
 cb_crashed (CutRunContext *run_context, const gchar *backtrace, CutGtkUI *ui)
 {
     CrashRowInfo *info;
@@ -1403,6 +1410,7 @@ connect_to_run_context (CutGtkUI *ui, CutRunContext *run_context)
 
     CONNECT(complete_test_suite);
 
+    CONNECT(error);
     CONNECT(crashed);
 #undef CONNECT
 }
@@ -1420,6 +1428,7 @@ disconnect_from_run_context (CutGtkUI *ui, CutRunContext *run_context)
 
     DISCONNECT(complete_test_suite);
 
+    DISCONNECT(error);
     DISCONNECT(crashed);
 #undef DISCONNECT
 }

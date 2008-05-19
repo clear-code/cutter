@@ -1,5 +1,7 @@
 2008-05-19  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/module/ui/cut-gtk-ui.c: handle error.
+
 	* doc/reference/: update.
 
 	* TODO: add auto-cutter.
