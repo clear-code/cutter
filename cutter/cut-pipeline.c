@@ -41,7 +41,6 @@ struct _CutPipelinePrivate
     GPid pid;
     guint process_source_id;
     guint io_source_id;
-    gchar *target_directory;
     GIOChannel *stdout_io;
     CutStreamParser *parser;
 };
@@ -60,14 +59,6 @@ G_DEFINE_TYPE_WITH_CODE(CutPipeline, cut_pipeline, CUT_TYPE_RUN_CONTEXT,
                         G_IMPLEMENT_INTERFACE(CUT_TYPE_RUNNER, runner_init))
 
 static void     dispose      (GObject         *object);
-static void     set_property (GObject         *object,
-                              guint            prop_id,
-                              const GValue    *value,
-                              GParamSpec      *pspec);
-static void     get_property (GObject         *object,
-                              guint            prop_id,
-                              GValue          *value,
-                              GParamSpec      *pspec);
 
 static void     runner_run_async (CutRunner *runner);
 
@@ -75,20 +66,10 @@ static void
 cut_pipeline_class_init (CutPipelineClass *klass)
 {
     GObjectClass *gobject_class;
-    GParamSpec *spec;
 
     gobject_class = G_OBJECT_CLASS(klass);
 
     gobject_class->dispose      = dispose;
-    gobject_class->set_property = set_property;
-    gobject_class->get_property = get_property;
-
-    spec = g_param_spec_string("target-directory",
-                               "Test target directory name",
-                               "Test target directory name",
-                               NULL,
-                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
-    g_object_class_install_property(gobject_class, PROP_TARGET_DIRECTORY, spec);
 
     g_type_class_add_private(gobject_class, sizeof(CutPipelinePrivate));
 }
@@ -102,7 +83,6 @@ cut_pipeline_init (CutPipeline *pipeline)
     priv->io_source_id      = 0;
     priv->pid               = 0;
 
-    priv->target_directory = NULL;
     priv->stdout_io        = NULL;
 
     priv->parser = NULL;
@@ -114,42 +94,6 @@ runner_init (CutRunnerIface *iface)
     parent_runner_iface = g_type_interface_peek_parent(iface);
     iface->run_async = runner_run_async;
     iface->run       = NULL;
-}
-
-static void
-set_property (GObject      *object,
-              guint         prop_id,
-              const GValue *value,
-              GParamSpec   *pspec)
-{
-    CutPipelinePrivate *priv = CUT_PIPELINE_GET_PRIVATE(object);
-
-    switch (prop_id) {
-      case PROP_TARGET_DIRECTORY:
-        priv->target_directory = g_value_dup_string(value);
-        break;
-      default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
-        break;
-    }
-}
-
-static void
-get_property (GObject    *object,
-              guint       prop_id,
-              GValue     *value,
-              GParamSpec *pspec)
-{
-    CutPipelinePrivate *priv = CUT_PIPELINE_GET_PRIVATE(object);
-
-    switch (prop_id) {
-      case PROP_TARGET_DIRECTORY:
-        g_value_set_string(value, priv->target_directory);
-        break;
-      default:
-        G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
-        break;
-    }
 }
 
 static void
@@ -209,22 +153,15 @@ dispose (GObject *object)
     if (priv->stdout_io)
         shutdown_io_channel(priv);
 
-    if (priv->target_directory) {
-        g_free(priv->target_directory);
-        priv->target_directory = NULL;
-    }
-
     dispose_parser(priv);
 
     G_OBJECT_CLASS(cut_pipeline_parent_class)->dispose(object);
 }
 
 CutRunContext *
-cut_pipeline_new (const gchar *target_directory)
+cut_pipeline_new (void)
 {
-    return g_object_new(CUT_TYPE_PIPELINE,
-                        "target-directory", target_directory,
-                        NULL);
+    return g_object_new(CUT_TYPE_PIPELINE, NULL);
 }
 
 static void
@@ -333,6 +270,7 @@ run_async (CutPipeline *pipeline)
     const gchar *cutter_command = NULL;
     gchar **argv = NULL;
     const gchar **original_argv;
+    const gchar *test_directory;
     gint argc;
     gint std_out;
     gboolean ret;
@@ -348,9 +286,10 @@ run_async (CutPipeline *pipeline)
             cutter_command = g_get_prgname();
     }
 
+    test_directory = cut_run_context_get_test_directory(run_context);
     command_line = g_strdup_printf("%s -v s --streamer=xml %s",
                                    cutter_command,
-                                   priv->target_directory);
+                                   test_directory);
     ret = g_shell_parse_argv(command_line, &argc, &argv, NULL);
     g_free(command_line);
     if (!ret) {

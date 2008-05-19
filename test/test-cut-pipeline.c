@@ -39,7 +39,7 @@ shutdown (void)
 void
 setup (void)
 {
-    pipeline = NULL;
+    pipeline = cut_pipeline_new();
     received_complete_signal = FALSE;
 }
 
@@ -65,9 +65,9 @@ test_exit_status_error (void)
 {
     gboolean success = TRUE;
 
-    pipeline = cut_pipeline_new(error_test_dir);
     cut_assert(pipeline);
 
+    cut_run_context_set_test_directory(CUT_RUN_CONTEXT(pipeline), error_test_dir);
     g_signal_connect(pipeline, "complete-run",
                      G_CALLBACK(cb_complete_run_signal), &success);
 
@@ -87,8 +87,7 @@ test_exit_status_success (void)
 {
     gboolean success = FALSE;
 
-    pipeline = cut_pipeline_new(success_test_dir);
-    cut_assert(pipeline);
+    cut_run_context_set_test_directory(CUT_RUN_CONTEXT(pipeline), success_test_dir);
 
     g_signal_connect(pipeline, "complete-run",
                      G_CALLBACK(cb_complete_run_signal), &success);
@@ -124,8 +123,9 @@ test_ ## signal_name ## _signal (void)                                  \
     gboolean success = FALSE;                                           \
     gint n_signal = 0;                                                  \
                                                                         \
-    pipeline = cut_pipeline_new(error_test_dir);                        \
     cut_assert(pipeline);                                               \
+    cut_run_context_set_test_directory(CUT_RUN_CONTEXT(pipeline),       \
+                                       error_test_dir);                 \
                                                                         \
     g_signal_connect(pipeline, "complete-run",                          \
                      G_CALLBACK(cb_complete_run_signal), &success);     \
