@@ -1,5 +1,7 @@
 2008-05-19  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-pipeline.c: improve stream reader.
+
 	* cutter/module/ui/cut-console-ui.c: support system error.
 
 	* cutter/cut-xml-parser.[ch], test/test-cut-xml-parser.c: remove.

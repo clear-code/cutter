@@ -219,11 +219,12 @@ read_stream (CutPipeline *pipeline, GIOChannel *channel)
     if (error) {
         emit_error(pipeline, error, "failed to read stream");
     } else {
-        if (stream) {
+        if (length > 0) {
             cut_stream_parser_parse(priv->parser, stream, length, &error);
             if (error)
                 emit_error(pipeline, error, "failed to parse stream");
             g_free(stream);
+            read_stream(pipeline, channel);
         }
     }
 }
@@ -259,10 +260,8 @@ child_watch_func (GPid pid, gint status, gpointer data)
         CutPipelinePrivate *priv;
 
         priv = CUT_PIPELINE_GET_PRIVATE(pipeline);
-        while (!priv->error_emitted &&
-               g_io_channel_get_buffer_condition(priv->stdout_io) & G_IO_IN) {
+        if (!priv->error_emitted)
             read_stream(pipeline, priv->stdout_io);
-        }
         if (!priv->error_emitted)
             emit_complete_signal(pipeline, WEXITSTATUS(status) == EXIT_SUCCESS);
         reap_child(pipeline, pid);
