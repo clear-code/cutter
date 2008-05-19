@@ -48,7 +48,7 @@ cut_utils_create_regex_pattern (const gchar *string)
 }
 
 GList *
-cut_utils_filter_to_regexs (gchar **filter)
+cut_utils_filter_to_regexs (const gchar **filter)
 {
     GList *regexs = NULL;
 

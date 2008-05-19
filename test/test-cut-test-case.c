@@ -174,7 +174,7 @@ test_teardown (void)
 void
 test_test_case_count (void)
 {
-    gchar *test_names[] = {"/.*/", NULL};
+    const gchar *test_names[] = {"/.*/", NULL};
     cut_assert_equal_int(3, cut_test_case_get_n_tests(test_object, NULL));
     cut_assert_equal_int(3, cut_test_case_get_n_tests(test_object, test_names));
 }
@@ -219,7 +219,7 @@ test_run_tests_with_regex (void)
 void
 test_run_with_name_filter (void)
 {
-    gchar *names[] = {"dummy_test_1", "run_test_function", NULL};
+    const gchar *names[] = {"dummy_test_1", "run_test_function", NULL};
 
     cut_assert(cut_test_case_run_with_filter(test_object, run_context, names));
     cut_assert_equal_int(1, n_run_dummy_run_test_function);
@@ -230,7 +230,7 @@ test_run_with_name_filter (void)
 void
 test_run_with_regex_filter (void)
 {
-    gchar *regex[] = {"/dummy/", NULL};
+    const gchar *regex[] = {"/dummy/", NULL};
 
     cut_assert(cut_test_case_run_with_filter(test_object, run_context, regex));
     cut_assert_equal_int(0, n_run_dummy_run_test_function);
@@ -241,7 +241,7 @@ test_run_with_regex_filter (void)
 void
 test_run_with_name_and_regex_filter (void)
 {
-    gchar *name_and_regex[] = {"/dummy/", "run_test_function", NULL};
+    const gchar *name_and_regex[] = {"/dummy/", "run_test_function", NULL};
 
     cut_assert(cut_test_case_run_with_filter(test_object, run_context,
                                              name_and_regex));

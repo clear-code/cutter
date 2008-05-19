@@ -120,7 +120,7 @@ real_get_elapsed (CutTest *test)
 
 GList *
 cut_test_container_filter_children (CutTestContainer *container,
-                                    gchar **filter)
+                                    const gchar **filter)
 {
     GList *original, *node, *regexs;
     GList *matched_tests = NULL;

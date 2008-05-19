@@ -49,6 +49,9 @@
 	* cutter/cut-main.c: Use cut_run_context_set_directories() and cast.
 	* cutter/cut-pipeline.[c|h]: Added
 	cut_pipeline_new_from_run_context().
+	* cutter/cut-test-case.[c|h], cutter/cut-utils.[c|h],
+	cut-test-container.[c|h], cutter/cut-test-suite.[c|h],
+	cutter/cut-repository: const cast.
 
 2008-05-19  Kouhei Sutou  <kou@cozmixng.org>
 

@@ -280,7 +280,7 @@ cut_test_case_new_empty (void)
 }
 
 static GList *
-get_filtered_tests (CutTestCase *test_case, gchar **test_names)
+get_filtered_tests (CutTestCase *test_case, const gchar **test_names)
 {
     CutTestContainer *container;
 
@@ -293,7 +293,7 @@ get_filtered_tests (CutTestCase *test_case, gchar **test_names)
 }
 
 guint
-cut_test_case_get_n_tests (CutTestCase *test_case,  gchar **test_names)
+cut_test_case_get_n_tests (CutTestCase *test_case,  const gchar **test_names)
 {
     GList *filtered_tests;
     guint n_tests;
@@ -446,9 +446,9 @@ cut_test_case_run_tests (CutTestCase *test_case, CutRunContext *run_context,
 }
 
 gboolean
-cut_test_case_run_test (CutTestCase *test_case, CutRunContext *run_context, gchar *name)
+cut_test_case_run_test (CutTestCase *test_case, CutRunContext *run_context, const gchar *name)
 {
-    gchar *test_names[] = {NULL, NULL};
+    const gchar *test_names[] = {NULL, NULL};
 
     g_return_val_if_fail(CUT_IS_TEST_CASE(test_case), FALSE);
 
@@ -459,7 +459,7 @@ cut_test_case_run_test (CutTestCase *test_case, CutRunContext *run_context, gcha
 gboolean
 cut_test_case_run_with_filter (CutTestCase  *test_case,
                                CutRunContext   *run_context,
-                               gchar **test_names)
+                               const gchar **test_names)
 {
     GList *filtered_tests;
     gboolean success = TRUE;
@@ -478,7 +478,7 @@ cut_test_case_run (CutTestCase *test_case, CutRunContext *run_context)
     gchar **test_names;
 
     test_names = cut_run_context_get_target_test_names(run_context);
-    return cut_test_case_run_with_filter(test_case, run_context, test_names);
+    return cut_test_case_run_with_filter(test_case, run_context, (const gchar **)test_names);
 }
 
 /*

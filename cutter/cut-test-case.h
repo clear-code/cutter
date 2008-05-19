@@ -74,15 +74,15 @@ CutTestCase *cut_test_case_new_empty      (void);
 void         cut_test_case_add_test       (CutTestCase *test_case,
                                            CutTest *test);
 guint        cut_test_case_get_n_tests    (CutTestCase   *test_case,
-                                           gchar        **test_names);
+                                           const gchar  **test_names);
 gboolean     cut_test_case_run            (CutTestCase   *test_case,
                                            CutRunContext *run_context);
 gboolean     cut_test_case_run_test       (CutTestCase   *test_case,
                                            CutRunContext *run_context,
-                                           gchar         *name);
+                                           const gchar   *name);
 gboolean     cut_test_case_run_with_filter(CutTestCase   *test_case,
                                            CutRunContext *run_context,
-                                           gchar        **test_names);
+                                           const gchar  **test_names);
 
 G_END_DECLS
 
