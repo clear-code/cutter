@@ -1061,7 +1061,7 @@ idle_cb_update_summary (gpointer data)
     g_free(summary);
 
     short_summary = generate_short_summary_message(ui->run_context);
-    title = g_strdup_printf("Cutter - %s", short_summary);
+    title = g_strdup_printf("%s - Cutter", short_summary);
     gtk_window_set_title(GTK_WINDOW(ui->window), title);
     g_free(short_summary);
     g_free(title);
@@ -1214,7 +1214,7 @@ cb_complete_test (CutRunContext *run_context,
 
 #define DISCONNECT(name)                                                \
     g_signal_handlers_disconnect_by_func(run_context,                   \
-                                         G_CALLBACK(cb_ ## name), \
+                                         G_CALLBACK(cb_ ## name),       \
                                          data)
     DISCONNECT(pass_assertion);
     DISCONNECT(success_test);

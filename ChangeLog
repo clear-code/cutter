@@ -1,5 +1,8 @@
 2008-05-19  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/module/ui/cut-gtk-ui.c (idle_cb_update_summary): invert
+	title order.
+
 	* test/test-cutter.c (test_help_all): add --stream-fd option.
 
 	* cutter/cut-process.c: use cut_utils_close_pipe().
