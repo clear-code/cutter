@@ -58,6 +58,13 @@
 
 #define CRASH_COLOR RED_BACK_COLOR WHITE_COLOR
 
+typedef struct _Error Error;
+struct _Error
+{
+    gchar *name;
+    gchar *detail;
+};
+
 typedef struct _CutConsoleUI CutConsoleUI;
 typedef struct _CutConsoleUIClass CutConsoleUIClass;
 
@@ -67,6 +74,7 @@ struct _CutConsoleUI
     gchar        *name;
     gboolean      use_color;
     CutVerboseLevel verbose_level;
+    GList        *errors;
 };
 
 struct _CutConsoleUIClass
@@ -136,6 +144,7 @@ init (CutConsoleUI *console)
 {
     console->use_color = FALSE;
     console->verbose_level = CUT_VERBOSE_LEVEL_NORMAL;
+    console->errors = NULL;
 }
 
 static void
@@ -222,9 +231,41 @@ CUT_MODULE_IMPL_INSTANTIATE (const gchar *first_property, va_list var_args)
     return g_object_new_valist(CUT_TYPE_CONSOLE_UI, first_property, var_args);
 }
 
+static Error *
+error_new (const gchar *name, const gchar *detail)
+{
+    Error *error;
+
+    error = g_slice_new(Error);
+    error->name = g_strdup(name);
+    error->detail = g_strdup(detail);
+
+    return error;
+}
+
+static void
+error_free (Error *error)
+{
+    if (error->name)
+        g_free(error->name);
+    if (error->detail)
+        g_free(error->detail);
+    g_slice_free(Error, error);
+}
+
 static void
 dispose (GObject *object)
 {
+    CutConsoleUI *console;
+
+    console = CUT_CONSOLE_UI(object);
+
+    if (console->errors) {
+        g_list_foreach(console->errors, (GFunc)error_free, NULL);
+        g_list_free(console->errors);
+        console->errors = NULL;
+    }
+
     G_OBJECT_CLASS(parent_class)->dispose(object);
 }
 
@@ -547,6 +588,16 @@ print_results (CutConsoleUI *console, CutRunContext *run_context)
     const GList *node;
 
     i = 1;
+    for (node = console->errors; node; node = g_list_next(node)) {
+        Error *error = node->data;
+
+        g_print("\n%d) ", i);
+        print_for_status(console, CUT_TEST_RESULT_ERROR,
+                         "SystemError: %s: %s", error->name, error->detail);
+        g_print("\n");
+        i++;
+    }
+
     for (node = cut_run_context_get_results(run_context);
          node;
          node = g_list_next(node)) {
@@ -559,7 +610,7 @@ print_results (CutConsoleUI *console, CutRunContext *run_context)
 
         status = cut_test_result_get_status(result);
         if (status == CUT_TEST_RESULT_SUCCESS)
-            continue; 
+            continue;
 
         filename = cut_run_context_build_source_filename(run_context,
                                              cut_test_result_get_filename(result));
@@ -576,7 +627,7 @@ print_results (CutConsoleUI *console, CutRunContext *run_context)
                          status_to_name(status), name);
 
         test = cut_test_result_get_test(result);
-        if (test) 
+        if (test)
             print_test_attributes(console, status, test);
 
         if (message) {
@@ -677,6 +728,16 @@ cb_complete_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
 }
 
 static void
+cb_error (CutRunContext *run_context, const gchar *name, const gchar *detail,
+          CutConsoleUI *console)
+{
+    print_with_color(console, status_to_color(CUT_TEST_RESULT_ERROR), "E");
+    fflush(stdout);
+
+    console->errors = g_list_append(console->errors, error_new(name, detail));
+}
+
+static void
 cb_crashed (CutRunContext *run_context, const gchar *backtrace,
             CutConsoleUI *console)
 {
@@ -705,6 +766,7 @@ connect_to_run_context (CutConsoleUI *console, CutRunContext *run_context)
     CONNECT(complete_test_case);
     CONNECT(complete_test_suite);
 
+    CONNECT(error);
     CONNECT(crashed);
 
 #undef CONNECT
@@ -733,6 +795,7 @@ disconnect_from_run_context (CutConsoleUI *console, CutRunContext *run_context)
     DISCONNECT(complete_test_case);
     DISCONNECT(complete_test_suite);
 
+    DISCONNECT(error);
     DISCONNECT(crashed);
 
 #undef DISCONNECT
