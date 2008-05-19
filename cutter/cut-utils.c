@@ -22,6 +22,7 @@
 #endif /* HAVE_CONFIG_H */
 
 #include <string.h>
+#include <unistd.h>
 #include <glib.h>
 
 #include "cut-utils.h"
@@ -235,6 +236,16 @@ cut_utils_strv_concat (const gchar **string_array, ...)
 
     return new_string_array;
 }
+
+void
+cut_utils_close_pipe (int *pipe, CutPipeMode mode)
+{
+    if (pipe[mode] == -1)
+        return;
+    close(pipe[mode]);
+    pipe[mode] = -1;
+}
+
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

@@ -24,6 +24,11 @@
 
 G_BEGIN_DECLS
 
+typedef enum {
+    CUT_READ,
+    CUT_WRITE
+} CutPipeMode;
+
 gchar   *cut_utils_create_regex_pattern (const gchar *string);
 GList   *cut_utils_filter_to_regexs     (const gchar **filters);
 gboolean cut_utils_filter_match         (GList *regexs,
@@ -42,6 +47,9 @@ void     cut_utils_append_xml_element_with_boolean_value
                                          gboolean     boolean);
 gchar  **cut_utils_strv_concat          (const gchar **str_array,
                                          ...) G_GNUC_MALLOC G_GNUC_NULL_TERMINATED;
+
+void     cut_utils_close_pipe           (int         *pipe,
+                                         CutPipeMode  mode);
 
 G_END_DECLS
 

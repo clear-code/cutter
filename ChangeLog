@@ -1,5 +1,9 @@
 2008-05-19  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-process.c: use cut_utils_close_pipe().
+
+	* cutter/cut-utils.[ch] (cut_utils_close_pipe): add.
+
 	* cutter/cut-pipeline.c: use a FD only for cutter to communicate
 	streamer.
 

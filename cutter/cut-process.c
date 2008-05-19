@@ -34,6 +34,7 @@
 
 #include "cut-process.h"
 #include "cut-experimental.h"
+#include "cut-utils.h"
 
 #define CUT_PROCESS_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_PROCESS, CutProcessPrivate))
 
@@ -49,12 +50,6 @@ struct _CutProcessPrivate
     GIOChannel *stdout_read_io;
     GIOChannel *stderr_read_io;
 };
-
-typedef enum
-{
-    READ,
-    WRITE
-} PipeMode;
 
 enum
 {
@@ -87,15 +82,6 @@ sane_dup2 (int fd1, int fd2)
         ret = dup2(fd1, fd2);
     while (ret < 0 && errno == EINTR);
     return ret;
-}
-
-static void
-close_pipe (int *pipe, PipeMode mode)
-{
-    if (pipe[mode] == -1)
-        return;
-    close(pipe[mode]);
-    pipe[mode] = -1;
 }
 
 static GIOChannel *
@@ -166,30 +152,30 @@ prepare_pipes (CutProcess *process)
         fork_errno = errno;
 
     if (pid == 0) {
-        close_pipe(stdout_pipe, READ);
-        close_pipe(stderr_pipe, READ);
-        close_pipe(cutter_pipe, READ);
+        cut_utils_close_pipe(stdout_pipe, CUT_READ);
+        cut_utils_close_pipe(stderr_pipe, CUT_READ);
+        cut_utils_close_pipe(cutter_pipe, CUT_READ);
 
-        if (sane_dup2(stdout_pipe[WRITE], STDOUT_FILENO) < 0 ||
-            sane_dup2(stderr_pipe[WRITE], STDERR_FILENO) < 0) {
+        if (sane_dup2(stdout_pipe[CUT_WRITE], STDOUT_FILENO) < 0 ||
+            sane_dup2(stderr_pipe[CUT_WRITE], STDERR_FILENO) < 0) {
         }
 
-        priv->child_io = create_write_io_channel(cutter_pipe[WRITE]);
+        priv->child_io = create_write_io_channel(cutter_pipe[CUT_WRITE]);
 
-        if (stdout_pipe[WRITE] >= 3)
-            close_pipe(stdout_pipe, WRITE);
-        if (stderr_pipe[WRITE] >= 3)
-            close_pipe(stderr_pipe, WRITE);
+        if (stdout_pipe[CUT_WRITE] >= 3)
+            cut_utils_close_pipe(stdout_pipe, CUT_WRITE);
+        if (stderr_pipe[CUT_WRITE] >= 3)
+            cut_utils_close_pipe(stderr_pipe, CUT_WRITE);
     } else {
         priv->pid = pid;
 
-        close_pipe(stdout_pipe, WRITE);
-        close_pipe(stderr_pipe, WRITE);
-        close_pipe(cutter_pipe, WRITE);
+        cut_utils_close_pipe(stdout_pipe, CUT_WRITE);
+        cut_utils_close_pipe(stderr_pipe, CUT_WRITE);
+        cut_utils_close_pipe(cutter_pipe, CUT_WRITE);
 
-        priv->parent_io = create_read_io_channel(cutter_pipe[READ]);
-        priv->stdout_read_io = create_read_io_channel(stdout_pipe[READ]);
-        priv->stderr_read_io = create_read_io_channel(stderr_pipe[READ]);
+        priv->parent_io = create_read_io_channel(cutter_pipe[CUT_READ]);
+        priv->stdout_read_io = create_read_io_channel(stdout_pipe[CUT_READ]);
+        priv->stderr_read_io = create_read_io_channel(stderr_pipe[CUT_READ]);
     }
 
     errno = fork_errno;
