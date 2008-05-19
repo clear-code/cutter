@@ -32,6 +32,7 @@
 #include "cut-runner.h"
 #include "cut-stream-parser.h"
 #include "cut-experimental.h"
+#include "cut-utils.h"
 
 #define CUT_PIPELINE_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_PIPELINE, CutPipelinePrivate))
 
@@ -283,42 +284,73 @@ create_io_channel (CutPipeline *pipeline, gint pipe)
     return channel;
 }
 
+static gchar **
+create_command_line_args (CutPipeline *pipeline)
+{
+    const gchar **original_argv;
+    gchar **new_args = NULL;
+    const gchar *test_directory;
+    CutRunContext *run_context = CUT_RUN_CONTEXT(pipeline);
+
+    test_directory = cut_run_context_get_test_directory(run_context);
+    original_argv = cut_run_context_get_command_line_args(run_context);
+
+    if (original_argv) {
+        gchar **copy;
+        guint i;
+        guint length = g_strv_length((gchar **)original_argv);
+
+        /* remove the last argumen in which test directory is stored */
+        copy = g_new(gchar*, length);
+        for (i = 0; i < length - 1; i++) {
+            copy[i] = g_strdup(original_argv[i]);
+        }
+        copy[i] = NULL;
+
+        new_args = cut_utils_strv_concat((const gchar **)copy,
+                                         "-v", "s",
+                                         "--streamer=xml",
+                                         test_directory,
+                                         NULL);
+        g_strfreev(copy);
+    } else {
+        gboolean result;
+        gint argc;
+        gchar *command_line;
+        const gchar *cutter_command = NULL;
+
+        cutter_command = g_getenv("CUTTER");
+
+        if (!cutter_command)
+            cutter_command = g_get_prgname();
+
+        command_line = g_strdup_printf("%s -v s --streamer=xml %s",
+                                       cutter_command,
+                                       test_directory);
+        result = g_shell_parse_argv(command_line, &argc, &new_args, NULL);
+        g_free(command_line);
+    }
+
+    return new_args;
+}
+
 static void
 run_async (CutPipeline *pipeline)
 {
-    gchar *command_line;
-    const gchar *cutter_command = NULL;
-    gchar **argv = NULL;
-    const gchar **original_argv;
-    const gchar *test_directory;
-    gint argc;
+    gchar **command_line_args;
     gint std_out;
     gboolean result;
-    CutRunContext *run_context = CUT_RUN_CONTEXT(pipeline);
     CutPipelinePrivate *priv = CUT_PIPELINE_GET_PRIVATE(pipeline);
 
-    original_argv = cut_run_context_get_command_line_args(run_context);
-    if (original_argv) {
-        cutter_command = original_argv[0];
-    } else {
-        cutter_command = g_getenv("CUTTER");
-        if (!cutter_command)
-            cutter_command = g_get_prgname();
-    }
+    command_line_args = create_command_line_args(pipeline);
 
-    test_directory = cut_run_context_get_test_directory(run_context);
-    command_line = g_strdup_printf("%s -v s --streamer=xml %s",
-                                   cutter_command,
-                                   test_directory);
-    result = g_shell_parse_argv(command_line, &argc, &argv, NULL);
-    g_free(command_line);
-    if (!result) {
+    if (!command_line_args) {
         emit_complete_signal(pipeline, FALSE);
         return;
     }
 
     result = g_spawn_async_with_pipes(NULL,
-                                      argv,
+                                      command_line_args,
                                       NULL,
                                       G_SPAWN_DO_NOT_REAP_CHILD,
                                       NULL,
@@ -328,7 +360,7 @@ run_async (CutPipeline *pipeline)
                                       &std_out,
                                       NULL,
                                       NULL);
-    g_strfreev(argv);
+    g_strfreev(command_line_args);
     if (!result) {
         emit_complete_signal(pipeline, FALSE);
         return;

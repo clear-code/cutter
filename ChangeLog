@@ -23,6 +23,7 @@
 	cutter/cut-pipeline.[c|h]: Now cut_pipeline_new() needs no argument.
 	test directory is obtain cut_run_context_get_test_directory().
 	* cutter/cut-utils.[c|h]: Added cut_utils_strv_concat().
+	* cutter/cut-pipeline.c: Pass original command line args.
 
 2008-05-19  Kouhei Sutou  <kou@cozmixng.org>
 
