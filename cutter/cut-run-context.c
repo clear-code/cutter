@@ -62,6 +62,7 @@ struct _CutRunContextPrivate
     CutTestSuite *test_suite;
     GList *listeners;
     CutOrder test_case_order;
+    gchar **command_line_args;
 };
 
 enum
@@ -490,6 +491,7 @@ cut_run_context_init (CutRunContext *context)
     priv->canceled = FALSE;
     priv->test_suite = NULL;
     priv->listeners = NULL;
+    priv->command_line_args = NULL;
 }
 
 static void
@@ -542,6 +544,9 @@ dispose (GObject *object)
 
     g_strfreev(priv->target_test_names);
     priv->target_test_names = NULL;
+
+    g_strfreev(priv->command_line_args);
+    priv->command_line_args = NULL;
 
     G_OBJECT_CLASS(cut_run_context_parent_class)->dispose(object);
 }
@@ -1415,6 +1420,22 @@ cut_run_context_start (CutRunContext *context)
     cut_run_context_detach_listeners(context);
 
     return success;
+}
+
+void
+cut_run_context_set_command_line_args (CutRunContext *context, gchar **args)
+{
+    CutRunContextPrivate *priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
+
+    g_strfreev(priv->command_line_args);
+    priv->command_line_args = g_strdupv(args);
+}
+
+const gchar **
+cut_run_context_get_command_line_args (CutRunContext *context)
+{
+    CutRunContextPrivate *priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
+    return (const gchar **)priv->command_line_args;
 }
 
 /*

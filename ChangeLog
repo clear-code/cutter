@@ -10,6 +10,8 @@
 
 	* cutter/cut-test-runner.c, cutter/cut-pipeline.c: Nullify unused
 	interface function to fix seg fault.
+	* cutter/cut-run-context.[c|h]
+	(cut_run_context_set_command_line_args): Added.
 
 2008-05-19  Kouhei Sutou  <kou@cozmixng.org>
 

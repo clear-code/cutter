@@ -204,6 +204,9 @@ gchar         *cut_run_context_build_source_filename(CutRunContext *context,
 
 gboolean       cut_run_context_start                (CutRunContext *context);
 
+void           cut_run_context_set_command_line_args(CutRunContext *context,
+                                                     gchar        **args);
+const gchar  **cut_run_context_get_command_line_args(CutRunContext *context);
 
 G_END_DECLS
 
