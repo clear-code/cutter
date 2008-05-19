@@ -1,5 +1,7 @@
 2008-05-19  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/module/ui/cut-console-ui.c: support system error.
+
 	* cutter/cut-xml-parser.[ch], test/test-cut-xml-parser.c: remove.
 
 	* cutter/Makefile.am, test/Makefile.am, cutter/cut-test-result.c:
