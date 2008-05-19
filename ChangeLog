@@ -58,6 +58,7 @@
 	* cutter/cut-test-case.[c|h], cutter/cut-utils.[c|h],
 	cut-test-container.[c|h], cutter/cut-test-suite.[c|h],
 	cutter/cut-repository: const cast.
+	* cutter/module/ui/cut-gtk-ui.c: Use CutPipeline.
 
 2008-05-19  Kouhei Sutou  <kou@cozmixng.org>
 

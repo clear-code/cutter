@@ -38,6 +38,7 @@
 #include <cutter/cut-test-case.h>
 #include <cutter/cut-verbose-level.h>
 #include <cutter/cut-enum-types.h>
+#include <cutter/cut-pipeline.h>
 
 #define CUT_TYPE_GTK_UI            cut_type_gtk_ui
 #define CUT_GTK_UI(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_GTK_UI, CutGtkUI))
@@ -63,9 +64,7 @@ struct _CutGtkUI
     GtkWidget     *restart_button;
 
     CutTestSuite  *test_suite;
-    CutRunContext     *run_context;
-
-    GMutex        *mutex;
+    CutRunContext *run_context;
 
     gboolean       running;
     guint          n_tests;
@@ -119,8 +118,6 @@ static void     detach_from_run_context (CutListener *listener,
                                     CutRunContext   *run_context);
 static gboolean run                (CutUI       *ui,
                                     CutRunContext   *run_context);
-
-static gboolean idle_cb_run_test (gpointer data);
 
 static void
 class_init (CutGtkUIClass *klass)
@@ -373,8 +370,6 @@ init (CutGtkUI *ui)
     ui->status = CUT_TEST_RESULT_SUCCESS;
     ui->update_pulse_id = 0;
 
-    ui->mutex = g_mutex_new();
-
     setup_window(ui);
 }
 
@@ -485,11 +480,6 @@ dispose (GObject *object)
     if (ui->run_context) {
         g_object_unref(ui->run_context);
         ui->run_context = NULL;
-    }
-
-    if (ui->mutex) {
-        g_mutex_free(ui->mutex);
-        ui->mutex = NULL;
     }
 
     G_OBJECT_CLASS(parent_class)->dispose(object);
@@ -748,7 +738,6 @@ idle_cb_free_test_case_row_info (gpointer data)
 
     ui = info->ui;
 
-    g_mutex_lock(ui->mutex);
     if (gtk_tree_model_get_iter_from_string(GTK_TREE_MODEL(ui->logs),
                                             &iter, info->path)) {
         GdkPixbuf *icon;
@@ -758,7 +747,6 @@ idle_cb_free_test_case_row_info (gpointer data)
                            -1);
         g_object_unref(icon);
     }
-    g_mutex_unlock(ui->mutex);
 
     g_object_unref(info->ui);
     g_object_unref(info->test_case);
@@ -781,7 +769,6 @@ idle_cb_free_test_row_info (gpointer data)
 
     ui = info->test_case_row_info->ui;
 
-    g_mutex_lock(ui->mutex);
     if (gtk_tree_model_get_iter_from_string(GTK_TREE_MODEL(ui->logs),
                                             &iter, info->path)) {
         gtk_tree_store_set(ui->logs, &iter,
@@ -789,7 +776,6 @@ idle_cb_free_test_row_info (gpointer data)
                            COLUMN_PROGRESS_PULSE, -1,
                            -1);
     }
-    g_mutex_unlock(ui->mutex);
 
     g_object_unref(info->test);
     g_free(info->path);
@@ -809,13 +795,11 @@ update_status (TestRowInfo *info, CutTestResultStatus status)
     test_case_row_info = info->test_case_row_info;
     ui = test_case_row_info->ui;
 
-    g_mutex_lock(ui->mutex);
     if (test_case_row_info->status < status)
         test_case_row_info->status = status;
 
     if (ui->status < status)
         ui->status = status;
-    g_mutex_unlock(ui->mutex);
 }
 
 static gboolean
@@ -829,7 +813,6 @@ idle_cb_append_test_case_row (gpointer data)
     ui = info->ui;
     test_case = info->test_case;
 
-    g_mutex_lock(ui->mutex);
     gtk_tree_store_append(ui->logs, &iter, NULL);
     gtk_tree_store_set(ui->logs, &iter,
                        COLUMN_NAME,
@@ -842,7 +825,6 @@ idle_cb_append_test_case_row (gpointer data)
     info->path =
         gtk_tree_model_get_string_from_iter(GTK_TREE_MODEL(ui->logs),
                                             &iter);
-    g_mutex_unlock(ui->mutex);
 
     return FALSE;
 }
@@ -856,7 +838,6 @@ idle_cb_update_test_case_row (gpointer data)
 
     ui = info->ui;
 
-    g_mutex_lock(ui->mutex);
     if (gtk_tree_model_get_iter_from_string(GTK_TREE_MODEL(ui->logs),
                                             &iter, info->path)) {
         gdouble fraction;
@@ -878,7 +859,6 @@ idle_cb_update_test_case_row (gpointer data)
         g_free(text);
         g_object_unref(icon);
     }
-    g_mutex_unlock(ui->mutex);
 
     return FALSE;
 }
@@ -894,7 +874,6 @@ timeout_cb_pulse_test (gpointer data)
     test_case_row_info = info->test_case_row_info;
     ui = test_case_row_info->ui;
 
-    g_mutex_lock(ui->mutex);
     info->pulse++;
     if (gtk_tree_model_get_iter_from_string(GTK_TREE_MODEL(ui->logs),
                                             &iter, info->path)) {
@@ -902,7 +881,6 @@ timeout_cb_pulse_test (gpointer data)
                            COLUMN_PROGRESS_PULSE, info->pulse,
                            -1);
     }
-    g_mutex_unlock(ui->mutex);
 
     if (!ui->running) {
         g_idle_add(idle_cb_free_test_row_info, info);
@@ -923,7 +901,6 @@ idle_cb_append_test_row (gpointer data)
     ui = info->test_case_row_info->ui;
     test = info->test;
 
-    g_mutex_lock(ui->mutex);
     gtk_tree_model_get_iter_from_string(GTK_TREE_MODEL(ui->logs),
                                         &test_case_iter,
                                         info->test_case_row_info->path);
@@ -946,7 +923,6 @@ idle_cb_append_test_row (gpointer data)
         gtk_tree_model_get_string_from_iter(GTK_TREE_MODEL(ui->logs),
                                             &iter);
     info->update_pulse_id = g_timeout_add(10, timeout_cb_pulse_test, info);
-    g_mutex_unlock(ui->mutex);
 
     return FALSE;
 }
@@ -960,7 +936,6 @@ idle_cb_update_test_row_status (gpointer data)
 
     ui = info->test_case_row_info->ui;
 
-    g_mutex_lock(ui->mutex);
     if (gtk_tree_model_get_iter_from_string(GTK_TREE_MODEL(ui->logs),
                                             &iter, info->path)) {
         GdkPixbuf *icon;
@@ -981,7 +956,6 @@ idle_cb_update_test_row_status (gpointer data)
             gtk_tree_path_free(path);
         }
     }
-    g_mutex_unlock(ui->mutex);
 
     return FALSE;
 }
@@ -1045,7 +1019,6 @@ idle_cb_append_test_result_row (gpointer data)
     result = info->result;
     test_row_path = info->test_row_info->path;
 
-    g_mutex_lock(ui->mutex);
     if (gtk_tree_model_get_iter_from_string(GTK_TREE_MODEL(ui->logs),
                                             &test_row_iter, test_row_path)) {
         GtkTreePath *path;
@@ -1059,7 +1032,6 @@ idle_cb_append_test_result_row (gpointer data)
                                      TRUE, 0, 0.5);
         gtk_tree_path_free(path);
     }
-    g_mutex_unlock(ui->mutex);
 
     g_object_unref(result);
     g_free(info);
@@ -1098,8 +1070,9 @@ idle_cb_update_summary (gpointer data)
 }
 
 static void
-cb_pass_assertion_test (CutTest *test, CutTestContext *test_context,
-                        gpointer data)
+cb_pass_assertion (CutRunContext *run_context,
+                   CutTest *test, CutTestContext *test_context,
+                   gpointer data)
 {
     TestRowInfo *info = data;
 
@@ -1109,7 +1082,8 @@ cb_pass_assertion_test (CutTest *test, CutTestContext *test_context,
 }
 
 static void
-cb_success_test (CutTest *test, CutTestContext *context, CutTestResult *result,
+cb_success_test (CutRunContext *run_context,
+                 CutTest *test, CutTestContext *context, CutTestResult *result,
                  gpointer data)
 {
     TestRowInfo *info = data;
@@ -1122,7 +1096,8 @@ cb_success_test (CutTest *test, CutTestContext *context, CutTestResult *result,
 }
 
 static void
-cb_failure_test (CutTest *test, CutTestContext *context, CutTestResult *result,
+cb_failure_test (CutRunContext *run_context,
+                 CutTest *test, CutTestContext *context, CutTestResult *result,
                  gpointer data)
 {
     TestRowInfo *info = data;
@@ -1134,7 +1109,8 @@ cb_failure_test (CutTest *test, CutTestContext *context, CutTestResult *result,
 }
 
 static void
-cb_error_test (CutTest *test, CutTestContext *context, CutTestResult *result,
+cb_error_test (CutRunContext *run_context,
+               CutTest *test, CutTestContext *context, CutTestResult *result,
                gpointer data)
 {
     TestRowInfo *info = data;
@@ -1146,7 +1122,8 @@ cb_error_test (CutTest *test, CutTestContext *context, CutTestResult *result,
 }
 
 static void
-cb_pending_test (CutTest *test, CutTestContext *context, CutTestResult *result,
+cb_pending_test (CutRunContext *run_context,
+                 CutTest *test, CutTestContext *context, CutTestResult *result,
                  gpointer data)
 {
     TestRowInfo *info = data;
@@ -1158,7 +1135,8 @@ cb_pending_test (CutTest *test, CutTestContext *context, CutTestResult *result,
 }
 
 static void
-cb_notification_test (CutTest *test, CutTestContext *context,
+cb_notification_test (CutRunContext *run_context,
+                      CutTest *test, CutTestContext *context,
                       CutTestResult *result, gpointer data)
 {
     TestRowInfo *info = data;
@@ -1170,7 +1148,8 @@ cb_notification_test (CutTest *test, CutTestContext *context,
 }
 
 static void
-cb_omission_test (CutTest *test, CutTestContext *context,
+cb_omission_test (CutRunContext *run_context,
+                  CutTest *test, CutTestContext *context,
                   CutTestResult *result, gpointer data)
 {
     TestRowInfo *info = data;
@@ -1214,7 +1193,10 @@ idle_cb_pop_running_test_message (gpointer data)
 }
 
 static void
-cb_complete_test (CutTest *test, gpointer data)
+cb_complete_test (CutRunContext *run_context,
+                  CutTest *test,
+                  CutTestContext *test_context,
+                  gpointer data)
 {
     TestRowInfo *info = data;
     TestCaseRowInfo *test_case_row_info;
@@ -1231,22 +1213,23 @@ cb_complete_test (CutTest *test, gpointer data)
     g_idle_add(idle_cb_free_test_row_info, data);
 
 #define DISCONNECT(name)                                                \
-    g_signal_handlers_disconnect_by_func(test,                          \
-                                         G_CALLBACK(cb_ ## name ## _test ), \
+    g_signal_handlers_disconnect_by_func(run_context,                   \
+                                         G_CALLBACK(cb_ ## name), \
                                          data)
     DISCONNECT(pass_assertion);
-    DISCONNECT(success);
-    DISCONNECT(failure);
-    DISCONNECT(error);
-    DISCONNECT(pending);
-    DISCONNECT(notification);
-    DISCONNECT(omission);
-    DISCONNECT(complete);
+    DISCONNECT(success_test);
+    DISCONNECT(failure_test);
+    DISCONNECT(error_test);
+    DISCONNECT(pending_test);
+    DISCONNECT(notification_test);
+    DISCONNECT(omission_test);
+    DISCONNECT(complete_test);
 #undef DISCONNECT
 }
 
 static void
-cb_start_test (CutTestCase *test_case, CutTest *test,
+cb_start_test (CutRunContext *run_context,
+               CutTest *test,
                CutTestContext *test_context, gpointer data)
 {
     TestRowInfo *info;
@@ -1263,16 +1246,16 @@ cb_start_test (CutTestCase *test_case, CutTest *test,
     g_idle_add(idle_cb_append_test_row, info);
 
 #define CONNECT(name) \
-    g_signal_connect(test, #name, G_CALLBACK(cb_ ## name ## _test), info)
+    g_signal_connect(run_context, #name, G_CALLBACK(cb_ ## name), info)
 
     CONNECT(pass_assertion);
-    CONNECT(success);
-    CONNECT(failure);
-    CONNECT(error);
-    CONNECT(pending);
-    CONNECT(notification);
-    CONNECT(omission);
-    CONNECT(complete);
+    CONNECT(success_test);
+    CONNECT(failure_test);
+    CONNECT(error_test);
+    CONNECT(pending_test);
+    CONNECT(notification_test);
+    CONNECT(omission_test);
+    CONNECT(complete_test);
 #undef CONNECT
 }
 
@@ -1285,7 +1268,6 @@ idle_cb_collapse_test_case_row (gpointer data)
 
     ui = info->ui;
 
-    g_mutex_lock(ui->mutex);
     if (info->status == CUT_TEST_RESULT_SUCCESS &&
         gtk_tree_model_get_iter_from_string(GTK_TREE_MODEL(ui->logs),
                                             &iter, info->path)) {
@@ -1295,23 +1277,24 @@ idle_cb_collapse_test_case_row (gpointer data)
         gtk_tree_view_collapse_row(ui->tree_view, path);
         gtk_tree_path_free(path);
     }
-    g_mutex_unlock(ui->mutex);
 
     return FALSE;
 }
 
 static void
-cb_complete_test_case (CutTestCase *test_case, gpointer data)
+cb_complete_test_case (CutRunContext *run_context,
+                       CutTestCase *test_case,
+                       gpointer data)
 {
     TestCaseRowInfo *info = data;
 
     g_idle_add(idle_cb_update_summary, info->ui);
     g_idle_add(idle_cb_collapse_test_case_row, data);
     g_idle_add(idle_cb_free_test_case_row_info, data);
-    g_signal_handlers_disconnect_by_func(test_case,
+    g_signal_handlers_disconnect_by_func(run_context,
                                          G_CALLBACK(cb_start_test),
                                          data);
-    g_signal_handlers_disconnect_by_func(test_case,
+    g_signal_handlers_disconnect_by_func(run_context,
                                          G_CALLBACK(cb_complete_test_case),
                                          data);
 }
@@ -1332,9 +1315,9 @@ cb_ready_test_case (CutRunContext *run_context, CutTestCase *test_case, guint n_
 
     g_idle_add(idle_cb_append_test_case_row, info);
 
-    g_signal_connect(test_case, "start-test",
+    g_signal_connect(run_context, "start-test",
                      G_CALLBACK(cb_start_test), info);
-    g_signal_connect(test_case, "complete",
+    g_signal_connect(run_context, "complete-test-case",
                      G_CALLBACK(cb_complete_test_case), info);
 }
 
@@ -1383,14 +1366,12 @@ idle_cb_append_crash_row (gpointer data)
 
     ui = info->ui;
 
-    g_mutex_lock(ui->mutex);
     gtk_tree_store_append(ui->logs, &iter, NULL);
     gtk_tree_store_set(ui->logs, &iter,
                        COLUMN_NAME, _("CRASHED!!!"),
                        COLUMN_DESCRIPTION, info->backtrace,
                        COLUMN_COLOR, "red",
                        -1);
-    g_mutex_unlock(ui->mutex);
 
     g_object_unref(ui);
     g_free(info->backtrace);
@@ -1430,7 +1411,7 @@ static void
 disconnect_from_run_context (CutGtkUI *ui, CutRunContext *run_context)
 {
 #define DISCONNECT(name)                                                \
-    g_signal_handlers_disconnect_by_func(run_context,                       \
+    g_signal_handlers_disconnect_by_func(run_context,                   \
                                          G_CALLBACK(cb_ ## name),       \
                                          ui)
 
@@ -1443,45 +1424,16 @@ disconnect_from_run_context (CutGtkUI *ui, CutRunContext *run_context)
 #undef DISCONNECT
 }
 
-static gpointer
-run_test_thread_func (gpointer data)
-{
-    CutGtkUI *ui = data;
-    CutRunContext *run_context;
-
-    run_context = g_object_ref(ui->run_context);
-
-    ui->n_tests = 0;
-    ui->n_completed_tests = 0;
-    ui->status = CUT_TEST_RESULT_SUCCESS;
-    cut_run_context_start(run_context);
-
-    g_object_unref(run_context);
-
-    return NULL;
-}
-
-static gboolean
-idle_cb_run_test (gpointer data)
-{
-    CutGtkUI *ui = data;
-
-    gtk_tree_store_clear(ui->logs);
-    g_thread_create(run_test_thread_func, ui, TRUE, NULL);
-
-    return FALSE;
-}
-
 static void
 attach_to_run_context (CutListener *listener,
-                  CutRunContext   *run_context)
+                       CutRunContext *run_context)
 {
     connect_to_run_context(CUT_GTK_UI(listener), run_context);
 }
 
 static void
 detach_from_run_context (CutListener *listener,
-                    CutRunContext   *run_context)
+                         CutRunContext *run_context)
 {
     disconnect_from_run_context(CUT_GTK_UI(listener), run_context);
 }
@@ -1490,16 +1442,25 @@ static gboolean
 run (CutUI *ui, CutRunContext *run_context)
 {
     CutGtkUI *gtk_ui = CUT_GTK_UI(ui);
-    gboolean success = FALSE;
+    CutRunContext *pipeline;
 
-    g_object_set(run_context, "is_multi_thread", TRUE, NULL);
-    gtk_ui->test_suite = g_object_ref(cut_run_context_get_test_suite(run_context));
-    gtk_ui->run_context = g_object_ref(run_context);
+    pipeline = cut_pipeline_new_from_run_context(run_context);
+
+    gtk_ui->run_context = pipeline;
+    gtk_ui->test_suite = g_object_ref(cut_run_context_get_test_suite(pipeline));
     gtk_widget_show_all(gtk_ui->window);
-    g_idle_add(idle_cb_run_test, gtk_ui);
+    gtk_tree_store_clear(gtk_ui->logs);
+
+    gtk_ui->n_tests = 0;
+    gtk_ui->n_completed_tests = 0;
+    gtk_ui->status = CUT_TEST_RESULT_SUCCESS;
+
+    cut_run_context_add_listener(pipeline, CUT_LISTENER(ui));
+    cut_run_context_start(pipeline);
+
     gtk_main();
 
-    return success;
+    return TRUE;
 }
 
 /*
