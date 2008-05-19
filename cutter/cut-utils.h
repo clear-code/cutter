@@ -40,6 +40,8 @@ void     cut_utils_append_xml_element_with_boolean_value
                                          guint        indent,
                                          const gchar *element_name,
                                          gboolean     boolean);
+gchar  **cut_utils_strv_concat          (const gchar **str_array,
+                                         ...) G_GNUC_MALLOC G_GNUC_NULL_TERMINATED;
 
 G_END_DECLS
 

@@ -4,6 +4,7 @@
 void test_compare_string_array (void);
 void test_inspect_string_array (void);
 void test_is_interested_diff (void);
+void test_strv_concat (void);
 
 void
 test_compare_string_array (void)
@@ -59,6 +60,15 @@ test_is_interested_diff (void)
                                                  "?     ^^^"));
 }
 
+void
+test_strv_concat (void)
+{
+    const gchar *strings[] = {"a", "b", "c", NULL};
+    gchar *expected[] = {"a", "b", "c", "d", "e", NULL};
+
+    cut_assert_equal_string_array(expected, 
+                                  cut_utils_strv_concat(strings, "d", "e", NULL));
+}
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

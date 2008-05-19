@@ -195,6 +195,47 @@ cut_utils_append_xml_element_with_boolean_value (GString *string, guint indent,
                                             boolean ? "TRUE" : "FALSE");
 }
 
+gchar **
+cut_utils_strv_concat (const gchar **string_array, ...)
+{
+    guint length, i;
+    guint args_length = 0;
+    va_list args;
+    gchar *string;
+    gchar **new_string_array;
+
+    if (!string_array)
+        return NULL;
+
+    length = g_strv_length((gchar **)string_array);
+    va_start(args, string_array);
+    string = va_arg(args, gchar*);
+    while (string) {
+        args_length++;
+        string = va_arg(args, gchar*);
+    }
+    va_end(args);
+
+    new_string_array = g_new(gchar*, length + args_length + 1);
+
+    for (i = 0; i < length; i++) {
+        new_string_array[i] = g_strdup(string_array[i]);
+    }
+
+    va_start(args, string_array);
+    string = va_arg(args, gchar*);
+    while (string) {
+        new_string_array[i] = g_strdup(string);
+        i++;
+        string = va_arg(args, gchar*);
+    }
+    va_end(args);
+
+    new_string_array[i] = NULL;
+
+    return new_string_array;
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */
