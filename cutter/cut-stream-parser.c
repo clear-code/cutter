@@ -654,6 +654,370 @@ get_parent_element (GMarkupParseContext *context)
 }
 
 static void
+start_top_level (CutStreamParserPrivate *priv, GMarkupParseContext *context,
+                 const gchar *element_name, GError **error)
+{
+    if (g_str_equal("stream", element_name)) {
+        PUSH_STATE(priv, IN_STREAM);
+        if (priv->run_context)
+            g_signal_emit_by_name(priv->run_context, "start-run");
+    } else {
+        invalid_element(context, error);
+    }
+}
+
+static void
+start_stream (CutStreamParserPrivate *priv,
+                      GMarkupParseContext *context,
+                      const gchar *element_name, GError **error)
+{
+    if (g_str_equal("test-result", element_name)) {
+        PUSH_STATE(priv, IN_TEST_RESULT);
+        priv->test_result = test_result_new();
+    } else if (g_str_equal("ready-test-suite", element_name)) {
+        PUSH_STATE(priv, IN_READY_TEST_SUITE);
+        priv->ready_test_suite = ready_test_suite_new();
+    } else if (g_str_equal("start-test-suite", element_name)) {
+        PUSH_STATE(priv, IN_START_TEST_SUITE);
+        PUSH_TEST_SUITE(priv, cut_test_suite_new());
+    } else if (g_str_equal("ready-test-case", element_name)) {
+        PUSH_STATE(priv, IN_READY_TEST_CASE);
+        priv->ready_test_case = ready_test_case_new();;
+    } else if (g_str_equal("start-test-case", element_name)) {
+        PUSH_STATE(priv, IN_START_TEST_CASE);
+        PUSH_TEST_CASE(priv, cut_test_case_new_empty());
+    } else if (g_str_equal("start-test", element_name)) {
+        PUSH_STATE(priv, IN_START_TEST);
+        priv->start_test = start_test_new();
+    } else if (g_str_equal("complete-test", element_name)) {
+        PUSH_STATE(priv, IN_COMPLETE_TEST);
+        priv->complete_test = complete_test_new();
+    } else if (g_str_equal("test-case-result", element_name)) {
+        PUSH_STATE(priv, IN_TEST_CASE_RESULT);
+        priv->test_case_result = test_case_result_new();
+    } else if (g_str_equal("complete-test-case", element_name)) {
+        PUSH_STATE(priv, IN_COMPLETE_TEST_CASE);
+    } else if (g_str_equal("complete-test-suite", element_name)) {
+        PUSH_STATE(priv, IN_COMPLETE_TEST_SUITE);
+    } else if (g_str_equal("success", element_name)) {
+        PUSH_STATE(priv, IN_STREAM_SUCCESS);
+    } else if (g_str_equal("crashed", element_name)) {
+        PUSH_STATE(priv, IN_CRASHED);
+    } else {
+        invalid_element(context, error);
+    }
+}
+
+static void
+start_ready_test_suite (CutStreamParserPrivate *priv,
+                                GMarkupParseContext *context,
+                                const gchar *element_name, GError **error)
+{
+    if (g_str_equal("test-suite", element_name)) {
+        PUSH_STATE(priv, IN_TEST_SUITE);
+        priv->ready_test_suite->test_suite = cut_test_suite_new();
+        PUSH_TEST_SUITE(priv, priv->ready_test_suite->test_suite);
+    } else if (g_str_equal("n-test-cases", element_name)) {
+        PUSH_STATE(priv, IN_READY_TEST_SUITE_N_TEST_CASES);
+    } else if (g_str_equal("n-tests", element_name)) {
+        PUSH_STATE(priv, IN_READY_TEST_SUITE_N_TESTS);
+    } else {
+        invalid_element(context, error);
+    }
+}
+
+static void
+start_start_test_suite (CutStreamParserPrivate *priv,
+                                GMarkupParseContext *context,
+                                const gchar *element_name, GError **error)
+{
+    if (g_str_equal("test-suite", element_name)) {
+        PUSH_STATE(priv, IN_TEST_SUITE);
+        PUSH_TEST_SUITE(priv, cut_test_suite_new());
+    } else {
+        invalid_element(context, error);
+    }
+}
+
+static void
+start_ready_test_case (CutStreamParserPrivate *priv,
+                               GMarkupParseContext *context,
+                               const gchar *element_name, GError **error)
+{
+    if (g_str_equal("test-case", element_name)) {
+        PUSH_STATE(priv, IN_TEST_CASE);
+        priv->ready_test_case->test_case = cut_test_case_new_empty();
+        PUSH_TEST_CASE(priv, priv->ready_test_case->test_case);
+    } else if (g_str_equal("n-tests", element_name)) {
+        PUSH_STATE(priv, IN_READY_TEST_CASE_N_TESTS);
+    } else {
+        invalid_element(context, error);
+    }
+}
+
+static void
+start_start_test_case (CutStreamParserPrivate *priv,
+                          GMarkupParseContext *context,
+                          const gchar *element_name, GError **error)
+{
+    if (g_str_equal("test-case", element_name)) {
+        PUSH_STATE(priv, IN_TEST_CASE);
+        PUSH_TEST_CASE(priv, cut_test_case_new_empty());
+    } else {
+        invalid_element(context, error);
+    }
+}
+
+static void
+start_start_test (CutStreamParserPrivate *priv,
+                          GMarkupParseContext *context,
+                          const gchar *element_name, GError **error)
+{
+    if (g_str_equal("test", element_name)) {
+        PUSH_STATE(priv, IN_TEST);
+        priv->start_test->test = cut_test_new_empty();
+        PUSH_TEST(priv, priv->start_test->test);
+    } else if (g_str_equal("test-context", element_name)) {
+        PUSH_STATE(priv, IN_TEST_CONTEXT);
+        priv->start_test->test_context = cut_test_context_new_empty();
+        PUSH_TEST_CONTEXT(priv,  priv->start_test->test_context);
+    } else {
+        invalid_element(context, error);
+    }
+}
+
+static void
+start_test_result (CutStreamParserPrivate *priv,
+                           GMarkupParseContext *context,
+                           const gchar *element_name, GError **error)
+{
+    if (g_str_equal("test", element_name)) {
+        PUSH_STATE(priv, IN_TEST);
+        priv->test_result->test = cut_test_new_empty();
+        PUSH_TEST(priv, priv->test_result->test);
+    } else if (g_str_equal("test-context", element_name)) {
+        PUSH_STATE(priv, IN_TEST_CONTEXT);
+        priv->test_result->test_context = cut_test_context_new_empty();
+        PUSH_TEST_CONTEXT(priv, priv->test_result->test_context);
+    } else if (g_str_equal("result", element_name)) {
+        PUSH_STATE(priv, IN_RESULT);
+        priv->test_result->result = cut_test_result_new_empty();
+        priv->result = priv->test_result->result;
+    } else {
+        invalid_element(context, error);
+    }
+}
+
+static void
+start_top_level_result (CutStreamParserPrivate *priv,
+                        GMarkupParseContext *context,
+                        const gchar *element_name, GError **error)
+{
+    if (g_str_equal("result", element_name)) {
+        PUSH_STATE(priv, IN_RESULT);
+        priv->result = cut_test_result_new_empty();
+    } else {
+        invalid_element(context, error);
+    }
+}
+
+static void
+start_result (CutStreamParserPrivate *priv, GMarkupParseContext *context,
+              const gchar *element_name, GError **error)
+{
+    if (g_str_equal("test-case", element_name)) {
+        CutTestCase *test_case;
+
+        PUSH_STATE(priv, IN_TEST_CASE);
+        test_case = cut_test_case_new_empty();
+        cut_test_result_set_test_case(priv->result, test_case);
+        PUSH_TEST_CASE(priv, test_case);
+        g_object_unref(test_case);
+    } else if (g_str_equal("test", element_name)) {
+        CutTest *test;
+
+        PUSH_STATE(priv, IN_TEST);
+        test = cut_test_new_empty();
+        cut_test_result_set_test(priv->result, test);
+        PUSH_TEST(priv, test);
+        g_object_unref(test);
+    } else if (g_str_equal("status", element_name)) {
+        PUSH_STATE(priv, IN_RESULT_STATUS);
+    } else if (g_str_equal("detail", element_name)) {
+        PUSH_STATE(priv, IN_RESULT_DETAIL);
+    } else if (g_str_equal("backtrace", element_name)) {
+        PUSH_STATE(priv, IN_RESULT_BACKTRACE);
+    } else if (g_str_equal("elapsed", element_name)) {
+        PUSH_STATE(priv, IN_RESULT_ELAPSED);
+    } else {
+        invalid_element(context, error);
+    }
+}
+
+static void
+start_complete_test (CutStreamParserPrivate *priv, GMarkupParseContext *context,
+                     const gchar *element_name, GError **error)
+{
+    if (g_str_equal("test", element_name)) {
+        PUSH_STATE(priv, IN_TEST);
+        priv->complete_test->test = cut_test_new_empty();
+        PUSH_TEST(priv, priv->complete_test->test);
+    } else if (g_str_equal("test-context", element_name)) {
+        PUSH_STATE(priv, IN_TEST_CONTEXT);
+        priv->complete_test->test_context = cut_test_context_new_empty();
+        PUSH_TEST_CONTEXT(priv, priv->complete_test->test_context);
+    } else {
+        invalid_element(context, error);
+    }
+}
+
+static void
+start_test_case_result (CutStreamParserPrivate *priv,
+                        GMarkupParseContext *context,
+                        const gchar *element_name, GError **error)
+{
+    if (g_str_equal("test-case", element_name)) {
+        PUSH_STATE(priv, IN_TEST_CASE);
+        priv->test_case_result->test_case = cut_test_case_new_empty();
+        PUSH_TEST_CASE(priv, priv->test_case_result->test_case);
+    } else if (g_str_equal("result", element_name)) {
+        PUSH_STATE(priv, IN_RESULT);
+        priv->test_case_result->result = cut_test_result_new_empty();
+        priv->result = priv->test_case_result->result;
+    } else {
+        invalid_element(context, error);
+    }
+}
+
+static void
+start_complete_test_case (CutStreamParserPrivate *priv,
+                          GMarkupParseContext *context,
+                          const gchar *element_name, GError **error)
+{
+    if (g_str_equal("test-case", element_name)) {
+        PUSH_STATE(priv, IN_TEST_CASE);
+        PUSH_TEST_CASE(priv, cut_test_case_new_empty());
+    } else {
+        invalid_element(context, error);
+    }
+}
+
+static void
+start_complete_test_suite (CutStreamParserPrivate *priv,
+                           GMarkupParseContext *context,
+                           const gchar *element_name, GError **error)
+{
+    if (g_str_equal("test-suite", element_name)) {
+        PUSH_STATE(priv, IN_TEST_SUITE);
+        PUSH_TEST_SUITE(priv, cut_test_suite_new());
+    } else {
+        invalid_element(context, error);
+    }
+}
+
+static void
+start_crashed (CutStreamParserPrivate *priv, GMarkupParseContext *context,
+               const gchar *element_name, GError **error)
+{
+    if (g_str_equal("backtrace", element_name)) {
+        PUSH_STATE(priv, IN_CRASHED_BACKTRACE);
+    } else {
+        invalid_element(context, error);
+    }
+}
+
+static void
+start_test_object (CutStreamParserPrivate *priv, GMarkupParseContext *context,
+                   const gchar *element_name, GError **error)
+{
+    if (g_str_equal("name", element_name)) {
+        PUSH_STATE(priv, IN_TEST_NAME);
+    } else if (g_str_equal("description", element_name)) {
+        PUSH_STATE(priv, IN_TEST_DESCRIPTION);
+    } else if (g_str_equal("option", element_name)) {
+        PUSH_STATE(priv, IN_TEST_OPTION);
+    } else {
+        invalid_element(context, error);
+    }
+}
+
+static void
+start_test_option (CutStreamParserPrivate *priv, GMarkupParseContext *context,
+                   const gchar *element_name, GError **error)
+{
+    if (g_str_equal("name", element_name)) {
+        PUSH_STATE(priv, IN_TEST_OPTION_NAME);
+    } else if (g_str_equal("value", element_name)) {
+        PUSH_STATE(priv, IN_TEST_OPTION_VALUE);
+    } else {
+        invalid_element(context, error);
+    }
+}
+
+static void
+start_result_backtrace (CutStreamParserPrivate *priv,
+                        GMarkupParseContext *context,
+                        const gchar *element_name, GError **error)
+{
+        if (g_str_equal("entry", element_name)) {
+            PUSH_STATE(priv, IN_RESULT_BACKTRACE_ENTRY);
+        } else {
+            invalid_element(context, error);
+        }
+}
+
+static void
+start_result_backtrace_entry (CutStreamParserPrivate *priv,
+                              GMarkupParseContext *context,
+                              const gchar *element_name, GError **error)
+{
+    if (g_str_equal("file", element_name)) {
+        PUSH_STATE(priv, IN_RESULT_BACKTRACE_ENTRY_FILE);
+    } else if (g_str_equal("line", element_name)) {
+        PUSH_STATE(priv, IN_RESULT_BACKTRACE_ENTRY_LINE);
+    } else if (g_str_equal("info", element_name)) {
+        PUSH_STATE(priv, IN_RESULT_BACKTRACE_ENTRY_INFO);
+    } else {
+        invalid_element(context, error);
+    }
+}
+
+static void
+start_test_context (CutStreamParserPrivate *priv, GMarkupParseContext *context,
+                    const gchar *element_name, GError **error)
+{
+    if (g_str_equal("test-suite", element_name)) {
+        CutTestSuite *test_suite;
+
+        PUSH_STATE(priv, IN_TEST_SUITE);
+        test_suite = cut_test_suite_new();
+        cut_test_context_set_test_suite(PEEK_TEST_CONTEXT(priv), test_suite);
+        PUSH_TEST_SUITE(priv, test_suite);
+        g_object_unref(test_suite);
+    } else if (g_str_equal("test-case", element_name)) {
+        CutTestCase *test_case;
+
+        PUSH_STATE(priv, IN_TEST_CASE);
+        test_case = cut_test_case_new_empty();
+        cut_test_context_set_test_case(PEEK_TEST_CONTEXT(priv), test_case);
+        PUSH_TEST_CASE(priv, test_case);
+        g_object_unref(test_case);
+    } else if (g_str_equal("test", element_name)) {
+        CutTest *test;
+
+        PUSH_STATE(priv, IN_TEST);
+        test = cut_test_new_empty();
+        cut_test_context_set_test(PEEK_TEST_CONTEXT(priv), test);
+        PUSH_TEST(priv, test);
+        g_object_unref(test);
+    } else if (g_str_equal("failed", element_name)) {
+        PUSH_STATE(priv, IN_TEST_CONTEXT_FAILED);
+    } else {
+        invalid_element(context, error);
+    }
+}
+
+static void
 start_element_handler (GMarkupParseContext *context,
                        const gchar         *element_name,
                        const gchar        **attr_names,
@@ -670,281 +1034,68 @@ start_element_handler (GMarkupParseContext *context,
     state = PEEK_STATE(priv);
     switch (state) {
       case IN_TOP_LEVEL:
-        if (g_str_equal("stream", element_name)) {
-            PUSH_STATE(priv, IN_STREAM);
-            if (priv->run_context) {
-                g_signal_emit_by_name(priv->run_context, "start-run");
-            }
-        } else {
-            invalid_element(context, error);
-        }
+        start_top_level(priv, context, element_name, error);
         break;
       case IN_STREAM:
-        if (g_str_equal("test-result", element_name)) {
-            PUSH_STATE(priv, IN_TEST_RESULT);
-            priv->test_result = test_result_new();
-        } else if (g_str_equal("ready-test-suite", element_name)) {
-            PUSH_STATE(priv, IN_READY_TEST_SUITE);
-            priv->ready_test_suite = ready_test_suite_new();
-        } else if (g_str_equal("start-test-suite", element_name)) {
-            PUSH_STATE(priv, IN_START_TEST_SUITE);
-            PUSH_TEST_SUITE(priv, cut_test_suite_new());
-        } else if (g_str_equal("ready-test-case", element_name)) {
-            PUSH_STATE(priv, IN_READY_TEST_CASE);
-            priv->ready_test_case = ready_test_case_new();;
-        } else if (g_str_equal("start-test-case", element_name)) {
-            PUSH_STATE(priv, IN_START_TEST_CASE);
-            PUSH_TEST_CASE(priv, cut_test_case_new_empty());
-        } else if (g_str_equal("start-test", element_name)) {
-            PUSH_STATE(priv, IN_START_TEST);
-            priv->start_test = start_test_new();
-        } else if (g_str_equal("complete-test", element_name)) {
-            PUSH_STATE(priv, IN_COMPLETE_TEST);
-            priv->complete_test = complete_test_new();
-        } else if (g_str_equal("test-case-result", element_name)) {
-            PUSH_STATE(priv, IN_TEST_CASE_RESULT);
-            priv->test_case_result = test_case_result_new();
-        } else if (g_str_equal("complete-test-case", element_name)) {
-            PUSH_STATE(priv, IN_COMPLETE_TEST_CASE);
-        } else if (g_str_equal("complete-test-suite", element_name)) {
-            PUSH_STATE(priv, IN_COMPLETE_TEST_SUITE);
-        } else if (g_str_equal("success", element_name)) {
-            PUSH_STATE(priv, IN_STREAM_SUCCESS);
-        } else if (g_str_equal("crashed", element_name)) {
-            PUSH_STATE(priv, IN_CRASHED);
-        } else {
-            invalid_element(context, error);
-        }
+        start_stream(priv, context, element_name, error);
         break;
       case IN_READY_TEST_SUITE:
-        if (g_str_equal("test-suite", element_name)) {
-            PUSH_STATE(priv, IN_TEST_SUITE);
-            priv->ready_test_suite->test_suite = cut_test_suite_new();
-            PUSH_TEST_SUITE(priv, priv->ready_test_suite->test_suite);
-        } else if (g_str_equal("n-test-cases", element_name)) {
-            PUSH_STATE(priv, IN_READY_TEST_SUITE_N_TEST_CASES);
-        } else if (g_str_equal("n-tests", element_name)) {
-            PUSH_STATE(priv, IN_READY_TEST_SUITE_N_TESTS);
-        } else {
-            invalid_element(context, error);
-        }
+        start_ready_test_suite(priv, context, element_name, error);
         break;
       case IN_START_TEST_SUITE:
-        if (g_str_equal("test-suite", element_name)) {
-            PUSH_STATE(priv, IN_TEST_SUITE);
-            PUSH_TEST_SUITE(priv, cut_test_suite_new());
-        } else {
-            invalid_element(context, error);
-        }
+        start_start_test_suite(priv, context, element_name, error);
         break;
       case IN_READY_TEST_CASE:
-        if (g_str_equal("test-case", element_name)) {
-            PUSH_STATE(priv, IN_TEST_CASE);
-            priv->ready_test_case->test_case = cut_test_case_new_empty();
-            PUSH_TEST_CASE(priv, priv->ready_test_case->test_case);
-        } else if (g_str_equal("n-tests", element_name)) {
-            PUSH_STATE(priv, IN_READY_TEST_CASE_N_TESTS);
-        } else {
-            invalid_element(context, error);
-        }
+        start_ready_test_case(priv, context, element_name, error);
         break;
       case IN_START_TEST_CASE:
-        if (g_str_equal("test-case", element_name)) {
-            PUSH_STATE(priv, IN_TEST_CASE);
-            PUSH_TEST_CASE(priv, cut_test_case_new_empty());
-        } else {
-            invalid_element(context, error);
-        }
+        start_start_test_case(priv, context, element_name, error);
         break;
       case IN_START_TEST:
-        if (g_str_equal("test", element_name)) {
-            PUSH_STATE(priv, IN_TEST);
-            priv->start_test->test = cut_test_new_empty();
-            PUSH_TEST(priv, priv->start_test->test);
-        } else if (g_str_equal("test-context", element_name)) {
-            PUSH_STATE(priv, IN_TEST_CONTEXT);
-            priv->start_test->test_context = cut_test_context_new_empty();
-            PUSH_TEST_CONTEXT(priv,  priv->start_test->test_context);
-        } else {
-            invalid_element(context, error);
-        }
+        start_start_test(priv, context, element_name, error);
         break;
       case IN_TEST_RESULT:
-        if (g_str_equal("test", element_name)) {
-            PUSH_STATE(priv, IN_TEST);
-            priv->test_result->test = cut_test_new_empty();
-            PUSH_TEST(priv, priv->test_result->test);
-        } else if (g_str_equal("test-context", element_name)) {
-            PUSH_STATE(priv, IN_TEST_CONTEXT);
-            priv->test_result->test_context = cut_test_context_new_empty();
-            PUSH_TEST_CONTEXT(priv, priv->test_result->test_context);
-        } else if (g_str_equal("result", element_name)) {
-            PUSH_STATE(priv, IN_RESULT);
-            priv->test_result->result = cut_test_result_new_empty();
-            priv->result = priv->test_result->result;
-        } else {
-            invalid_element(context, error);
-        }
+        start_test_result(priv, context, element_name, error);
         break;
       case IN_TOP_LEVEL_RESULT:
-        if (g_str_equal("result", element_name)) {
-            PUSH_STATE(priv, IN_RESULT);
-            priv->result = cut_test_result_new_empty();
-        } else {
-            invalid_element(context, error);
-        }
+        start_top_level_result(priv, context, element_name, error);
         break;
       case IN_RESULT:
-        if (g_str_equal("test-case", element_name)) {
-            CutTestCase *test_case;
-
-            PUSH_STATE(priv, IN_TEST_CASE);
-            test_case = cut_test_case_new_empty();
-            cut_test_result_set_test_case(priv->result, test_case);
-            PUSH_TEST_CASE(priv, test_case);
-            g_object_unref(test_case);
-        } else if (g_str_equal("test", element_name)) {
-            CutTest *test;
-
-            PUSH_STATE(priv, IN_TEST);
-            test = cut_test_new_empty();
-            cut_test_result_set_test(priv->result, test);
-            PUSH_TEST(priv, test);
-            g_object_unref(test);
-        } else if (g_str_equal("status", element_name)) {
-            PUSH_STATE(priv, IN_RESULT_STATUS);
-        } else if (g_str_equal("detail", element_name)) {
-            PUSH_STATE(priv, IN_RESULT_DETAIL);
-        } else if (g_str_equal("backtrace", element_name)) {
-            PUSH_STATE(priv, IN_RESULT_BACKTRACE);
-        } else if (g_str_equal("elapsed", element_name)) {
-            PUSH_STATE(priv, IN_RESULT_ELAPSED);
-        } else {
-            invalid_element(context, error);
-        }
+        start_result(priv, context, element_name, error);
         break;
       case IN_COMPLETE_TEST:
-        if (g_str_equal("test", element_name)) {
-            PUSH_STATE(priv, IN_TEST);
-            priv->complete_test->test = cut_test_new_empty();
-            PUSH_TEST(priv, priv->complete_test->test);
-        } else if (g_str_equal("test-context", element_name)) {
-            PUSH_STATE(priv, IN_TEST_CONTEXT);
-            priv->complete_test->test_context = cut_test_context_new_empty();
-            PUSH_TEST_CONTEXT(priv, priv->complete_test->test_context);
-        } else {
-            invalid_element(context, error);
-        }
+        start_complete_test(priv, context, element_name, error);
         break;
       case IN_TEST_CASE_RESULT:
-        if (g_str_equal("test-case", element_name)) {
-            PUSH_STATE(priv, IN_TEST_CASE);
-            priv->test_case_result->test_case = cut_test_case_new_empty();
-            PUSH_TEST_CASE(priv, priv->test_case_result->test_case);
-        } else if (g_str_equal("result", element_name)) {
-            PUSH_STATE(priv, IN_RESULT);
-            priv->test_case_result->result = cut_test_result_new_empty();
-            priv->result = priv->test_case_result->result;
-        } else {
-            invalid_element(context, error);
-        }
+        start_test_case_result(priv, context, element_name, error);
         break;
       case IN_COMPLETE_TEST_CASE:
-        if (g_str_equal("test-case", element_name)) {
-            PUSH_STATE(priv, IN_TEST_CASE);
-            PUSH_TEST_CASE(priv, cut_test_case_new_empty());
-        } else {
-            invalid_element(context, error);
-        }
+        start_complete_test_case(priv, context, element_name, error);
         break;
       case IN_COMPLETE_TEST_SUITE:
-        if (g_str_equal("test-suite", element_name)) {
-            PUSH_STATE(priv, IN_TEST_SUITE);
-            PUSH_TEST_SUITE(priv, cut_test_suite_new());
-        } else {
-            invalid_element(context, error);
-        }
+        start_complete_test_suite(priv, context, element_name, error);
         break;
       case IN_CRASHED:
-        if (g_str_equal("backtrace", element_name)) {
-            PUSH_STATE(priv, IN_CRASHED_BACKTRACE);
-        } else {
-            invalid_element(context, error);
-        }
+        start_crashed(priv, context, element_name, error);
         break;
       case IN_TEST_SUITE:
       case IN_TEST_CASE:
       case IN_TEST:
-        if (g_str_equal("name", element_name)) {
-            PUSH_STATE(priv, IN_TEST_NAME);
-        } else if (g_str_equal("description", element_name)) {
-            PUSH_STATE(priv, IN_TEST_DESCRIPTION);
-        } else if (g_str_equal("option", element_name)) {
-            PUSH_STATE(priv, IN_TEST_OPTION);
-        } else {
-            invalid_element(context, error);
-        }
+        start_test_object(priv, context, element_name, error);
         break;
       case IN_TEST_OPTION:
-        if (g_str_equal("name", element_name)) {
-            PUSH_STATE(priv, IN_TEST_OPTION_NAME);
-        } else if (g_str_equal("value", element_name)) {
-            PUSH_STATE(priv, IN_TEST_OPTION_VALUE);
-        } else {
-            invalid_element(context, error);
-        }
+        start_test_option(priv, context, element_name, error);
         break;
       case IN_RESULT_BACKTRACE:
-        if (g_str_equal("entry", element_name)) {
-            PUSH_STATE(priv, IN_RESULT_BACKTRACE_ENTRY);
-        } else {
-            invalid_element(context, error);
-        }
+        start_result_backtrace(priv, context, element_name, error);
         break;
       case IN_RESULT_BACKTRACE_ENTRY:
-        if (g_str_equal("file", element_name)) {
-            PUSH_STATE(priv, IN_RESULT_BACKTRACE_ENTRY_FILE);
-        } else if (g_str_equal("line", element_name)) {
-            PUSH_STATE(priv, IN_RESULT_BACKTRACE_ENTRY_LINE);
-        } else if (g_str_equal("info", element_name)) {
-            PUSH_STATE(priv, IN_RESULT_BACKTRACE_ENTRY_INFO);
-        } else {
-            invalid_element(context, error);
-        }
+        start_result_backtrace_entry(priv, context, element_name, error);
         break;
       case IN_TEST_CONTEXT:
-        if (g_str_equal("test-suite", element_name)) {
-            CutTestSuite *test_suite;
-
-            PUSH_STATE(priv, IN_TEST_SUITE);
-            test_suite = cut_test_suite_new();
-            cut_test_context_set_test_suite(PEEK_TEST_CONTEXT(priv), test_suite);
-            PUSH_TEST_SUITE(priv, test_suite);
-            g_object_unref(test_suite);
-        } else if (g_str_equal("test-case", element_name)) {
-            CutTestCase *test_case;
-
-            PUSH_STATE(priv, IN_TEST_CASE);
-            test_case = cut_test_case_new_empty();
-            cut_test_context_set_test_case(PEEK_TEST_CONTEXT(priv), test_case);
-            PUSH_TEST_CASE(priv, test_case);
-            g_object_unref(test_case);
-        } else if (g_str_equal("test", element_name)) {
-            CutTest *test;
-
-            PUSH_STATE(priv, IN_TEST);
-            test = cut_test_new_empty();
-            cut_test_context_set_test(PEEK_TEST_CONTEXT(priv), test);
-            PUSH_TEST(priv, test);
-            g_object_unref(test);
-        } else if (g_str_equal("failed", element_name)) {
-            PUSH_STATE(priv, IN_TEST_CONTEXT_FAILED);
-        } else {
-            invalid_element(context, error);
-        }
+        start_test_context(priv, context, element_name, error);
         break;
       default:
-        g_print("%d\n", state);
         invalid_element(context, error);
         break;
     }
