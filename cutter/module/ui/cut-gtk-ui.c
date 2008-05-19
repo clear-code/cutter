@@ -1342,8 +1342,7 @@ idle_cb_push_complete_test_suite_message (gpointer data)
 }
 
 static void
-cb_complete_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
-                        CutGtkUI *ui)
+cb_complete_run (CutRunContext *run_context, CutGtkUI *ui)
 {
     ui->running = FALSE;
 
@@ -1408,7 +1407,7 @@ connect_to_run_context (CutGtkUI *ui, CutRunContext *run_context)
     CONNECT(ready_test_suite);
     CONNECT(ready_test_case);
 
-    CONNECT(complete_test_suite);
+    CONNECT(complete_run);
 
     CONNECT(error);
     CONNECT(crashed);
@@ -1426,7 +1425,7 @@ disconnect_from_run_context (CutGtkUI *ui, CutRunContext *run_context)
     DISCONNECT(ready_test_suite);
     DISCONNECT(ready_test_case);
 
-    DISCONNECT(complete_test_suite);
+    DISCONNECT(complete_run);
 
     DISCONNECT(error);
     DISCONNECT(crashed);
