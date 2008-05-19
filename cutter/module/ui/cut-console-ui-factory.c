@@ -224,7 +224,9 @@ guess_color_usability (void)
     const gchar *term, *emacs;
 
     term = g_getenv("TERM");
-    if (term && (g_str_has_suffix(term, "term") || g_str_equal(term, "screen")))
+    if (term && (g_str_has_suffix(term, "term") ||
+                 g_str_has_suffix(term, "term-color") ||
+                 g_str_equal(term, "screen")))
         return TRUE;
 
     emacs = g_getenv("EMACS");
