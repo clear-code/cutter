@@ -1,5 +1,7 @@
 2008-05-19  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-stream-parser.c: invert.
+
 	* NEWS*: update.
 
 	* cutter/cut-stream-parser.c: support <pass-assertion>.

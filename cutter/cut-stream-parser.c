@@ -1287,7 +1287,7 @@ end_start_test (CutStreamParser *parser, CutStreamParserPrivate *priv,
         return;
 
     if (priv->run_context)
-        g_signal_emit_by_name(priv->run_context, "pass-assertion",
+        g_signal_emit_by_name(priv->run_context, "start-test",
                               priv->start_test->test,
                               priv->start_test->test_context);
 
@@ -1308,7 +1308,7 @@ end_pass_assertion (CutStreamParser *parser, CutStreamParserPrivate *priv,
         return;
 
     if (priv->run_context)
-        g_signal_emit_by_name(priv->run_context, "start-test",
+        g_signal_emit_by_name(priv->run_context, "pass-assertion",
                               priv->pass_assertion->test,
                               priv->pass_assertion->test_context);
 
