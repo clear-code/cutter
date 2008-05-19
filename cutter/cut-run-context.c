@@ -84,7 +84,8 @@ enum
     PROP_TARGET_TEST_CASE_NAMES,
     PROP_TARGET_TEST_NAMES,
     PROP_EXCLUDE_FILES,
-    PROP_EXCLUDE_DIRECTORIES
+    PROP_EXCLUDE_DIRECTORIES,
+    PROP_COMMAND_LINE_ARGS
 };
 
 enum
@@ -273,6 +274,12 @@ cut_run_context_class_init (CutRunContextClass *klass)
                                 "The directory names of excluding from target",
                                 G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_EXCLUDE_DIRECTORIES, spec);
+
+    spec = g_param_spec_pointer("command-line-args",
+                                "Command line arguments",
+                                "The argument strings from command line",
+                                G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_COMMAND_LINE_ARGS, spec);
 
     signals[START_RUN]
         = g_signal_new("start-run",
@@ -664,6 +671,9 @@ set_property (GObject      *object,
       case PROP_EXCLUDE_DIRECTORIES:
         priv->exclude_directories = g_strdupv(g_value_get_pointer(value));
         break;
+      case PROP_COMMAND_LINE_ARGS:
+        priv->command_line_args = g_strdupv(g_value_get_pointer(value));
+        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
@@ -726,6 +736,9 @@ get_property (GObject    *object,
         break;
       case PROP_EXCLUDE_DIRECTORIES:
         g_value_set_pointer(value, priv->exclude_directories);
+        break;
+      case PROP_COMMAND_LINE_ARGS:
+        g_value_set_pointer(value, priv->command_line_args);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);

@@ -172,13 +172,14 @@ cut_pipeline_new_from_run_context (CutRunContext *run_context)
 {
     return g_object_new(CUT_TYPE_PIPELINE, 
                         "test-directory", cut_run_context_get_test_directory(run_context),
-                        "source-directory", cut_run_context_get_source_directory(run_context),
                         "use-multi-thread", cut_run_context_get_multi_thread(run_context),
                         "exclude-files", cut_run_context_get_exclude_files(run_context),
                         "exclude-directories", cut_run_context_get_exclude_directories(run_context),
                         "target-test-case-names", cut_run_context_get_target_test_case_names(run_context),
                         "target-test-names", cut_run_context_get_target_test_names(run_context),
                         "test-case-order", cut_run_context_get_test_case_order(run_context),
+                        "source-directory", cut_run_context_get_source_directory(run_context),
+                        "command-line-args", cut_run_context_get_command_line_args(run_context),
                         NULL);
 }
 
@@ -322,6 +323,7 @@ create_command_line_args (CutPipeline *pipeline)
         copy[i] = NULL;
 
         new_args = cut_utils_strv_concat((const gchar **)copy,
+                                         "--ui=console",
                                          "-v", "s",
                                          "--streamer=xml",
                                          test_directory,
