@@ -1,3 +1,10 @@
+2008-05-20  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-run-context.c: Increment each test status count in
+	virtual function instead of callback functions of receiving CutTest
+	signals since CutPipeline does not receive any signals of CutTest
+	object.
+
 2008-05-19  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/module/streamer/cut-xml-streamer.c (cb_pass_assertion):

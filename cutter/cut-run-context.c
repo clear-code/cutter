@@ -144,6 +144,34 @@ static void get_property   (GObject         *object,
                             guint            prop_id,
                             GValue          *value,
                             GParamSpec      *pspec);
+static void pass_assertion (CutRunContext   *context,
+                            CutTest         *test,
+                            CutTestContext  *test_context);
+static void success_test   (CutRunContext   *context,
+                            CutTest         *test,
+                            CutTestContext  *test_context,
+                            CutTestResult   *result);
+static void failure_test   (CutRunContext   *context,
+                            CutTest         *test,
+                            CutTestContext  *test_context,
+                            CutTestResult   *result);
+static void error_test     (CutRunContext   *context,
+                            CutTest         *test,
+                            CutTestContext  *test_context,
+                            CutTestResult   *result);
+static void pending_test   (CutRunContext   *context,
+                            CutTest         *test,
+                            CutTestContext  *test_context,
+                            CutTestResult   *result);
+static void notification_test
+                           (CutRunContext   *context,
+                            CutTest         *test,
+                            CutTestContext  *test_context,
+                            CutTestResult   *result);
+static void omission_test  (CutRunContext   *context,
+                            CutTest         *test,
+                            CutTestContext  *test_context,
+                            CutTestResult   *result);
 
 static gboolean runner_run (CutRunner *runner);
 
@@ -158,6 +186,14 @@ cut_run_context_class_init (CutRunContextClass *klass)
     gobject_class->dispose      = dispose;
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
+
+    klass->pass_assertion    = pass_assertion;
+    klass->success_test      = success_test;
+    klass->failure_test      = failure_test;
+    klass->error_test        = error_test;
+    klass->pending_test      = pending_test;
+    klass->notification_test = notification_test;
+    klass->omission_test     = omission_test;
 
     spec = g_param_spec_uint("n-tests",
                              "Number of tests",
@@ -762,6 +798,107 @@ runner_run (CutRunner *runner)
     return FALSE;
 }
 
+static void 
+pass_assertion (CutRunContext   *context,
+                CutTest         *test,
+                CutTestContext  *test_context)
+{
+    CutRunContextPrivate *priv;
+
+    priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
+    g_mutex_lock(priv->mutex);
+    priv->n_assertions++;
+    g_mutex_unlock(priv->mutex);
+}
+
+static void 
+success_test (CutRunContext   *context,
+              CutTest         *test,
+              CutTestContext  *test_context,
+              CutTestResult   *result)
+{
+    CutRunContextPrivate *priv;
+
+    priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
+    g_mutex_lock(priv->mutex);
+    priv->results = g_list_prepend(priv->results, g_object_ref(result));
+    priv->n_successes++;
+    g_mutex_unlock(priv->mutex);
+}
+
+static void 
+failure_test (CutRunContext   *context,
+              CutTest         *test,
+              CutTestContext  *test_context,
+              CutTestResult   *result)
+{
+    CutRunContextPrivate *priv= CUT_RUN_CONTEXT_GET_PRIVATE(context);
+
+    g_mutex_lock(priv->mutex);
+    priv->results = g_list_prepend(priv->results, g_object_ref(result));
+    priv->n_failures++;
+    g_mutex_unlock(priv->mutex);
+}
+
+static void 
+error_test (CutRunContext   *context,
+              CutTest         *test,
+              CutTestContext  *test_context,
+              CutTestResult   *result)
+{
+    CutRunContextPrivate *priv;
+
+    priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
+    g_mutex_lock(priv->mutex);
+    priv->results = g_list_prepend(priv->results, g_object_ref(result));
+    priv->n_errors++;
+    g_mutex_unlock(priv->mutex);
+}
+
+static void 
+pending_test (CutRunContext   *context,
+              CutTest         *test,
+              CutTestContext  *test_context,
+              CutTestResult   *result)
+{
+    CutRunContextPrivate *priv;
+
+    priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
+    g_mutex_lock(priv->mutex);
+    priv->results = g_list_prepend(priv->results, g_object_ref(result));
+    priv->n_pendings++;
+    g_mutex_unlock(priv->mutex);
+}
+static void 
+notification_test (CutRunContext   *context,
+              CutTest         *test,
+              CutTestContext  *test_context,
+              CutTestResult   *result)
+{
+    CutRunContextPrivate *priv;
+
+    priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
+    g_mutex_lock(priv->mutex);
+    priv->results = g_list_prepend(priv->results, g_object_ref(result));
+    priv->n_notifications++;
+    g_mutex_unlock(priv->mutex);
+}
+
+static void 
+omission_test (CutRunContext   *context,
+              CutTest         *test,
+              CutTestContext  *test_context,
+              CutTestResult   *result)
+{
+    CutRunContextPrivate *priv;
+
+    priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
+    g_mutex_lock(priv->mutex);
+    priv->results = g_list_prepend(priv->results, g_object_ref(result));
+    priv->n_omissions++;
+    g_mutex_unlock(priv->mutex);
+}
+
 void
 cut_run_context_set_test_directory (CutRunContext *context, const gchar *directory)
 {
@@ -885,12 +1022,6 @@ static void
 cb_pass_assertion (CutTest *test, CutTestContext *test_context, gpointer data)
 {
     CutRunContext *context = data;
-    CutRunContextPrivate *priv;
-
-    priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
-    g_mutex_lock(priv->mutex);
-    priv->n_assertions++;
-    g_mutex_unlock(priv->mutex);
 
     g_signal_emit(context, signals[PASS_ASSERTION], 0, test, test_context);
 }
@@ -900,13 +1031,6 @@ cb_success (CutTest *test, CutTestContext *test_context, CutTestResult *result,
             gpointer data)
 {
     CutRunContext *context = data;
-    CutRunContextPrivate *priv;
-
-    priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
-    g_mutex_lock(priv->mutex);
-    priv->results = g_list_prepend(priv->results, g_object_ref(result));
-    priv->n_successes++;
-    g_mutex_unlock(priv->mutex);
 
     g_signal_emit(context, signals[SUCCESS_TEST], 0, test, test_context, result);
 }
@@ -916,13 +1040,6 @@ cb_failure (CutTest *test, CutTestContext *test_context, CutTestResult *result,
             gpointer data)
 {
     CutRunContext *context = data;
-    CutRunContextPrivate *priv;
-
-    priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
-    g_mutex_lock(priv->mutex);
-    priv->results = g_list_prepend(priv->results, g_object_ref(result));
-    priv->n_failures++;
-    g_mutex_unlock(priv->mutex);
 
     g_signal_emit(context, signals[FAILURE_TEST], 0, test, test_context, result);
 }
@@ -932,13 +1049,6 @@ cb_error (CutTest *test, CutTestContext *test_context, CutTestResult *result,
           gpointer data)
 {
     CutRunContext *context = data;
-    CutRunContextPrivate *priv;
-
-    priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
-    g_mutex_lock(priv->mutex);
-    priv->results = g_list_prepend(priv->results, g_object_ref(result));
-    priv->n_errors++;
-    g_mutex_unlock(priv->mutex);
 
     g_signal_emit(context, signals[ERROR_TEST], 0, test, test_context, result);
 }
@@ -948,13 +1058,6 @@ cb_pending (CutTest *test, CutTestContext *test_context, CutTestResult *result,
             gpointer data)
 {
     CutRunContext *context = data;
-    CutRunContextPrivate *priv;
-
-    priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
-    g_mutex_lock(priv->mutex);
-    priv->results = g_list_prepend(priv->results, g_object_ref(result));
-    priv->n_pendings++;
-    g_mutex_unlock(priv->mutex);
 
     g_signal_emit(context, signals[PENDING_TEST], 0, test, test_context, result);
 }
@@ -964,13 +1067,6 @@ cb_notification (CutTest *test, CutTestContext *test_context,
                  CutTestResult *result, gpointer data)
 {
     CutRunContext *context = data;
-    CutRunContextPrivate *priv;
-
-    priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
-    g_mutex_lock(priv->mutex);
-    priv->results = g_list_prepend(priv->results, g_object_ref(result));
-    priv->n_notifications++;
-    g_mutex_unlock(priv->mutex);
 
     g_signal_emit(context, signals[NOTIFICATION_TEST], 0, test, test_context, result);
 }
@@ -980,13 +1076,6 @@ cb_omission (CutTest *test, CutTestContext *test_context,
              CutTestResult *result, gpointer data)
 {
     CutRunContext *context = data;
-    CutRunContextPrivate *priv;
-
-    priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
-    g_mutex_lock(priv->mutex);
-    priv->results = g_list_prepend(priv->results, g_object_ref(result));
-    priv->n_omissions++;
-    g_mutex_unlock(priv->mutex);
 
     g_signal_emit(context, signals[OMISSION_TEST], 0, test, test_context, result);
 }
