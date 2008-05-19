@@ -1,5 +1,8 @@
 2008-05-19  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/module/streamer/cut-xml-streamer.c (cb_pass_assertion):
+	use stream().
+
 	* cutter/module/ui/cut-gtk-ui.c (idle_cb_update_summary): invert
 	title order.
 

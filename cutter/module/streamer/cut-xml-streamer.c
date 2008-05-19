@@ -420,7 +420,7 @@ cb_start_test (CutRunContext *run_context, CutTest *test,
 
 static void
 cb_pass_assertion (CutRunContext *run_context, CutTest *test,
-                   CutTestContext *test_context)
+                   CutTestContext *test_context, CutXMLStreamer *streamer)
 {
     GString *string;
 
@@ -431,8 +431,7 @@ cb_pass_assertion (CutRunContext *run_context, CutTest *test,
     cut_test_context_to_xml_string(test_context, string, 4);
     g_string_append(string, "  </pass-assertion>\n");
 
-    g_print(string->str);
-    fflush(stdout);
+    stream(streamer, string->str);
 
     g_string_free(string, TRUE);
 }
