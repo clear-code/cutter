@@ -62,6 +62,9 @@
   <index role="deprecated">
     <title>Index of deprecated symbols</title>
   </index>
+  <index role="1.0">
+    <title>Index of new symbols in 1.0</title>
+  </index>
   <index role="0.9">
     <title>Index of new symbols in 0.9</title>
   </index>

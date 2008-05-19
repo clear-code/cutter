@@ -1,5 +1,7 @@
 2008-05-19  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/: update.
+
 	* TODO: add auto-cutter.
 
 	* cutter/module/ui/cut-console-ui-factory.c: add *term-color TERM
