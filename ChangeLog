@@ -1,5 +1,7 @@
 2008-05-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* configure.ac: 1.0.0 -> 1.0.1.
+
 	* NEWS*: update.
 
 	* cutter/cut-stream-parser.c (end_test_context): fix memory leak.
