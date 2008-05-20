@@ -79,6 +79,7 @@
 	* cutter/module/streamer/cut-xml-streamer.c: Add mutex lock when write
 	XML string to io channel since the strings is jammed with multi
 	thread.
+	* cutter/cut-pipeline.c: Reduce read buffer size.
 
 2008-05-19  Kouhei Sutou  <kou@cozmixng.org>
 

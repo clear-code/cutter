@@ -223,7 +223,7 @@ emit_complete_signal (CutPipeline *pipeline, gboolean success)
     g_signal_emit_by_name(pipeline, "complete-run", success);
 }
 
-#define BUFFER_SIZE 4096
+#define BUFFER_SIZE 512
 static void
 read_stream (CutPipeline *pipeline, GIOChannel *channel)
 {
@@ -233,7 +233,7 @@ read_stream (CutPipeline *pipeline, GIOChannel *channel)
 
     while (!priv->error_emitted && !priv->eof) {
         GIOStatus status;
-        gchar stream[BUFFER_SIZE];
+        gchar stream[BUFFER_SIZE + 1];
         gsize length = 0;
         GError *error = NULL;
 
