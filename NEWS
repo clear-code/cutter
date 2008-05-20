@@ -2,12 +2,13 @@
 
 = NEWS --- The history of Cutter
 
-== 1.0.0: 2008-05-20
+== 1.0.0: 2008-05-21
 
   * Add assertions:
     * cut_assert_equal_pointer()
     * cut_assert_g_error()
     * cut_assert_match()
+    * cut_assert_match_with_free()
   * Add --exclude-file option that specifies excluded files
     from test targets
   * Add --exclude-dir option that specifies excluded directories
