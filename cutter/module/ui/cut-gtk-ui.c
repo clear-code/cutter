@@ -669,7 +669,7 @@ timeout_cb_pulse (gpointer data)
         text = g_strdup_printf(_("%u/%u (%u%%): %.1fs"),
                                n_completed_tests, n_tests,
                                (guint)(fraction * 100),
-                               cut_test_get_elapsed(CUT_TEST(ui->test_suite)));
+                               cut_run_context_get_elapsed(ui->run_context));
         gtk_progress_bar_set_text(bar, text);
         g_free(text);
     } else {
@@ -1333,7 +1333,7 @@ idle_cb_push_complete_test_suite_message (gpointer data)
     context_id = gtk_statusbar_get_context_id(ui->statusbar, "test-suite");
     summary = generate_summary_message(ui->run_context);
     message = g_strdup_printf(_("Finished in %0.1f seconds: %s"),
-                              cut_test_get_elapsed(CUT_TEST(ui->test_suite)),
+                              cut_run_context_get_elapsed(ui->run_context),
                               summary);
     g_free(summary);
     gtk_statusbar_pop(ui->statusbar, context_id);

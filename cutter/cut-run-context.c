@@ -46,6 +46,7 @@ struct _CutRunContextPrivate
     guint n_pendings;
     guint n_notifications;
     guint n_omissions;
+    gdouble elapsed;
     GList *results;
     gboolean use_multi_thread;
     gboolean is_multi_thread;
@@ -176,6 +177,9 @@ static void omission_test  (CutRunContext   *context,
                             CutTest         *test,
                             CutTestContext  *test_context,
                             CutTestResult   *result);
+static void complete_test  (CutRunContext   *context,
+                            CutTest         *test,
+                            CutTestContext  *test_context);
 static void crashed        (CutRunContext   *context,
                             const gchar     *backtrace);
 
@@ -208,6 +212,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     klass->pending_test      = pending_test;
     klass->notification_test = notification_test;
     klass->omission_test     = omission_test;
+    klass->complete_test     = complete_test;
     klass->crashed           = crashed;
 
     klass->prepare_test_suite = prepare_test_suite;
@@ -591,6 +596,7 @@ cut_run_context_init (CutRunContext *context)
     priv->n_pendings = 0;
     priv->n_notifications = 0;
     priv->n_omissions = 0;
+    priv->elapsed = 0.0;
     priv->results = NULL;
     priv->use_multi_thread = FALSE;
     priv->is_multi_thread = FALSE;
@@ -933,6 +939,19 @@ omission_test (CutRunContext   *context,
 }
 
 static void
+complete_test (CutRunContext   *context,
+               CutTest         *test,
+               CutTestContext  *test_context)
+{
+    CutRunContextPrivate *priv;
+
+    priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
+    g_mutex_lock(priv->mutex);
+    priv->elapsed += cut_test_get_elapsed(test);
+    g_mutex_unlock(priv->mutex);
+}
+
+static void
 crashed (CutRunContext *context, const gchar *backtrace)
 {
     CutRunContextPrivate *priv;
@@ -1155,6 +1174,12 @@ guint
 cut_run_context_get_n_omissions (CutRunContext *context)
 {
     return CUT_RUN_CONTEXT_GET_PRIVATE(context)->n_omissions;
+}
+
+gdouble
+cut_run_context_get_elapsed (CutRunContext *context)
+{
+    return CUT_RUN_CONTEXT_GET_PRIVATE(context)->elapsed;
 }
 
 const GList *
@@ -1384,6 +1409,7 @@ cut_run_context_start (CutRunContext *context)
 {
     gboolean success;
 
+    CUT_RUN_CONTEXT_GET_PRIVATE(context)->elapsed = 0.0;
     cut_run_context_attach_listeners(context);
     success = cut_runner_run(CUT_RUNNER(context));
     cut_run_context_detach_listeners(context);

@@ -1,5 +1,9 @@
 2008-05-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/module/ui/cut-gtk-ui.c: use cut_run_context_get_elapsed().
+
+	* cutter/cut-run-context.[ch] (cut_run_context_get_elapsed): add.
+
 	* cutter/cut-stream-parser.c: support elapsed in test object.
 
 	* cutter/cut-test.c: add elapsed into XML format.
