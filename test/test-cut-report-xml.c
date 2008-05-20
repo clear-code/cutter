@@ -104,25 +104,29 @@ run_the_test (CutTest *test)
 void
 test_report_success (void)
 {
-    gchar expected[] = "  <result>\n"
-                       "    <test-case>\n"
-                       "      <name>dummy test case</name>\n"
-                       "    </test-case>\n"
-                       "    <test>\n"
-                       "      <name>dummy-success-test</name>\n"
-                       "      <description>A success test</description>\n"
-                       "      <option>\n"
-                       "        <name>price</name>\n"
-                       "        <value>$199</value>\n"
-                       "      </option>\n"
-                       "      <option>\n"
-                       "        <name>bug</name>\n"
-                       "        <value>1234</value>\n"
-                       "      </option>\n"
-                       "    </test>\n"
-                       "    <status>success</status>\n"
-                       "    <elapsed>0.000100</elapsed>\n"
-                       "  </result>\n";
+    gchar expected[] =
+        "  <result>\n"
+        "    <test-case>\n"
+        "      <name>dummy test case</name>\n"
+        "      <elapsed>.+?</elapsed>\n"
+        "    </test-case>\n"
+        "    <test>\n"
+        "      <name>dummy-success-test</name>\n"
+        "      <description>A success test</description>\n"
+        "      <elapsed>.+?</elapsed>\n"
+        "      <option>\n"
+        "        <name>price</name>\n"
+        "        <value>\\$199</value>\n"
+        "      </option>\n"
+        "      <option>\n"
+        "        <name>bug</name>\n"
+        "        <value>1234</value>\n"
+        "      </option>\n"
+        "    </test>\n"
+        "    <status>success</status>\n"
+        "    <elapsed>.+?</elapsed>\n"
+        "  </result>\n";
+
     test_object = cut_test_new("dummy-success-test", dummy_success_test);
     cut_test_set_attribute(test_object, "description", "A success test");
     cut_test_set_attribute(test_object, "bug", "1234");
@@ -135,8 +139,7 @@ test_report_success (void)
                                          G_CALLBACK(cb_test_signal),
                                          NULL);
 
-    cut_assert_equal_string_with_free(expected,
-                                      cut_report_get_success_results(report));
+    cut_assert_match_with_free(expected, cut_report_get_success_results(report));
 }
 
 void
@@ -146,20 +149,22 @@ test_report_failure (void)
         "  <result>\n"
         "    <test-case>\n"
         "      <name>dummy test case</name>\n"
+        "      <elapsed>.+?</elapsed>\n"
         "    </test-case>\n"
         "    <test>\n"
         "      <name>dummy-failure-test</name>\n"
+        "      <elapsed>.+?</elapsed>\n"
         "    </test>\n"
         "    <status>failure</status>\n"
         "    <detail>This test should fail</detail>\n"
         "    <backtrace>\n"
         "      <entry>\n"
-        "        <file>test-cut-report-xml.c</file>\n"
+        "        <file>test-cut-report-xml\\.c</file>\n"
         "        <line>27</line>\n"
-        "        <info>dummy_failure_test()</info>\n"
+        "        <info>dummy_failure_test\\(\\)</info>\n"
         "      </entry>\n"
         "    </backtrace>\n"
-        "    <elapsed>0.000100</elapsed>\n"
+        "    <elapsed>.+?</elapsed>\n"
         "  </result>\n";
 
     test_object = cut_test_new("dummy-failure-test", dummy_failure_test);
@@ -171,8 +176,8 @@ test_report_failure (void)
                                          G_CALLBACK(cb_test_signal),
                                          NULL);
 
-    cut_assert_equal_string_with_free(expected,
-                                      cut_report_get_failure_results(report));
+    cut_assert_match_with_free(expected,
+                               cut_report_get_failure_results(report));
 }
 
 void
@@ -182,20 +187,22 @@ test_report_pending (void)
         "  <result>\n"
         "    <test-case>\n"
         "      <name>dummy test case</name>\n"
+        "      <elapsed>.+?</elapsed>\n"
         "    </test-case>\n"
         "    <test>\n"
         "      <name>dummy-pending-test</name>\n"
+        "      <elapsed>.+?</elapsed>\n"
         "    </test>\n"
         "    <status>pending</status>\n"
         "    <detail>This test has been pending ever!</detail>\n"
         "    <backtrace>\n"
         "      <entry>\n"
-        "        <file>test-cut-report-xml.c</file>\n"
+        "        <file>test-cut-report-xml\\.c</file>\n"
         "        <line>39</line>\n"
-        "        <info>dummy_pending_test()</info>\n"
+        "        <info>dummy_pending_test\\(\\)</info>\n"
         "      </entry>\n"
         "    </backtrace>\n"
-        "    <elapsed>0.000100</elapsed>\n"
+        "    <elapsed>.+?</elapsed>\n"
         "  </result>\n";
 
     test_object = cut_test_new("dummy-pending-test", dummy_pending_test);
@@ -207,8 +214,8 @@ test_report_pending (void)
                                          G_CALLBACK(cb_test_signal),
                                          NULL);
 
-    cut_assert_equal_string_with_free(expected,
-                                      cut_report_get_pending_results(report));
+    cut_assert_match_with_free(expected,
+                               cut_report_get_pending_results(report));
 }
 
 void
@@ -218,20 +225,22 @@ test_report_notification (void)
         "  <result>\n"
         "    <test-case>\n"
         "      <name>dummy test case</name>\n"
+        "      <elapsed>.+?</elapsed>\n"
         "    </test-case>\n"
         "    <test>\n"
         "      <name>dummy-notification-test</name>\n"
+        "      <elapsed>.+?</elapsed>\n"
         "    </test>\n"
         "    <status>notification</status>\n"
         "    <detail>This test has been notifable ever!</detail>\n"
         "    <backtrace>\n"
         "      <entry>\n"
-        "        <file>test-cut-report-xml.c</file>\n"
+        "        <file>test-cut-report-xml\\.c</file>\n"
         "        <line>45</line>\n"
-        "        <info>dummy_notification_test()</info>\n"
+        "        <info>dummy_notification_test\\(\\)</info>\n"
         "      </entry>\n"
         "    </backtrace>\n"
-        "    <elapsed>0.000100</elapsed>\n"
+        "    <elapsed>.+?</elapsed>\n"
         "  </result>\n";
 
     test_object = cut_test_new("dummy-notification-test", dummy_notification_test);
@@ -243,8 +252,8 @@ test_report_notification (void)
                                          G_CALLBACK(cb_test_signal),
                                          NULL);
 
-    cut_assert_equal_string_with_free(expected,
-                                      cut_report_get_notification_results(report));
+    cut_assert_match_with_free(expected,
+                               cut_report_get_notification_results(report));
 }
 
 void
@@ -254,20 +263,22 @@ test_report_error (void)
         "  <result>\n"
         "    <test-case>\n"
         "      <name>dummy test case</name>\n"
+        "      <elapsed>.+?</elapsed>\n"
         "    </test-case>\n"
         "    <test>\n"
         "      <name>dummy-error-test</name>\n"
+        "      <elapsed>.+?</elapsed>\n"
         "    </test>\n"
         "    <status>error</status>\n"
         "    <detail>This test should error</detail>\n"
         "    <backtrace>\n"
         "      <entry>\n"
-        "        <file>test-cut-report-xml.c</file>\n"
+        "        <file>test-cut-report-xml\\.c</file>\n"
         "        <line>33</line>\n"
-        "        <info>dummy_error_test()</info>\n"
+        "        <info>dummy_error_test\\(\\)</info>\n"
         "      </entry>\n"
         "    </backtrace>\n"
-        "    <elapsed>0.000100</elapsed>\n"
+        "    <elapsed>.+?</elapsed>\n"
         "  </result>\n";
 
     test_object = cut_test_new("dummy-error-test", dummy_error_test);
@@ -279,8 +290,7 @@ test_report_error (void)
                                          G_CALLBACK(cb_test_signal),
                                          NULL);
 
-    cut_assert_equal_string_with_free(expected,
-                                      cut_report_get_error_results(report));
+    cut_assert_match_with_free(expected, cut_report_get_error_results(report));
 }
 
 void
@@ -290,30 +300,34 @@ test_plural_reports (void)
         "  <result>\n"
         "    <test-case>\n"
         "      <name>dummy test case</name>\n"
+        "      <elapsed>.+?</elapsed>\n"
         "    </test-case>\n"
         "    <test>\n"
         "      <name>dummy-error-test</name>\n"
+        "      <elapsed>.+?</elapsed>\n"
         "    </test>\n"
         "    <status>error</status>\n"
         "    <detail>This test should error</detail>\n"
         "    <backtrace>\n"
         "      <entry>\n"
-        "        <file>test-cut-report-xml.c</file>\n"
+        "        <file>test-cut-report-xml\\.c</file>\n"
         "        <line>33</line>\n"
-        "        <info>dummy_error_test()</info>\n"
+        "        <info>dummy_error_test\\(\\)</info>\n"
         "      </entry>\n"
         "    </backtrace>\n"
-        "    <elapsed>0.000100</elapsed>\n"
+        "    <elapsed>.+?</elapsed>\n"
         "  </result>\n"
         "  <result>\n"
         "    <test-case>\n"
         "      <name>dummy test case</name>\n"
+        "      <elapsed>.+?</elapsed>\n"
         "    </test-case>\n"
         "    <test>\n"
         "      <name>dummy-success-test</name>\n"
+        "      <elapsed>.+?</elapsed>\n"
         "    </test>\n"
         "    <status>success</status>\n"
-        "    <elapsed>0.000100</elapsed>\n"
+        "    <elapsed>.+?</elapsed>\n"
         "  </result>\n";
 
     test_object = cut_test_new("dummy-success-test", dummy_success_test);
@@ -330,8 +344,7 @@ test_plural_reports (void)
                                          G_CALLBACK(cb_test_signal),
                                          NULL);
 
-    cut_assert_equal_string_with_free(expected,
-                                      cut_report_get_all_results(report));
+    cut_assert_match_with_free(expected, cut_report_get_all_results(report));
 }
 
 /*

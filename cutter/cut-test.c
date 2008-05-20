@@ -520,6 +520,11 @@ cut_test_to_xml_string (CutTest *test, GString *string, guint indent)
         cut_utils_append_xml_element_with_value(string, indent + 2,
                                                 "description", description);
 
+    elapsed = g_strdup_printf("%f", cut_test_get_elapsed(test));
+    cut_utils_append_xml_element_with_value(string, indent + 2,
+                                            "elapsed", elapsed);
+    g_free(elapsed);
+
     attributes = cut_test_get_attributes(test);
     if (attributes) {
         AppendAttributeInfo info;
@@ -528,11 +533,6 @@ cut_test_to_xml_string (CutTest *test, GString *string, guint indent)
         info.indent = indent + 2;
         g_hash_table_foreach(attributes, (GHFunc)append_attribute, &info);
     }
-
-    elapsed = g_strdup_printf("%f", cut_test_get_elapsed(test));
-    /* cut_utils_append_xml_element_with_value(string, indent + 2, */
-/*                                             "elapsed", elapsed); */
-    g_free(elapsed);
 
     cut_utils_append_indent(string, indent);
     g_string_append_printf(string, "</%s>\n", escaped);

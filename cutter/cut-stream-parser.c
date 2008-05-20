@@ -41,6 +41,7 @@ typedef enum {
     IN_TEST_NAME,
     IN_TEST_DESCRIPTION,
     IN_TEST_OPTION,
+    IN_TEST_ELAPSED,
 
     IN_TEST_OPTION_NAME,
     IN_TEST_OPTION_VALUE,
@@ -982,6 +983,8 @@ start_test_object (CutStreamParserPrivate *priv, GMarkupParseContext *context,
         PUSH_STATE(priv, IN_TEST_DESCRIPTION);
     } else if (g_str_equal("option", element_name)) {
         PUSH_STATE(priv, IN_TEST_OPTION);
+    } else if (g_str_equal("elapsed", element_name)) {
+        PUSH_STATE(priv, IN_TEST_ELAPSED);
     } else {
         invalid_element(context, error);
     }
@@ -1660,6 +1663,29 @@ text_test_option_value (CutStreamParserPrivate *priv,
 }
 
 static void
+text_test_elapsed (CutStreamParserPrivate *priv,
+                   GMarkupParseContext *context,
+                   const gchar *text, gsize text_len, GError **error)
+{
+    CutTest *target;
+
+    target = target_test_object(priv, PEEK_NTH_STATE(priv, 1));
+    if (target) {
+        gdouble elapsed;
+        gchar *end_position;
+
+        elapsed = g_ascii_strtod(text, &end_position);
+        if (text != end_position && end_position[0] == '\0') {
+            cut_test_set_elapsed(target, elapsed);
+        } else {
+            set_parse_error(context, error, "invalid elapsed value: %s", text);
+        }
+    } else {
+        set_parse_error(context, error, "can't find test elapsed target");
+    }
+}
+
+static void
 text_result_status (CutStreamParserPrivate *priv, GMarkupParseContext *context,
                     const gchar *text, gsize text_len, GError **error)
 {
@@ -1832,6 +1858,9 @@ text_handler (GMarkupParseContext *context,
         break;
       case IN_TEST_OPTION_VALUE:
         text_test_option_value(priv, context, text, text_len, error);
+        break;
+      case IN_TEST_ELAPSED:
+        text_test_elapsed(priv, context, text, text_len, error);
         break;
       case IN_RESULT_STATUS:
         text_result_status(priv, context, text, text_len, error);

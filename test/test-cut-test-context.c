@@ -99,13 +99,13 @@ test_xml_with_test_suite (void)
     gchar expected[] =
         "<test-context>\n"
         "  <test-suite>\n"
+        "    <elapsed>.+?</elapsed>\n"
         "  </test-suite>\n"
         "  <failed>FALSE</failed>\n"
         "</test-context>\n";
 
     cut_test_context_set_test_suite(context, test_suite);
-    cut_assert_equal_string_with_free(expected,
-                                      cut_test_context_to_xml(context));
+    cut_assert_match_with_free(expected, cut_test_context_to_xml(context));
 }
 
 void
@@ -114,17 +114,18 @@ test_xml_with_test_case (void)
     gchar expected[] =
         "<test-context>\n"
         "  <test-suite>\n"
+        "    <elapsed>.+?</elapsed>\n"
         "  </test-suite>\n"
         "  <test-case>\n"
         "    <name>my-test-case</name>\n"
+        "    <elapsed>.+?</elapsed>\n"
         "  </test-case>\n"
         "  <failed>FALSE</failed>\n"
         "</test-context>\n";
 
     cut_test_context_set_test_suite(context, test_suite);
     cut_test_context_set_test_case(context, test_case);
-    cut_assert_equal_string_with_free(expected,
-                                      cut_test_context_to_xml(context));
+    cut_assert_match_with_free(expected, cut_test_context_to_xml(context));
 }
 
 void
@@ -133,12 +134,15 @@ test_xml_with_test (void)
     gchar expected[] =
         "<test-context>\n"
         "  <test-suite>\n"
+        "    <elapsed>.+?</elapsed>\n"
         "  </test-suite>\n"
         "  <test-case>\n"
         "    <name>my-test-case</name>\n"
+        "    <elapsed>.+?</elapsed>\n"
         "  </test-case>\n"
         "  <test>\n"
         "    <name>my-test</name>\n"
+        "    <elapsed>.+?</elapsed>\n"
         "  </test>\n"
         "  <failed>FALSE</failed>\n"
         "</test-context>\n";
@@ -146,8 +150,7 @@ test_xml_with_test (void)
     cut_test_context_set_test_suite(context, test_suite);
     cut_test_context_set_test_case(context, test_case);
     cut_test_context_set_test(context, test);
-    cut_assert_equal_string_with_free(expected,
-                                      cut_test_context_to_xml(context));
+    cut_assert_match_with_free(expected, cut_test_context_to_xml(context));
 }
 
 /*

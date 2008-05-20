@@ -76,6 +76,7 @@ test_exit_status_success (void)
 {
     cut_assert_true(run(success_test_dir));
 }
+
 #define DEFINE_SIGNAL_TEST(signal_name, result, target_dir)             \
 static void                                                             \
 cb_ ## signal_name ## _signal (CutRunContext *run_context,              \
