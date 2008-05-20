@@ -55,6 +55,7 @@
 	* test/test-cut-pipeline.c,
 	test/pipeline_test_dir/error-test/error-test.c: Added omission signal
 	test and get_n_XX() tests.
+	* cutter/module/ui/cut-gtk-ui.c: Plugged memory leak.
 
 2008-05-19  Kouhei Sutou  <kou@cozmixng.org>
 

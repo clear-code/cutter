@@ -467,6 +467,10 @@ dispose (GObject *object)
         ui->update_pulse_id = 0;
     }
 
+    if (ui->logs) {
+        g_object_unref(ui->logs);
+        ui->logs = NULL;
+    }
     if (ui->window) {
         gtk_widget_destroy(ui->window);
         ui->window = NULL;
@@ -764,8 +768,10 @@ idle_cb_free_test_row_info (gpointer data)
     CutGtkUI *ui;
     GtkTreeIter iter;
 
-    if (info->update_pulse_id)
+    if (info->update_pulse_id) {
         g_source_remove(info->update_pulse_id);
+        info->update_pulse_id = 0;
+    }
 
     ui = info->test_case_row_info->ui;
 
@@ -1210,7 +1216,7 @@ cb_complete_test (CutRunContext *run_context,
     g_idle_add(idle_cb_update_summary, ui);
     g_idle_add(idle_cb_update_test_case_row, info->test_case_row_info);
     g_idle_add(idle_cb_pop_running_test_message, info);
-    g_idle_add(idle_cb_free_test_row_info, data);
+    g_idle_add(idle_cb_free_test_row_info, info);
 
 #define DISCONNECT(name)                                                \
     g_signal_handlers_disconnect_by_func(run_context,                   \
@@ -1345,6 +1351,7 @@ static void
 cb_complete_run (CutRunContext *run_context, gboolean success, CutGtkUI *ui)
 {
     ui->running = FALSE;
+    g_idle_add(idle_cb_update_button_sensitive, ui);
 }
 
 static void
@@ -1353,7 +1360,6 @@ cb_complete_test_suite (CutRunContext *run_context,
                         CutGtkUI *ui)
 {
     g_idle_add(idle_cb_push_complete_test_suite_message, ui);
-    g_idle_add(idle_cb_update_button_sensitive, ui);
 }
 
 typedef struct _CrashRowInfo
