@@ -675,7 +675,7 @@ extern "C" {
 } while(0)
 
 /**
- * cut_assert_match:
+ * cut_assert_match_with_free:
  * @pattern: the regular expression as string.
  * @actual: the string to be matched that is freed.
  * @...: optional format string, followed by parameters to insert

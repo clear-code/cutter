@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-19 15:04+0900\n"
+"POT-Creation-Date: 2008-05-20 12:22+0900\n"
 "PO-Revision-Date: 2008-05-19 15:07+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
@@ -101,11 +101,15 @@ msgstr "XMLレポートのオプション"
 msgid "Show XML report options"
 msgstr "XMLレポートのオプションを表示"
 
-#: cutter/module/streamer/cut-xml-streamer-factory.c:150
+#: cutter/module/streamer/cut-xml-streamer-factory.c:147
+msgid "Stream to FILE_DESCRIPTOR (default: stdout)"
+msgstr ""
+
+#: cutter/module/streamer/cut-xml-streamer-factory.c:155
 msgid "XML Streamer Options"
 msgstr "XMLストリーマのオプション"
 
-#: cutter/module/streamer/cut-xml-streamer-factory.c:151
+#: cutter/module/streamer/cut-xml-streamer-factory.c:156
 msgid "Show XML streamer options"
 msgstr "XMLストリーマのオプションを表示"
 
@@ -142,14 +146,14 @@ msgstr "名前"
 msgid "Description"
 msgstr "説明"
 
-#: cutter/module/ui/cut-gtk-ui.c:598
+#: cutter/module/ui/cut-gtk-ui.c:602
 #, c-format
 msgid ""
 "%d test(s), %d assertion(s), %d failure(s), %d error(s), %d pending(s), %d "
 "omission(s), %d notification(s)"
 msgstr "%dテスト、%d検証、%d失敗、%dエラー、%d保留、%d省略、%d通知"
 
-#: cutter/module/ui/cut-gtk-ui.c:619
+#: cutter/module/ui/cut-gtk-ui.c:623
 #, c-format
 msgid "%dT:%dA:%dF:%d:E:%dP:%dO:%dN"
 msgstr "%dテ:%d検:%d失:%d:エ:%d保:%d略:%d通"
@@ -164,16 +168,16 @@ msgstr "%u/%u (%u%%): %.1f秒"
 msgid "Staring test suite %s..."
 msgstr "テストスイート%sを開始..."
 
-#: cutter/module/ui/cut-gtk-ui.c:1173
+#: cutter/module/ui/cut-gtk-ui.c:1175
 #, c-format
 msgid "Running test: %s"
 msgstr "テストを実行中: %s"
 
-#: cutter/module/ui/cut-gtk-ui.c:1333
+#: cutter/module/ui/cut-gtk-ui.c:1335
 #, c-format
 msgid "Finished in %0.1f seconds: %s"
 msgstr "%0.1f秒で終了: %s"
 
-#: cutter/module/ui/cut-gtk-ui.c:1371
+#: cutter/module/ui/cut-gtk-ui.c:1378
 msgid "CRASHED!!!"
 msgstr "異常終了！！！"
