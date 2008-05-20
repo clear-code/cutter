@@ -625,15 +625,11 @@ generate_short_summary_message (CutRunContext *run_context)
                            n_pendings, n_omissions, n_notifications);
 }
 
-static gboolean
-idle_cb_update_button_sensitive (gpointer data)
+static void 
+update_button_sensitive (CutGtkUI *ui)
 {
-    CutGtkUI *ui = data;
-
     gtk_widget_set_sensitive(ui->cancel_button, ui->running);
     gtk_widget_set_sensitive(ui->restart_button, !ui->running);
-
-    return FALSE;
 }
 
 static void
@@ -709,7 +705,7 @@ cb_ready_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
     ui->n_tests = n_tests;
     ui->update_pulse_id = g_timeout_add(10, timeout_cb_pulse, ui);
 
-    g_idle_add(idle_cb_update_button_sensitive, ui);
+    update_button_sensitive(ui);
     g_idle_add(idle_cb_push_start_test_suite_message, ui);
 }
 
@@ -887,12 +883,12 @@ timeout_cb_pulse_test (gpointer data)
                            COLUMN_PROGRESS_PULSE, info->pulse,
                            -1);
     }
-
+#if 0
     if (!ui->running) {
         g_idle_add(idle_cb_free_test_row_info, info);
         g_idle_add(idle_cb_free_test_case_row_info, test_case_row_info);
     }
-
+#endif
     return ui->running;
 }
 
@@ -1351,7 +1347,7 @@ static void
 cb_complete_run (CutRunContext *run_context, gboolean success, CutGtkUI *ui)
 {
     ui->running = FALSE;
-    g_idle_add(idle_cb_update_button_sensitive, ui);
+    update_button_sensitive(ui);
 }
 
 static void
