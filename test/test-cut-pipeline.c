@@ -145,8 +145,6 @@ test_ ## signal_name ## _signal (void)                                  \
     cut_assert_false(success);                                          \
     cut_assert_equal_int(1, n_signal);                                  \
                                                                         \
-    cut_assert_equal_int(1,                                             \
-        cut_run_context_get_n_ ## signal_name ## s(pipeline));          \
     g_signal_handlers_disconnect_by_func(                               \
         pipeline, G_CALLBACK(cb_complete_run_signal), &success);        \
     g_signal_handlers_disconnect_by_func(                               \
