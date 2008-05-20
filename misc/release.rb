@@ -4,8 +4,6 @@ require 'rubygems'
 require 'mechanize'
 require 'logger'
 
-require 'net/ftp'
-
 if ARGV.size < 5
   puts "Usage: #{$0} " +
          "SF_USER_NAME PROJECT_NAME PACKAGE_NAME RELEASE_NAME FILE_NAME README NEWS"
@@ -41,15 +39,15 @@ def go_project_page(agent, my_page, project_name)
   agent.click(my_page.links.text(/\A#{Regexp.escape(project_name)}\z/i))
 end
 
-def upload_file(file)
-  dir, base = File.split(file)
-  Dir.chdir(dir) do
-    Net::FTP.open("upload.sourceforge.net") do |ftp|
-      ftp.login
-      ftp.chdir("/incoming")
-      ftp.putbinaryfile(base)
-    end
-  end
+def upload_file(agent, file, sf_user_name, password)
+  agent.user = sf_user_name
+  agent.password = password
+
+  page = agent.get("https://frs.sourceforge.net/")
+  upload_form = page.forms[0]
+  upload_form.upload = file
+
+  agent.submit(upload_form, upload_form.buttons.first)
 end
 
 def go_file_releases_page(agent, project_page)
@@ -145,13 +143,12 @@ end
 def main(sf_user_name, project_name, package_name, release_name, file_name,
          readme, news)
   agent = WWW::Mechanize.new
-  my_page = login(agent, sf_user_name) do
-    read_password("SF.net password for [#{sf_user_name}]: ")
-  end
+  password = read_password("SF.net password for [#{sf_user_name}]: ")
+  my_page = login(agent, sf_user_name, password)
 
   project_page = go_project_page(agent, my_page, project_name)
   file_releases_page = go_file_releases_page(agent, project_page)
-  upload_file(file_name)
+  upload_file(agent, file_name, sf_user_name, password)
   edit_release_page = go_edit_release_page(agent, file_releases_page,
                                            release_name)
   edit_release_page = update_release_info(agent, edit_release_page, news)
