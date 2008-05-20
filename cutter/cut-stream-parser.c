@@ -1162,9 +1162,9 @@ start_element_handler (GMarkupParseContext *context,
 }
 
 static void
-end_top_level (CutStreamParser *parser, CutStreamParserPrivate *priv,
-               GMarkupParseContext *context,
-               const gchar *element_name, GError **error)
+end_top_level_result (CutStreamParser *parser, CutStreamParserPrivate *priv,
+                      GMarkupParseContext *context,
+                      const gchar *element_name, GError **error)
 {
     if (priv->result) {
         g_object_unref(priv->result);
@@ -1189,6 +1189,23 @@ end_result (CutStreamParser *parser, CutStreamParserPrivate *priv,
 {
     if (priv->result)
         g_signal_emit_by_name(parser, "result", priv->result);
+}
+
+static void
+end_test_context (CutStreamParser *parser, CutStreamParserPrivate *priv,
+                  GMarkupParseContext *context,
+                  const gchar *element_name, GError **error)
+{
+    CutTestContext *test_context;
+
+    test_context = PEEK_TEST_CONTEXT(priv);
+
+    if (cut_test_context_get_test_suite(test_context))
+        DROP_TEST_SUITE(priv);
+    if (cut_test_context_get_test_case(test_context))
+        DROP_TEST_CASE(priv);
+    if (cut_test_context_get_test(test_context))
+        DROP_TEST(priv);
 }
 
 static void
@@ -1492,13 +1509,16 @@ end_element_handler (GMarkupParseContext *context,
     state = POP_STATE(priv);
     switch (state) {
       case IN_TOP_LEVEL_RESULT:
-        end_top_level(parser, priv, context, element_name, error);
+        end_top_level_result(parser, priv, context, element_name, error);
         break;
       case IN_STREAM:
         end_stream(parser, priv, context, element_name, error);
         break;
       case IN_RESULT:
         end_result(parser, priv, context, element_name, error);
+        break;
+      case IN_TEST_CONTEXT:
+        end_test_context(parser, priv, context, element_name, error);
         break;
       case IN_TEST_OPTION:
         end_test_option(parser, priv, context, element_name, error);
