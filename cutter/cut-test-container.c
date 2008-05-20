@@ -36,13 +36,15 @@ typedef struct _CutTestContainerPrivate	CutTestContainerPrivate;
 struct _CutTestContainerPrivate
 {
     GList *tests;
+    gdouble elapsed;
 };
 
 G_DEFINE_ABSTRACT_TYPE (CutTestContainer, cut_test_container, CUT_TYPE_TEST)
 
 static void dispose        (GObject         *object);
 
-static gdouble  real_get_elapsed  (CutTest  *test);
+static gdouble  get_elapsed  (CutTest  *test);
+static void     set_elapsed  (CutTest  *test, gdouble elapsed);
 
 static void
 cut_test_container_class_init (CutTestContainerClass *klass)
@@ -55,7 +57,8 @@ cut_test_container_class_init (CutTestContainerClass *klass)
 
     gobject_class->dispose      = dispose;
 
-    test_class->get_elapsed = real_get_elapsed;
+    test_class->get_elapsed = get_elapsed;
+    test_class->set_elapsed = set_elapsed;
 
     g_type_class_add_private(gobject_class, sizeof(CutTestContainerPrivate));
 }
@@ -66,6 +69,7 @@ cut_test_container_init (CutTestContainer *container)
     CutTestContainerPrivate *priv = CUT_TEST_CONTAINER_GET_PRIVATE(container);
 
     priv->tests = NULL;
+    priv->elapsed = -1.0;
 }
 
 static void
@@ -100,7 +104,7 @@ cut_test_container_get_children (CutTestContainer *container)
 }
 
 static gdouble
-real_get_elapsed (CutTest *test)
+get_elapsed (CutTest *test)
 {
     gdouble result = 0.0;
     GList *child;
@@ -109,6 +113,9 @@ real_get_elapsed (CutTest *test)
     g_return_val_if_fail(CUT_IS_TEST_CONTAINER(test), FALSE);
 
     priv = CUT_TEST_CONTAINER_GET_PRIVATE(test);
+    if (!(priv->elapsed < 0.0))
+        return priv->elapsed;
+
     for (child = priv->tests; child; child = g_list_next(child)) {
         CutTest *test = child->data;
 
@@ -116,6 +123,14 @@ real_get_elapsed (CutTest *test)
     }
 
     return result;
+}
+
+static void
+set_elapsed (CutTest *test, gdouble elapsed)
+{
+    g_return_if_fail(CUT_IS_TEST_CONTAINER(test));
+
+    CUT_TEST_CONTAINER_GET_PRIVATE(test)->elapsed = elapsed;
 }
 
 GList *

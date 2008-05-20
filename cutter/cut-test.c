@@ -41,6 +41,7 @@ struct _CutTestPrivate
     gchar *element_name;
     CutTestFunction test_function;
     GTimer *timer;
+    gdouble elapsed;
     GHashTable *attributes;
 };
 
@@ -81,7 +82,8 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 
-static gdouble      real_get_elapsed  (CutTest  *test);
+static gdouble      get_elapsed  (CutTest  *test);
+static void         set_elapsed  (CutTest  *test, gdouble elapsed);
 
 static void
 cut_test_class_init (CutTestClass *klass)
@@ -95,7 +97,8 @@ cut_test_class_init (CutTestClass *klass)
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
 
-    klass->get_elapsed = real_get_elapsed;
+    klass->get_elapsed = get_elapsed;
+    klass->set_elapsed = set_elapsed;
 
     spec = g_param_spec_string("name",
                                "Test name",
@@ -223,6 +226,7 @@ cut_test_init (CutTest *test)
 
     priv->test_function = NULL;
     priv->timer = NULL;
+    priv->elapsed = -1.0;
     priv->attributes = g_hash_table_new_full(g_str_hash, g_str_equal,
                                              g_free, g_free);
 }
@@ -396,9 +400,12 @@ cut_test_get_description (CutTest *test)
 }
 
 static gdouble
-real_get_elapsed (CutTest *test)
+get_elapsed (CutTest *test)
 {
     CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(test);
+
+    if (!(priv->elapsed < 0.0))
+        return priv->elapsed;
 
     if (priv->timer)
         return g_timer_elapsed(priv->timer, NULL);
@@ -410,6 +417,18 @@ gdouble
 cut_test_get_elapsed (CutTest *test)
 {
     return CUT_TEST_GET_CLASS(test)->get_elapsed(test);
+}
+
+static void
+set_elapsed (CutTest *test, gdouble elapsed)
+{
+    CUT_TEST_GET_PRIVATE(test)->elapsed = elapsed;
+}
+
+void
+cut_test_set_elapsed (CutTest *test, gdouble elapsed)
+{
+    return CUT_TEST_GET_CLASS(test)->set_elapsed(test, elapsed);
 }
 
 const gchar *
@@ -481,7 +500,7 @@ void
 cut_test_to_xml_string (CutTest *test, GString *string, guint indent)
 {
     CutTestPrivate *priv;
-    gchar *escaped;
+    gchar *escaped, *elapsed;
     const gchar *description, *name;
     GHashTable *attributes;
 
@@ -509,6 +528,11 @@ cut_test_to_xml_string (CutTest *test, GString *string, guint indent)
         info.indent = indent + 2;
         g_hash_table_foreach(attributes, (GHFunc)append_attribute, &info);
     }
+
+    elapsed = g_strdup_printf("%f", cut_test_get_elapsed(test));
+    /* cut_utils_append_xml_element_with_value(string, indent + 2, */
+/*                                             "elapsed", elapsed); */
+    g_free(elapsed);
 
     cut_utils_append_indent(string, indent);
     g_string_append_printf(string, "</%s>\n", escaped);

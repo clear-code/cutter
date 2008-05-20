@@ -80,6 +80,7 @@ struct _CutTestClass
                             const gchar    *backtrace);
 
     gdouble      (*get_elapsed)  (CutTest *test);
+    void         (*set_elapsed)  (CutTest *test, gdouble elapsed);
 };
 
 GType        cut_test_get_type  (void) G_GNUC_CONST;
@@ -97,6 +98,8 @@ void         cut_test_set_name            (CutTest     *test,
                                            const gchar *name);
 const gchar *cut_test_get_description     (CutTest     *test);
 gdouble      cut_test_get_elapsed         (CutTest     *test);
+void         cut_test_set_elapsed         (CutTest     *test,
+                                           gdouble      elapsed);
 const gchar *cut_test_get_attribute       (CutTest     *test,
                                            const gchar *name);
 void         cut_test_set_attribute       (CutTest     *test,

@@ -1,5 +1,8 @@
 2008-05-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test.[ch], cutter/cut-test-container.[ch],
+	test/test-cut-test.c: add cut_test_set_elapsed().
+
 	* cutter/cut-pipeline.c (read_stream): don't read all data at once.
 
 	* cutter/cut-test-runner.c (runner_run): emit start-run and complete-run.

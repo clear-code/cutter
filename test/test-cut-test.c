@@ -15,6 +15,7 @@ void test_pending_signal(void);
 void test_notification_signal(void);
 void test_omission_signal(void);
 void test_test_function (void);
+void test_set_elapsed(void);
 
 static CutRunContext *run_context;
 static CutTest *test_object;
@@ -313,6 +314,16 @@ test_pass_assertion_signal (void)
                                          G_CALLBACK(cb_pass_assertion_signal),
                                          NULL);
     cut_assert_equal_int(3, n_pass_assertion_signal);
+}
+
+void
+test_set_elapsed (void)
+{
+    cut_assert_equal_double(0.0, 0.1, cut_test_get_elapsed(test_object));
+    cut_test_set_elapsed(test_object, 3.0);
+    cut_assert_equal_double(3.0, 0.1, cut_test_get_elapsed(test_object));
+    cut_test_set_elapsed(test_object, -1.0);
+    cut_assert_equal_double(0.0, 0.1, cut_test_get_elapsed(test_object));
 }
 
 /*
