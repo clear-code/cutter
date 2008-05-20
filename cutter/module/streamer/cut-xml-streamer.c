@@ -53,6 +53,7 @@ struct _CutXMLStreamer
     CutRunContext    *run_context;
     gint fd;
     GIOChannel *channel;
+    GMutex *mutex;
 };
 
 struct _CutXMLStreamerClass
@@ -124,6 +125,7 @@ init (CutXMLStreamer *streamer)
     streamer->run_context = NULL;
     streamer->fd = -1;
     streamer->channel = NULL;
+    streamer->mutex = g_mutex_new();
 }
 
 static void
@@ -201,6 +203,11 @@ dispose (GObject *object)
     if (streamer->run_context) {
         g_object_unref(streamer->run_context);
         streamer->run_context = NULL;
+    }
+
+    if (streamer->mutex) {
+        g_mutex_free(streamer->mutex);
+        streamer->mutex = NULL;
     }
 
     G_OBJECT_CLASS(parent_class)->dispose(object);
@@ -285,6 +292,8 @@ stream (CutXMLStreamer *streamer, const gchar *format, ...)
     length = strlen(message);
     written = 0;
     snippet = message;
+
+    g_mutex_lock(streamer->mutex);
     while (length > 0) {
         GError *error = NULL;
 
@@ -303,6 +312,7 @@ stream (CutXMLStreamer *streamer, const gchar *format, ...)
         length -= written;
     }
     g_io_channel_flush(streamer->channel, NULL);
+    g_mutex_unlock(streamer->mutex);
 
     g_free(message);
 }

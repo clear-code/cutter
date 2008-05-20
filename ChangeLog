@@ -74,6 +74,9 @@
 	"start-test-suite" and "complete-test-suite" message.
 	* cutter/module/ui/cut-gtk-ui.c: Remove CutTestSuite object from
 	CutGtkUI private.
+	* cutter/module/streamer/cut-xml-streamer.c: Add mutex lock when write
+	XML string to io channel since the strings is jammed with multi
+	thread.
 
 2008-05-19  Kouhei Sutou  <kou@cozmixng.org>
 
