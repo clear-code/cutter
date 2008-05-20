@@ -1,5 +1,7 @@
 2008-05-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* NEWS*: update.
+
 	* cutter/cut-stream-parser.c (end_test_context): fix memory leak.
 
 	* cutter/cut-stream-parser.[ch] (cut_stream_parser_end_parse): add.

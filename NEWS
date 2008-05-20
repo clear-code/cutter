@@ -2,7 +2,7 @@
 
 = NEWS --- The history of Cutter
 
-== 1.0.0: 2008-05-21
+== 1.0.0: 2008-05-20
 
   * Add assertions:
     * cut_assert_equal_pointer()
