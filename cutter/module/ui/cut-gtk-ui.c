@@ -681,20 +681,17 @@ timeout_cb_pulse (gpointer data)
     return running;
 }
 
-static gboolean
-idle_cb_push_start_test_suite_message (gpointer data)
+static void
+push_start_test_suite_message (CutGtkUI *ui, CutTestSuite *test_suite)
 {
-    CutGtkUI *ui = data;
     guint context_id;
     gchar *message;
 
     context_id = gtk_statusbar_get_context_id(ui->statusbar, "test-suite");
     message = g_strdup_printf(_("Staring test suite %s..."),
-                              cut_test_get_name(CUT_TEST(ui->test_suite)));
+                              cut_test_get_name(CUT_TEST(test_suite)));
     gtk_statusbar_push(ui->statusbar, context_id, message);
     g_free(message);
-
-    return FALSE;
 }
 
 static void
@@ -706,7 +703,7 @@ cb_ready_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
     ui->update_pulse_id = g_timeout_add(10, timeout_cb_pulse, ui);
 
     update_button_sensitive(ui);
-    g_idle_add(idle_cb_push_start_test_suite_message, ui);
+    push_start_test_suite_message(ui, test_suite);
 }
 
 typedef struct _TestCaseRowInfo
@@ -1323,10 +1320,9 @@ cb_ready_test_case (CutRunContext *run_context, CutTestCase *test_case, guint n_
                      G_CALLBACK(cb_complete_test_case), info);
 }
 
-static gboolean
-idle_cb_push_complete_test_suite_message (gpointer data)
+static void
+push_complete_test_suite_message (CutGtkUI *ui)
 {
-    CutGtkUI *ui = data;
     guint context_id;
     gchar *message, *summary;
 
@@ -1339,8 +1335,6 @@ idle_cb_push_complete_test_suite_message (gpointer data)
     gtk_statusbar_pop(ui->statusbar, context_id);
     gtk_statusbar_push(ui->statusbar, context_id, message);
     g_free(message);
-
-    return FALSE;
 }
 
 static void
@@ -1355,7 +1349,7 @@ cb_complete_test_suite (CutRunContext *run_context,
                         CutTestSuite *test_suite,
                         CutGtkUI *ui)
 {
-    g_idle_add(idle_cb_push_complete_test_suite_message, ui);
+    push_complete_test_suite_message(ui);
 }
 
 typedef struct _CrashRowInfo
