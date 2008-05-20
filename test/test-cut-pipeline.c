@@ -8,10 +8,12 @@
 
 void test_exit_status_error (void);
 void test_exit_status_success (void);
+void test_success_signal (void);
 void test_failure_signal (void);
 void test_error_signal (void);
 void test_pending_signal (void);
 void test_omission_signal (void);
+void test_success_count (void);
 void test_failure_count (void);
 void test_error_count (void);
 void test_pending_count (void);
@@ -74,8 +76,7 @@ test_exit_status_success (void)
 {
     cut_assert_true(run(success_test_dir));
 }
-
-#define DEFINE_ERROR_SIGNAL_TEST(signal_name)                           \
+#define DEFINE_SIGNAL_TEST(signal_name, result, target_dir)             \
 static void                                                             \
 cb_ ## signal_name ## _signal (CutRunContext *run_context,              \
                                CutTest *test,                           \
@@ -98,7 +99,7 @@ test_ ## signal_name ## _signal (void)                                  \
                      G_CALLBACK(cb_ ## signal_name ## _signal),         \
                      &n_signal);                                        \
                                                                         \
-    cut_assert_false(run(error_test_dir));                              \
+    cut_assert_##result(run(target_dir));                               \
     cut_assert_equal_int(1, n_signal);                                  \
                                                                         \
     g_signal_handlers_disconnect_by_func(                               \
@@ -106,19 +107,30 @@ test_ ## signal_name ## _signal (void)                                  \
         &n_signal);                                                     \
 }
 
+#define DEFINE_ERROR_SIGNAL_TEST(signal_name)                           \
+    DEFINE_SIGNAL_TEST(signal_name, false, error_test_dir)
+#define DEFINE_SUCCESS_SIGNAL_TEST(signal_name)                         \
+    DEFINE_SIGNAL_TEST(signal_name, true, success_test_dir)
+
+DEFINE_SUCCESS_SIGNAL_TEST(success)
 DEFINE_ERROR_SIGNAL_TEST(failure)
 DEFINE_ERROR_SIGNAL_TEST(error)
 DEFINE_ERROR_SIGNAL_TEST(pending)
 DEFINE_ERROR_SIGNAL_TEST(omission)
 
-#define DEFINE_ERROR_COUNT_TEST(status_name)                            \
+#define DEFINE_COUNT_TEST(status_name, result, target_dir)              \
 void                                                                    \
 test_ ## status_name ## _count (void)                                   \
 {                                                                       \
-    cut_assert_false(run(error_test_dir));                              \
+    cut_assert_##result(run(target_dir));                               \
     cut_assert_equal_int(1,                                             \
         cut_run_context_get_n_ ## status_name ## s(pipeline));          \
 }
+
+#define DEFINE_ERROR_COUNT_TEST(status_name)                            \
+    DEFINE_COUNT_TEST(status_name, false, error_test_dir)
+#define DEFINE_SUCCESS_COUNT_TEST(status_name)                          \
+    DEFINE_COUNT_TEST(status_name, true, success_test_dir)
 
 DEFINE_ERROR_COUNT_TEST(failure)
 DEFINE_ERROR_COUNT_TEST(error)
