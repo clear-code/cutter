@@ -1,5 +1,7 @@
 2008-05-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* sample/glib/run-test.sh: set CUT_STREAMER_*_DIR environment variable.
+
 	* cutter/cut-stream-parser.c: call prepare_*.
 
 	* cutter/cut-test-runner.c: use virtual prepare_*.
