@@ -1,5 +1,7 @@
 2008-05-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-pipeline.c (read_stream): don't read all data at once.
+
 	* cutter/cut-test-runner.c (runner_run): emit start-run and complete-run.
 
 	* cutter/cut-runner.c (cut_runner_run): don't emit complete-run.
