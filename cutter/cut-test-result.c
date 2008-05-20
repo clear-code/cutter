@@ -536,6 +536,9 @@ result_status_to_name (CutTestResultStatus status)
       case CUT_TEST_RESULT_NOTIFICATION:
         return "notification";
         break;
+      case CUT_TEST_RESULT_OMISSION:
+        return "omission";
+        break;
       default:
         return "unknown status";
         break;
