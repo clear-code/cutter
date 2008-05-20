@@ -1385,7 +1385,6 @@ cut_run_context_start (CutRunContext *context)
     gboolean success;
 
     cut_run_context_attach_listeners(context);
-    g_signal_emit_by_name(context, "start-run");
     success = cut_runner_run(CUT_RUNNER(context));
     cut_run_context_detach_listeners(context);
 

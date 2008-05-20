@@ -78,10 +78,9 @@ cut_runner_run (CutRunner *runner)
         g_signal_handlers_disconnect_by_func(runner,
                                              G_CALLBACK(cb_collect_run_result),
                                              &info);
-        return info.success;
+        success = info.success;
     }
 
-    g_signal_emit_by_name(CUT_RUN_CONTEXT(runner), "complete-run", success);
     return success;
 }
 

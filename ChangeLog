@@ -1,5 +1,11 @@
 2008-05-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-runner.c (runner_run): emit start-run and complete-run.
+
+	* cutter/cut-runner.c (cut_runner_run): don't emit complete-run.
+
+	* cutter/cut-run-context.c (cut_run_context_start): don't emit start-run.
+
 	* sample/glib/run-test.sh: set CUT_STREAMER_*_DIR environment variable.
 
 	* cutter/cut-stream-parser.c: call prepare_*.
