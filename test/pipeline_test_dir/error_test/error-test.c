@@ -3,7 +3,7 @@
 void test_failure (void);
 void test_pending (void);
 void test_error (void);
-void test_omit (void);
+void test_omission (void);
 
 void
 test_failure (void)
