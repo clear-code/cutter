@@ -66,6 +66,8 @@
 	button state.
 	* cutter/module/ui/cut-gtk-ui.c: Do not use g_idle_add() for
 	"start-test-suite" and "complete-test-suite" message.
+	* cutter/module/ui/cut-gtk-ui.c: Remove CutTestSuite object from
+	CutGtkUI private.
 
 2008-05-19  Kouhei Sutou  <kou@cozmixng.org>
 

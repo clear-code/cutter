@@ -63,7 +63,6 @@ struct _CutGtkUI
     GtkWidget     *cancel_button;
     GtkWidget     *restart_button;
 
-    CutTestSuite  *test_suite;
     CutRunContext *run_context;
 
     gboolean       running;
@@ -363,7 +362,6 @@ setup_window (CutGtkUI *ui)
 static void
 init (CutGtkUI *ui)
 {
-    ui->test_suite = NULL;
     ui->run_context = NULL;
     ui->n_tests = 0;
     ui->n_completed_tests = 0;
@@ -474,11 +472,6 @@ dispose (GObject *object)
     if (ui->window) {
         gtk_widget_destroy(ui->window);
         ui->window = NULL;
-    }
-
-    if (ui->test_suite) {
-        g_object_unref(ui->test_suite);
-        ui->test_suite = NULL;
     }
 
     if (ui->run_context) {
@@ -1459,7 +1452,6 @@ run (CutUI *ui, CutRunContext *run_context)
     pipeline = cut_pipeline_new_from_run_context(run_context);
 
     gtk_ui->run_context = pipeline;
-    gtk_ui->test_suite = g_object_ref(cut_run_context_get_test_suite(pipeline));
     gtk_widget_show_all(gtk_ui->window);
     gtk_tree_store_clear(gtk_ui->logs);
 
