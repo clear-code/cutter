@@ -129,13 +129,18 @@ test_ ## status_name ## _count (void)                                   \
 
 #define DEFINE_ERROR_COUNT_TEST(status_name)                            \
     DEFINE_COUNT_TEST(status_name, false, error_test_dir)
-#define DEFINE_SUCCESS_COUNT_TEST(status_name)                          \
-    DEFINE_COUNT_TEST(status_name, true, success_test_dir)
 
 DEFINE_ERROR_COUNT_TEST(failure)
 DEFINE_ERROR_COUNT_TEST(error)
 DEFINE_ERROR_COUNT_TEST(pending)
 DEFINE_ERROR_COUNT_TEST(omission)
+
+void
+test_success_count (void)
+{
+    cut_assert_true(run(success_test_dir));
+    cut_assert_equal_int(1, cut_run_context_get_n_successes(pipeline));
+}
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
