@@ -675,6 +675,21 @@ extern "C" {
 } while(0)
 
 /**
+ * cut_assert_match:
+ * @pattern: the regular expression as string.
+ * @actual: the string to be matched that is freed.
+ * @...: optional format string, followed by parameters to insert
+ * into the format string (as with printf())
+ *
+ * Passes if @regex matches @string. See cut_assert_match()
+ * for detail.
+ *
+ * Since: 1.0
+ */
+#define cut_assert_match_with_free(pattern, actual, ...)                \
+    cut_assert_match(pattern, cut_take_string(actual), ## __VA_ARGS__)
+
+/**
  * cut_assert_equal_pointer:
  * @expected: an expected pointer.
  * @actual: an actual pointer.
