@@ -1,5 +1,23 @@
 2008-05-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-stream-parser.c: call prepare_*.
+
+	* cutter/cut-test-runner.c: use virtual prepare_*.
+
+	* cutter/module/streamer/cut-xml-streamer.c: support omission.
+
+	* cutter/cut-run-context.[ch]: increment n_tests++ before test
+	case setup() not test run.
+
+	* test/test-cut-assertions.c, test/test-cut-gassertions.c: follow
+	the above change.
+
+	* test/cuttest-assertions.h (cut_assert_test_result_summary): use macro.
+
+	* cutter/cut-run-context.[ch]
+	- make prepare_* virtual functions.
+	- (cut_run_context_crash, cut_run_context_set_backtrace): add.
+
 	* cutter/cut-test-result.c (result_status_to_name): support omission.
 
 2008-05-20  Hiroyuki Ikezoe  <poincare@ikezoe.net>

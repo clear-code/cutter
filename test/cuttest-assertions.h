@@ -4,27 +4,38 @@
 #include <cutter/cut-assertions.h>
 #include <cutter/cut-run-context.h>
 
-static inline void
-cut_assert_test_result_summary (CutRunContext *run_context,
-                                guint n_tests, guint n_assertions,
-                                guint n_failures, guint n_errors,
-                                guint n_pendings, guint n_notifications,
-                                guint n_omissions)
-{
-    cut_assert_equal_uint(n_tests, cut_run_context_get_n_tests(run_context));
-    cut_assert_equal_uint(n_assertions,
-                          cut_run_context_get_n_assertions(run_context));
-    cut_assert_equal_uint(n_failures,
-                          cut_run_context_get_n_failures(run_context));
-    cut_assert_equal_uint(n_errors,
-                          cut_run_context_get_n_errors(run_context));
-    cut_assert_equal_uint(n_pendings,
-                          cut_run_context_get_n_pendings(run_context));
-    cut_assert_equal_uint(n_notifications,
-                          cut_run_context_get_n_notifications(run_context));
-    cut_assert_equal_uint(n_omissions,
-                          cut_run_context_get_n_omissions(run_context));
-}
+#define cut_assert_test_result_summary(run_context, n_tests, n_assertions, \
+                                       n_failures, n_errors, n_pendings, \
+                                       n_notifications, n_omissions) do \
+{                                                                       \
+    CutRunContext *_run_context;                                        \
+    guint _n_tests, _n_assertions, _n_failures, _n_errors, _n_pendings; \
+    guint _n_notifications, _n_omissions;                               \
+                                                                        \
+    _run_context = (run_context);                                       \
+    _n_tests = (n_tests);                                               \
+    _n_assertions = (n_assertions);                                     \
+    _n_failures = (n_failures);                                         \
+    _n_errors = (n_errors);                                             \
+    _n_pendings = (n_pendings);                                         \
+    _n_notifications = (n_notifications);                               \
+    _n_omissions = (n_omissions);                                       \
+                                                                        \
+    cut_assert_equal_uint(_n_tests,                                     \
+                          cut_run_context_get_n_tests(_run_context));   \
+    cut_assert_equal_uint(_n_assertions,                                \
+                          cut_run_context_get_n_assertions(_run_context)); \
+    cut_assert_equal_uint(_n_failures,                                  \
+                          cut_run_context_get_n_failures(_run_context)); \
+    cut_assert_equal_uint(_n_errors,                                    \
+                          cut_run_context_get_n_errors(_run_context));  \
+    cut_assert_equal_uint(_n_pendings,                                  \
+                          cut_run_context_get_n_pendings(_run_context)); \
+    cut_assert_equal_uint(_n_notifications,                             \
+                          cut_run_context_get_n_notifications(_run_context)); \
+    cut_assert_equal_uint(_n_omissions,                                 \
+                          cut_run_context_get_n_omissions(_run_context)); \
+} while (0)
 
 static inline void
 cut_assert_test_result (CutRunContext *run_context,

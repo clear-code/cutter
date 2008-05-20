@@ -130,6 +130,13 @@ struct _CutRunContextClass
                                  const gchar    *detail);
     void (*crashed)             (CutRunContext  *context,
                                  const gchar    *backtrace);
+
+    void (*prepare_test_suite)  (CutRunContext  *context,
+                                 CutTestSuite   *test_suite);
+    void (*prepare_test_case)   (CutRunContext  *context,
+                                 CutTestCase    *test_case);
+    void (*prepare_test)        (CutRunContext  *context,
+                                 CutTest        *test);
 };
 
 GType          cut_run_context_get_type  (void) G_GNUC_CONST;
@@ -180,8 +187,12 @@ guint          cut_run_context_get_n_omissions      (CutRunContext *context);
 
 const GList   *cut_run_context_get_results          (CutRunContext *context);
 
+void           cut_run_context_crash                (CutRunContext *context,
+                                                     const gchar   *backtrace);
 gboolean       cut_run_context_is_crashed           (CutRunContext *context);
 const gchar   *cut_run_context_get_backtrace        (CutRunContext *context);
+void           cut_run_context_set_backtrace        (CutRunContext *context,
+                                                     const gchar   *backtrace);
 
 void           cut_run_context_cancel               (CutRunContext *context);
 gboolean       cut_run_context_is_canceled          (CutRunContext *context);

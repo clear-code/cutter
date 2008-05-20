@@ -1214,11 +1214,14 @@ end_ready_test_suite (CutStreamParser *parser, CutStreamParserPrivate *priv,
     if (!priv->ready_test_suite)
         return;
 
-    if (priv->run_context)
+    if (priv->run_context) {
+        cut_run_context_prepare_test_suite(priv->run_context,
+                                           priv->ready_test_suite->test_suite);
         g_signal_emit_by_name(priv->run_context, "ready-test-suite",
                               priv->ready_test_suite->test_suite,
                               priv->ready_test_suite->n_test_cases,
                               priv->ready_test_suite->n_tests);
+    }
 
     if (priv->ready_test_suite->test_suite)
         DROP_TEST_SUITE(priv);
@@ -1250,10 +1253,13 @@ end_ready_test_case (CutStreamParser *parser, CutStreamParserPrivate *priv,
     if (!priv->ready_test_case)
         return;
 
-    if (priv->run_context)
+    if (priv->run_context) {
+        cut_run_context_prepare_test_case(priv->run_context,
+                                          priv->ready_test_case->test_case);
         g_signal_emit_by_name(priv->run_context, "ready-test-case",
                               priv->ready_test_case->test_case,
                               priv->ready_test_case->n_tests);
+    }
 
     if (priv->ready_test_case->test_case)
         DROP_TEST_CASE(priv);
@@ -1286,10 +1292,12 @@ end_start_test (CutStreamParser *parser, CutStreamParserPrivate *priv,
     if (!priv->start_test)
         return;
 
-    if (priv->run_context)
+    if (priv->run_context) {
+        cut_run_context_prepare_test(priv->run_context, priv->start_test->test);
         g_signal_emit_by_name(priv->run_context, "start-test",
                               priv->start_test->test,
                               priv->start_test->test_context);
+    }
 
     if (priv->start_test->test)
         DROP_TEST(priv);
@@ -1536,8 +1544,6 @@ result_name_to_status (const gchar *name)
          return CUT_TEST_RESULT_ERROR;
     else if (g_str_equal(name, "pending"))
          return CUT_TEST_RESULT_PENDING;
-    else if (g_str_equal(name, "notification"))
-        return CUT_TEST_RESULT_NOTIFICATION;
     else if (g_str_equal(name, "notification"))
         return CUT_TEST_RESULT_NOTIFICATION;
     else if (g_str_equal(name, "omission"))

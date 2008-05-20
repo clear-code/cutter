@@ -8,25 +8,25 @@ void test_omission (void);
 void
 test_failure (void)
 {
-    cut_fail("Failed."); 
+    cut_fail("Failed.");
 }
 
 void
 test_pending (void)
 {
-    cut_pend("Pending..."); 
+    cut_pend("Pending...");
 }
 
 void
 test_error (void)
 {
-    cut_error("Error"); 
+    cut_error("Error");
 }
 
 void
 test_omission (void)
 {
-    cut_omit("Omit!"); 
+    cut_omit("Omit!");
 }
 
 /*

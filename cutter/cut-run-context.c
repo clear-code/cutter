@@ -144,6 +144,10 @@ static void get_property   (GObject         *object,
                             guint            prop_id,
                             GValue          *value,
                             GParamSpec      *pspec);
+
+static void start_test     (CutRunContext   *context,
+                            CutTest         *test,
+                            CutTestContext  *test_context);
 static void pass_assertion (CutRunContext   *context,
                             CutTest         *test,
                             CutTestContext  *test_context);
@@ -175,6 +179,13 @@ static void omission_test  (CutRunContext   *context,
 static void crashed        (CutRunContext   *context,
                             const gchar     *backtrace);
 
+static void prepare_test_suite  (CutRunContext  *context,
+                                 CutTestSuite   *test_suite);
+static void prepare_test_case   (CutRunContext  *context,
+                                 CutTestCase    *test_case);
+static void prepare_test        (CutRunContext  *context,
+                                 CutTest        *test);
+
 static gboolean runner_run (CutRunner *runner);
 
 static void
@@ -189,6 +200,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
 
+    klass->start_test        = start_test;
     klass->pass_assertion    = pass_assertion;
     klass->success_test      = success_test;
     klass->failure_test      = failure_test;
@@ -197,6 +209,10 @@ cut_run_context_class_init (CutRunContextClass *klass)
     klass->notification_test = notification_test;
     klass->omission_test     = omission_test;
     klass->crashed           = crashed;
+
+    klass->prepare_test_suite = prepare_test_suite;
+    klass->prepare_test_case = prepare_test_case;
+    klass->prepare_test = prepare_test;
 
     spec = g_param_spec_uint("n-tests",
                              "Number of tests",
@@ -801,7 +817,20 @@ runner_run (CutRunner *runner)
     return FALSE;
 }
 
-static void 
+static void
+start_test (CutRunContext   *context,
+            CutTest         *test,
+            CutTestContext  *test_context)
+{
+    CutRunContextPrivate *priv;
+
+    priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
+    g_mutex_lock(priv->mutex);
+    priv->n_tests++;
+    g_mutex_unlock(priv->mutex);
+}
+
+static void
 pass_assertion (CutRunContext   *context,
                 CutTest         *test,
                 CutTestContext  *test_context)
@@ -814,7 +843,7 @@ pass_assertion (CutRunContext   *context,
     g_mutex_unlock(priv->mutex);
 }
 
-static void 
+static void
 success_test (CutRunContext   *context,
               CutTest         *test,
               CutTestContext  *test_context,
@@ -829,7 +858,7 @@ success_test (CutRunContext   *context,
     g_mutex_unlock(priv->mutex);
 }
 
-static void 
+static void
 failure_test (CutRunContext   *context,
               CutTest         *test,
               CutTestContext  *test_context,
@@ -843,7 +872,7 @@ failure_test (CutRunContext   *context,
     g_mutex_unlock(priv->mutex);
 }
 
-static void 
+static void
 error_test (CutRunContext   *context,
             CutTest         *test,
             CutTestContext  *test_context,
@@ -858,7 +887,7 @@ error_test (CutRunContext   *context,
     g_mutex_unlock(priv->mutex);
 }
 
-static void 
+static void
 pending_test (CutRunContext   *context,
               CutTest         *test,
               CutTestContext  *test_context,
@@ -872,7 +901,8 @@ pending_test (CutRunContext   *context,
     priv->n_pendings++;
     g_mutex_unlock(priv->mutex);
 }
-static void 
+
+static void
 notification_test (CutRunContext   *context,
               CutTest         *test,
               CutTestContext  *test_context,
@@ -887,7 +917,7 @@ notification_test (CutRunContext   *context,
     g_mutex_unlock(priv->mutex);
 }
 
-static void 
+static void
 omission_test (CutRunContext   *context,
                CutTest         *test,
                CutTestContext  *test_context,
@@ -1033,330 +1063,51 @@ cut_run_context_get_target_test_names (CutRunContext *context)
 }
 
 static void
-cb_pass_assertion (CutTest *test, CutTestContext *test_context, gpointer data)
+prepare_test_suite (CutRunContext *context, CutTestSuite *test_suite)
 {
-    CutRunContext *context = data;
+}
 
-    g_signal_emit(context, signals[PASS_ASSERTION], 0, test, test_context);
+void
+cut_run_context_prepare_test_suite (CutRunContext *context,
+                                    CutTestSuite *test_suite)
+{
+    CutRunContextClass *klass;
+
+    klass = CUT_RUN_CONTEXT_GET_CLASS(context);
+    if (klass->prepare_test_suite)
+        klass->prepare_test_suite(context, test_suite);
 }
 
 static void
-cb_success (CutTest *test, CutTestContext *test_context, CutTestResult *result,
-            gpointer data)
+prepare_test_case (CutRunContext *context, CutTestCase *test_case)
 {
-    CutRunContext *context = data;
+}
 
-    g_signal_emit(context, signals[SUCCESS_TEST], 0, test, test_context, result);
+void
+cut_run_context_prepare_test_case (CutRunContext *context,
+                                   CutTestCase *test_case)
+{
+    CutRunContextClass *klass;
+
+    klass = CUT_RUN_CONTEXT_GET_CLASS(context);
+    if (klass->prepare_test_case)
+        klass->prepare_test_case(context, test_case);
 }
 
 static void
-cb_failure (CutTest *test, CutTestContext *test_context, CutTestResult *result,
-            gpointer data)
+prepare_test (CutRunContext *context, CutTest *test)
 {
-    CutRunContext *context = data;
-
-    g_signal_emit(context, signals[FAILURE_TEST], 0, test, test_context, result);
-}
-
-static void
-cb_error (CutTest *test, CutTestContext *test_context, CutTestResult *result,
-          gpointer data)
-{
-    CutRunContext *context = data;
-
-    g_signal_emit(context, signals[ERROR_TEST], 0, test, test_context, result);
-}
-
-static void
-cb_pending (CutTest *test, CutTestContext *test_context, CutTestResult *result,
-            gpointer data)
-{
-    CutRunContext *context = data;
-
-    g_signal_emit(context, signals[PENDING_TEST], 0, test, test_context, result);
-}
-
-static void
-cb_notification (CutTest *test, CutTestContext *test_context,
-                 CutTestResult *result, gpointer data)
-{
-    CutRunContext *context = data;
-
-    g_signal_emit(context, signals[NOTIFICATION_TEST], 0, test, test_context, result);
-}
-
-static void
-cb_omission (CutTest *test, CutTestContext *test_context,
-             CutTestResult *result, gpointer data)
-{
-    CutRunContext *context = data;
-
-    g_signal_emit(context, signals[OMISSION_TEST], 0, test, test_context, result);
-}
-
-static void
-cb_complete (CutTest *test, gpointer data)
-{
-    g_signal_handlers_disconnect_by_func(test,
-                                         G_CALLBACK(cb_pass_assertion),
-                                         data);
-    g_signal_handlers_disconnect_by_func(test,
-                                         G_CALLBACK(cb_success),
-                                         data);
-    g_signal_handlers_disconnect_by_func(test,
-                                         G_CALLBACK(cb_failure),
-                                         data);
-    g_signal_handlers_disconnect_by_func(test,
-                                         G_CALLBACK(cb_error),
-                                         data);
-    g_signal_handlers_disconnect_by_func(test,
-                                         G_CALLBACK(cb_pending),
-                                         data);
-    g_signal_handlers_disconnect_by_func(test,
-                                         G_CALLBACK(cb_notification),
-                                         data);
-    g_signal_handlers_disconnect_by_func(test,
-                                         G_CALLBACK(cb_omission),
-                                         data);
-    g_signal_handlers_disconnect_by_func(test,
-                                         G_CALLBACK(cb_complete),
-                                         data);
 }
 
 void
 cut_run_context_prepare_test (CutRunContext *context, CutTest *test)
 {
-    CutRunContextPrivate *priv;
+    CutRunContextClass *klass;
 
-    priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
-    g_mutex_lock(priv->mutex);
-    priv->n_tests++;
-    g_mutex_unlock(priv->mutex);
-
-    g_signal_connect(test, "pass_assertion",
-                     G_CALLBACK(cb_pass_assertion), context);
-    g_signal_connect(test, "success", G_CALLBACK(cb_success), context);
-    g_signal_connect(test, "failure", G_CALLBACK(cb_failure), context);
-    g_signal_connect(test, "error", G_CALLBACK(cb_error), context);
-    g_signal_connect(test, "pending", G_CALLBACK(cb_pending), context);
-    g_signal_connect(test, "notification", G_CALLBACK(cb_notification), context);
-    g_signal_connect(test, "omission", G_CALLBACK(cb_omission), context);
-    g_signal_connect(test, "complete", G_CALLBACK(cb_complete), context);
+    klass = CUT_RUN_CONTEXT_GET_CLASS(context);
+    if (klass->prepare_test)
+        klass->prepare_test(context, test);
 }
-
-static void
-cb_start_test (CutTestCase *test_case, CutTest *test,
-               CutTestContext *test_context, gpointer data)
-{
-    CutRunContext *context = data;
-
-    g_signal_emit(context, signals[START_TEST], 0, test, test_context);
-}
-
-static void
-cb_complete_test(CutTestCase *test_case, CutTest *test,
-                 CutTestContext *test_context, gpointer data)
-{
-    CutRunContext *context = data;
-
-    g_signal_emit(context, signals[COMPLETE_TEST], 0, test, test_context);
-}
-
-static void
-cb_success_test_case (CutTestCase *test_case, CutTestContext *test_context,
-                      CutTestResult *result, gpointer data)
-{
-    CutRunContext *context = data;
-
-    g_signal_emit(context, signals[SUCCESS_TEST_CASE], 0, test_case, result);
-}
-
-static void
-cb_failure_test_case (CutTestCase *test_case, CutTestContext *test_context,
-                      CutTestResult *result, gpointer data)
-{
-    CutRunContext *context = data;
-
-    g_signal_emit(context, signals[FAILURE_TEST_CASE], 0, test_case, result);
-}
-
-static void
-cb_error_test_case (CutTestCase *test_case, CutTestContext *test_context,
-                    CutTestResult *result, gpointer data)
-{
-    CutRunContext *context = data;
-
-    g_signal_emit(context, signals[ERROR_TEST_CASE], 0, test_case, result);
-}
-
-static void
-cb_pending_test_case (CutTestCase *test_case, CutTestContext *test_context,
-                      CutTestResult *result, gpointer data)
-{
-    CutRunContext *context = data;
-
-    g_signal_emit(context, signals[PENDING_TEST_CASE], 0, test_case, result);
-}
-
-static void
-cb_notification_test_case (CutTestCase *test_case, CutTestContext *test_context,
-                           CutTestResult *result, gpointer data)
-{
-    CutRunContext *context = data;
-
-    g_signal_emit(context, signals[NOTIFICATION_TEST_CASE], 0,
-                  test_case, result);
-}
-
-static void
-cb_omission_test_case (CutTestCase *test_case, CutTestContext *test_context,
-                       CutTestResult *result, gpointer data)
-{
-    CutRunContext *context = data;
-
-    g_signal_emit(context, signals[OMISSION_TEST_CASE], 0, test_case, result);
-}
-
-static void
-cb_start_test_case(CutTestCase *test_case, gpointer data)
-{
-    CutRunContext *context = data;
-
-    g_signal_emit(context, signals[START_TEST_CASE], 0, test_case);
-}
-
-static void
-cb_ready_test_case(CutTestCase *test_case, guint n_tests, gpointer data)
-{
-    CutRunContext *context = data;
-
-    g_signal_emit(context, signals[READY_TEST_CASE], 0, test_case, n_tests);
-}
-
-static void
-cb_complete_test_case(CutTestCase *test_case, gpointer data)
-{
-    CutRunContext *context = data;
-
-#define DISCONNECT(name)                                                \
-    g_signal_handlers_disconnect_by_func(test_case,                     \
-                                         G_CALLBACK(cb_ ## name),       \
-                                         data)
-
-    DISCONNECT(start_test);
-    DISCONNECT(complete_test);
-#undef DISCONNECT
-
-#define DISCONNECT(name)                                                \
-    g_signal_handlers_disconnect_by_func(test_case,                     \
-                                         G_CALLBACK(cb_ ## name ## _test_case), \
-                                         data)
-
-    DISCONNECT(success);
-    DISCONNECT(failure);
-    DISCONNECT(error);
-    DISCONNECT(pending);
-    DISCONNECT(notification);
-    DISCONNECT(omission);
-
-    DISCONNECT(ready);
-    DISCONNECT(start);
-    DISCONNECT(complete);
-#undef DISCONNECT
-
-    g_signal_emit(context, signals[COMPLETE_TEST_CASE], 0, test_case);
-}
-
-void
-cut_run_context_prepare_test_case (CutRunContext *context, CutTestCase *test_case)
-{
-#define CONNECT(name) \
-    g_signal_connect(test_case, #name, G_CALLBACK(cb_ ## name), context)
-
-    CONNECT(start_test);
-    CONNECT(complete_test);
-#undef CONNECT
-
-#define CONNECT(name)                                                   \
-    g_signal_connect(test_case, #name,                                  \
-                     G_CALLBACK(cb_ ## name ## _test_case), context)
-
-    CONNECT(success);
-    CONNECT(failure);
-    CONNECT(error);
-    CONNECT(pending);
-    CONNECT(notification);
-    CONNECT(omission);
-
-    CONNECT(ready);
-    CONNECT(start);
-    CONNECT(complete);
-#undef CONNECT
-}
-
-static void
-cb_ready_test_suite(CutTestSuite *test_suite, guint n_test_cases,
-                    guint n_tests, gpointer data)
-{
-    CutRunContext *context = data;
-
-    g_signal_emit(context, signals[READY_TEST_SUITE], 0, test_suite,
-                  n_test_cases, n_tests);
-}
-
-static void
-cb_start_test_suite(CutTestSuite *test_suite, gpointer data)
-{
-    CutRunContext *context = data;
-
-    g_signal_emit(context, signals[START_TEST_SUITE], 0, test_suite);
-}
-
-static void
-cb_crashed_test_suite(CutTestSuite *test_suite, const gchar *backtrace,
-                      gpointer data)
-{
-    CutRunContext *context = data;
-
-    g_signal_emit(context, signals[CRASHED], 0, backtrace);
-}
-
-static void
-cb_complete_test_suite(CutTestSuite *test_suite, gpointer data)
-{
-    CutRunContext *context = data;
-
-#define DISCONNECT(name)                                                \
-    g_signal_handlers_disconnect_by_func(test_suite,                    \
-                                         G_CALLBACK(cb_ ##              \
-                                                    name ##             \
-                                                    _test_suite),       \
-                                         data)
-
-    DISCONNECT(ready);
-    DISCONNECT(start);
-    DISCONNECT(complete);
-    DISCONNECT(crashed);
-#undef DISCONNECT
-
-    g_signal_emit(context, signals[COMPLETE_TEST_SUITE], 0, test_suite);
-}
-
-void
-cut_run_context_prepare_test_suite (CutRunContext *context, CutTestSuite *test_suite)
-{
-#define CONNECT(name)                                                \
-    g_signal_connect(test_suite, #name,                              \
-                     G_CALLBACK(cb_ ## name ## _test_suite),         \
-                     context)
-
-    CONNECT(ready);
-    CONNECT(start);
-    CONNECT(complete);
-    CONNECT(crashed);
-#undef CONNECT
-}
-
 
 guint
 cut_run_context_get_n_tests (CutRunContext *context)
@@ -1412,6 +1163,13 @@ cut_run_context_get_results (CutRunContext *context)
     return CUT_RUN_CONTEXT_GET_PRIVATE(context)->results;
 }
 
+void
+cut_run_context_crash (CutRunContext *context, const gchar *backtrace)
+{
+    CUT_RUN_CONTEXT_GET_PRIVATE(context)->crashed = TRUE;
+    cut_run_context_set_backtrace(context, backtrace);
+}
+
 gboolean
 cut_run_context_is_crashed (CutRunContext *context)
 {
@@ -1422,6 +1180,21 @@ const gchar *
 cut_run_context_get_backtrace (CutRunContext *context)
 {
     return CUT_RUN_CONTEXT_GET_PRIVATE(context)->backtrace;
+}
+
+void
+cut_run_context_set_backtrace (CutRunContext *context, const gchar *backtrace)
+{
+    CutRunContextPrivate *priv;
+
+    priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
+    if (priv->backtrace) {
+        g_free(priv->backtrace);
+        priv->backtrace = NULL;
+    }
+
+    if (backtrace)
+        priv->backtrace = g_strdup(backtrace);
 }
 
 void

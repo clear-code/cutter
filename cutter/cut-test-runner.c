@@ -34,16 +34,30 @@
 
 static void runner_init (CutRunnerIface *iface);
 
+
 static CutRunnerIface *parent_runner_iface;
 
 G_DEFINE_TYPE_WITH_CODE(CutTestRunner, cut_test_runner, CUT_TYPE_RUN_CONTEXT,
                         G_IMPLEMENT_INTERFACE(CUT_TYPE_RUNNER, runner_init))
 
+static void prepare_test_suite  (CutRunContext  *context,
+                                 CutTestSuite   *test_suite);
+static void prepare_test_case   (CutRunContext  *context,
+                                 CutTestCase    *test_case);
+static void prepare_test        (CutRunContext  *context,
+                                 CutTest        *test);
 static gboolean runner_run (CutRunner *runner);
 
 static void
 cut_test_runner_class_init (CutTestRunnerClass *klass)
 {
+    CutRunContextClass *run_context_class;
+
+    run_context_class = CUT_RUN_CONTEXT_CLASS(klass);
+
+    run_context_class->prepare_test_suite = prepare_test_suite;
+    run_context_class->prepare_test_case = prepare_test_case;
+    run_context_class->prepare_test = prepare_test;
 }
 
 static void
@@ -63,6 +77,343 @@ CutRunContext *
 cut_test_runner_new (void)
 {
     return g_object_new(CUT_TYPE_TEST_RUNNER, NULL);
+}
+
+static void
+cb_start_test (CutTestCase *test_case, CutTest *test,
+               CutTestContext *test_context, gpointer data)
+{
+    CutRunContext *context = data;
+
+    g_signal_emit_by_name(context, "start-test", test, test_context);
+}
+
+static void
+cb_complete_test(CutTestCase *test_case, CutTest *test,
+                 CutTestContext *test_context, gpointer data)
+{
+    CutRunContext *context = data;
+
+    g_signal_emit_by_name(context, "complete-test", test, test_context);
+}
+
+static void
+cb_success_test_case (CutTestCase *test_case, CutTestContext *test_context,
+                      CutTestResult *result, gpointer data)
+{
+    CutRunContext *context = data;
+
+    g_signal_emit_by_name(context, "success-test-case", test_case, result);
+}
+
+static void
+cb_failure_test_case (CutTestCase *test_case, CutTestContext *test_context,
+                      CutTestResult *result, gpointer data)
+{
+    CutRunContext *context = data;
+
+    g_signal_emit_by_name(context, "failure-test-case", test_case, result);
+}
+
+static void
+cb_error_test_case (CutTestCase *test_case, CutTestContext *test_context,
+                    CutTestResult *result, gpointer data)
+{
+    CutRunContext *context = data;
+
+    g_signal_emit_by_name(context, "error-test-case", test_case, result);
+}
+
+static void
+cb_pending_test_case (CutTestCase *test_case, CutTestContext *test_context,
+                      CutTestResult *result, gpointer data)
+{
+    CutRunContext *context = data;
+
+    g_signal_emit_by_name(context, "pending-test-case", test_case, result);
+}
+
+static void
+cb_notification_test_case (CutTestCase *test_case, CutTestContext *test_context,
+                           CutTestResult *result, gpointer data)
+{
+    CutRunContext *context = data;
+
+    g_signal_emit_by_name(context, "notification-test-case", test_case, result);
+}
+
+static void
+cb_omission_test_case (CutTestCase *test_case, CutTestContext *test_context,
+                       CutTestResult *result, gpointer data)
+{
+    CutRunContext *context = data;
+
+    g_signal_emit_by_name(context, "omission-test-case", test_case, result);
+}
+
+static void
+cb_start_test_case(CutTestCase *test_case, gpointer data)
+{
+    CutRunContext *context = data;
+
+    g_signal_emit_by_name(context, "start-test-case", test_case);
+}
+
+static void
+cb_ready_test_case(CutTestCase *test_case, guint n_tests, gpointer data)
+{
+    CutRunContext *context = data;
+
+    g_signal_emit_by_name(context, "ready-test-case", test_case, n_tests);
+}
+
+static void
+cb_complete_test_case(CutTestCase *test_case, gpointer data)
+{
+    CutRunContext *context = data;
+
+#define DISCONNECT(name)                                                \
+    g_signal_handlers_disconnect_by_func(test_case,                     \
+                                         G_CALLBACK(cb_ ## name),       \
+                                         data)
+
+    DISCONNECT(start_test);
+    DISCONNECT(complete_test);
+#undef DISCONNECT
+
+#define DISCONNECT(name)                                                \
+    g_signal_handlers_disconnect_by_func(test_case,                     \
+                                         G_CALLBACK(cb_ ## name ## _test_case), \
+                                         data)
+
+    DISCONNECT(success);
+    DISCONNECT(failure);
+    DISCONNECT(error);
+    DISCONNECT(pending);
+    DISCONNECT(notification);
+    DISCONNECT(omission);
+
+    DISCONNECT(ready);
+    DISCONNECT(start);
+    DISCONNECT(complete);
+#undef DISCONNECT
+
+    g_signal_emit_by_name(context, "complete-test-case", test_case);
+}
+
+static void
+cb_ready_test_suite(CutTestSuite *test_suite, guint n_test_cases,
+                    guint n_tests, gpointer data)
+{
+    CutRunContext *context = data;
+
+    g_signal_emit_by_name(context, "ready-test-suite", test_suite,
+                          n_test_cases, n_tests);
+}
+
+static void
+cb_start_test_suite(CutTestSuite *test_suite, gpointer data)
+{
+    CutRunContext *context = data;
+
+    g_signal_emit_by_name(context, "start-test-suite", test_suite);
+}
+
+static void
+cb_crashed_test_suite(CutTestSuite *test_suite, const gchar *backtrace,
+                      gpointer data)
+{
+    CutRunContext *context = data;
+
+    cut_run_context_crash(context, backtrace);
+    g_signal_emit_by_name(context, "crashed", backtrace);
+}
+
+static void
+cb_complete_test_suite(CutTestSuite *test_suite, gpointer data)
+{
+    CutRunContext *context = data;
+
+#define DISCONNECT(name)                                                \
+    g_signal_handlers_disconnect_by_func(test_suite,                    \
+                                         G_CALLBACK(cb_ ##              \
+                                                    name ##             \
+                                                    _test_suite),       \
+                                         data)
+
+    DISCONNECT(ready);
+    DISCONNECT(start);
+    DISCONNECT(complete);
+    DISCONNECT(crashed);
+#undef DISCONNECT
+
+    g_signal_emit_by_name(context, "complete-test-suite", test_suite);
+}
+
+static void
+prepare_test_suite (CutRunContext *context, CutTestSuite *test_suite)
+{
+    CutRunContextClass *klass;
+
+    klass = CUT_RUN_CONTEXT_CLASS(cut_test_runner_parent_class);
+    if (klass->prepare_test_suite)
+        klass->prepare_test_suite(context, test_suite);
+
+#define CONNECT(name)                                                \
+    g_signal_connect(test_suite, #name,                              \
+                     G_CALLBACK(cb_ ## name ## _test_suite),         \
+                     context)
+
+    CONNECT(ready);
+    CONNECT(start);
+    CONNECT(complete);
+    CONNECT(crashed);
+#undef CONNECT
+}
+
+static void
+prepare_test_case (CutRunContext *context, CutTestCase *test_case)
+{
+    CutRunContextClass *klass;
+
+    klass = CUT_RUN_CONTEXT_CLASS(cut_test_runner_parent_class);
+    if (klass->prepare_test_case)
+        klass->prepare_test_case(context, test_case);
+
+#define CONNECT(name) \
+    g_signal_connect(test_case, #name, G_CALLBACK(cb_ ## name), context)
+
+    CONNECT(start_test);
+    CONNECT(complete_test);
+#undef CONNECT
+
+#define CONNECT(name)                                                   \
+    g_signal_connect(test_case, #name,                                  \
+                     G_CALLBACK(cb_ ## name ## _test_case), context)
+
+    CONNECT(success);
+    CONNECT(failure);
+    CONNECT(error);
+    CONNECT(pending);
+    CONNECT(notification);
+    CONNECT(omission);
+
+    CONNECT(ready);
+    CONNECT(start);
+    CONNECT(complete);
+#undef CONNECT
+}
+
+static void
+cb_pass_assertion (CutTest *test, CutTestContext *test_context, gpointer data)
+{
+    CutRunContext *context = data;
+
+    g_signal_emit_by_name(context, "pass-assertion", test, test_context);
+}
+
+static void
+cb_success (CutTest *test, CutTestContext *test_context, CutTestResult *result,
+            gpointer data)
+{
+    CutRunContext *context = data;
+
+    g_signal_emit_by_name(context, "success-test", test, test_context, result);
+}
+
+static void
+cb_failure (CutTest *test, CutTestContext *test_context, CutTestResult *result,
+            gpointer data)
+{
+    CutRunContext *context = data;
+
+    g_signal_emit_by_name(context, "failure-test", test, test_context, result);
+}
+
+static void
+cb_error (CutTest *test, CutTestContext *test_context, CutTestResult *result,
+          gpointer data)
+{
+    CutRunContext *context = data;
+
+    g_signal_emit_by_name(context, "error-test", test, test_context, result);
+}
+
+static void
+cb_pending (CutTest *test, CutTestContext *test_context, CutTestResult *result,
+            gpointer data)
+{
+    CutRunContext *context = data;
+
+    g_signal_emit_by_name(context, "pending-test", test, test_context, result);
+}
+
+static void
+cb_notification (CutTest *test, CutTestContext *test_context,
+                 CutTestResult *result, gpointer data)
+{
+    CutRunContext *context = data;
+
+    g_signal_emit_by_name(context, "notification-test",
+                          test, test_context, result);
+}
+
+static void
+cb_omission (CutTest *test, CutTestContext *test_context,
+             CutTestResult *result, gpointer data)
+{
+    CutRunContext *context = data;
+
+    g_signal_emit_by_name(context, "omission-test", test, test_context, result);
+}
+
+static void
+cb_complete (CutTest *test, gpointer data)
+{
+    g_signal_handlers_disconnect_by_func(test,
+                                         G_CALLBACK(cb_pass_assertion),
+                                         data);
+    g_signal_handlers_disconnect_by_func(test,
+                                         G_CALLBACK(cb_success),
+                                         data);
+    g_signal_handlers_disconnect_by_func(test,
+                                         G_CALLBACK(cb_failure),
+                                         data);
+    g_signal_handlers_disconnect_by_func(test,
+                                         G_CALLBACK(cb_error),
+                                         data);
+    g_signal_handlers_disconnect_by_func(test,
+                                         G_CALLBACK(cb_pending),
+                                         data);
+    g_signal_handlers_disconnect_by_func(test,
+                                         G_CALLBACK(cb_notification),
+                                         data);
+    g_signal_handlers_disconnect_by_func(test,
+                                         G_CALLBACK(cb_omission),
+                                         data);
+    g_signal_handlers_disconnect_by_func(test,
+                                         G_CALLBACK(cb_complete),
+                                         data);
+}
+
+static void
+prepare_test (CutRunContext *context, CutTest *test)
+{
+    CutRunContextClass *klass;
+
+    klass = CUT_RUN_CONTEXT_CLASS(cut_test_runner_parent_class);
+    if (klass->prepare_test)
+        klass->prepare_test(context, test);
+
+    g_signal_connect(test, "pass_assertion",
+                     G_CALLBACK(cb_pass_assertion), context);
+    g_signal_connect(test, "success", G_CALLBACK(cb_success), context);
+    g_signal_connect(test, "failure", G_CALLBACK(cb_failure), context);
+    g_signal_connect(test, "error", G_CALLBACK(cb_error), context);
+    g_signal_connect(test, "pending", G_CALLBACK(cb_pending), context);
+    g_signal_connect(test, "notification", G_CALLBACK(cb_notification), context);
+    g_signal_connect(test, "omission", G_CALLBACK(cb_omission), context);
+    g_signal_connect(test, "complete", G_CALLBACK(cb_complete), context);
 }
 
 static gboolean

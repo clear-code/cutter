@@ -587,12 +587,14 @@ connect_to_run_context (CutXMLStreamer *streamer, CutRunContext *run_context)
     CONNECT_TO_TEST(error);
     CONNECT_TO_TEST(pending);
     CONNECT_TO_TEST(notification);
+    CONNECT_TO_TEST(omission);
 
     CONNECT_TO_TEST_CASE(success);
     CONNECT_TO_TEST_CASE(failure);
     CONNECT_TO_TEST_CASE(error);
     CONNECT_TO_TEST_CASE(pending);
     CONNECT_TO_TEST_CASE(notification);
+    CONNECT_TO_TEST_CASE(omission);
 
     CONNECT(complete_test);
     CONNECT(complete_test_case);
