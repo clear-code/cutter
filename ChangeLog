@@ -1,5 +1,9 @@
 2008-05-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-stream-parser.[ch] (cut_stream_parser_end_parse): add.
+
+	* cutter/cut-pipeline.c: call cut_stream_parser_end_parse().
+
 	* doc/reference/ja.po: update.
 
 	* NEWS*: update.

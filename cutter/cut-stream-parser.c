@@ -622,6 +622,14 @@ cut_stream_parser_parse (CutStreamParser *stream_parser,
     return g_markup_parse_context_parse(priv->context, text, text_len, error);
 }
 
+gboolean
+cut_stream_parser_end_parse (CutStreamParser *stream_parser, GError **error)
+{
+    CutStreamParserPrivate *priv = CUT_STREAM_PARSER_GET_PRIVATE(stream_parser);
+
+    return g_markup_parse_context_end_parse(priv->context, error);
+}
+
 static gchar *
 element_path (GMarkupParseContext *context)
 {

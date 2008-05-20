@@ -59,6 +59,8 @@ gboolean         cut_stream_parser_parse     (CutStreamParser *parser,
                                               const gchar     *text,
                                               gsize            text_len,
                                               GError         **error);
+gboolean         cut_stream_parser_end_parse (CutStreamParser *stream_parser,
+                                              GError         **error);
 
 G_END_DECLS
 

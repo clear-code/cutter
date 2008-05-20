@@ -256,8 +256,15 @@ read_stream (CutPipeline *pipeline, GIOChannel *channel)
             break;
         }
 
-        if (!priv->eof)
+        if (priv->eof) {
+            cut_stream_parser_end_parse(priv->parser, &error);
+            if (error) {
+                emit_error(pipeline, error, "failed to end parse stream");
+                break;
+            }
+        } else {
             g_main_context_iteration(NULL, FALSE);
+        }
     }
 }
 
