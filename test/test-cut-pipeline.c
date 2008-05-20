@@ -55,57 +55,24 @@ teardown (void)
         g_object_unref(pipeline);
 }
 
-static void
-cb_complete_run_signal (CutPipeline *pipeline, gboolean success, gpointer user_data)
+static gboolean
+run (const gchar *target_dir)
 {
-    gboolean *is_success;
-    received_complete_signal = TRUE;
+    cut_run_context_set_test_directory(pipeline, target_dir);
 
-    is_success = (gboolean *)user_data;
-    *is_success = success;
+    return cut_runner_run(CUT_RUNNER(pipeline));
 }
 
 void
 test_exit_status_error (void)
 {
-    gboolean success = TRUE;
-
-    cut_assert(pipeline);
-
-    cut_run_context_set_test_directory(pipeline, error_test_dir);
-    g_signal_connect(pipeline, "complete-run",
-                     G_CALLBACK(cb_complete_run_signal), &success);
-
-    cut_runner_run_async(CUT_RUNNER(pipeline));
-    while (!received_complete_signal) {
-        g_main_context_iteration(NULL, FALSE);
-    }
-
-    cut_assert_false(success);
-    g_signal_handlers_disconnect_by_func(pipeline,
-                                         G_CALLBACK(cb_complete_run_signal),
-                                         &success);
+    cut_assert_false(run(error_test_dir));
 }
 
 void
 test_exit_status_success (void)
 {
-    gboolean success = FALSE;
-
-    cut_run_context_set_test_directory(pipeline, success_test_dir);
-
-    g_signal_connect(pipeline, "complete-run",
-                     G_CALLBACK(cb_complete_run_signal), &success);
-
-    cut_runner_run_async(CUT_RUNNER(pipeline));
-    while (!received_complete_signal) {
-        g_main_context_iteration(NULL, FALSE);
-    }
-
-    cut_assert_true(success);
-    g_signal_handlers_disconnect_by_func(pipeline,
-                                         G_CALLBACK(cb_complete_run_signal),
-                                         &success);
+    cut_assert_true(run(success_test_dir));
 }
 
 #define DEFINE_ERROR_SIGNAL_TEST(signal_name)                           \
@@ -125,28 +92,15 @@ cb_ ## signal_name ## _signal (CutRunContext *run_context,              \
 void                                                                    \
 test_ ## signal_name ## _signal (void)                                  \
 {                                                                       \
-    gboolean success = FALSE;                                           \
     gint n_signal = 0;                                                  \
                                                                         \
-    cut_assert(pipeline);                                               \
-    cut_run_context_set_test_directory(pipeline,  error_test_dir);      \
-                                                                        \
-    g_signal_connect(pipeline, "complete-run",                          \
-                     G_CALLBACK(cb_complete_run_signal), &success);     \
     g_signal_connect(pipeline, #signal_name "-test",                    \
                      G_CALLBACK(cb_ ## signal_name ## _signal),         \
                      &n_signal);                                        \
                                                                         \
-    cut_runner_run_async(CUT_RUNNER(pipeline));                         \
-    while (!received_complete_signal) {                                 \
-        g_main_context_iteration(NULL, FALSE);                          \
-    }                                                                   \
-                                                                        \
-    cut_assert_false(success);                                          \
+    cut_assert_false(run(error_test_dir));                              \
     cut_assert_equal_int(1, n_signal);                                  \
                                                                         \
-    g_signal_handlers_disconnect_by_func(                               \
-        pipeline, G_CALLBACK(cb_complete_run_signal), &success);        \
     g_signal_handlers_disconnect_by_func(                               \
         pipeline, G_CALLBACK(cb_ ## signal_name ## _signal),            \
         &n_signal);                                                     \
@@ -161,24 +115,9 @@ DEFINE_ERROR_SIGNAL_TEST(omission)
 void                                                                    \
 test_ ## status_name ## _count (void)                                   \
 {                                                                       \
-    gboolean success = FALSE;                                           \
-                                                                        \
-    cut_assert(pipeline);                                               \
-    cut_run_context_set_test_directory(pipeline,  error_test_dir);      \
-                                                                        \
-    g_signal_connect(pipeline, "complete-run",                          \
-                     G_CALLBACK(cb_complete_run_signal), &success);     \
-                                                                        \
-    cut_runner_run_async(CUT_RUNNER(pipeline));                         \
-    while (!received_complete_signal) {                                 \
-        g_main_context_iteration(NULL, FALSE);                          \
-    }                                                                   \
-                                                                        \
-    cut_assert_false(success);                                          \
+    cut_assert_false(run(error_test_dir));                              \
     cut_assert_equal_int(1,                                             \
         cut_run_context_get_n_ ## status_name ## s(pipeline));          \
-    g_signal_handlers_disconnect_by_func(                               \
-        pipeline, G_CALLBACK(cb_complete_run_signal), &success);        \
 }
 
 DEFINE_ERROR_COUNT_TEST(failure)
