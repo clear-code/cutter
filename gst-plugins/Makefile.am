@@ -18,5 +18,10 @@ libgstcutter_la_LIBADD = 	\
 	$(GSTREAMER_LIBS) 	\
 	$(CUTTER_LIBS)
 
-libgstcutter_la_LDFLAGS = $(GST_PLUGIN_LDFLAGS)
+libgstcutter_la_LDFLAGS =		\
+	$(GST_PLUGIN_LDFLAGS)		\
+	-avoid-version -module		\
+	-export-dynamic 		\
+	$(no_undefined)			\
+	$(LIBTOOL_EXPORT_OPTIONS)
 endif
