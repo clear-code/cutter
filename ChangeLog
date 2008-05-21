@@ -1,3 +1,9 @@
+2008-05-22  Kouhei Sutou  <kou@cozmixng.org>
+
+	* gst-plugins/Makefile.am: add missing 's'.
+
+	* configure.ac: add --with-gst-pluginsdir option.
+
 2008-05-21  Kouhei Sutou  <kou@cozmixng.org>
 
 	* doc/tutorial/senna.rd.ja: add.

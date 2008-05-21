@@ -1,5 +1,5 @@
 if HAVE_GSTREAMER
-gst_plugin_LTLIBRARIES = libgstcutter.la
+gst_plugins_LTLIBRARIES = libgstcutter.la
 
 noinst_HEADERS = gst-cutter-src.h
 
