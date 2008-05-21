@@ -153,12 +153,13 @@ AC_SUBST([GSTREAMER_LIBS])
 if test x"$gstreamer_exists" = "xyes"; then
   AC_DEFINE(HAVE_GSTREAMER, 1, [Define to 1 if you have gstreamer installed])
   AC_MSG_CHECKING([where is GStreamer plugin dir])
-  AC_ARG_WITH([gst-plugindir],
-              AS_HELP_STRING([--with-gst-plugindir=DIR],
+  AC_ARG_WITH([gst-pluginsdir],
+              AS_HELP_STRING([--with-gst-pluginsdir=DIR],
                              [Use DIR for GStreamer plugin directory
                              (default: auto)]),
               [ac_cv_gst_pluginsdir="$withval"],
               [ac_cv_gst_pluginsdir="auto"])
+  echo "$ac_cv_gst_pluginsdir"
   if test "$ac_cv_gst_pluginsdir" = "auto"; then
     ac_cv_gst_pluginsdir=`pkg-config --variable=pluginsdir gstreamer-0.10`
   fi

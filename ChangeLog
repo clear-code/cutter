@@ -1,5 +1,7 @@
 2008-05-22  Kouhei Sutou  <kou@cozmixng.org>
 
+	* configure.ac: add missing 's'.
+
 	* configure.ac: use AC_MSG_CHECKING and AC_MSG_RESULT instead of
 	AC_CACHE_CHECK.
 
