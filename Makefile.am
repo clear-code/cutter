@@ -1,6 +1,15 @@
 ACLOCAL_AMFLAGS = -I m4macros
 
-SUBDIRS = m4macros cutter test sample po misc doc html
+SUBDIRS = 		\
+	m4macros	\
+	cutter		\
+	test		\
+	sample		\
+	gst-plugins	\
+	po		\
+	misc		\
+	doc		\
+	html
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = 	\

@@ -144,6 +144,25 @@ fi
 AM_CONDITIONAL([HAVE_GTK], [test -z "$no_gtk"])
 
 dnl **************************************************************
+dnl Check for Gstreamer
+dnl **************************************************************
+gstreamer_exists=no
+PKG_CHECK_MODULES(GSTREAMER, gstreamer-0.10 >= 0.10.0 gstreamer-base-0.10 >= 0.10.0,
+		  [gstreamer_exists=yes], [gstreamer_exists=no])
+AC_SUBST([GSTREAMER_CFLAGS])
+AC_SUBST([GSTREAMER_LIBS])
+if test x"$gstreamer_exists" = "xyes"; then
+  AC_DEFINE(HAVE_GSTREAMER, 1, [Define to 1 if you have gstreamer installed])
+  if test "x${prefix}" = "x$HOME"; then
+    gst_plugindir="$HOME/.gstreamer-$GST_MAJORMINOR/plugins"
+  else
+    gst_plugindir=`pkg-config --variable=pluginsdir gstreamer-0.10`
+  fi
+  AC_SUBST(gst_plugindir)
+fi
+AM_CONDITIONAL([HAVE_GSTREAMER], [test $gstreamer_exists = "yes"])
+
+dnl **************************************************************
 dnl Check for Cairo
 dnl **************************************************************
 cairo_exists=no
@@ -261,6 +280,7 @@ AC_CONFIG_FILES([Makefile
 		 cutter/module/ui/Makefile
 		 cutter/module/report/Makefile
 		 cutter/module/streamer/Makefile
+		 gst-plugins/Makefile
 		 sample/Makefile
 		 sample/glib/Makefile
 		 sample/gtk+/Makefile
