@@ -1,0 +1,45 @@
+# -*- rd -*-
+
+= Cutter導入事例: Senna
+
+((<Senna|URL:http://qwik.jp/senna/>))の単体テストフレームワー
+クとしてCutterを導入したときの手順です。自分のプロジェクトに
+Cutterを導入するときの参考にしてください。
+
+== はじめに
+
+まず、Sennaについて簡単に説明します。
+
+Sennaは組み込み型の全文検索エンジンで、その機能をライブラリ
+として提供します。SennaのAPIはbasic APIやadvanced APIなどい
+くつかのグループにわかれています。
+
+今回はSennaの単体テストフレームワークとしてCutterを導入し、
+utility APIのひとつ、snippet((-検索キーワードの周辺テキストの
+こと。ここではそれを取得するSennaの機能のこと。-))のテストを
+作成するまでを示します。このためには以下の作業が必要になりま
+す。
+
+  * SennaのビルドシステムにCutterを組み込む
+  * Cutterでsnippet APIのテストを記述する
+
+作業に入る前にSennaのビルドシステムについて確認します。
+
+=== Sennaのビルドシステム
+
+Sennaでは((<GNU
+Automake|URL:http://www.gnu.org/software/automake/>))や
+((<GNU Libtool|URL:http://www.gnu.org/software/libtool/>))な
+どGNUビルドシステムを利用したビルドシステムを採用しています。
+
+CutterはGNUビルドシステムサポート用の機能をいくつか提供してい
+ます。そのため、GNUビルドシステムを用いているプロジェクトへ
+はCutterを容易に導入することができます。
+
+もし、これからプロジェクトを始める場合でGNUビルドシステムを
+採用する場合は((<Cutterのチュートリアル
+|URL:http://cutter.sourceforge.net/reference/ja/tutorial.html>))
+が参考になると思います。
+
+== ビルドシステムへのCutterの組み込み
+
