@@ -23,20 +23,22 @@
 
 #include "gst-cutter-src.h"
 
-#include <gst/video/video.h>
-
 static const GstElementDetails cutter_src_details =
-    GST_ELEMENT_DETAILS ("Cutter src",
-                         "Source element of Cutter",
-                         "Source element of Cutter",
-                         "g新部 Hiroyuki Ikezoe  <poincare@ikezoe.net>");
+    GST_ELEMENT_DETAILS("Cutter src",
+                        "Source element of Cutter",
+                        "Source element of Cutter",
+                        "g新部 Hiroyuki Ikezoe  <poincare@ikezoe.net>");
 static GstStaticPadTemplate cutter_src_src_template_factory =
-    GST_STATIC_PAD_TEMPLATE ("src",
-                             GST_PAD_SRC,
-                             GST_PAD_ALWAYS,
-                             GST_STATIC_CAPS (GST_VIDEO_CAPS_YUV ("I420")));
+    GST_STATIC_PAD_TEMPLATE("src",
+                            GST_PAD_SRC,
+                            GST_PAD_ALWAYS,
+                            GST_STATIC_CAPS("text/plain; text/pango-markup"));
 
-GST_BOILERPLATE (GstCutterSrc, gst_cutter_src, GstElement, GST_TYPE_ELEMENT);
+GST_BOILERPLATE(GstCutterSrc, gst_cutter_src, GstElement, GST_TYPE_ELEMENT);
+
+static void dispose        (GObject         *object);
+
+static GstStateChangeReturn change_state (GstElement *element, GstStateChange transition);
 
 static void
 gst_cutter_src_base_init (gpointer klass)
@@ -50,8 +52,53 @@ gst_cutter_src_base_init (gpointer klass)
 }
 
 static void
-gst_cutter_src_init (GstCutterSrc *overlay, GstCutterSrcClass * klass)
+gst_cutter_src_class_init (GstCutterSrcClass * klass)
 {
+    GObjectClass *object_class = G_OBJECT_CLASS(klass);
+    GstElementClass *element_class = GST_ELEMENT_CLASS(klass);
+
+    parent_class = g_type_class_peek_parent(klass);
+
+    object_class->dispose = dispose;
+
+    element_class->change_state = change_state;
+}
+
+static void
+gst_cutter_src_init (GstCutterSrc *cutter_src, GstCutterSrcClass * klass)
+{
+}
+
+static void
+dispose (GObject *object)
+{
+    G_OBJECT_CLASS(parent_class)->dispose(object);
+}
+
+static GstStateChangeReturn
+change_state (GstElement *element, GstStateChange transition)
+{
+      GstStateChangeReturn ret = GST_STATE_CHANGE_SUCCESS;
+
+      switch (transition) {
+        case GST_STATE_CHANGE_READY_TO_PAUSED:
+          break;
+        default:
+          break;
+      }
+
+      ret = parent_class->change_state(element, transition);
+      if (ret == GST_STATE_CHANGE_FAILURE)
+        return ret;
+
+      switch (transition) {
+        case GST_STATE_CHANGE_PAUSED_TO_READY:
+          break;
+        default:
+          break;
+      }
+
+      return ret;
 }
 
 /*
