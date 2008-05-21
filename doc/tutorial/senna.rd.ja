@@ -6,6 +6,11 @@
 クとしてCutterを導入したときの手順です。自分のプロジェクトに
 Cutterを導入するときの参考にしてください。
 
+もし、まだCutterについて知らない場合は、はじめに((<チュートリ
+アル
+|URL:http://cutter.sourceforge.net/reference/ja/tutorial.html>))
+を読んでください。
+
 == はじめに
 
 まず、Sennaについて簡単に説明します。
@@ -39,7 +44,90 @@ CutterはGNUビルドシステムサポート用の機能をいくつか提供�
 もし、これからプロジェクトを始める場合でGNUビルドシステムを
 採用する場合は((<Cutterのチュートリアル
 |URL:http://cutter.sourceforge.net/reference/ja/tutorial.html>))
-が参考になると思います。
+が参考になるでしょう。
 
 == ビルドシステムへのCutterの組み込み
 
+Sennaの単体テストフレームワークとしてCutterを採用するにあたっ
+て、以下のような条件を満たすこととします。
+
+  * Cutterがない場合でもユーザがSennaをビルドできること
+  * Cutterがない場合でも開発者がSennaをビルドできること
+  * configure時にCutterを使用するかどうかを指定できること
+  * Cutterで作成したテストはtest/unit/以下に配置すること
+  * テストではテストを簡潔・容易に記述するためにGLibを利用す
+    る
+
+上記の中でのユーザと開発者の違いは、autogen.shを用いて自分で
+configureを作成するかどうかです。ユーザは開発者が作成した
+configureを利用するため、自分でconfigureを作成しません。一方、
+開発者はSubversionリポジトリ内にはconfigureは入っていないの
+でautogen.shを使ってconfigure.acからconfigureを作成し、利用
+します。つまり、違いは以下の通りになります。
+
+  * ユーザ: configureのみ実行
+  * 開発者: autogen.shとconfigureを実行
+
+それでは、まずは、開発者はすべてCutterをインストールしている
+ものとしてCutter対応のconfigureを生成できるようにします。
+
+=== cutter.m4
+
+Cutterはconfigure.ac内で利用できるCutter検出用のM4マクロを
+cutter.m4として提供しています。このファイルは
+${PREFIX}/share/aclocal/cutter.m4としてインストールされます。
+${PREFIX}/share/aclocal/以下に他の.m4ファイルがインストールされ
+ているような環境ではおそらくそのままで大丈夫ですが、そうでな
+い場合はautogen.shの中でaclocalを呼び出しているところを編集
+して${PREFIX}/share/aclocal/以下を.m4ファイルの検索パスに加
+える必要があります。
+
+もし、Cutterのconfigureに--prefix=/tmp/localオプションをつけ
+てビルド・インストールした場合はautogen.shを以下のように変更
+する必要があります。
+
+  # source: diff
+  Index: autogen.sh
+  ===================================================================
+  --- autogen.sh	(リビジョン 820)
+  +++ autogen.sh	(作業コピー)
+  @@ -105,7 +105,7 @@
+   echo "Running libtoolize ..."
+   $LIBTOOLIZE --force --copy
+   echo "Running aclocal ..."
+  -$ACLOCAL ${ACLOCAL_ARGS} -I .
+  +$ACLOCAL ${ACLOCAL_ARGS} -I . -I /tmp/local/share/aclocal
+   echo "Running autoheader..."
+   $AUTOHEADER
+   echo "Running automake ..."
+
+これでconfigure.ac内でCutterが提供する便利M4マクロを利用する
+準備が整いました。
+
+=== AC_CHECK_GCUTTER
+
+Cutterはパッケージを
+((<pkg-config|URL:http://pkg-config.freedesktop.org/>))のパッ
+ケージとしてインストールします。パッケージをpkg-configのパッ
+ケージとして作成しているのは、pkg-configが広く普及していて、
+GNUビルドツールなどpkg-configに対応しているビルドシステムが
+多いからです。
+
+Cutterは、テスト作成用に以下の2つのパッケージを容易しています。
+
+  * cutter: Cutterを利用してテストを作成する場合に利用
+  * gcutter: cutterパッケージにGLibサポート機能を追加したパッ
+    ケージ。GLibを利用してもっと簡潔・容易にテストを書きたい
+    場合に利用
+
+今回はGLibを利用してテストを作成するので、cutterパッケージで
+はなくgcutterパッケージを利用します。
+
+((*FIXME*))
+
+=== libcutter
+
+  * libcutter: 独自のテスト起動コマンド（通常はcutterコマン
+    ド）を作成する場合に利用
+
+((*FIXME*))
