@@ -167,6 +167,40 @@ WITH_CUTTER ... endifで判断できます。Makefile.amではCutterが
 こうすることにより、ユーザがCutterをインストールしていなくて
 も、Sennaをビルドできます。
 
+=== cutter.m4がない場合への対応
+
+cutter.m4がない場合は./autogen.shの実行が失敗します。つまり、
+開発者がconfigureを正常に生成できなくなります。
+
+残念ながら、Cutterはそれほど有名なフリーソフトウェアではない
+ため、開発者がCutterをインストールしていることはほとんどあり
+ません。そこで、開発者がCutterをインストールしていなくても
+configureを生成できるようにします。((-本当は開発者には頻繁に
+テストを走らせて欲しいのでCutterを必須にしたいところです。-))
+
+cutter.m4がインストールされているかどうかはAC_CHECK_GCUTTER
+関数が定義されているかどうかでわかります。そのため、以下のよ
+うに書くことにより、Cutterがインストールされてない環境でも
+configureを生成できます。もちろん、生成されたconfigureには
+Cutterの検出機能などはありません。
+
+configure.ac:
+  # source: sh
+  m4_ifdef([AC_CHECK_GCUTTER], [
+  AC_CHECK_GCUTTER
+  ],
+  [ac_cv_use_cutter="no"])
+
+  AM_CONDITIONAL([WITH_CUTTER], [test "$ac_cv_use_cutter" != "no"])
+  if test "$ac_cv_use_cutter" != "no"; then
+    AC_DEFINE(WITH_CUTTER, 1, [Define to 1 if you use Cutter])
+  fi
+
+このようにAC_CHECK_GCUTTERの呼び出し部分をm4_ifdefの中に入れ
+るだけです。AC_CHECK_GCUTTERが定義されていない場合は
+ac_cv_use_cutterを"no"にしているのでWITH_CUTTERが真になるこ
+とはありません。
+
 === ビルドシステムへtest/unit/以下を追加
 
 Cutterを用いたテストプログラムはtest/unit/以下に配置します。
@@ -258,6 +292,7 @@ libcutterもpkg-configのパッケージなのでpkg-configに対応して
 
 configure.ac:
   # source: m4
+  m4_ifdef([AC_CHECK_GCUTTER], [
   AC_CHECK_GCUTTER
 
   if test "$ac_cv_use_cutter" != "no"; then
@@ -265,6 +300,8 @@ configure.ac:
     AC_SUBST(LIBCUTTER_CFLAGS)
     AC_SUBST(LIBCUTTER_LIBS)
   fi
+  ],
+  [ac_cv_use_cutter="no"])
 
   AM_CONDITIONAL([WITH_CUTTER], [test "$ac_cv_use_cutter" != "no"])
   if test "$ac_cv_use_cutter" != "no"; then
@@ -416,3 +453,356 @@ check経由の場合はテスト実行前のmake実行を抑制します。
 
 == テストの作成
 
+テスト実行環境が整ったのでテストを作成します。ここでは検索キー
+ワードの周辺テキストを取得する((<snippet
+API|URL:http://qwik.jp/senna/APIJ.html#snippet_API>))のテスト
+を1つ作成します。
+
+テストの流れは以下の通りです。
+
+  (1) sen_snip_open()でsen_snipオブジェクトの生成
+  (2) sen_snip_add_cond()でキーワードを指定
+  (3) sen_snip_exec()でsnippetを生成
+  (4) sen_snip_get_result()で取得した結果が期待していたものか
+      を検証
+  (5) sen_snip_close()で生成したsen_snipオブジェクトを開放
+
+基本的なCutterのテスト作成方法については((<チュートリアル
+|URL:http://cutter.sourceforge.net/reference/ja/tutorial.html>))
+を参考にしてください。
+
+=== sen_snip_open()のテスト
+
+まずは、sen_snip_open()でsen_snipオブジェクトを生成する部分
+と、sen_snip_close()で生成したsen_snipオブジェクトを開放する
+部分を作成します。
+
+今回はGLibサポート付きでCutterを使用するgcutterパッケージを
+使っているので、テストは以下のようにgcutter.hを利用します。
+
+test/unit/test-snip.c:
+  # source: C
+  #include <senna.h>
+  #include <gcutter.h>
+
+  void test_simple_exec(void);
+
+  static const gchar default_open_tag[] = "[[";
+  static const gchar default_close_tag[] = "]]";
+
+  void
+  test_simple_exec(void)
+  {
+    sen_snip *snip;
+
+    snip = sen_snip_open(sen_enc_default, 0, 100, 10,
+                         default_open_tag, strlen(default_open_tag),
+                         default_close_tag, strlen(default_close_tag),
+                         NULL);
+    cut_assert_not_null(snip);
+    sen_snip_close(snip);
+  }
+
+
+sen_snip_open()は引数が多いですが、ここでは気にする必要はあ
+りません。sen_snip_open()によりsen_snip *が生成されるだけ知っ
+ていれば問題ありません。
+
+((<cut_assert_not_null|URL:http://cutter.sourceforge.net/reference/ja/cutter-cut-assertions.html#cut-assert-not-null>))(snip)
+でsen_snip *が正常に生成されているかを確認します。これは、
+sen_snip_open()は失敗時にはNULLを返すからです。
+
+最後にsen_snip_close()で生成したsen_snip *を開放します。
+
+=== sen_snip_add_cond()のテスト
+
+次はsen_snip_add_cond()でキーワードを指定する処理を追加しま
+す。sen_snip_add_cond()の戻り値はsen_rcです。sen_rcはエラー
+番号を示す数値でsen_success(0)以外はエラーになります。よって
+テストは以下のようになります。sen_snip_open()のときと同じく、
+sen_snip_add_cond()の引数は気にしなくても構いません。
+
+test/unit/test-snip.c:
+  # source: C
+  ...
+  void
+  test_simple_exec(void)
+  {
+    sen_snip *snip;
+    const gchar keyword[] = "Senna";
+
+    snip = sen_snip_open(sen_enc_default, 0, 100, 10,
+                         default_open_tag, strlen(default_open_tag),
+                         default_close_tag, strlen(default_close_tag),
+                         NULL);
+    cut_assert_not_null(snip);
+
+    cut_assert_equal_int(sen_success,
+                         sen_snip_add_cond(snip, keyword, strlen(keyword),
+                                           NULL, 0, NULL, 0));
+
+    sen_snip_close(snip);
+  }
+
+sen_snip_add_cond()の結果は
+((<cut_assert_equal_int|URL:http://cutter.sourceforge.net/reference/ja/cutter-cut-assertions.html#cut-assert-equal-int>))
+で検証しています。
+
+ただし、ここで問題があります。cut_assert*()は検証が失敗する
+とその時点でテスト関数からreturnし、それ以降のコードは実行し
+ません。つまり、cut_assert_equal_int()が失敗した場合は、
+sen_snip_open()で生成したsen_snip *が開放されないことになり
+ます。この問題を解決するためにsetup()/teardown()という仕組み
+があります。
+
+setup()はテストが実行される前に必ず実行され、teardown()はテ
+ストが実行された後に成功・失敗に関わらず必ず実行されます。こ
+の仕組みを利用することで確実にメモリ開放処理を行うことができ
+ます。
+
+test/unit/test-snip.c:
+  # source: C
+  ...
+  static sen_snip *snip;
+  ...
+
+  void
+  setup(void)
+  {
+    snip = NULL;
+  }
+
+  void
+  teardown(void)
+  {
+    if (snip) {
+      sen_snip_close(snip);
+    }
+  }
+
+  void
+  test_simple_exec(void)
+  {
+    const gchar keyword[] = "Senna";
+
+    snip = sen_snip_open(sen_enc_default, 0, 100, 10,
+                         default_open_tag, strlen(default_open_tag),
+                         default_close_tag, strlen(default_close_tag),
+                         NULL);
+    cut_assert_not_null(snip);
+
+    cut_assert_equal_int(sen_success,
+                         sen_snip_add_cond(snip, keyword, strlen(keyword),
+                                           NULL, 0, NULL, 0));
+  }
+
+これでcut_assert_equal_int()が成功しても失敗してもsen_snip *
+は開放されます。Cutterではメモリ開放処理のためにstatic変数と
+setup()/teardown()を使うことが定石になっています。
+
+=== sen_snip_exec()のテスト
+
+次はsen_snip_add_cond()で設定したキーワード用のsnippetを生成
+するsen_snip_exec()のテストです。sen_snip_exec()もsen_rcを返
+すので、それを検証します。また、引数でsnippet数とsnippet文字
+列のバイト数も受けとるのでそれも検証します。特に目立った部分
+はありません。
+
+test/unit/test-snip.c:
+  # source: C
+  ...
+  static const gchar text[] =
+    "Senna is an embeddable fulltext search engine, which you can use in\n"
+    "conjunction with various scripting languages and databases. Senna is\n"
+    "an inverted index based engine, & combines the best of n-gram\n"
+    "indexing and word indexing to achieve fast, precise searches. While\n"
+    "senna codebase is rather compact it is scalable enough to handle large\n"
+    "amounts of data and queries.";
+  ...
+  void
+  test_simple_exec(void)
+  {
+    ...
+    unsigned int n_results;
+    unsigned int max_tagged_len;
+
+    ...
+
+    cut_assert_equal_int(sen_success,
+                         sen_snip_exec(snip, text, strlen(text),
+                                       &n_results, &max_tagged_len));
+    cut_assert_equal_uint(2, n_results);
+    cut_assert_equal_uint(105, max_tagged_len);
+  }
+
+=== sen_snip_get_result()のテスト
+
+最後はsen_snip_exec()で生成したsnippetの内容が正しいかどうか
+のテストです。snippetはsen_snip_get_result()で取得できるので
+その結果を検証します。n_resultsが2なので2回
+sen_snip_get_result()を呼び出す必要があります。
+
+snippetを格納する場所のサイズは動的に決まります。そのため、
+snippetを格納する領域を動的に確保する必要があります。
+setup()/teardown()の仕組みを用いてメモリを開放するようにしま
+す。ここ以外は特に目立った部分はありません。
+
+test/unit/test-snip.c:
+  # source: C
+  ...
+  static gchar *result;
+
+  void
+  setup(void)
+  {
+    ...
+    result = NULL;
+  }
+
+  void
+  teardown(void)
+  {
+    ...
+    if (result) {
+      g_free(result);
+    }
+  }
+
+  void
+  test_simple_exec(void)
+  {
+    ...
+    unsigned int result_len;
+
+    ...
+    result = g_new(gchar, max_tagged_len);
+
+    cut_assert_equal_int(sen_success,
+                         sen_snip_get_result(snip, 0, result, &result_len));
+    cut_assert_equal_string("[[Senna]] is an embeddable fulltext search engine, "
+                            "which you can use in\n"
+                            "conjunction with various scripti",
+                            result);
+    cut_assert_equal_uint(104, result_len);
+
+    cut_assert_equal_int(sen_success,
+                         sen_snip_get_result(snip, 1, result, &result_len));
+    cut_assert_equal_string("ng languages and databases. [[Senna]] is\n"
+                            "an inverted index based engine, & combines "
+                            "the best of n-gram\ni",
+                            result);
+    cut_assert_equal_uint(104, result_len);
+  }
+
+これで単純にsnippet APIを使った場合のテストが1つできました。
+同様に、異常な場合や違ったデータを用いた場合などのテストを作
+成していきます。
+
+=== テスト全体
+
+今回作成したテストは以下の通りです。
+
+test/unit/test-snip.c:
+test/unit/test-snip.c:
+  # source: C
+  #include <senna.h>
+  #include <gcutter.h>
+
+  void test_simple_exec(void);
+
+  static sen_snip *snip;
+  static const gchar default_open_tag[] = "[[";
+  static const gchar default_close_tag[] = "]]";
+  static const gchar text[] =
+    "Senna is an embeddable fulltext search engine, which you can use in\n"
+    "conjunction with various scripting languages and databases. Senna is\n"
+    "an inverted index based engine, & combines the best of n-gram\n"
+    "indexing and word indexing to achieve fast, precise searches. While\n"
+    "senna codebase is rather compact it is scalable enough to handle large\n"
+    "amounts of data and queries.";
+  static gchar *result;
+
+  void
+  setup(void)
+  {
+    snip = NULL;
+    result = NULL;
+  }
+
+  void
+  teardown(void)
+  {
+    if (snip) {
+      sen_snip_close(snip);
+    }
+    if (result) {
+      g_free(result);
+    }
+  }
+
+  void
+  test_simple_exec(void)
+  {
+    const gchar keyword[] = "Senna";
+    unsigned int n_results;
+    unsigned int max_tagged_len;
+    unsigned int result_len;
+
+    snip = sen_snip_open(sen_enc_default, 0, 100, 10,
+                         default_open_tag, strlen(default_open_tag),
+                         default_close_tag, strlen(default_close_tag),
+                         NULL);
+    cut_assert_not_null(snip);
+
+    cut_assert_equal_int(sen_success,
+                         sen_snip_add_cond(snip, keyword, strlen(keyword),
+                                           NULL, 0, NULL, 0));
+
+    cut_assert_equal_int(sen_success,
+                         sen_snip_exec(snip, text, strlen(text),
+                                       &n_results, &max_tagged_len));
+    cut_assert_equal_uint(2, n_results);
+    cut_assert_equal_uint(105, max_tagged_len);
+
+    result = g_new(gchar, max_tagged_len);
+
+    cut_assert_equal_int(sen_success,
+                         sen_snip_get_result(snip, 0, result, &result_len));
+    cut_assert_equal_string("[[Senna]] is an embeddable fulltext search engine, "
+                            "which you can use in\n"
+                            "conjunction with various scripti",
+                            result);
+    cut_assert_equal_uint(104, result_len);
+
+    cut_assert_equal_int(sen_success,
+                         sen_snip_get_result(snip, 1, result, &result_len));
+    cut_assert_equal_string("ng languages and databases. [[Senna]] is\n"
+                            "an inverted index based engine, & combines "
+                            "the best of n-gram\ni",
+                            result);
+    cut_assert_equal_uint(104, result_len);
+  }
+
+問題発生時に有用なデバッグ情報を増やしたり、より読みやすいテ
+ストにするなど、いろいろ改良するべき点は残っていますが、今回
+はこれで終了します。実際のコードはSennaのリポジトリを((<参照
+|URL:http://svn.razil.jp/senna/test/unit/>))してください。
+
+== まとめ
+
+ここでは以下のことについて説明しました。
+
+  * GNUビルドシステムを採用した既存のプロジェクトへのCutter
+    の組み込み方法
+    * cutter.m4で提供するM4マクロの使用方法
+    * Cutterをインストールしていない開発者への対応
+    * Cutterをインストールしていないユーザへの対応
+  * Cutterを用いたテスト環境の構築方法
+    * 独自cutterコマンドの作成方法
+    * 便利なテスト起動スクリプトrun-test.shの作成方法
+  * Cutterを用いたテストの作成方法
+    * setup()/teardown()を用いたメモリ管理の方法
+    * diffの出力((*FIXME*))
+
+Cで書かれたプロジェクトに単体テストフレームワークを導入する
+場合はCutterも検討してみてはいかがでしょうか。
