@@ -272,7 +272,7 @@ configure.ac:
   fi
 
 テストプログラムをビルドするときはGCUTTER_CFLAGSと
-GCUTTER_LIBSを使いますが、Senna専用テスト起動スクリプト
+GCUTTER_LIBSを使いますが、Senna専用テスト起動プログラム
 cutter-sennaをビルドするときはLIBCUTTER_CLFAGSと
 LIBCUTTER_LIBSを使います。このように、今回は同じディレクトリ
 以下（test/unit/）にビルドのしかたが異なるプログラムが含まれ
@@ -328,9 +328,91 @@ test/unit/cutter-senna.c:
     exit(success ? EXIT_SUCCESS : EXIT_FAILURE);
   }
 
-上記のソースを見れば分かる通り、起動スクリプトを作成するため
-にはcut_init()とcut_run()を呼び出すだけです。あとは、適切なタ
-イミングで必要な処理を行うだけです。例えば、Cutterの初期化
-（cut_init()）を行う前にSennaの初期化（sen_init()）を行う、
+上記のソースを見れば分かる通り、テスト起動プログラムを作成す
+るためにはcut_init()とcut_run()を呼び出すだけです。あとは、適
+切なタイミングで必要な処理を行うだけです。例えば、Cutterの初
+期化（cut_init()）を行う前にSennaの初期化（sen_init()）を行う、
 などです。
+
+=== テスト起動スクリプト
+
+Cutterをビルドシステムへ組み込むための最後の作業は、
+cutter-sennaを起動してテストを走らせるためのシェルスクリプト
+run-test.shの作成です。
+
+もちろん、直接cutter-sennaを実行してもテストを走らせることは
+できます。しかし、cutter-sennaを実行するときはいくつかオプショ
+ンを指定する必要があります。例えば、テストプログラムがあるディ
+レクトリなどがそれです。ここでrun-test.shを作成する理由は、
+cutter-sennaへ渡すオプションなどを指定しなくてもよいようにす
+るなど、より簡単にテストを実行できるようにするためです。
+
+テストが簡単に実行できるということはとても重要なことです。テ
+ストを実行することが面倒だと、だんだんテストを実行しなくなっ
+てしまうからです。テストが実行されないと、新しくテストを作成
+することも面倒になってくるでしょう。これは悪い循環といえます。
+これを防ぐためにも最初のうちから簡単にテストを実行できる仕組
+みを用意しておくことが重要です。
+
+また、引数なしでも動くrun-test.shを用意することにはもう一つ理
+由があります。それは、GNU Automakeが提供するテスト起動の仕組
+みであるmake checkからも利用できるようにすることです。make
+checkでは指定されたテスト起動スクリプトが引数なしでテストを実
+行できる必要があります。((-テスト起動スクリプトにオプションを
+指定する場合は環境変数を利用します。-))
+
+前置きが長くなりましたがテストをもっと簡単に走らせるためのス
+クリプト、run-test.shは以下のようになります。
+
+test/unit/run-test.sh:
+  # source: sh
+  #!/bin/sh
+
+  export BASE_DIR="`dirname $0`"
+
+  if test x"$NO_MAKE" != x"yes"; then
+      make -C $BASE_DIR/../../ > /dev/null || exit 1
+  fi
+
+  CUTTER=$BASE_DIR/cutter-senna
+  if test x"$CUTTER_DEBUG" = x"yes"; then
+      CUTTER="$BASE_DIR/../../libtool --mode=execute gdb --args $CUTTER"
+  fi
+  CUTTER_ARGS="-s $BASE_DIR"
+  $CUTTER $CUTTER_ARGS "$@" $BASE_DIR
+
+このスクリプトではmake check以外からも便利に利用できるように
+なっています。make check以外から起動された場合は必要なビルド
+を行ってからテストを起動します。つまり、run-test.shからテス
+トを起動した場合はビルド忘れがなくなります。
+
+また、make checkではテスト結果とビルド結果が混ざりそこそこの
+出力になりますが、run-test.sh経由でビルド・テストを行うと必
+要最小限の出力になり、問題の発見が簡単になります。実際の開発
+は以下のようなサイクルになります。
+
+  (1) ソース変更
+  (2) test/unit/run-test.shを実行
+      (1) テスト失敗→(1)に戻る
+  (3) コミット→(1)に戻る
+
+手順が少ないため開発のリズムが崩れにくくなります。このサイク
+ルをより簡単に行うための方法もあるのですが、それはまた別の機
+会にします。
+
+run-test.shができたので、make checkでrun-test.shを起動するよ
+うにMakefile.amを変更します。
+
+test/unit/Makefile.am:
+  # source: makefile
+  if WITH_CUTTER
+  TESTS = run-test.sh
+  TESTS_ENVIRONMENT = NO_MAKE=yes
+  ...
+  endif
+
+TESTS_ENVIRONMENTにNO_MAKE=yesを指定することにより、make
+check経由の場合はテスト実行前のmake実行を抑制します。
+
+== テストの作成
 
