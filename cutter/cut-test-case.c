@@ -50,7 +50,7 @@ enum
 {
     PROP_0,
     PROP_SETUP_FUNCTION,
-    PROP_TEAR_DOWN_FUNCTION,
+    PROP_TEARDOWN_FUNCTION,
     PROP_GET_CURRENT_TEST_CONTEXT_FUNCTION,
     PROP_SET_CURRENT_TEST_CONTEXT_FUNCTION,
     PROP_STARTUP_FUNCTION,
@@ -99,11 +99,11 @@ cut_test_case_class_init (CutTestCaseClass *klass)
                                 G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class, PROP_SETUP_FUNCTION, spec);
 
-    spec = g_param_spec_pointer("tear-down-function",
+    spec = g_param_spec_pointer("teardown-function",
                                 "Teardown Function",
-                                "The function for tear down",
+                                "The function for teardown",
                                 G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
-    g_object_class_install_property(gobject_class, PROP_TEAR_DOWN_FUNCTION, spec);
+    g_object_class_install_property(gobject_class, PROP_TEARDOWN_FUNCTION, spec);
 
     spec = g_param_spec_pointer("get-current-test-context-function",
                                 "Get current test context function",
@@ -199,7 +199,7 @@ set_property (GObject      *object,
       case PROP_SETUP_FUNCTION:
         priv->setup = g_value_get_pointer(value);
         break;
-      case PROP_TEAR_DOWN_FUNCTION:
+      case PROP_TEARDOWN_FUNCTION:
         priv->teardown = g_value_get_pointer(value);
         break;
       case PROP_GET_CURRENT_TEST_CONTEXT_FUNCTION:
@@ -232,7 +232,7 @@ get_property (GObject    *object,
       case PROP_SETUP_FUNCTION:
         g_value_set_pointer(value, priv->setup);
         break;
-      case PROP_TEAR_DOWN_FUNCTION:
+      case PROP_TEARDOWN_FUNCTION:
         g_value_set_pointer(value, priv->teardown);
         break;
       case PROP_STARTUP_FUNCTION:
@@ -249,24 +249,24 @@ get_property (GObject    *object,
 
 CutTestCase *
 cut_test_case_new (const gchar *name,
-                   CutSetupFunction setup_function,
-                   CutTeardownFunction teardown_function,
-                   CutGetCurrentTestContextFunction get_current_test_context_function,
-                   CutSetCurrentTestContextFunction set_current_test_context_function,
-                   CutStartupFunction startup_function,
-                   CutShutdownFunction shutdown_function)
+                   CutSetupFunction setup,
+                   CutTeardownFunction teardown,
+                   CutGetCurrentTestContextFunction get_current_test_context,
+                   CutSetCurrentTestContextFunction set_current_test_context,
+                   CutStartupFunction startup,
+                   CutShutdownFunction shutdown)
 {
     return g_object_new(CUT_TYPE_TEST_CASE,
                         "name", name,
                         "element-name", "test-case",
-                        "setup-function", setup_function,
-                        "tear-down-function", teardown_function,
+                        "setup-function", setup,
+                        "teardown-function", teardown,
                         "get-current-test-context-function",
-                        get_current_test_context_function,
+                        get_current_test_context,
                         "set-current-test-context-function",
-                        set_current_test_context_function,
-                        "startup-function", startup_function,
-                        "shutdown-function", shutdown_function,
+                        set_current_test_context,
+                        "startup-function", startup,
+                        "shutdown-function", shutdown,
                         NULL);
 }
 

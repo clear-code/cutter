@@ -38,6 +38,9 @@ struct _CutRepositoryPrivate
     GList *exclude_files_regexs;
     GList *exclude_dirs_regexs;
     GList *loaders;
+
+    gint deep;
+    CutLoader *test_suite_loader;
 };
 
 enum
@@ -89,6 +92,8 @@ cut_repository_init (CutRepository *repository)
     priv->loaders = NULL;
     priv->exclude_files_regexs = NULL;
     priv->exclude_dirs_regexs = NULL;
+    priv->deep = 0;
+    priv->test_suite_loader = NULL;
 }
 
 static void
@@ -122,6 +127,11 @@ dispose (GObject *object)
     if (priv->exclude_dirs_regexs) {
         free_regexs(priv->exclude_dirs_regexs);
         priv->exclude_dirs_regexs = NULL;
+    }
+
+    if (priv->test_suite_loader) {
+        g_object_unref(priv->test_suite_loader);
+        priv->test_suite_loader = NULL;
     }
 
     G_OBJECT_CLASS(cut_repository_parent_class)->dispose(object);
@@ -171,8 +181,37 @@ cut_repository_new (const gchar *directory)
                         NULL);
 }
 
+static gboolean
+is_test_suite_so_path_name (const gchar *path_name)
+{
+    gboolean is_test_suite_so;
+    gchar *base_name;
+
+    base_name = g_path_get_basename(path_name);
+    is_test_suite_so = g_str_has_prefix(base_name, "suite_");
+    g_free(base_name);
+    return is_test_suite_so;
+}
+
 static void
-cut_repository_collect_loader (CutRepository *repository, const gchar *dir_name)
+update_test_suite_loader (CutRepositoryPrivate *priv, CutLoader *loader,
+                          gint deep)
+{
+    if (!priv->test_suite_loader) {
+        priv->deep = deep;
+        priv->test_suite_loader = g_object_ref(loader);
+    }
+
+    if (priv->deep > deep) {
+        priv->deep = deep;
+        g_object_unref(priv->test_suite_loader);
+        priv->test_suite_loader = g_object_ref(loader);
+    }
+}
+
+static void
+cut_repository_collect_loader (CutRepository *repository, const gchar *dir_name,
+                               gint deep)
 {
     GDir *dir;
     const gchar *entry;
@@ -183,25 +222,32 @@ cut_repository_collect_loader (CutRepository *repository, const gchar *dir_name)
         return;
 
     while ((entry = g_dir_read_name(dir))) {
-        CutLoader *loader;
         gchar *path_name;
 
         path_name = g_build_filename(dir_name, entry, NULL);
+        if (g_file_test(path_name, G_FILE_TEST_IS_DIR)) {
+            if (cut_utils_filter_match(priv->exclude_dirs_regexs, entry)) {
+                g_free(path_name);
+                continue;
+            }
+            cut_repository_collect_loader(repository, path_name, deep + 1);
+        } else {
+            CutLoader *loader;
 
-        if (g_file_test(path_name, G_FILE_TEST_IS_DIR) &&
-            !cut_utils_filter_match(priv->exclude_dirs_regexs, entry))
-            cut_repository_collect_loader(repository, path_name);
+            if (cut_utils_filter_match(priv->exclude_files_regexs, entry) ||
+                !g_str_has_suffix(entry, "."G_MODULE_SUFFIX)) {
+                g_free(path_name);
+                continue;
+            }
 
-        if (cut_utils_filter_match(priv->exclude_files_regexs, entry) ||
-            !g_str_has_suffix(entry, "."G_MODULE_SUFFIX)) {
-            g_free(path_name);
-            continue;
+            loader = cut_loader_new(path_name);
+            if (is_test_suite_so_path_name(path_name)) {
+                update_test_suite_loader(priv, loader, deep);
+            } else {
+                priv->loaders = g_list_prepend(priv->loaders, loader);
+            }
         }
-
-        loader = cut_loader_new(path_name);
         g_free(path_name);
-
-        priv->loaders = g_list_prepend(priv->loaders, loader);
     }
     g_dir_close(dir);
 }
@@ -216,9 +262,16 @@ cut_repository_create_test_suite (CutRepository *repository)
     if (!priv->directory)
         return NULL;
 
-    cut_repository_collect_loader(repository, priv->directory);
+    if (!priv->loaders) {
+        priv->deep = 0;
+        cut_repository_collect_loader(repository, priv->directory, priv->deep);
+    }
 
-    suite = cut_test_suite_new();
+    if (priv->test_suite_loader)
+        suite = cut_loader_load_test_suite(priv->test_suite_loader);
+    if (!suite)
+        suite = cut_test_suite_new_empty();
+
     for (list = priv->loaders; list; list = g_list_next(list)) {
         CutLoader *loader = CUT_LOADER(list->data);
         CutTestCase *test_case;

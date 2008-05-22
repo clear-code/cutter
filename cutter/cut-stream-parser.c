@@ -716,7 +716,7 @@ start_stream (CutStreamParserPrivate *priv,
         priv->ready_test_suite = ready_test_suite_new();
     } else if (g_str_equal("start-test-suite", element_name)) {
         PUSH_STATE(priv, IN_START_TEST_SUITE);
-        PUSH_TEST_SUITE(priv, cut_test_suite_new());
+        PUSH_TEST_SUITE(priv, cut_test_suite_new_empty());
     } else if (g_str_equal("ready-test-case", element_name)) {
         PUSH_STATE(priv, IN_READY_TEST_CASE);
         priv->ready_test_case = ready_test_case_new();;
@@ -752,7 +752,7 @@ start_ready_test_suite (CutStreamParserPrivate *priv,
 {
     if (g_str_equal("test-suite", element_name)) {
         PUSH_STATE(priv, IN_TEST_SUITE);
-        priv->ready_test_suite->test_suite = cut_test_suite_new();
+        priv->ready_test_suite->test_suite = cut_test_suite_new_empty();
         PUSH_TEST_SUITE(priv, priv->ready_test_suite->test_suite);
     } else if (g_str_equal("n-test-cases", element_name)) {
         PUSH_STATE(priv, IN_READY_TEST_SUITE_N_TEST_CASES);
@@ -770,7 +770,7 @@ start_start_test_suite (CutStreamParserPrivate *priv,
 {
     if (g_str_equal("test-suite", element_name)) {
         PUSH_STATE(priv, IN_TEST_SUITE);
-        PUSH_TEST_SUITE(priv, cut_test_suite_new());
+        PUSH_TEST_SUITE(priv, cut_test_suite_new_empty());
     } else {
         invalid_element(context, error);
     }
@@ -964,7 +964,7 @@ start_complete_test_suite (CutStreamParserPrivate *priv,
 {
     if (g_str_equal("test-suite", element_name)) {
         PUSH_STATE(priv, IN_TEST_SUITE);
-        PUSH_TEST_SUITE(priv, cut_test_suite_new());
+        PUSH_TEST_SUITE(priv, cut_test_suite_new_empty());
     } else {
         invalid_element(context, error);
     }
@@ -1047,7 +1047,7 @@ start_test_context (CutStreamParserPrivate *priv, GMarkupParseContext *context,
         CutTestSuite *test_suite;
 
         PUSH_STATE(priv, IN_TEST_SUITE);
-        test_suite = cut_test_suite_new();
+        test_suite = cut_test_suite_new_empty();
         cut_test_context_set_test_suite(PEEK_TEST_CONTEXT(priv), test_suite);
         PUSH_TEST_SUITE(priv, test_suite);
         g_object_unref(test_suite);

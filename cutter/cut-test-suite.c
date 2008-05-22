@@ -39,6 +39,22 @@
 #include "cut-marshalers.h"
 #include "cut-test-result.h"
 
+#define CUT_TEST_SUITE_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_SUITE, CutTestSuitePrivate))
+
+typedef struct _CutTestSuitePrivate	CutTestSuitePrivate;
+struct _CutTestSuitePrivate
+{
+    CutWarmupFunction warmup;
+    CutCooldownFunction cooldown;
+};
+
+enum
+{
+    PROP_0,
+    PROP_WARMUP_FUNCTION,
+    PROP_COOLDOWN_FUNCTION
+};
+
 enum
 {
     READY_SIGNAL,
@@ -54,12 +70,39 @@ static gint cut_test_suite_signals[LAST_SIGNAL] = {0};
 
 G_DEFINE_TYPE (CutTestSuite, cut_test_suite, CUT_TYPE_TEST_CONTAINER)
 
+static void dispose        (GObject         *object);
+static void set_property   (GObject         *object,
+                            guint            prop_id,
+                            const GValue    *value,
+                            GParamSpec      *pspec);
+static void get_property   (GObject         *object,
+                            guint            prop_id,
+                            GValue          *value,
+                            GParamSpec      *pspec);
+
 static void
 cut_test_suite_class_init (CutTestSuiteClass *klass)
 {
     GObjectClass *gobject_class;
+    GParamSpec *spec;
 
     gobject_class = G_OBJECT_CLASS(klass);
+
+    gobject_class->dispose      = dispose;
+    gobject_class->set_property = set_property;
+    gobject_class->get_property = get_property;
+
+    spec = g_param_spec_pointer("warmup-function",
+                                "Warmup Function",
+                                "The function for warmup",
+                                G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+    g_object_class_install_property(gobject_class, PROP_WARMUP_FUNCTION, spec);
+
+    spec = g_param_spec_pointer("cooldown-function",
+                                "Cooldown Function",
+                                "The function for cooldown",
+                                G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+    g_object_class_install_property(gobject_class, PROP_COOLDOWN_FUNCTION, spec);
 
     cut_test_suite_signals[READY_SIGNAL]
         = g_signal_new("ready",
@@ -87,19 +130,83 @@ cut_test_suite_class_init (CutTestSuiteClass *klass)
                        NULL, NULL,
                        g_cclosure_marshal_VOID__OBJECT,
                        G_TYPE_NONE, 1, CUT_TYPE_TEST_CASE);
+
+    g_type_class_add_private(gobject_class, sizeof(CutTestSuitePrivate));
 }
 
 static void
 cut_test_suite_init (CutTestSuite *test_suite)
 {
+    CutTestSuitePrivate *priv = CUT_TEST_SUITE_GET_PRIVATE(test_suite);
+
+    priv->warmup = NULL;
+    priv->cooldown = NULL;
+}
+
+static void
+dispose (GObject *object)
+{
+    G_OBJECT_CLASS(cut_test_suite_parent_class)->dispose(object);
+}
+
+static void
+set_property (GObject      *object,
+              guint         prop_id,
+              const GValue *value,
+              GParamSpec   *pspec)
+{
+    CutTestSuitePrivate *priv = CUT_TEST_SUITE_GET_PRIVATE(object);
+
+    switch (prop_id) {
+      case PROP_WARMUP_FUNCTION:
+        priv->warmup = g_value_get_pointer(value);
+        break;
+      case PROP_COOLDOWN_FUNCTION:
+        priv->cooldown = g_value_get_pointer(value);
+        break;
+      default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
+        break;
+    }
+}
+
+static void
+get_property (GObject    *object,
+              guint       prop_id,
+              GValue     *value,
+              GParamSpec *pspec)
+{
+    CutTestSuitePrivate *priv = CUT_TEST_SUITE_GET_PRIVATE(object);
+
+    switch (prop_id) {
+      case PROP_WARMUP_FUNCTION:
+        g_value_set_pointer(value, priv->warmup);
+        break;
+      case PROP_COOLDOWN_FUNCTION:
+        g_value_set_pointer(value, priv->cooldown);
+        break;
+      default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
+        break;
+    }
 }
 
 CutTestSuite *
-cut_test_suite_new (void)
+cut_test_suite_new (const gchar *name,
+                    CutWarmupFunction warmup, CutCooldownFunction cooldown)
 {
     return g_object_new(CUT_TYPE_TEST_SUITE,
                         "element-name", "test-suite",
+                        "name", name,
+                        "warmup-function", warmup,
+                        "cooldown-function", cooldown,
                         NULL);
+}
+
+CutTestSuite *
+cut_test_suite_new_empty (void)
+{
+    return cut_test_suite_new(NULL, NULL, NULL);
 }
 
 typedef struct _RunTestInfo
@@ -126,7 +233,8 @@ run (gpointer data)
     test_names = info->test_names;
 
     g_signal_emit_by_name(test_suite, "start-test-case", test_case);
-    success = cut_test_case_run_with_filter(test_case, run_context, (const gchar**)test_names);
+    success = cut_test_case_run_with_filter(test_case, run_context,
+                                            (const gchar**)test_names);
     g_signal_emit_by_name(test_suite, "complete-test-case", test_case);
 
     g_object_unref(test_suite);
@@ -261,9 +369,11 @@ emit_ready_signal (CutTestSuite *test_suite, GList *test_cases,
 }
 
 static gboolean
-cut_test_suite_run_test_cases (CutTestSuite *test_suite, CutRunContext *run_context,
+cut_test_suite_run_test_cases (CutTestSuite *test_suite,
+                               CutRunContext *run_context,
                                GList *test_cases, const gchar **test_names)
 {
+    CutTestSuitePrivate *priv;
     GList *node, *threads = NULL;
     GList *sorted_test_cases;
     gboolean try_thread;
@@ -274,8 +384,11 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite, CutRunContext *run_cont
     gboolean set_segv_action = TRUE;
     gboolean set_int_action = TRUE;
 
+    priv = CUT_TEST_SUITE_GET_PRIVATE(test_suite);
+
     sorted_test_cases = g_list_copy(test_cases);
-    sorted_test_cases = cut_run_context_sort_test_cases(run_context, sorted_test_cases);
+    sorted_test_cases = cut_run_context_sort_test_cases(run_context,
+                                                        sorted_test_cases);
     i_will_be_back_action.sa_handler = i_will_be_back_handler;
     sigemptyset(&i_will_be_back_action.sa_mask);
     i_will_be_back_action.sa_flags = 0;
@@ -289,6 +402,9 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite, CutRunContext *run_cont
         cut_run_context_prepare_test_suite(run_context, test_suite);
         emit_ready_signal(test_suite, sorted_test_cases, test_names);
         g_signal_emit_by_name(CUT_TEST(test_suite), "start");
+
+        if (priv->warmup)
+            priv->warmup();
 
         try_thread = cut_run_context_get_multi_thread(run_context);
         for (node = sorted_test_cases; node; node = g_list_next(node)) {
@@ -335,6 +451,9 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite, CutRunContext *run_cont
         sigaction(SIGINT, &previous_int_action, NULL);
     if (set_segv_action)
         sigaction(SIGSEGV, &previous_segv_action, NULL);
+
+    if (priv->cooldown)
+        priv->cooldown();
 
     g_signal_emit_by_name(CUT_TEST(test_suite), "complete");
 

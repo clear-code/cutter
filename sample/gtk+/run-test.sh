@@ -13,7 +13,7 @@ export CUT_REPORT_FACTORY_MODULE_DIR=$BASE_DIR/../../cutter/module/report/.libs
 export CUT_STREAMER_MODULE_DIR=$BASE_DIR/../../cutter/module/streamer/.libs
 export CUT_STREAMER_FACTORY_MODULE_DIR=$BASE_DIR/../../cutter/module/streamer/.libs
 
-CUTTER=$BASE_DIR/cutter-gtk
+CUTTER=$BASE_DIR/../../cutter/cutter
 if test x"$CUTTER_DEBUG" = x"yes"; then
     CUTTER="$BASE_DIR/../../libtool --mode=execute gdb --args $CUTTER"
 fi

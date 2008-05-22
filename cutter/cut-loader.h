@@ -24,6 +24,7 @@
 
 #include "cut-test.h"
 #include "cut-test-case.h"
+#include "cut-test-suite.h"
 
 G_BEGIN_DECLS
 
@@ -49,8 +50,9 @@ struct _CutLoaderClass
 
 GType cut_loader_get_type  (void) G_GNUC_CONST;
 
-CutLoader *cut_loader_new (const gchar *soname);
-CutTestCase *cut_loader_load_test_case (CutLoader *loader);
+CutLoader    *cut_loader_new             (const gchar *soname);
+CutTestCase  *cut_loader_load_test_case  (CutLoader *loader);
+CutTestSuite *cut_loader_load_test_suite (CutLoader *loader);
 
 G_END_DECLS
 

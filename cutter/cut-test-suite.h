@@ -34,6 +34,9 @@ G_BEGIN_DECLS
 #define CUT_IS_TEST_SUITE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_TEST_SUITE))
 #define CUT_TEST_SUITE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_TEST_SUITE, CutTestSuiteClass))
 
+typedef void (*CutWarmupFunction)    (void);
+typedef void (*CutCooldownFunction)   (void);
+
 typedef struct _CutTestSuiteClass CutTestSuiteClass;
 
 struct _CutTestSuite
@@ -54,7 +57,10 @@ struct _CutTestSuiteClass
 
 GType           cut_test_suite_get_type      (void) G_GNUC_CONST;
 
-CutTestSuite   *cut_test_suite_new           (void);
+CutTestSuite   *cut_test_suite_new           (const gchar *name,
+                                              CutWarmupFunction warmup,
+                                              CutCooldownFunction cooldown);
+CutTestSuite   *cut_test_suite_new_empty     (void);
 void            cut_test_suite_add_test_case (CutTestSuite *suite,
                                               CutTestCase  *test_case);
 gboolean        cut_test_suite_run           (CutTestSuite  *suite,

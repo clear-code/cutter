@@ -34,6 +34,7 @@
 #include "cut-loader.h"
 #include "cut-experimental.h"
 
+#define TEST_SUITE_SO_NAME_PREFIX "suite_"
 #define TEST_NAME_PREFIX "test_"
 #define ATTRIBUTE_PREFIX "attributes_"
 #define CUT_LOADER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_LOADER, CutLoaderPrivate))
@@ -417,34 +418,24 @@ create_test_case (CutLoader *loader)
 {
     CutLoaderPrivate *priv;
     CutTestCase *test_case;
-    CutSetupFunction setup_function = NULL;
-    CutGetCurrentTestContextFunction get_current_test_context_function = NULL;
-    CutSetCurrentTestContextFunction set_current_test_context_function = NULL;
-    CutStartupFunction startup_function = NULL;
-    CutShutdownFunction shutdown_function = NULL;
-    CutTeardownFunction teardown_function = NULL;
+    CutSetupFunction setup = NULL;
+    CutGetCurrentTestContextFunction get_current_test_context = NULL;
+    CutSetCurrentTestContextFunction set_current_test_context = NULL;
+    CutStartupFunction startup = NULL;
+    CutShutdownFunction shutdown = NULL;
+    CutTeardownFunction teardown = NULL;
     gchar *test_case_name, *filename;
 
     priv = CUT_LOADER_GET_PRIVATE(loader);
 
-    g_module_symbol(priv->module,
-                    "setup",
-                    (gpointer)&setup_function);
-    g_module_symbol(priv->module,
-                    "teardown",
-                    (gpointer)&teardown_function);
-    g_module_symbol(priv->module,
-                    "get_current_test_context",
-                    (gpointer)&get_current_test_context_function);
-    g_module_symbol(priv->module,
-                    "set_current_test_context",
-                    (gpointer)&set_current_test_context_function);
-    g_module_symbol(priv->module,
-                    "startup",
-                    (gpointer)&startup_function);
-    g_module_symbol(priv->module,
-                    "shutdown",
-                    (gpointer)&shutdown_function);
+    g_module_symbol(priv->module, "setup", (gpointer)&setup);
+    g_module_symbol(priv->module, "teardown", (gpointer)&teardown);
+    g_module_symbol(priv->module, "get_current_test_context",
+                    (gpointer)&get_current_test_context);
+    g_module_symbol(priv->module, "set_current_test_context",
+                    (gpointer)&set_current_test_context);
+    g_module_symbol(priv->module, "startup", (gpointer)&startup);
+    g_module_symbol(priv->module, "shutdown", (gpointer)&shutdown);
 
     filename = g_path_get_basename(priv->so_filename);
     if (g_str_has_prefix(filename, "lib")) {
@@ -457,12 +448,10 @@ create_test_case (CutLoader *loader)
                                strlen(filename) - strlen(G_MODULE_SUFFIX) -1);
     g_free(filename);
     test_case = cut_test_case_new(test_case_name,
-                                  setup_function,
-                                  teardown_function,
-                                  get_current_test_context_function,
-                                  set_current_test_context_function,
-                                  startup_function,
-                                  shutdown_function);
+                                  setup, teardown,
+                                  get_current_test_context,
+                                  set_current_test_context,
+                                  startup, shutdown);
     g_free(test_case_name);
 
     g_object_ref(loader);
@@ -487,7 +476,7 @@ set_attributes (CutTest *test, GList *attributes)
 CutTestCase *
 cut_loader_load_test_case (CutLoader *loader)
 {
-    GList *node;;
+    GList *node;
     GList *test_names;
     CutTestCase *test_case;
     CutLoaderPrivate *priv = CUT_LOADER_GET_PRIVATE(loader);
@@ -530,6 +519,52 @@ cut_loader_load_test_case (CutLoader *loader)
     g_list_free(test_names);
 
     return test_case;
+}
+
+static gchar *
+get_suite_prefix (CutLoaderPrivate *priv)
+{
+    gchar *prefix, *base_name;
+
+    base_name = g_path_get_basename(priv->so_filename);
+    prefix = g_strndup(base_name + strlen(TEST_SUITE_SO_NAME_PREFIX),
+                       strlen(base_name) -
+                       strlen(TEST_SUITE_SO_NAME_PREFIX) -
+                       strlen("." G_MODULE_SUFFIX));
+    g_free(base_name);
+    return prefix;
+}
+
+CutTestSuite *
+cut_loader_load_test_suite (CutLoader *loader)
+{
+    CutLoaderPrivate *priv;
+    gchar *prefix, *warmup_function_name, *cooldown_function_name;
+    CutWarmupFunction warmup = NULL;
+    CutCooldownFunction cooldown = NULL;
+
+    priv = CUT_LOADER_GET_PRIVATE(loader);
+
+    if (!priv->so_filename)
+        return NULL;
+
+    priv->module = g_module_open(priv->so_filename, G_MODULE_BIND_LAZY);
+    if (!priv->module)
+        return NULL;
+
+    prefix = get_suite_prefix(priv);
+
+    warmup_function_name = g_strconcat(prefix, "_", "warmup", NULL);
+    g_module_symbol(priv->module, warmup_function_name, (gpointer)&warmup);
+    g_free(warmup_function_name);
+
+    cooldown_function_name = g_strconcat(prefix, "_", "cooldown", NULL);
+    g_module_symbol(priv->module, cooldown_function_name, (gpointer)&cooldown);
+    g_free(cooldown_function_name);
+
+    g_free(prefix);
+
+    return cut_test_suite_new(NULL, warmup, cooldown);
 }
 
 /*

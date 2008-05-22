@@ -1,5 +1,18 @@
 2008-05-22  Kouhei Sutou  <kou@cozmixng.org>
 
+	* sample/gtk+/: use warmup() mechanism.
+
+	* cutter/cut-repository.c: use cut_loader_load_test_suite().
+
+	* cutter/cut-loader.c (cut_loader_load_test_suite): add.
+
+	* cutter/cut-test-suite.[ch]:
+	- cut_test_suite_new() requires some arguments.
+	- add cut_test_suite_new_empty().
+
+	* cutter/, test/: use cut_test_suite_new_empty() instead of
+	cut_test_suite_new().
+
 	* configure.ac: don't use temporary variable.
 
 	* configure.ac: add missing 's'.

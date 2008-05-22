@@ -336,7 +336,7 @@ test_get_test_suite (void)
                                  NULL, NULL, NULL, NULL, 0);
     cut_assert_null(cut_test_result_get_test_suite(result));
 
-    suite = cut_test_suite_new();
+    suite = cut_test_suite_new_empty();
     cut_test_result_set_test_suite(result, suite);
     cut_assert_equal_pointer(suite, cut_test_result_get_test_suite(result));
 

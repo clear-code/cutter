@@ -102,7 +102,7 @@ setup (void)
 
     run_context = CUT_RUN_CONTEXT(cut_test_runner_new());
 
-    test_object = cut_test_suite_new();
+    test_object = cut_test_suite_new_empty();
 
     test_path = g_build_filename(cuttest_get_base_dir(),
                                  "loader_test_dir",

@@ -38,7 +38,7 @@ setup (void)
                                   get_current_test_context,
                                   set_current_test_context,
                                   NULL, NULL);
-    test_suite = cut_test_suite_new();
+    test_suite = cut_test_suite_new_empty();
     cut_test_suite_add_test_case(test_suite, test_case);
 }
 

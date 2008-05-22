@@ -240,7 +240,7 @@ test_ready_signal (void)
     CutTestSuite *suite;
     CutTestCase *test_case;
 
-    suite = cut_test_suite_new();
+    suite = cut_test_suite_new_empty();
 
     test_case = cut_test_case_new("dummy test case",
                                   NULL,

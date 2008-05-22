@@ -20,7 +20,7 @@ void
 setup (void)
 {
     context = cut_test_context_new(NULL, NULL, NULL);
-    test_suite = cut_test_suite_new();
+    test_suite = cut_test_suite_new_empty();
     test_case = cut_test_case_new("my-test-case",
                                   NULL, NULL,
                                   NULL, NULL,
