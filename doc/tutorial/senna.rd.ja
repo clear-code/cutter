@@ -219,14 +219,118 @@ test/unit/以下がビルド対象に加わったので、test/unit/以下に作
 
 ただし、Sennaのようにライブラリ初期化・終了関数
 （sen_init()/sen_fin()）を用意している場合はCutterが提供して
-いるcutterコマンドを利用することはできません。おれおれcutter
-コマンドを作ることになります。
+いるcutterコマンドを利用することはできません。テストを実行す
+る前に初期化関数を、実行した後に終了関数を呼び出す必要がある
+からです。
 
-((*FIXME*))
+このような場合はプロジェクト専用のcutterコマンドを作成し、テ
+スト実行前と後に必要な処理を行います。プロジェクト専用の
+cutterコマンドを作成するためにはlibcutterパッケージを利用し
+ます。
 
 === libcutter
 
-  * libcutter: 独自のテスト起動コマンド（通常はcutterコマン
-    ド）を作成する場合に利用
+libcutterは独自のテスト起動コマンド（通常はcutterコマンド）
+を作成する場合に利用するパッケージです。libcutterを利用する
+ためには以下の作業が必要になります。
 
-((*FIXME*))
+  * libcutterが利用可能かどうかを検出する
+  * cutter-senna（Senna用のテスト起動コマンド）をビルドする
+    ための設定
+  * cutter-senna.cの作成
+
+まず、libcutterが利用可能かどうかを検出するために
+configure.acに以下を追加します。
+
+configure.ac:
+  # source: m4
+  if test "$ac_cv_use_cutter" != "no"; then
+    PKG_CHECK_MODULES(LIBCUTTER, libcutter, [], [ac_cv_use_cutter=no])
+    AC_SUBST(LIBCUTTER_CFLAGS)
+    AC_SUBST(LIBCUTTER_LIBS)
+  fi
+
+libcutterもpkg-configのパッケージなのでpkg-configに対応して
+いる他のライブラリと同じように利用可能かどうかを検出できます。
+ここではCutterが利用可能な場合だけ（$ac_cv_use_cutterが"no"
+ではないときだけ）libcutterを検出しています。そのため、この
+記述はAC_CHECK_GCUTTERのあとに記述する必要があります。
+
+configure.ac:
+  # source: m4
+  AC_CHECK_GCUTTER
+
+  if test "$ac_cv_use_cutter" != "no"; then
+    PKG_CHECK_MODULES(LIBCUTTER, libcutter, [], [ac_cv_use_cutter=no])
+    AC_SUBST(LIBCUTTER_CFLAGS)
+    AC_SUBST(LIBCUTTER_LIBS)
+  fi
+
+  AM_CONDITIONAL([WITH_CUTTER], [test "$ac_cv_use_cutter" != "no"])
+  if test "$ac_cv_use_cutter" != "no"; then
+    AC_DEFINE(WITH_CUTTER, 1, [Define to 1 if you use Cutter])
+  fi
+
+テストプログラムをビルドするときはGCUTTER_CFLAGSと
+GCUTTER_LIBSを使いますが、Senna専用テスト起動スクリプト
+cutter-sennaをビルドするときはLIBCUTTER_CLFAGSと
+LIBCUTTER_LIBSを使います。このように、今回は同じディレクトリ
+以下（test/unit/）にビルドのしかたが異なるプログラムが含まれ
+るので、configure.acに以下を記述し、各ターゲット毎にビルド方
+法を変更できるようにすることを忘れないでください。
+
+configure.ac:
+  # source: m4
+  AM_PROG_CC_C_O
+
+libcutterが検出できたで、それを利用してcutter-sennaをビルド
+する方法を設定します。test/unit/Makefile.amを以下のように変
+更します。
+
+test/unit/Makefile.am:
+  # source: makefile
+  if WITH_CUTTER
+  noinst_PROGRAMS = cutter-senna
+  endif
+
+  INCLUDES = -I. -I../.. -I../../lib $(SENNA_INCLUDEDIR)
+
+  cutter_senna_SOURCES = cutter-senna.c
+  cutter_senna_CFLAGS = $(LIBCUTTER_CFLAGS)
+  cutter_senna_LDADD = $(top_builddir)/lib/libsenna.la $(LIBCUTTER_LIBS)
+
+よくあるMakefile.amの書き方です。noinst_PROGRAMSをif
+WITH_CUTTER ... endifの中に入れているのは、Cutterがない環境で
+はビルド対象からはずし、ビルドエラーにならないようにするため
+です。
+
+=== カスタムテスト起動プログラム
+
+libcutterパッケージを使用することで簡単にテスト起動プログラ
+ムを作成することができます。Senna用のテスト起動プログラム
+cutter-sennaのソースは以下の通りです。
+
+test/unit/cutter-senna.c:
+  # source: C
+  #include <stdlib.h>
+  #include <senna.h>
+  #include <cutter/cut-main.h>
+
+  int
+  main(int argc, char **argv)
+  {
+    int success;
+
+    sen_init();
+    cut_init(&argc, &argv);
+    success = cut_run();
+    sen_fin();
+    exit(success ? EXIT_SUCCESS : EXIT_FAILURE);
+  }
+
+上記のソースを見れば分かる通り、起動スクリプトを作成するため
+にはcut_init()とcut_run()を呼び出すだけです。あとは、適切なタ
+イミングで必要な処理を行うだけです。例えば、Cutterの初期化
+（cut_init()）を行う前にSennaの初期化（sen_init()）を行う、
+などです。
+
