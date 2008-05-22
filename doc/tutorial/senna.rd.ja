@@ -698,6 +698,48 @@ test/unit/test-snip.c:
 同様に、異常な場合や違ったデータを用いた場合などのテストを作
 成していきます。
 
+=== diff
+
+せっかくなのでCutterのテスト結果の出力方法を紹介します。
+
+Cutterは
+((<cut_assert_equal_string|URL:http://cutter.sourceforge.net/reference/ja/cutter-cut-assertions.html#cut-assert-equal-string>))
+で文字列の比較が失敗したときには、どの部分が異なったかという
+差分情報を表示します。
+
+例えば、今回のテストの最後のcut_assert_equal_string()が失敗
+した場合は以下のような差分情報が表示されます。
+
+  diff:
+    - ng languages and DBes. [[Senna]] is
+    ?                  ^^
+    + ng languages and databases. [[Senna]] is
+    ?                  ^^^^^^^
+    - an Inverted Index Based Engine, & combines the best of n-gram
+    ?    ^        ^     ^     ^
+    + an inverted index based engine, & combines the best of n-gram
+    ?    ^        ^     ^     ^
+      i
+
+このときの期待した結果は以下の通りです。
+  ng languages and DBes. [[Senna]] is
+  an Inverted Index Based Engine, & combines the best of n-gram
+  i
+
+実際の結果は以下の通りです。
+  ng languages and databases. [[Senna]] is
+  an inverted index based engine, & combines the best of n-gram
+  i
+
+差分を見てもらうと分かる通り、異なっている行を示すだけではな
+くて、行内で異なっている文字まで示しています。（例えば、DBの
+下に^^が付いている。）
+
+広く使われているunified diff形式では行内で異なる文字は表示し
+ません。テストでは1行のみの比較を行うことも多く、行単位だけ
+の差分よりも文字単位での差分表示も行った方がデバッグが行いや
+すいという判断からこのような形式になっています。
+
 === テスト全体
 
 今回作成したテストは以下の通りです。
@@ -795,14 +837,14 @@ test/unit/test-snip.c:
   * GNUビルドシステムを採用した既存のプロジェクトへのCutter
     の組み込み方法
     * cutter.m4で提供するM4マクロの使用方法
-    * Cutterをインストールしていない開発者への対応
     * Cutterをインストールしていないユーザへの対応
+    * Cutterをインストールしていない開発者への対応
   * Cutterを用いたテスト環境の構築方法
     * 独自cutterコマンドの作成方法
     * 便利なテスト起動スクリプトrun-test.shの作成方法
   * Cutterを用いたテストの作成方法
     * setup()/teardown()を用いたメモリ管理の方法
-    * diffの出力((*FIXME*))
+    * diffの出力
 
 Cで書かれたプロジェクトに単体テストフレームワークを導入する
 場合はCutterも検討してみてはいかがでしょうか。
