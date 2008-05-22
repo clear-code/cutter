@@ -524,14 +524,14 @@ cut_loader_load_test_case (CutLoader *loader)
 static gchar *
 get_suite_prefix (CutLoaderPrivate *priv)
 {
-    gchar *prefix, *base_name;
+    gchar *prefix, *base_name, *original_base_name;
 
-    base_name = g_path_get_basename(priv->so_filename);
-    prefix = g_strndup(base_name + strlen(TEST_SUITE_SO_NAME_PREFIX),
-                       strlen(base_name) -
-                       strlen(TEST_SUITE_SO_NAME_PREFIX) -
-                       strlen("." G_MODULE_SUFFIX));
-    g_free(base_name);
+    original_base_name = base_name = g_path_get_basename(priv->so_filename);
+    if (g_str_has_prefix(base_name, TEST_SUITE_SO_NAME_PREFIX))
+        base_name += strlen(TEST_SUITE_SO_NAME_PREFIX);
+    prefix = g_strndup(base_name,
+                       strlen(base_name) - strlen("." G_MODULE_SUFFIX));
+    g_free(original_base_name);
     return prefix;
 }
 

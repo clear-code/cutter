@@ -3,7 +3,7 @@ INCLUDES = $(CUTTER_CFLAGS)	\
 	-I$(top_srcdir)		\
 	-I$(top_srcdir)/cutter
 
-noinst_LTLIBRARIES = 				\
+noinst_LTLIBRARIES = 			\
 		dummy_loader_test.la
 
 LDFLAGS =			\

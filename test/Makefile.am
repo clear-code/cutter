@@ -1,5 +1,6 @@
 SUBDIRS = 			\
 	loader_test_dir		\
+	loader_suite_test_dir	\
 	attribute_test_dir	\
 	repository_test_dir	\
 	module_test_dir		\
@@ -36,6 +37,7 @@ noinst_LTLIBRARIES = 				\
 		test_cut_test_suite.la		\
 		test_cut_test_context.la	\
 		test_cut_loader.la		\
+		test_cut_loader_suite.la	\
 		test_cut_repository.la		\
 		test_cut_test_runner.la		\
 		test_cut_value_equal.la		\
@@ -75,6 +77,8 @@ test_cut_test_suite_la_SOURCES  = test-cut-test-suite.c
 test_cut_test_suite_la_LIBADD   = cuttest_utils.la
 test_cut_loader_la_SOURCES      = test-cut-loader.c
 test_cut_loader_la_LIBADD       = cuttest_utils.la
+test_cut_loader_suite_la_SOURCES = test-cut-loader-suite.c
+test_cut_loader_suite_la_LIBADD = cuttest_utils.la
 test_cut_repository_la_SOURCES  = test-cut-repository.c
 test_cut_repository_la_LIBADD   = cuttest_utils.la
 test_cut_test_runner_la_SOURCES = test-cut-test-runner.c

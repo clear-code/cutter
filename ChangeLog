@@ -1,5 +1,9 @@
 2008-05-22  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-loader-suite.c, test/loader_suite_test_dir/,
+	configure.ac, test/Makefile.am: add tests for
+	cut_loader_load_test_suite().
+
 	* sample/gtk+/: use warmup() mechanism.
 
 	* cutter/cut-repository.c: use cut_loader_load_test_suite().

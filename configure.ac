@@ -292,6 +292,7 @@ AC_CONFIG_FILES([Makefile
 		 sample/cairo/Makefile
                  test/Makefile
 		 test/loader_test_dir/Makefile
+		 test/loader_suite_test_dir/Makefile
 		 test/repository_test_dir/Makefile
 		 test/attribute_test_dir/Makefile
 		 test/module_test_dir/Makefile
