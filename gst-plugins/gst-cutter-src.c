@@ -22,6 +22,9 @@
 #endif /* HAVE_CONFIG_H */
 
 #include "gst-cutter-src.h"
+#include <gst/base/gstbasesrc.h>
+
+#include <cutter/cut-pipeline.h>
 
 static const GstElementDetails cutter_src_details =
     GST_ELEMENT_DETAILS("Cutter src",
@@ -32,11 +35,23 @@ static GstStaticPadTemplate cutter_src_src_template_factory =
     GST_STATIC_PAD_TEMPLATE("src",
                             GST_PAD_SRC,
                             GST_PAD_ALWAYS,
-                            GST_STATIC_CAPS("text/plain; text/pango-markup"));
+                            GST_STATIC_CAPS_ANY);
+
+#define GST_CUTTER_SRC_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), GST_TYPE_CUTTER_SRC, GstCutterSrcPrivate))
+
+typedef struct _GstCutterSrcPrivate    GstCutterSrcPrivate;
+struct _GstCutterSrcPrivate
+{
+    CutRunContext *run_context;
+};
 
 GST_BOILERPLATE(GstCutterSrc, gst_cutter_src, GstElement, GST_TYPE_ELEMENT);
 
 static void dispose        (GObject         *object);
+
+static gboolean start       (GstBaseSrc *base_src);
+static gboolean stop        (GstBaseSrc *base_src);
+static gboolean is_seekable (GstBaseSrc *base_src);
 
 static GstStateChangeReturn change_state (GstElement *element, GstStateChange transition);
 
@@ -54,25 +69,67 @@ gst_cutter_src_base_init (gpointer klass)
 static void
 gst_cutter_src_class_init (GstCutterSrcClass * klass)
 {
-    GObjectClass *object_class = G_OBJECT_CLASS(klass);
+    GObjectClass *gobject_class = G_OBJECT_CLASS(klass);
     GstElementClass *element_class = GST_ELEMENT_CLASS(klass);
+    GstBaseSrcClass *base_src_class = GST_BASE_SRC_CLASS(klass);
 
     parent_class = g_type_class_peek_parent(klass);
 
-    object_class->dispose = dispose;
+    gobject_class->dispose = dispose;
 
     element_class->change_state = change_state;
+
+    base_src_class->start = start;
+    base_src_class->stop = stop;
+    base_src_class->is_seekable = is_seekable;
+
+    g_type_class_add_private(gobject_class, sizeof(GstCutterSrcPrivate));
 }
 
 static void
 gst_cutter_src_init (GstCutterSrc *cutter_src, GstCutterSrcClass * klass)
 {
+    GstCutterSrcPrivate *priv = GST_CUTTER_SRC_GET_PRIVATE(cutter_src);
+
+    priv->run_context = NULL;
 }
 
 static void
 dispose (GObject *object)
 {
+    GstCutterSrcPrivate *priv = GST_CUTTER_SRC_GET_PRIVATE(object);
+
+    if (priv->run_context) {
+        g_object_unref(priv->run_context);
+        priv->run_context = NULL;
+    }
+
     G_OBJECT_CLASS(parent_class)->dispose(object);
+}
+
+static gboolean
+start (GstBaseSrc *base_src)
+{
+    GstCutterSrcPrivate *priv = GST_CUTTER_SRC_GET_PRIVATE(base_src);
+
+    /*TODO: create CutPipeline */
+    return cut_run_context_start(priv->run_context);
+}
+
+static gboolean
+stop (GstBaseSrc *base_src)
+{
+    GstCutterSrcPrivate *priv = GST_CUTTER_SRC_GET_PRIVATE(base_src);
+
+    cut_run_context_cancel(priv->run_context);
+
+    return TRUE;
+}
+
+static gboolean
+is_seekable (GstBaseSrc *base_src)
+{
+    return FALSE;
 }
 
 static GstStateChangeReturn

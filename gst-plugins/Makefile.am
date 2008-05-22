@@ -3,6 +3,10 @@ gst_plugins_LTLIBRARIES = libgstcutter.la
 
 noinst_HEADERS = gst-cutter-src.h
 
+INCLUDES = 			\
+	 -I$(top_builddir)	\
+	 -I$(top_srcdir)
+
 libgstcutter_la_SOURCES =	\
 	gst-cutter.c		\
 	gst-cutter-src.c
