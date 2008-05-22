@@ -104,7 +104,7 @@ ${PREFIX}/share/aclocal/以下に他の.m4ファイルがインストールさ�
 これでconfigure.ac内でCutterが提供する便利M4マクロを利用する
 準備が整いました。
 
-=== AC_CHECK_GCUTTER
+=== テスト作成用パッケージ
 
 Cutterはパッケージを
 ((<pkg-config|URL:http://pkg-config.freedesktop.org/>))のパッ
@@ -113,7 +113,7 @@ Cutterはパッケージを
 GNUビルドツールなどpkg-configに対応しているビルドシステムが
 多いからです。
 
-Cutterは、テスト作成用に以下の2つのパッケージを容易しています。
+Cutterは、テスト作成用に以下の2つのパッケージを用意しています。
 
   * cutter: Cutterを利用してテストを作成する場合に利用
   * gcutter: cutterパッケージにGLibサポート機能を追加したパッ
@@ -122,6 +122,94 @@ Cutterは、テスト作成用に以下の2つのパッケージを容易して�
 
 今回はGLibを利用してテストを作成するので、cutterパッケージで
 はなくgcutterパッケージを利用します。
+
+Cutterはconfigure.acで簡単にcutter/gcutterパッケージの設定を
+行えるように以下のM4マクロを提供しています。
+
+: AC_CHECK_CUTTER
+
+   cutterパッケージ検出マクロです。以下の変数をAC_SUBSTしま
+   す。
+    * CUTTER: cutterコマンドのパス
+    * CUTTER_CFLAGS: cutterパッケージを用いたテストをビルド
+      するためのCFLAGS
+    * CUTTER_LIBS: cutterパッケージを用いたテストをビルド
+      するためのLIBS
+
+   また、cutterパッケージが利用不可能な場合は
+   ac_cv_use_cutterが"no"になります。
+
+: AC_CHECK_GCUTTER
+   gcutterパッケージ検出マクロです。上述のAC_CHECK_CUTTERマ
+   クロがAC_SUBSTする変数に加えて、以下の変数もAC_SUBSTしま
+   す。
+     * GCUTTER_CFLAGS: gcutterパッケージを用いたテストをビル
+       ドするためのCFLAGS
+     * GCUTTER_LIBS: gcutterパッケージを用いたテストをビルド
+       するためのLIBS
+
+今回はGLibサポートがついたgcutterパッケージを利用するので、
+AC_CHECK_GCUTTERマクロを利用します。よってconfigure.acには以
+下を追加することになります。
+
+configure.ac:
+  # source: sh
+  AC_CHECK_GCUTTER
+
+  AM_CONDITIONAL([WITH_CUTTER], [test "$ac_cv_use_cutter" != "no"])
+  if test "$ac_cv_use_cutter" != "no"; then
+    AC_DEFINE(WITH_CUTTER, 1, [Define to 1 if you use Cutter])
+  fi
+
+これで、Makefile.amではCutterが利用できるかどうかはif
+WITH_CUTTER ... endifで判断できます。Makefile.amではCutterが
+利用できない場合はテストプログラムをビルドしないようにします。
+こうすることにより、ユーザがCutterをインストールしていなくて
+も、Sennaをビルドできます。
+
+=== ビルドシステムへtest/unit/以下を追加
+
+Cutterを用いたテストプログラムはtest/unit/以下に配置します。
+このディレクトリは新規に作成するため、以下の作業が必要になり
+ます。
+
+  * test/Makefile.amのSUBDIRSにunitを追加
+  * configureでtest/unit/Makefileを生成する設定を追加
+  * test/unit/Makefile.amの作成
+
+まずは、test/Makefile.amのSUBDIRSにunitを追加し、test/unit/
+以下もビルド対象とします。
+
+test/Makefile.am:
+  # source: makefile
+  SUBDIRS = unit
+
+続いて、configure.acのAC_CONFIG_FILESにtest/unit/Makefileを
+追加し、configureがtest/unit/Makefileを生成するようにします。
+
+configure.ac:
+  # source: m4
+  AC_CONFIG_FILES([... test/unit/Makefile ...])
+
+最後に、test/unit/Makefile.amを作成し、test/unit/以下のビル
+ド方法を設定します。とりあえず、今は空っぽでかまいません。
+
+  % touch test/unit/Makefile.am
+
+これで、test/unit/以下をSennaのビルドシステムに加えることがで
+きました。再度./autogen.sh, ./configureを実行してからmakeす
+れば、test/unit/以下もビルド対象になっていることがわかります。
+
+  % ./autogen.sh
+  % ./configure
+  % make
+  ...
+  make[3]: ディレクトリ `.../test/unit' に入ります
+  ...
+
+=== テスト起動コマンド
+
+cutter-senna
 
 ((*FIXME*))
 
