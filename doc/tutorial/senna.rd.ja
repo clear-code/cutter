@@ -153,7 +153,7 @@ AC_CHECK_GCUTTERマクロを利用します。よってconfigure.acには以
 下を追加することになります。
 
 configure.ac:
-  # source: sh
+  # source: m4
   AC_CHECK_GCUTTER
 
   AM_CONDITIONAL([WITH_CUTTER], [test "$ac_cv_use_cutter" != "no"])
@@ -185,7 +185,7 @@ configureを生成できます。もちろん、生成されたconfigureには
 Cutterの検出機能などはありません。
 
 configure.ac:
-  # source: sh
+  # source: m4
   m4_ifdef([AC_CHECK_GCUTTER], [
   AC_CHECK_GCUTTER
   ],
