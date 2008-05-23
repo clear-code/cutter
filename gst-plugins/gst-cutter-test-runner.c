@@ -22,14 +22,13 @@
 #endif /* HAVE_CONFIG_H */
 
 #include "gst-cutter-test-runner.h"
-#include <gst/base/gstbasesrc.h>
 
 #include <cutter/cut-pipeline.h>
 
 static const GstElementDetails cutter_test_runner_details =
-    GST_ELEMENT_DETAILS("Cutter src",
-                        "Source element of Cutter",
-                        "Source element of Cutter",
+    GST_ELEMENT_DETAILS("Cutter test runner",
+                        "Cutter test runner",
+                        "Cutter test runner",
                         "g新部 Hiroyuki Ikezoe  <poincare@ikezoe.net>");
 static GstStaticPadTemplate cutter_test_runner_src_template_factory =
     GST_STATIC_PAD_TEMPLATE("src",
@@ -43,11 +42,26 @@ typedef struct _GstCutterTestRunnerPrivate    GstCutterTestRunnerPrivate;
 struct _GstCutterTestRunnerPrivate
 {
     CutRunContext *run_context;
+    gchar *test_directory;
 };
 
-GST_BOILERPLATE(GstCutterTestRunner, gst_cutter_test_runner, GstElement, GST_TYPE_ELEMENT);
+GST_BOILERPLATE(GstCutterTestRunner, gst_cutter_test_runner, GstElement, GST_TYPE_BASE_SRC);
+
+enum
+{
+    ARG_0,
+    ARG_TEST_DIRECTORY
+};
 
 static void dispose        (GObject         *object);
+static void set_property   (GObject         *object,
+                            guint            prop_id,
+                            const GValue    *value,
+                            GParamSpec      *pspec);
+static void get_property   (GObject         *object,
+                            guint            prop_id,
+                            GValue          *value,
+                            GParamSpec      *pspec);
 
 static gboolean      start           (GstBaseSrc *base_src);
 static gboolean      stop            (GstBaseSrc *base_src);
@@ -78,18 +92,28 @@ gst_cutter_test_runner_class_init (GstCutterTestRunnerClass * klass)
     GObjectClass *gobject_class = G_OBJECT_CLASS(klass);
     GstElementClass *element_class = GST_ELEMENT_CLASS(klass);
     GstBaseSrcClass *base_src_class = GST_BASE_SRC_CLASS(klass);
+    GParamSpec *spec;
 
     parent_class = g_type_class_peek_parent(klass);
 
-    gobject_class->dispose = dispose;
+    gobject_class->dispose      = dispose;
+    gobject_class->set_property = set_property;
+    gobject_class->get_property = get_property;
 
     element_class->change_state = change_state;
 
-    base_src_class->start = start;
-    base_src_class->stop = stop;
-    base_src_class->is_seekable = is_seekable;
-    base_src_class->create = create;
+    base_src_class->start           = start;
+    base_src_class->stop            = stop;
+    base_src_class->is_seekable     = is_seekable;
+    base_src_class->create          = create;
     base_src_class->check_get_range = check_get_range;
+
+    spec = g_param_spec_string("test-directory",
+                               "Test directory",
+                               "The directory name in which test cases are stored",
+                               NULL,
+                               G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, ARG_TEST_DIRECTORY, spec);
 
     g_type_class_add_private(gobject_class, sizeof(GstCutterTestRunnerPrivate));
 }
@@ -100,6 +124,7 @@ gst_cutter_test_runner_init (GstCutterTestRunner *cutter_test_runner, GstCutterT
     GstCutterTestRunnerPrivate *priv = GST_CUTTER_TEST_RUNNER_GET_PRIVATE(cutter_test_runner);
 
     priv->run_context = NULL;
+    priv->test_directory = NULL;
 }
 
 static void
@@ -113,6 +138,41 @@ dispose (GObject *object)
     }
 
     G_OBJECT_CLASS(parent_class)->dispose(object);
+}
+
+static void
+set_property (GObject      *object,
+              guint         prop_id,
+              const GValue *value,
+              GParamSpec   *pspec)
+{
+    GstCutterTestRunnerPrivate *priv = GST_CUTTER_TEST_RUNNER_GET_PRIVATE(object);
+
+    switch (prop_id) {
+      case ARG_TEST_DIRECTORY:
+        priv->test_directory = g_value_dup_string(value);
+        break;
+      default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
+        break;
+    }
+}
+
+static void
+get_property (GObject    *object,
+              guint       prop_id,
+              GValue     *value,
+              GParamSpec *pspec)
+{
+    GstCutterTestRunnerPrivate *priv = GST_CUTTER_TEST_RUNNER_GET_PRIVATE(object);
+
+    switch (prop_id) {
+      case ARG_TEST_DIRECTORY:
+        g_value_set_string(value, priv->test_directory);
+      default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
+        break;
+    }
 }
 
 static gboolean

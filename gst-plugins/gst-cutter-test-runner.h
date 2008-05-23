@@ -21,7 +21,7 @@
 #define __GST_CUTTER_TEST_RUNNER_H__
 
 #include <gst/gst.h>
-#include <gst/base/gstcollectpads.h>
+#include <gst/base/gstbasesrc.h>
 
 G_BEGIN_DECLS
 
@@ -36,14 +36,14 @@ typedef struct _GstCutterTestRunner      GstCutterTestRunner;
 typedef struct _GstCutterTestRunnerClass GstCutterTestRunnerClass;
 
 struct _GstCutterTestRunner {
-    GstElement element;
+    GstBaseSrc parent;
 
     GstPad *sinkpad;
     GstPad *srcpad;
 };
 
 struct _GstCutterTestRunnerClass {
-  GstElementClass parent_class;
+  GstBaseSrcClass parent_class;
 };
 
 GType gst_cutter_test_runner_get_type (void);
