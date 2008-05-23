@@ -45,7 +45,7 @@ struct _GstCutterTestRunnerPrivate
     gchar *test_directory;
 };
 
-GST_BOILERPLATE(GstCutterTestRunner, gst_cutter_test_runner, GstElement, GST_TYPE_BASE_SRC);
+GST_BOILERPLATE(GstCutterTestRunner, gst_cutter_test_runner, GstBaseSrc, GST_TYPE_BASE_SRC);
 
 enum
 {
@@ -229,7 +229,7 @@ change_state (GstElement *element, GstStateChange transition)
           break;
       }
 
-      ret = parent_class->change_state(element, transition);
+      ret = GST_ELEMENT_CLASS(parent_class)->change_state(element, transition);
       if (ret == GST_STATE_CHANGE_FAILURE)
         return ret;
 
