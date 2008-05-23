@@ -21,7 +21,7 @@
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
 
-#include "gst-cutter-src.h"
+#include "gst-cutter-test-runner.h"
 #include <gst/base/gstbasesrc.h>
 
 #include <cutter/cut-pipeline.h>
@@ -49,11 +49,17 @@ GST_BOILERPLATE(GstCutterSrc, gst_cutter_src, GstElement, GST_TYPE_ELEMENT);
 
 static void dispose        (GObject         *object);
 
-static gboolean start       (GstBaseSrc *base_src);
-static gboolean stop        (GstBaseSrc *base_src);
-static gboolean is_seekable (GstBaseSrc *base_src);
+static gboolean      start           (GstBaseSrc *base_src);
+static gboolean      stop            (GstBaseSrc *base_src);
+static gboolean      is_seekable     (GstBaseSrc *base_src);
+static GstFlowReturn create          (GstBaseSrc *basr_src,
+                                      guint64     offset,
+                                      guint       length,
+                                      GstBuffer **buffer);
+static gboolean      check_get_range (GstBaseSrc *base_src);
 
-static GstStateChangeReturn change_state (GstElement *element, GstStateChange transition);
+static GstStateChangeReturn change_state (GstElement *element,
+                                          GstStateChange transition);
 
 static void
 gst_cutter_src_base_init (gpointer klass)
@@ -82,6 +88,8 @@ gst_cutter_src_class_init (GstCutterSrcClass * klass)
     base_src_class->start = start;
     base_src_class->stop = stop;
     base_src_class->is_seekable = is_seekable;
+    base_src_class->create = create;
+    base_src_class->check_get_range = check_get_range;
 
     g_type_class_add_private(gobject_class, sizeof(GstCutterSrcPrivate));
 }
@@ -130,6 +138,19 @@ static gboolean
 is_seekable (GstBaseSrc *base_src)
 {
     return FALSE;
+}
+
+static gboolean
+check_get_range (GstBaseSrc *base_src)
+{
+    return FALSE;
+}
+
+static GstFlowReturn
+create (GstBaseSrc *basr_src, guint64 offset,
+        guint length, GstBuffer **buffer)
+{
+    return GST_FLOW_NOT_LINKED;
 }
 
 static GstStateChangeReturn

@@ -1,28 +1,28 @@
 if HAVE_GSTREAMER
-gst_plugins_LTLIBRARIES = libgstcutter.la
+gst_plugins_LTLIBRARIES = libgstcuttertest.la
 
-noinst_HEADERS = gst-cutter-src.h
+noinst_HEADERS = gst-cutter-test-runner.h
 
 INCLUDES = 			\
 	 -I$(top_builddir)	\
 	 -I$(top_srcdir)
 
-libgstcutter_la_SOURCES =	\
-	gst-cutter.c		\
-	gst-cutter-src.c
+libgstcuttertest_la_SOURCES =		\
+	gst-cutter-test.c		\
+	gst-cutter-test-runner.c
 
-libgstcutter_la_CFLAGS = 		\
+libgstcuttertest_la_CFLAGS = 		\
         $(GST_PLUGINS_BASE_CFLAGS)	\
 	$(GST_BASE_CFLAGS) 		\
 	$(GSTREAMER_CFLAGS)		\
 	$(CUTTER_CFLAGS)
 
-libgstcutter_la_LIBADD = 	\
+libgstcuttertest_la_LIBADD = 	\
 	$(GST_BASE_LIBS) 	\
 	$(GSTREAMER_LIBS) 	\
-	$(CUTTER_LIBS)
+	-lcutter
 
-libgstcutter_la_LDFLAGS =		\
+libgstcuttertest_la_LDFLAGS =		\
 	$(GST_PLUGIN_LDFLAGS)		\
 	-avoid-version -module		\
 	-export-dynamic 		\
