@@ -17,25 +17,25 @@
  *
  */
 
-#ifndef __GST_CUTTER_SRC_H__
-#define __GST_CUTTER_SRC_H__
+#ifndef __GST_CUTTER_TEST_RUNNER_H__
+#define __GST_CUTTER_TEST_RUNNER_H__
 
 #include <gst/gst.h>
 #include <gst/base/gstcollectpads.h>
 
 G_BEGIN_DECLS
 
-#define GST_TYPE_CUTTER_SRC            (gst_cutter_src_get_type())
-#define GST_CUTTER_SRC(obj)            (G_TYPE_CHECK_INSTANCE_CAST((obj), GST_TYPE_CUTTER_SRC, GstCutterSrc))
-#define GST_CUTTER_SRC_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST((klass), GST_TYPE_CUTTER_SRC, GstCutterSrcClass))
-#define GST_CUTTER_SRC_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GST_TYPE_CUTTER_SRC, GstCutterSrcClass))
-#define GST_IS_CUTTER_SRC(obj)         (G_TYPE_CHECK_INSTANCE_TYPE((obj), GST_TYPE_CUTTER_SRC))
-#define GST_IS_CUTTER_SRC_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), GST_TYPE_CUTTER_SRC))
+#define GST_TYPE_CUTTER_TEST_RUNNER            (gst_cutter_test_runner_get_type())
+#define GST_CUTTER_TEST_RUNNER(obj)            (G_TYPE_CHECK_INSTANCE_CAST((obj), GST_TYPE_CUTTER_TEST_RUNNER, GstCutterTestRunner))
+#define GST_CUTTER_TEST_RUNNER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST((klass), GST_TYPE_CUTTER_TEST_RUNNER, GstCutterTestRunnerClass))
+#define GST_CUTTER_TEST_RUNNER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GST_TYPE_CUTTER_TEST_RUNNER, GstCutterTestRunnerClass))
+#define GST_IS_CUTTER_TEST_RUNNER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE((obj), GST_TYPE_CUTTER_TEST_RUNNER))
+#define GST_IS_CUTTER_TEST_RUNNER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), GST_TYPE_CUTTER_TEST_RUNNER))
 
-typedef struct _GstCutterSrc      GstCutterSrc;
-typedef struct _GstCutterSrcClass GstCutterSrcClass;
+typedef struct _GstCutterTestRunner      GstCutterTestRunner;
+typedef struct _GstCutterTestRunnerClass GstCutterTestRunnerClass;
 
-struct _GstCutterSrc {
+struct _GstCutterTestRunner {
     GstElement element;
 
     GstPad *sinkpad;
@@ -44,15 +44,15 @@ struct _GstCutterSrc {
     gboolean silent;
 };
 
-struct _GstCutterSrcClass {
+struct _GstCutterTestRunnerClass {
   GstElementClass parent_class;
 };
 
-GType gst_cutter_src_get_type (void);
+GType gst_cutter_test_runner_get_type (void);
 
 G_END_DECLS
 
-#endif /* __GST_CUTTER_SRC_H */
+#endif /* __GST_CUTTER_TEST_RUNNER_H */
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */

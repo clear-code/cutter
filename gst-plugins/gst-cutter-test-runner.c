@@ -26,26 +26,26 @@
 
 #include <cutter/cut-pipeline.h>
 
-static const GstElementDetails cutter_src_details =
+static const GstElementDetails cutter_test_runner_details =
     GST_ELEMENT_DETAILS("Cutter src",
                         "Source element of Cutter",
                         "Source element of Cutter",
                         "g新部 Hiroyuki Ikezoe  <poincare@ikezoe.net>");
-static GstStaticPadTemplate cutter_src_src_template_factory =
+static GstStaticPadTemplate cutter_test_runner_src_template_factory =
     GST_STATIC_PAD_TEMPLATE("src",
                             GST_PAD_SRC,
                             GST_PAD_ALWAYS,
                             GST_STATIC_CAPS_ANY);
 
-#define GST_CUTTER_SRC_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), GST_TYPE_CUTTER_SRC, GstCutterSrcPrivate))
+#define GST_CUTTER_TEST_RUNNER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), GST_TYPE_CUTTER_TEST_RUNNER, GstCutterTestRunnerPrivate))
 
-typedef struct _GstCutterSrcPrivate    GstCutterSrcPrivate;
-struct _GstCutterSrcPrivate
+typedef struct _GstCutterTestRunnerPrivate    GstCutterTestRunnerPrivate;
+struct _GstCutterTestRunnerPrivate
 {
     CutRunContext *run_context;
 };
 
-GST_BOILERPLATE(GstCutterSrc, gst_cutter_src, GstElement, GST_TYPE_ELEMENT);
+GST_BOILERPLATE(GstCutterTestRunner, gst_cutter_test_runner, GstElement, GST_TYPE_ELEMENT);
 
 static void dispose        (GObject         *object);
 
@@ -62,18 +62,18 @@ static GstStateChangeReturn change_state (GstElement *element,
                                           GstStateChange transition);
 
 static void
-gst_cutter_src_base_init (gpointer klass)
+gst_cutter_test_runner_base_init (gpointer klass)
 {
     GstElementClass *element_class = GST_ELEMENT_CLASS(klass);
 
     gst_element_class_add_pad_template(element_class,
-        gst_static_pad_template_get(&cutter_src_src_template_factory));
+        gst_static_pad_template_get(&cutter_test_runner_src_template_factory));
 
-    gst_element_class_set_details(element_class, &cutter_src_details);
+    gst_element_class_set_details(element_class, &cutter_test_runner_details);
 }
 
 static void
-gst_cutter_src_class_init (GstCutterSrcClass * klass)
+gst_cutter_test_runner_class_init (GstCutterTestRunnerClass * klass)
 {
     GObjectClass *gobject_class = G_OBJECT_CLASS(klass);
     GstElementClass *element_class = GST_ELEMENT_CLASS(klass);
@@ -91,13 +91,13 @@ gst_cutter_src_class_init (GstCutterSrcClass * klass)
     base_src_class->create = create;
     base_src_class->check_get_range = check_get_range;
 
-    g_type_class_add_private(gobject_class, sizeof(GstCutterSrcPrivate));
+    g_type_class_add_private(gobject_class, sizeof(GstCutterTestRunnerPrivate));
 }
 
 static void
-gst_cutter_src_init (GstCutterSrc *cutter_src, GstCutterSrcClass * klass)
+gst_cutter_test_runner_init (GstCutterTestRunner *cutter_test_runner, GstCutterTestRunnerClass * klass)
 {
-    GstCutterSrcPrivate *priv = GST_CUTTER_SRC_GET_PRIVATE(cutter_src);
+    GstCutterTestRunnerPrivate *priv = GST_CUTTER_TEST_RUNNER_GET_PRIVATE(cutter_test_runner);
 
     priv->run_context = NULL;
 }
@@ -105,7 +105,7 @@ gst_cutter_src_init (GstCutterSrc *cutter_src, GstCutterSrcClass * klass)
 static void
 dispose (GObject *object)
 {
-    GstCutterSrcPrivate *priv = GST_CUTTER_SRC_GET_PRIVATE(object);
+    GstCutterTestRunnerPrivate *priv = GST_CUTTER_TEST_RUNNER_GET_PRIVATE(object);
 
     if (priv->run_context) {
         g_object_unref(priv->run_context);
@@ -118,7 +118,7 @@ dispose (GObject *object)
 static gboolean
 start (GstBaseSrc *base_src)
 {
-    GstCutterSrcPrivate *priv = GST_CUTTER_SRC_GET_PRIVATE(base_src);
+    GstCutterTestRunnerPrivate *priv = GST_CUTTER_TEST_RUNNER_GET_PRIVATE(base_src);
 
     /*TODO: create CutPipeline */
     return cut_run_context_start(priv->run_context);
@@ -127,7 +127,7 @@ start (GstBaseSrc *base_src)
 static gboolean
 stop (GstBaseSrc *base_src)
 {
-    GstCutterSrcPrivate *priv = GST_CUTTER_SRC_GET_PRIVATE(base_src);
+    GstCutterTestRunnerPrivate *priv = GST_CUTTER_TEST_RUNNER_GET_PRIVATE(base_src);
 
     cut_run_context_cancel(priv->run_context);
 
