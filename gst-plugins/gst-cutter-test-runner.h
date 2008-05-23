@@ -40,8 +40,6 @@ struct _GstCutterTestRunner {
 
     GstPad *sinkpad;
     GstPad *srcpad;
-
-    gboolean silent;
 };
 
 struct _GstCutterTestRunnerClass {
