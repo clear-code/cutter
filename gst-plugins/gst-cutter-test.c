@@ -30,7 +30,6 @@ plugin_init (GstPlugin * plugin)
 {
     gst_element_register(plugin, "cutter-test-runner", GST_RANK_NONE,
                          GST_TYPE_CUTTER_TEST_RUNNER);
-
     GST_DEBUG_CATEGORY_INIT(cutter_debug, "cutter-test", 0, "Cutter test runner elements");
 
     return TRUE;
@@ -38,7 +37,7 @@ plugin_init (GstPlugin * plugin)
 
 GST_PLUGIN_DEFINE (GST_VERSION_MAJOR, GST_VERSION_MINOR, 
                    "cutter-test", "Cutter test runner element",
-                   plugin_init, VERSION, "LGPLv3",
+                   plugin_init, VERSION, "LGPL",
                    "GstCutterTest", "http://cutter.sf.net");
 
 /*
