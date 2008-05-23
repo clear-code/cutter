@@ -89,7 +89,11 @@ create_io_channel (int pipe, GIOFlags flag)
 {
     GIOChannel *channel;
 
+#ifdef G_OS_WIN32
+    channel = g_io_channel_win32_new_fd(pipe);
+#else
     channel = g_io_channel_unix_new(pipe);
+#endif
     g_io_channel_set_encoding(channel, NULL, NULL);
     g_io_channel_set_flags(channel, flag, NULL);
     g_io_channel_set_close_on_unref(channel, TRUE);

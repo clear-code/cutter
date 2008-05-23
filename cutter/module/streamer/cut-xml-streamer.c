@@ -266,7 +266,11 @@ create_channel (CutXMLStreamer *streamer)
         fd = STDOUT_FILENO;
     else
         fd = streamer->fd;
+#ifdef G_OS_WIN32
+    channel = g_io_channel_win32_new_fd(fd);
+#else
     channel = g_io_channel_unix_new(fd);
+#endif
     g_io_channel_set_close_on_unref(channel, TRUE);
 
     return channel;

@@ -1,6 +1,9 @@
 2008-05-23  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-run-context.c: Plugged memory leak.
+	* cutter/cut-pipeline.c, cutter/cut-process.c,
+	cutter/module/streamer/cut-xml-streamer.c: Use
+	g_io_channel_win32_new_fd() for Windows environment.
 
 2008-05-22  Kouhei Sutou  <kou@cozmixng.org>
 

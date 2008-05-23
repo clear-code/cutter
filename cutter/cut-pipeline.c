@@ -313,7 +313,11 @@ create_child_out_channel (CutPipeline *pipeline)
     CutPipelinePrivate *priv;
 
     priv = CUT_PIPELINE_GET_PRIVATE(pipeline);
+#ifdef G_OS_WIN32
+    channel = g_io_channel_win32_new_fd(priv->child_pipe[CUT_READ]);
+#else
     channel = g_io_channel_unix_new(priv->child_pipe[CUT_READ]);
+#endif
     g_io_channel_set_close_on_unref(channel, TRUE);
     priv->child_out_source_id = g_io_add_watch(channel,
                                                G_IO_IN | G_IO_PRI |
