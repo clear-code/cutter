@@ -137,6 +137,11 @@ dispose (GObject *object)
         priv->run_context = NULL;
     }
 
+    if (priv->test_directory) {
+        g_free(priv->test_directory);
+        priv->test_directory = NULL;
+    }
+
     G_OBJECT_CLASS(parent_class)->dispose(object);
 }
 
@@ -180,7 +185,10 @@ start (GstBaseSrc *base_src)
 {
     GstCutterTestRunnerPrivate *priv = GST_CUTTER_TEST_RUNNER_GET_PRIVATE(base_src);
 
-    /*TODO: create CutPipeline */
+    priv->run_context = g_object_new(CUT_TYPE_PIPELINE,
+                                     "test-directory", priv->test_directory,
+                                     NULL);
+
     return cut_run_context_start(priv->run_context);
 }
 
