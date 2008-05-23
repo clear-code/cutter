@@ -1,3 +1,7 @@
+2008-05-23  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-run-context.c: Plugged memory leak.
+
 2008-05-22  Kouhei Sutou  <kou@cozmixng.org>
 
 	* test/test-cut-loader-suite.c, test/loader_suite_test_dir/,

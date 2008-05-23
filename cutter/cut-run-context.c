@@ -654,6 +654,9 @@ dispose (GObject *object)
     g_free(priv->source_directory);
     priv->source_directory = NULL;
 
+    g_free(priv->test_directory);
+    priv->test_directory = NULL;
+
     g_strfreev(priv->exclude_files);
     priv->exclude_files = NULL;
 
