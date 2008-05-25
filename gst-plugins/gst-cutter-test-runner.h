@@ -37,8 +37,6 @@ typedef struct _GstCutterTestRunnerClass GstCutterTestRunnerClass;
 
 struct _GstCutterTestRunner {
     GstBaseSrc parent;
-
-    GstPad *srcpad;
 };
 
 struct _GstCutterTestRunnerClass {
