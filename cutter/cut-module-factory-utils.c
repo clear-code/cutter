@@ -214,6 +214,7 @@ cut_module_factory_exist_module (const gchar *type, const gchar *name)
         return FALSE;
     list= g_list_find_custom(names, name, (GCompareFunc)strcmp);
 
+    g_list_foreach(names, (GFunc)g_free, NULL);
     g_list_free(names);
 
     return (list != NULL);
