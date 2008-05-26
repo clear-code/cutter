@@ -183,7 +183,7 @@ create_option_entries (CutFactoryBuilder *builder)
         entries[i].arg = G_OPTION_ARG_STRING;
         entries[i].arg_data = &priv->filenames[i];
         entries[i].description = g_strdup_printf("Set filename of %s report",
-                                                 name);
+                                                       name);
         entries[i].arg_description = "FILE";
     }
 
@@ -195,7 +195,9 @@ set_option_context (CutFactoryBuilder *builder, GOptionContext *context)
 {
     GOptionGroup *group;
     GOptionEntry *entries;
+    CutReportFactoryBuilderPrivate *priv;
 
+    priv = CUT_REPORT_FACTORY_BUILDER_GET_PRIVATE(builder);
     group = g_option_group_new(("report"),
                                _("Report Options"),
                                _("Show report options"),
@@ -208,6 +210,7 @@ set_option_context (CutFactoryBuilder *builder, GOptionContext *context)
     g_option_group_add_entries(group, entries);
     g_option_group_set_translation_domain(group, GETTEXT_PACKAGE);
     g_option_context_add_group(context, group);
+    priv->option_entries = entries;
 }
 
 static CutModuleFactory *
