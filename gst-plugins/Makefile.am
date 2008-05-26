@@ -9,7 +9,8 @@ INCLUDES = 			\
 
 libgstcuttertest_la_SOURCES =		\
 	gst-cutter-test.c		\
-	gst-cutter-test-runner.c
+	gst-cutter-test-runner.c	\
+	gst-cutter-test-viewer.c
 
 libgstcuttertest_la_CFLAGS = 		\
         $(GST_PLUGINS_BASE_CFLAGS)	\
