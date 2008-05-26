@@ -1,3 +1,7 @@
+2008-05-26  Kouhei Sutou  <kou@cozmixng.org>
+
+	* README*, configure.ac: require GLib >= 2.16.
+
 2008-05-26  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-report-factory-builder.c: Plugged memory leak.

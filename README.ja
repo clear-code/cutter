@@ -21,7 +21,7 @@ Cutterの特徴は以下の通りです。
 
 == 依存ライブラリ
 
-  * GLib >= 2.14
+  * GLib >= 2.16
 
 == 入手方法
 
@@ -37,14 +37,14 @@ Cutterの特徴は以下の通りです。
 
 === GLibを別途インストールする場合
 
-システムにインストールされているGLibが2.14より古い場合はGLib
->= 2.14を別途インストールし、それを用いてCutterをインストー
+システムにインストールされているGLibが2.16より古い場合はGLib
+>= 2.16を別途インストールし、それを用いてCutterをインストー
 ルすることができる。その場合は以下のようになる。この例で
 は~/local/以下にGLibをインストールしている。
 
-  % wget ftp://ftp.gtk.org/pub/glib/2.14/glib-2.14.5.tar.gz
-  % tar xvfz glib-2.14.5.tar.gz
-  % cd glib-2.14.5
+  % wget http://ftp.gnome.org/pub/GNOME/sources/glib/2.16/glib-2.16.3.tar.gz
+  % tar xvfz glib-2.16.3.tar.gz
+  % cd glib-2.16.3
   % ./configure --prefix=$HOME/local
   % make
   % make install

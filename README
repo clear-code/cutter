@@ -26,7 +26,7 @@ This is a list of features of Cutter:
 
 == Dependency libraries
 
-  * GLib >= 2.14
+  * GLib >= 2.16
 
 == Get
 

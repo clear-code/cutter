@@ -51,7 +51,7 @@ fi
 dnl **************************************************************
 dnl Check for GLib.
 dnl **************************************************************
-GLIB_REQUIRED=2.14.0
+GLIB_REQUIRED=2.16.0
 AC_SUBST(GLIB_REQUIRED)
 AM_PATH_GLIB_2_0($GLIB_REQUIRED,
                  [],
