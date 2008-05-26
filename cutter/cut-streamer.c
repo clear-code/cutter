@@ -27,30 +27,17 @@
 #include "cut-module.h"
 #include "cut-listener-utils.h"
 
-static void dispose        (GObject         *object);
-
 G_DEFINE_ABSTRACT_TYPE (CutStreamer, cut_streamer, G_TYPE_OBJECT)
 CUT_DEFINE_LISTENER_MODULE(streamer, STREAMER)
 
 static void
 cut_streamer_class_init (CutStreamerClass *klass)
 {
-    GObjectClass *gobject_class;
-
-    gobject_class = G_OBJECT_CLASS(klass);
-
-    gobject_class->dispose      = dispose;
 }
 
 static void
 cut_streamer_init (CutStreamer *streamer)
 {
-}
-
-static void
-dispose (GObject *object)
-{
-    G_OBJECT_CLASS(cut_streamer_parent_class)->dispose(object);
 }
 
 CutStreamer *
