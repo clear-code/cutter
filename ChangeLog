@@ -3,6 +3,7 @@
 	* cutter/cut-report-factory-builder.c: Plugged memory leak.
 	* cutter/cut-module-factory-utils.c: Plugged memory leak.
 	* cutter/cut-loader.c: Plugged memory leak.
+	* cutter/cut-main.c: Plugged memory leak.
 
 2008-05-23  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 

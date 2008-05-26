@@ -207,6 +207,11 @@ cut_quit (void)
         contractor = NULL;
     }
 
+    if (original_argv) {
+        g_strfreev(original_argv);
+        original_argv = NULL;
+    }
+
     initialized = FALSE;
 }
 
