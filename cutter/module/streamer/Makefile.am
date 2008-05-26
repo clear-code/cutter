@@ -10,10 +10,10 @@ LDFLAGS =							\
   -avoid-version -module					\
   -export-dynamic $(no_undefined) $(LIBTOOL_EXPORT_OPTIONS)
 
-report_module_LTLIBRARIES = 	\
+streamer_module_LTLIBRARIES = 	\
 		xml.la
 
-report_factory_module_LTLIBRARIES =	\
+streamer_factory_module_LTLIBRARIES =	\
 		xml_factory.la	
 
 xml_la_CPPFLAGS =
