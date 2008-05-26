@@ -469,6 +469,7 @@ set_attributes (CutTest *test, GList *attributes)
         cut_test_set_attribute(test, attribute->name, attribute->value);
         g_free((gchar *)attribute->name);
         g_free((gchar *)attribute->value);
+        g_free(attribute);
     }
     g_list_free(attributes);
 }
