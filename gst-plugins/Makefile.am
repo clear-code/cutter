@@ -1,3 +1,5 @@
+SUBDIRS = test
+
 if HAVE_GSTREAMER
 gst_plugins_LTLIBRARIES = libgstcuttertest.la
 
