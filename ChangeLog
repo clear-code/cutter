@@ -1,3 +1,7 @@
+2008-05-26  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-report-factory-builder.c: Plugged memory leak.
+
 2008-05-23  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-run-context.c: Plugged memory leak.

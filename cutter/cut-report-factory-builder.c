@@ -38,6 +38,7 @@ struct _CutReportFactoryBuilderPrivate
 {
     GList *names;
     gchar **filenames;
+    GOptionEntry *option_entries;
 };
 
 static GObject *constructor  (GType                  type,
@@ -100,6 +101,7 @@ cut_report_factory_builder_init (CutReportFactoryBuilder *builder)
     priv = CUT_REPORT_FACTORY_BUILDER_GET_PRIVATE(builder);
     priv->names = NULL;
     priv->filenames = NULL;
+    priv->option_entries = NULL;
 
     dir = g_getenv("CUT_REPORT_FACTORY_MODULE_DIR");
     if (!dir)
@@ -112,11 +114,33 @@ cut_report_factory_builder_init (CutReportFactoryBuilder *builder)
 }
 
 static void
+free_option_entries (CutReportFactoryBuilderPrivate *priv, GOptionEntry *entries)
+{
+    GList *node;
+    guint n_reports, i;
+
+    n_reports = g_list_length(priv->names);
+
+    for (i = 0, node = priv->names;
+         i < n_reports && node;
+         i++, node = g_list_next(node)) {
+        g_free((gchar *)entries[i].long_name);
+        g_free((gchar *)entries[i].description);
+    }
+    g_free(entries);
+}
+
+static void
 dispose (GObject *object)
 {
     CutReportFactoryBuilderPrivate *priv;
 
     priv = CUT_REPORT_FACTORY_BUILDER_GET_PRIVATE(object);
+
+    if (priv->option_entries) {
+        free_option_entries(priv, priv->option_entries);
+        priv->option_entries = NULL;
+    }
 
     if (priv->names) {
         g_list_foreach(priv->names, (GFunc)g_free, NULL);
@@ -184,7 +208,6 @@ set_option_context (CutFactoryBuilder *builder, GOptionContext *context)
     g_option_group_add_entries(group, entries);
     g_option_group_set_translation_domain(group, GETTEXT_PACKAGE);
     g_option_context_add_group(context, group);
-    g_free(entries);
 }
 
 static CutModuleFactory *
