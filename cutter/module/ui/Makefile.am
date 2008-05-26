@@ -16,7 +16,8 @@ ui_factory_module_LTLIBRARIES = console_factory.la
 console_la_CPPFLAGS =
 console_la_SOURCES = \
 	cut-console-ui.c
-console_la_LIBADD = $(GLIB_LIBS)
+console_la_LIBADD = $(GLIB_LIBS)			\
+		$(top_builddir)/cutter/libcutter.la
 
 console_factory_la_CPPFLAGS =
 console_factory_la_SOURCES = \
@@ -37,5 +38,6 @@ gtk_factory_la_CPPFLAGS =			\
 	$(GTK_CFLAGS)
 gtk_factory_la_SOURCES = \
 	cut-gtk-ui-factory.c
-gtk_factory_la_LIBADD = $(GTK_LIBS)
+gtk_factory_la_LIBADD = $(GTK_LIBS)			\
+		$(top_builddir)/cutter/libcutter.la
 endif

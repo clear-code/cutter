@@ -18,7 +18,8 @@ streamer_factory_module_LTLIBRARIES =	\
 
 xml_la_CPPFLAGS =
 xml_la_SOURCES = cut-xml-streamer.c
-xml_la_LIBADD = $(GLIB_LIBS)
+xml_la_LIBADD = $(GLIB_LIBS)				\
+		$(top_builddir)/cutter/libcutter.la
 
 xml_factory_la_CPPFLAGS =
 xml_factory_la_SOURCES = cut-xml-streamer-factory.c

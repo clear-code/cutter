@@ -6,6 +6,11 @@
 	* cutter/cut-main.c: Plugged memory leak.
 	* cutter/module/streamer/Makefile.am: Fix typo. report -> streamer.
 	CutXMLStreamer module was installed in report module directory!
+	* cutter/module/*/Makefile.am: Added
+	$(top_builddir)/cutter/libcutter.la to LIBADD since symbols in
+	libcutter.so can not be resolved if the module is loaded from other
+	modules(ex. GStreamer modules).
+
 
 2008-05-23  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
