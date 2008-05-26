@@ -63,6 +63,8 @@ static void get_property   (GObject         *object,
 
 static gboolean      start           (GstBaseSink *base_sink);
 static gboolean      stop            (GstBaseSink *base_sink);
+static GstFlowReturn render          (GstBaseSink *base_sink,
+                                      GstBuffer   *buffer);
 
 static void
 gst_cutter_test_viewer_base_init (gpointer klass)
@@ -89,6 +91,7 @@ gst_cutter_test_viewer_class_init (GstCutterTestViewerClass * klass)
 
     base_sink_class->start           = start;
     base_sink_class->stop            = stop;
+    base_sink_class->render          = render;
 
     g_type_class_add_private(gobject_class, sizeof(GstCutterTestViewerPrivate));
 }
@@ -164,6 +167,26 @@ stop (GstBaseSink *base_sink)
 
     return TRUE;
 }
+
+static GstFlowReturn
+render (GstBaseSink *base_sink, GstBuffer *buffer)
+{
+    guint size;
+    guint8 *data;
+    gchar *string;
+
+    size = GST_BUFFER_SIZE(buffer);
+    data = GST_BUFFER_DATA(buffer);
+
+    if (size > 0) {
+        string = g_strndup((gchar *)data, size);
+        g_print("%s\n", string);
+        g_free(string);
+    }
+
+    return GST_FLOW_OK;
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */
