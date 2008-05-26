@@ -26,7 +26,6 @@
 #include <unistd.h>
 #include <cutter/cut-test-runner.h>
 #include <cutter/cut-streamer.h>
-#include <cutter/cut-stream-parser.h>
 #include <cutter/cut-listener.h>
 
 static const GstElementDetails cutter_test_runner_details =
@@ -47,7 +46,6 @@ struct _GstCutterTestRunnerPrivate
 {
     CutRunContext *run_context;
     CutStreamer *cut_streamer;
-    CutStreamParser *parser;
     gchar *test_directory;
     GIOChannel *child_out;
     guint child_out_source_id;
@@ -140,7 +138,6 @@ gst_cutter_test_runner_init (GstCutterTestRunner *cutter_test_runner, GstCutterT
     priv->pipe[0] = -1;
     priv->pipe[1] = -1;
     priv->child_out = NULL;
-    priv->parser = NULL;
     priv->error_emitted = FALSE;
     priv->eof = FALSE;
 }
@@ -207,7 +204,6 @@ get_property (GObject    *object,
 static void
 read_stream (GstCutterTestRunnerPrivate *priv, GIOChannel *channel)
 {
-
     while (!priv->error_emitted && !priv->eof) {
         GIOStatus status;
         gchar stream[BUFFER_SIZE + 1];
@@ -226,17 +222,7 @@ read_stream (GstCutterTestRunnerPrivate *priv, GIOChannel *channel)
         if (length <= 0)
             break;
 
-        g_print("%s", stream);
-        cut_stream_parser_parse(priv->parser, stream, length, &error);
-        if (error) {
-            break;
-        }
-
         if (priv->eof) {
-            cut_stream_parser_end_parse(priv->parser, &error);
-            if (error) {
-                break;
-            }
         } else {
             g_main_context_iteration(NULL, FALSE);
         }
@@ -292,7 +278,6 @@ start (GstBaseSrc *base_src)
     priv->cut_streamer = cut_streamer_new("xml",
                                           "fd", priv->pipe[1],
                                           NULL);
-    priv->parser = cut_stream_parser_new(priv->run_context);
     priv->child_out = create_child_out_channel(priv);
 
     cut_run_context_add_listener(priv->run_context, CUT_LISTENER(priv->cut_streamer));
