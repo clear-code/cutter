@@ -20,10 +20,10 @@ libgstcuttertest_la_CFLAGS = 		\
 	$(GSTREAMER_CFLAGS)		\
 	$(CUTTER_CFLAGS)
 
-libgstcuttertest_la_LIBADD = 	\
-	$(GST_BASE_LIBS) 	\
-	$(GSTREAMER_LIBS) 	\
-	-lcutter
+libgstcuttertest_la_LIBADD = 			\
+	$(GST_BASE_LIBS) 			\
+	$(GSTREAMER_LIBS) 			\
+	$(top_builddir)/cutter/libcutter.la
 
 libgstcuttertest_la_LDFLAGS =		\
 	$(GST_PLUGIN_LDFLAGS)		\
