@@ -23,7 +23,10 @@
 
 #include "gst-cutter-test-viewer.h"
 
-#include <cutter/cut-pipeline.h>
+#include <cutter/cut-run-context.h>
+#include <cutter/cut-stream-parser.h>
+
+#include "cut-gst-run-context.h"
 
 static const GstElementDetails cutter_test_viewer_details =
     GST_ELEMENT_DETAILS("Cutter test viewer",
@@ -42,6 +45,7 @@ typedef struct _GstCutterTestViewerPrivate    GstCutterTestViewerPrivate;
 struct _GstCutterTestViewerPrivate
 {
     CutRunContext *run_context;
+    CutStreamParser *parser;
 };
 
 GST_BOILERPLATE(GstCutterTestViewer, gst_cutter_test_viewer, GstBaseSink, GST_TYPE_BASE_SINK);
@@ -102,6 +106,7 @@ gst_cutter_test_viewer_init (GstCutterTestViewer *cutter_test_viewer, GstCutterT
     GstCutterTestViewerPrivate *priv = GST_CUTTER_TEST_VIEWER_GET_PRIVATE(cutter_test_viewer);
 
     priv->run_context = NULL;
+    priv->parser = NULL;
 }
 
 static void
@@ -112,6 +117,11 @@ dispose (GObject *object)
     if (priv->run_context) {
         g_object_unref(priv->run_context);
         priv->run_context = NULL;
+    }
+
+    if (priv->parser) {
+        g_object_unref(priv->parser);
+        priv->parser = NULL;
     }
 
     G_OBJECT_CLASS(parent_class)->dispose(object);
@@ -152,8 +162,8 @@ start (GstBaseSink *base_sink)
 {
     GstCutterTestViewerPrivate *priv = GST_CUTTER_TEST_VIEWER_GET_PRIVATE(base_sink);
 
-    priv->run_context = g_object_new(CUT_TYPE_PIPELINE,
-                                     NULL);
+    priv->run_context = g_object_new(CUT_TYPE_GST_RUN_CONTEXT, NULL);
+    priv->parser = cut_stream_parser_new(priv->run_context);
 
     return TRUE;
 }
@@ -162,8 +172,6 @@ static gboolean
 stop (GstBaseSink *base_sink)
 {
     GstCutterTestViewerPrivate *priv = GST_CUTTER_TEST_VIEWER_GET_PRIVATE(base_sink);
-
-    cut_run_context_cancel(priv->run_context);
 
     return TRUE;
 }
@@ -174,12 +182,14 @@ render (GstBaseSink *base_sink, GstBuffer *buffer)
     guint size;
     guint8 *data;
     gchar *string;
+    GstCutterTestViewerPrivate *priv = GST_CUTTER_TEST_VIEWER_GET_PRIVATE(base_sink);
 
     size = GST_BUFFER_SIZE(buffer);
     data = GST_BUFFER_DATA(buffer);
 
     if (size > 0) {
         string = g_strndup((gchar *)data, size);
+        cut_stream_parser_parse(priv->parser, (gchar *)data, size, NULL);
         g_print("%s\n", string);
         g_free(string);
     }
