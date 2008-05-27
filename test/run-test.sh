@@ -11,8 +11,7 @@ if test -z "$CUTTER"; then
 fi
 
 if test x"$CUTTER_DEBUG" = x"yes"; then
-    CUTTER="$BASE_DIR/../libtool --mode=execute valgrind --leak-check=full --log-file=valgrind.log --show-reachable=yes $CUTTER"
-    #CUTTER="$BASE_DIR/../libtool --mode=execute gdb --args $CUTTER"
+    CUTTER="$BASE_DIR/../libtool --mode=execute gdb --args $CUTTER"
 fi
 
 export CUTTER
