@@ -326,8 +326,9 @@ create (GstBaseSrc *base_src, guint64 offset,
     GstBuffer *buf;
     GstCutterTestRunnerPrivate *priv = GST_CUTTER_TEST_RUNNER_GET_PRIVATE(base_src);
 
-    if (priv->xml_string->len < offset + length)
-        return GST_FLOW_RESEND;
+    while (priv->xml_string->len < offset + length) {
+        g_main_context_iteration(NULL, FALSE);
+    }
 
     buf = gst_buffer_new_and_alloc(length);
     memcpy(GST_BUFFER_DATA(buf), priv->xml_string->str + offset, length);
