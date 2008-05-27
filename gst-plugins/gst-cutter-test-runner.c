@@ -52,6 +52,7 @@ struct _GstCutterTestRunnerPrivate
     gint pipe[2];
     gboolean error_emitted;
     gboolean eof;
+    GString *xml_string;
 };
 
 GST_BOILERPLATE(GstCutterTestRunner, gst_cutter_test_runner, GstBaseSrc, GST_TYPE_BASE_SRC);
@@ -140,6 +141,7 @@ gst_cutter_test_runner_init (GstCutterTestRunner *cutter_test_runner, GstCutterT
     priv->child_out = NULL;
     priv->error_emitted = FALSE;
     priv->eof = FALSE;
+    priv->xml_string = g_string_new(NULL);
 }
 
 static void
@@ -162,6 +164,10 @@ dispose (GObject *object)
         priv->test_directory = NULL;
     }
 
+    if (priv->xml_string) {
+        g_string_free(priv->xml_string, TRUE);
+        priv->xml_string = NULL;
+    }
     G_OBJECT_CLASS(parent_class)->dispose(object);
 }
 
@@ -222,6 +228,7 @@ read_stream (GstCutterTestRunnerPrivate *priv, GIOChannel *channel)
         if (length <= 0)
             break;
 
+        priv->xml_string = g_string_append_len(priv->xml_string, stream, length);
         if (priv->eof) {
         } else {
             g_main_context_iteration(NULL, FALSE);
@@ -313,18 +320,19 @@ check_get_range (GstBaseSrc *base_src)
 }
 
 static GstFlowReturn
-create (GstBaseSrc *basr_src, guint64 offset,
+create (GstBaseSrc *base_src, guint64 offset,
         guint length, GstBuffer **buffer)
 {
     GstBuffer *buf;
-    gchar *empty;
+    GstCutterTestRunnerPrivate *priv = GST_CUTTER_TEST_RUNNER_GET_PRIVATE(base_src);
+
+    if (priv->xml_string->len < offset + length)
+        return GST_FLOW_RESEND;
 
     buf = gst_buffer_new_and_alloc(length);
-    empty = g_new0(gchar, length);
-    memcpy(GST_BUFFER_DATA(buf), empty, length);
+    memcpy(GST_BUFFER_DATA(buf), priv->xml_string->str + offset, length);
     GST_BUFFER_TIMESTAMP(buf) = GST_CLOCK_TIME_NONE;
     *buffer = buf;
-    g_free(empty);
 
     return GST_FLOW_OK;
 }
