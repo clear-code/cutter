@@ -1,5 +1,3 @@
-SUBDIRS = module
-
 INCLUDES = 			\
 	 -I$(top_builddir)	\
 	 -I$(top_srcdir)

@@ -11,16 +11,17 @@ if test -z "$CUTTER"; then
 fi
 
 if test x"$CUTTER_DEBUG" = x"yes"; then
-    CUTTER="$BASE_DIR/../libtool --mode=execute gdb --args $CUTTER"
+    CUTTER="$BASE_DIR/../libtool --mode=execute valgrind --leak-check=full --log-file=valgrind.log --show-reachable=yes $CUTTER"
+    #CUTTER="$BASE_DIR/../libtool --mode=execute gdb --args $CUTTER"
 fi
 
 export CUTTER
-export CUT_UI_MODULE_DIR=$BASE_DIR/../cutter/module/ui/.libs
-export CUT_UI_FACTORY_MODULE_DIR=$BASE_DIR/../cutter/module/ui/.libs
-export CUT_REPORT_MODULE_DIR=$BASE_DIR/../cutter/module/report/.libs
-export CUT_REPORT_FACTORY_MODULE_DIR=$BASE_DIR/../cutter/module/report/.libs
-export CUT_STREAMER_MODULE_DIR=$BASE_DIR/../cutter/module/streamer/.libs
-export CUT_STREAMER_FACTORY_MODULE_DIR=$BASE_DIR/../cutter/module/streamer/.libs
+export CUT_UI_MODULE_DIR=$BASE_DIR/../module/ui/.libs
+export CUT_UI_FACTORY_MODULE_DIR=$BASE_DIR/../module/ui/.libs
+export CUT_REPORT_MODULE_DIR=$BASE_DIR/../module/report/.libs
+export CUT_REPORT_FACTORY_MODULE_DIR=$BASE_DIR/../module/report/.libs
+export CUT_STREAMER_MODULE_DIR=$BASE_DIR/../module/streamer/.libs
+export CUT_STREAMER_FACTORY_MODULE_DIR=$BASE_DIR/../module/streamer/.libs
 
 CUTTER_ARGS="-s $BASE_DIR --exclude-dir=pipeline_test_dir"
 if test x"$USE_GTK" = x"yes"; then

@@ -1,3 +1,8 @@
+2008-05-27  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/module -> module: Moved modules directory.
+	* */run-test.sh: Follow the above change.
+
 2008-05-27  Kouhei Sutou  <kou@cozmixng.org>
 
 	* gst-plugins/test/Makefile.am: surrounded with if HAVE_GSTREAMER

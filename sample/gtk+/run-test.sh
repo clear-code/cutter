@@ -6,12 +6,12 @@ if test x"$NO_MAKE" != x"yes"; then
     make -C $BASE_DIR/../../ > /dev/null || exit 1
 fi
 
-export CUT_UI_MODULE_DIR=$BASE_DIR/../../cutter/module/ui/.libs
-export CUT_UI_FACTORY_MODULE_DIR=$BASE_DIR/../../cutter/module/ui/.libs
-export CUT_REPORT_MODULE_DIR=$BASE_DIR/../../cutter/module/report/.libs
-export CUT_REPORT_FACTORY_MODULE_DIR=$BASE_DIR/../../cutter/module/report/.libs
-export CUT_STREAMER_MODULE_DIR=$BASE_DIR/../../cutter/module/streamer/.libs
-export CUT_STREAMER_FACTORY_MODULE_DIR=$BASE_DIR/../../cutter/module/streamer/.libs
+export CUT_UI_MODULE_DIR=$BASE_DIR/../../module/ui/.libs
+export CUT_UI_FACTORY_MODULE_DIR=$BASE_DIR/../../module/ui/.libs
+export CUT_REPORT_MODULE_DIR=$BASE_DIR/../../module/report/.libs
+export CUT_REPORT_FACTORY_MODULE_DIR=$BASE_DIR/../../module/report/.libs
+export CUT_STREAMER_MODULE_DIR=$BASE_DIR/../../module/streamer/.libs
+export CUT_STREAMER_FACTORY_MODULE_DIR=$BASE_DIR/../../module/streamer/.libs
 
 CUTTER=$BASE_DIR/../../cutter/cutter
 if test x"$CUTTER_DEBUG" = x"yes"; then
