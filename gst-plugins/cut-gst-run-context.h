@@ -48,9 +48,6 @@ struct _CutGstRunContextClass
 
 GType          cut_gst_run_context_get_type  (void) G_GNUC_CONST;
 
-CutRunContext *cut_gst_run_context_new       (void);
-CutRunContext *cut_gst_run_context_new_from_run_context (CutRunContext *run_context);
-
 G_END_DECLS
 
 #endif /* __CUT_GST_RUN_CONTEXT_H__ */
