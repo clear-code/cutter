@@ -286,6 +286,7 @@ AC_CONFIG_FILES([Makefile
 		 cutter/module/report/Makefile
 		 cutter/module/streamer/Makefile
 		 gst-plugins/Makefile
+		 gst-plugins/test/Makefile
 		 sample/Makefile
 		 sample/glib/Makefile
 		 sample/gtk+/Makefile

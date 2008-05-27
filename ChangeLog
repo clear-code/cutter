@@ -1,3 +1,7 @@
+2008-05-27  Kouhei Sutou  <kou@cozmixng.org>
+
+	* configure.ac: add missing gst-plugins/test/Makefile.
+
 2008-05-26  Kouhei Sutou  <kou@cozmixng.org>
 
 	* README*, configure.ac: require GLib >= 2.16.
