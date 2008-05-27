@@ -6,7 +6,6 @@ if test x"$NO_MAKE" != x"yes"; then
     make -C $BASE_DIR/../ > /dev/null || exit 1
 fi
 
-export CUTTER
 export CUT_UI_MODULE_DIR=$BASE_DIR/../module/ui/.libs
 export CUT_UI_FACTORY_MODULE_DIR=$BASE_DIR/../module/ui/.libs
 export CUT_REPORT_MODULE_DIR=$BASE_DIR/../module/report/.libs
