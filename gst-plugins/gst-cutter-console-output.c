@@ -21,7 +21,7 @@
 #include "config.h"
 #endif /* HAVE_CONFIG_H */
 
-#include "gst-cutter-test-viewer.h"
+#include "gst-cutter-console-output.h"
 
 #include <cutter/cut-run-context.h>
 #include <cutter/cut-stream-parser.h>
@@ -32,21 +32,21 @@
 
 #include "cut-gst-run-context.h"
 
-static const GstElementDetails cutter_test_viewer_details =
-    GST_ELEMENT_DETAILS("Cutter test viewer",
-                        "Cutter test viewer",
-                        "Cutter test viewer",
+static const GstElementDetails cutter_console_output_details =
+    GST_ELEMENT_DETAILS("Cutter console output",
+                        "Cutter console output",
+                        "Cutter console output",
                         "g新部 Hiroyuki Ikezoe  <poincare@ikezoe.net>");
-static GstStaticPadTemplate cutter_test_viewer_sink_template_factory =
+static GstStaticPadTemplate cutter_console_output_sink_template_factory =
     GST_STATIC_PAD_TEMPLATE("sink",
                             GST_PAD_SINK,
                             GST_PAD_ALWAYS,
                             GST_STATIC_CAPS_ANY);
 
-#define GST_CUTTER_TEST_VIEWER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), GST_TYPE_CUTTER_TEST_VIEWER, GstCutterTestViewerPrivate))
+#define GST_CUTTER_CONSOLE_OUTPUT_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), GST_TYPE_CUTTER_CONSOLE_OUTPUT, GstCutterConsoleOutputPrivate))
 
-typedef struct _GstCutterTestViewerPrivate    GstCutterTestViewerPrivate;
-struct _GstCutterTestViewerPrivate
+typedef struct _GstCutterConsoleOutputPrivate    GstCutterConsoleOutputPrivate;
+struct _GstCutterConsoleOutputPrivate
 {
     CutRunContext *run_context;
     CutStreamParser *parser;
@@ -55,7 +55,7 @@ struct _GstCutterTestViewerPrivate
     gchar *verbose_level_string;
 };
 
-GST_BOILERPLATE(GstCutterTestViewer, gst_cutter_test_viewer, GstBaseSink, GST_TYPE_BASE_SINK);
+GST_BOILERPLATE(GstCutterConsoleOutput, gst_cutter_console_output, GstBaseSink, GST_TYPE_BASE_SINK);
 
 enum
 {
@@ -80,18 +80,18 @@ static GstFlowReturn render          (GstBaseSink *base_sink,
                                       GstBuffer   *buffer);
 
 static void
-gst_cutter_test_viewer_base_init (gpointer klass)
+gst_cutter_console_output_base_init (gpointer klass)
 {
     GstElementClass *element_class = GST_ELEMENT_CLASS(klass);
 
     gst_element_class_add_pad_template(element_class,
-        gst_static_pad_template_get(&cutter_test_viewer_sink_template_factory));
+        gst_static_pad_template_get(&cutter_console_output_sink_template_factory));
 
-    gst_element_class_set_details(element_class, &cutter_test_viewer_details);
+    gst_element_class_set_details(element_class, &cutter_console_output_details);
 }
 
 static void
-gst_cutter_test_viewer_class_init (GstCutterTestViewerClass * klass)
+gst_cutter_console_output_class_init (GstCutterConsoleOutputClass * klass)
 {
     GObjectClass *gobject_class = G_OBJECT_CLASS(klass);
     GstBaseSinkClass *base_sink_class = GST_BASE_SINK_CLASS(klass);
@@ -121,13 +121,13 @@ gst_cutter_test_viewer_class_init (GstCutterTestViewerClass * klass)
                                G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, ARG_VERBOSE_LEVEL, spec);
 
-    g_type_class_add_private(gobject_class, sizeof(GstCutterTestViewerPrivate));
+    g_type_class_add_private(gobject_class, sizeof(GstCutterConsoleOutputPrivate));
 }
 
 static void
-gst_cutter_test_viewer_init (GstCutterTestViewer *cutter_test_viewer, GstCutterTestViewerClass * klass)
+gst_cutter_console_output_init (GstCutterConsoleOutput *cutter_console_output, GstCutterConsoleOutputClass * klass)
 {
-    GstCutterTestViewerPrivate *priv = GST_CUTTER_TEST_VIEWER_GET_PRIVATE(cutter_test_viewer);
+    GstCutterConsoleOutputPrivate *priv = GST_CUTTER_CONSOLE_OUTPUT_GET_PRIVATE(cutter_console_output);
 
     priv->run_context = NULL;
     priv->parser = NULL;
@@ -139,7 +139,7 @@ gst_cutter_test_viewer_init (GstCutterTestViewer *cutter_test_viewer, GstCutterT
 static void
 dispose (GObject *object)
 {
-    GstCutterTestViewerPrivate *priv = GST_CUTTER_TEST_VIEWER_GET_PRIVATE(object);
+    GstCutterConsoleOutputPrivate *priv = GST_CUTTER_CONSOLE_OUTPUT_GET_PRIVATE(object);
 
     if (priv->run_context) {
         g_object_unref(priv->run_context);
@@ -170,7 +170,7 @@ set_property (GObject      *object,
               const GValue *value,
               GParamSpec   *pspec)
 {
-    GstCutterTestViewerPrivate *priv = GST_CUTTER_TEST_VIEWER_GET_PRIVATE(object);
+    GstCutterConsoleOutputPrivate *priv = GST_CUTTER_CONSOLE_OUTPUT_GET_PRIVATE(object);
 
     switch (prop_id) {
       case ARG_USE_COLOR:
@@ -191,7 +191,7 @@ get_property (GObject    *object,
               GValue     *value,
               GParamSpec *pspec)
 {
-    GstCutterTestViewerPrivate *priv = GST_CUTTER_TEST_VIEWER_GET_PRIVATE(object);
+    GstCutterConsoleOutputPrivate *priv = GST_CUTTER_CONSOLE_OUTPUT_GET_PRIVATE(object);
 
     switch (prop_id) {
       case ARG_USE_COLOR:
@@ -209,7 +209,7 @@ get_property (GObject    *object,
 static gboolean
 start (GstBaseSink *base_sink)
 {
-    GstCutterTestViewerPrivate *priv = GST_CUTTER_TEST_VIEWER_GET_PRIVATE(base_sink);
+    GstCutterConsoleOutputPrivate *priv = GST_CUTTER_CONSOLE_OUTPUT_GET_PRIVATE(base_sink);
 
     priv->run_context = g_object_new(CUT_TYPE_GST_RUN_CONTEXT, NULL);
     priv->ui = cut_ui_new("console", 
@@ -225,7 +225,7 @@ start (GstBaseSink *base_sink)
 static gboolean
 stop (GstBaseSink *base_sink)
 {
-    GstCutterTestViewerPrivate *priv = GST_CUTTER_TEST_VIEWER_GET_PRIVATE(base_sink);
+    GstCutterConsoleOutputPrivate *priv = GST_CUTTER_CONSOLE_OUTPUT_GET_PRIVATE(base_sink);
 
     cut_listener_detach_from_run_context(CUT_LISTENER(priv->ui), priv->run_context);
 
@@ -237,7 +237,7 @@ render (GstBaseSink *base_sink, GstBuffer *buffer)
 {
     guint size;
     guint8 *data;
-    GstCutterTestViewerPrivate *priv = GST_CUTTER_TEST_VIEWER_GET_PRIVATE(base_sink);
+    GstCutterConsoleOutputPrivate *priv = GST_CUTTER_CONSOLE_OUTPUT_GET_PRIVATE(base_sink);
 
     size = GST_BUFFER_SIZE(buffer);
     data = GST_BUFFER_DATA(buffer);

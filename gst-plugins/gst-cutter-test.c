@@ -22,7 +22,7 @@
 #endif /* HAVE_CONFIG_H */
 
 #include "gst-cutter-test-runner.h"
-#include "gst-cutter-test-viewer.h"
+#include "gst-cutter-console-output.h"
 
 GST_DEBUG_CATEGORY (cutter_debug);
 
@@ -31,15 +31,15 @@ plugin_init (GstPlugin * plugin)
 {
     gst_element_register(plugin, "cutter-test-runner", GST_RANK_NONE,
                          GST_TYPE_CUTTER_TEST_RUNNER);
-    gst_element_register(plugin, "cutter-test-viewer", GST_RANK_NONE,
-                         GST_TYPE_CUTTER_TEST_VIEWER);
-    GST_DEBUG_CATEGORY_INIT(cutter_debug, "cutter-test", 0, "Cutter test runner elements");
+    gst_element_register(plugin, "cutter-console-output", GST_RANK_NONE,
+                         GST_TYPE_CUTTER_CONSOLE_OUTPUT);
+    GST_DEBUG_CATEGORY_INIT(cutter_debug, "cutter-test", 0, "Cutter elements");
 
     return TRUE;
 }
 
 GST_PLUGIN_DEFINE (GST_VERSION_MAJOR, GST_VERSION_MINOR, 
-                   "cutter-test", "Cutter test runner element",
+                   "cutter-test", "Cutter element",
                    plugin_init, VERSION, "LGPL",
                    "GstCutterTest", "http://cutter.sf.net");
 

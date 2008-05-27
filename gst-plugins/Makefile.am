@@ -12,7 +12,7 @@ INCLUDES = 			\
 libgstcuttertest_la_SOURCES =		\
 	gst-cutter-test.c		\
 	gst-cutter-test-runner.c	\
-	gst-cutter-test-viewer.c	\
+	gst-cutter-console-output.c	\
 	cut-gst-run-context.c
 
 libgstcuttertest_la_CFLAGS = 		\
