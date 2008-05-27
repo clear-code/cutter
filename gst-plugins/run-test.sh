@@ -16,5 +16,5 @@ export CUT_STREAMER_FACTORY_MODULE_DIR=$BASE_DIR/../module/streamer/.libs
 export GST_PLUGIN_PATH=$BASE_DIR/.libs
 gst-launch-0.10 \
   cutter-test-runner test-directory=$BASE_DIR/test ! \
-  cutter-test-viewer verbose-level=v use-color=true
+  cutter-console-output verbose-level=v use-color=true
 
