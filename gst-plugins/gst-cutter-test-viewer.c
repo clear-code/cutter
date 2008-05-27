@@ -25,6 +25,9 @@
 
 #include <cutter/cut-run-context.h>
 #include <cutter/cut-stream-parser.h>
+#include <cutter/cut-listener.h>
+#include <cutter/cut-ui.h>
+#include <cutter/cut-verbose-level.h>
 
 #include "cut-gst-run-context.h"
 
@@ -46,6 +49,7 @@ struct _GstCutterTestViewerPrivate
 {
     CutRunContext *run_context;
     CutStreamParser *parser;
+    GObject *ui;
 };
 
 GST_BOILERPLATE(GstCutterTestViewer, gst_cutter_test_viewer, GstBaseSink, GST_TYPE_BASE_SINK);
@@ -107,6 +111,7 @@ gst_cutter_test_viewer_init (GstCutterTestViewer *cutter_test_viewer, GstCutterT
 
     priv->run_context = NULL;
     priv->parser = NULL;
+    priv->ui = NULL;
 }
 
 static void
@@ -124,6 +129,11 @@ dispose (GObject *object)
         priv->parser = NULL;
     }
 
+    if (priv->ui) {
+        g_object_unref(priv->ui);
+        priv->ui = NULL;
+    }
+
     G_OBJECT_CLASS(parent_class)->dispose(object);
 }
 
@@ -133,8 +143,6 @@ set_property (GObject      *object,
               const GValue *value,
               GParamSpec   *pspec)
 {
-    GstCutterTestViewerPrivate *priv = GST_CUTTER_TEST_VIEWER_GET_PRIVATE(object);
-
     switch (prop_id) {
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -148,8 +156,6 @@ get_property (GObject    *object,
               GValue     *value,
               GParamSpec *pspec)
 {
-    GstCutterTestViewerPrivate *priv = GST_CUTTER_TEST_VIEWER_GET_PRIVATE(object);
-
     switch (prop_id) {
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -163,6 +169,11 @@ start (GstBaseSink *base_sink)
     GstCutterTestViewerPrivate *priv = GST_CUTTER_TEST_VIEWER_GET_PRIVATE(base_sink);
 
     priv->run_context = g_object_new(CUT_TYPE_GST_RUN_CONTEXT, NULL);
+    priv->ui = cut_ui_new("console", 
+                          "use-color", TRUE,
+                          "verbose-level", CUT_VERBOSE_LEVEL_VERBOSE,
+                          NULL);
+    cut_listener_attach_to_run_context(CUT_LISTENER(priv->ui), priv->run_context);
     priv->parser = cut_stream_parser_new(priv->run_context);
 
     return TRUE;
@@ -173,6 +184,8 @@ stop (GstBaseSink *base_sink)
 {
     GstCutterTestViewerPrivate *priv = GST_CUTTER_TEST_VIEWER_GET_PRIVATE(base_sink);
 
+    cut_run_context_remove_listener(priv->run_context, CUT_LISTENER(priv->ui));
+
     return TRUE;
 }
 
@@ -181,18 +194,13 @@ render (GstBaseSink *base_sink, GstBuffer *buffer)
 {
     guint size;
     guint8 *data;
-    gchar *string;
     GstCutterTestViewerPrivate *priv = GST_CUTTER_TEST_VIEWER_GET_PRIVATE(base_sink);
 
     size = GST_BUFFER_SIZE(buffer);
     data = GST_BUFFER_DATA(buffer);
 
-    if (size > 0) {
-        string = g_strndup((gchar *)data, size);
+    if (size > 0)
         cut_stream_parser_parse(priv->parser, (gchar *)data, size, NULL);
-        g_print("%s\n", string);
-        g_free(string);
-    }
 
     return GST_FLOW_OK;
 }
