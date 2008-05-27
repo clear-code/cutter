@@ -229,10 +229,8 @@ read_stream (GstCutterTestRunnerPrivate *priv, GIOChannel *channel)
             break;
 
         priv->xml_string = g_string_append_len(priv->xml_string, stream, length);
-        if (priv->eof) {
-        } else {
+        if (!priv->eof)
             g_main_context_iteration(NULL, FALSE);
-        }
     }
 }
 
@@ -324,18 +322,32 @@ create (GstBaseSrc *base_src, guint64 offset,
         guint length, GstBuffer **buffer)
 {
     GstBuffer *buf;
+    guint send_size;
+    gboolean is_end_of_buffer = FALSE;
     GstCutterTestRunnerPrivate *priv = GST_CUTTER_TEST_RUNNER_GET_PRIVATE(base_src);
 
-    while (priv->xml_string->len < offset + length) {
+    while (!priv->eof && priv->xml_string->len < offset + length) {
         g_main_context_iteration(NULL, FALSE);
     }
 
-    buf = gst_buffer_new_and_alloc(length);
-    memcpy(GST_BUFFER_DATA(buf), priv->xml_string->str + offset, length);
-    GST_BUFFER_TIMESTAMP(buf) = GST_CLOCK_TIME_NONE;
+    if (priv->eof && priv->xml_string->len < offset + length) {
+        is_end_of_buffer = TRUE;
+    }
+
+    if (!priv->eof) {
+        send_size = length;
+    } else {
+        send_size = priv->xml_string->len - offset;
+    }
+
+    buf = gst_buffer_new_and_alloc(send_size);
+    memcpy(GST_BUFFER_DATA(buf), priv->xml_string->str + offset, send_size);
+    GST_BUFFER_SIZE(buf) = send_size;
+    GST_BUFFER_OFFSET(buf) = offset;
+    GST_BUFFER_OFFSET_END(buf) = offset + send_size;
     *buffer = buf;
 
-    return GST_FLOW_OK;
+    return !is_end_of_buffer ? GST_FLOW_OK : GST_FLOW_UNEXPECTED;
 }
 
 static GstStateChangeReturn
