@@ -3,6 +3,7 @@ ACLOCAL_AMFLAGS = -I m4macros
 SUBDIRS = 		\
 	m4macros	\
 	cutter		\
+	module		\
 	test		\
 	sample		\
 	gst-plugins	\
