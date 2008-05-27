@@ -52,7 +52,7 @@ struct _GstCutterTestViewerPrivate
     CutStreamParser *parser;
     GObject *ui;
     gboolean use_color;
-    CutVerboseLevel verbose_level;
+    gchar *verbose_level_string;
 };
 
 GST_BOILERPLATE(GstCutterTestViewer, gst_cutter_test_viewer, GstBaseSink, GST_TYPE_BASE_SINK);
@@ -114,12 +114,11 @@ gst_cutter_test_viewer_class_init (GstCutterTestViewerClass * klass)
                                 G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, ARG_USE_COLOR, spec);
 
-    spec = g_param_spec_enum("verbose-level",
-                             "Verbose Level",
-                             "The number of representing verbosity level",
-                             CUT_TYPE_VERBOSE_LEVEL,
-                             CUT_VERBOSE_LEVEL_NORMAL,
-                             G_PARAM_READWRITE);
+    spec = g_param_spec_string("verbose-level",
+                               "Verbose Level",
+                               "The string of representing verbosity level",
+                               NULL,
+                               G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, ARG_VERBOSE_LEVEL, spec);
 
     g_type_class_add_private(gobject_class, sizeof(GstCutterTestViewerPrivate));
@@ -134,7 +133,7 @@ gst_cutter_test_viewer_init (GstCutterTestViewer *cutter_test_viewer, GstCutterT
     priv->parser = NULL;
     priv->ui = NULL;
     priv->use_color = FALSE;
-    priv->verbose_level = CUT_VERBOSE_LEVEL_NORMAL;
+    priv->verbose_level_string = NULL;
 }
 
 static void
@@ -157,6 +156,11 @@ dispose (GObject *object)
         priv->ui = NULL;
     }
 
+    if (priv->verbose_level_string) {
+        g_free(priv->verbose_level_string);
+        priv->verbose_level_string = NULL;
+    }
+
     G_OBJECT_CLASS(parent_class)->dispose(object);
 }
 
@@ -173,7 +177,7 @@ set_property (GObject      *object,
         priv->use_color = g_value_get_boolean(value);
         break;
       case ARG_VERBOSE_LEVEL:
-        priv->verbose_level = g_value_get_enum(value);
+        priv->verbose_level_string = g_value_dup_string(value);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -194,7 +198,7 @@ get_property (GObject    *object,
         g_value_set_boolean(value, priv->use_color);
         break;
       case ARG_VERBOSE_LEVEL:
-        g_value_set_enum(value, priv->verbose_level);
+        g_value_set_string(value, priv->verbose_level_string);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -210,7 +214,7 @@ start (GstBaseSink *base_sink)
     priv->run_context = g_object_new(CUT_TYPE_GST_RUN_CONTEXT, NULL);
     priv->ui = cut_ui_new("console", 
                           "use-color", priv->use_color,
-                          "verbose-level", priv->verbose_level,
+                          "verbose-level", cut_verbose_level_parse(priv->verbose_level_string, NULL),
                           NULL);
     cut_listener_attach_to_run_context(CUT_LISTENER(priv->ui), priv->run_context);
     priv->parser = cut_stream_parser_new(priv->run_context);
