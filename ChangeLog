@@ -1,3 +1,7 @@
+2008-05-27  Kouhei Sutou  <kou@cozmixng.org>
+
+	* gst-plugins/run-test.sh: cleanup.
+
 2008-05-27  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/module -> module: Moved modules directory.
