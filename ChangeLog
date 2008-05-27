@@ -1,5 +1,8 @@
 2008-05-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gst-plugins/test/Makefile.am: surrounded with if HAVE_GSTREAMER
+	... endif.
+
 	* configure.ac: add missing gst-plugins/test/Makefile.
 
 2008-05-26  Kouhei Sutou  <kou@cozmixng.org>
