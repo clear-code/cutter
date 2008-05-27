@@ -15,5 +15,5 @@ export CUT_STREAMER_MODULE_DIR=$BASE_DIR/../module/streamer/.libs
 export CUT_STREAMER_FACTORY_MODULE_DIR=$BASE_DIR/../module/streamer/.libs
 
 export GST_PLUGIN_PATH=.libs
-gst-launch-0.10 cutter-test-runner test-directory=. ! cutter-test-viewer
+gst-launch-0.10 cutter-test-runner test-directory=. ! cutter-test-viewer verbose-level=2 use-color=true
 

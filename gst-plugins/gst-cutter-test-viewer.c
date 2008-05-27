@@ -28,6 +28,7 @@
 #include <cutter/cut-listener.h>
 #include <cutter/cut-ui.h>
 #include <cutter/cut-verbose-level.h>
+#include <cutter/cut-enum-types.h>
 
 #include "cut-gst-run-context.h"
 
@@ -50,13 +51,17 @@ struct _GstCutterTestViewerPrivate
     CutRunContext *run_context;
     CutStreamParser *parser;
     GObject *ui;
+    gboolean use_color;
+    CutVerboseLevel verbose_level;
 };
 
 GST_BOILERPLATE(GstCutterTestViewer, gst_cutter_test_viewer, GstBaseSink, GST_TYPE_BASE_SINK);
 
 enum
 {
-    ARG_0
+    ARG_0,
+    ARG_USE_COLOR,
+    ARG_VERBOSE_LEVEL
 };
 
 static void dispose        (GObject         *object);
@@ -90,6 +95,7 @@ gst_cutter_test_viewer_class_init (GstCutterTestViewerClass * klass)
 {
     GObjectClass *gobject_class = G_OBJECT_CLASS(klass);
     GstBaseSinkClass *base_sink_class = GST_BASE_SINK_CLASS(klass);
+    GParamSpec *spec;
 
     parent_class = g_type_class_peek_parent(klass);
 
@@ -97,9 +103,24 @@ gst_cutter_test_viewer_class_init (GstCutterTestViewerClass * klass)
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
 
-    base_sink_class->start           = start;
-    base_sink_class->stop            = stop;
-    base_sink_class->render          = render;
+    base_sink_class->start      = start;
+    base_sink_class->stop       = stop;
+    base_sink_class->render     = render;
+
+    spec = g_param_spec_boolean("use-color",
+                                "Use color",
+                                "Whether use color",
+                                FALSE,
+                                G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, ARG_USE_COLOR, spec);
+
+    spec = g_param_spec_enum("verbose-level",
+                             "Verbose Level",
+                             "The number of representing verbosity level",
+                             CUT_TYPE_VERBOSE_LEVEL,
+                             CUT_VERBOSE_LEVEL_NORMAL,
+                             G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, ARG_VERBOSE_LEVEL, spec);
 
     g_type_class_add_private(gobject_class, sizeof(GstCutterTestViewerPrivate));
 }
@@ -112,6 +133,8 @@ gst_cutter_test_viewer_init (GstCutterTestViewer *cutter_test_viewer, GstCutterT
     priv->run_context = NULL;
     priv->parser = NULL;
     priv->ui = NULL;
+    priv->use_color = FALSE;
+    priv->verbose_level = CUT_VERBOSE_LEVEL_NORMAL;
 }
 
 static void
@@ -143,7 +166,15 @@ set_property (GObject      *object,
               const GValue *value,
               GParamSpec   *pspec)
 {
+    GstCutterTestViewerPrivate *priv = GST_CUTTER_TEST_VIEWER_GET_PRIVATE(object);
+
     switch (prop_id) {
+      case ARG_USE_COLOR:
+        priv->use_color = g_value_get_boolean(value);
+        break;
+      case ARG_VERBOSE_LEVEL:
+        priv->verbose_level = g_value_get_enum(value);
+        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
@@ -156,7 +187,15 @@ get_property (GObject    *object,
               GValue     *value,
               GParamSpec *pspec)
 {
+    GstCutterTestViewerPrivate *priv = GST_CUTTER_TEST_VIEWER_GET_PRIVATE(object);
+
     switch (prop_id) {
+      case ARG_USE_COLOR:
+        g_value_set_boolean(value, priv->use_color);
+        break;
+      case ARG_VERBOSE_LEVEL:
+        g_value_set_enum(value, priv->verbose_level);
+        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
@@ -170,8 +209,8 @@ start (GstBaseSink *base_sink)
 
     priv->run_context = g_object_new(CUT_TYPE_GST_RUN_CONTEXT, NULL);
     priv->ui = cut_ui_new("console", 
-                          "use-color", TRUE,
-                          "verbose-level", CUT_VERBOSE_LEVEL_VERBOSE,
+                          "use-color", priv->use_color,
+                          "verbose-level", priv->verbose_level,
                           NULL);
     cut_listener_attach_to_run_context(CUT_LISTENER(priv->ui), priv->run_context);
     priv->parser = cut_stream_parser_new(priv->run_context);
