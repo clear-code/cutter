@@ -281,10 +281,10 @@ AC_CONFIG_FILES([Makefile
 		 libcutter.pc
 		 m4macros/Makefile
 		 cutter/Makefile
-		 cutter/module/Makefile
-		 cutter/module/ui/Makefile
-		 cutter/module/report/Makefile
-		 cutter/module/streamer/Makefile
+		 module/Makefile
+		 module/ui/Makefile
+		 module/report/Makefile
+		 module/streamer/Makefile
 		 gst-plugins/Makefile
 		 gst-plugins/test/Makefile
 		 sample/Makefile
