@@ -227,7 +227,7 @@ stop (GstBaseSink *base_sink)
 {
     GstCutterTestViewerPrivate *priv = GST_CUTTER_TEST_VIEWER_GET_PRIVATE(base_sink);
 
-    cut_run_context_remove_listener(priv->run_context, CUT_LISTENER(priv->ui));
+    cut_listener_detach_from_run_context(CUT_LISTENER(priv->ui), priv->run_context);
 
     return TRUE;
 }
