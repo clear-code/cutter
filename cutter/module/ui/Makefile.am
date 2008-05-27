@@ -32,12 +32,12 @@ gtk_la_CPPFLAGS = \
 		$(GTK_CFLAGS)
 gtk_la_SOURCES = \
 	cut-gtk-ui.c
-gtk_la_LIBADD = $(GTK_LIBS)
+gtk_la_LIBADD = $(GTK_LIBS)			\
+	$(top_builddir)/cutter/libcutter.la
 
 gtk_factory_la_CPPFLAGS =			\
 	$(GTK_CFLAGS)
 gtk_factory_la_SOURCES = \
 	cut-gtk-ui-factory.c
-gtk_factory_la_LIBADD = $(GTK_LIBS)			\
-		$(top_builddir)/cutter/libcutter.la
+gtk_factory_la_LIBADD = $(GTK_LIBS)
 endif
