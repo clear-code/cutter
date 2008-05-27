@@ -1,4 +1,5 @@
 * priority mode.
 * streamer modules.
   * connect to GStreamer.
+  * basically done.
 * auto-cutter.
