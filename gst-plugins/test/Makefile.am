@@ -13,5 +13,5 @@ AM_LDFLAGS =			\
 	-avoid-version
 
 dummy_loader_test_la_SOURCES = dummy-test-functions.c
-dummy_loader_test_la_LIBADD = -lcutter
+dummy_loader_test_la_LIBADD = $(top_builddir)/cutter/libcutter.la
 endif
