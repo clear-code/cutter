@@ -803,14 +803,14 @@ disconnect_from_run_context (CutConsoleUI *console, CutRunContext *run_context)
 
 static void
 attach_to_run_context (CutListener *listener,
-                  CutRunContext   *run_context)
+                       CutRunContext   *run_context)
 {
     connect_to_run_context(CUT_CONSOLE_UI(listener), run_context);
 }
 
 static void
 detach_from_run_context (CutListener *listener,
-                    CutRunContext   *run_context)
+                         CutRunContext   *run_context)
 {
     disconnect_from_run_context(CUT_CONSOLE_UI(listener), run_context);
 }
