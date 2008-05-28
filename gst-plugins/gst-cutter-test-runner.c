@@ -23,7 +23,6 @@
 
 #include "gst-cutter-test-runner.h"
 
-#include <unistd.h>
 #include <cutter/cut-test-runner.h>
 #include <cutter/cut-streamer.h>
 #include <cutter/cut-listener.h>
@@ -47,11 +46,7 @@ struct _GstCutterTestRunnerPrivate
     CutRunContext *run_context;
     CutStreamer *cut_streamer;
     gchar *test_directory;
-    GIOChannel *child_out;
-    guint child_out_source_id;
-    gint pipe[2];
     gboolean error_emitted;
-    gboolean eof;
     GString *xml_string;
 };
 
@@ -136,12 +131,7 @@ gst_cutter_test_runner_init (GstCutterTestRunner *cutter_test_runner, GstCutterT
     priv->run_context = NULL;
     priv->cut_streamer = NULL;
     priv->test_directory = NULL;
-    priv->pipe[0] = -1;
-    priv->pipe[1] = -1;
-    priv->child_out = NULL;
-    priv->error_emitted = FALSE;
-    priv->eof = FALSE;
-    priv->xml_string = g_string_new(NULL);
+    priv->xml_string = NULL;
 }
 
 static void
@@ -206,65 +196,14 @@ get_property (GObject    *object,
     }
 }
 
-#define BUFFER_SIZE 512
-static void
-read_stream (GstCutterTestRunnerPrivate *priv, GIOChannel *channel)
-{
-    while (!priv->error_emitted && !priv->eof) {
-        GIOStatus status;
-        gchar stream[BUFFER_SIZE + 1];
-        gsize length = 0;
-        GError *error = NULL;
-
-        status = g_io_channel_read_chars(channel, stream, BUFFER_SIZE, &length,
-                                         &error);
-        if (status == G_IO_STATUS_EOF)
-            priv->eof = TRUE;
-
-        if (error) {
-            break;
-        }
-
-        if (length <= 0)
-            break;
-
-        priv->xml_string = g_string_append_len(priv->xml_string, stream, length);
-        if (!priv->eof)
-            g_main_context_iteration(NULL, FALSE);
-    }
-}
-
 static gboolean
-child_out_watch_func (GIOChannel *channel, GIOCondition condition, gpointer data)
+stream_to_string (const gchar *message, GError **error, gpointer user_data)
 {
-    GstCutterTestRunnerPrivate *priv = (GstCutterTestRunnerPrivate *)data;
+    GString *string = user_data;
 
-    if (condition & G_IO_IN ||
-        condition & G_IO_PRI) {
-        read_stream(priv, channel);
-    }
-
-    if (condition & G_IO_ERR ||
-        condition & G_IO_HUP) {
-        return FALSE;
-    }
+    g_string_append(string, message);
 
     return TRUE;
-}
-
-static GIOChannel *
-create_child_out_channel (GstCutterTestRunnerPrivate *priv)
-{
-    GIOChannel *channel;
-
-    channel = g_io_channel_unix_new(priv->pipe[0]);
-    g_io_channel_set_close_on_unref(channel, TRUE);
-    priv->child_out_source_id = g_io_add_watch(channel,
-                                               G_IO_IN | G_IO_PRI |
-                                               G_IO_ERR | G_IO_HUP,
-                                               child_out_watch_func, priv);
-
-    return channel;
 }
 
 static gboolean
@@ -272,20 +211,17 @@ start (GstBaseSrc *base_src)
 {
     GstCutterTestRunnerPrivate *priv = GST_CUTTER_TEST_RUNNER_GET_PRIVATE(base_src);
 
-    pipe(priv->pipe);
-
-    priv->error_emitted = FALSE;
-    priv->eof = FALSE;
-
     priv->run_context = g_object_new(CUT_TYPE_TEST_RUNNER,
                                      "test-directory", priv->test_directory,
                                      NULL);
-    priv->cut_streamer = cut_streamer_new("xml",
-                                          "fd", priv->pipe[1],
-                                          NULL);
-    priv->child_out = create_child_out_channel(priv);
-
-    cut_run_context_add_listener(priv->run_context, CUT_LISTENER(priv->cut_streamer));
+    priv->xml_string = g_string_new(NULL);
+    priv->cut_streamer =
+        cut_streamer_new("xml",
+                         "stream-function", stream_to_string,
+                         "stream-function-user-data", priv->xml_string,
+                         NULL);
+    cut_run_context_add_listener(priv->run_context,
+                                 CUT_LISTENER(priv->cut_streamer));
 
     gst_base_src_set_format(base_src, GST_FORMAT_BYTES);
 
@@ -326,19 +262,11 @@ create (GstBaseSrc *base_src, guint64 offset,
     gboolean is_end_of_buffer = FALSE;
     GstCutterTestRunnerPrivate *priv = GST_CUTTER_TEST_RUNNER_GET_PRIVATE(base_src);
 
-    while (!priv->eof && priv->xml_string->len < offset + length) {
-        g_main_context_iteration(NULL, FALSE);
-    }
-
-    if (priv->eof && priv->xml_string->len < offset + length) {
+    if (priv->xml_string->len < offset + length) {
         is_end_of_buffer = TRUE;
     }
 
-    if (!priv->eof) {
-        send_size = length;
-    } else {
-        send_size = priv->xml_string->len - offset;
-    }
+    send_size = priv->xml_string->len - offset;
 
     buf = gst_buffer_new_and_alloc(send_size);
     memcpy(GST_BUFFER_DATA(buf), priv->xml_string->str + offset, send_size);
