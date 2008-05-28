@@ -192,18 +192,15 @@ _cut_module_show_error (GModule *module)
 {
     gchar *message;
 
-    if (!g_module_error()) return;
-    message = g_locale_to_utf8(g_module_error(), -1, NULL, NULL, NULL);
+    if (!g_module_error())
+        return;
 
+    message = g_locale_to_utf8(g_module_error(), -1, NULL, NULL, NULL);
     if (module) {
-        gchar *name;
-        name = g_strdup(g_module_name(module));
-        g_warning("%s: %s", name, message);
-        g_free(name);
+        g_warning("%s: %s", g_module_name(module), message);
     } else {
         g_warning("%s", message);
     }
-
     g_free(message);
 }
 

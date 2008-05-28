@@ -1,3 +1,8 @@
+2008-05-28  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-module.c (_cut_module_show_error): remove needless
+	g_strdup().
+
 2008-05-27  Kouhei Sutou  <kou@cozmixng.org>
 
 	* gst-plugins/run-test.sh: cleanup.
