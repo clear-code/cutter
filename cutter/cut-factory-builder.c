@@ -23,7 +23,6 @@
 
 #include <string.h>
 #include <glib.h>
-#include <glib/gi18n-lib.h>
 
 #include "cut-factory-builder.h"
 #include "cut-report-factory-builder.h"

@@ -26,7 +26,6 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <glib.h>
-#include <glib/gstdio.h>
 
 #include "cut-pipeline.h"
 #include "cut-test-result.h"
