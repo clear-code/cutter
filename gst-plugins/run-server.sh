@@ -12,4 +12,4 @@ export CUT_STREAMER_FACTORY_MODULE_DIR=$BASE_DIR/../module/streamer/.libs
 export GST_PLUGIN_PATH=$BASE_DIR/.libs
 gst-launch-0.10 \
   cutter-test-runner test-directory=$BASE_DIR/test ! \
-  udpsink port=50000
+  tcpclientsink host=192.168.1.27 port=50000
