@@ -23,7 +23,9 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include <glib.h>
+#include <glib/gstdio.h>
 #include <glib/gi18n-lib.h>
 #include <gmodule.h>
 
@@ -160,11 +162,96 @@ set_option_group (CutModuleFactory *factory, GOptionContext *context)
     g_option_context_add_group(context, group);
 }
 
+typedef struct _StreamData StreamData;
+struct _StreamData
+{
+    gint fd;
+    GIOChannel *channel;
+};
+
+static StreamData *
+stream_data_new (gint fd)
+{
+    StreamData *data;
+
+    data = g_slice_new(StreamData);
+    data->fd = fd;
+    data->channel = NULL;
+
+    return data;
+}
+
+static void
+stream_data_free (StreamData *data)
+{
+    if (data->channel)
+        g_io_channel_unref(data->channel);
+
+    g_slice_free(StreamData, data);
+}
+
+static GIOChannel *
+create_channel (StreamData *data)
+{
+    gint fd;
+    GIOChannel *channel;
+
+    if (data->fd == -1)
+        fd = STDOUT_FILENO;
+    else
+        fd = data->fd;
+#ifdef G_OS_WIN32
+    channel = g_io_channel_win32_new_fd(fd);
+#else
+    channel = g_io_channel_unix_new(fd);
+#endif
+    g_io_channel_set_close_on_unref(channel, TRUE);
+
+    return channel;
+}
+
+static gboolean
+stream_to_fd (const gchar *message, GError **error, gpointer user_data)
+{
+    StreamData *data = user_data;
+    const gchar *snippet;
+    gsize length, written;
+
+    if (!data->channel)
+        data->channel = create_channel(data);
+
+    if (!data->channel)
+        return FALSE;
+
+    length = strlen(message);
+    written = 0;
+    snippet = message;
+
+    while (length > 0) {
+        g_io_channel_write_chars(data->channel, snippet, length, &written,
+                                 error);
+        if (*error)
+            break;
+
+        snippet += written;
+        length -= written;
+    }
+    g_io_channel_flush(data->channel, NULL);
+
+    return *error == NULL;
+}
+
 GObject *
 create (CutModuleFactory *factory)
 {
+    StreamData *data;
+
+    data = stream_data_new(CUT_XML_STREAMER_FACTORY(factory)->fd);
     return G_OBJECT(cut_streamer_new("xml",
-                                     "fd", CUT_XML_STREAMER_FACTORY(factory)->fd,
+                                     "stream-function", stream_to_fd,
+                                     "stream-function-user-data", data,
+                                     "stream-function-user-data-destroy-function",
+                                     stream_data_free,
                                      NULL));
 }
 

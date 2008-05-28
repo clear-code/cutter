@@ -31,6 +31,10 @@ G_BEGIN_DECLS
 #define CUT_IS_STREAMER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_STREAMER))
 #define CUT_STREAMER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_STREAMER, CutStreamerClass))
 
+typedef gboolean (*CutStreamFunction) (const gchar *message,
+                                       GError **error,
+                                       gpointer user_data);
+
 typedef struct _CutStreamer         CutStreamer;
 typedef struct _CutStreamerClass    CutStreamerClass;
 

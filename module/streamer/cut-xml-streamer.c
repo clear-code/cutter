@@ -23,10 +23,8 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
 #include <glib.h>
 #include <glib/gi18n-lib.h>
-#include <glib/gstdio.h>
 #include <gmodule.h>
 
 #include <cutter/cut-module-impl.h>
@@ -51,9 +49,10 @@ struct _CutXMLStreamer
 {
     CutStreamer   object;
     CutRunContext    *run_context;
-    gint fd;
-    GIOChannel *channel;
     GMutex *mutex;
+    CutStreamFunction stream_function;
+    gpointer stream_function_user_data;
+    GDestroyNotify stream_function_user_data_destroy_function;
 };
 
 struct _CutXMLStreamerClass
@@ -65,7 +64,9 @@ enum
 {
     PROP_0,
     PROP_RUN_CONTEXT,
-    PROP_FD
+    PROP_STREAM_FUNCTION,
+    PROP_STREAM_FUNCTION_USER_DATA,
+    PROP_STREAM_FUNCTION_USER_DATA_DESTROY_FUNCTION
 };
 
 static GType cut_type_xml_streamer = 0;
@@ -109,23 +110,36 @@ class_init (CutXMLStreamerClass *klass)
                                G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_RUN_CONTEXT, spec);
 
-    spec = g_param_spec_int("fd",
-                            "FD",
-                            "A file descriptor to stream",
-                            -1,
-                            G_MAXINT,
-                            -1,
-                            G_PARAM_READWRITE);
-    g_object_class_install_property(gobject_class, PROP_FD, spec);
+    spec = g_param_spec_pointer("stream-function",
+                                "Stream function",
+                                "A function to stream data",
+                                G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+    g_object_class_install_property(gobject_class, PROP_STREAM_FUNCTION, spec);
+
+    spec = g_param_spec_pointer("stream-function-user-data",
+                                "Stream function user data",
+                                "A user data to use with stream function",
+                                G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+    g_object_class_install_property(gobject_class,
+                                    PROP_STREAM_FUNCTION_USER_DATA, spec);
+
+    spec = g_param_spec_pointer("stream-function-user-data-destroy-function",
+                                "Destroy function for stream function user data",
+                                "A function to destroy user data",
+                                G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+    g_object_class_install_property(gobject_class,
+                                    PROP_STREAM_FUNCTION_USER_DATA_DESTROY_FUNCTION,
+                                    spec);
 }
 
 static void
 init (CutXMLStreamer *streamer)
 {
     streamer->run_context = NULL;
-    streamer->fd = -1;
-    streamer->channel = NULL;
     streamer->mutex = g_mutex_new();
+    streamer->stream_function = NULL;
+    streamer->stream_function_user_data = NULL;
+    streamer->stream_function_user_data_destroy_function = NULL;
 }
 
 static void
@@ -210,6 +224,12 @@ dispose (GObject *object)
         streamer->mutex = NULL;
     }
 
+    if (streamer->stream_function_user_data) {
+        if (streamer->stream_function_user_data_destroy_function)
+            streamer->stream_function_user_data_destroy_function(streamer->stream_function_user_data);
+        streamer->stream_function_user_data = NULL;
+    }
+
     G_OBJECT_CLASS(parent_class)->dispose(object);
 }
 
@@ -226,8 +246,15 @@ set_property (GObject      *object,
         attach_to_run_context(CUT_LISTENER(streamer),
                               CUT_RUN_CONTEXT(g_value_get_object(value)));
         break;
-      case PROP_FD:
-        streamer->fd = g_value_get_int(value);
+      case PROP_STREAM_FUNCTION:
+        streamer->stream_function = g_value_get_pointer(value);
+        break;
+      case PROP_STREAM_FUNCTION_USER_DATA:
+        streamer->stream_function_user_data = g_value_get_pointer(value);
+        break;
+      case PROP_STREAM_FUNCTION_USER_DATA_DESTROY_FUNCTION:
+        streamer->stream_function_user_data_destroy_function =
+            g_value_get_pointer(value);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -247,8 +274,14 @@ get_property (GObject    *object,
       case PROP_RUN_CONTEXT:
         g_value_set_object(value, G_OBJECT(streamer->run_context));
         break;
-      case PROP_FD:
-        g_value_set_int(value, streamer->fd);
+      case PROP_STREAM_FUNCTION:
+        g_value_set_pointer(value, streamer->stream_function);
+        break;
+      case PROP_STREAM_FUNCTION_USER_DATA:
+        g_value_set_pointer(value, streamer->stream_function_user_data);
+        break;
+      case PROP_STREAM_FUNCTION_USER_DATA_DESTROY_FUNCTION:
+        g_value_set_pointer(value, streamer->stream_function_user_data_destroy_function);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -256,67 +289,32 @@ get_property (GObject    *object,
     }
 }
 
-static GIOChannel *
-create_channel (CutXMLStreamer *streamer)
-{
-    gint fd;
-    GIOChannel *channel;
-
-    if (streamer->fd == -1)
-        fd = STDOUT_FILENO;
-    else
-        fd = streamer->fd;
-#ifdef G_OS_WIN32
-    channel = g_io_channel_win32_new_fd(fd);
-#else
-    channel = g_io_channel_unix_new(fd);
-#endif
-    g_io_channel_set_close_on_unref(channel, TRUE);
-
-    return channel;
-}
-
 static void
 stream (CutXMLStreamer *streamer, const gchar *format, ...)
 {
-    gchar *message, *snippet;
-    gsize length, written;
+    GError *error = NULL;
+    gchar *message;
     va_list va_args;
 
-    if (!streamer->channel)
-        streamer->channel = create_channel(streamer);
-
-    if (!streamer->channel)
+    if (!streamer->stream_function)
         return;
 
     va_start(va_args, format);
     message = g_strdup_vprintf(format, va_args);
     va_end(va_args);
 
-    length = strlen(message);
-    written = 0;
-    snippet = message;
-
     g_mutex_lock(streamer->mutex);
-    while (length > 0) {
-        GError *error = NULL;
-
-        g_io_channel_write_chars(streamer->channel, snippet, length, &written,
-                                 &error);
-        if (error) {
-            g_warning("WriteError: %s:%d: %s",
-                      g_quark_to_string(error->domain),
-                      error->code,
-                      error->message);
-            g_error_free(error);
-            break;
-        }
-
-        snippet += written;
-        length -= written;
-    }
-    g_io_channel_flush(streamer->channel, NULL);
+    streamer->stream_function(message, &error,
+                              streamer->stream_function_user_data);
     g_mutex_unlock(streamer->mutex);
+
+    if (error) {
+        g_warning("WriteError: %s:%d: %s",
+                  g_quark_to_string(error->domain),
+                  error->code,
+                  error->message);
+        g_error_free(error);
+    }
 
     g_free(message);
 }
@@ -549,11 +547,6 @@ cb_complete_run (CutRunContext *run_context, gboolean success,
 {
     stream(streamer, "  <success>%s</success>\n", success ? "true" : "false");
     stream(streamer, "</stream>\n");
-
-    if (streamer->channel) {
-        g_io_channel_unref(streamer->channel);
-        streamer->channel = NULL;
-    }
 }
 
 static void

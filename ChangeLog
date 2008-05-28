@@ -1,5 +1,14 @@
 2008-05-28  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-xml-streamer.c: don't fork.
+
+	* module/streamer/cut-xml-streamer.c: abstract stream method.
+
+	* module/streamer/cut-xml-streamer-factory.c: use file descriptor based
+	stream method.
+
+	* cutter/cut-streamer.h (CutStreamFunction): add.
+
 	* cutter/cut-module.c (_cut_module_show_error): remove needless
 	g_strdup().
 
