@@ -40,6 +40,11 @@ static GstStaticPadTemplate cutter_server_src_template_factory =
                             GST_PAD_SRC,
                             GST_PAD_ALWAYS,
                             GST_STATIC_CAPS_ANY);
+static GstStaticPadTemplate cutter_server_sink_template_factory =
+    GST_STATIC_PAD_TEMPLATE("sink",
+                            GST_PAD_SINK,
+                            GST_PAD_ALWAYS,
+                            GST_STATIC_CAPS_ANY);
 
 #define GST_CUTTER_SERVER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), GST_TYPE_CUTTER_SERVER, GstCutterServerPrivate))
 
@@ -55,6 +60,8 @@ struct _GstCutterServerPrivate
 
     GString *xml_string;
     GstElement *tcp_server_sink;
+    GstPad *src_pad;
+    GstPad *sink_pad;
 };
 
 GST_BOILERPLATE(GstCutterServer, gst_cutter_server, GstElement, GST_TYPE_ELEMENT);
@@ -87,6 +94,8 @@ gst_cutter_server_base_init (gpointer klass)
 
     gst_element_class_add_pad_template(element_class,
         gst_static_pad_template_get(&cutter_server_src_template_factory));
+    gst_element_class_add_pad_template(element_class,
+        gst_static_pad_template_get(&cutter_server_sink_template_factory));
 
     gst_element_class_set_details(element_class, &cutter_server_details);
 }
@@ -137,7 +146,16 @@ gst_cutter_server_class_init (GstCutterServerClass * klass)
 static void
 gst_cutter_server_init (GstCutterServer *cutter_server, GstCutterServerClass * klass)
 {
+    GstPadTemplate *pad_template;
     GstCutterServerPrivate *priv = GST_CUTTER_SERVER_GET_PRIVATE(cutter_server);
+
+    pad_template = gst_element_class_get_pad_template(GST_ELEMENT_CLASS(klass), "src");
+    priv->src_pad = gst_pad_new_from_template(pad_template, "src");
+    gst_element_add_pad(GST_ELEMENT(cutter_server), priv->src_pad);
+
+    pad_template = gst_element_class_get_pad_template(GST_ELEMENT_CLASS(klass), "sink");
+    priv->sink_pad = gst_pad_new_from_template(pad_template, "sink");
+    gst_element_add_pad(GST_ELEMENT(cutter_server), priv->sink_pad);
 
     priv->run_context = NULL;
     priv->cut_streamer = NULL;
