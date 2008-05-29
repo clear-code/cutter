@@ -27,6 +27,9 @@
 #include <cutter/cut-streamer.h>
 #include <cutter/cut-listener.h>
 
+GST_DEBUG_CATEGORY_STATIC(cutter_test_runner_debug);
+#define GST_CAT_DEFAULT cutter_test_runner_debug
+
 static const GstElementDetails cutter_test_runner_details =
     GST_ELEMENT_DETAILS("Cutter test runner",
                         "Cutter test runner",
@@ -121,6 +124,8 @@ gst_cutter_test_runner_class_init (GstCutterTestRunnerClass * klass)
     g_object_class_install_property(gobject_class, ARG_TEST_DIRECTORY, spec);
 
     g_type_class_add_private(gobject_class, sizeof(GstCutterTestRunnerPrivate));
+
+    GST_DEBUG_CATEGORY_INIT(cutter_test_runner_debug, "cutter-test", 0, "Cutter test elements");
 }
 
 static void
@@ -268,6 +273,8 @@ create (GstBaseSrc *base_src, guint64 offset,
     guint send_size;
     gboolean is_end_of_buffer = FALSE;
     GstCutterTestRunnerPrivate *priv = GST_CUTTER_TEST_RUNNER_GET_PRIVATE(base_src);
+
+    GST_DEBUG("create buffer");
 
     if (priv->xml_string->len < offset + length) {
         is_end_of_buffer = TRUE;
