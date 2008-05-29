@@ -48,7 +48,11 @@ struct _GstCutterServerPrivate
 {
     CutRunContext *run_context;
     CutStreamer *cut_streamer;
+
     gchar *test_directory;
+    gchar *host;
+    gint port;
+
     GString *xml_string;
     GstElement *tcp_server_sink;
 };
@@ -58,7 +62,9 @@ GST_BOILERPLATE(GstCutterServer, gst_cutter_server, GstBaseSrc, GST_TYPE_BASE_SR
 enum
 {
     ARG_0,
-    ARG_TEST_DIRECTORY
+    ARG_TEST_DIRECTORY,
+    ARG_HOST,
+    ARG_PORT
 };
 
 static void dispose        (GObject         *object);
@@ -123,6 +129,22 @@ gst_cutter_server_class_init (GstCutterServerClass * klass)
                                G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, ARG_TEST_DIRECTORY, spec);
 
+    spec = g_param_spec_string("host",
+                               "host",
+                               "The host/IP to send the packets to",
+                               "localhost", 
+                               G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS);
+    g_object_class_install_property(gobject_class, ARG_HOST, spec);
+
+    spec = g_param_spec_int("port",
+                            "port",
+                            "The port to send the packets to",
+                            0,
+                            65535,
+                            4953, 
+                            G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, ARG_PORT, spec);
+
     g_type_class_add_private(gobject_class, sizeof(GstCutterServerPrivate));
 
     GST_DEBUG_CATEGORY_INIT(cutter_server_debug, "cutter-test", 0, "Cutter test elements");
@@ -137,6 +159,8 @@ gst_cutter_server_init (GstCutterServer *cutter_server, GstCutterServerClass * k
     priv->cut_streamer = NULL;
     priv->test_directory = NULL;
     priv->xml_string = NULL;
+    priv->port = 4953;
+    priv->host = NULL;
     priv->tcp_server_sink = gst_element_factory_make("tcpserversink", NULL);
     gst_element_link(GST_ELEMENT(cutter_server), priv->tcp_server_sink);
 }
@@ -166,6 +190,11 @@ dispose (GObject *object)
         priv->xml_string = NULL;
     }
 
+    if (priv->host) {
+        g_free(priv->host);
+        priv->host = NULL;
+    }
+
     if (priv->tcp_server_sink) {
         gst_object_unref(priv->tcp_server_sink);
         priv->tcp_server_sink = NULL;
@@ -186,6 +215,12 @@ set_property (GObject      *object,
       case ARG_TEST_DIRECTORY:
         priv->test_directory = g_value_dup_string(value);
         break;
+      case ARG_HOST:
+        priv->host = g_value_dup_string(value);
+        break;
+      case ARG_PORT:
+        priv->port = g_value_get_int(value);
+        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
@@ -203,6 +238,10 @@ get_property (GObject    *object,
     switch (prop_id) {
       case ARG_TEST_DIRECTORY:
         g_value_set_string(value, priv->test_directory);
+      case ARG_HOST:
+        g_value_set_string(value, priv->host);
+      case ARG_PORT:
+        g_value_set_int(value, priv->port);
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
