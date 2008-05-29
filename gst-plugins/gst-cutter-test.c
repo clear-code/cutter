@@ -23,8 +23,9 @@
 
 #include "gst-cutter-test-runner.h"
 #include "gst-cutter-console-output.h"
+#include "gst-cutter-server.h"
 
-GST_DEBUG_CATEGORY (cutter_debug);
+GST_DEBUG_CATEGORY(cutter_debug);
 
 static gboolean
 plugin_init (GstPlugin * plugin)
@@ -33,6 +34,8 @@ plugin_init (GstPlugin * plugin)
                          GST_TYPE_CUTTER_TEST_RUNNER);
     gst_element_register(plugin, "cutter-console-output", GST_RANK_NONE,
                          GST_TYPE_CUTTER_CONSOLE_OUTPUT);
+    gst_element_register(plugin, "cutter-server", GST_RANK_NONE,
+                         GST_TYPE_CUTTER_SERVER);
     GST_DEBUG_CATEGORY_INIT(cutter_debug, "cutter-test", 0, "Cutter elements");
 
     return TRUE;
