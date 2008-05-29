@@ -21,7 +21,7 @@
 #define __GST_CUTTER_SERVER_H__
 
 #include <gst/gst.h>
-#include <gst/base/gstbasesrc.h>
+#include <gst/gstelement.h>
 
 G_BEGIN_DECLS
 
@@ -36,11 +36,11 @@ typedef struct _GstCutterServer      GstCutterServer;
 typedef struct _GstCutterServerClass GstCutterServerClass;
 
 struct _GstCutterServer {
-    GstBaseSrc parent;
+    GstElement parent;
 };
 
 struct _GstCutterServerClass {
-  GstBaseSrcClass parent_class;
+  GstElementClass parent_class;
 };
 
 GType gst_cutter_server_get_type (void);

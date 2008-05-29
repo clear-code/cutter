@@ -57,7 +57,7 @@ struct _GstCutterServerPrivate
     GstElement *tcp_server_sink;
 };
 
-GST_BOILERPLATE(GstCutterServer, gst_cutter_server, GstBaseSrc, GST_TYPE_BASE_SRC);
+GST_BOILERPLATE(GstCutterServer, gst_cutter_server, GstElement, GST_TYPE_ELEMENT);
 
 enum
 {
@@ -76,15 +76,6 @@ static void get_property   (GObject         *object,
                             guint            prop_id,
                             GValue          *value,
                             GParamSpec      *pspec);
-
-static gboolean      start           (GstBaseSrc *base_src);
-static gboolean      stop            (GstBaseSrc *base_src);
-static gboolean      is_seekable     (GstBaseSrc *base_src);
-static GstFlowReturn create          (GstBaseSrc *basr_src,
-                                      guint64     offset,
-                                      guint       length,
-                                      GstBuffer **buffer);
-static gboolean      check_get_range (GstBaseSrc *base_src);
 
 static GstStateChangeReturn change_state (GstElement *element,
                                           GstStateChange transition);
@@ -105,7 +96,6 @@ gst_cutter_server_class_init (GstCutterServerClass * klass)
 {
     GObjectClass *gobject_class = G_OBJECT_CLASS(klass);
     GstElementClass *element_class = GST_ELEMENT_CLASS(klass);
-    GstBaseSrcClass *base_src_class = GST_BASE_SRC_CLASS(klass);
     GParamSpec *spec;
 
     parent_class = g_type_class_peek_parent(klass);
@@ -115,12 +105,6 @@ gst_cutter_server_class_init (GstCutterServerClass * klass)
     gobject_class->get_property = get_property;
 
     element_class->change_state = change_state;
-
-    base_src_class->start           = start;
-    base_src_class->stop            = stop;
-    base_src_class->is_seekable     = is_seekable;
-    base_src_class->create          = create;
-    base_src_class->check_get_range = check_get_range;
 
     spec = g_param_spec_string("test-directory",
                                "Test directory",
@@ -246,90 +230,6 @@ get_property (GObject    *object,
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
     }
-}
-
-static gboolean
-stream_to_string (const gchar *message, GError **error, gpointer user_data)
-{
-    GString *string = user_data;
-
-    g_string_append(string, message);
-
-    return TRUE;
-}
-
-static gboolean
-start (GstBaseSrc *base_src)
-{
-    GstCutterServerPrivate *priv = GST_CUTTER_SERVER_GET_PRIVATE(base_src);
-
-    priv->run_context = g_object_new(CUT_TYPE_TEST_RUNNER,
-                                     "test-directory", priv->test_directory,
-                                     NULL);
-    priv->xml_string = g_string_new(NULL);
-    priv->cut_streamer =
-        cut_streamer_new("xml",
-                         "stream-function", stream_to_string,
-                         "stream-function-user-data", priv->xml_string,
-                         NULL);
-    cut_run_context_add_listener(priv->run_context,
-                                 CUT_LISTENER(priv->cut_streamer));
-
-    gst_base_src_set_format(base_src, GST_FORMAT_BYTES);
-
-    cut_run_context_start(priv->run_context);
-
-    return TRUE;
-}
-
-static gboolean
-stop (GstBaseSrc *base_src)
-{
-    GstCutterServerPrivate *priv = GST_CUTTER_SERVER_GET_PRIVATE(base_src);
-
-    cut_run_context_cancel(priv->run_context);
-    cut_run_context_remove_listener(priv->run_context, CUT_LISTENER(priv->cut_streamer));
-
-    return TRUE;
-}
-
-static gboolean
-is_seekable (GstBaseSrc *base_src)
-{
-    return FALSE;
-}
-
-static gboolean
-check_get_range (GstBaseSrc *base_src)
-{
-    return FALSE;
-}
-
-static GstFlowReturn
-create (GstBaseSrc *base_src, guint64 offset,
-        guint length, GstBuffer **buffer)
-{
-    GstBuffer *buf;
-    guint send_size;
-    gboolean is_end_of_buffer = FALSE;
-    GstCutterServerPrivate *priv = GST_CUTTER_SERVER_GET_PRIVATE(base_src);
-
-    GST_DEBUG("create buffer");
-
-    if (priv->xml_string->len < offset + length) {
-        is_end_of_buffer = TRUE;
-    }
-
-    send_size = priv->xml_string->len - offset;
-
-    buf = gst_buffer_new_and_alloc(send_size);
-    memcpy(GST_BUFFER_DATA(buf), priv->xml_string->str + offset, send_size);
-    GST_BUFFER_SIZE(buf) = send_size;
-    GST_BUFFER_OFFSET(buf) = offset;
-    GST_BUFFER_OFFSET_END(buf) = offset + send_size;
-    *buffer = buf;
-
-    return !is_end_of_buffer ? GST_FLOW_OK : GST_FLOW_UNEXPECTED;
 }
 
 static GstStateChangeReturn
