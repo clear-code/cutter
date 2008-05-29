@@ -50,7 +50,6 @@ struct _GstCutterTestRunnerPrivate
     CutStreamer *cut_streamer;
     gchar *test_directory;
     GString *xml_string;
-    GstElement *tcp_server_sink;
 };
 
 GST_BOILERPLATE(GstCutterTestRunner, gst_cutter_test_runner, GstBaseSrc, GST_TYPE_BASE_SRC);
@@ -137,7 +136,6 @@ gst_cutter_test_runner_init (GstCutterTestRunner *cutter_test_runner, GstCutterT
     priv->cut_streamer = NULL;
     priv->test_directory = NULL;
     priv->xml_string = NULL;
-    priv->tcp_server_sink = gst_element_factory_make("tcp", "tcpserversink");
 }
 
 static void
@@ -163,11 +161,6 @@ dispose (GObject *object)
     if (priv->xml_string) {
         g_string_free(priv->xml_string, TRUE);
         priv->xml_string = NULL;
-    }
-
-    if (priv->tcp_server_sink) {
-        gst_object_unref(priv->tcp_server_sink);
-        priv->tcp_server_sink = NULL;
     }
 
     G_OBJECT_CLASS(parent_class)->dispose(object);
