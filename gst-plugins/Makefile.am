@@ -3,7 +3,11 @@ SUBDIRS = test
 if HAVE_GSTREAMER
 gst_plugins_LTLIBRARIES = libgstcuttertest.la
 
-noinst_HEADERS = gst-cutter-test-runner.h
+noinst_HEADERS = 			\
+	gst-cutter-test-runner.h	\
+	gst-cutter-console-output.h	\
+	gst-cutter-server.h		\
+	cut-gst-run-context.h
 
 INCLUDES = 			\
 	 -I$(top_builddir)	\
