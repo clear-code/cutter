@@ -1,3 +1,7 @@
+2008-05-30  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-run-context.c: cleanup.
+
 2008-05-28  Kouhei Sutou  <kou@cozmixng.org>
 
 	* gst-plugins/gst-cutter-test-runner.c: use stream-function.

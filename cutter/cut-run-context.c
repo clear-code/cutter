@@ -913,9 +913,9 @@ pending_test (CutRunContext   *context,
 
 static void
 notification_test (CutRunContext   *context,
-              CutTest         *test,
-              CutTestContext  *test_context,
-              CutTestResult   *result)
+                   CutTest         *test,
+                   CutTestContext  *test_context,
+                   CutTestResult   *result)
 {
     CutRunContextPrivate *priv;
 
@@ -966,7 +966,8 @@ crashed (CutRunContext *context, const gchar *backtrace)
 }
 
 void
-cut_run_context_set_test_directory (CutRunContext *context, const gchar *directory)
+cut_run_context_set_test_directory (CutRunContext *context,
+                                    const gchar *directory)
 {
     CutRunContextPrivate *priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
 
@@ -981,7 +982,8 @@ cut_run_context_get_test_directory (CutRunContext *context)
 }
 
 void
-cut_run_context_set_source_directory (CutRunContext *context, const gchar *directory)
+cut_run_context_set_source_directory (CutRunContext *context,
+                                      const gchar *directory)
 {
     CutRunContextPrivate *priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
 
@@ -996,7 +998,8 @@ cut_run_context_get_source_directory (CutRunContext *context)
 }
 
 void
-cut_run_context_set_multi_thread (CutRunContext *context, gboolean use_multi_thread)
+cut_run_context_set_multi_thread (CutRunContext *context,
+                                  gboolean use_multi_thread)
 {
     CutRunContextPrivate *priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
 
@@ -1053,7 +1056,8 @@ cut_run_context_get_exclude_directories (CutRunContext *context)
 }
 
 void
-cut_run_context_set_target_test_case_names (CutRunContext *context, gchar **names)
+cut_run_context_set_target_test_case_names (CutRunContext *context,
+                                            gchar **names)
 {
     CutRunContextPrivate *priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
 
@@ -1243,11 +1247,14 @@ cut_run_context_create_test_suite (CutRunContext *context)
     CutRunContextPrivate *priv;
     CutRepository *repository;
     CutTestSuite *suite;
+    const gchar **exclude_files, **exclude_directories;
 
     priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
     repository = cut_repository_new(priv->test_directory);
-    cut_repository_set_exclude_files(repository, (const gchar **)priv->exclude_files);
-    cut_repository_set_exclude_directories(repository, (const gchar **)priv->exclude_directories);
+    exclude_files = (const gchar **)priv->exclude_files;
+    cut_repository_set_exclude_files(repository, exclude_files);
+    exclude_directories = (const gchar **)priv->exclude_directories;
+    cut_repository_set_exclude_directories(repository, exclude_directories);
     suite = cut_repository_create_test_suite(repository);
     g_object_unref(repository);
 
@@ -1326,7 +1333,8 @@ cut_run_context_detach_listeners (CutRunContext *context)
 }
 
 gchar *
-cut_run_context_build_source_filename (CutRunContext *context, const gchar *filename)
+cut_run_context_build_source_filename (CutRunContext *context,
+                                       const gchar *filename)
 {
     const gchar *source_directory;
     gchar *source_filename;
