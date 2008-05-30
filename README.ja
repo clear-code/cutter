@@ -27,7 +27,7 @@ Cutterの特徴は以下の通りです。
 
 ((<URL:http://sourceforge.net/project/showfiles.php?group_id=208375>))
 
-  % svn co https://cutter.svn.sourceforge.net/svnroot/cutter/trunk cutter
+  % svn co https://cutter.svn.sourceforge.net/svnroot/cutter/cutter/trunk cutter
 
 == インストール
 

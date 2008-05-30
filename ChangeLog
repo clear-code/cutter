@@ -1,5 +1,12 @@
 2008-05-30  Kouhei Sutou  <kou@cozmixng.org>
 
+	* README*: change repository path:
+	https://cutter.svn.sourceforge.net/svnroot/cutter/trunk ->
+	https://cutter.svn.sourceforge.net/svnroot/cutter/cutter/trunk
+	If you have a working copy, do switch:
+	  % cd ../cutter
+	  % svn switch https://cutter.svn.sourceforge.net/svnroot/cutter/cutter/trunk
+
 	* cutter/cut-run-context.c: cleanup.
 
 2008-05-28  Kouhei Sutou  <kou@cozmixng.org>
