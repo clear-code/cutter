@@ -28,6 +28,8 @@
 
 #ifdef HAVE_LIBBFD
 #  include <bfd.h>
+#else
+#  include <glib/gstdio.h>
 #endif
 
 #include "cut-loader.h"
