@@ -181,7 +181,7 @@ install-data-local:
 	      echo "-- Installing $$i";					\
 	      $(INSTALL_DATA) $$i $(DESTDIR)$(TARGET_DIR)$$target_dir;	\
 	    done;							\
-	    echo "-- Installing $(srcdir)$$dir/index.sgml";		\
+	    echo "-- Installing $(srcdir)/$$dir/index.sgml";		\
 	    $(INSTALL_DATA) $(srcdir)$$dir/index.sgml			\
 	      $(DESTDIR)$(TARGET_DIR)$$target_dir || :;			\
 	    if test `which gtkdoc-rebase` != ""; then			\

@@ -2,6 +2,8 @@
 
 	* gtk-doc.make: use " not '.
 
+	* gtk-doc.make: add missing '/'.
+
 2008-06-03  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-loader.c: include <glib/gstdio.h> if libbfd is unavailable.
