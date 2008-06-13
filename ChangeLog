@@ -1,5 +1,7 @@
 2008-06-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/factory_test_dir/type1/Makefile.am: don't link.
+
 	* configure.ac: add --disable-gstreamer option.
 
 	* sample/glib/uri.c: remove needless test.
