@@ -2,6 +2,16 @@
 
 = NEWS --- The history of Cutter
 
+== 1.0.1: 2008-06-13
+
+  * Improve AC_CHECK_COVERAGE
+  * Document:
+    * Fix: Require GLib >= 2.16
+  * Experimental:
+    * Support GStreamer:
+      * Transport test result to remote machine and so on
+    * Support warmup()/cooldown()
+
 == 1.0.0: 2008-05-20
 
   * Add assertions:

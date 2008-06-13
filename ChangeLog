@@ -1,5 +1,7 @@
 2008-06-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* NEWS*: update.
+
 	* m4macros/cutter.m4 (coverage): only report project related files.
 
 2008-06-04  Kouhei Sutou  <kou@cozmixng.org>
