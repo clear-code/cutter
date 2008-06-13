@@ -23,13 +23,26 @@
 
 #include <stdlib.h>
 #include <string.h>
-#ifdef HAVE_SYS_WAIT_H
-#  include <sys/wait.h>
-#endif
+#include <fcntl.h>
+#include <errno.h>
+
 #ifdef HAVE_UNISTD_H
 #  include <unistd.h>
 #endif
-#include <errno.h>
+#ifdef HAVE_SYS_WAIT_H
+#  include <sys/wait.h>
+#endif
+#ifndef WIFEXITED
+#  define WIFEXITED(status) (TRUE)
+#endif
+#ifndef WEXITSTATUS
+#  define WEXITSTATUS(status) (status)
+#endif
+#ifdef HAVE_IO_H
+#  include <io.h>
+#  define pipe(phandles) _pipe(phandles, 4096, _O_BINARY)
+#endif
+
 #include <glib.h>
 
 #include "cut-pipeline.h"

@@ -1,5 +1,7 @@
 2008-06-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-pipeline.c: define fallbacks on Windows.
+
 	* cutter/cut-process.c: CutPipeline do nothing on Windows.
 
 	* gst-plugins/gst-cutter-test-runner.c: include missing <string.h>.
