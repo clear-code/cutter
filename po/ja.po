@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-13 16:14+0900\n"
-"PO-Revision-Date: 2008-06-13 16:15+0900\n"
+"POT-Creation-Date: 2008-06-13 16:31+0900\n"
+"PO-Revision-Date: 2008-06-13 16:35+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -52,6 +52,11 @@ msgstr "ファイルをスキップ"
 #: cutter/cut-main.c:103
 msgid "Skip directories"
 msgstr "ディレクトリをスキップ"
+
+#: cutter/cut-report-factory-builder.c:185
+#, c-format
+msgid "Set filename of %s report"
+msgstr "%sレポートのファイル名を設定"
 
 #: cutter/cut-report-factory-builder.c:202
 msgid "Report Options"
