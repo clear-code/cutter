@@ -788,10 +788,13 @@ get_property (GObject    *object,
         break;
       case PROP_TEST_DIRECTORY:
         g_value_set_string(value, priv->test_directory);
+        break;
       case PROP_SOURCE_DIRECTORY:
         g_value_set_string(value, priv->source_directory);
+        break;
       case PROP_TARGET_TEST_CASE_NAMES:
         g_value_set_pointer(value, priv->target_test_case_names);
+        break;
       case PROP_TARGET_TEST_NAMES:
         g_value_set_pointer(value, priv->target_test_names);
         break;

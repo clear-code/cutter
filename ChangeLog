@@ -1,6 +1,7 @@
 2008-06-13  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* configure.ac: Added -DG_DISABLE_DEPRECATED to CFLAGS.
+	* cutter/cut-run-context.c: break! break!
 
 2008-06-13  Kouhei Sutou  <kou@cozmixng.org>
 
