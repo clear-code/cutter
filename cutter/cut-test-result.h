@@ -22,7 +22,6 @@
 
 #include <glib-object.h>
 
-#include <cutter/cut-assertions.h>
 #include <cutter/cut-test.h>
 #include <cutter/cut-test-case.h>
 #include <cutter/cut-test-suite.h>

@@ -23,6 +23,8 @@
 
 #include <glib.h>
 
+#include <string.h>
+
 #include "cut-run-context.h"
 #include "cut-runner.h"
 #include "cut-listener.h"

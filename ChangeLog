@@ -1,5 +1,12 @@
 2008-06-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-pipeline.c: include <errno.h>.
+
+	* cutter/cut-test.h, cutter/cut-test-result.h: don't include
+	<cut-assertions.h>.
+
+	* cutter/cut-run-context.c: include <string.h>.
+
 	* cutter/cut-test-context.c: add ifdef check.
 
 	* configure.ac: add <sys/wait.h> check.

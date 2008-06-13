@@ -23,7 +23,6 @@
 #include <glib-object.h>
 
 #include <cutter/cut-private.h>
-#include <cutter/cut-assertions.h>
 #include <cutter/cut-test-context.h>
 
 G_BEGIN_DECLS
