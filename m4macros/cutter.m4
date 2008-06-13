@@ -73,11 +73,11 @@ coverage: coverage-clean check
 	\$(LCOV) --compat-libtool --directory . \\
 	  --capture --output-file \$(COVERAGE_INFO_FILE)
 	\$(LCOV) --compat-libtool --directory . \\
-	  --extract \$(COVERAGE_INFO_FILE) '\$(abs_top_srcdir)/*' \\
+	  --extract \$(COVERAGE_INFO_FILE) "\`(cd '\$(top_srcdir)'; pwd)\`/*" \\
 	  --output-file \$(COVERAGE_INFO_FILE)
 	\$(GENHTML) --highlight --legend \\
 	  --output-directory \$(COVERAGE_REPORT_DIR) \\
-	  --prefix \$(abs_top_srcdir) \\
+	  --prefix "\`(cd '\$(top_srcdir)'; pwd)\`" \\
 	  \$(GENHTML_OPTIONS) \$(COVERAGE_INFO_FILE)
 EOS
       fi

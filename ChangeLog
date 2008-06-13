@@ -4,6 +4,8 @@
 
 2008-06-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* m4macros/cutter.m4 (coverage): don't use abs_top_srcdir.
+
 	* NEWS*: update.
 
 	* m4macros/cutter.m4 (coverage): only report project related files.
