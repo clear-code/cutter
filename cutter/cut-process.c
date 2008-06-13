@@ -18,16 +18,27 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#  include "config.h"
 #endif /* HAVE_CONFIG_H */
 
 #include <stdlib.h>
 #include <string.h>
+#include <fcntl.h>
 #include <signal.h>
-#include <unistd.h>
 #include <errno.h>
 #include <sys/types.h>
-#include <sys/wait.h>
+
+#ifdef HAVE_UNISTD_H
+#  include <unistd.h>
+#endif
+#ifdef HAVE_SYS_WAIT_H
+#  include <sys/wait.h>
+#endif
+#ifdef HAVE_IO_H
+#  include <io.h>
+#  define pipe(phandles) _pipe(phandles, 4096, _O_BINARY)
+#endif
+
 #include <glib.h>
 #include <glib/gstdio.h>
 #include <gmodule.h>
@@ -42,6 +53,7 @@ typedef struct _CutProcessPrivate	CutProcessPrivate;
 struct _CutProcessPrivate
 {
     pid_t pid;
+#ifndef G_OS_WIN32
     gchar *stdout_string;
     gchar *stderr_string;
     GString *cutter_string;
@@ -49,6 +61,7 @@ struct _CutProcessPrivate
     GIOChannel *parent_io;
     GIOChannel *stdout_read_io;
     GIOChannel *stderr_read_io;
+#endif
 };
 
 enum
@@ -74,6 +87,7 @@ cut_process_class_init (CutProcessClass *klass)
     g_type_class_add_private(gobject_class, sizeof(CutProcessPrivate));
 }
 
+#ifndef G_OS_WIN32
 static int
 sane_dup2 (int fd1, int fd2)
 {
@@ -89,11 +103,7 @@ create_io_channel (int pipe, GIOFlags flag)
 {
     GIOChannel *channel;
 
-#ifdef G_OS_WIN32
-    channel = g_io_channel_win32_new_fd(pipe);
-#else
     channel = g_io_channel_unix_new(pipe);
-#endif
     g_io_channel_set_encoding(channel, NULL, NULL);
     g_io_channel_set_flags(channel, flag, NULL);
     g_io_channel_set_close_on_unref(channel, TRUE);
@@ -122,7 +132,7 @@ read_from_child (GIOChannel *source, GIOCondition *condition,
     gsize bytes_read;
     gchar buffer[4096];
 
-    status = g_io_channel_read_chars(source, buffer, 
+    status = g_io_channel_read_chars(source, buffer,
                                      sizeof(buffer),
                                      &bytes_read,
                                      NULL);
@@ -192,9 +202,10 @@ ensure_collect_result (CutProcess *process, unsigned int usec_timeout)
     CutProcessPrivate *priv = CUT_PROCESS_GET_PRIVATE(process);
 
     /* workaround since g_io_add_watch() does not work I expect. */
-    while(read_from_child(priv->parent_io, NULL, process))
+    while (read_from_child(priv->parent_io, NULL, process))
         ;
 }
+#endif
 
 static void
 cut_process_init (CutProcess *process)
@@ -202,16 +213,19 @@ cut_process_init (CutProcess *process)
     CutProcessPrivate *priv = CUT_PROCESS_GET_PRIVATE(process);
 
     priv->pid = 0;
+#ifndef G_OS_WIN32
     priv->stdout_string = NULL;
     priv->stderr_string = NULL;
     priv->cutter_string = g_string_new(NULL);
     priv->child_io = NULL;
     priv->parent_io = NULL;
+#endif
 }
 
 static void
 dispose (GObject *object)
 {
+#ifndef G_OS_WIN32
     CutProcessPrivate *priv = CUT_PROCESS_GET_PRIVATE(object);
 
     if (priv->pid) {
@@ -253,6 +267,7 @@ dispose (GObject *object)
         g_io_channel_unref(priv->stderr_read_io);
         priv->stderr_read_io = NULL;
     }
+#endif
 
     G_OBJECT_CLASS(cut_process_parent_class)->dispose(object);
 }
@@ -267,12 +282,19 @@ cut_process_new ()
 int
 cut_process_fork (CutProcess *process)
 {
+#ifdef G_OS_WIN32
+    return 0;
+#else
     return prepare_pipes(process);
+#endif
 }
 
 int
 cut_process_wait (CutProcess *process, unsigned int usec_timeout)
 {
+#ifdef G_OS_WIN32
+    return 0;
+#else
     int status;
     pid_t pid;
 
@@ -287,6 +309,7 @@ cut_process_wait (CutProcess *process, unsigned int usec_timeout)
     ensure_collect_result(process, usec_timeout);
 
     return status;
+#endif
 }
 
 int
@@ -295,6 +318,7 @@ cut_process_get_pid (CutProcess *process)
     return CUT_PROCESS_GET_PRIVATE(process)->pid;
 }
 
+#ifndef G_OS_WIN32
 static gchar *
 read_from_channel (GIOChannel *source)
 {
@@ -302,7 +326,7 @@ read_from_channel (GIOChannel *source)
     gsize bytes_read;
     gchar *buffer = NULL;
 
-    status = g_io_channel_read_to_end(source, &buffer, 
+    status = g_io_channel_read_to_end(source, &buffer,
                                       &bytes_read,
                                       NULL);
     return buffer;
@@ -374,14 +398,17 @@ cut_process_get_result_from_child (CutProcess *process)
 {
     return CUT_PROCESS_GET_PRIVATE(process)->cutter_string->str;
 }
+#endif
 
 void
 cut_process_exit (CutProcess *process)
 {
+#ifndef G_OS_WIN32
     CutProcessPrivate *priv = CUT_PROCESS_GET_PRIVATE(process);
 
     g_io_channel_unref(priv->child_io);
     priv->child_io = NULL;
+#endif
     _exit(EXIT_SUCCESS);
 }
 
