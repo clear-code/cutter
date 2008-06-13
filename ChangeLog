@@ -1,5 +1,7 @@
 2008-06-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* configure.ac (SF_REPOS): fix a path.
+
 	* cutter/cut-report-factory-builder.c (create_option_entries):
 	mark translable.
 

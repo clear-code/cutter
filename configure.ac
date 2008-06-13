@@ -260,7 +260,7 @@ AC_SUBST(SF_HTDOCS_PATH)
 SF_HTDOCS="$SF_HOST:$SF_HTDOCS_PATH"
 AC_SUBST(SF_HTDOCS)
 
-SF_REPOS="https://cutter.svn.sourceforge.net/svnroot/cutter"
+SF_REPOS="https://cutter.svn.sourceforge.net/svnroot/cutter/cutter"
 AC_SUBST(SF_REPOS)
 
 CUTTER="\$(top_builddir)/cutter/cutter\$(EXEEXT)"
