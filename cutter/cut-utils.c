@@ -22,7 +22,9 @@
 #endif /* HAVE_CONFIG_H */
 
 #include <string.h>
-#include <unistd.h>
+#ifdef HAVE_UNISTD_H
+#  include <unistd.h>
+#endif
 #include <glib.h>
 
 #include "cut-utils.h"
