@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Cutter 1.0.0\n"
+"Project-Id-Version: Cutter 1.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-05-20 12:22+0900\n"
-"PO-Revision-Date: 2008-05-19 15:07+0900\n"
+"POT-Creation-Date: 2008-06-13 16:14+0900\n"
+"PO-Revision-Date: 2008-06-13 16:15+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -53,11 +53,11 @@ msgstr "ファイルをスキップ"
 msgid "Skip directories"
 msgstr "ディレクトリをスキップ"
 
-#: cutter/cut-report-factory-builder.c:176
+#: cutter/cut-report-factory-builder.c:202
 msgid "Report Options"
 msgstr "レポートのオプション"
 
-#: cutter/cut-report-factory-builder.c:177
+#: cutter/cut-report-factory-builder.c:203
 msgid "Show report options"
 msgstr "レポートのオプションを表示"
 
@@ -85,99 +85,99 @@ msgstr "UIのオプション"
 msgid "Show UI options"
 msgstr "コンソールUIのオプションの表示"
 
-#: cutter/module/report/cut-pdf-report-factory.c:220
+#: module/report/cut-pdf-report-factory.c:220
 msgid "PDF Report Options"
 msgstr "PDFレポートのオプション"
 
-#: cutter/module/report/cut-pdf-report-factory.c:221
+#: module/report/cut-pdf-report-factory.c:221
 msgid "Show PDF report options"
 msgstr "PDFレポートのオプションを表示"
 
-#: cutter/module/report/cut-xml-report-factory.c:220
+#: module/report/cut-xml-report-factory.c:220
 msgid "XML Report Options"
 msgstr "XMLレポートのオプション"
 
-#: cutter/module/report/cut-xml-report-factory.c:221
+#: module/report/cut-xml-report-factory.c:221
 msgid "Show XML report options"
 msgstr "XMLレポートのオプションを表示"
 
-#: cutter/module/streamer/cut-xml-streamer-factory.c:147
+#: module/streamer/cut-xml-streamer-factory.c:149
 msgid "Stream to FILE_DESCRIPTOR (default: stdout)"
-msgstr ""
+msgstr "ストリームをFILE_DESCRIPTORに出力 (デフォルト: stdout)"
 
-#: cutter/module/streamer/cut-xml-streamer-factory.c:155
+#: module/streamer/cut-xml-streamer-factory.c:157
 msgid "XML Streamer Options"
 msgstr "XMLストリーマのオプション"
 
-#: cutter/module/streamer/cut-xml-streamer-factory.c:156
+#: module/streamer/cut-xml-streamer-factory.c:158
 msgid "Show XML streamer options"
 msgstr "XMLストリーマのオプションを表示"
 
-#: cutter/module/ui/cut-console-ui-factory.c:281
+#: module/ui/cut-console-ui-factory.c:281
 #, c-format
 msgid "Invalid color value: %s"
 msgstr "不正な色指定です: %s"
 
-#: cutter/module/ui/cut-console-ui-factory.c:306
+#: module/ui/cut-console-ui-factory.c:306
 msgid "Set verbose level"
 msgstr "詳細度を設定"
 
-#: cutter/module/ui/cut-console-ui-factory.c:308
+#: module/ui/cut-console-ui-factory.c:308
 msgid "Output log with colors"
 msgstr "色付きでログを出力"
 
-#: cutter/module/ui/cut-console-ui-factory.c:317
+#: module/ui/cut-console-ui-factory.c:317
 msgid "Console UI Options"
 msgstr "コンソールUIのオプション"
 
-#: cutter/module/ui/cut-console-ui-factory.c:318
+#: module/ui/cut-console-ui-factory.c:318
 msgid "Show console UI options"
 msgstr "コンソールUIのオプションの表示"
 
-#: cutter/module/ui/cut-gtk-ui.c:227
+#: module/ui/cut-gtk-ui.c:226
 msgid "Ready"
 msgstr "準備完了"
 
-#: cutter/module/ui/cut-gtk-ui.c:242
+#: module/ui/cut-gtk-ui.c:241
 msgid "Name"
 msgstr "名前"
 
-#: cutter/module/ui/cut-gtk-ui.c:268
+#: module/ui/cut-gtk-ui.c:267
 msgid "Description"
 msgstr "説明"
 
-#: cutter/module/ui/cut-gtk-ui.c:602
+#: module/ui/cut-gtk-ui.c:595
 #, c-format
 msgid ""
 "%d test(s), %d assertion(s), %d failure(s), %d error(s), %d pending(s), %d "
 "omission(s), %d notification(s)"
 msgstr "%dテスト、%d検証、%d失敗、%dエラー、%d保留、%d省略、%d通知"
 
-#: cutter/module/ui/cut-gtk-ui.c:623
+#: module/ui/cut-gtk-ui.c:616
 #, c-format
 msgid "%dT:%dA:%dF:%d:E:%dP:%dO:%dN"
 msgstr "%dテ:%d検:%d失:%d:エ:%d保:%d略:%d通"
 
-#: cutter/module/ui/cut-gtk-ui.c:669
+#: module/ui/cut-gtk-ui.c:662
 #, c-format
 msgid "%u/%u (%u%%): %.1fs"
 msgstr "%u/%u (%u%%): %.1f秒"
 
-#: cutter/module/ui/cut-gtk-ui.c:692
+#: module/ui/cut-gtk-ui.c:684
 #, c-format
 msgid "Staring test suite %s..."
 msgstr "テストスイート%sを開始..."
 
-#: cutter/module/ui/cut-gtk-ui.c:1175
+#: module/ui/cut-gtk-ui.c:1165
 #, c-format
 msgid "Running test: %s"
 msgstr "テストを実行中: %s"
 
-#: cutter/module/ui/cut-gtk-ui.c:1335
+#: module/ui/cut-gtk-ui.c:1324
 #, c-format
 msgid "Finished in %0.1f seconds: %s"
 msgstr "%0.1f秒で終了: %s"
 
-#: cutter/module/ui/cut-gtk-ui.c:1378
+#: module/ui/cut-gtk-ui.c:1365
 msgid "CRASHED!!!"
 msgstr "異常終了！！！"
