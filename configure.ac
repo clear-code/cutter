@@ -150,25 +150,36 @@ AM_CONDITIONAL([HAVE_GTK], [test -z "$no_gtk"])
 dnl **************************************************************
 dnl Check for GStreamer
 dnl **************************************************************
+AC_MSG_CHECKING([whether to try to use GStreamer])
+AC_ARG_ENABLE([gstreamer],
+              AS_HELP_STRING([--disable-gstreamer],
+                             [Disable BFD support]),
+              [ac_cv_enable_gstreamer=$enableval],
+              [ac_cv_enable_gstreamer=yes])
+AC_MSG_RESULT([$ac_cv_enable_gstreamer])
+
 gstreamer_exists=no
-PKG_CHECK_MODULES(GSTREAMER, gstreamer-0.10 >= 0.10.0 gstreamer-base-0.10 >= 0.10.0,
-		  [gstreamer_exists=yes], [gstreamer_exists=no])
-AC_SUBST([GSTREAMER_CFLAGS])
-AC_SUBST([GSTREAMER_LIBS])
-if test x"$gstreamer_exists" = "xyes"; then
-  AC_DEFINE(HAVE_GSTREAMER, 1, [Define to 1 if you have gstreamer installed])
-  AC_MSG_CHECKING([where is GStreamer plugin dir])
-  AC_ARG_WITH([gst-pluginsdir],
-              AS_HELP_STRING([--with-gst-pluginsdir=DIR],
-                             [Use DIR for GStreamer plugin directory
-                             (default: auto)]),
-              [gst_pluginsdir="$withval"],
-              [gst_pluginsdir="auto"])
-  if test "$gst_pluginsdir" = "auto"; then
-    gst_pluginsdir=`pkg-config --variable=pluginsdir gstreamer-0.10`
+if test x"$ac_cv_enable_gstreamer"; then
+  PKG_CHECK_MODULES(GSTREAMER,
+                    gstreamer-0.10 >= 0.10.0 gstreamer-base-0.10 >= 0.10.0,
+		    [gstreamer_exists=yes], [gstreamer_exists=no])
+  AC_SUBST([GSTREAMER_CFLAGS])
+  AC_SUBST([GSTREAMER_LIBS])
+  if test x"$gstreamer_exists" = "xyes"; then
+    AC_DEFINE(HAVE_GSTREAMER, 1, [Define to 1 if you have gstreamer installed])
+    AC_MSG_CHECKING([where is GStreamer plugin dir])
+    AC_ARG_WITH([gst-pluginsdir],
+		AS_HELP_STRING([--with-gst-pluginsdir=DIR],
+			       [Use DIR for GStreamer plugin directory
+			       (default: auto)]),
+		[gst_pluginsdir="$withval"],
+		[gst_pluginsdir="auto"])
+    if test "$gst_pluginsdir" = "auto"; then
+      gst_pluginsdir=`pkg-config --variable=pluginsdir gstreamer-0.10`
+    fi
+    AC_MSG_RESULT([$gst_pluginsdir])
+    AC_SUBST(gst_pluginsdir)
   fi
-  AC_MSG_RESULT([$gst_pluginsdir])
-  AC_SUBST(gst_pluginsdir)
 fi
 AM_CONDITIONAL([HAVE_GSTREAMER], [test $gstreamer_exists = "yes"])
 

@@ -1,5 +1,7 @@
 2008-06-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* configure.ac: add --disable-gstreamer option.
+
 	* sample/glib/uri.c: remove needless test.
 
 	* cutter/cut-test-context.c: fork()/waitpid() doesn't work on Windows.
