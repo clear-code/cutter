@@ -14,12 +14,60 @@ AM_INIT_AUTOMAKE($PACKAGE_NAME, $PACKAGE_VERSION)
 PACKAGE_TITLE=Cutter
 AC_SUBST(PACKAGE_TITLE)
 
+AC_CANONICAL_HOST
+
+AC_MSG_CHECKING([for native Win32])
+case "$host" in
+  *-*-mingw*)
+    os_win32=yes
+    ;;
+  *)
+    os_win32=no
+    ;;
+esac
+AC_MSG_RESULT([$os_win32])
+
+AC_MSG_CHECKING([for some Win32 platform])
+case "$host" in
+  *-*-mingw*|*-*-cygwin*)
+    platform_win32=yes
+    ;;
+  *)
+    platform_win32=no
+    ;;
+esac
+AC_MSG_RESULT([$platform_win32])
+
+AM_CONDITIONAL(OS_WIN32, test "$os_win32" = "yes")
+AM_CONDITIONAL(PLATFORM_WIN32, test "$platform_win32" = "yes")
+
+AC_ENABLE_SHARED(yes)
+AC_ENABLE_STATIC(no)
+
+AC_LIBTOOL_WIN32_DLL
+AC_PROG_LIBTOOL
+
+LT_CURRENT=1
+LT_REVISION=0
+LT_AGE=1
+LT_VERSION_INFO="$LT_CURRENT:$LT_REVISION:$LT_AGE"
+AC_SUBST(LT_CURRENT)
+AC_SUBST(LT_REVISION)
+AC_SUBST(LT_AGE)
+AC_SUBST(LT_VERSION_INFO)
+
+LT_CURRENT_MINUS_AGE=`expr $LT_CURRENT - $LT_AGE`
+AC_SUBST(LT_CURRENT_MINUS_AGE)
+
+LIBTOOL_EXPORT_OPTIONS='-export-symbols-regex "^[[^_]].*"'
+AC_SUBST(LIBTOOL_EXPORT_OPTIONS)
+
+
 # Checks for programs.
 AC_PROG_CC
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
-AC_PROG_LIBTOOL
 
 if test "x$GCC" = "xyes"; then
   case " $CFLAGS " in
@@ -52,6 +100,23 @@ fi
 AC_HEADER_SYS_WAIT
 AC_CHECK_HEADER(io.h,
                 [AC_DEFINE(HAVE_IO_H, 1, [Define to 1 if you have <io.h>.])])
+
+dnl **************************************************************
+dnl Check for MinGW
+dnl **************************************************************
+
+AC_ARG_ENABLE([mingw-debug],
+              AS_HELP_STRING([--enable-mingw-debug],
+	                     [Enable MinGW debug]))
+case $host_os in
+mingw*)
+  if test "x$enable_mingw_debug" != "xno"; then
+    LDFLAGS="$LDFLAGS -mwindows"
+  fi
+  AC_CHECK_TOOL(WINDRES, windres)
+  ;;
+esac
+AM_CONDITIONAL([HAVE_WINDRES], [test x"$WINDRES" != x])
 
 dnl **************************************************************
 dnl Check for GLib.
@@ -159,7 +224,7 @@ AC_ARG_ENABLE([gstreamer],
 AC_MSG_RESULT([$ac_cv_enable_gstreamer])
 
 gstreamer_exists=no
-if test x"$ac_cv_enable_gstreamer"; then
+if test "$ac_cv_enable_gstreamer" = "yes"; then
   PKG_CHECK_MODULES(GSTREAMER,
                     gstreamer-0.10 >= 0.10.0 gstreamer-base-0.10 >= 0.10.0,
 		    [gstreamer_exists=yes], [gstreamer_exists=no])
