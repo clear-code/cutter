@@ -1,5 +1,9 @@
 2008-06-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-context.c: add ifdef check.
+
+	* configure.ac: add <sys/wait.h> check.
+
 	* configure.ac: 1.0.1 -> 1.0.2.
 
 	* configure.ac (SF_REPOS): fix a path.

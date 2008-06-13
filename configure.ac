@@ -48,6 +48,9 @@ if test "x$GCC" = "xyes"; then
   esac
 fi
 
+# Checks for headers
+AC_HEADER_SYS_WAIT
+
 dnl **************************************************************
 dnl Check for GLib.
 dnl **************************************************************
