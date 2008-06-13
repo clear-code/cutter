@@ -1,5 +1,7 @@
 2008-06-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* sample/glib/uri.c: remove needless test.
+
 	* cutter/cut-test-context.c: fork()/waitpid() doesn't work on Windows.
 
 	* cutter/cut-assertions.h (cut_assert_errno): use current_errno

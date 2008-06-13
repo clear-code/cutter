@@ -299,16 +299,6 @@ test_g_filename_from_uri_error (void)
       res = g_filename_from_uri (from_uri_error_tests[i].uri,
 			         &hostname,
 			         &error);
-#ifdef G_OS_WIN32
-      gchar *slash, *p;
-
-      p = from_uri_error_tests[i].expected_filename = g_strdup (from_uri_error_tests[i].expected_filename);
-      while ((slash = strchr (p, '/')) != NULL)
-        {
-          *slash = '\\';
-	  p = slash + 1;
-	}
-#endif
       cut_assert (!res);
       cut_assert (error);
       cut_assert (error->domain == G_CONVERT_ERROR);
