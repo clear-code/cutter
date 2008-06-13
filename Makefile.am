@@ -39,7 +39,9 @@ upload-doc:
 	cd doc/reference && $(MAKE) $(AM_MAKEFLAGS) upload
 
 update-po:
-	cd $(top_srcdir) && find cutter -name '*.c' | sort > po/POTFILES.in
+	cd $(top_srcdir) && \
+	  (find cutter -name '*.c'; find module -name '*.c') | \
+	  sort > po/POTFILES.in
 	cd po && $(MAKE) $(AM_MAKEFLAGS) update-po
 	cd doc/reference && $(MAKE) $(AM_MAKEFLAGS) update-po
 

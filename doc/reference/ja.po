@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Cutter 1.0.0\n"
-"POT-Creation-Date: 2008-05-20 12:22+0900\n"
-"PO-Revision-Date: 2008-05-20 12:25+0900\n"
+"Project-Id-Version: Cutter 1.0.1\n"
+"POT-Creation-Date: 2008-06-13 16:13+0900\n"
+"PO-Revision-Date: 2008-06-13 16:07+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -48,34 +48,38 @@ msgid "Index of deprecated symbols"
 msgstr "非推奨のシンボル一覧"
 
 #: cutter-docs.sgml:66(title)
+msgid "Index of new symbols in 1.0.1"
+msgstr "1.0.1での新しいシンボル一覧"
+
+#: cutter-docs.sgml:69(title)
 msgid "Index of new symbols in 1.0"
 msgstr "1.0での新しいシンボル一覧"
 
-#: cutter-docs.sgml:69(title)
+#: cutter-docs.sgml:72(title)
 msgid "Index of new symbols in 0.9"
 msgstr "0.9での新しいシンボル一覧"
 
-#: cutter-docs.sgml:72(title)
+#: cutter-docs.sgml:75(title)
 msgid "Index of new symbols in 0.8"
 msgstr "0.8での新しいシンボル一覧"
 
-#: cutter-docs.sgml:75(title)
+#: cutter-docs.sgml:78(title)
 msgid "Index of new symbols in 0.7"
 msgstr "0.7での新しいシンボル一覧"
 
-#: cutter-docs.sgml:78(title)
+#: cutter-docs.sgml:81(title)
 msgid "Index of new symbols in 0.6"
 msgstr "0.6での新しいシンボル一覧"
 
-#: cutter-docs.sgml:81(title)
+#: cutter-docs.sgml:84(title)
 msgid "Index of new symbols in 0.5"
 msgstr "0.5での新しいシンボル一覧"
 
-#: cutter-docs.sgml:84(title)
+#: cutter-docs.sgml:87(title)
 msgid "Index of new symbols in 0.4"
 msgstr "0.4での新しいシンボル一覧"
 
-#: cutter-docs.sgml:87(title)
+#: cutter-docs.sgml:90(title)
 msgid "Index of new symbols in 0.3"
 msgstr "0.3での新しいシンボル一覧"
 
@@ -322,9 +326,9 @@ msgstr ""
 #: xml/cut-module-factory.xml:47(title) xml/cut-pipeline.xml:37(title)
 #: xml/cut-process.xml:47(title) xml/cut-report-factory-builder.xml:35(title)
 #: xml/cut-report.xml:47(title) xml/cut-run-context.xml:119(title)
-#: xml/cut-sequence-matcher.xml:84(title) xml/cut-stream-parser.xml:41(title)
+#: xml/cut-sequence-matcher.xml:84(title) xml/cut-stream-parser.xml:43(title)
 #: xml/cut-streamer-factory-builder.xml:35(title)
-#: xml/cut-streamer.xml:38(title) xml/cut-test-runner.xml:36(title)
+#: xml/cut-streamer.xml:41(title) xml/cut-test-runner.xml:36(title)
 #: xml/cut-ui-factory-builder.xml:35(title) xml/cut-ui.xml:42(title)
 #: xml/cut-value-equal.xml:40(title) xml/cut-xml-parser.xml:36(title)
 #: xml/cutter.xml:38(title) xml/gbsearcharray.xml:45(title)
@@ -368,9 +372,9 @@ msgstr "例: <placeholder-1/>"
 #: xml/cut-module-factory.xml:54(title) xml/cut-pipeline.xml:44(title)
 #: xml/cut-process.xml:54(title) xml/cut-report-factory-builder.xml:42(title)
 #: xml/cut-report.xml:54(title) xml/cut-run-context.xml:126(title)
-#: xml/cut-sequence-matcher.xml:91(title) xml/cut-stream-parser.xml:48(title)
+#: xml/cut-sequence-matcher.xml:91(title) xml/cut-stream-parser.xml:50(title)
 #: xml/cut-streamer-factory-builder.xml:42(title)
-#: xml/cut-streamer.xml:45(title) xml/cut-test-runner.xml:43(title)
+#: xml/cut-streamer.xml:48(title) xml/cut-test-runner.xml:43(title)
 #: xml/cut-ui-factory-builder.xml:42(title) xml/cut-ui.xml:49(title)
 #: xml/cut-value-equal.xml:47(title) xml/cut-xml-parser.xml:43(title)
 #: xml/cutter.xml:143(title) xml/gbsearcharray.xml:52(title)
@@ -425,7 +429,7 @@ msgstr ""
 #: xml/cut-gassertions.xml:83(term) xml/cut-gassertions.xml:102(term)
 #: xml/cut-gassertions.xml:122(term) xml/cut-gassertions.xml:139(term)
 #: xml/cut-module-factory.xml:82(term) xml/cut-report.xml:78(term)
-#: xml/cut-run-context.xml:856(term) xml/cut-streamer.xml:69(term)
+#: xml/cut-run-context.xml:856(term) xml/cut-streamer.xml:94(term)
 #: xml/cut-ui.xml:82(term)
 msgid "<parameter>...</parameter>&nbsp;:"
 msgstr ""
@@ -741,7 +745,8 @@ msgstr "期待される浮動小数点数。"
 
 #: xml/cut-assertions.xml:332(term) xml/cut-gassertions-helper.xml:62(term)
 #: xml/cut-gpublic.xml:74(term) xml/cut-run-context.xml:850(term)
-#: xml/cut-stream-parser.xml:101(term)
+#: xml/cut-stream-parser.xml:103(term) xml/cut-stream-parser.xml:121(term)
+#: xml/cut-streamer.xml:60(term)
 msgid "<parameter>error</parameter>&nbsp;:"
 msgstr ""
 
@@ -1127,7 +1132,10 @@ msgid ""
 "Passes if <parameter>regex</parameter> matches <parameter>string</"
 "parameter>. See <link linkend=\"cut-assert-match\"><function>cut_assert_match"
 "()</function></link> for detail."
-msgstr "<parameter>regex</parameter>が<parameter>string</parameter>にマッチしたときパスします。詳細は<link linkend=\\\"cut-assert-match\\\"><function>cut_assert_match()</function></link>を見てください。"
+msgstr ""
+"<parameter>regex</parameter>が<parameter>string</parameter>にマッチしたときパ"
+"スします。詳細は<link linkend=\\\"cut-assert-match\\"
+"\"><function>cut_assert_match()</function></link>を見てください。"
 
 #: xml/cut-assertions.xml:642(simpara)
 msgid "the string to be matched that is freed."
@@ -1204,9 +1212,10 @@ msgstr ""
 #: xml/cut-sequence-matcher.xml:49(link) xml/cut-sequence-matcher.xml:50(link)
 #: xml/cut-sequence-matcher.xml:53(link) xml/cut-sequence-matcher.xml:54(link)
 #: xml/cut-sequence-matcher.xml:56(link) xml/cut-sequence-matcher.xml:57(link)
-#: xml/cut-stream-parser.xml:26(link) xml/cut-streamer.xml:23(link)
-#: xml/cut-streamer.xml:24(link) xml/cut-ui.xml:25(link)
-#: xml/cut-ui.xml:26(link) xml/cut-xml-parser.xml:22(link)
+#: xml/cut-stream-parser.xml:26(link) xml/cut-streamer.xml:22(link)
+#: xml/cut-streamer.xml:26(link) xml/cut-streamer.xml:27(link)
+#: xml/cut-ui.xml:25(link) xml/cut-ui.xml:26(link)
+#: xml/cut-xml-parser.xml:22(link)
 msgid "gchar"
 msgstr ""
 
@@ -1223,7 +1232,8 @@ msgstr ""
 #: xml/cut-run-context.xml:34(link) xml/cut-run-context.xml:35(link)
 #: xml/cut-run-context.xml:72(link) xml/cut-run-context.xml:77(link)
 #: xml/cut-run-context.xml:96(link) xml/cut-sequence-matcher.xml:24(link)
-#: xml/cut-stream-parser.xml:25(link) xml/cut-ui.xml:28(link)
+#: xml/cut-stream-parser.xml:25(link) xml/cut-stream-parser.xml:29(link)
+#: xml/cut-streamer.xml:22(link) xml/cut-ui.xml:28(link)
 #: xml/cut-value-equal.xml:23(link)
 msgid "gboolean"
 msgstr ""
@@ -1330,9 +1340,10 @@ msgstr ""
 #: xml/cut-sequence-matcher.xml:421(term)
 #: xml/cut-sequence-matcher.xml:435(term)
 #: xml/cut-sequence-matcher.xml:449(term)
-#: xml/cut-sequence-matcher.xml:463(term) xml/cut-stream-parser.xml:67(term)
-#: xml/cut-stream-parser.xml:78(term) xml/cut-stream-parser.xml:104(term)
-#: xml/cut-streamer.xml:72(term) xml/cut-test-runner.xml:59(term)
+#: xml/cut-sequence-matcher.xml:463(term) xml/cut-stream-parser.xml:69(term)
+#: xml/cut-stream-parser.xml:80(term) xml/cut-stream-parser.xml:106(term)
+#: xml/cut-stream-parser.xml:124(term) xml/cut-streamer.xml:66(term)
+#: xml/cut-streamer.xml:97(term) xml/cut-test-runner.xml:59(term)
 #: xml/cut-ui.xml:85(term) xml/cut-ui.xml:103(term)
 #: xml/cut-value-equal.xml:67(term) xml/cut-xml-parser.xml:57(term)
 #: xml/gbsearcharray.xml:78(term) xml/gbsearcharray.xml:191(term)
@@ -1554,7 +1565,7 @@ msgstr ""
 
 #: xml/cut-cairo-pie-chart.xml:94(term) xml/cut-listener.xml:57(term)
 #: xml/cut-listener.xml:74(term) xml/cut-main.xml:98(term)
-#: xml/cut-pipeline.xml:71(term) xml/cut-stream-parser.xml:64(term)
+#: xml/cut-pipeline.xml:71(term) xml/cut-stream-parser.xml:66(term)
 #: xml/cut-ui.xml:100(term)
 msgid "<parameter>run_context</parameter>&nbsp;:"
 msgstr ""
@@ -2398,6 +2409,7 @@ msgstr ""
 
 #: xml/cut-gpublic.xml:24(link) xml/cut-gpublic.xml:25(link)
 #: xml/cut-run-context.xml:99(link) xml/cut-stream-parser.xml:28(link)
+#: xml/cut-stream-parser.xml:30(link) xml/cut-streamer.xml:23(link)
 msgid "GError"
 msgstr ""
 
@@ -2458,6 +2470,7 @@ msgstr ""
 #: xml/cut-sequence-matcher.xml:25(link) xml/cut-sequence-matcher.xml:42(link)
 #: xml/cut-sequence-matcher.xml:46(link) xml/cut-sequence-matcher.xml:52(link)
 #: xml/cut-sequence-matcher.xml:59(link) xml/cut-sequence-matcher.xml:61(link)
+#: xml/cut-streamer.xml:24(link)
 msgid "gpointer"
 msgstr ""
 
@@ -2533,7 +2546,7 @@ msgstr ""
 
 #: xml/cut-list.xml:72(term) xml/cut-list.xml:96(term)
 #: xml/cut-list.xml:118(term) xml/cut-sequence-matcher.xml:126(term)
-#: xml/cut-sequence-matcher.xml:266(term)
+#: xml/cut-sequence-matcher.xml:266(term) xml/cut-streamer.xml:63(term)
 msgid "<parameter>user_data</parameter>&nbsp;:"
 msgstr ""
 
@@ -2655,7 +2668,7 @@ msgstr ""
 #: xml/cut-module-factory-utils.xml:170(term)
 #: xml/cut-module-factory.xml:76(term) xml/cut-module-factory.xml:102(term)
 #: xml/cut-report.xml:72(term) xml/cut-run-context.xml:847(term)
-#: xml/cut-streamer.xml:63(term) xml/cut-ui.xml:76(term)
+#: xml/cut-streamer.xml:88(term) xml/cut-ui.xml:76(term)
 msgid "<parameter>name</parameter>&nbsp;:"
 msgstr ""
 
@@ -3089,7 +3102,7 @@ msgid ""
 msgstr ""
 
 #: xml/cut-module-factory.xml:79(term) xml/cut-module-factory.xml:105(term)
-#: xml/cut-report.xml:75(term) xml/cut-streamer.xml:66(term)
+#: xml/cut-report.xml:75(term) xml/cut-streamer.xml:91(term)
 #: xml/cut-ui.xml:79(term)
 msgid "<parameter>first_property</parameter>&nbsp;:"
 msgstr ""
@@ -4954,25 +4967,29 @@ msgstr ""
 #: xml/cut-stream-parser.xml:7(refentrytitle)
 #: xml/cut-stream-parser.xml:13(refname) xml/cut-stream-parser.xml:22(link)
 #: xml/cut-stream-parser.xml:23(link) xml/cut-stream-parser.xml:24(link)
-#: xml/cut-stream-parser.xml:25(link) xml/cut-stream-parser.xml:50(title)
-#: xml/cut-stream-parser.xml:51(primary)
+#: xml/cut-stream-parser.xml:25(link) xml/cut-stream-parser.xml:29(link)
+#: xml/cut-stream-parser.xml:52(title) xml/cut-stream-parser.xml:53(primary)
 msgid "CutStreamParser"
 msgstr ""
 
-#: xml/cut-stream-parser.xml:23(link) xml/cut-stream-parser.xml:60(primary)
+#: xml/cut-stream-parser.xml:23(link) xml/cut-stream-parser.xml:62(primary)
 msgid "cut_stream_parser_new"
 msgstr ""
 
-#: xml/cut-stream-parser.xml:24(link) xml/cut-stream-parser.xml:74(primary)
+#: xml/cut-stream-parser.xml:24(link) xml/cut-stream-parser.xml:76(primary)
 msgid "cut_test_result_parser_new"
 msgstr ""
 
-#: xml/cut-stream-parser.xml:25(link) xml/cut-stream-parser.xml:85(primary)
+#: xml/cut-stream-parser.xml:25(link) xml/cut-stream-parser.xml:87(primary)
 msgid "cut_stream_parser_parse"
 msgstr ""
 
 #: xml/cut-stream-parser.xml:27(link)
 msgid "gsize"
+msgstr ""
+
+#: xml/cut-stream-parser.xml:29(link) xml/cut-stream-parser.xml:113(primary)
+msgid "cut_stream_parser_end_parse"
 msgstr ""
 
 #: xml/cut-stream-parser.xml:21(synopsis)
@@ -4986,9 +5003,11 @@ msgid ""
 "                                                         const <placeholder-10/> *text,\n"
 "                                                         <placeholder-11/> text_len,\n"
 "                                                         <placeholder-12/> **error);\n"
+"<placeholder-13/>            <placeholder-14/>         (<placeholder-15/> *stream_parser,\n"
+"                                                         <placeholder-16/> **error);\n"
 msgstr ""
 
-#: xml/cut-stream-parser.xml:51(programlisting)
+#: xml/cut-stream-parser.xml:53(programlisting)
 #, no-wrap
 msgid ""
 "typedef struct {\n"
@@ -4996,29 +5015,29 @@ msgid ""
 "} CutStreamParser;\n"
 msgstr ""
 
-#: xml/cut-stream-parser.xml:59(title)
+#: xml/cut-stream-parser.xml:61(title)
 msgid "cut_stream_parser_new ()"
 msgstr ""
 
-#: xml/cut-stream-parser.xml:60(programlisting)
+#: xml/cut-stream-parser.xml:62(programlisting)
 #, no-wrap
 msgid "<link linkend=\"CutStreamParser\">CutStreamParser</link>*    cut_stream_parser_new               (<link linkend=\"CutRunContext\">CutRunContext</link> *run_context);"
 msgstr ""
 
-#: xml/cut-stream-parser.xml:73(title)
+#: xml/cut-stream-parser.xml:75(title)
 msgid "cut_test_result_parser_new ()"
 msgstr ""
 
-#: xml/cut-stream-parser.xml:74(programlisting)
+#: xml/cut-stream-parser.xml:76(programlisting)
 #, no-wrap
 msgid "<link linkend=\"CutStreamParser\">CutStreamParser</link>*    cut_test_result_parser_new          (void);"
 msgstr ""
 
-#: xml/cut-stream-parser.xml:84(title)
+#: xml/cut-stream-parser.xml:86(title)
 msgid "cut_stream_parser_parse ()"
 msgstr ""
 
-#: xml/cut-stream-parser.xml:85(programlisting)
+#: xml/cut-stream-parser.xml:87(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"gboolean\">gboolean</link>            cut_stream_parser_parse             (<link linkend=\"CutStreamParser\">CutStreamParser</link> *parser,\n"
@@ -5027,16 +5046,31 @@ msgid ""
 "                                                         <link linkend=\"GError\">GError</link> **error);"
 msgstr ""
 
-#: xml/cut-stream-parser.xml:92(term)
+#: xml/cut-stream-parser.xml:94(term)
 msgid "<parameter>parser</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-stream-parser.xml:95(term)
+#: xml/cut-stream-parser.xml:97(term)
 msgid "<parameter>text</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-stream-parser.xml:98(term)
+#: xml/cut-stream-parser.xml:100(term)
 msgid "<parameter>text_len</parameter>&nbsp;:"
+msgstr ""
+
+#: xml/cut-stream-parser.xml:112(title)
+msgid "cut_stream_parser_end_parse ()"
+msgstr ""
+
+#: xml/cut-stream-parser.xml:113(programlisting)
+#, no-wrap
+msgid ""
+"<link linkend=\"gboolean\">gboolean</link>            cut_stream_parser_end_parse         (<link linkend=\"CutStreamParser\">CutStreamParser</link> *stream_parser,\n"
+"                                                         <link linkend=\"GError\">GError</link> **error);"
+msgstr ""
+
+#: xml/cut-stream-parser.xml:118(term)
+msgid "<parameter>stream_parser</parameter>&nbsp;:"
 msgstr ""
 
 #: xml/cut-streamer-factory-builder.xml:7(refentrytitle)
@@ -5056,12 +5090,16 @@ msgid ""
 msgstr ""
 
 #: xml/cut-streamer.xml:7(refentrytitle) xml/cut-streamer.xml:13(refname)
-#: xml/cut-streamer.xml:22(link) xml/cut-streamer.xml:23(link)
-#: xml/cut-streamer.xml:47(title) xml/cut-streamer.xml:48(primary)
+#: xml/cut-streamer.xml:25(link) xml/cut-streamer.xml:26(link)
+#: xml/cut-streamer.xml:72(title) xml/cut-streamer.xml:73(primary)
 msgid "CutStreamer"
 msgstr ""
 
-#: xml/cut-streamer.xml:23(link) xml/cut-streamer.xml:57(primary)
+#: xml/cut-streamer.xml:22(link)
+msgid "*CutStreamFunction"
+msgstr ""
+
+#: xml/cut-streamer.xml:26(link) xml/cut-streamer.xml:82(primary)
 msgid "cut_streamer_new"
 msgstr ""
 
@@ -5069,13 +5107,36 @@ msgstr ""
 #, no-wrap
 msgid ""
 "\n"
-"                    <placeholder-1/>;\n"
-"<placeholder-2/>*        <placeholder-3/>                    (const <placeholder-4/> *name,\n"
-"                                                         const <placeholder-5/> *first_property,\n"
+"<placeholder-1/>            (<placeholder-2/>)                (const <placeholder-3/> *message,\n"
+"                                                         <placeholder-4/> **error,\n"
+"                                                         <placeholder-5/> user_data);\n"
+"                    <placeholder-6/>;\n"
+"<placeholder-7/>*        <placeholder-8/>                    (const <placeholder-9/> *name,\n"
+"                                                         const <placeholder-10/> *first_property,\n"
 "                                                         ...);\n"
 msgstr ""
 
-#: xml/cut-streamer.xml:48(programlisting)
+#: xml/cut-streamer.xml:50(title)
+msgid "CutStreamFunction ()"
+msgstr ""
+
+#: xml/cut-streamer.xml:51(primary)
+msgid "CutStreamFunction"
+msgstr ""
+
+#: xml/cut-streamer.xml:51(programlisting)
+#, no-wrap
+msgid ""
+"<link linkend=\"gboolean\">gboolean</link>            (*CutStreamFunction)                (const <link linkend=\"gchar\">gchar</link> *message,\n"
+"                                                         <link linkend=\"GError\">GError</link> **error,\n"
+"                                                         <link linkend=\"gpointer\">gpointer</link> user_data);"
+msgstr ""
+
+#: xml/cut-streamer.xml:57(term)
+msgid "<parameter>message</parameter>&nbsp;:"
+msgstr ""
+
+#: xml/cut-streamer.xml:73(programlisting)
 #, no-wrap
 msgid ""
 "typedef struct {\n"
@@ -5083,11 +5144,11 @@ msgid ""
 "} CutStreamer;\n"
 msgstr ""
 
-#: xml/cut-streamer.xml:56(title)
+#: xml/cut-streamer.xml:81(title)
 msgid "cut_streamer_new ()"
 msgstr ""
 
-#: xml/cut-streamer.xml:57(programlisting)
+#: xml/cut-streamer.xml:82(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"CutStreamer\">CutStreamer</link>*        cut_streamer_new                    (const <link linkend=\"gchar\">gchar</link> *name,\n"
