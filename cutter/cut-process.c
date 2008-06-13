@@ -331,10 +331,14 @@ read_from_channel (GIOChannel *source)
                                       NULL);
     return buffer;
 }
+#endif
 
 const gchar *
 cut_process_get_stdout_message (CutProcess *process)
 {
+#ifdef G_OS_WIN32
+    return "";
+#else
     CutProcessPrivate *priv = CUT_PROCESS_GET_PRIVATE(process);
 
     if (priv->stdout_string)
@@ -343,11 +347,15 @@ cut_process_get_stdout_message (CutProcess *process)
     priv->stdout_string = read_from_channel(priv->stdout_read_io);
 
     return (const gchar*)priv->stdout_string;
+#endif
 }
 
 const gchar *
 cut_process_get_stderr_message (CutProcess *process)
 {
+#ifdef G_OS_WIN32
+    return "";
+#else
     CutProcessPrivate *priv = CUT_PROCESS_GET_PRIVATE(process);
 
     if (priv->stderr_string)
@@ -356,11 +364,15 @@ cut_process_get_stderr_message (CutProcess *process)
     priv->stderr_string = read_from_channel(priv->stderr_read_io);
 
     return (const gchar*)priv->stderr_string;
+#endif
 }
 
 gboolean
 cut_process_send_test_result_to_parent (CutProcess *process, CutTestResult *result)
 {
+#ifdef G_OS_WIN32
+    return TRUE;
+#else
     CutProcessPrivate *priv = CUT_PROCESS_GET_PRIVATE(process);
     gchar *xml, *buffer;
     gsize bytes_written, length;
@@ -391,14 +403,18 @@ cut_process_send_test_result_to_parent (CutProcess *process, CutTestResult *resu
     g_free(xml);
 
     return TRUE;
+#endif
 }
 
 const gchar *
 cut_process_get_result_from_child (CutProcess *process)
 {
+#ifdef G_OS_WIN32
+    return "";
+#else
     return CUT_PROCESS_GET_PRIVATE(process)->cutter_string->str;
-}
 #endif
+}
 
 void
 cut_process_exit (CutProcess *process)
