@@ -22,13 +22,16 @@
 #endif /* HAVE_CONFIG_H */
 
 #include <stdio.h>
-#include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
+#include <fcntl.h>
 #include <glib.h>
-
 #include <setjmp.h>
 #include <signal.h>
+
+#ifdef HAVE_UNISTD_H
+#  include <unistd.h>
+#endif
 
 #include "cut-test-suite.h"
 
@@ -64,7 +67,9 @@ enum
 };
 
 static jmp_buf jump_buffer;
+#ifndef G_OS_WIN32
 static gchar *backtrace = NULL;
+#endif
 
 static gint cut_test_suite_signals[LAST_SIGNAL] = {0};
 
@@ -283,6 +288,7 @@ run_with_thread (CutTestSuite *test_suite, CutTestCase *test_case,
     }
 }
 
+#ifndef G_OS_WIN32
 static void
 read_backtrace (int in_fd)
 {
@@ -347,6 +353,7 @@ i_will_be_back_handler (int signum)
     collect_backtrace();
     longjmp(jump_buffer, signum);
 }
+#endif
 
 static void
 emit_ready_signal (CutTestSuite *test_suite, GList *test_cases,
@@ -379,16 +386,20 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite,
     gboolean try_thread;
     gboolean all_success = TRUE;
     gint signum;
+#ifndef G_OS_WIN32
     struct sigaction i_will_be_back_action;
     struct sigaction previous_segv_action, previous_int_action;
     gboolean set_segv_action = TRUE;
     gboolean set_int_action = TRUE;
+#endif
 
     priv = CUT_TEST_SUITE_GET_PRIVATE(test_suite);
 
     sorted_test_cases = g_list_copy(test_cases);
     sorted_test_cases = cut_run_context_sort_test_cases(run_context,
                                                         sorted_test_cases);
+
+#ifndef G_OS_WIN32
     i_will_be_back_action.sa_handler = i_will_be_back_handler;
     sigemptyset(&i_will_be_back_action.sa_mask);
     i_will_be_back_action.sa_flags = 0;
@@ -396,6 +407,8 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite,
         set_segv_action = FALSE;
     if (sigaction(SIGINT, &i_will_be_back_action, &previous_int_action) == -1)
         set_int_action = FALSE;
+#endif
+
     signum = setjmp(jump_buffer);
     switch (signum) {
       case 0:
@@ -439,18 +452,22 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite,
             g_object_unref(result);
         }
         break;
+#ifndef G_OS_WIN32
       case SIGSEGV:
         all_success = FALSE;
         g_signal_emit_by_name(CUT_TEST(test_suite), "crashed", backtrace);
         g_free(backtrace);
         break;
+#endif
       default:
         break;
     }
+#ifndef G_OS_WIN32
     if (set_int_action)
         sigaction(SIGINT, &previous_int_action, NULL);
     if (set_segv_action)
         sigaction(SIGSEGV, &previous_segv_action, NULL);
+#endif
 
     if (priv->cooldown)
         priv->cooldown();

@@ -50,6 +50,8 @@ fi
 
 # Checks for headers
 AC_HEADER_SYS_WAIT
+AC_CHECK_HEADER(io.h,
+                [AC_DEFINE(HAVE_IO_H, 1, [Define to 1 if you have <io.h>.])])
 
 dnl **************************************************************
 dnl Check for GLib.
