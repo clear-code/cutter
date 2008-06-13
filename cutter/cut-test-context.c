@@ -39,6 +39,17 @@
 #include "cut-process.h"
 #include "cut-utils.h"
 
+#define cut_error(context, message, ...) do                     \
+{                                                               \
+    cut_test_context_register_result(context,                   \
+                                     CUT_TEST_RESULT_ERROR,     \
+                                     __PRETTY_FUNCTION__,       \
+                                     __FILE__, __LINE__,        \
+                                     message, ## __VA_ARGS__,   \
+                                     NULL);                     \
+    cut_test_context_long_jump(context);                        \
+} while (0)
+
 #define CUT_TEST_CONTEXT_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_CONTEXT, CutTestContextPrivate))
 
 typedef struct _CutTestContextPrivate	CutTestContextPrivate;
@@ -534,6 +545,12 @@ cut_test_context_trap_fork (CutTestContext *context,
                             const gchar *filename,
                             guint line)
 {
+#ifdef G_OS_WIN32
+    cut_error(context,
+              "cut_test_context_wait_process() doesn't "
+              "work on the environment.");
+    return 0;
+#else
     CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
     CutProcess *process;
 
@@ -551,6 +568,7 @@ cut_test_context_trap_fork (CutTestContext *context,
     priv->processes = g_list_prepend(priv->processes, process);
 
     return cut_process_fork(process);
+#endif
 }
 
 int
@@ -558,6 +576,11 @@ cut_test_context_wait_process (CutTestContext *context,
                                int pid, unsigned int timeout)
 {
     int exit_status = EXIT_SUCCESS;
+#ifdef G_OS_WIN32
+    cut_error(context,
+              "cut_test_context_wait_process() doesn't "
+              "work on the environment.");
+#else
     CutProcess *process;
 
     process = get_process_from_pid(context, pid);
@@ -591,7 +614,7 @@ cut_test_context_wait_process (CutTestContext *context,
                 xml += result_xml_length;
         }
     }
-
+#endif
     return exit_status;
 }
 
