@@ -1,5 +1,10 @@
 2008-06-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/Makefile.am: add -no-undefined.
+
+	* module/ui/Makefile.am, module/streamer/Makefile.am,
+	module/report/Makefile.am: link to libcutter.
+
 	* configure.ac: detect Windows related configurations.
 
 	* test/factory_test_dir/type1/Makefile.am: don't link.

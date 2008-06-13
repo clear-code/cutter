@@ -143,6 +143,10 @@ libcutter_la_SOURCES =				\
 		cut-sequence-matcher.c		\
 		cut-diff.c
 
+libcutter_la_LDFLAGS =				\
+	-version-info $(LT_VERSION_INFO)	\
+	-no-undefined
+
 libcutter_la_LIBADD =			\
 	$(GLIB_LIBS)
 
