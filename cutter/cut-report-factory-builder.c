@@ -182,8 +182,8 @@ create_option_entries (CutFactoryBuilder *builder)
         entries[i].long_name = g_strconcat(name, "-report", NULL);
         entries[i].arg = G_OPTION_ARG_STRING;
         entries[i].arg_data = &priv->filenames[i];
-        entries[i].description = g_strdup_printf("Set filename of %s report",
-                                                       name);
+        entries[i].description = g_strdup_printf(_("Set filename of %s report"),
+                                                 name);
         entries[i].arg_description = "FILE";
     }
 

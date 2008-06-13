@@ -1,5 +1,8 @@
 2008-06-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-report-factory-builder.c (create_option_entries):
+	mark translable.
+
 	* doc/reference/cutter-docs.sgml: add index of new symbols in
 	1.0.1 section.
 
