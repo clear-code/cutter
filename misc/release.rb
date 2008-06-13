@@ -40,12 +40,11 @@ def go_project_page(agent, my_page, project_name)
 end
 
 def upload_file(agent, file, sf_user_name, password)
-  agent.user = sf_user_name
-  agent.password = password
+  agent.basic_auth(sf_user_name, password)
 
-  page = agent.get("https://frs.sourceforge.net/")
+  page = agent.get("https://frs.sourceforge.net/webupload")
   upload_form = page.forms[0]
-  upload_form.upload = file
+  upload_form.file_uploads[0].file_name = file
 
   agent.submit(upload_form, upload_form.buttons.first)
 end
