@@ -602,14 +602,15 @@ extern "C" {
  */
 #define cut_assert_errno(...) do                                        \
 {                                                                       \
-    int _errno = errno;                                                 \
-    if (_errno == 0) {                                                  \
+    int current_errno = errno;                                          \
+    if (current_errno == 0) {                                           \
         cut_test_pass();                                                \
     } else {                                                            \
         cut_test_fail(FAILURE,                                          \
                       cut_take_printf("expected: <0> (errno)\n"         \
                                       " but was: <%d> (%s)",            \
-                                      _errno, strerror(_errno)),        \
+                                      current_errno,                    \
+                                      strerror(current_errno)),         \
                       ## __VA_ARGS__);                                  \
     }                                                                   \
 } while(0)

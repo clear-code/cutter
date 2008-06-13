@@ -1,5 +1,8 @@
 2008-06-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertions.h (cut_assert_errno): use current_errno
+	variable name instead of _errno.
+
 	* cutter/cut-utils.c: add ifdef check.
 
 	* cutter/cut-pipeline.c: define fallbacks on Windows.
