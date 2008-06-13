@@ -1,5 +1,7 @@
 2008-06-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gst-plugins/gst-cutter-test-runner.c: include missing <string.h>.
+
 	* cutter/cut-test-suite.c: backtrace isn't supported on Windows.
 
 	* configure.ac: add <io.h> check.
