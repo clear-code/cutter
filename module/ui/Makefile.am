@@ -8,7 +8,7 @@ AM_CFLAGS =			\
 
 LDFLAGS =							\
   -avoid-version -module					\
-  -no-undefiend -export-dynamic $(LIBTOOL_EXPORT_OPTIONS)
+  -no-undefined -export-dynamic $(LIBTOOL_EXPORT_OPTIONS)
 
 LIBS =					\
 	$(GLIB_LIBS)			\
