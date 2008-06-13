@@ -49,17 +49,36 @@ AC_DEFUN([AC_CHECK_COVERAGE],
   AC_SUBST(COVERAGE_CFLAGS)
   AM_CONDITIONAL([ENABLE_COVERAGE], [test "x$ac_cv_enable_coverage" = "xyes"])
 
+  COVERAGE_INFO_FILE="coverage.info"
+  AC_SUBST(COVERAGE_INFO_FILE)
+
+  COVERAGE_REPORT_DIR="coverage"
+  AC_SUBST(COVERAGE_REPORT_DIR)
+
+  if test "$GENHTML_OPTIONS" = ""; then
+    GENHTML_OPTIONS=""
+  fi
+  AC_SUBST(GENHTML_OPTIONS)
+
   if test "x$ac_cv_enable_coverage" = "xyes"; then
     AC_CONFIG_COMMANDS([coverage], [
       if grep -v coverage Makefile >/dev/null; then
         cat >>Makefile <<EOS
 
 coverage-clean:
-	\$(LCOV) --compat-libtool --zerocounters -d . -o coverage.info
+	\$(LCOV) --compat-libtool --zerocounters --directory . \\
+	  --output-file \$(COVERAGE_INFO_FILE)
 
 coverage: coverage-clean check
-	\$(LCOV) --compat-libtool -d . -c -o coverage.info && \\
-	  \$(GENHTML) --highlight --legend -o coverage coverage.info
+	\$(LCOV) --compat-libtool --directory . \\
+	  --capture --output-file \$(COVERAGE_INFO_FILE)
+	\$(LCOV) --compat-libtool --directory . \\
+	  --extract \$(COVERAGE_INFO_FILE) '\$(abs_top_srcdir)/*' \\
+	  --output-file \$(COVERAGE_INFO_FILE)
+	\$(GENHTML) --highlight --legend \\
+	  --output-directory \$(COVERAGE_REPORT_DIR) \\
+	  --prefix \$(abs_top_srcdir) \\
+	  \$(GENHTML_OPTIONS) \$(COVERAGE_INFO_FILE)
 EOS
       fi
     ])
