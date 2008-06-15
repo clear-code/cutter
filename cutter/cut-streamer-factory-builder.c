@@ -25,12 +25,16 @@
 #include <glib.h>
 #include <glib/gi18n-lib.h>
 
+#include "cut-utils.h"
 #include "cut-streamer-factory-builder.h"
 #include "cut-module-factory.h"
 #include "cut-module-factory-utils.h"
 
 static const gchar *streamer_name = NULL;
 static CutStreamerFactoryBuilder *the_builder = NULL;
+#ifdef G_OS_WIN32
+static gchar *win32_streamer_factory_module_dir = NULL;
+#endif
 
 #define CUT_STREAMER_FACTORY_BUILDER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_STREAMER_FACTORY_BUILDER, CutStreamerFactoryBuilderPrivate))
 
@@ -101,8 +105,16 @@ cut_streamer_factory_builder_init (CutStreamerFactoryBuilder *builder)
     priv->names = NULL;
 
     dir = g_getenv("CUT_STREAMER_FACTORY_MODULE_DIR");
-    if (!dir)
+    if (!dir) {
+#ifdef G_OS_WIN32
+        if (!win32_streamer_factory_module_dir)
+            win32_streamer_factory_module_dir =
+                cut_win32_build_factory_module_dir_name("streamer");
+        dir = win32_streamer_factory_module_dir;
+#else
         dir = STREAMER_FACTORY_MODULEDIR;
+#endif
+    }
 
     g_object_set(G_OBJECT(builder),
                  "module-dir", dir,

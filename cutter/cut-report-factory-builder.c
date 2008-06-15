@@ -25,11 +25,15 @@
 #include <glib.h>
 #include <glib/gi18n-lib.h>
 
+#include "cut-utils.h"
 #include "cut-report-factory-builder.h"
 #include "cut-module-factory.h"
 #include "cut-module-factory-utils.h"
 
 static CutReportFactoryBuilder *the_builder = NULL;
+#ifdef G_OS_WIN32
+static gchar *win32_report_factory_module_dir = NULL;
+#endif
 
 #define CUT_REPORT_FACTORY_BUILDER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_REPORT_FACTORY_BUILDER, CutReportFactoryBuilderPrivate))
 
@@ -104,8 +108,16 @@ cut_report_factory_builder_init (CutReportFactoryBuilder *builder)
     priv->option_entries = NULL;
 
     dir = g_getenv("CUT_REPORT_FACTORY_MODULE_DIR");
-    if (!dir)
+    if (!dir) {
+#ifdef G_OS_WIN32
+        if (!win32_report_factory_module_dir)
+            win32_report_factory_module_dir =
+                cut_win32_build_factory_module_dir_name("report");
+        dir = win32_report_factory_module_dir;
+#else
         dir = REPORT_FACTORY_MODULEDIR;
+#endif
+    }
 
     g_object_set(G_OBJECT(builder),
                  "module-dir", dir,

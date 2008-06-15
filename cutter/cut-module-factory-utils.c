@@ -25,11 +25,16 @@
 #include <glib.h>
 #include <glib/gi18n-lib.h>
 
+#include "cut-utils.h"
 #include "cut-module.h"
 #include "cut-module-factory-utils.h"
 
 static gchar *module_dir = NULL;
 static GHashTable *factories = NULL;
+#ifdef G_OS_WIN32
+static gchar *win32_factory_module_dir = NULL;
+#endif
+
 
 static void
 unload_modules (gpointer data)
@@ -84,7 +89,14 @@ _cut_module_factory_module_dir (void)
     if (dir)
         return dir;
 
+#ifdef G_OS_WIN32
+    if (!win32_factory_module_dir)
+        win32_factory_module_dir =
+            cut_win32_build_factory_module_dir_name(NULL);
+    return win32_factory_module_dir;
+#else
     return FACTORY_MODULEDIR;
+#endif
 }
 
 void

@@ -52,7 +52,8 @@ void     cut_utils_close_pipe           (int         *pipe,
                                          CutPipeMode  mode);
 
 #ifdef G_OS_WIN32
-const gchar *cut_win32_base_path        (void);
+const gchar *cut_win32_base_path                     (void);
+gchar       *cut_win32_build_factory_module_dir_name (const gchar *type);
 #endif
 
 G_END_DECLS
