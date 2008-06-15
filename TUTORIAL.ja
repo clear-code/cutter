@@ -35,8 +35,8 @@ Cutterが依存しているライブラリはGLibのみである。GLibはUNIX�
 まず、プログラムを作成するためのディレクトリを用意する。ディ
 レクトリはstackとする。
 
-  % mkdir -p ~/work/c/stack
-  % cd stack
+  % mkdir -p /tmp/stack
+  % cd /tmp/stack
 
 続いて、stack/ディレクトリ以下にビルド補助ファイル用ディレク
 トリconfig/、プログラム用ディレクトリsrc/、テストプログラム用
@@ -122,8 +122,8 @@ configure.acを用意してもう一度autogen.shを実行すると以下のよ
 
   [stack]% ./autogen.sh
   Putting files in AC_CONFIG_AUX_DIR, `config'.
-  configure.ac: installing `config/install-sh'
-  configure.ac: installing `config/missing'
+  configure.ac:7: installing `config/install-sh'
+  configure.ac:7: installing `config/missing'
   automake: no `Makefile.am' found for any configure output
   Failed automake --add-missing --foreign --copy
 
@@ -235,14 +235,14 @@ Makefile.am:
 Makefile.amを変更した後にmakeを実行すると、makeがMakefile.am
 の変更を検出し、Makefileなどを自動的に更新する。
 
-  [stack]% % make
-   cd . && /bin/sh /home/kou/work/c/cutter/sample/stack/config/missing --run automake-1.9 --foreign  Makefile
+  [stack]% make
+   cd . && /bin/sh /tmp/stack/config/missing --run automake-1.10 --foreign  Makefile
    cd . && /bin/sh ./config.status Makefile 
   config.status: creating Makefile
   Making all in test
-  make[1]: ディレクトリ `/home/kou/work/c/cutter/sample/stack/test' に入ります
+  make[1]: ディレクトリ `/tmp/stack/test' に入ります
   make[1]: *** ターゲット `all' を make するルールがありません.  中止.
-  make[1]: ディレクトリ `/home/kou/work/c/cutter/sample/stack/test' から出ます
+  make[1]: ディレクトリ `/tmp/stack/test' から出ます
   make: *** [all-recursive] エラー 1
 
 test/以下もビルドしにいこうとしているのがわかる。ただし、
@@ -276,12 +276,12 @@ test/Makefileが生成され、test/以下でのmakeが失敗しなくなる。
   config.status: src/config.h is unchanged
   config.status: executing depfiles commands
   Making all in test
-  make[1]: ディレクトリ `/home/kou/work/c/cutter/sample/stack/test' に入ります
+  make[1]: ディレクトリ `/tmp/stack/test' に入ります
   make[1]: `all' に対して行うべき事はありません.
-  make[1]: ディレクトリ `/home/kou/work/c/cutter/sample/stack/test' から出ます
-  make[1]: ディレクトリ `/home/kou/work/c/cutter/sample/stack' に入ります
+  make[1]: ディレクトリ `/tmp/stack/test' から出ます
+  make[1]: ディレクトリ `/tmp/stack' に入ります
   make[1]: `all-am' に対して行うべき事はありません.
-  make[1]: ディレクトリ `/home/kou/work/c/cutter/sample/stack' から出ます
+  make[1]: ディレクトリ `/tmp/stack' から出ます
 
 ==== test/test_stack.soのビルド
 
@@ -300,10 +300,13 @@ cutterから動的に読み込まれる。動的に読み込まれる共有ラ�
 た、-moduleオプションを指定する場合-rpathも指定する必要がある。
 そこで、LDFLAGSを以下のように指定する。-avoid-versionはテスト
 の共有ライブラリにはバージョン番号を付ける必要がないため指定
-している。
+している。-no-undefinedは未定義のシンボルがある場合にエラーを
+報告するオプションである。環境によっては-no-undefinedを指定し
+ないと共有ライブラリが作成されないため指定している。（例えば、
+Windows上でDLLを作成する場合）
 
 test/Makefile.am:
-  LDFLAGS = -module -rpath $(libdir) -avoid-version
+  LDFLAGS = -module -rpath $(libdir) -avoid-version -no-undefined
 
 test/test_stack.laのビルド（test_stack.soはtest/.libs/以下に
 作成される）にはtest/test-stack.cを使用するので、それを指定す
@@ -316,9 +319,10 @@ test/Makefile.am:
 
   [stack]% make
   ...
-   cd . && /bin/sh /home/kou/work/c/cutter/sample/stack/config/missing --run automake-1.9 --foreign  Makefile
-  Makefile.am: required file `config/depcomp' not found
-  make: *** [Makefile.in] エラー 1
+   cd .. && /bin/sh /tmp/stack/config/missing --run automake-1.10 --foreign  test/Makefile
+  test/Makefile.am: required file `config/depcomp' not found
+  test/Makefile.am:   `automake --add-missing' can install `depcomp'
+  make[1]: *** [Makefile.in] エラー 1
   ...
 
 config/depcompを生成するには--add-missingオプション付きで
@@ -333,15 +337,15 @@ automakeを実行する必要がある。これにはautogen.shを使用でき�
 
   [stack]% make
   ...
-  test-stack.c:1:20: error: cutter.h: No such file or directory
-  test-stack.c:2:19: error: stack.h: No such file or directory
-  test-stack.c: In function 'test_new_stack':
-  test-stack.c:9: error: 'Stack' undeclared (first use in this function)
+  test-stack.c:1:20: error: cutter.h: そのようなファイルやディレクトリはありません
+  test-stack.c:2:19: error: stack.h: そのようなファイルやディレクトリはありません
+  test-stack.c: In function ‘test_new_stack’:
+  test-stack.c:9: error: ‘Stack’ undeclared (first use in this function)
   test-stack.c:9: error: (Each undeclared identifier is reported only once
   test-stack.c:9: error: for each function it appears in.)
-  test-stack.c:9: error: 'stack' undeclared (first use in this function)
+  test-stack.c:9: error: ‘stack’ undeclared (first use in this function)
   make[1]: *** [test-stack.lo] エラー 1
-  make[1]: ディレクトリ `/home/kou/work/c/cutter/sample/stack/test' から出ます
+  make[1]: ディレクトリ `/tmp/stack/test' から出ます
   make: *** [all-recursive] エラー 1
 
 ただし、上記のようにCutterを使用する設定を行っていないため
@@ -358,9 +362,7 @@ stack.hの読み込みにも失敗する。
 
 configure.ac:
   ...
-  PKG_CHECK_MODULES(CUTTER, cutter)
-  AC_SUBST([CUTTER_CFLAGS])
-  AC_SUBST([CUTTER_LIBS])
+  AC_CHECK_CUTTER
 
   AC_CONFIG_FILES([Makefile
                    test/Makefile])
@@ -388,9 +390,7 @@ configure.ac:
 
   AC_PROG_LIBTOOL
 
-  PKG_CHECK_MODULES(CUTTER, cutter)
-  AC_SUBST([CUTTER_CFLAGS])
-  AC_SUBST([CUTTER_LIBS])
+  AC_CHECK_CUTTER
 
   AC_CONFIG_FILES([Makefile
                    test/Makefile])
@@ -403,7 +403,7 @@ test/Makefile.am:
   INCLUDES = $(CUTTER_CFLAGS)
   LIBS = $(CUTTER_LIBS)
 
-  LDFLAGS = -module -rpath $(libdir) -avoid-version
+  LDFLAGS = -module -rpath $(libdir) -avoid-version -no-undefined
 
   test_stack_la_SOURCES = test-stack.c
 
@@ -412,14 +412,14 @@ test/Makefile.am:
 
   [stack]% make
   ...
-  test-stack.c:2:19: error: stack.h: No such file or directory
-  test-stack.c: In function 'test_new_stack':
-  test-stack.c:9: error: 'Stack' undeclared (first use in this function)
+  test-stack.c:2:19: error: stack.h: そのようなファイルやディレクトリはありません
+  test-stack.c: In function ‘test_new_stack’:
+  test-stack.c:9: error: ‘Stack’ undeclared (first use in this function)
   test-stack.c:9: error: (Each undeclared identifier is reported only once
   test-stack.c:9: error: for each function it appears in.)
-  test-stack.c:9: error: 'stack' undeclared (first use in this function)
+  test-stack.c:9: error: ‘stack’ undeclared (first use in this function)
   make[1]: *** [test-stack.lo] エラー 1
-  make[1]: ディレクトリ `/home/kou/work/c/cutter/sample/stack/test' から出ます
+  make[1]: ディレクトリ `/tmp/stack/test' から出ます
   make: *** [all-recursive] エラー 1
 
 cutter.hが読み込めないというエラーがなくなった。
@@ -446,13 +446,13 @@ makeを実行するとstack.hが読み込めないエラーが解消されてい
 
   [stack]% make
   ...
-  test-stack.c: In function 'test_new_stack':
-  test-stack.c:9: error: 'Stack' undeclared (first use in this function)
+  test-stack.c: In function ‘test_new_stack’:
+  test-stack.c:9: error: ‘Stack’ undeclared (first use in this function)
   test-stack.c:9: error: (Each undeclared identifier is reported only once
   test-stack.c:9: error: for each function it appears in.)
-  test-stack.c:9: error: 'stack' undeclared (first use in this function)
+  test-stack.c:9: error: ‘stack’ undeclared (first use in this function)
   make[1]: *** [test-stack.lo] エラー 1
-  make[1]: ディレクトリ `/home/kou/work/c/cutter/sample/stack/test' から出ます
+  make[1]: ディレクトリ `/tmp/stack/test' から出ます
   make: *** [all-recursive] エラー 1
 
 残りのエラーがStack型が宣言されていないことだけになった。
@@ -475,11 +475,11 @@ stack_new()が宣言されていないため警告がでるが共有ライブラ
 
   [stack]% make
   ...
-  test-stack.c: In function 'test_new_stack':
+  test-stack.c: In function ‘test_new_stack’:
   test-stack.c:10: warning: assignment makes pointer from integer without a cast
   ...
   [stack]% file test/.libs/test_stack.so
-  test/.libs/test_stack.so: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), not stripped
+  test/.libs/test_stack.so: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, not stripped
 
 ==== stack_new()/stack_is_empty()の宣言
 
@@ -518,7 +518,7 @@ test/run-test.sh:
   #!/bin/sh
 
   export BASE_DIR="`dirname $0`"
-  $CUTTER --color=auto -s $BASE_DIR "$@" $BASE_DIR
+  $CUTTER -s $BASE_DIR "$@" $BASE_DIR
 
 実行権を付けることを忘れないこと。
 
@@ -533,47 +533,15 @@ test/Makefile.am:
   ...
 
 TESTS_ENVIRONMENTではcutterコマンドのパスを環境変数CUTTERで
-渡している。cutterコマンドのパスはconfigureで検出する。
-cutterコマンドのパスを検出するために、configure.acに以下を追
-加する。
+渡している。cutterコマンドのパスはconfigure.ac内に追加した
+AC_CHECK_CUTTERが検出している。
 
-configure.ac:
-  ...
-  _PKG_CONFIG(CUTTER, variable=cutter, cutter)
-  CUTTER=$pkg_cv_CUTTER
-  AC_SUBST([CUTTER])
-  ...
+make -s checkでテストが走ることを確認する。-sオプションは
+makeの出力を抑えるオプション（silent）であり、これを指定する
+ことによりテスト結果が見やすくなる。
 
-configure.ac全体は以下のようになる。
-
-configure.ac:
-  AC_PREREQ(2.59)
-
-  AC_INIT(stack, 0.0.1, you@example.com)
-  AC_CONFIG_AUX_DIR([config])
-  AC_CONFIG_HEADER([src/config.h])
-
-  AM_INIT_AUTOMAKE($PACKAGE_NAME, $PACKAGE_VERSION)
-
-  AC_PROG_LIBTOOL
-
-  PKG_CHECK_MODULES(CUTTER, cutter)
-  AC_SUBST([CUTTER_CFLAGS])
-  AC_SUBST([CUTTER_LIBS])
-
-  _PKG_CONFIG(CUTTER, variable=cutter, cutter)
-  CUTTER=$pkg_cv_CUTTER
-  AC_SUBST([CUTTER])
-
-  AC_CONFIG_FILES([Makefile
-                   test/Makefile])
-
-  AC_OUTPUT
-
-make checkでテストが走ることを確認する。
-
-  [stack]% make check
-  ...
+  [stack]% make -s check
+  Making check in test
   cutter: symbol lookup error: ./.libs/test_stack.so: undefined symbol: stack_new
   FAIL: run-test.sh
   ================================
@@ -584,8 +552,8 @@ make checkでテストが走ることを確認する。
 
 ==== test/run-test.shの単独実行のサポート
 
-make checkではビルドログなどテスト結果以外の出力がでて、テス
-ト結果が埋もれてしまう。そこで、make check経由ではなく
+make -s checkではビルドログなどテスト結果以外の出力がでて、テス
+ト結果が埋もれてしまう。そこで、make -s check経由ではなく
 test/run-test.shを実行できるようにする。
 
 まず、test/run-test.shを環境変数CUTTERが指定されていない場合
@@ -606,7 +574,7 @@ test/run-test.sh:
       CUTTER="`make -s -C $BASE_DIR echo-cutter`"
   fi
 
-  $CUTTER --color=auto -s $BASE_DIR "$@" $BASE_DIR
+  $CUTTER -s $BASE_DIR "$@" $BASE_DIR
 
 このtest/run-test.shに対応するためにtest/Makefile.amを以下の
 ように変更する。
@@ -616,7 +584,7 @@ test/Makefile.am:
   TESTS_ENVIRONMENT = NO_MAKE=yes CUTTER="$(CUTTER)"
   ...
   echo-cutter:
-  	@echo $(CUTTER)
+  	echo $(CUTTER)
 
 test/Makefile.am全体は以下のようになる。
 
@@ -629,19 +597,19 @@ test/Makefile.am:
   INCLUDES = $(CUTTER_CFLAGS) -I$(top_srcdir)/src
   LIBS = $(CUTTER_LIBS)
 
-  LDFLAGS = -module -rpath $(libdir) -avoid-version
+  LDFLAGS = -module -rpath $(libdir) -avoid-version -no-undefined
 
   test_stack_la_SOURCES = test-stack.c
 
   echo-cutter:
-  	@echo $(CUTTER)
+          @echo $(CUTTER)
 
 test/run-test.shを直接実行してテストが起動することを確認する。
 
   [stack]% test/run-test.sh
   cutter: symbol lookup error: test/.libs/test_stack.so: undefined symbol: stack_new
 
-ここからはmake checkではなくtest/run-test.shを使用する。こ
+ここからはmake -s checkではなくtest/run-test.shを使用する。こ
 れは必要な情報のみが出力され、本当に興味のあるテストの結果が
 埋もれてしまうのを防ぐためである。
 
@@ -698,7 +666,7 @@ configure.ac:
 これでsrc/以下もビルド対象となる。
 
   [stack]% test/run-test.sh
-  configure.ac:19: required file `src/Makefile.in' not found
+  configure.ac:13: required file `src/Makefile.in' not found
   make: *** [Makefile.in] エラー 1
 
 src/Makefile.amを作成するとこのエラーはなくなる。
@@ -717,6 +685,8 @@ src/Makefile.amに以下を追加し、src/stack.cからlibstack.soを
 src/Makefile.am:
   lib_LTLIBRARIES = libstack.la
 
+  LDFLAGS = -no-undefined
+
   libstack_la_SOURCES = stack.c
 
 makeでlibstack.soが生成できるようになるはずである。
@@ -724,7 +694,7 @@ makeでlibstack.soが生成できるようになるはずである。
   [stack]% make
   ...
   make[1]: ディレクトリ `/tmp/stack/src' に入ります
-  Makefile:273: .deps/stack.Plo: そのようなファイルやディレクトリはありません
+  Makefile:275: .deps/stack.Plo: そのようなファイルやディレクトリはありません
   make[1]: *** ターゲット `.deps/stack.Plo' を make するルールがありません.  中止.
   ...
 
@@ -737,7 +707,7 @@ makeでsrc/.libs/libstack.so.0.0.0を生成することができる。
 
   [stack]% make
   [stack]% file src/.libs/libstack.so.0.0.0
-  src/.libs/libstack.so.0.0.0: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), not stripped
+  src/.libs/libstack.so.0.0.0: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, not stripped
 
 ==== src/libstack.laのリンク
 
@@ -819,9 +789,10 @@ src/stack.c:
   [stack]% test/run-test.sh
   .
 
-  Finished in 0.000006 seconds
+  Finished in 0.000028 seconds
 
-  1 test(s), 1 assertion(s), 0 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
+  1 test(s), 1 assertion(s), 0 failure(s), 0 error(s), 0 pending(s), 0 omission(s), 0 notification(s)
+  100% passed
 
 「.」がひとつ表示されているのは1つのテストがパスしたことを表
 している。現在は1つしかテストがないので1つのテストにパスした
@@ -907,17 +878,18 @@ test/test-stack.c:
 pushの実装ができたのでテストを実行する。
 
   [stack]% test/run-test.sh
-  F.
+  .F
 
   1) Failure: test_push
   <1 == stack_get_size(stack)>
   expected: <1>
    but was: <0>
-  ./test/test-stack.c:23: test_push()
+  test/test-stack.c:23: test_push()
 
-  Finished in 0.000086 seconds
+  Finished in 0.000113 seconds
 
-  2 test(s), 2 assertion(s), 1 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
+  2 test(s), 2 assertion(s), 1 failure(s), 0 error(s), 0 pending(s), 0 omission(s), 0 notification(s)
+  50% passed
 
 「F」はテストが失敗（Failure）したことを表している。環境によっ
 ては表示が赤くなっているはずである。これは、テストがパスして
@@ -925,7 +897,7 @@ pushの実装ができたのでテストを実行する。
 装に移る前にテストをパスさせるようにpushを実装を改良するべき
 だということである。
 
-cutterからのメッセージでは、test/test-stack.cの24行目、
+cutterからのメッセージでは、test/test-stack.cの23行目、
 test_push()関数の中でstack_get_size(stack)の値が1ではなく0の
 ために失敗したということを表している。該当する行は以下の通り
 である。
@@ -1054,17 +1026,18 @@ test/test-stack.c:
 この変更の後でもテストが変更前と同じ結果を返すことを確認する。
 
   [stack]% test/run-test.sh
-  F.
+  .F
 
   1) Failure: test_push
   <1 == stack_get_size(stack)>
   expected: <1>
    but was: <0>
-  test/test-stack.c:34: test_push()
+  test/test-stack.c:35: test_push()
 
-  Finished in 0.000092 seconds
+  Finished in 0.000084 seconds
 
-  2 test(s), 2 assertion(s), 1 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
+  2 test(s), 2 assertion(s), 1 failure(s), 0 error(s), 0 pending(s), 0 omission(s), 0 notification(s)
+  50% passed
 
 === stack_new()/stack_free()の実装
 
@@ -1116,17 +1089,18 @@ src/stack.c:
 この変更の後でもテストが変更前と同じ結果を返すことを確認する。
 
   [stack]% test/run-test.sh
-  F.
+  .F
 
   1) Failure: test_push
   <1 == stack_get_size(stack)>
   expected: <1>
    but was: <0>
-  test/test-stack.c:34: test_push()
+  test/test-stack.c:35: test_push()
 
-  Finished in 0.000090 seconds
+  Finished in 0.000113 seconds
 
-  2 test(s), 2 assertion(s), 1 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
+  2 test(s), 2 assertion(s), 1 failure(s), 0 error(s), 0 pending(s), 0 omission(s), 0 notification(s)
+  50% passed
 
 === stack_push()の本実装
 
@@ -1153,20 +1127,21 @@ pushする毎にスタックサイズを増やし、そのサイズを返すよ�
 るはずである。
 
   [stack]% test/run-test.sh
-  F.
+  .F
 
   1) Failure: test_push
-  expected: <!stack_is_empty(stack)> is not TRUE/NULL
-  ./test/test-stack.c:35: test_push()
+  expected: <!stack_is_empty(stack)> is not FALSE/NULL
+  test/test-stack.c:36: test_push()
 
-  Finished in 0.000087 seconds
+  Finished in 0.000113 seconds
 
-  2 test(s), 3 assertion(s), 1 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
+  2 test(s), 3 assertion(s), 1 failure(s), 0 error(s), 0 pending(s), 0 omission(s), 0 notification(s)
+  50% passed
 
 期待通りstack_get_size()のテストはパスしたがその後の
-test/test-stack.cの35行目、stack_is_empty()で失敗している。
+test/test-stack.cの36行目、stack_is_empty()で失敗している。
 
-test/test-stack.c:35:
+test/test-stack.c:36:
   cut_assert(!stack_is_empty(stack));
 
 スタックにpushしたら空ではなくなるはずである。
@@ -1190,9 +1165,10 @@ src/stack.c:
   % test/run-test.sh
   ..
 
-  Finished in 0.000015 seconds
+  Finished in 0.000036 seconds
 
-  2 test(s), 4 assertion(s), 0 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
+  2 test(s), 4 assertion(s), 0 failure(s), 0 error(s), 0 pending(s), 0 omission(s), 0 notification(s)
+  100% passed
 
 pushのテストもパスし、既存のスタックを作った直後の場合のテス
 トもパスしたままである。すべてのテストがパスしたため、結果表
@@ -1211,7 +1187,7 @@ popをすると最後にpushした値が順番に返ってくる。また、pop�
 
 test/test-stack.c:
   ...
-  void test_pop (void)
+  void test_pop (void);
   ...
   void
   test_pop (void)
@@ -1268,7 +1244,7 @@ src/stack.c:
 ここで30を返すようにしているのは最初のstack_pop()では30を返
 すことが期待されているからである。
 
-test/test-stack.c:49:
+test/test-stack.c:50:
   cut_assert_equal_int(30, stack_pop(stack));
 
 テストを実行し、popのテストもエラーが発生せずに実行されるこ
@@ -1281,18 +1257,19 @@ test/test-stack.c:49:
   <2 == stack_get_size(stack)>
   expected: <2>
    but was: <3>
-  test/test-stack.c:50: test_pop()
+  test/test-stack.c:51: test_pop()
 
-  Finished in 0.000085 seconds
+  Finished in 0.000307 seconds
 
-  3 test(s), 6 assertion(s), 1 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
+  3 test(s), 6 assertion(s), 1 failure(s), 0 error(s), 0 pending(s), 0 omission(s), 0 notification(s)
+  66.6667% passed
 
 popのテストが実行された。しかし、現在のstack_pop()ではスタッ
 クサイズを変更していないため、popした後のスタックサイズを確
 認しているtest/test-stack.cの50行目のstack_get_size()で失敗
 している。
 
-test/test-stack.c:50:
+test/test-stack.c:51:
   cut_assert_equal_int(2, stack_get_size(stack));
 
 === データ領域の確保
@@ -1340,11 +1317,12 @@ src/stack.c:
   <2 == stack_get_size(stack)>
   expected: <2>
    but was: <3>
-  test/test-stack.c:50: test_pop()
+  test/test-stack.c:51: test_pop()
 
-  Finished in 0.000084 seconds
+  Finished in 0.000097 seconds
 
-  3 test(s), 6 assertion(s), 1 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
+  3 test(s), 6 assertion(s), 1 failure(s), 0 error(s), 0 pending(s), 0 omission(s), 0 notification(s)
+  66.6667% passed
 
 === stack_pop()の本実装
 
@@ -1398,9 +1376,10 @@ src/stack.c:
   [stack]% test/run-test.sh
   ...
 
-  Finished in 0.000039 seconds
+  Finished in 0.000076 seconds
 
-  3 test(s), 15 assertion(s), 0 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
+  3 test(s), 15 assertion(s), 0 failure(s), 0 error(s), 0 pending(s), 0 omission(s), 0 notification(s)
+  100% passed
 
 == 重複の排除
 
@@ -1451,9 +1430,10 @@ src/stack.c:
   [stack]% test/run-test.sh
   ...
 
-  Finished in 0.000039 seconds
+  Finished in 0.000078 seconds
 
-  3 test(s), 15 assertion(s), 0 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
+  3 test(s), 15 assertion(s), 0 failure(s), 0 error(s), 0 pending(s), 0 omission(s), 0 notification(s)
+  100% passed
 
 結果が緑なので次へ進める。
 
@@ -1540,9 +1520,10 @@ src/stack.c:
   [stack]% test/run-test.sh
   ...
 
-  Finished in 0.000040 seconds
+  Finished in 0.000076 seconds
 
-  3 test(s), 15 assertion(s), 0 failure(s), 0 error(s), 0 pending(s), 0 notification(s)
+  3 test(s), 15 assertion(s), 0 failure(s), 0 error(s), 0 pending(s), 0 omission(s), 0 notification(s)
+  100% passed
 
 既存の動作を変更することなく、プログラム中の重複部分を取り除
 き、プログラムを改良したことを確認できた。
@@ -1745,6 +1726,104 @@ src/stack.c:
       stack_realloc(stack);
       return value;
   }
+
+=== Cutterがある場合だけテストをサポート
+
+ここで作成したtest/test-stack.cはCutterがない場合はビルドに
+失敗する。つまり、makeが失敗する。開発者であればテストを実行
+するのが当然なので、Cutterがない場合は失敗しても問題はない。
+むしろ、問題に気づきやすいのでそうである方がよいと言える。
+
+しかし、ライブラリとしてスタックを使いたいユーザにはCutterが
+ない場合でもビルドが正常に終了できた方がよい。そのようなユー
+ザは開発者がテストしたリリース版のライブラリを使用していると
+考えられるからである。
+
+以下はCutterがない場合でもビルドできるようにする方法である。
+
+まず、configure.acのAC_CHECK_CUTERの部分を以下のように変更し、
+Cutterが提供するm4（cutter.m4）がない場合でもautogen.sh（よ
+り詳しくいうとaclocal）が動くようにする。（autogen.shを実行
+するのが開発者のみであれば、この設定は必要ない。その場合は
+AC_CHECK_CUTTERの定義がないためにaclocalが失敗する。）
+
+configure.ac:
+  ...
+  m4_ifdef([AC_CHECK_CUTTER], [AC_CHECK_CUTTER], [ac_cv_use_cutter="no"])
+  ...
+
+ここでac_cv_use_cutterという変数名を使っているのは、
+AC_CHECK_CUTTERが同じ名前の変数を使っているからである。この
+変数はCutterの検出が失敗した場合にも"no"になるので、
+cutter.m4がない場合（autogen.shを実行した環境にCutterがない
+場合）は常にCutterを検出できなかった状態となる。
+
+次に、Cutterの検出に失敗したという情報をMakefile.am中で利用す
+るために、AC_CHECK_CUTTERの後ろでMakefile.am中で使える条件を
+設定する。
+
+configure.ac:
+  ...
+  m4_ifdef([AC_CHECK_CUTTER], [AC_CHECK_CUTTER], [ac_cv_use_cutter="no"])
+  AM_CONDITIONAL([WITH_CUTTER], [test "$ac_cv_use_cutter" != "no"])
+  ...
+
+後は、WITH_CUTTERが真の場合だけtest/test-stack.cをビルドし、
+test/run-test.shを実行すればよい。
+
+test/Makefile.am:
+  if WITH_CUTTER
+  TESTS = run-test.sh
+  TESTS_ENVIRONMENT = NO_MAKE=yes CUTTER="$(CUTTER)"
+
+  noinst_LTLIBRARIES = test_stack.la
+  endif
+  ...
+
+以上の変更を加えたconfigure.acとtest/Makefile.amの全体は以下
+のとおりである。
+
+configure.ac:
+  AC_PREREQ(2.59)
+
+  AC_INIT(stack, 0.0.1, you@example.com)
+  AC_CONFIG_AUX_DIR([config])
+  AC_CONFIG_HEADER([src/config.h])
+
+  AM_INIT_AUTOMAKE($PACKAGE_NAME, $PACKAGE_VERSION)
+
+  AC_PROG_LIBTOOL
+
+  m4_ifdef([AC_CHECK_CUTTER], [AC_CHECK_CUTTER], [ac_cv_use_cutter="no"])
+  AM_CONDITIONAL([WITH_CUTTER], [test "$ac_cv_use_cutter" != "no"])
+
+  m4_ifdef([AC_CHECK_COVERAGE], [AC_CHECK_COVERAGE])
+
+  AC_CONFIG_FILES([Makefile
+                   src/Makefile
+                   test/Makefile])
+
+  AC_OUTPUT
+
+test/Makefile.am:
+  if WITH_CUTTER
+  TESTS = run-test.sh
+  TESTS_ENVIRONMENT = NO_MAKE=yes CUTTER="$(CUTTER)"
+
+  noinst_LTLIBRARIES = test_stack.la
+  endif
+
+  INCLUDES = -I$(top_srcdir)/src
+  LIBS = $(CUTTER_LIBS) $(top_builddir)/src/libstack.la
+
+  AM_CFLAGS = $(CUTTER_CFLAGS)
+
+  LDFLAGS = -module -rpath $(libdir) -avoid-version -no-undefined
+
+  test_stack_la_SOURCES = test-stack.c
+
+  echo-cutter:
+  	@echo $(CUTTER)
 
 === 関連項目
 

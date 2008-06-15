@@ -1,5 +1,7 @@
 2008-06-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* TUTORIAL*: update.
+
 	* sample/stack/configure.ac: use m4_ifdef.
 
 	* sample/stack/test/Makefile.am: do nothing on no Cutter environment.
