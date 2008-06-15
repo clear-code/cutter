@@ -1,3 +1,8 @@
+2008-06-16  Kouhei Sutou  <kou@cozmixng.org>
+
+	* libcutter.pc.in (Libs): move to ...
+	* cutter.pc.in (Libs): ... here.
+
 2008-06-15  Kouhei Sutou  <kou@cozmixng.org>
 
 	* TUTORIAL*: update.
