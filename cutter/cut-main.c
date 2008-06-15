@@ -39,6 +39,7 @@
 #include "cut-module-factory.h"
 #include "cut-contractor.h"
 #include "cut-value-equal.h"
+#include "cut-utils.h"
 
 static gboolean initialized = FALSE;
 static gchar *test_directory = NULL;
@@ -119,7 +120,17 @@ cut_init (int *argc, char ***argv)
 
     original_argv = g_strdupv(*argv);
 
+#ifdef G_OS_WIN32
+    {
+        gchar *locale_dir;
+        locale_dir = g_build_filename(cut_win32_base_path(),
+                                      "share", "locale", NULL);
+        bindtextdomain(GETTEXT_PACKAGE, locale_dir);
+        g_free(locale_dir);
+    }
+#else
     bindtextdomain(GETTEXT_PACKAGE, LOCALEDIR);
+#endif
     bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
     textdomain(GETTEXT_PACKAGE);
 

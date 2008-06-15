@@ -51,6 +51,10 @@ gchar  **cut_utils_strv_concat          (const gchar **str_array,
 void     cut_utils_close_pipe           (int         *pipe,
                                          CutPipeMode  mode);
 
+#ifdef G_OS_WIN32
+const gchar *cut_win32_base_path        (void);
+#endif
+
 G_END_DECLS
 
 #endif /* __CUT_UTILS_H__ */

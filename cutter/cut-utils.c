@@ -248,6 +248,21 @@ cut_utils_close_pipe (int *pipe, CutPipeMode mode)
     pipe[mode] = -1;
 }
 
+#ifdef G_OS_WIN32
+static gchar *win32_base_path = NULL;
+
+const gchar *
+cut_win32_base_path (void)
+{
+    if (win32_base_path)
+        return win32_base_path;
+
+    win32_base_path = g_win32_get_package_installation_directory(PACKAGE, NULL);
+
+    return win32_base_path;
+}
+#endif
+
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
