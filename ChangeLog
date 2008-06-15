@@ -1,5 +1,7 @@
 2008-06-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/Makefile.am: make DLL.
+
 	* cutter/cut-utils.[ch] (cut_win32_build_factory_module_dir_name): add.
 
 	* cutter/cut-ui-factory-builder.c,

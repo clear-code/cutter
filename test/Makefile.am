@@ -60,7 +60,12 @@ noinst_LTLIBRARIES = 				\
 LDFLAGS =			\
 	-module			\
 	-rpath $(libdir)	\
-	-avoid-version
+	-avoid-version		\
+	-no-undefined
+
+LIBS =						\
+	$(top_builddir)/cutter/libcutter.la	\
+	$(GLIB_LIBS)
 
 cuttest_utils_la_SOURCES = 		\
 			cuttest-utils.c	\
