@@ -335,7 +335,7 @@ cut_module_load_modules_unique (const gchar *base_dir, GList *exist_modules)
         return exist_modules;
 
     while ((entry = g_dir_read_name(dir))) {
-        sorted_entries = g_slist_prepend(sorted_entries, (gpointer)entry);
+        sorted_entries = g_slist_prepend(sorted_entries, g_strdup(entry));
     }
     sorted_entries = g_slist_sort(sorted_entries, (GCompareFunc)strcmp);
     for (node = sorted_entries; node; node = g_slist_next(node)) {
@@ -353,6 +353,7 @@ cut_module_load_modules_unique (const gchar *base_dir, GList *exist_modules)
         else
             modules = g_list_prepend(modules, module);
     }
+    g_slist_foreach(sorted_entries, (GFunc)g_free, NULL);
     g_slist_free(sorted_entries);
     g_dir_close(dir);
 

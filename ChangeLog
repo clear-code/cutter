@@ -1,5 +1,8 @@
 2008-06-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-module.c (cut_module_load_modules_unique): duplicate
+	read entries.
+
 	* cutter/cut-main.c (cut_init): use relative path for LOCALEDIR.
 
 	* cutter/cut-utils.[ch] (cut_win32_base_path): define.
