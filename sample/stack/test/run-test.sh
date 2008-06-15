@@ -10,4 +10,4 @@ if test -z "$CUTTER"; then
     CUTTER="`make -s -C $BASE_DIR echo-cutter`"
 fi
 
-$CUTTER --color=auto -s $BASE_DIR "$@" $BASE_DIR
+$CUTTER -s $BASE_DIR "$@" $BASE_DIR

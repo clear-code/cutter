@@ -1,5 +1,10 @@
 2008-06-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* sample/stack/test/Makefile.am (LDFLAGS),
+	sample/stack/src/Makefile.am (LDFLAGS): add -no-undefined option.
+
+	* sample/stack/test/run-test.sh: remove needless --color=auto option.
+
 	* test/Makefile.am: make DLL.
 
 	* cutter/cut-utils.[ch] (cut_win32_build_factory_module_dir_name): add.
