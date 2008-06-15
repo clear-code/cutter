@@ -1,5 +1,9 @@
 2008-06-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* sample/stack/configure.ac: use m4_ifdef.
+
+	* sample/stack/test/Makefile.am: do nothing on no Cutter environment.
+
 	* sample/stack/test/Makefile.am (LDFLAGS),
 	sample/stack/src/Makefile.am (LDFLAGS): add -no-undefined option.
 
