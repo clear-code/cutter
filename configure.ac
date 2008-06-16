@@ -137,9 +137,36 @@ AC_ARG_ENABLE([bfd],
               [ac_cv_enable_bfd=yes])
 AC_MSG_RESULT([$ac_cv_enable_bfd])
 
+bfd_available=no
+BFD_LIBS=
 if test x"$ac_cv_enable_bfd" = "xyes"; then
-  AC_CHECK_LIB(bfd, bfd_init)
+  AC_CHECK_HEADERS([bfd.h], [have_bfd_h=yes], [have_bfd_h=no])
+
+  if test "$have_bfd_h" = "yes"; then
+    AC_CHECK_LIB(bfd, xstrerror, [have_libbfd_so=yes], [have_libbfd_so=no])
+    if test "$have_libbfd_so" = "yes"; then
+      BFD_LIBS="-lbfd"
+    else
+      original_LDFLAGS="$LDFLAGS"
+      LDFLAGS="$LDFLAGS -shared"
+      AC_CHECK_LIB(bfd, bfd_init, [have_libbfd=yes], [have_libbfd=no])
+      AC_CHECK_LIB(iberty, xstrerror, [have_libiberty=yes], [have_libiberty=no])
+      if test "$have_libbfd" = "yes" -a "$have_libiberty" = "yes"; then
+	BFD_LIBS="-lbfd -liberty"
+      fi
+      LDFLAGS="$original_LDFLAGS"
+    fi
+  fi
+
+  AC_MSG_CHECKING([whether BFD available])
+  if test "$BFD_LIBS" != ""; then
+    bfd_available=yes
+    AC_DEFINE(HAVE_LIBBFD, 1, [Define to 1 if you have the BFD library.])
+  fi
+  AC_MSG_RESULT([$bfd_available])
 fi
+AC_SUBST(BFD_LIBS)
+AM_CONDITIONAL([HAVE_LIBBFD], [test "$bfd_available" = "yes"])
 
 dnl **************************************************************
 dnl for coverage

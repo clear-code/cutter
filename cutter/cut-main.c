@@ -26,7 +26,7 @@
 #include <glib.h>
 #include <glib/gi18n-lib.h>
 
-#ifdef HAVE_LIBBFD
+#ifdef HAVE_BFD_H
 #  include <bfd.h>
 #endif
 

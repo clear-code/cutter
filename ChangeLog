@@ -1,5 +1,8 @@
 2008-06-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* configure.ac, cutter/Makefile.am, cutter/cut-main.c: improve BFD
+	detection.
+
 	* test/cuttest*: move to ...
 	* test/lib/: ... here.
 

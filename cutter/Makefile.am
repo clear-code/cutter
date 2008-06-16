@@ -149,6 +149,9 @@ libcutter_la_LDFLAGS =				\
 
 libcutter_la_LIBADD =			\
 	$(GLIB_LIBS)
+if HAVE_LIBBFD
+libcutter_la_LIBADD += $(BFD_LIBS)
+endif
 
 cutter_LDADD = libcutter.la
 
