@@ -1,5 +1,7 @@
 2008-06-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* **/Makefile.am: use AM_LDFLAGS not LDFLAGS.
+
 	* test/Makefile.am: cuttest-utils isn't a module.
 
 	* libcutter.pc.in (Libs): move to ...

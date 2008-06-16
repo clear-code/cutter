@@ -16,7 +16,7 @@ AM_CFLAGS =			\
 
 LIBS = $(GTK_LIBS)
 
-LDFLAGS =			\
+AM_LDFLAGS =			\
 	-rpath $(libdir)	\
 	-module			\
 	-avoid-version

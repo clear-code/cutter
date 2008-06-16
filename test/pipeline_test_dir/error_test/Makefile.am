@@ -6,7 +6,7 @@ INCLUDES = $(CUTTER_CFLAGS)	\
 noinst_LTLIBRARIES = 		\
 		error_test.la
 
-LDFLAGS =			\
+AM_LDFLAGS =			\
 	-module			\
 	-rpath $(libdir)	\
 	-avoid-version

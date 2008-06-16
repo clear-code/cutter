@@ -8,7 +8,7 @@ noinst_LTLIBRARIES = 				\
 		suite_cuttest_loader_invalid.la	\
 		suite_cuttest_loader_none.la
 
-LDFLAGS =			\
+AM_LDFLAGS =			\
 	-module			\
 	-rpath $(libdir)	\
 	-avoid-version

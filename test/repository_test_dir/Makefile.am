@@ -8,7 +8,7 @@ noinst_LTLIBRARIES = 					\
 		repository_test_case2.la		\
 		repository_test_case3.la
 
-LDFLAGS =			\
+AM_LDFLAGS =			\
 	-module			\
 	-rpath $(libdir)	\
 	-avoid-version

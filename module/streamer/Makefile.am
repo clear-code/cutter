@@ -6,7 +6,7 @@ AM_CFLAGS =			\
 	$(GLIB_CFLAGS)		\
 	$(COVERAGE_CFLAGS)
 
-LDFLAGS =							\
+AM_LDFLAGS =							\
   -avoid-version -module					\
   -no-undefined -export-dynamic $(LIBTOOL_EXPORT_OPTIONS)
 

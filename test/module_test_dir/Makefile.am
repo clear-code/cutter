@@ -8,7 +8,7 @@ noinst_LTLIBRARIES =		\
 		test2.la	\
 		cannot_load_module.la
 
-LDFLAGS =			\
+AM_LDFLAGS =			\
 	-module			\
 	-rpath $(libdir)	\
 	-avoid-version

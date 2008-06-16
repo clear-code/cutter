@@ -27,7 +27,7 @@ noinst_LTLIBRARIES = 			\
 		test_utf8_validate.la	\
 		test_uri.la
 
-LDFLAGS =			\
+AM_LDFLAGS =			\
 	-rpath $(libdir)	\
 	-module			\
 	-avoid-version

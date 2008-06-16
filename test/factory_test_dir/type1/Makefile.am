@@ -8,7 +8,7 @@ noinst_LTLIBRARIES = 		\
 	module2_factory.la	\
 	module3_factory.la
 
-LDFLAGS =			\
+AM_LDFLAGS =			\
 	-module			\
 	-rpath $(libdir)	\
 	-avoid-version

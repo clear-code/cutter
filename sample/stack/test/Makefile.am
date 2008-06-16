@@ -10,7 +10,7 @@ LIBS = $(CUTTER_LIBS) $(top_builddir)/src/libstack.la
 
 AM_CFLAGS = $(CUTTER_CFLAGS)
 
-LDFLAGS = -module -rpath $(libdir) -avoid-version -no-undefined
+AM_LDFLAGS = -module -rpath $(libdir) -avoid-version -no-undefined
 
 test_stack_la_SOURCES = test-stack.c
 
