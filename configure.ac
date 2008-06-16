@@ -138,6 +138,7 @@ AC_ARG_ENABLE([bfd],
 AC_MSG_RESULT([$ac_cv_enable_bfd])
 
 bfd_available=no
+need_environ_declaration=no
 BFD_LIBS=
 if test x"$ac_cv_enable_bfd" = "xyes"; then
   AC_CHECK_HEADERS([bfd.h], [have_bfd_h=yes], [have_bfd_h=no])
@@ -152,7 +153,8 @@ if test x"$ac_cv_enable_bfd" = "xyes"; then
       AC_CHECK_LIB(bfd, bfd_init, [have_libbfd=yes], [have_libbfd=no])
       AC_CHECK_LIB(iberty, xstrerror, [have_libiberty=yes], [have_libiberty=no])
       if test "$have_libbfd" = "yes" -a "$have_libiberty" = "yes"; then
-	BFD_LIBS="-lbfd -liberty"
+        BFD_LIBS="-lbfd -liberty"
+        AC_CHECK_DECL(environ, [need_environ_declaration=yes])
       fi
       LDFLAGS="$original_LDFLAGS"
     fi
@@ -162,6 +164,10 @@ if test x"$ac_cv_enable_bfd" = "xyes"; then
   if test "$BFD_LIBS" != ""; then
     bfd_available=yes
     AC_DEFINE(HAVE_LIBBFD, 1, [Define to 1 if you have the BFD library.])
+    if test "$need_environ_declaration" = "yes"; then
+      AC_DEFINE(NEED_ENVIRON_DECLARATION, 1,
+                [Define to 1 if your system needs environ variable declaration.])
+    fi
   fi
   AC_MSG_RESULT([$bfd_available])
 fi

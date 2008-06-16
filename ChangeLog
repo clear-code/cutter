@@ -1,5 +1,7 @@
 2008-06-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* configure.ac: declare fallback environ variable.
+
 	* test/Makefile.am (LIBS): use top_builddir not builddir for old system.
 
 	* configure.ac, cutter/Makefile.am, cutter/cut-main.c: improve BFD

@@ -30,6 +30,10 @@
 #  include <bfd.h>
 #endif
 
+#ifdef NEED_ENVIRON_DECLARATION
+char **environ = NULL;
+#endif
+
 #include "cut-main.h"
 
 #include "cut-listener.h"
