@@ -29,7 +29,7 @@ setup (void)
     test_path = g_build_filename(cuttest_get_base_dir(),
                                  "attribute_test_dir",
                                  ".libs",
-                                 "dummy_attribute_test.so",
+                                 "dummy_attribute_test." G_MODULE_SUFFIX,
                                  NULL);
     test_loader = cut_loader_new(test_path);
     g_free(test_path);

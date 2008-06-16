@@ -1,3 +1,9 @@
+2008-06-16  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test-cut-loader-suite.c, test/test-cut-test-suite.c,
+	test/test-cut-loader.c, test/test-cut-test-attribute.c: Use
+	G_MODULE_SUFFIX insted of "so".
+
 2008-06-16  Kouhei Sutou  <kou@cozmixng.org>
 
 	* **/Makefile.am: use AM_LDFLAGS not LDFLAGS.

@@ -49,7 +49,7 @@ test_load_valid (void)
     CutWarmupFunction warmup_function = NULL;
     CutCooldownFunction cooldown_function = NULL;
 
-    loader = create_loader("suite_cuttest_loader_valid.so");
+    loader = create_loader("suite_cuttest_loader_valid." G_MODULE_SUFFIX);
     test_suite = cut_loader_load_test_suite(loader);
     cut_assert(test_suite);
 
@@ -67,7 +67,7 @@ test_load_invalid (void)
     CutWarmupFunction warmup_function = NULL;
     CutCooldownFunction cooldown_function = NULL;
 
-    loader = create_loader("suite_cuttest_loader_invalid.so");
+    loader = create_loader("suite_cuttest_loader_invalid." G_MODULE_SUFFIX);
     test_suite = cut_loader_load_test_suite(loader);
     cut_assert(test_suite);
 
@@ -85,7 +85,7 @@ test_load_none (void)
     CutWarmupFunction warmup_function = NULL;
     CutCooldownFunction cooldown_function = NULL;
 
-    loader = create_loader("suite_cuttest_loader_none.so");
+    loader = create_loader("suite_cuttest_loader_none." G_MODULE_SUFFIX);
     test_suite = cut_loader_load_test_suite(loader);
     cut_assert(test_suite);
 
