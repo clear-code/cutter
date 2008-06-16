@@ -1,5 +1,7 @@
 2008-06-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/Makefile.am: cuttest-utils isn't a module.
+
 	* libcutter.pc.in (Libs): move to ...
 	* cutter.pc.in (Libs): ... here.
 
