@@ -1,5 +1,7 @@
 2008-06-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-loader.c (collect_symbols): remove leading chars.
+
 	* configure.ac: declare fallback environ variable.
 
 	* test/Makefile.am (LIBS): use top_builddir not builddir for old system.

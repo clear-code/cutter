@@ -185,6 +185,7 @@ collect_symbols (CutLoaderPrivate *priv)
     asymbol **symbol_table;
     long number_of_symbols;
     long i;
+    char symbol_leading_char;
     bfd *abfd;
 
     abfd = bfd_openr(priv->so_filename, NULL);
@@ -205,12 +206,17 @@ collect_symbols (CutLoaderPrivate *priv)
     symbol_table = (asymbol **)g_new(char, storage_needed);
     number_of_symbols = bfd_canonicalize_symtab(abfd, symbol_table);
 
+    symbol_leading_char = bfd_get_symbol_leading_char(abfd);
     for (i = 0; i < number_of_symbols; i++) {
         symbol_info info;
+        const char *name;
 
         bfd_symbol_info(symbol_table[i], &info);
+        name = info.name;
+        while (symbol_leading_char == name[0])
+            name++;
         if (info.type == 'T') {
-            symbols = g_list_prepend(symbols, g_strdup(info.name));
+            symbols = g_list_prepend(symbols, g_strdup(name));
         }
     }
 
