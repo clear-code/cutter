@@ -154,7 +154,7 @@ if test x"$ac_cv_enable_bfd" = "xyes"; then
       AC_CHECK_LIB(iberty, xstrerror, [have_libiberty=yes], [have_libiberty=no])
       if test "$have_libbfd" = "yes" -a "$have_libiberty" = "yes"; then
         BFD_LIBS="-lbfd -liberty"
-        AC_CHECK_DECL(environ, [need_environ_declaration=yes])
+        AC_CHECK_DECL(environ, [], [need_environ_declaration=yes])
       fi
       LDFLAGS="$original_LDFLAGS"
     fi
