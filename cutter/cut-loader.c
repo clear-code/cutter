@@ -209,13 +209,13 @@ collect_symbols (CutLoaderPrivate *priv)
     symbol_leading_char = bfd_get_symbol_leading_char(abfd);
     for (i = 0; i < number_of_symbols; i++) {
         symbol_info info;
-        const char *name;
 
         bfd_symbol_info(symbol_table[i], &info);
-        name = info.name;
-        while (symbol_leading_char == name[0])
-            name++;
         if (info.type == 'T') {
+            const char *name;
+            name = info.name;
+            while (symbol_leading_char == name[0])
+                name++;
             symbols = g_list_prepend(symbols, g_strdup(name));
         }
     }
