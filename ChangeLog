@@ -4,6 +4,8 @@
 	test/test-cut-loader.c, test/test-cut-test-attribute.c: Use
 	G_MODULE_SUFFIX insted of "so".
 	* test/*/Makefile.am: Append -no-undefined option.
+	* test/tets-cut-test-suite.c: test_crashed_signal() is only available
+	on Unix.
 
 2008-06-16  Kouhei Sutou  <kou@cozmixng.org>
 

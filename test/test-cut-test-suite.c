@@ -1,9 +1,14 @@
+#ifdef HAVE_CONFIG_H
+#  include "config.h"
+#endif
 #include <cutter.h>
 #include <cutter/cut-test-runner.h>
 #include <cutter/cut-test-case.h>
 #include <cutter/cut-test-suite.h>
 #include <cutter/cut-loader.h>
+#ifndef G_OS_WIN32
 #include <signal.h>
+#endif
 
 #include "cuttest-utils.h"
 
@@ -18,7 +23,9 @@ void test_run_test_in_test_case_with_regex (void);
 void test_run_test_with_regex_in_test_case_with_regex (void);
 void test_run_test_in_test_case_with_null (void);
 void test_run_test_with_filter_with_null (void);
+#ifndef G_OS_WIN32
 void test_crashed_signal (void);
+#endif
 
 static CutRunContext *run_context;
 static CutTestSuite *test_object;
@@ -74,6 +81,7 @@ bummy_run_test_function (void)
     n_run_bummy_run_test_function++;
 }
 
+#ifndef G_OS_WIN32
 static void
 dummy_crashed_function (void)
 {
@@ -85,6 +93,7 @@ cb_crashed_signal (CutTest *test, gpointer data)
 {
     n_crashed_signal++;
 }
+#endif
 
 void
 setup (void)
@@ -311,6 +320,7 @@ test_run_test_with_filter_with_null (void)
     cut_assert_equal_int(1, n_run_bummy_run_test_function);
 }
 
+#ifndef G_OS_WIN32
 static void
 segv_handler (int signum)
 {
@@ -338,6 +348,7 @@ test_crashed_signal (void)
                                          NULL);
     cut_assert_equal_int(1, n_crashed_signal);
 }
+#endif
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
