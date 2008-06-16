@@ -9,7 +9,9 @@
 #include <glib.h>
 
 void test_message_from_forked_process (void);
+#ifndef G_OS_WIN32
 void test_fail_in_forked_process (void);
+#endif
 
 static CutRunContext *run_context;
 static CutTest *test_object;
@@ -57,6 +59,7 @@ test_message_from_forked_process (void)
     cut_assert_equal_int(EXIT_SUCCESS, cut_wait_process(pid, 100));
 }
 
+#ifndef G_OS_WIN32
 static gboolean
 run (CutTest *test)
 {
@@ -142,6 +145,7 @@ test_fail_in_forked_process (void)
         cut_assert_equal_string(NULL, omission_message);
     }
 }
+#endif
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

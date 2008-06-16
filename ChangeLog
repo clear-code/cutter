@@ -20,6 +20,8 @@
 	on Unix.
 	* cutter/cut-test-context.c: cut_omit() instead of cut_error() if
 	cut_test_context_fork() is invoked on Windows.
+	* test/test-cut-fork.c: Do not run test_fail_in_forked_process() on
+	Windows.
 
 2008-06-16  Kouhei Sutou  <kou@cozmixng.org>
 
