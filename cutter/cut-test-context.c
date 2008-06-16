@@ -39,10 +39,10 @@
 #include "cut-process.h"
 #include "cut-utils.h"
 
-#define cut_error(context, message, ...) do                     \
+#define cut_omit(context, message, ...) do                      \
 {                                                               \
     cut_test_context_register_result(context,                   \
-                                     CUT_TEST_RESULT_ERROR,     \
+                                     CUT_TEST_RESULT_OMISSION,  \
                                      __PRETTY_FUNCTION__,       \
                                      __FILE__, __LINE__,        \
                                      message, ## __VA_ARGS__,   \
@@ -546,9 +546,9 @@ cut_test_context_trap_fork (CutTestContext *context,
                             guint line)
 {
 #ifdef G_OS_WIN32
-    cut_error(context,
-              "cut_test_context_wait_process() doesn't "
-              "work on the environment.");
+    cut_omit(context,
+             "cut_test_context_wait_process() doesn't "
+             "work on the environment.");
     return 0;
 #else
     CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
@@ -577,9 +577,9 @@ cut_test_context_wait_process (CutTestContext *context,
 {
     int exit_status = EXIT_SUCCESS;
 #ifdef G_OS_WIN32
-    cut_error(context,
-              "cut_test_context_wait_process() doesn't "
-              "work on the environment.");
+    cut_omit(context,
+             "cut_test_context_wait_process() doesn't "
+             "work on the environment.");
 #else
     CutProcess *process;
 

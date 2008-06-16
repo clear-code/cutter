@@ -18,6 +18,8 @@
 	* test/*/Makefile.am: Append -no-undefined option.
 	* test/tets-cut-test-suite.c: test_crashed_signal() is only available
 	on Unix.
+	* cutter/cut-test-context.c: cut_omit() instead of cut_error() if
+	cut_test_context_fork() is invoked on Windows.
 
 2008-06-16  Kouhei Sutou  <kou@cozmixng.org>
 
