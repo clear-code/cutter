@@ -54,6 +54,11 @@ enum
     PROP_SO_FILENAME
 };
 
+typedef enum {
+    CUT_BINARY_TYPE_UNKNOWN,
+    CUT_BINARY_TYPE_MACH_O_BUNDLE
+} CutBinaryType;
+
 G_DEFINE_TYPE (CutLoader, cut_loader, G_TYPE_OBJECT)
 
 static void dispose         (GObject               *object);
@@ -178,7 +183,7 @@ is_test_function_name (const gchar *name)
 
 #ifdef HAVE_LIBBFD
 static GList *
-collect_symbols (CutLoaderPrivate *priv)
+collect_symbols (CutLoaderPrivate *priv, CutBinaryType *binary_type)
 {
     GList *symbols = NULL;
     long storage_needed;
@@ -207,13 +212,18 @@ collect_symbols (CutLoaderPrivate *priv)
     number_of_symbols = bfd_canonicalize_symtab(abfd, symbol_table);
 
     symbol_leading_char = bfd_get_symbol_leading_char(abfd);
+    if (bfd_get_flavour(abfd) == bfd_target_mach_o_flavour)
+        *binary_type = CUT_BINARY_TYPE_MACH_O_BUNDLE;
+
     for (i = 0; i < number_of_symbols; i++) {
         symbol_info info;
 
         bfd_symbol_info(symbol_table[i], &info);
-        if (info.type == 'T') {
-            const char *name;
-            name = info.name;
+        if (info.type == 'T' ||
+            (*binary_type == CUT_BINARY_TYPE_MACH_O_BUNDLE &&
+             info.type == 'U')) {
+            const char *name = info.name;
+
             while (symbol_leading_char == name[0])
                 name++;
             symbols = g_list_prepend(symbols, g_strdup(name));
@@ -227,11 +237,6 @@ collect_symbols (CutLoaderPrivate *priv)
 }
 
 #else
-
-typedef enum {
-    CUT_BINARY_TYPE_UNKNOWN,
-    CUT_BINARY_TYPE_MACH_O_BUNDLE
-} CutBinaryType;
 
 static inline CutBinaryType
 guess_binary_type (char *buffer, size_t size)
@@ -263,7 +268,7 @@ is_valid_symbol_name (GString *name)
 }
 
 static GList *
-collect_symbols (CutLoaderPrivate *priv)
+collect_symbols (CutLoaderPrivate *priv, CutBinaryType *binary_type)
 {
     FILE *input;
     GString *name;
@@ -272,7 +277,6 @@ collect_symbols (CutLoaderPrivate *priv)
     GHashTable *symbol_name_table;
     GList *symbols;
     gboolean first_buffer = TRUE;
-    CutBinaryType binary_type = CUT_BINARY_TYPE_UNKNOWN;
 
     input = g_fopen(priv->so_filename, "rb");
     if (!input)
@@ -284,13 +288,13 @@ collect_symbols (CutLoaderPrivate *priv)
         size_t i;
 
         if (first_buffer) {
-            binary_type = guess_binary_type(buffer, size);
+            *binary_type = guess_binary_type(buffer, size);
             first_buffer = FALSE;
         }
 
         for (i = 0; i < size; i++) {
             if (is_valid_char_for_cutter_symbol(name, buffer, i,
-                                                size, binary_type)) {
+                                                size, *binary_type)) {
                 g_string_append_c(name, buffer[i]);
             } else if (name->len > 0) {
                 if (is_valid_symbol_name(name)) {
@@ -347,7 +351,7 @@ static gboolean
 is_valid_attributes_function_name (const gchar *function_name, const gchar *test_name)
 {
     return g_str_has_prefix(function_name, ATTRIBUTE_PREFIX) &&
-           is_including_test_name(function_name, test_name);
+        is_including_test_name(function_name, test_name);
 }
 
 static gchar *
@@ -487,8 +491,10 @@ cut_loader_load_test_case (CutLoader *loader)
     GList *node;
     GList *test_names;
     CutTestCase *test_case;
-    CutLoaderPrivate *priv = CUT_LOADER_GET_PRIVATE(loader);
+    CutBinaryType binary_type = CUT_BINARY_TYPE_UNKNOWN;
+    CutLoaderPrivate *priv;
 
+    priv = CUT_LOADER_GET_PRIVATE(loader);
     if (!priv->so_filename)
         return NULL;
 
@@ -497,7 +503,7 @@ cut_loader_load_test_case (CutLoader *loader)
     if (!priv->module)
         return NULL;
 
-    priv->symbols = collect_symbols(priv);
+    priv->symbols = collect_symbols(priv, &binary_type);
     if (!priv->symbols)
         return NULL;
 
@@ -514,9 +520,10 @@ cut_loader_load_test_case (CutLoader *loader)
         name = node->data;
         g_module_symbol(priv->module, name, (gpointer)&function);
         if (function) {
-            GList *attributes;
+            GList *attributes = NULL;
             test = cut_test_new(name, function);
-            attributes = collect_attributes(priv, name);
+            if (binary_type != CUT_BINARY_TYPE_MACH_O_BUNDLE)
+                attributes = collect_attributes(priv, name);
             if (attributes) {
                 set_attributes(test, attributes);
             }
