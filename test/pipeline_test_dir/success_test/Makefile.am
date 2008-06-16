@@ -9,7 +9,12 @@ noinst_LTLIBRARIES = 		\
 AM_LDFLAGS =			\
 	-module			\
 	-rpath $(libdir)	\
-	-avoid-version
+	-avoid-version		\
+	-no-undefined
+
+LIBS =						\
+	$(top_builddir)/cutter/libcutter.la	\
+	$(GLIB_LIBS)
 
 success_test_la_SOURCES = success-test.c
 

@@ -11,7 +11,12 @@ noinst_LTLIBRARIES = 			\
 AM_LDFLAGS =			\
 	-module			\
 	-rpath $(libdir)	\
-	-avoid-version
+	-avoid-version		\
+	-no-undefined
+
+LIBS =						\
+	$(top_builddir)/cutter/libcutter.la	\
+	$(GLIB_LIBS)
 
 factory_module1_la_SOURCES = factory-module1.c
 factory_module2_la_SOURCES = factory-module2.c

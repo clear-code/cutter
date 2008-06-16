@@ -3,6 +3,7 @@
 	* test/test-cut-loader-suite.c, test/test-cut-test-suite.c,
 	test/test-cut-loader.c, test/test-cut-test-attribute.c: Use
 	G_MODULE_SUFFIX insted of "so".
+	* test/*/Makefile.am: Append -no-undefined option.
 
 2008-06-16  Kouhei Sutou  <kou@cozmixng.org>
 

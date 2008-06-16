@@ -11,7 +11,12 @@ noinst_LTLIBRARIES = 				\
 AM_LDFLAGS =			\
 	-module			\
 	-rpath $(libdir)	\
-	-avoid-version
+	-avoid-version		\
+	-no-undefined
+
+LIBS =						\
+	$(top_builddir)/cutter/libcutter.la	\
+	$(GLIB_LIBS)
 
 suite_cuttest_loader_valid_la_SOURCES = suite-cuttest-loader-valid.c
 suite_cuttest_loader_invalid_la_SOURCES = suite-cuttest-loader-invalid.c

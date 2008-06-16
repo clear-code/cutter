@@ -11,7 +11,12 @@ noinst_LTLIBRARIES = 					\
 AM_LDFLAGS =			\
 	-module			\
 	-rpath $(libdir)	\
-	-avoid-version
+	-avoid-version		\
+	-no-undefined
+
+LIBS =						\
+	$(top_builddir)/cutter/libcutter.la	\
+	$(GLIB_LIBS)
 
 repository_test_case1_la_SOURCES = test-case1.c
 repository_test_case2_la_SOURCES = test-case2.c
