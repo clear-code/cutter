@@ -64,9 +64,9 @@ AM_LDFLAGS =			\
 	-avoid-version		\
 	-no-undefined
 
-LIBS =						\
-	$(top_builddir)/cutter/libcutter.la	\
-	$(builddir)/lib/libcuttest_utils.la	\
+LIBS =							\
+	$(top_builddir)/cutter/libcutter.la		\
+	$(top_builddir)/test/lib/libcuttest_utils.la	\
 	$(GLIB_LIBS)
 
 test_cutter_la_SOURCES		= test-cutter.c

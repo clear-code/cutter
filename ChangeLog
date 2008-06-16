@@ -1,5 +1,7 @@
 2008-06-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/Makefile.am (LIBS): use top_builddir not builddir for old system.
+
 	* configure.ac, cutter/Makefile.am, cutter/cut-main.c: improve BFD
 	detection.
 
