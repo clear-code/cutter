@@ -1,3 +1,7 @@
+2008-06-18  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test-cut-process.c: Pass cut_process_fork() test on Windows.
+
 2008-06-17  Kouhei Sutou  <kou@cozmixng.org>
 
 	* test/test-cut-test-suite.c: remove needless SEGV handler.
