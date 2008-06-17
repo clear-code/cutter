@@ -21,45 +21,65 @@
 #define __CUT_LISTENER_UTILS_H__
 
 #include <glib-object.h>
+#include "cut-utils.h"
 
 G_BEGIN_DECLS
 
-#define CUT_DEFINE_LISTENER_MODULE(name, NAME)                              \
-static GList *name##s = NULL;                                               \
-static gchar *name##_module_dir = NULL;                                     \
-static const gchar *                                                        \
-_cut_##name##_module_dir (void)                                             \
-{                                                                           \
-    const gchar *dir;                                                       \
-                                                                            \
-    if (name##_module_dir)                                                  \
-        return name##_module_dir;                                           \
-                                                                            \
-    dir = g_getenv("CUT_" #NAME "_MODULE_DIR");                             \
-    if (dir)                                                                \
-        return dir;                                                         \
-                                                                            \
-    return NAME##_MODULEDIR;                                                \
-}                                                                           \
-                                                                            \
-static CutModule *                                                          \
-cut_##name##_load_module (const gchar *name)                                \
-{                                                                           \
-    CutModule *module;                                                      \
-                                                                            \
-    module = cut_module_find(name##s, name);                                \
-    if (module)                                                             \
-        return module;                                                      \
-                                                                            \
-    module = cut_module_load_module(_cut_##name##_module_dir(), name);      \
-    if (module) {                                                           \
-        if (g_type_module_use(G_TYPE_MODULE(module))) {                     \
-            name##s = g_list_prepend(name##s, module);                      \
-            g_type_module_unuse(G_TYPE_MODULE(module));                     \
-        }                                                                   \
-    }                                                                       \
-                                                                            \
-    return module;                                                          \
+#ifdef G_OS_WIN32
+#  define CUT_DEFINE_WIN32_LISTENER_MODULE_DIR_VARIABLE(name)   \
+    static gchar *win32_ ## name ## _module_dir = NULL
+#  define CUT_LISTENER_RETURN_DEFAULT_MODULE_DIR(name, NAME) do \
+    {                                                           \
+        if (!win32_ ## name ## _module_dir)                     \
+            win32_ ## name ## _module_dir =                     \
+                cut_win32_build_factory_module_dir_name(#name); \
+        return win32_ ## name ## _module_dir;                   \
+    } while (0)
+#else
+#  define CUT_DEFINE_WIN32_LISTENER_MODULE_DIR_VARIABLE(name)
+#  define CUT_LISTENER_RETURN_DEFAULT_MODULE_DIR(name, NAME)    \
+    return NAME ## _MODULEDIR
+#endif
+
+
+#define CUT_DEFINE_LISTENER_MODULE(name, NAME)                          \
+static GList *name ## s = NULL;                                         \
+static gchar *name ## _module_dir = NULL;                               \
+CUT_DEFINE_WIN32_LISTENER_MODULE_DIR_VARIABLE(name);                    \
+static const gchar *                                                    \
+_cut_ ## name ## _module_dir (void)                                     \
+{                                                                       \
+    const gchar *dir;                                                   \
+                                                                        \
+    if (name ## _module_dir)                                            \
+        return name ## _module_dir;                                     \
+                                                                        \
+    dir = g_getenv("CUT_" #NAME "_MODULE_DIR");                         \
+    if (dir)                                                            \
+        return dir;                                                     \
+                                                                        \
+    CUT_LISTENER_RETURN_DEFAULT_MODULE_DIR(name, NAME);                 \
+}                                                                       \
+                                                                        \
+static CutModule *                                                      \
+cut_ ## name ## _load_module (const gchar *name)                        \
+{                                                                       \
+    CutModule *module;                                                  \
+                                                                        \
+    module = cut_module_find(name ## s, name);                          \
+    if (module)                                                         \
+        return module;                                                  \
+                                                                        \
+    module = cut_module_load_module(_cut_ ## name ## _module_dir(),     \
+                                    name);                              \
+    if (module) {                                                       \
+        if (g_type_module_use(G_TYPE_MODULE(module))) {                 \
+            name ## s = g_list_prepend(name ## s, module);              \
+            g_type_module_unuse(G_TYPE_MODULE(module));                 \
+        }                                                               \
+    }                                                                   \
+                                                                        \
+    return module;                                                      \
 }
 
 
