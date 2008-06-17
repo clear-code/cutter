@@ -321,12 +321,6 @@ test_run_test_with_filter_with_null (void)
 }
 
 #ifndef G_OS_WIN32
-static void
-segv_handler (int signum)
-{
-    return;
-}
-
 void
 test_crashed_signal (void)
 {
@@ -340,8 +334,8 @@ test_crashed_signal (void)
     cut_test_suite_add_test_case(test_object, test_case);
     g_object_unref(test_case);
 
-    signal(SIGSEGV, segv_handler);
-    g_signal_connect(test_object, "crashed", G_CALLBACK(cb_crashed_signal), NULL);
+    g_signal_connect(test_object, "crashed",
+                     G_CALLBACK(cb_crashed_signal), NULL);
     cut_assert(!run_test_in_test_case("crash_test", "crash_test_case"));
     g_signal_handlers_disconnect_by_func(test_object,
                                          G_CALLBACK(cb_crashed_signal),
