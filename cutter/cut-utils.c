@@ -134,6 +134,15 @@ cut_utils_inspect_string_array (gchar **strings)
     return g_string_free(inspected, FALSE);
 }
 
+const gchar *
+cut_utils_inspect_string (gchar *string)
+{
+    if (string)
+        return string;
+    else
+        return "(null)";
+}
+
 gboolean
 cut_utils_is_interested_diff (const gchar *diff)
 {
@@ -263,10 +272,21 @@ cut_win32_base_path (void)
 }
 
 gchar *
-cut_win32_build_factory_module_dir_name (const gchar *type)
+cut_win32_build_module_dir_name (const gchar *type)
 {
     return g_build_filename(cut_win32_base_path(), "lib", PACKAGE,
-                            "module", "factory", type, NULL);
+                            "module", type, NULL);
+}
+
+gchar *
+cut_win32_build_factory_module_dir_name (const gchar *type)
+{
+    gchar *module_dir, *factory_module_dir;
+
+    module_dir = cut_win32_build_module_dir_name("factory");
+    factory_module_dir = g_build_filename(module_dir, type, NULL);
+    g_free(module_dir);
+    return factory_module_dir;
 }
 #endif
 

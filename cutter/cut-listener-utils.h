@@ -26,17 +26,17 @@
 G_BEGIN_DECLS
 
 #ifdef G_OS_WIN32
-#  define CUT_DEFINE_WIN32_LISTENER_MODULE_DIR_VARIABLE(name)   \
-    static gchar *win32_ ## name ## _module_dir = NULL
+#  define CUT_DEFINE_ADDITIONAL_LISTENER_VARIABLES(name)        \
+    static gchar *win32_ ## name ## _module_dir = NULL;
 #  define CUT_LISTENER_RETURN_DEFAULT_MODULE_DIR(name, NAME) do \
     {                                                           \
         if (!win32_ ## name ## _module_dir)                     \
             win32_ ## name ## _module_dir =                     \
-                cut_win32_build_factory_module_dir_name(#name); \
+                cut_win32_build_module_dir_name(#name);         \
         return win32_ ## name ## _module_dir;                   \
     } while (0)
 #else
-#  define CUT_DEFINE_WIN32_LISTENER_MODULE_DIR_VARIABLE(name)
+#  define CUT_DEFINE_ADDITIONAL_LISTENER_VARIABLES(name)
 #  define CUT_LISTENER_RETURN_DEFAULT_MODULE_DIR(name, NAME)    \
     return NAME ## _MODULEDIR
 #endif
@@ -45,7 +45,8 @@ G_BEGIN_DECLS
 #define CUT_DEFINE_LISTENER_MODULE(name, NAME)                          \
 static GList *name ## s = NULL;                                         \
 static gchar *name ## _module_dir = NULL;                               \
-CUT_DEFINE_WIN32_LISTENER_MODULE_DIR_VARIABLE(name);                    \
+CUT_DEFINE_ADDITIONAL_LISTENER_VARIABLES(name)                          \
+                                                                        \
 static const gchar *                                                    \
 _cut_ ## name ## _module_dir (void)                                     \
 {                                                                       \
