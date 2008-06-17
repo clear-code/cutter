@@ -335,6 +335,9 @@ create_child_out_channel (CutPipeline *pipeline)
 #else
     channel = g_io_channel_unix_new(priv->child_pipe[CUT_READ]);
 #endif
+    if (!channel)
+        return NULL;
+
     g_io_channel_set_close_on_unref(channel, TRUE);
     priv->child_out_source_id = g_io_add_watch(channel,
                                                G_IO_IN | G_IO_PRI |
@@ -459,10 +462,15 @@ run_async (CutPipeline *pipeline)
         return;
     }
 
+    priv->child_out = create_child_out_channel(pipeline);
+    if (!priv->child_out) {
+        emit_error(pipeline, error, "failed to connect to child pipe");
+        return;
+    }
+
     priv->error_emitted = FALSE;
     priv->eof = FALSE;
     priv->parser = cut_stream_parser_new(CUT_RUN_CONTEXT(pipeline));
-    priv->child_out = create_child_out_channel(pipeline);
     priv->process_source_id = g_child_watch_add(priv->pid,
                                                 child_watch_func,
                                                 pipeline);
