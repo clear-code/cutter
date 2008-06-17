@@ -110,9 +110,6 @@ AC_ARG_ENABLE([mingw-debug],
 	                     [Enable MinGW debug]))
 case $host_os in
 mingw*)
-  if test "x$enable_mingw_debug" != "xno"; then
-    LDFLAGS="$LDFLAGS -mwindows"
-  fi
   AC_CHECK_TOOL(WINDRES, windres)
   ;;
 esac

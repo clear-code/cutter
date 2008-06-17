@@ -1,3 +1,8 @@
+2008-06-17  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* configure.ac: Remove -mwindows option. The options is not needed for
+	console program.
+
 2008-06-16  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-loader.c: don't collect attributes for Mac binaries.
