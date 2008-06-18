@@ -3,6 +3,8 @@
 	* test/test-cutter.c: Inherit all environment values from parent
 	process to child process except LANG value.
 	* test/test-cutter.c: Use "\r\n" for line feed code on Windows.
+	* test/test-cutter.c: Quote cutter command since g_shell_parse_argv()
+	cannot handle backslash.
 
 2008-06-18  Kouhei Sutou  <kou@cozmixng.org>
 

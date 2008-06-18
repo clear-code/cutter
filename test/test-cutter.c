@@ -92,7 +92,7 @@ run_cutter (const gchar *options)
     g_setenv("LANG", "C", TRUE);
 
     if (options)
-        command = g_strdup_printf("%s %s", cutter_command, options);
+        command = g_strdup_printf("\"%s\" %s", cutter_command, options);
     else
         command = g_strdup(cutter_command);
     g_shell_parse_argv(command, &argc, &argv, NULL);
