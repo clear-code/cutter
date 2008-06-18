@@ -9,7 +9,7 @@ noinst_LTLIBRARIES = 		\
 AM_LDFLAGS =			\
 	-module			\
 	-rpath $(libdir)	\
-	-avoid-version		^
+	-avoid-version		\
 	-no-undefined
 
 LIBS =						\
