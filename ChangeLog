@@ -1,5 +1,7 @@
 2008-06-18  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-loader.c: disable attribute collection on non-BFD build.
+
 	* cutter/cut-test-suite.c: use cut_get_cutter_command_path() not
 	cut_utils_get_cutter_command_path().
 

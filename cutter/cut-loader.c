@@ -182,6 +182,13 @@ is_test_function_name (const gchar *name)
 }
 
 #ifdef HAVE_LIBBFD
+
+gboolean
+cut_loader_support_attribute (void)
+{
+    return TRUE;
+}
+
 static GList *
 collect_symbols (CutLoaderPrivate *priv, CutBinaryType *binary_type)
 {
@@ -237,6 +244,12 @@ collect_symbols (CutLoaderPrivate *priv, CutBinaryType *binary_type)
 }
 
 #else
+
+gboolean
+cut_loader_support_attribute (void)
+{
+    return FALSE;
+}
 
 static inline CutBinaryType
 guess_binary_type (char *buffer, size_t size)
@@ -359,7 +372,8 @@ get_attribute_name (const gchar *attribute_function_name, const gchar *test_name
 {
     gchar *pos;
 
-    pos = g_strrstr(attribute_function_name, test_name + strlen(TEST_NAME_PREFIX)) - 1;
+    pos = g_strrstr(attribute_function_name,
+                    test_name + strlen(TEST_NAME_PREFIX)) - 1;
 
     return g_strndup(attribute_function_name, pos - attribute_function_name);
 }
@@ -407,7 +421,8 @@ collect_attributes (CutLoaderPrivate *priv, const gchar *test_name)
                     CutTestAttribute *new_attribute;
                     if (!attribute->name || !attribute->value)
                         break;
-                    new_attribute = cut_test_attribute_new(attribute->name, attribute->value);
+                    new_attribute = cut_test_attribute_new(attribute->name,
+                                                           attribute->value);
                     attributes = g_list_append(attributes, new_attribute);
                     attribute++;
                 }
@@ -522,7 +537,8 @@ cut_loader_load_test_case (CutLoader *loader)
         if (function) {
             GList *attributes = NULL;
             test = cut_test_new(name, function);
-            if (binary_type != CUT_BINARY_TYPE_MACH_O_BUNDLE)
+            if (cut_loader_support_attribute() &&
+                binary_type != CUT_BINARY_TYPE_MACH_O_BUNDLE)
                 attributes = collect_attributes(priv, name);
             if (attributes) {
                 set_attributes(test, attributes);
