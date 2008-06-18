@@ -145,7 +145,7 @@ void
 test_no_option (void)
 {
     cut_assert(run_cutter(NULL));
-    cut_assert_equal_int(256, exit_staus);
+    cut_assert_equal_int(256, exit_status);
     cut_assert_equal_string(help_message, stdout_string);
 }
 
