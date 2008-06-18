@@ -1,5 +1,9 @@
 2008-06-18  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-main.[ch] (cut_set_cutter_command_path): export for testing.
+
+	* test/test-cut-main.c: add a test for cut_get_cutter_command_path().
+
 	* configure.ac: don't add $(EXEEXT) to CUTTER.
 
 	* cutter/cut-loader.[ch]: CutLoader has binary type.
