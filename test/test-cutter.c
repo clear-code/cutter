@@ -11,16 +11,11 @@
 #  include <gtk/gtk.h>
 #endif
 
-enum {
-    ENV_LANG,
-    ENV_CUT_UI_MODULE_DIR,
-    ENV_CUT_UI_FACTORY_MODULE_DIR,
-    ENV_CUT_REPORT_MODULE_DIR,
-    ENV_CUT_REPORT_FACTORY_MODULE_DIR,
-    ENV_CUT_STREAMER_MODULE_DIR,
-    ENV_CUT_STREAMER_FACTORY_MODULE_DIR,
-    ENV_LAST
-};
+#ifdef G_OS_WIN32
+#define LINE_FEED_CODE "\r\n"
+#else
+#define LINE_FEED_CODE "\n"
+#endif
 
 void test_help (void);
 void test_help_all (void);
@@ -45,27 +40,27 @@ setup (void)
     exit_status = 0;
 
     help_message = cut_take_printf(
-        "Usage:\n"
-        "  %s [OPTION...] TEST_DIRECTORY\n"
-        "\n"
-        "Help Options:\n"
-        "  -?, --help                                      Show help options\n"
-        "  --help-all                                      Show all help options\n"
-        "  --help-streamer                                 Show streamer options\n"
-        "  --help-report                                   Show report options\n"
-        "  --help-ui                                       Show UI options\n"
-        "  --help-console-ui                               Show console UI options\n"
-        "\n"
-        "Application Options:\n"
-        "  --version                                       Show version\n"
-        "  -s, --source-directory=DIRECTORY                Set directory of source code\n"
-        "  -n, --name=TEST_NAME                            Specify tests\n"
-        "  -t, --test-case=TEST_CASE_NAME                  Specify test cases\n"
-        "  -m, --multi-thread                              Run test cases with multi-thread\n"
-        "  --test-case-order=[none|name|name-desc]         Sort test case by. Default is 'none'.\n"
-        "  --exclude-file=FILE_NAME                        Skip files\n"
-        "  --exclude-dir=DIRECTORY_NAME                    Skip directories\n"
-        "\n",
+        "Usage:" LINE_FEED_CODE
+        "  %s [OPTION...] TEST_DIRECTORY" LINE_FEED_CODE
+        "" LINE_FEED_CODE
+        "Help Options:" LINE_FEED_CODE
+        "  -?, --help                                      Show help options" LINE_FEED_CODE
+        "  --help-all                                      Show all help options" LINE_FEED_CODE
+        "  --help-streamer                                 Show streamer options" LINE_FEED_CODE
+        "  --help-report                                   Show report options" LINE_FEED_CODE
+        "  --help-ui                                       Show UI options" LINE_FEED_CODE
+        "  --help-console-ui                               Show console UI options" LINE_FEED_CODE
+        "" LINE_FEED_CODE
+        "Application Options:" LINE_FEED_CODE
+        "  --version                                       Show version" LINE_FEED_CODE
+        "  -s, --source-directory=DIRECTORY                Set directory of source code" LINE_FEED_CODE
+        "  -n, --name=TEST_NAME                            Specify tests" LINE_FEED_CODE
+        "  -t, --test-case=TEST_CASE_NAME                  Specify test cases" LINE_FEED_CODE
+        "  -m, --multi-thread                              Run test cases with multi-thread" LINE_FEED_CODE
+        "  --test-case-order=[none|name|name-desc]         Sort test case by. Default is 'none'." LINE_FEED_CODE
+        "  --exclude-file=FILE_NAME                        Skip files" LINE_FEED_CODE
+        "  --exclude-dir=DIRECTORY_NAME                    Skip directories" LINE_FEED_CODE
+        "" LINE_FEED_CODE,
         g_get_prgname());
 }
 
@@ -130,7 +125,7 @@ test_version (void)
 {
     cut_assert(run_cutter("--version"));
     cut_assert_equal_int(0, exit_status);
-    cut_assert_equal_string(VERSION"\n", stdout_string);
+    cut_assert_equal_string(VERSION LINE_FEED_CODE, stdout_string);
 }
 
 void
@@ -155,67 +150,67 @@ test_help_all (void)
     const gchar *help_all_message;
 
     help_all_message = cut_take_printf(
-        "Usage:\n"
-        "  %s [OPTION...] TEST_DIRECTORY\n"
-        "\n"
-        "Help Options:\n"
-        "  -?, --help                                      Show help options\n"
-        "  --help-all                                      Show all help options\n"
-        "  --help-streamer                                 Show streamer options\n"
-        "  --help-report                                   Show report options\n"
-        "  --help-ui                                       Show UI options\n"
-        "  --help-xml-streamer                             Show XML streamer options\n"
-        "  --help-console-ui                               Show console UI options\n"
+        "Usage:" LINE_FEED_CODE
+        "  %s [OPTION...] TEST_DIRECTORY" LINE_FEED_CODE
+        "" LINE_FEED_CODE
+        "Help Options:" LINE_FEED_CODE
+        "  -?, --help                                      Show help options" LINE_FEED_CODE
+        "  --help-all                                      Show all help options" LINE_FEED_CODE
+        "  --help-streamer                                 Show streamer options" LINE_FEED_CODE
+        "  --help-report                                   Show report options" LINE_FEED_CODE
+        "  --help-ui                                       Show UI options" LINE_FEED_CODE
+        "  --help-xml-streamer                             Show XML streamer options" LINE_FEED_CODE
+        "  --help-console-ui                               Show console UI options" LINE_FEED_CODE
 #ifdef HAVE_GTK
-        "  --help-gtk                                      Show GTK+ Options\n"
+        "  --help-gtk                                      Show GTK+ Options" LINE_FEED_CODE
 #endif
-        "\n"
-        "Streamer Options\n"
-        "  --streamer=[xml]                                Specify streamer\n"
-        "\n"
-        "Report Options\n"
-        "  --pdf-report=FILE                               Set filename of pdf report\n"
-        "  --xml-report=FILE                               Set filename of xml report\n"
-        "\n"
-        "UI Options\n"
+        "" LINE_FEED_CODE
+        "Streamer Options" LINE_FEED_CODE
+        "  --streamer=[xml]                                Specify streamer" LINE_FEED_CODE
+        "" LINE_FEED_CODE
+        "Report Options" LINE_FEED_CODE
+        "  --pdf-report=FILE                               Set filename of pdf report" LINE_FEED_CODE
+        "  --xml-report=FILE                               Set filename of xml report" LINE_FEED_CODE
+        "" LINE_FEED_CODE
+        "UI Options" LINE_FEED_CODE
 #ifdef HAVE_GTK
-        "  -u, --ui=[console|gtk]                          Specify UI\n"
+        "  -u, --ui=[console|gtk]                          Specify UI" LINE_FEED_CODE
 #else
-        "  -u, --ui=[console]                              Specify UI\n"
+        "  -u, --ui=[console]                              Specify UI" LINE_FEED_CODE
 #endif
-        "\n"
-        "XML Streamer Options\n"
-        "  --stream-fd=FILE_DESCRIPTOR                     Stream to FILE_DESCRIPTOR (default: stdout)\n"
-        "\n"
-        "Console UI Options\n"
-        "  -v, --verbose=[s|silent|n|normal|v|verbose]     Set verbose level\n"
-        "  -c, --color=[yes|true|no|false|auto]            Output log with colors\n"
-        "\n"
+        "" LINE_FEED_CODE
+        "XML Streamer Options" LINE_FEED_CODE
+        "  --stream-fd=FILE_DESCRIPTOR                     Stream to FILE_DESCRIPTOR (default: stdout)" LINE_FEED_CODE
+        "" LINE_FEED_CODE
+        "Console UI Options" LINE_FEED_CODE
+        "  -v, --verbose=[s|silent|n|normal|v|verbose]     Set verbose level" LINE_FEED_CODE
+        "  -c, --color=[yes|true|no|false|auto]            Output log with colors" LINE_FEED_CODE
+        "" LINE_FEED_CODE
 #ifdef HAVE_GTK
-        "GTK+ Options\n"
-        "  --class=CLASS                                   Program class as used by the window manager\n"
-        "  --gtk-name=NAME                                 Program name as used by the window manager\n"
-        "  --screen=SCREEN                                 X screen to use\n"
+        "GTK+ Options" LINE_FEED_CODE
+        "  --class=CLASS                                   Program class as used by the window manager" LINE_FEED_CODE
+        "  --gtk-name=NAME                                 Program name as used by the window manager" LINE_FEED_CODE
+        "  --screen=SCREEN                                 X screen to use" LINE_FEED_CODE
 #  ifdef GDK_WINDOWING_X11
-        "  --sync                                          Make X calls synchronous\n"
+        "  --sync                                          Make X calls synchronous" LINE_FEED_CODE
 #  endif
-        "  --gtk-module=MODULES                            Load additional GTK+ modules\n"
-        "  --g-fatal-warnings                              Make all warnings fatal\n"
-        "\n"
+        "  --gtk-module=MODULES                            Load additional GTK+ modules" LINE_FEED_CODE
+        "  --g-fatal-warnings                              Make all warnings fatal" LINE_FEED_CODE
+        "" LINE_FEED_CODE
 #endif
-        "Application Options:\n"
-        "  --version                                       Show version\n"
-        "  -s, --source-directory=DIRECTORY                Set directory of source code\n"
-        "  -n, --name=TEST_NAME                            Specify tests\n"
-        "  -t, --test-case=TEST_CASE_NAME                  Specify test cases\n"
-        "  -m, --multi-thread                              Run test cases with multi-thread\n"
-        "  --test-case-order=[none|name|name-desc]         Sort test case by. Default is 'none'.\n"
-        "  --exclude-file=FILE_NAME                        Skip files\n"
-        "  --exclude-dir=DIRECTORY_NAME                    Skip directories\n"
+        "Application Options:" LINE_FEED_CODE
+        "  --version                                       Show version" LINE_FEED_CODE
+        "  -s, --source-directory=DIRECTORY                Set directory of source code" LINE_FEED_CODE
+        "  -n, --name=TEST_NAME                            Specify tests" LINE_FEED_CODE
+        "  -t, --test-case=TEST_CASE_NAME                  Specify test cases" LINE_FEED_CODE
+        "  -m, --multi-thread                              Run test cases with multi-thread" LINE_FEED_CODE
+        "  --test-case-order=[none|name|name-desc]         Sort test case by. Default is 'none'." LINE_FEED_CODE
+        "  --exclude-file=FILE_NAME                        Skip files" LINE_FEED_CODE
+        "  --exclude-dir=DIRECTORY_NAME                    Skip directories" LINE_FEED_CODE
 #ifdef HAVE_GTK
-        "  --display=DISPLAY                               X display to use\n"
+        "  --display=DISPLAY                               X display to use" LINE_FEED_CODE
 #endif
-        "\n",
+        "" LINE_FEED_CODE,
         g_get_prgname());
 
     cut_assert(run_cutter("--help-all"));
@@ -228,7 +223,7 @@ test_invalid_option (void)
 {
     cut_assert(run_cutter("--XXXX"));
     cut_assert_equal_int(256, exit_status);
-    cut_assert_equal_string("Unknown option --XXXX\n", stdout_string);
+    cut_assert_equal_string("Unknown option --XXXX" LINE_FEED_CODE, stdout_string);
 }
 
 void
@@ -236,7 +231,7 @@ test_invalid_color_option (void)
 {
     cut_assert(run_cutter("--color=XXX"));
     cut_assert_equal_int(256, exit_status);
-    cut_assert_equal_string("Invalid color value: XXX\n", stdout_string);
+    cut_assert_equal_string("Invalid color value: XXX" LINE_FEED_CODE, stdout_string);
 }
 
 void
@@ -244,7 +239,7 @@ test_invalid_order_option (void)
 {
     cut_assert(run_cutter("--test-case-order=XXX"));
     cut_assert_equal_int(256, exit_status);
-    cut_assert_equal_string("Invalid test case order value: XXX\n", stdout_string);
+    cut_assert_equal_string("Invalid test case order value: XXX" LINE_FEED_CODE, stdout_string);
 }
 
 void
@@ -252,7 +247,7 @@ test_invalid_verbose_option (void)
 {
     cut_assert(run_cutter("--verbose=XXX"));
     cut_assert_equal_int(256, exit_status);
-    cut_assert_equal_string("Invalid verbose level name: XXX\n", stdout_string);
+    cut_assert_equal_string("Invalid verbose level name: XXX" LINE_FEED_CODE, stdout_string);
 }
 
 /*
