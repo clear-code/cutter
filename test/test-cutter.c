@@ -129,7 +129,7 @@ void
 test_version (void)
 {
     cut_assert(run_cutter("--version"));
-    cut_assert_equal_int(exit_status, 0);
+    cut_assert_equal_int(0, exit_status);
     cut_assert_equal_string(VERSION"\n", stdout_string);
 }
 
@@ -137,7 +137,7 @@ void
 test_help (void)
 {
     cut_assert(run_cutter("--help"));
-    cut_assert_equal_int(exit_status, 0);
+    cut_assert_equal_int(0, exit_status);
     cut_assert_equal_string(help_message, stdout_string);
 }
 
@@ -145,7 +145,7 @@ void
 test_no_option (void)
 {
     cut_assert(run_cutter(NULL));
-    cut_assert_equal_int(exit_status, 256);
+    cut_assert_equal_int(256, exit_staus);
     cut_assert_equal_string(help_message, stdout_string);
 }
 
