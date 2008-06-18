@@ -83,30 +83,18 @@ run_cutter (const gchar *options)
 {
     const gchar *cutter_command;
     gchar *command;
-    gchar **envp;
     gint argc;
     gchar **argv;
+    gchar *lang = NULL;
     gboolean ret;
 
     cutter_command = cut_utils_get_cutter_command_path();
     cut_assert(cutter_command);
 
-    envp = g_new0(gchar *, ENV_LAST + 1);
-    envp[ENV_LANG] = g_strdup("LANG=C");
-
-#define SET_ENV(name)                                                       \
-    if (g_getenv(#name))                                                    \
-        envp[ENV_ ## name] = g_strdup_printf("%s=%s", #name, g_getenv(#name))
-
-    SET_ENV(CUT_UI_MODULE_DIR);
-    SET_ENV(CUT_UI_FACTORY_MODULE_DIR);
-    SET_ENV(CUT_REPORT_MODULE_DIR);
-    SET_ENV(CUT_REPORT_FACTORY_MODULE_DIR);
-    SET_ENV(CUT_STREAMER_MODULE_DIR);
-    SET_ENV(CUT_STREAMER_FACTORY_MODULE_DIR);
-#undef SET_ENV
-
-    envp[ENV_LAST] = NULL;
+    if (g_getenv("LANG")) {
+        lang = g_strdup(g_getenv("LANG"));
+    }
+    g_setenv("LANG", "C", TRUE);
 
     if (options)
         command = g_strdup_printf("%s %s", cutter_command, options);
@@ -115,9 +103,9 @@ run_cutter (const gchar *options)
     g_shell_parse_argv(command, &argc, &argv, NULL);
     g_free(command);
 
-    ret = g_spawn_sync("./",
+    ret = g_spawn_sync(NULL,
                        argv,
-                       (gchar **)envp,
+                       NULL,
                        0,
                        NULL,
                        NULL,
@@ -125,8 +113,14 @@ run_cutter (const gchar *options)
                        &stderr_string,
                        &exit_status,
                        NULL);
+
+    if (lang) {
+        g_setenv("LANG", lang, TRUE);
+        g_free(lang);
+    } else {
+        g_unsetenv("LANG");
+    }
     g_strfreev(argv);
-    g_strfreev(envp);
 
     return ret;
 }
