@@ -184,7 +184,7 @@ is_test_function_name (const gchar *name)
 #ifdef HAVE_LIBBFD
 
 gboolean
-cut_loader_support_attribute (void)
+cut_loader_support_attribute (CutLoader *loader)
 {
     return TRUE;
 }
@@ -246,7 +246,7 @@ collect_symbols (CutLoaderPrivate *priv, CutBinaryType *binary_type)
 #else
 
 gboolean
-cut_loader_support_attribute (void)
+cut_loader_support_attribute (CutLoader *loader)
 {
     return FALSE;
 }
@@ -537,7 +537,7 @@ cut_loader_load_test_case (CutLoader *loader)
         if (function) {
             GList *attributes = NULL;
             test = cut_test_new(name, function);
-            if (cut_loader_support_attribute() &&
+            if (cut_loader_support_attribute(loader) &&
                 binary_type != CUT_BINARY_TYPE_MACH_O_BUNDLE)
                 attributes = collect_attributes(priv, name);
             if (attributes) {

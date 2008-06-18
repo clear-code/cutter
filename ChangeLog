@@ -1,5 +1,11 @@
 2008-06-18  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-loader.[ch] (cut_loader_support_attribute): require
+	CutLoader *.
+
+	* test/test-cut-test-attribute.c: omit attribute loading test on
+	no attribute loading support environment.
+
 	* cutter/cut-loader.h (cut_loader_support_attribute): add.
 
 	* cutter/cut-loader.c: disable attribute collection on non-BFD build.
