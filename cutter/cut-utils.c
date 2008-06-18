@@ -135,7 +135,7 @@ cut_utils_inspect_string_array (gchar **strings)
 }
 
 const gchar *
-cut_utils_inspect_string (gchar *string)
+cut_utils_inspect_string (const gchar *string)
 {
     if (string)
         return string;
