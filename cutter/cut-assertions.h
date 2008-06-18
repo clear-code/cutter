@@ -362,11 +362,13 @@ extern "C" {
         } else {                                                        \
             const char *message;                                        \
                                                                         \
-            message = cut_take_printf("<%s == %s>\n"                    \
-                                      "expected: <%s>\n"                \
-                                      " but was: <%s>",                 \
-                                      #expected, #actual,               \
-                                      _expected, _actual);              \
+            message =                                                   \
+                cut_take_printf("<%s == %s>\n"                          \
+                                "expected: <%s>\n"                      \
+                                " but was: <%s>",                       \
+                                #expected, #actual,                     \
+                                cut_utils_inspect_string(_expected),    \
+                                cut_utils_inspect_string(_actual));     \
             if (_expected && _actual) {                                 \
                 const char *diff;                                       \
                                                                         \
