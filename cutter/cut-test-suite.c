@@ -38,6 +38,7 @@
 #include "cut-test.h"
 #include "cut-test-case.h"
 #include "cut-run-context.h"
+#include "cut-main.h"
 #include "cut-utils.h"
 #include "cut-marshalers.h"
 #include "cut-test-result.h"
@@ -335,7 +336,7 @@ collect_backtrace (void)
         return;
     }
     stdout = pseudo_stdout;
-    g_on_error_stack_trace(cut_utils_get_cutter_command_path());
+    g_on_error_stack_trace(cut_get_cutter_command_path());
     stdout = original_stdout;
     fclose(pseudo_stdout);
 
