@@ -48,6 +48,7 @@
 	document says setting the function is dangerous.
 	* test/test-cutter.c: Use cut_utils_get_cutter_command_path() instead
 	of getting CUTTER environment value.
+	* test/test-cutter.c: NULL check barrier for SETENV macro.
 
 2008-06-17  Kouhei Sutou  <kou@cozmixng.org>
 

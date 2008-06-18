@@ -94,8 +94,9 @@ run_cutter (const gchar *options)
     envp = g_new0(gchar *, ENV_LAST + 1);
     envp[ENV_LANG] = g_strdup("LANG=C");
 
-#define SET_ENV(name)                                                   \
-    envp[ENV_ ## name] = g_strdup_printf("%s=%s", #name, g_getenv(#name))
+#define SET_ENV(name)                                                       \
+    if (g_getenv(#name))                                                    \
+        envp[ENV_ ## name] = g_strdup_printf("%s=%s", #name, g_getenv(#name))
 
     SET_ENV(CUT_UI_MODULE_DIR);
     SET_ENV(CUT_UI_FACTORY_MODULE_DIR);
