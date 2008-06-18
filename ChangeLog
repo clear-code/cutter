@@ -1,5 +1,9 @@
 2008-06-18  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-loader.[ch]: CutLoader has binary type.
+
+	* test/test-cut-test-attribute.c: follow the above change.
+
 	* cutter/cut-loader.[ch] (cut_loader_support_attribute): require
 	CutLoader *.
 

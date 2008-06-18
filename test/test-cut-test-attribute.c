@@ -15,11 +15,11 @@ static CutTest *test;
 static CutLoader *test_loader;
 static CutTestCase *test_case;
 
-#define cut_omit_if_loader_does_not_support_attribute() do      \
-{                                                               \
-    if (!cut_loader_support_attribute(test_loader))             \
-        cut_omit("test attribute loading isn't "                \
-                 "supported on the environment.");              \
+#define cut_omit_if_loader_does_not_support_attribute(loader) do        \
+{                                                                       \
+    if (!cut_loader_support_attribute(loader))                          \
+        cut_omit("test attribute loading isn't "                        \
+                 "supported on the environment.");                      \
 } while (0)
 
 static void
@@ -76,17 +76,19 @@ test_get_bug_id (void)
     GList *tests;
     const gchar *filter[] = {"/test_get_bug_id/", NULL};
 
-    cut_omit_if_loader_does_not_support_attribute();
-
     test_case = cut_loader_load_test_case(test_loader);
     cut_assert(test_case);
 
     container = CUT_TEST_CONTAINER(test_case);
     tests = cut_test_container_filter_children(container, filter);
     cut_assert(tests);
-
     cut_assert(1, g_list_length(tests));
-    cut_assert_equal_string("1234567890", cut_test_get_attribute(CUT_TEST(tests->data), "bug"));
+
+    cut_omit_if_loader_does_not_support_attribute(test_loader);
+
+    cut_assert_equal_string("1234567890",
+                            cut_test_get_attribute(CUT_TEST(tests->data),
+                                                   "bug"));
 }
 
 void
@@ -96,20 +98,22 @@ test_get_attribute (void)
     GList *tests;
     const gchar *filter[] = {"/test_attribute/", NULL};
 
-    cut_omit_if_loader_does_not_support_attribute();
-
     test_case = cut_loader_load_test_case(test_loader);
     cut_assert(test_case);
 
     container = CUT_TEST_CONTAINER(test_case);
     tests = cut_test_container_filter_children(container, filter);
     cut_assert(tests);
-
     cut_assert(1, g_list_length(tests));
-    cut_assert_equal_string("9", cut_test_get_attribute(CUT_TEST(tests->data),
-                                                        "bug"));
-    cut_assert_equal_string("5678", cut_test_get_attribute(CUT_TEST(tests->data),
-                                                           "priority"));
+
+    cut_omit_if_loader_does_not_support_attribute(test_loader);
+
+    cut_assert_equal_string("9",
+                            cut_test_get_attribute(CUT_TEST(tests->data),
+                                                   "bug"));
+    cut_assert_equal_string("5678",
+                            cut_test_get_attribute(CUT_TEST(tests->data),
+                                                   "priority"));
 }
 
 void
@@ -119,16 +123,16 @@ test_get_description (void)
     GList *tests;
     const gchar *filter[] = {"/test_description/", NULL};
 
-    cut_omit_if_loader_does_not_support_attribute();
-
     test_case = cut_loader_load_test_case(test_loader);
     cut_assert(test_case);
 
     container = CUT_TEST_CONTAINER(test_case);
     tests = cut_test_container_filter_children(container, filter);
     cut_assert(tests);
-
     cut_assert(1, g_list_length(tests));
+
+    cut_omit_if_loader_does_not_support_attribute(test_loader);
+
     cut_assert_equal_string("This message is the description of test_description()",
                             cut_test_get_description(CUT_TEST(tests->data)));
 }

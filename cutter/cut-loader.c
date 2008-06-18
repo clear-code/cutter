@@ -40,12 +40,18 @@
 #define ATTRIBUTE_PREFIX "attributes_"
 #define CUT_LOADER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_LOADER, CutLoaderPrivate))
 
+typedef enum {
+    CUT_BINARY_TYPE_UNKNOWN,
+    CUT_BINARY_TYPE_MACH_O_BUNDLE
+} CutBinaryType;
+
 typedef struct _CutLoaderPrivate	CutLoaderPrivate;
 struct _CutLoaderPrivate
 {
     gchar *so_filename;
     GList *symbols;
     GModule *module;
+    CutBinaryType binary_type;
 };
 
 enum
@@ -53,11 +59,6 @@ enum
     PROP_0,
     PROP_SO_FILENAME
 };
-
-typedef enum {
-    CUT_BINARY_TYPE_UNKNOWN,
-    CUT_BINARY_TYPE_MACH_O_BUNDLE
-} CutBinaryType;
 
 G_DEFINE_TYPE (CutLoader, cut_loader, G_TYPE_OBJECT)
 
@@ -99,6 +100,7 @@ cut_loader_init (CutLoader *loader)
     CutLoaderPrivate *priv = CUT_LOADER_GET_PRIVATE(loader);
 
     priv->so_filename = NULL;
+    priv->binary_type = CUT_BINARY_TYPE_UNKNOWN;
 }
 
 static void
@@ -186,11 +188,14 @@ is_test_function_name (const gchar *name)
 gboolean
 cut_loader_support_attribute (CutLoader *loader)
 {
-    return TRUE;
+    CutLoaderPrivate *priv;
+
+    priv = CUT_LOADER_GET_PRIVATE(loader);
+    return priv->binary_type != CUT_BINARY_TYPE_MACH_O_BUNDLE;
 }
 
 static GList *
-collect_symbols (CutLoaderPrivate *priv, CutBinaryType *binary_type)
+collect_symbols (CutLoaderPrivate *priv)
 {
     GList *symbols = NULL;
     long storage_needed;
@@ -220,14 +225,14 @@ collect_symbols (CutLoaderPrivate *priv, CutBinaryType *binary_type)
 
     symbol_leading_char = bfd_get_symbol_leading_char(abfd);
     if (bfd_get_flavour(abfd) == bfd_target_mach_o_flavour)
-        *binary_type = CUT_BINARY_TYPE_MACH_O_BUNDLE;
+        priv->binary_type = CUT_BINARY_TYPE_MACH_O_BUNDLE;
 
     for (i = 0; i < number_of_symbols; i++) {
         symbol_info info;
 
         bfd_symbol_info(symbol_table[i], &info);
         if (info.type == 'T' ||
-            (*binary_type == CUT_BINARY_TYPE_MACH_O_BUNDLE &&
+            (priv->binary_type == CUT_BINARY_TYPE_MACH_O_BUNDLE &&
              info.type == 'U')) {
             const char *name = info.name;
 
@@ -281,7 +286,7 @@ is_valid_symbol_name (GString *name)
 }
 
 static GList *
-collect_symbols (CutLoaderPrivate *priv, CutBinaryType *binary_type)
+collect_symbols (CutLoaderPrivate *priv)
 {
     FILE *input;
     GString *name;
@@ -301,13 +306,13 @@ collect_symbols (CutLoaderPrivate *priv, CutBinaryType *binary_type)
         size_t i;
 
         if (first_buffer) {
-            *binary_type = guess_binary_type(buffer, size);
+            priv->binary_type = guess_binary_type(buffer, size);
             first_buffer = FALSE;
         }
 
         for (i = 0; i < size; i++) {
             if (is_valid_char_for_cutter_symbol(name, buffer, i,
-                                                size, *binary_type)) {
+                                                size, priv->binary_type)) {
                 g_string_append_c(name, buffer[i]);
             } else if (name->len > 0) {
                 if (is_valid_symbol_name(name)) {
@@ -506,7 +511,6 @@ cut_loader_load_test_case (CutLoader *loader)
     GList *node;
     GList *test_names;
     CutTestCase *test_case;
-    CutBinaryType binary_type = CUT_BINARY_TYPE_UNKNOWN;
     CutLoaderPrivate *priv;
 
     priv = CUT_LOADER_GET_PRIVATE(loader);
@@ -518,7 +522,7 @@ cut_loader_load_test_case (CutLoader *loader)
     if (!priv->module)
         return NULL;
 
-    priv->symbols = collect_symbols(priv, &binary_type);
+    priv->symbols = collect_symbols(priv);
     if (!priv->symbols)
         return NULL;
 
@@ -537,8 +541,7 @@ cut_loader_load_test_case (CutLoader *loader)
         if (function) {
             GList *attributes = NULL;
             test = cut_test_new(name, function);
-            if (cut_loader_support_attribute(loader) &&
-                binary_type != CUT_BINARY_TYPE_MACH_O_BUNDLE)
+            if (cut_loader_support_attribute(loader))
                 attributes = collect_attributes(priv, name);
             if (attributes) {
                 set_attributes(test, attributes);
