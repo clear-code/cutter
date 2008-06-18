@@ -205,6 +205,9 @@ create_channel (StreamData *data)
 #else
     channel = g_io_channel_unix_new(fd);
 #endif
+    if (!channel)
+        return NULL;
+
     g_io_channel_set_close_on_unref(channel, TRUE);
 
     return channel;
