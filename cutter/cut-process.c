@@ -283,7 +283,8 @@ int
 cut_process_fork (CutProcess *process)
 {
 #ifdef G_OS_WIN32
-    return 0;
+    errno = ENOSYS;
+    return -1;
 #else
     return prepare_pipes(process);
 #endif

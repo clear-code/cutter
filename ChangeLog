@@ -1,5 +1,9 @@
 2008-06-18  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-process.c (cut_process_fork): set ENOSYS on Windows.
+
+	* test/test-cut-process.c (test_fork): check ENOSYS.
+
 	* cutter/cut-utils.c, cutter/cut-public.h
 	(cut_utils_inspect_string): add missing const.
 
