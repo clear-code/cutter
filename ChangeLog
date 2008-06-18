@@ -24,6 +24,8 @@
 	create_child_out_channel().
 	* module/streamer/cut-xml-streamer-factory.c: NULL check barrier in
 	create_channel().
+	* cutter/cut-pipeline.c: Do not set GSpawnChildSetupFunc. GLib
+	document says setting the function is dangerous.
 
 2008-06-17  Kouhei Sutou  <kou@cozmixng.org>
 

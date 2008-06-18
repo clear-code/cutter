@@ -330,10 +330,13 @@ create_child_out_channel (CutPipeline *pipeline)
     CutPipelinePrivate *priv;
 
     priv = CUT_PIPELINE_GET_PRIVATE(pipeline);
-#ifdef G_OS_WIN32
-    channel = g_io_channel_win32_new_fd(priv->child_pipe[CUT_READ]);
-#else
+    if (priv->child_pipe[CUT_READ] == -1)
+        return NULL;
+
+#ifndef G_OS_WIN32
     channel = g_io_channel_unix_new(priv->child_pipe[CUT_READ]);
+#else
+    channel = g_io_channel_win32_new_fd(priv->child_pipe[CUT_READ]);
 #endif
     if (!channel)
         return NULL;
@@ -404,6 +407,7 @@ create_command_line_args (CutPipeline *pipeline)
     return new_args;
 }
 
+#ifndef G_OS_WIN32
 static void
 setup_child (gpointer user_data)
 {
@@ -414,6 +418,7 @@ setup_child (gpointer user_data)
 
     cut_utils_close_pipe(priv->child_pipe, CUT_READ);
 }
+#endif
 
 static void
 run_async (CutPipeline *pipeline)
@@ -441,7 +446,11 @@ run_async (CutPipeline *pipeline)
                                       NULL,
                                       G_SPAWN_LEAVE_DESCRIPTORS_OPEN |
                                       G_SPAWN_DO_NOT_REAP_CHILD,
+#ifndef G_OS_WIN32
                                       setup_child,
+#else
+                                      NULL, 
+#endif
                                       pipeline,
                                       &priv->pid,
                                       NULL,
