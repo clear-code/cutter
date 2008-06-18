@@ -1,4 +1,5 @@
 #include <cutter.h>
+#include <cut-utils.h>
 
 #ifdef HAVE_CONFIG_H
 #  include <cutter/config.h>
@@ -87,7 +88,7 @@ run_cutter (const gchar *options)
     gchar **argv;
     gboolean ret;
 
-    cutter_command = g_getenv("CUTTER");
+    cutter_command = cut_utils_get_cutter_command_path();
     cut_assert(cutter_command);
 
     envp = g_new0(gchar *, ENV_LAST + 1);

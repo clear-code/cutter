@@ -46,6 +46,8 @@
 	create_channel().
 	* cutter/cut-pipeline.c: Do not set GSpawnChildSetupFunc. GLib
 	document says setting the function is dangerous.
+	* test/test-cutter.c: Use cut_utils_get_cutter_command_path() instead
+	of getting CUTTER environment value.
 
 2008-06-17  Kouhei Sutou  <kou@cozmixng.org>
 
