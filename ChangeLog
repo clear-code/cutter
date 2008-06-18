@@ -1,5 +1,7 @@
 2008-06-18  Kouhei Sutou  <kou@cozmixng.org>
 
+	* configure.ac: don't add $(EXEEXT) to CUTTER.
+
 	* cutter/cut-loader.[ch]: CutLoader has binary type.
 
 	* test/test-cut-test-attribute.c: follow the above change.

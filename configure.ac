@@ -374,7 +374,7 @@ AC_SUBST(SF_HTDOCS)
 SF_REPOS="https://cutter.svn.sourceforge.net/svnroot/cutter/cutter"
 AC_SUBST(SF_REPOS)
 
-CUTTER="\$(top_builddir)/cutter/cutter\$(EXEEXT)"
+CUTTER="\$(top_builddir)/cutter/cutter"
 AC_SUBST(CUTTER)
 
 CUTTER_CFLAGS="$GLIB_CFLAGS -DG_DISABLE_DEPRECATED -DUI_MODULEDIR=\\\"\"\$(ui_moduledir)\"\\\""
