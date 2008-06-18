@@ -34,6 +34,8 @@ void          cut_quit               (void);
 
 gboolean      cut_run                (void);
 
+const char   *cut_get_cutter_command_path (void);
+
 CutRunContext *cut_create_run_context(void);
 gboolean       cut_start_run_context (CutRunContext *run_context);
 

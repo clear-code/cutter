@@ -29,6 +29,7 @@
 
 #include "cut-utils.h"
 #include "cut-public.h"
+#include "cut-main.h"
 
 gchar *
 cut_utils_create_regex_pattern (const gchar *string)
@@ -255,6 +256,22 @@ cut_utils_close_pipe (int *pipe, CutPipeMode mode)
         return;
     close(pipe[mode]);
     pipe[mode] = -1;
+}
+
+const gchar *
+cut_utils_get_cutter_command_path (void)
+{
+    const gchar *cutter_command;
+
+    cutter_command = g_getenv("CUTTER");
+    if (cutter_command)
+        return cutter_command;
+
+    cutter_command = cut_get_cutter_command_path();
+    if (cutter_command)
+        return cutter_command;
+
+    return g_get_prgname();
 }
 
 #ifdef G_OS_WIN32

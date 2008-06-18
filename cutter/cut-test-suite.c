@@ -335,7 +335,7 @@ collect_backtrace (void)
         return;
     }
     stdout = pseudo_stdout;
-    g_on_error_stack_trace(g_get_prgname());
+    g_on_error_stack_trace(cut_utils_get_cutter_command_path());
     stdout = original_stdout;
     fclose(pseudo_stdout);
 

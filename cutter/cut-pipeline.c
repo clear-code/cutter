@@ -388,19 +388,13 @@ create_command_line_args (CutPipeline *pipeline)
         gboolean result;
         gint argc;
         gchar *command_line;
-        const gchar *cutter_command = NULL;
-
-        cutter_command = g_getenv("CUTTER");
-
-        if (!cutter_command)
-            cutter_command = g_get_prgname();
 
         command_line = g_strdup_printf("%s "
                                        "-v s "
                                        "--streamer=xml "
                                        "--stream-fd=%d "
                                        "%s",
-                                       cutter_command,
+                                       cut_utils_get_cutter_command_path(),
                                        priv->child_pipe[CUT_WRITE],
                                        test_directory);
         result = g_shell_parse_argv(command_line, &argc, &new_args, NULL);

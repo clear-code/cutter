@@ -51,6 +51,9 @@ gchar  **cut_utils_strv_concat          (const gchar **str_array,
 void     cut_utils_close_pipe           (int         *pipe,
                                          CutPipeMode  mode);
 
+const gchar *cut_utils_get_cutter_command_path (void);
+
+
 #ifdef G_OS_WIN32
 const gchar *cut_win32_base_path                     (void);
 gchar       *cut_win32_build_module_dir_name         (const gchar *type);

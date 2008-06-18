@@ -1,5 +1,12 @@
 2008-06-18  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-suite.c, cutter/cut-pipeline.c: use
+	cut_utils_get_cutter_command_path().
+
+	* cutter/cut-utils.[ch] (cut_utils_get_cutter_command_path): add.
+
+	* cutter/cut-main.[ch] (cut_get_cutter_command_path): add.
+
 	* cutter/cut-process.c (cut_process_fork): set ENOSYS on Windows.
 
 	* test/test-cut-process.c (test_fork): check ENOSYS.

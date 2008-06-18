@@ -57,6 +57,7 @@ static gboolean use_multi_thread = FALSE;
 static GList *factories = NULL;
 static CutContractor *contractor = NULL;
 static gchar **original_argv = NULL;
+static gchar *cutter_command_path = NULL;
 
 static gboolean
 print_version (const gchar *option_name, const gchar *value,
@@ -109,6 +110,22 @@ static const GOptionEntry option_entries[] =
     {NULL}
 };
 
+static void
+set_cutter_command_path (const gchar *argv0)
+{
+    if (cutter_command_path)
+        g_free(cutter_command_path);
+
+    cutter_command_path = g_find_program_in_path(argv0);
+    if (!cutter_command_path) {
+        gchar *current_dir;
+
+        current_dir = g_get_current_dir();
+        cutter_command_path = g_build_filename(current_dir, argv0, NULL);
+        g_free(current_dir);
+    }
+}
+
 void
 cut_init (int *argc, char ***argv)
 {
@@ -121,6 +138,8 @@ cut_init (int *argc, char ***argv)
         return;
 
     initialized = TRUE;
+
+    set_cutter_command_path((*argv)[0]);
 
     original_argv = g_strdupv(*argv);
 
@@ -342,6 +361,12 @@ cut_run (void)
     g_object_unref(run_context);
 
     return success;
+}
+
+const gchar *
+cut_get_cutter_command_path (void)
+{
+    return cutter_command_path;
 }
 
 /*
