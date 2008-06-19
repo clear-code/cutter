@@ -213,6 +213,12 @@ test_help_all (void)
         "  --screen=SCREEN                                 X screen to use" LINE_FEED_CODE
 #  ifdef GDK_WINDOWING_X11
         "  --sync                                          Make X calls synchronous" LINE_FEED_CODE
+#  elif defined(GDK_WINDOWING_WIN32)
+        "  --sync                                          Don't batch GDI requests" LINE_FEED_CODE
+        "  --no-wintab                                     Don't use the Wintab API for tablet support" LINE_FEED_CODE
+        "  --ignore-wintab                                 Same as --no-wintab" LINE_FEED_CODE
+        "  --use-wintab                                    Do use the Wintab API [default]" LINE_FEED_CODE
+        "  --max-colors=COLORS                             Size of the palette in 8 bit mode" LINE_FEED_CODE
 #  endif
         "  --gtk-module=MODULES                            Load additional GTK+ modules" LINE_FEED_CODE
         "  --g-fatal-warnings                              Make all warnings fatal" LINE_FEED_CODE

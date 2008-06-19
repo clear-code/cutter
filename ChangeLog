@@ -25,6 +25,7 @@
 	* cutter/cut-module.c: Show g_module_error() message directly. 
 	* cutter/cut-pipeline.c: Quote cutter command and test target
 	directory.
+	* test/test-cutter.c: Added some description for Gtk+ for Windows.
 
 2008-06-18  Kouhei Sutou  <kou@cozmixng.org>
 
