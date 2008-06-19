@@ -1,5 +1,7 @@
 2008-06-19  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-loader.c: enable attribute support for MS Windows DLL.x
+
 	* cutter/cut-module.c (_cut_module_show_error): remove a needless
 	variable.
 

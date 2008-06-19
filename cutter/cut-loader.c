@@ -42,7 +42,8 @@
 
 typedef enum {
     CUT_BINARY_TYPE_UNKNOWN,
-    CUT_BINARY_TYPE_MACH_O_BUNDLE
+    CUT_BINARY_TYPE_MACH_O_BUNDLE,
+    CUT_BINARY_TYPE_MS_WINDOWS_DLL
 } CutBinaryType;
 
 typedef struct _CutLoaderPrivate	CutLoaderPrivate;
@@ -253,14 +254,22 @@ collect_symbols (CutLoaderPrivate *priv)
 gboolean
 cut_loader_support_attribute (CutLoader *loader)
 {
-    return FALSE;
+    CutLoaderPrivate *priv;
+
+    priv = CUT_LOADER_GET_PRIVATE(loader);
+    return priv->binary_type == CUT_BINARY_TYPE_MS_WINDOWS_DLL;
 }
 
 static inline CutBinaryType
 guess_binary_type (char *buffer, size_t size)
 {
-    if (size >= 4 && ((unsigned int *)buffer)[0] == 0xfeedface)
+    if (size >= 4 && ((guint32 *)buffer)[0] == 0xfeedface)
         return CUT_BINARY_TYPE_MACH_O_BUNDLE;
+    if (size >= 4 &&
+        ((guint8 *)buffer)[0] == 'M' &&
+        ((guint8 *)buffer)[1] == 'Z' &&
+        ((guint8 *)buffer)[4] & 0x2)
+        return CUT_BINARY_TYPE_MS_WINDOWS_DLL;
     return CUT_BINARY_TYPE_UNKNOWN;
 }
 
@@ -282,7 +291,7 @@ is_valid_char_for_cutter_symbol (GString *name, char *buffer,
 static inline gboolean
 is_valid_symbol_name (GString *name)
 {
-    return name->len > 1;
+    return name->len >= 4;
 }
 
 static GList *
