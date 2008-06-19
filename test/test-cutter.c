@@ -11,6 +11,14 @@
 #  include <gtk/gtk.h>
 #endif
 
+#ifdef HAVE_SYS_WAIT_H
+#  include <sys/types.h>
+#  include <sys/wait.h>
+#else
+#  WIFEXITED(status) TRUE
+#  WEXITSTATUS(status) (status)
+#endif
+
 #ifdef G_OS_WIN32
 #define LINE_FEED_CODE "\r\n"
 #else
@@ -32,6 +40,19 @@ static gint exit_status = 0;
 static gchar *lang = NULL;
 
 static const gchar *help_message;
+
+#define cut_assert_exit_status(status) do                       \
+{                                                               \
+    cut_assert_true(WIFEXITED(exit_status));                    \
+    cut_assert_equal_int(status, WEXITSTATUS(exit_status));     \
+} while (0)
+
+#define cut_assert_exit_success()               \
+    cut_assert_exit_status(EXIT_SUCCESS)
+
+#define cut_assert_exit_failure()               \
+    cut_assert_exit_status(EXIT_FAILURE)
+
 
 void
 setup (void)
@@ -123,7 +144,7 @@ void
 test_version (void)
 {
     cut_assert(run_cutter("--version"));
-    cut_assert_equal_int(0, exit_status);
+    cut_assert_exit_success();
     cut_assert_equal_string(VERSION LINE_FEED_CODE, stdout_string);
 }
 
@@ -131,7 +152,7 @@ void
 test_help (void)
 {
     cut_assert(run_cutter("--help"));
-    cut_assert_equal_int(0, exit_status);
+    cut_assert_exit_success();
     cut_assert_equal_string(help_message, stdout_string);
 }
 
@@ -139,7 +160,7 @@ void
 test_no_option (void)
 {
     cut_assert(run_cutter(NULL));
-    cut_assert_equal_int(EXIT_FAILURE, exit_status);
+    cut_assert_exit_failure();
     cut_assert_equal_string(help_message, stdout_string);
 }
 
@@ -213,7 +234,7 @@ test_help_all (void)
         g_get_prgname());
 
     cut_assert(run_cutter("--help-all"));
-    cut_assert_equal_int(0, exit_status);
+    cut_assert_exit_success();
     cut_assert_equal_string(help_all_message, stdout_string);
 }
 
@@ -221,32 +242,36 @@ void
 test_invalid_option (void)
 {
     cut_assert(run_cutter("--XXXX"));
-    cut_assert_equal_int(EXIT_FAILURE, exit_status);
-    cut_assert_equal_string("Unknown option --XXXX" LINE_FEED_CODE, stdout_string);
+    cut_assert_exit_failure();
+    cut_assert_equal_string("Unknown option --XXXX" LINE_FEED_CODE,
+                            stdout_string);
 }
 
 void
 test_invalid_color_option (void)
 {
     cut_assert(run_cutter("--color=XXX"));
-    cut_assert_equal_int(EXIT_FAILURE, exit_status);
-    cut_assert_equal_string("Invalid color value: XXX" LINE_FEED_CODE, stdout_string);
+    cut_assert_exit_failure();
+    cut_assert_equal_string("Invalid color value: XXX" LINE_FEED_CODE,
+                            stdout_string);
 }
 
 void
 test_invalid_order_option (void)
 {
     cut_assert(run_cutter("--test-case-order=XXX"));
-    cut_assert_equal_int(EXIT_FAILURE, exit_status);
-    cut_assert_equal_string("Invalid test case order value: XXX" LINE_FEED_CODE, stdout_string);
+    cut_assert_exit_failure();
+    cut_assert_equal_string("Invalid test case order value: XXX" LINE_FEED_CODE,
+                            stdout_string);
 }
 
 void
 test_invalid_verbose_option (void)
 {
     cut_assert(run_cutter("--verbose=XXX"));
-    cut_assert_equal_int(EXIT_FAILURE, exit_status);
-    cut_assert_equal_string("Invalid verbose level name: XXX" LINE_FEED_CODE, stdout_string);
+    cut_assert_exit_failure();
+    cut_assert_equal_string("Invalid verbose level name: XXX" LINE_FEED_CODE,
+                            stdout_string);
 }
 
 /*

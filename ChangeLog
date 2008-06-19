@@ -1,5 +1,7 @@
 2008-06-19  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cutter.c: strict.
+
 	* cutter/cut-main.c: use EXIT_FAILURE.
 
 	* cutter/cut-gpublic.h, cutter/cut-utils.c (cut_assert_g_error): define.
