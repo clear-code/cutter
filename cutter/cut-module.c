@@ -190,7 +190,6 @@ cut_module_collect_names (GList *modules)
 static void
 _cut_module_show_error (GModule *module)
 {
-    gchar *message;
     const gchar *module_error_message;
 
     module_error_message = g_module_error();
@@ -198,12 +197,10 @@ _cut_module_show_error (GModule *module)
         return;
 
     if (module) {
-        g_warning("%s: %s", g_module_name(module), 
-                            module_error_message);
+        g_warning("%s: %s", g_module_name(module), module_error_message);
     } else {
         g_warning("%s", module_error_message);
     }
-    g_free(message);
 }
 
 CutModule *
