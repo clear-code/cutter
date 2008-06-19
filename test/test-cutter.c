@@ -15,8 +15,8 @@
 #  include <sys/types.h>
 #  include <sys/wait.h>
 #else
-#  WIFEXITED(status) TRUE
-#  WEXITSTATUS(status) (status)
+#  define WIFEXITED(status) TRUE
+#  define WEXITSTATUS(status) (status)
 #endif
 
 #ifdef G_OS_WIN32
