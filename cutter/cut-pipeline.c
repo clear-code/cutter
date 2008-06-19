@@ -392,11 +392,11 @@ create_command_line_args (CutPipeline *pipeline)
         gint argc;
         gchar *command_line;
 
-        command_line = g_strdup_printf("%s "
+        command_line = g_strdup_printf("\"%s\" "
                                        "-v s "
                                        "--streamer=xml "
                                        "--stream-fd=%d "
-                                       "%s",
+                                       "\"%s\"",
                                        cut_utils_get_cutter_command_path(),
                                        priv->child_pipe[CUT_WRITE],
                                        test_directory);
