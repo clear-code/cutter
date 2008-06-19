@@ -4,7 +4,7 @@
 	variable.
 
 	* module/ui/cut-console-ui-factory.c (guess_color_usability): use
-	colorized output on cygwin and Windows console.
+	colorized output on cygwin.
 
 	* test/test-cutter.c: strict.
 

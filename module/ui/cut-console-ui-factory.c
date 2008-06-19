@@ -221,7 +221,7 @@ get_property (GObject    *object,
 static gboolean
 guess_color_usability (void)
 {
-    const gchar *term, *emacs, *client_name;
+    const gchar *term, *emacs;
 
     term = g_getenv("TERM");
     if (term && (g_str_has_suffix(term, "term") ||
@@ -232,10 +232,6 @@ guess_color_usability (void)
 
     emacs = g_getenv("EMACS");
     if (emacs && (g_str_equal(emacs, "t")))
-        return TRUE;
-
-    client_name = g_getenv("CLIENTNAME");
-    if (client_name && g_str_equal(client_name, "Console"))
         return TRUE;
 
     return FALSE;
