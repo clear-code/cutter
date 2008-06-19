@@ -191,15 +191,17 @@ static void
 _cut_module_show_error (GModule *module)
 {
     gchar *message;
+    const gchar *module_error_message;
 
-    if (!g_module_error())
+    module_error_message = g_module_error();
+    if (!module_error_message)
         return;
 
-    message = g_locale_to_utf8(g_module_error(), -1, NULL, NULL, NULL);
     if (module) {
-        g_warning("%s: %s", g_module_name(module), message);
+        g_warning("%s: %s", g_module_name(module), 
+                            module_error_message);
     } else {
-        g_warning("%s", message);
+        g_warning("%s", module_error_message);
     }
     g_free(message);
 }
@@ -267,7 +269,7 @@ _cut_module_module_file_name (const gchar *name)
 
 static gboolean
 _cut_module_load_func (GModule *module, const gchar *func_name,
-                         gpointer *symbol)
+                       gpointer *symbol)
 {
     g_return_val_if_fail(module, FALSE);
 
@@ -393,5 +395,5 @@ cut_module_unload (CutModule *module)
 }
 
 /*
-vi:nowrap:ai:expandtab:sw=4
+vi:ts=4:nowrap:ai:expandtab:sw=4
 */

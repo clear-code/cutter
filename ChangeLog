@@ -19,6 +19,7 @@
 	cannot handle backslash.
 	* test/test-cutter.c: Also quote cutter command without option.
 	* cutter/cut-main.c, test/test-cutter.c: Use EXIT_FAILURE.
+	* cutter/cut-module.c: Show g_module_error() message directly. 
 
 2008-06-18  Kouhei Sutou  <kou@cozmixng.org>
 
