@@ -1,3 +1,7 @@
+2008-06-19  Kouhei Sutou  <kou@cozmixng.org>
+
+	* test/test-cutter.c: reset LANG in teardown.
+
 2008-06-19  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* test/test-cutter.c: Inherit all environment values from parent

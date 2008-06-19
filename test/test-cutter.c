@@ -29,6 +29,7 @@ void test_no_option (void);
 static gchar *stdout_string = NULL;
 static gchar *stderr_string = NULL;
 static gint exit_status = 0;
+static gchar *lang = NULL;
 
 static const gchar *help_message;
 
@@ -38,6 +39,7 @@ setup (void)
     stdout_string = NULL;
     stderr_string = NULL;
     exit_status = 0;
+    lang = g_strdup(g_getenv("LANG"));
 
     help_message = cut_take_printf(
         "Usage:" LINE_FEED_CODE
@@ -71,6 +73,13 @@ teardown (void)
         g_free(stdout_string);
     if (stderr_string)
         g_free(stderr_string);
+
+    if (lang) {
+        g_setenv("LANG", lang, TRUE);
+        g_free(lang);
+    } else {
+        g_unsetenv("LANG");
+    }
 }
 
 static gboolean
@@ -80,15 +89,11 @@ run_cutter (const gchar *options)
     gchar *command;
     gint argc;
     gchar **argv;
-    gchar *lang = NULL;
     gboolean ret;
 
     cutter_command = cut_utils_get_cutter_command_path();
     cut_assert(cutter_command);
 
-    if (g_getenv("LANG")) {
-        lang = g_strdup(g_getenv("LANG"));
-    }
     g_setenv("LANG", "C", TRUE);
 
     if (options)
@@ -109,12 +114,6 @@ run_cutter (const gchar *options)
                        &exit_status,
                        NULL);
 
-    if (lang) {
-        g_setenv("LANG", lang, TRUE);
-        g_free(lang);
-    } else {
-        g_unsetenv("LANG");
-    }
     g_strfreev(argv);
 
     return ret;
