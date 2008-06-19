@@ -29,6 +29,8 @@ GObject *cut_test_context_take_g_object (CutTestContext *context,
 const GError *cut_test_context_take_g_error (CutTestContext *context,
                                              GError         *error);
 
+char    *cut_utils_inspect_g_error      (GError *error);
+
 G_END_DECLS
 
 #endif /* __CUT_GPUBLIC_H__ */

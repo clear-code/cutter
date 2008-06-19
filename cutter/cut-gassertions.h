@@ -186,14 +186,9 @@ G_BEGIN_DECLS
     if (_g_error == NULL) {                                             \
         cut_test_pass();                                                \
     } else {                                                            \
-        const gchar *inspected, *domain_name;                           \
-        domain_name = g_quark_to_string(_g_error->domain);              \
-        inspected = cut_take_printf("%s:%d",                            \
-                                    domain_name,                        \
-                                    _g_error->code);                    \
-        if (_g_error->message)                                          \
-            inspected = cut_take_printf("%s: %s",                       \
-                                        inspected, _g_error->message);  \
+        const gchar *inspected;                                         \
+        inspected =                                                     \
+            cut_take_string(cut_utils_inspect_g_error(_g_error));       \
         g_error_free(_g_error);                                         \
         cut_test_fail(FAILURE,                                          \
                       cut_take_printf("expected: <%s> is NULL\n"        \

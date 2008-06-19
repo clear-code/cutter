@@ -76,6 +76,7 @@ int   cut_utils_compare_string_array        (char **strings1,
                                              char **strings2);
 char *cut_utils_inspect_string_array        (char **strings);
 const char *cut_utils_inspect_string        (const char *string);
+
 int   cut_utils_is_interested_diff          (const char *diff);
 int   cut_utils_file_exist                  (const char *path);
 

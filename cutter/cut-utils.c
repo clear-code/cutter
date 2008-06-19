@@ -29,6 +29,7 @@
 
 #include "cut-utils.h"
 #include "cut-public.h"
+#include "cut-gpublic.h"
 #include "cut-main.h"
 
 gchar *
@@ -142,6 +143,24 @@ cut_utils_inspect_string (const gchar *string)
         return string;
     else
         return "(null)";
+}
+
+gchar *
+cut_utils_inspect_g_error (GError *error)
+{
+    GString *inspected;
+
+    if (!error)
+        return g_strdup("No error");
+
+    inspected = g_string_new(g_quark_to_string(error->domain));
+    g_string_append_printf(inspected, ":%d", error->code);
+    if (error->message) {
+        g_string_append(inspected, ": ");
+        g_string_append(inspected, error->message);
+    }
+
+    return g_string_free(inspected, FALSE);
 }
 
 gboolean
