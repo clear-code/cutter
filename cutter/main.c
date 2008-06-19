@@ -35,7 +35,7 @@ main (int argc, char *argv[])
     success = cut_run();
     cut_quit();
 
-    exit(success ? 0 : 1);
+    exit(success ? EXIT_SUCCESS : EXIT_FAILURE);
 }
 
 /*
