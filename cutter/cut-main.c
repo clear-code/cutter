@@ -64,7 +64,7 @@ print_version (const gchar *option_name, const gchar *value,
                gpointer data, GError **error)
 {
     g_print("%s\n", VERSION);
-    exit(0);
+    exit(EXIT_SUCCESS);
     return TRUE;
 }
 
@@ -165,7 +165,7 @@ cut_init (int *argc, char ***argv)
         g_print("%s\n", error->message);
         g_error_free(error);
         g_option_context_free(option_context);
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
     for (i = 1; i < *argc; i++) {
@@ -184,7 +184,7 @@ cut_init (int *argc, char ***argv)
         g_print("%s\n", error->message);
         g_error_free(error);
         g_option_context_free(option_context);
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
     if (*argc == 1) {
@@ -193,7 +193,7 @@ cut_init (int *argc, char ***argv)
         g_print("%s", help_string);
         g_free(help_string);
         g_option_context_free(option_context);
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
     test_directory = (*argv)[1];

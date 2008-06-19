@@ -10,6 +10,7 @@
 	* test/test-cutter.c: Quote cutter command since g_shell_parse_argv()
 	cannot handle backslash.
 	* test/test-cutter.c: Also quote cutter command without option.
+	* cutter/cut-main.c, test/test-cutter.c: Use EXIT_FAILURE.
 
 2008-06-18  Kouhei Sutou  <kou@cozmixng.org>
 

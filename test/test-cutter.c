@@ -139,7 +139,7 @@ void
 test_no_option (void)
 {
     cut_assert(run_cutter(NULL));
-    cut_assert_equal_int(256, exit_status);
+    cut_assert_equal_int(EXIT_FAILURE, exit_status);
     cut_assert_equal_string(help_message, stdout_string);
 }
 
@@ -221,7 +221,7 @@ void
 test_invalid_option (void)
 {
     cut_assert(run_cutter("--XXXX"));
-    cut_assert_equal_int(256, exit_status);
+    cut_assert_equal_int(EXIT_FAILURE, exit_status);
     cut_assert_equal_string("Unknown option --XXXX" LINE_FEED_CODE, stdout_string);
 }
 
@@ -229,7 +229,7 @@ void
 test_invalid_color_option (void)
 {
     cut_assert(run_cutter("--color=XXX"));
-    cut_assert_equal_int(256, exit_status);
+    cut_assert_equal_int(EXIT_FAILURE, exit_status);
     cut_assert_equal_string("Invalid color value: XXX" LINE_FEED_CODE, stdout_string);
 }
 
@@ -237,7 +237,7 @@ void
 test_invalid_order_option (void)
 {
     cut_assert(run_cutter("--test-case-order=XXX"));
-    cut_assert_equal_int(256, exit_status);
+    cut_assert_equal_int(EXIT_FAILURE, exit_status);
     cut_assert_equal_string("Invalid test case order value: XXX" LINE_FEED_CODE, stdout_string);
 }
 
@@ -245,7 +245,7 @@ void
 test_invalid_verbose_option (void)
 {
     cut_assert(run_cutter("--verbose=XXX"));
-    cut_assert_equal_int(256, exit_status);
+    cut_assert_equal_int(EXIT_FAILURE, exit_status);
     cut_assert_equal_string("Invalid verbose level name: XXX" LINE_FEED_CODE, stdout_string);
 }
 
