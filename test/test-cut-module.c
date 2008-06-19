@@ -36,6 +36,7 @@ startup (void)
 void
 shutdown (void)
 {
+    g_list_foreach(modules, (GFunc) cut_module_unload, NULL);
     g_list_free(modules);
     modules = NULL;
 

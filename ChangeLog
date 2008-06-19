@@ -26,6 +26,7 @@
 	* cutter/cut-pipeline.c: Quote cutter command and test target
 	directory.
 	* test/test-cutter.c: Added some description for Gtk+ for Windows.
+	* test/test-cut-module.c: Unload modules in shutdown().
 
 2008-06-18  Kouhei Sutou  <kou@cozmixng.org>
 
