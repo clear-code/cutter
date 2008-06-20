@@ -1,3 +1,7 @@
+2008-06-20  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* FEATURES: Added.
+
 2008-06-19  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-loader.c: enable attribute support for MS Windows DLL.x
