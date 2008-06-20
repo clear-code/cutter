@@ -449,7 +449,7 @@ run_async (CutPipeline *pipeline)
 #ifndef G_OS_WIN32
                                       setup_child,
 #else
-                                      NULL, 
+                                      NULL,
 #endif
                                       pipeline,
                                       &priv->pid,
@@ -462,6 +462,11 @@ run_async (CutPipeline *pipeline)
 
     if (!result) {
         emit_error(pipeline, error, "failed to spawn child process");
+        return;
+    }
+
+    if (priv->pid == (GPid)0) {
+        emit_error(pipeline, error, "failed to get child PID");
         return;
     }
 
