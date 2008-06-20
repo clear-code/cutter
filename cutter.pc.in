@@ -6,7 +6,7 @@ includedir=@includedir@
 cutter=${bindir}/cutter@EXEEXT@
 
 Name: Cutter
-Description: Cutter is an Unit Testing Framework for C.
+Description: Cutter is a Unit Testing Framework for C.
 Version: @VERSION@
 Cflags: -I${includedir}/cutter
 Libs: -L${libdir} -lcutter

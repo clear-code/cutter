@@ -34,7 +34,7 @@ extern "C" {
  * @short_description: An Unit Testing Framework for C.
  * @see_also: <link linkend="cutter-cut-assertions">Assertions</link>
  *
- * Cutter is an Unit Testing Framework for C and has the
+ * Cutter is a Unit Testing Framework for C and has the
  * following features:
  * <itemizedlist>
  *   <listitem><para>

@@ -17,7 +17,7 @@ LGPLv3
 
 == What's this?
 
-Cutter is an Unit Testing Framework for C.
+Cutter is a Unit Testing Framework for C.
 
 This is a list of features of Cutter:
   * easy to write tests.
