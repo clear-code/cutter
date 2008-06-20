@@ -1,5 +1,6 @@
 * priority mode.
 * streamer modules.
-  * connect to GStreamer.
   * basically done.
 * auto-cutter.
+* cut_fixtures_set_base_path().
+* cut_fixtures_get_XX().
