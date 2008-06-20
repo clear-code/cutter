@@ -34,6 +34,13 @@ extern "C" {
 #  define CUT_GNUC_NORETURN
 #endif
 
+#if __GNUC__ >= 4
+#  define CUT_GNUC_NULL_TERMINATED __attribute__((__sentinel__))
+#else
+#  define CUT_GNUC_NULL_TERMINATED
+#endif
+
+
 typedef struct _CutTestContext     CutTestContext;
 
 typedef struct _CutTestAttribute CutTestAttribute;
@@ -83,6 +90,13 @@ int   cut_utils_file_exist                  (const char *path);
 int   cut_utils_regex_match                 (const char *pattern,
                                              const char *string);
 
+const char *cut_utils_get_fixture_data_string(CutTestContext *context,
+                                              const char *function,
+                                              const char *file,
+                                              unsigned int line,
+                                              const char *path,
+                                              ...) CUT_GNUC_NULL_TERMINATED;
+
 void *cut_test_context_get_user_data        (CutTestContext *context);
 int   cut_test_context_trap_fork            (CutTestContext *context,
                                              const char     *function_name,
@@ -97,6 +111,11 @@ const char *cut_test_context_get_forked_stdout_message
 const char *cut_test_context_get_forked_stderr_message
                                             (CutTestContext *context,
                                              int             pid);
+
+void  cut_test_context_set_fixture_data_base_dir
+                                            (CutTestContext *context,
+                                             const char     *path,
+                                             ...) CUT_GNUC_NULL_TERMINATED;
 
 char       *cut_diff_readable               (const char     *from,
                                              const char     *to);

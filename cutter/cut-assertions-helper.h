@@ -57,6 +57,19 @@ extern "C" {
     cut_test_context_long_jump(get_current_test_context());         \
 } while (0)
 
+#define cut_set_fixture_data_dir(path, ...) do  \
+{                                               \
+    cut_test_context_set_fixture_data_base_dir( \
+        get_current_test_context(),             \
+        path, ## __VA_ARGS__, NULL);            \
+} while (0)
+
+#define cut_get_fixture_data_string(path, ...)                          \
+    cut_utils_get_fixture_data_string(get_current_test_context(),       \
+                                      __PRETTY_FUNCTION__,              \
+                                      __FILE__,                         \
+                                      __LINE__,                         \
+                                      path, ## __VA_ARGS__, NULL)
 
 #ifdef __cplusplus
 }

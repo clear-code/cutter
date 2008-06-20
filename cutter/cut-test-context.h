@@ -92,6 +92,17 @@ void          cut_test_context_to_xml_string  (CutTestContext *context,
                                                GString        *string,
                                                guint           indent);
 
+const gchar  *cut_test_context_get_fixture_data_string
+                                              (CutTestContext *context,
+                                               GError        **error,
+                                               const gchar    *path,
+                                               ...) G_GNUC_NULL_TERMINATED;
+const gchar  *cut_test_context_get_fixture_data_stringv
+                                              (CutTestContext *context,
+                                               GError        **error,
+                                               const gchar    *path,
+                                               va_list        *args);
+
 G_END_DECLS
 
 #endif /* __CUT_TEST_CONTEXT_H__ */

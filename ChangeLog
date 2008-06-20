@@ -1,5 +1,13 @@
 2008-06-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-utils.[ch], cutter/cut-test-context.[ch],
+	cutter/cut-public.h, cutter/cut-assertions-helper.h: add fixture
+	date implementation prototype. TOO DIRTY! Need
+	cut_assert_equal_fixture_data_string().
+
+	* test/test-cut-fixture-data.c: add.
+	* test/fixtures/data/1.txt: add. Need Makefile.am!
+
 	* cutter/cut-pipeline.c (run_async): check PID isn't 0.
 
 	* ./: an Unit -> a Unit.

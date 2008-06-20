@@ -193,6 +193,40 @@ cut_utils_regex_match (const gchar *pattern, const gchar *string)
     return g_regex_match_simple(pattern, string, G_REGEX_MULTILINE, 0);
 }
 
+const gchar *
+cut_utils_get_fixture_data_string(CutTestContext *context,
+                                  const char *function,
+                                  const char *file,
+                                  unsigned int line,
+                                  const char *path,
+                                  ...)
+{
+    GError *error = NULL;
+    const gchar *data;
+    va_list args;
+
+    va_start(args, path);
+    data = cut_test_context_get_fixture_data_stringv(context, &error,
+                                                     path, &args);
+    va_end(args);
+
+    if (error) {
+        gchar *inspected, *message;
+
+        inspected = cut_utils_inspect_g_error(error);
+        message = g_strdup_printf("can't get fixture data: %s", inspected);
+        g_error_free(error);
+        cut_test_context_register_result(context,
+                                         CUT_TEST_RESULT_ERROR,
+                                         function, file, line,
+                                         message, NULL);
+        g_free(inspected);
+        g_free(message);
+        cut_test_context_long_jump(context);
+    }
+    return data;
+}
+
 void
 cut_utils_append_indent (GString *string, guint size)
 {
@@ -291,6 +325,60 @@ cut_utils_get_cutter_command_path (void)
         return cutter_command;
 
     return g_get_prgname();
+}
+
+gchar *
+cut_utils_build_pathv (const gchar *path, va_list *args)
+{
+    GArray *elements;
+    gchar *element, *concatenated_path;
+
+    if (!path)
+        return NULL;
+
+    elements = g_array_new(TRUE, FALSE, sizeof(char *));
+
+    g_array_append_val(elements, path);
+    while ((element = va_arg(*args, gchar *))) {
+        g_array_append_val(elements, element);
+    }
+    concatenated_path = g_build_filenamev((gchar **)(elements->data));
+    g_array_free(elements, TRUE);
+
+    return concatenated_path;
+}
+
+gchar *
+cut_utils_expand_path (const gchar *path)
+{
+    if (!path)
+        return NULL;
+
+    if (g_path_is_absolute(path)) {
+        return g_strdup(path);
+    } else {
+        gchar *current_dir, *full_path;
+
+        current_dir = g_get_current_dir();
+        full_path = g_build_filename(current_dir, path, NULL);
+        g_free(current_dir);
+
+        return full_path;
+    }
+}
+
+gchar *
+cut_utils_expand_pathv (const gchar *path, va_list *args)
+{
+    gchar *concatenated_path, *expanded_path;
+
+    if (!path)
+        return NULL;
+
+    concatenated_path = cut_utils_build_pathv(path, args);
+    expanded_path = cut_utils_expand_path(concatenated_path);
+    g_free(concatenated_path);
+    return expanded_path;
 }
 
 #ifdef G_OS_WIN32

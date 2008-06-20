@@ -68,6 +68,8 @@ struct _CutTestContextPrivate
     gpointer user_data;
     GDestroyNotify user_data_destroy_notify;
     GList *processes;
+    gchar *fixture_data_base_dir;
+    GHashTable *cached_fixture_data;
 };
 
 enum
@@ -148,6 +150,10 @@ cut_test_context_init (CutTestContext *context)
     priv->user_data_destroy_notify = NULL;
 
     priv->processes = NULL;
+
+    priv->fixture_data_base_dir = NULL;
+    priv->cached_fixture_data = g_hash_table_new_full(g_str_hash, g_str_equal,
+                                                      g_free, g_free);
 }
 
 static void
@@ -201,6 +207,16 @@ dispose (GObject *object)
     if (priv->user_data && priv->user_data_destroy_notify)
         priv->user_data_destroy_notify(priv->user_data);
     priv->user_data = NULL;
+
+    if (priv->fixture_data_base_dir) {
+        g_free(priv->fixture_data_base_dir);
+        priv->fixture_data_base_dir = NULL;
+    }
+
+    if (priv->cached_fixture_data) {
+        g_hash_table_unref(priv->cached_fixture_data);
+        priv->cached_fixture_data = NULL;
+    }
 
     G_OBJECT_CLASS(cut_test_context_parent_class)->dispose(object);
 }
@@ -693,6 +709,89 @@ cut_test_context_to_xml_string (CutTestContext *context, GString *string,
     g_string_append(string, "</test-context>\n");
 }
 
+void
+cut_test_context_set_fixture_data_base_dir (CutTestContext *context,
+                                            const gchar *path, ...)
+{
+    CutTestContextPrivate *priv;
+    va_list args;
+
+    priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+    if (priv->fixture_data_base_dir)
+        g_free(priv->fixture_data_base_dir);
+
+    va_start(args, path);
+    priv->fixture_data_base_dir = cut_utils_expand_pathv(path, &args);
+    va_end(args);
+}
+
+
+const gchar *
+cut_test_context_get_fixture_data_stringv (CutTestContext *context,
+                                           GError **error,
+                                           const gchar *path,
+                                           va_list *args)
+{
+    CutTestContextPrivate *priv;
+    gchar *concatenated_path, *full_path;
+    gpointer value;
+
+    if (!path)
+        return NULL;
+
+    priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+
+    concatenated_path = cut_utils_build_pathv(path, args);
+
+    if (g_path_is_absolute(concatenated_path)) {
+        full_path = concatenated_path;
+    } else {
+        if (priv->fixture_data_base_dir) {
+            full_path = g_build_filename(priv->fixture_data_base_dir,
+                                         concatenated_path,
+                                         NULL);
+        } else {
+            full_path = cut_utils_expand_path(concatenated_path);
+        }
+        g_free(concatenated_path);
+    }
+
+    value = g_hash_table_lookup(priv->cached_fixture_data, full_path);
+    if (value) {
+        g_free(full_path);
+    } else {
+        gchar *contents;
+        gsize length;
+
+        if (g_file_get_contents(full_path, &contents, &length, error)) {
+            g_hash_table_insert(priv->cached_fixture_data, full_path, contents);
+            value = contents;
+        } else {
+            g_free(full_path);
+        }
+    }
+
+    return value;
+}
+
+const gchar *
+cut_test_context_get_fixture_data_string (CutTestContext *context,
+                                          GError **error,
+                                          const gchar *path, ...)
+{
+    const gchar *value;
+    va_list args;
+
+    if (!path)
+        return NULL;
+
+    va_start(args, path);
+    value = cut_test_context_get_fixture_data_stringv(context, error,
+                                                      path, &args);
+    va_end(args);
+
+    return value;
+}
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
