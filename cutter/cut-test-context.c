@@ -68,7 +68,7 @@ struct _CutTestContextPrivate
     gpointer user_data;
     GDestroyNotify user_data_destroy_notify;
     GList *processes;
-    gchar *fixture_data_base_dir;
+    gchar *fixture_data_dir;
     GHashTable *cached_fixture_data;
 };
 
@@ -151,7 +151,7 @@ cut_test_context_init (CutTestContext *context)
 
     priv->processes = NULL;
 
-    priv->fixture_data_base_dir = NULL;
+    priv->fixture_data_dir = NULL;
     priv->cached_fixture_data = g_hash_table_new_full(g_str_hash, g_str_equal,
                                                       g_free, g_free);
 }
@@ -208,9 +208,9 @@ dispose (GObject *object)
         priv->user_data_destroy_notify(priv->user_data);
     priv->user_data = NULL;
 
-    if (priv->fixture_data_base_dir) {
-        g_free(priv->fixture_data_base_dir);
-        priv->fixture_data_base_dir = NULL;
+    if (priv->fixture_data_dir) {
+        g_free(priv->fixture_data_dir);
+        priv->fixture_data_dir = NULL;
     }
 
     if (priv->cached_fixture_data) {
@@ -710,18 +710,18 @@ cut_test_context_to_xml_string (CutTestContext *context, GString *string,
 }
 
 void
-cut_test_context_set_fixture_data_base_dir (CutTestContext *context,
-                                            const gchar *path, ...)
+cut_test_context_set_fixture_data_dir (CutTestContext *context,
+                                       const gchar *path, ...)
 {
     CutTestContextPrivate *priv;
     va_list args;
 
     priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
-    if (priv->fixture_data_base_dir)
-        g_free(priv->fixture_data_base_dir);
+    if (priv->fixture_data_dir)
+        g_free(priv->fixture_data_dir);
 
     va_start(args, path);
-    priv->fixture_data_base_dir = cut_utils_expand_pathv(path, &args);
+    priv->fixture_data_dir = cut_utils_expand_pathv(path, &args);
     va_end(args);
 }
 
@@ -746,8 +746,8 @@ cut_test_context_get_fixture_data_stringv (CutTestContext *context,
     if (g_path_is_absolute(concatenated_path)) {
         full_path = concatenated_path;
     } else {
-        if (priv->fixture_data_base_dir) {
-            full_path = g_build_filename(priv->fixture_data_base_dir,
+        if (priv->fixture_data_dir) {
+            full_path = g_build_filename(priv->fixture_data_dir,
                                          concatenated_path,
                                          NULL);
         } else {

@@ -734,7 +734,7 @@ extern "C" {
     cut_assert_equal_string(expected,                                   \
                             cut_get_fixture_data_string(path,           \
                                                         ## __VA_ARGS__), \
-                            "%s%s", #path, ## __VA_ARGS__)
+                            "%s%s", #path, # __VA_ARGS__)
 
 #ifdef __cplusplus
 }

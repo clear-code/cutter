@@ -122,9 +122,9 @@ run (CutTest *test)
     run_context = cut_test_runner_new();
 
     test_context = cut_test_context_new(NULL, NULL, test_object);
-    cut_test_context_set_fixture_data_base_dir(test_context,
-                                               cuttest_get_base_dir(),
-                                               "fixtures", "assertions", NULL);
+    cut_test_context_set_fixture_data_dir(test_context,
+                                          cuttest_get_base_dir(),
+                                          "fixtures", "assertions", NULL);
     original_test_context = get_current_test_context();
     set_current_test_context(test_context);
     success = cut_test_run(test_object, test_context, run_context);

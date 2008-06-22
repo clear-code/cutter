@@ -112,8 +112,7 @@ const char *cut_test_context_get_forked_stderr_message
                                             (CutTestContext *context,
                                              int             pid);
 
-void  cut_test_context_set_fixture_data_base_dir
-                                            (CutTestContext *context,
+void  cut_test_context_set_fixture_data_dir (CutTestContext *context,
                                              const char     *path,
                                              ...) CUT_GNUC_NULL_TERMINATED;
 

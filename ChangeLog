@@ -1,5 +1,9 @@
 2008-06-22  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-assertions.c, cutter/cut-public.h,
+	cutter/cut-assertions.h, cutter/cut-assertions-helper.h: base_dir
+	-> dir.
+
 	* cutter/cut-assertions.h (cut_assert_equal_fixture_data_string),
 	test/test-cut-assertions.c, test/fixtures/assertions/: add a
 	assertion for fixture data.

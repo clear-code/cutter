@@ -59,7 +59,7 @@ extern "C" {
 
 #define cut_set_fixture_data_dir(path, ...) do  \
 {                                               \
-    cut_test_context_set_fixture_data_base_dir( \
+    cut_test_context_set_fixture_data_dir(      \
         get_current_test_context(),             \
         path, ## __VA_ARGS__, NULL);            \
 } while (0)
