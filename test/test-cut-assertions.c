@@ -7,6 +7,7 @@
 #include "cut-test-result.h"
 #include "cut-utils.h"
 #include "cut-test-runner.h"
+#include "cuttest-utils.h"
 #include "cuttest-assertions.h"
 
 #include <glib/gstdio.h>
@@ -38,6 +39,8 @@ void test_omit (void);
 void test_file_exist (void);
 void test_match (void);
 void test_equal_pointer (void);
+void test_equal_fixture_data_string (void);
+void test_equal_fixture_data_string_without_file (void);
 
 static gboolean need_cleanup;
 static gboolean compare_function_is_called;
@@ -119,6 +122,9 @@ run (CutTest *test)
     run_context = cut_test_runner_new();
 
     test_context = cut_test_context_new(NULL, NULL, test_object);
+    cut_test_context_set_fixture_data_base_dir(test_context,
+                                               cuttest_get_base_dir(),
+                                               "fixtures", "assertions", NULL);
     original_test_context = get_current_test_context();
     set_current_test_context(test_context);
     success = cut_test_run(test_object, test_context, run_context);
@@ -590,6 +596,42 @@ test_equal_pointer (void)
     test = cut_test_new("equal-pointer-test", equal_pointer_test);
     cut_assert(!run(test));
     cut_assert_test_result_summary(run_context, 0, 1, 1, 0, 0, 0, 0);
+}
+
+static void
+equal_fixture_data_string_test (void)
+{
+    cut_assert_equal_fixture_data_string("top level data\n", "data.txt");
+    cut_assert_equal_fixture_data_string("sub level data\n", "sub", "data.txt");
+    cut_assert_equal_fixture_data_string("wrong data\n", "sub", "data.txt");
+}
+
+void
+test_equal_fixture_data_string (void)
+{
+    CutTest *test;
+
+    test = cut_test_new("equal-fixture-data-sting-test",
+                        equal_fixture_data_string_test);
+    cut_assert(!run(test));
+    cut_assert_test_result_summary(run_context, 0, 2, 1, 0, 0, 0, 0);
+}
+
+static void
+equal_fixture_data_string_test_without_file (void)
+{
+    cut_assert_equal_fixture_data_string("NONE!", "nonexistent.txt");
+}
+
+void
+test_equal_fixture_data_string_without_file (void)
+{
+    CutTest *test;
+
+    test = cut_test_new("equal-fixture-data-sting-test-without-file",
+                        equal_fixture_data_string_test_without_file);
+    cut_assert(!run(test));
+    cut_assert_test_result_summary(run_context, 0, 0, 0, 1, 0, 0, 0);
 }
 
 /*

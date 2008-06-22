@@ -720,6 +720,22 @@ extern "C" {
     }                                                           \
 } while(0)
 
+/**
+ * cut_assert_equal_fixture_data_string:
+ * @expected: an expected string.
+ * @path: a first element of the path to the fixture data.
+ * @...: remaining elements in path.
+ *
+ * Passes if @expected == cut_get_fixture_data_string(@path, ...).
+ *
+ * Since: 1.0.2
+ */
+#define cut_assert_equal_fixture_data_string(expected, path, ...)       \
+    cut_assert_equal_string(expected,                                   \
+                            cut_get_fixture_data_string(path,           \
+                                                        ## __VA_ARGS__), \
+                            "%s%s", #path, ## __VA_ARGS__)
+
 #ifdef __cplusplus
 }
 #endif
