@@ -1,3 +1,7 @@
+2008-06-24  Kouhei Sutou  <kou@cozmixng.org>
+
+	* configure.ac, test/fixtures/**/Makefile.am: add Makefile.am.
+
 2008-06-23  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-assertions.h, cutter/cut-public.h,

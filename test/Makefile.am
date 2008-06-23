@@ -1,4 +1,5 @@
 SUBDIRS = 			\
+	fixtures		\
 	lib			\
 	loader_test_dir		\
 	loader_suite_test_dir	\

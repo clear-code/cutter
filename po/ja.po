@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-13 16:31+0900\n"
+"POT-Creation-Date: 2008-06-24 08:11+0900\n"
 "PO-Revision-Date: 2008-06-13 16:35+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
@@ -16,77 +16,77 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: cutter/cut-main.c:79
+#: cutter/cut-main.c:85
 #, c-format
 msgid "Invalid test case order value: %s"
 msgstr "不正なテストケース順序指定です: %s"
 
-#: cutter/cut-main.c:89
+#: cutter/cut-main.c:95
 msgid "Show version"
 msgstr "バージョンを表示"
 
-#: cutter/cut-main.c:91
+#: cutter/cut-main.c:97
 msgid "Set directory of source code"
 msgstr "ソースコードのディレクトリを設定"
 
-#: cutter/cut-main.c:93
+#: cutter/cut-main.c:99
 msgid "Specify tests"
 msgstr "テストを指定"
 
-#: cutter/cut-main.c:95
+#: cutter/cut-main.c:101
 msgid "Specify test cases"
 msgstr "テストケースを指定"
 
-#: cutter/cut-main.c:97
+#: cutter/cut-main.c:103
 msgid "Run test cases with multi-thread"
 msgstr "マルチスレッドでテストケースを実行"
 
-#: cutter/cut-main.c:99
+#: cutter/cut-main.c:105
 msgid "Sort test case by. Default is 'none'."
 msgstr "テストケースを並び替える。既定値は'none'（並び替えない）"
 
-#: cutter/cut-main.c:101
+#: cutter/cut-main.c:107
 msgid "Skip files"
 msgstr "ファイルをスキップ"
 
-#: cutter/cut-main.c:103
+#: cutter/cut-main.c:109
 msgid "Skip directories"
 msgstr "ディレクトリをスキップ"
 
-#: cutter/cut-report-factory-builder.c:185
+#: cutter/cut-report-factory-builder.c:197
 #, c-format
 msgid "Set filename of %s report"
 msgstr "%sレポートのファイル名を設定"
 
-#: cutter/cut-report-factory-builder.c:202
+#: cutter/cut-report-factory-builder.c:214
 msgid "Report Options"
 msgstr "レポートのオプション"
 
-#: cutter/cut-report-factory-builder.c:203
+#: cutter/cut-report-factory-builder.c:215
 msgid "Show report options"
 msgstr "レポートのオプションを表示"
 
-#: cutter/cut-streamer-factory-builder.c:137
+#: cutter/cut-streamer-factory-builder.c:149
 msgid "Specify streamer"
 msgstr "ストリーマを指定"
 
-#: cutter/cut-streamer-factory-builder.c:162
+#: cutter/cut-streamer-factory-builder.c:174
 msgid "Streamer Options"
 msgstr "ストリーマのオプション"
 
-#: cutter/cut-streamer-factory-builder.c:163
+#: cutter/cut-streamer-factory-builder.c:175
 msgid "Show streamer options"
 msgstr "ストリーマのオプションを表示"
 
-#: cutter/cut-ui-factory-builder.c:100
+#: cutter/cut-ui-factory-builder.c:113
 msgid "Specify UI"
 msgstr "UIを指定"
 
-#: cutter/cut-ui-factory-builder.c:125
+#: cutter/cut-ui-factory-builder.c:138
 msgid "UI Options"
 msgstr "UIのオプション"
 
-#: cutter/cut-ui-factory-builder.c:126
+#: cutter/cut-ui-factory-builder.c:139
 msgid "Show UI options"
 msgstr "コンソールUIのオプションの表示"
 

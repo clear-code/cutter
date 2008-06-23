@@ -403,6 +403,10 @@ AC_CONFIG_FILES([Makefile
 		 sample/gtk+/Makefile
 		 sample/cairo/Makefile
                  test/Makefile
+		 test/fixtures/Makefile
+		 test/fixtures/assertions/Makefile
+		 test/fixtures/assertions/sub/Makefile
+		 test/fixtures/data/Makefile
                  test/lib/Makefile
 		 test/loader_test_dir/Makefile
 		 test/loader_suite_test_dir/Makefile
