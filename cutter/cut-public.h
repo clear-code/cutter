@@ -97,6 +97,15 @@ const char *cut_utils_get_fixture_data_string(CutTestContext *context,
                                               const char *path,
                                               ...) CUT_GNUC_NULL_TERMINATED;
 
+void  cut_utils_get_fixture_data_string_and_path(CutTestContext *context,
+                                                 const char *function,
+                                                 const char *file,
+                                                 unsigned int line,
+                                                 char **data,
+                                                 char **fixture_path,
+                                                 const char *path,
+                                                 ...) CUT_GNUC_NULL_TERMINATED;
+
 void *cut_test_context_get_user_data        (CutTestContext *context);
 int   cut_test_context_trap_fork            (CutTestContext *context,
                                              const char     *function_name,

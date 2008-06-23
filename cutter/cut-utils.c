@@ -228,6 +228,48 @@ cut_utils_get_fixture_data_string(CutTestContext *context,
 }
 
 void
+cut_utils_get_fixture_data_string_and_path (CutTestContext *context,
+                                            const gchar *function,
+                                            const gchar *file,
+                                            unsigned int line,
+                                            gchar **data,
+                                            gchar **fixture_path,
+                                            const gchar *path,
+                                            ...)
+{
+    GError *error = NULL;
+    va_list args, copied_args;
+    const gchar *fixture_data;
+
+    va_start(args, path);
+
+    va_copy(copied_args, args);
+    *fixture_path = cut_test_context_build_fixture_pathv(context,
+                                                         path, &copied_args);
+    va_end(copied_args);
+
+    fixture_data = cut_test_context_get_fixture_data_stringv(context, &error,
+                                                             path, &args);
+    *data = (gchar *)fixture_data;
+    va_end(args);
+
+    if (error) {
+        gchar *inspected, *message;
+
+        inspected = cut_utils_inspect_g_error(error);
+        message = g_strdup_printf("can't get fixture data: %s", inspected);
+        g_error_free(error);
+        cut_test_context_register_result(context,
+                                         CUT_TEST_RESULT_ERROR,
+                                         function, file, line,
+                                         message, NULL);
+        g_free(inspected);
+        g_free(message);
+        cut_test_context_long_jump(context);
+    }
+}
+
+void
 cut_utils_append_indent (GString *string, guint size)
 {
     guint i;

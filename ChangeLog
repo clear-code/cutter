@@ -1,3 +1,9 @@
+2008-06-23  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-assertions.h, cutter/cut-public.h,
+	cutter/cut-test-context.[ch], cutter/cut-utils.c: show a file name
+	of fixture data.
+
 2008-06-22  Kouhei Sutou  <kou@cozmixng.org>
 
 	* test/test-cut-assertions.c, cutter/cut-public.h,

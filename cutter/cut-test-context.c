@@ -725,24 +725,16 @@ cut_test_context_set_fixture_data_dir (CutTestContext *context,
     va_end(args);
 }
 
-
-const gchar *
-cut_test_context_get_fixture_data_stringv (CutTestContext *context,
-                                           GError **error,
-                                           const gchar *path,
-                                           va_list *args)
+gchar *
+cut_test_context_build_fixture_pathv (CutTestContext *context,
+                                      const gchar *path, va_list *args)
 {
     CutTestContextPrivate *priv;
     gchar *concatenated_path, *full_path;
-    gpointer value;
-
-    if (!path)
-        return NULL;
 
     priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
 
     concatenated_path = cut_utils_build_pathv(path, args);
-
     if (g_path_is_absolute(concatenated_path)) {
         full_path = concatenated_path;
     } else {
@@ -756,6 +748,39 @@ cut_test_context_get_fixture_data_stringv (CutTestContext *context,
         g_free(concatenated_path);
     }
 
+    return full_path;
+}
+
+gchar *
+cut_test_context_build_fixture_path (CutTestContext *context,
+                                     const gchar *path, ...)
+{
+    va_list args;
+    gchar *full_path;
+
+    va_start(args, path);
+    full_path = cut_test_context_build_fixture_pathv(context, path, &args);
+    va_end(args);
+
+    return full_path;
+}
+
+const gchar *
+cut_test_context_get_fixture_data_stringv (CutTestContext *context,
+                                           GError **error,
+                                           const gchar *path,
+                                           va_list *args)
+{
+    CutTestContextPrivate *priv;
+    gchar *full_path;
+    gpointer value;
+
+    if (!path)
+        return NULL;
+
+    priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+
+    full_path = cut_test_context_build_fixture_pathv(context, path, args);
     value = g_hash_table_lookup(priv->cached_fixture_data, full_path);
     if (value) {
         g_free(full_path);
