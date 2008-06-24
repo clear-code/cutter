@@ -75,6 +75,11 @@ extern "C" {
                                       __LINE__,                         \
                                       path, ## __VA_ARGS__, NULL)
 
+#define cut_remove_path(path, ...)                                      \
+    cut_utils_remove_path_recursive_force(                              \
+        cut_take_string(                                                \
+            cut_utils_build_path(path, ## __VA_ARGS__, NULL)))
+
 #ifdef __cplusplus
 }
 #endif

@@ -55,6 +55,37 @@ extern "C" {
     cut_test_fail(ERROR, NULL, format, ## __VA_ARGS__)
 
 /**
+ * cut_error_errno:
+ * @...: optional format string, followed by parameters to insert
+ * into the format string (as with printf())
+ *
+ * e.g.:
+ * |[
+ * void
+ * setup (void)
+ * {
+ *     mkdir("tmp", 0700);
+ *     cut_error_errno("Failed to make tmp directory");
+ *       -> Error when tmp directory isn't made successfully.
+ * }
+ * ]|
+ *
+ * Since: 1.0.2
+ */
+#define cut_error_errno(...) do                                         \
+{                                                                       \
+    int _current_errno = errno;                                         \
+                                                                        \
+    if (_current_errno != 0) {                                          \
+        cut_test_fail(ERROR,                                            \
+                      cut_take_printf("%s <%d>",                        \
+                                      strerror(_current_errno),         \
+                                      _current_errno),                  \
+                      ## __VA_ARGS__);                                  \
+    }                                                                   \
+} while(0)
+
+/**
  * cut_fail:
  * @format: the message format. See the printf() documentation.
  * @...: the parameters to insert into the format string.
@@ -604,43 +635,99 @@ extern "C" {
  */
 #define cut_assert_errno(...) do                                        \
 {                                                                       \
-    int current_errno = errno;                                          \
-    if (current_errno == 0) {                                           \
+    int _current_errno = errno;                                         \
+                                                                        \
+    if (_current_errno == 0) {                                          \
         cut_test_pass();                                                \
     } else {                                                            \
         cut_test_fail(FAILURE,                                          \
                       cut_take_printf("expected: <0> (errno)\n"         \
                                       " but was: <%d> (%s)",            \
-                                      current_errno,                    \
-                                      strerror(current_errno)),         \
+                                      _current_errno,                   \
+                                      strerror(_current_errno)),        \
                       ## __VA_ARGS__);                                  \
     }                                                                   \
 } while(0)
 
+#ifndef CUTTER_DISABLE_DEPRECATED
 /**
  * cut_assert_file_exist:
  * @path: the path to test.
  * @...: optional format string, followed by parameters to insert
  * into the format string (as with printf())
  *
- * Passes if @path is exist. It may or may not be a regular file.
+ * Passes if @path exists. It may or may not be a regular file.
  *
  * e.g.:
  * |[
- * cut_assert_file_exist("/tmp");             -> Pass on many environment.
+ * cut_assert_file_exist("/tmp");             -> Pass on many environment
  * cut_assert_file_exist("/non-existent");    -> Fail
  * ]|
  *
  * Since: 0.9
+ * Deprecated: 1.0.2: Use cut_assert_path_exist() instead.
  */
-#define cut_assert_file_exist(path, ...) do                             \
+#define cut_assert_file_exist(path, ...)                                \
+    cut_assert_path_exist(path, ## __VA_ARGS__)
+#endif
+
+/**
+ * cut_assert_path_exist:
+ * @path: the path to test.
+ * @...: optional format string, followed by parameters to insert
+ * into the format string (as with printf())
+ *
+ * Passes if @path exists. It may or may not be a regular file.
+ *
+ * e.g.:
+ * |[
+ * cut_assert_path_exist("/tmp");             -> Pass on many environment
+ * cut_assert_path_exist("/non-existent");    -> Fail
+ * ]|
+ *
+ * Since: 1.0.2
+ */
+#define cut_assert_path_exist(path, ...) do                             \
 {                                                                       \
-    const char *_path = (path);                                         \
+    const char *_path;                                                  \
+                                                                        \
+    _path = (path);                                                     \
     if (cut_utils_file_exist(_path)) {                                  \
         cut_test_pass();                                                \
     } else {                                                            \
         cut_test_fail(FAILURE,                                          \
-                      cut_take_printf("expected: <%s> exist", _path),   \
+                      cut_take_printf("expected: <%s> exists", _path),  \
+                      ## __VA_ARGS__);                                  \
+    }                                                                   \
+} while(0)
+
+/**
+ * cut_assert_path_not_exist:
+ * @path: the path to test.
+ * @...: optional format string, followed by parameters to insert
+ * into the format string (as with printf())
+ *
+ * Passes if @path doesn't exist.
+ *
+ * e.g.:
+ * |[
+ * cut_assert_path_not_exist("/non-existent");    -> Pass on many environment
+ * cut_assert_path_not_exist("/tmp");             -> Fail
+ * ]|
+ *
+ * Since: 1.0.2
+ */
+#define cut_assert_path_not_exist(path, ...) do                         \
+{                                                                       \
+    const char *_path;                                                  \
+                                                                        \
+    _path = (path);                                                     \
+    if (!cut_utils_file_exist(_path)) {                                 \
+        cut_test_pass();                                                \
+    } else {                                                            \
+        cut_test_fail(FAILURE,                                          \
+                      cut_take_printf("expected: <%s> doesn't exist",   \
+                                      _path),                           \
                       ## __VA_ARGS__);                                  \
     }                                                                   \
 } while(0)
@@ -742,6 +829,7 @@ extern "C" {
     cut_assert_equal_string((expected), _data,                          \
                             "%s", cut_take_string(_full_path));         \
 } while (0)
+
 
 #ifdef __cplusplus
 }

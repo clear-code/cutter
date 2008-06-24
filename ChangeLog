@@ -1,5 +1,22 @@
 2008-06-24  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-gassertions.h (cut_assert_remove_path): add.
+
+	* cutter/cut-assertions.h
+	(cut_error_errno, cut_assert_path_not_exist): add.
+	(cut_assert_path_exist): add and deprecate ...
+	(cut_assert_file_exist): ... this.
+
+	* cutter/cut-utils.[ch] (cut_utils_remove_path)
+	(cut_utils_remove_path_recursive): add.
+
+	* cutter/cut-public.h, cutter/cut-utils.c (cut_utils_build_path)
+	(cut_utils_remove_path_recursive_force): add.
+
+	* cutter/cut-assertions-helper.h (cut_remove_path): add.
+
+	* test/test-cut-utils.c (test_remove_path_recursive): add.
+
 	* cutter/cut-test-context.h (cut_test_context_build_fixture_path):
 	move to ...
 	* cutter/cut-public.h: ... here.

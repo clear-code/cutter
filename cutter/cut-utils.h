@@ -57,6 +57,10 @@ gchar       *cut_utils_build_pathv      (const gchar *path, va_list *args);
 gchar       *cut_utils_expand_path      (const gchar *path);
 gchar       *cut_utils_expand_pathv     (const gchar *path, va_list *args);
 
+gboolean     cut_utils_remove_path           (const char  *path,
+                                              GError     **error);
+gboolean     cut_utils_remove_path_recursive (const char  *path,
+                                              GError     **error);
 
 #ifdef G_OS_WIN32
 const gchar *cut_win32_base_path                     (void);

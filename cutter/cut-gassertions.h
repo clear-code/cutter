@@ -198,6 +198,29 @@ G_BEGIN_DECLS
     }                                                                   \
 } while(0)
 
+/**
+ * cut_assert_remove_path:
+ * @path: a first element of the path to the removed path.
+ * @...: remaining elements in path.
+ *
+ * Passes if cut_utils_build_path(@path, ...) is removed successfully.
+ *
+ * Since: 1.0.2
+ */
+#define cut_assert_remove_path(path, ...) do                            \
+{                                                                       \
+    GError *_remove_path_g_error = NULL;                                \
+    gchar *_full_path;                                                  \
+    const gchar *_taken_full_path;                                      \
+                                                                        \
+    _full_path = cut_utils_build_path(path, ## __VA_ARGS__, NULL);      \
+    cut_utils_remove_path_recursive(_full_path, &_remove_path_g_error); \
+                                                                        \
+    _taken_full_path = cut_take_string(_full_path);                     \
+    cut_assert_g_error(&_remove_path_g_error,                           \
+                       "Remove: %s", _taken_full_path);                 \
+} while (0)
+
 G_END_DECLS
 
 #endif /* __CUT_GASSERTIONS_H__ */

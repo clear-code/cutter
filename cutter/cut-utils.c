@@ -26,6 +26,9 @@
 #  include <unistd.h>
 #endif
 #include <glib.h>
+#include <glib/gstdio.h>
+
+#include <errno.h>
 
 #include "cut-utils.h"
 #include "cut-public.h"
@@ -370,6 +373,19 @@ cut_utils_get_cutter_command_path (void)
 }
 
 gchar *
+cut_utils_build_path (const gchar *path, ...)
+{
+    char *built_path;
+    va_list args;
+
+    va_start(args, path);
+    built_path = cut_utils_build_pathv(path, &args);
+    va_end(args);
+
+    return built_path;
+}
+
+gchar *
 cut_utils_build_pathv (const gchar *path, va_list *args)
 {
     GArray *elements;
@@ -422,6 +438,68 @@ cut_utils_expand_pathv (const gchar *path, va_list *args)
     g_free(concatenated_path);
     return expanded_path;
 }
+
+gboolean
+cut_utils_remove_path (const char *path, GError **error)
+{
+    if (!g_file_test(path, G_FILE_TEST_EXISTS)) {
+        g_set_error(error, G_FILE_ERROR, G_FILE_ERROR_NOENT,
+                    "path doesn't exist: %s", path);
+        return FALSE;
+    }
+
+    if (g_file_test(path, G_FILE_TEST_IS_DIR)) {
+        if (g_rmdir(path) == -1) {
+            g_set_error(error, G_FILE_ERROR, g_file_error_from_errno(errno),
+                        "can't remove directory: %s", path);
+            return FALSE;
+        }
+    } else {
+        if (g_unlink(path) == -1) {
+            g_set_error(error, G_FILE_ERROR, g_file_error_from_errno(errno),
+                        "can't remove path: %s", path);
+            return FALSE;
+        }
+    }
+
+    return TRUE;
+}
+
+gboolean
+cut_utils_remove_path_recursive (const char *path, GError **error)
+{
+    if (g_file_test(path, G_FILE_TEST_IS_DIR)) {
+        GDir *dir;
+        const gchar *name;
+
+        dir = g_dir_open(path, 0, error);
+        if (!dir)
+            return FALSE;
+
+        while ((name = g_dir_read_name(dir))) {
+            const gchar *full_path;
+
+            full_path = g_build_filename(path, name, NULL);
+            if (!cut_utils_remove_path_recursive(full_path, error))
+                return FALSE;
+        }
+
+        g_dir_close(dir);
+
+        return cut_utils_remove_path(path, error);
+    } else {
+        return cut_utils_remove_path(path, error);
+    }
+
+    return TRUE;
+}
+
+void
+cut_utils_remove_path_recursive_force (const char *path)
+{
+    cut_utils_remove_path_recursive(path, NULL);
+}
+
 
 #ifdef G_OS_WIN32
 static gchar *win32_base_path = NULL;
