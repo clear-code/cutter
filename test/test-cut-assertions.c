@@ -38,6 +38,7 @@ void test_failure_from_nested_function (void);
 void test_assert_errno (void);
 void test_omit (void);
 void test_path_exist (void);
+void test_path_not_exist (void);
 void test_match (void);
 void test_equal_pointer (void);
 void test_equal_fixture_data_string (void);
@@ -560,6 +561,35 @@ test_path_exist (void)
     CutTest *test;
 
     test = cut_test_new("path-exist-test", path_exist_test);
+    cut_assert(!run(test));
+    cut_assert_test_result_summary(run_context, 0, 1, 1, 0, 0, 0, 0);
+}
+
+static void
+path_not_exist_test (void)
+{
+    gint fd;
+    GError *error = NULL;
+
+    cut_assert_path_not_exist(tmp_file_name);
+
+    fd = g_file_open_tmp(NULL, &tmp_file_name, &error);
+    if (fd == -1) {
+        const gchar *message;
+        message = cut_take_string(g_strdup(error->message));
+        g_error_free(error);
+        cut_error("can't create temporary file: %s", message);
+    }
+    close(fd);
+    cut_assert_path_not_exist(tmp_file_name);
+}
+
+void
+test_path_not_exist (void)
+{
+    CutTest *test;
+
+    test = cut_test_new("path-not-exist-test", path_not_exist_test);
     cut_assert(!run(test));
     cut_assert_test_result_summary(run_context, 0, 1, 1, 0, 0, 0, 0);
 }

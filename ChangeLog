@@ -1,5 +1,7 @@
 2008-06-24  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-assertions.c (test_path_not_exist): add.
+
 	* test/test-cut-assertions.c (test_error_errno): add.
 
 	* test/test-cut-assertions.c: file_exist -> path_exist.
