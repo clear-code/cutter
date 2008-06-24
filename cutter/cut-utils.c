@@ -194,12 +194,12 @@ cut_utils_regex_match (const gchar *pattern, const gchar *string)
 }
 
 const gchar *
-cut_utils_get_fixture_data_string(CutTestContext *context,
-                                  const char *function,
-                                  const char *file,
-                                  unsigned int line,
-                                  const char *path,
-                                  ...)
+cut_utils_get_fixture_data_string (CutTestContext *context,
+                                   const char *function,
+                                   const char *file,
+                                   unsigned int line,
+                                   const char *path,
+                                   ...)
 {
     GError *error = NULL;
     const gchar *data;

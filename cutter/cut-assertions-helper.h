@@ -64,6 +64,10 @@ extern "C" {
         path, ## __VA_ARGS__, NULL);            \
 } while (0)
 
+#define cut_build_fixture_path(path, ...)                               \
+    cut_test_context_build_fixture_path(get_current_test_context(),     \
+                                        path, ## __VA_ARGS__, NULL)
+
 #define cut_get_fixture_data_string(path, ...)                          \
     cut_utils_get_fixture_data_string(get_current_test_context(),       \
                                       __PRETTY_FUNCTION__,              \

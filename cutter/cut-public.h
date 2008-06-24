@@ -90,6 +90,10 @@ int   cut_utils_file_exist                  (const char *path);
 int   cut_utils_regex_match                 (const char *pattern,
                                              const char *string);
 
+char *cut_test_context_build_fixture_path   (CutTestContext *context,
+                                             const char     *path,
+                                             ...) CUT_GNUC_NULL_TERMINATED;
+
 const char *cut_utils_get_fixture_data_string(CutTestContext *context,
                                               const char *function,
                                               const char *file,

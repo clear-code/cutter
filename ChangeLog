@@ -1,5 +1,11 @@
 2008-06-24  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-context.h (cut_test_context_build_fixture_path):
+	move to ...
+	* cutter/cut-public.h: ... here.
+
+	* cutter/cut-assertions-helper.h (cut_build_fixture_path): add.
+
 	* configure.ac, test/fixtures/**/Makefile.am: add Makefile.am.
 
 2008-06-23  Kouhei Sutou  <kou@cozmixng.org>
