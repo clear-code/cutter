@@ -36,7 +36,7 @@ void test_assert_equal_function (void);
 void test_failure_from_nested_function (void);
 void test_assert_errno (void);
 void test_omit (void);
-void test_file_exist (void);
+void test_path_exist (void);
 void test_match (void);
 void test_equal_pointer (void);
 void test_equal_fixture_data_string (void);
@@ -533,7 +533,7 @@ test_omit (void)
 }
 
 static void
-file_exist_test (void)
+path_exist_test (void)
 {
     gint fd;
     GError *error = NULL;
@@ -547,17 +547,17 @@ file_exist_test (void)
     }
     close(fd);
 
-    cut_assert_file_exist(tmp_file_name);
+    cut_assert_path_exist(tmp_file_name);
     g_remove(tmp_file_name);
-    cut_assert_file_exist(tmp_file_name);
+    cut_assert_path_exist(tmp_file_name);
 }
 
 void
-test_file_exist (void)
+test_path_exist (void)
 {
     CutTest *test;
 
-    test = cut_test_new("file-exist-test", file_exist_test);
+    test = cut_test_new("path-exist-test", path_exist_test);
     cut_assert(!run(test));
     cut_assert_test_result_summary(run_context, 0, 1, 1, 0, 0, 0, 0);
 }
