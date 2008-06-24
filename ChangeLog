@@ -1,5 +1,7 @@
 2008-06-24  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-assertions.c (test_error_errno): add.
+
 	* test/test-cut-assertions.c: file_exist -> path_exist.
 
 	* cutter/cut-gassertions.h (cut_assert_remove_path): add.

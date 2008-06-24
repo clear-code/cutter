@@ -78,9 +78,9 @@ extern "C" {
                                                                         \
     if (_current_errno != 0) {                                          \
         cut_test_fail(ERROR,                                            \
-                      cut_take_printf("%s <%d>",                        \
-                                      strerror(_current_errno),         \
-                                      _current_errno),                  \
+                      cut_take_printf("<%d> (%s)",                      \
+                                      _current_errno,                   \
+                                      strerror(_current_errno)),        \
                       ## __VA_ARGS__);                                  \
     }                                                                   \
 } while(0)

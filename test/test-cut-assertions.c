@@ -2,6 +2,12 @@
 #  include <config.h>
 #endif
 
+#include <glib/gstdio.h>
+#ifdef HAVE_UNISTD_H
+#  include <unistd.h>
+#endif
+#include <errno.h>
+
 #include "cutter.h"
 #include "cut-test.h"
 #include "cut-test-result.h"
@@ -9,11 +15,6 @@
 #include "cut-test-runner.h"
 #include "cuttest-utils.h"
 #include "cuttest-assertions.h"
-
-#include <glib/gstdio.h>
-#ifdef HAVE_UNISTD_H
-#  include <unistd.h>
-#endif
 
 void test_equal_int(void);
 void test_equal_string(void);
@@ -41,6 +42,7 @@ void test_match (void);
 void test_equal_pointer (void);
 void test_equal_fixture_data_string (void);
 void test_equal_fixture_data_string_without_file (void);
+void test_error_errno (void);
 
 static gboolean need_cleanup;
 static gboolean compare_function_is_called;
@@ -632,6 +634,31 @@ test_equal_fixture_data_string_without_file (void)
                         equal_fixture_data_string_test_without_file);
     cut_assert(!run(test));
     cut_assert_test_result_summary(run_context, 0, 0, 0, 1, 0, 0, 0);
+}
+
+static void
+error_errno (void)
+{
+    errno = 0;
+    cut_error_errno("Not error");
+
+    errno = EACCES;
+    cut_error_errno("Should error");
+}
+
+void
+test_error_errno (void)
+{
+    CutTest *test;
+    CutTestResult *result;
+
+    test = cut_test_new("error-errno", error_errno);
+    cut_assert(!run(test));
+    cut_assert_test_result_summary(run_context, 0, 0, 0, 1, 0, 0, 0);
+
+    result = cut_run_context_get_results(run_context)->data;
+    cut_assert_equal_string("Should error",
+                            cut_test_result_get_user_message(result));
 }
 
 /*
