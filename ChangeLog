@@ -1,5 +1,7 @@
 2008-06-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* NEWS*: update.
+
 	* cutter/, doc/: fixture_path -> fixture_data_path.
 
 	* doc/reference/ja.po: update.

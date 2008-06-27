@@ -2,6 +2,22 @@
 
 = NEWS --- The history of Cutter
 
+== 1.0.2: 2008-06-27
+
+  * Support fixture data
+    * cut_set_fixture_data_dir()
+    * cut_get_fixture_data_string()
+    * cut_build_fixture_data_path()
+  * Add a utility
+    * cut_remove_path()
+  * Add assertions
+    * cut_assert_equal_fixture_data_string()
+    * cut_assert_path_not_exist()
+    * cut_assert_remove_path()
+    * cut_error_errno()
+  * Experimental:
+    * Windows support
+
 == 1.0.1: 2008-06-13
 
   * Improve AC_CHECK_COVERAGE

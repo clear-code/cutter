@@ -2,6 +2,22 @@
 
 = NEWS --- Cutterの歴史
 
+== 1.0.2: 2008-06-27
+
+  * フィクスチャデータのサポート
+    * cut_set_fixture_data_dir()
+    * cut_get_fixture_data_string()
+    * cut_build_fixture_data_path()
+  * ユーティリティの追加
+    * cut_remove_path()
+  * 検証の追加
+    * cut_assert_equal_fixture_data_string()
+    * cut_assert_path_not_exist()
+    * cut_assert_remove_path()
+    * cut_error_errno()
+  * 実験的:
+    * Windowsサポート
+
 == 1.0.1: 2008-06-13
 
   * AC_CHECK_COVERAGEの改良
