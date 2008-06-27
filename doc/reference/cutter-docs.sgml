@@ -24,6 +24,7 @@
       <title>Writing tests</title>
       <xi:include href="xml/cutter.xml"/>
       <xi:include href="xml/cut-assertions.xml"/>
+      <xi:include href="xml/cut-test-utils.xml"/>
       <xi:include href="xml/cut-gassertions.xml"/>
       <xi:include href="xml/cut-experimental.xml"/>
     </chapter>

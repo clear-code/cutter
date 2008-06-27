@@ -23,6 +23,7 @@
 #include <string.h>
 #include <errno.h>
 #include <cutter/cut-public.h>
+#include <cutter/cut-test-utils.h>
 #include <cutter/cut-assertions-helper.h>
 
 #ifdef __cplusplus

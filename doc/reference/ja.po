@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.0.1\n"
-"POT-Creation-Date: 2008-06-27 11:45+0900\n"
+"POT-Creation-Date: 2008-06-27 14:01+0900\n"
 "PO-Revision-Date: 2008-06-27 11:46+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
@@ -109,8 +109,8 @@ msgstr "検証"
 #: xml/cut-streamer-factory-builder.xml:8(manvolnum)
 #: xml/cut-streamer.xml:8(manvolnum) xml/cut-test-runner.xml:8(manvolnum)
 #: xml/cut-ui-factory-builder.xml:8(manvolnum) xml/cut-ui.xml:8(manvolnum)
-#: xml/cut-value-equal.xml:8(manvolnum) xml/cutter.xml:8(manvolnum)
-#: xml/gbsearcharray.xml:8(manvolnum)
+#: xml/cut-value-equal.xml:8(manvolnum) xml/cut-version.xml:8(manvolnum)
+#: xml/cutter.xml:8(manvolnum) xml/gbsearcharray.xml:8(manvolnum)
 msgid "3"
 msgstr ""
 
@@ -131,8 +131,8 @@ msgstr ""
 #: xml/cut-streamer-factory-builder.xml:9(refmiscinfo)
 #: xml/cut-streamer.xml:9(refmiscinfo) xml/cut-test-runner.xml:9(refmiscinfo)
 #: xml/cut-ui-factory-builder.xml:9(refmiscinfo) xml/cut-ui.xml:9(refmiscinfo)
-#: xml/cut-value-equal.xml:9(refmiscinfo) xml/cutter.xml:9(refmiscinfo)
-#: xml/gbsearcharray.xml:9(refmiscinfo)
+#: xml/cut-value-equal.xml:9(refmiscinfo) xml/cut-version.xml:9(refmiscinfo)
+#: xml/cutter.xml:9(refmiscinfo) xml/gbsearcharray.xml:9(refmiscinfo)
 msgid "CUTTER Library"
 msgstr "Cutterライブラリ"
 
@@ -154,8 +154,8 @@ msgstr "あなたのプログラムが期待通りに動作しているかを検
 #: xml/cut-streamer-factory-builder.xml:19(title)
 #: xml/cut-streamer.xml:19(title) xml/cut-test-runner.xml:19(title)
 #: xml/cut-ui-factory-builder.xml:19(title) xml/cut-ui.xml:19(title)
-#: xml/cut-value-equal.xml:19(title) xml/cutter.xml:19(title)
-#: xml/gbsearcharray.xml:19(title)
+#: xml/cut-value-equal.xml:19(title) xml/cut-version.xml:19(title)
+#: xml/cutter.xml:19(title) xml/gbsearcharray.xml:19(title)
 msgid "Synopsis"
 msgstr "概要"
 
@@ -345,8 +345,8 @@ msgstr ""
 #: xml/cut-streamer-factory-builder.xml:35(title)
 #: xml/cut-streamer.xml:41(title) xml/cut-test-runner.xml:36(title)
 #: xml/cut-ui-factory-builder.xml:35(title) xml/cut-ui.xml:42(title)
-#: xml/cut-value-equal.xml:40(title) xml/cutter.xml:38(title)
-#: xml/gbsearcharray.xml:45(title)
+#: xml/cut-value-equal.xml:40(title) xml/cut-version.xml:38(title)
+#: xml/cutter.xml:38(title) xml/gbsearcharray.xml:45(title)
 msgid "Description"
 msgstr "説明"
 
@@ -392,8 +392,8 @@ msgstr "例: <placeholder-1/>"
 #: xml/cut-streamer-factory-builder.xml:42(title)
 #: xml/cut-streamer.xml:48(title) xml/cut-test-runner.xml:43(title)
 #: xml/cut-ui-factory-builder.xml:42(title) xml/cut-ui.xml:49(title)
-#: xml/cut-value-equal.xml:47(title) xml/cutter.xml:143(title)
-#: xml/gbsearcharray.xml:52(title)
+#: xml/cut-value-equal.xml:47(title) xml/cut-version.xml:45(title)
+#: xml/cutter.xml:143(title) xml/gbsearcharray.xml:52(title)
 msgid "Details"
 msgstr "詳細"
 
@@ -1235,7 +1235,10 @@ msgid ""
 "Passes if <parameter>pattern</parameter> matches <parameter>string</"
 "parameter>. See <link linkend=\"cut-assert-match\"><function>cut_assert_match"
 "()</function></link> for detail."
-msgstr "<parameter>pattern</parameter>が<parameter>string</parameter>にマッチしたときパスします。詳細は<link linkend=\\\"cut-assert-match\\\"><function>cut_assert_match()</function></link>を見てください。"
+msgstr ""
+"<parameter>pattern</parameter>が<parameter>string</parameter>にマッチしたとき"
+"パスします。詳細は<link linkend=\\\"cut-assert-match\\"
+"\"><function>cut_assert_match()</function></link>を見てください。"
 
 #: xml/cut-assertions.xml:718(simpara)
 msgid "the string to be matched that is freed."
@@ -5307,6 +5310,60 @@ msgstr ""
 
 #: xml/cut-value-equal.xml:86(term)
 msgid "<parameter>equal_func</parameter>&nbsp;:"
+msgstr ""
+
+#: xml/cut-version.xml:7(refentrytitle) xml/cut-version.xml:13(refname)
+msgid "cut-version"
+msgstr ""
+
+#: xml/cut-version.xml:22(link) xml/cut-version.xml:47(title)
+#: xml/cut-version.xml:48(primary)
+msgid "CUTTER_VERSION_MAJOR"
+msgstr ""
+
+#: xml/cut-version.xml:23(link) xml/cut-version.xml:54(title)
+#: xml/cut-version.xml:55(primary)
+msgid "CUTTER_VERSION_MINOR"
+msgstr ""
+
+#: xml/cut-version.xml:24(link) xml/cut-version.xml:61(title)
+#: xml/cut-version.xml:62(primary)
+msgid "CUTTER_VERSION_MICRO"
+msgstr ""
+
+#: xml/cut-version.xml:25(link) xml/cut-version.xml:68(title)
+#: xml/cut-version.xml:69(primary)
+msgid "CUTTER_VERSION_STRING"
+msgstr ""
+
+#: xml/cut-version.xml:21(synopsis)
+#, no-wrap
+msgid ""
+"\n"
+"#define             <placeholder-1/>\n"
+"#define             <placeholder-2/>\n"
+"#define             <placeholder-3/>\n"
+"#define             <placeholder-4/>\n"
+msgstr ""
+
+#: xml/cut-version.xml:48(programlisting)
+#, no-wrap
+msgid "#define CUTTER_VERSION_MAJOR 1\n"
+msgstr ""
+
+#: xml/cut-version.xml:55(programlisting)
+#, no-wrap
+msgid "#define CUTTER_VERSION_MINOR 0\n"
+msgstr ""
+
+#: xml/cut-version.xml:62(programlisting)
+#, no-wrap
+msgid "#define CUTTER_VERSION_MICRO 2\n"
+msgstr ""
+
+#: xml/cut-version.xml:69(programlisting)
+#, no-wrap
+msgid "#define CUTTER_VERSION_STRING \"1.0.2\"\n"
 msgstr ""
 
 #: xml/cutter.xml:7(refentrytitle) xml/cutter.xml:13(refname)

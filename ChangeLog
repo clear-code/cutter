@@ -1,5 +1,13 @@
 2008-06-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertions.h: include cut-test-utils.h.
+
+	* cutter/cut-test-utils.h: split from ...
+	* cutter/cut-assertions-helper.h: ... here.
+
+	* cutter/Makefile.am, doc/reference/Makefile.am,
+	doc/reference/cutter-docs.sgml: add cut-test-utils.h.
+
 	* configure.ac: support cutter/cut-version.h.
 	* cutter/cut-version.h.in: add.
 

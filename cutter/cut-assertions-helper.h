@@ -24,22 +24,7 @@
 extern "C" {
 #endif
 
-#define cut_take_string(string)                                         \
-    cut_test_context_take_string(get_current_test_context(), (string))
-
-#define cut_take_printf(format, ...)                                    \
-    cut_test_context_take_printf(get_current_test_context(),            \
-                                 (format), __VA_ARGS__)
-#define cut_take_string_array(strings)                                  \
-    cut_test_context_take_string_array(get_current_test_context(), (strings))
-
-#define cut_take_diff(from, to)                                         \
-    cut_take_string(cut_diff_readable(from, to))
-
-#define cut_inspect_string_array(strings)                               \
-    cut_take_string(cut_utils_inspect_string_array(strings))
-
-#define cut_test_pass() \
+#define cut_test_pass()                                         \
     cut_test_context_pass_assertion(get_current_test_context())
 
 #define cut_test_register_result(status, message, ...) do               \
@@ -56,29 +41,6 @@ extern "C" {
     cut_test_register_result(status, message, ## __VA_ARGS__);      \
     cut_test_context_long_jump(get_current_test_context());         \
 } while (0)
-
-#define cut_set_fixture_data_dir(path, ...) do  \
-{                                               \
-    cut_test_context_set_fixture_data_dir(      \
-        get_current_test_context(),             \
-        path, ## __VA_ARGS__, NULL);            \
-} while (0)
-
-#define cut_build_fixture_path(path, ...)                               \
-    cut_test_context_build_fixture_path(get_current_test_context(),     \
-                                        path, ## __VA_ARGS__, NULL)
-
-#define cut_get_fixture_data_string(path, ...)                          \
-    cut_utils_get_fixture_data_string(get_current_test_context(),       \
-                                      __PRETTY_FUNCTION__,              \
-                                      __FILE__,                         \
-                                      __LINE__,                         \
-                                      path, ## __VA_ARGS__, NULL)
-
-#define cut_remove_path(path, ...)                                      \
-    cut_utils_remove_path_recursive_force(                              \
-        cut_take_string(                                                \
-            cut_utils_build_path(path, ## __VA_ARGS__, NULL)))
 
 #ifdef __cplusplus
 }
