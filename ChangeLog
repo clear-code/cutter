@@ -1,5 +1,10 @@
 2008-06-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* configure.ac: support cutter/cut-version.h.
+	* cutter/cut-version.h.in: add.
+
+	* cutter/cut-main.h, cutter/cutter.h: include cut-version.h.
+
 	* doc/reference/cutter-docs.sgml: add new symbols in 1.0.2 link.
 
 	* doc/reference/ja.po: update.

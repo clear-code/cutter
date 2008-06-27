@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -17,34 +17,17 @@
  *
  */
 
-#ifndef __CUT_MAIN_H__
-#define __CUT_MAIN_H__
+#ifndef __CUT_VERSION_H__
+#define __CUT_VERSION_H__
 
-#ifdef __CUT_HIDDEN_DEFINITIONS_H__
-#  error "don't include cutter.h with test runner program!"
-#endif
 
-#include <cutter/cut-version.h>
+#define CUTTER_VERSION_MAJOR @CUTTER_VERSION_MAJOR@
+#define CUTTER_VERSION_MINOR @CUTTER_VERSION_MINOR@
+#define CUTTER_VERSION_MICRO @CUTTER_VERSION_MICRO@
 
-#include <cutter/cut-test-runner.h>
-#include <cutter/cut-test-suite.h>
+#define CUTTER_VERSION_STRING "@CUTTER_VERSION@"
 
-G_BEGIN_DECLS
-
-void          cut_init               (int *argc, char ***argv);
-void          cut_quit               (void);
-
-gboolean      cut_run                (void);
-
-void          cut_set_cutter_command_path (const char *argv0);
-const char   *cut_get_cutter_command_path (void);
-
-CutRunContext *cut_create_run_context(void);
-gboolean       cut_start_run_context (CutRunContext *run_context);
-
-G_END_DECLS
-
-#endif /* __CUT_MAIN_H__ */
+#endif /* __CUT_VERSION_H__ */
 
 /*
 vi:nowrap:ai:expandtab:sw=4

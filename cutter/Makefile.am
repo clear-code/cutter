@@ -13,6 +13,7 @@ CLEANFILES = *.gcno *.gcda
 lib_LTLIBRARIES = libcutter.la
 
 cutter_public_headers = 			\
+		cut-version.h			\
 		cut-assertions.h		\
 		cut-assertions-helper.h		\
 		cut-experimental.h		\

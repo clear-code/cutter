@@ -3,7 +3,13 @@
 
 AC_PREREQ(2.59)
 
-AC_INIT(cutter, 1.0.2, kou@cozmixng.org)
+m4_define([cutter_version_major], [1])
+m4_define([cutter_version_minor], [0])
+m4_define([cutter_version_micro], [2])
+m4_define([cutter_version],
+          [cutter_version_major.cutter_version_minor.cutter_version_micro])
+
+AC_INIT(cutter, [cutter_version], kou@cozmixng.org)
 AC_CONFIG_AUX_DIR([config])
 
 AC_CONFIG_SRCDIR([cutter/cut-main.c])
@@ -13,6 +19,15 @@ AM_INIT_AUTOMAKE($PACKAGE_NAME, $PACKAGE_VERSION)
 
 PACKAGE_TITLE=Cutter
 AC_SUBST(PACKAGE_TITLE)
+
+CUTTER_VERSION_MAJOR=cutter_version_major
+CUTTER_VERSION_MINOR=cutter_version_minor
+CUTTER_VERSION_MICRO=cutter_version_micro
+CUTTER_VERSION=cutter_version
+AC_SUBST(CUTTER_VERSION_MAJOR)
+AC_SUBST(CUTTER_VERSION_MINOR)
+AC_SUBST(CUTTER_VERSION_MICRO)
+AC_SUBST(CUTTER_VERSION)
 
 AC_CANONICAL_HOST
 
@@ -391,6 +406,7 @@ AC_CONFIG_FILES([Makefile
 		 gcutter.pc
 		 libcutter.pc
 		 m4macros/Makefile
+		 cutter/cut-version.h
 		 cutter/Makefile
 		 module/Makefile
 		 module/ui/Makefile
