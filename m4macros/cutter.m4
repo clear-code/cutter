@@ -62,7 +62,9 @@ AC_DEFUN([AC_CHECK_COVERAGE],
 
   if test "x$ac_cv_enable_coverage" = "xyes"; then
     AC_CONFIG_COMMANDS([coverage], [
-      if grep -v coverage Makefile >/dev/null; then
+      if grep '^coverage:' Makefile > /dev/null; then
+        : # do nothing
+      else
         cat >>Makefile <<EOS
 
 coverage-clean:
