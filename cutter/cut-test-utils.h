@@ -120,7 +120,7 @@ extern "C" {
 } while (0)
 
 /**
- * cut_build_fixture_path:
+ * cut_build_fixture_data_path:
  * @path: a first element of the path to the fixture data.
  * @...: remaining elements in path.
  *
@@ -133,9 +133,9 @@ extern "C" {
  *
  * Since: 1.0.2
  */
-#define cut_build_fixture_path(path, ...)                               \
-    cut_test_context_build_fixture_path(get_current_test_context(),     \
-                                        path, ## __VA_ARGS__, NULL)
+#define cut_build_fixture_data_path(path, ...)                          \
+    cut_test_context_build_fixture_data_path(get_current_test_context(), \
+                                             path, ## __VA_ARGS__, NULL)
 
 /**
  * cut_get_fixture_data_string:
@@ -144,8 +144,8 @@ extern "C" {
  *
  * Reads the fixture data at "@path/..." and returns it as a
  * string that is owned by Cutter. The description of
- * cut_build_fixture_path() shows how the fixture data path
- * is determined.
+ * cut_build_fixture_data_path() shows how the fixture data
+ * path is determined.
  *
  * Returns: a content of the fixture data as string.
  *

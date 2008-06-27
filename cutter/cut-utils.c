@@ -236,7 +236,7 @@ cut_utils_get_fixture_data_string_and_path (CutTestContext *context,
                                             const gchar *file,
                                             unsigned int line,
                                             gchar **data,
-                                            gchar **fixture_path,
+                                            gchar **fixture_data_path,
                                             const gchar *path,
                                             ...)
 {
@@ -247,8 +247,9 @@ cut_utils_get_fixture_data_string_and_path (CutTestContext *context,
     va_start(args, path);
 
     va_copy(copied_args, args);
-    *fixture_path = cut_test_context_build_fixture_pathv(context,
-                                                         path, &copied_args);
+    *fixture_data_path = cut_test_context_build_fixture_data_pathv(context,
+                                                                   path,
+                                                                   &copied_args);
     va_end(copied_args);
 
     fixture_data = cut_test_context_get_fixture_data_stringv(context, &error,

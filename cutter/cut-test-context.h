@@ -92,7 +92,7 @@ void          cut_test_context_to_xml_string  (CutTestContext *context,
                                                GString        *string,
                                                guint           indent);
 
-gchar        *cut_test_context_build_fixture_pathv
+gchar        *cut_test_context_build_fixture_data_pathv
                                               (CutTestContext *context,
                                                const gchar    *path,
                                                va_list        *args);

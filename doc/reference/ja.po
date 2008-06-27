@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.0.2\n"
-"POT-Creation-Date: 2008-06-27 14:46+0900\n"
-"PO-Revision-Date: 2008-06-27 14:47+0900\n"
+"POT-Creation-Date: 2008-06-27 14:56+0900\n"
+"PO-Revision-Date: 2008-06-27 14:55+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -5171,7 +5171,7 @@ msgid "cut_set_fixture_data_dir"
 msgstr ""
 
 #: xml/cut-test-utils.xml:28(link) xml/cut-test-utils.xml:148(primary)
-msgid "cut_build_fixture_path"
+msgid "cut_build_fixture_data_path"
 msgstr ""
 
 #: xml/cut-test-utils.xml:29(link) xml/cut-test-utils.xml:167(primary)
@@ -5192,7 +5192,7 @@ msgid ""
 "#define             <placeholder-4/>                       (from, to)\n"
 "#define             <placeholder-5/>            (strings)\n"
 "#define             <placeholder-6/>            (path, ...)\n"
-"#define             <placeholder-7/>              (path, ...)\n"
+"#define             <placeholder-7/>         (path, ...)\n"
 "#define             <placeholder-8/>         (path, ...)\n"
 "#define             <placeholder-9/>                     (path, ...)\n"
 msgstr ""
@@ -5344,12 +5344,12 @@ msgid "a first element of the path to the fixture data directory."
 msgstr "フィクスチャデータディレクトリのパスの最初の要素。"
 
 #: xml/cut-test-utils.xml:147(title)
-msgid "cut_build_fixture_path()"
+msgid "cut_build_fixture_data_path()"
 msgstr ""
 
 #: xml/cut-test-utils.xml:148(programlisting)
 #, no-wrap
-msgid "#define             cut_build_fixture_path(path, ...)"
+msgid "#define             cut_build_fixture_data_path(path, ...)"
 msgstr ""
 
 #: xml/cut-test-utils.xml:149(para)
@@ -5378,13 +5378,13 @@ msgstr ""
 msgid ""
 "Reads the fixture data at \"<parameter>path</parameter>/...\" and returns it "
 "as a string that is owned by Cutter. The description of <link linkend=\"cut-"
-"build-fixture-path\"><function>cut_build_fixture_path()</function></link> "
-"shows how the fixture data path is determined."
+"build-fixture-data-path\"><function>cut_build_fixture_data_path()</"
+"function></link> shows how the fixture data path is determined."
 msgstr ""
 "\"<parameter>path</parameter>/...\"にあるフィクスチャデータを読み込み、文字列"
 "として返します。文字列はCutterが所持します。<link linkend=\"cut-build-"
-"fixture-path\"><function>cut_build_fixture_path()</function></link>の説明には"
-"フィクスチャデータのパスがどのように決定されるかが書かれています。"
+"fixture-data-path\"><function>cut_build_fixture_data_path()</function></link>"
+"の説明にはフィクスチャデータのパスがどのように決定されるかが書かれています。"
 
 #: xml/cut-test-utils.xml:185(title)
 msgid "cut_remove_path()"

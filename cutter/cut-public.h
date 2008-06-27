@@ -94,7 +94,8 @@ void  cut_utils_remove_path_recursive_force (const char *path);
 int   cut_utils_regex_match                 (const char *pattern,
                                              const char *string);
 
-char *cut_test_context_build_fixture_path   (CutTestContext *context,
+char *cut_test_context_build_fixture_data_path
+                                            (CutTestContext *context,
                                              const char     *path,
                                              ...) CUT_GNUC_NULL_TERMINATED;
 
@@ -110,7 +111,7 @@ void  cut_utils_get_fixture_data_string_and_path(CutTestContext *context,
                                                  const char *file,
                                                  unsigned int line,
                                                  char **data,
-                                                 char **fixture_path,
+                                                 char **fixture_data_path,
                                                  const char *path,
                                                  ...) CUT_GNUC_NULL_TERMINATED;
 
