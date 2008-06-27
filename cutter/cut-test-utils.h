@@ -35,6 +35,8 @@ extern "C" {
  * set up/tear down test environment, prepare expected and
  * actual values and so on. Cutter provides test utilities
  * to you write your tests more easily.
+ *
+ * The utilities work without GLib support.
  */
 
 /**
@@ -50,7 +52,7 @@ extern "C" {
     cut_test_context_take_string(get_current_test_context(), (string))
 
 /**
- * cut_take_string:
+ * cut_take_printf:
  * @format: the message format. See the printf() documentation.
  * @...: the parameters to insert into the format string.
  *
@@ -64,7 +66,7 @@ extern "C" {
                                  (format), __VA_ARGS__)
 
 /**
- * cut_take_string:
+ * cut_take_string_array:
  * @strings: the array of strings to be owned by Cutter.
  *
  * Passes ownership of the array of strings (char **) to
@@ -101,7 +103,7 @@ extern "C" {
 
 
 /**
- * cut_inspect_string_array:
+ * cut_set_fixture_data_dir:
  * @path: a first element of the path to the fixture data directory.
  * @...: remaining elements in path.
  *
@@ -141,8 +143,9 @@ extern "C" {
  * @...: remaining elements in path.
  *
  * Reads the fixture data at "@path/..." and returns it as a
- * string that is owned by Cutter. cut_build_fixture_path()
- * shows how the fixture data path is determined.
+ * string that is owned by Cutter. The description of
+ * cut_build_fixture_path() shows how the fixture data path
+ * is determined.
  *
  * Returns: a content of the fixture data as string.
  *

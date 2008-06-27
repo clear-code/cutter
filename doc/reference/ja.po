@@ -1,13 +1,13 @@
 # ja.po for Cutter Reference.
-# Copyright (C) 2007 Kouhei Sutou
+# Copyright (C) 2007-2008 Kouhei Sutou
 # This file is distributed under the same license as the Cutter package.
-# Kouhei Sutou <kou@cozmixng.org>, 2007.
+# Kouhei Sutou <kou@cozmixng.org>, 2007-2008.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Cutter 1.0.1\n"
-"POT-Creation-Date: 2008-06-27 14:01+0900\n"
-"PO-Revision-Date: 2008-06-27 11:46+0900\n"
+"Project-Id-Version: Cutter 1.0.2\n"
+"POT-Creation-Date: 2008-06-27 14:46+0900\n"
+"PO-Revision-Date: 2008-06-27 14:47+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -39,51 +39,51 @@ msgstr "リファレンス"
 msgid "Writing tests"
 msgstr "テスト作成"
 
-#: cutter-docs.sgml:60(title)
+#: cutter-docs.sgml:61(title)
 msgid "Index"
 msgstr "索引"
 
-#: cutter-docs.sgml:63(title)
+#: cutter-docs.sgml:64(title)
 msgid "Index of deprecated symbols"
 msgstr "非推奨のシンボル一覧"
 
-#: cutter-docs.sgml:66(title)
+#: cutter-docs.sgml:67(title)
 msgid "Index of new symbols in 1.0.2"
 msgstr "1.0.2での新しいシンボル一覧"
 
-#: cutter-docs.sgml:69(title)
+#: cutter-docs.sgml:70(title)
 msgid "Index of new symbols in 1.0.1"
 msgstr "1.0.1での新しいシンボル一覧"
 
-#: cutter-docs.sgml:72(title)
+#: cutter-docs.sgml:73(title)
 msgid "Index of new symbols in 1.0"
 msgstr "1.0での新しいシンボル一覧"
 
-#: cutter-docs.sgml:75(title)
+#: cutter-docs.sgml:76(title)
 msgid "Index of new symbols in 0.9"
 msgstr "0.9での新しいシンボル一覧"
 
-#: cutter-docs.sgml:78(title)
+#: cutter-docs.sgml:79(title)
 msgid "Index of new symbols in 0.8"
 msgstr "0.8での新しいシンボル一覧"
 
-#: cutter-docs.sgml:81(title)
+#: cutter-docs.sgml:82(title)
 msgid "Index of new symbols in 0.7"
 msgstr "0.7での新しいシンボル一覧"
 
-#: cutter-docs.sgml:84(title)
+#: cutter-docs.sgml:85(title)
 msgid "Index of new symbols in 0.6"
 msgstr "0.6での新しいシンボル一覧"
 
-#: cutter-docs.sgml:87(title)
+#: cutter-docs.sgml:88(title)
 msgid "Index of new symbols in 0.5"
 msgstr "0.5での新しいシンボル一覧"
 
-#: cutter-docs.sgml:90(title)
+#: cutter-docs.sgml:91(title)
 msgid "Index of new symbols in 0.4"
 msgstr "0.4での新しいシンボル一覧"
 
-#: cutter-docs.sgml:93(title)
+#: cutter-docs.sgml:94(title)
 msgid "Index of new symbols in 0.3"
 msgstr "0.3での新しいシンボル一覧"
 
@@ -108,6 +108,7 @@ msgstr "検証"
 #: xml/cut-stream-parser.xml:8(manvolnum)
 #: xml/cut-streamer-factory-builder.xml:8(manvolnum)
 #: xml/cut-streamer.xml:8(manvolnum) xml/cut-test-runner.xml:8(manvolnum)
+#: xml/cut-test-utils.xml:8(manvolnum)
 #: xml/cut-ui-factory-builder.xml:8(manvolnum) xml/cut-ui.xml:8(manvolnum)
 #: xml/cut-value-equal.xml:8(manvolnum) xml/cut-version.xml:8(manvolnum)
 #: xml/cutter.xml:8(manvolnum) xml/gbsearcharray.xml:8(manvolnum)
@@ -130,6 +131,7 @@ msgstr ""
 #: xml/cut-stream-parser.xml:9(refmiscinfo)
 #: xml/cut-streamer-factory-builder.xml:9(refmiscinfo)
 #: xml/cut-streamer.xml:9(refmiscinfo) xml/cut-test-runner.xml:9(refmiscinfo)
+#: xml/cut-test-utils.xml:9(refmiscinfo)
 #: xml/cut-ui-factory-builder.xml:9(refmiscinfo) xml/cut-ui.xml:9(refmiscinfo)
 #: xml/cut-value-equal.xml:9(refmiscinfo) xml/cut-version.xml:9(refmiscinfo)
 #: xml/cutter.xml:9(refmiscinfo) xml/gbsearcharray.xml:9(refmiscinfo)
@@ -153,9 +155,10 @@ msgstr "あなたのプログラムが期待通りに動作しているかを検
 #: xml/cut-sequence-matcher.xml:19(title) xml/cut-stream-parser.xml:19(title)
 #: xml/cut-streamer-factory-builder.xml:19(title)
 #: xml/cut-streamer.xml:19(title) xml/cut-test-runner.xml:19(title)
-#: xml/cut-ui-factory-builder.xml:19(title) xml/cut-ui.xml:19(title)
-#: xml/cut-value-equal.xml:19(title) xml/cut-version.xml:19(title)
-#: xml/cutter.xml:19(title) xml/gbsearcharray.xml:19(title)
+#: xml/cut-test-utils.xml:19(title) xml/cut-ui-factory-builder.xml:19(title)
+#: xml/cut-ui.xml:19(title) xml/cut-value-equal.xml:19(title)
+#: xml/cut-version.xml:19(title) xml/cutter.xml:19(title)
+#: xml/gbsearcharray.xml:19(title)
 msgid "Synopsis"
 msgstr "概要"
 
@@ -344,9 +347,10 @@ msgstr ""
 #: xml/cut-sequence-matcher.xml:84(title) xml/cut-stream-parser.xml:43(title)
 #: xml/cut-streamer-factory-builder.xml:35(title)
 #: xml/cut-streamer.xml:41(title) xml/cut-test-runner.xml:36(title)
-#: xml/cut-ui-factory-builder.xml:35(title) xml/cut-ui.xml:42(title)
-#: xml/cut-value-equal.xml:40(title) xml/cut-version.xml:38(title)
-#: xml/cutter.xml:38(title) xml/gbsearcharray.xml:45(title)
+#: xml/cut-test-utils.xml:43(title) xml/cut-ui-factory-builder.xml:35(title)
+#: xml/cut-ui.xml:42(title) xml/cut-value-equal.xml:40(title)
+#: xml/cut-version.xml:38(title) xml/cutter.xml:38(title)
+#: xml/gbsearcharray.xml:45(title)
 msgid "Description"
 msgstr "説明"
 
@@ -391,9 +395,10 @@ msgstr "例: <placeholder-1/>"
 #: xml/cut-sequence-matcher.xml:91(title) xml/cut-stream-parser.xml:50(title)
 #: xml/cut-streamer-factory-builder.xml:42(title)
 #: xml/cut-streamer.xml:48(title) xml/cut-test-runner.xml:43(title)
-#: xml/cut-ui-factory-builder.xml:42(title) xml/cut-ui.xml:49(title)
-#: xml/cut-value-equal.xml:47(title) xml/cut-version.xml:45(title)
-#: xml/cutter.xml:143(title) xml/gbsearcharray.xml:52(title)
+#: xml/cut-test-utils.xml:58(title) xml/cut-ui-factory-builder.xml:42(title)
+#: xml/cut-ui.xml:49(title) xml/cut-value-equal.xml:47(title)
+#: xml/cut-version.xml:45(title) xml/cutter.xml:143(title)
+#: xml/gbsearcharray.xml:52(title)
 msgid "Details"
 msgstr "詳細"
 
@@ -413,13 +418,14 @@ msgstr "メッセージ付きでエラーを発生させます。"
 #: xml/cut-assertions.xml:94(term) xml/cut-assertions.xml:132(term)
 #: xml/cut-assertions.xml:148(term) xml/cut-assertions.xml:166(term)
 #: xml/cut-assertions.xml:181(term) xml/cut-assertions.xml:203(term)
-#: xml/cut-run-context.xml:853(term)
+#: xml/cut-run-context.xml:853(term) xml/cut-test-utils.xml:81(term)
 msgid "<parameter>format</parameter>&nbsp;:"
 msgstr ""
 
 #: xml/cut-assertions.xml:95(simpara) xml/cut-assertions.xml:133(simpara)
 #: xml/cut-assertions.xml:149(simpara) xml/cut-assertions.xml:167(simpara)
 #: xml/cut-assertions.xml:182(simpara) xml/cut-assertions.xml:204(simpara)
+#: xml/cut-test-utils.xml:82(simpara)
 msgid ""
 "the message format. See the <link linkend=\"printf\"><function>printf()</"
 "function></link> documentation."
@@ -448,13 +454,17 @@ msgstr ""
 #: xml/cut-gassertions.xml:123(term) xml/cut-gassertions.xml:140(term)
 #: xml/cut-gassertions.xml:157(term) xml/cut-module-factory.xml:82(term)
 #: xml/cut-report.xml:78(term) xml/cut-run-context.xml:856(term)
-#: xml/cut-streamer.xml:94(term) xml/cut-ui.xml:82(term)
+#: xml/cut-streamer.xml:94(term) xml/cut-test-utils.xml:84(term)
+#: xml/cut-test-utils.xml:141(term) xml/cut-test-utils.xml:160(term)
+#: xml/cut-test-utils.xml:179(term) xml/cut-test-utils.xml:196(term)
+#: xml/cut-ui.xml:82(term)
 msgid "<parameter>...</parameter>&nbsp;:"
 msgstr ""
 
 #: xml/cut-assertions.xml:98(simpara) xml/cut-assertions.xml:136(simpara)
 #: xml/cut-assertions.xml:152(simpara) xml/cut-assertions.xml:170(simpara)
 #: xml/cut-assertions.xml:185(simpara) xml/cut-assertions.xml:207(simpara)
+#: xml/cut-test-utils.xml:85(simpara)
 msgid "the parameters to insert into the format string."
 msgstr "整形文字列に挿入されるパラメータ。"
 
@@ -506,7 +516,9 @@ msgstr ""
 
 #: xml/cut-assertions.xml:122(para) xml/cut-assertions.xml:652(para)
 #: xml/cut-assertions.xml:676(para) xml/cut-assertions.xml:763(para)
-#: xml/cut-gassertions.xml:160(para)
+#: xml/cut-gassertions.xml:160(para) xml/cut-test-utils.xml:144(para)
+#: xml/cut-test-utils.xml:163(para) xml/cut-test-utils.xml:182(para)
+#: xml/cut-test-utils.xml:199(para)
 msgid "Since 1.0.2"
 msgstr "1.0.2から"
 
@@ -1132,7 +1144,9 @@ msgstr ""
 
 #: xml/cut-assertions.xml:621(term) xml/cut-assertions.xml:645(term)
 #: xml/cut-assertions.xml:669(term) xml/cut-assertions.xml:757(term)
-#: xml/cut-gassertions.xml:154(term)
+#: xml/cut-gassertions.xml:154(term) xml/cut-test-utils.xml:138(term)
+#: xml/cut-test-utils.xml:157(term) xml/cut-test-utils.xml:176(term)
+#: xml/cut-test-utils.xml:193(term)
 msgid "<parameter>path</parameter>&nbsp;:"
 msgstr ""
 
@@ -1282,11 +1296,14 @@ msgstr ""
 msgid "an expected string."
 msgstr "期待される文字列。"
 
-#: xml/cut-assertions.xml:758(simpara)
+#: xml/cut-assertions.xml:758(simpara) xml/cut-test-utils.xml:158(simpara)
+#: xml/cut-test-utils.xml:177(simpara)
 msgid "a first element of the path to the fixture data."
 msgstr "フィクスチャデータのパスの最初の要素。"
 
 #: xml/cut-assertions.xml:761(simpara) xml/cut-gassertions.xml:158(simpara)
+#: xml/cut-test-utils.xml:142(simpara) xml/cut-test-utils.xml:161(simpara)
+#: xml/cut-test-utils.xml:180(simpara) xml/cut-test-utils.xml:197(simpara)
 msgid "remaining elements in path."
 msgstr "パスの残りの要素。"
 
@@ -1646,7 +1663,7 @@ msgstr ""
 #: xml/cut-sequence-matcher.xml:281(term)
 #: xml/cut-sequence-matcher.xml:301(term)
 #: xml/cut-sequence-matcher.xml:325(term)
-#: xml/cut-sequence-matcher.xml:346(term)
+#: xml/cut-sequence-matcher.xml:346(term) xml/cut-test-utils.xml:110(term)
 msgid "<parameter>from</parameter>&nbsp;:"
 msgstr ""
 
@@ -1654,7 +1671,7 @@ msgstr ""
 #: xml/cut-sequence-matcher.xml:284(term)
 #: xml/cut-sequence-matcher.xml:304(term)
 #: xml/cut-sequence-matcher.xml:328(term)
-#: xml/cut-sequence-matcher.xml:349(term)
+#: xml/cut-sequence-matcher.xml:349(term) xml/cut-test-utils.xml:113(term)
 msgid "<parameter>to</parameter>&nbsp;:"
 msgstr ""
 
@@ -2351,7 +2368,7 @@ msgid ""
 "                                                         <link linkend=\"gpointer\">gpointer</link> user_data);"
 msgstr ""
 
-#: xml/cut-list.xml:66(term)
+#: xml/cut-list.xml:66(term) xml/cut-test-utils.xml:68(term)
 msgid "<parameter>string</parameter>&nbsp;:"
 msgstr ""
 
@@ -5120,6 +5137,275 @@ msgstr ""
 #, no-wrap
 msgid "<link linkend=\"CutRunContext\">CutRunContext</link>*      cut_test_runner_new                 (void);"
 msgstr ""
+
+#: xml/cut-test-utils.xml:7(refentrytitle) xml/cut-test-utils.xml:13(refname)
+msgid "Test Utilities"
+msgstr "テストユーティリティ"
+
+#: xml/cut-test-utils.xml:14(refpurpose)
+msgid "Utilities to write tests more easily."
+msgstr "テストをもっと簡単に書くためのユーティリティ。"
+
+#: xml/cut-test-utils.xml:22(link) xml/cut-test-utils.xml:61(primary)
+msgid "cut_take_string"
+msgstr ""
+
+#: xml/cut-test-utils.xml:23(link) xml/cut-test-utils.xml:74(primary)
+msgid "cut_take_printf"
+msgstr ""
+
+#: xml/cut-test-utils.xml:24(link) xml/cut-test-utils.xml:90(primary)
+msgid "cut_take_string_array"
+msgstr ""
+
+#: xml/cut-test-utils.xml:25(link) xml/cut-test-utils.xml:104(primary)
+msgid "cut_take_diff"
+msgstr ""
+
+#: xml/cut-test-utils.xml:26(link) xml/cut-test-utils.xml:119(primary)
+msgid "cut_inspect_string_array"
+msgstr ""
+
+#: xml/cut-test-utils.xml:27(link) xml/cut-test-utils.xml:131(primary)
+msgid "cut_set_fixture_data_dir"
+msgstr ""
+
+#: xml/cut-test-utils.xml:28(link) xml/cut-test-utils.xml:148(primary)
+msgid "cut_build_fixture_path"
+msgstr ""
+
+#: xml/cut-test-utils.xml:29(link) xml/cut-test-utils.xml:167(primary)
+msgid "cut_get_fixture_data_string"
+msgstr ""
+
+#: xml/cut-test-utils.xml:30(link) xml/cut-test-utils.xml:186(primary)
+msgid "cut_remove_path"
+msgstr ""
+
+#: xml/cut-test-utils.xml:21(synopsis)
+#, no-wrap
+msgid ""
+"\n"
+"#define             <placeholder-1/>                     (string)\n"
+"#define             <placeholder-2/>                     (format, ...)\n"
+"#define             <placeholder-3/>               (strings)\n"
+"#define             <placeholder-4/>                       (from, to)\n"
+"#define             <placeholder-5/>            (strings)\n"
+"#define             <placeholder-6/>            (path, ...)\n"
+"#define             <placeholder-7/>              (path, ...)\n"
+"#define             <placeholder-8/>         (path, ...)\n"
+"#define             <placeholder-9/>                     (path, ...)\n"
+msgstr ""
+
+#: xml/cut-test-utils.xml:44(para)
+msgid ""
+"To write tests, you need to write codes that set up/tear down test "
+"environment, prepare expected and actual values and so on. Cutter provides "
+"test utilities to you write your tests more easily."
+msgstr ""
+"テストを書くためには、テスト環境を前処理・後処理するコードや、検証する結果を"
+"準備するコードなどたくさんのコードを書く必要があります。Cutterはもっと簡単に"
+"テストを書くためにユーティリティを提供します。"
+
+#: xml/cut-test-utils.xml:50(para)
+msgid "The utilities work without GLib support."
+msgstr "このユーティリティはGLibサポート無しでも使えます。"
+
+#: xml/cut-test-utils.xml:60(title)
+msgid "cut_take_string()"
+msgstr ""
+
+#: xml/cut-test-utils.xml:61(programlisting)
+#, no-wrap
+msgid "#define             cut_take_string(string)"
+msgstr ""
+
+#: xml/cut-test-utils.xml:62(para)
+msgid ""
+"Passes ownership of the string to Cutter and returns a string that has same "
+"contents of <parameter>string</parameter>."
+msgstr ""
+"文字列の所有権をCutterに渡し、<parameter>string</parameter>と同じ内容の文字列"
+"を返します。"
+
+#: xml/cut-test-utils.xml:69(simpara)
+msgid "the string to be owned by Cutter."
+msgstr "Cutterが所有する文字列。"
+
+#: xml/cut-test-utils.xml:73(title)
+msgid "cut_take_printf()"
+msgstr ""
+
+#: xml/cut-test-utils.xml:74(programlisting)
+#, no-wrap
+msgid "#define             cut_take_printf(format, ...)"
+msgstr ""
+
+#: xml/cut-test-utils.xml:75(para)
+msgid ""
+"Formats a string like <link linkend=\"printf\"><function>printf()</"
+"function></link> but the formatted string is owned by Cutter."
+msgstr ""
+"<link linkend=\"printf\"><function>printf()</function></link>のように文字列を"
+"整形しますが、整形された文字列はCutterが所有します。"
+
+#: xml/cut-test-utils.xml:89(title)
+msgid "cut_take_string_array()"
+msgstr ""
+
+#: xml/cut-test-utils.xml:90(programlisting)
+#, no-wrap
+msgid "#define             cut_take_string_array(strings)"
+msgstr ""
+
+#: xml/cut-test-utils.xml:91(para)
+msgid ""
+"Passes ownership of the array of strings (char **) to Cutter and returns an "
+"array of strings that has same contents of <parameter>strings</parameter>."
+msgstr ""
+"文字列の配列（char **）の所有権をCutterに渡し、<parameter>strings</parameter>"
+"と同じ内容の文字列の配列を返します。"
+
+#: xml/cut-test-utils.xml:98(term) xml/cut-test-utils.xml:125(term)
+msgid "<parameter>strings</parameter>&nbsp;:"
+msgstr ""
+
+#: xml/cut-test-utils.xml:99(simpara)
+msgid "the array of strings to be owned by Cutter."
+msgstr "Cutterが所有する文字列の配列。"
+
+#: xml/cut-test-utils.xml:103(title)
+msgid "cut_take_diff()"
+msgstr ""
+
+#: xml/cut-test-utils.xml:104(programlisting)
+#, no-wrap
+msgid "#define             cut_take_diff(from, to)"
+msgstr ""
+
+#: xml/cut-test-utils.xml:105(para)
+msgid ""
+"Computes diff between <parameter>from</parameter> and <parameter>to</"
+"parameter> that is owned by Cutter."
+msgstr ""
+"<parameter>from</parameter>と<parameter>to</parameter>のdiffを計算します。"
+"diffの所有者はCutterです。"
+
+#: xml/cut-test-utils.xml:111(simpara)
+msgid "the original string."
+msgstr "元の文字列。"
+
+#: xml/cut-test-utils.xml:114(simpara)
+msgid "the modified string."
+msgstr "修正された文字列。"
+
+#: xml/cut-test-utils.xml:118(title)
+msgid "cut_inspect_string_array()"
+msgstr ""
+
+#: xml/cut-test-utils.xml:119(programlisting)
+#, no-wrap
+msgid "#define             cut_inspect_string_array(strings)"
+msgstr ""
+
+#: xml/cut-test-utils.xml:120(para)
+msgid ""
+"Formats <parameter>strings</parameter> as human readable string that is "
+"owned by Cutter."
+msgstr ""
+"<parameter>strings</parameter>を人が読みやすい文字列に整形します。整形された"
+"文字列の所有者はCutterです。"
+
+#: xml/cut-test-utils.xml:126(simpara)
+msgid "the array of strings to be inspected."
+msgstr "対象となる文字列の配列。"
+
+#: xml/cut-test-utils.xml:130(title)
+msgid "cut_set_fixture_data_dir()"
+msgstr ""
+
+#: xml/cut-test-utils.xml:131(programlisting)
+#, no-wrap
+msgid "#define             cut_set_fixture_data_dir(path, ...)"
+msgstr ""
+
+#: xml/cut-test-utils.xml:132(para)
+msgid ""
+"Set fixture data directory that is used by <link linkend=\"cut-get-fixture-"
+"data-string\"><function>cut_get_fixture_data_string()</function></link> and "
+"so on."
+msgstr ""
+"<link linkend=\"cut-get-fixture-data-string"
+"\"><function>cut_get_fixture_data_string()</function></link>などで使われる"
+"フィクスチャデータのディレクトリを指定します。"
+
+#: xml/cut-test-utils.xml:139(simpara)
+msgid "a first element of the path to the fixture data directory."
+msgstr "フィクスチャデータディレクトリのパスの最初の要素。"
+
+#: xml/cut-test-utils.xml:147(title)
+msgid "cut_build_fixture_path()"
+msgstr ""
+
+#: xml/cut-test-utils.xml:148(programlisting)
+#, no-wrap
+msgid "#define             cut_build_fixture_path(path, ...)"
+msgstr ""
+
+#: xml/cut-test-utils.xml:149(para)
+msgid ""
+"Builds a path to the fixture data. If <parameter>path</parameter> is "
+"relative path, the path is handled as a relative path from a directory that "
+"is specified by <link linkend=\"cut-set-fixture-data-dir"
+"\"><function>cut_set_fixture_data_dir()</function></link> or the current "
+"directory."
+msgstr ""
+"フィクスチャデータへのパスを生成します。もし、<parameter>path</parameter>が相"
+"対パスなら、パスは<link linkend=\"cut-set-fixture-data-dir"
+"\"><function>cut_set_fixture_data_dir()</function></link>で指定したディレクト"
+"リか、現在のディレクトリからの相対パスとして処理されます。"
+
+#: xml/cut-test-utils.xml:166(title)
+msgid "cut_get_fixture_data_string()"
+msgstr ""
+
+#: xml/cut-test-utils.xml:167(programlisting)
+#, no-wrap
+msgid "#define             cut_get_fixture_data_string(path, ...)"
+msgstr ""
+
+#: xml/cut-test-utils.xml:168(para)
+msgid ""
+"Reads the fixture data at \"<parameter>path</parameter>/...\" and returns it "
+"as a string that is owned by Cutter. The description of <link linkend=\"cut-"
+"build-fixture-path\"><function>cut_build_fixture_path()</function></link> "
+"shows how the fixture data path is determined."
+msgstr ""
+"\"<parameter>path</parameter>/...\"にあるフィクスチャデータを読み込み、文字列"
+"として返します。文字列はCutterが所持します。<link linkend=\"cut-build-"
+"fixture-path\"><function>cut_build_fixture_path()</function></link>の説明には"
+"フィクスチャデータのパスがどのように決定されるかが書かれています。"
+
+#: xml/cut-test-utils.xml:185(title)
+msgid "cut_remove_path()"
+msgstr ""
+
+#: xml/cut-test-utils.xml:186(programlisting)
+#, no-wrap
+msgid "#define             cut_remove_path(path, ...)"
+msgstr ""
+
+#: xml/cut-test-utils.xml:187(para)
+msgid ""
+"Removes <parameter>path</parameter> and it's children recursively. It "
+"doesn't report any errors."
+msgstr ""
+"<parameter>path</parameter>と、その下にあるパスを再帰的に削除します。いかなる"
+"エラーも報告しません。"
+
+#: xml/cut-test-utils.xml:194(simpara)
+msgid "a first element of the path to be removed."
+msgstr "削除するパスの最初の要素。"
 
 #: xml/cut-ui-factory-builder.xml:7(refentrytitle)
 #: xml/cut-ui-factory-builder.xml:13(refname)

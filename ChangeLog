@@ -1,5 +1,9 @@
 2008-06-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/ja.po: update.
+
+	* cutter/cut-test-utils.h: fix typos.
+
 	* m4macros/cutter.m4: don't add 'coverage' rule one more times.
 
 	* cutter/cut-assertions.h: include cut-test-utils.h.
