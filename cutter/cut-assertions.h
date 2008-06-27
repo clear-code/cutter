@@ -739,7 +739,7 @@ extern "C" {
  * @...: optional format string, followed by parameters to insert
  * into the format string (as with printf())
  *
- * Passes if @regex matches @string.
+ * Passes if @pattern matches @string.
  *
  * e.g.:
  * |[
@@ -771,7 +771,7 @@ extern "C" {
  * @...: optional format string, followed by parameters to insert
  * into the format string (as with printf())
  *
- * Passes if @regex matches @string. See cut_assert_match()
+ * Passes if @pattern matches @string. See cut_assert_match()
  * for detail.
  *
  * Since: 1.0

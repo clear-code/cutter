@@ -1,3 +1,11 @@
+2008-06-27  Kouhei Sutou  <kou@cozmixng.org>
+
+	* doc/reference/cutter-docs.sgml: add new symbols in 1.0.2 link.
+
+	* doc/reference/ja.po: update.
+
+	* cutter/cut-assertions.h: fix typos.
+
 2008-06-24  Kouhei Sutou  <kou@cozmixng.org>
 
 	* test/test-cut-assertions.c (test_path_not_exist): add.
