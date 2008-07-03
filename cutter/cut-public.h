@@ -56,7 +56,8 @@ typedef enum {
     CUT_TEST_RESULT_OMISSION,
     CUT_TEST_RESULT_PENDING,
     CUT_TEST_RESULT_FAILURE,
-    CUT_TEST_RESULT_ERROR
+    CUT_TEST_RESULT_ERROR,
+    CUT_TEST_RESULT_LAST
 } CutTestResultStatus;
 
 void  cut_test_context_pass_assertion       (CutTestContext *context);

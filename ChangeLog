@@ -1,3 +1,18 @@
+2008-07-03  Kouhei Sutou  <kou@cozmixng.org>
+
+	* module/ui/cut-gtk-ui.c: use default: for switch (status).
+
+	* module/report/cut-pdf-report.c: draw chart by GOffice.
+
+	* module/report/cut-pdf-report-factory.c: initialize and shutdown
+	GOffice.
+
+	* module/report/Makefile.am: add GOFFICE_{CFLAGS,LIBS}.
+
+	* cutter/cut-public.h (CUT_TEST_RESULT_LAST): add.
+
+	* configure.ac: detect GOffice.
+
 2008-06-27  Kouhei Sutou  <kou@cozmixng.org>
 
 	* configure.ac: 1.0.2 -> 1.0.3.

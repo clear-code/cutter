@@ -27,10 +27,22 @@
 #include <glib/gi18n-lib.h>
 #include <gmodule.h>
 
+#ifdef HAVE_GOFFICE
+#  include <goffice/goffice.h>
+#  include <goffice/app/go-plugin.h>
+#  include <goffice/app/go-plugin-loader-module.h>
+#endif
+
 #include <cutter/cut-module-impl.h>
 #include <cutter/cut-report.h>
 #include <cutter/cut-module-factory.h>
 #include <cutter/cut-enum-types.h>
+
+
+#ifdef HAVE_GOFFICE
+static gboolean goffice_initialized = FALSE;
+static gboolean goffice_shutdowned = FALSE;
+#endif
 
 #define CUT_TYPE_PDF_REPORT_FACTORY            cut_type_pdf_factory_report
 #define CUT_PDF_REPORT_FACTORY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_PDF_REPORT_FACTORY, CutPDFReportFactory))
@@ -184,6 +196,15 @@ CUT_MODULE_IMPL_INIT (GTypeModule *type_module)
 {
     GList *registered_types = NULL;
 
+#ifdef HAVE_GOFFICE
+    if (!goffice_initialized) {
+        goffice_initialized = TRUE;
+        libgoffice_init();
+        go_plugins_init(NULL, NULL, NULL, NULL, TRUE,
+                        GO_PLUGIN_LOADER_MODULE_TYPE);
+    }
+#endif
+
     register_type(type_module);
     if (cut_type_pdf_factory_report)
         registered_types =
@@ -196,6 +217,13 @@ CUT_MODULE_IMPL_INIT (GTypeModule *type_module)
 G_MODULE_EXPORT void
 CUT_MODULE_IMPL_EXIT (void)
 {
+#ifdef HAVE_GOFFICE
+    if (goffice_initialized && !goffice_shutdowned) {
+        goffice_shutdowned = TRUE;
+        go_plugins_shutdown();
+        libgoffice_shutdown();
+    }
+#endif
 }
 
 G_MODULE_EXPORT GObject *

@@ -34,6 +34,20 @@
 #include <cairo-pdf.h>
 #include <pango/pangocairo.h>
 
+#ifdef HAVE_GOFFICE
+#  include <pango/pango.h>
+#  include <goffice/data/go-data-simple.h>
+#  include <goffice/graph/gog-object.h>
+#  include <goffice/graph/gog-chart.h>
+#  include <goffice/graph/gog-graph.h>
+#  include <goffice/graph/gog-plot.h>
+#  include <goffice/graph/gog-label.h>
+#  include <goffice/graph/gog-series.h>
+#  include <goffice/graph/gog-data-set.h>
+#  include <goffice/graph/gog-style.h>
+#  include <goffice/graph/gog-styled-object.h>
+#endif
+
 #include <cutter/cut-module-impl.h>
 #include <cutter/cut-report.h>
 #include <cutter/cut-listener.h>
@@ -388,6 +402,12 @@ show_test_case (cairo_t *cr, CutTestCase *test_case, CutTestResultStatus status,
 }
 
 static void
+cb_complete_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
+                        CutPDFReport *report)
+{
+}
+
+static void
 show_summary (CutPDFReport *report, CutRunContext *run_context)
 {
     const GList *node;
@@ -455,18 +475,103 @@ show_summary (CutPDFReport *report, CutRunContext *run_context)
     height = after_y - y;
 }
 
+#ifdef HAVE_GOFFICE
 static void
-cb_complete_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
-                        CutPDFReport *report)
+graph_setup_title (GogGraph *graph, const gchar *title)
 {
-    CutCairoPieChart *chart;
+    GogLabel *label;
+    GOData *data;
+    GogStyle *style;
+    PangoFontDescription *desc;
 
-    cairo_move_to(report->context, 50, 50);
-    chart = cut_cairo_pie_chart_new(400, 300);
-    cut_cairo_pie_chart_draw(chart, report->context, run_context);
-    g_object_unref(chart);
+    label = g_object_new(GOG_LABEL_TYPE, NULL);
+    data = go_data_scalar_str_new(title, FALSE);
+    gog_dataset_set_dim(GOG_DATASET(label), 0, data, NULL);
+    gog_object_add_by_name(GOG_OBJECT(graph), "Title", GOG_OBJECT(label));
 
+    style = gog_styled_object_get_style(GOG_STYLED_OBJECT(label));
+    desc = pango_font_description_from_string("Sans bold 16");
+    gog_style_set_font_desc(style, desc);
+}
+
+static void
+graph_setup_chart (GogGraph *graph, CutRunContext *run_context)
+{
+    GogChart *chart;
+    GogPlot *pie;
+    GOData *data;
+    GogSeries *series;
+    const gchar *legends[CUT_TEST_RESULT_LAST];
+    double values[CUT_TEST_RESULT_LAST];
+
+    chart = GOG_CHART(gog_object_get_child_by_name(GOG_OBJECT(graph), "Chart"));
+    pie = gog_plot_new_by_name("GogPiePlot");
+    gog_object_add_by_name(GOG_OBJECT(chart), "Plot", GOG_OBJECT(pie));
+
+#define STATUS(status) (CUT_TEST_RESULT_ ## status)
+#define SET_DATA(status, n_statuses) G_STMT_START                       \
+{                                                                       \
+    legends[STATUS(status)] =                                           \
+        cut_test_result_status_to_signal_name(STATUS(status));          \
+    values[STATUS(status)] =                                            \
+        cut_run_context_get_n_ ## n_statuses(run_context);              \
+} G_STMT_END                                                            \
+
+    SET_DATA(SUCCESS, successes);
+    SET_DATA(NOTIFICATION, notifications);
+    SET_DATA(OMISSION, omissions);
+    SET_DATA(PENDING, pendings);
+    SET_DATA(FAILURE, failures);
+    SET_DATA(ERROR, errors);
+
+#undef STATUS
+#undef SET_DATA
+
+    series = gog_plot_new_series(pie);
+    data = go_data_vector_str_new(legends, CUT_TEST_RESULT_LAST, NULL);
+    gog_series_set_dim(series, 0, data, NULL);
+    data = go_data_vector_val_new(values, CUT_TEST_RESULT_LAST, NULL);
+    gog_series_set_dim(series, 1, data, NULL);
+    gog_object_add_by_name(GOG_OBJECT(chart), "Legend", NULL);
+}
+
+static GogGraph *
+graph_new (const gchar *title, CutRunContext *run_context)
+{
+    GogGraph *graph;
+
+    graph = g_object_new(GOG_GRAPH_TYPE, NULL);
+    gog_object_add_by_name(GOG_OBJECT(graph), "Chart", NULL);
+
+    graph_setup_title(graph, title);
+    graph_setup_chart(graph, run_context);
+
+    return graph;
+}
+
+static void
+draw_chart (CutPDFReport *report, CutRunContext *run_context)
+{
+    GogGraph *graph;
+
+    graph = graph_new("Test result report", run_context);
+    cairo_translate(report->context, 100, 50);
+    gog_graph_render_to_cairo(graph, report->context, 400, 300);
+    g_object_unref(graph);
+}
+#endif
+
+static void
+cb_complete_run (CutRunContext *run_context, gboolean success,
+                 CutPDFReport *report)
+{
+#ifdef HAVE_GOFFICE
+    cairo_save(report->context);
+    draw_chart(report, run_context);
+    cairo_restore(report->context);
     cairo_show_page(report->context);
+#endif
+
     init_page(report->context);
     show_summary(report, run_context);
 }
@@ -500,6 +605,7 @@ connect_to_run_context (CutPDFReport *report, CutRunContext *run_context)
     CONNECT(complete_test);
     CONNECT(complete_test_case);
     CONNECT(complete_test_suite);
+    CONNECT(complete_run);
 
     CONNECT(crashed);
 
@@ -510,10 +616,11 @@ static void
 disconnect_from_run_context (CutPDFReport *report, CutRunContext *run_context)
 {
 #define DISCONNECT(name)                                               \
-    g_signal_handlers_disconnect_by_func(run_context,                       \
+    g_signal_handlers_disconnect_by_func(run_context,                  \
                                          G_CALLBACK(cb_ ## name),      \
                                          report)
 
+    DISCONNECT(ready_test_suite);
     DISCONNECT(start_test_suite);
     DISCONNECT(start_test_case);
     DISCONNECT(start_test);
@@ -521,6 +628,7 @@ disconnect_from_run_context (CutPDFReport *report, CutRunContext *run_context)
     DISCONNECT(complete_test);
     DISCONNECT(complete_test_case);
     DISCONNECT(complete_test_suite);
+    DISCONNECT(complete_run);
 
     DISCONNECT(crashed);
 

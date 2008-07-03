@@ -4,6 +4,7 @@ INCLUDES = 			\
 
 AM_CFLAGS =			\
 	$(GLIB_CFLAGS)		\
+	$(GOFFICE_CFLAGS)	\
 	$(COVERAGE_CFLAGS)
 
 AM_LDFLAGS =							\
@@ -20,6 +21,7 @@ report_factory_module_LTLIBRARIES =	\
 
 LIBS =						\
 	$(GLIB_LIBS)				\
+	$(GOFFICE_LIBS)				\
 	$(top_builddir)/cutter/libcutter.la
 
 xml_la_CPPFLAGS =
