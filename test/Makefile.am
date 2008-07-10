@@ -34,6 +34,7 @@ noinst_LTLIBRARIES = 				\
 		test_cut_gassertions.la		\
 		test_cut_test_attribute.la	\
 		test_cut_test.la		\
+		test_cut_iterated_test.la	\
 		test_cut_test_result.la		\
 		test_cut_test_case.la		\
 		test_cut_test_suite.la		\
@@ -76,6 +77,7 @@ test_cutter_la_SOURCES		= test-cutter.c
 test_cut_assertions_la_SOURCES  = test-cut-assertions.c
 test_cut_gassertions_la_SOURCES = test-cut-gassertions.c
 test_cut_test_la_SOURCES        = test-cut-test.c
+test_cut_iterated_test_la_SOURCES = test-cut-iterated-test.c
 test_cut_test_result_la_SOURCES = test-cut-test-result.c
 test_cut_test_case_la_SOURCES   = test-cut-test-case.c
 test_cut_test_suite_la_SOURCES  = test-cut-test-suite.c

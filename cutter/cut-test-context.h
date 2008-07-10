@@ -74,9 +74,12 @@ void          cut_test_context_set_multi_thread
 gboolean      cut_test_context_is_multi_thread
                                               (CutTestContext *context);
 
-void          cut_test_context_set_user_data  (CutTestContext *context,
-                                               gpointer        user_data,
-                                               GDestroyNotify  notify);
+void          cut_test_context_shift_data     (CutTestContext *context);
+gboolean      cut_test_context_have_data      (CutTestContext *context);
+gconstpointer cut_test_context_get_current_data
+                                              (CutTestContext *context);
+const gchar  *cut_test_context_get_current_data_name
+                                              (CutTestContext *context);
 
 void          cut_test_context_set_failed     (CutTestContext *context,
                                                gboolean        failed);

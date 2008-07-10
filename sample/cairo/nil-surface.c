@@ -168,8 +168,9 @@ void
 test_nil_surface (void)
 {
     cairo_surface_t *surface;
-
+/*
     surface = cut_user_data;
     draw (cairo_create (surface));
+*/
 }
 

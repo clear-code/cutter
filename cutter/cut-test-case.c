@@ -316,7 +316,9 @@ run (CutTestCase *test_case, CutTest *test, CutRunContext *run_context)
 {
     CutTestCasePrivate *priv;
     CutTestContext *original_test_context, *test_context;
+    CutDataSetupFunction data_setup_function;
     gboolean success = TRUE;
+    gboolean need_to_run_test = TRUE;
     gboolean is_multi_thread;
     jmp_buf jump_buffer;
 
@@ -338,25 +340,61 @@ run (CutTestCase *test_case, CutTest *test, CutRunContext *run_context)
     priv->set_current_test_context(test_context);
 
     g_signal_emit_by_name(test_case, "start-test", test, test_context);
-    if (priv->setup) {
+
+    data_setup_function = cut_test_get_data_setup_function(test);
+    if (data_setup_function) {
         cut_test_context_set_jump(test_context, &jump_buffer);
         if (setjmp(jump_buffer) == 0) {
-            priv->setup();
+            data_setup_function();
         }
     }
 
     if (cut_test_context_is_failed(test_context)) {
         success = FALSE;
-    } else {
-        cut_test_context_set_test(test_context, test);
-        success = cut_test_run(test, test_context, run_context);
-        cut_test_context_set_test(test_context, NULL);
+        need_to_run_test = FALSE;
+    } else if (data_setup_function &&
+               !cut_test_context_have_data(test_context)) {
+        need_to_run_test = FALSE;
     }
 
-    if (priv->teardown) {
-        cut_test_context_set_jump(test_context, &jump_buffer);
-        if (setjmp(jump_buffer) == 0) {
-            priv->teardown();
+    while (need_to_run_test) {
+        if (priv->setup) {
+            cut_test_context_set_jump(test_context, &jump_buffer);
+            if (setjmp(jump_buffer) == 0) {
+                priv->setup();
+            }
+        }
+
+        if (cut_test_context_is_failed(test_context)) {
+            success = FALSE;
+        } else {
+            cut_test_context_set_test(test_context, test);
+            if (data_setup_function) {
+                const gchar *data_name;
+                gconstpointer data;
+
+                data_name = cut_test_context_get_current_data_name(test_context);
+                data = cut_test_context_get_current_data(test_context);
+                cut_test_bind_data(test, data_name, data);
+            }
+            success = cut_test_run(test, test_context, run_context);
+            if (data_setup_function)
+                cut_test_unbind_data(test);
+            cut_test_context_set_test(test_context, NULL);
+        }
+
+        if (priv->teardown) {
+            cut_test_context_set_jump(test_context, &jump_buffer);
+            if (setjmp(jump_buffer) == 0) {
+                priv->teardown();
+            }
+        }
+
+        if (data_setup_function) {
+            cut_test_context_shift_data(test_context);
+            need_to_run_test = cut_test_context_have_data(test_context);
+        } else {
+            need_to_run_test = FALSE;
         }
     }
     g_signal_emit_by_name(test_case, "complete-test", test, test_context);
@@ -386,6 +424,8 @@ cut_test_case_run_tests (CutTestCase *test_case, CutRunContext *run_context,
     CutTestResult *result;
     gboolean all_success = TRUE;
 
+    /* FIXME: expand iterated tests in tests */
+
     cut_run_context_prepare_test_case(run_context, test_case);
     g_signal_emit_by_name(test_case, "ready", g_list_length((GList *)tests));
     g_signal_emit_by_name(CUT_TEST(test_case), "start");
@@ -397,13 +437,12 @@ cut_test_case_run_tests (CutTestCase *test_case, CutRunContext *run_context,
     }
 
     for (list = tests; list; list = g_list_next(list)) {
-        if (!list->data)
+        CutTest *test = list->data;
+
+        if (!test)
             continue;
 
-        if (CUT_IS_TEST(list->data)) {
-            CutTest *test;
-
-            test = CUT_TEST(list->data);
+        if (CUT_IS_TEST(test)) {
             g_signal_connect(test, "success", G_CALLBACK(cb_test_status),
                              &status);
             g_signal_connect(test, "failure", G_CALLBACK(cb_test_status),

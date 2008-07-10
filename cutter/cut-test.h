@@ -39,6 +39,8 @@ typedef struct _CutTestClass    CutTestClass;
 typedef struct _CutTestResultClass    CutTestResultClass;
 
 typedef void    (*CutTestFunction)     (void);
+typedef void    (*CutIteratedTestFunction) (gconstpointer data);
+typedef void    (*CutDataSetupFunction)(void);
 typedef void    (*CutSetupFunction)    (void);
 typedef void    (*CutTeardownFunction) (void);
 typedef CutTestContext *(*CutGetCurrentTestContextFunction) (void);
@@ -86,6 +88,9 @@ GType        cut_test_get_type  (void) G_GNUC_CONST;
 
 CutTest     *cut_test_new                 (const gchar    *name,
                                            CutTestFunction function);
+CutTest     *cut_iterated_test_new        (const gchar    *name,
+                                           CutIteratedTestFunction function,
+                                           CutDataSetupFunction data_setup_function);
 CutTest     *cut_test_new_empty           (void);
 gboolean     cut_test_run                 (CutTest        *test,
                                            CutTestContext *test_context,
@@ -95,6 +100,12 @@ void         cut_test_stop_timer          (CutTest     *test);
 const gchar *cut_test_get_name            (CutTest     *test);
 void         cut_test_set_name            (CutTest     *test,
                                            const gchar *name);
+void         cut_test_bind_data           (CutTest     *test,
+                                           const gchar *name,
+                                           gconstpointer data);
+void         cut_test_unbind_data         (CutTest     *test);
+CutDataSetupFunction cut_test_get_data_setup_function(CutTest *test);
+const gchar *cut_test_get_full_name       (CutTest     *test);
 const gchar *cut_test_get_description     (CutTest     *test);
 gdouble      cut_test_get_elapsed         (CutTest     *test);
 void         cut_test_set_elapsed         (CutTest     *test,

@@ -38,8 +38,13 @@ typedef struct _CutTestPrivate	CutTestPrivate;
 struct _CutTestPrivate
 {
     gchar *name;
+    gchar *full_name;
     gchar *element_name;
+    const gchar *data_name;
+    gconstpointer data;
     CutTestFunction test_function;
+    CutIteratedTestFunction iterated_test_function;
+    CutDataSetupFunction data_setup_function;
     GTimer *timer;
     gdouble elapsed;
     GHashTable *attributes;
@@ -50,7 +55,9 @@ enum
     PROP_0,
     PROP_NAME,
     PROP_ELEMENT_NAME,
-    PROP_TEST_FUNCTION
+    PROP_TEST_FUNCTION,
+    PROP_ITERATED_TEST_FUNCTION,
+    PROP_DATA_SETUP_FUNCTION
 };
 
 enum
@@ -119,6 +126,20 @@ cut_test_class_init (CutTestClass *klass)
                                 "The function for test",
                                 G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class, PROP_TEST_FUNCTION, spec);
+
+    spec = g_param_spec_pointer("iterated-test-function",
+                                "Iterated Test Function",
+                                "The function for iterated test",
+                                G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+    g_object_class_install_property(gobject_class, PROP_ITERATED_TEST_FUNCTION,
+                                    spec);
+
+    spec = g_param_spec_pointer("data-setup-function",
+                                "Data Setup Function",
+                                "The function for setup test data",
+                                G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+    g_object_class_install_property(gobject_class, PROP_DATA_SETUP_FUNCTION,
+                                    spec);
 
     cut_test_signals[START]
         = g_signal_new ("start",
@@ -224,11 +245,27 @@ cut_test_init (CutTest *test)
 {
     CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(test);
 
+    priv->full_name = NULL;
+
     priv->test_function = NULL;
+    priv->iterated_test_function = NULL;
+    priv->data_setup_function = NULL;
     priv->timer = NULL;
     priv->elapsed = -1.0;
     priv->attributes = g_hash_table_new_full(g_str_hash, g_str_equal,
                                              g_free, g_free);
+
+    priv->data_name = NULL;
+    priv->data = NULL;
+}
+
+static void
+free_full_name (CutTestPrivate *priv)
+{
+    if (priv->full_name) {
+        g_free(priv->full_name);
+        priv->full_name = NULL;
+    }
 }
 
 static void
@@ -247,6 +284,8 @@ dispose (GObject *object)
     }
 
     priv->test_function = NULL;
+    priv->iterated_test_function = NULL;
+    priv->data_setup_function = NULL;
 
     if (priv->timer) {
         g_timer_destroy(priv->timer);
@@ -257,6 +296,8 @@ dispose (GObject *object)
         g_hash_table_unref(priv->attributes);
         priv->attributes = NULL;
     }
+
+    free_full_name(priv);
 
     G_OBJECT_CLASS(cut_test_parent_class)->dispose(object);
 }
@@ -283,6 +324,12 @@ set_property (GObject      *object,
       case PROP_TEST_FUNCTION:
         priv->test_function = g_value_get_pointer(value);
         break;
+      case PROP_ITERATED_TEST_FUNCTION:
+        priv->iterated_test_function = g_value_get_pointer(value);
+        break;
+      case PROP_DATA_SETUP_FUNCTION:
+        priv->data_setup_function = g_value_get_pointer(value);
+        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
@@ -307,6 +354,12 @@ get_property (GObject    *object,
       case PROP_TEST_FUNCTION:
         g_value_set_pointer(value, priv->test_function);
         break;
+      case PROP_ITERATED_TEST_FUNCTION:
+        g_value_set_pointer(value, priv->iterated_test_function);
+        break;
+      case PROP_DATA_SETUP_FUNCTION:
+        g_value_set_pointer(value, priv->data_setup_function);
+        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
@@ -324,6 +377,18 @@ cut_test_new (const gchar *name, CutTestFunction function)
 }
 
 CutTest *
+cut_iterated_test_new (const gchar *name, CutIteratedTestFunction function,
+                       CutDataSetupFunction data_setup_function)
+{
+    return g_object_new(CUT_TYPE_TEST,
+                        "element-name", "test",
+                        "name", name,
+                        "iterated-test-function", function,
+                        "data-setup-function", data_setup_function,
+                        NULL);
+}
+
+CutTest *
 cut_test_new_empty (void)
 {
     return cut_test_new(NULL, NULL);
@@ -332,12 +397,22 @@ cut_test_new_empty (void)
 gboolean
 cut_test_run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
 {
-    CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(test);
+    CutTestPrivate *priv;
     gboolean success = TRUE;
+    gboolean iterated_test;
     jmp_buf jump_buffer;
 
-    if (!priv->test_function)
-        return FALSE;
+    priv = CUT_TEST_GET_PRIVATE(test);
+
+    iterated_test = priv->data != NULL;
+
+    if (iterated_test) {
+        if (!priv->iterated_test_function)
+            return FALSE;
+    } else {
+        if (!priv->test_function)
+            return FALSE;
+    }
 
     cut_run_context_prepare_test(run_context, test);
 
@@ -346,11 +421,15 @@ cut_test_run (CutTest *test, CutTestContext *test_context, CutRunContext *run_co
     cut_test_context_set_jump(test_context, &jump_buffer);
     if (setjmp(jump_buffer) == 0) {
         if (priv->timer) {
-            g_timer_start(priv->timer);
+            g_timer_continue(priv->timer);
         } else {
             priv->timer = g_timer_new();
         }
-        priv->test_function();
+        if (iterated_test) {
+            priv->iterated_test_function(priv->data);
+        } else {
+            priv->test_function();
+        }
     }
     g_timer_stop(priv->timer);
 
@@ -388,9 +467,57 @@ cut_test_set_name (CutTest *test, const gchar *name)
         g_free(priv->name);
         priv->name = NULL;
     }
-    
+
+    free_full_name(priv);
+
     if (name)
         priv->name = g_strdup(name);
+}
+
+void
+cut_test_bind_data (CutTest *test, const gchar *name, gconstpointer data)
+{
+    CutTestPrivate *priv;
+
+    priv = CUT_TEST_GET_PRIVATE(test);
+
+    priv->data_name = name;
+    priv->data = data;
+
+    free_full_name(priv);
+}
+
+void
+cut_test_unbind_data (CutTest *test)
+{
+    cut_test_bind_data(test, NULL, NULL);
+}
+
+CutDataSetupFunction
+cut_test_get_data_setup_function (CutTest *test)
+{
+    return CUT_TEST_GET_PRIVATE(test)->data_setup_function;
+}
+
+const gchar *
+cut_test_get_full_name (CutTest *test)
+{
+    CutTestPrivate *priv;
+
+    priv = CUT_TEST_GET_PRIVATE(test);
+    if (!priv->full_name) {
+        if (priv->name && priv->data_name) {
+            priv->full_name = g_strconcat(priv->name,
+                                          " (", priv->data_name, ")",
+                                          NULL);
+        } else if (priv->name) {
+            priv->full_name = g_strdup(priv->name);
+        } else if (priv->data_name) {
+            priv->full_name = g_strconcat("(", priv->data_name, ")", NULL);
+        }
+    }
+
+    return priv->full_name;
 }
 
 const gchar *

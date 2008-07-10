@@ -37,7 +37,8 @@
 
 #define TEST_SUITE_SO_NAME_PREFIX "suite_"
 #define TEST_NAME_PREFIX "test_"
-#define ATTRIBUTE_PREFIX "attributes_"
+#define DATA_SETUP_FUNCTION_NAME_PREFIX "data_"
+#define ATTRIBUTES_FUNCTION_NAME_PREFIX "attributes_"
 #define CUT_LOADER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_LOADER, CutLoaderPrivate))
 
 typedef enum {
@@ -370,14 +371,15 @@ is_including_test_name (const gchar *function_name, const gchar *test_name)
 static gboolean
 is_valid_attribute_function_name (const gchar *function_name, const gchar *test_name)
 {
-    return !g_str_has_prefix(function_name, ATTRIBUTE_PREFIX) &&
+    return !g_str_has_prefix(function_name, ATTRIBUTES_FUNCTION_NAME_PREFIX) &&
+        !g_str_has_prefix(function_name, DATA_SETUP_FUNCTION_NAME_PREFIX) &&
         is_including_test_name(function_name, test_name);
 }
 
 static gboolean
 is_valid_attributes_function_name (const gchar *function_name, const gchar *test_name)
 {
-    return g_str_has_prefix(function_name, ATTRIBUTE_PREFIX) &&
+    return g_str_has_prefix(function_name, ATTRIBUTES_FUNCTION_NAME_PREFIX) &&
         is_including_test_name(function_name, test_name);
 }
 
@@ -549,7 +551,22 @@ cut_loader_load_test_case (CutLoader *loader)
         g_module_symbol(priv->module, name, (gpointer)&function);
         if (function) {
             GList *attributes = NULL;
-            test = cut_test_new(name, function);
+            gchar *data_setup_function_name;
+            CutDataSetupFunction data_setup_function = NULL;
+
+            data_setup_function_name =
+                g_strconcat(DATA_SETUP_FUNCTION_NAME_PREFIX,
+                            name + strlen(TEST_NAME_PREFIX),
+                            NULL);
+            g_module_symbol(priv->module, data_setup_function_name,
+                            (gpointer)&data_setup_function);
+
+            if (data_setup_function)
+                test = cut_iterated_test_new(name,
+                                             (CutIteratedTestFunction)function,
+                                             data_setup_function);
+            else
+                test = cut_test_new(name, function);
             if (cut_loader_support_attribute(loader))
                 attributes = collect_attributes(priv, name);
             if (attributes) {

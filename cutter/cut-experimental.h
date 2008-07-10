@@ -33,19 +33,6 @@ extern "C" {
  */
 
 /**
- * cut_user_data:
- *
- * This is useful only if you make a custom test runner like
- * cutter command. You can pass a data from your custom test
- * runner to test programs. They will receive your data
- * through this.
- *
- * Returns: a data from a program who invokes your test.
- */
-#define cut_user_data                                               \
-    (cut_test_context_get_user_data(get_current_test_context()))
-
-/**
  * cut_fork:
  *
  * Makes child process.
@@ -157,6 +144,70 @@ extern "C" {
  */
 #define cut_fork_get_stderr_message(pid)                            \
     cut_test_context_get_forked_stderr_message(get_current_test_context(), pid)
+
+
+/**
+ * cut_add_data:
+ * @first_data_name: The first data name.
+ * @...: The data and destroy function of the first data,
+ *       followed optionally by more
+ *       name/data/destroy_function triples
+ *
+ * Adds data to use iterated test.
+ *
+ * e.g.:
+ * |[
+ * typedef struct _MyTestData
+ * {
+ *     char *expected;
+ *     int integer;
+ * } MyTestData;
+ *
+ * static MyTestData *
+ * new_my_test_data (char *expected, int integer)
+ * {
+ *     MyTestData *data;
+ *
+ *     data = malloc(sizeof(MyTestData));
+ *     data->expected = strdup(expected);
+ *     data->integer = integer;
+ *
+ *     return data;
+ * }
+ *
+ * static void
+ * free_my_test_data (MyTestData *data)
+ * {
+ *     free(data->expected);
+ *     free(data);
+ * }
+ *
+ * void
+ * data_my_translate(void)
+ * {
+ *     cut_add_data("simple data", \/\* the first data \*\/
+ *                  new_my_test_data("first", 1)),
+ *                  free_my_test_data,
+ *                  "complex data", \/\* the second data \*\/,
+ *                  new_my_test_data("a hundred eleven", 111),
+ *                  free_my_test_data);
+ * }
+ *
+ * void
+ * test_my_translate(void *data)
+ * {
+ *      MyTestData *test_data = data;
+ *      cut_assert_equal_string(data->expected,
+ *                              my_translate(data->integer));
+ * }
+ * ]|
+ *
+ * Since: 1.0.3
+ */
+#define cut_add_data(first_data_name, ...)                      \
+    cut_test_context_add_data(get_current_test_context(),       \
+                              first_data_name, ## __VA_ARGS__,  \
+                              NULL)
 
 #ifdef __cplusplus
 }

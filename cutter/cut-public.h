@@ -41,6 +41,8 @@ extern "C" {
 #endif
 
 
+typedef void    (*CutDestroyFunction)     (void *data);
+
 typedef struct _CutTestContext     CutTestContext;
 
 typedef struct _CutTestAttribute CutTestAttribute;
@@ -116,7 +118,10 @@ void  cut_utils_get_fixture_data_string_and_path(CutTestContext *context,
                                                  const char *path,
                                                  ...) CUT_GNUC_NULL_TERMINATED;
 
-void *cut_test_context_get_user_data        (CutTestContext *context);
+void  cut_test_context_add_data             (CutTestContext *context,
+                                             const char     *first_data_name,
+                                             ...) CUT_GNUC_NULL_TERMINATED;
+
 int   cut_test_context_trap_fork            (CutTestContext *context,
                                              const char     *function_name,
                                              const char     *filename,

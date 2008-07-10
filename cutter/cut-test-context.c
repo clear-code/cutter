@@ -65,11 +65,19 @@ struct _CutTestContextPrivate
     GList *taken_string_arrays;
     GList *taken_objects;
     GList *taken_errors;
-    gpointer user_data;
-    GDestroyNotify user_data_destroy_notify;
+    GList *current_data;
+    GList *data_list;
     GList *processes;
     gchar *fixture_data_dir;
     GHashTable *cached_fixture_data;
+};
+
+typedef struct _CutTestData	CutTestData;
+struct _CutTestData
+{
+    gchar *name;
+    gpointer data;
+    CutDestroyFunction destroy_function;
 };
 
 enum
@@ -91,6 +99,39 @@ static void get_property   (GObject         *object,
                             guint            prop_id,
                             GValue          *value,
                             GParamSpec      *pspec);
+
+
+static CutTestData *
+cut_test_data_new (const gchar *name, gpointer data,
+                   GDestroyNotify destroy_function)
+{
+    CutTestData *test_data;
+
+    test_data = g_slice_new(CutTestData);
+    test_data->name = g_strdup(name);
+    test_data->data = data;
+    test_data->destroy_function = destroy_function;
+
+    return test_data;
+}
+
+static void
+cut_test_data_free (CutTestData *data)
+{
+    if (!data)
+        return;
+
+    if (data->name)
+        g_free(data->name);
+
+    if (data->destroy_function)
+        data->destroy_function(data->data);
+
+    data->data = NULL;
+    data->destroy_function = NULL;
+
+    g_slice_free(CutTestData, data);
+}
 
 static void
 cut_test_context_class_init (CutTestContextClass *klass)
@@ -146,8 +187,8 @@ cut_test_context_init (CutTestContext *context)
     priv->taken_objects = NULL;
     priv->taken_errors = NULL;
 
-    priv->user_data = NULL;
-    priv->user_data_destroy_notify = NULL;
+    priv->data_list = NULL;
+    priv->current_data = NULL;
 
     priv->processes = NULL;
 
@@ -204,9 +245,12 @@ dispose (GObject *object)
         priv->taken_errors = NULL;
     }
 
-    if (priv->user_data && priv->user_data_destroy_notify)
-        priv->user_data_destroy_notify(priv->user_data);
-    priv->user_data = NULL;
+    if (priv->data_list) {
+        g_list_foreach(priv->data_list, (GFunc)cut_test_data_free, NULL);
+        g_list_free(priv->data_list);
+        priv->data_list = NULL;
+    }
+    priv->current_data = NULL;
 
     if (priv->fixture_data_dir) {
         g_free(priv->fixture_data_dir);
@@ -340,23 +384,84 @@ cut_test_context_set_test (CutTestContext *context, CutTest *test)
     priv->test = test;
 }
 
-gpointer
-cut_test_context_get_user_data (CutTestContext *context)
+void
+cut_test_context_add_data (CutTestContext *context, const gchar *first_data_name,
+                           ...)
 {
-    return CUT_TEST_CONTEXT_GET_PRIVATE(context)->user_data;
+    CutTestContextPrivate *priv;
+    const gchar *name;
+    va_list args;
+
+    priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+
+    name = first_data_name;
+    va_start(args, first_data_name);
+    while (name) {
+        CutTestData *test_data;
+        gpointer data;
+        CutDestroyFunction destroy_function;
+
+        data = va_arg(args, gpointer);
+        destroy_function = va_arg(args, CutDestroyFunction);
+        test_data = cut_test_data_new(name, data, destroy_function);
+        priv->data_list = g_list_prepend(priv->data_list, test_data);
+        if (!priv->current_data)
+            priv->current_data = priv->data_list;
+
+        name = va_arg(args, gchar *);
+    }
+    va_end(args);
 }
 
 void
-cut_test_context_set_user_data (CutTestContext *context, gpointer user_data,
-                                GDestroyNotify notify)
+cut_test_context_shift_data (CutTestContext *context)
 {
-    CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+    CutTestContextPrivate *priv;
 
-    if (priv->user_data && priv->user_data_destroy_notify)
-        priv->user_data_destroy_notify(priv->user_data);
+    priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
 
-    priv->user_data = user_data;
-    priv->user_data_destroy_notify = notify;
+    if (priv->current_data)
+        priv->current_data = g_list_previous(priv->current_data);
+}
+
+gboolean
+cut_test_context_have_data (CutTestContext *context)
+{
+    return CUT_TEST_CONTEXT_GET_PRIVATE(context)->current_data != NULL;
+}
+
+static CutTestData *
+get_current_data (CutTestContext *context)
+{
+    CutTestContextPrivate *priv;
+    CutTestData *data;
+
+    priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+    g_return_val_if_fail(priv->current_data != NULL, NULL);
+
+    return priv->current_data->data;
+}
+
+gconstpointer
+cut_test_context_get_current_data (CutTestContext *context)
+{
+    CutTestData *data;
+
+    data = get_current_data(context);
+    g_return_val_if_fail(data != NULL, NULL);
+
+    return data->data;
+}
+
+const gchar *
+cut_test_context_get_current_data_name (CutTestContext *context)
+{
+    CutTestData *data;
+
+    data = get_current_data(context);
+    g_return_val_if_fail(data != NULL, NULL);
+
+    return data->name;
 }
 
 void
@@ -448,6 +553,8 @@ cut_test_context_register_result (CutTestContext *context,
     }
     va_end(args);
 
+    if (priv->test)
+        cut_test_get_name(priv->test);
     result = cut_test_result_new(status,
                                  priv->test, priv->test_case, priv->test_suite,
                                  user_message, system_message,
