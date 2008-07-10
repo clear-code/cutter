@@ -33,6 +33,7 @@
 #endif
 
 #include "cut-loader.h"
+#include "cut-test-iterator.h"
 #include "cut-experimental.h"
 
 #define TEST_SUITE_SO_NAME_PREFIX "suite_"
@@ -561,12 +562,18 @@ cut_loader_load_test_case (CutLoader *loader)
             g_module_symbol(priv->module, data_setup_function_name,
                             (gpointer)&data_setup_function);
 
-            if (data_setup_function)
-                test = cut_iterated_test_new(name,
-                                             (CutIteratedTestFunction)function,
-                                             data_setup_function);
-            else
+            if (data_setup_function) {
+                CutTestIterator *test_iterator;
+                CutIteratedTestFunction test_function;
+
+                test_function = (CutIteratedTestFunction)function;
+                test_iterator = cut_test_iterator_new(name,
+                                                      test_function,
+                                                      data_setup_function);
+                test = CUT_TEST(test_iterator);
+            } else {
                 test = cut_test_new(name, function);
+            }
             if (cut_loader_support_attribute(loader))
                 attributes = collect_attributes(priv, name);
             if (attributes) {

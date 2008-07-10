@@ -32,6 +32,7 @@
 
 #include "cut-marshalers.h"
 #include "cut-test-result.h"
+#include "cut-test-iterator.h"
 
 #define CUT_TEST_CASE_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_CASE, CutTestCasePrivate))
 
@@ -316,9 +317,7 @@ run (CutTestCase *test_case, CutTest *test, CutRunContext *run_context)
 {
     CutTestCasePrivate *priv;
     CutTestContext *original_test_context, *test_context;
-    CutDataSetupFunction data_setup_function;
     gboolean success = TRUE;
-    gboolean need_to_run_test = TRUE;
     gboolean is_multi_thread;
     jmp_buf jump_buffer;
 
@@ -336,70 +335,39 @@ run (CutTestCase *test_case, CutTest *test, CutRunContext *run_context)
 
     test_context = cut_test_context_new(NULL, test_case, NULL);
     cut_test_context_set_multi_thread(test_context, is_multi_thread);
-    original_test_context = priv->get_current_test_context();
-    priv->set_current_test_context(test_context);
+    original_test_context = cut_test_case_get_current_test_context(test_case);
+    cut_test_case_set_current_test_context(test_case, test_context);
 
     g_signal_emit_by_name(test_case, "start-test", test, test_context);
 
-    data_setup_function = cut_test_get_data_setup_function(test);
-    if (data_setup_function) {
+    if (priv->setup) {
         cut_test_context_set_jump(test_context, &jump_buffer);
         if (setjmp(jump_buffer) == 0) {
-            data_setup_function();
+            priv->setup();
         }
     }
 
     if (cut_test_context_is_failed(test_context)) {
         success = FALSE;
-        need_to_run_test = FALSE;
-    } else if (data_setup_function &&
-               !cut_test_context_have_data(test_context)) {
-        need_to_run_test = FALSE;
+    } else {
+        cut_test_context_set_test(test_context, test);
+        if (CUT_IS_TEST_ITERATOR(test))
+            success = cut_test_iterator_run(CUT_TEST_ITERATOR(test),
+                                            test_context, run_context);
+        else
+            success = cut_test_run(test, test_context, run_context);
+        cut_test_context_set_test(test_context, NULL);
     }
 
-    while (need_to_run_test) {
-        if (priv->setup) {
-            cut_test_context_set_jump(test_context, &jump_buffer);
-            if (setjmp(jump_buffer) == 0) {
-                priv->setup();
-            }
-        }
-
-        if (cut_test_context_is_failed(test_context)) {
-            success = FALSE;
-        } else {
-            cut_test_context_set_test(test_context, test);
-            if (data_setup_function) {
-                const gchar *data_name;
-                gconstpointer data;
-
-                data_name = cut_test_context_get_current_data_name(test_context);
-                data = cut_test_context_get_current_data(test_context);
-                cut_test_bind_data(test, data_name, data);
-            }
-            success = cut_test_run(test, test_context, run_context);
-            if (data_setup_function)
-                cut_test_unbind_data(test);
-            cut_test_context_set_test(test_context, NULL);
-        }
-
-        if (priv->teardown) {
-            cut_test_context_set_jump(test_context, &jump_buffer);
-            if (setjmp(jump_buffer) == 0) {
-                priv->teardown();
-            }
-        }
-
-        if (data_setup_function) {
-            cut_test_context_shift_data(test_context);
-            need_to_run_test = cut_test_context_have_data(test_context);
-        } else {
-            need_to_run_test = FALSE;
+    if (priv->teardown) {
+        cut_test_context_set_jump(test_context, &jump_buffer);
+        if (setjmp(jump_buffer) == 0) {
+            priv->teardown();
         }
     }
     g_signal_emit_by_name(test_case, "complete-test", test, test_context);
 
-    priv->set_current_test_context(original_test_context);
+    cut_test_case_set_current_test_context(test_case, original_test_context);
     g_object_unref(test_context);
 
     return success;
@@ -466,9 +434,7 @@ cut_test_case_run_tests (CutTestCase *test_case, CutRunContext *run_context,
     }
 
     result = cut_test_result_new(status,
-                                 NULL,
-                                 test_case,
-                                 NULL,
+                                 NULL, test_case, NULL, NULL,
                                  NULL, NULL,
                                  NULL, NULL, 0);
     g_signal_emit_by_name(CUT_TEST(test_case),
@@ -518,6 +484,22 @@ cut_test_case_run (CutTestCase *test_case, CutRunContext *run_context)
 
     test_names = cut_run_context_get_target_test_names(run_context);
     return cut_test_case_run_with_filter(test_case, run_context, (const gchar **)test_names);
+}
+
+CutTestContext *
+cut_test_case_get_current_test_context (CutTestCase *test_case)
+{
+    return CUT_TEST_CASE_GET_PRIVATE(test_case)->get_current_test_context();
+}
+
+void
+cut_test_case_set_current_test_context (CutTestCase *test_case,
+                                        CutTestContext *test_context)
+{
+    CutTestCasePrivate *priv;
+
+    priv = CUT_TEST_CASE_GET_PRIVATE(test_case);
+    priv->set_current_test_context(test_context);
 }
 
 /*

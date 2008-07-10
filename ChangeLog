@@ -1,5 +1,10 @@
 2008-07-10  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/: add CutTestData and CutTestIterator. need to implement
+	CutIteratedTest. still too buggy.
+
+	* test/test-cut-test-result.c: follow the above changes.
+
 	* cutter/: add experimental iterated test support. (just work for now)
 
 	* test/Makefile.am, test/test-cut-iterated-test.c: add a sample

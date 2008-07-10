@@ -36,6 +36,7 @@
 #include "cut-test-context.h"
 #include "cut-test-suite.h"
 #include "cut-test-result.h"
+#include "cut-test-data.h"
 #include "cut-process.h"
 #include "cut-utils.h"
 
@@ -72,14 +73,6 @@ struct _CutTestContextPrivate
     GHashTable *cached_fixture_data;
 };
 
-typedef struct _CutTestData	CutTestData;
-struct _CutTestData
-{
-    gchar *name;
-    gpointer data;
-    CutDestroyFunction destroy_function;
-};
-
 enum
 {
     PROP_0,
@@ -100,38 +93,6 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 
-
-static CutTestData *
-cut_test_data_new (const gchar *name, gpointer data,
-                   GDestroyNotify destroy_function)
-{
-    CutTestData *test_data;
-
-    test_data = g_slice_new(CutTestData);
-    test_data->name = g_strdup(name);
-    test_data->data = data;
-    test_data->destroy_function = destroy_function;
-
-    return test_data;
-}
-
-static void
-cut_test_data_free (CutTestData *data)
-{
-    if (!data)
-        return;
-
-    if (data->name)
-        g_free(data->name);
-
-    if (data->destroy_function)
-        data->destroy_function(data->data);
-
-    data->data = NULL;
-    data->destroy_function = NULL;
-
-    g_slice_free(CutTestData, data);
-}
 
 static void
 cut_test_context_class_init (CutTestContextClass *klass)
@@ -246,7 +207,7 @@ dispose (GObject *object)
     }
 
     if (priv->data_list) {
-        g_list_foreach(priv->data_list, (GFunc)cut_test_data_free, NULL);
+        g_list_foreach(priv->data_list, (GFunc)g_object_unref, NULL);
         g_list_free(priv->data_list);
         priv->data_list = NULL;
     }
@@ -430,11 +391,10 @@ cut_test_context_have_data (CutTestContext *context)
     return CUT_TEST_CONTEXT_GET_PRIVATE(context)->current_data != NULL;
 }
 
-static CutTestData *
-get_current_data (CutTestContext *context)
+CutTestData *
+cut_test_context_get_current_data (CutTestContext *context)
 {
     CutTestContextPrivate *priv;
-    CutTestData *data;
 
     priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
     g_return_val_if_fail(priv->current_data != NULL, NULL);
@@ -442,26 +402,10 @@ get_current_data (CutTestContext *context)
     return priv->current_data->data;
 }
 
-gconstpointer
-cut_test_context_get_current_data (CutTestContext *context)
+guint
+cut_test_context_get_n_data (CutTestContext *context)
 {
-    CutTestData *data;
-
-    data = get_current_data(context);
-    g_return_val_if_fail(data != NULL, NULL);
-
-    return data->data;
-}
-
-const gchar *
-cut_test_context_get_current_data_name (CutTestContext *context)
-{
-    CutTestData *data;
-
-    data = get_current_data(context);
-    g_return_val_if_fail(data != NULL, NULL);
-
-    return data->name;
+    return g_list_length(CUT_TEST_CONTEXT_GET_PRIVATE(context)->data_list);
 }
 
 void
@@ -470,6 +414,12 @@ cut_test_context_set_jump (CutTestContext *context, jmp_buf *buffer)
     CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
 
     priv->jump_buffer = buffer;
+}
+
+jmp_buf *
+cut_test_context_get_jump (CutTestContext *context)
+{
+    return CUT_TEST_CONTEXT_GET_PRIVATE(context)->jump_buffer;
 }
 
 void
@@ -536,12 +486,14 @@ cut_test_context_register_result (CutTestContext *context,
                                   const gchar *message,
                                   ...)
 {
-    CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+    CutTestContextPrivate *priv;
     CutTestResult *result;
+    CutTestData *test_data = NULL;
     const gchar *system_message;
     gchar *user_message = NULL, *user_message_format;
     va_list args;
 
+    priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
     if (cut_test_result_status_is_critical(status))
         priv->failed = TRUE;
 
@@ -553,10 +505,11 @@ cut_test_context_register_result (CutTestContext *context,
     }
     va_end(args);
 
-    if (priv->test)
-        cut_test_get_name(priv->test);
+    if (priv->current_data)
+        test_data = priv->current_data->data;
     result = cut_test_result_new(status,
                                  priv->test, priv->test_case, priv->test_suite,
+                                 test_data,
                                  user_message, system_message,
                                  function_name, filename, line);
     if (user_message)

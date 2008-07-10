@@ -27,6 +27,7 @@
 #include <cutter/cut-private.h>
 #include <cutter/cut-public.h>
 #include <cutter/cut-gpublic.h>
+#include <cutter/cut-test-data.h>
 
 G_BEGIN_DECLS
 
@@ -76,10 +77,9 @@ gboolean      cut_test_context_is_multi_thread
 
 void          cut_test_context_shift_data     (CutTestContext *context);
 gboolean      cut_test_context_have_data      (CutTestContext *context);
-gconstpointer cut_test_context_get_current_data
+CutTestData  *cut_test_context_get_current_data
                                               (CutTestContext *context);
-const gchar  *cut_test_context_get_current_data_name
-                                              (CutTestContext *context);
+guint         cut_test_context_get_n_data     (CutTestContext *context);
 
 void          cut_test_context_set_failed     (CutTestContext *context,
                                                gboolean        failed);
@@ -87,6 +87,7 @@ gboolean      cut_test_context_is_failed      (CutTestContext *context);
 
 void          cut_test_context_set_jump       (CutTestContext *context,
                                                jmp_buf        *buffer);
+jmp_buf      *cut_test_context_get_jump       (CutTestContext *context);
 void          cut_test_context_emit_signal    (CutTestContext *context,
                                                CutTestResult  *result);
 

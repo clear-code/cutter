@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2008  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -51,6 +51,7 @@ CutTestResult *cut_test_result_new        (CutTestResultStatus status,
                                            CutTest *test,
                                            CutTestCase *test_case,
                                            CutTestSuite *test_suite,
+                                           CutTestData *test_data,
                                            const gchar *user_message,
                                            const gchar *system_message,
                                            const gchar *function_name,
@@ -64,11 +65,12 @@ CutTestResult *cut_test_result_new_from_xml
 
 CutTestResultStatus  cut_test_result_get_status        (CutTestResult *result);
 CutTest             *cut_test_result_get_test          (CutTestResult *result);
-CutTestCase         *cut_test_result_get_test_case     (CutTestResult *result);
 const gchar         *cut_test_result_get_test_name     (CutTestResult *result);
+CutTestCase         *cut_test_result_get_test_case     (CutTestResult *result);
 const gchar         *cut_test_result_get_test_case_name(CutTestResult *result);
 CutTestSuite        *cut_test_result_get_test_suite    (CutTestResult *result);
 const gchar         *cut_test_result_get_test_suite_name(CutTestResult *result);
+CutTestData         *cut_test_result_get_test_data     (CutTestResult *result);
 const gchar         *cut_test_result_get_message       (CutTestResult *result);
 const gchar         *cut_test_result_get_user_message  (CutTestResult *result);
 const gchar         *cut_test_result_get_system_message(CutTestResult *result);
@@ -85,6 +87,8 @@ void cut_test_result_set_test_case       (CutTestResult *result,
                                           CutTestCase *test_case);
 void cut_test_result_set_test_suite      (CutTestResult *result,
                                           CutTestSuite  *test_suite);
+void cut_test_result_set_test_data       (CutTestResult *result,
+                                          CutTestData   *test_data);
 void cut_test_result_set_message         (CutTestResult *result,
                                           const gchar *message);
 void cut_test_result_set_user_message    (CutTestResult *result,

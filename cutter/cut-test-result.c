@@ -42,6 +42,7 @@ struct _CutTestResultPrivate
     CutTest *test;
     CutTestCase *test_case;
     CutTestSuite *test_suite;
+    CutTestData *test_data;
     gchar *message;
     gchar *user_message;
     gchar *system_message;
@@ -58,6 +59,7 @@ enum
     PROP_TEST,
     PROP_TEST_CASE,
     PROP_TEST_SUITE,
+    PROP_TEST_DATA,
     PROP_USER_MESSAGE,
     PROP_SYSTEM_MESSAGE,
     PROP_FUNCTION_NAME,
@@ -120,6 +122,13 @@ cut_test_result_class_init (CutTestResultClass *klass)
                                G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_TEST_SUITE, spec);
 
+    spec = g_param_spec_object("test-data",
+                               "CutTestData object",
+                               "A CutTestData object",
+                               CUT_TYPE_TEST_DATA,
+                               G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_TEST_DATA, spec);
+
     spec = g_param_spec_string("user-message",
                                "User Message",
                                "The message from user of the result",
@@ -174,6 +183,7 @@ cut_test_result_init (CutTestResult *result)
     priv->test = NULL;
     priv->test_case = NULL;
     priv->test_suite = NULL;
+    priv->test_data = NULL;
     priv->message = NULL;
     priv->user_message = NULL;
     priv->system_message = NULL;
@@ -201,6 +211,11 @@ dispose (GObject *object)
     if (priv->test_suite) {
         g_object_unref(priv->test_suite);
         priv->test_suite = NULL;
+    }
+
+    if (priv->test_data) {
+        g_object_unref(priv->test_data);
+        priv->test_data = NULL;
     }
 
     if (priv->message) {
@@ -255,6 +270,10 @@ set_property (GObject      *object,
         cut_test_result_set_test_suite(CUT_TEST_RESULT(object),
                                        g_value_get_object(value));
         break;
+      case PROP_TEST_DATA:
+        cut_test_result_set_test_data(CUT_TEST_RESULT(object),
+                                      g_value_get_object(value));
+        break;
       case PROP_USER_MESSAGE:
         cut_test_result_set_user_message(CUT_TEST_RESULT(object),
                                          g_value_get_string(value));
@@ -307,6 +326,9 @@ get_property (GObject    *object,
       case PROP_TEST_SUITE:
         g_value_set_object(value, G_OBJECT(priv->test_suite));
         break;
+      case PROP_TEST_DATA:
+        g_value_set_object(value, G_OBJECT(priv->test_data));
+        break;
       case PROP_USER_MESSAGE:
         g_value_set_string(value, priv->user_message);
         break;
@@ -336,6 +358,7 @@ cut_test_result_new (CutTestResultStatus status,
                      CutTest *test,
                      CutTestCase *test_case,
                      CutTestSuite *test_suite,
+                     CutTestData *test_data,
                      const gchar *user_message,
                      const gchar *system_message,
                      const gchar *function_name,
@@ -347,6 +370,7 @@ cut_test_result_new (CutTestResultStatus status,
                         "test", test,
                         "test-case", test_case,
                         "test-suite", test_suite,
+                        "test-data", test_data,
                         "user-message", user_message,
                         "system-message", system_message,
                         "function-name", function_name,
@@ -359,7 +383,7 @@ CutTestResult *
 cut_test_result_new_empty (void)
 {
     return cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
-                               NULL, NULL, NULL,
+                               NULL, NULL, NULL, NULL,
                                NULL, NULL,
                                NULL, NULL, 0);
 }
@@ -469,6 +493,12 @@ cut_test_result_get_test_suite_name (CutTestResult *result)
     if (priv->test_suite)
         return cut_test_get_name(CUT_TEST(priv->test_suite));
     return NULL;
+}
+
+CutTestData *
+cut_test_result_get_test_data (CutTestResult *result)
+{
+    return CUT_TEST_RESULT_GET_PRIVATE(result)->test_data;
 }
 
 const gchar *
@@ -741,6 +771,19 @@ cut_test_result_set_test_suite (CutTestResult *result, CutTestSuite *test_suite)
     }
     if (test_suite)
         priv->test_suite = g_object_ref(test_suite);
+}
+
+void
+cut_test_result_set_test_data (CutTestResult *result, CutTestData *test_data)
+{
+    CutTestResultPrivate *priv = CUT_TEST_RESULT_GET_PRIVATE(result);
+
+    if (priv->test_data) {
+        g_object_unref(priv->test_data);
+        priv->test_data = NULL;
+    }
+    if (test_data)
+        priv->test_data = g_object_ref(test_data);
 }
 
 void

@@ -39,9 +39,11 @@ libcutter_public_headers = 			\
 		cut-test.h			\
 		cut-test-case.h			\
 		cut-test-container.h		\
+		cut-test-iterator.h		\
 		cut-test-context.h		\
 		cut-test-suite.h		\
 		cut-test-result.h		\
+		cut-test-data.h			\
 		cut-ui.h			\
 		cut-contractor.h		\
 		cut-factory-builder.h		\
@@ -118,9 +120,11 @@ libcutter_la_SOURCES =				\
 		cut-test.c			\
 		cut-test-context.c		\
 		cut-test-container.c		\
+		cut-test-iterator.c		\
 		cut-test-case.c			\
-		cut-test-result.c		\
 		cut-test-suite.c		\
+		cut-test-result.c		\
+		cut-test-data.c			\
 		cut-verbose-level.c		\
 		cut-loader.c			\
 		cut-repository.c		\

@@ -89,8 +89,7 @@ GType        cut_test_get_type  (void) G_GNUC_CONST;
 CutTest     *cut_test_new                 (const gchar    *name,
                                            CutTestFunction function);
 CutTest     *cut_iterated_test_new        (const gchar    *name,
-                                           CutIteratedTestFunction function,
-                                           CutDataSetupFunction data_setup_function);
+                                           CutIteratedTestFunction function);
 CutTest     *cut_test_new_empty           (void);
 gboolean     cut_test_run                 (CutTest        *test,
                                            CutTestContext *test_context,
@@ -101,8 +100,7 @@ const gchar *cut_test_get_name            (CutTest     *test);
 void         cut_test_set_name            (CutTest     *test,
                                            const gchar *name);
 void         cut_test_bind_data           (CutTest     *test,
-                                           const gchar *name,
-                                           gconstpointer data);
+                                           CutTestData *test_data);
 void         cut_test_unbind_data         (CutTest     *test);
 CutDataSetupFunction cut_test_get_data_setup_function(CutTest *test);
 const gchar *cut_test_get_full_name       (CutTest     *test);

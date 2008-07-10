@@ -55,7 +55,7 @@ void
 test_get_status (void)
 {
     result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
-                                 NULL, NULL, NULL,
+                                 NULL, NULL, NULL, NULL,
                                  "user-message",
                                  "system-message",
                                  "function-name",
@@ -66,7 +66,7 @@ test_get_status (void)
     g_object_unref(result);
 
     result = cut_test_result_new(CUT_TEST_RESULT_FAILURE,
-                                 NULL, NULL, NULL,
+                                 NULL, NULL, NULL, NULL,
                                  "user-message",
                                  "system-message",
                                  "function-name",
@@ -77,7 +77,7 @@ test_get_status (void)
     g_object_unref(result);
 
     result = cut_test_result_new(CUT_TEST_RESULT_ERROR,
-                                 NULL, NULL, NULL,
+                                 NULL, NULL, NULL, NULL,
                                  "user-message",
                                  "system-message",
                                  "function-name",
@@ -88,7 +88,7 @@ test_get_status (void)
     g_object_unref(result);
 
     result = cut_test_result_new(CUT_TEST_RESULT_PENDING,
-                                 NULL, NULL, NULL,
+                                 NULL, NULL, NULL, NULL,
                                  "user-message",
                                  "system-message",
                                  "function-name",
@@ -102,7 +102,7 @@ void
 test_get_message_full (void)
 {
     result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
-                                 NULL, NULL, NULL,
+                                 NULL, NULL, NULL, NULL,
                                  "user-message",
                                  "system-message",
                                  "function-name",
@@ -120,7 +120,7 @@ void
 test_get_message_only_user (void)
 {
     result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
-                                 NULL, NULL, NULL,
+                                 NULL, NULL, NULL, NULL,
                                  "user-message",
                                  NULL,
                                  "function-name",
@@ -137,7 +137,7 @@ void
 test_get_message_only_system (void)
 {
     result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
-                                 NULL, NULL, NULL,
+                                 NULL, NULL, NULL, NULL,
                                  NULL,
                                  "system-message",
                                  "function-name",
@@ -154,7 +154,7 @@ void
 test_get_message_none (void)
 {
     result = cut_test_result_new(CUT_TEST_RESULT_FAILURE,
-                                 NULL, NULL, NULL,
+                                 NULL, NULL, NULL, NULL,
                                  NULL,
                                  NULL,
                                  "function-name",
@@ -180,7 +180,7 @@ void
 test_set_messages (void)
 {
     result = cut_test_result_new(CUT_TEST_RESULT_FAILURE,
-                                 NULL, NULL, NULL,
+                                 NULL, NULL, NULL, NULL,
                                  "user-message",
                                  "system-message",
                                  "function-name",
@@ -209,7 +209,7 @@ void
 test_get_function_name (void)
 {
     result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
-                                 NULL, NULL, NULL,
+                                 NULL, NULL, NULL, NULL,
                                  "user-message",
                                  "system-message",
                                  "function-name",
@@ -223,7 +223,7 @@ test_get_function_name (void)
     g_object_unref(result);
 
     result = cut_test_result_new(CUT_TEST_RESULT_FAILURE,
-                                 NULL, NULL, NULL,
+                                 NULL, NULL, NULL, NULL,
                                  NULL,
                                  NULL,
                                  NULL,
@@ -237,7 +237,7 @@ void
 test_get_filename (void)
 {
     result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
-                                 NULL, NULL, NULL,
+                                 NULL, NULL, NULL, NULL,
                                  "user-message",
                                  "system-message",
                                  "function-name",
@@ -251,7 +251,7 @@ test_get_filename (void)
     g_object_unref(result);
 
     result = cut_test_result_new(CUT_TEST_RESULT_FAILURE,
-                                 NULL, NULL, NULL,
+                                 NULL, NULL, NULL, NULL,
                                  NULL,
                                  NULL,
                                  NULL,
@@ -264,7 +264,7 @@ void
 test_get_line (void)
 {
     result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
-                                 NULL, NULL, NULL,
+                                 NULL, NULL, NULL, NULL,
                                  "user-message",
                                  "system-message",
                                  "function-name",
@@ -277,7 +277,7 @@ test_get_line (void)
     g_object_unref(result);
 
     result = cut_test_result_new(CUT_TEST_RESULT_FAILURE,
-                                 NULL, NULL, NULL,
+                                 NULL, NULL, NULL, NULL,
                                  NULL,
                                  NULL,
                                  NULL,
@@ -287,7 +287,7 @@ test_get_line (void)
     g_object_unref(result);
 
     result = cut_test_result_new(CUT_TEST_RESULT_FAILURE,
-                                 NULL, NULL, NULL,
+                                 NULL, NULL, NULL, NULL,
                                  NULL,
                                  NULL,
                                  NULL,
@@ -332,7 +332,7 @@ void
 test_get_test_suite (void)
 {
     result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
-                                 NULL, NULL, NULL,
+                                 NULL, NULL, NULL, NULL,
                                  NULL, NULL, NULL, NULL, 0);
     cut_assert_null(cut_test_result_get_test_suite(result));
 
