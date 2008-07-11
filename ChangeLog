@@ -1,5 +1,9 @@
 2008-07-11  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-result.c, module/ui/cut-console-ui.c: improve output.
+
+	* cutter/cut-test-iterator.c: don't unbind data.
+
 	* cutter/cut-test-iterator.c (cut_test_iterator_run): call
 	test_run_context_prepare_test_iterator().
 

@@ -598,9 +598,9 @@ print_results (CutConsoleUI *console, CutRunContext *run_context)
         i++;
     }
 
-    for (node = cut_run_context_get_results(run_context);
+    for (node = g_list_last(cut_run_context_get_results(run_context));
          node;
-         node = g_list_next(node)) {
+         node = g_list_previous(node)) {
         CutTestResult *result = node->data;
         CutTestResultStatus status;
         CutTest *test;
@@ -612,8 +612,8 @@ print_results (CutConsoleUI *console, CutRunContext *run_context)
         if (status == CUT_TEST_RESULT_SUCCESS)
             continue;
 
-        filename = cut_run_context_build_source_filename(run_context,
-                                             cut_test_result_get_filename(result));
+        filename = cut_test_result_get_filename(result);
+        filename = cut_run_context_build_source_filename(run_context, filename);
 
         message = cut_test_result_get_message(result);
         name = cut_test_result_get_test_name(result);

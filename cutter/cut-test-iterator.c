@@ -332,7 +332,6 @@ cut_test_iterator_run (CutTestIterator *test_iterator,
                            cut_test_context_get_current_data(test_context));
         if (!run(test_iterator, test, test_context, run_context))
             all_success = FALSE;
-        cut_test_unbind_data(test);
 
         g_signal_handlers_disconnect_by_func(test,
                                              G_CALLBACK(cb_test_status),
