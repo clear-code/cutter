@@ -23,21 +23,66 @@
  * Author: Carl D. Worth <cworth@cworth.org>
  */
 
-#include <cutter.h>
-
 #include <stddef.h>
 #include <cairo.h>
-#include <cairo-pdf.h>
-#include <cairo-svg.h>
-#include <cairo-ps.h>
+#ifdef CAIRO_HAS_SVG_SURFACE
+#  include <cairo-svg.h>
+#endif
+#ifdef CAIRO_HAS_PDF_SURFACE
+#  include <cairo-pdf.h>
+#endif
+#ifdef CAIRO_HAS_PS_SURFACE
+#  include <cairo-ps.h>
+#endif
 
-void test_nil_surface (void);
+#include <cutter.h>
+
+void data_nil_surface (void);
+void test_nil_surface (void *data);
+
+typedef cairo_surface_t *(*SurfaceCreator) (const char *file_name);
+
+typedef struct _SurfaceTestData
+{
+    SurfaceCreator creator;
+    char *file_name;
+} SurfaceTestData;
+
+static SurfaceTestData *
+surface_test_data_new (SurfaceCreator creator, const char *file_name)
+{
+    SurfaceTestData *test_data;
+
+    test_data = malloc(sizeof(SurfaceTestData));
+    test_data->creator = creator;
+    if (file_name)
+        test_data->file_name = strdup(file_name);
+    else
+        test_data->file_name = NULL;
+
+    return test_data;
+}
+
+static void
+surface_test_data_free (void *data)
+{
+    SurfaceTestData *test_data = data;
+
+    free(test_data->file_name);
+    free(test_data);
+}
+
 
 static cairo_t *cr;
+static cairo_surface_t *surface;
+static char *file_name;
 
 void
 setup (void)
 {
+    cr = NULL;
+    surface = NULL;
+    file_name = NULL;
 }
 
 void
@@ -45,7 +90,65 @@ teardown (void)
 {
     if (cr)
         cairo_destroy (cr);
-    cr = NULL;
+    if (surface)
+        cairo_surface_destroy (surface);
+    if (file_name) {
+        cut_remove_path (file_name);
+        free (file_name);
+    }
+}
+
+static cairo_surface_t *
+image_surface_create (const char *file_name)
+{
+    return cairo_image_surface_create (CAIRO_FORMAT_ARGB32, 100, 100);
+}
+
+#ifdef CAIRO_HAS_SVG_SURFACE
+static cairo_surface_t *
+svg_surface_create (const char *file_name)
+{
+    return cairo_svg_surface_create (file_name, 100, 100);
+}
+#endif
+
+#ifdef CAIRO_HAS_PDF_SURFACE
+static cairo_surface_t *
+pdf_surface_create (const char *file_name)
+{
+    return cairo_pdf_surface_create (file_name, 100, 100);
+}
+#endif
+
+#ifdef CAIRO_HAS_PS_SURFACE
+static cairo_surface_t *
+ps_surface_create (const char *file_name)
+{
+    return cairo_ps_surface_create (file_name, 100, 100);
+}
+#endif
+
+void
+data_nil_surface (void)
+{
+    cut_add_data ("image surface",
+                  surface_test_data_new (image_surface_create, NULL),
+                  surface_test_data_free);
+#ifdef CAIRO_HAS_SVG_SURFACE
+    cut_add_data ("SVG surface",
+                  surface_test_data_new (svg_surface_create, "nil-surface.svg"),
+                  surface_test_data_free);
+#endif
+#ifdef CAIRO_HAS_PDF_SURFACE
+    cut_add_data ("PDF surface",
+                  surface_test_data_new (pdf_surface_create, "nil-surface.pdf"),
+                  surface_test_data_free);
+#endif
+#ifdef CAIRO_HAS_PS_SURFACE
+    cut_add_data ("PS surface",
+                  surface_test_data_new (ps_surface_create, "nil-surface.ps"),
+                  surface_test_data_free);
+#endif
 }
 
 /* Test to verify fixes for the following similar bugs:
@@ -165,12 +268,18 @@ draw (cairo_t *cr)
 }
 
 void
-test_nil_surface (void)
+test_nil_surface (void *data)
 {
-    cairo_surface_t *surface;
-/*
-    surface = cut_user_data;
-    draw (cairo_create (surface));
-*/
-}
+    SurfaceTestData *test_data = data;
 
+    if (test_data->file_name) {
+        cut_remove_path (test_data->file_name);
+        file_name = strdup (test_data->file_name);
+    }
+
+    surface = test_data->creator (test_data->file_name);
+    cut_assert_not_null (surface);
+    draw (cairo_create (surface));
+    cairo_surface_destroy (surface);
+    surface = NULL;
+}

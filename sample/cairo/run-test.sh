@@ -13,5 +13,12 @@ export CUT_REPORT_FACTORY_MODULE_DIR=$BASE_DIR/../../module/report/.libs
 export CUT_STREAMER_MODULE_DIR=$BASE_DIR/../../module/streamer/.libs
 export CUT_STREAMER_FACTORY_MODULE_DIR=$BASE_DIR/../../module/streamer/.libs
 
-$BASE_DIR/cutter-cairo \
-    --color=auto --multi-thread -s $BASE_DIR "$@" $BASE_DIR
+CUTTER=$BASE_DIR/../../cutter/cutter
+if test x"$CUTTER_DEBUG" = x"yes"; then
+    CUTTER="$BASE_DIR/../../libtool --mode=execute gdb --args $CUTTER"
+fi
+CUTTER_ARGS="-s $BASE_DIR --multi-thread"
+if test x"$USE_GTK" = x"yes"; then
+    CUTTER_ARGS="-u gtk $CUTTER_ARGS"
+fi
+$CUTTER $CUTTER_ARGS "$@" $BASE_DIR

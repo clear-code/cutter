@@ -1,5 +1,12 @@
 2008-07-11  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-iterator.c: fix setup/teardown bug.
+
+	* cutter/cut-test-case.[ch] (cut_test_case_run_setup)
+	(cut_test_case_run_teardown): export.
+
+	* sample/cairo/: use iterated test.
+
 	* cutter/cut-test-context.[ch] (cut_test_context_set_data): add.
 
 	* cutter/cut-iterated-test.[ch]: add.

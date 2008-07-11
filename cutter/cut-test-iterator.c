@@ -240,7 +240,6 @@ run_test (CutTestIterator *test_iterator, CutIteratedTest *test,
         return TRUE;
 
     test_case = cut_test_context_get_test_case(test_context);
-    cut_test_context_set_test(test_context, CUT_TEST(test));
 
     local_test_context = cut_test_context_new(NULL, test_case, CUT_TEST(test));
 
@@ -248,14 +247,24 @@ run_test (CutTestIterator *test_iterator, CutIteratedTest *test,
     cut_test_context_set_multi_thread(local_test_context, is_multi_thread);
     cut_test_context_set_data(local_test_context,
                               cut_test_context_get_current_data(test_context));
-    cut_test_context_set_test(local_test_context, CUT_TEST(test));
 
     original_test_context = cut_test_case_get_current_test_context(test_case);
     cut_test_case_set_current_test_context(test_case, local_test_context);
 
     g_signal_emit_by_name(test_iterator, "start-test", test,
                           local_test_context);
-    success = cut_test_run(CUT_TEST(test), local_test_context, run_context);
+
+    cut_test_case_run_setup(test_case, local_test_context);
+    if (cut_test_context_is_failed(local_test_context)) {
+        success = FALSE;
+    } else {
+        cut_test_context_set_test(test_context, CUT_TEST(test));
+        cut_test_context_set_test(local_test_context, CUT_TEST(test));
+        success = cut_test_run(CUT_TEST(test), local_test_context, run_context);
+        cut_test_context_set_test(local_test_context, NULL);
+        cut_test_context_set_test(test_context, NULL);
+    }
+    cut_test_case_run_teardown(test_case, local_test_context);
 
     /* need? */
     cut_test_context_set_failed(test_context,
@@ -265,7 +274,6 @@ run_test (CutTestIterator *test_iterator, CutIteratedTest *test,
                           local_test_context);
 
     cut_test_case_set_current_test_context(test_case, original_test_context);
-    cut_test_context_set_test(test_context, NULL);
     g_object_unref(local_test_context);
 
     return success;
@@ -314,6 +322,7 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
 
     while (cut_test_context_have_data(test_context)) {
         CutIteratedTest *test;
+        CutTestData *test_data;
 
         test = cut_iterated_test_new(cut_test_get_name(CUT_TEST(test_iterator)),
                                      priv->iterated_test_function);
@@ -342,6 +351,9 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
                                              G_CALLBACK(cb_test_status),
                                              &status);
 
+        test_data = cut_test_context_get_current_data(test_context);
+        cut_test_data_set_value(test_data, NULL, NULL);
+
         cut_test_context_shift_data(test_context);
     }
 
@@ -358,6 +370,7 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
 
     return all_success;
 }
+
 
 /*
 vi:nowrap:ai:expandtab:sw=4

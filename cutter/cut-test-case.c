@@ -312,6 +312,38 @@ cut_test_case_add_test (CutTestCase *test_case, CutTest *test)
     cut_test_container_add_test(CUT_TEST_CONTAINER(test_case), test);
 }
 
+void
+cut_test_case_run_setup (CutTestCase *test_case, CutTestContext *test_context)
+{
+    CutTestCasePrivate *priv;
+
+    priv = CUT_TEST_CASE_GET_PRIVATE(test_case);
+    if (priv->setup) {
+        jmp_buf jump_buffer;
+
+        cut_test_context_set_jump(test_context, &jump_buffer);
+        if (setjmp(jump_buffer) == 0) {
+            priv->setup();
+        }
+    }
+}
+
+void
+cut_test_case_run_teardown (CutTestCase *test_case, CutTestContext *test_context)
+{
+    CutTestCasePrivate *priv;
+
+    priv = CUT_TEST_CASE_GET_PRIVATE(test_case);
+    if (priv->teardown) {
+        jmp_buf jump_buffer;
+
+        cut_test_context_set_jump(test_context, &jump_buffer);
+        if (setjmp(jump_buffer) == 0) {
+            priv->teardown();
+        }
+    }
+}
+
 static gboolean
 run (CutTestCase *test_case, CutTest *test, CutRunContext *run_context)
 {
@@ -319,7 +351,6 @@ run (CutTestCase *test_case, CutTest *test, CutRunContext *run_context)
     CutTestContext *original_test_context, *test_context;
     gboolean success = TRUE;
     gboolean is_multi_thread;
-    jmp_buf jump_buffer;
 
     if (cut_run_context_is_canceled(run_context))
         return TRUE;
@@ -338,13 +369,10 @@ run (CutTestCase *test_case, CutTest *test, CutRunContext *run_context)
     original_test_context = cut_test_case_get_current_test_context(test_case);
     cut_test_case_set_current_test_context(test_case, test_context);
 
-    g_signal_emit_by_name(test_case, "start-test", test, test_context);
 
-    if (priv->setup) {
-        cut_test_context_set_jump(test_context, &jump_buffer);
-        if (setjmp(jump_buffer) == 0) {
-            priv->setup();
-        }
+    if (!CUT_IS_TEST_CONTAINER(test)) {
+        g_signal_emit_by_name(test_case, "start-test", test, test_context);
+        cut_test_case_run_setup(test_case, test_context);
     }
 
     if (cut_test_context_is_failed(test_context)) {
@@ -355,13 +383,10 @@ run (CutTestCase *test_case, CutTest *test, CutRunContext *run_context)
         cut_test_context_set_test(test_context, NULL);
     }
 
-    if (priv->teardown) {
-        cut_test_context_set_jump(test_context, &jump_buffer);
-        if (setjmp(jump_buffer) == 0) {
-            priv->teardown();
-        }
+    if (!CUT_IS_TEST_CONTAINER(test)) {
+        cut_test_case_run_teardown(test_case, test_context);
+        g_signal_emit_by_name(test_case, "complete-test", test, test_context);
     }
-    g_signal_emit_by_name(test_case, "complete-test", test, test_context);
 
     cut_test_case_set_current_test_context(test_case, original_test_context);
     g_object_unref(test_context);

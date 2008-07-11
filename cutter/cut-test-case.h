@@ -82,6 +82,11 @@ gboolean     cut_test_case_run_with_filter(CutTestCase   *test_case,
                                            CutRunContext *run_context,
                                            const gchar  **test_names);
 
+void         cut_test_case_run_setup      (CutTestCase    *test_case,
+                                           CutTestContext *test_context);
+void         cut_test_case_run_teardown   (CutTestCase    *test_case,
+                                           CutTestContext *test_context);
+
 CutTestContext *cut_test_case_get_current_test_context
                                           (CutTestCase   *test_case);
 void         cut_test_case_set_current_test_context
