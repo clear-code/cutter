@@ -27,7 +27,6 @@
 
 #include "cut-test-iterator.h"
 
-#include "cut-test.h"
 #include "cut-run-context.h"
 
 #include "cut-marshalers.h"
@@ -71,6 +70,10 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 
+static gboolean run        (CutTest        *test,
+                            CutTestContext *test_context,
+                            CutRunContext  *run_context);
+
 static void
 cut_test_iterator_class_init (CutTestIteratorClass *klass)
 {
@@ -84,6 +87,8 @@ cut_test_iterator_class_init (CutTestIteratorClass *klass)
     gobject_class->dispose      = dispose;
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
+
+    test_class->run = run;
 
     spec = g_param_spec_pointer("iterated-test-function",
                                 "Iterated Test Function",
@@ -192,8 +197,8 @@ cut_test_iterator_new (const gchar *name,
                        CutDataSetupFunction data_setup_function)
 {
     return g_object_new(CUT_TYPE_TEST_ITERATOR,
-                        "name", name,
                         "element-name", "test-iterator",
+                        "name", name,
                         "iterated-test-function", test_function,
                         "data-setup-function", data_setup_function,
                         NULL);
@@ -216,15 +221,15 @@ cut_test_iterator_get_n_tests (CutTestIterator *test_iterator)
 
 void
 cut_test_iterator_add_test (CutTestIterator *test_iterator,
-                            CutTest *test
-                            /* should be CutIteratedTest *test */)
+                            CutIteratedTest *test)
 {
-    cut_test_container_add_test(CUT_TEST_CONTAINER(test_iterator), test);
+    cut_test_container_add_test(CUT_TEST_CONTAINER(test_iterator),
+                                CUT_TEST(test));
 }
 
 static gboolean
-run (CutTestIterator *test_iterator, CutTest *test, /* should be CutIteratedTest *test */
-     CutTestContext *test_context, CutRunContext *run_context)
+run_test (CutTestIterator *test_iterator, CutIteratedTest *test,
+          CutTestContext *test_context, CutRunContext *run_context)
 {
     CutTestCase *test_case;
     CutTestContext *original_test_context, *local_test_context;
@@ -234,20 +239,23 @@ run (CutTestIterator *test_iterator, CutTest *test, /* should be CutIteratedTest
     if (cut_run_context_is_canceled(run_context))
         return TRUE;
 
-    is_multi_thread = cut_run_context_is_multi_thread(run_context);
-
     test_case = cut_test_context_get_test_case(test_context);
-    cut_test_context_set_test(test_context, test);
+    cut_test_context_set_test(test_context, CUT_TEST(test));
 
-    local_test_context = cut_test_context_new(NULL, test_case, test);
+    local_test_context = cut_test_context_new(NULL, test_case, CUT_TEST(test));
+
+    is_multi_thread = cut_run_context_is_multi_thread(run_context);
     cut_test_context_set_multi_thread(local_test_context, is_multi_thread);
+    cut_test_context_set_data(local_test_context,
+                              cut_test_context_get_current_data(test_context));
+    cut_test_context_set_test(local_test_context, CUT_TEST(test));
+
     original_test_context = cut_test_case_get_current_test_context(test_case);
     cut_test_case_set_current_test_context(test_case, local_test_context);
 
-    cut_test_context_set_test(test_context, test);
     g_signal_emit_by_name(test_iterator, "start-test", test,
                           local_test_context);
-    success = cut_test_run(test, local_test_context, run_context);
+    success = cut_test_run(CUT_TEST(test), local_test_context, run_context);
 
     /* need? */
     cut_test_context_set_failed(test_context,
@@ -272,11 +280,10 @@ cb_test_status (CutTest *test, CutTestContext *context, CutTestResult *result,
     *status = MAX(*status, cut_test_result_get_status(result));
 }
 
-gboolean
-cut_test_iterator_run (CutTestIterator *test_iterator,
-                       CutTestContext *test_context,
-                       CutRunContext *run_context)
+static gboolean
+run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
 {
+    CutTestIterator *test_iterator;
     CutTestIteratorPrivate *priv;
     CutTestResult *result;
     CutTestCase *test_case;
@@ -284,6 +291,7 @@ cut_test_iterator_run (CutTestIterator *test_iterator,
     gboolean all_success = TRUE;
     jmp_buf jump_buffer;
 
+    test_iterator = CUT_TEST_ITERATOR(test);
     g_return_val_if_fail(CUT_IS_TEST_ITERATOR(test_iterator), FALSE);
 
     priv = CUT_TEST_ITERATOR_GET_PRIVATE(test_iterator);
@@ -305,8 +313,7 @@ cut_test_iterator_run (CutTestIterator *test_iterator,
     g_signal_emit_by_name(CUT_TEST(test_iterator), "start");
 
     while (cut_test_context_have_data(test_context)) {
-        /* CutIteratedTest *test; */
-        CutTest *test;
+        CutIteratedTest *test;
 
         test = cut_iterated_test_new(cut_test_get_name(CUT_TEST(test_iterator)),
                                      priv->iterated_test_function);
@@ -328,9 +335,7 @@ cut_test_iterator_run (CutTestIterator *test_iterator,
         g_signal_connect(test, "omission", G_CALLBACK(cb_test_status),
                          &status);
 
-        cut_test_bind_data(test,
-                           cut_test_context_get_current_data(test_context));
-        if (!run(test_iterator, test, test_context, run_context))
+        if (!run_test(test_iterator, test, test_context, run_context))
             all_success = FALSE;
 
         g_signal_handlers_disconnect_by_func(test,

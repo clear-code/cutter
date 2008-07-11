@@ -23,6 +23,7 @@
 #include <glib-object.h>
 
 #include <cutter/cut-test-container.h>
+#include <cutter/cut-iterated-test.h>
 
 G_BEGIN_DECLS
 
@@ -62,12 +63,8 @@ CutTestIterator *cut_test_iterator_new         (const gchar     *name,
                                                 CutDataSetupFunction data_setup_function);
 CutTestIterator *cut_test_iterator_new_empty   (void);
 void             cut_test_iterator_add_test    (CutTestIterator *test_iterator,
-                                                CutTest *test
-                                                /* should be CutIteratedTest */);
+                                                CutIteratedTest *test);
 guint            cut_test_iterator_get_n_tests (CutTestIterator *test_iterator);
-gboolean         cut_test_iterator_run         (CutTestIterator *test_iterator,
-                                                CutTestContext  *test_context,
-                                                CutRunContext   *run_context);
 
 G_END_DECLS
 

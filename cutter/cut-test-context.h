@@ -75,6 +75,8 @@ void          cut_test_context_set_multi_thread
 gboolean      cut_test_context_is_multi_thread
                                               (CutTestContext *context);
 
+void          cut_test_context_set_data       (CutTestContext *context,
+                                               CutTestData    *test_data);
 void          cut_test_context_shift_data     (CutTestContext *context);
 gboolean      cut_test_context_have_data      (CutTestContext *context);
 CutTestData  *cut_test_context_get_current_data

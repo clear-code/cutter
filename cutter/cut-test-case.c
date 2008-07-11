@@ -351,11 +351,7 @@ run (CutTestCase *test_case, CutTest *test, CutRunContext *run_context)
         success = FALSE;
     } else {
         cut_test_context_set_test(test_context, test);
-        if (CUT_IS_TEST_ITERATOR(test))
-            success = cut_test_iterator_run(CUT_TEST_ITERATOR(test),
-                                            test_context, run_context);
-        else
-            success = cut_test_run(test, test_context, run_context);
+        success = cut_test_run(test, test_context, run_context);
         cut_test_context_set_test(test_context, NULL);
     }
 
@@ -391,8 +387,6 @@ cut_test_case_run_tests (CutTestCase *test_case, CutRunContext *run_context,
     CutTestResultStatus status = CUT_TEST_RESULT_SUCCESS;
     CutTestResult *result;
     gboolean all_success = TRUE;
-
-    /* FIXME: expand iterated tests in tests */
 
     cut_run_context_prepare_test_case(run_context, test_case);
     g_signal_emit_by_name(test_case, "ready", g_list_length((GList *)tests));
@@ -483,7 +477,8 @@ cut_test_case_run (CutTestCase *test_case, CutRunContext *run_context)
     gchar **test_names;
 
     test_names = cut_run_context_get_target_test_names(run_context);
-    return cut_test_case_run_with_filter(test_case, run_context, (const gchar **)test_names);
+    return cut_test_case_run_with_filter(test_case, run_context,
+                                         (const gchar **)test_names);
 }
 
 CutTestContext *

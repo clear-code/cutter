@@ -1,5 +1,20 @@
 2008-07-11  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-context.[ch] (cut_test_context_set_data): add.
+
+	* cutter/cut-iterated-test.[ch]: add.
+	* cutter/Makefile.am: add cut-iterated-test.[ch].
+
+	* cutter/cut-test.c: virtualize run method.
+
+	* cutter/cut-test-case.c: use virtual run method.
+
+	* cutter/cut-test-iterator.[ch]: use virtual run method and
+	CutIteratedTest.
+
+	* cutter/cut-test-result.c (cut_test_result_get_test_name):
+	support test data name.
+
 	* module/ui/cut-console-ui.c: suppress a warning.
 
 	* cutter/cut-test-result.c, module/ui/cut-console-ui.c: improve output.

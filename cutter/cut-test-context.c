@@ -159,6 +159,17 @@ cut_test_context_init (CutTestContext *context)
 }
 
 static void
+free_data_list (CutTestContextPrivate *priv)
+{
+    if (priv->data_list) {
+        g_list_foreach(priv->data_list, (GFunc)g_object_unref, NULL);
+        g_list_free(priv->data_list);
+        priv->data_list = NULL;
+    }
+    priv->current_data = NULL;
+}
+
+static void
 dispose (GObject *object)
 {
     CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(object);
@@ -206,12 +217,7 @@ dispose (GObject *object)
         priv->taken_errors = NULL;
     }
 
-    if (priv->data_list) {
-        g_list_foreach(priv->data_list, (GFunc)g_object_unref, NULL);
-        g_list_free(priv->data_list);
-        priv->data_list = NULL;
-    }
-    priv->current_data = NULL;
+    free_data_list(priv);
 
     if (priv->fixture_data_dir) {
         g_free(priv->fixture_data_dir);
@@ -372,6 +378,22 @@ cut_test_context_add_data (CutTestContext *context, const gchar *first_data_name
         name = va_arg(args, gchar *);
     }
     va_end(args);
+}
+
+void
+cut_test_context_set_data (CutTestContext *context, CutTestData *test_data)
+{
+    CutTestContextPrivate *priv;
+
+    priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+
+    free_data_list(priv);
+
+    if (test_data) {
+        g_object_ref(test_data);
+        priv->data_list = g_list_prepend(priv->data_list, test_data);
+        priv->current_data = priv->data_list;
+    }
 }
 
 void
