@@ -1,5 +1,7 @@
 2008-07-11  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-test-context.c (test_set_data): add.
+
 	* cutter/cut-test-iterator.c: fix setup/teardown bug.
 
 	* cutter/cut-test-case.[ch] (cut_test_case_run_setup)

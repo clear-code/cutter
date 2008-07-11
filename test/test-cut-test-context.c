@@ -2,7 +2,7 @@
 #include <cutter/cut-test-context.h>
 #include <cutter/cut-test-suite.h>
 
-void test_user_data (void);
+void test_set_data (void);
 void test_set_failed (void);
 void test_simple_xml (void);
 void test_xml_with_test_suite (void);
@@ -13,8 +13,10 @@ static CutTestContext *context;
 static CutTestSuite *test_suite;
 static CutTestCase *test_case;
 static CutTest *test;
+static CutTestData *test_data;
 
-static guint32 user_data;
+static gboolean destroy_called;
+static gchar *destroyed_string;
 
 void
 setup (void)
@@ -26,39 +28,62 @@ setup (void)
                                   NULL, NULL,
                                   NULL,NULL);
     test = cut_test_new("my-test", NULL);
-
-    user_data = 0;
+    test_data = NULL;
+    destroy_called = FALSE;
+    destroyed_string = NULL;
 }
 
 void
 teardown (void)
 {
-    g_object_unref(context);
+    if (context)
+        g_object_unref(context);
+
     g_object_unref(test_suite);
     g_object_unref(test_case);
+
+    if (test_data)
+        g_object_unref(test_data);
+    if (destroyed_string)
+        g_free(destroyed_string);
 }
 
 static void
-destroy_user_data (gpointer data)
+string_data_free (gpointer data)
 {
-    cut_assert_equal_int(user_data,
-                         GPOINTER_TO_UINT(data));
+    destroy_called = TRUE;
+    destroyed_string = data;
 }
 
 void
-test_user_data (void)
+test_set_data (void)
 {
-/*
-    user_data = g_random_int();
+    CutTestData *current_test_data;
+    const gchar name[] = "sample test data";
+    const gchar value[] = "sample test value";
 
-    cut_test_context_set_user_data(context,
-                                   GUINT_TO_POINTER(user_data), 
-                                   destroy_user_data);
-    cut_assert_equal_int(user_data,
-                         cut_test_context_get_user_data(context));
+    cut_assert_false(cut_test_context_have_data(context));
 
-    cut_test_context_set_user_data(context, 0, NULL);
-*/
+    test_data = cut_test_data_new(name, g_strdup(value), string_data_free);
+    cut_test_context_set_data(context, test_data);
+
+    cut_assert_true(cut_test_context_have_data(context));
+    current_test_data = cut_test_context_get_current_data(context);
+    cut_assert_not_null(current_test_data);
+    cut_assert_equal_string(value, cut_test_data_get_value(current_test_data));
+
+    cut_assert_false(destroy_called);
+    cut_assert_equal_string(NULL, destroyed_string);
+    g_object_unref(context);
+    context = NULL;
+    cut_assert_false(destroy_called);
+    cut_assert_equal_string(NULL, destroyed_string);
+
+    cut_notify("should make CutTestData test");
+    g_object_unref(test_data);
+    test_data = NULL;
+    cut_assert_true(destroy_called);
+    cut_assert_equal_string(value, destroyed_string);
 }
 
 void
