@@ -1,3 +1,12 @@
+2008-07-11  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-test-iterator.c (cut_test_iterator_run): call
+	test_run_context_prepare_test_iterator().
+
+	* cutter/cut-test-runner.c: connect test iterator related signals.
+
+	* cutter/cut-run-context.[ch]: add test iterator related signals.
+
 2008-07-10  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/: add CutTestData and CutTestIterator. need to implement

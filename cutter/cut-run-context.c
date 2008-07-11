@@ -100,6 +100,8 @@ enum
     START_TEST_SUITE,
     READY_TEST_CASE,
     START_TEST_CASE,
+    READY_TEST_ITERATOR,
+    START_TEST_ITERATOR,
     START_TEST,
 
     PASS_ASSERTION,
@@ -111,6 +113,13 @@ enum
     NOTIFICATION_TEST,
     OMISSION_TEST,
 
+    SUCCESS_TEST_ITERATOR,
+    FAILURE_TEST_ITERATOR,
+    ERROR_TEST_ITERATOR,
+    PENDING_TEST_ITERATOR,
+    NOTIFICATION_TEST_ITERATOR,
+    OMISSION_TEST_ITERATOR,
+
     SUCCESS_TEST_CASE,
     FAILURE_TEST_CASE,
     ERROR_TEST_CASE,
@@ -119,6 +128,7 @@ enum
     OMISSION_TEST_CASE,
 
     COMPLETE_TEST,
+    COMPLETE_TEST_ITERATOR,
     COMPLETE_TEST_CASE,
     COMPLETE_TEST_SUITE,
     COMPLETE_RUN,
@@ -189,6 +199,9 @@ static void prepare_test_suite  (CutRunContext  *context,
                                  CutTestSuite   *test_suite);
 static void prepare_test_case   (CutRunContext  *context,
                                  CutTestCase    *test_case);
+static void prepare_test_iterator
+                                (CutRunContext  *context,
+                                 CutTestIterator *test_iterator);
 static void prepare_test        (CutRunContext  *context,
                                  CutTest        *test);
 
@@ -219,6 +232,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
 
     klass->prepare_test_suite = prepare_test_suite;
     klass->prepare_test_case = prepare_test_case;
+    klass->prepare_test_iterator = prepare_test_iterator;
     klass->prepare_test = prepare_test;
 
     spec = g_param_spec_uint("n-tests",
@@ -382,12 +396,30 @@ cut_run_context_class_init (CutRunContextClass *klass)
 
     signals[START_TEST_CASE]
         = g_signal_new ("start-test-case",
-                        G_TYPE_FROM_CLASS (klass),
+                        G_TYPE_FROM_CLASS(klass),
                         G_SIGNAL_RUN_LAST,
-                        G_STRUCT_OFFSET (CutRunContextClass, start_test_case),
+                        G_STRUCT_OFFSET(CutRunContextClass, start_test_case),
                         NULL, NULL,
                         g_cclosure_marshal_VOID__OBJECT,
                         G_TYPE_NONE, 1, CUT_TYPE_TEST_CASE);
+
+    signals[READY_TEST_ITERATOR]
+        = g_signal_new ("ready-test-iterator",
+                        G_TYPE_FROM_CLASS(klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET(CutRunContextClass, ready_test_iterator),
+                        NULL, NULL,
+                        _cut_marshal_VOID__OBJECT_UINT,
+                        G_TYPE_NONE, 2, CUT_TYPE_TEST_ITERATOR, G_TYPE_UINT);
+
+    signals[START_TEST_ITERATOR]
+        = g_signal_new ("start-test-iterator",
+                        G_TYPE_FROM_CLASS(klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET(CutRunContextClass, start_test_iterator),
+                        NULL, NULL,
+                        g_cclosure_marshal_VOID__OBJECT,
+                        G_TYPE_NONE, 1, CUT_TYPE_TEST_ITERATOR);
 
     signals[START_TEST]
         = g_signal_new ("start-test",
@@ -482,6 +514,69 @@ cut_run_context_class_init (CutRunContextClass *klass)
                         NULL, NULL,
                         _cut_marshal_VOID__OBJECT_OBJECT,
                         G_TYPE_NONE, 2, CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT);
+
+    signals[SUCCESS_TEST_ITERATOR]
+        = g_signal_new("success-test-iterator",
+                       G_TYPE_FROM_CLASS(klass),
+                       G_SIGNAL_RUN_LAST,
+                       G_STRUCT_OFFSET(CutRunContextClass, success_test_iterator),
+                       NULL, NULL,
+                       _cut_marshal_VOID__OBJECT_OBJECT,
+                       G_TYPE_NONE, 2, CUT_TYPE_TEST_ITERATOR, CUT_TYPE_TEST_RESULT);
+
+    signals[FAILURE_TEST_ITERATOR]
+        = g_signal_new("failure-test-iterator",
+                       G_TYPE_FROM_CLASS(klass),
+                       G_SIGNAL_RUN_LAST,
+                       G_STRUCT_OFFSET(CutRunContextClass, failure_test_iterator),
+                       NULL, NULL,
+                       _cut_marshal_VOID__OBJECT_OBJECT,
+                       G_TYPE_NONE, 2, CUT_TYPE_TEST_ITERATOR, CUT_TYPE_TEST_RESULT);
+
+    signals[ERROR_TEST_ITERATOR]
+        = g_signal_new("error-test-iterator",
+                       G_TYPE_FROM_CLASS(klass),
+                       G_SIGNAL_RUN_LAST,
+                       G_STRUCT_OFFSET(CutRunContextClass, error_test_iterator),
+                       NULL, NULL,
+                       _cut_marshal_VOID__OBJECT_OBJECT,
+                       G_TYPE_NONE, 2, CUT_TYPE_TEST_ITERATOR, CUT_TYPE_TEST_RESULT);
+
+    signals[PENDING_TEST_ITERATOR]
+        = g_signal_new("pending-test-iterator",
+                       G_TYPE_FROM_CLASS(klass),
+                       G_SIGNAL_RUN_LAST,
+                       G_STRUCT_OFFSET(CutRunContextClass, pending_test_iterator),
+                       NULL, NULL,
+                       _cut_marshal_VOID__OBJECT_OBJECT,
+                       G_TYPE_NONE, 2, CUT_TYPE_TEST_ITERATOR, CUT_TYPE_TEST_RESULT);
+
+    signals[NOTIFICATION_TEST_ITERATOR]
+        = g_signal_new("notification-test-iterator",
+                       G_TYPE_FROM_CLASS(klass),
+                       G_SIGNAL_RUN_LAST,
+                       G_STRUCT_OFFSET(CutRunContextClass, notification_test_iterator),
+                       NULL, NULL,
+                       _cut_marshal_VOID__OBJECT_OBJECT,
+                       G_TYPE_NONE, 2, CUT_TYPE_TEST_ITERATOR, CUT_TYPE_TEST_RESULT);
+
+    signals[OMISSION_TEST_ITERATOR]
+        = g_signal_new("omission-test-iterator",
+                       G_TYPE_FROM_CLASS (klass),
+                       G_SIGNAL_RUN_LAST,
+                       G_STRUCT_OFFSET(CutRunContextClass, omission_test_iterator),
+                       NULL, NULL,
+                       _cut_marshal_VOID__OBJECT_OBJECT,
+                       G_TYPE_NONE, 2, CUT_TYPE_TEST_ITERATOR, CUT_TYPE_TEST_RESULT);
+
+    signals[COMPLETE_TEST_ITERATOR]
+        = g_signal_new ("complete-test-iterator",
+                        G_TYPE_FROM_CLASS (klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET (CutRunContextClass, complete_test_iterator),
+                        NULL, NULL,
+                        g_cclosure_marshal_VOID__OBJECT,
+                        G_TYPE_NONE, 1, CUT_TYPE_TEST_ITERATOR);
 
     signals[SUCCESS_TEST_CASE]
         = g_signal_new("success-test-case",
@@ -1123,6 +1218,22 @@ cut_run_context_prepare_test_case (CutRunContext *context,
     klass = CUT_RUN_CONTEXT_GET_CLASS(context);
     if (klass->prepare_test_case)
         klass->prepare_test_case(context, test_case);
+}
+
+static void
+prepare_test_iterator (CutRunContext *context, CutTestIterator *test_iterator)
+{
+}
+
+void
+cut_run_context_prepare_test_iterator (CutRunContext *context,
+                                       CutTestIterator *test_iterator)
+{
+    CutRunContextClass *klass;
+
+    klass = CUT_RUN_CONTEXT_GET_CLASS(context);
+    if (klass->prepare_test_iterator)
+        klass->prepare_test_iterator(context, test_iterator);
 }
 
 static void

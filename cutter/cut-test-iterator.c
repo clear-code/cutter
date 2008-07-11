@@ -299,7 +299,7 @@ cut_test_iterator_run (CutTestIterator *test_iterator,
     if (cut_test_context_is_failed(test_context))
         return FALSE;
 
-    /* cut_run_context_prepare_test_iterator(run_context, test_iterator); */
+    cut_run_context_prepare_test_iterator(run_context, test_iterator);
     g_signal_emit_by_name(test_iterator, "ready",
                           cut_test_context_get_n_data(test_context));
     g_signal_emit_by_name(CUT_TEST(test_iterator), "start");

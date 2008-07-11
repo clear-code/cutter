@@ -23,6 +23,7 @@
 #include <glib-object.h>
 
 #include <cutter/cut-test-suite.h>
+#include <cutter/cut-test-iterator.h>
 #include <cutter/cut-private.h>
 
 G_BEGIN_DECLS
@@ -63,6 +64,11 @@ struct _CutRunContextClass
                                  guint           n_tests);
     void (*start_test_case)     (CutRunContext  *context,
                                  CutTestCase    *test_case);
+    void (*ready_test_iterator) (CutRunContext  *context,
+                                 CutTestIterator *test_iterator,
+                                 guint           n_tests);
+    void (*start_test_iterator) (CutRunContext  *context,
+                                 CutTestIterator *test_iterator);
     void (*start_test)          (CutRunContext  *context,
                                  CutTest        *test,
                                  CutTestContext *test_context);
@@ -98,6 +104,33 @@ struct _CutRunContextClass
                                  CutTest        *test,
                                  CutTestContext *test_context);
 
+    void (*success_test_iterator)
+                                (CutRunContext  *context,
+                                 CutTestIterator *test_iterator,
+                                 CutTestResult  *result);
+    void (*failure_test_iterator)
+                                (CutRunContext  *context,
+                                 CutTestIterator *test_iterator,
+                                 CutTestResult  *result);
+    void (*error_test_iterator) (CutRunContext  *context,
+                                 CutTestIterator *test_iterator,
+                                 CutTestResult  *result);
+    void (*pending_test_iterator)
+                                (CutRunContext  *context,
+                                 CutTestIterator *test_iterator,
+                                 CutTestResult  *result);
+    void (*notification_test_iterator)
+                                (CutRunContext  *context,
+                                 CutTestIterator *test_iterator,
+                                 CutTestResult  *result);
+    void (*omission_test_iterator)
+                                (CutRunContext  *context,
+                                 CutTestIterator *test_iterator,
+                                 CutTestResult  *result);
+    void (*complete_test_iterator)
+                                (CutRunContext  *context,
+                                 CutTestIterator *test_iterator);
+
     void (*success_test_case)   (CutRunContext  *context,
                                  CutTestCase    *test_case,
                                  CutTestResult  *result);
@@ -110,9 +143,10 @@ struct _CutRunContextClass
     void (*pending_test_case)   (CutRunContext  *context,
                                  CutTestCase    *test_case,
                                  CutTestResult  *result);
-    void (*notification_test_case) (CutRunContext  *context,
-                                    CutTestCase    *test_case,
-                                    CutTestResult  *result);
+    void (*notification_test_case)
+                                (CutRunContext  *context,
+                                 CutTestCase    *test_case,
+                                 CutTestResult  *result);
     void (*omission_test_case)  (CutRunContext  *context,
                                  CutTestCase    *test_case,
                                  CutTestResult  *result);
@@ -135,6 +169,9 @@ struct _CutRunContextClass
                                  CutTestSuite   *test_suite);
     void (*prepare_test_case)   (CutRunContext  *context,
                                  CutTestCase    *test_case);
+    void (*prepare_test_iterator)
+                                (CutRunContext  *context,
+                                 CutTestIterator *test_iterator);
     void (*prepare_test)        (CutRunContext  *context,
                                  CutTest        *test);
 };
@@ -171,6 +208,8 @@ gchar        **cut_run_context_get_target_test_names(CutRunContext *context);
 
 void           cut_run_context_prepare_test         (CutRunContext *context,
                                                      CutTest       *test);
+void           cut_run_context_prepare_test_iterator(CutRunContext *context,
+                                                     CutTestIterator *test_iterator);
 void           cut_run_context_prepare_test_case    (CutRunContext *context,
                                                      CutTestCase   *test_case);
 void           cut_run_context_prepare_test_suite   (CutRunContext *context,
