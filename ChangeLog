@@ -1,5 +1,7 @@
 2008-07-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-iterator.c (run): fix memory leak.
+
 	* test/test-cut-stream-parser.c (test_start_test_with_data): add.
 
 	* cutter/cut-stream-parser.c: support test-data parsing.

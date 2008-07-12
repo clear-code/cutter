@@ -328,8 +328,8 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
                                      priv->iterated_test_function);
         if (!test)
             continue;
-
         cut_test_iterator_add_test(test_iterator, test);
+        g_object_unref(test);
 
         g_signal_connect(test, "success", G_CALLBACK(cb_test_status),
                          &status);
