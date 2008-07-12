@@ -1,5 +1,7 @@
 2008-07-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-report.c: expand macro.
+
 	* test/test-cut-pipeline.c: use iterated test.
 	* test/loader/fixtures/pipeline: split each result to each test
 	file to get correct test success result.

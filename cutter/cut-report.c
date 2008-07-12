@@ -160,33 +160,106 @@ cut_report_get_filename (CutReport *report)
     return CUT_REPORT_GET_PRIVATE(report)->filename;
 }
 
-#define GET_RESULTS(name)                               \
-gchar *                                                 \
-cut_report_get_ ## name ## _results (CutReport *report) \
-{                                                       \
-    CutReportClass *klass;                              \
-                                                        \
-    g_return_val_if_fail(CUT_IS_REPORT(report), NULL);  \
-                                                        \
-    klass = CUT_REPORT_GET_CLASS(report);               \
-    if (klass->get_ ## name ## _results)                \
-        return klass->get_ ## name ## _results(report); \
-    else                                                \
-        return NULL;                                    \
+gchar *
+cut_report_get_all_results (CutReport *report)
+{
+    CutReportClass *klass;
+
+    g_return_val_if_fail(CUT_IS_REPORT(report), NULL);
+
+    klass = CUT_REPORT_GET_CLASS(report);
+    if (klass->get_all_results)
+        return klass->get_all_results(report);
+    else
+        return NULL;
 }
 
-GET_RESULTS(all)
-GET_RESULTS(success)
-GET_RESULTS(error)
-GET_RESULTS(failure)
-GET_RESULTS(pending)
-GET_RESULTS(notification)
+gchar *
+cut_report_get_success_results (CutReport *report)
+{
+    CutReportClass *klass;
 
-#undef GET_RESULTS
+    g_return_val_if_fail(CUT_IS_REPORT(report), NULL);
+
+    klass = CUT_REPORT_GET_CLASS(report);
+    if (klass->get_success_results)
+        return klass->get_success_results(report);
+    else
+        return NULL;
+}
 
 gchar *
-cut_report_get_test_result(CutReport *report,
-                           const gchar *test_name)
+cut_report_get_error_results (CutReport *report)
+{
+    CutReportClass *klass;
+
+    g_return_val_if_fail(CUT_IS_REPORT(report), NULL);
+
+    klass = CUT_REPORT_GET_CLASS(report);
+    if (klass->get_error_results)
+        return klass->get_error_results(report);
+    else
+        return NULL;
+}
+
+gchar *
+cut_report_get_failure_results (CutReport *report)
+{
+    CutReportClass *klass;
+
+    g_return_val_if_fail(CUT_IS_REPORT(report), NULL);
+
+    klass = CUT_REPORT_GET_CLASS(report);
+    if (klass->get_failure_results)
+        return klass->get_failure_results(report);
+    else
+        return NULL;
+}
+
+gchar *
+cut_report_get_failure_results (CutReport *report)
+{
+    CutReportClass *klass;
+
+    g_return_val_if_fail(CUT_IS_REPORT(report), NULL);
+
+    klass = CUT_REPORT_GET_CLASS(report);
+    if (klass->get_failure_results)
+        return klass->get_failure_results(report);
+    else
+        return NULL;
+}
+
+gchar *
+cut_report_get_pending_results (CutReport *report)
+{
+    CutReportClass *klass;
+
+    g_return_val_if_fail(CUT_IS_REPORT(report), NULL);
+
+    klass = CUT_REPORT_GET_CLASS(report);
+    if (klass->get_pending_results)
+        return klass->get_pending_results(report);
+    else
+        return NULL;
+}
+
+gchar *
+cut_report_get_notification_results (CutReport *report)
+{
+    CutReportClass *klass;
+
+    g_return_val_if_fail(CUT_IS_REPORT(report), NULL);
+
+    klass = CUT_REPORT_GET_CLASS(report);
+    if (klass->get_notification_results)
+        return klass->get_notification_results(report);
+    else
+        return NULL;
+}
+
+gchar *
+cut_report_get_test_result(CutReport *report, const gchar *test_name)
 {
     CutReportClass *klass;
 
