@@ -2,6 +2,7 @@
 #include <cutter/cut-test-runner.h>
 
 void test_take_g_object(void);
+void test_take_g_list(void);
 
 #define CUT_TYPE_SIMPLE_OBJECT            (cut_simple_object_get_type ())
 #define CUT_SIMPLE_OBJECT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_SIMPLE_OBJECT, CutModuleTest1))
@@ -45,13 +46,14 @@ static CutTestResult *test_result;
 
 static GObject *object;
 
+static gboolean destroyed;
+static GList *list;
+
 static gboolean
-run (CutTest *_test)
+run (void)
 {
     gboolean success;
     CutTestContext *original_test_context;
-
-    test = _test;
 
     run_context = CUT_RUN_CONTEXT(cut_test_runner_new());
 
@@ -73,6 +75,9 @@ setup (void)
     test_result = NULL;
 
     object = NULL;
+
+    destroyed = FALSE;
+    list = NULL;
 }
 
 void
@@ -86,10 +91,12 @@ teardown (void)
         g_object_unref(test_context);
     if (test_result)
         g_object_unref(test_result);
+    if (list)
+        g_list_free(list);
 }
 
 static void
-take_g_object (void)
+stub_take_g_object (void)
 {
     cut_take_g_object(object);
 }
@@ -111,15 +118,45 @@ test_take_g_object (void)
     cut_assert(object);
     g_object_weak_ref(object, check_unref, &unrefed);
 
-    test = cut_test_new("cut_take_g_object test", take_g_object);
-    cut_assert(test);
+    test = cut_test_new("cut_take_g_object test", stub_take_g_object);
+    cut_assert_not_null(test);
 
-    cut_assert(!unrefed);
-    cut_assert(run(test));
-    cut_assert(!unrefed);
+    cut_assert_false(unrefed);
+    cut_assert_true(run());
+    cut_assert_false(unrefed);
     g_object_unref(test_context);
     test_context = NULL;
-    cut_assert(unrefed);
+    cut_assert_true(unrefed);
+}
+
+static void
+list_value_free (gpointer value)
+{
+    destroyed = TRUE;
+}
+
+static void
+stub_take_g_list (void)
+{
+    cut_take_g_list(list, list_value_free);
+}
+
+void
+test_take_g_list (void)
+{
+    list = g_list_prepend(list, GINT_TO_POINTER(100));
+
+    test = cut_test_new("cut_take_g_list test", stub_take_g_list);
+    cut_assert_not_null(test);
+
+    cut_assert_false(destroyed);
+    cut_assert_true(run());
+    cut_assert_false(destroyed);
+
+    g_object_unref(test_context);
+    test_context = NULL;
+    cut_assert_true(destroyed);
+    list = NULL;
 }
 
 /*
