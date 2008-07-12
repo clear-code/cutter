@@ -1,5 +1,8 @@
 2008-07-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-list.[ch] (cut_list_equal_uint)
+	(cut_list_inspect_uint): add.
+
 	* cutter/cut-test.h (CutIteratedTestFunction): move to ...
 	* cutter/cut-iterated-test.h: ... here.
 

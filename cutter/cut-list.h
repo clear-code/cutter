@@ -40,6 +40,10 @@ gboolean         cut_list_equal_int            (const GList *list1,
                                                 const GList *list2);
 gchar           *cut_list_inspect_int          (const GList *list);
 
+gboolean         cut_list_equal_uint           (const GList *list1,
+                                                const GList *list2);
+gchar           *cut_list_inspect_uint         (const GList *list);
+
 gboolean         cut_list_equal_string         (const GList *list1,
                                                 const GList *list2);
 gchar           *cut_list_inspect_string       (const GList *list);

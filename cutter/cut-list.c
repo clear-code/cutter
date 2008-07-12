@@ -87,6 +87,30 @@ cut_list_inspect_int (const GList *list)
 }
 
 static gboolean
+equal_uint (gconstpointer data1, gconstpointer data2, gpointer user_data)
+{
+    return GPOINTER_TO_UINT(data1) == GPOINTER_TO_UINT(data2);
+}
+
+gboolean
+cut_list_equal_uint (const GList *list1, const GList *list2)
+{
+    return cut_list_equal(list1, list2, equal_uint, NULL);
+}
+
+static void
+inspect_uint (GString *string, gconstpointer data, gpointer user_data)
+{
+    g_string_append_printf(string, "%u", GPOINTER_TO_UINT(data));
+}
+
+gchar *
+cut_list_inspect_uint (const GList *list)
+{
+    return cut_list_inspect(list, inspect_uint, NULL);
+}
+
+static gboolean
 equal_string (gconstpointer data1, gconstpointer data2, gpointer user_data)
 {
     if (data1 == NULL && data2 == NULL)
