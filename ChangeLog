@@ -1,5 +1,8 @@
 2008-07-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/lib/cuttest-utils.[ch] (cuttest_result_summary_list_new)
+	(cuttest_result_summary_list_new_from_run_context): add.
+
 	* cutter/cut-list.[ch] (cut_list_equal_uint)
 	(cut_list_inspect_uint): add.
 
