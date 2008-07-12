@@ -1,3 +1,8 @@
+2008-07-12  Kouhei Sutou  <kou@cozmixng.org>
+
+	* test/test-cut-test-data.c: add.
+	* test/Makefile.am: add test-cut-test-data.c.
+
 2008-07-11  Kouhei Sutou  <kou@cozmixng.org>
 
 	* test/test-cut-test-context.c (test_set_data): add.

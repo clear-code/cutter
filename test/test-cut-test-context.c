@@ -79,7 +79,6 @@ test_set_data (void)
     cut_assert_false(destroy_called);
     cut_assert_equal_string(NULL, destroyed_string);
 
-    cut_notify("should make CutTestData test");
     g_object_unref(test_data);
     test_data = NULL;
     cut_assert_true(destroy_called);
