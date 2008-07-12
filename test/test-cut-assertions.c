@@ -67,37 +67,37 @@ error_equal_string_with_null (void)
 }
 
 static void
-dummy_error_test_function (void)
+stub_error_test_function (void)
 {
     cut_error("This test should error");
 }
 
 static void
-dummy_fail_test_function (void)
+stub_fail_test_function (void)
 {
     cut_fail("This test should fail");
 }
 
 static void
-dummy_pend_test_function (void)
+stub_pend_test_function (void)
 {
     cut_pend("This test has been pending ever!");
 }
 
 static void
-dummy_notify_test_function (void)
+stub_notify_test_function (void)
 {
     cut_notify("This test has been notifying ever!");
 }
 
 static void
-dummy_assert_message_test_function (void)
+stub_assert_message_test_function (void)
 {
     cut_assert(FALSE, "The message of %s", "assertion");
 }
 
 static void
-dummy_assert_message_with_format_string (void)
+stub_assert_message_with_format_string (void)
 {
     cut_assert_equal_string("%s", "%d",
                             "%s and %s have format string",
@@ -277,15 +277,15 @@ test_error (void)
 {
     CutTest *test;
 
-    test = cut_test_new("dummy-error-test", dummy_error_test_function);
+    test = cut_test_new("stub-error-test", stub_error_test_function);
     cut_assert(test, "Creating a new CutTest object failed");
 
     cut_assert(!run(test));
     cut_assert_test_result_summary(run_context, 0, 0, 0, 1, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_ERROR,
-                           "dummy-error-test",
+                           "stub-error-test",
                            "This test should error", NULL,
-                           "dummy_error_test_function");
+                           "stub_error_test_function");
 }
 
 void
@@ -293,7 +293,7 @@ test_pending (void)
 {
     CutTest *test;
 
-    test = cut_test_new("dummy-pend-test", dummy_pend_test_function);
+    test = cut_test_new("stub-pend-test", stub_pend_test_function);
     cut_assert(test, "Creating a new CutTest object failed");
 
     g_signal_connect(test, "pending", G_CALLBACK(cb_collect_result),
@@ -315,7 +315,7 @@ test_notification (void)
 {
     CutTest *test;
 
-    test = cut_test_new("dummy-notify-test", dummy_notify_test_function);
+    test = cut_test_new("stub-notify-test", stub_notify_test_function);
     cut_assert(test, "Creating a new CutTest object failed");
 
     g_signal_connect(test, "notification", G_CALLBACK(cb_collect_result),
@@ -337,7 +337,7 @@ test_fail (void)
 {
     CutTest *test;
 
-    test = cut_test_new("dummy-fail-test", dummy_fail_test_function);
+    test = cut_test_new("stub-fail-test", stub_fail_test_function);
     cut_assert(test);
 
     g_signal_connect(test, "failure", G_CALLBACK(cb_collect_result),
@@ -358,8 +358,8 @@ test_assert_message (void)
 {
     CutTest *test;
 
-    test = cut_test_new("dummy-assertion-message-test",
-                        dummy_assert_message_test_function);
+    test = cut_test_new("stub-assertion-message-test",
+                        stub_assert_message_test_function);
     cut_assert(test);
 
     g_signal_connect(test, "failure", G_CALLBACK(cb_collect_result),
@@ -382,8 +382,8 @@ test_assert_message_with_format_string (void)
 {
     CutTest *test;
 
-    test = cut_test_new("dummy-assert-message-with-string",
-                        dummy_assert_message_with_format_string);
+    test = cut_test_new("stub-assert-message-with-string",
+                        stub_assert_message_with_format_string);
     cut_assert(test);
 
     g_signal_connect(test, "failure", G_CALLBACK(cb_collect_result),

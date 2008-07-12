@@ -379,10 +379,10 @@ test_new_from_xml (void)
     const gchar xml[] =
         "<result>\n"
         "  <test-case>\n"
-        "    <name>dummy test case</name>\n"
+        "    <name>stub test case</name>\n"
         "  </test-case>\n"
         "  <test>\n"
-        "    <name>dummy-error-test</name>\n"
+        "    <name>stub-error-test</name>\n"
         "    <description>Error Test</description>\n"
         "    <option>\n"
         "      <name>bug</name>\n"
@@ -395,7 +395,7 @@ test_new_from_xml (void)
         "    <entry>\n"
         "      <file>test-cut-report-xml.c</file>\n"
         "      <line>31</line>\n"
-        "      <info>dummy_error_test()</info>\n"
+        "      <info>stub_error_test()</info>\n"
         "    </entry>\n"
         "  </backtrace>\n"
         "  <elapsed>0.000100</elapsed>\n"
@@ -408,9 +408,9 @@ test_new_from_xml (void)
     test = cut_test_result_get_test(result);
     cut_assert(test);
 
-    cut_assert_equal_string("dummy test case",
+    cut_assert_equal_string("stub test case",
                             cut_test_result_get_test_case_name(result));
-    cut_assert_equal_string("dummy-error-test",
+    cut_assert_equal_string("stub-error-test",
                             cut_test_result_get_test_name(result));
     cut_assert_equal_int(CUT_TEST_RESULT_ERROR,
                          cut_test_result_get_status(result));
@@ -418,7 +418,7 @@ test_new_from_xml (void)
     cut_assert_equal_int(31, cut_test_result_get_line(result));
     cut_assert_equal_string("test-cut-report-xml.c",
                             cut_test_result_get_filename(result));
-    cut_assert_equal_string("dummy_error_test",
+    cut_assert_equal_string("stub_error_test",
                             cut_test_result_get_function_name(result));
     cut_assert_equal_string("This test should error",
                             cut_test_result_get_message(result));
@@ -476,14 +476,14 @@ test_new_from_xml_with_invalid_info (void)
         "<result>\n"
         "  <backtrace>\n"
         "    <entry>\n"
-        "      <info>dummy_error_test</info>\n"
+        "      <info>stub_error_test</info>\n"
         "    </entry>\n"
         "  </backtrace>\n"
         "</result>\n";
 
     cut_assert_new_from_xml_error("Error on line 4 char 30: "
                                   "/result/backtrace/entry/info: "
-                                  "invalid function name: dummy_error_test",
+                                  "invalid function name: stub_error_test",
                                   xml);
 }
 

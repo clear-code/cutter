@@ -31,64 +31,64 @@ static gboolean set_error_on_setup = FALSE;
 
 static gint n_setup = 0;
 static gint n_teardown = 0;
-static gint n_run_dummy_run_test_function = 0;
-static gint n_run_dummy_test_function1 = 0;
-static gint n_run_dummy_test_function2 = 0;
+static gint n_run_stub_run_test_function = 0;
+static gint n_run_stub_test_function1 = 0;
+static gint n_run_stub_test_function2 = 0;
 
 static void
-dummy_test_function1 (void)
+stub_test_function1 (void)
 {
     cut_assert_equal_int(1, 1);
     cut_assert_equal_int(1, 1);
     cut_assert_equal_int(1, 1);
     cut_assert_equal_int(1, 1);
-    n_run_dummy_test_function1++;
+    n_run_stub_test_function1++;
 }
 
 static void
-dummy_test_function2 (void)
+stub_test_function2 (void)
 {
-    n_run_dummy_test_function2++;
+    n_run_stub_test_function2++;
 }
 
 static void
-dummy_run_test_function (void)
+stub_run_test_function (void)
 {
-    n_run_dummy_run_test_function++;
+    n_run_stub_run_test_function++;
 }
 
 static void
-dummy_failure_test (void)
+stub_failure_test (void)
 {
     cut_fail("Failed!!!");
 }
 
 static void
-dummy_error_test (void)
+stub_error_test (void)
 {
     cut_error("Error!!!");
 }
 
 static void
-dummy_pending_test (void)
+stub_pending_test (void)
 {
     cut_pend("Pend!!!");
 }
 
 static void
-dummy_notification_test (void)
+stub_notification_test (void)
 {
     cut_notify("Notify!!!");
 }
 
 static void
-dummy_omission_test (void)
+stub_omission_test (void)
 {
     cut_omit("Omit!!!");
 }
 
 static void
-dummy_setup_function (void)
+stub_setup_function (void)
 {
     if (set_error_on_setup)
         cut_error("Error in setup");
@@ -96,7 +96,7 @@ dummy_setup_function (void)
 }
 
 static void
-dummy_teardown_function (void)
+stub_teardown_function (void)
 {
     n_teardown++;
 }
@@ -110,22 +110,22 @@ setup (void)
 
     n_setup = 0;
     n_teardown = 0;
-    n_run_dummy_run_test_function = 0;
-    n_run_dummy_test_function1 = 0;
-    n_run_dummy_test_function2 = 0;
+    n_run_stub_run_test_function = 0;
+    n_run_stub_test_function1 = 0;
+    n_run_stub_test_function2 = 0;
 
     run_context = CUT_RUN_CONTEXT(cut_test_runner_new());
     cut_run_context_set_target_test_names(run_context, test_names);
 
-    test_object = cut_test_case_new("dummy test case",
-                                    dummy_setup_function,
-                                    dummy_teardown_function,
+    test_object = cut_test_case_new("stub test case",
+                                    stub_setup_function,
+                                    stub_teardown_function,
                                     get_current_test_context,
                                     set_current_test_context,
                                     NULL, NULL);
-    cuttest_add_test(test_object, "dummy_test_1", dummy_test_function1);
-    cuttest_add_test(test_object, "dummy_test_2", dummy_test_function2);
-    cuttest_add_test(test_object, "run_test_function", dummy_run_test_function);
+    cuttest_add_test(test_object, "stub_test_1", stub_test_function1);
+    cuttest_add_test(test_object, "stub_test_2", stub_test_function2);
+    cuttest_add_test(test_object, "run_test_function", stub_run_test_function);
 }
 
 void
@@ -183,9 +183,9 @@ void
 test_run (void)
 {
     cut_assert(run_the_test());
-    cut_assert_equal_int(1, n_run_dummy_test_function1);
-    cut_assert_equal_int(1, n_run_dummy_test_function2);
-    cut_assert_equal_int(1, n_run_dummy_run_test_function);
+    cut_assert_equal_int(1, n_run_stub_test_function1);
+    cut_assert_equal_int(1, n_run_stub_test_function2);
+    cut_assert_equal_int(1, n_run_stub_run_test_function);
 }
 
 void
@@ -193,8 +193,8 @@ test_run_with_setup_error (void)
 {
     set_error_on_setup = TRUE;
     cut_assert(!run_the_test());
-    cut_assert_equal_int(0, n_run_dummy_test_function1);
-    cut_assert_equal_int(0, n_run_dummy_run_test_function);
+    cut_assert_equal_int(0, n_run_stub_test_function1);
+    cut_assert_equal_int(0, n_run_stub_run_test_function);
 }
 
 void
@@ -203,57 +203,57 @@ test_run_this_function (void)
     cut_assert(cut_test_case_run_test(test_object, run_context,
                                       "run_test_function"));
 
-    cut_assert_equal_int(1, n_run_dummy_run_test_function);
-    cut_assert_equal_int(0, n_run_dummy_test_function1);
+    cut_assert_equal_int(1, n_run_stub_run_test_function);
+    cut_assert_equal_int(0, n_run_stub_test_function1);
 }
 
 void
 test_run_tests_with_regex (void)
 {
-    cut_assert(cut_test_case_run_test(test_object, run_context, "/dummy/"));
-    cut_assert_equal_int(0, n_run_dummy_run_test_function);
-    cut_assert_equal_int(1, n_run_dummy_test_function1);
-    cut_assert_equal_int(1, n_run_dummy_test_function2);
+    cut_assert(cut_test_case_run_test(test_object, run_context, "/stub/"));
+    cut_assert_equal_int(0, n_run_stub_run_test_function);
+    cut_assert_equal_int(1, n_run_stub_test_function1);
+    cut_assert_equal_int(1, n_run_stub_test_function2);
 }
 
 void
 test_run_with_name_filter (void)
 {
-    const gchar *names[] = {"dummy_test_1", "run_test_function", NULL};
+    const gchar *names[] = {"stub_test_1", "run_test_function", NULL};
 
     cut_assert(cut_test_case_run_with_filter(test_object, run_context, names));
-    cut_assert_equal_int(1, n_run_dummy_run_test_function);
-    cut_assert_equal_int(1, n_run_dummy_test_function1);
-    cut_assert_equal_int(0, n_run_dummy_test_function2);
+    cut_assert_equal_int(1, n_run_stub_run_test_function);
+    cut_assert_equal_int(1, n_run_stub_test_function1);
+    cut_assert_equal_int(0, n_run_stub_test_function2);
 }
 
 void
 test_run_with_regex_filter (void)
 {
-    const gchar *regex[] = {"/dummy/", NULL};
+    const gchar *regex[] = {"/stub/", NULL};
 
     cut_assert(cut_test_case_run_with_filter(test_object, run_context, regex));
-    cut_assert_equal_int(0, n_run_dummy_run_test_function);
-    cut_assert_equal_int(1, n_run_dummy_test_function1);
-    cut_assert_equal_int(1, n_run_dummy_test_function2);
+    cut_assert_equal_int(0, n_run_stub_run_test_function);
+    cut_assert_equal_int(1, n_run_stub_test_function1);
+    cut_assert_equal_int(1, n_run_stub_test_function2);
 }
 
 void
 test_run_with_name_and_regex_filter (void)
 {
-    const gchar *name_and_regex[] = {"/dummy/", "run_test_function", NULL};
+    const gchar *name_and_regex[] = {"/stub/", "run_test_function", NULL};
 
     cut_assert(cut_test_case_run_with_filter(test_object, run_context,
                                              name_and_regex));
-    cut_assert_equal_int(1, n_run_dummy_run_test_function);
-    cut_assert_equal_int(1, n_run_dummy_test_function1);
-    cut_assert_equal_int(1, n_run_dummy_test_function2);
+    cut_assert_equal_int(1, n_run_stub_run_test_function);
+    cut_assert_equal_int(1, n_run_stub_test_function1);
+    cut_assert_equal_int(1, n_run_stub_test_function2);
 }
 
 void
 test_get_name (void)
 {
-    cut_assert_equal_string("dummy test case",
+    cut_assert_equal_string("stub test case",
                             cut_test_get_name(CUT_TEST(test_object)));
 }
 
@@ -289,7 +289,7 @@ test_failure_signal (void)
     gint n_failures = 0;
     g_signal_connect(test_object, "failure",
                      G_CALLBACK(cb_count_status), &n_failures);
-    cuttest_add_test(test_object, "dummy_failure_test", dummy_failure_test);
+    cuttest_add_test(test_object, "stub_failure_test", stub_failure_test);
     cut_assert(!cut_test_case_run(test_object, run_context));
     g_signal_handlers_disconnect_by_func(test_object,
                                          G_CALLBACK(cb_count_status),
@@ -303,7 +303,7 @@ test_error_signal (void)
     gint n_errors = 0;
     g_signal_connect(test_object, "error",
                      G_CALLBACK(cb_count_status), &n_errors);
-    cuttest_add_test(test_object, "dummy_error_test", dummy_error_test);
+    cuttest_add_test(test_object, "stub_error_test", stub_error_test);
     cut_assert(!cut_test_case_run(test_object, run_context));
     g_signal_handlers_disconnect_by_func(test_object,
                                          G_CALLBACK(cb_count_status),
@@ -317,7 +317,7 @@ test_pending_signal (void)
     gint n_pendings = 0;
     g_signal_connect(test_object, "pending",
                      G_CALLBACK(cb_count_status), &n_pendings);
-    cuttest_add_test(test_object, "dummy_pending_test", dummy_pending_test);
+    cuttest_add_test(test_object, "stub_pending_test", stub_pending_test);
     cut_assert(!cut_test_case_run(test_object, run_context));
     g_signal_handlers_disconnect_by_func(test_object,
                                          G_CALLBACK(cb_count_status),
@@ -331,8 +331,8 @@ test_notification_signal (void)
     gint n_notifications = 0;
     g_signal_connect(test_object, "notification",
                      G_CALLBACK(cb_count_status), &n_notifications);
-    cuttest_add_test(test_object, "dummy_notification_test",
-                     dummy_notification_test);
+    cuttest_add_test(test_object, "stub_notification_test",
+                     stub_notification_test);
     cut_assert(cut_test_case_run(test_object, run_context));
     g_signal_handlers_disconnect_by_func(test_object,
                                          G_CALLBACK(cb_count_status),
@@ -359,8 +359,8 @@ test_omission_signal (void)
     gint n_omissions = 0;
     g_signal_connect(test_object, "omission",
                      G_CALLBACK(cb_count_status), &n_omissions);
-    cuttest_add_test(test_object, "dummy_omission_test",
-                     dummy_omission_test);
+    cuttest_add_test(test_object, "stub_omission_test",
+                     stub_omission_test);
     cut_assert(cut_test_case_run(test_object, run_context));
     g_signal_handlers_disconnect_by_func(test_object,
                                          G_CALLBACK(cb_count_status),

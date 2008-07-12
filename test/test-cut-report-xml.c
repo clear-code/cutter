@@ -17,30 +17,30 @@ static CutTestCase *test_case;
 static CutTestContext *test_context;
 
 static void
-dummy_success_test (void)
+stub_success_test (void)
 {
 }
 
 static void
-dummy_failure_test (void)
+stub_failure_test (void)
 {
     cut_fail("This test should fail");
 }
 
 static void
-dummy_error_test (void)
+stub_error_test (void)
 {
     cut_error("This test should error");
 }
 
 static void
-dummy_pending_test (void)
+stub_pending_test (void)
 {
     cut_pend("This test has been pending ever!");
 }
 
 static void
-dummy_notification_test (void)
+stub_notification_test (void)
 {
     cut_notify("This test has been notifable ever!");
 }
@@ -58,7 +58,7 @@ setup (void)
     report = cut_report_new("xml", NULL);
     cut_listener_attach_to_run_context(CUT_LISTENER(report), run_context);
 
-    test_case = cut_test_case_new("dummy test case",
+    test_case = cut_test_case_new("stub test case",
                                   NULL, NULL,
                                   get_current_test_context,
                                   set_current_test_context,
@@ -107,11 +107,11 @@ test_report_success (void)
     gchar expected[] =
         "  <result>\n"
         "    <test-case>\n"
-        "      <name>dummy test case</name>\n"
+        "      <name>stub test case</name>\n"
         "      <elapsed>.+?</elapsed>\n"
         "    </test-case>\n"
         "    <test>\n"
-        "      <name>dummy-success-test</name>\n"
+        "      <name>stub-success-test</name>\n"
         "      <description>A success test</description>\n"
         "      <elapsed>.+?</elapsed>\n"
         "      <option>\n"
@@ -127,7 +127,7 @@ test_report_success (void)
         "    <elapsed>.+?</elapsed>\n"
         "  </result>\n";
 
-    test_object = cut_test_new("dummy-success-test", dummy_success_test);
+    test_object = cut_test_new("stub-success-test", stub_success_test);
     cut_test_set_attribute(test_object, "description", "A success test");
     cut_test_set_attribute(test_object, "bug", "1234");
     cut_test_set_attribute(test_object, "price", "$199");
@@ -148,11 +148,11 @@ test_report_failure (void)
     gchar expected[] =
         "  <result>\n"
         "    <test-case>\n"
-        "      <name>dummy test case</name>\n"
+        "      <name>stub test case</name>\n"
         "      <elapsed>.+?</elapsed>\n"
         "    </test-case>\n"
         "    <test>\n"
-        "      <name>dummy-failure-test</name>\n"
+        "      <name>stub-failure-test</name>\n"
         "      <elapsed>.+?</elapsed>\n"
         "    </test>\n"
         "    <status>failure</status>\n"
@@ -161,13 +161,13 @@ test_report_failure (void)
         "      <entry>\n"
         "        <file>test-cut-report-xml\\.c</file>\n"
         "        <line>27</line>\n"
-        "        <info>dummy_failure_test\\(\\)</info>\n"
+        "        <info>stub_failure_test\\(\\)</info>\n"
         "      </entry>\n"
         "    </backtrace>\n"
         "    <elapsed>.+?</elapsed>\n"
         "  </result>\n";
 
-    test_object = cut_test_new("dummy-failure-test", dummy_failure_test);
+    test_object = cut_test_new("stub-failure-test", stub_failure_test);
     g_signal_connect_after(test_object, "failure",
                            G_CALLBACK(cb_test_signal), NULL);
     cut_test_case_add_test(test_case, test_object);
@@ -186,11 +186,11 @@ test_report_pending (void)
     gchar expected[] =
         "  <result>\n"
         "    <test-case>\n"
-        "      <name>dummy test case</name>\n"
+        "      <name>stub test case</name>\n"
         "      <elapsed>.+?</elapsed>\n"
         "    </test-case>\n"
         "    <test>\n"
-        "      <name>dummy-pending-test</name>\n"
+        "      <name>stub-pending-test</name>\n"
         "      <elapsed>.+?</elapsed>\n"
         "    </test>\n"
         "    <status>pending</status>\n"
@@ -199,13 +199,13 @@ test_report_pending (void)
         "      <entry>\n"
         "        <file>test-cut-report-xml\\.c</file>\n"
         "        <line>39</line>\n"
-        "        <info>dummy_pending_test\\(\\)</info>\n"
+        "        <info>stub_pending_test\\(\\)</info>\n"
         "      </entry>\n"
         "    </backtrace>\n"
         "    <elapsed>.+?</elapsed>\n"
         "  </result>\n";
 
-    test_object = cut_test_new("dummy-pending-test", dummy_pending_test);
+    test_object = cut_test_new("stub-pending-test", stub_pending_test);
     g_signal_connect_after(test_object, "pending",
                            G_CALLBACK(cb_test_signal), NULL);
     cut_test_case_add_test(test_case, test_object);
@@ -224,11 +224,11 @@ test_report_notification (void)
     gchar expected[] =
         "  <result>\n"
         "    <test-case>\n"
-        "      <name>dummy test case</name>\n"
+        "      <name>stub test case</name>\n"
         "      <elapsed>.+?</elapsed>\n"
         "    </test-case>\n"
         "    <test>\n"
-        "      <name>dummy-notification-test</name>\n"
+        "      <name>stub-notification-test</name>\n"
         "      <elapsed>.+?</elapsed>\n"
         "    </test>\n"
         "    <status>notification</status>\n"
@@ -237,13 +237,13 @@ test_report_notification (void)
         "      <entry>\n"
         "        <file>test-cut-report-xml\\.c</file>\n"
         "        <line>45</line>\n"
-        "        <info>dummy_notification_test\\(\\)</info>\n"
+        "        <info>stub_notification_test\\(\\)</info>\n"
         "      </entry>\n"
         "    </backtrace>\n"
         "    <elapsed>.+?</elapsed>\n"
         "  </result>\n";
 
-    test_object = cut_test_new("dummy-notification-test", dummy_notification_test);
+    test_object = cut_test_new("stub-notification-test", stub_notification_test);
     g_signal_connect_after(test_object, "notification",
                            G_CALLBACK(cb_test_signal), NULL);
     cut_test_case_add_test(test_case, test_object);
@@ -262,11 +262,11 @@ test_report_error (void)
     gchar expected[] =
         "  <result>\n"
         "    <test-case>\n"
-        "      <name>dummy test case</name>\n"
+        "      <name>stub test case</name>\n"
         "      <elapsed>.+?</elapsed>\n"
         "    </test-case>\n"
         "    <test>\n"
-        "      <name>dummy-error-test</name>\n"
+        "      <name>stub-error-test</name>\n"
         "      <elapsed>.+?</elapsed>\n"
         "    </test>\n"
         "    <status>error</status>\n"
@@ -275,13 +275,13 @@ test_report_error (void)
         "      <entry>\n"
         "        <file>test-cut-report-xml\\.c</file>\n"
         "        <line>33</line>\n"
-        "        <info>dummy_error_test\\(\\)</info>\n"
+        "        <info>stub_error_test\\(\\)</info>\n"
         "      </entry>\n"
         "    </backtrace>\n"
         "    <elapsed>.+?</elapsed>\n"
         "  </result>\n";
 
-    test_object = cut_test_new("dummy-error-test", dummy_error_test);
+    test_object = cut_test_new("stub-error-test", stub_error_test);
     g_signal_connect_after(test_object, "error",
                            G_CALLBACK(cb_test_signal), NULL);
     cut_test_case_add_test(test_case, test_object);
@@ -299,11 +299,11 @@ test_plural_reports (void)
     gchar expected[] =
         "  <result>\n"
         "    <test-case>\n"
-        "      <name>dummy test case</name>\n"
+        "      <name>stub test case</name>\n"
         "      <elapsed>.+?</elapsed>\n"
         "    </test-case>\n"
         "    <test>\n"
-        "      <name>dummy-error-test</name>\n"
+        "      <name>stub-error-test</name>\n"
         "      <elapsed>.+?</elapsed>\n"
         "    </test>\n"
         "    <status>error</status>\n"
@@ -312,29 +312,29 @@ test_plural_reports (void)
         "      <entry>\n"
         "        <file>test-cut-report-xml\\.c</file>\n"
         "        <line>33</line>\n"
-        "        <info>dummy_error_test\\(\\)</info>\n"
+        "        <info>stub_error_test\\(\\)</info>\n"
         "      </entry>\n"
         "    </backtrace>\n"
         "    <elapsed>.+?</elapsed>\n"
         "  </result>\n"
         "  <result>\n"
         "    <test-case>\n"
-        "      <name>dummy test case</name>\n"
+        "      <name>stub test case</name>\n"
         "      <elapsed>.+?</elapsed>\n"
         "    </test-case>\n"
         "    <test>\n"
-        "      <name>dummy-success-test</name>\n"
+        "      <name>stub-success-test</name>\n"
         "      <elapsed>.+?</elapsed>\n"
         "    </test>\n"
         "    <status>success</status>\n"
         "    <elapsed>.+?</elapsed>\n"
         "  </result>\n";
 
-    test_object = cut_test_new("dummy-success-test", dummy_success_test);
+    test_object = cut_test_new("stub-success-test", stub_success_test);
     g_signal_connect_after(test_object, "success", G_CALLBACK(cb_test_signal), NULL);
     cut_test_case_add_test(test_case, test_object);
 
-    test_object = cut_test_new("dummy-error-test", dummy_error_test);
+    test_object = cut_test_new("stub-error-test", stub_error_test);
     g_signal_connect_after(test_object, "error",
                            G_CALLBACK(cb_test_signal), NULL);
     cut_test_case_add_test(test_case, test_object);

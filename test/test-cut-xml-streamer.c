@@ -20,7 +20,7 @@ static CutTestContext *test_context;
 static GString *xml;
 
 static void
-dummy_success_test (void)
+stub_success_test (void)
 {
 }
 
@@ -37,7 +37,7 @@ setup (void)
     run_context = CUT_RUN_CONTEXT(cut_test_runner_new());
     cut_run_context_set_target_test_names(run_context, test_names);
 
-    test_case = cut_test_case_new("dummy test case",
+    test_case = cut_test_case_new("stub test case",
                                   NULL, NULL,
                                   get_current_test_context,
                                   set_current_test_context,
@@ -116,7 +116,7 @@ test_ready_test_suite (void)
                                 "stream-function", stream_to_string,
                                 "stream-function-user-data", xml,
                                 NULL);
-    test_object = cut_test_new("dummy-success-test", dummy_success_test);
+    test_object = cut_test_new("stub-success-test", stub_success_test);
     cut_test_case_add_test(test_case, test_object);
     cut_listener_attach_to_run_context(CUT_LISTENER(streamer), run_context);
     cut_assert(cut_test_suite_run(test_suite, run_context));
@@ -131,7 +131,7 @@ test_ready_test_case (void)
     gchar expected[] =
         "  <ready-test-case>\n"
         "    <test-case>\n"
-        "      <name>dummy test case</name>\n"
+        "      <name>stub test case</name>\n"
         "      <elapsed>.*?</elapsed>\n"
         "    </test-case>\n"
         "    <n-tests>1</n-tests>\n"
@@ -143,7 +143,7 @@ test_ready_test_case (void)
                                 "stream-function", stream_to_string,
                                 "stream-function-user-data", xml,
                                 NULL);
-    test_object = cut_test_new("dummy-success-test", dummy_success_test);
+    test_object = cut_test_new("stub-success-test", stub_success_test);
     cut_test_case_add_test(test_case, test_object);
     cut_listener_attach_to_run_context(CUT_LISTENER(streamer), run_context);
     cut_assert(cut_test_suite_run(test_suite, run_context));
@@ -158,27 +158,27 @@ test_streamer_success (void)
     gchar expected[] =
         "  <test-result>\n"
         "    <test>\n"
-        "      <name>dummy-success-test</name>\n"
+        "      <name>stub-success-test</name>\n"
         "      <elapsed>.*?</elapsed>\n"
         "    </test>\n"
         "    <test-context>\n"
         "      <test-case>\n"
-        "        <name>dummy test case</name>\n"
+        "        <name>stub test case</name>\n"
         "        <elapsed>.*?</elapsed>\n"
         "      </test-case>\n"
         "      <test>\n"
-        "        <name>dummy-success-test</name>\n"
+        "        <name>stub-success-test</name>\n"
         "        <elapsed>.*?</elapsed>\n"
         "      </test>\n"
         "      <failed>FALSE</failed>\n"
         "    </test-context>\n"
         "    <result>\n"
         "      <test-case>\n"
-        "        <name>dummy test case</name>\n"
+        "        <name>stub test case</name>\n"
         "        <elapsed>.*?</elapsed>\n"
         "      </test-case>\n"
         "      <test>\n"
-        "        <name>dummy-success-test</name>\n"
+        "        <name>stub-success-test</name>\n"
         "        <elapsed>.*?</elapsed>\n"
         "      </test>\n"
         "      <status>success</status>\n"
@@ -193,7 +193,7 @@ test_streamer_success (void)
                                 "stream-function-user-data", xml,
                                 NULL);
 
-    test_object = cut_test_new("dummy-success-test", dummy_success_test);
+    test_object = cut_test_new("stub-success-test", stub_success_test);
     g_signal_connect_after(test_object, "success",
                            G_CALLBACK(cb_test_signal), NULL);
     cut_test_case_add_test(test_case, test_object);

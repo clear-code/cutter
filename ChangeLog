@@ -1,5 +1,7 @@
 2008-07-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/: dummy -> stub.
+
 	* cutter/cut-list.c (inspect_string): format NULL as NULL not "(null)".
 
 	* test/test-cut-gassertions.c (test_equal_g_list_string_both_null)

@@ -254,7 +254,7 @@ test_equal_g_list_string (void)
                            "<list1 == list2>\n"
                            "expected: <(\"abc\", \"def\")>\n"
                            " but was: <(\"zyx\", \"wvu\")>",
-                           "equal_g_list_string_test");
+                           "stub_equal_g_list_string");
 }
 
 static void

@@ -31,7 +31,7 @@ static gint n_notification_signal = 0;
 static gint n_omission_signal = 0;
 
 static void
-dummy_test_function (void)
+stub_test_function (void)
 {
     cut_assert_equal_int(1, 1);
     cut_assert_equal_int(1, 1);
@@ -40,31 +40,31 @@ dummy_test_function (void)
 }
 
 static void
-dummy_fail_function (void)
+stub_fail_function (void)
 {
     cut_fail("This test should fail");
 }
 
 static void
-dummy_pending_function (void)
+stub_pending_function (void)
 {
     cut_pend("This test has been pending ever!");
 }
 
 static void
-dummy_notification_function (void)
+stub_notification_function (void)
 {
     cut_notify("This test has been notifying ever!");
 }
 
 static void
-dummy_error_function (void)
+stub_error_function (void)
 {
     cut_error("This test should error");
 }
 
 static void
-dummy_omission_function (void)
+stub_omission_function (void)
 {
     cut_omit("This test should be omitted");
 }
@@ -85,7 +85,7 @@ setup (void)
 
     run_context = CUT_RUN_CONTEXT(cut_test_runner_new());
 
-    test_object = cut_test_new("dummy-test", dummy_test_function);
+    test_object = cut_test_new("stub-test", stub_test_function);
 }
 
 void
@@ -169,14 +169,14 @@ test_test_function (void)
     g_object_get(test_object,
                  "test-function", &test_function,
                  NULL);
-    cut_assert_equal_int(GPOINTER_TO_UINT(dummy_test_function),
+    cut_assert_equal_int(GPOINTER_TO_UINT(stub_test_function),
                          GPOINTER_TO_UINT(test_function));
 }
 
 void
 test_get_name (void)
 {
-    cut_assert_equal_string("dummy-test",
+    cut_assert_equal_string("stub-test",
                             cut_test_get_name(test_object));
     cut_test_set_name(test_object, "new-name");
     cut_assert_equal_string("new-name",
@@ -186,8 +186,8 @@ test_get_name (void)
 void
 test_get_description (void)
 {
-    cut_test_set_attribute(test_object, "description", "Dummy Test");
-    cut_assert_equal_string("Dummy Test",
+    cut_test_set_attribute(test_object, "description", "Stub Test");
+    cut_assert_equal_string("Stub Test",
                             cut_test_get_description(test_object));
 }
 
@@ -225,7 +225,7 @@ test_error_signal (void)
 {
     CutTest *test;
 
-    test = cut_test_new("dummy-error-test", dummy_error_function);
+    test = cut_test_new("stub-error-test", stub_error_function);
     cut_assert(test);
 
     g_signal_connect(test, "error", G_CALLBACK(cb_error_signal), NULL);
@@ -242,7 +242,7 @@ test_failure_signal (void)
 {
     CutTest *test;
 
-    test = cut_test_new("dummy-failure-test", dummy_fail_function);
+    test = cut_test_new("stub-failure-test", stub_fail_function);
     cut_assert(test);
 
     g_signal_connect(test, "failure", G_CALLBACK(cb_failure_signal), NULL);
@@ -259,7 +259,7 @@ test_pending_signal (void)
 {
     CutTest *test;
 
-    test = cut_test_new("dummy-pending-test", dummy_pending_function);
+    test = cut_test_new("stub-pending-test", stub_pending_function);
     cut_assert(test);
 
     g_signal_connect(test, "pending", G_CALLBACK(cb_pending_signal), NULL);
@@ -276,7 +276,7 @@ test_notification_signal (void)
 {
     CutTest *test;
 
-    test = cut_test_new("dummy-notification-test", dummy_notification_function);
+    test = cut_test_new("stub-notification-test", stub_notification_function);
     cut_assert(test);
 
     g_signal_connect(test, "notification", G_CALLBACK(cb_notification_signal), NULL);
@@ -293,7 +293,7 @@ test_omission_signal (void)
 {
     CutTest *test;
 
-    test = cut_test_new("dummy-omission-test", dummy_omission_function);
+    test = cut_test_new("stub-omission-test", stub_omission_function);
     cut_assert(test);
 
     g_signal_connect(test, "omission", G_CALLBACK(cb_omission_signal), NULL);
