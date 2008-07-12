@@ -195,10 +195,10 @@ equal_g_list_uint_test (void)
     list2 = g_list_append(list2, GUINT_TO_POINTER(1000));
     list2 = g_list_append(list2, GUINT_TO_POINTER(2000));
 
-    cut_assert_equal_g_list_int(list1, list1);
-    cut_assert_equal_g_list_int(list2, list2);
+    cut_assert_equal_g_list_uint(list1, list1);
+    cut_assert_equal_g_list_uint(list2, list2);
 
-    cut_assert_equal_g_list_int(list1, list2);
+    cut_assert_equal_g_list_uint(list1, list2);
 }
 
 void
