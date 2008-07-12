@@ -201,7 +201,7 @@ test_equal_string_with_diff (void)
     g_signal_connect(test, "failure", G_CALLBACK(cb_collect_result),
                      &test_result);
     cut_assert(!run(test));
-    cut_assert_test_result_summary(run_context, 0, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result_summary(run_context, 0, 0, 0, 1, 0, 0, 0, 0);
     cut_assert_equal_string("<\"abc def ghi jkl\" == \"abc DEF ghi jkl\">\n"
                             "expected: <abc def ghi jkl>\n"
                             " but was: <abc DEF ghi jkl>\n"
@@ -281,7 +281,7 @@ test_error (void)
     cut_assert(test, "Creating a new CutTest object failed");
 
     cut_assert(!run(test));
-    cut_assert_test_result_summary(run_context, 0, 0, 0, 1, 0, 0, 0);
+    cut_assert_test_result_summary(run_context, 0, 0, 0, 0, 1, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_ERROR,
                            "stub-error-test",
                            "This test should error", NULL,
@@ -474,7 +474,7 @@ test_null_string (void)
 
     test = cut_test_new("assert-null-string", null_string_assertions);
     cut_assert(!run(test));
-    cut_assert_test_result_summary(run_context, 0, 1, 1, 0, 0, 0, 0);
+    cut_assert_test_result_summary(run_context, 0, 1, 0, 1, 0, 0, 0, 0);
 }
 
 static void
@@ -494,7 +494,7 @@ test_equal_string_with_free (void)
     test = cut_test_new("assert-string-equal-string-with-free",
                         equal_string_with_free_assertions);
     cut_assert(!run(test));
-    cut_assert_test_result_summary(run_context, 0, 3, 1, 0, 0, 0, 0);
+    cut_assert_test_result_summary(run_context, 0, 3, 0, 1, 0, 0, 0, 0);
 }
 
 static void
@@ -514,7 +514,7 @@ test_assert_errno (void)
 
     test = cut_test_new("assert-errno-for-eacces", assert_errno_for_eacces);
     cut_assert(!run(test));
-    cut_assert_test_result_summary(run_context, 0, 1, 1, 0, 0, 0, 0);
+    cut_assert_test_result_summary(run_context, 0, 1, 0, 1, 0, 0, 0, 0);
 }
 
 static void
@@ -532,7 +532,7 @@ test_omit (void)
 
     test = cut_test_new("omit-test", omit_test);
     cut_assert(run(test));
-    cut_assert_test_result_summary(run_context, 0, 1, 0, 0, 0, 0, 1);
+    cut_assert_test_result_summary(run_context, 0, 1, 1, 0, 0, 0, 0, 1);
 }
 
 static void
@@ -562,7 +562,7 @@ test_path_exist (void)
 
     test = cut_test_new("path-exist-test", path_exist_test);
     cut_assert(!run(test));
-    cut_assert_test_result_summary(run_context, 0, 1, 1, 0, 0, 0, 0);
+    cut_assert_test_result_summary(run_context, 0, 1, 0, 1, 0, 0, 0, 0);
 }
 
 static void
@@ -591,7 +591,7 @@ test_path_not_exist (void)
 
     test = cut_test_new("path-not-exist-test", path_not_exist_test);
     cut_assert(!run(test));
-    cut_assert_test_result_summary(run_context, 0, 1, 1, 0, 0, 0, 0);
+    cut_assert_test_result_summary(run_context, 0, 1, 0, 1, 0, 0, 0, 0);
 }
 
 static void
@@ -608,7 +608,7 @@ test_match (void)
 
     test = cut_test_new("match-test", match_test);
     cut_assert(!run(test));
-    cut_assert_test_result_summary(run_context, 0, 1, 1, 0, 0, 0, 0);
+    cut_assert_test_result_summary(run_context, 0, 1, 0, 1, 0, 0, 0, 0);
 }
 
 static void
@@ -627,7 +627,7 @@ test_equal_pointer (void)
 
     test = cut_test_new("equal-pointer-test", equal_pointer_test);
     cut_assert(!run(test));
-    cut_assert_test_result_summary(run_context, 0, 1, 1, 0, 0, 0, 0);
+    cut_assert_test_result_summary(run_context, 0, 1, 0, 1, 0, 0, 0, 0);
 }
 
 static void
@@ -646,7 +646,7 @@ test_equal_fixture_data_string (void)
     test = cut_test_new("equal-fixture-data-sting-test",
                         equal_fixture_data_string_test);
     cut_assert(!run(test));
-    cut_assert_test_result_summary(run_context, 0, 2, 1, 0, 0, 0, 0);
+    cut_assert_test_result_summary(run_context, 0, 2, 0, 1, 0, 0, 0, 0);
 }
 
 static void
@@ -662,8 +662,9 @@ test_equal_fixture_data_string_without_file (void)
 
     test = cut_test_new("equal-fixture-data-sting-test-without-file",
                         equal_fixture_data_string_test_without_file);
-    cut_assert(!run(test));
-    cut_assert_test_result_summary(run_context, 0, 0, 0, 1, 0, 0, 0);
+    cut_assert_false(run(test));
+
+    cut_assert_test_result_summary(run_context, 0, 0, 0, 0, 1, 0, 0, 0);
 }
 
 static void
@@ -684,7 +685,7 @@ test_error_errno (void)
 
     test = cut_test_new("error-errno", error_errno);
     cut_assert(!run(test));
-    cut_assert_test_result_summary(run_context, 0, 0, 0, 1, 0, 0, 0);
+    cut_assert_test_result_summary(run_context, 0, 0, 0, 0, 1, 0, 0, 0);
 
     result = cut_run_context_get_results(run_context)->data;
     cut_assert_equal_string("Should error",

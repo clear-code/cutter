@@ -217,7 +217,7 @@ test_run (void *data)
     cut_assert_true(run());
 
     cut_assert_n_signals(1, 1, 0, 0, 0, 0, 0);
-    cut_assert_test_result_summary(run_context, 0, 1, 0, 0, 0, 0, 0);
+    cut_assert_test_result_summary(run_context, 0, 1, 1, 0, 0, 0, 0, 0);
 }
 
 /*

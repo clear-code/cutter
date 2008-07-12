@@ -37,6 +37,7 @@ cuttest_result_summary_list_new (guint n_tests,
 
     APPEND(n_tests);
     APPEND(n_assertions);
+    APPEND(n_successes);
     APPEND(n_failures);
     APPEND(n_errors);
     APPEND(n_pendings);
@@ -54,7 +55,7 @@ cuttest_result_summary_list_new_from_run_context (CutRunContext *run_context)
     return cuttest_result_summary_list_new(
         cut_run_context_get_n_tests(run_context),
         cut_run_context_get_n_assertions(run_context),
-        0,
+        cut_run_context_get_n_successes(run_context),
         cut_run_context_get_n_failures(run_context),
         cut_run_context_get_n_errors(run_context),
         cut_run_context_get_n_pendings(run_context),

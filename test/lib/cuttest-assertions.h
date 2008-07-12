@@ -11,7 +11,7 @@
     cut_take_g_list(list, NULL)
 
 #define cut_assert_test_result_summary(run_context, n_tests,            \
-                                       n_assertions,                    \
+                                       n_assertions, n_successes,       \
                                        n_failures, n_errors,            \
                                        n_pendings, n_notifications,     \
                                        n_omissions) do                  \
@@ -25,7 +25,7 @@
     _result_summary =                                                   \
         cuttest_result_summary_list_new((n_tests),                      \
                                         (n_assertions),                 \
-                                        0,                              \
+                                        (n_successes),                  \
                                         (n_failures),                   \
                                         (n_errors),                     \
                                         (n_pendings),                   \

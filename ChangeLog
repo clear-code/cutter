@@ -1,5 +1,13 @@
 2008-07-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/lib/cuttest-utils.c
+	(cuttest_result_summary_list_new_from_run_context),
+	test/lib/cuttest-assertions.h (cut_assert_test_result_summary):
+	support n_successes.
+
+	* test/test-cut-iterated-test.c, test/test-cut-gassertions.c,
+	test/test-cut-assertions.c: follow the above changes.
+
 	* cutter/cut-report.c: expand macro.
 
 	* test/test-cut-pipeline.c: use iterated test.
