@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2008  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -115,8 +115,10 @@ G_BEGIN_DECLS
  */
 #define cut_assert_equal_g_list_int(expected, actual, ...) do           \
 {                                                                       \
-    const GList *_expected = (expected);                                \
-    const GList *_actual = (actual);                                    \
+    const GList *_expected, *_actual;                                   \
+                                                                        \
+    _expected = (expected);                                             \
+    _actual = (actual);                                                 \
     if (cut_list_equal_int(_expected, _actual)) {                       \
         cut_test_pass();                                                \
     } else {                                                            \
@@ -125,6 +127,42 @@ G_BEGIN_DECLS
             cut_take_string(cut_list_inspect_int(_expected));           \
         inspected_actual =                                              \
             cut_take_string(cut_list_inspect_int(_actual));             \
+        cut_test_fail(FAILURE,                                          \
+                      cut_take_printf("<%s == %s>\n"                    \
+                                      "expected: <%s>\n"                \
+                                      " but was: <%s>",                 \
+                                      #expected, #actual,               \
+                                      inspected_expected,               \
+                                      inspected_actual),                \
+                      ## __VA_ARGS__);                                  \
+    }                                                                   \
+} while(0)
+
+/**
+ * cut_assert_equal_g_list_uint:
+ * @expected: an expected GList * of unsigned integer.
+ * @actual: an actual GList * of unsigned integer.
+ * @...: optional format string, followed by parameters to insert
+ * into the format string (as with printf())
+ *
+ * Passes if @expected == @actual.
+ *
+ * Since: 1.0.3
+ */
+#define cut_assert_equal_g_list_uint(expected, actual, ...) do          \
+{                                                                       \
+    const GList *_expected, *_actual;                                   \
+                                                                        \
+    _expected = (expected);                                             \
+    _actual = (actual);                                                 \
+    if (cut_list_equal_uint(_expected, _actual)) {                      \
+        cut_test_pass();                                                \
+    } else {                                                            \
+        const gchar *inspected_expected, *inspected_actual;             \
+        inspected_expected =                                            \
+            cut_take_string(cut_list_inspect_uint(_expected));          \
+        inspected_actual =                                              \
+            cut_take_string(cut_list_inspect_uint(_actual));            \
         cut_test_fail(FAILURE,                                          \
                       cut_take_printf("<%s == %s>\n"                    \
                                       "expected: <%s>\n"                \

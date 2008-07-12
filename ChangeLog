@@ -1,5 +1,9 @@
 2008-07-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-gassertions.h (cut_assert_equal_g_list_uint): add.
+
+	* test/test-cut-gassertions.c (test_equal_g_list_uint): add.
+
 	* cutter/cut-test-context.c, cutter/cut-gpublic.h
 	(cut_test_context_take_g_list): add.
 

@@ -8,6 +8,7 @@
 void test_equal_g_type(void);
 void test_equal_g_value(void);
 void test_equal_g_list_int(void);
+void test_equal_g_list_uint(void);
 void test_equal_g_list_string(void);
 void test_g_error(void);
 
@@ -157,8 +158,8 @@ static void
 equal_g_list_int_test (void)
 {
     list1 = g_list_append(list1, GINT_TO_POINTER(100));
-    list1 = g_list_append(list1, GINT_TO_POINTER(200));
-    list2 = g_list_append(list2, GINT_TO_POINTER(1000));
+    list1 = g_list_append(list1, GINT_TO_POINTER(-200));
+    list2 = g_list_append(list2, GINT_TO_POINTER(-1000));
     list2 = g_list_append(list2, GINT_TO_POINTER(2000));
 
     cut_assert_equal_g_list_int(list1, list1);
@@ -181,9 +182,42 @@ test_equal_g_list_int (void)
                            "equal_g_list_int test",
                            NULL,
                            "<list1 == list2>\n"
+                           "expected: <(100, -200)>\n"
+                           " but was: <(-1000, 2000)>",
+                           "equal_g_list_int_test");
+}
+
+static void
+equal_g_list_uint_test (void)
+{
+    list1 = g_list_append(list1, GUINT_TO_POINTER(100));
+    list1 = g_list_append(list1, GUINT_TO_POINTER(200));
+    list2 = g_list_append(list2, GUINT_TO_POINTER(1000));
+    list2 = g_list_append(list2, GUINT_TO_POINTER(2000));
+
+    cut_assert_equal_g_list_int(list1, list1);
+    cut_assert_equal_g_list_int(list2, list2);
+
+    cut_assert_equal_g_list_int(list1, list2);
+}
+
+void
+test_equal_g_list_uint (void)
+{
+    CutTest *test;
+
+    test = cut_test_new("equal_g_list_uint test", equal_g_list_uint_test);
+    cut_assert(test);
+
+    cut_assert(!run(test));
+    cut_assert_test_result_summary(run_context, 0, 2, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "equal_g_list_uint test",
+                           NULL,
+                           "<list1 == list2>\n"
                            "expected: <(100, 200)>\n"
                            " but was: <(1000, 2000)>",
-                           "equal_g_list_int_test");
+                           "equal_g_list_uint_test");
 }
 
 static void
