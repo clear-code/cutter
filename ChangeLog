@@ -1,5 +1,7 @@
 2008-07-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-iterated-test.c: fix test.
+
 	* test/lib/cuttest-assertions.h (cut_assert_test_result_summary):
 	use cut_assert_equal_g_list_uint().
 
