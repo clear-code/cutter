@@ -1,40 +1,47 @@
-#ifndef __CUTTEST__UTILS_H__
-#define __CUTTEST__UTILS_H__
+#ifndef __CUTTEST_ASSERTIONS_H__
+#define __CUTTEST_ASSERTIONS_H__
 
+#include <gcutter.h>
 #include <cutter/cut-assertions.h>
 #include <cutter/cut-run-context.h>
+#include <cutter/cut-test-result.h>
+#include "cuttest-utils.h"
 
-#define cut_assert_test_result_summary(run_context, n_tests, n_assertions, \
-                                       n_failures, n_errors, n_pendings, \
-                                       n_notifications, n_omissions) do \
+#define cut_take_result_summary_list(list)      \
+    cut_take_g_list(list, NULL)
+
+#define cut_assert_test_result_summary(run_context, n_tests,            \
+                                       n_assertions,                    \
+                                       n_failures, n_errors,            \
+                                       n_pendings, n_notifications,     \
+                                       n_omissions) do                  \
 {                                                                       \
     CutRunContext *_run_context;                                        \
-    guint _n_tests, _n_assertions, _n_failures, _n_errors, _n_pendings; \
-    guint _n_notifications, _n_omissions;                               \
+    GList *_result_summary;                                             \
+    const GList *_expected_result_summary;                              \
+    const GList *_actual_result_summary;                                \
                                                                         \
     _run_context = (run_context);                                       \
-    _n_tests = (n_tests);                                               \
-    _n_assertions = (n_assertions);                                     \
-    _n_failures = (n_failures);                                         \
-    _n_errors = (n_errors);                                             \
-    _n_pendings = (n_pendings);                                         \
-    _n_notifications = (n_notifications);                               \
-    _n_omissions = (n_omissions);                                       \
+    _result_summary =                                                   \
+        cuttest_result_summary_list_new((n_tests),                      \
+                                        (n_assertions),                 \
+                                        0,                              \
+                                        (n_failures),                   \
+                                        (n_errors),                     \
+                                        (n_pendings),                   \
+                                        (n_notifications),              \
+                                        (n_omissions));                 \
+    _expected_result_summary =                                          \
+        cut_take_result_summary_list(_result_summary);                  \
                                                                         \
-    cut_assert_equal_uint(_n_tests,                                     \
-                          cut_run_context_get_n_tests(_run_context));   \
-    cut_assert_equal_uint(_n_assertions,                                \
-                          cut_run_context_get_n_assertions(_run_context)); \
-    cut_assert_equal_uint(_n_failures,                                  \
-                          cut_run_context_get_n_failures(_run_context)); \
-    cut_assert_equal_uint(_n_errors,                                    \
-                          cut_run_context_get_n_errors(_run_context));  \
-    cut_assert_equal_uint(_n_pendings,                                  \
-                          cut_run_context_get_n_pendings(_run_context)); \
-    cut_assert_equal_uint(_n_notifications,                             \
-                          cut_run_context_get_n_notifications(_run_context)); \
-    cut_assert_equal_uint(_n_omissions,                                 \
-                          cut_run_context_get_n_omissions(_run_context)); \
+    _result_summary =                                                   \
+        cuttest_result_summary_list_new_from_run_context(_run_context); \
+                                                                        \
+    _actual_result_summary =                                            \
+        cut_take_result_summary_list(_result_summary);                  \
+                                                                        \
+    cut_assert_equal_g_list_uint(_expected_result_summary,              \
+                                 _actual_result_summary);               \
 } while (0)
 
 static inline void
@@ -54,10 +61,10 @@ cut_assert_test_result (CutRunContext *run_context,
     cut_assert(result);
     cut_assert_equal_int(status, cut_test_result_get_status(result));
     cut_assert_equal_string(test_name, cut_test_result_get_test_name(result));
-    cut_assert_equal_string_or_null(user_message,
-                                    cut_test_result_get_user_message(result));
-    cut_assert_equal_string_or_null(system_message,
-                                    cut_test_result_get_system_message(result));
+    cut_assert_equal_string(user_message,
+                            cut_test_result_get_user_message(result));
+    cut_assert_equal_string(system_message,
+                            cut_test_result_get_system_message(result));
     cut_assert_equal_string(function_name,
                             cut_test_result_get_function_name(result));
 }

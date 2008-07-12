@@ -1,5 +1,8 @@
 2008-07-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/lib/cuttest-assertions.h (cut_assert_test_result_summary):
+	use cut_assert_equal_g_list_uint().
+
 	* test/lib/cuttest-utils.[ch] (cuttest_result_summary_list_new)
 	(cuttest_result_summary_list_new_from_run_context): add.
 
