@@ -217,20 +217,6 @@ cut_report_get_failure_results (CutReport *report)
 }
 
 gchar *
-cut_report_get_failure_results (CutReport *report)
-{
-    CutReportClass *klass;
-
-    g_return_val_if_fail(CUT_IS_REPORT(report), NULL);
-
-    klass = CUT_REPORT_GET_CLASS(report);
-    if (klass->get_failure_results)
-        return klass->get_failure_results(report);
-    else
-        return NULL;
-}
-
-gchar *
 cut_report_get_pending_results (CutReport *report)
 {
     CutReportClass *klass;
