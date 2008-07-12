@@ -241,7 +241,6 @@ cut_test_data_set_value (CutTestData *test_data, gpointer value,
     priv->destroy_function = destroy_function;
 }
 
-/*
 gchar *
 cut_test_data_to_xml (CutTestData *test_data)
 {
@@ -252,73 +251,24 @@ cut_test_data_to_xml (CutTestData *test_data)
     return g_string_free(string, FALSE);
 }
 
-typedef struct _AppendAttributeInfo {
-    GString *string;
-    guint indent;
-} AppendAttributeInfo;
-
-static void
-append_attribute (const gchar *key, const gchar *value,
-                  AppendAttributeInfo *info)
-{
-    if (strcmp(key, "description") == 0)
-        return;
-
-    cut_utils_append_indent(info->string, info->indent);
-    g_string_append(info->string, "<option>\n");
-
-    cut_utils_append_xml_element_with_value(info->string, info->indent + 2,
-                                            "name", key);
-    cut_utils_append_xml_element_with_value(info->string, info->indent + 2,
-                                            "value", value);
-
-    cut_utils_append_indent(info->string, info->indent);
-    g_string_append(info->string, "</option>\n");
-}
-
 void
-cut_test_data_to_xml_string (CutTestData *test_data, GString *string, guint indent)
+cut_test_data_to_xml_string (CutTestData *test_data, GString *string,
+                             guint indent)
 {
     CutTestDataPrivate *priv;
-    gchar *escaped, *elapsed;
-    const gchar *description, *name;
-    GHashTable *attributes;
 
     priv = CUT_TEST_DATA_GET_PRIVATE(test_data);
 
-    escaped = g_markup_escape_text(priv->element_name, -1);
     cut_utils_append_indent(string, indent);
-    g_string_append_printf(string, "<%s>\n", escaped);
+    g_string_append_printf(string, "<test-data>\n");
 
-    name = cut_test_data_get_name(test_data);
-    if (name)
+    if (priv->name)
         cut_utils_append_xml_element_with_value(string, indent + 2,
-                                                "name", name);
-
-    description = cut_test_data_get_description(test_data);
-    if (description)
-        cut_utils_append_xml_element_with_value(string, indent + 2,
-                                                "description", description);
-
-    elapsed = g_strdup_printf("%f", cut_test_data_get_elapsed(test_data));
-    cut_utils_append_xml_element_with_value(string, indent + 2,
-                                            "elapsed", elapsed);
-    g_free(elapsed);
-
-    attributes = cut_test_data_get_attributes(test_data);
-    if (attributes) {
-        AppendAttributeInfo info;
-
-        info.string = string;
-        info.indent = indent + 2;
-        g_hash_table_foreach(attributes, (GHFunc)append_attribute, &info);
-    }
+                                                "name", priv->name);
 
     cut_utils_append_indent(string, indent);
-    g_string_append_printf(string, "</%s>\n", escaped);
-    g_free(escaped);
+    g_string_append_printf(string, "</test-data>\n");
 }
-*/
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

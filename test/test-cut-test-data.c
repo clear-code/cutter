@@ -7,10 +7,14 @@ void test_new_empty (void);
 void test_new_and_destroy (void);
 void test_set_name (void);
 void test_set_value (void);
+void test_to_xml (void);
+void test_to_xml_empty (void);
+void test_to_xml_string (void);
 
 static CutTestData *test_data;
 static gboolean destroy_called;
 static gchar *destroyed_string;
+static GString *string;
 
 void
 setup (void)
@@ -18,6 +22,7 @@ setup (void)
     test_data = NULL;
     destroy_called = FALSE;
     destroyed_string = NULL;
+    string = NULL;
 }
 
 void
@@ -28,6 +33,9 @@ teardown (void)
 
     if (destroyed_string)
         g_free(destroyed_string);
+
+    if (string)
+        g_string_free(string, TRUE);
 }
 
 void
@@ -85,30 +93,45 @@ test_set_name (void)
 }
 
 void
-test_set_value (void)
+test_to_xml (void)
 {
     const gchar name[] = "sample test data";
     const gchar value[] = "sample test value";
-    const gchar new_value[] = "new test value";
+    const gchar expected[] =
+        "<test-data>\n"
+        "  <name>sample test data</name>\n"
+        "</test-data>\n";
 
-    test_data = cut_test_data_new(name, g_strdup(value), string_data_free);
-    cut_assert_equal_string(value, cut_test_data_get_value(test_data));
+    test_data = cut_test_data_new(name, g_strdup(value), g_free);
+    cut_assert_equal_string_with_free(expected, cut_test_data_to_xml(test_data));
+}
 
-    cut_assert_false(destroy_called);
-    cut_assert_equal_string(NULL, destroyed_string);
-    cut_test_data_set_value(test_data, g_strdup(new_value), string_data_free);
-    cut_assert_true(destroy_called);
-    cut_assert_equal_string(value, destroyed_string);
-    destroy_called = FALSE;
-    g_free(destroyed_string);
-    destroyed_string = NULL;
+void
+test_to_xml_empty (void)
+{
+    const gchar expected[] =
+        "<test-data>\n"
+        "</test-data>\n";
 
-    cut_assert_equal_string(new_value, cut_test_data_get_value(test_data));
+    test_data = cut_test_data_new_empty();
+    cut_assert_equal_string_with_free(expected, cut_test_data_to_xml(test_data));
+}
 
-    cut_test_data_set_value(test_data, NULL, NULL);
-    cut_assert_true(destroy_called);
-    cut_assert_equal_string(new_value, destroyed_string);
-    cut_assert_equal_string(NULL, cut_test_data_get_value(test_data));
+void
+test_to_xml_string (void)
+{
+    const gchar name[] = "sample test data";
+    const gchar value[] = "sample test value";
+    const gchar expected[] =
+        "before content\n"
+        "  <test-data>\n"
+        "    <name>sample test data</name>\n"
+        "  </test-data>\n";
+
+    test_data = cut_test_data_new(name, g_strdup(value), g_free);
+    string = g_string_new("before content\n");
+    cut_test_data_to_xml_string(test_data, string, 2);
+    cut_assert_equal_string(expected, string->str);
 }
 
 /*

@@ -1,5 +1,10 @@
 2008-07-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-data.c (cut_test_data_to_xml)
+	(cut_test_data_to_xml_string): implement.
+
+	* test/test-cut-test-data.c: add tests for to_xml family.
+
 	* test/test-cut-test-data.c: add.
 	* test/Makefile.am: add test-cut-test-data.c.
 
