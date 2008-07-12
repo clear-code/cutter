@@ -8,6 +8,7 @@ void test_simple_xml (void);
 void test_xml_with_test_suite (void);
 void test_xml_with_test_case (void);
 void test_xml_with_test (void);
+void test_xml_with_test_data (void);
 
 static CutTestContext *context;
 static CutTestSuite *test_suite;
@@ -66,6 +67,10 @@ test_set_data (void)
 
     test_data = cut_test_data_new(name, g_strdup(value), string_data_free);
     cut_test_context_set_data(context, test_data);
+    g_object_unref(test_data);
+    test_data = NULL;
+    cut_assert_false(destroy_called);
+    cut_assert_equal_string(NULL, destroyed_string);
 
     cut_assert_true(cut_test_context_have_data(context));
     current_test_data = cut_test_context_get_current_data(context);
@@ -76,11 +81,6 @@ test_set_data (void)
     cut_assert_equal_string(NULL, destroyed_string);
     g_object_unref(context);
     context = NULL;
-    cut_assert_false(destroy_called);
-    cut_assert_equal_string(NULL, destroyed_string);
-
-    g_object_unref(test_data);
-    test_data = NULL;
     cut_assert_true(destroy_called);
     cut_assert_equal_string(value, destroyed_string);
 }
@@ -176,6 +176,38 @@ test_xml_with_test (void)
     cut_test_context_set_test_suite(context, test_suite);
     cut_test_context_set_test_case(context, test_case);
     cut_test_context_set_test(context, test);
+    cut_assert_match_with_free(expected, cut_test_context_to_xml(context));
+}
+
+void
+test_xml_with_test_data (void)
+{
+    const gchar test_data_name[] = "sample test data";
+    gchar test_data_value[] = "sample test value";
+    gchar expected[] =
+        "<test-context>\n"
+        "  <test-suite>\n"
+        "    <elapsed>.+?</elapsed>\n"
+        "  </test-suite>\n"
+        "  <test-case>\n"
+        "    <name>my-test-case</name>\n"
+        "    <elapsed>.+?</elapsed>\n"
+        "  </test-case>\n"
+        "  <test>\n"
+        "    <name>my-test</name>\n"
+        "    <elapsed>.+?</elapsed>\n"
+        "  </test>\n"
+        "  <test-data>\n"
+        "    <name>sample test data</name>\n"
+        "  </test-data>\n"
+        "  <failed>FALSE</failed>\n"
+        "</test-context>\n";
+
+    test_data = cut_test_data_new(test_data_name, test_data_value, NULL);
+    cut_test_context_set_test_suite(context, test_suite);
+    cut_test_context_set_test_case(context, test_case);
+    cut_test_context_set_test(context, test);
+    cut_test_context_set_data(context, test_data);
     cut_assert_match_with_free(expected, cut_test_context_to_xml(context));
 }
 

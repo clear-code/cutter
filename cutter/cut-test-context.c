@@ -782,6 +782,9 @@ cut_test_context_to_xml_string (CutTestContext *context, GString *string,
         cut_test_to_xml_string(CUT_TEST(priv->test_case), string, indent + 2);
     if (priv->test)
         cut_test_to_xml_string(priv->test, string, indent + 2);
+    if (priv->current_data)
+        cut_test_data_to_xml_string(priv->current_data->data,
+                                    string, indent + 2);
 
     cut_utils_append_xml_element_with_boolean_value(string, indent + 2,
                                                     "failed", priv->failed);

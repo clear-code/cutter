@@ -1,5 +1,10 @@
 2008-07-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-test-context.c (test_xml_with_test_data): add.
+
+	* cutter/cut-test-context.c (cut_test_context_to_xml_string):
+	support test data XML serialization.
+
 	* cutter/cut-test-data.c (cut_test_data_to_xml)
 	(cut_test_data_to_xml_string): implement.
 
