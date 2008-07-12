@@ -66,6 +66,7 @@ struct _CutTestContextPrivate
     GList *taken_string_arrays;
     GList *taken_objects;
     GList *taken_errors;
+    GList *taken_lists;
     GList *current_data;
     GList *data_list;
     GList *processes;
@@ -82,6 +83,35 @@ enum
 };
 
 G_DEFINE_TYPE (CutTestContext, cut_test_context, G_TYPE_OBJECT)
+
+typedef struct _TakenList TakenList;
+struct _TakenList
+{
+    GList *list;
+    CutDestroyFunction destroy;
+};
+
+static TakenList *
+taken_list_new (GList *list, CutDestroyFunction destroy)
+{
+    TakenList *taken_list;
+
+    taken_list = g_slice_new(TakenList);
+    taken_list->list = list;
+    taken_list->destroy = destroy;
+    return taken_list;
+}
+
+static void
+taken_list_free (TakenList *taken_list)
+{
+    if (taken_list->destroy)
+        g_list_foreach(taken_list->list, (GFunc)taken_list->destroy, NULL);
+    g_list_free(taken_list->list);
+
+    g_slice_free(TakenList, taken_list);
+}
+
 
 static void dispose        (GObject         *object);
 static void set_property   (GObject         *object,
@@ -147,6 +177,7 @@ cut_test_context_init (CutTestContext *context)
 
     priv->taken_objects = NULL;
     priv->taken_errors = NULL;
+    priv->taken_lists = NULL;
 
     priv->data_list = NULL;
     priv->current_data = NULL;
@@ -195,9 +226,11 @@ dispose (GObject *object)
         priv->processes = NULL;
     }
 
-    g_list_foreach(priv->taken_strings, (GFunc)g_free, NULL);
-    g_list_free(priv->taken_strings);
-    priv->taken_strings = NULL;
+    if (priv->taken_strings) {
+        g_list_foreach(priv->taken_strings, (GFunc)g_free, NULL);
+        g_list_free(priv->taken_strings);
+        priv->taken_strings = NULL;
+    }
 
     if (priv->taken_string_arrays) {
         g_list_foreach(priv->taken_string_arrays, (GFunc)g_strfreev, NULL);
@@ -215,6 +248,12 @@ dispose (GObject *object)
         g_list_foreach(priv->taken_errors, (GFunc)g_error_free, NULL);
         g_list_free(priv->taken_errors);
         priv->taken_errors = NULL;
+    }
+
+    if (priv->taken_lists) {
+        g_list_foreach(priv->taken_lists, (GFunc)taken_list_free, NULL);
+        g_list_free(priv->taken_lists);
+        priv->taken_lists = NULL;
     }
 
     free_data_list(priv);
@@ -635,6 +674,20 @@ cut_test_context_take_g_error (CutTestContext *context, GError *error)
     priv->taken_errors = g_list_prepend(priv->taken_errors, taken_error);
 
     return taken_error;
+}
+
+const GList *
+cut_test_context_take_g_list (CutTestContext *context, GList *list,
+                              CutDestroyFunction destroy)
+{
+    CutTestContextPrivate *priv;
+    TakenList *taken_list;
+
+    priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+    taken_list = taken_list_new(list, destroy);
+    priv->taken_lists = g_list_prepend(priv->taken_lists, taken_list);
+
+    return list;
 }
 
 int

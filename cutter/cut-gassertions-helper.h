@@ -30,6 +30,10 @@ extern "C" {
 #define cut_take_g_error(error)                                         \
     cut_test_context_take_g_error(get_current_test_context(), (error))
 
+#define cut_take_g_list(list, destroy)                                  \
+    cut_test_context_take_g_list(get_current_test_context(),            \
+                                 (list), (destroy))
+
 #ifdef __cplusplus
 }
 #endif

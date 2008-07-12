@@ -1,5 +1,12 @@
 2008-07-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-context.c, cutter/cut-gpublic.h
+	(cut_test_context_take_g_list): add.
+
+	* cutter/cut-gassertions-helper.h (cut_take_g_list): add.
+
+	* test/test-cut-gassertions-helper.c (test_take_g_list): add.
+
 	* cutter/cut-test-iterator.c (run): fix memory leak.
 
 	* test/test-cut-stream-parser.c (test_start_test_with_data): add.

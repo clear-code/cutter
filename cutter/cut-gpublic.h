@@ -24,12 +24,17 @@
 
 G_BEGIN_DECLS
 
-GObject *cut_test_context_take_g_object (CutTestContext *context,
-                                         GObject        *object);
-const GError *cut_test_context_take_g_error (CutTestContext *context,
-                                             GError         *error);
+GObject      *cut_test_context_take_g_object (CutTestContext     *context,
+                                              GObject            *object);
 
-char    *cut_utils_inspect_g_error      (GError *error);
+const GError *cut_test_context_take_g_error  (CutTestContext     *context,
+                                              GError             *error);
+char         *cut_utils_inspect_g_error      (GError             *error);
+
+const GList  *cut_test_context_take_g_list   (CutTestContext     *context,
+                                              GList              *list,
+                                              CutDestroyFunction  destroy);
+
 
 G_END_DECLS
 
