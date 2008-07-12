@@ -1,5 +1,7 @@
 2008-07-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* configure.ac, test/fixtures/pipeline/: remove _test.
+
 	* configure.ac, test/: move test/*_dir to test/fixtures/.
 
 	* test/: dummy -> stub.

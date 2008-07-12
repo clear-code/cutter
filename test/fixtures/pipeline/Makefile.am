@@ -1,1 +1,1 @@
-SUBDIRS = error_test success_test
+SUBDIRS = error success

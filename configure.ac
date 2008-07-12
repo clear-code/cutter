@@ -445,8 +445,8 @@ AC_CONFIG_FILES([Makefile
 		 test/fixtures/loader/suite/Makefile
 		 test/fixtures/loader/test/Makefile
 		 test/fixtures/pipeline/Makefile
-		 test/fixtures/pipeline/error_test/Makefile
-		 test/fixtures/pipeline/success_test/Makefile
+		 test/fixtures/pipeline/error/Makefile
+		 test/fixtures/pipeline/success/Makefile
 		 test/fixtures/repository/Makefile
                  test/lib/Makefile
 		 po/Makefile.in
