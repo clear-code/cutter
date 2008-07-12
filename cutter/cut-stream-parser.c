@@ -37,11 +37,14 @@ typedef enum {
     IN_TEST_SUITE,
     IN_TEST_CASE,
     IN_TEST,
+    IN_TEST_DATA,
 
     IN_TEST_NAME,
     IN_TEST_DESCRIPTION,
     IN_TEST_OPTION,
     IN_TEST_ELAPSED,
+
+    IN_TEST_DATA_NAME,
 
     IN_TEST_OPTION_NAME,
     IN_TEST_OPTION_VALUE,
@@ -152,6 +155,7 @@ struct _CutStreamParserPrivate
     GQueue *test_cases;
     GQueue *test_suites;
     GQueue *test_contexts;
+    GQueue *test_data;
 
     ReadyTestSuite *ready_test_suite;
     ReadyTestCase *ready_test_case;
@@ -214,6 +218,15 @@ struct _CutStreamParserPrivate
     (g_object_unref(POP_TEST_CONTEXT(priv)))
 #define PEEK_TEST_CONTEXT(priv)                 \
     (g_queue_peek_head((priv)->test_contexts))
+
+#define PUSH_TEST_DATA(priv, current_test_data)                         \
+    (g_queue_push_head((priv)->test_data, g_object_ref(current_test_data)))
+#define POP_TEST_DATA(priv)                     \
+    (g_queue_pop_head((priv)->test_data))
+#define DROP_TEST_DATA(priv)                    \
+    (g_object_unref(POP_TEST_DATA(priv)))
+#define PEEK_TEST_DATA(priv)                    \
+    (g_queue_peek_head((priv)->test_data))
 
 enum
 {
@@ -315,6 +328,7 @@ cut_stream_parser_init (CutStreamParser *stream_parser)
     priv->test_cases = g_queue_new();
     priv->test_suites = g_queue_new();
     priv->test_contexts = g_queue_new();
+    priv->test_data = g_queue_new();
 
     priv->ready_test_suite = NULL;
     priv->ready_test_case = NULL;
@@ -486,6 +500,12 @@ dispose (GObject *object)
         g_queue_foreach(priv->test_contexts, (GFunc)g_object_unref, NULL);
         g_queue_free(priv->test_contexts);
         priv->test_contexts = NULL;
+    }
+
+    if (priv->test_data) {
+        g_queue_foreach(priv->test_data, (GFunc)g_object_unref, NULL);
+        g_queue_free(priv->test_data);
+        priv->test_data = NULL;
     }
 
     if (priv->ready_test_suite) {
@@ -1067,8 +1087,27 @@ start_test_context (CutStreamParserPrivate *priv, GMarkupParseContext *context,
         cut_test_context_set_test(PEEK_TEST_CONTEXT(priv), test);
         PUSH_TEST(priv, test);
         g_object_unref(test);
+    } else if (g_str_equal("test-data", element_name)) {
+        CutTestData *test_data;
+
+        PUSH_STATE(priv, IN_TEST_DATA);
+        test_data = cut_test_data_new_empty();
+        cut_test_context_set_data(PEEK_TEST_CONTEXT(priv), test_data);
+        PUSH_TEST_DATA(priv, test_data);
+        g_object_unref(test_data);
     } else if (g_str_equal("failed", element_name)) {
         PUSH_STATE(priv, IN_TEST_CONTEXT_FAILED);
+    } else {
+        invalid_element(context, error);
+    }
+}
+
+static void
+start_test_data (CutStreamParserPrivate *priv, GMarkupParseContext *context,
+                 const gchar *element_name, GError **error)
+{
+    if (g_str_equal("name", element_name)) {
+        PUSH_STATE(priv, IN_TEST_DATA_NAME);
     } else {
         invalid_element(context, error);
     }
@@ -1155,6 +1194,9 @@ start_element_handler (GMarkupParseContext *context,
       case IN_TEST_CONTEXT:
         start_test_context(priv, context, element_name, error);
         break;
+      case IN_TEST_DATA:
+        start_test_data(priv, context, element_name, error);
+        break;
       default:
         invalid_element(context, error);
         break;
@@ -1206,6 +1248,8 @@ end_test_context (CutStreamParser *parser, CutStreamParserPrivate *priv,
         DROP_TEST_CASE(priv);
     if (cut_test_context_get_test(test_context))
         DROP_TEST(priv);
+    if (cut_test_context_have_data(test_context))
+        DROP_TEST_DATA(priv);
 }
 
 static void
@@ -1827,6 +1871,17 @@ text_ready_test_case_n_tests (CutStreamParserPrivate *priv,
 }
 
 static void
+text_test_data_name (CutStreamParserPrivate *priv,
+                     GMarkupParseContext *context,
+                     const gchar *text, gsize text_len, GError **error)
+{
+    CutTestData *test_data;
+
+    test_data = PEEK_TEST_DATA(priv);
+    cut_test_data_set_name(test_data, text);
+}
+
+static void
 text_test_context_failed (CutStreamParserPrivate *priv,
                           GMarkupParseContext *context,
                           const gchar *text, gsize text_len, GError **error)
@@ -1916,6 +1971,9 @@ text_handler (GMarkupParseContext *context,
         break;
       case IN_READY_TEST_CASE_N_TESTS:
         text_ready_test_case_n_tests(priv, context, text, text_len, error);
+        break;
+      case IN_TEST_DATA_NAME:
+        text_test_data_name(priv, context, text, text_len, error);
         break;
       case IN_TEST_CONTEXT_FAILED:
         text_test_context_failed(priv, context, text, text_len, error);

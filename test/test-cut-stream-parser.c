@@ -8,6 +8,7 @@ void test_ready_test_case (void);
 void test_start_test_case (void);
 void test_start_test (void);
 void test_start_test_with_multiple_option_names (void);
+void test_start_test_with_data (void);
 void test_error_result (void);
 void test_complete_test (void);
 void test_complete_test_case (void);
@@ -683,6 +684,8 @@ test_start_test (void)
     test = cut_test_context_get_test(context);
     cut_assert_not_null(test);
     cut_assert_equal_string("my test", cut_test_get_name(test));
+
+    cut_assert_false(cut_test_context_have_data(context));
 }
 
 void
@@ -741,6 +744,76 @@ test_start_test_with_multiple_option_names (void)
                            "/stream/start-test/test/option/name: "
                            "multiple option name: name2",
                            start_test);
+}
+
+void
+test_start_test_with_data (void)
+{
+    StartTestInfo *info;
+    CutTestData *test_data;
+    CutTestContext *context;
+    gchar header[] =
+        "<stream>\n"
+        "  <ready-test-suite>\n"
+        "    <test-suite>\n"
+        "    </test-suite>\n"
+        "    <n-test-cases>3</n-test-cases>\n"
+        "    <n-tests>7</n-tests>\n"
+        "  </ready-test-suite>\n"
+        "  <start-test-suite>\n"
+        "    <test-suite>\n"
+        "    </test-suite>\n"
+        "  </start-test-suite>\n"
+        "  <ready-test-case>\n"
+        "    <test-case>\n"
+        "      <name>my test case</name>\n"
+        "    </test-case>\n"
+        "    <n-tests>2</n-tests>\n"
+        "  </ready-test-case>\n"
+        "  <start-test-case>\n"
+        "    <test-case>\n"
+        "      <name>my test case</name>\n"
+        "    </test-case>\n"
+        "  </start-test-case>\n";
+    gchar start_test[] =
+        "  <start-test>\n"
+        "    <test>\n"
+        "      <name>my test</name>\n"
+        "    </test>\n"
+        "    <test-context>\n"
+        "      <test-suite>\n"
+        "      </test-suite>\n"
+        "      <test-case>\n"
+        "        <name>my test case</name>\n"
+        "      </test-case>\n"
+        "      <test>\n"
+        "        <name>my test</name>\n"
+        "      </test>\n"
+        "      <test-data>\n"
+        "        <name>the first test data</name>\n"
+        "      </test-data>\n"
+        "      <failed>FALSE</failed>\n"
+        "    </test-context>\n"
+        "  </start-test>\n";
+
+    cut_assert_parse(header);
+    cut_assert_null(receiver->start_tests);
+
+    cut_assert_parse(start_test);
+    cut_assert_equal_int(1, g_list_length(receiver->start_tests));
+
+    info = receiver->start_tests->data;
+    cut_assert_not_null(info);
+
+    context = info->test_context;
+    cut_assert_not_null(context);
+    cut_assert_false(cut_test_context_is_failed(context));
+    cut_assert_true(cut_test_context_have_data(context));
+
+    test_data = cut_test_context_get_current_data(context);
+    cut_assert_not_null(test_data);
+    cut_assert_equal_string("the first test data",
+                            cut_test_data_get_name(test_data));
 }
 
 void
