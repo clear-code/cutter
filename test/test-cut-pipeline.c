@@ -12,7 +12,6 @@ void data_count (void);
 void test_count (gconstpointer data);
 
 static CutRunContext *pipeline;
-static gboolean received_complete_signal = FALSE;
 
 static gchar *
 build_test_dir (const gchar *result)
@@ -28,7 +27,6 @@ void
 setup (void)
 {
     pipeline = cut_pipeline_new();
-    received_complete_signal = FALSE;
 }
 
 void
