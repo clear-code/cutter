@@ -17,7 +17,9 @@ setup (void)
     gchar *test_path;
 
     test_path = g_build_filename(cuttest_get_base_dir(),
-                                 "loader_test_dir",
+                                 "fixtures",
+                                 "loader",
+                                 "test",
                                  ".libs",
                                  "dummy_loader_test." G_MODULE_SUFFIX,
                                  NULL);

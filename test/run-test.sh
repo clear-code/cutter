@@ -22,7 +22,7 @@ export CUT_REPORT_FACTORY_MODULE_DIR=$BASE_DIR/../module/report/.libs
 export CUT_STREAMER_MODULE_DIR=$BASE_DIR/../module/streamer/.libs
 export CUT_STREAMER_FACTORY_MODULE_DIR=$BASE_DIR/../module/streamer/.libs
 
-CUTTER_ARGS="-s $BASE_DIR --exclude-dir=pipeline_test_dir"
+CUTTER_ARGS="-s $BASE_DIR --exclude-dir=fixtures"
 if test x"$USE_GTK" = x"yes"; then
     CUTTER_ARGS="-u gtk $CUTTER_ARGS"
 fi

@@ -114,7 +114,9 @@ setup (void)
     test_object = cut_test_suite_new_empty();
 
     test_path = g_build_filename(cuttest_get_base_dir(),
-                                 "loader_test_dir",
+                                 "fixtures",
+                                 "loader",
+                                 "test",
                                  ".libs",
                                  "dummy_loader_test." G_MODULE_SUFFIX,
                                  NULL);

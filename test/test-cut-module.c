@@ -13,7 +13,7 @@ static GList *modules = NULL;
 static gchar *modules_dir = NULL;
 static GLogFunc original_log_func = NULL;
 
-static void 
+static void
 log_func (const gchar   *log_domain,
           GLogLevelFlags log_level,
           const gchar   *message,
@@ -27,7 +27,9 @@ startup (void)
     original_log_func = g_log_set_default_handler(log_func, NULL);
 
     modules_dir = g_build_filename(cuttest_get_base_dir(),
-                                   "module_test_dir",
+                                   "fixtures",
+                                   "loader",
+                                   "module",
                                    ".libs",
                                    NULL);
     modules = cut_module_load_modules(modules_dir);

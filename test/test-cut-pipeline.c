@@ -27,11 +27,13 @@ void
 startup (void)
 {
     success_test_dir = g_build_filename(cuttest_get_base_dir(),
-                                        "pipeline_test_dir",
+                                        "fixtures",
+                                        "pipeline",
                                         "success_test",
                                         NULL);
     error_test_dir = g_build_filename(cuttest_get_base_dir(),
-                                      "pipeline_test_dir",
+                                      "fixtures",
+                                      "pipeline",
                                       "error_test",
                                       NULL);
 }

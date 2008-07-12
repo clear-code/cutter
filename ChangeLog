@@ -1,5 +1,7 @@
 2008-07-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* configure.ac, test/: move test/*_dir to test/fixtures/.
+
 	* test/: dummy -> stub.
 
 	* cutter/cut-list.c (inspect_string): format NULL as NULL not "(null)".

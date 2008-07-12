@@ -34,7 +34,9 @@ setup (void)
     gchar *test_path;
 
     test_path = g_build_filename(cuttest_get_base_dir(),
-                                 "attribute_test_dir",
+                                 "fixtures",
+                                 "loader",
+                                 "attribute",
                                  ".libs",
                                  "dummy_attribute_test." G_MODULE_SUFFIX,
                                  NULL);

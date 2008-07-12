@@ -1,3 +1,7 @@
 SUBDIRS =		\
 	assertions	\
-	data
+	data		\
+	factory		\
+	loader		\
+	pipeline	\
+	repository

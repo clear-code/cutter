@@ -15,7 +15,8 @@ setup (void)
     gchar *test_repository_path;
 
     test_repository_path = g_build_filename(cuttest_get_base_dir(),
-                                            "repository_test_dir",
+                                            "fixtures",
+                                            "repository",
                                             NULL);
     test_repository = cut_repository_new(test_repository_path);
     g_free(test_repository_path);
@@ -28,9 +29,9 @@ teardown (void)
 }
 
 static const gchar *expected_test_case_name[] = {
-"repository_test_case1",
-"repository_test_case2",
-"repository_test_case3"
+    "repository_test_case1",
+    "repository_test_case2",
+    "repository_test_case3"
 };
 static const gint n_expected_test_case_names = G_N_ELEMENTS(expected_test_case_name);
 

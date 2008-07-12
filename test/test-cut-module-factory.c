@@ -20,7 +20,8 @@ startup (void)
     cut_module_factory_init();
 
     factory_dir = g_build_filename(cuttest_get_base_dir(),
-                                   "factory_test_dir",
+                                   "fixtures",
+                                   "factory",
                                    NULL);
     cut_module_factory_load_all(factory_dir);
     g_free(factory_dir);

@@ -436,18 +436,19 @@ AC_CONFIG_FILES([Makefile
 		 test/fixtures/assertions/Makefile
 		 test/fixtures/assertions/sub/Makefile
 		 test/fixtures/data/Makefile
+		 test/fixtures/factory/Makefile
+		 test/fixtures/factory/type1/Makefile
+		 test/fixtures/factory/type2/Makefile
+		 test/fixtures/loader/Makefile
+		 test/fixtures/loader/attribute/Makefile
+		 test/fixtures/loader/module/Makefile
+		 test/fixtures/loader/suite/Makefile
+		 test/fixtures/loader/test/Makefile
+		 test/fixtures/pipeline/Makefile
+		 test/fixtures/pipeline/error_test/Makefile
+		 test/fixtures/pipeline/success_test/Makefile
+		 test/fixtures/repository/Makefile
                  test/lib/Makefile
-		 test/loader_test_dir/Makefile
-		 test/loader_suite_test_dir/Makefile
-		 test/repository_test_dir/Makefile
-		 test/attribute_test_dir/Makefile
-		 test/module_test_dir/Makefile
-		 test/factory_test_dir/Makefile
-		 test/factory_test_dir/type1/Makefile
-		 test/factory_test_dir/type2/Makefile
-		 test/pipeline_test_dir/Makefile
-		 test/pipeline_test_dir/error_test/Makefile
-		 test/pipeline_test_dir/success_test/Makefile
 		 po/Makefile.in
 		 misc/Makefile
 		 doc/Makefile

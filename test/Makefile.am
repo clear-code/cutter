@@ -1,13 +1,6 @@
 SUBDIRS = 			\
-	fixtures		\
 	lib			\
-	loader_test_dir		\
-	loader_suite_test_dir	\
-	attribute_test_dir	\
-	repository_test_dir	\
-	module_test_dir		\
-	factory_test_dir	\
-	pipeline_test_dir
+	fixtures
 
 INCLUDES = 			\
 	-I$(top_builddir)	\

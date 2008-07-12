@@ -33,7 +33,9 @@ create_loader (const gchar *so_filename)
     gchar *so_path;
 
     so_path = g_build_filename(cuttest_get_base_dir(),
-                               "loader_suite_test_dir",
+                               "fixtures",
+                               "loader",
+                               "suite",
                                ".libs",
                                so_filename,
                                NULL);
