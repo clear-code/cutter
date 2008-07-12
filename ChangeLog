@@ -1,5 +1,10 @@
 2008-07-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-list.c (inspect_string): format NULL as NULL not "(null)".
+
+	* test/test-cut-gassertions.c (test_equal_g_list_string_both_null)
+	(test_equal_g_list_string_other_null): add.
+
 	* test/test-cut-iterated-test.c: fix test.
 
 	* test/lib/cuttest-assertions.h (cut_assert_test_result_summary):

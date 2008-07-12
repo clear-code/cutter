@@ -132,7 +132,11 @@ static void
 inspect_string (GString *string, gconstpointer data, gpointer user_data)
 {
     const gchar *value = data;
-    g_string_append_printf(string, "\"%s\"", value);
+
+    if (value)
+        g_string_append_printf(string, "\"%s\"", value);
+    else
+        g_string_append(string, "NULL");
 }
 
 gchar *

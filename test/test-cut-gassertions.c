@@ -10,6 +10,8 @@ void test_equal_g_value(void);
 void test_equal_g_list_int(void);
 void test_equal_g_list_uint(void);
 void test_equal_g_list_string(void);
+void test_equal_g_list_string_both_null(void);
+void test_equal_g_list_string_other_null(void);
 void test_g_error(void);
 
 static CutTest *test;
@@ -221,7 +223,7 @@ test_equal_g_list_uint (void)
 }
 
 static void
-equal_g_list_string_test (void)
+stub_equal_g_list_string (void)
 {
     need_to_free_list_contents = TRUE;
 
@@ -241,10 +243,10 @@ test_equal_g_list_string (void)
 {
     CutTest *test;
 
-    test = cut_test_new("equal_g_list_string test", equal_g_list_string_test);
+    test = cut_test_new("equal_g_list_string test", stub_equal_g_list_string);
     cut_assert(test);
 
-    cut_assert(!run(test));
+    cut_assert_false(run(test));
     cut_assert_test_result_summary(run_context, 0, 2, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "equal_g_list_string test",
@@ -253,6 +255,75 @@ test_equal_g_list_string (void)
                            "expected: <(\"abc\", \"def\")>\n"
                            " but was: <(\"zyx\", \"wvu\")>",
                            "equal_g_list_string_test");
+}
+
+static void
+stub_equal_g_list_string_both_null (void)
+{
+    need_to_free_list_contents = TRUE;
+
+    list1 = g_list_append(list1, g_strdup("abc"));
+    list1 = g_list_append(list1, NULL);
+    list1 = g_list_append(list1, g_strdup("def"));
+    list2 = g_list_append(list2, g_strdup("abc"));
+    list2 = g_list_append(list2, NULL);
+    list2 = g_list_append(list2, g_strdup("def"));
+
+    cut_assert_equal_g_list_string(list1, list1);
+    cut_assert_equal_g_list_string(list2, list2);
+
+    cut_assert_equal_g_list_string(list1, list2);
+}
+
+void
+test_equal_g_list_string_both_null (void)
+{
+    CutTest *test;
+
+    test = cut_test_new("equal_g_list_string test (both NULL)",
+                        stub_equal_g_list_string_both_null);
+    cut_assert(test);
+
+    cut_assert_true(run(test));
+    cut_assert_test_result_summary(run_context, 0, 3, 0, 0, 0, 0, 0);
+}
+
+static void
+stub_equal_g_list_string_other_null (void)
+{
+    need_to_free_list_contents = TRUE;
+
+    list1 = g_list_append(list1, g_strdup("abc"));
+    list1 = g_list_append(list1, g_strdup("abc"));
+    list1 = g_list_append(list1, g_strdup("def"));
+    list2 = g_list_append(list2, NULL);
+    list2 = g_list_append(list2, g_strdup("abc"));
+    list2 = g_list_append(list2, g_strdup("def"));
+
+    cut_assert_equal_g_list_string(list1, list1);
+    cut_assert_equal_g_list_string(list2, list2);
+
+    cut_assert_equal_g_list_string(list1, list2);
+}
+
+void
+test_equal_g_list_string_other_null (void)
+{
+    CutTest *test;
+
+    test = cut_test_new("equal_g_list_string test (other NULL)",
+                        stub_equal_g_list_string_other_null);
+    cut_assert(test);
+
+    cut_assert_false(run(test));
+    cut_assert_test_result_summary(run_context, 0, 2, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "equal_g_list_string test (other NULL)",
+                           NULL,
+                           "<list1 == list2>\n"
+                           "expected: <(\"abc\", \"abc\", \"def\")>\n"
+                           " but was: <(NULL, \"abc\", \"def\")>",
+                           "stub_equal_g_list_string_other_null");
 }
 
 static void
