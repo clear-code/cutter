@@ -481,7 +481,7 @@ test_new_from_xml_with_invalid_info (void)
         "  </backtrace>\n"
         "</result>\n";
 
-    cut_assert_new_from_xml_error("Error on line 4 char 30: "
+    cut_assert_new_from_xml_error("Error on line 4 char 29: "
                                   "/result/backtrace/entry/info: "
                                   "invalid function name: stub_error_test",
                                   xml);
