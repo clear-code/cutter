@@ -21,7 +21,7 @@ setup (void)
                                  "loader",
                                  "test",
                                  ".libs",
-                                 "dummy_loader_test." G_MODULE_SUFFIX,
+                                 "stub_loader_test." G_MODULE_SUFFIX,
                                  NULL);
     test_loader = cut_loader_new(test_path);
     g_free(test_path);
@@ -43,9 +43,9 @@ teardown (void)
 
 static gchar *expected_functions[] = {
     "test_abcdefghijklmnopqratuvwzyz_ABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789",
-    "test_dummy_function1",
-    "test_dummy_function2",
-    "test_dummy_function3",
+    "test_stub_function1",
+    "test_stub_function2",
+    "test_stub_function3",
     NULL
 };
 

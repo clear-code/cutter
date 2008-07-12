@@ -31,59 +31,59 @@ static CutRunContext *run_context;
 static CutTestSuite *test_object;
 static CutLoader *loader;
 
-static gint n_run_dummy_run_test_function = 0;
-static gint n_run_dummy_test_function1 = 0;
-static gint n_run_dummy_test_function2 = 0;
+static gint n_run_stub_run_test_function = 0;
+static gint n_run_stub_test_function1 = 0;
+static gint n_run_stub_test_function2 = 0;
 
-static gint n_run_bummy_run_test_function = 0;
-static gint n_run_bummy_test_function1 = 0;
-static gint n_run_bummy_test_function2 = 0;
+static gint n_run_stock_run_test_function = 0;
+static gint n_run_stock_test_function1 = 0;
+static gint n_run_stock_test_function2 = 0;
 
 static gint n_crashed_signal = 0;
 
 static void
-dummy_test_function1 (void)
+stub_test_function1 (void)
 {
     cut_assert_equal_int(1, 1);
     cut_assert_equal_int(1, 1);
     cut_assert_equal_int(1, 1);
     cut_assert_equal_int(1, 1);
-    n_run_dummy_test_function1++;
+    n_run_stub_test_function1++;
 }
 
 static void
-dummy_test_function2 (void)
+stub_test_function2 (void)
 {
-    n_run_dummy_test_function2++;
+    n_run_stub_test_function2++;
 }
 
 static void
-dummy_run_test_function (void)
+stub_run_test_function (void)
 {
-    n_run_dummy_run_test_function++;
+    n_run_stub_run_test_function++;
 }
 
 static void
-bummy_test_function1 (void)
+stock_test_function1 (void)
 {
-    n_run_bummy_test_function1++;
+    n_run_stock_test_function1++;
 }
 
 static void
-bummy_test_function2 (void)
+stock_test_function2 (void)
 {
-    n_run_bummy_test_function2++;
+    n_run_stock_test_function2++;
 }
 
 static void
-bummy_run_test_function (void)
+stock_run_test_function (void)
 {
-    n_run_bummy_run_test_function++;
+    n_run_stock_run_test_function++;
 }
 
 #ifndef G_OS_WIN32
 static void
-dummy_crashed_function (void)
+stub_crashed_function (void)
 {
     raise(SIGSEGV);
 }
@@ -101,12 +101,12 @@ setup (void)
     CutTestCase *test_case;
     gchar *test_path;
 
-    n_run_dummy_test_function1 = 0;
-    n_run_dummy_test_function2 = 0;
-    n_run_dummy_run_test_function = 0;
-    n_run_bummy_test_function1 = 0;
-    n_run_bummy_test_function2 = 0;
-    n_run_bummy_run_test_function = 0;
+    n_run_stub_test_function1 = 0;
+    n_run_stub_test_function2 = 0;
+    n_run_stub_run_test_function = 0;
+    n_run_stock_test_function1 = 0;
+    n_run_stock_test_function2 = 0;
+    n_run_stock_run_test_function = 0;
     n_crashed_signal = 0;
 
     run_context = CUT_RUN_CONTEXT(cut_test_runner_new());
@@ -118,7 +118,7 @@ setup (void)
                                  "loader",
                                  "test",
                                  ".libs",
-                                 "dummy_loader_test." G_MODULE_SUFFIX,
+                                 "stub_loader_test." G_MODULE_SUFFIX,
                                  NULL);
     loader = cut_loader_new(test_path);
     g_free(test_path);
@@ -126,24 +126,24 @@ setup (void)
     cut_test_suite_add_test_case(test_object, test_case);
     g_object_unref(test_case);
 
-    test_case = cut_test_case_new("dummy_test_case", NULL, NULL,
+    test_case = cut_test_case_new("stub_test_case", NULL, NULL,
                                   get_current_test_context,
                                   set_current_test_context,
                                   NULL, NULL);
-    cuttest_add_test(test_case, "dummy_test_1", dummy_test_function1);
-    cuttest_add_test(test_case, "dummy_test_2", dummy_test_function2);
-    cuttest_add_test(test_case, "run_test_function", dummy_run_test_function);
+    cuttest_add_test(test_case, "stub_test_1", stub_test_function1);
+    cuttest_add_test(test_case, "stub_test_2", stub_test_function2);
+    cuttest_add_test(test_case, "run_test_function", stub_run_test_function);
     cut_test_suite_add_test_case(test_object, test_case);
     g_object_unref(test_case);
 
-    test_case = cut_test_case_new("bummy_test_case", NULL, NULL,
+    test_case = cut_test_case_new("stock_test_case", NULL, NULL,
                                   get_current_test_context,
                                   set_current_test_context,
                                   NULL, NULL);
-    cuttest_add_test(test_case, "bummy_test_1", bummy_test_function1);
-    cuttest_add_test(test_case, "bummy_test_2", bummy_test_function2);
-    cuttest_add_test(test_case, "bummy_run_test_function",
-                     bummy_run_test_function);
+    cuttest_add_test(test_case, "stock_test_1", stock_test_function1);
+    cuttest_add_test(test_case, "stock_test_2", stock_test_function2);
+    cuttest_add_test(test_case, "stock_run_test_function",
+                     stock_run_test_function);
     cut_test_suite_add_test_case(test_object, test_case);
     g_object_unref(test_case);
 }
@@ -193,133 +193,133 @@ void
 test_run (void)
 {
     cut_assert(cut_test_suite_run(test_object, run_context));
-    cut_assert_equal_int(1, n_run_dummy_test_function1);
-    cut_assert_equal_int(1, n_run_dummy_test_function2);
-    cut_assert_equal_int(1, n_run_dummy_run_test_function);
-    cut_assert_equal_int(1, n_run_bummy_test_function1);
-    cut_assert_equal_int(1, n_run_bummy_test_function2);
-    cut_assert_equal_int(1, n_run_bummy_run_test_function);
+    cut_assert_equal_int(1, n_run_stub_test_function1);
+    cut_assert_equal_int(1, n_run_stub_test_function2);
+    cut_assert_equal_int(1, n_run_stub_run_test_function);
+    cut_assert_equal_int(1, n_run_stock_test_function1);
+    cut_assert_equal_int(1, n_run_stock_test_function2);
+    cut_assert_equal_int(1, n_run_stock_run_test_function);
 }
 
 void
 test_run_test_case (void)
 {
     cut_assert(cut_test_suite_run_test_case(test_object, run_context,
-                                            "dummy_test_case"));
-    cut_assert_equal_int(1, n_run_dummy_test_function1);
-    cut_assert_equal_int(1, n_run_dummy_test_function2);
-    cut_assert_equal_int(1, n_run_dummy_run_test_function);
-    cut_assert_equal_int(0, n_run_bummy_test_function1);
-    cut_assert_equal_int(0, n_run_bummy_test_function2);
-    cut_assert_equal_int(0, n_run_bummy_run_test_function);
+                                            "stub_test_case"));
+    cut_assert_equal_int(1, n_run_stub_test_function1);
+    cut_assert_equal_int(1, n_run_stub_test_function2);
+    cut_assert_equal_int(1, n_run_stub_run_test_function);
+    cut_assert_equal_int(0, n_run_stock_test_function1);
+    cut_assert_equal_int(0, n_run_stock_test_function2);
+    cut_assert_equal_int(0, n_run_stock_run_test_function);
 }
 
 void
 test_run_test_case_with_regex (void)
 {
-    cut_assert(run_test_case("/dummy/"));
-    cut_assert_equal_int(1, n_run_dummy_test_function1);
-    cut_assert_equal_int(1, n_run_dummy_test_function2);
-    cut_assert_equal_int(1, n_run_dummy_run_test_function);
-    cut_assert_equal_int(0, n_run_bummy_test_function1);
-    cut_assert_equal_int(0, n_run_bummy_test_function2);
-    cut_assert_equal_int(0, n_run_bummy_run_test_function);
+    cut_assert(run_test_case("/stub/"));
+    cut_assert_equal_int(1, n_run_stub_test_function1);
+    cut_assert_equal_int(1, n_run_stub_test_function2);
+    cut_assert_equal_int(1, n_run_stub_run_test_function);
+    cut_assert_equal_int(0, n_run_stock_test_function1);
+    cut_assert_equal_int(0, n_run_stock_test_function2);
+    cut_assert_equal_int(0, n_run_stock_run_test_function);
 }
 
 void
 test_run_test (void)
 {
     cut_assert(run_test("run_test_function"));
-    cut_assert_equal_int(0, n_run_dummy_test_function1);
-    cut_assert_equal_int(0, n_run_dummy_test_function2);
-    cut_assert_equal_int(1, n_run_dummy_run_test_function);
-    cut_assert_equal_int(0, n_run_bummy_test_function1);
-    cut_assert_equal_int(0, n_run_bummy_test_function2);
-    cut_assert_equal_int(0, n_run_bummy_run_test_function);
+    cut_assert_equal_int(0, n_run_stub_test_function1);
+    cut_assert_equal_int(0, n_run_stub_test_function2);
+    cut_assert_equal_int(1, n_run_stub_run_test_function);
+    cut_assert_equal_int(0, n_run_stock_test_function1);
+    cut_assert_equal_int(0, n_run_stock_test_function2);
+    cut_assert_equal_int(0, n_run_stock_run_test_function);
 }
 
 void
 test_run_test_with_regex (void)
 {
-    cut_assert(run_test("/dummy/"));
-    cut_assert_equal_int(1, n_run_dummy_test_function1);
-    cut_assert_equal_int(1, n_run_dummy_test_function2);
-    cut_assert_equal_int(0, n_run_dummy_run_test_function);
-    cut_assert_equal_int(0, n_run_bummy_test_function1);
-    cut_assert_equal_int(0, n_run_bummy_test_function2);
-    cut_assert_equal_int(0, n_run_bummy_run_test_function);
+    cut_assert(run_test("/stub/"));
+    cut_assert_equal_int(1, n_run_stub_test_function1);
+    cut_assert_equal_int(1, n_run_stub_test_function2);
+    cut_assert_equal_int(0, n_run_stub_run_test_function);
+    cut_assert_equal_int(0, n_run_stock_test_function1);
+    cut_assert_equal_int(0, n_run_stock_test_function2);
+    cut_assert_equal_int(0, n_run_stock_run_test_function);
 }
 
 void
 test_run_test_in_test_case (void)
 {
-    cut_assert(run_test_in_test_case("run_test_function", "dummy_test_case"));
-    cut_assert_equal_int(0, n_run_dummy_test_function1);
-    cut_assert_equal_int(0, n_run_dummy_test_function2);
-    cut_assert_equal_int(1, n_run_dummy_run_test_function);
-    cut_assert_equal_int(0, n_run_bummy_test_function1);
-    cut_assert_equal_int(0, n_run_bummy_test_function2);
-    cut_assert_equal_int(0, n_run_bummy_run_test_function);
+    cut_assert(run_test_in_test_case("run_test_function", "stub_test_case"));
+    cut_assert_equal_int(0, n_run_stub_test_function1);
+    cut_assert_equal_int(0, n_run_stub_test_function2);
+    cut_assert_equal_int(1, n_run_stub_run_test_function);
+    cut_assert_equal_int(0, n_run_stock_test_function1);
+    cut_assert_equal_int(0, n_run_stock_test_function2);
+    cut_assert_equal_int(0, n_run_stock_run_test_function);
 }
 
 void
 test_run_test_with_regex_in_test_case (void)
 {
-    cut_assert(run_test_in_test_case("/dummy/", "dummy_test_case"));
-    cut_assert_equal_int(1, n_run_dummy_test_function1);
-    cut_assert_equal_int(1, n_run_dummy_test_function2);
-    cut_assert_equal_int(0, n_run_dummy_run_test_function);
-    cut_assert_equal_int(0, n_run_bummy_test_function1);
-    cut_assert_equal_int(0, n_run_bummy_test_function2);
-    cut_assert_equal_int(0, n_run_bummy_run_test_function);
+    cut_assert(run_test_in_test_case("/stub/", "stub_test_case"));
+    cut_assert_equal_int(1, n_run_stub_test_function1);
+    cut_assert_equal_int(1, n_run_stub_test_function2);
+    cut_assert_equal_int(0, n_run_stub_run_test_function);
+    cut_assert_equal_int(0, n_run_stock_test_function1);
+    cut_assert_equal_int(0, n_run_stock_test_function2);
+    cut_assert_equal_int(0, n_run_stock_run_test_function);
 }
 
 void
 test_run_test_in_test_case_with_regex (void)
 {
-    cut_assert(run_test_in_test_case("run_test_function", "/dummy/"));
-    cut_assert_equal_int(0, n_run_dummy_test_function1);
-    cut_assert_equal_int(0, n_run_dummy_test_function2);
-    cut_assert_equal_int(1, n_run_dummy_run_test_function);
-    cut_assert_equal_int(0, n_run_bummy_test_function1);
-    cut_assert_equal_int(0, n_run_bummy_test_function2);
-    cut_assert_equal_int(0, n_run_bummy_run_test_function);
+    cut_assert(run_test_in_test_case("run_test_function", "/stub/"));
+    cut_assert_equal_int(0, n_run_stub_test_function1);
+    cut_assert_equal_int(0, n_run_stub_test_function2);
+    cut_assert_equal_int(1, n_run_stub_run_test_function);
+    cut_assert_equal_int(0, n_run_stock_test_function1);
+    cut_assert_equal_int(0, n_run_stock_test_function2);
+    cut_assert_equal_int(0, n_run_stock_run_test_function);
 }
 
 void
 test_run_test_with_regex_in_test_case_with_regex (void)
 {
-    cut_assert(run_test_in_test_case("/dummy/", "/dummy/"));
-    cut_assert_equal_int(1, n_run_dummy_test_function1);
-    cut_assert_equal_int(1, n_run_dummy_test_function2);
-    cut_assert_equal_int(0, n_run_dummy_run_test_function);
-    cut_assert_equal_int(0, n_run_bummy_test_function1);
-    cut_assert_equal_int(0, n_run_bummy_test_function2);
-    cut_assert_equal_int(0, n_run_bummy_run_test_function);
+    cut_assert(run_test_in_test_case("/stub/", "/stub/"));
+    cut_assert_equal_int(1, n_run_stub_test_function1);
+    cut_assert_equal_int(1, n_run_stub_test_function2);
+    cut_assert_equal_int(0, n_run_stub_run_test_function);
+    cut_assert_equal_int(0, n_run_stock_test_function1);
+    cut_assert_equal_int(0, n_run_stock_test_function2);
+    cut_assert_equal_int(0, n_run_stock_run_test_function);
 }
 
 void
 test_run_test_in_test_case_with_null (void)
 {
     cut_assert(run_test(NULL));
-    cut_assert_equal_int(1, n_run_dummy_test_function1);
-    cut_assert_equal_int(1, n_run_dummy_test_function2);
-    cut_assert_equal_int(1, n_run_dummy_run_test_function);
-    cut_assert_equal_int(1, n_run_bummy_test_function1);
-    cut_assert_equal_int(1, n_run_bummy_test_function2);
-    cut_assert_equal_int(1, n_run_bummy_run_test_function);
+    cut_assert_equal_int(1, n_run_stub_test_function1);
+    cut_assert_equal_int(1, n_run_stub_test_function2);
+    cut_assert_equal_int(1, n_run_stub_run_test_function);
+    cut_assert_equal_int(1, n_run_stock_test_function1);
+    cut_assert_equal_int(1, n_run_stock_test_function2);
+    cut_assert_equal_int(1, n_run_stock_run_test_function);
 }
 
 void
 test_run_test_with_filter_with_null (void)
 {
     cut_assert(run_test_with_filter(NULL, NULL));
-    cut_assert_equal_int(1, n_run_dummy_test_function1);
-    cut_assert_equal_int(1, n_run_dummy_test_function2);
-    cut_assert_equal_int(1, n_run_dummy_run_test_function);
-    cut_assert_equal_int(1, n_run_bummy_test_function1);
-    cut_assert_equal_int(1, n_run_bummy_test_function2);
-    cut_assert_equal_int(1, n_run_bummy_run_test_function);
+    cut_assert_equal_int(1, n_run_stub_test_function1);
+    cut_assert_equal_int(1, n_run_stub_test_function2);
+    cut_assert_equal_int(1, n_run_stub_run_test_function);
+    cut_assert_equal_int(1, n_run_stock_test_function1);
+    cut_assert_equal_int(1, n_run_stock_test_function2);
+    cut_assert_equal_int(1, n_run_stock_run_test_function);
 }
 
 #ifndef G_OS_WIN32
@@ -332,7 +332,7 @@ test_crashed_signal (void)
                                   get_current_test_context,
                                   set_current_test_context,
                                   NULL, NULL);
-    cuttest_add_test(test_case, "crash_test", dummy_crashed_function);
+    cuttest_add_test(test_case, "crash_test", stub_crashed_function);
     cut_test_suite_add_test_case(test_object, test_case);
     g_object_unref(test_case);
 

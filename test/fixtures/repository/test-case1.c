@@ -1,21 +1,21 @@
 #include <cutter.h>
 
-void test_dummy_function1 (void);
-void test_dummy_function2 (void);
-void test_dummy_function3 (void);
+void test_stub_function1 (void);
+void test_stub_function2 (void);
+void test_stub_function3 (void);
 
 void
-test_dummy_function1 (void)
+test_stub_function1 (void)
 {
 }
 
 void
-test_dummy_function2 (void)
+test_stub_function2 (void)
 {
 }
 
 void
-test_dummy_function3 (void)
+test_stub_function3 (void)
 {
 }
 

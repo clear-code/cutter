@@ -1,10 +1,11 @@
-INCLUDES = $(CUTTER_CFLAGS)	\
+INCLUDES =			\
+	$(CUTTER_CFLAGS)	\
 	-I$(top_builddir)	\
 	-I$(top_srcdir)		\
 	-I$(top_srcdir)/cutter
 
-noinst_LTLIBRARIES = 				\
-		dummy_attribute_test.la
+noinst_LTLIBRARIES =		\
+	stub_attribute_test.la
 
 AM_LDFLAGS =			\
 	-module			\
@@ -16,5 +17,5 @@ LIBS =						\
 	$(top_builddir)/cutter/libcutter.la	\
 	$(GLIB_LIBS)
 
-dummy_attribute_test_la_SOURCES = dummy-test-functions.c
+stub_attribute_test_la_SOURCES = stub-test-functions.c
 
