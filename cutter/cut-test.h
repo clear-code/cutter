@@ -39,7 +39,6 @@ typedef struct _CutTestClass    CutTestClass;
 typedef struct _CutTestResultClass    CutTestResultClass;
 
 typedef void    (*CutTestFunction)     (void);
-typedef void    (*CutIteratedTestFunction) (gconstpointer data);
 typedef void    (*CutDataSetupFunction)(void);
 typedef void    (*CutSetupFunction)    (void);
 typedef void    (*CutTeardownFunction) (void);

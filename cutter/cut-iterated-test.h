@@ -34,6 +34,8 @@ G_BEGIN_DECLS
 #define CUT_IS_ITERATED_TEST_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_ITERATED_TEST))
 #define CUT_ITERATED_TEST_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_ITERATED_TEST, CutIteratedTestClass))
 
+typedef void    (*CutIteratedTestFunction) (gconstpointer data);
+
 typedef struct _CutIteratedTest         CutIteratedTest;
 typedef struct _CutIteratedTestClass    CutIteratedTestClass;
 

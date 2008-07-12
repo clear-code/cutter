@@ -1,5 +1,8 @@
 2008-07-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test.h (CutIteratedTestFunction): move to ...
+	* cutter/cut-iterated-test.h: ... here.
+
 	* cutter/cut-gassertions.h (cut_assert_equal_g_list_uint): add.
 
 	* test/test-cut-gassertions.c (test_equal_g_list_uint): add.
