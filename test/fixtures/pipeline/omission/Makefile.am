@@ -5,7 +5,7 @@ INCLUDES =			\
 	-I$(top_srcdir)/cutter
 
 noinst_LTLIBRARIES = 		\
-	error_test.la
+	omission_test.la
 
 AM_LDFLAGS =			\
 	-module			\
@@ -17,5 +17,5 @@ LIBS =						\
 	$(top_builddir)/cutter/libcutter.la	\
 	$(GLIB_LIBS)
 
-error_test_la_SOURCES = error-test.c
+omission_test_la_SOURCES = omission-test.c
 

@@ -446,6 +446,9 @@ AC_CONFIG_FILES([Makefile
 		 test/fixtures/loader/test/Makefile
 		 test/fixtures/pipeline/Makefile
 		 test/fixtures/pipeline/error/Makefile
+		 test/fixtures/pipeline/failure/Makefile
+		 test/fixtures/pipeline/omission/Makefile
+		 test/fixtures/pipeline/pending/Makefile
 		 test/fixtures/pipeline/success/Makefile
 		 test/fixtures/repository/Makefile
                  test/lib/Makefile

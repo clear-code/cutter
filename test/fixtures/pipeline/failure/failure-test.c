@@ -1,11 +1,11 @@
 #include <cutter.h>
 
-void test_error (void);
+void test_failure (void);
 
 void
-test_error (void)
+test_failure (void)
 {
-    cut_error("Error");
+    cut_fail("Failed.");
 }
 
 /*

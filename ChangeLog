@@ -1,5 +1,9 @@
 2008-07-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-pipeline.c: use iterated test.
+	* test/loader/fixtures/pipeline: split each result to each test
+	file to get correct test success result.
+
 	* configure.ac, test/: dummy -> stub.
 
 	* configure.ac, test/fixtures/pipeline/: remove _test.

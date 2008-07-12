@@ -1,11 +1,11 @@
 #include <cutter.h>
 
-void test_error (void);
+void test_omission (void);
 
 void
-test_error (void)
+test_omission (void)
 {
-    cut_error("Error");
+    cut_omit("Omit!");
 }
 
 /*

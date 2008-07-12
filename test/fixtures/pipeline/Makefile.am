@@ -1,1 +1,6 @@
-SUBDIRS = error success
+SUBDIRS =		\
+	error		\
+	failure		\
+	omission	\
+	pending		\
+	success

@@ -6,43 +6,22 @@
 
 #include <unistd.h>
 
-void test_exit_status_error (void);
-void test_exit_status_success (void);
-void test_success_signal (void);
-void test_failure_signal (void);
-void test_error_signal (void);
-void test_pending_signal (void);
-void test_omission_signal (void);
-void test_success_count (void);
-void test_failure_count (void);
-void test_error_count (void);
-void test_pending_count (void);
-void test_omission_count (void);
+void data_signal (void);
+void test_signal (gconstpointer data);
+void data_count (void);
+void test_count (gconstpointer data);
 
 static CutRunContext *pipeline;
 static gboolean received_complete_signal = FALSE;
-static gchar *success_test_dir, *error_test_dir;
 
-void
-startup (void)
+static gchar *
+build_test_dir (const gchar *result)
 {
-    success_test_dir = g_build_filename(cuttest_get_base_dir(),
-                                        "fixtures",
-                                        "pipeline",
-                                        "success",
-                                        NULL);
-    error_test_dir = g_build_filename(cuttest_get_base_dir(),
-                                      "fixtures",
-                                      "pipeline",
-                                      "error",
-                                      NULL);
-}
-
-void
-shutdown (void)
-{
-    g_free(success_test_dir);
-    g_free(error_test_dir);
+    return g_build_filename(cuttest_get_base_dir(),
+                            "fixtures",
+                            "pipeline",
+                            result,
+                            NULL);
 }
 
 void
@@ -60,89 +39,152 @@ teardown (void)
 }
 
 static gboolean
-run (const gchar *target_dir)
+run (const gchar *test_dir)
 {
-    cut_run_context_set_test_directory(pipeline, target_dir);
+    cut_run_context_set_test_directory(pipeline, test_dir);
 
     return cut_runner_run(CUT_RUNNER(pipeline));
 }
 
-void
-test_exit_status_error (void)
+typedef struct _SignalTestData
 {
-    cut_assert_false(run(error_test_dir));
-}
+    gchar *signal_name;
+    gchar *test_dir;
+    gboolean success;
+} SignalTestData;
 
-void
-test_exit_status_success (void)
+static SignalTestData *
+signal_test_data_new (const gchar *result, gboolean success)
 {
-    cut_assert_true(run(success_test_dir));
+    SignalTestData *test_data;
+
+    test_data = g_new(SignalTestData, 1);
+    test_data->signal_name = g_strconcat(result, "-test", NULL);
+    test_data->test_dir = build_test_dir(result);
+    test_data->success = success;
+
+    return test_data;
 }
 
-#define DEFINE_SIGNAL_TEST(signal_name, result, target_dir)             \
-static void                                                             \
-cb_ ## signal_name ## _signal (CutRunContext *run_context,              \
-                               CutTest *test,                           \
-                               CutTestContext *test_context,            \
-                               CutTestResult *result,                   \
-                               gpointer data)                           \
-{                                                                       \
-    gint *n_signal;                                                     \
-                                                                        \
-    n_signal = (gint *)data;                                            \
-    (*n_signal)++;                                                      \
-}                                                                       \
-                                                                        \
-void                                                                    \
-test_ ## signal_name ## _signal (void)                                  \
-{                                                                       \
-    gint n_signal = 0;                                                  \
-                                                                        \
-    g_signal_connect(pipeline, #signal_name "-test",                    \
-                     G_CALLBACK(cb_ ## signal_name ## _signal),         \
-                     &n_signal);                                        \
-                                                                        \
-    cut_assert_##result(run(target_dir));                               \
-    cut_assert_equal_int(1, n_signal);                                  \
-                                                                        \
-    g_signal_handlers_disconnect_by_func(                               \
-        pipeline, G_CALLBACK(cb_ ## signal_name ## _signal),            \
-        &n_signal);                                                     \
+static void
+signal_test_data_free (SignalTestData *test_data)
+{
+    g_free(test_data->signal_name);
+    g_free(test_data->test_dir);
+    g_free(test_data);
 }
-
-#define DEFINE_ERROR_SIGNAL_TEST(signal_name)                           \
-    DEFINE_SIGNAL_TEST(signal_name, false, error_test_dir)
-#define DEFINE_SUCCESS_SIGNAL_TEST(signal_name)                         \
-    DEFINE_SIGNAL_TEST(signal_name, true, success_test_dir)
-
-DEFINE_SUCCESS_SIGNAL_TEST(success)
-DEFINE_ERROR_SIGNAL_TEST(failure)
-DEFINE_ERROR_SIGNAL_TEST(error)
-DEFINE_ERROR_SIGNAL_TEST(pending)
-DEFINE_ERROR_SIGNAL_TEST(omission)
-
-#define DEFINE_COUNT_TEST(status_name, result, target_dir)              \
-void                                                                    \
-test_ ## status_name ## _count (void)                                   \
-{                                                                       \
-    cut_assert_##result(run(target_dir));                               \
-    cut_assert_equal_int(1,                                             \
-        cut_run_context_get_n_ ## status_name ## s(pipeline));          \
-}
-
-#define DEFINE_ERROR_COUNT_TEST(status_name)                            \
-    DEFINE_COUNT_TEST(status_name, false, error_test_dir)
-
-DEFINE_ERROR_COUNT_TEST(failure)
-DEFINE_ERROR_COUNT_TEST(error)
-DEFINE_ERROR_COUNT_TEST(pending)
-DEFINE_ERROR_COUNT_TEST(omission)
 
 void
-test_success_count (void)
+data_signal (void)
 {
-    cut_assert_true(run(success_test_dir));
-    cut_assert_equal_int(1, cut_run_context_get_n_successes(pipeline));
+    cut_add_data("success",
+                 signal_test_data_new("success", TRUE),
+                 signal_test_data_free,
+                 "failure",
+                 signal_test_data_new("failure", FALSE),
+                 signal_test_data_free,
+                 "error",
+                 signal_test_data_new("error", FALSE),
+                 signal_test_data_free,
+                 "pending",
+                 signal_test_data_new("pending", FALSE),
+                 signal_test_data_free,
+                 "omission",
+                 signal_test_data_new("omission", TRUE),
+                 signal_test_data_free);
+}
+
+static void
+cb_count_signal (CutRunContext *run_context, CutTest *test,
+                 CutTestContext *test_context, CutTestResult *result,
+                 gpointer data)
+{
+    gint *n_signal = data;
+    (*n_signal)++;
+}
+
+void
+test_signal (gconstpointer data)
+{
+    const SignalTestData *test_data = data;
+    gint n_signal = 0;
+
+    g_signal_connect(pipeline, test_data->signal_name,
+                     G_CALLBACK(cb_count_signal), &n_signal);
+
+    if (test_data->success)
+        cut_assert_true(run(test_data->test_dir));
+    else
+        cut_assert_false(run(test_data->test_dir));
+
+    cut_assert_equal_int(1, n_signal);
+
+    g_signal_handlers_disconnect_by_func(pipeline,
+                                         G_CALLBACK(cb_count_signal),
+                                         &n_signal);
+}
+
+typedef guint (*GetCountFunction) (CutRunContext *run_context);
+typedef struct _CountTestData
+{
+    GetCountFunction get_count;
+    gchar *test_dir;
+    gboolean success;
+} CountTestData;
+
+static CountTestData *
+count_test_data_new (const gchar *result, GetCountFunction get_count,
+                     gboolean success)
+{
+    CountTestData *test_data;
+
+    test_data = g_new(CountTestData, 1);
+    test_data->get_count = get_count;
+    test_data->test_dir = build_test_dir(result);
+    test_data->success = success;
+
+    return test_data;
+}
+
+static void
+count_test_data_free (CountTestData *test_data)
+{
+    g_free(test_data->test_dir);
+    g_free(test_data);
+}
+
+void
+data_count (void)
+{
+#define ADD_DATA(result, result_plural, success) do                     \
+{                                                                       \
+    GetCountFunction get_count;                                         \
+                                                                        \
+    get_count = cut_run_context_get_n_ ## result_plural;                \
+    cut_add_data(#result,                                               \
+                 count_test_data_new(#result, get_count, success),      \
+                 count_test_data_free);                                 \
+} while (0)
+
+    ADD_DATA(success, successes, TRUE);
+    ADD_DATA(failure, failures, FALSE);
+    ADD_DATA(error, errors, FALSE);
+    ADD_DATA(pending, pendings, FALSE);
+    ADD_DATA(omission, omissions, TRUE);
+
+#undef ADD_DATA
+}
+
+void
+test_count (gconstpointer data)
+{
+    const CountTestData *test_data = data;
+
+    if (test_data->success)
+        cut_assert_true(run(test_data->test_dir));
+    else
+        cut_assert_false(run(test_data->test_dir));
+    cut_assert_equal_uint(1, test_data->get_count(pipeline));
 }
 
 /*
