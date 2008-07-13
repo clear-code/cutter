@@ -1,5 +1,7 @@
 2008-07-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cutter.h: use "data driven test".
+
 	* cutter/cut-experimental.h (cut_add_data): move to ...
 	* cutter/cutter.h: ... here.
 

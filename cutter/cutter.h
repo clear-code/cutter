@@ -179,7 +179,7 @@ void shutdown(void);
  *       followed optionally by more
  *       name/data/destroy_function triples
  *
- * Adds data to use iterated test.
+ * Adds data to use data driven test.
  *
  * e.g.:
  * |[
