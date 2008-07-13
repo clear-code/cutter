@@ -7,6 +7,9 @@
 void test_success(void);
 void test_failure(void);
 void test_error(void);
+void test_pending(void);
+void test_notification(void);
+void test_omission(void);
 void test_error_in_data_setup(void);
 
 static CutRunContext *run_context;
@@ -257,7 +260,7 @@ run (void)
 }
 
 static void
-stub_success_iterated_data (void)
+stub_iterated_data (void)
 {
     cut_add_data("First", GINT_TO_POINTER(1), NULL,
                  "Second", GINT_TO_POINTER(2), NULL,
@@ -279,19 +282,11 @@ test_success (void)
 {
     test_iterator = cut_test_iterator_new("success test iterator",
                                           stub_success_iterated_test,
-                                          stub_success_iterated_data);
+                                          stub_iterated_data);
     cut_assert_true(run());
 
     cut_assert_n_signals(1, 1, 3, 3, 3, 0, 1, 0, 0, 0, 0, 0);
     cut_assert_test_result_summary(run_context, 3, 6, 3, 0, 0, 0, 0, 0);
-}
-
-static void
-stub_failure_iterated_data (void)
-{
-    cut_add_data("First", GINT_TO_POINTER(1), NULL,
-                 "Second", GINT_TO_POINTER(2), NULL,
-                 "Third", GINT_TO_POINTER(3), NULL);
 }
 
 static void
@@ -307,7 +302,7 @@ test_failure (void)
 {
     test_iterator = cut_test_iterator_new("failure test iterator",
                                           stub_failure_iterated_test,
-                                          stub_failure_iterated_data);
+                                          stub_iterated_data);
     cut_assert_false(run());
 
     cut_assert_n_signals(1, 1, 3, 3, 3, 0, 0, 1, 0, 0, 0, 0);
@@ -332,14 +327,6 @@ test_failure (void)
 }
 
 static void
-stub_error_iterated_data (void)
-{
-    cut_add_data("First", GINT_TO_POINTER(1), NULL,
-                 "Second", GINT_TO_POINTER(2), NULL,
-                 "Third", GINT_TO_POINTER(3), NULL);
-}
-
-static void
 stub_error_iterated_test (gconstpointer data)
 {
     cut_assert_true(TRUE, "always pass");
@@ -353,7 +340,7 @@ test_error (void)
 {
     test_iterator = cut_test_iterator_new("error test iterator",
                                           stub_error_iterated_test,
-                                          stub_error_iterated_data);
+                                          stub_iterated_data);
     cut_assert_false(run());
 
     cut_assert_n_signals(1, 1, 3, 3, 3, 0, 0, 0, 1, 0, 0, 0);
@@ -368,6 +355,108 @@ test_error (void)
                            "stub_error_iterated_test");
     cut_assert_test_result(run_context, 2, CUT_TEST_RESULT_SUCCESS,
                            "error test iterator (Third)",
+                           NULL, NULL, NULL);
+}
+
+static void
+stub_pending_iterated_test (gconstpointer data)
+{
+    cut_assert_true(TRUE, "always pass");
+    if (GPOINTER_TO_INT(data) == 2)
+        cut_pend("PENDING!");
+    cut_assert_true(TRUE, "always pass if come here");
+}
+
+void
+test_pending (void)
+{
+    test_iterator = cut_test_iterator_new("pending test iterator",
+                                          stub_pending_iterated_test,
+                                          stub_iterated_data);
+    cut_assert_false(run());
+
+    cut_assert_n_signals(1, 1, 3, 3, 3, 0, 0, 0, 0, 1, 0, 0);
+    cut_assert_test_result_summary(run_context, 3, 5, 2, 0, 0, 1, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_SUCCESS,
+                           "pending test iterator (First)",
+                           NULL, NULL, NULL);
+    cut_assert_test_result(run_context, 1, CUT_TEST_RESULT_PENDING,
+                           "pending test iterator (Second)",
+                           "PENDING!",
+                           NULL,
+                           "stub_pending_iterated_test");
+    cut_assert_test_result(run_context, 2, CUT_TEST_RESULT_SUCCESS,
+                           "pending test iterator (Third)",
+                           NULL, NULL, NULL);
+}
+
+static void
+stub_notification_iterated_test (gconstpointer data)
+{
+    cut_assert_true(TRUE, "always pass");
+    if (GPOINTER_TO_INT(data) == 2)
+        cut_notify("NOTIFICATION!");
+    cut_assert_true(TRUE, "always pass if come here");
+}
+
+void
+test_notification (void)
+{
+    test_iterator = cut_test_iterator_new("notification test iterator",
+                                          stub_notification_iterated_test,
+                                          stub_iterated_data);
+    cut_assert_true(run());
+
+    cut_assert_n_signals(1, 1, 3, 3, 3, 0, 0, 0, 0, 0, 1, 0);
+    cut_assert_test_result_summary(run_context, 3, 6, 3, 0, 0, 0, 1, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_SUCCESS,
+                           "notification test iterator (First)",
+                           NULL, NULL, NULL);
+    cut_assert_test_result(run_context, 1, CUT_TEST_RESULT_NOTIFICATION,
+                           "notification test iterator (Second)",
+                           "NOTIFICATION!",
+                           NULL,
+                           "stub_notification_iterated_test");
+    cut_assert_test_result(run_context, 2, CUT_TEST_RESULT_SUCCESS,
+                           "notification test iterator (Second)",
+                           NULL, NULL, NULL);
+    cut_assert_test_result(run_context, 3, CUT_TEST_RESULT_SUCCESS,
+                           "notification test iterator (Third)",
+                           NULL, NULL, NULL);
+}
+
+static void
+stub_omission_iterated_test (gconstpointer data)
+{
+    cut_assert_true(TRUE, "always pass");
+    if (GPOINTER_TO_INT(data) == 2)
+        cut_omit("OMISSION!");
+    cut_assert_true(TRUE, "always pass if come here");
+}
+
+void
+test_omission (void)
+{
+    test_iterator = cut_test_iterator_new("omission test iterator",
+                                          stub_omission_iterated_test,
+                                          stub_iterated_data);
+    cut_assert_true(run());
+
+    cut_assert_n_signals(1, 1, 3, 3, 3, 0, 0, 0, 0, 0, 0, 1);
+    cut_assert_test_result_summary(run_context, 3, 5, 3, 0, 0, 0, 0, 1);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_SUCCESS,
+                           "omission test iterator (First)",
+                           NULL, NULL, NULL);
+    cut_assert_test_result(run_context, 1, CUT_TEST_RESULT_OMISSION,
+                           "omission test iterator (Second)",
+                           "OMISSION!",
+                           NULL,
+                           "stub_omission_iterated_test");
+    cut_assert_test_result(run_context, 2, CUT_TEST_RESULT_SUCCESS,
+                           "omission test iterator (Second)",
+                           NULL, NULL, NULL);
+    cut_assert_test_result(run_context, 3, CUT_TEST_RESULT_SUCCESS,
+                           "omission test iterator (Third)",
                            NULL, NULL, NULL);
 }
 
