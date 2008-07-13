@@ -14,6 +14,7 @@ void test_start_iterated_test (void);
 void test_error_result (void);
 void test_complete_iterated_test (void);
 void test_complete_test (void);
+void test_complete_test_iterator (void);
 void test_complete_test_case (void);
 void test_complete_test_suite (void);
 void test_complete_run_without_success_tag (void);
@@ -1476,6 +1477,107 @@ test_complete_test (void)
     test = cut_test_context_get_test(context);
     cut_assert_not_null(test);
     cut_assert_equal_string("my test", cut_test_get_name(test));
+}
+
+void
+test_complete_test_iterator (void)
+{
+    CutTestIterator *test_iterator;
+    gchar header[] =
+        "<stream>\n"
+        "  <ready-test-suite>\n"
+        "    <test-suite>\n"
+        "    </test-suite>\n"
+        "    <n-test-cases>3</n-test-cases>\n"
+        "    <n-tests>7</n-tests>\n"
+        "  </ready-test-suite>\n"
+        "  <start-test-suite>\n"
+        "    <test-suite>\n"
+        "    </test-suite>\n"
+        "  </start-test-suite>\n"
+        "  <ready-test-case>\n"
+        "    <test-case>\n"
+        "      <name>my test case</name>\n"
+        "    </test-case>\n"
+        "    <n-tests>2</n-tests>\n"
+        "  </ready-test-case>\n"
+        "  <start-test-case>\n"
+        "    <test-case>\n"
+        "      <name>my test case</name>\n"
+        "    </test-case>\n"
+        "  </start-test-case>\n"
+        "  <ready-test-iterator>\n"
+        "    <test-iterator>\n"
+        "      <name>my test iterator</name>\n"
+        "    </test-iterator>\n"
+        "    <n-tests>5</n-tests>\n"
+        "  </ready-test-iterator>\n"
+        "  <start-test-iterator>\n"
+        "    <test-iterator>\n"
+        "      <name>my test iterator</name>\n"
+        "    </test-iterator>\n"
+        "  </start-test-iterator>\n"
+        "  <start-iterated-test>\n"
+        "    <iterated-test>\n"
+        "      <name>my iterated test</name>\n"
+        "    </iterated-test>\n"
+        "    <test-context>\n"
+        "      <test-suite>\n"
+        "      </test-suite>\n"
+        "      <test-case>\n"
+        "        <name>my test case</name>\n"
+        "      </test-case>\n"
+        "      <test-iterator>\n"
+        "        <name>my test iterator</name>\n"
+        "      </test-iterator>\n"
+        "      <iterated-test>\n"
+        "        <name>my iterated test</name>\n"
+        "      </iterated-test>\n"
+        "      <test-data>\n"
+        "        <name>the first test data</name>\n"
+        "      </test-data>\n"
+        "      <failed>FALSE</failed>\n"
+        "    </test-context>\n"
+        "  </start-iterated-test>\n"
+        "  <complete-iterated-test>\n"
+        "    <iterated-test>\n"
+        "      <name>my iterated test</name>\n"
+        "    </iterated-test>\n"
+        "    <test-context>\n"
+        "      <test-suite>\n"
+        "      </test-suite>\n"
+        "      <test-case>\n"
+        "        <name>my test case</name>\n"
+        "      </test-case>\n"
+        "      <test-iterator>\n"
+        "        <name>my test iterator</name>\n"
+        "      </test-iterator>\n"
+        "      <iterated-test>\n"
+        "        <name>my iterated test</name>\n"
+        "      </iterated-test>\n"
+        "      <test-data>\n"
+        "        <name>the first test data</name>\n"
+        "      </test-data>\n"
+        "      <failed>TRUE</failed>\n"
+        "    </test-context>\n"
+        "  </complete-iterated-test>\n";
+    gchar complete_test_iterator[] =
+        "  <complete-test-iterator>\n"
+        "    <test-iterator>\n"
+        "      <name>my test iterator</name>\n"
+        "    </test-iterator>\n"
+        "  </complete-test-iterator>\n";
+
+    cut_assert_parse(header);
+    cut_assert_null(0, receiver->complete_test_iterators);
+
+    cut_assert_parse(complete_test_iterator);
+    cut_assert_equal_uint(1, g_list_length(receiver->complete_test_iterators));
+
+    test_iterator = receiver->complete_test_iterators->data;
+    cut_assert_not_null(test_iterator);
+    cut_assert_equal_string("my test iterator",
+                            cut_test_get_name(CUT_TEST(test_iterator)));
 }
 
 void
