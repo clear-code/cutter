@@ -50,6 +50,7 @@ struct _CutRunContextPrivate
     guint n_omissions;
     gdouble elapsed;
     GList *results;
+    GList *reversed_results;
     gboolean use_multi_thread;
     gboolean is_multi_thread;
     GMutex *mutex;
@@ -695,6 +696,7 @@ cut_run_context_init (CutRunContext *context)
     priv->n_omissions = 0;
     priv->elapsed = 0.0;
     priv->results = NULL;
+    priv->reversed_results = NULL;
     priv->use_multi_thread = FALSE;
     priv->is_multi_thread = FALSE;
     priv->mutex = g_mutex_new();
@@ -727,6 +729,11 @@ dispose (GObject *object)
         g_list_foreach(priv->results, (GFunc)g_object_unref, NULL);
         g_list_free(priv->results);
         priv->results = NULL;
+    }
+
+    if (priv->reversed_results) {
+        g_list_free(priv->reversed_results);
+        priv->reversed_results = NULL;
     }
 
     if (priv->mutex) {
@@ -1308,7 +1315,14 @@ cut_run_context_get_elapsed (CutRunContext *context)
 const GList *
 cut_run_context_get_results (CutRunContext *context)
 {
-    return CUT_RUN_CONTEXT_GET_PRIVATE(context)->results;
+    CutRunContextPrivate *priv;
+
+    priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
+    if (priv->reversed_results)
+        g_list_free(priv->reversed_results);
+
+    priv->reversed_results = g_list_reverse(g_list_copy(priv->results));
+    return priv->reversed_results;
 }
 
 void

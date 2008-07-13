@@ -598,9 +598,9 @@ print_results (CutConsoleUI *console, CutRunContext *run_context)
         i++;
     }
 
-    for (node = g_list_last((GList *)cut_run_context_get_results(run_context));
+    for (node = cut_run_context_get_results(run_context);
          node;
-         node = g_list_previous(node)) {
+         node = g_list_next(node)) {
         CutTestResult *result = node->data;
         CutTestResultStatus status;
         CutTest *test;

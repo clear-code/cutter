@@ -1,5 +1,10 @@
 2008-07-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* module/ui/cut-console-ui.c (print_results): don't reverse each.
+
+	* cutter/cut-run-context.c (cut_run_context_get_results): return
+	collect order results.
+
 	* cutter/cut-gassertions.h: use cut_append_diff().
 
 	* cutter/cut-test-utils.h (cut_append_diff): add.
