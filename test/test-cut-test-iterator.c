@@ -283,7 +283,9 @@ test_success (void)
     test_iterator = cut_test_iterator_new("success test iterator",
                                           stub_success_iterated_test,
                                           stub_iterated_data);
+    cut_assert_equal_uint(0, cut_test_iterator_get_n_tests(test_iterator));
     cut_assert_true(run());
+    cut_assert_equal_uint(3, cut_test_iterator_get_n_tests(test_iterator));
 
     cut_assert_n_signals(1, 1, 3, 3, 3, 0, 1, 0, 0, 0, 0, 0);
     cut_assert_test_result_summary(run_context, 3, 6, 3, 0, 0, 0, 0, 0);
@@ -303,7 +305,9 @@ test_failure (void)
     test_iterator = cut_test_iterator_new("failure test iterator",
                                           stub_failure_iterated_test,
                                           stub_iterated_data);
+    cut_assert_equal_uint(0, cut_test_iterator_get_n_tests(test_iterator));
     cut_assert_false(run());
+    cut_assert_equal_uint(3, cut_test_iterator_get_n_tests(test_iterator));
 
     cut_assert_n_signals(1, 1, 3, 3, 3, 0, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result_summary(run_context, 3, 5, 1, 2, 0, 0, 0, 0);
@@ -341,7 +345,9 @@ test_error (void)
     test_iterator = cut_test_iterator_new("error test iterator",
                                           stub_error_iterated_test,
                                           stub_iterated_data);
+    cut_assert_equal_uint(0, cut_test_iterator_get_n_tests(test_iterator));
     cut_assert_false(run());
+    cut_assert_equal_uint(3, cut_test_iterator_get_n_tests(test_iterator));
 
     cut_assert_n_signals(1, 1, 3, 3, 3, 0, 0, 0, 1, 0, 0, 0);
     cut_assert_test_result_summary(run_context, 3, 5, 2, 0, 1, 0, 0, 0);
@@ -373,7 +379,9 @@ test_pending (void)
     test_iterator = cut_test_iterator_new("pending test iterator",
                                           stub_pending_iterated_test,
                                           stub_iterated_data);
+    cut_assert_equal_uint(0, cut_test_iterator_get_n_tests(test_iterator));
     cut_assert_false(run());
+    cut_assert_equal_uint(3, cut_test_iterator_get_n_tests(test_iterator));
 
     cut_assert_n_signals(1, 1, 3, 3, 3, 0, 0, 0, 0, 1, 0, 0);
     cut_assert_test_result_summary(run_context, 3, 5, 2, 0, 0, 1, 0, 0);
@@ -405,7 +413,9 @@ test_notification (void)
     test_iterator = cut_test_iterator_new("notification test iterator",
                                           stub_notification_iterated_test,
                                           stub_iterated_data);
+    cut_assert_equal_uint(0, cut_test_iterator_get_n_tests(test_iterator));
     cut_assert_true(run());
+    cut_assert_equal_uint(3, cut_test_iterator_get_n_tests(test_iterator));
 
     cut_assert_n_signals(1, 1, 3, 3, 3, 0, 0, 0, 0, 0, 1, 0);
     cut_assert_test_result_summary(run_context, 3, 6, 3, 0, 0, 0, 1, 0);
@@ -440,7 +450,9 @@ test_omission (void)
     test_iterator = cut_test_iterator_new("omission test iterator",
                                           stub_omission_iterated_test,
                                           stub_iterated_data);
+    cut_assert_equal_uint(0, cut_test_iterator_get_n_tests(test_iterator));
     cut_assert_true(run());
+    cut_assert_equal_uint(3, cut_test_iterator_get_n_tests(test_iterator));
 
     cut_assert_n_signals(1, 1, 3, 3, 3, 0, 0, 0, 0, 0, 0, 1);
     cut_assert_test_result_summary(run_context, 3, 5, 3, 0, 0, 0, 0, 1);
@@ -482,7 +494,9 @@ test_error_in_data_setup (void)
         cut_test_iterator_new("error in data setup test iterator",
                               stub_error_in_data_setup_iterated_test,
                               stub_error_in_data_setup_iterated_data);
+    cut_assert_equal_uint(0, cut_test_iterator_get_n_tests(test_iterator));
     cut_assert_false(run());
+    cut_assert_equal_uint(0, cut_test_iterator_get_n_tests(test_iterator));
 
     cut_assert_n_signals(0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0);
     cut_assert_test_result_summary(run_context, 0, 0, 0, 0, 0, 0, 0, 0);

@@ -1,5 +1,8 @@
 2008-07-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-test-iterator.c: add test for
+	cut_test_iterator_get_n_tests().
+
 	* configure.ac, test/fixtures/loader/Makefile.am: add
 	test/fixtures/loader/iterator/.
 	* test/fixtures/loader/iterator/: add.
