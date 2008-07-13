@@ -1,18 +1,21 @@
 #include "cutter.h"
 #include <cutter/cut-test-context.h>
 #include <cutter/cut-test-suite.h>
+#include <cutter/cut-test-iterator.h>
 
 void test_set_data (void);
 void test_set_failed (void);
 void test_simple_xml (void);
 void test_xml_with_test_suite (void);
 void test_xml_with_test_case (void);
+void test_xml_with_test_iterator (void);
 void test_xml_with_test (void);
 void test_xml_with_test_data (void);
 
 static CutTestContext *context;
 static CutTestSuite *test_suite;
 static CutTestCase *test_case;
+static CutTestIterator *test_iterator;
 static CutTest *test;
 static CutTestData *test_data;
 
@@ -27,7 +30,8 @@ setup (void)
     test_case = cut_test_case_new("my-test-case",
                                   NULL, NULL,
                                   NULL, NULL,
-                                  NULL,NULL);
+                                  NULL, NULL);
+    test_iterator = cut_test_iterator_new("my-test-iterator", NULL, NULL);
     test = cut_test_new("my-test", NULL);
     test_data = NULL;
     destroy_called = FALSE;
@@ -42,6 +46,7 @@ teardown (void)
 
     g_object_unref(test_suite);
     g_object_unref(test_case);
+    g_object_unref(test_iterator);
 
     if (test_data)
         g_object_unref(test_data);
@@ -131,6 +136,31 @@ test_xml_with_test_suite (void)
         "</test-context>\n";
 
     cut_test_context_set_test_suite(context, test_suite);
+    cut_assert_match_with_free(expected, cut_test_context_to_xml(context));
+}
+
+void
+test_xml_with_test_iterator (void)
+{
+    gchar expected[] =
+        "<test-context>\n"
+        "  <test-suite>\n"
+        "    <elapsed>.+?</elapsed>\n"
+        "  </test-suite>\n"
+        "  <test-case>\n"
+        "    <name>my-test-case</name>\n"
+        "    <elapsed>.+?</elapsed>\n"
+        "  </test-case>\n"
+        "  <test-iterator>\n"
+        "    <name>my-test-iterator</name>\n"
+        "    <elapsed>.+?</elapsed>\n"
+        "  </test-iterator>\n"
+        "  <failed>FALSE</failed>\n"
+        "</test-context>\n";
+
+    cut_test_context_set_test_suite(context, test_suite);
+    cut_test_context_set_test_case(context, test_case);
+    cut_test_context_set_test_iterator(context, test_iterator);
     cut_assert_match_with_free(expected, cut_test_context_to_xml(context));
 }
 

@@ -65,6 +65,11 @@ void          cut_test_context_set_test_suite (CutTestContext *context,
 CutTestCase  *cut_test_context_get_test_case  (CutTestContext *context);
 void          cut_test_context_set_test_case  (CutTestContext *context,
                                                CutTestCase    *test_case);
+CutTestIterator *cut_test_context_get_test_iterator
+                                              (CutTestContext *context);
+void          cut_test_context_set_test_iterator
+                                              (CutTestContext *context,
+                                               CutTestIterator *test_iterator);
 CutTest      *cut_test_context_get_test       (CutTestContext *context);
 void          cut_test_context_set_test       (CutTestContext *context,
                                                CutTest        *test);

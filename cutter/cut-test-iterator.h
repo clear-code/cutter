@@ -34,7 +34,6 @@ G_BEGIN_DECLS
 #define CUT_IS_TEST_ITERATOR_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_TEST_ITERATOR))
 #define CUT_TEST_ITERATOR_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_TEST_ITERATOR, CutTestIteratorClass))
 
-typedef struct _CutTestIterator      CutTestIterator;
 typedef struct _CutTestIteratorClass CutTestIteratorClass;
 
 struct _CutTestIterator

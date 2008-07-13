@@ -35,6 +35,7 @@
 
 #include "cut-test-context.h"
 #include "cut-test-suite.h"
+#include "cut-test-iterator.h"
 #include "cut-test-result.h"
 #include "cut-test-data.h"
 #include "cut-process.h"
@@ -58,6 +59,7 @@ struct _CutTestContextPrivate
 {
     CutTestSuite *test_suite;
     CutTestCase *test_case;
+    CutTestIterator *test_iterator;
     CutTest *test;
     gboolean failed;
     gboolean is_multi_thread;
@@ -79,6 +81,7 @@ enum
     PROP_0,
     PROP_TEST_SUITE,
     PROP_TEST_CASE,
+    PROP_TEST_ITERATOR,
     PROP_TEST
 };
 
@@ -150,6 +153,13 @@ cut_test_context_class_init (CutTestContextClass *klass)
                                G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class, PROP_TEST_CASE, spec);
 
+    spec = g_param_spec_object("test-iterator",
+                               "Test iterator",
+                               "The test iterator of the test context",
+                               CUT_TYPE_TEST_ITERATOR,
+                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+    g_object_class_install_property(gobject_class, PROP_TEST_ITERATOR, spec);
+
     spec = g_param_spec_object("test",
                                "Test",
                                "The test of the test context",
@@ -167,6 +177,7 @@ cut_test_context_init (CutTestContext *context)
 
     priv->test_suite = NULL;
     priv->test_case = NULL;
+    priv->test_iterator = NULL;
     priv->test = NULL;
 
     priv->failed = FALSE;
@@ -213,6 +224,11 @@ dispose (GObject *object)
     if (priv->test_case) {
         g_object_unref(priv->test_case);
         priv->test_case = NULL;
+    }
+
+    if (priv->test_iterator) {
+        g_object_unref(priv->test_iterator);
+        priv->test_iterator = NULL;
     }
 
     if (priv->test) {
@@ -286,6 +302,9 @@ set_property (GObject      *object,
       case PROP_TEST_CASE:
         cut_test_context_set_test_case(context, g_value_get_object(value));
         break;
+      case PROP_TEST_ITERATOR:
+        cut_test_context_set_test_iterator(context, g_value_get_object(value));
+        break;
       case PROP_TEST:
         cut_test_context_set_test(context, g_value_get_object(value));
         break;
@@ -310,6 +329,9 @@ get_property (GObject    *object,
       case PROP_TEST_CASE:
         g_value_set_object(value, priv->test_case);
         break;
+      case PROP_TEST_ITERATOR:
+        g_value_set_object(value, priv->test_iterator);
+        break;
       case PROP_TEST:
         g_value_set_object(value, priv->test);
         break;
@@ -326,6 +348,7 @@ cut_test_context_new (CutTestSuite *test_suite, CutTestCase *test_case,
     return g_object_new(CUT_TYPE_TEST_CONTEXT,
                         "test-suite", test_suite,
                         "test-case", test_case,
+                        "test-iterator", NULL,
                         "test", test,
                         NULL);
 }
@@ -370,6 +393,25 @@ cut_test_context_set_test_case (CutTestContext *context, CutTestCase *test_case)
     if (test_case)
         g_object_ref(test_case);
     priv->test_case = test_case;
+}
+
+CutTestIterator *
+cut_test_context_get_test_iterator (CutTestContext *context)
+{
+    return CUT_TEST_CONTEXT_GET_PRIVATE(context)->test_iterator;
+}
+
+void
+cut_test_context_set_test_iterator (CutTestContext *context,
+                                    CutTestIterator *test_iterator)
+{
+    CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+
+    if (priv->test_iterator)
+        g_object_unref(priv->test_iterator);
+    if (test_iterator)
+        g_object_ref(test_iterator);
+    priv->test_iterator = test_iterator;
 }
 
 CutTest *
@@ -532,6 +574,9 @@ cut_test_context_emit_signal (CutTestContext *context,
         cut_test_result_set_elapsed(result, cut_test_get_elapsed(priv->test));
         g_signal_emit_by_name(priv->test, status_signal_name,
                               context, result);
+    } else if (priv->test_iterator) {
+        g_signal_emit_by_name(priv->test_iterator, status_signal_name,
+                              context, result);
     } else if (priv->test_case) {
         g_signal_emit_by_name(priv->test_case, status_signal_name,
                               context, result);
@@ -569,7 +614,8 @@ cut_test_context_register_result (CutTestContext *context,
     if (priv->current_data)
         test_data = priv->current_data->data;
     result = cut_test_result_new(status,
-                                 priv->test, priv->test_case, priv->test_suite,
+                                 priv->test, /* priv->test_iterator, */ 
+                                 priv->test_case, priv->test_suite,
                                  test_data,
                                  user_message, system_message,
                                  function_name, filename, line);
@@ -833,6 +879,9 @@ cut_test_context_to_xml_string (CutTestContext *context, GString *string,
         cut_test_to_xml_string(CUT_TEST(priv->test_suite), string, indent + 2);
     if (priv->test_case)
         cut_test_to_xml_string(CUT_TEST(priv->test_case), string, indent + 2);
+    if (priv->test_iterator)
+        cut_test_to_xml_string(CUT_TEST(priv->test_iterator),
+                               string, indent + 2);
     if (priv->test)
         cut_test_to_xml_string(priv->test, string, indent + 2);
     if (priv->current_data)

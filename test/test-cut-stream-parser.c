@@ -6,6 +6,8 @@ void test_ready_test_suite (void);
 void test_start_test_suite (void);
 void test_ready_test_case (void);
 void test_start_test_case (void);
+void test_ready_test_iterator (void);
+void test_start_test_iterator (void);
 void test_start_test (void);
 void test_start_test_with_multiple_option_names (void);
 void test_start_test_with_data (void);
@@ -32,13 +34,16 @@ struct _CuttestEventReceiver
 {
     CutRunContext object;
 
-    gint n_start_runs;
+    guint n_start_runs;
     GList *ready_test_suites;
     GList *start_test_suites;
     GList *ready_test_cases;
     GList *start_test_cases;
+    GList *ready_test_iterators;
+    GList *start_test_iterators;
     GList *start_tests;
     GList *complete_tests;
+    GList *complete_test_iterators;
     GList *complete_test_cases;
     GList *complete_test_suites;
     GList *complete_runs;
@@ -59,13 +64,13 @@ G_DEFINE_TYPE(CuttestEventReceiver, cuttest_event_receiver, CUT_TYPE_RUN_CONTEXT
 typedef struct _ReadyTestSuiteInfo
 {
     CutTestSuite *test_suite;
-    gint n_test_cases;
-    gint n_tests;
+    guint n_test_cases;
+    guint n_tests;
 } ReadyTestSuiteInfo;
 
 static ReadyTestSuiteInfo *
-ready_test_suite_info_new (CutTestSuite *test_suite, gint n_test_cases,
-                           gint n_tests)
+ready_test_suite_info_new (CutTestSuite *test_suite, guint n_test_cases,
+                           guint n_tests)
 {
     ReadyTestSuiteInfo *info;
 
@@ -90,11 +95,11 @@ ready_test_suite_info_free (ReadyTestSuiteInfo *info)
 typedef struct _ReadyTestCaseInfo
 {
     CutTestCase *test_case;
-    gint n_tests;
+    guint n_tests;
 } ReadyTestCaseInfo;
 
 static ReadyTestCaseInfo *
-ready_test_case_info_new (CutTestCase *test_case, gint n_tests)
+ready_test_case_info_new (CutTestCase *test_case, guint n_tests)
 {
     ReadyTestCaseInfo *info;
 
@@ -113,6 +118,34 @@ ready_test_case_info_free (ReadyTestCaseInfo *info)
     if (info->test_case)
         g_object_unref(info->test_case);
     g_slice_free(ReadyTestCaseInfo, info);
+}
+
+typedef struct _ReadyTestIteratorInfo
+{
+    CutTestIterator *test_iterator;
+    guint n_tests;
+} ReadyTestIteratorInfo;
+
+static ReadyTestIteratorInfo *
+ready_test_iterator_info_new (CutTestIterator *test_iterator, guint n_tests)
+{
+    ReadyTestIteratorInfo *info;
+
+    info = g_slice_new(ReadyTestIteratorInfo);
+    info->test_iterator = test_iterator;
+    if (info->test_iterator)
+        g_object_ref(info->test_iterator);
+    info->n_tests = n_tests;
+
+    return info;
+}
+
+static void
+ready_test_iterator_info_free (ReadyTestIteratorInfo *info)
+{
+    if (info->test_iterator)
+        g_object_unref(info->test_iterator);
+    g_slice_free(ReadyTestIteratorInfo, info);
 }
 
 typedef struct _StartTestInfo
@@ -212,6 +245,20 @@ dispose (GObject *object)
         receiver->start_test_cases = NULL;
     }
 
+    if (receiver->ready_test_iterators) {
+        g_list_foreach(receiver->ready_test_iterators,
+                       (GFunc)ready_test_iterator_info_free, NULL);
+        g_list_free(receiver->ready_test_iterators);
+        receiver->ready_test_iterators = NULL;
+    }
+
+    if (receiver->start_test_iterators) {
+        g_list_foreach(receiver->start_test_iterators,
+                       (GFunc)g_object_unref, NULL);
+        g_list_free(receiver->start_test_iterators);
+        receiver->start_test_iterators = NULL;
+    }
+
     if (receiver->start_tests) {
         g_list_foreach(receiver->start_tests,
                        (GFunc)start_test_info_free, NULL);
@@ -224,6 +271,13 @@ dispose (GObject *object)
                        (GFunc)complete_test_info_free, NULL);
         g_list_free(receiver->complete_tests);
         receiver->complete_tests = NULL;
+    }
+
+    if (receiver->complete_test_iterators) {
+        g_list_foreach(receiver->complete_test_iterators,
+                       (GFunc)g_object_unref, NULL);
+        g_list_free(receiver->complete_test_iterators);
+        receiver->complete_test_iterators = NULL;
     }
 
     if (receiver->complete_test_cases) {
@@ -308,6 +362,30 @@ start_test_case (CutRunContext *context, CutTestCase *test_case)
 }
 
 static void
+ready_test_iterator (CutRunContext *context, CutTestIterator *test_iterator,
+                     guint n_tests)
+{
+    CuttestEventReceiver *receiver;
+    ReadyTestIteratorInfo *info;
+
+    receiver = CUTTEST_EVENT_RECEIVER(context);
+    info = ready_test_iterator_info_new(test_iterator, n_tests);
+    receiver->ready_test_iterators =
+        g_list_append(receiver->ready_test_iterators, info);
+}
+
+static void
+start_test_iterator (CutRunContext *context, CutTestIterator *test_iterator)
+{
+    CuttestEventReceiver *receiver;
+
+    receiver = CUTTEST_EVENT_RECEIVER(context);
+    receiver->start_test_iterators =
+        g_list_append(receiver->start_test_iterators,
+                      g_object_ref(test_iterator));
+}
+
+static void
 start_test (CutRunContext *context, CutTest *test, CutTestContext *test_context)
 {
     CuttestEventReceiver *receiver;
@@ -328,6 +406,17 @@ complete_test (CutRunContext *context, CutTest *test,
     receiver = CUTTEST_EVENT_RECEIVER(context);
     info = complete_test_info_new(test, test_context);
     receiver->complete_tests = g_list_append(receiver->complete_tests, info);
+}
+
+static void
+complete_test_iterator (CutRunContext *context, CutTestIterator *test_iterator)
+{
+    CuttestEventReceiver *receiver;
+
+    receiver = CUTTEST_EVENT_RECEIVER(context);
+    receiver->complete_test_iterators =
+        g_list_append(receiver->complete_test_iterators,
+                      g_object_ref(test_iterator));
 }
 
 static void
@@ -385,8 +474,11 @@ cuttest_event_receiver_class_init (CuttestEventReceiverClass *klass)
     run_context_class->start_test_suite = start_test_suite;
     run_context_class->ready_test_case = ready_test_case;
     run_context_class->start_test_case = start_test_case;
+    run_context_class->ready_test_iterator = ready_test_iterator;
+    run_context_class->start_test_iterator = start_test_iterator;
     run_context_class->start_test = start_test;
     run_context_class->complete_test = complete_test;
+    run_context_class->complete_test_iterator = complete_test_iterator;
     run_context_class->complete_test_case = complete_test_case;
     run_context_class->complete_test_suite = complete_test_suite;
     run_context_class->complete_run = complete_run;
@@ -401,8 +493,11 @@ cuttest_event_receiver_init (CuttestEventReceiver *receiver)
     receiver->start_test_suites = NULL;
     receiver->ready_test_cases = NULL;
     receiver->start_test_cases = NULL;
+    receiver->ready_test_iterators = NULL;
+    receiver->start_test_iterators = NULL;
     receiver->start_tests = NULL;
     receiver->complete_tests = NULL;
+    receiver->complete_test_iterators = NULL;
     receiver->complete_test_cases = NULL;
     receiver->complete_test_suites = NULL;
     receiver->complete_runs = NULL;
@@ -605,6 +700,106 @@ test_start_test_case (void)
     cut_assert_not_null(test_case);
     cut_assert_equal_string("my test case",
                             cut_test_get_name(CUT_TEST(test_case)));
+}
+
+void
+test_ready_test_iterator (void)
+{
+    ReadyTestIteratorInfo *info;
+    gchar header[] =
+        "<stream>\n"
+        "  <ready-test-suite>\n"
+        "    <test-suite>\n"
+        "    </test-suite>\n"
+        "    <n-test-cases>3</n-test-cases>\n"
+        "    <n-tests>7</n-tests>\n"
+        "  </ready-test-suite>\n"
+        "  <start-test-suite>\n"
+        "    <test-suite>\n"
+        "    </test-suite>\n"
+        "  </start-test-suite>\n"
+        "  <ready-test-case>\n"
+        "    <test-case>\n"
+        "      <name>my test case</name>\n"
+        "    </test-case>\n"
+        "    <n-tests>2</n-tests>\n"
+        "  </ready-test-case>\n"
+        "  <start-test-case>\n"
+        "    <test-case>\n"
+        "      <name>my test case</name>\n"
+        "    </test-case>\n"
+        "  </start-test-case>\n";
+    gchar ready_test_iterator[] =
+        "  <ready-test-iterator>\n"
+        "    <test-iterator>\n"
+        "      <name>my test iterator</name>\n"
+        "    </test-iterator>\n"
+        "    <n-tests>5</n-tests>\n"
+        "  </ready-test-iterator>\n";
+
+    cut_assert_parse(header);
+    cut_assert_null(0, receiver->ready_test_iterators);
+
+    cut_assert_parse(ready_test_iterator);
+    cut_assert_equal_int(1, g_list_length(receiver->ready_test_iterators));
+
+    info = receiver->ready_test_iterators->data;
+    cut_assert_not_null(info->test_iterator);
+    cut_assert_equal_string("my test iterator",
+                            cut_test_get_name(CUT_TEST(info->test_iterator)));
+    cut_assert_equal_uint(5, info->n_tests);
+}
+
+void
+test_start_test_iterator (void)
+{
+    CutTestIterator *test_iterator;
+    gchar header[] =
+        "<stream>\n"
+        "  <ready-test-suite>\n"
+        "    <test-suite>\n"
+        "    </test-suite>\n"
+        "    <n-test-cases>3</n-test-cases>\n"
+        "    <n-tests>7</n-tests>\n"
+        "  </ready-test-suite>\n"
+        "  <start-test-suite>\n"
+        "    <test-suite>\n"
+        "    </test-suite>\n"
+        "  </start-test-suite>\n"
+        "  <ready-test-case>\n"
+        "    <test-case>\n"
+        "      <name>my test case</name>\n"
+        "    </test-case>\n"
+        "    <n-tests>2</n-tests>\n"
+        "  </ready-test-case>\n"
+        "  <start-test-case>\n"
+        "    <test-case>\n"
+        "      <name>my test case</name>\n"
+        "    </test-case>\n"
+        "  </start-test-case>\n"
+        "  <ready-test-iterator>\n"
+        "    <test-iterator>\n"
+        "      <name>my test iterator</name>\n"
+        "    </test-iterator>\n"
+        "    <n-tests>5</n-tests>\n"
+        "  </ready-test-iterator>\n";
+    gchar start_test_iterator[] =
+        "  <start-test-iterator>\n"
+        "    <test-iterator>\n"
+        "      <name>my test iterator</name>\n"
+        "    </test-iterator>\n"
+        "  </start-test-iterator>\n";
+
+    cut_assert_parse(header);
+    cut_assert_null(0, receiver->start_test_iterators);
+
+    cut_assert_parse(start_test_iterator);
+    cut_assert_equal_int(1, g_list_length(receiver->start_test_iterators));
+
+    test_iterator = receiver->start_test_iterators->data;
+    cut_assert_not_null(test_iterator);
+    cut_assert_equal_string("my test iterator",
+                            cut_test_get_name(CUT_TEST(test_iterator)));
 }
 
 void

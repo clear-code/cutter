@@ -1,5 +1,19 @@
 2008-07-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-stream-parser.c: support test iterator.
+
+	* cutter/cut-test-context.[ch] (cut_test_context_get_test_iterator)
+	(cut_test_context_set_test_iterator): add.
+
+	* cutter/cut-test-iterator.h, cutter/cut-iterated-test.h: move
+	typedef to ...
+	* cutter/cut-private.h: ... here.
+
+	* test/test-cut-stream-parser.c (test_ready_test_iterator)
+	(test_start_test_iterator): add.
+
+	* test/test-cut-test-context.c (test_xml_with_test_iterator): add.
+
 	* test/test-cut-test-iterator.c: add test for
 	cut_test_iterator_get_n_tests().
 

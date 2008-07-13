@@ -36,7 +36,6 @@ G_BEGIN_DECLS
 
 typedef void    (*CutIteratedTestFunction) (gconstpointer data);
 
-typedef struct _CutIteratedTest         CutIteratedTest;
 typedef struct _CutIteratedTestClass    CutIteratedTestClass;
 
 struct _CutIteratedTest
