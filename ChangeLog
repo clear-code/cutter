@@ -1,3 +1,8 @@
+2008-07-14  Kouhei Sutou  <kou@cozmixng.org>
+
+	* test/test-cut-loader.c (test_load_test_iterator): run loaded
+	test iterator.
+
 2008-07-13  Kouhei Sutou  <kou@cozmixng.org>
 
 	* test/test-cut-stream-parser.c (test_pass_assertion): add.

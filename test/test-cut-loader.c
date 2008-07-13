@@ -1,7 +1,8 @@
-#include "cutter.h"
-#include "cut-loader.h"
+#include <cutter.h>
+#include <cutter/cut-loader.h>
+#include <cutter/cut-test-runner.h>
 
-#include "cuttest-utils.h"
+#include "lib/cuttest-assertions.h"
 
 void test_load_function (void);
 void test_load_startup_and_shutdown_function (void);
@@ -10,6 +11,7 @@ void test_load_test_iterator (void);
 
 static CutLoader *loader;
 static CutTestCase *test_case;
+static CutRunContext *run_context;
 static gchar **test_names;
 
 void
@@ -18,6 +20,7 @@ setup (void)
     loader = NULL;
     test_case = NULL;
     test_names = NULL;
+    run_context = NULL;
 }
 
 void
@@ -29,6 +32,8 @@ teardown (void)
         g_object_unref(test_case);
     if (test_names)
         g_strfreev(test_names);
+    if (run_context)
+        g_object_unref(run_context);
 }
 
 static CutLoader *
@@ -48,6 +53,15 @@ loader_new (const gchar *directory, const gchar *module_name)
     g_free(test_path);
 
     return loader;
+}
+
+static gboolean
+run (void)
+{
+    cut_assert_not_null(test_case);
+
+    run_context = cut_test_runner_new();
+    return cut_test_case_run(test_case, run_context);
 }
 
 static gchar *expected_functions[] = {
@@ -156,6 +170,9 @@ test_load_test_iterator (void)
                  NULL);
     cut_assert_not_null(iterated_test_function);
     cut_assert_not_null(data_setup_function);
+
+    cut_assert_true(run());
+    cut_assert_test_result_summary(run_context, 2, 2, 2, 0, 0, 0, 0, 0);
 }
 
 /*
