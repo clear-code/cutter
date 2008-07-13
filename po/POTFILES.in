@@ -2,6 +2,7 @@ cutter/cut-contractor.c
 cutter/cut-diff.c
 cutter/cut-enum-types.c
 cutter/cut-factory-builder.c
+cutter/cut-iterated-test.c
 cutter/cut-list.c
 cutter/cut-listener.c
 cutter/cut-loader.c
@@ -24,6 +25,8 @@ cutter/cut-streamer.c
 cutter/cut-test-case.c
 cutter/cut-test-container.c
 cutter/cut-test-context.c
+cutter/cut-test-data.c
+cutter/cut-test-iterator.c
 cutter/cut-test-result.c
 cutter/cut-test-runner.c
 cutter/cut-test-suite.c

@@ -1,14 +1,14 @@
 # Cutter ja.po.
-# Copyright (C) 2007 Kouhei Sutou
+# Copyright (C) 2007-2008 Kouhei Sutou
 # This file is distributed under the same license as the Cutter package.
 # Kouhei Sutou <kou@cozmixng.org>, 2007.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Cutter 1.0.1\n"
+"Project-Id-Version: Cutter 1.0.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-27 14:52+0900\n"
-"PO-Revision-Date: 2008-06-13 16:35+0900\n"
+"POT-Creation-Date: 2008-07-14 07:42+0900\n"
+"PO-Revision-Date: 2008-07-14 07:45+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -90,11 +90,11 @@ msgstr "UIのオプション"
 msgid "Show UI options"
 msgstr "コンソールUIのオプションの表示"
 
-#: module/report/cut-pdf-report-factory.c:220
+#: module/report/cut-pdf-report-factory.c:248
 msgid "PDF Report Options"
 msgstr "PDFレポートのオプション"
 
-#: module/report/cut-pdf-report-factory.c:221
+#: module/report/cut-pdf-report-factory.c:249
 msgid "Show PDF report options"
 msgstr "PDFレポートのオプションを表示"
 
