@@ -157,48 +157,61 @@ extern "C" {
  *
  * e.g.:
  * |[
- * typedef struct _MyTestData
+ * const char*
+ * translate (int input)
  * {
- *     char *expected;
- *     int integer;
- * } MyTestData;
+ *    switch(input) {
+ *    case 1:
+ *        return "first";
+ *    case 111:
+ *        return "a hundred eleven";
+ *    default:
+ *        return "unsupported";
+ *    }
+ * }
  *
- * static MyTestData *
- * new_my_test_data (char *expected, int integer)
+ * typedef struct _TranslateTestData
  * {
- *     MyTestData *data;
+ *     char *translated;
+ *     int input;
+ * } TranslateTestData;
  *
- *     data = malloc(sizeof(MyTestData));
- *     data->expected = strdup(expected);
- *     data->integer = integer;
+ * static TranslateTestData *
+ * translate_test_data_new (char *translated, int input)
+ * {
+ *     TranslateTestData *data;
+ *
+ *     data = malloc(sizeof(TranslateTestData));
+ *     data->translated = strdup(translated);
+ *     data->input = input;
  *
  *     return data;
  * }
  *
  * static void
- * free_my_test_data (MyTestData *data)
+ * translate_test_data_free (TranslateTestData *data)
  * {
- *     free(data->expected);
+ *     free(data->translated);
  *     free(data);
  * }
  *
  * void
- * data_my_translate(void)
+ * data_translate(void)
  * {
  *     cut_add_data("simple data", \/\* the first data \*\/
- *                  new_my_test_data("first", 1)),
- *                  free_my_test_data,
+ *                  translate_test_data_new("first", 1)),
+ *                  translate_test_data_free,
  *                  "complex data", \/\* the second data \*\/,
- *                  new_my_test_data("a hundred eleven", 111),
- *                  free_my_test_data);
+ *                  translate_test_data_new("a hundred eleven", 111),
+ *                  translate_test_data_free);
  * }
  *
  * void
- * test_my_translate(void *data)
+ * test_translate(const void *data)
  * {
- *      MyTestData *test_data = data;
- *      cut_assert_equal_string(data->expected,
- *                              my_translate(data->integer));
+ *      const TranslateTestData *test_data = data;
+ *      cut_assert_equal_string(test_data->translated,
+ *                              translate(test_data->input));
  * }
  * ]|
  *

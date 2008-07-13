@@ -96,6 +96,9 @@ void  cut_utils_remove_path_recursive_force (const char *path);
 
 int   cut_utils_regex_match                 (const char *pattern,
                                              const char *string);
+char *cut_utils_append_diff                 (const char *message,
+                                             const char *from,
+                                             const char *to);
 
 char *cut_test_context_build_fixture_data_path
                                             (CutTestContext *context,

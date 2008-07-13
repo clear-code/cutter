@@ -91,6 +91,23 @@ extern "C" {
     cut_take_string(cut_diff_readable(from, to))
 
 /**
+ * cut_append_diff:
+ * @message: the string to be appended diff.
+ * @from: the original string.
+ * @to: the modified string.
+ *
+ * Computes diff between @from and @to and append the diff
+ * to @message. Returned string is owned by Cutter.
+ *
+ * Returns: @message with diff between @from and @to or same
+ * as @message if the diff not interested. Don't free it.
+ *
+ * Since: 1.0.3
+ */
+#define cut_append_diff(message, from, to)                      \
+    cut_take_string(cut_utils_append_diff(message, from, to))
+
+/**
  * cut_inspect_string_array:
  * @strings: the array of strings to be inspected.
  *

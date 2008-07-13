@@ -496,9 +496,29 @@ cut_utils_remove_path_recursive (const char *path, GError **error)
 }
 
 void
-cut_utils_remove_path_recursive_force (const char *path)
+cut_utils_remove_path_recursive_force (const gchar *path)
 {
     cut_utils_remove_path_recursive(path, NULL);
+}
+
+gchar *
+cut_utils_append_diff (const gchar *message, const gchar *from, const gchar *to)
+{
+    gchar *diff, *result;
+
+    diff = cut_diff_readable(from, to);
+    if (cut_utils_is_interested_diff(diff)) {
+        result = g_strdup_printf("%s\n"
+                                 "\n"
+                                 "diff:\n"
+                                 "%s",
+                                 message, diff);
+    } else {
+        result = g_strdup(message);
+    }
+    g_free(diff);
+
+    return result;
 }
 
 

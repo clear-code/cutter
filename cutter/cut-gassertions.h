@@ -81,24 +81,30 @@ G_BEGIN_DECLS
     if (cut_value_equal(expected, actual)) {                            \
         cut_test_pass();                                                \
     } else {                                                            \
+        const gchar *message;                                           \
         const gchar *inspected_expected, *inspected_actual;             \
         const gchar *expected_type_name, *actual_type_name;             \
+                                                                        \
         inspected_expected =                                            \
             cut_take_string(g_strdup_value_contents(_expected));        \
         inspected_actual =                                              \
             cut_take_string(g_strdup_value_contents(_actual));          \
         expected_type_name = g_type_name(G_VALUE_TYPE(_expected));      \
         actual_type_name = g_type_name(G_VALUE_TYPE(_actual));          \
-        cut_test_fail(FAILURE,                                          \
-                      cut_take_printf("<%s == %s>\n"                    \
-                                      "expected: <%s> (%s)\n"           \
-                                      " but was: <%s> (%s)",            \
-                                      #expected, #actual,               \
-                                      inspected_expected,               \
-                                      expected_type_name,               \
-                                      inspected_actual,                 \
-                                      actual_type_name),                \
-                      ## __VA_ARGS__);                                  \
+                                                                        \
+        message = cut_take_printf("<%s == %s>\n"                        \
+                                  "expected: <%s> (%s)\n"               \
+                                  " but was: <%s> (%s)",                \
+                                  #expected, #actual,                   \
+                                  inspected_expected,                   \
+                                  expected_type_name,                   \
+                                  inspected_actual,                     \
+                                  actual_type_name);                    \
+        message = cut_append_diff(message,                              \
+                                  inspected_expected,                   \
+                                  inspected_actual);                    \
+                                                                        \
+        cut_test_fail(FAILURE, message, ## __VA_ARGS__);                \
     }                                                                   \
 } while(0)
 
@@ -122,19 +128,24 @@ G_BEGIN_DECLS
     if (cut_list_equal_int(_expected, _actual)) {                       \
         cut_test_pass();                                                \
     } else {                                                            \
+        const gchar *message;                                           \
         const gchar *inspected_expected, *inspected_actual;             \
+                                                                        \
         inspected_expected =                                            \
             cut_take_string(cut_list_inspect_int(_expected));           \
         inspected_actual =                                              \
             cut_take_string(cut_list_inspect_int(_actual));             \
-        cut_test_fail(FAILURE,                                          \
-                      cut_take_printf("<%s == %s>\n"                    \
-                                      "expected: <%s>\n"                \
-                                      " but was: <%s>",                 \
-                                      #expected, #actual,               \
-                                      inspected_expected,               \
-                                      inspected_actual),                \
-                      ## __VA_ARGS__);                                  \
+                                                                        \
+        message = cut_take_printf("<%s == %s>\n"                        \
+                                  "expected: <%s>\n"                    \
+                                  " but was: <%s>",                     \
+                                  #expected, #actual,                   \
+                                  inspected_expected,                   \
+                                  inspected_actual),                    \
+        message = cut_append_diff(message,                              \
+                                  inspected_expected,                   \
+                                  inspected_actual);                    \
+        cut_test_fail(FAILURE, message, ## __VA_ARGS__);                \
     }                                                                   \
 } while(0)
 
@@ -158,19 +169,23 @@ G_BEGIN_DECLS
     if (cut_list_equal_uint(_expected, _actual)) {                      \
         cut_test_pass();                                                \
     } else {                                                            \
+        const gchar *message;                                           \
         const gchar *inspected_expected, *inspected_actual;             \
+                                                                        \
         inspected_expected =                                            \
             cut_take_string(cut_list_inspect_uint(_expected));          \
         inspected_actual =                                              \
             cut_take_string(cut_list_inspect_uint(_actual));            \
-        cut_test_fail(FAILURE,                                          \
-                      cut_take_printf("<%s == %s>\n"                    \
-                                      "expected: <%s>\n"                \
-                                      " but was: <%s>",                 \
-                                      #expected, #actual,               \
-                                      inspected_expected,               \
-                                      inspected_actual),                \
-                      ## __VA_ARGS__);                                  \
+        message = cut_take_printf("<%s == %s>\n"                        \
+                                  "expected: <%s>\n"                    \
+                                  " but was: <%s>",                     \
+                                  #expected, #actual,                   \
+                                  inspected_expected,                   \
+                                  inspected_actual),                    \
+        message = cut_append_diff(message,                              \
+                                  inspected_expected,                   \
+                                  inspected_actual);                    \
+        cut_test_fail(FAILURE, message, ## __VA_ARGS__);                \
     }                                                                   \
 } while(0)
 
@@ -192,19 +207,23 @@ G_BEGIN_DECLS
     if (cut_list_equal_string(_expected, _actual)) {                    \
         cut_test_pass();                                                \
     } else {                                                            \
+        const gchar *message;                                           \
         const gchar *inspected_expected, *inspected_actual;             \
+                                                                        \
         inspected_expected =                                            \
             cut_take_string(cut_list_inspect_string(_expected));        \
         inspected_actual =                                              \
             cut_take_string(cut_list_inspect_string(_actual));          \
-        cut_test_fail(FAILURE,                                          \
-                      cut_take_printf("<%s == %s>\n"                    \
-                                      "expected: <%s>\n"                \
-                                      " but was: <%s>",                 \
-                                      #expected, #actual,               \
-                                      inspected_expected,               \
-                                      inspected_actual),                \
-                      ## __VA_ARGS__);                                  \
+        message = cut_take_printf("<%s == %s>\n"                        \
+                                  "expected: <%s>\n"                    \
+                                  " but was: <%s>",                     \
+                                  #expected, #actual,                   \
+                                  inspected_expected,                   \
+                                  inspected_actual);                    \
+        message = cut_append_diff(message,                              \
+                                  inspected_expected,                   \
+                                  inspected_actual);                    \
+        cut_test_fail(FAILURE, message, ## __VA_ARGS__);                \
     }                                                                   \
 } while(0)
 

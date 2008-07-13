@@ -401,18 +401,8 @@ extern "C" {
                                 #expected, #actual,                     \
                                 cut_utils_inspect_string(_expected),    \
                                 cut_utils_inspect_string(_actual));     \
-            if (_expected && _actual) {                                 \
-                const char *diff;                                       \
-                                                                        \
-                diff = cut_take_diff(_expected, _actual);               \
-                if (cut_utils_is_interested_diff(diff)) {               \
-                    message = cut_take_printf("%s\n"                    \
-                                              "\n"                      \
-                                              "diff:\n"                 \
-                                              "%s",                     \
-                                              message, diff);           \
-                }                                                       \
-            }                                                           \
+            if (_expected && _actual)                                   \
+                message = cut_append_diff(message, _expected, _actual); \
             cut_test_fail(FAILURE, message, ## __VA_ARGS__);            \
         }                                                               \
     }                                                                   \
