@@ -441,6 +441,7 @@ AC_CONFIG_FILES([Makefile
 		 test/fixtures/factory/type2/Makefile
 		 test/fixtures/loader/Makefile
 		 test/fixtures/loader/attribute/Makefile
+		 test/fixtures/loader/iterator/Makefile
 		 test/fixtures/loader/module/Makefile
 		 test/fixtures/loader/suite/Makefile
 		 test/fixtures/loader/test/Makefile

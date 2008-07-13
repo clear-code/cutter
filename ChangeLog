@@ -1,5 +1,11 @@
 2008-07-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* configure.ac, test/fixtures/loader/Makefile.am: add
+	test/fixtures/loader/iterator/.
+	* test/fixtures/loader/iterator/: add.
+
+	* test/test-cut-loader.c (test_load_test_iterator): add.
+
 	* test/test-cut-test-iterator.c (test_pending, test_notification)
 	(test_omission): add.
 

@@ -6,26 +6,16 @@
 void test_load_function (void);
 void test_load_startup_and_shutdown_function (void);
 void test_fail_to_load (void);
+void test_load_test_iterator (void);
 
-static CutLoader *test_loader;
+static CutLoader *loader;
 static CutTestCase *test_case;
 static gchar **test_names;
 
 void
 setup (void)
 {
-    gchar *test_path;
-
-    test_path = g_build_filename(cuttest_get_base_dir(),
-                                 "fixtures",
-                                 "loader",
-                                 "test",
-                                 ".libs",
-                                 "stub_loader_test." G_MODULE_SUFFIX,
-                                 NULL);
-    test_loader = cut_loader_new(test_path);
-    g_free(test_path);
-
+    loader = NULL;
     test_case = NULL;
     test_names = NULL;
 }
@@ -33,12 +23,31 @@ setup (void)
 void
 teardown (void)
 {
-    if (test_loader)
-        g_object_unref(test_loader);
+    if (loader)
+        g_object_unref(loader);
     if (test_case)
         g_object_unref(test_case);
     if (test_names)
         g_strfreev(test_names);
+}
+
+static CutLoader *
+loader_new (const gchar *directory, const gchar *module_name)
+{
+    CutLoader *loader;
+    gchar *test_path;
+
+    test_path = g_build_filename(cuttest_get_base_dir(),
+                                 "fixtures",
+                                 "loader",
+                                 directory,
+                                 ".libs",
+                                 module_name,
+                                 NULL);
+    loader = cut_loader_new(test_path);
+    g_free(test_path);
+
+    return loader;
 }
 
 static gchar *expected_functions[] = {
@@ -67,7 +76,8 @@ test_load_function (void)
     const gchar *target_test_names[] = {"/.*/", NULL};
     gint i;
 
-    test_case = cut_loader_load_test_case(test_loader);
+    loader = loader_new("test", "stub_loader_test." G_MODULE_SUFFIX);
+    test_case = cut_loader_load_test_case(loader);
     cut_assert(test_case);
     cut_assert_equal_int(4, cut_test_case_get_n_tests(test_case, NULL));
     cut_assert_equal_int(4, cut_test_case_get_n_tests(test_case,
@@ -97,7 +107,8 @@ test_load_startup_and_shutdown_function (void)
     CutStartupFunction startup_function = NULL;
     CutShutdownFunction shutdown_function = NULL;
 
-    test_case = cut_loader_load_test_case(test_loader);
+    loader = loader_new("test", "stub_loader_test." G_MODULE_SUFFIX);
+    test_case = cut_loader_load_test_case(loader);
     cut_assert(test_case);
 
     g_object_get(G_OBJECT(test_case),
@@ -111,20 +122,40 @@ test_load_startup_and_shutdown_function (void)
 void
 test_fail_to_load (void)
 {
-    CutLoader *loader;
-    gchar *test_path;
+    loader = loader_new("module", "cannot_load_module." G_MODULE_SUFFIX);
+    cut_assert_not_null(loader);
 
-    test_path = g_build_filename(cuttest_get_base_dir(),
-                                 "module_test_dir",
-                                 ".libs",
-                                 "cannot_load_module." G_MODULE_SUFFIX,
-                                 NULL);
-    loader = cut_loader_new(test_path);
-    g_free(test_path);
+    test_case = cut_loader_load_test_case(loader);
+    cut_assert_null(test_case);
+}
 
-    cut_assert(loader);
-    cut_assert_null(cut_loader_load_test_case(loader));
-    g_object_unref(loader);
+void
+test_load_test_iterator (void)
+{
+    const GList *tests;
+    CutTestIterator *test_iterator;
+    CutIteratedTestFunction iterated_test_function = NULL;
+    CutDataSetupFunction data_setup_function = NULL;
+
+    loader = loader_new("iterator", "success_iterated_test." G_MODULE_SUFFIX);
+    cut_assert_not_null(loader);
+
+    test_case = cut_loader_load_test_case(loader);
+    cut_assert_not_null(test_case);
+    cut_assert_equal_int(1, cut_test_case_get_n_tests(test_case, NULL));
+
+    tests = cut_test_container_get_children(CUT_TEST_CONTAINER(test_case));
+    cut_assert_not_null(tests);
+
+    test_iterator = tests->data;
+    cut_assert_not_null(test_iterator);
+
+    g_object_get(test_iterator,
+                 "iterated-test-function", &iterated_test_function,
+                 "data-setup-function", &data_setup_function,
+                 NULL);
+    cut_assert_not_null(iterated_test_function);
+    cut_assert_not_null(data_setup_function);
 }
 
 /*
