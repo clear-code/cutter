@@ -1,7 +1,7 @@
 2008-07-14  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-experimental.h (cut_add_data): move to ...
-	* cutter/cut-test-utils.h: ... here.
+	* cutter/cutter.h: ... here.
 
 	* test/test-cut-loader.c (test_load_test_iterator): run loaded
 	test iterator.
