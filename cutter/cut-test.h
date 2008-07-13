@@ -85,6 +85,9 @@ struct _CutTestClass
     gboolean     (*run)          (CutTest        *test,
                                   CutTestContext *test_context,
                                   CutRunContext  *run_context);
+    void         (*prepare)      (CutTest        *test,
+                                  CutTestContext *test_context,
+                                  CutRunContext  *run_context);
     gboolean     (*is_available) (CutTest        *test,
                                   CutTestContext *test_context,
                                   CutRunContext  *run_context);

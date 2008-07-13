@@ -89,6 +89,9 @@ static void         set_elapsed  (CutTest  *test, gdouble elapsed);
 static gboolean     run          (CutTest        *test,
                                   CutTestContext *test_context,
                                   CutRunContext  *run_context);
+static void         prepare      (CutTest        *test,
+                                  CutTestContext *test_context,
+                                  CutRunContext  *run_context);
 static gboolean     is_available (CutTest        *test,
                                   CutTestContext *test_context,
                                   CutRunContext  *run_context);
@@ -111,6 +114,7 @@ cut_test_class_init (CutTestClass *klass)
     klass->get_elapsed = get_elapsed;
     klass->set_elapsed = set_elapsed;
     klass->run = run;
+    klass->prepare = prepare;
     klass->is_available = is_available;
     klass->invoke = invoke;
 
@@ -363,6 +367,12 @@ cut_test_new_empty (void)
     return cut_test_new(NULL, NULL);
 }
 
+static void
+prepare (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
+{
+    cut_run_context_prepare_test(run_context, test);
+}
+
 static gboolean
 is_available (CutTest *test, CutTestContext *test_context,
               CutRunContext *run_context)
@@ -390,7 +400,7 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
     if (!klass->is_available(test, test_context, run_context))
         return FALSE;
 
-    cut_run_context_prepare_test(run_context, test);
+    klass->prepare(test, test_context, run_context);
 
     g_signal_emit_by_name(test, "start");
 

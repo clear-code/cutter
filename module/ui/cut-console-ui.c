@@ -51,6 +51,7 @@
 #define GREEN_BACK_COLOR "\033[01;42m"
 #define YELLOW_COLOR "\033[01;33m"
 #define BLUE_COLOR "\033[01;34m"
+#define BLUE_BACK_COLOR "\033[01;44m"
 #define MAGENTA_COLOR "\033[01;35m"
 #define CYAN_COLOR "\033[01;36m"
 #define WHITE_COLOR "\033[01;37m"
@@ -103,11 +104,11 @@ static void get_property   (GObject         *object,
                             GParamSpec      *pspec);
 
 static void     attach_to_run_context   (CutListener *listener,
-                                    CutRunContext   *run_context);
+                                         CutRunContext   *run_context);
 static void     detach_from_run_context (CutListener *listener,
-                                    CutRunContext   *run_context);
-static gboolean run                (CutUI       *ui,
-                                    CutRunContext   *run_context);
+                                         CutRunContext   *run_context);
+static gboolean run                     (CutUI       *ui,
+                                         CutRunContext   *run_context);
 
 static void
 class_init (CutConsoleUIClass *klass)
@@ -430,35 +431,77 @@ cb_start_test_case (CutRunContext *run_context, CutTestCase *test_case,
 }
 
 static void
-cb_start_test (CutRunContext *run_context, CutTest *test, CutTestContext *test_context,
-               CutConsoleUI *console)
+cb_start_test_iterator (CutRunContext *run_context,
+                        CutTestIterator *test_iterator,
+                        CutConsoleUI *console)
 {
-    GString *tab_stop;
-    const gchar *name;
-    gint name_length;
-    const gchar *description;
-
     if (console->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
         return;
 
+    g_print("  ");
+    print_with_color(console, BLUE_BACK_COLOR,
+                     "%s:", cut_test_get_name(CUT_TEST(test_iterator)));
+    g_print("\n");
+}
+
+static void
+print_test_on_start (CutConsoleUI *console, const gchar *name,
+                     CutTest *test, const gchar *indent)
+{
+    GString *tab_stop;
+    gint name_length;
+    const gchar *description;
+
     description = cut_test_get_description(test);
     if (description)
-        g_print("  %s\n", description);
+        g_print("  %s%s\n", indent, description);
 
-    name = cut_test_get_name(test);
-    name_length = strlen(name) + 2;
+    name_length = strlen(indent) + strlen(name) + 2;
     tab_stop = g_string_new("");
     while (name_length < (8 * 7 - 1)) {
         g_string_append_c(tab_stop, '\t');
         name_length += 8;
     }
-    g_print("  %s:%s", name, tab_stop->str);
+    g_print("  %s%s:%s", indent, name, tab_stop->str);
     g_string_free(tab_stop, TRUE);
     fflush(stdout);
 }
 
 static void
-cb_success_test (CutRunContext      *run_context,
+cb_start_test (CutRunContext *run_context, CutTest *test,
+               CutTestContext *test_context, CutConsoleUI *console)
+{
+    if (console->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
+        return;
+
+    print_test_on_start(console, cut_test_get_name(test), test, "");
+}
+
+static void
+cb_start_iterated_test (CutRunContext *run_context,
+                        CutIteratedTest *iterated_test,
+                        CutTestContext *test_context, CutConsoleUI *console)
+{
+    const gchar *name = NULL;
+
+    if (console->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
+        return;
+
+    if (cut_test_context_have_data(test_context)) {
+        CutTestData *data;
+
+        data = cut_test_context_get_current_data(test_context);
+        name = cut_test_data_get_name(data);
+    }
+
+    if (!name)
+        name = cut_test_get_name(CUT_TEST(iterated_test));
+
+    print_test_on_start(console, name, CUT_TEST(iterated_test), "  ");
+}
+
+static void
+cb_success_test (CutRunContext  *run_context,
                  CutTest        *test,
                  CutTestContext *context,
                  CutTestResult  *result,
@@ -544,6 +587,24 @@ cb_complete_test (CutRunContext *run_context, CutTest *test,
 
     g_print(": (%f)\n", cut_test_get_elapsed(test));
     fflush(stdout);
+}
+
+static void
+cb_complete_iterated_test (CutRunContext *run_context,
+                           CutIteratedTest *iterated_test,
+                           CutTestContext *test_context, CutConsoleUI *console)
+{
+    cb_complete_test(run_context, CUT_TEST(iterated_test),
+                     test_context, console);
+}
+
+static void
+cb_complete_test_iterator (CutRunContext *run_context,
+                           CutTestIterator *test_iterator,
+                           CutConsoleUI *console)
+{
+    if (console->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
+        return;
 }
 
 static void
@@ -755,7 +816,9 @@ connect_to_run_context (CutConsoleUI *console, CutRunContext *run_context)
 
     CONNECT(start_test_suite);
     CONNECT(start_test_case);
+    CONNECT(start_test_iterator);
     CONNECT(start_test);
+    CONNECT(start_iterated_test);
 
     CONNECT(success_test);
     CONNECT(notification_test);
@@ -764,7 +827,9 @@ connect_to_run_context (CutConsoleUI *console, CutRunContext *run_context)
     CONNECT(failure_test);
     CONNECT(error_test);
 
+    CONNECT(complete_iterated_test);
     CONNECT(complete_test);
+    CONNECT(complete_test_iterator);
     CONNECT(complete_test_case);
     CONNECT(complete_test_suite);
 
@@ -778,13 +843,15 @@ static void
 disconnect_from_run_context (CutConsoleUI *console, CutRunContext *run_context)
 {
 #define DISCONNECT(name)                                                \
-    g_signal_handlers_disconnect_by_func(run_context,                       \
+    g_signal_handlers_disconnect_by_func(run_context,                   \
                                          G_CALLBACK(cb_ ## name),       \
                                          console)
 
     DISCONNECT(start_test_suite);
     DISCONNECT(start_test_case);
+    DISCONNECT(start_test_iterator);
     DISCONNECT(start_test);
+    DISCONNECT(start_iterated_test);
 
     DISCONNECT(success_test);
     DISCONNECT(notification_test);
@@ -793,7 +860,9 @@ disconnect_from_run_context (CutConsoleUI *console, CutRunContext *run_context)
     DISCONNECT(failure_test);
     DISCONNECT(error_test);
 
+    DISCONNECT(complete_iterated_test);
     DISCONNECT(complete_test);
+    DISCONNECT(complete_test_iterator);
     DISCONNECT(complete_test_case);
     DISCONNECT(complete_test_suite);
 

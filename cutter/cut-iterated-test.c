@@ -59,6 +59,9 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 
+static void         prepare      (CutTest        *test,
+                                  CutTestContext *test_context,
+                                  CutRunContext  *run_context);
 static gboolean     is_available (CutTest        *test,
                                   CutTestContext *test_context,
                                   CutRunContext  *run_context);
@@ -80,6 +83,7 @@ cut_iterated_test_class_init (CutIteratedTestClass *klass)
     gobject_class->get_property = get_property;
 
     test_class = CUT_TEST_CLASS(klass);
+    test_class->prepare = prepare;
     test_class->is_available = is_available;
     test_class->invoke = invoke;
 
@@ -161,6 +165,12 @@ CutIteratedTest *
 cut_iterated_test_new_empty (void)
 {
     return cut_iterated_test_new(NULL, NULL);
+}
+
+static void
+prepare (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
+{
+    cut_run_context_prepare_iterated_test(run_context, CUT_ITERATED_TEST(test));
 }
 
 static gboolean

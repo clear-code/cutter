@@ -313,6 +313,24 @@ prepare_test_case (CutRunContext *context, CutTestCase *test_case)
 }
 
 static void
+cb_start_iterated_test (gpointer test_case_or_test_iterator, CutTest *test,
+                        CutTestContext *test_context, gpointer data)
+{
+    CutRunContext *context = data;
+
+    g_signal_emit_by_name(context, "start-iterated-test", test, test_context);
+}
+
+static void
+cb_complete_iterated_test (gpointer test_case_or_test_iterator, CutTest *test,
+                           CutTestContext *test_context, gpointer data)
+{
+    CutRunContext *context = data;
+
+    g_signal_emit_by_name(context, "complete-iterated-test", test, test_context);
+}
+
+static void
 cb_success_test_iterator (CutTestIterator *test_iterator,
                           CutTestContext *test_context,
                           CutTestResult *result, gpointer data)
@@ -432,11 +450,12 @@ prepare_test_iterator (CutRunContext *context, CutTestIterator *test_iterator)
     if (klass->prepare_test_iterator)
         klass->prepare_test_iterator(context, test_iterator);
 
-#define CONNECT(name) \
-    g_signal_connect(test_iterator, #name, G_CALLBACK(cb_ ## name), context)
+#define CONNECT(name)                                                   \
+    g_signal_connect(test_iterator, #name "-test",                      \
+                     G_CALLBACK(cb_ ## name ## _iterated_test), context)
 
-    CONNECT(start_test);
-    CONNECT(complete_test);
+    CONNECT(start);
+    CONNECT(complete);
 #undef CONNECT
 
 #define CONNECT(name)                                                   \
