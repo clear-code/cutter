@@ -303,6 +303,18 @@ test_plural_reports (void)
         "      <elapsed>.+?</elapsed>\n"
         "    </test-case>\n"
         "    <test>\n"
+        "      <name>stub-success-test</name>\n"
+        "      <elapsed>.+?</elapsed>\n"
+        "    </test>\n"
+        "    <status>success</status>\n"
+        "    <elapsed>.+?</elapsed>\n"
+        "  </result>\n"
+        "  <result>\n"
+        "    <test-case>\n"
+        "      <name>stub test case</name>\n"
+        "      <elapsed>.+?</elapsed>\n"
+        "    </test-case>\n"
+        "    <test>\n"
         "      <name>stub-error-test</name>\n"
         "      <elapsed>.+?</elapsed>\n"
         "    </test>\n"
@@ -316,22 +328,11 @@ test_plural_reports (void)
         "      </entry>\n"
         "    </backtrace>\n"
         "    <elapsed>.+?</elapsed>\n"
-        "  </result>\n"
-        "  <result>\n"
-        "    <test-case>\n"
-        "      <name>stub test case</name>\n"
-        "      <elapsed>.+?</elapsed>\n"
-        "    </test-case>\n"
-        "    <test>\n"
-        "      <name>stub-success-test</name>\n"
-        "      <elapsed>.+?</elapsed>\n"
-        "    </test>\n"
-        "    <status>success</status>\n"
-        "    <elapsed>.+?</elapsed>\n"
         "  </result>\n";
 
     test_object = cut_test_new("stub-success-test", stub_success_test);
-    g_signal_connect_after(test_object, "success", G_CALLBACK(cb_test_signal), NULL);
+    g_signal_connect_after(test_object, "success",
+                           G_CALLBACK(cb_test_signal), NULL);
     cut_test_case_add_test(test_case, test_object);
 
     test_object = cut_test_new("stub-error-test", stub_error_test);

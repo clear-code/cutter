@@ -1,5 +1,9 @@
 2008-07-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-gassertions.c (test_equal_g_list_int),
+	test/test-cut-report-xml.c (test_plural_reports): follow the
+	following changes.
+
 	* test/lib/cuttest-utils.[ch] (cuttest_result_string_list_new)
 	(cuttest_result_string_list_new_from_result): add.
 

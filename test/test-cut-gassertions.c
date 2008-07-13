@@ -185,7 +185,13 @@ test_equal_g_list_int (void)
                            NULL,
                            "<list1 == list2>\n"
                            "expected: <(100, -200)>\n"
-                           " but was: <(-1000, 2000)>",
+                           " but was: <(-1000, 2000)>\n"
+                           "\n"
+                           "diff:\n"
+                           "- (100, -200)\n"
+                           "?      ^^\n"
+                           "+ (-1000, 2000)\n"
+                           "?  +   + ^   +",
                            "equal_g_list_int_test");
 }
 
@@ -218,7 +224,12 @@ test_equal_g_list_uint (void)
                            NULL,
                            "<list1 == list2>\n"
                            "expected: <(100, 200)>\n"
-                           " but was: <(1000, 2000)>",
+                           " but was: <(1000, 2000)>\n"
+                           "\n"
+                           "diff:\n"
+                           "- (100, 200)\n"
+                           "+ (1000, 2000)\n"
+                           "?     +     +",
                            "equal_g_list_uint_test");
 }
 
