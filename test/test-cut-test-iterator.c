@@ -1,0 +1,319 @@
+#include <gcutter.h>
+#include <cutter/cut-test-iterator.h>
+#include <cutter/cut-test-runner.h>
+
+#include "lib/cuttest-assertions.h"
+
+void test_success(void);
+void test_failure(void);
+
+static CutRunContext *run_context;
+static CutTestCase *test_case;
+static CutTestIterator *test_iterator;
+static gboolean run_test_flag = FALSE;
+static guint n_setup_calls = 0;
+static guint n_teardown_calls = 0;
+static guint n_tests = 0;
+static guint n_start_signals = 0;
+static guint n_complete_signals = 0;
+static guint n_success_signals = 0;
+static guint n_failure_signals = 0;
+static guint n_error_signals = 0;
+static guint n_pending_signals = 0;
+static guint n_pass_assertion_signals = 0;
+static guint n_notification_signals = 0;
+static guint n_omission_signals = 0;
+
+#define cut_assert_n_signals(_n_start_signals, _n_complete_signals,     \
+                             _n_tests,                                  \
+                             _n_assertions, _n_successes,               \
+                             _n_failures, _n_errors, _n_pendings,       \
+                             _n_notifications, _n_omissions) do         \
+{                                                                       \
+    GList *_result_summary;                                             \
+    const GList *_expected_result_summary;                              \
+    const GList *_actual_result_summary;                                \
+    guint __n_start_signals, __n_complete_signals;                      \
+                                                                        \
+    __n_start_signals = (_n_start_signals);                             \
+    __n_complete_signals = (_n_complete_signals);                       \
+                                                                        \
+    _result_summary =                                                   \
+        cuttest_result_summary_list_new((_n_tests),                     \
+                                        (_n_assertions),                \
+                                        (_n_successes),                 \
+                                        (_n_failures),                  \
+                                        (_n_errors),                    \
+                                        (_n_pendings),                  \
+                                        (_n_notifications),             \
+                                        (_n_omissions));                \
+    _result_summary =                                                   \
+        g_list_prepend(_result_summary,                                 \
+                       GUINT_TO_POINTER(__n_complete_signals));         \
+    _result_summary =                                                   \
+        g_list_prepend(_result_summary,                                 \
+                       GUINT_TO_POINTER(__n_start_signals));            \
+    _expected_result_summary =                                          \
+        cut_take_result_summary_list(_result_summary);                  \
+                                                                        \
+    _result_summary =                                                   \
+        cuttest_result_summary_list_new(n_tests,                        \
+                                        n_pass_assertion_signals,       \
+                                        n_success_signals,              \
+                                        n_failure_signals,              \
+                                        n_error_signals,                \
+                                        n_pending_signals,              \
+                                        n_notification_signals,         \
+                                        n_omission_signals);            \
+    _result_summary =                                                   \
+        g_list_prepend(_result_summary,                                 \
+                       GUINT_TO_POINTER(n_complete_signals));           \
+    _result_summary =                                                   \
+        g_list_prepend(_result_summary,                                 \
+                       GUINT_TO_POINTER(n_start_signals));              \
+    _actual_result_summary =                                            \
+        cut_take_result_summary_list(_result_summary);                  \
+                                                                        \
+    cut_assert_equal_g_list_uint(_expected_result_summary,              \
+                                 _actual_result_summary);               \
+} while (0)
+
+static void
+stub_setup (void)
+{
+    n_setup_calls++;
+}
+
+static void
+stub_teardown (void)
+{
+    n_teardown_calls++;
+}
+
+void
+setup (void)
+{
+    run_test_flag = FALSE;
+    n_setup_calls = 0;
+    n_teardown_calls = 0;
+    n_tests = 0;
+    n_start_signals = 0;
+    n_complete_signals = 0;
+    n_success_signals = 0;
+    n_failure_signals = 0;
+    n_error_signals = 0;
+    n_pending_signals = 0;
+    n_notification_signals = 0;
+    n_pass_assertion_signals = 0;
+    n_omission_signals = 0;
+
+    run_context = CUT_RUN_CONTEXT(cut_test_runner_new());
+    test_case = cut_test_case_new("driver test case",
+                                  stub_setup, stub_teardown,
+                                  get_current_test_context,
+                                  set_current_test_context,
+                                  NULL, NULL);
+    test_iterator = NULL;
+}
+
+void
+teardown (void)
+{
+    if (test_iterator)
+        g_object_unref(test_iterator);
+    g_object_unref(test_case);
+    g_object_unref(run_context);
+}
+
+static void
+cb_ready_signal (CutTestIterator *test_iteartor, guint n_iterated_tests,
+                 gpointer data)
+{
+    n_tests += n_iterated_tests;
+}
+
+static void
+cb_start_signal (CutTest *test, gpointer data)
+{
+    n_start_signals++;
+}
+
+static void
+cb_complete_signal (CutTest *test, gpointer data)
+{
+    n_complete_signals++;
+}
+
+static void
+cb_success_signal (CutTest *test, gpointer data)
+{
+    n_success_signals++;
+}
+
+static void
+cb_failure_signal (CutTest *test, gpointer data)
+{
+    n_failure_signals++;
+}
+
+static void
+cb_error_signal (CutTest *test, gpointer data)
+{
+    n_error_signals++;
+}
+
+static void
+cb_pending_signal (CutTest *test, gpointer data)
+{
+    n_pending_signals++;
+}
+
+static void
+cb_notification_signal (CutTest *test, gpointer data)
+{
+    n_notification_signals++;
+}
+
+static void
+cb_pass_assertion_signal (CutTest *test, gpointer data)
+{
+    n_pass_assertion_signals++;
+}
+
+static void
+cb_omission_signal (CutTest *test, gpointer data)
+{
+    n_omission_signals++;
+}
+
+static void
+connect_signals (CutTest *test)
+{
+#define CONNECT(name)                                                   \
+    g_signal_connect(test, #name, G_CALLBACK(cb_ ## name ## _signal), NULL)
+
+    CONNECT(ready);
+    CONNECT(start);
+    CONNECT(complete);
+    CONNECT(success);
+    CONNECT(failure);
+    CONNECT(error);
+    CONNECT(pending);
+    CONNECT(notification);
+    CONNECT(pass_assertion);
+    CONNECT(omission);
+
+#undef CONNECT
+}
+
+static void
+disconnect_signals (CutTest *test)
+{
+#define DISCONNECT(name)                                                \
+    g_signal_handlers_disconnect_by_func(test,                          \
+                                         G_CALLBACK(cb_ ## name ## _signal), \
+                                         NULL)
+
+    DISCONNECT(ready);
+    DISCONNECT(start);
+    DISCONNECT(complete);
+    DISCONNECT(success);
+    DISCONNECT(failure);
+    DISCONNECT(error);
+    DISCONNECT(pending);
+    DISCONNECT(notification);
+    DISCONNECT(pass_assertion);
+    DISCONNECT(omission);
+
+#undef DISCONNECT
+}
+
+static gboolean
+run (void)
+{
+    gboolean success;
+    CutTestContext *original_test_context;
+    CutTestContext *test_context;
+    CutTest *test;
+
+    test = CUT_TEST(test_iterator);
+    connect_signals(test);
+    test_context = cut_test_context_new(NULL, test_case, test);
+    original_test_context = get_current_test_context();
+    set_current_test_context(test_context);
+    success = cut_test_run(test, test_context, run_context);
+    set_current_test_context(original_test_context);
+    disconnect_signals(test);
+
+    g_object_unref(test_context);
+
+    return success;
+}
+
+static void
+stub_success_iterated_data (void)
+{
+    cut_add_data("First", GINT_TO_POINTER(1), NULL,
+                 "Second", GINT_TO_POINTER(2), NULL,
+                 "Third", GINT_TO_POINTER(3), NULL);
+}
+
+static void
+stub_success_iterated_test (gconstpointer data)
+{
+    static int i = 0;
+
+    i++;
+    cut_assert_true(TRUE, "always pass");
+    cut_assert_equal_int(i, GPOINTER_TO_INT(data));
+}
+
+void
+test_success (void)
+{
+    test_iterator = cut_test_iterator_new("success test iterator",
+                                          stub_success_iterated_test,
+                                          stub_success_iterated_data);
+    cut_assert_true(run());
+
+    cut_assert_n_signals(1, 1, 3, 0, 1, 0, 0, 0, 0, 0);
+    cut_assert_test_result_summary(run_context, 3, 6, 3, 0, 0, 0, 0, 0);
+}
+
+static void
+stub_failure_iterated_data (void)
+{
+    cut_add_data("First", GINT_TO_POINTER(1), NULL,
+                 "Second", GINT_TO_POINTER(2), NULL,
+                 "Third", GINT_TO_POINTER(3), NULL);
+}
+
+static void
+stub_failure_iterated_test (gconstpointer data)
+{
+    cut_assert_true(TRUE, "always pass");
+    cut_assert_equal_int(2, GPOINTER_TO_INT(data));
+}
+
+void
+test_failure (void)
+{
+    test_iterator = cut_test_iterator_new("failure test iterator",
+                                          stub_failure_iterated_test,
+                                          stub_failure_iterated_data);
+    cut_assert_false(run());
+
+    cut_assert_n_signals(1, 1, 3, 0, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result_summary(run_context, 3, 4, 1, 2, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "failure test iterator (First)",
+                           NULL,
+                           "<2 == GPOINTER_TO_INT(data)>\n"
+                           "expected: <2>\n"
+                           " but was: <1>",
+                           "stub_failure_iterated_test");
+}
+
+/*
+vi:ts=4:nowrap:ai:expandtab:sw=4
+*/
