@@ -1,5 +1,9 @@
 2008-07-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/, test/: CutTestContext and CutRunContext have
+	CutTestIterator.
+	* test/: test_object -> test.
+
 	* cutter/cut-stream-parser.c: support test iterator.
 
 	* cutter/cut-test-context.[ch] (cut_test_context_get_test_iterator)

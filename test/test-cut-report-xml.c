@@ -12,7 +12,7 @@ void test_plural_reports (void);
 
 static CutRunContext *run_context;
 static CutReport *report;
-static CutTest *test_object;
+static CutTest *test;
 static CutTestCase *test_case;
 static CutTestContext *test_context;
 
@@ -49,7 +49,7 @@ void
 setup (void)
 {
     gchar *test_names[] = {"/.*/", NULL};
-    test_object = NULL;
+    test = NULL;
     test_context = NULL;
 
     run_context = CUT_RUN_CONTEXT(cut_test_runner_new());
@@ -68,8 +68,8 @@ setup (void)
 void
 teardown (void)
 {
-    if (test_object)
-        g_object_unref(test_object);
+    if (test)
+        g_object_unref(test);
     if (test_context)
         g_object_unref(test_context);
     cut_listener_detach_from_run_context(CUT_LISTENER(report), run_context);
@@ -85,12 +85,12 @@ cb_test_signal (CutTest *test, CutTestContext *context, CutTestResult *result,
 }
 
 static gboolean
-run_the_test (CutTest *test)
+run (void)
 {
     gboolean success;
     CutTestContext *original_test_context;
 
-    test_context = cut_test_context_new(NULL, test_case, test);
+    test_context = cut_test_context_new(NULL, test_case, NULL, test);
     original_test_context = get_current_test_context();
     set_current_test_context(test_context);
     success = cut_test_run(test, test_context, run_context);
@@ -127,15 +127,15 @@ test_report_success (void)
         "    <elapsed>.+?</elapsed>\n"
         "  </result>\n";
 
-    test_object = cut_test_new("stub-success-test", stub_success_test);
-    cut_test_set_attribute(test_object, "description", "A success test");
-    cut_test_set_attribute(test_object, "bug", "1234");
-    cut_test_set_attribute(test_object, "price", "$199");
-    g_signal_connect_after(test_object, "success",
+    test = cut_test_new("stub-success-test", stub_success_test);
+    cut_test_set_attribute(test, "description", "A success test");
+    cut_test_set_attribute(test, "bug", "1234");
+    cut_test_set_attribute(test, "price", "$199");
+    g_signal_connect_after(test, "success",
                            G_CALLBACK(cb_test_signal), NULL);
-    cut_test_case_add_test(test_case, test_object);
-    cut_assert(run_the_test(test_object));
-    g_signal_handlers_disconnect_by_func(test_object,
+    cut_test_case_add_test(test_case, test);
+    cut_assert_true(run());
+    g_signal_handlers_disconnect_by_func(test,
                                          G_CALLBACK(cb_test_signal),
                                          NULL);
 
@@ -167,12 +167,12 @@ test_report_failure (void)
         "    <elapsed>.+?</elapsed>\n"
         "  </result>\n";
 
-    test_object = cut_test_new("stub-failure-test", stub_failure_test);
-    g_signal_connect_after(test_object, "failure",
+    test = cut_test_new("stub-failure-test", stub_failure_test);
+    g_signal_connect_after(test, "failure",
                            G_CALLBACK(cb_test_signal), NULL);
-    cut_test_case_add_test(test_case, test_object);
-    cut_assert(!run_the_test(test_object));
-    g_signal_handlers_disconnect_by_func(test_object,
+    cut_test_case_add_test(test_case, test);
+    cut_assert_false(run());
+    g_signal_handlers_disconnect_by_func(test,
                                          G_CALLBACK(cb_test_signal),
                                          NULL);
 
@@ -205,12 +205,12 @@ test_report_pending (void)
         "    <elapsed>.+?</elapsed>\n"
         "  </result>\n";
 
-    test_object = cut_test_new("stub-pending-test", stub_pending_test);
-    g_signal_connect_after(test_object, "pending",
+    test = cut_test_new("stub-pending-test", stub_pending_test);
+    g_signal_connect_after(test, "pending",
                            G_CALLBACK(cb_test_signal), NULL);
-    cut_test_case_add_test(test_case, test_object);
-    cut_assert(!run_the_test(test_object));
-    g_signal_handlers_disconnect_by_func(test_object,
+    cut_test_case_add_test(test_case, test);
+    cut_assert_false(run());
+    g_signal_handlers_disconnect_by_func(test,
                                          G_CALLBACK(cb_test_signal),
                                          NULL);
 
@@ -243,12 +243,12 @@ test_report_notification (void)
         "    <elapsed>.+?</elapsed>\n"
         "  </result>\n";
 
-    test_object = cut_test_new("stub-notification-test", stub_notification_test);
-    g_signal_connect_after(test_object, "notification",
+    test = cut_test_new("stub-notification-test", stub_notification_test);
+    g_signal_connect_after(test, "notification",
                            G_CALLBACK(cb_test_signal), NULL);
-    cut_test_case_add_test(test_case, test_object);
-    cut_assert(run_the_test(test_object));
-    g_signal_handlers_disconnect_by_func(test_object,
+    cut_test_case_add_test(test_case, test);
+    cut_assert_true(run());
+    g_signal_handlers_disconnect_by_func(test,
                                          G_CALLBACK(cb_test_signal),
                                          NULL);
 
@@ -281,12 +281,12 @@ test_report_error (void)
         "    <elapsed>.+?</elapsed>\n"
         "  </result>\n";
 
-    test_object = cut_test_new("stub-error-test", stub_error_test);
-    g_signal_connect_after(test_object, "error",
+    test = cut_test_new("stub-error-test", stub_error_test);
+    g_signal_connect_after(test, "error",
                            G_CALLBACK(cb_test_signal), NULL);
-    cut_test_case_add_test(test_case, test_object);
-    cut_assert(!run_the_test(test_object));
-    g_signal_handlers_disconnect_by_func(test_object,
+    cut_test_case_add_test(test_case, test);
+    cut_assert_false(run());
+    g_signal_handlers_disconnect_by_func(test,
                                          G_CALLBACK(cb_test_signal),
                                          NULL);
 
@@ -330,18 +330,18 @@ test_plural_reports (void)
         "    <elapsed>.+?</elapsed>\n"
         "  </result>\n";
 
-    test_object = cut_test_new("stub-success-test", stub_success_test);
-    g_signal_connect_after(test_object, "success",
+    test = cut_test_new("stub-success-test", stub_success_test);
+    g_signal_connect_after(test, "success",
                            G_CALLBACK(cb_test_signal), NULL);
-    cut_test_case_add_test(test_case, test_object);
+    cut_test_case_add_test(test_case, test);
 
-    test_object = cut_test_new("stub-error-test", stub_error_test);
-    g_signal_connect_after(test_object, "error",
+    test = cut_test_new("stub-error-test", stub_error_test);
+    g_signal_connect_after(test, "error",
                            G_CALLBACK(cb_test_signal), NULL);
-    cut_test_case_add_test(test_case, test_object);
-    cut_assert(!cut_test_case_run(test_case, run_context));
+    cut_test_case_add_test(test_case, test);
+    cut_assert_false(cut_test_case_run(test_case, run_context));
 
-    g_signal_handlers_disconnect_by_func(test_object,
+    g_signal_handlers_disconnect_by_func(test,
                                          G_CALLBACK(cb_test_signal),
                                          NULL);
 

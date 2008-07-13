@@ -14,7 +14,7 @@ void test_fail_in_forked_process (void);
 #endif
 
 static CutRunContext *run_context;
-static CutTest *test_object;
+static CutTest *test;
 static CutTestContext *test_context;
 
 void
@@ -22,15 +22,15 @@ setup (void)
 {
     run_context = CUT_RUN_CONTEXT(cut_test_runner_new());
 
-    test_object = NULL;
+    test = NULL;
     test_context = NULL;
 }
 
 void
 teardown (void)
 {
-    if (test_object)
-        g_object_unref(test_object);
+    if (test)
+        g_object_unref(test);
 
     if (test_context)
         g_object_unref(test_context);
@@ -61,13 +61,13 @@ test_message_from_forked_process (void)
 
 #ifndef G_OS_WIN32
 static gboolean
-run (CutTest *test)
+run (void)
 {
     gboolean success, is_multi_thread;
     CutTestContext *original_test_context;
 
     original_test_context = get_current_test_context();
-    test_context = cut_test_context_new(NULL, NULL, test);
+    test_context = cut_test_context_new(NULL, NULL, NULL, test);
 
     is_multi_thread = cut_test_context_is_multi_thread(original_test_context);
     cut_run_context_set_multi_thread(run_context, is_multi_thread);
@@ -112,24 +112,24 @@ test_fail_in_forked_process (void)
     const gchar *notification_message = NULL;
     const gchar *omission_message = NULL;
 
-    test_object = cut_test_new("failure", cut_fail_in_forked_process);
+    test = cut_test_new("failure", cut_fail_in_forked_process);
 
-    g_signal_connect(test_object, "notification",
+    g_signal_connect(test, "notification",
                      G_CALLBACK(cb_collect_message), &notification_message);
-    g_signal_connect(test_object, "failure",
+    g_signal_connect(test, "failure",
                      G_CALLBACK(cb_collect_message), &failure_message);
-    g_signal_connect(test_object, "omission",
+    g_signal_connect(test, "omission",
                      G_CALLBACK(cb_collect_message), &omission_message);
 
-    cut_assert(run(test_object));
+    cut_assert_true(run());
 
-    g_signal_handlers_disconnect_by_func(test_object,
+    g_signal_handlers_disconnect_by_func(test,
                                          G_CALLBACK(cb_collect_message),
                                          &notification_message);
-    g_signal_handlers_disconnect_by_func(test_object,
+    g_signal_handlers_disconnect_by_func(test,
                                          G_CALLBACK(cb_collect_message),
                                          &failure_message);
-    g_signal_handlers_disconnect_by_func(test_object,
+    g_signal_handlers_disconnect_by_func(test,
                                          G_CALLBACK(cb_collect_message),
                                          &omission_message);
 

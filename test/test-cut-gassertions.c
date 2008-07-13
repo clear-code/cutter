@@ -27,16 +27,14 @@ static GError *error;
 static gboolean need_to_free_error;
 
 static gboolean
-run (CutTest *_test)
+run (void)
 {
     gboolean success;
     CutTestContext *original_test_context;
 
-    test = _test;
-
     run_context = CUT_RUN_CONTEXT(cut_test_runner_new());
 
-    test_context = cut_test_context_new(NULL, NULL, test);
+    test_context = cut_test_context_new(NULL, NULL, NULL, test);
     original_test_context = get_current_test_context();
     set_current_test_context(test_context);
     success = cut_test_run(test, test_context, run_context);
@@ -106,12 +104,10 @@ equal_g_type_test (void)
 void
 test_equal_g_type (void)
 {
-    CutTest *test;
-
     test = cut_test_new("equal_g_type test", equal_g_type_test);
-    cut_assert(test);
+    cut_assert_not_null(test);
 
-    cut_assert(!run(test));
+    cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 0, 1, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "equal_g_type test",
@@ -140,12 +136,10 @@ equal_g_value_test (void)
 void
 test_equal_g_value (void)
 {
-    CutTest *test;
-
     test = cut_test_new("equal_g_value test", equal_g_value_test);
-    cut_assert(test);
+    cut_assert_not_null(test);
 
-    cut_assert(!run(test));
+    cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 0, 2, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "equal_g_value test",
@@ -173,12 +167,10 @@ equal_g_list_int_test (void)
 void
 test_equal_g_list_int (void)
 {
-    CutTest *test;
-
     test = cut_test_new("equal_g_list_int test", equal_g_list_int_test);
-    cut_assert(test);
+    cut_assert_not_null(test);
 
-    cut_assert(!run(test));
+    cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 0, 2, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "equal_g_list_int test",
@@ -212,12 +204,10 @@ equal_g_list_uint_test (void)
 void
 test_equal_g_list_uint (void)
 {
-    CutTest *test;
-
     test = cut_test_new("equal_g_list_uint test", equal_g_list_uint_test);
-    cut_assert(test);
+    cut_assert_not_null(test);
 
-    cut_assert(!run(test));
+    cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 0, 2, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "equal_g_list_uint test",
@@ -252,12 +242,10 @@ stub_equal_g_list_string (void)
 void
 test_equal_g_list_string (void)
 {
-    CutTest *test;
-
     test = cut_test_new("equal_g_list_string test", stub_equal_g_list_string);
-    cut_assert(test);
+    cut_assert_not_null(test);
 
-    cut_assert_false(run(test));
+    cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 0, 2, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "equal_g_list_string test",
@@ -289,13 +277,11 @@ stub_equal_g_list_string_both_null (void)
 void
 test_equal_g_list_string_both_null (void)
 {
-    CutTest *test;
-
     test = cut_test_new("equal_g_list_string test (both NULL)",
                         stub_equal_g_list_string_both_null);
-    cut_assert(test);
+    cut_assert_not_null(test);
 
-    cut_assert_true(run(test));
+    cut_assert_true(run());
     cut_assert_test_result_summary(run_context, 0, 3, 1, 0, 0, 0, 0, 0);
 }
 
@@ -320,13 +306,11 @@ stub_equal_g_list_string_other_null (void)
 void
 test_equal_g_list_string_other_null (void)
 {
-    CutTest *test;
-
     test = cut_test_new("equal_g_list_string test (other NULL)",
                         stub_equal_g_list_string_other_null);
-    cut_assert(test);
+    cut_assert_not_null(test);
 
-    cut_assert_false(run(test));
+    cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 0, 2, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "equal_g_list_string test (other NULL)",
@@ -349,12 +333,10 @@ g_error_test (void)
 void
 test_g_error (void)
 {
-    CutTest *test;
-
     test = cut_test_new("cut_assert_g_error test", g_error_test);
-    cut_assert(test);
+    cut_assert_not_null(test);
 
-    cut_assert(!run(test));
+    cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 0, 1, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "cut_assert_g_error test",

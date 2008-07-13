@@ -343,12 +343,12 @@ get_property (GObject    *object,
 
 CutTestContext *
 cut_test_context_new (CutTestSuite *test_suite, CutTestCase *test_case,
-                      CutTest *test)
+                      CutTestIterator *test_iterator, CutTest *test)
 {
     return g_object_new(CUT_TYPE_TEST_CONTEXT,
                         "test-suite", test_suite,
                         "test-case", test_case,
-                        "test-iterator", NULL,
+                        "test-iterator", test_iterator,
                         "test", test,
                         NULL);
 }
@@ -356,7 +356,7 @@ cut_test_context_new (CutTestSuite *test_suite, CutTestCase *test_case,
 CutTestContext *
 cut_test_context_new_empty (void)
 {
-    return cut_test_context_new(NULL, NULL, NULL);
+    return cut_test_context_new(NULL, NULL, NULL, NULL);
 }
 
 CutTestSuite *
@@ -614,7 +614,7 @@ cut_test_context_register_result (CutTestContext *context,
     if (priv->current_data)
         test_data = priv->current_data->data;
     result = cut_test_result_new(status,
-                                 priv->test, /* priv->test_iterator, */ 
+                                 priv->test, priv->test_iterator,
                                  priv->test_case, priv->test_suite,
                                  test_data,
                                  user_message, system_message,

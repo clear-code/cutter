@@ -49,6 +49,7 @@ GType          cut_test_result_get_type   (void) G_GNUC_CONST;
 
 CutTestResult *cut_test_result_new        (CutTestResultStatus status,
                                            CutTest *test,
+                                           CutTestIterator *test_iterator,
                                            CutTestCase *test_case,
                                            CutTestSuite *test_suite,
                                            CutTestData *test_data,
@@ -66,6 +67,9 @@ CutTestResult *cut_test_result_new_from_xml
 CutTestResultStatus  cut_test_result_get_status        (CutTestResult *result);
 CutTest             *cut_test_result_get_test          (CutTestResult *result);
 const gchar         *cut_test_result_get_test_name     (CutTestResult *result);
+CutTestIterator     *cut_test_result_get_test_iterator (CutTestResult *result);
+const gchar         *cut_test_result_get_test_iterator_name
+                                                       (CutTestResult *result);
 CutTestCase         *cut_test_result_get_test_case     (CutTestResult *result);
 const gchar         *cut_test_result_get_test_case_name(CutTestResult *result);
 CutTestSuite        *cut_test_result_get_test_suite    (CutTestResult *result);
@@ -83,6 +87,8 @@ void cut_test_result_set_status          (CutTestResult *result,
                                           CutTestResultStatus status);
 void cut_test_result_set_test            (CutTestResult *result,
                                           CutTest *test);
+void cut_test_result_set_test_iterator   (CutTestResult *result,
+                                          CutTestIterator *test_iterator);
 void cut_test_result_set_test_case       (CutTestResult *result,
                                           CutTestCase *test_case);
 void cut_test_result_set_test_suite      (CutTestResult *result,

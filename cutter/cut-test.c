@@ -408,14 +408,17 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
     success = !cut_test_context_is_failed(test_context);
     if (success) {
         CutTestCase *test_case;
+        CutTestIterator *test_iterator;
         CutTestData *test_data = NULL;
         CutTestResult *result;
 
         test_case = cut_test_context_get_test_case(test_context);
+        test_iterator = cut_test_context_get_test_iterator(test_context);
         if (cut_test_context_have_data(test_context))
             test_data = cut_test_context_get_current_data(test_context);
         result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
-                                     test, test_case, NULL, test_data,
+                                     test, test_iterator, test_case,
+                                     NULL, test_data,
                                      NULL, NULL,
                                      NULL, NULL, 0);
         cut_test_result_set_elapsed(result, cut_test_get_elapsed(test));

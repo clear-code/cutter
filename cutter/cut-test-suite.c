@@ -444,7 +444,7 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite,
         if (all_success) {
             CutTestResult *result;
             result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
-                                         NULL, NULL, test_suite, NULL,
+                                         NULL, NULL, NULL, test_suite, NULL,
                                          NULL, NULL,
                                          NULL, NULL, 0);
             g_signal_emit_by_name(CUT_TEST(test_suite), "success", NULL, result);

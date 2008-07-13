@@ -240,8 +240,8 @@ run_test (CutTestIterator *test_iterator, CutIteratedTest *test,
         return TRUE;
 
     test_case = cut_test_context_get_test_case(test_context);
-
-    local_test_context = cut_test_context_new(NULL, test_case, CUT_TEST(test));
+    local_test_context = cut_test_context_new(NULL, test_case, test_iterator,
+                                              CUT_TEST(test));
 
     is_multi_thread = cut_run_context_is_multi_thread(run_context);
     cut_test_context_set_multi_thread(local_test_context, is_multi_thread);
@@ -266,7 +266,6 @@ run_test (CutTestIterator *test_iterator, CutIteratedTest *test,
     }
     cut_test_case_run_teardown(test_case, local_test_context);
 
-    /* need? */
     cut_test_context_set_failed(test_context,
                                 cut_test_context_is_failed(local_test_context));
 
@@ -305,6 +304,7 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
     priv = CUT_TEST_ITERATOR_GET_PRIVATE(test_iterator);
     g_return_val_if_fail(priv->data_setup_function != NULL, FALSE);
 
+    cut_test_context_set_test_iterator(test_context, test_iterator);
     if (priv->data_setup_function) {
         cut_test_context_set_jump(test_context, &jump_buffer);
         if (setjmp(jump_buffer) == 0) {
@@ -312,8 +312,10 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
         }
     }
 
-    if (cut_test_context_is_failed(test_context))
+    if (cut_test_context_is_failed(test_context)) {
+        cut_test_context_set_test_iterator(test_context, NULL);
         return FALSE;
+    }
 
     cut_run_context_prepare_test_iterator(run_context, test_iterator);
     g_signal_emit_by_name(test_iterator, "ready",
@@ -359,7 +361,7 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
 
     test_case = cut_test_context_get_test_case(test_context);
     result = cut_test_result_new(status,
-                                 CUT_TEST(test_iterator), test_case, NULL, NULL,
+                                 NULL, test_iterator, test_case, NULL, NULL,
                                  NULL, NULL,
                                  NULL, NULL, 0);
     g_signal_emit_by_name(CUT_TEST(test_iterator),
@@ -367,6 +369,8 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
                           test_context, result);
     g_object_unref(result);
     g_signal_emit_by_name(CUT_TEST(test_iterator), "complete");
+
+    cut_test_context_set_test_iterator(test_context, NULL);
 
     return all_success;
 }

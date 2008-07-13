@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2008  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -28,6 +28,7 @@
 #include "cut-test-result.h"
 #include "cut-enum-types.h"
 #include "cut-test.h"
+#include "cut-test-iterator.h"
 #include "cut-test-case.h"
 #include "cut-test-suite.h"
 #include "cut-stream-parser.h"
@@ -40,6 +41,7 @@ struct _CutTestResultPrivate
 {
     CutTestResultStatus status;
     CutTest *test;
+    CutTestIterator *test_iterator;
     CutTestCase *test_case;
     CutTestSuite *test_suite;
     CutTestData *test_data;
@@ -58,6 +60,7 @@ enum
     PROP_0,
     PROP_STATUS,
     PROP_TEST,
+    PROP_TEST_ITERATOR,
     PROP_TEST_CASE,
     PROP_TEST_SUITE,
     PROP_TEST_DATA,
@@ -108,6 +111,13 @@ cut_test_result_class_init (CutTestResultClass *klass)
                                CUT_TYPE_TEST,
                                G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_TEST, spec);
+
+    spec = g_param_spec_object("test-iterator",
+                               "CutTestIterator object",
+                               "A CutTestIterator object",
+                               CUT_TYPE_TEST_ITERATOR,
+                               G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_TEST_ITERATOR, spec);
 
     spec = g_param_spec_object("test-case",
                                "CutTestCase object",
@@ -182,6 +192,7 @@ cut_test_result_init (CutTestResult *result)
 
     priv->status = CUT_TEST_RESULT_SUCCESS;
     priv->test = NULL;
+    priv->test_iterator = NULL;
     priv->test_case = NULL;
     priv->test_suite = NULL;
     priv->test_data = NULL;
@@ -203,6 +214,11 @@ dispose (GObject *object)
     if (priv->test) {
         g_object_unref(priv->test);
         priv->test = NULL;
+    }
+
+    if (priv->test_iterator) {
+        g_object_unref(priv->test_iterator);
+        priv->test_iterator = NULL;
     }
 
     if (priv->test_case) {
@@ -269,6 +285,10 @@ set_property (GObject      *object,
         cut_test_result_set_test(CUT_TEST_RESULT(object),
                                  g_value_get_object(value));
         break;
+      case PROP_TEST_ITERATOR:
+        cut_test_result_set_test_iterator(CUT_TEST_RESULT(object),
+                                          g_value_get_object(value));
+        break;
       case PROP_TEST_CASE:
         cut_test_result_set_test_case(CUT_TEST_RESULT(object),
                                       g_value_get_object(value));
@@ -327,6 +347,9 @@ get_property (GObject    *object,
       case PROP_TEST:
         g_value_set_object(value, G_OBJECT(priv->test));
         break;
+      case PROP_TEST_ITERATOR:
+        g_value_set_object(value, G_OBJECT(priv->test_iterator));
+        break;
       case PROP_TEST_CASE:
         g_value_set_object(value, G_OBJECT(priv->test_case));
         break;
@@ -363,6 +386,7 @@ get_property (GObject    *object,
 CutTestResult *
 cut_test_result_new (CutTestResultStatus status,
                      CutTest *test,
+                     CutTestIterator *test_iterator,
                      CutTestCase *test_case,
                      CutTestSuite *test_suite,
                      CutTestData *test_data,
@@ -375,6 +399,7 @@ cut_test_result_new (CutTestResultStatus status,
     return g_object_new(CUT_TYPE_TEST_RESULT,
                         "status", status,
                         "test", test,
+                        "test-iterator", test_iterator,
                         "test-case", test_case,
                         "test-suite", test_suite,
                         "test-data", test_data,
@@ -390,7 +415,7 @@ CutTestResult *
 cut_test_result_new_empty (void)
 {
     return cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
-                               NULL, NULL, NULL, NULL,
+                               NULL, NULL, NULL, NULL, NULL,
                                NULL, NULL,
                                NULL, NULL, 0);
 }
@@ -460,6 +485,12 @@ cut_test_result_get_test (CutTestResult *result)
     return CUT_TEST_RESULT_GET_PRIVATE(result)->test;
 }
 
+CutTestIterator *
+cut_test_result_get_test_iterator (CutTestResult *result)
+{
+    return CUT_TEST_RESULT_GET_PRIVATE(result)->test_iterator;
+}
+
 CutTestCase *
 cut_test_result_get_test_case (CutTestResult *result)
 {
@@ -496,6 +527,16 @@ cut_test_result_get_test_name (CutTestResult *result)
     }
 
     return priv->test_name;
+}
+
+const gchar *
+cut_test_result_get_test_iterator_name (CutTestResult *result)
+{
+    CutTestResultPrivate *priv = CUT_TEST_RESULT_GET_PRIVATE(result);
+
+    if (priv->test_iterator)
+        return cut_test_get_name(CUT_TEST(priv->test_iterator));
+    return NULL;
 }
 
 const gchar *
@@ -702,6 +743,7 @@ cut_test_result_to_xml_string (CutTestResult *result, GString *string,
                                guint indent)
 {
     CutTestCase *test_case;
+    CutTestIterator *test_iterator;
     CutTest *test;
 
     cut_utils_append_indent(string, indent);
@@ -710,6 +752,9 @@ cut_test_result_to_xml_string (CutTestResult *result, GString *string,
     test_case = cut_test_result_get_test_case(result);
     if (test_case)
         cut_test_to_xml_string(CUT_TEST(test_case), string, indent + 2);
+    test_iterator = cut_test_result_get_test_iterator(result);
+    if (test_iterator)
+        cut_test_to_xml_string(CUT_TEST(test_iterator), string, indent + 2);
     test = cut_test_result_get_test(result);
     if (test)
         cut_test_to_xml_string(test, string, indent + 2);
@@ -774,6 +819,20 @@ cut_test_result_set_test (CutTestResult *result, CutTest *test)
     }
     if (test)
         priv->test = g_object_ref(test);
+}
+
+void
+cut_test_result_set_test_iterator (CutTestResult *result,
+                                   CutTestIterator *test_iterator)
+{
+    CutTestResultPrivate *priv = CUT_TEST_RESULT_GET_PRIVATE(result);
+
+    if (priv->test_iterator) {
+        g_object_unref(priv->test_iterator);
+        priv->test_iterator = NULL;
+    }
+    if (test_iterator)
+        priv->test_iterator = g_object_ref(test_iterator);
 }
 
 void

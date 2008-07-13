@@ -54,9 +54,10 @@ extern GPrivate *cut_test_context_private;
 
 GType        cut_test_context_get_type  (void) G_GNUC_CONST;
 
-CutTestContext  *cut_test_context_new (CutTestSuite *test_suite,
-                                       CutTestCase  *test_case,
-                                       CutTest      *test);
+CutTestContext  *cut_test_context_new (CutTestSuite    *test_suite,
+                                       CutTestCase     *test_case,
+                                       CutTestIterator *test_iterator,
+                                       CutTest         *test);
 CutTestContext  *cut_test_context_new_empty (void);
 
 CutTestSuite *cut_test_context_get_test_suite (CutTestContext *context);

@@ -25,7 +25,7 @@ static gchar *destroyed_string;
 void
 setup (void)
 {
-    context = cut_test_context_new(NULL, NULL, NULL);
+    context = cut_test_context_new_empty();
     test_suite = cut_test_suite_new_empty();
     test_case = cut_test_case_new("my-test-case",
                                   NULL, NULL,

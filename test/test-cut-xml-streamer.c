@@ -12,7 +12,7 @@ void test_streamer_success (void);
 
 static CutStreamer *streamer;
 static CutRunContext *run_context;
-static CutTest *test_object;
+static CutTest *test;
 static CutTestCase *test_case;
 static CutTestSuite *test_suite;
 static CutTestContext *test_context;
@@ -29,7 +29,7 @@ setup (void)
 {
     gchar *test_names[] = {"/.*/", NULL};
 
-    test_object = NULL;
+    test = NULL;
     test_context = NULL;
     streamer = NULL;
     xml = NULL;
@@ -49,8 +49,8 @@ setup (void)
 void
 teardown (void)
 {
-    if (test_object)
-        g_object_unref(test_object);
+    if (test)
+        g_object_unref(test);
     if (test_context)
         g_object_unref(test_context);
     if (streamer)
@@ -72,12 +72,12 @@ cb_test_signal (CutTest *test, CutTestContext *context, CutTestResult *result,
 }
 
 static gboolean
-run_the_test (CutTest *test)
+run (void)
 {
     gboolean success;
     CutTestContext *original_test_context;
 
-    test_context = cut_test_context_new(NULL, test_case, test);
+    test_context = cut_test_context_new(NULL, test_case, NULL, test);
     original_test_context = get_current_test_context();
     set_current_test_context(test_context);
     success = cut_test_run(test, test_context, run_context);
@@ -116,8 +116,8 @@ test_ready_test_suite (void)
                                 "stream-function", stream_to_string,
                                 "stream-function-user-data", xml,
                                 NULL);
-    test_object = cut_test_new("stub-success-test", stub_success_test);
-    cut_test_case_add_test(test_case, test_object);
+    test = cut_test_new("stub-success-test", stub_success_test);
+    cut_test_case_add_test(test_case, test);
     cut_listener_attach_to_run_context(CUT_LISTENER(streamer), run_context);
     cut_assert(cut_test_suite_run(test_suite, run_context));
     cut_listener_detach_from_run_context(CUT_LISTENER(streamer), run_context);
@@ -143,8 +143,8 @@ test_ready_test_case (void)
                                 "stream-function", stream_to_string,
                                 "stream-function-user-data", xml,
                                 NULL);
-    test_object = cut_test_new("stub-success-test", stub_success_test);
-    cut_test_case_add_test(test_case, test_object);
+    test = cut_test_new("stub-success-test", stub_success_test);
+    cut_test_case_add_test(test_case, test);
     cut_listener_attach_to_run_context(CUT_LISTENER(streamer), run_context);
     cut_assert(cut_test_suite_run(test_suite, run_context));
     cut_listener_detach_from_run_context(CUT_LISTENER(streamer), run_context);
@@ -193,13 +193,13 @@ test_streamer_success (void)
                                 "stream-function-user-data", xml,
                                 NULL);
 
-    test_object = cut_test_new("stub-success-test", stub_success_test);
-    g_signal_connect_after(test_object, "success",
+    test = cut_test_new("stub-success-test", stub_success_test);
+    g_signal_connect_after(test, "success",
                            G_CALLBACK(cb_test_signal), NULL);
-    cut_test_case_add_test(test_case, test_object);
+    cut_test_case_add_test(test_case, test);
     cut_listener_attach_to_run_context(CUT_LISTENER(streamer), run_context);
-    cut_assert(run_the_test(test_object));
-    g_signal_handlers_disconnect_by_func(test_object,
+    cut_assert_true(run());
+    g_signal_handlers_disconnect_by_func(test,
                                          G_CALLBACK(cb_test_signal),
                                          NULL);
     cut_listener_detach_from_run_context(CUT_LISTENER(streamer), run_context);

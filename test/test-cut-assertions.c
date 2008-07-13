@@ -45,11 +45,10 @@ void test_equal_fixture_data_string (void);
 void test_equal_fixture_data_string_without_file (void);
 void test_error_errno (void);
 
-static gboolean need_cleanup;
 static gboolean compare_function_is_called;
 static gchar *tmp_file_name;
 
-static CutTest *test_object;
+static CutTest *test;
 static CutRunContext *run_context;
 static CutTestContext *test_context;
 static CutTestResult *test_result;
@@ -113,24 +112,22 @@ cb_collect_result (CutTest *test, CutTestContext *test_context,
 }
 
 static gboolean
-run (CutTest *test)
+run (void)
 {
     gboolean success;
     CutTestContext *original_test_context;
 
-    need_cleanup = TRUE;
-
-    test_object = test;
+    cut_assert_not_null(test);
 
     run_context = cut_test_runner_new();
 
-    test_context = cut_test_context_new(NULL, NULL, test_object);
+    test_context = cut_test_context_new(NULL, NULL, NULL, test);
     cut_test_context_set_fixture_data_dir(test_context,
                                           cuttest_get_base_dir(),
                                           "fixtures", "assertions", NULL);
     original_test_context = get_current_test_context();
     set_current_test_context(test_context);
-    success = cut_test_run(test_object, test_context, run_context);
+    success = cut_test_run(test, test_context, run_context);
     set_current_test_context(original_test_context);
 
     return success;
@@ -139,10 +136,9 @@ run (CutTest *test)
 void
 setup (void)
 {
-    need_cleanup = FALSE;
     compare_function_is_called = FALSE;
     tmp_file_name = NULL;
-    test_object = NULL;
+    test = NULL;
     run_context = NULL;
     test_context = NULL;
     test_result = NULL;
@@ -156,11 +152,8 @@ teardown (void)
         g_free(tmp_file_name);
     }
 
-    if (!need_cleanup)
-        return;
-
-    if (test_object)
-        g_object_unref(test_object);
+    if (test)
+        g_object_unref(test);
     if (run_context)
         g_object_unref(run_context);
     if (test_context)
@@ -194,13 +187,11 @@ equal_string_with_diff (void)
 void
 test_equal_string_with_diff (void)
 {
-    CutTest *test;
-
     test = cut_test_new("assert-equal-string-with-diff",
                         equal_string_with_diff);
     g_signal_connect(test, "failure", G_CALLBACK(cb_collect_result),
                      &test_result);
-    cut_assert(!run(test));
+    cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 0, 0, 0, 1, 0, 0, 0, 0);
     cut_assert_equal_string("<\"abc def ghi jkl\" == \"abc DEF ghi jkl\">\n"
                             "expected: <abc def ghi jkl>\n"
@@ -251,36 +242,27 @@ test_null (void)
 void
 test_error_equal_string_with_null (void)
 {
-    CutTest *test;
-
     test = cut_test_new("error-equal-string-with-null",
                         error_equal_string_with_null);
-    cut_assert(test, "Creating a new CutTest object failed");
-
-    cut_assert(!run(test));
+    cut_assert_not_null(test);
+    cut_assert_false(run());
 }
 
 void
 test_error_equal_string (void)
 {
-    CutTest *test;
-
-    test = cut_test_new("error-equal-string",
-                        error_equal_string);
-    cut_assert(test, "Creating a new CutTest object failed");
-
-    cut_assert(!run(test));
+    test = cut_test_new("error-equal-string", error_equal_string);
+    cut_assert_not_null(test);
+    cut_assert_false(run());
 }
 
 void
 test_error (void)
 {
-    CutTest *test;
-
     test = cut_test_new("stub-error-test", stub_error_test_function);
-    cut_assert(test, "Creating a new CutTest object failed");
+    cut_assert_not_null(test);
 
-    cut_assert(!run(test));
+    cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 0, 0, 0, 0, 1, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_ERROR,
                            "stub-error-test",
@@ -291,21 +273,19 @@ test_error (void)
 void
 test_pending (void)
 {
-    CutTest *test;
-
     test = cut_test_new("stub-pend-test", stub_pend_test_function);
-    cut_assert(test, "Creating a new CutTest object failed");
+    cut_assert_not_null(test);
 
     g_signal_connect(test, "pending", G_CALLBACK(cb_collect_result),
                      &test_result);
-    cut_assert(!run(test), "cut_pend() did not return FALSE!");
+    cut_assert_false(run(), "cut_pend() did not return FALSE!");
     g_signal_handlers_disconnect_by_func(test,
                                          G_CALLBACK(cb_collect_result),
                                          &test_result);
 
-    cut_assert(test_result,
-               "Could not get a CutTestResult object "
-               "since \"pending\" signal was not emmitted.");
+    cut_assert_not_null(test_result,
+                        "Could not get a CutTestResult object "
+                        "since \"pending\" signal was not emitted.");
     cut_assert_equal_int(CUT_TEST_RESULT_PENDING,
                          cut_test_result_get_status(test_result));
 }
@@ -313,21 +293,19 @@ test_pending (void)
 void
 test_notification (void)
 {
-    CutTest *test;
-
     test = cut_test_new("stub-notify-test", stub_notify_test_function);
-    cut_assert(test, "Creating a new CutTest object failed");
+    cut_assert_not_null(test);
 
     g_signal_connect(test, "notification", G_CALLBACK(cb_collect_result),
                      &test_result);
-    cut_assert(run(test), "cut_notify() did return FALSE!");
+    cut_assert_true(run(), "cut_notify() did return FALSE!");
     g_signal_handlers_disconnect_by_func(test,
                                          G_CALLBACK(cb_collect_result),
                                          &test_result);
 
-    cut_assert(test_result,
-               "Could not get a CutTestResult object "
-               "since \"notification\" signal was not emmitted.");
+    cut_assert_not_null(test_result,
+                        "Could not get a CutTestResult object "
+                        "since \"notification\" signal was not emitted.");
     cut_assert_equal_int(CUT_TEST_RESULT_NOTIFICATION,
                          cut_test_result_get_status(test_result));
 }
@@ -335,20 +313,18 @@ test_notification (void)
 void
 test_fail (void)
 {
-    CutTest *test;
-
     test = cut_test_new("stub-fail-test", stub_fail_test_function);
-    cut_assert(test);
+    cut_assert_not_null(test);
 
     g_signal_connect(test, "failure", G_CALLBACK(cb_collect_result),
                      &test_result);
-    cut_assert(!run(test));
+    cut_assert_false(run());
     g_signal_handlers_disconnect_by_func(test,
                                          G_CALLBACK(cb_collect_result),
                                          &test_result);
-    cut_assert(test_result,
-               "Could not get a CutTestResult object "
-               "since \"failure\" signal was not emmitted.");
+    cut_assert_not_null(test_result,
+                        "Could not get a CutTestResult object "
+                        "since \"failure\" signal was not emitted.");
     cut_assert_equal_int(CUT_TEST_RESULT_FAILURE,
                          cut_test_result_get_status(test_result));
 }
@@ -356,21 +332,19 @@ test_fail (void)
 void
 test_assert_message (void)
 {
-    CutTest *test;
-
     test = cut_test_new("stub-assertion-message-test",
                         stub_assert_message_test_function);
-    cut_assert(test);
+    cut_assert_not_null(test);
 
     g_signal_connect(test, "failure", G_CALLBACK(cb_collect_result),
                      &test_result);
-    cut_assert(!run(test));
+    cut_assert_false(run());
     g_signal_handlers_disconnect_by_func(test,
                                          G_CALLBACK(cb_collect_result),
                                          &test_result);
-    cut_assert(test_result,
-               "Could not get a CutTestResult object "
-               "since \"failure\" signal was not emmitted.");
+    cut_assert_not_null(test_result,
+                        "Could not get a CutTestResult object "
+                        "since \"failure\" signal was not emitted.");
     cut_assert_equal_int(CUT_TEST_RESULT_FAILURE,
                          cut_test_result_get_status(test_result));
     cut_assert_equal_string("The message of assertion",
@@ -380,21 +354,19 @@ test_assert_message (void)
 void
 test_assert_message_with_format_string (void)
 {
-    CutTest *test;
-
     test = cut_test_new("stub-assert-message-with-string",
                         stub_assert_message_with_format_string);
-    cut_assert(test);
+    cut_assert_not_null(test);
 
     g_signal_connect(test, "failure", G_CALLBACK(cb_collect_result),
                      &test_result);
-    cut_assert(!run(test));
+    cut_assert_false(run());
     g_signal_handlers_disconnect_by_func(test,
                                          G_CALLBACK(cb_collect_result),
                                          &test_result);
-    cut_assert(test_result,
-               "Could not get a CutTestResult object "
-               "since \"failure\" signal was not emmitted.");
+    cut_assert_not_null(test_result,
+                        "Could not get a CutTestResult object "
+                        "since \"failure\" signal was not emitted.");
     cut_assert_equal_int(CUT_TEST_RESULT_FAILURE,
                          cut_test_result_get_status(test_result));
     cut_assert_equal_string("<\"%s\" == \"%d\">\n"
@@ -415,9 +387,9 @@ compare_function (gpointer a, gpointer b)
 void
 test_assert_equal_function (void)
 {
-    cut_assert(!compare_function_is_called);
+    cut_assert_false(compare_function_is_called);
     cut_assert_equal(compare_function, "o", "o");
-    cut_assert(compare_function_is_called);
+    cut_assert_true(compare_function_is_called);
 }
 
 static gboolean
@@ -438,22 +410,16 @@ just_call_fail_in_nested_function (void)
 void
 test_failure_from_nested_function (void)
 {
-    CutTest *test;
     CutTestResult *result;
-    const GList *results;
 
     test = cut_test_new("fail from nested function",
                         just_call_fail_in_nested_function);
-    cut_assert(test);
+    cut_assert_not_null(test);
 
-    cut_assert(!run(test));
+    cut_assert_false(run());
 
-    cut_assert(run_context);
-    cut_assert(1, cut_run_context_get_n_tests(run_context));
-    cut_assert(1, cut_run_context_get_n_assertions(run_context));
-    results = cut_run_context_get_results(run_context);
-    cut_assert(1, g_list_length((GList *)results));
-    cut_assert(1, cut_run_context_get_n_failures(run_context));
+    cut_assert_not_null(run_context);
+    cut_assert_test_result_summary(run_context, 0, 0, 0, 1, 0, 0, 0, 0);
 
     result = cut_run_context_get_results(run_context)->data;
     cut_assert_equal_string("Fail from nested function",
@@ -470,10 +436,8 @@ null_string_assertions (void)
 void
 test_null_string (void)
 {
-    CutTest *test;
-
     test = cut_test_new("assert-null-string", null_string_assertions);
-    cut_assert(!run(test));
+    cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 0, 1, 0, 1, 0, 0, 0, 0);
 }
 
@@ -489,11 +453,9 @@ equal_string_with_free_assertions (void)
 void
 test_equal_string_with_free (void)
 {
-    CutTest *test;
-
     test = cut_test_new("assert-string-equal-string-with-free",
                         equal_string_with_free_assertions);
-    cut_assert(!run(test));
+    cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 0, 3, 0, 1, 0, 0, 0, 0);
 }
 
@@ -510,10 +472,8 @@ assert_errno_for_eacces (void)
 void
 test_assert_errno (void)
 {
-    CutTest *test;
-
     test = cut_test_new("assert-errno-for-eacces", assert_errno_for_eacces);
-    cut_assert(!run(test));
+    cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 0, 1, 0, 1, 0, 0, 0, 0);
 }
 
@@ -528,10 +488,8 @@ omit_test (void)
 void
 test_omit (void)
 {
-    CutTest *test;
-
     test = cut_test_new("omit-test", omit_test);
-    cut_assert(run(test));
+    cut_assert_true(run());
     cut_assert_test_result_summary(run_context, 0, 1, 1, 0, 0, 0, 0, 1);
 }
 
@@ -558,10 +516,8 @@ path_exist_test (void)
 void
 test_path_exist (void)
 {
-    CutTest *test;
-
     test = cut_test_new("path-exist-test", path_exist_test);
-    cut_assert(!run(test));
+    cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 0, 1, 0, 1, 0, 0, 0, 0);
 }
 
@@ -587,10 +543,8 @@ path_not_exist_test (void)
 void
 test_path_not_exist (void)
 {
-    CutTest *test;
-
     test = cut_test_new("path-not-exist-test", path_not_exist_test);
-    cut_assert(!run(test));
+    cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 0, 1, 0, 1, 0, 0, 0, 0);
 }
 
@@ -604,10 +558,8 @@ match_test (void)
 void
 test_match (void)
 {
-    CutTest *test;
-
     test = cut_test_new("match-test", match_test);
-    cut_assert(!run(test));
+    cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 0, 1, 0, 1, 0, 0, 0, 0);
 }
 
@@ -623,10 +575,8 @@ equal_pointer_test (void)
 void
 test_equal_pointer (void)
 {
-    CutTest *test;
-
     test = cut_test_new("equal-pointer-test", equal_pointer_test);
-    cut_assert(!run(test));
+    cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 0, 1, 0, 1, 0, 0, 0, 0);
 }
 
@@ -641,11 +591,9 @@ equal_fixture_data_string_test (void)
 void
 test_equal_fixture_data_string (void)
 {
-    CutTest *test;
-
     test = cut_test_new("equal-fixture-data-sting-test",
                         equal_fixture_data_string_test);
-    cut_assert(!run(test));
+    cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 0, 2, 0, 1, 0, 0, 0, 0);
 }
 
@@ -658,12 +606,9 @@ equal_fixture_data_string_test_without_file (void)
 void
 test_equal_fixture_data_string_without_file (void)
 {
-    CutTest *test;
-
     test = cut_test_new("equal-fixture-data-sting-test-without-file",
                         equal_fixture_data_string_test_without_file);
-    cut_assert_false(run(test));
-
+    cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 0, 0, 0, 0, 1, 0, 0, 0);
 }
 
@@ -680,11 +625,10 @@ error_errno (void)
 void
 test_error_errno (void)
 {
-    CutTest *test;
     CutTestResult *result;
 
     test = cut_test_new("error-errno", error_errno);
-    cut_assert(!run(test));
+    cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 0, 0, 0, 0, 1, 0, 0, 0);
 
     result = cut_run_context_get_results(run_context)->data;

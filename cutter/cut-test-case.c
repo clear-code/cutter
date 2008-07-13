@@ -363,7 +363,7 @@ run (CutTestCase *test_case, CutTest *test, CutRunContext *run_context)
         return FALSE;
     }
 
-    test_context = cut_test_context_new(NULL, test_case, NULL);
+    test_context = cut_test_context_new(NULL, test_case, NULL, NULL);
     cut_test_context_set_multi_thread(test_context, is_multi_thread);
     original_test_context = cut_test_case_get_current_test_context(test_case);
     cut_test_case_set_current_test_context(test_case, test_context);
@@ -452,7 +452,7 @@ cut_test_case_run_tests (CutTestCase *test_case, CutRunContext *run_context,
     }
 
     result = cut_test_result_new(status,
-                                 NULL, test_case, NULL, NULL,
+                                 NULL, NULL, test_case, NULL, NULL,
                                  NULL, NULL,
                                  NULL, NULL, 0);
     g_signal_emit_by_name(CUT_TEST(test_case),
