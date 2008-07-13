@@ -1,5 +1,15 @@
 2008-07-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-run-context.[ch]
+	(cut_run_context_prepare_iterated_test): add.
+
+	* cutter/cut-test-runner.c: support prepare_iterated_test.
+
+	* cutter/cut-stream-parser.c: support iterated test.
+
+	* test/test-cut-stream-parser.c (test_start_iterated_test)
+	(test_complete_iterated_test): add.
+
 	* cutter/, test/: CutTestContext and CutRunContext have
 	CutTestIterator.
 	* test/: test_object -> test.

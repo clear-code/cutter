@@ -49,6 +49,9 @@ static void prepare_test_iterator
                                  CutTestIterator *test_iterator);
 static void prepare_test        (CutRunContext  *context,
                                  CutTest        *test);
+static void prepare_iterated_test
+                                (CutRunContext  *context,
+                                 CutIteratedTest *iterated_test);
 static gboolean runner_run (CutRunner *runner);
 
 static void
@@ -62,6 +65,7 @@ cut_test_runner_class_init (CutTestRunnerClass *klass)
     run_context_class->prepare_test_case = prepare_test_case;
     run_context_class->prepare_test_iterator = prepare_test_iterator;
     run_context_class->prepare_test = prepare_test;
+    run_context_class->prepare_iterated_test = prepare_iterated_test;
 }
 
 static void
@@ -553,6 +557,29 @@ prepare_test (CutRunContext *context, CutTest *test)
     g_signal_connect(test, "notification", G_CALLBACK(cb_notification), context);
     g_signal_connect(test, "omission", G_CALLBACK(cb_omission), context);
     g_signal_connect(test, "complete", G_CALLBACK(cb_complete), context);
+}
+
+static void
+prepare_iterated_test (CutRunContext *context, CutIteratedTest *iterated_test)
+{
+    CutRunContextClass *klass;
+
+    klass = CUT_RUN_CONTEXT_CLASS(cut_test_runner_parent_class);
+    if (klass->prepare_iterated_test)
+        klass->prepare_iterated_test(context, iterated_test);
+
+    g_signal_connect(iterated_test, "pass_assertion",
+                     G_CALLBACK(cb_pass_assertion), context);
+    g_signal_connect(iterated_test, "success", G_CALLBACK(cb_success), context);
+    g_signal_connect(iterated_test, "failure", G_CALLBACK(cb_failure), context);
+    g_signal_connect(iterated_test, "error", G_CALLBACK(cb_error), context);
+    g_signal_connect(iterated_test, "pending", G_CALLBACK(cb_pending), context);
+    g_signal_connect(iterated_test, "notification",
+                     G_CALLBACK(cb_notification), context);
+    g_signal_connect(iterated_test, "omission",
+                     G_CALLBACK(cb_omission), context);
+    g_signal_connect(iterated_test, "complete",
+                     G_CALLBACK(cb_complete), context);
 }
 
 static gboolean

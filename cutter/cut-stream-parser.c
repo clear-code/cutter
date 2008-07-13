@@ -38,6 +38,7 @@ typedef enum {
     IN_TEST_CASE,
     IN_TEST_ITERATOR,
     IN_TEST,
+    IN_ITERATED_TEST,
     IN_TEST_DATA,
 
     IN_TEST_NAME,
@@ -71,6 +72,8 @@ typedef enum {
 
     IN_START_TEST,
 
+    IN_START_ITERATED_TEST,
+
     IN_PASS_ASSERTION,
 
     IN_TEST_RESULT,
@@ -84,6 +87,8 @@ typedef enum {
     IN_RESULT_BACKTRACE_ENTRY_LINE,
     IN_RESULT_BACKTRACE_ENTRY_INFO,
     IN_RESULT_ELAPSED,
+
+    IN_COMPLETE_ITERATED_TEST,
 
     IN_COMPLETE_TEST,
 
@@ -132,6 +137,13 @@ struct _StartTest
     CutTestContext *test_context;
 };
 
+typedef struct _StartIteratedTest StartIteratedTest;
+struct _StartIteratedTest
+{
+    CutIteratedTest *iterated_test;
+    CutTestContext *test_context;
+};
+
 typedef struct _PassAssertion PassAssertion;
 struct _PassAssertion
 {
@@ -145,6 +157,13 @@ struct _TestResult
     CutTest *test;
     CutTestContext *test_context;
     CutTestResult *result;
+};
+
+typedef struct _CompleteIteratedTest CompleteIteratedTest;
+struct _CompleteIteratedTest
+{
+    CutIteratedTest *iterated_test;
+    CutTestContext *test_context;
 };
 
 typedef struct _CompleteTest CompleteTest;
@@ -168,6 +187,7 @@ struct _CutStreamParserPrivate
     CutRunContext *run_context;
 
     GQueue *states;
+    GQueue *iterated_tests;
     GQueue *tests;
     GQueue *test_iterators;
     GQueue *test_cases;
@@ -179,8 +199,10 @@ struct _CutStreamParserPrivate
     ReadyTestCase *ready_test_case;
     ReadyTestIterator *ready_test_iterator;
     StartTest *start_test;
+    StartIteratedTest *start_iterated_test;
     PassAssertion *pass_assertion;
     TestResult *test_result;
+    CompleteIteratedTest *complete_iterated_test;
     CompleteTest *complete_test;
     TestCaseResult *test_case_result;
 
@@ -352,6 +374,7 @@ cut_stream_parser_init (CutStreamParser *stream_parser)
 
     priv->states = g_queue_new();
     PUSH_STATE(priv, IN_TOP_LEVEL);
+    priv->iterated_tests = g_queue_new();
     priv->tests = g_queue_new();
     priv->test_cases = g_queue_new();
     priv->test_iterators = g_queue_new();
@@ -363,7 +386,9 @@ cut_stream_parser_init (CutStreamParser *stream_parser)
     priv->ready_test_case = NULL;
     priv->ready_test_iterator = NULL;
     priv->start_test = NULL;
+    priv->start_iterated_test = NULL;
     priv->pass_assertion = NULL;
+    priv->complete_iterated_test = NULL;
     priv->complete_test = NULL;
     priv->test_result = NULL;
     priv->test_case_result = NULL;
@@ -433,6 +458,22 @@ start_test_free (StartTest *start_test)
     g_slice_free(StartTest, start_test);
 }
 
+static StartIteratedTest *
+start_iterated_test_new (void)
+{
+    return g_slice_new0(StartIteratedTest);
+}
+
+static void
+start_iterated_test_free (StartIteratedTest *start_iterated_test)
+{
+    if (start_iterated_test->iterated_test)
+        g_object_unref(start_iterated_test->iterated_test);
+    if (start_iterated_test->test_context)
+        g_object_unref(start_iterated_test->test_context);
+    g_slice_free(StartIteratedTest, start_iterated_test);
+}
+
 static PassAssertion *
 pass_assertion_new (void)
 {
@@ -465,6 +506,22 @@ test_result_free (TestResult *test_result)
     if (test_result->result)
         g_object_unref(test_result->result);
     g_slice_free(TestResult, test_result);
+}
+
+static CompleteIteratedTest *
+complete_iterated_test_new (void)
+{
+    return g_slice_new0(CompleteIteratedTest);
+}
+
+static void
+complete_iterated_test_free (CompleteIteratedTest *complete_iterated_test)
+{
+    if (complete_iterated_test->iterated_test)
+        g_object_unref(complete_iterated_test->iterated_test);
+    if (complete_iterated_test->test_context)
+        g_object_unref(complete_iterated_test->test_context);
+    g_slice_free(CompleteIteratedTest, complete_iterated_test);
 }
 
 static CompleteTest *
@@ -522,6 +579,12 @@ dispose (GObject *object)
         priv->states = NULL;
     }
 
+    if (priv->iterated_tests) {
+        g_queue_foreach(priv->iterated_tests, (GFunc)g_object_unref, NULL);
+        g_queue_free(priv->iterated_tests);
+        priv->iterated_tests = NULL;
+    }
+
     if (priv->tests) {
         g_queue_foreach(priv->tests, (GFunc)g_object_unref, NULL);
         g_queue_free(priv->tests);
@@ -567,6 +630,11 @@ dispose (GObject *object)
         priv->start_test = NULL;
     }
 
+    if (priv->start_iterated_test) {
+        start_iterated_test_free(priv->start_iterated_test);
+        priv->start_iterated_test = NULL;
+    }
+
     if (priv->pass_assertion) {
         pass_assertion_free(priv->pass_assertion);
         priv->pass_assertion = NULL;
@@ -575,6 +643,11 @@ dispose (GObject *object)
     if (priv->test_result) {
         test_result_free(priv->test_result);
         priv->test_result = NULL;
+    }
+
+    if (priv->complete_iterated_test) {
+        complete_iterated_test_free(priv->complete_iterated_test);
+        priv->complete_iterated_test = NULL;
     }
 
     if (priv->complete_test) {
@@ -796,6 +869,12 @@ start_stream (CutStreamParserPrivate *priv,
     } else if (g_str_equal("start-test", element_name)) {
         PUSH_STATE(priv, IN_START_TEST);
         priv->start_test = start_test_new();
+    } else if (g_str_equal("start-iterated-test", element_name)) {
+        PUSH_STATE(priv, IN_START_ITERATED_TEST);
+        priv->start_iterated_test = start_iterated_test_new();
+    } else if (g_str_equal("complete-iterated-test", element_name)) {
+        PUSH_STATE(priv, IN_COMPLETE_ITERATED_TEST);
+        priv->complete_iterated_test = complete_iterated_test_new();
     } else if (g_str_equal("complete-test", element_name)) {
         PUSH_STATE(priv, IN_COMPLETE_TEST);
         priv->complete_test = complete_test_new();
@@ -925,6 +1004,24 @@ start_start_test (CutStreamParserPrivate *priv,
 }
 
 static void
+start_start_iterated_test (CutStreamParserPrivate *priv,
+                           GMarkupParseContext *context,
+                           const gchar *element_name, GError **error)
+{
+    if (g_str_equal("iterated-test", element_name)) {
+        PUSH_STATE(priv, IN_ITERATED_TEST);
+        priv->start_iterated_test->iterated_test = cut_iterated_test_new_empty();
+        PUSH_TEST(priv, CUT_TEST(priv->start_iterated_test->iterated_test));
+    } else if (g_str_equal("test-context", element_name)) {
+        PUSH_STATE(priv, IN_TEST_CONTEXT);
+        priv->start_iterated_test->test_context = cut_test_context_new_empty();
+        PUSH_TEST_CONTEXT(priv,  priv->start_iterated_test->test_context);
+    } else {
+        invalid_element(context, error);
+    }
+}
+
+static void
 start_pass_assertion (CutStreamParserPrivate *priv,
                       GMarkupParseContext *context,
                       const gchar *element_name, GError **error)
@@ -944,8 +1041,8 @@ start_pass_assertion (CutStreamParserPrivate *priv,
 
 static void
 start_test_result (CutStreamParserPrivate *priv,
-                           GMarkupParseContext *context,
-                           const gchar *element_name, GError **error)
+                   GMarkupParseContext *context,
+                   const gchar *element_name, GError **error)
 {
     if (g_str_equal("test", element_name)) {
         PUSH_STATE(priv, IN_TEST);
@@ -1005,6 +1102,26 @@ start_result (CutStreamParserPrivate *priv, GMarkupParseContext *context,
         PUSH_STATE(priv, IN_RESULT_BACKTRACE);
     } else if (g_str_equal("elapsed", element_name)) {
         PUSH_STATE(priv, IN_RESULT_ELAPSED);
+    } else {
+        invalid_element(context, error);
+    }
+}
+
+static void
+start_complete_iterated_test (CutStreamParserPrivate *priv,
+                              GMarkupParseContext *context,
+                              const gchar *element_name, GError **error)
+{
+    if (g_str_equal("iterated-test", element_name)) {
+        PUSH_STATE(priv, IN_ITERATED_TEST);
+        priv->complete_iterated_test->iterated_test =
+            cut_iterated_test_new_empty();
+        PUSH_TEST(priv, CUT_TEST(priv->complete_iterated_test->iterated_test));
+    } else if (g_str_equal("test-context", element_name)) {
+        PUSH_STATE(priv, IN_TEST_CONTEXT);
+        priv->complete_iterated_test->test_context =
+            cut_test_context_new_empty();
+        PUSH_TEST_CONTEXT(priv, priv->complete_iterated_test->test_context);
     } else {
         invalid_element(context, error);
     }
@@ -1173,6 +1290,15 @@ start_test_context (CutStreamParserPrivate *priv, GMarkupParseContext *context,
         cut_test_context_set_test_case(PEEK_TEST_CONTEXT(priv), test_case);
         PUSH_TEST_CASE(priv, test_case);
         g_object_unref(test_case);
+    } else if (g_str_equal("test-iterator", element_name)) {
+        CutTestIterator *test_iterator;
+
+        PUSH_STATE(priv, IN_TEST_ITERATOR);
+        test_iterator = cut_test_iterator_new_empty();
+        cut_test_context_set_test_iterator(PEEK_TEST_CONTEXT(priv),
+                                           test_iterator);
+        PUSH_TEST_ITERATOR(priv, test_iterator);
+        g_object_unref(test_iterator);
     } else if (g_str_equal("test", element_name)) {
         CutTest *test;
 
@@ -1181,6 +1307,15 @@ start_test_context (CutStreamParserPrivate *priv, GMarkupParseContext *context,
         cut_test_context_set_test(PEEK_TEST_CONTEXT(priv), test);
         PUSH_TEST(priv, test);
         g_object_unref(test);
+    } else if (g_str_equal("iterated-test", element_name)) {
+        CutIteratedTest *iterated_test;
+
+        PUSH_STATE(priv, IN_ITERATED_TEST);
+        iterated_test = cut_iterated_test_new_empty();
+        cut_test_context_set_test(PEEK_TEST_CONTEXT(priv),
+                                  CUT_TEST(iterated_test));
+        PUSH_TEST(priv, CUT_TEST(iterated_test));
+        g_object_unref(iterated_test);
     } else if (g_str_equal("test-data", element_name)) {
         CutTestData *test_data;
 
@@ -1250,6 +1385,9 @@ start_element_handler (GMarkupParseContext *context,
       case IN_START_TEST:
         start_start_test(priv, context, element_name, error);
         break;
+      case IN_START_ITERATED_TEST:
+        start_start_iterated_test(priv, context, element_name, error);
+        break;
       case IN_PASS_ASSERTION:
         start_pass_assertion(priv, context, element_name, error);
         break;
@@ -1261,6 +1399,9 @@ start_element_handler (GMarkupParseContext *context,
         break;
       case IN_RESULT:
         start_result(priv, context, element_name, error);
+        break;
+      case IN_COMPLETE_ITERATED_TEST:
+        start_complete_iterated_test(priv, context, element_name, error);
         break;
       case IN_COMPLETE_TEST:
         start_complete_test(priv, context, element_name, error);
@@ -1284,6 +1425,7 @@ start_element_handler (GMarkupParseContext *context,
       case IN_TEST_CASE:
       case IN_TEST_ITERATOR:
       case IN_TEST:
+      case IN_ITERATED_TEST:
         start_test_object(priv, context, element_name, error);
         break;
       case IN_TEST_OPTION:
@@ -1528,6 +1670,32 @@ end_start_test (CutStreamParser *parser, CutStreamParserPrivate *priv,
 }
 
 static void
+end_start_iterated_test (CutStreamParser *parser, CutStreamParserPrivate *priv,
+                         GMarkupParseContext *context,
+                         const gchar *element_name, GError **error)
+{
+    if (!priv->start_iterated_test)
+        return;
+
+    if (priv->run_context) {
+        CutIteratedTest *iterated_test;
+
+        iterated_test = priv->start_iterated_test->iterated_test;
+        cut_run_context_prepare_iterated_test(priv->run_context, iterated_test);
+        g_signal_emit_by_name(priv->run_context, "start-iterated-test",
+                              iterated_test,
+                              priv->start_iterated_test->test_context);
+    }
+
+    if (priv->start_iterated_test->iterated_test)
+        DROP_TEST(priv);
+    if (priv->start_iterated_test->test_context)
+        DROP_TEST_CONTEXT(priv);
+    start_iterated_test_free(priv->start_iterated_test);
+    priv->start_iterated_test = NULL;
+}
+
+static void
 end_pass_assertion (CutStreamParser *parser, CutStreamParserPrivate *priv,
                     GMarkupParseContext *context,
                     const gchar *element_name, GError **error)
@@ -1580,6 +1748,28 @@ end_test_result (CutStreamParser *parser, CutStreamParserPrivate *priv,
     test_result_free(priv->test_result);
     priv->test_result = NULL;
     priv->result = NULL;
+}
+
+static void
+end_complete_iterated_test (CutStreamParser *parser,
+                            CutStreamParserPrivate *priv,
+                            GMarkupParseContext *context,
+                            const gchar *element_name, GError **error)
+{
+    if (!priv->complete_iterated_test)
+        return;
+
+    if (priv->run_context)
+        g_signal_emit_by_name(priv->run_context, "complete-iterated-test",
+                              priv->complete_iterated_test->iterated_test,
+                              priv->complete_iterated_test->test_context);
+
+    if (priv->complete_iterated_test->iterated_test)
+        DROP_TEST(priv);
+    if (priv->complete_iterated_test->test_context)
+        DROP_TEST_CONTEXT(priv);
+    complete_iterated_test_free(priv->complete_iterated_test);
+    priv->complete_iterated_test = NULL;
 }
 
 static void
@@ -1754,11 +1944,17 @@ end_element_handler (GMarkupParseContext *context,
       case IN_START_TEST:
         end_start_test(parser, priv, context, element_name, error);
         break;
+      case IN_START_ITERATED_TEST:
+        end_start_iterated_test(parser, priv, context, element_name, error);
+        break;
       case IN_PASS_ASSERTION:
         end_pass_assertion(parser, priv, context, element_name, error);
         break;
       case IN_TEST_RESULT:
         end_test_result(parser, priv, context, element_name, error);
+        break;
+      case IN_COMPLETE_ITERATED_TEST:
+        end_complete_iterated_test(parser, priv, context, element_name, error);
         break;
       case IN_COMPLETE_TEST:
         end_complete_test(parser, priv, context, element_name, error);
@@ -1850,6 +2046,7 @@ target_test_object (CutStreamParserPrivate *priv, ParseState parent_state)
         target = CUT_TEST(PEEK_TEST_ITERATOR(priv));
         break;
       case IN_TEST:
+      case IN_ITERATED_TEST:
         target = PEEK_TEST(priv);
         break;
       default:

@@ -104,6 +104,7 @@ enum
     READY_TEST_ITERATOR,
     START_TEST_ITERATOR,
     START_TEST,
+    START_ITERATED_TEST,
 
     PASS_ASSERTION,
 
@@ -128,6 +129,7 @@ enum
     NOTIFICATION_TEST_CASE,
     OMISSION_TEST_CASE,
 
+    COMPLETE_ITERATED_TEST,
     COMPLETE_TEST,
     COMPLETE_TEST_ITERATOR,
     COMPLETE_TEST_CASE,
@@ -159,6 +161,10 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 
+static void start_iterated_test
+                           (CutRunContext   *context,
+                            CutIteratedTest *iterated_test,
+                            CutTestContext  *test_context);
 static void start_test     (CutRunContext   *context,
                             CutTest         *test,
                             CutTestContext  *test_context);
@@ -193,6 +199,10 @@ static void omission_test  (CutRunContext   *context,
 static void complete_test  (CutRunContext   *context,
                             CutTest         *test,
                             CutTestContext  *test_context);
+static void complete_iterated_test
+                           (CutRunContext   *context,
+                            CutIteratedTest *iterated_test,
+                            CutTestContext  *test_context);
 static void crashed        (CutRunContext   *context,
                             const gchar     *backtrace);
 
@@ -205,6 +215,9 @@ static void prepare_test_iterator
                                  CutTestIterator *test_iterator);
 static void prepare_test        (CutRunContext  *context,
                                  CutTest        *test);
+static void prepare_iterated_test
+                                (CutRunContext  *context,
+                                 CutIteratedTest *iterated_test);
 
 static gboolean runner_run (CutRunner *runner);
 
@@ -220,6 +233,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
 
+    klass->start_iterated_test = start_iterated_test;
     klass->start_test        = start_test;
     klass->pass_assertion    = pass_assertion;
     klass->success_test      = success_test;
@@ -229,12 +243,14 @@ cut_run_context_class_init (CutRunContextClass *klass)
     klass->notification_test = notification_test;
     klass->omission_test     = omission_test;
     klass->complete_test     = complete_test;
+    klass->complete_iterated_test = complete_iterated_test;
     klass->crashed           = crashed;
 
     klass->prepare_test_suite = prepare_test_suite;
     klass->prepare_test_case = prepare_test_case;
     klass->prepare_test_iterator = prepare_test_iterator;
     klass->prepare_test = prepare_test;
+    klass->prepare_iterated_test = prepare_iterated_test;
 
     spec = g_param_spec_uint("n-tests",
                              "Number of tests",
@@ -432,6 +448,16 @@ cut_run_context_class_init (CutRunContextClass *klass)
                         G_TYPE_NONE, 2,
                         CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT);
 
+    signals[START_ITERATED_TEST]
+        = g_signal_new("start-iterated-test",
+                       G_TYPE_FROM_CLASS(klass),
+                       G_SIGNAL_RUN_LAST,
+                       G_STRUCT_OFFSET(CutRunContextClass, start_iterated_test),
+                       NULL, NULL,
+                       _cut_marshal_VOID__OBJECT_OBJECT,
+                       G_TYPE_NONE, 2,
+                       CUT_TYPE_ITERATED_TEST, CUT_TYPE_TEST_CONTEXT);
+
     signals[PASS_ASSERTION]
         = g_signal_new ("pass-assertion",
                         G_TYPE_FROM_CLASS (klass),
@@ -506,6 +532,17 @@ cut_run_context_class_init (CutRunContextClass *klass)
                        G_TYPE_NONE, 3,
                        CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT,
                        CUT_TYPE_TEST_RESULT);
+
+    signals[COMPLETE_ITERATED_TEST]
+        = g_signal_new("complete-iterated-test",
+                       G_TYPE_FROM_CLASS(klass),
+                       G_SIGNAL_RUN_LAST,
+                       G_STRUCT_OFFSET(CutRunContextClass,
+                                       complete_iterated_test),
+                       NULL, NULL,
+                       _cut_marshal_VOID__OBJECT_OBJECT,
+                       G_TYPE_NONE,
+                       2, CUT_TYPE_ITERATED_TEST, CUT_TYPE_TEST_CONTEXT);
 
     signals[COMPLETE_TEST]
         = g_signal_new ("complete-test",
@@ -947,6 +984,19 @@ start_test (CutRunContext   *context,
 }
 
 static void
+start_iterated_test (CutRunContext   *context,
+                     CutIteratedTest *iterated_test,
+                     CutTestContext  *test_context)
+{
+    CutRunContextPrivate *priv;
+
+    priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
+    g_mutex_lock(priv->mutex);
+    priv->n_tests++;
+    g_mutex_unlock(priv->mutex);
+}
+
+static void
 pass_assertion (CutRunContext   *context,
                 CutTest         *test,
                 CutTestContext  *test_context)
@@ -1045,6 +1095,19 @@ omission_test (CutRunContext   *context,
     g_mutex_lock(priv->mutex);
     priv->results = g_list_prepend(priv->results, g_object_ref(result));
     priv->n_omissions++;
+    g_mutex_unlock(priv->mutex);
+}
+
+static void
+complete_iterated_test (CutRunContext   *context,
+                        CutIteratedTest *iterated_test,
+                        CutTestContext  *test_context)
+{
+    CutRunContextPrivate *priv;
+
+    priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
+    g_mutex_lock(priv->mutex);
+    priv->elapsed += cut_test_get_elapsed(CUT_TEST(iterated_test));
     g_mutex_unlock(priv->mutex);
 }
 
@@ -1256,6 +1319,22 @@ cut_run_context_prepare_test (CutRunContext *context, CutTest *test)
     klass = CUT_RUN_CONTEXT_GET_CLASS(context);
     if (klass->prepare_test)
         klass->prepare_test(context, test);
+}
+
+static void
+prepare_iterated_test (CutRunContext *context, CutIteratedTest *iterated_test)
+{
+}
+
+void
+cut_run_context_prepare_iterated_test (CutRunContext *context,
+                                       CutIteratedTest *iterated_test)
+{
+    CutRunContextClass *klass;
+
+    klass = CUT_RUN_CONTEXT_GET_CLASS(context);
+    if (klass->prepare_iterated_test)
+        klass->prepare_iterated_test(context, iterated_test);
 }
 
 guint
