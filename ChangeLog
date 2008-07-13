@@ -1,5 +1,10 @@
 2008-07-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/lib/cuttest-utils.[ch] (cuttest_result_string_list_new)
+	(cuttest_result_string_list_new_from_result): add.
+
+	* test/lib/cuttest-assertions.h: function -> macro.
+
 	* module/ui/cut-console-ui.c (print_results): don't reverse each.
 
 	* cutter/cut-run-context.c (cut_run_context_get_results): return

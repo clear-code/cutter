@@ -63,3 +63,33 @@ cuttest_result_summary_list_new_from_run_context (CutRunContext *run_context)
         cut_run_context_get_n_omissions(run_context));
 }
 
+GList *
+cuttest_result_string_list_new (const gchar *test_name,
+                                const gchar *user_message,
+                                const gchar *system_message,
+                                const gchar *function_name)
+{
+    GList *strings = NULL;
+
+#define APPEND(value)                           \
+    strings = g_list_append(strings, g_strdup(value))
+
+    APPEND(test_name);
+    APPEND(user_message);
+    APPEND(system_message);
+    APPEND(function_name);
+
+#undef APPEND
+
+    return strings;
+}
+
+GList *
+cuttest_result_string_list_new_from_result (CutTestResult *result)
+{
+    return cuttest_result_string_list_new(
+        cut_test_result_get_test_name(result),
+        cut_test_result_get_user_message(result),
+        cut_test_result_get_system_message(result),
+        cut_test_result_get_function_name(result));
+}

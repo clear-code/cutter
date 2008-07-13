@@ -4,6 +4,7 @@
 #include <glib.h>
 #include <cutter/cut-test-case.h>
 #include <cutter/cut-run-context.h>
+#include <cutter/cut-test-result.h>
 
 const gchar *cuttest_get_base_dir (void);
 void         cuttest_add_test     (CutTestCase *test_case,
@@ -20,5 +21,13 @@ GList       *cuttest_result_summary_list_new
                                    guint n_omissions);
 GList       *cuttest_result_summary_list_new_from_run_context
                                   (CutRunContext *run_context);
+
+GList       *cuttest_result_string_list_new
+                                  (const gchar *test_name,
+                                   const gchar *user_message,
+                                   const gchar *system_message,
+                                   const gchar *function_name);
+GList       *cuttest_result_string_list_new_from_result
+                                  (CutTestResult *result);
 
 #endif

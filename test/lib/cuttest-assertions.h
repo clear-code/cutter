@@ -10,6 +10,9 @@
 #define cut_take_result_summary_list(list)      \
     cut_take_g_list(list, NULL)
 
+#define cut_take_result_string_list(list)       \
+    cut_take_g_list(list, g_free)
+
 #define cut_assert_test_result_summary(run_context, n_tests,            \
                                        n_assertions, n_successes,       \
                                        n_failures, n_errors,            \
@@ -44,29 +47,35 @@
                                  _actual_result_summary);               \
 } while (0)
 
-static inline void
-cut_assert_test_result (CutRunContext *run_context,
-                        gint i, CutTestResultStatus status,
-                        const gchar *test_name,
-                        const gchar *user_message, const gchar *system_message,
-                        const gchar *function_name)
-{
-    const GList *results;
-    CutTestResult *result;
-
-    results = cut_run_context_get_results(run_context);
-    cut_assert_operator_int(i, <, g_list_length((GList *)results));
-
-    result = g_list_nth_data((GList *)results, i);
-    cut_assert(result);
-    cut_assert_equal_int(status, cut_test_result_get_status(result));
-    cut_assert_equal_string(test_name, cut_test_result_get_test_name(result));
-    cut_assert_equal_string(user_message,
-                            cut_test_result_get_user_message(result));
-    cut_assert_equal_string(system_message,
-                            cut_test_result_get_system_message(result));
-    cut_assert_equal_string(function_name,
-                            cut_test_result_get_function_name(result));
-}
+#define cut_assert_test_result(run_context, i, status, test_name,       \
+                               user_message, system_message,            \
+                               function_name) do                        \
+{                                                                       \
+    const GList *_results;                                              \
+    CutTestResult *_result;                                             \
+    guint _i;                                                           \
+    GList *_strings = NULL;                                             \
+    const GList *_expected_strings, *_actual_strings;                   \
+                                                                        \
+    _results = cut_run_context_get_results(run_context);                \
+    _i = (i);                                                           \
+    cut_assert_operator_int(_i, <, g_list_length((GList *)_results));   \
+                                                                        \
+    _result = g_list_nth_data((GList *)_results, _i);                   \
+    cut_assert(_result);                                                \
+    cut_assert_equal_int((status),                                      \
+                         cut_test_result_get_status(_result));          \
+                                                                        \
+    _strings = cuttest_result_string_list_new((test_name),              \
+                                              (user_message),           \
+                                              (system_message),         \
+                                              (function_name));         \
+    _expected_strings = cut_take_result_summary_list(_strings);         \
+                                                                        \
+    _strings = cuttest_result_string_list_new_from_result(_result);     \
+    _actual_strings = cut_take_result_summary_list(_strings);           \
+                                                                        \
+    cut_assert_equal_g_list_string(_expected_strings, _actual_strings); \
+} while (0)
 
 #endif
