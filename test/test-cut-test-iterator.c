@@ -7,6 +7,7 @@
 void test_success(void);
 void test_failure(void);
 void test_error(void);
+void test_error_in_data_setup(void);
 
 static CutRunContext *run_context;
 static CutTestCase *test_case;
@@ -368,6 +369,34 @@ test_error (void)
     cut_assert_test_result(run_context, 2, CUT_TEST_RESULT_SUCCESS,
                            "error test iterator (Third)",
                            NULL, NULL, NULL);
+}
+
+static void
+stub_error_in_data_setup_iterated_data (void)
+{
+    cut_add_data("First", GINT_TO_POINTER(1), NULL);
+    cut_add_data("Second", GINT_TO_POINTER(2), NULL);
+    cut_error("error in data setup");
+    cut_add_data("Third", GINT_TO_POINTER(3), NULL);
+}
+
+static void
+stub_error_in_data_setup_iterated_test (gconstpointer data)
+{
+    cut_assert_true(TRUE, "always pass");
+}
+
+void
+test_error_in_data_setup (void)
+{
+    test_iterator =
+        cut_test_iterator_new("error in data setup test iterator",
+                              stub_error_in_data_setup_iterated_test,
+                              stub_error_in_data_setup_iterated_data);
+    cut_assert_false(run());
+
+    cut_assert_n_signals(0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0);
+    cut_assert_test_result_summary(run_context, 0, 0, 0, 0, 0, 0, 0, 0);
 }
 
 /*

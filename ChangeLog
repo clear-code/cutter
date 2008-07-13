@@ -1,5 +1,7 @@
 2008-07-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-test-iterator.c (test_error_in_data_setup): add.
+
 	* test/test-cut-test-iterator.c (test_error): add.
 
 	* test/test-cut-test-iterator.c: add.
