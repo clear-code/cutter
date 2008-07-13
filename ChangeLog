@@ -1,5 +1,7 @@
 2008-07-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-iterator.c (run): pass test_context to signal.
+
 	* cutter/cut-test-case.c: remove needless #include.
 
 2008-07-12  Kouhei Sutou  <kou@cozmixng.org>
