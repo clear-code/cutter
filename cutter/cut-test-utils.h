@@ -190,6 +190,88 @@ extern "C" {
         cut_take_string(                                                \
             cut_utils_build_path(path, ## __VA_ARGS__, NULL)))
 
+/**
+ * cut_add_data:
+ * @first_data_name: The first data name.
+ * @...: The data and destroy function of the first data,
+ *       followed optionally by more
+ *       name/data/destroy_function triples
+ *
+ * Adds data to use iterated test.
+ *
+ * e.g.:
+ * |[
+ * #include <cutter.h>
+ *
+ * void data_translate (void);
+ * void test_translate (const void *data);
+ *
+ * static const char*
+ * translate (int input)
+ * {
+ *    switch(input) {
+ *    case 1:
+ *        return "first";
+ *    case 111:
+ *        return "a hundred eleven";
+ *    default:
+ *        return "unsupported";
+ *    }
+ * }
+ *
+ * typedef struct _TranslateTestData
+ * {
+ *     char *translated;
+ *     int input;
+ * } TranslateTestData;
+ *
+ * static TranslateTestData *
+ * translate_test_data_new (char *translated, int input)
+ * {
+ *     TranslateTestData *data;
+ *
+ *     data = malloc(sizeof(TranslateTestData));
+ *     data->translated = strdup(translated);
+ *     data->input = input;
+ *
+ *     return data;
+ * }
+ *
+ * static void
+ * translate_test_data_free (TranslateTestData *data)
+ * {
+ *     free(data->translated);
+ *     free(data);
+ * }
+ *
+ * void
+ * data_translate(void)
+ * {
+ *     cut_add_data("simple data",
+ *                  translate_test_data_new("first", 1),
+ *                  translate_test_data_free,
+ *                  "complex data",
+ *                  translate_test_data_new("a hundred eleven", 111),
+ *                  translate_test_data_free);
+ * }
+ *
+ * void
+ * test_translate(const void *data)
+ * {
+ *      const TranslateTestData *test_data = data;
+ *
+ *      cut_assert_equal_string(test_data->translated,
+ *                              translate(test_data->input));
+ * }
+ * ]|
+ *
+ * Since: 1.0.3
+ */
+#define cut_add_data(first_data_name, ...)                      \
+    cut_test_context_add_data(get_current_test_context(),       \
+                              first_data_name, ## __VA_ARGS__,  \
+                              NULL)
+
 #ifdef __cplusplus
 }
 #endif
