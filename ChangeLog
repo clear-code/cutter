@@ -1,5 +1,7 @@
 2008-07-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-stream-parser.c (test_pass_assertion): add.
+
 	* cutter/cut-iterated-test.c: implement prepare.
 
 	* cutter/cut-test.[ch]: virtualize prepare.

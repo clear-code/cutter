@@ -12,6 +12,7 @@ void test_start_test (void);
 void test_start_test_with_multiple_option_names (void);
 void test_start_iterated_test (void);
 void test_error_result (void);
+void test_pass_assertion (void);
 void test_complete_iterated_test (void);
 void test_complete_test (void);
 void test_complete_test_iterator (void);
@@ -45,6 +46,7 @@ struct _CuttestEventReceiver
     GList *start_test_iterators;
     GList *start_tests;
     GList *start_iterated_tests;
+    GList *pass_assertions;
     GList *complete_iterated_tests;
     GList *complete_tests;
     GList *complete_test_iterators;
@@ -217,6 +219,38 @@ start_iterated_test_info_free (StartIteratedTestInfo *info)
     g_slice_free(StartIteratedTestInfo, info);
 }
 
+typedef struct _PassAssertionInfo
+{
+    CutTest *test;
+    CutTestContext *test_context;
+} PassAssertionInfo;
+
+static PassAssertionInfo *
+pass_assertion_info_new (CutTest *test, CutTestContext *test_context)
+{
+    PassAssertionInfo *info;
+
+    info = g_slice_new(PassAssertionInfo);
+    info->test = test;
+    if (info->test)
+        g_object_ref(info->test);
+    info->test_context = test_context;
+    if (info->test_context)
+        g_object_ref(info->test_context);
+
+    return info;
+}
+
+static void
+pass_assertion_info_free (PassAssertionInfo *info)
+{
+    if (info->test)
+        g_object_unref(info->test);
+    if (info->test_context)
+        g_object_unref(info->test_context);
+    g_slice_free(PassAssertionInfo, info);
+}
+
 typedef struct _CompleteIteratedTestInfo
 {
     CutIteratedTest *iterated_test;
@@ -341,6 +375,13 @@ dispose (GObject *object)
                        (GFunc)start_iterated_test_info_free, NULL);
         g_list_free(receiver->start_iterated_tests);
         receiver->start_iterated_tests = NULL;
+    }
+
+    if (receiver->pass_assertions) {
+        g_list_foreach(receiver->pass_assertions,
+                       (GFunc)pass_assertion_info_free, NULL);
+        g_list_free(receiver->pass_assertions);
+        receiver->pass_assertions = NULL;
     }
 
     if (receiver->complete_iterated_tests) {
@@ -494,6 +535,18 @@ start_iterated_test (CutRunContext *context, CutIteratedTest *iterated_test,
 }
 
 static void
+pass_assertion (CutRunContext *context, CutTest *test,
+                CutTestContext *test_context)
+{
+    CuttestEventReceiver *receiver;
+    PassAssertionInfo *info;
+
+    receiver = CUTTEST_EVENT_RECEIVER(context);
+    info = pass_assertion_info_new(test, test_context);
+    receiver->pass_assertions = g_list_append(receiver->pass_assertions, info);
+}
+
+static void
 complete_iterated_test (CutRunContext *context, CutIteratedTest *iterated_test,
                         CutTestContext *test_context)
 {
@@ -588,6 +641,7 @@ cuttest_event_receiver_class_init (CuttestEventReceiverClass *klass)
     run_context_class->start_test_iterator = start_test_iterator;
     run_context_class->start_test = start_test;
     run_context_class->start_iterated_test = start_iterated_test;
+    run_context_class->pass_assertion = pass_assertion;
     run_context_class->complete_iterated_test = complete_iterated_test;
     run_context_class->complete_test = complete_test;
     run_context_class->complete_test_iterator = complete_test_iterator;
@@ -1226,7 +1280,7 @@ test_error_result (void)
                      G_CALLBACK(collect_result), (gpointer)&result);
 
     cut_assert_parse(xml);
-    cut_assert(result);
+    cut_assert_not_null(result);
 
     test = cut_test_result_get_test(result);
     cut_assert(test);
@@ -1249,6 +1303,143 @@ test_error_result (void)
                             cut_test_get_attribute(test, "bug"));
     cut_assert_equal_string("Error Test",
                             cut_test_get_description(test));
+}
+
+void
+test_pass_assertion (void)
+{
+    PassAssertionInfo *info;
+    CutTest *test;
+    CutTestCase *test_case;
+    CutTestContext *test_context;
+    const gchar xml[] =
+        "<stream>\n"
+        "  <ready-test-suite>\n"
+        "    <test-suite>\n"
+        "      <elapsed>0.000000</elapsed>\n"
+        "    </test-suite>\n"
+        "    <n-test-cases>34</n-test-cases>\n"
+        "    <n-tests>236</n-tests>\n"
+        "  </ready-test-suite>\n"
+        "  <start-test-suite>\n"
+        "    <test-suite>\n"
+        "      <elapsed>0.000000</elapsed>\n"
+        "    </test-suite>\n"
+        "  </start-test-suite>\n"
+        "  <ready-test-case>\n"
+        "    <test-case>\n"
+        "      <name>test_cut_test</name>\n"
+        "      <elapsed>0.000000</elapsed>\n"
+        "    </test-case>\n"
+        "    <n-tests>13</n-tests>\n"
+        "  </ready-test-case>\n"
+        "  <start-test-case>\n"
+        "    <test-case>\n"
+        "      <name>test_cut_test</name>\n"
+        "      <elapsed>0.000000</elapsed>\n"
+        "    </test-case>\n"
+        "  </start-test-case>\n"
+        "  <start-test>\n"
+        "    <test>\n"
+        "      <name>test_error_signal</name>\n"
+        "      <elapsed>0.000000</elapsed>\n"
+        "    </test>\n"
+        "    <test-context>\n"
+        "      <test-case>\n"
+        "        <name>test_cut_test</name>\n"
+        "        <elapsed>0.000000</elapsed>\n"
+        "      </test-case>\n"
+        "      <failed>FALSE</failed>\n"
+        "    </test-context>\n"
+        "  </start-test>\n"
+        "  <pass-assertion>\n"
+        "    <test>\n"
+        "      <name>test_error_signal</name>\n"
+        "      <elapsed>0.000039</elapsed>\n"
+        "    </test>\n"
+        "    <test-context>\n"
+        "      <test-case>\n"
+        "        <name>test_cut_test</name>\n"
+        "        <elapsed>0.000062</elapsed>\n"
+        "      </test-case>\n"
+        "      <test>\n"
+        "        <name>test_error_signal</name>\n"
+        "        <elapsed>0.000077</elapsed>\n"
+        "      </test>\n"
+        "      <failed>FALSE</failed>\n"
+        "    </test-context>\n"
+        "  </pass-assertion>\n"
+        "  <test-result>\n"
+        "    <test>\n"
+        "      <name>test_error_signal</name>\n"
+        "      <elapsed>0.000895</elapsed>\n"
+        "    </test>\n"
+        "    <test-context>\n"
+        "      <test-case>\n"
+        "        <name>test_cut_test</name>\n"
+        "        <elapsed>0.000895</elapsed>\n"
+        "      </test-case>\n"
+        "      <test>\n"
+        "        <name>test_error_signal</name>\n"
+        "        <elapsed>0.000895</elapsed>\n"
+        "      </test>\n"
+        "      <failed>FALSE</failed>\n"
+        "    </test-context>\n"
+        "    <result>\n"
+        "      <test-case>\n"
+        "        <name>test_cut_test</name>\n"
+        "        <elapsed>0.000895</elapsed>\n"
+        "      </test-case>\n"
+        "      <test>\n"
+        "        <name>test_error_signal</name>\n"
+        "        <elapsed>0.000895</elapsed>\n"
+        "      </test>\n"
+        "      <status>success</status>\n"
+        "      <elapsed>0.000895</elapsed>\n"
+        "    </result>\n"
+        "  </test-result>\n"
+        "  <complete-test>\n"
+        "    <test>\n"
+        "      <name>test_error_signal</name>\n"
+        "      <elapsed>0.000895</elapsed>\n"
+        "    </test>\n"
+        "  </complete-test>\n"
+        "  <complete-test-case>\n"
+        "    <test-case>\n"
+        "      <name>test_cut_test</name>\n"
+        "      <elapsed>0.003745</elapsed>\n"
+        "    </test-case>\n"
+        "  </complete-test-case>\n"
+        "  <complete-test-suite>\n"
+        "    <test-suite>\n"
+        "      <elapsed>139.666143</elapsed>\n"
+        "    </test-suite>\n"
+        "  </complete-test-suite>\n"
+        "  <success>false</success>\n"
+        "</stream>\n";
+
+    cut_assert_null(receiver->pass_assertions);
+    cut_assert_parse(xml);
+    cut_assert_not_null(receiver->pass_assertions);
+
+    cut_assert_equal_uint(1, g_list_length(receiver->pass_assertions));
+    info = receiver->pass_assertions->data;
+
+    test = info->test;
+    cut_assert_not_null(test);
+    cut_assert_equal_string("test_error_signal", cut_test_get_name(test));
+
+    test_context = info->test_context;
+    cut_assert_not_null(test_context);
+
+    test_case = cut_test_context_get_test_case(test_context);
+    cut_assert_not_null(test_case);
+    cut_assert_equal_string("test_cut_test",
+                            cut_test_get_name(CUT_TEST(test_case)));
+
+    test = cut_test_context_get_test(test_context);
+    cut_assert_not_null(test);
+    cut_assert_equal_string("test_error_signal", cut_test_get_name(test));
 }
 
 void
