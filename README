@@ -24,6 +24,8 @@ This is a list of features of Cutter:
   * outputs result with useful format for debugging.
   * tests are built as shared libraries.
 
+See ((<FEATURES>)) for more details.
+
 == Dependency libraries
 
   * GLib >= 2.16

@@ -1,5 +1,8 @@
 2008-07-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* FEATURES.ja: add.
+	* FEATURES, README*: update.
+
 	* doc/reference/: update document.
 
 	* cutter/cutter.h: use "data driven test".

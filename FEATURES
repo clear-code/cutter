@@ -1,8 +1,46 @@
 # -*- rd -*-
 
-== Cross Platform
+= Features
+
+Cutter has basic features of a unit testing framework:
+
+  * Fixture
+  * No test registration code
+  * Result output with useful format for debugging
+  * Many assertions
+
+Cutter also has many useful advanced features:
+
+  * Cross platform
+  * Data Driven Test support
+  * Coverage support
+  * Backtrace on crash
+  * Serialize/deserialize test result
+  * ...
+
+== Basic
+
+=== Fixture
+
+=== No test registration code
+
+=== Result output with useful format for debugging
+
+=== Many assertions
+
+== Advanced
+
+=== Cross platform
 
   * GNU/Linux and Unix
   * Windows
   * Mac OS X
+
+=== Data Driven Test support
+
+=== Coverage support
+
+=== Backtrace on crash
+
+=== Serialize/deserialize test result
 
