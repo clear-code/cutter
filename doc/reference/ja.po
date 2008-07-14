@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.0.3\n"
 "POT-Creation-Date: 2008-07-14 11:38+0900\n"
-"PO-Revision-Date: 2008-07-14 11:39+0900\n"
+"PO-Revision-Date: 2008-07-14 13:56+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -6836,51 +6836,3 @@ msgstr ""
 #: xml/gbsearcharray.xml:0(None)
 msgid "translator-credits"
 msgstr ""
-
-#~ msgid ""
-#~ "Passes ownership of the GObject * to Cutter and returns the GObject *."
-#~ msgstr ""
-#~ "GObject *の所有権をCutterに渡し、引数で指定されたGObject *を返します。"
-
-#~ msgid ""
-#~ "This is useful only if you make a custom test runner like cutter command. "
-#~ "You can pass a data from your custom test runner to test programs. They "
-#~ "will receive your data through this."
-#~ msgstr ""
-#~ "cutterコマンドのようなテスト起動コマンドを独自に作ったときにだけ役にたちま"
-#~ "す。独自のテスト起動コマンドからテストプログラムにデータを渡すことができま"
-#~ "す。テストプログラムはこのマクロを使ってデータを受け取ることができます。"
-
-#~ msgid "a data from a program who invokes your test."
-#~ msgstr "テストを実行したプログラムからのデータ。"
-
-#~ msgid "Tutorial"
-#~ msgstr "チュートリアル"
-
-#~ msgid "Object Hierarchy"
-#~ msgstr "オブジェクト階層"
-
-#~ msgid "Properties"
-#~ msgstr "プロパティ"
-
-#~ msgid "n-tests"
-#~ msgstr "テスト数"
-
-#~ msgid "Signals"
-#~ msgstr "シグナル"
-
-#~ msgid "Property Details"
-#~ msgstr "プロパティ詳細"
-
-#~ msgid "Signal Details"
-#~ msgstr "シグナル詳細"
-
-#~ msgid "description"
-#~ msgstr "説明"
-
-#~ msgid ""
-#~ "format string, followed by parameters to insert into the format string "
-#~ "(as with <link linkend=\"printf\"><function>printf()</function></link>)"
-#~ msgstr ""
-#~ "整形文字列。以降のパラメータが整形文字列に挿入されます。（<link linkend="
-#~ "\"printf\"><function>printf()</function></link>と同じ）"

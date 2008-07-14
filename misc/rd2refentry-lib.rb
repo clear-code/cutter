@@ -1,8 +1,12 @@
 require "English"
 
 require "erb"
+require "optparse"
 require "rd/rdvisitor"
 require "rd/version"
+
+require "gettext"
+require "gettext/poparser"
 
 module RD
   class RD2RefEntryVisitor < RDVisitor
@@ -12,8 +16,15 @@ module RD
     SYSTEM_VERSION = "0.0.1"
     VERSION = Version.new_from_version_string(SYSTEM_NAME, SYSTEM_VERSION)
 
-    def self.version
-      VERSION
+    @@po = nil
+    class << self
+      def version
+        VERSION
+      end
+
+      def po=(po)
+        @@po = po
+      end
     end
 
     # must-have constants
@@ -24,6 +35,7 @@ module RD
 
     def initialize
       super
+      @translate_data = nil
     end
 
     def apply_to_DocumentElement(element, contents)
@@ -40,7 +52,7 @@ module RD
 
     def apply_to_Headline(element, title)
       if element.level == 1
-        @title, @purpose = title.join.split(/\B---\B/, 2)
+        @title, @purpose = title.join.split(/\s*\B---\B\s*/, 2)
       end
       [:headline, element.level - 1, title]
     end
@@ -112,6 +124,23 @@ module RD
     end
 
     private
+    def _(msgstr)
+      translate_data[msgstr] || msgstr
+    end
+
+    def translate_data
+      @translate_data ||= make_translate_data
+    end
+
+    def make_translate_data
+      data = MOFile.new
+      if @@po
+        parser = GetText::PoParser.new
+        parser.parse(File.read(@@po), data)
+      end
+      data
+    end
+
     def xml_decl
       "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
     end
@@ -152,12 +181,17 @@ module RD
 
     def ref_meta
       tag("refmeta", {},
-          tag("refentrytitle", {}, @title),
-          tag("refmiscinfo", {}, h("Cutter Library")))
+          tag("refentrytitle",
+              {
+                "role" => "top_of_page",
+                "id" => "#{ref_entry_id}.top_of_page",
+              },
+              @title),
+          tag("refmiscinfo", {}, h(_("CUTTER Library"))))
     end
 
     def ref_name_div
-      contents = tag("refname", {}, @title)
+      contents = [tag("refname", {}, @title)]
       contents << tag("refpurpose", {}, @purpose) if @purpose
       tag("refnamediv", {}, *contents)
     end
@@ -200,10 +234,9 @@ module RD
         unless sub_section_contents.empty?
           raise "!?" unless section_contents.last[0] == level
           _, contents = section_contents.pop
-          tagged_contents = tag("refsect#{level}", {},
-                                *(contents + sub_section_contents))
           if level > 0
-            contents = tagged_contents
+            contents = tag("refsect#{level}", {},
+                           *(contents + sub_section_contents))
           else
             contents = sub_section_contents.join("\n\n")
           end
@@ -224,3 +257,8 @@ module RD
 end
 
 $Visitor_Class = RD::RD2RefEntryVisitor
+ARGV.options do |opts|
+  opts.on("-pPO", "--po=PO", "PO file") do |po|
+    RD::RD2RefEntryVisitor.po = po
+  end
+end

@@ -82,7 +82,16 @@ CATALOGS=ja.po
 # include common portion ...
 include $(top_srcdir)/gtk-doc.make
 
-CLEANFILES += $(DOC_MODULE)-sections.txt
+CLEANFILES +=				\
+	$(DOC_MODULE)-sections.txt	\
+	readme.xml			\
+	readme.xml.ja			\
+	news.xml			\
+	news.xml.ja			\
+	tutorial.xml			\
+	tutorial.xml.ja			\
+	features.xml			\
+	features.xml.ja
 
 # Other files to distribute
 EXTRA_DIST +=				\
@@ -112,29 +121,31 @@ update-po: Makefile sgml.stamp
 	done
 
 RD2REFENTRY_LIB = $(top_srcdir)/misc/rd2refentry-lib.rb
+RD2 = rd2 -r $(RD2REFENTRY_LIB)
+RD2_JA = $(RD2) --po=$(srcdir)/ja.po
 news.xml: $(top_srcdir)/NEWS $(RD2REFENTRY_LIB) news.xml.ja
-	rd2 -r $(RD2REFENTRY_LIB) $(top_srcdir)/NEWS > news.xml
+	$(RD2) $(top_srcdir)/NEWS > news.xml
 
-news.xml.ja: $(top_srcdir)/NEWS.ja $(RD2REFENTRY_LIB)
-	rd2 -r $(RD2REFENTRY_LIB) $(top_srcdir)/NEWS.ja > news.xml.ja
+news.xml.ja: $(top_srcdir)/NEWS.ja $(RD2REFENTRY_LIB) ja.po
+	$(RD2_JA) $(top_srcdir)/NEWS.ja > news.xml.ja
 
 readme.xml: $(top_srcdir)/README $(RD2REFENTRY_LIB) readme.xml.ja
-	rd2 -r $(RD2REFENTRY_LIB) $(top_srcdir)/README > readme.xml
+	$(RD2) $(top_srcdir)/README > readme.xml
 
-readme.xml.ja: $(top_srcdir)/README.ja $(RD2REFENTRY_LIB)
-	rd2 -r $(RD2REFENTRY_LIB) $(top_srcdir)/README.ja > readme.xml.ja
+readme.xml.ja: $(top_srcdir)/README.ja $(RD2REFENTRY_LIB) ja.po
+	$(RD2_JA) $(top_srcdir)/README.ja > readme.xml.ja
 
 tutorial.xml: $(top_srcdir)/TUTORIAL $(RD2REFENTRY_LIB) tutorial.xml.ja
-	rd2 -r $(RD2REFENTRY_LIB) $(top_srcdir)/TUTORIAL > tutorial.xml
+	$(RD2) $(top_srcdir)/TUTORIAL > tutorial.xml
 
-tutorial.xml.ja: $(top_srcdir)/TUTORIAL.ja $(RD2REFENTRY_LIB)
-	rd2 -r $(RD2REFENTRY_LIB) $(top_srcdir)/TUTORIAL.ja > tutorial.xml.ja
+tutorial.xml.ja: $(top_srcdir)/TUTORIAL.ja $(RD2REFENTRY_LIB) ja.po
+	$(RD2_JA) $(top_srcdir)/TUTORIAL.ja > tutorial.xml.ja
 
 features.xml: $(top_srcdir)/FEATURES $(RD2REFENTRY_LIB) features.xml.ja
-	rd2 -r $(RD2REFENTRY_LIB) $(top_srcdir)/FEATURES > features.xml
+	$(RD2) $(top_srcdir)/FEATURES > features.xml
 
-features.xml.ja: $(top_srcdir)/FEATURES.ja $(RD2REFENTRY_LIB)
-	rd2 -r $(RD2REFENTRY_LIB) $(top_srcdir)/FEATURES.ja > features.xml.ja
+features.xml.ja: $(top_srcdir)/FEATURES.ja $(RD2REFENTRY_LIB) ja.po
+	$(RD2_JA) $(top_srcdir)/FEATURES.ja > features.xml.ja
 
 upload: docs
 	ssh $(SF_HOST) rm -rf $(SF_HTDOCS_PATH)/reference

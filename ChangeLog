@@ -1,5 +1,9 @@
 2008-07-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/ja.po: remove obsoleted messages.
+
+	* misc/rd2refentry-lib.rb, doc/reference/Makefile.am: support po.
+
 	* cutter/cutter.h (cut_add_data), doc/reference/: add a link to
 	CutDestroyFunction.
 
