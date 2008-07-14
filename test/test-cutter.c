@@ -211,7 +211,7 @@ test_help_all (void)
         "  --class=CLASS                                   Program class as used by the window manager" LINE_FEED_CODE
         "  --gtk-name=NAME                                 Program name as used by the window manager" LINE_FEED_CODE
         "  --screen=SCREEN                                 X screen to use" LINE_FEED_CODE
-#  ifdef GTK_NOTE
+#  ifdef G_ENABLE_DEBUG
         "  --gdk-debug=FLAGS                               Gdk debugging flags to set" LINE_FEED_CODE
         "  --gdk-no-debug=FLAGS                            Gdk debugging flags to unset" LINE_FEED_CODE
 #  endif
@@ -226,7 +226,7 @@ test_help_all (void)
 #  endif
         "  --gtk-module=MODULES                            Load additional GTK+ modules" LINE_FEED_CODE
         "  --g-fatal-warnings                              Make all warnings fatal" LINE_FEED_CODE
-#  ifdef GTK_NOTE
+#  ifdef G_ENABLE_DEBUG
         "  --gtk-debug=FLAGS                               GTK+ debugging flags to set" LINE_FEED_CODE
         "  --gtk-no-debug=FLAGS                            GTK+ debugging flags to unset" LINE_FEED_CODE
 #  endif

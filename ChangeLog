@@ -1,5 +1,7 @@
 2008-07-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cutter.c (test_help_all): use G_ENABLE_DEBUG not GTK_NOTE.
+
 	* test/lib/Makefile.am: add -rpath to make .so.
 
 2008-07-15  Hiroyuki Ikezoe  <poincare@ikezoe.net>
