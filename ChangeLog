@@ -1,5 +1,7 @@
 2008-07-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* FEATURES*: update.
+
 	* doc/reference/ja.po: remove obsoleted messages.
 
 	* misc/rd2refentry-lib.rb, doc/reference/Makefile.am: support po.

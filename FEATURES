@@ -2,6 +2,8 @@
 
 = Features --- What can be done with Cutter
 
+== Introduction
+
 Cutter has basic features of a unit testing framework:
 
   * Fixture
