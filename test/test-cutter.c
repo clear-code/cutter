@@ -211,6 +211,10 @@ test_help_all (void)
         "  --class=CLASS                                   Program class as used by the window manager" LINE_FEED_CODE
         "  --gtk-name=NAME                                 Program name as used by the window manager" LINE_FEED_CODE
         "  --screen=SCREEN                                 X screen to use" LINE_FEED_CODE
+#  ifdef GTK_NOTE
+        "  --gdk-debug=FLAGS                               Gdk debugging flags to set" LINE_FEED_CODE
+        "  --gdk-no-debug=FLAGS                            Gdk debugging flags to unset" LINE_FEED_CODE
+#  endif
 #  ifdef GDK_WINDOWING_X11
         "  --sync                                          Make X calls synchronous" LINE_FEED_CODE
 #  elif defined(GDK_WINDOWING_WIN32)
@@ -222,6 +226,10 @@ test_help_all (void)
 #  endif
         "  --gtk-module=MODULES                            Load additional GTK+ modules" LINE_FEED_CODE
         "  --g-fatal-warnings                              Make all warnings fatal" LINE_FEED_CODE
+#  ifdef GTK_NOTE
+        "  --gtk-debug=FLAGS                               GTK+ debugging flags to set" LINE_FEED_CODE
+        "  --gtk-no-debug=FLAGS                            GTK+ debugging flags to unset" LINE_FEED_CODE
+#  endif
         "" LINE_FEED_CODE
 #endif
         "Application Options:" LINE_FEED_CODE

@@ -1,3 +1,10 @@
+2008-07-15  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/test-cutter.c: added --gtk-debug, --gtk-no-debug, etc. etc. if
+	GTK_NOTE is defined. The macro is defined in gtk/gtkdebug.h if
+	G_ENABLE_DEBUG is defined so it can be used for check whether GTK+ is
+	compiled with DEBUG flag.
+
 2008-07-14  Kouhei Sutou  <kou@cozmixng.org>
 
 	* FEATURES*: update.
