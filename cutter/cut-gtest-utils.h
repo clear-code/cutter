@@ -68,7 +68,7 @@ G_BEGIN_DECLS
  * @list: the GList * to be owned by Cutter.
  * @destroy_function: the destroy function
  * (#CutDestroyFunction) that destroys the elements of
- * @list, or %NULL.
+ * @list, or NULL.
  *
  * Passes ownership of @list to Cutter and returns
  * a GList * that has same elements of @list.
