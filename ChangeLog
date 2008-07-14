@@ -1,5 +1,7 @@
 2008-07-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/cutter-docs.sgml: don't use capital form for id.
+
 	* FEATURES*, README*: update.
 	* doc/reference/: support FEATURES*.
 	* misc/rd2refentry-lib.rb: support local reference.

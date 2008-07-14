@@ -10,7 +10,7 @@
 
   <part>
     <title>Introduction</title>
-    <chapter id="Start">
+    <chapter id="start">
       <title>Getting start</title>
       <xi:include href="news.xml"/>
       <xi:include href="readme.xml"/>
@@ -21,7 +21,7 @@
 
   <part>
     <title>Reference</title>
-    <chapter id="Writing">
+    <chapter id="writing">
       <title>Writing tests</title>
       <xi:include href="xml/cutter.xml"/>
       <xi:include href="xml/cut-assertions.xml"/>
@@ -30,11 +30,11 @@
       <xi:include href="xml/cut-experimental.xml"/>
     </chapter>
 <!--
-    <chapter id="Invoking">
+    <chapter id="invoking">
       <title>Invoking tests</title>
       <xi:include href="xml/cut-main.xml"/>
     </chapter>
-    <chapter id="Internal">
+    <chapter id="internal">
       <title>Internal objects</title>
       <xi:include href="xml/cut-test-context.xml"/>
       <xi:include href="xml/cut-test-case.xml"/>
