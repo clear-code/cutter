@@ -1,6 +1,6 @@
 # -*- rd -*-
 
-= 機能
+= 機能 --- Cutterの機能
 
 Cutterは以下のような単体テストフレームワークの基本的な機能を
 持っています。
@@ -203,9 +203,9 @@ Cutterでは、上記のような一般的な検証機能以外にも様々な�
   * ...
 
 検証機能の一覧はリファレンスマニュアルの((<検証
-|URL:http://cutter.sourceforge.net/reference/ja/cutter-cut-assertions.html>))
+|URL:http://cutter.sf.net/reference/ja/cutter-cut-assertions.html>))
 や((<GLibサポート付きの検証
-|http://cutter.sourceforge.net/reference/ja/cutter-cut-assertions.html>))
+|URL:http://cutter.sf.net/reference/ja/cutter-cut-gassertions.html>))
 を見てください。
 
 == 高度な機能

@@ -1,6 +1,6 @@
 # -*- rd -*-
 
-= README
+= README --- An introduction of Cutter
 
 == Name
 
@@ -133,7 +133,7 @@ Executing flow of test is the following.
   (2) Compile it and build test_*.so.
   (3) Execute cutter. It loads test_*.so and runs them.
 
-See TUTORIAL and sample/stack/.
+See ((<a tutorial|TUTORIAL>)) and sample/stack/.
 
 == Test result
 

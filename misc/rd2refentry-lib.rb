@@ -53,14 +53,23 @@ module RD
       tag("programlisting", {}, contents.join("").chomp)
     end
 
+    def apply_to_Reference_with_RDLabel(element, contents)
+      raise "label with filename is unsupported" if element.label.filename
+      url = element.label.element_label
+      label = contents.join("").chomp
+      label = url if label.empty?
+      url = remove_lang_suffix(url.downcase) + ".html"
+      label = remove_lang_suffix(label)
+      tag("ulink", {:url => url}, label)
+    end
+
     def apply_to_Reference_with_URL(element, contents)
-      if /\Ahttp:\/\/cutter\.sf\.net\/reference\// =~ element.label.url
+      url = element.label.url
+      label = contents.join("").chomp
+      if /\Ahttp:\/\/cutter\.(?:sf|sourceforge)\.net\/reference\// =~ url
         url = File.basename($POSTMATCH)
-        label = url
-      else
-        url = element.label.url
-        label = contents.join("").chomp
       end
+      url = label if label.empty?
       tag("ulink", {:url => url}, label)
     end
 
@@ -206,6 +215,10 @@ module RD
 
     def consist_of_one_textblock?(listitem)
       listitem.children.size == 1 and listitem.children[0].is_a?(TextBlock)
+    end
+
+    def remove_lang_suffix(string)
+      string.sub(/\.[a-z]{2}$/, "")
     end
   end
 end

@@ -63,11 +63,12 @@ MKDB_OPTIONS=--sgml-mode --output-format=xml --ignore-files=trio
 HTML_IMAGES =
 
 # Extra SGML files that are included by $(DOC_MAIN_SGML_FILE)
-content_files =				\
-	version.xml			\
-	readme.xml			\
-	news.xml			\
-	tutorial.xml
+content_files =		\
+	version.xml	\
+	readme.xml	\
+	news.xml	\
+	tutorial.xml	\
+	features.xml
 
 # Extra options to supply to gtkdoc-fixref
 FIXXREF_OPTIONS=
@@ -89,6 +90,8 @@ EXTRA_DIST +=				\
 	news.xml.ja			\
 	tutorial.xml			\
 	tutorial.xml.ja			\
+	features.xml			\
+	features.xml.ja			\
 	sf-logo.html			\
 	ja.po
 
@@ -122,6 +125,12 @@ tutorial.xml: $(top_srcdir)/TUTORIAL $(RD2REFENTRY_LIB) tutorial.xml.ja
 
 tutorial.xml.ja: $(top_srcdir)/TUTORIAL.ja $(RD2REFENTRY_LIB)
 	rd2 -r $(RD2REFENTRY_LIB) $(top_srcdir)/TUTORIAL.ja > tutorial.xml.ja
+
+features.xml: $(top_srcdir)/FEATURES $(RD2REFENTRY_LIB) features.xml.ja
+	rd2 -r $(RD2REFENTRY_LIB) $(top_srcdir)/FEATURES > features.xml
+
+features.xml.ja: $(top_srcdir)/FEATURES.ja $(RD2REFENTRY_LIB)
+	rd2 -r $(RD2REFENTRY_LIB) $(top_srcdir)/FEATURES.ja > features.xml.ja
 
 upload: docs
 	ssh $(SF_HOST) rm -rf $(SF_HTDOCS_PATH)/reference

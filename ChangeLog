@@ -1,5 +1,9 @@
 2008-07-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* FEATURES*, README*: update.
+	* doc/reference/: support FEATURES*.
+	* misc/rd2refentry-lib.rb: support local reference.
+
 	* cutter/cut-assertions.h: reorder. assertions are above, others
 	are below.
 
