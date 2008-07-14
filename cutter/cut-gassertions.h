@@ -229,7 +229,7 @@ G_BEGIN_DECLS
 
 /**
  * cut_assert_g_error:
- * @error: a GError *.
+ * @error: a target GError *.
  * @...: optional format string, followed by parameters to insert
  * into the format string (as with printf())
  *
