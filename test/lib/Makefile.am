@@ -17,8 +17,12 @@ LIBS =						\
 	$(top_builddir)/cutter/libcutter.la	\
 	$(GLIB_LIBS)
 
+# We just need to add -rpath option to make .so. We use
+# $(libdir) here but we can use other absolute path like
+# $(abs_builddir).  $(abs_builddir) is more reasonable
+# absolute path but it's not supported automake < 1.10. :<
 AM_LDFLAGS =			\
-	-rpath $(abs_builddir)
+	-rpath $(libdir)
 
 libcuttest_utils_la_SOURCES = 		\
 	cuttest-utils.c			\

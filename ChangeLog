@@ -1,5 +1,9 @@
 2008-07-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/lib/Makefile.am (AM_LDFLAGS): use $(libdir) not
+	$(abs_builddir) because $(abs_builddir) isn't supported automake <
+	1.10. :<
+
 	* test/test-cutter.c (test_help_all): use G_ENABLE_DEBUG not GTK_NOTE.
 
 	* test/lib/Makefile.am: add -rpath to make .so.
