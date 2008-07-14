@@ -1,5 +1,8 @@
 2008-07-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-context.c (cut_test_context_take_g_list): copy
+	and free passed list.
+
 	* cutter/cut-gassertions.h: improve document.
 
 	* doc/reference/ja.po: update.

@@ -91,25 +91,27 @@ typedef struct _TakenList TakenList;
 struct _TakenList
 {
     GList *list;
-    CutDestroyFunction destroy;
+    CutDestroyFunction destroy_function;
 };
 
 static TakenList *
-taken_list_new (GList *list, CutDestroyFunction destroy)
+taken_list_new (GList *list, CutDestroyFunction destroy_function)
 {
     TakenList *taken_list;
 
     taken_list = g_slice_new(TakenList);
-    taken_list->list = list;
-    taken_list->destroy = destroy;
+    taken_list->list = g_list_copy(list);
+    taken_list->destroy_function = destroy_function;
     return taken_list;
 }
 
 static void
 taken_list_free (TakenList *taken_list)
 {
-    if (taken_list->destroy)
-        g_list_foreach(taken_list->list, (GFunc)taken_list->destroy, NULL);
+    if (taken_list->destroy_function)
+        g_list_foreach(taken_list->list,
+                       (GFunc)taken_list->destroy_function,
+                       NULL);
     g_list_free(taken_list->list);
 
     g_slice_free(TakenList, taken_list);
@@ -724,16 +726,17 @@ cut_test_context_take_g_error (CutTestContext *context, GError *error)
 
 const GList *
 cut_test_context_take_g_list (CutTestContext *context, GList *list,
-                              CutDestroyFunction destroy)
+                              CutDestroyFunction destroy_function)
 {
     CutTestContextPrivate *priv;
     TakenList *taken_list;
 
     priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
-    taken_list = taken_list_new(list, destroy);
+    taken_list = taken_list_new(list, destroy_function);
     priv->taken_lists = g_list_prepend(priv->taken_lists, taken_list);
+    g_list_free(list);
 
-    return list;
+    return taken_list->list;
 }
 
 int
