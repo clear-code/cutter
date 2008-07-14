@@ -1,5 +1,8 @@
 2008-07-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertions.h: reorder. assertions are above, others
+	are below.
+
 	* FEATURES.ja: add.
 	* FEATURES, README*: update.
 

@@ -46,110 +46,6 @@ extern "C" {
  */
 
 /**
- * cut_error:
- * @format: the message format. See the printf() documentation.
- * @...: the parameters to insert into the format string.
- *
- * Raises an error with message.
- */
-#define cut_error(format, ...)                  \
-    cut_test_fail(ERROR, NULL, format, ## __VA_ARGS__)
-
-/**
- * cut_error_errno:
- * @...: optional format string, followed by parameters to insert
- * into the format string (as with printf())
- *
- * e.g.:
- * |[
- * void
- * setup (void)
- * {
- *     mkdir("tmp", 0700);
- *     cut_error_errno("Failed to make tmp directory");
- *       -> Error when tmp directory isn't made successfully.
- * }
- * ]|
- *
- * Since: 1.0.2
- */
-#define cut_error_errno(...) do                                         \
-{                                                                       \
-    int _current_errno = errno;                                         \
-                                                                        \
-    if (_current_errno != 0) {                                          \
-        cut_test_fail(ERROR,                                            \
-                      cut_take_printf("<%d> (%s)",                      \
-                                      _current_errno,                   \
-                                      strerror(_current_errno)),        \
-                      ## __VA_ARGS__);                                  \
-    }                                                                   \
-} while(0)
-
-/**
- * cut_fail:
- * @format: the message format. See the printf() documentation.
- * @...: the parameters to insert into the format string.
- *
- * Raises a failure with message.
- */
-#define cut_fail(format, ...)                    \
-    cut_test_fail(FAILURE, NULL, format, ## __VA_ARGS__)
-
-/**
- * cut_pend:
- * @format: the message format. See the printf() documentation.
- * @...: the parameters to insert into the format string.
- *
- * Marks the test is pending with message. The test is
- * stopped.
- */
-#define cut_pend(format, ...)                               \
-    cut_test_fail(PENDING, NULL, format, ## __VA_ARGS__)
-
-#ifndef CUTTER_DISABLE_DEPRECATED
-/**
- * cut_pending:
- * @format: the message format. See the printf() documentation.
- * @...: the parameters to insert into the format string.
- *
- * Marks the test is pending with message. The test is
- * stopped.
- *
- * Deprecated: 0.4: Use cut_pend() instead.
- */
-#define cut_pending(format, ...) cut_pend(format, ## __VA_ARGS__)
-#endif
-
-/**
- * cut_notify:
- * @format: the message format. See the printf() documentation.
- * @...: the parameters to insert into the format string.
- *
- * Leaves a notification message. The test is continued.
- */
-#define cut_notify(format, ...)                  \
-    cut_test_register_result(NOTIFICATION, NULL, format, ## __VA_ARGS__)
-
-/**
- * cut_omit:
- * @format: the message format. See the printf() documentation.
- * @...: the parameters to insert into the format string.
- *
- * Omit the test.
- *
- * e.g.:
- * |[
- * if (version < 2.0)
- *   cut_omit("Require >= 2.0");
- * ]|
- *
- * Since: 0.8
- */
-#define cut_omit(format, ...)                           \
-    cut_test_fail(OMISSION, NULL, format, ## __VA_ARGS__)
-
-/**
  * cut_assert:
  * @expression: the expression to check.
  * @...: optional format string, followed by parameters to insert
@@ -820,6 +716,110 @@ extern "C" {
     cut_assert_equal_string((expected), _data,                          \
                             "%s", cut_take_string(_full_path));         \
 } while (0)
+
+/**
+ * cut_error:
+ * @format: the message format. See the printf() documentation.
+ * @...: the parameters to insert into the format string.
+ *
+ * Raises an error with message.
+ */
+#define cut_error(format, ...)                  \
+    cut_test_fail(ERROR, NULL, format, ## __VA_ARGS__)
+
+/**
+ * cut_error_errno:
+ * @...: optional format string, followed by parameters to insert
+ * into the format string (as with printf())
+ *
+ * e.g.:
+ * |[
+ * void
+ * setup (void)
+ * {
+ *     mkdir("tmp", 0700);
+ *     cut_error_errno("Failed to make tmp directory");
+ *       -> Error when tmp directory isn't made successfully.
+ * }
+ * ]|
+ *
+ * Since: 1.0.2
+ */
+#define cut_error_errno(...) do                                         \
+{                                                                       \
+    int _current_errno = errno;                                         \
+                                                                        \
+    if (_current_errno != 0) {                                          \
+        cut_test_fail(ERROR,                                            \
+                      cut_take_printf("<%d> (%s)",                      \
+                                      _current_errno,                   \
+                                      strerror(_current_errno)),        \
+                      ## __VA_ARGS__);                                  \
+    }                                                                   \
+} while(0)
+
+/**
+ * cut_fail:
+ * @format: the message format. See the printf() documentation.
+ * @...: the parameters to insert into the format string.
+ *
+ * Raises a failure with message.
+ */
+#define cut_fail(format, ...)                    \
+    cut_test_fail(FAILURE, NULL, format, ## __VA_ARGS__)
+
+/**
+ * cut_pend:
+ * @format: the message format. See the printf() documentation.
+ * @...: the parameters to insert into the format string.
+ *
+ * Marks the test is pending with message. The test is
+ * stopped.
+ */
+#define cut_pend(format, ...)                               \
+    cut_test_fail(PENDING, NULL, format, ## __VA_ARGS__)
+
+#ifndef CUTTER_DISABLE_DEPRECATED
+/**
+ * cut_pending:
+ * @format: the message format. See the printf() documentation.
+ * @...: the parameters to insert into the format string.
+ *
+ * Marks the test is pending with message. The test is
+ * stopped.
+ *
+ * Deprecated: 0.4: Use cut_pend() instead.
+ */
+#define cut_pending(format, ...) cut_pend(format, ## __VA_ARGS__)
+#endif
+
+/**
+ * cut_notify:
+ * @format: the message format. See the printf() documentation.
+ * @...: the parameters to insert into the format string.
+ *
+ * Leaves a notification message. The test is continued.
+ */
+#define cut_notify(format, ...)                  \
+    cut_test_register_result(NOTIFICATION, NULL, format, ## __VA_ARGS__)
+
+/**
+ * cut_omit:
+ * @format: the message format. See the printf() documentation.
+ * @...: the parameters to insert into the format string.
+ *
+ * Omit the test.
+ *
+ * e.g.:
+ * |[
+ * if (version < 2.0)
+ *   cut_omit("Require >= 2.0");
+ * ]|
+ *
+ * Since: 0.8
+ */
+#define cut_omit(format, ...)                           \
+    cut_test_fail(OMISSION, NULL, format, ## __VA_ARGS__)
 
 
 #ifdef __cplusplus
