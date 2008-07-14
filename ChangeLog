@@ -1,5 +1,8 @@
 2008-07-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cutter.h (cut_add_data), doc/reference/: add a link to
+	CutDestroyFunction.
+
 	* doc/reference/: support cut-gtest-utils.h and cut-types.h.
 
 	* cutter/cut-public.h, cutter/cut-gassertions.h,

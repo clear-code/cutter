@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.0.3\n"
-"POT-Creation-Date: 2008-07-14 11:22+0900\n"
-"PO-Revision-Date: 2008-07-14 11:22+0900\n"
+"POT-Creation-Date: 2008-07-14 11:38+0900\n"
+"PO-Revision-Date: 2008-07-14 11:39+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -92,7 +92,7 @@ msgid "Index of new symbols in 0.3"
 msgstr "0.3での新しいシンボル一覧"
 
 #: xml/cut-assertions.xml:7(refentrytitle) xml/cut-assertions.xml:13(refname)
-#: xml/cutter.xml:276(link)
+#: xml/cutter.xml:277(link)
 msgid "Assertions"
 msgstr "検証"
 
@@ -2206,7 +2206,7 @@ msgid "an actual GList * of unsigned integer."
 msgstr "実際の符号無し整数のリスト（GList *）。"
 
 #: xml/cut-gassertions.xml:128(para) xml/cut-test-utils.xml:136(para)
-#: xml/cutter.xml:267(para)
+#: xml/cutter.xml:268(para)
 msgid "Since 1.0.3"
 msgstr "1.0.3から"
 
@@ -2351,12 +2351,8 @@ msgstr ""
 msgid ""
 "the destroy function (<link linkend=\"CutDestroyFunction"
 "\"><type>CutDestroyFunction</type></link>) that destroys the elements of "
-"<parameter>list</parameter>, or <link linkend=\"NULL:CAPS\"><literal>NULL</"
-"literal></link>."
-msgstr ""
-"<parameter>list</parameter>の要素を破棄する関数(<link linkend="
-"\"CutDestroyFunction\"><type>CutDestroyFunction</type></link>)、あるいは"
-"<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>。"
+"<parameter>list</parameter>, or NULL."
+msgstr "<parameter>list</parameter>の要素を破棄する関数(<link linkend=\"CutDestroyFunction\"><type>CutDestroyFunction</type></link>)、あるいはNULL。"
 
 #: xml/cut-iterated-test.xml:7(refentrytitle)
 #: xml/cut-iterated-test.xml:13(refname) xml/cut-iterated-test.xml:23(link)
@@ -6607,12 +6603,11 @@ msgstr "最初のデータ名。"
 #: xml/cutter.xml:263(simpara)
 msgid ""
 "The data and destroy function of the first data, followed optionally by more "
-"name/data/destroy_function triples"
-msgstr ""
-"最初のデータとデータ破棄関数。続けて任意の数の「名前・データ・データ破棄関"
-"数」の三つ組を指定します。"
+"name/data/destroy_function(<link linkend=\"CutDestroyFunction"
+"\"><type>CutDestroyFunction</type></link>) triples."
+msgstr "最初のデータとデータ破棄関数。続けて任意の数の「名前・データ・データ破棄関数(<link linkend=\"CutDestroyFunction\"><type>CutDestroyFunction</type></link>)」の三つ組を指定します。"
 
-#: xml/cutter.xml:275(title)
+#: xml/cutter.xml:276(title)
 msgid "See Also"
 msgstr "参考"
 

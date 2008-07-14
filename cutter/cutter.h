@@ -177,7 +177,8 @@ void shutdown(void);
  * @first_data_name: The first data name.
  * @...: The data and destroy function of the first data,
  *       followed optionally by more
- *       name/data/destroy_function triples
+ *       name/data/destroy_function(#CutDestroyFunction)
+ *       triples.
  *
  * Adds data to use data driven test.
  *
