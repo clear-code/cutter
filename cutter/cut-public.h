@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2008  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,6 +24,8 @@
 extern "C" {
 #endif
 
+#include <cutter/cut-types.h>
+
 #if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ > 4)
 #  define CUT_GNUC_PRINTF(format_index, arg_index)                      \
     __attribute__((__format__ (__printf__, format_index, arg_index)))
@@ -39,9 +41,6 @@ extern "C" {
 #else
 #  define CUT_GNUC_NULL_TERMINATED
 #endif
-
-
-typedef void    (*CutDestroyFunction)     (void *data);
 
 typedef struct _CutTestContext     CutTestContext;
 

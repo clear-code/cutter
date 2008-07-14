@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.0.3\n"
-"POT-Creation-Date: 2008-07-14 10:28+0900\n"
-"PO-Revision-Date: 2008-07-14 10:29+0900\n"
+"POT-Creation-Date: 2008-07-14 11:22+0900\n"
+"PO-Revision-Date: 2008-07-14 11:22+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -39,55 +39,55 @@ msgstr "リファレンス"
 msgid "Writing tests"
 msgstr "テスト作成"
 
-#: cutter-docs.sgml:62(title)
+#: cutter-docs.sgml:64(title)
 msgid "Index"
 msgstr "索引"
 
-#: cutter-docs.sgml:65(title)
+#: cutter-docs.sgml:67(title)
 msgid "Index of deprecated symbols"
 msgstr "非推奨のシンボル一覧"
 
-#: cutter-docs.sgml:68(title)
+#: cutter-docs.sgml:70(title)
 msgid "Index of new symbols in 1.0.3"
 msgstr "1.0.3での新しいシンボル一覧"
 
-#: cutter-docs.sgml:71(title)
+#: cutter-docs.sgml:73(title)
 msgid "Index of new symbols in 1.0.2"
 msgstr "1.0.2での新しいシンボル一覧"
 
-#: cutter-docs.sgml:74(title)
+#: cutter-docs.sgml:76(title)
 msgid "Index of new symbols in 1.0.1"
 msgstr "1.0.1での新しいシンボル一覧"
 
-#: cutter-docs.sgml:77(title)
+#: cutter-docs.sgml:79(title)
 msgid "Index of new symbols in 1.0"
 msgstr "1.0での新しいシンボル一覧"
 
-#: cutter-docs.sgml:80(title)
+#: cutter-docs.sgml:82(title)
 msgid "Index of new symbols in 0.9"
 msgstr "0.9での新しいシンボル一覧"
 
-#: cutter-docs.sgml:83(title)
+#: cutter-docs.sgml:85(title)
 msgid "Index of new symbols in 0.8"
 msgstr "0.8での新しいシンボル一覧"
 
-#: cutter-docs.sgml:86(title)
+#: cutter-docs.sgml:88(title)
 msgid "Index of new symbols in 0.7"
 msgstr "0.7での新しいシンボル一覧"
 
-#: cutter-docs.sgml:89(title)
+#: cutter-docs.sgml:91(title)
 msgid "Index of new symbols in 0.6"
 msgstr "0.6での新しいシンボル一覧"
 
-#: cutter-docs.sgml:92(title)
+#: cutter-docs.sgml:94(title)
 msgid "Index of new symbols in 0.5"
 msgstr "0.5での新しいシンボル一覧"
 
-#: cutter-docs.sgml:95(title)
+#: cutter-docs.sgml:97(title)
 msgid "Index of new symbols in 0.4"
 msgstr "0.4での新しいシンボル一覧"
 
-#: cutter-docs.sgml:98(title)
+#: cutter-docs.sgml:100(title)
 msgid "Index of new symbols in 0.3"
 msgstr "0.3での新しいシンボル一覧"
 
@@ -101,9 +101,10 @@ msgstr "検証"
 #: xml/cut-factory-builder.xml:8(manvolnum)
 #: xml/cut-gassertions-helper.xml:8(manvolnum)
 #: xml/cut-gassertions.xml:8(manvolnum) xml/cut-gpublic.xml:8(manvolnum)
-#: xml/cut-iterated-test.xml:8(manvolnum) xml/cut-list.xml:8(manvolnum)
-#: xml/cut-listener-utils.xml:8(manvolnum) xml/cut-listener.xml:8(manvolnum)
-#: xml/cut-main.xml:8(manvolnum) xml/cut-module-factory-utils.xml:8(manvolnum)
+#: xml/cut-gtest-utils.xml:8(manvolnum) xml/cut-iterated-test.xml:8(manvolnum)
+#: xml/cut-list.xml:8(manvolnum) xml/cut-listener-utils.xml:8(manvolnum)
+#: xml/cut-listener.xml:8(manvolnum) xml/cut-main.xml:8(manvolnum)
+#: xml/cut-module-factory-utils.xml:8(manvolnum)
 #: xml/cut-module-factory.xml:8(manvolnum) xml/cut-pipeline.xml:8(manvolnum)
 #: xml/cut-process.xml:8(manvolnum)
 #: xml/cut-report-factory-builder.xml:8(manvolnum)
@@ -113,7 +114,7 @@ msgstr "検証"
 #: xml/cut-streamer-factory-builder.xml:8(manvolnum)
 #: xml/cut-streamer.xml:8(manvolnum) xml/cut-test-data.xml:8(manvolnum)
 #: xml/cut-test-iterator.xml:8(manvolnum) xml/cut-test-runner.xml:8(manvolnum)
-#: xml/cut-test-utils.xml:8(manvolnum)
+#: xml/cut-test-utils.xml:8(manvolnum) xml/cut-types.xml:8(manvolnum)
 #: xml/cut-ui-factory-builder.xml:8(manvolnum) xml/cut-ui.xml:8(manvolnum)
 #: xml/cut-value-equal.xml:8(manvolnum) xml/cut-version.xml:8(manvolnum)
 #: xml/cutter.xml:8(manvolnum) xml/gbsearcharray.xml:8(manvolnum)
@@ -125,6 +126,7 @@ msgstr ""
 #: xml/cut-factory-builder.xml:9(refmiscinfo)
 #: xml/cut-gassertions-helper.xml:9(refmiscinfo)
 #: xml/cut-gassertions.xml:9(refmiscinfo) xml/cut-gpublic.xml:9(refmiscinfo)
+#: xml/cut-gtest-utils.xml:9(refmiscinfo)
 #: xml/cut-iterated-test.xml:9(refmiscinfo) xml/cut-list.xml:9(refmiscinfo)
 #: xml/cut-listener-utils.xml:9(refmiscinfo)
 #: xml/cut-listener.xml:9(refmiscinfo) xml/cut-main.xml:9(refmiscinfo)
@@ -139,7 +141,7 @@ msgstr ""
 #: xml/cut-streamer.xml:9(refmiscinfo) xml/cut-test-data.xml:9(refmiscinfo)
 #: xml/cut-test-iterator.xml:9(refmiscinfo)
 #: xml/cut-test-runner.xml:9(refmiscinfo)
-#: xml/cut-test-utils.xml:9(refmiscinfo)
+#: xml/cut-test-utils.xml:9(refmiscinfo) xml/cut-types.xml:9(refmiscinfo)
 #: xml/cut-ui-factory-builder.xml:9(refmiscinfo) xml/cut-ui.xml:9(refmiscinfo)
 #: xml/cut-value-equal.xml:9(refmiscinfo) xml/cut-version.xml:9(refmiscinfo)
 #: xml/cutter.xml:9(refmiscinfo) xml/gbsearcharray.xml:9(refmiscinfo)
@@ -154,10 +156,10 @@ msgstr "あなたのプログラムが期待通りに動作しているかを検
 #: xml/cut-diff.xml:19(title) xml/cut-experimental.xml:19(title)
 #: xml/cut-factory-builder.xml:19(title)
 #: xml/cut-gassertions-helper.xml:19(title) xml/cut-gassertions.xml:20(title)
-#: xml/cut-gpublic.xml:19(title) xml/cut-iterated-test.xml:19(title)
-#: xml/cut-list.xml:19(title) xml/cut-listener-utils.xml:19(title)
-#: xml/cut-listener.xml:19(title) xml/cut-main.xml:19(title)
-#: xml/cut-module-factory-utils.xml:19(title)
+#: xml/cut-gpublic.xml:19(title) xml/cut-gtest-utils.xml:20(title)
+#: xml/cut-iterated-test.xml:19(title) xml/cut-list.xml:19(title)
+#: xml/cut-listener-utils.xml:19(title) xml/cut-listener.xml:19(title)
+#: xml/cut-main.xml:19(title) xml/cut-module-factory-utils.xml:19(title)
 #: xml/cut-module-factory.xml:19(title) xml/cut-pipeline.xml:19(title)
 #: xml/cut-process.xml:19(title) xml/cut-report-factory-builder.xml:19(title)
 #: xml/cut-report.xml:19(title) xml/cut-run-context.xml:19(title)
@@ -165,10 +167,10 @@ msgstr "あなたのプログラムが期待通りに動作しているかを検
 #: xml/cut-streamer-factory-builder.xml:19(title)
 #: xml/cut-streamer.xml:19(title) xml/cut-test-data.xml:19(title)
 #: xml/cut-test-iterator.xml:19(title) xml/cut-test-runner.xml:19(title)
-#: xml/cut-test-utils.xml:19(title) xml/cut-ui-factory-builder.xml:19(title)
-#: xml/cut-ui.xml:19(title) xml/cut-value-equal.xml:19(title)
-#: xml/cut-version.xml:19(title) xml/cutter.xml:19(title)
-#: xml/gbsearcharray.xml:19(title)
+#: xml/cut-test-utils.xml:19(title) xml/cut-types.xml:19(title)
+#: xml/cut-ui-factory-builder.xml:19(title) xml/cut-ui.xml:19(title)
+#: xml/cut-value-equal.xml:19(title) xml/cut-version.xml:19(title)
+#: xml/cutter.xml:19(title) xml/gbsearcharray.xml:19(title)
 msgid "Synopsis"
 msgstr "概要"
 
@@ -348,10 +350,10 @@ msgstr ""
 #: xml/cut-diff.xml:38(title) xml/cut-experimental.xml:38(title)
 #: xml/cut-factory-builder.xml:42(title)
 #: xml/cut-gassertions-helper.xml:37(title) xml/cut-gassertions.xml:42(title)
-#: xml/cut-gpublic.xml:42(title) xml/cut-iterated-test.xml:39(title)
-#: xml/cut-list.xml:53(title) xml/cut-listener-utils.xml:37(title)
-#: xml/cut-listener.xml:39(title) xml/cut-main.xml:42(title)
-#: xml/cut-module-factory-utils.xml:49(title)
+#: xml/cut-gpublic.xml:34(title) xml/cut-gtest-utils.xml:38(title)
+#: xml/cut-iterated-test.xml:39(title) xml/cut-list.xml:53(title)
+#: xml/cut-listener-utils.xml:37(title) xml/cut-listener.xml:39(title)
+#: xml/cut-main.xml:42(title) xml/cut-module-factory-utils.xml:49(title)
 #: xml/cut-module-factory.xml:47(title) xml/cut-pipeline.xml:37(title)
 #: xml/cut-process.xml:47(title) xml/cut-report-factory-builder.xml:35(title)
 #: xml/cut-report.xml:47(title) xml/cut-run-context.xml:125(title)
@@ -359,10 +361,10 @@ msgstr ""
 #: xml/cut-streamer-factory-builder.xml:35(title)
 #: xml/cut-streamer.xml:41(title) xml/cut-test-data.xml:50(title)
 #: xml/cut-test-iterator.xml:42(title) xml/cut-test-runner.xml:36(title)
-#: xml/cut-test-utils.xml:44(title) xml/cut-ui-factory-builder.xml:35(title)
-#: xml/cut-ui.xml:42(title) xml/cut-value-equal.xml:40(title)
-#: xml/cut-version.xml:38(title) xml/cutter.xml:39(title)
-#: xml/gbsearcharray.xml:45(title)
+#: xml/cut-test-utils.xml:44(title) xml/cut-types.xml:35(title)
+#: xml/cut-ui-factory-builder.xml:35(title) xml/cut-ui.xml:42(title)
+#: xml/cut-value-equal.xml:40(title) xml/cut-version.xml:38(title)
+#: xml/cutter.xml:39(title) xml/gbsearcharray.xml:45(title)
 msgid "Description"
 msgstr "説明"
 
@@ -398,10 +400,10 @@ msgstr "例: <placeholder-1/>"
 #: xml/cut-diff.xml:45(title) xml/cut-experimental.xml:47(title)
 #: xml/cut-factory-builder.xml:49(title)
 #: xml/cut-gassertions-helper.xml:44(title) xml/cut-gassertions.xml:51(title)
-#: xml/cut-gpublic.xml:49(title) xml/cut-iterated-test.xml:46(title)
-#: xml/cut-list.xml:60(title) xml/cut-listener-utils.xml:44(title)
-#: xml/cut-listener.xml:46(title) xml/cut-main.xml:49(title)
-#: xml/cut-module-factory-utils.xml:56(title)
+#: xml/cut-gpublic.xml:41(title) xml/cut-gtest-utils.xml:53(title)
+#: xml/cut-iterated-test.xml:46(title) xml/cut-list.xml:60(title)
+#: xml/cut-listener-utils.xml:44(title) xml/cut-listener.xml:46(title)
+#: xml/cut-main.xml:49(title) xml/cut-module-factory-utils.xml:56(title)
 #: xml/cut-module-factory.xml:54(title) xml/cut-pipeline.xml:44(title)
 #: xml/cut-process.xml:54(title) xml/cut-report-factory-builder.xml:42(title)
 #: xml/cut-report.xml:54(title) xml/cut-run-context.xml:132(title)
@@ -409,10 +411,10 @@ msgstr "例: <placeholder-1/>"
 #: xml/cut-streamer-factory-builder.xml:42(title)
 #: xml/cut-streamer.xml:48(title) xml/cut-test-data.xml:57(title)
 #: xml/cut-test-iterator.xml:49(title) xml/cut-test-runner.xml:43(title)
-#: xml/cut-test-utils.xml:59(title) xml/cut-ui-factory-builder.xml:42(title)
-#: xml/cut-ui.xml:49(title) xml/cut-value-equal.xml:47(title)
-#: xml/cut-version.xml:45(title) xml/cutter.xml:144(title)
-#: xml/gbsearcharray.xml:52(title)
+#: xml/cut-test-utils.xml:59(title) xml/cut-types.xml:44(title)
+#: xml/cut-ui-factory-builder.xml:42(title) xml/cut-ui.xml:49(title)
+#: xml/cut-value-equal.xml:47(title) xml/cut-version.xml:45(title)
+#: xml/cutter.xml:144(title) xml/gbsearcharray.xml:52(title)
 msgid "Details"
 msgstr "詳細"
 
@@ -663,10 +665,9 @@ msgid "an expected float value."
 msgstr "期待される浮動小数点数。"
 
 #: xml/cut-assertions.xml:234(term) xml/cut-gassertions-helper.xml:63(term)
-#: xml/cut-gassertions.xml:158(term) xml/cut-gpublic.xml:78(term)
-#: xml/cut-gpublic.xml:92(term) xml/cut-run-context.xml:890(term)
-#: xml/cut-stream-parser.xml:103(term) xml/cut-stream-parser.xml:121(term)
-#: xml/cut-streamer.xml:60(term)
+#: xml/cut-gassertions.xml:158(term) xml/cut-gtest-utils.xml:75(term)
+#: xml/cut-run-context.xml:890(term) xml/cut-stream-parser.xml:103(term)
+#: xml/cut-stream-parser.xml:121(term) xml/cut-streamer.xml:60(term)
 msgid "<parameter>error</parameter>&nbsp;:"
 msgstr ""
 
@@ -1339,7 +1340,6 @@ msgstr ""
 
 #: xml/cut-contractor.xml:24(link) xml/cut-contractor.xml:25(link)
 #: xml/cut-factory-builder.xml:28(link) xml/cut-factory-builder.xml:29(link)
-#: xml/cut-gpublic.xml:27(link) xml/cut-gpublic.xml:28(link)
 #: xml/cut-list.xml:25(link) xml/cut-list.xml:26(link)
 #: xml/cut-list.xml:29(link) xml/cut-list.xml:32(link)
 #: xml/cut-list.xml:33(link) xml/cut-list.xml:34(link)
@@ -1453,10 +1453,11 @@ msgstr ""
 #: xml/cut-run-context.xml:108(link) xml/cut-sequence-matcher.xml:31(link)
 #: xml/cut-sequence-matcher.xml:38(link) xml/cut-test-data.xml:28(link)
 #: xml/cut-test-data.xml:31(link) xml/cut-test-data.xml:35(link)
-#: xml/cut-test-iterator.xml:27(link) xml/cut-ui.xml:23(link)
-#: xml/cut-ui.xml:24(link) xml/cut-value-equal.xml:22(link)
-#: xml/cut-value-equal.xml:25(link) xml/cutter.xml:22(link)
-#: xml/cutter.xml:23(link) xml/cutter.xml:24(link) xml/cutter.xml:25(link)
+#: xml/cut-test-iterator.xml:27(link) xml/cut-types.xml:22(link)
+#: xml/cut-ui.xml:23(link) xml/cut-ui.xml:24(link)
+#: xml/cut-value-equal.xml:22(link) xml/cut-value-equal.xml:25(link)
+#: xml/cutter.xml:22(link) xml/cutter.xml:23(link) xml/cutter.xml:24(link)
+#: xml/cutter.xml:25(link)
 msgid "void"
 msgstr ""
 
@@ -1505,9 +1506,7 @@ msgstr ""
 #: xml/cut-diff.xml:68(term) xml/cut-diff.xml:82(term)
 #: xml/cut-experimental.xml:71(term) xml/cut-factory-builder.xml:68(term)
 #: xml/cut-factory-builder.xml:82(term) xml/cut-factory-builder.xml:113(term)
-#: xml/cut-factory-builder.xml:127(term) xml/cut-gpublic.xml:63(term)
-#: xml/cut-gpublic.xml:81(term) xml/cut-gpublic.xml:95(term)
-#: xml/cut-gpublic.xml:117(term) xml/cut-iterated-test.xml:81(term)
+#: xml/cut-factory-builder.xml:127(term) xml/cut-iterated-test.xml:81(term)
 #: xml/cut-iterated-test.xml:92(term) xml/cut-list.xml:102(term)
 #: xml/cut-list.xml:124(term) xml/cut-list.xml:142(term)
 #: xml/cut-list.xml:156(term) xml/cut-list.xml:174(term)
@@ -1620,34 +1619,32 @@ msgid ""
 msgstr ""
 
 #: xml/cut-contractor.xml:126(term) xml/cut-factory-builder.xml:98(term)
-#: xml/cut-gpublic.xml:57(term) xml/cut-gpublic.xml:75(term)
-#: xml/cut-gpublic.xml:108(term) xml/cut-module-factory.xml:126(term)
-#: xml/cut-run-context.xml:160(term) xml/cut-run-context.xml:175(term)
-#: xml/cut-run-context.xml:191(term) xml/cut-run-context.xml:207(term)
-#: xml/cut-run-context.xml:222(term) xml/cut-run-context.xml:237(term)
-#: xml/cut-run-context.xml:251(term) xml/cut-run-context.xml:266(term)
-#: xml/cut-run-context.xml:281(term) xml/cut-run-context.xml:297(term)
-#: xml/cut-run-context.xml:313(term) xml/cut-run-context.xml:329(term)
-#: xml/cut-run-context.xml:345(term) xml/cut-run-context.xml:361(term)
-#: xml/cut-run-context.xml:377(term) xml/cut-run-context.xml:392(term)
-#: xml/cut-run-context.xml:409(term) xml/cut-run-context.xml:426(term)
-#: xml/cut-run-context.xml:442(term) xml/cut-run-context.xml:458(term)
-#: xml/cut-run-context.xml:473(term) xml/cut-run-context.xml:487(term)
-#: xml/cut-run-context.xml:501(term) xml/cut-run-context.xml:515(term)
-#: xml/cut-run-context.xml:529(term) xml/cut-run-context.xml:543(term)
-#: xml/cut-run-context.xml:557(term) xml/cut-run-context.xml:571(term)
-#: xml/cut-run-context.xml:585(term) xml/cut-run-context.xml:599(term)
-#: xml/cut-run-context.xml:614(term) xml/cut-run-context.xml:629(term)
-#: xml/cut-run-context.xml:643(term) xml/cut-run-context.xml:658(term)
-#: xml/cut-run-context.xml:673(term) xml/cut-run-context.xml:685(term)
-#: xml/cut-run-context.xml:699(term) xml/cut-run-context.xml:713(term)
-#: xml/cut-run-context.xml:728(term) xml/cut-run-context.xml:744(term)
-#: xml/cut-run-context.xml:759(term) xml/cut-run-context.xml:774(term)
-#: xml/cut-run-context.xml:792(term) xml/cut-run-context.xml:808(term)
-#: xml/cut-run-context.xml:823(term) xml/cut-run-context.xml:835(term)
-#: xml/cut-run-context.xml:849(term) xml/cut-run-context.xml:866(term)
-#: xml/cut-run-context.xml:884(term) xml/cut-run-context.xml:910(term)
-#: xml/cut-run-context.xml:926(term)
+#: xml/cut-module-factory.xml:126(term) xml/cut-run-context.xml:160(term)
+#: xml/cut-run-context.xml:175(term) xml/cut-run-context.xml:191(term)
+#: xml/cut-run-context.xml:207(term) xml/cut-run-context.xml:222(term)
+#: xml/cut-run-context.xml:237(term) xml/cut-run-context.xml:251(term)
+#: xml/cut-run-context.xml:266(term) xml/cut-run-context.xml:281(term)
+#: xml/cut-run-context.xml:297(term) xml/cut-run-context.xml:313(term)
+#: xml/cut-run-context.xml:329(term) xml/cut-run-context.xml:345(term)
+#: xml/cut-run-context.xml:361(term) xml/cut-run-context.xml:377(term)
+#: xml/cut-run-context.xml:392(term) xml/cut-run-context.xml:409(term)
+#: xml/cut-run-context.xml:426(term) xml/cut-run-context.xml:442(term)
+#: xml/cut-run-context.xml:458(term) xml/cut-run-context.xml:473(term)
+#: xml/cut-run-context.xml:487(term) xml/cut-run-context.xml:501(term)
+#: xml/cut-run-context.xml:515(term) xml/cut-run-context.xml:529(term)
+#: xml/cut-run-context.xml:543(term) xml/cut-run-context.xml:557(term)
+#: xml/cut-run-context.xml:571(term) xml/cut-run-context.xml:585(term)
+#: xml/cut-run-context.xml:599(term) xml/cut-run-context.xml:614(term)
+#: xml/cut-run-context.xml:629(term) xml/cut-run-context.xml:643(term)
+#: xml/cut-run-context.xml:658(term) xml/cut-run-context.xml:673(term)
+#: xml/cut-run-context.xml:685(term) xml/cut-run-context.xml:699(term)
+#: xml/cut-run-context.xml:713(term) xml/cut-run-context.xml:728(term)
+#: xml/cut-run-context.xml:744(term) xml/cut-run-context.xml:759(term)
+#: xml/cut-run-context.xml:774(term) xml/cut-run-context.xml:792(term)
+#: xml/cut-run-context.xml:808(term) xml/cut-run-context.xml:823(term)
+#: xml/cut-run-context.xml:835(term) xml/cut-run-context.xml:849(term)
+#: xml/cut-run-context.xml:866(term) xml/cut-run-context.xml:884(term)
+#: xml/cut-run-context.xml:910(term) xml/cut-run-context.xml:926(term)
 msgid "<parameter>context</parameter>&nbsp;:"
 msgstr ""
 
@@ -2020,17 +2017,20 @@ msgid "cut-gassertions-helper"
 msgstr ""
 
 #: xml/cut-gassertions-helper.xml:22(link)
-#: xml/cut-gassertions-helper.xml:47(primary)
+#: xml/cut-gassertions-helper.xml:47(primary) xml/cut-gtest-utils.xml:23(link)
+#: xml/cut-gtest-utils.xml:56(primary)
 msgid "cut_take_g_object"
 msgstr ""
 
 #: xml/cut-gassertions-helper.xml:23(link)
-#: xml/cut-gassertions-helper.xml:59(primary)
+#: xml/cut-gassertions-helper.xml:59(primary) xml/cut-gtest-utils.xml:24(link)
+#: xml/cut-gtest-utils.xml:68(primary)
 msgid "cut_take_g_error"
 msgstr ""
 
 #: xml/cut-gassertions-helper.xml:24(link)
-#: xml/cut-gassertions-helper.xml:71(primary)
+#: xml/cut-gassertions-helper.xml:71(primary) xml/cut-gtest-utils.xml:25(link)
+#: xml/cut-gtest-utils.xml:81(primary)
 msgid "cut_take_g_list"
 msgstr ""
 
@@ -2043,29 +2043,31 @@ msgid ""
 "#define             <placeholder-3/>                     (list, destroy)\n"
 msgstr ""
 
-#: xml/cut-gassertions-helper.xml:46(title)
+#: xml/cut-gassertions-helper.xml:46(title) xml/cut-gtest-utils.xml:55(title)
 msgid "cut_take_g_object()"
 msgstr ""
 
 #: xml/cut-gassertions-helper.xml:47(programlisting)
+#: xml/cut-gtest-utils.xml:56(programlisting)
 #, no-wrap
 msgid "#define             cut_take_g_object(object)"
 msgstr ""
 
-#: xml/cut-gassertions-helper.xml:51(term) xml/cut-gpublic.xml:60(term)
+#: xml/cut-gassertions-helper.xml:51(term) xml/cut-gtest-utils.xml:62(term)
 msgid "<parameter>object</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-gassertions-helper.xml:58(title)
+#: xml/cut-gassertions-helper.xml:58(title) xml/cut-gtest-utils.xml:67(title)
 msgid "cut_take_g_error()"
 msgstr ""
 
 #: xml/cut-gassertions-helper.xml:59(programlisting)
+#: xml/cut-gtest-utils.xml:68(programlisting)
 #, no-wrap
 msgid "#define             cut_take_g_error(error)"
 msgstr ""
 
-#: xml/cut-gassertions-helper.xml:70(title)
+#: xml/cut-gassertions-helper.xml:70(title) xml/cut-gtest-utils.xml:80(title)
 msgid "cut_take_g_list()"
 msgstr ""
 
@@ -2074,13 +2076,13 @@ msgstr ""
 msgid "#define             cut_take_g_list(list, destroy)"
 msgstr ""
 
-#: xml/cut-gassertions-helper.xml:75(term) xml/cut-gpublic.xml:111(term)
+#: xml/cut-gassertions-helper.xml:75(term) xml/cut-gtest-utils.xml:88(term)
 #: xml/cut-list.xml:115(term) xml/cut-list.xml:153(term)
 #: xml/cut-list.xml:185(term) xml/cut-list.xml:217(term)
 msgid "<parameter>list</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-gassertions-helper.xml:78(term) xml/cut-gpublic.xml:114(term)
+#: xml/cut-gassertions-helper.xml:78(term)
 msgid "<parameter>destroy</parameter>&nbsp;:"
 msgstr ""
 
@@ -2267,105 +2269,94 @@ msgstr "削除するパスの最初の要素。"
 msgid "cut-gpublic"
 msgstr ""
 
-#: xml/cut-gpublic.xml:22(link) xml/cut-gpublic.xml:23(link)
-#: xml/cut-module-factory.xml:33(link) xml/cut-ui.xml:25(link)
-msgid "GObject"
-msgstr ""
+#: xml/cut-gtest-utils.xml:7(refentrytitle)
+#: xml/cut-gtest-utils.xml:13(refname)
+msgid "Test Utilities with GLib support"
+msgstr "GLibサポート付きテストユーティリティ"
 
-#: xml/cut-gpublic.xml:22(link) xml/cut-gpublic.xml:52(primary)
-msgid "cut_test_context_take_g_object"
-msgstr ""
+#: xml/cut-gtest-utils.xml:14(refpurpose)
+msgid "Utilities to write tests more easily with GLib support."
+msgstr "テストをもっと簡単に書くためのGLibサポート付きユーティリティ。"
 
-#: xml/cut-gpublic.xml:22(link) xml/cut-gpublic.xml:24(link)
-#: xml/cut-gpublic.xml:27(link)
-msgid "CutTestContext"
-msgstr ""
-
-#: xml/cut-gpublic.xml:24(link) xml/cut-gpublic.xml:25(link)
-#: xml/cut-gpublic.xml:26(link) xml/cut-run-context.xml:105(link)
-#: xml/cut-stream-parser.xml:28(link) xml/cut-stream-parser.xml:30(link)
-#: xml/cut-streamer.xml:23(link)
-msgid "GError"
-msgstr ""
-
-#: xml/cut-gpublic.xml:24(link) xml/cut-gpublic.xml:70(primary)
-msgid "cut_test_context_take_g_error"
-msgstr ""
-
-#: xml/cut-gpublic.xml:26(link) xml/cut-main.xml:23(link)
-#: xml/cut-main.xml:26(link) xml/cut-main.xml:27(link)
-msgid "char"
-msgstr ""
-
-#: xml/cut-gpublic.xml:26(link) xml/cut-gpublic.xml:88(primary)
-msgid "cut_utils_inspect_g_error"
-msgstr ""
-
-#: xml/cut-gpublic.xml:27(link) xml/cut-gpublic.xml:102(primary)
-msgid "cut_test_context_take_g_list"
-msgstr ""
-
-#: xml/cut-gpublic.xml:29(link) xml/cut-test-data.xml:25(link)
-#: xml/cut-test-data.xml:33(link)
-msgid "CutDestroyFunction"
-msgstr ""
-
-#: xml/cut-gpublic.xml:21(synopsis)
+#: xml/cut-gtest-utils.xml:22(synopsis)
 #, no-wrap
 msgid ""
 "\n"
-"<placeholder-1/>*            <placeholder-2/>      (<placeholder-3/> *context,\n"
-"                                                         <placeholder-4/> *object);\n"
-"const <placeholder-5/>*       <placeholder-6/>       (<placeholder-7/> *context,\n"
-"                                                         <placeholder-8/> *error);\n"
-"<placeholder-9/>*               <placeholder-10/>           (<placeholder-11/> *error);\n"
-"const <placeholder-12/>*        <placeholder-13/>        (<placeholder-14/> *context,\n"
-"                                                         <placeholder-15/> *list,\n"
-"                                                         <placeholder-16/> destroy);\n"
+"#define             <placeholder-1/>                   (object)\n"
+"#define             <placeholder-2/>                    (error)\n"
+"#define             <placeholder-3/>                     (list, destroy_function)\n"
 msgstr ""
 
-#: xml/cut-gpublic.xml:51(title)
-msgid "cut_test_context_take_g_object ()"
-msgstr ""
-
-#: xml/cut-gpublic.xml:52(programlisting)
-#, no-wrap
+#: xml/cut-gtest-utils.xml:39(para) xml/cut-test-utils.xml:45(para)
 msgid ""
-"<link linkend=\"GObject\">GObject</link>*            cut_test_context_take_g_object      (<link linkend=\"CutTestContext\">CutTestContext</link> *context,\n"
-"                                                         <link linkend=\"GObject\">GObject</link> *object);"
+"To write tests, you need to write codes that set up/tear down test "
+"environment, prepare expected and actual values and so on. Cutter provides "
+"test utilities to you write your tests more easily."
 msgstr ""
+"テストを書くためには、テスト環境を前処理・後処理するコードや、検証する結果を"
+"準備するコードなどたくさんのコードを書く必要があります。Cutterはもっと簡単に"
+"テストを書くためにユーティリティを提供します。"
 
-#: xml/cut-gpublic.xml:69(title)
-msgid "cut_test_context_take_g_error ()"
-msgstr ""
+#: xml/cut-gtest-utils.xml:45(para)
+msgid "The utilities work with GLib."
+msgstr "このユーティリティはGLibと一緒に使います。"
 
-#: xml/cut-gpublic.xml:70(programlisting)
-#, no-wrap
+#: xml/cut-gtest-utils.xml:57(para)
 msgid ""
-"const <link linkend=\"GError\">GError</link>*       cut_test_context_take_g_error       (<link linkend=\"CutTestContext\">CutTestContext</link> *context,\n"
-"                                                         <link linkend=\"GError\">GError</link> *error);"
+"Passes ownership of <parameter>object</parameter> to Cutter and returns "
+"<parameter>object</parameter>."
 msgstr ""
+"<parameter>object</parameter>の所有権をCutterに渡し、<parameter>object</"
+"parameter>を返します。"
 
-#: xml/cut-gpublic.xml:87(title)
-msgid "cut_utils_inspect_g_error ()"
-msgstr ""
+#: xml/cut-gtest-utils.xml:63(simpara)
+msgid "the GObject * to be owned by Cutter."
+msgstr "Cutterが所有権をもつことになるGObject *。"
 
-#: xml/cut-gpublic.xml:88(programlisting)
-#, no-wrap
-msgid "<link linkend=\"char\">char</link>*               cut_utils_inspect_g_error           (<link linkend=\"GError\">GError</link> *error);"
-msgstr ""
-
-#: xml/cut-gpublic.xml:101(title)
-msgid "cut_test_context_take_g_list ()"
-msgstr ""
-
-#: xml/cut-gpublic.xml:102(programlisting)
-#, no-wrap
+#: xml/cut-gtest-utils.xml:69(para)
 msgid ""
-"const <link linkend=\"GList\">GList</link>*        cut_test_context_take_g_list        (<link linkend=\"CutTestContext\">CutTestContext</link> *context,\n"
-"                                                         <link linkend=\"GList\">GList</link> *list,\n"
-"                                                         <link linkend=\"CutDestroyFunction\">CutDestroyFunction</link> destroy);"
+"Passes ownership of <parameter>error</parameter> to Cutter and returns a "
+"GError * that has same contents of <parameter>error</parameter>."
 msgstr ""
+"<parameter>error</parameter>の所有権をCutterに渡し、<parameter>error</"
+"parameter>と同じ内容のGError *を返します。"
+
+#: xml/cut-gtest-utils.xml:76(simpara)
+msgid "the GError * to be owned by Cutter."
+msgstr "Cutterが所有権を持つことになるGError *。"
+
+#: xml/cut-gtest-utils.xml:81(programlisting)
+#, no-wrap
+msgid "#define             cut_take_g_list(list, destroy_function)"
+msgstr ""
+
+#: xml/cut-gtest-utils.xml:82(para)
+msgid ""
+"Passes ownership of <parameter>list</parameter> to Cutter and returns a "
+"GList * that has same elements of <parameter>list</parameter>."
+msgstr ""
+"<parameter>list</parameter>の所有権をCutterに渡し、<parameter>list</"
+"parameter>と同じ要素を持つGList *を返します。"
+
+#: xml/cut-gtest-utils.xml:89(simpara)
+msgid "the GList * to be owned by Cutter."
+msgstr "Cutterが所有権を持つことになるGList *。"
+
+#: xml/cut-gtest-utils.xml:91(term) xml/cut-test-data.xml:81(term)
+#: xml/cut-test-data.xml:158(term)
+msgid "<parameter>destroy_function</parameter>&nbsp;:"
+msgstr ""
+
+#: xml/cut-gtest-utils.xml:92(simpara)
+msgid ""
+"the destroy function (<link linkend=\"CutDestroyFunction"
+"\"><type>CutDestroyFunction</type></link>) that destroys the elements of "
+"<parameter>list</parameter>, or <link linkend=\"NULL:CAPS\"><literal>NULL</"
+"literal></link>."
+msgstr ""
+"<parameter>list</parameter>の要素を破棄する関数(<link linkend="
+"\"CutDestroyFunction\"><type>CutDestroyFunction</type></link>)、あるいは"
+"<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>。"
 
 #: xml/cut-iterated-test.xml:7(refentrytitle)
 #: xml/cut-iterated-test.xml:13(refname) xml/cut-iterated-test.xml:23(link)
@@ -2418,7 +2409,7 @@ msgid "<link linkend=\"void\">void</link>                (*CutIteratedTestFuncti
 msgstr ""
 
 #: xml/cut-iterated-test.xml:53(term) xml/cut-list.xml:72(term)
-#: xml/cut-sequence-matcher.xml:123(term)
+#: xml/cut-sequence-matcher.xml:123(term) xml/cut-types.xml:56(term)
 msgid "<parameter>data</parameter>&nbsp;:"
 msgstr ""
 
@@ -2844,6 +2835,11 @@ msgstr ""
 msgid "int"
 msgstr ""
 
+#: xml/cut-main.xml:23(link) xml/cut-main.xml:26(link)
+#: xml/cut-main.xml:27(link)
+msgid "char"
+msgstr ""
+
 #: xml/cut-main.xml:24(link) xml/cut-main.xml:68(primary)
 msgid "cut_quit"
 msgstr ""
@@ -3180,6 +3176,10 @@ msgstr ""
 
 #: xml/cut-module-factory.xml:31(link) xml/cut-module-factory.xml:118(primary)
 msgid "cut_module_factory_set_option_group"
+msgstr ""
+
+#: xml/cut-module-factory.xml:33(link) xml/cut-ui.xml:25(link)
+msgid "GObject"
 msgstr ""
 
 #: xml/cut-module-factory.xml:33(link) xml/cut-module-factory.xml:134(primary)
@@ -3937,6 +3937,11 @@ msgstr ""
 
 #: xml/cut-run-context.xml:103(link) xml/cut-run-context.xml:876(primary)
 msgid "cut_run_context_emit_error"
+msgstr ""
+
+#: xml/cut-run-context.xml:105(link) xml/cut-stream-parser.xml:28(link)
+#: xml/cut-stream-parser.xml:30(link) xml/cut-streamer.xml:23(link)
+msgid "GError"
 msgstr ""
 
 #: xml/cut-run-context.xml:108(link) xml/cut-run-context.xml:904(primary)
@@ -5368,6 +5373,11 @@ msgstr ""
 msgid "cut_test_data_new"
 msgstr ""
 
+#: xml/cut-test-data.xml:25(link) xml/cut-test-data.xml:33(link)
+#: xml/cut-types.xml:47(primary)
+msgid "CutDestroyFunction"
+msgstr ""
+
 #: xml/cut-test-data.xml:26(link) xml/cut-test-data.xml:91(primary)
 msgid "cut_test_data_new_empty"
 msgstr ""
@@ -5440,10 +5450,6 @@ msgstr ""
 
 #: xml/cut-test-data.xml:78(term) xml/cut-test-data.xml:155(term)
 msgid "<parameter>value</parameter>&nbsp;:"
-msgstr ""
-
-#: xml/cut-test-data.xml:81(term) xml/cut-test-data.xml:158(term)
-msgid "<parameter>destroy_function</parameter>&nbsp;:"
 msgstr ""
 
 #: xml/cut-test-data.xml:90(title)
@@ -5725,16 +5731,6 @@ msgid ""
 "#define             <placeholder-10/>                     (path, ...)\n"
 msgstr ""
 
-#: xml/cut-test-utils.xml:45(para)
-msgid ""
-"To write tests, you need to write codes that set up/tear down test "
-"environment, prepare expected and actual values and so on. Cutter provides "
-"test utilities to you write your tests more easily."
-msgstr ""
-"テストを書くためには、テスト環境を前処理・後処理するコードや、検証する結果を"
-"準備するコードなどたくさんのコードを書く必要があります。Cutterはもっと簡単に"
-"テストを書くためにユーティリティを提供します。"
-
 #: xml/cut-test-utils.xml:51(para)
 msgid "The utilities work without GLib support."
 msgstr "このユーティリティはGLibサポート無しでも使えます。"
@@ -5758,7 +5754,7 @@ msgstr ""
 
 #: xml/cut-test-utils.xml:70(simpara)
 msgid "the string to be owned by Cutter."
-msgstr "Cutterが所有する文字列。"
+msgstr "Cutterが所有権も持つことになる文字列。"
 
 #: xml/cut-test-utils.xml:74(title)
 msgid "cut_take_printf()"
@@ -5957,6 +5953,51 @@ msgstr ""
 #: xml/cut-test-utils.xml:215(simpara)
 msgid "a first element of the path to be removed."
 msgstr "削除するパスの最初の要素。"
+
+#: xml/cut-types.xml:7(refentrytitle) xml/cut-types.xml:13(refname)
+msgid "Types"
+msgstr "型"
+
+#: xml/cut-types.xml:14(refpurpose)
+msgid "Types that is used in test."
+msgstr "テストで使う型です。"
+
+#: xml/cut-types.xml:22(link)
+msgid "*CutDestroyFunction"
+msgstr ""
+
+#: xml/cut-types.xml:21(synopsis)
+#, no-wrap
+msgid ""
+"\n"
+"<placeholder-1/>                (<placeholder-2/>)               (<placeholder-3/> *data);\n"
+msgstr ""
+
+#: xml/cut-types.xml:36(para)
+msgid "There are some types to be used in test."
+msgstr "テストで使う型がいくつかあります。"
+
+#: xml/cut-types.xml:46(title)
+msgid "CutDestroyFunction ()"
+msgstr ""
+
+#: xml/cut-types.xml:47(programlisting)
+#, no-wrap
+msgid "<link linkend=\"void\">void</link>                (*CutDestroyFunction)               (<link linkend=\"void\">void</link> *data);"
+msgstr ""
+
+#: xml/cut-types.xml:48(para)
+msgid ""
+"Specifies the type of function which is called when a data element is "
+"destroyed. It is passed the pointer to the data element and should free any "
+"memory and resources allocated for it."
+msgstr ""
+"データが破棄されるときに呼ばれる関数の型です。データのポインタを受け取り、そ"
+"のデータ用に割り当てられたメモリとリソースを開放します。"
+
+#: xml/cut-types.xml:57(simpara)
+msgid "the data element to be destroyed."
+msgstr "破棄するデータ。"
 
 #: xml/cut-ui-factory-builder.xml:7(refentrytitle)
 #: xml/cut-ui-factory-builder.xml:13(refname)
@@ -6800,6 +6841,11 @@ msgstr ""
 #: xml/gbsearcharray.xml:0(None)
 msgid "translator-credits"
 msgstr ""
+
+#~ msgid ""
+#~ "Passes ownership of the GObject * to Cutter and returns the GObject *."
+#~ msgstr ""
+#~ "GObject *の所有権をCutterに渡し、引数で指定されたGObject *を返します。"
 
 #~ msgid ""
 #~ "This is useful only if you make a custom test runner like cutter command. "

@@ -26,6 +26,7 @@
 #include <cutter/cut-list.h>
 #include <cutter/cut-assertions.h>
 #include <cutter/cut-gpublic.h>
+#include <cutter/cut-gtest-utils.h>
 #include <cutter/cut-gassertions-helper.h>
 
 G_BEGIN_DECLS

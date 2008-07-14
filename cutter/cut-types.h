@@ -17,15 +17,38 @@
  *
  */
 
-#ifndef __CUT_GASSERTIONS_HELPER_H__
-#define __CUT_GASSERTIONS_HELPER_H__
+#ifndef __CUT_TYPES_H__
+#define __CUT_TYPES_H__
 
-G_BEGIN_DECLS
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-G_END_DECLS
+/**
+ * SECTION: cut-types
+ * @title: Types
+ * @short_description: Types that is used in test.
+ *
+ * There are some types to be used in test.
+ */
 
-#endif /* __CUT_GASSERTIONS_HELPER_H__ */
+/**
+ * CutDestroyFunction:
+ * @data: the data element to be destroyed.
+ *
+ * Specifies the type of function which is called when a
+ * data element is destroyed. It is passed the pointer to
+ * the data element and should free any memory and resources
+ * allocated for it.
+ */
+typedef void   (*CutDestroyFunction)           (void *data);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* __CUT_TYPES_H__ */
 
 /*
-vi:nowrap:ai:expandtab:sw=4:ts=4
+vi:ts=4:nowrap:ai:expandtab:sw=4
 */

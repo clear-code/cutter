@@ -1,5 +1,12 @@
 2008-07-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/: support cut-gtest-utils.h and cut-types.h.
+
+	* cutter/cut-public.h, cutter/cut-gassertions.h,
+	cutter/cut-gassertions-helper.h: move some definitions to ...
+	* cutter/cut-gtest-utils.h, cutter/cut-types.h: ... here to be
+	documented.
+
 	* cutter/cut-test-context.c (cut_test_context_take_g_list): copy
 	and free passed list.
 

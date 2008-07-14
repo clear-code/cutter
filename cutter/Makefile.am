@@ -19,12 +19,14 @@ cutter_public_headers = 			\
 		cut-test-utils.h		\
 		cut-experimental.h		\
 		cut-hidden-definitions.h	\
-		cut-public.h
+		cut-public.h			\
+		cut-types.h
 
 gcutter_public_headers =			\
 		cut-gassertions.h		\
 		cut-gassertions-helper.h	\
 		cut-gpublic.h			\
+		cut-gtest-utils.h		\
 		cut-value-equal.h		\
 		cut-list.h
 

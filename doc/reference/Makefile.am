@@ -19,12 +19,15 @@ HFILE_GLOB =					\
 	$(top_srcdir)/cutter/cut-assertions.h	\
 	$(top_srcdir)/cutter/cut-test-utils.h	\
 	$(top_srcdir)/cutter/cut-gassertions.h	\
+	$(top_srcdir)/cutter/cut-gtest-utils.h	\
+	$(top_srcdir)/cutter/cut-types.h	\
 	$(top_srcdir)/cutter/cut-experimental.h
 #CFILE_GLOB=$(top_srcdir)/cutter/*.c
 
 # Headers to ignore
 IGNORE_HFILES=			\
 	cut-assertions-helper.h	\
+	cut-gassertions-helper.h\
 	cut-context.h		\
 	cut-enum-types.h	\
 	cut-hidden-definitions.h\
@@ -34,6 +37,7 @@ IGNORE_HFILES=			\
 	cut-module.h		\
 	cut-private.h		\
 	cut-public.h		\
+	cut-gpublic.h		\
 	cut-repository.h	\
 	cut-runner.h		\
 	cut-test-case.h		\
@@ -46,14 +50,14 @@ IGNORE_HFILES=			\
 	cut-verbose-level.h	\
 	config.h
 
-INCLUDES = \
+INCLUDES =				\
 	-I$(top_srcdir)/cutter 		\
 	-I$(top_srcdir) 		\
 	-I$(top_builddir)/cutter	\
 	$(GLIB_CFLAGS)
 
-GTKDOC_LIBS = \
-	$(top_builddir)/cutter/libcutter.la \
+GTKDOC_LIBS =					\
+	$(top_builddir)/cutter/libcutter.la	\
 	$(GLIB_LIBS)
 
 # Extra options to supply to gtkdoc-mkdb
@@ -70,7 +74,7 @@ content_files =		\
 	tutorial.xml	\
 	features.xml
 
-# Extra options to supply to gtkdoc-fixref
+# Extra options to supply to gtkdoc-fixxref
 FIXXREF_OPTIONS=
 
 CATALOGS=ja.po
@@ -96,7 +100,7 @@ EXTRA_DIST +=				\
 	ja.po
 
 $(DOC_MODULE).pot: sgml-build.stamp
-	xml2po -k -o $(DOC_MODULE).pot \
+	xml2po -k -o $(DOC_MODULE).pot				\
 	  $(srcdir)/$(DOC_MAIN_SGML_FILE) $(srcdir)/xml/*.xml
 
 update-po: Makefile sgml.stamp
