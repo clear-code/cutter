@@ -14,7 +14,7 @@ Cutter has basic features of a unit testing framework:
 Cutter also has many useful advanced features:
 
   * Cross platform
-  * Data Driven Test support
+  * Data-Driven Testing support
   * Coverage support
   * Backtrace on crash
   * Serialize/deserialize test result
@@ -22,27 +22,285 @@ Cutter also has many useful advanced features:
 
 == Basic
 
+This section explains how Cutter provides features that are
+considered about basic unit testing framework features.
+
 === Fixture
+
+Fixture in a unit testing framework is a mechanism that set
+up test data before each test. It is usually implemented by
+executing setup/teardown process. See also
+((<Test fixture
+(Wikipedia)|URL:http://en.wikipedia.org/wiki/Test_fixture>)).
+
+In Cutter, if setup()/teardown() functions are defined in a
+test program like the following, their functions are treated
+as setup/teardown processes:
+
+  void
+  setup (void)
+  {
+     /* set up test data */
+  }
+
+  void
+  teardown (void)
+  {
+     /* tear down test data */
+  }
+
+Cutter also supports startup()/shutdown() functions that are
+called on each test case starting/completing:
+
+  void
+  startup (void)
+  {
+     /* set up the test case */
+  }
+
+  void
+  shutdown (void)
+  {
+     /* tear down the test case*/
+  }
+
+Their functions are called the following order:
+
+  * startup()
+    * setup()
+      * run test1
+    * teardown()
+    * setup()
+      * run test2
+    * teardown()
+    * ...
+  * shutdown()
+
+Cutter also supports functions that are called on all test
+starting/completing as experimental features. Their
+functions are called warmup/cooldown. Here is the call
+order:
+
+  * run warmup
+    * startup() of test case1
+      * setup() of test case1
+        * run test1-1
+      * teardown() of test case1
+      * setup() of test case1
+        * run test1-2
+      * teardown() of test case1
+      * ...
+    * shutdown() of test case1
+    * startup() of test case2
+      * setup() of test case2
+        * run test2-1
+      * teardown() of test case2
+      * setup() of test case2
+        * run test2-2
+      * teardown() of test case2
+      * ...
+    * shutdown() of test case1
+    * ...
+  * run cooldown
+
+The last two functions are useful for testing a library that
+has initialize/finalize functions of itself. But they are
+experimental features. So explanation of their usage is
+omitted. If you want to use them, please contact us.
 
 === No test registration code
 
+Most of unit testing frameworks for dynamic languages doesn't
+require that users register their tests. Tests are found by
+frameworks and ran. But most of unit testing frameworks for
+C require that users register their tests.
+
+Cutter finds test functions automatically like frameworks
+for dynamic languages to write tests easily. Public
+functions that their name starts with "test_" are recognized
+as test functions. Here is a sample test function
+definition:
+
+  void test_my_function (void);
+
+  void
+  test_my_function (void)
+  {
+      /* a test function */
+  }
+
 === Result output with useful format for debugging
+
+Cutter outputs a test result to confirm and fix a problem
+quickly. In particular Cutter outputs
+
+  * no problem parts simply and
+  * problem parts verbosely.
+
+Cutter outputs no problem parts simply (they may not be
+displayed) to avoid important parts are buried.
+
+Cutter outputs information of problem parts as many as
+possible to provide users information to judge what is a
+problem.
+
+For example, we assume that an expected string and an actual
+string are different on string equality check test. Cutter
+arranges and displays the expected string and the actual
+string to confirm difference between them easily:
+
+  expected: <abc def ghi jkl>
+   but was: <abc DEF ghi jkl>
+
+If their aren't arranged or displayed in the same line, it's
+difficult to find difference between them:
+
+  expected: <abc def ghi jkl>
+  but was: <abc DEF ghi jkl>
+
+  <abc def ghi jkl> is expected but was <abc DEF ghi jkl>
+
+Cutter also outputs diff between the expected string and the
+actual string to show where is different explicitly:
+
+  expected: <abc def ghi jkl>
+   but was: <abc DEF ghi jkl>
+  
+  diff:
+  - abc def ghi jkl
+  ?     ^^^
+  + abc DEF ghi jkl
+  ?     ^^^
+
+Cutter strongly helps us to confirm a problem on test
+failure as mentioned above.
 
 === Many assertions
 
+((<xUnit|URL:http://en.wikipedia.org/wiki/XUnit>)) based
+unit testing frameworks provides assertions to assert test
+target works as we had expected. For example, many
+frameworks provides assertions like the followings:
+
+  * assert: asserts that target is true value
+  * assert_equal: asserts that an actual value equals an
+    expected value
+
+In Cutter, the following assertions are corresponding the
+above assertions:
+
+  * cut_assert()
+  * cut_assert_true(): asserts same as cut_assert() but it
+    clearly specifies "true value" (Cutter recommends to use
+    it because it's self-describing rather than
+    cut_assert())
+  * cut_assert_equal_int()
+  * cut_assert_equal_uint()
+  * cut_assert_equal_string()
+  * ...
+
+Cutter also provides many built-in assertions than common
+assertions as mentioned above to write tests easily. For
+example, Cutter provides built-in assertions like the
+followings:
+
+  * cut_assert_errno(): asserts that errno is 0
+  * cut_assert_match(): asserts that an expected string
+    matches an actual string
+  * cut_assert_path_exist(): asserts that specified path
+    exists
+  * ...
+
+See
+((<Assertions|URL:http://cutter.sf.net/reference/cutter-cut-assertions.html>))
+and ((<Assertions with GLib
+support|URL:http://cutter.sf.net/reference/cutter-cut-gassertions.html>))
+in the reference manual for assertion list.
+
 == Advanced
+
+This section explains how Cutter provides features that are
+provided by a few unit testing frameworks or not provided
+any unit testing frameworks.
 
 === Cross platform
 
-  * GNU/Linux and Unix
-  * Windows
-  * Mac OS X
+For now, Cutter works on the following platforms:
 
-=== Data Driven Test support
+  * GNU/Linux
+  * FreeBSD
+  * Mac OS X
+  * Windows (MinGW)
+
+=== Data-Driven Testing support
+
+There is a testing method called ((<Data-Driven
+Testing|URL:http://en.wikipedia.org/wiki/Data-driven_testing>)).
+
+Cutter supports Data-Driven Testing. See ((<cut_add_data()
+|URL:http://cutter.sf.net/reference/cutter-cutter.html#cut-add-data>))
+for writing a data-driven test.
+
+Data-driven tests are executed by the following order:
+
+  * call data setup function
+  * setup()
+    * run test with test data1
+  * teardown()
+  * setup()
+    * run test with test data2
+  * teardown()
+  * ...
 
 === Coverage support
 
+((<Code
+coverage|URL:http://en.wikipedia.org/wiki/Code_coverage>))
+is a measure for how code is tested cyclopaedically.
+
+Cutter provides a M4 macro to help us measuring code
+coverage. If you use GNU Autoconf/GNU Automake, you
+can add code coverage support into your build system easily.
+
+See about AC_CHECK_COVERAGE in ((<README>)) and
+((<tutorial|TUTORIAL>)).
+
 === Backtrace on crash
+
+It's natural that a program written in C crashes. Cutter
+tries to retrieve a backtrace on SEGV signal is raised. If a
+backtrace is retrieved, Cutter outputs it and exit. Of
+course Cutter cannot always retrieve a backtrace because the
+test process is broken.
+
+To check details of a problem, we need to use a debugger
+like GDB. But we can use a backtrace as the first step.
 
 === Serialize/deserialize test result
 
+There are some methods to confirm how high software's
+quality:
+
+  * measuring transition between test status and number of
+    found bugs.
+  * measuring transition between test status and number of
+    reported bugs.
+  * measuring transition between test status and source code
+    size.
+
+For example, if number of tests are grown but number of
+found bugs aren't grown, we may be doing inefficient test or
+software quality might be high without test. If number of
+tests are grown but number of reported bugs are grown, we
+may be testing irrelevance points. If source code size is
+grown but number of tests aren't grown, we may lazy.
+
+We can analyze software development status with test result
+logs in chronological order not just the current test
+result. We may use analyzed result to improve software
+quality.
+
+Cutter can save a test result to a file as XML. Cutter can
+also read saved XML and restore a test result.
+
+Cutter will provide a feature that charts test result logs.
