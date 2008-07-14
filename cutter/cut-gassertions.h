@@ -237,20 +237,22 @@ G_BEGIN_DECLS
  *
  * Since: 1.0
  */
-#define cut_assert_g_error(g_error, ...) do                             \
+#define cut_assert_g_error(error, ...) do                               \
 {                                                                       \
-    GError *_g_error = (g_error);                                       \
-    if (_g_error == NULL) {                                             \
+    GError *_error;                                                     \
+                                                                        \
+    _error = (error);                                                   \
+    if (_error == NULL) {                                               \
         cut_test_pass();                                                \
     } else {                                                            \
         const gchar *inspected;                                         \
         inspected =                                                     \
-            cut_take_string(cut_utils_inspect_g_error(_g_error));       \
-        g_error_free(_g_error);                                         \
+            cut_take_string(cut_utils_inspect_g_error(_error));         \
+        g_error_free(_error);                                           \
         cut_test_fail(FAILURE,                                          \
                       cut_take_printf("expected: <%s> is NULL\n"        \
                                       " but was: <%s>",                 \
-                                      #g_error, inspected),             \
+                                      #error, inspected),               \
                       ## __VA_ARGS__);                                  \
     }                                                                   \
 } while(0)

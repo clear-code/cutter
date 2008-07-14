@@ -1,5 +1,7 @@
 2008-07-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-gassertions.h (cut_assert_g_error): g_error -> error.
+
 	* doc/reference/cutter-docs.sgml: don't use capital form for id.
 
 	* FEATURES*, README*: update.
