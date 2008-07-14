@@ -9,14 +9,16 @@ AM_CFLAGS += $(GTK_CFLAGS)
 endif
 
 EXTRA_DIST = cuttest-assertions.h
-CLEANFILES = *.gcno *.gcda
 
-noinst_LTLIBRARIES = 				\
-		libcuttest_utils.la
+noinst_LTLIBRARIES = 		\
+	libcuttest_utils.la
 
 LIBS =						\
 	$(top_builddir)/cutter/libcutter.la	\
 	$(GLIB_LIBS)
+
+AM_LDFLAGS =			\
+	-rpath $(abs_builddir)
 
 libcuttest_utils_la_SOURCES = 		\
 	cuttest-utils.c			\
