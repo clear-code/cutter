@@ -97,7 +97,7 @@ G_BEGIN_DECLS
  *
  * Since: 1.0.3
  */
-GList  *gcut_list_string_new  (const gchar *value, ...) CUT_GNUC_NULL_TERMINATED;
+GList  *gcut_list_string_new  (const gchar *value, ...) G_GNUC_NULL_TERMINATED;
 
 /**
  * gcut_list_string_free:
@@ -107,7 +107,7 @@ GList  *gcut_list_string_new  (const gchar *value, ...) CUT_GNUC_NULL_TERMINATED
  *
  * Since: 1.0.3
  */
-void   gcut_list_string_free  (GList *list);
+void    gcut_list_string_free (GList *list);
 
 
 G_END_DECLS

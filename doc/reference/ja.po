@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.0.3\n"
-"POT-Creation-Date: 2008-07-15 13:31+0900\n"
-"PO-Revision-Date: 2008-07-15 13:40+0900\n"
+"POT-Creation-Date: 2008-07-15 14:28+0900\n"
+"PO-Revision-Date: 2008-07-15 14:31+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -396,7 +396,7 @@ msgstr ""
 #: xml/cutter.xml:39(title) xml/cuttest-assertions.xml:44(title)
 #: xml/cuttest-utils.xml:54(title) xml/gbsearcharray.xml:45(title)
 #: xml/gcut-assertions.xml:48(title) xml/gcut-list.xml:53(title)
-#: xml/gcut-public.xml:42(title) xml/gcut-test-utils.xml:38(title)
+#: xml/gcut-public.xml:42(title) xml/gcut-test-utils.xml:41(title)
 #: xml/gcut-value-equal.xml:40(title)
 #: xml/gst-cutter-console-output.xml:35(title)
 #: xml/gst-cutter-server.xml:35(title)
@@ -454,7 +454,7 @@ msgstr "例: <placeholder-1/>"
 #: xml/cutter.xml:144(title) xml/cuttest-assertions.xml:51(title)
 #: xml/cuttest-utils.xml:61(title) xml/gbsearcharray.xml:52(title)
 #: xml/gcut-assertions.xml:57(title) xml/gcut-list.xml:60(title)
-#: xml/gcut-public.xml:49(title) xml/gcut-test-utils.xml:53(title)
+#: xml/gcut-public.xml:49(title) xml/gcut-test-utils.xml:56(title)
 #: xml/gcut-value-equal.xml:47(title)
 #: xml/gst-cutter-console-output.xml:42(title)
 #: xml/gst-cutter-server.xml:42(title)
@@ -519,6 +519,7 @@ msgstr "チェックする式。"
 #: xml/gcut-assertions.xml:214(term) xml/gcut-assertions.xml:235(term)
 #: xml/gcut-assertions.xml:253(term) xml/gcut-assertions.xml:271(term)
 #: xml/gcut-assertions.xml:289(term) xml/gcut-assertions.xml:306(term)
+#: xml/gcut-test-utils.xml:114(term)
 msgid "<parameter>...</parameter>&nbsp;:"
 msgstr ""
 
@@ -739,7 +740,7 @@ msgstr "期待される浮動小数点数。"
 #: xml/cut-stream-parser.xml:103(term) xml/cut-stream-parser.xml:121(term)
 #: xml/cut-streamer.xml:60(term) xml/gcut-assertions.xml:250(term)
 #: xml/gcut-assertions.xml:268(term) xml/gcut-public.xml:78(term)
-#: xml/gcut-public.xml:92(term) xml/gcut-test-utils.xml:76(term)
+#: xml/gcut-public.xml:92(term) xml/gcut-test-utils.xml:79(term)
 msgid "<parameter>error</parameter>&nbsp;:"
 msgstr ""
 
@@ -1467,7 +1468,7 @@ msgstr ""
 #: xml/cuttest-utils.xml:37(link) xml/cuttest-utils.xml:38(link)
 #: xml/cuttest-utils.xml:39(link) xml/gcut-list.xml:29(link)
 #: xml/gcut-list.xml:34(link) xml/gcut-list.xml:37(link)
-#: xml/gcut-list.xml:40(link)
+#: xml/gcut-list.xml:40(link) xml/gcut-test-utils.xml:26(link)
 msgid "gchar"
 msgstr ""
 
@@ -1615,9 +1616,9 @@ msgstr ""
 #: xml/gcut-list.xml:188(term) xml/gcut-list.xml:206(term)
 #: xml/gcut-list.xml:220(term) xml/gcut-public.xml:63(term)
 #: xml/gcut-public.xml:81(term) xml/gcut-public.xml:95(term)
-#: xml/gcut-public.xml:117(term) xml/gcut-value-equal.xml:67(term)
-#: xml/stack.xml:62(term) xml/stack.xml:88(term) xml/stack.xml:102(term)
-#: xml/stack.xml:132(term)
+#: xml/gcut-public.xml:117(term) xml/gcut-test-utils.xml:117(term)
+#: xml/gcut-value-equal.xml:67(term) xml/stack.xml:62(term)
+#: xml/stack.xml:88(term) xml/stack.xml:102(term) xml/stack.xml:132(term)
 msgid "<emphasis>Returns</emphasis>&nbsp;:"
 msgstr "<emphasis>戻り値</emphasis>&nbsp;:"
 
@@ -1711,9 +1712,9 @@ msgstr ""
 #: xml/cut-value-equal.xml:22(link) xml/cut-value-equal.xml:25(link)
 #: xml/cutter.xml:22(link) xml/cutter.xml:23(link) xml/cutter.xml:24(link)
 #: xml/cutter.xml:25(link) xml/cuttest-utils.xml:23(link)
-#: xml/gcut-list.xml:22(link) xml/gcut-value-equal.xml:22(link)
-#: xml/gcut-value-equal.xml:25(link) xml/stack.xml:24(link)
-#: xml/stack.xml:27(link)
+#: xml/gcut-list.xml:22(link) xml/gcut-test-utils.xml:28(link)
+#: xml/gcut-value-equal.xml:22(link) xml/gcut-value-equal.xml:25(link)
+#: xml/stack.xml:24(link) xml/stack.xml:27(link)
 msgid "void"
 msgstr ""
 
@@ -1991,6 +1992,7 @@ msgstr ""
 #: xml/gcut-list.xml:37(link) xml/gcut-list.xml:38(link)
 #: xml/gcut-list.xml:39(link) xml/gcut-list.xml:40(link)
 #: xml/gcut-public.xml:27(link) xml/gcut-public.xml:28(link)
+#: xml/gcut-test-utils.xml:26(link) xml/gcut-test-utils.xml:28(link)
 msgid "GList"
 msgstr ""
 
@@ -2632,8 +2634,9 @@ msgstr "実際の符号無し整数のリスト（GList *）。"
 #: xml/gcut-assertions.xml:116(para) xml/gcut-assertions.xml:156(para)
 #: xml/gcut-assertions.xml:198(para) xml/gcut-assertions.xml:218(para)
 #: xml/gcut-assertions.xml:257(para) xml/gcut-assertions.xml:292(para)
-#: xml/gcut-test-utils.xml:65(para) xml/gcut-test-utils.xml:79(para)
-#: xml/gcut-test-utils.xml:98(para)
+#: xml/gcut-test-utils.xml:68(para) xml/gcut-test-utils.xml:82(para)
+#: xml/gcut-test-utils.xml:100(para) xml/gcut-test-utils.xml:121(para)
+#: xml/gcut-test-utils.xml:134(para)
 msgid "Since 1.0.3"
 msgstr "1.0.3から"
 
@@ -2763,7 +2766,7 @@ msgid ""
 msgstr ""
 
 #: xml/cut-gtest-utils.xml:39(para) xml/cut-test-utils.xml:45(para)
-#: xml/gcut-test-utils.xml:39(para)
+#: xml/gcut-test-utils.xml:42(para)
 msgid ""
 "To write tests, you need to write codes that set up/tear down test "
 "environment, prepare expected and actual values and so on. Cutter provides "
@@ -2773,7 +2776,7 @@ msgstr ""
 "準備するコードなどたくさんのコードを書く必要があります。Cutterはもっと簡単に"
 "テストを書くためにユーティリティを提供します。"
 
-#: xml/cut-gtest-utils.xml:45(para) xml/gcut-test-utils.xml:45(para)
+#: xml/cut-gtest-utils.xml:45(para) xml/gcut-test-utils.xml:48(para)
 msgid "The utilities work with GLib."
 msgstr "このユーティリティはGLibと一緒に使います。"
 
@@ -2786,7 +2789,7 @@ msgstr ""
 msgid "#define             cut_take_g_object(object)"
 msgstr ""
 
-#: xml/cut-gtest-utils.xml:57(para) xml/gcut-test-utils.xml:57(para)
+#: xml/cut-gtest-utils.xml:57(para) xml/gcut-test-utils.xml:60(para)
 msgid ""
 "Passes ownership of <parameter>object</parameter> to Cutter and returns "
 "<parameter>object</parameter>."
@@ -2795,11 +2798,11 @@ msgstr ""
 "parameter>を返します。"
 
 #: xml/cut-gtest-utils.xml:62(term) xml/gcut-public.xml:60(term)
-#: xml/gcut-test-utils.xml:62(term)
+#: xml/gcut-test-utils.xml:65(term)
 msgid "<parameter>object</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-gtest-utils.xml:63(simpara) xml/gcut-test-utils.xml:63(simpara)
+#: xml/cut-gtest-utils.xml:63(simpara) xml/gcut-test-utils.xml:66(simpara)
 msgid "the GObject * to be owned by Cutter."
 msgstr "Cutterが所有権をもつことになるGObject *。"
 
@@ -2812,7 +2815,7 @@ msgstr ""
 msgid "#define             cut_take_g_error(error)"
 msgstr ""
 
-#: xml/cut-gtest-utils.xml:69(para) xml/gcut-test-utils.xml:70(para)
+#: xml/cut-gtest-utils.xml:69(para) xml/gcut-test-utils.xml:73(para)
 msgid ""
 "Passes ownership of <parameter>error</parameter> to Cutter and returns a "
 "GError * that has same contents of <parameter>error</parameter>."
@@ -2820,7 +2823,7 @@ msgstr ""
 "<parameter>error</parameter>の所有権をCutterに渡し、<parameter>error</"
 "parameter>と同じ内容のGError *を返します。"
 
-#: xml/cut-gtest-utils.xml:76(simpara) xml/gcut-test-utils.xml:77(simpara)
+#: xml/cut-gtest-utils.xml:76(simpara) xml/gcut-test-utils.xml:80(simpara)
 msgid "the GError * to be owned by Cutter."
 msgstr "Cutterが所有権を持つことになるGError *。"
 
@@ -2833,7 +2836,7 @@ msgstr ""
 msgid "#define             cut_take_g_list(list, destroy_function)"
 msgstr ""
 
-#: xml/cut-gtest-utils.xml:82(para) xml/gcut-test-utils.xml:84(para)
+#: xml/cut-gtest-utils.xml:82(para) xml/gcut-test-utils.xml:87(para)
 msgid ""
 "Passes ownership of <parameter>list</parameter> to Cutter and returns a "
 "GList * that has same elements of <parameter>list</parameter>."
@@ -2847,20 +2850,20 @@ msgstr ""
 #: xml/cuttest-assertions.xml:70(term) xml/gcut-list.xml:115(term)
 #: xml/gcut-list.xml:153(term) xml/gcut-list.xml:185(term)
 #: xml/gcut-list.xml:217(term) xml/gcut-public.xml:111(term)
-#: xml/gcut-test-utils.xml:90(term)
+#: xml/gcut-test-utils.xml:93(term) xml/gcut-test-utils.xml:131(term)
 msgid "<parameter>list</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-gtest-utils.xml:89(simpara) xml/gcut-test-utils.xml:91(simpara)
+#: xml/cut-gtest-utils.xml:89(simpara) xml/gcut-test-utils.xml:94(simpara)
 msgid "the GList * to be owned by Cutter."
 msgstr "Cutterが所有権を持つことになるGList *。"
 
 #: xml/cut-gtest-utils.xml:91(term) xml/cut-test-data.xml:81(term)
-#: xml/cut-test-data.xml:158(term) xml/gcut-test-utils.xml:93(term)
+#: xml/cut-test-data.xml:158(term) xml/gcut-test-utils.xml:96(term)
 msgid "<parameter>destroy_function</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cut-gtest-utils.xml:92(simpara) xml/gcut-test-utils.xml:94(simpara)
+#: xml/cut-gtest-utils.xml:92(simpara) xml/gcut-test-utils.xml:97(simpara)
 msgid ""
 "the destroy function (<link linkend=\"CutDestroyFunction"
 "\"><type>CutDestroyFunction</type></link>) that destroys the elements of "
@@ -5912,7 +5915,7 @@ msgid ""
 msgstr ""
 
 #: xml/cut-test-data.xml:78(term) xml/cut-test-data.xml:155(term)
-#: xml/stack.xml:117(term)
+#: xml/gcut-test-utils.xml:111(term) xml/stack.xml:117(term)
 msgid "<parameter>value</parameter>&nbsp;:"
 msgstr ""
 
@@ -7631,7 +7634,11 @@ msgid ""
 "1.0.3 and should not be used in newly-written code. Use <link linkend=\"gcut-"
 "assert-equal-type\"><function>gcut_assert_equal_type()</function></link> "
 "instead."
-msgstr "<literal>cut_assert_equal_g_type</literal>はバージョン1.0.3から非推奨になりました。新しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-assert-equal-type\"><function>gcut_assert_equal_type()</function></link>を使ってください。"
+msgstr ""
+"<literal>cut_assert_equal_g_type</literal>はバージョン1.0.3から非推奨になりま"
+"した。新しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-"
+"assert-equal-type\"><function>gcut_assert_equal_type()</function></link>を"
+"使ってください。"
 
 #: xml/gcut-assertions.xml:99(title)
 msgid "gcut_assert_equal_value()"
@@ -7648,7 +7655,11 @@ msgid ""
 "version 1.0.3 and should not be used in newly-written code. Use <link "
 "linkend=\"gcut-assert-equal-value\"><function>gcut_assert_equal_value()</"
 "function></link> instead."
-msgstr "<literal>cut_assert_equal_g_value</literal>はバージョン1.0.3から非推奨になりました。新しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-assert-equal-value\"><function>gcut_assert_equal_value()</function></link>を使ってください。"
+msgstr ""
+"<literal>cut_assert_equal_g_value</literal>はバージョン1.0.3から非推奨になり"
+"ました。新しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-"
+"assert-equal-value\"><function>gcut_assert_equal_value()</function></link>を"
+"使ってください。"
 
 #: xml/gcut-assertions.xml:139(title)
 msgid "gcut_assert_equal_list_int()"
@@ -7665,7 +7676,11 @@ msgid ""
 "version 1.0.3 and should not be used in newly-written code. Use <link "
 "linkend=\"gcut-assert-equal-list-int\"><function>gcut_assert_equal_list_int()"
 "</function></link> instead."
-msgstr "<literal>cut_assert_equal_g_string_list_int</literal>はバージョン1.0.3から非推奨になりました。新しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-assert-equal-list-int\"><function>gcut_assert_equal_list_int()</function></link>を使ってください。"
+msgstr ""
+"<literal>cut_assert_equal_g_string_list_int</literal>はバージョン1.0.3から非"
+"推奨になりました。新しく書くコードでは使わないでください。代わりに<link "
+"linkend=\"gcut-assert-equal-list-int\"><function>gcut_assert_equal_list_int()"
+"</function></link>を使ってください。"
 
 #: xml/gcut-assertions.xml:181(title)
 msgid "gcut_assert_equal_list_uint()"
@@ -7691,7 +7706,11 @@ msgid ""
 "version 1.0.3 and should not be used in newly-written code. Use <link "
 "linkend=\"gcut-assert-equal-list-string"
 "\"><function>gcut_assert_equal_list_string()</function></link> instead."
-msgstr "<literal>cut_assert_equal_g_list_string</literal>はバージョン1.0.3から非推奨になりました。新しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-assert-equal-list-string\"><function>gcut_assert_equal_list_string()</function></link>を使ってください。"
+msgstr ""
+"<literal>cut_assert_equal_g_list_string</literal>はバージョン1.0.3から非推奨"
+"になりました。新しく書くコードでは使わないでください。代わりに<link linkend="
+"\"gcut-assert-equal-list-string\"><function>gcut_assert_equal_list_string()</"
+"function></link>を使ってください。"
 
 #: xml/gcut-assertions.xml:243(title)
 msgid "gcut_assert_error()"
@@ -7707,7 +7726,11 @@ msgid ""
 "<literal>cut_assert_g_error</literal> has been deprecated since version "
 "1.0.3 and should not be used in newly-written code. Use <link linkend=\"gcut-"
 "assert-error\"><function>gcut_assert_error()</function></link> instead."
-msgstr "<literal>cut_assert_g_error</literal>はバージョン1.0.3から非推奨になりました。新しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-assert-error\"><function>gcut_assert_error()</function></link>を使ってください。"
+msgstr ""
+"<literal>cut_assert_g_error</literal>はバージョン1.0.3から非推奨になりまし"
+"た。新しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-"
+"assert-error\"><function>gcut_assert_error()</function></link>を使ってくださ"
+"い。"
 
 #: xml/gcut-assertions.xml:279(title)
 msgid "gcut_assert_remove_path()"
@@ -7724,7 +7747,11 @@ msgid ""
 "1.0.3 and should not be used in newly-written code. Use <link linkend=\"gcut-"
 "assert-remove-path\"><function>gcut_assert_remove_path()</function></link> "
 "instead."
-msgstr "<literal>cut_assert_remove_path</literal>はバージョン1.0.3から非推奨になりました。新しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-assert-remove-path\"><function>gcut_assert_remove_path()</function></link>を使ってください。"
+msgstr ""
+"<literal>cut_assert_remove_path</literal>はバージョン1.0.3から非推奨になりま"
+"した。新しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-"
+"assert-remove-path\"><function>gcut_assert_remove_path()</function></link>を"
+"使ってください。"
 
 #: xml/gcut-list.xml:7(refentrytitle) xml/gcut-list.xml:13(refname)
 msgid "gcut-list"
@@ -7978,16 +8005,24 @@ msgstr ""
 msgid "<parameter>destroy</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:23(link) xml/gcut-test-utils.xml:56(primary)
+#: xml/gcut-test-utils.xml:23(link) xml/gcut-test-utils.xml:59(primary)
 msgid "gcut_take_object"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:24(link) xml/gcut-test-utils.xml:69(primary)
+#: xml/gcut-test-utils.xml:24(link) xml/gcut-test-utils.xml:72(primary)
 msgid "gcut_take_error"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:25(link) xml/gcut-test-utils.xml:83(primary)
+#: xml/gcut-test-utils.xml:25(link) xml/gcut-test-utils.xml:86(primary)
 msgid "gcut_take_list"
+msgstr ""
+
+#: xml/gcut-test-utils.xml:26(link) xml/gcut-test-utils.xml:104(primary)
+msgid "gcut_list_string_new"
+msgstr ""
+
+#: xml/gcut-test-utils.xml:28(link) xml/gcut-test-utils.xml:125(primary)
+msgid "gcut_list_string_free"
 msgstr ""
 
 #: xml/gcut-test-utils.xml:22(synopsis)
@@ -7997,34 +8032,84 @@ msgid ""
 "#define             <placeholder-1/>                    (object)\n"
 "#define             <placeholder-2/>                     (error)\n"
 "#define             <placeholder-3/>                      (list, destroy_function)\n"
+"<placeholder-4/>*              <placeholder-5/>                (const <placeholder-6/> *value,\n"
+"                                                         ...);\n"
+"<placeholder-7/>                <placeholder-8/>               (<placeholder-9/> *list);\n"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:55(title)
+#: xml/gcut-test-utils.xml:58(title)
 msgid "gcut_take_object()"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:56(programlisting)
+#: xml/gcut-test-utils.xml:59(programlisting)
 #, no-wrap
 msgid "#define             gcut_take_object(object)"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:68(title)
+#: xml/gcut-test-utils.xml:71(title)
 msgid "gcut_take_error()"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:69(programlisting)
+#: xml/gcut-test-utils.xml:72(programlisting)
 #, no-wrap
 msgid "#define             gcut_take_error(error)"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:82(title)
+#: xml/gcut-test-utils.xml:85(title)
 msgid "gcut_take_list()"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:83(programlisting)
+#: xml/gcut-test-utils.xml:86(programlisting)
 #, no-wrap
 msgid "#define             gcut_take_list(list, destroy_function)"
 msgstr ""
+
+#: xml/gcut-test-utils.xml:103(title)
+msgid "gcut_list_string_new ()"
+msgstr ""
+
+#: xml/gcut-test-utils.xml:104(programlisting)
+#, no-wrap
+msgid ""
+"<link linkend=\"GList\">GList</link>*              gcut_list_string_new                (const <link linkend=\"gchar\">gchar</link> *value,\n"
+"                                                         ...);"
+msgstr ""
+
+#: xml/gcut-test-utils.xml:106(para)
+msgid "Creates a list from passed strings."
+msgstr "渡された文字列からリストを作ります。"
+
+#: xml/gcut-test-utils.xml:112(simpara)
+msgid "the first string."
+msgstr "最初の文字列。"
+
+#: xml/gcut-test-utils.xml:115(simpara)
+msgid "remaining strings in list, terminated by NULL."
+msgstr "リストに入れる残りの文字列。最後の引数としてNULLを指定してください。"
+
+#: xml/gcut-test-utils.xml:117(simpara)
+msgid ""
+"a newly-allocated GList * that contains passed strings and must be freed "
+"with <link linkend=\"gcut-list-string-free\"><function>gcut_list_string_free"
+"()</function></link>."
+msgstr "渡された文字列のリスト。<link linkend=\"gcut-list-string-free\"><function>gcut_list_string_free()</function></link>で開放してください。"
+
+#: xml/gcut-test-utils.xml:124(title)
+msgid "gcut_list_string_free ()"
+msgstr ""
+
+#: xml/gcut-test-utils.xml:125(programlisting)
+#, no-wrap
+msgid "<link linkend=\"void\">void</link>                gcut_list_string_free               (<link linkend=\"GList\">GList</link> *list);"
+msgstr ""
+
+#: xml/gcut-test-utils.xml:126(para)
+msgid "Frees <parameter>list</parameter> and contained strings."
+msgstr "<parameter>list</parameter>と<parameter>list</parameter>内にある文字列を開放します。"
+
+#: xml/gcut-test-utils.xml:132(simpara)
+msgid "the list that contains strings to be freed."
+msgstr "開放する文字列のリスト。"
 
 #: xml/gcut-value-equal.xml:7(refentrytitle)
 #: xml/gcut-value-equal.xml:13(refname)

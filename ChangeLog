@@ -1,5 +1,7 @@
 2008-07-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-test-utils.h, doc/reference/ja.po: update document.
+
 	* gcutter/gcut-public.h: add missing #include.
 
 	* gcutter/gcut-list.[ch] (gcut_list_string_new,
