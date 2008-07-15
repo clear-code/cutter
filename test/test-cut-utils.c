@@ -1,6 +1,6 @@
 #include <gcutter.h>
 #include <cutter/cut-utils.h>
-#include <cuttest-utils.h>
+#include "lib/cuttest-utils.h"
 
 void test_compare_string_array (void);
 void test_inspect_string_array (void);

@@ -1,10 +1,16 @@
-#include "cutter.h"
+#ifdef HAVE_CONFIG_H
+#  include <config.h>
+#endif
+
+#include <cutter.h>
 #include <cutter/cut-pipeline.h>
 #include <cutter/cut-runner.h>
 
-#include "cuttest-utils.h"
+#include "lib/cuttest-utils.h"
 
-#include <unistd.h>
+#ifdef HAVE_UNISTD_H
+#  include <unistd.h>
+#endif
 
 void data_signal (void);
 void test_signal (gconstpointer data);

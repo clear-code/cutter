@@ -1,5 +1,5 @@
 #include <cutter.h>
-#include <cuttest-utils.h>
+#include "lib/cuttest-utils.h"
 
 void test_get_fixture_data_string (void);
 

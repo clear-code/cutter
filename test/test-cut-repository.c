@@ -1,9 +1,9 @@
-#include "cutter.h"
-#include "cut-repository.h"
-#include "cut-test-case.h"
-#include "cut-test-container.h"
+#include <cutter.h>
+#include <cutter/cut-repository.h>
+#include <cutter/cut-test-case.h>
+#include <cutter/cut-test-container.h>
 
-#include "cuttest-utils.h"
+#include "lib/cuttest-utils.h"
 
 void test_create_test_suite (void);
 

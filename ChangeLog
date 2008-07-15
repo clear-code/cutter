@@ -1,5 +1,7 @@
 2008-07-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/: cleanup #include.
+
 	* test/test-cut-assertions.c: remove needless #include.
 
 	* doc/reference/Makefile.am (DOC_SOURCE_DIR): use top directory.

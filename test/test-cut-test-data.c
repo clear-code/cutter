@@ -1,6 +1,6 @@
 #include <gcutter.h>
 #include <cutter/cut-test-data.h>
-#include <cuttest-utils.h>
+#include "lib/cuttest-utils.h"
 
 void test_new (void);
 void test_new_empty (void);

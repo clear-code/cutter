@@ -10,7 +10,7 @@
 #include <signal.h>
 #endif
 
-#include "cuttest-utils.h"
+#include "lib/cuttest-utils.h"
 
 void test_run (void);
 void test_run_test_case (void);

@@ -1,10 +1,9 @@
-#include "cutter.h"
-#include "cut-test.h"
-#include "cut-test-result.h"
-#include "cut-loader.h"
-#include "cut-utils.h"
-#include "cuttest-utils.h"
-#include "cuttest-assertions.h"
+#include <cutter.h>
+#include <cutter/cut-test.h>
+#include <cutter/cut-test-result.h>
+#include <cutter/cut-loader.h>
+#include <cutter/cut-utils.h>
+#include "lib/cuttest-assertions.h"
 
 void test_set_attribute (void);
 void test_get_bug_id (void);
