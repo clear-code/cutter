@@ -714,7 +714,7 @@ teardown (void)
     const GError *taken_error = NULL;                           \
     cut_stream_parser_parse(parser, (string), -1, &error);      \
     cut_assert_not_null(error);                                 \
-    taken_error = cut_take_g_error(error);                      \
+    taken_error = gcut_take_error(error);                       \
     cut_assert_equal_string((expected_message),                 \
                             taken_error->message);              \
 } while (0)

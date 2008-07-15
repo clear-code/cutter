@@ -17,22 +17,22 @@
  *
  */
 
-#ifndef __CUT_GASSERTIONS_H__
-#define __CUT_GASSERTIONS_H__
+#ifndef __GCUT_ASSERTIONS_H__
+#define __GCUT_ASSERTIONS_H__
 
 #include <glib.h>
 
-#include <cutter/cut-value-equal.h>
-#include <cutter/cut-list.h>
-#include <cutter/cut-assertions.h>
-#include <cutter/cut-gpublic.h>
-#include <cutter/cut-gtest-utils.h>
-#include <cutter/cut-gassertions-helper.h>
+#include <gcutter/gcut-value-equal.h>
+#include <gcutter/gcut-list.h>
+#include <gcutter/gcut-assertions.h>
+#include <gcutter/gcut-public.h>
+#include <gcutter/gcut-test-utils.h>
+#include <gcutter/gcut-assertions-helper.h>
 
 G_BEGIN_DECLS
 
 /**
- * SECTION: cut-gassertions
+ * SECTION: gcut-assertions
  * @title: Assertions with GLib support
  * @short_description: Checks that your program works as you
  * expect with GLib support.
@@ -40,15 +40,17 @@ G_BEGIN_DECLS
  */
 
 /**
- * cut_assert_equal_g_type:
+ * gcut_assert_equal_type:
  * @expected: an expected GType.
  * @actual: an actual GType.
  * @...: optional format string, followed by parameters to insert
  * into the format string (as with printf())
  *
  * Passes if @expected == @actual.
+ *
+ * Since: 1.0.3
  */
-#define cut_assert_equal_g_type(expected, actual, ...) do       \
+#define gcut_assert_equal_type(expected, actual, ...) do        \
 {                                                               \
     GType _expected = (expected);                               \
     GType _actual = (actual);                                   \
@@ -66,20 +68,38 @@ G_BEGIN_DECLS
     }                                                           \
 } while(0)
 
+#ifndef CUTTER_DISABLE_DEPRECATED
 /**
- * cut_assert_equal_g_value:
+ * cut_assert_equal_g_type:
+ * @expected: an expected GType.
+ * @actual: an actual GType.
+ * @...: optional format string, followed by parameters to insert
+ * into the format string (as with printf())
+ *
+ * Passes if @expected == @actual.
+ *
+ * Deprecated: 1.0.3: Use gcut_assert_equal_type() instead.
+ */
+#define cut_assert_equal_g_type(expected, actual, ...)          \
+    gcut_assert_equal_type(expected, actual, ## __VA_ARGS__)
+#endif
+
+/**
+ * gcut_assert_equal_value:
  * @expected: an expected GValue *.
  * @actual: an actual GValue *.
  * @...: optional format string, followed by parameters to insert
  * into the format string (as with printf())
  *
  * Passes if @expected == @actual.
+ *
+ * Since: 1.0.3
  */
-#define cut_assert_equal_g_value(expected, actual, ...) do              \
+#define gcut_assert_equal_value(expected, actual, ...) do               \
 {                                                                       \
     GValue *_expected = (expected);                                     \
     GValue *_actual = (actual);                                         \
-    if (cut_value_equal(expected, actual)) {                            \
+    if (gcut_value_equal(expected, actual)) {                           \
         cut_test_pass();                                                \
     } else {                                                            \
         const gchar *message;                                           \
@@ -109,6 +129,64 @@ G_BEGIN_DECLS
     }                                                                   \
 } while(0)
 
+#ifndef CUTTER_DISABLE_DEPRECATED
+/**
+ * cut_assert_equal_g_value:
+ * @expected: an expected GValue *.
+ * @actual: an actual GValue *.
+ * @...: optional format string, followed by parameters to insert
+ * into the format string (as with printf())
+ *
+ * Passes if @expected == @actual.
+ *
+ * Deprecated: 1.0.3: Use gcut_assert_equal_value() instead.
+ */
+#define cut_assert_equal_g_value(expected, actual, ...)         \
+    gcut_assert_equal_value(expected, actual, ## __VA_ARGS__)
+#endif
+
+/**
+ * gcut_assert_equal_list_int:
+ * @expected: an expected GList * of integer.
+ * @actual: an actual GList * of integer.
+ * @...: optional format string, followed by parameters to insert
+ * into the format string (as with printf())
+ *
+ * Passes if @expected == @actual.
+ *
+ * Since: 1.0.3
+ */
+#define gcut_assert_equal_list_int(expected, actual, ...) do            \
+{                                                                       \
+    const GList *_expected, *_actual;                                   \
+                                                                        \
+    _expected = (expected);                                             \
+    _actual = (actual);                                                 \
+    if (gcut_list_int_equal(_expected, _actual)) {                      \
+        cut_test_pass();                                                \
+    } else {                                                            \
+        const gchar *message;                                           \
+        const gchar *inspected_expected, *inspected_actual;             \
+                                                                        \
+        inspected_expected =                                            \
+            cut_take_string(gcut_list_int_inspect(_expected));          \
+        inspected_actual =                                              \
+            cut_take_string(gcut_list_int_inspect(_actual));            \
+                                                                        \
+        message = cut_take_printf("<%s == %s>\n"                        \
+                                  "expected: <%s>\n"                    \
+                                  " but was: <%s>",                     \
+                                  #expected, #actual,                   \
+                                  inspected_expected,                   \
+                                  inspected_actual),                    \
+        message = cut_append_diff(message,                              \
+                                  inspected_expected,                   \
+                                  inspected_actual);                    \
+        cut_test_fail(FAILURE, message, ## __VA_ARGS__);                \
+    }                                                                   \
+} while(0)
+
+#ifndef CUTTER_DISABLE_DEPRECATED
 /**
  * cut_assert_equal_g_list_int:
  * @expected: an expected GList * of integer.
@@ -119,24 +197,40 @@ G_BEGIN_DECLS
  * Passes if @expected == @actual.
  *
  * Since: 0.8
+ *
+ * Deprecated: 1.0.3: Use gcut_assert_equal_list_int() instead.
  */
-#define cut_assert_equal_g_list_int(expected, actual, ...) do           \
+#define cut_assert_equal_g_list_int(expected, actual, ...)      \
+    gcut_assert_equal_list_int(expected, actual, ## __VA_ARGS__)
+#endif
+
+/**
+ * gcut_assert_equal_list_uint:
+ * @expected: an expected GList * of unsigned integer.
+ * @actual: an actual GList * of unsigned integer.
+ * @...: optional format string, followed by parameters to insert
+ * into the format string (as with printf())
+ *
+ * Passes if @expected == @actual.
+ *
+ * Since: 1.0.3
+ */
+#define gcut_assert_equal_list_uint(expected, actual, ...) do           \
 {                                                                       \
     const GList *_expected, *_actual;                                   \
                                                                         \
     _expected = (expected);                                             \
     _actual = (actual);                                                 \
-    if (cut_list_equal_int(_expected, _actual)) {                       \
+    if (gcut_list_uint_equal(_expected, _actual)) {                     \
         cut_test_pass();                                                \
     } else {                                                            \
         const gchar *message;                                           \
         const gchar *inspected_expected, *inspected_actual;             \
                                                                         \
         inspected_expected =                                            \
-            cut_take_string(cut_list_inspect_int(_expected));           \
+            cut_take_string(gcut_list_uint_inspect(_expected));         \
         inspected_actual =                                              \
-            cut_take_string(cut_list_inspect_int(_actual));             \
-                                                                        \
+            cut_take_string(gcut_list_uint_inspect(_actual));           \
         message = cut_take_printf("<%s == %s>\n"                        \
                                   "expected: <%s>\n"                    \
                                   " but was: <%s>",                     \
@@ -151,9 +245,9 @@ G_BEGIN_DECLS
 } while(0)
 
 /**
- * cut_assert_equal_g_list_uint:
- * @expected: an expected GList * of unsigned integer.
- * @actual: an actual GList * of unsigned integer.
+ * gcut_assert_equal_list_string:
+ * @expected: an expected GList * of string.
+ * @actual: an actual GList * of string.
  * @...: optional format string, followed by parameters to insert
  * into the format string (as with printf())
  *
@@ -161,28 +255,26 @@ G_BEGIN_DECLS
  *
  * Since: 1.0.3
  */
-#define cut_assert_equal_g_list_uint(expected, actual, ...) do          \
+#define gcut_assert_equal_list_string(expected, actual, ...) do         \
 {                                                                       \
-    const GList *_expected, *_actual;                                   \
-                                                                        \
-    _expected = (expected);                                             \
-    _actual = (actual);                                                 \
-    if (cut_list_equal_uint(_expected, _actual)) {                      \
+    const GList *_expected = (expected);                                \
+    const GList *_actual = (actual);                                    \
+    if (gcut_list_string_equal(_expected, _actual)) {                   \
         cut_test_pass();                                                \
     } else {                                                            \
         const gchar *message;                                           \
         const gchar *inspected_expected, *inspected_actual;             \
                                                                         \
         inspected_expected =                                            \
-            cut_take_string(cut_list_inspect_uint(_expected));          \
+            cut_take_string(gcut_list_string_inspect(_expected));       \
         inspected_actual =                                              \
-            cut_take_string(cut_list_inspect_uint(_actual));            \
+            cut_take_string(gcut_list_string_inspect(_actual));         \
         message = cut_take_printf("<%s == %s>\n"                        \
                                   "expected: <%s>\n"                    \
                                   " but was: <%s>",                     \
                                   #expected, #actual,                   \
                                   inspected_expected,                   \
-                                  inspected_actual),                    \
+                                  inspected_actual);                    \
         message = cut_append_diff(message,                              \
                                   inspected_expected,                   \
                                   inspected_actual);                    \
@@ -190,6 +282,7 @@ G_BEGIN_DECLS
     }                                                                   \
 } while(0)
 
+#ifndef CUTTER_DISABLE_DEPRECATED
 /**
  * cut_assert_equal_g_list_string:
  * @expected: an expected GList * of string.
@@ -200,45 +293,24 @@ G_BEGIN_DECLS
  * Passes if @expected == @actual.
  *
  * Since: 0.8
+ *
+ * Deprecated: 1.0.3: Use gcut_assert_equal_list_string() instead.
  */
-#define cut_assert_equal_g_list_string(expected, actual, ...) do        \
-{                                                                       \
-    const GList *_expected = (expected);                                \
-    const GList *_actual = (actual);                                    \
-    if (cut_list_equal_string(_expected, _actual)) {                    \
-        cut_test_pass();                                                \
-    } else {                                                            \
-        const gchar *message;                                           \
-        const gchar *inspected_expected, *inspected_actual;             \
-                                                                        \
-        inspected_expected =                                            \
-            cut_take_string(cut_list_inspect_string(_expected));        \
-        inspected_actual =                                              \
-            cut_take_string(cut_list_inspect_string(_actual));          \
-        message = cut_take_printf("<%s == %s>\n"                        \
-                                  "expected: <%s>\n"                    \
-                                  " but was: <%s>",                     \
-                                  #expected, #actual,                   \
-                                  inspected_expected,                   \
-                                  inspected_actual);                    \
-        message = cut_append_diff(message,                              \
-                                  inspected_expected,                   \
-                                  inspected_actual);                    \
-        cut_test_fail(FAILURE, message, ## __VA_ARGS__);                \
-    }                                                                   \
-} while(0)
+#define cut_assert_equal_g_list_string(expected, actual, ...)           \
+    gcut_assert_equal_list_string(expected, actual, ## __VA_ARGS__)
+#endif
 
 /**
- * cut_assert_g_error:
+ * gcut_assert_error:
  * @error: a target GError *.
  * @...: optional format string, followed by parameters to insert
  * into the format string (as with printf())
  *
  * Passes if @error == NULL.
  *
- * Since: 1.0
+ * Since: 1.0.3
  */
-#define cut_assert_g_error(error, ...) do                               \
+#define gcut_assert_error(error, ...) do                                \
 {                                                                       \
     GError *_error;                                                     \
                                                                         \
@@ -258,16 +330,33 @@ G_BEGIN_DECLS
     }                                                                   \
 } while(0)
 
+#ifndef CUTTER_DISABLE_DEPRECATED
 /**
- * cut_assert_remove_path:
+ * cut_assert_g_error:
+ * @error: a target GError *.
+ * @...: optional format string, followed by parameters to insert
+ * into the format string (as with printf())
+ *
+ * Passes if @error == NULL.
+ *
+ * Since: 1.0
+ *
+ * Deprecated: 1.0.3: Use gcut_assert_error() instead.
+ */
+#define cut_assert_g_error(error, ...)          \
+    gcut_assert_error(error, ## __VA_ARGS__)
+#endif
+
+/**
+ * gcut_assert_remove_path:
  * @path: a first element of the path to the removed path.
  * @...: remaining elements in path.
  *
  * Passes if cut_utils_build_path(@path, ...) is removed successfully.
  *
- * Since: 1.0.2
+ * Since: 1.0.3
  */
-#define cut_assert_remove_path(path, ...) do                            \
+#define gcut_assert_remove_path(path, ...) do                           \
 {                                                                       \
     GError *_remove_path_g_error = NULL;                                \
     gchar *_full_path;                                                  \
@@ -281,9 +370,25 @@ G_BEGIN_DECLS
                        "Remove: %s", _taken_full_path);                 \
 } while (0)
 
+#ifndef CUTTER_DISABLE_DEPRECATED
+/**
+ * cut_assert_remove_path:
+ * @path: a first element of the path to the removed path.
+ * @...: remaining elements in path.
+ *
+ * Passes if cut_utils_build_path(@path, ...) is removed successfully.
+ *
+ * Since: 1.0.2
+ *
+ * Deprecated: 1.0.3: Use gcut_assert_remove_path() instead.
+ */
+#define cut_assert_remove_path(path, ...)               \
+    gcut_assert_remove_path(path, ## __VA_ARGS__)
+#endif
+
 G_END_DECLS
 
-#endif /* __CUT_GASSERTIONS_H__ */
+#endif /* __GCUT_ASSERTIONS_H__ */
 
 /*
 vi:nowrap:ai:expandtab:sw=4

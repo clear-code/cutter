@@ -98,7 +98,7 @@ teardown (void)
 static void
 stub_take_g_object (void)
 {
-    cut_take_g_object(object);
+    gcut_take_object(object);
 }
 
 static void
@@ -138,7 +138,7 @@ list_value_free (gpointer value)
 static void
 stub_take_g_list (void)
 {
-    cut_take_g_list(list, list_value_free);
+    gcut_take_list(list, list_value_free);
 }
 
 void

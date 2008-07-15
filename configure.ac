@@ -456,6 +456,7 @@ AC_CONFIG_FILES([Makefile
 		 gcutter.pc
 		 libcutter.pc
 		 m4macros/Makefile
+		 gcutter/Makefile
 		 cutter/cut-version.h
 		 cutter/Makefile
 		 module/Makefile

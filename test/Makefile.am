@@ -6,7 +6,7 @@ INCLUDES = 			\
 	-I$(top_builddir)	\
 	-I$(top_srcdir)		\
 	-I$(top_srcdir)/cutter	\
-	-I$(top_srcdir)/test/lib
+	-I$(top_srcdir)/gcutter
 
 AM_CFLAGS = $(CUTTER_CFLAGS)
 if HAVE_GTK
@@ -24,7 +24,7 @@ TESTS_ENVIRONMENT = 		\
 noinst_LTLIBRARIES = 				\
 		test_cutter.la			\
 		test_cut_assertions.la		\
-		test_cut_gassertions.la		\
+		test_gcut_assertions.la		\
 		test_cut_test_attribute.la	\
 		test_cut_test.la		\
 		test_cut_iterated_test.la	\
@@ -51,7 +51,7 @@ noinst_LTLIBRARIES = 				\
 		test_cut_utils.la		\
 		test_cut_sequence_matcher.la	\
 		test_cut_diff.la		\
-		test_cut_gassertions_helper.la	\
+		test_gcut_assertions_helper.la	\
 		test_cut_main.la		\
 		test_cut_fixture_data.la	\
 		test_cut_test_data.la		\
@@ -70,7 +70,7 @@ LIBS =							\
 
 test_cutter_la_SOURCES		= test-cutter.c
 test_cut_assertions_la_SOURCES  = test-cut-assertions.c
-test_cut_gassertions_la_SOURCES = test-cut-gassertions.c
+test_gcut_assertions_la_SOURCES = test-gcut-assertions.c
 test_cut_test_la_SOURCES        = test-cut-test.c
 test_cut_iterated_test_la_SOURCES = test-cut-iterated-test.c
 test_cut_test_result_la_SOURCES = test-cut-test-result.c
@@ -97,7 +97,7 @@ test_cut_test_context_la_SOURCES = test-cut-test-context.c
 test_cut_utils_la_SOURCES       = test-cut-utils.c
 test_cut_sequence_matcher_la_SOURCES = test-cut-sequence-matcher.c
 test_cut_diff_la_SOURCES        = test-cut-diff.c
-test_cut_gassertions_helper_la_SOURCES = test-cut-gassertions-helper.c
+test_gcut_assertions_helper_la_SOURCES = test-gcut-assertions-helper.c
 test_cut_main_la_SOURCES        = test-cut-main.c
 test_cut_fixture_data_la_SOURCES = test-cut-fixture-data.c
 test_cut_test_data_la_SOURCES = test-cut-test-data.c

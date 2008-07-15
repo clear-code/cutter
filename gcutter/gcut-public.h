@@ -17,8 +17,8 @@
  *
  */
 
-#ifndef __CUT_GPUBLIC_H__
-#define __CUT_GPUBLIC_H__
+#ifndef __GCUT_PUBLIC_H__
+#define __GCUT_PUBLIC_H__
 
 #include <glib-object.h>
 
@@ -38,7 +38,7 @@ const GList  *cut_test_context_take_g_list   (CutTestContext     *context,
 
 G_END_DECLS
 
-#endif /* __CUT_GPUBLIC_H__ */
+#endif /* __GCUT_PUBLIC_H__ */
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

@@ -25,8 +25,8 @@
 #include <string.h>
 #include <glib.h>
 
-#include "cut-list.h"
 #include "cut-sequence-matcher.h"
+#include "../gcutter/gcut-list.h"
 
 #define CUT_SEQUENCE_MATCHER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_SEQUENCE_MATCHER, CutSequenceMatcherPrivate))
 

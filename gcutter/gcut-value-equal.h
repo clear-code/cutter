@@ -17,26 +17,26 @@
  *
  */
 
-#ifndef __CUT_VALUE_EQUAL_H__
-#define __CUT_VALUE_EQUAL_H__
+#ifndef __GCUT_VALUE_EQUAL_H__
+#define __GCUT_VALUE_EQUAL_H__
 
 #include <glib-object.h>
 
 G_BEGIN_DECLS
 
-void             cut_value_equal_init          (void);
+void             gcut_value_equal_init          (void);
 
-gboolean         cut_value_equal               (const GValue *value1,
-                                                const GValue *value2);
+gboolean         gcut_value_equal               (const GValue *value1,
+                                                 const GValue *value2);
 
-void             cut_value_register_equal_func (GType type1,
-                                                GType type2,
-                                                GEqualFunc equal_func);
+void             gcut_value_register_equal_func (GType type1,
+                                                 GType type2,
+                                                 GEqualFunc equal_func);
 
 
 G_END_DECLS
 
-#endif /* __CUT_VALUE_EQUAL_H__ */
+#endif /* __GCUT_VALUE_EQUAL_H__ */
 
 /*
 vi:nowrap:ai:expandtab:sw=4

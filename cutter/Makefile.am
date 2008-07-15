@@ -22,14 +22,6 @@ cutter_public_headers = 			\
 		cut-public.h			\
 		cut-types.h
 
-gcutter_public_headers =			\
-		cut-gassertions.h		\
-		cut-gassertions-helper.h	\
-		cut-gpublic.h			\
-		cut-gtest-utils.h		\
-		cut-value-equal.h		\
-		cut-list.h
-
 libcutter_public_headers = 			\
 		cut-private.h			\
 		cut-runner.h			\
@@ -65,7 +57,6 @@ libcutter_public_headers = 			\
 		cut-diff.h
 
 noinst_headers = 			\
-		gbsearcharray.h		\
 		cut-loader.h		\
 		cut-module.h		\
 		cut-module-impl.h	\
@@ -74,13 +65,11 @@ noinst_headers = 			\
 
 cutterincludedir=$(includedir)/cutter
 cutterinclude_HEADERS = 		\
-	cutter.h			\
-	gcutter.h
+	cutter.h
 
 cuttersubincludedir=$(includedir)/cutter/cutter
-cuttersubinclude_HEADERS = 		\
-	$(cutter_public_headers)	\
-	$(gcutter_public_headers)	\
+cuttersubinclude_HEADERS = 				\
+	$(cutter_public_headers)			\
 	$(libcutter_public_headers)
 
 enum_source_prefix = cut-enum-types
@@ -112,7 +101,6 @@ libcutter_la_SOURCES =				\
 		cut-enum-types.c		\
 		$(marshal_sources)		\
 		$(cutter_public_headers)	\
-		$(gcutter_public_headers)	\
 		$(libcutter_public_headers)	\
 		$(noinst_headers)		\
 		cut-run-context.c		\
@@ -148,8 +136,6 @@ libcutter_la_SOURCES =				\
 		cut-pipeline.c			\
 		cut-utils.c			\
 		cut-stream-parser.c		\
-		cut-value-equal.c		\
-		cut-list.c			\
 		cut-sequence-matcher.c		\
 		cut-diff.c
 
@@ -157,7 +143,8 @@ libcutter_la_LDFLAGS =				\
 	-version-info $(LT_VERSION_INFO)	\
 	-no-undefined
 
-libcutter_la_LIBADD =			\
+libcutter_la_LIBADD =				\
+	$(builddir)/../gcutter/libgcutter.la	\
 	$(GLIB_LIBS)
 if HAVE_LIBBFD
 libcutter_la_LIBADD += $(BFD_LIBS)

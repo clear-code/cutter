@@ -20,12 +20,12 @@
 #ifndef __CUT_GTEST_UTILS_H__
 #define __CUT_GTEST_UTILS_H__
 
-#include <cutter/cut-gpublic.h>
+#include <gcutter/gcut-public.h>
 
 G_BEGIN_DECLS
 
 /**
- * SECTION: cut-gtest-utils
+ * SECTION: gcut-test-utils
  * @title: Test Utilities with GLib support
  * @short_description: Utilities to write tests more easily
  * with GLib support.
@@ -40,18 +40,20 @@ G_BEGIN_DECLS
 
 
 /**
- * cut_take_g_object:
+ * gcut_take_g_object:
  * @object: the GObject * to be owned by Cutter.
  *
  * Passes ownership of @object to Cutter and returns @object.
  *
  * Returns: @object owned by Cutter. Don't g_object_unref() it.
+ *
+ * Since: 1.0.3
  */
-#define cut_take_g_object(object)                                       \
+#define gcut_take_object(object)                                        \
     cut_test_context_take_g_object(get_current_test_context(), (object))
 
 /**
- * cut_take_g_error:
+ * gcut_take_error:
  * @error: the GError * to be owned by Cutter.
  *
  * Passes ownership of @error to Cutter and returns
@@ -59,12 +61,14 @@ G_BEGIN_DECLS
  *
  * Returns: a GError * owned by Cutter. Don't g_error_free()
  * it.
+ *
+ * Since: 1.0.3
  */
-#define cut_take_g_error(error)                                         \
+#define gcut_take_error(error)                                          \
     cut_test_context_take_g_error(get_current_test_context(), (error))
 
 /**
- * cut_take_g_list:
+ * gcut_take_list:
  * @list: the GList * to be owned by Cutter.
  * @destroy_function: the destroy function
  * (#CutDestroyFunction) that destroys the elements of
@@ -75,8 +79,10 @@ G_BEGIN_DECLS
  *
  * Returns: a GList * owned by Cutter. Don't g_list_free()
  * it.
+ *
+ * Since: 1.0.3
  */
-#define cut_take_g_list(list, destroy_function)                         \
+#define gcut_take_list(list, destroy_function)                          \
     cut_test_context_take_g_list(get_current_test_context(),            \
                                  (list), (destroy_function))
 

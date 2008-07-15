@@ -26,8 +26,8 @@
 
 #include <cutter/cut-private.h>
 #include <cutter/cut-public.h>
-#include <cutter/cut-gpublic.h>
 #include <cutter/cut-test-data.h>
+#include <gcutter/gcut-public.h>
 
 G_BEGIN_DECLS
 

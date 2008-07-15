@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -17,15 +17,14 @@
  *
  */
 
-#ifndef __CUT_GASSERTIONS_HELPER_H__
-#define __CUT_GASSERTIONS_HELPER_H__
+#ifndef __GCUTTER_H__
+#define __GCUTTER_H__
 
-G_BEGIN_DECLS
+#include <cutter.h>
+#include <gcutter/gcut-assertions.h>
 
-G_END_DECLS
-
-#endif /* __CUT_GASSERTIONS_HELPER_H__ */
+#endif /* __GCUTTER_H__ */
 
 /*
-vi:nowrap:ai:expandtab:sw=4:ts=4
+vi:nowrap:ai:expandtab:sw=4
 */

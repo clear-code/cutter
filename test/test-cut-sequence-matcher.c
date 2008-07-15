@@ -1,7 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 
-#include <cutter.h>
-#include <cutter/cut-gassertions.h>
+#include <gcutter.h>
 #include <cutter/cut-sequence-matcher.h>
 
 void test_to_indexes_for_string_sequence(void);
@@ -135,7 +134,7 @@ equal_match_with_data (gconstpointer info1, gconstpointer info2,
 static gboolean
 equal_matches (const GList *matches1, const GList *matches2)
 {
-    return cut_list_equal(matches1, matches2, equal_match_with_data, NULL);
+    return gcut_list_equal(matches1, matches2, equal_match_with_data, NULL);
 }
 
 static gchar *
@@ -162,7 +161,7 @@ inspect_match_func (GString *string, gconstpointer data, gpointer user_data)
 static const gchar *
 inspect_matches (const GList *matches)
 {
-    return cut_take_string(cut_list_inspect(matches, inspect_match_func, NULL));
+    return cut_take_string(gcut_list_inspect(matches, inspect_match_func, NULL));
 }
 
 #define cut_assert_to_index(expected, matcher, to_content) do           \
@@ -672,8 +671,8 @@ equal_operation_with_data (gconstpointer data1, gconstpointer data2,
 static gboolean
 equal_operations (const GList *operations1, const GList *operations2)
 {
-    return cut_list_equal(operations1, operations2,
-                          equal_operation_with_data, NULL);
+    return gcut_list_equal(operations1, operations2,
+                           equal_operation_with_data, NULL);
 }
 
 static const gchar *
@@ -711,8 +710,8 @@ inspect_operation_func (GString *string, gconstpointer data, gpointer user_data)
 static const gchar *
 inspect_operations (const GList *operations)
 {
-    return cut_take_string(cut_list_inspect(operations,
-                                            inspect_operation_func, NULL));
+    return cut_take_string(gcut_list_inspect(operations,
+                                             inspect_operation_func, NULL));
 }
 
 #define cut_assert_operations(expected,                                 \

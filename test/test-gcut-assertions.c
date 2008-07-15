@@ -3,7 +3,7 @@
 #include "cut-test-result.h"
 #include "cut-utils.h"
 #include "cut-test-runner.h"
-#include "cuttest-assertions.h"
+#include "lib/cuttest-assertions.h"
 
 void test_equal_g_type(void);
 void test_equal_g_value(void);
@@ -97,8 +97,8 @@ teardown (void)
 static void
 equal_g_type_test (void)
 {
-    cut_assert_equal_g_type(G_TYPE_INT, G_TYPE_INT);
-    cut_assert_equal_g_type(G_TYPE_INT, G_TYPE_STRING);
+    gcut_assert_equal_type(G_TYPE_INT, G_TYPE_INT);
+    gcut_assert_equal_type(G_TYPE_INT, G_TYPE_STRING);
 }
 
 void
@@ -195,10 +195,10 @@ equal_g_list_uint_test (void)
     list2 = g_list_append(list2, GUINT_TO_POINTER(1000));
     list2 = g_list_append(list2, GUINT_TO_POINTER(2000));
 
-    cut_assert_equal_g_list_uint(list1, list1);
-    cut_assert_equal_g_list_uint(list2, list2);
+    gcut_assert_equal_list_uint(list1, list1);
+    gcut_assert_equal_list_uint(list2, list2);
 
-    cut_assert_equal_g_list_uint(list1, list2);
+    gcut_assert_equal_list_uint(list1, list2);
 }
 
 void

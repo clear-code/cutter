@@ -32,8 +32,8 @@
 
 #include "cut-utils.h"
 #include "cut-public.h"
-#include "cut-gpublic.h"
 #include "cut-main.h"
+#include "../gcutter/gcut-public.h"
 
 gchar *
 cut_utils_create_regex_pattern (const gchar *string)

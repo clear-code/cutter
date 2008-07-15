@@ -18,8 +18,9 @@ HFILE_GLOB =					\
 	$(top_srcdir)/cutter/cutter.h		\
 	$(top_srcdir)/cutter/cut-assertions.h	\
 	$(top_srcdir)/cutter/cut-test-utils.h	\
-	$(top_srcdir)/cutter/cut-gassertions.h	\
-	$(top_srcdir)/cutter/cut-gtest-utils.h	\
+	$(top_srcdir)/gcutter/gcutter.h		\
+	$(top_srcdir)/gcutter/gcut-assertions.h	\
+	$(top_srcdir)/gcutter/gcut-test-utils.h	\
 	$(top_srcdir)/cutter/cut-types.h	\
 	$(top_srcdir)/cutter/cut-experimental.h
 #CFILE_GLOB=$(top_srcdir)/cutter/*.c

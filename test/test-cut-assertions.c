@@ -14,7 +14,7 @@
 #include "cut-utils.h"
 #include "cut-test-runner.h"
 #include "cuttest-utils.h"
-#include "cuttest-assertions.h"
+#include "lib/cuttest-assertions.h"
 
 void test_equal_int(void);
 void test_equal_string(void);

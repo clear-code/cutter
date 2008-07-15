@@ -2,6 +2,7 @@ ACLOCAL_AMFLAGS = -I m4macros
 
 SUBDIRS = 		\
 	m4macros	\
+	gcutter		\
 	cutter		\
 	module		\
 	test		\

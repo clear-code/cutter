@@ -1,5 +1,7 @@
 2008-07-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* Makefile.am, configure.ac, cutter/, gcutter/, test/: cut-g* -> gcut-*.
+
 	* configure.ac, test/test-cutter.c: check GTK+ is built with debug
 	mode on configure not runtime.
 

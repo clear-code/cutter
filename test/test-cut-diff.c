@@ -1,7 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 
-#include <cutter.h>
-#include <cutter/cut-gassertions.h>
+#include <gcutter.h>
 #include <cutter/cut-diff.h>
 
 void test_same_contents_readable_diff(void);

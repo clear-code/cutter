@@ -24,7 +24,7 @@
 #include <glib.h>
 #include "gbsearcharray.h"
 
-#include "cut-value-equal.h"
+#include "gcut-value-equal.h"
 
 typedef struct {
     GType type1;
@@ -33,7 +33,7 @@ typedef struct {
 } EqualEntry;
 
 static gint	equal_entries_cmp (gconstpointer bsearch_node1,
-                               gconstpointer bsearch_node2);
+                                   gconstpointer bsearch_node2);
 
 static GBSearchArray *equal_entries = NULL;
 static GBSearchConfig equal_bconfig = {
@@ -89,7 +89,7 @@ equal_entries_cmp (gconstpointer bsearch_node1,
 }
 
 void
-cut_value_register_equal_func (GType type1, GType type2, GEqualFunc equal_func)
+gcut_value_register_equal_func (GType type1, GType type2, GEqualFunc equal_func)
 {
     EqualEntry entry;
 
@@ -105,7 +105,7 @@ cut_value_register_equal_func (GType type1, GType type2, GEqualFunc equal_func)
 }
 
 gboolean
-cut_value_equal (const GValue *value1, const GValue *value2)
+gcut_value_equal (const GValue *value1, const GValue *value2)
 {
     GEqualFunc func;
     GType type1, type2;
@@ -167,13 +167,13 @@ value_equal_string_string (gconstpointer val1, gconstpointer val2)
 }
 
 void
-cut_value_equal_init (void)
+gcut_value_equal_init (void)
 {
     equal_entries = g_bsearch_array_create(&equal_bconfig);
 
 #define REGISTER_SAME_TYPE_EQUAL_FUNC(g_type, type)                     \
-    cut_value_register_equal_func(g_type, g_type,                       \
-                                  value_equal_ ## type ## _ ## type)
+    gcut_value_register_equal_func(g_type, g_type,                      \
+                                   value_equal_ ## type ## _ ## type)
 
     REGISTER_SAME_TYPE_EQUAL_FUNC(G_TYPE_CHAR, char);
     REGISTER_SAME_TYPE_EQUAL_FUNC(G_TYPE_UCHAR, uchar);

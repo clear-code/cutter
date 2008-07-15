@@ -24,11 +24,11 @@
 #include <glib.h>
 #include <string.h>
 
-#include "cut-list.h"
+#include "gcut-list.h"
 
 gboolean
-cut_list_equal (const GList *list1, const GList *list2,
-                GCompareDataFunc compare_func, gpointer user_data)
+gcut_list_equal (const GList *list1, const GList *list2,
+                 GCompareDataFunc compare_func, gpointer user_data)
 {
     const GList *node1, *node2;
 
@@ -43,8 +43,8 @@ cut_list_equal (const GList *list1, const GList *list2,
 }
 
 gchar *
-cut_list_inspect (const GList *list, CutInspectFunc inspect_func,
-                  gpointer user_data)
+gcut_list_inspect (const GList *list, GCutInspectFunc inspect_func,
+                   gpointer user_data)
 {
     const GList *node;
     GString *string;
@@ -69,9 +69,9 @@ equal_int (gconstpointer data1, gconstpointer data2, gpointer user_data)
 }
 
 gboolean
-cut_list_equal_int (const GList *list1, const GList *list2)
+gcut_list_int_equal (const GList *list1, const GList *list2)
 {
-    return cut_list_equal(list1, list2, equal_int, NULL);
+    return gcut_list_equal(list1, list2, equal_int, NULL);
 }
 
 static void
@@ -81,9 +81,9 @@ inspect_int (GString *string, gconstpointer data, gpointer user_data)
 }
 
 gchar *
-cut_list_inspect_int (const GList *list)
+gcut_list_int_inspect (const GList *list)
 {
-    return cut_list_inspect(list, inspect_int, NULL);
+    return gcut_list_inspect(list, inspect_int, NULL);
 }
 
 static gboolean
@@ -93,9 +93,9 @@ equal_uint (gconstpointer data1, gconstpointer data2, gpointer user_data)
 }
 
 gboolean
-cut_list_equal_uint (const GList *list1, const GList *list2)
+gcut_list_uint_equal (const GList *list1, const GList *list2)
 {
-    return cut_list_equal(list1, list2, equal_uint, NULL);
+    return gcut_list_equal(list1, list2, equal_uint, NULL);
 }
 
 static void
@@ -105,9 +105,9 @@ inspect_uint (GString *string, gconstpointer data, gpointer user_data)
 }
 
 gchar *
-cut_list_inspect_uint (const GList *list)
+gcut_list_uint_inspect (const GList *list)
 {
-    return cut_list_inspect(list, inspect_uint, NULL);
+    return gcut_list_inspect(list, inspect_uint, NULL);
 }
 
 static gboolean
@@ -123,9 +123,9 @@ equal_string (gconstpointer data1, gconstpointer data2, gpointer user_data)
 }
 
 gboolean
-cut_list_equal_string (const GList *list1, const GList *list2)
+gcut_list_string_equal (const GList *list1, const GList *list2)
 {
-    return cut_list_equal(list1, list2, equal_string, NULL);
+    return gcut_list_equal(list1, list2, equal_string, NULL);
 }
 
 static void
@@ -140,9 +140,9 @@ inspect_string (GString *string, gconstpointer data, gpointer user_data)
 }
 
 gchar *
-cut_list_inspect_string (const GList *list)
+gcut_list_string_inspect (const GList *list)
 {
-    return cut_list_inspect(list, inspect_string, NULL);
+    return gcut_list_inspect(list, inspect_string, NULL);
 }
 
 /*

@@ -52,8 +52,8 @@ static gint n_omission_signals = 0;
     _actual_result_summary =                                            \
         cut_take_result_summary_list(_result_summary);                  \
                                                                         \
-    cut_assert_equal_g_list_uint(_expected_result_summary,              \
-                                 _actual_result_summary);               \
+    gcut_assert_equal_list_uint(_expected_result_summary,               \
+                                _actual_result_summary);                \
 } while (0)
 
 void

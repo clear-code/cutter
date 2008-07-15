@@ -42,8 +42,8 @@ char **environ = NULL;
 #include "cut-ui.h"
 #include "cut-module-factory.h"
 #include "cut-contractor.h"
-#include "cut-value-equal.h"
 #include "cut-utils.h"
+#include "../gcutter/gcut-value-equal.h"
 
 static gboolean initialized = FALSE;
 static gchar *test_directory = NULL;
@@ -147,7 +147,7 @@ cut_init (int *argc, char ***argv)
     if (!g_thread_supported())
         g_thread_init(NULL);
 
-    cut_value_equal_init();
+    gcut_value_equal_init();
 
     option_context = g_option_context_new("TEST_DIRECTORY");
     g_option_context_set_help_enabled(option_context, FALSE);
