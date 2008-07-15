@@ -1,5 +1,11 @@
 2008-07-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/Makefile.am (DOC_SOURCE_DIR): use top directory.
+
+	* doc/reference/cutter-docs.sgml: remove a duplicated line.
+
+	* gcutter/gcut-test-utils.h: fix a typo.
+
 	* cutter/Makefile.am (libcutter_la_LIBADD): use $(top_builddir)
 	not $(builddir).
 

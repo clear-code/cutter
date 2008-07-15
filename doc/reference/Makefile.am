@@ -11,7 +11,7 @@ SCAN_OPTIONS =							\
 	--deprecated-guards="CUTTER_DISABLE_DEPRECATED"
 
 # The directory containing the source code. Relative to $(srcdir)
-DOC_SOURCE_DIR=../../cutter
+DOC_SOURCE_DIR=../..
 
 # Used for dependencies
 HFILE_GLOB =					\

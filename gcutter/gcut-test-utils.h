@@ -40,7 +40,7 @@ G_BEGIN_DECLS
 
 
 /**
- * gcut_take_g_object:
+ * gcut_take_object:
  * @object: the GObject * to be owned by Cutter.
  *
  * Passes ownership of @object to Cutter and returns @object.
