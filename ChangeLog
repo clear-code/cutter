@@ -1,5 +1,8 @@
 2008-07-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/Makefile.am (libcutter_la_LIBADD): use $(top_builddir)
+	not $(builddir).
+
 	* Makefile.am (update-po): include gcutter/.
 
 	* Makefile.am, configure.ac, cutter/, gcutter/, test/: cut-g* -> gcut-*.

@@ -144,7 +144,7 @@ libcutter_la_LDFLAGS =				\
 	-no-undefined
 
 libcutter_la_LIBADD =				\
-	$(builddir)/../gcutter/libgcutter.la	\
+	$(top_builddir)/gcutter/libgcutter.la	\
 	$(GLIB_LIBS)
 if HAVE_LIBBFD
 libcutter_la_LIBADD += $(BFD_LIBS)
