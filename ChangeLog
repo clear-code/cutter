@@ -1,5 +1,10 @@
 2008-07-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* configure.ac, test/test-cutter.c: check GTK+ is built with debug
+	mode on configure not runtime.
+
+	* test/Makefile.am (test_cutter_la_LIBADD): don't link GTK+.
+
 	* test/lib/Makefile.am (AM_LDFLAGS): don't add version.
 
 	* module/report/cut-xml-report.c (output_to_file): check return

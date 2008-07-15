@@ -7,10 +7,6 @@
 
 #include <glib.h>
 
-#ifdef HAVE_GTK
-#  include <gtk/gtk.h>
-#endif
-
 #ifdef HAVE_SYS_WAIT_H
 #  include <sys/types.h>
 #  include <sys/wait.h>
@@ -52,37 +48,6 @@ static const gchar *help_message;
 
 #define cut_assert_exit_failure()               \
     cut_assert_exit_status(EXIT_FAILURE)
-
-#ifdef HAVE_GTK
-static gboolean gtk_enable_debug = FALSE;
-static gchar *gtk_help_string = NULL;
-
-void
-startup (void)
-{
-    GOptionGroup *gtk_option_group;
-    GOptionContext *option_context;
-
-    gtk_option_group = gtk_get_option_group(FALSE);
-    option_context = g_option_context_new(NULL);
-
-    gtk_help_string = g_option_context_get_help(option_context, FALSE, gtk_option_group);
-
-    if (gtk_help_string && 
-        cut_utils_regex_match("gtk-debug", gtk_help_string)) {
-        gtk_enable_debug = TRUE;
-    }
-
-    g_option_context_free(option_context);
-}
-
-void
-shutdown (void)
-{
-    if (gtk_help_string)
-        g_free(gtk_help_string);
-}
-#endif
 
 void
 setup (void)
@@ -241,7 +206,7 @@ test_help_all (void)
         "  --class=CLASS                                   Program class as used by the window manager" LINE_FEED_CODE
         "  --gtk-name=NAME                                 Program name as used by the window manager" LINE_FEED_CODE
         "  --screen=SCREEN                                 X screen to use" LINE_FEED_CODE
-#  ifdef G_ENABLE_DEBUG
+#  ifdef HAVE_GTK_ENABLE_DEBUG
         "  --gdk-debug=FLAGS                               Gdk debugging flags to set" LINE_FEED_CODE
         "  --gdk-no-debug=FLAGS                            Gdk debugging flags to unset" LINE_FEED_CODE
 #  endif
@@ -256,7 +221,7 @@ test_help_all (void)
 #  endif
         "  --gtk-module=MODULES                            Load additional GTK+ modules" LINE_FEED_CODE
         "  --g-fatal-warnings                              Make all warnings fatal" LINE_FEED_CODE
-#  ifdef G_ENABLE_DEBUG
+#  ifdef HAVE_GTK_ENABLE_DEBUG
         "  --gtk-debug=FLAGS                               GTK+ debugging flags to set" LINE_FEED_CODE
         "  --gtk-no-debug=FLAGS                            GTK+ debugging flags to unset" LINE_FEED_CODE
 #  endif

@@ -17,8 +17,8 @@ EXTRA_DIST = run-test.sh
 CLEANFILES = *.gcno *.gcda
 
 TESTS = run-test.sh
-TESTS_ENVIRONMENT = \
-	NO_MAKE=yes \
+TESTS_ENVIRONMENT = 		\
+	NO_MAKE=yes 		\
 	CUTTER="$(CUTTER)"
 
 noinst_LTLIBRARIES = 				\
@@ -69,9 +69,6 @@ LIBS =							\
 	$(GLIB_LIBS)
 
 test_cutter_la_SOURCES		= test-cutter.c
-if HAVE_GTK
-test_cutter_la_LIBADD		= $(GTK_LIBS)
-endif
 test_cut_assertions_la_SOURCES  = test-cut-assertions.c
 test_cut_gassertions_la_SOURCES = test-cut-gassertions.c
 test_cut_test_la_SOURCES        = test-cut-test.c

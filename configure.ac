@@ -254,6 +254,43 @@ AM_PATH_GTK_2_0(2.12.0, [], [], [])
 
 if test -z "$no_gtk"; then
   AC_DEFINE(HAVE_GTK, 1, [Define to 1 if you have GTK+ installed])
+
+  AC_MSG_CHECKING(for GTK+ is built with debug mode)
+  ac_save_CFLAGS="$CFLAGS"
+  ac_save_LIBS="$LIBS"
+  CFLAGS="$CFLAGS $GTK_CFLAGS"
+  LIBS="$CFLAGS $GTK_LIBS"
+  AC_RUN_IFELSE([
+#include <stdlib.h>
+#include <gtk/gtk.h>
+
+int
+main (int argc, char **argv)
+{
+    GOptionGroup *option_group;
+    GOptionContext *option_context;
+    gchar *help;
+    gboolean debug_mode = FALSE;
+
+    option_group = gtk_get_option_group(FALSE);
+    option_context = g_option_context_new(NULL);
+
+    help = g_option_context_get_help(option_context, FALSE, option_group);
+
+    if (help && g_regex_match_simple("--gtk-debug", help, 0, 0)) {
+        debug_mode = TRUE;
+    }
+    g_option_context_free(option_context);
+
+    return debug_mode ? EXIT_SUCCESS : EXIT_FAILURE;
+}
+    ],
+    [AC_DEFINE(HAVE_GTK_ENABLE_DEBUG, 1,
+               [Define to 1 if you have GTK+ installed and built with debug mode])
+     AC_MSG_RESULT(yes)],
+    [AC_MSG_RESULT(no)])
+  CFLAGS="$ac_save_CFLAGS"
+  LIBS="$ac_save_LIBS"
 fi
 AM_CONDITIONAL([HAVE_GTK], [test -z "$no_gtk"])
 
