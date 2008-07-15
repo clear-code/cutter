@@ -209,7 +209,7 @@ Cutterは上記のような一般的な検証機能以外にも様々な検証�
 検証機能の一覧はリファレンスマニュアルの((<検証
 |URL:http://cutter.sf.net/reference/ja/cutter-cut-assertions.html>))
 や((<GLibサポート付きの検証
-|URL:http://cutter.sf.net/reference/ja/cutter-cut-gassertions.html>))
+|URL:http://cutter.sf.net/reference/ja/cutter-gcut-assertions.html>))
 を見てください。
 
 == 高度な機能

@@ -1,5 +1,7 @@
 2008-07-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* FEATURES*: cut-gassertions -> gcut-assertions.
+
 	* cutter/cut-assertions.h, gcutter/gcut-assertions.h: fix indent.
 
 	* doc/reference/ja.po: update.
