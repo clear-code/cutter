@@ -13,7 +13,6 @@
 #include "cut-test-result.h"
 #include "cut-utils.h"
 #include "cut-test-runner.h"
-#include "cuttest-utils.h"
 #include "lib/cuttest-assertions.h"
 
 void test_equal_int(void);
