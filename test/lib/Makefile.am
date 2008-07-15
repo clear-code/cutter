@@ -22,7 +22,8 @@ LIBS =						\
 # $(abs_builddir).  $(abs_builddir) is more reasonable
 # absolute path but it's not supported automake < 1.10. :<
 AM_LDFLAGS =			\
-	-rpath $(libdir)
+	-rpath $(libdir)	\
+	-avoid-version
 
 libcuttest_utils_la_SOURCES = 		\
 	cuttest-utils.c			\
