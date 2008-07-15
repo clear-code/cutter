@@ -211,11 +211,10 @@ followings:
     exists
   * ...
 
-See
-((<Assertions|URL:http://cutter.sf.net/reference/cutter-cut-assertions.html>))
-and ((<Assertions with GLib
-support|URL:http://cutter.sf.net/reference/cutter-gcut-assertions.html>))
-in the reference manual for assertion list.
+See ((<Assertions|cutter-cut-assertions.html>)) and
+((<Assertions with GLib
+support|cutter-gcut-assertions.html>)) in the reference
+manual for assertion list.
 
 == Advanced
 
@@ -263,7 +262,7 @@ coverage. If you use GNU Autoconf/GNU Automake, you
 can add code coverage support into your build system easily.
 
 See about AC_CHECK_COVERAGE in ((<README>)) and
-((<tutorial|TUTORIAL>)).
+((<TUTORIAL>)).
 
 === Backtrace on crash
 

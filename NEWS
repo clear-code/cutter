@@ -2,6 +2,30 @@
 
 = NEWS --- The history of Cutter
 
+== 1.0.3: 2008-07-15
+
+  * Support Data-Driven Testing:
+    * ((<cut_add_data()|cutter-cutter.html>))
+  * Add assertions:
+    * ((<gcut_assert_equal_list_uint()|cutter-gcut-assertions.html>))
+  * Rename assertions:
+    * Rename features that requires GLib support to
+      'gcut_XXX' from 'cut_XXX'. 'cut_XXX' can be still used
+      but they are deprecated. See ((<Assertions with GLib support
+      |cutter-gcut-assertions.html>)) for more details.
+  * Add utilities:
+    * ((<cut_append_diff()|cutter-cut-test-utils.html>)):
+      appends diff to a string.
+    * ((<gcut_list_string_new()|cutter-gcut-test-utils.html>))/
+      ((<gcut_list_string_free()|cutter-gcut-test-utils.html>)):
+      helps creating a list of strings.
+    * ((<gcut_take_error()|cutter-gcut-test-utils.html>)):
+      takes ownership of GError * to Cutter.
+    * ((<gcut_take_list()|cutter-gcut-test-utils.html>)):
+      takes ownership of GList * to Cutter.
+    * ((<gcut_take_object()|cutter-gcut-test-utils.html>)):
+      takes ownership of GObject * to Cutter.
+
 == 1.0.2: 2008-06-27
 
   * Support fixture data

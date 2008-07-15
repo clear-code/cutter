@@ -1,5 +1,11 @@
 2008-07-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* NEWS*: add entries for 1.0.3.
+
+	* FEATURES*: update.
+
+	* misc/rd2refentry-lib.rb: support easy link to reference manual.
+
 	* gcutter/gcut-test-utils.h, doc/reference/ja.po: update document.
 
 	* gcutter/gcut-public.h: add missing #include.

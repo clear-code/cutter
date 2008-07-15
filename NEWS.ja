@@ -2,15 +2,39 @@
 
 = NEWS --- Cutterの歴史
 
+== 1.0.3: 2008-07-15
+
+  * データ駆動テストのサポート:
+    * ((<cut_add_data()|cutter-cutter.html>))
+  * 検証の追加:
+    * ((<gcut_assert_equal_list_uint()|cutter-gcut-assertions.html>))
+  * 検証の名前変更:
+    * GLibサポートが必要な機能はcut_ではなくgcut_からはじま
+      る名前に変更。以前からあるcut_はじまりの名前も使えるが
+      非推奨。詳細は((<GLibサポート付きの検証
+      |cutter-gcut-assertions.html>))を参照。
+  * 便利機能の追加:
+    * ((<cut_append_diff()|cutter-cut-test-utils.html>)):
+      文字列にdiffを追加
+    * ((<gcut_list_string_new()|cutter-gcut-test-utils.html>))/
+      ((<gcut_list_string_free()|cutter-gcut-test-utils.html>)):
+      文字列のリストの作成を支援。
+    * ((<gcut_take_error()|cutter-gcut-test-utils.html>)):
+      GError *の所有権をCutterに移譲
+    * ((<gcut_take_list()|cutter-gcut-test-utils.html>)):
+      GList *の所有権をCutterに移譲
+    * ((<gcut_take_object()|cutter-gcut-test-utils.html>)):
+      GObject *の所有権をCutterに移譲
+
 == 1.0.2: 2008-06-27
 
-  * フィクスチャデータのサポート
+  * フィクスチャデータのサポート:
     * cut_set_fixture_data_dir()
     * cut_get_fixture_data_string()
     * cut_build_fixture_data_path()
-  * ユーティリティの追加
+  * ユーティリティの追加:
     * cut_remove_path()
-  * 検証の追加
+  * 検証の追加:
     * cut_assert_equal_fixture_data_string()
     * cut_assert_path_not_exist()
     * cut_assert_remove_path()

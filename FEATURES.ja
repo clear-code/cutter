@@ -207,10 +207,8 @@ Cutterは上記のような一般的な検証機能以外にも様々な検証�
   * ...
 
 検証機能の一覧はリファレンスマニュアルの((<検証
-|URL:http://cutter.sf.net/reference/ja/cutter-cut-assertions.html>))
-や((<GLibサポート付きの検証
-|URL:http://cutter.sf.net/reference/ja/cutter-gcut-assertions.html>))
-を見てください。
+|cutter-cut-assertions.html>))や((<GLibサポート付きの検証
+|cutter-gcut-assertions.html>))を見てください。
 
 == 高度な機能
 
@@ -242,8 +240,8 @@ Cutterは上記のような一般的な検証機能以外にも様々な検証�
 ができます。このようなテストの仕方はデータ駆動テストと呼ばれ
 ています。
 
-Cutterでのデータ駆動テストの書き方については((<cut_add_data()
-|URL:http://cutter.sf.net/reference/ja/cutter-cutter.html#cut-add-data>))
+Cutterでのデータ駆動テストの書き方については
+((<cut_add_data()|cutter-cutter.html>))
 を見てください。
 
 データ駆動テストの場合はテストは以下のような流れで実行されま

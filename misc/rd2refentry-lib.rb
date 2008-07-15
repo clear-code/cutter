@@ -70,7 +70,16 @@ module RD
       url = element.label.element_label
       label = contents.join("").chomp
       label = url if label.empty?
-      url = remove_lang_suffix(url.downcase) + ".html"
+      case url
+      when /\.html$/
+        if /\(\)$/ =~ label
+          anchor = $PREMATCH.gsub(/_/, "-")
+          url = "#{url}\##{anchor}"
+        end
+      when /\.html#[a-zA-Z\-_]+$/
+      else
+        url = remove_lang_suffix(url.downcase) + ".html"
+      end
       label = remove_lang_suffix(label)
       tag("ulink", {:url => url}, label)
     end
