@@ -44,7 +44,7 @@ G_BEGIN_DECLS
  * @expected: an expected GType.
  * @actual: an actual GType.
  * @...: optional format string, followed by parameters to insert
- * into the format string (as with printf())
+ *       into the format string (as with printf())
  *
  * Passes if @expected == @actual.
  *
@@ -74,7 +74,7 @@ G_BEGIN_DECLS
  * @expected: an expected GType.
  * @actual: an actual GType.
  * @...: optional format string, followed by parameters to insert
- * into the format string (as with printf())
+ *       into the format string (as with printf())
  *
  * Passes if @expected == @actual.
  *
@@ -89,7 +89,7 @@ G_BEGIN_DECLS
  * @expected: an expected GValue *.
  * @actual: an actual GValue *.
  * @...: optional format string, followed by parameters to insert
- * into the format string (as with printf())
+ *       into the format string (as with printf())
  *
  * Passes if @expected == @actual.
  *
@@ -135,7 +135,7 @@ G_BEGIN_DECLS
  * @expected: an expected GValue *.
  * @actual: an actual GValue *.
  * @...: optional format string, followed by parameters to insert
- * into the format string (as with printf())
+ *       into the format string (as with printf())
  *
  * Passes if @expected == @actual.
  *
@@ -150,7 +150,7 @@ G_BEGIN_DECLS
  * @expected: an expected GList * of integer.
  * @actual: an actual GList * of integer.
  * @...: optional format string, followed by parameters to insert
- * into the format string (as with printf())
+ *       into the format string (as with printf())
  *
  * Passes if @expected == @actual.
  *
@@ -192,7 +192,7 @@ G_BEGIN_DECLS
  * @expected: an expected GList * of integer.
  * @actual: an actual GList * of integer.
  * @...: optional format string, followed by parameters to insert
- * into the format string (as with printf())
+ *       into the format string (as with printf())
  *
  * Passes if @expected == @actual.
  *
@@ -209,7 +209,7 @@ G_BEGIN_DECLS
  * @expected: an expected GList * of unsigned integer.
  * @actual: an actual GList * of unsigned integer.
  * @...: optional format string, followed by parameters to insert
- * into the format string (as with printf())
+ *       into the format string (as with printf())
  *
  * Passes if @expected == @actual.
  *
@@ -249,7 +249,7 @@ G_BEGIN_DECLS
  * @expected: an expected GList * of string.
  * @actual: an actual GList * of string.
  * @...: optional format string, followed by parameters to insert
- * into the format string (as with printf())
+ *       into the format string (as with printf())
  *
  * Passes if @expected == @actual.
  *
@@ -288,7 +288,7 @@ G_BEGIN_DECLS
  * @expected: an expected GList * of string.
  * @actual: an actual GList * of string.
  * @...: optional format string, followed by parameters to insert
- * into the format string (as with printf())
+ *       into the format string (as with printf())
  *
  * Passes if @expected == @actual.
  *
@@ -304,7 +304,7 @@ G_BEGIN_DECLS
  * gcut_assert_error:
  * @error: a target GError *.
  * @...: optional format string, followed by parameters to insert
- * into the format string (as with printf())
+ *       into the format string (as with printf())
  *
  * Passes if @error == NULL.
  *
@@ -335,7 +335,7 @@ G_BEGIN_DECLS
  * cut_assert_g_error:
  * @error: a target GError *.
  * @...: optional format string, followed by parameters to insert
- * into the format string (as with printf())
+ *       into the format string (as with printf())
  *
  * Passes if @error == NULL.
  *

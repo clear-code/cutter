@@ -49,7 +49,7 @@ extern "C" {
  * cut_assert:
  * @expression: the expression to check.
  * @...: optional format string, followed by parameters to insert
- * into the format string (as with printf())
+ *       into the format string (as with printf())
  *
  * Passes if @expression is not 0 or NULL.
  */
@@ -70,7 +70,7 @@ extern "C" {
  * cut_assert_true:
  * @expression: the expression to check.
  * @...: optional format string, followed by parameters to insert
- * into the format string (as with printf())
+ *       into the format string (as with printf())
  *
  * Passes if @expression is TRUE value (not 0 or NULL).
  *
@@ -93,7 +93,7 @@ extern "C" {
  * cut_assert_false:
  * @expression: the expression to check.
  * @...: optional format string, followed by parameters to insert
- * into the format string (as with printf())
+ *       into the format string (as with printf())
  *
  * Passes if @expression is 0 or NULL.
  *
@@ -116,7 +116,7 @@ extern "C" {
  * cut_assert_null:
  * @expression: the expression to check.
  * @...: optional format string, followed by parameters to insert
- * into the format string (as with printf())
+ *       into the format string (as with printf())
  *
  * Passes if @expression is NULL.
  */
@@ -136,7 +136,7 @@ extern "C" {
  * cut_assert_null_string:
  * @expression: the expression that returns string.
  * @...: optional format string, followed by parameters to insert
- * into the format string (as with printf())
+ *       into the format string (as with printf())
  *
  * Passes if @expression is NULL.
  *
@@ -160,7 +160,7 @@ extern "C" {
  * cut_assert_not_null:
  * @expression: the expression to check.
  * @...: optional format string, followed by parameters to insert
- * into the format string (as with printf())
+ *       into the format string (as with printf())
  *
  * Passes if @expression is not NULL.
  */
@@ -181,7 +181,7 @@ extern "C" {
  * @expected: an expected integer value.
  * @actual: an actual integer value.
  * @...: optional format string, followed by parameters to insert
- * into the format string (as with printf())
+ *       into the format string (as with printf())
  *
  * Passes if @expected == @actual.
  */
@@ -207,7 +207,7 @@ extern "C" {
  * @expected: an expected unsigned integer value.
  * @actual: an actual unsigned integer value.
  * @...: optional format string, followed by parameters to insert
- * into the format string (as with printf())
+ *       into the format string (as with printf())
  *
  * Passes if @expected == @actual.
  */
@@ -234,7 +234,7 @@ extern "C" {
  * @error: an float value that specifies error range.
  * @actual: an actual float value.
  * @...: optional format string, followed by parameters to insert
- * into the format string (as with printf())
+ *       into the format string (as with printf())
  *
  * Passes if (@expected - @error) <= @actual <= (@expected + @error).
  */
@@ -265,7 +265,7 @@ extern "C" {
  * @expected: an expected string value.
  * @actual: an actual string value.
  * @...: optional format string, followed by parameters to insert
- * into the format string (as with printf())
+ *       into the format string (as with printf())
  *
  * Passes if both @expected and @actual are NULL or
  * strcmp(@expected, @actual) == 0.
@@ -309,7 +309,7 @@ extern "C" {
  * @expected: an expected string value.
  * @actual: an actual string value that is freed.
  * @...: optional format string, followed by parameters to insert
- * into the format string (as with printf())
+ *       into the format string (as with printf())
  *
  * Passes if both @expected and @actual are NULL or
  * strcmp(@expected, @actual) == 0.
@@ -327,7 +327,7 @@ extern "C" {
  * @expected: an expected string value.
  * @actual: an actual string value.
  * @...: optional format string, followed by parameters to insert
- * into the format string (as with printf())
+ *       into the format string (as with printf())
  *
  * Passes if both @expected and @actual are NULL or
  * strcmp(@expected, @actual) == 0.
@@ -346,7 +346,7 @@ extern "C" {
  * @actual: an actual data.
  * @actual_size: a size of @actual.
  * @...: optional format string, followed by parameters to insert
- * into the format string (as with printf())
+ *       into the format string (as with printf())
  *
  * Passes if @expected_size == @actual_size and
  * memcmp(@expected, @actual, @expected_size) == 0.
@@ -379,7 +379,7 @@ extern "C" {
  * @expected: an expected NULL-terminated array of strings.
  * @actual: an actual NULL-terminated array of strings that are freed.
  * @...: optional format string, followed by parameters to insert
- * into the format string (as with printf())
+ *       into the format string (as with printf())
  *
  * Passes if both @expected and @actual are not NULL and
  * have same content (strcmp() == 0) strings.
@@ -408,7 +408,7 @@ extern "C" {
  * @expected: an expected NULL-terminated array of strings.
  * @actual: an actual NULL-terminated array of strings.
  * @...: optional format string, followed by parameters to insert
- * into the format string (as with printf())
+ *       into the format string (as with printf())
  *
  * Passes if both @expected and @actual are not NULL and
  * have same content (strcmp() == 0) strings.
@@ -426,7 +426,7 @@ extern "C" {
  * @operator: a binary operator.
  * @rhs: a right hand side value.
  * @...: optional format string, followed by parameters to insert
- * into the format string (as with printf())
+ *       into the format string (as with printf())
  *
  * Passes if (@lhs @operator @rhs) is TRUE.
  *
@@ -453,7 +453,7 @@ extern "C" {
  * @operator: a binary operator.
  * @rhs: a right hand side integer value.
  * @...: optional format string, followed by parameters to insert
- * into the format string (as with printf())
+ *       into the format string (as with printf())
  *
  * Passes if (@lhs @operator @rhs) is TRUE.
  *
@@ -484,7 +484,7 @@ extern "C" {
  * @expected: an expected value.
  * @actual: an actual value.
  * @...: optional format string, followed by parameters to insert
- * into the format string (as with printf())
+ *       into the format string (as with printf())
  *
  * Passes if @function(@expected, @actual) returns TRUE.
  *
@@ -508,7 +508,7 @@ extern "C" {
 /**
  * cut_assert_errno:
  * @...: optional format string, followed by parameters to insert
- * into the format string (as with printf())
+ *       into the format string (as with printf())
  *
  * Passes if errno is 0.
  *
@@ -541,7 +541,7 @@ extern "C" {
  * cut_assert_file_exist:
  * @path: the path to test.
  * @...: optional format string, followed by parameters to insert
- * into the format string (as with printf())
+ *       into the format string (as with printf())
  *
  * Passes if @path exists. It may or may not be a regular file.
  *
@@ -562,7 +562,7 @@ extern "C" {
  * cut_assert_path_exist:
  * @path: the path to test.
  * @...: optional format string, followed by parameters to insert
- * into the format string (as with printf())
+ *       into the format string (as with printf())
  *
  * Passes if @path exists. It may or may not be a regular file.
  *
@@ -592,7 +592,7 @@ extern "C" {
  * cut_assert_path_not_exist:
  * @path: the path to test.
  * @...: optional format string, followed by parameters to insert
- * into the format string (as with printf())
+ *       into the format string (as with printf())
  *
  * Passes if @path doesn't exist.
  *
@@ -624,7 +624,7 @@ extern "C" {
  * @pattern: the regular expression as string.
  * @actual: the string to be matched.
  * @...: optional format string, followed by parameters to insert
- * into the format string (as with printf())
+ *       into the format string (as with printf())
  *
  * Passes if @pattern matches @string.
  *
@@ -656,7 +656,7 @@ extern "C" {
  * @pattern: the regular expression as string.
  * @actual: the string to be matched that is freed.
  * @...: optional format string, followed by parameters to insert
- * into the format string (as with printf())
+ *       into the format string (as with printf())
  *
  * Passes if @pattern matches @string. See cut_assert_match()
  * for detail.
@@ -671,7 +671,7 @@ extern "C" {
  * @expected: an expected pointer.
  * @actual: an actual pointer.
  * @...: optional format string, followed by parameters to insert
- * into the format string (as with printf())
+ *       into the format string (as with printf())
  *
  * Passes if @expected == @actual.
  *
@@ -730,7 +730,7 @@ extern "C" {
 /**
  * cut_error_errno:
  * @...: optional format string, followed by parameters to insert
- * into the format string (as with printf())
+ *       into the format string (as with printf())
  *
  * e.g.:
  * |[

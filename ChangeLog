@@ -1,5 +1,9 @@
 2008-07-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertions.h, gcutter/gcut-assertions.h: fix indent.
+
+	* doc/reference/ja.po: update.
+
 	* test/: cleanup #include.
 
 	* test/test-cut-assertions.c: remove needless #include.
