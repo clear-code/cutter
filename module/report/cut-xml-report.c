@@ -248,6 +248,7 @@ output_to_file (CutXMLReport *report, gchar *string)
 {
     const gchar *filename;
     FILE *fp;
+    int n_retries = 0;
 
     if (!string)
         return;
@@ -260,7 +261,14 @@ output_to_file (CutXMLReport *report, gchar *string)
     if (!fp)
         return;
 
-    fwrite(string, strlen(string), 1, fp);
+    while (fwrite(string, strlen(string), 1, fp) != 1) {
+        n_retries++;
+        if (n_retries >= 3) {
+            g_warning("can't write XML report to file [%s]: [%s]",
+                      filename, string);
+            break;
+        }
+    }
 
     fclose(fp);
 }

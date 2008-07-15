@@ -1,5 +1,8 @@
 2008-07-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* module/report/cut-xml-report.c (output_to_file): check return
+	value of fwrite() and retry at most 3 times.
+
 	* test/lib/Makefile.am (AM_LDFLAGS): use $(libdir) not
 	$(abs_builddir) because $(abs_builddir) isn't supported automake <
 	1.10. :<
