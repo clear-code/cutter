@@ -25,6 +25,7 @@
 #include <string.h>
 
 #include "gcut-list.h"
+#include "gcut-test-utils.h"
 
 gboolean
 gcut_list_equal (const GList *list1, const GList *list2,
@@ -143,6 +144,29 @@ gchar *
 gcut_list_string_inspect (const GList *list)
 {
     return gcut_list_inspect(list, inspect_string, NULL);
+}
+
+GList *
+gcut_list_string_new (const gchar *value, ...)
+{
+    GList *list = NULL;
+    va_list args;
+
+    va_start(args, value);
+    while (value) {
+        list = g_list_prepend(list, g_strdup(value));
+        value = va_arg(args, const gchar *);
+    }
+    va_end(args);
+
+    return g_list_reverse(list);
+}
+
+void
+gcut_list_string_free (GList *list)
+{
+    g_list_foreach(list, (GFunc)g_free, NULL);
+    g_list_free(list);
 }
 
 /*

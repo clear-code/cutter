@@ -1,5 +1,14 @@
 2008-07-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-public.h: add missing #include.
+
+	* gcutter/gcut-list.[ch] (gcut_list_string_new,
+	gcut_list_string_free): add.
+
+	* test/test-gcut-test-utils.c: add.
+
+	* test/Makefile.am: add test/test-gcut-test-utils.c.
+
 	* FEATURES*: cut-gassertions -> gcut-assertions.
 
 	* cutter/cut-assertions.h, gcutter/gcut-assertions.h: fix indent.

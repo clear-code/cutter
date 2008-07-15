@@ -17,8 +17,8 @@
  *
  */
 
-#ifndef __CUT_GTEST_UTILS_H__
-#define __CUT_GTEST_UTILS_H__
+#ifndef __GCUT_TEST_UTILS_H__
+#define __GCUT_TEST_UTILS_H__
 
 #include <gcutter/gcut-public.h>
 
@@ -70,9 +70,8 @@ G_BEGIN_DECLS
 /**
  * gcut_take_list:
  * @list: the GList * to be owned by Cutter.
- * @destroy_function: the destroy function
- * (#CutDestroyFunction) that destroys the elements of
- * @list, or NULL.
+ * @destroy_function: the destroy function (#CutDestroyFunction) that
+ *                    destroys the elements of @list, or NULL.
  *
  * Passes ownership of @list to Cutter and returns
  * a GList * that has same elements of @list.
@@ -86,9 +85,34 @@ G_BEGIN_DECLS
     cut_test_context_take_g_list(get_current_test_context(),            \
                                  (list), (destroy_function))
 
+/**
+ * gcut_list_string_new:
+ * @value: the first string.
+ * @...: remaining strings in list, terminated by NULL.
+ *
+ * Creates a list from passed strings.
+ *
+ * Returns: a newly-allocated GList * that contains passed
+ * strings and must be freed with gcut_list_string_free().
+ *
+ * Since: 1.0.3
+ */
+GList  *gcut_list_string_new  (const gchar *value, ...) CUT_GNUC_NULL_TERMINATED;
+
+/**
+ * gcut_list_string_free:
+ * @list: the list that contains strings to be freed.
+ *
+ * Frees @list and contained strings.
+ *
+ * Since: 1.0.3
+ */
+void   gcut_list_string_free  (GList *list);
+
+
 G_END_DECLS
 
-#endif /* __CUT_GTEST_UTILS_H__ */
+#endif /* __GCUT_TEST_UTILS_H__ */
 
 /*
 vi:nowrap:ai:expandtab:sw=4:ts=4

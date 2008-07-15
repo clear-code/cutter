@@ -22,6 +22,8 @@
 
 #include <glib-object.h>
 
+#include <cutter/cut-public.h>
+
 G_BEGIN_DECLS
 
 GObject      *cut_test_context_take_g_object (CutTestContext     *context,

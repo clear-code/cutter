@@ -52,6 +52,7 @@ noinst_LTLIBRARIES = 				\
 		test_cut_sequence_matcher.la	\
 		test_cut_diff.la		\
 		test_gcut_assertions_helper.la	\
+		test_gcut_test_utils.la		\
 		test_cut_main.la		\
 		test_cut_fixture_data.la	\
 		test_cut_test_data.la		\
@@ -98,6 +99,7 @@ test_cut_utils_la_SOURCES       = test-cut-utils.c
 test_cut_sequence_matcher_la_SOURCES = test-cut-sequence-matcher.c
 test_cut_diff_la_SOURCES        = test-cut-diff.c
 test_gcut_assertions_helper_la_SOURCES = test-gcut-assertions-helper.c
+test_gcut_test_utils_la_SOURCES = test-gcut-test-utils.c
 test_cut_main_la_SOURCES        = test-cut-main.c
 test_cut_fixture_data_la_SOURCES = test-cut-fixture-data.c
 test_cut_test_data_la_SOURCES = test-cut-test-data.c
