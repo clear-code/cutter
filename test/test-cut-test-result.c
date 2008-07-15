@@ -402,7 +402,7 @@ test_new_from_xml (void)
         "</result>\n";
 
     result = cut_test_result_new_from_xml(xml, -1, &error);
-    cut_assert_g_error(error);
+    gcut_assert_error(error);
     cut_assert(result);
 
     test = cut_test_result_get_test(result);

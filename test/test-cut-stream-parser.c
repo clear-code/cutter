@@ -705,7 +705,7 @@ teardown (void)
 {                                                               \
     GError *error = NULL;                                       \
     cut_stream_parser_parse(parser, (string), -1, &error);      \
-    cut_assert_g_error(error);                                  \
+    gcut_assert_error(error);                                   \
 } while (0)
 
 #define cut_assert_parse_error(expected_message, string) do     \

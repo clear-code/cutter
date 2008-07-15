@@ -110,16 +110,16 @@ test_remove_path_recursive (void)
     cut_assert_path_not_exist(sub_file);
 
     g_file_set_contents(file, "top file", -1, &error);
-    cut_assert_g_error(error);
+    gcut_assert_error(error);
 
     if (g_mkdir_with_parents(sub_dir, 0700) == -1)
         cut_assert_errno();
 
     g_file_set_contents(sub_file, "sub file", -1, &error);
-    cut_assert_g_error(error);
+    gcut_assert_error(error);
 
     cut_utils_remove_path_recursive(tmp_dir, &error);
-    cut_assert_g_error(error);
+    gcut_assert_error(error);
 
     cut_assert_path_not_exist(sub_file);
     cut_assert_path_not_exist(sub_dir);

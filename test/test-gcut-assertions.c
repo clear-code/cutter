@@ -5,14 +5,14 @@
 #include "cut-test-runner.h"
 #include "lib/cuttest-assertions.h"
 
-void test_equal_g_type(void);
-void test_equal_g_value(void);
-void test_equal_g_list_int(void);
-void test_equal_g_list_uint(void);
-void test_equal_g_list_string(void);
-void test_equal_g_list_string_both_null(void);
-void test_equal_g_list_string_other_null(void);
-void test_g_error(void);
+void test_equal_type(void);
+void test_equal_value(void);
+void test_equal_list_int(void);
+void test_equal_list_uint(void);
+void test_equal_list_string(void);
+void test_equal_list_string_both_null(void);
+void test_equal_list_string_other_null(void);
+void test_error(void);
 
 static CutTest *test;
 static CutRunContext *run_context;
@@ -95,16 +95,16 @@ teardown (void)
 
 
 static void
-equal_g_type_test (void)
+stub_equal_type (void)
 {
     gcut_assert_equal_type(G_TYPE_INT, G_TYPE_INT);
     gcut_assert_equal_type(G_TYPE_INT, G_TYPE_STRING);
 }
 
 void
-test_equal_g_type (void)
+test_equal_type (void)
 {
-    test = cut_test_new("equal_g_type test", equal_g_type_test);
+    test = cut_test_new("equal_type test", stub_equal_type);
     cut_assert_not_null(test);
 
     cut_assert_false(run());
@@ -120,23 +120,23 @@ test_equal_g_type (void)
 
 
 static void
-equal_g_value_test (void)
+stub_equal_value (void)
 {
     g_value_init(value1, G_TYPE_INT);
     g_value_set_int(value1, 10);
     g_value_init(value2, G_TYPE_STRING);
     g_value_set_string(value2, "String");
 
-    cut_assert_equal_g_value(value1, value1);
-    cut_assert_equal_g_value(value2, value2);
+    gcut_assert_equal_value(value1, value1);
+    gcut_assert_equal_value(value2, value2);
 
-    cut_assert_equal_g_value(value1, value2);
+    gcut_assert_equal_value(value1, value2);
 }
 
 void
-test_equal_g_value (void)
+test_equal_value (void)
 {
-    test = cut_test_new("equal_g_value test", equal_g_value_test);
+    test = cut_test_new("equal_value test", stub_equal_value);
     cut_assert_not_null(test);
 
     cut_assert_false(run());
@@ -151,23 +151,23 @@ test_equal_g_value (void)
 }
 
 static void
-equal_g_list_int_test (void)
+stub_equal_list_int (void)
 {
     list1 = g_list_append(list1, GINT_TO_POINTER(100));
     list1 = g_list_append(list1, GINT_TO_POINTER(-200));
     list2 = g_list_append(list2, GINT_TO_POINTER(-1000));
     list2 = g_list_append(list2, GINT_TO_POINTER(2000));
 
-    cut_assert_equal_g_list_int(list1, list1);
-    cut_assert_equal_g_list_int(list2, list2);
+    gcut_assert_equal_list_int(list1, list1);
+    gcut_assert_equal_list_int(list2, list2);
 
-    cut_assert_equal_g_list_int(list1, list2);
+    gcut_assert_equal_list_int(list1, list2);
 }
 
 void
-test_equal_g_list_int (void)
+test_equal_list_int (void)
 {
-    test = cut_test_new("equal_g_list_int test", equal_g_list_int_test);
+    test = cut_test_new("equal_list_int test", stub_equal_list_int);
     cut_assert_not_null(test);
 
     cut_assert_false(run());
@@ -188,7 +188,7 @@ test_equal_g_list_int (void)
 }
 
 static void
-equal_g_list_uint_test (void)
+stub_equal_list_uint (void)
 {
     list1 = g_list_append(list1, GUINT_TO_POINTER(100));
     list1 = g_list_append(list1, GUINT_TO_POINTER(200));
@@ -202,9 +202,9 @@ equal_g_list_uint_test (void)
 }
 
 void
-test_equal_g_list_uint (void)
+test_equal_list_uint (void)
 {
-    test = cut_test_new("equal_g_list_uint test", equal_g_list_uint_test);
+    test = cut_test_new("equal_list_uint test", stub_equal_list_uint);
     cut_assert_not_null(test);
 
     cut_assert_false(run());
@@ -224,7 +224,7 @@ test_equal_g_list_uint (void)
 }
 
 static void
-stub_equal_g_list_string (void)
+stub_equal_list_string (void)
 {
     need_to_free_list_contents = TRUE;
 
@@ -233,31 +233,31 @@ stub_equal_g_list_string (void)
     list2 = g_list_append(list2, g_strdup("zyx"));
     list2 = g_list_append(list2, g_strdup("wvu"));
 
-    cut_assert_equal_g_list_string(list1, list1);
-    cut_assert_equal_g_list_string(list2, list2);
+    gcut_assert_equal_list_string(list1, list1);
+    gcut_assert_equal_list_string(list2, list2);
 
-    cut_assert_equal_g_list_string(list1, list2);
+    gcut_assert_equal_list_string(list1, list2);
 }
 
 void
-test_equal_g_list_string (void)
+test_equal_list_string (void)
 {
-    test = cut_test_new("equal_g_list_string test", stub_equal_g_list_string);
+    test = cut_test_new("equal_list_string test", stub_equal_list_string);
     cut_assert_not_null(test);
 
     cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 0, 2, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
-                           "equal_g_list_string test",
+                           "equal_list_string test",
                            NULL,
                            "<list1 == list2>\n"
                            "expected: <(\"abc\", \"def\")>\n"
                            " but was: <(\"zyx\", \"wvu\")>",
-                           "stub_equal_g_list_string");
+                           "stub_equal_list_string");
 }
 
 static void
-stub_equal_g_list_string_both_null (void)
+stub_equal_list_string_both_null (void)
 {
     need_to_free_list_contents = TRUE;
 
@@ -268,17 +268,17 @@ stub_equal_g_list_string_both_null (void)
     list2 = g_list_append(list2, NULL);
     list2 = g_list_append(list2, g_strdup("def"));
 
-    cut_assert_equal_g_list_string(list1, list1);
-    cut_assert_equal_g_list_string(list2, list2);
+    gcut_assert_equal_list_string(list1, list1);
+    gcut_assert_equal_list_string(list2, list2);
 
-    cut_assert_equal_g_list_string(list1, list2);
+    gcut_assert_equal_list_string(list1, list2);
 }
 
 void
-test_equal_g_list_string_both_null (void)
+test_equal_list_string_both_null (void)
 {
-    test = cut_test_new("equal_g_list_string test (both NULL)",
-                        stub_equal_g_list_string_both_null);
+    test = cut_test_new("equal_list_string test (both NULL)",
+                        stub_equal_list_string_both_null);
     cut_assert_not_null(test);
 
     cut_assert_true(run());
@@ -286,7 +286,7 @@ test_equal_g_list_string_both_null (void)
 }
 
 static void
-stub_equal_g_list_string_other_null (void)
+stub_equal_list_string_other_null (void)
 {
     need_to_free_list_contents = TRUE;
 
@@ -297,53 +297,53 @@ stub_equal_g_list_string_other_null (void)
     list2 = g_list_append(list2, g_strdup("abc"));
     list2 = g_list_append(list2, g_strdup("def"));
 
-    cut_assert_equal_g_list_string(list1, list1);
-    cut_assert_equal_g_list_string(list2, list2);
+    gcut_assert_equal_list_string(list1, list1);
+    gcut_assert_equal_list_string(list2, list2);
 
-    cut_assert_equal_g_list_string(list1, list2);
+    gcut_assert_equal_list_string(list1, list2);
 }
 
 void
-test_equal_g_list_string_other_null (void)
+test_equal_list_string_other_null (void)
 {
-    test = cut_test_new("equal_g_list_string test (other NULL)",
-                        stub_equal_g_list_string_other_null);
+    test = cut_test_new("equal_list_string test (other NULL)",
+                        stub_equal_list_string_other_null);
     cut_assert_not_null(test);
 
     cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 0, 2, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
-                           "equal_g_list_string test (other NULL)",
+                           "equal_list_string test (other NULL)",
                            NULL,
                            "<list1 == list2>\n"
                            "expected: <(\"abc\", \"abc\", \"def\")>\n"
                            " but was: <(NULL, \"abc\", \"def\")>",
-                           "stub_equal_g_list_string_other_null");
+                           "stub_equal_list_string_other_null");
 }
 
 static void
-g_error_test (void)
+stub_error (void)
 {
-    cut_assert_g_error(error);
+    gcut_assert_error(error);
 
     error = g_error_new(G_FILE_ERROR, G_FILE_ERROR_NOENT, "not found");
-    cut_assert_g_error(error);
+    gcut_assert_error(error);
 }
 
 void
-test_g_error (void)
+test_error (void)
 {
-    test = cut_test_new("cut_assert_g_error test", g_error_test);
+    test = cut_test_new("gcut_assert_error test", stub_error);
     cut_assert_not_null(test);
 
     cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 0, 1, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
-                           "cut_assert_g_error test",
+                           "gcut_assert_error test",
                            NULL,
                            "expected: <error> is NULL\n"
                            " but was: <g-file-error-quark:4: not found>",
-                           "g_error_test");
+                           "stub_error_test");
 }
 
 /*

@@ -169,7 +169,7 @@ inspect_matches (const GList *matches)
     const GList *indexes;                                               \
     indexes = cut_sequence_matcher_get_to_index((matcher),              \
                                                 (to_content));          \
-    cut_assert_equal_g_list_int(expected, indexes);                     \
+    gcut_assert_equal_list_int(expected, indexes);                      \
 } while (0)
 
 void

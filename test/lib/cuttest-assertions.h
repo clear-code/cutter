@@ -75,7 +75,7 @@
     _strings = cuttest_result_string_list_new_from_result(_result);     \
     _actual_strings = cut_take_result_summary_list(_strings);           \
                                                                         \
-    cut_assert_equal_g_list_string(_expected_strings, _actual_strings); \
+    gcut_assert_equal_list_string(_expected_strings, _actual_strings);  \
 } while (0)
 
 #endif
