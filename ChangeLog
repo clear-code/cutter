@@ -1,5 +1,7 @@
 2008-07-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* misc/release.rb: remove RD link markup from announce text.
+
 	* configure.ac: 1.0.3 -> 1.0.4.
 
 	* test/: don't use deprecated symbols.

@@ -91,6 +91,10 @@ def latest_release_changes(news)
   extract_sections(news)[1].chomp
 end
 
+def remove_rd_link_markup(text)
+  text.gsub(/\(\(<(.*?)(?:\|.*?)?>\)\)/m, '\1')
+end
+
 def update_release_info(agent, edit_release_page, news)
   edit_release_info_form = edit_release_page.forms.action(/editreleases/)[0]
   edit_release_info_form.release_changes = latest_release_changes(news)
@@ -135,7 +139,7 @@ def submit_news(agent, submit_news_page, project_name, package_name,
   submit_news_form.summary = summary
   details = [project_summary(readme),
              latest_release_changes(news)].join("\n\n")
-  submit_news_form.details = details.gsub(/\n/, "\r\n")
+  submit_news_form.details = remove_rd_link_markup(details).gsub(/\n/, "\r\n")
   agent.submit(submit_news_form, submit_news_form.buttons.first)
 end
 
