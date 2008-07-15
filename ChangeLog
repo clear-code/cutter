@@ -17,6 +17,7 @@
 	GTK_NOTE is defined. The macro is defined in gtk/gtkdebug.h if
 	G_ENABLE_DEBUG is defined so it can be used for check whether GTK+ is
 	compiled with DEBUG flag.
+	* test/test-cutter.c: Check GTK+ help string has "gtk-debug".
 
 2008-07-14  Kouhei Sutou  <kou@cozmixng.org>
 
