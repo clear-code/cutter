@@ -1,3 +1,7 @@
+2008-07-16  Kouhei Sutou  <kou@cozmixng.org>
+
+	* html/index.html: add a link to features page.
+
 2008-07-15  Kouhei Sutou  <kou@cozmixng.org>
 
 	* misc/release.rb: remove RD link markup from announce text.
