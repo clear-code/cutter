@@ -3,7 +3,6 @@ cutter/cut-diff.c
 cutter/cut-enum-types.c
 cutter/cut-factory-builder.c
 cutter/cut-iterated-test.c
-cutter/cut-list.c
 cutter/cut-listener.c
 cutter/cut-loader.c
 cutter/cut-main.c
@@ -34,9 +33,10 @@ cutter/cut-test.c
 cutter/cut-ui-factory-builder.c
 cutter/cut-ui.c
 cutter/cut-utils.c
-cutter/cut-value-equal.c
 cutter/cut-verbose-level.c
 cutter/main.c
+gcutter/gcut-list.c
+gcutter/gcut-value-equal.c
 module/report/cut-cairo-chart-data.c
 module/report/cut-cairo-pie-chart.c
 module/report/cut-cairo.c
