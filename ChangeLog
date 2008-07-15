@@ -1,5 +1,7 @@
 2008-07-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* configure.ac: 1.0.3 -> 1.0.4.
+
 	* test/: don't use deprecated symbols.
 
 	* NEWS*: add entries for 1.0.3.
