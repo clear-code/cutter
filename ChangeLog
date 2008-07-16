@@ -1,5 +1,7 @@
 2008-07-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* module/report/cut-pdf-report-factory.c (create): add missing static.
+
 	* test/test-gcut-assertions.c: fix tests.
 
 	* html/index.html: add a link to features page.

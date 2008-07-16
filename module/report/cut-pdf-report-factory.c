@@ -253,7 +253,7 @@ set_option_group (CutModuleFactory *factory, GOptionContext *context)
     g_option_context_add_group(context, group);
 }
 
-GObject *
+static GObject *
 create (CutModuleFactory *factory)
 {
     CutPDFReportFactory *pdf = CUT_PDF_REPORT_FACTORY(factory);
