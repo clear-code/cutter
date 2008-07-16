@@ -4,7 +4,6 @@ INCLUDES = 			\
 
 AM_CFLAGS =			\
 	$(GLIB_CFLAGS)		\
-	$(GOFFICE_CFLAGS)	\
 	$(COVERAGE_CFLAGS)
 
 AM_LDFLAGS =							\
@@ -12,16 +11,13 @@ AM_LDFLAGS =							\
   -no-undefined -export-dynamic $(LIBTOOL_EXPORT_OPTIONS)
 
 report_module_LTLIBRARIES = 	\
-		xml.la		\
-		pdf.la
+	xml.la
 
 report_factory_module_LTLIBRARIES =	\
-		xml_factory.la		\
-		pdf_factory.la
+	xml_factory.la
 
 LIBS =						\
 	$(GLIB_LIBS)				\
-	$(GOFFICE_LIBS)				\
 	$(top_builddir)/cutter/libcutter.la
 
 xml_la_CPPFLAGS =
@@ -31,9 +27,15 @@ xml_factory_la_CPPFLAGS =
 xml_factory_la_SOURCES = cut-xml-report-factory.c
 
 if PDF_REPORT_AVAILABLE
-pdf_la_CPPFLAGS =				\
-	$(CAIRO_PDF_CFLAGS)			\
-	$(PANGO_CAIRO_CFLAGS)
+report_module_LTLIBRARIES += pdf.la
+report_factory_module_LTLIBRARIES += pdf_factory.la
+
+pdf_la_CFLAGS =			\
+	$(CAIRO_PDF_CFLAGS)	\
+	$(PANGO_CAIRO_CFLAGS)	\
+	$(GOFFICE_CFLAGS)	\
+	$(AM_CFLAGS)
+
 pdf_la_SOURCES = 		\
 	cut-pdf-report.c 	\
 	cut-cairo.c		\
@@ -42,12 +44,19 @@ pdf_la_SOURCES = 		\
 	cut-cairo-pie-chart.h	\
 	cut-cairo-chart-data.c	\
 	cut-cairo-chart-data.h
+
 pdf_la_LIBADD =			\
-	$(GLIB_LIBS)		\
 	$(CAIRO_PDF_LIBS)	\
 	$(PANGO_CAIRO_LIBS)	\
-	$(LIBS)
+	$(GOFFICE_LIBS)
 
-pdf_factory_la_CPPFLAGS =
+
+pdf_factory_la_CFLAGS =		\
+	$(GOFFICE_CFLAGS)	\
+	$(AM_CFLAGS)
+
+pdf_factory_la_LIBADD =		\
+	$(GOFFICE_LIBS)
+
 pdf_factory_la_SOURCES = cut-pdf-report-factory.c
 endif

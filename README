@@ -370,3 +370,6 @@ The following is a template of test.
       ...
   }
   
+== Thanks
+
+  * Kazumasa Matsunagaさん: reports a build bug.

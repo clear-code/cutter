@@ -1,5 +1,10 @@
 2008-07-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* module/report/Makefile.am: fix a build bug on non PDF report
+	available environment.
+
+	* README*: add Kazumasa Matsunaga to thanks list. Thanks!!!
+
 	* module/report/cut-pdf-report-factory.c (create): add missing static.
 
 	* test/test-gcut-assertions.c: fix tests.

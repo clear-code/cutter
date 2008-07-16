@@ -387,3 +387,8 @@ cutter/cut-assertions.hあるいは
                               strstr("string sub-string", "sub"));
       ...
   }
+
+== 感謝
+
+  * Kazumasa Matsunagaさん: ビルドの不具合を報告してくれまし
+    た。
