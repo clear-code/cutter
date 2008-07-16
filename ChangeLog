@@ -1,5 +1,7 @@
 2008-07-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-gcut-assertions.c: fix tests.
+
 	* html/index.html: add a link to features page.
 
 2008-07-15  Kouhei Sutou  <kou@cozmixng.org>

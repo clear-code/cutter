@@ -110,12 +110,12 @@ test_equal_type (void)
     cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 0, 1, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
-                           "equal_g_type test",
+                           "equal_type test",
                            NULL,
                            "<G_TYPE_INT == G_TYPE_STRING>\n"
                            "expected: <gint>\n"
                            " but was: <gchararray>",
-                           "equal_g_type_test");
+                           "stub_equal_type");
 }
 
 
@@ -142,12 +142,12 @@ test_equal_value (void)
     cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 0, 2, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
-                           "equal_g_value test",
+                           "equal_value test",
                            NULL,
                            "<value1 == value2>\n"
                            "expected: <10> (gint)\n"
                            " but was: <\"String\"> (gchararray)",
-                           "equal_g_value_test");
+                           "stub_equal_value");
 }
 
 static void
@@ -173,7 +173,7 @@ test_equal_list_int (void)
     cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 0, 2, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
-                           "equal_g_list_int test",
+                           "equal_list_int test",
                            NULL,
                            "<list1 == list2>\n"
                            "expected: <(100, -200)>\n"
@@ -184,7 +184,7 @@ test_equal_list_int (void)
                            "?      ^^\n"
                            "+ (-1000, 2000)\n"
                            "?  +   + ^   +",
-                           "equal_g_list_int_test");
+                           "stub_equal_list_int");
 }
 
 static void
@@ -210,7 +210,7 @@ test_equal_list_uint (void)
     cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 0, 2, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
-                           "equal_g_list_uint test",
+                           "equal_list_uint test",
                            NULL,
                            "<list1 == list2>\n"
                            "expected: <(100, 200)>\n"
@@ -220,7 +220,7 @@ test_equal_list_uint (void)
                            "- (100, 200)\n"
                            "+ (1000, 2000)\n"
                            "?     +     +",
-                           "equal_g_list_uint_test");
+                           "stub_equal_list_uint");
 }
 
 static void
@@ -343,7 +343,7 @@ test_error (void)
                            NULL,
                            "expected: <error> is NULL\n"
                            " but was: <g-file-error-quark:4: not found>",
-                           "stub_error_test");
+                           "stub_error");
 }
 
 /*
