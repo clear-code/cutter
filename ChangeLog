@@ -1,3 +1,7 @@
+2008-07-18  Kouhei Sutou  <kou@cozmixng.org>
+
+	* README*: improve sub title.
+
 2008-07-16  Kouhei Sutou  <kou@cozmixng.org>
 
 	* module/report/Makefile.am: fix a build bug on non PDF report

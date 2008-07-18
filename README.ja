@@ -1,6 +1,6 @@
 # -*- rd -*-
 
-= README --- Cutterの概要
+= README --- C言語用単体テストフレームワークCutterの概要
 
 == 名前
 
@@ -12,7 +12,7 @@ LGPL
 
 == Cutter?
 
-CのためのUnit Testing Frameworkです。
+CutterはC言語のためのxUnit系の単体テストフレームワークです。
 
 Cutterの特徴は以下の通りです。
   * テストが簡単に書ける
