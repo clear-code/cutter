@@ -311,9 +311,8 @@ test_test_case_count()関数内で起こったことがわかります。
 
 === 表明
 
-cutter/cut-assertions.hあるいは
-((<URL:http://cutter.sf.net/reference/ja/cutter-cut-assertions.html>))
-を見てください。
+((<cutter/cut-assertions.h|cutter-cut-assertions.html>))を見
+てください。
 
 === 属性
 
