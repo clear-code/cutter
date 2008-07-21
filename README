@@ -296,7 +296,7 @@ configure.ac and type "make coverage".
 
 === Assertions
 
-See ((<cutter/cut-assertions.h|cutter-cut-assertions.html>)).
+See ((<"cutter/cut-assertions.h"|cutter-cut-assertions.html>)).
 
 === Attributes
 
