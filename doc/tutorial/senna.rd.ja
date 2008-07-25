@@ -101,6 +101,11 @@ ${PREFIX}/share/aclocal/以下に他の.m4ファイルがインストールさ�
    $AUTOHEADER
    echo "Running automake ..."
 
+あるいはautogen.shを実行する時に環境変数ACLOCAL_ARGSを指定し
+ます。
+
+  % ACLOCAL_ARGS="-I /tmp/local/share/aclocal" ./autogen.sh
+
 これでconfigure.ac内でCutterが提供する便利M4マクロを利用する
 準備が整いました。
 
@@ -251,138 +256,11 @@ test/unit/以下がビルド対象に加わったので、test/unit/以下に作
 トになっています。このシェルスクリプトからcutterコマンドを呼
 び出してテストを実行します。
 
-ただし、Sennaのようにライブラリ初期化・終了関数
-（sen_init()/sen_fin()）を用意している場合はCutterが提供して
-いるcutterコマンドを利用することはできません。テストを実行す
-る前に初期化関数を、実行した後に終了関数を呼び出す必要がある
-からです。
-
-このような場合はプロジェクト専用のcutterコマンドを作成し、テ
-スト実行前と後に必要な処理を行います。プロジェクト専用の
-cutterコマンドを作成するためにはlibcutterパッケージを利用し
-ます。
-
-=== libcutter
-
-libcutterは独自のテスト起動コマンド（通常はcutterコマンド）
-を作成する場合に利用するパッケージです。libcutterを利用する
-ためには以下の作業が必要になります。
-
-  * libcutterが利用可能かどうかを検出する
-  * cutter-senna（Senna用のテスト起動コマンド）をビルドする
-    ための設定
-  * cutter-senna.cの作成
-
-まず、libcutterが利用可能かどうかを検出するために
-configure.acに以下を追加します。
-
-configure.ac:
-  # source: m4
-  if test "$ac_cv_use_cutter" != "no"; then
-    PKG_CHECK_MODULES(LIBCUTTER, libcutter, [], [ac_cv_use_cutter=no])
-    AC_SUBST(LIBCUTTER_CFLAGS)
-    AC_SUBST(LIBCUTTER_LIBS)
-  fi
-
-libcutterもpkg-configのパッケージなのでpkg-configに対応して
-いる他のライブラリと同じように利用可能かどうかを検出できます。
-ここではCutterが利用可能な場合だけ（$ac_cv_use_cutterが"no"
-ではないときだけ）libcutterを検出しています。そのため、この
-記述はAC_CHECK_GCUTTERのあとに記述する必要があります。
-
-configure.ac:
-  # source: m4
-  m4_ifdef([AC_CHECK_GCUTTER], [
-  AC_CHECK_GCUTTER
-
-  if test "$ac_cv_use_cutter" != "no"; then
-    PKG_CHECK_MODULES(LIBCUTTER, libcutter, [], [ac_cv_use_cutter=no])
-    AC_SUBST(LIBCUTTER_CFLAGS)
-    AC_SUBST(LIBCUTTER_LIBS)
-  fi
-  ],
-  [ac_cv_use_cutter="no"])
-
-  AM_CONDITIONAL([WITH_CUTTER], [test "$ac_cv_use_cutter" != "no"])
-  if test "$ac_cv_use_cutter" != "no"; then
-    AC_DEFINE(WITH_CUTTER, 1, [Define to 1 if you use Cutter])
-  fi
-
-テストプログラムをビルドするときはGCUTTER_CFLAGSと
-GCUTTER_LIBSを使いますが、Senna専用テスト起動プログラム
-cutter-sennaをビルドするときはLIBCUTTER_CLFAGSと
-LIBCUTTER_LIBSを使います。このように、今回は同じディレクトリ
-以下（test/unit/）にビルドのしかたが異なるプログラムが含まれ
-るので、configure.acに以下を記述し、各ターゲット毎にビルド方
-法を変更できるようにすることを忘れないでください。
-
-configure.ac:
-  # source: m4
-  AM_PROG_CC_C_O
-
-libcutterが検出できたで、それを利用してcutter-sennaをビルド
-する方法を設定します。test/unit/Makefile.amを以下のように変
-更します。
-
-test/unit/Makefile.am:
-  # source: makefile
-  if WITH_CUTTER
-  noinst_PROGRAMS = cutter-senna
-  endif
-
-  INCLUDES = -I. -I../.. -I../../lib $(SENNA_INCLUDEDIR)
-
-  cutter_senna_SOURCES = cutter-senna.c
-  cutter_senna_CFLAGS = $(LIBCUTTER_CFLAGS)
-  cutter_senna_LDADD = $(top_builddir)/lib/libsenna.la $(LIBCUTTER_LIBS)
-
-よくあるMakefile.amの書き方です。noinst_PROGRAMSをif
-WITH_CUTTER ... endifの中に入れているのは、Cutterがない環境で
-はビルド対象からはずし、ビルドエラーにならないようにするため
-です。
-
-=== カスタムテスト起動プログラム
-
-libcutterパッケージを使用することで簡単にテスト起動プログラ
-ムを作成することができます。Senna用のテスト起動プログラム
-cutter-sennaのソースは以下の通りです。
-
-test/unit/cutter-senna.c:
-  # source: C
-  #include <stdlib.h>
-  #include <senna.h>
-  #include <cutter/cut-main.h>
-
-  int
-  main(int argc, char **argv)
-  {
-    int success;
-
-    sen_init();
-    cut_init(&argc, &argv);
-    success = cut_run();
-    sen_fin();
-    exit(success ? EXIT_SUCCESS : EXIT_FAILURE);
-  }
-
-上記のソースを見れば分かる通り、テスト起動プログラムを作成す
-るためにはcut_init()とcut_run()を呼び出すだけです。あとは、適
-切なタイミングで必要な処理を行うだけです。例えば、Cutterの初
-期化（cut_init()）を行う前にSennaの初期化（sen_init()）を行う、
-などです。
-
-=== テスト起動スクリプト
-
-Cutterをビルドシステムへ組み込むための最後の作業は、
-cutter-sennaを起動してテストを走らせるためのシェルスクリプト
-run-test.shの作成です。
-
-もちろん、直接cutter-sennaを実行してもテストを走らせることは
-できます。しかし、cutter-sennaを実行するときはいくつかオプショ
-ンを指定する必要があります。例えば、テストプログラムがあるディ
-レクトリなどがそれです。ここでrun-test.shを作成する理由は、
-cutter-sennaへ渡すオプションなどを指定しなくてもよいようにす
-るなど、より簡単にテストを実行できるようにするためです。
+cutterを実行するときはいくつかオプションを指定する必要があり
+ます。例えば、テストプログラムがあるディレクトリなどがそれで
+す。ここでrun-test.shを作成する理由は、cutterへ渡すオプション
+などを指定しなくてもよいようにするなど、より簡単にテストを実
+行できるようにするためです。
 
 テストが簡単に実行できるということはとても重要なことです。テ
 ストを実行することが面倒だと、だんだんテストを実行しなくなっ
@@ -411,17 +289,35 @@ test/unit/run-test.sh:
       make -C $BASE_DIR/../../ > /dev/null || exit 1
   fi
 
-  CUTTER=$BASE_DIR/cutter-senna
+  if test -z "$CUTTER"; then
+      CUTTER="`make -s -C $BASE_DIR echo-cutter`"
+  fi
+
   if test x"$CUTTER_DEBUG" = x"yes"; then
       CUTTER="$BASE_DIR/../../libtool --mode=execute gdb --args $CUTTER"
   fi
+
   CUTTER_ARGS="-s $BASE_DIR"
   $CUTTER $CUTTER_ARGS "$@" $BASE_DIR
 
 このスクリプトではmake check以外からも便利に利用できるように
-なっています。make check以外から起動された場合は必要なビルド
-を行ってからテストを起動します。つまり、run-test.shからテス
-トを起動した場合はビルド忘れがなくなります。
+なっています。make check以外から起動された場合（つまり直接
+test/unit/run-test.shを軌道した場合）は必要なビルドを行ってか
+らテストを起動します。つまり、run-test.shからテストを起動した
+場合はビルド忘れがなくなります。
+
+実は、上記のrun-test.shを直接起動できるようにするためには、
+test/unit/Makefile.amにも一工夫する必要があります。それは、
+configureで検出したcutterコマンドのパスをrun-test.shに伝える
+ためのターゲットを用意するということです。
+
+test/unit/Makefile.am:
+  # source: makefile
+  echo-cutter:
+  	@echo $(CUTTER)
+
+これで、run-test.shを直接起動しても、必要に応じてビルドした
+り、情報を集めたりしてテストを起動してくれます。
 
 また、make checkではテスト結果とビルド結果が混ざりそこそこの
 出力になりますが、run-test.sh経由でビルド・テストを行うと必
@@ -450,6 +346,94 @@ test/unit/Makefile.am:
 
 TESTS_ENVIRONMENTにNO_MAKE=yesを指定することにより、make
 check経由の場合はテスト実行前のmake実行を抑制します。
+
+これでテストを実行するための環境は整いました。
+
+== ライブラリの初期化
+
+Sennaのようにライブラリ初期化・終了関数
+（sen_init()/sen_fin()）を用意している場合は、テストの作成に
+入る前に、もう一つ用意しておかなければいけない仕組みがありま
+す。このような関数を持っているライブラリをテストする場合は、
+テスト全体を実行する前に初期化関数を、実行した後に終了関数を
+呼び出す必要があります。これを行う仕組みを用意する必要があり
+ます。
+
+cutterコマンドは指定されたディレクトリ以下の共有ライブラリを
+かき集めて、その中からテストを検出して実行します。その時に以
+下の条件にあう共有ライブラリを見つけると、テスト全体を実行す
+る前後に特定の関数を実行することができます。これは、今まさに
+必要としている機能です。
+
+  * ファイル名が「suite_」からはじまっている
+
+この共有ライブラリが以下の名前のシンボルを公開している場合は、
+その関数をテスト全体を実行する前後に実行します。ここでは、共
+有ライブラリのファイル名はsuite_senna_test.soとします。
+
+  * senna_test_warmup(): テスト全体を実行する前に実行
+  * senna_test_cooldown(): テスト全体を実行した後に実行
+
+「_warmup」と「_cooldown」の前の「senna_test」の部分は共有ラ
+イブラリのファイル名から先頭の「suite_」と拡張子を除いた部分
+です。
+
+Sennaの場合は以下のようなsuite-senna-test.cを作成します。
+
+test/unit/suite-senna-test.c:
+  # source: C
+  #include <senna.h>
+
+  void senna_test_warmup(void);
+  void senna_test_cooldown(void);
+
+  void
+  senna_test_warmup(void)
+  {
+    sen_init();
+  }
+
+  void
+  senna_test_cooldown(void)
+  {
+    sen_fin();
+  }
+
+suite-senna-test.cをビルドするためにMakefile.amに以下を追加
+します。
+
+test/unit/Makefile.am:
+  # source: makefile
+  if WITH_CUTTER
+  ...
+
+  noinst_LTLIBRARIES =				\
+  	suite_senna_test.la
+  endif
+
+  INCLUDES =			\
+  	-I$(srcdir)		\
+  	-I$(top_srcdir)		\
+  	-I$(top_srcdir)/lib	\
+  	$(SENNA_INCLUDEDIR)
+
+  AM_CFLAGS = $(GCUTTER_CFLAGS)
+  AM_LDFLAGS = -module -rpath $(libdir) -avoid-version
+
+  LIBS =						\
+  	$(top_builddir)/lib/libsenna.la		\
+  	$(GCUTTER_LIBS)
+
+  suite_senna_test_la_SOURCES = suite-senna-test.c
+
+よくあるMakefile.amの書き方です。noinst_LTLIBRARIESをif
+WITH_CUTTER ... endifの中に入れているのは、Cutterがない環境で
+はビルド対象からはずし、ビルドエラーにならないようにするため
+です。
+
+これで、test/unit/.libs/suite_senna_test.soがビルドされるよう
+になり、テスト全体を実行する前後にSennaの初期化・終了処理を行
+うことができます。
 
 == テストの作成
 
@@ -745,7 +729,6 @@ Cutterは
 今回作成したテストは以下の通りです。
 
 test/unit/test-snip.c:
-test/unit/test-snip.c:
   # source: C
   #include <senna.h>
   #include <gcutter.h>
@@ -840,8 +823,8 @@ test/unit/test-snip.c:
     * Cutterをインストールしていないユーザへの対応
     * Cutterをインストールしていない開発者への対応
   * Cutterを用いたテスト環境の構築方法
-    * 独自cutterコマンドの作成方法
     * 便利なテスト起動スクリプトrun-test.shの作成方法
+    * 初期化・終了関数があるライブラリのテスト方法
   * Cutterを用いたテストの作成方法
     * setup()/teardown()を用いたメモリ管理の方法
     * diffの出力
