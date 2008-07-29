@@ -112,6 +112,10 @@ void         cut_test_set_name            (CutTest     *test,
 CutDataSetupFunction cut_test_get_data_setup_function(CutTest *test);
 const gchar *cut_test_get_full_name       (CutTest     *test);
 const gchar *cut_test_get_description     (CutTest     *test);
+void         cut_test_get_start_time      (CutTest     *test,
+                                           GTimeVal    *start_time);
+void         cut_test_set_start_time      (CutTest     *test,
+                                           GTimeVal    *start_time);
 gdouble      cut_test_get_elapsed         (CutTest     *test);
 void         cut_test_set_elapsed         (CutTest     *test,
                                            gdouble      elapsed);

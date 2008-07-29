@@ -1,5 +1,8 @@
 2008-07-29  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test.[ch], test/test-cut-test.c: add start time to
+	test.
+
 	* module/report/cut-xml-report.c (cb_test_signal): indent test result.
 
 	* cutter/cut-diff.[ch], cut-utils.c, cutter/cut-public.h,

@@ -43,6 +43,7 @@ struct _CutTestPrivate
     CutTestData *test_data;
     CutTestFunction test_function;
     GTimer *timer;
+    GTimeVal start_time;
     gdouble elapsed;
     GHashTable *attributes;
 };
@@ -84,6 +85,7 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 
+static void         start        (CutTest  *test);
 static gdouble      get_elapsed  (CutTest  *test);
 static void         set_elapsed  (CutTest  *test, gdouble elapsed);
 static gboolean     run          (CutTest        *test,
@@ -111,6 +113,7 @@ cut_test_class_init (CutTestClass *klass)
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
 
+    klass->start = start;
     klass->get_elapsed = get_elapsed;
     klass->set_elapsed = set_elapsed;
     klass->run = run;
@@ -141,7 +144,7 @@ cut_test_class_init (CutTestClass *klass)
     cut_test_signals[START]
         = g_signal_new ("start",
                         G_TYPE_FROM_CLASS (klass),
-                        G_SIGNAL_RUN_LAST,
+                        G_SIGNAL_RUN_FIRST,
                         G_STRUCT_OFFSET (CutTestClass, start),
                         NULL, NULL,
                         g_cclosure_marshal_VOID__VOID,
@@ -246,6 +249,8 @@ cut_test_init (CutTest *test)
 
     priv->test_function = NULL;
     priv->timer = NULL;
+    priv->start_time.tv_sec = 0;
+    priv->start_time.tv_usec = 0;
     priv->elapsed = -1.0;
     priv->attributes = g_hash_table_new_full(g_str_hash, g_str_equal,
                                              g_free, g_free);
@@ -368,6 +373,14 @@ cut_test_new_empty (void)
 }
 
 static void
+start (CutTest *test)
+{
+    GTimeVal value;
+    g_get_current_time(&value);
+    cut_test_set_start_time(test, &value);
+}
+
+static void
 prepare (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
 {
     cut_run_context_prepare_test(run_context, test);
@@ -474,6 +487,20 @@ const gchar *
 cut_test_get_description (CutTest *test)
 {
     return cut_test_get_attribute(test, "description");
+}
+
+void
+cut_test_get_start_time (CutTest *test, GTimeVal *start_time)
+{
+    memcpy(start_time, &(CUT_TEST_GET_PRIVATE(test)->start_time),
+           sizeof(GTimeVal));
+}
+
+void
+cut_test_set_start_time (CutTest *test, GTimeVal *start_time)
+{
+    memcpy(&(CUT_TEST_GET_PRIVATE(test)->start_time), start_time,
+           sizeof(GTimeVal));
 }
 
 static gdouble
