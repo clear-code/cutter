@@ -254,9 +254,10 @@ set_option_group (CutModuleFactory *factory, GOptionContext *context)
 typedef struct _StreamData StreamData;
 struct _StreamData
 {
+    gboolean initialized;
     gint fd;
     gchar *log_directory;
-    GIOChannel *channel;
+    GList *channels;
 };
 
 static StreamData *
@@ -265,9 +266,10 @@ stream_data_new (gint fd, gchar *log_directory)
     StreamData *data;
 
     data = g_slice_new(StreamData);
+    data->initialized = FALSE;
     data->fd = fd;
     data->log_directory = g_strdup(log_directory);
-    data->channel = NULL;
+    data->channels = NULL;
 
     return data;
 }
@@ -277,62 +279,108 @@ stream_data_free (StreamData *data)
 {
     if (data->log_directory)
         g_free(data->log_directory);
-    if (data->channel)
-        g_io_channel_unref(data->channel);
+
+    if (data->channels) {
+        g_list_foreach(data->channels, (GFunc)g_io_channel_unref, NULL);
+        g_list_free(data->channels);
+    }
 
     g_slice_free(StreamData, data);
 }
 
-static GIOChannel *
-create_channel (StreamData *data)
+static GList *
+create_channels (StreamData *data, GError **error)
 {
-    gint fd;
+    gint fd = -1;
+    GList *channels = NULL;
     GIOChannel *channel;
 
-    if (data->fd == -1)
+    if (data->fd == -1 && !data->log_directory)
         fd = STDOUT_FILENO;
     else
         fd = data->fd;
+
+    if (fd != -1) {
 #ifdef G_OS_WIN32
-    channel = g_io_channel_win32_new_fd(fd);
+        channel = g_io_channel_win32_new_fd(fd);
 #else
-    channel = g_io_channel_unix_new(fd);
+        channel = g_io_channel_unix_new(fd);
 #endif
-    if (!channel)
-        return NULL;
 
-    g_io_channel_set_close_on_unref(channel, TRUE);
+        if (channel) {
+            g_io_channel_set_close_on_unref(channel, TRUE);
+            channels = g_list_prepend(channels, channel);
+        }
+    }
 
-    return channel;
+    if (data->log_directory) {
+        gchar *file_name, *base_name;
+        time_t now;
+        struct tm *tm;
+
+        time(&now);
+        tm = gmtime(&now);
+        base_name = g_strdup_printf("%04d-%02d-%02d-%02d-%02d-%02d.xml",
+                                    1900 + tm->tm_year,
+                                    tm->tm_mon,
+                                    tm->tm_mday,
+                                    tm->tm_hour,
+                                    tm->tm_min,
+                                    tm->tm_sec);
+        file_name = g_build_filename(data->log_directory, base_name, NULL);
+
+        g_mkdir_with_parents(data->log_directory, 0755);
+        channel = g_io_channel_new_file(file_name, "w", error);
+        if (channel) {
+            g_io_channel_set_close_on_unref(channel, TRUE);
+            channels = g_list_prepend(channels, channel);
+        }
+        g_free(base_name);
+        g_free(file_name);
+    }
+
+    return channels;
 }
 
 static gboolean
 stream (const gchar *message, GError **error, gpointer user_data)
 {
     StreamData *data = user_data;
-    const gchar *snippet;
-    gsize length, written;
+    GList *node;
+    gsize length;
 
-    if (!data->channel)
-        data->channel = create_channel(data);
+    if (!data->initialized) {
+        data->channels = create_channels(data, error);
+        data->initialized = TRUE;
+        if (*error)
+            return FALSE;
+    }
 
-    if (!data->channel)
+    if (!data->channels)
         return FALSE;
 
     length = strlen(message);
-    written = 0;
-    snippet = message;
+    for (node = data->channels; node; node = g_list_next(node)) {
+        GIOChannel *channel = node->data;
+        gsize len, written;
+        const gchar *snippet;
 
-    while (length > 0) {
-        g_io_channel_write_chars(data->channel, snippet, length, &written,
-                                 error);
+        len = length;
+        written = 0;
+        snippet = message;
+        while (len > 0) {
+            g_io_channel_write_chars(channel, snippet, len, &written, error);
+            if (*error)
+                break;
+
+            snippet += written;
+            len -= written;
+        }
+        g_io_channel_flush(channel, NULL);
+
         if (*error)
             break;
-
-        snippet += written;
-        length -= written;
     }
-    g_io_channel_flush(data->channel, NULL);
 
     return *error == NULL;
 }

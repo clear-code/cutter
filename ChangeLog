@@ -1,5 +1,7 @@
 2008-07-29  Kouhei Sutou  <kou@cozmixng.org>
 
+	* module/stream/cut-xml-stream-factory.c: output to both FD and file.
+
 	* module/report/cut-pdf-report-factory.c (dispose): fix a minor bug.
 
 	* test/test-cutter.c (test_help_all): follow the below changes.
