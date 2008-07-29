@@ -1,1 +1,1 @@
-SUBDIRS = ui report streamer
+SUBDIRS = ui report stream
