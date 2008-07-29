@@ -130,6 +130,10 @@ void         cut_test_to_xml_string       (CutTest     *test,
                                            GString     *string,
                                            guint        indent);
 
+void         cut_test_emit_result_signal  (CutTest     *test,
+                                           CutTestContext *test_context,
+                                           CutTestResult *result);
+
 G_END_DECLS
 
 #endif /* __CUT_TEST_H__ */

@@ -1233,6 +1233,8 @@ test_start_iterated_test (void)
 void
 test_error_result (void)
 {
+    GTimeVal expected_start_time, actual_start_time;
+    CutTest *test;
     const gchar xml[] =
         "<stream>\n"
         "  <test-result>\n"
@@ -1279,11 +1281,11 @@ test_error_result (void)
         "          <info>stub_error_test()</info>\n"
         "        </entry>\n"
         "      </backtrace>\n"
+        "      <start-time>2008-07-29T05:16:40Z</start-time>\n"
         "      <elapsed>0.000100</elapsed>\n"
         "    </result>\n"
         "  </test-result>\n"
         "</stream>\n";
-    CutTest *test;
 
     g_signal_connect(parser, "result",
                      G_CALLBACK(collect_result), (gpointer)&result);
@@ -1300,7 +1302,13 @@ test_error_result (void)
                             cut_test_result_get_test_name(result));
     cut_assert_equal_int(CUT_TEST_RESULT_ERROR,
                          cut_test_result_get_status(result));
+
+    expected_start_time.tv_sec = 1217308600;
+    expected_start_time.tv_usec = 0;
+    cut_test_result_get_start_time(result, &actual_start_time);
+    gcut_assert_equal_time_val(&expected_start_time, &actual_start_time);
     cut_assert_equal_double(0.0001, 0.0, cut_test_result_get_elapsed(result));
+
     cut_assert_equal_int(31, cut_test_result_get_line(result));
     cut_assert_equal_string("test-cut-report-xml.c",
                             cut_test_result_get_filename(result));
@@ -1308,6 +1316,7 @@ test_error_result (void)
                             cut_test_result_get_function_name(result));
     cut_assert_equal_string("This test should error",
                             cut_test_result_get_message(result));
+
     cut_assert_equal_string("1234",
                             cut_test_get_attribute(test, "bug"));
     cut_assert_equal_string("Error Test",

@@ -455,9 +455,7 @@ cut_test_case_run_tests (CutTestCase *test_case, CutRunContext *run_context,
                                  NULL, NULL, test_case, NULL, NULL,
                                  NULL, NULL,
                                  NULL, NULL, 0);
-    g_signal_emit_by_name(CUT_TEST(test_case),
-                          cut_test_result_status_to_signal_name(status),
-                          NULL, result);
+    cut_test_emit_result_signal(CUT_TEST(test_case), NULL, result);
     g_object_unref(result);
 
     if (priv->shutdown) {

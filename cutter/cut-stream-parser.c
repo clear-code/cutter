@@ -87,6 +87,7 @@ typedef enum {
     IN_RESULT_BACKTRACE_ENTRY_FILE,
     IN_RESULT_BACKTRACE_ENTRY_LINE,
     IN_RESULT_BACKTRACE_ENTRY_INFO,
+    IN_RESULT_START_TIME,
     IN_RESULT_ELAPSED,
 
     IN_COMPLETE_ITERATED_TEST,
@@ -1101,6 +1102,8 @@ start_result (CutStreamParserPrivate *priv, GMarkupParseContext *context,
         PUSH_STATE(priv, IN_RESULT_DETAIL);
     } else if (g_str_equal("backtrace", element_name)) {
         PUSH_STATE(priv, IN_RESULT_BACKTRACE);
+    } else if (g_str_equal("start-time", element_name)) {
+        PUSH_STATE(priv, IN_RESULT_START_TIME);
     } else if (g_str_equal("elapsed", element_name)) {
         PUSH_STATE(priv, IN_RESULT_ELAPSED);
     } else {
@@ -2218,6 +2221,23 @@ text_result_backtrace_entry_info (CutStreamParserPrivate *priv,
     }
 }
 
+
+static void
+text_result_start_time (CutStreamParserPrivate *priv,
+                        GMarkupParseContext *context,
+                        const gchar *text, gsize text_len, GError **error)
+{
+    GTimeVal start_time;
+
+    if (g_time_val_from_iso8601(text, &start_time)) {
+        cut_test_result_set_start_time(priv->result, &start_time);
+    } else {
+        set_parse_error(context, error,
+                        "invalid start-time value (not ISO 8601 format): %s",
+                        text);
+    }
+}
+
 static void
 text_result_elapsed (CutStreamParserPrivate *priv, GMarkupParseContext *context,
                      const gchar *text, gsize text_len, GError **error)
@@ -2376,6 +2396,9 @@ text_handler (GMarkupParseContext *context,
         break;
       case IN_RESULT_BACKTRACE_ENTRY_INFO:
         text_result_backtrace_entry_info(priv, context, text, text_len, error);
+        break;
+      case IN_RESULT_START_TIME:
+        text_result_start_time(priv, context, text, text_len, error);
         break;
       case IN_RESULT_ELAPSED:
         text_result_elapsed(priv, context, text, text_len, error);

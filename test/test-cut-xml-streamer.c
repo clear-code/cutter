@@ -195,6 +195,9 @@ test_streamer_success (void)
         "        <elapsed>.*?</elapsed>\n"
         "      </test>\n"
         "      <status>success</status>\n"
+        "      <start-time>"
+                "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z"
+              "</start-time>\n"
         "      <elapsed>.*?</elapsed>\n"
         "    </result>\n"
         "  </test-result>\n";

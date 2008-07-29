@@ -564,14 +564,10 @@ void
 cut_test_context_emit_signal (CutTestContext *context,
                               CutTestResult *result)
 {
-    CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
-    const gchar *status_signal_name = NULL;
-    CutTestResultStatus status;
+    CutTestContextPrivate *priv;
     CutTest *target = NULL;
 
-    status = cut_test_result_get_status(result);
-    status_signal_name = cut_test_result_status_to_signal_name(status);
-
+    priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
     if (priv->test) {
         target = priv->test;
     } else if (priv->test_iterator) {
@@ -580,10 +576,8 @@ cut_test_context_emit_signal (CutTestContext *context,
         target = CUT_TEST(priv->test_case);
     }
 
-    if (target) {
-        cut_test_result_set_elapsed(result, cut_test_get_elapsed(target));
-        g_signal_emit_by_name(target, status_signal_name, context, result);
-    }
+    if (target)
+        cut_test_emit_result_signal(target, context, result);
 }
 
 void

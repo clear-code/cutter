@@ -128,6 +128,9 @@ test_report_success (void)
         "      </option>\n"
         "    </test>\n"
         "    <status>success</status>\n"
+        "    <start-time>"
+               "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z"
+             "</start-time>\n"
         "    <elapsed>.+?</elapsed>\n"
         "  </result>\n";
 
@@ -172,6 +175,9 @@ test_report_failure (void)
         "        <info>stub_failure_test\\(\\)</info>\n"
         "      </entry>\n"
         "    </backtrace>\n"
+        "    <start-time>"
+              "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z"
+            "</start-time>\n"
         "    <elapsed>.+?</elapsed>\n"
         "  </result>\n";
 
@@ -214,6 +220,9 @@ test_report_pending (void)
         "        <info>stub_pending_test\\(\\)</info>\n"
         "      </entry>\n"
         "    </backtrace>\n"
+        "    <start-time>"
+               "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z"
+             "</start-time>\n"
         "    <elapsed>.+?</elapsed>\n"
         "  </result>\n";
 
@@ -256,6 +265,9 @@ test_report_notification (void)
         "        <info>stub_notification_test\\(\\)</info>\n"
         "      </entry>\n"
         "    </backtrace>\n"
+        "    <start-time>"
+               "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z"
+             "</start-time>\n"
         "    <elapsed>.+?</elapsed>\n"
         "  </result>\n";
 
@@ -285,7 +297,7 @@ test_report_error (void)
         "    <test>\n"
         "      <name>stub-error-test</name>\n"
         "      <start-time>"
-                 "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z"
+                "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z"
               "</start-time>\n"
         "      <elapsed>.+?</elapsed>\n"
         "    </test>\n"
@@ -298,6 +310,9 @@ test_report_error (void)
         "        <info>stub_error_test\\(\\)</info>\n"
         "      </entry>\n"
         "    </backtrace>\n"
+        "    <start-time>"
+              "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z"
+            "</start-time>\n"
         "    <elapsed>.+?</elapsed>\n"
         "  </result>\n";
 
@@ -333,6 +348,9 @@ test_plural_reports (void)
         "      <elapsed>.+?</elapsed>\n"
         "    </test>\n"
         "    <status>success</status>\n"
+        "    <start-time>"
+              "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z"
+            "</start-time>\n"
         "    <elapsed>.+?</elapsed>\n"
         "  </result>\n"
         "  <result>\n"
@@ -359,6 +377,9 @@ test_plural_reports (void)
         "        <info>stub_error_test\\(\\)</info>\n"
         "      </entry>\n"
         "    </backtrace>\n"
+        "    <start-time>"
+              "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z"
+            "</start-time>\n"
         "    <elapsed>.+?</elapsed>\n"
         "  </result>\n";
 

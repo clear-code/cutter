@@ -52,6 +52,7 @@ struct _CutTestResultPrivate
     gchar *function_name;
     gchar *filename;
     guint line;
+    GTimeVal start_time;
     gdouble elapsed;
 };
 
@@ -203,6 +204,8 @@ cut_test_result_init (CutTestResult *result)
     priv->function_name = NULL;
     priv->filename = NULL;
     priv->line = 0;
+    priv->start_time.tv_sec = 0;
+    priv->start_time.tv_usec = 0;
     priv->elapsed = 0.0;
 }
 
@@ -601,6 +604,13 @@ cut_test_result_get_line (CutTestResult *result)
     return CUT_TEST_RESULT_GET_PRIVATE(result)->line;
 }
 
+void
+cut_test_result_get_start_time (CutTestResult *result, GTimeVal *start_time)
+{
+    memcpy(start_time, &(CUT_TEST_RESULT_GET_PRIVATE(result)->start_time),
+           sizeof(GTimeVal));
+}
+
 gdouble
 cut_test_result_get_elapsed (CutTestResult *result)
 {
@@ -719,7 +729,8 @@ append_test_result_to_string (GString *string, CutTestResult *result,
                               guint indent)
 {
     CutTestResultStatus status;
-    gchar *elapsed_string;
+    GTimeVal start_time;
+    gchar *elapsed_string, *start_time_string;
     const gchar *message;
 
     message = cut_test_result_get_message(result);
@@ -732,6 +743,12 @@ append_test_result_to_string (GString *string, CutTestResult *result,
                                                 "detail", message);
     if (status != CUT_TEST_RESULT_SUCCESS)
         append_backtrace_to_string(string, result, indent);
+
+    cut_test_result_get_start_time(result, &start_time);
+    start_time_string = g_time_val_to_iso8601(&start_time);
+    cut_utils_append_xml_element_with_value(string, indent, "start-time",
+                                            start_time_string);
+    g_free(start_time_string);
 
     elapsed_string = g_strdup_printf("%f", cut_test_result_get_elapsed(result));
     cut_utils_append_xml_element_with_value(string, indent, "elapsed",
@@ -950,6 +967,13 @@ cut_test_result_set_line (CutTestResult *result,
                           guint line)
 {
     CUT_TEST_RESULT_GET_PRIVATE(result)->line = line;
+}
+
+void
+cut_test_result_set_start_time (CutTestResult *result, GTimeVal *start_time)
+{
+    memcpy(&(CUT_TEST_RESULT_GET_PRIVATE(result)->start_time), start_time,
+           sizeof(GTimeVal));
 }
 
 void

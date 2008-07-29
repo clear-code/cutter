@@ -440,12 +440,11 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
         if (cut_test_context_have_data(test_context))
             test_data = cut_test_context_get_current_data(test_context);
         result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
-                                     test, test_iterator, test_case, 
-                                    NULL, test_data,
+                                     test, test_iterator, test_case,
+                                     NULL, test_data,
                                      NULL, NULL,
                                      NULL, NULL, 0);
-        cut_test_result_set_elapsed(result, cut_test_get_elapsed(test));
-        g_signal_emit_by_name(test, "success", test_context, result);
+        cut_test_emit_result_signal(test, test_context, result);
         g_object_unref(result);
     }
 
@@ -635,6 +634,24 @@ cut_test_to_xml_string (CutTest *test, GString *string, guint indent)
     cut_utils_append_indent(string, indent);
     g_string_append_printf(string, "</%s>\n", escaped);
     g_free(escaped);
+}
+
+void
+cut_test_emit_result_signal (CutTest *test,
+                             CutTestContext *test_context,
+                             CutTestResult *result)
+{
+    CutTestPrivate *priv;
+    const gchar *status_signal_name = NULL;
+    CutTestResultStatus status;
+
+    priv = CUT_TEST_GET_PRIVATE(test);
+    cut_test_result_set_start_time(result, &(priv->start_time));
+    cut_test_result_set_elapsed(result, cut_test_get_elapsed(test));
+
+    status = cut_test_result_get_status(result);
+    status_signal_name = cut_test_result_status_to_signal_name(status);
+    g_signal_emit_by_name(test, status_signal_name, test_context, result);
 }
 
 /*

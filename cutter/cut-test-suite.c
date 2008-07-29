@@ -447,7 +447,7 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite,
                                          NULL, NULL, NULL, test_suite, NULL,
                                          NULL, NULL,
                                          NULL, NULL, 0);
-            g_signal_emit_by_name(CUT_TEST(test_suite), "success", NULL, result);
+            cut_test_emit_result_signal(CUT_TEST(test_suite), NULL, result);
             g_object_unref(result);
         }
         break;

@@ -350,6 +350,7 @@ test_to_xml_empty (void)
     gchar expected[] =
         "<result>\n"
         "  <status>success</status>\n"
+        "  <start-time>1970-01-01T00:00:00Z</start-time>\n"
         "  <elapsed>0.000000</elapsed>\n"
         "</result>\n";
 
@@ -363,6 +364,7 @@ test_to_xml_empty_failure (void)
     gchar expected[] =
         "<result>\n"
         "  <status>failure</status>\n"
+        "  <start-time>1970-01-01T00:00:00Z</start-time>\n"
         "  <elapsed>0.000000</elapsed>\n"
         "</result>\n";
 

@@ -81,6 +81,8 @@ const gchar         *cut_test_result_get_system_message(CutTestResult *result);
 const gchar         *cut_test_result_get_function_name (CutTestResult *result);
 const gchar         *cut_test_result_get_filename      (CutTestResult *result);
 guint                cut_test_result_get_line          (CutTestResult *result);
+void                 cut_test_result_get_start_time    (CutTestResult *result,
+                                                        GTimeVal *start_time);
 gdouble              cut_test_result_get_elapsed       (CutTestResult *result);
 
 void cut_test_result_set_status          (CutTestResult *result,
@@ -107,6 +109,8 @@ void cut_test_result_set_filename        (CutTestResult *result,
                                           const gchar *filename);
 void cut_test_result_set_line            (CutTestResult *result,
                                           guint line);
+void cut_test_result_set_start_time      (CutTestResult *result,
+                                          GTimeVal *start_time);
 void cut_test_result_set_elapsed         (CutTestResult *result,
                                           gdouble elapsed);
 

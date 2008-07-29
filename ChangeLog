@@ -1,5 +1,14 @@
 2008-07-29  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test.[ch] (cut_test_emit_result_signal): add.
+	* cutter/cut-test-*.c: use cut_test_emit_result_signal().
+
+	* test/: follow the below changes.
+
+	* cutter/cut-stream-parser.c: support start-time parsing.
+
+	* cutter/cut-test-result.[ch]: add start-time to test result.
+
 	* cutter/cut-test-context.c (cut_test_context_emit_signal): cleanup.
 
 	* cutter/cut-test.[ch] (cut_stop_timer): remove needless codes.
