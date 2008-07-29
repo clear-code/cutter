@@ -49,6 +49,7 @@ struct _CutXMLStreamFactory
     CutModuleFactory     object;
 
     gint                 fd;
+    gchar               *log_directory;
 };
 
 struct _CutXMLStreamFactoryClass
@@ -56,10 +57,25 @@ struct _CutXMLStreamFactoryClass
     CutModuleFactoryClass parent_class;
 };
 
+enum
+{
+    PROP_0,
+    PROP_FD,
+    PROP_LOG_DIRECTORY
+};
+
 static GType cut_type_xml_stream_factory = 0;
 static CutModuleFactoryClass *parent_class;
 
 static void     dispose          (GObject         *object);
+static void     set_property     (GObject         *object,
+                                  guint            prop_id,
+                                  const GValue    *value,
+                                  GParamSpec      *pspec);
+static void     get_property     (GObject         *object,
+                                  guint            prop_id,
+                                  GValue          *value,
+                                  GParamSpec      *pspec);
 static void     set_option_group (CutModuleFactory *factory,
                                   GOptionContext   *context);
 static GObject *create           (CutModuleFactory *factory);
@@ -69,26 +85,99 @@ class_init (CutModuleFactoryClass *klass)
 {
     CutModuleFactoryClass *factory_class;
     GObjectClass *gobject_class;
+    GParamSpec *spec;
 
     parent_class = g_type_class_peek_parent(klass);
     gobject_class = G_OBJECT_CLASS(klass);
     factory_class  = CUT_MODULE_FACTORY_CLASS(klass);
 
     gobject_class->dispose      = dispose;
+    gobject_class->set_property = set_property;
+    gobject_class->get_property = get_property;
 
     factory_class->set_option_group = set_option_group;
     factory_class->create           = create;
+
+    spec = g_param_spec_int("fd",
+                            "FD",
+                            "The FD of output stream",
+                            G_MININT32, G_MAXINT32, -1,
+                            G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
+    g_object_class_install_property(gobject_class, PROP_FD, spec);
+
+    spec = g_param_spec_string("log-directory",
+                               "Log Directory",
+                               "The directory of log files",
+                               NULL,
+                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
+    g_object_class_install_property(gobject_class, PROP_LOG_DIRECTORY, spec);
 }
 
 static void
-init (CutXMLStreamFactory *xml)
+init (CutXMLStreamFactory *factory)
 {
-    xml->fd = -1;
+    factory->fd = -1;
+    factory->log_directory = NULL;
 }
 
 static void
 dispose (GObject *object)
 {
+    CutXMLStreamFactory *factory;
+
+    factory = CUT_XML_STREAM_FACTORY(object);
+    if (factory->log_directory) {
+        g_free(factory->log_directory);
+        factory->log_directory = NULL;
+    }
+
+    G_OBJECT_CLASS(parent_class)->dispose(object);
+}
+
+static void
+set_property (GObject      *object,
+              guint         prop_id,
+              const GValue *value,
+              GParamSpec   *pspec)
+{
+    CutXMLStreamFactory *factory;
+
+    factory = CUT_XML_STREAM_FACTORY(object);
+    switch (prop_id) {
+      case PROP_FD:
+        factory->fd = g_value_get_int(value);
+        break;
+      case PROP_LOG_DIRECTORY:
+        if (factory->log_directory)
+            g_free(factory->log_directory);
+        factory->log_directory = g_value_dup_string(value);
+        break;
+      default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
+        break;
+    }
+}
+
+static void
+get_property (GObject    *object,
+              guint       prop_id,
+              GValue     *value,
+              GParamSpec *pspec)
+{
+    CutXMLStreamFactory *factory;
+
+    factory = CUT_XML_STREAM_FACTORY(object);
+    switch (prop_id) {
+      case PROP_FD:
+        g_value_set_int(value, factory->fd);
+        break;
+      case PROP_LOG_DIRECTORY:
+        g_value_set_string(value, factory->log_directory);
+        break;
+      default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
+        break;
+    }
 }
 
 static void
@@ -145,13 +234,13 @@ set_option_group (CutModuleFactory *factory, GOptionContext *context)
     CutXMLStreamFactory *xml = CUT_XML_STREAM_FACTORY(factory);
     GOptionGroup *group;
     GOptionEntry entries[] = {
-        {"stream-fd", 0, 0, G_OPTION_ARG_INT, &(xml->fd),
-         N_("Stream to FILE_DESCRIPTOR (default: stdout)"), "FILE_DESCRIPTOR"},
         {NULL}
     };
 
     if (CUT_MODULE_FACTORY_CLASS(parent_class)->set_option_group)
         CUT_MODULE_FACTORY_CLASS(parent_class)->set_option_group(factory, context);
+
+    return;
 
     group = g_option_group_new(("xml-stream"),
                                _("XML Stream Options"),
@@ -166,16 +255,18 @@ typedef struct _StreamData StreamData;
 struct _StreamData
 {
     gint fd;
+    gchar *log_directory;
     GIOChannel *channel;
 };
 
 static StreamData *
-stream_data_new (gint fd)
+stream_data_new (gint fd, gchar *log_directory)
 {
     StreamData *data;
 
     data = g_slice_new(StreamData);
     data->fd = fd;
+    data->log_directory = g_strdup(log_directory);
     data->channel = NULL;
 
     return data;
@@ -184,6 +275,8 @@ stream_data_new (gint fd)
 static void
 stream_data_free (StreamData *data)
 {
+    if (data->log_directory)
+        g_free(data->log_directory);
     if (data->channel)
         g_io_channel_unref(data->channel);
 
@@ -214,7 +307,7 @@ create_channel (StreamData *data)
 }
 
 static gboolean
-stream_to_fd (const gchar *message, GError **error, gpointer user_data)
+stream (const gchar *message, GError **error, gpointer user_data)
 {
     StreamData *data = user_data;
     const gchar *snippet;
@@ -247,11 +340,13 @@ stream_to_fd (const gchar *message, GError **error, gpointer user_data)
 GObject *
 create (CutModuleFactory *factory)
 {
+    CutXMLStreamFactory *xml_factory;
     StreamData *data;
 
-    data = stream_data_new(CUT_XML_STREAM_FACTORY(factory)->fd);
+    xml_factory = CUT_XML_STREAM_FACTORY(factory);
+    data = stream_data_new(xml_factory->fd, xml_factory->log_directory);
     return G_OBJECT(cut_stream_new("xml",
-                                   "stream-function", stream_to_fd,
+                                   "stream-function", stream,
                                    "stream-function-user-data", data,
                                    "stream-function-user-data-destroy-function",
                                    stream_data_free,

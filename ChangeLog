@@ -1,5 +1,15 @@
 2008-07-29  Kouhei Sutou  <kou@cozmixng.org>
 
+	* module/report/cut-pdf-report-factory.c (dispose): fix a minor bug.
+
+	* test/test-cutter.c (test_help_all): follow the below changes.
+
+	* module/stream/cut-xml-stream-factory.c: move --stream-fd option
+	to ...
+	* cutter/cut-stream-factory-builder.c: ... here.
+
+	* cutter/cut-stream-factory-builder.c: add --stream-log-dir option.
+
 	* ./: streamer -> stream.
 
 	* module/streamer/cut-xml-streamer.c: support test iterator.

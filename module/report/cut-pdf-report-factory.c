@@ -128,6 +128,8 @@ dispose (GObject *object)
         g_free(pdf->filename);
         pdf->filename = NULL;
     }
+
+    G_OBJECT_CLASS(parent_class)->dispose(object);
 }
 
 static void

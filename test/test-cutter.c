@@ -178,7 +178,6 @@ test_help_all (void)
         "  --help-stream                                   Show stream options" LINE_FEED_CODE
         "  --help-report                                   Show report options" LINE_FEED_CODE
         "  --help-ui                                       Show UI options" LINE_FEED_CODE
-        "  --help-xml-stream                               Show XML stream options" LINE_FEED_CODE
         "  --help-console-ui                               Show console UI options" LINE_FEED_CODE
 #ifdef HAVE_GTK
         "  --help-gtk                                      Show GTK+ Options" LINE_FEED_CODE
@@ -186,6 +185,8 @@ test_help_all (void)
         "" LINE_FEED_CODE
         "Stream Options" LINE_FEED_CODE
         "  --stream=[xml]                                  Specify stream" LINE_FEED_CODE
+        "  --stream-fd=FILE_DESCRIPTOR                     Stream to FILE_DESCRIPTOR (default: stdout)" LINE_FEED_CODE
+        "  --stream-log-dir=DIRECTORY                      Stream to a file under DIRECTORY (default: none)" LINE_FEED_CODE
         "" LINE_FEED_CODE
         "Report Options" LINE_FEED_CODE
         "  --pdf-report=FILE                               Set filename of pdf report" LINE_FEED_CODE
@@ -197,9 +198,6 @@ test_help_all (void)
 #else
         "  -u, --ui=[console]                              Specify UI" LINE_FEED_CODE
 #endif
-        "" LINE_FEED_CODE
-        "XML Stream Options" LINE_FEED_CODE
-        "  --stream-fd=FILE_DESCRIPTOR                     Stream to FILE_DESCRIPTOR (default: stdout)" LINE_FEED_CODE
         "" LINE_FEED_CODE
         "Console UI Options" LINE_FEED_CODE
         "  -v, --verbose=[s|silent|n|normal|v|verbose]     Set verbose level" LINE_FEED_CODE

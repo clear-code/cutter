@@ -31,6 +31,8 @@
 #include "cut-module-factory-utils.h"
 
 static const gchar *stream_name = NULL;
+static int fd = -1;
+static const gchar *log_directory = NULL;
 static CutStreamFactoryBuilder *the_builder = NULL;
 #ifdef G_OS_WIN32
 static gchar *win32_stream_factory_module_dir = NULL;
@@ -147,6 +149,10 @@ set_option_context (CutFactoryBuilder *builder, GOptionContext *context)
     GOptionEntry entries[] = {
         {"stream", 0, 0, G_OPTION_ARG_STRING, &stream_name,
          N_("Specify stream"), NULL},
+        {"stream-fd", 0, 0, G_OPTION_ARG_INT, &fd,
+         N_("Stream to FILE_DESCRIPTOR (default: stdout)"), "FILE_DESCRIPTOR"},
+        {"stream-log-dir", 0, 0, G_OPTION_ARG_STRING, &log_directory,
+         N_("Stream to a file under DIRECTORY (default: none)"), "DIRECTORY"},
         {NULL}
     };
 
@@ -211,7 +217,10 @@ build (CutFactoryBuilder *builder)
         return NULL;
 
     priv = CUT_STREAM_FACTORY_BUILDER_GET_PRIVATE(builder);
-    factory = build_factory(builder, stream_name, NULL);
+    factory = build_factory(builder, stream_name,
+                            "fd", fd,
+                            "log-directory", log_directory,
+                            NULL);
 
     if (factory)
         factories = g_list_prepend(factories, factory);
