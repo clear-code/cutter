@@ -23,40 +23,40 @@
 
 #include <glib.h>
 
-#include "cut-streamer.h"
+#include "cut-stream.h"
 #include "cut-module.h"
 #include "cut-listener-utils.h"
 
-G_DEFINE_ABSTRACT_TYPE (CutStreamer, cut_streamer, G_TYPE_OBJECT)
-CUT_DEFINE_LISTENER_MODULE(streamer, STREAMER)
+G_DEFINE_ABSTRACT_TYPE (CutStream, cut_stream, G_TYPE_OBJECT)
+CUT_DEFINE_LISTENER_MODULE(stream, STREAM)
 
 static void
-cut_streamer_class_init (CutStreamerClass *klass)
+cut_stream_class_init (CutStreamClass *klass)
 {
 }
 
 static void
-cut_streamer_init (CutStreamer *streamer)
+cut_stream_init (CutStream *stream)
 {
 }
 
-CutStreamer *
-cut_streamer_new (const gchar *name,
-                  const gchar *first_property, ...)
+CutStream *
+cut_stream_new (const gchar *name,
+                const gchar *first_property, ...)
 {
     CutModule *module;
-    GObject *streamer;
+    GObject *stream;
     va_list var_args;
 
-    module = cut_streamer_load_module(name);
+    module = cut_stream_load_module(name);
     g_return_val_if_fail(module != NULL, NULL);
 
     va_start(var_args, first_property);
-    streamer = cut_module_instantiate(module,
+    stream = cut_module_instantiate(module,
                                       first_property, var_args);
     va_end(var_args);
 
-    return CUT_STREAMER(streamer);
+    return CUT_STREAM(stream);
 }
 
 /*

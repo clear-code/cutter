@@ -1,16 +1,18 @@
-#include "cutter.h"
-#include "cut-test-runner.h"
-#include "cut-listener.h"
-#include "cut-streamer.h"
+#include <cutter.h>
+#include <cutter/cut-test-runner.h>
+#include <cutter/cut-listener.h>
+#include <cutter/cut-stream.h>
 
-#include <unistd.h>
 #include <stdlib.h>
+#ifdef HAVE_UNISTD_H
+#  include <unistd.h>
+#endif
 
 void test_ready_test_suite (void);
 void test_ready_test_case (void);
-void test_streamer_success (void);
+void test_stream_success (void);
 
-static CutStreamer *streamer;
+static CutStream *stream;
 static CutRunContext *run_context;
 static CutTest *test;
 static CutTestCase *test_case;
@@ -31,7 +33,7 @@ setup (void)
 
     test = NULL;
     test_context = NULL;
-    streamer = NULL;
+    stream = NULL;
     xml = NULL;
 
     run_context = CUT_RUN_CONTEXT(cut_test_runner_new());
@@ -53,8 +55,8 @@ teardown (void)
         g_object_unref(test);
     if (test_context)
         g_object_unref(test_context);
-    if (streamer)
-        g_object_unref(streamer);
+    if (stream)
+        g_object_unref(stream);
     if (test_case)
         g_object_unref(test_case);
     if (test_suite)
@@ -113,15 +115,15 @@ test_ready_test_suite (void)
 
     xml = g_string_new(NULL);
 
-    streamer = cut_streamer_new("xml",
-                                "stream-function", stream_to_string,
-                                "stream-function-user-data", xml,
-                                NULL);
+    stream = cut_stream_new("xml",
+                            "stream-function", stream_to_string,
+                            "stream-function-user-data", xml,
+                            NULL);
     test = cut_test_new("stub-success-test", stub_success_test);
     cut_test_case_add_test(test_case, test);
-    cut_listener_attach_to_run_context(CUT_LISTENER(streamer), run_context);
+    cut_listener_attach_to_run_context(CUT_LISTENER(stream), run_context);
     cut_assert(cut_test_suite_run(test_suite, run_context));
-    cut_listener_detach_from_run_context(CUT_LISTENER(streamer), run_context);
+    cut_listener_detach_from_run_context(CUT_LISTENER(stream), run_context);
 
     cut_assert_match(expected, xml->str);
 }
@@ -141,21 +143,21 @@ test_ready_test_case (void)
 
     xml = g_string_new(NULL);
 
-    streamer = cut_streamer_new("xml",
-                                "stream-function", stream_to_string,
-                                "stream-function-user-data", xml,
-                                NULL);
+    stream = cut_stream_new("xml",
+                            "stream-function", stream_to_string,
+                            "stream-function-user-data", xml,
+                            NULL);
     test = cut_test_new("stub-success-test", stub_success_test);
     cut_test_case_add_test(test_case, test);
-    cut_listener_attach_to_run_context(CUT_LISTENER(streamer), run_context);
+    cut_listener_attach_to_run_context(CUT_LISTENER(stream), run_context);
     cut_assert(cut_test_suite_run(test_suite, run_context));
-    cut_listener_detach_from_run_context(CUT_LISTENER(streamer), run_context);
+    cut_listener_detach_from_run_context(CUT_LISTENER(stream), run_context);
 
     cut_assert_match(expected, xml->str);
 }
 
 void
-test_streamer_success (void)
+test_stream_success (void)
 {
     gchar expected[] =
         "  <test-result>\n"
@@ -204,21 +206,21 @@ test_streamer_success (void)
 
     xml = g_string_new(NULL);
 
-    streamer = cut_streamer_new("xml",
-                                "stream-function", stream_to_string,
-                                "stream-function-user-data", xml,
-                                NULL);
+    stream = cut_stream_new("xml",
+                            "stream-function", stream_to_string,
+                            "stream-function-user-data", xml,
+                            NULL);
 
     test = cut_test_new("stub-success-test", stub_success_test);
     g_signal_connect_after(test, "success",
                            G_CALLBACK(cb_test_signal), NULL);
     cut_test_case_add_test(test_case, test);
-    cut_listener_attach_to_run_context(CUT_LISTENER(streamer), run_context);
+    cut_listener_attach_to_run_context(CUT_LISTENER(stream), run_context);
     cut_assert_true(run());
     g_signal_handlers_disconnect_by_func(test,
                                          G_CALLBACK(cb_test_signal),
                                          NULL);
-    cut_listener_detach_from_run_context(CUT_LISTENER(streamer), run_context);
+    cut_listener_detach_from_run_context(CUT_LISTENER(stream), run_context);
 
     cut_assert_match(expected, xml->str);
 }

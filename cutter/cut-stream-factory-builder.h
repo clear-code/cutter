@@ -26,31 +26,31 @@
 
 G_BEGIN_DECLS
 
-#define CUT_TYPE_STREAMER_FACTORY_BUILDER            (cut_streamer_factory_builder_get_type ())
-#define CUT_STREAMER_FACTORY_BUILDER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_STREAMER_FACTORY_BUILDER, CutStreamerFactoryBuilder))
-#define CUT_STREAMER_FACTORY_BUILDER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_STREAMER_FACTORY_BUILDER, CutStreamerFactoryBuilderClass))
-#define CUT_IS_STREAMER_FACTORY_BUILDER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_STREAMER_FACTORY_BUILDER))
-#define CUT_IS_STREAMER_FACTORY_BUILDER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_STREAMER_FACTORY_BUILDER))
-#define CUT_STREAMER_FACTORY_BUILDER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_STREAMER_FACTORY_BUILDER, CutStreamerFactoryBuilderClass))
+#define CUT_TYPE_STREAM_FACTORY_BUILDER            (cut_stream_factory_builder_get_type ())
+#define CUT_STREAM_FACTORY_BUILDER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_STREAM_FACTORY_BUILDER, CutStreamFactoryBuilder))
+#define CUT_STREAM_FACTORY_BUILDER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_STREAM_FACTORY_BUILDER, CutStreamFactoryBuilderClass))
+#define CUT_IS_STREAM_FACTORY_BUILDER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_STREAM_FACTORY_BUILDER))
+#define CUT_IS_STREAM_FACTORY_BUILDER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_STREAM_FACTORY_BUILDER))
+#define CUT_STREAM_FACTORY_BUILDER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_STREAM_FACTORY_BUILDER, CutStreamFactoryBuilderClass))
 
-typedef struct _CutStreamerFactoryBuilder         CutStreamerFactoryBuilder;
-typedef struct _CutStreamerFactoryBuilderClass    CutStreamerFactoryBuilderClass;
+typedef struct _CutStreamFactoryBuilder         CutStreamFactoryBuilder;
+typedef struct _CutStreamFactoryBuilderClass    CutStreamFactoryBuilderClass;
 
-struct _CutStreamerFactoryBuilder
+struct _CutStreamFactoryBuilder
 {
     CutFactoryBuilder object;
 };
 
-struct _CutStreamerFactoryBuilderClass
+struct _CutStreamFactoryBuilderClass
 {
     CutFactoryBuilderClass parent_class;
 };
 
-GType cut_streamer_factory_builder_get_type (void) G_GNUC_CONST;
+GType cut_stream_factory_builder_get_type (void) G_GNUC_CONST;
 
 G_END_DECLS
 
-#endif /* __CUT_STREAMER_FACTORY_BUILDER_H__ */
+#endif /* __CUT_STREAM_FACTORY_BUILDER_H__ */
 
 /*
 vi:nowrap:ai:expandtab:sw=4

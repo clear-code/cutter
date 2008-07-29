@@ -26,20 +26,20 @@
 #include <glib/gi18n-lib.h>
 
 #include "cut-utils.h"
-#include "cut-streamer-factory-builder.h"
+#include "cut-stream-factory-builder.h"
 #include "cut-module-factory.h"
 #include "cut-module-factory-utils.h"
 
-static const gchar *streamer_name = NULL;
-static CutStreamerFactoryBuilder *the_builder = NULL;
+static const gchar *stream_name = NULL;
+static CutStreamFactoryBuilder *the_builder = NULL;
 #ifdef G_OS_WIN32
-static gchar *win32_streamer_factory_module_dir = NULL;
+static gchar *win32_stream_factory_module_dir = NULL;
 #endif
 
-#define CUT_STREAMER_FACTORY_BUILDER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_STREAMER_FACTORY_BUILDER, CutStreamerFactoryBuilderPrivate))
+#define CUT_STREAM_FACTORY_BUILDER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_STREAM_FACTORY_BUILDER, CutStreamFactoryBuilderPrivate))
 
-typedef struct _CutStreamerFactoryBuilderPrivate	CutStreamerFactoryBuilderPrivate;
-struct _CutStreamerFactoryBuilderPrivate
+typedef struct _CutStreamFactoryBuilderPrivate	CutStreamFactoryBuilderPrivate;
+struct _CutStreamFactoryBuilderPrivate
 {
     GList *names;
 };
@@ -55,10 +55,10 @@ static GList       *build              (CutFactoryBuilder *builder);
 static GList       *build_all          (CutFactoryBuilder *builder);
 static const gchar *get_type_name      (CutFactoryBuilder *builder);
 
-G_DEFINE_TYPE(CutStreamerFactoryBuilder, cut_streamer_factory_builder, CUT_TYPE_FACTORY_BUILDER)
+G_DEFINE_TYPE(CutStreamFactoryBuilder, cut_stream_factory_builder, CUT_TYPE_FACTORY_BUILDER)
 
 static void
-cut_streamer_factory_builder_class_init (CutStreamerFactoryBuilderClass *klass)
+cut_stream_factory_builder_class_init (CutStreamFactoryBuilderClass *klass)
 {
     GObjectClass *gobject_class;
     CutFactoryBuilderClass *builder_class;
@@ -75,7 +75,7 @@ cut_streamer_factory_builder_class_init (CutStreamerFactoryBuilderClass *klass)
     builder_class->get_type_name      = get_type_name;
 
     g_type_class_add_private(gobject_class,
-                             sizeof(CutStreamerFactoryBuilderPrivate));
+                             sizeof(CutStreamFactoryBuilderPrivate));
 }
 
 static GObject *
@@ -85,9 +85,9 @@ constructor (GType type, guint n_props, GObjectConstructParam *props)
 
     if (!the_builder) {
         GObjectClass *klass;
-        klass = G_OBJECT_CLASS(cut_streamer_factory_builder_parent_class);
+        klass = G_OBJECT_CLASS(cut_stream_factory_builder_parent_class);
         object = klass->constructor(type, n_props, props);
-        the_builder = CUT_STREAMER_FACTORY_BUILDER(object);
+        the_builder = CUT_STREAM_FACTORY_BUILDER(object);
     } else {
         object = g_object_ref(G_OBJECT(the_builder));
     }
@@ -96,38 +96,38 @@ constructor (GType type, guint n_props, GObjectConstructParam *props)
 }
 
 static void
-cut_streamer_factory_builder_init (CutStreamerFactoryBuilder *builder)
+cut_stream_factory_builder_init (CutStreamFactoryBuilder *builder)
 {
-    CutStreamerFactoryBuilderPrivate *priv;
+    CutStreamFactoryBuilderPrivate *priv;
     const gchar *dir;
 
-    priv = CUT_STREAMER_FACTORY_BUILDER_GET_PRIVATE(builder);
+    priv = CUT_STREAM_FACTORY_BUILDER_GET_PRIVATE(builder);
     priv->names = NULL;
 
-    dir = g_getenv("CUT_STREAMER_FACTORY_MODULE_DIR");
+    dir = g_getenv("CUT_STREAM_FACTORY_MODULE_DIR");
     if (!dir) {
 #ifdef G_OS_WIN32
-        if (!win32_streamer_factory_module_dir)
-            win32_streamer_factory_module_dir =
-                cut_win32_build_factory_module_dir_name("streamer");
-        dir = win32_streamer_factory_module_dir;
+        if (!win32_stream_factory_module_dir)
+            win32_stream_factory_module_dir =
+                cut_win32_build_factory_module_dir_name("stream");
+        dir = win32_stream_factory_module_dir;
 #else
-        dir = STREAMER_FACTORY_MODULEDIR;
+        dir = STREAM_FACTORY_MODULEDIR;
 #endif
     }
 
     g_object_set(G_OBJECT(builder),
                  "module-dir", dir,
                  NULL);
-    cut_module_factory_load(dir, "streamer");
+    cut_module_factory_load(dir, "stream");
 }
 
 static void
 dispose (GObject *object)
 {
-    CutStreamerFactoryBuilderPrivate *priv;
+    CutStreamFactoryBuilderPrivate *priv;
 
-    priv = CUT_STREAMER_FACTORY_BUILDER_GET_PRIVATE(object);
+    priv = CUT_STREAM_FACTORY_BUILDER_GET_PRIVATE(object);
 
     if (priv->names) {
         g_list_foreach(priv->names, (GFunc)g_free, NULL);
@@ -136,7 +136,7 @@ dispose (GObject *object)
     }
 
 
-    G_OBJECT_CLASS(cut_streamer_factory_builder_parent_class)->dispose(object);
+    G_OBJECT_CLASS(cut_stream_factory_builder_parent_class)->dispose(object);
 }
 
 static void
@@ -145,34 +145,34 @@ set_option_context (CutFactoryBuilder *builder, GOptionContext *context)
     static gchar *arg_description = NULL;
     GOptionGroup *group;
     GOptionEntry entries[] = {
-        {"streamer", 0, 0, G_OPTION_ARG_STRING, &streamer_name,
-         N_("Specify streamer"), NULL},
+        {"stream", 0, 0, G_OPTION_ARG_STRING, &stream_name,
+         N_("Specify stream"), NULL},
         {NULL}
     };
 
     if (!arg_description) {
-        GString *available_streamers;
+        GString *available_streams;
         GList *names, *node;
 
-        available_streamers = g_string_new("[");
-        names = cut_module_factory_get_names("streamer");
+        available_streams = g_string_new("[");
+        names = cut_module_factory_get_names("stream");
         for (node = names; node; node = g_list_next(node)) {
             const gchar *name = node->data;
-            g_string_append(available_streamers, name);
+            g_string_append(available_streams, name);
             if (g_list_next(node))
-                g_string_append(available_streamers, "|");
+                g_string_append(available_streams, "|");
         }
-        g_string_append(available_streamers, "]");
-        arg_description = g_string_free(available_streamers, FALSE);
+        g_string_append(available_streams, "]");
+        arg_description = g_string_free(available_streams, FALSE);
 
         g_list_foreach(names, (GFunc)g_free, NULL);
         g_list_free(names);
     }
     entries[0].arg_description = arg_description;
 
-    group = g_option_group_new(("streamer"),
-                               _("Streamer Options"),
-                               _("Show streamer options"),
+    group = g_option_group_new(("stream"),
+                               _("Stream Options"),
+                               _("Show stream options"),
                                builder, NULL);
     g_option_group_add_entries(group, entries);
     g_option_group_set_translation_domain(group, GETTEXT_PACKAGE);
@@ -180,16 +180,16 @@ set_option_context (CutFactoryBuilder *builder, GOptionContext *context)
 }
 
 static CutModuleFactory *
-build_factory (CutFactoryBuilder *builder, const gchar *streamer_type,
+build_factory (CutFactoryBuilder *builder, const gchar *stream_type,
                const gchar *first_property, ...)
 {
     CutModuleFactory *factory = NULL;
 
-    if (cut_module_factory_exist_module("streamer", streamer_type)) {
+    if (cut_module_factory_exist_module("stream", stream_type)) {
         GOptionContext *option_context;
         va_list var_args;
         va_start(var_args, first_property);
-        factory = cut_module_factory_new_valist("streamer", streamer_type,
+        factory = cut_module_factory_new_valist("stream", stream_type,
                                                 first_property, var_args);
         va_end(var_args);
 
@@ -204,14 +204,14 @@ static GList *
 build (CutFactoryBuilder *builder)
 {
     GList *factories = NULL;
-    CutStreamerFactoryBuilderPrivate *priv;
+    CutStreamFactoryBuilderPrivate *priv;
     CutModuleFactory *factory;
 
-    if (!streamer_name)
+    if (!stream_name)
         return NULL;
 
-    priv = CUT_STREAMER_FACTORY_BUILDER_GET_PRIVATE(builder);
-    factory = build_factory(builder, streamer_name, NULL);
+    priv = CUT_STREAM_FACTORY_BUILDER_GET_PRIVATE(builder);
+    factory = build_factory(builder, stream_name, NULL);
 
     if (factory)
         factories = g_list_prepend(factories, factory);
@@ -225,12 +225,12 @@ build_all (CutFactoryBuilder *builder)
     GList *factories = NULL, *node;
     GList *factory_names;
 
-    factory_names = cut_module_factory_get_names("streamer");
+    factory_names = cut_module_factory_get_names("stream");
 
     for (node = factory_names; node; node = g_list_next(node)) {
         CutModuleFactory *module_factory;
         GOptionContext *option_context;
-        module_factory = cut_module_factory_new("streamer", node->data, NULL);
+        module_factory = cut_module_factory_new("stream", node->data, NULL);
         g_object_get(builder,
                      "option-context", &option_context,
                      NULL);
@@ -245,7 +245,7 @@ build_all (CutFactoryBuilder *builder)
 static const gchar *
 get_type_name (CutFactoryBuilder *builder)
 {
-    return "streamer";
+    return "stream";
 }
 
 /*

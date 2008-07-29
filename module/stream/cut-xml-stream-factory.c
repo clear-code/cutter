@@ -30,33 +30,33 @@
 #include <gmodule.h>
 
 #include <cutter/cut-module-impl.h>
-#include <cutter/cut-streamer.h>
+#include <cutter/cut-stream.h>
 #include <cutter/cut-module-factory.h>
 #include <cutter/cut-enum-types.h>
 
-#define CUT_TYPE_XML_STREAMER_FACTORY            cut_type_xml_streamer_factory
-#define CUT_XML_STREAMER_FACTORY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_XML_STREAMER_FACTORY, CutXMLStreamerFactory))
-#define CUT_XML_STREAMER_FACTORY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_XML_STREAMER_FACTORY, CutXMLStreamerFactoryClass))
-#define CUT_IS_XML_STREAMER_FACTORY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_XML_STREAMER_FACTORY))
-#define CUT_IS_XML_STREAMER_FACTORY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_XML_STREAMER_FACTORY))
-#define CUT_XML_STREAMER_FACTORY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_XML_STREAMER_FACTORY, CutXMLStreamerFactoryClass))
+#define CUT_TYPE_XML_STREAM_FACTORY            cut_type_xml_stream_factory
+#define CUT_XML_STREAM_FACTORY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_XML_STREAM_FACTORY, CutXMLStreamFactory))
+#define CUT_XML_STREAM_FACTORY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_XML_STREAM_FACTORY, CutXMLStreamFactoryClass))
+#define CUT_IS_XML_STREAM_FACTORY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_XML_STREAM_FACTORY))
+#define CUT_IS_XML_STREAM_FACTORY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_XML_STREAM_FACTORY))
+#define CUT_XML_STREAM_FACTORY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_XML_STREAM_FACTORY, CutXMLStreamFactoryClass))
 
-typedef struct _CutXMLStreamerFactory CutXMLStreamerFactory;
-typedef struct _CutXMLStreamerFactoryClass CutXMLStreamerFactoryClass;
+typedef struct _CutXMLStreamFactory CutXMLStreamFactory;
+typedef struct _CutXMLStreamFactoryClass CutXMLStreamFactoryClass;
 
-struct _CutXMLStreamerFactory
+struct _CutXMLStreamFactory
 {
     CutModuleFactory     object;
 
     gint                 fd;
 };
 
-struct _CutXMLStreamerFactoryClass
+struct _CutXMLStreamFactoryClass
 {
     CutModuleFactoryClass parent_class;
 };
 
-static GType cut_type_xml_streamer_factory = 0;
+static GType cut_type_xml_stream_factory = 0;
 static CutModuleFactoryClass *parent_class;
 
 static void     dispose          (GObject         *object);
@@ -81,7 +81,7 @@ class_init (CutModuleFactoryClass *klass)
 }
 
 static void
-init (CutXMLStreamerFactory *xml)
+init (CutXMLStreamFactory *xml)
 {
     xml->fd = -1;
 }
@@ -96,21 +96,21 @@ register_type (GTypeModule *type_module)
 {
     static const GTypeInfo info =
         {
-            sizeof (CutXMLStreamerFactoryClass),
+            sizeof (CutXMLStreamFactoryClass),
             (GBaseInitFunc) NULL,
             (GBaseFinalizeFunc) NULL,
             (GClassInitFunc) class_init,
             NULL,           /* class_finalize */
             NULL,           /* class_data */
-            sizeof(CutXMLStreamerFactory),
+            sizeof(CutXMLStreamFactory),
             0,
             (GInstanceInitFunc) init,
         };
 
-    cut_type_xml_streamer_factory =
+    cut_type_xml_stream_factory =
         g_type_module_register_type(type_module,
                                     CUT_TYPE_MODULE_FACTORY,
-                                    "CutXMLStreamerFactory",
+                                    "CutXMLStreamFactory",
                                     &info, 0);
 }
 
@@ -120,10 +120,10 @@ CUT_MODULE_IMPL_INIT (GTypeModule *type_module)
     GList *registered_types = NULL;
 
     register_type(type_module);
-    if (cut_type_xml_streamer_factory)
+    if (cut_type_xml_stream_factory)
         registered_types =
             g_list_prepend(registered_types,
-                           (gchar *)g_type_name(cut_type_xml_streamer_factory));
+                           (gchar *)g_type_name(cut_type_xml_stream_factory));
 
     return registered_types;
 }
@@ -136,13 +136,13 @@ CUT_MODULE_IMPL_EXIT (void)
 G_MODULE_EXPORT GObject *
 CUT_MODULE_IMPL_INSTANTIATE (const gchar *first_property, va_list var_args)
 {
-    return g_object_new_valist(CUT_TYPE_XML_STREAMER_FACTORY, first_property, var_args);
+    return g_object_new_valist(CUT_TYPE_XML_STREAM_FACTORY, first_property, var_args);
 }
 
 static void
 set_option_group (CutModuleFactory *factory, GOptionContext *context)
 {
-    CutXMLStreamerFactory *xml = CUT_XML_STREAMER_FACTORY(factory);
+    CutXMLStreamFactory *xml = CUT_XML_STREAM_FACTORY(factory);
     GOptionGroup *group;
     GOptionEntry entries[] = {
         {"stream-fd", 0, 0, G_OPTION_ARG_INT, &(xml->fd),
@@ -153,9 +153,9 @@ set_option_group (CutModuleFactory *factory, GOptionContext *context)
     if (CUT_MODULE_FACTORY_CLASS(parent_class)->set_option_group)
         CUT_MODULE_FACTORY_CLASS(parent_class)->set_option_group(factory, context);
 
-    group = g_option_group_new(("xml-streamer"),
-                               _("XML Streamer Options"),
-                               _("Show XML streamer options"),
+    group = g_option_group_new(("xml-stream"),
+                               _("XML Stream Options"),
+                               _("Show XML stream options"),
                                xml, NULL);
     g_option_group_add_entries(group, entries);
     g_option_group_set_translation_domain(group, GETTEXT_PACKAGE);
@@ -249,13 +249,13 @@ create (CutModuleFactory *factory)
 {
     StreamData *data;
 
-    data = stream_data_new(CUT_XML_STREAMER_FACTORY(factory)->fd);
-    return G_OBJECT(cut_streamer_new("xml",
-                                     "stream-function", stream_to_fd,
-                                     "stream-function-user-data", data,
-                                     "stream-function-user-data-destroy-function",
-                                     stream_data_free,
-                                     NULL));
+    data = stream_data_new(CUT_XML_STREAM_FACTORY(factory)->fd);
+    return G_OBJECT(cut_stream_new("xml",
+                                   "stream-function", stream_to_fd,
+                                   "stream-function-user-data", data,
+                                   "stream-function-user-data-destroy-function",
+                                   stream_data_free,
+                                   NULL));
 }
 
 /*

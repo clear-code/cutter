@@ -381,7 +381,7 @@ create_command_line_args (CutPipeline *pipeline)
         new_args = cut_utils_strv_concat((const gchar **)copy,
                                          "--ui=console",
                                          "-v", "s",
-                                         "--streamer=xml",
+                                         "--stream=xml",
                                          stream_fd,
                                          test_directory,
                                          NULL);
@@ -394,7 +394,7 @@ create_command_line_args (CutPipeline *pipeline)
 
         command_line = g_strdup_printf("\"%s\" "
                                        "-v s "
-                                       "--streamer=xml "
+                                       "--stream=xml "
                                        "--stream-fd=%d "
                                        "\"%s\"",
                                        cut_utils_get_cutter_command_path(),

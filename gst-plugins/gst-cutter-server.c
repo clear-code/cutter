@@ -24,7 +24,7 @@
 #include "gst-cutter-server.h"
 
 #include <cutter/cut-test-runner.h>
-#include <cutter/cut-streamer.h>
+#include <cutter/cut-stream.h>
 #include <cutter/cut-listener.h>
 
 GST_DEBUG_CATEGORY_STATIC(cutter_server_debug);
@@ -52,7 +52,7 @@ typedef struct _GstCutterServerPrivate    GstCutterServerPrivate;
 struct _GstCutterServerPrivate
 {
     CutRunContext *run_context;
-    CutStreamer *cut_streamer;
+    CutStream *cut_stream;
 
     gchar *test_directory;
     gchar *host;
@@ -158,7 +158,7 @@ gst_cutter_server_init (GstCutterServer *cutter_server, GstCutterServerClass * k
     gst_element_add_pad(GST_ELEMENT(cutter_server), priv->sink_pad);
 
     priv->run_context = NULL;
-    priv->cut_streamer = NULL;
+    priv->cut_stream = NULL;
     priv->test_directory = NULL;
     priv->xml_string = NULL;
     priv->port = 4953;
@@ -177,9 +177,9 @@ dispose (GObject *object)
         priv->run_context = NULL;
     }
 
-    if (priv->cut_streamer) {
-        g_object_unref(priv->cut_streamer);
-        priv->cut_streamer = NULL;
+    if (priv->cut_stream) {
+        g_object_unref(priv->cut_stream);
+        priv->cut_stream = NULL;
     }
 
     if (priv->test_directory) {

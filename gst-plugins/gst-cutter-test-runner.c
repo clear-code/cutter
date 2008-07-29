@@ -26,7 +26,7 @@
 #include "gst-cutter-test-runner.h"
 
 #include <cutter/cut-test-runner.h>
-#include <cutter/cut-streamer.h>
+#include <cutter/cut-stream.h>
 #include <cutter/cut-listener.h>
 
 GST_DEBUG_CATEGORY_STATIC(cutter_test_runner_debug);
@@ -49,7 +49,7 @@ typedef struct _GstCutterTestRunnerPrivate    GstCutterTestRunnerPrivate;
 struct _GstCutterTestRunnerPrivate
 {
     CutRunContext *run_context;
-    CutStreamer *cut_streamer;
+    CutStream *cut_stream;
     gchar *test_directory;
     GString *xml_string;
 };
@@ -135,7 +135,7 @@ gst_cutter_test_runner_init (GstCutterTestRunner *cutter_test_runner, GstCutterT
     GstCutterTestRunnerPrivate *priv = GST_CUTTER_TEST_RUNNER_GET_PRIVATE(cutter_test_runner);
 
     priv->run_context = NULL;
-    priv->cut_streamer = NULL;
+    priv->cut_stream = NULL;
     priv->test_directory = NULL;
     priv->xml_string = NULL;
 }
@@ -150,9 +150,9 @@ dispose (GObject *object)
         priv->run_context = NULL;
     }
 
-    if (priv->cut_streamer) {
-        g_object_unref(priv->cut_streamer);
-        priv->cut_streamer = NULL;
+    if (priv->cut_stream) {
+        g_object_unref(priv->cut_stream);
+        priv->cut_stream = NULL;
     }
 
     if (priv->test_directory) {
@@ -222,13 +222,13 @@ start (GstBaseSrc *base_src)
                                      "test-directory", priv->test_directory,
                                      NULL);
     priv->xml_string = g_string_new(NULL);
-    priv->cut_streamer =
-        cut_streamer_new("xml",
-                         "stream-function", stream_to_string,
-                         "stream-function-user-data", priv->xml_string,
-                         NULL);
+    priv->cut_stream =
+        cut_stream_new("xml",
+                       "stream-function", stream_to_string,
+                       "stream-function-user-data", priv->xml_string,
+                       NULL);
     cut_run_context_add_listener(priv->run_context,
-                                 CUT_LISTENER(priv->cut_streamer));
+                                 CUT_LISTENER(priv->cut_stream));
 
     gst_base_src_set_format(base_src, GST_FORMAT_BYTES);
 
@@ -243,7 +243,7 @@ stop (GstBaseSrc *base_src)
     GstCutterTestRunnerPrivate *priv = GST_CUTTER_TEST_RUNNER_GET_PRIVATE(base_src);
 
     cut_run_context_cancel(priv->run_context);
-    cut_run_context_remove_listener(priv->run_context, CUT_LISTENER(priv->cut_streamer));
+    cut_run_context_remove_listener(priv->run_context, CUT_LISTENER(priv->cut_stream));
 
     return TRUE;
 }

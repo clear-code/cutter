@@ -1,5 +1,7 @@
 2008-07-29  Kouhei Sutou  <kou@cozmixng.org>
 
+	* ./: streamer -> stream.
+
 	* module/streamer/cut-xml-streamer.c: support test iterator.
 
 	* cutter/cut-test.[ch] (cut_test_emit_result_signal): add.

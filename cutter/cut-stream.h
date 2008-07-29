@@ -24,38 +24,38 @@
 
 G_BEGIN_DECLS
 
-#define CUT_TYPE_STREAMER            (cut_streamer_get_type ())
-#define CUT_STREAMER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_STREAMER, CutStreamer))
-#define CUT_STREAMER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_STREAMER, CutStreamerClass))
-#define CUT_IS_STREAMER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_STREAMER))
-#define CUT_IS_STREAMER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_STREAMER))
-#define CUT_STREAMER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_STREAMER, CutStreamerClass))
+#define CUT_TYPE_STREAM            (cut_stream_get_type ())
+#define CUT_STREAM(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_STREAM, CutStream))
+#define CUT_STREAM_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_STREAM, CutStreamClass))
+#define CUT_IS_STREAM(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_STREAM))
+#define CUT_IS_STREAM_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_STREAM))
+#define CUT_STREAM_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_STREAM, CutStreamClass))
 
 typedef gboolean (*CutStreamFunction) (const gchar *message,
                                        GError **error,
                                        gpointer user_data);
 
-typedef struct _CutStreamer         CutStreamer;
-typedef struct _CutStreamerClass    CutStreamerClass;
+typedef struct _CutStream         CutStream;
+typedef struct _CutStreamClass    CutStreamClass;
 
-struct _CutStreamer
+struct _CutStream
 {
     GObject object;
 };
 
-struct _CutStreamerClass
+struct _CutStreamClass
 {
     GObjectClass parent_class;
 };
 
-GType        cut_streamer_get_type  (void) G_GNUC_CONST;
+GType        cut_stream_get_type  (void) G_GNUC_CONST;
 
-CutStreamer *cut_streamer_new       (const gchar *name,
-                                     const gchar *first_property,
-                                     ...);
+CutStream   *cut_stream_new       (const gchar *name,
+                                   const gchar *first_property,
+                                   ...);
 G_END_DECLS
 
-#endif /* __CUT_STREAMER_H__ */
+#endif /* __CUT_STREAM_H__ */
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
