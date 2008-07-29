@@ -231,14 +231,14 @@ report_factory_moduledir="\${moduledir}/factory/report"
 AC_SUBST(report_factory_moduledir)
 
 dnl **************************************************************
-dnl Configure for Streamer modules.
+dnl Configure for Stream modules.
 dnl **************************************************************
 
-streamer_moduledir="\${moduledir}/streamer"
-AC_SUBST(streamer_moduledir)
+stream_moduledir="\${moduledir}/stream"
+AC_SUBST(stream_moduledir)
 
-streamer_factory_moduledir="\${moduledir}/factory/streamer"
-AC_SUBST(streamer_factory_moduledir)
+stream_factory_moduledir="\${moduledir}/factory/stream"
+AC_SUBST(stream_factory_moduledir)
 
 dnl **************************************************************
 dnl Configure for factory modules.
@@ -446,8 +446,8 @@ CUTTER_CFLAGS="$GLIB_CFLAGS -DG_DISABLE_DEPRECATED -DUI_MODULEDIR=\\\"\"\$(ui_mo
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DUI_FACTORY_MODULEDIR=\\\"\"\$(ui_factory_moduledir)\"\\\""
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DREPORT_MODULEDIR=\\\"\"\$(report_moduledir)\"\\\""
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DREPORT_FACTORY_MODULEDIR=\\\"\"\$(report_factory_moduledir)\"\\\""
-CUTTER_CFLAGS="$CUTTER_CFLAGS -DSTREAMER_MODULEDIR=\\\"\"\$(streamer_moduledir)\"\\\""
-CUTTER_CFLAGS="$CUTTER_CFLAGS -DSTREAMER_FACTORY_MODULEDIR=\\\"\"\$(streamer_factory_moduledir)\"\\\""
+CUTTER_CFLAGS="$CUTTER_CFLAGS -DSTREAM_MODULEDIR=\\\"\"\$(stream_moduledir)\"\\\""
+CUTTER_CFLAGS="$CUTTER_CFLAGS -DSTREAM_FACTORY_MODULEDIR=\\\"\"\$(stream_factory_moduledir)\"\\\""
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DFACTORY_MODULEDIR=\\\"\"\$(factory_moduledir)\"\\\""
 AC_SUBST(CUTTER_CFLAGS)
 
@@ -462,7 +462,7 @@ AC_CONFIG_FILES([Makefile
 		 module/Makefile
 		 module/ui/Makefile
 		 module/report/Makefile
-		 module/streamer/Makefile
+		 module/stream/Makefile
 		 gst-plugins/Makefile
 		 gst-plugins/test/Makefile
 		 sample/Makefile
