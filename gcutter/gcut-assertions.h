@@ -386,6 +386,35 @@ G_BEGIN_DECLS
     gcut_assert_remove_path(path, ## __VA_ARGS__)
 #endif
 
+/**
+ * gcut_assert_equal_time_val:
+ * @expected: an expected GTimeVal.
+ * @actual: an actual GTimeVal.
+ * @...: optional format string, followed by parameters to insert
+ *       into the format string (as with printf())
+ *
+ * Passes if @expected == @actual.
+ *
+ * Since: 1.0.4
+ */
+#define gcut_assert_equal_time_val(expected, actual, ...) do            \
+{                                                                       \
+    GTimeVal *_expected_time_val;                                       \
+    GTimeVal *_actual_time_val;                                         \
+    const gchar *_expected_time_val_string;                             \
+    const gchar *_actual_time_val_string;                               \
+                                                                        \
+    _expected_time_val = (expected);                                    \
+    _actual_time_val = (actual);                                        \
+    _expected_time_val_string =                                         \
+        cut_take_string(g_time_val_to_iso8601(_expected_time_val));     \
+    _actual_time_val_string =                                           \
+        cut_take_string(g_time_val_to_iso8601(_actual_time_val));       \
+    cut_assert_equal_string(_expected_time_val_string,                  \
+                            _actual_time_val_string,                    \
+                            ## __VA_ARGS__);                            \
+} while(0)
+
 G_END_DECLS
 
 #endif /* __GCUT_ASSERTIONS_H__ */

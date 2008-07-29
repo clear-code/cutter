@@ -604,7 +604,7 @@ void
 cut_test_to_xml_string (CutTest *test, GString *string, guint indent)
 {
     CutTestPrivate *priv;
-    gchar *escaped, *elapsed;
+    gchar *escaped, *start_time, *elapsed;
     const gchar *description, *name;
     GHashTable *attributes;
 
@@ -623,6 +623,11 @@ cut_test_to_xml_string (CutTest *test, GString *string, guint indent)
     if (description)
         cut_utils_append_xml_element_with_value(string, indent + 2,
                                                 "description", description);
+
+    start_time = g_time_val_to_iso8601(&(priv->start_time));
+    cut_utils_append_xml_element_with_value(string, indent + 2,
+                                            "start-time", start_time);
+    g_free(start_time);
 
     elapsed = g_strdup_printf("%f", cut_test_get_elapsed(test));
     cut_utils_append_xml_element_with_value(string, indent + 2,

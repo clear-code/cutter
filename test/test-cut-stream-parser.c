@@ -744,10 +744,12 @@ void
 test_ready_test_suite (void)
 {
     ReadyTestSuiteInfo *info;
+    GTimeVal expected, actual;
 
     cut_assert_parse("<stream>\n");
     cut_assert_parse("  <ready-test-suite>\n");
     cut_assert_parse("    <test-suite>\n");
+    cut_assert_parse("      <start-time>1970-01-01T00:00:00Z</start-time>\n");
     cut_assert_parse("    </test-suite>\n");
     cut_assert_parse("    <n-test-cases>3</n-test-cases>\n");
     cut_assert_parse("    <n-tests>7</n-tests>\n");
@@ -757,8 +759,15 @@ test_ready_test_suite (void)
     cut_assert_equal_int(1, g_list_length(receiver->ready_test_suites));
 
     info = receiver->ready_test_suites->data;
+
     cut_assert_not_null(info->test_suite);
     cut_assert_equal_string(NULL, cut_test_get_name(CUT_TEST(info->test_suite)));
+
+    expected.tv_sec = 0;
+    expected.tv_usec = 0;
+    cut_test_get_start_time(CUT_TEST(info->test_suite), &actual);
+    gcut_assert_equal_time_val(&expected, &actual);
+
     cut_assert_equal_int(3, info->n_test_cases);
     cut_assert_equal_int(7, info->n_tests);
 }

@@ -1,5 +1,13 @@
 2008-07-29  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/: follow the below changes.
+
+	* cutter/cut-stream-parser.c: support start-time parsing.
+
+	* cutter/cut-test.c (cut_test_to_xml_string): add start-time to XML.
+
+	* gcutter/gcut-assertions.h (gcut_assert_equal_time_val): add.
+
 	* cutter/cut-test.[ch], test/test-cut-test.c: add start time to
 	test.
 

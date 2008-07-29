@@ -1,4 +1,4 @@
-#include <cutter.h>
+#include <gcutter.h>
 #include <cutter/cut-test.h>
 #include <cutter/cut-test-runner.h>
 
@@ -329,11 +329,6 @@ test_set_elapsed (void)
     cut_assert_equal_double(0.0, 0.1, cut_test_get_elapsed(test));
 }
 
-#define cut_assert_equal_time_val(expected, actual)                     \
-    cut_assert_equal_string(                                            \
-        cut_take_string(g_time_val_to_iso8601((expected))),             \
-        cut_take_string(g_time_val_to_iso8601((actual))))
-
 void
 test_start_time (void)
 {
@@ -344,18 +339,18 @@ test_start_time (void)
     expected.tv_sec = 0;
     expected.tv_usec = 0;
     cut_test_get_start_time(test, &actual);
-    cut_assert_equal_time_val(&expected, &actual);
+    gcut_assert_equal_time_val(&expected, &actual);
 
     g_get_current_time(&expected);
     g_signal_emit_by_name(test, "start", NULL);
     cut_test_get_start_time(test, &actual);
-    cut_assert_equal_time_val(&expected, &actual);
+    gcut_assert_equal_time_val(&expected, &actual);
 
     expected.tv_sec = 100000;
     expected.tv_usec = 0;
     cut_test_set_start_time(test, &expected);
     cut_test_get_start_time(test, &actual);
-    cut_assert_equal_time_val(&expected, &actual);
+    gcut_assert_equal_time_val(&expected, &actual);
 }
 
 /*

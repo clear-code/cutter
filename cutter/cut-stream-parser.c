@@ -44,6 +44,7 @@ typedef enum {
     IN_TEST_NAME,
     IN_TEST_DESCRIPTION,
     IN_TEST_OPTION,
+    IN_TEST_START_TIME,
     IN_TEST_ELAPSED,
 
     IN_TEST_DATA_NAME,
@@ -1222,6 +1223,8 @@ start_test_object (CutStreamParserPrivate *priv, GMarkupParseContext *context,
         PUSH_STATE(priv, IN_TEST_DESCRIPTION);
     } else if (g_str_equal("option", element_name)) {
         PUSH_STATE(priv, IN_TEST_OPTION);
+    } else if (g_str_equal("start-time", element_name)) {
+        PUSH_STATE(priv, IN_TEST_START_TIME);
     } else if (g_str_equal("elapsed", element_name)) {
         PUSH_STATE(priv, IN_TEST_ELAPSED);
     } else {
@@ -2110,6 +2113,29 @@ text_test_option_value (CutStreamParserPrivate *priv,
 }
 
 static void
+text_test_start_time (CutStreamParserPrivate *priv,
+                      GMarkupParseContext *context,
+                      const gchar *text, gsize text_len, GError **error)
+{
+    CutTest *target;
+
+    target = target_test_object(priv, PEEK_NTH_STATE(priv, 1));
+    if (target) {
+        GTimeVal start_time;
+
+        if (g_time_val_from_iso8601(text, &start_time)) {
+            cut_test_set_start_time(target, &start_time);
+        } else {
+            set_parse_error(context, error,
+                            "invalid start-time value (not ISO 8601 format): %s",
+                            text);
+        }
+    } else {
+        set_parse_error(context, error, "can't find test start time target");
+    }
+}
+
+static void
 text_test_elapsed (CutStreamParserPrivate *priv,
                    GMarkupParseContext *context,
                    const gchar *text, gsize text_len, GError **error)
@@ -2329,6 +2355,9 @@ text_handler (GMarkupParseContext *context,
         break;
       case IN_TEST_OPTION_VALUE:
         text_test_option_value(priv, context, text, text_len, error);
+        break;
+      case IN_TEST_START_TIME:
+        text_test_start_time(priv, context, text, text_len, error);
         break;
       case IN_TEST_ELAPSED:
         text_test_elapsed(priv, context, text, text_len, error);
