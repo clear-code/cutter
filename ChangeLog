@@ -1,5 +1,9 @@
 2008-07-29  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-context.c (cut_test_context_emit_signal): cleanup.
+
+	* cutter/cut-test.[ch] (cut_stop_timer): remove needless codes.
+
 	* test/: follow the below changes.
 
 	* cutter/cut-stream-parser.c: support start-time parsing.

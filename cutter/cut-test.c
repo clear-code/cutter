@@ -440,8 +440,8 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
         if (cut_test_context_have_data(test_context))
             test_data = cut_test_context_get_current_data(test_context);
         result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
-                                     test, test_iterator, test_case,
-                                     NULL, test_data,
+                                     test, test_iterator, test_case, 
+                                    NULL, test_data,
                                      NULL, NULL,
                                      NULL, NULL, 0);
         cut_test_result_set_elapsed(result, cut_test_get_elapsed(test));
@@ -553,17 +553,6 @@ GHashTable *
 cut_test_get_attributes (CutTest *test)
 {
     return CUT_TEST_GET_PRIVATE(test)->attributes;
-}
-
-void
-cut_test_stop_timer (CutTest *test)
-{
-    CutTestPrivate *priv;
-
-    priv = CUT_TEST_GET_PRIVATE(test);
-
-    if (priv->timer)
-        g_timer_stop(priv->timer);
 }
 
 gchar *

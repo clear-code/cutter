@@ -722,7 +722,6 @@ append_test_result_to_string (GString *string, CutTestResult *result,
     gchar *elapsed_string;
     const gchar *message;
 
-    elapsed_string = g_strdup_printf("%f", cut_test_result_get_elapsed(result));
     message = cut_test_result_get_message(result);
     status = cut_test_result_get_status(result);
 
@@ -733,6 +732,8 @@ append_test_result_to_string (GString *string, CutTestResult *result,
                                                 "detail", message);
     if (status != CUT_TEST_RESULT_SUCCESS)
         append_backtrace_to_string(string, result, indent);
+
+    elapsed_string = g_strdup_printf("%f", cut_test_result_get_elapsed(result));
     cut_utils_append_xml_element_with_value(string, indent, "elapsed",
                                             elapsed_string);
     g_free(elapsed_string);
