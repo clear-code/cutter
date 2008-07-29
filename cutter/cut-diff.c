@@ -27,6 +27,7 @@
 
 #include "cut-sequence-matcher.h"
 #include "cut-diff.h"
+#include "cut-utils.h"
 
 #define CUT_DIFFER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_DIFFER, CutDifferPrivate))
 
@@ -477,6 +478,51 @@ cut_diff_readable (const gchar *from, const gchar *to)
     result = cut_differ_diff(differ);
     g_object_unref(differ);
     return result;
+}
+
+gchar *
+cut_diff_folded_readable (const gchar *from, const gchar *to)
+{
+    gchar *folded_from, *folded_to;
+    gchar *folded_diff;
+
+    folded_from = cut_utils_fold(from);
+    folded_to = cut_utils_fold(to);
+    folded_diff = cut_diff_readable(folded_from, folded_to);
+    g_free(folded_from);
+    g_free(folded_to);
+
+    return folded_diff;
+}
+
+gboolean
+cut_diff_is_interested (const gchar *diff)
+{
+    if (!diff)
+        return FALSE;
+
+    if (!g_regex_match_simple("^[-+]", diff, G_REGEX_MULTILINE, 0))
+        return FALSE;
+
+    if (g_regex_match_simple("^[ ?]", diff, G_REGEX_MULTILINE, 0))
+        return TRUE;
+
+    if (g_regex_match_simple("(?:.*\n){2,}", diff, G_REGEX_MULTILINE, 0))
+        return TRUE;
+
+    return FALSE;
+}
+
+gboolean
+cut_diff_need_fold (const gchar *diff)
+{
+    if (!diff)
+        return FALSE;
+
+    if (g_regex_match_simple("^[-+].{79}", diff, G_REGEX_MULTILINE, 0))
+        return TRUE;
+
+    return FALSE;
 }
 
 /*

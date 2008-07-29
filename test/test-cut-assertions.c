@@ -8,16 +8,17 @@
 #endif
 #include <errno.h>
 
-#include "cutter.h"
-#include "cut-test.h"
-#include "cut-test-result.h"
-#include "cut-utils.h"
-#include "cut-test-runner.h"
+#include <cutter.h>
+#include <cutter/cut-test.h>
+#include <cutter/cut-test-result.h>
+#include <cutter/cut-utils.h>
+#include <cutter/cut-test-runner.h>
 #include "lib/cuttest-assertions.h"
 
 void test_equal_int(void);
 void test_equal_string(void);
 void test_equal_string_with_diff(void);
+void test_equal_string_with_folded_diff(void);
 void test_equal_double(void);
 void test_operator(void);
 void test_equal_string_array (void);
@@ -201,6 +202,129 @@ test_equal_string_with_diff (void)
                             "?     ^^^\n"
                             "+ abc DEF ghi jkl\n"
                             "?     ^^^",
+                            cut_test_result_get_system_message(test_result));
+}
+
+static void
+equal_string_with_folded_diff (void)
+{
+    cut_assert_equal_string("0123456789"
+                            "1123456789"
+                            "2123456789"
+                            "3123456789"
+                            "4123456789"
+                            "5123456789"
+                            "6123456789"
+                            "7123456789"
+                            "8123456789",
+
+                            "0000000000"
+                            "1123456789"
+                            "2123456789"
+                            "3123456789"
+                            "4123456789"
+                            "5123456789"
+                            "6123456789"
+                            "7123456789"
+                            "8123456789");
+}
+
+void
+test_equal_string_with_folded_diff (void)
+{
+    test = cut_test_new("assert-equal-string-with-folded-diff",
+                        equal_string_with_folded_diff);
+    g_signal_connect(test, "failure", G_CALLBACK(cb_collect_result),
+                     &test_result);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 0, 0, 0, 1, 0, 0, 0, 0);
+    cut_assert_equal_string("<"
+                            "\"0123456789\" "
+                            "\"1123456789\" "
+                            "\"2123456789\" "
+                            "\"3123456789\" "
+                            "\"4123456789\" "
+                            "\"5123456789\" "
+                            "\"6123456789\" "
+                            "\"7123456789\" "
+                            "\"8123456789\""
+                            " == "
+                            "\"0000000000\" "
+                            "\"1123456789\" "
+                            "\"2123456789\" "
+                            "\"3123456789\" "
+                            "\"4123456789\" "
+                            "\"5123456789\" "
+                            "\"6123456789\" "
+                            "\"7123456789\" "
+                            "\"8123456789\""
+                            ">\n"
+                            "expected: <"
+                            "0123456789"
+                            "1123456789"
+                            "2123456789"
+                            "3123456789"
+                            "4123456789"
+                            "5123456789"
+                            "6123456789"
+                            "7123456789"
+                            "8123456789"
+                            ">\n"
+                            " but was: <"
+                            "0000000000"
+                            "1123456789"
+                            "2123456789"
+                            "3123456789"
+                            "4123456789"
+                            "5123456789"
+                            "6123456789"
+                            "7123456789"
+                            "8123456789"
+                            ">\n"
+                            "\n"
+                            "diff:\n"
+                            "- 0123456789"
+                            "1123456789"
+                            "2123456789"
+                            "3123456789"
+                            "4123456789"
+                            "5123456789"
+                            "6123456789"
+                            "7123456789"
+                            "8123456789\n"
+                            "?  ^^^^^^^^^\n"
+                            "+ 0000000000"
+                            "1123456789"
+                            "2123456789"
+                            "3123456789"
+                            "4123456789"
+                            "5123456789"
+                            "6123456789"
+                            "7123456789"
+                            "8123456789\n"
+                            "?  ^^^^^^^^^\n"
+                            "\n"
+                            "folded diff:\n"
+                            "- 0123456789"
+                            "1123456789"
+                            "2123456789"
+                            "3123456789"
+                            "4123456789"
+                            "5123456789"
+                            "6123456789"
+                            "71234567\n"
+                            "?  ^^^^^^^^^\n"
+                            "+ 0000000000"
+                            "1123456789"
+                            "2123456789"
+                            "3123456789"
+                            "4123456789"
+                            "5123456789"
+                            "6123456789"
+                            "71234567\n"
+                            "?  ^^^^^^^^^\n"
+                            "  89"
+                            "8123456789",
                             cut_test_result_get_system_message(test_result));
 }
 

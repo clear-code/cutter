@@ -1,3 +1,9 @@
+2008-07-29  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-diff.[ch], cut-utils.c, cutter/cut-public.h,
+	test/test-cut-assertions.c, test/test-cut-diff.c,
+	test/test-cut-utils.c: support folded diff.
+
 2008-07-25  Kouhei Sutou  <kou@cozmixng.org>
 
 	* doc/tutorial/senna.rd.ja: don't make cutter-senna. use

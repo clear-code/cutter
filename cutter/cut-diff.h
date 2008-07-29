@@ -53,6 +53,10 @@ CutDiffer *cut_differ_readable_new     (const gchar *from,
                                         const gchar *to);
 gchar     *cut_differ_diff             (CutDiffer   *differ);
 
+
+gboolean   cut_diff_is_interested      (const gchar *diff);
+gboolean   cut_diff_need_fold          (const gchar *diff);
+
 G_END_DECLS
 
 #endif /* __CUT_DIFF_H__ */

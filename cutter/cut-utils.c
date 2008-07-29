@@ -31,7 +31,8 @@
 #include <errno.h>
 
 #include "cut-utils.h"
-#include "cut-public.h"
+#include "cut-utils.h"
+#include "cut-diff.h"
 #include "cut-main.h"
 #include "../gcutter/gcut-public.h"
 
@@ -164,24 +165,6 @@ cut_utils_inspect_g_error (GError *error)
     }
 
     return g_string_free(inspected, FALSE);
-}
-
-gboolean
-cut_utils_is_interested_diff (const gchar *diff)
-{
-    if (!diff)
-        return FALSE;
-
-    if (!g_regex_match_simple("^[-+]", diff, G_REGEX_MULTILINE, 0))
-        return FALSE;
-
-    if (g_regex_match_simple("^[ ?]", diff, G_REGEX_MULTILINE, 0))
-        return TRUE;
-
-    if (g_regex_match_simple("(?:.*\n){2,}", diff, G_REGEX_MULTILINE, 0))
-        return TRUE;
-
-    return FALSE;
 }
 
 gboolean
@@ -507,18 +490,57 @@ cut_utils_append_diff (const gchar *message, const gchar *from, const gchar *to)
     gchar *diff, *result;
 
     diff = cut_diff_readable(from, to);
-    if (cut_utils_is_interested_diff(diff)) {
+    if (cut_diff_is_interested(diff)) {
         result = g_strdup_printf("%s\n"
                                  "\n"
                                  "diff:\n"
                                  "%s",
                                  message, diff);
+        if (cut_diff_need_fold(diff)) {
+            gchar *folded_diff, *original_result;
+
+            original_result = result;
+            folded_diff = cut_diff_folded_readable(from, to);
+            result = g_strdup_printf("%s\n"
+                                     "\n"
+                                     "folded diff:\n"
+                                     "%s",
+                                     original_result, folded_diff);
+            g_free(original_result);
+            g_free(folded_diff);
+        }
     } else {
         result = g_strdup(message);
     }
     g_free(diff);
 
     return result;
+}
+
+gchar *
+cut_utils_fold (const gchar *string)
+{
+    GRegex *fold_re;
+    GArray *folded_lines;
+    gchar **lines, **line;
+    gchar *folded_string;
+
+    fold_re = g_regex_new("(.{78})", 0, 0, NULL);
+    folded_lines = g_array_new(TRUE, FALSE, sizeof(gchar *));
+
+    lines = g_regex_split_simple("\r?\n", string, 0, 0);
+    for (line = lines; *line; line++) {
+        gchar *folded_line;
+
+        folded_line = g_regex_replace(fold_re, *line, -1, 0, "\\1\n", 0, NULL);
+        g_array_append_val(folded_lines, folded_line);
+    }
+    g_strfreev(lines);
+
+    folded_string = g_strjoinv("\n", (gchar **)(folded_lines->data));
+    g_array_free(folded_lines, TRUE);
+
+    return folded_string;
 }
 
 

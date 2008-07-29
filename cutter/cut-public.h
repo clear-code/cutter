@@ -86,8 +86,6 @@ int   cut_utils_compare_string_array        (char **strings1,
 char *cut_utils_inspect_string_array        (char **strings);
 const char *cut_utils_inspect_string        (const char *string);
 
-int   cut_utils_is_interested_diff          (const char *diff);
-
 int   cut_utils_file_exist                  (const char *path);
 char *cut_utils_build_path                  (const char *path,
                                              ...) CUT_GNUC_NULL_TERMINATED;
@@ -95,6 +93,7 @@ void  cut_utils_remove_path_recursive_force (const char *path);
 
 int   cut_utils_regex_match                 (const char *pattern,
                                              const char *string);
+char *cut_utils_fold                        (const char *string);
 char *cut_utils_append_diff                 (const char *message,
                                              const char *from,
                                              const char *to);
@@ -144,7 +143,8 @@ void  cut_test_context_set_fixture_data_dir (CutTestContext *context,
 
 char       *cut_diff_readable               (const char     *from,
                                              const char     *to);
-
+char       *cut_diff_folded_readable        (const char     *from,
+                                             const char     *to);
 
 #ifdef __cplusplus
 }

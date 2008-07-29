@@ -4,9 +4,9 @@
 
 void test_compare_string_array (void);
 void test_inspect_string_array (void);
-void test_is_interested_diff (void);
 void test_strv_concat (void);
 void test_remove_path_recursive (void);
+void test_fold (void);
 
 static gchar *tmp_dir;
 
@@ -57,33 +57,6 @@ test_inspect_string_array (void)
 }
 
 void
-test_is_interested_diff (void)
-{
-    cut_assert_false(cut_utils_is_interested_diff(NULL));
-    cut_assert_false(cut_utils_is_interested_diff(""));
-    cut_assert_false(cut_utils_is_interested_diff(" a\n"
-                                                  " b\n"
-                                                  " c"));
-    cut_assert_false(cut_utils_is_interested_diff("- abc\n"
-                                                  "+ abc"));
-    cut_assert_true(cut_utils_is_interested_diff("- a\n"
-                                                 "+ b\n"
-                                                 "+ c"));
-    cut_assert_true(cut_utils_is_interested_diff("- abc\n"
-                                                 "+ abc\n"
-                                                 "  xyz"));
-    cut_assert_true(cut_utils_is_interested_diff("- abc def ghi xyz\n"
-                                                 "?     ^^^\n"
-                                                 "+ abc DEF ghi xyz\n"
-                                                 "?     ^^^"));
-    cut_assert_true(cut_utils_is_interested_diff("  a\n"
-                                                 "- abc def ghi xyz\n"
-                                                 "?     ^^^\n"
-                                                 "+ abc DEF ghi xyz\n"
-                                                 "?     ^^^"));
-}
-
-void
 test_strv_concat (void)
 {
     const gchar *strings[] = {"a", "b", "c", NULL};
@@ -125,6 +98,30 @@ test_remove_path_recursive (void)
     cut_assert_path_not_exist(sub_dir);
     cut_assert_path_not_exist(file);
     cut_assert_path_not_exist(tmp_dir);
+}
+
+void
+test_fold (void)
+{
+    cut_assert_equal_string_with_free("0123456789"
+                                      "1123456789"
+                                      "2123456789"
+                                      "3123456789"
+                                      "4123456789"
+                                      "5123456789"
+                                      "6123456789"
+                                      "71234567\n"
+                                      "89"
+                                      "8123456789",
+                                      cut_utils_fold("0123456789"
+                                                     "1123456789"
+                                                     "2123456789"
+                                                     "3123456789"
+                                                     "4123456789"
+                                                     "5123456789"
+                                                     "6123456789"
+                                                     "7123456789"
+                                                     "8123456789"));
 }
 
 /*

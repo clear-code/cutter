@@ -10,6 +10,9 @@ void test_replace_readable_diff(void);
 void test_difference_readable_diff(void);
 void test_complex_readable_diff(void);
 void test_empty_readable_diff(void);
+void test_folded_readable_diff(void);
+void test_is_interested (void);
+void test_need_fold (void);
 
 #define cut_assert_readable_diff(expected, from, to)    \
     cut_assert_equal_string_with_free(expected, cut_diff_readable(from, to))
@@ -158,6 +161,93 @@ void
 test_empty_readable_diff (void)
 {
     cut_assert_readable_diff("", "", "");
+}
+
+void
+test_is_interested (void)
+{
+    cut_assert_false(cut_diff_is_interested(NULL));
+    cut_assert_false(cut_diff_is_interested(""));
+    cut_assert_false(cut_diff_is_interested(" a\n"
+                                            " b\n"
+                                            " c"));
+    cut_assert_false(cut_diff_is_interested("- abc\n"
+                                            "+ abc"));
+    cut_assert_true(cut_diff_is_interested("- a\n"
+                                           "+ b\n"
+                                           "+ c"));
+    cut_assert_true(cut_diff_is_interested("- abc\n"
+                                           "+ abc\n"
+                                           "  xyz"));
+    cut_assert_true(cut_diff_is_interested("- abc def ghi xyz\n"
+                                           "?     ^^^\n"
+                                           "+ abc DEF ghi xyz\n"
+                                           "?     ^^^"));
+    cut_assert_true(cut_diff_is_interested("  a\n"
+                                           "- abc def ghi xyz\n"
+                                           "?     ^^^\n"
+                                           "+ abc DEF ghi xyz\n"
+                                           "?     ^^^"));
+}
+
+void
+test_need_fold (void)
+{
+    cut_assert_false(cut_diff_need_fold(NULL));
+    cut_assert_false(cut_diff_need_fold(""));
+    cut_assert_false(cut_diff_need_fold("0123456789"
+                                        "1123456789"
+                                        "2123456789"
+                                        "3123456789"
+                                        "4123456789"
+                                        "5123456789"
+                                        "6123456789"
+                                        "7123456789"));
+
+    cut_assert_false(cut_diff_need_fold("- 23456789"
+                                        "1123456789"
+                                        "2123456789"
+                                        "3123456789"
+                                        "4123456789"
+                                        "5123456789"
+                                        "6123456789"
+                                        "712345678"));
+    cut_assert_false(cut_diff_need_fold("+ 23456789"
+                                        "1123456789"
+                                        "2123456789"
+                                        "3123456789"
+                                        "4123456789"
+                                        "5123456789"
+                                        "6123456789"
+                                        "712345678"));
+
+    cut_assert_true(cut_diff_need_fold("- 23456789"
+                                       "1123456789"
+                                       "2123456789"
+                                       "3123456789"
+                                       "4123456789"
+                                       "5123456789"
+                                       "6123456789"
+                                       "7123456789"));
+    cut_assert_true(cut_diff_need_fold("+ 23456789"
+                                       "1123456789"
+                                       "2123456789"
+                                       "3123456789"
+                                       "4123456789"
+                                       "5123456789"
+                                       "6123456789"
+                                       "7123456789"));
+
+    cut_assert_true(cut_diff_need_fold("\n"
+                                       "+ 23456789"
+                                       "1123456789"
+                                       "2123456789"
+                                       "3123456789"
+                                       "4123456789"
+                                       "5123456789"
+                                       "6123456789"
+                                       "7123456789"
+                                       "\n"));
 }
 
 /*
