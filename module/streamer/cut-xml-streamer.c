@@ -413,6 +413,49 @@ cb_start_test_case (CutRunContext *run_context, CutTestCase *test_case,
 }
 
 static void
+cb_ready_test_iterator (CutRunContext *run_context,
+                        CutTestIterator *test_iterator,
+                        guint n_tests, CutXMLStreamer *streamer)
+{
+    GString *string;
+    gchar *str;
+
+    string = g_string_new(NULL);
+
+    g_string_append(string, "  <ready-test-iterator>\n");
+
+    cut_test_to_xml_string(CUT_TEST(test_iterator), string, 4);
+
+    str = g_strdup_printf("%d", n_tests);
+    cut_utils_append_xml_element_with_value(string, 4, "n-tests", str);
+    g_free(str);
+
+    g_string_append(string, "  </ready-test-iterator>\n");
+
+    stream(streamer, "%s", string->str);
+
+    g_string_free(string, TRUE);
+}
+
+static void
+cb_start_test_iterator (CutRunContext *run_context,
+                        CutTestIterator *test_iterator,
+                        CutXMLStreamer *streamer)
+{
+    GString *string;
+
+    string = g_string_new(NULL);
+
+    g_string_append(string, "  <start-test-iterator>\n");
+    cut_test_to_xml_string(CUT_TEST(test_iterator), string, 4);
+    g_string_append(string, "  </start-test-iterator>\n");
+
+    stream(streamer, "%s", string->str);
+
+    g_string_free(string, TRUE);
+}
+
+static void
 cb_start_test (CutRunContext *run_context, CutTest *test,
                CutTestContext *test_context, CutXMLStreamer *streamer)
 {
@@ -481,6 +524,44 @@ cb_complete_test (CutRunContext *run_context, CutTest *test,
     g_string_append(string, "  <complete-test>\n");
     cut_test_to_xml_string(test, string, 4);
     g_string_append(string, "  </complete-test>\n");
+
+    stream(streamer, "%s", string->str);
+
+    g_string_free(string, TRUE);
+}
+
+static void
+cb_test_iterator_result (CutRunContext  *run_context,
+                         CutTestIterator *test_iterator,
+                         CutTestResult  *result,
+                         CutXMLStreamer *streamer)
+{
+    GString *string;
+
+    string = g_string_new(NULL);
+
+    g_string_append(string, "  <test-iterator-result>\n");
+    cut_test_to_xml_string(CUT_TEST(test_iterator), string, 4);
+    cut_test_result_to_xml_string(result, string, 4);
+    g_string_append(string, "  </test-iterator-result>\n");
+
+    stream(streamer, "%s", string->str);
+
+    g_string_free(string, TRUE);
+}
+
+static void
+cb_complete_test_iterator (CutRunContext *run_context,
+                           CutTestIterator *test_iterator,
+                           CutXMLStreamer *streamer)
+{
+    GString *string;
+
+    string = g_string_new(NULL);
+
+    g_string_append(string, "  <complete-test-iterator>\n");
+    cut_test_to_xml_string(CUT_TEST(test_iterator), string, 4);
+    g_string_append(string, "  </complete-test-iterator>\n");
 
     stream(streamer, "%s", string->str);
 
@@ -580,11 +661,17 @@ connect_to_run_context (CutXMLStreamer *streamer, CutRunContext *run_context)
     g_signal_connect(run_context, #name "_test_case",                   \
                      G_CALLBACK(cb_test_case_result), streamer)
 
+#define CONNECT_TO_TEST_ITERATOR(name)                                  \
+    g_signal_connect(run_context, #name "_test_iterator",               \
+                     G_CALLBACK(cb_test_iterator_result), streamer)
+
     CONNECT(start_run);
     CONNECT(ready_test_suite);
     CONNECT(start_test_suite);
     CONNECT(ready_test_case);
     CONNECT(start_test_case);
+    CONNECT(ready_test_iterator);
+    CONNECT(start_test_iterator);
     CONNECT(start_test);
 
     CONNECT(pass_assertion);
@@ -596,6 +683,13 @@ connect_to_run_context (CutXMLStreamer *streamer, CutRunContext *run_context)
     CONNECT_TO_TEST(notification);
     CONNECT_TO_TEST(omission);
 
+    CONNECT_TO_TEST_ITERATOR(success);
+    CONNECT_TO_TEST_ITERATOR(failure);
+    CONNECT_TO_TEST_ITERATOR(error);
+    CONNECT_TO_TEST_ITERATOR(pending);
+    CONNECT_TO_TEST_ITERATOR(notification);
+    CONNECT_TO_TEST_ITERATOR(omission);
+
     CONNECT_TO_TEST_CASE(success);
     CONNECT_TO_TEST_CASE(failure);
     CONNECT_TO_TEST_CASE(error);
@@ -604,6 +698,7 @@ connect_to_run_context (CutXMLStreamer *streamer, CutRunContext *run_context)
     CONNECT_TO_TEST_CASE(omission);
 
     CONNECT(complete_test);
+    CONNECT(complete_test_iterator);
     CONNECT(complete_test_case);
     CONNECT(complete_test_suite);
     CONNECT(complete_run);
@@ -626,6 +721,8 @@ disconnect_from_run_context (CutXMLStreamer *streamer,
     DISCONNECT(start_test_suite);
     DISCONNECT(ready_test_case);
     DISCONNECT(start_test_case);
+    DISCONNECT(ready_test_iterator);
+    DISCONNECT(start_test_iterator);
     DISCONNECT(start_test);
 
     DISCONNECT(pass_assertion);
@@ -635,10 +732,15 @@ disconnect_from_run_context (CutXMLStreamer *streamer,
                                          streamer);
 
     g_signal_handlers_disconnect_by_func(run_context,
+                                         G_CALLBACK(cb_test_iterator_result),
+                                         streamer);
+
+    g_signal_handlers_disconnect_by_func(run_context,
                                          G_CALLBACK(cb_test_case_result),
                                          streamer);
 
     DISCONNECT(complete_test);
+    DISCONNECT(complete_test_iterator);
     DISCONNECT(complete_test_case);
     DISCONNECT(complete_test_suite);
     DISCONNECT(complete_run);
