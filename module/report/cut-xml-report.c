@@ -313,10 +313,12 @@ cb_test_signal (CutRunContext      *run_context,
                 CutTestResult  *result,
                 CutXMLReport   *report)
 {
-    gchar *string;
-    string = cut_test_result_to_xml(result);
-    output_to_file(report, string);
-    g_free(string);
+    GString *string;
+
+    string = g_string_new(NULL);
+    cut_test_result_to_xml_string(result, string, 2);
+    output_to_file(report, string->str);
+    g_string_free(string, TRUE);
 }
 
 static void

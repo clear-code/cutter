@@ -1,5 +1,7 @@
 2008-07-29  Kouhei Sutou  <kou@cozmixng.org>
 
+	* module/report/cut-xml-report.c (cb_test_signal): indent test result.
+
 	* cutter/cut-diff.[ch], cut-utils.c, cutter/cut-public.h,
 	test/test-cut-assertions.c, test/test-cut-diff.c,
 	test/test-cut-utils.c: support folded diff.
