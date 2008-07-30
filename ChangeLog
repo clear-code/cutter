@@ -1,5 +1,10 @@
 2008-07-30  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/lib/cuttest-utils.h: add ISO8601_PATTERN.
+
+	* test/test-cut-report-xml.c, test/test-cut-xml-stream.c: use
+	ISO8601_PATTERN.
+
 	* module/ui/cut-console-ui.c: use complete-run not
 	complete-test-suite to show summary.
 

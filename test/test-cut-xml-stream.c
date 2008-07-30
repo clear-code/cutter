@@ -111,7 +111,7 @@ normalize_xml (const gchar *xml)
                                      "<elapsed>0.000001</elapsed>");
     start_time_normalized_xml =
         replace("<start-time>"
-                   "20\\d{2}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z"
+                  "20\\d{2}-" ISO8601_PATTERN_WITHOUT_YEAR
                 "</start-time>",
                 elapsed_normalized_xml,
                 "<start-time>2008-07-30T04:55:42Z</start-time>");
