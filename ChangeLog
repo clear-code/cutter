@@ -1,3 +1,13 @@
+2008-07-31  Kouhei Sutou  <kou@cozmixng.org>
+
+	* TODO:
+	- update.
+	- add:
+	  - stress test. (N processes and N threads)
+	  - elapsed time assert.
+          - test history chart.
+          - coordinattion with TestLink.
+
 2008-07-30  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-run-context.[ch] (cut_run_context_get_total_elapsed): add.

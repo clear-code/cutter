@@ -1,6 +1,14 @@
 * priority mode.
-* streamer modules.
-  * basically done.
 * auto-cutter.
-* cut_fixtures_set_base_path().
-* cut_fixtures_get_XX().
+* gompertz curve.
+* stress test. (N processes and N threads)
+  * main test - cut_fork() -> sub test1 (multi thread mode)
+          |   -    ...     -> ...
+          |   - cut_fork() -> sub testN (multi thread mode)
+          +-> assert the above resutls
+* elapsed time assert. (compare with past elapsed time?)
+* test history chart.
+  * N tests
+  * N failures
+  * elapsed time
+* coordinattion with TestLink.
