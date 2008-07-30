@@ -46,6 +46,7 @@ char **environ = NULL;
 #include "cut-main.h"
 
 #include "cut-listener.h"
+#include "cut-analyzer.h"
 #include "cut-test-runner.h"
 #include "cut-test-suite.h"
 #include "cut-ui.h"
@@ -54,8 +55,15 @@ char **environ = NULL;
 #include "cut-utils.h"
 #include "../gcutter/gcut-value-equal.h"
 
+typedef enum {
+    MODE_TEST,
+    MODE_ANALYZE
+} RunMode;
+
 static gboolean initialized = FALSE;
+static RunMode mode = MODE_TEST;
 static gchar *test_directory = NULL;
+static gchar *log_directory = NULL;
 static gchar *source_directory = NULL;
 static gchar **test_case_names = NULL;
 static gchar **test_names = NULL;
@@ -74,6 +82,25 @@ print_version (const gchar *option_name, const gchar *value,
 {
     g_print("%s\n", VERSION);
     exit(EXIT_SUCCESS);
+    return TRUE;
+}
+
+static gboolean
+parse_mode (const gchar *option_name, const gchar *value,
+               gpointer data, GError **error)
+{
+    if (g_utf8_collate(value, "test") == 0) {
+        mode = MODE_TEST;
+    } else if (g_utf8_collate(value, "analyze") == 0) {
+        mode = MODE_ANALYZE;
+    } else {
+        g_set_error(error,
+                    G_OPTION_ERROR,
+                    G_OPTION_ERROR_BAD_VALUE,
+                    _("Invalid run mode: %s"), value);
+        return FALSE;
+    }
+
     return TRUE;
 }
 
@@ -102,6 +129,8 @@ static const GOptionEntry option_entries[] =
 {
     {"version", 0, G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_CALLBACK, print_version,
      N_("Show version"), NULL},
+    {"mode", 0, 0, G_OPTION_ARG_CALLBACK, parse_mode,
+     N_("Set run mode (default: test)"), "[test|analyze]"},
     {"source-directory", 's', 0, G_OPTION_ARG_STRING, &source_directory,
      N_("Set directory of source code"), "DIRECTORY"},
     {"name", 'n', 0, G_OPTION_ARG_STRING_ARRAY, &test_names,
@@ -213,7 +242,10 @@ cut_init (int *argc, char ***argv)
         exit(EXIT_FAILURE);
     }
 
-    test_directory = (*argv)[1];
+    if (mode == MODE_ANALYZE)
+        log_directory = (*argv)[1];
+    else
+        test_directory = (*argv)[1];
 
 #ifdef HAVE_LIBBFD
     bfd_init();
@@ -255,9 +287,13 @@ cut_create_run_context (void)
 {
     CutRunContext *run_context;
 
-    run_context = cut_test_runner_new();
+    if (mode == MODE_ANALYZE)
+        run_context = cut_analyzer_new();
+    else
+        run_context = cut_test_runner_new();
 
     cut_run_context_set_test_directory(run_context, test_directory);
+    cut_run_context_set_log_directory(run_context, log_directory);
     if (source_directory)
         cut_run_context_set_source_directory(run_context, source_directory);
     cut_run_context_set_multi_thread(run_context, use_multi_thread);
@@ -341,7 +377,11 @@ cut_start_run_context (CutRunContext *run_context)
     listeners = create_listeners();
     add_listeners(run_context, listeners);
 
-    ui = get_cut_ui(listeners);
+    if (mode == MODE_ANALYZE)
+        ui = NULL;
+    else
+        ui = get_cut_ui(listeners);
+
     if (ui)
         success = cut_ui_run(ui, run_context);
     else

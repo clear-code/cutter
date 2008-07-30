@@ -1,5 +1,11 @@
 2008-07-30  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cutter.c: follow the below changes.
+
+	* cutter/cut-main.c:
+	- use CutAnalyzer.
+	- add --mode option.
+
 	* cutter/Makefile.am: add cut-analyzer.[ch].
 
 	* cutter/cut-analyzer.[ch]: add.

@@ -76,6 +76,7 @@ setup (void)
         "" LINE_FEED_CODE
         "Application Options:" LINE_FEED_CODE
         "  --version                                       Show version" LINE_FEED_CODE
+        "  --mode=[test|analyze]                           Set run mode (default: test)" LINE_FEED_CODE
         "  -s, --source-directory=DIRECTORY                Set directory of source code" LINE_FEED_CODE
         "  -n, --name=TEST_NAME                            Specify tests" LINE_FEED_CODE
         "  -t, --test-case=TEST_CASE_NAME                  Specify test cases" LINE_FEED_CODE
@@ -234,6 +235,7 @@ test_help_all (void)
 #endif
         "Application Options:" LINE_FEED_CODE
         "  --version                                       Show version" LINE_FEED_CODE
+        "  --mode=[test|analyze]                           Set run mode (default: test)" LINE_FEED_CODE
         "  -s, --source-directory=DIRECTORY                Set directory of source code" LINE_FEED_CODE
         "  -n, --name=TEST_NAME                            Specify tests" LINE_FEED_CODE
         "  -t, --test-case=TEST_CASE_NAME                  Specify test cases" LINE_FEED_CODE
