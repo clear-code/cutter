@@ -720,6 +720,7 @@ print_summary (CutConsoleUI *console, CutRunContext *run_context,
 {
     guint n_tests, n_assertions, n_successes, n_failures, n_errors;
     guint n_pendings, n_notifications, n_omissions;
+    gdouble pass_percentage;
     const gchar *color;
 
     n_tests = cut_run_context_get_n_tests(run_context);
@@ -757,9 +758,13 @@ print_summary (CutConsoleUI *console, CutRunContext *run_context,
                      n_tests, n_assertions, n_failures, n_errors,
                      n_pendings, n_omissions, n_notifications);
     g_print("\n");
-    print_with_color(console, color,
-                     "%g%% passed",
-                     100.0 * ((gdouble)n_successes / (gdouble)n_tests));
+
+    if (n_tests == 0) {
+        pass_percentage = 0;
+    } else {
+        pass_percentage = 100.0 * ((gdouble)n_successes / (gdouble)n_tests);
+    }
+    print_with_color(console, color, "%g%% passed", pass_percentage);
     g_print("\n");
 }
 
