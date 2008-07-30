@@ -60,6 +60,7 @@ struct _CutRunContextPrivate
     gchar **exclude_files;
     gchar **exclude_directories;
     gchar *source_directory;
+    gchar *log_directory;
     gchar **target_test_case_names;
     gchar **target_test_names;
     gboolean canceled;
@@ -85,6 +86,7 @@ enum
     PROP_TEST_CASE_ORDER,
     PROP_TEST_DIRECTORY,
     PROP_SOURCE_DIRECTORY,
+    PROP_LOG_DIRECTORY,
     PROP_TARGET_TEST_CASE_NAMES,
     PROP_TARGET_TEST_NAMES,
     PROP_EXCLUDE_FILES,
@@ -343,6 +345,13 @@ cut_run_context_class_init (CutRunContextClass *klass)
                                NULL,
                                G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_SOURCE_DIRECTORY, spec);
+
+    spec = g_param_spec_string("log-directory",
+                               "Log directory",
+                               "The directory name in which log files are stored",
+                               NULL,
+                               G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_LOG_DIRECTORY, spec);
 
     spec = g_param_spec_pointer("target-test-case-names",
                                 "Test case names",
@@ -741,6 +750,7 @@ cut_run_context_init (CutRunContext *context)
     priv->backtrace = NULL;
     priv->test_directory = NULL;
     priv->source_directory = NULL;
+    priv->log_directory = NULL;
     priv->exclude_files = NULL;
     priv->exclude_directories = NULL;
     priv->target_test_case_names = NULL;
@@ -794,6 +804,9 @@ dispose (GObject *object)
 
     g_free(priv->source_directory);
     priv->source_directory = NULL;
+
+    g_free(priv->log_directory);
+    priv->log_directory = NULL;
 
     g_free(priv->test_directory);
     priv->test_directory = NULL;
@@ -864,6 +877,9 @@ set_property (GObject      *object,
       case PROP_SOURCE_DIRECTORY:
         priv->source_directory = g_value_dup_string(value);
         break;
+      case PROP_LOG_DIRECTORY:
+        priv->log_directory = g_value_dup_string(value);
+        break;
       case PROP_TARGET_TEST_CASE_NAMES:
         priv->target_test_case_names = g_strdupv(g_value_get_pointer(value));
         break;
@@ -932,6 +948,9 @@ get_property (GObject    *object,
         break;
       case PROP_SOURCE_DIRECTORY:
         g_value_set_string(value, priv->source_directory);
+        break;
+      case PROP_LOG_DIRECTORY:
+        g_value_set_string(value, priv->log_directory);
         break;
       case PROP_TARGET_TEST_CASE_NAMES:
         g_value_set_pointer(value, priv->target_test_case_names);
@@ -1165,6 +1184,22 @@ const gchar *
 cut_run_context_get_source_directory (CutRunContext *context)
 {
     return CUT_RUN_CONTEXT_GET_PRIVATE(context)->source_directory;
+}
+
+void
+cut_run_context_set_log_directory (CutRunContext *context,
+                                   const gchar *directory)
+{
+    CutRunContextPrivate *priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
+
+    g_free(priv->log_directory);
+    priv->log_directory = g_strdup(directory);
+}
+
+const gchar *
+cut_run_context_get_log_directory (CutRunContext *context)
+{
+    return CUT_RUN_CONTEXT_GET_PRIVATE(context)->log_directory;
 }
 
 void

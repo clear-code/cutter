@@ -1,5 +1,8 @@
 2008-07-30  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-run-context.[ch] (cut_run_context_get_log_directory)
+	(cut_run_context_set_log_directory): add.
+
 	* test/test-cutter.c, test/run-test.sh: follow the below changes.
 
 	* cutter/cut-main.c, cutter/cut-stream-factory-builder.c: dir ->

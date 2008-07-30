@@ -194,6 +194,9 @@ const gchar   *cut_run_context_get_test_directory   (CutRunContext *context);
 void           cut_run_context_set_source_directory (CutRunContext *context,
                                                      const gchar   *directory);
 const gchar   *cut_run_context_get_source_directory (CutRunContext *context);
+void           cut_run_context_set_log_directory    (CutRunContext *context,
+                                                     const gchar   *directory);
+const gchar   *cut_run_context_get_log_directory    (CutRunContext *context);
 
 void           cut_run_context_set_multi_thread     (CutRunContext *context,
                                                      gboolean       use_multi_thread);
