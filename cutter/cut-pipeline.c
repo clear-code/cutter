@@ -67,12 +67,6 @@ struct _CutPipelinePrivate
     gboolean eof;
 };
 
-enum
-{
-    PROP_0,
-    PROP_TARGET_DIRECTORY
-};
-
 static CutRunnerIface *parent_runner_iface;
 
 static void runner_init (CutRunnerIface *iface);
@@ -369,7 +363,7 @@ create_command_line_args (CutPipeline *pipeline)
         guint i;
         guint length = g_strv_length((gchar **)original_argv);
 
-        /* remove the last argumen in which test directory is stored */
+        /* remove the last argument in which test directory is stored */
         copy = g_new(gchar *, length);
         for (i = 0; i < length - 1; i++) {
             copy[i] = g_strdup(original_argv[i]);
