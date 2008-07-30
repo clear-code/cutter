@@ -94,6 +94,8 @@ typedef enum {
 
     IN_COMPLETE_TEST,
 
+    IN_TEST_ITERATOR_RESULT,
+
     IN_TEST_CASE_RESULT,
 
     IN_COMPLETE_TEST_ITERATOR,
@@ -175,6 +177,13 @@ struct _CompleteTest
     CutTestContext *test_context;
 };
 
+typedef struct _TestIteratorResult TestIteratorResult;
+struct _TestIteratorResult
+{
+    CutTestIterator *test_iterator;
+    CutTestResult *result;
+};
+
 typedef struct _TestCaseResult TestCaseResult;
 struct _TestCaseResult
 {
@@ -206,6 +215,7 @@ struct _CutStreamParserPrivate
     TestResult *test_result;
     CompleteIteratedTest *complete_iterated_test;
     CompleteTest *complete_test;
+    TestIteratorResult *test_iterator_result;
     TestCaseResult *test_case_result;
 
     CutTestResult *result;
@@ -393,6 +403,7 @@ cut_stream_parser_init (CutStreamParser *stream_parser)
     priv->complete_iterated_test = NULL;
     priv->complete_test = NULL;
     priv->test_result = NULL;
+    priv->test_iterator_result = NULL;
     priv->test_case_result = NULL;
     priv->crashed_backtrace = NULL;
 
@@ -540,6 +551,22 @@ complete_test_free (CompleteTest *complete_test)
     if (complete_test->test_context)
         g_object_unref(complete_test->test_context);
     g_slice_free(CompleteTest, complete_test);
+}
+
+static TestIteratorResult *
+test_iterator_result_new (void)
+{
+    return g_slice_new0(TestIteratorResult);
+}
+
+static void
+test_iterator_result_free (TestIteratorResult *test_iterator_result)
+{
+    if (test_iterator_result->test_iterator)
+        g_object_unref(test_iterator_result->test_iterator);
+    if (test_iterator_result->result)
+        g_object_unref(test_iterator_result->result);
+    g_slice_free(TestIteratorResult, test_iterator_result);
 }
 
 static TestCaseResult *
@@ -880,6 +907,9 @@ start_stream (CutStreamParserPrivate *priv,
     } else if (g_str_equal("complete-test", element_name)) {
         PUSH_STATE(priv, IN_COMPLETE_TEST);
         priv->complete_test = complete_test_new();
+    } else if (g_str_equal("test-iterator-result", element_name)) {
+        PUSH_STATE(priv, IN_TEST_ITERATOR_RESULT);
+        priv->test_iterator_result = test_iterator_result_new();
     } else if (g_str_equal("complete-test-iterator", element_name)) {
         PUSH_STATE(priv, IN_COMPLETE_TEST_ITERATOR);
     } else if (g_str_equal("test-case-result", element_name)) {
@@ -1169,6 +1199,25 @@ start_complete_test (CutStreamParserPrivate *priv, GMarkupParseContext *context,
 }
 
 static void
+start_test_iterator_result (CutStreamParserPrivate *priv,
+                        GMarkupParseContext *context,
+                        const gchar *element_name, GError **error)
+{
+    if (g_str_equal("test-iterator", element_name)) {
+        PUSH_STATE(priv, IN_TEST_ITERATOR);
+        priv->test_iterator_result->test_iterator =
+            cut_test_iterator_new_empty();
+        PUSH_TEST_ITERATOR(priv, priv->test_iterator_result->test_iterator);
+    } else if (g_str_equal("result", element_name)) {
+        PUSH_STATE(priv, IN_RESULT);
+        priv->test_iterator_result->result = cut_test_result_new_empty();
+        priv->result = g_object_ref(priv->test_iterator_result->result);
+    } else {
+        invalid_element(context, error);
+    }
+}
+
+static void
 start_complete_test_iterator (CutStreamParserPrivate *priv,
                               GMarkupParseContext *context,
                               const gchar *element_name, GError **error)
@@ -1193,7 +1242,7 @@ start_test_case_result (CutStreamParserPrivate *priv,
     } else if (g_str_equal("result", element_name)) {
         PUSH_STATE(priv, IN_RESULT);
         priv->test_case_result->result = cut_test_result_new_empty();
-        priv->result = priv->test_case_result->result;
+        priv->result = g_object_ref(priv->test_case_result->result);
     } else {
         invalid_element(context, error);
     }
@@ -1431,6 +1480,9 @@ start_element_handler (GMarkupParseContext *context,
         break;
       case IN_COMPLETE_TEST:
         start_complete_test(priv, context, element_name, error);
+        break;
+      case IN_TEST_ITERATOR_RESULT:
+        start_test_iterator_result(priv, context, element_name, error);
         break;
       case IN_COMPLETE_TEST_ITERATOR:
         start_complete_test_iterator(priv, context, element_name, error);
@@ -1820,6 +1872,38 @@ end_complete_test (CutStreamParser *parser, CutStreamParserPrivate *priv,
 }
 
 static void
+end_test_iterator_result (CutStreamParser *parser, CutStreamParserPrivate *priv,
+                          GMarkupParseContext *context,
+                          const gchar *element_name, GError **error)
+{
+    if (!priv->test_iterator_result)
+        return;
+
+    if (priv->run_context) {
+        CutTestResult *result;
+        CutTestResultStatus status;
+        const gchar *signal_name;
+        gchar *full_signal_name;
+
+        result = priv->test_iterator_result->result;
+        status = cut_test_result_get_status(result);
+        signal_name = cut_test_result_status_to_signal_name(status);
+        full_signal_name = g_strdup_printf("%s-test-iterator", signal_name);
+        g_signal_emit_by_name(priv->run_context, full_signal_name,
+                              priv->test_iterator_result->test_iterator,
+                              priv->test_iterator_result->result);
+        g_free(full_signal_name);
+    }
+
+    if (priv->test_iterator_result->test_iterator)
+        DROP_TEST_ITERATOR(priv);
+    test_iterator_result_free(priv->test_iterator_result);
+    priv->test_iterator_result = NULL;
+    g_object_unref(priv->result);
+    priv->result = NULL;
+}
+
+static void
 end_complete_test_iterator (CutStreamParser *parser,
                             CutStreamParserPrivate *priv,
                             GMarkupParseContext *context,
@@ -1865,6 +1949,7 @@ end_test_case_result (CutStreamParser *parser, CutStreamParserPrivate *priv,
         DROP_TEST_CASE(priv);
     test_case_result_free(priv->test_case_result);
     priv->test_case_result = NULL;
+    g_object_unref(priv->result);
     priv->result = NULL;
 }
 
@@ -1984,6 +2069,9 @@ end_element_handler (GMarkupParseContext *context,
         break;
       case IN_COMPLETE_TEST:
         end_complete_test(parser, priv, context, element_name, error);
+        break;
+      case IN_TEST_ITERATOR_RESULT:
+        end_test_iterator_result(parser, priv, context, element_name, error);
         break;
       case IN_COMPLETE_TEST_ITERATOR:
         end_complete_test_iterator(parser, priv, context, element_name, error);

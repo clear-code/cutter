@@ -11,8 +11,10 @@ void test_start_test_iterator (void);
 void test_start_test (void);
 void test_start_test_with_multiple_option_names (void);
 void test_start_iterated_test (void);
-void test_error_result (void);
-void test_result_of_iterated_test (void);
+void test_result_error (void);
+void test_result_iterated_test (void);
+void test_result_test_iterator (void);
+void test_result_test_case (void);
 void test_pass_assertion_test (void);
 void test_pass_assertion_iterated_test (void);
 void test_complete_iterated_test (void);
@@ -1233,7 +1235,7 @@ test_start_iterated_test (void)
 }
 
 void
-test_error_result (void)
+test_result_error (void)
 {
     GTimeVal expected_start_time, actual_start_time;
     CutTest *test;
@@ -1326,7 +1328,7 @@ test_error_result (void)
 }
 
 void
-test_result_of_iterated_test (void)
+test_result_iterated_test (void)
 {
     GTimeVal expected_start_time, actual_start_time;
     CutTest *test;
@@ -1403,6 +1405,111 @@ test_result_of_iterated_test (void)
     cut_test_result_get_start_time(result, &actual_start_time);
     gcut_assert_equal_time_val(&expected_start_time, &actual_start_time);
     cut_assert_equal_double(0.028, 0.001, cut_test_result_get_elapsed(result));
+}
+
+void
+test_result_test_iterator (void)
+{
+    GTimeVal expected_start_time, actual_start_time;
+    CutTestIterator *test_iterator;
+    const gchar xml[] =
+        "<stream>\n"
+        "  <test-iterator-result>\n"
+        "    <test-iterator>\n"
+        "      <name>test_count</name>\n"
+        "      <start-time>2008-07-29T23:22:29Z</start-time>\n"
+        "      <elapsed>0.152822</elapsed>\n"
+        "    </test-iterator>\n"
+        "    <result>\n"
+        "      <test-case>\n"
+        "        <name>test_cut_pipeline</name>\n"
+        "        <start-time>2008-07-29T23:22:29Z</start-time>\n"
+        "        <elapsed>0.152822</elapsed>\n"
+        "      </test-case>\n"
+        "      <test-iterator>\n"
+        "        <name>test_count</name>\n"
+        "        <start-time>2008-07-29T23:22:29Z</start-time>\n"
+        "        <elapsed>0.152822</elapsed>\n"
+        "      </test-iterator>\n"
+        "      <status>success</status>\n"
+        "      <start-time>2008-07-29T23:22:29Z</start-time>\n"
+        "      <elapsed>0.152822</elapsed>\n"
+        "    </result>\n"
+        "  </test-iterator-result>\n"
+        "</stream>\n";
+
+    g_signal_connect(parser, "result",
+                     G_CALLBACK(collect_result), (gpointer)&result);
+
+    cut_assert_parse(xml);
+    cut_assert_not_null(result);
+
+    test_iterator = cut_test_result_get_test_iterator(result);
+    cut_assert_not_null(test_iterator);
+
+    cut_assert_equal_string("test_count",
+                            cut_test_get_name(CUT_TEST(test_iterator)));
+    cut_assert_equal_string("test_count",
+                            cut_test_result_get_test_iterator_name(result));
+    cut_assert_equal_string("test_cut_pipeline",
+                            cut_test_result_get_test_case_name(result));
+    cut_assert_equal_int(CUT_TEST_RESULT_SUCCESS,
+                         cut_test_result_get_status(result));
+
+    expected_start_time.tv_sec = 1217373749;
+    expected_start_time.tv_usec = 0;
+    cut_test_result_get_start_time(result, &actual_start_time);
+    gcut_assert_equal_time_val(&expected_start_time, &actual_start_time);
+    cut_assert_equal_double(0.15, 0.01, cut_test_result_get_elapsed(result));
+}
+
+void
+test_result_test_case (void)
+{
+    GTimeVal expected_start_time, actual_start_time;
+    CutTestCase *test_case;
+    const gchar xml[] =
+        "<stream>\n"
+        "  <test-case-result>\n"
+        "    <test-case>\n"
+        "      <name>test_cut_test_iterator</name>\n"
+        "      <start-time>2008-07-29T23:22:28Z</start-time>\n"
+        "      <elapsed>0.010663</elapsed>\n"
+        "    </test-case>\n"
+        "    <result>\n"
+        "      <test-case>\n"
+        "        <name>test_cut_test_iterator</name>\n"
+        "        <start-time>2008-07-29T23:22:28Z</start-time>\n"
+        "        <elapsed>0.010663</elapsed>\n"
+        "      </test-case>\n"
+        "      <status>success</status>\n"
+        "      <start-time>2008-07-29T23:22:28Z</start-time>\n"
+        "      <elapsed>0.010663</elapsed>\n"
+        "    </result>\n"
+        "  </test-case-result>\n"
+        "</stream>\n";
+
+    g_signal_connect(parser, "result",
+                     G_CALLBACK(collect_result), (gpointer)&result);
+
+    cut_assert_parse(xml);
+    cut_assert_not_null(result);
+
+    test_case = cut_test_result_get_test_case(result);
+    cut_assert_not_null(test_case);
+
+    cut_assert_equal_string("test_cut_test_iterator",
+                            cut_test_get_name(CUT_TEST(test_case)));
+    cut_assert_equal_string("test_cut_test_iterator",
+                            cut_test_result_get_test_case_name(result));
+    cut_assert_equal_int(CUT_TEST_RESULT_SUCCESS,
+                         cut_test_result_get_status(result));
+
+    expected_start_time.tv_sec = 1217373748;
+    expected_start_time.tv_usec = 0;
+    cut_test_result_get_start_time(result, &actual_start_time);
+    gcut_assert_equal_time_val(&expected_start_time, &actual_start_time);
+    cut_assert_equal_double(0.01, 0.001, cut_test_result_get_elapsed(result));
 }
 
 void
