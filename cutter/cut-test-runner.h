@@ -47,7 +47,7 @@ struct _CutTestRunnerClass
 
 GType          cut_test_runner_get_type  (void) G_GNUC_CONST;
 
-CutRunContext  *cut_test_runner_new       (void);
+CutRunContext  *cut_test_runner_new      (void);
 
 G_END_DECLS
 
