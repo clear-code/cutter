@@ -344,6 +344,7 @@ test_start_time (void)
     g_get_current_time(&expected);
     g_signal_emit_by_name(test, "start", NULL);
     cut_test_get_start_time(test, &actual);
+    expected.tv_usec = actual.tv_usec; /* don't compare usec */
     gcut_assert_equal_time_val(&expected, &actual);
 
     expected.tv_sec = 100000;
