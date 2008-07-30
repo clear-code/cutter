@@ -1,5 +1,8 @@
 2008-07-30  Kouhei Sutou  <kou@cozmixng.org>
 
+	* module/ui/cut-console-ui.c: use complete-run not
+	complete-test-suite to show summary.
+
 	* module/stream/cut-xml-stream.c: stream start-iterated-test and
 	complete-iterated-test.
 

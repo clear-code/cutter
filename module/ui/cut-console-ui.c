@@ -615,6 +615,14 @@ cb_complete_test_case (CutRunContext *run_context, CutTestCase *test_case,
         return;
 }
 
+static void
+cb_complete_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
+                        CutConsoleUI *console)
+{
+    if (console->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
+        return;
+}
+
 typedef struct _ConsoleAndStatus {
     CutConsoleUI *console;
     CutTestResultStatus status;
@@ -756,8 +764,8 @@ print_summary (CutConsoleUI *console, CutRunContext *run_context,
 }
 
 static void
-cb_complete_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
-                        CutConsoleUI *console)
+cb_complete_run (CutRunContext *run_context, gboolean success,
+                 CutConsoleUI *console)
 {
     gboolean crashed;
     CutVerboseLevel verbose_level;
@@ -783,8 +791,7 @@ cb_complete_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
     print_results(console, run_context);
 
     g_print("\n");
-    g_print("Finished in %f seconds",
-            cut_test_get_elapsed(CUT_TEST(test_suite)));
+    g_print("Finished in %f seconds", cut_run_context_get_elapsed(run_context));
     g_print("\n\n");
 
     print_summary(console, run_context, crashed);
@@ -832,6 +839,7 @@ connect_to_run_context (CutConsoleUI *console, CutRunContext *run_context)
     CONNECT(complete_test_iterator);
     CONNECT(complete_test_case);
     CONNECT(complete_test_suite);
+    CONNECT(complete_run);
 
     CONNECT(error);
     CONNECT(crashed);
@@ -865,6 +873,7 @@ disconnect_from_run_context (CutConsoleUI *console, CutRunContext *run_context)
     DISCONNECT(complete_test_iterator);
     DISCONNECT(complete_test_case);
     DISCONNECT(complete_test_suite);
+    DISCONNECT(complete_run);
 
     DISCONNECT(error);
     DISCONNECT(crashed);
