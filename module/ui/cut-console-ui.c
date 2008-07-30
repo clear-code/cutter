@@ -827,8 +827,8 @@ connect_to_run_context (CutConsoleUI *console, CutRunContext *run_context)
     CONNECT(failure_test);
     CONNECT(error_test);
 
-    CONNECT(complete_iterated_test);
     CONNECT(complete_test);
+    CONNECT(complete_iterated_test);
     CONNECT(complete_test_iterator);
     CONNECT(complete_test_case);
     CONNECT(complete_test_suite);
