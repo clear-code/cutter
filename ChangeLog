@@ -1,3 +1,7 @@
+2008-07-30  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-main.c: just show analyze mode. not implemented yet.
+
 2008-07-29  Kouhei Sutou  <kou@cozmixng.org>
 
 	* module/stream/cut-xml-stream-factory.c: output to both FD and file.

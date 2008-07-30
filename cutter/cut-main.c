@@ -26,6 +26,15 @@
 #include <glib.h>
 #include <glib/gi18n-lib.h>
 
+#ifdef ENABLE_NLS
+#  if !GLIB_CHECK_VERSION(2, 18, 0)
+#    define g_dgettext(domain, string) dgettext(domain, string)
+#  endif
+#  define G_(string) g_dgettext("glib20", string)
+#else
+#  define G_(string) (string)
+#endif
+
 #ifdef HAVE_BFD_H
 #  include <bfd.h>
 #endif
@@ -117,6 +126,7 @@ cut_init (int *argc, char ***argv)
     GOptionContext *option_context;
     GOptionGroup *main_group;
     GError *error = NULL;
+    gchar *program_name, *parameter_string;
 
     if (initialized)
         return;
@@ -149,7 +159,14 @@ cut_init (int *argc, char ***argv)
 
     gcut_value_equal_init();
 
-    option_context = g_option_context_new("TEST_DIRECTORY");
+    program_name = g_path_get_basename((*argv)[0]);
+    parameter_string =
+        g_strdup_printf(N_("TEST_DIRECTORY\n"
+                           "  %s --mode=analyze %s LOG_DIRECTORY"),
+                        program_name, G_("[OPTION...]"));
+    option_context = g_option_context_new(parameter_string);
+    g_free(program_name);
+    g_free(parameter_string);
     g_option_context_set_help_enabled(option_context, FALSE);
     g_option_context_set_ignore_unknown_options(option_context, TRUE);
 
