@@ -1,9 +1,10 @@
 #!/bin/sh
 
 export BASE_DIR="`dirname $0`"
+top_dir="$BASE_DIR/.."
 
 if test x"$NO_MAKE" != x"yes"; then
-    make -C $BASE_DIR/../ > /dev/null || exit 1
+    make -C $top_dir/ > /dev/null || exit 1
 fi
 
 if test -z "$CUTTER"; then
@@ -15,14 +16,15 @@ if test x"$CUTTER_DEBUG" = x"yes"; then
 fi
 
 export CUTTER
-export CUT_UI_MODULE_DIR=$BASE_DIR/../module/ui/.libs
-export CUT_UI_FACTORY_MODULE_DIR=$BASE_DIR/../module/ui/.libs
-export CUT_REPORT_MODULE_DIR=$BASE_DIR/../module/report/.libs
-export CUT_REPORT_FACTORY_MODULE_DIR=$BASE_DIR/../module/report/.libs
-export CUT_STREAM_MODULE_DIR=$BASE_DIR/../module/stream/.libs
-export CUT_STREAM_FACTORY_MODULE_DIR=$BASE_DIR/../module/stream/.libs
+export CUT_UI_MODULE_DIR=$top_dir/module/ui/.libs
+export CUT_UI_FACTORY_MODULE_DIR=$top_dir/module/ui/.libs
+export CUT_REPORT_MODULE_DIR=$top_dir/module/report/.libs
+export CUT_REPORT_FACTORY_MODULE_DIR=$top_dir/module/report/.libs
+export CUT_STREAM_MODULE_DIR=$top_dir/module/stream/.libs
+export CUT_STREAM_FACTORY_MODULE_DIR=$top_dir/module/stream/.libs
 
 CUTTER_ARGS="-s $BASE_DIR --exclude-dir=fixtures"
+CUTTER_ARGS="$CUTTER_ARGS --stream=xml --stream-log-dir $top_dir/log"
 if test x"$USE_GTK" = x"yes"; then
     CUTTER_ARGS="-u gtk $CUTTER_ARGS"
 fi
