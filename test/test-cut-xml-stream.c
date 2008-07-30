@@ -2,19 +2,21 @@
 #include <cutter/cut-test-runner.h>
 #include <cutter/cut-listener.h>
 #include <cutter/cut-stream.h>
+#include "lib/cuttest-utils.h"
 
 #include <stdlib.h>
 #ifdef HAVE_UNISTD_H
 #  include <unistd.h>
 #endif
 
-void test_ready_test_suite (void);
-void test_ready_test_case (void);
-void test_stream_success (void);
+void data_stream (void);
+void test_stream (gconstpointer data);
 
 static CutStream *stream;
 static CutRunContext *run_context;
 static CutTest *test;
+static CutIteratedTest *iterated_test;
+static CutTestIterator *test_iterator;
 static CutTestCase *test_case;
 static CutTestSuite *test_suite;
 static CutTestContext *test_context;
@@ -26,12 +28,28 @@ stub_success_test (void)
 {
 }
 
+static void
+stub_iterated_data (void)
+{
+    cut_add_data("first data", NULL, NULL,
+                 "second data", NULL, NULL);
+}
+
+static void
+stub_iterated_test (gconstpointer data)
+{
+}
+
 void
 setup (void)
 {
     gchar *test_names[] = {"/.*/", NULL};
 
+    cut_set_fixture_data_dir(cuttest_get_base_dir(), "fixtures", "xml-stream");
+
     test = NULL;
+    iterated_test = NULL;
+    test_iterator = NULL;
     test_context = NULL;
     stream = NULL;
     xml = NULL;
@@ -53,6 +71,10 @@ teardown (void)
 {
     if (test)
         g_object_unref(test);
+    if (iterated_test)
+        g_object_unref(iterated_test);
+    if (test_iterator)
+        g_object_unref(test_iterator);
     if (test_context)
         g_object_unref(test_context);
     if (stream)
@@ -66,11 +88,37 @@ teardown (void)
         g_string_free(xml, TRUE);
 }
 
-static void
-cb_test_signal (CutTest *test, CutTestContext *context, CutTestResult *result,
-                gpointer data)
+static gchar *
+replace (const gchar *pattern, const gchar *string, const gchar *replacement)
 {
-    g_object_set(G_OBJECT(result), "elapsed", 0.0001, NULL);
+    gchar *result;
+    GRegex *regex;
+
+    regex = g_regex_new(pattern, 0, 0, NULL);
+    result = g_regex_replace(regex, string, -1, 0, replacement, 0, NULL);
+    g_regex_unref(regex);
+    return result;
+}
+
+static const gchar *
+normalize_xml (const gchar *xml)
+{
+    gchar *elapsed_normalized_xml, *start_time_normalized_xml;
+    const gchar *normalized_xml;
+
+    elapsed_normalized_xml = replace("<elapsed>(.*?)</elapsed>",
+                                     xml,
+                                     "<elapsed>0.000001</elapsed>");
+    start_time_normalized_xml =
+        replace("<start-time>"
+                   "20\\d{2}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z"
+                "</start-time>",
+                elapsed_normalized_xml,
+                "<start-time>2008-07-30T04:55:42Z</start-time>");
+    g_free(elapsed_normalized_xml);
+    normalized_xml = cut_take_string(start_time_normalized_xml);
+
+    return normalized_xml;
 }
 
 static gboolean
@@ -82,7 +130,7 @@ run (void)
     test_context = cut_test_context_new(NULL, test_case, NULL, test);
     original_test_context = get_current_test_context();
     set_current_test_context(test_context);
-    success = cut_test_run(test, test_context, run_context);
+    success = cut_test_suite_run(test_suite, run_context);
     set_current_test_context(original_test_context);
 
     g_object_unref(test_context);
@@ -100,129 +148,79 @@ stream_to_string (const gchar *message, GError **error, gpointer user_data)
     return TRUE;
 }
 
-void
-test_ready_test_suite (void)
+typedef void (*TestSetupFunction) (void);
+
+typedef struct _StreamTestData
 {
-    gchar expected[] =
-        "  <ready-test-suite>\n"
-        "    <test-suite>\n"
-        "      <start-time>1970-01-01T00:00:00Z</start-time>\n"
-        "      <elapsed>.*?</elapsed>\n"
-        "    </test-suite>\n"
-        "    <n-test-cases>1</n-test-cases>\n"
-        "    <n-tests>1</n-tests>\n"
-        "  </ready-test-suite>\n";
+    gchar *data_file_name;
+    TestSetupFunction test_setup;
+} StreamTestData;
 
-    xml = g_string_new(NULL);
+static StreamTestData *
+stream_test_data_new (const gchar *data_file_name, TestSetupFunction test_setup)
+{
+    StreamTestData *data;
 
-    stream = cut_stream_new("xml",
-                            "stream-function", stream_to_string,
-                            "stream-function-user-data", xml,
-                            NULL);
+    data = g_new(StreamTestData, 1);
+    data->data_file_name = g_strdup(data_file_name);
+    data->test_setup = test_setup;
+
+    return data;
+}
+
+static void
+stream_test_data_free (StreamTestData *data)
+{
+    g_free(data->data_file_name);
+    g_free(data);
+}
+
+static void
+setup_success_test (void)
+{
     test = cut_test_new("stub-success-test", stub_success_test);
     cut_test_case_add_test(test_case, test);
-    cut_listener_attach_to_run_context(CUT_LISTENER(stream), run_context);
-    cut_assert(cut_test_suite_run(test_suite, run_context));
-    cut_listener_detach_from_run_context(CUT_LISTENER(stream), run_context);
+}
 
-    cut_assert_match(expected, xml->str);
+static void
+setup_iterated_test (void)
+{
+    test_iterator = cut_test_iterator_new("stub-iterated-test",
+                                          stub_iterated_test,
+                                          stub_iterated_data);
+    cut_test_case_add_test(test_case, CUT_TEST(test_iterator));
 }
 
 void
-test_ready_test_case (void)
+data_stream (void)
 {
-    gchar expected[] =
-        "  <ready-test-case>\n"
-        "    <test-case>\n"
-        "      <name>stub test case</name>\n"
-        "      <start-time>1970-01-01T00:00:00Z</start-time>\n"
-        "      <elapsed>.*?</elapsed>\n"
-        "    </test-case>\n"
-        "    <n-tests>1</n-tests>\n"
-        "  </ready-test-case>\n";
-
-    xml = g_string_new(NULL);
-
-    stream = cut_stream_new("xml",
-                            "stream-function", stream_to_string,
-                            "stream-function-user-data", xml,
-                            NULL);
-    test = cut_test_new("stub-success-test", stub_success_test);
-    cut_test_case_add_test(test_case, test);
-    cut_listener_attach_to_run_context(CUT_LISTENER(stream), run_context);
-    cut_assert(cut_test_suite_run(test_suite, run_context));
-    cut_listener_detach_from_run_context(CUT_LISTENER(stream), run_context);
-
-    cut_assert_match(expected, xml->str);
+    cut_add_data("test",
+                 stream_test_data_new("test.xml", setup_success_test),
+                 stream_test_data_free,
+                 "iterated test",
+                 stream_test_data_new("iterated-test.xml", setup_iterated_test),
+                 stream_test_data_free);
 }
 
 void
-test_stream_success (void)
+test_stream (gconstpointer data)
 {
-    gchar expected[] =
-        "  <test-result>\n"
-        "    <test>\n"
-        "      <name>stub-success-test</name>\n"
-        "      <start-time>"
-                 "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z"
-              "</start-time>\n"
-        "      <elapsed>.*?</elapsed>\n"
-        "    </test>\n"
-        "    <test-context>\n"
-        "      <test-case>\n"
-        "        <name>stub test case</name>\n"
-        "        <start-time>1970-01-01T00:00:00Z</start-time>\n"
-        "        <elapsed>.*?</elapsed>\n"
-        "      </test-case>\n"
-        "      <test>\n"
-        "        <name>stub-success-test</name>\n"
-        "        <start-time>"
-                   "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z"
-                "</start-time>\n"
-        "        <elapsed>.*?</elapsed>\n"
-        "      </test>\n"
-        "      <failed>FALSE</failed>\n"
-        "    </test-context>\n"
-        "    <result>\n"
-        "      <test-case>\n"
-        "        <name>stub test case</name>\n"
-        "        <start-time>1970-01-01T00:00:00Z</start-time>\n"
-        "        <elapsed>.*?</elapsed>\n"
-        "      </test-case>\n"
-        "      <test>\n"
-        "        <name>stub-success-test</name>\n"
-        "        <start-time>"
-                   "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z"
-                "</start-time>\n"
-        "        <elapsed>.*?</elapsed>\n"
-        "      </test>\n"
-        "      <status>success</status>\n"
-        "      <start-time>"
-                "\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z"
-              "</start-time>\n"
-        "      <elapsed>.*?</elapsed>\n"
-        "    </result>\n"
-        "  </test-result>\n";
+    const StreamTestData *test_data = data;
+    const gchar *expected;
+
+    test_data->test_setup();
 
     xml = g_string_new(NULL);
-
     stream = cut_stream_new("xml",
                             "stream-function", stream_to_string,
                             "stream-function-user-data", xml,
                             NULL);
-
-    test = cut_test_new("stub-success-test", stub_success_test);
-    g_signal_connect_after(test, "success",
-                           G_CALLBACK(cb_test_signal), NULL);
-    cut_test_case_add_test(test_case, test);
     cut_listener_attach_to_run_context(CUT_LISTENER(stream), run_context);
-    cut_assert_true(run());
-    g_signal_handlers_disconnect_by_func(test,
-                                         G_CALLBACK(cb_test_signal),
-                                         NULL);
+    cut_assert(run());
     cut_listener_detach_from_run_context(CUT_LISTENER(stream), run_context);
 
-    cut_assert_match(expected, xml->str);
+    expected = cut_get_fixture_data_string(test_data->data_file_name);
+    cut_assert_equal_string(expected, normalize_xml(xml->str));
 }
 
 /*

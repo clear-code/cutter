@@ -1,5 +1,13 @@
 2008-07-30  Kouhei Sutou  <kou@cozmixng.org>
 
+	* module/stream/cut-xml-stream.c: stream start-iterated-test and
+	complete-iterated-test.
+
+	* test/fixtures/xml-stream: add expected data for
+	test/test-cut-xml-stream.c.
+
+	* test/test-cut-xml-stream.c: use data driven test style.
+
 	* html/: add a index page in Japanese.
 
 	* cutter/cut-test-iterator.c, cutter/cut-test-case.c: cleanup.

@@ -4,4 +4,5 @@ SUBDIRS =		\
 	factory		\
 	loader		\
 	pipeline	\
-	repository
+	repository	\
+	xml-stream

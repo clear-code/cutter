@@ -490,6 +490,7 @@ AC_CONFIG_FILES([Makefile
 		 test/fixtures/pipeline/pending/Makefile
 		 test/fixtures/pipeline/success/Makefile
 		 test/fixtures/repository/Makefile
+		 test/fixtures/xml-stream/Makefile
                  test/lib/Makefile
 		 po/Makefile.in
 		 misc/Makefile

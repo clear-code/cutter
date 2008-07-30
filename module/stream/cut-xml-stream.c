@@ -456,6 +456,26 @@ cb_start_test_iterator (CutRunContext *run_context,
 }
 
 static void
+cb_start_iterated_test (CutRunContext *run_context,
+                        CutIteratedTest *iterated_test,
+                        CutTestContext *test_context,
+                        CutXMLStream *stream)
+{
+    GString *string;
+
+    string = g_string_new(NULL);
+
+    g_string_append(string, "  <start-iterated-test>\n");
+    cut_test_to_xml_string(CUT_TEST(iterated_test), string, 4);
+    cut_test_context_to_xml_string(test_context, string, 4);
+    g_string_append(string, "  </start-iterated-test>\n");
+
+    flow(stream, "%s", string->str);
+
+    g_string_free(string, TRUE);
+}
+
+static void
 cb_start_test (CutRunContext *run_context, CutTest *test,
                CutTestContext *test_context, CutXMLStream *stream)
 {
@@ -523,7 +543,29 @@ cb_complete_test (CutRunContext *run_context, CutTest *test,
 
     g_string_append(string, "  <complete-test>\n");
     cut_test_to_xml_string(test, string, 4);
+    if (test_context)
+        cut_test_context_to_xml_string(test_context, string, 4);
     g_string_append(string, "  </complete-test>\n");
+
+    flow(stream, "%s", string->str);
+
+    g_string_free(string, TRUE);
+}
+
+static void
+cb_complete_iterated_test (CutRunContext *run_context,
+                           CutIteratedTest *iterated_test,
+                           CutTestContext *test_context,
+                           CutXMLStream *stream)
+{
+    GString *string;
+
+    string = g_string_new(NULL);
+
+    g_string_append(string, "  <complete-iterated-test>\n");
+    cut_test_to_xml_string(CUT_TEST(iterated_test), string, 4);
+    cut_test_context_to_xml_string(test_context, string, 4);
+    g_string_append(string, "  </complete-iterated-test>\n");
 
     flow(stream, "%s", string->str);
 
@@ -533,7 +575,7 @@ cb_complete_test (CutRunContext *run_context, CutTest *test,
 static void
 cb_test_iterator_result (CutRunContext  *run_context,
                          CutTestIterator *test_iterator,
-                         CutTestResult  *result,
+                         CutTestResult *result,
                          CutXMLStream *stream)
 {
     GString *string;
@@ -672,6 +714,7 @@ connect_to_run_context (CutXMLStream *stream, CutRunContext *run_context)
     CONNECT(start_test_case);
     CONNECT(ready_test_iterator);
     CONNECT(start_test_iterator);
+    CONNECT(start_iterated_test);
     CONNECT(start_test);
 
     CONNECT(pass_assertion);
@@ -698,6 +741,7 @@ connect_to_run_context (CutXMLStream *stream, CutRunContext *run_context)
     CONNECT_TO_TEST_CASE(omission);
 
     CONNECT(complete_test);
+    CONNECT(complete_iterated_test);
     CONNECT(complete_test_iterator);
     CONNECT(complete_test_case);
     CONNECT(complete_test_suite);
@@ -723,6 +767,7 @@ disconnect_from_run_context (CutXMLStream *stream,
     DISCONNECT(start_test_case);
     DISCONNECT(ready_test_iterator);
     DISCONNECT(start_test_iterator);
+    DISCONNECT(start_iterated_test);
     DISCONNECT(start_test);
 
     DISCONNECT(pass_assertion);
@@ -740,6 +785,7 @@ disconnect_from_run_context (CutXMLStream *stream,
                                          stream);
 
     DISCONNECT(complete_test);
+    DISCONNECT(complete_iterated_test);
     DISCONNECT(complete_test_iterator);
     DISCONNECT(complete_test_case);
     DISCONNECT(complete_test_suite);
