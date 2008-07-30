@@ -64,6 +64,7 @@ setup (void)
     help_message = cut_take_printf(
         "Usage:" LINE_FEED_CODE
         "  %s [OPTION...] TEST_DIRECTORY" LINE_FEED_CODE
+        "  %s --mode=analyze [OPTION...] LOG_DIRECTORY" LINE_FEED_CODE
         "" LINE_FEED_CODE
         "Help Options:" LINE_FEED_CODE
         "  -?, --help                                      Show help options" LINE_FEED_CODE
@@ -83,6 +84,7 @@ setup (void)
         "  --exclude-file=FILE_NAME                        Skip files" LINE_FEED_CODE
         "  --exclude-dir=DIRECTORY_NAME                    Skip directories" LINE_FEED_CODE
         "" LINE_FEED_CODE,
+        g_get_prgname(),
         g_get_prgname());
 }
 
@@ -171,6 +173,7 @@ test_help_all (void)
     help_all_message = cut_take_printf(
         "Usage:" LINE_FEED_CODE
         "  %s [OPTION...] TEST_DIRECTORY" LINE_FEED_CODE
+        "  %s --mode=analyze [OPTION...] LOG_DIRECTORY" LINE_FEED_CODE
         "" LINE_FEED_CODE
         "Help Options:" LINE_FEED_CODE
         "  -?, --help                                      Show help options" LINE_FEED_CODE
@@ -242,6 +245,7 @@ test_help_all (void)
         "  --display=DISPLAY                               X display to use" LINE_FEED_CODE
 #endif
         "" LINE_FEED_CODE,
+        g_get_prgname(),
         g_get_prgname());
 
     cut_assert(run_cutter("--help-all"));

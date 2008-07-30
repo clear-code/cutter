@@ -1,5 +1,7 @@
 2008-07-30  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cutter.c: follow the below changes.
+
 	* test/run-test.sh: log test result.
 
 	* cutter/cut-main.c: just show analyze mode. not implemented yet.
