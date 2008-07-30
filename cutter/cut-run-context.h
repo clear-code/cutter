@@ -240,6 +240,7 @@ guint          cut_run_context_get_n_notifications  (CutRunContext *context);
 guint          cut_run_context_get_n_omissions      (CutRunContext *context);
 
 gdouble        cut_run_context_get_elapsed          (CutRunContext *context);
+gdouble        cut_run_context_get_total_elapsed    (CutRunContext *context);
 
 const GList   *cut_run_context_get_results          (CutRunContext *context);
 

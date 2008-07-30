@@ -49,6 +49,7 @@ struct _CutRunContextPrivate
     guint n_notifications;
     guint n_omissions;
     gdouble elapsed;
+    GTimer *timer;
     GList *results;
     GList *reversed_results;
     gboolean use_multi_thread;
@@ -163,6 +164,7 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 
+static void start_run      (CutRunContext   *context);
 static void start_iterated_test
                            (CutRunContext   *context,
                             CutIteratedTest *iterated_test,
@@ -205,6 +207,8 @@ static void complete_iterated_test
                            (CutRunContext   *context,
                             CutIteratedTest *iterated_test,
                             CutTestContext  *test_context);
+static void complete_run   (CutRunContext   *context,
+                            gboolean         success);
 static void crashed        (CutRunContext   *context,
                             const gchar     *backtrace);
 
@@ -235,6 +239,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
 
+    klass->start_run         = start_run;
     klass->start_iterated_test = start_iterated_test;
     klass->start_test        = start_test;
     klass->pass_assertion    = pass_assertion;
@@ -246,6 +251,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     klass->omission_test     = omission_test;
     klass->complete_test     = complete_test;
     klass->complete_iterated_test = complete_iterated_test;
+    klass->complete_run      = complete_run;
     klass->crashed           = crashed;
 
     klass->prepare_test_suite = prepare_test_suite;
@@ -741,6 +747,7 @@ cut_run_context_init (CutRunContext *context)
     priv->n_notifications = 0;
     priv->n_omissions = 0;
     priv->elapsed = 0.0;
+    priv->timer = NULL;
     priv->results = NULL;
     priv->reversed_results = NULL;
     priv->use_multi_thread = FALSE;
@@ -771,6 +778,11 @@ static void
 dispose (GObject *object)
 {
     CutRunContextPrivate *priv = CUT_RUN_CONTEXT_GET_PRIVATE(object);
+
+    if (priv->timer) {
+        g_timer_destroy(priv->timer);
+        priv->timer = NULL;
+    }
 
     if (priv->results) {
         g_list_foreach(priv->results, (GFunc)g_object_unref, NULL);
@@ -990,6 +1002,19 @@ runner_run (CutRunner *runner)
 }
 
 static void
+start_run (CutRunContext *context)
+{
+    CutRunContextPrivate *priv;
+
+    priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
+    g_mutex_lock(priv->mutex);
+    if (priv->timer)
+        g_timer_destroy(priv->timer);
+    priv->timer = g_timer_new();
+    g_mutex_unlock(priv->mutex);
+}
+
+static void
 start_test (CutRunContext   *context,
             CutTest         *test,
             CutTestContext  *test_context)
@@ -1140,6 +1165,18 @@ complete_test (CutRunContext   *context,
     priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
     g_mutex_lock(priv->mutex);
     priv->elapsed += cut_test_get_elapsed(test);
+    g_mutex_unlock(priv->mutex);
+}
+
+static void
+complete_run (CutRunContext *context, gboolean success)
+{
+    CutRunContextPrivate *priv;
+
+    priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
+    g_mutex_lock(priv->mutex);
+    if (priv->timer)
+        g_timer_stop(priv->timer);
     g_mutex_unlock(priv->mutex);
 }
 
@@ -1422,6 +1459,18 @@ cut_run_context_get_n_omissions (CutRunContext *context)
 
 gdouble
 cut_run_context_get_elapsed (CutRunContext *context)
+{
+    CutRunContextPrivate *priv;
+
+    priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
+    if (priv->timer)
+        return g_timer_elapsed(priv->timer, NULL);
+    else
+        return 0.0;
+}
+
+gdouble
+cut_run_context_get_total_elapsed (CutRunContext *context)
 {
     return CUT_RUN_CONTEXT_GET_PRIVATE(context)->elapsed;
 }

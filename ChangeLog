@@ -1,5 +1,11 @@
 2008-07-30  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-run-context.[ch] (cut_run_context_get_total_elapsed): add.
+
+	* module/ui/cut-console-ui.c (cb_complete_run): show pure elapsed
+	time and total elapsed time that is sum of elapsed time of all
+	tests.
+
 	* test/test-cut-test.c (test_start_time): don't compare usec.
 
 	* test/run-test.sh (CUTTER_ARGS): don't log on analyze mode.
