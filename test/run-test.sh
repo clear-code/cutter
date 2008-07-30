@@ -24,7 +24,11 @@ export CUT_STREAM_MODULE_DIR=$top_dir/module/stream/.libs
 export CUT_STREAM_FACTORY_MODULE_DIR=$top_dir/module/stream/.libs
 
 CUTTER_ARGS="-s $BASE_DIR --exclude-directory fixtures"
-CUTTER_ARGS="$CUTTER_ARGS --stream=xml --stream-log-directory $top_dir/log"
+if echo "$@" | grep -- --mode=analyze > /dev/null; then
+    :
+else
+    CUTTER_ARGS="$CUTTER_ARGS --stream=xml --stream-log-directory $top_dir/log"
+fi
 if test x"$USE_GTK" = x"yes"; then
     CUTTER_ARGS="-u gtk $CUTTER_ARGS"
 fi

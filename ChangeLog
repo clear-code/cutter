@@ -1,5 +1,7 @@
 2008-07-30  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/run-test.sh (CUTTER_ARGS): don't log on analyze mode.
+
 	* cutter/cut-analyzer.c (run_async): ensure emit complete-run signal.
 
 	* module/ui/cut-console-ui.c (print_summary): check n_tests == 0 case.
