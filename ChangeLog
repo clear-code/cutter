@@ -1,5 +1,9 @@
 2008-07-30  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/Makefile.am: add cut-analyzer.[ch].
+
+	* cutter/cut-analyzer.[ch]: add.
+
 	* cutter/cut-run-context.[ch] (cut_run_context_get_log_directory)
 	(cut_run_context_set_log_directory): add.
 
