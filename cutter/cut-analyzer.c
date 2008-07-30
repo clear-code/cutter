@@ -227,20 +227,22 @@ run_async (CutAnalyzer *analyzer)
         g_io_channel_unref(channel);
         dispose_parser(priv);
     }
-    g_list_foreach(names, (GFunc)g_free, NULL);
-    g_list_free(names);
+
+    if (names) {
+        g_list_foreach(names, (GFunc)g_free, NULL);
+        g_list_free(names);
+    } else {
+        emit_complete_signal(analyzer, TRUE);
+    }
 }
 
 static void
 runner_run_async (CutRunner *runner)
 {
     CutAnalyzer *analyzer;
-    CutAnalyzerPrivate *priv;
 
     analyzer = CUT_ANALYZER(runner);
     run_async(analyzer);
-
-    priv = CUT_ANALYZER_GET_PRIVATE(analyzer);
 }
 
 /*
