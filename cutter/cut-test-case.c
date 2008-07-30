@@ -344,6 +344,31 @@ cut_test_case_run_teardown (CutTestCase *test_case, CutTestContext *test_context
 }
 
 static gboolean
+run_test (CutTestCase *test_case, CutTest *test,
+          CutTestContext *test_context, CutRunContext *run_context)
+{
+    gboolean success = TRUE;
+
+    if (!CUT_IS_TEST_CONTAINER(test)) {
+        g_signal_emit_by_name(test_case, "start-test", test, test_context);
+        cut_test_case_run_setup(test_case, test_context);
+    }
+
+    if (cut_test_context_is_failed(test_context)) {
+        success = FALSE;
+    } else {
+        success = cut_test_run(test, test_context, run_context);
+    }
+
+    if (!CUT_IS_TEST_CONTAINER(test)) {
+        cut_test_case_run_teardown(test_case, test_context);
+        g_signal_emit_by_name(test_case, "complete-test", test, test_context);
+    }
+
+    return success;
+}
+
+static gboolean
 run (CutTestCase *test_case, CutTest *test, CutRunContext *run_context)
 {
     CutTestCasePrivate *priv;
@@ -368,24 +393,9 @@ run (CutTestCase *test_case, CutTest *test, CutRunContext *run_context)
     original_test_context = cut_test_case_get_current_test_context(test_case);
     cut_test_case_set_current_test_context(test_case, test_context);
 
-
-    if (!CUT_IS_TEST_CONTAINER(test)) {
-        g_signal_emit_by_name(test_case, "start-test", test, test_context);
-        cut_test_case_run_setup(test_case, test_context);
-    }
-
-    if (cut_test_context_is_failed(test_context)) {
-        success = FALSE;
-    } else {
-        cut_test_context_set_test(test_context, test);
-        success = cut_test_run(test, test_context, run_context);
-        cut_test_context_set_test(test_context, NULL);
-    }
-
-    if (!CUT_IS_TEST_CONTAINER(test)) {
-        cut_test_case_run_teardown(test_case, test_context);
-        g_signal_emit_by_name(test_case, "complete-test", test, test_context);
-    }
+    cut_test_context_set_test(test_context, test);
+    success = run_test(test_case, test, test_context, run_context);
+    cut_test_context_set_test(test_context, NULL);
 
     cut_test_case_set_current_test_context(test_case, original_test_context);
     g_object_unref(test_context);

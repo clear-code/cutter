@@ -228,6 +228,31 @@ cut_test_iterator_add_test (CutTestIterator *test_iterator,
 }
 
 static gboolean
+run_test_real (CutTestCase *test_case,
+               CutTestIterator *test_iterator, CutIteratedTest *test,
+               CutTestContext *test_context, CutRunContext *run_context)
+{
+    gboolean success = TRUE;
+
+    g_signal_emit_by_name(test_iterator, "start-test", test, test_context);
+
+    cut_test_case_run_setup(test_case, test_context);
+    if (cut_test_context_is_failed(test_context)) {
+        success = FALSE;
+    } else {
+        success = cut_test_run(CUT_TEST(test), test_context, run_context);
+    }
+    cut_test_case_run_teardown(test_case, test_context);
+
+    cut_test_context_set_failed(test_context,
+                                cut_test_context_is_failed(test_context));
+
+    g_signal_emit_by_name(test_iterator, "complete-test", test, test_context);
+
+    return success;
+}
+
+static gboolean
 run_test (CutTestIterator *test_iterator, CutIteratedTest *test,
           CutTestContext *test_context, CutRunContext *run_context)
 {
@@ -251,26 +276,12 @@ run_test (CutTestIterator *test_iterator, CutIteratedTest *test,
     original_test_context = cut_test_case_get_current_test_context(test_case);
     cut_test_case_set_current_test_context(test_case, local_test_context);
 
-    g_signal_emit_by_name(test_iterator, "start-test", test,
-                          local_test_context);
-
-    cut_test_case_run_setup(test_case, local_test_context);
-    if (cut_test_context_is_failed(local_test_context)) {
-        success = FALSE;
-    } else {
-        cut_test_context_set_test(test_context, CUT_TEST(test));
-        cut_test_context_set_test(local_test_context, CUT_TEST(test));
-        success = cut_test_run(CUT_TEST(test), local_test_context, run_context);
-        cut_test_context_set_test(local_test_context, NULL);
-        cut_test_context_set_test(test_context, NULL);
-    }
-    cut_test_case_run_teardown(test_case, local_test_context);
-
-    cut_test_context_set_failed(test_context,
-                                cut_test_context_is_failed(local_test_context));
-
-    g_signal_emit_by_name(test_iterator, "complete-test", test,
-                          local_test_context);
+    cut_test_context_set_test(test_context, CUT_TEST(test));
+    cut_test_context_set_test(local_test_context, CUT_TEST(test));
+    success = run_test_real(test_case, test_iterator, test,
+                            local_test_context, run_context);
+    cut_test_context_set_test(local_test_context, NULL);
+    cut_test_context_set_test(test_context, NULL);
 
     cut_test_case_set_current_test_context(test_case, original_test_context);
     g_object_unref(local_test_context);

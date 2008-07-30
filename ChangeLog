@@ -1,5 +1,7 @@
 2008-07-30  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-iterator.c, cutter/cut-test-case.c: cleanup.
+
 	* cutter/cut-stream-parser.c, test/test-cut-stream-parser.c:
 	support test-iterator-result parsing.
 
