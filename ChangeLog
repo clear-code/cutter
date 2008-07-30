@@ -1,5 +1,10 @@
 2008-07-30  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-stream-parser.c, test/test-cut-stream-parser.c:
+	support iterated-test and test-iterator parsing.
+
+	* test/test-cut-stream-parser.c (test_result_of_iterated_test): 
+
 	* test/test-cutter.c: follow the below changes.
 
 	* cutter/cut-main.c:

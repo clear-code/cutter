@@ -12,7 +12,9 @@ void test_start_test (void);
 void test_start_test_with_multiple_option_names (void);
 void test_start_iterated_test (void);
 void test_error_result (void);
-void test_pass_assertion (void);
+void test_result_of_iterated_test (void);
+void test_pass_assertion_test (void);
+void test_pass_assertion_iterated_test (void);
 void test_complete_iterated_test (void);
 void test_complete_test (void);
 void test_complete_test_iterator (void);
@@ -1324,7 +1326,87 @@ test_error_result (void)
 }
 
 void
-test_pass_assertion (void)
+test_result_of_iterated_test (void)
+{
+    GTimeVal expected_start_time, actual_start_time;
+    CutTest *test;
+    const gchar xml[] =
+        "<stream>\n"
+        "  <test-result>\n"
+        "    <iterated-test>\n"
+        "      <name>test_count</name>\n"
+        "      <start-time>2008-07-29T23:22:29Z</start-time>\n"
+        "      <elapsed>0.028738</elapsed>\n"
+        "    </iterated-test>\n"
+        "    <test-context>\n"
+        "      <test-case>\n"
+        "        <name>test_cut_pipeline</name>\n"
+        "        <start-time>2008-07-29T23:22:29Z</start-time>\n"
+        "        <elapsed>0.028738</elapsed>\n"
+        "      </test-case>\n"
+        "      <test-iterator>\n"
+        "        <name>test_count</name>\n"
+        "        <start-time>2008-07-29T23:22:29Z</start-time>\n"
+        "        <elapsed>0.028738</elapsed>\n"
+        "      </test-iterator>\n"
+        "      <iterated-test>\n"
+        "        <name>test_count</name>\n"
+        "        <start-time>2008-07-29T23:22:29Z</start-time>\n"
+        "        <elapsed>0.028738</elapsed>\n"
+        "      </iterated-test>\n"
+        "      <test-data>\n"
+        "        <name>success</name>\n"
+        "      </test-data>\n"
+        "      <failed>FALSE</failed>\n"
+        "    </test-context>\n"
+        "    <result>\n"
+        "      <test-case>\n"
+        "        <name>test_cut_pipeline</name>\n"
+        "        <start-time>2008-07-29T23:22:29Z</start-time>\n"
+        "        <elapsed>0.028738</elapsed>\n"
+        "      </test-case>\n"
+        "      <test-iterator>\n"
+        "        <name>test_count</name>\n"
+        "        <start-time>2008-07-29T23:22:29Z</start-time>\n"
+        "        <elapsed>0.028738</elapsed>\n"
+        "      </test-iterator>\n"
+        "      <iterated-test>\n"
+        "        <name>test_count</name>\n"
+        "        <start-time>2008-07-29T23:22:29Z</start-time>\n"
+        "        <elapsed>0.028738</elapsed>\n"
+        "      </iterated-test>\n"
+        "      <status>success</status>\n"
+        "      <start-time>2008-07-29T23:22:29Z</start-time>\n"
+        "      <elapsed>0.028738</elapsed>\n"
+        "    </result>\n"
+        "  </test-result>\n"
+        "</stream>\n";
+
+    g_signal_connect(parser, "result",
+                     G_CALLBACK(collect_result), (gpointer)&result);
+
+    cut_assert_parse(xml);
+    cut_assert_not_null(result);
+
+    test = cut_test_result_get_test(result);
+    cut_assert(test);
+
+    cut_assert_equal_string("test_cut_pipeline",
+                            cut_test_result_get_test_case_name(result));
+    cut_assert_equal_string("test_count",
+                            cut_test_result_get_test_iterator_name(result));
+    cut_assert_equal_int(CUT_TEST_RESULT_SUCCESS,
+                         cut_test_result_get_status(result));
+
+    expected_start_time.tv_sec = 1217373749;
+    expected_start_time.tv_usec = 0;
+    cut_test_result_get_start_time(result, &actual_start_time);
+    gcut_assert_equal_time_val(&expected_start_time, &actual_start_time);
+    cut_assert_equal_double(0.028, 0.001, cut_test_result_get_elapsed(result));
+}
+
+void
+test_pass_assertion_test (void)
 {
     PassAssertionInfo *info;
     CutTest *test;
@@ -1458,6 +1540,163 @@ test_pass_assertion (void)
     test = cut_test_context_get_test(test_context);
     cut_assert_not_null(test);
     cut_assert_equal_string("test_error_signal", cut_test_get_name(test));
+}
+
+void
+test_pass_assertion_iterated_test (void)
+{
+    PassAssertionInfo *info;
+    CutTestData *test_data;
+    CutTest *test;
+    CutTestIterator *test_iterator;
+    CutTestCase *test_case;
+    CutTestContext *test_context;
+    const gchar xml[] =
+        "<stream>\n"
+        "  <ready-test-suite>\n"
+        "    <test-suite>\n"
+        "      <elapsed>0.000000</elapsed>\n"
+        "    </test-suite>\n"
+        "    <n-test-cases>34</n-test-cases>\n"
+        "    <n-tests>236</n-tests>\n"
+        "  </ready-test-suite>\n"
+        "  <start-test-suite>\n"
+        "    <test-suite>\n"
+        "      <elapsed>0.000000</elapsed>\n"
+        "    </test-suite>\n"
+        "  </start-test-suite>\n"
+        "  <ready-test-case>\n"
+        "    <test-case>\n"
+        "      <name>test_cut_test</name>\n"
+        "      <elapsed>0.000000</elapsed>\n"
+        "    </test-case>\n"
+        "    <n-tests>13</n-tests>\n"
+        "  </ready-test-case>\n"
+        "  <start-test-case>\n"
+        "    <test-case>\n"
+        "      <name>test_cut_test</name>\n"
+        "      <elapsed>0.000000</elapsed>\n"
+        "    </test-case>\n"
+        "  </start-test-case>\n"
+        "  <start-test>\n"
+        "    <test>\n"
+        "      <name>test_error_signal</name>\n"
+        "      <elapsed>0.000000</elapsed>\n"
+        "    </test>\n"
+        "    <test-context>\n"
+        "      <test-case>\n"
+        "        <name>test_cut_test</name>\n"
+        "        <elapsed>0.000000</elapsed>\n"
+        "      </test-case>\n"
+        "      <failed>FALSE</failed>\n"
+        "    </test-context>\n"
+        "  </start-test>\n"
+        "  <pass-assertion>\n"
+        "    <iterated-test>\n"
+        "      <name>test_count</name>\n"
+        "      <start-time>2008-07-29T23:22:29Z</start-time>\n"
+        "      <elapsed>0.039929</elapsed>\n"
+        "    </iterated-test>\n"
+        "   <test-context>\n"
+        "     <test-case>\n"
+        "       <name>test_cut_pipeline</name>\n"
+        "       <start-time>2008-07-29T23:22:29Z</start-time>\n"
+        "       <elapsed>0.068691</elapsed>\n"
+        "     </test-case>\n"
+        "     <test-iterator>\n"
+        "       <name>test_count</name>\n"
+        "       <start-time>2008-07-29T23:22:29Z</start-time>\n"
+        "       <elapsed>0.068712</elapsed>\n"
+        "     </test-iterator>\n"
+        "     <iterated-test>\n"
+        "       <name>test_count</name>\n"
+        "       <start-time>2008-07-29T23:22:29Z</start-time>\n"
+        "       <elapsed>0.039995</elapsed>\n"
+        "     </iterated-test>\n"
+        "     <test-data>\n"
+        "       <name>failure</name>\n"
+        "     </test-data>\n"
+        "     <failed>FALSE</failed>\n"
+        "   </test-context>\n"
+        "  </pass-assertion>\n"
+        "  <test-result>\n"
+        "    <test>\n"
+        "      <name>test_error_signal</name>\n"
+        "      <elapsed>0.000895</elapsed>\n"
+        "    </test>\n"
+        "    <test-context>\n"
+        "      <test-case>\n"
+        "        <name>test_cut_test</name>\n"
+        "        <elapsed>0.000895</elapsed>\n"
+        "      </test-case>\n"
+        "      <test>\n"
+        "        <name>test_error_signal</name>\n"
+        "        <elapsed>0.000895</elapsed>\n"
+        "      </test>\n"
+        "      <failed>FALSE</failed>\n"
+        "    </test-context>\n"
+        "    <result>\n"
+        "      <test-case>\n"
+        "        <name>test_cut_test</name>\n"
+        "        <elapsed>0.000895</elapsed>\n"
+        "      </test-case>\n"
+        "      <test>\n"
+        "        <name>test_error_signal</name>\n"
+        "        <elapsed>0.000895</elapsed>\n"
+        "      </test>\n"
+        "      <status>success</status>\n"
+        "      <elapsed>0.000895</elapsed>\n"
+        "    </result>\n"
+        "  </test-result>\n"
+        "  <complete-test>\n"
+        "    <test>\n"
+        "      <name>test_error_signal</name>\n"
+        "      <elapsed>0.000895</elapsed>\n"
+        "    </test>\n"
+        "  </complete-test>\n"
+        "  <complete-test-case>\n"
+        "    <test-case>\n"
+        "      <name>test_cut_test</name>\n"
+        "      <elapsed>0.003745</elapsed>\n"
+        "    </test-case>\n"
+        "  </complete-test-case>\n"
+        "  <complete-test-suite>\n"
+        "    <test-suite>\n"
+        "      <elapsed>139.666143</elapsed>\n"
+        "    </test-suite>\n"
+        "  </complete-test-suite>\n"
+        "  <success>false</success>\n"
+        "</stream>\n";
+
+    cut_assert_null(receiver->pass_assertions);
+    cut_assert_parse(xml);
+    cut_assert_not_null(receiver->pass_assertions);
+
+    cut_assert_equal_uint(1, g_list_length(receiver->pass_assertions));
+    info = receiver->pass_assertions->data;
+
+    test = info->test;
+    cut_assert_not_null(test);
+    cut_assert_equal_string("test_count", cut_test_get_name(test));
+
+    test_context = info->test_context;
+    cut_assert_not_null(test_context);
+
+    test_case = cut_test_context_get_test_case(test_context);
+    cut_assert_not_null(test_case);
+    cut_assert_equal_string("test_cut_pipeline",
+                            cut_test_get_name(CUT_TEST(test_case)));
+
+    test_iterator = cut_test_context_get_test_iterator(test_context);
+    cut_assert_not_null(test_iterator);
+    cut_assert_equal_string("test_count",
+                            cut_test_get_name(CUT_TEST(test_iterator)));
+
+    test_data = cut_test_context_get_current_data(test_context);
+    cut_assert_not_null(test_data);
+    cut_assert_equal_string("failure", cut_test_data_get_name(test_data));
+
+    cut_assert_false(cut_test_context_is_failed(test_context));
 }
 
 void

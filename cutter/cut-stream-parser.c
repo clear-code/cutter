@@ -1032,6 +1032,10 @@ start_pass_assertion (CutStreamParserPrivate *priv,
         PUSH_STATE(priv, IN_TEST);
         priv->pass_assertion->test = cut_test_new_empty();
         PUSH_TEST(priv, priv->pass_assertion->test);
+    } else if (g_str_equal("iterated-test", element_name)) {
+        PUSH_STATE(priv, IN_ITERATED_TEST);
+        priv->pass_assertion->test = CUT_TEST(cut_iterated_test_new_empty());
+        PUSH_TEST(priv, priv->pass_assertion->test);
     } else if (g_str_equal("test-context", element_name)) {
         PUSH_STATE(priv, IN_TEST_CONTEXT);
         priv->pass_assertion->test_context = cut_test_context_new_empty();
@@ -1050,6 +1054,10 @@ start_test_result (CutStreamParserPrivate *priv,
         PUSH_STATE(priv, IN_TEST);
         priv->test_result->test = cut_test_new_empty();
         PUSH_TEST(priv, priv->test_result->test);
+    } else if (g_str_equal("iterated-test", element_name)) {
+        PUSH_STATE(priv, IN_ITERATED_TEST);
+        priv->test_result->test = CUT_TEST(cut_iterated_test_new_empty());
+        PUSH_TEST(priv, priv->test_result->test);
     } else if (g_str_equal("test-context", element_name)) {
         PUSH_STATE(priv, IN_TEST_CONTEXT);
         priv->test_result->test_context = cut_test_context_new_empty();
@@ -1057,7 +1065,7 @@ start_test_result (CutStreamParserPrivate *priv,
     } else if (g_str_equal("result", element_name)) {
         PUSH_STATE(priv, IN_RESULT);
         priv->test_result->result = cut_test_result_new_empty();
-        priv->result = priv->test_result->result;
+        priv->result = g_object_ref(priv->test_result->result);
     } else {
         invalid_element(context, error);
     }
@@ -1088,11 +1096,23 @@ start_result (CutStreamParserPrivate *priv, GMarkupParseContext *context,
         cut_test_result_set_test_case(priv->result, test_case);
         PUSH_TEST_CASE(priv, test_case);
         g_object_unref(test_case);
-    } else if (g_str_equal("test", element_name)) {
+    } else if (g_str_equal("test-iterator", element_name)) {
+        CutTestIterator *test_iterator;
+
+        PUSH_STATE(priv, IN_TEST_ITERATOR);
+        test_iterator = cut_test_iterator_new_empty();
+        cut_test_result_set_test_iterator(priv->result, test_iterator);
+        PUSH_TEST_ITERATOR(priv, test_iterator);
+        g_object_unref(test_iterator);
+    } else if (g_str_equal("test", element_name) ||
+               g_str_equal("iterated-test", element_name)) {
         CutTest *test;
 
         PUSH_STATE(priv, IN_TEST);
-        test = cut_test_new_empty();
+        if (g_str_equal("iterated-test", element_name))
+            test = CUT_TEST(cut_iterated_test_new_empty());
+        else
+            test = cut_test_new_empty();
         cut_test_result_set_test(priv->result, test);
         PUSH_TEST(priv, test);
         g_object_unref(test);
