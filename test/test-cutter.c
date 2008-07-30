@@ -81,8 +81,8 @@ setup (void)
         "  -t, --test-case=TEST_CASE_NAME                  Specify test cases" LINE_FEED_CODE
         "  -m, --multi-thread                              Run test cases with multi-thread" LINE_FEED_CODE
         "  --test-case-order=[none|name|name-desc]         Sort test case by. Default is 'none'." LINE_FEED_CODE
-        "  --exclude-file=FILE_NAME                        Skip files" LINE_FEED_CODE
-        "  --exclude-dir=DIRECTORY_NAME                    Skip directories" LINE_FEED_CODE
+        "  --exclude-file=FILE                             Skip files" LINE_FEED_CODE
+        "  --exclude-directory=DIRECTORY                   Skip directories" LINE_FEED_CODE
         "" LINE_FEED_CODE,
         g_get_prgname(),
         g_get_prgname());
@@ -189,7 +189,7 @@ test_help_all (void)
         "Stream Options" LINE_FEED_CODE
         "  --stream=[xml]                                  Specify stream" LINE_FEED_CODE
         "  --stream-fd=FILE_DESCRIPTOR                     Stream to FILE_DESCRIPTOR (default: stdout)" LINE_FEED_CODE
-        "  --stream-log-dir=DIRECTORY                      Stream to a file under DIRECTORY (default: none)" LINE_FEED_CODE
+        "  --stream-log-directory=DIRECTORY                Stream to a file under DIRECTORY (default: none)" LINE_FEED_CODE
         "" LINE_FEED_CODE
         "Report Options" LINE_FEED_CODE
         "  --pdf-report=FILE                               Set filename of pdf report" LINE_FEED_CODE
@@ -239,8 +239,8 @@ test_help_all (void)
         "  -t, --test-case=TEST_CASE_NAME                  Specify test cases" LINE_FEED_CODE
         "  -m, --multi-thread                              Run test cases with multi-thread" LINE_FEED_CODE
         "  --test-case-order=[none|name|name-desc]         Sort test case by. Default is 'none'." LINE_FEED_CODE
-        "  --exclude-file=FILE_NAME                        Skip files" LINE_FEED_CODE
-        "  --exclude-dir=DIRECTORY_NAME                    Skip directories" LINE_FEED_CODE
+        "  --exclude-file=FILE                             Skip files" LINE_FEED_CODE
+        "  --exclude-directory=DIRECTORY                   Skip directories" LINE_FEED_CODE
 #ifdef HAVE_GTK
         "  --display=DISPLAY                               X display to use" LINE_FEED_CODE
 #endif

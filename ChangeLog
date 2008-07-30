@@ -1,6 +1,9 @@
 2008-07-30  Kouhei Sutou  <kou@cozmixng.org>
 
-	* test/test-cutter.c: follow the below changes.
+	* test/test-cutter.c, test/run-test.sh: follow the below changes.
+
+	* cutter/cut-main.c, cutter/cut-stream-factory-builder.c: dir ->
+	directory.
 
 	* test/run-test.sh: log test result.
 

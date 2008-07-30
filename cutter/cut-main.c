@@ -60,7 +60,7 @@ static gchar *source_directory = NULL;
 static gchar **test_case_names = NULL;
 static gchar **test_names = NULL;
 static gchar **exclude_files = NULL;
-static gchar **exclude_dirs = NULL;
+static gchar **exclude_directories = NULL;
 static CutOrder test_case_order = CUT_ORDER_NONE_SPECIFIED;
 static gboolean use_multi_thread = FALSE;
 static GList *factories = NULL;
@@ -113,9 +113,9 @@ static const GOptionEntry option_entries[] =
     {"test-case-order", 0, 0, G_OPTION_ARG_CALLBACK, parse_test_case_order,
      N_("Sort test case by. Default is 'none'."), "[none|name|name-desc]"},
     {"exclude-file", 0, 0, G_OPTION_ARG_STRING_ARRAY, &exclude_files,
-     N_("Skip files"), "FILE_NAME"},
-    {"exclude-dir", 0, 0, G_OPTION_ARG_STRING_ARRAY, &exclude_dirs,
-     N_("Skip directories"), "DIRECTORY_NAME"},
+     N_("Skip files"), "FILE"},
+    {"exclude-directory", 0, 0, G_OPTION_ARG_STRING_ARRAY, &exclude_directories,
+     N_("Skip directories"), "DIRECTORY"},
     {NULL}
 };
 
@@ -261,8 +261,10 @@ cut_create_run_context (void)
     if (source_directory)
         cut_run_context_set_source_directory(run_context, source_directory);
     cut_run_context_set_multi_thread(run_context, use_multi_thread);
-    cut_run_context_set_exclude_files(run_context, (const gchar **)exclude_files);
-    cut_run_context_set_exclude_directories(run_context, (const gchar **)exclude_dirs);
+    cut_run_context_set_exclude_files(run_context,
+                                      (const gchar **)exclude_files);
+    cut_run_context_set_exclude_directories(run_context,
+                                            (const gchar **)exclude_directories);
     cut_run_context_set_target_test_case_names(run_context, test_case_names);
     cut_run_context_set_target_test_names(run_context, test_names);
     cut_run_context_set_test_case_order(run_context, test_case_order);
