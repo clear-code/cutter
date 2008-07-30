@@ -1,5 +1,7 @@
 2008-07-30  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-analyzer.c (run_async): remove needless emit signal.
+
 	* test/lib/cuttest-utils.h: add ISO8601_PATTERN.
 
 	* test/test-cut-report-xml.c, test/test-cut-xml-stream.c: use

@@ -217,7 +217,6 @@ run_async (CutAnalyzer *analyzer)
         gchar *file_name = node->data;
         GIOChannel *channel;
 
-        g_print("%s\n", file_name);
         channel = g_io_channel_new_file(file_name, "r", &error);
         if (error) {
             emit_error(analyzer, error, "failed to open log file");
@@ -242,7 +241,6 @@ runner_run_async (CutRunner *runner)
     run_async(analyzer);
 
     priv = CUT_ANALYZER_GET_PRIVATE(analyzer);
-    emit_complete_signal(analyzer, !priv->error_emitted);
 }
 
 /*
