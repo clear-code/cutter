@@ -1,4 +1,4 @@
-#include <cutter.h>
+#include <gcutter.h>
 #include <cutter/cut-test.h>
 #include <cutter/cut-test-result.h>
 #include <cutter/cut-loader.h>
@@ -6,10 +6,12 @@
 #include "lib/cuttest-assertions.h"
 
 void test_set_attribute (void);
-void test_get_bug_id (void);
-void test_get_attribute (void);
-void test_get_description (void);
+void test_bug_id (void);
+void test_multi_attributes (void);
+void test_description (void);
 
+static GList *tests;
+static GList *expected_names;
 static CutTest *test;
 static CutLoader *test_loader;
 static CutTestCase *test_case;
@@ -20,12 +22,6 @@ static CutTestCase *test_case;
         cut_omit("test attribute loading isn't "                        \
                  "supported on the environment.");                      \
 } while (0)
-
-static void
-fail_test (void)
-{
-    cut_assert_equal_string("abc", "xyz");
-}
 
 void
 setup (void)
@@ -42,6 +38,9 @@ setup (void)
     test_loader = cut_loader_new(test_path);
     g_free(test_path);
 
+    expected_names = NULL;
+    tests = NULL;
+
     test_case = NULL;
     test = NULL;
 }
@@ -49,6 +48,11 @@ setup (void)
 void
 teardown (void)
 {
+    if (expected_names)
+        gcut_list_string_free(expected_names);
+    if (tests)
+        g_list_free(tests);
+
     if (test)
         g_object_unref(test);
     if (test_loader)
@@ -57,10 +61,31 @@ teardown (void)
         g_object_unref(test_case);
 }
 
+static const GList *
+collect_test_names (GList *tests)
+{
+    GList *node;
+    GList *names = NULL;
+
+    for (node = tests; node; node = g_list_next(node)) {
+        CutTest *test = node->data;
+
+        names = g_list_append(names, g_strdup(cut_test_get_name(test)));
+    }
+
+    return gcut_take_list(names, g_free);
+}
+
+static void
+stub_fail_test (void)
+{
+    cut_assert_equal_string("abc", "xyz");
+}
+
 void
 test_set_attribute (void)
 {
-    test = cut_test_new("fail-test", fail_test);
+    test = cut_test_new("fail-test", stub_fail_test);
     cut_assert(test);
     cut_assert_null(cut_test_get_attribute(test, "category"));
     cut_test_set_attribute(test, "category", "assertion");
@@ -71,19 +96,19 @@ test_set_attribute (void)
 }
 
 void
-test_get_bug_id (void)
+test_bug_id (void)
 {
     CutTestContainer *container;
-    GList *tests;
-    const gchar *filter[] = {"/test_get_bug_id/", NULL};
+    const gchar *filter[] = {"/test_bug_id/", NULL};
 
     test_case = cut_loader_load_test_case(test_loader);
     cut_assert(test_case);
 
     container = CUT_TEST_CONTAINER(test_case);
     tests = cut_test_container_filter_children(container, filter);
-    cut_assert(tests);
-    cut_assert(1, g_list_length(tests));
+    expected_names = gcut_list_string_new("test_bug_id", NULL);
+    gcut_assert_equal_list_string(expected_names,
+                                  collect_test_names(tests));
 
     cut_omit_if_loader_does_not_support_attribute(test_loader);
 
@@ -93,10 +118,10 @@ test_get_bug_id (void)
 }
 
 void
-test_get_attribute (void)
+test_multi_attributes (void)
 {
     CutTestContainer *container;
-    GList *tests;
+    CutTest *test;
     const gchar *filter[] = {"/test_attribute/", NULL};
 
     test_case = cut_loader_load_test_case(test_loader);
@@ -104,24 +129,19 @@ test_get_attribute (void)
 
     container = CUT_TEST_CONTAINER(test_case);
     tests = cut_test_container_filter_children(container, filter);
-    cut_assert(tests);
-    cut_assert(1, g_list_length(tests));
+    expected_names = gcut_list_string_new("test_attribute", NULL);
+    gcut_assert_equal_list_string(expected_names,
+                                  collect_test_names(tests));
 
-    cut_omit_if_loader_does_not_support_attribute(test_loader);
-
-    cut_assert_equal_string("9",
-                            cut_test_get_attribute(CUT_TEST(tests->data),
-                                                   "bug"));
-    cut_assert_equal_string("5678",
-                            cut_test_get_attribute(CUT_TEST(tests->data),
-                                                   "priority"));
+    cut_pend("WRITE ME");
+    test = CUT_TEST(tests->data);
+    cut_assert_not_null(cut_test_get_attributes_setup_function(test));
 }
 
 void
-test_get_description (void)
+test_description (void)
 {
     CutTestContainer *container;
-    GList *tests;
     const gchar *filter[] = {"/test_description/", NULL};
 
     test_case = cut_loader_load_test_case(test_loader);
@@ -129,8 +149,9 @@ test_get_description (void)
 
     container = CUT_TEST_CONTAINER(test_case);
     tests = cut_test_container_filter_children(container, filter);
-    cut_assert(tests);
-    cut_assert(1, g_list_length(tests));
+    expected_names = gcut_list_string_new("test_description", NULL);
+    gcut_assert_equal_list_string(expected_names,
+                                  collect_test_names(tests));
 
     cut_omit_if_loader_does_not_support_attribute(test_loader);
 

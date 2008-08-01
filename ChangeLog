@@ -1,5 +1,8 @@
 2008-07-31  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-test-attribute.c,
+	test/fixtures/loader/attribute/stub-test-functions.c: cleanup.
+
 	* cutter/cut-analyzer.c: handle error.
 
 	* cutter/cut-run-context.[ch] (cut_run_context_emit_error): emit
