@@ -24,6 +24,7 @@
 
 #include <gcutter/gcut-value-equal.h>
 #include <gcutter/gcut-list.h>
+#include <gcutter/gcut-hash.h>
 #include <gcutter/gcut-assertions.h>
 #include <gcutter/gcut-public.h>
 #include <gcutter/gcut-test-utils.h>
@@ -299,6 +300,47 @@ G_BEGIN_DECLS
 #define cut_assert_equal_g_list_string(expected, actual, ...)           \
     gcut_assert_equal_list_string(expected, actual, ## __VA_ARGS__)
 #endif
+
+/**
+ * gcut_assert_equal_hash_string_string:
+ * @expected: an expected GHashTable * of string.
+ * @actual: an actual GHashTable * of string.
+ * @...: optional format string, followed by parameters to insert
+ *       into the format string (as with printf())
+ *
+ * Passes if @expected == @actual.
+ *
+ * Since: 1.0.3
+ */
+#define gcut_assert_equal_hash_string_string(expected, actual, ...) do  \
+{                                                                       \
+    GHashTable *_expected;                                              \
+    GHashTable *_actual;                                                \
+                                                                        \
+    _expected = (expected);                                             \
+    _actual = (actual);                                                 \
+    if (gcut_hash_string_equal(_expected, _actual)) {                   \
+        cut_test_pass();                                                \
+    } else {                                                            \
+        const gchar *message;                                           \
+        const gchar *inspected_expected, *inspected_actual;             \
+                                                                        \
+        inspected_expected =                                            \
+            cut_take_string(gcut_hash_string_string_inspect(_expected)); \
+        inspected_actual =                                              \
+            cut_take_string(gcut_hash_string_string_inspect(_actual));  \
+        message = cut_take_printf("<%s == %s>\n"                        \
+                                  "expected: <%s>\n"                    \
+                                  " but was: <%s>",                     \
+                                  #expected, #actual,                   \
+                                  inspected_expected,                   \
+                                  inspected_actual);                    \
+        message = cut_append_diff(message,                              \
+                                  inspected_expected,                   \
+                                  inspected_actual);                    \
+        cut_test_fail(FAILURE, message, ## __VA_ARGS__);                \
+    }                                                                   \
+} while(0)
 
 /**
  * gcut_assert_error:

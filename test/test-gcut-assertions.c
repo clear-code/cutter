@@ -12,6 +12,7 @@ void test_equal_list_uint(void);
 void test_equal_list_string(void);
 void test_equal_list_string_both_null(void);
 void test_equal_list_string_other_null(void);
+void test_equal_hash_string_string(void);
 void test_error(void);
 
 static CutTest *test;
@@ -22,6 +23,7 @@ static CutTestResult *test_result;
 static GValue *value1, *value2;
 static GList *list1, *list2;
 static gboolean need_to_free_list_contents;
+static GHashTable *hash1, *hash2;
 
 static GError *error;
 static gboolean need_to_free_error;
@@ -58,6 +60,9 @@ setup (void)
     list2 = NULL;
     need_to_free_list_contents = FALSE;
 
+    hash1 = NULL;
+    hash2 = NULL;
+
     error = NULL;
     need_to_free_error = FALSE;
 }
@@ -88,6 +93,11 @@ teardown (void)
     }
     g_list_free(list1);
     g_list_free(list2);
+
+    if (hash1)
+        g_hash_table_destroy(hash1);
+    if (hash2)
+        g_hash_table_destroy(hash2);
 
     if (error && need_to_free_error)
         g_error_free(error);
@@ -322,6 +332,41 @@ test_equal_list_string_other_null (void)
 }
 
 static void
+stub_equal_hash_string_string (void)
+{
+    hash1 = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, g_free);
+    hash2 = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, g_free);
+
+    g_hash_table_insert(hash1, g_strdup("abc"), g_strdup("11"));
+    g_hash_table_insert(hash1, g_strdup("def"), g_strdup("22"));
+    g_hash_table_insert(hash2, g_strdup("zyx"), g_strdup("99"));
+    g_hash_table_insert(hash2, g_strdup("wvu"), g_strdup("88"));
+
+    gcut_assert_equal_hash_string_string(hash1, hash1);
+    gcut_assert_equal_hash_string_string(hash2, hash2);
+
+    gcut_assert_equal_hash_string_string(hash1, hash2);
+}
+
+void
+test_equal_hash_string_string (void)
+{
+    test = cut_test_new("equal_hash_string_string test",
+                        stub_equal_hash_string_string);
+    cut_assert_not_null(test);
+
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 0, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "equal_hash_string_string test",
+                           NULL,
+                           "<hash1 == hash2>\n"
+                           "expected: <{\"def\" => \"22\", \"abc\" => \"11\"}>\n"
+                           " but was: <{\"zyx\" => \"99\", \"wvu\" => \"88\"}>",
+                           "stub_equal_hash_string_string");
+}
+
+static void
 stub_error (void)
 {
     gcut_assert_error(error);
@@ -345,6 +390,7 @@ test_error (void)
                            " but was: <g-file-error-quark:4: not found>",
                            "stub_error");
 }
+
 
 /*
 vi:nowrap:ai:expandtab:sw=4:ts=4

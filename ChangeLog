@@ -1,5 +1,14 @@
 2008-08-01  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-gcut-assertions.c (test_equal_hash_string_string): add
+	a test for gcut_assert_equal_hash_string_string().
+
+	* gcutter/gcut-assertions.h (gcut_assert_equal_hash_string_string): add.
+
+	* gcutter/gcut-hash.[ch]: add.
+
+	* gcutter/Makefile.am: add gcut-hash.[ch].
+
 	* cutter/cut-analyzer.c (BUFFER_SIZE): remove
           needless definition.
 
