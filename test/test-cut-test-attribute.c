@@ -122,6 +122,7 @@ test_multi_attributes (void)
 {
     CutTestContainer *container;
     CutTest *test;
+    GHashTable *expected;
     const gchar *filter[] = {"/test_attribute/", NULL};
 
     test_case = cut_loader_load_test_case(test_loader);
@@ -134,8 +135,12 @@ test_multi_attributes (void)
                                   collect_test_names(tests));
 
     test = CUT_TEST(tests->data);
-    cut_assert_equal_string("9", cut_test_get_attribute(test, "bug"));
-    cut_assert_equal_string("5678", cut_test_get_attribute(test, "priority"));
+    expected = gcut_hash_table_string_string_new("bug", "9",
+                                                 "priority", "5678",
+                                                 NULL);
+    gcut_take_hash_table(expected);
+    gcut_assert_equal_hash_table_string_string(expected,
+                                               cut_test_get_attributes(test));
 }
 
 void

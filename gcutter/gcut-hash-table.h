@@ -17,31 +17,32 @@
  *
  */
 
-#ifndef __GCUT_HASH_H__
-#define __GCUT_HASH_H__
+#ifndef __GCUT_HASH_TABLE_H__
+#define __GCUT_HASH_TABLE_H__
 
 #include <glib-object.h>
 #include <gcutter/gcut-list.h>
 
 G_BEGIN_DECLS
 
-gboolean         gcut_hash_equal                (GHashTable *hash1,
+gboolean         gcut_hash_table_equal          (GHashTable *hash1,
                                                  GHashTable *hash2,
                                                  GCompareDataFunc compare_func,
                                                  gpointer user_data);
-gchar           *gcut_hash_inspect              (GHashTable *hash,
+gchar           *gcut_hash_table_inspect        (GHashTable *hash,
                                                  GCutInspectFunc key_inspect_func,
                                                  GCutInspectFunc value_inspect_func,
                                                  gpointer user_data);
 
-gboolean         gcut_hash_string_equal         (GHashTable *hash1,
+gboolean         gcut_hash_table_string_equal   (GHashTable *hash1,
                                                  GHashTable *hash2);
-gchar           *gcut_hash_string_string_inspect(GHashTable *hash);
+gchar           *gcut_hash_table_string_string_inspect
+                                                (GHashTable *hash);
 
 
 G_END_DECLS
 
-#endif /* __GCUT_HASH_H__ */
+#endif /* __GCUT_HASH_TABLE_H__ */
 
 /*
 vi:nowrap:ai:expandtab:sw=4:ts=4

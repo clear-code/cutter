@@ -24,7 +24,7 @@
 
 #include <gcutter/gcut-value-equal.h>
 #include <gcutter/gcut-list.h>
-#include <gcutter/gcut-hash.h>
+#include <gcutter/gcut-hash-table.h>
 #include <gcutter/gcut-assertions.h>
 #include <gcutter/gcut-public.h>
 #include <gcutter/gcut-test-utils.h>
@@ -302,7 +302,7 @@ G_BEGIN_DECLS
 #endif
 
 /**
- * gcut_assert_equal_hash_string_string:
+ * gcut_assert_equal_hash_table_string_string:
  * @expected: an expected GHashTable * of string.
  * @actual: an actual GHashTable * of string.
  * @...: optional format string, followed by parameters to insert
@@ -310,25 +310,25 @@ G_BEGIN_DECLS
  *
  * Passes if @expected == @actual.
  *
- * Since: 1.0.3
+ * Since: 1.0.4
  */
-#define gcut_assert_equal_hash_string_string(expected, actual, ...) do  \
+#define gcut_assert_equal_hash_table_string_string(expected, actual, ...) do \
 {                                                                       \
     GHashTable *_expected;                                              \
     GHashTable *_actual;                                                \
                                                                         \
     _expected = (expected);                                             \
     _actual = (actual);                                                 \
-    if (gcut_hash_string_equal(_expected, _actual)) {                   \
+    if (gcut_hash_table_string_equal(_expected, _actual)) {             \
         cut_test_pass();                                                \
     } else {                                                            \
         const gchar *message;                                           \
-        const gchar *inspected_expected, *inspected_actual;             \
+        gchar *inspected_expected, *inspected_actual;                   \
                                                                         \
         inspected_expected =                                            \
-            cut_take_string(gcut_hash_string_string_inspect(_expected)); \
+            gcut_hash_table_string_string_inspect(_expected);           \
         inspected_actual =                                              \
-            cut_take_string(gcut_hash_string_string_inspect(_actual));  \
+            gcut_hash_table_string_string_inspect(_actual);             \
         message = cut_take_printf("<%s == %s>\n"                        \
                                   "expected: <%s>\n"                    \
                                   " but was: <%s>",                     \
@@ -338,6 +338,8 @@ G_BEGIN_DECLS
         message = cut_append_diff(message,                              \
                                   inspected_expected,                   \
                                   inspected_actual);                    \
+        g_free(inspected_expected);                                     \
+        g_free(inspected_actual);                                       \
         cut_test_fail(FAILURE, message, ## __VA_ARGS__);                \
     }                                                                   \
 } while(0)

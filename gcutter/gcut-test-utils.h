@@ -86,6 +86,22 @@ G_BEGIN_DECLS
                                  (list), (destroy_function))
 
 /**
+ * gcut_take_hash_table:
+ * @hash_table: the GHashTable * to be owned by Cutter.
+ *
+ * Passes ownership of @hash_table to Cutter and returns
+ * @hash_table.
+ *
+ * Returns: a GHash_Table * owned by Cutter. Don't
+ * g_hash_table_unref() it.
+ *
+ * Since: 1.0.4
+ */
+#define gcut_take_hash_table(hash_table)                                \
+    cut_test_context_take_g_hash_table(get_current_test_context(),      \
+                                       (hash_table))
+
+/**
  * gcut_list_string_new:
  * @value: the first string.
  * @...: remaining strings in list, terminated by NULL.
@@ -108,6 +124,23 @@ GList  *gcut_list_string_new  (const gchar *value, ...) G_GNUC_NULL_TERMINATED;
  * Since: 1.0.3
  */
 void    gcut_list_string_free (GList *list);
+
+/**
+ * gcut_hash_table_string_string_new:
+ * @key: The first key string.
+ * @...: The string value of the first key, followed
+ *       optionally by more key/value pairs.
+ *
+ * Creates a hash table that has string key and string value
+ * from passed key/value pairs.
+ *
+ * Returns: a newly-allocated GHashTable * that contains
+ * passed key/value pairs and must be freed with
+ * g_hash_table_unref().
+ *
+ * Since: 1.0.4
+ */
+GHashTable *gcut_hash_table_string_string_new(const gchar *key, ...) G_GNUC_NULL_TERMINATED;
 
 
 G_END_DECLS

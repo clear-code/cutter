@@ -1,5 +1,23 @@
 2008-08-01  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-test-attribute.c (test_multi_attributes): use
+	gcut_hash_table_string_string_new() and
+	gcut_assert_equal_hash_table_string_string().
+
+	* gcutter/gcut-test-utils.h (gcut_take_hash_table): ad..
+
+	* gcutter/gcut-test-utils.h, gcutter/gcut-hash-table.c
+	(gcut_hash_table_string_string_new): add.
+
+	* cutter/cut-test-context.c, gcutter/gcut-public.h
+	(cut_test_context_take_g_hash_table): add.
+
+	* gcutter/gcut-hash.[ch]: rename to ...
+	* gcutter/gcut-hash-table.[ch]: ... them.
+
+	* gcutter/, test/test-gcut-assertions.c: gcut_hash_XXX ->
+	gcut_hash_table_XXX.
+
 	* test/test-gcut-assertions.c (test_equal_hash_string_string): add
 	a test for gcut_assert_equal_hash_string_string().
 

@@ -36,6 +36,9 @@ char         *cut_utils_inspect_g_error      (GError             *error);
 const GList  *cut_test_context_take_g_list   (CutTestContext     *context,
                                               GList              *list,
                                               CutDestroyFunction  destroy);
+GHashTable   *cut_test_context_take_g_hash_table
+                                             (CutTestContext     *context,
+                                              GHashTable         *hash_table);
 
 
 G_END_DECLS

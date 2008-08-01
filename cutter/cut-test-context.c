@@ -69,6 +69,7 @@ struct _CutTestContextPrivate
     GList *taken_objects;
     GList *taken_errors;
     GList *taken_lists;
+    GList *taken_hash_tables;
     GList *current_data;
     GList *data_list;
     GList *processes;
@@ -116,7 +117,6 @@ taken_list_free (TakenList *taken_list)
 
     g_slice_free(TakenList, taken_list);
 }
-
 
 static void dispose        (GObject         *object);
 static void set_property   (GObject         *object,
@@ -191,6 +191,7 @@ cut_test_context_init (CutTestContext *context)
     priv->taken_objects = NULL;
     priv->taken_errors = NULL;
     priv->taken_lists = NULL;
+    priv->taken_hash_tables = NULL;
 
     priv->data_list = NULL;
     priv->current_data = NULL;
@@ -272,6 +273,12 @@ dispose (GObject *object)
         g_list_foreach(priv->taken_lists, (GFunc)taken_list_free, NULL);
         g_list_free(priv->taken_lists);
         priv->taken_lists = NULL;
+    }
+
+    if (priv->taken_hash_tables) {
+        g_list_foreach(priv->taken_hash_tables, (GFunc)g_hash_table_unref, NULL);
+        g_list_free(priv->taken_hash_tables);
+        priv->taken_hash_tables = NULL;
     }
 
     free_data_list(priv);
@@ -772,6 +779,19 @@ cut_test_context_take_g_list (CutTestContext *context, GList *list,
     g_list_free(list);
 
     return taken_list->list;
+}
+
+GHashTable *
+cut_test_context_take_g_hash_table (CutTestContext *context,
+                                    GHashTable     *hash_table)
+{
+    CutTestContextPrivate *priv;
+
+    priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+    priv->taken_hash_tables =
+        g_list_prepend(priv->taken_hash_tables, hash_table);
+
+    return hash_table;
 }
 
 int

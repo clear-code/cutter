@@ -95,9 +95,9 @@ teardown (void)
     g_list_free(list2);
 
     if (hash1)
-        g_hash_table_destroy(hash1);
+        g_hash_table_unref(hash1);
     if (hash2)
-        g_hash_table_destroy(hash2);
+        g_hash_table_unref(hash2);
 
     if (error && need_to_free_error)
         g_error_free(error);
@@ -342,10 +342,10 @@ stub_equal_hash_string_string (void)
     g_hash_table_insert(hash2, g_strdup("zyx"), g_strdup("99"));
     g_hash_table_insert(hash2, g_strdup("wvu"), g_strdup("88"));
 
-    gcut_assert_equal_hash_string_string(hash1, hash1);
-    gcut_assert_equal_hash_string_string(hash2, hash2);
+    gcut_assert_equal_hash_table_string_string(hash1, hash1);
+    gcut_assert_equal_hash_table_string_string(hash2, hash2);
 
-    gcut_assert_equal_hash_string_string(hash1, hash2);
+    gcut_assert_equal_hash_table_string_string(hash1, hash2);
 }
 
 void
