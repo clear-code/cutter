@@ -464,6 +464,46 @@ cut_test_context_add_data (CutTestContext *context, const gchar *first_data_name
 }
 
 void
+cut_test_context_set_attributes (CutTestContext *context,
+                                 const gchar *first_attribute_name,
+                                 ...)
+{
+    CutTestContextPrivate *priv;
+    CutTest *target = NULL;
+    const gchar *name;
+    va_list args;
+
+    priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+
+    if (priv->test) {
+        target = priv->test;
+    } else if (priv->test_iterator) {
+        target = CUT_TEST(priv->test_iterator);
+    } else if (priv->test_case) {
+        target = CUT_TEST(priv->test_case);
+    } else if (priv->test_suite) {
+        target = CUT_TEST(priv->test_suite);
+    }
+
+    if (!target) {
+        g_warning("can't find a target to set attributes.");
+        return;
+    }
+
+    name = first_attribute_name;
+    va_start(args, first_attribute_name);
+    while (name) {
+        const gchar *value;
+
+        value = va_arg(args, gchar *);
+        cut_test_set_attribute(target, name, value);
+
+        name = va_arg(args, gchar *);
+    }
+    va_end(args);
+}
+
+void
 cut_test_context_set_data (CutTestContext *context, CutTestData *test_data)
 {
     CutTestContextPrivate *priv;

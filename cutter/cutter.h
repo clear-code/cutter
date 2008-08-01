@@ -255,6 +255,44 @@ void shutdown(void);
                               first_data_name, ## __VA_ARGS__,  \
                               NULL)
 
+/**
+ * cut_set_attributes:
+ * @first_attribute_name: The first attribute name.
+ * @...: The value of the first attribute, followed
+ *       optionally by more name/value pairs.
+ *
+ * Sets attributes of the test.
+ *
+ * e.g.:
+ * |[
+ * #include <cutter.h>
+ *
+ * void attributes_repeat (void);
+ * void test_repeat (void);
+ *
+ * void
+ * attributes_repeat(void)
+ * {
+ *     cut_set_attributes("description", "a test for repeat function",
+ *                        "bug", "111",
+ *                        "priority", "high");
+ * }
+ *
+ * void
+ * test_repeat(void)
+ * {
+ *      cut_assert_equal_string_with_free("XXX", repeat("X", 3));
+ * }
+ * ]|
+ *
+ * Since: 1.0.4
+ */
+#define cut_set_attributes(first_attribute_name, ...)           \
+    cut_test_context_set_attributes(get_current_test_context(), \
+                                    first_attribute_name,       \
+                                    ## __VA_ARGS__,             \
+                                    NULL)                       \
+
 #ifdef __cplusplus
 }
 #endif

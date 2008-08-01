@@ -133,9 +133,9 @@ test_multi_attributes (void)
     gcut_assert_equal_list_string(expected_names,
                                   collect_test_names(tests));
 
-    cut_pend("WRITE ME");
     test = CUT_TEST(tests->data);
-    cut_assert_not_null(cut_test_get_attributes_setup_function(test));
+    cut_assert_equal_string("9", cut_test_get_attribute(test, "bug"));
+    cut_assert_equal_string("5678", cut_test_get_attribute(test, "priority"));
 }
 
 void

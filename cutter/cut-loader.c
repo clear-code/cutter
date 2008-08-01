@@ -39,7 +39,7 @@
 #define TEST_SUITE_SO_NAME_PREFIX "suite_"
 #define TEST_NAME_PREFIX "test_"
 #define DATA_SETUP_FUNCTION_NAME_PREFIX "data_"
-#define ATTRIBUTES_FUNCTION_NAME_PREFIX "attributes_"
+#define ATTRIBUTES_SETUP_FUNCTION_NAME_PREFIX "attributes_"
 #define CUT_LOADER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_LOADER, CutLoaderPrivate))
 
 typedef enum {
@@ -372,15 +372,9 @@ is_including_test_name (const gchar *function_name, const gchar *test_name)
 static gboolean
 is_valid_attribute_function_name (const gchar *function_name, const gchar *test_name)
 {
-    return !g_str_has_prefix(function_name, ATTRIBUTES_FUNCTION_NAME_PREFIX) &&
+    return !g_str_has_prefix(function_name,
+                             ATTRIBUTES_SETUP_FUNCTION_NAME_PREFIX) &&
         !g_str_has_prefix(function_name, DATA_SETUP_FUNCTION_NAME_PREFIX) &&
-        is_including_test_name(function_name, test_name);
-}
-
-static gboolean
-is_valid_attributes_function_name (const gchar *function_name, const gchar *test_name)
-{
-    return g_str_has_prefix(function_name, ATTRIBUTES_FUNCTION_NAME_PREFIX) &&
         is_including_test_name(function_name, test_name);
 }
 
@@ -396,23 +390,16 @@ get_attribute_name (const gchar *attribute_function_name, const gchar *test_name
 }
 
 typedef const gchar *(*CutAttributeItemFunction)     (void);
-typedef CutTestAttribute *(*CutAttributeFunction)     (void);
 
-static CutTestAttribute *
-cut_test_attribute_new (const gchar *name, const gchar *value)
+static void
+apply_attributes (CutLoaderPrivate *priv, CutTest *test, const gchar *test_name)
 {
-    CutTestAttribute *attribute = g_new0(CutTestAttribute, 1);
-    attribute->name = g_strdup(name);
-    attribute->value = g_strdup(value);
-    return attribute;
-}
+    GList *node;
 
-static GList *
-collect_attributes (CutLoaderPrivate *priv, const gchar *test_name)
-{
-    GList *attributes = NULL, *node;
+    if (!test)
+        return;
     if (!test_name)
-        return NULL;
+        return;
 
     for (node = priv->symbols; node; node = g_list_next(node)) {
         gchar *function_name = node->data;
@@ -422,31 +409,84 @@ collect_attributes (CutLoaderPrivate *priv, const gchar *test_name)
             CutAttributeItemFunction function = NULL;
             g_module_symbol(priv->module, function_name, (gpointer)&function);
             if (function) {
-                CutTestAttribute *attribute;
-                gchar *name = get_attribute_name(function_name, test_name);
-                const gchar *value = function();
-                attribute = cut_test_attribute_new(name, value);
+                gchar *name;
+                const gchar *value;
+
+                name = get_attribute_name(function_name, test_name);
+                value = function();
+                cut_test_set_attribute(test, name, value);
                 g_free(name);
-                attributes = g_list_append(attributes, attribute);
-            }
-        } else if (is_valid_attributes_function_name(function_name, test_name)) {
-            CutAttributeFunction function = NULL;
-            g_module_symbol(priv->module, function_name, (gpointer)&function);
-            if (function) {
-                CutTestAttribute *attribute = function();
-                while (TRUE) {
-                    CutTestAttribute *new_attribute;
-                    if (!attribute->name || !attribute->value)
-                        break;
-                    new_attribute = cut_test_attribute_new(attribute->name,
-                                                           attribute->value);
-                    attributes = g_list_append(attributes, new_attribute);
-                    attribute++;
-                }
             }
         }
     }
-    return attributes;
+}
+
+static void
+register_test (CutLoader *loader, CutTestCase *test_case,
+               CutGetCurrentTestContextFunction get_current_test_context,
+               CutSetCurrentTestContextFunction set_current_test_context,
+               const gchar *name, CutTestFunction function)
+{
+    CutLoaderPrivate *priv;
+    CutTest *test;
+    gchar *data_setup_function_name;
+    CutDataSetupFunction data_setup_function = NULL;
+    gchar *attributes_setup_function_name;
+    CutAttributesSetupFunction attributes_setup_function = NULL;
+
+    priv = CUT_LOADER_GET_PRIVATE(loader);
+
+    data_setup_function_name =
+        g_strconcat(DATA_SETUP_FUNCTION_NAME_PREFIX,
+                    name + strlen(TEST_NAME_PREFIX),
+                    NULL);
+    g_module_symbol(priv->module, data_setup_function_name,
+                    (gpointer)&data_setup_function);
+
+    attributes_setup_function_name =
+        g_strconcat(ATTRIBUTES_SETUP_FUNCTION_NAME_PREFIX,
+                    name + strlen(TEST_NAME_PREFIX),
+                    NULL);
+    g_module_symbol(priv->module, attributes_setup_function_name,
+                    (gpointer)&attributes_setup_function);
+
+    if (data_setup_function) {
+        CutTestIterator *test_iterator;
+        CutIteratedTestFunction test_function;
+
+        test_function = (CutIteratedTestFunction)function;
+        test_iterator = cut_test_iterator_new(name,
+                                              test_function,
+                                              data_setup_function);
+        test = CUT_TEST(test_iterator);
+    } else {
+        test = cut_test_new(name, function);
+    }
+
+    if (get_current_test_context &&
+        set_current_test_context &&
+        attributes_setup_function) {
+        CutTestContext *test_context, *original_test_context;
+
+        original_test_context = get_current_test_context();
+        if (data_setup_function) {
+            test_context = cut_test_context_new(NULL, test_case,
+                                                CUT_TEST_ITERATOR(test), NULL);
+        } else {
+            test_context = cut_test_context_new(NULL, test_case, NULL, test);
+        }
+        set_current_test_context(test_context);
+        attributes_setup_function();
+        set_current_test_context(original_test_context);
+        g_object_unref(test_case);
+    }
+
+    if (cut_loader_support_attribute(loader))
+        apply_attributes(priv, test, name);
+
+    cut_test_case_add_test(test_case, test);
+
+    g_object_unref(test);
 }
 
 static void
@@ -457,13 +497,13 @@ cb_complete (CutTestCase *test_case, gpointer data)
 }
 
 static CutTestCase *
-create_test_case (CutLoader *loader)
+create_test_case (CutLoader *loader,
+                  CutGetCurrentTestContextFunction *get_current_test_context,
+                  CutSetCurrentTestContextFunction *set_current_test_context)
 {
     CutLoaderPrivate *priv;
     CutTestCase *test_case;
     CutSetupFunction setup = NULL;
-    CutGetCurrentTestContextFunction get_current_test_context = NULL;
-    CutSetCurrentTestContextFunction set_current_test_context = NULL;
     CutStartupFunction startup = NULL;
     CutShutdownFunction shutdown = NULL;
     CutTeardownFunction teardown = NULL;
@@ -474,9 +514,9 @@ create_test_case (CutLoader *loader)
     g_module_symbol(priv->module, "setup", (gpointer)&setup);
     g_module_symbol(priv->module, "teardown", (gpointer)&teardown);
     g_module_symbol(priv->module, "get_current_test_context",
-                    (gpointer)&get_current_test_context);
+                    (gpointer)get_current_test_context);
     g_module_symbol(priv->module, "set_current_test_context",
-                    (gpointer)&set_current_test_context);
+                    (gpointer)set_current_test_context);
     g_module_symbol(priv->module, "startup", (gpointer)&startup);
     g_module_symbol(priv->module, "shutdown", (gpointer)&shutdown);
 
@@ -492,8 +532,8 @@ create_test_case (CutLoader *loader)
     g_free(filename);
     test_case = cut_test_case_new(test_case_name,
                                   setup, teardown,
-                                  get_current_test_context,
-                                  set_current_test_context,
+                                  *get_current_test_context,
+                                  *set_current_test_context,
                                   startup, shutdown);
     g_free(test_case_name);
 
@@ -503,27 +543,15 @@ create_test_case (CutLoader *loader)
     return test_case;
 }
 
-static void
-set_attributes (CutTest *test, GList *attributes)
-{
-    GList *node;
-    for (node = attributes; node; node = g_list_next(node)) {
-        CutTestAttribute *attribute = (CutTestAttribute *)node->data;
-        cut_test_set_attribute(test, attribute->name, attribute->value);
-        g_free((gchar *)attribute->name);
-        g_free((gchar *)attribute->value);
-        g_free(attribute);
-    }
-    g_list_free(attributes);
-}
-
 CutTestCase *
 cut_loader_load_test_case (CutLoader *loader)
 {
+    CutLoaderPrivate *priv;
     GList *node;
     GList *test_names;
     CutTestCase *test_case;
-    CutLoaderPrivate *priv;
+    CutGetCurrentTestContextFunction get_current_test_context;
+    CutSetCurrentTestContextFunction set_current_test_context;
 
     priv = CUT_LOADER_GET_PRIVATE(loader);
     if (!priv->so_filename)
@@ -542,46 +570,20 @@ cut_loader_load_test_case (CutLoader *loader)
     if (!test_names)
         return NULL;
 
-    test_case = create_test_case(loader);
+    test_case = create_test_case(loader,
+                                 &get_current_test_context,
+                                 &set_current_test_context);
     for (node = test_names; node; node = g_list_next(node)) {
         gchar *name;
-        CutTest *test;
         CutTestFunction function = NULL;
 
         name = node->data;
         g_module_symbol(priv->module, name, (gpointer)&function);
-        if (function) {
-            GList *attributes = NULL;
-            gchar *data_setup_function_name;
-            CutDataSetupFunction data_setup_function = NULL;
-
-            data_setup_function_name =
-                g_strconcat(DATA_SETUP_FUNCTION_NAME_PREFIX,
-                            name + strlen(TEST_NAME_PREFIX),
-                            NULL);
-            g_module_symbol(priv->module, data_setup_function_name,
-                            (gpointer)&data_setup_function);
-
-            if (data_setup_function) {
-                CutTestIterator *test_iterator;
-                CutIteratedTestFunction test_function;
-
-                test_function = (CutIteratedTestFunction)function;
-                test_iterator = cut_test_iterator_new(name,
-                                                      test_function,
-                                                      data_setup_function);
-                test = CUT_TEST(test_iterator);
-            } else {
-                test = cut_test_new(name, function);
-            }
-            if (cut_loader_support_attribute(loader))
-                attributes = collect_attributes(priv, name);
-            if (attributes) {
-                set_attributes(test, attributes);
-            }
-            cut_test_case_add_test(test_case, test);
-            g_object_unref(test);
-        }
+        if (function)
+            register_test(loader, test_case,
+                          get_current_test_context,
+                          set_current_test_context,
+                          name, function);
     }
     g_list_free(test_names);
 

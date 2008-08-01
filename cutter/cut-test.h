@@ -39,7 +39,7 @@ typedef struct _CutTestClass    CutTestClass;
 typedef struct _CutTestResultClass    CutTestResultClass;
 
 typedef void    (*CutTestFunction)     (void);
-typedef void    (*CutDataSetupFunction)(void);
+typedef void    (*CutAttributesSetupFunction)(void);
 typedef void    (*CutSetupFunction)    (void);
 typedef void    (*CutTeardownFunction) (void);
 typedef CutTestContext *(*CutGetCurrentTestContextFunction) (void);
@@ -108,7 +108,6 @@ gboolean     cut_test_run                 (CutTest        *test,
 const gchar *cut_test_get_name            (CutTest     *test);
 void         cut_test_set_name            (CutTest     *test,
                                            const gchar *name);
-CutDataSetupFunction cut_test_get_data_setup_function(CutTest *test);
 const gchar *cut_test_get_full_name       (CutTest     *test);
 const gchar *cut_test_get_description     (CutTest     *test);
 void         cut_test_get_start_time      (CutTest     *test,

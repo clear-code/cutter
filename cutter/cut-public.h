@@ -44,12 +44,6 @@ extern "C" {
 
 typedef struct _CutTestContext     CutTestContext;
 
-typedef struct _CutTestAttribute CutTestAttribute;
-struct _CutTestAttribute {
-    const char *name;
-    const char *value;
-};
-
 typedef enum {
     CUT_TEST_RESULT_INVALID = -1,
     CUT_TEST_RESULT_SUCCESS,
@@ -121,6 +115,10 @@ void  cut_utils_get_fixture_data_string_and_path(CutTestContext *context,
 
 void  cut_test_context_add_data             (CutTestContext *context,
                                              const char     *first_data_name,
+                                             ...) CUT_GNUC_NULL_TERMINATED;
+
+void  cut_test_context_set_attributes       (CutTestContext *context,
+                                             const char     *first_attribute_name,
                                              ...) CUT_GNUC_NULL_TERMINATED;
 
 int   cut_test_context_trap_fork            (CutTestContext *context,

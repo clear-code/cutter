@@ -4,7 +4,7 @@
 const char *bug_bug_id (void);
 
 /* attribute */
-const CutTestAttribute *attributes_attribute (void);
+void attributes_attribute (void);
 const char *description_description (void);
 
 /* tests */
@@ -19,17 +19,12 @@ test_bug_id (void)
 }
 
 
-const CutTestAttribute *
+void
 attributes_attribute (void)
 {
-    static const CutTestAttribute attributes[] = {
-        {"bug", "1234"},
-        {"priority", "5678"},
-        {"bug", "9"},
-        {NULL, NULL}
-    };
-
-    return attributes;
+    cut_set_attributes("bug", "1234",
+                       "priority", "5678",
+                       "bug", "9");
 }
 
 void

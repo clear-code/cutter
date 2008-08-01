@@ -1,5 +1,26 @@
 2008-07-31  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-test-attribute.c (test_multi_attributes): fix a test.
+
+	* test/fixtures/loader/attribute/stub-test-functions.c: use
+	cut_set_attributes().
+
+	* cutter/cut-test.h (CutAttributesSetupFunction): add.
+
+	* cutter/cut-test.h (cut_test_get_data_setup_function): remove
+	needless function.
+
+	* cutter/cut-test.h (CutDataSetupFunction): move to ...
+	* cutter/cut-test-iterator.h: ... here.
+
+	* cutter/cut-public.h (CutTestAttribute): remove.
+	* cutter/cut-public.h, cutter/cut-test-context.c
+	(cut_test_context_set_attributes): add.
+
+	* cutter/cut-loader.c: get attributes from cut_set_attributes().
+
+	* cuter.h (cut_set_attributes): add.
+
 	* test/test-cut-test-attribute.c,
 	test/fixtures/loader/attribute/stub-test-functions.c: cleanup.
 
