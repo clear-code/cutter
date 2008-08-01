@@ -13,8 +13,3 @@
   * elapsed time
 * coordinattion with TestLink.
 * image diff.
-* change test attribute register API like data register API.
-  * use cut_add_data() like API not string return.
-  * backword compatibility?
-    * use meta_XXX() function name not attributes_XXX()?
-    * cut_add_meta_data()?

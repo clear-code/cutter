@@ -1,3 +1,8 @@
+2008-08-01  Kouhei Sutou  <kou@cozmixng.org>
+
+	* TODO: remove: change test attribute register API like data
+	register API.
+
 2008-07-31  Kouhei Sutou  <kou@cozmixng.org>
 
 	* test/test-cut-test-attribute.c (test_multi_attributes): fix a test.
