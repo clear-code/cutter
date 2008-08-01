@@ -23,14 +23,11 @@
 
 #include "gst-cutter-console-output.h"
 
-#include <cutter/cut-run-context.h>
-#include <cutter/cut-stream-parser.h>
+#include <cutter/cut-stream-reader.h>
 #include <cutter/cut-listener.h>
 #include <cutter/cut-ui.h>
 #include <cutter/cut-verbose-level.h>
 #include <cutter/cut-enum-types.h>
-
-#include "cut-gst-run-context.h"
 
 static const GstElementDetails cutter_console_output_details =
     GST_ELEMENT_DETAILS("Cutter console output",
@@ -48,8 +45,7 @@ static GstStaticPadTemplate cutter_console_output_sink_template_factory =
 typedef struct _GstCutterConsoleOutputPrivate    GstCutterConsoleOutputPrivate;
 struct _GstCutterConsoleOutputPrivate
 {
-    CutRunContext *run_context;
-    CutStreamParser *parser;
+    CutRunContext *reader;
     GObject *ui;
     gboolean use_color;
     gchar *verbose_level_string;
@@ -125,12 +121,12 @@ gst_cutter_console_output_class_init (GstCutterConsoleOutputClass * klass)
 }
 
 static void
-gst_cutter_console_output_init (GstCutterConsoleOutput *cutter_console_output, GstCutterConsoleOutputClass * klass)
+gst_cutter_console_output_init (GstCutterConsoleOutput *cutter_console_output,
+                                GstCutterConsoleOutputClass * klass)
 {
     GstCutterConsoleOutputPrivate *priv = GST_CUTTER_CONSOLE_OUTPUT_GET_PRIVATE(cutter_console_output);
 
-    priv->run_context = NULL;
-    priv->parser = NULL;
+    priv->reader = NULL;
     priv->ui = NULL;
     priv->use_color = FALSE;
     priv->verbose_level_string = NULL;
@@ -139,16 +135,13 @@ gst_cutter_console_output_init (GstCutterConsoleOutput *cutter_console_output, G
 static void
 dispose (GObject *object)
 {
-    GstCutterConsoleOutputPrivate *priv = GST_CUTTER_CONSOLE_OUTPUT_GET_PRIVATE(object);
+    GstCutterConsoleOutputPrivate *priv;
 
-    if (priv->run_context) {
-        g_object_unref(priv->run_context);
-        priv->run_context = NULL;
-    }
+    priv = GST_CUTTER_CONSOLE_OUTPUT_GET_PRIVATE(object);
 
-    if (priv->parser) {
-        g_object_unref(priv->parser);
-        priv->parser = NULL;
+    if (priv->reader) {
+        g_object_unref(priv->reader);
+        priv->reader = NULL;
     }
 
     if (priv->ui) {
@@ -170,8 +163,9 @@ set_property (GObject      *object,
               const GValue *value,
               GParamSpec   *pspec)
 {
-    GstCutterConsoleOutputPrivate *priv = GST_CUTTER_CONSOLE_OUTPUT_GET_PRIVATE(object);
+    GstCutterConsoleOutputPrivate *priv;
 
+    priv = GST_CUTTER_CONSOLE_OUTPUT_GET_PRIVATE(object);
     switch (prop_id) {
       case ARG_USE_COLOR:
         priv->use_color = g_value_get_boolean(value);
@@ -191,8 +185,9 @@ get_property (GObject    *object,
               GValue     *value,
               GParamSpec *pspec)
 {
-    GstCutterConsoleOutputPrivate *priv = GST_CUTTER_CONSOLE_OUTPUT_GET_PRIVATE(object);
+    GstCutterConsoleOutputPrivate *priv;
 
+    priv = GST_CUTTER_CONSOLE_OUTPUT_GET_PRIVATE(object);
     switch (prop_id) {
       case ARG_USE_COLOR:
         g_value_set_boolean(value, priv->use_color);
@@ -209,15 +204,18 @@ get_property (GObject    *object,
 static gboolean
 start (GstBaseSink *base_sink)
 {
-    GstCutterConsoleOutputPrivate *priv = GST_CUTTER_CONSOLE_OUTPUT_GET_PRIVATE(base_sink);
+    GstCutterConsoleOutputPrivate *priv;
+    CutVerboseLevel verbose_level;
 
-    priv->run_context = g_object_new(CUT_TYPE_GST_RUN_CONTEXT, NULL);
-    priv->ui = cut_ui_new("console", 
+    priv = GST_CUTTER_CONSOLE_OUTPUT_GET_PRIVATE(base_sink);
+
+    verbose_level = cut_verbose_level_parse(priv->verbose_level_string, NULL);
+    priv->ui = cut_ui_new("console",
                           "use-color", priv->use_color,
-                          "verbose-level", cut_verbose_level_parse(priv->verbose_level_string, NULL),
+                          "verbose-level", verbose_level,
                           NULL);
-    cut_listener_attach_to_run_context(CUT_LISTENER(priv->ui), priv->run_context);
-    priv->parser = cut_stream_parser_new(priv->run_context);
+    priv->reader = cut_stream_reader_new();
+    cut_listener_attach_to_run_context(CUT_LISTENER(priv->ui), priv->reader);
 
     return TRUE;
 }
@@ -225,9 +223,11 @@ start (GstBaseSink *base_sink)
 static gboolean
 stop (GstBaseSink *base_sink)
 {
-    GstCutterConsoleOutputPrivate *priv = GST_CUTTER_CONSOLE_OUTPUT_GET_PRIVATE(base_sink);
+    GstCutterConsoleOutputPrivate *priv;
 
-    cut_listener_detach_from_run_context(CUT_LISTENER(priv->ui), priv->run_context);
+    priv = GST_CUTTER_CONSOLE_OUTPUT_GET_PRIVATE(base_sink);
+    cut_stream_reader_end_read(CUT_STREAM_READER(priv->reader));
+    cut_listener_detach_from_run_context(CUT_LISTENER(priv->ui), priv->reader);
 
     return TRUE;
 }
@@ -237,13 +237,15 @@ render (GstBaseSink *base_sink, GstBuffer *buffer)
 {
     guint size;
     guint8 *data;
-    GstCutterConsoleOutputPrivate *priv = GST_CUTTER_CONSOLE_OUTPUT_GET_PRIVATE(base_sink);
+    GstCutterConsoleOutputPrivate *priv;
 
+    priv = GST_CUTTER_CONSOLE_OUTPUT_GET_PRIVATE(base_sink);
     size = GST_BUFFER_SIZE(buffer);
     data = GST_BUFFER_DATA(buffer);
 
     if (size > 0)
-        cut_stream_parser_parse(priv->parser, (gchar *)data, size, NULL);
+        cut_stream_reader_read(CUT_STREAM_READER(priv->reader),
+                               (gchar *)data, size);
 
     return GST_FLOW_OK;
 }

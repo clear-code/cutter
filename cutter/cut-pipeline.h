@@ -22,7 +22,7 @@
 
 #include <glib-object.h>
 
-#include <cutter/cut-run-context.h>
+#include <cutter/cut-stream-reader.h>
 
 G_BEGIN_DECLS
 
@@ -38,18 +38,19 @@ typedef struct _CutPipelineClass CutPipelineClass;
 
 struct _CutPipeline
 {
-    CutRunContext object;
+    CutStreamReader object;
 };
 
 struct _CutPipelineClass
 {
-    CutRunContextClass parent_class;
+    CutStreamReaderClass parent_class;
 };
 
 GType          cut_pipeline_get_type  (void) G_GNUC_CONST;
 
 CutRunContext *cut_pipeline_new       (void);
-CutRunContext *cut_pipeline_new_from_run_context (CutRunContext *run_context);
+CutRunContext *cut_pipeline_new_from_run_context
+                                      (CutRunContext *run_context);
 
 G_END_DECLS
 

@@ -55,7 +55,8 @@ libcutter_public_headers = 			\
 		cut-verbose-level.h		\
 		cut-sequence-matcher.h		\
 		cut-diff.h			\
-		cut-analyzer.h
+		cut-analyzer.h			\
+		cut-stream-reader.h
 
 noinst_headers = 			\
 		cut-loader.h		\
@@ -139,7 +140,8 @@ libcutter_la_SOURCES =				\
 		cut-stream-parser.c		\
 		cut-sequence-matcher.c		\
 		cut-diff.c			\
-		cut-analyzer.c
+		cut-analyzer.c			\
+		cut-stream-reader.c
 
 libcutter_la_LDFLAGS =				\
 	-version-info $(LT_VERSION_INFO)	\

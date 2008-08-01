@@ -48,11 +48,11 @@
 #include "cut-pipeline.h"
 #include "cut-test-result.h"
 #include "cut-runner.h"
-#include "cut-stream-parser.h"
 #include "cut-experimental.h"
 #include "cut-utils.h"
 
-#define CUT_PIPELINE_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_PIPELINE, CutPipelinePrivate))
+#define CUT_PIPELINE_GET_PRIVATE(obj) \
+    (G_TYPE_INSTANCE_GET_PRIVATE((obj), CUT_TYPE_PIPELINE, CutPipelinePrivate))
 
 typedef struct _CutPipelinePrivate	CutPipelinePrivate;
 struct _CutPipelinePrivate
@@ -62,16 +62,13 @@ struct _CutPipelinePrivate
     guint child_out_source_id;
     GIOChannel *child_out;
     gint child_pipe[2];
-    CutStreamParser *parser;
-    gboolean error_emitted;
-    gboolean eof;
 };
 
 static CutRunnerIface *parent_runner_iface;
 
 static void runner_init (CutRunnerIface *iface);
 
-G_DEFINE_TYPE_WITH_CODE(CutPipeline, cut_pipeline, CUT_TYPE_RUN_CONTEXT,
+G_DEFINE_TYPE_WITH_CODE(CutPipeline, cut_pipeline, CUT_TYPE_STREAM_READER,
                         G_IMPLEMENT_INTERFACE(CUT_TYPE_RUNNER, runner_init))
 
 static void     dispose      (GObject         *object);
@@ -102,10 +99,6 @@ cut_pipeline_init (CutPipeline *pipeline)
     priv->child_out         = NULL;
     priv->child_pipe[0] = -1;
     priv->child_pipe[1] = -1;
-
-    priv->parser = NULL;
-    priv->error_emitted = FALSE;
-    priv->eof = FALSE;
 }
 
 static void
@@ -145,18 +138,6 @@ shutdown_child_out_channel (CutPipelinePrivate *priv)
 }
 
 static void
-dispose_parser (CutPipelinePrivate *priv)
-{
-    if (priv->parser) {
-        CutStreamParser *parser;
-
-        parser = priv->parser;
-        priv->parser = NULL;
-        g_object_unref(parser);
-    }
-}
-
-static void
 dispose (GObject *object)
 {
     CutPipelinePrivate *priv = CUT_PIPELINE_GET_PRIVATE(object);
@@ -172,8 +153,6 @@ dispose (GObject *object)
 
     if (priv->child_out)
         shutdown_child_out_channel(priv);
-
-    dispose_parser(priv);
 
     G_OBJECT_CLASS(cut_pipeline_parent_class)->dispose(object);
 }
@@ -209,9 +188,14 @@ cut_pipeline_new_from_run_context (CutRunContext *run_context)
     _run_context = CUT_RUN_CONTEXT(pipeline);                           \
     cut_run_context_emit_error(_run_context, "StreamError", error,      \
                                format, ## __VA_ARGS__);                 \
-    _priv->error_emitted = TRUE;                                        \
     emit_complete_signal(pipeline, FALSE);                              \
 } while (0)
+
+static void
+emit_complete_signal (CutPipeline *pipeline, gboolean success)
+{
+    g_signal_emit_by_name(pipeline, "complete-run", success);
+}
 
 static void
 reap_child (CutPipeline *pipeline, GPid pid)
@@ -225,81 +209,34 @@ reap_child (CutPipeline *pipeline, GPid pid)
     remove_child_out_watch_func(priv);
     shutdown_child_out_channel(priv);
     close_child(priv);
-    dispose_parser(priv);
 }
 
-static void
-emit_complete_signal (CutPipeline *pipeline, gboolean success)
-{
-    g_signal_emit_by_name(pipeline, "complete-run", success);
-}
-
-#define BUFFER_SIZE 512
-static void
+static gboolean
 read_stream (CutPipeline *pipeline, GIOChannel *channel)
 {
-    CutPipelinePrivate *priv;
-
-    priv = CUT_PIPELINE_GET_PRIVATE(pipeline);
-
-    while (!priv->error_emitted && !priv->eof) {
-        GIOStatus status;
-        gchar stream[BUFFER_SIZE + 1];
-        gsize length = 0;
-        GError *error = NULL;
-
-        status = g_io_channel_read_chars(channel, stream, BUFFER_SIZE, &length,
-                                         &error);
-        if (status == G_IO_STATUS_EOF)
-            priv->eof = TRUE;
-
-        if (error) {
-            emit_error(pipeline, error, "failed to read stream");
-            break;
-        }
-
-        if (length <= 0)
-            break;
-
-        cut_stream_parser_parse(priv->parser, stream, length, &error);
-        if (error) {
-            emit_error(pipeline, error, "failed to parse stream");
-            break;
-        }
-
-        if (priv->eof) {
-            cut_stream_parser_end_parse(priv->parser, &error);
-            if (error) {
-                emit_error(pipeline, error, "failed to end parse stream");
-                break;
-            }
-        } else {
-            g_main_context_iteration(NULL, FALSE);
-        }
-    }
+    return cut_stream_reader_read_from_io_channel(CUT_STREAM_READER(pipeline),
+                                                  channel);
 }
 
 static gboolean
 child_out_watch_func (GIOChannel *channel, GIOCondition condition, gpointer data)
 {
-    CutPipeline *pipeline;
+    gboolean keep_callback = TRUE;
 
     if (!CUT_IS_PIPELINE(data))
         return FALSE;
 
-    pipeline = CUT_PIPELINE(data);
-
     if (condition & G_IO_IN ||
         condition & G_IO_PRI) {
-        read_stream(pipeline, channel);
+        keep_callback = read_stream(CUT_PIPELINE(data), channel);
     }
 
     if (condition & G_IO_ERR ||
         condition & G_IO_HUP) {
-        return FALSE;
+        keep_callback = FALSE;
     }
 
-    return TRUE;
+    return keep_callback;
 }
 
 static void
@@ -311,8 +248,6 @@ child_watch_func (GPid pid, gint status, gpointer data)
 
         priv = CUT_PIPELINE_GET_PRIVATE(pipeline);
         read_stream(pipeline, priv->child_out);
-        if (!priv->error_emitted)
-            emit_complete_signal(pipeline, WEXITSTATUS(status) == EXIT_SUCCESS);
         reap_child(pipeline, pid);
     }
 }
@@ -470,9 +405,6 @@ run_async (CutPipeline *pipeline)
         return;
     }
 
-    priv->error_emitted = FALSE;
-    priv->eof = FALSE;
-    priv->parser = cut_stream_parser_new(CUT_RUN_CONTEXT(pipeline));
     priv->process_source_id = g_child_watch_add(priv->pid,
                                                 child_watch_func,
                                                 pipeline);

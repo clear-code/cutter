@@ -1,5 +1,16 @@
 2008-07-31  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/Makefile.am: add cut-stream-reader.[ch].
+
+	* cutter/cut-stream-reader.[ch]: add.
+
+	* cutter/cut-pipeline.[ch],
+	gst-plugins/gst-cutter-console-output.c: use CutStreamReader.
+
+	* gst-plugins/Makefile.am: remove cut-gst-run-context.[ch].
+
+	* gst-plugins/cut-gst-run-context.[ch]: remove.
+
 	* **/.gitignore: add.
 
 	* TODO:

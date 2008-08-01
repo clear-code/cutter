@@ -6,8 +6,7 @@ gst_plugins_LTLIBRARIES = libgstcuttertest.la
 noinst_HEADERS = 			\
 	gst-cutter-test-runner.h	\
 	gst-cutter-console-output.h	\
-	gst-cutter-server.h		\
-	cut-gst-run-context.h
+	gst-cutter-server.h
 
 INCLUDES = 			\
 	 -I$(top_builddir)	\
@@ -17,8 +16,7 @@ libgstcuttertest_la_SOURCES =		\
 	gst-cutter-test.c		\
 	gst-cutter-test-runner.c	\
 	gst-cutter-console-output.c	\
-	gst-cutter-server.c		\
-	cut-gst-run-context.c
+	gst-cutter-server.c
 
 libgstcuttertest_la_CFLAGS = 		\
         $(GST_PLUGINS_BASE_CFLAGS)	\
