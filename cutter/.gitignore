@@ -1,0 +1,11 @@
+/config.h
+/config.h.in
+/cut-enum-types.c
+/cut-enum-types.h
+/cut-marshalers.c
+/cut-marshalers.h
+/cut-version.h
+/cutter
+/stamp-cut-enum-types-c
+/stamp-cut-enum-types-h
+/stamp-h1
