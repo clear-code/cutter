@@ -1,5 +1,8 @@
 2008-08-01  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-analyzer.c (BUFFER_SIZE): remove
+          needless definition.
+
 	* TODO: remove: change test attribute register API like data
 	register API.
 

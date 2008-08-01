@@ -26,8 +26,6 @@
 #include "cut-analyzer.h"
 #include "cut-file-stream-reader.h"
 
-#define BUFFER_SIZE 4096
-
 #define CUT_ANALYZER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), CUT_TYPE_ANALYZER, CutAnalyzerPrivate))
 
 typedef struct _CutAnalyzerPrivate	CutAnalyzerPrivate;
