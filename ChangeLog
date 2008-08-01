@@ -8,6 +8,7 @@
           - test history chart.
           - coordinattion with TestLink.
 	  - image diff.
+	  - change test attribute register API like data register API.
 
 2008-07-30  Kouhei Sutou  <kou@cozmixng.org>
 
