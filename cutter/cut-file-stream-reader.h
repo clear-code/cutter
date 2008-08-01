@@ -26,6 +26,8 @@
 
 G_BEGIN_DECLS
 
+#define CUT_FILE_STREAM_READER_ERROR           (cut_file_stream_reader_error_quark())
+
 #define CUT_TYPE_FILE_STREAM_READER            (cut_file_stream_reader_get_type ())
 #define CUT_FILE_STREAM_READER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_FILE_STREAM_READER, CutFileStreamReader))
 #define CUT_FILE_STREAM_READER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_FILE_STREAM_READER, CutFileStreamReaderClass))
@@ -46,6 +48,12 @@ struct _CutFileStreamReaderClass
     CutStreamReaderClass parent_class;
 };
 
+typedef enum
+{
+    CUT_FILE_STREAM_READER_ERROR_FILE
+} CutFileStreamReaderError;
+
+GQuark         cut_file_stream_reader_error_quark(void);
 GType          cut_file_stream_reader_get_type  (void) G_GNUC_CONST;
 
 CutRunContext *cut_file_stream_reader_new       (const gchar *file_name);

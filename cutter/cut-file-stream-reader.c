@@ -169,12 +169,20 @@ cut_file_stream_reader_new (const gchar *file_name)
                         NULL);
 }
 
-#define emit_error(file_stream_reader, error, format, ...) do           \
+GQuark
+cut_file_stream_reader_error_quark (void)
+{
+    return g_quark_from_static_string("cut-file-stream-reader-error-quark");
+}
+
+#define emit_error(file_stream_reader, code, sub_error, format, ...) do \
 {                                                                       \
     CutRunContext *_run_context;                                        \
                                                                         \
     _run_context = CUT_RUN_CONTEXT(file_stream_reader);                 \
-    cut_run_context_emit_error(_run_context, "FileError", error,        \
+    cut_run_context_emit_error(_run_context,                            \
+                               CUT_FILE_STREAM_READER_ERROR,            \
+                               code, sub_error,                         \
                                format, ## __VA_ARGS__);                 \
     emit_complete_signal(file_stream_reader, FALSE);                    \
 } while (0)
@@ -197,7 +205,7 @@ runner_run_async (CutRunner *runner)
     priv = CUT_FILE_STREAM_READER_GET_PRIVATE(file_stream_reader);
     channel = g_io_channel_new_file(priv->file_name, "r", &error);
     if (error) {
-        emit_error(file_stream_reader, error,
+        emit_error(file_stream_reader, CUT_FILE_STREAM_READER_ERROR_FILE, error,
                    "can't open file: %s", priv->file_name);
         return;
     }

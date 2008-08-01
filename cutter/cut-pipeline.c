@@ -179,14 +179,21 @@ cut_pipeline_new_from_run_context (CutRunContext *run_context)
                         NULL);
 }
 
-#define emit_error(pipeline, error, format, ...) do                     \
+GQuark
+cut_pipeline_error_quark (void)
+{
+    return g_quark_from_static_string("cut-pipeline-error-quark");
+}
+
+#define emit_error(pipeline, code, error, format, ...) do               \
 {                                                                       \
     CutPipelinePrivate *_priv;                                          \
     CutRunContext *_run_context;                                        \
                                                                         \
     _priv = CUT_PIPELINE_GET_PRIVATE(pipeline);                         \
     _run_context = CUT_RUN_CONTEXT(pipeline);                           \
-    cut_run_context_emit_error(_run_context, "PipelineError", error,    \
+    cut_run_context_emit_error(_run_context, CUT_PIPELINE_ERROR,        \
+                               code, error,                             \
                                format, ## __VA_ARGS__);                 \
     emit_complete_signal(pipeline, FALSE);                              \
 } while (0)
@@ -360,13 +367,15 @@ run_async (CutPipeline *pipeline)
     priv = CUT_PIPELINE_GET_PRIVATE(pipeline);
 
     if (pipe(priv->child_pipe) < 0) {
-        emit_error(pipeline, NULL, "can't create pipe: %s", strerror(errno));
+        emit_error(pipeline, CUT_PIPELINE_ERROR_PIPE, NULL,
+                   "failed to create pipe: %s", strerror(errno));
         return;
     }
 
     command_line_args = create_command_line_args(pipeline);
     if (!command_line_args) {
-        emit_error(pipeline, NULL, "failed to generate command line");
+        emit_error(pipeline, CUT_PIPELINE_ERROR_COMMAND_LINE, NULL,
+                   "failed to generate command line");
         return;
     }
 
@@ -390,18 +399,21 @@ run_async (CutPipeline *pipeline)
     cut_utils_close_pipe(priv->child_pipe, CUT_WRITE);
 
     if (!result) {
-        emit_error(pipeline, error, "failed to spawn child process");
+        emit_error(pipeline, CUT_PIPELINE_ERROR_SPAWN, error,
+                   "failed to spawn child process");
         return;
     }
 
     if (priv->pid == (GPid)0) {
-        emit_error(pipeline, error, "failed to get child PID");
+        emit_error(pipeline, CUT_PIPELINE_ERROR_CHILD_PID,
+                   error, "failed to get child PID");
         return;
     }
 
     priv->child_out = create_child_out_channel(pipeline);
     if (!priv->child_out) {
-        emit_error(pipeline, error, "failed to connect to child pipe");
+        emit_error(pipeline, CUT_PIPELINE_ERROR_PIPE,
+                   error, "failed to connect to child pipe");
         return;
     }
 

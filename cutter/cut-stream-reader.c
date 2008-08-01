@@ -88,14 +88,22 @@ cut_stream_reader_new (void)
     return g_object_new(CUT_TYPE_STREAM_READER, NULL);
 }
 
-#define emit_error(stream_reader, error, format, ...) do                \
+GQuark
+cut_stream_reader_error_quark (void)
+{
+    return g_quark_from_static_string("cut-stream-reader-error-quark");
+}
+
+#define emit_error(stream_reader, code, sub_error, format, ...) do      \
 {                                                                       \
     CutStreamReaderPrivate *_priv;                                      \
     CutRunContext *_run_context;                                        \
                                                                         \
     _priv = CUT_STREAM_READER_GET_PRIVATE(stream_reader);               \
     _run_context = CUT_RUN_CONTEXT(stream_reader);                      \
-    cut_run_context_emit_error(_run_context, "StreamError", error,      \
+    cut_run_context_emit_error(_run_context,                            \
+                               CUT_STREAM_READER_ERROR,                 \
+                               code, sub_error,                         \
                                format, ## __VA_ARGS__);                 \
     _priv->error_emitted = TRUE;                                        \
     emit_complete_signal(stream_reader, FALSE);                         \
@@ -128,18 +136,17 @@ cut_stream_reader_read_from_io_channel (CutStreamReader *stream_reader,
             eof = TRUE;
 
         if (error) {
-            emit_error(stream_reader, error, "failed to read stream");
+            emit_error(stream_reader,
+                       CUT_STREAM_READER_ERROR_READ,
+                       error, "failed to read stream");
             break;
         }
 
         if (length <= 0)
             break;
 
-        cut_stream_parser_parse(priv->parser, stream, length, &error);
-        if (error) {
-            emit_error(stream_reader, error, "failed to parse stream");
+        if (!cut_stream_reader_read(stream_reader, stream, length))
             break;
-        }
 
         if (eof) {
             cut_stream_reader_end_read(stream_reader);
@@ -160,7 +167,9 @@ cut_stream_reader_read (CutStreamReader *stream_reader,
     priv = CUT_STREAM_READER_GET_PRIVATE(stream_reader);
     cut_stream_parser_parse(priv->parser, stream, length, &error);
     if (error)
-        emit_error(stream_reader, error, "failed to parse stream");
+        emit_error(stream_reader,
+                   CUT_STREAM_READER_ERROR_PARSE,
+                   error, "failed to parse stream");
 
     return !priv->error_emitted;
 }
@@ -177,7 +186,9 @@ cut_stream_reader_end_read (CutStreamReader *stream_reader)
 
     cut_stream_parser_end_parse(priv->parser, &error);
     if (error)
-        emit_error(stream_reader, error, "failed to end parse stream");
+        emit_error(stream_reader,
+                   CUT_STREAM_READER_ERROR_END_PARSE,
+                   error, "failed to end parse stream");
 
     return !priv->error_emitted;
 }

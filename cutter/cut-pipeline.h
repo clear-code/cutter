@@ -26,6 +26,8 @@
 
 G_BEGIN_DECLS
 
+#define CUT_PIPELINE_ERROR           (cut_pipeline_error_quark())
+
 #define CUT_TYPE_PIPELINE            (cut_pipeline_get_type ())
 #define CUT_PIPELINE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_PIPELINE, CutPipeline))
 #define CUT_PIPELINE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_PIPELINE, CutPipelineClass))
@@ -46,6 +48,15 @@ struct _CutPipelineClass
     CutStreamReaderClass parent_class;
 };
 
+typedef enum
+{
+    CUT_PIPELINE_ERROR_PIPE,
+    CUT_PIPELINE_ERROR_COMMAND_LINE,
+    CUT_PIPELINE_ERROR_SPAWN,
+    CUT_PIPELINE_ERROR_CHILD_PID
+} CutPipelineError;
+
+GQuark         cut_pipeline_error_quark(void);
 GType          cut_pipeline_get_type  (void) G_GNUC_CONST;
 
 CutRunContext *cut_pipeline_new       (void);

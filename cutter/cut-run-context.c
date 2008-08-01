@@ -35,6 +35,11 @@
 #include "cut-marshalers.h"
 #include "cut-enum-types.h"
 
+#if !GLIB_CHECK_VERSION(2, 18, 0)
+#  define g_set_error_literal(error, domain, code, message) \
+    g_set_error(error, domain, code, "%s", message)
+#endif
+
 #define CUT_RUN_CONTEXT_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_RUN_CONTEXT, CutRunContextPrivate))
 
 typedef struct _CutRunContextPrivate	CutRunContextPrivate;
@@ -718,8 +723,8 @@ cut_run_context_class_init (CutRunContextClass *klass)
                        G_SIGNAL_RUN_LAST,
                        G_STRUCT_OFFSET(CutRunContextClass, error),
                        NULL, NULL,
-                       _cut_marshal_VOID__STRING_STRING,
-                       G_TYPE_NONE, 2, G_TYPE_STRING, G_TYPE_STRING);
+                        g_cclosure_marshal_VOID__POINTER,
+                       G_TYPE_NONE, 1, G_TYPE_POINTER);
 
     signals[CRASHED]
         = g_signal_new("crashed",
@@ -1723,34 +1728,38 @@ cut_run_context_start (CutRunContext *context)
 
 void
 cut_run_context_emit_error (CutRunContext *context,
-                            const gchar   *name,
-                            GError        *error,
+                            GQuark         domain,
+                            gint           code,
+                            GError        *sub_error,
                             const gchar   *format,
                             ...)
 {
     GString *message;
     va_list var_args;
+    GError *error = NULL;
 
     message = g_string_new(NULL);
-
-    if (error) {
-        g_string_append_printf(message, "%s:%d",
-                               g_quark_to_string(error->domain), error->code);
-        if (error->message)
-            g_string_append_printf(message, ": %s", error->message);
-
-        g_string_append(message, ": ");
-    }
 
     va_start(var_args, format);
     g_string_append_vprintf(message, format, var_args);
     va_end(var_args);
 
-    g_signal_emit(context, signals[ERROR], 0, name, message->str);
+    if (sub_error) {
+        g_string_append_printf(message,
+                               ": %s:%d",
+                               g_quark_to_string(sub_error->domain),
+                               sub_error->code);
+        if (sub_error->message)
+            g_string_append_printf(message, ": %s", sub_error->message);
 
-    if (error)
-        g_error_free(error);
+        g_error_free(sub_error);
+    }
+
+    g_set_error_literal(&error, domain, code, message->str);
     g_string_free(message, TRUE);
+    g_signal_emit(context, signals[ERROR], 0, error);
+
+    g_error_free(error);
 }
 
 void

@@ -26,11 +26,13 @@
 
 G_BEGIN_DECLS
 
-#define CUT_TYPE_STREAM_READER            (cut_stream_reader_get_type ())
-#define CUT_STREAM_READER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_STREAM_READER, CutStreamReader))
-#define CUT_STREAM_READER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_STREAM_READER, CutStreamReaderClass))
-#define CUT_IS_STREAM_READER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_STREAM_READER))
-#define CUT_IS_STREAM_READER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_STREAM_READER))
+#define CUT_STREAM_READER_ERROR           (cut_stream_reader_error_quark())
+
+#define CUT_TYPE_STREAM_READER            (cut_stream_reader_get_type())
+#define CUT_STREAM_READER(obj)            (G_TYPE_CHECK_INSTANCE_CAST((obj), CUT_TYPE_STREAM_READER, CutStreamReader))
+#define CUT_STREAM_READER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST((klass), CUT_TYPE_STREAM_READER, CutStreamReaderClass))
+#define CUT_IS_STREAM_READER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE((obj), CUT_TYPE_STREAM_READER))
+#define CUT_IS_STREAM_READER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass), CUT_TYPE_STREAM_READER))
 #define CUT_STREAM_READER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_STREAM_READER, CutStreamReaderClass))
 
 typedef struct _CutStreamReader      CutStreamReader;
@@ -45,6 +47,15 @@ struct _CutStreamReaderClass
 {
     CutRunContextClass parent_class;
 };
+
+typedef enum
+{
+    CUT_STREAM_READER_ERROR_READ,
+    CUT_STREAM_READER_ERROR_PARSE,
+    CUT_STREAM_READER_ERROR_END_PARSE
+} CutStreamReaderError;
+
+GQuark         cut_stream_reader_error_quark(void);
 
 GType          cut_stream_reader_get_type  (void) G_GNUC_CONST;
 

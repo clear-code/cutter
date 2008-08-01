@@ -80,6 +80,14 @@ cut_analyzer_new (void)
     return g_object_new(CUT_TYPE_ANALYZER, NULL);
 }
 
+static void
+error_cb (CutRunContext *context, GError *error, gpointer user_data)
+{
+    GError **user_error = user_data;
+
+    *user_error = g_error_copy(error);
+}
+
 gboolean
 cut_analyzer_analyze (CutAnalyzer *analyzer, const gchar *log_directory,
                       GError **error)
@@ -89,6 +97,7 @@ cut_analyzer_analyze (CutAnalyzer *analyzer, const gchar *log_directory,
     const gchar *name;
     GList *names = NULL;
     GList *node;
+    gboolean success =TRUE;
 
     priv = CUT_ANALYZER_GET_PRIVATE(analyzer);
 
@@ -107,14 +116,19 @@ cut_analyzer_analyze (CutAnalyzer *analyzer, const gchar *log_directory,
     g_dir_close(log_dir);
 
     names = g_list_reverse(g_list_sort(names, (GCompareFunc)g_utf8_collate));
-    for (node = names; node; node = g_list_next(node)) {
+    for (node = names; node && success; node = g_list_next(node)) {
         gchar *file_name = node->data;
         CutRunContext *reader;
+        GError *local_error = NULL;
 
-        g_print("%s\n", file_name);
         reader = cut_file_stream_reader_new(file_name);
+        g_signal_connect(reader, "error", G_CALLBACK(error_cb), &local_error);
         priv->run_contexts = g_list_append(priv->run_contexts, reader);
         cut_run_context_start(reader);
+        if (local_error) {
+            success = FALSE;
+            g_propagate_error(error, local_error);
+        }
     }
 
     if (names) {
@@ -122,7 +136,7 @@ cut_analyzer_analyze (CutAnalyzer *analyzer, const gchar *log_directory,
         g_list_free(names);
     }
 
-    return TRUE;
+    return success;
 }
 
 const GList *

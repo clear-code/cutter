@@ -1,5 +1,13 @@
 2008-07-31  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-analyzer.c: handle error.
+
+	* cutter/cut-run-context.[ch] (cut_run_context_emit_error): emit
+	error with GError * not gchar *name and gchar *detail.
+
+	* cutter/cut-file-stream-reader.[ch], cutter/cut-pipeline.[ch],
+	cutter/cut-stream-reader.[ch]: follow the above change.
+
 	* cutter/cut-main.c: CutAnalyzer isn't CutRunContext now.
 
 	* cutter/Makefile.am: add cut-file-stream-reader.[ch].
