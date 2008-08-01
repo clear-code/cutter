@@ -287,10 +287,7 @@ cut_create_run_context (void)
 {
     CutRunContext *run_context;
 
-    if (mode == MODE_ANALYZE)
-        run_context = cut_analyzer_new();
-    else
-        run_context = cut_test_runner_new();
+    run_context = cut_test_runner_new();
 
     cut_run_context_set_test_directory(run_context, test_directory);
     cut_run_context_set_log_directory(run_context, log_directory);
@@ -397,11 +394,28 @@ gboolean
 cut_run (void)
 {
     CutRunContext *run_context;
+    CutAnalyzer *analyzer;
     gboolean success = TRUE;
 
-    run_context = cut_create_run_context();
-    success = cut_start_run_context(run_context);
-    g_object_unref(run_context);
+    if (mode == MODE_ANALYZE) {
+        GError *error = NULL;
+
+        analyzer = cut_analyzer_new();
+        success = cut_analyzer_analyze(analyzer, log_directory, &error);
+        if (error) {
+            gchar *message;
+
+            message = cut_utils_inspect_g_error(error);
+            g_warning("%s", message);
+            g_free(message);
+            g_error_free(error);
+        }
+        g_object_unref(analyzer);
+    } else {
+        run_context = cut_create_run_context();
+        success = cut_start_run_context(run_context);
+        g_object_unref(run_context);
+    }
 
     return success;
 }

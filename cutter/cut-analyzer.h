@@ -22,8 +22,6 @@
 
 #include <glib-object.h>
 
-#include <cutter/cut-run-context.h>
-
 G_BEGIN_DECLS
 
 #define CUT_TYPE_ANALYZER            (cut_analyzer_get_type ())
@@ -38,19 +36,24 @@ typedef struct _CutAnalyzerClass CutAnalyzerClass;
 
 struct _CutAnalyzer
 {
-    CutRunContext object;
+    GObject object;
 };
 
 struct _CutAnalyzerClass
 {
-    CutRunContextClass parent_class;
+    GObjectClass parent_class;
 };
 
 GType          cut_analyzer_get_type  (void) G_GNUC_CONST;
 
-CutRunContext *cut_analyzer_new       (void);
-CutRunContext *cut_analyzer_new_from_run_context
-                                      (CutRunContext *run_context);
+CutAnalyzer   *cut_analyzer_new       (void);
+
+gboolean       cut_analyzer_analyze   (CutAnalyzer  *analyzer,
+                                       const gchar  *log_directory,
+                                       GError      **error);
+
+const GList   *cut_analyzer_get_run_contexts
+                                      (CutAnalyzer  *analyzer);
 
 G_END_DECLS
 

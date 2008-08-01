@@ -186,7 +186,7 @@ cut_pipeline_new_from_run_context (CutRunContext *run_context)
                                                                         \
     _priv = CUT_PIPELINE_GET_PRIVATE(pipeline);                         \
     _run_context = CUT_RUN_CONTEXT(pipeline);                           \
-    cut_run_context_emit_error(_run_context, "StreamError", error,      \
+    cut_run_context_emit_error(_run_context, "PipelineError", error,    \
                                format, ## __VA_ARGS__);                 \
     emit_complete_signal(pipeline, FALSE);                              \
 } while (0)
