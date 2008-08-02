@@ -197,6 +197,15 @@ cut_differ_readable_init (CutDifferReadable *differ)
 {
 }
 
+CutDiffer *
+cut_differ_readable_new (const gchar *from, const gchar *to)
+{
+    return g_object_new(CUT_TYPE_DIFFER_READABLE,
+                        "from", from,
+                        "to", to,
+                        NULL);
+}
+
 static void
 tag (GArray *result, const gchar *tag, gchar **lines, gint begin, gint end)
 {
@@ -471,10 +480,7 @@ cut_diff_readable (const gchar *from, const gchar *to)
     CutDiffer *differ;
     gchar *result;
 
-    differ = g_object_new(CUT_TYPE_DIFFER_READABLE,
-                          "from", from,
-                          "to", to,
-                          NULL);
+    differ = cut_differ_readable_new(from, to);
     result = cut_differ_diff(differ);
     g_object_unref(differ);
     return result;
