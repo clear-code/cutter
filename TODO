@@ -13,3 +13,4 @@
   * elapsed time
 * coordinattion with TestLink.
 * image diff.
+* failmalloc like memory test.

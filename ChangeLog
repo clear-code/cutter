@@ -1,5 +1,7 @@
 2008-08-02  Kouhei Sutou  <kou@cozmixng.org>
 
+	* TODO: add: failmalloc like memory test.
+
 	* cutter/cut-diff.c (cut_differ_readable_new): add.
 	(cut_diff_readable): use cut_differ_readable_new().
 
