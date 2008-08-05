@@ -399,11 +399,12 @@ dnl **************************************************************
 dnl Check for gettext.
 dnl **************************************************************
 
+AC_PROG_INTLTOOL([0.35.5])
+
 GETTEXT_PACKAGE=cutter
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE], ["$GETTEXT_PACKAGE"], [Gettext package])
 
-ALL_LINGUAS="ja"
 AM_GLIB_GNU_GETTEXT
 
 dnl **************************************************************
