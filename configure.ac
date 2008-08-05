@@ -11,6 +11,7 @@ m4_define([cutter_version],
 
 AC_INIT(cutter, [cutter_version], kou@cozmixng.org)
 AC_CONFIG_AUX_DIR([config])
+AC_CONFIG_MACRO_DIR([m4macros])
 
 AC_CONFIG_SRCDIR([cutter/cut-main.c])
 AM_CONFIG_HEADER([cutter/config.h])

@@ -1,3 +1,8 @@
+2008-08-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* autogen.sh, configure.ac: Use AC_CONFIG_MACRO_DIR instead of -I
+	option of aclocal.
+
 2008-08-02  Kouhei Sutou  <kou@cozmixng.org>
 
 	* TODO: add: failmalloc like memory test.
