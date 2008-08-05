@@ -279,6 +279,11 @@ cut_quit (void)
         original_argv = NULL;
     }
 
+    if (cutter_command_path) {
+        g_free(cutter_command_path);
+        cutter_command_path = NULL;
+    }
+
     initialized = FALSE;
 }
 

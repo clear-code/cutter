@@ -3,6 +3,7 @@
 	* autogen.sh, configure.ac: Use AC_CONFIG_MACRO_DIR instead of -I
 	option of aclocal.
 	* po/LINGUAS, configure.ac: Requre intltool >= 0.35.5.
+	* cutter/cut-main.c, cutter/cut-loader.c: Fix memory leak.
 
 2008-08-02  Kouhei Sutou  <kou@cozmixng.org>
 

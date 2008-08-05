@@ -487,6 +487,8 @@ register_test (CutLoader *loader, CutTestCase *test_case,
     cut_test_case_add_test(test_case, test);
 
     g_object_unref(test);
+    g_free(data_setup_function_name);
+    g_free(attributes_setup_function_name);
 }
 
 static void
