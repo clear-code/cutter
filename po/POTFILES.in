@@ -19,8 +19,8 @@ cutter/cut-run-context.c
 cutter/cut-runner.c
 cutter/cut-sequence-matcher.c
 cutter/cut-stream-parser.c
-cutter/cut-streamer-factory-builder.c
-cutter/cut-streamer.c
+cutter/cut-stream-factory-builder.c
+cutter/cut-stream.c
 cutter/cut-test-case.c
 cutter/cut-test-container.c
 cutter/cut-test-context.c
@@ -44,8 +44,8 @@ module/report/cut-pdf-report-factory.c
 module/report/cut-pdf-report.c
 module/report/cut-xml-report-factory.c
 module/report/cut-xml-report.c
-module/streamer/cut-xml-streamer-factory.c
-module/streamer/cut-xml-streamer.c
+module/stream/cut-xml-stream-factory.c
+module/stream/cut-xml-stream.c
 module/ui/cut-console-ui-factory.c
 module/ui/cut-console-ui.c
 module/ui/cut-gtk-ui-factory.c
