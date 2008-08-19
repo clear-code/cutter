@@ -1,5 +1,8 @@
 2008-08-19  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-pipeline.c: create child cutter's arguments from
+	CutPipeline's parameter if original arguments aren't set.
+
 	* cutter/cut-run-context.c: fix memory leak.
 
 	* test/test-cut-pipeline.c: report error on pipeline running.

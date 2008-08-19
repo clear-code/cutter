@@ -167,15 +167,24 @@ CutRunContext *
 cut_pipeline_new_from_run_context (CutRunContext *run_context)
 {
     return g_object_new(CUT_TYPE_PIPELINE,
-                        "test-directory", cut_run_context_get_test_directory(run_context),
-                        "use-multi-thread", cut_run_context_get_multi_thread(run_context),
-                        "exclude-files", cut_run_context_get_exclude_files(run_context),
-                        "exclude-directories", cut_run_context_get_exclude_directories(run_context),
-                        "target-test-case-names", cut_run_context_get_target_test_case_names(run_context),
-                        "target-test-names", cut_run_context_get_target_test_names(run_context),
-                        "test-case-order", cut_run_context_get_test_case_order(run_context),
-                        "source-directory", cut_run_context_get_source_directory(run_context),
-                        "command-line-args", cut_run_context_get_command_line_args(run_context),
+                        "test-directory",
+                        cut_run_context_get_test_directory(run_context),
+                        "use-multi-thread",
+                        cut_run_context_get_multi_thread(run_context),
+                        "exclude-files",
+                        cut_run_context_get_exclude_files(run_context),
+                        "exclude-directories",
+                        cut_run_context_get_exclude_directories(run_context),
+                        "target-test-case-names",
+                        cut_run_context_get_target_test_case_names(run_context),
+                        "target-test-names",
+                        cut_run_context_get_target_test_names(run_context),
+                        "test-case-order",
+                        cut_run_context_get_test_case_order(run_context),
+                        "source-directory",
+                        cut_run_context_get_source_directory(run_context),
+                        "command-line-args",
+                        cut_run_context_get_command_line_args(run_context),
                         NULL);
 }
 
@@ -287,57 +296,136 @@ create_child_out_channel (CutPipeline *pipeline)
 }
 
 static gchar **
-create_command_line_args (CutPipeline *pipeline)
+create_command_line_args_from_argv (CutPipeline *pipeline, const gchar **argv)
 {
-    const gchar **original_argv;
-    gchar **new_args = NULL;
-    const gchar *test_directory;
-    CutRunContext *run_context = CUT_RUN_CONTEXT(pipeline);
     CutPipelinePrivate *priv;
+    CutRunContext *run_context;
+    gchar **new_argv;
+    gchar **copy;
+    const gchar *test_directory;
+    gchar *stream_fd;
+    guint i;
+    guint length;
 
     priv = CUT_PIPELINE_GET_PRIVATE(pipeline);
+    run_context = CUT_RUN_CONTEXT(pipeline);
+
+    length = g_strv_length((gchar **)argv);
+    /* remove the last argument in which test directory is stored */
+    copy = g_new(gchar *, length);
+    for (i = 0; i < length - 1; i++) {
+        copy[i] = g_strdup(argv[i]);
+    }
+    copy[i] = NULL;
+
+    stream_fd = g_strdup_printf("--stream-fd=%d",
+                                priv->child_pipe[CUT_WRITE]);
     test_directory = cut_run_context_get_test_directory(run_context);
+    new_argv = cut_utils_strv_concat((const gchar **)copy,
+                                     "--ui=console",
+                                     "-v", "s",
+                                     "--stream=xml",
+                                     stream_fd,
+                                     test_directory,
+                                     NULL);
+    g_free(stream_fd);
+    g_strfreev(copy);
+
+    return new_argv;
+}
+
+static void
+append_arg (GArray *argv, const gchar *arg)
+{
+    gchar *dupped_arg;
+
+    dupped_arg = strdup(arg);
+    g_array_append_val(argv, dupped_arg);
+}
+
+static void
+append_arg_printf (GArray *argv, const gchar *format, ...)
+{
+    gchar *arg;
+    va_list args;
+
+    va_start(args, format);
+    arg = g_strdup_vprintf(format, args);
+    va_end(args);
+
+    g_array_append_val(argv, arg);
+}
+
+static gchar **
+create_command_line_args_from_parameters (CutPipeline *pipeline)
+{
+    CutPipelinePrivate *priv;
+    CutRunContext *run_context;
+    GArray *argv;
+    const gchar *directory;
+    const gchar **strings;
+    gchar **names;
+
+    priv = CUT_PIPELINE_GET_PRIVATE(pipeline);
+    run_context = CUT_RUN_CONTEXT(pipeline);
+
+    argv = g_array_new(TRUE, TRUE, sizeof(gchar *));
+
+    append_arg(argv, cut_utils_get_cutter_command_path());
+    append_arg(argv, "--verbose=silent");
+    append_arg(argv, "--stream=xml");
+    append_arg_printf(argv, "--stream-fd=%d", priv->child_pipe[CUT_WRITE]);
+
+    directory = cut_run_context_get_source_directory(run_context);
+    if (directory)
+        append_arg_printf(argv, "--source-directory=%s", directory);
+
+    if (cut_run_context_is_multi_thread(run_context))
+        append_arg(argv, "--multi-thread");
+
+    strings = cut_run_context_get_exclude_files(run_context);
+    while (strings) {
+        append_arg_printf(argv, "--exclude-file=%s", *strings);
+        strings++;
+    }
+
+    strings = cut_run_context_get_exclude_directories(run_context);
+    while (strings) {
+        append_arg_printf(argv, "--exclude-directory=%s", *strings);
+        strings++;
+    }
+
+    names = cut_run_context_get_target_test_case_names(run_context);
+    while (names) {
+        append_arg_printf(argv, "--test-case=%s", *names);
+        names++;
+    }
+
+    names = cut_run_context_get_target_test_names(run_context);
+    while (names) {
+        append_arg_printf(argv, "--name=%s", *names);
+        names++;
+    }
+
+    append_arg(argv, cut_run_context_get_test_directory(run_context));
+
+    return (gchar **)(g_array_free(argv, FALSE));
+}
+
+static gchar **
+create_command_line_args (CutPipeline *pipeline)
+{
+    CutRunContext *run_context;
+    const gchar **original_argv;
+    gchar **new_args = NULL;
+
+    run_context = CUT_RUN_CONTEXT(pipeline);
     original_argv = cut_run_context_get_command_line_args(run_context);
 
     if (original_argv) {
-        gchar **copy;
-        gchar *stream_fd;
-        guint i;
-        guint length = g_strv_length((gchar **)original_argv);
-
-        /* remove the last argument in which test directory is stored */
-        copy = g_new(gchar *, length);
-        for (i = 0; i < length - 1; i++) {
-            copy[i] = g_strdup(original_argv[i]);
-        }
-        copy[i] = NULL;
-
-        stream_fd = g_strdup_printf("--stream-fd=%d",
-                                    priv->child_pipe[CUT_WRITE]);
-        new_args = cut_utils_strv_concat((const gchar **)copy,
-                                         "--ui=console",
-                                         "-v", "s",
-                                         "--stream=xml",
-                                         stream_fd,
-                                         test_directory,
-                                         NULL);
-        g_free(stream_fd);
-        g_strfreev(copy);
+        new_args = create_command_line_args_from_argv(pipeline, original_argv);
     } else {
-        gboolean result;
-        gint argc;
-        gchar *command_line;
-
-        command_line = g_strdup_printf("\"%s\" "
-                                       "-v s "
-                                       "--stream=xml "
-                                       "--stream-fd=%d "
-                                       "\"%s\"",
-                                       cut_utils_get_cutter_command_path(),
-                                       priv->child_pipe[CUT_WRITE],
-                                       test_directory);
-        result = g_shell_parse_argv(command_line, &argc, &new_args, NULL);
-        g_free(command_line);
+        new_args = create_command_line_args_from_parameters(pipeline);
     }
 
     return new_args;
