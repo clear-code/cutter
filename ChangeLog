@@ -1,5 +1,7 @@
 2008-08-19  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-run-context.c: fix memory leak.
+
 	* test/test-cut-pipeline.c: report error on pipeline running.
 
 2008-08-05  Hiroyuki Ikezoe  <poincare@ikezoe.net>

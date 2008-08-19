@@ -777,6 +777,7 @@ static void
 remove_listener (CutListener *listener, CutRunContext *context)
 {
     cut_listener_detach_from_run_context(listener, context);
+    g_object_unref(listener);
 }
 
 static void
@@ -811,7 +812,8 @@ dispose (GObject *object)
     }
 
     if (priv->listeners) {
-        g_list_foreach(priv->listeners, (GFunc)remove_listener, CUT_RUN_CONTEXT(object));
+        g_list_foreach(priv->listeners,
+                       (GFunc)remove_listener, CUT_RUN_CONTEXT(object));
         g_list_free(priv->listeners);
         priv->listeners = NULL;
     }
@@ -1597,9 +1599,8 @@ void
 cut_run_context_remove_listener (CutRunContext *context, CutListener *listener)
 {
     CutRunContextPrivate *priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
-    remove_listener(listener, context);
     priv->listeners = g_list_remove(priv->listeners, listener);
-    g_object_unref(listener);
+    remove_listener(listener, context);
 }
 
 static void
