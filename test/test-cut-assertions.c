@@ -121,7 +121,7 @@ run (void)
 
     run_context = cut_test_runner_new();
 
-    test_context = cut_test_context_new(NULL, NULL, NULL, test);
+    test_context = cut_test_context_new(run_context, NULL, NULL, NULL, test);
     cut_test_context_set_fixture_data_dir(test_context,
                                           cuttest_get_base_dir(),
                                           "fixtures", "assertions", NULL);

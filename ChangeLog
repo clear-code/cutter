@@ -1,5 +1,10 @@
 2008-08-19  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-context.c, cutter/cut-test-context.h:
+	CutTestContext has CutRunContext.
+
+	* cutter/, test/: follow the above changes.
+
 	* TODO: add CutSubProcess.
 
 	* cutter/cut-pipeline.c

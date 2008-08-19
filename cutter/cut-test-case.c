@@ -388,7 +388,8 @@ run (CutTestCase *test_case, CutTest *test, CutRunContext *run_context)
         return FALSE;
     }
 
-    test_context = cut_test_context_new(NULL, test_case, NULL, NULL);
+    test_context = cut_test_context_new(run_context,
+                                        NULL, test_case, NULL, NULL);
     cut_test_context_set_multi_thread(test_context, is_multi_thread);
     original_test_context = cut_test_case_get_current_test_context(test_case);
     cut_test_case_set_current_test_context(test_case, test_context);

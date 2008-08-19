@@ -54,12 +54,16 @@ extern GPrivate *cut_test_context_private;
 
 GType        cut_test_context_get_type  (void) G_GNUC_CONST;
 
-CutTestContext  *cut_test_context_new (CutTestSuite    *test_suite,
+CutTestContext  *cut_test_context_new (CutRunContext   *run_context,
+                                       CutTestSuite    *test_suite,
                                        CutTestCase     *test_case,
                                        CutTestIterator *test_iterator,
                                        CutTest         *test);
 CutTestContext  *cut_test_context_new_empty (void);
 
+CutRunContext   *cut_test_context_get_run_context (CutTestContext *context);
+void             cut_test_context_set_run_context (CutTestContext *context,
+                                                   CutRunContext  *run_context);
 CutTestSuite *cut_test_context_get_test_suite (CutTestContext *context);
 void          cut_test_context_set_test_suite (CutTestContext *context,
                                                CutTestSuite   *test_suite);

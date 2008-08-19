@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2008  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -33,6 +33,7 @@
 #endif
 #include <glib.h>
 
+#include "cut-run-context.h"
 #include "cut-test-context.h"
 #include "cut-test-suite.h"
 #include "cut-test-iterator.h"
@@ -57,6 +58,7 @@
 typedef struct _CutTestContextPrivate	CutTestContextPrivate;
 struct _CutTestContextPrivate
 {
+    CutRunContext *run_context;
     CutTestSuite *test_suite;
     CutTestCase *test_case;
     CutTestIterator *test_iterator;
@@ -80,6 +82,7 @@ struct _CutTestContextPrivate
 enum
 {
     PROP_0,
+    PROP_RUN_CONTEXT,
     PROP_TEST_SUITE,
     PROP_TEST_CASE,
     PROP_TEST_ITERATOR,
@@ -141,32 +144,39 @@ cut_test_context_class_init (CutTestContextClass *klass)
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
 
+    spec = g_param_spec_object("run-context",
+                               "Run context",
+                               "The run context of the test context",
+                               CUT_TYPE_RUN_CONTEXT,
+                               G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_RUN_CONTEXT, spec);
+
     spec = g_param_spec_object("test-suite",
                                "Test suite",
                                "The test suite of the test context",
                                CUT_TYPE_TEST_SUITE,
-                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+                               G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_TEST_SUITE, spec);
 
     spec = g_param_spec_object("test-case",
                                "Test case",
                                "The test case of the test context",
                                CUT_TYPE_TEST_CASE,
-                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+                               G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_TEST_CASE, spec);
 
     spec = g_param_spec_object("test-iterator",
                                "Test iterator",
                                "The test iterator of the test context",
                                CUT_TYPE_TEST_ITERATOR,
-                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+                               G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_TEST_ITERATOR, spec);
 
     spec = g_param_spec_object("test",
                                "Test",
                                "The test of the test context",
                                CUT_TYPE_TEST,
-                               G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
+                               G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_TEST, spec);
 
     g_type_class_add_private(gobject_class, sizeof(CutTestContextPrivate));
@@ -177,6 +187,7 @@ cut_test_context_init (CutTestContext *context)
 {
     CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
 
+    priv->run_context = NULL;
     priv->test_suite = NULL;
     priv->test_case = NULL;
     priv->test_iterator = NULL;
@@ -218,6 +229,11 @@ static void
 dispose (GObject *object)
 {
     CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(object);
+
+    if (priv->run_context) {
+        g_object_unref(priv->run_context);
+        priv->run_context = NULL;
+    }
 
     if (priv->test_suite) {
         g_object_unref(priv->test_suite);
@@ -305,6 +321,9 @@ set_property (GObject      *object,
     CutTestContext *context = CUT_TEST_CONTEXT(object);
 
     switch (prop_id) {
+      case PROP_RUN_CONTEXT:
+        cut_test_context_set_run_context(context, g_value_get_object(value));
+        break;
       case PROP_TEST_SUITE:
         cut_test_context_set_test_suite(context, g_value_get_object(value));
         break;
@@ -332,6 +351,9 @@ get_property (GObject    *object,
     CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(object);
 
     switch (prop_id) {
+      case PROP_RUN_CONTEXT:
+        g_value_set_object(value, priv->run_context);
+        break;
       case PROP_TEST_SUITE:
         g_value_set_object(value, priv->test_suite);
         break;
@@ -351,10 +373,12 @@ get_property (GObject    *object,
 }
 
 CutTestContext *
-cut_test_context_new (CutTestSuite *test_suite, CutTestCase *test_case,
+cut_test_context_new (CutRunContext *run_context,
+                      CutTestSuite *test_suite, CutTestCase *test_case,
                       CutTestIterator *test_iterator, CutTest *test)
 {
     return g_object_new(CUT_TYPE_TEST_CONTEXT,
+                        "run-context", run_context,
                         "test-suite", test_suite,
                         "test-case", test_case,
                         "test-iterator", test_iterator,
@@ -365,7 +389,25 @@ cut_test_context_new (CutTestSuite *test_suite, CutTestCase *test_case,
 CutTestContext *
 cut_test_context_new_empty (void)
 {
-    return cut_test_context_new(NULL, NULL, NULL, NULL);
+    return cut_test_context_new(NULL, NULL, NULL, NULL, NULL);
+}
+
+CutRunContext *
+cut_test_context_get_run_context (CutTestContext *context)
+{
+    return CUT_TEST_CONTEXT_GET_PRIVATE(context)->run_context;
+}
+
+void
+cut_test_context_set_run_context (CutTestContext *context, CutRunContext *run_context)
+{
+    CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+
+    if (priv->run_context)
+        g_object_unref(priv->run_context);
+    if (run_context)
+        g_object_ref(run_context);
+    priv->run_context = run_context;
 }
 
 CutTestSuite *

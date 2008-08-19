@@ -470,10 +470,11 @@ register_test (CutLoader *loader, CutTestCase *test_case,
 
         original_test_context = get_current_test_context();
         if (data_setup_function) {
-            test_context = cut_test_context_new(NULL, test_case,
+            test_context = cut_test_context_new(NULL, NULL, test_case,
                                                 CUT_TEST_ITERATOR(test), NULL);
         } else {
-            test_context = cut_test_context_new(NULL, test_case, NULL, test);
+            test_context = cut_test_context_new(NULL, NULL, test_case,
+                                                NULL, test);
         }
         set_current_test_context(test_context);
         attributes_setup_function();

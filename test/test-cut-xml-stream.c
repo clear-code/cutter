@@ -127,7 +127,8 @@ run (void)
     gboolean success;
     CutTestContext *original_test_context;
 
-    test_context = cut_test_context_new(NULL, test_case, NULL, test);
+    test_context = cut_test_context_new(run_context,
+                                        NULL, test_case, NULL, test);
     original_test_context = get_current_test_context();
     set_current_test_context(test_context);
     success = cut_test_suite_run(test_suite, run_context);

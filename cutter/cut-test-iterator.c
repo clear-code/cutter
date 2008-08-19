@@ -265,7 +265,8 @@ run_test (CutTestIterator *test_iterator, CutIteratedTest *test,
         return TRUE;
 
     test_case = cut_test_context_get_test_case(test_context);
-    local_test_context = cut_test_context_new(NULL, test_case, test_iterator,
+    local_test_context = cut_test_context_new(run_context,
+                                              NULL, test_case, test_iterator,
                                               CUT_TEST(test));
 
     is_multi_thread = cut_run_context_is_multi_thread(run_context);

@@ -189,7 +189,7 @@ run (void)
 
     test = CUT_TEST(iterated_test);
     connect_signals(test);
-    test_context = cut_test_context_new(NULL, NULL, NULL, test);
+    test_context = cut_test_context_new(run_context, NULL, NULL, NULL, test);
     cut_test_context_set_data(test_context, test_data);
     original_test_context = get_current_test_context();
     set_current_test_context(test_context);
