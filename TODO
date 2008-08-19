@@ -14,3 +14,6 @@
 * coordinattion with TestLink.
 * image diff.
 * failmalloc like memory test.
+* CutSubProcess for multi process test.
+  It delegates signals of CutPipeline (sub process) to parent process's
+  CutRunContext.
