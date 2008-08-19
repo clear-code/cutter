@@ -384,25 +384,25 @@ create_command_line_args_from_parameters (CutPipeline *pipeline)
         append_arg(argv, "--multi-thread");
 
     strings = cut_run_context_get_exclude_files(run_context);
-    while (strings) {
+    while (strings && *strings) {
         append_arg_printf(argv, "--exclude-file=%s", *strings);
         strings++;
     }
 
     strings = cut_run_context_get_exclude_directories(run_context);
-    while (strings) {
+    while (strings && *strings) {
         append_arg_printf(argv, "--exclude-directory=%s", *strings);
         strings++;
     }
 
     names = cut_run_context_get_target_test_case_names(run_context);
-    while (names) {
+    while (names && *names) {
         append_arg_printf(argv, "--test-case=%s", *names);
         names++;
     }
 
     names = cut_run_context_get_target_test_names(run_context);
-    while (names) {
+    while (names && *names) {
         append_arg_printf(argv, "--name=%s", *names);
         names++;
     }
