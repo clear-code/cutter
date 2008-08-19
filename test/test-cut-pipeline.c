@@ -3,6 +3,7 @@
 #endif
 
 #include <cutter.h>
+#include <gcutter.h>
 #include <cutter/cut-pipeline.h>
 #include <cutter/cut-runner.h>
 
@@ -42,12 +43,19 @@ teardown (void)
         g_object_unref(pipeline);
 }
 
+static void
+report_error (CutRunContext *context, GError *error, gpointer user_data)
+{
+    gcut_assert_error(error, "Pipeline Error");
+}
+
 static gboolean
 run (const gchar *test_dir)
 {
     cut_run_context_set_test_directory(pipeline, test_dir);
 
-    return cut_runner_run(CUT_RUNNER(pipeline));
+    g_signal_connect(pipeline, "error", G_CALLBACK(report_error), NULL);
+    return cut_run_context_start(pipeline);
 }
 
 typedef struct _SignalTestData
