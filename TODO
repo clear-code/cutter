@@ -17,3 +17,4 @@
 * CutSubProcess for multi process test.
   It delegates signals of CutPipeline (sub process) to parent process's
   CutRunContext.
+* CutTestIterator supports multi thread.

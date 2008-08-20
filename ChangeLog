@@ -1,5 +1,7 @@
 2008-08-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* TODO: add: CutTestIterator supports multi thread.
+
 	* test/fixtures/sub-process/test-invoker.c: test-delegate ->
 	test-invoker.
 
