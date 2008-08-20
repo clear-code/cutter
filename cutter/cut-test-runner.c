@@ -607,11 +607,15 @@ runner_run (CutRunner *runner)
     CutRunContext *context;
     CutTestSuite *suite;
     gboolean success;
+    CutTestResultStatus status;
 
     context = CUT_RUN_CONTEXT(runner);
     suite = cut_run_context_get_test_suite(context);
     g_signal_emit_by_name(context, "start-run");
     success = cut_test_suite_run(suite, context);
+    status = cut_run_context_get_status(context);
+    if (cut_test_result_status_is_critical(status))
+        success = FALSE;
     g_signal_emit_by_name(context, "complete-run", success);
     return success;
 }

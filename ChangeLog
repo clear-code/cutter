@@ -1,5 +1,8 @@
 2008-08-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-runner.c (runner_run): consider delegated test
+	results.
+
 	* module/ui/cut-console-ui.c (print_summary): use
 	cut_run_context_get_status().
 
