@@ -375,7 +375,7 @@ create_command_line_args_from_parameters (CutPipeline *pipeline)
     if (directory)
         append_arg_printf(argv, "--source-directory=%s", directory);
 
-    if (cut_run_context_is_multi_thread(run_context))
+    if (cut_run_context_get_multi_thread(run_context))
         append_arg(argv, "--multi-thread");
 
     strings = cut_run_context_get_exclude_files(run_context);

@@ -1,5 +1,11 @@
 2008-08-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-pipeline.c
+	(create_command_line_args_from_parameters): use
+	cut_run_context_get_multi_thread() instead of
+	cut_run_context_is_multi_thread() because spawned process may be
+	able to use multi thread.
+
 	* TODO: add: CutTestIterator supports multi thread.
 
 	* test/fixtures/sub-process/test-invoker.c: test-delegate ->
