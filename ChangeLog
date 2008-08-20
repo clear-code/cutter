@@ -1,5 +1,10 @@
 2008-08-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* module/ui/cut-console-ui.c (print_summary): use
+	cut_run_context_get_status().
+
+	* cutter/cut-run-context.[ch] (cut_run_context_get_status): add.
+
 	* cutter/cut-test-context.c (cut_test_context_register_result):
 	filename in test result is expanded by its run context on creating.
 

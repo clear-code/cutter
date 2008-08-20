@@ -728,21 +728,7 @@ print_summary (CutConsoleUI *console, CutRunContext *run_context,
     if (crashed) {
         color = CRASH_COLOR;
     } else {
-        CutTestResultStatus status;
-        if (n_errors > 0) {
-            status = CUT_TEST_RESULT_ERROR;
-        } else if (n_failures > 0) {
-            status = CUT_TEST_RESULT_FAILURE;
-        } else if (n_pendings > 0) {
-            status = CUT_TEST_RESULT_PENDING;
-        } else if (n_omissions > 0) {
-            status = CUT_TEST_RESULT_OMISSION;
-        } else if (n_notifications > 0) {
-            status = CUT_TEST_RESULT_NOTIFICATION;
-        } else {
-            status = CUT_TEST_RESULT_SUCCESS;
-        }
-        color = status_to_color(status);
+        color = status_to_color(cut_run_context_get_status(run_context));
     }
     print_with_color(console, color,
                      "%d test(s), %d assertion(s), %d failure(s), "

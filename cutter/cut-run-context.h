@@ -237,6 +237,7 @@ guint          cut_run_context_get_n_errors         (CutRunContext *context);
 guint          cut_run_context_get_n_pendings       (CutRunContext *context);
 guint          cut_run_context_get_n_notifications  (CutRunContext *context);
 guint          cut_run_context_get_n_omissions      (CutRunContext *context);
+CutTestResultStatus cut_run_context_get_status      (CutRunContext *context);
 
 gdouble        cut_run_context_get_elapsed          (CutRunContext *context);
 gdouble        cut_run_context_get_total_elapsed    (CutRunContext *context);
