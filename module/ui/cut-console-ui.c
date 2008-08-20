@@ -514,7 +514,7 @@ cb_success_test (CutRunContext  *run_context,
 }
 
 static void
-cb_notification_test (CutRunContext      *run_context,
+cb_notification_test (CutRunContext  *run_context,
                       CutTest        *test,
                       CutTestContext *test_context,
                       CutTestResult  *result,
@@ -527,7 +527,7 @@ cb_notification_test (CutRunContext      *run_context,
 }
 
 static void
-cb_omission_test (CutRunContext      *run_context,
+cb_omission_test (CutRunContext  *run_context,
                   CutTest        *test,
                   CutTestContext *test_context,
                   CutTestResult  *result,
@@ -540,7 +540,7 @@ cb_omission_test (CutRunContext      *run_context,
 }
 
 static void
-cb_pending_test (CutRunContext      *run_context,
+cb_pending_test (CutRunContext  *run_context,
                  CutTest        *test,
                  CutTestContext *test_context,
                  CutTestResult  *result,
@@ -553,7 +553,7 @@ cb_pending_test (CutRunContext      *run_context,
 }
 
 static void
-cb_failure_test (CutRunContext      *run_context,
+cb_failure_test (CutRunContext  *run_context,
                  CutTest        *test,
                  CutTestContext *test_context,
                  CutTestResult  *result,
@@ -566,7 +566,7 @@ cb_failure_test (CutRunContext      *run_context,
 }
 
 static void
-cb_error_test (CutRunContext      *run_context,
+cb_error_test (CutRunContext  *run_context,
                CutTest        *test,
                CutTestContext *test_context,
                CutTestResult  *result,
@@ -673,18 +673,12 @@ print_results (CutConsoleUI *console, CutRunContext *run_context)
         CutTestResult *result = node->data;
         CutTestResultStatus status;
         CutTest *test;
-        gchar *full_filename;
-        const gchar *filename;
         const gchar *message;
         const gchar *name;
 
         status = cut_test_result_get_status(result);
         if (status == CUT_TEST_RESULT_SUCCESS)
             continue;
-
-        filename = cut_test_result_get_filename(result);
-        full_filename = cut_run_context_build_source_filename(run_context,
-                                                              filename);
 
         message = cut_test_result_get_message(result);
         name = cut_test_result_get_test_name(result);
@@ -706,11 +700,10 @@ print_results (CutConsoleUI *console, CutRunContext *run_context)
             print_for_status(console, status, "%s", message);
         }
         g_print("\n%s:%d: %s()\n",
-                full_filename,
+                cut_test_result_get_filename(result),
                 cut_test_result_get_line(result),
                 cut_test_result_get_function_name(result));
         i++;
-        g_free(full_filename);
     }
 }
 

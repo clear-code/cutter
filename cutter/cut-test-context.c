@@ -683,6 +683,7 @@ cut_test_context_register_result (CutTestContext *context,
     CutTestData *test_data = NULL;
     const gchar *system_message;
     gchar *user_message = NULL, *user_message_format;
+    gchar *full_filename;
     va_list args;
 
     priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
@@ -699,14 +700,20 @@ cut_test_context_register_result (CutTestContext *context,
 
     if (priv->current_data)
         test_data = priv->current_data->data;
+    if (priv->run_context)
+        full_filename = cut_run_context_build_source_filename(priv->run_context,
+                                                              filename);
+    else
+        full_filename = g_strdup(filename);
     result = cut_test_result_new(status,
                                  priv->test, priv->test_iterator,
                                  priv->test_case, priv->test_suite,
                                  test_data,
                                  user_message, system_message,
-                                 function_name, filename, line);
+                                 function_name, full_filename, line);
     if (user_message)
         g_free(user_message);
+    g_free(full_filename);
 
     if (priv->test) {
         CutProcess *process;
