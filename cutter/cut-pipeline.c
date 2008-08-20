@@ -360,7 +360,6 @@ create_command_line_args_from_parameters (CutPipeline *pipeline)
     GArray *argv;
     const gchar *directory;
     const gchar **strings;
-    gchar **names;
 
     priv = CUT_PIPELINE_GET_PRIVATE(pipeline);
     run_context = CUT_RUN_CONTEXT(pipeline);
@@ -391,16 +390,16 @@ create_command_line_args_from_parameters (CutPipeline *pipeline)
         strings++;
     }
 
-    names = cut_run_context_get_target_test_case_names(run_context);
-    while (names && *names) {
-        append_arg_printf(argv, "--test-case=%s", *names);
-        names++;
+    strings = cut_run_context_get_target_test_case_names(run_context);
+    while (strings && *strings) {
+        append_arg_printf(argv, "--test-case=%s", *strings);
+        strings++;
     }
 
-    names = cut_run_context_get_target_test_names(run_context);
-    while (names && *names) {
-        append_arg_printf(argv, "--name=%s", *names);
-        names++;
+    strings = cut_run_context_get_target_test_names(run_context);
+    while (strings && *strings) {
+        append_arg_printf(argv, "--name=%s", *strings);
+        strings++;
     }
 
     append_arg(argv, cut_run_context_get_test_directory(run_context));

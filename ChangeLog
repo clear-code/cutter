@@ -1,5 +1,7 @@
 2008-08-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/, test/: gchar ** -> const gchar **.
+
 	* test/test-cut-pipeline.c: move delegate test to ...
 	* test/test-cut-sub-process.c: ... here as sub process test.
 

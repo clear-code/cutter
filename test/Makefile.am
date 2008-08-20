@@ -56,7 +56,8 @@ noinst_LTLIBRARIES = 				\
 		test_cut_main.la		\
 		test_cut_fixture_data.la	\
 		test_cut_test_data.la		\
-		test_cut_test_iterator.la
+		test_cut_test_iterator.la	\
+		test_cut_sub_process.la
 
 AM_LDFLAGS =			\
 	-module			\
@@ -104,6 +105,7 @@ test_cut_main_la_SOURCES        = test-cut-main.c
 test_cut_fixture_data_la_SOURCES = test-cut-fixture-data.c
 test_cut_test_data_la_SOURCES = test-cut-test-data.c
 test_cut_test_iterator_la_SOURCES = test-cut-test-iterator.c
+test_cut_sub_process_la_SOURCES = test-cut-sub-process.c
 
 echo-cutter:
 	@echo $(CUTTER)

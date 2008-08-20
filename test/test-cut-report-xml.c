@@ -49,7 +49,7 @@ stub_notification_test (void)
 void
 setup (void)
 {
-    gchar *test_names[] = {"/.*/", NULL};
+    const gchar *test_names[] = {"/.*/", NULL};
     test = NULL;
     test_context = NULL;
 

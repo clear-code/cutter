@@ -507,11 +507,10 @@ cut_test_case_run_with_filter (CutTestCase  *test_case,
 gboolean
 cut_test_case_run (CutTestCase *test_case, CutRunContext *run_context)
 {
-    gchar **test_names;
+    const gchar **test_names;
 
     test_names = cut_run_context_get_target_test_names(run_context);
-    return cut_test_case_run_with_filter(test_case, run_context,
-                                         (const gchar **)test_names);
+    return cut_test_case_run_with_filter(test_case, run_context, test_names);
 }
 
 CutTestContext *

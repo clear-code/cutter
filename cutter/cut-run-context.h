@@ -212,11 +212,11 @@ const gchar  **cut_run_context_get_exclude_directories
                                                     (CutRunContext *context);
 void           cut_run_context_set_target_test_case_names
                                                     (CutRunContext *context,
-                                                     gchar        **names);
-gchar        **cut_run_context_get_target_test_case_names(CutRunContext *context);
+                                                     const gchar  **names);
+const gchar  **cut_run_context_get_target_test_case_names(CutRunContext *context);
 void           cut_run_context_set_target_test_names(CutRunContext *context,
-                                                     gchar        **names);
-gchar        **cut_run_context_get_target_test_names(CutRunContext *context);
+                                                     const gchar  **names);
+const gchar  **cut_run_context_get_target_test_names(CutRunContext *context);
 
 void           cut_run_context_prepare_test         (CutRunContext *context,
                                                      CutTest       *test);
@@ -277,6 +277,7 @@ gchar         *cut_run_context_build_source_filename(CutRunContext *context,
                                                      const gchar   *filename);
 
 gboolean       cut_run_context_start                (CutRunContext *context);
+void           cut_run_context_start_async          (CutRunContext *context);
 
 gboolean       cut_run_context_emit_complete_run    (CutRunContext *context,
                                                      gboolean       success);

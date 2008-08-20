@@ -551,7 +551,7 @@ cut_utils_create_taken_sub_process (const char     *test_directory,
 
     sub_process = cut_sub_process_new_with_test_context(test_directory,
                                                         test_context);
-    cut_test_context_take_g_object(test_context, sub_process);
+    cut_test_context_take_g_object(test_context, G_OBJECT(sub_process));
     return sub_process;
 }
 

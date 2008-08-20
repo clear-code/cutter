@@ -43,7 +43,7 @@ stub_iterated_test (gconstpointer data)
 void
 setup (void)
 {
-    gchar *test_names[] = {"/.*/", NULL};
+    const gchar *test_names[] = {"/.*/", NULL};
 
     cut_set_fixture_data_dir(cuttest_get_base_dir(), "fixtures", "xml-stream");
 

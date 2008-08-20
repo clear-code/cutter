@@ -1,3 +1,5 @@
+/* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+
 #include <gcutter.h>
 #include <cutter/cut-utils.h>
 #include "lib/cuttest-utils.h"

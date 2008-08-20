@@ -303,8 +303,10 @@ cut_create_run_context (void)
                                       (const gchar **)exclude_files);
     cut_run_context_set_exclude_directories(run_context,
                                             (const gchar **)exclude_directories);
-    cut_run_context_set_target_test_case_names(run_context, test_case_names);
-    cut_run_context_set_target_test_names(run_context, test_names);
+    cut_run_context_set_target_test_case_names(run_context,
+                                               (const gchar **)test_case_names);
+    cut_run_context_set_target_test_names(run_context,
+                                          (const gchar **)test_names);
     cut_run_context_set_test_case_order(run_context, test_case_order);
     cut_run_context_set_command_line_args(run_context, original_argv);
 

@@ -104,7 +104,7 @@ stub_teardown_function (void)
 void
 setup (void)
 {
-    gchar *test_names[] = {"/.*/", NULL};
+    const gchar *test_names[] = {"/.*/", NULL};
 
     set_error_on_setup = FALSE;
 

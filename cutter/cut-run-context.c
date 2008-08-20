@@ -1308,35 +1308,36 @@ cut_run_context_get_exclude_directories (CutRunContext *context)
 
 void
 cut_run_context_set_target_test_case_names (CutRunContext *context,
-                                            gchar **names)
+                                            const gchar **names)
 {
     CutRunContextPrivate *priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
 
     g_strfreev(priv->target_test_case_names);
-    priv->target_test_case_names = g_strdupv(names);
+    priv->target_test_case_names = g_strdupv((gchar **)names);
 }
 
-gchar **
+const gchar **
 cut_run_context_get_target_test_case_names (CutRunContext *context)
 {
     CutRunContextPrivate *priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
-    return priv->target_test_case_names;
+    return (const gchar **)priv->target_test_case_names;
 }
 
 void
-cut_run_context_set_target_test_names (CutRunContext *context, gchar **names)
+cut_run_context_set_target_test_names (CutRunContext *context,
+                                       const gchar **names)
 {
     CutRunContextPrivate *priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
 
     g_strfreev(priv->target_test_names);
-    priv->target_test_names = g_strdupv(names);
+    priv->target_test_names = g_strdupv((gchar **)names);
 }
 
-gchar **
+const gchar **
 cut_run_context_get_target_test_names (CutRunContext *context)
 {
     CutRunContextPrivate *priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
-    return priv->target_test_names;
+    return (const gchar **)priv->target_test_names;
 }
 
 static void
@@ -1752,6 +1753,24 @@ cut_run_context_start (CutRunContext *context)
     cut_run_context_detach_listeners(context);
 
     return success;
+}
+
+static void
+cb_complete_run (CutRunContext *context, gboolean success, gpointer user_data)
+{
+    g_signal_handlers_disconnect_by_func(context,
+                                         G_CALLBACK(cb_complete_run),
+                                         user_data);
+    cut_run_context_detach_listeners(context);
+}
+
+void
+cut_run_context_start_async (CutRunContext *context)
+{
+    CUT_RUN_CONTEXT_GET_PRIVATE(context)->elapsed = 0.0;
+    cut_run_context_attach_listeners(context);
+    g_signal_connect(context, "complete-run", G_CALLBACK(cb_complete_run), NULL);
+    cut_runner_run_async(CUT_RUNNER(context));
 }
 
 gboolean

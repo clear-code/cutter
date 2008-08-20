@@ -481,14 +481,14 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite,
 gboolean
 cut_test_suite_run (CutTestSuite *suite, CutRunContext *run_context)
 {
-    gchar **test_case_names;
-    gchar **test_names;
+    const gchar **test_case_names;
+    const gchar **test_names;
 
     test_case_names = cut_run_context_get_target_test_case_names(run_context);
     test_names = cut_run_context_get_target_test_names(run_context);
     return cut_test_suite_run_with_filter(suite, run_context,
-                                          (const gchar **)test_case_names,
-                                          (const gchar **)test_names);
+                                          test_case_names,
+                                          test_names);
 }
 
 gboolean
