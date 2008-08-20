@@ -1752,6 +1752,19 @@ cut_run_context_start (CutRunContext *context)
     return success;
 }
 
+gboolean
+cut_run_context_emit_complete_run (CutRunContext *context, gboolean success)
+{
+    CutTestResultStatus status;
+
+    status = cut_run_context_get_status(context);
+    if (cut_test_result_status_is_critical(status))
+        success = FALSE;
+    g_signal_emit_by_name(context, "complete-run", success);
+
+    return success;
+}
+
 void
 cut_run_context_emit_error (CutRunContext *context,
                             GQuark         domain,

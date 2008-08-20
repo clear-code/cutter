@@ -96,24 +96,20 @@ cut_stream_reader_error_quark (void)
 
 #define emit_error(stream_reader, code, sub_error, format, ...) do      \
 {                                                                       \
+    CutStreamReader *_stream_reader;                                    \
     CutStreamReaderPrivate *_priv;                                      \
     CutRunContext *_run_context;                                        \
                                                                         \
-    _priv = CUT_STREAM_READER_GET_PRIVATE(stream_reader);               \
-    _run_context = CUT_RUN_CONTEXT(stream_reader);                      \
+    _stream_reader = (stream_reader);                                   \
+    _priv = CUT_STREAM_READER_GET_PRIVATE(_stream_reader);              \
+    _run_context = CUT_RUN_CONTEXT(_stream_reader);                     \
     cut_run_context_emit_error(_run_context,                            \
                                CUT_STREAM_READER_ERROR,                 \
                                code, sub_error,                         \
                                format, ## __VA_ARGS__);                 \
     _priv->error_emitted = TRUE;                                        \
-    emit_complete_signal(stream_reader, FALSE);                         \
+    cut_run_context_emit_complete_run(_run_context, FALSE);             \
 } while (0)
-
-static void
-emit_complete_signal (CutStreamReader *stream_reader, gboolean success)
-{
-    g_signal_emit_by_name(stream_reader, "complete-run", success);
-}
 
 #define BUFFER_SIZE 4096
 gboolean

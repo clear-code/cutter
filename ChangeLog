@@ -1,5 +1,12 @@
 2008-08-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-pipeline.c, cutter/cut-stream-parser.c,
+	cutter/cut-stream-reader.c, cutter/cut-test-runner.c: use
+	cut_run_context_emit_complete_run().
+
+	* cutter/cut-run-context.[ch] (cut_run_context_emit_complete_run):
+	add a convenience function for considering delegated test results.
+
 	* cutter/cut-stream-parser.c (start_result): parse test data in
 	<result>.
 

@@ -1552,8 +1552,7 @@ end_stream (CutStreamParser *parser, CutStreamParserPrivate *priv,
             const gchar *element_name, GError **error)
 {
     if (priv->run_context)
-        g_signal_emit_by_name(priv->run_context, "complete-run", priv->success);
-
+        cut_run_context_emit_complete_run(priv->run_context, priv->success);
 }
 
 static void

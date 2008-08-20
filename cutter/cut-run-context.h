@@ -278,6 +278,8 @@ gchar         *cut_run_context_build_source_filename(CutRunContext *context,
 
 gboolean       cut_run_context_start                (CutRunContext *context);
 
+gboolean       cut_run_context_emit_complete_run    (CutRunContext *context,
+                                                     gboolean       success);
 void           cut_run_context_emit_error           (CutRunContext *context,
                                                      GQuark         domain,
                                                      gint           code,

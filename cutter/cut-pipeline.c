@@ -196,22 +196,18 @@ cut_pipeline_error_quark (void)
 
 #define emit_error(pipeline, code, error, format, ...) do               \
 {                                                                       \
+    CutPipeline *_pipeline;                                             \
     CutPipelinePrivate *_priv;                                          \
     CutRunContext *_run_context;                                        \
                                                                         \
-    _priv = CUT_PIPELINE_GET_PRIVATE(pipeline);                         \
-    _run_context = CUT_RUN_CONTEXT(pipeline);                           \
+    _pipeline = (pipeline);                                             \
+    _priv = CUT_PIPELINE_GET_PRIVATE(_pipeline);                        \
+    _run_context = CUT_RUN_CONTEXT(_pipeline);                          \
     cut_run_context_emit_error(_run_context, CUT_PIPELINE_ERROR,        \
                                code, error,                             \
                                format, ## __VA_ARGS__);                 \
-    emit_complete_signal(pipeline, FALSE);                              \
+    cut_run_context_emit_complete_run(_run_context, FALSE);             \
 } while (0)
-
-static void
-emit_complete_signal (CutPipeline *pipeline, gboolean success)
-{
-    g_signal_emit_by_name(pipeline, "complete-run", success);
-}
 
 static void
 reap_child (CutPipeline *pipeline, GPid pid)
