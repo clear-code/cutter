@@ -1,5 +1,14 @@
 2008-08-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-stream-parser.c (start_result): parse test data in
+	<result>.
+
+	* test/test-cut-stream-parser.c (test_result_iterated_test),
+	test/fixtures/xml-stream/iterated-test.xml: follow the below change.
+
+	* cutter/cut-test-result.c (cut_test_result_to_xml_string): output
+	test data to XML.
+
 	* cutter/cut-test-runner.c (runner_run): consider delegated test
 	results.
 

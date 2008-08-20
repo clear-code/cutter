@@ -1146,6 +1146,14 @@ start_result (CutStreamParserPrivate *priv, GMarkupParseContext *context,
         cut_test_result_set_test(priv->result, test);
         PUSH_TEST(priv, test);
         g_object_unref(test);
+    } else if (g_str_equal("test-data", element_name)) {
+        CutTestData *test_data;
+
+        PUSH_STATE(priv, IN_TEST_DATA);
+        test_data = cut_test_data_new_empty();
+        cut_test_result_set_test_data(priv->result, test_data);
+        PUSH_TEST_DATA(priv, test_data);
+        g_object_unref(test_data);
     } else if (g_str_equal("status", element_name)) {
         PUSH_STATE(priv, IN_RESULT_STATUS);
     } else if (g_str_equal("detail", element_name)) {

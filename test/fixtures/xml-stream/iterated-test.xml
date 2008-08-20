@@ -113,6 +113,9 @@
         <start-time>2008-07-30T04:55:42Z</start-time>
         <elapsed>0.000001</elapsed>
       </iterated-test>
+      <test-data>
+        <name>first data</name>
+      </test-data>
       <status>success</status>
       <start-time>2008-07-30T04:55:42Z</start-time>
       <elapsed>0.000001</elapsed>
@@ -217,6 +220,9 @@
         <start-time>2008-07-30T04:55:42Z</start-time>
         <elapsed>0.000001</elapsed>
       </iterated-test>
+      <test-data>
+        <name>second data</name>
+      </test-data>
       <status>success</status>
       <start-time>2008-07-30T04:55:42Z</start-time>
       <elapsed>0.000001</elapsed>

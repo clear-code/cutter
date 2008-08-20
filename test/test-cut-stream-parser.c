@@ -1332,6 +1332,7 @@ test_result_iterated_test (void)
 {
     GTimeVal expected_start_time, actual_start_time;
     CutTest *test;
+    CutTestData *test_data;
     const gchar xml[] =
         "<stream>\n"
         "  <test-result>\n"
@@ -1377,6 +1378,9 @@ test_result_iterated_test (void)
         "        <start-time>2008-07-29T23:22:29Z</start-time>\n"
         "        <elapsed>0.028738</elapsed>\n"
         "      </iterated-test>\n"
+        "      <test-data>\n"
+        "        <name>first data</name>\n"
+        "      </test-data>\n"
         "      <status>success</status>\n"
         "      <start-time>2008-07-29T23:22:29Z</start-time>\n"
         "      <elapsed>0.028738</elapsed>\n"
@@ -1397,6 +1401,9 @@ test_result_iterated_test (void)
                             cut_test_result_get_test_case_name(result));
     cut_assert_equal_string("test_count",
                             cut_test_result_get_test_iterator_name(result));
+    test_data = cut_test_result_get_test_data(result);
+    cut_assert_not_null(test_data);
+    cut_assert_equal_string("first data", cut_test_data_get_name(test_data));
     cut_assert_equal_int(CUT_TEST_RESULT_SUCCESS,
                          cut_test_result_get_status(result));
 

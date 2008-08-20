@@ -763,6 +763,7 @@ cut_test_result_to_xml_string (CutTestResult *result, GString *string,
     CutTestCase *test_case;
     CutTestIterator *test_iterator;
     CutTest *test;
+    CutTestData *test_data;
 
     cut_utils_append_indent(string, indent);
     g_string_append(string, "<result>\n");
@@ -776,6 +777,9 @@ cut_test_result_to_xml_string (CutTestResult *result, GString *string,
     test = cut_test_result_get_test(result);
     if (test)
         cut_test_to_xml_string(test, string, indent + 2);
+    test_data = cut_test_result_get_test_data(result);
+    if (test_data)
+        cut_test_data_to_xml_string(test_data, string, indent + 2);
     append_test_result_to_string(string, result, indent + 2);
 
     cut_utils_append_indent(string, indent);
