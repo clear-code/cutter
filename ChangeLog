@@ -1,5 +1,8 @@
 2008-08-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/fixtures/sub-process/test-invoker.c: test-delegate ->
+	test-invoker.
+
 	* cutter/, test/: gchar ** -> const gchar **.
 
 	* test/test-cut-pipeline.c: move delegate test to ...

@@ -7,7 +7,7 @@ INCLUDES = $(CUTTER_CFLAGS)	\
 	-I$(top_srcdir)/gcutter
 
 noinst_LTLIBRARIES = 		\
-	test_delegate.la
+	test_invoker.la
 
 AM_LDFLAGS =			\
 	-module			\
@@ -19,5 +19,5 @@ LIBS =						\
 	$(top_builddir)/cutter/libcutter.la	\
 	$(GLIB_LIBS)
 
-test_delegate_la_SOURCES = test-delegate.c
+test_invoker_la_SOURCES = test-invoker.c
 
