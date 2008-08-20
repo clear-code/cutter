@@ -3,5 +3,4 @@ SUBDIRS =		\
 	failure		\
 	omission	\
 	pending		\
-	success		\
-	delegate
+	success

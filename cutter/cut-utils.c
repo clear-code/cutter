@@ -543,6 +543,17 @@ cut_utils_fold (const gchar *string)
     return folded_string;
 }
 
+CutSubProcess *
+cut_utils_create_taken_sub_process (const char     *test_directory,
+                                    CutTestContext *test_context)
+{
+    CutSubProcess *sub_process;
+
+    sub_process = cut_sub_process_new_with_test_context(test_directory,
+                                                        test_context);
+    cut_test_context_take_g_object(test_context, sub_process);
+    return sub_process;
+}
 
 #ifdef G_OS_WIN32
 static gchar *win32_base_path = NULL;

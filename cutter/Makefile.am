@@ -57,7 +57,8 @@ libcutter_public_headers = 			\
 		cut-diff.h			\
 		cut-analyzer.h			\
 		cut-stream-reader.h		\
-		cut-file-stream-reader.h
+		cut-file-stream-reader.h	\
+		cut-sub-process.h
 
 noinst_headers = 			\
 		cut-loader.h		\
@@ -143,7 +144,8 @@ libcutter_la_SOURCES =				\
 		cut-diff.c			\
 		cut-analyzer.c			\
 		cut-stream-reader.c		\
-		cut-file-stream-reader.c
+		cut-file-stream-reader.c	\
+		cut-sub-process.c
 
 libcutter_la_LDFLAGS =				\
 	-version-info $(LT_VERSION_INFO)	\

@@ -164,7 +164,7 @@ extern "C" {
  * cut_build_fixture_data_path() shows how the fixture data
  * path is determined.
  *
- * Returns: a content of the fixture data as string.
+ * Returns: a content of the fixture data as string. (char *)
  *
  * Since: 1.0.2
  */
@@ -189,6 +189,22 @@ extern "C" {
     cut_utils_remove_path_recursive_force(                              \
         cut_take_string(                                                \
             cut_utils_build_path(path, ## __VA_ARGS__, NULL)))
+
+/**
+ * cut_sub_process_new:
+ * @test_directory: a directory includes sub process test.
+ *
+ * Creates sub cutter process that runs tests under
+ * @test_directory and returns it. A created sub process
+ * is owned by Cutter.
+ *
+ * Returns: a #CutSubProcess.
+ *
+ * Since: 1.0.4
+ */
+#define cut_sub_process_new(test_directory)                             \
+    cut_utils_create_taken_sub_process(test_directory,                  \
+                                       get_current_test_context())
 
 
 #ifdef __cplusplus

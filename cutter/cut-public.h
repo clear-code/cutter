@@ -42,7 +42,18 @@ extern "C" {
 #  define CUT_GNUC_NULL_TERMINATED
 #endif
 
+typedef int cut_boolean;
+
+#ifndef CUT_FALSE
+#  define CUT_FALSE (0)
+#endif
+
+#ifndef CUT_TRUE
+#  define CUT_TRUE (!CUT_FALSE)
+#endif
+
 typedef struct _CutTestContext     CutTestContext;
+typedef struct _CutSubProcess      CutSubProcess;
 
 typedef enum {
     CUT_TEST_RESULT_INVALID = -1,
@@ -143,6 +154,63 @@ char       *cut_diff_readable               (const char     *from,
                                              const char     *to);
 char       *cut_diff_folded_readable        (const char     *from,
                                              const char     *to);
+
+CutSubProcess *cut_utils_create_taken_sub_process (const char     *test_directory,
+                                                   CutTestContext *test_context);
+
+CutSubProcess *cut_sub_process_new_with_test_context
+                                                  (const char     *test_directory,
+                                                   CutTestContext *test_context);
+
+cut_boolean    cut_sub_process_run                (CutSubProcess  *sub_process);
+void           cut_sub_process_run_async          (CutSubProcess  *sub_process);
+cut_boolean    cut_sub_process_wait               (CutSubProcess  *sub_process);
+cut_boolean    cut_sub_process_is_success         (CutSubProcess  *sub_process);
+cut_boolean    cut_sub_process_is_running         (CutSubProcess  *sub_process);
+
+const char    *cut_sub_process_get_test_directory (CutSubProcess  *sub_process);
+void           cut_sub_process_set_test_directory (CutSubProcess  *sub_process,
+                                                   const char     *test_directory);
+const char    *cut_sub_process_get_source_directory
+                                                  (CutSubProcess  *sub_process);
+void           cut_sub_process_set_source_directory
+                                                  (CutSubProcess  *sub_process,
+                                                   const char     *source_directory);
+
+cut_boolean    cut_sub_process_is_multi_thread    (CutSubProcess  *sub_process);
+cut_boolean    cut_sub_process_get_multi_thread   (CutSubProcess  *sub_process);
+void           cut_sub_process_set_multi_thread   (CutSubProcess  *sub_process,
+                                                   cut_boolean     multi_thread);
+
+const char   **cut_sub_process_get_exclude_files  (CutSubProcess  *sub_process);
+void           cut_sub_process_set_exclude_files  (CutSubProcess  *sub_process,
+                                                   const char    **files);
+
+const char   **cut_sub_process_get_exclude_directories
+                                                  (CutSubProcess  *sub_process);
+void           cut_sub_process_set_exclude_directories
+                                                  (CutSubProcess  *sub_process,
+                                                   const char    **directories);
+
+const char   **cut_sub_process_get_target_test_case_names
+                                                  (CutSubProcess  *sub_process);
+void           cut_sub_process_set_target_test_case_names
+                                                  (CutSubProcess  *sub_process,
+                                                   const char    **names);
+
+const char   **cut_sub_process_get_target_test_names
+                                                  (CutSubProcess  *sub_process);
+void           cut_sub_process_set_target_test_names
+                                                  (CutSubProcess  *sub_process,
+                                                   const char    **names);
+
+double         cut_sub_process_get_elapsed        (CutSubProcess  *sub_process);
+double         cut_sub_process_get_total_elapsed  (CutSubProcess  *sub_process);
+
+cut_boolean    cut_sub_process_is_crashed         (CutSubProcess  *sub_process);
+
+const char    *cut_sub_process_get_backtrace      (CutSubProcess  *sub_process);
+
 
 #ifdef __cplusplus
 }

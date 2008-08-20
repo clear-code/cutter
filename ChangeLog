@@ -1,5 +1,12 @@
 2008-08-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-pipeline.c: move delegate test to ...
+	* test/test-cut-sub-process.c: ... here as sub process test.
+
+	* cutter/cut-sub-process.[ch], cutter/cut-public.h,
+	cutter/cut-utils.c, cutter/cut-test-utils.h: add a convenience
+	object for users who want to run sub cutter process.
+
 	* test/test-cut-pipeline.c (test_delegate): add a test for
 	cut_run_context_delegate_signals().
 	* test/fixtures/pipeline/delegate/: add a test data for

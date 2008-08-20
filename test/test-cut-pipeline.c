@@ -19,7 +19,6 @@ void data_signal (void);
 void test_signal (gconstpointer data);
 void data_count (void);
 void test_count (gconstpointer data);
-void test_delegate (void);
 
 static CutRunContext *pipeline;
 static const gchar *env_pipeline_test_dir;
@@ -202,42 +201,6 @@ test_count (gconstpointer data)
     else
         cut_assert_false(run(test_data->test_dir));
     cut_assert_equal_uint(1, test_data->get_count(pipeline));
-}
-
-void
-test_delegate (void)
-{
-    const gchar *exclude_directories[] = {"fixtures", NULL};
-    const gchar *pipeline_test_dir;
-    const gchar *delegate_test_dir;
-    gint n_normal_tests, n_iterated_tests, n_spike_tests;
-    gint n_results, n_non_critical_results;
-
-    cut_run_context_set_exclude_directories(pipeline, exclude_directories);
-
-    pipeline_test_dir = cut_take_string(build_test_dir("delegate", "fixtures",
-                                                       "normal"));
-    g_setenv("CUTTEST_PIPELINE_TEST_DIR", pipeline_test_dir, TRUE);
-
-    delegate_test_dir = cut_take_string(build_test_dir("delegate"));
-    cut_assert_false(run(delegate_test_dir));
-
-    n_normal_tests = 1;
-    n_iterated_tests = 2;
-    n_spike_tests = 1;
-    n_results = 6;
-    n_non_critical_results = 3;
-    cut_assert_test_result_summary(pipeline,
-                                   (n_normal_tests + n_iterated_tests) *
-                                     n_results + n_spike_tests,
-                                   (n_normal_tests + n_iterated_tests),
-                                   (n_normal_tests + n_iterated_tests) *
-                                     n_non_critical_results + n_spike_tests,
-                                   (n_normal_tests + n_iterated_tests),
-                                   (n_normal_tests + n_iterated_tests),
-                                   (n_normal_tests + n_iterated_tests),
-                                   (n_normal_tests + n_iterated_tests),
-                                   (n_normal_tests + n_iterated_tests));
 }
 
 /*

@@ -5,4 +5,5 @@ SUBDIRS =		\
 	loader		\
 	pipeline	\
 	repository	\
+	sub-process	\
 	xml-stream
