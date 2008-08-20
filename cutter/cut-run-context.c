@@ -153,6 +153,8 @@ enum
 static gint signals[LAST_SIGNAL] = {0};
 static CutRunnerIface *parent_runner_iface;
 
+static GQuark detail_delegate;
+
 static void runner_init (CutRunnerIface *iface);
 
 G_DEFINE_ABSTRACT_TYPE_WITH_CODE(CutRunContext, cut_run_context, G_TYPE_OBJECT,
@@ -397,7 +399,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     signals[START_RUN]
         = g_signal_new("start-run",
                        G_TYPE_FROM_CLASS(klass),
-                       G_SIGNAL_RUN_LAST,
+                       G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                        G_STRUCT_OFFSET(CutRunContextClass, start_run),
                        NULL, NULL,
                        g_cclosure_marshal_VOID__VOID,
@@ -406,7 +408,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     signals[READY_TEST_SUITE]
         = g_signal_new ("ready-test-suite",
                         G_TYPE_FROM_CLASS (klass),
-                        G_SIGNAL_RUN_LAST,
+                        G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                         G_STRUCT_OFFSET (CutRunContextClass, ready_test_suite),
                         NULL, NULL,
                         _cut_marshal_VOID__OBJECT_UINT_UINT,
@@ -416,7 +418,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     signals[START_TEST_SUITE]
         = g_signal_new ("start-test-suite",
                         G_TYPE_FROM_CLASS (klass),
-                        G_SIGNAL_RUN_LAST,
+                        G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                         G_STRUCT_OFFSET (CutRunContextClass, start_test_suite),
                         NULL, NULL,
                         g_cclosure_marshal_VOID__OBJECT,
@@ -425,7 +427,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     signals[READY_TEST_CASE]
         = g_signal_new ("ready-test-case",
                         G_TYPE_FROM_CLASS (klass),
-                        G_SIGNAL_RUN_LAST,
+                        G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                         G_STRUCT_OFFSET (CutRunContextClass, ready_test_case),
                         NULL, NULL,
                         _cut_marshal_VOID__OBJECT_UINT,
@@ -434,7 +436,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     signals[START_TEST_CASE]
         = g_signal_new ("start-test-case",
                         G_TYPE_FROM_CLASS(klass),
-                        G_SIGNAL_RUN_LAST,
+                        G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                         G_STRUCT_OFFSET(CutRunContextClass, start_test_case),
                         NULL, NULL,
                         g_cclosure_marshal_VOID__OBJECT,
@@ -443,7 +445,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     signals[READY_TEST_ITERATOR]
         = g_signal_new ("ready-test-iterator",
                         G_TYPE_FROM_CLASS(klass),
-                        G_SIGNAL_RUN_LAST,
+                        G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                         G_STRUCT_OFFSET(CutRunContextClass, ready_test_iterator),
                         NULL, NULL,
                         _cut_marshal_VOID__OBJECT_UINT,
@@ -452,7 +454,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     signals[START_TEST_ITERATOR]
         = g_signal_new ("start-test-iterator",
                         G_TYPE_FROM_CLASS(klass),
-                        G_SIGNAL_RUN_LAST,
+                        G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                         G_STRUCT_OFFSET(CutRunContextClass, start_test_iterator),
                         NULL, NULL,
                         g_cclosure_marshal_VOID__OBJECT,
@@ -461,7 +463,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     signals[START_TEST]
         = g_signal_new ("start-test",
                         G_TYPE_FROM_CLASS (klass),
-                        G_SIGNAL_RUN_LAST,
+                        G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                         G_STRUCT_OFFSET (CutRunContextClass, start_test),
                         NULL, NULL,
                         _cut_marshal_VOID__OBJECT_OBJECT,
@@ -471,7 +473,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     signals[START_ITERATED_TEST]
         = g_signal_new("start-iterated-test",
                        G_TYPE_FROM_CLASS(klass),
-                       G_SIGNAL_RUN_LAST,
+                       G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                        G_STRUCT_OFFSET(CutRunContextClass, start_iterated_test),
                        NULL, NULL,
                        _cut_marshal_VOID__OBJECT_OBJECT,
@@ -481,7 +483,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     signals[PASS_ASSERTION]
         = g_signal_new ("pass-assertion",
                         G_TYPE_FROM_CLASS (klass),
-                        G_SIGNAL_RUN_LAST,
+                        G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                         G_STRUCT_OFFSET (CutRunContextClass, pass_assertion),
                         NULL, NULL,
                         _cut_marshal_VOID__OBJECT_OBJECT,
@@ -490,7 +492,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     signals[SUCCESS_TEST]
         = g_signal_new ("success-test",
                         G_TYPE_FROM_CLASS (klass),
-                        G_SIGNAL_RUN_LAST,
+                        G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                         G_STRUCT_OFFSET (CutRunContextClass, success_test),
                         NULL, NULL,
                         _cut_marshal_VOID__OBJECT_OBJECT_OBJECT,
@@ -501,7 +503,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     signals[FAILURE_TEST]
         = g_signal_new ("failure-test",
                         G_TYPE_FROM_CLASS (klass),
-                        G_SIGNAL_RUN_LAST,
+                        G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                         G_STRUCT_OFFSET (CutRunContextClass, failure_test),
                         NULL, NULL,
                         _cut_marshal_VOID__OBJECT_OBJECT_OBJECT,
@@ -512,7 +514,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     signals[ERROR_TEST]
         = g_signal_new ("error-test",
                         G_TYPE_FROM_CLASS (klass),
-                        G_SIGNAL_RUN_LAST,
+                        G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                         G_STRUCT_OFFSET (CutRunContextClass, error_test),
                         NULL, NULL,
                         _cut_marshal_VOID__OBJECT_OBJECT_OBJECT,
@@ -523,7 +525,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     signals[PENDING_TEST]
         = g_signal_new ("pending-test",
                         G_TYPE_FROM_CLASS (klass),
-                        G_SIGNAL_RUN_LAST,
+                        G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                         G_STRUCT_OFFSET (CutRunContextClass, pending_test),
                         NULL, NULL,
                         _cut_marshal_VOID__OBJECT_OBJECT_OBJECT,
@@ -534,7 +536,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     signals[NOTIFICATION_TEST]
         = g_signal_new ("notification-test",
                         G_TYPE_FROM_CLASS (klass),
-                        G_SIGNAL_RUN_LAST,
+                        G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                         G_STRUCT_OFFSET (CutRunContextClass, notification_test),
                         NULL, NULL,
                         _cut_marshal_VOID__OBJECT_OBJECT_OBJECT,
@@ -545,7 +547,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     signals[OMISSION_TEST]
         = g_signal_new("omission-test",
                        G_TYPE_FROM_CLASS(klass),
-                       G_SIGNAL_RUN_LAST,
+                       G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                        G_STRUCT_OFFSET(CutRunContextClass, omission_test),
                        NULL, NULL,
                        _cut_marshal_VOID__OBJECT_OBJECT_OBJECT,
@@ -556,7 +558,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     signals[COMPLETE_ITERATED_TEST]
         = g_signal_new("complete-iterated-test",
                        G_TYPE_FROM_CLASS(klass),
-                       G_SIGNAL_RUN_LAST,
+                       G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                        G_STRUCT_OFFSET(CutRunContextClass,
                                        complete_iterated_test),
                        NULL, NULL,
@@ -567,7 +569,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     signals[COMPLETE_TEST]
         = g_signal_new ("complete-test",
                         G_TYPE_FROM_CLASS (klass),
-                        G_SIGNAL_RUN_LAST,
+                        G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                         G_STRUCT_OFFSET (CutRunContextClass, complete_test),
                         NULL, NULL,
                         _cut_marshal_VOID__OBJECT_OBJECT,
@@ -576,7 +578,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     signals[SUCCESS_TEST_ITERATOR]
         = g_signal_new("success-test-iterator",
                        G_TYPE_FROM_CLASS(klass),
-                       G_SIGNAL_RUN_LAST,
+                       G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                        G_STRUCT_OFFSET(CutRunContextClass, success_test_iterator),
                        NULL, NULL,
                        _cut_marshal_VOID__OBJECT_OBJECT,
@@ -585,7 +587,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     signals[FAILURE_TEST_ITERATOR]
         = g_signal_new("failure-test-iterator",
                        G_TYPE_FROM_CLASS(klass),
-                       G_SIGNAL_RUN_LAST,
+                       G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                        G_STRUCT_OFFSET(CutRunContextClass, failure_test_iterator),
                        NULL, NULL,
                        _cut_marshal_VOID__OBJECT_OBJECT,
@@ -594,7 +596,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     signals[ERROR_TEST_ITERATOR]
         = g_signal_new("error-test-iterator",
                        G_TYPE_FROM_CLASS(klass),
-                       G_SIGNAL_RUN_LAST,
+                       G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                        G_STRUCT_OFFSET(CutRunContextClass, error_test_iterator),
                        NULL, NULL,
                        _cut_marshal_VOID__OBJECT_OBJECT,
@@ -603,7 +605,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     signals[PENDING_TEST_ITERATOR]
         = g_signal_new("pending-test-iterator",
                        G_TYPE_FROM_CLASS(klass),
-                       G_SIGNAL_RUN_LAST,
+                       G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                        G_STRUCT_OFFSET(CutRunContextClass, pending_test_iterator),
                        NULL, NULL,
                        _cut_marshal_VOID__OBJECT_OBJECT,
@@ -612,7 +614,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     signals[NOTIFICATION_TEST_ITERATOR]
         = g_signal_new("notification-test-iterator",
                        G_TYPE_FROM_CLASS(klass),
-                       G_SIGNAL_RUN_LAST,
+                       G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                        G_STRUCT_OFFSET(CutRunContextClass, notification_test_iterator),
                        NULL, NULL,
                        _cut_marshal_VOID__OBJECT_OBJECT,
@@ -621,7 +623,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     signals[OMISSION_TEST_ITERATOR]
         = g_signal_new("omission-test-iterator",
                        G_TYPE_FROM_CLASS (klass),
-                       G_SIGNAL_RUN_LAST,
+                       G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                        G_STRUCT_OFFSET(CutRunContextClass, omission_test_iterator),
                        NULL, NULL,
                        _cut_marshal_VOID__OBJECT_OBJECT,
@@ -630,7 +632,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     signals[COMPLETE_TEST_ITERATOR]
         = g_signal_new ("complete-test-iterator",
                         G_TYPE_FROM_CLASS (klass),
-                        G_SIGNAL_RUN_LAST,
+                        G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                         G_STRUCT_OFFSET (CutRunContextClass, complete_test_iterator),
                         NULL, NULL,
                         g_cclosure_marshal_VOID__OBJECT,
@@ -639,7 +641,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     signals[SUCCESS_TEST_CASE]
         = g_signal_new("success-test-case",
                        G_TYPE_FROM_CLASS(klass),
-                       G_SIGNAL_RUN_LAST,
+                       G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                        G_STRUCT_OFFSET(CutRunContextClass, success_test_case),
                        NULL, NULL,
                        _cut_marshal_VOID__OBJECT_OBJECT,
@@ -648,7 +650,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     signals[FAILURE_TEST_CASE]
         = g_signal_new("failure-test-case",
                        G_TYPE_FROM_CLASS(klass),
-                       G_SIGNAL_RUN_LAST,
+                       G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                        G_STRUCT_OFFSET(CutRunContextClass, failure_test_case),
                        NULL, NULL,
                        _cut_marshal_VOID__OBJECT_OBJECT,
@@ -657,7 +659,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     signals[ERROR_TEST_CASE]
         = g_signal_new("error-test-case",
                        G_TYPE_FROM_CLASS(klass),
-                       G_SIGNAL_RUN_LAST,
+                       G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                        G_STRUCT_OFFSET(CutRunContextClass, error_test_case),
                        NULL, NULL,
                        _cut_marshal_VOID__OBJECT_OBJECT,
@@ -666,7 +668,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     signals[PENDING_TEST_CASE]
         = g_signal_new("pending-test-case",
                        G_TYPE_FROM_CLASS(klass),
-                       G_SIGNAL_RUN_LAST,
+                       G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                        G_STRUCT_OFFSET(CutRunContextClass, pending_test_case),
                        NULL, NULL,
                        _cut_marshal_VOID__OBJECT_OBJECT,
@@ -675,7 +677,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     signals[NOTIFICATION_TEST_CASE]
         = g_signal_new("notification-test-case",
                        G_TYPE_FROM_CLASS(klass),
-                       G_SIGNAL_RUN_LAST,
+                       G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                        G_STRUCT_OFFSET(CutRunContextClass, notification_test_case),
                        NULL, NULL,
                        _cut_marshal_VOID__OBJECT_OBJECT,
@@ -684,7 +686,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     signals[OMISSION_TEST_CASE]
         = g_signal_new("omission-test-case",
                        G_TYPE_FROM_CLASS (klass),
-                       G_SIGNAL_RUN_LAST,
+                       G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                        G_STRUCT_OFFSET(CutRunContextClass, omission_test_case),
                        NULL, NULL,
                        _cut_marshal_VOID__OBJECT_OBJECT,
@@ -693,7 +695,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     signals[COMPLETE_TEST_CASE]
         = g_signal_new ("complete-test-case",
                         G_TYPE_FROM_CLASS (klass),
-                        G_SIGNAL_RUN_LAST,
+                        G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                         G_STRUCT_OFFSET (CutRunContextClass, complete_test_case),
                         NULL, NULL,
                         g_cclosure_marshal_VOID__OBJECT,
@@ -702,7 +704,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     signals[COMPLETE_TEST_SUITE]
         = g_signal_new ("complete-test-suite",
                         G_TYPE_FROM_CLASS (klass),
-                        G_SIGNAL_RUN_LAST,
+                        G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                         G_STRUCT_OFFSET (CutRunContextClass, complete_test_suite),
                         NULL, NULL,
                         g_cclosure_marshal_VOID__OBJECT,
@@ -711,7 +713,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     signals[COMPLETE_RUN]
         = g_signal_new("complete-run",
                        G_TYPE_FROM_CLASS(klass),
-                       G_SIGNAL_RUN_LAST,
+                       G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                        G_STRUCT_OFFSET(CutRunContextClass, complete_run),
                        NULL, NULL,
                        g_cclosure_marshal_VOID__BOOLEAN,
@@ -720,7 +722,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     signals[ERROR]
         = g_signal_new("error",
                        G_TYPE_FROM_CLASS(klass),
-                       G_SIGNAL_RUN_LAST,
+                       G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                        G_STRUCT_OFFSET(CutRunContextClass, error),
                        NULL, NULL,
                         g_cclosure_marshal_VOID__POINTER,
@@ -729,7 +731,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     signals[CRASHED]
         = g_signal_new("crashed",
                        G_TYPE_FROM_CLASS(klass),
-                       G_SIGNAL_RUN_LAST,
+                       G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                        G_STRUCT_OFFSET(CutRunContextClass, crashed),
                        NULL, NULL,
                        g_cclosure_marshal_VOID__STRING,
@@ -1816,6 +1818,457 @@ cut_run_context_get_command_line_args (CutRunContext *context)
     CutRunContextPrivate *priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
     return (const gchar **)priv->command_line_args;
 }
+
+static void
+cb_delegate_ready_test_case (CutRunContext *context, CutTestCase *test_case,
+                             guint n_tests, gpointer user_data)
+{
+    CutRunContext *other_context = user_data;
+    g_signal_emit(other_context, signals[READY_TEST_CASE], detail_delegate,
+                  test_case, n_tests);
+}
+
+static void
+cb_delegate_start_test_case (CutRunContext *context, CutTestCase *test_case,
+                             gpointer user_data)
+{
+    CutRunContext *other_context = user_data;
+    g_signal_emit(other_context, signals[START_TEST_CASE], detail_delegate,
+                  test_case);
+}
+
+static void
+cb_delegate_ready_test_iterator (CutRunContext *context,
+                                 CutTestIterator *test_iterator,
+                                 guint n_tests,
+                                 gpointer user_data)
+{
+    CutRunContext *other_context = user_data;
+    g_signal_emit(other_context, signals[READY_TEST_ITERATOR], detail_delegate,
+                  test_iterator, n_tests);
+}
+
+static void
+cb_delegate_start_test_iterator (CutRunContext *context,
+                                 CutTestIterator *test_iterator,
+                                 gpointer user_data)
+{
+    CutRunContext *other_context = user_data;
+    g_signal_emit(other_context, signals[START_TEST_ITERATOR], detail_delegate,
+                  test_iterator);
+}
+
+
+static void
+cb_delegate_start_test (CutRunContext *context,
+                        CutTest *test, CutTestContext *test_context,
+                        gpointer user_data)
+{
+    CutRunContext *other_context = user_data;
+    g_signal_emit(other_context, signals[START_TEST], detail_delegate,
+                  test, test_context);
+}
+
+static void
+cb_delegate_start_iterated_test (CutRunContext *context,
+                                 CutIteratedTest *iterated_test,
+                                 CutTestContext *test_context,
+                                 gpointer user_data)
+{
+    CutRunContext *other_context = user_data;
+    g_signal_emit(other_context, signals[START_ITERATED_TEST], detail_delegate,
+                  iterated_test, test_context);
+}
+
+
+static void
+cb_delegate_pass_assertion (CutRunContext *context,
+                            CutTest *test,
+                            CutTestContext *test_context,
+                            gpointer user_data)
+{
+    CutRunContext *other_context = user_data;
+    g_signal_emit(other_context, signals[PASS_ASSERTION], detail_delegate,
+                  test, test_context);
+}
+
+static void
+cb_delegate_success_test (CutRunContext *context,
+                          CutTest *test,
+                          CutTestContext *test_context,
+                          CutTestResult *result,
+                          gpointer user_data)
+{
+    CutRunContext *other_context = user_data;
+    g_signal_emit(other_context, signals[SUCCESS_TEST], detail_delegate,
+                  test, test_context, result);
+}
+
+static void
+cb_delegate_failure_test (CutRunContext *context,
+                          CutTest *test,
+                          CutTestContext *test_context,
+                          CutTestResult *result,
+                          gpointer user_data)
+{
+    CutRunContext *other_context = user_data;
+    g_signal_emit(other_context, signals[FAILURE_TEST], detail_delegate,
+                  test, test_context, result);
+}
+
+static void
+cb_delegate_error_test (CutRunContext *context,
+                        CutTest *test,
+                        CutTestContext *test_context,
+                        CutTestResult *result,
+                        gpointer user_data)
+{
+    CutRunContext *other_context = user_data;
+    g_signal_emit(other_context, signals[ERROR_TEST], detail_delegate,
+                  test, test_context, result);
+}
+
+static void
+cb_delegate_pending_test (CutRunContext *context,
+                          CutTest *test,
+                          CutTestContext *test_context,
+                          CutTestResult *result,
+                          gpointer user_data)
+{
+    CutRunContext *other_context = user_data;
+    g_signal_emit(other_context, signals[PENDING_TEST], detail_delegate,
+                  test, test_context, result);
+}
+
+static void
+cb_delegate_notification_test (CutRunContext *context,
+                               CutTest *test,
+                               CutTestContext *test_context,
+                               CutTestResult *result,
+                               gpointer user_data)
+{
+    CutRunContext *other_context = user_data;
+    g_signal_emit(other_context, signals[NOTIFICATION_TEST], detail_delegate,
+                  test, test_context, result);
+}
+
+static void
+cb_delegate_omission_test (CutRunContext *context,
+                           CutTest *test,
+                           CutTestContext *test_context,
+                           CutTestResult *result,
+                           gpointer user_data)
+{
+    CutRunContext *other_context = user_data;
+    g_signal_emit(other_context, signals[OMISSION_TEST], detail_delegate,
+                  test, test_context, result);
+}
+
+
+static void
+cb_delegate_complete_test (CutRunContext *context,
+                           CutTest *test,
+                           CutTestContext *test_context,
+                           gpointer user_data)
+{
+    CutRunContext *other_context = user_data;
+    g_signal_emit(other_context, signals[COMPLETE_TEST], detail_delegate,
+                  test, test_context);
+}
+
+static void
+cb_delegate_complete_iterated_test (CutRunContext *context,
+                                    CutIteratedTest *iterated_test,
+                                    CutTestContext *test_context,
+                                    gpointer user_data)
+{
+    CutRunContext *other_context = user_data;
+    g_signal_emit(other_context, signals[COMPLETE_ITERATED_TEST], detail_delegate,
+                  iterated_test, test_context);
+}
+
+static void
+cb_delegate_success_test_iterator (CutRunContext *context,
+                                   CutTestIterator *test_iterator,
+                                   CutTestResult *result,
+                                   gpointer user_data)
+{
+    CutRunContext *other_context = user_data;
+    g_signal_emit(other_context, signals[SUCCESS_TEST_ITERATOR], detail_delegate,
+                  test_iterator, result);
+}
+
+static void
+cb_delegate_failure_test_iterator (CutRunContext *context,
+                                   CutTestIterator *test_iterator,
+                                   CutTestResult *result,
+                                   gpointer user_data)
+{
+    CutRunContext *other_context = user_data;
+    g_signal_emit(other_context, signals[FAILURE_TEST_ITERATOR], detail_delegate,
+                  test_iterator, result);
+}
+
+static void
+cb_delegate_error_test_iterator (CutRunContext *context,
+                                 CutTestIterator *test_iterator,
+                                 CutTestResult *result,
+                                 gpointer user_data)
+{
+    CutRunContext *other_context = user_data;
+    g_signal_emit(other_context, signals[ERROR_TEST_ITERATOR], detail_delegate,
+                  test_iterator, result);
+}
+
+static void
+cb_delegate_pending_test_iterator (CutRunContext *context,
+                                   CutTestIterator *test_iterator,
+                                   CutTestResult *result,
+                                   gpointer user_data)
+{
+    CutRunContext *other_context = user_data;
+    g_signal_emit(other_context, signals[PENDING_TEST_ITERATOR], detail_delegate,
+                  test_iterator, result);
+}
+
+static void
+cb_delegate_notification_test_iterator (CutRunContext *context,
+                                        CutTestIterator *test_iterator,
+                                        CutTestResult *result,
+                                        gpointer user_data)
+{
+    CutRunContext *other_context = user_data;
+    g_signal_emit(other_context, signals[NOTIFICATION_TEST_ITERATOR],
+                  detail_delegate,
+                  test_iterator, result);
+}
+
+static void
+cb_delegate_omission_test_iterator (CutRunContext *context,
+                                    CutTestIterator *test_iterator,
+                                    CutTestResult *result,
+                                    gpointer user_data)
+{
+    CutRunContext *other_context = user_data;
+    g_signal_emit(other_context, signals[OMISSION_TEST_ITERATOR],
+                  detail_delegate,
+                  test_iterator, result);
+}
+
+static void
+cb_delegate_complete_test_iterator (CutRunContext *context,
+                                    CutTestIterator *test_iterator,
+                                    gpointer user_data)
+{
+    CutRunContext *other_context = user_data;
+    g_signal_emit(other_context, signals[COMPLETE_TEST_ITERATOR],
+                  detail_delegate,
+                  test_iterator);
+}
+
+static void
+cb_delegate_success_test_case (CutRunContext *context,
+                               CutTestCase *test_case,
+                               CutTestResult *result,
+                               gpointer user_data)
+{
+    CutRunContext *other_context = user_data;
+    g_signal_emit(other_context, signals[SUCCESS_TEST_CASE], detail_delegate,
+                  test_case, result);
+}
+
+static void
+cb_delegate_failure_test_case (CutRunContext *context,
+                               CutTestCase *test_case,
+                               CutTestResult *result,
+                               gpointer user_data)
+{
+    CutRunContext *other_context = user_data;
+    g_signal_emit(other_context, signals[FAILURE_TEST_CASE], detail_delegate,
+                  test_case, result);
+}
+
+static void
+cb_delegate_error_test_case (CutRunContext *context,
+                             CutTestCase *test_case,
+                             CutTestResult *result,
+                             gpointer user_data)
+{
+    CutRunContext *other_context = user_data;
+    g_signal_emit(other_context, signals[ERROR_TEST_CASE], detail_delegate,
+                  test_case, result);
+}
+
+static void
+cb_delegate_pending_test_case (CutRunContext *context,
+                               CutTestCase *test_case,
+                               CutTestResult *result,
+                               gpointer user_data)
+{
+    CutRunContext *other_context = user_data;
+    g_signal_emit(other_context, signals[PENDING_TEST_CASE], detail_delegate,
+                  test_case, result);
+}
+
+static void
+cb_delegate_notification_test_case (CutRunContext *context,
+                                    CutTestCase *test_case,
+                                    CutTestResult *result,
+                                    gpointer user_data)
+{
+    CutRunContext *other_context = user_data;
+    g_signal_emit(other_context, signals[NOTIFICATION_TEST_CASE],
+                  detail_delegate,
+                  test_case, result);
+}
+
+static void
+cb_delegate_omission_test_case (CutRunContext *context,
+                                CutTestCase *test_case,
+                                CutTestResult *result,
+                                gpointer user_data)
+{
+    CutRunContext *other_context = user_data;
+    g_signal_emit(other_context, signals[OMISSION_TEST_CASE], detail_delegate,
+                  test_case, result);
+}
+
+static void
+cb_delegate_complete_test_case (CutRunContext *context,
+                                CutTestCase *test_case,
+                                gpointer user_data)
+{
+    CutRunContext *other_context = user_data;
+    g_signal_emit(other_context, signals[COMPLETE_TEST_CASE], detail_delegate,
+                  test_case);
+}
+
+
+static void
+cb_delegate_error (CutRunContext *context, GError *error, gpointer user_data)
+{
+    CutRunContext *other_context = user_data;
+    g_signal_emit(other_context, signals[ERROR], detail_delegate,
+                  error);
+}
+
+static void
+cb_delegate_crashed (CutRunContext *context, const gchar *backtrace,
+                     gpointer user_data)
+{
+    CutRunContext *other_context = user_data;
+    g_signal_emit(other_context, signals[CRASHED], detail_delegate,
+                  backtrace);
+}
+
+
+static void
+cb_delegate_complete_run (CutRunContext *context, gboolean success,
+                          gpointer user_data)
+{
+    CutRunContext *other_context = user_data;
+#define DISCONNECT_DELEGATE_SIGNAL(name)                                \
+    g_signal_handlers_disconnect_by_func(context,                       \
+                                         cb_delegate_ ## name,          \
+                                         other_context)
+
+    DISCONNECT_DELEGATE_SIGNAL(ready_test_case);
+    DISCONNECT_DELEGATE_SIGNAL(start_test_case);
+    DISCONNECT_DELEGATE_SIGNAL(ready_test_iterator);
+    DISCONNECT_DELEGATE_SIGNAL(start_test_iterator);
+
+    DISCONNECT_DELEGATE_SIGNAL(start_test);
+    DISCONNECT_DELEGATE_SIGNAL(start_iterated_test);
+
+    DISCONNECT_DELEGATE_SIGNAL(pass_assertion);
+    DISCONNECT_DELEGATE_SIGNAL(success_test);
+    DISCONNECT_DELEGATE_SIGNAL(failure_test);
+    DISCONNECT_DELEGATE_SIGNAL(error_test);
+    DISCONNECT_DELEGATE_SIGNAL(pending_test);
+    DISCONNECT_DELEGATE_SIGNAL(notification_test);
+    DISCONNECT_DELEGATE_SIGNAL(omission_test);
+
+    DISCONNECT_DELEGATE_SIGNAL(complete_test);
+    DISCONNECT_DELEGATE_SIGNAL(complete_iterated_test);
+
+    DISCONNECT_DELEGATE_SIGNAL(success_test_iterator);
+    DISCONNECT_DELEGATE_SIGNAL(failure_test_iterator);
+    DISCONNECT_DELEGATE_SIGNAL(error_test_iterator);
+    DISCONNECT_DELEGATE_SIGNAL(pending_test_iterator);
+    DISCONNECT_DELEGATE_SIGNAL(notification_test_iterator);
+    DISCONNECT_DELEGATE_SIGNAL(omission_test_iterator);
+    DISCONNECT_DELEGATE_SIGNAL(complete_test_iterator);
+
+    DISCONNECT_DELEGATE_SIGNAL(success_test_case);
+    DISCONNECT_DELEGATE_SIGNAL(failure_test_case);
+    DISCONNECT_DELEGATE_SIGNAL(error_test_case);
+    DISCONNECT_DELEGATE_SIGNAL(pending_test_case);
+    DISCONNECT_DELEGATE_SIGNAL(notification_test_case);
+    DISCONNECT_DELEGATE_SIGNAL(omission_test_case);
+    DISCONNECT_DELEGATE_SIGNAL(complete_test_case);
+
+    DISCONNECT_DELEGATE_SIGNAL(error);
+    DISCONNECT_DELEGATE_SIGNAL(crashed);
+
+    DISCONNECT_DELEGATE_SIGNAL(complete_run);
+
+#undef DISCONNECT_DELEGATE_SIGNAL
+}
+
+
+void
+cut_run_context_delegate_signals (CutRunContext *context,
+                                  CutRunContext *other_context)
+{
+    detail_delegate = g_quark_from_static_string("delegate");
+
+#define CONNECT_DELEGATE_SIGNAL(name)                                   \
+    g_signal_connect(context, #name,                                    \
+                     G_CALLBACK(cb_delegate_ ## name),                  \
+                     other_context)
+
+    CONNECT_DELEGATE_SIGNAL(ready_test_case);
+    CONNECT_DELEGATE_SIGNAL(start_test_case);
+    CONNECT_DELEGATE_SIGNAL(ready_test_iterator);
+    CONNECT_DELEGATE_SIGNAL(start_test_iterator);
+
+    CONNECT_DELEGATE_SIGNAL(start_test);
+    CONNECT_DELEGATE_SIGNAL(start_iterated_test);
+
+    CONNECT_DELEGATE_SIGNAL(pass_assertion);
+    CONNECT_DELEGATE_SIGNAL(success_test);
+    CONNECT_DELEGATE_SIGNAL(failure_test);
+    CONNECT_DELEGATE_SIGNAL(error_test);
+    CONNECT_DELEGATE_SIGNAL(pending_test);
+    CONNECT_DELEGATE_SIGNAL(notification_test);
+    CONNECT_DELEGATE_SIGNAL(omission_test);
+
+    CONNECT_DELEGATE_SIGNAL(complete_test);
+    CONNECT_DELEGATE_SIGNAL(complete_iterated_test);
+
+    CONNECT_DELEGATE_SIGNAL(success_test_iterator);
+    CONNECT_DELEGATE_SIGNAL(failure_test_iterator);
+    CONNECT_DELEGATE_SIGNAL(error_test_iterator);
+    CONNECT_DELEGATE_SIGNAL(pending_test_iterator);
+    CONNECT_DELEGATE_SIGNAL(notification_test_iterator);
+    CONNECT_DELEGATE_SIGNAL(omission_test_iterator);
+    CONNECT_DELEGATE_SIGNAL(complete_test_iterator);
+
+    CONNECT_DELEGATE_SIGNAL(success_test_case);
+    CONNECT_DELEGATE_SIGNAL(failure_test_case);
+    CONNECT_DELEGATE_SIGNAL(error_test_case);
+    CONNECT_DELEGATE_SIGNAL(pending_test_case);
+    CONNECT_DELEGATE_SIGNAL(notification_test_case);
+    CONNECT_DELEGATE_SIGNAL(omission_test_case);
+    CONNECT_DELEGATE_SIGNAL(complete_test_case);
+
+    CONNECT_DELEGATE_SIGNAL(error);
+    CONNECT_DELEGATE_SIGNAL(crashed);
+
+    CONNECT_DELEGATE_SIGNAL(complete_run);
+#undef CONNECT_DELEGATE_SIGNAL
+}
+
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

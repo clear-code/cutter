@@ -291,6 +291,9 @@ void           cut_run_context_set_command_line_args(CutRunContext *context,
                                                      gchar        **args);
 const gchar  **cut_run_context_get_command_line_args(CutRunContext *context);
 
+void           cut_run_context_delegate_signals     (CutRunContext *context,
+                                                     CutRunContext *other_context);
+
 
 G_END_DECLS
 

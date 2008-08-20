@@ -491,6 +491,9 @@ AC_CONFIG_FILES([Makefile
 		 test/fixtures/pipeline/omission/Makefile
 		 test/fixtures/pipeline/pending/Makefile
 		 test/fixtures/pipeline/success/Makefile
+		 test/fixtures/pipeline/delegate/Makefile
+		 test/fixtures/pipeline/delegate/fixtures/Makefile
+		 test/fixtures/pipeline/delegate/fixtures/normal/Makefile
 		 test/fixtures/repository/Makefile
 		 test/fixtures/xml-stream/Makefile
                  test/lib/Makefile

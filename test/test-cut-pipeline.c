@@ -1,3 +1,5 @@
+/* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+
 #ifdef HAVE_CONFIG_H
 #  include <config.h>
 #endif
@@ -7,7 +9,7 @@
 #include <cutter/cut-pipeline.h>
 #include <cutter/cut-runner.h>
 
-#include "lib/cuttest-utils.h"
+#include "lib/cuttest-assertions.h"
 
 #ifdef HAVE_UNISTD_H
 #  include <unistd.h>
@@ -17,23 +19,24 @@ void data_signal (void);
 void test_signal (gconstpointer data);
 void data_count (void);
 void test_count (gconstpointer data);
+void test_delegate (void);
 
 static CutRunContext *pipeline;
+static const gchar *env_pipeline_test_dir;
 
-static gchar *
-build_test_dir (const gchar *result)
-{
-    return g_build_filename(cuttest_get_base_dir(),
-                            "fixtures",
-                            "pipeline",
-                            result,
-                            NULL);
-}
+#define build_test_dir(dir, ...)                \
+    g_build_filename(cuttest_get_base_dir(),    \
+                     "fixtures",                \
+                     "pipeline",                \
+                     dir,                       \
+                     ## __VA_ARGS__,            \
+                     NULL)
 
 void
 setup (void)
 {
     pipeline = cut_pipeline_new();
+    env_pipeline_test_dir = g_getenv("CUTTEST_PIPELINE_TEST_DIR");
 }
 
 void
@@ -41,6 +44,7 @@ teardown (void)
 {
     if (pipeline)
         g_object_unref(pipeline);
+    g_setenv("CUTTEST_PIPELINE_TEST_DIR", env_pipeline_test_dir, TRUE);
 }
 
 static void
@@ -53,6 +57,7 @@ static gboolean
 run (const gchar *test_dir)
 {
     cut_run_context_set_test_directory(pipeline, test_dir);
+    cut_run_context_set_source_directory(pipeline, test_dir);
 
     g_signal_connect(pipeline, "error", G_CALLBACK(report_error), NULL);
     return cut_run_context_start(pipeline);
@@ -197,6 +202,42 @@ test_count (gconstpointer data)
     else
         cut_assert_false(run(test_data->test_dir));
     cut_assert_equal_uint(1, test_data->get_count(pipeline));
+}
+
+void
+test_delegate (void)
+{
+    const gchar *exclude_directories[] = {"fixtures", NULL};
+    const gchar *pipeline_test_dir;
+    const gchar *delegate_test_dir;
+    gint n_normal_tests, n_iterated_tests, n_spike_tests;
+    gint n_results, n_non_critical_results;
+
+    cut_run_context_set_exclude_directories(pipeline, exclude_directories);
+
+    pipeline_test_dir = cut_take_string(build_test_dir("delegate", "fixtures",
+                                                       "normal"));
+    g_setenv("CUTTEST_PIPELINE_TEST_DIR", pipeline_test_dir, TRUE);
+
+    delegate_test_dir = cut_take_string(build_test_dir("delegate"));
+    cut_assert_false(run(delegate_test_dir));
+
+    n_normal_tests = 1;
+    n_iterated_tests = 2;
+    n_spike_tests = 1;
+    n_results = 6;
+    n_non_critical_results = 3;
+    cut_assert_test_result_summary(pipeline,
+                                   (n_normal_tests + n_iterated_tests) *
+                                     n_results + n_spike_tests,
+                                   (n_normal_tests + n_iterated_tests),
+                                   (n_normal_tests + n_iterated_tests) *
+                                     n_non_critical_results + n_spike_tests,
+                                   (n_normal_tests + n_iterated_tests),
+                                   (n_normal_tests + n_iterated_tests),
+                                   (n_normal_tests + n_iterated_tests),
+                                   (n_normal_tests + n_iterated_tests),
+                                   (n_normal_tests + n_iterated_tests));
 }
 
 /*

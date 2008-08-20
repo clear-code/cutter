@@ -1,5 +1,15 @@
 2008-08-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-pipeline.c (test_delegate): add a test for
+	cut_run_context_delegate_signals().
+	* test/fixtures/pipeline/delegate/: add a test data for
+	cut_run_context_delegate_signals().
+	* configure.ac, test/fixtures/pipeline/Makefile.am: add
+	test/fixtures/pipeline/delegate/.
+
+	* cutter/cut-run-context.[ch] (cut_run_context_delegate_signals):
+	add test result delegation mechanism.
+
 	* cutter/cut-pipeline.c, cutter/cut-stream-parser.c,
 	cutter/cut-stream-reader.c, cutter/cut-test-runner.c: use
 	cut_run_context_emit_complete_run().
