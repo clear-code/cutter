@@ -253,9 +253,9 @@ run (gpointer data)
 }
 
 static void
-run_with_thread (CutTestSuite *test_suite, CutTestCase *test_case,
-                 CutRunContext *run_context, const gchar **test_names,
-                 gboolean try_thread, GList **threads, gboolean *success)
+run_with_thread_support (CutTestSuite *test_suite, CutTestCase *test_case,
+                         CutRunContext *run_context, const gchar **test_names,
+                         gboolean try_thread, GList **threads, gboolean *success)
 {
     RunTestInfo *info;
     gboolean need_no_thread_run = TRUE;
@@ -427,8 +427,9 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite,
             if (!test_case)
                 continue;
             if (CUT_IS_TEST_CASE(test_case)) {
-                run_with_thread(test_suite, test_case, run_context, test_names,
-                                try_thread, &threads, &all_success);
+                run_with_thread_support(test_suite, test_case, run_context,
+                                        test_names,
+                                        try_thread, &threads, &all_success);
             } else {
                 g_warning("This object is not test case!");
             }

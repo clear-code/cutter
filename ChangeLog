@@ -1,5 +1,8 @@
 2008-08-21  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-suite.c: use more descriptive name:
+	run_with_thread() -> run_with_thread_support().
+
 	* sample/glib/thread.c: follow the below changes:
 	set the current test explicitly if new thread is created in test.
 
