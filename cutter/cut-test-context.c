@@ -408,8 +408,6 @@ cut_test_context_set_current (CutTestContextKey *key,
         current_context_key = g_private_new(NULL);
         g_hash_table_insert(current_contexts, key, current_context_key);
     }
-    if (context)
-        g_object_ref(context);
     g_private_set(current_context_key, context);
     g_mutex_unlock(current_contexts_mutex);
 }

@@ -1,5 +1,8 @@
 2008-08-21  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-context.c (cut_test_context_set_current): remove
+	needless ref.
+
 	* cutter/cut-test-suite.c: use more descriptive name:
 	run_with_thread() -> run_with_thread_support().
 
