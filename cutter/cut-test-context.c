@@ -121,6 +121,9 @@ taken_list_free (TakenList *taken_list)
     g_slice_free(TakenList, taken_list);
 }
 
+static GHashTable *current_contexts = NULL;
+static GMutex *current_contexts_mutex = NULL;
+
 static void dispose        (GObject         *object);
 static void set_property   (GObject         *object,
                             guint            prop_id,
@@ -370,6 +373,60 @@ get_property (GObject    *object,
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
     }
+}
+
+void
+cut_test_context_init_current (void)
+{
+    current_contexts = g_hash_table_new(g_direct_hash, g_direct_equal);
+    current_contexts_mutex = g_mutex_new();
+}
+
+void
+cut_test_context_quit_current (void)
+{
+    if (current_contexts) {
+        g_hash_table_unref(current_contexts);
+        current_contexts = NULL;
+    }
+
+    if (current_contexts_mutex) {
+        g_mutex_free(current_contexts_mutex);
+        current_contexts_mutex = NULL;
+    }
+}
+
+void
+cut_test_context_set_current (CutTestContextKey *key,
+                              CutTestContext *context)
+{
+    GPrivate *current_context_key;
+
+    g_mutex_lock(current_contexts_mutex);
+    current_context_key = g_hash_table_lookup(current_contexts, key);
+    if (!current_context_key) {
+        current_context_key = g_private_new(NULL);
+        g_hash_table_insert(current_contexts, key, current_context_key);
+    }
+    if (context)
+        g_object_ref(context);
+    g_private_set(current_context_key, context);
+    g_mutex_unlock(current_contexts_mutex);
+}
+
+CutTestContext *
+cut_test_context_get_current (CutTestContextKey *key)
+{
+    CutTestContext *test_context = NULL;
+    GPrivate *current_context_key;
+
+    g_mutex_lock(current_contexts_mutex);
+    current_context_key = g_hash_table_lookup(current_contexts, key);
+    if (current_context_key)
+        test_context = g_private_get(current_context_key);
+    g_mutex_unlock(current_contexts_mutex);
+
+    return test_context;
 }
 
 CutTestContext *
@@ -627,8 +684,11 @@ cut_test_context_long_jump (CutTestContext *context)
 void
 cut_test_context_pass_assertion (CutTestContext *context)
 {
-    CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+    CutTestContextPrivate *priv;
 
+    g_return_if_fail(CUT_IS_TEST_CONTEXT(context));
+
+    priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
     g_return_if_fail(priv->test);
 
     g_signal_emit_by_name(priv->test, "pass-assertion", context);

@@ -188,6 +188,8 @@ cut_init (int *argc, char ***argv)
 
     gcut_value_equal_init();
 
+    cut_test_context_init_current();
+
     program_name = g_path_get_basename((*argv)[0]);
     parameter_string =
         g_strdup_printf(N_("TEST_DIRECTORY\n"
@@ -283,6 +285,8 @@ cut_quit (void)
         g_free(cutter_command_path);
         cutter_command_path = NULL;
     }
+
+    cut_test_context_quit_current();
 
     initialized = FALSE;
 }

@@ -30,18 +30,18 @@ extern "C" {
 void set_current_test_context(CutTestContext *context);
 CutTestContext *get_current_test_context(void);
 
-static CutTestContext *_current_test_context = NULL;
+static CutTestContextKey _current_test_context_key;
 
 void
 set_current_test_context (CutTestContext *context)
 {
-    _current_test_context = context;
+    cut_test_context_set_current(&_current_test_context_key, context);
 }
 
 CutTestContext *
 get_current_test_context (void)
 {
-    return _current_test_context;
+    return cut_test_context_get_current(&_current_test_context_key);
 }
 
 #ifdef __cplusplus

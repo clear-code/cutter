@@ -15,6 +15,13 @@ setup (void)
   g_thread_use_default_impl = FALSE;
 }
 
+typedef struct _TestData
+{
+  gint number;
+  guint unsigned_number;
+  CutTestContext *test_context;
+} TestData;
+
 /* GMutex */
 static GMutex* test_g_mutex_mutex = NULL;
 static guint test_g_mutex_int = 0;
@@ -22,9 +29,12 @@ static gboolean test_g_mutex_thread_ready;
 G_LOCK_DEFINE_STATIC (test_g_mutex);
 
 static gpointer
-test_g_mutex_thread (gpointer data)
+test_g_mutex_thread (gpointer user_data)
 {
-  cut_assert_equal_int (42, GPOINTER_TO_INT (data));
+  TestData *data = user_data;
+
+  set_current_test_context (data->test_context);
+  cut_assert_equal_int (42, data->number);
   cut_assert (g_mutex_trylock (test_g_mutex_mutex) == FALSE);
   cut_assert (G_TRYLOCK (test_g_mutex) == FALSE);
   test_g_mutex_thread_ready = TRUE;
@@ -39,13 +49,15 @@ void
 test_g_mutex (void)
 {
   GThread *thread;
+  TestData test_data;
   test_g_mutex_mutex = g_mutex_new ();
 
   cut_assert (g_mutex_trylock (test_g_mutex_mutex));
   cut_assert (G_TRYLOCK (test_g_mutex));
   test_g_mutex_thread_ready = FALSE;
-  thread = g_thread_create (test_g_mutex_thread, GINT_TO_POINTER (42),
-			    TRUE, NULL);
+  test_data.number = 42;
+  test_data.test_context = get_current_test_context ();
+  thread = g_thread_create (test_g_mutex_thread, &test_data, TRUE, NULL);
   /* This busy wait is only for testing purposes and not an example of
    * good code!*/
   while (!test_g_mutex_thread_ready)
@@ -64,9 +76,13 @@ static guint test_g_static_rec_mutex_int = 0;
 static gboolean test_g_static_rec_mutex_thread_ready;
 
 static gpointer
-test_g_static_rec_mutex_thread (gpointer data)
+test_g_static_rec_mutex_thread (gpointer user_data)
 {
-  cut_assert_equal_int (42, GPOINTER_TO_INT (data));
+  TestData *data = user_data;
+
+  set_current_test_context (data->test_context);
+
+  cut_assert_equal_int (42, data->number);
   cut_assert (g_static_rec_mutex_trylock (&test_g_static_rec_mutex_mutex) 
 	      == FALSE);
   test_g_static_rec_mutex_thread_ready = TRUE;
@@ -87,11 +103,14 @@ void
 test_g_static_rec_mutex (void)
 {
   GThread *thread;
+  TestData test_data;
 
   cut_assert (g_static_rec_mutex_trylock (&test_g_static_rec_mutex_mutex));
   test_g_static_rec_mutex_thread_ready = FALSE;
-  thread = g_thread_create (test_g_static_rec_mutex_thread, 
-			    GINT_TO_POINTER (42), TRUE, NULL);
+  test_data.number = 42;
+  test_data.test_context = get_current_test_context ();
+  thread = g_thread_create (test_g_static_rec_mutex_thread,
+			    &test_data, TRUE, NULL);
   /* This busy wait is only for testing purposes and not an example of
    * good code!*/
   while (!test_g_static_rec_mutex_thread_ready)
@@ -145,11 +164,16 @@ test_g_static_private_destructor (gpointer data)
 
 
 static gpointer
-test_g_static_private_thread (gpointer data)
+test_g_static_private_thread (gpointer user_data)
 {
-  guint number = GPOINTER_TO_INT (data);
+  TestData *data = user_data;
+  guint number;
   guint i;
   guint *private1, *private2;
+
+  set_current_test_context (data->test_context);
+  number = data->unsigned_number;
+
   for (i = 0; i < 10; i++)
     {
       number = number * 11 + 1; /* A very simple and bad RNG ;-) */
@@ -196,21 +220,24 @@ test_g_static_private_thread (gpointer data)
       cut_assert_equal_int (number * 2, *private2);      
     }
 
-  return GINT_TO_POINTER (GPOINTER_TO_INT (data) * 3);
+  return GINT_TO_POINTER (data->unsigned_number * 3);
 }
 
 void
 test_g_static_private (void)
 {
   GThread *threads[THREADS];
+  TestData data[THREADS];
   guint i;
 
   test_g_static_private_ready = 0;
 
   for (i = 0; i < THREADS; i++)
     {
-      threads[i] = g_thread_create (test_g_static_private_thread, 
-				    GINT_TO_POINTER (i), TRUE, NULL);      
+      data[i].unsigned_number = i;
+      data[i].test_context = get_current_test_context ();
+      threads[i] = g_thread_create (test_g_static_private_thread,
+				    &(data[i]), TRUE, NULL);
     }
 
   /* Busy wait is not nice but that's just a test */
@@ -241,6 +268,7 @@ static GStaticRWLock test_g_static_rw_lock_lock = G_STATIC_RW_LOCK_INIT;
 static gpointer
 test_g_static_rw_lock_thread (gpointer data)
 {
+  set_current_test_context (data);
   while (test_g_static_rw_lock_run)
     {
       if (g_random_double() > .2) /* I'm a reader */
@@ -297,7 +325,7 @@ test_g_static_rw_lock (void)
   for (i = 0; i < THREADS; i++)
     {
       threads[i] = g_thread_create (test_g_static_rw_lock_thread, 
-				    NULL, TRUE, NULL);      
+                                    get_current_test_context (), TRUE, NULL);
     }
   g_usleep (G_USEC_PER_SEC * 5);
   test_g_static_rw_lock_run = FALSE;
@@ -326,9 +354,12 @@ test_g_once_init_func(gpointer arg)
 }
 
 static gpointer
-test_g_once_thread (gpointer ignore)
+test_g_once_thread (gpointer user_data)
 {
+  TestData *data = user_data;
   guint i;
+
+  set_current_test_context (data->test_context);
   G_LOCK (test_g_once);
   /* Don't start before all threads are created */
   G_UNLOCK (test_g_once);
@@ -356,6 +387,7 @@ test_g_thread_once (void)
 {
   static GOnce once_init = G_ONCE_INIT;
   GThread *threads[G_ONCE_THREADS];
+  TestData data[G_ONCE_THREADS];
   guint i;
   for (i = 0; i < G_ONCE_SIZE; i++) 
     {
@@ -365,8 +397,9 @@ test_g_thread_once (void)
   G_LOCK (test_g_once);
   for (i = 0; i < G_ONCE_THREADS; i++)
     {
-      threads[i] = g_thread_create (test_g_once_thread, GUINT_TO_POINTER(i%2), 
-				    TRUE, NULL);
+      data[i].unsigned_number = i % 2;
+      data[i].test_context = get_current_test_context ();
+      threads[i] = g_thread_create (test_g_once_thread, &(data[i]), TRUE, NULL);
     }
   G_UNLOCK (test_g_once);
   for (i = 0; i < G_ONCE_THREADS; i++)

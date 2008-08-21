@@ -66,6 +66,15 @@ typedef enum {
     CUT_TEST_RESULT_LAST
 } CutTestResultStatus;
 
+typedef struct _CutTestContextKey CutTestContextKey;
+struct _CutTestContextKey {
+    int unused;
+};
+
+void            cut_test_context_set_current(CutTestContextKey *key,
+                                             CutTestContext *context);
+CutTestContext *cut_test_context_get_current(CutTestContextKey *key);
+
 void  cut_test_context_pass_assertion       (CutTestContext *context);
 void  cut_test_context_register_result      (CutTestContext *context,
                                              CutTestResultStatus status,
