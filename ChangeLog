@@ -1,5 +1,7 @@
 2008-08-21  Kouhei Sutou  <kou@cozmixng.org>
 
+	* TODO: remove: CutTestIterator supports multi thread.
+
 	* cutter/cut-test-iterator.c: support multi thread.
 
 	* cutter/cut-test-suite.c (run_with_thread_support): add missing
