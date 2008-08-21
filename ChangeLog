@@ -1,5 +1,9 @@
 2008-08-21  Kouhei Sutou  <kou@cozmixng.org>
 
+	* TODO: add: CutSubProcessGroup for multi process test.
+
+	* TODO: remove: CutSubProcess for multi process test.
+
 	* TODO: remove: CutTestIterator supports multi thread.
 
 	* cutter/cut-test-iterator.c: support multi thread.

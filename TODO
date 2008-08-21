@@ -14,9 +14,8 @@
 * coordinattion with TestLink.
 * image diff.
 * failmalloc like memory test.
-* CutSubProcess for multi process test.
-  It delegates signals of CutPipeline (sub process) to parent process's
-  CutRunContext.
+* CutSubProcessGroup for multi process test.
+  It provides cut_sub_process_group_add() and cut_sub_process_group_wait().
 * more intelligent crashed reporting.
   * get the latest unfinished test and bundle it into crashed reporting.
   * CutRunContext should have multiple crashed information.
