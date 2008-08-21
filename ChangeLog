@@ -1,5 +1,10 @@
 2008-08-21  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-pipeline.c (child_out_watch_func): check all stream
+	is read or not.
+
+	* cutter/cut-run-context.[ch] (cut_run_context_is_completed): add.
+
 	* TODO: add: CutSubProcessGroup for multi process test.
 
 	* TODO: remove: CutSubProcess for multi process test.

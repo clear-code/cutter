@@ -74,6 +74,7 @@ struct _CutRunContextPrivate
     GList *listeners;
     CutOrder test_case_order;
     gchar **command_line_args;
+    gboolean completed;
 };
 
 enum
@@ -773,6 +774,7 @@ cut_run_context_init (CutRunContext *context)
     priv->test_suite = NULL;
     priv->listeners = NULL;
     priv->command_line_args = NULL;
+    priv->completed = FALSE;
 }
 
 static void
@@ -1017,6 +1019,7 @@ start_run (CutRunContext *context)
 
     priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
     g_mutex_lock(priv->mutex);
+    priv->completed = FALSE;
     if (priv->timer)
         g_timer_destroy(priv->timer);
     priv->timer = g_timer_new();
@@ -1186,6 +1189,7 @@ complete_run (CutRunContext *context, gboolean success)
     g_mutex_lock(priv->mutex);
     if (priv->timer)
         g_timer_stop(priv->timer);
+    priv->completed = TRUE;
     g_mutex_unlock(priv->mutex);
 }
 
@@ -2288,6 +2292,11 @@ cut_run_context_delegate_signals (CutRunContext *context,
 #undef CONNECT_DELEGATE_SIGNAL
 }
 
+gboolean
+cut_run_context_is_completed (CutRunContext *context)
+{
+    return CUT_RUN_CONTEXT_GET_PRIVATE(context)->completed;
+}
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

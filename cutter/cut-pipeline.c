@@ -238,6 +238,9 @@ child_out_watch_func (GIOChannel *channel, GIOCondition condition, gpointer data
         keep_callback = read_stream(CUT_PIPELINE(data), channel);
     }
 
+    if (cut_run_context_is_completed(CUT_RUN_CONTEXT(pipeline)))
+        return FALSE;
+
     if (condition & G_IO_ERR ||
         condition & G_IO_HUP ||
         condition & G_IO_NVAL) {

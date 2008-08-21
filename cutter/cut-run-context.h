@@ -294,6 +294,7 @@ const gchar  **cut_run_context_get_command_line_args(CutRunContext *context);
 
 void           cut_run_context_delegate_signals     (CutRunContext *context,
                                                      CutRunContext *other_context);
+gboolean       cut_run_context_is_completed         (CutRunContext *context);
 
 
 G_END_DECLS
