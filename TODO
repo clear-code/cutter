@@ -18,3 +18,6 @@
   It delegates signals of CutPipeline (sub process) to parent process's
   CutRunContext.
 * CutTestIterator supports multi thread.
+* more intelligent crashed reporting.
+  * get the latest unfinished test and bundle it into crashed reporting.
+  * CutRunContext should have multiple crashed information.

@@ -1,5 +1,7 @@
 2008-08-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* TODO: add: more intelligent crashed reporting.
+
 	* cutter/cut-pipeline.c
 	(create_command_line_args_from_parameters): use
 	cut_run_context_get_multi_thread() instead of
