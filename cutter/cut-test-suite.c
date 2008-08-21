@@ -284,7 +284,7 @@ run_with_thread_support (CutTestSuite *test_suite, CutTestCase *test_case,
     }
 
     if (need_no_thread_run) {
-        if (!run(info))
+        if (!GPOINTER_TO_INT(run(info)))
             *success = FALSE;
     }
 }

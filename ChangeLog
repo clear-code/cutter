@@ -1,5 +1,8 @@
 2008-08-21  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-suite.c (run_with_thread_support): add missing
+	type conversion.
+
 	* cutter/cut-pipeline.[ch]: fix a block bug on child process is
 	died unexpectedly.
 
