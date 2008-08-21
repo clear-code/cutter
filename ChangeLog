@@ -1,5 +1,11 @@
 2008-08-21  Kouhei Sutou  <kou@cozmixng.org>
 
+	* sample/glib/thread.c: use cut_get_current_test_context() and
+	cut_set_current_test_context().
+
+	* cutter/cutter.h (cut_get_current_test_context),
+	(cut_set_current_test_context): add and documented.
+
 	* cutter/: use cut_test_context_current as prefix:
 	cut_test_context_XXX_current() -> cut_test_context_current_XXX().
 

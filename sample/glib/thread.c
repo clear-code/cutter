@@ -33,7 +33,7 @@ test_g_mutex_thread (gpointer user_data)
 {
   TestData *data = user_data;
 
-  set_current_test_context (data->test_context);
+  cut_set_current_test_context (data->test_context);
   cut_assert_equal_int (42, data->number);
   cut_assert (g_mutex_trylock (test_g_mutex_mutex) == FALSE);
   cut_assert (G_TRYLOCK (test_g_mutex) == FALSE);
@@ -56,7 +56,7 @@ test_g_mutex (void)
   cut_assert (G_TRYLOCK (test_g_mutex));
   test_g_mutex_thread_ready = FALSE;
   test_data.number = 42;
-  test_data.test_context = get_current_test_context ();
+  test_data.test_context = cut_get_current_test_context ();
   thread = g_thread_create (test_g_mutex_thread, &test_data, TRUE, NULL);
   /* This busy wait is only for testing purposes and not an example of
    * good code!*/
@@ -80,7 +80,7 @@ test_g_static_rec_mutex_thread (gpointer user_data)
 {
   TestData *data = user_data;
 
-  set_current_test_context (data->test_context);
+  cut_set_current_test_context (data->test_context);
 
   cut_assert_equal_int (42, data->number);
   cut_assert (g_static_rec_mutex_trylock (&test_g_static_rec_mutex_mutex) 
@@ -108,7 +108,7 @@ test_g_static_rec_mutex (void)
   cut_assert (g_static_rec_mutex_trylock (&test_g_static_rec_mutex_mutex));
   test_g_static_rec_mutex_thread_ready = FALSE;
   test_data.number = 42;
-  test_data.test_context = get_current_test_context ();
+  test_data.test_context = cut_get_current_test_context ();
   thread = g_thread_create (test_g_static_rec_mutex_thread,
 			    &test_data, TRUE, NULL);
   /* This busy wait is only for testing purposes and not an example of
@@ -171,7 +171,7 @@ test_g_static_private_thread (gpointer user_data)
   guint i;
   guint *private1, *private2;
 
-  set_current_test_context (data->test_context);
+  cut_set_current_test_context (data->test_context);
   number = data->unsigned_number;
 
   for (i = 0; i < 10; i++)
@@ -235,7 +235,7 @@ test_g_static_private (void)
   for (i = 0; i < THREADS; i++)
     {
       data[i].unsigned_number = i;
-      data[i].test_context = get_current_test_context ();
+      data[i].test_context = cut_get_current_test_context ();
       threads[i] = g_thread_create (test_g_static_private_thread,
 				    &(data[i]), TRUE, NULL);
     }
@@ -268,7 +268,7 @@ static GStaticRWLock test_g_static_rw_lock_lock = G_STATIC_RW_LOCK_INIT;
 static gpointer
 test_g_static_rw_lock_thread (gpointer data)
 {
-  set_current_test_context (data);
+  cut_set_current_test_context (data);
   while (test_g_static_rw_lock_run)
     {
       if (g_random_double() > .2) /* I'm a reader */
@@ -325,7 +325,7 @@ test_g_static_rw_lock (void)
   for (i = 0; i < THREADS; i++)
     {
       threads[i] = g_thread_create (test_g_static_rw_lock_thread, 
-                                    get_current_test_context (), TRUE, NULL);
+                                    cut_get_current_test_context (), TRUE, NULL);
     }
   g_usleep (G_USEC_PER_SEC * 5);
   test_g_static_rw_lock_run = FALSE;
@@ -359,7 +359,7 @@ test_g_once_thread (gpointer user_data)
   TestData *data = user_data;
   guint i;
 
-  set_current_test_context (data->test_context);
+  cut_set_current_test_context (data->test_context);
   G_LOCK (test_g_once);
   /* Don't start before all threads are created */
   G_UNLOCK (test_g_once);
@@ -398,7 +398,7 @@ test_g_thread_once (void)
   for (i = 0; i < G_ONCE_THREADS; i++)
     {
       data[i].unsigned_number = i % 2;
-      data[i].test_context = get_current_test_context ();
+      data[i].test_context = cut_get_current_test_context ();
       threads[i] = g_thread_create (test_g_once_thread, &(data[i]), TRUE, NULL);
     }
   G_UNLOCK (test_g_once);

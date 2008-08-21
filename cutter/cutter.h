@@ -293,6 +293,58 @@ void shutdown(void);
                                     ## __VA_ARGS__,             \
                                     NULL)                       \
 
+/**
+ * cut_get_current_test_context:
+ *
+ * Returns the current test context. The current test
+ * context is a thread local object. It means that you don't
+ * need to use this if you don't create a new thread in your
+ * test. This is only needed to use if you create a new
+ * thread. You need to pass the current test context in your
+ * test to the current test context in a created thread:
+ *
+ * |[
+ * int
+ * your_thread_function(void *data)
+ * {
+ *     CutTestContext *test_context = data;
+ *     cut_set_current_test_context(test_context);
+ *     ....
+ * }
+ *
+ * void
+ * run_your_thread(void)
+ * {
+ *     int result;
+ *     pthread_t your_thread;
+ *
+ *     result = pthread_create(&your_thread, NULL,
+ *                             your_thread_function,
+ *                             cut_get_current_test_context());
+ *     ...
+ * }
+ * ]|
+ *
+ * Returns: a #CutTestContext.
+ *
+ * Since: 1.0.4
+ */
+#define cut_get_current_test_context()          \
+    get_current_test_context()
+
+/**
+ * cut_set_current_test_context:
+ * @test_context: the #CutTestContext to be the current test context
+ *
+ * Set @test_context as the current test context. See
+ * cut_get_current_test_context() for more details.
+ *
+ * Since: 1.0.4
+ */
+#define cut_set_current_test_context(test_context)      \
+    set_current_test_context(test_context)
+
+
 #ifdef __cplusplus
 }
 #endif
