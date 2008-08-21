@@ -376,14 +376,14 @@ get_property (GObject    *object,
 }
 
 void
-cut_test_context_init_current (void)
+cut_test_context_current_init (void)
 {
     current_contexts = g_hash_table_new(g_direct_hash, g_direct_equal);
     current_contexts_mutex = g_mutex_new();
 }
 
 void
-cut_test_context_quit_current (void)
+cut_test_context_current_quit (void)
 {
     if (current_contexts) {
         g_hash_table_unref(current_contexts);
@@ -397,7 +397,7 @@ cut_test_context_quit_current (void)
 }
 
 void
-cut_test_context_set_current (CutTestContextKey *key,
+cut_test_context_current_set (CutTestContextKey *key,
                               CutTestContext *context)
 {
     GPrivate *current_context_key;
@@ -413,7 +413,7 @@ cut_test_context_set_current (CutTestContextKey *key,
 }
 
 CutTestContext *
-cut_test_context_get_current (CutTestContextKey *key)
+cut_test_context_current_get (CutTestContextKey *key)
 {
     CutTestContext *test_context = NULL;
     GPrivate *current_context_key;

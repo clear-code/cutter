@@ -1,5 +1,8 @@
 2008-08-21  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/: use cut_test_context_current as prefix:
+	cut_test_context_XXX_current() -> cut_test_context_current_XXX().
+
 	* cutter/cut-test-context.c (cut_test_context_set_current): remove
 	needless ref.
 

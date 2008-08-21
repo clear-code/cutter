@@ -53,8 +53,9 @@ struct _CutTestContextClass
 extern GPrivate *cut_test_context_private;
 
 GType            cut_test_context_get_type  (void) G_GNUC_CONST;
-void             cut_test_context_init_current (void);
-void             cut_test_context_quit_current (void);
+
+void             cut_test_context_current_init (void);
+void             cut_test_context_current_quit (void);
 
 CutTestContext  *cut_test_context_new (CutRunContext   *run_context,
                                        CutTestSuite    *test_suite,

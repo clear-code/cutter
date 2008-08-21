@@ -188,7 +188,7 @@ cut_init (int *argc, char ***argv)
 
     gcut_value_equal_init();
 
-    cut_test_context_init_current();
+    cut_test_context_current_init();
 
     program_name = g_path_get_basename((*argv)[0]);
     parameter_string =
@@ -286,7 +286,7 @@ cut_quit (void)
         cutter_command_path = NULL;
     }
 
-    cut_test_context_quit_current();
+    cut_test_context_current_quit();
 
     initialized = FALSE;
 }

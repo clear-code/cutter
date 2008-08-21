@@ -71,9 +71,9 @@ struct _CutTestContextKey {
     int unused;
 };
 
-void            cut_test_context_set_current(CutTestContextKey *key,
+void            cut_test_context_current_set(CutTestContextKey *key,
                                              CutTestContext *context);
-CutTestContext *cut_test_context_get_current(CutTestContextKey *key);
+CutTestContext *cut_test_context_current_get(CutTestContextKey *key);
 
 void  cut_test_context_pass_assertion       (CutTestContext *context);
 void  cut_test_context_register_result      (CutTestContext *context,
