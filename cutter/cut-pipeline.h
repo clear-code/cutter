@@ -53,7 +53,8 @@ typedef enum
     CUT_PIPELINE_ERROR_PIPE,
     CUT_PIPELINE_ERROR_COMMAND_LINE,
     CUT_PIPELINE_ERROR_SPAWN,
-    CUT_PIPELINE_ERROR_CHILD_PID
+    CUT_PIPELINE_ERROR_CHILD_PID,
+    CUT_PIPELINE_ERROR_IO_ERROR
 } CutPipelineError;
 
 GQuark         cut_pipeline_error_quark(void);

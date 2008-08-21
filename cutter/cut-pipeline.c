@@ -32,12 +32,6 @@
 #ifdef HAVE_SYS_WAIT_H
 #  include <sys/wait.h>
 #endif
-#ifndef WIFEXITED
-#  define WIFEXITED(status) (TRUE)
-#endif
-#ifndef WEXITSTATUS
-#  define WEXITSTATUS(status) (status)
-#endif
 #ifdef HAVE_IO_H
 #  include <io.h>
 #  define pipe(phandles) _pipe(phandles, 4096, _O_BINARY)
@@ -233,6 +227,7 @@ read_stream (CutPipeline *pipeline, GIOChannel *channel)
 static gboolean
 child_out_watch_func (GIOChannel *channel, GIOCondition condition, gpointer data)
 {
+    CutPipeline *pipeline = data;
     gboolean keep_callback = TRUE;
 
     if (!CUT_IS_PIPELINE(data))
@@ -244,7 +239,28 @@ child_out_watch_func (GIOChannel *channel, GIOCondition condition, gpointer data
     }
 
     if (condition & G_IO_ERR ||
-        condition & G_IO_HUP) {
+        condition & G_IO_HUP ||
+        condition & G_IO_NVAL) {
+        GArray *messages;
+        gchar *message;
+
+        messages = g_array_new(TRUE, TRUE, sizeof(gchar *));
+        if (condition & G_IO_ERR) {
+            message = "Error";
+            g_array_append_val(messages, message);
+        }
+        if (condition & G_IO_HUP) {
+            message = "Hung up";
+            g_array_append_val(messages, message);
+        }
+        if (condition & G_IO_NVAL) {
+            message = "Invalid request";
+            g_array_append_val(messages, message);
+        }
+        message = g_strjoinv(" | ", (gchar **)(messages->data));
+        emit_error(pipeline, CUT_PIPELINE_ERROR_IO_ERROR, NULL, "%s", message);
+        g_free(message);
+        g_array_free(messages, TRUE);
         keep_callback = FALSE;
     }
 
@@ -254,14 +270,12 @@ child_out_watch_func (GIOChannel *channel, GIOCondition condition, gpointer data
 static void
 child_watch_func (GPid pid, gint status, gpointer data)
 {
-    if (WIFEXITED(status)) {
-        CutPipeline *pipeline = data;
-        CutPipelinePrivate *priv;
+    CutPipeline *pipeline = data;
+    CutPipelinePrivate *priv;
 
-        priv = CUT_PIPELINE_GET_PRIVATE(pipeline);
-        read_stream(pipeline, priv->child_out);
-        reap_child(pipeline, pid);
-    }
+    priv = CUT_PIPELINE_GET_PRIVATE(pipeline);
+    read_stream(pipeline, priv->child_out);
+    reap_child(pipeline, pid);
 }
 
 static GIOChannel *
