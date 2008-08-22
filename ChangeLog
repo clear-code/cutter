@@ -1,5 +1,7 @@
 2008-08-22  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-process.c: add ifdef check.
+
 	* cutter/cut-sub-process.c:
 	- add ran check.
 	- add missing NULL.

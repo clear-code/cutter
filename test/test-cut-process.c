@@ -1,7 +1,11 @@
+/* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+
 #include "cutter.h"
 #include <cutter/cut-process.h>
 
-#include <unistd.h>
+#ifdef HAVE_UNISTD_H
+#  include <unistd.h>
+#endif
 
 void test_fork (void);
 
