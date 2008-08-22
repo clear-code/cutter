@@ -11,6 +11,8 @@
 
 #include "lib/cuttest-assertions.h"
 
+#define TEST_DIR_KEY "CUTTEST_SUB_PROCESS_TEST_DIR"
+
 void test_run (void);
 
 static CutRunContext *pipeline;
@@ -29,7 +31,7 @@ void
 setup (void)
 {
     pipeline = cut_pipeline_new();
-    env_sub_process_test_dir = g_getenv("CUTTEST_SUB_PROCESS_TEST_DIR");
+    env_sub_process_test_dir = g_getenv(TEST_DIR_KEY);
 }
 
 void
@@ -37,7 +39,7 @@ teardown (void)
 {
     if (pipeline)
         g_object_unref(pipeline);
-    g_setenv("CUTTEST_SUB_PROCESS_TEST_DIR", env_sub_process_test_dir, TRUE);
+    g_setenv(TEST_DIR_KEY, env_sub_process_test_dir, TRUE);
 }
 
 static void
@@ -62,7 +64,7 @@ run (const gchar *test_dir)
     cut_run_context_set_source_directory(pipeline, test_invoker_dir);
     g_free(test_invoker_dir);
 
-    g_setenv("CUTTEST_SUB_PROCESS_TEST_DIR", test_dir, TRUE);
+    g_setenv(TEST_DIR_KEY, test_dir, TRUE);
 
     g_signal_connect(pipeline, "error", G_CALLBACK(report_error), NULL);
     return cut_run_context_start(pipeline);

@@ -1,5 +1,8 @@
 2008-08-22  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-sub-process.c,
+	test/fixtures/sub-process/test-invoker.c: abstract.
+
 	* TODO: add: cut_sub_process_new() and cut_sub_process_group()
 	should be changed.
 
