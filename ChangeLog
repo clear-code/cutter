@@ -1,5 +1,7 @@
 2008-08-22  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-pipeline.c (create_command_line_args): add NULL check.
+
 	* cutter/cut-utils.c (cut_utils_create_taken_sub_process_group): add.
 
 	* cutter/cut-public.h: add CutSubProcessGroup.
