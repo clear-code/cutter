@@ -35,6 +35,7 @@ struct _CutSubProcessPrivate
     CutTestContext *test_context;
     gboolean running;
     gboolean is_success;
+    gboolean is_ran;
 };
 
 enum {
@@ -79,7 +80,7 @@ cut_sub_process_class_init (CutSubProcessClass *klass)
                                "The test context",
                                CUT_TYPE_TEST_CONTEXT,
                                G_PARAM_READABLE | G_PARAM_WRITABLE);
-    g_object_class_install_property(gobject_class, PROP_PIPELINE, spec);
+    g_object_class_install_property(gobject_class, PROP_TEST_CONTEXT, spec);
 
     g_type_class_add_private(gobject_class, sizeof(CutSubProcessPrivate));
 }
@@ -94,6 +95,7 @@ cut_sub_process_init (CutSubProcess *sub_process)
     priv->test_context = NULL;
     priv->running = FALSE;
     priv->is_success = TRUE;
+    priv->is_ran = FALSE;
 }
 
 static void
@@ -188,8 +190,10 @@ cut_sub_process_new_with_test_context (const char     *test_directory,
 
     sub_process = g_object_new(CUT_TYPE_SUB_PROCESS,
                                "test-context", test_context,
-                               "pipeline", pipeline);
+                               "pipeline", pipeline,
+                               NULL);
     g_object_unref(pipeline);
+
     return sub_process;
 }
 
@@ -239,9 +243,12 @@ cut_sub_process_run (CutSubProcess *sub_process)
     CutSubProcessPrivate *priv;
 
     priv = CUT_SUB_PROCESS_GET_PRIVATE(sub_process);
-    priv->running = TRUE;
-    priv->is_success = cut_run_context_start(priv->pipeline);
-    priv->running = FALSE;
+    if (!priv->is_ran) {
+        priv->running = TRUE;
+        priv->is_success = cut_run_context_start(priv->pipeline);
+        priv->running = FALSE;
+        priv->is_ran = TRUE;
+    }
     return priv->is_success;
 }
 
@@ -258,6 +265,7 @@ cb_complete_run (CutRunContext *pipeline, gboolean success, gpointer user_data)
     priv = CUT_SUB_PROCESS_GET_PRIVATE(sub_process);
     priv->is_success = success;
     priv->running = FALSE;
+    priv->is_ran = TRUE;
 }
 
 void
@@ -266,11 +274,13 @@ cut_sub_process_run_async (CutSubProcess *sub_process)
     CutSubProcessPrivate *priv;
 
     priv = CUT_SUB_PROCESS_GET_PRIVATE(sub_process);
-    priv->running = TRUE;
-    priv->is_success = TRUE;
-    g_signal_connect(priv->pipeline, "complete-run",
-                     G_CALLBACK(cb_complete_run), sub_process);
-    cut_run_context_start_async(priv->pipeline);
+    if (!priv->is_ran && !priv->running) {
+        priv->running = TRUE;
+        priv->is_success = TRUE;
+        g_signal_connect(priv->pipeline, "complete-run",
+                         G_CALLBACK(cb_complete_run), sub_process);
+        cut_run_context_start_async(priv->pipeline);
+    }
 }
 
 gboolean
@@ -279,8 +289,10 @@ cut_sub_process_wait (CutSubProcess *sub_process)
     CutSubProcessPrivate *priv;
 
     priv = CUT_SUB_PROCESS_GET_PRIVATE(sub_process);
-    while (priv->running)
-        g_main_context_iteration(NULL, FALSE);
+    if (!priv->is_ran) {
+        while (priv->running)
+            g_main_context_iteration(NULL, FALSE);
+    }
     return priv->is_success;
 }
 
