@@ -20,3 +20,4 @@
   * get the latest unfinished test and bundle it into crashed reporting.
   * CutRunContext should have multiple crashed information.
 * cut_sub_process_new() and cut_sub_process_group() should be changed.
+  cut_get_new_sub_process()?
