@@ -54,6 +54,7 @@ typedef int cut_boolean;
 
 typedef struct _CutTestContext     CutTestContext;
 typedef struct _CutSubProcess      CutSubProcess;
+typedef struct _CutSubProcessGroup CutSubProcessGroup;
 
 typedef enum {
     CUT_TEST_RESULT_INVALID = -1,
@@ -220,6 +221,15 @@ cut_boolean    cut_sub_process_is_crashed         (CutSubProcess  *sub_process);
 
 const char    *cut_sub_process_get_backtrace      (CutSubProcess  *sub_process);
 
+
+CutSubProcessGroup *cut_utils_create_taken_sub_process_group (CutTestContext *test_context);
+CutSubProcessGroup *cut_sub_process_group_new_with_test_context
+                                                  (CutTestContext      *test_context);
+void           cut_sub_process_group_add          (CutSubProcessGroup  *group,
+                                                   CutSubProcess       *sub_process);
+cut_boolean    cut_sub_process_group_run          (CutSubProcessGroup  *group);
+void           cut_sub_process_group_run_async    (CutSubProcessGroup  *group);
+cut_boolean    cut_sub_process_group_wait         (CutSubProcessGroup  *group);
 
 #ifdef __cplusplus
 }

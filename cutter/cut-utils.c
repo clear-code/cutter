@@ -555,6 +555,16 @@ cut_utils_create_taken_sub_process (const char     *test_directory,
     return sub_process;
 }
 
+CutSubProcessGroup *
+cut_utils_create_taken_sub_process_group (CutTestContext *test_context)
+{
+    CutSubProcessGroup *group;
+
+    group = cut_sub_process_group_new_with_test_context(test_context);
+    cut_test_context_take_g_object(test_context, G_OBJECT(group));
+    return group;
+}
+
 #ifdef G_OS_WIN32
 static gchar *win32_base_path = NULL;
 

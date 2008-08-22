@@ -1,3 +1,20 @@
+2008-08-22  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-utils.c (cut_utils_create_taken_sub_process_group): add.
+
+	* cutter/cut-public.h: add CutSubProcessGroup.
+
+	* cutter/cut-test-utils.h (cut_sub_process_group_new): add.
+
+	* cutter/cut-sub-process-group.[ch]: add.
+
+	* test/test-cut-sub-process-group.c: add.
+
+	* cutter/Makefile.am: add test-cut-sub-process-group.c.
+
+	* configure.ac, test/fixtures/Makefile.am: add
+	test/fixtures/sub-process-group/.
+
 2008-08-21  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-pipeline.c (child_out_watch_func): check all stream

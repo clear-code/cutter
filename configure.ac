@@ -494,6 +494,9 @@ AC_CONFIG_FILES([Makefile
 		 test/fixtures/sub-process/Makefile
 		 test/fixtures/sub-process/fixtures/Makefile
 		 test/fixtures/sub-process/fixtures/normal/Makefile
+		 test/fixtures/sub-process-group/Makefile
+		 test/fixtures/sub-process-group/fixtures/Makefile
+		 test/fixtures/sub-process-group/fixtures/normal/Makefile
 		 test/fixtures/repository/Makefile
 		 test/fixtures/xml-stream/Makefile
                  test/lib/Makefile
