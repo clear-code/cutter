@@ -1,3 +1,7 @@
+2008-08-25  Kouhei Sutou  <kou@cozmixng.org>
+
+	* doc/tutorial/senna.rd.ja: fix a typo and add some information.
+
 2008-08-22  Kouhei Sutou  <kou@cozmixng.org>
 
 	* test/test-cut-sub-process.c,

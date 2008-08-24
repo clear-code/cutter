@@ -489,8 +489,8 @@ test/unit/test-snip.c:
   }
 
 
-sen_snip_open()は引数が多いですが、ここでは気にする必要はあ
-りません。sen_snip_open()によりsen_snip *が生成されるだけ知っ
+sen_snip_open()は引数が多いですが、ここでは気にする必要はあり
+ません。sen_snip_open()によりsen_snip *が生成されることだけ知っ
 ていれば問題ありません。
 
 ((<cut_assert_not_null|URL:http://cutter.sourceforge.net/reference/ja/cutter-cut-assertions.html#cut-assert-not-null>))(snip)
@@ -725,6 +725,10 @@ Cutterは
 の差分よりも文字単位での差分表示も行った方がデバッグが行いや
 すいという判断からこのような形式になっています。
 
+この形式は((<Pythonの
+difflib|URL:http://www.python.jp/doc/release/lib/module-difflib.html>))
+にあるndiffの形式と同じものです。
+
 === テスト全体
 
 今回作成したテストは以下の通りです。
@@ -811,8 +815,9 @@ test/unit/test-snip.c:
 
 問題発生時に有用なデバッグ情報を増やしたり、より読みやすいテ
 ストにするなど、いろいろ改良するべき点は残っていますが、今回
-はこれで終了します。実際のコードはSennaのリポジトリを((<参照
-|URL:http://svn.razil.jp/senna/test/unit/>))してください。
+はこれで終了します。実際のコードは((<Sennaのリポジトリ
+|URL:http://svn.razil.jp/senna/test/unit/>))を参照してくださ
+い。
 
 == まとめ
 
