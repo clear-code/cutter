@@ -47,6 +47,9 @@ struct _CutSubProcessClass
 
 GType           cut_sub_process_get_type         (void) G_GNUC_CONST;
 
+CutSubProcess  *cut_sub_process_new              (const char     *test_directory,
+                                                  CutTestContext *test_context);
+
 CutRunContext  *cut_sub_process_get_pipeline     (CutSubProcess  *sub_process);
 void            cut_sub_process_set_pipeline     (CutSubProcess  *sub_process,
                                                   CutRunContext  *run_context);

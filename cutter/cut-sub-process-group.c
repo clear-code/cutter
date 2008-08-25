@@ -148,7 +148,7 @@ get_property (GObject    *object,
 }
 
 CutSubProcessGroup *
-cut_sub_process_group_new_with_test_context (CutTestContext *test_context)
+cut_sub_process_group_new (CutTestContext *test_context)
 {
     return g_object_new(CUT_TYPE_SUB_PROCESS_GROUP,
                         "test-context", test_context,

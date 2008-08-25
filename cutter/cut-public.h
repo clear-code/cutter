@@ -165,11 +165,7 @@ char       *cut_diff_readable               (const char     *from,
 char       *cut_diff_folded_readable        (const char     *from,
                                              const char     *to);
 
-CutSubProcess *cut_utils_create_taken_sub_process (const char     *test_directory,
-                                                   CutTestContext *test_context);
-
-CutSubProcess *cut_sub_process_new_with_test_context
-                                                  (const char     *test_directory,
+CutSubProcess *cut_utils_take_new_sub_process     (const char     *test_directory,
                                                    CutTestContext *test_context);
 
 cut_boolean    cut_sub_process_run                (CutSubProcess  *sub_process);
@@ -222,9 +218,7 @@ cut_boolean    cut_sub_process_is_crashed         (CutSubProcess  *sub_process);
 const char    *cut_sub_process_get_backtrace      (CutSubProcess  *sub_process);
 
 
-CutSubProcessGroup *cut_utils_create_taken_sub_process_group (CutTestContext *test_context);
-CutSubProcessGroup *cut_sub_process_group_new_with_test_context
-                                                  (CutTestContext      *test_context);
+CutSubProcessGroup *cut_utils_take_new_sub_process_group (CutTestContext *test_context);
 void           cut_sub_process_group_add          (CutSubProcessGroup  *group,
                                                    CutSubProcess       *sub_process);
 cut_boolean    cut_sub_process_group_run          (CutSubProcessGroup  *group);

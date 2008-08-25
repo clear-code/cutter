@@ -15,11 +15,11 @@ create_group (void)
     int n_processes = 3;
     CutSubProcessGroup *group;
 
-    group = cut_sub_process_group_new();
+    group = cut_take_new_sub_process_group();
     for (i = 0; i < n_processes; i++) {
         CutSubProcess *sub_process;
 
-        sub_process = cut_sub_process_new(g_getenv(TEST_DIR_KEY));
+        sub_process = cut_take_new_sub_process(g_getenv(TEST_DIR_KEY));
         cut_sub_process_group_add(group, sub_process);
     }
     return group;

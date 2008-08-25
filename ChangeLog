@@ -1,5 +1,11 @@
 2008-08-25  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/, test/:
+	- cut_sub_process_new() -> cut_take_new_sub_process().
+	- cut_sub_process_group_new() -> cut_take_new_sub_process_group().
+
+	* cutter/cut-test-utils.h (cut_take_new_sub_process): 
+
 	* TODO: remove: CutSubProcessGroup for multi process test.
 
 	* test/test-cut-sub-process-group.c,

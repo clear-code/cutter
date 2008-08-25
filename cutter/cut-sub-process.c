@@ -168,8 +168,7 @@ get_property (GObject    *object,
 }
 
 CutSubProcess *
-cut_sub_process_new_with_test_context (const char     *test_directory,
-                                       CutTestContext *test_context)
+cut_sub_process_new (const char *test_directory, CutTestContext *test_context)
 {
     CutSubProcess *sub_process;
     CutRunContext *parent_run_context = NULL;

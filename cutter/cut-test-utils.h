@@ -191,7 +191,7 @@ extern "C" {
             cut_utils_build_path(path, ## __VA_ARGS__, NULL)))
 
 /**
- * cut_sub_process_new:
+ * cut_take_new_sub_process:
  * @test_directory: a directory includes sub process test.
  *
  * Creates sub cutter process that runs tests under
@@ -202,12 +202,12 @@ extern "C" {
  *
  * Since: 1.0.4
  */
-#define cut_sub_process_new(test_directory)                             \
-    cut_utils_create_taken_sub_process(test_directory,                  \
-                                       get_current_test_context())
+#define cut_take_new_sub_process(test_directory)                       \
+    cut_utils_take_new_sub_process(test_directory,                     \
+                                   get_current_test_context())
 
 /**
- * cut_sub_process_group_new:
+ * cut_take_new_sub_process_group:
  *
  * Creates a group of sub cutter process. A created group
  * is owned by Cutter.
@@ -216,8 +216,8 @@ extern "C" {
  *
  * Since: 1.0.4
  */
-#define cut_sub_process_group_new()                                     \
-    cut_utils_create_taken_sub_process_group(get_current_test_context())
+#define cut_take_new_sub_process_group()                                \
+    cut_utils_take_new_sub_process_group(get_current_test_context())
 
 
 #ifdef __cplusplus

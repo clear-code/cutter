@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2008  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -18,7 +18,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#  include "config.h"
 #endif /* HAVE_CONFIG_H */
 
 #include <string.h>
@@ -31,7 +31,8 @@
 #include <errno.h>
 
 #include "cut-utils.h"
-#include "cut-utils.h"
+#include "cut-sub-process.h"
+#include "cut-sub-process-group.h"
 #include "cut-diff.h"
 #include "cut-main.h"
 #include "../gcutter/gcut-public.h"
@@ -544,23 +545,22 @@ cut_utils_fold (const gchar *string)
 }
 
 CutSubProcess *
-cut_utils_create_taken_sub_process (const char     *test_directory,
-                                    CutTestContext *test_context)
+cut_utils_take_new_sub_process (const char     *test_directory,
+                                CutTestContext *test_context)
 {
     CutSubProcess *sub_process;
 
-    sub_process = cut_sub_process_new_with_test_context(test_directory,
-                                                        test_context);
+    sub_process = cut_sub_process_new(test_directory, test_context);
     cut_test_context_take_g_object(test_context, G_OBJECT(sub_process));
     return sub_process;
 }
 
 CutSubProcessGroup *
-cut_utils_create_taken_sub_process_group (CutTestContext *test_context)
+cut_utils_take_new_sub_process_group (CutTestContext *test_context)
 {
     CutSubProcessGroup *group;
 
-    group = cut_sub_process_group_new_with_test_context(test_context);
+    group = cut_sub_process_group_new(test_context);
     cut_test_context_take_g_object(test_context, G_OBJECT(group));
     return group;
 }

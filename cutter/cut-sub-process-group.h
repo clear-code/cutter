@@ -46,6 +46,8 @@ struct _CutSubProcessGroupClass
 
 GType           cut_sub_process_group_get_type      (void) G_GNUC_CONST;
 
+CutSubProcessGroup *cut_sub_process_group_new          (CutTestContext *test_context);
+
 CutTestContext *cut_sub_process_group_get_test_context (CutSubProcessGroup *sub_process_group);
 void            cut_sub_process_group_set_test_context (CutSubProcessGroup *sub_process_group,
                                                         CutTestContext *test_context);
