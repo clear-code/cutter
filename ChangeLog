@@ -1,5 +1,19 @@
 2008-08-25  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/cutter-docs.sgml: add cut-multi-process.
+
+	* doc/reference/Makefile.am: follow the below changes.
+
+	* cutter/cut-test-utils.h, cutter/cut-public.h: move CutSubProcess
+	and CutSubProcessGroup to ...
+	* cutter/cut-multi-process.h: ... here. (new file)
+
+	* cutter/cut-public.h: move m4 macros to ...
+	* cutter/cut-macros.h: ... here. (new file)
+
+	* cutter/cut-public.h: move cut_boolean to ...
+	* cutter/cut-types.h: ... here.
+
 	* TODO: remove:
 	cut_sub_process_new() and cut_sub_process_group() should be changed.
 

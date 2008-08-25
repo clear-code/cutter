@@ -25,36 +25,10 @@ extern "C" {
 #endif
 
 #include <cutter/cut-types.h>
-
-#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ > 4)
-#  define CUT_GNUC_PRINTF(format_index, arg_index)                      \
-    __attribute__((__format__ (__printf__, format_index, arg_index)))
-#  define CUT_GNUC_NORETURN                     \
-    __attribute__((__noreturn__))
-#else
-#  define CUT_GNUC_PRINTF(format_index, arg_index)
-#  define CUT_GNUC_NORETURN
-#endif
-
-#if __GNUC__ >= 4
-#  define CUT_GNUC_NULL_TERMINATED __attribute__((__sentinel__))
-#else
-#  define CUT_GNUC_NULL_TERMINATED
-#endif
-
-typedef int cut_boolean;
-
-#ifndef CUT_FALSE
-#  define CUT_FALSE (0)
-#endif
-
-#ifndef CUT_TRUE
-#  define CUT_TRUE (!CUT_FALSE)
-#endif
+#include <cutter/cut-macros.h>
+#include <cutter/cut-multi-process.h>
 
 typedef struct _CutTestContext     CutTestContext;
-typedef struct _CutSubProcess      CutSubProcess;
-typedef struct _CutSubProcessGroup CutSubProcessGroup;
 
 typedef enum {
     CUT_TEST_RESULT_INVALID = -1,
@@ -168,62 +142,7 @@ char       *cut_diff_folded_readable        (const char     *from,
 CutSubProcess *cut_utils_take_new_sub_process     (const char     *test_directory,
                                                    CutTestContext *test_context);
 
-cut_boolean    cut_sub_process_run                (CutSubProcess  *sub_process);
-void           cut_sub_process_run_async          (CutSubProcess  *sub_process);
-cut_boolean    cut_sub_process_wait               (CutSubProcess  *sub_process);
-cut_boolean    cut_sub_process_is_success         (CutSubProcess  *sub_process);
-cut_boolean    cut_sub_process_is_running         (CutSubProcess  *sub_process);
-
-const char    *cut_sub_process_get_test_directory (CutSubProcess  *sub_process);
-void           cut_sub_process_set_test_directory (CutSubProcess  *sub_process,
-                                                   const char     *test_directory);
-const char    *cut_sub_process_get_source_directory
-                                                  (CutSubProcess  *sub_process);
-void           cut_sub_process_set_source_directory
-                                                  (CutSubProcess  *sub_process,
-                                                   const char     *source_directory);
-
-cut_boolean    cut_sub_process_is_multi_thread    (CutSubProcess  *sub_process);
-cut_boolean    cut_sub_process_get_multi_thread   (CutSubProcess  *sub_process);
-void           cut_sub_process_set_multi_thread   (CutSubProcess  *sub_process,
-                                                   cut_boolean     multi_thread);
-
-const char   **cut_sub_process_get_exclude_files  (CutSubProcess  *sub_process);
-void           cut_sub_process_set_exclude_files  (CutSubProcess  *sub_process,
-                                                   const char    **files);
-
-const char   **cut_sub_process_get_exclude_directories
-                                                  (CutSubProcess  *sub_process);
-void           cut_sub_process_set_exclude_directories
-                                                  (CutSubProcess  *sub_process,
-                                                   const char    **directories);
-
-const char   **cut_sub_process_get_target_test_case_names
-                                                  (CutSubProcess  *sub_process);
-void           cut_sub_process_set_target_test_case_names
-                                                  (CutSubProcess  *sub_process,
-                                                   const char    **names);
-
-const char   **cut_sub_process_get_target_test_names
-                                                  (CutSubProcess  *sub_process);
-void           cut_sub_process_set_target_test_names
-                                                  (CutSubProcess  *sub_process,
-                                                   const char    **names);
-
-double         cut_sub_process_get_elapsed        (CutSubProcess  *sub_process);
-double         cut_sub_process_get_total_elapsed  (CutSubProcess  *sub_process);
-
-cut_boolean    cut_sub_process_is_crashed         (CutSubProcess  *sub_process);
-
-const char    *cut_sub_process_get_backtrace      (CutSubProcess  *sub_process);
-
-
 CutSubProcessGroup *cut_utils_take_new_sub_process_group (CutTestContext *test_context);
-void           cut_sub_process_group_add          (CutSubProcessGroup  *group,
-                                                   CutSubProcess       *sub_process);
-cut_boolean    cut_sub_process_group_run          (CutSubProcessGroup  *group);
-void           cut_sub_process_group_run_async    (CutSubProcessGroup  *group);
-cut_boolean    cut_sub_process_group_wait         (CutSubProcessGroup  *group);
 
 #ifdef __cplusplus
 }

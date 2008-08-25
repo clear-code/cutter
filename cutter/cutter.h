@@ -24,6 +24,7 @@
 
 #include <cutter/cut-hidden-definitions.h>
 #include <cutter/cut-assertions.h>
+#include <cutter/cut-multi-process.h>
 #include <cutter/cut-experimental.h>
 
 #ifdef __cplusplus

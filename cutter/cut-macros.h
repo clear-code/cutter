@@ -17,40 +17,43 @@
  *
  */
 
-#ifndef __CUT_TYPES_H__
-#define __CUT_TYPES_H__
+#ifndef __CUT_MACROS_H__
+#define __CUT_MACROS_H__
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-/**
- * SECTION: cut-types
- * @title: Types
- * @short_description: Types that is used in test.
- *
- * There are some types to be used in test.
- */
+#if __GNUC__ > 2 || (__GNUC__ == 2 && __GNUC_MINOR__ > 4)
+#  define CUT_GNUC_PRINTF(format_index, arg_index)                      \
+    __attribute__((__format__ (__printf__, format_index, arg_index)))
+#  define CUT_GNUC_NORETURN                     \
+    __attribute__((__noreturn__))
+#else
+#  define CUT_GNUC_PRINTF(format_index, arg_index)
+#  define CUT_GNUC_NORETURN
+#endif
 
-/**
- * CutDestroyFunction:
- * @data: the data element to be destroyed.
- *
- * Specifies the type of function which is called when a
- * data element is destroyed. It is passed the pointer to
- * the data element and should free any memory and resources
- * allocated for it.
- */
-typedef void   (*CutDestroyFunction)           (void *data);
+#if __GNUC__ >= 4
+#  define CUT_GNUC_NULL_TERMINATED __attribute__((__sentinel__))
+#else
+#  define CUT_GNUC_NULL_TERMINATED
+#endif
 
+#ifndef CUT_FALSE
+#  define CUT_FALSE (0)
+#endif
 
-typedef int cut_boolean;
+#ifndef CUT_TRUE
+#  define CUT_TRUE (!CUT_FALSE)
+#endif
+
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* __CUT_TYPES_H__ */
+#endif /* __CUT_MACROS_H__ */
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

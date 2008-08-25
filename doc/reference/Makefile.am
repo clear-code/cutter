@@ -18,6 +18,7 @@ HFILE_GLOB =					\
 	$(top_srcdir)/cutter/cutter.h		\
 	$(top_srcdir)/cutter/cut-assertions.h	\
 	$(top_srcdir)/cutter/cut-test-utils.h	\
+	$(top_srcdir)/cutter/cut-multi-process.h\
 	$(top_srcdir)/gcutter/gcutter.h		\
 	$(top_srcdir)/gcutter/gcut-assertions.h	\
 	$(top_srcdir)/gcutter/gcut-test-utils.h	\
@@ -33,6 +34,7 @@ IGNORE_HFILES=			\
 	cut-enum-types.h	\
 	cut-hidden-definitions.h\
 	cut-loader.h		\
+	cut-macros.h		\
 	cut-marshalers.h	\
 	cut-module-impl.h	\
 	cut-module.h		\
@@ -40,7 +42,8 @@ IGNORE_HFILES=			\
 	cut-public.h		\
 	cut-gpublic.h		\
 	cut-repository.h	\
-	cut-runner.h		\
+	cut-sub-process.h	\
+	cut-sub-process-group.h	\
 	cut-test-case.h		\
 	cut-test-context.h	\
 	cut-test-container.h	\

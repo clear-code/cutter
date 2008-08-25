@@ -21,7 +21,7 @@
 #define __CUT_PROCESS_H__
 
 #include <glib-object.h>
-#include "cut-test-result.h"
+#include <cutter/cut-test-result.h>
 
 G_BEGIN_DECLS
 

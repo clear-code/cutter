@@ -20,7 +20,9 @@ cutter_public_headers = 			\
 		cut-experimental.h		\
 		cut-hidden-definitions.h	\
 		cut-public.h			\
-		cut-types.h
+		cut-types.h			\
+		cut-macros.h			\
+		cut-multi-process.h
 
 libcutter_public_headers = 			\
 		cut-private.h			\

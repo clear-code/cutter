@@ -21,7 +21,7 @@
 #define __CUT_SUB_PROCESS_H__
 
 #include <glib-object.h>
-#include <cutter/cut-public.h>
+#include <cutter/cut-multi-process.h>
 #include <cutter/cut-run-context.h>
 
 G_BEGIN_DECLS
