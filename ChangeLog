@@ -1,5 +1,7 @@
 2008-08-25  Kouhei Sutou  <kou@cozmixng.org>
 
+	* autogen.sh: add -I m4macros.
+
 	* doc/reference/cutter-docs.sgml: add cut-multi-process.
 
 	* doc/reference/Makefile.am: follow the below changes.
