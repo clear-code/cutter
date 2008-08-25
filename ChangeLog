@@ -1,3 +1,7 @@
+2008-08-26  Kouhei Sutou  <kou@cozmixng.org>
+
+	* module/ui/cut-console-ui.c (cb_error, cb_crashed): check verbose level.
+
 2008-08-25  Kouhei Sutou  <kou@cozmixng.org>
 
 	* autogen.sh: add -I m4macros.

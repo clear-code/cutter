@@ -787,8 +787,10 @@ static void
 cb_error (CutRunContext *run_context, const gchar *name, const gchar *detail,
           CutConsoleUI *console)
 {
-    print_with_color(console, status_to_color(CUT_TEST_RESULT_ERROR), "E");
-    fflush(stdout);
+    if (console->verbose_level >= CUT_VERBOSE_LEVEL_NORMAL) {
+        print_with_color(console, status_to_color(CUT_TEST_RESULT_ERROR), "E");
+        fflush(stdout);
+    }
 
     console->errors = g_list_append(console->errors, error_new(name, detail));
 }
@@ -797,6 +799,8 @@ static void
 cb_crashed (CutRunContext *run_context, const gchar *backtrace,
             CutConsoleUI *console)
 {
+    if (console->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
+        return;
     print_with_color(console, CRASH_COLOR, "!");
     fflush(stdout);
 }
