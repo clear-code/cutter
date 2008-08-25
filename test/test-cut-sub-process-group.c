@@ -14,6 +14,7 @@
 #define TEST_DIR_KEY "CUTTEST_SUB_PROCESS_GROUP_TEST_DIR"
 
 void test_run (void);
+void test_run_async (void);
 
 static CutRunContext *pipeline;
 static const gchar *env_sub_process_group_test_dir;
@@ -49,12 +50,15 @@ report_error (CutRunContext *context, GError *error, gpointer user_data)
 }
 
 static gboolean
-run (const gchar *test_dir)
+run (const gchar *test_dir, const gchar *test_name)
 {
     const gchar *exclude_directories[] = {"fixtures", NULL};
+    const gchar *test_names[] = {NULL, NULL};
     gchar *test_invoker_dir;
 
     cut_run_context_set_exclude_directories(pipeline, exclude_directories);
+    test_names[0] = test_name;
+    cut_run_context_set_target_test_names(pipeline, test_names);
 
     test_invoker_dir = g_build_filename(cuttest_get_base_dir(),
                                         "fixtures",
@@ -80,7 +84,46 @@ test_run (void)
     gint n_pendings, n_notifications, n_omissions;
 
     test_dir = cut_take_string(build_test_dir("normal"));
-    cut_assert_false(run(test_dir));
+    cut_assert_false(run(test_dir, "test_run"));
+
+    n_processes = 3;
+    n_normal_tests = 1;
+    n_spike_tests = 1;
+    n_iterated_tests = 2;
+    n_results = 6;
+    n_non_critical_results = 3;
+
+    n_tests = ((n_normal_tests + n_iterated_tests) * n_results);
+    n_assertions = (n_normal_tests + n_iterated_tests);
+    n_successes = (n_normal_tests + n_iterated_tests) * n_non_critical_results;
+    n_failures = (n_normal_tests + n_iterated_tests);
+    n_errors = (n_normal_tests + n_iterated_tests);
+    n_pendings = (n_normal_tests + n_iterated_tests);
+    n_notifications = (n_normal_tests + n_iterated_tests);
+    n_omissions = (n_normal_tests + n_iterated_tests);
+
+    cut_assert_test_result_summary(pipeline,
+                                   n_tests * n_processes + n_spike_tests,
+                                   n_assertions * n_processes,
+                                   n_successes * n_processes + n_spike_tests,
+                                   n_failures * n_processes,
+                                   n_errors * n_processes,
+                                   n_pendings * n_processes,
+                                   n_notifications * n_processes,
+                                   n_omissions * n_processes);
+}
+
+void
+test_run_async (void)
+{
+    const gchar *test_dir;
+    gint n_processes, n_normal_tests, n_iterated_tests, n_spike_tests;
+    gint n_results, n_non_critical_results;
+    gint n_tests, n_assertions, n_successes, n_failures, n_errors;
+    gint n_pendings, n_notifications, n_omissions;
+
+    test_dir = cut_take_string(build_test_dir("normal"));
+    cut_assert_false(run(test_dir, "test_run_async"));
 
     n_processes = 3;
     n_normal_tests = 1;

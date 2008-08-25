@@ -1,5 +1,9 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 
+#ifdef HAVE_CONFIG_H
+#  include <config.h>
+#endif
+
 #include "cutter.h"
 #include <cutter/cut-process.h>
 

@@ -5,10 +5,11 @@
 
 #define TEST_DIR_KEY "CUTTEST_SUB_PROCESS_GROUP_TEST_DIR"
 
-void test_invoke(void);
+void test_run(void);
+void test_run_async(void);
 
-void
-test_invoke (void)
+static CutSubProcessGroup *
+create_group (void)
 {
     int i;
     int n_processes = 3;
@@ -21,7 +22,26 @@ test_invoke (void)
         sub_process = cut_sub_process_new(g_getenv(TEST_DIR_KEY));
         cut_sub_process_group_add(group, sub_process);
     }
+    return group;
+}
+
+void
+test_run (void)
+{
+    CutSubProcessGroup *group;
+
+    group = create_group();
     cut_sub_process_group_run(group);
+}
+
+void
+test_run_async (void)
+{
+    CutSubProcessGroup *group;
+
+    group = create_group();
+    cut_sub_process_group_run_async(group);
+    cut_sub_process_group_wait(group);
 }
 
 /*
