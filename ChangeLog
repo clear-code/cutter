@@ -1,5 +1,8 @@
 2008-08-25  Kouhei Sutou  <kou@cozmixng.org>
 
+	* TODO: remove:
+	cut_sub_process_new() and cut_sub_process_group() should be changed.
+
 	* cutter/, test/:
 	- cut_sub_process_new() -> cut_take_new_sub_process().
 	- cut_sub_process_group_new() -> cut_take_new_sub_process_group().
