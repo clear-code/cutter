@@ -816,8 +816,8 @@ test/unit/test-snip.c:
 問題発生時に有用なデバッグ情報を増やしたり、より読みやすいテ
 ストにするなど、いろいろ改良するべき点は残っていますが、今回
 はこれで終了します。実際のコードは((<Sennaのリポジトリ
-|URL:http://svn.razil.jp/senna/test/unit/>))を参照してくださ
-い。
+|URL:http://dev.razil.jp/senna/browser/trunk/test/unit/>))を
+参照してください。
 
 == まとめ
 
