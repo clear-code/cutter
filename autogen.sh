@@ -11,7 +11,7 @@ run()
 
 run ${ACLOCAL:-aclocal} -I m4macros $ACLOCAL_OPTIONS
 run ${LIBTOOLIZE:-libtoolize} --copy --force
-run ${GLIB_GETTEXTIZE:-glib-gettextize} --force --copy
+run ${INTLTOOLIZE:-intltoolize} --force --copy
 #run ${GTKDOCIZE:-gtkdocize} --copy
 run ${AUTOHEADER:-autoheader}
 run ${AUTOMAKE:-automake} --add-missing --foreign --copy

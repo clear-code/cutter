@@ -1,5 +1,8 @@
 2008-08-26  Kouhei Sutou  <kou@cozmixng.org>
 
+	* autogen.sh, configure.ac: don't use glib-gettextize. use only
+	intltoolize.
+
 	* cutter/cutter.h, cutter/cut-multi-process.h: fix typos.
 
 	* doc/reference/ja.po: update.
