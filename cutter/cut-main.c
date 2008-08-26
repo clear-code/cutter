@@ -75,6 +75,7 @@ static GList *factories = NULL;
 static CutContractor *contractor = NULL;
 static gchar **original_argv = NULL;
 static gchar *cutter_command_path = NULL;
+static gboolean fatal_failures = FALSE;
 
 static gboolean
 print_version (const gchar *option_name, const gchar *value,
@@ -145,6 +146,8 @@ static const GOptionEntry option_entries[] =
      N_("Skip files"), "FILE"},
     {"exclude-directory", 0, 0, G_OPTION_ARG_STRING_ARRAY, &exclude_directories,
      N_("Skip directories"), "DIRECTORY"},
+    {"fatal-failures", 0, 0, G_OPTION_ARG_NONE, &fatal_failures,
+     N_("Treat failures as fatal problem"), NULL},
     {NULL}
 };
 
@@ -312,6 +315,7 @@ cut_create_run_context (void)
     cut_run_context_set_target_test_names(run_context,
                                           (const gchar **)test_names);
     cut_run_context_set_test_case_order(run_context, test_case_order);
+    cut_run_context_set_fatal_failures(run_context, fatal_failures);
     cut_run_context_set_command_line_args(run_context, original_argv);
 
     return run_context;

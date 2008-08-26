@@ -32,6 +32,16 @@
 #  include <unistd.h>
 #endif
 #include <glib.h>
+#include <glib/gi18n-lib.h>
+
+#ifdef G_OS_WIN32
+#  include <process.h>		/* For getpid() */
+#  include <io.h>
+#  define STRICT		/* Strict typing, please */
+#  define _WIN32_WINDOWS 0x0401 /* to get IsDebuggerPresent */
+#  include <windows.h>
+#  undef STRICT
+#endif
 
 #include "cut-run-context.h"
 #include "cut-test-context.h"
@@ -373,6 +383,12 @@ get_property (GObject    *object,
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
     }
+}
+
+GQuark
+cut_test_context_error_quark (void)
+{
+    return g_quark_from_static_string("cut-test-context-error-quark");
 }
 
 void
@@ -787,6 +803,31 @@ cut_test_context_register_result (CutTestContext *context,
     }
 
     cut_test_context_emit_signal(context, result);
+
+    if (status == CUT_TEST_RESULT_FAILURE &&
+        priv->run_context &&
+        cut_run_context_get_fatal_failures(priv->run_context)) {
+        const gchar *message;
+
+        message = _("Treat a failure as a fatal problem, aborting.");
+        cut_run_context_emit_error(priv->run_context,
+                                   CUT_TEST_CONTEXT_ERROR,
+                                   CUT_TEST_CONTEXT_ERROR_FATAL,
+                                   NULL, "%s", message);
+        cut_run_context_emit_complete_run(priv->run_context, FALSE);
+#ifdef G_OS_WIN32
+        if (IsDebuggerPresent())
+            G_BREAKPOINT();
+        else
+            abort();
+#else
+#  ifdef SIGTRAP
+        G_BREAKPOINT();
+#  else
+        abort();
+#  endif
+#endif
+    }
 
     g_object_unref(result);
 }

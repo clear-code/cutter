@@ -31,7 +31,9 @@
 
 G_BEGIN_DECLS
 
-#define CUT_TYPE_TEST_CONTEXT                 (cut_test_context_get_type ())
+#define CUT_TEST_CONTEXT_ERROR                (cut_test_context_error_quark())
+
+#define CUT_TYPE_TEST_CONTEXT                 (cut_test_context_get_type())
 #define CUT_TEST_CONTEXT(obj)                 (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_TEST_CONTEXT, CutTestContext))
 #define CUT_TEST_TEST_CONTEXT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_TEST_CONTEXT, CutTestContextClass))
 #define CUT_IS_TEST_CONTEXT(obj)              (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_TEST_CONTEXT))
@@ -50,9 +52,14 @@ struct _CutTestContextClass
     GObjectClass parent_class;
 };
 
-extern GPrivate *cut_test_context_private;
+typedef enum
+{
+    CUT_TEST_CONTEXT_ERROR_FATAL
+} CutTestContextError;
 
-GType            cut_test_context_get_type  (void) G_GNUC_CONST;
+GQuark           cut_test_context_error_quark  (void);
+
+GType            cut_test_context_get_type     (void) G_GNUC_CONST;
 
 void             cut_test_context_current_init (void);
 void             cut_test_context_current_quit (void);

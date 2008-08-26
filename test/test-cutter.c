@@ -84,6 +84,7 @@ setup (void)
         "  --test-case-order=[none|name|name-desc]         Sort test case by. Default is 'none'." LINE_FEED_CODE
         "  --exclude-file=FILE                             Skip files" LINE_FEED_CODE
         "  --exclude-directory=DIRECTORY                   Skip directories" LINE_FEED_CODE
+        "  --fatal-failures                                Treat failures as fatal problem" LINE_FEED_CODE
         "" LINE_FEED_CODE,
         g_get_prgname(),
         g_get_prgname());
@@ -243,6 +244,7 @@ test_help_all (void)
         "  --test-case-order=[none|name|name-desc]         Sort test case by. Default is 'none'." LINE_FEED_CODE
         "  --exclude-file=FILE                             Skip files" LINE_FEED_CODE
         "  --exclude-directory=DIRECTORY                   Skip directories" LINE_FEED_CODE
+        "  --fatal-failures                                Treat failures as fatal problem" LINE_FEED_CODE
 #ifdef HAVE_GTK
         "  --display=DISPLAY                               X display to use" LINE_FEED_CODE
 #endif

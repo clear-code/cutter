@@ -179,6 +179,8 @@ cut_pipeline_new_from_run_context (CutRunContext *run_context)
                         cut_run_context_get_source_directory(run_context),
                         "command-line-args",
                         cut_run_context_get_command_line_args(run_context),
+                        "fatal-failures",
+                        cut_run_context_get_fatal_failures(run_context),
                         NULL);
 }
 

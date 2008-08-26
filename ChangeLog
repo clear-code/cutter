@@ -1,5 +1,15 @@
 2008-08-26  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-run-context.[ch]: add fatal failures mode.
+
+	* cutter/cut-test-context.[ch]: abort() or G_BREAKPOINT() on
+	failure in fatal failures mode.
+
+	* cutter/cut-main.c: add --fatal-failures option.
+
+	* cutter/cut-pipeline.c (cut_pipeline_new_from_run_context),
+	test/test-cutter.c: follow the above change.
+
 	* doc/reference/ja.po: update.
 
 	* cutter/cut-sub-process.c (cut_sub_process_is_multi_thread): remove.
