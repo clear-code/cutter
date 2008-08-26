@@ -417,6 +417,38 @@ cut_boolean    cut_sub_process_is_crashed         (CutSubProcess  *sub_process);
 const char    *cut_sub_process_get_backtrace      (CutSubProcess  *sub_process);
 
 /**
+ * cut_sub_process_get_fatal_failures:
+ * @sub_process: a #CutSubProcess.
+ *
+ * Returns whether @sub_process is ran in fatal-failures
+ * mode. See cut_sub_process_set_fatal_failures() more
+ * details of fatal-failures mode.
+ *
+ * Returns: %CUT_TRUE if @sub_process is ran in fatal-failures
+ * mode, %CUT_FALSE otherwise.
+ *
+ * Since: 1.0.4
+ */
+cut_boolean    cut_sub_process_get_fatal_failures (CutSubProcess  *sub_process);
+
+/**
+ * cut_sub_process_set_fatal_failures:
+ * @sub_process: a #CutSubProcess.
+ * @fatal_failures: %CUT_TRUE to be ran in fatal-failures mode.
+ *
+ * Sets whether @sub_process is ran in fatal-failures mode or
+ * not. In this mode, all failures are treated as fatal
+ * problems. It means that test is aborted on failure. On
+ * some environments, breakpoint is set.
+ *
+ * This is same as --fatal-failures command line option.
+ *
+ * Since: 1.0.4
+ */
+void           cut_sub_process_set_fatal_failures (CutSubProcess  *sub_process,
+                                                   cut_boolean     fatal_failures);
+
+/**
  * cut_take_new_sub_process_group:
  *
  * Creates a group of sub cutter process. A created group

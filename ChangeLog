@@ -1,5 +1,12 @@
 2008-08-26  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-pipeline.c
+	(create_command_line_args_from_parameters): support --fatal-failures.
+
+	* cutter/cut-sub-process.c, cutter/cut-multi-process.h
+	(cut_sub_process_get_fatal_failures)
+	(cut_sub_process_set_fatal_failures): add.
+
 	* module/ui/cut-console-ui.c: fix error signal handling.
 
 	* cutter/cut-run-context.[ch]: add fatal failures mode.

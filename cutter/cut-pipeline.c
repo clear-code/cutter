@@ -376,6 +376,9 @@ create_command_line_args_from_parameters (CutPipeline *pipeline)
         strings++;
     }
 
+    if (cut_run_context_get_fatal_failures(run_context))
+        append_arg(argv, "--fatal-failures");
+
     append_arg(argv, cut_run_context_get_test_directory(run_context));
 
     return (gchar **)(g_array_free(argv, FALSE));
