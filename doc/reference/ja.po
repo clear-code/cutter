@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.0.3\n"
-"POT-Creation-Date: 2008-08-26 12:08+0900\n"
-"PO-Revision-Date: 2008-08-26 12:28+0900\n"
+"POT-Creation-Date: 2008-08-26 15:42+0900\n"
+"PO-Revision-Date: 2008-08-26 15:42+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -506,7 +506,7 @@ msgstr ""
 #: xml/cut-test-data.xml:173(term) xml/cut-test-iterator.xml:83(term)
 #: xml/cut-test-iterator.xml:94(term) xml/cut-test-iterator.xml:124(term)
 #: xml/cut-test-runner.xml:59(term) xml/cut-ui.xml:85(term)
-#: xml/cut-ui.xml:103(term) xml/cutter.xml:349(term)
+#: xml/cut-ui.xml:103(term) xml/cutter.xml:351(term)
 #: xml/cuttest-utils.xml:83(term) xml/cuttest-utils.xml:145(term)
 #: xml/cuttest-utils.xml:160(term) xml/cuttest-utils.xml:186(term)
 #: xml/cuttest-utils.xml:201(term) xml/gbsearcharray.xml:78(term)
@@ -564,7 +564,7 @@ msgid "const <link linkend=\"GList\">GList</link>*        cut_analyzer_get_run_c
 msgstr ""
 
 #: xml/cut-assertions.xml:7(refentrytitle) xml/cut-assertions.xml:13(refname)
-#: xml/cutter.xml:375(link)
+#: xml/cutter.xml:378(link)
 msgid "Assertions"
 msgstr "検証"
 
@@ -769,7 +769,7 @@ msgstr ""
 #: xml/cut-assertions.xml:748(para) xml/cut-experimental.xml:54(para)
 #: xml/cut-experimental.xml:82(para) xml/cut-experimental.xml:114(para)
 #: xml/cut-experimental.xml:143(para) xml/cutter.xml:193(para)
-#: xml/cutter.xml:279(para)
+#: xml/cutter.xml:279(para) xml/cutter.xml:325(para)
 msgid "e.g.: <placeholder-1/>"
 msgstr "例: <placeholder-1/>"
 
@@ -3422,7 +3422,7 @@ msgstr ""
 #: xml/cut-multi-process.xml:7(refentrytitle)
 #: xml/cut-multi-process.xml:13(refname)
 msgid "Multi Process"
-msgstr ""
+msgstr "マルチプロセス"
 
 #: xml/cut-multi-process.xml:14(refpurpose)
 msgid "Utilities to run your tests on multi processes."
@@ -3644,11 +3644,16 @@ msgstr ""
 
 #: xml/cut-multi-process.xml:83(para)
 msgid ""
-"If your test target support multi-process and/or multi-thread, you need to "
+"If your test target supports multi-process and/or multi-thread, you need to "
 "test them. You can use <link linkend=\"CutSubProcess\"><type>CutSubProcess</"
 "type></link> and <link linkend=\"CutSubProcessGroup"
 "\"><type>CutSubProcessGroup</type></link> to do it."
 msgstr ""
+"もしテスト対象のソフトウェアがマルチプロセスやマルチスレッドでの使用をサポー"
+"トしているなら、それらの機能をテストする必要があります。そのようなテストため"
+"に、<link linkend=\"CutSubProcess\"><type>CutSubProcess</type></link>と<link "
+"linkend=\"CutSubProcessGroup\"><type>CutSubProcessGroup</type></link>を使うこ"
+"とができます。"
 
 #: xml/cut-multi-process.xml:88(para)
 msgid ""
@@ -3657,6 +3662,9 @@ msgid ""
 "process. You will get results of test on another process as results of test "
 "on your main process."
 msgstr ""
+"<link linkend=\"CutSubProcess\"><type>CutSubProcess</type></link>はテストを別"
+"のプロセスで走らせ、その結果をメインプロセスに転送します。このため、別のプロ"
+"セス上でのテスト結果もメインプロセス上でのテスト結果と同じように見えます。"
 
 #: xml/cut-multi-process.xml:94(para)
 msgid ""
@@ -3664,6 +3672,9 @@ msgid ""
 "is a convenience object to run some <link linkend=\"CutSubProcess"
 "\"><type>CutSubProcess</type></link>."
 msgstr ""
+"<link linkend=\"CutSubProcessGroup\"><type>CutSubProcessGroup</type></link>は"
+"いくつかの<link linkend=\"CutSubProcess\"><type>CutSubProcess</type></link>を"
+"まとめて実行するための便利オブジェクトです。"
 
 #: xml/cut-multi-process.xml:106(programlisting)
 #: xml/cut-sub-process.xml:45(programlisting)
@@ -3676,6 +3687,8 @@ msgid ""
 "An object to represent sub cutter process. It contains sub cutter process's "
 "parameters and results of sub cutter process."
 msgstr ""
+"サブcutterプロセスを表現するオブジェクトです。サブcutterプロセスのパラメタと"
+"テスト結果を持っています。"
 
 #: xml/cut-multi-process.xml:114(programlisting)
 #, no-wrap
@@ -3708,7 +3721,7 @@ msgstr "例: <placeholder-1/>"
 #: xml/cut-multi-process.xml:584(para) xml/cut-multi-process.xml:601(para)
 #: xml/cut-multi-process.xml:619(para) xml/cut-multi-process.xml:634(para)
 #: xml/cut-multi-process.xml:652(para) xml/cutter.xml:311(para)
-#: xml/cutter.xml:352(para) xml/cutter.xml:366(para)
+#: xml/cutter.xml:354(para) xml/cutter.xml:369(para)
 #: xml/gcut-assertions.xml:262(para) xml/gcut-assertions.xml:352(para)
 #: xml/gcut-test-utils.xml:117(para) xml/gcut-test-utils.xml:175(para)
 msgid "Since 1.0.4"
@@ -3723,6 +3736,8 @@ msgstr ""
 #: xml/cut-multi-process.xml:128(para)
 msgid "An object to run sub cutter processes. This is just for convenience."
 msgstr ""
+"サブcutterプロセスを実行するオブジェクトです。このオブジェクトは便利にテスト"
+"を書くために導入されています。"
 
 #: xml/cut-multi-process.xml:134(programlisting)
 #, no-wrap
@@ -3756,6 +3771,8 @@ msgid ""
 "Creates sub cutter process that runs tests under <parameter>test_directory</"
 "parameter> and returns it. A created sub process is owned by Cutter."
 msgstr ""
+"<parameter>test_directory</parameter>以下のテストを実行するサブcutterプロセス"
+"を作り、それを返します。返されたサブcutterプロセスの所有者はCutterです。"
 
 #: xml/cut-multi-process.xml:162(term) xml/cut-multi-process.xml:281(term)
 msgid "<parameter>test_directory</parameter>&nbsp;:"
@@ -3763,7 +3780,7 @@ msgstr ""
 
 #: xml/cut-multi-process.xml:163(simpara)
 msgid "a directory includes sub process test."
-msgstr ""
+msgstr "サブcutterプロセスのテストがあるディレクトリ。"
 
 #: xml/cut-multi-process.xml:168(title)
 msgid "cut_sub_process_run ()"
@@ -3776,7 +3793,7 @@ msgstr ""
 
 #: xml/cut-multi-process.xml:170(para)
 msgid "Runs sub cutter process."
-msgstr ""
+msgstr "サブcutterプロセスを実行します。"
 
 #: xml/cut-multi-process.xml:175(term) xml/cut-multi-process.xml:193(term)
 #: xml/cut-multi-process.xml:207(term) xml/cut-multi-process.xml:225(term)
@@ -3819,6 +3836,8 @@ msgstr ""
 #: xml/cut-multi-process.xml:599(simpara)
 msgid "a <link linkend=\"CutSubProcess\"><type>CutSubProcess</type></link>."
 msgstr ""
+"<link linkend=\"CutSubProcess\"><type>CutSubProcess</type></link>オブジェク"
+"ト。"
 
 #: xml/cut-multi-process.xml:178(simpara)
 #: xml/cut-multi-process.xml:210(simpara)
@@ -3828,6 +3847,9 @@ msgid ""
 "<parameter>sub_process</parameter> is completed successfully, <link linkend="
 "\"CUT-FALSE:CAPS\"><literal>CUT_FALSE</literal></link> otherwise."
 msgstr ""
+"もし、<parameter>sub_process</parameter>が正常に終了した場合は<link linkend="
+"\"CUT-TRUE:CAPS\"><literal>CUT_TRUE</literal></link>、そうでない場合は<link "
+"linkend=\"CUT-FALSE:CAPS\"><literal>CUT_FALSE</literal></link>。"
 
 #: xml/cut-multi-process.xml:185(title)
 msgid "cut_sub_process_run_async ()"
@@ -3843,7 +3865,10 @@ msgid ""
 "Runs sub cutter process asynchronously. The result of "
 "<parameter>sub_process</parameter> can be gotten by <link linkend=\"cut-sub-"
 "process-wait\"><function>cut_sub_process_wait()</function></link>."
-msgstr "非同期でサブcutterコマンドを実行します。<parameter>sub_process</parameter>の結果は<link linkend=\"cut-sub-process-wait\"><function>cut_sub_process_wait()</function></link>で取得できます。"
+msgstr ""
+"非同期でサブcutterコマンドを実行します。<parameter>sub_process</parameter>の"
+"結果は<link linkend=\"cut-sub-process-wait\"><function>cut_sub_process_wait()"
+"</function></link>で取得できます。"
 
 #: xml/cut-multi-process.xml:199(title)
 msgid "cut_sub_process_wait ()"
@@ -3894,6 +3919,9 @@ msgid ""
 "<parameter>sub_process</parameter> is running, <link linkend=\"CUT-FALSE:CAPS"
 "\"><literal>CUT_FALSE</literal></link> otherwise."
 msgstr ""
+"<parameter>sub_process</parameter>が実行中の場合は<link linkend=\"CUT-TRUE:"
+"CAPS\"><literal>CUT_TRUE</literal></link>、そうでない場合は<link linkend="
+"\"CUT-FALSE:CAPS\"><literal>CUT_FALSE</literal></link>。"
 
 #: xml/cut-multi-process.xml:252(title)
 msgid "cut_sub_process_get_test_directory ()"
@@ -3906,12 +3934,12 @@ msgstr ""
 
 #: xml/cut-multi-process.xml:254(para)
 msgid "Returns a test directory that has tests to be ran."
-msgstr ""
+msgstr "実行対象のテストがあるディレクトリを返します。"
 
 #: xml/cut-multi-process.xml:262(simpara)
 #: xml/cut-multi-process.xml:282(simpara)
 msgid "a test directory."
-msgstr ""
+msgstr "テストディレクトリ"
 
 #: xml/cut-multi-process.xml:268(title)
 msgid "cut_sub_process_set_test_directory ()"
@@ -3930,6 +3958,9 @@ msgid ""
 "tests to be ran. This is same as TEST_DIRECTORY required command line "
 "argument."
 msgstr ""
+"実行対象のテストがあるディレクトリとして<parameter>test_directory</parameter>"
+"を指定します。これは必須のコマンドライン引数であるTEST_DIRECTORYと同じ意味を"
+"持ちます。"
 
 #: xml/cut-multi-process.xml:287(title)
 msgid "cut_sub_process_get_source_directory ()"
@@ -3944,12 +3975,12 @@ msgstr ""
 
 #: xml/cut-multi-process.xml:290(para)
 msgid "Returns a source directory that has source files."
-msgstr ""
+msgstr "ソースファイルがあるディレクトリを返します。"
 
 #: xml/cut-multi-process.xml:298(simpara)
 #: xml/cut-multi-process.xml:319(simpara)
 msgid "a source directory."
-msgstr ""
+msgstr "ソースディレクトリ。"
 
 #: xml/cut-multi-process.xml:304(title)
 msgid "cut_sub_process_set_source_directory ()"
@@ -3968,6 +3999,9 @@ msgid ""
 "Sets <parameter>source_directory</parameter> as a source directory that has "
 "source files. This is same as --source-directory command line option."
 msgstr ""
+"ソースファイルがあるディレクトリとして<parameter>source_directory</parameter>"
+"を指定します。これは--source-directoryコマンドラインオプションと同じ意味を持"
+"ちます。"
 
 #: xml/cut-multi-process.xml:318(term)
 msgid "<parameter>source_directory</parameter>&nbsp;:"
@@ -3986,7 +4020,9 @@ msgstr ""
 msgid ""
 "Returns whether <parameter>sub_process</parameter> is ran in multi-thread "
 "mode."
-msgstr "<parameter>sub_process</parameter>をマルチスレッドモードで実行するかどうかを返します。"
+msgstr ""
+"<parameter>sub_process</parameter>をマルチスレッドモードで実行するかどうかを"
+"返します。"
 
 #: xml/cut-multi-process.xml:334(simpara)
 msgid ""
@@ -3994,6 +4030,9 @@ msgid ""
 "<parameter>sub_process</parameter> is ran in multi-thread mode, <link "
 "linkend=\"CUT-FALSE:CAPS\"><literal>CUT_FALSE</literal></link> otherwise."
 msgstr ""
+"<parameter>sub_process</parameter>がマルチスレッドモードで実行されるなら"
+"<link linkend=\"CUT-TRUE:CAPS\"><literal>CUT_TRUE</literal></link>、そうでな"
+"ければ<link linkend=\"CUT-FALSE:CAPS\"><literal>CUT_FALSE</literal></link>。"
 
 #: xml/cut-multi-process.xml:341(title)
 msgid "cut_sub_process_set_multi_thread ()"
@@ -4011,6 +4050,9 @@ msgid ""
 "Sets whether <parameter>sub_process</parameter> is ran in multi-thread mode "
 "or not. This is same as --multi-thread command line option."
 msgstr ""
+"<parameter>sub_process</parameter>がマルチスレッドモードで実行されるかどうか"
+"を指定します。これは--multi-threadコマンドラインオプションと同じ意味を持ちま"
+"す。"
 
 #: xml/cut-multi-process.xml:353(term)
 msgid "<parameter>multi_thread</parameter>&nbsp;:"
@@ -4021,6 +4063,8 @@ msgid ""
 "<link linkend=\"CUT-TRUE:CAPS\"><literal>CUT_TRUE</literal></link> to be ran "
 "in multi-thread mode."
 msgstr ""
+"マルチスレッドモードで実行されるなら<link linkend=\"CUT-TRUE:CAPS"
+"\"><literal>CUT_TRUE</literal></link>。"
 
 #: xml/cut-multi-process.xml:359(title)
 msgid "cut_sub_process_get_exclude_files ()"
@@ -4033,12 +4077,12 @@ msgstr ""
 
 #: xml/cut-multi-process.xml:361(para)
 msgid "Returns file names that are excluded from target test files."
-msgstr ""
+msgstr "テスト対象ファイルから除外されるファイル名を返します。"
 
 #: xml/cut-multi-process.xml:370(simpara)
 #: xml/cut-multi-process.xml:389(simpara)
 msgid "file names that are excluded from target test files."
-msgstr ""
+msgstr "テスト対象ファイルから除外されるファイル名。"
 
 #: xml/cut-multi-process.xml:376(title)
 msgid "cut_sub_process_set_exclude_files ()"
@@ -4056,6 +4100,8 @@ msgid ""
 "Sets file names that are excluded from target test files. This is same as --"
 "exclude-file command line option."
 msgstr ""
+"テスト対象から除外されるファイル名を指定します。これは--exclude-fileコマンド"
+"ラインオプションと同じ意味を持ちます。"
 
 #: xml/cut-multi-process.xml:388(term)
 msgid "<parameter>files</parameter>&nbsp;:"
@@ -4073,13 +4119,13 @@ msgid ""
 msgstr ""
 
 #: xml/cut-multi-process.xml:398(para)
-msgid "Returns file names that are excluded from target test directories."
-msgstr ""
+msgid "Returns directory names that are excluded from target test directories."
+msgstr "テスト対象ディレクトリから除外されるディレクトリ名を返します。"
 
 #: xml/cut-multi-process.xml:407(simpara)
 #: xml/cut-multi-process.xml:429(simpara)
-msgid "file names that are excluded from target test directories."
-msgstr ""
+msgid "directory names that are excluded from target test directories."
+msgstr "テスト対象ディレクトリから除外されるディレクトリ名。"
 
 #: xml/cut-multi-process.xml:414(title)
 msgid "cut_sub_process_set_exclude_directories ()"
@@ -4095,9 +4141,11 @@ msgstr ""
 
 #: xml/cut-multi-process.xml:418(para)
 msgid ""
-"Sets file names that are excluded from target test directories. This is same "
-"as --exclude-file command line option."
+"Sets directory names that are excluded from target test directories. This is "
+"same as --exclude-directory command line option."
 msgstr ""
+"テスト対象ディレクトリから除外されるディレクトリ名を指定します。これは--"
+"exclude-directoryコマンドラインオプションと同じ意味を持ちます。"
 
 #: xml/cut-multi-process.xml:428(term)
 msgid "<parameter>directories</parameter>&nbsp;:"
@@ -4116,12 +4164,12 @@ msgstr ""
 
 #: xml/cut-multi-process.xml:438(para)
 msgid "Returns test case names that are ran."
-msgstr ""
+msgstr "実行されるテストケース名を返します。"
 
 #: xml/cut-multi-process.xml:446(simpara)
 #: xml/cut-multi-process.xml:466(simpara)
 msgid "test case names that are ran."
-msgstr ""
+msgstr "実行されるテストケース名。"
 
 #: xml/cut-multi-process.xml:452(title)
 msgid "cut_sub_process_set_target_test_case_names ()"
@@ -4140,6 +4188,8 @@ msgid ""
 "Sets test case names that are ran. This is same as --test-case command line "
 "option."
 msgstr ""
+"実行されるテストケース名を指定します。これは--test-caseコマンドラインオプショ"
+"ンと同じ意味を持ちます。"
 
 #: xml/cut-multi-process.xml:465(term) xml/cut-multi-process.xml:501(term)
 #: xml/cut-run-context.xml:374(term) xml/cut-run-context.xml:406(term)
@@ -4159,12 +4209,12 @@ msgstr ""
 
 #: xml/cut-multi-process.xml:474(para)
 msgid "Returns test names that are ran."
-msgstr ""
+msgstr "実行されるテスト名を返します。"
 
 #: xml/cut-multi-process.xml:482(simpara)
 #: xml/cut-multi-process.xml:502(simpara)
 msgid "test names that are ran."
-msgstr ""
+msgstr "実行されるテスト名。"
 
 #: xml/cut-multi-process.xml:488(title)
 msgid "cut_sub_process_set_target_test_names ()"
@@ -4182,6 +4232,8 @@ msgstr ""
 msgid ""
 "Sets test names that are ran. This is same as --test command line option."
 msgstr ""
+"実行されるテスト名を指定します。これは--testコマンドラインオプションと同じ意"
+"味を持ちます。"
 
 #: xml/cut-multi-process.xml:507(title)
 msgid "cut_sub_process_get_elapsed ()"
@@ -4211,11 +4263,11 @@ msgstr ""
 
 #: xml/cut-multi-process.xml:525(para)
 msgid "Gets the sum of times that are used by each test."
-msgstr ""
+msgstr "各テストで使われた時間の合計を返します。"
 
 #: xml/cut-multi-process.xml:533(simpara)
 msgid "the sum of times that are used by each test."
-msgstr ""
+msgstr "各テストで使われた時間の合計。"
 
 #: xml/cut-multi-process.xml:539(title)
 msgid "cut_sub_process_is_crashed ()"
@@ -4236,6 +4288,9 @@ msgid ""
 "<parameter>sub_process</parameter> was crashed, <link linkend=\"CUT-FALSE:"
 "CAPS\"><literal>CUT_FALSE</literal></link> otherwise."
 msgstr ""
+"<parameter>sub_process</parameter>が異常終了したときは<link linkend=\"CUT-"
+"TRUE:CAPS\"><literal>CUT_TRUE</literal></link>、そうでない場合は<link "
+"linkend=\"CUT-FALSE:CAPS\"><literal>CUT_FALSE</literal></link>。"
 
 #: xml/cut-multi-process.xml:556(title)
 msgid "cut_sub_process_get_backtrace ()"
@@ -4248,13 +4303,17 @@ msgstr ""
 
 #: xml/cut-multi-process.xml:558(para)
 msgid "Returns the backtrace on <parameter>sub_process</parameter> is crashed."
-msgstr "<parameter>sub_process</parameter>が異常終了したときのバックトレースを返します。"
+msgstr ""
+"<parameter>sub_process</parameter>が異常終了したときのバックトレースを返しま"
+"す。"
 
 #: xml/cut-multi-process.xml:566(simpara)
 msgid ""
 "the backtrace if <parameter>sub_process</parameter> could get it, NULL "
 "otherwise."
-msgstr "<parameter>sub_process</parameter>がバックトレースを取得できたなら、バックトレース。そうでない場合はNULL。"
+msgstr ""
+"<parameter>sub_process</parameter>がバックトレースを取得できたなら、バックト"
+"レース。そうでない場合はNULL。"
 
 #: xml/cut-multi-process.xml:573(title)
 msgid "cut_take_new_sub_process_group()"
@@ -4269,6 +4328,8 @@ msgstr ""
 msgid ""
 "Creates a group of sub cutter process. A created group is owned by Cutter."
 msgstr ""
+"サブc<uterプロセスのグループを作ります。作られたグループの所有者はCutterで"
+"す。"
 
 #: xml/cut-multi-process.xml:581(simpara)
 #: xml/cut-multi-process.xml:596(simpara)
@@ -4279,6 +4340,8 @@ msgid ""
 "a <link linkend=\"CutSubProcessGroup\"><type>CutSubProcessGroup</type></"
 "link>."
 msgstr ""
+"<link linkend=\"CutSubProcessGroup\"><type>CutSubProcessGroup</type></link>オ"
+"ブジェクト。"
 
 #: xml/cut-multi-process.xml:587(title)
 msgid "cut_sub_process_group_add ()"
@@ -4294,7 +4357,9 @@ msgstr ""
 #: xml/cut-multi-process.xml:590(para)
 msgid ""
 "Adds <parameter>sub_process</parameter> to <parameter>group</parameter>."
-msgstr "<parameter>sub_process</parameter>を<parameter>group</parameter>に追加します。"
+msgstr ""
+"<parameter>sub_process</parameter>を<parameter>group</parameter>に追加しま"
+"す。"
 
 #: xml/cut-multi-process.xml:595(term) xml/cut-multi-process.xml:612(term)
 #: xml/cut-multi-process.xml:631(term) xml/cut-multi-process.xml:645(term)
@@ -4315,6 +4380,8 @@ msgid ""
 "Runs all sub cutter processes of <parameter>group</parameter> and returns "
 "the result of them."
 msgstr ""
+"<parameter>group</parameter>内のすべてのサブcutterプロセスを実行し、その結果"
+"を返します。"
 
 #: xml/cut-multi-process.xml:615(simpara)
 #: xml/cut-multi-process.xml:648(simpara)
@@ -4324,6 +4391,10 @@ msgid ""
 "successfully, <link linkend=\"CUT-FALSE:CAPS\"><literal>CUT_FALSE</literal></"
 "link> otherwise."
 msgstr ""
+"<parameter>group</parameter>内のすべてのサブcutterプロセスが正常終了したら"
+"<link linkend=\"CUT-TRUE:CAPS\"><literal>CUT_TRUE</literal></link>、そうでな"
+"い場合は<link linkend=\"CUT-FALSE:CAPS\"><literal>CUT_FALSE</literal></"
+"link>。"
 
 #: xml/cut-multi-process.xml:622(title)
 msgid "cut_sub_process_group_run_async ()"
@@ -4341,6 +4412,9 @@ msgid ""
 "process-group-wait\"><function>cut_sub_process_group_wait()</function></"
 "link>."
 msgstr ""
+"<parameter>group</parameter>内のすべてのサブcutterプロセスを非同期で実行しま"
+"す。実行結果は<link linkend=\"cut-sub-process-group-wait"
+"\"><function>cut_sub_process_group_wait()</function></link>で取得できます。"
 
 #: xml/cut-multi-process.xml:637(title)
 msgid "cut_sub_process_group_wait ()"
@@ -4356,6 +4430,8 @@ msgid ""
 "Waits for all sub cutter processes of <parameter>group</parameter> that are "
 "ran asynchronously to complete and returns the result."
 msgstr ""
+"<parameter>group</parameter>内の非同期で実行されたすべてのサブcutterプロセス"
+"の終了を待ち、終了結果を返します。"
 
 #: xml/cut-pipeline.xml:7(refentrytitle) xml/cut-pipeline.xml:13(refname)
 #: xml/cut-pipeline.xml:23(link) xml/cut-pipeline.xml:56(title)
@@ -7746,7 +7822,7 @@ msgstr ""
 msgid "cut_get_current_test_context"
 msgstr ""
 
-#: xml/cutter.xml:29(link) xml/cutter.xml:356(primary)
+#: xml/cutter.xml:29(link) xml/cutter.xml:358(primary)
 msgid "cut_set_current_test_context"
 msgstr ""
 
@@ -8106,7 +8182,7 @@ msgstr ""
 
 #: xml/cutter.xml:276(para)
 msgid "Sets attributes of the test."
-msgstr ""
+msgstr "テストの属性を設定します。"
 
 #: xml/cutter.xml:281(programlisting)
 #, no-wrap
@@ -8158,13 +8234,18 @@ msgstr ""
 #: xml/cutter.xml:316(para)
 msgid ""
 "Returns the current test context. The current test context is a thread local "
-"object. It means that you don't need to use this if you don't create a new "
-"thread in your test. This is only needed to use if you create a new thread. "
-"You need to pass the current test context in your test to the current test "
-"context in a created thread:"
+"object. It means that you don't need to care this if you don't create a new "
+"thread in your test. This is only needed to care if you create a new thread. "
+"You need to pass the current test context in your test thread to the current "
+"test context in a created thread."
 msgstr ""
+"現在のテストコンテキストを返します。「現在のテストコンテキスト」はスレッド"
+"ローカルなオブジェクトです。もしテストの中で新しいスレッドを作らない場合はテ"
+"ストコンテキストを気にする必要はありません。新しいスレッドを作る場合だけ必要"
+"になります。テストのスレッドが持っている「現在のテストコンテキスト」を新しく"
+"作ったスレッドに渡す必要がありません。"
 
-#: xml/cutter.xml:325(programlisting)
+#: xml/cutter.xml:327(programlisting)
 #, no-wrap
 msgid ""
 "\n"
@@ -8189,38 +8270,45 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: xml/cutter.xml:349(simpara)
+#: xml/cutter.xml:351(simpara)
 msgid "a <link linkend=\"CutTestContext\"><type>CutTestContext</type></link>."
 msgstr ""
+"<link linkend=\"CutTestContext\"><type>CutTestContext</type></link>オブジェク"
+"ト。"
 
-#: xml/cutter.xml:355(title)
+#: xml/cutter.xml:357(title)
 msgid "cut_set_current_test_context()"
 msgstr ""
 
-#: xml/cutter.xml:356(programlisting)
+#: xml/cutter.xml:358(programlisting)
 #, no-wrap
 msgid "#define             cut_set_current_test_context(test_context)"
 msgstr ""
 
-#: xml/cutter.xml:357(para)
+#: xml/cutter.xml:359(para)
 msgid ""
 "Set <parameter>test_context</parameter> as the current test context. See "
 "<link linkend=\"cut-get-current-test-context"
 "\"><function>cut_get_current_test_context()</function></link> for more "
 "details."
-msgstr "現在のテストコンテキストを<parameter>test_context</parameter>にします。詳細は<link linkend=\"cut-get-current-test-context\"><function>cut_get_current_test_context()</function></link>を見てください。"
+msgstr ""
+"現在のテストコンテキストを<parameter>test_context</parameter>にします。詳細は"
+"<link linkend=\"cut-get-current-test-context"
+"\"><function>cut_get_current_test_context()</function></link>を見てください。"
 
-#: xml/cutter.xml:363(term)
+#: xml/cutter.xml:365(term)
 msgid "<parameter>test_context</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/cutter.xml:364(simpara)
+#: xml/cutter.xml:366(simpara)
 msgid ""
 "the <link linkend=\"CutTestContext\"><type>CutTestContext</type></link> to "
-"be the current test context"
+"be the current test context."
 msgstr ""
+"現在のテストコンテキストになる<link linkend=\"CutTestContext"
+"\"><type>CutTestContext</type></link>。"
 
-#: xml/cutter.xml:374(title)
+#: xml/cutter.xml:377(title)
 msgid "See Also"
 msgstr "参考"
 
@@ -9665,7 +9753,9 @@ msgstr ""
 msgid ""
 "Passes ownership of <parameter>hash_table</parameter> to Cutter and returns "
 "<parameter>hash_table</parameter>."
-msgstr "<parameter>hash_table</parameter>の所有権をCutterに渡し、<parameter>hash_table</parameter>を返します。"
+msgstr ""
+"<parameter>hash_table</parameter>の所有権をCutterに渡し、"
+"<parameter>hash_table</parameter>を返します。"
 
 #: xml/gcut-test-utils.xml:115(simpara)
 msgid "the GHashTable * to be owned by Cutter."
@@ -9738,6 +9828,8 @@ msgid ""
 "Creates a hash table that has string key and string value from passed key/"
 "value pairs."
 msgstr ""
+"引数で指定されたキーと値のペアから、文字列のキーと値を持つハッシュテーブルを"
+"作成します。"
 
 #: xml/gcut-test-utils.xml:163(term)
 msgid "<parameter>key</parameter>&nbsp;:"
@@ -9751,14 +9843,17 @@ msgstr "最初のキー文字列。"
 msgid ""
 "The string value of the first key, followed optionally by more key/value "
 "pairs."
-msgstr ""
+msgstr "最初のキーに対応する値（文字列）。以降、キーと値のペアを指定る。"
 
 #: xml/gcut-test-utils.xml:170(simpara)
 msgid ""
 "a newly-allocated GHashTable * that contains passed key/value pairs and must "
 "be freed with <link linkend=\"g-hash-table-unref"
 "\"><function>g_hash_table_unref()</function></link>."
-msgstr "渡されたキー・値を持つハッシュテーブル（GHashTable *）。<link linkend=\"g-hash-table-unref\"><function>g_hash_table_unref()</function></link>で開放してください。"
+msgstr ""
+"渡されたキー・値を持つハッシュテーブル（GHashTable *）。<link linkend=\"g-"
+"hash-table-unref\"><function>g_hash_table_unref()</function></link>で開放して"
+"ください。"
 
 #: xml/gcut-value-equal.xml:7(refentrytitle)
 #: xml/gcut-value-equal.xml:13(refname)

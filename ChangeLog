@@ -1,5 +1,9 @@
 2008-08-26  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cutter.h, cutter/cut-multi-process.h: fix typos.
+
+	* doc/reference/ja.po: update.
+
 	* cutter/cut-pipeline.c
 	(create_command_line_args_from_parameters): support --fatal-failures.
 

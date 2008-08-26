@@ -32,7 +32,7 @@ extern "C" {
  * @short_description: Utilities to run your tests on multi
  * processes.
  *
- * If your test target support multi-process and/or
+ * If your test target supports multi-process and/or
  * multi-thread, you need to test them. You can use
  * #CutSubProcess and #CutSubProcessGroup to do it.
  *
@@ -54,13 +54,13 @@ extern "C" {
  * sub cutter process's parameters and results of sub cutter
  * process.
  *
- * Here is an example:
+ * e.g.:
  * |[
- *    CutSubProcess *sub_process;
+ * CutSubProcess *sub_process;
  *
- *    sub_process = cut_take_new_sub_process("test-dir");
- *    cut_sub_process_set_multi_thread(sub_process, TRUE);
- *    cut_assert_true(cut_sub_process_run(sub_process));
+ * sub_process = cut_take_new_sub_process("test-dir");
+ * cut_sub_process_set_multi_thread(sub_process, TRUE);
+ * cut_assert_true(cut_sub_process_run(sub_process));
  * ]|
  *
  * Since: 1.0.4
@@ -73,20 +73,20 @@ typedef struct _CutSubProcess      CutSubProcess;
  * An object to run sub cutter processes. This is just for
  * convenience.
  *
- * Here is an example:
+ * e.g.:
  * |[
- *    CutSubProcess *sub_process1, *sub_process2, *sub_process3;
- *    CutSubProcessGroup *group;
+ * CutSubProcess *sub_process1, *sub_process2, *sub_process3;
+ * CutSubProcessGroup *group;
  *
- *    sub_process1 = cut_take_new_sub_process("test-dir1");
- *    sub_process2 = cut_take_new_sub_process("test-dir2");
- *    sub_process3 = cut_take_new_sub_process("test-dir3");
+ * sub_process1 = cut_take_new_sub_process("test-dir1");
+ * sub_process2 = cut_take_new_sub_process("test-dir2");
+ * sub_process3 = cut_take_new_sub_process("test-dir3");
  *
- *    group = cut_take_new_sub_process_group();
- *    cut_sub_process_group_add(group, sub_process1);
- *    cut_sub_process_group_add(group, sub_process2);
- *    cut_sub_process_group_add(group, sub_process3);
- *    cut_assert_true(cut_sub_process_group_run(group));
+ * group = cut_take_new_sub_process_group();
+ * cut_sub_process_group_add(group, sub_process1);
+ * cut_sub_process_group_add(group, sub_process2);
+ * cut_sub_process_group_add(group, sub_process3);
+ * cut_assert_true(cut_sub_process_group_run(group));
  * ]|
  *
  * Since: 1.0.4
@@ -285,11 +285,11 @@ void           cut_sub_process_set_exclude_files  (CutSubProcess  *sub_process,
  * cut_sub_process_get_exclude_directories:
  * @sub_process: a #CutSubProcess.
  *
- * Returns file names that are excluded from target test
- * directories.
+ * Returns directory names that are excluded from target
+ * test directories.
  *
- * Returns: file names that are excluded from target test
- * directories.
+ * Returns: directory names that are excluded from target
+ * test directories.
  *
  * Since: 1.0.4
  */
@@ -299,11 +299,11 @@ const char   **cut_sub_process_get_exclude_directories
 /**
  * cut_sub_process_set_exclude_directories:
  * @sub_process: a #CutSubProcess.
- * @directories: file names that are excluded from target test
- * directories.
+ * @directories: directory names that are excluded from
+ * target test directories.
  *
- * Sets file names that are excluded from target test
- * directories. This is same as --exclude-file command line
+ * Sets directory names that are excluded from target test
+ * directories. This is same as --exclude-directory command line
  * option.
  *
  * Since: 1.0.4

@@ -299,11 +299,13 @@ void shutdown(void);
  *
  * Returns the current test context. The current test
  * context is a thread local object. It means that you don't
- * need to use this if you don't create a new thread in your
- * test. This is only needed to use if you create a new
+ * need to care this if you don't create a new thread in your
+ * test. This is only needed to care if you create a new
  * thread. You need to pass the current test context in your
- * test to the current test context in a created thread:
+ * test thread to the current test context in a created
+ * thread.
  *
+ * e.g.:
  * |[
  * int
  * your_thread_function(void *data)
@@ -335,7 +337,8 @@ void shutdown(void);
 
 /**
  * cut_set_current_test_context:
- * @test_context: the #CutTestContext to be the current test context
+ * @test_context: the #CutTestContext to be the current test
+ * context.
  *
  * Set @test_context as the current test context. See
  * cut_get_current_test_context() for more details.
