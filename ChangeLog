@@ -1,5 +1,7 @@
 2008-08-26  Kouhei Sutou  <kou@cozmixng.org>
 
+	* module/stream/cut-xml-stream-factory.c: tm_mon is 0-11!!!
+
 	* test/lib/Makefile.am: add cuttest-event-receiver.[ch].
 
 	* test/Makefile.am: test_cut_stream_parser.so use
