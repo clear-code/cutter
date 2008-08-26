@@ -1,5 +1,7 @@
 2008-08-26  Kouhei Sutou  <kou@cozmixng.org>
 
+	* TODO: add: use imagehlp.h on Windows.
+
 	* cutter/cut-sub-process.c, cutter/cut-multi-process.h
 	(cut_sub_process_get_backtrace): remove.
 
