@@ -468,7 +468,7 @@ cut_boolean    cut_sub_process_group_run          (CutSubProcessGroup  *group);
 void           cut_sub_process_group_run_async    (CutSubProcessGroup  *group);
 
 /**
- * cut_sub_process_group_run:
+ * cut_sub_process_group_wait:
  * @group: a #CutSubProcessGroup.
  *
  * Waits for all sub cutter processes of @group that are ran

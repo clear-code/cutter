@@ -1,5 +1,7 @@
 2008-08-26  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/ja.po: update.
+
 	* cutter/cut-sub-process.c (cut_sub_process_is_multi_thread): remove.
 
 	* cutter/cut-multi-process.h: document.
