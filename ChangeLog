@@ -1,5 +1,11 @@
 2008-08-26  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-file-stream-reader.c, cutter/cut-pipeline.c: use
+	cut_stream_reader_watch_io_channel().
+
+	* cutter/cut-stream-reader.[ch]
+	(cut_stream_reader_watch_io_channel): add.
+
 	* module/ui/cut-console-ui.c (cb_error, cb_crashed): check verbose level.
 
 2008-08-25  Kouhei Sutou  <kou@cozmixng.org>

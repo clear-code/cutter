@@ -34,6 +34,8 @@ typedef struct _CutFileStreamReaderPrivate	CutFileStreamReaderPrivate;
 struct _CutFileStreamReaderPrivate
 {
     gchar *file_name;
+    GIOChannel *channel;
+    guint watch_source_id;
 };
 
 enum
@@ -92,6 +94,8 @@ cut_file_stream_reader_init (CutFileStreamReader *file_stream_reader)
     priv = CUT_FILE_STREAM_READER_GET_PRIVATE(file_stream_reader);
 
     priv->file_name = NULL;
+    priv->channel = NULL;
+    priv->watch_source_id = 0;
 }
 
 static void
@@ -112,12 +116,27 @@ free_file_name (CutFileStreamReaderPrivate *priv)
 }
 
 static void
+remove_watch_func (CutFileStreamReaderPrivate *priv)
+{
+    g_source_remove(priv->watch_source_id);
+    priv->watch_source_id = 0;
+}
+
+static void
 dispose (GObject *object)
 {
     CutFileStreamReaderPrivate *priv;
 
     priv = CUT_FILE_STREAM_READER_GET_PRIVATE(object);
     free_file_name(priv);
+
+    if (priv->watch_source_id)
+        remove_watch_func(priv);
+
+    if (priv->channel) {
+        g_io_channel_unref(priv->channel);
+        priv->channel = NULL;
+    }
 
     G_OBJECT_CLASS(cut_file_stream_reader_parent_class)->dispose(object);
 }
@@ -196,23 +215,24 @@ emit_complete_signal (CutFileStreamReader *file_stream_reader, gboolean success)
 static void
 runner_run_async (CutRunner *runner)
 {
+    CutStreamReader *stream_reader;
     CutFileStreamReader *file_stream_reader;
     CutFileStreamReaderPrivate *priv;
-    GIOChannel *channel;
     GError *error = NULL;
 
     file_stream_reader = CUT_FILE_STREAM_READER(runner);
+    stream_reader = CUT_STREAM_READER(file_stream_reader);
     priv = CUT_FILE_STREAM_READER_GET_PRIVATE(file_stream_reader);
-    channel = g_io_channel_new_file(priv->file_name, "r", &error);
+    priv->channel = g_io_channel_new_file(priv->file_name, "r", &error);
     if (error) {
         emit_error(file_stream_reader, CUT_FILE_STREAM_READER_ERROR_FILE, error,
                    "can't open file: %s", priv->file_name);
         return;
     }
 
-    cut_stream_reader_read_from_io_channel(CUT_STREAM_READER(file_stream_reader),
-                                           channel);
-    g_io_channel_unref(channel);
+    g_io_channel_set_close_on_unref(priv->channel, TRUE);
+    priv->watch_source_id = cut_stream_reader_watch_io_channel(stream_reader,
+                                                               priv->channel);
 }
 
 /*

@@ -111,10 +111,69 @@ cut_stream_reader_error_quark (void)
     cut_run_context_emit_complete_run(_run_context, FALSE);             \
 } while (0)
 
+static gboolean
+watch_func (GIOChannel *channel, GIOCondition condition, gpointer data)
+{
+    CutStreamReader *stream_reader = data;
+    gboolean keep_callback = TRUE;
+
+    if (!CUT_IS_STREAM_READER(data))
+        return FALSE;
+
+    if (condition & G_IO_IN ||
+        condition & G_IO_PRI) {
+        keep_callback = cut_stream_reader_read_from_io_channel(stream_reader,
+                                                               channel);
+    }
+
+    if (cut_run_context_is_completed(CUT_RUN_CONTEXT(stream_reader)))
+        return FALSE;
+
+    if (condition & G_IO_ERR ||
+        condition & G_IO_HUP ||
+        condition & G_IO_NVAL) {
+        GArray *messages;
+        gchar *message;
+
+        messages = g_array_new(TRUE, TRUE, sizeof(gchar *));
+        if (condition & G_IO_ERR) {
+            message = "Error";
+            g_array_append_val(messages, message);
+        }
+        if (condition & G_IO_HUP) {
+            message = "Hung up";
+            g_array_append_val(messages, message);
+        }
+        if (condition & G_IO_NVAL) {
+            message = "Invalid request";
+            g_array_append_val(messages, message);
+        }
+        message = g_strjoinv(" | ", (gchar **)(messages->data));
+        emit_error(stream_reader,
+                   CUT_STREAM_READER_ERROR_IO_ERROR, NULL,
+                   "%s", message);
+        g_free(message);
+        g_array_free(messages, TRUE);
+        keep_callback = FALSE;
+    }
+
+    return keep_callback;
+}
+
+guint
+cut_stream_reader_watch_io_channel (CutStreamReader *stream_reader,
+                                    GIOChannel      *channel)
+{
+    return g_io_add_watch(channel,
+                          G_IO_IN | G_IO_PRI |
+                          G_IO_ERR | G_IO_HUP | G_IO_NVAL,
+                          watch_func, stream_reader);
+}
+
 #define BUFFER_SIZE 4096
 gboolean
 cut_stream_reader_read_from_io_channel (CutStreamReader *stream_reader,
-                                        GIOChannel *channel)
+                                        GIOChannel      *channel)
 {
     CutStreamReaderPrivate *priv;
 

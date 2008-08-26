@@ -52,7 +52,8 @@ typedef enum
 {
     CUT_STREAM_READER_ERROR_READ,
     CUT_STREAM_READER_ERROR_PARSE,
-    CUT_STREAM_READER_ERROR_END_PARSE
+    CUT_STREAM_READER_ERROR_END_PARSE,
+    CUT_STREAM_READER_ERROR_IO_ERROR
 } CutStreamReaderError;
 
 GQuark         cut_stream_reader_error_quark(void);
@@ -61,9 +62,12 @@ GType          cut_stream_reader_get_type  (void) G_GNUC_CONST;
 
 CutRunContext *cut_stream_reader_new       (void);
 
+guint          cut_stream_reader_watch_io_channel
+                                           (CutStreamReader *stream_reader,
+                                            GIOChannel      *channel);
 gboolean       cut_stream_reader_read_from_io_channel
                                            (CutStreamReader *stream_reader,
-                                            GIOChannel *channel);
+                                            GIOChannel      *channel);
 gboolean       cut_stream_reader_read      (CutStreamReader *stream_reader,
                                             const gchar     *stream,
                                             gsize            length);
