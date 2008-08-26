@@ -59,13 +59,6 @@
 
 #define CRASH_COLOR RED_BACK_COLOR WHITE_COLOR
 
-typedef struct _Error Error;
-struct _Error
-{
-    gchar *name;
-    gchar *detail;
-};
-
 typedef struct _CutConsoleUI CutConsoleUI;
 typedef struct _CutConsoleUIClass CutConsoleUIClass;
 
@@ -244,28 +237,6 @@ CUT_MODULE_IMPL_INSTANTIATE (const gchar *first_property, va_list var_args)
     return g_object_new_valist(CUT_TYPE_CONSOLE_UI, first_property, var_args);
 }
 
-static Error *
-error_new (const gchar *name, const gchar *detail)
-{
-    Error *error;
-
-    error = g_slice_new(Error);
-    error->name = g_strdup(name);
-    error->detail = g_strdup(detail);
-
-    return error;
-}
-
-static void
-error_free (Error *error)
-{
-    if (error->name)
-        g_free(error->name);
-    if (error->detail)
-        g_free(error->detail);
-    g_slice_free(Error, error);
-}
-
 static void
 dispose (GObject *object)
 {
@@ -274,7 +245,7 @@ dispose (GObject *object)
     console = CUT_CONSOLE_UI(object);
 
     if (console->errors) {
-        g_list_foreach(console->errors, (GFunc)error_free, NULL);
+        g_list_foreach(console->errors, (GFunc)g_error_free, NULL);
         g_list_free(console->errors);
         console->errors = NULL;
     }
@@ -691,11 +662,18 @@ print_results (CutConsoleUI *console, CutRunContext *run_context)
 
     i = 1;
     for (node = console->errors; node; node = g_list_next(node)) {
-        Error *error = node->data;
+        GError *error = node->data;
 
         g_print("\n%d) ", i);
         print_for_status(console, CUT_TEST_RESULT_ERROR,
-                         "SystemError: %s: %s", error->name, error->detail);
+                         "SystemError: %s:%d",
+                         g_quark_to_string(error->domain),
+                         error->code);
+        if (error->message) {
+            g_print("\n");
+            print_for_status(console, CUT_TEST_RESULT_ERROR,
+                             "%s", error->message);
+        }
         g_print("\n");
         i++;
     }
@@ -817,15 +795,14 @@ cb_complete_run (CutRunContext *run_context, gboolean success,
 }
 
 static void
-cb_error (CutRunContext *run_context, const gchar *name, const gchar *detail,
-          CutConsoleUI *console)
+cb_error (CutRunContext *run_context, GError *error, CutConsoleUI *console)
 {
     if (console->verbose_level >= CUT_VERBOSE_LEVEL_NORMAL) {
         print_with_color(console, status_to_color(CUT_TEST_RESULT_ERROR), "E");
         fflush(stdout);
     }
 
-    console->errors = g_list_append(console->errors, error_new(name, detail));
+    console->errors = g_list_append(console->errors, g_error_copy(error));
 }
 
 static void

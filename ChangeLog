@@ -1,5 +1,7 @@
 2008-08-26  Kouhei Sutou  <kou@cozmixng.org>
 
+	* module/ui/cut-console-ui.c: fix error signal handling.
+
 	* cutter/cut-run-context.[ch]: add fatal failures mode.
 
 	* cutter/cut-test-context.[ch]: abort() or G_BREAKPOINT() on
