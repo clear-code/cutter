@@ -469,15 +469,6 @@ cut_sub_process_is_crashed (CutSubProcess  *sub_process)
     return cut_run_context_is_crashed(pipeline);
 }
 
-const char *
-cut_sub_process_get_backtrace (CutSubProcess  *sub_process)
-{
-    CutRunContext *pipeline;
-
-    pipeline = CUT_SUB_PROCESS_GET_PRIVATE(sub_process)->pipeline;
-    return cut_run_context_get_backtrace(pipeline);
-}
-
 gboolean
 cut_sub_process_get_fatal_failures (CutSubProcess  *sub_process)
 {

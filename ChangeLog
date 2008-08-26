@@ -1,5 +1,8 @@
 2008-08-26  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-sub-process.c, cutter/cut-multi-process.h
+	(cut_sub_process_get_backtrace): remove.
+
 	* TODO: remove: stress test. (N processes and N threads).
 
 	* doc/reference/ja.po, po/ja.po, po/POTFILES.in: update.

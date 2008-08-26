@@ -404,19 +404,6 @@ double         cut_sub_process_get_total_elapsed  (CutSubProcess  *sub_process);
 cut_boolean    cut_sub_process_is_crashed         (CutSubProcess  *sub_process);
 
 /**
- * cut_sub_process_get_backtrace:
- * @sub_process: a #CutSubProcess.
- *
- * Returns the backtrace on @sub_process is crashed.
- *
- * Returns: the backtrace if @sub_process could get it, NULL
- * otherwise.
- *
- * Since: 1.0.4
- */
-const char    *cut_sub_process_get_backtrace      (CutSubProcess  *sub_process);
-
-/**
  * cut_sub_process_get_fatal_failures:
  * @sub_process: a #CutSubProcess.
  *
