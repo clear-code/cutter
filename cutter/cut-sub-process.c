@@ -346,15 +346,6 @@ cut_sub_process_set_source_directory (CutSubProcess  *sub_process,
 }
 
 gboolean
-cut_sub_process_is_multi_thread (CutSubProcess  *sub_process)
-{
-    CutRunContext *pipeline;
-
-    pipeline = CUT_SUB_PROCESS_GET_PRIVATE(sub_process)->pipeline;
-    return cut_run_context_is_multi_thread(pipeline);
-}
-
-gboolean
 cut_sub_process_get_multi_thread (CutSubProcess  *sub_process)
 {
     CutRunContext *pipeline;

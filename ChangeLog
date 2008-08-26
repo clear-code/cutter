@@ -1,5 +1,9 @@
 2008-08-26  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-sub-process.c (cut_sub_process_is_multi_thread): remove.
+
+	* cutter/cut-multi-process.h: document.
+
 	* module/ui/cut-console-ui-factory.c: move guessing progress row
 	max value to ...
 	* module/ui/cut-console-ui.c: ... here.
