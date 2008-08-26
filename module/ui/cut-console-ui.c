@@ -76,6 +76,8 @@ struct _CutConsoleUI
     gboolean      use_color;
     CutVerboseLevel verbose_level;
     GList        *errors;
+    gint          progress_row;
+    gint          progress_row_max;
 };
 
 struct _CutConsoleUIClass
@@ -140,12 +142,33 @@ class_init (CutConsoleUIClass *klass)
     g_object_class_install_property(gobject_class, PROP_VERBOSE_LEVEL, spec);
 }
 
+static gint
+guess_term_width (void)
+{
+    gint term_width = 0;
+    const gchar *term_width_env;
+
+    term_width_env = g_getenv("TERM_WIDTH");
+    if (term_width_env)
+        term_width = atoi(term_width_env);
+
+    if (term_width == -1)
+        return -1;
+
+    if (term_width <= 0)
+        term_width = 79;
+
+    return term_width;
+}
+
 static void
 init (CutConsoleUI *console)
 {
     console->use_color = FALSE;
     console->verbose_level = CUT_VERBOSE_LEVEL_NORMAL;
     console->errors = NULL;
+    console->progress_row = 0;
+    console->progress_row_max = guess_term_width();
 }
 
 static void
@@ -413,6 +436,21 @@ print_for_status (CutConsoleUI *console, CutTestResultStatus status,
 }
 
 static void
+print_progress (CutConsoleUI *console, CutTestResultStatus status,
+                gchar const *mark)
+{
+    print_with_color(console, status_to_color(status), "%s", mark);
+
+    console->progress_row += strlen(mark);
+    if (console->progress_row >= console->progress_row_max) {
+        if (console->progress_row_max != -1 &&
+            console->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
+            g_print("\n");
+        console->progress_row = 0;
+    }
+}
+
+static void
 cb_start_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
                      CutConsoleUI *console)
 {
@@ -509,7 +547,7 @@ cb_success_test (CutRunContext  *run_context,
 {
     if (console->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
-    print_for_status(console, CUT_TEST_RESULT_SUCCESS, ".");
+    print_progress(console, CUT_TEST_RESULT_SUCCESS, ".");
     fflush(stdout);
 }
 
@@ -522,7 +560,7 @@ cb_notification_test (CutRunContext  *run_context,
 {
     if (console->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
-    print_for_status(console, CUT_TEST_RESULT_NOTIFICATION, "N");
+    print_progress(console, CUT_TEST_RESULT_NOTIFICATION, "N");
     fflush(stdout);
 }
 
@@ -535,7 +573,7 @@ cb_omission_test (CutRunContext  *run_context,
 {
     if (console->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
-    print_for_status(console, CUT_TEST_RESULT_OMISSION, "O");
+    print_progress(console, CUT_TEST_RESULT_OMISSION, "O");
     fflush(stdout);
 }
 
@@ -548,7 +586,7 @@ cb_pending_test (CutRunContext  *run_context,
 {
     if (console->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
-    print_for_status(console, CUT_TEST_RESULT_PENDING, "P");
+    print_progress(console, CUT_TEST_RESULT_PENDING, "P");
     fflush(stdout);
 }
 
@@ -561,7 +599,7 @@ cb_failure_test (CutRunContext  *run_context,
 {
     if (console->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
-    print_for_status(console, CUT_TEST_RESULT_FAILURE, "F");
+    print_progress(console, CUT_TEST_RESULT_FAILURE, "F");
     fflush(stdout);
 }
 
@@ -574,7 +612,7 @@ cb_error_test (CutRunContext  *run_context,
 {
     if (console->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
-    print_for_status(console, CUT_TEST_RESULT_ERROR, "E");
+    print_progress(console, CUT_TEST_RESULT_ERROR, "E");
     fflush(stdout);
 }
 

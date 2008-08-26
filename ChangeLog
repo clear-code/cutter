@@ -1,5 +1,7 @@
 2008-08-26  Kouhei Sutou  <kou@cozmixng.org>
 
+	* module/ui/cut-console-ui.c: fold progress marks.
+
 	* test/test-cut-file-stream-reader.c,
 	test/fixtures/file-stream-reader/, test/fixtures/Makefile.am: add
 	tests for file stream reader.
