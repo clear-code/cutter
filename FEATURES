@@ -18,6 +18,7 @@ Cutter also has many useful advanced features:
   * Coverage support
   * Backtrace on crash
   * Serialize/deserialize test result
+  * Multi-process/multi-thread support
   * ...
 
 == Basic

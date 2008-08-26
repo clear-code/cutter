@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Cutter 1.0.3\n"
+"Project-Id-Version: Cutter 1.0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-15 14:32+0900\n"
-"PO-Revision-Date: 2008-07-14 07:45+0900\n"
+"POT-Creation-Date: 2008-08-26 15:44+0900\n"
+"PO-Revision-Date: 2008-08-26 16:40+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -16,42 +16,64 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: cutter/cut-main.c:85
+#: cutter/cut-main.c:101
+#, c-format
+msgid "Invalid run mode: %s"
+msgstr "不正な実行モードです: %s"
+
+#: cutter/cut-main.c:122
 #, c-format
 msgid "Invalid test case order value: %s"
 msgstr "不正なテストケース順序指定です: %s"
 
-#: cutter/cut-main.c:95
+#: cutter/cut-main.c:132
 msgid "Show version"
 msgstr "バージョンを表示"
 
-#: cutter/cut-main.c:97
+#: cutter/cut-main.c:134
+msgid "Set run mode (default: test)"
+msgstr "実行モードを設定（既定値: test）"
+
+#: cutter/cut-main.c:136
 msgid "Set directory of source code"
 msgstr "ソースコードのディレクトリを設定"
 
-#: cutter/cut-main.c:99
+#: cutter/cut-main.c:138
 msgid "Specify tests"
 msgstr "テストを指定"
 
-#: cutter/cut-main.c:101
+#: cutter/cut-main.c:140
 msgid "Specify test cases"
 msgstr "テストケースを指定"
 
-#: cutter/cut-main.c:103
+#: cutter/cut-main.c:142
 msgid "Run test cases with multi-thread"
 msgstr "マルチスレッドでテストケースを実行"
 
-#: cutter/cut-main.c:105
+#: cutter/cut-main.c:144
 msgid "Sort test case by. Default is 'none'."
 msgstr "テストケースを並び替える。既定値は'none'（並び替えない）"
 
-#: cutter/cut-main.c:107
+#: cutter/cut-main.c:146
 msgid "Skip files"
 msgstr "ファイルをスキップ"
 
-#: cutter/cut-main.c:109
+#: cutter/cut-main.c:148
 msgid "Skip directories"
 msgstr "ディレクトリをスキップ"
+
+#: cutter/cut-main.c:150
+msgid "Treat failures as fatal problem"
+msgstr "失敗を致命的な問題として扱う"
+
+#: cutter/cut-main.c:198
+#, c-format
+msgid ""
+"TEST_DIRECTORY\n"
+"  %s --mode=analyze %s LOG_DIRECTORY"
+msgstr ""
+"テストディレクトリ\n"
+"  %s --mode=analyze %s ログディレクトリ"
 
 #: cutter/cut-report-factory-builder.c:197
 #, c-format
@@ -66,35 +88,47 @@ msgstr "レポートのオプション"
 msgid "Show report options"
 msgstr "レポートのオプションを表示"
 
-#: cutter/cut-streamer-factory-builder.c:149
-msgid "Specify streamer"
-msgstr "ストリーマを指定"
+#: cutter/cut-stream-factory-builder.c:151
+msgid "Specify stream"
+msgstr "ストリームを指定"
 
-#: cutter/cut-streamer-factory-builder.c:174
-msgid "Streamer Options"
-msgstr "ストリーマのオプション"
+#: cutter/cut-stream-factory-builder.c:153
+msgid "Stream to FILE_DESCRIPTOR (default: stdout)"
+msgstr "ストリームをFILE_DESCRIPTORに出力（既定値: stdout）"
 
-#: cutter/cut-streamer-factory-builder.c:175
-msgid "Show streamer options"
-msgstr "ストリーマのオプションを表示"
+#: cutter/cut-stream-factory-builder.c:155
+msgid "Stream to a file under DIRECTORY (default: none)"
+msgstr "ストリームをDIRECTORY以下のファイルに出力（既定値: 無し）"
 
-#: cutter/cut-ui-factory-builder.c:113
+#: cutter/cut-stream-factory-builder.c:180
+msgid "Stream Options"
+msgstr "ストリームのオプション"
+
+#: cutter/cut-stream-factory-builder.c:181
+msgid "Show stream options"
+msgstr "ストリームのオプションを表示"
+
+#: cutter/cut-test-context.c:812
+msgid "Treat a failure as a fatal problem, aborting."
+msgstr "失敗を致命的な問題として扱い、異常終了しています。"
+
+#: cutter/cut-ui-factory-builder.c:115
 msgid "Specify UI"
 msgstr "UIを指定"
 
-#: cutter/cut-ui-factory-builder.c:138
+#: cutter/cut-ui-factory-builder.c:140
 msgid "UI Options"
 msgstr "UIのオプション"
 
-#: cutter/cut-ui-factory-builder.c:139
+#: cutter/cut-ui-factory-builder.c:141
 msgid "Show UI options"
 msgstr "コンソールUIのオプションの表示"
 
-#: module/report/cut-pdf-report-factory.c:248
+#: module/report/cut-pdf-report-factory.c:250
 msgid "PDF Report Options"
 msgstr "PDFレポートのオプション"
 
-#: module/report/cut-pdf-report-factory.c:249
+#: module/report/cut-pdf-report-factory.c:251
 msgid "Show PDF report options"
 msgstr "PDFレポートのオプションを表示"
 
@@ -106,36 +140,32 @@ msgstr "XMLレポートのオプション"
 msgid "Show XML report options"
 msgstr "XMLレポートのオプションを表示"
 
-#: module/streamer/cut-xml-streamer-factory.c:149
-msgid "Stream to FILE_DESCRIPTOR (default: stdout)"
-msgstr "ストリームをFILE_DESCRIPTORに出力 (デフォルト: stdout)"
+#: module/stream/cut-xml-stream-factory.c:246
+msgid "XML Stream Options"
+msgstr "XMLストリームのオプション"
 
-#: module/streamer/cut-xml-streamer-factory.c:157
-msgid "XML Streamer Options"
-msgstr "XMLストリーマのオプション"
+#: module/stream/cut-xml-stream-factory.c:247
+msgid "Show XML stream options"
+msgstr "XMLストリームのオプションを表示"
 
-#: module/streamer/cut-xml-streamer-factory.c:158
-msgid "Show XML streamer options"
-msgstr "XMLストリーマのオプションを表示"
-
-#: module/ui/cut-console-ui-factory.c:281
+#: module/ui/cut-console-ui-factory.c:307
 #, c-format
 msgid "Invalid color value: %s"
 msgstr "不正な色指定です: %s"
 
-#: module/ui/cut-console-ui-factory.c:306
+#: module/ui/cut-console-ui-factory.c:332
 msgid "Set verbose level"
 msgstr "詳細度を設定"
 
-#: module/ui/cut-console-ui-factory.c:308
+#: module/ui/cut-console-ui-factory.c:334
 msgid "Output log with colors"
 msgstr "色付きでログを出力"
 
-#: module/ui/cut-console-ui-factory.c:317
+#: module/ui/cut-console-ui-factory.c:343
 msgid "Console UI Options"
 msgstr "コンソールUIのオプション"
 
-#: module/ui/cut-console-ui-factory.c:318
+#: module/ui/cut-console-ui-factory.c:344
 msgid "Show console UI options"
 msgstr "コンソールUIのオプションの表示"
 

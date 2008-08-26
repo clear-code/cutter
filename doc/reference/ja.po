@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.0.3\n"
-"POT-Creation-Date: 2008-08-26 15:42+0900\n"
-"PO-Revision-Date: 2008-08-26 15:42+0900\n"
+"POT-Creation-Date: 2008-08-26 16:33+0900\n"
+"PO-Revision-Date: 2008-08-26 16:43+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -768,7 +768,8 @@ msgstr ""
 #: xml/cut-assertions.xml:559(para) xml/cut-assertions.xml:658(para)
 #: xml/cut-assertions.xml:748(para) xml/cut-experimental.xml:54(para)
 #: xml/cut-experimental.xml:82(para) xml/cut-experimental.xml:114(para)
-#: xml/cut-experimental.xml:143(para) xml/cutter.xml:193(para)
+#: xml/cut-experimental.xml:143(para) xml/cut-multi-process.xml:112(para)
+#: xml/cut-multi-process.xml:132(para) xml/cutter.xml:193(para)
 #: xml/cutter.xml:279(para) xml/cutter.xml:325(para)
 msgid "e.g.: <placeholder-1/>"
 msgstr "例: <placeholder-1/>"
@@ -3694,16 +3695,12 @@ msgstr ""
 #, no-wrap
 msgid ""
 "\n"
-"   CutSubProcess *sub_process;\n"
+"CutSubProcess *sub_process;\n"
 "\n"
-"   sub_process = cut_take_new_sub_process(\"test-dir\");\n"
-"   cut_sub_process_set_multi_thread(sub_process, TRUE);\n"
-"   cut_assert_true(cut_sub_process_run(sub_process));\n"
+"sub_process = cut_take_new_sub_process(\"test-dir\");\n"
+"cut_sub_process_set_multi_thread(sub_process, TRUE);\n"
+"cut_assert_true(cut_sub_process_run(sub_process));\n"
 msgstr ""
-
-#: xml/cut-multi-process.xml:112(para) xml/cut-multi-process.xml:132(para)
-msgid "Here is an example: <placeholder-1/>"
-msgstr "例: <placeholder-1/>"
 
 #: xml/cut-multi-process.xml:123(para) xml/cut-multi-process.xml:150(para)
 #: xml/cut-multi-process.xml:165(para) xml/cut-multi-process.xml:182(para)
@@ -3743,18 +3740,18 @@ msgstr ""
 #, no-wrap
 msgid ""
 "\n"
-"   CutSubProcess *sub_process1, *sub_process2, *sub_process3;\n"
-"   CutSubProcessGroup *group;\n"
+"CutSubProcess *sub_process1, *sub_process2, *sub_process3;\n"
+"CutSubProcessGroup *group;\n"
 "\n"
-"   sub_process1 = cut_take_new_sub_process(\"test-dir1\");\n"
-"   sub_process2 = cut_take_new_sub_process(\"test-dir2\");\n"
-"   sub_process3 = cut_take_new_sub_process(\"test-dir3\");\n"
+"sub_process1 = cut_take_new_sub_process(\"test-dir1\");\n"
+"sub_process2 = cut_take_new_sub_process(\"test-dir2\");\n"
+"sub_process3 = cut_take_new_sub_process(\"test-dir3\");\n"
 "\n"
-"   group = cut_take_new_sub_process_group();\n"
-"   cut_sub_process_group_add(group, sub_process1);\n"
-"   cut_sub_process_group_add(group, sub_process2);\n"
-"   cut_sub_process_group_add(group, sub_process3);\n"
-"   cut_assert_true(cut_sub_process_group_run(group));\n"
+"group = cut_take_new_sub_process_group();\n"
+"cut_sub_process_group_add(group, sub_process1);\n"
+"cut_sub_process_group_add(group, sub_process2);\n"
+"cut_sub_process_group_add(group, sub_process3);\n"
+"cut_assert_true(cut_sub_process_group_run(group));\n"
 msgstr ""
 
 #: xml/cut-multi-process.xml:153(title)
