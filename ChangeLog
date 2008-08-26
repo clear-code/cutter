@@ -1,5 +1,13 @@
 2008-08-26  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-file-stream-reader.c,
+	test/fixtures/file-stream-reader/, test/fixtures/Makefile.am: add
+	tests for file stream reader.
+
+	* test/Makefile.am: add test_cut_file_stream_reader.so.
+
+	* configure.ac: add test/fixtures/file-stream-reader/Makefile.
+
 	* module/stream/cut-xml-stream-factory.c: tm_mon is 0-11!!!
 
 	* test/lib/Makefile.am: add cuttest-event-receiver.[ch].

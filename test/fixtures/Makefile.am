@@ -7,4 +7,5 @@ SUBDIRS =			\
 	repository		\
 	sub-process		\
 	sub-process-group	\
-	xml-stream
+	xml-stream		\
+	file-stream-reader
