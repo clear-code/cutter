@@ -1,5 +1,7 @@
 2008-08-26  Kouhei Sutou  <kou@cozmixng.org>
 
+	* TODO: remove: stress test. (N processes and N threads).
+
 	* doc/reference/ja.po, po/ja.po, po/POTFILES.in: update.
 
 	* autogen.sh, configure.ac: don't use glib-gettextize. use only

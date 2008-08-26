@@ -1,11 +1,6 @@
 * priority mode.
 * auto-cutter.
 * gompertz curve.
-* stress test. (N processes and N threads)
-  * main test - cut_fork() -> sub test1 (multi thread mode)
-          |   -    ...     -> ...
-          |   - cut_fork() -> sub testN (multi thread mode)
-          +-> assert the above resutls
 * elapsed time assert. (compare with past elapsed time?)
 * test history chart.
   * N tests
