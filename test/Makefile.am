@@ -71,6 +71,9 @@ LIBS =							\
 	$(top_builddir)/test/lib/libcuttest_utils.la	\
 	$(GLIB_LIBS)
 
+EVENT_RECEIVER_LIBS = $(top_builddir)/test/lib/libcuttest_event_receiver.la
+
+
 test_cutter_la_SOURCES		= test-cutter.c
 test_cut_assertions_la_SOURCES  = test-cut-assertions.c
 test_gcut_assertions_la_SOURCES = test-gcut-assertions.c
@@ -95,6 +98,7 @@ test_cut_fork_la_SOURCES  	= test-cut-fork.c
 test_cut_process_la_SOURCES  	= test-cut-process.c
 test_cut_pipeline_la_SOURCES  	= test-cut-pipeline.c
 test_cut_stream_parser_la_SOURCES = test-cut-stream-parser.c
+test_cut_stream_parser_la_LIBADD = $(EVENT_RECEIVER_LIBS)
 test_cut_verbose_level_la_SOURCES = test-cut-verbose-level.c
 test_cut_test_context_la_SOURCES = test-cut-test-context.c
 test_cut_utils_la_SOURCES       = test-cut-utils.c

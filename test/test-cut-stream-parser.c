@@ -1,5 +1,6 @@
 #include <gcutter.h>
 #include <cutter/cut-stream-parser.h>
+#include "lib/cuttest-event-receiver.h"
 
 void test_start_run (void);
 void test_ready_test_suite (void);
@@ -26,661 +27,6 @@ void test_complete_run_without_success_tag (void);
 void test_complete_run_with_success_true (void);
 void test_complete_run_with_success_false (void);
 void test_crashed (void);
-
-#define CUTTEST_TYPE_EVENT_RECEIVER            (cuttest_event_receiver_get_type ())
-#define CUTTEST_EVENT_RECEIVER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUTTEST_TYPE_EVENT_RECEIVER, CuttestEventReceiver))
-#define CUTTEST_EVENT_RECEIVER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUTTEST_TYPE_EVENT_RECEIVER, CuttestEventReceiverClass))
-#define CUTTEST_IS_EVENT_RECEIVER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUTTEST_TYPE_EVENT_RECEIVER))
-#define CUTTEST_IS_EVENT_RECEIVER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUTTEST_TYPE_EVENT_RECEIVER))
-#define CUTTEST_EVENT_RECEIVER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUTTEST_TYPE_EVENT_RECEIVER, CuttestEventReceiverClass))
-
-typedef struct _CuttestEventReceiver      CuttestEventReceiver;
-typedef struct _CuttestEventReceiverClass CuttestEventReceiverClass;
-
-struct _CuttestEventReceiver
-{
-    CutRunContext object;
-
-    guint n_start_runs;
-    GList *ready_test_suites;
-    GList *start_test_suites;
-    GList *ready_test_cases;
-    GList *start_test_cases;
-    GList *ready_test_iterators;
-    GList *start_test_iterators;
-    GList *start_tests;
-    GList *start_iterated_tests;
-    GList *pass_assertions;
-    GList *complete_iterated_tests;
-    GList *complete_tests;
-    GList *complete_test_iterators;
-    GList *complete_test_cases;
-    GList *complete_test_suites;
-    GList *complete_runs;
-    GList *crasheds;
-};
-
-struct _CuttestEventReceiverClass
-{
-    CutRunContextClass parent_class;
-};
-
-GType          cuttest_event_receiver_get_type  (void) G_GNUC_CONST;
-
-static CutRunContext *cuttest_event_receiver_new       (void);
-
-G_DEFINE_TYPE(CuttestEventReceiver, cuttest_event_receiver, CUT_TYPE_RUN_CONTEXT)
-
-typedef struct _ReadyTestSuiteInfo
-{
-    CutTestSuite *test_suite;
-    guint n_test_cases;
-    guint n_tests;
-} ReadyTestSuiteInfo;
-
-static ReadyTestSuiteInfo *
-ready_test_suite_info_new (CutTestSuite *test_suite, guint n_test_cases,
-                           guint n_tests)
-{
-    ReadyTestSuiteInfo *info;
-
-    info = g_slice_new(ReadyTestSuiteInfo);
-    info->test_suite = test_suite;
-    if (info->test_suite)
-        g_object_ref(info->test_suite);
-    info->n_test_cases = n_test_cases;
-    info->n_tests = n_tests;
-
-    return info;
-}
-
-static void
-ready_test_suite_info_free (ReadyTestSuiteInfo *info)
-{
-    if (info->test_suite)
-        g_object_unref(info->test_suite);
-    g_slice_free(ReadyTestSuiteInfo, info);
-}
-
-typedef struct _ReadyTestCaseInfo
-{
-    CutTestCase *test_case;
-    guint n_tests;
-} ReadyTestCaseInfo;
-
-static ReadyTestCaseInfo *
-ready_test_case_info_new (CutTestCase *test_case, guint n_tests)
-{
-    ReadyTestCaseInfo *info;
-
-    info = g_slice_new(ReadyTestCaseInfo);
-    info->test_case = test_case;
-    if (info->test_case)
-        g_object_ref(info->test_case);
-    info->n_tests = n_tests;
-
-    return info;
-}
-
-static void
-ready_test_case_info_free (ReadyTestCaseInfo *info)
-{
-    if (info->test_case)
-        g_object_unref(info->test_case);
-    g_slice_free(ReadyTestCaseInfo, info);
-}
-
-typedef struct _ReadyTestIteratorInfo
-{
-    CutTestIterator *test_iterator;
-    guint n_tests;
-} ReadyTestIteratorInfo;
-
-static ReadyTestIteratorInfo *
-ready_test_iterator_info_new (CutTestIterator *test_iterator, guint n_tests)
-{
-    ReadyTestIteratorInfo *info;
-
-    info = g_slice_new(ReadyTestIteratorInfo);
-    info->test_iterator = test_iterator;
-    if (info->test_iterator)
-        g_object_ref(info->test_iterator);
-    info->n_tests = n_tests;
-
-    return info;
-}
-
-static void
-ready_test_iterator_info_free (ReadyTestIteratorInfo *info)
-{
-    if (info->test_iterator)
-        g_object_unref(info->test_iterator);
-    g_slice_free(ReadyTestIteratorInfo, info);
-}
-
-typedef struct _StartTestInfo
-{
-    CutTest *test;
-    CutTestContext *test_context;
-} StartTestInfo;
-
-static StartTestInfo *
-start_test_info_new (CutTest *test, CutTestContext *test_context)
-{
-    StartTestInfo *info;
-
-    info = g_slice_new(StartTestInfo);
-    info->test = test;
-    if (info->test)
-        g_object_ref(info->test);
-    info->test_context = test_context;
-    if (info->test_context)
-        g_object_ref(info->test_context);
-
-    return info;
-}
-
-static void
-start_test_info_free (StartTestInfo *info)
-{
-    if (info->test)
-        g_object_unref(info->test);
-    if (info->test_context)
-        g_object_unref(info->test_context);
-    g_slice_free(StartTestInfo, info);
-}
-
-typedef struct _StartIteratedTestInfo
-{
-    CutIteratedTest *iterated_test;
-    CutTestContext *test_context;
-} StartIteratedTestInfo;
-
-static StartIteratedTestInfo *
-start_iterated_test_info_new (CutIteratedTest *iterated_test,
-                              CutTestContext *test_context)
-{
-    StartIteratedTestInfo *info;
-
-    info = g_slice_new(StartIteratedTestInfo);
-    info->iterated_test = iterated_test;
-    if (info->iterated_test)
-        g_object_ref(info->iterated_test);
-    info->test_context = test_context;
-    if (info->test_context)
-        g_object_ref(info->test_context);
-
-    return info;
-}
-
-static void
-start_iterated_test_info_free (StartIteratedTestInfo *info)
-{
-    if (info->iterated_test)
-        g_object_unref(info->iterated_test);
-    if (info->test_context)
-        g_object_unref(info->test_context);
-    g_slice_free(StartIteratedTestInfo, info);
-}
-
-typedef struct _PassAssertionInfo
-{
-    CutTest *test;
-    CutTestContext *test_context;
-} PassAssertionInfo;
-
-static PassAssertionInfo *
-pass_assertion_info_new (CutTest *test, CutTestContext *test_context)
-{
-    PassAssertionInfo *info;
-
-    info = g_slice_new(PassAssertionInfo);
-    info->test = test;
-    if (info->test)
-        g_object_ref(info->test);
-    info->test_context = test_context;
-    if (info->test_context)
-        g_object_ref(info->test_context);
-
-    return info;
-}
-
-static void
-pass_assertion_info_free (PassAssertionInfo *info)
-{
-    if (info->test)
-        g_object_unref(info->test);
-    if (info->test_context)
-        g_object_unref(info->test_context);
-    g_slice_free(PassAssertionInfo, info);
-}
-
-typedef struct _CompleteIteratedTestInfo
-{
-    CutIteratedTest *iterated_test;
-    CutTestContext *test_context;
-} CompleteIteratedTestInfo;
-
-static CompleteIteratedTestInfo *
-complete_iterated_test_info_new (CutIteratedTest *iterated_test,
-                                 CutTestContext *test_context)
-{
-    CompleteIteratedTestInfo *info;
-
-    info = g_slice_new(CompleteIteratedTestInfo);
-    info->iterated_test = iterated_test;
-    if (info->iterated_test)
-        g_object_ref(info->iterated_test);
-    info->test_context = test_context;
-    if (info->test_context)
-        g_object_ref(info->test_context);
-
-    return info;
-}
-
-static void
-complete_iterated_test_info_free (CompleteIteratedTestInfo *info)
-{
-    if (info->iterated_test)
-        g_object_unref(info->iterated_test);
-    if (info->test_context)
-        g_object_unref(info->test_context);
-    g_slice_free(CompleteIteratedTestInfo, info);
-}
-
-typedef struct _CompleteTestInfo
-{
-    CutTest *test;
-    CutTestContext *test_context;
-} CompleteTestInfo;
-
-static CompleteTestInfo *
-complete_test_info_new (CutTest *test, CutTestContext *test_context)
-{
-    CompleteTestInfo *info;
-
-    info = g_slice_new(CompleteTestInfo);
-    info->test = test;
-    if (info->test)
-        g_object_ref(info->test);
-    info->test_context = test_context;
-    if (info->test_context)
-        g_object_ref(info->test_context);
-
-    return info;
-}
-
-static void
-complete_test_info_free (CompleteTestInfo *info)
-{
-    if (info->test)
-        g_object_unref(info->test);
-    if (info->test_context)
-        g_object_unref(info->test_context);
-    g_slice_free(CompleteTestInfo, info);
-}
-
-static void
-dispose (GObject *object)
-{
-    CuttestEventReceiver *receiver;
-
-    receiver = CUTTEST_EVENT_RECEIVER(object);
-
-    if (receiver->ready_test_suites) {
-        g_list_foreach(receiver->ready_test_suites,
-                       (GFunc)ready_test_suite_info_free, NULL);
-        g_list_free(receiver->ready_test_suites);
-        receiver->ready_test_suites = NULL;
-    }
-
-    if (receiver->start_test_suites) {
-        g_list_foreach(receiver->start_test_suites, (GFunc)g_object_unref, NULL);
-        g_list_free(receiver->start_test_suites);
-        receiver->start_test_suites = NULL;
-    }
-
-    if (receiver->ready_test_cases) {
-        g_list_foreach(receiver->ready_test_cases,
-                       (GFunc)ready_test_case_info_free, NULL);
-        g_list_free(receiver->ready_test_cases);
-        receiver->ready_test_cases = NULL;
-    }
-
-    if (receiver->start_test_cases) {
-        g_list_foreach(receiver->start_test_cases, (GFunc)g_object_unref, NULL);
-        g_list_free(receiver->start_test_cases);
-        receiver->start_test_cases = NULL;
-    }
-
-    if (receiver->ready_test_iterators) {
-        g_list_foreach(receiver->ready_test_iterators,
-                       (GFunc)ready_test_iterator_info_free, NULL);
-        g_list_free(receiver->ready_test_iterators);
-        receiver->ready_test_iterators = NULL;
-    }
-
-    if (receiver->start_test_iterators) {
-        g_list_foreach(receiver->start_test_iterators,
-                       (GFunc)g_object_unref, NULL);
-        g_list_free(receiver->start_test_iterators);
-        receiver->start_test_iterators = NULL;
-    }
-
-    if (receiver->start_tests) {
-        g_list_foreach(receiver->start_tests,
-                       (GFunc)start_test_info_free, NULL);
-        g_list_free(receiver->start_tests);
-        receiver->start_tests = NULL;
-    }
-
-    if (receiver->start_iterated_tests) {
-        g_list_foreach(receiver->start_iterated_tests,
-                       (GFunc)start_iterated_test_info_free, NULL);
-        g_list_free(receiver->start_iterated_tests);
-        receiver->start_iterated_tests = NULL;
-    }
-
-    if (receiver->pass_assertions) {
-        g_list_foreach(receiver->pass_assertions,
-                       (GFunc)pass_assertion_info_free, NULL);
-        g_list_free(receiver->pass_assertions);
-        receiver->pass_assertions = NULL;
-    }
-
-    if (receiver->complete_iterated_tests) {
-        g_list_foreach(receiver->complete_iterated_tests,
-                       (GFunc)complete_iterated_test_info_free, NULL);
-        g_list_free(receiver->complete_iterated_tests);
-        receiver->complete_iterated_tests = NULL;
-    }
-
-    if (receiver->complete_tests) {
-        g_list_foreach(receiver->complete_tests,
-                       (GFunc)complete_test_info_free, NULL);
-        g_list_free(receiver->complete_tests);
-        receiver->complete_tests = NULL;
-    }
-
-    if (receiver->complete_test_iterators) {
-        g_list_foreach(receiver->complete_test_iterators,
-                       (GFunc)g_object_unref, NULL);
-        g_list_free(receiver->complete_test_iterators);
-        receiver->complete_test_iterators = NULL;
-    }
-
-    if (receiver->complete_test_cases) {
-        g_list_foreach(receiver->complete_test_cases,
-                       (GFunc)g_object_unref, NULL);
-        g_list_free(receiver->complete_test_cases);
-        receiver->complete_test_cases = NULL;
-    }
-
-    if (receiver->complete_test_suites) {
-        g_list_foreach(receiver->complete_test_suites,
-                       (GFunc)g_object_unref, NULL);
-        g_list_free(receiver->complete_test_suites);
-        receiver->complete_test_suites = NULL;
-    }
-
-    if (receiver->complete_runs) {
-        g_list_free(receiver->complete_runs);
-        receiver->complete_runs = NULL;
-    }
-
-    if (receiver->crasheds) {
-        g_list_foreach(receiver->crasheds, (GFunc)g_free, NULL);
-        g_list_free(receiver->crasheds);
-        receiver->crasheds = NULL;
-    }
-
-    G_OBJECT_CLASS(cuttest_event_receiver_parent_class)->dispose(object);
-}
-
-static void
-start_run (CutRunContext *context)
-{
-    CuttestEventReceiver *receiver;
-
-    receiver = CUTTEST_EVENT_RECEIVER(context);
-    receiver->n_start_runs++;
-}
-
-static void
-ready_test_suite (CutRunContext *context, CutTestSuite *test_suite,
-                  guint n_test_cases, guint n_tests)
-{
-    CuttestEventReceiver *receiver;
-    ReadyTestSuiteInfo *info;
-
-    receiver = CUTTEST_EVENT_RECEIVER(context);
-    info = ready_test_suite_info_new(test_suite, n_test_cases, n_tests);
-    receiver->ready_test_suites =
-        g_list_append(receiver->ready_test_suites, info);
-}
-
-static void
-start_test_suite (CutRunContext *context, CutTestSuite *test_suite)
-{
-    CuttestEventReceiver *receiver;
-
-    receiver = CUTTEST_EVENT_RECEIVER(context);
-    receiver->start_test_suites =
-        g_list_append(receiver->start_test_suites, g_object_ref(test_suite));
-}
-
-static void
-ready_test_case (CutRunContext *context, CutTestCase *test_case, guint n_tests)
-{
-    CuttestEventReceiver *receiver;
-    ReadyTestCaseInfo *info;
-
-    receiver = CUTTEST_EVENT_RECEIVER(context);
-    info = ready_test_case_info_new(test_case, n_tests);
-    receiver->ready_test_cases = g_list_append(receiver->ready_test_cases, info);
-}
-
-static void
-start_test_case (CutRunContext *context, CutTestCase *test_case)
-{
-    CuttestEventReceiver *receiver;
-
-    receiver = CUTTEST_EVENT_RECEIVER(context);
-    receiver->start_test_cases =
-        g_list_append(receiver->start_test_cases, g_object_ref(test_case));
-}
-
-static void
-ready_test_iterator (CutRunContext *context, CutTestIterator *test_iterator,
-                     guint n_tests)
-{
-    CuttestEventReceiver *receiver;
-    ReadyTestIteratorInfo *info;
-
-    receiver = CUTTEST_EVENT_RECEIVER(context);
-    info = ready_test_iterator_info_new(test_iterator, n_tests);
-    receiver->ready_test_iterators =
-        g_list_append(receiver->ready_test_iterators, info);
-}
-
-static void
-start_test_iterator (CutRunContext *context, CutTestIterator *test_iterator)
-{
-    CuttestEventReceiver *receiver;
-
-    receiver = CUTTEST_EVENT_RECEIVER(context);
-    receiver->start_test_iterators =
-        g_list_append(receiver->start_test_iterators,
-                      g_object_ref(test_iterator));
-}
-
-static void
-start_test (CutRunContext *context, CutTest *test, CutTestContext *test_context)
-{
-    CuttestEventReceiver *receiver;
-    StartTestInfo *info;
-
-    receiver = CUTTEST_EVENT_RECEIVER(context);
-    info = start_test_info_new(test, test_context);
-    receiver->start_tests = g_list_append(receiver->start_tests, info);
-}
-
-static void
-start_iterated_test (CutRunContext *context, CutIteratedTest *iterated_test,
-                     CutTestContext *test_context)
-{
-    CuttestEventReceiver *receiver;
-    StartIteratedTestInfo *info;
-
-    receiver = CUTTEST_EVENT_RECEIVER(context);
-    info = start_iterated_test_info_new(iterated_test, test_context);
-    receiver->start_iterated_tests =
-        g_list_append(receiver->start_iterated_tests, info);
-}
-
-static void
-pass_assertion (CutRunContext *context, CutTest *test,
-                CutTestContext *test_context)
-{
-    CuttestEventReceiver *receiver;
-    PassAssertionInfo *info;
-
-    receiver = CUTTEST_EVENT_RECEIVER(context);
-    info = pass_assertion_info_new(test, test_context);
-    receiver->pass_assertions = g_list_append(receiver->pass_assertions, info);
-}
-
-static void
-complete_iterated_test (CutRunContext *context, CutIteratedTest *iterated_test,
-                        CutTestContext *test_context)
-{
-    CuttestEventReceiver *receiver;
-    CompleteIteratedTestInfo *info;
-
-    receiver = CUTTEST_EVENT_RECEIVER(context);
-    info = complete_iterated_test_info_new(iterated_test, test_context);
-    receiver->complete_iterated_tests =
-        g_list_append(receiver->complete_iterated_tests, info);
-}
-
-static void
-complete_test (CutRunContext *context, CutTest *test,
-               CutTestContext *test_context)
-{
-    CuttestEventReceiver *receiver;
-    CompleteTestInfo *info;
-
-    receiver = CUTTEST_EVENT_RECEIVER(context);
-    info = complete_test_info_new(test, test_context);
-    receiver->complete_tests = g_list_append(receiver->complete_tests, info);
-}
-
-static void
-complete_test_iterator (CutRunContext *context, CutTestIterator *test_iterator)
-{
-    CuttestEventReceiver *receiver;
-
-    receiver = CUTTEST_EVENT_RECEIVER(context);
-    receiver->complete_test_iterators =
-        g_list_append(receiver->complete_test_iterators,
-                      g_object_ref(test_iterator));
-}
-
-static void
-complete_test_case (CutRunContext *context, CutTestCase *test_case)
-{
-    CuttestEventReceiver *receiver;
-
-    receiver = CUTTEST_EVENT_RECEIVER(context);
-    receiver->complete_test_cases =
-        g_list_append(receiver->complete_test_cases, g_object_ref(test_case));
-}
-
-static void
-complete_test_suite (CutRunContext *context, CutTestSuite *test_suite)
-{
-    CuttestEventReceiver *receiver;
-
-    receiver = CUTTEST_EVENT_RECEIVER(context);
-    receiver->complete_test_suites =
-        g_list_append(receiver->complete_test_suites, g_object_ref(test_suite));
-}
-
-static void
-complete_run (CutRunContext *context, gboolean success)
-{
-    CuttestEventReceiver *receiver;
-
-    receiver = CUTTEST_EVENT_RECEIVER(context);
-    receiver->complete_runs = g_list_append(receiver->complete_runs,
-                                            GINT_TO_POINTER(success));
-}
-
-static void
-crashed (CutRunContext *context, const gchar *backtrace)
-{
-    CuttestEventReceiver *receiver;
-
-    receiver = CUTTEST_EVENT_RECEIVER(context);
-    receiver->crasheds = g_list_append(receiver->crasheds, g_strdup(backtrace));
-}
-
-static void
-cuttest_event_receiver_class_init (CuttestEventReceiverClass *klass)
-{
-    GObjectClass *gobject_class;
-    CutRunContextClass *run_context_class;
-
-    gobject_class = G_OBJECT_CLASS(klass);
-    run_context_class = CUT_RUN_CONTEXT_CLASS(klass);
-
-    gobject_class->dispose = dispose;
-
-    run_context_class->start_run = start_run;
-    run_context_class->ready_test_suite = ready_test_suite;
-    run_context_class->start_test_suite = start_test_suite;
-    run_context_class->ready_test_case = ready_test_case;
-    run_context_class->start_test_case = start_test_case;
-    run_context_class->ready_test_iterator = ready_test_iterator;
-    run_context_class->start_test_iterator = start_test_iterator;
-    run_context_class->start_test = start_test;
-    run_context_class->start_iterated_test = start_iterated_test;
-    run_context_class->pass_assertion = pass_assertion;
-    run_context_class->complete_iterated_test = complete_iterated_test;
-    run_context_class->complete_test = complete_test;
-    run_context_class->complete_test_iterator = complete_test_iterator;
-    run_context_class->complete_test_case = complete_test_case;
-    run_context_class->complete_test_suite = complete_test_suite;
-    run_context_class->complete_run = complete_run;
-    run_context_class->crashed = crashed;
-}
-
-static void
-cuttest_event_receiver_init (CuttestEventReceiver *receiver)
-{
-    receiver->n_start_runs = 0;
-    receiver->ready_test_suites = NULL;
-    receiver->start_test_suites = NULL;
-    receiver->ready_test_cases = NULL;
-    receiver->start_test_cases = NULL;
-    receiver->ready_test_iterators = NULL;
-    receiver->start_test_iterators = NULL;
-    receiver->start_tests = NULL;
-    receiver->start_iterated_tests = NULL;
-    receiver->complete_iterated_tests = NULL;
-    receiver->complete_tests = NULL;
-    receiver->complete_test_iterators = NULL;
-    receiver->complete_test_cases = NULL;
-    receiver->complete_test_suites = NULL;
-    receiver->complete_runs = NULL;
-    receiver->crasheds = NULL;
-}
-
-static CutRunContext *
-cuttest_event_receiver_new (void)
-{
-    return g_object_new(CUTTEST_TYPE_EVENT_RECEIVER, NULL);
-}
 
 static CutStreamParser *parser;
 static CutTestResult *result;
@@ -747,7 +93,7 @@ test_start_run (void)
 void
 test_ready_test_suite (void)
 {
-    ReadyTestSuiteInfo *info;
+    CuttestReadyTestSuiteInfo *info;
     GTimeVal expected, actual;
 
     cut_assert_parse("<stream>\n");
@@ -808,7 +154,7 @@ test_start_test_suite (void)
 void
 test_ready_test_case (void)
 {
-    ReadyTestCaseInfo *info;
+    CuttestReadyTestCaseInfo *info;
     gchar header[] =
         "<stream>\n"
         "  <ready-test-suite>\n"
@@ -886,7 +232,7 @@ test_start_test_case (void)
 void
 test_ready_test_iterator (void)
 {
-    ReadyTestIteratorInfo *info;
+    CuttestReadyTestIteratorInfo *info;
     gchar header[] =
         "<stream>\n"
         "  <ready-test-suite>\n"
@@ -986,7 +332,7 @@ test_start_test_iterator (void)
 void
 test_start_test (void)
 {
-    StartTestInfo *info;
+    CuttestStartTestInfo *info;
     CutTestContext *context;
     CutTestSuite *test_suite;
     CutTestCase *test_case;
@@ -1125,7 +471,7 @@ test_start_test_with_multiple_option_names (void)
 void
 test_start_iterated_test (void)
 {
-    StartIteratedTestInfo *info;
+    CuttestStartIteratedTestInfo *info;
     CutTestData *test_data;
     CutTestContext *context;
     CutTestSuite *test_suite;
@@ -1522,7 +868,7 @@ test_result_test_case (void)
 void
 test_pass_assertion_test (void)
 {
-    PassAssertionInfo *info;
+    CuttestPassAssertionInfo *info;
     CutTest *test;
     CutTestCase *test_case;
     CutTestContext *test_context;
@@ -1659,7 +1005,7 @@ test_pass_assertion_test (void)
 void
 test_pass_assertion_iterated_test (void)
 {
-    PassAssertionInfo *info;
+    CuttestPassAssertionInfo *info;
     CutTestData *test_data;
     CutTest *test;
     CutTestIterator *test_iterator;
@@ -1816,7 +1162,7 @@ test_pass_assertion_iterated_test (void)
 void
 test_complete_iterated_test (void)
 {
-    CompleteIteratedTestInfo *info;
+    CuttestCompleteIteratedTestInfo *info;
     CutTestContext *context;
     CutTestSuite *test_suite;
     CutTestCase *test_case;
@@ -1949,7 +1295,7 @@ test_complete_iterated_test (void)
 void
 test_complete_test (void)
 {
-    CompleteTestInfo *info;
+    CuttestCompleteTestInfo *info;
     CutTestContext *context;
     CutTestSuite *test_suite;
     CutTestCase *test_case;

@@ -10,8 +10,9 @@ endif
 
 EXTRA_DIST = cuttest-assertions.h
 
-noinst_LTLIBRARIES = 		\
-	libcuttest_utils.la
+noinst_LTLIBRARIES = 			\
+	libcuttest_utils.la		\
+	libcuttest_event_receiver.la
 
 LIBS =						\
 	$(top_builddir)/cutter/libcutter.la	\
@@ -28,3 +29,7 @@ AM_LDFLAGS =			\
 libcuttest_utils_la_SOURCES = 		\
 	cuttest-utils.c			\
 	cuttest-utils.h
+
+libcuttest_event_receiver_la_SOURCES = 		\
+	cuttest-event-receiver.c		\
+	cuttest-event-receiver.h

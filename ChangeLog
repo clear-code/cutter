@@ -1,5 +1,13 @@
 2008-08-26  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/lib/Makefile.am: add cuttest-event-receiver.[ch].
+
+	* test/Makefile.am: test_cut_stream_parser.so use
+	cuttest_event_receiver.so.
+
+	* test/test-cut-stream-parser.c: move CuttestEventReceiver to ...
+	* test/lib/cuttest-event-receiver.[ch]: ... here.
+
 	* cutter/cut-file-stream-reader.c, cutter/cut-pipeline.c: use
 	cut_stream_reader_watch_io_channel().
 
