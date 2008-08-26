@@ -236,6 +236,32 @@ guess_color_usability (void)
     return FALSE;
 }
 
+static gint
+guess_term_width (void)
+{
+    gint term_width = 0;
+    const gchar *term_width_env;
+
+    term_width_env = g_getenv("TERM_WIDTH");
+    if (term_width_env)
+        term_width = atoi(term_width_env);
+
+    if (term_width < 0)
+        return -1;
+
+    if (term_width == 0) {
+        const gchar *emacs_env;
+
+        emacs_env = g_getenv("EMACS");
+        if (emacs_env && (g_str_equal(emacs_env, "t")))
+            term_width = -1;
+        else
+            term_width = 79;
+    }
+
+    return term_width;
+}
+
 static gboolean
 parse_verbose_level_arg (const gchar *option_name, const gchar *value,
                          gpointer data, GError **error)
@@ -331,6 +357,7 @@ create (CutModuleFactory *factory)
     return G_OBJECT(cut_ui_new("console",
                                "use-color", console->use_color,
                                "verbose-level", console->verbose_level,
+                               "progress-row-max", guess_term_width(),
                                NULL));
 }
 

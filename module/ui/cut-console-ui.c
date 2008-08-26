@@ -89,7 +89,8 @@ enum
 {
     PROP_0,
     PROP_USE_COLOR,
-    PROP_VERBOSE_LEVEL
+    PROP_VERBOSE_LEVEL,
+    PROP_PROGRESS_ROW_MAX
 };
 
 static GType cut_type_console_ui = 0;
@@ -140,25 +141,13 @@ class_init (CutConsoleUIClass *klass)
                              CUT_VERBOSE_LEVEL_NORMAL,
                              G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_VERBOSE_LEVEL, spec);
-}
 
-static gint
-guess_term_width (void)
-{
-    gint term_width = 0;
-    const gchar *term_width_env;
-
-    term_width_env = g_getenv("TERM_WIDTH");
-    if (term_width_env)
-        term_width = atoi(term_width_env);
-
-    if (term_width == -1)
-        return -1;
-
-    if (term_width <= 0)
-        term_width = 79;
-
-    return term_width;
+    spec = g_param_spec_int("progress-row-max",
+                            "Progress Row Max",
+                            "The max number of progress row",
+                            -1, G_MAXINT16, -1,
+                            G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_PROGRESS_ROW_MAX, spec);
 }
 
 static void
@@ -168,7 +157,7 @@ init (CutConsoleUI *console)
     console->verbose_level = CUT_VERBOSE_LEVEL_NORMAL;
     console->errors = NULL;
     console->progress_row = 0;
-    console->progress_row_max = guess_term_width();
+    console->progress_row_max = -1;
 }
 
 static void
@@ -308,6 +297,9 @@ set_property (GObject      *object,
       case PROP_VERBOSE_LEVEL:
         console->verbose_level = g_value_get_enum(value);
         break;
+      case PROP_PROGRESS_ROW_MAX:
+        console->progress_row_max = g_value_get_int(value);
+        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
@@ -328,6 +320,9 @@ get_property (GObject    *object,
         break;
       case PROP_VERBOSE_LEVEL:
         g_value_set_enum(value, console->verbose_level);
+        break;
+      case PROP_PROGRESS_ROW_MAX:
+        g_value_set_int(value, console->progress_row_max);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);

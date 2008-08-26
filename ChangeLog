@@ -1,5 +1,9 @@
 2008-08-26  Kouhei Sutou  <kou@cozmixng.org>
 
+	* module/ui/cut-console-ui-factory.c: move guessing progress row
+	max value to ...
+	* module/ui/cut-console-ui.c: ... here.
+
 	* module/ui/cut-console-ui.c: fold progress marks.
 
 	* test/test-cut-file-stream-reader.c,
