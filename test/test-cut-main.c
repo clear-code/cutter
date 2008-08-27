@@ -24,12 +24,18 @@ teardown (void)
 void
 test_cutter_command_path (void)
 {
+    const gchar *exist_command;
     const gchar *absolute_path, *relative_cutter, *absolute_cutter;
 
     cut_assert_not_null(cut_get_cutter_command_path());
 
-    cut_set_cutter_command_path("dir");
-    cut_assert_equal_string(cut_take_string(g_find_program_in_path("dir")),
+#ifdef G_OS_WIN32
+    exist_command = "dir";
+#else
+    exist_command = "ls";
+#endif
+    cut_set_cutter_command_path(exist_command);
+    cut_assert_equal_string(cut_take_string(g_find_program_in_path(exist_command)),
                             cut_get_cutter_command_path());
 
     absolute_path =
