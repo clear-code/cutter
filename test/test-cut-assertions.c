@@ -650,16 +650,15 @@ path_not_exist_test (void)
     gint fd;
     GError *error = NULL;
 
+    fd = g_file_open_tmp(NULL, &tmp_file_name, &error);
+    cut_assert_g_error(error);
+    close(fd);
+
+    g_remove(tmp_file_name);
     cut_assert_path_not_exist(tmp_file_name);
 
-    fd = g_file_open_tmp(NULL, &tmp_file_name, &error);
-    if (fd == -1) {
-        const gchar *message;
-        message = cut_take_string(g_strdup(error->message));
-        g_error_free(error);
-        cut_error("can't create temporary file: %s", message);
-    }
-    close(fd);
+    g_file_set_contents(tmp_file_name, "XXX", -1, &error);
+    cut_assert_g_error(error);
     cut_assert_path_not_exist(tmp_file_name);
 }
 
@@ -668,7 +667,7 @@ test_path_not_exist (void)
 {
     test = cut_test_new("path-not-exist-test", path_not_exist_test);
     cut_assert_false(run());
-    cut_assert_test_result_summary(run_context, 0, 1, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result_summary(run_context, 0, 3, 0, 1, 0, 0, 0, 0);
 }
 
 static void

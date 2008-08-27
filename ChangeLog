@@ -1,5 +1,9 @@
 2008-08-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-assertions.c (path_not_exist_test): fix wrong test.
+
+	* cutter/cut-assertions.h (cut_assert_path_not_exist): add NULL check.
+
 	* test/test-cut-main.c (test_cutter_command_path): use notepad.exe
 	as exist command.
 

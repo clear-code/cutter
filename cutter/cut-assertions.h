@@ -609,7 +609,13 @@ extern "C" {
     const char *_path;                                                  \
                                                                         \
     _path = (path);                                                     \
-    if (!cut_utils_file_exist(_path)) {                                 \
+    if (!_path) {                                                       \
+        const gchar *_message;                                          \
+                                                                        \
+        _message = cut_take_printf("expected: <%s> should not be NULL", \
+                                   #path);                              \
+        cut_test_fail(FAILURE, _message, ## __VA_ARGS__);               \
+    } else if (!cut_utils_file_exist(_path)) {                          \
         cut_test_pass();                                                \
     } else {                                                            \
         cut_test_fail(FAILURE,                                          \
