@@ -13,3 +13,5 @@
   * get the latest unfinished test and bundle it into crashed reporting.
   * CutRunContext should have multiple crashed information.
 * use imagehlp.h on Windows.
+* use mach-o/loader.h on Mac OS X.
+* update option descriptions in README.

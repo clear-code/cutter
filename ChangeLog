@@ -1,5 +1,9 @@
 2008-08-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* TODO: add:
+	- use mach-o/loader.h on Mac OS X.
+	- update option descriptions in README.
+
 	* test/test-cut-main.c (test_cutter_command_path): use exist
 	command on the test environment.
 
