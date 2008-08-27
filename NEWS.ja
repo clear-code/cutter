@@ -2,6 +2,32 @@
 
 = NEWS --- Cutterの歴史
 
+== 1.0.4: 2008-08-27
+
+  * オプション:
+    * 過去のテスト結果をログとして保存する--stream-log-dirオ
+      プションの追加
+    * テストが失敗したら中断する--fatal-failuresオプションの
+      追加（デバッガとの連携のため）
+  * 結果出力:
+    * 行が長い場合は折りたたんでdiffした結果も表示
+    * 実行中を示す印（「.」や「F」）を適度に改行しながら出力
+  * 属性を設定する
+    ((<cut_set_attributes()|cutter-cutter.html>))の追加
+  * ((<マルチプロセスでのテスト|cutter-cut-multi-process.html>))をサポート
+  * データ駆動テストのマルチスレッド実行のサポート
+  * 検証の追加:
+    * ((<gcut_assert_equal_hash_string_string()|cutter-gcut-assertions.html>))
+    * ((<gcut_assert_equal_time_val()|cutter-gcut-assertions.html>))
+  * 便利機能の追加:
+    * ((<gcut_hash_table_string_string_new()|cutter-gcut-test-utils.html>))
+    * ((<gcut_take_hash_table()|cutter-gcut-test-utils.html>))
+  * 修正:
+    * GOfficeがない環境でビルドが失敗する問題の修正
+      （Kazumasa Matsunagaさんによる報告）
+  * 実験的:
+    * ログを解析する--analyzerモードの追加
+
 == 1.0.3: 2008-07-15
 
   * データ駆動テストのサポート:

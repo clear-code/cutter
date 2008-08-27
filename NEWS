@@ -2,6 +2,32 @@
 
 = NEWS --- The history of Cutter
 
+== 1.0.4: 2008-08-27
+
+  * Option:
+    * Add --stream-log-dir option that is for logging test
+      result history
+    * Add --fatal-failures option that test is aborted on
+      failure (for cooperation with debugger)
+  * Output:
+    * Support folded diff
+    * Output newline into long summary (".", "F", ...)
+  * Add ((<cut_set_attributes()|cutter-cutter.html>)) to set
+    attributes
+  * Support ((<test on multi-process|cutter-cut-multi-process.html>))
+  * Support data driven test on multi-thread
+  * Add assertions:
+    * ((<gcut_assert_equal_hash_string_string()|cutter-gcut-assertions.html>))
+    * ((<gcut_assert_equal_time_val()|cutter-gcut-assertions.html>))
+  * Add utilities:
+    * ((<gcut_hash_table_string_string_new()|cutter-gcut-test-utils.html>))
+    * ((<gcut_take_hash_table()|cutter-gcut-test-utils.html>))
+  * Fix:
+    * Fix a build bug on no GOffice environment.
+      (Reported by Kazumasa Matsunaga)
+  * Experimental:
+    * Add --analyzer mode that cutter analyzes test result log.
+
 == 1.0.3: 2008-07-15
 
   * Support Data-Driven Testing:
