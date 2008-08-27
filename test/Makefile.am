@@ -63,7 +63,7 @@ noinst_LTLIBRARIES = 				\
 
 AM_LDFLAGS =			\
 	-module			\
-	-rpath $(libdir)	\
+	-rpath `pwd`/.libs	\
 	-avoid-version		\
 	-no-undefined
 

@@ -1,5 +1,7 @@
 2008-08-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/Makefile.am (AM_LDFLAGS): use `pwd`/.libs not $(libs).
+
 	* TODO: add:
 	- use mach-o/loader.h on Mac OS X.
 	- update option descriptions in README.
