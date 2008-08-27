@@ -1,5 +1,7 @@
 2008-08-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-pipeline.c: remove needless set environment.
+
 	* cutter/cut-repository.c (is_ignore_directory): skip shared
 	object search in metadata directory.
 

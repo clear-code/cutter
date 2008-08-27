@@ -21,7 +21,6 @@ void data_count (void);
 void test_count (gconstpointer data);
 
 static CutRunContext *pipeline;
-static const gchar *env_pipeline_test_dir;
 
 #define build_test_dir(dir, ...)                \
     g_build_filename(cuttest_get_base_dir(),    \
@@ -35,7 +34,6 @@ void
 setup (void)
 {
     pipeline = cut_pipeline_new();
-    env_pipeline_test_dir = g_getenv("CUTTEST_PIPELINE_TEST_DIR");
 }
 
 void
@@ -43,7 +41,6 @@ teardown (void)
 {
     if (pipeline)
         g_object_unref(pipeline);
-    g_setenv("CUTTEST_PIPELINE_TEST_DIR", env_pipeline_test_dir, TRUE);
 }
 
 static void
