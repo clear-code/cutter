@@ -17,12 +17,15 @@ TESTS_ENVIRONMENT = NO_MAKE=yes
 noinst_LTLIBRARIES = 			\
 		test_nil_surface.la
 
-LIBS = $(CAIRO_LIBS) $(CUTTER_LIBS)
+LIBS =						\
+	$(top_builddir)/cutter/libcutter.la	\
+	$(CAIRO_LIBS)
 
 AM_LDFLAGS =			\
 	-rpath $(libdir)	\
 	-module			\
-	-avoid-version
+	-avoid-version		\
+	-no-undefined
 
 test_nil_surface_la_SOURCES = nil-surface.c
 

@@ -14,12 +14,15 @@ AM_CFLAGS =			\
 	$(CUTTER_CFLAGS)	\
 	$(GTK_CFLAGS)
 
-LIBS = $(GTK_LIBS)
+LIBS =						\
+	$(top_builddir)/cutter/libcutter.la	\
+	$(GTK_LIBS)
 
 AM_LDFLAGS =			\
 	-rpath $(libdir)	\
 	-module			\
-	-avoid-version
+	-avoid-version		\
+	-no-undefined
 
 noinst_LTLIBRARIES = 			\
 		suite_gtk_test.la	\

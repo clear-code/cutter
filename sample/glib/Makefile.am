@@ -28,9 +28,14 @@ noinst_LTLIBRARIES = 			\
 		test_uri.la
 
 AM_LDFLAGS =			\
-	-rpath $(libdir)	\
+	-rpath `pwd`/.libs	\
 	-module			\
-	-avoid-version
+	-avoid-version		\
+	-no-undefined
+
+LIBS =						\
+	$(top_builddir)/cutter/libcutter.la	\
+	$(GLIB_LIBS)
 
 test_array_la_SOURCES = array.c
 test_atomic_la_SOURCES = atomic.c
