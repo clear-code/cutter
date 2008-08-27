@@ -1,5 +1,7 @@
 2008-08-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* configure.ac: add AM_GLIB_GNU_GETTEXT.
+
 	* sample/cairo/Makefile.am, sample/glib/Makefile.am,
 	sample/gtk+/Makefile.am: add missing -no-undefined.
 

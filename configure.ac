@@ -401,6 +401,8 @@ dnl **************************************************************
 
 AC_PROG_INTLTOOL([0.35.5])
 
+AM_GLIB_GNU_GETTEXT
+
 GETTEXT_PACKAGE=cutter
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE], ["$GETTEXT_PACKAGE"], [Gettext package])
