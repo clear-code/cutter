@@ -562,8 +562,11 @@ cut_loader_load_test_case (CutLoader *loader)
 
     priv->module = g_module_open(priv->so_filename,
                                  G_MODULE_BIND_LAZY | G_MODULE_BIND_LOCAL);
-    if (!priv->module)
+    if (!priv->module) {
+        g_warning("can't load a shared object for test case: %s: %s",
+                  priv->so_filename, g_module_error());
         return NULL;
+    }
 
     priv->symbols = collect_symbols(priv);
     if (!priv->symbols)
@@ -621,8 +624,11 @@ cut_loader_load_test_suite (CutLoader *loader)
         return NULL;
 
     priv->module = g_module_open(priv->so_filename, G_MODULE_BIND_LAZY);
-    if (!priv->module)
+    if (!priv->module) {
+        g_warning("can't load a shared object for test suite: %s: %s",
+                  priv->so_filename, g_module_error());
         return NULL;
+    }
 
     prefix = get_suite_prefix(priv);
 

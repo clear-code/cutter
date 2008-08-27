@@ -1,5 +1,9 @@
 2008-08-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-loader.c (cut_loader_load_test_suite)
+	(cut_loader_load_test_case): show warning messages on
+	g_module_open failure.
+
 	* test/lib/Makefile.am (AM_LDFLAGS): use `pwd`/.libs for -rpath
 	not $(libdir).
 
