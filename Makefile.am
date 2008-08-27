@@ -25,7 +25,9 @@ EXTRA_DIST =		\
 	TUTORIAL.ja	\
 	README.ja	\
 	NEWS		\
-	NEWS.ja
+	NEWS.ja		\
+	FEATURES	\
+	FEATURES.ja
 
 upload: upload-doc
 
