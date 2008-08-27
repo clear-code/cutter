@@ -14,7 +14,7 @@
 void test_run (void);
 
 static CutRunContext *pipeline;
-static const gchar *env_sub_process_test_dir;
+static gchar *env_test_dir;
 
 #define build_test_dir(dir, ...)                \
     g_build_filename(cuttest_get_base_dir(),    \
@@ -29,7 +29,7 @@ void
 setup (void)
 {
     pipeline = cut_pipeline_new();
-    env_sub_process_test_dir = g_getenv(CUTTEST_TEST_DIR_KEY);
+    env_test_dir = g_strdup(g_getenv(CUTTEST_TEST_DIR_KEY));
 }
 
 void
@@ -38,10 +38,12 @@ teardown (void)
     if (pipeline)
         g_object_unref(pipeline);
 
-    if (env_sub_process_test_dir)
-        g_setenv(CUTTEST_TEST_DIR_KEY, env_sub_process_test_dir, TRUE);
-    else
+    if (env_test_dir) {
+        g_setenv(CUTTEST_TEST_DIR_KEY, env_test_dir, TRUE);
+        g_free(env_test_dir);
+    } else {
         g_unsetenv(CUTTEST_TEST_DIR_KEY);
+    }
 }
 
 static void

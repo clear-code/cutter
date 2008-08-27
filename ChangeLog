@@ -1,5 +1,9 @@
 2008-08-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-sub-process-group.c,
+	test/fixtures/sub-process-group/test-invoker.c: : use
+	CUTTEST_TEST_DIR_KEY.
+
 	* test/lib/cuttest-utils.h (CUTTEST_TEST_DIR_KEY): move from
 	test/test-cut-sub-process.c.
 

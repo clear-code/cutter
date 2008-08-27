@@ -3,7 +3,7 @@
 #include <cutter.h>
 #include <gcutter.h>
 
-#define TEST_DIR_KEY "CUTTEST_SUB_PROCESS_GROUP_TEST_DIR"
+#include "../../lib/cuttest-utils.h"
 
 void test_run(void);
 void test_run_async(void);
@@ -19,7 +19,7 @@ create_group (void)
     for (i = 0; i < n_processes; i++) {
         CutSubProcess *sub_process;
 
-        sub_process = cut_take_new_sub_process(g_getenv(TEST_DIR_KEY));
+        sub_process = cut_take_new_sub_process(g_getenv(CUTTEST_TEST_DIR_KEY));
         cut_sub_process_group_add(group, sub_process);
     }
     return group;
