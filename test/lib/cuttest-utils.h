@@ -10,6 +10,8 @@
     "\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?Z"
 #define ISO8601_PATTERN "\\d{4}-" ISO8601_PATTERN_WITHOUT_YEAR
 
+#define CUTTEST_TEST_DIR_KEY "CUTTEST_TEST_DIR"
+
 const gchar *cuttest_get_base_dir (void);
 void         cuttest_add_test     (CutTestCase *test_case,
                                    const gchar *test_name,

@@ -1,5 +1,12 @@
 2008-08-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/lib/cuttest-utils.h (CUTTEST_TEST_DIR_KEY): move from
+	test/test-cut-sub-process.c.
+
+	* test/test-cut-sub-process.c,
+	test/fixtures/sub-process/test-invoker.c: : use
+	CUTTEST_TEST_DIR_KEY.
+
 	* test/test-cut-pipeline.c: remove needless set environment.
 
 	* cutter/cut-repository.c (is_ignore_directory): skip shared

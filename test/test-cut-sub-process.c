@@ -11,8 +11,6 @@
 
 #include "lib/cuttest-assertions.h"
 
-#define TEST_DIR_KEY "CUTTEST_SUB_PROCESS_TEST_DIR"
-
 void test_run (void);
 
 static CutRunContext *pipeline;
@@ -31,7 +29,7 @@ void
 setup (void)
 {
     pipeline = cut_pipeline_new();
-    env_sub_process_test_dir = g_getenv(TEST_DIR_KEY);
+    env_sub_process_test_dir = g_getenv(CUTTEST_TEST_DIR_KEY);
 }
 
 void
@@ -39,7 +37,11 @@ teardown (void)
 {
     if (pipeline)
         g_object_unref(pipeline);
-    g_setenv(TEST_DIR_KEY, env_sub_process_test_dir, TRUE);
+
+    if (env_sub_process_test_dir)
+        g_setenv(CUTTEST_TEST_DIR_KEY, env_sub_process_test_dir, TRUE);
+    else
+        g_unsetenv(CUTTEST_TEST_DIR_KEY);
 }
 
 static void
@@ -64,7 +66,7 @@ run (const gchar *test_dir)
     cut_run_context_set_source_directory(pipeline, test_invoker_dir);
     g_free(test_invoker_dir);
 
-    g_setenv(TEST_DIR_KEY, test_dir, TRUE);
+    g_setenv(CUTTEST_TEST_DIR_KEY, test_dir, TRUE);
 
     g_signal_connect(pipeline, "error", G_CALLBACK(report_error), NULL);
     return cut_run_context_start(pipeline);
@@ -75,6 +77,7 @@ test_run (void)
 {
     const gchar *test_dir;
     gint n_normal_tests, n_iterated_tests, n_spike_tests;
+    gint n_spike_test_assertions;
     gint n_results, n_non_critical_results;
 
     test_dir = cut_take_string(build_test_dir("normal"));
@@ -83,12 +86,14 @@ test_run (void)
     n_normal_tests = 1;
     n_iterated_tests = 2;
     n_spike_tests = 1;
+    n_spike_test_assertions = 1;
     n_results = 6;
     n_non_critical_results = 3;
     cut_assert_test_result_summary(pipeline,
                                    (n_normal_tests + n_iterated_tests) *
                                      n_results + n_spike_tests,
-                                   (n_normal_tests + n_iterated_tests),
+                                   (n_normal_tests + n_iterated_tests) +
+                                     (n_spike_test_assertions * n_spike_tests),
                                    (n_normal_tests + n_iterated_tests) *
                                      n_non_critical_results + n_spike_tests,
                                    (n_normal_tests + n_iterated_tests),

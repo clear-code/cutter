@@ -3,7 +3,7 @@
 #include <cutter.h>
 #include <gcutter.h>
 
-#define TEST_DIR_KEY "CUTTEST_SUB_PROCESS_TEST_DIR"
+#include "../../lib/cuttest-utils.h"
 
 void test_invoke(void);
 
@@ -11,8 +11,11 @@ void
 test_invoke (void)
 {
     CutSubProcess *sub_process;
+    const gchar *test_dir;
 
-    sub_process = cut_take_new_sub_process(g_getenv(TEST_DIR_KEY));
+    test_dir = g_getenv(CUTTEST_TEST_DIR_KEY);
+    cut_assert_not_null(test_dir, "ENV[%s]", CUTTEST_TEST_DIR_KEY);
+    sub_process = cut_take_new_sub_process(test_dir);
     cut_sub_process_run(sub_process);
 }
 
