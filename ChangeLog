@@ -1,5 +1,9 @@
 2008-08-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-mach-o-loader.[ch]: add but not implemented yet.
+
+	* cutter/cut-loader.c: use CutMachOLoader if available.
+
 	* misc/release.rb: add fallback.
 
 	* configure.ac: 1.0.4 -> 1.0.5.
@@ -35,6 +39,7 @@
 	* test/test-cut-main.c (test_cutter_command_path): use exist
 	command on the test environment.
 
+>>>>>>> .r2367
 	* test/test-cut-sub-process-group.c,
 	test/fixtures/sub-process-group/test-invoker.c: : use
 	CUTTEST_TEST_DIR_KEY.

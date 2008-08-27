@@ -33,6 +33,7 @@
 #endif
 
 #include "cut-loader.h"
+#include "cut-mach-o-loader.h"
 #include "cut-test-iterator.h"
 #include "cut-experimental.h"
 
@@ -55,6 +56,7 @@ struct _CutLoaderPrivate
     GList *symbols;
     GModule *module;
     CutBinaryType binary_type;
+    CutMachOLoader *mach_o_loader;
 };
 
 enum
@@ -104,6 +106,7 @@ cut_loader_init (CutLoader *loader)
 
     priv->so_filename = NULL;
     priv->binary_type = CUT_BINARY_TYPE_UNKNOWN;
+    priv->mach_o_loader = NULL;
 }
 
 static void
@@ -124,6 +127,11 @@ dispose (GObject *object)
     if (priv->so_filename) {
         g_free(priv->so_filename);
         priv->so_filename = NULL;
+    }
+
+    if (priv->mach_o_loader) {
+        g_object_unref(priv->mach_o_loader);
+        priv->mach_o_loader = NULL;
     }
 
     if (priv->module) {
@@ -188,8 +196,8 @@ is_test_function_name (const gchar *name)
 
 #ifdef HAVE_LIBBFD
 
-gboolean
-cut_loader_support_attribute (CutLoader *loader)
+static gboolean
+cut_loader_support_attribute_bfd (CutLoader *loader)
 {
     CutLoaderPrivate *priv;
 
@@ -198,7 +206,7 @@ cut_loader_support_attribute (CutLoader *loader)
 }
 
 static GList *
-collect_symbols (CutLoaderPrivate *priv)
+collect_symbols_bfd (CutLoaderPrivate *priv)
 {
     GList *symbols = NULL;
     long storage_needed;
@@ -253,8 +261,8 @@ collect_symbols (CutLoaderPrivate *priv)
 
 #else
 
-gboolean
-cut_loader_support_attribute (CutLoader *loader)
+static gboolean
+cut_loader_support_attribute_scan (CutLoader *loader)
 {
     CutLoaderPrivate *priv;
 
@@ -297,7 +305,7 @@ is_valid_symbol_name (GString *name)
 }
 
 static GList *
-collect_symbols (CutLoaderPrivate *priv)
+collect_symbols_scan (CutLoaderPrivate *priv)
 {
     FILE *input;
     GString *name;
@@ -347,6 +355,37 @@ collect_symbols (CutLoaderPrivate *priv)
     return symbols;
 }
 #endif
+
+gboolean
+cut_loader_support_attribute (CutLoader *loader)
+{
+    CutLoaderPrivate *priv;
+
+    priv = CUT_LOADER_GET_PRIVATE(loader);
+    if (priv->mach_o_loader) {
+        return cut_mach_o_loader_support_attribute(priv->mach_o_loader);
+    } else {
+#ifdef HAVE_BFD_H
+        return cut_loader_support_attribute_bfd(loader);
+#else
+        return cut_loader_support_attribute_scan(loader);
+#endif
+    }
+}
+
+static GList *
+collect_symbols (CutLoaderPrivate *priv)
+{
+    if (priv->mach_o_loader) {
+        return cut_mach_o_loader_collect_symbols(priv->mach_o_loader);
+    } else {
+#ifdef HAVE_BFD_H
+        return collect_symbols_bfd(priv);
+#else
+        return collect_symbols_scan(priv);
+#endif
+    }
+}
 
 static GList *
 collect_test_functions (CutLoaderPrivate *priv)
@@ -566,6 +605,12 @@ cut_loader_load_test_case (CutLoader *loader)
         g_warning("can't load a shared object for test case: %s: %s",
                   priv->so_filename, g_module_error());
         return NULL;
+    }
+
+    priv->mach_o_loader = cut_mach_o_loader_new(priv->so_filename);
+    if (!cut_mach_o_loader_is_mach_o(priv->mach_o_loader)) {
+        g_object_unref(priv->mach_o_loader);
+        priv->mach_o_loader = NULL;
     }
 
     priv->symbols = collect_symbols(priv);
