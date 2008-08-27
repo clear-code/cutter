@@ -15,3 +15,4 @@
 * use imagehlp.h on Windows.
 * use mach-o/loader.h on Mac OS X.
 * update option descriptions in README.
+* introduce easy sub process debugging mechanism.

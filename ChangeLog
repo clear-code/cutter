@@ -1,5 +1,7 @@
 2008-08-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* TODO: add: introduce easy sub process debugging mechanism.
+
 	* cutter/cut-mach-o-loader.[ch]: add but not implemented yet.
 
 	* cutter/cut-loader.c: use CutMachOLoader if available.
