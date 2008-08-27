@@ -17,7 +17,7 @@
   * ((<マルチプロセスでのテスト|cutter-cut-multi-process.html>))をサポート
   * データ駆動テストのマルチスレッド実行のサポート
   * 検証の追加:
-    * ((<gcut_assert_equal_hash_string_string()|cutter-gcut-assertions.html>))
+    * ((<gcut_assert_equal_hash_table_string_string()|cutter-gcut-assertions.html>))
     * ((<gcut_assert_equal_time_val()|cutter-gcut-assertions.html>))
   * 便利機能の追加:
     * ((<gcut_hash_table_string_string_new()|cutter-gcut-test-utils.html>))

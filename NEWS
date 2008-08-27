@@ -17,7 +17,7 @@
   * Support ((<test on multi-process|cutter-cut-multi-process.html>))
   * Support data driven test on multi-thread
   * Add assertions:
-    * ((<gcut_assert_equal_hash_string_string()|cutter-gcut-assertions.html>))
+    * ((<gcut_assert_equal_hash_table_string_string()|cutter-gcut-assertions.html>))
     * ((<gcut_assert_equal_time_val()|cutter-gcut-assertions.html>))
   * Add utilities:
     * ((<gcut_hash_table_string_string_new()|cutter-gcut-test-utils.html>))
