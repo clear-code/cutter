@@ -30,7 +30,11 @@ def login(agent, user_name, password=nil)
   login_form.form_loginname = user_name
   login_form.form_pw = password || yield
 
-  page = agent.submit(login_form, login_form.buttons.first)
+  begin
+    page = agent.submit(login_form, login_form.buttons.first)
+  rescue WWW::Mechanize::ResponseCodeError
+    page = agent.get("https://sourceforge.net/my/")
+  end
   raise "login failed" unless /Personal Page/ =~ page.title
   page
 end
@@ -145,7 +149,9 @@ end
 
 def main(sf_user_name, project_name, package_name, release_name, file_name,
          readme, news)
-  agent = WWW::Mechanize.new
+  agent = WWW::Mechanize.new do |_agent|
+    # _agent.log = Logger.new(STDOUT)
+  end
   password = read_password("SF.net password for [#{sf_user_name}]: ")
   my_page = login(agent, sf_user_name, password)
 
