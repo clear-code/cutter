@@ -209,6 +209,15 @@ update_test_suite_loader (CutRepositoryPrivate *priv, CutLoader *loader,
     }
 }
 
+static inline gboolean
+is_ignore_directory (const gchar *dir_name)
+{
+    return g_str_equal(dir_name, ".svn") ||
+        g_str_equal(dir_name, ".git") ||
+        g_str_equal(dir_name, "CVS") ||
+        g_str_has_suffix(dir_name, ".dSYM");
+}
+
 static void
 cut_repository_collect_loader (CutRepository *repository, const gchar *dir_name,
                                gint deep)
@@ -216,6 +225,9 @@ cut_repository_collect_loader (CutRepository *repository, const gchar *dir_name,
     GDir *dir;
     const gchar *entry;
     CutRepositoryPrivate *priv = CUT_REPOSITORY_GET_PRIVATE(repository);
+
+    if (is_ignore_directory(dir_name))
+        return;
 
     dir = g_dir_open(dir_name, 0, NULL);
     if (!dir)
