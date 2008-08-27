@@ -1,5 +1,9 @@
 2008-08-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* sample/Makefile.am (stack_src_DATA),
+	sample/stack/config/keep-me: add sample/stack/config/keep-me just
+	for dist sample/stack/config/ empty directory.
+
 	* Makefile.am (EXTRA_DIST): add missing FEATURES*.
 
 	* configure.ac: add AM_GLIB_GNU_GETTEXT.

@@ -33,8 +33,13 @@ stack_test_DATA =		\
 	stack/test/test-stack.c
 
 stack_configdir = $(stackdir)/config
-stack_config_DATA = # for creating an empty directory
+stack_config_DATA =		\
+	stack/config/keep-me
 
-EXTRA_DIST =							\
-	$(stack_SCRIPTS) $(stack_DATA) $(stack_src_DATA)	\
-	$(stack_test_SCRIPTS)  $(stack_test_DATA)
+EXTRA_DIST =			\
+	$(stack_SCRIPTS)	\
+	$(stack_DATA)		\
+	$(stack_src_DATA)	\
+	$(stack_test_SCRIPTS)	\
+	$(stack_test_DATA)	\
+	$(stack_config_DATA)
