@@ -1,5 +1,7 @@
 2008-08-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* configure.ac: 1.0.4 -> 1.0.5.
+
 	* NEWS*: add an entry for 1.0.4.
 
 	* sample/Makefile.am (stack_src_DATA),
