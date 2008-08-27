@@ -30,7 +30,7 @@ test_cutter_command_path (void)
     cut_assert_not_null(cut_get_cutter_command_path());
 
 #ifdef G_OS_WIN32
-    exist_command = "dir";
+    exist_command = "notepad";
 #else
     exist_command = "ls";
 #endif

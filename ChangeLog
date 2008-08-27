@@ -1,5 +1,8 @@
 2008-08-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-main.c (test_cutter_command_path): use notepad.exe
+	as exist command.
+
 	* test/lib/Makefile.am (AM_LDFLAGS): add -no-undefined.
 
 	* test/Makefile.am (AM_LDFLAGS): use `pwd`/.libs not $(libs).
