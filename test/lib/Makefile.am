@@ -20,7 +20,8 @@ LIBS =						\
 
 AM_LDFLAGS =			\
 	-rpath `pwd`/.libs	\
-	-avoid-version
+	-avoid-version		\
+	-no-undefined
 
 libcuttest_utils_la_SOURCES = 		\
 	cuttest-utils.c			\

@@ -1,5 +1,7 @@
 2008-08-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/lib/Makefile.am (AM_LDFLAGS): add -no-undefined.
+
 	* test/Makefile.am (AM_LDFLAGS): use `pwd`/.libs not $(libs).
 
 	* TODO: add:
