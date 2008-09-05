@@ -28,6 +28,7 @@
 #include <gcutter/gcut-assertions.h>
 #include <gcutter/gcut-public.h>
 #include <gcutter/gcut-test-utils.h>
+#include <gcutter/gcut-error.h>
 #include <gcutter/gcut-assertions-helper.h>
 
 G_BEGIN_DECLS
@@ -390,6 +391,45 @@ G_BEGIN_DECLS
 #define cut_assert_g_error(error, ...)          \
     gcut_assert_error(error, ## __VA_ARGS__)
 #endif
+
+/**
+ * gcut_assert_equal_error:
+ * @expected: an expected GError *.
+ * @actual: an actual GError *.
+ * @...: optional format string, followed by parameters to insert
+ *       into the format string (as with printf())
+ *
+ * Passes if @expected == @actual.
+ *
+ * Since: 1.0.5
+ */
+#define gcut_assert_equal_error(expected, actual, ...) do               \
+{                                                                       \
+    GError *_expected;                                                  \
+    GError *_actual;                                                    \
+                                                                        \
+    _expected = (expected);                                             \
+    _actual = (actual);                                                 \
+    if (gcut_error_equal(_expected, _actual)) {                         \
+        cut_test_pass();                                                \
+    } else {                                                            \
+        const gchar *inspected_expected;                                \
+        const gchar *inspected_actual;                                  \
+                                                                        \
+        inspected_expected =                                            \
+            cut_take_string(cut_utils_inspect_g_error(_expected));      \
+        inspected_actual =                                              \
+            cut_take_string(cut_utils_inspect_g_error(_actual));        \
+        cut_test_fail(FAILURE,                                          \
+                      cut_take_printf("<%s == %s>\n"                    \
+                                      "expected: <%s>\n"                \
+                                      " but was: <%s>",                 \
+                                      #expected, #actual,               \
+                                      inspected_expected,               \
+                                      inspected_actual),                \
+                      ## __VA_ARGS__);                                  \
+    }                                                                   \
+} while(0)
 
 /**
  * gcut_assert_remove_path:

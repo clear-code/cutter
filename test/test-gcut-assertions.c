@@ -14,6 +14,7 @@ void test_equal_list_string_both_null(void);
 void test_equal_list_string_other_null(void);
 void test_equal_hash_string_string(void);
 void test_error(void);
+void test_equal_error(void);
 
 static CutTest *test;
 static CutRunContext *run_context;
@@ -26,6 +27,7 @@ static gboolean need_to_free_list_contents;
 static GHashTable *hash1, *hash2;
 
 static GError *error;
+static GError *error1, *error2;
 static gboolean need_to_free_error;
 
 static gboolean
@@ -65,6 +67,9 @@ setup (void)
 
     error = NULL;
     need_to_free_error = FALSE;
+
+    error1 = NULL;
+    error2 = NULL;
 }
 
 void
@@ -101,6 +106,11 @@ teardown (void)
 
     if (error && need_to_free_error)
         g_error_free(error);
+
+    if (error1)
+        g_error_free(error1);
+    if (error2)
+        g_error_free(error2);
 }
 
 
@@ -389,6 +399,35 @@ test_error (void)
                            "expected: <error> is NULL\n"
                            " but was: <g-file-error-quark:4: not found>",
                            "stub_error");
+}
+
+static void
+stub_equal_error (void)
+{
+    error1 = g_error_new(G_FILE_ERROR, G_FILE_ERROR_NOENT, "not found");
+    error2 = g_error_new(G_FILE_ERROR, G_FILE_ERROR_NOENT, "not found");
+    gcut_assert_equal_error(error1, error2);
+
+    g_error_free(error2);
+    error2 = g_error_new(G_FILE_ERROR, G_FILE_ERROR_NOENT, "no entry");
+    gcut_assert_equal_error(error1, error2);
+}
+
+void
+test_equal_error (void)
+{
+    test = cut_test_new("gcut_assert_equal_error test", stub_equal_error);
+    cut_assert_not_null(test);
+
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 0, 1, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "gcut_assert_equal_error test",
+                           NULL,
+                           "<error1 == error2>\n"
+                           "expected: <g-file-error-quark:4: not found>\n"
+                           " but was: <g-file-error-quark:4: no entry>",
+                           "stub_equal_error");
 }
 
 

@@ -1,3 +1,9 @@
+2008-09-05  Kouhei Sutou  <kou@cozmixng.org>
+
+	* gcutter/gcut-assertions.h (gcut_assert_equal_error): add.
+	* gcutter/gcut-error.[ch]: add.
+	* test/test-gcut-assertions.c (test_equal_error): add.
+
 2008-08-27  Kouhei Sutou  <kou@cozmixng.org>
 
 	* TODO: add: introduce easy sub process debugging mechanism.
