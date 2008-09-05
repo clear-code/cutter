@@ -1,5 +1,8 @@
 2008-09-05  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-repository.c (is_test_suite_so_path_name): accept
+	suite-XXX.so as suite file not only suite_XXX.so.
+
 	* gcutter/gcut-assertions.h (gcut_assert_equal_error): add.
 	* gcutter/gcut-error.[ch]: add.
 	* test/test-gcut-assertions.c (test_equal_error): add.

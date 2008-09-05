@@ -184,11 +184,13 @@ cut_repository_new (const gchar *directory)
 static gboolean
 is_test_suite_so_path_name (const gchar *path_name)
 {
-    gboolean is_test_suite_so;
+    gboolean is_test_suite_so = FALSE;
     gchar *base_name;
 
     base_name = g_path_get_basename(path_name);
-    is_test_suite_so = g_str_has_prefix(base_name, "suite_");
+    if (g_str_has_prefix(base_name, "suite_") ||
+        g_str_has_prefix(base_name, "suite-"))
+        is_test_suite_so = TRUE;
     g_free(base_name);
     return is_test_suite_so;
 }
