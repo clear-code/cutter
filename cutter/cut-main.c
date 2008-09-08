@@ -26,15 +26,6 @@
 #include <glib.h>
 #include <glib/gi18n-lib.h>
 
-#ifdef ENABLE_NLS
-#  if !GLIB_CHECK_VERSION(2, 18, 0)
-#    define g_dgettext(domain, string) dgettext(domain, string)
-#  endif
-#  define G_(string) g_dgettext("glib20", string)
-#else
-#  define G_(string) (string)
-#endif
-
 #ifdef HAVE_BFD_H
 #  include <bfd.h>
 #endif
@@ -170,6 +161,8 @@ cut_init (int *argc, char ***argv)
 
     original_argv = g_strdupv(*argv);
 
+    setlocale(LC_ALL, "");
+
 #ifdef G_OS_WIN32
     {
         gchar *locale_dir;
@@ -184,8 +177,6 @@ cut_init (int *argc, char ***argv)
     bind_textdomain_codeset(GETTEXT_PACKAGE, "UTF-8");
     textdomain(GETTEXT_PACKAGE);
 
-    setlocale(LC_ALL, "");
-
     g_type_init();
     if (!g_thread_supported())
         g_thread_init(NULL);
@@ -198,7 +189,7 @@ cut_init (int *argc, char ***argv)
     parameter_string =
         g_strdup_printf(N_("TEST_DIRECTORY\n"
                            "  %s --mode=analyze %s LOG_DIRECTORY"),
-                        program_name, G_("[OPTION...]"));
+                        program_name, _("[OPTION...]"));
     option_context = g_option_context_new(parameter_string);
     g_free(program_name);
     g_free(parameter_string);
