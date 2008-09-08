@@ -21,6 +21,8 @@ void test_equal_string_with_diff(void);
 void test_equal_string_with_folded_diff(void);
 void test_equal_double(void);
 void test_operator(void);
+void test_operator_int(void);
+void test_operator_double(void);
 void test_equal_string_array (void);
 void test_null(void);
 void test_null_string(void);
@@ -345,6 +347,51 @@ test_operator (void)
     cut_assert_operator(NULL, ==, NULL);
     cut_assert_operator(TRUE, ||, FALSE);
     cut_assert_operator(TRUE, &&, TRUE);
+}
+
+static void
+stub_operator_int (void)
+{
+    cut_assert_operator_int(1, <, 2 + 3);
+    cut_assert_operator_int(2, ==, 1 + 1);
+    cut_assert_operator_int(1 + 1, >=, 2 + 4);
+}
+
+void
+test_operator_int (void)
+{
+    test = cut_test_new("stub-operator-int", stub_operator_int);
+    cut_assert_not_null(test);
+
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 0, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "stub-operator-int", NULL,
+                           "expected: <1 + 1> >= <2 + 4>\n"
+                           " but was: <2> >= <6>",
+                           "stub_operator_int");
+}
+
+static void
+stub_operator_double (void)
+{
+    cut_assert_operator_double(1.2, <, 2.2 + 3.4);
+    cut_assert_operator_double(1.1 + 1.1, >=, 2.2 + 4.4);
+}
+
+void
+test_operator_double (void)
+{
+    test = cut_test_new("stub-operator-double", stub_operator_double);
+    cut_assert_not_null(test);
+
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 0, 1, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "stub-operator-double", NULL,
+                           "expected: <1.1 + 1.1> >= <2.2 + 4.4>\n"
+                           " but was: <2.2> >= <6.6>",
+                           "stub_operator_double");
 }
 
 void

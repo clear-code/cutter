@@ -479,6 +479,41 @@ extern "C" {
 } while(0)
 
 /**
+ * cut_assert_operator_double:
+ * @lhs: a left hand side double value.
+ * @operator: a binary operator.
+ * @rhs: a right hand side double value.
+ * @...: optional format string, followed by parameters to insert
+ *       into the format string (as with printf())
+ *
+ * Passes if (@lhs @operator @rhs) is TRUE.
+ *
+ * e.g.:
+ * |[
+ * cut_assert_operator_double(1.1, <, 2.2) -> (1.1 < 2.2);
+ * ]|
+ *
+ * Since: 1.0.5
+ */
+#define cut_assert_operator_double(lhs, operator, rhs, ...) do          \
+{                                                                       \
+    double _lhs, _rhs;                                                  \
+                                                                        \
+    _lhs = (lhs);                                                       \
+    _rhs = (rhs);                                                       \
+    if (_lhs operator _rhs) {                                           \
+        cut_test_pass();                                                \
+    } else {                                                            \
+        cut_test_fail(FAILURE,                                          \
+                      cut_take_printf("expected: <%s> %s <%s>\n"        \
+                                      " but was: <%g> %s <%g>",         \
+                                      #lhs, #operator, #rhs,            \
+                                      _lhs, #operator, _rhs),           \
+                      ## __VA_ARGS__);                                  \
+    }                                                                   \
+} while(0)
+
+/**
  * cut_assert_equal:
  * @function: a function that compares @actual with @expected.
  * @expected: an expected value.
