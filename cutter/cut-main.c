@@ -54,6 +54,7 @@ char **environ = NULL;
 #include "cut-contractor.h"
 #include "cut-utils.h"
 #include "../gcutter/gcut-value-equal.h"
+#include "../gcutter/gcut-error.h"
 
 typedef enum {
     MODE_TEST,
@@ -420,7 +421,7 @@ cut_run (void)
         if (error) {
             gchar *message;
 
-            message = cut_utils_inspect_g_error(error);
+            message = gcut_error_inspect(error);
             g_warning("%s", message);
             g_free(message);
             g_error_free(error);

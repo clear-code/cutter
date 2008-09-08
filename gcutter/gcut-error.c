@@ -41,6 +41,24 @@ gcut_error_equal (GError *error1, GError *error2)
     return g_str_equal(error1->message, error2->message);
 }
 
+gchar *
+gcut_error_inspect (GError *error)
+{
+    GString *inspected;
+
+    if (!error)
+        return g_strdup("No error");
+
+    inspected = g_string_new(g_quark_to_string(error->domain));
+    g_string_append_printf(inspected, ":%d", error->code);
+    if (error->message) {
+        g_string_append(inspected, ": ");
+        g_string_append(inspected, error->message);
+    }
+
+    return g_string_free(inspected, FALSE);
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */

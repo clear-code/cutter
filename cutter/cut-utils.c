@@ -36,6 +36,7 @@
 #include "cut-diff.h"
 #include "cut-main.h"
 #include "../gcutter/gcut-public.h"
+#include "../gcutter/gcut-error.h"
 
 gchar *
 cut_utils_create_regex_pattern (const gchar *string)
@@ -150,24 +151,6 @@ cut_utils_inspect_string (const gchar *string)
         return "(null)";
 }
 
-gchar *
-cut_utils_inspect_g_error (GError *error)
-{
-    GString *inspected;
-
-    if (!error)
-        return g_strdup("No error");
-
-    inspected = g_string_new(g_quark_to_string(error->domain));
-    g_string_append_printf(inspected, ":%d", error->code);
-    if (error->message) {
-        g_string_append(inspected, ": ");
-        g_string_append(inspected, error->message);
-    }
-
-    return g_string_free(inspected, FALSE);
-}
-
 gboolean
 cut_utils_file_exist (const gchar *path)
 {
@@ -200,7 +183,7 @@ cut_utils_get_fixture_data_string (CutTestContext *context,
     if (error) {
         gchar *inspected, *message;
 
-        inspected = cut_utils_inspect_g_error(error);
+        inspected = gcut_error_inspect(error);
         message = g_strdup_printf("can't get fixture data: %s", inspected);
         g_error_free(error);
         cut_test_context_register_result(context,
@@ -244,7 +227,7 @@ cut_utils_get_fixture_data_string_and_path (CutTestContext *context,
     if (error) {
         gchar *inspected, *message;
 
-        inspected = cut_utils_inspect_g_error(error);
+        inspected = gcut_error_inspect(error);
         message = g_strdup_printf("can't get fixture data: %s", inspected);
         g_error_free(error);
         cut_test_context_register_result(context,

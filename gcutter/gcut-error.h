@@ -24,8 +24,10 @@
 
 G_BEGIN_DECLS
 
-gboolean gcut_error_equal         (GError *error1,
-                                   GError *error2);
+gboolean  gcut_error_equal         (GError *error1,
+                                    GError *error2);
+gchar    *gcut_error_inspect       (GError *error);
+
 G_END_DECLS
 
 #endif /* __GCUT_ERROR_H__ */

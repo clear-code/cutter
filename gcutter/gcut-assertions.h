@@ -364,8 +364,7 @@ G_BEGIN_DECLS
         cut_test_pass();                                                \
     } else {                                                            \
         const gchar *inspected;                                         \
-        inspected =                                                     \
-            cut_take_string(cut_utils_inspect_g_error(_error));         \
+        inspected = cut_take_string(gcut_error_inspect(_error));        \
         g_error_free(_error);                                           \
         cut_test_fail(FAILURE,                                          \
                       cut_take_printf("expected: <%s> is NULL\n"        \
@@ -417,9 +416,9 @@ G_BEGIN_DECLS
         const gchar *inspected_actual;                                  \
                                                                         \
         inspected_expected =                                            \
-            cut_take_string(cut_utils_inspect_g_error(_expected));      \
+            cut_take_string(gcut_error_inspect(_expected));             \
         inspected_actual =                                              \
-            cut_take_string(cut_utils_inspect_g_error(_actual));        \
+            cut_take_string(gcut_error_inspect(_actual));               \
         cut_test_fail(FAILURE,                                          \
                       cut_take_printf("<%s == %s>\n"                    \
                                       "expected: <%s>\n"                \
