@@ -24,7 +24,7 @@
 #include "gcut-error.h"
 
 gboolean
-gcut_error_equal (GError *error1, GError *error2)
+gcut_error_equal (const GError *error1, const GError *error2)
 {
     if (error1 == error2)
         return TRUE;
@@ -38,11 +38,17 @@ gcut_error_equal (GError *error1, GError *error2)
     if (error1->code != error2->code)
         return FALSE;
 
+    if (error1->message == NULL && error2->message == NULL)
+        return TRUE;
+
+    if (error1->message == NULL || error2->message == NULL)
+        return FALSE;
+
     return g_str_equal(error1->message, error2->message);
 }
 
 gchar *
-gcut_error_inspect (GError *error)
+gcut_error_inspect (const GError *error)
 {
     GString *inspected;
 

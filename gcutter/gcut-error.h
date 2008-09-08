@@ -24,9 +24,9 @@
 
 G_BEGIN_DECLS
 
-gboolean  gcut_error_equal         (GError *error1,
-                                    GError *error2);
-gchar    *gcut_error_inspect       (GError *error);
+gboolean  gcut_error_equal         (const GError *error1,
+                                    const GError *error2);
+gchar    *gcut_error_inspect       (const GError *error);
 
 G_END_DECLS
 

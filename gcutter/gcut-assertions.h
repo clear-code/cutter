@@ -404,8 +404,8 @@ G_BEGIN_DECLS
  */
 #define gcut_assert_equal_error(expected, actual, ...) do               \
 {                                                                       \
-    GError *_expected;                                                  \
-    GError *_actual;                                                    \
+    const GError *_expected;                                            \
+    const GError *_actual;                                              \
                                                                         \
     _expected = (expected);                                             \
     _actual = (actual);                                                 \
