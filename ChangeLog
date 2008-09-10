@@ -1,5 +1,8 @@
 2008-09-10  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/run-test.sh (CUTTER_WRAPPER): don't override CUTTER for sub
+	process.
+
 	* cutter/cut-loader.c, cutter/cut-module-factory-utils.c: support
 	'-' as shared object file name separator.
 

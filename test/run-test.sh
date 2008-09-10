@@ -11,8 +11,9 @@ if test -z "$CUTTER"; then
     CUTTER="$BASE_DIR/`make -s -C $BASE_DIR echo-cutter`"
 fi
 
+CUTTER_WRAPPER=
 if test x"$CUTTER_DEBUG" = x"yes"; then
-    CUTTER="$BASE_DIR/../libtool --mode=execute gdb --args $CUTTER"
+    CUTTER_WRAPPER="$BASE_DIR/../libtool --mode=execute gdb --args"
 fi
 
 export CUTTER
@@ -32,4 +33,4 @@ fi
 if test x"$USE_GTK" = x"yes"; then
     CUTTER_ARGS="-u gtk $CUTTER_ARGS"
 fi
-$CUTTER $CUTTER_ARGS "$@" $BASE_DIR
+$CUTTER_WRAPPER $CUTTER $CUTTER_ARGS "$@" $BASE_DIR
