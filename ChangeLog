@@ -1,5 +1,9 @@
 2008-09-10  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-main.c: add --max-threads option.
+
+	* test/test-cutter.c: follow the above change.
+
 	* test/test-gcut-assertions-helper.c: fix typos.
 
 	* cutter/cut-run-context.[ch]

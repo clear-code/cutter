@@ -80,7 +80,8 @@ setup (void)
         "  -s, --source-directory=DIRECTORY                Set directory of source code" LINE_FEED_CODE
         "  -n, --name=TEST_NAME                            Specify tests" LINE_FEED_CODE
         "  -t, --test-case=TEST_CASE_NAME                  Specify test cases" LINE_FEED_CODE
-        "  -m, --multi-thread                              Run test cases with multi-thread" LINE_FEED_CODE
+        "  -m, --multi-thread                              Run test cases and iterated tests with multi-thread" LINE_FEED_CODE
+        "  --max-threads=MAX_THREADS                       Run test cases and iterated tests with MAX_THREADS threads concurrently at a maximum (default: 10; -1 is no limit)" LINE_FEED_CODE
         "  --test-case-order=[none|name|name-desc]         Sort test case by. Default is 'none'." LINE_FEED_CODE
         "  --exclude-file=FILE                             Skip files" LINE_FEED_CODE
         "  --exclude-directory=DIRECTORY                   Skip directories" LINE_FEED_CODE
@@ -240,7 +241,8 @@ test_help_all (void)
         "  -s, --source-directory=DIRECTORY                Set directory of source code" LINE_FEED_CODE
         "  -n, --name=TEST_NAME                            Specify tests" LINE_FEED_CODE
         "  -t, --test-case=TEST_CASE_NAME                  Specify test cases" LINE_FEED_CODE
-        "  -m, --multi-thread                              Run test cases with multi-thread" LINE_FEED_CODE
+        "  -m, --multi-thread                              Run test cases and iterated tests with multi-thread" LINE_FEED_CODE
+        "  --max-threads=MAX_THREADS                       Run test cases and iterated tests with MAX_THREADS threads concurrently at a maximum (default: 10; -1 is no limit)" LINE_FEED_CODE
         "  --test-case-order=[none|name|name-desc]         Sort test case by. Default is 'none'." LINE_FEED_CODE
         "  --exclude-file=FILE                             Skip files" LINE_FEED_CODE
         "  --exclude-directory=DIRECTORY                   Skip directories" LINE_FEED_CODE
