@@ -165,6 +165,8 @@ cut_pipeline_new_from_run_context (CutRunContext *run_context)
                         cut_run_context_get_test_directory(run_context),
                         "use-multi-thread",
                         cut_run_context_get_multi_thread(run_context),
+                        "max-threads",
+                        cut_run_context_get_max_threads(run_context),
                         "exclude-files",
                         cut_run_context_get_exclude_files(run_context),
                         "exclude-directories",

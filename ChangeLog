@@ -1,5 +1,8 @@
 2008-09-10  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-pipeline.c (cut_pipeline_new_from_run_context): pass
+	max-threads parameter.
+
 	* cutter/cut-main.c: add --max-threads option.
 
 	* test/test-cutter.c: follow the above change.
