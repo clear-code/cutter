@@ -9,6 +9,7 @@
 #  include <unistd.h>
 #endif
 
+void attributes_stream (void);
 void data_stream (void);
 void test_stream (gconstpointer data);
 
@@ -190,6 +191,12 @@ setup_iterated_test (void)
                                           stub_iterated_test,
                                           stub_iterated_data);
     cut_test_case_add_test(test_case, CUT_TEST(test_iterator));
+}
+
+void
+attributes_stream (void)
+{
+    cut_set_attributes("multi-thread", "false");
 }
 
 void
