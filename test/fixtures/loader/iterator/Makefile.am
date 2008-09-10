@@ -5,7 +5,7 @@ INCLUDES =			\
 	-I$(top_srcdir)/cutter
 
 noinst_LTLIBRARIES =			\
-	success_iterated_test.la
+	success-iterated-test.la
 
 AM_LDFLAGS =			\
 	-module			\

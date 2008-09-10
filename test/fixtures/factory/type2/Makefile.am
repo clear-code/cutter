@@ -4,9 +4,9 @@ INCLUDES = $(CUTTER_CFLAGS)	\
 	-I$(top_srcdir)/cutter
 
 noinst_LTLIBRARIES = 			\
-		factory_module1.la	\
-		factory_module2.la	\
-		factory_module3.la
+		factory-module1.la	\
+		factory-module2.la	\
+		factory-module3.la
 
 AM_LDFLAGS =			\
 	-module			\

@@ -1,5 +1,10 @@
 2008-09-10  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-loader.c, cutter/cut-module-factory-utils.c: support
+	'-' as shared object file name separator.
+
+	* test/: use '-' not '_' for shared object file name separator.
+
 	* cutter/cut-pipeline.c
 	(create_command_line_args_from_parameters): add --max-threads option.
 

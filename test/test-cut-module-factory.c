@@ -79,7 +79,7 @@ test_module_arguments (void)
     gint argc = 3;
     gchar *argv[] = {
         "test program",
-        "-f", "stub_function",
+        "-f", "stub-function",
         NULL,
     };
     gchar **copy_argv;
@@ -99,7 +99,7 @@ test_module_arguments (void)
     g_object_get(object,
                  "name", &function_name,
                  NULL);
-    cut_assert_equal_string_with_free("stub_function", function_name);
+    cut_assert_equal_string_with_free("stub-function", function_name);
 
     g_object_unref(factory);
     factory = NULL;

@@ -4,9 +4,9 @@ INCLUDES = $(CUTTER_CFLAGS)	\
 	-I$(top_srcdir)/cutter
 
 noinst_LTLIBRARIES = 				\
-		suite_cuttest_loader_valid.la	\
-		suite_cuttest_loader_invalid.la	\
-		suite_cuttest_loader_none.la
+		suite-cuttest-loader-valid.la	\
+		suite-cuttest-loader-invalid.la	\
+		suite-cuttest-loader-none.la
 
 AM_LDFLAGS =			\
 	-module			\

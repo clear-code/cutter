@@ -33,7 +33,7 @@ setup (void)
                                  "loader",
                                  "attribute",
                                  ".libs",
-                                 "stub_attribute_test." G_MODULE_SUFFIX,
+                                 "stub-attribute-test." G_MODULE_SUFFIX,
                                  NULL);
     test_loader = cut_loader_new(test_path);
     g_free(test_path);

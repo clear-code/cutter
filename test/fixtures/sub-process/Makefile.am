@@ -7,7 +7,7 @@ INCLUDES = $(CUTTER_CFLAGS)	\
 	-I$(top_srcdir)/gcutter
 
 noinst_LTLIBRARIES = 		\
-	test_invoker.la
+	test-invoker.la
 
 AM_LDFLAGS =			\
 	-module			\

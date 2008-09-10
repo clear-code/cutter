@@ -6,7 +6,7 @@ INCLUDES = $(CUTTER_CFLAGS)	\
 noinst_LTLIBRARIES =		\
 		test1.la	\
 		test2.la	\
-		cannot_load_module.la
+		cannot-load-module.la
 
 AM_LDFLAGS =			\
 	-module			\

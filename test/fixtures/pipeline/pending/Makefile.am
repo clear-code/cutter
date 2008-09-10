@@ -5,7 +5,7 @@ INCLUDES =			\
 	-I$(top_srcdir)/cutter
 
 noinst_LTLIBRARIES = 		\
-	pending_test.la
+	pending-test.la
 
 AM_LDFLAGS =			\
 	-module			\

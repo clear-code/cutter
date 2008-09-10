@@ -37,7 +37,7 @@
 #include "cut-test-iterator.h"
 #include "cut-experimental.h"
 
-#define TEST_SUITE_SO_NAME_PREFIX "suite_"
+#define TEST_SUITE_SO_NAME_PREFIX "suite"
 #define TEST_NAME_PREFIX "test_"
 #define DATA_SETUP_FUNCTION_NAME_PREFIX "data_"
 #define ATTRIBUTES_SETUP_FUNCTION_NAME_PREFIX "attributes_"
@@ -645,13 +645,21 @@ static gchar *
 get_suite_prefix (CutLoaderPrivate *priv)
 {
     gchar *prefix, *base_name, *original_base_name;
+    gchar *character;
 
     original_base_name = base_name = g_path_get_basename(priv->so_filename);
-    if (g_str_has_prefix(base_name, TEST_SUITE_SO_NAME_PREFIX))
-        base_name += strlen(TEST_SUITE_SO_NAME_PREFIX);
+    if (g_str_has_prefix(base_name, TEST_SUITE_SO_NAME_PREFIX "_") ||
+        g_str_has_prefix(base_name, TEST_SUITE_SO_NAME_PREFIX "-"))
+        base_name += strlen(TEST_SUITE_SO_NAME_PREFIX "-");
     prefix = g_strndup(base_name,
                        strlen(base_name) - strlen("." G_MODULE_SUFFIX));
     g_free(original_base_name);
+
+    for (character = prefix; *character; character++) {
+        if (*character == '-')
+            *character = '_';
+    }
+
     return prefix;
 }
 

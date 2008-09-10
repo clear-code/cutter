@@ -5,7 +5,7 @@ INCLUDES =			\
 	-I$(top_srcdir)/cutter
 
 noinst_LTLIBRARIES = 		\
-	stub_loader_test.la
+	stub-loader-test.la
 
 AM_LDFLAGS =			\
 	-module			\

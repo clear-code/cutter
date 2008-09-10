@@ -118,7 +118,7 @@ setup (void)
                                  "loader",
                                  "test",
                                  ".libs",
-                                 "stub_loader_test." G_MODULE_SUFFIX,
+                                 "stub-loader-test." G_MODULE_SUFFIX,
                                  NULL);
     loader = cut_loader_new(test_path);
     g_free(test_path);
@@ -126,7 +126,7 @@ setup (void)
     cut_test_suite_add_test_case(test_object, test_case);
     g_object_unref(test_case);
 
-    test_case = cut_test_case_new("stub_test_case", NULL, NULL,
+    test_case = cut_test_case_new("stub-test-case", NULL, NULL,
                                   get_current_test_context,
                                   set_current_test_context,
                                   NULL, NULL);
@@ -136,7 +136,7 @@ setup (void)
     cut_test_suite_add_test_case(test_object, test_case);
     g_object_unref(test_case);
 
-    test_case = cut_test_case_new("stock_test_case", NULL, NULL,
+    test_case = cut_test_case_new("stock-test-case", NULL, NULL,
                                   get_current_test_context,
                                   set_current_test_context,
                                   NULL, NULL);
@@ -205,7 +205,7 @@ void
 test_run_test_case (void)
 {
     cut_assert(cut_test_suite_run_test_case(test_object, run_context,
-                                            "stub_test_case"));
+                                            "stub-test-case"));
     cut_assert_equal_int(1, n_run_stub_test_function1);
     cut_assert_equal_int(1, n_run_stub_test_function2);
     cut_assert_equal_int(1, n_run_stub_run_test_function);
@@ -253,7 +253,7 @@ test_run_test_with_regex (void)
 void
 test_run_test_in_test_case (void)
 {
-    cut_assert(run_test_in_test_case("run_test_function", "stub_test_case"));
+    cut_assert(run_test_in_test_case("run_test_function", "stub-test-case"));
     cut_assert_equal_int(0, n_run_stub_test_function1);
     cut_assert_equal_int(0, n_run_stub_test_function2);
     cut_assert_equal_int(1, n_run_stub_run_test_function);
@@ -265,7 +265,7 @@ test_run_test_in_test_case (void)
 void
 test_run_test_with_regex_in_test_case (void)
 {
-    cut_assert(run_test_in_test_case("/stub/", "stub_test_case"));
+    cut_assert(run_test_in_test_case("/stub/", "stub-test-case"));
     cut_assert_equal_int(1, n_run_stub_test_function1);
     cut_assert_equal_int(1, n_run_stub_test_function2);
     cut_assert_equal_int(0, n_run_stub_run_test_function);

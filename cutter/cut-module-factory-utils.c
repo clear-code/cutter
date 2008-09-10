@@ -158,30 +158,35 @@ cut_module_factory_load_module (const gchar *type, const gchar *name)
     CutModule *module;
     GList *modules = NULL;
     gchar *real_name;
+    gchar *separators[] = {"_", "-", NULL};
+    gchar **separators_p;
 
     modules = g_hash_table_lookup(factories, type);
     if (!modules)
         return NULL;
 
-    real_name = g_strconcat(name, "_factory", NULL);
+    for (separators_p = separators; *separators_p; separators_p++) {
+        real_name = g_strconcat(name, *separators_p, "factory", NULL);
+        module = cut_module_find(modules, real_name);
+        if (module) {
+            g_free(real_name);
+            return module;
+        }
 
-    module = cut_module_find(modules, real_name);
-    if (module)
-        goto END;
-
-    module = cut_module_load_module(_cut_module_factory_module_dir(), real_name);
-    if (module) {
-        if (g_type_module_use(G_TYPE_MODULE(module))) {
-            modules = g_list_prepend(modules, module);
-            g_type_module_unuse(G_TYPE_MODULE(module));
-            g_hash_table_replace(factories, g_strdup(type), modules);
+        module = cut_module_load_module(_cut_module_factory_module_dir(),
+                                        real_name);
+        g_free(real_name);
+        if (module) {
+            if (g_type_module_use(G_TYPE_MODULE(module))) {
+                modules = g_list_prepend(modules, module);
+                g_type_module_unuse(G_TYPE_MODULE(module));
+                g_hash_table_replace(factories, g_strdup(type), modules);
+            }
+            return module;
         }
     }
 
-END:
-    g_free(real_name);
-
-    return module;
+    return NULL;
 }
 
 void
@@ -206,11 +211,13 @@ cut_module_factory_get_names (const gchar *type)
     orig_names = cut_module_collect_names(modules);
     for (node = orig_names; node; node = g_list_next(node)) {
         const gchar *name = node->data;
-        gchar *p;
-        if (!g_str_has_suffix(name, "_factory"))
-            continue;
-        p = g_strrstr(name, "_factory");
-        names = g_list_prepend(names, g_strndup(name, p - name));
+
+        if (g_str_has_suffix(name, "_factory") ||
+            g_str_has_suffix(name, "-factory")) {
+            gchar *p;
+            p = g_strrstr(name, "factory") - 1;
+            names = g_list_prepend(names, g_strndup(name, p - name));
+        }
     }
     g_list_free(orig_names);
     return g_list_reverse(names);

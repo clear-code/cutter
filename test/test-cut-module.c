@@ -73,7 +73,7 @@ test_collect_names (void)
     cut_assert(names);
     cut_assert_equal_int(3, g_list_length(names));
 
-    cut_assert_equal_string("cannot_load_module", names->data);
+    cut_assert_equal_string("cannot-load-module", names->data);
     cut_assert_equal_string("test1", g_list_nth_data(names, 1));
     cut_assert_equal_string("test2", g_list_nth_data(names, 2));
 

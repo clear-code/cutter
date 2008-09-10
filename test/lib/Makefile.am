@@ -11,8 +11,8 @@ endif
 EXTRA_DIST = cuttest-assertions.h
 
 noinst_LTLIBRARIES = 			\
-	libcuttest_utils.la		\
-	libcuttest_event_receiver.la
+	libcuttest-utils.la		\
+	libcuttest-event-receiver.la
 
 LIBS =						\
 	$(top_builddir)/cutter/libcutter.la	\

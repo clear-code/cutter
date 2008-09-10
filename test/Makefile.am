@@ -22,45 +22,45 @@ TESTS_ENVIRONMENT = 		\
 	CUTTER="$(CUTTER)"
 
 noinst_LTLIBRARIES = 				\
-		test_cutter.la			\
-		test_cut_assertions.la		\
-		test_gcut_assertions.la		\
-		test_cut_test_attribute.la	\
-		test_cut_test.la		\
-		test_cut_iterated_test.la	\
-		test_cut_test_result.la		\
-		test_cut_test_case.la		\
-		test_cut_test_suite.la		\
-		test_cut_test_context.la	\
-		test_cut_loader.la		\
-		test_cut_loader_suite.la	\
-		test_cut_repository.la		\
+		test-cutter.la			\
+		test-cut-assertions.la		\
+		test-gcut-assertions.la		\
+		test-cut-test-attribute.la	\
+		test-cut-test.la		\
+		test-cut-iterated-test.la	\
+		test-cut-test-result.la		\
+		test-cut-test-case.la		\
+		test-cut-test-suite.la		\
+		test-cut-test-context.la	\
+		test-cut-loader.la		\
+		test-cut-loader-suite.la	\
+		test-cut-repository.la		\
 		test-cut-run-context.la		\
-		test_cut_test_runner.la		\
-		test_cut_value_equal.la		\
-		test_cut_module.la		\
-		test_cut_module_factory.la	\
-		test_cut_factory_builder.la	\
-		test_cut_contractor.la		\
-		test_cut_fork.la		\
-		test_cut_process.la		\
-		test_cut_pipeline.la		\
-		test_cut_stream_parser.la	\
-		test_cut_report_xml.la		\
-		test_cut_xml_stream.la		\
-		test_cut_verbose_level.la	\
-		test_cut_utils.la		\
-		test_cut_sequence_matcher.la	\
-		test_cut_diff.la		\
-		test_gcut_assertions_helper.la	\
-		test_gcut_test_utils.la		\
-		test_cut_main.la		\
-		test_cut_fixture_data.la	\
-		test_cut_test_data.la		\
-		test_cut_test_iterator.la	\
-		test_cut_sub_process.la		\
-		test_cut_sub_process_group.la	\
-		test_cut_file_stream_reader.la
+		test-cut-test-runner.la		\
+		test-cut-value-equal.la		\
+		test-cut-module.la		\
+		test-cut-module-factory.la	\
+		test-cut-factory-builder.la	\
+		test-cut-contractor.la		\
+		test-cut-fork.la		\
+		test-cut-process.la		\
+		test-cut-pipeline.la		\
+		test-cut-stream-parser.la	\
+		test-cut-report-xml.la		\
+		test-cut-xml-stream.la		\
+		test-cut-verbose-level.la	\
+		test-cut-utils.la		\
+		test-cut-sequence-matcher.la	\
+		test-cut-diff.la		\
+		test-gcut-assertions-helper.la	\
+		test-gcut-test-utils.la		\
+		test-cut-main.la		\
+		test-cut-fixture-data.la	\
+		test-cut-test-data.la		\
+		test-cut-test-iterator.la	\
+		test-cut-sub-process.la		\
+		test-cut-sub-process-group.la	\
+		test-cut-file-stream-reader.la
 
 AM_LDFLAGS =			\
 	-module			\
@@ -70,10 +70,10 @@ AM_LDFLAGS =			\
 
 LIBS =							\
 	$(top_builddir)/cutter/libcutter.la		\
-	$(top_builddir)/test/lib/libcuttest_utils.la	\
+	$(top_builddir)/test/lib/libcuttest-utils.la	\
 	$(GLIB_LIBS)
 
-EVENT_RECEIVER_LIBS = $(top_builddir)/test/lib/libcuttest_event_receiver.la
+EVENT_RECEIVER_LIBS = $(top_builddir)/test/lib/libcuttest-event-receiver.la
 
 
 test_cutter_la_SOURCES		= test-cutter.c

@@ -3,10 +3,10 @@ INCLUDES = $(CUTTER_CFLAGS)	\
 	-I$(top_srcdir)		\
 	-I$(top_srcdir)/cutter
 
-noinst_LTLIBRARIES = 					\
-		repository_test_case1.la		\
-		repository_test_case2.la		\
-		repository_test_case3.la
+noinst_LTLIBRARIES = 				\
+	repository-test-case1.la		\
+	repository-test-case2.la		\
+	repository-test-case3.la
 
 AM_LDFLAGS =			\
 	-module			\

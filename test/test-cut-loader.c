@@ -90,7 +90,7 @@ test_load_function (void)
     const gchar *target_test_names[] = {"/.*/", NULL};
     gint i;
 
-    loader = loader_new("test", "stub_loader_test." G_MODULE_SUFFIX);
+    loader = loader_new("test", "stub-loader-test." G_MODULE_SUFFIX);
     test_case = cut_loader_load_test_case(loader);
     cut_assert(test_case);
     cut_assert_equal_int(4, cut_test_case_get_n_tests(test_case, NULL));
@@ -121,7 +121,7 @@ test_load_startup_and_shutdown_function (void)
     CutStartupFunction startup_function = NULL;
     CutShutdownFunction shutdown_function = NULL;
 
-    loader = loader_new("test", "stub_loader_test." G_MODULE_SUFFIX);
+    loader = loader_new("test", "stub-loader-test." G_MODULE_SUFFIX);
     test_case = cut_loader_load_test_case(loader);
     cut_assert(test_case);
 
@@ -136,7 +136,7 @@ test_load_startup_and_shutdown_function (void)
 void
 test_fail_to_load (void)
 {
-    loader = loader_new("module", "cannot_load_module." G_MODULE_SUFFIX);
+    loader = loader_new("module", "cannot-load-module." G_MODULE_SUFFIX);
     cut_assert_not_null(loader);
 
     test_case = cut_loader_load_test_case(loader);
@@ -151,7 +151,7 @@ test_load_test_iterator (void)
     CutIteratedTestFunction iterated_test_function = NULL;
     CutDataSetupFunction data_setup_function = NULL;
 
-    loader = loader_new("iterator", "success_iterated_test." G_MODULE_SUFFIX);
+    loader = loader_new("iterator", "success-iterated-test." G_MODULE_SUFFIX);
     cut_assert_not_null(loader);
 
     test_case = cut_loader_load_test_case(loader);

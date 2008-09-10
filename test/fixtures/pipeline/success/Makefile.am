@@ -4,7 +4,7 @@ INCLUDES = $(CUTTER_CFLAGS)	\
 	-I$(top_srcdir)/cutter
 
 noinst_LTLIBRARIES = 		\
-		success_test.la
+	success-test.la
 
 AM_LDFLAGS =			\
 	-module			\
