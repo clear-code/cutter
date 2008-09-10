@@ -354,6 +354,10 @@ create_command_line_args_from_parameters (CutPipeline *pipeline)
     if (cut_run_context_get_multi_thread(run_context))
         append_arg(argv, "--multi-thread");
 
+    append_arg_printf(argv,
+                      "--max-threads=%d",
+                      cut_run_context_get_max_threads(run_context));
+
     strings = cut_run_context_get_exclude_files(run_context);
     while (strings && *strings) {
         append_arg_printf(argv, "--exclude-file=%s", *strings);

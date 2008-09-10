@@ -1,5 +1,8 @@
 2008-09-10  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-pipeline.c
+	(create_command_line_args_from_parameters): add --max-threads option.
+
 	* cutter/cut-multi-process.[ch]
 	(cut_sub_process_{set,get}_max_threads): add.
 
