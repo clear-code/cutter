@@ -321,7 +321,8 @@ run_test_with_thread_support (CutTestIterator *test_iterator,
                                               NULL, test_case, test_iterator,
                                               test);
     is_multi_thread = cut_run_context_is_multi_thread(run_context);
-    multi_thread_attribute = cut_test_get_attribute(test, "multi-thread");
+    multi_thread_attribute = cut_test_get_attribute(CUT_TEST(test_iterator),
+                                                    "multi-thread");
     if (multi_thread_attribute &&
         g_str_equal(multi_thread_attribute, "false"))
         is_multi_thread = FALSE;

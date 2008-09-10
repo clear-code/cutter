@@ -1,5 +1,7 @@
 2008-09-10  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-iterator.c: fix attribute target.
+
 	* cutter/cut-test-iterator.c, cutter/cut-test-suite.c: use
 	GThreadPool to limit number of max threads.
 
