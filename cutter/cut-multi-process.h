@@ -266,7 +266,7 @@ void           cut_sub_process_set_multi_thread   (CutSubProcess  *sub_process,
  *
  * Since: 1.0.5
  */
-int            cut_sub_process_get_multi_thread   (CutSubProcess  *sub_process);
+int            cut_sub_process_get_max_threads    (CutSubProcess  *sub_process);
 
 /**
  * cut_sub_process_set_max_threads:
@@ -280,7 +280,7 @@ int            cut_sub_process_get_multi_thread   (CutSubProcess  *sub_process);
  *
  * Since: 1.0.5
  */
-void           cut_sub_process_set_multi_thread   (CutSubProcess  *sub_process,
+void           cut_sub_process_set_max_threads    (CutSubProcess  *sub_process,
                                                    int             max_threads);
 
 /**

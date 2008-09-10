@@ -1,7 +1,7 @@
 2008-09-10  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-multi-process.[ch]
-	(cut_sub_process_{set,get}_multi_thread): add.
+	(cut_sub_process_{set,get}_max_threads): add.
 
 	* cutter/cut-pipeline.c (cut_pipeline_new_from_run_context): pass
 	max-threads parameter.
