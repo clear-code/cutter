@@ -1,5 +1,7 @@
 2008-09-10  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-gcut-assertions-helper.c: fix typos.
+
 	* cutter/cut-run-context.[ch]
 	(cut_run_context_{set,get}_max_threads): add.
 

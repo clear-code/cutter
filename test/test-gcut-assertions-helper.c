@@ -5,11 +5,11 @@ void test_take_g_object(void);
 void test_take_g_list(void);
 
 #define CUT_TYPE_SIMPLE_OBJECT            (cut_simple_object_get_type ())
-#define CUT_SIMPLE_OBJECT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_SIMPLE_OBJECT, CutModuleTest1))
-#define CUT_SIMPLE_OBJECT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_SIMPLE_OBJECT, CutModuleTest1Class))
+#define CUT_SIMPLE_OBJECT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_SIMPLE_OBJECT, CutSimpleObject))
+#define CUT_SIMPLE_OBJECT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_SIMPLE_OBJECT, CutSimpleObjectClass))
 #define CUT_IS_SIMPLE_OBJECT(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_SIMPLE_OBJECT))
 #define CUT_IS_SIMPLE_OBJECT_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_SIMPLE_OBJECT))
-#define CUT_SIMPLE_OBJECT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_SIMPLE_OBJECT, CutModuleTest1Class))
+#define CUT_SIMPLE_OBJECT_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_SIMPLE_OBJECT, CutSimpleObjectClass))
 
 typedef struct _CutSimpleObject CutSimpleObject;
 typedef struct _CutSimpleObjectClass CutSimpleObjectClass;
