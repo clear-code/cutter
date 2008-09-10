@@ -43,6 +43,8 @@
 #include "cut-marshalers.h"
 #include "cut-test-result.h"
 
+#include "../gcutter/gcut-error.h"
+
 #define CUT_TEST_SUITE_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_SUITE, CutTestSuitePrivate))
 
 typedef struct _CutTestSuitePrivate	CutTestSuitePrivate;
@@ -223,15 +225,15 @@ typedef struct _RunTestInfo
     gchar **test_names;
 } RunTestInfo;
 
-static gpointer
-run (gpointer data)
+static void
+run (gpointer data, gpointer user_data)
 {
     RunTestInfo *info = data;
     CutTestSuite *test_suite;
     CutTestCase *test_case;
     CutRunContext *run_context;
     gchar **test_names;
-    gboolean success;
+    gboolean *success = user_data;
 
     test_suite = info->test_suite;
     test_case = info->test_case;
@@ -239,8 +241,9 @@ run (gpointer data)
     test_names = info->test_names;
 
     g_signal_emit_by_name(test_suite, "start-test-case", test_case);
-    success = cut_test_case_run_with_filter(test_case, run_context,
-                                            (const gchar**)test_names);
+    if (!cut_test_case_run_with_filter(test_case, run_context,
+                                       (const gchar**)test_names))
+        *success =  FALSE;
     g_signal_emit_by_name(test_suite, "complete-test-case", test_case);
 
     g_object_unref(test_suite);
@@ -248,14 +251,12 @@ run (gpointer data)
     g_object_unref(run_context);
     g_strfreev(test_names);
     g_free(info);
-
-    return GINT_TO_POINTER(success);
 }
 
 static void
 run_with_thread_support (CutTestSuite *test_suite, CutTestCase *test_case,
                          CutRunContext *run_context, const gchar **test_names,
-                         gboolean try_thread, GList **threads, gboolean *success)
+                         GThreadPool *thread_pool, gboolean *success)
 {
     RunTestInfo *info;
     gboolean need_no_thread_run = TRUE;
@@ -269,24 +270,24 @@ run_with_thread_support (CutTestSuite *test_suite, CutTestCase *test_case,
     info->run_context = g_object_ref(run_context);
     info->test_names = g_strdupv((gchar **)test_names);
 
-    if (try_thread) {
-        GThread *thread;
+    if (thread_pool) {
         GError *error = NULL;
 
-        thread = g_thread_create(run, info, TRUE, &error);
+        g_thread_pool_push(thread_pool, info, &error);
         if (error) {
-            g_warning("%s(%d)", error->message, error->code);
+            gchar *inspected;
+
+            inspected = gcut_error_inspect(error);
+            g_warning("%s", inspected);
+            g_free(inspected);
             g_error_free(error);
         } else {
             need_no_thread_run = FALSE;
-            *threads = g_list_append(*threads, thread);
         }
     }
 
-    if (need_no_thread_run) {
-        if (!GPOINTER_TO_INT(run(info)))
-            *success = FALSE;
-    }
+    if (need_no_thread_run)
+        run(info, success);
 }
 
 #ifndef G_OS_WIN32
@@ -382,7 +383,8 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite,
                                GList *test_cases, const gchar **test_names)
 {
     CutTestSuitePrivate *priv;
-    GList *node, *threads = NULL;
+    GList *node;
+    GThreadPool *thread_pool = NULL;
     GList *sorted_test_cases;
     gboolean try_thread;
     gboolean all_success = TRUE;
@@ -410,6 +412,24 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite,
         set_int_action = FALSE;
 #endif
 
+    try_thread = cut_run_context_get_multi_thread(run_context);
+    if (try_thread) {
+        GError *error = NULL;
+        gint max_threads;
+
+        max_threads = cut_run_context_get_max_threads(run_context);
+        thread_pool = g_thread_pool_new(run, &all_success,
+                                        max_threads, FALSE, &error);
+        if (error) {
+            gchar *inspected;
+
+            inspected = gcut_error_inspect(error);
+            g_warning("%s", inspected);
+            g_free(inspected);
+            g_error_free(error);
+        }
+    }
+
     signum = setjmp(jump_buffer);
     switch (signum) {
       case 0:
@@ -420,7 +440,6 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite,
         if (priv->warmup)
             priv->warmup();
 
-        try_thread = cut_run_context_get_multi_thread(run_context);
         for (node = sorted_test_cases; node; node = g_list_next(node)) {
             CutTestCase *test_case = node->data;
 
@@ -428,19 +447,14 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite,
                 continue;
             if (CUT_IS_TEST_CASE(test_case)) {
                 run_with_thread_support(test_suite, test_case, run_context,
-                                        test_names,
-                                        try_thread, &threads, &all_success);
+                                        test_names, thread_pool, &all_success);
             } else {
                 g_warning("This object is not test case!");
             }
         }
 
-        for (node = threads; node; node = g_list_next(node)) {
-            GThread *thread = node->data;
-
-            if (!GPOINTER_TO_INT(g_thread_join(thread)))
-                all_success = FALSE;
-        }
+        if (thread_pool)
+            g_thread_pool_free(thread_pool, FALSE, TRUE);
 
         if (all_success) {
             CutTestResult *result;

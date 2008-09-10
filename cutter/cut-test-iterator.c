@@ -32,6 +32,8 @@
 #include "cut-marshalers.h"
 #include "cut-test-result.h"
 
+#include "../gcutter/gcut-error.h"
+
 #define CUT_TEST_ITERATOR_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_ITERATOR, CutTestIteratorPrivate))
 
 typedef struct _CutTestIteratorPrivate	CutTestIteratorPrivate;
@@ -238,8 +240,8 @@ typedef struct _RunTestInfo
     CutTestContext *original_test_context;
 } RunTestInfo;
 
-static gpointer
-run_test_without_thread (gpointer data)
+static void
+run_test_without_thread (gpointer data, gpointer user_data)
 {
     RunTestInfo *info = data;
     CutRunContext *run_context;
@@ -247,7 +249,7 @@ run_test_without_thread (gpointer data)
     CutTestIterator *test_iterator;
     CutIteratedTest *iterated_test;
     CutTestContext *test_context, *parent_test_context, *original_test_context;
-    gboolean success = TRUE;
+    gboolean *success = user_data;
 
     run_context = info->run_context;
     test_case = info->test_case;
@@ -258,7 +260,7 @@ run_test_without_thread (gpointer data)
     original_test_context = info->original_test_context;
 
     if (cut_run_context_is_canceled(run_context))
-        return GINT_TO_POINTER(success);
+        return;
 
     cut_test_case_set_current_test_context(test_case, test_context);
 
@@ -267,10 +269,10 @@ run_test_without_thread (gpointer data)
 
     cut_test_case_run_setup(test_case, test_context);
     if (cut_test_context_is_failed(test_context)) {
-        success = FALSE;
+        *success = FALSE;
     } else {
-        success = cut_test_run(CUT_TEST(iterated_test), test_context,
-                               run_context);
+        if (!cut_test_run(CUT_TEST(iterated_test), test_context, run_context))
+            *success = FALSE;
     }
     cut_test_case_run_teardown(test_case, test_context);
 
@@ -292,8 +294,6 @@ run_test_without_thread (gpointer data)
     g_object_unref(parent_test_context);
     g_object_unref(original_test_context);
     g_free(info);
-
-    return GINT_TO_POINTER(success);
 }
 
 static void
@@ -301,31 +301,38 @@ run_test_with_thread_support (CutTestIterator *test_iterator,
                               CutIteratedTest *iterated_test,
                               CutTestContext *test_context,
                               CutRunContext *run_context,
-                              GList **threads,
+                              GThreadPool *thread_pool,
                               gboolean *success)
 {
     RunTestInfo *info;
+    CutTest *test;
     CutTestCase *test_case;
     CutTestContext *original_test_context, *local_test_context;
     gboolean is_multi_thread;
     gboolean need_no_thread_run = TRUE;
+    const gchar *multi_thread_attribute;
 
     if (cut_run_context_is_canceled(run_context))
         return;
 
+    test = CUT_TEST(iterated_test);
     test_case = cut_test_context_get_test_case(test_context);
     local_test_context = cut_test_context_new(run_context,
                                               NULL, test_case, test_iterator,
-                                              CUT_TEST(iterated_test));
+                                              test);
     is_multi_thread = cut_run_context_is_multi_thread(run_context);
+    multi_thread_attribute = cut_test_get_attribute(test, "multi-thread");
+    if (multi_thread_attribute &&
+        g_str_equal(multi_thread_attribute, "false"))
+        is_multi_thread = FALSE;
     cut_test_context_set_multi_thread(local_test_context, is_multi_thread);
     cut_test_context_set_data(local_test_context,
                               cut_test_context_get_current_data(test_context));
 
     original_test_context = cut_test_case_get_current_test_context(test_case);
 
-    cut_test_context_set_test(test_context, CUT_TEST(iterated_test));
-    cut_test_context_set_test(local_test_context, CUT_TEST(iterated_test));
+    cut_test_context_set_test(test_context, test);
+    cut_test_context_set_test(local_test_context, test);
 
     info = g_new0(RunTestInfo, 1);
     info->run_context = g_object_ref(run_context);
@@ -335,23 +342,24 @@ run_test_with_thread_support (CutTestIterator *test_iterator,
     info->test_context = local_test_context;
     info->parent_test_context = g_object_ref(test_context);
     info->original_test_context = g_object_ref(original_test_context);
-    if (is_multi_thread) {
-        GThread *thread;
+    if (is_multi_thread && thread_pool) {
         GError *error = NULL;
 
-        thread = g_thread_create(run_test_without_thread, info, TRUE, &error);
+        g_thread_pool_push(thread_pool, info, &error);
         if (error) {
-            g_warning("%s(%d)", error->message, error->code);
+            gchar *inspected;
+
+            inspected = gcut_error_inspect(error);
+            g_warning("%s", inspected);
+            g_free(inspected);
             g_error_free(error);
         } else {
             need_no_thread_run = FALSE;
-            *threads = g_list_append(*threads, thread);
         }
     }
 
-    if (need_no_thread_run &&
-        !GPOINTER_TO_INT(run_test_without_thread(info)))
-        *success = FALSE;
+    if (need_no_thread_run)
+        run_test_without_thread(info, success);
 }
 
 static void
@@ -370,7 +378,9 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
     CutTestIteratorPrivate *priv;
     CutTestResult *result;
     CutTestCase *test_case;
-    GList *node, *tests = NULL, *test_data_list = NULL, *threads = NULL;
+    GList *node, *tests = NULL, *test_data_list = NULL;
+    GThreadPool *thread_pool = NULL;
+    GError *error = NULL;
     CutTestResultStatus status = CUT_TEST_RESULT_SUCCESS;
     gboolean all_success = TRUE;
     jmp_buf jump_buffer;
@@ -392,6 +402,20 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
     if (cut_test_context_is_failed(test_context)) {
         cut_test_context_set_test_iterator(test_context, NULL);
         return FALSE;
+    }
+
+    thread_pool = g_thread_pool_new(run_test_without_thread,
+                                    &all_success,
+                                    cut_run_context_get_max_threads(run_context),
+                                    FALSE,
+                                    &error);
+    if (error) {
+        gchar *inspected;
+
+        inspected = gcut_error_inspect(error);
+        g_warning("%s", inspected);
+        g_free(inspected);
+        g_error_free(error);
     }
 
     cut_run_context_prepare_test_iterator(run_context, test_iterator);
@@ -429,18 +453,13 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
 
         run_test_with_thread_support(test_iterator, test,
                                      test_context, run_context,
-                                     &threads, &all_success);
+                                     thread_pool, &all_success);
 
         cut_test_context_shift_data(test_context);
     }
 
-    for (node = threads; node; node = g_list_next(node)) {
-        GThread *thread = node->data;
-
-        if (!GPOINTER_TO_INT(g_thread_join(thread)))
-            all_success = FALSE;
-    }
-    g_list_free(threads);
+    if (thread_pool)
+        g_thread_pool_free(thread_pool, FALSE, TRUE);
 
     for (node = tests; node; node = g_list_next(node)) {
         CutTest *test = node->data;
