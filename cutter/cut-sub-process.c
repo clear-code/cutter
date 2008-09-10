@@ -21,6 +21,7 @@
 #  include "config.h"
 #endif /* HAVE_CONFIG_H */
 
+#include "cut-main.h"
 #include "cut-sub-process.h"
 #include "cut-pipeline.h"
 #include "cut-test-context.h"
@@ -296,7 +297,7 @@ cut_sub_process_wait (CutSubProcess *sub_process)
     priv = CUT_SUB_PROCESS_GET_PRIVATE(sub_process);
     if (!priv->is_ran) {
         while (priv->running)
-            g_main_context_iteration(NULL, FALSE);
+            cut_run_iteration();
     }
     return priv->is_success;
 }

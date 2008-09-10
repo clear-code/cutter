@@ -434,6 +434,20 @@ cut_run (void)
     return success;
 }
 
+gboolean
+cut_run_iteration (void)
+{
+    static GStaticRecMutex mutex = G_STATIC_REC_MUTEX_INIT;
+    gboolean dispatched;
+
+    /* should lock? */
+    /* g_static_rec_mutex_lock(&mutex); */
+    dispatched = g_main_context_iteration(NULL, FALSE);
+    /* g_static_rec_mutex_unlock(&mutex); */
+
+    return dispatched;
+}
+
 const gchar *
 cut_get_cutter_command_path (void)
 {

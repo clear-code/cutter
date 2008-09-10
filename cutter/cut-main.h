@@ -35,6 +35,7 @@ void          cut_init               (int *argc, char ***argv);
 void          cut_quit               (void);
 
 gboolean      cut_run                (void);
+gboolean      cut_run_iteration      (void);
 
 void          cut_set_cutter_command_path (const char *argv0);
 const char   *cut_get_cutter_command_path (void);

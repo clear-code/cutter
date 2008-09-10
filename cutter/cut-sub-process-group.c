@@ -21,6 +21,7 @@
 #  include "config.h"
 #endif /* HAVE_CONFIG_H */
 
+#include "cut-main.h"
 #include "cut-sub-process-group.h"
 #include "cut-sub-process.h"
 #include "cut-test-context.h"
@@ -243,7 +244,7 @@ cut_sub_process_group_wait (CutSubProcessGroup *sub_process_group)
 
     priv = CUT_SUB_PROCESS_GROUP_GET_PRIVATE(sub_process_group);
     while (priv->n_uncompleted_processes > 0)
-        g_main_context_iteration(NULL, FALSE);
+        cut_run_iteration();
     return priv->all_success;
 }
 

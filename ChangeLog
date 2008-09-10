@@ -1,5 +1,13 @@
 2008-09-10  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-main.[ch] (cut_run_iteration): add for replacing
+	g_main_context_iteration() but it doesn't do any other work now.
+	It may lock in the feature.
+
+	* cutter/cut-runner.c, cutter/cut-sub-process.c,
+	cutter/cut-sub-process-group.c: use cut_run_iteration() instead of
+	g_main_context_iteration().
+
 	* cutter/cut-test-iterator.c: fix attribute target.
 
 	* cutter/cut-test-iterator.c, cutter/cut-test-suite.c: use

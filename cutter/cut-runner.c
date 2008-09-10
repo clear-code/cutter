@@ -23,6 +23,7 @@
 
 #include <glib.h>
 
+#include "cut-main.h"
 #include "cut-runner.h"
 #include "cut-run-context.h"
 
@@ -72,9 +73,8 @@ cut_runner_run (CutRunner *runner)
         g_signal_connect(runner, "complete-run",
                          G_CALLBACK(cb_collect_run_result), &info);
         iface->run_async(runner);
-        while (!info.received) {
-            g_main_context_iteration(NULL, FALSE);
-        }
+        while (!info.received)
+            cut_run_iteration();
         g_signal_handlers_disconnect_by_func(runner,
                                              G_CALLBACK(cb_collect_run_result),
                                              &info);
