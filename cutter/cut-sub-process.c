@@ -182,8 +182,14 @@ cut_sub_process_new (const char *test_directory, CutTestContext *test_context)
     cut_run_context_set_test_directory(pipeline, test_directory);
 
     if (parent_run_context) {
+        gint max_threads;
+
         if (cut_run_context_get_multi_thread(parent_run_context))
             cut_run_context_set_multi_thread(pipeline, TRUE);
+
+        max_threads = cut_run_context_get_max_threads(parent_run_context);
+        cut_run_context_set_max_threads(pipeline, max_threads);
+
         cut_run_context_delegate_signals(pipeline, parent_run_context);
     }
 
@@ -362,6 +368,25 @@ cut_sub_process_set_multi_thread (CutSubProcess  *sub_process,
 
     pipeline = CUT_SUB_PROCESS_GET_PRIVATE(sub_process)->pipeline;
     cut_run_context_set_multi_thread(pipeline, multi_thread);
+}
+
+gint
+cut_sub_process_get_max_threads (CutSubProcess *sub_process)
+{
+    CutRunContext *pipeline;
+
+    pipeline = CUT_SUB_PROCESS_GET_PRIVATE(sub_process)->pipeline;
+    return cut_run_context_get_max_threads(pipeline);
+}
+
+void
+cut_sub_process_set_max_threads (CutSubProcess *sub_process,
+                                 gint           max_threads)
+{
+    CutRunContext *pipeline;
+
+    pipeline = CUT_SUB_PROCESS_GET_PRIVATE(sub_process)->pipeline;
+    cut_run_context_set_max_threads(pipeline, max_threads);
 }
 
 const char **

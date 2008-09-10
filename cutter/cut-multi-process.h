@@ -255,6 +255,35 @@ void           cut_sub_process_set_multi_thread   (CutSubProcess  *sub_process,
                                                    cut_boolean     multi_thread);
 
 /**
+ * cut_sub_process_get_max_threads:
+ * @sub_process: a #CutSubProcess.
+ *
+ * Returns how many threads are used concurrently at a
+ * maximum in @sub_process.
+ *
+ * Returns: max number of threads used concurrently at a
+ * maximum in @sub_process.
+ *
+ * Since: 1.0.5
+ */
+int            cut_sub_process_get_multi_thread   (CutSubProcess  *sub_process);
+
+/**
+ * cut_sub_process_set_max_threads:
+ * @sub_process: a #CutSubProcess.
+ * @max_threads: max number of threads used concurrently at
+ *               a maximum.
+ *
+ * Sets how many threads are used concurrently at a
+ * maximum in @sub_process. -1 means no limit. This is same
+ * as --max-threads command line option.
+ *
+ * Since: 1.0.5
+ */
+void           cut_sub_process_set_multi_thread   (CutSubProcess  *sub_process,
+                                                   int             max_threads);
+
+/**
  * cut_sub_process_get_exclude_files:
  * @sub_process: a #CutSubProcess.
  *
