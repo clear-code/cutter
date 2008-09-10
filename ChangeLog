@@ -1,5 +1,7 @@
 2008-09-10  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-pipeline.c: work with multi thread mode.
+
 	* cutter/cut-main.[ch] (cut_run_iteration): add for replacing
 	g_main_context_iteration() but it doesn't do any other work now.
 	It may lock in the feature.

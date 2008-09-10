@@ -20,7 +20,8 @@ void test_signal (gconstpointer data);
 void data_count (void);
 void test_count (gconstpointer data);
 
-static CutRunContext *pipeline;
+static GHashTable *pipelines;
+static GMutex *fixture_mutex, *run_mutex;
 
 #define build_test_dir(dir, ...)                \
     g_build_filename(cuttest_get_base_dir(),    \
@@ -31,16 +32,38 @@ static CutRunContext *pipeline;
                      NULL)
 
 void
+startup (void)
+{
+    pipelines = g_hash_table_new_full(g_direct_hash, g_direct_equal,
+                                      NULL, g_object_unref);
+    fixture_mutex = g_mutex_new();
+    run_mutex = g_mutex_new();
+}
+
+void
+shutdown (void)
+{
+    g_mutex_free(run_mutex);
+    g_mutex_free(fixture_mutex);
+    g_hash_table_unref(pipelines);
+}
+
+#define pipeline (g_hash_table_lookup(pipelines, g_thread_self()))
+
+void
 setup (void)
 {
-    pipeline = cut_pipeline_new();
+    g_mutex_lock(fixture_mutex);
+    g_hash_table_insert(pipelines, g_thread_self(), cut_pipeline_new());
+    g_mutex_unlock(fixture_mutex);
 }
 
 void
 teardown (void)
 {
-    if (pipeline)
-        g_object_unref(pipeline);
+    g_mutex_lock(fixture_mutex);
+    g_hash_table_remove(pipelines, g_thread_self());
+    g_mutex_unlock(fixture_mutex);
 }
 
 static void
@@ -52,11 +75,18 @@ report_error (CutRunContext *context, GError *error, gpointer user_data)
 static gboolean
 run (const gchar *test_dir)
 {
+    gboolean success;
+
     cut_run_context_set_test_directory(pipeline, test_dir);
     cut_run_context_set_source_directory(pipeline, test_dir);
 
     g_signal_connect(pipeline, "error", G_CALLBACK(report_error), NULL);
-    return cut_run_context_start(pipeline);
+
+    g_mutex_lock(run_mutex);
+    success = cut_run_context_start(pipeline);
+    g_mutex_unlock(run_mutex);
+
+    return success;
 }
 
 typedef struct _SignalTestData
