@@ -1,3 +1,11 @@
+2008-09-10  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-run-context.[ch]
+	(cut_run_context_{set,get}_max_threads): add.
+
+	* test/Makefile.am: add test-cut-run-context.c.
+	* test/test-cut-run-context.c (test_max_threads): add.
+
 2008-09-09  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-main.c: fix help message encoding on non UTF-8 locale.
