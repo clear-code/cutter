@@ -109,6 +109,9 @@ gcut_hash_table_inspect (GHashTable *hash,
     GString *string;
     InspectData data;
 
+    if (!hash)
+        return g_strdup("(null)");
+
     string = g_string_new("{");
 
     data.output = string;
