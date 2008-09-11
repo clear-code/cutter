@@ -97,7 +97,7 @@ AC_DEFUN([AC_CHECK_CUTTER],
   AC_CACHE_CHECK([whether to use Cutter],
                  [ac_cv_use_cutter], [ac_cv_use_cutter=auto])
   if test "$ac_cv_use_cutter" != "no"; then
-    PKG_CHECK_MODULES(CUTTER, cutter, [], [ac_cv_use_cutter=no])
+    PKG_CHECK_MODULES(CUTTER, cutter $1, [], [ac_cv_use_cutter=no])
     AC_SUBST([CUTTER_CFLAGS])
     AC_SUBST([CUTTER_LIBS])
   fi
@@ -111,9 +111,9 @@ AC_DEFUN([AC_CHECK_CUTTER],
 
 AC_DEFUN([AC_CHECK_GCUTTER],
 [
-  AC_REQUIRE([AC_CHECK_CUTTER])
+  AC_CHECK_CUTTER($1)
   if test "$ac_cv_use_cutter" != "no"; then
-    PKG_CHECK_MODULES(GCUTTER, gcutter, [], [:])
+    PKG_CHECK_MODULES(GCUTTER, gcutter $1, [], [:])
     AC_SUBST([GCUTTER_CFLAGS])
     AC_SUBST([GCUTTER_LIBS])
   fi

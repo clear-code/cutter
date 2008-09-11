@@ -1,5 +1,7 @@
 2008-09-11  Kouhei Sutou  <kou@cozmixng.org>
 
+	* m4macros/cutter.m4: support version check.
+
 	* gcutter/gcut-hash-table.c, gcutter/gcut-test-utils.h
 	(gcut_hash_table_string_string_newv): add.
 	* test/test-gcut-hash-table.c (test_new): add a test for
