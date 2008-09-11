@@ -1,3 +1,7 @@
+2008-09-11  Kouhei Sutou  <kou@cozmixng.org>
+
+	* gcutter/gcut-hash-table.c (gcut_hash_table_equal): add NULL check.
+
 2008-09-10  Kouhei Sutou  <kou@cozmixng.org>
 
 	* test/test-cut-xml-stream.c (attributes_stream): don't use multi
