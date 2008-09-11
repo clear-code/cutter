@@ -146,7 +146,8 @@ extern "C" {
  * directory that is specified by cut_set_fixture_data_dir()
  * or the current directory.
  *
- * Returns: a path to the fixture data.
+ * Returns: a path to the fixture data. It should be freed
+ * when no longer needed.
  *
  * Since: 1.0.2
  */

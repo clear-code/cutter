@@ -1,5 +1,8 @@
 2008-09-11  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-utils.h (cut_build_fixture_data_path): add
+	memory ownership document.
+
 	* m4macros/cutter.m4: support version check.
 
 	* gcutter/gcut-hash-table.c, gcutter/gcut-test-utils.h
