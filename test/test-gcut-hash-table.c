@@ -2,6 +2,7 @@
 
 #include <gcutter.h>
 
+void test_new(void);
 void test_equal_same_content(void);
 void test_equal_same_size_and_different_content(void);
 void test_equal_different_size(void);
@@ -27,6 +28,34 @@ teardown (void)
         g_hash_table_unref(hash1);
     if (hash2)
         g_hash_table_unref(hash2);
+}
+
+static GHashTable *
+stub_gcut_hash_table_string_string_newv (const gchar *key, ...)
+{
+    GHashTable *hash;
+    va_list args;
+
+    va_start(args, key);
+    hash = gcut_hash_table_string_string_newv(key, args);
+    va_end(args);
+
+    return hash;
+}
+
+void
+test_new (void)
+{
+    hash1 = gcut_hash_table_string_string_new("key1", "value1",
+                                              "key2", "value2",
+                                              "key3", "value3",
+                                              NULL);
+    hash2 = stub_gcut_hash_table_string_string_newv("key1", "value1",
+                                                    "key2", "value2",
+                                                    "key3", "value3",
+                                                    NULL);
+
+    cut_assert_true(gcut_hash_table_string_equal(hash1, hash2));
 }
 
 void

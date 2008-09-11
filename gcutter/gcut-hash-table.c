@@ -168,8 +168,19 @@ gcut_hash_table_string_string_new (const gchar *key, ...)
     GHashTable *table;
     va_list args;
 
-    table = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, g_free);
     va_start(args, key);
+    table = gcut_hash_table_string_string_newv(key, args);
+    va_end(args);
+
+    return table;
+}
+
+GHashTable *
+gcut_hash_table_string_string_newv (const gchar *key, va_list args)
+{
+    GHashTable *table;
+
+    table = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, g_free);
     while (key) {
         const gchar *value;
 
@@ -178,7 +189,6 @@ gcut_hash_table_string_string_new (const gchar *key, ...)
 
         key = va_arg(args, const gchar *);
     }
-    va_end(args);
 
     return table;
 }

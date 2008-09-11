@@ -128,8 +128,9 @@ void    gcut_list_string_free (GList *list);
 /**
  * gcut_hash_table_string_string_new:
  * @key: The first key string.
- * @...: The string value of the first key, followed
- *       optionally by more key/value pairs.
+ * @...: A NULL-terminated list of rest arguments. The
+ *       string value of the first key, followed optionally
+ *       by more key/value pairs. It must end with NULL.
  *
  * Creates a hash table that has string key and string value
  * from passed key/value pairs.
@@ -141,6 +142,24 @@ void    gcut_list_string_free (GList *list);
  * Since: 1.0.4
  */
 GHashTable *gcut_hash_table_string_string_new(const gchar *key, ...) G_GNUC_NULL_TERMINATED;
+
+/**
+ * gcut_hash_table_string_string_newv:
+ * @key: The first key string.
+ * @args: A NULL-terminated list of rest arguments. The
+ *        first item is the string value of the first key,
+ *        followed optionally by more key/value pairs.
+ *
+ * Creates a hash table that has string key and string value
+ * from passed key/value pairs.
+ *
+ * Returns: a newly-allocated GHashTable * that contains
+ * passed key/value pairs and must be freed with
+ * g_hash_table_unref().
+ *
+ * Since: 1.0.5
+ */
+GHashTable *gcut_hash_table_string_string_newv(const gchar *key, va_list args);
 
 
 G_END_DECLS
