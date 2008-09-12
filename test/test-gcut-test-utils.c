@@ -1,7 +1,7 @@
 #include <gcutter.h>
 
 void test_list_string (void);
-
+void test_take_new_list_string (void);
 
 static GList *list;
 
@@ -19,7 +19,8 @@ teardown (void)
 }
 
 
-void test_list_string (void)
+void
+test_list_string (void)
 {
     GList *expected = NULL;
 
@@ -28,6 +29,21 @@ void test_list_string (void)
     expected = g_list_append(expected, "123");
 
     list = gcut_list_string_new("a", "zzz", "123", NULL);
-
     gcut_assert_equal_list_string(gcut_take_list(expected, NULL), list);
+}
+
+void
+test_take_new_list_string (void)
+{
+    GList *expected = NULL;
+    const GList *actual;
+
+    expected = g_list_append(expected, "a");
+    expected = g_list_append(expected, "zzz");
+    expected = g_list_append(expected, "123");
+
+    actual = gcut_take_new_list_string("a", "zzz", "123", NULL);
+
+    gcut_assert_equal_list_string(gcut_take_list(expected, NULL),
+                                  actual);
 }

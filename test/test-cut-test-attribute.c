@@ -135,10 +135,9 @@ test_multi_attributes (void)
                                   collect_test_names(tests));
 
     test = CUT_TEST(tests->data);
-    expected = gcut_hash_table_string_string_new("bug", "9",
-                                                 "priority", "5678",
-                                                 NULL);
-    gcut_take_hash_table(expected);
+    expected = gcut_take_new_hash_table_string_string("bug", "9",
+                                                      "priority", "5678",
+                                                      NULL);
     gcut_assert_equal_hash_table_string_string(expected,
                                                cut_test_get_attributes(test));
 }

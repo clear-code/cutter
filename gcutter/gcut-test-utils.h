@@ -116,6 +116,23 @@ G_BEGIN_DECLS
 GList  *gcut_list_string_new  (const gchar *value, ...) G_GNUC_NULL_TERMINATED;
 
 /**
+ * gcut_take_new_list_string:
+ * @value: the first string.
+ * @...: remaining strings in list, terminated by NULL.
+ *
+ * Creates a list from passed strings that is owned by
+ * Cutter.
+ *
+ * Returns: a newly-allocated GList * that contains passed
+ * strings and is owned by Cutter.
+ *
+ * Since: 1.0.5
+ */
+#define gcut_take_new_list_string(value, ...)                           \
+    gcut_take_list(gcut_list_string_new(value, ## __VA_ARGS__),         \
+                   g_free)
+
+/**
  * gcut_list_string_free:
  * @list: the list that contains strings to be freed.
  *
@@ -161,6 +178,24 @@ GHashTable *gcut_hash_table_string_string_new(const gchar *key, ...) G_GNUC_NULL
  */
 GHashTable *gcut_hash_table_string_string_newv(const gchar *key, va_list args);
 
+/**
+ * gcut_take_new_hash_table_string_string:
+ * @key: The first key string.
+ * @...: A NULL-terminated list of rest arguments. The
+ *       string value of the first key, followed optionally
+ *       by more key/value pairs. It must end with NULL.
+ *
+ * Creates a hash table that has string key and string value
+ * from passed key/value pairs. The created hash table is
+ * owned by Cutter. So don't g_hash_table_unref() it.
+ *
+ * Returns: a newly-allocated GHashTable * that contains
+ * passed key/value pairs.
+ *
+ * Since: 1.0.5
+ */
+#define gcut_take_new_hash_table_string_string(key, ...)                \
+    gcut_take_hash_table(gcut_hash_table_string_string_new(key, ## __VA_ARGS__))
 
 G_END_DECLS
 
