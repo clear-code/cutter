@@ -305,7 +305,7 @@ flow (CutXMLStream *stream, const gchar *format, ...)
 
     g_mutex_lock(stream->mutex);
     stream->stream_function(message, &error,
-                              stream->stream_function_user_data);
+                            stream->stream_function_user_data);
     g_mutex_unlock(stream->mutex);
 
     if (error) {
