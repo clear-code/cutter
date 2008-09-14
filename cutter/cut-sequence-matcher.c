@@ -383,8 +383,8 @@ char_sequence_new (const gchar *string)
 
     sequence = g_sequence_new(NULL);
 
-    for (; *string != '\0'; string++) {
-        g_sequence_append(sequence, GINT_TO_POINTER((gint)*string));
+    for (; *string != '\0'; string = g_utf8_next_char(string)) {
+        g_sequence_append(sequence, GUINT_TO_POINTER(g_utf8_get_char(string)));
     }
 
     return sequence;
@@ -394,10 +394,10 @@ static gint
 char_sequence_iter_compare (GSequenceIter *data1, GSequenceIter *data2,
                             gpointer user_data)
 {
-    gint character1, character2;
+    gunichar character1, character2;
 
-    character1 = GPOINTER_TO_INT(g_sequence_get(data1));
-    character2 = GPOINTER_TO_INT(g_sequence_get(data2));
+    character1 = GPOINTER_TO_UINT(g_sequence_get(data1));
+    character2 = GPOINTER_TO_UINT(g_sequence_get(data2));
 
     if (character1 < character2) {
         return -1;
@@ -411,18 +411,16 @@ char_sequence_iter_compare (GSequenceIter *data1, GSequenceIter *data2,
 static guint
 char_value_hash (gconstpointer v)
 {
-    gint character;
-    character = GPOINTER_TO_INT(v);
-    return g_int_hash(&character);
+    return GPOINTER_TO_UINT(v);
 }
 
 static gboolean
 char_value_equal (gconstpointer v1, gconstpointer v2)
 {
-    gint character1, character2;
-    character1 = GPOINTER_TO_INT(v1);
-    character2 = GPOINTER_TO_INT(v2);
-    return g_int_equal(&character1, &character2);
+    gunichar character1, character2;
+    character1 = GPOINTER_TO_UINT(v1);
+    character2 = GPOINTER_TO_UINT(v2);
+    return character1 == character2;
 }
 
 CutSequenceMatcher *

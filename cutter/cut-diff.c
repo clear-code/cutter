@@ -287,6 +287,26 @@ format_diff_point (GArray *result, gchar *from_line, gchar *to_line,
     }
 }
 
+static gint
+compute_width (const gchar *string, gint begin, gint end)
+{
+    const gchar *last;
+    gint width = 0;
+
+    last = g_utf8_offset_to_pointer(string, end);
+    for (string = g_utf8_offset_to_pointer(string, begin);
+         string < last;
+         string = g_utf8_next_char(string)) {
+        if (g_unichar_iswide_cjk(g_utf8_get_char(string))) {
+            width += 2;
+        } else {
+            width++;
+        }
+    }
+
+    return width;
+}
+
 static void
 diff_line (GArray *result, gchar *from_line, gchar *to_line)
 {
@@ -304,24 +324,28 @@ diff_line (GArray *result, gchar *from_line, gchar *to_line)
          operations;
          operations = g_list_next(operations)) {
         CutSequenceMatchOperation *operation = operations->data;
-        gint from_size, to_size;
+        gint from_width, to_width;
 
-        from_size = operation->from_end - operation->from_begin;
-        to_size = operation->to_end - operation->to_begin;
+        from_width = compute_width(from_line,
+                                   operation->from_begin,
+                                   operation->from_end);
+        to_width = compute_width(to_line,
+                                 operation->to_begin,
+                                 operation->to_end);
         switch (operation->type) {
           case CUT_SEQUENCE_MATCH_OPERATION_EQUAL:
-            append_n_tag(from_tags, ' ', from_size);
-            append_n_tag(to_tags, ' ', to_size);
+            append_n_tag(from_tags, ' ', from_width);
+            append_n_tag(to_tags, ' ', to_width);
             break;
           case CUT_SEQUENCE_MATCH_OPERATION_INSERT:
-            append_n_tag(to_tags, '+', to_size);
+            append_n_tag(to_tags, '+', to_width);
             break;
           case CUT_SEQUENCE_MATCH_OPERATION_DELETE:
-            append_n_tag(from_tags, '-', from_size);
+            append_n_tag(from_tags, '-', from_width);
             break;
           case CUT_SEQUENCE_MATCH_OPERATION_REPLACE:
-            append_n_tag(from_tags, '^', from_size);
-            append_n_tag(to_tags, '^', to_size);
+            append_n_tag(from_tags, '^', from_width);
+            append_n_tag(to_tags, '^', to_width);
             break;
           default:
             g_error("unknown operation type: %d", operation->type);

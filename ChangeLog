@@ -1,3 +1,8 @@
+2008-09-14  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-sequence-matcher.c, cutter/cut-diff.c,
+	test/test-cut-diff.c: support double width character.
+
 2008-09-12  Kouhei Sutou  <kou@cozmixng.org>
 
 	* test/test-gcut-test-utils.c (test_take_new_list_string): add.
