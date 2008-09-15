@@ -4,6 +4,7 @@
 #include "lib/cuttest-utils.h"
 
 void test_equal_property(void);
+void test_equal_content(void);
 
 static GdkPixbuf *pixbuf1, *pixbuf2;
 
@@ -57,6 +58,21 @@ test_equal_property (void)
     g_object_unref(pixbuf2);
     pixbuf2 = load_pixbuf("small-circle.png");
     cut_assert_false(gdkcut_pixbuf_equal_property(pixbuf1, pixbuf2));
+}
+
+void
+test_equal_content (void)
+{
+    pixbuf1 = load_pixbuf("dark-circle.png");
+    pixbuf2 = load_pixbuf("nested-circle.png");
+
+    cut_assert_true(gdkcut_pixbuf_equal_content(pixbuf1, pixbuf1, 0));
+    cut_assert_true(gdkcut_pixbuf_equal_content(pixbuf2, pixbuf2, 0));
+    cut_assert_false(gdkcut_pixbuf_equal_content(pixbuf1, pixbuf2, 0));
+
+    g_object_unref(pixbuf2);
+    pixbuf2 = load_pixbuf("small-circle.png");
+    cut_assert_false(gdkcut_pixbuf_equal_content(pixbuf1, pixbuf2, 0));
 }
 
 /*

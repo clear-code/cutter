@@ -1,5 +1,9 @@
 2008-09-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gdkcutter-pixbuf/gdkcut-pixbuf.c (pixels_equal),
+	test/test-gdkcut-pixbuf.c (test_equal_content): implement
+	gdkcut_pixbuf_equal_content() without threshold.
+
 	* configure.ac, Makefile.am, gdkcutter-pixbuf/,
 	gdkcutter-pixbuf.pc.in, test/fixtures/pixbuf/,
 	test/test-gdkcut-pixbuf.c: start GdkPixbuf support.

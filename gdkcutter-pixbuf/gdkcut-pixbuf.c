@@ -56,13 +56,15 @@ pixels_equal (const guchar *pixels1, const guchar *pixels2,
               gint bits_per_sample, gint width, gint height, gint row_stride)
 {
     gint x, y;
+    gint n_row_pixels;
 
+    n_row_pixels = width * n_channels;
     for (y = 0; y < height; y++) {
         const guchar *row1, *row2;
 
         row1 = pixels1 + y * row_stride;
         row2 = pixels2 + y * row_stride;
-        for (x = 0; x < width; x++) {
+        for (x = 0; x < n_row_pixels; x += n_channels) {
             gint channel;
 
             for (channel = 0; channel < n_channels; channel++) {
