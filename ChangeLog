@@ -1,5 +1,9 @@
 2008-09-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gdkcutter-pixbuf/gdkcut-pixbuf.c (gdkcut_pixbuf_inspect_property),
+	test/test-gdkcut-pixbuf.c (test_inspect_property): implement
+	gdkcut_pixbuf_inspect_property().
+
 	* test/test-gdkcut-pixbuf.c (test_equal_content_threshold),
 	test/fixtures/pixbuf/max-3-pixel-value-different-dark-circle.png,
 	gdkcutter-pixbuf/gdkcut-pixbuf-assertions.h: implement

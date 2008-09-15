@@ -6,6 +6,7 @@
 void test_equal_property(void);
 void test_equal_content(void);
 void test_equal_content_threshold(void);
+void test_inspect_property(void);
 
 static GdkPixbuf *pixbuf1, *pixbuf2;
 
@@ -85,6 +86,32 @@ test_equal_content_threshold (void)
     cut_assert_false(gdkcut_pixbuf_equal_content(pixbuf1, pixbuf2, 0));
     cut_assert_true(gdkcut_pixbuf_equal_content(pixbuf1, pixbuf1, 3));
     cut_assert_false(gdkcut_pixbuf_equal_content(pixbuf1, pixbuf2, 2));
+}
+
+void
+test_inspect_property (void)
+{
+    pixbuf1 = load_pixbuf("dark-circle.png");
+    pixbuf2 = load_pixbuf("no-alpha-small-circle.png");
+
+    cut_assert_equal_string_with_free("#<GdkPixbuf: "
+                                      "n-channels: 4; "
+                                      "has-alpha: TRUE; "
+                                      "bits-per-sample: 8; "
+                                      "width: 100; "
+                                      "height: 100; "
+                                      "row-stride: 400"
+                                      ">",
+                                      gdkcut_pixbuf_inspect_property(pixbuf1));
+    cut_assert_equal_string_with_free("#<GdkPixbuf: "
+                                      "n-channels: 3; "
+                                      "has-alpha: FALSE; "
+                                      "bits-per-sample: 8; "
+                                      "width: 50; "
+                                      "height: 50; "
+                                      "row-stride: 152"
+                                      ">",
+                                      gdkcut_pixbuf_inspect_property(pixbuf2));
 }
 
 /*

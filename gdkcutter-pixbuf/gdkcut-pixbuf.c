@@ -113,6 +113,40 @@ gdkcut_pixbuf_equal_content (const GdkPixbuf *pixbuf1,
                         gdk_pixbuf_get_rowstride(pixbuf1));
 }
 
+gchar *
+gdkcut_pixbuf_inspect_property (const GdkPixbuf *pixbuf)
+{
+    GString *inspected;
+
+    if (!pixbuf)
+        return g_strdup("(null)");
+
+    inspected = g_string_new("#<GdkPixbuf: ");
+
+    g_string_append_printf(inspected,
+                           "n-channels: %d; ",
+                           gdk_pixbuf_get_n_channels(pixbuf));
+    g_string_append_printf(inspected,
+                           "has-alpha: %s; ",
+                           gdk_pixbuf_get_has_alpha(pixbuf) ? "TRUE" : "FALSE");
+    g_string_append_printf(inspected,
+                           "bits-per-sample: %d; ",
+                           gdk_pixbuf_get_bits_per_sample(pixbuf));
+    g_string_append_printf(inspected,
+                           "width: %d; ",
+                           gdk_pixbuf_get_width(pixbuf));
+    g_string_append_printf(inspected,
+                           "height: %d; ",
+                           gdk_pixbuf_get_height(pixbuf));
+    g_string_append_printf(inspected,
+                           "row-stride: %d",
+                           gdk_pixbuf_get_rowstride(pixbuf));
+
+    g_string_append(inspected, ">");
+
+    return g_string_free(inspected, FALSE);
+}
+
 GdkPixbuf *
 gdkcut_pixbuf_diff (const GdkPixbuf *pixbuf1,
                     const GdkPixbuf *pixbuf2,
