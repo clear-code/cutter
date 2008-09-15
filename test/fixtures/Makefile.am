@@ -8,4 +8,5 @@ SUBDIRS =			\
 	sub-process		\
 	sub-process-group	\
 	xml-stream		\
-	file-stream-reader
+	file-stream-reader	\
+	pixbuf

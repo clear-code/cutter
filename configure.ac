@@ -145,6 +145,19 @@ AM_PATH_GLIB_2_0($GLIB_REQUIRED,
                  [AC_MSG_ERROR([GLib >= $GLIB_REQUIRED required.])],
                  [gmodule gobject gthread])
 
+dnl **************************************************************
+dnl Check for GdkPixbuf
+dnl **************************************************************
+PKG_CHECK_MODULES(GDK_PIXBUF, gdk-pixbuf-2.0,
+                  [gdk_pixbuf_exists=yes], [gdk_pixbuf_exists=no])
+AC_SUBST(GDK_PIXBUF_CFLAGS)
+AC_SUBST(GDK_PIXBUF_LIBS)
+
+if test "$gdk_pixbuf_exists" = "yes"; then
+  AC_DEFINE(HAVE_GDK_PIXBUF, 1, [Define to 1 if you have gdk-pixbuf installed])
+fi
+AM_CONDITIONAL([HAVE_GDK_PIXBUF], [test "$gdk_pixbuf_exists" = "yes"])
+
 # Checks for libraries.
 AC_MSG_CHECKING([whether to try to use BFD])
 AC_ARG_ENABLE([bfd],
@@ -461,8 +474,10 @@ AC_CONFIG_FILES([Makefile
 		 cutter.pc
 		 gcutter.pc
 		 libcutter.pc
+		 gdkcutter-pixbuf.pc
 		 m4macros/Makefile
 		 gcutter/Makefile
+		 gdkcutter-pixbuf/Makefile
 		 cutter/cut-version.h
 		 cutter/Makefile
 		 module/Makefile
@@ -504,6 +519,7 @@ AC_CONFIG_FILES([Makefile
 		 test/fixtures/repository/Makefile
 		 test/fixtures/xml-stream/Makefile
 		 test/fixtures/file-stream-reader/Makefile
+		 test/fixtures/pixbuf/Makefile
 		 test/lib/Makefile
 		 po/Makefile.in
 		 misc/Makefile

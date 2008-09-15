@@ -1,16 +1,17 @@
 ACLOCAL_AMFLAGS = -I m4macros
 
-SUBDIRS = 		\
-	m4macros	\
-	gcutter		\
-	cutter		\
-	module		\
-	test		\
-	sample		\
-	gst-plugins	\
-	po		\
-	misc		\
-	doc		\
+SUBDIRS = 			\
+	m4macros		\
+	gcutter			\
+	gdkcutter-pixbuf	\
+	cutter			\
+	module			\
+	test			\
+	sample			\
+	gst-plugins		\
+	po			\
+	misc			\
+	doc			\
 	html
 
 pkgconfigdir = $(libdir)/pkgconfig
@@ -18,6 +19,10 @@ pkgconfig_DATA = 	\
 	cutter.pc	\
 	gcutter.pc	\
 	libcutter.pc
+
+if HAVE_GDK_PIXBUF
+pkgconfig_DATA += gdkcutter-pixbuf.pc
+endif
 
 EXTRA_DIST =		\
 	autogen.sh	\

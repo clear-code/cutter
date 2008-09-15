@@ -1,5 +1,9 @@
 2008-09-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* configure.ac, Makefile.am, gdkcutter-pixbuf/,
+	gdkcutter-pixbuf.pc.in, test/fixtures/pixbuf/,
+	test/test-gdkcut-pixbuf.c: start GdkPixbuf support.
+
 	* cutter/Makefile.am, gcutter/Makefile.am: cleanup.
 
 2008-09-14  Kouhei Sutou  <kou@cozmixng.org>
