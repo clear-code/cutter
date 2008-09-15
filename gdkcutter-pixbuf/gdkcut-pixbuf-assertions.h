@@ -42,7 +42,16 @@ G_BEGIN_DECLS
  * @...: optional format string, followed by parameters to insert
  *       into the format string (as with printf())
  *
- * Passes if @expected == @actual within threshold difference.
+ * Passes if @expected == @actual. If difference of each
+ * corresponding pixel value is within threshold, @expected
+ * and @actual are treated as equal image.
+ *
+ * If threshold is 3, pixel value of @expected at (1, 1) is
+ * 127 and pixel value of @actual at (1, 1) is 131, @actual
+ * doesn't equals to @expected. If pixel value of @actual at
+ * (1, 1) is 130, @actual may equal to @expected. (All other
+ * corresponding pixel values are needed to fill this
+ * condition.)
  *
  * Since: 1.0.5
  */

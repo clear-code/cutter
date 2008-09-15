@@ -1,8 +1,13 @@
 2008-09-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-gdkcut-pixbuf.c (test_equal_content_threshold),
+	test/fixtures/pixbuf/max-3-pixel-value-different-dark-circle.png,
+	gdkcutter-pixbuf/gdkcut-pixbuf-assertions.h: implement
+	gdkcut_pixbuf_equal_content() with threshold support.
+
 	* gdkcutter-pixbuf/gdkcut-pixbuf.c (pixels_equal),
 	test/test-gdkcut-pixbuf.c (test_equal_content): implement
-	gdkcut_pixbuf_equal_content() without threshold.
+	gdkcut_pixbuf_equal_content() without threshold support.
 
 	* configure.ac, Makefile.am, gdkcutter-pixbuf/,
 	gdkcutter-pixbuf.pc.in, test/fixtures/pixbuf/,

@@ -5,6 +5,7 @@
 
 void test_equal_property(void);
 void test_equal_content(void);
+void test_equal_content_threshold(void);
 
 static GdkPixbuf *pixbuf1, *pixbuf2;
 
@@ -73,6 +74,17 @@ test_equal_content (void)
     g_object_unref(pixbuf2);
     pixbuf2 = load_pixbuf("small-circle.png");
     cut_assert_false(gdkcut_pixbuf_equal_content(pixbuf1, pixbuf2, 0));
+}
+
+void
+test_equal_content_threshold (void)
+{
+    pixbuf1 = load_pixbuf("dark-circle.png");
+    pixbuf2 = load_pixbuf("max-3-pixel-value-different-dark-circle.png");
+
+    cut_assert_false(gdkcut_pixbuf_equal_content(pixbuf1, pixbuf2, 0));
+    cut_assert_true(gdkcut_pixbuf_equal_content(pixbuf1, pixbuf1, 3));
+    cut_assert_false(gdkcut_pixbuf_equal_content(pixbuf1, pixbuf2, 2));
 }
 
 /*
