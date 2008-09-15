@@ -3,8 +3,8 @@ ACLOCAL_AMFLAGS = -I m4macros
 SUBDIRS = 			\
 	m4macros		\
 	gcutter			\
-	gdkcutter-pixbuf	\
 	cutter			\
+	gdkcutter-pixbuf	\
 	module			\
 	test			\
 	sample			\

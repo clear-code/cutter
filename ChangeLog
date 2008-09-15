@@ -1,3 +1,7 @@
+2008-09-16  Kouhei Sutou  <kou@cozmixng.org>
+
+	* Makefile.am (SUBDIRS): build gdkcutter-pixbuf/ after cutter/.
+
 2008-09-15  Kouhei Sutou  <kou@cozmixng.org>
 
 	* gdkcutter-pixbuf/gdkcut-pixbuf.c (gdkcut_pixbuf_inspect_property),
