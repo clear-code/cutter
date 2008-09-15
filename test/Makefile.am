@@ -76,10 +76,10 @@ AM_LDFLAGS =			\
 
 LIBS =							\
 	$(top_builddir)/cutter/libcutter.la		\
-	$(builddir)/lib/libcuttest-utils.la		\
+	$(top_builddir)/test/lib/libcuttest-utils.la	\
 	$(GLIB_LIBS)
 
-EVENT_RECEIVER_LIBS = $(builddir)/lib/libcuttest-event-receiver.la
+EVENT_RECEIVER_LIBS = $(top_builddir)/test/lib/libcuttest-event-receiver.la
 
 GDKCUTTER_PIXBUF_LIBS = $(top_builddir)/gdkcutter-pixbuf/libgdkcutter-pixbuf.la
 
