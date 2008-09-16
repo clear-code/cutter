@@ -1,5 +1,8 @@
 2008-09-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-assertions.c (path_exist_test): use
+	gcut_error_inspect().
+
 	* cutter/cut-utils.c (cut_utils_fold): fix a memory leak.
 
 	* test/run-test.sh: support CUTTER_CHECK_LEAK environment variable

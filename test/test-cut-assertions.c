@@ -672,7 +672,7 @@ path_exist_test (void)
     fd = g_file_open_tmp(NULL, &tmp_file_name, &error);
     if (fd == -1) {
         const gchar *message;
-        message = cut_take_string(g_strdup(error->message));
+        message = cut_take_string(gcut_error_inspect(error));
         g_error_free(error);
         cut_error("can't create temporary file: %s", message);
     }
