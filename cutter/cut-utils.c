@@ -511,6 +511,7 @@ cut_utils_fold (const gchar *string)
     GArray *folded_lines;
     gchar **lines, **line;
     gchar *folded_string;
+    guint i;
 
     fold_re = g_regex_new("(.{78})", 0, 0, NULL);
     folded_lines = g_array_new(TRUE, FALSE, sizeof(gchar *));
@@ -525,6 +526,12 @@ cut_utils_fold (const gchar *string)
     g_strfreev(lines);
 
     folded_string = g_strjoinv("\n", (gchar **)(folded_lines->data));
+    for (i = 0; i < folded_lines->len; i++) {
+        gchar *folded_line;
+
+        folded_line = g_array_index(folded_lines, gchar *, i);
+        g_free(folded_line);
+    }
     g_array_free(folded_lines, TRUE);
     g_regex_unref(fold_re);
 

@@ -1,5 +1,7 @@
 2008-09-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-utils.c (cut_utils_fold): fix a memory leak.
+
 	* test/run-test.sh: add -v to valgrind option.
 
 	* test/test-cut-assertions.c (path_exist_test): use
