@@ -1,5 +1,7 @@
 2008-09-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-utils.c (cut_utils_fold): fix a memory leak.
+
 	* test/run-test.sh: support CUTTER_CHECK_LEAK environment variable
 	to run on valgrind.
 

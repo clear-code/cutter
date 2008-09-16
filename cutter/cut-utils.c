@@ -526,6 +526,7 @@ cut_utils_fold (const gchar *string)
 
     folded_string = g_strjoinv("\n", (gchar **)(folded_lines->data));
     g_array_free(folded_lines, TRUE);
+    g_regex_unref(fold_re);
 
     return folded_string;
 }
