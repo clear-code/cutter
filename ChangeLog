@@ -1,5 +1,9 @@
 2008-09-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-utils.c (cut_utils_remove_path_recursive): fix a
+	memory leak bug.
+	Reported by Daijiro MORI. Thanks!!!
+
 	* test/Makefile.am: add gdk-pixbuf's include path if needed.
 
 	* test/Makefile.am: $(builddir) isn't available on old automake...

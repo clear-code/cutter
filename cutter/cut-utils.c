@@ -445,10 +445,13 @@ cut_utils_remove_path_recursive (const char *path, GError **error)
             return FALSE;
 
         while ((name = g_dir_read_name(dir))) {
-            const gchar *full_path;
+            gchar *full_path;
+            gboolean success;
 
             full_path = g_build_filename(path, name, NULL);
-            if (!cut_utils_remove_path_recursive(full_path, error))
+            success = cut_utils_remove_path_recursive(full_path, error);
+            g_free(full_path);
+            if (!success)
                 return FALSE;
         }
 
