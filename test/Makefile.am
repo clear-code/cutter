@@ -13,6 +13,9 @@ AM_CFLAGS = $(CUTTER_CFLAGS)
 if HAVE_GTK
 AM_CFLAGS += $(GTK_CFLAGS)
 endif
+if HAVE_GDK_PIXBUF
+AM_CFLAGS += $(GDK_PIXBUF_CFLAGS)
+endif
 
 EXTRA_DIST = run-test.sh
 CLEANFILES = *.gcno *.gcda
@@ -81,9 +84,10 @@ LIBS =							\
 
 EVENT_RECEIVER_LIBS = $(top_builddir)/test/lib/libcuttest-event-receiver.la
 
-GDKCUTTER_PIXBUF_LIBS = $(top_builddir)/gdkcutter-pixbuf/libgdkcutter-pixbuf.la
+GDKCUTTER_PIXBUF_LIBS =	$(top_builddir)/gdkcutter-pixbuf/libgdkcutter-pixbuf.la
 
 test_cutter_la_SOURCES		= test-cutter.c
+test_cutter_la_LIBADD		= $(GTK_LIBS)
 test_cut_assertions_la_SOURCES  = test-cut-assertions.c
 test_gcut_assertions_la_SOURCES = test-gcut-assertions.c
 test_cut_test_la_SOURCES        = test-cut-test.c

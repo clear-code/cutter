@@ -1,5 +1,7 @@
 2008-09-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/Makefile.am: add gdk-pixbuf's include path if needed.
+
 	* test/Makefile.am: $(builddir) isn't available on old automake...
 
 	* Makefile.am (SUBDIRS): build gdkcutter-pixbuf/ after cutter/.
