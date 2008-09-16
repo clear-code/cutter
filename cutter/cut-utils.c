@@ -227,6 +227,8 @@ cut_utils_get_fixture_data_string_and_path (CutTestContext *context,
     if (error) {
         gchar *inspected, *message;
 
+        g_free(*fixture_data_path);
+
         inspected = gcut_error_inspect(error);
         message = g_strdup_printf("can't get fixture data: %s", inspected);
         g_error_free(error);

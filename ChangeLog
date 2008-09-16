@@ -1,5 +1,8 @@
 2008-09-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-utils.c (cut_utils_get_fixture_data_string_and_path):
+	fix a memory leak.
+
 	* cutter/cut-utils.c (cut_utils_fold): fix a memory leak.
 
 	* test/run-test.sh: add -v to valgrind option.
