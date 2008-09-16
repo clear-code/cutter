@@ -14,6 +14,9 @@ fi
 CUTTER_WRAPPER=
 if test x"$CUTTER_DEBUG" = x"yes"; then
     CUTTER_WRAPPER="$BASE_DIR/../libtool --mode=execute gdb --args"
+elif test x"$CUTTER_CHECK_LEAK" = x"yes"; then
+    CUTTER_WRAPPER="$BASE_DIR/../libtool --mode=execute valgrind "
+    CUTTER_WRAPPER="$CUTTER_WRAPPER --leak-check=full --show-reachable=yes"
 fi
 
 export CUTTER

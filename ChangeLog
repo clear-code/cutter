@@ -1,5 +1,8 @@
 2008-09-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/run-test.sh: support CUTTER_CHECK_LEAK environment variable
+	to run on valgrind.
+
 	* cutter/cut-utils.c (cut_utils_remove_path_recursive): fix a
 	memory leak bug.
 	Reported by Daijiro MORI. Thanks!!!
