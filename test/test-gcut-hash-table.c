@@ -13,12 +13,15 @@ void test_inspect_empty(void);
 void test_inspect_null(void);
 
 static GHashTable *hash1, *hash2;
+static gchar *inspected;
 
 void
 setup (void)
 {
     hash1 = NULL;
     hash2 = NULL;
+
+    inspected = NULL;
 }
 
 void
@@ -28,6 +31,9 @@ teardown (void)
         g_hash_table_unref(hash1);
     if (hash2)
         g_hash_table_unref(hash2);
+
+    if (inspected)
+        g_free(inspected);
 }
 
 static GHashTable *
@@ -116,23 +122,24 @@ test_inspect (void)
     hash1 = gcut_hash_table_string_string_new("key1", "value1",
                                               "key2", "value2",
                                               NULL);
+    inspected = gcut_hash_table_string_string_inspect(hash1);
     cut_assert_equal_string("{\"key1\" => \"value1\", \"key2\" => \"value2\"}",
-                            gcut_hash_table_string_string_inspect(hash1));
+                            inspected);
 }
 
 void
 test_inspect_empty (void)
 {
     hash1 = gcut_hash_table_string_string_new(NULL, NULL);
-    cut_assert_equal_string("{}",
-                            gcut_hash_table_string_string_inspect(hash1));
+    inspected = gcut_hash_table_string_string_inspect(hash1);
+    cut_assert_equal_string("{}", inspected);
 }
 
 void
 test_inspect_null (void)
 {
-    cut_assert_equal_string("(null)",
-                            gcut_hash_table_string_string_inspect(NULL));
+    inspected = gcut_hash_table_string_string_inspect(NULL);
+    cut_assert_equal_string("(null)", inspected);
 }
 
 /*

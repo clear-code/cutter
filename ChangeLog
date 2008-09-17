@@ -1,3 +1,7 @@
+2008-09-17  Kouhei Sutou  <kou@cozmixng.org>
+
+	* test/test-gcut-hash-table.c (test_inspect_null): fix memory leak.
+
 2008-09-16  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-utils.c (cut_utils_get_fixture_data_string_and_path):
