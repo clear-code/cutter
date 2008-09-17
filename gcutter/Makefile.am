@@ -18,7 +18,8 @@ gcutter_public_headers =		\
 	gcut-value-equal.h		\
 	gcut-list.h			\
 	gcut-hash-table.h		\
-	gcut-error.h
+	gcut-error.h			\
+	gcut-enum.h
 
 noinst_headers = 	\
 	gbsearcharray.h
@@ -36,4 +37,5 @@ libgcutter_la_SOURCES =			\
 	gcut-value-equal.c		\
 	gcut-list.c			\
 	gcut-hash-table.c		\
-	gcut-error.c
+	gcut-error.c			\
+	gcut-enum.c
