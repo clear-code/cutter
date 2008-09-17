@@ -1,5 +1,8 @@
 2008-09-17  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-enum.[ch], test/test-gcut-enum.c: add
+	gcut_enum_inspect() and gcut_flags_inspect().
+
 	* test/test-gcut-hash-table.c (test_inspect_null): fix memory leak.
 
 2008-09-16  Kouhei Sutou  <kou@cozmixng.org>
