@@ -29,6 +29,7 @@
 #include <gcutter/gcut-public.h>
 #include <gcutter/gcut-test-utils.h>
 #include <gcutter/gcut-error.h>
+#include <gcutter/gcut-enum.h>
 #include <gcutter/gcut-assertions-helper.h>
 
 G_BEGIN_DECLS
@@ -496,6 +497,91 @@ G_BEGIN_DECLS
     cut_assert_equal_string(_expected_time_val_string,                  \
                             _actual_time_val_string,                    \
                             ## __VA_ARGS__);                            \
+} while(0)
+
+/**
+ * gcut_assert_equal_enum:
+ * @type: an GEnum type.
+ * @expected: an expected enum value.
+ * @actual: an actual enum value.
+ * @...: optional format string, followed by parameters to insert
+ *       into the format string (as with printf())
+ *
+ * Passes if @expected == @actual.
+ *
+ * Since: 1.0.5
+ */
+#define gcut_assert_equal_enum(enum_type, expected, actual, ...) do     \
+{                                                                       \
+    GType _enum_type;                                                   \
+    gint _expected;                                                     \
+    gint _actual;                                                       \
+                                                                        \
+    _enum_type = (enum_type);                                           \
+    _expected = (expected);                                             \
+    _actual = (actual);                                                 \
+    if (_expected == _actual) {                                         \
+        cut_test_pass();                                                \
+    } else {                                                            \
+        const gchar *_inspected_expected;                               \
+        const gchar *_inspected_actual;                                 \
+                                                                        \
+        _inspected_expected =                                           \
+            cut_take_string(gcut_enum_inspect(_enum_type, _expected));  \
+        _inspected_actual =                                             \
+            cut_take_string(gcut_enum_inspect(_enum_type, _actual));    \
+        cut_test_fail(FAILURE,                                          \
+                      cut_take_printf("<%s == %s> (%s)\n"               \
+                                      "expected: <%s>\n"                \
+                                      " but was: <%s>",                 \
+                                      #expected, #actual, #enum_type,   \
+                                      _inspected_expected,              \
+                                      _inspected_actual),               \
+                      ## __VA_ARGS__);                                  \
+    }                                                                   \
+} while(0)
+
+/**
+ * gcut_assert_equal_flags:
+ * @type: an GFlags type.
+ * @expected: an expected flags value.
+ * @actual: an actual flags value.
+ * @...: optional format string, followed by parameters to insert
+ *       into the format string (as with printf())
+ *
+ * Passes if @expected == @actual.
+ *
+ * Since: 1.0.5
+ */
+#define gcut_assert_equal_flags(flags_type, expected, actual, ...) do   \
+{                                                                       \
+    GType _flags_type;                                                  \
+    gint _expected;                                                     \
+    gint _actual;                                                       \
+                                                                        \
+    _flags_type = (flags_type);                                         \
+    _expected = (expected);                                             \
+    _actual = (actual);                                                 \
+    if (_expected == _actual) {                                         \
+        cut_test_pass();                                                \
+    } else {                                                            \
+        const gchar *_inspected_expected;                               \
+        const gchar *_inspected_actual;                                 \
+                                                                        \
+        _inspected_expected =                                           \
+            cut_take_string(gcut_flags_inspect(_flags_type,             \
+                                               _expected));             \
+        _inspected_actual =                                             \
+            cut_take_string(gcut_flags_inspect(_flags_type, _actual));  \
+        cut_test_fail(FAILURE,                                          \
+                      cut_take_printf("<%s == %s> (%s)\n"               \
+                                      "expected: <%s>\n"                \
+                                      " but was: <%s>",                 \
+                                      #expected, #actual, #flags_type,  \
+                                      _inspected_expected,              \
+                                      _inspected_actual),               \
+                      ## __VA_ARGS__);                                  \
+    }                                                                   \
 } while(0)
 
 G_END_DECLS

@@ -1,8 +1,9 @@
 #include <gcutter.h>
-#include "cut-test.h"
-#include "cut-test-result.h"
-#include "cut-utils.h"
-#include "cut-test-runner.h"
+#include <cutter/cut-test.h>
+#include <cutter/cut-test-result.h>
+#include <cutter/cut-utils.h>
+#include <cutter/cut-test-runner.h>
+#include <cutter/cut-enum-types.h>
 #include "lib/cuttest-assertions.h"
 
 void test_equal_type(void);
@@ -15,6 +16,8 @@ void test_equal_list_string_other_null(void);
 void test_equal_hash_string_string(void);
 void test_error(void);
 void test_equal_error(void);
+void test_equal_enum(void);
+void test_equal_flags(void);
 
 static CutTest *test;
 static CutRunContext *run_context;
@@ -29,6 +32,8 @@ static GHashTable *hash1, *hash2;
 static GError *error;
 static GError *error1, *error2;
 static gboolean need_to_free_error;
+
+static GType flags_type = 0;
 
 static gboolean
 run (void)
@@ -428,6 +433,79 @@ test_equal_error (void)
                            "expected: <g-file-error-quark:4: not found>\n"
                            " but was: <g-file-error-quark:4: no entry>",
                            "stub_equal_error");
+}
+
+static void
+stub_equal_enum (void)
+{
+    gcut_assert_equal_enum(CUT_TYPE_TEST_RESULT_STATUS,
+                           CUT_TEST_RESULT_PENDING,
+                           CUT_TEST_RESULT_PENDING);
+    gcut_assert_equal_enum(CUT_TYPE_TEST_RESULT_STATUS,
+                           CUT_TEST_RESULT_FAILURE,
+                           CUT_TEST_RESULT_PENDING);
+}
+
+void
+test_equal_enum (void)
+{
+    test = cut_test_new("gcut_assert_equal_enum test", stub_equal_enum);
+    cut_assert_not_null(test);
+
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 0, 1, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "gcut_assert_equal_enum test",
+                           NULL,
+                           "<CUT_TEST_RESULT_FAILURE == CUT_TEST_RESULT_PENDING>"
+                           " (CUT_TYPE_TEST_RESULT_STATUS)\n"
+                           "expected: <#<CutTestResultStatus: "
+                           "failure(CUT_TEST_RESULT_FAILURE:4)>>\n"
+                           " but was: <#<CutTestResultStatus: "
+                           "pending(CUT_TEST_RESULT_PENDING:3)>>",
+                           "stub_equal_enum");
+}
+
+static void
+stub_equal_flags (void)
+{
+    gcut_assert_equal_flags(flags_type,
+                            (1 << 0) | (1 << 2),
+                            (1 << 0) | (1 << 2));
+    gcut_assert_equal_flags(flags_type,
+                            (1 << 1) | (1 << 2),
+                            (1 << 3));
+}
+
+void
+test_equal_flags (void)
+{
+    if (flags_type == 0) {
+        static const GFlagsValue values[] = {
+            {1 << 0, "CUTTEST_ASSERT_STUB_FIRST", "first"},
+            {1 << 1, "CUTTEST_ASSERT_STUB_SECOND", "second"},
+            {1 << 2, "CUTTEST_ASSERT_STUB_THIRD", "third"},
+            {0, NULL, NULL}
+        };
+        flags_type = g_flags_register_static("CuttestAssertStubFlags", values);
+    }
+
+    test = cut_test_new("gcut_assert_equal_flags test", stub_equal_flags);
+    cut_assert_not_null(test);
+
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 0, 1, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "gcut_assert_equal_flags test",
+                           NULL,
+                           "<(1 << 1) | (1 << 2) == (1 << 3)> (flags_type)\n"
+                           "expected: <#<CuttestAssertStubFlags: "
+                           "second|third "
+                           "(CUTTEST_ASSERT_STUB_SECOND:0x2)|"
+                           "(CUTTEST_ASSERT_STUB_THIRD:0x4)>>\n"
+                           " but was: <#<CuttestAssertStubFlags: "
+                           "(unknown flags: 0x8)>>",
+                           "stub_equal_flags");
 }
 
 

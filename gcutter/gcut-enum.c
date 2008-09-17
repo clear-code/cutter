@@ -83,7 +83,7 @@ gcut_flags_inspect (GType flags_type, guint flags)
             for (i = 0; i < flags_class->n_values; i++) {
                 GFlagsValue *value = flags_class->values + i;
                 if (value->value & flags)
-                    g_string_append_printf(inspected, "(%s:%u)|",
+                    g_string_append_printf(inspected, "(%s:0x%x)|",
                                            value->value_name, value->value);
             }
             g_string_truncate(inspected, inspected->len - 1);

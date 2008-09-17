@@ -36,7 +36,7 @@ test_inspect_enum (void)
 }
 
 void
-_test_inspect_flags (void)
+test_inspect_flags (void)
 {
     static GType type = 0;
     if (type == 0) {
@@ -56,14 +56,15 @@ _test_inspect_flags (void)
     inspected = gcut_flags_inspect(type, (1 << 0) | (1 << 1));
     cut_assert_equal_string("#<CuttestStubFlags: "
                             "first|second "
-                            "(CUTTEST_STUB_FIRST:1)|(CUTTEST_STUB_SECOND:2)>",
+                            "(CUTTEST_STUB_FIRST:0x1)|"
+                            "(CUTTEST_STUB_SECOND:0x2)>",
                             inspected);
 
     g_free(inspected);
     inspected = gcut_flags_inspect(type, (1 << 0) | (1 << 3));
     cut_assert_equal_string("#<CuttestStubFlags: "
                             "first "
-                            "(CUTTEST_STUB_FIRST:1) "
+                            "(CUTTEST_STUB_FIRST:0x1) "
                             "(unknown flags: 0x8)>",
                             inspected);
 }
