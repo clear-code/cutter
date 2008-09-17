@@ -509,6 +509,14 @@ G_BEGIN_DECLS
  *
  * Passes if @expected == @actual.
  *
+ * e.g.:
+ * |[
+ * gcut_assert_equal_enum(GTK_TYPE_DIRECTION_TYPE,
+                          GTK_DIR_LEFT, GTK_DIR_LEFT); -> Pass
+ * gcut_assert_equal_enum(GTK_TYPE_DIRECTION_TYPE,
+                          GTK_DIR_DOWN, GTK_DIR_LEFT); -> Fail
+ * ]|
+ *
  * Since: 1.0.5
  */
 #define gcut_assert_equal_enum(enum_type, expected, actual, ...) do     \
@@ -550,6 +558,19 @@ G_BEGIN_DECLS
  *       into the format string (as with printf())
  *
  * Passes if @expected == @actual.
+ *
+ * e.g.:
+ * |[
+ * gcut_assert_equal_flags(GTK_TYPE_DIALOG_FLAGS,
+ *                         GTK_DIALOG_DESTROY_MODAL |
+ *                           GTK_DIALOG_DESTROY_WITH_PARENT,
+ *                         GTK_DIALOG_DESTROY_MODAL |
+ *                           GTK_DIALOG_DESTROY_WITH_PARENT); -> Pass
+ * gcut_assert_equal_flags(GTK_TYPE_DIALOG_FLAGS,
+ *                         GTK_DIALOG_DESTROY_MODAL |
+ *                           GTK_DIALOG_DESTROY_WITH_PARENT,
+ *                         GTK_DIALOG_DESTROY_MODAL); -> Fail
+ * ]|
  *
  * Since: 1.0.5
  */
