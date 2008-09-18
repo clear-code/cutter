@@ -102,8 +102,8 @@ cut_utils_inspect_memory (const void *memory, size_t size)
     GString *buffer;
     size_t i;
 
-    if (size == 0)
-        return g_strdup("");
+    if (memory == NULL || size == 0)
+        return g_strdup("(null)");
 
     buffer = g_string_sized_new(size * 5);
     for (i = 0; i < size; i++) {

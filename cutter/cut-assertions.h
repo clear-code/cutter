@@ -366,8 +366,9 @@ extern "C" {
         memcmp(_expected, _actual, _expected_size) == 0) {              \
         cut_test_pass();                                                \
     } else {                                                            \
-        const gchar *_inspected_expected;                               \
-        const gchar *_inspected_actual;                                 \
+    const char *_message;                                               \
+        const char *_inspected_expected;                                \
+        const char *_inspected_actual;                                  \
                                                                         \
         _inspected_expected =                                           \
             cut_take_string(cut_utils_inspect_memory(_expected,         \
@@ -375,17 +376,20 @@ extern "C" {
         _inspected_actual =                                             \
             cut_take_string(cut_utils_inspect_memory(_actual,           \
                                                      _actual_size));    \
-        cut_test_fail(FAILURE,                                          \
-                      cut_take_printf("<%s(size: %s) == %s(size: %s)>\n"\
-                                      "expected: <%s (size: %ld)>\n"    \
-                                      " but was: <%s (size: %ld)>",     \
-                                      #expected, #expected_size,        \
-                                      #actual, #actual_size,            \
+        _message = cut_take_printf("<%s(size: %s) == %s(size: %s)>\n"   \
+                                   "expected: <%s (size: %ld)>\n"       \
+                                   " but was: <%s (size: %ld)>",        \
+                                   #expected, #expected_size,           \
+                                   #actual, #actual_size,               \
+                                   _inspected_expected,                 \
+                                   (long)_expected_size,                \
+                                   _inspected_actual,                   \
+                                   (long)_actual_size);                 \
+        if (_expected_size > 0 && _actual_size > 0)                     \
+            _message = cut_append_diff(_message,                        \
                                       _inspected_expected,              \
-                                      (long)_expected_size,             \
-                                      _inspected_actual,                \
-                                      (long)_actual_size),              \
-                      ## __VA_ARGS__);                                  \
+                                      _inspected_actual);               \
+        cut_test_fail(FAILURE, _message, ## __VA_ARGS__);               \
     }                                                                   \
 } while(0)
 

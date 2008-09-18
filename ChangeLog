@@ -1,5 +1,7 @@
 2008-09-18  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-utils.c, test/test-cut-utils.c: improve inspected result.
+
 	* cutter/cut-utils.c, cutter/cut-assertion.h, cutter/cut-public.h,
 	test/test-cut-assertions.h: show hex string dump in
 	cut_assert_equal_memory().

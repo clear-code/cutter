@@ -4,6 +4,7 @@
 #include <cutter/cut-utils.h>
 #include "lib/cuttest-utils.h"
 
+void test_inspect_memory (void);
 void test_compare_string_array (void);
 void test_inspect_string_array (void);
 void test_strv_concat (void);
@@ -29,6 +30,23 @@ teardown (void)
         cut_utils_remove_path_recursive(tmp_dir, NULL);
         g_free(tmp_dir);
     }
+}
+
+void
+test_inspect_memory (void)
+{
+    gchar binary[] = {0x00, 0x01, 0x02, 0x1f};
+    gchar empty[] = {};
+
+    cut_assert_equal_string_with_free("(null)",
+                                      cut_utils_inspect_memory(empty, 0));
+    cut_assert_equal_string_with_free("(null)",
+                                      cut_utils_inspect_memory(NULL, 100));
+    cut_assert_equal_string_with_free("0x00 0x01 0x02 0x1f",
+                                      cut_utils_inspect_memory(binary,
+                                                               sizeof(binary)));
+    cut_assert_equal_string_with_free("0x00 0x01",
+                                      cut_utils_inspect_memory(binary, 2));
 }
 
 void
