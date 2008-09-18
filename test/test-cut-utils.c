@@ -39,11 +39,11 @@ test_compare_string_array (void)
     gchar *strings3[] = {"a", "b", NULL};
     gchar *strings4[] = {"a", "b", "d", NULL};
 
-    cut_assert(cut_utils_compare_string_array(strings1, strings2));
-    cut_assert(!cut_utils_compare_string_array(NULL, strings2));
-    cut_assert(cut_utils_compare_string_array(NULL, NULL));
-    cut_assert(!cut_utils_compare_string_array(strings1, strings3));
-    cut_assert(!cut_utils_compare_string_array(strings1, strings4));
+    cut_assert_true(cut_utils_equal_string_array(strings1, strings2));
+    cut_assert_false(cut_utils_equal_string_array(NULL, strings2));
+    cut_assert_true(cut_utils_equal_string_array(NULL, NULL));
+    cut_assert_false(cut_utils_equal_string_array(strings1, strings3));
+    cut_assert_false(cut_utils_equal_string_array(strings1, strings4));
 }
 
 

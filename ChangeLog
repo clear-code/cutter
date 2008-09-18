@@ -1,3 +1,14 @@
+2008-09-18  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-utils.c, cutter/cut-assertion.h, cutter/cut-public.h,
+	test/test-cut-assertions.h: show hex string dump in
+	cut_assert_equal_memory().
+
+	* cutter/cut-utils.c, cutter/cut-assertions.h,
+	cutter/cut-public.h, test/test-cut-utils.c:
+	cut_utils_compare_string_array() ->
+	cut_utils_equal_string_array().
+
 2008-09-17  Kouhei Sutou  <kou@cozmixng.org>
 
 	* gcutter/gcut-assertions.h (gcut_assert_equal_enum)

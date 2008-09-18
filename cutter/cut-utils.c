@@ -95,8 +95,27 @@ cut_utils_filter_match (GList *regexs, const gchar *name)
     return FALSE;
 }
 
+gchar *
+cut_utils_inspect_memory (const void *memory, size_t size)
+{
+    const guchar *binary = memory;
+    GString *buffer;
+    size_t i;
+
+    if (size == 0)
+        return g_strdup("");
+
+    buffer = g_string_sized_new(size * 5);
+    for (i = 0; i < size; i++) {
+        g_string_append_printf(buffer, "0x%02x ", binary[i]);
+    }
+    g_string_truncate(buffer, buffer->len - 1);
+
+    return g_string_free(buffer, FALSE);
+}
+
 gboolean
-cut_utils_compare_string_array (gchar **strings1, gchar **strings2)
+cut_utils_equal_string_array (gchar **strings1, gchar **strings2)
 {
     gint i, length;
 

@@ -23,6 +23,7 @@ void test_equal_double(void);
 void test_operator(void);
 void test_operator_int(void);
 void test_operator_double(void);
+void test_equal_memory (void);
 void test_equal_string_array (void);
 void test_null(void);
 void test_null_string(void);
@@ -392,6 +393,39 @@ test_operator_double (void)
                            "expected: <1.1 + 1.1> >= <2.2 + 4.4>\n"
                            " but was: <2.2> >= <6.6>",
                            "stub_operator_double");
+}
+
+static void
+stub_equal_memory (void)
+{
+    gchar expected[] = {0x00, 0x01, 0x02, 0x03, 0x04};
+    gchar actual[] = {0x00, 0x01, 0x02, 0x03, 0x04,
+                      0x12, 0x10, 0x0e, 0x0c, 0x0a};
+
+    cut_assert_equal_memory(expected, sizeof(expected),
+                            expected, sizeof(expected));
+    cut_assert_equal_memory(actual, sizeof(actual),
+                            actual, sizeof(actual));
+    cut_assert_equal_memory(expected, sizeof(expected),
+                            actual, sizeof(expected));
+    cut_assert_equal_memory(expected, sizeof(expected),
+                            actual, sizeof(actual));
+}
+
+void
+test_equal_memory (void)
+{
+    test = cut_test_new("stub-equal-memory", stub_equal_memory);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 0, 3, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "stub-equal-memory", NULL,
+                           "<expected(size: sizeof(expected)) == "
+                           "actual(size: sizeof(actual))>\n"
+                           "expected: <0x00 0x01 0x02 0x03 0x04 (size: 5)>\n"
+                           " but was: <0x00 0x01 0x02 0x03 0x04 "
+                           "0x12 0x10 0x0e 0x0c 0x0a (size: 10)>",
+                           "stub_equal_memory");
 }
 
 void

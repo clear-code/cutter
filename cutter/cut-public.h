@@ -70,7 +70,10 @@ const char **cut_test_context_take_string_array
                                              char          **strings);
 
 
-int   cut_utils_compare_string_array        (char **strings1,
+char *cut_utils_inspect_memory              (const void *memory,
+                                             size_t      size);
+
+int   cut_utils_equal_string_array          (char **strings1,
                                              char **strings2);
 char *cut_utils_inspect_string_array        (char **strings);
 const char *cut_utils_inspect_string        (const char *string);
