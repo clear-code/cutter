@@ -1,3 +1,10 @@
+2008-09-28  Kouhei Sutou  <kou@cozmixng.org>
+
+	* TODO: add a bug fix task:
+	[BUG] test result (error, omission, ...) signal in setup() isn't
+	connected to CutRunner because setup() is invoked before CutTest's
+	prepare().
+
 2008-09-18  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-utils.c, test/test-cut-utils.c: improve inspected result.
