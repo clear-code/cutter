@@ -20,3 +20,4 @@
 * resolve circular reference between CutStreamReader and CutStreamParser.
 * [BUG] test result (error, omission, ...) signal in setup() isn't connected
   to CutRunner because setup() is invoked before CutTest's prepare().
+* cut_assert_equal_sockaddr().

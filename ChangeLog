@@ -1,5 +1,7 @@
 2008-09-30  Kouhei Sutou  <kou@cozmixng.org>
 
+	* TODO: add a new feature entry: cut_assert_equal_sockaddr().
+
 	* cutter/cut-test-utils.h (cut_take_strdup): add.
 
 	* cutter/cut-test-context.c, cutter/cut-public.h
