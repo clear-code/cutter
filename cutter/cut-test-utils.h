@@ -52,6 +52,21 @@ extern "C" {
     cut_test_context_take_string(get_current_test_context(), (string))
 
 /**
+ * cut_take_strdup:
+ * @string: the string to be duplicated.
+ *
+ * Duplicates the string, passes ownership of the
+ * duplicated string to Cutter and returns the duplicated
+ * string.
+ *
+ * Returns: a duplicated string owned by Cutter. Don't free it.
+ *
+ * Since: 1.0.5
+ */
+#define cut_take_strdup(string)                                         \
+    cut_test_context_take_strdup(get_current_test_context(), (string))
+
+/**
  * cut_take_printf:
  * @format: the message format. See the printf() documentation.
  * @...: the parameters to insert into the format string.

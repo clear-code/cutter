@@ -1,3 +1,10 @@
+2008-09-30  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-test-utils.h (cut_take_strdup): add.
+
+	* cutter/cut-test-context.c, cutter/cut-public.h
+	(cut_test_context_take_strdup): add.
+
 2008-09-28  Kouhei Sutou  <kou@cozmixng.org>
 
 	* TODO: add a bug fix task:

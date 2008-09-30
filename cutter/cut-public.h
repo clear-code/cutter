@@ -62,6 +62,8 @@ void  cut_test_context_long_jump            (CutTestContext *context) CUT_GNUC_N
 
 const char *cut_test_context_take_string    (CutTestContext *context,
                                              char           *string);
+const char *cut_test_context_take_strdup    (CutTestContext *context,
+                                             const char     *string);
 const char *cut_test_context_take_printf    (CutTestContext *context,
                                              const char     *format,
                                              ...) CUT_GNUC_PRINTF(2, 3);
