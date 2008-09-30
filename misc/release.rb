@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+require 'English'
 require 'rubygems'
 require 'mechanize'
 require 'logger'
@@ -87,12 +88,23 @@ def extract_sections(file)
   File.read(file).gsub(/==+\n.*\n==+\n/, '').split(/.*\n^==.*\n\n\n*/)
 end
 
+def guess_target_index(file, default_index)
+  index = default_index
+  if /:(\d+)\Z/ =~ file
+    file = $PREMATCH
+    index = $1.to_i
+  end
+  [file, index]
+end
+
 def project_summary(readme)
-  extract_sections(readme)[4].split(/\n\n/)[0].chomp
+  readme, index = guess_target_index(readme, 4)
+  extract_sections(readme)[index].split(/\n\n/)[0].chomp
 end
 
 def latest_release_changes(news)
-  extract_sections(news)[1].chomp
+  news, index = guess_target_index(news, 1)
+  extract_sections(news)[index].chomp
 end
 
 def remove_rd_link_markup(text)
