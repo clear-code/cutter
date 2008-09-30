@@ -58,8 +58,22 @@ def go_file_releases_page(agent, project_page)
   agent.click(project_page.links.text(/\AFile Releases\z/))
 end
 
-def add_release(agent, file_releases_page, release_name)
-  add_release_link = file_releases_page.links.text(/\[Add Release\]/)
+def find_target_release_link(file_releases_page, package_name, label)
+  target_release_row = (file_releases_page / "tr").find do |row|
+    not (row / "input[@value = #{package_name}]").empty?
+  end
+  raise "can't find package ID" if /package_id=(\d+)/ !~ target_release_row.to_s
+  package_id = $1
+  release_links = file_releases_page.links.text(label)
+  release_links.find do |link|
+    /package_id=#{package_id}/ =~ link.href
+  end
+end
+
+def add_release(agent, file_releases_page, package_name, release_name)
+  add_release_link = find_target_release_link(file_releases_page,
+                                              package_name,
+                                              /\[Add Release\]/)
   add_release_page = agent.click(add_release_link)
 
   create_file_release_form = add_release_page.forms.last
@@ -69,12 +83,14 @@ def add_release(agent, file_releases_page, release_name)
                create_file_release_form.buttons.first)
 end
 
-def go_edit_release_page(agent, file_releases_page, release_name)
-  release_list_link = file_releases_page.links.text(/\[Edit Releases\]/)
-  release_list_page = agent.click(release_list_link)
+def go_edit_release_page(agent, file_releases_page, package_name, release_name)
+  edit_release_link = find_target_release_link(file_releases_page,
+                                               package_name,
+                                               /\[Edit Releases\]/)
+  release_list_page = agent.click(edit_release_link)
   edit_current_release_row = release_list_page / "td[text() ~= #{release_name}]"
   if edit_current_release_row.empty?
-    add_release(agent, file_releases_page, release_name)
+    add_release(agent, file_releases_page, package_name, release_name)
   else
     edit_release_link = (edit_current_release_row / "a")[0]
     edit_release_link = WWW::Mechanize::Page::Link.new(edit_release_link,
@@ -171,7 +187,7 @@ def main(sf_user_name, project_name, package_name, release_name, file_name,
   file_releases_page = go_file_releases_page(agent, project_page)
   upload_file(agent, file_name, sf_user_name, password)
   edit_release_page = go_edit_release_page(agent, file_releases_page,
-                                           release_name)
+                                           package_name, release_name)
   edit_release_page = update_release_info(agent, edit_release_page, news)
   edit_release_page = register_file(agent, edit_release_page,
                                     File.basename(file_name))
