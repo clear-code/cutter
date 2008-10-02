@@ -1,5 +1,9 @@
 2008-10-02  Kouhei Sutou  <kou@cozmixng.org>
 
+	* TODO: add a new entry: add a new command line option that switch
+	whether unload opened module or not to resolve symbols in opened
+	module. --keep-module?
+
 	* test/lib/cuttest-assertions.h (cut_assert_test_result): fix
 	memory leaks.
 
