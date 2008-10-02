@@ -1,5 +1,8 @@
 2008-10-02  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/lib/cuttest-assertions.h (cut_assert_test_result): fix
+	memory leaks.
+
 	* cutter/cut-pipeline.c (unref_child_out_channel): unref child out
 	not only shutdown.
 

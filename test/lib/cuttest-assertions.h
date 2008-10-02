@@ -11,7 +11,7 @@
     gcut_take_list(list, NULL)
 
 #define cut_take_result_string_list(list)       \
-    g_cut_take_list(list, g_free)
+    gcut_take_list(list, g_free)
 
 #define cut_assert_test_result_summary(run_context, n_tests,            \
                                        n_assertions, n_successes,       \
@@ -70,10 +70,10 @@
                                               (user_message),           \
                                               (system_message),         \
                                               (function_name));         \
-    _expected_strings = cut_take_result_summary_list(_strings);         \
+    _expected_strings = cut_take_result_string_list(_strings);          \
                                                                         \
     _strings = cuttest_result_string_list_new_from_result(_result);     \
-    _actual_strings = cut_take_result_summary_list(_strings);           \
+    _actual_strings = cut_take_result_string_list(_strings);            \
                                                                         \
     gcut_assert_equal_list_string(_expected_strings, _actual_strings);  \
 } while (0)
