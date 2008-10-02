@@ -1,5 +1,8 @@
 2008-10-02  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-pipeline.c (unref_child_out_channel): unref child out
+	not only shutdown.
+
 	* test/test-cut-main.c: fix invalid memory access.
 
 	* cutter/cut-assertions.h (cut_assert_equal_fixture_data_string):

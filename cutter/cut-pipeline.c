@@ -125,9 +125,9 @@ close_child (CutPipelinePrivate *priv)
 }
 
 static void
-shutdown_child_out_channel (CutPipelinePrivate *priv)
+unref_child_out_channel (CutPipelinePrivate *priv)
 {
-    g_io_channel_shutdown(priv->child_out, TRUE, NULL);
+    g_io_channel_unref(priv->child_out);
     priv->child_out = NULL;
 }
 
@@ -146,7 +146,7 @@ dispose (GObject *object)
         close_child(priv);
 
     if (priv->child_out)
-        shutdown_child_out_channel(priv);
+        unref_child_out_channel(priv);
 
     G_OBJECT_CLASS(cut_pipeline_parent_class)->dispose(object);
 }
@@ -217,7 +217,7 @@ reap_child (CutPipeline *pipeline, GPid pid)
 
     remove_child_watch_func(priv);
     remove_child_out_watch_func(priv);
-    shutdown_child_out_channel(priv);
+    unref_child_out_channel(priv);
     close_child(priv);
 }
 
