@@ -1,3 +1,7 @@
+2008-10-02  Kouhei Sutou  <kou@cozmixng.org>
+
+	* test/test-cut-utils.c (test_strv_concat): fix a memory leak.
+
 2008-10-01  Kouhei Sutou  <kou@cozmixng.org>
 
 	* misc/release.rb: fix package detection.

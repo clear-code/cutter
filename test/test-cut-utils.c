@@ -12,6 +12,7 @@ void test_remove_path_recursive (void);
 void test_fold (void);
 
 static gchar *tmp_dir;
+static gchar **actual_string_array;
 
 void
 setup (void)
@@ -21,6 +22,8 @@ setup (void)
 
     if (g_mkdir_with_parents(tmp_dir, 0700) == -1)
         cut_error_errno();
+
+    actual_string_array = NULL;
 }
 
 void
@@ -30,6 +33,9 @@ teardown (void)
         cut_utils_remove_path_recursive(tmp_dir, NULL);
         g_free(tmp_dir);
     }
+
+    if (actual_string_array)
+        g_strfreev(actual_string_array);
 }
 
 void
@@ -82,9 +88,8 @@ test_strv_concat (void)
     const gchar *strings[] = {"a", "b", "c", NULL};
     gchar *expected[] = {"a", "b", "c", "d", "e", NULL};
 
-    cut_assert_equal_string_array(expected,
-                                  cut_utils_strv_concat(strings, "d", "e",
-                                                        NULL));
+    actual_string_array = cut_utils_strv_concat(strings, "d", "e", NULL);
+    cut_assert_equal_string_array(expected, actual_string_array);
 }
 
 void
