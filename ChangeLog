@@ -1,5 +1,8 @@
 2008-10-02  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertions.h (cut_assert_equal_fixture_data_string):
+	fix a memory leak.
+
 	* test/test-cut-utils.c (test_strv_concat): fix a memory leak.
 
 2008-10-01  Kouhei Sutou  <kou@cozmixng.org>

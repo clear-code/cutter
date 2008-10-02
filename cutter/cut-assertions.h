@@ -767,14 +767,16 @@ extern "C" {
 #define cut_assert_equal_fixture_data_string(expected, path, ...) do    \
 {                                                                       \
     char *_data, *_full_path;                                           \
+    const char *_taken_full_path;                                       \
                                                                         \
     cut_utils_get_fixture_data_string_and_path(                         \
         get_current_test_context(),                                     \
         __PRETTY_FUNCTION__, __FILE__, __LINE__,                        \
         &_data, &_full_path,                                            \
-        path, ## __VA_ARGS__, NULL);                                    \
+        (path), ## __VA_ARGS__, NULL);                                  \
+    _taken_full_path = cut_take_string(_full_path);                     \
     cut_assert_equal_string((expected), _data,                          \
-                            "%s", cut_take_string(_full_path));         \
+                            "%s", _taken_full_path);                    \
 } while (0)
 
 /**
