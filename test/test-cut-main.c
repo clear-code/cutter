@@ -6,19 +6,21 @@ const char   *cut_get_cutter_command_path (void);
 
 void test_cutter_command_path (void);
 
-static const gchar *original_cutter_command_path = NULL;
+static gchar *original_cutter_command_path;
 
 void
 setup (void)
 {
-    original_cutter_command_path = cut_get_cutter_command_path();
+    original_cutter_command_path = g_strdup(cut_get_cutter_command_path());
 }
 
 void
 teardown (void)
 {
-    if (original_cutter_command_path)
+    if (original_cutter_command_path) {
         cut_set_cutter_command_path(original_cutter_command_path);
+        g_free(original_cutter_command_path);
+    }
 }
 
 void
