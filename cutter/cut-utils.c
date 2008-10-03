@@ -66,14 +66,23 @@ cut_utils_filter_to_regexs (const gchar **filter)
     for (; *filter; filter++) {
         GRegex *regex;
         gchar *pattern;
+        GError *error = NULL;
 
         if (*filter[0] == '\0')
             continue;
 
         pattern = cut_utils_create_regex_pattern(*filter);
-        regex = g_regex_new(pattern, G_REGEX_EXTENDED, 0, NULL);
-        if (regex)
+        regex = g_regex_new(pattern, 0, 0, &error);
+        if (regex) {
             regexs = g_list_prepend(regexs, regex);
+        } else {
+            gchar *inspected;
+
+            inspected = gcut_error_inspect(error);
+            g_warning("%s", inspected);
+            g_free(inspected);
+            g_error_free(error);
+        }
         g_free(pattern);
     }
 
