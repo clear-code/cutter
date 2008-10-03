@@ -27,6 +27,7 @@
 
 #include "cut-test-container.h"
 
+#include "cut-iterated-test.h"
 #include "cut-run-context.h"
 #include "cut-utils.h"
 
@@ -93,7 +94,7 @@ cut_test_container_add_test (CutTestContainer *container, CutTest *test)
 
     if (CUT_IS_TEST(test)) {
         g_object_ref(test);
-        priv->tests = g_list_prepend(priv->tests, test);
+        priv->tests = g_list_append(priv->tests, test);
     }
 }
 
@@ -153,8 +154,11 @@ cut_test_container_filter_children (CutTestContainer *container,
     for (node = original; node; node = g_list_next(node)) {
         CutTest *test = node->data;
 
-        if (cut_utils_filter_match(regexs, cut_test_get_name(test)))
-            matched_tests = g_list_prepend(matched_tests, test);
+        if (CUT_IS_TEST_ITERATOR(test) ||
+            cut_utils_filter_match(regexs, cut_test_get_name(test)) ||
+            cut_utils_filter_match(regexs, cut_test_get_full_name(test))) {
+            matched_tests = g_list_append(matched_tests, test);
+        }
     }
 
     g_list_foreach(regexs, (GFunc)g_regex_unref, NULL);

@@ -45,7 +45,6 @@ struct _CutTestResultPrivate
     CutTestCase *test_case;
     CutTestSuite *test_suite;
     CutTestData *test_data;
-    gchar *test_name;
     gchar *message;
     gchar *user_message;
     gchar *system_message;
@@ -197,7 +196,6 @@ cut_test_result_init (CutTestResult *result)
     priv->test_case = NULL;
     priv->test_suite = NULL;
     priv->test_data = NULL;
-    priv->test_name = NULL;
     priv->message = NULL;
     priv->user_message = NULL;
     priv->system_message = NULL;
@@ -237,11 +235,6 @@ dispose (GObject *object)
     if (priv->test_data) {
         g_object_unref(priv->test_data);
         priv->test_data = NULL;
-    }
-
-    if (priv->test_name) {
-        g_free(priv->test_name);
-        priv->test_name = NULL;
     }
 
     if (priv->message) {
@@ -507,29 +500,10 @@ cut_test_result_get_test_name (CutTestResult *result)
 
     priv = CUT_TEST_RESULT_GET_PRIVATE(result);
 
-    if (priv->test_name) {
-        g_free(priv->test_name);
-        priv->test_name = NULL;
-    }
+    if (!priv->test)
+        return NULL;
 
-    if (priv->test) {
-        const gchar *name;
-        const gchar *data_name = NULL;
-
-        name = cut_test_get_name(priv->test);
-        if (priv->test_data)
-            data_name = cut_test_data_get_name(priv->test_data);
-
-        if (name && data_name) {
-            priv->test_name = g_strconcat(name, " (", data_name, ")", NULL);
-        } else if (name) {
-            priv->test_name = g_strdup(name);
-        } else if (data_name) {
-            priv->test_name = g_strconcat(" (", data_name, ")", NULL);
-        }
-    }
-
-    return priv->test_name;
+    return cut_test_get_full_name(priv->test);
 }
 
 const gchar *

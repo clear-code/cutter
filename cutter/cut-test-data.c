@@ -124,7 +124,6 @@ free_value (CutTestDataPrivate *priv)
             priv->destroy_function(priv->value);
         priv->value = NULL;
     }
-    priv->destroy_function = NULL;
 }
 
 static void

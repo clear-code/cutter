@@ -40,7 +40,6 @@ struct _CutTestPrivate
     gchar *name;
     gchar *full_name;
     gchar *element_name;
-    CutTestData *test_data;
     CutTestFunction test_function;
     GTimer *timer;
     GTimeVal start_time;
@@ -254,8 +253,6 @@ cut_test_init (CutTest *test)
     priv->elapsed = -1.0;
     priv->attributes = g_hash_table_new_full(g_str_hash, g_str_equal,
                                              g_free, g_free);
-
-    priv->test_data = NULL;
 }
 
 static void
@@ -292,11 +289,6 @@ dispose (GObject *object)
     if (priv->attributes) {
         g_hash_table_unref(priv->attributes);
         priv->attributes = NULL;
-    }
-
-    if (priv->test_data) {
-        g_object_unref(priv->test_data);
-        priv->test_data = NULL;
     }
 
     free_full_name(priv);
@@ -432,16 +424,16 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
     if (success) {
         CutTestCase *test_case;
         CutTestIterator *test_iterator;
-        CutTestData *test_data = NULL;
         CutTestResult *result;
+        CutTestData *data = NULL;
 
         test_case = cut_test_context_get_test_case(test_context);
         test_iterator = cut_test_context_get_test_iterator(test_context);
-        if (cut_test_context_have_data(test_context))
-            test_data = cut_test_context_get_current_data(test_context);
+        if (CUT_IS_ITERATED_TEST(test))
+            data = cut_iterated_test_get_data(CUT_ITERATED_TEST(test));
         result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
                                      test, test_iterator, test_case,
-                                     NULL, test_data,
+                                     NULL, data,
                                      NULL, NULL,
                                      NULL, NULL, 0);
         cut_test_emit_result_signal(test, test_context, result);
@@ -480,6 +472,37 @@ cut_test_set_name (CutTest *test, const gchar *name)
 
     if (name)
         priv->name = g_strdup(name);
+}
+
+const gchar *
+cut_test_get_full_name (CutTest *test)
+{
+    CutTestPrivate *priv;
+    CutTestData *data = NULL;
+
+    priv = CUT_TEST_GET_PRIVATE(test);
+    if (priv->full_name)
+        return priv->full_name;
+
+    if (CUT_IS_ITERATED_TEST(test))
+        data = cut_iterated_test_get_data(CUT_ITERATED_TEST(test));
+
+    if (priv->name && data) {
+        priv->full_name = g_strconcat(priv->name,
+                                      " (",
+                                      cut_test_data_get_name(data),
+                                      ")",
+                                      NULL);
+    } else if (priv->name) {
+        priv->full_name = g_strdup(priv->name);
+    } else if (data) {
+        priv->full_name = g_strconcat(" (",
+                                      cut_test_data_get_name(data),
+                                      ")",
+                                      NULL);
+    }
+
+    return priv->full_name;
 }
 
 const gchar *

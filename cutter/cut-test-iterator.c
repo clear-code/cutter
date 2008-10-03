@@ -370,12 +370,13 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
     CutTestIteratorPrivate *priv;
     CutTestResult *result;
     CutTestCase *test_case;
-    GList *node, *tests = NULL;
+    GList *node, *tests = NULL, *filtered_tests = NULL;
     GThreadPool *thread_pool = NULL;
     GError *error = NULL;
     CutTestResultStatus status = CUT_TEST_RESULT_SUCCESS;
     gboolean all_success = TRUE;
     guint n_tests;
+    const gchar **test_names;
     jmp_buf jump_buffer;
 
     test_iterator = CUT_TEST_ITERATOR(test);
@@ -422,7 +423,7 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
         cut_test_iterator_add_test(test_iterator, test);
         g_object_unref(test);
 
-        tests = g_list_append(tests, test);
+        tests = g_list_prepend(tests, test);
 
         g_signal_connect(test, "success", G_CALLBACK(cb_test_status),
                          &status);
@@ -440,19 +441,25 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
         cut_test_context_shift_data(test_context);
     }
 
+    test_names = cut_run_context_get_target_test_names(run_context);
+    filtered_tests =
+        cut_test_container_filter_children(CUT_TEST_CONTAINER(test_iterator),
+                                           test_names);
+
     cut_run_context_prepare_test_iterator(run_context, test_iterator);
     n_tests = cut_test_container_get_n_tests(CUT_TEST_CONTAINER(test_iterator),
                                              run_context);
     g_signal_emit_by_name(test_iterator, "ready", n_tests);
     g_signal_emit_by_name(CUT_TEST(test_iterator), "start");
 
-    for (node = tests; node; node = g_list_next(node)) {
+    for (node = filtered_tests; node; node = g_list_next(node)) {
         CutIteratedTest *test = node->data;
 
         run_test_with_thread_support(test_iterator, test,
                                      test_context, run_context,
                                      thread_pool, &all_success);
     }
+    g_list_free(filtered_tests);
 
     if (thread_pool)
         g_thread_pool_free(thread_pool, FALSE, TRUE);
