@@ -359,7 +359,7 @@ i_will_be_back_handler (int signum)
 
 static void
 emit_ready_signal (CutTestSuite *test_suite, GList *test_cases,
-                   const gchar **test_names)
+                   CutRunContext *run_context)
 {
     GList *node;
     guint n_test_cases, n_tests;
@@ -371,7 +371,7 @@ emit_ready_signal (CutTestSuite *test_suite, GList *test_cases,
         CutTestCase *test_case = node->data;
 
         n_test_cases++;
-        n_tests += cut_test_case_get_n_tests(test_case, test_names);
+        n_tests += cut_test_case_get_n_tests(test_case, run_context);
     }
 
     g_signal_emit_by_name(test_suite, "ready", n_test_cases, n_tests);
@@ -438,7 +438,7 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite,
     switch (signum) {
       case 0:
         cut_run_context_prepare_test_suite(run_context, test_suite);
-        emit_ready_signal(test_suite, sorted_test_cases, test_names);
+        emit_ready_signal(test_suite, sorted_test_cases, run_context);
         g_signal_emit_by_name(CUT_TEST(test_suite), "start");
 
         if (priv->warmup)

@@ -1,5 +1,8 @@
 2008-10-03  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/, test/: cut_test_case_get_n_tests() receives
+	CutRunContext * not gchar **.
+
 	* cutter/cut-test-suite.c: handle SIGABRT action like SIGSEGV.
 
 	* cutter/cut-loader.[ch], cutter/cut-main.c,

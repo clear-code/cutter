@@ -175,8 +175,11 @@ void
 test_test_case_count (void)
 {
     const gchar *test_names[] = {"/.*/", NULL};
+
     cut_assert_equal_int(3, cut_test_case_get_n_tests(test_object, NULL));
-    cut_assert_equal_int(3, cut_test_case_get_n_tests(test_object, test_names));
+
+    cut_run_context_set_target_test_names(run_context, test_names);
+    cut_assert_equal_int(3, cut_test_case_get_n_tests(test_object, run_context));
 }
 
 void

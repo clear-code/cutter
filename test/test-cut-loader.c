@@ -94,8 +94,10 @@ test_load_function (void)
     test_case = cut_loader_load_test_case(loader);
     cut_assert(test_case);
     cut_assert_equal_int(4, cut_test_case_get_n_tests(test_case, NULL));
-    cut_assert_equal_int(4, cut_test_case_get_n_tests(test_case,
-                                                      target_test_names));
+
+    run_context = cut_test_runner_new();
+    cut_run_context_set_target_test_names(run_context, target_test_names);
+    cut_assert_equal_int(4, cut_test_case_get_n_tests(test_case, run_context));
 
     container = CUT_TEST_CONTAINER(test_case);
     tests = (GList *)cut_test_container_get_children(container);
