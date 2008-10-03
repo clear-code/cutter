@@ -391,8 +391,10 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite,
     gint signum;
 #ifndef G_OS_WIN32
     struct sigaction i_will_be_back_action;
-    struct sigaction previous_segv_action, previous_int_action;
+    struct sigaction previous_segv_action, previous_abort_action;
+    struct sigaction previous_int_action;
     gboolean set_segv_action = TRUE;
+    gboolean set_abort_action = TRUE;
     gboolean set_int_action = TRUE;
 #endif
 
@@ -408,6 +410,8 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite,
     i_will_be_back_action.sa_flags = 0;
     if (sigaction(SIGSEGV, &i_will_be_back_action, &previous_segv_action) == -1)
         set_segv_action = FALSE;
+    if (sigaction(SIGABRT, &i_will_be_back_action, &previous_abort_action) == -1)
+        set_abort_action = FALSE;
     if (sigaction(SIGINT, &i_will_be_back_action, &previous_int_action) == -1)
         set_int_action = FALSE;
 #endif
@@ -468,6 +472,7 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite,
         break;
 #ifndef G_OS_WIN32
       case SIGSEGV:
+      case SIGABRT:
         all_success = FALSE;
         g_signal_emit_by_name(CUT_TEST(test_suite), "crashed", backtrace);
         g_free(backtrace);
@@ -479,6 +484,8 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite,
 #ifndef G_OS_WIN32
     if (set_int_action)
         sigaction(SIGINT, &previous_int_action, NULL);
+    if (set_abort_action)
+        sigaction(SIGABRT, &previous_abort_action, NULL);
     if (set_segv_action)
         sigaction(SIGSEGV, &previous_segv_action, NULL);
 #endif
@@ -536,7 +543,7 @@ cut_test_suite_run_test (CutTestSuite *suite, CutRunContext *run_context,
 
 gboolean
 cut_test_suite_run_test_in_test_case (CutTestSuite *suite,
-                                      CutRunContext    *run_context,
+                                      CutRunContext *run_context,
                                       gchar        *test_name,
                                       gchar        *test_case_name)
 {
@@ -555,7 +562,7 @@ cut_test_suite_run_test_in_test_case (CutTestSuite *suite,
 
 gboolean
 cut_test_suite_run_with_filter (CutTestSuite *test_suite,
-                                CutRunContext   *run_context,
+                                CutRunContext *run_context,
                                 const gchar **test_case_names,
                                 const gchar **test_names)
 {

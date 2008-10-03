@@ -1,5 +1,7 @@
 2008-10-03  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-suite.c: handle SIGABRT action like SIGSEGV.
+
 	* cutter/cut-loader.[ch], cutter/cut-main.c,
 	cutter/cut-pipeline.c, cutter/cut-repository.[ch],
 	cutter/cut-run-context.[ch], test/run-test.sh, test/test-cutter.c:
