@@ -86,6 +86,7 @@ setup (void)
         "  --exclude-file=FILE                             Skip files" LINE_FEED_CODE
         "  --exclude-directory=DIRECTORY                   Skip directories" LINE_FEED_CODE
         "  --fatal-failures                                Treat failures as fatal problem" LINE_FEED_CODE
+        "  --keep-opening-modules                          Keep opening loaded modules to resolve symbols for debugging" LINE_FEED_CODE
         "" LINE_FEED_CODE,
         g_get_prgname(),
         g_get_prgname());
@@ -247,6 +248,7 @@ test_help_all (void)
         "  --exclude-file=FILE                             Skip files" LINE_FEED_CODE
         "  --exclude-directory=DIRECTORY                   Skip directories" LINE_FEED_CODE
         "  --fatal-failures                                Treat failures as fatal problem" LINE_FEED_CODE
+        "  --keep-opening-modules                          Keep opening loaded modules to resolve symbols for debugging" LINE_FEED_CODE
 #ifdef HAVE_GTK
         "  --display=DISPLAY                               X display to use" LINE_FEED_CODE
 #endif

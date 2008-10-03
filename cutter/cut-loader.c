@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2008  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -18,7 +18,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#  include "config.h"
 #endif /* HAVE_CONFIG_H */
 
 #include <stdlib.h>
@@ -57,6 +57,7 @@ struct _CutLoaderPrivate
     GModule *module;
     CutBinaryType binary_type;
     CutMachOLoader *mach_o_loader;
+    gboolean keep_opening;
 };
 
 enum
@@ -107,6 +108,7 @@ cut_loader_init (CutLoader *loader)
     priv->so_filename = NULL;
     priv->binary_type = CUT_BINARY_TYPE_UNKNOWN;
     priv->mach_o_loader = NULL;
+    priv->keep_opening = FALSE;
 }
 
 static void
@@ -135,7 +137,8 @@ dispose (GObject *object)
     }
 
     if (priv->module) {
-        g_module_close(priv->module);
+        if (!priv->keep_opening)
+            g_module_close(priv->module);
         priv->module = NULL;
     }
 
@@ -186,6 +189,18 @@ cut_loader_new (const gchar *soname)
     return g_object_new(CUT_TYPE_LOADER,
                         "so-filename", soname,
                         NULL);
+}
+
+gboolean
+cut_loader_get_keep_opening (CutLoader *loader)
+{
+    return CUT_LOADER_GET_PRIVATE(loader)->keep_opening;
+}
+
+void
+cut_loader_set_keep_opening (CutLoader *loader, gboolean keep_opening)
+{
+    CUT_LOADER_GET_PRIVATE(loader)->keep_opening = keep_opening;
 }
 
 static inline gboolean

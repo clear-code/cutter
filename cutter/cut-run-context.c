@@ -77,6 +77,7 @@ struct _CutRunContextPrivate
     gchar **command_line_args;
     gboolean completed;
     gboolean fatal_failures;
+    gboolean keep_opening_modules;
 };
 
 enum
@@ -102,7 +103,8 @@ enum
     PROP_EXCLUDE_FILES,
     PROP_EXCLUDE_DIRECTORIES,
     PROP_COMMAND_LINE_ARGS,
-    PROP_FATAL_FAILURES
+    PROP_FATAL_FAILURES,
+    PROP_KEEP_OPENING_MODULES
 };
 
 enum
@@ -414,6 +416,15 @@ cut_run_context_class_init (CutRunContextClass *klass)
                                 FALSE,
                                 G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_FATAL_FAILURES, spec);
+
+    spec = g_param_spec_boolean("keep-opening-modules",
+                                "Keep opening modules",
+                                "Keep opening loaded modules to resolve symbols "
+                                "for debugging",
+                                FALSE,
+                                G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_KEEP_OPENING_MODULES,
+                                    spec);
 
     signals[START_RUN]
         = g_signal_new("start-run",
@@ -795,6 +806,7 @@ cut_run_context_init (CutRunContext *context)
     priv->command_line_args = NULL;
     priv->completed = FALSE;
     priv->fatal_failures = FALSE;
+    priv->keep_opening_modules = FALSE;
 }
 
 static void
@@ -944,6 +956,9 @@ set_property (GObject      *object,
       case PROP_FATAL_FAILURES:
         priv->fatal_failures = g_value_get_boolean(value);
         break;
+      case PROP_KEEP_OPENING_MODULES:
+        priv->keep_opening_modules = g_value_get_boolean(value);
+        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
@@ -1021,6 +1036,9 @@ get_property (GObject    *object,
         break;
       case PROP_FATAL_FAILURES:
         g_value_set_boolean(value, priv->fatal_failures);
+        break;
+      case PROP_KEEP_OPENING_MODULES:
+        g_value_set_boolean(value, priv->keep_opening_modules);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -1629,6 +1647,8 @@ cut_run_context_create_test_suite (CutRunContext *context)
 
     priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
     repository = cut_repository_new(priv->test_directory);
+    cut_repository_set_keep_opening_modules(repository,
+                                            priv->keep_opening_modules);
     exclude_files = (const gchar **)priv->exclude_files;
     cut_repository_set_exclude_files(repository, exclude_files);
     exclude_directories = (const gchar **)priv->exclude_directories;
@@ -2355,6 +2375,19 @@ gboolean
 cut_run_context_get_fatal_failures (CutRunContext *context)
 {
     return CUT_RUN_CONTEXT_GET_PRIVATE(context)->fatal_failures;
+}
+
+void
+cut_run_context_set_keep_opening_modules (CutRunContext *context,
+                                          gboolean       keep_opening)
+{
+    CUT_RUN_CONTEXT_GET_PRIVATE(context)->keep_opening_modules = keep_opening;
+}
+
+gboolean
+cut_run_context_get_keep_opening_modules (CutRunContext *context)
+{
+    return CUT_RUN_CONTEXT_GET_PRIVATE(context)->keep_opening_modules;
 }
 
 /*

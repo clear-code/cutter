@@ -41,6 +41,8 @@ struct _CutRepositoryPrivate
 
     gint deep;
     CutLoader *test_suite_loader;
+
+    gboolean keep_opening_modules;
 };
 
 enum
@@ -94,6 +96,7 @@ cut_repository_init (CutRepository *repository)
     priv->exclude_dirs_regexs = NULL;
     priv->deep = 0;
     priv->test_suite_loader = NULL;
+    priv->keep_opening_modules = FALSE;
 }
 
 static void
@@ -181,6 +184,19 @@ cut_repository_new (const gchar *directory)
                         NULL);
 }
 
+gboolean
+cut_repository_get_keep_opening_modules (CutRepository *repository)
+{
+    return CUT_REPOSITORY_GET_PRIVATE(repository)->keep_opening_modules;
+}
+
+void
+cut_repository_set_keep_opening_modules (CutRepository *repository,
+                                         gboolean keep_opening)
+{
+    CUT_REPOSITORY_GET_PRIVATE(repository)->keep_opening_modules = keep_opening;
+}
+
 static gboolean
 is_test_suite_so_path_name (const gchar *path_name)
 {
@@ -255,6 +271,7 @@ cut_repository_collect_loader (CutRepository *repository, const gchar *dir_name,
             }
 
             loader = cut_loader_new(path_name);
+            cut_loader_set_keep_opening(loader, priv->keep_opening_modules);
             if (is_test_suite_so_path_name(path_name)) {
                 update_test_suite_loader(priv, loader, deep);
             } else {

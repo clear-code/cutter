@@ -50,9 +50,12 @@ struct _CutLoaderClass
 
 GType cut_loader_get_type  (void) G_GNUC_CONST;
 
-CutLoader    *cut_loader_new             (const gchar *soname);
-CutTestCase  *cut_loader_load_test_case  (CutLoader *loader);
-CutTestSuite *cut_loader_load_test_suite (CutLoader *loader);
+CutLoader    *cut_loader_new               (const gchar *soname);
+gboolean      cut_loader_get_keep_opening  (CutLoader *loader);
+void          cut_loader_set_keep_opening  (CutLoader *loader,
+                                            gboolean   keep_opening);
+CutTestCase  *cut_loader_load_test_case    (CutLoader *loader);
+CutTestSuite *cut_loader_load_test_suite   (CutLoader *loader);
 
 gboolean      cut_loader_support_attribute (CutLoader *loader);
 

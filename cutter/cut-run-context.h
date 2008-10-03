@@ -302,6 +302,11 @@ gboolean       cut_run_context_is_completed         (CutRunContext *context);
 void           cut_run_context_set_fatal_failures   (CutRunContext *context,
                                                      gboolean       fatal_failures);
 gboolean       cut_run_context_get_fatal_failures   (CutRunContext *context);
+void           cut_run_context_set_keep_opening_modules
+                                                    (CutRunContext *context,
+                                                     gboolean       keep_opening);
+gboolean       cut_run_context_get_keep_opening_modules
+                                                    (CutRunContext *context);
 
 
 G_END_DECLS

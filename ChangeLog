@@ -1,5 +1,14 @@
 2008-10-03  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-loader.[ch], cutter/cut-main.c,
+	cutter/cut-pipeline.c, cutter/cut-repository.[ch],
+	cutter/cut-run-context.[ch], test/run-test.sh, test/test-cutter.c:
+	add --keep-opening-modules option to resolve symbols for debugging.
+
+	* TODO: remove a entry: add a new command line option that switch
+	whether unload opened module or not to resolve symbols in opened
+	module. --keep-module?
+
 	* cutter/cut-main.c (cut_set_cutter_command_path): add NULL check.
 
 2008-10-02  Kouhei Sutou  <kou@cozmixng.org>

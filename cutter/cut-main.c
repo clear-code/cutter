@@ -69,6 +69,7 @@ static CutContractor *contractor = NULL;
 static gchar **original_argv = NULL;
 static gchar *cutter_command_path = NULL;
 static gboolean fatal_failures = FALSE;
+static gboolean keep_opening_modules = FALSE;
 
 static gboolean
 print_version (const gchar *option_name, const gchar *value,
@@ -146,6 +147,8 @@ static const GOptionEntry option_entries[] =
      N_("Skip directories"), "DIRECTORY"},
     {"fatal-failures", 0, 0, G_OPTION_ARG_NONE, &fatal_failures,
      N_("Treat failures as fatal problem"), NULL},
+    {"keep-opening-modules", 0, 0, G_OPTION_ARG_NONE, &keep_opening_modules,
+     N_("Keep opening loaded modules to resolve symbols for debugging"), NULL},
     {NULL}
 };
 
@@ -315,6 +318,7 @@ cut_create_run_context (void)
                                           (const gchar **)test_names);
     cut_run_context_set_test_case_order(run_context, test_case_order);
     cut_run_context_set_fatal_failures(run_context, fatal_failures);
+    cut_run_context_set_keep_opening_modules(run_context, keep_opening_modules);
     cut_run_context_set_command_line_args(run_context, original_argv);
 
     return run_context;
@@ -437,7 +441,7 @@ cut_run (void)
 gboolean
 cut_run_iteration (void)
 {
-    static GStaticRecMutex mutex = G_STATIC_REC_MUTEX_INIT;
+    /* static GStaticRecMutex mutex = G_STATIC_REC_MUTEX_INIT; */
     gboolean dispatched;
 
     /* should lock? */

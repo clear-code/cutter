@@ -183,6 +183,8 @@ cut_pipeline_new_from_run_context (CutRunContext *run_context)
                         cut_run_context_get_command_line_args(run_context),
                         "fatal-failures",
                         cut_run_context_get_fatal_failures(run_context),
+                        "keep-opening-modules",
+                        cut_run_context_get_keep_opening_modules(run_context),
                         NULL);
 }
 
