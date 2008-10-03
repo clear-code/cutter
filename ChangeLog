@@ -1,5 +1,7 @@
 2008-10-03  Kouhei Sutou  <kou@cozmixng.org>
 
+	* TODO: add a new entry: cut_trace() that stacks backtrace.
+
 	* cutter/cut-utils.c (cut_utils_filter_to_regexs):
 	- don't use extended mode.
 	- show regexp error.

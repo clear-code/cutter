@@ -21,3 +21,5 @@
 * [BUG] test result (error, omission, ...) signal in setup() isn't connected
   to CutRunner because setup() is invoked before CutTest's prepare().
 * cut_assert_equal_sockaddr().
+* cut_trace() that stacks backtrace.
+  e.g. cut_trace(my_assert_xxx(ZZZ));
