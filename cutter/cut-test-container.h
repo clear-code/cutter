@@ -54,6 +54,8 @@ GList       *cut_test_container_get_children (CutTestContainer *container);
 GList       *cut_test_container_filter_children
                                              (CutTestContainer *container,
                                               const gchar     **filter);
+guint        cut_test_container_get_n_tests  (CutTestContainer *container,
+                                              CutRunContext    *run_context);
 
 G_END_DECLS
 

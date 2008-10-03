@@ -51,8 +51,14 @@ struct _CutIteratedTestClass
 GType                cut_iterated_test_get_type    (void) G_GNUC_CONST;
 
 CutIteratedTest     *cut_iterated_test_new         (const gchar     *name,
-                                                    CutIteratedTestFunction function);
+                                                    CutIteratedTestFunction function,
+                                                    CutTestData     *data);
 CutIteratedTest     *cut_iterated_test_new_empty   (void);
+
+CutTestData         *cut_iterated_test_get_data    (CutIteratedTest *test);
+void                 cut_iterated_test_set_data    (CutIteratedTest *test,
+                                                    CutTestData     *data);
+void                 cut_iterated_test_clear_data  (CutIteratedTest *test);
 
 G_END_DECLS
 

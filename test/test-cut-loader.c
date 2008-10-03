@@ -93,13 +93,16 @@ test_load_function (void)
     loader = loader_new("test", "stub-loader-test." G_MODULE_SUFFIX);
     test_case = cut_loader_load_test_case(loader);
     cut_assert(test_case);
-    cut_assert_equal_int(4, cut_test_case_get_n_tests(test_case, NULL));
+
+    container = CUT_TEST_CONTAINER(test_case);
+    cut_assert_equal_int(4,
+                         cut_test_container_get_n_tests(container, NULL));
 
     run_context = cut_test_runner_new();
     cut_run_context_set_target_test_names(run_context, target_test_names);
-    cut_assert_equal_int(4, cut_test_case_get_n_tests(test_case, run_context));
+    cut_assert_equal_int(4,
+                         cut_test_container_get_n_tests(container, run_context));
 
-    container = CUT_TEST_CONTAINER(test_case);
     tests = (GList *)cut_test_container_get_children(container);
     cut_assert(tests);
 
@@ -149,6 +152,7 @@ void
 test_load_test_iterator (void)
 {
     const GList *tests;
+    CutTestContainer *container;
     CutTestIterator *test_iterator;
     CutIteratedTestFunction iterated_test_function = NULL;
     CutDataSetupFunction data_setup_function = NULL;
@@ -158,9 +162,10 @@ test_load_test_iterator (void)
 
     test_case = cut_loader_load_test_case(loader);
     cut_assert_not_null(test_case);
-    cut_assert_equal_int(1, cut_test_case_get_n_tests(test_case, NULL));
+    container = CUT_TEST_CONTAINER(test_case);
+    cut_assert_equal_int(1, cut_test_container_get_n_tests(container, NULL));
 
-    tests = cut_test_container_get_children(CUT_TEST_CONTAINER(test_case));
+    tests = cut_test_container_get_children(container);
     cut_assert_not_null(tests);
 
     test_iterator = tests->data;

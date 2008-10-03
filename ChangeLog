@@ -1,5 +1,7 @@
 2008-10-03  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/, test/: CutIteratedTest has test data.
+
 	* cutter/, test/: cut_test_case_get_n_tests() receives
 	CutRunContext * not gchar **.
 

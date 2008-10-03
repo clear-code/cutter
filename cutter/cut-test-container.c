@@ -27,7 +27,7 @@
 
 #include "cut-test-container.h"
 
-#include "cut-test.h"
+#include "cut-run-context.h"
 #include "cut-utils.h"
 
 #define CUT_TEST_CONTAINER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_CONTAINER, CutTestContainerPrivate))
@@ -161,6 +161,32 @@ cut_test_container_filter_children (CutTestContainer *container,
     g_list_free(regexs);
 
     return matched_tests;
+}
+
+guint
+cut_test_container_get_n_tests (CutTestContainer *container,
+                                CutRunContext *run_context)
+{
+    const gchar **test_names = NULL;
+
+    if (run_context)
+        test_names = cut_run_context_get_target_test_names(run_context);
+
+    if (test_names) {
+        GList *filtered_tests;
+        guint n_tests;
+
+        filtered_tests = cut_test_container_filter_children(container,
+                                                            test_names);
+        n_tests = g_list_length(filtered_tests);
+        g_list_free(filtered_tests);
+        return n_tests;
+    } else {
+        CutTestContainerPrivate *priv;
+
+        priv = CUT_TEST_CONTAINER_GET_PRIVATE(container);
+        return g_list_length(priv->tests);
+    }
 }
 
 /*

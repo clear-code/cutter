@@ -292,22 +292,6 @@ get_filtered_tests (CutTestCase *test_case, const gchar **test_names)
     }
 }
 
-guint
-cut_test_case_get_n_tests (CutTestCase *test_case, CutRunContext *run_context)
-{
-    GList *filtered_tests;
-    guint n_tests;
-    const gchar **test_names = NULL;
-
-    if (run_context)
-        test_names = cut_run_context_get_target_test_names(run_context);
-    filtered_tests = get_filtered_tests(test_case, test_names);
-    n_tests = g_list_length(filtered_tests);
-    g_list_free(filtered_tests);
-
-    return n_tests;
-}
-
 void
 cut_test_case_add_test (CutTestCase *test_case, CutTest *test)
 {

@@ -39,12 +39,14 @@ typedef struct _CutIteratedTestPrivate	CutIteratedTestPrivate;
 struct _CutIteratedTestPrivate
 {
     CutIteratedTestFunction iterated_test_function;
+    CutTestData *data;
 };
 
 enum
 {
     PROP_0,
-    PROP_ITERATED_TEST_FUNCTION
+    PROP_ITERATED_TEST_FUNCTION,
+    PROP_DATA
 };
 
 G_DEFINE_TYPE(CutIteratedTest, cut_iterated_test, CUT_TYPE_TEST)
@@ -94,6 +96,13 @@ cut_iterated_test_class_init (CutIteratedTestClass *klass)
     g_object_class_install_property(gobject_class, PROP_ITERATED_TEST_FUNCTION,
                                     spec);
 
+    spec = g_param_spec_object("data",
+                               "Data",
+                               "The test data for iterated test",
+                               CUT_TYPE_TEST_DATA,
+                               G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_DATA, spec);
+
     g_type_class_add_private(gobject_class, sizeof(CutIteratedTestPrivate));
 }
 
@@ -103,6 +112,7 @@ cut_iterated_test_init (CutIteratedTest *test)
     CutIteratedTestPrivate *priv = CUT_ITERATED_TEST_GET_PRIVATE(test);
 
     priv->iterated_test_function = NULL;
+    priv->data = NULL;
 }
 
 static void
@@ -111,6 +121,11 @@ dispose (GObject *object)
     CutIteratedTestPrivate *priv = CUT_ITERATED_TEST_GET_PRIVATE(object);
 
     priv->iterated_test_function = NULL;
+
+    if (priv->data) {
+        g_object_unref(priv->data);
+        priv->data = NULL;
+    }
 
     G_OBJECT_CLASS(cut_iterated_test_parent_class)->dispose(object);
 }
@@ -126,6 +141,10 @@ set_property (GObject      *object,
     switch (prop_id) {
       case PROP_ITERATED_TEST_FUNCTION:
         priv->iterated_test_function = g_value_get_pointer(value);
+        break;
+      case PROP_DATA:
+        cut_iterated_test_set_data(CUT_ITERATED_TEST(object),
+                                   g_value_get_object(value));
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -145,6 +164,9 @@ get_property (GObject    *object,
       case PROP_ITERATED_TEST_FUNCTION:
         g_value_set_pointer(value, priv->iterated_test_function);
         break;
+      case PROP_DATA:
+        g_value_set_object(value, priv->data);
+        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
@@ -152,19 +174,50 @@ get_property (GObject    *object,
 }
 
 CutIteratedTest *
-cut_iterated_test_new (const gchar *name, CutIteratedTestFunction function)
+cut_iterated_test_new (const gchar *name, CutIteratedTestFunction function,
+                       CutTestData *data)
 {
     return g_object_new(CUT_TYPE_ITERATED_TEST,
                         "element-name", "iterated-test",
                         "name", name,
                         "iterated-test-function", function,
+                        "data", data,
                         NULL);
 }
 
 CutIteratedTest *
 cut_iterated_test_new_empty (void)
 {
-    return cut_iterated_test_new(NULL, NULL);
+    return cut_iterated_test_new(NULL, NULL, NULL);
+}
+
+CutTestData *
+cut_iterated_test_get_data (CutIteratedTest *test)
+{
+    return CUT_ITERATED_TEST_GET_PRIVATE(test)->data;
+}
+
+void
+cut_iterated_test_set_data (CutIteratedTest *test, CutTestData *data)
+{
+    CutIteratedTestPrivate *priv;
+
+    priv = CUT_ITERATED_TEST_GET_PRIVATE(test);
+    if (priv->data)
+        g_object_unref(priv->data);
+    priv->data = data;
+    if (priv->data)
+        g_object_ref(priv->data);
+}
+
+void
+cut_iterated_test_clear_data (CutIteratedTest *test)
+{
+    CutIteratedTestPrivate *priv;
+
+    priv = CUT_ITERATED_TEST_GET_PRIVATE(test);
+    if (priv->data)
+        cut_test_data_set_value(priv->data, NULL, NULL);
 }
 
 static void
@@ -177,21 +230,21 @@ static gboolean
 is_available (CutTest *test, CutTestContext *test_context,
               CutRunContext *run_context)
 {
-    return CUT_ITERATED_TEST_GET_PRIVATE(test)->iterated_test_function &&
-        cut_test_context_have_data(test_context);
+    CutIteratedTestPrivate *priv;
+
+    priv = CUT_ITERATED_TEST_GET_PRIVATE(test);
+    return priv->iterated_test_function && priv->data;
 }
 
 static void
 invoke (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
 {
     CutIteratedTestPrivate *priv;
-    CutTestData *test_data;
     gconstpointer value;
 
     priv = CUT_ITERATED_TEST_GET_PRIVATE(test);
 
-    test_data = cut_test_context_get_current_data(test_context);
-    value = cut_test_data_get_value(test_data);
+    value = cut_test_data_get_value(priv->data);
     return priv->iterated_test_function(value);
 }
 

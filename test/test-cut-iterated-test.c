@@ -211,9 +211,10 @@ stub_test_equal_value_string (gconstpointer data)
 void
 test_run (void *data)
 {
-    iterated_test = cut_iterated_test_new("success test",
-                                          stub_test_equal_value_string);
     test_data = cut_test_data_new("First data", g_strdup("value"), g_free);
+    iterated_test = cut_iterated_test_new("success test",
+                                          stub_test_equal_value_string,
+                                          test_data);
     cut_assert_true(run());
 
     cut_assert_n_signals(1, 1, 0, 0, 0, 0, 0);

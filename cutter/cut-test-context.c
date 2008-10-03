@@ -639,6 +639,16 @@ cut_test_context_set_data (CutTestContext *context, CutTestData *test_data)
     }
 }
 
+CutTestData *
+cut_test_context_get_data (CutTestContext *context, guint index)
+{
+    CutTestContextPrivate *priv;
+
+    priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+
+    return g_list_nth_data(priv->data_list, index);
+}
+
 void
 cut_test_context_shift_data (CutTestContext *context)
 {

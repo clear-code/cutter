@@ -97,6 +97,8 @@ gboolean      cut_test_context_is_multi_thread
 
 void          cut_test_context_set_data       (CutTestContext *context,
                                                CutTestData    *test_data);
+CutTestData  *cut_test_context_get_data       (CutTestContext *context,
+                                               guint           index);
 void          cut_test_context_shift_data     (CutTestContext *context);
 gboolean      cut_test_context_have_data      (CutTestContext *context);
 CutTestData  *cut_test_context_get_current_data

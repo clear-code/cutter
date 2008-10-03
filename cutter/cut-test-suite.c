@@ -371,7 +371,8 @@ emit_ready_signal (CutTestSuite *test_suite, GList *test_cases,
         CutTestCase *test_case = node->data;
 
         n_test_cases++;
-        n_tests += cut_test_case_get_n_tests(test_case, run_context);
+        n_tests += cut_test_container_get_n_tests(CUT_TEST_CONTAINER(test_case),
+                                                  run_context);
     }
 
     g_signal_emit_by_name(test_suite, "ready", n_test_cases, n_tests);

@@ -212,15 +212,6 @@ cut_test_iterator_new_empty (void)
     return cut_test_iterator_new(NULL, NULL, NULL);
 }
 
-guint
-cut_test_iterator_get_n_tests (CutTestIterator *test_iterator)
-{
-    CutTestContainer *container;
-
-    container = CUT_TEST_CONTAINER(test_iterator);
-    return g_list_length(cut_test_container_get_children(container));
-}
-
 void
 cut_test_iterator_add_test (CutTestIterator *test_iterator,
                             CutIteratedTest *test)
@@ -328,7 +319,7 @@ run_test_with_thread_support (CutTestIterator *test_iterator,
         is_multi_thread = FALSE;
     cut_test_context_set_multi_thread(local_test_context, is_multi_thread);
     cut_test_context_set_data(local_test_context,
-                              cut_test_context_get_current_data(test_context));
+                              cut_iterated_test_get_data(iterated_test));
 
     original_test_context = cut_test_case_get_current_test_context(test_case);
 
@@ -379,11 +370,12 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
     CutTestIteratorPrivate *priv;
     CutTestResult *result;
     CutTestCase *test_case;
-    GList *node, *tests = NULL, *test_data_list = NULL;
+    GList *node, *tests = NULL;
     GThreadPool *thread_pool = NULL;
     GError *error = NULL;
     CutTestResultStatus status = CUT_TEST_RESULT_SUCCESS;
     gboolean all_success = TRUE;
+    guint n_tests;
     jmp_buf jump_buffer;
 
     test_iterator = CUT_TEST_ITERATOR(test);
@@ -419,25 +411,18 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
         g_error_free(error);
     }
 
-    cut_run_context_prepare_test_iterator(run_context, test_iterator);
-    g_signal_emit_by_name(test_iterator, "ready",
-                          cut_test_context_get_n_data(test_context));
-    g_signal_emit_by_name(CUT_TEST(test_iterator), "start");
-
     while (cut_test_context_have_data(test_context)) {
         CutIteratedTest *test;
         CutTestData *test_data;
 
+        test_data = cut_test_context_get_current_data(test_context);
         test = cut_iterated_test_new(cut_test_get_name(CUT_TEST(test_iterator)),
-                                     priv->iterated_test_function);
-        if (!test)
-            continue;
+                                     priv->iterated_test_function,
+                                     test_data);
         cut_test_iterator_add_test(test_iterator, test);
         g_object_unref(test);
 
-        tests = g_list_prepend(tests, test);
-        test_data = cut_test_context_get_current_data(test_context);
-        test_data_list = g_list_prepend(test_data_list, test_data);
+        tests = g_list_append(tests, test);
 
         g_signal_connect(test, "success", G_CALLBACK(cb_test_status),
                          &status);
@@ -452,31 +437,35 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
         g_signal_connect(test, "omission", G_CALLBACK(cb_test_status),
                          &status);
 
+        cut_test_context_shift_data(test_context);
+    }
+
+    cut_run_context_prepare_test_iterator(run_context, test_iterator);
+    n_tests = cut_test_container_get_n_tests(CUT_TEST_CONTAINER(test_iterator),
+                                             run_context);
+    g_signal_emit_by_name(test_iterator, "ready", n_tests);
+    g_signal_emit_by_name(CUT_TEST(test_iterator), "start");
+
+    for (node = tests; node; node = g_list_next(node)) {
+        CutIteratedTest *test = node->data;
+
         run_test_with_thread_support(test_iterator, test,
                                      test_context, run_context,
                                      thread_pool, &all_success);
-
-        cut_test_context_shift_data(test_context);
     }
 
     if (thread_pool)
         g_thread_pool_free(thread_pool, FALSE, TRUE);
 
     for (node = tests; node; node = g_list_next(node)) {
-        CutTest *test = node->data;
+        CutIteratedTest *test = node->data;
 
         g_signal_handlers_disconnect_by_func(test,
                                              G_CALLBACK(cb_test_status),
                                              &status);
+        cut_iterated_test_clear_data(test);
     }
     g_list_free(tests);
-
-    for (node = test_data_list; node; node = g_list_next(node)) {
-        CutTestData *test_data = node->data;
-
-        cut_test_data_set_value(test_data, NULL, NULL);
-    }
-    g_list_free(test_data_list);
 
     test_case = cut_test_context_get_test_case(test_context);
     result = cut_test_result_new(status,

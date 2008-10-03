@@ -65,7 +65,6 @@ CutTestIterator *cut_test_iterator_new         (const gchar     *name,
 CutTestIterator *cut_test_iterator_new_empty   (void);
 void             cut_test_iterator_add_test    (CutTestIterator *test_iterator,
                                                 CutIteratedTest *test);
-guint            cut_test_iterator_get_n_tests (CutTestIterator *test_iterator);
 
 G_END_DECLS
 
