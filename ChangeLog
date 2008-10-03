@@ -1,3 +1,7 @@
+2008-10-03  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-main.c (cut_set_cutter_command_path): add NULL check.
+
 2008-10-02  Kouhei Sutou  <kou@cozmixng.org>
 
 	* TODO: add a new entry: add a new command line option that switch

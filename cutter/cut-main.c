@@ -461,10 +461,10 @@ cut_set_cutter_command_path (const gchar *argv0)
         g_free(cutter_command_path);
     cutter_command_path = NULL;
 
-    if (g_path_is_absolute(argv0))
+    if (argv0 && g_path_is_absolute(argv0))
         cutter_command_path = g_strdup(argv0);
 
-    if (!cutter_command_path)
+    if (!cutter_command_path && argv0)
         cutter_command_path = g_find_program_in_path(argv0);
 
     if (!cutter_command_path) {
