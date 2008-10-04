@@ -76,12 +76,7 @@ cut_utils_filter_to_regexs (const gchar **filter)
         if (regex) {
             regexs = g_list_prepend(regexs, regex);
         } else {
-            gchar *inspected;
-
-            inspected = gcut_error_inspect(error);
-            g_warning("%s", inspected);
-            g_free(inspected);
-            g_error_free(error);
+            cut_utils_report_error(error);
         }
         g_free(pattern);
     }

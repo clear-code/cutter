@@ -421,12 +421,7 @@ cut_run (void)
         analyzer = cut_analyzer_new();
         success = cut_analyzer_analyze(analyzer, log_directory, &error);
         if (error) {
-            gchar *message;
-
-            message = gcut_error_inspect(error);
-            g_warning("%s", message);
-            g_free(message);
-            g_error_free(error);
+            cut_utils_report_error(error);
         }
         g_object_unref(analyzer);
     } else {

@@ -31,6 +31,7 @@
 
 #include "cut-marshalers.h"
 #include "cut-test-result.h"
+#include "cut-utils.h"
 
 #include "../gcutter/gcut-error.h"
 
@@ -339,12 +340,7 @@ run_test_with_thread_support (CutTestIterator *test_iterator,
 
         g_thread_pool_push(thread_pool, info, &error);
         if (error) {
-            gchar *inspected;
-
-            inspected = gcut_error_inspect(error);
-            g_warning("%s", inspected);
-            g_free(inspected);
-            g_error_free(error);
+            cut_utils_report_error(error);
         } else {
             need_no_thread_run = FALSE;
         }
@@ -383,12 +379,7 @@ run_iterated_tests (CutTest *test, CutTestContext *test_context,
                                     FALSE,
                                     &error);
     if (error) {
-        gchar *inspected;
-
-        inspected = gcut_error_inspect(error);
-        g_warning("%s", inspected);
-        g_free(inspected);
-        g_error_free(error);
+        cut_utils_report_error(error);
         return;
     }
 

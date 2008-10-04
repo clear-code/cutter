@@ -426,12 +426,7 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite,
         thread_pool = g_thread_pool_new(run, &all_success,
                                         max_threads, FALSE, &error);
         if (error) {
-            gchar *inspected;
-
-            inspected = gcut_error_inspect(error);
-            g_warning("%s", inspected);
-            g_free(inspected);
-            g_error_free(error);
+            cut_utils_report_error(error);
         }
     }
 

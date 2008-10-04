@@ -29,6 +29,16 @@ typedef enum {
     CUT_WRITE
 } CutPipeMode;
 
+#define cut_utils_report_error(error) do        \
+{                                               \
+    gchar *inspected;                           \
+                                                \
+    inspected = gcut_error_inspect(error);      \
+    g_warning("%s", inspected);                 \
+    g_free(inspected);                          \
+    g_error_free(error);                        \
+} while (0)
+
 gchar   *cut_utils_create_regex_pattern (const gchar *string);
 GList   *cut_utils_filter_to_regexs     (const gchar **filters);
 gboolean cut_utils_filter_match         (GList *regexs,

@@ -1,5 +1,8 @@
 2008-10-04  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-utils.h (cut_utils_report_error): define.
+	* cutter/: use cut_utils_report_error().
+
 	* cutter/cut-test-iterator.c: cleanup.
 
 2008-10-03  Kouhei Sutou  <kou@cozmixng.org>
