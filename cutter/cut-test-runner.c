@@ -67,7 +67,7 @@ cut_test_runner_new (void)
 }
 
 static void
-cb_start (CutTest *test, CutTestContext *test_context, gpointer data)
+cb_start_test (CutTest *test, CutTestContext *test_context, gpointer data)
 {
     CutRunContext *context = data;
 
@@ -75,7 +75,8 @@ cb_start (CutTest *test, CutTestContext *test_context, gpointer data)
 }
 
 static void
-cb_pass_assertion (CutTest *test, CutTestContext *test_context, gpointer data)
+cb_pass_assertion_test (CutTest *test, CutTestContext *test_context,
+                        gpointer data)
 {
     CutRunContext *context = data;
 
@@ -83,8 +84,8 @@ cb_pass_assertion (CutTest *test, CutTestContext *test_context, gpointer data)
 }
 
 static void
-cb_success (CutTest *test, CutTestContext *test_context, CutTestResult *result,
-            gpointer data)
+cb_success_test (CutTest *test, CutTestContext *test_context,
+                 CutTestResult *result, gpointer data)
 {
     CutRunContext *context = data;
 
@@ -92,8 +93,8 @@ cb_success (CutTest *test, CutTestContext *test_context, CutTestResult *result,
 }
 
 static void
-cb_failure (CutTest *test, CutTestContext *test_context, CutTestResult *result,
-            gpointer data)
+cb_failure_test (CutTest *test, CutTestContext *test_context,
+                 CutTestResult *result, gpointer data)
 {
     CutRunContext *context = data;
 
@@ -101,8 +102,8 @@ cb_failure (CutTest *test, CutTestContext *test_context, CutTestResult *result,
 }
 
 static void
-cb_error (CutTest *test, CutTestContext *test_context, CutTestResult *result,
-          gpointer data)
+cb_error_test (CutTest *test, CutTestContext *test_context,
+               CutTestResult *result, gpointer data)
 {
     CutRunContext *context = data;
 
@@ -110,8 +111,8 @@ cb_error (CutTest *test, CutTestContext *test_context, CutTestResult *result,
 }
 
 static void
-cb_pending (CutTest *test, CutTestContext *test_context, CutTestResult *result,
-            gpointer data)
+cb_pending_test (CutTest *test, CutTestContext *test_context,
+                 CutTestResult *result, gpointer data)
 {
     CutRunContext *context = data;
 
@@ -119,8 +120,8 @@ cb_pending (CutTest *test, CutTestContext *test_context, CutTestResult *result,
 }
 
 static void
-cb_notification (CutTest *test, CutTestContext *test_context,
-                 CutTestResult *result, gpointer data)
+cb_notification_test (CutTest *test, CutTestContext *test_context,
+                      CutTestResult *result, gpointer data)
 {
     CutRunContext *context = data;
 
@@ -129,8 +130,8 @@ cb_notification (CutTest *test, CutTestContext *test_context,
 }
 
 static void
-cb_omission (CutTest *test, CutTestContext *test_context,
-             CutTestResult *result, gpointer data)
+cb_omission_test (CutTest *test, CutTestContext *test_context,
+                  CutTestResult *result, gpointer data)
 {
     CutRunContext *context = data;
 
@@ -138,7 +139,7 @@ cb_omission (CutTest *test, CutTestContext *test_context,
 }
 
 static void
-cb_complete (CutTest *test, CutTestContext *test_context, gpointer data)
+cb_complete_test (CutTest *test, CutTestContext *test_context, gpointer data)
 {
     CutRunContext *context = data;
 
@@ -149,7 +150,8 @@ static void
 connect_to_test (CutRunContext *context, CutTest *test)
 {
 #define CONNECT(name)                                                   \
-    g_signal_connect(test, #name, G_CALLBACK(cb_ ## name), context)
+    g_signal_connect(test, #name,                                       \
+                     G_CALLBACK(cb_ ## name ## _test), context)
 
     CONNECT(start);
     CONNECT(pass_assertion);
@@ -178,7 +180,9 @@ cb_complete_test_test_case (CutTestCase *test_case, CutTest *test,
 {
 #define DISCONNECT(name)                                                \
     g_signal_handlers_disconnect_by_func(test,                          \
-                                         G_CALLBACK(cb_ ## name),       \
+                                         G_CALLBACK(cb_ ##              \
+                                                    name ##             \
+                                                    _test),             \
                                          data)
 
     DISCONNECT(start);
@@ -313,6 +317,61 @@ cb_start_iterated_test (CutIteratedTest *iterated_test,
 }
 
 static void
+cb_pass_assertion_iterated_test (CutIteratedTest *iterated_test,
+                                 CutTestContext *test_context, gpointer data)
+{
+    cb_pass_assertion_test(CUT_TEST(iterated_test), test_context, data);
+}
+
+static void
+cb_success_iterated_test (CutIteratedTest *iterated_test,
+                          CutTestContext *test_context,
+                          CutTestResult *result, gpointer data)
+{
+    cb_success_test(CUT_TEST(iterated_test), test_context, result, data);
+}
+
+static void
+cb_failure_iterated_test (CutIteratedTest *iterated_test,
+                          CutTestContext *test_context,
+                          CutTestResult *result, gpointer data)
+{
+    cb_failure_test(CUT_TEST(iterated_test), test_context, result, data);
+}
+
+static void
+cb_error_iterated_test (CutIteratedTest *iterated_test,
+                        CutTestContext *test_context,
+                        CutTestResult *result, gpointer data)
+{
+    cb_error_test(CUT_TEST(iterated_test), test_context, result, data);
+}
+
+static void
+cb_pending_iterated_test (CutIteratedTest *iterated_test,
+                          CutTestContext *test_context,
+                          CutTestResult *result, gpointer data)
+{
+    cb_pending_test(CUT_TEST(iterated_test), test_context, result, data);
+}
+
+static void
+cb_notification_iterated_test (CutIteratedTest *iterated_test,
+                               CutTestContext *test_context,
+                               CutTestResult *result, gpointer data)
+{
+    cb_notification_test(CUT_TEST(iterated_test), test_context, result, data);
+}
+
+static void
+cb_omission_iterated_test (CutIteratedTest *iterated_test,
+                           CutTestContext *test_context,
+                           CutTestResult *result, gpointer data)
+{
+    cb_omission_test(CUT_TEST(iterated_test), test_context, result, data);
+}
+
+static void
 cb_complete_iterated_test (CutIteratedTest *iterated_test,
                            CutTestContext *test_context, gpointer data)
 {
@@ -337,10 +396,6 @@ cb_start_test_test_iterator (CutTestIterator *test_iterator,
 
     CONNECT(start);
     CONNECT(complete);
-#undef CONNECT
-
-#define CONNECT(name)                                                   \
-    g_signal_connect(test, #name, G_CALLBACK(cb_ ## name), context)
 
     CONNECT(pass_assertion);
     CONNECT(success);
@@ -367,12 +422,6 @@ cb_complete_test_test_iterator (CutTestIterator *test_iterator,
 
     DISCONNECT(start);
     DISCONNECT(complete);
-#undef DISCONNECT
-
-#define DISCONNECT(name)                                                \
-    g_signal_handlers_disconnect_by_func(test,                          \
-                                         G_CALLBACK(cb_ ## name),       \
-                                         data)
 
     DISCONNECT(pass_assertion);
     DISCONNECT(success);

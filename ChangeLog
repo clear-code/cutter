@@ -1,5 +1,7 @@
 2008-10-05  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-runner.c: cleanup.
+
 	* cutter/, test/: fix a bug that any test result in setup() is
 	ignored.
 
