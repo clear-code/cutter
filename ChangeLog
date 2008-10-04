@@ -1,3 +1,7 @@
+2008-10-04  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-test-iterator.c: cleanup.
+
 2008-10-03  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/, test/: support iterated test filtering by -n option.
