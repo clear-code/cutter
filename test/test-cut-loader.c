@@ -61,7 +61,8 @@ run (void)
     cut_assert_not_null(test_case);
 
     run_context = cut_test_runner_new();
-    return cut_test_case_run(test_case, run_context);
+    return cut_test_runner_run_test_case(CUT_TEST_RUNNER(run_context),
+                                         test_case);
 }
 
 static gchar *expected_functions[] = {

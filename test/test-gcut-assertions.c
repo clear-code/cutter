@@ -46,7 +46,8 @@ run (void)
     test_context = cut_test_context_new(run_context, NULL, NULL, NULL, test);
     original_test_context = get_current_test_context();
     set_current_test_context(test_context);
-    success = cut_test_run(test, test_context, run_context);
+    success = cut_test_runner_run_test(CUT_TEST_RUNNER(run_context),
+                                       test, test_context);
     set_current_test_context(original_test_context);
 
     return success;
@@ -133,7 +134,7 @@ test_equal_type (void)
     cut_assert_not_null(test);
 
     cut_assert_false(run());
-    cut_assert_test_result_summary(run_context, 0, 1, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "equal_type test",
                            NULL,
@@ -165,7 +166,7 @@ test_equal_value (void)
     cut_assert_not_null(test);
 
     cut_assert_false(run());
-    cut_assert_test_result_summary(run_context, 0, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "equal_value test",
                            NULL,
@@ -196,7 +197,7 @@ test_equal_list_int (void)
     cut_assert_not_null(test);
 
     cut_assert_false(run());
-    cut_assert_test_result_summary(run_context, 0, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "equal_list_int test",
                            NULL,
@@ -233,7 +234,7 @@ test_equal_list_uint (void)
     cut_assert_not_null(test);
 
     cut_assert_false(run());
-    cut_assert_test_result_summary(run_context, 0, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "equal_list_uint test",
                            NULL,
@@ -271,7 +272,7 @@ test_equal_list_string (void)
     cut_assert_not_null(test);
 
     cut_assert_false(run());
-    cut_assert_test_result_summary(run_context, 0, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "equal_list_string test",
                            NULL,
@@ -307,7 +308,7 @@ test_equal_list_string_both_null (void)
     cut_assert_not_null(test);
 
     cut_assert_true(run());
-    cut_assert_test_result_summary(run_context, 0, 3, 1, 0, 0, 0, 0, 0);
+    cut_assert_test_result_summary(run_context, 1, 3, 1, 0, 0, 0, 0, 0);
 }
 
 static void
@@ -336,7 +337,7 @@ test_equal_list_string_other_null (void)
     cut_assert_not_null(test);
 
     cut_assert_false(run());
-    cut_assert_test_result_summary(run_context, 0, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "equal_list_string test (other NULL)",
                            NULL,
@@ -371,7 +372,7 @@ test_equal_hash_string_string (void)
     cut_assert_not_null(test);
 
     cut_assert_false(run());
-    cut_assert_test_result_summary(run_context, 0, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "equal_hash_string_string test",
                            NULL,
@@ -397,7 +398,7 @@ test_error (void)
     cut_assert_not_null(test);
 
     cut_assert_false(run());
-    cut_assert_test_result_summary(run_context, 0, 1, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "gcut_assert_error test",
                            NULL,
@@ -425,7 +426,7 @@ test_equal_error (void)
     cut_assert_not_null(test);
 
     cut_assert_false(run());
-    cut_assert_test_result_summary(run_context, 0, 1, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "gcut_assert_equal_error test",
                            NULL,
@@ -453,7 +454,7 @@ test_equal_enum (void)
     cut_assert_not_null(test);
 
     cut_assert_false(run());
-    cut_assert_test_result_summary(run_context, 0, 1, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "gcut_assert_equal_enum test",
                            NULL,
@@ -494,7 +495,7 @@ test_equal_flags (void)
     cut_assert_not_null(test);
 
     cut_assert_false(run());
-    cut_assert_test_result_summary(run_context, 0, 1, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "gcut_assert_equal_flags test",
                            NULL,

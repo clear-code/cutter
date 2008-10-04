@@ -215,6 +215,8 @@ data_count (void)
     ADD_DATA(pending, pendings, FALSE);
     ADD_DATA(omission, omissions, TRUE);
 
+    ADD_DATA(setup-error, errors, FALSE);
+
 #undef ADD_DATA
 }
 

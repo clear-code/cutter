@@ -86,55 +86,56 @@ teardown (void)
 }
 
 static void
-cb_start_signal (CutTest *test, gpointer data)
+cb_start_signal (CutTest *test, CutTestContext *test_context, gpointer data)
 {
     n_start_signals++;
 }
 
 static void
-cb_complete_signal (CutTest *test, gpointer data)
+cb_complete_signal (CutTest *test, CutTestContext *test_context, gpointer data)
 {
     n_complete_signals++;
 }
 
 static void
-cb_success_signal (CutTest *test, gpointer data)
+cb_success_signal (CutTest *test, CutTestContext *test_context, gpointer data)
 {
     n_success_signals++;
 }
 
 static void
-cb_failure_signal (CutTest *test, gpointer data)
+cb_failure_signal (CutTest *test, CutTestContext *test_context, gpointer data)
 {
     n_failure_signals++;
 }
 
 static void
-cb_error_signal (CutTest *test, gpointer data)
+cb_error_signal (CutTest *test, CutTestContext *test_context, gpointer data)
 {
     n_error_signals++;
 }
 
 static void
-cb_pending_signal (CutTest *test, gpointer data)
+cb_pending_signal (CutTest *test, CutTestContext *test_context, gpointer data)
 {
     n_pending_signals++;
 }
 
 static void
-cb_notification_signal (CutTest *test, gpointer data)
+cb_notification_signal (CutTest *test, CutTestContext *test_context, gpointer data)
 {
     n_notification_signals++;
 }
 
 static void
-cb_pass_assertion_signal (CutTest *test, gpointer data)
+cb_pass_assertion_signal (CutTest *test, CutTestContext *test_context,
+                          gpointer data)
 {
     n_pass_assertion_signals++;
 }
 
 static void
-cb_omission_signal (CutTest *test, gpointer data)
+cb_omission_signal (CutTest *test, CutTestContext *test_context, gpointer data)
 {
     n_omission_signals++;
 }
@@ -193,7 +194,8 @@ run (void)
     cut_test_context_set_data(test_context, test_data);
     original_test_context = get_current_test_context();
     set_current_test_context(test_context);
-    success = cut_test_run(test, test_context, run_context);
+    success = cut_test_runner_run_test(CUT_TEST_RUNNER(run_context),
+                                       test, test_context);
     set_current_test_context(original_test_context);
     disconnect_signals(test);
 
@@ -218,7 +220,7 @@ test_run (void *data)
     cut_assert_true(run());
 
     cut_assert_n_signals(1, 1, 0, 0, 0, 0, 0);
-    cut_assert_test_result_summary(run_context, 0, 1, 1, 0, 0, 0, 0, 0);
+    cut_assert_test_result_summary(run_context, 1, 1, 1, 0, 0, 0, 0, 0);
 }
 
 /*

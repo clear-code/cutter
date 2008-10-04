@@ -23,6 +23,7 @@
 #include <glib-object.h>
 
 #include <cutter/cut-test-container.h>
+#include <cutter/cut-test-iterator.h>
 
 G_BEGIN_DECLS
 
@@ -54,6 +55,14 @@ struct _CutTestCaseClass
                            CutTestContext *test_context);
     void (*complete_test) (CutTestCase    *test_case,
                            CutTest        *test,
+                           CutTestContext *test_context);
+    void (*start_test_iterator)
+                          (CutTestCase    *test_case,
+                           CutTestIterator *test_iterator,
+                           CutTestContext *test_context);
+    void (*complete_test_iterator)
+                          (CutTestCase    *test_case,
+                           CutTestIterator *test_iterator,
                            CutTestContext *test_context);
 };
 

@@ -226,19 +226,6 @@ static void complete_run   (CutRunContext   *context,
 static void crashed        (CutRunContext   *context,
                             const gchar     *backtrace);
 
-static void prepare_test_suite  (CutRunContext  *context,
-                                 CutTestSuite   *test_suite);
-static void prepare_test_case   (CutRunContext  *context,
-                                 CutTestCase    *test_case);
-static void prepare_test_iterator
-                                (CutRunContext  *context,
-                                 CutTestIterator *test_iterator);
-static void prepare_test        (CutRunContext  *context,
-                                 CutTest        *test);
-static void prepare_iterated_test
-                                (CutRunContext  *context,
-                                 CutIteratedTest *iterated_test);
-
 static gboolean runner_run (CutRunner *runner);
 
 static void
@@ -267,12 +254,6 @@ cut_run_context_class_init (CutRunContextClass *klass)
     klass->complete_iterated_test = complete_iterated_test;
     klass->complete_run      = complete_run;
     klass->crashed           = crashed;
-
-    klass->prepare_test_suite = prepare_test_suite;
-    klass->prepare_test_case = prepare_test_case;
-    klass->prepare_test_iterator = prepare_test_iterator;
-    klass->prepare_test = prepare_test;
-    klass->prepare_iterated_test = prepare_iterated_test;
 
     spec = g_param_spec_uint("n-tests",
                              "Number of tests",
@@ -1406,85 +1387,6 @@ cut_run_context_get_target_test_names (CutRunContext *context)
 {
     CutRunContextPrivate *priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
     return (const gchar **)priv->target_test_names;
-}
-
-static void
-prepare_test_suite (CutRunContext *context, CutTestSuite *test_suite)
-{
-}
-
-void
-cut_run_context_prepare_test_suite (CutRunContext *context,
-                                    CutTestSuite *test_suite)
-{
-    CutRunContextClass *klass;
-
-    klass = CUT_RUN_CONTEXT_GET_CLASS(context);
-    if (klass->prepare_test_suite)
-        klass->prepare_test_suite(context, test_suite);
-}
-
-static void
-prepare_test_case (CutRunContext *context, CutTestCase *test_case)
-{
-}
-
-void
-cut_run_context_prepare_test_case (CutRunContext *context,
-                                   CutTestCase *test_case)
-{
-    CutRunContextClass *klass;
-
-    klass = CUT_RUN_CONTEXT_GET_CLASS(context);
-    if (klass->prepare_test_case)
-        klass->prepare_test_case(context, test_case);
-}
-
-static void
-prepare_test_iterator (CutRunContext *context, CutTestIterator *test_iterator)
-{
-}
-
-void
-cut_run_context_prepare_test_iterator (CutRunContext *context,
-                                       CutTestIterator *test_iterator)
-{
-    CutRunContextClass *klass;
-
-    klass = CUT_RUN_CONTEXT_GET_CLASS(context);
-    if (klass->prepare_test_iterator)
-        klass->prepare_test_iterator(context, test_iterator);
-}
-
-static void
-prepare_test (CutRunContext *context, CutTest *test)
-{
-}
-
-void
-cut_run_context_prepare_test (CutRunContext *context, CutTest *test)
-{
-    CutRunContextClass *klass;
-
-    klass = CUT_RUN_CONTEXT_GET_CLASS(context);
-    if (klass->prepare_test)
-        klass->prepare_test(context, test);
-}
-
-static void
-prepare_iterated_test (CutRunContext *context, CutIteratedTest *iterated_test)
-{
-}
-
-void
-cut_run_context_prepare_iterated_test (CutRunContext *context,
-                                       CutIteratedTest *iterated_test)
-{
-    CutRunContextClass *klass;
-
-    klass = CUT_RUN_CONTEXT_GET_CLASS(context);
-    if (klass->prepare_iterated_test)
-        klass->prepare_iterated_test(context, iterated_test);
 }
 
 guint

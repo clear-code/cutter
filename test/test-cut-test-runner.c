@@ -172,7 +172,8 @@ test_n_ (void)
     cuttest_add_test(test_case, "test_5", stub_notification_function);
     cuttest_add_test(test_case, "test_6", stub_error_function);
 
-    cut_assert(!cut_test_case_run(test_case, run_context));
+    cut_assert(!cut_test_runner_run_test_case(CUT_TEST_RUNNER(run_context),
+                                              test_case));
 
     cut_assert_equal_int(3, cut_run_context_get_n_successes(run_context));
     cut_assert_equal_int(1, cut_run_context_get_n_failures(run_context));
@@ -256,7 +257,8 @@ test_ready_signal (void)
     cut_run_context_set_test_suite(run_context, suite);
     g_signal_connect(run_context, "ready-test-suite", G_CALLBACK(cb_ready_test_suite_signal), NULL);
     g_signal_connect(run_context, "ready-test-case", G_CALLBACK(cb_ready_test_case_signal), NULL);
-    cut_assert(cut_test_suite_run(suite, run_context));
+    cut_assert(cut_test_runner_run_test_suite(CUT_TEST_RUNNER(run_context),
+                                              suite));
     g_signal_handlers_disconnect_by_func(run_context,
                                          G_CALLBACK(cb_ready_test_suite_signal),
                                          NULL);

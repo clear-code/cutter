@@ -84,13 +84,11 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 
-static void         start        (CutTest  *test);
+static void         start        (CutTest  *test,
+                                  CutTestContext *test_context);
 static gdouble      get_elapsed  (CutTest  *test);
 static void         set_elapsed  (CutTest  *test, gdouble elapsed);
 static gboolean     run          (CutTest        *test,
-                                  CutTestContext *test_context,
-                                  CutRunContext  *run_context);
-static void         prepare      (CutTest        *test,
                                   CutTestContext *test_context,
                                   CutRunContext  *run_context);
 static gboolean     is_available (CutTest        *test,
@@ -116,7 +114,6 @@ cut_test_class_init (CutTestClass *klass)
     klass->get_elapsed = get_elapsed;
     klass->set_elapsed = set_elapsed;
     klass->run = run;
-    klass->prepare = prepare;
     klass->is_available = is_available;
     klass->invoke = invoke;
 
@@ -146,8 +143,8 @@ cut_test_class_init (CutTestClass *klass)
                         G_SIGNAL_RUN_FIRST,
                         G_STRUCT_OFFSET (CutTestClass, start),
                         NULL, NULL,
-                        g_cclosure_marshal_VOID__VOID,
-                        G_TYPE_NONE, 0);
+                        g_cclosure_marshal_VOID__OBJECT,
+                        G_TYPE_NONE, 1, CUT_TYPE_TEST_CONTEXT);
 
     cut_test_signals[PASS_ASSERTION]
         = g_signal_new ("pass-assertion",
@@ -224,8 +221,8 @@ cut_test_class_init (CutTestClass *klass)
                         G_SIGNAL_RUN_LAST,
                         G_STRUCT_OFFSET (CutTestClass, complete),
                         NULL, NULL,
-                        g_cclosure_marshal_VOID__VOID,
-                        G_TYPE_NONE, 0);
+                        g_cclosure_marshal_VOID__OBJECT,
+                        G_TYPE_NONE, 1, CUT_TYPE_TEST_CONTEXT);
 
     cut_test_signals[CRASHED]
         = g_signal_new ("crashed",
@@ -365,17 +362,11 @@ cut_test_new_empty (void)
 }
 
 static void
-start (CutTest *test)
+start (CutTest *test, CutTestContext *test_context)
 {
     GTimeVal value;
     g_get_current_time(&value);
     cut_test_set_start_time(test, &value);
-}
-
-static void
-prepare (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
-{
-    cut_run_context_prepare_test(run_context, test);
 }
 
 static gboolean
@@ -405,9 +396,7 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
     if (!klass->is_available(test, test_context, run_context))
         return FALSE;
 
-    klass->prepare(test, test_context, run_context);
-
-    g_signal_emit_by_name(test, "start");
+    g_signal_emit_by_name(test, "start", test_context);
 
     cut_test_context_set_jump(test_context, &jump_buffer);
     if (setjmp(jump_buffer) == 0) {
@@ -440,7 +429,7 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
         g_object_unref(result);
     }
 
-    g_signal_emit_by_name(test, "complete");
+    g_signal_emit_by_name(test, "complete", test_context);
 
     return success;
 }

@@ -1,3 +1,12 @@
+2008-10-05  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/, test/: fix a bug that any test result in setup() is
+	ignored.
+
+	* TODO: remove an entry: [BUG] test result (error, omission, ...)
+	signal in setup() isn't connected to CutRunner because setup() is
+	invoked before CutTest's prepare().
+
 2008-10-04  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-utils.h (cut_utils_report_error): define.

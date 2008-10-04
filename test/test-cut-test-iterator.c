@@ -251,7 +251,8 @@ run (void)
                                         NULL, test_case, NULL, NULL);
     original_test_context = get_current_test_context();
     set_current_test_context(test_context);
-    success = cut_test_run(test, test_context, run_context);
+    success = cut_test_runner_run_test_iterator(CUT_TEST_RUNNER(run_context),
+                                                test_iterator, test_context);
     set_current_test_context(original_test_context);
     disconnect_signals(test);
 

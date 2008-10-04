@@ -45,9 +45,20 @@ struct _CutTestRunnerClass
     CutRunContextClass parent_class;
 };
 
-GType          cut_test_runner_get_type  (void) G_GNUC_CONST;
+GType          cut_test_runner_get_type         (void) G_GNUC_CONST;
 
-CutRunContext  *cut_test_runner_new      (void);
+CutRunContext *cut_test_runner_new              (void);
+
+gboolean       cut_test_runner_run_test         (CutTestRunner  *runner,
+                                                 CutTest        *test,
+                                                 CutTestContext *test_context);
+gboolean       cut_test_runner_run_test_case    (CutTestRunner  *runner,
+                                                 CutTestCase    *test_case);
+gboolean       cut_test_runner_run_test_iterator(CutTestRunner  *runner,
+                                                 CutTestIterator *test_iterator,
+                                                 CutTestContext *test_context);
+gboolean       cut_test_runner_run_test_suite   (CutTestRunner  *runner,
+                                                 CutTestSuite   *test_suite);
 
 G_END_DECLS
 

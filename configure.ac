@@ -510,6 +510,7 @@ AC_CONFIG_FILES([Makefile
 		 test/fixtures/pipeline/omission/Makefile
 		 test/fixtures/pipeline/pending/Makefile
 		 test/fixtures/pipeline/success/Makefile
+		 test/fixtures/pipeline/setup-error/Makefile
 		 test/fixtures/sub-process/Makefile
 		 test/fixtures/sub-process/fixtures/Makefile
 		 test/fixtures/sub-process/fixtures/normal/Makefile

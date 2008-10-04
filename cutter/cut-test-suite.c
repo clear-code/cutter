@@ -433,9 +433,8 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite,
     signum = setjmp(jump_buffer);
     switch (signum) {
       case 0:
-        cut_run_context_prepare_test_suite(run_context, test_suite);
         emit_ready_signal(test_suite, sorted_test_cases, run_context);
-        g_signal_emit_by_name(CUT_TEST(test_suite), "start");
+        g_signal_emit_by_name(test_suite, "start", NULL);
 
         if (priv->warmup)
             priv->warmup();
@@ -489,7 +488,7 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite,
     if (priv->cooldown)
         priv->cooldown();
 
-    g_signal_emit_by_name(CUT_TEST(test_suite), "complete");
+    g_signal_emit_by_name(CUT_TEST(test_suite), "complete", NULL);
 
     g_list_free(sorted_test_cases);
 

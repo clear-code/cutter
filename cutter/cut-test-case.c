@@ -62,6 +62,8 @@ enum
     READY_SIGNAL,
     START_TEST_SIGNAL,
     COMPLETE_TEST_SIGNAL,
+    START_TEST_ITERATOR_SIGNAL,
+    COMPLETE_TEST_ITERATOR_SIGNAL,
     LAST_SIGNAL
 };
 
@@ -164,6 +166,26 @@ cut_test_case_class_init (CutTestCaseClass *klass)
                 NULL, NULL,
                 _cut_marshal_VOID__OBJECT_OBJECT,
                 G_TYPE_NONE, 2, CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT);
+
+    cut_test_case_signals[START_TEST_ITERATOR_SIGNAL]
+        = g_signal_new("start-test-iterator",
+                       G_TYPE_FROM_CLASS(klass),
+                       G_SIGNAL_RUN_LAST,
+                       G_STRUCT_OFFSET(CutTestCaseClass, start_test_iterator),
+                       NULL, NULL,
+                       _cut_marshal_VOID__OBJECT_OBJECT,
+                       G_TYPE_NONE, 2,
+                       CUT_TYPE_TEST_ITERATOR, CUT_TYPE_TEST_CONTEXT);
+
+    cut_test_case_signals[COMPLETE_TEST_ITERATOR_SIGNAL]
+        = g_signal_new("complete-test-iterator",
+                       G_TYPE_FROM_CLASS(klass),
+                       G_SIGNAL_RUN_LAST,
+                       G_STRUCT_OFFSET(CutTestCaseClass, complete_test_iterator),
+                       NULL, NULL,
+                       _cut_marshal_VOID__OBJECT_OBJECT,
+                       G_TYPE_NONE, 2,
+                       CUT_TYPE_TEST_ITERATOR, CUT_TYPE_TEST_CONTEXT);
 
     g_type_class_add_private(gobject_class, sizeof(CutTestCasePrivate));
 }
@@ -336,7 +358,10 @@ run_test (CutTestCase *test_case, CutTest *test,
 {
     gboolean success = TRUE;
 
-    if (!CUT_IS_TEST_CONTAINER(test)) {
+    if (CUT_IS_TEST_ITERATOR(test)) {
+        g_signal_emit_by_name(test_case, "start-test-iterator",
+                              test, test_context);
+    } else {
         g_signal_emit_by_name(test_case, "start-test", test, test_context);
         cut_test_case_run_setup(test_case, test_context);
     }
@@ -347,7 +372,10 @@ run_test (CutTestCase *test_case, CutTest *test,
         success = cut_test_run(test, test_context, run_context);
     }
 
-    if (!CUT_IS_TEST_CONTAINER(test)) {
+    if (CUT_IS_TEST_ITERATOR(test)) {
+        g_signal_emit_by_name(test_case, "complete-test-iterator",
+                              test, test_context);
+    } else {
         cut_test_case_run_teardown(test_case, test_context);
         g_signal_emit_by_name(test_case, "complete-test", test, test_context);
     }
@@ -410,9 +438,8 @@ cut_test_case_run_tests (CutTestCase *test_case, CutRunContext *run_context,
     CutTestResult *result;
     gboolean all_success = TRUE;
 
-    cut_run_context_prepare_test_case(run_context, test_case);
     g_signal_emit_by_name(test_case, "ready", g_list_length((GList *)tests));
-    g_signal_emit_by_name(CUT_TEST(test_case), "start");
+    g_signal_emit_by_name(CUT_TEST(test_case), "start", NULL);
 
     priv = CUT_TEST_CASE_GET_PRIVATE(test_case);
 
@@ -459,7 +486,7 @@ cut_test_case_run_tests (CutTestCase *test_case, CutRunContext *run_context,
     if (priv->shutdown) {
         priv->shutdown();
     }
-    g_signal_emit_by_name(CUT_TEST(test_case), "complete");
+    g_signal_emit_by_name(CUT_TEST(test_case), "complete", NULL);
 
     return all_success;
 }

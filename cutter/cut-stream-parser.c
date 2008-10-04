@@ -1620,8 +1620,6 @@ end_ready_test_suite (CutStreamParser *parser, CutStreamParserPrivate *priv,
         return;
 
     if (priv->run_context) {
-        cut_run_context_prepare_test_suite(priv->run_context,
-                                           priv->ready_test_suite->test_suite);
         g_signal_emit_by_name(priv->run_context, "ready-test-suite",
                               priv->ready_test_suite->test_suite,
                               priv->ready_test_suite->n_test_cases,
@@ -1659,8 +1657,6 @@ end_ready_test_case (CutStreamParser *parser, CutStreamParserPrivate *priv,
         return;
 
     if (priv->run_context) {
-        cut_run_context_prepare_test_case(priv->run_context,
-                                          priv->ready_test_case->test_case);
         g_signal_emit_by_name(priv->run_context, "ready-test-case",
                               priv->ready_test_case->test_case,
                               priv->ready_test_case->n_tests);
@@ -1698,9 +1694,6 @@ end_ready_test_iterator (CutStreamParser *parser, CutStreamParserPrivate *priv,
         return;
 
     if (priv->run_context) {
-        cut_run_context_prepare_test_iterator(
-            priv->run_context,
-            priv->ready_test_iterator->test_iterator);
         g_signal_emit_by_name(priv->run_context, "ready-test-iterator",
                               priv->ready_test_iterator->test_iterator,
                               priv->ready_test_iterator->n_tests);
@@ -1740,7 +1733,6 @@ end_start_test (CutStreamParser *parser, CutStreamParserPrivate *priv,
         return;
 
     if (priv->run_context) {
-        cut_run_context_prepare_test(priv->run_context, priv->start_test->test);
         g_signal_emit_by_name(priv->run_context, "start-test",
                               priv->start_test->test,
                               priv->start_test->test_context);
@@ -1763,12 +1755,8 @@ end_start_iterated_test (CutStreamParser *parser, CutStreamParserPrivate *priv,
         return;
 
     if (priv->run_context) {
-        CutIteratedTest *iterated_test;
-
-        iterated_test = priv->start_iterated_test->iterated_test;
-        cut_run_context_prepare_iterated_test(priv->run_context, iterated_test);
         g_signal_emit_by_name(priv->run_context, "start-iterated-test",
-                              iterated_test,
+                              priv->start_iterated_test->iterated_test,
                               priv->start_iterated_test->test_context);
     }
 

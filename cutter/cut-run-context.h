@@ -170,19 +170,6 @@ struct _CutRunContextClass
                                  GError         *error);
     void (*crashed)             (CutRunContext  *context,
                                  const gchar    *backtrace);
-
-    void (*prepare_test_suite)  (CutRunContext  *context,
-                                 CutTestSuite   *test_suite);
-    void (*prepare_test_case)   (CutRunContext  *context,
-                                 CutTestCase    *test_case);
-    void (*prepare_test_iterator)
-                                (CutRunContext  *context,
-                                 CutTestIterator *test_iterator);
-    void (*prepare_test)        (CutRunContext  *context,
-                                 CutTest        *test);
-    void (*prepare_iterated_test)
-                                (CutRunContext  *context,
-                                 CutIteratedTest *iterated_test);
 };
 
 GType          cut_run_context_get_type  (void) G_GNUC_CONST;
@@ -221,17 +208,6 @@ const gchar  **cut_run_context_get_target_test_case_names(CutRunContext *context
 void           cut_run_context_set_target_test_names(CutRunContext *context,
                                                      const gchar  **names);
 const gchar  **cut_run_context_get_target_test_names(CutRunContext *context);
-
-void           cut_run_context_prepare_test         (CutRunContext *context,
-                                                     CutTest       *test);
-void           cut_run_context_prepare_iterated_test(CutRunContext *context,
-                                                     CutIteratedTest *iterated_test);
-void           cut_run_context_prepare_test_iterator(CutRunContext *context,
-                                                     CutTestIterator *test_iterator);
-void           cut_run_context_prepare_test_case    (CutRunContext *context,
-                                                     CutTestCase   *test_case);
-void           cut_run_context_prepare_test_suite   (CutRunContext *context,
-                                                     CutTestSuite  *test_suite);
 
 guint          cut_run_context_get_n_tests          (CutRunContext *context);
 guint          cut_run_context_get_n_successes      (CutRunContext *context);

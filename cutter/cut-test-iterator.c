@@ -419,10 +419,9 @@ run_iterated_tests (CutTest *test, CutTestContext *test_context,
     filtered_tests = cut_test_container_filter_children(test_container,
                                                         test_names);
 
-    cut_run_context_prepare_test_iterator(run_context, test_iterator);
     n_tests = cut_test_container_get_n_tests(test_container, run_context);
     g_signal_emit_by_name(test_iterator, "ready", n_tests);
-    g_signal_emit_by_name(test, "start");
+    g_signal_emit_by_name(test, "start", NULL);
 
     for (node = filtered_tests; node; node = g_list_next(node)) {
         CutIteratedTest *iterated_test = node->data;
@@ -487,7 +486,7 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
                                  NULL, NULL, 0);
     cut_test_emit_result_signal(CUT_TEST(test_iterator), test_context, result);
     g_object_unref(result);
-    g_signal_emit_by_name(CUT_TEST(test_iterator), "complete");
+    g_signal_emit_by_name(test, "complete", NULL);
 
     cut_test_context_set_test_iterator(test_context, NULL);
 

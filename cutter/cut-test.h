@@ -54,7 +54,8 @@ struct _CutTestClass
 {
     GObjectClass parent_class;
 
-    void (*start)          (CutTest        *test);
+    void (*start)          (CutTest        *test,
+                            CutTestContext *context);
     void (*pass_assertion) (CutTest        *test,
                             CutTestContext *context);
     void (*success)        (CutTest        *test,
@@ -75,7 +76,8 @@ struct _CutTestClass
     void (*omission)       (CutTest        *test,
                             CutTestContext *context,
                             CutTestResult  *result);
-    void (*complete)       (CutTest        *test);
+    void (*complete)       (CutTest        *test,
+                            CutTestContext *context);
     void (*crashed)        (CutTest        *test,
                             const gchar    *backtrace);
 
@@ -83,9 +85,6 @@ struct _CutTestClass
     void         (*set_elapsed)  (CutTest *test, gdouble elapsed);
 
     gboolean     (*run)          (CutTest        *test,
-                                  CutTestContext *test_context,
-                                  CutRunContext  *run_context);
-    void         (*prepare)      (CutTest        *test,
                                   CutTestContext *test_context,
                                   CutRunContext  *run_context);
     gboolean     (*is_available) (CutTest        *test,

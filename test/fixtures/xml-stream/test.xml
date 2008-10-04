@@ -30,7 +30,7 @@
   <start-test>
     <test>
       <name>stub-success-test</name>
-      <start-time>1970-01-01T00:00:00Z</start-time>
+      <start-time>2008-07-30T04:55:42Z</start-time>
       <elapsed>0.000001</elapsed>
     </test>
     <test-context>
@@ -41,7 +41,7 @@
       </test-case>
       <test>
         <name>stub-success-test</name>
-        <start-time>1970-01-01T00:00:00Z</start-time>
+        <start-time>2008-07-30T04:55:42Z</start-time>
         <elapsed>0.000001</elapsed>
       </test>
       <failed>FALSE</failed>

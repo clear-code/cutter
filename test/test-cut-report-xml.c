@@ -95,7 +95,8 @@ run (void)
                                         NULL, test_case, NULL, test);
     original_test_context = get_current_test_context();
     set_current_test_context(test_context);
-    success = cut_test_run(test, test_context, run_context);
+    success = cut_test_runner_run_test(CUT_TEST_RUNNER(run_context),
+                                       test, test_context);
     set_current_test_context(original_test_context);
 
     g_object_unref(test_context);
@@ -362,7 +363,8 @@ test_plural_reports (void)
     g_signal_connect_after(test, "error",
                            G_CALLBACK(cb_test_signal), NULL);
     cut_test_case_add_test(test_case, test);
-    cut_assert_false(cut_test_case_run(test_case, run_context));
+    cut_assert_false(cut_test_runner_run_test_case(CUT_TEST_RUNNER(run_context),
+                                                   test_case));
 
     g_signal_handlers_disconnect_by_func(test,
                                          G_CALLBACK(cb_test_signal),

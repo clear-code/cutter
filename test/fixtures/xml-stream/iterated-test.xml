@@ -45,7 +45,7 @@
   <start-iterated-test>
     <iterated-test>
       <name>stub-iterated-test</name>
-      <start-time>1970-01-01T00:00:00Z</start-time>
+      <start-time>2008-07-30T04:55:42Z</start-time>
       <elapsed>0.000001</elapsed>
     </iterated-test>
     <test-context>
@@ -61,7 +61,7 @@
       </test-iterator>
       <iterated-test>
         <name>stub-iterated-test</name>
-        <start-time>1970-01-01T00:00:00Z</start-time>
+        <start-time>2008-07-30T04:55:42Z</start-time>
         <elapsed>0.000001</elapsed>
       </iterated-test>
       <test-data>
@@ -152,7 +152,7 @@
   <start-iterated-test>
     <iterated-test>
       <name>stub-iterated-test</name>
-      <start-time>1970-01-01T00:00:00Z</start-time>
+      <start-time>2008-07-30T04:55:42Z</start-time>
       <elapsed>0.000001</elapsed>
     </iterated-test>
     <test-context>
@@ -168,7 +168,7 @@
       </test-iterator>
       <iterated-test>
         <name>stub-iterated-test</name>
-        <start-time>1970-01-01T00:00:00Z</start-time>
+        <start-time>2008-07-30T04:55:42Z</start-time>
         <elapsed>0.000001</elapsed>
       </iterated-test>
       <test-data>
