@@ -1,5 +1,6 @@
 #include <gcutter.h>
 #include <cutter/cut-test-result.h>
+#include <cutter/cut-backtrace-entry.h>
 
 void test_get_status(void);
 void test_get_message_full(void);
@@ -7,9 +8,7 @@ void test_get_message_only_user(void);
 void test_get_message_only_system(void);
 void test_get_message_none(void);
 void test_set_messages(void);
-void test_get_function_name(void);
-void test_get_filename(void);
-void test_get_line(void);
+void test_get_backtrace(void);
 void test_status_to_signal_name(void);
 void test_status_is_critical(void);
 void test_get_test_suite(void);
@@ -18,7 +17,6 @@ void test_to_xml_empty_failure(void);
 void test_new_from_xml(void);
 void test_new_from_xml_with_invalid_top_level_tag_name(void);
 void test_new_from_xml_with_invalid_line(void);
-void test_new_from_xml_with_invalid_info(void);
 void test_new_from_xml_with_unexpected_name_tag(void);
 void test_new_from_xml_with_unexpected_value_tag(void);
 void test_new_from_xml_without_option_name(void);
@@ -30,6 +28,7 @@ void test_new_from_xml_with_invalid_elapsed(void);
 static CutTestResult *result;
 static CutTestSuite *suite;
 static GError *error;
+static GList *backtrace;
 
 void
 setup (void)
@@ -37,6 +36,12 @@ setup (void)
     result = NULL;
     suite = NULL;
     error = NULL;
+
+    backtrace = g_list_prepend(NULL,
+                               cut_backtrace_entry_new("file name",
+                                                       999,
+                                                       "function name",
+                                                       "info"));
 }
 
 void
@@ -48,6 +53,11 @@ teardown (void)
         g_object_unref(suite);
     if (error)
         g_error_free(error);
+
+    if (backtrace) {
+        g_list_foreach(backtrace, (GFunc)g_object_unref, NULL);
+        g_list_free(backtrace);
+    }
 }
 
 
@@ -58,9 +68,7 @@ test_get_status (void)
                                  NULL, NULL, NULL, NULL, NULL,
                                  "user-message",
                                  "system-message",
-                                 "filename",
-                                 999,
-                                 "function-name");
+                                 backtrace);
     cut_assert_equal_int(CUT_TEST_RESULT_SUCCESS,
                          cut_test_result_get_status(result));
     g_object_unref(result);
@@ -69,9 +77,7 @@ test_get_status (void)
                                  NULL, NULL, NULL, NULL, NULL,
                                  "user-message",
                                  "system-message",
-                                 "filename",
-                                 999,
-                                 "function-name");
+                                 backtrace);
     cut_assert_equal_int(CUT_TEST_RESULT_FAILURE,
                          cut_test_result_get_status(result));
     g_object_unref(result);
@@ -80,9 +86,7 @@ test_get_status (void)
                                  NULL, NULL, NULL, NULL, NULL,
                                  "user-message",
                                  "system-message",
-                                 "filename",
-                                 999,
-                                 "function-name");
+                                 backtrace);
     cut_assert_equal_int(CUT_TEST_RESULT_ERROR,
                          cut_test_result_get_status(result));
     g_object_unref(result);
@@ -91,9 +95,7 @@ test_get_status (void)
                                  NULL, NULL, NULL, NULL, NULL,
                                  "user-message",
                                  "system-message",
-                                 "filename",
-                                 999,
-                                 "function-name");
+                                 backtrace);
     cut_assert_equal_int(CUT_TEST_RESULT_PENDING,
                          cut_test_result_get_status(result));
 }
@@ -105,9 +107,7 @@ test_get_message_full (void)
                                  NULL, NULL, NULL, NULL, NULL,
                                  "user-message",
                                  "system-message",
-                                 "filename",
-                                 999,
-                                 "function-name");
+                                 backtrace);
     cut_assert_equal_string("user-message\nsystem-message",
                             cut_test_result_get_message(result));
     cut_assert_equal_string("user-message",
@@ -123,9 +123,7 @@ test_get_message_only_user (void)
                                  NULL, NULL, NULL, NULL, NULL,
                                  "user-message",
                                  NULL,
-                                 "filename",
-                                 999,
-                                 "function-name");
+                                 backtrace);
     cut_assert_equal_string("user-message",
                             cut_test_result_get_message(result));
     cut_assert_equal_string("user-message",
@@ -140,9 +138,7 @@ test_get_message_only_system (void)
                                  NULL, NULL, NULL, NULL, NULL,
                                  NULL,
                                  "system-message",
-                                 "filename",
-                                 999,
-                                 "function-name");
+                                 backtrace);
     cut_assert_equal_string("system-message",
                             cut_test_result_get_message(result));
     cut_assert(cut_test_result_get_user_message(result) == NULL);
@@ -157,9 +153,7 @@ test_get_message_none (void)
                                  NULL, NULL, NULL, NULL, NULL,
                                  NULL,
                                  NULL,
-                                 "filename",
-                                 999,
-                                 "function-name");
+                                 backtrace);
     cut_assert_null(cut_test_result_get_message(result));
 
     cut_test_result_set_message(result, "message");
@@ -183,9 +177,7 @@ test_set_messages (void)
                                  NULL, NULL, NULL, NULL, NULL,
                                  "user-message",
                                  "system-message",
-                                 "filename",
-                                 999,
-                                 "function-name");
+                                 backtrace);
     cut_assert_equal_string("user-message\nsystem-message",
                             cut_test_result_get_message(result));
 
@@ -206,94 +198,33 @@ test_set_messages (void)
 }
 
 void
-test_get_function_name (void)
+test_get_backtrace (void)
 {
+    const GList *actual_backtrace;
+    CutBacktraceEntry *entry;
+
     result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
                                  NULL, NULL, NULL, NULL, NULL,
                                  "user-message",
                                  "system-message",
-                                 "filename",
-                                 999,
-                                 "function-name");
-    cut_assert_equal_string("function-name",
-                            cut_test_result_get_function_name(result));
-    cut_test_result_set_function_name(result, "another-function-name");
-    cut_assert_equal_string("another-function-name",
-                            cut_test_result_get_function_name(result));
-    g_object_unref(result);
+                                 backtrace);
+    actual_backtrace = cut_test_result_get_backtrace(result);
+    cut_assert_not_null(actual_backtrace);
 
+    entry = actual_backtrace->data;
+    cut_assert_equal_string("file name", cut_backtrace_entry_get_file(entry));
+    cut_assert_equal_uint(999, cut_backtrace_entry_get_line(entry));
+    cut_assert_equal_string("function name",
+                            cut_backtrace_entry_get_function(entry));
+    cut_assert_equal_string("info", cut_backtrace_entry_get_info(entry));
+
+    g_object_unref(result);
     result = cut_test_result_new(CUT_TEST_RESULT_FAILURE,
                                  NULL, NULL, NULL, NULL, NULL,
                                  NULL,
                                  NULL,
-                                 "filename",
-                                 999,
                                  NULL);
-    cut_assert(cut_test_result_get_function_name(result) == NULL,
-               "cut_test_result_get_function_name() should return NULL!");
-}
-
-void
-test_get_filename (void)
-{
-    result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
-                                 NULL, NULL, NULL, NULL, NULL,
-                                 "user-message",
-                                 "system-message",
-                                 "filename",
-                                 999,
-                                 "function-name");
-    cut_assert_equal_string("filename", cut_test_result_get_filename(result));
-
-    cut_test_result_set_filename(result, "another-filename");
-    cut_assert_equal_string("another-filename",
-                            cut_test_result_get_filename(result));
-    g_object_unref(result);
-
-    result = cut_test_result_new(CUT_TEST_RESULT_FAILURE,
-                                 NULL, NULL, NULL, NULL, NULL,
-                                 NULL,
-                                 NULL,
-                                 NULL,
-                                 999,
-                                 NULL);
-    cut_assert_null(cut_test_result_get_filename(result));
-}
-
-void
-test_get_line (void)
-{
-    result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
-                                 NULL, NULL, NULL, NULL, NULL,
-                                 "user-message",
-                                 "system-message",
-                                 "filename",
-                                 999,
-                                 "function-name");
-    cut_assert_equal_int(999, cut_test_result_get_line(result));
-
-    cut_test_result_set_line(result, 9999);
-    cut_assert_equal_int(9999, cut_test_result_get_line(result));
-    g_object_unref(result);
-
-    result = cut_test_result_new(CUT_TEST_RESULT_FAILURE,
-                                 NULL, NULL, NULL, NULL, NULL,
-                                 NULL,
-                                 NULL,
-                                 NULL,
-                                 0,
-                                 NULL);
-    cut_assert_equal_int(0, cut_test_result_get_line(result));
-    g_object_unref(result);
-
-    result = cut_test_result_new(CUT_TEST_RESULT_FAILURE,
-                                 NULL, NULL, NULL, NULL, NULL,
-                                 NULL,
-                                 NULL,
-                                 NULL,
-                                 G_MAXUINT,
-                                 NULL);
-    cut_assert_equal_int(G_MAXUINT, cut_test_result_get_line(result));
+    cut_assert_null(cut_test_result_get_backtrace(result));
 }
 
 void
@@ -333,7 +264,7 @@ test_get_test_suite (void)
 {
     result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
                                  NULL, NULL, NULL, NULL, NULL,
-                                 NULL, NULL, NULL, 0, NULL);
+                                 NULL, NULL, NULL);
     cut_assert_null(cut_test_result_get_test_suite(result));
 
     suite = cut_test_suite_new_empty();
@@ -378,6 +309,8 @@ test_new_from_xml (void)
 {
     GError *error = NULL;
     CutTest *test;
+    const GList *actual_backtrace;
+    CutBacktraceEntry *entry;
     const gchar xml[] =
         "<result>\n"
         "  <test-case>\n"
@@ -399,6 +332,11 @@ test_new_from_xml (void)
         "      <line>31</line>\n"
         "      <info>stub_error_test()</info>\n"
         "    </entry>\n"
+        "    <entry>\n"
+        "      <file>test-cut-test-result.c</file>\n"
+        "      <line>29</line>\n"
+        "      <info>test_new_from_xml(): additional info</info>\n"
+        "    </entry>\n"
         "  </backtrace>\n"
         "  <elapsed>0.000100</elapsed>\n"
         "</result>\n";
@@ -417,11 +355,26 @@ test_new_from_xml (void)
     cut_assert_equal_int(CUT_TEST_RESULT_ERROR,
                          cut_test_result_get_status(result));
     cut_assert_equal_double(0.0001, 0.0, cut_test_result_get_elapsed(result));
-    cut_assert_equal_int(31, cut_test_result_get_line(result));
+
+    actual_backtrace = cut_test_result_get_backtrace(result);
+    cut_assert_not_null(actual_backtrace);
+    entry = actual_backtrace->data;
     cut_assert_equal_string("test-cut-report-xml.c",
-                            cut_test_result_get_filename(result));
+                            cut_backtrace_entry_get_file(entry));
+    cut_assert_equal_uint(31, cut_backtrace_entry_get_line(entry));
     cut_assert_equal_string("stub_error_test",
-                            cut_test_result_get_function_name(result));
+                            cut_backtrace_entry_get_function(entry));
+
+    cut_assert_not_null(g_list_next(actual_backtrace));
+    entry = g_list_next(actual_backtrace)->data;
+    cut_assert_equal_string("test-cut-test-result.c",
+                            cut_backtrace_entry_get_file(entry));
+    cut_assert_equal_uint(29, cut_backtrace_entry_get_line(entry));
+    cut_assert_equal_string("test_new_from_xml",
+                            cut_backtrace_entry_get_function(entry));
+    cut_assert_equal_string("additional info",
+                            cut_backtrace_entry_get_info(entry));
+
     cut_assert_equal_string("This test should error",
                             cut_test_result_get_message(result));
     cut_assert_equal_string("1234",
@@ -430,13 +383,17 @@ test_new_from_xml (void)
                             cut_test_get_description(test));
 }
 
-#define cut_assert_new_from_xml_error(expected, xml) do         \
-{                                                               \
-    result = cut_test_result_new_from_xml(xml, -1, &error);     \
-    cut_assert_null(result);                                    \
-    cut_assert_not_null(error);                                 \
-    cut_assert_equal_string((expected), error->message);        \
-} while (0)
+static void
+cut_assert_new_from_xml_error_helper(const gchar *expected, const gchar *xml)
+{
+    result = cut_test_result_new_from_xml(xml, -1, &error);
+    cut_assert_null(result);
+    cut_assert_not_null(error);
+    cut_assert_equal_string(expected, error->message);
+}
+
+#define cut_assert_new_from_xml_error(expected, xml)                    \
+    cut_trace(cut_assert_new_from_xml_error_helper(expected, xml))
 
 void
 test_new_from_xml_with_invalid_top_level_tag_name (void)
@@ -468,24 +425,6 @@ test_new_from_xml_with_invalid_line (void)
     cut_assert_new_from_xml_error("Error on line 5 char 17: "
                                   "/result/backtrace/entry/line: "
                                   "invalid line number: XXX",
-                                  xml);
-}
-
-void
-test_new_from_xml_with_invalid_info (void)
-{
-    const gchar xml[] =
-        "<result>\n"
-        "  <backtrace>\n"
-        "    <entry>\n"
-        "      <info>stub_error_test</info>\n"
-        "    </entry>\n"
-        "  </backtrace>\n"
-        "</result>\n";
-
-    cut_assert_new_from_xml_error("Error on line 4 char 29: "
-                                  "/result/backtrace/entry/info: "
-                                  "invalid function name: stub_error_test",
                                   xml);
 }
 

@@ -50,9 +50,9 @@ test_atomic (void)
 
   cut_assert (g_atomic_pointer_compare_and_exchange (&atomic_pointer, 
 						     NULL, biggest_pointer));
-  cut_assert_equal_int (biggest_pointer, atomic_pointer);
+  cut_assert_equal_pointer (biggest_pointer, atomic_pointer);
 
-  cut_assert_equal_int (atomic_pointer, g_atomic_pointer_get (&atomic_pointer));
+  cut_assert_equal_pointer (atomic_pointer, g_atomic_pointer_get (&atomic_pointer));
 
   cut_assert (g_atomic_pointer_compare_and_exchange (&atomic_pointer, 
 						     biggest_pointer, NULL));

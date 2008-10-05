@@ -423,8 +423,7 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
         result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
                                      test, test_iterator, test_case,
                                      NULL, data,
-                                     NULL, NULL,
-                                     NULL, 0, NULL);
+                                     NULL, NULL, NULL);
         cut_test_emit_result_signal(test, test_context, result);
         g_object_unref(result);
     }

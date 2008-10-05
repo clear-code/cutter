@@ -19,5 +19,3 @@
 * [CutRepository/CutLoader] source directory supports nested directory.
 * resolve circular reference between CutStreamReader and CutStreamParser.
 * cut_assert_equal_sockaddr().
-* cut_trace() that stacks backtrace.
-  e.g. cut_trace(my_assert_xxx(ZZZ));

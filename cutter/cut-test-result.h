@@ -47,17 +47,15 @@ struct _CutTestResultClass
 
 GType          cut_test_result_get_type   (void) G_GNUC_CONST;
 
-CutTestResult *cut_test_result_new        (CutTestResultStatus status,
-                                           CutTest *test,
-                                           CutTestIterator *test_iterator,
-                                           CutTestCase *test_case,
-                                           CutTestSuite *test_suite,
-                                           CutTestData *test_data,
-                                           const gchar *user_message,
-                                           const gchar *system_message,
-                                           const gchar *filename,
-                                           guint line,
-                                           const gchar *function_name);
+CutTestResult *cut_test_result_new        (CutTestResultStatus  status,
+                                           CutTest             *test,
+                                           CutTestIterator     *test_iterator,
+                                           CutTestCase         *test_case,
+                                           CutTestSuite        *test_suite,
+                                           CutTestData         *test_data,
+                                           const gchar         *user_message,
+                                           const gchar         *system_message,
+                                           const GList         *backtrace);
 CutTestResult *cut_test_result_new_empty  (void);
 CutTestResult *cut_test_result_new_from_xml
                                           (const gchar *xml,
@@ -78,9 +76,7 @@ CutTestData         *cut_test_result_get_test_data     (CutTestResult *result);
 const gchar         *cut_test_result_get_message       (CutTestResult *result);
 const gchar         *cut_test_result_get_user_message  (CutTestResult *result);
 const gchar         *cut_test_result_get_system_message(CutTestResult *result);
-const gchar         *cut_test_result_get_function_name (CutTestResult *result);
-const gchar         *cut_test_result_get_filename      (CutTestResult *result);
-guint                cut_test_result_get_line          (CutTestResult *result);
+const GList         *cut_test_result_get_backtrace    (CutTestResult *result);
 void                 cut_test_result_get_start_time    (CutTestResult *result,
                                                         GTimeVal *start_time);
 gdouble              cut_test_result_get_elapsed       (CutTestResult *result);
@@ -103,12 +99,8 @@ void cut_test_result_set_user_message    (CutTestResult *result,
                                           const gchar *user_message);
 void cut_test_result_set_system_message  (CutTestResult *result,
                                           const gchar *system_message);
-void cut_test_result_set_function_name   (CutTestResult *result,
-                                          const gchar *function_name);
-void cut_test_result_set_filename        (CutTestResult *result,
-                                          const gchar *filename);
-void cut_test_result_set_line            (CutTestResult *result,
-                                          guint line);
+void cut_test_result_set_backtrace       (CutTestResult *result,
+                                          const GList   *backtrace);
 void cut_test_result_set_start_time      (CutTestResult *result,
                                           GTimeVal *start_time);
 void cut_test_result_set_elapsed         (CutTestResult *result,

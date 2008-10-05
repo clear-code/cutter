@@ -970,6 +970,7 @@ append_test_result_row (CutGtkUI *ui, CutTestResult *result,
     const gchar *test_name;
     GdkPixbuf *icon;
 
+    /* FIXME */
     filename = cut_run_context_build_source_filename(ui->run_context,
                                                      cut_test_result_get_filename(result));
     status = cut_test_result_get_status(result);

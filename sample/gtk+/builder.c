@@ -1399,7 +1399,7 @@ test_cell_view (void)
   
   renderers = gtk_cell_view_get_cell_renderers (GTK_CELL_VIEW (cellview));
   cut_assert (renderers);
-  cut_assert (1, g_list_length (renderers));
+  cut_assert_equal_int (1, g_list_length (renderers));
   
   gtk_widget_realize (GTK_WIDGET (cellview));
 

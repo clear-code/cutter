@@ -40,6 +40,33 @@ extern "C" {
  */
 
 /**
+ */
+#define cut_trace_with_info_expression(expression,              \
+                                       info_expression) do      \
+{                                                               \
+    cut_test_context_push_backtrace(get_current_test_context(), \
+                                    __FILE__, __LINE__,         \
+                                    __PRETTY_FUNCTION__,        \
+                                    #info_expression);          \
+    do {                                                        \
+        expression;                                             \
+    } while (0);                                                \
+    cut_test_context_pop_backtrace(get_current_test_context()); \
+} while (0)
+
+#define cut_trace(expression) do                                \
+{                                                               \
+    cut_test_context_push_backtrace(get_current_test_context(), \
+                                    __FILE__, __LINE__,         \
+                                    __PRETTY_FUNCTION__,        \
+                                    #expression);               \
+    do {                                                        \
+        expression;                                             \
+    } while (0);                                                \
+    cut_test_context_pop_backtrace(get_current_test_context()); \
+} while (0)
+
+/**
  * cut_take_string:
  * @string: the string to be owned by Cutter.
  *
@@ -49,7 +76,10 @@ extern "C" {
  * Returns: a string owned by Cutter. Don't free it.
  */
 #define cut_take_string(string)                                         \
-    cut_test_context_take_string(get_current_test_context(), (string))
+    cut_take_string_helper(get_current_test_context(), (string))
+
+#define cut_take_string_helper(test_context, string)                     \
+    cut_test_context_take_string(test_context, (string))
 
 /**
  * cut_take_strdup:
@@ -77,8 +107,11 @@ extern "C" {
  * Returns: a formatted string owned by Cutter. Don't free it.
  */
 #define cut_take_printf(format, ...)                                    \
-    cut_test_context_take_printf(get_current_test_context(),            \
-                                 (format), __VA_ARGS__)
+    cut_take_printf_helper(get_current_test_context(),                  \
+                           format, __VA_ARGS__)
+
+#define cut_take_printf_helper(test_context, format, ...)               \
+    cut_test_context_take_printf(test_context, (format), __VA_ARGS__)
 
 /**
  * cut_take_string_array:
@@ -120,7 +153,12 @@ extern "C" {
  * Since: 1.0.3
  */
 #define cut_append_diff(message, from, to)                      \
-    cut_take_string(cut_utils_append_diff(message, from, to))
+    cut_append_diff_helper(get_current_test_context(),          \
+                           message, from, to)
+
+#define cut_append_diff_helper(test_context, message, from, to)         \
+    cut_take_string_helper(test_context,                                \
+                           cut_utils_append_diff(message, from, to))
 
 /**
  * cut_inspect_string_array:
@@ -130,8 +168,13 @@ extern "C" {
  *
  * Returns: a inspected string. Don't free it.
  */
-#define cut_inspect_string_array(strings)                               \
-    cut_take_string(cut_utils_inspect_string_array(strings))
+#define cut_inspect_string_array(strings)                       \
+    cut_inspect_string_array_helper(get_current_test_context(), \
+                                    (strings))
+
+#define cut_inspect_string_array_helper(test_context, strings)          \
+    cut_take_string_helper(test_context,                                \
+                           cut_utils_inspect_string_array(strings))
 
 
 /**
@@ -186,9 +229,6 @@ extern "C" {
  */
 #define cut_get_fixture_data_string(path, ...)                          \
     cut_utils_get_fixture_data_string(get_current_test_context(),       \
-                                      __FILE__,                         \
-                                      __LINE__,                         \
-                                      __PRETTY_FUNCTION__,              \
                                       path, ## __VA_ARGS__, NULL)
 
 /**

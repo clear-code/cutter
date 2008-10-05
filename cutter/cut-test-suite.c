@@ -459,8 +459,7 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite,
             CutTestResult *result;
             result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
                                          NULL, NULL, NULL, test_suite, NULL,
-                                         NULL, NULL,
-                                         NULL, 0, NULL);
+                                         NULL, NULL, NULL);
             cut_test_emit_result_signal(CUT_TEST(test_suite), NULL, result);
             g_object_unref(result);
         }

@@ -125,7 +125,8 @@ test_ptr_array (void)
     g_ptr_array_add (gparray, GINT_TO_POINTER (i));
 
   for (i = 0; i < 10000; i++)
-    cut_assert_equal_int (GINT_TO_POINTER (i), g_ptr_array_index (gparray, i));
+    cut_assert_equal_pointer (GINT_TO_POINTER (i),
+                              g_ptr_array_index (gparray, i));
   
   g_ptr_array_foreach (gparray, sum_up, &sum);
   cut_assert_equal_int (49995000, sum);

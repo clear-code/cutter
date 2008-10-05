@@ -1,4 +1,5 @@
 #include "cuttest-utils.h"
+#include <cutter/cut-backtrace-entry.h>
 
 const gchar *
 cuttest_get_base_dir(void)
@@ -87,9 +88,18 @@ cuttest_result_string_list_new (const gchar *test_name,
 GList *
 cuttest_result_string_list_new_from_result (CutTestResult *result)
 {
+    const GList *backtrace;
+    const gchar *function_name = NULL;
+
+    backtrace = cut_test_result_get_backtrace(result);
+    if (backtrace) {
+        CutBacktraceEntry *entry = backtrace->data;
+        function_name = cut_backtrace_entry_get_function(entry);
+    }
+
     return cuttest_result_string_list_new(
         cut_test_result_get_test_name(result),
         cut_test_result_get_user_message(result),
         cut_test_result_get_system_message(result),
-        cut_test_result_get_function_name(result));
+        function_name);
 }

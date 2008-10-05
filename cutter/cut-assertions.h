@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2008  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -22,8 +22,6 @@
 
 #include <string.h>
 #include <errno.h>
-#include <cutter/cut-public.h>
-#include <cutter/cut-test-utils.h>
 #include <cutter/cut-assertions-helper.h>
 
 #ifdef __cplusplus
@@ -53,18 +51,12 @@ extern "C" {
  *
  * Passes if @expression is not 0 or NULL.
  */
-#define cut_assert(expression, ...) do                          \
-{                                                               \
-    if (expression) {                                           \
-        cut_test_pass();                                        \
-    } else {                                                    \
-        cut_test_fail(FAILURE,                                  \
-                      cut_take_printf("expected: <%s>"          \
-                                      " is not FALSE/NULL",     \
-                                      #expression),             \
-                      ## __VA_ARGS__);                          \
-    }                                                           \
-} while(0)
+#define cut_assert(expression, ...)                                     \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_helper(get_current_test_context(),                   \
+                          (expression) ? CUT_TRUE : CUT_FALSE,          \
+                          #expression, ## __VA_ARGS__, NULL),           \
+        cut_assert(expression, ## __VA_ARGS__))
 
 /**
  * cut_assert_true:
@@ -76,18 +68,12 @@ extern "C" {
  *
  * Since: 0.9
  */
-#define cut_assert_true(expression, ...) do                     \
-{                                                               \
-    if (expression) {                                           \
-        cut_test_pass();                                        \
-    } else {                                                    \
-        cut_test_fail(FAILURE,                                  \
-                      cut_take_printf("expected: <%s>"          \
-                                      " is TRUE value",         \
-                                      #expression),             \
-                      ## __VA_ARGS__);                          \
-    }                                                           \
-} while(0)
+#define cut_assert_true(expression, ...)                                \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_true_helper(get_current_test_context(),              \
+                               (expression) ? CUT_TRUE : CUT_FALSE,     \
+                               #expression, ## __VA_ARGS__, NULL),      \
+        cut_assert_true(expression, ## __VA_ARGS__))
 
 /**
  * cut_assert_false:
@@ -99,18 +85,12 @@ extern "C" {
  *
  * Since: 0.9
  */
-#define cut_assert_false(expression, ...) do                    \
-{                                                               \
-    if (expression) {                                           \
-        cut_test_fail(FAILURE,                                  \
-                      cut_take_printf("expected: <%s>"          \
-                                      " is FALSE/NULL",         \
-                                      #expression),             \
-                      ## __VA_ARGS__);                          \
-    } else {                                                    \
-        cut_test_pass();                                        \
-    }                                                           \
-} while(0)
+#define cut_assert_false(expression, ...)                               \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_false_helper(get_current_test_context(),             \
+                                (expression) ? CUT_TRUE : CUT_FALSE,    \
+                                #expression, ## __VA_ARGS__, NULL),     \
+        cut_assert_false(expression, ## __VA_ARGS__))
 
 /**
  * cut_assert_null:
@@ -120,17 +100,12 @@ extern "C" {
  *
  * Passes if @expression is NULL.
  */
-#define cut_assert_null(expression, ...) do                     \
-{                                                               \
-    if ((expression) == NULL) {                                 \
-        cut_test_pass();                                        \
-    } else {                                                    \
-        cut_test_fail(FAILURE,                                  \
-                      cut_take_printf("expected: <%s> is NULL", \
-                                      #expression),             \
-                      ## __VA_ARGS__);                          \
-    }                                                           \
-} while(0)                                                      \
+#define cut_assert_null(expression, ...)                                \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_null_helper(get_current_test_context(),              \
+                               (expression),                            \
+                               #expression, ## __VA_ARGS__, NULL),      \
+        cut_assert_null(expression, ## __VA_ARGS__))
 
 /**
  * cut_assert_null_string:
@@ -142,19 +117,13 @@ extern "C" {
  *
  * Since: 0.3
  */
-#define cut_assert_null_string(expression, ...) do                      \
-{                                                                       \
-    const char *_expression = (expression);                             \
-    if (_expression == NULL) {                                          \
-        cut_test_pass();                                                \
-    } else {                                                            \
-        cut_test_fail(FAILURE,                                          \
-                      cut_take_printf("expected: <%s> is NULL\n"        \
-                                      " but was: <%s>",                 \
-                                      #expression, _expression),        \
-                      ## __VA_ARGS__);                                  \
-    }                                                                   \
-} while(0)
+#define cut_assert_null_string(expression, ...)                         \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_null_string_helper(get_current_test_context(),       \
+                                      (expression),                     \
+                                      #expression,                      \
+                                      ## __VA_ARGS__, NULL),            \
+        cut_assert_null_string(expression, ## __VA_ARGS__))
 
 /**
  * cut_assert_not_null:
@@ -164,17 +133,13 @@ extern "C" {
  *
  * Passes if @expression is not NULL.
  */
-#define cut_assert_not_null(expression, ...) do                         \
-{                                                                       \
-    if ((expression) != NULL) {                                         \
-        cut_test_pass();                                                \
-    } else {                                                            \
-        cut_test_fail(FAILURE,                                          \
-                      cut_take_printf("expected: <%s> is not NULL",     \
-                                      #expression),                     \
-                      ## __VA_ARGS__);                                  \
-    }                                                                   \
-} while(0)
+#define cut_assert_not_null(expression, ...)                    \
+    cut_trace_with_info_expression(                             \
+        cut_assert_not_null_helper(get_current_test_context(),  \
+                                   (expression),                \
+                                   #expression,                 \
+                                   ## __VA_ARGS__, NULL),       \
+        cut_assert_not_null(expression, ## __VA_ARGS__))
 
 /**
  * cut_assert_equal_int:
@@ -185,22 +150,13 @@ extern "C" {
  *
  * Passes if @expected == @actual.
  */
-#define cut_assert_equal_int(expected, actual, ...) do          \
-{                                                               \
-    long _expected = (long)(expected);                          \
-    long _actual = (long)(actual);                              \
-    if (_expected == _actual) {                                 \
-        cut_test_pass();                                        \
-    } else {                                                    \
-        cut_test_fail(FAILURE,                                  \
-                      cut_take_printf("<%s == %s>\n"            \
-                                      "expected: <%ld>\n"       \
-                                      " but was: <%ld>",        \
-                                      #expected, #actual,       \
-                                      _expected, _actual),      \
-                      ## __VA_ARGS__);                          \
-    }                                                           \
-} while(0)
+#define cut_assert_equal_int(expected, actual, ...)             \
+    cut_trace_with_info_expression(                             \
+        cut_assert_equal_int_helper(get_current_test_context(), \
+                                    (expected), (actual),       \
+                                    #expected, #actual,         \
+                                    ## __VA_ARGS__, NULL),      \
+        cut_assert_equal_int(expected, actual, ## __VA_ARGS__))
 
 /**
  * cut_assert_equal_uint:
@@ -211,22 +167,13 @@ extern "C" {
  *
  * Passes if @expected == @actual.
  */
-#define cut_assert_equal_uint(expected, actual, ...) do     \
-{                                                           \
-    unsigned long _expected = (unsigned long)(expected);    \
-    unsigned long _actual = (unsigned long)(actual);        \
-    if (_expected == _actual) {                             \
-        cut_test_pass();                                    \
-    } else {                                                \
-        cut_test_fail(FAILURE,                              \
-                      cut_take_printf("<%s == %s>\n"        \
-                                      "expected: <%lu>\n"   \
-                                      " but was: <%lu>",    \
-                                      #expected, #actual,   \
-                                      _expected, _actual),  \
-                      ## __VA_ARGS__);                      \
-    }                                                       \
-} while(0)
+#define cut_assert_equal_uint(expected, actual, ...)                    \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_equal_uint_helper(get_current_test_context(),        \
+                                     (expected), (actual),              \
+                                     #expected, #actual,                \
+                                     ## __VA_ARGS__, NULL),             \
+        cut_assert_equal_uint(expected, actual, ## __VA_ARGS__))
 
 /**
  * cut_assert_equal_double:
@@ -238,27 +185,14 @@ extern "C" {
  *
  * Passes if (@expected - @error) <= @actual <= (@expected + @error).
  */
-#define cut_assert_equal_double(expected, error, actual, ...) do        \
-{                                                                       \
-    double _expected, _error, _actual;                                  \
-                                                                        \
-    _expected = (expected);                                             \
-    _error = (error);                                                   \
-    _actual = (actual);                                                 \
-    if (_expected - _error <= _actual &&                                \
-        _actual <= _expected + _error) {                                \
-        cut_test_pass();                                                \
-    } else {                                                            \
-        cut_test_fail(FAILURE,                                          \
-                      cut_take_printf("<%s-%s <= %s <= %s+%s>\n"        \
-                                      "expected: <%g +/- %g>\n"         \
-                                      " but was: <%g>",                 \
-                                      #expected, #error,                \
-                                      #actual, #expected, #error,       \
-                                      _expected, _error, _actual),      \
-                      ## __VA_ARGS__);                                  \
-    }                                                                   \
-} while(0)
+#define cut_assert_equal_double(expected, error, actual, ...)           \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_equal_double_helper(get_current_test_context(),      \
+                                       (expected), (error), (actual),   \
+                                       #expected, #error, #actual,      \
+                                       ## __VA_ARGS__, NULL),           \
+        cut_assert_equal_double(expected, error, actual,                \
+                                ## __VA_ARGS__))
 
 /**
  * cut_assert_equal_string:
@@ -270,39 +204,13 @@ extern "C" {
  * Passes if both @expected and @actual are NULL or
  * strcmp(@expected, @actual) == 0.
  */
-#define cut_assert_equal_string(expected, actual, ...) do               \
-{                                                                       \
-    const char *_expected = (expected);                                 \
-    const char *_actual = (actual);                                     \
-    if (_expected == NULL) {                                            \
-        if (_actual == NULL) {                                          \
-            cut_test_pass();                                            \
-        } else {                                                        \
-            cut_test_fail(FAILURE,                                      \
-                          cut_take_printf("expected: <%s> is NULL\n"    \
-                                          " but was: <%s>",             \
-                                          #actual, _actual),            \
-                          ## __VA_ARGS__);                              \
-        }                                                               \
-    } else {                                                            \
-        if (_actual && strcmp(_expected, _actual) == 0) {               \
-            cut_test_pass();                                            \
-        } else {                                                        \
-            const char *message;                                        \
-                                                                        \
-            message =                                                   \
-                cut_take_printf("<%s == %s>\n"                          \
-                                "expected: <%s>\n"                      \
-                                " but was: <%s>",                       \
-                                #expected, #actual,                     \
-                                cut_utils_inspect_string(_expected),    \
-                                cut_utils_inspect_string(_actual));     \
-            if (_expected && _actual)                                   \
-                message = cut_append_diff(message, _expected, _actual); \
-            cut_test_fail(FAILURE, message, ## __VA_ARGS__);            \
-        }                                                               \
-    }                                                                   \
-} while(0)
+#define cut_assert_equal_string(expected, actual, ...)                  \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_equal_string_helper(get_current_test_context(),      \
+                                       expected, actual,                \
+                                       #expected, #actual,              \
+                                       ## __VA_ARGS__, NULL),           \
+        cut_assert_equal_string(expected, actual, ## __VA_ARGS__))
 
 /**
  * cut_assert_equal_string_with_free:
@@ -317,9 +225,12 @@ extern "C" {
  * Since: 0.3
  */
 #define cut_assert_equal_string_with_free(expected, actual, ...)        \
-    cut_assert_equal_string(expected,                                   \
-                            cut_take_string(actual),                    \
-                            ## __VA_ARGS__);
+    cut_trace_with_info_expression(                                     \
+        cut_assert_equal_string(expected,                               \
+                                cut_take_string(actual),                \
+                                ## __VA_ARGS__),                        \
+        cut_assert_equal_string_with_free(expected, actual,             \
+                                          ## __VA_ARGS__))
 
 #ifndef CUTTER_DISABLE_DEPRECATED
 /**
@@ -335,8 +246,11 @@ extern "C" {
  *
  * Deprecated: 0.3: Use cut_assert_equal_string() instead.
  */
-#define cut_assert_equal_string_or_null(expected, actual, ...) \
-    cut_assert_equal_string(expected, actual, ## __VA_ARGS__)
+#define cut_assert_equal_string_or_null(expected, actual, ...)          \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_equal_string(expected, actual, ## __VA_ARGS__),      \
+        cut_assert_equal_string_or_null(expected, actual,               \
+                                        ## __VA_ARGS__))
 #endif
 
 /**
@@ -352,46 +266,16 @@ extern "C" {
  * memcmp(@expected, @actual, @expected_size) == 0.
  */
 #define cut_assert_equal_memory(expected, expected_size,                \
-                                actual, actual_size, ...) do            \
-{                                                                       \
-    const void *_expected, *_actual;                                    \
-    size_t _expected_size, _actual_size;                                \
-                                                                        \
-    _expected = (expected);                                             \
-    _expected_size = (expected_size);                                   \
-    _actual = (actual);                                                 \
-    _actual_size = (actual_size);                                       \
-                                                                        \
-    if (_expected_size == _actual_size &&                               \
-        memcmp(_expected, _actual, _expected_size) == 0) {              \
-        cut_test_pass();                                                \
-    } else {                                                            \
-    const char *_message;                                               \
-        const char *_inspected_expected;                                \
-        const char *_inspected_actual;                                  \
-                                                                        \
-        _inspected_expected =                                           \
-            cut_take_string(cut_utils_inspect_memory(_expected,         \
-                                                     _expected_size));  \
-        _inspected_actual =                                             \
-            cut_take_string(cut_utils_inspect_memory(_actual,           \
-                                                     _actual_size));    \
-        _message = cut_take_printf("<%s(size: %s) == %s(size: %s)>\n"   \
-                                   "expected: <%s (size: %ld)>\n"       \
-                                   " but was: <%s (size: %ld)>",        \
-                                   #expected, #expected_size,           \
-                                   #actual, #actual_size,               \
-                                   _inspected_expected,                 \
-                                   (long)_expected_size,                \
-                                   _inspected_actual,                   \
-                                   (long)_actual_size);                 \
-        if (_expected_size > 0 && _actual_size > 0)                     \
-            _message = cut_append_diff(_message,                        \
-                                      _inspected_expected,              \
-                                      _inspected_actual);               \
-        cut_test_fail(FAILURE, _message, ## __VA_ARGS__);               \
-    }                                                                   \
-} while(0)
+                                actual, actual_size, ...)               \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_equal_memory_helper(get_current_test_context(),      \
+                                       expected, expected_size,         \
+                                       actual, actual_size,             \
+                                       #expected, #expected_size,       \
+                                       #actual, #actual_size,           \
+                                       ## __VA_ARGS__, NULL),           \
+        cut_assert_equal_memory(expected, expected_size,                \
+                                actual, actual_size, ## __VA_ARGS__))
 
 /**
  * cut_assert_equal_string_array:
@@ -403,24 +287,13 @@ extern "C" {
  * Passes if both @expected and @actual are not NULL and
  * have same content (strcmp() == 0) strings.
  */
-#define cut_assert_equal_string_array(expected, actual, ...) do         \
-{                                                                       \
-    char **_expected = (expected);                                      \
-    char **_actual = (actual);                                          \
-    if (_expected && _actual &&                                         \
-        cut_utils_equal_string_array(_expected, _actual)) {             \
-        cut_test_pass();                                                \
-    } else {                                                            \
-        cut_test_fail(FAILURE,                                          \
-                      cut_take_printf("<%s == %s>\n"                    \
-                                      "expected: <%s>\n"                \
-                                      " but was: <%s>",                 \
-                                      #expected, #actual,               \
-                                      cut_inspect_string_array(_expected), \
-                                      cut_inspect_string_array(_actual)), \
-                      ## __VA_ARGS__);                                  \
-    }                                                                   \
-} while(0)
+#define cut_assert_equal_string_array(expected, actual, ...)            \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_equal_string_array_helper(                           \
+            get_current_test_context(),                                 \
+            expected, actual, #expected, #actual,                       \
+            ## __VA_ARGS__, NULL),                                      \
+        cut_assert_equal_string_array(expected, actual, ## __VA_ARGS__))
 
 /**
  * cut_assert_equal_string_array_with_free:
@@ -435,9 +308,15 @@ extern "C" {
  * Since: 0.9
  */
 #define cut_assert_equal_string_array_with_free(expected, actual, ...)  \
-    cut_assert_equal_string_array(expected,                             \
-                                  cut_take_string_array(actual),        \
-                                  ## __VA_ARGS__);
+    cut_trace_with_info_expression(                                     \
+        cut_assert_equal_string_array_helper(                           \
+            get_current_test_context(),                                 \
+            expected,                                                   \
+            cut_take_string_array(actual),                              \
+            #expected, #actual,                                         \
+            ## __VA_ARGS__, NULL),                                      \
+        cut_assert_equal_string_array_with_free(                        \
+            expected, actual, ## __VA_ARGS__))
 
 /**
  * cut_assert_operator:
@@ -454,17 +333,13 @@ extern "C" {
  * cut_assert_operator(1, <, 2) -> (1 < 2);
  * ]|
  */
-#define cut_assert_operator(lhs, operator, rhs, ...) do                 \
-{                                                                       \
-    if ((lhs) operator (rhs)) {                                         \
-        cut_test_pass();                                                \
-    } else {                                                            \
-        cut_test_fail(FAILURE,                                          \
-                      cut_take_printf("expected: <%s %s %s> is TRUE",   \
-                                      #lhs, #operator, #rhs),           \
-                      ## __VA_ARGS__);                                  \
-    }                                                                   \
-} while(0)
+#define cut_assert_operator(lhs, operator, rhs, ...)                    \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_operator_helper(get_current_test_context(),          \
+                                   ((lhs) operator (rhs)),              \
+                                   #lhs, #operator, #rhs,               \
+                                   ## __VA_ARGS__, NULL),               \
+        cut_assert_operator(lhs, operator, rhs, ## __VA_ARGS__))
 
 /**
  * cut_assert_operator_int:
@@ -485,16 +360,13 @@ extern "C" {
 {                                                                       \
     long _lhs = (lhs);                                                  \
     long _rhs = (rhs);                                                  \
-    if (_lhs operator _rhs) {                                           \
-        cut_test_pass();                                                \
-    } else {                                                            \
-        cut_test_fail(FAILURE,                                          \
-                      cut_take_printf("expected: <%s> %s <%s>\n"        \
-                                      " but was: <%ld> %s <%ld>",       \
-                                      #lhs, #operator, #rhs,            \
-                                      _lhs, #operator, _rhs),           \
-                      ## __VA_ARGS__);                                  \
-    }                                                                   \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_operator_int_helper(get_current_test_context(),      \
+                                       (_lhs operator _rhs),            \
+                                       _lhs, _rhs,                      \
+                                       #lhs, #operator, #rhs,           \
+                                       ## __VA_ARGS__, NULL),           \
+        cut_assert_operator_int(lhs, operator, rhs, ## __VA_ARGS__));   \
 } while(0)
 
 /**
@@ -516,20 +388,15 @@ extern "C" {
  */
 #define cut_assert_operator_double(lhs, operator, rhs, ...) do          \
 {                                                                       \
-    double _lhs, _rhs;                                                  \
-                                                                        \
-    _lhs = (lhs);                                                       \
-    _rhs = (rhs);                                                       \
-    if (_lhs operator _rhs) {                                           \
-        cut_test_pass();                                                \
-    } else {                                                            \
-        cut_test_fail(FAILURE,                                          \
-                      cut_take_printf("expected: <%s> %s <%s>\n"        \
-                                      " but was: <%g> %s <%g>",         \
-                                      #lhs, #operator, #rhs,            \
-                                      _lhs, #operator, _rhs),           \
-                      ## __VA_ARGS__);                                  \
-    }                                                                   \
+    double _lhs = (lhs);                                                \
+    double _rhs = (rhs);                                                \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_operator_double_helper(get_current_test_context(),   \
+                                       (_lhs operator _rhs),            \
+                                       _lhs, _rhs,                      \
+                                       #lhs, #operator, #rhs,           \
+                                       ## __VA_ARGS__, NULL),           \
+        cut_assert_operator_double(lhs, operator, rhs, ## __VA_ARGS__));\
 } while(0)
 
 /**
@@ -547,17 +414,13 @@ extern "C" {
  * cut_assert_equal(!strcmp, "abc", "abc"); -> Pass
  * ]|
  */
-#define cut_assert_equal(function, expected, actual, ...) do            \
-{                                                                       \
-    if (function(expected, actual)) {                                   \
-        cut_test_pass();                                                \
-    } else {                                                            \
-        cut_test_fail(FAILURE,                                          \
-                      cut_take_printf("expected: <%s(%s, %s)> is TRUE", \
-                                      #function, #expected, #actual),   \
-                      ## __VA_ARGS__);                                  \
-    }                                                                   \
-} while(0)
+#define cut_assert_equal(function, expected, actual, ...)               \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_equal_helper(get_current_test_context(),             \
+                                function(expected, actual),             \
+                                #function, #expected, #actual,          \
+                                ## __VA_ARGS__, NULL),                  \
+        cut_assert_equal(function, expected, actual, ## __VA_ARGS__))
 
 /**
  * cut_assert_errno:
@@ -574,21 +437,11 @@ extern "C" {
  *
  * Since: 0.8
  */
-#define cut_assert_errno(...) do                                        \
-{                                                                       \
-    int _current_errno = errno;                                         \
-                                                                        \
-    if (_current_errno == 0) {                                          \
-        cut_test_pass();                                                \
-    } else {                                                            \
-        cut_test_fail(FAILURE,                                          \
-                      cut_take_printf("expected: <0> (errno)\n"         \
-                                      " but was: <%d> (%s)",            \
-                                      _current_errno,                   \
-                                      strerror(_current_errno)),        \
-                      ## __VA_ARGS__);                                  \
-    }                                                                   \
-} while(0)
+#define cut_assert_errno(...)                                           \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_errno_helper(get_current_test_context(),             \
+                                ## __VA_ARGS__, NULL),                  \
+        cut_assert_errno(__VA_ARGS__))
 
 #ifndef CUTTER_DISABLE_DEPRECATED
 /**
@@ -609,7 +462,9 @@ extern "C" {
  * Deprecated: 1.0.2: Use cut_assert_path_exist() instead.
  */
 #define cut_assert_file_exist(path, ...)                                \
-    cut_assert_path_exist(path, ## __VA_ARGS__)
+    cut_trace_with_info_expression(                                     \
+        cut_assert_path_exist(path, ## __VA_ARGS__),                    \
+        cut_assert_file_exist(path, ## __VA_ARGS__))
 #endif
 
 /**
@@ -628,19 +483,12 @@ extern "C" {
  *
  * Since: 1.0.2
  */
-#define cut_assert_path_exist(path, ...) do                             \
-{                                                                       \
-    const char *_path;                                                  \
-                                                                        \
-    _path = (path);                                                     \
-    if (cut_utils_file_exist(_path)) {                                  \
-        cut_test_pass();                                                \
-    } else {                                                            \
-        cut_test_fail(FAILURE,                                          \
-                      cut_take_printf("expected: <%s> exists", _path),  \
-                      ## __VA_ARGS__);                                  \
-    }                                                                   \
-} while(0)
+#define cut_assert_path_exist(path, ...)                                \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_path_exist_helper(get_current_test_context(),        \
+                                     path, #path,                       \
+                                     ## __VA_ARGS__, NULL),             \
+        cut_assert_path_exist(path, ## __VA_ARGS__))
 
 /**
  * cut_assert_path_not_exist:
@@ -658,26 +506,12 @@ extern "C" {
  *
  * Since: 1.0.2
  */
-#define cut_assert_path_not_exist(path, ...) do                         \
-{                                                                       \
-    const char *_path;                                                  \
-                                                                        \
-    _path = (path);                                                     \
-    if (!_path) {                                                       \
-        const gchar *_message;                                          \
-                                                                        \
-        _message = cut_take_printf("expected: <%s> should not be NULL", \
-                                   #path);                              \
-        cut_test_fail(FAILURE, _message, ## __VA_ARGS__);               \
-    } else if (!cut_utils_file_exist(_path)) {                          \
-        cut_test_pass();                                                \
-    } else {                                                            \
-        cut_test_fail(FAILURE,                                          \
-                      cut_take_printf("expected: <%s> doesn't exist",   \
-                                      _path),                           \
-                      ## __VA_ARGS__);                                  \
-    }                                                                   \
-} while(0)
+#define cut_assert_path_not_exist(path, ...)                            \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_path_not_exist_helper(get_current_test_context(),    \
+                                         path, #path,                   \
+                                         ## __VA_ARGS__, NULL),         \
+        cut_assert_path_not_exist(path, ## __VA_ARGS__))
 
 /**
  * cut_assert_match:
@@ -696,20 +530,12 @@ extern "C" {
  *
  * Since: 1.0
  */
-#define cut_assert_match(pattern, actual, ...) do                       \
-{                                                                       \
-    const char *_pattern = (pattern);                                   \
-    const char *_actual = (actual);                                     \
-    if (cut_utils_regex_match(_pattern, _actual)) {                     \
-        cut_test_pass();                                                \
-    } else {                                                            \
-        cut_test_fail(FAILURE,                                          \
-                      cut_take_printf("expected: <%s> matches to\n"     \
-                                      "          <%s>",                 \
-                                      _pattern, _actual),               \
-                      ## __VA_ARGS__);                                  \
-    }                                                                   \
-} while(0)
+#define cut_assert_match(pattern, actual, ...)                          \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_match_helper(get_current_test_context(),             \
+                                pattern, actual, #pattern, #actual,     \
+                                ## __VA_ARGS__, NULL),                  \
+        cut_assert_match(path, actual, ## __VA_ARGS__))
 
 /**
  * cut_assert_match_with_free:
@@ -724,7 +550,12 @@ extern "C" {
  * Since: 1.0
  */
 #define cut_assert_match_with_free(pattern, actual, ...)                \
-    cut_assert_match(pattern, cut_take_string(actual), ## __VA_ARGS__)
+    cut_trace_with_info_expression(                                     \
+        cut_assert_match_helper(get_current_test_context(),             \
+                                pattern, cut_take_string(actual),       \
+                                #pattern, #actual                       \
+                                ## __VA_ARGS__, NULL),                  \
+        cut_assert_match_with_free(pattern, actual, ## __VA_ARGS__))
 
 /**
  * cut_assert_equal_pointer:
@@ -737,22 +568,13 @@ extern "C" {
  *
  * Since: 1.0
  */
-#define cut_assert_equal_pointer(expected, actual, ...) do      \
-{                                                               \
-    void *_expected = (expected);                               \
-    void *_actual = (actual);                                   \
-    if (_expected == _actual) {                                 \
-        cut_test_pass();                                        \
-    } else {                                                    \
-        cut_test_fail(FAILURE,                                  \
-                      cut_take_printf("<%s == %s>\n"            \
-                                      "expected: <%p>\n"        \
-                                      " but was: <%p>",         \
-                                      #expected, #actual,       \
-                                      _expected, _actual),      \
-                      ## __VA_ARGS__);                          \
-    }                                                           \
-} while(0)
+#define cut_assert_equal_pointer(expected, actual, ...)                 \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_equal_pointer_helper(get_current_test_context(),     \
+                                        expected, actual,               \
+                                        #expected, #actual              \
+                                        ## __VA_ARGS__, NULL),          \
+        cut_assert_equal_pointer(expected, actual, ## __VA_ARGS__))
 
 /**
  * cut_assert_equal_fixture_data_string:
@@ -764,14 +586,21 @@ extern "C" {
  *
  * Since: 1.0.2
  */
-#define cut_assert_equal_fixture_data_string(expected, path, ...) do    \
+#define cut_assert_equal_fixture_data_string(expected, path, ...)       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_equal_fixture_data_string_helper(expected, path,     \
+                                                    ## __VA_ARGS__),    \
+        cut_assert_equal_fixture_data_string(expected, path,            \
+                                             ## __VA_ARGS__))
+
+#define cut_assert_equal_fixture_data_string_helper(expected, path,     \
+                                                    ...) do             \
 {                                                                       \
     char *_data, *_full_path;                                           \
     const char *_taken_full_path;                                       \
                                                                         \
     cut_utils_get_fixture_data_string_and_path(                         \
         get_current_test_context(),                                     \
-        __FILE__, __LINE__, __PRETTY_FUNCTION__,                        \
         &_data, &_full_path,                                            \
         (path), ## __VA_ARGS__, NULL);                                  \
     _taken_full_path = cut_take_string(_full_path);                     \
@@ -786,8 +615,10 @@ extern "C" {
  *
  * Raises an error with message.
  */
-#define cut_error(format, ...)                  \
-    cut_test_fail(ERROR, NULL, format, ## __VA_ARGS__)
+#define cut_error(format, ...)                                  \
+    cut_trace_with_info_expression(                             \
+        cut_test_fail(ERROR, NULL, format, ## __VA_ARGS__),     \
+        cut_error(format, ## __VA_ARGS__))
 
 /**
  * cut_error_errno:
@@ -807,18 +638,11 @@ extern "C" {
  *
  * Since: 1.0.2
  */
-#define cut_error_errno(...) do                                         \
-{                                                                       \
-    int _current_errno = errno;                                         \
-                                                                        \
-    if (_current_errno != 0) {                                          \
-        cut_test_fail(ERROR,                                            \
-                      cut_take_printf("<%d> (%s)",                      \
-                                      _current_errno,                   \
-                                      strerror(_current_errno)),        \
-                      ## __VA_ARGS__);                                  \
-    }                                                                   \
-} while(0)
+#define cut_error_errno(...)                                    \
+    cut_trace_with_info_expression(                             \
+        cut_error_errno_helper(get_current_test_context(),      \
+                               ## __VA_ARGS__, NULL),           \
+        cut_error_errno(__VA_ARGS__))
 
 /**
  * cut_fail:
@@ -827,8 +651,10 @@ extern "C" {
  *
  * Raises a failure with message.
  */
-#define cut_fail(format, ...)                    \
-    cut_test_fail(FAILURE, NULL, format, ## __VA_ARGS__)
+#define cut_fail(format, ...)                                   \
+    cut_trace_with_info_expression(                             \
+        cut_test_fail(FAILURE, NULL, format, ## __VA_ARGS__),   \
+        cut_fail(format, ## __VA_ARGS__))
 
 /**
  * cut_pend:
@@ -838,8 +664,10 @@ extern "C" {
  * Marks the test is pending with message. The test is
  * stopped.
  */
-#define cut_pend(format, ...)                               \
-    cut_test_fail(PENDING, NULL, format, ## __VA_ARGS__)
+#define cut_pend(format, ...)                                   \
+    cut_trace_with_info_expression(                             \
+        cut_test_fail(PENDING, NULL, format, ## __VA_ARGS__),   \
+        cut_pend(format, ## __VA_ARGS__))
 
 #ifndef CUTTER_DISABLE_DEPRECATED
 /**
@@ -852,7 +680,10 @@ extern "C" {
  *
  * Deprecated: 0.4: Use cut_pend() instead.
  */
-#define cut_pending(format, ...) cut_pend(format, ## __VA_ARGS__)
+#define cut_pending(format, ...)                \
+    cut_trace_with_info_expression(             \
+        cut_pend(format, ## __VA_ARGS__),       \
+        cut_pending(format, ## __VA_ARGS__))
 #endif
 
 /**
@@ -862,8 +693,11 @@ extern "C" {
  *
  * Leaves a notification message. The test is continued.
  */
-#define cut_notify(format, ...)                  \
-    cut_test_register_result(NOTIFICATION, NULL, format, ## __VA_ARGS__)
+#define cut_notify(format, ...)                                         \
+    cut_trace_with_info_expression(                                     \
+        cut_test_register_result(NOTIFICATION, NULL, format,            \
+                                 ## __VA_ARGS__),                       \
+        cut_notify(format, ## __VA_ARGS__))
 
 /**
  * cut_omit:
@@ -880,8 +714,10 @@ extern "C" {
  *
  * Since: 0.8
  */
-#define cut_omit(format, ...)                           \
-    cut_test_fail(OMISSION, NULL, format, ## __VA_ARGS__)
+#define cut_omit(format, ...)                                   \
+    cut_trace_with_info_expression(                             \
+        cut_test_fail(OMISSION, NULL, format, ## __VA_ARGS__),  \
+        cut_omit(format, ## __VA_ARGS__))
 
 
 #ifdef __cplusplus

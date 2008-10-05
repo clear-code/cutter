@@ -56,10 +56,7 @@ extern "C" {
  * Since: 0.8
  */
 #define cut_fork()                                              \
-    cut_test_context_trap_fork(get_current_test_context(),      \
-                               __FILE__,                        \
-                               __LINE__,                        \
-                               __PRETTY_FUNCTION__)
+    cut_test_context_trap_fork(get_current_test_context())
 
 /**
  * cut_wait_process:

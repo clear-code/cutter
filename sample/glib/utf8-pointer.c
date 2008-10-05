@@ -64,7 +64,7 @@ test_utf8 (void)
   for (i = 0; i < num_chars; i++)
     for (j = 0; j < num_chars; j++) 
       {
-	cut_assert_equal_int (p[j], g_utf8_offset_to_pointer (p[i], j - i));
+	cut_assert_equal_pointer (p[j], g_utf8_offset_to_pointer (p[i], j - i));
 	cut_assert_equal_int (j - i, g_utf8_pointer_to_offset (p[i], p[j]));
       }
   

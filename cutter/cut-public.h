@@ -24,6 +24,8 @@
 extern "C" {
 #endif
 
+#include <stdarg.h>
+
 #include <cutter/cut-types.h>
 #include <cutter/cut-macros.h>
 #include <cutter/cut-multi-process.h>
@@ -53,11 +55,14 @@ CutTestContext *cut_test_context_current_get(CutTestContextKey *key);
 void  cut_test_context_pass_assertion       (CutTestContext *context);
 void  cut_test_context_register_result      (CutTestContext *context,
                                              CutTestResultStatus status,
-                                             const char *filename,
-                                             unsigned int line,
-                                             const char *function_name,
                                              const char *message,
-                                             ...) /* CUT_GNUC_PRINTF(7, 8) */;
+                                             ...) /* CUT_GNUC_PRINTF(4, 5) */;
+void  cut_test_context_register_resultv
+                                            (CutTestContext *context,
+                                             CutTestResultStatus status,
+                                             const char *system_message,
+                                             const char *user_message_format,
+                                             va_list args);
 void  cut_test_context_long_jump            (CutTestContext *context) CUT_GNUC_NORETURN;
 
 const char *cut_test_context_take_string    (CutTestContext *context,
@@ -80,7 +85,7 @@ int   cut_utils_equal_string_array          (char **strings1,
 char *cut_utils_inspect_string_array        (char **strings);
 const char *cut_utils_inspect_string        (const char *string);
 
-int   cut_utils_file_exist                  (const char *path);
+int   cut_utils_path_exist                  (const char *path);
 char *cut_utils_build_path                  (const char *path,
                                              ...) CUT_GNUC_NULL_TERMINATED;
 void  cut_utils_remove_path_recursive_force (const char *path);
@@ -92,22 +97,16 @@ char *cut_utils_append_diff                 (const char *message,
                                              const char *from,
                                              const char *to);
 
-char *cut_test_context_build_fixture_data_path
+char       *cut_test_context_build_fixture_data_path
                                             (CutTestContext *context,
                                              const char     *path,
                                              ...) CUT_GNUC_NULL_TERMINATED;
 
 const char *cut_utils_get_fixture_data_string(CutTestContext *context,
-                                              const char *file,
-                                              unsigned int line,
-                                              const char *function,
                                               const char *path,
                                               ...) CUT_GNUC_NULL_TERMINATED;
 
 void  cut_utils_get_fixture_data_string_and_path(CutTestContext *context,
-                                                 const char *file,
-                                                 unsigned int line,
-                                                 const char *function,
                                                  char **data,
                                                  char **fixture_data_path,
                                                  const char *path,
@@ -121,10 +120,7 @@ void  cut_test_context_set_attributes       (CutTestContext *context,
                                              const char     *first_attribute_name,
                                              ...) CUT_GNUC_NULL_TERMINATED;
 
-int   cut_test_context_trap_fork            (CutTestContext *context,
-                                             const char     *filename,
-                                             unsigned int    line,
-                                             const char     *function_name);
+int   cut_test_context_trap_fork            (CutTestContext *context);
 int   cut_test_context_wait_process         (CutTestContext *context,
                                              int             pid,
                                              unsigned int    usec_timeout);
@@ -138,6 +134,13 @@ const char *cut_test_context_get_forked_stderr_message
 void  cut_test_context_set_fixture_data_dir (CutTestContext *context,
                                              const char     *path,
                                              ...) CUT_GNUC_NULL_TERMINATED;
+
+void        cut_test_context_push_backtrace (CutTestContext *context,
+                                             const char     *file_name,
+                                             unsigned int    line,
+                                             const char     *function_name,
+                                             const char     *info);
+void        cut_test_context_pop_backtrace  (CutTestContext *context);
 
 char       *cut_diff_readable               (const char     *from,
                                              const char     *to);

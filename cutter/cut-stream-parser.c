@@ -26,6 +26,7 @@
 #include <glib.h>
 
 #include "cut-stream-parser.h"
+#include "cut-backtrace-entry.h"
 
 typedef enum {
     IN_TOP_LEVEL,
@@ -221,6 +222,8 @@ struct _CutStreamParserPrivate
     TestCaseResult *test_case_result;
 
     CutTestResult *result;
+    GList *backtrace;
+    CutBacktraceEntry *backtrace_entry;
     gchar *option_name;
     gchar *option_value;
     gboolean complete_success;
@@ -411,6 +414,8 @@ cut_stream_parser_init (CutStreamParser *stream_parser)
     priv->crashed_backtrace = NULL;
 
     priv->result = NULL;
+    priv->backtrace = NULL;
+    priv->backtrace_entry = NULL;
     priv->option_name = NULL;
     priv->option_value = NULL;
     priv->complete_success = TRUE;
@@ -696,6 +701,17 @@ dispose (GObject *object)
     if (priv->result) {
         g_object_unref(priv->result);
         priv->result = NULL;
+    }
+
+    if (priv->backtrace) {
+        g_list_foreach(priv->backtrace, (GFunc)g_object_unref, NULL);
+        g_list_free(priv->backtrace);
+        priv->backtrace = NULL;
+    }
+
+    if (priv->backtrace_entry) {
+        g_object_unref(priv->backtrace_entry);
+        priv->backtrace_entry = NULL;
     }
 
     if (priv->option_name) {
@@ -1344,11 +1360,12 @@ start_result_backtrace (CutStreamParserPrivate *priv,
                         GMarkupParseContext *context,
                         const gchar *element_name, GError **error)
 {
-        if (g_str_equal("entry", element_name)) {
-            PUSH_STATE(priv, IN_RESULT_BACKTRACE_ENTRY);
-        } else {
-            invalid_element(context, error);
-        }
+    if (g_str_equal("entry", element_name)) {
+        PUSH_STATE(priv, IN_RESULT_BACKTRACE_ENTRY);
+        priv->backtrace_entry = cut_backtrace_entry_new_empty();
+    } else {
+        invalid_element(context, error);
+    }
 }
 
 static void
@@ -1624,6 +1641,36 @@ end_test_option (CutStreamParser *parser, CutStreamParserPrivate *priv,
         g_free(priv->option_value);
         priv->option_value = NULL;
     }
+}
+
+static void
+end_result_backtrace (CutStreamParser *parser, CutStreamParserPrivate *priv,
+                      GMarkupParseContext *context,
+                      const gchar *element_name, GError **error)
+{
+    if (!priv->backtrace)
+        return;
+
+    if (priv->result)
+        cut_test_result_set_backtrace(priv->result,
+                                      g_list_reverse(priv->backtrace));
+
+    g_list_foreach(priv->backtrace, (GFunc)g_object_unref, NULL);
+    g_list_free(priv->backtrace);
+    priv->backtrace = NULL;
+}
+
+static void
+end_result_backtrace_entry (CutStreamParser *parser,
+                            CutStreamParserPrivate *priv,
+                            GMarkupParseContext *context,
+                            const gchar *element_name, GError **error)
+{
+    if (!priv->backtrace_entry)
+        return; /* should check file name, line, info? */
+
+    priv->backtrace = g_list_prepend(priv->backtrace, priv->backtrace_entry);
+    priv->backtrace_entry = NULL;
 }
 
 static void
@@ -2053,6 +2100,12 @@ end_element_handler (GMarkupParseContext *context,
       case IN_TEST_OPTION:
         end_test_option(parser, priv, context, element_name, error);
         break;
+      case IN_RESULT_BACKTRACE:
+        end_result_backtrace(parser, priv, context, element_name, error);
+        break;
+      case IN_RESULT_BACKTRACE_ENTRY:
+        end_result_backtrace_entry(parser, priv, context, element_name, error);
+        break;
       case IN_READY_TEST_SUITE:
         end_ready_test_suite(parser, priv, context, element_name, error);
         break;
@@ -2315,7 +2368,7 @@ text_result_backtrace_entry_file (CutStreamParserPrivate *priv,
                                   const gchar *text, gsize text_len,
                                   GError **error)
 {
-    cut_test_result_set_filename(priv->result, text);
+    cut_backtrace_entry_set_file(priv->backtrace_entry, text);
 }
 
 static void
@@ -2325,7 +2378,7 @@ text_result_backtrace_entry_line (CutStreamParserPrivate *priv,
                                   GError **error)
 {
     if (is_integer(text)) {
-        cut_test_result_set_line(priv->result, atoi(text));
+        cut_backtrace_entry_set_line(priv->backtrace_entry, atoi(text));
     } else {
         set_parse_error(context, error, "invalid line number: %s", text);
     }
@@ -2338,13 +2391,28 @@ text_result_backtrace_entry_info (CutStreamParserPrivate *priv,
                                   GError **error)
 {
     if (g_str_has_suffix(text, "()")) {
-        gchar *function_name;
+        gchar *function;
 
-        function_name = g_strndup(text, strlen(text) - 2);
-        cut_test_result_set_function_name(priv->result, function_name);
-        g_free(function_name);
+        function = g_strndup(text, strlen(text) - 2);
+        cut_backtrace_entry_set_function(priv->backtrace_entry, function);
+        g_free(function);
     } else {
-        set_parse_error(context, error, "invalid function name: %s", text);
+        const gchar *info_start;
+
+        info_start = strstr(text, "():");
+        if (info_start) {
+            gchar *function;
+
+            function = g_strndup(text, info_start - text);
+            info_start += strlen("():");
+            while (info_start[0] && info_start[0] == ' ')
+                info_start++;
+            cut_backtrace_entry_set_function(priv->backtrace_entry, function);
+            cut_backtrace_entry_set_info(priv->backtrace_entry, info_start);
+            g_free(function);
+        } else {
+            cut_backtrace_entry_set_info(priv->backtrace_entry, text);
+        }
     }
 }
 

@@ -131,7 +131,7 @@ test_g_static_rec_mutex (void)
   test_g_static_rec_mutex_int = 0;  
   g_static_rec_mutex_unlock (&test_g_static_rec_mutex_mutex);
 
-  cut_assert (43, GPOINTER_TO_INT (g_thread_join (thread)));
+  cut_assert_equal_int (43, GPOINTER_TO_INT (g_thread_join (thread)));
 }
 
 /* GStaticPrivate */
@@ -368,7 +368,7 @@ test_g_once_thread (gpointer user_data)
       guint pos = g_random_int_range (0, G_ONCE_SIZE);
       gpointer ret = g_once (test_g_once_array + pos, test_g_once_init_func, 
 			     test_g_once_guint_array + pos);
-      cut_assert_equal_int (ret, test_g_once_guint_array + pos);
+      cut_assert_equal_pointer (ret, test_g_once_guint_array + pos);
     }
   
   /* Make sure, that all counters are touched at least once */
@@ -376,7 +376,7 @@ test_g_once_thread (gpointer user_data)
     {
       gpointer ret = g_once (test_g_once_array + i, test_g_once_init_func, 
 			     test_g_once_guint_array + i);
-      cut_assert_equal_int (ret, test_g_once_guint_array + i);
+      cut_assert_equal_pointer (ret, test_g_once_guint_array + i);
     }
 
   return NULL;

@@ -38,4 +38,5 @@ libgcutter_la_SOURCES =			\
 	gcut-list.c			\
 	gcut-hash-table.c		\
 	gcut-error.c			\
-	gcut-enum.c
+	gcut-enum.c			\
+	gcut-assertions-helper.c

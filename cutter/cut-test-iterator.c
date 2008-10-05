@@ -484,8 +484,7 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
     test_case = cut_test_context_get_test_case(test_context);
     result = cut_test_result_new(status,
                                  NULL, test_iterator, test_case, NULL, NULL,
-                                 NULL, NULL,
-                                 NULL, 0, NULL);
+                                 NULL, NULL, NULL);
     cut_test_emit_result_signal(CUT_TEST(test_iterator), test_context, result);
     g_object_unref(result);
     g_signal_emit_by_name(test, "complete", NULL, all_success);

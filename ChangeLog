@@ -1,5 +1,9 @@
 2008-10-05  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/, gcutter/, test/, module/, sample/: implement cut_trace().
+	* TODO: remove a entry: cut_trace() that stacks backtrace.
+	e.g. cut_trace(my_assert_xxx(ZZZ));
+
 	* cutter/cut-test-context.c: take_XXX() doesn't dup target object.
 
 	* cutter/, test/:

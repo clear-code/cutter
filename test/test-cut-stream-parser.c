@@ -1,5 +1,6 @@
 #include <gcutter.h>
 #include <cutter/cut-stream-parser.h>
+#include <cutter/cut-backtrace-entry.h>
 #include "lib/cuttest-event-receiver.h"
 
 void test_start_run (void);
@@ -104,7 +105,7 @@ test_ready_test_suite (void)
     cut_assert_parse("    <n-test-cases>3</n-test-cases>\n");
     cut_assert_parse("    <n-tests>7</n-tests>\n");
 
-    cut_assert_null(0, receiver->ready_test_suites);
+    cut_assert_null(receiver->ready_test_suites);
     cut_assert_parse("  </ready-test-suite>");
     cut_assert_equal_int(1, g_list_length(receiver->ready_test_suites));
 
@@ -141,7 +142,7 @@ test_start_test_suite (void)
         "  </start-test-suite>\n";
 
     cut_assert_parse(header);
-    cut_assert_null(0, receiver->start_test_suites);
+    cut_assert_null(receiver->start_test_suites);
 
     cut_assert_parse(start_test_suite);
     cut_assert_equal_int(1, g_list_length(receiver->start_test_suites));
@@ -176,7 +177,7 @@ test_ready_test_case (void)
         "  </ready-test-case>\n";
 
     cut_assert_parse(header);
-    cut_assert_null(0, receiver->ready_test_cases);
+    cut_assert_null(receiver->ready_test_cases);
 
     cut_assert_parse(ready_test_case);
     cut_assert_equal_int(1, g_list_length(receiver->ready_test_cases));
@@ -218,7 +219,7 @@ test_start_test_case (void)
         "  </start-test-case>\n";
 
     cut_assert_parse(header);
-    cut_assert_null(0, receiver->start_test_cases);
+    cut_assert_null(receiver->start_test_cases);
 
     cut_assert_parse(start_test_case);
     cut_assert_equal_int(1, g_list_length(receiver->start_test_cases));
@@ -265,7 +266,7 @@ test_ready_test_iterator (void)
         "  </ready-test-iterator>\n";
 
     cut_assert_parse(header);
-    cut_assert_null(0, receiver->ready_test_iterators);
+    cut_assert_null(receiver->ready_test_iterators);
 
     cut_assert_parse(ready_test_iterator);
     cut_assert_equal_int(1, g_list_length(receiver->ready_test_iterators));
@@ -318,7 +319,7 @@ test_start_test_iterator (void)
         "  </start-test-iterator>\n";
 
     cut_assert_parse(header);
-    cut_assert_null(0, receiver->start_test_iterators);
+    cut_assert_null(receiver->start_test_iterators);
 
     cut_assert_parse(start_test_iterator);
     cut_assert_equal_int(1, g_list_length(receiver->start_test_iterators));
@@ -460,7 +461,7 @@ test_start_test_with_multiple_option_names (void)
         "  </start-test>\n";
 
     cut_assert_parse(header);
-    cut_assert_null(0, receiver->start_tests);
+    cut_assert_null(receiver->start_tests);
 
     cut_assert_parse_error("Error on line 28 char 21: "
                            "/stream/start-test/test/option/name: "
@@ -585,6 +586,8 @@ test_result_error (void)
 {
     GTimeVal expected_start_time, actual_start_time;
     CutTest *test;
+    const GList *actual_backtrace;
+    CutBacktraceEntry *entry;
     const gchar xml[] =
         "<stream>\n"
         "  <test-result>\n"
@@ -659,11 +662,15 @@ test_result_error (void)
     gcut_assert_equal_time_val(&expected_start_time, &actual_start_time);
     cut_assert_equal_double(0.0001, 0.0, cut_test_result_get_elapsed(result));
 
-    cut_assert_equal_int(31, cut_test_result_get_line(result));
+    actual_backtrace = cut_test_result_get_backtrace(result);
+    cut_assert_not_null(actual_backtrace);
+    entry = actual_backtrace->data;
     cut_assert_equal_string("test-cut-report-xml.c",
-                            cut_test_result_get_filename(result));
+                            cut_backtrace_entry_get_file(entry));
+    cut_assert_equal_uint(31, cut_backtrace_entry_get_line(entry));
     cut_assert_equal_string("stub_error_test",
-                            cut_test_result_get_function_name(result));
+                            cut_backtrace_entry_get_function(entry));
+
     cut_assert_equal_string("This test should error",
                             cut_test_result_get_message(result));
 
@@ -1250,7 +1257,7 @@ test_complete_iterated_test (void)
         "  </complete-iterated-test>\n";
 
     cut_assert_parse(header);
-    cut_assert_null(0, receiver->complete_iterated_tests);
+    cut_assert_null(receiver->complete_iterated_tests);
 
     cut_assert_parse(complete_iterated_test);
     cut_assert_equal_uint(1, g_list_length(receiver->complete_iterated_tests));
@@ -1358,7 +1365,7 @@ test_complete_test (void)
         "  </complete-test>\n";
 
     cut_assert_parse(header);
-    cut_assert_null(0, receiver->complete_tests);
+    cut_assert_null(receiver->complete_tests);
 
     cut_assert_parse(complete_test);
     cut_assert_equal_int(1, g_list_length(receiver->complete_tests));
@@ -1477,7 +1484,7 @@ test_complete_test_iterator (void)
         "  </complete-test-iterator>\n";
 
     cut_assert_parse(header);
-    cut_assert_null(0, receiver->complete_test_iterators);
+    cut_assert_null(receiver->complete_test_iterators);
 
     cut_assert_parse(complete_test_iterator);
     cut_assert_equal_uint(1, g_list_length(receiver->complete_test_iterators));
@@ -1555,7 +1562,7 @@ test_complete_test_case (void)
         "  </complete-test-case>\n";
 
     cut_assert_parse(header);
-    cut_assert_null(0, receiver->complete_test_cases);
+    cut_assert_null(receiver->complete_test_cases);
 
     cut_assert_parse(complete_test_case);
     cut_assert_equal_int(1, g_list_length(receiver->complete_test_cases));
@@ -1637,7 +1644,7 @@ test_complete_test_suite (void)
         "  </complete-test-suite>\n";
 
     cut_assert_parse(header);
-    cut_assert_null(0, receiver->complete_test_suites);
+    cut_assert_null(receiver->complete_test_suites);
 
     cut_assert_parse(complete_test_suite);
     cut_assert_equal_int(1, g_list_length(receiver->complete_test_suites));
@@ -1653,7 +1660,7 @@ test_complete_run_without_success_tag (void)
     cut_assert_parse("<stream>\n");
     cut_assert_equal_int(1, receiver->n_start_runs);
 
-    cut_assert_null(0, receiver->complete_runs);
+    cut_assert_null(receiver->complete_runs);
     cut_assert_parse("</stream>\n");
     cut_assert_equal_int(1, g_list_length(receiver->complete_runs));
     cut_assert_true(GPOINTER_TO_INT(receiver->complete_runs->data));
@@ -1665,9 +1672,9 @@ test_complete_run_with_success_true (void)
     cut_assert_parse("<stream>\n");
     cut_assert_equal_int(1, receiver->n_start_runs);
 
-    cut_assert_null(0, receiver->complete_runs);
+    cut_assert_null(receiver->complete_runs);
     cut_assert_parse("  <success>TRUE</success>\n");
-    cut_assert_null(0, receiver->complete_runs);
+    cut_assert_null(receiver->complete_runs);
     cut_assert_parse("</stream>\n");
     cut_assert_equal_int(1, g_list_length(receiver->complete_runs));
     cut_assert_true(GPOINTER_TO_INT(receiver->complete_runs->data));
@@ -1679,9 +1686,9 @@ test_complete_run_with_success_false (void)
     cut_assert_parse("<stream>\n");
     cut_assert_equal_int(1, receiver->n_start_runs);
 
-    cut_assert_null(0, receiver->complete_runs);
+    cut_assert_null(receiver->complete_runs);
     cut_assert_parse("  <success>FALSE</success>\n");
-    cut_assert_null(0, receiver->complete_runs);
+    cut_assert_null(receiver->complete_runs);
     cut_assert_parse("</stream>");
     cut_assert_equal_int(1, g_list_length(receiver->complete_runs));
     cut_assert_false(GPOINTER_TO_INT(receiver->complete_runs->data));
@@ -1712,7 +1719,7 @@ test_crashed (void)
     cut_assert_parse("    <backtrace>");
     cut_assert_parse(crashed_backtrace);
     cut_assert_parse("</backtrace>\n");
-    cut_assert_null(0, receiver->crasheds);
+    cut_assert_null(receiver->crasheds);
     cut_assert_parse("  </crashed>\n");
     cut_assert_equal_int(1, g_list_length(receiver->crasheds));
 

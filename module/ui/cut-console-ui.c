@@ -35,6 +35,7 @@
 #include <cutter/cut-test.h>
 #include <cutter/cut-test-suite.h>
 #include <cutter/cut-test-context.h>
+#include <cutter/cut-backtrace-entry.h>
 #include <cutter/cut-verbose-level.h>
 #include <cutter/cut-enum-types.h>
 
@@ -686,6 +687,7 @@ print_results (CutConsoleUI *console, CutRunContext *run_context)
         CutTestResult *result = node->data;
         CutTestResultStatus status;
         CutTest *test;
+        const GList *node;
         const gchar *message;
         const gchar *name;
 
@@ -712,10 +714,22 @@ print_results (CutConsoleUI *console, CutRunContext *run_context)
             g_print("\n");
             print_for_status(console, status, "%s", message);
         }
-        g_print("\n%s:%d: %s()\n",
-                cut_test_result_get_filename(result),
-                cut_test_result_get_line(result),
-                cut_test_result_get_function_name(result));
+        g_print("\n");
+        for (node = cut_test_result_get_backtrace(result);
+             node;
+             node = g_list_next(node)) {
+            CutBacktraceEntry *entry = node->data;
+            const gchar *info;
+
+            g_print("%s:%d: %s()",
+                    cut_backtrace_entry_get_file(entry),
+                    cut_backtrace_entry_get_line(entry),
+                    cut_backtrace_entry_get_function(entry));
+            info = cut_backtrace_entry_get_info(entry);
+            if (info)
+                g_print(": %s", info);
+            g_print("\n");
+        }
         i++;
     }
 }

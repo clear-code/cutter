@@ -50,14 +50,13 @@
 #include "cut-test-result.h"
 #include "cut-test-data.h"
 #include "cut-process.h"
+#include "cut-backtrace-entry.h"
 #include "cut-utils.h"
 
 #define cut_omit(context, message, ...) do                      \
 {                                                               \
     cut_test_context_register_result(context,                   \
                                      CUT_TEST_RESULT_OMISSION,  \
-                                     __FILE__, __LINE__,        \
-                                     __PRETTY_FUNCTION__,       \
                                      message, ## __VA_ARGS__,   \
                                      NULL);                     \
     cut_test_context_long_jump(context);                        \
@@ -87,6 +86,7 @@ struct _CutTestContextPrivate
     GList *processes;
     gchar *fixture_data_dir;
     GHashTable *cached_fixture_data;
+    GList *backtrace;
 };
 
 enum
@@ -225,6 +225,8 @@ cut_test_context_init (CutTestContext *context)
     priv->fixture_data_dir = NULL;
     priv->cached_fixture_data = g_hash_table_new_full(g_str_hash, g_str_equal,
                                                       g_free, g_free);
+
+    priv->backtrace = NULL;
 }
 
 static void
@@ -320,6 +322,12 @@ dispose (GObject *object)
     if (priv->cached_fixture_data) {
         g_hash_table_unref(priv->cached_fixture_data);
         priv->cached_fixture_data = NULL;
+    }
+
+    if (priv->backtrace) {
+        g_list_foreach(priv->backtrace, (GFunc)g_object_unref, NULL);
+        g_list_free(priv->backtrace);
+        priv->backtrace = NULL;
     }
 
     G_OBJECT_CLASS(cut_test_context_parent_class)->dispose(object);
@@ -754,50 +762,35 @@ cut_test_context_emit_signal (CutTestContext *context,
 }
 
 void
-cut_test_context_register_result (CutTestContext *context,
-                                  CutTestResultStatus status,
-                                  const gchar *filename,
-                                  guint line,
-                                  const gchar *function_name,
-                                  const gchar *message,
-                                  ...)
+cut_test_context_register_resultv (CutTestContext *context,
+                                   CutTestResultStatus status,
+                                   const char *system_message,
+                                   const char *user_message_format,
+                                   va_list args)
 {
     CutTestContextPrivate *priv;
     CutTestResult *result;
     CutTestData *test_data = NULL;
-    const gchar *system_message;
-    gchar *user_message = NULL, *user_message_format;
-    gchar *full_filename;
-    va_list args;
+    gchar *user_message = NULL;
 
     priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
     if (cut_test_result_status_is_critical(status))
         priv->failed = TRUE;
 
-    system_message = message;
-    va_start(args, message);
-    user_message_format = va_arg(args, gchar *);
     if (user_message_format) {
         user_message = g_strdup_vprintf(user_message_format, args);
     }
-    va_end(args);
 
     if (priv->current_data)
         test_data = priv->current_data->data;
-    if (priv->run_context)
-        full_filename = cut_run_context_build_source_filename(priv->run_context,
-                                                              filename);
-    else
-        full_filename = g_strdup(filename);
     result = cut_test_result_new(status,
                                  priv->test, priv->test_iterator,
                                  priv->test_case, priv->test_suite,
                                  test_data,
                                  user_message, system_message,
-                                 full_filename, line, function_name);
+                                 priv->backtrace);
     if (user_message)
         g_free(user_message);
-    g_free(full_filename);
 
     if (priv->test) {
         CutProcess *process;
@@ -840,6 +833,20 @@ cut_test_context_register_result (CutTestContext *context,
     }
 
     g_object_unref(result);
+}
+
+void
+cut_test_context_register_result (CutTestContext *context,
+                                  CutTestResultStatus status,
+                                  const gchar *message,
+                                  ...)
+{
+    va_list args;
+
+    va_start(args, message);
+    cut_test_context_register_resultv(context, status, message,
+                                      va_arg(args, gchar *), args);
+    va_end(args);
 }
 
 void
@@ -951,10 +958,7 @@ cut_test_context_take_g_hash_table (CutTestContext *context,
 }
 
 int
-cut_test_context_trap_fork (CutTestContext *context,
-                            const gchar *filename,
-                            guint line,
-                            const gchar *function_name)
+cut_test_context_trap_fork (CutTestContext *context)
 {
 #ifdef G_OS_WIN32
     cut_omit(context,
@@ -968,7 +972,6 @@ cut_test_context_trap_fork (CutTestContext *context,
     if (cut_test_context_is_multi_thread(context)) {
         cut_test_context_register_result(context,
                                          CUT_TEST_RESULT_OMISSION,
-                                         filename, line, function_name,
                                          "can't use cut_fork() "
                                          "in multi thread mode",
                                          NULL);
@@ -1217,6 +1220,42 @@ cut_test_context_get_fixture_data_string (CutTestContext *context,
     va_end(args);
 
     return value;
+}
+
+void
+cut_test_context_push_backtrace (CutTestContext *context,
+                                 const char     *file_name,
+                                 unsigned int    line,
+                                 const char     *function_name,
+                                 const char     *info)
+{
+    CutTestContextPrivate *priv;
+    CutBacktraceEntry *entry;
+    gchar *full_file_name = NULL;
+
+    priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+    if (priv->run_context)
+        full_file_name = cut_run_context_build_source_filename(priv->run_context,
+                                                               file_name);
+    entry = cut_backtrace_entry_new(full_file_name ? full_file_name : file_name,
+                                    line, function_name, info);
+    if (full_file_name)
+        g_free(full_file_name);
+    priv->backtrace = g_list_prepend(priv->backtrace, entry);
+}
+
+void
+cut_test_context_pop_backtrace (CutTestContext *context)
+{
+    CutTestContextPrivate *priv;
+    CutBacktraceEntry *entry;
+
+    priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+    g_return_if_fail(priv->backtrace != NULL);
+
+    entry = priv->backtrace->data;
+    g_object_unref(entry);
+    priv->backtrace = g_list_delete_link(priv->backtrace, priv->backtrace);
 }
 
 /*

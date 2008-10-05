@@ -32,6 +32,7 @@
 #include "cut-test-case.h"
 #include "cut-test-suite.h"
 #include "cut-stream-parser.h"
+#include "cut-backtrace-entry.h"
 #include "cut-utils.h"
 
 #define CUT_TEST_RESULT_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_RESULT, CutTestResultPrivate))
@@ -48,9 +49,7 @@ struct _CutTestResultPrivate
     gchar *message;
     gchar *user_message;
     gchar *system_message;
-    gchar *function_name;
-    gchar *filename;
-    guint line;
+    GList *backtrace;
     GTimeVal start_time;
     gdouble elapsed;
 };
@@ -66,9 +65,7 @@ enum
     PROP_TEST_DATA,
     PROP_USER_MESSAGE,
     PROP_SYSTEM_MESSAGE,
-    PROP_FUNCTION_NAME,
-    PROP_FILENAME,
-    PROP_LINE,
+    PROP_BACKTRACE,
     PROP_ELAPSED,
 };
 
@@ -154,26 +151,11 @@ cut_test_result_class_init (CutTestResultClass *klass)
                                G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_SYSTEM_MESSAGE, spec);
 
-    spec = g_param_spec_string("function-name",
-                               "Function name",
-                               "The function name of the result",
-                               NULL,
-                               G_PARAM_READWRITE);
-    g_object_class_install_property(gobject_class, PROP_FUNCTION_NAME, spec);
-
-    spec = g_param_spec_string("filename",
-                               "Filename",
-                               "The filename of the result",
-                               NULL,
-                               G_PARAM_READWRITE);
-    g_object_class_install_property(gobject_class, PROP_FILENAME, spec);
-
-    spec = g_param_spec_uint("line",
-                             "Line number",
-                             "The line number of the result",
-                             0, G_MAXUINT32, 0,
-                             G_PARAM_READWRITE);
-    g_object_class_install_property(gobject_class, PROP_LINE, spec);
+    spec = g_param_spec_pointer("backtrace",
+                                "backtrace",
+                                "The backtrace of the result",
+                                G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_BACKTRACE, spec);
 
     spec = g_param_spec_double("elapsed",
                                "Elapsed time",
@@ -199,9 +181,7 @@ cut_test_result_init (CutTestResult *result)
     priv->message = NULL;
     priv->user_message = NULL;
     priv->system_message = NULL;
-    priv->function_name = NULL;
-    priv->filename = NULL;
-    priv->line = 0;
+    priv->backtrace = NULL;
     priv->start_time.tv_sec = 0;
     priv->start_time.tv_usec = 0;
     priv->elapsed = 0.0;
@@ -252,14 +232,10 @@ dispose (GObject *object)
         priv->system_message = NULL;
     }
 
-    if (priv->function_name) {
-        g_free(priv->function_name);
-        priv->function_name = NULL;
-    }
-
-    if (priv->filename) {
-        g_free(priv->filename);
-        priv->filename = NULL;
+    if (priv->backtrace) {
+        g_list_foreach(priv->backtrace, (GFunc)g_object_unref, NULL);
+        g_list_free(priv->backtrace);
+        priv->backtrace = NULL;
     }
 
     G_OBJECT_CLASS(cut_test_result_parent_class)->dispose(object);
@@ -303,21 +279,17 @@ set_property (GObject      *object,
         if (priv->message)
             g_free(priv->message);
         priv->message = NULL;
+        break;
       case PROP_SYSTEM_MESSAGE:
         cut_test_result_set_system_message(CUT_TEST_RESULT(object),
                                            g_value_get_string(value));
         if (priv->message)
             g_free(priv->message);
         priv->message = NULL;
-      case PROP_FUNCTION_NAME:
-        cut_test_result_set_function_name(CUT_TEST_RESULT(object),
-                                          g_value_get_string(value));
-      case PROP_FILENAME:
-        cut_test_result_set_filename(CUT_TEST_RESULT(object),
-                                     g_value_get_string(value));
         break;
-      case PROP_LINE:
-        priv->line = g_value_get_uint(value);
+      case PROP_BACKTRACE:
+        cut_test_result_set_backtrace(CUT_TEST_RESULT(object),
+                                      g_value_get_pointer(value));
         break;
       case PROP_ELAPSED:
         priv->elapsed = g_value_get_double(value);
@@ -361,14 +333,8 @@ get_property (GObject    *object,
       case PROP_SYSTEM_MESSAGE:
         g_value_set_string(value, priv->system_message);
         break;
-      case PROP_FUNCTION_NAME:
-        g_value_set_string(value, priv->function_name);
-        break;
-      case PROP_FILENAME:
-        g_value_set_string(value, priv->filename);
-        break;
-      case PROP_LINE:
-        g_value_set_uint(value, priv->line);
+      case PROP_BACKTRACE:
+        g_value_set_pointer(value, priv->backtrace);
         break;
       case PROP_ELAPSED:
         g_value_set_double(value, priv->elapsed);
@@ -380,17 +346,15 @@ get_property (GObject    *object,
 }
 
 CutTestResult *
-cut_test_result_new (CutTestResultStatus status,
-                     CutTest *test,
-                     CutTestIterator *test_iterator,
-                     CutTestCase *test_case,
-                     CutTestSuite *test_suite,
-                     CutTestData *test_data,
-                     const gchar *user_message,
-                     const gchar *system_message,
-                     const gchar *filename,
-                     guint line,
-                     const gchar *function_name)
+cut_test_result_new (CutTestResultStatus  status,
+                     CutTest             *test,
+                     CutTestIterator     *test_iterator,
+                     CutTestCase         *test_case,
+                     CutTestSuite        *test_suite,
+                     CutTestData         *test_data,
+                     const gchar         *user_message,
+                     const gchar         *system_message,
+                     const GList         *backtrace)
 {
     return g_object_new(CUT_TYPE_TEST_RESULT,
                         "status", status,
@@ -401,9 +365,7 @@ cut_test_result_new (CutTestResultStatus status,
                         "test-data", test_data,
                         "user-message", user_message,
                         "system-message", system_message,
-                        "function-name", function_name,
-                        "filename", filename,
-                        "line", line,
+                        "backtrace", backtrace,
                         NULL);
 }
 
@@ -412,8 +374,7 @@ cut_test_result_new_empty (void)
 {
     return cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
                                NULL, NULL, NULL, NULL, NULL,
-                               NULL, NULL,
-                               NULL, 0, NULL);
+                               NULL, NULL, NULL);
 }
 
 static void
@@ -560,22 +521,10 @@ cut_test_result_get_system_message (CutTestResult *result)
     return CUT_TEST_RESULT_GET_PRIVATE(result)->system_message;
 }
 
-const gchar *
-cut_test_result_get_function_name (CutTestResult *result)
+const GList *
+cut_test_result_get_backtrace (CutTestResult *result)
 {
-    return CUT_TEST_RESULT_GET_PRIVATE(result)->function_name;
-}
-
-const gchar *
-cut_test_result_get_filename (CutTestResult *result)
-{
-    return CUT_TEST_RESULT_GET_PRIVATE(result)->filename;
-}
-
-guint
-cut_test_result_get_line (CutTestResult *result)
-{
-    return CUT_TEST_RESULT_GET_PRIVATE(result)->line;
+    return CUT_TEST_RESULT_GET_PRIVATE(result)->backtrace;
 }
 
 void
@@ -630,72 +579,24 @@ result_status_to_name (CutTestResultStatus status)
 }
 
 static void
-append_element_valist (GString *string, guint indent,
-                       const gchar *element_name, va_list var_args)
-{
-    const gchar *name;
-
-    name = element_name;
-
-    while (name) {
-        const gchar *value = va_arg(var_args, gchar *);
-        if (value)
-            cut_utils_append_xml_element_with_value(string, indent, name, value);
-        name = va_arg(var_args, gchar *);
-    }
-}
-
-static void
-append_element_with_children (GString *string, guint indent,
-                              const gchar *element_name,
-                              const gchar *first_child_element, ...)
-{
-    gchar *escaped;
-    va_list var_args;
-
-    escaped = g_markup_escape_text(element_name, -1);
-    cut_utils_append_indent(string, indent);
-    g_string_append_printf(string, "<%s>\n", escaped);
-
-    va_start(var_args, first_child_element);
-    append_element_valist(string, indent + 2, first_child_element, var_args);
-    va_end(var_args);
-
-    cut_utils_append_indent(string, indent);
-    g_string_append_printf(string, "</%s>\n", escaped);
-    g_free(escaped);
-}
-
-static void
 append_backtrace_to_string (GString *string, CutTestResult *result, guint indent)
 {
     CutTestResultPrivate *priv;
-    gchar *line_string = NULL;
-    gchar *info_string = NULL;
+    GList *node;
 
     priv = CUT_TEST_RESULT_GET_PRIVATE(result);
-    if (priv->filename == NULL && priv->function_name == NULL)
+    if (priv->backtrace == NULL)
         return;
-
-    if (priv->line > 0)
-        line_string = g_strdup_printf("%d", priv->line);
-    if (priv->function_name)
-        info_string = g_strdup_printf("%s()", priv->function_name);
 
     cut_utils_append_indent(string, indent);
     g_string_append(string, "<backtrace>\n");
-    append_element_with_children(string, indent + 2, "entry",
-                                 "file", priv->filename,
-                                 "line", line_string,
-                                 "info", info_string,
-                                 NULL);
+    for (node = priv->backtrace; node; node = g_list_next(node)) {
+        CutBacktraceEntry *entry = node->data;
+
+        cut_backtrace_entry_to_xml_string(entry, string, indent + 2);
+    }
     cut_utils_append_indent(string, indent);
     g_string_append(string, "</backtrace>\n");
-
-    if (line_string)
-        g_free(line_string);
-    if (info_string)
-        g_free(info_string);
 }
 
 static void
@@ -913,38 +814,17 @@ cut_test_result_set_system_message (CutTestResult *result,
 }
 
 void
-cut_test_result_set_function_name (CutTestResult *result,
-                                   const gchar *function_name)
+cut_test_result_set_backtrace (CutTestResult *result, const GList *backtrace)
 {
     CutTestResultPrivate *priv = CUT_TEST_RESULT_GET_PRIVATE(result);
 
-    if (priv->function_name) {
-        g_free(priv->function_name);
-        priv->function_name = NULL;
+    if (priv->backtrace) {
+        g_list_foreach(priv->backtrace, (GFunc)g_object_unref, NULL);
+        g_list_free(priv->backtrace);
+        priv->backtrace = NULL;
     }
-    if (function_name)
-        priv->function_name = g_strdup(function_name);
-}
-
-void
-cut_test_result_set_filename (CutTestResult *result,
-                              const gchar *filename)
-{
-    CutTestResultPrivate *priv = CUT_TEST_RESULT_GET_PRIVATE(result);
-
-    if (priv->filename) {
-        g_free(priv->filename);
-        priv->filename = NULL;
-    }
-    if (filename)
-        priv->filename = g_strdup(filename);
-}
-
-void
-cut_test_result_set_line (CutTestResult *result,
-                          guint line)
-{
-    CUT_TEST_RESULT_GET_PRIVATE(result)->line = line;
+    priv->backtrace = g_list_copy((GList *)backtrace);
+    g_list_foreach(priv->backtrace, (GFunc)g_object_ref, NULL);
 }
 
 void
