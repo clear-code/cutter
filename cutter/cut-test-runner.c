@@ -382,15 +382,15 @@ cb_complete_iterated_test (CutIteratedTest *iterated_test,
 }
 
 static void
-cb_start_test_test_iterator (CutTestIterator *test_iterator,
-                             CutTest *test,
-                             CutTestContext *test_context,
-                             gpointer data)
+cb_start_iterated_test_test_iterator (CutTestIterator *test_iterator,
+                                      CutIteratedTest *iterated_test,
+                                      CutTestContext *test_context,
+                                      gpointer data)
 {
     CutRunContext *context = data;
 
 #define CONNECT(name)                                                   \
-    g_signal_connect(test, #name,                                       \
+    g_signal_connect(iterated_test, #name,                              \
                      G_CALLBACK(cb_ ## name ## _iterated_test),         \
                      context)
 
@@ -408,13 +408,13 @@ cb_start_test_test_iterator (CutTestIterator *test_iterator,
 }
 
 static void
-cb_complete_test_test_iterator (CutTestIterator *test_iterator,
-                                CutTest *test,
-                                CutTestContext *test_context,
-                                gpointer data)
+cb_complete_iterated_test_test_iterator (CutTestIterator *test_iterator,
+                                         CutIteratedTest *iterated_test,
+                                         CutTestContext *test_context,
+                                         gpointer data)
 {
 #define DISCONNECT(name)                                                \
-    g_signal_handlers_disconnect_by_func(test_iterator,                 \
+    g_signal_handlers_disconnect_by_func(iterated_test,                 \
                                          G_CALLBACK(cb_ ##              \
                                                     name ##             \
                                                     _iterated_test),    \
@@ -536,8 +536,8 @@ connect_to_test_iterator (CutRunContext *context, CutTestIterator *test_iterator
     g_signal_connect(test_iterator, #name,                              \
                      G_CALLBACK(cb_ ## name ## _test_iterator), context)
 
-    CONNECT(start_test);
-    CONNECT(complete_test);
+    CONNECT(start_iterated_test);
+    CONNECT(complete_iterated_test);
 
     CONNECT(success);
     CONNECT(failure);
@@ -578,8 +578,8 @@ cb_complete_test_iterator_test_case (CutTestCase *test_case,
                                                     _test_iterator),    \
                                          context)
 
-    DISCONNECT(start_test);
-    DISCONNECT(complete_test);
+    DISCONNECT(start_iterated_test);
+    DISCONNECT(complete_iterated_test);
 
     DISCONNECT(success);
     DISCONNECT(failure);

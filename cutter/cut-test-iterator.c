@@ -53,9 +53,9 @@ enum
 
 enum
 {
-    READY_SIGNAL,
-    START_TEST_SIGNAL,
-    COMPLETE_TEST_SIGNAL,
+    READY,
+    START_TEST,
+    COMPLETE_TEST,
     LAST_SIGNAL
 };
 
@@ -107,7 +107,7 @@ cut_test_iterator_class_init (CutTestIteratorClass *klass)
     g_object_class_install_property(gobject_class, PROP_DATA_SETUP_FUNCTION,
                                     spec);
 
-    signals[READY_SIGNAL]
+    signals[READY]
         = g_signal_new("ready",
                        G_TYPE_FROM_CLASS(klass),
                        G_SIGNAL_RUN_LAST,
@@ -116,20 +116,20 @@ cut_test_iterator_class_init (CutTestIteratorClass *klass)
                        g_cclosure_marshal_VOID__UINT,
                        G_TYPE_NONE, 1, G_TYPE_UINT);
 
-    signals[START_TEST_SIGNAL]
-        = g_signal_new("start-test",
+    signals[START_TEST]
+        = g_signal_new("start-iterated-test",
                 G_TYPE_FROM_CLASS(klass),
                 G_SIGNAL_RUN_LAST,
-                G_STRUCT_OFFSET(CutTestIteratorClass, start_test),
+                G_STRUCT_OFFSET(CutTestIteratorClass, start_iterated_test),
                 NULL, NULL,
                 _cut_marshal_VOID__OBJECT_OBJECT,
                 G_TYPE_NONE, 2, CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT);
 
-    signals[COMPLETE_TEST_SIGNAL]
-        = g_signal_new("complete-test",
+    signals[COMPLETE_TEST]
+        = g_signal_new("complete-iterated-test",
                 G_TYPE_FROM_CLASS(klass),
                 G_SIGNAL_RUN_LAST,
-                G_STRUCT_OFFSET(CutTestIteratorClass, complete_test),
+                G_STRUCT_OFFSET(CutTestIteratorClass, complete_iterated_test),
                 NULL, NULL,
                 _cut_marshal_VOID__OBJECT_OBJECT,
                 G_TYPE_NONE, 2, CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT);
@@ -256,7 +256,7 @@ run_test_without_thread (gpointer data, gpointer user_data)
 
     cut_test_case_set_current_test_context(test_case, test_context);
 
-    g_signal_emit_by_name(test_iterator, "start-test",
+    g_signal_emit_by_name(test_iterator, "start-iterated-test",
                           iterated_test, test_context);
 
     cut_test_case_run_setup(test_case, test_context);
@@ -271,7 +271,7 @@ run_test_without_thread (gpointer data, gpointer user_data)
     cut_test_context_set_failed(parent_test_context,
                                 cut_test_context_is_failed(test_context));
 
-    g_signal_emit_by_name(test_iterator, "complete-test",
+    g_signal_emit_by_name(test_iterator, "complete-iterated-test",
                           iterated_test, test_context);
 
     cut_test_context_set_test(test_context, NULL);

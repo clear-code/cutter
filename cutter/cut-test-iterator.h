@@ -49,11 +49,13 @@ struct _CutTestIteratorClass
 
     void (*ready)         (CutTestIterator *test_iterator,
                            guint            n_tests);
-    void (*start_test)    (CutTestIterator *test_iterator,
-                           CutTest         *test,
+    void (*start_iterated_test)
+                          (CutTestIterator *test_iterator,
+                           CutIteratedTest *iterated_test,
                            CutTestContext  *test_context);
-    void (*complete_test) (CutTestIterator *test_iterator,
-                           CutTest         *test,
+    void (*complete_iterated_test)
+                          (CutTestIterator *test_iterator,
+                           CutIteratedTest *iterated_test,
                            CutTestContext  *test_context);
 };
 
