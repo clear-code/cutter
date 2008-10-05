@@ -1,3 +1,7 @@
+2008-10-06  Kouhei Sutou  <kou@cozmixng.org>
+
+	* test/test-cut-test-suite.c: keep the current test context.
+
 2008-10-05  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/, gcutter/, test/, module/, sample/: implement cut_trace().

@@ -156,37 +156,75 @@ teardown (void)
     g_object_unref(run_context);
 }
 
+#define KEEP_TEST_CONTEXT_BEGIN do                      \
+{                                                       \
+    CutTestContext *current_test_context;               \
+                                                        \
+    current_test_context = get_current_test_context();  \
+    g_object_ref(current_test_context);                 \
+    do
+
+#define KEEP_TEST_CONTEXT_END                           \
+     while (0);                                         \
+    set_current_test_context(current_test_context);     \
+    g_object_unref(current_test_context);               \
+} while (0);
+
 static gboolean
 run_test_case (gchar *test_case_name)
 {
-    return cut_test_suite_run_test_in_test_case(test_object,
-                                                run_context,
-                                                "/.*/",
-                                                test_case_name);
+    gboolean success;
+
+    KEEP_TEST_CONTEXT_BEGIN {
+        success = cut_test_suite_run_test_in_test_case(test_object,
+                                                       run_context,
+                                                       "/.*/",
+                                                       test_case_name);
+    } KEEP_TEST_CONTEXT_END;
+
+    return success;
 }
 
 static gboolean
 run_test (gchar *test_name)
 {
-    return cut_test_suite_run_test(test_object, run_context, test_name);
+    gboolean success;
+
+    KEEP_TEST_CONTEXT_BEGIN {
+        success = cut_test_suite_run_test(test_object, run_context, test_name);
+    } KEEP_TEST_CONTEXT_END;
+
+    return success;
 }
 
 static gboolean
 run_test_in_test_case (gchar *test_name, gchar *test_case_name)
 {
-    return cut_test_suite_run_test_in_test_case(test_object,
-                                                run_context,
-                                                test_name,
-                                                test_case_name);
+    gboolean success;
+
+    KEEP_TEST_CONTEXT_BEGIN {
+        success = cut_test_suite_run_test_in_test_case(test_object,
+                                                       run_context,
+                                                       test_name,
+                                                       test_case_name);
+    } KEEP_TEST_CONTEXT_END;
+
+    return success;
 }
 
 static gboolean
 run_test_with_filter (const gchar **test_case_names, const gchar **test_names)
 {
-    return cut_test_suite_run_with_filter(test_object,
-                                          run_context,
-                                          test_case_names,
-                                          test_names);
+    gboolean success;
+
+    KEEP_TEST_CONTEXT_BEGIN {
+        success = cut_test_suite_run_with_filter(test_object,
+                                                 run_context,
+                                                 test_case_names,
+                                                 test_names);
+    } KEEP_TEST_CONTEXT_END;
+
+    return success;
 }
 
 void
