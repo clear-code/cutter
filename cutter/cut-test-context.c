@@ -114,7 +114,7 @@ taken_list_new (GList *list, CutDestroyFunction destroy_function)
     TakenList *taken_list;
 
     taken_list = g_slice_new(TakenList);
-    taken_list->list = g_list_copy(list);
+    taken_list->list = list;
     taken_list->destroy_function = destroy_function;
     return taken_list;
 }
@@ -859,13 +859,10 @@ cut_test_context_take_string (CutTestContext *context,
                               char           *string)
 {
     CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
-    char *taken_string;
 
-    taken_string = g_strdup(string);
-    priv->taken_strings = g_list_prepend(priv->taken_strings, taken_string);
-    g_free(string);
+    priv->taken_strings = g_list_prepend(priv->taken_strings, string);
 
-    return taken_string;
+    return string;
 }
 
 const char *
@@ -897,13 +894,11 @@ cut_test_context_take_string_array (CutTestContext *context,
                                     char          **strings)
 {
     CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
-    char **taken_strings;
 
-    taken_strings = g_strdupv(strings);
-    priv->taken_string_arrays = g_list_prepend(priv->taken_string_arrays, taken_strings);
-    g_strfreev(strings);
+    priv->taken_string_arrays =
+        g_list_prepend(priv->taken_string_arrays, strings);
 
-    return (const char **)taken_strings;
+    return (const char **)strings;
 }
 
 GObject *
@@ -921,14 +916,11 @@ const GError *
 cut_test_context_take_g_error (CutTestContext *context, GError *error)
 {
     CutTestContextPrivate *priv;
-    GError *taken_error;
 
     priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
-    taken_error = g_error_copy(error);
-    g_error_free(error);
-    priv->taken_errors = g_list_prepend(priv->taken_errors, taken_error);
+    priv->taken_errors = g_list_prepend(priv->taken_errors, error);
 
-    return taken_error;
+    return error;
 }
 
 const GList *
@@ -941,9 +933,8 @@ cut_test_context_take_g_list (CutTestContext *context, GList *list,
     priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
     taken_list = taken_list_new(list, destroy_function);
     priv->taken_lists = g_list_prepend(priv->taken_lists, taken_list);
-    g_list_free(list);
 
-    return taken_list->list;
+    return list;
 }
 
 GHashTable *

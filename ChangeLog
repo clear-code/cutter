@@ -1,5 +1,7 @@
 2008-10-05  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-context.c: take_XXX() doesn't dup target object.
+
 	* cutter/, test/:
 	function name, file name, line -> file name, line, function name.
 
