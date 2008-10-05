@@ -1186,9 +1186,8 @@ idle_cb_pop_running_test_message (gpointer data)
 
 static void
 cb_complete_test (CutRunContext *run_context,
-                  CutTest *test,
-                  CutTestContext *test_context,
-                  gpointer data)
+                  CutTest *test, CutTestContext *test_context,
+                  gboolean success, gpointer data)
 {
     TestRowInfo *info = data;
     TestCaseRowInfo *test_case_row_info;
@@ -1275,7 +1274,7 @@ idle_cb_collapse_test_case_row (gpointer data)
 
 static void
 cb_complete_test_case (CutRunContext *run_context,
-                       CutTestCase *test_case,
+                       CutTestCase *test_case, gboolean success,
                        gpointer data)
 {
     TestCaseRowInfo *info = data;
@@ -1340,6 +1339,7 @@ cb_complete_run (CutRunContext *run_context, gboolean success, CutGtkUI *ui)
 static void
 cb_complete_test_suite (CutRunContext *run_context,
                         CutTestSuite *test_suite,
+                        gboolean success,
                         CutGtkUI *ui)
 {
     push_complete_test_suite_message(ui);

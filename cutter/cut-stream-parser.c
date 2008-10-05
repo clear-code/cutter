@@ -104,6 +104,8 @@ typedef enum {
 
     IN_COMPLETE_TEST_SUITE,
 
+    IN_COMPLETE_SUCCESS,
+
     IN_CRASHED,
     IN_CRASHED_BACKTRACE
 } ParseState;
@@ -221,7 +223,8 @@ struct _CutStreamParserPrivate
     CutTestResult *result;
     gchar *option_name;
     gchar *option_value;
-    gboolean success;
+    gboolean complete_success;
+    gboolean stream_success;
     gchar *crashed_backtrace;
 };
 
@@ -410,7 +413,8 @@ cut_stream_parser_init (CutStreamParser *stream_parser)
     priv->result = NULL;
     priv->option_name = NULL;
     priv->option_value = NULL;
-    priv->success = TRUE;
+    priv->complete_success = TRUE;
+    priv->stream_success = TRUE;
 }
 
 static ReadyTestSuite *
@@ -1184,6 +1188,8 @@ start_complete_iterated_test (CutStreamParserPrivate *priv,
         priv->complete_iterated_test->test_context =
             cut_test_context_new_empty();
         PUSH_TEST_CONTEXT(priv, priv->complete_iterated_test->test_context);
+    } else if (g_str_equal("success", element_name)) {
+        PUSH_STATE(priv, IN_COMPLETE_SUCCESS);
     } else {
         invalid_element(context, error);
     }
@@ -1201,6 +1207,8 @@ start_complete_test (CutStreamParserPrivate *priv, GMarkupParseContext *context,
         PUSH_STATE(priv, IN_TEST_CONTEXT);
         priv->complete_test->test_context = cut_test_context_new_empty();
         PUSH_TEST_CONTEXT(priv, priv->complete_test->test_context);
+    } else if (g_str_equal("success", element_name)) {
+        PUSH_STATE(priv, IN_COMPLETE_SUCCESS);
     } else {
         invalid_element(context, error);
     }
@@ -1233,6 +1241,8 @@ start_complete_test_iterator (CutStreamParserPrivate *priv,
     if (g_str_equal("test-iterator", element_name)) {
         PUSH_STATE(priv, IN_TEST_ITERATOR);
         PUSH_TEST_ITERATOR(priv, cut_test_iterator_new_empty());
+    } else if (g_str_equal("success", element_name)) {
+        PUSH_STATE(priv, IN_COMPLETE_SUCCESS);
     } else {
         invalid_element(context, error);
     }
@@ -1264,6 +1274,8 @@ start_complete_test_case (CutStreamParserPrivate *priv,
     if (g_str_equal("test-case", element_name)) {
         PUSH_STATE(priv, IN_TEST_CASE);
         PUSH_TEST_CASE(priv, cut_test_case_new_empty());
+    } else if (g_str_equal("success", element_name)) {
+        PUSH_STATE(priv, IN_COMPLETE_SUCCESS);
     } else {
         invalid_element(context, error);
     }
@@ -1277,6 +1289,8 @@ start_complete_test_suite (CutStreamParserPrivate *priv,
     if (g_str_equal("test-suite", element_name)) {
         PUSH_STATE(priv, IN_TEST_SUITE);
         PUSH_TEST_SUITE(priv, cut_test_suite_new_empty());
+    } else if (g_str_equal("success", element_name)) {
+        PUSH_STATE(priv, IN_COMPLETE_SUCCESS);
     } else {
         invalid_element(context, error);
     }
@@ -1552,7 +1566,8 @@ end_stream (CutStreamParser *parser, CutStreamParserPrivate *priv,
             const gchar *element_name, GError **error)
 {
     if (priv->run_context)
-        cut_run_context_emit_complete_run(priv->run_context, priv->success);
+        cut_run_context_emit_complete_run(priv->run_context,
+                                          priv->stream_success);
 }
 
 static void
@@ -1835,7 +1850,8 @@ end_complete_iterated_test (CutStreamParser *parser,
     if (priv->run_context)
         g_signal_emit_by_name(priv->run_context, "complete-iterated-test",
                               priv->complete_iterated_test->iterated_test,
-                              priv->complete_iterated_test->test_context);
+                              priv->complete_iterated_test->test_context,
+                              priv->complete_success);
 
     if (priv->complete_iterated_test->iterated_test)
         DROP_TEST(priv);
@@ -1856,7 +1872,8 @@ end_complete_test (CutStreamParser *parser, CutStreamParserPrivate *priv,
     if (priv->run_context)
         g_signal_emit_by_name(priv->run_context, "complete-test",
                               priv->complete_test->test,
-                              priv->complete_test->test_context);
+                              priv->complete_test->test_context,
+                              priv->complete_success);
 
     if (priv->complete_test->test)
         DROP_TEST(priv);
@@ -1864,6 +1881,7 @@ end_complete_test (CutStreamParser *parser, CutStreamParserPrivate *priv,
         DROP_TEST_CONTEXT(priv);
     complete_test_free(priv->complete_test);
     priv->complete_test = NULL;
+    priv->complete_success = TRUE;
 }
 
 static void
@@ -1912,8 +1930,10 @@ end_complete_test_iterator (CutStreamParser *parser,
 
     if (priv->run_context)
         g_signal_emit_by_name(priv->run_context,
-                              "complete-test-iterator", test_iterator);
+                              "complete-test-iterator", test_iterator,
+                              priv->complete_success);
     g_object_unref(test_iterator);
+    priv->complete_success = TRUE;
 }
 
 static void
@@ -1961,8 +1981,10 @@ end_complete_test_case (CutStreamParser *parser, CutStreamParserPrivate *priv,
 
     if (priv->run_context)
         g_signal_emit_by_name(priv->run_context,
-                              "complete-test-case", test_case);
+                              "complete-test-case", test_case,
+                              priv->complete_success);
     g_object_unref(test_case);
+    priv->complete_success = TRUE;
 }
 
 static void
@@ -1978,8 +2000,10 @@ end_complete_test_suite (CutStreamParser *parser, CutStreamParserPrivate *priv,
 
     if (priv->run_context)
         g_signal_emit_by_name(priv->run_context,
-                              "complete-test-suite", test_suite);
+                              "complete-test-suite", test_suite,
+                              priv->complete_success);
     g_object_unref(test_suite);
+    priv->complete_success = TRUE;
 }
 
 static void
@@ -2432,11 +2456,23 @@ text_test_context_failed (CutStreamParserPrivate *priv,
 }
 
 static void
+text_complete_success (CutStreamParserPrivate *priv,
+                       GMarkupParseContext *context,
+                       const gchar *text, gsize text_len, GError **error)
+{
+    if (is_boolean(text)) {
+        priv->complete_success = string_to_boolean(text);
+    } else {
+        set_parse_error(context, error, "invalid boolean value: %s", text);
+    }
+}
+
+static void
 text_stream_success (CutStreamParserPrivate *priv, GMarkupParseContext *context,
                      const gchar *text, gsize text_len, GError **error)
 {
     if (is_boolean(text)) {
-        priv->success = string_to_boolean(text);
+        priv->stream_success = string_to_boolean(text);
     } else {
         set_parse_error(context, error, "invalid boolean value: %s", text);
     }
@@ -2524,6 +2560,8 @@ text_handler (GMarkupParseContext *context,
       case IN_TEST_CONTEXT_FAILED:
         text_test_context_failed(priv, context, text, text_len, error);
         break;
+      case IN_COMPLETE_SUCCESS:
+        text_complete_success(priv, context, text, text_len, error);
       case IN_STREAM_SUCCESS:
         text_stream_success(priv, context, text, text_len, error);
         break;

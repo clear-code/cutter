@@ -176,7 +176,8 @@ pass_assertion_info_free (CuttestPassAssertionInfo *info)
 
 static CuttestCompleteIteratedTestInfo *
 complete_iterated_test_info_new (CutIteratedTest *iterated_test,
-                                 CutTestContext *test_context)
+                                 CutTestContext *test_context,
+                                 gboolean success)
 {
     CuttestCompleteIteratedTestInfo *info;
 
@@ -187,6 +188,7 @@ complete_iterated_test_info_new (CutIteratedTest *iterated_test,
     info->test_context = test_context;
     if (info->test_context)
         g_object_ref(info->test_context);
+    info->success = success;
 
     return info;
 }
@@ -202,7 +204,8 @@ complete_iterated_test_info_free (CuttestCompleteIteratedTestInfo *info)
 }
 
 static CuttestCompleteTestInfo *
-complete_test_info_new (CutTest *test, CutTestContext *test_context)
+complete_test_info_new (CutTest *test, CutTestContext *test_context,
+                        gboolean success)
 {
     CuttestCompleteTestInfo *info;
 
@@ -213,6 +216,7 @@ complete_test_info_new (CutTest *test, CutTestContext *test_context)
     info->test_context = test_context;
     if (info->test_context)
         g_object_ref(info->test_context);
+    info->success = success;
 
     return info;
 }
@@ -459,58 +463,63 @@ pass_assertion (CutRunContext *context, CutTest *test,
 
 static void
 complete_iterated_test (CutRunContext *context, CutIteratedTest *iterated_test,
-                        CutTestContext *test_context)
+                        CutTestContext *test_context, gboolean success)
 {
     CuttestEventReceiver *receiver;
     CuttestCompleteIteratedTestInfo *info;
 
     receiver = CUTTEST_EVENT_RECEIVER(context);
-    info = complete_iterated_test_info_new(iterated_test, test_context);
+    info = complete_iterated_test_info_new(iterated_test, test_context, success);
     receiver->complete_iterated_tests =
         g_list_append(receiver->complete_iterated_tests, info);
 }
 
 static void
 complete_test (CutRunContext *context, CutTest *test,
-               CutTestContext *test_context)
+               CutTestContext *test_context, gboolean success)
 {
     CuttestEventReceiver *receiver;
     CuttestCompleteTestInfo *info;
 
     receiver = CUTTEST_EVENT_RECEIVER(context);
-    info = complete_test_info_new(test, test_context);
+    info = complete_test_info_new(test, test_context, success);
     receiver->complete_tests = g_list_append(receiver->complete_tests, info);
 }
 
 static void
-complete_test_iterator (CutRunContext *context, CutTestIterator *test_iterator)
+complete_test_iterator (CutRunContext *context, CutTestIterator *test_iterator,
+                        gboolean success)
 {
     CuttestEventReceiver *receiver;
 
     receiver = CUTTEST_EVENT_RECEIVER(context);
     receiver->complete_test_iterators =
         g_list_append(receiver->complete_test_iterators,
-                      g_object_ref(test_iterator));
+                      g_object_ref(test_iterator)); /* FIXME: use success */
 }
 
 static void
-complete_test_case (CutRunContext *context, CutTestCase *test_case)
+complete_test_case (CutRunContext *context, CutTestCase *test_case,
+                    gboolean success)
 {
     CuttestEventReceiver *receiver;
 
     receiver = CUTTEST_EVENT_RECEIVER(context);
     receiver->complete_test_cases =
         g_list_append(receiver->complete_test_cases, g_object_ref(test_case));
+    /* FIXME: use success */
 }
 
 static void
-complete_test_suite (CutRunContext *context, CutTestSuite *test_suite)
+complete_test_suite (CutRunContext *context, CutTestSuite *test_suite,
+                     gboolean success)
 {
     CuttestEventReceiver *receiver;
 
     receiver = CUTTEST_EVENT_RECEIVER(context);
     receiver->complete_test_suites =
         g_list_append(receiver->complete_test_suites, g_object_ref(test_suite));
+    /* FIXME: use success */
 }
 
 static void

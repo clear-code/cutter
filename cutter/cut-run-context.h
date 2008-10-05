@@ -105,11 +105,13 @@ struct _CutRunContextClass
                                  CutTestResult  *result);
     void (*complete_test)       (CutRunContext  *context,
                                  CutTest        *test,
-                                 CutTestContext *test_context);
+                                 CutTestContext *test_context,
+                                 gboolean        success);
     void (*complete_iterated_test)
                                 (CutRunContext  *context,
                                  CutIteratedTest *iterated_test,
-                                 CutTestContext *test_context);
+                                 CutTestContext *test_context,
+                                 gboolean        success);
 
     void (*success_test_iterator)
                                 (CutRunContext  *context,
@@ -136,7 +138,8 @@ struct _CutRunContextClass
                                  CutTestResult  *result);
     void (*complete_test_iterator)
                                 (CutRunContext  *context,
-                                 CutTestIterator *test_iterator);
+                                 CutTestIterator *test_iterator,
+                                 gboolean        success);
 
     void (*success_test_case)   (CutRunContext  *context,
                                  CutTestCase    *test_case,
@@ -158,10 +161,12 @@ struct _CutRunContextClass
                                  CutTestCase    *test_case,
                                  CutTestResult  *result);
     void (*complete_test_case)  (CutRunContext  *context,
-                                 CutTestCase    *test_case);
+                                 CutTestCase    *test_case,
+                                 gboolean        success);
 
     void (*complete_test_suite) (CutRunContext  *context,
-                                 CutTestSuite   *test_suite);
+                                 CutTestSuite   *test_suite,
+                                 gboolean        success);
 
     void (*complete_run)        (CutRunContext  *context,
                                  gboolean        success);

@@ -63,9 +63,9 @@ enum
 
 enum
 {
-    READY_SIGNAL,
-    START_TEST_CASE_SIGNAL,
-    COMPLETE_TEST_CASE_SIGNAL,
+    READY,
+    START_TEST_CASE,
+    COMPLETE_TEST_CASE,
     LAST_SIGNAL
 };
 
@@ -112,7 +112,7 @@ cut_test_suite_class_init (CutTestSuiteClass *klass)
                                 G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class, PROP_COOLDOWN_FUNCTION, spec);
 
-    cut_test_suite_signals[READY_SIGNAL]
+    cut_test_suite_signals[READY]
         = g_signal_new("ready",
                        G_TYPE_FROM_CLASS(klass),
                        G_SIGNAL_RUN_LAST,
@@ -121,7 +121,7 @@ cut_test_suite_class_init (CutTestSuiteClass *klass)
                        _cut_marshal_VOID__UINT_UINT,
                        G_TYPE_NONE, 2, G_TYPE_UINT, G_TYPE_UINT);
 
-    cut_test_suite_signals[START_TEST_CASE_SIGNAL]
+    cut_test_suite_signals[START_TEST_CASE]
         = g_signal_new("start-test-case",
                        G_TYPE_FROM_CLASS(klass),
                        G_SIGNAL_RUN_LAST,
@@ -130,14 +130,14 @@ cut_test_suite_class_init (CutTestSuiteClass *klass)
                        g_cclosure_marshal_VOID__OBJECT,
                        G_TYPE_NONE, 1, CUT_TYPE_TEST_CASE);
 
-    cut_test_suite_signals[COMPLETE_TEST_CASE_SIGNAL]
+    cut_test_suite_signals[COMPLETE_TEST_CASE]
         = g_signal_new("complete-test-case",
                        G_TYPE_FROM_CLASS(klass),
                        G_SIGNAL_RUN_LAST,
                        G_STRUCT_OFFSET(CutTestSuiteClass, complete_test_case),
                        NULL, NULL,
-                       g_cclosure_marshal_VOID__OBJECT,
-                       G_TYPE_NONE, 1, CUT_TYPE_TEST_CASE);
+                       _cut_marshal_VOID__OBJECT_BOOLEAN,
+                       G_TYPE_NONE, 2, CUT_TYPE_TEST_CASE, G_TYPE_BOOLEAN);
 
     g_type_class_add_private(gobject_class, sizeof(CutTestSuitePrivate));
 }
@@ -244,7 +244,7 @@ run (gpointer data, gpointer user_data)
     if (!cut_test_case_run_with_filter(test_case, run_context,
                                        (const gchar**)test_names))
         *success =  FALSE;
-    g_signal_emit_by_name(test_suite, "complete-test-case", test_case);
+    g_signal_emit_by_name(test_suite, "complete-test-case", test_case, *success);
 
     g_object_unref(test_suite);
     g_object_unref(test_case);
@@ -488,7 +488,7 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite,
     if (priv->cooldown)
         priv->cooldown();
 
-    g_signal_emit_by_name(CUT_TEST(test_suite), "complete", NULL);
+    g_signal_emit_by_name(CUT_TEST(test_suite), "complete", NULL, all_success);
 
     g_list_free(sorted_test_cases);
 

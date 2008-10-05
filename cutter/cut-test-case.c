@@ -59,11 +59,11 @@ enum
 
 enum
 {
-    READY_SIGNAL,
-    START_TEST_SIGNAL,
-    COMPLETE_TEST_SIGNAL,
-    START_TEST_ITERATOR_SIGNAL,
-    COMPLETE_TEST_ITERATOR_SIGNAL,
+    READY,
+    START_TEST,
+    COMPLETE_TEST,
+    START_TEST_ITERATOR,
+    COMPLETE_TEST_ITERATOR,
     LAST_SIGNAL
 };
 
@@ -140,7 +140,7 @@ cut_test_case_class_init (CutTestCaseClass *klass)
                                     spec);
 
 
-    cut_test_case_signals[READY_SIGNAL]
+    cut_test_case_signals[READY]
         = g_signal_new("ready",
                        G_TYPE_FROM_CLASS(klass),
                        G_SIGNAL_RUN_LAST,
@@ -149,7 +149,7 @@ cut_test_case_class_init (CutTestCaseClass *klass)
                        g_cclosure_marshal_VOID__UINT,
                        G_TYPE_NONE, 1, G_TYPE_UINT);
 
-    cut_test_case_signals[START_TEST_SIGNAL]
+    cut_test_case_signals[START_TEST]
         = g_signal_new("start-test",
                 G_TYPE_FROM_CLASS(klass),
                 G_SIGNAL_RUN_LAST,
@@ -158,34 +158,36 @@ cut_test_case_class_init (CutTestCaseClass *klass)
                 _cut_marshal_VOID__OBJECT_OBJECT,
                 G_TYPE_NONE, 2, CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT);
 
-    cut_test_case_signals[COMPLETE_TEST_SIGNAL]
+    cut_test_case_signals[COMPLETE_TEST]
         = g_signal_new("complete-test",
-                G_TYPE_FROM_CLASS(klass),
-                G_SIGNAL_RUN_LAST,
-                G_STRUCT_OFFSET(CutTestCaseClass, complete_test),
-                NULL, NULL,
-                _cut_marshal_VOID__OBJECT_OBJECT,
-                G_TYPE_NONE, 2, CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT);
+                       G_TYPE_FROM_CLASS(klass),
+                       G_SIGNAL_RUN_LAST,
+                       G_STRUCT_OFFSET(CutTestCaseClass, complete_test),
+                       NULL, NULL,
+                       _cut_marshal_VOID__OBJECT_OBJECT_BOOLEAN,
+                       G_TYPE_NONE, 3,
+                       CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT, G_TYPE_BOOLEAN);
 
-    cut_test_case_signals[START_TEST_ITERATOR_SIGNAL]
+    cut_test_case_signals[START_TEST_ITERATOR]
         = g_signal_new("start-test-iterator",
                        G_TYPE_FROM_CLASS(klass),
                        G_SIGNAL_RUN_LAST,
                        G_STRUCT_OFFSET(CutTestCaseClass, start_test_iterator),
                        NULL, NULL,
                        _cut_marshal_VOID__OBJECT_OBJECT,
-                       G_TYPE_NONE, 2,
-                       CUT_TYPE_TEST_ITERATOR, CUT_TYPE_TEST_CONTEXT);
+                       G_TYPE_NONE,
+                       2, CUT_TYPE_TEST_ITERATOR, CUT_TYPE_TEST_CONTEXT);
 
-    cut_test_case_signals[COMPLETE_TEST_ITERATOR_SIGNAL]
+    cut_test_case_signals[COMPLETE_TEST_ITERATOR]
         = g_signal_new("complete-test-iterator",
                        G_TYPE_FROM_CLASS(klass),
                        G_SIGNAL_RUN_LAST,
                        G_STRUCT_OFFSET(CutTestCaseClass, complete_test_iterator),
                        NULL, NULL,
-                       _cut_marshal_VOID__OBJECT_OBJECT,
-                       G_TYPE_NONE, 2,
-                       CUT_TYPE_TEST_ITERATOR, CUT_TYPE_TEST_CONTEXT);
+                       _cut_marshal_VOID__OBJECT_OBJECT_BOOLEAN,
+                       G_TYPE_NONE,
+                       3, CUT_TYPE_TEST_ITERATOR, CUT_TYPE_TEST_CONTEXT,
+                       G_TYPE_BOOLEAN);
 
     g_type_class_add_private(gobject_class, sizeof(CutTestCasePrivate));
 }
@@ -374,10 +376,11 @@ run_test (CutTestCase *test_case, CutTest *test,
 
     if (CUT_IS_TEST_ITERATOR(test)) {
         g_signal_emit_by_name(test_case, "complete-test-iterator",
-                              test, test_context);
+                              test, test_context, success);
     } else {
         cut_test_case_run_teardown(test_case, test_context);
-        g_signal_emit_by_name(test_case, "complete-test", test, test_context);
+        g_signal_emit_by_name(test_case, "complete-test",
+                              test, test_context, success);
     }
 
     return success;
@@ -486,7 +489,7 @@ cut_test_case_run_tests (CutTestCase *test_case, CutRunContext *run_context,
     if (priv->shutdown) {
         priv->shutdown();
     }
-    g_signal_emit_by_name(CUT_TEST(test_case), "complete", NULL);
+    g_signal_emit_by_name(CUT_TEST(test_case), "complete", NULL, all_success);
 
     return all_success;
 }

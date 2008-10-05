@@ -361,13 +361,14 @@ cb_test_signal (CutRunContext      *run_context,
 
 static void
 cb_complete_test (CutRunContext *run_context, CutTest *test,
-                  CutTestContext *test_context, CutPDFReport *report)
+                  CutTestContext *test_context, gboolean success,
+                  CutPDFReport *report)
 {
 }
 
 static void
 cb_complete_test_case (CutRunContext *run_context, CutTestCase *test_case,
-                       CutPDFReport *report)
+                       gboolean success, CutPDFReport *report)
 {
 }
 
@@ -403,7 +404,7 @@ show_test_case (cairo_t *cr, CutTestCase *test_case, CutTestResultStatus status,
 
 static void
 cb_complete_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
-                        CutPDFReport *report)
+                        gboolean success, CutPDFReport *report)
 {
 }
 

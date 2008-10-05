@@ -323,19 +323,20 @@ cb_test_signal (CutRunContext      *run_context,
 
 static void
 cb_complete_test (CutRunContext *run_context, CutTest *test,
-                  CutTestContext *test_context, CutXMLReport *report)
+                  CutTestContext *test_context, gboolean success,
+                  CutXMLReport *report)
 {
 }
 
 static void
 cb_complete_test_case (CutRunContext *run_context, CutTestCase *test_case,
-                       CutXMLReport *report)
+                       gboolean success, CutXMLReport *report)
 {
 }
 
 static void
 cb_complete_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
-                        CutXMLReport *report)
+                        gboolean success, CutXMLReport *report)
 {
     output_to_file(report, "</report>");
 }

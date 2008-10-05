@@ -216,22 +216,22 @@ cut_test_class_init (CutTestClass *klass)
                         CUT_TYPE_TEST_CONTEXT, CUT_TYPE_TEST_RESULT);
 
     cut_test_signals[COMPLETE]
-        = g_signal_new ("complete",
-                        G_TYPE_FROM_CLASS (klass),
-                        G_SIGNAL_RUN_LAST,
-                        G_STRUCT_OFFSET (CutTestClass, complete),
-                        NULL, NULL,
-                        g_cclosure_marshal_VOID__OBJECT,
-                        G_TYPE_NONE, 1, CUT_TYPE_TEST_CONTEXT);
+        = g_signal_new("complete",
+                       G_TYPE_FROM_CLASS (klass),
+                       G_SIGNAL_RUN_LAST,
+                       G_STRUCT_OFFSET (CutTestClass, complete),
+                       NULL, NULL,
+                       _cut_marshal_VOID__OBJECT_BOOLEAN,
+                       G_TYPE_NONE, 2, CUT_TYPE_TEST_CONTEXT, G_TYPE_BOOLEAN);
 
     cut_test_signals[CRASHED]
-        = g_signal_new ("crashed",
-                        G_TYPE_FROM_CLASS (klass),
-                        G_SIGNAL_RUN_LAST,
-                        G_STRUCT_OFFSET (CutTestClass, crashed),
-                        NULL, NULL,
-                        g_cclosure_marshal_VOID__STRING,
-                        G_TYPE_NONE, 1, G_TYPE_STRING);
+        = g_signal_new("crashed",
+                       G_TYPE_FROM_CLASS (klass),
+                       G_SIGNAL_RUN_LAST,
+                       G_STRUCT_OFFSET (CutTestClass, crashed),
+                       NULL, NULL,
+                       g_cclosure_marshal_VOID__STRING,
+                       G_TYPE_NONE, 1, G_TYPE_STRING);
 
     g_type_class_add_private(gobject_class, sizeof(CutTestPrivate));
 }
@@ -429,7 +429,7 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
         g_object_unref(result);
     }
 
-    g_signal_emit_by_name(test, "complete", test_context);
+    g_signal_emit_by_name(test, "complete", test_context, success);
 
     return success;
 }

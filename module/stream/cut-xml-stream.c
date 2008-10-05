@@ -535,7 +535,8 @@ cb_test_result (CutRunContext  *run_context,
 
 static void
 cb_complete_test (CutRunContext *run_context, CutTest *test,
-                  CutTestContext *test_context, CutXMLStream *stream)
+                  CutTestContext *test_context, gboolean success,
+                  CutXMLStream *stream)
 {
     GString *string;
 
@@ -545,6 +546,8 @@ cb_complete_test (CutRunContext *run_context, CutTest *test,
     cut_test_to_xml_string(test, string, 4);
     if (test_context)
         cut_test_context_to_xml_string(test_context, string, 4);
+    cut_utils_append_xml_element_with_boolean_value(string, 4,
+                                                    "success", success);
     g_string_append(string, "  </complete-test>\n");
 
     flow(stream, "%s", string->str);
@@ -556,6 +559,7 @@ static void
 cb_complete_iterated_test (CutRunContext *run_context,
                            CutIteratedTest *iterated_test,
                            CutTestContext *test_context,
+                           gboolean success,
                            CutXMLStream *stream)
 {
     GString *string;
@@ -565,6 +569,8 @@ cb_complete_iterated_test (CutRunContext *run_context,
     g_string_append(string, "  <complete-iterated-test>\n");
     cut_test_to_xml_string(CUT_TEST(iterated_test), string, 4);
     cut_test_context_to_xml_string(test_context, string, 4);
+    cut_utils_append_xml_element_with_boolean_value(string, 4,
+                                                    "success", success);
     g_string_append(string, "  </complete-iterated-test>\n");
 
     flow(stream, "%s", string->str);
@@ -595,6 +601,7 @@ cb_test_iterator_result (CutRunContext  *run_context,
 static void
 cb_complete_test_iterator (CutRunContext *run_context,
                            CutTestIterator *test_iterator,
+                           gboolean success,
                            CutXMLStream *stream)
 {
     GString *string;
@@ -603,6 +610,8 @@ cb_complete_test_iterator (CutRunContext *run_context,
 
     g_string_append(string, "  <complete-test-iterator>\n");
     cut_test_to_xml_string(CUT_TEST(test_iterator), string, 4);
+    cut_utils_append_xml_element_with_boolean_value(string, 4,
+                                                    "success", success);
     g_string_append(string, "  </complete-test-iterator>\n");
 
     flow(stream, "%s", string->str);
@@ -632,7 +641,7 @@ cb_test_case_result (CutRunContext  *run_context,
 
 static void
 cb_complete_test_case (CutRunContext *run_context, CutTestCase *test_case,
-                       CutXMLStream *stream)
+                       gboolean success, CutXMLStream *stream)
 {
     GString *string;
 
@@ -640,6 +649,8 @@ cb_complete_test_case (CutRunContext *run_context, CutTestCase *test_case,
 
     g_string_append(string, "  <complete-test-case>\n");
     cut_test_to_xml_string(CUT_TEST(test_case), string, 4);
+    cut_utils_append_xml_element_with_boolean_value(string, 4,
+                                                    "success", success);
     g_string_append(string, "  </complete-test-case>\n");
 
     flow(stream, "%s", string->str);
@@ -649,7 +660,7 @@ cb_complete_test_case (CutRunContext *run_context, CutTestCase *test_case,
 
 static void
 cb_complete_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
-                        CutXMLStream *stream)
+                        gboolean success, CutXMLStream *stream)
 {
     GString *string;
 
@@ -657,6 +668,8 @@ cb_complete_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
 
     g_string_append(string, "  <complete-test-suite>\n");
     cut_test_to_xml_string(CUT_TEST(test_suite), string, 4);
+    cut_utils_append_xml_element_with_boolean_value(string, 4,
+                                                    "success", success);
     g_string_append(string, "  </complete-test-suite>\n");
 
     flow(stream, "%s", string->str);
@@ -668,8 +681,16 @@ static void
 cb_complete_run (CutRunContext *run_context, gboolean success,
                  CutXMLStream *stream)
 {
-    flow(stream, "  <success>%s</success>\n", success ? "true" : "false");
-    flow(stream, "</stream>\n");
+    GString *string;
+
+    string = g_string_new(NULL);
+    cut_utils_append_xml_element_with_boolean_value(string, 2,
+                                                    "success", success);
+    g_string_append(string, "</stream>\n");
+
+    flow(stream, "%s", string->str);
+
+    g_string_free(string, TRUE);
 }
 
 static void

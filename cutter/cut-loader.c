@@ -547,7 +547,8 @@ register_test (CutLoader *loader, CutTestCase *test_case,
 }
 
 static void
-cb_complete (CutTestCase *test_case, CutTestContext *test_context, gpointer data)
+cb_complete (CutTestCase *test_case, CutTestContext *test_context,
+             gboolean success, gpointer data)
 {
     CutLoader *loader = data;
     g_object_unref(loader);

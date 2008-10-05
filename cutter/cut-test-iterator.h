@@ -56,7 +56,8 @@ struct _CutTestIteratorClass
     void (*complete_iterated_test)
                           (CutTestIterator *test_iterator,
                            CutIteratedTest *iterated_test,
-                           CutTestContext  *test_context);
+                           CutTestContext  *test_context,
+                           gboolean         success);
 };
 
 GType            cut_test_iterator_get_type    (void) G_GNUC_CONST;

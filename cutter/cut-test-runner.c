@@ -139,11 +139,12 @@ cb_omission_test (CutTest *test, CutTestContext *test_context,
 }
 
 static void
-cb_complete_test (CutTest *test, CutTestContext *test_context, gpointer data)
+cb_complete_test (CutTest *test, CutTestContext *test_context,
+                  gboolean success, gpointer data)
 {
     CutRunContext *context = data;
 
-    g_signal_emit_by_name(context, "complete-test", test, test_context);
+    g_signal_emit_by_name(context, "complete-test", test, test_context, success);
 }
 
 static void
@@ -176,7 +177,8 @@ cb_start_test_test_case (CutTestCase *test_case, CutTest *test,
 
 static void
 cb_complete_test_test_case (CutTestCase *test_case, CutTest *test,
-                            CutTestContext *test_context, gpointer data)
+                            CutTestContext *test_context, gboolean success,
+                            gpointer data)
 {
 #define DISCONNECT(name)                                                \
     g_signal_handlers_disconnect_by_func(test,                          \
@@ -270,11 +272,11 @@ cb_ready_test_case (CutTestCase *test_case, guint n_tests, gpointer data)
 
 static void
 cb_complete_test_case (CutTestCase *test_case, CutTestContext *test_context,
-                       gpointer data)
+                       gboolean success, gpointer data)
 {
     CutRunContext *context = data;
 
-    g_signal_emit_by_name(context, "complete-test-case", test_case);
+    g_signal_emit_by_name(context, "complete-test-case", test_case, success);
 }
 
 static void
@@ -373,12 +375,13 @@ cb_omission_iterated_test (CutIteratedTest *iterated_test,
 
 static void
 cb_complete_iterated_test (CutIteratedTest *iterated_test,
-                           CutTestContext *test_context, gpointer data)
+                           CutTestContext *test_context, gboolean success,
+                           gpointer data)
 {
     CutRunContext *context = data;
 
     g_signal_emit_by_name(context, "complete-iterated-test",
-                          iterated_test, test_context);
+                          iterated_test, test_context, success);
 }
 
 static void
@@ -411,6 +414,7 @@ static void
 cb_complete_iterated_test_test_iterator (CutTestIterator *test_iterator,
                                          CutIteratedTest *iterated_test,
                                          CutTestContext *test_context,
+                                         gboolean success,
                                          gpointer data)
 {
 #define DISCONNECT(name)                                                \
@@ -521,11 +525,12 @@ cb_ready_test_iterator (CutTestIterator *test_iterator, guint n_tests,
 static void
 cb_complete_test_iterator (CutTestIterator *test_iterator,
                            CutTestContext *test_context,
-                           gpointer data)
+                           gboolean success, gpointer data)
 {
     CutRunContext *context = data;
 
-    g_signal_emit_by_name(context, "complete-test-iterator", test_iterator);
+    g_signal_emit_by_name(context, "complete-test-iterator",
+                          test_iterator, success);
 }
 
 static void
@@ -567,6 +572,7 @@ static void
 cb_complete_test_iterator_test_case (CutTestCase *test_case,
                                      CutTestIterator *test_iterator,
                                      CutTestContext *test_context,
+                                     gboolean success,
                                      gpointer data)
 {
     CutRunContext *context = data;
@@ -631,6 +637,7 @@ cb_start_test_case_test_suite (CutTestSuite *test_suite, CutTestCase *test_case,
 static void
 cb_complete_test_case_test_suite (CutTestSuite *test_suite,
                                   CutTestCase *test_case,
+                                  gboolean success,
                                   gpointer data)
 {
     CutRunContext *context = data;
@@ -662,7 +669,7 @@ cb_complete_test_case_test_suite (CutTestSuite *test_suite,
 
 static void
 cb_complete_test_suite (CutTestSuite *test_suite, CutTestContext *test_context,
-                        gpointer data)
+                        gboolean success, gpointer data)
 {
     CutRunContext *context = data;
 
@@ -682,7 +689,7 @@ cb_complete_test_suite (CutTestSuite *test_suite, CutTestContext *test_context,
     DISCONNECT(complete_test_case);
 #undef DISCONNECT
 
-    g_signal_emit_by_name(context, "complete-test-suite", test_suite);
+    g_signal_emit_by_name(context, "complete-test-suite", test_suite, success);
 }
 
 static void

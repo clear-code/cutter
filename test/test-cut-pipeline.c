@@ -69,6 +69,7 @@ teardown (void)
 static void
 report_error (CutRunContext *context, GError *error, gpointer user_data)
 {
+    g_mutex_unlock(run_mutex);
     gcut_assert_error(error, "Pipeline Error");
 }
 

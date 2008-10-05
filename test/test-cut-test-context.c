@@ -107,11 +107,11 @@ test_simple_xml (void)
 {
     gchar success_expected[] =
         "<test-context>\n"
-        "  <failed>FALSE</failed>\n"
+        "  <failed>false</failed>\n"
         "</test-context>\n";
     gchar failed_expected[] =
         "<test-context>\n"
-        "  <failed>TRUE</failed>\n"
+        "  <failed>true</failed>\n"
         "</test-context>\n";
 
     cut_assert_false(cut_test_context_is_failed(context));
@@ -133,7 +133,7 @@ test_xml_with_test_suite (void)
         "    <start-time>1970-01-01T00:00:00Z</start-time>\n"
         "    <elapsed>.+?</elapsed>\n"
         "  </test-suite>\n"
-        "  <failed>FALSE</failed>\n"
+        "  <failed>false</failed>\n"
         "</test-context>\n";
 
     cut_test_context_set_test_suite(context, test_suite);
@@ -159,7 +159,7 @@ test_xml_with_test_iterator (void)
         "    <start-time>1970-01-01T00:00:00Z</start-time>\n"
         "    <elapsed>.+?</elapsed>\n"
         "  </test-iterator>\n"
-        "  <failed>FALSE</failed>\n"
+        "  <failed>false</failed>\n"
         "</test-context>\n";
 
     cut_test_context_set_test_suite(context, test_suite);
@@ -182,7 +182,7 @@ test_xml_with_test_case (void)
         "    <start-time>1970-01-01T00:00:00Z</start-time>\n"
         "    <elapsed>.+?</elapsed>\n"
         "  </test-case>\n"
-        "  <failed>FALSE</failed>\n"
+        "  <failed>false</failed>\n"
         "</test-context>\n";
 
     cut_test_context_set_test_suite(context, test_suite);
@@ -209,7 +209,7 @@ test_xml_with_test (void)
         "    <start-time>1970-01-01T00:00:00Z</start-time>\n"
         "    <elapsed>.+?</elapsed>\n"
         "  </test>\n"
-        "  <failed>FALSE</failed>\n"
+        "  <failed>false</failed>\n"
         "</test-context>\n";
 
     cut_test_context_set_test_suite(context, test_suite);
@@ -242,7 +242,7 @@ test_xml_with_test_data (void)
         "  <test-data>\n"
         "    <name>sample test data</name>\n"
         "  </test-data>\n"
-        "  <failed>FALSE</failed>\n"
+        "  <failed>false</failed>\n"
         "</test-context>\n";
 
     test_data = cut_test_data_new(test_data_name, test_data_value, NULL);

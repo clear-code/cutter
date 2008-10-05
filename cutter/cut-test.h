@@ -77,7 +77,8 @@ struct _CutTestClass
                             CutTestContext *context,
                             CutTestResult  *result);
     void (*complete)       (CutTest        *test,
-                            CutTestContext *context);
+                            CutTestContext *context,
+                            gboolean        success);
     void (*crashed)        (CutTest        *test,
                             const gchar    *backtrace);
 

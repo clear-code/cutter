@@ -296,7 +296,7 @@ cut_utils_append_xml_element_with_boolean_value (GString *string, guint indent,
                                                  gboolean boolean)
 {
     cut_utils_append_xml_element_with_value(string, indent, element_name,
-                                            boolean ? "TRUE" : "FALSE");
+                                            boolean ? "true" : "false");
 }
 
 gchar **

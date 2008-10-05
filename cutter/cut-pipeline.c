@@ -263,6 +263,8 @@ create_child_out_channel (CutPipeline *pipeline)
     g_io_channel_set_close_on_unref(channel, TRUE);
 
     reader = CUT_STREAM_READER(pipeline);
+    /* FIXME: should connect "error" or "complete-run"
+     * signal and cleanup resource. */
     priv->child_out_source_id = cut_stream_reader_watch_io_channel(reader,
                                                                    channel);
 

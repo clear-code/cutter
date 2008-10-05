@@ -44,7 +44,7 @@
         <start-time>2008-07-30T04:55:42Z</start-time>
         <elapsed>0.000001</elapsed>
       </test>
-      <failed>FALSE</failed>
+      <failed>false</failed>
     </test-context>
   </start-test>
   <test-result>
@@ -64,7 +64,7 @@
         <start-time>2008-07-30T04:55:42Z</start-time>
         <elapsed>0.000001</elapsed>
       </test>
-      <failed>FALSE</failed>
+      <failed>false</failed>
     </test-context>
     <result>
       <test-case>
@@ -99,8 +99,9 @@
         <start-time>2008-07-30T04:55:42Z</start-time>
         <elapsed>0.000001</elapsed>
       </test>
-      <failed>FALSE</failed>
+      <failed>false</failed>
     </test-context>
+    <success>true</success>
   </complete-test>
   <test-case-result>
     <test-case>
@@ -125,10 +126,12 @@
       <start-time>2008-07-30T04:55:42Z</start-time>
       <elapsed>0.000001</elapsed>
     </test-case>
+    <success>true</success>
   </complete-test-case>
   <complete-test-suite>
     <test-suite>
       <start-time>2008-07-30T04:55:42Z</start-time>
       <elapsed>0.000001</elapsed>
     </test-suite>
+    <success>true</success>
   </complete-test-suite>

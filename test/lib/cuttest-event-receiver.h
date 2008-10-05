@@ -104,12 +104,14 @@ typedef struct _CuttestCompleteIteratedTestInfo
 {
     CutIteratedTest *iterated_test;
     CutTestContext *test_context;
+    gboolean success;
 } CuttestCompleteIteratedTestInfo;
 
 typedef struct _CuttestCompleteTestInfo
 {
     CutTest *test;
     CutTestContext *test_context;
+    gboolean success;
 } CuttestCompleteTestInfo;
 
 

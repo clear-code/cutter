@@ -584,7 +584,8 @@ cb_error_test (CutRunContext  *run_context,
 
 static void
 cb_complete_test (CutRunContext *run_context, CutTest *test,
-                  CutTestContext *test_context, CutConsoleUI *console)
+                  CutTestContext *test_context, gboolean success,
+                  CutConsoleUI *console)
 {
     if (console->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
         return;
@@ -596,16 +597,17 @@ cb_complete_test (CutRunContext *run_context, CutTest *test,
 static void
 cb_complete_iterated_test (CutRunContext *run_context,
                            CutIteratedTest *iterated_test,
-                           CutTestContext *test_context, CutConsoleUI *console)
+                           CutTestContext *test_context, gboolean success,
+                           CutConsoleUI *console)
 {
     cb_complete_test(run_context, CUT_TEST(iterated_test),
-                     test_context, console);
+                     test_context, success, console);
 }
 
 static void
 cb_complete_test_iterator (CutRunContext *run_context,
                            CutTestIterator *test_iterator,
-                           CutConsoleUI *console)
+                           gboolean success, CutConsoleUI *console)
 {
     if (console->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
         return;
@@ -613,7 +615,7 @@ cb_complete_test_iterator (CutRunContext *run_context,
 
 static void
 cb_complete_test_case (CutRunContext *run_context, CutTestCase *test_case,
-                       CutConsoleUI *console)
+                       gboolean success, CutConsoleUI *console)
 {
     if (console->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
         return;
@@ -621,7 +623,7 @@ cb_complete_test_case (CutRunContext *run_context, CutTestCase *test_case,
 
 static void
 cb_complete_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
-                        CutConsoleUI *console)
+                        gboolean success, CutConsoleUI *console)
 {
     if (console->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
         return;

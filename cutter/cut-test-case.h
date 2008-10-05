@@ -63,7 +63,8 @@ struct _CutTestCaseClass
     void (*complete_test_iterator)
                           (CutTestCase    *test_case,
                            CutTestIterator *test_iterator,
-                           CutTestContext *test_context);
+                           CutTestContext *test_context,
+                           gboolean        success);
 };
 
 GType        cut_test_case_get_type       (void) G_GNUC_CONST;

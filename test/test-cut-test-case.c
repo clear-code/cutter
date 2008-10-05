@@ -136,8 +136,17 @@ teardown (void)
 }
 
 static void
-cb_count_around_test (CutTestCase *test_case, CutTest *test,
-                      CutTestContext *test_context, gpointer data)
+cb_count_start_test (CutTestCase *test_case, CutTest *test,
+                     CutTestContext *test_context, gpointer data)
+{
+    gint *count = data;
+    *count += 1;
+}
+
+static void
+cb_count_complete_test (CutTestCase *test_case, CutTest *test,
+                        CutTestContext *test_context, gboolean success,
+                        gpointer data)
 {
     gint *count = data;
     *count += 1;
@@ -269,10 +278,10 @@ test_start_signal (void)
 {
     gint n_start_tests = 0;
     g_signal_connect(test_object, "start-test",
-                     G_CALLBACK(cb_count_around_test), &n_start_tests);
+                     G_CALLBACK(cb_count_start_test), &n_start_tests);
     cut_assert(cut_test_case_run(test_object, run_context));
     g_signal_handlers_disconnect_by_func(test_object,
-                                         G_CALLBACK(cb_count_around_test),
+                                         G_CALLBACK(cb_count_start_test),
                                          &n_start_tests);
     cut_assert_equal_int(3, n_start_tests);
 }
@@ -352,10 +361,10 @@ test_complete_signal (void)
 {
     gint n_complete_tests = 0;
     g_signal_connect(test_object, "complete-test",
-                     G_CALLBACK(cb_count_around_test), &n_complete_tests);
+                     G_CALLBACK(cb_count_complete_test), &n_complete_tests);
     cut_assert(cut_test_case_run(test_object, run_context));
     g_signal_handlers_disconnect_by_func(test_object,
-                                         G_CALLBACK(cb_count_around_test),
+                                         G_CALLBACK(cb_count_complete_test),
                                          &n_complete_tests);
     cut_assert_equal_int(3, n_complete_tests);
 }

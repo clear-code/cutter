@@ -51,8 +51,11 @@ struct _CutTestSuiteClass
     void (*ready)              (CutTestSuite *suite,
                                 guint         n_test_cases,
                                 guint         n_tests);
-    void (*start_test_case)    (CutTestSuite *suite, CutTestCase *test_case);
-    void (*complete_test_case) (CutTestSuite *suite, CutTestCase *test_case);
+    void (*start_test_case)    (CutTestSuite *suite,
+                                CutTestCase  *test_case);
+    void (*complete_test_case) (CutTestSuite *suite,
+                                CutTestCase  *test_case,
+                                gboolean      success);
 };
 
 GType           cut_test_suite_get_type      (void) G_GNUC_CONST;

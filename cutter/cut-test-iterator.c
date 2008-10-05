@@ -127,12 +127,14 @@ cut_test_iterator_class_init (CutTestIteratorClass *klass)
 
     signals[COMPLETE_TEST]
         = g_signal_new("complete-iterated-test",
-                G_TYPE_FROM_CLASS(klass),
-                G_SIGNAL_RUN_LAST,
-                G_STRUCT_OFFSET(CutTestIteratorClass, complete_iterated_test),
-                NULL, NULL,
-                _cut_marshal_VOID__OBJECT_OBJECT,
-                G_TYPE_NONE, 2, CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT);
+                       G_TYPE_FROM_CLASS(klass),
+                       G_SIGNAL_RUN_LAST,
+                       G_STRUCT_OFFSET(CutTestIteratorClass,
+                                       complete_iterated_test),
+                       NULL, NULL,
+                       _cut_marshal_VOID__OBJECT_OBJECT_BOOLEAN,
+                       G_TYPE_NONE, 3,
+                       CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT, G_TYPE_BOOLEAN);
 
     g_type_class_add_private(gobject_class, sizeof(CutTestIteratorPrivate));
 }
@@ -272,7 +274,7 @@ run_test_without_thread (gpointer data, gpointer user_data)
                                 cut_test_context_is_failed(test_context));
 
     g_signal_emit_by_name(test_iterator, "complete-iterated-test",
-                          iterated_test, test_context);
+                          iterated_test, test_context, *success);
 
     cut_test_context_set_test(test_context, NULL);
     cut_test_context_set_test(parent_test_context, NULL);
@@ -486,7 +488,7 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
                                  NULL, NULL, 0);
     cut_test_emit_result_signal(CUT_TEST(test_iterator), test_context, result);
     g_object_unref(result);
-    g_signal_emit_by_name(test, "complete", NULL);
+    g_signal_emit_by_name(test, "complete", NULL, all_success);
 
     cut_test_context_set_test_iterator(test_context, NULL);
 
