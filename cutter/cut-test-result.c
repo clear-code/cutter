@@ -461,10 +461,10 @@ cut_test_result_get_test_name (CutTestResult *result)
 
     priv = CUT_TEST_RESULT_GET_PRIVATE(result);
 
-    if (!priv->test)
-        return NULL;
+    if (priv->test)
+        return cut_test_get_full_name(priv->test);
 
-    return cut_test_get_full_name(priv->test);
+    return NULL;
 }
 
 const gchar *

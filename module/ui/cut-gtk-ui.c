@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2008  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -39,6 +39,7 @@
 #include <cutter/cut-verbose-level.h>
 #include <cutter/cut-enum-types.h>
 #include <cutter/cut-pipeline.h>
+#include <cutter/cut-backtrace-entry.h>
 
 #define CUT_TYPE_GTK_UI            cut_type_gtk_ui
 #define CUT_GTK_UI(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_GTK_UI, CutGtkUI))
@@ -111,12 +112,12 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 
-static void     attach_to_run_context   (CutListener *listener,
-                                    CutRunContext   *run_context);
-static void     detach_from_run_context (CutListener *listener,
-                                    CutRunContext   *run_context);
-static gboolean run                (CutUI       *ui,
-                                    CutRunContext   *run_context);
+static void     attach_to_run_context   (CutListener   *listener,
+                                         CutRunContext *run_context);
+static void     detach_from_run_context (CutListener   *listener,
+                                         CutRunContext *run_context);
+static gboolean run                     (CutUI         *ui,
+                                         CutRunContext *run_context);
 
 static void
 class_init (CutGtkUIClass *klass)
@@ -618,7 +619,7 @@ generate_short_summary_message (CutRunContext *run_context)
                            n_pendings, n_omissions, n_notifications);
 }
 
-static void 
+static void
 update_button_sensitive (CutGtkUI *ui)
 {
     gtk_widget_set_sensitive(ui->cancel_button, ui->running);
@@ -965,37 +966,44 @@ append_test_result_row (CutGtkUI *ui, CutTestResult *result,
                         GtkTreeIter *result_row_iter)
 {
     CutTestResultStatus status;
-    gchar *filename, *name;
+    const GList *node;
+    GString *name;
     const gchar *message;
-    const gchar *test_name;
     GdkPixbuf *icon;
 
-    /* FIXME */
-    filename = cut_run_context_build_source_filename(ui->run_context,
-                                                     cut_test_result_get_filename(result));
     status = cut_test_result_get_status(result);
     message = cut_test_result_get_message(result);
-    test_name = cut_test_result_get_test_name(result);
-    if (!test_name)
-        test_name = cut_test_result_get_test_case_name(result);
-    if (!test_name)
-        test_name = cut_test_result_get_test_suite_name(result);
-    name = g_strdup_printf("%s:%d: %s()",
-                           filename,
-                           cut_test_result_get_line(result),
-                           cut_test_result_get_function_name(result));
-    g_free(filename);
+
+    name = g_string_new(NULL);
+    for (node = cut_test_result_get_backtrace(result);
+         node;
+         node = g_list_next(node)) {
+        CutBacktraceEntry *entry = node->data;
+        const gchar *info;
+
+        /* FIXME: should use cut_backtrace_entry_format() */
+        g_string_append_printf(name,
+                               "%s:%d: %s()",
+                               cut_backtrace_entry_get_file(entry),
+                               cut_backtrace_entry_get_line(entry),
+                               cut_backtrace_entry_get_function(entry));
+        info = cut_backtrace_entry_get_info(entry);
+        if (info)
+            g_string_append_printf(name, ": %s", info);
+        if (g_list_next(node))
+            g_string_append(name, "\n");
+    }
 
     icon = get_status_icon(ui->tree_view, status);
 
     gtk_tree_store_append(ui->logs, result_row_iter, test_row_iter);
     gtk_tree_store_set(ui->logs, result_row_iter,
-                       COLUMN_NAME, name,
+                       COLUMN_NAME, name->str,
                        COLUMN_DESCRIPTION, message,
                        COLUMN_STATUS_ICON, icon,
                        COLUMN_COLOR, status_to_color(status, TRUE),
                        -1);
-    g_free(name);
+    g_string_free(name, TRUE);
     g_object_unref(icon);
 }
 

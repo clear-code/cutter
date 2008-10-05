@@ -1,11 +1,15 @@
 2008-10-06  Kouhei Sutou  <kou@cozmixng.org>
 
+	* module/ui/cut-gtk-ui.c: suppress warnings.
+
+	* TODO: add an entry: GTK+ UI supports test iterator.
+
 	* test/test-cut-test-suite.c: keep the current test context.
 
 2008-10-05  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/, gcutter/, test/, module/, sample/: implement cut_trace().
-	* TODO: remove a entry: cut_trace() that stacks backtrace.
+	* TODO: remove an entry: cut_trace() that stacks backtrace.
 	e.g. cut_trace(my_assert_xxx(ZZZ));
 
 	* cutter/cut-test-context.c: take_XXX() doesn't dup target object.

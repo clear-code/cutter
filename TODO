@@ -19,3 +19,4 @@
 * [CutRepository/CutLoader] source directory supports nested directory.
 * resolve circular reference between CutStreamReader and CutStreamParser.
 * cut_assert_equal_sockaddr().
+* GTK+ UI supports test iterator.
