@@ -58,9 +58,9 @@ test_get_status (void)
                                  NULL, NULL, NULL, NULL, NULL,
                                  "user-message",
                                  "system-message",
-                                 "function-name",
                                  "filename",
-                                 999);
+                                 999,
+                                 "function-name");
     cut_assert_equal_int(CUT_TEST_RESULT_SUCCESS,
                          cut_test_result_get_status(result));
     g_object_unref(result);
@@ -69,9 +69,9 @@ test_get_status (void)
                                  NULL, NULL, NULL, NULL, NULL,
                                  "user-message",
                                  "system-message",
-                                 "function-name",
                                  "filename",
-                                 999);
+                                 999,
+                                 "function-name");
     cut_assert_equal_int(CUT_TEST_RESULT_FAILURE,
                          cut_test_result_get_status(result));
     g_object_unref(result);
@@ -80,9 +80,9 @@ test_get_status (void)
                                  NULL, NULL, NULL, NULL, NULL,
                                  "user-message",
                                  "system-message",
-                                 "function-name",
                                  "filename",
-                                 999);
+                                 999,
+                                 "function-name");
     cut_assert_equal_int(CUT_TEST_RESULT_ERROR,
                          cut_test_result_get_status(result));
     g_object_unref(result);
@@ -91,9 +91,9 @@ test_get_status (void)
                                  NULL, NULL, NULL, NULL, NULL,
                                  "user-message",
                                  "system-message",
-                                 "function-name",
                                  "filename",
-                                 999);
+                                 999,
+                                 "function-name");
     cut_assert_equal_int(CUT_TEST_RESULT_PENDING,
                          cut_test_result_get_status(result));
 }
@@ -105,9 +105,9 @@ test_get_message_full (void)
                                  NULL, NULL, NULL, NULL, NULL,
                                  "user-message",
                                  "system-message",
-                                 "function-name",
                                  "filename",
-                                 999);
+                                 999,
+                                 "function-name");
     cut_assert_equal_string("user-message\nsystem-message",
                             cut_test_result_get_message(result));
     cut_assert_equal_string("user-message",
@@ -123,9 +123,9 @@ test_get_message_only_user (void)
                                  NULL, NULL, NULL, NULL, NULL,
                                  "user-message",
                                  NULL,
-                                 "function-name",
                                  "filename",
-                                 999);
+                                 999,
+                                 "function-name");
     cut_assert_equal_string("user-message",
                             cut_test_result_get_message(result));
     cut_assert_equal_string("user-message",
@@ -140,9 +140,9 @@ test_get_message_only_system (void)
                                  NULL, NULL, NULL, NULL, NULL,
                                  NULL,
                                  "system-message",
-                                 "function-name",
                                  "filename",
-                                 999);
+                                 999,
+                                 "function-name");
     cut_assert_equal_string("system-message",
                             cut_test_result_get_message(result));
     cut_assert(cut_test_result_get_user_message(result) == NULL);
@@ -157,9 +157,9 @@ test_get_message_none (void)
                                  NULL, NULL, NULL, NULL, NULL,
                                  NULL,
                                  NULL,
-                                 "function-name",
                                  "filename",
-                                 999);
+                                 999,
+                                 "function-name");
     cut_assert_null(cut_test_result_get_message(result));
 
     cut_test_result_set_message(result, "message");
@@ -183,9 +183,9 @@ test_set_messages (void)
                                  NULL, NULL, NULL, NULL, NULL,
                                  "user-message",
                                  "system-message",
-                                 "function-name",
                                  "filename",
-                                 999);
+                                 999,
+                                 "function-name");
     cut_assert_equal_string("user-message\nsystem-message",
                             cut_test_result_get_message(result));
 
@@ -212,9 +212,9 @@ test_get_function_name (void)
                                  NULL, NULL, NULL, NULL, NULL,
                                  "user-message",
                                  "system-message",
-                                 "function-name",
                                  "filename",
-                                 999);
+                                 999,
+                                 "function-name");
     cut_assert_equal_string("function-name",
                             cut_test_result_get_function_name(result));
     cut_test_result_set_function_name(result, "another-function-name");
@@ -226,9 +226,9 @@ test_get_function_name (void)
                                  NULL, NULL, NULL, NULL, NULL,
                                  NULL,
                                  NULL,
-                                 NULL,
                                  "filename",
-                                 999);
+                                 999,
+                                 NULL);
     cut_assert(cut_test_result_get_function_name(result) == NULL,
                "cut_test_result_get_function_name() should return NULL!");
 }
@@ -240,9 +240,9 @@ test_get_filename (void)
                                  NULL, NULL, NULL, NULL, NULL,
                                  "user-message",
                                  "system-message",
-                                 "function-name",
                                  "filename",
-                                 999);
+                                 999,
+                                 "function-name");
     cut_assert_equal_string("filename", cut_test_result_get_filename(result));
 
     cut_test_result_set_filename(result, "another-filename");
@@ -255,8 +255,8 @@ test_get_filename (void)
                                  NULL,
                                  NULL,
                                  NULL,
-                                 NULL,
-                                 999);
+                                 999,
+                                 NULL);
     cut_assert_null(cut_test_result_get_filename(result));
 }
 
@@ -267,9 +267,9 @@ test_get_line (void)
                                  NULL, NULL, NULL, NULL, NULL,
                                  "user-message",
                                  "system-message",
-                                 "function-name",
                                  "filename",
-                                 999);
+                                 999,
+                                 "function-name");
     cut_assert_equal_int(999, cut_test_result_get_line(result));
 
     cut_test_result_set_line(result, 9999);
@@ -281,8 +281,8 @@ test_get_line (void)
                                  NULL,
                                  NULL,
                                  NULL,
-                                 NULL,
-                                 0);
+                                 0,
+                                 NULL);
     cut_assert_equal_int(0, cut_test_result_get_line(result));
     g_object_unref(result);
 
@@ -291,8 +291,8 @@ test_get_line (void)
                                  NULL,
                                  NULL,
                                  NULL,
-                                 NULL,
-                                 G_MAXUINT);
+                                 G_MAXUINT,
+                                 NULL);
     cut_assert_equal_int(G_MAXUINT, cut_test_result_get_line(result));
 }
 
@@ -333,7 +333,7 @@ test_get_test_suite (void)
 {
     result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
                                  NULL, NULL, NULL, NULL, NULL,
-                                 NULL, NULL, NULL, NULL, 0);
+                                 NULL, NULL, NULL, 0, NULL);
     cut_assert_null(cut_test_result_get_test_suite(result));
 
     suite = cut_test_suite_new_empty();

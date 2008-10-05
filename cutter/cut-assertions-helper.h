@@ -32,7 +32,7 @@ extern "C" {
     cut_test_context_register_result(                                   \
         get_current_test_context(),                                     \
         CUT_TEST_RESULT_ ## status,                                     \
-        __PRETTY_FUNCTION__, __FILE__, __LINE__,                        \
+        __FILE__, __LINE__, __PRETTY_FUNCTION__,                        \
         message, ## __VA_ARGS__, NULL);                                 \
 } while (0)
 

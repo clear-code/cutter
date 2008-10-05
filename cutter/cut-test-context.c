@@ -56,8 +56,8 @@
 {                                                               \
     cut_test_context_register_result(context,                   \
                                      CUT_TEST_RESULT_OMISSION,  \
-                                     __PRETTY_FUNCTION__,       \
                                      __FILE__, __LINE__,        \
+                                     __PRETTY_FUNCTION__,       \
                                      message, ## __VA_ARGS__,   \
                                      NULL);                     \
     cut_test_context_long_jump(context);                        \
@@ -756,9 +756,9 @@ cut_test_context_emit_signal (CutTestContext *context,
 void
 cut_test_context_register_result (CutTestContext *context,
                                   CutTestResultStatus status,
-                                  const gchar *function_name,
                                   const gchar *filename,
                                   guint line,
+                                  const gchar *function_name,
                                   const gchar *message,
                                   ...)
 {
@@ -794,7 +794,7 @@ cut_test_context_register_result (CutTestContext *context,
                                  priv->test_case, priv->test_suite,
                                  test_data,
                                  user_message, system_message,
-                                 function_name, full_filename, line);
+                                 full_filename, line, function_name);
     if (user_message)
         g_free(user_message);
     g_free(full_filename);
@@ -961,9 +961,9 @@ cut_test_context_take_g_hash_table (CutTestContext *context,
 
 int
 cut_test_context_trap_fork (CutTestContext *context,
-                            const gchar *function_name,
                             const gchar *filename,
-                            guint line)
+                            guint line,
+                            const gchar *function_name)
 {
 #ifdef G_OS_WIN32
     cut_omit(context,
@@ -977,7 +977,7 @@ cut_test_context_trap_fork (CutTestContext *context,
     if (cut_test_context_is_multi_thread(context)) {
         cut_test_context_register_result(context,
                                          CUT_TEST_RESULT_OMISSION,
-                                         function_name, filename, line,
+                                         filename, line, function_name,
                                          "can't use cut_fork() "
                                          "in multi thread mode",
                                          NULL);

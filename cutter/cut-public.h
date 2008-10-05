@@ -53,9 +53,9 @@ CutTestContext *cut_test_context_current_get(CutTestContextKey *key);
 void  cut_test_context_pass_assertion       (CutTestContext *context);
 void  cut_test_context_register_result      (CutTestContext *context,
                                              CutTestResultStatus status,
-                                             const char *function_name,
                                              const char *filename,
                                              unsigned int line,
+                                             const char *function_name,
                                              const char *message,
                                              ...) /* CUT_GNUC_PRINTF(7, 8) */;
 void  cut_test_context_long_jump            (CutTestContext *context) CUT_GNUC_NORETURN;
@@ -98,16 +98,16 @@ char *cut_test_context_build_fixture_data_path
                                              ...) CUT_GNUC_NULL_TERMINATED;
 
 const char *cut_utils_get_fixture_data_string(CutTestContext *context,
-                                              const char *function,
                                               const char *file,
                                               unsigned int line,
+                                              const char *function,
                                               const char *path,
                                               ...) CUT_GNUC_NULL_TERMINATED;
 
 void  cut_utils_get_fixture_data_string_and_path(CutTestContext *context,
-                                                 const char *function,
                                                  const char *file,
                                                  unsigned int line,
+                                                 const char *function,
                                                  char **data,
                                                  char **fixture_data_path,
                                                  const char *path,
@@ -122,9 +122,9 @@ void  cut_test_context_set_attributes       (CutTestContext *context,
                                              ...) CUT_GNUC_NULL_TERMINATED;
 
 int   cut_test_context_trap_fork            (CutTestContext *context,
-                                             const char     *function_name,
                                              const char     *filename,
-                                             unsigned int    line);
+                                             unsigned int    line,
+                                             const char     *function_name);
 int   cut_test_context_wait_process         (CutTestContext *context,
                                              int             pid,
                                              unsigned int    usec_timeout);

@@ -188,9 +188,9 @@ cut_utils_regex_match (const gchar *pattern, const gchar *string)
 
 const gchar *
 cut_utils_get_fixture_data_string (CutTestContext *context,
-                                   const char *function,
                                    const char *file,
                                    unsigned int line,
+                                   const char *function,
                                    const char *path,
                                    ...)
 {
@@ -211,7 +211,7 @@ cut_utils_get_fixture_data_string (CutTestContext *context,
         g_error_free(error);
         cut_test_context_register_result(context,
                                          CUT_TEST_RESULT_ERROR,
-                                         function, file, line,
+                                         file, line, function,
                                          message, NULL);
         g_free(inspected);
         g_free(message);
@@ -222,9 +222,9 @@ cut_utils_get_fixture_data_string (CutTestContext *context,
 
 void
 cut_utils_get_fixture_data_string_and_path (CutTestContext *context,
-                                            const gchar *function,
                                             const gchar *file,
                                             unsigned int line,
+                                            const gchar *function,
                                             gchar **data,
                                             gchar **fixture_data_path,
                                             const gchar *path,
@@ -257,7 +257,7 @@ cut_utils_get_fixture_data_string_and_path (CutTestContext *context,
         g_error_free(error);
         cut_test_context_register_result(context,
                                          CUT_TEST_RESULT_ERROR,
-                                         function, file, line,
+                                         file, line, function,
                                          message, NULL);
         g_free(inspected);
         g_free(message);

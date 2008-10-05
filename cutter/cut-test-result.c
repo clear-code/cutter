@@ -388,9 +388,9 @@ cut_test_result_new (CutTestResultStatus status,
                      CutTestData *test_data,
                      const gchar *user_message,
                      const gchar *system_message,
-                     const gchar *function_name,
                      const gchar *filename,
-                     guint line)
+                     guint line,
+                     const gchar *function_name)
 {
     return g_object_new(CUT_TYPE_TEST_RESULT,
                         "status", status,
@@ -413,7 +413,7 @@ cut_test_result_new_empty (void)
     return cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
                                NULL, NULL, NULL, NULL, NULL,
                                NULL, NULL,
-                               NULL, NULL, 0);
+                               NULL, 0, NULL);
 }
 
 static void

@@ -186,9 +186,9 @@ extern "C" {
  */
 #define cut_get_fixture_data_string(path, ...)                          \
     cut_utils_get_fixture_data_string(get_current_test_context(),       \
-                                      __PRETTY_FUNCTION__,              \
                                       __FILE__,                         \
                                       __LINE__,                         \
+                                      __PRETTY_FUNCTION__,              \
                                       path, ## __VA_ARGS__, NULL)
 
 /**

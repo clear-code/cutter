@@ -771,7 +771,7 @@ extern "C" {
                                                                         \
     cut_utils_get_fixture_data_string_and_path(                         \
         get_current_test_context(),                                     \
-        __PRETTY_FUNCTION__, __FILE__, __LINE__,                        \
+        __FILE__, __LINE__, __PRETTY_FUNCTION__,                        \
         &_data, &_full_path,                                            \
         (path), ## __VA_ARGS__, NULL);                                  \
     _taken_full_path = cut_take_string(_full_path);                     \

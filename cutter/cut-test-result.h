@@ -55,9 +55,9 @@ CutTestResult *cut_test_result_new        (CutTestResultStatus status,
                                            CutTestData *test_data,
                                            const gchar *user_message,
                                            const gchar *system_message,
-                                           const gchar *function_name,
                                            const gchar *filename,
-                                           guint line);
+                                           guint line,
+                                           const gchar *function_name);
 CutTestResult *cut_test_result_new_empty  (void);
 CutTestResult *cut_test_result_new_from_xml
                                           (const gchar *xml,

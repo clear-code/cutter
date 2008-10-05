@@ -1,5 +1,8 @@
 2008-10-05  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/, test/:
+	function name, file name, line -> file name, line, function name.
+
 	* cutter/, module/, test/: pass 'gboolean success' to complete signal.
 
 	* cutter/cut-test-iterator.[ch], cutter/cut-test-runner.c:
