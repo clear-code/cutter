@@ -719,16 +719,11 @@ print_results (CutConsoleUI *console, CutRunContext *run_context)
              node;
              node = g_list_next(node)) {
             CutBacktraceEntry *entry = node->data;
-            const gchar *info;
+            gchar *formatted_entry;
 
-            g_print("%s:%d: %s()",
-                    cut_backtrace_entry_get_file(entry),
-                    cut_backtrace_entry_get_line(entry),
-                    cut_backtrace_entry_get_function(entry));
-            info = cut_backtrace_entry_get_info(entry);
-            if (info)
-                g_print(": %s", info);
-            g_print("\n");
+            formatted_entry = cut_backtrace_entry_format(entry);
+            g_print("%s\n", formatted_entry);
+            g_free(formatted_entry);
         }
         i++;
     }

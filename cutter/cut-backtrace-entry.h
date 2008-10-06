@@ -52,28 +52,31 @@ CutBacktraceEntry *cut_backtrace_entry_new       (const gchar *file,
                                                   const gchar *info);
 CutBacktraceEntry *cut_backtrace_entry_new_empty (void);
 
-const gchar       *cut_backtrace_entry_get_file  (CutBacktraceEntry *backtrace);
-void               cut_backtrace_entry_set_file  (CutBacktraceEntry *backtrace,
+const gchar       *cut_backtrace_entry_get_file  (CutBacktraceEntry *entry);
+void               cut_backtrace_entry_set_file  (CutBacktraceEntry *entry,
                                                   const gchar       *file);
-guint              cut_backtrace_entry_get_line  (CutBacktraceEntry *backtrace);
-void               cut_backtrace_entry_set_line  (CutBacktraceEntry *backtrace,
+guint              cut_backtrace_entry_get_line  (CutBacktraceEntry *entry);
+void               cut_backtrace_entry_set_line  (CutBacktraceEntry *entry,
                                                   guint              line);
 const gchar       *cut_backtrace_entry_get_function
-                                                 (CutBacktraceEntry *backtrace);
+                                                 (CutBacktraceEntry *entry);
 void               cut_backtrace_entry_set_function
-                                                 (CutBacktraceEntry *backtrace,
+                                                 (CutBacktraceEntry *entry,
                                                   const gchar       *function);
-const gchar       *cut_backtrace_entry_get_info  (CutBacktraceEntry *backtrace);
-void               cut_backtrace_entry_set_info  (CutBacktraceEntry *backtrace,
+const gchar       *cut_backtrace_entry_get_info  (CutBacktraceEntry *entry);
+void               cut_backtrace_entry_set_info  (CutBacktraceEntry *entry,
                                                   const gchar       *info);
 
-gchar             *cut_backtrace_entry_to_xml    (CutBacktraceEntry *backtrace);
+gchar             *cut_backtrace_entry_to_xml    (CutBacktraceEntry *entry);
 void               cut_backtrace_entry_to_xml_string
-                                                 (CutBacktraceEntry *backtrace,
+                                                 (CutBacktraceEntry *entry,
                                                   GString           *string,
                                                   guint              indent);
 
-gchar             *cut_backtrace_entry_format    (CutBacktraceEntry *backtrace);
+gchar             *cut_backtrace_entry_format    (CutBacktraceEntry *entry);
+void               cut_backtrace_entry_format_string
+                                                 (CutBacktraceEntry *entry,
+                                                  GString           *string);
 
 G_END_DECLS
 

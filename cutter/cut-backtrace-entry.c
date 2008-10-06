@@ -354,6 +354,15 @@ cut_backtrace_entry_to_xml_string (CutBacktraceEntry *entry, GString *string,
         line_string = g_strdup_printf("%d", priv->line);
     if (priv->function)
         info_string = g_strdup_printf("%s()", priv->function);
+    if (priv->info) {
+        if (info_string) {
+            gchar *function_string = info_string;
+            info_string = g_strconcat(function_string, ": ", priv->info, NULL);
+            g_free(function_string);
+        } else {
+            info_string = g_strdup(priv->info);
+        }
+    }
 
     append_element_with_children(string, indent, "entry",
                                  "file", priv->file,
@@ -368,9 +377,32 @@ cut_backtrace_entry_to_xml_string (CutBacktraceEntry *entry, GString *string,
 }
 
 gchar *
-cut_backtrace_entry_format (CutBacktraceEntry *backtrace)
+cut_backtrace_entry_format (CutBacktraceEntry *entry)
 {
-    return NULL; /* FIXME */
+    GString *string;
+
+    string = g_string_new(NULL);
+    cut_backtrace_entry_format_string(entry, string);
+    return g_string_free(string, FALSE);
+}
+
+void
+cut_backtrace_entry_format_string (CutBacktraceEntry *entry, GString *string)
+{
+    CutBacktraceEntryPrivate *priv;
+
+    priv = CUT_BACKTRACE_ENTRY_GET_PRIVATE(entry);
+
+    g_string_append_printf(string,
+                           "%s:%d",
+                           priv->file ? priv->file : "(null)",
+                           priv->line);
+    if (priv->function)
+        g_string_append_printf(string, ": %s()", priv->function);
+    if (priv->info)
+        g_string_append_printf(string, ": %s", priv->info);
+    if (priv->function == NULL && priv->info == NULL)
+        g_string_append(string, ":");
 }
 
 /*

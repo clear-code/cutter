@@ -1,5 +1,9 @@
 2008-10-06  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-backtrace-entry.[ch]: define format function.
+	* module/ui/: use backtrace entry format function.
+	* test/test-cut-report-xml.c: follow the above change.
+
 	* cutter/cut-hidden-definitions.h: add CUT_HELPER guard.
 
 	* module/ui/cut-gtk-ui.c: suppress warnings.

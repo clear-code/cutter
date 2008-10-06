@@ -979,17 +979,8 @@ append_test_result_row (CutGtkUI *ui, CutTestResult *result,
          node;
          node = g_list_next(node)) {
         CutBacktraceEntry *entry = node->data;
-        const gchar *info;
 
-        /* FIXME: should use cut_backtrace_entry_format() */
-        g_string_append_printf(name,
-                               "%s:%d: %s()",
-                               cut_backtrace_entry_get_file(entry),
-                               cut_backtrace_entry_get_line(entry),
-                               cut_backtrace_entry_get_function(entry));
-        info = cut_backtrace_entry_get_info(entry);
-        if (info)
-            g_string_append_printf(name, ": %s", info);
+        cut_backtrace_entry_format_string(entry, name);
         if (g_list_next(node))
             g_string_append(name, "\n");
     }
