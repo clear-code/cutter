@@ -27,9 +27,10 @@
 extern "C" {
 #endif
 
-void set_current_test_context(CutTestContext *context);
-CutTestContext *get_current_test_context(void);
+void            set_current_test_context (CutTestContext *context);
+CutTestContext *get_current_test_context (void);
 
+#ifndef CUT_HELPER
 static CutTestContextKey _current_test_context_key;
 
 void
@@ -43,6 +44,7 @@ get_current_test_context (void)
 {
     return cut_test_context_current_get(&_current_test_context_key);
 }
+#endif
 
 #ifdef __cplusplus
 }
