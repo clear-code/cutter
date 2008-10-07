@@ -67,6 +67,41 @@ extern "C" {
 } while (0)
 
 /**
+ * cut_take:
+ * @object: the object to be owned by Cutter.
+ * @destroy_function: the destroy function for the object.
+ *
+ * Passes ownership of the object to Cutter and returns the
+ * object itself. @object is destroyed by @destroy_func.
+ *
+ * Returns: the object owned by Cutter. Don't free it.
+ *
+ * Since: 1.0.5
+ */
+#define cut_take(object, destroy_function)                              \
+    cut_take_helper(get_current_test_context(), (object), destroy_function)
+
+#define cut_take_helper(test_context, string, destroy_function)     \
+    cut_test_context_take(test_context, (object), destroy_function)
+
+/**
+ * cut_take_memory:
+ * @memory: the memory to be owned by Cutter.
+ *
+ * Passes ownership of the memory to Cutter and returns the
+ * memory itself. @memory is destroyed by free().
+ *
+ * Returns: the memory owned by Cutter. Don't free it.
+ *
+ * Since: 1.0.5
+ */
+#define cut_take_memory(string)                                         \
+    cut_take_memory_helper(get_current_test_context(), (memory))
+
+#define cut_take_memory_helper(test_context, object)            \
+    cut_test_context_take_memory(test_context, (object))
+
+/**
  * cut_take_string:
  * @string: the string to be owned by Cutter.
  *
@@ -78,7 +113,7 @@ extern "C" {
 #define cut_take_string(string)                                         \
     cut_take_string_helper(get_current_test_context(), (string))
 
-#define cut_take_string_helper(test_context, string)                     \
+#define cut_take_string_helper(test_context, string)            \
     cut_test_context_take_string(test_context, (string))
 
 /**
@@ -95,6 +130,41 @@ extern "C" {
  */
 #define cut_take_strdup(string)                                         \
     cut_test_context_take_strdup(get_current_test_context(), (string))
+
+/**
+ * cut_take_strndup:
+ * @string: the string to be duplicated.
+ * @size: the number of bytes to duplicate.
+ *
+ * Duplicates the first @size bytes of the string, passes
+ * ownership of the duplicated string to Cutter and returns
+ * the duplicated string. The duplicated string is always
+ * nul-terminated.
+ *
+ * Returns: the duplicated string owned by Cutter. Don't free it.
+ *
+ * Since: 1.0.5
+ */
+#define cut_take_strndup(string, size)                          \
+    cut_test_context_take_strndup(get_current_test_context(),   \
+                                  (string), (size))
+
+/**
+ * cut_take_memdup:
+ * @memory: the memory to be duplicated.
+ * @size: the number of bytes to duplicate.
+ *
+ * Duplicates @size bytes of the memory, passes ownership of
+ * the duplicated memory to Cutter and returns the
+ * duplicated memory.
+ *
+ * Returns: the duplicated memory owned by Cutter. Don't free it.
+ *
+ * Since: 1.0.5
+ */
+#define cut_take_memdup(memory, size)                                   \
+    cut_test_context_take_memdup(get_current_test_context(),            \
+                                 (memory), (size))
 
 /**
  * cut_take_printf:

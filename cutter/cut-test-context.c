@@ -75,9 +75,9 @@ struct _CutTestContextPrivate
     gboolean failed;
     gboolean is_multi_thread;
     jmp_buf *jump_buffer;
-    GList *taken_strings;
-    GList *taken_string_arrays;
     GList *taken_objects;
+    GList *taken_string_arrays;
+    GList *taken_g_objects;
     GList *taken_errors;
     GList *taken_lists;
     GList *taken_hash_tables;
@@ -100,6 +100,32 @@ enum
 };
 
 G_DEFINE_TYPE (CutTestContext, cut_test_context, G_TYPE_OBJECT)
+
+typedef struct _TakenObject TakenObject;
+struct _TakenObject
+{
+    gpointer object;
+    CutDestroyFunction destroy_function;
+};
+
+static TakenObject *
+taken_object_new (gpointer object, CutDestroyFunction destroy_function)
+{
+    TakenObject *taken_object;
+
+    taken_object = g_slice_new(TakenObject);
+    taken_object->object = object;
+    taken_object->destroy_function = destroy_function;
+    return taken_object;
+}
+
+static void
+taken_object_free (TakenObject *taken_object)
+{
+    if (taken_object->object)
+        taken_object->destroy_function(taken_object->object);
+    g_slice_free(TakenObject, taken_object);
+}
 
 typedef struct _TakenList TakenList;
 struct _TakenList
@@ -209,13 +235,7 @@ cut_test_context_init (CutTestContext *context)
     priv->failed = FALSE;
     priv->is_multi_thread = FALSE;
 
-    priv->taken_strings = NULL;
-    priv->taken_string_arrays = NULL;
-
     priv->taken_objects = NULL;
-    priv->taken_errors = NULL;
-    priv->taken_lists = NULL;
-    priv->taken_hash_tables = NULL;
 
     priv->data_list = NULL;
     priv->current_data = NULL;
@@ -276,40 +296,10 @@ dispose (GObject *object)
         priv->processes = NULL;
     }
 
-    if (priv->taken_strings) {
-        g_list_foreach(priv->taken_strings, (GFunc)g_free, NULL);
-        g_list_free(priv->taken_strings);
-        priv->taken_strings = NULL;
-    }
-
-    if (priv->taken_string_arrays) {
-        g_list_foreach(priv->taken_string_arrays, (GFunc)g_strfreev, NULL);
-        g_list_free(priv->taken_string_arrays);
-        priv->taken_string_arrays = NULL;
-    }
-
     if (priv->taken_objects) {
-        g_list_foreach(priv->taken_objects, (GFunc)g_object_unref, NULL);
+        g_list_foreach(priv->taken_objects, (GFunc)taken_object_free, NULL);
         g_list_free(priv->taken_objects);
         priv->taken_objects = NULL;
-    }
-
-    if (priv->taken_errors) {
-        g_list_foreach(priv->taken_errors, (GFunc)g_error_free, NULL);
-        g_list_free(priv->taken_errors);
-        priv->taken_errors = NULL;
-    }
-
-    if (priv->taken_lists) {
-        g_list_foreach(priv->taken_lists, (GFunc)taken_list_free, NULL);
-        g_list_free(priv->taken_lists);
-        priv->taken_lists = NULL;
-    }
-
-    if (priv->taken_hash_tables) {
-        g_list_foreach(priv->taken_hash_tables, (GFunc)g_hash_table_unref, NULL);
-        g_list_free(priv->taken_hash_tables);
-        priv->taken_hash_tables = NULL;
     }
 
     free_data_list(priv);
@@ -861,15 +851,33 @@ cut_test_context_is_failed (CutTestContext *context)
     return CUT_TEST_CONTEXT_GET_PRIVATE(context)->failed;
 }
 
+const void *
+cut_test_context_take (CutTestContext *context,
+                       void           *object,
+                       CutDestroyFunction destroy_function)
+{
+    CutTestContextPrivate *priv;
+    TakenObject *taken_object;
+
+    priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+    taken_object = taken_object_new(object, destroy_function);
+    priv->taken_objects = g_list_prepend(priv->taken_objects, taken_object);
+
+    return object;
+}
+
+const void *
+cut_test_context_take_memory (CutTestContext *context,
+                              void           *memory)
+{
+    return cut_test_context_take(context, memory, g_free);
+}
+
 const char *
 cut_test_context_take_string (CutTestContext *context,
                               char           *string)
 {
-    CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
-
-    priv->taken_strings = g_list_prepend(priv->taken_strings, string);
-
-    return string;
+    return cut_test_context_take(context, string, g_free);
 }
 
 const char *
@@ -877,6 +885,22 @@ cut_test_context_take_strdup (CutTestContext *context,
                               const char     *string)
 {
     return cut_test_context_take_string(context, g_strdup(string));
+}
+
+const char *
+cut_test_context_take_strndup (CutTestContext *context,
+                               const char     *string,
+                               size_t          size)
+{
+    return cut_test_context_take_string(context, g_strndup(string, size));
+}
+
+const void *
+cut_test_context_take_memdup (CutTestContext *context,
+                              const void     *memory,
+                              size_t          size)
+{
+    return cut_test_context_take_memory(context, g_memdup(memory, size));
 }
 
 const char *
@@ -900,46 +924,34 @@ const char **
 cut_test_context_take_string_array (CutTestContext *context,
                                     char          **strings)
 {
-    CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
-
-    priv->taken_string_arrays =
-        g_list_prepend(priv->taken_string_arrays, strings);
-
-    return (const char **)strings;
+    return (const char **)cut_test_context_take(context,
+                                                (gpointer)strings,
+                                                (CutDestroyFunction)g_strfreev);
 }
 
 GObject *
 cut_test_context_take_g_object (CutTestContext *context,
                                 GObject        *object)
 {
-    CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
-
-    priv->taken_objects = g_list_prepend(priv->taken_objects, object);
-
-    return object;
+    return (GObject *)cut_test_context_take(context, object, g_object_unref);
 }
 
 const GError *
 cut_test_context_take_g_error (CutTestContext *context, GError *error)
 {
-    CutTestContextPrivate *priv;
-
-    priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
-    priv->taken_errors = g_list_prepend(priv->taken_errors, error);
-
-    return error;
+    return cut_test_context_take(context, error,
+                                 (CutDestroyFunction) g_error_free);
 }
 
 const GList *
 cut_test_context_take_g_list (CutTestContext *context, GList *list,
                               CutDestroyFunction destroy_function)
 {
-    CutTestContextPrivate *priv;
     TakenList *taken_list;
 
-    priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
     taken_list = taken_list_new(list, destroy_function);
-    priv->taken_lists = g_list_prepend(priv->taken_lists, taken_list);
+    cut_test_context_take(context, taken_list,
+                          (CutDestroyFunction)taken_list_free);
 
     return list;
 }
@@ -948,13 +960,9 @@ GHashTable *
 cut_test_context_take_g_hash_table (CutTestContext *context,
                                     GHashTable     *hash_table)
 {
-    CutTestContextPrivate *priv;
-
-    priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
-    priv->taken_hash_tables =
-        g_list_prepend(priv->taken_hash_tables, hash_table);
-
-    return hash_table;
+    return (GHashTable *)cut_test_context_take(context,
+                                               hash_table,
+                                               (CutDestroyFunction)g_hash_table_unref);
 }
 
 int

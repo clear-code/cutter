@@ -65,10 +65,21 @@ void  cut_test_context_register_resultv
                                              va_list args);
 void  cut_test_context_long_jump            (CutTestContext *context) CUT_GNUC_NORETURN;
 
+const void *cut_test_context_take           (CutTestContext *context,
+                                             void           *object,
+                                             CutDestroyFunction destroy_function);
+const void *cut_test_context_take_memory    (CutTestContext *context,
+                                             void           *memory);
 const char *cut_test_context_take_string    (CutTestContext *context,
                                              char           *string);
 const char *cut_test_context_take_strdup    (CutTestContext *context,
                                              const char     *string);
+const char *cut_test_context_take_strndup   (CutTestContext *context,
+                                             const char     *string,
+                                             size_t          size);
+const void *cut_test_context_take_memdup    (CutTestContext *context,
+                                             const void     *memory,
+                                             size_t          size);
 const char *cut_test_context_take_printf    (CutTestContext *context,
                                              const char     *format,
                                              ...) CUT_GNUC_PRINTF(2, 3);

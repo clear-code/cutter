@@ -1,3 +1,13 @@
+2008-10-07  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-public.h, cutter/cut-test-context.c
+	(cut_test_context_take)
+	(cut_test_context_take_memory, cut_test_context_take_strndup)
+	(cut_test_context_take_memdup): add.
+
+	* cutter/cut-test-utils.h (cut_take, cut_take_memory)
+	(cut_take_strndup, cut_take_memdup): add.
+
 2008-10-06  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-backtrace-entry.[ch]: define format function.
