@@ -20,3 +20,5 @@
 * resolve circular reference between CutStreamReader and CutStreamParser.
 * cut_assert_equal_sockaddr().
 * GTK+ UI supports test iterator.
+* add description about -I$PREFIX/share/aclocal and
+  PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig to TUTORIAL.

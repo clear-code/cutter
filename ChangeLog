@@ -1,3 +1,9 @@
+2008-10-09  Kouhei Sutou  <kou@cozmixng.org>
+
+	* TODO: add an entry: add description about
+	-I$PREFIX/share/aclocal and PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig
+	to TUTORIAL.
+
 2008-10-08  Kouhei Sutou  <kou@cozmixng.org>
 
 	* gcutter/gcut-assertions.h, gcutter/gcut-assertions-helper.[ch],
