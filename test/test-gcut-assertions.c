@@ -3,6 +3,7 @@
 #include <cutter/cut-test-result.h>
 #include <cutter/cut-utils.h>
 #include <cutter/cut-test-runner.h>
+#include <cutter/cut-loader.h>
 #include <cutter/cut-enum-types.h>
 #include "lib/cuttest-assertions.h"
 
@@ -13,6 +14,7 @@ void test_equal_list_uint(void);
 void test_equal_list_string(void);
 void test_equal_list_string_both_null(void);
 void test_equal_list_string_other_null(void);
+void test_equal_list_object(void);
 void test_equal_hash_string_string(void);
 void test_error(void);
 void test_equal_error(void);
@@ -27,6 +29,7 @@ static CutTestResult *test_result;
 static GValue *value1, *value2;
 static GList *list1, *list2;
 static gboolean need_to_free_list_contents;
+static GDestroyNotify list_element_free_function;
 static GHashTable *hash1, *hash2;
 
 static GError *error;
@@ -67,6 +70,7 @@ setup (void)
     list1 = NULL;
     list2 = NULL;
     need_to_free_list_contents = FALSE;
+    list_element_free_function = g_free;
 
     hash1 = NULL;
     hash2 = NULL;
@@ -99,8 +103,8 @@ teardown (void)
     g_free(value2);
 
     if (need_to_free_list_contents) {
-        g_list_foreach(list1, (GFunc)g_free, NULL);
-        g_list_foreach(list2, (GFunc)g_free, NULL);
+        g_list_foreach(list1, (GFunc)list_element_free_function, NULL);
+        g_list_foreach(list2, (GFunc)list_element_free_function, NULL);
     }
     g_list_free(list1);
     g_list_free(list2);
@@ -345,6 +349,72 @@ test_equal_list_string_other_null (void)
                            "expected: <(\"abc\", \"abc\", \"def\")>\n"
                            " but was: <(NULL, \"abc\", \"def\")>",
                            "stub_equal_list_string_other_null");
+}
+
+static void
+g_object_unref_with_null_check (gpointer object)
+{
+    if (object)
+        g_object_unref(object);
+}
+
+static void
+stub_equal_list_object (void)
+{
+    need_to_free_list_contents = TRUE;
+    list_element_free_function = g_object_unref_with_null_check;
+
+    list1 = g_list_append(list1, cut_loader_new("file1"));
+    list1 = g_list_append(list1, NULL);
+    list1 = g_list_append(list1, cut_test_new("test1", NULL));
+    list2 = g_list_append(list2, cut_loader_new("file2"));
+    list2 = g_list_append(list2, NULL);
+    list2 = g_list_append(list2, cut_test_new("test2", NULL));
+
+    gcut_assert_equal_list_object(list1, list1);
+    gcut_assert_equal_list_object(list2, list2);
+
+    gcut_assert_equal_list_object(list1, list2);
+}
+
+void
+test_equal_list_object (void)
+{
+    const gchar *inspected_expected, *inspected_actual;
+    const gchar *message, *message_with_diff;
+
+    test = cut_test_new("equal_list_object test",
+                        stub_equal_list_object);
+    cut_assert_not_null(test);
+
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+
+    inspected_expected = cut_take_printf(
+        "(#<CutLoader:%p so-filename=<\"file1\">>, "
+          "NULL, "
+         "#<CutTest:%p name=<\"test1\">, element-name=<\"test\">, "
+            "test-function=<NULL>>)",
+        list1->data, g_list_nth_data(list1, 2));
+    inspected_actual = cut_take_printf(
+        "(#<CutLoader:%p so-filename=<\"file2\">>, "
+          "NULL, "
+         "#<CutTest:%p name=<\"test2\">, element-name=<\"test\">, "
+            "test-function=<NULL>>)",
+        list2->data, g_list_nth_data(list2, 2));
+    message = cut_take_printf("<list1 == list2>\n"
+                              "expected: <%s>\n"
+                              " but was: <%s>",
+                              inspected_expected,
+                              inspected_actual);
+    message_with_diff = cut_append_diff(message,
+                                        inspected_expected,
+                                        inspected_actual);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "equal_list_object test",
+                           NULL,
+                           message_with_diff,
+                           "stub_equal_list_object");
 }
 
 static void

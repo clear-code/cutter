@@ -125,8 +125,7 @@ equal_match (const CutSequenceMatchInfo *info1,
 }
 
 static gboolean
-equal_match_with_data (gconstpointer info1, gconstpointer info2,
-                       gpointer user_data)
+equal_match_with_data (gconstpointer info1, gconstpointer info2)
 {
     return equal_match(info1, info2);
 }
@@ -134,7 +133,7 @@ equal_match_with_data (gconstpointer info1, gconstpointer info2,
 static gboolean
 equal_matches (const GList *matches1, const GList *matches2)
 {
-    return gcut_list_equal(matches1, matches2, equal_match_with_data, NULL);
+    return gcut_list_equal(matches1, matches2, equal_match_with_data);
 }
 
 static gchar *
@@ -654,8 +653,7 @@ test_get_blocks_complex_for_char_sequence (void)
 }
 
 static gboolean
-equal_operation_with_data (gconstpointer data1, gconstpointer data2,
-                           gpointer user_data)
+equal_operation_with_data (gconstpointer data1, gconstpointer data2)
 {
     const CutSequenceMatchOperation *operation1, *operation2;
 
@@ -672,7 +670,7 @@ static gboolean
 equal_operations (const GList *operations1, const GList *operations2)
 {
     return gcut_list_equal(operations1, operations2,
-                           equal_operation_with_data, NULL);
+                           equal_operation_with_data);
 }
 
 static const gchar *

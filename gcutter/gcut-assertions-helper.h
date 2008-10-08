@@ -69,6 +69,15 @@ void      gcut_assert_equal_list_string_helper
                                              const gchar    *expression_actual,
                                              const gchar    *user_message_format,
                                              ...);
+void      gcut_assert_equal_list_object_helper
+                                            (CutTestContext *test_context,
+                                             const GList    *expected,
+                                             const GList    *actual,
+                                             GEqualFunc      equal_function,
+                                             const gchar    *expression_expected,
+                                             const gchar    *expression_actual,
+                                             const gchar    *user_message_format,
+                                             ...);
 void      gcut_assert_equal_hash_table_string_string_helper
                                             (CutTestContext *test_context,
                                              GHashTable     *expected,

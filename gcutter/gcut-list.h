@@ -30,8 +30,7 @@ typedef void   (*GCutInspectFunc) (GString *string,
 
 gboolean         gcut_list_equal                (const GList *list1,
                                                  const GList *list2,
-                                                 GCompareDataFunc compare_func,
-                                                 gpointer user_data);
+                                                 GEqualFunc   equal_func);
 gchar           *gcut_list_inspect              (const GList *list,
                                                  GCutInspectFunc inspect_func,
                                                  gpointer user_data);
@@ -47,6 +46,8 @@ gchar           *gcut_list_uint_inspect         (const GList *list);
 gboolean         gcut_list_string_equal         (const GList *list1,
                                                  const GList *list2);
 gchar           *gcut_list_string_inspect       (const GList *list);
+
+gchar           *gcut_list_object_inspect       (const GList *list);
 
 
 G_END_DECLS

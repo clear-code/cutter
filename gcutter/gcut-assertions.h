@@ -208,6 +208,51 @@ G_BEGIN_DECLS
 #endif
 
 /**
+ * gcut_assert_equal_list_object:
+ * @expected: an expected GList * of GObject *.
+ * @actual: an actual GList * of GObject *.
+ * @...: optional format string, followed by parameters to insert
+ *       into the format string (as with printf())
+ *
+ * Passes if @expected and @actual has same GObject * in
+ * same order.
+ *
+ * Since: 1.0.5
+ */
+#define gcut_assert_equal_list_object(expected, actual, ...)            \
+    cut_trace_with_info_expression(                                     \
+        gcut_assert_equal_list_object_helper(                           \
+            get_current_test_context(),                                 \
+            expected, actual, g_direct_equal, #expected, #actual,       \
+            ## __VA_ARGS__, NULL),                                      \
+        gcut_assert_equal_list_object(expected, actual, ## __VA_ARGS__))
+
+/**
+ * gcut_assert_equal_list_object_custom:
+ * @expected: an expected GList * of GObject *.
+ * @actual: an actual GList * of GObject *.
+ * @equal_function: a function that compares two GObject *.
+ *                  (#GEqualFunc)
+ * @...: optional format string, followed by parameters to insert
+ *       into the format string (as with printf())
+ *
+ * Passes if @expected and @actual has same GObject * in
+ * same order. Each comparison of GObject * uses
+ * @equal_function.
+ *
+ * Since: 1.0.5
+ */
+#define gcut_assert_equal_list_object_custom(expected, actual,          \
+                                             equal_function, ...)       \
+    cut_trace_with_info_expression(                                     \
+        gcut_assert_equal_list_object_helper(                           \
+            get_current_test_context(),                                 \
+            expected, actual, equal_function, #expected, #actual,       \
+            ## __VA_ARGS__, NULL),                                      \
+        gcut_assert_equal_list_object_custom(expected, actual,          \
+                                             ## __VA_ARGS__))
+
+/**
  * gcut_assert_equal_hash_table_string_string:
  * @expected: an expected GHashTable * of string.
  * @actual: an actual GHashTable * of string.

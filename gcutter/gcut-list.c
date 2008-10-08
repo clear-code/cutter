@@ -28,15 +28,14 @@
 #include "gcut-test-utils.h"
 
 gboolean
-gcut_list_equal (const GList *list1, const GList *list2,
-                 GCompareDataFunc compare_func, gpointer user_data)
+gcut_list_equal (const GList *list1, const GList *list2, GEqualFunc equal_func)
 {
     const GList *node1, *node2;
 
     for (node1 = list1, node2 = list2;
          node1 && node2;
          node1 = g_list_next(node1), node2 = g_list_next(node2)) {
-        if (!compare_func(node1->data, node2->data, user_data))
+        if (!equal_func(node1->data, node2->data))
             return FALSE;
     }
 
@@ -64,7 +63,7 @@ gcut_list_inspect (const GList *list, GCutInspectFunc inspect_func,
 }
 
 static gboolean
-equal_int (gconstpointer data1, gconstpointer data2, gpointer user_data)
+equal_int (gconstpointer data1, gconstpointer data2)
 {
     return GPOINTER_TO_INT(data1) == GPOINTER_TO_INT(data2);
 }
@@ -72,7 +71,7 @@ equal_int (gconstpointer data1, gconstpointer data2, gpointer user_data)
 gboolean
 gcut_list_int_equal (const GList *list1, const GList *list2)
 {
-    return gcut_list_equal(list1, list2, equal_int, NULL);
+    return gcut_list_equal(list1, list2, equal_int);
 }
 
 static void
@@ -88,7 +87,7 @@ gcut_list_int_inspect (const GList *list)
 }
 
 static gboolean
-equal_uint (gconstpointer data1, gconstpointer data2, gpointer user_data)
+equal_uint (gconstpointer data1, gconstpointer data2)
 {
     return GPOINTER_TO_UINT(data1) == GPOINTER_TO_UINT(data2);
 }
@@ -96,7 +95,7 @@ equal_uint (gconstpointer data1, gconstpointer data2, gpointer user_data)
 gboolean
 gcut_list_uint_equal (const GList *list1, const GList *list2)
 {
-    return gcut_list_equal(list1, list2, equal_uint, NULL);
+    return gcut_list_equal(list1, list2, equal_uint);
 }
 
 static void
@@ -112,7 +111,7 @@ gcut_list_uint_inspect (const GList *list)
 }
 
 static gboolean
-equal_string (gconstpointer data1, gconstpointer data2, gpointer user_data)
+equal_string (gconstpointer data1, gconstpointer data2)
 {
     if (data1 == NULL && data2 == NULL)
         return TRUE;
@@ -126,7 +125,7 @@ equal_string (gconstpointer data1, gconstpointer data2, gpointer user_data)
 gboolean
 gcut_list_string_equal (const GList *list1, const GList *list2)
 {
-    return gcut_list_equal(list1, list2, equal_string, NULL);
+    return gcut_list_equal(list1, list2, equal_string);
 }
 
 static void
@@ -167,6 +166,48 @@ gcut_list_string_free (GList *list)
 {
     g_list_foreach(list, (GFunc)g_free, NULL);
     g_list_free(list);
+}
+
+static void
+inspect_object (GString *string, gconstpointer data, gpointer user_data)
+{
+    GObject *object = (GObject *)data;
+    guint i, n_properties = 0;
+    GParamSpec **param_specs = NULL;
+
+    if (!object) {
+        g_string_append(string, "NULL");
+        return;
+    }
+
+    g_string_append_printf(string, "#<%s:%p",
+                           G_OBJECT_TYPE_NAME(object),
+                           object);
+    param_specs = g_object_class_list_properties(G_OBJECT_GET_CLASS(object),
+                                                 &n_properties);
+    for (i = 0; i < n_properties; i++) {
+        GParamSpec *spec = param_specs[i];
+        GValue value = {0,};
+        gchar *value_string;
+
+        if (i > 0)
+            g_string_append(string, ",");
+
+        g_value_init(&value, spec->value_type);
+        g_object_get_property(object, spec->name, &value);
+        value_string = g_strdup_value_contents(&value);
+        g_string_append_printf(string, " %s=<%s>", spec->name, value_string);
+        g_free(value_string);
+        g_value_unset(&value);
+    }
+    g_free(param_specs);
+    g_string_append(string, ">");
+}
+
+gchar *
+gcut_list_object_inspect (const GList *list)
+{
+    return gcut_list_inspect(list, inspect_object, NULL);
 }
 
 /*

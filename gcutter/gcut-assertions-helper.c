@@ -213,6 +213,45 @@ gcut_assert_equal_list_string_helper (CutTestContext *test_context,
 }
 
 void
+gcut_assert_equal_list_object_helper (CutTestContext *test_context,
+                                      const GList    *expected,
+                                      const GList    *actual,
+                                      GEqualFunc      equal_function,
+                                      const gchar    *expression_expected,
+                                      const gchar    *expression_actual,
+                                      const gchar    *user_message_format,
+                                      ...)
+{
+    if (gcut_list_equal(expected, actual, equal_function)) {
+        cut_test_pass_helper(test_context);
+    } else {
+        const gchar *message;
+        const gchar *inspected_expected, *inspected_actual;
+
+        inspected_expected =
+            cut_take_string_helper(test_context,
+                                   gcut_list_object_inspect(expected));
+        inspected_actual =
+            cut_take_string_helper(test_context,
+                                   gcut_list_object_inspect(actual));
+
+        message = cut_take_printf_helper(test_context,
+                                         "<%s == %s>\n"
+                                         "expected: <%s>\n"
+                                         " but was: <%s>",
+                                         expression_expected, expression_actual,
+                                         inspected_expected,
+                                         inspected_actual);
+        message = cut_append_diff_helper(test_context,
+                                         message,
+                                         inspected_expected,
+                                         inspected_actual);
+        cut_test_fail_helper(test_context, FAILURE,
+                             message, user_message_format);
+    }
+}
+
+void
 gcut_assert_equal_hash_table_string_string_helper (CutTestContext *test_context,
                                                    GHashTable     *expected,
                                                    GHashTable     *actual,
