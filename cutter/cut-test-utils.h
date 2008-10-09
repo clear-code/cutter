@@ -95,7 +95,7 @@ extern "C" {
  *
  * Since: 1.0.5
  */
-#define cut_take_memory(string)                                         \
+#define cut_take_memory(memory)                                 \
     cut_take_memory_helper(get_current_test_context(), (memory))
 
 #define cut_take_memory_helper(test_context, object)            \

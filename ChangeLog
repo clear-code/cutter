@@ -1,3 +1,8 @@
+2008-10-10  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-utils.h (cut_take_memory): Fix typo. string ->
+	memory.
+
 2008-10-09  Kouhei Sutou  <kou@cozmixng.org>
 
 	* TODO: add an entry: add description about
