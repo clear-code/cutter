@@ -742,14 +742,12 @@ set_property (GObject      *object,
 
     switch (prop_id) {
       case PROP_RUN_CONTEXT:
-        if (priv->run_context) {
-            g_object_unref(priv->run_context);
-            priv->run_context = NULL;
-        }
-        priv->run_context = g_value_get_object(value);
-        if (priv->run_context)
-            g_object_ref(priv->run_context);
+      {
+        gpointer object = g_value_get_object(value);
+        if (object)
+            priv->run_context = g_object_ref(object);
         break;
+      }
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;

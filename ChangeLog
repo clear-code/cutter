@@ -2,6 +2,8 @@
 
 	* cutter/cut-test-utils.h (cut_take_memory): Fix typo. string ->
 	memory.
+	* cutter/cut-stream-parser.c: "run-context" property is
+	"CONSTRUCT_ONLY" so is is not needed to unref previous value.
 
 2008-10-09  Kouhei Sutou  <kou@cozmixng.org>
 
