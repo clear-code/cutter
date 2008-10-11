@@ -410,13 +410,13 @@ test_equal_list_object (void)
 
     inspected_expected = cut_take_printf(
         "(#<CutRepository:%p directory=<\"directory1\">>, "
-          "NULL, "
+          "(null), "
          "#<CutTest:%p name=<\"test1\">, element-name=<\"test\">, "
             "test-function=<NULL>, base-directory=<NULL>>)",
         list1->data, g_list_nth_data(list1, 2));
     inspected_actual = cut_take_printf(
         "(#<CutRepository:%p directory=<\"directory2\">>, "
-          "NULL, "
+          "(null), "
          "#<CutTest:%p name=<\"test2\">, element-name=<\"test\">, "
             "test-function=<NULL>, base-directory=<NULL>>)",
         list2->data, g_list_nth_data(list2, 2));

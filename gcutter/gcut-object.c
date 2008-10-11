@@ -24,6 +24,7 @@
 #include <glib-object.h>
 
 #include "gcut-object.h"
+#include "gcut-enum.h"
 #include "gcut-test-utils.h"
 
 gboolean
@@ -62,7 +63,18 @@ inspect_object (GString *string, gconstpointer const_object, gpointer data)
 
         g_value_init(&value, spec->value_type);
         g_object_get_property(object, spec->name, &value);
-        value_string = g_strdup_value_contents(&value);
+        if (G_TYPE_IS_ENUM(spec->value_type)) {
+            value_string = gcut_enum_inspect(spec->value_type,
+                                             g_value_get_enum(&value));
+        } else if (G_TYPE_IS_FLAGS(spec->value_type)) {
+            value_string = gcut_flags_inspect(spec->value_type,
+                                              g_value_get_flags(&value));
+        } else if (G_TYPE_IS_OBJECT(spec->value_type)) {
+            /* FIXME: circular check */
+            value_string = gcut_object_inspect(g_value_get_object(&value));
+        } else {
+            value_string = g_strdup_value_contents(&value);
+        }
         g_string_append_printf(string, " %s=<%s>", spec->name, value_string);
         g_free(value_string);
         g_value_unset(&value);
@@ -84,7 +96,7 @@ gcut_object_inspect_custom (const GObject *object, GCutInspectFunc inspect_func,
     GString *string;
 
     if (!object)
-        return g_strdup("NULL");
+        return g_strdup("(null)");
 
     string = g_string_new(NULL);
     inspect_func(string, object, user_data);

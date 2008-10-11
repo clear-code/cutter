@@ -81,7 +81,7 @@ void
 test_inspect_null (void)
 {
     inspected = gcut_object_inspect(NULL);
-    cut_assert_equal_string("NULL", inspected);
+    cut_assert_equal_string("(null)", inspected);
 }
 
 static void

@@ -30,8 +30,6 @@ gboolean         gdkcut_pixbuf_equal_content    (const GdkPixbuf *pixbuf1,
                                                  const GdkPixbuf *pixbuf2,
                                                  guint            threshold);
 
-gchar           *gdkcut_pixbuf_inspect_property (const GdkPixbuf *pixbuf);
-
 GdkPixbuf       *gdkcut_pixbuf_diff             (const GdkPixbuf *pixbuf1,
                                                  const GdkPixbuf *pixbuf2,
                                                  guint            threshold);

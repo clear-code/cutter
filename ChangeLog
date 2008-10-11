@@ -1,5 +1,17 @@
 2008-10-11  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gdkcutter-pixbuf/gdkcut-pixbuf.[ch]: remove
+	gdkcut_pixbuf_inspect_property().
+
+	* test/test-gdkcut-pixbuf.c: use gcut_object_inspect() instead of
+	gdkcut_pixbuf_inspect_property().
+
+	* cutter/cut-assertions.h (cut_assert_equal_string_with_free):
+	improve backtrace.
+
+	* gcutter/gcut-object.c, test/test-gcut-object.c: improve
+	inspected result.
+
 	* gcutter/gcut-object.[ch], test/test-gcut-object.c: add.
 
 	* gcutter/gcut-list.c: use gcut_object_*().

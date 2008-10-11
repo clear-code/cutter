@@ -226,9 +226,11 @@ extern "C" {
  */
 #define cut_assert_equal_string_with_free(expected, actual, ...)        \
     cut_trace_with_info_expression(                                     \
-        cut_assert_equal_string(expected,                               \
-                                cut_take_string(actual),                \
-                                ## __VA_ARGS__),                        \
+        cut_assert_equal_string_helper(get_current_test_context(),      \
+                                       expected,                        \
+                                       cut_take_string(actual),         \
+                                       #expected, #actual,              \
+                                       ## __VA_ARGS__, NULL),           \
         cut_assert_equal_string_with_free(expected, actual,             \
                                           ## __VA_ARGS__))
 

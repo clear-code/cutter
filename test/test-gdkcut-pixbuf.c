@@ -6,7 +6,7 @@
 void test_equal_property(void);
 void test_equal_content(void);
 void test_equal_content_threshold(void);
-void test_inspect_property(void);
+void test_inspect(void);
 
 static GdkPixbuf *pixbuf1, *pixbuf2;
 
@@ -89,29 +89,43 @@ test_equal_content_threshold (void)
 }
 
 void
-test_inspect_property (void)
+test_inspect (void)
 {
+    const gchar *expected;
     pixbuf1 = load_pixbuf("dark-circle.png");
     pixbuf2 = load_pixbuf("no-alpha-small-circle.png");
 
-    cut_assert_equal_string_with_free("#<GdkPixbuf: "
-                                      "n-channels: 4; "
-                                      "has-alpha: TRUE; "
-                                      "bits-per-sample: 8; "
-                                      "width: 100; "
-                                      "height: 100; "
-                                      "row-stride: 400"
-                                      ">",
-                                      gdkcut_pixbuf_inspect_property(pixbuf1));
-    cut_assert_equal_string_with_free("#<GdkPixbuf: "
-                                      "n-channels: 3; "
-                                      "has-alpha: FALSE; "
-                                      "bits-per-sample: 8; "
-                                      "width: 50; "
-                                      "height: 50; "
-                                      "row-stride: 152"
-                                      ">",
-                                      gdkcut_pixbuf_inspect_property(pixbuf2));
+    expected = cut_take_printf("#<GdkPixbuf:%p "
+                               "colorspace="
+                               "<#<GdkColorspace: rgb(GDK_COLORSPACE_RGB:0)>>, "
+                               "n-channels=<4>, "
+                               "has-alpha=<TRUE>, "
+                               "bits-per-sample=<8>, "
+                               "width=<100>, "
+                               "height=<100>, "
+                               "rowstride=<400>, "
+                               "pixels=<((gpointer) %p)>"
+                               ">",
+                               pixbuf1,
+                               gdk_pixbuf_get_pixels(pixbuf1));
+    cut_assert_equal_string_with_free(expected,
+                                      gcut_object_inspect(G_OBJECT(pixbuf1)));
+
+    expected = cut_take_printf("#<GdkPixbuf:%p "
+                               "colorspace="
+                               "<#<GdkColorspace: rgb(GDK_COLORSPACE_RGB:0)>>, "
+                               "n-channels=<3>, "
+                               "has-alpha=<FALSE>, "
+                               "bits-per-sample=<8>, "
+                               "width=<50>, "
+                               "height=<50>, "
+                               "rowstride=<152>, "
+                               "pixels=<((gpointer) %p)>"
+                               ">",
+                               pixbuf2,
+                               gdk_pixbuf_get_pixels(pixbuf2));
+    cut_assert_equal_string_with_free(expected,
+                                      gcut_object_inspect(G_OBJECT(pixbuf2)));
 }
 
 /*
