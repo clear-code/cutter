@@ -56,6 +56,17 @@ static CutRunContext *run_context;
 static CutTestContext *test_context;
 static CutTestResult *test_result;
 
+static gint fail_line;
+
+#define MARK_FAIL(assertion) do                 \
+{                                               \
+    fail_line = __LINE__;                       \
+    assertion;                                  \
+} while (0)
+
+#define FAIL_LOCATION (cut_take_printf("%s:%d", __FILE__, fail_line))
+
+
 static void
 error_equal_string (void)
 {
@@ -66,44 +77,6 @@ static void
 error_equal_string_with_null (void)
 {
     cut_assert_equal_string("", NULL);
-}
-
-static void
-stub_error_test_function (void)
-{
-    cut_error("This test should error");
-}
-
-static void
-stub_fail_test_function (void)
-{
-    cut_fail("This test should fail");
-}
-
-static void
-stub_pend_test_function (void)
-{
-    cut_pend("This test has been pending ever!");
-}
-
-static void
-stub_notify_test_function (void)
-{
-    cut_notify("This test has been notifying ever!");
-}
-
-static void
-stub_assert_message_test_function (void)
-{
-    cut_assert(FALSE, "The message of %s", "assertion");
-}
-
-static void
-stub_assert_message_with_format_string (void)
-{
-    cut_assert_equal_string("%s", "%d",
-                            "%s and %s have format string",
-                            "expected", "actual");
 }
 
 static void
@@ -146,6 +119,7 @@ setup (void)
     run_context = NULL;
     test_context = NULL;
     test_result = NULL;
+    fail_line = 0;
 }
 
 void
@@ -356,7 +330,7 @@ stub_operator_int (void)
 {
     cut_assert_operator_int(1, <, 2 + 3);
     cut_assert_operator_int(2, ==, 1 + 1);
-    cut_assert_operator_int(1 + 1, >=, 2 + 4);
+    MARK_FAIL(cut_assert_operator_int(1 + 1, >=, 2 + 4));
 }
 
 void
@@ -371,6 +345,7 @@ test_operator_int (void)
                            "stub-operator-int", NULL,
                            "expected: <1 + 1> >= <2 + 4>\n"
                            " but was: <2> >= <6>",
+                           FAIL_LOCATION,
                            "stub_operator_int");
 }
 
@@ -378,7 +353,7 @@ static void
 stub_operator_double (void)
 {
     cut_assert_operator_double(1.2, <, 2.2 + 3.4);
-    cut_assert_operator_double(1.1 + 1.1, >=, 2.2 + 4.4);
+    MARK_FAIL(cut_assert_operator_double(1.1 + 1.1, >=, 2.2 + 4.4));
 }
 
 void
@@ -393,6 +368,7 @@ test_operator_double (void)
                            "stub-operator-double", NULL,
                            "expected: <1.1 + 1.1> >= <2.2 + 4.4>\n"
                            " but was: <2.2> >= <6.6>",
+                           FAIL_LOCATION,
                            "stub_operator_double");
 }
 
@@ -409,8 +385,8 @@ stub_equal_memory (void)
                             actual, sizeof(actual));
     cut_assert_equal_memory(expected, sizeof(expected),
                             actual, sizeof(expected));
-    cut_assert_equal_memory(expected, sizeof(expected),
-                            actual, sizeof(actual));
+    MARK_FAIL(cut_assert_equal_memory(expected, sizeof(expected),
+                                      actual, sizeof(actual)));
 }
 
 void
@@ -426,6 +402,7 @@ test_equal_memory (void)
                            "expected: <0x00 0x01 0x02 0x03 0x04 (size: 5)>\n"
                            " but was: <0x00 0x01 0x02 0x03 0x04 "
                            "0x12 0x10 0x0e 0x0c 0x0a (size: 10)>",
+                           FAIL_LOCATION,
                            "stub_equal_memory");
 }
 
@@ -461,10 +438,16 @@ test_error_equal_string (void)
     cut_assert_false(run());
 }
 
+static void
+stub_error (void)
+{
+    MARK_FAIL(cut_error("This test should error"));
+}
+
 void
 test_error (void)
 {
-    test = cut_test_new("stub-error-test", stub_error_test_function);
+    test = cut_test_new("stub-error-test", stub_error);
     cut_assert_not_null(test);
 
     cut_assert_false(run());
@@ -472,13 +455,21 @@ test_error (void)
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_ERROR,
                            "stub-error-test",
                            "This test should error", NULL,
-                           "stub_error_test_function");
+                           FAIL_LOCATION,
+                           "stub_error");
+}
+
+static void
+stub_pend (void)
+{
+    cut_pend("This test has been pending ever!");
 }
 
 void
 test_pending (void)
 {
-    test = cut_test_new("stub-pend-test", stub_pend_test_function);
+    /* FIXME: use cut_assert_test_result_summary() */
+    test = cut_test_new("stub-pend-test", stub_pend);
     cut_assert_not_null(test);
 
     g_signal_connect(test, "pending", G_CALLBACK(cb_collect_result),
@@ -495,15 +486,22 @@ test_pending (void)
                          cut_test_result_get_status(test_result));
 }
 
+static void
+stub_notify (void)
+{
+    cut_notify("This test has been notifying ever!");
+}
+
 void
 test_notification (void)
 {
-    test = cut_test_new("stub-notify-test", stub_notify_test_function);
+    /* FIXME: use cut_assert_test_result_summary() */
+    test = cut_test_new("stub-notify-test", stub_notify);
     cut_assert_not_null(test);
 
     g_signal_connect(test, "notification", G_CALLBACK(cb_collect_result),
                      &test_result);
-    cut_assert_true(run(), "cut_notify() did return FALSE!");
+    cut_assert_true(run(), "cut_notify() did return TRUE!");
     g_signal_handlers_disconnect_by_func(test,
                                          G_CALLBACK(cb_collect_result),
                                          &test_result);
@@ -515,10 +513,17 @@ test_notification (void)
                          cut_test_result_get_status(test_result));
 }
 
+static void
+stub_fail (void)
+{
+    cut_fail("This test should fail");
+}
+
 void
 test_fail (void)
 {
-    test = cut_test_new("stub-fail-test", stub_fail_test_function);
+    /* FIXME: use cut_assert_test_result_summary() */
+    test = cut_test_new("stub-fail-test", stub_fail);
     cut_assert_not_null(test);
 
     g_signal_connect(test, "failure", G_CALLBACK(cb_collect_result),
@@ -534,11 +539,18 @@ test_fail (void)
                          cut_test_result_get_status(test_result));
 }
 
+static void
+stub_assert_message (void)
+{
+    cut_assert(FALSE, "The message of %s", "assertion");
+}
+
 void
 test_assert_message (void)
 {
+    /* FIXME: use cut_assert_test_result_summary() */
     test = cut_test_new("stub-assertion-message-test",
-                        stub_assert_message_test_function);
+                        stub_assert_message);
     cut_assert_not_null(test);
 
     g_signal_connect(test, "failure", G_CALLBACK(cb_collect_result),
@@ -556,9 +568,18 @@ test_assert_message (void)
                             cut_test_result_get_user_message(test_result));
 }
 
+static void
+stub_assert_message_with_format_string (void)
+{
+    cut_assert_equal_string("%s", "%d",
+                            "%s and %s have format string",
+                            "expected", "actual");
+}
+
 void
 test_assert_message_with_format_string (void)
 {
+    /* FIXME: use cut_assert_test_result_summary() */
     test = cut_test_new("stub-assert-message-with-string",
                         stub_assert_message_with_format_string);
     cut_assert_not_null(test);
@@ -597,12 +618,10 @@ test_assert_equal_function (void)
     cut_assert_true(compare_function_is_called);
 }
 
-static gboolean
+static void
 fail_in_nested_function (void)
 {
     cut_fail("Fail from nested function");
-
-    return FALSE;
 }
 
 static void
@@ -615,6 +634,7 @@ just_call_fail_in_nested_function (void)
 void
 test_failure_from_nested_function (void)
 {
+    /* FIXME: use cut_assert_test_result_summary() */
     CutTestResult *result;
 
     test = cut_test_new("fail from nested function",
@@ -829,6 +849,7 @@ error_errno (void)
 void
 test_error_errno (void)
 {
+    /* FIXME: use cut_assert_test_result_summary() */
     CutTestResult *result;
 
     test = cut_test_new("error-errno", error_errno);

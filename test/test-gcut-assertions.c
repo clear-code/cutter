@@ -38,6 +38,16 @@ static gboolean need_to_free_error;
 
 static GType flags_type = 0;
 
+static gint fail_line;
+
+#define MARK_FAIL(assertion) do                 \
+{                                               \
+    fail_line = __LINE__;                       \
+    assertion;                                  \
+} while (0)
+
+#define FAIL_LOCATION (cut_take_printf("%s:%d", __FILE__, fail_line))
+
 static gboolean
 run (void)
 {
@@ -80,6 +90,8 @@ setup (void)
 
     error1 = NULL;
     error2 = NULL;
+
+    fail_line = 0;
 }
 
 void
@@ -128,7 +140,7 @@ static void
 stub_equal_type (void)
 {
     gcut_assert_equal_type(G_TYPE_INT, G_TYPE_INT);
-    gcut_assert_equal_type(G_TYPE_INT, G_TYPE_STRING);
+    MARK_FAIL(gcut_assert_equal_type(G_TYPE_INT, G_TYPE_STRING));
 }
 
 void
@@ -145,6 +157,7 @@ test_equal_type (void)
                            "<G_TYPE_INT == G_TYPE_STRING>\n"
                            "expected: <gint>\n"
                            " but was: <gchararray>",
+                           FAIL_LOCATION,
                            "stub_equal_type");
 }
 
@@ -160,7 +173,7 @@ stub_equal_value (void)
     gcut_assert_equal_value(value1, value1);
     gcut_assert_equal_value(value2, value2);
 
-    gcut_assert_equal_value(value1, value2);
+    MARK_FAIL(gcut_assert_equal_value(value1, value2));
 }
 
 void
@@ -177,6 +190,7 @@ test_equal_value (void)
                            "<value1 == value2>\n"
                            "expected: <10> (gint)\n"
                            " but was: <\"String\"> (gchararray)",
+                           FAIL_LOCATION,
                            "stub_equal_value");
 }
 
@@ -191,7 +205,7 @@ stub_equal_list_int (void)
     gcut_assert_equal_list_int(list1, list1);
     gcut_assert_equal_list_int(list2, list2);
 
-    gcut_assert_equal_list_int(list1, list2);
+    MARK_FAIL(gcut_assert_equal_list_int(list1, list2));
 }
 
 void
@@ -214,6 +228,7 @@ test_equal_list_int (void)
                            "?      ^^\n"
                            "+ (-1000, 2000)\n"
                            "?  +   + ^   +",
+                           FAIL_LOCATION,
                            "stub_equal_list_int");
 }
 
@@ -228,7 +243,7 @@ stub_equal_list_uint (void)
     gcut_assert_equal_list_uint(list1, list1);
     gcut_assert_equal_list_uint(list2, list2);
 
-    gcut_assert_equal_list_uint(list1, list2);
+    MARK_FAIL(gcut_assert_equal_list_uint(list1, list2));
 }
 
 void
@@ -250,6 +265,7 @@ test_equal_list_uint (void)
                            "- (100, 200)\n"
                            "+ (1000, 2000)\n"
                            "?     +     +",
+                           FAIL_LOCATION,
                            "stub_equal_list_uint");
 }
 
@@ -266,7 +282,7 @@ stub_equal_list_string (void)
     gcut_assert_equal_list_string(list1, list1);
     gcut_assert_equal_list_string(list2, list2);
 
-    gcut_assert_equal_list_string(list1, list2);
+    MARK_FAIL(gcut_assert_equal_list_string(list1, list2));
 }
 
 void
@@ -283,6 +299,7 @@ test_equal_list_string (void)
                            "<list1 == list2>\n"
                            "expected: <(\"abc\", \"def\")>\n"
                            " but was: <(\"zyx\", \"wvu\")>",
+                           FAIL_LOCATION,
                            "stub_equal_list_string");
 }
 
@@ -330,7 +347,7 @@ stub_equal_list_string_other_null (void)
     gcut_assert_equal_list_string(list1, list1);
     gcut_assert_equal_list_string(list2, list2);
 
-    gcut_assert_equal_list_string(list1, list2);
+    MARK_FAIL(gcut_assert_equal_list_string(list1, list2));
 }
 
 void
@@ -348,6 +365,7 @@ test_equal_list_string_other_null (void)
                            "<list1 == list2>\n"
                            "expected: <(\"abc\", \"abc\", \"def\")>\n"
                            " but was: <(NULL, \"abc\", \"def\")>",
+                           FAIL_LOCATION,
                            "stub_equal_list_string_other_null");
 }
 
@@ -374,7 +392,7 @@ stub_equal_list_object (void)
     gcut_assert_equal_list_object(list1, list1);
     gcut_assert_equal_list_object(list2, list2);
 
-    gcut_assert_equal_list_object(list1, list2);
+    MARK_FAIL(gcut_assert_equal_list_object(list1, list2));
 }
 
 void
@@ -414,6 +432,7 @@ test_equal_list_object (void)
                            "equal_list_object test",
                            NULL,
                            message_with_diff,
+                           FAIL_LOCATION,
                            "stub_equal_list_object");
 }
 
@@ -431,7 +450,7 @@ stub_equal_hash_string_string (void)
     gcut_assert_equal_hash_table_string_string(hash1, hash1);
     gcut_assert_equal_hash_table_string_string(hash2, hash2);
 
-    gcut_assert_equal_hash_table_string_string(hash1, hash2);
+    MARK_FAIL(gcut_assert_equal_hash_table_string_string(hash1, hash2));
 }
 
 void
@@ -449,6 +468,7 @@ test_equal_hash_string_string (void)
                            "<hash1 == hash2>\n"
                            "expected: <{\"def\" => \"22\", \"abc\" => \"11\"}>\n"
                            " but was: <{\"zyx\" => \"99\", \"wvu\" => \"88\"}>",
+                           FAIL_LOCATION,
                            "stub_equal_hash_string_string");
 }
 
@@ -458,7 +478,7 @@ stub_error (void)
     gcut_assert_error(error);
 
     error = g_error_new(G_FILE_ERROR, G_FILE_ERROR_NOENT, "not found");
-    gcut_assert_error(error);
+    MARK_FAIL(gcut_assert_error(error));
 }
 
 void
@@ -474,6 +494,7 @@ test_error (void)
                            NULL,
                            "expected: <error> is NULL\n"
                            " but was: <g-file-error-quark:4: not found>",
+                           FAIL_LOCATION,
                            "stub_error");
 }
 
@@ -486,7 +507,7 @@ stub_equal_error (void)
 
     g_error_free(error2);
     error2 = g_error_new(G_FILE_ERROR, G_FILE_ERROR_NOENT, "no entry");
-    gcut_assert_equal_error(error1, error2);
+    MARK_FAIL(gcut_assert_equal_error(error1, error2));
 }
 
 void
@@ -503,6 +524,7 @@ test_equal_error (void)
                            "<error1 == error2>\n"
                            "expected: <g-file-error-quark:4: not found>\n"
                            " but was: <g-file-error-quark:4: no entry>",
+                           FAIL_LOCATION,
                            "stub_equal_error");
 }
 
@@ -512,9 +534,9 @@ stub_equal_enum (void)
     gcut_assert_equal_enum(CUT_TYPE_TEST_RESULT_STATUS,
                            CUT_TEST_RESULT_PENDING,
                            CUT_TEST_RESULT_PENDING);
-    gcut_assert_equal_enum(CUT_TYPE_TEST_RESULT_STATUS,
-                           CUT_TEST_RESULT_FAILURE,
-                           CUT_TEST_RESULT_PENDING);
+    MARK_FAIL(gcut_assert_equal_enum(CUT_TYPE_TEST_RESULT_STATUS,
+                                     CUT_TEST_RESULT_FAILURE,
+                                     CUT_TEST_RESULT_PENDING));
 }
 
 void
@@ -534,6 +556,7 @@ test_equal_enum (void)
                            "failure(CUT_TEST_RESULT_FAILURE:4)>>\n"
                            " but was: <#<CutTestResultStatus: "
                            "pending(CUT_TEST_RESULT_PENDING:3)>>",
+                           FAIL_LOCATION,
                            "stub_equal_enum");
 }
 
@@ -543,9 +566,9 @@ stub_equal_flags (void)
     gcut_assert_equal_flags(flags_type,
                             (1 << 0) | (1 << 2),
                             (1 << 0) | (1 << 2));
-    gcut_assert_equal_flags(flags_type,
-                            (1 << 1) | (1 << 2),
-                            (1 << 3));
+    MARK_FAIL(gcut_assert_equal_flags(flags_type,
+                                      (1 << 1) | (1 << 2),
+                                      (1 << 3)));
 }
 
 void
@@ -576,6 +599,7 @@ test_equal_flags (void)
                            "(CUTTEST_ASSERT_STUB_THIRD:0x4)>>\n"
                            " but was: <#<CuttestAssertStubFlags: "
                            "(unknown flags: 0x8)>>",
+                           FAIL_LOCATION,
                            "stub_equal_flags");
 }
 

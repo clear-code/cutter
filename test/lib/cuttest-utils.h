@@ -28,11 +28,20 @@ GList       *cuttest_result_summary_list_new
 GList       *cuttest_result_summary_list_new_from_run_context
                                   (CutRunContext *run_context);
 
+GList       *cuttest_result_string_list_new_va_list
+                                  (const gchar *test_name,
+                                   const gchar *user_message,
+                                   const gchar *system_message,
+                                   const gchar *message,
+                                   const gchar *backtrace,
+                                   va_list args);
 GList       *cuttest_result_string_list_new
                                   (const gchar *test_name,
                                    const gchar *user_message,
                                    const gchar *system_message,
-                                   const gchar *function_name);
+                                   const gchar *message,
+                                   const gchar *backtrace,
+                                   ...);
 GList       *cuttest_result_string_list_new_from_result
                                   (CutTestResult *result);
 

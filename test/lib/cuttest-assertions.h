@@ -47,9 +47,10 @@
                                 _actual_result_summary);                \
 } while (0)
 
-#define cut_assert_test_result(run_context, i, status, test_name,       \
-                               user_message, system_message,            \
-                               function_name) do                        \
+#define cut_assert_test_result_with_message(run_context, i, status,     \
+                                            test_name, user_message,    \
+                                            system_message, message,    \
+                                            backtrace, ...) do          \
 {                                                                       \
     const GList *_results;                                              \
     CutTestResult *_result;                                             \
@@ -69,7 +70,10 @@
     _strings = cuttest_result_string_list_new((test_name),              \
                                               (user_message),           \
                                               (system_message),         \
-                                              (function_name));         \
+                                              (message),                \
+                                              (backtrace),              \
+                                              ## __VA_ARGS__,           \
+                                              NULL);                    \
     _expected_strings = cut_take_result_string_list(_strings);          \
                                                                         \
     _strings = cuttest_result_string_list_new_from_result(_result);     \
@@ -77,5 +81,13 @@
                                                                         \
     gcut_assert_equal_list_string(_expected_strings, _actual_strings);  \
 } while (0)
+
+#define cut_assert_test_result(run_context, i, status, test_name,       \
+                               user_message, system_message,            \
+                               backtrace, ...)                          \
+    cut_assert_test_result_with_message(run_context, i, status,         \
+                                        test_name, user_message,        \
+                                        system_message, NULL,           \
+                                        backtrace, ## __VA_ARGS__, NULL)
 
 #endif
