@@ -46,6 +46,7 @@ setup (void)
 void
 teardown (void)
 {
+    g_object_unref(receiver);
     g_object_unref(parser);
 
     if (result)

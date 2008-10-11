@@ -1,5 +1,7 @@
 2008-10-11  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut-stream-parser.c (teardown): fix memory leak.
+
 	* TODO: remove an entry: [CutRepository/CutLoader] source
 	directory supports nested directory.
 
