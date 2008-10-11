@@ -16,7 +16,6 @@
 * use mach-o/loader.h on Mac OS X.
 * update option descriptions in README.
 * introduce easy sub process debugging mechanism.
-* resolve circular reference between CutStreamReader and CutStreamParser.
 * cut_assert_equal_sockaddr().
 * GTK+ UI supports test iterator.
 * add description about -I$PREFIX/share/aclocal and

@@ -1,5 +1,9 @@
 2008-10-11  Kouhei Sutou  <kou@cozmixng.org>
 
+	* TODO: remove an entry: resolve circular reference between
+	CutStreamReader and CutStreamParser.
+	* cutter/cut-stream-parser.c: use weak_ref.
+
 	* test/test-cut-stream-parser.c (teardown): fix memory leak.
 
 	* TODO: remove an entry: [CutRepository/CutLoader] source

@@ -595,6 +595,16 @@ test_case_result_free (TestCaseResult *test_case_result)
 }
 
 static void
+run_context_weak_notify (gpointer data, GObject *where_the_object_was)
+{
+    CutStreamParser *parser = data;
+    CutStreamParserPrivate *priv;
+
+    priv = CUT_STREAM_PARSER_GET_PRIVATE(parser);
+    priv->run_context = NULL;
+}
+
+static void
 dispose (GObject *object)
 {
     CutStreamParserPrivate *priv = CUT_STREAM_PARSER_GET_PRIVATE(object);
@@ -605,11 +615,9 @@ dispose (GObject *object)
     }
 
     if (priv->run_context) {
-        CutRunContext *run_context;
-
-        run_context = priv->run_context;
+        g_object_weak_unref(G_OBJECT(priv->run_context),
+                            run_context_weak_notify, object);
         priv->run_context = NULL;
-        g_object_unref(run_context);
     }
 
     if (priv->states) {
@@ -742,12 +750,11 @@ set_property (GObject      *object,
 
     switch (prop_id) {
       case PROP_RUN_CONTEXT:
-      {
-        gpointer object = g_value_get_object(value);
-        if (object)
-            priv->run_context = g_object_ref(object);
+        priv->run_context = g_value_get_object(value);
+        if (priv->run_context)
+            g_object_weak_ref(G_OBJECT(priv->run_context),
+                              run_context_weak_notify, object);
         break;
-      }
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
