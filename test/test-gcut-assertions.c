@@ -622,6 +622,9 @@ test_equal_flags (void)
 static void
 stub_equal_object (void)
 {
+    object1 = G_OBJECT(cut_loader_new("so-name1"));
+    object2 = G_OBJECT(cut_loader_new("so-name2"));
+
     gcut_assert_equal_object(object1, object1);
     gcut_assert_equal_object(object2, object2);
     gcut_assert_equal_object(NULL, NULL);
@@ -633,9 +636,6 @@ test_equal_object (void)
 {
     const gchar *inspected_expected, *inspected_actual;
     const gchar *message;
-
-    object1 = G_OBJECT(cut_loader_new("so-name1"));
-    object2 = G_OBJECT(cut_loader_new("so-name2"));
 
     test = cut_test_new("gcut_assert_equal_object test", stub_equal_object);
     cut_assert_not_null(test);
@@ -667,6 +667,7 @@ test_equal_object (void)
 static void
 stub_equal_object_null (void)
 {
+    object1 = G_OBJECT(cut_loader_new("so-name"));
     MARK_FAIL(gcut_assert_equal_object(object1, NULL));
 }
 
@@ -675,8 +676,6 @@ test_equal_object_null (void)
 {
     const gchar *inspected_expected;
     const gchar *message;
-
-    object1 = G_OBJECT(cut_loader_new("so-name"));
 
     test = cut_test_new("gcut_assert_equal_object_null test",
                         stub_equal_object_null);
@@ -711,6 +710,10 @@ equal_name (gconstpointer data1, gconstpointer data2)
 static void
 stub_equal_object_custom (void)
 {
+    object1 = G_OBJECT(cut_test_new("test-name", NULL));
+    object2 = G_OBJECT(cut_test_new("test-name", NULL));
+    object3 = G_OBJECT(cut_test_new("no-name", NULL));
+
     gcut_assert_equal_object_custom(object1, object2, equal_name);
     MARK_FAIL(gcut_assert_equal_object_custom(object1, object3, equal_name));
 }
@@ -720,10 +723,6 @@ test_equal_object_custom (void)
 {
     const gchar *inspected_expected, *inspected_actual;
     const gchar *message;
-
-    object1 = G_OBJECT(cut_test_new("test-name", NULL));
-    object2 = G_OBJECT(cut_test_new("test-name", NULL));
-    object3 = G_OBJECT(cut_test_new("no-name", NULL));
 
     test = cut_test_new("gcut_assert_equal_object_custom test",
                         stub_equal_object_custom);
