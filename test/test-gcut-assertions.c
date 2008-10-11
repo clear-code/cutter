@@ -22,6 +22,8 @@ void test_equal_error(void);
 void test_equal_enum(void);
 void test_equal_flags(void);
 void test_equal_object(void);
+void test_equal_object_null(void);
+void test_equal_object_custom(void);
 
 static CutTest *test;
 static CutRunContext *run_context;
@@ -33,7 +35,7 @@ static GList *list1, *list2;
 static gboolean need_to_free_list_contents;
 static GDestroyNotify list_element_free_function;
 static GHashTable *hash1, *hash2;
-static GObject *object1, *object2;
+static GObject *object1, *object2, *object3;
 
 static GError *error;
 static GError *error1, *error2;
@@ -90,6 +92,7 @@ setup (void)
 
     object1 = NULL;
     object2 = NULL;
+    object3 = NULL;
 
     error = NULL;
     need_to_free_error = FALSE;
@@ -136,6 +139,8 @@ teardown (void)
         g_object_unref(object1);
     if (object2)
         g_object_unref(object2);
+    if (object3)
+        g_object_unref(object3);
 
     if (error && need_to_free_error)
         g_error_free(error);
@@ -657,6 +662,99 @@ test_equal_object (void)
                            message,
                            FAIL_LOCATION,
                            "stub_equal_object");
+}
+
+static void
+stub_equal_object_null (void)
+{
+    MARK_FAIL(gcut_assert_equal_object(object1, NULL));
+}
+
+void
+test_equal_object_null (void)
+{
+    const gchar *inspected_expected;
+    const gchar *message;
+
+    object1 = G_OBJECT(cut_loader_new("so-name"));
+
+    test = cut_test_new("gcut_assert_equal_object_null test",
+                        stub_equal_object_null);
+    cut_assert_not_null(test);
+
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 0, 0, 1, 0, 0, 0, 0);
+
+    inspected_expected = cut_take_printf("#<CutLoader:%p "
+                                         "so-filename=<\"so-name\">, "
+                                         "base-directory=<NULL>>",
+                                         object1);
+    message = cut_take_printf("<object1 == NULL>\n"
+                              "expected: <%s>\n"
+                              " but was: <%s>",
+                              inspected_expected, "(null)");
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "gcut_assert_equal_object_null test",
+                           NULL,
+                           message,
+                           FAIL_LOCATION,
+                           "stub_equal_object_null");
+}
+
+static gboolean
+equal_name (gconstpointer data1, gconstpointer data2)
+{
+    return g_str_equal(cut_test_get_name(CUT_TEST(data1)),
+                       cut_test_get_name(CUT_TEST(data2)));
+}
+
+static void
+stub_equal_object_custom (void)
+{
+    gcut_assert_equal_object_custom(object1, object2, equal_name);
+    MARK_FAIL(gcut_assert_equal_object_custom(object1, object3, equal_name));
+}
+
+void
+test_equal_object_custom (void)
+{
+    const gchar *inspected_expected, *inspected_actual;
+    const gchar *message;
+
+    object1 = G_OBJECT(cut_test_new("test-name", NULL));
+    object2 = G_OBJECT(cut_test_new("test-name", NULL));
+    object3 = G_OBJECT(cut_test_new("no-name", NULL));
+
+    test = cut_test_new("gcut_assert_equal_object_custom test",
+                        stub_equal_object_custom);
+    cut_assert_not_null(test);
+
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+
+    inspected_expected = cut_take_printf("#<CutTest:%p "
+                                         "name=<\"test-name\">, "
+                                         "element-name=<\"test\">, "
+                                         "test-function=<NULL>, "
+                                         "base-directory=<NULL>>",
+                                         object1);
+    inspected_actual = cut_take_printf("#<CutTest:%p "
+                                       "name=<\"no-name\">, "
+                                       "element-name=<\"test\">, "
+                                       "test-function=<NULL>, "
+                                       "base-directory=<NULL>>",
+                                       object3);
+    message = cut_take_printf("<equal_name(object1, object3)>\n"
+                              "expected: <%s>\n"
+                              " but was: <%s>",
+                              inspected_expected, inspected_actual);
+    message = cut_append_diff(message, inspected_expected, inspected_actual);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "gcut_assert_equal_object_custom test",
+                           NULL,
+                           message,
+                           FAIL_LOCATION,
+                           "stub_equal_object_custom");
 }
 
 

@@ -458,13 +458,17 @@ gcut_assert_equal_object_helper (CutTestContext *test_context,
                                " but was: <%s>",
                                inspected_expected,
                                inspected_actual);
-        fail_message = cut_append_diff_helper(test_context,
-                                              message->str,
-                                              inspected_expected,
-                                              inspected_actual);
+        if (expected && actual)
+            fail_message = cut_append_diff_helper(test_context,
+                                                  message->str,
+                                                  inspected_expected,
+                                                  inspected_actual);
+        else
+            fail_message = cut_take_strdup_helper(test_context, message->str);
         g_free(inspected_expected);
         g_free(inspected_actual);
         g_string_free(message, TRUE);
+
         cut_test_fail_helper(test_context,
                              FAILURE,
                              fail_message,
