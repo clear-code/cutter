@@ -70,6 +70,7 @@ static gchar **original_argv = NULL;
 static gchar *cutter_command_path = NULL;
 static gboolean fatal_failures = FALSE;
 static gboolean keep_opening_modules = FALSE;
+static gboolean enable_convenience_attribute_definition = FALSE;
 
 static gboolean
 print_version (const gchar *option_name, const gchar *value,
@@ -149,6 +150,11 @@ static const GOptionEntry option_entries[] =
      N_("Treat failures as fatal problem"), NULL},
     {"keep-opening-modules", 0, 0, G_OPTION_ARG_NONE, &keep_opening_modules,
      N_("Keep opening loaded modules to resolve symbols for debugging"), NULL},
+    {"enable-convenience-attribute-definition", 0, 0, G_OPTION_ARG_NONE,
+     &enable_convenience_attribute_definition,
+     N_("Enable convenience but danger "
+        "'#{ATTRIBUTE_NAME}_#{TEST_NAME - 'test_' PREFIX}' "
+        "attribute set function"), NULL},
     {NULL}
 };
 
@@ -319,6 +325,8 @@ cut_create_run_context (void)
     cut_run_context_set_test_case_order(run_context, test_case_order);
     cut_run_context_set_fatal_failures(run_context, fatal_failures);
     cut_run_context_set_keep_opening_modules(run_context, keep_opening_modules);
+    cut_run_context_set_enable_convenience_attribute_definition(run_context,
+                                                                enable_convenience_attribute_definition);
     cut_run_context_set_command_line_args(run_context, original_argv);
 
     return run_context;

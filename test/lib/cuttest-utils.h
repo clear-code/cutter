@@ -35,34 +35,6 @@ const gchar *cuttest_get_base_dir (void);
 void         cuttest_add_test     (CutTestCase *test_case,
                                    const gchar *test_name,
                                    CutTestFunction test_function);
-GList       *cuttest_result_summary_list_new
-                                  (guint n_tests,
-                                   guint n_assertions,
-                                   guint n_successes,
-                                   guint n_failures,
-                                   guint n_errors,
-                                   guint n_pendings,
-                                   guint n_notifications,
-                                   guint n_omissions);
-GList       *cuttest_result_summary_list_new_from_run_context
-                                  (CutRunContext *run_context);
-
-GList       *cuttest_result_string_list_new_va_list
-                                  (const gchar *test_name,
-                                   const gchar *user_message,
-                                   const gchar *system_message,
-                                   const gchar *message,
-                                   const gchar *backtrace,
-                                   va_list args);
-GList       *cuttest_result_string_list_new
-                                  (const gchar *test_name,
-                                   const gchar *user_message,
-                                   const gchar *system_message,
-                                   const gchar *message,
-                                   const gchar *backtrace,
-                                   ...);
-GList       *cuttest_result_string_list_new_from_result
-                                  (CutTestResult *result);
 
 #endif
 

@@ -185,6 +185,8 @@ cut_pipeline_new_from_run_context (CutRunContext *run_context)
                         cut_run_context_get_fatal_failures(run_context),
                         "keep-opening-modules",
                         cut_run_context_get_keep_opening_modules(run_context),
+                        "enable-convenience-attribute-definition",
+                        cut_run_context_get_enable_convenience_attribute_definition(run_context),
                         NULL);
 }
 

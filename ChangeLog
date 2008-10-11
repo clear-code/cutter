@@ -1,5 +1,9 @@
 2008-10-11  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/, test/, README*: add
+	--enable-convenience-attribute-definition option and convenience
+	but dangerous attribute set function is disabled by default.
+
 	* test/lib/Makefile.am, test/lib/cuttest-assertions.[ch]: define
 	assertion as function not macro.
 

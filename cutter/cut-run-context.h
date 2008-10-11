@@ -288,6 +288,11 @@ void           cut_run_context_set_keep_opening_modules
                                                      gboolean       keep_opening);
 gboolean       cut_run_context_get_keep_opening_modules
                                                     (CutRunContext *context);
+void           cut_run_context_set_enable_convenience_attribute_definition
+                                                    (CutRunContext *context,
+                                                     gboolean       enable_convenience_attribute_definition);
+gboolean       cut_run_context_get_enable_convenience_attribute_definition
+                                                    (CutRunContext *context);
 
 
 G_END_DECLS

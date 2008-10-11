@@ -55,6 +55,11 @@ gboolean       cut_repository_get_keep_opening_modules
 void           cut_repository_set_keep_opening_modules
                                                 (CutRepository *repository,
                                                  gboolean       keep_opening);
+gboolean       cut_repository_get_enable_convenience_attribute_definition
+                                                (CutRepository *repository);
+void           cut_repository_set_enable_convenience_attribute_definition
+                                                (CutRepository *repository,
+                                                 gboolean       enable_convenience_attribute_definition);
 CutTestSuite  *cut_repository_create_test_suite (CutRepository *repository);
 void           cut_repository_set_exclude_files (CutRepository *repository,
                                                  const gchar  **filenames);

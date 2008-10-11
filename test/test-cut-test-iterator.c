@@ -40,63 +40,83 @@ static gint fail_line;
 #define FAIL_LOCATION (cut_take_printf("%s:%d", __FILE__, fail_line))
 
 
-#define PREPEND_GUINT(list, guint_value)                         \
-    list = g_list_prepend(list,                                  \
-                          GUINT_TO_POINTER(guint_value))
+static void
+cut_assert_n_signals_helper(guint expected_n_start_signals,
+                            guint expected_n_complete_signals,
+                            guint expected_n_setup_calls,
+                            guint expected_n_teardown_calls,
+                            guint expected_n_tests,
+                            guint expected_n_assertions,
+                            guint expected_n_successes,
+                            guint expected_n_failures,
+                            guint expected_n_errors,
+                            guint expected_n_pendings,
+                            guint expected_n_notifications,
+                            guint expected_n_omissions)
+{
+    GList *result_summary;
+    const GList *expected_result_summary;
+    const GList *actual_result_summary;
 
-#define cut_assert_n_signals(_n_start_signals, _n_complete_signals,     \
-                             _n_setup_calls, _n_teardown_calls,         \
-                             _n_tests,                                  \
-                             _n_assertions, _n_successes,               \
-                             _n_failures, _n_errors, _n_pendings,       \
-                             _n_notifications, _n_omissions) do         \
-{                                                                       \
-    GList *_result_summary;                                             \
-    const GList *_expected_result_summary;                              \
-    const GList *_actual_result_summary;                                \
-    guint __n_start_signals, __n_complete_signals;                      \
-    guint __n_setup_calls, __n_teardown_calls;                          \
-                                                                        \
-    __n_start_signals = (_n_start_signals);                             \
-    __n_complete_signals = (_n_complete_signals);                       \
-    __n_setup_calls = (_n_setup_calls);                                 \
-    __n_teardown_calls = (_n_teardown_calls);                           \
-                                                                        \
-    _result_summary =                                                   \
-        cuttest_result_summary_list_new((_n_tests),                     \
-                                        (_n_assertions),                \
-                                        (_n_successes),                 \
-                                        (_n_failures),                  \
-                                        (_n_errors),                    \
-                                        (_n_pendings),                  \
-                                        (_n_notifications),             \
-                                        (_n_omissions));                \
-    PREPEND_GUINT(_result_summary, __n_teardown_calls);                 \
-    PREPEND_GUINT(_result_summary, __n_setup_calls);                    \
-    PREPEND_GUINT(_result_summary, __n_complete_signals);               \
-    PREPEND_GUINT(_result_summary, __n_start_signals);                  \
-    _expected_result_summary =                                          \
-        cut_take_result_summary_list(_result_summary);                  \
-                                                                        \
-    _result_summary =                                                   \
-        cuttest_result_summary_list_new(n_tests,                        \
-                                        n_pass_assertion_signals,       \
-                                        n_success_signals,              \
-                                        n_failure_signals,              \
-                                        n_error_signals,                \
-                                        n_pending_signals,              \
-                                        n_notification_signals,         \
-                                        n_omission_signals);            \
-    PREPEND_GUINT(_result_summary, n_teardown_calls);                   \
-    PREPEND_GUINT(_result_summary, n_setup_calls);                      \
-    PREPEND_GUINT(_result_summary, n_complete_signals);                 \
-    PREPEND_GUINT(_result_summary, n_start_signals);                    \
-    _actual_result_summary =                                            \
-        cut_take_result_summary_list(_result_summary);                  \
-                                                                        \
-    gcut_assert_equal_list_uint(_expected_result_summary,               \
-                                _actual_result_summary);                \
-} while (0)
+#define APPEND(value)                                                   \
+    result_summary = g_list_append(result_summary, GUINT_TO_POINTER(value))
+
+    result_summary = NULL;
+    APPEND(expected_n_start_signals);
+    APPEND(expected_n_complete_signals);
+    APPEND(expected_n_setup_calls);
+    APPEND(expected_n_teardown_calls);
+    APPEND(expected_n_tests);
+    APPEND(expected_n_assertions);
+    APPEND(expected_n_successes);
+    APPEND(expected_n_failures);
+    APPEND(expected_n_errors);
+    APPEND(expected_n_pendings);
+    APPEND(expected_n_notifications);
+    APPEND(expected_n_omissions);
+    expected_result_summary = gcut_take_list(result_summary, NULL);
+
+    result_summary = NULL;
+    APPEND(n_start_signals);
+    APPEND(n_complete_signals);
+    APPEND(n_setup_calls);
+    APPEND(n_teardown_calls);
+    APPEND(n_tests);
+    APPEND(n_pass_assertion_signals);
+    APPEND(n_success_signals);
+    APPEND(n_failure_signals);
+    APPEND(n_error_signals);
+    APPEND(n_pending_signals);
+    APPEND(n_notification_signals);
+    APPEND(n_omission_signals);
+    actual_result_summary = gcut_take_list(result_summary, NULL);
+#undef APPEND
+
+    gcut_assert_equal_list_uint(expected_result_summary,
+                                actual_result_summary);
+}
+
+#define cut_assert_n_signals(n_start_signals, n_complete_signals,       \
+                             n_setup_calls, n_teardown_calls,           \
+                             n_tests,                                   \
+                             n_assertions, n_successes,                 \
+                             n_failures, n_errors, n_pendings,          \
+                             n_notifications, n_omissions)              \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_n_signals_helper(n_start_signals,                    \
+                                    n_complete_signals,                 \
+                                    n_setup_calls, n_teardown_calls,    \
+                                    n_tests, n_assertions,              \
+                                    n_successes, n_failures,            \
+                                    n_errors, n_pendings,               \
+                                    n_notifications, n_omissions),      \
+        cut_assert_n_signals(n_start_signals,                           \
+                             n_complete_signals,                        \
+                             n_setup_calls, n_teardown_calls,           \
+                             n_tests, n_assertions,                     \
+                             n_successes, n_failures,                   \
+                             n_errors, n_pendings,                      \
+                             n_notifications, n_omissions))
 
 static void
 stub_setup (void)

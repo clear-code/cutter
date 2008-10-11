@@ -320,29 +320,30 @@ test_test_case_count()関数内で起こったことがわかります。
 ことができます。例えば、以下のようにテストにBug IDの情報を付
 加することができます。
 
-  const char *bug_invalid_input(void);
+  void attributes_invalid_input(void);
   void test_invalid_input(void);
 
-  const char *
-  bug_invalid_input (void)
+  void
+  attributes_invalid_input (void)
   {
-       return "123";
+      cut_set_attributes("bug", "123");
   }
 
   void
   test_invalid_input (void)
   {
-       cut_assert_equal("OK", get_input());
+      cut_assert_equal("OK", get_input());
   }
 
 この例では、test_invalid_inputテストがBug #123のテストである
 という情報を付加しています。
 
-属性は"「属性名」_「テスト名からtest_を除いたもの」"という名
-前のconst char *を返す関数を定義することで追加できます。上記
-の例では「bug」属性を「test_invalid_input」テストに追加する
-ために「bug_invalid_input」という属性設定関数を定義していま
-す。
+属性は"「attributes_「テスト名からtest_を除いたもの」"という名
+前の関数を定義し、その関数の中でcut_set_attributes()を使って
+設定できます。上記の例では「test_invalid_input」テストに
+「123」という値の「bug」属性を追加するために
+「attributes_invalid_input」という関数を定義し、その中で
+cut_set_attributes("bug", "123")を呼び、属性を設定しています。
 
 === 雛型
 

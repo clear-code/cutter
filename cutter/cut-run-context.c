@@ -78,6 +78,7 @@ struct _CutRunContextPrivate
     gboolean completed;
     gboolean fatal_failures;
     gboolean keep_opening_modules;
+    gboolean enable_convenience_attribute_definition;
 };
 
 enum
@@ -104,7 +105,8 @@ enum
     PROP_EXCLUDE_DIRECTORIES,
     PROP_COMMAND_LINE_ARGS,
     PROP_FATAL_FAILURES,
-    PROP_KEEP_OPENING_MODULES
+    PROP_KEEP_OPENING_MODULES,
+    PROP_ENABLE_CONVENIENCE_ATTRIBUTE_DEFINITION
 };
 
 enum
@@ -407,6 +409,17 @@ cut_run_context_class_init (CutRunContextClass *klass)
                                 FALSE,
                                 G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_KEEP_OPENING_MODULES,
+                                    spec);
+
+    spec = g_param_spec_boolean("enable-convenience-attribute-definition",
+                                "Enable convenience attribute definition",
+                                "Enable convenience but dangerous "
+                                "'#{ATTRIBUTE_NAME}_#{TEST_NAME - 'test_' PREFIX}' "
+                                "attribute set function",
+                                FALSE,
+                                G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class,
+                                    PROP_ENABLE_CONVENIENCE_ATTRIBUTE_DEFINITION,
                                     spec);
 
     signals[START_RUN]
@@ -798,6 +811,7 @@ cut_run_context_init (CutRunContext *context)
     priv->completed = FALSE;
     priv->fatal_failures = FALSE;
     priv->keep_opening_modules = FALSE;
+    priv->enable_convenience_attribute_definition = FALSE;
 }
 
 static void
@@ -950,6 +964,9 @@ set_property (GObject      *object,
       case PROP_KEEP_OPENING_MODULES:
         priv->keep_opening_modules = g_value_get_boolean(value);
         break;
+      case PROP_ENABLE_CONVENIENCE_ATTRIBUTE_DEFINITION:
+        priv->enable_convenience_attribute_definition = g_value_get_boolean(value);
+        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
@@ -1030,6 +1047,9 @@ get_property (GObject    *object,
         break;
       case PROP_KEEP_OPENING_MODULES:
         g_value_set_boolean(value, priv->keep_opening_modules);
+        break;
+      case PROP_ENABLE_CONVENIENCE_ATTRIBUTE_DEFINITION:
+        g_value_set_boolean(value, priv->enable_convenience_attribute_definition);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -1563,6 +1583,8 @@ cut_run_context_create_test_suite (CutRunContext *context)
     repository = cut_repository_new(priv->test_directory);
     cut_repository_set_keep_opening_modules(repository,
                                             priv->keep_opening_modules);
+    cut_repository_set_enable_convenience_attribute_definition(repository,
+                                                               priv->enable_convenience_attribute_definition);
     exclude_files = (const gchar **)priv->exclude_files;
     cut_repository_set_exclude_files(repository, exclude_files);
     exclude_directories = (const gchar **)priv->exclude_directories;
@@ -2305,6 +2327,20 @@ gboolean
 cut_run_context_get_keep_opening_modules (CutRunContext *context)
 {
     return CUT_RUN_CONTEXT_GET_PRIVATE(context)->keep_opening_modules;
+}
+
+void
+cut_run_context_set_enable_convenience_attribute_definition (CutRunContext *context,
+                                                             gboolean       enable_convenience_attribute_definition)
+{
+    CUT_RUN_CONTEXT_GET_PRIVATE(context)->enable_convenience_attribute_definition =
+        enable_convenience_attribute_definition;
+}
+
+gboolean
+cut_run_context_get_enable_convenience_attribute_definition (CutRunContext *context)
+{
+    return CUT_RUN_CONTEXT_GET_PRIVATE(context)->enable_convenience_attribute_definition;
 }
 
 /*

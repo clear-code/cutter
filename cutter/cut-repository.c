@@ -43,6 +43,7 @@ struct _CutRepositoryPrivate
     CutLoader *test_suite_loader;
 
     gboolean keep_opening_modules;
+    gboolean enable_convenience_attribute_definition;
 };
 
 enum
@@ -97,6 +98,7 @@ cut_repository_init (CutRepository *repository)
     priv->deep = 0;
     priv->test_suite_loader = NULL;
     priv->keep_opening_modules = FALSE;
+    priv->enable_convenience_attribute_definition = FALSE;
 }
 
 static void
@@ -195,6 +197,19 @@ cut_repository_set_keep_opening_modules (CutRepository *repository,
                                          gboolean keep_opening)
 {
     CUT_REPOSITORY_GET_PRIVATE(repository)->keep_opening_modules = keep_opening;
+}
+
+gboolean
+cut_repository_get_enable_convenience_attribute_definition (CutRepository *repository)
+{
+    return CUT_REPOSITORY_GET_PRIVATE(repository)->enable_convenience_attribute_definition;
+}
+
+void
+cut_repository_set_enable_convenience_attribute_definition (CutRepository *repository,
+                                                            gboolean enable_convenience_attribute_definition)
+{
+    CUT_REPOSITORY_GET_PRIVATE(repository)->enable_convenience_attribute_definition = enable_convenience_attribute_definition;
 }
 
 static gboolean
@@ -297,6 +312,8 @@ cut_repository_collect_loader (CutRepository *repository, const gchar *dir_name,
             relative_path = compute_relative_path(paths);
             cut_loader_set_base_directory(loader, relative_path);
             cut_loader_set_keep_opening(loader, priv->keep_opening_modules);
+            cut_loader_set_enable_convenience_attribute_definition(loader,
+                                                                   priv->enable_convenience_attribute_definition);
             if (is_test_suite_so_path_name(path_name)) {
                 update_test_suite_loader(priv, loader, paths->len);
             } else {

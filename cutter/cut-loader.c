@@ -58,6 +58,7 @@ struct _CutLoaderPrivate
     CutBinaryType binary_type;
     CutMachOLoader *mach_o_loader;
     gboolean keep_opening;
+    gboolean enable_convenience_attribute_definition;
     gchar *base_directory;
 };
 
@@ -118,6 +119,7 @@ cut_loader_init (CutLoader *loader)
     priv->binary_type = CUT_BINARY_TYPE_UNKNOWN;
     priv->mach_o_loader = NULL;
     priv->keep_opening = FALSE;
+    priv->enable_convenience_attribute_definition = FALSE;
     priv->base_directory = NULL;
 }
 
@@ -223,6 +225,19 @@ void
 cut_loader_set_keep_opening (CutLoader *loader, gboolean keep_opening)
 {
     CUT_LOADER_GET_PRIVATE(loader)->keep_opening = keep_opening;
+}
+
+gboolean
+cut_loader_get_enable_convenience_attribute_definition (CutLoader *loader)
+{
+    return CUT_LOADER_GET_PRIVATE(loader)->enable_convenience_attribute_definition;
+}
+
+void
+cut_loader_set_enable_convenience_attribute_definition (CutLoader *loader, gboolean enable_convenience_attribute_definition)
+{
+    CUT_LOADER_GET_PRIVATE(loader)->enable_convenience_attribute_definition =
+        enable_convenience_attribute_definition;
 }
 
 const gchar *
@@ -416,6 +431,9 @@ cut_loader_support_attribute (CutLoader *loader)
     CutLoaderPrivate *priv;
 
     priv = CUT_LOADER_GET_PRIVATE(loader);
+    if (!priv->enable_convenience_attribute_definition)
+        return FALSE;
+
     if (priv->mach_o_loader) {
         return cut_mach_o_loader_support_attribute(priv->mach_o_loader);
     } else {

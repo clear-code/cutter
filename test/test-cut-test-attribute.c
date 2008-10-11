@@ -37,6 +37,7 @@ setup (void)
                                  NULL);
     test_loader = cut_loader_new(test_path);
     g_free(test_path);
+    cut_loader_set_enable_convenience_attribute_definition(test_loader, TRUE);
 
     expected_names = NULL;
     tests = NULL;
