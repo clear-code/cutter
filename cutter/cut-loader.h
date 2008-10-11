@@ -54,6 +54,9 @@ CutLoader    *cut_loader_new               (const gchar *soname);
 gboolean      cut_loader_get_keep_opening  (CutLoader *loader);
 void          cut_loader_set_keep_opening  (CutLoader *loader,
                                             gboolean   keep_opening);
+const gchar  *cut_loader_get_base_directory(CutLoader *loader);
+void          cut_loader_set_base_directory(CutLoader *loader,
+                                            const gchar *base_directory);
 CutTestCase  *cut_loader_load_test_case    (CutLoader *loader);
 CutTestSuite *cut_loader_load_test_suite   (CutLoader *loader);
 

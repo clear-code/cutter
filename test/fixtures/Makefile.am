@@ -9,4 +9,5 @@ SUBDIRS =			\
 	sub-process-group	\
 	xml-stream		\
 	file-stream-reader	\
-	pixbuf
+	pixbuf			\
+	path

@@ -135,6 +135,10 @@ const gchar  *cut_test_context_get_fixture_data_stringv
                                                const gchar    *path,
                                                va_list        *args);
 
+gchar        *cut_test_context_build_source_filename
+                                              (CutTestContext *context,
+                                               const gchar    *filename);
+
 G_END_DECLS
 
 #endif /* __CUT_TEST_CONTEXT_H__ */

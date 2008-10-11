@@ -58,12 +58,14 @@ struct _CutLoaderPrivate
     CutBinaryType binary_type;
     CutMachOLoader *mach_o_loader;
     gboolean keep_opening;
+    gchar *base_directory;
 };
 
 enum
 {
     PROP_0,
-    PROP_SO_FILENAME
+    PROP_SO_FILENAME,
+    PROP_BASE_DIRECTORY
 };
 
 G_DEFINE_TYPE (CutLoader, cut_loader, G_TYPE_OBJECT)
@@ -97,6 +99,13 @@ cut_loader_class_init (CutLoaderClass *klass)
                                G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class, PROP_SO_FILENAME, spec);
 
+    spec = g_param_spec_string("base-directory",
+                               "Base directory",
+                               "The base directory of shared object",
+                               NULL,
+                               G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_BASE_DIRECTORY, spec);
+
     g_type_class_add_private(gobject_class, sizeof(CutLoaderPrivate));
 }
 
@@ -109,6 +118,7 @@ cut_loader_init (CutLoader *loader)
     priv->binary_type = CUT_BINARY_TYPE_UNKNOWN;
     priv->mach_o_loader = NULL;
     priv->keep_opening = FALSE;
+    priv->base_directory = NULL;
 }
 
 static void
@@ -144,6 +154,11 @@ dispose (GObject *object)
 
     free_symbols(priv);
 
+    if (priv->base_directory) {
+        g_free(priv->base_directory);
+        priv->base_directory = NULL;
+    }
+
     G_OBJECT_CLASS(cut_loader_parent_class)->dispose(object);
 }
 
@@ -158,6 +173,10 @@ set_property (GObject      *object,
     switch (prop_id) {
       case PROP_SO_FILENAME:
         priv->so_filename = g_value_dup_string(value);
+        break;
+      case PROP_BASE_DIRECTORY:
+        cut_loader_set_base_directory(CUT_LOADER(object),
+                                      g_value_get_string(value));
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -176,6 +195,9 @@ get_property (GObject    *object,
     switch (prop_id) {
       case PROP_SO_FILENAME:
         g_value_set_string(value, priv->so_filename);
+        break;
+      case PROP_BASE_DIRECTORY:
+        g_value_set_string(value, priv->base_directory);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -201,6 +223,23 @@ void
 cut_loader_set_keep_opening (CutLoader *loader, gboolean keep_opening)
 {
     CUT_LOADER_GET_PRIVATE(loader)->keep_opening = keep_opening;
+}
+
+const gchar *
+cut_loader_get_base_directory (CutLoader *loader)
+{
+    return CUT_LOADER_GET_PRIVATE(loader)->base_directory;
+}
+
+void
+cut_loader_set_base_directory (CutLoader *loader, const gchar *base_directory)
+{
+    CutLoaderPrivate *priv;
+
+    priv = CUT_LOADER_GET_PRIVATE(loader);
+    if (priv->base_directory)
+        g_free(priv->base_directory);
+    priv->base_directory = g_strdup(base_directory);
 }
 
 static inline gboolean
@@ -516,6 +555,7 @@ register_test (CutLoader *loader, CutTestCase *test_case,
     } else {
         test = cut_test_new(name, function);
     }
+    cut_test_set_base_directory(test, priv->base_directory);
 
     if (get_current_test_context &&
         set_current_test_context &&
@@ -594,6 +634,8 @@ create_test_case (CutLoader *loader,
                                   *set_current_test_context,
                                   startup, shutdown);
     g_free(test_case_name);
+
+    cut_test_set_base_directory(CUT_TEST(test_case), priv->base_directory);
 
     g_object_ref(loader);
     g_signal_connect(test_case, "complete", G_CALLBACK(cb_complete), loader);
@@ -684,6 +726,7 @@ cut_loader_load_test_suite (CutLoader *loader)
 {
     CutLoaderPrivate *priv;
     gchar *prefix, *warmup_function_name, *cooldown_function_name;
+    CutTestSuite *test_suite;
     CutWarmupFunction warmup = NULL;
     CutCooldownFunction cooldown = NULL;
 
@@ -711,7 +754,9 @@ cut_loader_load_test_suite (CutLoader *loader)
 
     g_free(prefix);
 
-    return cut_test_suite_new(NULL, warmup, cooldown);
+    test_suite = cut_test_suite_new(NULL, warmup, cooldown);
+    cut_test_set_base_directory(CUT_TEST(test_suite), priv->base_directory);
+    return test_suite;
 }
 
 /*

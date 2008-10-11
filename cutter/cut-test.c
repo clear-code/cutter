@@ -45,6 +45,7 @@ struct _CutTestPrivate
     GTimeVal start_time;
     gdouble elapsed;
     GHashTable *attributes;
+    gchar *base_directory;
 };
 
 enum
@@ -52,7 +53,8 @@ enum
     PROP_0,
     PROP_NAME,
     PROP_ELEMENT_NAME,
-    PROP_TEST_FUNCTION
+    PROP_TEST_FUNCTION,
+    PROP_BASE_DIRECTORY
 };
 
 enum
@@ -136,6 +138,13 @@ cut_test_class_init (CutTestClass *klass)
                                 "The function for test",
                                 G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class, PROP_TEST_FUNCTION, spec);
+
+    spec = g_param_spec_string("base-directory",
+                               "Base directory",
+                               "The base directory of the test",
+                               NULL,
+                               G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_BASE_DIRECTORY, spec);
 
     cut_test_signals[START]
         = g_signal_new ("start",
@@ -290,6 +299,11 @@ dispose (GObject *object)
 
     free_full_name(priv);
 
+    if (priv->base_directory) {
+        g_free(priv->base_directory);
+        priv->base_directory = NULL;
+    }
+
     G_OBJECT_CLASS(cut_test_parent_class)->dispose(object);
 }
 
@@ -315,6 +329,9 @@ set_property (GObject      *object,
       case PROP_TEST_FUNCTION:
         priv->test_function = g_value_get_pointer(value);
         break;
+      case PROP_BASE_DIRECTORY:
+        cut_test_set_base_directory(CUT_TEST(object), g_value_get_string(value));
+        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
@@ -338,6 +355,9 @@ get_property (GObject    *object,
         break;
       case PROP_TEST_FUNCTION:
         g_value_set_pointer(value, priv->test_function);
+        break;
+      case PROP_BASE_DIRECTORY:
+        g_value_set_string(value, priv->base_directory);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -563,6 +583,24 @@ GHashTable *
 cut_test_get_attributes (CutTest *test)
 {
     return CUT_TEST_GET_PRIVATE(test)->attributes;
+}
+
+const gchar *
+cut_test_get_base_directory (CutTest *test)
+{
+    return CUT_TEST_GET_PRIVATE(test)->base_directory;
+}
+
+void
+cut_test_set_base_directory (CutTest *test, const gchar *base_directory)
+{
+    CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(test);
+
+    if (priv->base_directory) {
+        g_free(priv->base_directory);
+        priv->base_directory = NULL;
+    }
+    priv->base_directory = g_strdup(base_directory);
 }
 
 gchar *

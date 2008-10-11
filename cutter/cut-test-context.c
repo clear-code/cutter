@@ -1230,25 +1230,59 @@ cut_test_context_get_fixture_data_string (CutTestContext *context,
     return value;
 }
 
+gchar *
+cut_test_context_build_source_filename (CutTestContext *context,
+                                        const gchar    *filename)
+{
+    CutTestContextPrivate *priv;
+    const gchar *base_directory = NULL;
+
+    priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+    if (priv->test)
+        base_directory = cut_test_get_base_directory(priv->test);
+    if (!base_directory && priv->test_case)
+        base_directory = cut_test_get_base_directory(CUT_TEST(priv->test_case));
+    if (!base_directory && priv->test_suite)
+        base_directory = cut_test_get_base_directory(CUT_TEST(priv->test_suite));
+
+    if (base_directory) {
+        gchar *relative_filename, *full_filename;
+
+        relative_filename = g_build_filename(base_directory, filename, NULL);
+        if (priv->run_context) {
+            full_filename =
+                cut_run_context_build_source_filename(priv->run_context,
+                                                      relative_filename);
+            g_free(relative_filename);
+            return full_filename;
+        } else {
+            return relative_filename;
+        }
+    }
+
+
+    if (priv->run_context)
+        return cut_run_context_build_source_filename(priv->run_context,
+                                                     filename);
+    else
+        return g_strdup(filename);
+}
+
 void
 cut_test_context_push_backtrace (CutTestContext *context,
-                                 const char     *file_name,
+                                 const char     *filename,
                                  unsigned int    line,
                                  const char     *function_name,
                                  const char     *info)
 {
     CutTestContextPrivate *priv;
     CutBacktraceEntry *entry;
-    gchar *full_file_name = NULL;
+    gchar *full_filename = NULL;
 
     priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
-    if (priv->run_context)
-        full_file_name = cut_run_context_build_source_filename(priv->run_context,
-                                                               file_name);
-    entry = cut_backtrace_entry_new(full_file_name ? full_file_name : file_name,
-                                    line, function_name, info);
-    if (full_file_name)
-        g_free(full_file_name);
+    full_filename = cut_test_context_build_source_filename(context, filename);
+    entry = cut_backtrace_entry_new(full_filename, line, function_name, info);
+    g_free(full_filename);
     priv->backtrace = g_list_prepend(priv->backtrace, entry);
 }
 

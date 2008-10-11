@@ -521,6 +521,9 @@ AC_CONFIG_FILES([Makefile
 		 test/fixtures/xml-stream/Makefile
 		 test/fixtures/file-stream-reader/Makefile
 		 test/fixtures/pixbuf/Makefile
+		 test/fixtures/path/Makefile
+		 test/fixtures/path/parent/Makefile
+		 test/fixtures/path/parent/sub/Makefile
 		 test/lib/Makefile
 		 po/Makefile.in
 		 misc/Makefile

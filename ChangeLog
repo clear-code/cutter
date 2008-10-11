@@ -1,5 +1,10 @@
 2008-10-11  Kouhei Sutou  <kou@cozmixng.org>
 
+	* TODO: remove an entry: [CutRepository/CutLoader] source
+	directory supports nested directory.
+
+	* cutter/, test/: source path resolution supports nested directory.
+
 	* test/test-cut-assertions.c, test/test-cut-test-iterator.c,
 	test/test-gcut-assertions.c, test/lib/cuttest-utils.[ch],
 	test/lib/cuttest-assertions.h: check backtrace of test result too.

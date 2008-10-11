@@ -236,9 +236,29 @@ is_ignore_directory (const gchar *dir_name)
         g_str_has_suffix(dir_name, ".dSYM");
 }
 
+static inline gchar *
+compute_relative_path (GArray *paths)
+{
+    gchar *last_component, *relative_path;
+    gboolean is_ignore_library_directory = FALSE;
+
+    last_component = g_array_index(paths, gchar *, paths->len - 1);
+    if (g_str_equal(last_component, ".libs") ||
+        g_str_equal(last_component, "_libs"))
+        is_ignore_library_directory = TRUE;
+
+    if (is_ignore_library_directory)
+        g_array_index(paths, gchar *, paths->len - 1) = NULL;
+    relative_path = g_build_filenamev((gchar **)(paths->data));
+    if (is_ignore_library_directory)
+        g_array_index(paths, gchar *, paths->len - 1) = last_component;
+
+    return relative_path;
+}
+
 static void
 cut_repository_collect_loader (CutRepository *repository, const gchar *dir_name,
-                               gint deep)
+                               GArray *paths)
 {
     GDir *dir;
     const gchar *entry;
@@ -260,9 +280,12 @@ cut_repository_collect_loader (CutRepository *repository, const gchar *dir_name,
                 g_free(path_name);
                 continue;
             }
-            cut_repository_collect_loader(repository, path_name, deep + 1);
+            g_array_append_val(paths, entry);
+            cut_repository_collect_loader(repository, path_name, paths);
+            g_array_remove_index(paths, paths->len - 1);
         } else {
             CutLoader *loader;
+            gchar *relative_path;
 
             if (cut_utils_filter_match(priv->exclude_files_regexs, entry) ||
                 !g_str_has_suffix(entry, "."G_MODULE_SUFFIX)) {
@@ -271,9 +294,11 @@ cut_repository_collect_loader (CutRepository *repository, const gchar *dir_name,
             }
 
             loader = cut_loader_new(path_name);
+            relative_path = compute_relative_path(paths);
+            cut_loader_set_base_directory(loader, relative_path);
             cut_loader_set_keep_opening(loader, priv->keep_opening_modules);
             if (is_test_suite_so_path_name(path_name)) {
-                update_test_suite_loader(priv, loader, deep);
+                update_test_suite_loader(priv, loader, paths->len);
             } else {
                 priv->loaders = g_list_prepend(priv->loaders, loader);
             }
@@ -294,8 +319,12 @@ cut_repository_create_test_suite (CutRepository *repository)
         return NULL;
 
     if (!priv->loaders) {
+        GArray *paths;
+
         priv->deep = 0;
-        cut_repository_collect_loader(repository, priv->directory, priv->deep);
+        paths = g_array_new(TRUE, TRUE, sizeof(gchar *));
+        cut_repository_collect_loader(repository, priv->directory, paths);
+        g_array_free(paths, TRUE);
     }
 
     if (priv->test_suite_loader)

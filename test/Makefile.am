@@ -66,7 +66,8 @@ noinst_LTLIBRARIES = 				\
 		test-cut-test-iterator.la	\
 		test-cut-sub-process.la		\
 		test-cut-sub-process-group.la	\
-		test-cut-file-stream-reader.la
+		test-cut-file-stream-reader.la	\
+		test-cut-path.la
 
 if HAVE_GDK_PIXBUF
 noinst_LTLIBRARIES += 				\
@@ -131,6 +132,7 @@ test_cut_test_iterator_la_SOURCES = test-cut-test-iterator.c
 test_cut_sub_process_la_SOURCES = test-cut-sub-process.c
 test_cut_sub_process_group_la_SOURCES = test-cut-sub-process-group.c
 test_cut_file_stream_reader_la_SOURCES = test-cut-file-stream-reader.c
+test_cut_path_la_SOURCES = test-cut-path.c
 test_gdkcut_pixbuf_la_SOURCES = test-gdkcut-pixbuf.c
 test_gdkcut_pixbuf_la_LIBADD = $(GDKCUTTER_PIXBUF_LIBS)
 
