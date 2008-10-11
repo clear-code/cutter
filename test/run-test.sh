@@ -31,6 +31,7 @@ export CUT_STREAM_MODULE_DIR=$top_dir/module/stream/.libs
 export CUT_STREAM_FACTORY_MODULE_DIR=$top_dir/module/stream/.libs
 
 CUTTER_ARGS="$CUTTER_ARGS -s $BASE_DIR --exclude-directory fixtures"
+CUTTER_ARGS="$CUTTER_ARGS --exclude-directory lib"
 if echo "$@" | grep -- --mode=analyze > /dev/null; then
     :
 else

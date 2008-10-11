@@ -17,77 +17,63 @@
                                        n_assertions, n_successes,       \
                                        n_failures, n_errors,            \
                                        n_pendings, n_notifications,     \
-                                       n_omissions) do                  \
-{                                                                       \
-    CutRunContext *_run_context;                                        \
-    GList *_result_summary;                                             \
-    const GList *_expected_result_summary;                              \
-    const GList *_actual_result_summary;                                \
-                                                                        \
-    _run_context = (run_context);                                       \
-    _result_summary =                                                   \
-        cuttest_result_summary_list_new((n_tests),                      \
-                                        (n_assertions),                 \
-                                        (n_successes),                  \
-                                        (n_failures),                   \
-                                        (n_errors),                     \
-                                        (n_pendings),                   \
-                                        (n_notifications),              \
-                                        (n_omissions));                 \
-    _expected_result_summary =                                          \
-        cut_take_result_summary_list(_result_summary);                  \
-                                                                        \
-    _result_summary =                                                   \
-        cuttest_result_summary_list_new_from_run_context(_run_context); \
-                                                                        \
-    _actual_result_summary =                                            \
-        cut_take_result_summary_list(_result_summary);                  \
-                                                                        \
-    gcut_assert_equal_list_uint(_expected_result_summary,               \
-                                _actual_result_summary);                \
-} while (0)
+                                       n_omissions)                     \
+    cut_trace_with_info_expression(                                     \
+    cut_assert_test_result_summary_helper(run_context, n_tests,         \
+                                          n_assertions, n_successes,    \
+                                          n_failures, n_errors,         \
+                                          n_pendings, n_notifications,  \
+                                          n_omissions),                 \
+        cut_assert_test_result_summary(run_context, n_tests,            \
+                                       n_assertions, n_successes,       \
+                                       n_failures, n_errors,            \
+                                       n_pendings, n_notifications,     \
+                                       n_omissions))
 
 #define cut_assert_test_result_with_message(run_context, i, status,     \
                                             test_name, user_message,    \
                                             system_message, message,    \
-                                            backtrace, ...) do          \
-{                                                                       \
-    const GList *_results;                                              \
-    CutTestResult *_result;                                             \
-    guint _i;                                                           \
-    GList *_strings = NULL;                                             \
-    const GList *_expected_strings, *_actual_strings;                   \
-                                                                        \
-    _results = cut_run_context_get_results(run_context);                \
-    _i = (i);                                                           \
-    cut_assert_operator_int(_i, <, g_list_length((GList *)_results));   \
-                                                                        \
-    _result = g_list_nth_data((GList *)_results, _i);                   \
-    cut_assert(_result);                                                \
-    cut_assert_equal_int((status),                                      \
-                         cut_test_result_get_status(_result));          \
-                                                                        \
-    _strings = cuttest_result_string_list_new((test_name),              \
-                                              (user_message),           \
-                                              (system_message),         \
-                                              (message),                \
-                                              (backtrace),              \
-                                              ## __VA_ARGS__,           \
-                                              NULL);                    \
-    _expected_strings = cut_take_result_string_list(_strings);          \
-                                                                        \
-    _strings = cuttest_result_string_list_new_from_result(_result);     \
-    _actual_strings = cut_take_result_string_list(_strings);            \
-                                                                        \
-    gcut_assert_equal_list_string(_expected_strings, _actual_strings);  \
-} while (0)
+                                            backtrace, ...)             \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_test_result_helper(run_context, i, status,           \
+                                      test_name, user_message,          \
+                                      system_message, message,          \
+                                      backtrace, ## __VA_ARGS__, NULL), \
+        cut_assert_test_result_with_message(run_context, i, status,     \
+                                            test_name, user_message,    \
+                                            system_message, message,    \
+                                            backtrace, ## __VA_ARGS__))
 
 #define cut_assert_test_result(run_context, i, status, test_name,       \
                                user_message, system_message,            \
                                backtrace, ...)                          \
-    cut_assert_test_result_with_message(run_context, i, status,         \
-                                        test_name, user_message,        \
-                                        system_message, NULL,           \
-                                        backtrace, ## __VA_ARGS__, NULL)
+    cut_trace_with_info_expression(                                     \
+        cut_assert_test_result_helper(run_context, i, status,           \
+                                      test_name, user_message,          \
+                                      system_message, NULL,             \
+                                      backtrace, ## __VA_ARGS__, NULL), \
+        cut_assert_test_result(run_context, i, status, test_name,       \
+                               user_message, system_message, backtrace, \
+                               ## __VA_ARGS__))
+
+
+void cut_assert_test_result_summary_helper (CutRunContext *run_context,
+                                            guint n_tests,
+                                            guint n_assertions,
+                                            guint n_successes,
+                                            guint n_failures,
+                                            guint n_errors,
+                                            guint n_pendings,
+                                            guint n_notifications,
+                                            guint n_omissions);
+void cut_assert_test_result_helper         (CutRunContext *run_context,
+                                            guint i,
+                                            CutTestResultStatus status,
+                                            const gchar *test_name,
+                                            const gchar *user_message,
+                                            const gchar *system_message,
+                                            const gchar *message,
+                                            const gchar *backtrace,
+                                            ...);
 
 #endif
