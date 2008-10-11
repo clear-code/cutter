@@ -1,5 +1,27 @@
 2008-10-11  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-gdkcut-pixbuf.c,
+	test/fixtures/pixbuf/diff-dark-and-nested-circle.png: add tests
+	for image diff.
+
+	* gdkcutter-pixbuf/gdkcut-pixbuf.c (gdkcut_pixbuf_diff): implement.
+
+	* gdkcutter-pixbuf/gdkcut-pixbuf.[ch] (gdkcut_pixbuf_save_diff):
+	receive GError.
+
+	* gdkcutter-pixbuf/gdkcut-pixbuf-assertions.h
+	(gdkcut_pixbuf_assert_equal): fix.
+
+	* gdkcutter-pixbuf/gdkcut-pixbuf-assertions-helper.[ch]: add.
+
+	* cutter/cut-public.h, cutter/cut-test-context.c
+	(cut_test_context_get_last_backtrace): add.
+
+	* cutter/cut-assertions-helper.h
+	(cut_test_register_result_helper): improve API.
+
+	* TODO: remove an entry: image diff.
+
 	* test/test-gdkcut-pixbuf.c (test_diff_between_equal_images): add.
 
 	* test/test-gcut-assertions.c, test/test-gcut-assertions.c: fix a

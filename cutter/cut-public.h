@@ -152,6 +152,12 @@ void        cut_test_context_push_backtrace (CutTestContext *context,
                                              const char     *function_name,
                                              const char     *info);
 void        cut_test_context_pop_backtrace  (CutTestContext *context);
+void        cut_test_context_get_last_backtrace
+                                            (CutTestContext *context,
+                                             const char    **filename,
+                                             unsigned int   *line,
+                                             const char    **function_name,
+                                             const char    **info);
 
 char       *cut_diff_readable               (const char     *from,
                                              const char     *to);

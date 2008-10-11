@@ -36,7 +36,8 @@ GdkPixbuf       *gdkcut_pixbuf_diff             (const GdkPixbuf *pixbuf1,
 gchar           *gdkcut_pixbuf_save_diff        (const GdkPixbuf *pixbuf1,
                                                  const GdkPixbuf *pixbuf2,
                                                  guint            threshold,
-                                                 const gchar     *prefix);
+                                                 const gchar     *prefix,
+                                                 GError         **error);
 
 G_END_DECLS
 

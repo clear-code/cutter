@@ -41,12 +41,17 @@ extern "C" {
 } while (0)
 
 #define cut_test_register_result_helper(test_context, status,           \
-                                        system_message, message,        \
-                                        args) do                        \
+                                        system_message,                 \
+                                        user_message_format) do         \
 {                                                                       \
+    va_list args;                                                       \
+                                                                        \
+    va_start(args, user_message_format);                                \
     cut_test_context_register_resultv(test_context,                     \
                                       CUT_TEST_RESULT_ ## status,       \
-                                      system_message, message, args);   \
+                                      system_message,                   \
+                                      user_message_format, args);       \
+    va_end(args);                                                       \
 } while (0)
 
 #define cut_test_fail(status, message, ...) do                      \
@@ -58,13 +63,9 @@ extern "C" {
 #define cut_test_fail_helper(test_context, status, system_message,      \
                              user_message_format) do                    \
 {                                                                       \
-    va_list args;                                                       \
-                                                                        \
-    va_start(args, user_message_format);                                \
     cut_test_register_result_helper(test_context, status,               \
                                     system_message,                     \
-                                    user_message_format, args);         \
-    va_end(args);                                                       \
+                                    user_message_format);               \
     cut_test_context_long_jump(test_context);                           \
 } while (0)
 

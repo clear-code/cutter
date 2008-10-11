@@ -7,7 +7,6 @@
   * N failures
   * elapsed time
 * coordinattion with TestLink.
-* image diff.
 * failmalloc like memory test.
 * more intelligent crashed reporting.
   * get the latest unfinished test and bundle it into crashed reporting.

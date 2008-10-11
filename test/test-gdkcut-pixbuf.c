@@ -1,22 +1,26 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 
 #include <gdkcutter-pixbuf.h>
+#include <gdkcutter-pixbuf/gdkcut-pixbuf.h>
 #include "lib/cuttest-utils.h"
 
 void test_equal_property(void);
 void test_equal_content(void);
 void test_equal_content_threshold(void);
 void test_inspect(void);
+void test_diff(void);
 void test_diff_between_equal_images(void);
 
-static GdkPixbuf *pixbuf1, *pixbuf2, *diff;
+static GdkPixbuf *pixbuf1, *pixbuf2;
+static GdkPixbuf *expected_diff, *actual_diff;
 
 void
 setup (void)
 {
     pixbuf1 = NULL;
     pixbuf2 = NULL;
-    diff = NULL;
+    expected_diff = NULL;
+    actual_diff = NULL;
 
     cut_set_fixture_data_dir(cuttest_get_base_dir(),
                              "fixtures",
@@ -31,8 +35,11 @@ teardown (void)
         g_object_unref(pixbuf1);
     if (pixbuf2)
         g_object_unref(pixbuf2);
-    if (diff)
-        g_object_unref(diff);
+
+    if (expected_diff)
+        g_object_unref(expected_diff);
+    if (actual_diff)
+        g_object_unref(actual_diff);
 }
 
 static GdkPixbuf *
@@ -133,12 +140,23 @@ test_inspect (void)
 }
 
 void
+test_diff (void)
+{
+    pixbuf1 = load_pixbuf("dark-circle.png");
+    pixbuf2 = load_pixbuf("nested-circle.png");
+    expected_diff = load_pixbuf("diff-dark-and-nested-circle.png");
+
+    actual_diff = gdkcut_pixbuf_diff(pixbuf1, pixbuf2, 0);
+    gdkcut_pixbuf_assert_equal(expected_diff, actual_diff, 0);
+}
+
+void
 test_diff_between_equal_images (void)
 {
     pixbuf1 = load_pixbuf("dark-circle.png");
 
-    diff = gdkcut_pixbuf_diff(pixbuf1, pixbuf1, 0);
-    gcut_assert_equal_object(NULL, diff);
+    actual_diff = gdkcut_pixbuf_diff(pixbuf1, pixbuf1, 0);
+    gcut_assert_equal_object(NULL, actual_diff);
 }
 
 

@@ -22,7 +22,7 @@
 
 #include <glib.h>
 
-#include <gdkcutter-pixbuf/gdkcut-pixbuf.h>
+#include <gdkcutter-pixbuf/gdkcut-pixbuf-assertions-helper.h>
 
 G_BEGIN_DECLS
 
@@ -55,60 +55,15 @@ G_BEGIN_DECLS
  *
  * Since: 1.0.5
  */
-#define gdkcut_pixbuf_assert_equal(expected, actual, threshold, ...) do \
-{                                                                       \
-    GdkPixbuf *_expected;                                               \
-    GdkPixbuf *_actual;                                                 \
-    gint _threshold;                                                    \
-                                                                        \
-    _expected = (expected);                                             \
-    _actual = (actual);                                                 \
-    _threshold = (threshold);                                           \
-    if (gdkcut_pixbuf_equal_content(_expected, _actual, _threshold)) {  \
-        cut_test_pass();                                                \
-    } else {                                                            \
-        const gchar *message;                                           \
-                                                                        \
-        message = cut_take_printf("<%s == %s> (%s)",                    \
-                                  #expected, #actual, #threshold);      \
-        if (gdkcut_pixbuf_equal_property(_expected, _actual)) {         \
-            gchar *diff_image_file;                                     \
-                                                                        \
-            diff_iamge_file =                                           \
-                gdkcut_pixbuf_save_diff(_expected,                      \
-                                        _actual,                        \
-                                        threshold,                      \
-                                        cut_take_printf("%s-%d",        \
-                                                        __FILE__,       \
-                                                        __LINE__));     \
-            message = cut_take_printf("%s\n"                            \
-                                      " threshold: <%d>\n"              \
-                                      "diff image: <%s>",               \
-                                      message,                          \
-                                      _threshold,                       \
-                                      diff_iamge_file);                 \
-            g_free(diff_iamge_file);                                    \
-        } else {                                                        \
-            gchar *expected_property;                                   \
-            gchar *actual_property;                                     \
-                                                                        \
-            expected_property =                                         \
-                gdkcut_pixbuf_inspect_property(_expected);              \
-            actual_property =                                           \
-                gdkcut_pixbuf_inspect_property(_actual);                \
-            message = cut_take_printf("%s\n"                            \
-                                      "expected: <%s>\n"                \
-                                      " but was: <%s>",                 \
-                                      message,                          \
-                                      expected_property,                \
-                                      actual_property);                 \
-            message = cut_append_diff(message,                          \
-                                      expected_property,                \
-                                      actual_property);                 \
-        }                                                               \
-        cut_test_fail(FAILURE, message, ## __VA_ARGS__);                \
-    }                                                                   \
-} while(0)
+#define gdkcut_pixbuf_assert_equal(expected, actual, threshold, ...)    \
+    cut_trace_with_info_expression(                                     \
+        gdkcut_pixbuf_assert_equal_helper(get_current_test_context(),   \
+                                          expected, actual, threshold,  \
+                                          #expected, #actual,           \
+                                          #threshold,                   \
+                                          ## __VA_ARGS__, NULL),        \
+        gdkcut_pixbuf_assert_equal(expected, actual, threshold,         \
+                                   ## __VA_ARGS__))
 
 G_END_DECLS
 

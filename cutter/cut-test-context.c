@@ -1300,6 +1300,30 @@ cut_test_context_pop_backtrace (CutTestContext *context)
     priv->backtrace = g_list_delete_link(priv->backtrace, priv->backtrace);
 }
 
+void
+cut_test_context_get_last_backtrace (CutTestContext *context,
+                                     const char    **filename,
+                                     unsigned int   *line,
+                                     const char    **function_name,
+                                     const char    **info)
+{
+    CutTestContextPrivate *priv;
+    CutBacktraceEntry *entry;
+
+    priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+    g_return_if_fail(priv->backtrace != NULL);
+
+    entry = priv->backtrace->data;
+    if (filename)
+        *filename = cut_backtrace_entry_get_file(entry);
+    if (line)
+        *line = cut_backtrace_entry_get_line(entry);
+    if (function_name)
+        *function_name = cut_backtrace_entry_get_function(entry);
+    if (info)
+        *info = cut_backtrace_entry_get_info(entry);
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */

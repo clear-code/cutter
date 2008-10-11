@@ -15,6 +15,7 @@ endif
 
 gdkcutter_pixbuf_public_headers =		\
 	gdkcut-pixbuf-assertions.h		\
+	gdkcut-pixbuf-assertions-helper.h	\
 	gdkcut-pixbuf.h
 
 pkginclude_HEADERS = 		\
@@ -24,8 +25,9 @@ gdkcutter_pixbuf_includedir=$(includedir)/gdkcutter-pixbuf
 gdkcutter_pixbuf_include_HEADERS = 		\
 	$(gdkcutter_pixbuf_public_headers)
 
-libgdkcutter_pixbuf_la_SOURCES =	\
-	$(gcutter_public_headers)	\
+libgdkcutter_pixbuf_la_SOURCES =		\
+	$(gcutter_public_headers)		\
+	gdkcut-pixbuf-assertions-helper.c	\
 	gdkcut-pixbuf.c
 
 libgdkcutter_pixbuf_la_LDFLAGS =		\
