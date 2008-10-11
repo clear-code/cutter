@@ -1,5 +1,7 @@
 2008-10-11  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-gdkcut-pixbuf.c (test_diff_between_equal_images): add.
+
 	* test/test-gcut-assertions.c, test/test-gcut-assertions.c: fix a
 	crash bug.
 

@@ -7,14 +7,16 @@ void test_equal_property(void);
 void test_equal_content(void);
 void test_equal_content_threshold(void);
 void test_inspect(void);
+void test_diff_between_equal_images(void);
 
-static GdkPixbuf *pixbuf1, *pixbuf2;
+static GdkPixbuf *pixbuf1, *pixbuf2, *diff;
 
 void
 setup (void)
 {
     pixbuf1 = NULL;
     pixbuf2 = NULL;
+    diff = NULL;
 
     cut_set_fixture_data_dir(cuttest_get_base_dir(),
                              "fixtures",
@@ -29,6 +31,8 @@ teardown (void)
         g_object_unref(pixbuf1);
     if (pixbuf2)
         g_object_unref(pixbuf2);
+    if (diff)
+        g_object_unref(diff);
 }
 
 static GdkPixbuf *
@@ -127,6 +131,16 @@ test_inspect (void)
     cut_assert_equal_string_with_free(expected,
                                       gcut_object_inspect(G_OBJECT(pixbuf2)));
 }
+
+void
+test_diff_between_equal_images (void)
+{
+    pixbuf1 = load_pixbuf("dark-circle.png");
+
+    diff = gdkcut_pixbuf_diff(pixbuf1, pixbuf1, 0);
+    gcut_assert_equal_object(NULL, diff);
+}
+
 
 /*
 vi:nowrap:ai:expandtab:sw=4:ts=4
