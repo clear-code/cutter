@@ -1,5 +1,13 @@
 2008-10-11  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-gcut-assertions.c (test_equal_object): add.
+
+	* gcutter/gcut-assertions.h (gcut_assert_equal_object)
+	(gcut_assert_equal_object_custom): add.
+
+	* gcutter/gcut-assertions-helper.[ch]
+	(gcut_assert_equal_object_helper): add.
+
 	* gdkcutter-pixbuf/gdkcut-pixbuf.[ch]: remove
 	gdkcut_pixbuf_inspect_property().
 

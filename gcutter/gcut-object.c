@@ -37,6 +37,9 @@ gcut_object_equal (const GObject *object1, const GObject *object2,
     if (object1 == NULL || object2 == NULL)
         return FALSE;
 
+    if (!equal_func)
+        return FALSE;
+
     return equal_func(object1, object2);
 }
 

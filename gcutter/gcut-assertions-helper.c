@@ -422,6 +422,55 @@ gcut_assert_equal_flags_helper (CutTestContext *test_context,
     }
 }
 
+void
+gcut_assert_equal_object_helper (CutTestContext *test_context,
+                                 GObject        *expected,
+                                 GObject        *actual,
+                                 GEqualFunc      equal_function,
+                                 const gchar    *expression_expected,
+                                 const gchar    *expression_actual,
+                                 const gchar    *expression_equal_function,
+                                 const gchar    *user_message_format,
+                                 ...)
+{
+    if (gcut_object_equal(expected, actual, equal_function)) {
+        cut_test_pass_helper(test_context);
+    } else {
+        gchar *inspected_expected, *inspected_actual;
+        GString *message;
+        const gchar *fail_message;
+
+        inspected_expected = gcut_object_inspect(expected);
+        inspected_actual = gcut_object_inspect(actual);
+        message = g_string_new(NULL);
+
+        if (expression_equal_function)
+            g_string_append_printf(message,
+                                   "<%s(%s, %s)>\n",
+                                   expression_equal_function,
+                                   expression_expected, expression_actual);
+        else
+            g_string_append_printf(message,
+                                   "<%s == %s>\n",
+                                   expression_expected, expression_actual);
+        g_string_append_printf(message,
+                               "expected: <%s>\n"
+                               " but was: <%s>",
+                               inspected_expected,
+                               inspected_actual);
+        fail_message = cut_append_diff_helper(test_context,
+                                              message->str,
+                                              inspected_expected,
+                                              inspected_actual);
+        g_free(inspected_expected);
+        g_free(inspected_actual);
+        g_string_free(message, TRUE);
+        cut_test_fail_helper(test_context,
+                             FAILURE,
+                             fail_message,
+                             user_message_format);
+    }
+}
 
 
 /*

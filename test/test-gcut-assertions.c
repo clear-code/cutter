@@ -5,6 +5,7 @@
 #include <cutter/cut-test-runner.h>
 #include <cutter/cut-repository.h>
 #include <cutter/cut-enum-types.h>
+#include <cutter/cut-loader.h>
 #include "lib/cuttest-assertions.h"
 
 void test_equal_type(void);
@@ -20,6 +21,7 @@ void test_error(void);
 void test_equal_error(void);
 void test_equal_enum(void);
 void test_equal_flags(void);
+void test_equal_object(void);
 
 static CutTest *test;
 static CutRunContext *run_context;
@@ -31,6 +33,7 @@ static GList *list1, *list2;
 static gboolean need_to_free_list_contents;
 static GDestroyNotify list_element_free_function;
 static GHashTable *hash1, *hash2;
+static GObject *object1, *object2;
 
 static GError *error;
 static GError *error1, *error2;
@@ -85,6 +88,9 @@ setup (void)
     hash1 = NULL;
     hash2 = NULL;
 
+    object1 = NULL;
+    object2 = NULL;
+
     error = NULL;
     need_to_free_error = FALSE;
 
@@ -125,6 +131,11 @@ teardown (void)
         g_hash_table_unref(hash1);
     if (hash2)
         g_hash_table_unref(hash2);
+
+    if (object1)
+        g_object_unref(object1);
+    if (object2)
+        g_object_unref(object2);
 
     if (error && need_to_free_error)
         g_error_free(error);
@@ -601,6 +612,51 @@ test_equal_flags (void)
                            "(unknown flags: 0x8)>>",
                            FAIL_LOCATION,
                            "stub_equal_flags");
+}
+
+static void
+stub_equal_object (void)
+{
+    gcut_assert_equal_object(object1, object1);
+    gcut_assert_equal_object(object2, object2);
+    gcut_assert_equal_object(NULL, NULL);
+    MARK_FAIL(gcut_assert_equal_object(object1, object2));
+}
+
+void
+test_equal_object (void)
+{
+    const gchar *inspected_expected, *inspected_actual;
+    const gchar *message;
+
+    object1 = G_OBJECT(cut_loader_new("so-name1"));
+    object2 = G_OBJECT(cut_loader_new("so-name2"));
+
+    test = cut_test_new("gcut_assert_equal_object test", stub_equal_object);
+    cut_assert_not_null(test);
+
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 3, 0, 1, 0, 0, 0, 0);
+
+    inspected_expected = cut_take_printf("#<CutLoader:%p "
+                                         "so-filename=<\"so-name1\">, "
+                                         "base-directory=<NULL>>",
+                                         object1);
+    inspected_actual = cut_take_printf("#<CutLoader:%p "
+                                       "so-filename=<\"so-name2\">, "
+                                       "base-directory=<NULL>>",
+                                       object2);
+    message = cut_take_printf("<object1 == object2>\n"
+                              "expected: <%s>\n"
+                              " but was: <%s>",
+                              inspected_expected, inspected_actual);
+    message = cut_append_diff(message, inspected_expected, inspected_actual);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "gcut_assert_equal_object test",
+                           NULL,
+                           message,
+                           FAIL_LOCATION,
+                           "stub_equal_object");
 }
 
 

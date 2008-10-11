@@ -473,6 +473,81 @@ G_BEGIN_DECLS
         gcut_assert_equal_flags(flags_type, expected, actual,           \
                                ## __VA_ARGS__))
 
+/**
+ * gcut_assert_equal_object:
+ * @expected: an expected object.
+ * @actual: an actual object.
+ * @...: optional format string, followed by parameters to insert
+ *       into the format string (as with printf())
+ *
+ * Passes if @expected == @actual. See
+ * gcut_assert_equal_object_custom() when you need to customize
+ * equality check.
+ *
+ * e.g.:
+ * |[
+ * gcut_assert_equal_object(object, object);   -> Pass
+ * gcut_assert_equal_object(object1, object2); -> Fail
+ * gcut_assert_equal_object(NULL, NULL);       -> Pass
+ * gcut_assert_equal_object(object1, NULL);    -> Fail
+ * ]|
+ *
+ * Since: 1.0.5
+ */
+#define gcut_assert_equal_object(expected, actual, ...)                 \
+    cut_trace_with_info_expression(                                     \
+        gcut_assert_equal_object_helper(get_current_test_context(),     \
+                                        G_OBJECT(expected),             \
+                                        G_OBJECT(actual),               \
+                                        NULL,                           \
+                                        #expected, #actual,             \
+                                        NULL,                           \
+                                        ## __VA_ARGS__, NULL),          \
+        gcut_assert_equal_object(expected, actual, ## __VA_ARGS__))
+
+/**
+ * gcut_assert_equal_object_custom:
+ * @expected: an expected object.
+ * @actual: an actual object.
+ * @equal_function: an function that compare tow object. (#GEqualFunc)
+ * @...: optional format string, followed by parameters to insert
+ *       into the format string (as with printf())
+ *
+ * Passes if equal_function(@expected, @actual) == TRUE.
+ *
+ * e.g.:
+ * |[
+ * static gboolean
+ * equal_name (gconstpointer data1, gconstpointer data2)
+ * {
+ *     return g_str_equal(my_object_get_name(MY_OBJECT(data1)),
+ *                        my_object_get_name(MY_OBJECT(data2)));
+ * }
+ *
+ * gcut_assert_equal_object_custom(object, object, equal_name);   -> Pass
+ * gcut_assert_equal_object_custom(same_name_object1,
+ *                                 same_name_object2,
+ *                                 equal_name);                   -> Pass
+ * gcut_assert_equal_object_custom(different_name_object1,
+ *                                 different_name_object2,
+ *                                 equal_name);                   -> Fail
+ * ]|
+ *
+ * Since: 1.0.5
+ */
+#define gcut_assert_equal_object_custom(expected, actual,               \
+                                        equal_function, ...)            \
+    cut_trace_with_info_expression(                                     \
+        gcut_assert_equal_object_helper(get_current_test_context(),     \
+                                        G_OBJECT(expected),             \
+                                        G_OBJECT(actual),               \
+                                        equal_function,                 \
+                                        #expected, #actual,             \
+                                        #equal_function,                \
+                                        ## __VA_ARGS__, NULL),          \
+        gcut_assert_equal_object(expected, actual, equal_function,      \
+                                 ## __VA_ARGS__))
+
 G_END_DECLS
 
 #endif /* __GCUT_ASSERTIONS_H__ */

@@ -118,6 +118,16 @@ void      gcut_assert_equal_flags_helper    (CutTestContext *test_context,
                                              const gchar    *user_message_format,
                                              ...);
 
+void      gcut_assert_equal_object_helper   (CutTestContext *test_context,
+                                             GObject        *expected,
+                                             GObject        *actual,
+                                             GEqualFunc      equal_function,
+                                             const gchar    *expression_expected,
+                                             const gchar    *expression_actual,
+                                             const gchar    *expression_equal_function,
+                                             const gchar    *user_message_format,
+                                             ...);
+
 G_END_DECLS
 
 #endif /* __GCUT_ASSERTIONS_HELPER_H__ */
