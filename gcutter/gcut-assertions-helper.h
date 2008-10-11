@@ -30,6 +30,7 @@
 #include <gcutter/gcut-test-utils.h>
 #include <gcutter/gcut-error.h>
 #include <gcutter/gcut-enum.h>
+#include <gcutter/gcut-object.h>
 
 G_BEGIN_DECLS
 

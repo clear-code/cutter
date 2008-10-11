@@ -22,11 +22,9 @@
 
 #include <glib-object.h>
 
-G_BEGIN_DECLS
+#include <gcutter/gcut-types.h>
 
-typedef void   (*GCutInspectFunc) (GString *string,
-                                   gconstpointer data,
-                                   gpointer user_data);
+G_BEGIN_DECLS
 
 gboolean         gcut_list_equal                (const GList *list1,
                                                  const GList *list2,

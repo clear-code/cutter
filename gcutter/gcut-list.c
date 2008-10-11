@@ -18,13 +18,14 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#  include "../cutter/config.h"
 #endif /* HAVE_CONFIG_H */
 
 #include <glib.h>
 #include <string.h>
 
 #include "gcut-list.h"
+#include "gcut-object.h"
 #include "gcut-test-utils.h"
 
 gboolean
@@ -171,37 +172,11 @@ gcut_list_string_free (GList *list)
 static void
 inspect_object (GString *string, gconstpointer data, gpointer user_data)
 {
-    GObject *object = (GObject *)data;
-    guint i, n_properties = 0;
-    GParamSpec **param_specs = NULL;
+    gchar *inspected_object;
 
-    if (!object) {
-        g_string_append(string, "NULL");
-        return;
-    }
-
-    g_string_append_printf(string, "#<%s:%p",
-                           G_OBJECT_TYPE_NAME(object),
-                           object);
-    param_specs = g_object_class_list_properties(G_OBJECT_GET_CLASS(object),
-                                                 &n_properties);
-    for (i = 0; i < n_properties; i++) {
-        GParamSpec *spec = param_specs[i];
-        GValue value = {0,};
-        gchar *value_string;
-
-        if (i > 0)
-            g_string_append(string, ",");
-
-        g_value_init(&value, spec->value_type);
-        g_object_get_property(object, spec->name, &value);
-        value_string = g_strdup_value_contents(&value);
-        g_string_append_printf(string, " %s=<%s>", spec->name, value_string);
-        g_free(value_string);
-        g_value_unset(&value);
-    }
-    g_free(param_specs);
-    g_string_append(string, ">");
+    inspected_object = gcut_object_inspect(data);
+    g_string_append(string, inspected_object);
+    g_free(inspected_object);
 }
 
 gchar *
@@ -213,4 +188,3 @@ gcut_list_object_inspect (const GList *list)
 /*
 vi:nowrap:ai:expandtab:sw=4:ts=4
 */
-
