@@ -47,6 +47,10 @@ gchar           *gcut_list_string_inspect       (const GList *list);
 
 gchar           *gcut_list_object_inspect       (const GList *list);
 
+gchar           *gcut_list_enum_inspect         (const GList *list,
+                                                 GType        type);
+gchar           *gcut_list_flags_inspect        (const GList *list,
+                                                 GType        type);
 
 G_END_DECLS
 

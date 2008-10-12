@@ -26,6 +26,7 @@
 
 #include "gcut-list.h"
 #include "gcut-object.h"
+#include "gcut-enum.h"
 #include "gcut-test-utils.h"
 
 gboolean
@@ -184,6 +185,41 @@ gcut_list_object_inspect (const GList *list)
 {
     return gcut_list_inspect(list, inspect_object, NULL);
 }
+
+static void
+inspect_enum (GString *string, gconstpointer data, gpointer user_data)
+{
+    gchar *inspected_enum;
+    GType type = GPOINTER_TO_UINT(user_data);
+
+    inspected_enum = gcut_enum_inspect(type, GPOINTER_TO_INT(data));
+    g_string_append(string, inspected_enum);
+    g_free(inspected_enum);
+}
+
+gchar *
+gcut_list_enum_inspect (const GList *list, GType type)
+{
+    return gcut_list_inspect(list, inspect_enum, GUINT_TO_POINTER(type));
+}
+
+static void
+inspect_flags (GString *string, gconstpointer data, gpointer user_data)
+{
+    gchar *inspected_flags;
+    GType type = GPOINTER_TO_UINT(user_data);
+
+    inspected_flags = gcut_flags_inspect(type, GPOINTER_TO_UINT(data));
+    g_string_append(string, inspected_flags);
+    g_free(inspected_flags);
+}
+
+gchar *
+gcut_list_flags_inspect (const GList *list, GType type)
+{
+    return gcut_list_inspect(list, inspect_flags, GUINT_TO_POINTER(type));
+}
+
 
 /*
 vi:nowrap:ai:expandtab:sw=4:ts=4

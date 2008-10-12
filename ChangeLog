@@ -1,5 +1,8 @@
 2008-10-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-list.[ch], test/test-gcut-list.c
+	(gcut_list_enum_inspect, gcut_list_flags_inspect): add.
+
 	* gdkcutter-pixbuf/gdkcut-pixbuf.c, test/test-gdkcut-pixbuf.c,
 	test/fixtures/pixbuf/: fix non-alpha image diff.
 
