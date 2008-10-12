@@ -14,6 +14,7 @@ lib_LTLIBRARIES = libcutter.la
 
 cutter_public_headers = 		\
 	cut-version.h			\
+	cut-features.h			\
 	cut-assertions.h		\
 	cut-assertions-helper.h		\
 	cut-test-utils.h		\

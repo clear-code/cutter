@@ -458,6 +458,10 @@ AC_SUBST(SF_HTDOCS)
 SF_REPOS="https://cutter.svn.sourceforge.net/svnroot/cutter/cutter"
 AC_SUBST(SF_REPOS)
 
+dnl **************************************************************
+dnl Cutter related variables.
+dnl **************************************************************
+
 CUTTER="\$(top_builddir)/cutter/cutter"
 AC_SUBST(CUTTER)
 
@@ -469,6 +473,45 @@ CUTTER_CFLAGS="$CUTTER_CFLAGS -DSTREAM_MODULEDIR=\\\"\"\$(stream_moduledir)\"\\\
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DSTREAM_FACTORY_MODULEDIR=\\\"\"\$(stream_factory_moduledir)\"\\\""
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DFACTORY_MODULEDIR=\\\"\"\$(factory_moduledir)\"\\\""
 AC_SUBST(CUTTER_CFLAGS)
+
+dnl **************************************************************
+dnl cutter/cut-features.h
+dnl **************************************************************
+
+AC_CONFIG_COMMANDS([cutter/cut-features.h-start],
+[
+  cat > cutter/cut-features.h <<\_______EOF
+/* cut-features.h
+ *
+ * This is a generated file.  Please modify 'configure.ac'
+ */
+
+#ifndef __CUT_FEATURES_H__
+#define __CUT_FEATURES_H__
+
+#define CUT_SUPPORT_GLIB 1
+_______EOF
+])
+
+  if test "$gdk_pixbuf_exists" = "yes"; then
+AC_CONFIG_COMMANDS([cutter/cut-features.h-gdk-pixbuf-enable],
+[
+    echo "#define CUT_SUPPORT_GDK_PIXBUF 1" >> cutter/cut-features.h
+])
+  else
+AC_CONFIG_COMMANDS([cutter/cut-features.h-gdk-pixbuf-disable],
+[
+    echo "/* #undef CUT_SUPPORT_GDK_PIXBUF */" >> cutter/cut-features.h
+])
+  fi
+
+AC_CONFIG_COMMANDS([cutter/cut-features.h-end],
+[
+  cat >> cutter/cut-features.h <<\_______EOF
+
+#endif
+_______EOF
+])
 
 AC_CONFIG_FILES([Makefile
 		 cutter.pc

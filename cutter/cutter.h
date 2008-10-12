@@ -21,6 +21,7 @@
 #define __CUTTER_H__
 
 #include <cutter/cut-version.h>
+#include <cutter/cut-features.h>
 
 #include <cutter/cut-hidden-definitions.h>
 #include <cutter/cut-assertions.h>

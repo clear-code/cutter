@@ -21,7 +21,7 @@ gdkcutter_pixbuf_public_headers =		\
 pkginclude_HEADERS = 		\
 	gdkcutter-pixbuf.h
 
-gdkcutter_pixbuf_includedir=$(includedir)/gdkcutter-pixbuf
+gdkcutter_pixbuf_includedir=$(pkgincludedir)/gdkcutter-pixbuf
 gdkcutter_pixbuf_include_HEADERS = 		\
 	$(gdkcutter_pixbuf_public_headers)
 

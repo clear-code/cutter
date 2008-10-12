@@ -1,5 +1,13 @@
 2008-10-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gdkcutter-pixbuf/Makefile.am (gdkcutter_pixbuf_includedir): fix
+	install directory.
+
+	* cutter/Makefile.am (cutter_public_headers): install
+	cutter/cut-features.h.
+
+	* configure.ac, cutter/cutter.h: create cut-features.h and use it.
+
 	* m4macros/cutter.m4: add AC_CHECK_GDKCUTTER_PIXBUF.
 
 	* cutter/cut-assertions-helper.c: use cut_utils_equal_double().
