@@ -71,7 +71,7 @@ autogen.sh:
       fi
   }
 
-  run aclocal
+  run aclocal ${ACLOCAL_ARGS}
   run libtoolize --copy --force
   run autoheader
   run automake --add-missing --foreign --copy
@@ -91,6 +91,14 @@ command. The following list shows what is done by them:
   * automake: generates Makefile.in that is used by
     configure script.
   * autoconf: generates configure scripts.
+
+If we installed Cutter into different prefix with aclocal's
+install prefix, you need to set ACLOCAL_ARGS environment
+variable. The environment variable is referred from
+autogen.sh. If we installed Cutter with $HOME/local prefix,
+here is an example command to set the environment variable:
+
+  [stack]% export ACLOCAL_ARGS=$HOME/local/share/aclocal
 
 The following is a result of autogen.sh at this point:
 
@@ -366,9 +374,8 @@ have a stack implementation yet.
 ==== Use Cutter
 
 We will support cutter.h including. Cutter provides a macro
-file for aclocal whic is a popular package information management
-tool. Because of this, we can use Cutter with GNU build
-system.
+file for aclocal. Because of this, we can use Cutter with
+GNU build system.
 
 First, we add a code to detect Cutter into configure.ac.
 
@@ -417,6 +424,16 @@ test/Makefile.am:
   LDFLAGS = -module -rpath $(libdir) -avoid-version -no-undefined
 
   test_stack_la_SOURCES = test-stack.c
+
+AC_CHECK_CUTTER macro uses pkg-config which is a popular
+package information management tool. If we installed Cutter
+with different prefix of pkg-config, we need to set
+PKG_CONFIG_PATH environment variable. The environment
+variable is referred by pkg-config to find .pc file. If we
+installed Cutter with $HOME/local prefix, here is an example
+command to set the environment variable:
+
+  [stack]% export PKG_CONFIG_PATH=$HOME/local/lib/pkgconfig
 
 We run make again and make runs configure automatically and
 builds with Cutter configuration after the above changes.

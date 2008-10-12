@@ -9,7 +9,7 @@ run()
     fi
 }
 
-run aclocal
+run aclocal ${ACLOCAL_ARGS}
 run libtoolize --copy --force
 run autoheader
 run automake --add-missing --foreign --copy

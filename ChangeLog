@@ -1,5 +1,12 @@
 2008-10-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* TUTORIAL*, test/sample/stack/autogen.sh: add description about
+	when Cutter is installed with non-system prefix.
+
+	* TODO: remove an entry: add description about
+	-I$PREFIX/share/aclocal and PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig
+	to TUTORIAL.
+
 	* gcutter/gcut-assertions.h, gcutter/assertions-helper.[ch],
 	test/test-gcut-assertions.c: add gcut_assert_equal_list_enum() and
 	gcut_assert_equal_list_flags().
