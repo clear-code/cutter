@@ -1,5 +1,10 @@
 2008-10-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-utils.h (cut_equal_string): add.
+
+	* cutter/cut-utils.c, cutter/cut-public.h, test/test-cut-utils.c:
+	add cut_utils_equal_string().
+
 	* cutter/cut-public.h: use cut_boolean.
 
 2008-10-11  Kouhei Sutou  <kou@cozmixng.org>

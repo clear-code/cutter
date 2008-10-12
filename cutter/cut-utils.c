@@ -119,6 +119,18 @@ cut_utils_inspect_memory (const void *memory, size_t size)
 }
 
 gboolean
+cut_utils_equal_string (gchar *string1, gchar *string2)
+{
+    if (string1 == string2)
+        return TRUE;
+
+    if (string1 == NULL || string2 == NULL)
+        return FALSE;
+
+    return g_str_equal(string1, string2);
+}
+
+gboolean
 cut_utils_equal_string_array (gchar **strings1, gchar **strings2)
 {
     gint i, length;

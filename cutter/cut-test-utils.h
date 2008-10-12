@@ -319,6 +319,22 @@ extern "C" {
         cut_take_string(                                                \
             cut_utils_build_path(path, ## __VA_ARGS__, NULL)))
 
+/**
+ * cut_equal_string:
+ * @string1: a string. (char *)
+ * @string2: a string. (char *)
+ *
+ * Compare @string1 to @string2. @string1 and/or @string2
+ * maybe NULL.
+ *
+ * Returns: TRUE if both @string1 and @string2 are NULL or
+ *          have the same contents; FALSE otherwise.
+ *
+ * Since: 1.0.5
+ */
+#define cut_equal_string(string1, string2)                              \
+    cut_utils_equal_string(string1, string2)
+
 #ifdef __cplusplus
 }
 #endif

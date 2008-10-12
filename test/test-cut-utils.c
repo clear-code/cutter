@@ -10,6 +10,7 @@ void test_inspect_string_array (void);
 void test_strv_concat (void);
 void test_remove_path_recursive (void);
 void test_fold (void);
+void test_equal_string (void);
 
 static gchar *tmp_dir;
 static gchar **actual_string_array;
@@ -147,6 +148,15 @@ test_fold (void)
                                                      "6123456789"
                                                      "7123456789"
                                                      "8123456789"));
+}
+
+void
+test_equal_string (void)
+{
+    cut_assert_true(cut_utils_equal_string(NULL, NULL));
+    cut_assert_true(cut_utils_equal_string("string", "string"));
+    cut_assert_false(cut_utils_equal_string("string", NULL));
+    cut_assert_false(cut_utils_equal_string(NULL, "string"));
 }
 
 /*
