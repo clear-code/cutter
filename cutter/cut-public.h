@@ -88,23 +88,23 @@ const char **cut_test_context_take_string_array
                                              char          **strings);
 
 
-char *cut_utils_inspect_memory              (const void *memory,
+char        *cut_utils_inspect_memory       (const void *memory,
                                              size_t      size);
 
-int   cut_utils_equal_string_array          (char **strings1,
+cut_boolean  cut_utils_equal_string_array   (char **strings1,
                                              char **strings2);
-char *cut_utils_inspect_string_array        (char **strings);
-const char *cut_utils_inspect_string        (const char *string);
+char        *cut_utils_inspect_string_array (char **strings);
+const char  *cut_utils_inspect_string       (const char *string);
 
-int   cut_utils_path_exist                  (const char *path);
-char *cut_utils_build_path                  (const char *path,
+cut_boolean  cut_utils_path_exist           (const char *path);
+char        *cut_utils_build_path           (const char *path,
                                              ...) CUT_GNUC_NULL_TERMINATED;
-void  cut_utils_remove_path_recursive_force (const char *path);
-
-int   cut_utils_regex_match                 (const char *pattern,
+void         cut_utils_remove_path_recursive_force
+                                            (const char *path);
+cut_boolean  cut_utils_regex_match          (const char *pattern,
                                              const char *string);
-char *cut_utils_fold                        (const char *string);
-char *cut_utils_append_diff                 (const char *message,
+char        *cut_utils_fold                 (const char *string);
+char        *cut_utils_append_diff          (const char *message,
                                              const char *from,
                                              const char *to);
 
