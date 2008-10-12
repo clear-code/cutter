@@ -119,7 +119,7 @@ cut_utils_inspect_memory (const void *memory, size_t size)
 }
 
 gboolean
-cut_utils_equal_string (gchar *string1, gchar *string2)
+cut_utils_equal_string (const gchar *string1, const gchar *string2)
 {
     if (string1 == string2)
         return TRUE;

@@ -1,5 +1,8 @@
 2008-10-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-utils.c, cutter/cut-public.h
+	(cut_utils_equal_string): add const.
+
 	* cutter/cut-test-utils.h (cut_equal_string): add.
 
 	* cutter/cut-utils.c, cutter/cut-public.h, test/test-cut-utils.c:

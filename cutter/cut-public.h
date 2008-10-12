@@ -91,8 +91,8 @@ const char **cut_test_context_take_string_array
 char        *cut_utils_inspect_memory       (const void *memory,
                                              size_t      size);
 
-cut_boolean  cut_utils_equal_string         (char *string1,
-                                             char *string2);
+cut_boolean  cut_utils_equal_string         (const char *string1,
+                                             const char *string2);
 cut_boolean  cut_utils_equal_string_array   (char **strings1,
                                              char **strings2);
 char        *cut_utils_inspect_string_array (char **strings);
