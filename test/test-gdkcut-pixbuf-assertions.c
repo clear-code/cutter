@@ -131,7 +131,7 @@ test_equal (void)
     inspected_pixbuf2 = gcut_object_inspect(G_OBJECT(pixbuf2));
     message = cut_take_printf("<pixbuf1 == pixbuf2> (2)\n"
                               "  expected: <%s>\n"
-                              "   but was: <%s>\n"
+                              "    actual: <%s>\n"
                               " threshold: <2>\n"
                               "diff image: <%s-%u.png>",
                               inspected_pixbuf1, inspected_pixbuf2,

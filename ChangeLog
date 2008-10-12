@@ -1,5 +1,10 @@
 2008-10-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertions-helper.c,
+	gcutter/gcut-assertions-helper.c,
+	gdkcutter-pixbuf/gdkcut-pixbuf-assertions-helper.c, test/:
+	'but was' -> 'actual'.
+
 	* cutter/cut-assertions.h, cutter/cut-assertions-helper.[ch],
 	gcutter/gcut-assertions-helper.c,
 	gdkcutter-pixbuf/gdkcut-pixbuf-assertions-helper.c,

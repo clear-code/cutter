@@ -173,7 +173,7 @@ test_equal_string_with_diff (void)
     cut_assert_test_result_summary(run_context, 1, 0, 0, 1, 0, 0, 0, 0);
     cut_assert_equal_string("<\"abc def ghi jkl\" == \"abc DEF ghi jkl\">\n"
                             "expected: <abc def ghi jkl>\n"
-                            " but was: <abc DEF ghi jkl>\n"
+                            "  actual: <abc DEF ghi jkl>\n"
                             "\n"
                             "diff:\n"
                             "- abc def ghi jkl\n"
@@ -248,7 +248,7 @@ test_equal_string_with_folded_diff (void)
                             "7123456789"
                             "8123456789"
                             ">\n"
-                            " but was: <"
+                            "  actual: <"
                             "0000000000"
                             "1123456789"
                             "2123456789"
@@ -344,7 +344,7 @@ test_operator_int (void)
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "stub-operator-int", NULL,
                            "expected: <1 + 1> >= <2 + 4>\n"
-                           " but was: <2> >= <6>",
+                           "  actual: <2> >= <6>",
                            FAIL_LOCATION,
                            "stub_operator_int");
 }
@@ -367,7 +367,7 @@ test_operator_double (void)
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "stub-operator-double", NULL,
                            "expected: <1.1 + 1.1> >= <2.2 + 4.4>\n"
-                           " but was: <2.2> >= <6.6>",
+                           "  actual: <2.2> >= <6.6>",
                            FAIL_LOCATION,
                            "stub_operator_double");
 }
@@ -400,7 +400,7 @@ test_equal_memory (void)
                            "<expected(size: sizeof(expected)) == "
                            "actual(size: sizeof(actual))>\n"
                            "expected: <0x00 0x01 0x02 0x03 0x04 (size: 5)>\n"
-                           " but was: <0x00 0x01 0x02 0x03 0x04 "
+                           "  actual: <0x00 0x01 0x02 0x03 0x04 "
                            "0x12 0x10 0x0e 0x0c 0x0a (size: 10)>",
                            FAIL_LOCATION,
                            "stub_equal_memory");
@@ -597,7 +597,7 @@ test_assert_message_with_format_string (void)
                          cut_test_result_get_status(test_result));
     cut_assert_equal_string("<\"%s\" == \"%d\">\n"
                             "expected: <%s>\n"
-                            " but was: <%d>",
+                            "  actual: <%d>",
                             cut_test_result_get_system_message(test_result));
     cut_assert_equal_string("expected and actual have format string",
                             cut_test_result_get_user_message(test_result));

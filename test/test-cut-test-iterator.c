@@ -357,7 +357,7 @@ test_failure (void)
                            NULL,
                            "<2 == GPOINTER_TO_INT(data)>\n"
                            "expected: <2>\n"
-                           " but was: <1>",
+                           "  actual: <1>",
                            FAIL_LOCATION,
                            "stub_failure_iterated_test");
     cut_assert_test_result(run_context, 1, CUT_TEST_RESULT_SUCCESS,
@@ -368,7 +368,7 @@ test_failure (void)
                            NULL,
                            "<2 == GPOINTER_TO_INT(data)>\n"
                            "expected: <2>\n"
-                           " but was: <3>",
+                           "  actual: <3>",
                            FAIL_LOCATION,
                            "stub_failure_iterated_test");
 }

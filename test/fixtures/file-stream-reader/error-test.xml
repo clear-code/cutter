@@ -394,7 +394,7 @@
       <status>failure</status>
       <detail>&lt;9 == n_run_stub_test_function2&gt;
 expected: &lt;9&gt;
- but was: &lt;1&gt;</detail>
+  actual: &lt;1&gt;</detail>
       <backtrace>
         <entry>
           <file>test/test-cut-test-case.c</file>

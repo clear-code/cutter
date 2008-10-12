@@ -176,7 +176,7 @@ test_equal_type (void)
                            NULL,
                            "<G_TYPE_INT == G_TYPE_STRING>\n"
                            "expected: <gint>\n"
-                           " but was: <gchararray>",
+                           "  actual: <gchararray>",
                            FAIL_LOCATION,
                            "stub_equal_type");
 }
@@ -209,7 +209,7 @@ test_equal_value (void)
                            NULL,
                            "<value1 == value2>\n"
                            "expected: <10> (gint)\n"
-                           " but was: <\"String\"> (gchararray)",
+                           "  actual: <\"String\"> (gchararray)",
                            FAIL_LOCATION,
                            "stub_equal_value");
 }
@@ -241,7 +241,7 @@ test_equal_list_int (void)
                            NULL,
                            "<list1 == list2>\n"
                            "expected: <(100, -200)>\n"
-                           " but was: <(-1000, 2000)>\n"
+                           "  actual: <(-1000, 2000)>\n"
                            "\n"
                            "diff:\n"
                            "- (100, -200)\n"
@@ -279,7 +279,7 @@ test_equal_list_uint (void)
                            NULL,
                            "<list1 == list2>\n"
                            "expected: <(100, 200)>\n"
-                           " but was: <(1000, 2000)>\n"
+                           "  actual: <(1000, 2000)>\n"
                            "\n"
                            "diff:\n"
                            "- (100, 200)\n"
@@ -318,7 +318,7 @@ test_equal_list_string (void)
                            NULL,
                            "<list1 == list2>\n"
                            "expected: <(\"abc\", \"def\")>\n"
-                           " but was: <(\"zyx\", \"wvu\")>",
+                           "  actual: <(\"zyx\", \"wvu\")>",
                            FAIL_LOCATION,
                            "stub_equal_list_string");
 }
@@ -384,7 +384,7 @@ test_equal_list_string_other_null (void)
                            NULL,
                            "<list1 == list2>\n"
                            "expected: <(\"abc\", \"abc\", \"def\")>\n"
-                           " but was: <(NULL, \"abc\", \"def\")>",
+                           "  actual: <(NULL, \"abc\", \"def\")>",
                            FAIL_LOCATION,
                            "stub_equal_list_string_other_null");
 }
@@ -425,7 +425,7 @@ test_equal_list_enum (void)
 
     message = cut_take_printf("<list1 == list2>\n"
                               "expected: <%s>\n"
-                              " but was: <%s>",
+                              "  actual: <%s>",
                               inspected_expected,
                               inspected_actual);
     message_with_diff = cut_append_diff(message,
@@ -483,7 +483,7 @@ test_equal_list_flags (void)
 
     message = cut_take_printf("<list1 == list2>\n"
                               "expected: <%s>\n"
-                              " but was: <%s>",
+                              "  actual: <%s>",
                               inspected_expected,
                               inspected_actual);
     message_with_diff = cut_append_diff(message,
@@ -550,7 +550,7 @@ test_equal_list_object (void)
         list2->data, g_list_nth_data(list2, 2));
     message = cut_take_printf("<list1 == list2>\n"
                               "expected: <%s>\n"
-                              " but was: <%s>",
+                              "  actual: <%s>",
                               inspected_expected,
                               inspected_actual);
     message_with_diff = cut_append_diff(message,
@@ -595,7 +595,7 @@ test_equal_hash_string_string (void)
                            NULL,
                            "<hash1 == hash2>\n"
                            "expected: <{\"def\" => \"22\", \"abc\" => \"11\"}>\n"
-                           " but was: <{\"zyx\" => \"99\", \"wvu\" => \"88\"}>",
+                           "  actual: <{\"zyx\" => \"99\", \"wvu\" => \"88\"}>",
                            FAIL_LOCATION,
                            "stub_equal_hash_string_string");
 }
@@ -621,7 +621,7 @@ test_error (void)
                            "gcut_assert_error test",
                            NULL,
                            "expected: <error> is NULL\n"
-                           " but was: <g-file-error-quark:4: not found>",
+                           "  actual: <g-file-error-quark:4: not found>",
                            FAIL_LOCATION,
                            "stub_error");
 }
@@ -651,7 +651,7 @@ test_equal_error (void)
                            NULL,
                            "<error1 == error2>\n"
                            "expected: <g-file-error-quark:4: not found>\n"
-                           " but was: <g-file-error-quark:4: no entry>",
+                           "  actual: <g-file-error-quark:4: no entry>",
                            FAIL_LOCATION,
                            "stub_equal_error");
 }
@@ -682,7 +682,7 @@ test_equal_enum (void)
                            " (CUT_TYPE_TEST_RESULT_STATUS)\n"
                            "expected: <#<CutTestResultStatus: "
                            "failure(CUT_TEST_RESULT_FAILURE:4)>>\n"
-                           " but was: <#<CutTestResultStatus: "
+                           "  actual: <#<CutTestResultStatus: "
                            "pending(CUT_TEST_RESULT_PENDING:3)>>",
                            FAIL_LOCATION,
                            "stub_equal_enum");
@@ -724,7 +724,7 @@ test_equal_flags (void)
                            "second|third "
                            "(CUTTEST_ASSERT_STUB_SECOND:0x2)|"
                            "(CUTTEST_ASSERT_STUB_THIRD:0x4)>>\n"
-                           " but was: <#<CuttestAssertStubFlags: "
+                           "  actual: <#<CuttestAssertStubFlags: "
                            "(unknown flags: 0x8)>>",
                            FAIL_LOCATION,
                            "stub_equal_flags");
@@ -764,7 +764,7 @@ test_equal_object (void)
                                        object2);
     message = cut_take_printf("<object1 == object2>\n"
                               "expected: <%s>\n"
-                              " but was: <%s>",
+                              "  actual: <%s>",
                               inspected_expected, inspected_actual);
     message = cut_append_diff(message, inspected_expected, inspected_actual);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
@@ -801,7 +801,7 @@ test_equal_object_null (void)
                                          object1);
     message = cut_take_printf("<object1 == NULL>\n"
                               "expected: <%s>\n"
-                              " but was: <%s>",
+                              "  actual: <%s>",
                               inspected_expected, "(null)");
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "gcut_assert_equal_object_null test",
@@ -856,7 +856,7 @@ test_equal_object_custom (void)
                                        object3);
     message = cut_take_printf("<equal_name(object1, object3)>\n"
                               "expected: <%s>\n"
-                              " but was: <%s>",
+                              "  actual: <%s>",
                               inspected_expected, inspected_actual);
     message = cut_append_diff(message, inspected_expected, inspected_actual);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,

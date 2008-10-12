@@ -47,7 +47,7 @@ gcut_assert_equal_type_helper (CutTestContext *test_context,
             cut_take_printf_helper(test_context,
                                    "<%s == %s>\n"
                                    "expected: <%s>\n"
-                                   " but was: <%s>",
+                                   "  actual: <%s>",
                                    expression_expected,
                                    expression_actual,
                                    g_type_name(expected),
@@ -84,7 +84,7 @@ gcut_assert_equal_value_helper (CutTestContext *test_context,
         message = cut_take_printf_helper(test_context,
                                          "<%s == %s>\n"
                                          "expected: <%s> (%s)\n"
-                                         " but was: <%s> (%s)",
+                                         "  actual: <%s> (%s)",
                                          expression_expected, expression_actual,
                                          inspected_expected, expected_type_name,
                                          inspected_actual, actual_type_name);
@@ -122,7 +122,7 @@ gcut_assert_equal_list_int_helper (CutTestContext *test_context,
         message = cut_take_printf_helper(test_context,
                                          "<%s == %s>\n"
                                          "expected: <%s>\n"
-                                         " but was: <%s>",
+                                         "  actual: <%s>",
                                          expression_expected, expression_actual,
                                          inspected_expected,
                                          inspected_actual);
@@ -159,7 +159,7 @@ gcut_assert_equal_list_uint_helper (CutTestContext *test_context,
         message = cut_take_printf_helper(test_context,
                                          "<%s == %s>\n"
                                          "expected: <%s>\n"
-                                         " but was: <%s>",
+                                         "  actual: <%s>",
                                          expression_expected, expression_actual,
                                          inspected_expected,
                                          inspected_actual);
@@ -196,7 +196,7 @@ gcut_assert_equal_list_string_helper (CutTestContext *test_context,
         message = cut_take_printf_helper(test_context,
                                          "<%s == %s>\n"
                                          "expected: <%s>\n"
-                                         " but was: <%s>",
+                                         "  actual: <%s>",
                                          expression_expected, expression_actual,
                                          inspected_expected,
                                          inspected_actual);
@@ -235,7 +235,7 @@ gcut_assert_equal_list_enum_helper (CutTestContext *test_context,
         message = cut_take_printf_helper(test_context,
                                          "<%s == %s>\n"
                                          "expected: <%s>\n"
-                                         " but was: <%s>",
+                                         "  actual: <%s>",
                                          expression_expected, expression_actual,
                                          inspected_expected,
                                          inspected_actual);
@@ -274,7 +274,7 @@ gcut_assert_equal_list_flags_helper (CutTestContext *test_context,
         message = cut_take_printf_helper(test_context,
                                          "<%s == %s>\n"
                                          "expected: <%s>\n"
-                                         " but was: <%s>",
+                                         "  actual: <%s>",
                                          expression_expected, expression_actual,
                                          inspected_expected,
                                          inspected_actual);
@@ -312,7 +312,7 @@ gcut_assert_equal_list_object_helper (CutTestContext *test_context,
         message = cut_take_printf_helper(test_context,
                                          "<%s == %s>\n"
                                          "expected: <%s>\n"
-                                         " but was: <%s>",
+                                         "  actual: <%s>",
                                          expression_expected, expression_actual,
                                          inspected_expected,
                                          inspected_actual);
@@ -347,7 +347,7 @@ gcut_assert_equal_hash_table_string_string_helper (
         message = cut_take_printf_helper(test_context,
                                          "<%s == %s>\n"
                                          "expected: <%s>\n"
-                                         " but was: <%s>",
+                                         "  actual: <%s>",
                                          expression_expected, expression_actual,
                                          inspected_expected,
                                          inspected_actual);
@@ -380,7 +380,7 @@ gcut_assert_error_helper (CutTestContext *test_context,
             test_context,
             cut_take_printf_helper(test_context,
                                    "expected: <%s> is NULL\n"
-                                   " but was: <%s>",
+                                   "  actual: <%s>",
                                    expression_error, inspected),
             user_message_format);
     }
@@ -410,7 +410,7 @@ gcut_assert_equal_error_helper (CutTestContext *test_context,
             cut_take_printf_helper(test_context,
                                    "<%s == %s>\n"
                                    "expected: <%s>\n"
-                                   " but was: <%s>",
+                                   "  actual: <%s>",
                                    expression_expected,
                                    expression_actual,
                                    inspected_expected,
@@ -447,7 +447,7 @@ gcut_assert_equal_enum_helper (CutTestContext *test_context,
             cut_take_printf_helper(test_context,
                                    "<%s == %s> (%s)\n"
                                    "expected: <%s>\n"
-                                   " but was: <%s>",
+                                   "  actual: <%s>",
                                    expression_expected,
                                    expression_actual,
                                    expression_enum_type,
@@ -485,7 +485,7 @@ gcut_assert_equal_flags_helper (CutTestContext *test_context,
             cut_take_printf_helper(test_context,
                                    "<%s == %s> (%s)\n"
                                    "expected: <%s>\n"
-                                   " but was: <%s>",
+                                   "  actual: <%s>",
                                    expression_expected,
                                    expression_actual,
                                    expression_flags_type,
@@ -528,7 +528,7 @@ gcut_assert_equal_object_helper (CutTestContext *test_context,
                                    expression_expected, expression_actual);
         g_string_append_printf(message,
                                "expected: <%s>\n"
-                               " but was: <%s>",
+                               "  actual: <%s>",
                                inspected_expected,
                                inspected_actual);
         if (expected && actual)

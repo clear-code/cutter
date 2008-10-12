@@ -53,7 +53,7 @@ gdkcut_pixbuf_assert_equal_helper (CutTestContext  *test_context,
         inspected_actual = gcut_object_inspect(G_OBJECT(actual));
         g_string_append_printf(message,
                                "  expected: <%s>\n"
-                               "   but was: <%s>\n"
+                               "    actual: <%s>\n"
                                " threshold: <%u>",
                                inspected_expected,
                                inspected_actual,

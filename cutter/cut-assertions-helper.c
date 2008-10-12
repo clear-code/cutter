@@ -126,7 +126,7 @@ cut_assert_null_string_helper (CutTestContext *test_context,
             test_context,
             cut_take_printf_helper(test_context,
                                    "expected: <%s> is NULL\n"
-                                   " but was: <%s>",
+                                   "  actual: <%s>",
                                    expression, string),
             user_message_format);
     }
@@ -168,7 +168,7 @@ cut_assert_equal_int_helper (CutTestContext *test_context,
             cut_take_printf_helper(test_context,
                                    "<%s == %s>\n"
                                    "expected: <%ld>\n"
-                                   " but was: <%ld>",
+                                   "  actual: <%ld>",
                                    expression_expected,
                                    expression_actual,
                                    expected, actual),
@@ -193,7 +193,7 @@ cut_assert_equal_uint_helper (CutTestContext *test_context,
             cut_take_printf_helper(test_context,
                                    "<%s == %s>\n"
                                    "expected: <%lu>\n"
-                                   " but was: <%lu>",
+                                   "  actual: <%lu>",
                                    expression_expected,
                                    expression_actual,
                                    expected, actual),
@@ -220,7 +220,7 @@ cut_assert_equal_double_helper (CutTestContext *test_context,
             cut_take_printf_helper(test_context,
                                    "<%s-%s <= %s <= %s+%s>\n"
                                    "expected: <%g +/- %g>\n"
-                                   " but was: <%g>",
+                                   "  actual: <%g>",
                                    expression_expected,
                                    expression_error,
                                    expression_actual,
@@ -249,7 +249,7 @@ cut_assert_equal_string_helper (CutTestContext *test_context,
 
             message = cut_take_printf_helper(test_context,
                                              "expected: <%s> is NULL\n"
-                                             " but was: <%s>",
+                                             "  actual: <%s>",
                                              expression_actual,
                                              actual);
             cut_test_fail_va_list_helper(test_context,
@@ -264,7 +264,7 @@ cut_assert_equal_string_helper (CutTestContext *test_context,
             message = cut_take_printf_helper(test_context,
                                              "<%s == %s>\n"
                                              "expected: <%s>\n"
-                                             " but was: <%s>",
+                                             "  actual: <%s>",
                                              expression_expected,
                                              expression_actual,
                                              cut_utils_inspect_string(expected),
@@ -310,7 +310,7 @@ cut_assert_equal_memory_helper (CutTestContext *test_context,
         message = cut_take_printf_helper(test_context,
                                          "<%s(size: %s) == %s(size: %s)>\n"
                                          "expected: <%s (size: %lu)>\n"
-                                         " but was: <%s (size: %lu)>",
+                                         "  actual: <%s (size: %lu)>",
                                          expression_expected,
                                          expression_expected_size,
                                          expression_actual,
@@ -354,7 +354,7 @@ cut_assert_equal_string_array_helper (CutTestContext *test_context,
             cut_take_printf_helper(test_context,
                                    "<%s == %s>\n"
                                    "expected: <%s>\n"
-                                   " but was: <%s>",
+                                   "  actual: <%s>",
                                    expression_expected,
                                    expression_actual,
                                    inspected_expected,
@@ -405,7 +405,7 @@ cut_assert_operator_int_helper (CutTestContext *test_context,
             test_context,
             cut_take_printf_helper(test_context,
                                    "expected: <%s> %s <%s>\n"
-                                   " but was: <%ld> %s <%ld>",
+                                   "  actual: <%ld> %s <%ld>",
                                    expression_lhs,
                                    expression_operator,
                                    expression_rhs,
@@ -434,7 +434,7 @@ cut_assert_operator_double_helper (CutTestContext *test_context,
             test_context,
             cut_take_printf_helper(test_context,
                                    "expected: <%s> %s <%s>\n"
-                                   " but was: <%g> %s <%g>",
+                                   "  actual: <%g> %s <%g>",
                                    expression_lhs,
                                    expression_operator,
                                    expression_rhs,
@@ -483,7 +483,7 @@ cut_assert_errno_helper (CutTestContext *test_context,
             test_context,
             cut_take_printf_helper(test_context,
                                    "expected: <0> (errno)\n"
-                                   " but was: <%d> (%s)",
+                                   "  actual: <%d> (%s)",
                                    current_errno,
                                    strerror(current_errno)),
             user_message_format);
@@ -595,7 +595,7 @@ cut_assert_equal_pointer_helper (CutTestContext *test_context,
             cut_take_printf_helper(test_context,
                                    "<%s == %s>\n"
                                    "expected: <%p>\n"
-                                   " but was: <%p>",
+                                   "  actual: <%p>",
                                    expression_expected,
                                    expression_actual,
                                    expected, actual),
