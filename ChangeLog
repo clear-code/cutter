@@ -1,5 +1,12 @@
 2008-10-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertions-helper.c: use cut_utils_equal_double().
+
+	* cutter/cut-test-utils.h (cut_equal_string): add.
+
+	* cutter/cut-utils.c, cutter/cut-public.h, test/test-cut-utils.c:
+	add cut_utils_equal_string().
+
 	* cutter/cut-assertions-helper.c: use cut_utils_equal_string().
 
 	* cutter/cut-assertions.h: move to needless headers to ...

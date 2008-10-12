@@ -335,6 +335,21 @@ extern "C" {
 #define cut_equal_string(string1, string2)                              \
     cut_utils_equal_string(string1, string2)
 
+/**
+ * cut_equal_double:
+ * @double1: a double value.
+ * @double2: a double value.
+ * @error: a double value that specifies error range.
+ *
+ * Compare @double1 to @double2 with @error range.
+ *
+ * Returns: TRUE if |@double1 - @double2| <= @error; FALSE otherwise.
+ *
+ * Since: 1.0.5
+ */
+#define cut_equal_double(double1, double2, error)       \
+    cut_utils_equal_double(double1, double2, error)
+
 #ifdef __cplusplus
 }
 #endif

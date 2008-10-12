@@ -22,6 +22,7 @@
 #endif /* HAVE_CONFIG_H */
 
 #include <string.h>
+#include <math.h>
 #ifdef HAVE_UNISTD_H
 #  include <unistd.h>
 #endif
@@ -128,6 +129,12 @@ cut_utils_equal_string (const gchar *string1, const gchar *string2)
         return FALSE;
 
     return g_str_equal(string1, string2);
+}
+
+gboolean
+cut_utils_equal_double (gdouble double1, gdouble double2, gdouble error)
+{
+    return fabs(double1 - double2) <= error;
 }
 
 gboolean

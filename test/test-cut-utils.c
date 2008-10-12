@@ -11,6 +11,7 @@ void test_strv_concat (void);
 void test_remove_path_recursive (void);
 void test_fold (void);
 void test_equal_string (void);
+void test_equal_double (void);
 
 static gchar *tmp_dir;
 static gchar **actual_string_array;
@@ -157,6 +158,15 @@ test_equal_string (void)
     cut_assert_true(cut_utils_equal_string("string", "string"));
     cut_assert_false(cut_utils_equal_string("string", NULL));
     cut_assert_false(cut_utils_equal_string(NULL, "string"));
+}
+
+void
+test_equal_double (void)
+{
+    cut_assert_true(cut_utils_equal_double(0, 0, 0.1));
+    cut_assert_true(cut_utils_equal_double(0.11, 0.19, 0.1));
+    cut_assert_true(cut_utils_equal_double(0.11, 0.12, 0.01));
+    cut_assert_false(cut_utils_equal_double(0.11, 0.12, 0.009));
 }
 
 /*

@@ -211,7 +211,7 @@ cut_assert_equal_double_helper (CutTestContext *test_context,
                                 const char     *user_message_format,
                                 ...)
 {
-    if (expected - error <= actual && actual <= expected + error) {
+    if (cut_utils_equal_double(expected, actual, error)) {
         cut_test_pass_helper(test_context);
     } else {
         cut_test_fail_helper(test_context,
