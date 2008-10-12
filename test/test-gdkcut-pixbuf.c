@@ -10,6 +10,7 @@ void test_equal_content_threshold(void);
 void test_inspect(void);
 void test_diff(void);
 void test_diff_between_equal_images(void);
+void test_diff_no_alpha(void);
 
 static GdkPixbuf *pixbuf1, *pixbuf2;
 static GdkPixbuf *expected_diff, *actual_diff;
@@ -104,7 +105,7 @@ test_inspect (void)
 {
     const gchar *expected;
     pixbuf1 = load_pixbuf("dark-circle.png");
-    pixbuf2 = load_pixbuf("no-alpha-small-circle.png");
+    pixbuf2 = load_pixbuf("small-circle-no-alpha.png");
 
     expected = cut_take_printf("#<GdkPixbuf:%p "
                                "colorspace="
@@ -157,6 +158,18 @@ test_diff_between_equal_images (void)
 
     actual_diff = gdkcut_pixbuf_diff(pixbuf1, pixbuf1, 0);
     gcut_assert_equal_object(NULL, actual_diff);
+}
+
+void
+test_diff_no_alpha (void)
+{
+    pixbuf1 = load_pixbuf("dark-circle-no-alpha.png");
+    pixbuf2 = load_pixbuf("nested-circle-no-alpha.png");
+    expected_diff = load_pixbuf("diff-dark-and-nested-circle-no-alpha.png");
+
+    actual_diff = gdkcut_pixbuf_diff(pixbuf1, pixbuf2, 0);
+    gdk_pixbuf_save(actual_diff, "/tmp/xxx.png", "png", NULL, NULL);
+    gdkcut_pixbuf_assert_equal(expected_diff, actual_diff, 0);
 }
 
 

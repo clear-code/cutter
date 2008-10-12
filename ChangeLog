@@ -1,5 +1,8 @@
 2008-10-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gdkcutter-pixbuf/gdkcut-pixbuf.c, test/test-gdkcut-pixbuf.c,
+	test/fixtures/pixbuf/: fix non-alpha image diff.
+
 	* gdkcutter-pixbuf/Makefile.am (gdkcutter_pixbuf_includedir): fix
 	install directory.
 

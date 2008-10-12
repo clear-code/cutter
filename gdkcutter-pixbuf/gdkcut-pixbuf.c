@@ -203,6 +203,9 @@ draw_pixbuf (GdkPixbuf *diff, const GdkPixbuf *source,
             for (channel = 0; channel < source_n_channels; channel++) {
                 target_pixel[channel] = source_target_pixel[channel];
             }
+            for (; channel < n_channels; channel++) {
+                target_pixel[channel] = 0xff;
+            }
         }
     }
 }
