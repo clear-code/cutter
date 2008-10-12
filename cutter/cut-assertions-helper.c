@@ -22,6 +22,7 @@
 #endif /* HAVE_CONFIG_H */
 
 #include <string.h>
+#include <errno.h>
 #ifdef HAVE_UNISTD_H
 #  include <unistd.h>
 #endif
@@ -254,7 +255,7 @@ cut_assert_equal_string_helper (CutTestContext *test_context,
                                  message, user_message_format);
         }
     } else {
-        if (actual && strcmp(expected, actual) == 0) {
+        if (cut_utils_equal_string(expected, actual)) {
             cut_test_pass_helper(test_context);
         } else {
             const char *message;

@@ -1,3 +1,7 @@
+/* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+
+#include <string.h>
+
 #include <cutter.h>
 
 void data_translate (void);

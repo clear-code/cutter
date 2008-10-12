@@ -1,3 +1,7 @@
+/* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+
+#include <string.h>
+
 #include <cutter.h>
 #include <cutter/cut-loader.h>
 #include <cutter/cut-test-runner.h>

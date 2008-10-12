@@ -24,6 +24,8 @@
  */
 
 #include <stddef.h>
+#include <string.h>
+
 #include <cairo.h>
 #ifdef CAIRO_HAS_SVG_SURFACE
 #  include <cairo-svg.h>
