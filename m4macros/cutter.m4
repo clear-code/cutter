@@ -112,9 +112,22 @@ AC_DEFUN([AC_CHECK_CUTTER],
 AC_DEFUN([AC_CHECK_GCUTTER],
 [
   AC_CHECK_CUTTER($1)
+  ac_cv_use_gcutter=no
   if test "$ac_cv_use_cutter" != "no"; then
-    PKG_CHECK_MODULES(GCUTTER, gcutter $1, [], [:])
+    PKG_CHECK_MODULES(GCUTTER, gcutter $1, [ac_cv_use_gcutter=yes], [:])
     AC_SUBST([GCUTTER_CFLAGS])
     AC_SUBST([GCUTTER_LIBS])
+  fi
+])
+
+AC_DEFUN([AC_CHECK_GDKCUTTER_PIXBUF],
+[
+  AC_CHECK_GCUTTER($1)
+  ac_cv_use_gdkcutter_pixbuf=no
+  if test "$ac_cv_use_cutter" != "no"; then
+    PKG_CHECK_MODULES(GDKCUTTER_PIXBUF, gdkcutter-pixbuf $1,
+                      [ac_cv_use_gdkcutter_pixbuf=yes], [:])
+    AC_SUBST([GDKCUTTER_PIXBUF_CFLAGS])
+    AC_SUBST([GDKCUTTER_PIXBUF_LIBS])
   fi
 ])
