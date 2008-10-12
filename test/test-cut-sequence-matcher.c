@@ -328,8 +328,7 @@ test_to_indexes_complex_for_char_sequence (void)
     if (equal_match(&info, actual_info)) {                              \
         cut_test_pass();                                                \
     } else {                                                            \
-        cut_test_fail(FAILURE,                                          \
-                      cut_take_printf("expected: %s\n"                  \
+        cut_test_fail(cut_take_printf("expected: %s\n"                  \
                                       " but was: %s",                   \
                                       inspect_match(&info),             \
                                       inspect_match(actual_info)),      \
@@ -453,8 +452,7 @@ append_match_info (GList *list, gint begin, gint end, gint size)
                                                                         \
         inspected_expected = inspect_matches(_expected);                \
         inspected_actual = inspect_matches(_actual);                    \
-        cut_test_fail(FAILURE,                                          \
-                      cut_take_printf("expected: <%s>\n"                \
+        cut_test_fail(cut_take_printf("expected: <%s>\n"                \
                                       " but was: <%s>",                 \
                                       inspected_expected,               \
                                       inspected_actual),                \
@@ -729,8 +727,7 @@ inspect_operations (const GList *operations)
                                                                         \
         inspected_expected = inspect_operations(_expected);             \
         inspected_actual = inspect_operations(_actual);                 \
-        cut_test_fail(FAILURE,                                          \
-                      cut_take_printf("expected: <%s>\n"                \
+        cut_test_fail(cut_take_printf("expected: <%s>\n"                \
                                       " but was: <%s>",                 \
                                       inspected_expected,               \
                                       inspected_actual),                \

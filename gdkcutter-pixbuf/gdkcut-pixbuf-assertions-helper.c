@@ -78,10 +78,10 @@ gdkcut_pixbuf_assert_equal_helper (CutTestContext  *test_context,
                 gchar *inspected_error;
 
                 inspected_error = gcut_error_inspect(error);
-                cut_test_register_result_helper(test_context,
-                                                NOTIFICATION,
-                                                inspected_error,
-                                                user_message_format);
+                cut_test_register_result_va_list_helper(test_context,
+                                                        NOTIFICATION,
+                                                        inspected_error,
+                                                        user_message_format);
                 g_free(inspected_error);
             } else {
                 g_string_append_printf(message,
@@ -102,8 +102,8 @@ gdkcut_pixbuf_assert_equal_helper (CutTestContext  *test_context,
             fail_message = cut_take_string_helper(test_context,
                                                   g_string_free(message, FALSE));
         }
-        cut_test_fail_helper(test_context, FAILURE, fail_message,
-                             user_message_format);
+        cut_test_fail_va_list_helper(test_context, fail_message,
+                                     user_message_format);
     }
 }
 

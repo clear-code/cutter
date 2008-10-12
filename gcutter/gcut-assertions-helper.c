@@ -42,17 +42,17 @@ gcut_assert_equal_type_helper (CutTestContext *test_context,
     if (expected == actual) {
         cut_test_pass_helper(test_context);
     } else {
-        cut_test_fail_helper(test_context,
-                             FAILURE,
-                             cut_take_printf_helper(test_context,
-                                                    "<%s == %s>\n"
-                                                    "expected: <%s>\n"
-                                                    " but was: <%s>",
-                                                    expression_expected,
-                                                    expression_actual,
-                                                    g_type_name(expected),
-                                                    g_type_name(actual)),
-                             user_message_format);
+        cut_test_fail_va_list_helper(
+            test_context,
+            cut_take_printf_helper(test_context,
+                                   "<%s == %s>\n"
+                                   "expected: <%s>\n"
+                                   " but was: <%s>",
+                                   expression_expected,
+                                   expression_actual,
+                                   g_type_name(expected),
+                                   g_type_name(actual)),
+            user_message_format);
     }
 }
 
@@ -93,8 +93,7 @@ gcut_assert_equal_value_helper (CutTestContext *test_context,
                                          inspected_expected,
                                          inspected_actual);
 
-        cut_test_fail_helper(test_context, FAILURE,
-                             message, user_message_format);
+        cut_test_fail_va_list_helper(test_context, message, user_message_format);
     }
 }
 
@@ -131,8 +130,7 @@ gcut_assert_equal_list_int_helper (CutTestContext *test_context,
                                          message,
                                          inspected_expected,
                                          inspected_actual);
-        cut_test_fail_helper(test_context, FAILURE,
-                             message, user_message_format);
+        cut_test_fail_va_list_helper(test_context, message, user_message_format);
     }
 }
 
@@ -169,8 +167,7 @@ gcut_assert_equal_list_uint_helper (CutTestContext *test_context,
                                          message,
                                          inspected_expected,
                                          inspected_actual);
-        cut_test_fail_helper(test_context, FAILURE,
-                             message, user_message_format);
+        cut_test_fail_va_list_helper(test_context, message, user_message_format);
     }
 }
 
@@ -207,8 +204,7 @@ gcut_assert_equal_list_string_helper (CutTestContext *test_context,
                                          message,
                                          inspected_expected,
                                          inspected_actual);
-        cut_test_fail_helper(test_context, FAILURE,
-                             message, user_message_format);
+        cut_test_fail_va_list_helper(test_context, message, user_message_format);
     }
 }
 
@@ -247,8 +243,7 @@ gcut_assert_equal_list_enum_helper (CutTestContext *test_context,
                                          message,
                                          inspected_expected,
                                          inspected_actual);
-        cut_test_fail_helper(test_context, FAILURE,
-                             message, user_message_format);
+        cut_test_fail_va_list_helper(test_context, message, user_message_format);
     }
 }
 
@@ -287,8 +282,7 @@ gcut_assert_equal_list_flags_helper (CutTestContext *test_context,
                                          message,
                                          inspected_expected,
                                          inspected_actual);
-        cut_test_fail_helper(test_context, FAILURE,
-                             message, user_message_format);
+        cut_test_fail_va_list_helper(test_context, message, user_message_format);
     }
 }
 
@@ -326,19 +320,19 @@ gcut_assert_equal_list_object_helper (CutTestContext *test_context,
                                          message,
                                          inspected_expected,
                                          inspected_actual);
-        cut_test_fail_helper(test_context, FAILURE,
-                             message, user_message_format);
+        cut_test_fail_va_list_helper(test_context, message, user_message_format);
     }
 }
 
 void
-gcut_assert_equal_hash_table_string_string_helper (CutTestContext *test_context,
-                                                   GHashTable     *expected,
-                                                   GHashTable     *actual,
-                                                   const gchar    *expression_expected,
-                                                   const gchar    *expression_actual,
-                                                   const gchar    *user_message_format,
-                                                   ...)
+gcut_assert_equal_hash_table_string_string_helper (
+    CutTestContext *test_context,
+    GHashTable     *expected,
+    GHashTable     *actual,
+    const gchar    *expression_expected,
+    const gchar    *expression_actual,
+    const gchar    *user_message_format,
+    ...)
 {
     if (gcut_hash_table_string_equal(expected, actual)) {
         cut_test_pass_helper(test_context);
@@ -363,8 +357,7 @@ gcut_assert_equal_hash_table_string_string_helper (CutTestContext *test_context,
                                          inspected_actual);
         g_free(inspected_expected);
         g_free(inspected_actual);
-        cut_test_fail_helper(test_context, FAILURE,
-                             message, user_message_format);
+        cut_test_fail_va_list_helper(test_context, message, user_message_format);
     }
 }
 
@@ -383,13 +376,13 @@ gcut_assert_error_helper (CutTestContext *test_context,
         inspected = cut_take_string_helper(test_context,
                                            gcut_error_inspect(error));
         g_error_free(error);
-        cut_test_fail_helper(test_context,
-                             FAILURE,
-                             cut_take_printf_helper(test_context,
-                                                    "expected: <%s> is NULL\n"
-                                                    " but was: <%s>",
-                                                    expression_error, inspected),
-                             user_message_format);
+        cut_test_fail_va_list_helper(
+            test_context,
+            cut_take_printf_helper(test_context,
+                                   "expected: <%s> is NULL\n"
+                                   " but was: <%s>",
+                                   expression_error, inspected),
+            user_message_format);
     }
 }
 
@@ -412,17 +405,17 @@ gcut_assert_equal_error_helper (CutTestContext *test_context,
             cut_take_string_helper(test_context, gcut_error_inspect(expected));
         inspected_actual =
             cut_take_string_helper(test_context, gcut_error_inspect(actual));
-        cut_test_fail_helper(test_context,
-                             FAILURE,
-                             cut_take_printf_helper(test_context,
-                                                    "<%s == %s>\n"
-                                                    "expected: <%s>\n"
-                                                    " but was: <%s>",
-                                                    expression_expected,
-                                                    expression_actual,
-                                                    inspected_expected,
-                                                    inspected_actual),
-                             user_message_format);
+        cut_test_fail_va_list_helper(
+            test_context,
+            cut_take_printf_helper(test_context,
+                                   "<%s == %s>\n"
+                                   "expected: <%s>\n"
+                                   " but was: <%s>",
+                                   expression_expected,
+                                   expression_actual,
+                                   inspected_expected,
+                                   inspected_actual),
+            user_message_format);
     }
 }
 
@@ -449,18 +442,18 @@ gcut_assert_equal_enum_helper (CutTestContext *test_context,
         inspected_actual =
             cut_take_string_helper(test_context,
                                    gcut_enum_inspect(enum_type, actual));
-        cut_test_fail_helper(test_context,
-                             FAILURE,
-                             cut_take_printf_helper(test_context,
-                                                    "<%s == %s> (%s)\n"
-                                                    "expected: <%s>\n"
-                                                    " but was: <%s>",
-                                                    expression_expected,
-                                                    expression_actual,
-                                                    expression_enum_type,
-                                                    inspected_expected,
-                                                    inspected_actual),
-                             user_message_format);
+        cut_test_fail_va_list_helper(
+            test_context,
+            cut_take_printf_helper(test_context,
+                                   "<%s == %s> (%s)\n"
+                                   "expected: <%s>\n"
+                                   " but was: <%s>",
+                                   expression_expected,
+                                   expression_actual,
+                                   expression_enum_type,
+                                   inspected_expected,
+                                   inspected_actual),
+            user_message_format);
     }
 }
 
@@ -487,18 +480,18 @@ gcut_assert_equal_flags_helper (CutTestContext *test_context,
         inspected_actual =
             cut_take_string_helper(test_context,
                                    gcut_flags_inspect(flags_type, actual));
-        cut_test_fail_helper(test_context,
-                             FAILURE,
-                             cut_take_printf_helper(test_context,
-                                                    "<%s == %s> (%s)\n"
-                                                    "expected: <%s>\n"
-                                                    " but was: <%s>",
-                                                    expression_expected,
-                                                    expression_actual,
-                                                    expression_flags_type,
-                                                    inspected_expected,
-                                                    inspected_actual),
-                             user_message_format);
+        cut_test_fail_va_list_helper(
+            test_context,
+            cut_take_printf_helper(test_context,
+                                   "<%s == %s> (%s)\n"
+                                   "expected: <%s>\n"
+                                   " but was: <%s>",
+                                   expression_expected,
+                                   expression_actual,
+                                   expression_flags_type,
+                                   inspected_expected,
+                                   inspected_actual),
+            user_message_format);
     }
 }
 
@@ -549,10 +542,9 @@ gcut_assert_equal_object_helper (CutTestContext *test_context,
         g_free(inspected_actual);
         g_string_free(message, TRUE);
 
-        cut_test_fail_helper(test_context,
-                             FAILURE,
-                             fail_message,
-                             user_message_format);
+        cut_test_fail_va_list_helper(test_context,
+                                     fail_message,
+                                     user_message_format);
     }
 }
 

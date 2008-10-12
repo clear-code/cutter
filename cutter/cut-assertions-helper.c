@@ -43,12 +43,13 @@ cut_assert_helper (CutTestContext *test_context,
     if (result) {
         cut_test_pass_helper(test_context);
     } else {
-        cut_test_fail_helper(test_context, FAILURE,
-                             cut_take_printf_helper(test_context,
-                                                    "expected: <%s>"
-                                                    " is not FALSE/NULL",
-                                                    expression),
-                             user_message_format);
+        cut_test_fail_va_list_helper(
+            test_context,
+            cut_take_printf_helper(test_context,
+                                   "expected: <%s>"
+                                   " is not FALSE/NULL",
+                                   expression),
+            user_message_format);
     }
 }
 
@@ -62,13 +63,13 @@ cut_assert_true_helper (CutTestContext *test_context,
     if (result) {
         cut_test_pass_helper(test_context);
     } else {
-        cut_test_fail_helper(test_context,
-                             FAILURE,
-                             cut_take_printf_helper(test_context,
-                                                    "expected: <%s>"
-                                                    " is TRUE value",
-                                                    expression),
-                             user_message_format);
+        cut_test_fail_va_list_helper(
+            test_context,
+            cut_take_printf_helper(test_context,
+                                   "expected: <%s>"
+                                   " is TRUE value",
+                                   expression),
+            user_message_format);
     }
 }
 
@@ -80,13 +81,13 @@ cut_assert_false_helper (CutTestContext *test_context,
                          ...)
 {
     if (result) {
-        cut_test_fail_helper(test_context,
-                             FAILURE,
-                             cut_take_printf_helper(test_context,
-                                                    "expected: <%s>"
-                                                    " is FALSE/NULL",
-                                                    expression),
-                             user_message_format);
+        cut_test_fail_va_list_helper(
+            test_context,
+            cut_take_printf_helper(test_context,
+                                   "expected: <%s>"
+                                   " is FALSE/NULL",
+                                   expression),
+            user_message_format);
     } else {
         cut_test_pass_helper(test_context);
     }
@@ -102,12 +103,12 @@ cut_assert_null_helper (CutTestContext *test_context,
     if (object == NULL) {
         cut_test_pass_helper(test_context);
     } else {
-        cut_test_fail_helper(test_context,
-                             FAILURE,
-                             cut_take_printf_helper(test_context,
-                                                    "expected: <%s> is NULL",
-                                                    expression),
-                             user_message_format);
+        cut_test_fail_va_list_helper(
+            test_context,
+            cut_take_printf_helper(test_context,
+                                   "expected: <%s> is NULL",
+                                   expression),
+            user_message_format);
     }
 }
 
@@ -121,13 +122,13 @@ cut_assert_null_string_helper (CutTestContext *test_context,
     if (string == NULL) {
         cut_test_pass_helper(test_context);
     } else {
-        cut_test_fail_helper(test_context,
-                             FAILURE,
-                             cut_take_printf_helper(test_context,
-                                                    "expected: <%s> is NULL\n"
-                                                    " but was: <%s>",
-                                                    expression, string),
-                             user_message_format);
+        cut_test_fail_va_list_helper(
+            test_context,
+            cut_take_printf_helper(test_context,
+                                   "expected: <%s> is NULL\n"
+                                   " but was: <%s>",
+                                   expression, string),
+            user_message_format);
     }
 }
 
@@ -141,12 +142,12 @@ cut_assert_not_null_helper (CutTestContext *test_context,
     if (object != NULL) {
         cut_test_pass_helper(test_context);
     } else {
-        cut_test_fail_helper(test_context,
-                             FAILURE,
-                             cut_take_printf_helper(test_context,
-                                                    "expected: <%s> is not NULL",
-                                                    expression),
-                             user_message_format);
+        cut_test_fail_va_list_helper(
+            test_context,
+            cut_take_printf_helper(test_context,
+                                   "expected: <%s> is not NULL",
+                                   expression),
+            user_message_format);
     }
 }
 
@@ -162,16 +163,16 @@ cut_assert_equal_int_helper (CutTestContext *test_context,
     if (expected == actual) {
         cut_test_pass_helper(test_context);
     } else {
-        cut_test_fail_helper(test_context,
-                             FAILURE,
-                             cut_take_printf_helper(test_context,
-                                                    "<%s == %s>\n"
-                                                    "expected: <%ld>\n"
-                                                    " but was: <%ld>",
-                                                    expression_expected,
-                                                    expression_actual,
-                                                    expected, actual),
-                             user_message_format);
+        cut_test_fail_va_list_helper(
+            test_context,
+            cut_take_printf_helper(test_context,
+                                   "<%s == %s>\n"
+                                   "expected: <%ld>\n"
+                                   " but was: <%ld>",
+                                   expression_expected,
+                                   expression_actual,
+                                   expected, actual),
+            user_message_format);
     }
 }
 
@@ -187,16 +188,16 @@ cut_assert_equal_uint_helper (CutTestContext *test_context,
     if (expected == actual) {
         cut_test_pass_helper(test_context);
     } else {
-        cut_test_fail_helper(test_context,
-                             FAILURE,
-                             cut_take_printf_helper(test_context,
-                                                    "<%s == %s>\n"
-                                                    "expected: <%lu>\n"
-                                                    " but was: <%lu>",
-                                                    expression_expected,
-                                                    expression_actual,
-                                                    expected, actual),
-                             user_message_format);
+        cut_test_fail_va_list_helper(
+            test_context,
+            cut_take_printf_helper(test_context,
+                                   "<%s == %s>\n"
+                                   "expected: <%lu>\n"
+                                   " but was: <%lu>",
+                                   expression_expected,
+                                   expression_actual,
+                                   expected, actual),
+            user_message_format);
     }
 }
 
@@ -214,20 +215,20 @@ cut_assert_equal_double_helper (CutTestContext *test_context,
     if (cut_utils_equal_double(expected, actual, error)) {
         cut_test_pass_helper(test_context);
     } else {
-        cut_test_fail_helper(test_context,
-                             FAILURE,
-                             cut_take_printf_helper(test_context,
-                                                    "<%s-%s <= %s <= %s+%s>\n"
-                                                    "expected: <%g +/- %g>\n"
-                                                    " but was: <%g>",
-                                                    expression_expected,
-                                                    expression_error,
-                                                    expression_actual,
-                                                    expression_expected,
-                                                    expression_error,
-                                                    expected, error,
-                                                    actual),
-                             user_message_format);
+        cut_test_fail_va_list_helper(
+            test_context,
+            cut_take_printf_helper(test_context,
+                                   "<%s-%s <= %s <= %s+%s>\n"
+                                   "expected: <%g +/- %g>\n"
+                                   " but was: <%g>",
+                                   expression_expected,
+                                   expression_error,
+                                   expression_actual,
+                                   expression_expected,
+                                   expression_error,
+                                   expected, error,
+                                   actual),
+            user_message_format);
     }
 }
 
@@ -251,8 +252,8 @@ cut_assert_equal_string_helper (CutTestContext *test_context,
                                              " but was: <%s>",
                                              expression_actual,
                                              actual);
-            cut_test_fail_helper(test_context, FAILURE,
-                                 message, user_message_format);
+            cut_test_fail_va_list_helper(test_context,
+                                         message, user_message_format);
         }
     } else {
         if (cut_utils_equal_string(expected, actual)) {
@@ -271,8 +272,8 @@ cut_assert_equal_string_helper (CutTestContext *test_context,
             if (expected && actual)
                 message = cut_append_diff_helper(test_context,
                                                  message, expected, actual);
-            cut_test_fail_helper(test_context, FAILURE,
-                                 message, user_message_format);
+            cut_test_fail_va_list_helper(test_context,
+                                         message, user_message_format);
         }
     }
 }
@@ -323,8 +324,8 @@ cut_assert_equal_memory_helper (CutTestContext *test_context,
                                              message,
                                              inspected_expected,
                                              inspected_actual);
-        cut_test_fail_helper(test_context, FAILURE,
-                             message, user_message_format);
+        cut_test_fail_va_list_helper(test_context,
+                                     message, user_message_format);
     }
 }
 
@@ -348,17 +349,17 @@ cut_assert_equal_string_array_helper (CutTestContext *test_context,
                                                              expected);
         inspected_actual = cut_inspect_string_array_helper(test_context,
                                                            actual);
-        cut_test_fail_helper(test_context,
-                             FAILURE,
-                             cut_take_printf_helper(test_context,
-                                                    "<%s == %s>\n"
-                                                    "expected: <%s>\n"
-                                                    " but was: <%s>",
-                                                    expression_expected,
-                                                    expression_actual,
-                                                    inspected_expected,
-                                                    inspected_actual),
-                             user_message_format);
+        cut_test_fail_va_list_helper(
+            test_context,
+            cut_take_printf_helper(test_context,
+                                   "<%s == %s>\n"
+                                   "expected: <%s>\n"
+                                   " but was: <%s>",
+                                   expression_expected,
+                                   expression_actual,
+                                   inspected_expected,
+                                   inspected_actual),
+            user_message_format);
     }
 }
 
@@ -374,15 +375,15 @@ cut_assert_operator_helper (CutTestContext *test_context,
     if (result) {
         cut_test_pass_helper(test_context);
     } else {
-        cut_test_fail_helper(test_context,
-                             FAILURE,
-                             cut_take_printf_helper(test_context,
-                                                    "expected: <%s %s %s> "
-                                                    "is TRUE",
-                                                    expression_lhs,
-                                                    expression_operator,
-                                                    expression_rhs),
-                             user_message_format);
+        cut_test_fail_va_list_helper(
+            test_context,
+            cut_take_printf_helper(test_context,
+                                   "expected: <%s %s %s> "
+                                   "is TRUE",
+                                   expression_lhs,
+                                   expression_operator,
+                                   expression_rhs),
+            user_message_format);
     }
 }
 
@@ -400,18 +401,18 @@ cut_assert_operator_int_helper (CutTestContext *test_context,
     if (result) {
         cut_test_pass_helper(test_context);
     } else {
-        cut_test_fail_helper(test_context,
-                             FAILURE,
-                             cut_take_printf_helper(test_context,
-                                                    "expected: <%s> %s <%s>\n"
-                                                    " but was: <%ld> %s <%ld>",
-                                                    expression_lhs,
-                                                    expression_operator,
-                                                    expression_rhs,
-                                                    lhs,
-                                                    expression_operator,
-                                                    rhs),
-                             user_message_format);
+        cut_test_fail_va_list_helper(
+            test_context,
+            cut_take_printf_helper(test_context,
+                                   "expected: <%s> %s <%s>\n"
+                                   " but was: <%ld> %s <%ld>",
+                                   expression_lhs,
+                                   expression_operator,
+                                   expression_rhs,
+                                   lhs,
+                                   expression_operator,
+                                   rhs),
+            user_message_format);
     }
 }
 
@@ -429,18 +430,18 @@ cut_assert_operator_double_helper (CutTestContext *test_context,
     if (result) {
         cut_test_pass_helper(test_context);
     } else {
-        cut_test_fail_helper(test_context,
-                             FAILURE,
-                             cut_take_printf_helper(test_context,
-                                                    "expected: <%s> %s <%s>\n"
-                                                    " but was: <%g> %s <%g>",
-                                                    expression_lhs,
-                                                    expression_operator,
-                                                    expression_rhs,
-                                                    lhs,
-                                                    expression_operator,
-                                                    rhs),
-                             user_message_format);
+        cut_test_fail_va_list_helper(
+            test_context,
+            cut_take_printf_helper(test_context,
+                                   "expected: <%s> %s <%s>\n"
+                                   " but was: <%g> %s <%g>",
+                                   expression_lhs,
+                                   expression_operator,
+                                   expression_rhs,
+                                   lhs,
+                                   expression_operator,
+                                   rhs),
+            user_message_format);
     }
 }
 
@@ -456,15 +457,15 @@ cut_assert_equal_helper (CutTestContext *test_context,
     if (result) {
         cut_test_pass_helper(test_context);
     } else {
-        cut_test_fail_helper(test_context,
-                             FAILURE,
-                             cut_take_printf_helper(test_context,
-                                                    "expected: <%s(%s, %s)> "
-                                                    "is TRUE",
-                                                    expression_function,
-                                                    expression_expected,
-                                                    expression_actual),
-                             user_message_format);
+        cut_test_fail_va_list_helper(
+            test_context,
+            cut_take_printf_helper(test_context,
+                                   "expected: <%s(%s, %s)> "
+                                   "is TRUE",
+                                   expression_function,
+                                   expression_expected,
+                                   expression_actual),
+            user_message_format);
     }
 }
 
@@ -478,14 +479,14 @@ cut_assert_errno_helper (CutTestContext *test_context,
     if (current_errno == 0) {
         cut_test_pass_helper(test_context);
     } else {
-        cut_test_fail_helper(test_context,
-                             FAILURE,
-                             cut_take_printf_helper(test_context,
-                                                    "expected: <0> (errno)\n"
-                                                    " but was: <%d> (%s)",
-                                                    current_errno,
-                                                    strerror(current_errno)),
-                             user_message_format);
+        cut_test_fail_va_list_helper(
+            test_context,
+            cut_take_printf_helper(test_context,
+                                   "expected: <0> (errno)\n"
+                                   " but was: <%d> (%s)",
+                                   current_errno,
+                                   strerror(current_errno)),
+            user_message_format);
     }
 }
 
@@ -497,26 +498,26 @@ cut_assert_path_exist_helper (CutTestContext *test_context,
                               ...)
 {
     if (!path) {
-        cut_test_fail_helper(test_context,
-                             FAILURE,
-                             cut_take_printf_helper(test_context,
-                                                    "<%s>\n"
-                                                    "expected: <%s> "
-                                                    "should not be NULL",
-                                                    expression_path,
-                                                    path),
-                             user_message_format);
+        cut_test_fail_va_list_helper(
+            test_context,
+            cut_take_printf_helper(test_context,
+                                   "<%s>\n"
+                                   "expected: <%s> "
+                                   "should not be NULL",
+                                   expression_path,
+                                   path),
+            user_message_format);
     } else if (cut_utils_path_exist(path)) {
         cut_test_pass_helper(test_context);
     } else {
-        cut_test_fail_helper(test_context,
-                             FAILURE,
-                             cut_take_printf_helper(test_context,
-                                                    "<%s>\n"
-                                                    "expected: <%s> exists",
-                                                    expression_path,
-                                                    path),
-                             user_message_format);
+        cut_test_fail_va_list_helper(
+            test_context,
+            cut_take_printf_helper(test_context,
+                                   "<%s>\n"
+                                   "expected: <%s> exists",
+                                   expression_path,
+                                   path),
+            user_message_format);
     }
 }
 
@@ -528,27 +529,27 @@ cut_assert_path_not_exist_helper (CutTestContext *test_context,
                                   ...)
 {
     if (!path) {
-        cut_test_fail_helper(test_context,
-                             FAILURE,
-                             cut_take_printf_helper(test_context,
-                                                    "<%s>\n"
-                                                    "expected: <%s> "
-                                                    "should not be NULL",
-                                                    expression_path,
-                                                    path),
-                             user_message_format);
+        cut_test_fail_va_list_helper(
+            test_context,
+            cut_take_printf_helper(test_context,
+                                   "<%s>\n"
+                                   "expected: <%s> "
+                                   "should not be NULL",
+                                   expression_path,
+                                   path),
+            user_message_format);
     } else if (!cut_utils_path_exist(path)) {
         cut_test_pass_helper(test_context);
     } else {
-        cut_test_fail_helper(test_context,
-                             FAILURE,
-                             cut_take_printf_helper(test_context,
-                                                    "<%s>\n"
-                                                    "expected: <%s> "
-                                                    "doesn't exist",
-                                                    expression_path,
-                                                    path),
-                             user_message_format);
+        cut_test_fail_va_list_helper(
+            test_context,
+            cut_take_printf_helper(test_context,
+                                   "<%s>\n"
+                                   "expected: <%s> "
+                                   "doesn't exist",
+                                   expression_path,
+                                   path),
+            user_message_format);
     }
 }
 
@@ -564,16 +565,16 @@ cut_assert_match_helper (CutTestContext *test_context,
     if (cut_utils_regex_match(pattern, actual)) {
         cut_test_pass_helper(test_context);
     } else {
-        cut_test_fail_helper(test_context,
-                             FAILURE,
-                             cut_take_printf_helper(test_context,
-                                                    "<%s> =~ <%s>\n"
-                                                    " pattern: <%s>\n"
-                                                    "  actual: <%s>",
-                                                    expression_pattern,
-                                                    expression_actual,
-                                                    pattern, actual),
-                             user_message_format);
+        cut_test_fail_va_list_helper(
+            test_context,
+            cut_take_printf_helper(test_context,
+                                   "<%s> =~ <%s>\n"
+                                   " pattern: <%s>\n"
+                                   "  actual: <%s>",
+                                   expression_pattern,
+                                   expression_actual,
+                                   pattern, actual),
+            user_message_format);
     }
 }
 
@@ -589,16 +590,16 @@ cut_assert_equal_pointer_helper (CutTestContext *test_context,
     if (expected == actual) {
         cut_test_pass_helper(test_context);
     } else {
-        cut_test_fail_helper(test_context,
-                             FAILURE,
-                             cut_take_printf_helper(test_context,
-                                                    "<%s == %s>\n"
-                                                    "expected: <%p>\n"
-                                                    " but was: <%p>",
-                                                    expression_expected,
-                                                    expression_actual,
-                                                    expected, actual),
-                             user_message_format);
+        cut_test_fail_va_list_helper(
+            test_context,
+            cut_take_printf_helper(test_context,
+                                   "<%s == %s>\n"
+                                   "expected: <%p>\n"
+                                   " but was: <%p>",
+                                   expression_expected,
+                                   expression_actual,
+                                   expected, actual),
+            user_message_format);
     }
 }
 
@@ -610,13 +611,14 @@ cut_error_errno_helper (CutTestContext *test_context,
     int current_errno = errno;
 
     if (current_errno != 0) {
-        cut_test_fail_helper(test_context,
-                             ERROR,
-                             cut_take_printf_helper(test_context,
-                                                    "<%d> (%s)",
-                                                    current_errno,
-                                                    strerror(current_errno)),
-                             user_message_format);
+        cut_test_terminate_va_list_helper(
+            test_context,
+            ERROR,
+            cut_take_printf_helper(test_context,
+                                   "<%d> (%s)",
+                                   current_errno,
+                                   strerror(current_errno)),
+            user_message_format);
     }
 }
 

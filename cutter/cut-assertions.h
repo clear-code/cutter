@@ -615,9 +615,9 @@ extern "C" {
  *
  * Raises an error with message.
  */
-#define cut_error(format, ...)                                  \
-    cut_trace_with_info_expression(                             \
-        cut_test_fail(ERROR, NULL, format, ## __VA_ARGS__),     \
+#define cut_error(format, ...)                                          \
+    cut_trace_with_info_expression(                                     \
+        cut_test_terminate(ERROR, NULL, format, ## __VA_ARGS__),        \
         cut_error(format, ## __VA_ARGS__))
 
 /**
@@ -651,9 +651,9 @@ extern "C" {
  *
  * Raises a failure with message.
  */
-#define cut_fail(format, ...)                                   \
-    cut_trace_with_info_expression(                             \
-        cut_test_fail(FAILURE, NULL, format, ## __VA_ARGS__),   \
+#define cut_fail(format, ...)                                        \
+    cut_trace_with_info_expression(                                  \
+        cut_test_terminate(FAILURE, NULL, format, ## __VA_ARGS__),   \
         cut_fail(format, ## __VA_ARGS__))
 
 /**
@@ -664,9 +664,9 @@ extern "C" {
  * Marks the test is pending with message. The test is
  * stopped.
  */
-#define cut_pend(format, ...)                                   \
-    cut_trace_with_info_expression(                             \
-        cut_test_fail(PENDING, NULL, format, ## __VA_ARGS__),   \
+#define cut_pend(format, ...)                                           \
+    cut_trace_with_info_expression(                                     \
+        cut_test_terminate(PENDING, NULL, format, ## __VA_ARGS__),      \
         cut_pend(format, ## __VA_ARGS__))
 
 #ifndef CUTTER_DISABLE_DEPRECATED
@@ -714,11 +714,22 @@ extern "C" {
  *
  * Since: 0.8
  */
-#define cut_omit(format, ...)                                   \
-    cut_trace_with_info_expression(                             \
-        cut_test_fail(OMISSION, NULL, format, ## __VA_ARGS__),  \
+#define cut_omit(format, ...)                                           \
+    cut_trace_with_info_expression(                                     \
+        cut_test_terminate(OMISSION, NULL, format, ## __VA_ARGS__),     \
         cut_omit(format, ## __VA_ARGS__))
 
+
+#define cut_test_pass()                                 \
+    cut_test_pass_helper(get_current_test_context())
+
+#define cut_test_fail(message, ...)                                 \
+    cut_test_terminate(FAILURE, message, ## __VA_ARGS__)
+
+#define cut_test_fail_va_list(system_message,                           \
+                              user_message_format)                      \
+    cut_test_fail_va_list_helper(get_current_test_context(),            \
+                                 system_message, user_message_format)
 
 #ifdef __cplusplus
 }

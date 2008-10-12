@@ -1,5 +1,13 @@
 2008-10-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertions.h, cutter/cut-assertions-helper.[ch],
+	gcutter/gcut-assertions-helper.c,
+	gdkcutter-pixbuf/gdkcut-pixbuf-assertions-helper.c,
+	test/test-cut-sequence-matcher.c:
+	export cut_test_pass(), cut_test_fail() and
+	cut_test_fail_va_list(). cut_test_fail()'s API
+	changed. cut_test_terminate() has old API.
+
 	* TUTORIAL*, test/sample/stack/autogen.sh: add description about
 	when Cutter is installed with non-system prefix.
 

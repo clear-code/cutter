@@ -27,10 +27,7 @@
 extern "C" {
 #endif
 
-#define cut_test_pass()                                         \
-    cut_test_pass_helper(get_current_test_context())
-
-#define cut_test_pass_helper(test_context)                      \
+#define cut_test_pass_helper(test_context)              \
     cut_test_context_pass_assertion(test_context)
 
 #define cut_test_register_result(status, message, ...) do               \
@@ -40,9 +37,9 @@ extern "C" {
                                      message, ## __VA_ARGS__, NULL);    \
 } while (0)
 
-#define cut_test_register_result_helper(test_context, status,           \
-                                        system_message,                 \
-                                        user_message_format) do         \
+#define cut_test_register_result_va_list_helper(test_context, status,   \
+                                                system_message,         \
+                                                user_message_format) do \
 {                                                                       \
     va_list args;                                                       \
                                                                         \
@@ -54,18 +51,26 @@ extern "C" {
     va_end(args);                                                       \
 } while (0)
 
-#define cut_test_fail(status, message, ...) do                      \
+#define cut_test_terminate(status, message, ...) do                 \
 {                                                                   \
     cut_test_register_result(status, message, ## __VA_ARGS__);      \
     cut_test_context_long_jump(get_current_test_context());         \
 } while (0)
 
-#define cut_test_fail_helper(test_context, status, system_message,      \
-                             user_message_format) do                    \
+#define cut_test_fail_va_list_helper(test_context,                      \
+                                     system_message,                    \
+                                     user_message_format)               \
+    cut_test_terminate_va_list_helper(test_context, FAILURE,            \
+                                      system_message,                   \
+                                      user_message_format)
+
+#define cut_test_terminate_va_list_helper(test_context, status,         \
+                                          system_message,               \
+                                          user_message_format) do       \
 {                                                                       \
-    cut_test_register_result_helper(test_context, status,               \
-                                    system_message,                     \
-                                    user_message_format);               \
+    cut_test_register_result_va_list_helper(test_context, status,       \
+                                            system_message,             \
+                                            user_message_format);       \
     cut_test_context_long_jump(test_context);                           \
 } while (0)
 
