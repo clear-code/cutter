@@ -70,6 +70,26 @@ void      gcut_assert_equal_list_string_helper
                                              const gchar    *expression_actual,
                                              const gchar    *user_message_format,
                                              ...);
+void      gcut_assert_equal_list_enum_helper
+                                            (CutTestContext *test_context,
+                                             GType           type,
+                                             const GList    *expected,
+                                             const GList    *actual,
+                                             const gchar    *expression_type,
+                                             const gchar    *expression_expected,
+                                             const gchar    *expression_actual,
+                                             const gchar    *user_message_format,
+                                             ...);
+void      gcut_assert_equal_list_flags_helper
+                                            (CutTestContext *test_context,
+                                             GType           type,
+                                             const GList    *expected,
+                                             const GList    *actual,
+                                             const gchar    *expression_type,
+                                             const gchar    *expression_expected,
+                                             const gchar    *expression_actual,
+                                             const gchar    *user_message_format,
+                                             ...);
 void      gcut_assert_equal_list_object_helper
                                             (CutTestContext *test_context,
                                              const GList    *expected,

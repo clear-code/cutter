@@ -253,6 +253,50 @@ G_BEGIN_DECLS
                                              ## __VA_ARGS__))
 
 /**
+ * gcut_assert_equal_list_enum:
+ * @type: a GEnum type.
+ * @expected: an expected GList * of enum value.
+ * @actual: an actual GList * of enum value.
+ * @...: optional format string, followed by parameters to insert
+ *       into the format string (as with printf())
+ *
+ * Passes if @expected and @actual has same enum values in
+ * same order.
+ *
+ * Since: 1.0.5
+ */
+#define gcut_assert_equal_list_enum(type, expected, actual, ...)        \
+    cut_trace_with_info_expression(                                     \
+        gcut_assert_equal_list_enum_helper(                             \
+            get_current_test_context(),                                 \
+            type, expected, actual, #type, #expected, #actual,          \
+            ## __VA_ARGS__, NULL),                                      \
+        gcut_assert_equal_list_enum(type, expected, actual,             \
+                                    ## __VA_ARGS__))
+
+/**
+ * gcut_assert_equal_list_flags:
+ * @type: a GFlags type.
+ * @expected: an expected GList * of flags value.
+ * @actual: an actual GList * of flags value.
+ * @...: optional format string, followed by parameters to insert
+ *       into the format string (as with printf())
+ *
+ * Passes if @expected and @actual has same flags values in
+ * same order.
+ *
+ * Since: 1.0.5
+ */
+#define gcut_assert_equal_list_flags(type, expected, actual, ...)       \
+    cut_trace_with_info_expression(                                     \
+        gcut_assert_equal_list_flags_helper(                            \
+            get_current_test_context(),                                 \
+            type, expected, actual, #type, #expected, #actual,          \
+            ## __VA_ARGS__, NULL),                                      \
+        gcut_assert_equal_list_flags(type, expected, actual,            \
+                                    ## __VA_ARGS__))
+
+/**
  * gcut_assert_equal_hash_table_string_string:
  * @expected: an expected GHashTable * of string.
  * @actual: an actual GHashTable * of string.
@@ -412,7 +456,7 @@ G_BEGIN_DECLS
 
 /**
  * gcut_assert_equal_enum:
- * @type: an GEnum type.
+ * @type: a GEnum type.
  * @expected: an expected enum value.
  * @actual: an actual enum value.
  * @...: optional format string, followed by parameters to insert
@@ -547,6 +591,7 @@ G_BEGIN_DECLS
                                         ## __VA_ARGS__, NULL),          \
         gcut_assert_equal_object(expected, actual, equal_function,      \
                                  ## __VA_ARGS__))
+
 
 G_END_DECLS
 

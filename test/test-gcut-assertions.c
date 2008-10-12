@@ -15,6 +15,8 @@ void test_equal_list_uint(void);
 void test_equal_list_string(void);
 void test_equal_list_string_both_null(void);
 void test_equal_list_string_other_null(void);
+void test_equal_list_enum(void);
+void test_equal_list_flags(void);
 void test_equal_list_object(void);
 void test_equal_hash_string_string(void);
 void test_error(void);
@@ -99,6 +101,8 @@ setup (void)
 
     error1 = NULL;
     error2 = NULL;
+
+    flags_type = 0;
 
     fail_line = 0;
 }
@@ -386,6 +390,114 @@ test_equal_list_string_other_null (void)
 }
 
 static void
+stub_equal_list_enum (void)
+{
+    list1 = g_list_append(list1, GINT_TO_POINTER(CUT_TEST_RESULT_PENDING));
+    list1 = g_list_append(list1, GINT_TO_POINTER(CUT_TEST_RESULT_SUCCESS));
+    list2 = g_list_append(list2, GINT_TO_POINTER(CUT_TEST_RESULT_FAILURE));
+
+    gcut_assert_equal_list_enum(CUT_TYPE_TEST_RESULT_STATUS, list1, list1);
+    gcut_assert_equal_list_enum(CUT_TYPE_TEST_RESULT_STATUS, list2, list2);
+
+    MARK_FAIL(gcut_assert_equal_list_enum(CUT_TYPE_TEST_RESULT_STATUS,
+                                          list1, list2));
+}
+
+void
+test_equal_list_enum (void)
+{
+    const gchar inspected_expected[] =
+        "(#<CutTestResultStatus: "
+        "pending(CUT_TEST_RESULT_PENDING:3)>, "
+        "#<CutTestResultStatus: "
+        "success(CUT_TEST_RESULT_SUCCESS:0)>)";
+    const gchar inspected_actual[] =
+        "(#<CutTestResultStatus: "
+        "failure(CUT_TEST_RESULT_FAILURE:4)>)";
+        ;
+    const gchar *message, *message_with_diff;
+
+    test = cut_test_new("equal_list_enum test", stub_equal_list_enum);
+    cut_assert_not_null(test);
+
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+
+    message = cut_take_printf("<list1 == list2>\n"
+                              "expected: <%s>\n"
+                              " but was: <%s>",
+                              inspected_expected,
+                              inspected_actual);
+    message_with_diff = cut_append_diff(message,
+                                        inspected_expected,
+                                        inspected_actual);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "equal_list_enum test",
+                           NULL,
+                           message_with_diff,
+                           FAIL_LOCATION,
+                           "stub_equal_list_enum");
+}
+
+static void
+stub_equal_list_flags (void)
+{
+    list1 = g_list_append(list1, GUINT_TO_POINTER(1 << 0 | 1 << 1));
+    list1 = g_list_append(list1, GUINT_TO_POINTER(1 << 2));
+    list2 = g_list_append(list2, GUINT_TO_POINTER(0));
+
+    gcut_assert_equal_list_flags(flags_type, list1, list1);
+    gcut_assert_equal_list_flags(flags_type, list2, list2);
+
+    MARK_FAIL(gcut_assert_equal_list_flags(flags_type, list1, list2));
+}
+
+void
+test_equal_list_flags (void)
+{
+    const gchar inspected_expected[] =
+        "(#<CuttestAssertListStubFlags: "
+        "first|second "
+        "(CUTTEST_ASSERT_LIST_STUB_FIRST:0x1)|"
+        "(CUTTEST_ASSERT_LIST_STUB_SECOND:0x2)>, "
+        "#<CuttestAssertListStubFlags: "
+        "third (CUTTEST_ASSERT_LIST_STUB_THIRD:0x4)>)";
+    const gchar inspected_actual[] =
+        "(#<CuttestAssertListStubFlags>)";
+    const gchar *message, *message_with_diff;
+    static const GFlagsValue values[] = {
+        {1 << 0, "CUTTEST_ASSERT_LIST_STUB_FIRST", "first"},
+        {1 << 1, "CUTTEST_ASSERT_LIST_STUB_SECOND", "second"},
+        {1 << 2, "CUTTEST_ASSERT_LIST_STUB_THIRD", "third"},
+        {0, NULL, NULL}
+    };
+
+    flags_type = g_flags_register_static("CuttestAssertListStubFlags", values);
+
+
+    test = cut_test_new("equal_list_flags test", stub_equal_list_flags);
+    cut_assert_not_null(test);
+
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+
+    message = cut_take_printf("<list1 == list2>\n"
+                              "expected: <%s>\n"
+                              " but was: <%s>",
+                              inspected_expected,
+                              inspected_actual);
+    message_with_diff = cut_append_diff(message,
+                                        inspected_expected,
+                                        inspected_actual);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "equal_list_flags test",
+                           NULL,
+                           message_with_diff,
+                           FAIL_LOCATION,
+                           "stub_equal_list_flags");
+}
+
+static void
 g_object_unref_with_null_check (gpointer object)
 {
     if (object)
@@ -590,15 +702,14 @@ stub_equal_flags (void)
 void
 test_equal_flags (void)
 {
-    if (flags_type == 0) {
-        static const GFlagsValue values[] = {
-            {1 << 0, "CUTTEST_ASSERT_STUB_FIRST", "first"},
-            {1 << 1, "CUTTEST_ASSERT_STUB_SECOND", "second"},
-            {1 << 2, "CUTTEST_ASSERT_STUB_THIRD", "third"},
-            {0, NULL, NULL}
-        };
-        flags_type = g_flags_register_static("CuttestAssertStubFlags", values);
-    }
+    static const GFlagsValue values[] = {
+        {1 << 0, "CUTTEST_ASSERT_STUB_FIRST", "first"},
+        {1 << 1, "CUTTEST_ASSERT_STUB_SECOND", "second"},
+        {1 << 2, "CUTTEST_ASSERT_STUB_THIRD", "third"},
+        {0, NULL, NULL}
+    };
+
+    flags_type = g_flags_register_static("CuttestAssertStubFlags", values);
 
     test = cut_test_new("gcut_assert_equal_flags test", stub_equal_flags);
     cut_assert_not_null(test);

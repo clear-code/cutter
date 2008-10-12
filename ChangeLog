@@ -1,5 +1,9 @@
 2008-10-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-assertions.h, gcutter/assertions-helper.[ch],
+	test/test-gcut-assertions.c: add gcut_assert_equal_list_enum() and
+	gcut_assert_equal_list_flags().
+
 	* gcutter/gcut-list.[ch], test/test-gcut-list.c
 	(gcut_list_enum_inspect, gcut_list_flags_inspect): add.
 
