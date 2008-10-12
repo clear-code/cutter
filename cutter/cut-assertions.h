@@ -176,7 +176,7 @@ extern "C" {
 /**
  * cut_assert_equal_double:
  * @expected: an expected float value.
- * @error: an float value that specifies error range.
+ * @error: a float value that specifies error range.
  * @actual: an actual float value.
  * @...: optional format string, followed by parameters to insert
  *       into the format string (as with printf())
