@@ -1,6 +1,6 @@
 /* -*- c-file-style: "gnu" -*- */
 
-#include <cutter.h>
+#include <gcutter.h>
 
 #include <stdio.h>
 #include <string.h>

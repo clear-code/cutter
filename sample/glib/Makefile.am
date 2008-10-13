@@ -1,7 +1,8 @@
 INCLUDES = 			\
 	-I$(top_builddir)	\
 	-I$(top_srcdir)		\
-	-I$(top_srcdir)/cutter
+	-I$(top_srcdir)/cutter	\
+	-I$(top_srcdir)/gcutter
 
 AM_CFLAGS = $(CUTTER_CFLAGS)
 
