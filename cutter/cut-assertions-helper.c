@@ -31,7 +31,7 @@
 
 #include <errno.h>
 
-#include "cut-assertions-helper.h"
+#include "cut-helper.h"
 
 void
 cut_assert_helper (CutTestContext *test_context,

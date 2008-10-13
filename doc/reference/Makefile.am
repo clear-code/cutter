@@ -14,16 +14,20 @@ SCAN_OPTIONS =							\
 DOC_SOURCE_DIR=../..
 
 # Used for dependencies
-HFILE_GLOB =					\
-	$(top_srcdir)/cutter/cutter.h		\
-	$(top_srcdir)/cutter/cut-assertions.h	\
-	$(top_srcdir)/cutter/cut-test-utils.h	\
-	$(top_srcdir)/cutter/cut-multi-process.h\
-	$(top_srcdir)/gcutter/gcutter.h		\
-	$(top_srcdir)/gcutter/gcut-assertions.h	\
-	$(top_srcdir)/gcutter/gcut-test-utils.h	\
-	$(top_srcdir)/cutter/cut-types.h	\
-	$(top_srcdir)/cutter/cut-experimental.h
+HFILE_GLOB =								\
+	$(top_srcdir)/cutter/cutter.h					\
+	$(top_srcdir)/cutter/cut-assertions.h				\
+	$(top_srcdir)/cutter/cut-test-utils.h				\
+	$(top_srcdir)/cutter/cut-multi-process.h			\
+	$(top_srcdir)/gcutter/gcutter.h					\
+	$(top_srcdir)/gcutter/gcut-assertions.h				\
+	$(top_srcdir)/gcutter/gcut-test-utils.h				\
+	$(top_srcdir)/cutter/cut-types.h				\
+	$(top_srcdir)/cutter/cut-experimental.h				\
+	$(top_srcdir)/cutter/cut-helper.h				\
+	$(top_srcdir)/gdkcutter-pixbuf/gdkcutter-pixbuf.h		\
+	$(top_srcdir)/gdkcutter-pixbuf/gdkcut-pixbuf.h			\
+	$(top_srcdir)/gdkcutter-pixbuf/gdkcut-pixbuf-assertions.h
 #CFILE_GLOB=$(top_srcdir)/cutter/*.c
 
 # Headers to ignore
@@ -54,15 +58,22 @@ IGNORE_HFILES=			\
 	cut-verbose-level.h	\
 	config.h
 
-INCLUDES =				\
-	-I$(top_srcdir)/cutter 		\
-	-I$(top_srcdir) 		\
-	-I$(top_builddir)/cutter	\
+INCLUDES =					\
+	-I$(top_srcdir)/cutter			\
+	-I$(top_srcdir)/gcutter			\
+	-I$(top_srcdir)/gdkcutter-pixbuf	\
+	-I$(top_srcdir)				\
+	-I$(top_builddir)/cutter		\
 	$(GLIB_CFLAGS)
 
 GTKDOC_LIBS =					\
 	$(top_builddir)/cutter/libcutter.la	\
 	$(GLIB_LIBS)
+if HAVE_GDK_PIXBUF
+GTKDOC_LIBS +=							\
+	$(top_builddir)/gdkcutter-pixbuf/libgdkcutter-pixbuf.la	\
+	$(GDK_PIXBUF_LIBS)
+endif
 
 # Extra options to supply to gtkdoc-mkdb
 MKDB_OPTIONS=--sgml-mode --output-format=xml --ignore-files=trio

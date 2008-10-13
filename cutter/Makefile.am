@@ -23,7 +23,8 @@ cutter_public_headers = 		\
 	cut-public.h			\
 	cut-types.h			\
 	cut-macros.h			\
-	cut-multi-process.h
+	cut-multi-process.h		\
+	cut-helper.h
 
 libcutter_public_headers = 		\
 	cut-private.h			\

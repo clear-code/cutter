@@ -17,7 +17,7 @@
  *
  */
 
-#define CUT_HELPER 1
+#include <cutter/cut-helper.h>
 #include "cuttest-assertions.h"
 #include <cutter/cut-backtrace-entry.h>
 

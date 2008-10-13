@@ -40,33 +40,6 @@ extern "C" {
  */
 
 /**
- */
-#define cut_trace_with_info_expression(expression,              \
-                                       info_expression) do      \
-{                                                               \
-    cut_test_context_push_backtrace(get_current_test_context(), \
-                                    __FILE__, __LINE__,         \
-                                    __PRETTY_FUNCTION__,        \
-                                    #info_expression);          \
-    do {                                                        \
-        expression;                                             \
-    } while (0);                                                \
-    cut_test_context_pop_backtrace(get_current_test_context()); \
-} while (0)
-
-#define cut_trace(expression) do                                \
-{                                                               \
-    cut_test_context_push_backtrace(get_current_test_context(), \
-                                    __FILE__, __LINE__,         \
-                                    __PRETTY_FUNCTION__,        \
-                                    #expression);               \
-    do {                                                        \
-        expression;                                             \
-    } while (0);                                                \
-    cut_test_context_pop_backtrace(get_current_test_context()); \
-} while (0)
-
-/**
  * cut_take:
  * @object: the object to be owned by Cutter.
  * @destroy_function: the destroy function for the object.

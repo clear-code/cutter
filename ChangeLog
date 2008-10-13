@@ -1,5 +1,10 @@
 2008-10-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-helper.h: introduce for original function base
+	assertion writer.
+	* cutter/, doc/reference/, test/lib/cuttest-assertions.c: follow
+	the above change.
+
 	* test/run-test.sh: cleanup.
 
 2008-10-12  Kouhei Sutou  <kou@cozmixng.org>

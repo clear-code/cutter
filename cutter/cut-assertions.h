@@ -720,17 +720,6 @@ extern "C" {
         cut_omit(format, ## __VA_ARGS__))
 
 
-#define cut_test_pass()                                 \
-    cut_test_pass_helper(get_current_test_context())
-
-#define cut_test_fail(message, ...)                                 \
-    cut_test_terminate(FAILURE, message, ## __VA_ARGS__)
-
-#define cut_test_fail_va_list(system_message,                           \
-                              user_message_format)                      \
-    cut_test_fail_va_list_helper(get_current_test_context(),            \
-                                 system_message, user_message_format)
-
 #ifdef __cplusplus
 }
 #endif
