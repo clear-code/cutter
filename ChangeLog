@@ -1,3 +1,7 @@
+2008-10-14  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-test-utils.h (cut_take_strdup): add missing ().
+
 2008-10-13  Kouhei Sutou  <kou@cozmixng.org>
 
 	* doc/reference/ja.po: update.

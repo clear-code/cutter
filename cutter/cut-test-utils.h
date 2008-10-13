@@ -93,7 +93,7 @@ extern "C" {
  * Since: 1.0.5
  */
 #define cut_take_strdup(string)                                 \
-    cut_take_strdup_helper(get_current_test_context, (string))
+    cut_take_strdup_helper(get_current_test_context(), (string))
 
 /**
  * cut_take_strndup:
