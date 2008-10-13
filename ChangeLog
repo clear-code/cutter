@@ -1,5 +1,7 @@
 2008-10-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/Makefile.am: add missing gcut-main.[ch].
+
 	* cutter/cut-main.c: use gcut-main.h not gcut-value-equal.h.
 
 	* cutter/cut-assertions-helper.c (cut_assert_equal_memory_helper):

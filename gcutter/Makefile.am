@@ -21,7 +21,8 @@ gcutter_public_headers =		\
 	gcut-error.h			\
 	gcut-enum.h			\
 	gcut-types.h			\
-	gcut-object.h
+	gcut-object.h			\
+	gcut-main.h
 
 noinst_headers = 	\
 	gbsearcharray.h
@@ -42,4 +43,5 @@ libgcutter_la_SOURCES =			\
 	gcut-error.c			\
 	gcut-enum.c			\
 	gcut-assertions-helper.c	\
-	gcut-object.c
+	gcut-object.c			\
+	gcut-main.c
