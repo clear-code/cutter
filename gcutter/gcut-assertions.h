@@ -553,7 +553,7 @@ G_BEGIN_DECLS
  * gcut_assert_equal_object_custom:
  * @expected: an expected object.
  * @actual: an actual object.
- * @equal_function: an function that compare tow object. (#GEqualFunc)
+ * @equal_function: an function that compare two object. (#GEqualFunc)
  * @...: optional format string, followed by parameters to insert
  *       into the format string (as with printf())
  *

@@ -72,8 +72,8 @@ extern "C" {
  * cut_take_string:
  * @string: the string to be owned by Cutter.
  *
- * Passes ownership of the string to Cutter and returns a
- * string that has same contents of @string.
+ * Passes ownership of the string to Cutter and returns the
+ * string itself.
  *
  * Returns: a string owned by Cutter. Don't free it.
  */

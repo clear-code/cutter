@@ -1,5 +1,7 @@
 2008-10-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/ja.po: update.
+
 	* cutter/cut-test-utils.h: move *_helper() to ...
 	* cutter/cut-test-utils-helper.h: ... here.
 

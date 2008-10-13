@@ -146,8 +146,9 @@ void    gcut_list_string_free (GList *list);
  * gcut_hash_table_string_string_new:
  * @key: The first key string.
  * @...: A NULL-terminated list of rest arguments. The
- *       string value of the first key, followed optionally
- *       by more key/value pairs. It must end with NULL.
+ *       first item is the string value of the first key,
+ *       followed optionally by more key/value pairs. It
+ *       must end with NULL.
  *
  * Creates a hash table that has string key and string value
  * from passed key/value pairs.
@@ -165,7 +166,8 @@ GHashTable *gcut_hash_table_string_string_new(const gchar *key, ...) G_GNUC_NULL
  * @key: The first key string.
  * @args: A NULL-terminated list of rest arguments. The
  *        first item is the string value of the first key,
- *        followed optionally by more key/value pairs.
+ *        followed optionally by more key/value pairs. It
+ *        must end with NULL.
  *
  * Creates a hash table that has string key and string value
  * from passed key/value pairs.
