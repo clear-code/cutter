@@ -307,18 +307,19 @@ cut_assert_equal_memory_helper (CutTestContext *test_context,
             cut_take_string_helper(test_context,
                                    cut_utils_inspect_memory(actual,
                                                             actual_size));
-        message = cut_take_printf_helper(test_context,
-                                         "<%s(size: %s) == %s(size: %s)>\n"
-                                         "expected: <%s (size: %lu)>\n"
-                                         "  actual: <%s (size: %lu)>",
-                                         expression_expected,
-                                         expression_expected_size,
-                                         expression_actual,
-                                         expression_actual_size,
-                                         inspected_expected,
-                                         expected_size,
-                                         inspected_actual,
-                                         actual_size);
+        message = cut_take_printf_helper(
+            test_context,
+            "<%s(size: %s) == %s(size: %s)>\n"
+            "expected: <%s (size: %" G_GSIZE_FORMAT ")>\n"
+            "  actual: <%s (size: %" G_GSIZE_FORMAT ")>",
+            expression_expected,
+            expression_expected_size,
+            expression_actual,
+            expression_actual_size,
+            inspected_expected,
+            expected_size,
+            inspected_actual,
+            actual_size);
         if (expected_size > 0 && actual_size > 0)
             message = cut_append_diff_helper(test_context,
                                              message,

@@ -1,5 +1,8 @@
 2008-10-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertions-helper.c (cut_assert_equal_memory_helper):
+	use G_GSIZE_FORMAT.
+
 	* gcutter/gcut-main.[ch]: add.
 	* gcutter/gcut-value-equal.h: split init function to gcut-main.h.
 	* cutter/cut-main.c: call gcut_init() not gcut_equal_value_init().
