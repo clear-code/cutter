@@ -1,5 +1,8 @@
 2008-10-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-utils.h: move *_helper() to ...
+	* cutter/cut-test-utils-helper.h: ... here.
+
 	* Makefile.am: add gdkcutter-pixbuf package to po target.
 
 	* cutter/cut-helper.h: introduce for original function base

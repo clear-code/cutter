@@ -18,6 +18,7 @@ cutter_public_headers = 		\
 	cut-assertions.h		\
 	cut-assertions-helper.h		\
 	cut-test-utils.h		\
+	cut-test-utils-helper.h		\
 	cut-experimental.h		\
 	cut-hidden-definitions.h	\
 	cut-public.h			\
