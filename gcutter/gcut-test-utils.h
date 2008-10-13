@@ -117,7 +117,7 @@ GList  *gcut_list_string_new  (const gchar *value, ...) G_GNUC_NULL_TERMINATED;
 
 /**
  * gcut_take_new_list_string:
- * @value: the first string.
+ * @value: the first string. (const char *)
  * @...: remaining strings in list, terminated by NULL.
  *
  * Creates a list from passed strings that is owned by
@@ -182,7 +182,7 @@ GHashTable *gcut_hash_table_string_string_newv(const gchar *key, va_list args);
 
 /**
  * gcut_take_new_hash_table_string_string:
- * @key: The first key string.
+ * @key: The first key string. (const gchar *)
  * @...: A NULL-terminated list of rest arguments. The
  *       string value of the first key, followed optionally
  *       by more key/value pairs. It must end with NULL.

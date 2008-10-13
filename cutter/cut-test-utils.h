@@ -56,7 +56,7 @@ extern "C" {
 
 /**
  * cut_take_memory:
- * @memory: the memory to be owned by Cutter.
+ * @memory: the memory to be owned by Cutter. (void *)
  *
  * Passes ownership of the memory to Cutter and returns the
  * memory itself. @memory is destroyed by free().
@@ -82,7 +82,7 @@ extern "C" {
 
 /**
  * cut_take_strdup:
- * @string: the string to be duplicated.
+ * @string: the string to be duplicated. (const char *)
  *
  * Duplicates the string, passes ownership of the
  * duplicated string to Cutter and returns the duplicated
@@ -97,8 +97,8 @@ extern "C" {
 
 /**
  * cut_take_strndup:
- * @string: the string to be duplicated.
- * @size: the number of bytes to duplicate.
+ * @string: the string to be duplicated. (const char *)
+ * @size: the number of bytes to duplicate. (size_t)
  *
  * Duplicates the first @size bytes of the string, passes
  * ownership of the duplicated string to Cutter and returns
@@ -115,8 +115,8 @@ extern "C" {
 
 /**
  * cut_take_memdup:
- * @memory: the memory to be duplicated.
- * @size: the number of bytes to duplicate.
+ * @memory: the memory to be duplicated. (void *)
+ * @size: the number of bytes to duplicate. (size_t)
  *
  * Duplicates @size bytes of the memory, passes ownership of
  * the duplicated memory to Cutter and returns the

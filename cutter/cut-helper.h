@@ -20,7 +20,7 @@
 #ifndef __CUT_HELPER_H__
 #define __CUT_HELPER_H__
 
-#define CUT_HELPER 1
+#include <cutter/cut-declare-helper.h>
 #include <cutter.h>
 
 #ifdef __cplusplus
@@ -265,14 +265,16 @@ extern "C" {
  * Here is an example of
  * cut_trace_with_info_expression(). If
  * cut_assert_not_null(object) is failed, you will get a
- * backtrace that contains two line;
- * cut_assert_not_null(object) and
- * create_my_object("my-name") not
- * create_my_object_helper("my-name"). If you use
- * cut_trace() instead of cut_trace_with_info_expression(),
- * you will get create_my_object_helper("my-name"). You may
- * be confused about 'Where is
- * create_my_object_helper("my-name") from?
+ * backtrace that contains two line:
+ * <itemizedlist>
+ *   <listitem><para>cut_assert_not_null(object)</para></listitem>
+ *   <listitem><para>create_my_object("my-name") not
+ * create_my_object_helper("my-name")</para></listitem>
+ * </itemizedlist>
+ * If you use cut_trace() instead of
+ * cut_trace_with_info_expression(), you will get
+ * create_my_object_helper("my-name"). You may be confused
+ * about 'Where is create_my_object_helper("my-name") from?
  * test_my_object_name() uses create_my_object("my-name")
  * but does not use create_my_object_helper("my-name").'.
  *
