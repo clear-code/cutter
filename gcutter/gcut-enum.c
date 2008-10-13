@@ -35,7 +35,7 @@ gcut_enum_inspect (GType enum_type, gint enum_value)
 
     enum_class = g_type_class_ref(enum_type);
     if (!enum_class)
-        return g_strdup_printf("unknown enum type: %s(%ld)",
+        return g_strdup_printf("unknown enum type: %s(%" G_GSIZE_FORMAT ")",
                                g_type_name(enum_type), enum_type);
 
     value = g_enum_get_value(enum_class, enum_value);
@@ -64,7 +64,7 @@ gcut_flags_inspect (GType flags_type, guint flags)
 
     flags_class = g_type_class_ref(flags_type);
     if (!flags_class)
-        return g_strdup_printf("unknown flags type: %s(%ld)",
+        return g_strdup_printf("unknown flags type: %s(%" G_GSIZE_FORMAT ")",
                                g_type_name(flags_type), flags_type);
 
 
