@@ -23,7 +23,7 @@
 
 #include <glib.h>
 
-#include "gcut-init.h"
+#include "gcut-main.h"
 
 static gboolean initialized = FALSE;
 
