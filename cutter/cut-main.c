@@ -18,7 +18,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#  include "config.h"
 #endif /* HAVE_CONFIG_H */
 
 #include <stdlib.h>
@@ -44,7 +44,7 @@ char **environ = NULL;
 #include "cut-module-factory.h"
 #include "cut-contractor.h"
 #include "cut-utils.h"
-#include "../gcutter/gcut-value-equal.h"
+#include "../gcutter/gcut-main.h"
 #include "../gcutter/gcut-error.h"
 
 typedef enum {
