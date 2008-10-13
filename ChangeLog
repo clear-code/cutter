@@ -1,3 +1,7 @@
+2008-10-13  Kouhei Sutou  <kou@cozmixng.org>
+
+	* test/run-test.sh: cleanup.
+
 2008-10-12  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-assertions-helper.c,
