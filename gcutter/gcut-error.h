@@ -26,7 +26,7 @@ G_BEGIN_DECLS
 
 /**
  * SECTION: gcut-error
- * @title: Assertion Utilities for #GError.
+ * @title: Assertion Utilities for GError
  * @short_description: Utilities to write assertions related
  * to #GError more easily.
  *
@@ -38,13 +38,13 @@ G_BEGIN_DECLS
  */
 
 /**
- * gcut_enum_equal:
+ * gcut_error_equal:
  * @error1: a #GError to be compared.
  * @error2: a #GError to be compared.
  *
- * Compares two #GError, @enum1 and @enum2.
+ * Compares two #GError, @error1 and @error2.
  *
- * Returns: TRUE if both of enum1 and enum2 have the same
+ * Returns: TRUE if both of @error1 and @error2 have the same
  * domain, code and message, FALSE otherwise.
  *
  * Since: 1.0.5

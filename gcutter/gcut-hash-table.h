@@ -27,7 +27,7 @@ G_BEGIN_DECLS
 
 /**
  * SECTION: gcut-hash-table
- * @title: Assertion Utilities for #GHashTable.
+ * @title: Assertion Utilities for GHashTable
  * @short_description: Utilities to write assertions related
  * to #GHashTable more easily.
  *

@@ -28,7 +28,7 @@ G_BEGIN_DECLS
 
 /**
  * SECTION: gcut-object
- * @title: Assertion Utilities for #GObject.
+ * @title: Assertion Utilities for GObject
  * @short_description: Utilities to write assertions related
  * to #GObject more easily.
  *
@@ -42,14 +42,14 @@ G_BEGIN_DECLS
 
 /**
  * gcut_object_equal:
- * @object1: a #GObject value to be compared.
- * @object2: a #GObject value to be compared.
+ * @object1: a #GObject to be compared.
+ * @object2: a #GObject to be compared.
  * @equal_func: a function that compares two #GObject. NULL
  * is OK.
  *
- * Compares two #GObject, @object1 and @object2. If
- * @equal_func is NULL, @object1 and @object2 is just
- * only compared by memory location.
+ * Compares two #GObject, @object1 and @object2 by
+ * @equal_func. If @equal_func is NULL, @object1 and
+ * @object2 is just only compared by memory location.
  *
  * Returns: TRUE if @object1 == @object2 or
  * @equal_func(@object1, @object2), FALSE otherwise.
@@ -74,7 +74,7 @@ gboolean         gcut_object_equal                (const GObject *object1,
 gchar           *gcut_object_inspect              (const GObject *object);
 
 /**
- * gcut_object_inspect:
+ * gcut_object_inspect_custom:
  * @object: a #GObject.
  * @inspect_func: a function that inspects @object.
  * @user_data: user data to pass to the function.

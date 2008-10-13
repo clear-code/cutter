@@ -26,7 +26,7 @@ G_BEGIN_DECLS
 
 /**
  * SECTION: gcut-enum
- * @title: Assertion Utilities for #GEnum and #GFlags.
+ * @title: Assertion Utilities for GEnum and GFlags
  * @short_description: Utilities to write assertions related
  * to #GEnum or #GFlags more easily.
  *

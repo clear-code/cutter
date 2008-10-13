@@ -1,5 +1,8 @@
 2008-10-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/ja.po: update.
+	* gcutter/: fix typos.
+
 	* sample/glib/option.c: suppress warnings.
 
 	* doc/reference/: update.

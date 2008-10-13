@@ -28,7 +28,7 @@ G_BEGIN_DECLS
 
 /**
  * SECTION: gcut-list
- * @title: Assertion Utilities for #GList.
+ * @title: Assertion Utilities for GList
  * @short_description: Utilities to write assertions related
  * to #GList more easily.
  *
@@ -47,7 +47,7 @@ G_BEGIN_DECLS
  * @equal_func: a function that compares two values.
  *
  * Compares two #GList, @list1 and @list2. @equal_func is
- * called for each values of @list1 and @list2.
+ * called for each corresponding values of @list1 and @list2.
  *
  * e.g.:
  * |[
@@ -153,7 +153,7 @@ gchar           *gcut_list_uint_inspect         (const GList *list);
  * should be #GList of string.
  *
  * Returns: TRUE if all corresponding string of @list1 and
- * @list2 are same value, FALSE otherwise.
+ * @list2 are same content string, FALSE otherwise.
  *
  * Since: 1.0.5
  */

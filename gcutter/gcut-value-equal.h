@@ -26,7 +26,7 @@ G_BEGIN_DECLS
 
 /**
  * SECTION: gcut-value-equal
- * @title: Assertion Utilities for #GValue.
+ * @title: Assertion Utilities for GValue
  * @short_description: Utilities to write assertions related
  * to #GValue more easily.
  *
