@@ -1,5 +1,9 @@
 2008-10-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-main.[ch]: add.
+	* gcutter/gcut-value-equal.h: split init function to gcut-main.h.
+	* cutter/cut-main.c: call gcut_init() not gcut_equal_value_init().
+
 	* doc/reference/ja.po: update.
 	* cutter/, gcutter/: fix typos.
 

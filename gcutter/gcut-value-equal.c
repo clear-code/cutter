@@ -18,12 +18,13 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#  include "../cutter/config.h"
 #endif /* HAVE_CONFIG_H */
 
 #include <glib.h>
 #include "gbsearcharray.h"
 
+#include "gcut-main.h"
 #include "gcut-value-equal.h"
 
 typedef struct {
@@ -189,7 +190,14 @@ gcut_value_equal_init (void)
     REGISTER_SAME_TYPE_EQUAL_FUNC(G_TYPE_POINTER, pointer);
     REGISTER_SAME_TYPE_EQUAL_FUNC(G_TYPE_GTYPE, gtype);
     REGISTER_SAME_TYPE_EQUAL_FUNC(G_TYPE_STRING, string);
+#undef REGISTER_SAME_TYPE_EQUAL_FUNC
 }
+
+void
+gcut_value_equal_quit (void)
+{
+}
+
 
 /*
 vi:nowrap:ai:expandtab:sw=4

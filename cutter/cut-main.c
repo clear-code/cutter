@@ -196,7 +196,7 @@ cut_init (int *argc, char ***argv)
     if (!g_thread_supported())
         g_thread_init(NULL);
 
-    gcut_value_equal_init();
+    gcut_init();
 
     cut_test_context_current_init();
 
@@ -297,6 +297,8 @@ cut_quit (void)
     }
 
     cut_test_context_current_quit();
+
+    gcut_quit();
 
     initialized = FALSE;
 }

@@ -17,14 +17,23 @@
  *
  */
 
-#ifndef __GCUTTER_H__
-#define __GCUTTER_H__
+#ifndef __GCUT_MAIN_H__
+#define __GCUT_MAIN_H__
 
-#include <cutter.h>
-#include <gcutter/gcut-main.h>
-#include <gcutter/gcut-assertions.h>
+#include <glib-object.h>
 
-#endif /* __GCUTTER_H__ */
+G_BEGIN_DECLS
+
+void             gcut_init                      (void);
+void             gcut_value_equal_init          (void);
+
+void             gcut_quit                      (void);
+void             gcut_value_equal_quit          (void);
+
+
+G_END_DECLS
+
+#endif /* __GCUT_MAIN_H__ */
 
 /*
 vi:nowrap:ai:expandtab:sw=4

@@ -24,8 +24,6 @@
 
 G_BEGIN_DECLS
 
-void             gcut_value_equal_init          (void);
-
 gboolean         gcut_value_equal               (const GValue *value1,
                                                  const GValue *value2);
 

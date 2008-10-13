@@ -19,12 +19,18 @@ HFILE_GLOB =								\
 	$(top_srcdir)/cutter/cut-assertions.h				\
 	$(top_srcdir)/cutter/cut-test-utils.h				\
 	$(top_srcdir)/cutter/cut-multi-process.h			\
-	$(top_srcdir)/gcutter/gcutter.h					\
-	$(top_srcdir)/gcutter/gcut-assertions.h				\
-	$(top_srcdir)/gcutter/gcut-test-utils.h				\
 	$(top_srcdir)/cutter/cut-types.h				\
 	$(top_srcdir)/cutter/cut-experimental.h				\
 	$(top_srcdir)/cutter/cut-helper.h				\
+	$(top_srcdir)/gcutter/gcutter.h					\
+	$(top_srcdir)/gcutter/gcut-assertions.h				\
+	$(top_srcdir)/gcutter/gcut-test-utils.h				\
+	$(top_srcdir)/gcutter/gcut-enum.h				\
+	$(top_srcdir)/gcutter/gcut-error.h				\
+	$(top_srcdir)/gcutter/gcut-hash-table.h				\
+	$(top_srcdir)/gcutter/gcut-list.h				\
+	$(top_srcdir)/gcutter/gcut-object.h				\
+	$(top_srcdir)/gcutter/gcut-value-equal.h			\
 	$(top_srcdir)/gdkcutter-pixbuf/gdkcutter-pixbuf.h		\
 	$(top_srcdir)/gdkcutter-pixbuf/gdkcut-pixbuf.h			\
 	$(top_srcdir)/gdkcutter-pixbuf/gdkcut-pixbuf-assertions.h
