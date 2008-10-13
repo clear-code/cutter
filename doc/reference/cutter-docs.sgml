@@ -26,15 +26,21 @@
       <xi:include href="xml/cutter.xml"/>
       <xi:include href="xml/cut-assertions.xml"/>
       <xi:include href="xml/cut-test-utils.xml"/>
-      <xi:include href="xml/cut-multi-process.xml"/>
       <xi:include href="xml/gcut-assertions.xml"/>
       <xi:include href="xml/gcut-test-utils.xml"/>
       <xi:include href="xml/cut-types.xml"/>
+      <xi:include href="xml/cut-multi-process.xml"/>
       <xi:include href="xml/cut-experimental.xml"/>
     </chapter>
     <chapter id="writing-assertion">
       <title>Writing assertion</title>
       <xi:include href="xml/cut-helper.xml"/>
+      <xi:include href="xml/gcut-enum.xml"/>
+      <xi:include href="xml/gcut-error.xml"/>
+      <xi:include href="xml/gcut-hash-table.xml"/>
+      <xi:include href="xml/gcut-list.xml"/>
+      <xi:include href="xml/gcut-object.xml"/>
+      <xi:include href="xml/gcut-value-equal.xml"/>
     </chapter>
 <!--
     <chapter id="invoking">
