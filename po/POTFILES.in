@@ -1,4 +1,6 @@
 cutter/cut-analyzer.c
+cutter/cut-assertions-helper.c
+cutter/cut-backtrace-entry.c
 cutter/cut-contractor.c
 cutter/cut-diff.c
 cutter/cut-enum-types.c
@@ -7,6 +9,7 @@ cutter/cut-file-stream-reader.c
 cutter/cut-iterated-test.c
 cutter/cut-listener.c
 cutter/cut-loader.c
+cutter/cut-mach-o-loader.c
 cutter/cut-main.c
 cutter/cut-marshalers.c
 cutter/cut-module-factory-utils.c
@@ -40,9 +43,15 @@ cutter/cut-ui.c
 cutter/cut-utils.c
 cutter/cut-verbose-level.c
 cutter/main.c
+gcutter/gcut-assertions-helper.c
+gcutter/gcut-enum.c
+gcutter/gcut-error.c
 gcutter/gcut-hash-table.c
 gcutter/gcut-list.c
+gcutter/gcut-object.c
 gcutter/gcut-value-equal.c
+gdkcutter-pixbuf/gdkcut-pixbuf-assertions-helper.c
+gdkcutter-pixbuf/gdkcut-pixbuf.c
 module/report/cut-cairo-chart-data.c
 module/report/cut-cairo-pie-chart.c
 module/report/cut-cairo.c
