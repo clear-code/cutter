@@ -30,8 +30,7 @@
 typedef struct _EqualData
 {
     GHashTable *target;
-    GCompareDataFunc compare_func;
-    gpointer user_data;
+    GEqualFunc equal_func;
     gboolean equal;
 } EqualData;
 
@@ -47,7 +46,7 @@ equal_hash_table_pair (gpointer key, gpointer value, gpointer user_data)
         return;
     }
 
-    if (!data->compare_func(value, target_value, data->user_data)) {
+    if (!data->equal_func(value, target_value)) {
         data->equal = FALSE;
         return;
     }
@@ -55,7 +54,7 @@ equal_hash_table_pair (gpointer key, gpointer value, gpointer user_data)
 
 gboolean
 gcut_hash_table_equal (GHashTable *hash1, GHashTable *hash2,
-                       GCompareDataFunc compare_func, gpointer user_data)
+                       GEqualFunc equal_func)
 {
     EqualData data;
 
@@ -69,8 +68,7 @@ gcut_hash_table_equal (GHashTable *hash1, GHashTable *hash2,
         return FALSE;
 
     data.target = hash2;
-    data.compare_func = compare_func;
-    data.user_data = user_data;
+    data.equal_func = equal_func;
     data.equal = TRUE;
     g_hash_table_foreach(hash1, equal_hash_table_pair, &data);
 
@@ -128,7 +126,7 @@ gcut_hash_table_inspect (GHashTable *hash,
 }
 
 static gboolean
-equal_string (gconstpointer data1, gconstpointer data2, gpointer user_data)
+equal_string (gconstpointer data1, gconstpointer data2)
 {
     if (data1 == NULL && data2 == NULL)
         return TRUE;
@@ -142,7 +140,7 @@ equal_string (gconstpointer data1, gconstpointer data2, gpointer user_data)
 gboolean
 gcut_hash_table_string_equal (GHashTable *hash1, GHashTable *hash2)
 {
-    return gcut_hash_table_equal(hash1, hash2, equal_string, NULL);
+    return gcut_hash_table_equal(hash1, hash2, equal_string);
 }
 
 static void

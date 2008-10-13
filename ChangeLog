@@ -1,5 +1,7 @@
 2008-10-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/: document.
+
 	* gcutter/Makefile.am: add missing gcut-main.[ch].
 
 	* cutter/cut-main.c: use gcut-main.h not gcut-value-equal.h.

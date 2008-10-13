@@ -24,8 +24,45 @@
 
 G_BEGIN_DECLS
 
+/**
+ * SECTION: gcut-error
+ * @title: Assertion Utilities for #GError.
+ * @short_description: Utilities to write assertions related
+ * to #GError more easily.
+ *
+ * To write assertions, you need to check equality and show
+ * expected and actual values.
+ *
+ * The utilities help you to write assertions that are
+ * related to #GError.
+ */
+
+/**
+ * gcut_enum_equal:
+ * @error1: a #GError to be compared.
+ * @error2: a #GError to be compared.
+ *
+ * Compares two #GError, @enum1 and @enum2.
+ *
+ * Returns: TRUE if both of enum1 and enum2 have the same
+ * domain, code and message, FALSE otherwise.
+ *
+ * Since: 1.0.5
+ */
 gboolean  gcut_error_equal         (const GError *error1,
                                     const GError *error2);
+
+/**
+ * gcut_error_inspect:
+ * @error: a #GError value.
+ *
+ * Inspects @error. The returned string should be freed when
+ * no longer needed.
+ *
+ * Returns: inspected @error as a string.
+ *
+ * Since: 1.0.5
+ */
 gchar    *gcut_error_inspect       (const GError *error);
 
 G_END_DECLS

@@ -24,15 +24,78 @@
 
 G_BEGIN_DECLS
 
+/**
+ * SECTION: gcut-enum
+ * @title: Assertion Utilities for #GEnum and #GFlags.
+ * @short_description: Utilities to write assertions related
+ * to #GEnum or #GFlags more easily.
+ *
+ * To write assertions, you need to check equality and show
+ * expected and actual values.
+ *
+ * The utilities help you to write assertions that are
+ * related to #GEnum or #GFlags.
+ */
+
+/**
+ * gcut_enum_equal:
+ * @enum_type: a #GEnum type.
+ * @enum1: a #GEnum value to be compared.
+ * @enum2: a #GEnum value to be compared.
+ *
+ * Compares two @enum_type values, @enum1 and @enum2.
+ *
+ * Returns: TRUE if @enum1 == @enum2, FALSE otherwise.
+ *
+ * Since: 1.0.5
+ */
 gboolean         gcut_enum_equal                (GType enum_type,
                                                  gint  enum1,
                                                  gint  enum2);
+
+/**
+ * gcut_enum_inspect:
+ * @enum_type: a #GEnum type.
+ * @enum_value: a #GEnum value to be inspected.
+ *
+ * Inspects @enum_type value, @enum_value. The returned
+ * string should be freed when no longer needed.
+ *
+ * Returns: inspected @enum_value as a string.
+ *
+ * Since: 1.0.5
+ */
 gchar           *gcut_enum_inspect              (GType enum_type,
                                                  gint  enum_value);
 
+/**
+ * gcut_flags_equal:
+ * @flags_type: a #GFlags type.
+ * @flags1: a #GFlags value to be compared.
+ * @flags2: a #GFlags value to be compared.
+ *
+ * Compares two @flags_type values, @flags1 and @flags2.
+ *
+ * Returns: TRUE if @flags1 == @flags2, FALSE otherwise.
+ *
+ * Since: 1.0.5
+ */
 gboolean         gcut_flags_equal               (GType flags_type,
                                                  guint flags1,
                                                  guint flags2);
+
+/**
+ * gcut_flags_inspect:
+ * @flags_type: a #GFlags type.
+ * @flags_value: a #GFlags value to be inspected.
+ *
+ * Inspects @flags_type value, @flags_value. The returned
+ * string should be freed when no longer needed.
+ *
+ * Returns: inspected @flags_value as a string.
+ *
+ * Since: 1.0.5
+ */
 gchar           *gcut_flags_inspect             (GType flags_type,
                                                  guint flags);
 

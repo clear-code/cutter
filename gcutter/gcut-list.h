@@ -26,29 +26,195 @@
 
 G_BEGIN_DECLS
 
+/**
+ * SECTION: gcut-list
+ * @title: Assertion Utilities for #GList.
+ * @short_description: Utilities to write assertions related
+ * to #GList more easily.
+ *
+ * To write assertions, you need to check equality and show
+ * expected and actual values.
+ *
+ * The utilities help you to write assertions that are
+ * related to #GList.
+ */
+
+
+/**
+ * gcut_list_equal:
+ * @list1: a #GList to be compared.
+ * @list2: a #GList to be compared.
+ * @equal_func: a function that compares two values.
+ *
+ * Compares two #GList, @list1 and @list2. @equal_func is
+ * called for each values of @list1 and @list2.
+ *
+ * e.g.:
+ * |[
+ * TODO
+ * ]|
+ *
+ * Returns: TRUE if all corresponding values of @list1 and
+ * @list2 are reported TRUE by @equal_func, FALSE otherwise.
+ *
+ * Since: 1.0.5
+ */
 gboolean         gcut_list_equal                (const GList *list1,
                                                  const GList *list2,
                                                  GEqualFunc   equal_func);
+
+/**
+ * gcut_list_inspect:
+ * @list: a #GList to be inspected.
+ * @inspect_func: a function that inspects each value.
+ * @user_data: user data to pass to the function.
+ *
+ * Inspects @list. Each value of @list is inspected by
+ * @inspect_func. The returned string should be freed when
+ * no longer needed.
+ *
+ * e.g.:
+ * |[
+ * TODO
+ * ]|
+ *
+ * Returns: inspected @list as a string.
+ *
+ * Since: 1.0.5
+ */
 gchar           *gcut_list_inspect              (const GList *list,
                                                  GCutInspectFunc inspect_func,
                                                  gpointer user_data);
 
+/**
+ * gcut_list_int_equal:
+ * @list1: a #GList of #gint to be compared.
+ * @list2: a #GList of #gint to be compared.
+ *
+ * Compares two #GList, @list1 and @list2. @list1 and @list2
+ * should be #GList of #gint.
+ *
+ * Returns: TRUE if all corresponding integers of @list1 and
+ * @list2 are same value, FALSE otherwise.
+ *
+ * Since: 1.0.5
+ */
 gboolean         gcut_list_int_equal            (const GList *list1,
                                                  const GList *list2);
+
+/**
+ * gcut_list_int_inspect:
+ * @list: a #GList of #gint to be inspected.
+ *
+ * Inspects @list. @list should be #GList of #gint. The
+ * returned string should be freed when no longer needed.
+ *
+ * Returns: inspected @list as a string.
+ *
+ * Since: 1.0.5
+ */
 gchar           *gcut_list_int_inspect          (const GList *list);
 
+/**
+ * gcut_list_uint_equal:
+ * @list1: a #GList of #guint to be compared.
+ * @list2: a #GList of #guint to be compared.
+ *
+ * Compares two #GList, @list1 and @list2. @list1 and @list2
+ * should be #GList of #guint.
+ *
+ * Returns: TRUE if all corresponding unsigned integers of
+ * @list1 and @list2 are same value, FALSE otherwise.
+ *
+ * Since: 1.0.5
+ */
 gboolean         gcut_list_uint_equal           (const GList *list1,
                                                  const GList *list2);
+
+/**
+ * gcut_list_uint_inspect:
+ * @list: a #GList of #guint to be inspected.
+ *
+ * Inspects @list. @list should be #GList of #guint. The
+ * returned string should be freed when no longer needed.
+ *
+ * Returns: inspected @list as a string.
+ *
+ * Since: 1.0.5
+ */
 gchar           *gcut_list_uint_inspect         (const GList *list);
 
+/**
+ * gcut_list_string_equal:
+ * @list1: a #GList of string to be compared.
+ * @list2: a #GList of string to be compared.
+ *
+ * Compares two #GList, @list1 and @list2. @list1 and @list2
+ * should be #GList of string.
+ *
+ * Returns: TRUE if all corresponding string of @list1 and
+ * @list2 are same value, FALSE otherwise.
+ *
+ * Since: 1.0.5
+ */
 gboolean         gcut_list_string_equal         (const GList *list1,
                                                  const GList *list2);
+
+/**
+ * gcut_list_string_inspect:
+ * @list: a #GList of string to be inspected.
+ *
+ * Inspects @list. @list should be #GList of string. The
+ * returned string should be freed when no longer needed.
+ *
+ * Returns: inspected @list as a string.
+ *
+ * Since: 1.0.5
+ */
 gchar           *gcut_list_string_inspect       (const GList *list);
 
+/**
+ * gcut_list_object_inspect:
+ * @list: a #GList of #GObject to be inspected.
+ *
+ * Inspects @list. @list should be #GList of #GObject. The
+ * returned string should be freed when no longer needed.
+ *
+ * Returns: inspected @list as a string.
+ *
+ * Since: 1.0.5
+ */
 gchar           *gcut_list_object_inspect       (const GList *list);
 
+/**
+ * gcut_list_enum_inspect:
+ * @list: a #GList of enum value to be inspected.
+ * @type: a #GEnum type.
+ *
+ * Inspects @list. @list should be #GList of enum value of
+ * #GEnum. The returned string should be freed when no
+ * longer needed.
+ *
+ * Returns: inspected @list as a string.
+ *
+ * Since: 1.0.5
+ */
 gchar           *gcut_list_enum_inspect         (const GList *list,
                                                  GType        type);
+
+/**
+ * gcut_list_flags_inspect:
+ * @list: a #GList of flags value to be inspected.
+ * @type: a #GFlags type.
+ *
+ * Inspects @list. @list should be #GList of flags value of
+ * #GFlags. The returned string should be freed when no
+ * longer needed.
+ *
+ * Returns: inspected @list as a string.
+ *
+ * Since: 1.0.5
+ */
 gchar           *gcut_list_flags_inspect        (const GList *list,
                                                  GType        type);
 

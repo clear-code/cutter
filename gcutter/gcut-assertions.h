@@ -456,7 +456,7 @@ G_BEGIN_DECLS
 
 /**
  * gcut_assert_equal_enum:
- * @type: a GEnum type.
+ * @enum_type: a GEnum type.
  * @expected: an expected enum value.
  * @actual: an actual enum value.
  * @...: optional format string, followed by parameters to insert
@@ -474,18 +474,18 @@ G_BEGIN_DECLS
  *
  * Since: 1.0.5
  */
-#define gcut_assert_equal_enum(type, expected, actual, ...)             \
+#define gcut_assert_equal_enum(enum_type, expected, actual, ...)        \
     cut_trace_with_info_expression(                                     \
         gcut_assert_equal_enum_helper(get_current_test_context(),       \
-                                      type, expected, actual,           \
-                                      #type, #expected, #actual,        \
+                                      enum_type, expected, actual,      \
+                                      #enum_type, #expected, #actual,   \
                                       ## __VA_ARGS__, NULL),            \
-        gcut_assert_equal_enum(type, expected, actual,                  \
+        gcut_assert_equal_enum(enum_type, expected, actual,             \
                                ## __VA_ARGS__))
 
 /**
  * gcut_assert_equal_flags:
- * @type: a GFlags type.
+ * @flags_type: a GFlags type.
  * @expected: an expected flags value.
  * @actual: an actual flags value.
  * @...: optional format string, followed by parameters to insert
@@ -508,13 +508,14 @@ G_BEGIN_DECLS
  *
  * Since: 1.0.5
  */
-#define gcut_assert_equal_flags(type, expected, actual, ...)            \
+#define gcut_assert_equal_flags(flags_type, expected, actual, ...)      \
     cut_trace_with_info_expression(                                     \
         gcut_assert_equal_flags_helper(get_current_test_context(),      \
-                                       type, expected, actual,          \
-                                       #type, #expected, #actual,       \
+                                       flags_type, expected, actual,    \
+                                       #flags_type, #expected, #actual, \
                                        ## __VA_ARGS__, NULL),           \
-        gcut_assert_equal_flags(type, expected, actual, ## __VA_ARGS__))
+        gcut_assert_equal_flags(flags_type, expected, actual,           \
+                                ## __VA_ARGS__))
 
 /**
  * gcut_assert_equal_object:
