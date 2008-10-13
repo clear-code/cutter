@@ -548,6 +548,55 @@ gcut_assert_equal_object_helper (CutTestContext *test_context,
     }
 }
 
+void
+gcut_assert_equal_int64_helper (CutTestContext *test_context,
+                                gint64          expected,
+                                gint64          actual,
+                                const char     *expression_expected,
+                                const char     *expression_actual,
+                                const char     *user_message_format,
+                                ...)
+{
+    if (expected == actual) {
+        cut_test_pass_helper(test_context);
+    } else {
+        cut_test_fail_va_list_helper(
+            test_context,
+            cut_take_printf_helper(test_context,
+                                   "<%s == %s>\n"
+                                   "expected: <%" G_GINT64_FORMAT ">\n"
+                                   "  actual: <%" G_GINT64_FORMAT ">",
+                                   expression_expected,
+                                   expression_actual,
+                                   expected, actual),
+            user_message_format);
+    }
+}
+
+void
+gcut_assert_equal_uint64_helper (CutTestContext *test_context,
+                                 guint64         expected,
+                                 guint64         actual,
+                                 const char     *expression_expected,
+                                 const char     *expression_actual,
+                                 const char     *user_message_format,
+                                 ...)
+{
+    if (expected == actual) {
+        cut_test_pass_helper(test_context);
+    } else {
+        cut_test_fail_va_list_helper(
+            test_context,
+            cut_take_printf_helper(test_context,
+                                   "<%s == %s>\n"
+                                   "expected: <%" G_GUINT64_FORMAT ">\n"
+                                   "  actual: <%" G_GUINT64_FORMAT ">",
+                                   expression_expected,
+                                   expression_actual,
+                                   expected, actual),
+            user_message_format);
+    }
+}
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

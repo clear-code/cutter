@@ -1,5 +1,9 @@
 2008-10-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-assertions.h, gcutter/gcut-assertions-helper.[ch]:
+	add gcut_assert_equal_int64() and gcut_assert_equal_uint64().
+	* sample/glib/option.c: use gcut_assert_equal_int64().
+
 	* gcutter/: document.
 
 	* gcutter/Makefile.am: add missing gcut-main.[ch].

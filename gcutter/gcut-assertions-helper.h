@@ -147,6 +147,20 @@ void      gcut_assert_equal_object_helper   (CutTestContext *test_context,
                                              const gchar    *expression_equal_function,
                                              const gchar    *user_message_format,
                                              ...);
+void      gcut_assert_equal_int64_helper    (CutTestContext *test_context,
+                                             gint64          expected,
+                                             gint64          actual,
+                                             const char     *expression_expected,
+                                             const char     *expression_actual,
+                                             const char     *user_message_format,
+                                             ...);
+void      gcut_assert_equal_uint64_helper   (CutTestContext *test_context,
+                                             guint64         expected,
+                                             guint64         actual,
+                                             const char     *expression_expected,
+                                             const char     *expression_actual,
+                                             const char     *user_message_format,
+                                             ...);
 
 G_END_DECLS
 

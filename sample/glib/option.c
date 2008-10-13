@@ -423,8 +423,8 @@ test_arg_int64 (void)
   cut_assert (g_option_context_parse (context, &argc, &argv, &error));
 
   /* Last arg specified is the one that should be stored */
-  cut_assert_equal_int (G_GINT64_CONSTANT(4294967296), test_int64);
-  cut_assert_equal_int (G_GINT64_CONSTANT(0xfffffffff), test_int64_2);
+  gcut_assert_equal_int64 (G_GINT64_CONSTANT(4294967296), test_int64);
+  gcut_assert_equal_int64 (G_GINT64_CONSTANT(0xfffffffff), test_int64_2);
 }
 
 static gboolean

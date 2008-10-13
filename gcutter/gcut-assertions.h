@@ -593,6 +593,44 @@ G_BEGIN_DECLS
                                  ## __VA_ARGS__))
 
 
+/**
+ * gcut_assert_equal_int64:
+ * @expected: an expected 64 bit integer value. (gint64)
+ * @actual: an actual 64 bit integer value. (gint64)
+ * @...: optional format string, followed by parameters to insert
+ *       into the format string (as with printf())
+ *
+ * Passes if @expected == @actual.
+ *
+ * Since: 1.0.5
+ */
+#define gcut_assert_equal_int64(expected, actual, ...)                  \
+    cut_trace_with_info_expression(                                     \
+        gcut_assert_equal_int64_helper(get_current_test_context(),      \
+                                       (expected), (actual),            \
+                                       #expected, #actual,              \
+                                       ## __VA_ARGS__, NULL),           \
+        gcut_assert_equal_int64(expected, actual, ## __VA_ARGS__))
+
+/**
+ * gcut_assert_equal_uint64:
+ * @expected: an expected unsigned integer value. (guint64)
+ * @actual: an actual unsigned integer value. (guint64)
+ * @...: optional format string, followed by parameters to insert
+ *       into the format string (as with printf())
+ *
+ * Passes if @expected == @actual.
+ *
+ * Since: 1.0.5
+ */
+#define gcut_assert_equal_uint64(expected, actual, ...)                 \
+    cut_trace_with_info_expression(                                     \
+        gcut_assert_equal_uint64_helper(get_current_test_context(),     \
+                                        (expected), (actual),           \
+                                        #expected, #actual,             \
+                                        ## __VA_ARGS__, NULL),          \
+        gcut_assert_equal_uint64(expected, actual, ## __VA_ARGS__))
+
 G_END_DECLS
 
 #endif /* __GCUT_ASSERTIONS_H__ */
