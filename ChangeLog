@@ -1,5 +1,7 @@
 2008-10-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* sample/glib/option.c: pass "" not NULL.
+
 	* gcutter/gcut-enum.c: use G_GSIZE_FORMAT for formatting GType.
 
 	* sample/glib/: use gcutter.
