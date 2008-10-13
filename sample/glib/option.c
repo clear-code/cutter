@@ -157,7 +157,7 @@ error_post_parse_int (GOptionContext *context,
     error_test_post_parse_fail = TRUE;
 
   /* Set an error in the post hook */
-  g_set_error (error, G_OPTION_ERROR, G_OPTION_ERROR_BAD_VALUE, "");
+  g_set_error (error, G_OPTION_ERROR, G_OPTION_ERROR_BAD_VALUE, "XXX");
 
   return FALSE;
 }
@@ -214,7 +214,7 @@ error_test2_post_parse (GOptionContext *context,
     error_test_post_parse_fail = TRUE;
 
   /* Set an error in the post hook */
-  g_set_error (error, G_OPTION_ERROR, G_OPTION_ERROR_BAD_VALUE, "");
+  g_set_error (error, G_OPTION_ERROR, G_OPTION_ERROR_BAD_VALUE, "XXX");
 
   return FALSE;
 }
@@ -268,7 +268,7 @@ error_test3_post_parse (GOptionContext *context,
     error_test_post_parse_fail = TRUE;
 
   /* Set an error in the post hook */
-  g_set_error (error, G_OPTION_ERROR, G_OPTION_ERROR_BAD_VALUE, "");
+  g_set_error (error, G_OPTION_ERROR, G_OPTION_ERROR_BAD_VALUE, "XXX");
 
   return FALSE;
 }
