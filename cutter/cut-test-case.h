@@ -72,10 +72,6 @@ GType        cut_test_case_get_type       (void) G_GNUC_CONST;
 CutTestCase *cut_test_case_new            (const gchar *name,
                                            CutSetupFunction setup,
                                            CutTeardownFunction teardown,
-                                           CutGetCurrentTestContextFunction
-                                           get_current_test_context,
-                                           CutSetCurrentTestContextFunction
-                                           set_current_test_context,
                                            CutStartupFunction startup,
                                            CutShutdownFunction shutdown);
 CutTestCase *cut_test_case_new_empty      (void);
@@ -93,12 +89,6 @@ gboolean     cut_test_case_run_with_filter(CutTestCase   *test_case,
 void         cut_test_case_run_setup      (CutTestCase    *test_case,
                                            CutTestContext *test_context);
 void         cut_test_case_run_teardown   (CutTestCase    *test_case,
-                                           CutTestContext *test_context);
-
-CutTestContext *cut_test_case_get_current_test_context
-                                          (CutTestCase   *test_case);
-void         cut_test_case_set_current_test_context
-                                          (CutTestCase   *test_case,
                                            CutTestContext *test_context);
 
 G_END_DECLS

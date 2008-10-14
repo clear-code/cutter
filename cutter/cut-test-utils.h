@@ -51,8 +51,9 @@ extern "C" {
  *
  * Since: 1.0.5
  */
-#define cut_take(object, destroy_function)                              \
-    cut_take_helper(get_current_test_context(), (object), destroy_function)
+#define cut_take(object, destroy_function)              \
+    cut_take_helper(cut_get_current_test_context(),     \
+                    (object), destroy_function)
 
 /**
  * cut_take_memory:
@@ -65,8 +66,8 @@ extern "C" {
  *
  * Since: 1.0.5
  */
-#define cut_take_memory(memory)                                 \
-    cut_take_memory_helper(get_current_test_context(), (memory))
+#define cut_take_memory(memory)                                         \
+    cut_take_memory_helper(cut_get_current_test_context(), (memory))
 
 /**
  * cut_take_string:
@@ -78,7 +79,7 @@ extern "C" {
  * Returns: a string owned by Cutter. Don't free it.
  */
 #define cut_take_string(string)                                         \
-    cut_take_string_helper(get_current_test_context(), (string))
+    cut_take_string_helper(cut_get_current_test_context(), (string))
 
 /**
  * cut_take_strdup:
@@ -92,8 +93,8 @@ extern "C" {
  *
  * Since: 1.0.5
  */
-#define cut_take_strdup(string)                                 \
-    cut_take_strdup_helper(get_current_test_context(), (string))
+#define cut_take_strdup(string)                                         \
+    cut_take_strdup_helper(cut_get_current_test_context(), (string))
 
 /**
  * cut_take_strndup:
@@ -109,8 +110,8 @@ extern "C" {
  *
  * Since: 1.0.5
  */
-#define cut_take_strndup(string, size)                          \
-    cut_test_context_take_strndup(get_current_test_context(),   \
+#define cut_take_strndup(string, size)                                  \
+    cut_test_context_take_strndup(cut_get_current_test_context(),       \
                                   (string), (size))
 
 /**
@@ -127,7 +128,7 @@ extern "C" {
  * Since: 1.0.5
  */
 #define cut_take_memdup(memory, size)                                   \
-    cut_test_context_take_memdup(get_current_test_context(),            \
+    cut_test_context_take_memdup(cut_get_current_test_context(),        \
                                  (memory), (size))
 
 /**
@@ -140,8 +141,8 @@ extern "C" {
  *
  * Returns: a formatted string owned by Cutter. Don't free it.
  */
-#define cut_take_printf(format, ...)                                    \
-    cut_take_printf_helper(get_current_test_context(),                  \
+#define cut_take_printf(format, ...)                            \
+    cut_take_printf_helper(cut_get_current_test_context(),      \
                            format, __VA_ARGS__)
 
 /**
@@ -155,7 +156,8 @@ extern "C" {
  * Returns: an array of strings owned by Cutter. Don't free it.
  */
 #define cut_take_string_array(strings)                                  \
-    cut_test_context_take_string_array(get_current_test_context(), (strings))
+    cut_test_context_take_string_array(cut_get_current_test_context(),  \
+                                       (strings))
 
 /**
  * cut_take_diff:
@@ -184,7 +186,7 @@ extern "C" {
  * Since: 1.0.3
  */
 #define cut_append_diff(message, from, to)                      \
-    cut_append_diff_helper(get_current_test_context(),          \
+    cut_append_diff_helper(cut_get_current_test_context(),      \
                            message, from, to)
 
 /**
@@ -195,8 +197,8 @@ extern "C" {
  *
  * Returns: a inspected string. Don't free it.
  */
-#define cut_inspect_string_array(strings)                       \
-    cut_inspect_string_array_helper(get_current_test_context(), \
+#define cut_inspect_string_array(strings)                               \
+    cut_inspect_string_array_helper(cut_get_current_test_context(),     \
                                     (strings))
 
 /**
@@ -212,7 +214,7 @@ extern "C" {
 #define cut_set_fixture_data_dir(path, ...) do  \
 {                                               \
     cut_test_context_set_fixture_data_dir(      \
-        get_current_test_context(),             \
+        cut_get_current_test_context(),         \
         path, ## __VA_ARGS__, NULL);            \
 } while (0)
 
@@ -231,9 +233,10 @@ extern "C" {
  *
  * Since: 1.0.2
  */
-#define cut_build_fixture_data_path(path, ...)                          \
-    cut_test_context_build_fixture_data_path(get_current_test_context(), \
-                                             path, ## __VA_ARGS__, NULL)
+#define cut_build_fixture_data_path(path, ...)  \
+    cut_test_context_build_fixture_data_path(   \
+        cut_get_current_test_context(),         \
+        path, ## __VA_ARGS__, NULL)
 
 /**
  * cut_get_fixture_data_string:
@@ -250,7 +253,7 @@ extern "C" {
  * Since: 1.0.2
  */
 #define cut_get_fixture_data_string(path, ...)                          \
-    cut_utils_get_fixture_data_string(get_current_test_context(),       \
+    cut_utils_get_fixture_data_string(cut_get_current_test_context(),   \
                                       path, ## __VA_ARGS__, NULL)
 
 /**

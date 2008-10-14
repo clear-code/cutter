@@ -25,6 +25,7 @@ extern "C" {
 #endif
 
 #include <stdarg.h>
+#include <stdlib.h>
 
 #include <cutter/cut-types.h>
 #include <cutter/cut-macros.h>
@@ -43,14 +44,8 @@ typedef enum {
     CUT_TEST_RESULT_LAST
 } CutTestResultStatus;
 
-typedef struct _CutTestContextKey CutTestContextKey;
-struct _CutTestContextKey {
-    int unused;
-};
-
-void            cut_test_context_current_set(CutTestContextKey *key,
-                                             CutTestContext *context);
-CutTestContext *cut_test_context_current_get(CutTestContextKey *key);
+void            cut_test_context_current_set(CutTestContext *context);
+CutTestContext *cut_test_context_current_get(void);
 
 void  cut_test_context_pass_assertion       (CutTestContext *context);
 void  cut_test_context_register_result      (CutTestContext *context,

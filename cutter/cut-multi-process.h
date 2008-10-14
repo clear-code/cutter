@@ -107,7 +107,7 @@ typedef struct _CutSubProcessGroup CutSubProcessGroup;
  */
 #define cut_take_new_sub_process(test_directory)                       \
     cut_utils_take_new_sub_process(test_directory,                     \
-                                   get_current_test_context())
+                                   cut_get_current_test_context())
 
 /**
  * cut_sub_process_run:
@@ -475,7 +475,7 @@ void           cut_sub_process_set_fatal_failures (CutSubProcess  *sub_process,
  * Since: 1.0.4
  */
 #define cut_take_new_sub_process_group()                                \
-    cut_utils_take_new_sub_process_group(get_current_test_context())
+    cut_utils_take_new_sub_process_group(cut_get_current_test_context())
 
 /**
  * cut_sub_process_group_add:

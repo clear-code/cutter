@@ -29,7 +29,6 @@ setup (void)
     test_suite = cut_test_suite_new_empty();
     test_case = cut_test_case_new("my-test-case",
                                   NULL, NULL,
-                                  NULL, NULL,
                                   NULL, NULL);
     test_iterator = cut_test_iterator_new("my-test-iterator", NULL, NULL);
     test = cut_test_new("my-test", NULL);

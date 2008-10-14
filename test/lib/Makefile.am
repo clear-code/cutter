@@ -19,6 +19,11 @@ LIBS =						\
 	$(top_builddir)/cutter/libcutter.la	\
 	$(GLIB_LIBS)
 
+AM_LDFLAGS =                    \
+        -rpath `pwd`/.libs      \
+        -avoid-version          \
+        -no-undefined
+
 libcuttest_utils_la_SOURCES = 		\
 	cuttest-utils.c			\
 	cuttest-utils.h			\

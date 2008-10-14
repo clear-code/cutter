@@ -101,11 +101,11 @@ run (void)
     cut_test_context_set_fixture_data_dir(test_context,
                                           cuttest_get_base_dir(),
                                           "fixtures", "assertions", NULL);
-    original_test_context = get_current_test_context();
-    set_current_test_context(test_context);
+    original_test_context = cut_get_current_test_context();
+    cut_set_current_test_context(test_context);
     success = cut_test_runner_run_test(CUT_TEST_RUNNER(run_context),
                                        test, test_context);
-    set_current_test_context(original_test_context);
+    cut_set_current_test_context(original_test_context);
 
     return success;
 }

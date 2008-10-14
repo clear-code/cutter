@@ -120,8 +120,6 @@ setup (void)
     test_object = cut_test_case_new("stub test case",
                                     stub_setup_function,
                                     stub_teardown_function,
-                                    get_current_test_context,
-                                    set_current_test_context,
                                     NULL, NULL);
     cuttest_add_test(test_object, "stub_test_1", stub_test_function1);
     cuttest_add_test(test_object, "stub_test_2", stub_test_function2);

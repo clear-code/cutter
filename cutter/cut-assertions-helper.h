@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2008  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -32,7 +32,7 @@ extern "C" {
 
 #define cut_test_register_result(status, message, ...) do               \
 {                                                                       \
-    cut_test_context_register_result(get_current_test_context(),        \
+    cut_test_context_register_result(cut_get_current_test_context(),    \
                                      CUT_TEST_RESULT_ ## status,        \
                                      message, ## __VA_ARGS__, NULL);    \
 } while (0)
@@ -54,7 +54,7 @@ extern "C" {
 #define cut_test_terminate(status, message, ...) do                 \
 {                                                                   \
     cut_test_register_result(status, message, ## __VA_ARGS__);      \
-    cut_test_context_long_jump(get_current_test_context());         \
+    cut_test_context_long_jump(cut_get_current_test_context());     \
 } while (0)
 
 #define cut_test_fail_va_list_helper(test_context,                      \

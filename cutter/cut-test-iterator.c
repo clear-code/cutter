@@ -256,7 +256,7 @@ run_test_without_thread (gpointer data, gpointer user_data)
     if (cut_run_context_is_canceled(run_context))
         return;
 
-    cut_test_case_set_current_test_context(test_case, test_context);
+    cut_test_context_current_set(test_context);
 
     g_signal_emit_by_name(test_iterator, "start-iterated-test",
                           iterated_test, test_context);
@@ -278,7 +278,7 @@ run_test_without_thread (gpointer data, gpointer user_data)
 
     cut_test_context_set_test(test_context, NULL);
     cut_test_context_set_test(parent_test_context, NULL);
-    cut_test_case_set_current_test_context(test_case, original_test_context);
+    cut_test_context_current_set(original_test_context);
 
     g_object_unref(run_context);
     g_object_unref(test_case);
@@ -324,7 +324,7 @@ run_test_with_thread_support (CutTestIterator *test_iterator,
     cut_test_context_set_data(local_test_context,
                               cut_iterated_test_get_data(iterated_test));
 
-    original_test_context = cut_test_case_get_current_test_context(test_case);
+    original_test_context = cut_test_context_current_get();
 
     cut_test_context_set_test(test_context, test);
     cut_test_context_set_test(local_test_context, test);

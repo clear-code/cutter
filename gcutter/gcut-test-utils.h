@@ -50,7 +50,8 @@ G_BEGIN_DECLS
  * Since: 1.0.3
  */
 #define gcut_take_object(object)                                        \
-    cut_test_context_take_g_object(get_current_test_context(), (object))
+    cut_test_context_take_g_object(cut_get_current_test_context(),      \
+                                   (object))
 
 /**
  * gcut_take_error:
@@ -65,7 +66,8 @@ G_BEGIN_DECLS
  * Since: 1.0.3
  */
 #define gcut_take_error(error)                                          \
-    cut_test_context_take_g_error(get_current_test_context(), (error))
+    cut_test_context_take_g_error(cut_get_current_test_context(),       \
+                                  (error))
 
 /**
  * gcut_take_list:
@@ -82,7 +84,7 @@ G_BEGIN_DECLS
  * Since: 1.0.3
  */
 #define gcut_take_list(list, destroy_function)                          \
-    cut_test_context_take_g_list(get_current_test_context(),            \
+    cut_test_context_take_g_list(cut_get_current_test_context(),        \
                                  (list), (destroy_function))
 
 /**
@@ -98,7 +100,7 @@ G_BEGIN_DECLS
  * Since: 1.0.4
  */
 #define gcut_take_hash_table(hash_table)                                \
-    cut_test_context_take_g_hash_table(get_current_test_context(),      \
+    cut_test_context_take_g_hash_table(cut_get_current_test_context(),  \
                                        (hash_table))
 
 /**

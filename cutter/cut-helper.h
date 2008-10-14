@@ -20,7 +20,6 @@
 #ifndef __CUT_HELPER_H__
 #define __CUT_HELPER_H__
 
-#include <cutter/cut-declare-helper.h>
 #include <cutter.h>
 
 #ifdef __cplusplus
@@ -127,8 +126,8 @@ extern "C" {
  *
  * Since: 1.0.5
  */
-#define cut_test_pass()                                 \
-    cut_test_pass_helper(get_current_test_context())
+#define cut_test_pass()                                         \
+    cut_test_pass_helper(cut_get_current_test_context())
 
 /**
  * cut_test_fail:
@@ -175,7 +174,7 @@ extern "C" {
  * Since: 1.0.5
  */
 #define cut_test_fail_va_list(system_message, user_message_format)      \
-    cut_test_fail_va_list_helper(get_current_test_context(),            \
+    cut_test_fail_va_list_helper(cut_get_current_test_context(),        \
                                  system_message, user_message_format)
 
 /**
@@ -238,16 +237,16 @@ extern "C" {
  *
  * Since: 1.0.5
  */
-#define cut_trace(expression) do                                \
-{                                                               \
-    cut_test_context_push_backtrace(get_current_test_context(), \
-                                    __FILE__, __LINE__,         \
-                                    __PRETTY_FUNCTION__,        \
-                                    #expression);               \
-    do {                                                        \
-        expression;                                             \
-    } while (0);                                                \
-    cut_test_context_pop_backtrace(get_current_test_context()); \
+#define cut_trace(expression) do                                        \
+{                                                                       \
+    cut_test_context_push_backtrace(cut_get_current_test_context(),     \
+                                    __FILE__, __LINE__,                 \
+                                    __PRETTY_FUNCTION__,                \
+                                    #expression);                       \
+    do {                                                                \
+        expression;                                                     \
+    } while (0);                                                        \
+    cut_test_context_pop_backtrace(cut_get_current_test_context());     \
 } while (0)
 
 /**
@@ -307,14 +306,14 @@ extern "C" {
  */
 #define cut_trace_with_info_expression(expression, info_expression) do  \
 {                                                                       \
-    cut_test_context_push_backtrace(get_current_test_context(),         \
+    cut_test_context_push_backtrace(cut_get_current_test_context(),     \
                                     __FILE__, __LINE__,                 \
                                     __PRETTY_FUNCTION__,                \
                                     #info_expression);                  \
     do {                                                                \
         expression;                                                     \
     } while (0);                                                        \
-    cut_test_context_pop_backtrace(get_current_test_context());         \
+    cut_test_context_pop_backtrace(cut_get_current_test_context());     \
 } while (0)
 
 

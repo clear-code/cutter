@@ -42,8 +42,6 @@ typedef void    (*CutTestFunction)     (void);
 typedef void    (*CutAttributesSetupFunction)(void);
 typedef void    (*CutSetupFunction)    (void);
 typedef void    (*CutTeardownFunction) (void);
-typedef CutTestContext *(*CutGetCurrentTestContextFunction) (void);
-typedef void            (*CutSetCurrentTestContextFunction) (CutTestContext *context);
 
 struct _CutTest
 {

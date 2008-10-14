@@ -119,16 +119,16 @@ test_sort_test_cases (void)
 {
     test_cases = g_list_append(test_cases,
                                cut_test_case_new("abc", NULL, NULL,
-                                                 NULL, NULL, NULL, NULL));
+                                                 NULL, NULL));
     test_cases = g_list_append(test_cases,
                                cut_test_case_new("xyz", NULL, NULL,
-                                                 NULL, NULL, NULL, NULL));
+                                                 NULL, NULL));
     test_cases = g_list_append(test_cases,
                                cut_test_case_new("123", NULL, NULL,
-                                                 NULL, NULL, NULL, NULL));
+                                                 NULL, NULL));
     test_cases = g_list_append(test_cases,
                                cut_test_case_new("XYZ", NULL, NULL,
-                                                 NULL, NULL, NULL, NULL));
+                                                 NULL, NULL));
 
     expected_names = g_strsplit("abc xyz 123 XYZ", " ", -1);
     actual_names = collect_test_case_names(test_cases);
@@ -160,11 +160,7 @@ void
 test_n_ (void)
 {
     test_case = cut_test_case_new("stub test case",
-                                  NULL,
-                                  NULL,
-                                  get_current_test_context,
-                                  set_current_test_context,
-                                  NULL, NULL);
+                                  NULL, NULL, NULL, NULL);
     cuttest_add_test(test_case, "test_1", stub_success_function);
     cuttest_add_test(test_case, "test_2", stub_failure_function);
     cuttest_add_test(test_case, "test_3", stub_omit_function);
@@ -244,11 +240,7 @@ test_ready_signal (void)
     suite = cut_test_suite_new_empty();
 
     test_case = cut_test_case_new("stub test case",
-                                  NULL,
-                                  NULL,
-                                  get_current_test_context,
-                                  set_current_test_context,
-                                  NULL, NULL);
+                                  NULL, NULL, NULL, NULL);
     cuttest_add_test(test_case, "test_1", stub_success_function);
     cut_test_suite_add_test_case(suite, test_case);
     g_object_unref(test_case);

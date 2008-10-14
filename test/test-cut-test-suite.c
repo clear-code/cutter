@@ -127,8 +127,6 @@ setup (void)
     g_object_unref(test_case);
 
     test_case = cut_test_case_new("stub-test-case", NULL, NULL,
-                                  get_current_test_context,
-                                  set_current_test_context,
                                   NULL, NULL);
     cuttest_add_test(test_case, "stub_test_1", stub_test_function1);
     cuttest_add_test(test_case, "stub_test_2", stub_test_function2);
@@ -137,8 +135,6 @@ setup (void)
     g_object_unref(test_case);
 
     test_case = cut_test_case_new("stock-test-case", NULL, NULL,
-                                  get_current_test_context,
-                                  set_current_test_context,
                                   NULL, NULL);
     cuttest_add_test(test_case, "stock_test_1", stock_test_function1);
     cuttest_add_test(test_case, "stock_test_2", stock_test_function2);
@@ -156,18 +152,18 @@ teardown (void)
     g_object_unref(run_context);
 }
 
-#define KEEP_TEST_CONTEXT_BEGIN do                      \
-{                                                       \
-    CutTestContext *current_test_context;               \
-                                                        \
-    current_test_context = get_current_test_context();  \
-    g_object_ref(current_test_context);                 \
+#define KEEP_TEST_CONTEXT_BEGIN do                              \
+{                                                               \
+    CutTestContext *current_test_context;                       \
+                                                                \
+    current_test_context = cut_get_current_test_context();      \
+    g_object_ref(current_test_context);                         \
     do
 
-#define KEEP_TEST_CONTEXT_END                           \
-     while (0);                                         \
-    set_current_test_context(current_test_context);     \
-    g_object_unref(current_test_context);               \
+#define KEEP_TEST_CONTEXT_END                                   \
+     while (0);                                                 \
+    cut_set_current_test_context(current_test_context);         \
+    g_object_unref(current_test_context);                       \
 } while (0);
 
 static gboolean
@@ -366,10 +362,7 @@ test_crashed_signal (void)
 {
     CutTestCase *test_case;
 
-    test_case = cut_test_case_new("crash_test_case", NULL, NULL,
-                                  get_current_test_context,
-                                  set_current_test_context,
-                                  NULL, NULL);
+    test_case = cut_test_case_new("crash_test_case", NULL, NULL, NULL, NULL);
     cuttest_add_test(test_case, "crash_test", stub_crashed_function);
     cut_test_suite_add_test_case(test_object, test_case);
     g_object_unref(test_case);

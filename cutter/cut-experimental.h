@@ -56,7 +56,7 @@ extern "C" {
  * Since: 0.8
  */
 #define cut_fork()                                              \
-    cut_test_context_trap_fork(get_current_test_context())
+    cut_test_context_trap_fork(cut_get_current_test_context())
 
 /**
  * cut_wait_process:
@@ -82,8 +82,8 @@ extern "C" {
  *
  * Since: 0.8
  */
-#define cut_wait_process(pid, usec_timeout)                     \
-    cut_test_context_wait_process(get_current_test_context(),   \
+#define cut_wait_process(pid, usec_timeout)                         \
+    cut_test_context_wait_process(cut_get_current_test_context(),   \
                                   pid, usec_timeout)
 
 /**
@@ -112,7 +112,8 @@ extern "C" {
  * Since: 0.8
  */
 #define cut_fork_get_stdout_message(pid)                            \
-    cut_test_context_get_forked_stdout_message(get_current_test_context(), pid)
+    cut_test_context_get_forked_stdout_message(                     \
+        cut_get_current_test_context(), pid)
 
 /**
  * cut_fork_get_stderr_message:
@@ -140,7 +141,8 @@ extern "C" {
  * Since: 0.8
  */
 #define cut_fork_get_stderr_message(pid)                            \
-    cut_test_context_get_forked_stderr_message(get_current_test_context(), pid)
+    cut_test_context_get_forked_stderr_message(                     \
+        cut_get_current_test_context(), pid)
 
 #ifdef __cplusplus
 }

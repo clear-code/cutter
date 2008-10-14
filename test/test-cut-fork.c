@@ -66,16 +66,16 @@ run (void)
     gboolean success, is_multi_thread;
     CutTestContext *original_test_context;
 
-    original_test_context = get_current_test_context();
+    original_test_context = cut_get_current_test_context();
     test_context = cut_test_context_new(run_context, NULL, NULL, NULL, test);
 
     is_multi_thread = cut_test_context_is_multi_thread(original_test_context);
     cut_run_context_set_multi_thread(run_context, is_multi_thread);
     cut_test_context_set_multi_thread(test_context, is_multi_thread);
 
-    set_current_test_context(test_context);
+    cut_set_current_test_context(test_context);
     success = cut_test_run(test, test_context, run_context);
-    set_current_test_context(original_test_context);
+    cut_set_current_test_context(original_test_context);
 
     return success;
 }
@@ -133,7 +133,7 @@ test_fail_in_forked_process (void)
                                          G_CALLBACK(cb_collect_message),
                                          &omission_message);
 
-    if (cut_test_context_is_multi_thread(get_current_test_context())) {
+    if (cut_test_context_is_multi_thread(cut_get_current_test_context())) {
         cut_assert_equal_string(NULL, failure_message);
         cut_assert_equal_string(NULL, notification_message);
         cut_assert_equal_string("can't use cut_fork() in multi thread mode",

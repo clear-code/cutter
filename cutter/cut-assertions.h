@@ -51,7 +51,7 @@ extern "C" {
  */
 #define cut_assert(expression, ...)                                     \
     cut_trace_with_info_expression(                                     \
-        cut_assert_helper(get_current_test_context(),                   \
+        cut_assert_helper(cut_get_current_test_context(),               \
                           (expression) ? CUT_TRUE : CUT_FALSE,          \
                           #expression, ## __VA_ARGS__, NULL),           \
         cut_assert(expression, ## __VA_ARGS__))
@@ -68,7 +68,7 @@ extern "C" {
  */
 #define cut_assert_true(expression, ...)                                \
     cut_trace_with_info_expression(                                     \
-        cut_assert_true_helper(get_current_test_context(),              \
+        cut_assert_true_helper(cut_get_current_test_context(),          \
                                (expression) ? CUT_TRUE : CUT_FALSE,     \
                                #expression, ## __VA_ARGS__, NULL),      \
         cut_assert_true(expression, ## __VA_ARGS__))
@@ -85,7 +85,7 @@ extern "C" {
  */
 #define cut_assert_false(expression, ...)                               \
     cut_trace_with_info_expression(                                     \
-        cut_assert_false_helper(get_current_test_context(),             \
+        cut_assert_false_helper(cut_get_current_test_context(),         \
                                 (expression) ? CUT_TRUE : CUT_FALSE,    \
                                 #expression, ## __VA_ARGS__, NULL),     \
         cut_assert_false(expression, ## __VA_ARGS__))
@@ -100,7 +100,7 @@ extern "C" {
  */
 #define cut_assert_null(expression, ...)                                \
     cut_trace_with_info_expression(                                     \
-        cut_assert_null_helper(get_current_test_context(),              \
+        cut_assert_null_helper(cut_get_current_test_context(),          \
                                (expression),                            \
                                #expression, ## __VA_ARGS__, NULL),      \
         cut_assert_null(expression, ## __VA_ARGS__))
@@ -117,7 +117,7 @@ extern "C" {
  */
 #define cut_assert_null_string(expression, ...)                         \
     cut_trace_with_info_expression(                                     \
-        cut_assert_null_string_helper(get_current_test_context(),       \
+        cut_assert_null_string_helper(cut_get_current_test_context(),   \
                                       (expression),                     \
                                       #expression,                      \
                                       ## __VA_ARGS__, NULL),            \
@@ -131,12 +131,12 @@ extern "C" {
  *
  * Passes if @expression is not NULL.
  */
-#define cut_assert_not_null(expression, ...)                    \
-    cut_trace_with_info_expression(                             \
-        cut_assert_not_null_helper(get_current_test_context(),  \
-                                   (expression),                \
-                                   #expression,                 \
-                                   ## __VA_ARGS__, NULL),       \
+#define cut_assert_not_null(expression, ...)                            \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_not_null_helper(cut_get_current_test_context(),      \
+                                   (expression),                        \
+                                   #expression,                         \
+                                   ## __VA_ARGS__, NULL),               \
         cut_assert_not_null(expression, ## __VA_ARGS__))
 
 /**
@@ -148,12 +148,12 @@ extern "C" {
  *
  * Passes if @expected == @actual.
  */
-#define cut_assert_equal_int(expected, actual, ...)             \
-    cut_trace_with_info_expression(                             \
-        cut_assert_equal_int_helper(get_current_test_context(), \
-                                    (expected), (actual),       \
-                                    #expected, #actual,         \
-                                    ## __VA_ARGS__, NULL),      \
+#define cut_assert_equal_int(expected, actual, ...)                     \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_equal_int_helper(cut_get_current_test_context(),     \
+                                    (expected), (actual),               \
+                                    #expected, #actual,                 \
+                                    ## __VA_ARGS__, NULL),              \
         cut_assert_equal_int(expected, actual, ## __VA_ARGS__))
 
 /**
@@ -167,7 +167,7 @@ extern "C" {
  */
 #define cut_assert_equal_uint(expected, actual, ...)                    \
     cut_trace_with_info_expression(                                     \
-        cut_assert_equal_uint_helper(get_current_test_context(),        \
+        cut_assert_equal_uint_helper(cut_get_current_test_context(),    \
                                      (expected), (actual),              \
                                      #expected, #actual,                \
                                      ## __VA_ARGS__, NULL),             \
@@ -185,7 +185,7 @@ extern "C" {
  */
 #define cut_assert_equal_double(expected, error, actual, ...)           \
     cut_trace_with_info_expression(                                     \
-        cut_assert_equal_double_helper(get_current_test_context(),      \
+        cut_assert_equal_double_helper(cut_get_current_test_context(),  \
                                        (expected), (error), (actual),   \
                                        #expected, #error, #actual,      \
                                        ## __VA_ARGS__, NULL),           \
@@ -204,7 +204,7 @@ extern "C" {
  */
 #define cut_assert_equal_string(expected, actual, ...)                  \
     cut_trace_with_info_expression(                                     \
-        cut_assert_equal_string_helper(get_current_test_context(),      \
+        cut_assert_equal_string_helper(cut_get_current_test_context(),  \
                                        expected, actual,                \
                                        #expected, #actual,              \
                                        ## __VA_ARGS__, NULL),           \
@@ -224,7 +224,7 @@ extern "C" {
  */
 #define cut_assert_equal_string_with_free(expected, actual, ...)        \
     cut_trace_with_info_expression(                                     \
-        cut_assert_equal_string_helper(get_current_test_context(),      \
+        cut_assert_equal_string_helper(cut_get_current_test_context(),  \
                                        expected,                        \
                                        cut_take_string(actual),         \
                                        #expected, #actual,              \
@@ -268,7 +268,7 @@ extern "C" {
 #define cut_assert_equal_memory(expected, expected_size,                \
                                 actual, actual_size, ...)               \
     cut_trace_with_info_expression(                                     \
-        cut_assert_equal_memory_helper(get_current_test_context(),      \
+        cut_assert_equal_memory_helper(cut_get_current_test_context(),  \
                                        expected, expected_size,         \
                                        actual, actual_size,             \
                                        #expected, #expected_size,       \
@@ -290,7 +290,7 @@ extern "C" {
 #define cut_assert_equal_string_array(expected, actual, ...)            \
     cut_trace_with_info_expression(                                     \
         cut_assert_equal_string_array_helper(                           \
-            get_current_test_context(),                                 \
+            cut_get_current_test_context(),                             \
             expected, actual, #expected, #actual,                       \
             ## __VA_ARGS__, NULL),                                      \
         cut_assert_equal_string_array(expected, actual, ## __VA_ARGS__))
@@ -310,7 +310,7 @@ extern "C" {
 #define cut_assert_equal_string_array_with_free(expected, actual, ...)  \
     cut_trace_with_info_expression(                                     \
         cut_assert_equal_string_array_helper(                           \
-            get_current_test_context(),                                 \
+            cut_get_current_test_context(),                             \
             expected,                                                   \
             cut_take_string_array(actual),                              \
             #expected, #actual,                                         \
@@ -335,7 +335,7 @@ extern "C" {
  */
 #define cut_assert_operator(lhs, operator, rhs, ...)                    \
     cut_trace_with_info_expression(                                     \
-        cut_assert_operator_helper(get_current_test_context(),          \
+        cut_assert_operator_helper(cut_get_current_test_context(),      \
                                    ((lhs) operator (rhs)),              \
                                    #lhs, #operator, #rhs,               \
                                    ## __VA_ARGS__, NULL),               \
@@ -361,7 +361,7 @@ extern "C" {
     long _lhs = (lhs);                                                  \
     long _rhs = (rhs);                                                  \
     cut_trace_with_info_expression(                                     \
-        cut_assert_operator_int_helper(get_current_test_context(),      \
+        cut_assert_operator_int_helper(cut_get_current_test_context(),  \
                                        (_lhs operator _rhs),            \
                                        _lhs, _rhs,                      \
                                        #lhs, #operator, #rhs,           \
@@ -391,12 +391,14 @@ extern "C" {
     double _lhs = (lhs);                                                \
     double _rhs = (rhs);                                                \
     cut_trace_with_info_expression(                                     \
-        cut_assert_operator_double_helper(get_current_test_context(),   \
-                                       (_lhs operator _rhs),            \
-                                       _lhs, _rhs,                      \
-                                       #lhs, #operator, #rhs,           \
-                                       ## __VA_ARGS__, NULL),           \
-        cut_assert_operator_double(lhs, operator, rhs, ## __VA_ARGS__));\
+        cut_assert_operator_double_helper(                              \
+            cut_get_current_test_context(),                             \
+            (_lhs operator _rhs),                                       \
+            _lhs, _rhs,                                                 \
+            #lhs, #operator, #rhs,                                      \
+            ## __VA_ARGS__, NULL),                                      \
+        cut_assert_operator_double(lhs, operator, rhs,                  \
+                                   ## __VA_ARGS__));                    \
 } while(0)
 
 /**
@@ -416,7 +418,7 @@ extern "C" {
  */
 #define cut_assert_equal(function, expected, actual, ...)               \
     cut_trace_with_info_expression(                                     \
-        cut_assert_equal_helper(get_current_test_context(),             \
+        cut_assert_equal_helper(cut_get_current_test_context(),         \
                                 function(expected, actual),             \
                                 #function, #expected, #actual,          \
                                 ## __VA_ARGS__, NULL),                  \
@@ -439,7 +441,7 @@ extern "C" {
  */
 #define cut_assert_errno(...)                                           \
     cut_trace_with_info_expression(                                     \
-        cut_assert_errno_helper(get_current_test_context(),             \
+        cut_assert_errno_helper(cut_get_current_test_context(),         \
                                 ## __VA_ARGS__, NULL),                  \
         cut_assert_errno(__VA_ARGS__))
 
@@ -485,7 +487,7 @@ extern "C" {
  */
 #define cut_assert_path_exist(path, ...)                                \
     cut_trace_with_info_expression(                                     \
-        cut_assert_path_exist_helper(get_current_test_context(),        \
+        cut_assert_path_exist_helper(cut_get_current_test_context(),    \
                                      path, #path,                       \
                                      ## __VA_ARGS__, NULL),             \
         cut_assert_path_exist(path, ## __VA_ARGS__))
@@ -506,11 +508,12 @@ extern "C" {
  *
  * Since: 1.0.2
  */
-#define cut_assert_path_not_exist(path, ...)                            \
-    cut_trace_with_info_expression(                                     \
-        cut_assert_path_not_exist_helper(get_current_test_context(),    \
-                                         path, #path,                   \
-                                         ## __VA_ARGS__, NULL),         \
+#define cut_assert_path_not_exist(path, ...)                    \
+    cut_trace_with_info_expression(                             \
+        cut_assert_path_not_exist_helper(                       \
+            cut_get_current_test_context(),                     \
+            path, #path,                                        \
+            ## __VA_ARGS__, NULL),                              \
         cut_assert_path_not_exist(path, ## __VA_ARGS__))
 
 /**
@@ -532,7 +535,7 @@ extern "C" {
  */
 #define cut_assert_match(pattern, actual, ...)                          \
     cut_trace_with_info_expression(                                     \
-        cut_assert_match_helper(get_current_test_context(),             \
+        cut_assert_match_helper(cut_get_current_test_context(),         \
                                 pattern, actual, #pattern, #actual,     \
                                 ## __VA_ARGS__, NULL),                  \
         cut_assert_match(path, actual, ## __VA_ARGS__))
@@ -551,7 +554,7 @@ extern "C" {
  */
 #define cut_assert_match_with_free(pattern, actual, ...)                \
     cut_trace_with_info_expression(                                     \
-        cut_assert_match_helper(get_current_test_context(),             \
+        cut_assert_match_helper(cut_get_current_test_context(),         \
                                 pattern, cut_take_string(actual),       \
                                 #pattern, #actual                       \
                                 ## __VA_ARGS__, NULL),                  \
@@ -570,7 +573,7 @@ extern "C" {
  */
 #define cut_assert_equal_pointer(expected, actual, ...)                 \
     cut_trace_with_info_expression(                                     \
-        cut_assert_equal_pointer_helper(get_current_test_context(),     \
+        cut_assert_equal_pointer_helper(cut_get_current_test_context(), \
                                         expected, actual,               \
                                         #expected, #actual              \
                                         ## __VA_ARGS__, NULL),          \
@@ -600,7 +603,7 @@ extern "C" {
     const char *_taken_full_path;                                       \
                                                                         \
     cut_utils_get_fixture_data_string_and_path(                         \
-        get_current_test_context(),                                     \
+        cut_get_current_test_context(),                                 \
         &_data, &_full_path,                                            \
         (path), ## __VA_ARGS__, NULL);                                  \
     _taken_full_path = cut_take_string(_full_path);                     \
@@ -640,7 +643,7 @@ extern "C" {
  */
 #define cut_error_errno(...)                                    \
     cut_trace_with_info_expression(                             \
-        cut_error_errno_helper(get_current_test_context(),      \
+        cut_error_errno_helper(cut_get_current_test_context(),  \
                                ## __VA_ARGS__, NULL),           \
         cut_error_errno(__VA_ARGS__))
 

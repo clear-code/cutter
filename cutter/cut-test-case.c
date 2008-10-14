@@ -40,8 +40,6 @@ struct _CutTestCasePrivate
 {
     CutSetupFunction setup;
     CutTeardownFunction teardown;
-    CutGetCurrentTestContextFunction get_current_test_context;
-    CutSetCurrentTestContextFunction set_current_test_context;
     CutStartupFunction startup;
     CutShutdownFunction shutdown;
 };
@@ -51,8 +49,6 @@ enum
     PROP_0,
     PROP_SETUP_FUNCTION,
     PROP_TEARDOWN_FUNCTION,
-    PROP_GET_CURRENT_TEST_CONTEXT_FUNCTION,
-    PROP_SET_CURRENT_TEST_CONTEXT_FUNCTION,
     PROP_STARTUP_FUNCTION,
     PROP_SHUTDOWN_FUNCTION
 };
@@ -106,22 +102,6 @@ cut_test_case_class_init (CutTestCaseClass *klass)
                                 "The function for teardown",
                                 G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class, PROP_TEARDOWN_FUNCTION, spec);
-
-    spec = g_param_spec_pointer("get-current-test-context-function",
-                                "Get current test context function",
-                                "The function for getting current test context",
-                                G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
-    g_object_class_install_property(gobject_class,
-                                    PROP_GET_CURRENT_TEST_CONTEXT_FUNCTION,
-                                    spec);
-
-    spec = g_param_spec_pointer("set-current-test-context-function",
-                                "Set current test context function",
-                                "The function for setting current test context",
-                                G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
-    g_object_class_install_property(gobject_class,
-                                    PROP_SET_CURRENT_TEST_CONTEXT_FUNCTION,
-                                    spec);
 
     spec = g_param_spec_pointer("startup-function",
                                 "Startup Function",
@@ -199,8 +179,6 @@ cut_test_case_init (CutTestCase *test_case)
 
     priv->setup = NULL;
     priv->teardown = NULL;
-    priv->get_current_test_context = NULL;
-    priv->set_current_test_context = NULL;
     priv->startup = NULL;
     priv->shutdown = NULL;
 }
@@ -225,12 +203,6 @@ set_property (GObject      *object,
         break;
       case PROP_TEARDOWN_FUNCTION:
         priv->teardown = g_value_get_pointer(value);
-        break;
-      case PROP_GET_CURRENT_TEST_CONTEXT_FUNCTION:
-        priv->get_current_test_context = g_value_get_pointer(value);
-        break;
-      case PROP_SET_CURRENT_TEST_CONTEXT_FUNCTION:
-        priv->set_current_test_context = g_value_get_pointer(value);
         break;
       case PROP_STARTUP_FUNCTION:
         priv->startup = g_value_get_pointer(value);
@@ -275,8 +247,6 @@ CutTestCase *
 cut_test_case_new (const gchar *name,
                    CutSetupFunction setup,
                    CutTeardownFunction teardown,
-                   CutGetCurrentTestContextFunction get_current_test_context,
-                   CutSetCurrentTestContextFunction set_current_test_context,
                    CutStartupFunction startup,
                    CutShutdownFunction shutdown)
 {
@@ -285,10 +255,6 @@ cut_test_case_new (const gchar *name,
                         "element-name", "test-case",
                         "setup-function", setup,
                         "teardown-function", teardown,
-                        "get-current-test-context-function",
-                        get_current_test_context,
-                        "set-current-test-context-function",
-                        set_current_test_context,
                         "startup-function", startup,
                         "shutdown-function", shutdown,
                         NULL);
@@ -298,7 +264,6 @@ CutTestCase *
 cut_test_case_new_empty (void)
 {
     return cut_test_case_new(NULL,
-                             NULL, NULL,
                              NULL, NULL,
                              NULL, NULL);
 }
@@ -389,7 +354,6 @@ run_test (CutTestCase *test_case, CutTest *test,
 static gboolean
 run (CutTestCase *test_case, CutTest *test, CutRunContext *run_context)
 {
-    CutTestCasePrivate *priv;
     CutTestContext *original_test_context, *test_context;
     gboolean success = TRUE;
     gboolean is_multi_thread;
@@ -399,24 +363,17 @@ run (CutTestCase *test_case, CutTest *test, CutRunContext *run_context)
 
     is_multi_thread = cut_run_context_is_multi_thread(run_context);
 
-    priv = CUT_TEST_CASE_GET_PRIVATE(test_case);
-    if (!priv->get_current_test_context ||
-        !priv->set_current_test_context) {
-        g_warning("You should include <cutter.h>");
-        return FALSE;
-    }
-
     test_context = cut_test_context_new(run_context,
                                         NULL, test_case, NULL, NULL);
     cut_test_context_set_multi_thread(test_context, is_multi_thread);
-    original_test_context = cut_test_case_get_current_test_context(test_case);
-    cut_test_case_set_current_test_context(test_case, test_context);
+    original_test_context = cut_test_context_current_get();
+    cut_test_context_current_set(test_context);
 
     cut_test_context_set_test(test_context, test);
     success = run_test(test_case, test, test_context, run_context);
     cut_test_context_set_test(test_context, NULL);
 
-    cut_test_case_set_current_test_context(test_case, original_test_context);
+    cut_test_context_current_set(original_test_context);
     g_object_unref(test_context);
 
     return success;
@@ -527,22 +484,6 @@ cut_test_case_run (CutTestCase *test_case, CutRunContext *run_context)
 
     test_names = cut_run_context_get_target_test_names(run_context);
     return cut_test_case_run_with_filter(test_case, run_context, test_names);
-}
-
-CutTestContext *
-cut_test_case_get_current_test_context (CutTestCase *test_case)
-{
-    return CUT_TEST_CASE_GET_PRIVATE(test_case)->get_current_test_context();
-}
-
-void
-cut_test_case_set_current_test_context (CutTestCase *test_case,
-                                        CutTestContext *test_context)
-{
-    CutTestCasePrivate *priv;
-
-    priv = CUT_TEST_CASE_GET_PRIVATE(test_case);
-    priv->set_current_test_context(test_context);
 }
 
 /*

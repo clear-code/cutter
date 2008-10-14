@@ -23,7 +23,6 @@
 #include <cutter/cut-version.h>
 #include <cutter/cut-features.h>
 
-#include <cutter/cut-hidden-definitions.h>
 #include <cutter/cut-assertions.h>
 #include <cutter/cut-multi-process.h>
 #include <cutter/cut-helper.h>
@@ -254,7 +253,7 @@ void shutdown(void);
  * Since: 1.0.3
  */
 #define cut_add_data(first_data_name, ...)                      \
-    cut_test_context_add_data(get_current_test_context(),       \
+    cut_test_context_add_data(cut_get_current_test_context(),   \
                               first_data_name, ## __VA_ARGS__,  \
                               NULL)
 
@@ -290,11 +289,11 @@ void shutdown(void);
  *
  * Since: 1.0.4
  */
-#define cut_set_attributes(first_attribute_name, ...)           \
-    cut_test_context_set_attributes(get_current_test_context(), \
-                                    first_attribute_name,       \
-                                    ## __VA_ARGS__,             \
-                                    NULL)                       \
+#define cut_set_attributes(first_attribute_name, ...)                   \
+    cut_test_context_set_attributes(cut_get_current_test_context(),     \
+                                    first_attribute_name,               \
+                                    ## __VA_ARGS__,                     \
+                                    NULL)
 
 /**
  * cut_get_current_test_context:
@@ -335,7 +334,7 @@ void shutdown(void);
  * Since: 1.0.4
  */
 #define cut_get_current_test_context()          \
-    get_current_test_context()
+    cut_test_context_current_get()
 
 /**
  * cut_set_current_test_context:
@@ -348,7 +347,7 @@ void shutdown(void);
  * Since: 1.0.4
  */
 #define cut_set_current_test_context(test_context)      \
-    set_current_test_context(test_context)
+    cut_test_context_current_set(test_context)
 
 
 #ifdef __cplusplus

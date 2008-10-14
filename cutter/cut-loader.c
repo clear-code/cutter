@@ -534,8 +534,6 @@ apply_attributes (CutLoaderPrivate *priv, CutTest *test, const gchar *test_name)
 
 static void
 register_test (CutLoader *loader, CutTestCase *test_case,
-               CutGetCurrentTestContextFunction get_current_test_context,
-               CutSetCurrentTestContextFunction set_current_test_context,
                const gchar *name, CutTestFunction function)
 {
     CutLoaderPrivate *priv;
@@ -575,12 +573,10 @@ register_test (CutLoader *loader, CutTestCase *test_case,
     }
     cut_test_set_base_directory(test, priv->base_directory);
 
-    if (get_current_test_context &&
-        set_current_test_context &&
-        attributes_setup_function) {
+    if (attributes_setup_function) {
         CutTestContext *test_context, *original_test_context;
 
-        original_test_context = get_current_test_context();
+        original_test_context = cut_test_context_current_get();
         if (data_setup_function) {
             test_context = cut_test_context_new(NULL, NULL, test_case,
                                                 CUT_TEST_ITERATOR(test), NULL);
@@ -588,9 +584,9 @@ register_test (CutLoader *loader, CutTestCase *test_case,
             test_context = cut_test_context_new(NULL, NULL, test_case,
                                                 NULL, test);
         }
-        set_current_test_context(test_context);
+        cut_test_context_current_set(test_context);
         attributes_setup_function();
-        set_current_test_context(original_test_context);
+        cut_test_context_current_set(original_test_context);
         g_object_unref(test_case);
     }
 
@@ -613,9 +609,7 @@ cb_complete (CutTestCase *test_case, CutTestContext *test_context,
 }
 
 static CutTestCase *
-create_test_case (CutLoader *loader,
-                  CutGetCurrentTestContextFunction *get_current_test_context,
-                  CutSetCurrentTestContextFunction *set_current_test_context)
+create_test_case (CutLoader *loader)
 {
     CutLoaderPrivate *priv;
     CutTestCase *test_case;
@@ -629,10 +623,6 @@ create_test_case (CutLoader *loader,
 
     g_module_symbol(priv->module, "setup", (gpointer)&setup);
     g_module_symbol(priv->module, "teardown", (gpointer)&teardown);
-    g_module_symbol(priv->module, "get_current_test_context",
-                    (gpointer)get_current_test_context);
-    g_module_symbol(priv->module, "set_current_test_context",
-                    (gpointer)set_current_test_context);
     g_module_symbol(priv->module, "startup", (gpointer)&startup);
     g_module_symbol(priv->module, "shutdown", (gpointer)&shutdown);
 
@@ -648,8 +638,6 @@ create_test_case (CutLoader *loader,
     g_free(filename);
     test_case = cut_test_case_new(test_case_name,
                                   setup, teardown,
-                                  *get_current_test_context,
-                                  *set_current_test_context,
                                   startup, shutdown);
     g_free(test_case_name);
 
@@ -668,8 +656,6 @@ cut_loader_load_test_case (CutLoader *loader)
     GList *node;
     GList *test_names;
     CutTestCase *test_case;
-    CutGetCurrentTestContextFunction get_current_test_context;
-    CutSetCurrentTestContextFunction set_current_test_context;
 
     priv = CUT_LOADER_GET_PRIVATE(loader);
     if (!priv->so_filename)
@@ -697,9 +683,7 @@ cut_loader_load_test_case (CutLoader *loader)
     if (!test_names)
         return NULL;
 
-    test_case = create_test_case(loader,
-                                 &get_current_test_context,
-                                 &set_current_test_context);
+    test_case = create_test_case(loader);
     for (node = test_names; node; node = g_list_next(node)) {
         gchar *name;
         CutTestFunction function = NULL;
@@ -707,10 +691,7 @@ cut_loader_load_test_case (CutLoader *loader)
         name = node->data;
         g_module_symbol(priv->module, name, (gpointer)&function);
         if (function)
-            register_test(loader, test_case,
-                          get_current_test_context,
-                          set_current_test_context,
-                          name, function);
+            register_test(loader, test_case, name, function);
     }
     g_list_free(test_names);
 

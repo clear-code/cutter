@@ -59,10 +59,7 @@ setup (void)
     cut_run_context_set_target_test_names(run_context, test_names);
 
     test_case = cut_test_case_new("stub test case",
-                                  NULL, NULL,
-                                  get_current_test_context,
-                                  set_current_test_context,
-                                  NULL, NULL);
+                                  NULL, NULL, NULL, NULL);
     test_suite = cut_test_suite_new_empty();
     cut_test_suite_add_test_case(test_suite, test_case);
 }
@@ -130,11 +127,11 @@ run (void)
 
     test_context = cut_test_context_new(run_context,
                                         NULL, test_case, NULL, test);
-    original_test_context = get_current_test_context();
-    set_current_test_context(test_context);
+    original_test_context = cut_get_current_test_context();
+    cut_set_current_test_context(test_context);
     success = cut_test_runner_run_test_suite(CUT_TEST_RUNNER(run_context),
                                              test_suite);
-    set_current_test_context(original_test_context);
+    cut_set_current_test_context(original_test_context);
 
     g_object_unref(test_context);
     test_context = NULL;

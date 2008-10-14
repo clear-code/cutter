@@ -87,6 +87,7 @@ struct _CutTestContextPrivate
     gchar *fixture_data_dir;
     GHashTable *cached_fixture_data;
     GList *backtrace;
+    GMutex *mutex;
 };
 
 enum
@@ -157,8 +158,7 @@ taken_list_free (TakenList *taken_list)
     g_slice_free(TakenList, taken_list);
 }
 
-static GHashTable *current_contexts = NULL;
-static GMutex *current_contexts_mutex = NULL;
+static GStaticPrivate current_context_private;
 
 static void dispose        (GObject         *object);
 static void set_property   (GObject         *object,
@@ -247,6 +247,8 @@ cut_test_context_init (CutTestContext *context)
                                                       g_free, g_free);
 
     priv->backtrace = NULL;
+
+    priv->mutex = g_mutex_new();
 }
 
 static void
@@ -318,6 +320,11 @@ dispose (GObject *object)
         g_list_foreach(priv->backtrace, (GFunc)g_object_unref, NULL);
         g_list_free(priv->backtrace);
         priv->backtrace = NULL;
+    }
+
+    if (priv->mutex) {
+        g_mutex_free(priv->mutex);
+        priv->mutex = NULL;
     }
 
     G_OBJECT_CLASS(cut_test_context_parent_class)->dispose(object);
@@ -392,53 +399,25 @@ cut_test_context_error_quark (void)
 void
 cut_test_context_current_init (void)
 {
-    current_contexts = g_hash_table_new(g_direct_hash, g_direct_equal);
-    current_contexts_mutex = g_mutex_new();
+    g_static_private_init(&current_context_private);
 }
 
 void
 cut_test_context_current_quit (void)
 {
-    if (current_contexts) {
-        g_hash_table_unref(current_contexts);
-        current_contexts = NULL;
-    }
-
-    if (current_contexts_mutex) {
-        g_mutex_free(current_contexts_mutex);
-        current_contexts_mutex = NULL;
-    }
+    g_static_private_free(&current_context_private);
 }
 
 void
-cut_test_context_current_set (CutTestContextKey *key,
-                              CutTestContext *context)
+cut_test_context_current_set (CutTestContext *context)
 {
-    GPrivate *current_context_key;
-
-    g_mutex_lock(current_contexts_mutex);
-    current_context_key = g_hash_table_lookup(current_contexts, key);
-    if (!current_context_key) {
-        current_context_key = g_private_new(NULL);
-        g_hash_table_insert(current_contexts, key, current_context_key);
-    }
-    g_private_set(current_context_key, context);
-    g_mutex_unlock(current_contexts_mutex);
+    g_static_private_set(&current_context_private, context, NULL);
 }
 
 CutTestContext *
-cut_test_context_current_get (CutTestContextKey *key)
+cut_test_context_current_get (void)
 {
-    CutTestContext *test_context = NULL;
-    GPrivate *current_context_key;
-
-    g_mutex_lock(current_contexts_mutex);
-    current_context_key = g_hash_table_lookup(current_contexts, key);
-    if (current_context_key)
-        test_context = g_private_get(current_context_key);
-    g_mutex_unlock(current_contexts_mutex);
-
-    return test_context;
+    return g_static_private_get(&current_context_private);
 }
 
 CutTestContext *
@@ -1279,11 +1258,17 @@ cut_test_context_push_backtrace (CutTestContext *context,
     CutBacktraceEntry *entry;
     gchar *full_filename = NULL;
 
+    g_return_if_fail(context != NULL);
+    g_return_if_fail(CUT_IS_TEST_CONTEXT(context));
+
     priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+
+    g_mutex_lock(priv->mutex);
     full_filename = cut_test_context_build_source_filename(context, filename);
     entry = cut_backtrace_entry_new(full_filename, line, function_name, info);
     g_free(full_filename);
     priv->backtrace = g_list_prepend(priv->backtrace, entry);
+    g_mutex_unlock(priv->mutex);
 }
 
 void
@@ -1292,12 +1277,17 @@ cut_test_context_pop_backtrace (CutTestContext *context)
     CutTestContextPrivate *priv;
     CutBacktraceEntry *entry;
 
+    g_return_if_fail(context != NULL);
+    g_return_if_fail(CUT_IS_TEST_CONTEXT(context));
+
     priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
     g_return_if_fail(priv->backtrace != NULL);
 
+    g_mutex_lock(priv->mutex);
     entry = priv->backtrace->data;
     g_object_unref(entry);
     priv->backtrace = g_list_delete_link(priv->backtrace, priv->backtrace);
+    g_mutex_unlock(priv->mutex);
 }
 
 void

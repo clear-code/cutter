@@ -1,5 +1,13 @@
 2008-10-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-context.c: cut_test_context_current_get() and
+	cut_test_context_current_set() doesn't require key. So we can
+	introduce hidden get_current_test_context() and
+	set_current_test_context().
+	TODO: rewrite cut-assertions-helper.c.
+	* cutter/, gcutter/, gdkcutter-pixbuf/, test/:  follow the above
+	change.
+
 	* gdkcutter-pixbuf/gdkcut-pixbuf.c: fix an index bug.
 	* test/test-gdkcut-pixbuf.c: remove needless code.
 

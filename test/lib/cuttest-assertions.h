@@ -19,11 +19,13 @@
                                        n_pendings, n_notifications,     \
                                        n_omissions)                     \
     cut_trace_with_info_expression(                                     \
-    cut_assert_test_result_summary_helper(run_context, n_tests,         \
-                                          n_assertions, n_successes,    \
-                                          n_failures, n_errors,         \
-                                          n_pendings, n_notifications,  \
-                                          n_omissions),                 \
+        cut_assert_test_result_summary_helper(run_context, n_tests,     \
+                                              n_assertions,             \
+                                              n_successes,              \
+                                              n_failures, n_errors,     \
+                                              n_pendings,               \
+                                              n_notifications,          \
+                                              n_omissions),             \
         cut_assert_test_result_summary(run_context, n_tests,            \
                                        n_assertions, n_successes,       \
                                        n_failures, n_errors,            \
