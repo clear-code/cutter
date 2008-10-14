@@ -1,4 +1,6 @@
-#include <cutter.h>
+/* -*- c-file-style: "gnu" -*- */
+
+#include <gcutter.h>
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -10,24 +12,16 @@
 
 #define BUFFER_SIZE 1024
 
-static GError *error = NULL;
-
 void test_iochannel (void);
 
 void
 setup (void)
 {
-  error = NULL;
 }
 
 void
 teardown (void)
 {
-  if (error)
-    {
-      g_error_free (error);
-      error = NULL;
-    }
 }
 
 static void
@@ -35,14 +29,13 @@ test_small_writes (void)
 {
   GIOChannel *io;
   GIOStatus status = G_IO_STATUS_NORMAL;
-  guint cnt; 
+  guint cnt;
   gchar tmp;
+  GError *error = NULL;
 
   io = g_io_channel_new_file ("iochannel-test-outfile", "w", &error);
   
-  cut_assert_null (error, "Unable to open file %s: %s", 
-		  	  "iochannel-test-outfile", 
-			  error->message);
+  gcut_assert_error (error, "Unable to open file: iochannel-test-outfile");
 
   g_io_channel_set_encoding (io, NULL, NULL);
   g_io_channel_set_buffer_size (io, 1022);
@@ -77,41 +70,46 @@ test_iochannel (void)
   const gchar encoding[] = "EUC-JP";
   GIOStatus status;
   GIOFlags flags;
+  GError *error = NULL;
 
   if (!srcdir)
     srcdir = ".";
   filename = g_build_filename (srcdir, "iochannel-test-infile", NULL);
 
   gio_r = g_io_channel_new_file (filename, "r", &error);
-  cut_assert_null (error, "Unable to open file %s: %s", filename, error->message);
+  gcut_assert_error (error, "Unable to open file");
 
   gio_w = g_io_channel_new_file ("iochannel-test-outfile", "w", &error);
-  cut_assert_null (error, "Unable to open file %s: %s", "iochannel-test-outfile", error->message);
+  gcut_assert_error (error, "Unable to open file: iochannel-test-outfile");
 
   g_io_channel_set_encoding (gio_r, encoding, &error);
-  cut_assert_null (error, "%s", error->message);
-  
+  gcut_assert_error (error);
+
   g_io_channel_set_buffer_size (gio_r, BUFFER_SIZE);
 
   status = g_io_channel_set_flags (gio_r, G_IO_FLAG_NONBLOCK, &error);
-  cut_assert_null (error, "%s", error->message);
+  gcut_assert_error (error);
   flags = g_io_channel_get_flags (gio_r);
   buffer = g_string_sized_new (BUFFER_SIZE);
 
   while (TRUE)
   {
       do
-        status = g_io_channel_read_line_string (gio_r, buffer, NULL, &error);
-      while (status == G_IO_STATUS_AGAIN);
+        {
+          status = g_io_channel_read_line_string (gio_r, buffer, NULL, &error);
+          gcut_assert_error (error);
+        } while (status == G_IO_STATUS_AGAIN);
       if (status != G_IO_STATUS_NORMAL)
         break;
 
       rlength += buffer->len;
 
       do
-        status = g_io_channel_write_chars (gio_w, buffer->str, buffer->len,
-          &length_out, &error);
-      while (status == G_IO_STATUS_AGAIN);
+        {
+          status = g_io_channel_write_chars (gio_w, buffer->str, buffer->len,
+                                             &length_out, &error);
+          gcut_assert_error (error);
+        } while (status == G_IO_STATUS_AGAIN);
       if (status != G_IO_STATUS_NORMAL)
         break;
 
@@ -128,9 +126,7 @@ test_iochannel (void)
       case G_IO_STATUS_EOF:
         break;
       case G_IO_STATUS_ERROR:
-        g_warning (error->message);
-        g_error_free (error);
-        error = NULL;
+        gcut_assert_error(error);
         break;
       default:
         g_warning ("Abnormal exit from write loop.");
@@ -138,8 +134,10 @@ test_iochannel (void)
     }
 
   do
-    status = g_io_channel_flush (gio_w, &error);
-  while (status == G_IO_STATUS_AGAIN);
+    {
+      status = g_io_channel_flush (gio_w, &error);
+      gcut_assert_error (error);
+    } while (status == G_IO_STATUS_AGAIN);
 
   cut_assert_equal_int (G_IO_STATUS_NORMAL, status);
 

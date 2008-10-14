@@ -1,6 +1,6 @@
 /* -*- c-file-style: "gnu" -*- */
 
-#include <cutter.h>
+#include <gcutter.h>
 
 #include <glib.h>
 #include <locale.h>
@@ -84,9 +84,7 @@ check_error (GError **error,
 }
 
 #define check_no_error(error) \
-  cut_assert_null (error, "Unexpected error: (%s, %d) %s\n", \
-	           g_quark_to_string (error->domain), \
-		   error->code, error->message);
+  gcut_assert_error(error)
 
 static void
 check_string_value (GKeyFile    *keyfile,
@@ -1159,25 +1157,27 @@ test_reload_idempotency (void)
 
   /* check that we only insert a single new line between groups */
   keyfile = g_key_file_new ();
-  cut_assert (g_key_file_load_from_data (keyfile,
+  if (!g_key_file_load_from_data (keyfile,
 	                          original_data, strlen(original_data),
 	                          G_KEY_FILE_KEEP_COMMENTS,
-	                          &error),
-    "Failed to parse keyfile[1]: %s", error->message);
+	                          &error))
+    gcut_assert_error (error, "Failed to parse keyfile[1]");
 
   data1 = g_key_file_to_data (keyfile, &len1, &error);
-  cut_assert (data1, "Failed to extract keyfile[1]: %s", error->message);
+  if (!data1)
+    gcut_assert_error (error, "Failed to extract keyfile[1]");
   g_key_file_free (keyfile);
 
   keyfile = g_key_file_new ();
-  cut_assert (g_key_file_load_from_data (keyfile,
+  if (!g_key_file_load_from_data (keyfile,
 	                          data1, len1,
 				  G_KEY_FILE_KEEP_COMMENTS,
-				  &error),
-    "Failed to parse keyfile[2]: %s", error->message);
+				  &error))
+      gcut_assert_error (error, "Failed to parse keyfile[2]");
 
   data2 = g_key_file_to_data (keyfile, &len2, &error);
-  cut_assert (data2, "Failed to extract keyfile[2]: %s", error->message);
+  if (!data2)
+    gcut_assert_error (error, "Failed to extract keyfile[2]");
 
   g_key_file_free (keyfile);
   keyfile = NULL;
