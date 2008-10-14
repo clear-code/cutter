@@ -36,12 +36,6 @@ extern "C" {
  * easy to read test. Symbols in this section help you
  * writing your own assertions.
  *
- * If you make your assertions module, note that you need to
- * include &lt;cutter/cut-helper.h&gt; not &lt;cutter.h&gt;
- * and you can't make it as shared library. You need to link
- * it as static library. (So, libtool's convenience library
- * is also OK.)
- *
  * e.g.:
  *
  * my-assertions.h:
@@ -78,10 +72,6 @@ extern "C" {
  *
  * my-assertions.c:
  * |[
- * #include <cutter/cut-helper.h>
- * #if 0
- *           ^^^^^^^^^^^^^^^^^^^ important!
- * #endif
  * #include "my-assertions.h"
  *
  * void
@@ -113,7 +103,7 @@ extern "C" {
  * LIBS = $(GCUTTER_LIBS)
  * noinst_LTLIBRARIES = libmy-assertions.la
  * libmy_assertions_la_SOURCES = my-assertions.c my-assertions.h
- * # NO AM_LDFLAGS
+ * AM_LDFLAGS = -module -rpath $(libdir) -avoid-version -no-undefined
  * ]|
  */
 

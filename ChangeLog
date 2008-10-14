@@ -1,5 +1,7 @@
 2008-10-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-helper.h: support shared library.
+
 	* cutter/, gcutter/, gdkcutter-pixbuf/: use
 	cut_get_current_test_context().
 	* test/: follow the above change.
