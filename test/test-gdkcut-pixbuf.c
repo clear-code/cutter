@@ -168,7 +168,6 @@ test_diff_no_alpha (void)
     expected_diff = load_pixbuf("diff-dark-and-nested-circle-no-alpha.png");
 
     actual_diff = gdkcut_pixbuf_diff(pixbuf1, pixbuf2, 0);
-    gdk_pixbuf_save(actual_diff, "/tmp/xxx.png", "png", NULL, NULL);
     gdkcut_pixbuf_assert_equal(expected_diff, actual_diff, 0);
 }
 

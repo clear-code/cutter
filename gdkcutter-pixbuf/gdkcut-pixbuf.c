@@ -331,7 +331,7 @@ draw_diff_emphasis (GdkPixbuf *diff,
                 }
             }
 
-            if (different || target_n_channels < 3)
+            if (different || target_n_channels < 4)
                 result_pixel[3] = 0xff;
 
             for (channel = 0; channel < n_channels; channel++) {

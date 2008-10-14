@@ -1,5 +1,8 @@
 2008-10-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gdkcutter-pixbuf/gdkcut-pixbuf.c: fix an index bug.
+	* test/test-gdkcut-pixbuf.c: remove needless code.
+
 	* sample/glib/iochannel.c, sample/glib/keyfile.c: use
 	gcut_assert_error().
 
