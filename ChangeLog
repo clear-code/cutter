@@ -1,5 +1,7 @@
 2008-10-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/fixtures/pixbuf/Makefile.am (EXTRA_DIST): add missing files.
+
 	* FEATURES*: add image diff.
 
 	* NEWS*, doc/reference/, misc/rd2refentry-lib.rb: use <img>.
