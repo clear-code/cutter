@@ -1,5 +1,9 @@
 2008-10-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-hash-table.c, gcutter/gcut-test-utils.h,
+	test/test-gcut-hash-table.c: gcut_hash_table_string_string_newv()
+	-> gcut_hash_table_string_string_new_va_list().
+
 	* NEWS*: add an entry for 1.0.5.
 
 	* cutter/cut-helper.h: support shared library.

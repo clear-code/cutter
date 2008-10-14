@@ -164,7 +164,7 @@ void    gcut_list_string_free (GList *list);
 GHashTable *gcut_hash_table_string_string_new(const gchar *key, ...) G_GNUC_NULL_TERMINATED;
 
 /**
- * gcut_hash_table_string_string_newv:
+ * gcut_hash_table_string_string_new_va_list:
  * @key: The first key string.
  * @args: A NULL-terminated list of rest arguments. The
  *        first item is the string value of the first key,
@@ -180,7 +180,8 @@ GHashTable *gcut_hash_table_string_string_new(const gchar *key, ...) G_GNUC_NULL
  *
  * Since: 1.0.5
  */
-GHashTable *gcut_hash_table_string_string_newv(const gchar *key, va_list args);
+GHashTable *gcut_hash_table_string_string_new_va_list(const gchar *key,
+                                                      va_list args);
 
 /**
  * gcut_take_new_hash_table_string_string:

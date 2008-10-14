@@ -167,14 +167,14 @@ gcut_hash_table_string_string_new (const gchar *key, ...)
     va_list args;
 
     va_start(args, key);
-    table = gcut_hash_table_string_string_newv(key, args);
+    table = gcut_hash_table_string_string_new_va_list(key, args);
     va_end(args);
 
     return table;
 }
 
 GHashTable *
-gcut_hash_table_string_string_newv (const gchar *key, va_list args)
+gcut_hash_table_string_string_new_va_list (const gchar *key, va_list args)
 {
     GHashTable *table;
 
