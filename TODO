@@ -17,3 +17,4 @@
 * introduce easy sub process debugging mechanism.
 * cut_assert_equal_sockaddr().
 * GTK+ UI supports test iterator.
+* GCutIOChannelString.
