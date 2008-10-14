@@ -1,5 +1,7 @@
 2008-10-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* NEWS*: 14 -> 15. give up.
+
 	* configure.ac (SF_HOST): shell.sourceforge.net -> web.sourceforge.net.
 
 	* test/fixtures/pixbuf/Makefile.am (EXTRA_DIST): add missing files.

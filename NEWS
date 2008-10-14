@@ -2,7 +2,7 @@
 
 = NEWS --- The history of Cutter
 
-== 1.0.5: 2008-10-14
+== 1.0.5: 2008-10-15
 
   * Support max number of threads ran concurrently:
     * Add --max-threads option
