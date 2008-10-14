@@ -77,6 +77,8 @@ module RD
           url = "#{url}\##{anchor}"
         end
       when /\.html#[a-zA-Z\-_]+$/
+      when /\.png$/
+        return tag("inlinegraphic", {:fileref => url, :format => "PNG"})
       else
         url = remove_lang_suffix(url.downcase) + ".html"
       end

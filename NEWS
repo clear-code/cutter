@@ -12,9 +12,9 @@
   * Support GdkPixbuf:
     * Image comparison
     * Image diff
-      * ((<expected|URL:http://cutter.svn.sourceforge.net/svnroot/cutter/cutter/trunk/test/fixtures/pixbuf/dark-circle.png>))
-      * ((<actual|URL:http://cutter.svn.sourceforge.net/svnroot/cutter/cutter/trunk/test/fixtures/pixbuf/nested-circle.png>))
-      * ((<diff|URL:http://cutter.svn.sourceforge.net/svnroot/cutter/cutter/trunk/test/fixtures/pixbuf/diff-dark-and-nested-circle.png>))
+      * expected: ((<dark-circle.png>))
+      * actual: ((<nested-circle.png>))
+      * diff: ((<diff-dark-and-nested-circle.png>))
   * Improve debug support:
     * Add --keep-opening-modules option
       * Keep opening modules for resolving symbols on debugging
@@ -48,13 +48,13 @@
       * ((<cut_trace()|cutter-cut-helper.html>))
       * ((<cut_trace_with_info_expression()|cutter-cut-helper.html>))
     * ((<Writing assertion|writing-assertion.html>))
-      * ((<Assertion writing helper|cutter-cut-helper.h>))
-      * ((<Assertion Utilities for GEnum and GFlags|cutter-gcut-enum.h>))
-      * ((<Assertion Utilities for GError|cutter-gcut-error.h>))
-      * ((<Assertion Utilities for GHashTable|cutter-gcut-hash-table.h>))
-      * ((<Assertion Utilities for GList|cutter-gcut-list.h>))
-      * ((<Assertion Utilities for GObject|cutter-gcut-object.h>))
-      * ((<Assertion Utilities for GValue|cutter-gcut-value-equal.h>))
+      * ((<Assertion writing helper|cutter-cut-helper.html>))
+      * ((<Assertion Utilities for GEnum and GFlags|cutter-gcut-enum.html>))
+      * ((<Assertion Utilities for GError|cutter-gcut-error.html>))
+      * ((<Assertion Utilities for GHashTable|cutter-gcut-hash-table.html>))
+      * ((<Assertion Utilities for GList|cutter-gcut-list.html>))
+      * ((<Assertion Utilities for GObject|cutter-gcut-object.html>))
+      * ((<Assertion Utilities for GValue|cutter-gcut-value-equal.html>))
     * ((<cut_equal_double()|cutter-cut-test-utils.html>))
     * ((<cut_equal_string()|cutter-cut-test-utils.html>))
   * Bug fixes:

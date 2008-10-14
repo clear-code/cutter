@@ -85,7 +85,10 @@ endif
 MKDB_OPTIONS=--sgml-mode --output-format=xml --ignore-files=trio
 
 # Images to copy into HTML directory
-HTML_IMAGES =
+HTML_IMAGES =				\
+	dark-circle.png			\
+	nested-circle.png		\
+	diff-dark-and-nested-circle.png
 
 # Extra SGML files that are included by $(DOC_MAIN_SGML_FILE)
 content_files =		\

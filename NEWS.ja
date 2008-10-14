@@ -12,9 +12,9 @@
   * GdkPixbufのサポート:
     * 画像比較
     * 画像diff
-      * ((<期待値|URL:http://cutter.svn.sourceforge.net/svnroot/cutter/cutter/trunk/test/fixtures/pixbuf/dark-circle.png>))
-      * ((<実測値|URL:http://cutter.svn.sourceforge.net/svnroot/cutter/cutter/trunk/test/fixtures/pixbuf/nested-circle.png>))
-      * ((<diff|URL:http://cutter.svn.sourceforge.net/svnroot/cutter/cutter/trunk/test/fixtures/pixbuf/diff-dark-and-nested-circle.png>))
+      * 期待値: ((<dark-circle.png>))
+      * 実測値: ((<nested-circle.png>))
+      * diff: ((<diff-dark-and-nested-circle.png>))
   * デバッグ支援の強化:
     * --keep-opening-modulesオプションの追加
       * デバッグ時にシンボル解決できるように開いたモジュール
@@ -49,13 +49,13 @@
       * ((<cut_trace()|cutter-cut-helper.html>))
       * ((<cut_trace_with_info_expression()|cutter-cut-helper.html>))
     * ((<検証作成|writing-assertion.html>))
-      * ((<検証作成の補助|cutter-cut-helper.h>))
-      * ((<GEnumとGFlags用の検証ユーティリティ|cutter-gcut-enum.h>))
-      * ((<GError用の検証ユーティリティ|cutter-gcut-error.h>))
-      * ((<GHashTable用の検証ユーティリティ|cutter-gcut-hash-table.h>))
-      * ((<GList用の検証ユーティリティ|cutter-gcut-list.h>))
-      * ((<GObject用の検証ユーティリティ|cutter-gcut-object.h>))
-      * ((<GValue用の検証ユーティリティ|cutter-gcut-value-equal.h>))
+      * ((<検証作成の補助|cutter-cut-helper.html>))
+      * ((<GEnumとGFlags用の検証ユーティリティ|cutter-gcut-enum.html>))
+      * ((<GError用の検証ユーティリティ|cutter-gcut-error.html>))
+      * ((<GHashTable用の検証ユーティリティ|cutter-gcut-hash-table.html>))
+      * ((<GList用の検証ユーティリティ|cutter-gcut-list.html>))
+      * ((<GObject用の検証ユーティリティ|cutter-gcut-object.html>))
+      * ((<GValue用の検証ユーティリティ|cutter-gcut-value-equal.html>))
     * ((<cut_equal_double()|cutter-cut-test-utils.html>))
     * ((<cut_equal_string()|cutter-cut-test-utils.html>))
   * バグ修正:
