@@ -27,9 +27,6 @@
 extern "C" {
 #endif
 
-#define cut_test_pass_helper(test_context)              \
-    cut_test_context_pass_assertion(test_context)
-
 #define cut_test_register_result(status, message, ...) do               \
 {                                                                       \
     cut_test_context_register_result(cut_get_current_test_context(),    \
@@ -37,17 +34,17 @@ extern "C" {
                                      message, ## __VA_ARGS__, NULL);    \
 } while (0)
 
-#define cut_test_register_result_va_list_helper(test_context, status,   \
-                                                system_message,         \
-                                                user_message_format) do \
+#define cut_test_register_result_va_list(status, system_message,        \
+                                         user_message_format) do        \
 {                                                                       \
     va_list args;                                                       \
                                                                         \
     va_start(args, user_message_format);                                \
-    cut_test_context_register_resultv(test_context,                     \
-                                      CUT_TEST_RESULT_ ## status,       \
-                                      system_message,                   \
-                                      user_message_format, args);       \
+    cut_test_context_register_result_va_list(                           \
+        cut_get_current_test_context(),                                 \
+        CUT_TEST_RESULT_ ## status,                                     \
+        system_message,                                                 \
+        user_message_format, args);                                     \
     va_end(args);                                                       \
 } while (0)
 
@@ -57,69 +54,51 @@ extern "C" {
     cut_test_context_long_jump(cut_get_current_test_context());     \
 } while (0)
 
-#define cut_test_fail_va_list_helper(test_context,                      \
-                                     system_message,                    \
-                                     user_message_format)               \
-    cut_test_terminate_va_list_helper(test_context, FAILURE,            \
-                                      system_message,                   \
-                                      user_message_format)
-
-#define cut_test_terminate_va_list_helper(test_context, status,         \
-                                          system_message,               \
-                                          user_message_format) do       \
+#define cut_test_terminate_va_list(status, system_message,              \
+                                   user_message_format) do              \
 {                                                                       \
-    cut_test_register_result_va_list_helper(test_context, status,       \
-                                            system_message,             \
-                                            user_message_format);       \
-    cut_test_context_long_jump(test_context);                           \
+    cut_test_register_result_va_list(status, system_message,            \
+                                     user_message_format);              \
+    cut_test_context_long_jump(cut_get_current_test_context());         \
 } while (0)
 
-void        cut_assert_helper              (CutTestContext *test_context,
-                                            cut_boolean     result,
+void        cut_assert_helper              (cut_boolean     result,
                                             const char     *expression,
                                             const char     *user_message_format,
                                             ...);
-void        cut_assert_true_helper         (CutTestContext *test_context,
-                                            cut_boolean     result,
+void        cut_assert_true_helper         (cut_boolean     result,
                                             const char     *expression,
                                             const char     *user_message_format,
                                             ...);
-void        cut_assert_false_helper        (CutTestContext *test_context,
-                                            cut_boolean     result,
+void        cut_assert_false_helper        (cut_boolean     result,
                                             const char     *expression,
                                             const char     *user_message_format,
                                             ...);
-void        cut_assert_null_helper         (CutTestContext *test_context,
-                                            const void     *object,
+void        cut_assert_null_helper         (const void     *object,
                                             const char     *expression,
                                             const char     *user_message_format,
                                             ...);
-void        cut_assert_null_string_helper  (CutTestContext *test_context,
-                                            const char     *string,
+void        cut_assert_null_string_helper  (const char     *string,
                                             const char     *expression,
                                             const char     *user_message_format,
                                             ...);
-void        cut_assert_not_null_helper     (CutTestContext *test_context,
-                                            const void     *object,
+void        cut_assert_not_null_helper     (const void     *object,
                                             const char     *expression,
                                             const char     *user_message_format,
                                             ...);
-void        cut_assert_equal_int_helper    (CutTestContext *test_context,
-                                            long            expected,
+void        cut_assert_equal_int_helper    (long            expected,
                                             long            actual,
                                             const char     *expression_expected,
                                             const char     *expression_actual,
                                             const char     *user_message_format,
                                             ...);
-void        cut_assert_equal_uint_helper   (CutTestContext *test_context,
-                                            unsigned long   expected,
+void        cut_assert_equal_uint_helper   (unsigned long   expected,
                                             unsigned long   actual,
                                             const char     *expression_expected,
                                             const char     *expression_actual,
                                             const char     *user_message_format,
                                             ...);
-void        cut_assert_equal_double_helper (CutTestContext *test_context,
-                                            double          expected,
+void        cut_assert_equal_double_helper (double          expected,
                                             double          error,
                                             double          actual,
                                             const char     *expression_expected,
@@ -127,15 +106,13 @@ void        cut_assert_equal_double_helper (CutTestContext *test_context,
                                             const char     *expression_actual,
                                             const char     *user_message_format,
                                             ...);
-void        cut_assert_equal_string_helper (CutTestContext *test_context,
-                                            const char     *expected,
+void        cut_assert_equal_string_helper (const char     *expected,
                                             const char     *actual,
                                             const char     *expression_expected,
                                             const char     *expression_actual,
                                             const char     *user_message_format,
                                             ...);
-void        cut_assert_equal_memory_helper (CutTestContext *test_context,
-                                            const void     *expected,
+void        cut_assert_equal_memory_helper (const void     *expected,
                                             size_t          expected_size,
                                             const void     *actual,
                                             size_t          actual_size,
@@ -146,22 +123,19 @@ void        cut_assert_equal_memory_helper (CutTestContext *test_context,
                                             const char     *user_message_format,
                                             ...);
 void        cut_assert_equal_string_array_helper
-                                           (CutTestContext *test_context,
-                                            char          **expected,
+                                           (char          **expected,
                                             char          **actual,
                                             const char     *expression_expected,
                                             const char     *expression_actual,
                                             const char     *user_message_format,
                                             ...);
-void        cut_assert_operator_helper     (CutTestContext *test_context,
-                                            cut_boolean     result,
+void        cut_assert_operator_helper     (cut_boolean     result,
                                             const char     *expression_lhs,
                                             const char     *expression_operator,
                                             const char     *expression_rhs,
                                             const char     *user_message_format,
                                             ...);
-void        cut_assert_operator_int_helper (CutTestContext *test_context,
-                                            cut_boolean     result,
+void        cut_assert_operator_int_helper (cut_boolean     result,
                                             long            lhs,
                                             long            rhs,
                                             const char     *expression_lhs,
@@ -170,8 +144,7 @@ void        cut_assert_operator_int_helper (CutTestContext *test_context,
                                             const char     *user_message_format,
                                             ...);
 void        cut_assert_operator_double_helper
-                                           (CutTestContext *test_context,
-                                            cut_boolean     result,
+                                           (cut_boolean     result,
                                             double          lhs,
                                             double          rhs,
                                             const char     *expression_lhs,
@@ -179,46 +152,41 @@ void        cut_assert_operator_double_helper
                                             const char     *expression_rhs,
                                             const char     *user_message_format,
                                             ...);
-void        cut_assert_equal_helper (CutTestContext *test_context,
-                                     cut_boolean     result,
+void        cut_assert_equal_helper (cut_boolean     result,
                                      const char     *expression_function,
                                      const char     *expression_expected,
                                      const char     *expression_actual,
                                      const char     *user_message_format,
                                      ...);
-void        cut_assert_errno_helper (CutTestContext *test_context,
+void        cut_assert_errno_helper (void           *dummy_argument,
                                      const char     *user_message_format,
                                      ...);
 void        cut_assert_path_exist_helper
-                                    (CutTestContext *test_context,
-                                     const char     *path,
+                                    (const char     *path,
                                      const char     *expression_path,
                                      const char     *user_message_format,
                                      ...);
 void        cut_assert_path_not_exist_helper
-                                    (CutTestContext *test_context,
-                                     const char     *path,
+                                    (const char     *path,
                                      const char     *expression_path,
                                      const char     *user_message_format,
                                      ...);
-void        cut_assert_match_helper (CutTestContext *test_context,
-                                     const char     *pattern,
+void        cut_assert_match_helper (const char     *pattern,
                                      const char     *actual,
                                      const char     *expression_pattern,
                                      const char     *expression_actual,
                                      const char     *user_message_format,
                                      ...);
 void        cut_assert_equal_pointer_helper
-                                    (CutTestContext *test_context,
-                                     const void     *expected,
+                                    (const void     *expected,
                                      const void     *actual,
                                      const char     *expression_expected,
                                      const char     *expression_actual,
                                      const char     *user_message_format,
                                      ...);
-void        cut_error_errno_helper (CutTestContext *test_context,
-                                    const char     *user_message_format,
-                                    ...);
+void        cut_error_errno_helper  (void           *dummy_argument,
+                                     const char     *user_message_format,
+                                     ...);
 
 
 #ifdef __cplusplus

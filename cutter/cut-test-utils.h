@@ -20,8 +20,6 @@
 #ifndef __CUT_TEST_UTILS_H__
 #define __CUT_TEST_UTILS_H__
 
-#include <cutter/cut-test-utils-helper.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -51,9 +49,9 @@ extern "C" {
  *
  * Since: 1.0.5
  */
-#define cut_take(object, destroy_function)              \
-    cut_take_helper(cut_get_current_test_context(),     \
-                    (object), destroy_function)
+#define cut_take(object, destroy_function)                      \
+    cut_test_context_take(cut_get_current_test_context(),       \
+                          (object), destroy_function)
 
 /**
  * cut_take_memory:
@@ -67,7 +65,8 @@ extern "C" {
  * Since: 1.0.5
  */
 #define cut_take_memory(memory)                                         \
-    cut_take_memory_helper(cut_get_current_test_context(), (memory))
+    cut_test_context_take_memory(cut_get_current_test_context(),        \
+                                 (memory))
 
 /**
  * cut_take_string:
@@ -79,7 +78,8 @@ extern "C" {
  * Returns: a string owned by Cutter. Don't free it.
  */
 #define cut_take_string(string)                                         \
-    cut_take_string_helper(cut_get_current_test_context(), (string))
+    cut_test_context_take_string(cut_get_current_test_context(),        \
+                                 (string))
 
 /**
  * cut_take_strdup:
@@ -94,7 +94,8 @@ extern "C" {
  * Since: 1.0.5
  */
 #define cut_take_strdup(string)                                         \
-    cut_take_strdup_helper(cut_get_current_test_context(), (string))
+    cut_test_context_take_strdup(cut_get_current_test_context(),        \
+                                 (string))
 
 /**
  * cut_take_strndup:
@@ -141,9 +142,9 @@ extern "C" {
  *
  * Returns: a formatted string owned by Cutter. Don't free it.
  */
-#define cut_take_printf(format, ...)                            \
-    cut_take_printf_helper(cut_get_current_test_context(),      \
-                           format, __VA_ARGS__)
+#define cut_take_printf(format, ...)                                    \
+    cut_test_context_take_printf(cut_get_current_test_context(),        \
+                                 format, __VA_ARGS__)
 
 /**
  * cut_take_string_array:
@@ -186,8 +187,7 @@ extern "C" {
  * Since: 1.0.3
  */
 #define cut_append_diff(message, from, to)                      \
-    cut_append_diff_helper(cut_get_current_test_context(),      \
-                           message, from, to)
+    cut_take_string(cut_utils_append_diff(message, from, to))
 
 /**
  * cut_inspect_string_array:
@@ -198,8 +198,7 @@ extern "C" {
  * Returns: a inspected string. Don't free it.
  */
 #define cut_inspect_string_array(strings)                               \
-    cut_inspect_string_array_helper(cut_get_current_test_context(),     \
-                                    (strings))
+    cut_take_string(cut_utils_inspect_string_array(strings))
 
 /**
  * cut_set_fixture_data_dir:

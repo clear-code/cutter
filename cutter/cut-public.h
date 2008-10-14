@@ -52,7 +52,7 @@ void  cut_test_context_register_result      (CutTestContext *context,
                                              CutTestResultStatus status,
                                              const char *message,
                                              ...) /* CUT_GNUC_PRINTF(4, 5) */;
-void  cut_test_context_register_resultv
+void  cut_test_context_register_result_va_list
                                             (CutTestContext *context,
                                              CutTestResultStatus status,
                                              const char *system_message,

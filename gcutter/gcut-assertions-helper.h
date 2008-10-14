@@ -22,7 +22,7 @@
 
 #include <glib.h>
 
-#include <cutter/cut-assertions-helper.h>
+#include <cutter.h>
 #include <gcutter/gcut-value-equal.h>
 #include <gcutter/gcut-list.h>
 #include <gcutter/gcut-hash-table.h>
@@ -34,45 +34,39 @@
 
 G_BEGIN_DECLS
 
-void      gcut_assert_equal_type_helper     (CutTestContext *test_context,
-                                             GType           expected,
+void      gcut_assert_equal_type_helper     (GType           expected,
                                              GType           actual,
                                              const gchar    *expression_expected,
                                              const gchar    *expression_actual,
                                              const gchar    *format,
                                              ...);
-void      gcut_assert_equal_value_helper    (CutTestContext *test_context,
-                                             GValue         *expected,
+void      gcut_assert_equal_value_helper    (GValue         *expected,
                                              GValue         *actual,
                                              const gchar    *expression_expected,
                                              const gchar    *expression_actual,
                                              const gchar    *format,
                                              ...);
-void      gcut_assert_equal_list_int_helper (CutTestContext *test_context,
-                                             const GList    *expected,
+void      gcut_assert_equal_list_int_helper (const GList    *expected,
                                              const GList    *actual,
                                              const gchar    *expression_expected,
                                              const gchar    *expression_actual,
                                              const gchar    *format,
                                              ...);
-void      gcut_assert_equal_list_uint_helper(CutTestContext *test_context,
-                                             const GList    *expected,
+void      gcut_assert_equal_list_uint_helper(const GList    *expected,
                                              const GList    *actual,
                                              const gchar    *expression_expected,
                                              const gchar    *expression_actual,
                                              const gchar    *user_message_format,
                                              ...);
 void      gcut_assert_equal_list_string_helper
-                                            (CutTestContext *test_context,
-                                             const GList    *expected,
+                                            (const GList    *expected,
                                              const GList    *actual,
                                              const gchar    *expression_expected,
                                              const gchar    *expression_actual,
                                              const gchar    *user_message_format,
                                              ...);
 void      gcut_assert_equal_list_enum_helper
-                                            (CutTestContext *test_context,
-                                             GType           type,
+                                            (GType           type,
                                              const GList    *expected,
                                              const GList    *actual,
                                              const gchar    *expression_type,
@@ -81,8 +75,7 @@ void      gcut_assert_equal_list_enum_helper
                                              const gchar    *user_message_format,
                                              ...);
 void      gcut_assert_equal_list_flags_helper
-                                            (CutTestContext *test_context,
-                                             GType           type,
+                                            (GType           type,
                                              const GList    *expected,
                                              const GList    *actual,
                                              const gchar    *expression_type,
@@ -91,8 +84,7 @@ void      gcut_assert_equal_list_flags_helper
                                              const gchar    *user_message_format,
                                              ...);
 void      gcut_assert_equal_list_object_helper
-                                            (CutTestContext *test_context,
-                                             const GList    *expected,
+                                            (const GList    *expected,
                                              const GList    *actual,
                                              GEqualFunc      equal_function,
                                              const gchar    *expression_expected,
@@ -100,27 +92,23 @@ void      gcut_assert_equal_list_object_helper
                                              const gchar    *user_message_format,
                                              ...);
 void      gcut_assert_equal_hash_table_string_string_helper
-                                            (CutTestContext *test_context,
-                                             GHashTable     *expected,
+                                            (GHashTable     *expected,
                                              GHashTable     *actual,
                                              const gchar    *expression_expected,
                                              const gchar    *expression_actual,
                                              const gchar    *user_message_format,
                                              ...);
-void      gcut_assert_error_helper          (CutTestContext *test_context,
-                                             GError         *error,
+void      gcut_assert_error_helper          (GError         *error,
                                              const gchar    *expression_error,
                                              const gchar    *user_message_format,
                                              ...);
-void      gcut_assert_equal_error_helper    (CutTestContext *test_context,
-                                             const GError   *expected,
+void      gcut_assert_equal_error_helper    (const GError   *expected,
                                              const GError   *actual,
                                              const gchar    *expression_expected,
                                              const gchar    *expression_actual,
                                              const gchar    *user_message_format,
                                              ...);
-void      gcut_assert_equal_enum_helper     (CutTestContext *test_context,
-                                             GType           enum_type,
+void      gcut_assert_equal_enum_helper     (GType           enum_type,
                                              gint            expected,
                                              gint            actual,
                                              const gchar    *expression_enum_type,
@@ -128,8 +116,7 @@ void      gcut_assert_equal_enum_helper     (CutTestContext *test_context,
                                              const gchar    *expression_actual,
                                              const gchar    *user_message_format,
                                              ...);
-void      gcut_assert_equal_flags_helper    (CutTestContext *test_context,
-                                             GType           flags_type,
+void      gcut_assert_equal_flags_helper    (GType           flags_type,
                                              gint            expected,
                                              gint            actual,
                                              const gchar    *expression_flags_type,
@@ -138,8 +125,7 @@ void      gcut_assert_equal_flags_helper    (CutTestContext *test_context,
                                              const gchar    *user_message_format,
                                              ...);
 
-void      gcut_assert_equal_object_helper   (CutTestContext *test_context,
-                                             GObject        *expected,
+void      gcut_assert_equal_object_helper   (GObject        *expected,
                                              GObject        *actual,
                                              GEqualFunc      equal_function,
                                              const gchar    *expression_expected,
@@ -147,15 +133,13 @@ void      gcut_assert_equal_object_helper   (CutTestContext *test_context,
                                              const gchar    *expression_equal_function,
                                              const gchar    *user_message_format,
                                              ...);
-void      gcut_assert_equal_int64_helper    (CutTestContext *test_context,
-                                             gint64          expected,
+void      gcut_assert_equal_int64_helper    (gint64          expected,
                                              gint64          actual,
                                              const char     *expression_expected,
                                              const char     *expression_actual,
                                              const char     *user_message_format,
                                              ...);
-void      gcut_assert_equal_uint64_helper   (CutTestContext *test_context,
-                                             guint64         expected,
+void      gcut_assert_equal_uint64_helper   (guint64         expected,
                                              guint64         actual,
                                              const char     *expression_expected,
                                              const char     *expression_actual,

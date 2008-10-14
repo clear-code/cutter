@@ -25,8 +25,7 @@
 #include "gdkcut-pixbuf.h"
 
 void
-gdkcut_pixbuf_assert_equal_helper (CutTestContext  *test_context,
-                                   const GdkPixbuf *expected,
+gdkcut_pixbuf_assert_equal_helper (const GdkPixbuf *expected,
                                    const GdkPixbuf *actual,
                                    guint            threshold,
                                    const gchar     *expression_expected,
@@ -36,7 +35,7 @@ gdkcut_pixbuf_assert_equal_helper (CutTestContext  *test_context,
                                    ...)
 {
     if (gdkcut_pixbuf_equal_content(expected, actual, threshold)) {
-        cut_test_pass_helper(test_context);
+        cut_test_pass();
     } else {
         GString *message;
         const gchar *fail_message;
@@ -65,7 +64,8 @@ gdkcut_pixbuf_assert_equal_helper (CutTestContext  *test_context,
             gchar *diff_image_file;
             GError *error = NULL;
 
-            cut_test_context_get_last_backtrace(test_context, &filename, &line,
+            cut_test_context_get_last_backtrace(cut_get_current_test_context(),
+                                                &filename, &line,
                                                 NULL, NULL);
             diff_image_file_prefix = g_strdup_printf("%s-%u", filename, line);
             diff_image_file =
@@ -78,10 +78,9 @@ gdkcut_pixbuf_assert_equal_helper (CutTestContext  *test_context,
                 gchar *inspected_error;
 
                 inspected_error = gcut_error_inspect(error);
-                cut_test_register_result_va_list_helper(test_context,
-                                                        NOTIFICATION,
-                                                        inspected_error,
-                                                        user_message_format);
+                cut_test_register_result_va_list(NOTIFICATION,
+                                                 inspected_error,
+                                                 user_message_format);
                 g_free(inspected_error);
             } else {
                 g_string_append_printf(message,
@@ -90,20 +89,16 @@ gdkcut_pixbuf_assert_equal_helper (CutTestContext  *test_context,
                                        diff_image_file);
                 g_free(diff_image_file);
             }
-            fail_message = cut_take_string_helper(test_context,
-                                                  g_string_free(message, FALSE));
+            fail_message = cut_take_string(g_string_free(message, FALSE));
         } else if (expected && actual) {
-            fail_message = cut_append_diff_helper(test_context,
-                                                  message->str,
-                                                  inspected_expected,
-                                                  inspected_actual);
+            fail_message = cut_append_diff(message->str,
+                                           inspected_expected,
+                                           inspected_actual);
             g_string_free(message, TRUE);
         } else {
-            fail_message = cut_take_string_helper(test_context,
-                                                  g_string_free(message, FALSE));
+            fail_message = cut_take_string(g_string_free(message, FALSE));
         }
-        cut_test_fail_va_list_helper(test_context, fail_message,
-                                     user_message_format);
+        cut_test_fail_va_list(fail_message, user_message_format);
     }
 }
 

@@ -126,8 +126,8 @@ extern "C" {
  *
  * Since: 1.0.5
  */
-#define cut_test_pass()                                         \
-    cut_test_pass_helper(cut_get_current_test_context())
+#define cut_test_pass()                                                 \
+    cut_test_context_pass_assertion(cut_get_current_test_context())
 
 /**
  * cut_test_fail:
@@ -174,8 +174,8 @@ extern "C" {
  * Since: 1.0.5
  */
 #define cut_test_fail_va_list(system_message, user_message_format)      \
-    cut_test_fail_va_list_helper(cut_get_current_test_context(),        \
-                                 system_message, user_message_format)
+    cut_test_terminate_va_list(FAILURE, system_message,                 \
+                               user_message_format)
 
 /**
  * cut_trace:

@@ -58,7 +58,6 @@ G_BEGIN_DECLS
 #define gdkcut_pixbuf_assert_equal(expected, actual, threshold, ...)    \
     cut_trace_with_info_expression(                                     \
         gdkcut_pixbuf_assert_equal_helper(                              \
-            cut_get_current_test_context(),                             \
             expected, actual, threshold,                                \
             #expected, #actual, #threshold,                             \
             ## __VA_ARGS__, NULL),                                      \

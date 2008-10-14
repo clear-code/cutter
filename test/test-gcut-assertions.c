@@ -651,7 +651,13 @@ test_equal_error (void)
                            NULL,
                            "<error1 == error2>\n"
                            "expected: <g-file-error-quark:4: not found>\n"
-                           "  actual: <g-file-error-quark:4: no entry>",
+                           "  actual: <g-file-error-quark:4: no entry>\n"
+                           "\n"
+                           "diff:\n"
+                           "- g-file-error-quark:4: not found\n"
+                           "?                          ^^^^^^\n"
+                           "+ g-file-error-quark:4: no entry\n"
+                           "?                         +++ ^^",
                            FAIL_LOCATION,
                            "stub_equal_error");
 }
@@ -675,17 +681,24 @@ test_equal_enum (void)
 
     cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
-    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
-                           "gcut_assert_equal_enum test",
-                           NULL,
-                           "<CUT_TEST_RESULT_FAILURE == CUT_TEST_RESULT_PENDING>"
-                           " (CUT_TYPE_TEST_RESULT_STATUS)\n"
-                           "expected: <#<CutTestResultStatus: "
-                           "failure(CUT_TEST_RESULT_FAILURE:4)>>\n"
-                           "  actual: <#<CutTestResultStatus: "
-                           "pending(CUT_TEST_RESULT_PENDING:3)>>",
-                           FAIL_LOCATION,
-                           "stub_equal_enum");
+    cut_assert_test_result(
+        run_context, 0, CUT_TEST_RESULT_FAILURE,
+        "gcut_assert_equal_enum test",
+        NULL,
+        "<CUT_TEST_RESULT_FAILURE == CUT_TEST_RESULT_PENDING>"
+        " (CUT_TYPE_TEST_RESULT_STATUS)\n"
+        "expected: <#<CutTestResultStatus: "
+        "failure(CUT_TEST_RESULT_FAILURE:4)>>\n"
+        "  actual: <#<CutTestResultStatus: "
+        "pending(CUT_TEST_RESULT_PENDING:3)>>\n"
+        "\n"
+        "diff:\n"
+        "- #<CutTestResultStatus: failure(CUT_TEST_RESULT_FAILURE:4)>\n"
+        "?                        ^^ ^^^^                 ^^ ^^^^ ^\n"
+        "+ #<CutTestResultStatus: pending(CUT_TEST_RESULT_PENDING:3)>\n"
+        "?                        ^^^^ ^^                 ^^^^ ^^ ^",
+        FAIL_LOCATION,
+        "stub_equal_enum");
 }
 
 static void

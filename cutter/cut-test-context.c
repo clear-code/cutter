@@ -731,11 +731,11 @@ cut_test_context_emit_signal (CutTestContext *context,
 }
 
 void
-cut_test_context_register_resultv (CutTestContext *context,
-                                   CutTestResultStatus status,
-                                   const char *system_message,
-                                   const char *user_message_format,
-                                   va_list args)
+cut_test_context_register_result_va_list (CutTestContext *context,
+                                          CutTestResultStatus status,
+                                          const char *system_message,
+                                          const char *user_message_format,
+                                          va_list args)
 {
     CutTestContextPrivate *priv;
     CutTestResult *result;
@@ -813,8 +813,8 @@ cut_test_context_register_result (CutTestContext *context,
     va_list args;
 
     va_start(args, message);
-    cut_test_context_register_resultv(context, status, message,
-                                      va_arg(args, gchar *), args);
+    cut_test_context_register_result_va_list(context, status, message,
+                                             va_arg(args, gchar *), args);
     va_end(args);
 }
 

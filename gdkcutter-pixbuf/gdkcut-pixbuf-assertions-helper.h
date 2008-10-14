@@ -27,8 +27,7 @@
 
 G_BEGIN_DECLS
 
-void  gdkcut_pixbuf_assert_equal_helper (CutTestContext  *test_context,
-                                         const GdkPixbuf *expected,
+void  gdkcut_pixbuf_assert_equal_helper (const GdkPixbuf *expected,
                                          const GdkPixbuf *actual,
                                          guint            threshold,
                                          const gchar     *expression_expected,
