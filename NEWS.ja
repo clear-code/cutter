@@ -11,10 +11,10 @@
       * ((<cut_sub_process_set_max_threads()|cutter-cut-multi-process.html>))
   * GdkPixbufのサポート:
     * 画像比較
-    * 画像diff
+    * 画像差分
       * 期待値: ((<dark-circle.png>))
       * 実測値: ((<nested-circle.png>))
-      * diff: ((<diff-dark-and-nested-circle.png>))
+      * 差分: ((<diff-dark-and-nested-circle.png>))
   * デバッグ支援の強化:
     * --keep-opening-modulesオプションの追加
       * デバッグ時にシンボル解決できるように開いたモジュール

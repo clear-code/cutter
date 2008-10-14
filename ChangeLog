@@ -1,5 +1,7 @@
 2008-10-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* FEATURES*: add image diff.
+
 	* NEWS*, doc/reference/, misc/rd2refentry-lib.rb: use <img>.
 
 	* gcutter/gcut-hash-table.c, gcutter/gcut-test-utils.h,

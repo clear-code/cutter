@@ -19,6 +19,7 @@ Cutter also has many useful advanced features:
   * Backtrace on crash
   * Serialize/deserialize test result
   * Multi-process/multi-thread support
+  * Image diff
   * ...
 
 == Basic
