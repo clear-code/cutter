@@ -1,5 +1,7 @@
 2008-10-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* NEWS*: add an entry for 1.0.5.
+
 	* cutter/cut-helper.h: support shared library.
 
 	* cutter/, gcutter/, gdkcutter-pixbuf/: use
