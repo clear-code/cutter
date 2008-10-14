@@ -48,6 +48,7 @@ gcutter/gcut-enum.c
 gcutter/gcut-error.c
 gcutter/gcut-hash-table.c
 gcutter/gcut-list.c
+gcutter/gcut-main.c
 gcutter/gcut-object.c
 gcutter/gcut-value-equal.c
 gdkcutter-pixbuf/gdkcut-pixbuf-assertions-helper.c
