@@ -1,5 +1,7 @@
 2008-10-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* Makefile.am, misc/release.rb: use PACKAGE_NAME not PACKAGE_TITLE.
+
 	* html/Makefile.am, doc/reference/Makefile.am: follow the recent
 	SF.net change.
 
