@@ -8,7 +8,7 @@ require 'logger'
 if ARGV.size < 5
   puts "Usage: #{$0} " +
          "SF_USER_NAME PROJECT_NAME PACKAGE_NAME RELEASE_NAME FILE_NAME README NEWS"
-  puts " e.g.: #{$0} ktou cutter cutter 0.3.0 cutter-0.3.0.tar.gz README NEWS"
+  puts " e.g.: #{$0} ktou Cutter cutter 0.3.0 cutter-0.3.0.tar.gz README NEWS"
   exit(1)
 end
 
