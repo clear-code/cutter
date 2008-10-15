@@ -541,7 +541,7 @@ test_notification (void)
 static void
 stub_fail (void)
 {
-    cut_fail("This test should fail");
+    cut_fail("This test should fail. %s", "Exactly!");
 }
 
 void
@@ -562,6 +562,8 @@ test_fail (void)
                         "since \"failure\" signal was not emitted.");
     cut_assert_equal_int(CUT_TEST_RESULT_FAILURE,
                          cut_test_result_get_status(test_result));
+
+    cut_assert_equal_string("This test should fail. Exactly!", cut_test_result_get_message(test_result));
 }
 
 static void
@@ -887,5 +889,5 @@ test_error_errno (void)
 }
 
 /*
-vi:nowrap:ai:expandtab:sw=4
+vi:ts=4:nowrap:ai:expandtab:sw=4
 */
