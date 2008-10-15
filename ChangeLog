@@ -1,5 +1,7 @@
 2008-10-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* configure.ac: 1.0.5 -> 1.0.6.
+
 	* Makefile.am, misc/release.rb: use PACKAGE_NAME not PACKAGE_TITLE.
 
 	* html/Makefile.am, doc/reference/Makefile.am: follow the recent
