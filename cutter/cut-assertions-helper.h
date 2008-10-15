@@ -27,11 +27,12 @@
 extern "C" {
 #endif
 
-#define cut_test_register_result(status, message, ...) do               \
+#define cut_test_register_result(status, system_message, ...) do        \
 {                                                                       \
     cut_test_context_register_result(cut_get_current_test_context(),    \
                                      CUT_TEST_RESULT_ ## status,        \
-                                     message, ## __VA_ARGS__, NULL);    \
+                                     system_message,                    \
+                                     ## __VA_ARGS__, NULL);             \
 } while (0)
 
 #define cut_test_register_result_va_list(status, system_message,        \
@@ -48,10 +49,10 @@ extern "C" {
     va_end(args);                                                       \
 } while (0)
 
-#define cut_test_terminate(status, message, ...) do                 \
-{                                                                   \
-    cut_test_register_result(status, message, ## __VA_ARGS__);      \
-    cut_test_context_long_jump(cut_get_current_test_context());     \
+#define cut_test_terminate(status, system_message, ...) do              \
+{                                                                       \
+    cut_test_register_result(status, system_message, ## __VA_ARGS__);   \
+    cut_test_context_long_jump(cut_get_current_test_context());         \
 } while (0)
 
 #define cut_test_terminate_va_list(status, system_message,              \

@@ -563,7 +563,8 @@ test_fail (void)
     cut_assert_equal_int(CUT_TEST_RESULT_FAILURE,
                          cut_test_result_get_status(test_result));
 
-    cut_assert_equal_string("This test should fail. Exactly!", cut_test_result_get_message(test_result));
+    cut_assert_equal_string("This test should fail. Exactly!",
+                            cut_test_result_get_message(test_result));
 }
 
 static void

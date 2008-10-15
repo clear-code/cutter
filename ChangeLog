@@ -1,5 +1,8 @@
 2008-10-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertions-helper.h: improve variable name.
+	* test/test-cut-assertions.c: fix indent.
+
 	* NEWS*, doc/reference/ja.po: add cut_assert_operator_uint().
 
 	* cutter/cut-assertions.h, cutter/cut-assertions-helper.[ch],
