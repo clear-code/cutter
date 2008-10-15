@@ -172,15 +172,16 @@ features.xml.ja: $(top_srcdir)/FEATURES.ja $(RD2REFENTRY_LIB) ja.po
 	$(RD2_JA) $(top_srcdir)/FEATURES.ja > features.xml.ja
 
 upload: docs
-	ssh $(SF_HOST) rm -rf $(SF_HTDOCS_PATH)/reference
-	scp -r $(srcdir)/html/ $(SF_HTDOCS)/reference/
+	rm -rf $(srcdir)/tmp/
+	mkdir -p $(srcdir)/tmp/
+	cp -rp $(srcdir)/html/ $(srcdir)/tmp/reference
 	for catalog in $(CATALOGS); do					\
 	  lang=`echo $$catalog | sed 's/.po$$//'`;			\
-	  scp -r $(srcdir)/$$lang/html/ $(SF_HTDOCS)/reference/$$lang/;	\
+	  cp -rp $(srcdir)/$$lang/html/ $(srcdir)/tmp/reference/$$lang/;\
 	done
-	ssh $(SF_HOST) chmod -R g+w $(SF_HTDOCS_PATH)/reference
-	scp $(srcdir)/sf-logo.html $(SF_HOST):
-	ssh $(SF_HOST) ruby -i ''					\
-	   -pe "'\$$_.sub!(/<\\/body>/u,				\
-	                    File.read(\"sf-logo.html\") + \"</body>\")'"\
-	   '$(SF_HTDOCS_PATH)/reference/**/*.html'
+	chmod -R g+w $(srcdir)/tmp/reference
+	ruby -i'' -pe '$$_.sub!(/<\/body>/u,				\
+	                       	File.read("sf-logo.html") + "</body>")'	\
+	  $(srcdir)/tmp/reference/*.html				\
+	  $(srcdir)/tmp/reference/*/*.html
+	scp -r $(srcdir)/tmp/reference/* $(SF_HTDOCS)/reference/

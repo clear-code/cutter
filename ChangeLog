@@ -1,5 +1,8 @@
 2008-10-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* html/Makefile.am, doc/reference/Makefile.am: follow the recent
+	SF.net change.
+
 	* cutter/cut-test-context.c: use variable.
 
 	* cutter/cut-assertions-helper.h: improve variable name.
