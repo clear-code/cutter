@@ -32,6 +32,7 @@
     * ((<gcut_hash_table_string_string_new()|cutter-gcut-test-utils.html>))
     * ((<gcut_hash_table_string_string_new_va_list()|cutter-gcut-test-utils.html>))
   * Add assertions:
+    * ((<cut_assert_operator_uint()|cutter-cut-assertions.html>))
     * ((<cut_assert_operator_double()|cutter-cut-assertions.html>))
     * ((<gcut_assert_equal_enum()|cutter-gcut-assertions.html>))
     * ((<gcut_assert_equal_error()|cutter-gcut-assertions.html>))

@@ -365,6 +365,8 @@ extern "C" {
  * |[
  * cut_assert_operator_uint(1, <, 2) -> (1 < 2);
  * ]|
+ *
+ * Since: 1.0.5
  */
 #define cut_assert_operator_uint(lhs, operator, rhs, ...) do            \
     {                                                                   \

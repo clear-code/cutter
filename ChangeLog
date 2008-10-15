@@ -1,5 +1,7 @@
 2008-10-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* NEWS*, doc/reference/ja.po: add cut_assert_operator_uint().
+
 	* cutter/cut-assertions.h, cutter/cut-assertions-helper.[ch],
 	test/test-cut-assertions.c: add cut_assert_operator_uint().
 
