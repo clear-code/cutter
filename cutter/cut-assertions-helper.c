@@ -356,6 +356,31 @@ cut_assert_operator_int_helper (cut_boolean     result,
 }
 
 void
+cut_assert_operator_uint_helper (cut_boolean     result,
+                                 unsigned long   lhs,
+                                 unsigned long   rhs,
+                                 const char     *expression_lhs,
+                                 const char     *expression_operator,
+                                 const char     *expression_rhs,
+                                 const char     *user_message_format,
+                                 ...)
+{
+    if (result) {
+        cut_test_pass();
+    } else {
+        cut_test_fail_va_list(cut_take_printf("expected: <%s> %s <%s>\n"
+                                              "  actual: <%lu> %s <%lu>",
+                                              expression_lhs,
+                                              expression_operator,
+                                              expression_rhs,
+                                              lhs,
+                                              expression_operator,
+                                              rhs),
+                              user_message_format);
+    }
+}
+
+void
 cut_assert_operator_double_helper (cut_boolean     result,
                                    double          lhs,
                                    double          rhs,

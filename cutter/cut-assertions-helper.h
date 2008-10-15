@@ -143,6 +143,14 @@ void        cut_assert_operator_int_helper (cut_boolean     result,
                                             const char     *expression_rhs,
                                             const char     *user_message_format,
                                             ...);
+void        cut_assert_operator_uint_helper(cut_boolean     result,
+                                            unsigned long   lhs,
+                                            unsigned long   rhs,
+                                            const char     *expression_lhs,
+                                            const char     *expression_operator,
+                                            const char     *expression_rhs,
+                                            const char     *user_message_format,
+                                            ...);
 void        cut_assert_operator_double_helper
                                            (cut_boolean     result,
                                             double          lhs,

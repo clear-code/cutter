@@ -1,3 +1,8 @@
+2008-10-15  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-assertions.h, cutter/cut-assertions-helper.[ch],
+	test/test-cut-assertions.c: add cut_assert_operator_uint().
+
 2008-10-14  Kouhei Sutou  <kou@cozmixng.org>
 
 	* NEWS*: 14 -> 15. give up.

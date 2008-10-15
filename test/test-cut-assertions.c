@@ -22,6 +22,7 @@ void test_equal_string_with_folded_diff(void);
 void test_equal_double(void);
 void test_operator(void);
 void test_operator_int(void);
+void test_operator_uint(void);
 void test_operator_double(void);
 void test_equal_memory (void);
 void test_equal_string_array (void);
@@ -347,6 +348,30 @@ test_operator_int (void)
                            "  actual: <2> >= <6>",
                            FAIL_LOCATION,
                            "stub_operator_int");
+}
+
+static void
+stub_operator_uint (void)
+{
+    cut_assert_operator_uint(1, <, 2 + 3);
+    cut_assert_operator_uint(2, ==, 1 + 1);
+    MARK_FAIL(cut_assert_operator_uint(1 + 1, >=, 2 + 4));
+}
+
+void
+test_operator_uint (void)
+{
+    test = cut_test_new("stub-operator-uint", stub_operator_uint);
+    cut_assert_not_null(test);
+
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "stub-operator-uint", NULL,
+                           "expected: <1 + 1> >= <2 + 4>\n"
+                           "  actual: <2> >= <6>",
+                           FAIL_LOCATION,
+                           "stub_operator_uint");
 }
 
 static void

@@ -352,6 +352,33 @@ extern "C" {
 } while(0)
 
 /**
+ * cut_assert_operator_uint:
+ * @lhs: a left hand side unsigned integer value.
+ * @operator: a binary operator.
+ * @rhs: a right hand side unsigned integer value.
+ * @...: optional format string, followed by parameters to insert
+ *       into the format string (as with printf())
+ *
+ * Passes if (@lhs @operator @rhs) is TRUE.
+ *
+ * e.g.:
+ * |[
+ * cut_assert_operator_uint(1, <, 2) -> (1 < 2);
+ * ]|
+ */
+#define cut_assert_operator_uint(lhs, operator, rhs, ...) do            \
+    {                                                                   \
+        unsigned long _lhs = (lhs);                                     \
+        unsigned long _rhs = (rhs);                                     \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_operator_uint_helper((_lhs operator _rhs),           \
+                                       _lhs, _rhs,                      \
+                                       #lhs, #operator, #rhs,           \
+                                       ## __VA_ARGS__, NULL),           \
+        cut_assert_operator_uint(lhs, operator, rhs, ## __VA_ARGS__));  \
+} while(0)
+
+/**
  * cut_assert_operator_double:
  * @lhs: a left hand side double value.
  * @operator: a binary operator.
