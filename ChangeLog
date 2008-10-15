@@ -1,5 +1,7 @@
 2008-10-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-context.c: use variable.
+
 	* cutter/cut-assertions-helper.h: improve variable name.
 	* test/test-cut-assertions.c: fix indent.
 

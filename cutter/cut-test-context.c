@@ -811,10 +811,12 @@ cut_test_context_register_result (CutTestContext *context,
                                   ...)
 {
     va_list args;
+    const gchar *user_message_format;
 
     va_start(args, message);
+    user_message_format = va_arg(args, gchar *);
     cut_test_context_register_result_va_list(context, status, message,
-                                             va_arg(args, gchar *), args);
+                                             user_message_format, args);
     va_end(args);
 }
 
