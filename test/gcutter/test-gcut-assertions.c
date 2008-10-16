@@ -6,7 +6,7 @@
 #include <cutter/cut-repository.h>
 #include <cutter/cut-enum-types.h>
 #include <cutter/cut-loader.h>
-#include "lib/cuttest-assertions.h"
+#include "../lib/cuttest-assertions.h"
 
 void test_equal_type(void);
 void test_equal_value(void);
