@@ -49,13 +49,15 @@ test_new (void)
     GError *error = NULL;
 
     channel = gcut_io_channel_string_new("XXX");
-    cut_assert_equal_string("XXX", gcut_string_io_channel_get_string(channel));
+    cut_assert_equal_string("XXX",
+                            gcut_string_io_channel_get_string(channel)->str);
 
     g_io_channel_read_to_end(channel, &data, &length, &error);
     gcut_assert_error(error);
     cut_assert_equal_string("XXX", data);
 
-    cut_assert_equal_string("XXX", gcut_string_io_channel_get_string(channel));
+    cut_assert_equal_string("XXX",
+                            gcut_string_io_channel_get_string(channel)->str);
 }
 
 void
@@ -66,7 +68,8 @@ test_new_null (void)
     GError *error = NULL;
 
     channel = gcut_io_channel_string_new(NULL);
-    cut_assert_equal_string("", gcut_string_io_channel_get_string(channel));
+    cut_assert_equal_string("",
+                            gcut_string_io_channel_get_string(channel)->str);
 
     cut_assert_equal_int(G_IO_STATUS_EOF,
                          g_io_channel_read_chars(channel, buffer, sizeof(buffer),
@@ -77,7 +80,8 @@ test_new_null (void)
     gcut_assert_error(error);
     cut_assert_equal_string("", data);
 
-    cut_assert_equal_string("", gcut_string_io_channel_get_string(channel));
+    cut_assert_equal_string("",
+                            gcut_string_io_channel_get_string(channel)->str);
 }
 
 void
@@ -91,7 +95,8 @@ test_read_write (void)
     channel = gcut_io_channel_string_new(NULL);
     g_io_channel_set_encoding(channel, NULL, &error);
     gcut_assert_error(error);
-    cut_assert_equal_string("", gcut_string_io_channel_get_string(channel));
+    cut_assert_equal_string("",
+                            gcut_string_io_channel_get_string(channel)->str);
 
     cut_assert_equal_int(G_IO_STATUS_EOF,
                          g_io_channel_read_chars(channel, buffer, sizeof(buffer),
@@ -110,7 +115,7 @@ test_read_write (void)
     cut_assert_equal_string(write_data, data);
 
     cut_assert_equal_string(write_data,
-                            gcut_string_io_channel_get_string(channel));
+                            gcut_string_io_channel_get_string(channel)->str);
 }
 
 /*

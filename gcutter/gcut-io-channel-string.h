@@ -25,7 +25,7 @@
 G_BEGIN_DECLS
 
 GIOChannel    *gcut_io_channel_string_new        (const gchar *initial);
-const gchar   *gcut_string_io_channel_get_string (GIOChannel  *channel);
+GString       *gcut_string_io_channel_get_string (GIOChannel  *channel);
 
 G_END_DECLS
 

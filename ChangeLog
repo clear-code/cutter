@@ -1,5 +1,9 @@
 2008-10-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-io-channel-string.[ch],
+	test/test-gcut-io-channel-string.c:
+	gcut_string_io_channel_get_string() returns GString * not gchar *.
+
 	* gcutter/gcut-io-channel-string.[ch], gcutter/gcut-test-utils.h,
 	test/test-gcut-io-channel-string.c: add gcut_io_channel_string_new().
 

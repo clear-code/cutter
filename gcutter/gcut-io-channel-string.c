@@ -268,12 +268,12 @@ gcut_io_channel_string_new (const gchar *initial)
     return channel;
 }
 
-const gchar *
+GString *
 gcut_string_io_channel_get_string (GIOChannel *channel)
 {
     GCutIOChannelString *string_channel = (GCutIOChannelString *)channel;
 
-    return string_channel->string->str;
+    return string_channel->string;
 }
 
 /*
