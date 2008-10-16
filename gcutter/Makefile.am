@@ -22,6 +22,7 @@ gcutter_public_headers =		\
 	gcut-enum.h			\
 	gcut-types.h			\
 	gcut-object.h			\
+	gcut-io-channel-string.h	\
 	gcut-main.h
 
 noinst_headers = 	\
@@ -44,4 +45,5 @@ libgcutter_la_SOURCES =			\
 	gcut-enum.c			\
 	gcut-assertions-helper.c	\
 	gcut-object.c			\
+	gcut-io-channel-string.c	\
 	gcut-main.c

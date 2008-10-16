@@ -62,6 +62,7 @@ noinst_LTLIBRARIES = 				\
 		test-gcut-enum.la		\
 		test-gcut-object.la		\
 		test-gcut-list.la		\
+		test-gcut-io-channel-string.la	\
 		test-cut-main.la		\
 		test-cut-fixture-data.la	\
 		test-cut-test-data.la		\
@@ -130,6 +131,7 @@ test_gcut_hash_table_la_SOURCES = test-gcut-hash-table.c
 test_gcut_enum_la_SOURCES       = test-gcut-enum.c
 test_gcut_object_la_SOURCES     = test-gcut-object.c
 test_gcut_list_la_SOURCES       = test-gcut-list.c
+test_gcut_io_channel_string_la_SOURCES = test-gcut-io-channel-string.c
 test_cut_main_la_SOURCES        = test-cut-main.c
 test_cut_fixture_data_la_SOURCES = test-cut-fixture-data.c
 test_cut_test_data_la_SOURCES = test-cut-test-data.c

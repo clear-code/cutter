@@ -1,5 +1,8 @@
 2008-10-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-io-channel-string.[ch], gcutter/gcut-test-utils.h,
+	test/test-gcut-io-channel-string.c: add gcut_io_channel_string_new().
+
 	* gcutter/gcut-list.[ch], gcutter/gcut-assertions.c,
 	gcutter/gcut-assertions-helper.h, test/test-gcut-list.c:
 	- gcut_list_XXX_{equal,inspect}() -> gcut_list_{equal,inspect}_XXX().
