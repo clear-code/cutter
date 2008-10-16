@@ -1,5 +1,7 @@
 2008-10-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* html/index.html*: add a link to users.
+
 	* USERS*, Makefile.am, doc/reference/Makefile.am,
 	doc/reference/cutter-docs.sgml: add.
 
