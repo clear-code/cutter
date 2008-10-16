@@ -1,20 +1,17 @@
 SUBDIRS = 			\
 	lib			\
-	fixtures
+	fixtures		\
+	gdkcutter-pixbuf
 
 INCLUDES = 					\
 	-I$(top_builddir)			\
 	-I$(top_srcdir)				\
 	-I$(top_srcdir)/cutter			\
-	-I$(top_srcdir)/gcutter			\
-	-I$(top_srcdir)/gdkcutter-pixbuf
+	-I$(top_srcdir)/gcutter
 
 AM_CFLAGS = $(CUTTER_CFLAGS)
 if HAVE_GTK
 AM_CFLAGS += $(GTK_CFLAGS)
-endif
-if HAVE_GDK_PIXBUF
-AM_CFLAGS += $(GDK_PIXBUF_CFLAGS)
 endif
 
 EXTRA_DIST = run-test.sh
@@ -72,12 +69,6 @@ noinst_LTLIBRARIES = 				\
 		test-cut-file-stream-reader.la	\
 		test-cut-path.la
 
-if HAVE_GDK_PIXBUF
-noinst_LTLIBRARIES += 					\
-		test-gdkcut-pixbuf-assertions.la	\
-		test-gdkcut-pixbuf.la
-endif
-
 AM_LDFLAGS =			\
 	-module			\
 	-rpath `pwd`/.libs	\
@@ -90,8 +81,6 @@ LIBS =							\
 	$(GLIB_LIBS)
 
 EVENT_RECEIVER_LIBS = $(top_builddir)/test/lib/libcuttest-event-receiver.la
-
-GDKCUTTER_PIXBUF_LIBS =	$(top_builddir)/gdkcutter-pixbuf/libgdkcutter-pixbuf.la
 
 test_cutter_la_SOURCES		= test-cutter.c
 test_cutter_la_LIBADD		= $(GTK_LIBS)
@@ -140,11 +129,6 @@ test_cut_sub_process_la_SOURCES = test-cut-sub-process.c
 test_cut_sub_process_group_la_SOURCES = test-cut-sub-process-group.c
 test_cut_file_stream_reader_la_SOURCES = test-cut-file-stream-reader.c
 test_cut_path_la_SOURCES = test-cut-path.c
-
-test_gdkcut_pixbuf_assertions_la_SOURCES = test-gdkcut-pixbuf-assertions.c
-test_gdkcut_pixbuf_assertions_la_LIBADD = $(GDKCUTTER_PIXBUF_LIBS)
-test_gdkcut_pixbuf_la_SOURCES = test-gdkcut-pixbuf.c
-test_gdkcut_pixbuf_la_LIBADD = $(GDKCUTTER_PIXBUF_LIBS)
 
 echo-cutter:
 	@echo $(CUTTER)

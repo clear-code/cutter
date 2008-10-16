@@ -2,7 +2,7 @@
 
 #include <gdkcutter-pixbuf.h>
 #include <gdkcutter-pixbuf/gdkcut-pixbuf.h>
-#include "lib/cuttest-utils.h"
+#include "../lib/cuttest-utils.h"
 
 void test_equal_property(void);
 void test_equal_content(void);

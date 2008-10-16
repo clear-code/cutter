@@ -5,7 +5,7 @@
 #include <cutter/cut-test-runner.h>
 #include <gdkcutter-pixbuf.h>
 #include <gdkcutter-pixbuf/gdkcut-pixbuf.h>
-#include "lib/cuttest-assertions.h"
+#include "../lib/cuttest-assertions.h"
 
 void test_equal(void);
 

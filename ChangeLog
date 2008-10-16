@@ -1,5 +1,8 @@
 2008-10-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-gdkcutter-pixbuf*: move to ...
+	* test/gdkcutter-pixbuf/: ... here.
+
 	* gcutter/gcut-io-channel-string.[ch],
 	test/test-gcut-io-channel-string.c:
 	gcut_string_io_channel_get_string() returns GString * not gchar *.
