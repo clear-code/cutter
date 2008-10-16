@@ -32,7 +32,9 @@ EXTRA_DIST =		\
 	NEWS		\
 	NEWS.ja		\
 	FEATURES	\
-	FEATURES.ja
+	FEATURES.ja	\
+	USERS		\
+	USERS.ja
 
 upload: upload-doc
 

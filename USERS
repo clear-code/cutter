@@ -1,0 +1,14 @@
+# -*- rd -*-
+
+= USERS --- Projects that use Cutter
+
+== List
+
+  * ((<Cutter|URL:http://cutter.sf.net/>)): self test
+  * ((<Senna|URL://qwik.jp/senna/FrontPageJ.html>)):
+    full-text search engine
+  * ((<milter manager|URL:http://sf.net/projects/milter-manager/>)):
+    a milter that manager milters
+#  * ((<Poppler|URL:http://poppler.freedesktop.org/>)):
+#    PDF rendering library
+#

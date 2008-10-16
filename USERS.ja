@@ -1,0 +1,13 @@
+# -*- rd -*-
+
+= 利用者 --- Cutterを使っているプロジェクト
+
+== 一覧
+
+  * ((<Cutter|URL:http://cutter.sf.net/>)): セルフテスト
+  * ((<Senna|URL://qwik.jp/senna/FrontPageJ.html>)): 全文検
+    索エンジン
+  * ((<milter manager|URL:http://sf.net/projects/milter-manager/>)):
+    milterを管理するmilter
+#  * ((<Poppler|URL:http://poppler.freedesktop.org/>)): PDF
+#    レンダリングライブラリ

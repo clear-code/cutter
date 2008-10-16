@@ -1,5 +1,8 @@
 2008-10-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* USERS*, Makefile.am, doc/reference/Makefile.am,
+	doc/reference/cutter-docs.sgml: add.
+
 	* test/test-gdkcutter-pixbuf*: move to ...
 	* test/gdkcutter-pixbuf/: ... here.
 

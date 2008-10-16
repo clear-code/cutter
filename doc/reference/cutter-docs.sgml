@@ -16,6 +16,7 @@
       <xi:include href="readme.xml"/>
       <xi:include href="tutorial.xml"/>
       <xi:include href="features.xml"/>
+      <xi:include href="users.xml"/>
     </chapter>
   </part>
 

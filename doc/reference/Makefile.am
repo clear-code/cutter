@@ -96,7 +96,8 @@ content_files =		\
 	readme.xml	\
 	news.xml	\
 	tutorial.xml	\
-	features.xml
+	features.xml	\
+	users.xml
 
 # Extra options to supply to gtkdoc-fixxref
 FIXXREF_OPTIONS=
@@ -106,29 +107,27 @@ CATALOGS=ja.po
 # include common portion ...
 include $(top_srcdir)/gtk-doc.make
 
+generated_xml_files =	\
+	readme.xml	\
+	readme.xml.ja	\
+	news.xml	\
+	news.xml.ja	\
+	tutorial.xml	\
+	tutorial.xml.ja	\
+	features.xml	\
+	features.xml.ja	\
+	users.xml	\
+	users.xml.ja
+
 CLEANFILES +=				\
 	$(DOC_MODULE)-sections.txt	\
-	readme.xml			\
-	readme.xml.ja			\
-	news.xml			\
-	news.xml.ja			\
-	tutorial.xml			\
-	tutorial.xml.ja			\
-	features.xml			\
-	features.xml.ja
+	$(generated_xml_files)
 
 # Other files to distribute
 EXTRA_DIST +=				\
 	html-build.stamp		\
 	version.xml.in			\
-	readme.xml			\
-	readme.xml.ja			\
-	news.xml			\
-	news.xml.ja			\
-	tutorial.xml			\
-	tutorial.xml.ja			\
-	features.xml			\
-	features.xml.ja			\
+	$(generated_xml_files)		\
 	sf-logo.html			\
 	ja.po
 
@@ -170,6 +169,12 @@ features.xml: $(top_srcdir)/FEATURES $(RD2REFENTRY_LIB) features.xml.ja
 
 features.xml.ja: $(top_srcdir)/FEATURES.ja $(RD2REFENTRY_LIB) ja.po
 	$(RD2_JA) $(top_srcdir)/FEATURES.ja > features.xml.ja
+
+users.xml: $(top_srcdir)/USERS $(RD2REFENTRY_LIB) users.xml.ja
+	$(RD2) $(top_srcdir)/USERS > users.xml
+
+users.xml.ja: $(top_srcdir)/USERS.ja $(RD2REFENTRY_LIB) ja.po
+	$(RD2_JA) $(top_srcdir)/USERS.ja > users.xml.ja
 
 upload: docs
 	rm -rf $(srcdir)/tmp/
