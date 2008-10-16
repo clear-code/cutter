@@ -71,7 +71,7 @@ equal_int (gconstpointer data1, gconstpointer data2)
 }
 
 gboolean
-gcut_list_int_equal (const GList *list1, const GList *list2)
+gcut_list_equal_int (const GList *list1, const GList *list2)
 {
     return gcut_list_equal(list1, list2, equal_int);
 }
@@ -83,7 +83,7 @@ inspect_int (GString *string, gconstpointer data, gpointer user_data)
 }
 
 gchar *
-gcut_list_int_inspect (const GList *list)
+gcut_list_inspect_int (const GList *list)
 {
     return gcut_list_inspect(list, inspect_int, NULL);
 }
@@ -95,7 +95,7 @@ equal_uint (gconstpointer data1, gconstpointer data2)
 }
 
 gboolean
-gcut_list_uint_equal (const GList *list1, const GList *list2)
+gcut_list_equal_uint (const GList *list1, const GList *list2)
 {
     return gcut_list_equal(list1, list2, equal_uint);
 }
@@ -107,7 +107,7 @@ inspect_uint (GString *string, gconstpointer data, gpointer user_data)
 }
 
 gchar *
-gcut_list_uint_inspect (const GList *list)
+gcut_list_inspect_uint (const GList *list)
 {
     return gcut_list_inspect(list, inspect_uint, NULL);
 }
@@ -125,7 +125,7 @@ equal_string (gconstpointer data1, gconstpointer data2)
 }
 
 gboolean
-gcut_list_string_equal (const GList *list1, const GList *list2)
+gcut_list_equal_string (const GList *list1, const GList *list2)
 {
     return gcut_list_equal(list1, list2, equal_string);
 }
@@ -142,7 +142,7 @@ inspect_string (GString *string, gconstpointer data, gpointer user_data)
 }
 
 gchar *
-gcut_list_string_inspect (const GList *list)
+gcut_list_inspect_string (const GList *list)
 {
     return gcut_list_inspect(list, inspect_string, NULL);
 }
@@ -181,7 +181,7 @@ inspect_object (GString *string, gconstpointer data, gpointer user_data)
 }
 
 gchar *
-gcut_list_object_inspect (const GList *list)
+gcut_list_inspect_object (const GList *list)
 {
     return gcut_list_inspect(list, inspect_object, NULL);
 }
@@ -198,7 +198,7 @@ inspect_enum (GString *string, gconstpointer data, gpointer user_data)
 }
 
 gchar *
-gcut_list_enum_inspect (const GList *list, GType type)
+gcut_list_inspect_enum (GType type, const GList *list)
 {
     return gcut_list_inspect(list, inspect_enum, GUINT_TO_POINTER(type));
 }
@@ -215,7 +215,7 @@ inspect_flags (GString *string, gconstpointer data, gpointer user_data)
 }
 
 gchar *
-gcut_list_flags_inspect (const GList *list, GType type)
+gcut_list_inspect_flags (GType type, const GList *list)
 {
     return gcut_list_inspect(list, inspect_flags, GUINT_TO_POINTER(type));
 }

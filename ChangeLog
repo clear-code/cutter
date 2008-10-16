@@ -1,3 +1,11 @@
+2008-10-16  Kouhei Sutou  <kou@cozmixng.org>
+
+	* gcutter/gcut-list.[ch], gcutter/gcut-assertions.c,
+	gcutter/gcut-assertions-helper.h, test/test-gcut-list.c:
+	- gcut_list_XXX_{equal,inspect}() -> gcut_list_{equal,inspect}_XXX().
+	- gcut_list_{enum,flags}_inspect(list, type) ->
+	  gcut_list_{enum,flags}_inspect(type, list).
+
 2008-10-15  Kouhei Sutou  <kou@cozmixng.org>
 
 	* configure.ac: 1.0.5 -> 1.0.6.

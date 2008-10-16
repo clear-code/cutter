@@ -30,7 +30,7 @@ test_inspect_enum (void)
 {
     list = g_list_append(list, GINT_TO_POINTER(CUT_TEST_RESULT_PENDING));
     list = g_list_append(list, GINT_TO_POINTER(CUT_TEST_RESULT_NOTIFICATION));
-    inspected = gcut_list_enum_inspect(list, CUT_TYPE_TEST_RESULT_STATUS);
+    inspected = gcut_list_inspect_enum(CUT_TYPE_TEST_RESULT_STATUS, list);
     cut_assert_equal_string("(#<CutTestResultStatus: "
                             "pending(CUT_TEST_RESULT_PENDING:3)>, "
                             "#<CutTestResultStatus: "
@@ -54,7 +54,7 @@ test_inspect_flags (void)
 
     list = g_list_append(list, GUINT_TO_POINTER(1 << 0 | 1 << 1));
     list = g_list_append(list, GUINT_TO_POINTER(1 << 2));
-    inspected = gcut_list_flags_inspect(list, type);
+    inspected = gcut_list_inspect_flags(type, list);
     cut_assert_equal_string("(#<CuttestListStubFlags: "
                             "first|second "
                             "(CUTTEST_LIST_STUB_FIRST:0x1)|"

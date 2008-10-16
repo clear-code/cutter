@@ -87,6 +87,139 @@ gchar           *gcut_list_inspect              (const GList *list,
                                                  gpointer user_data);
 
 /**
+ * gcut_list_equal_int:
+ * @list1: a #GList of #gint to be compared.
+ * @list2: a #GList of #gint to be compared.
+ *
+ * Compares two #GList, @list1 and @list2. @list1 and @list2
+ * should be #GList of #gint.
+ *
+ * Returns: TRUE if all corresponding integers of @list1 and
+ * @list2 are same value, FALSE otherwise.
+ *
+ * Since: 1.0.6
+ */
+gboolean         gcut_list_equal_int            (const GList *list1,
+                                                 const GList *list2);
+
+/**
+ * gcut_list_inspect_int:
+ * @list: a #GList of #gint to be inspected.
+ *
+ * Inspects @list. @list should be #GList of #gint. The
+ * returned string should be freed when no longer needed.
+ *
+ * Returns: inspected @list as a string.
+ *
+ * Since: 1.0.6
+ */
+gchar           *gcut_list_inspect_int          (const GList *list);
+
+/**
+ * gcut_list_equal_uint:
+ * @list1: a #GList of #guint to be compared.
+ * @list2: a #GList of #guint to be compared.
+ *
+ * Compares two #GList, @list1 and @list2. @list1 and @list2
+ * should be #GList of #guint.
+ *
+ * Returns: TRUE if all corresponding unsigned integers of
+ * @list1 and @list2 are same value, FALSE otherwise.
+ *
+ * Since: 1.0.6
+ */
+gboolean         gcut_list_equal_uint           (const GList *list1,
+                                                 const GList *list2);
+
+/**
+ * gcut_list_inspect_uint:
+ * @list: a #GList of #guint to be inspected.
+ *
+ * Inspects @list. @list should be #GList of #guint. The
+ * returned string should be freed when no longer needed.
+ *
+ * Returns: inspected @list as a string.
+ *
+ * Since: 1.0.6
+ */
+gchar           *gcut_list_inspect_uint         (const GList *list);
+
+/**
+ * gcut_list_equal_string:
+ * @list1: a #GList of string to be compared.
+ * @list2: a #GList of string to be compared.
+ *
+ * Compares two #GList, @list1 and @list2. @list1 and @list2
+ * should be #GList of string.
+ *
+ * Returns: TRUE if all corresponding string of @list1 and
+ * @list2 are same content string, FALSE otherwise.
+ *
+ * Since: 1.0.6
+ */
+gboolean         gcut_list_equal_string         (const GList *list1,
+                                                 const GList *list2);
+
+/**
+ * gcut_list_inspect_string:
+ * @list: a #GList of string to be inspected.
+ *
+ * Inspects @list. @list should be #GList of string. The
+ * returned string should be freed when no longer needed.
+ *
+ * Returns: inspected @list as a string.
+ *
+ * Since: 1.0.6
+ */
+gchar           *gcut_list_inspect_string       (const GList *list);
+
+/**
+ * gcut_list_inspect_object:
+ * @list: a #GList of #GObject to be inspected.
+ *
+ * Inspects @list. @list should be #GList of #GObject. The
+ * returned string should be freed when no longer needed.
+ *
+ * Returns: inspected @list as a string.
+ *
+ * Since: 1.0.6
+ */
+gchar           *gcut_list_inspect_object       (const GList *list);
+
+/**
+ * gcut_list_inspect_enum:
+ * @type: a #GEnum type.
+ * @list: a #GList of enum value to be inspected.
+ *
+ * Inspects @list. @list should be #GList of enum value of
+ * #GEnum. The returned string should be freed when no
+ * longer needed.
+ *
+ * Returns: inspected @list as a string.
+ *
+ * Since: 1.0.6
+ */
+gchar           *gcut_list_inspect_enum         (GType        type,
+                                                 const GList *list);
+
+/**
+ * gcut_list_inspect_flags:
+ * @type: a #GFlags type.
+ * @list: a #GList of flags value to be inspected.
+ *
+ * Inspects @list. @list should be #GList of flags value of
+ * #GFlags. The returned string should be freed when no
+ * longer needed.
+ *
+ * Returns: inspected @list as a string.
+ *
+ * Since: 1.0.6
+ */
+gchar           *gcut_list_inspect_flags        (GType        type,
+                                                 const GList *list);
+
+#ifndef CUTTER_DISABLE_DEPRECATED
+/**
  * gcut_list_int_equal:
  * @list1: a #GList of #gint to be compared.
  * @list2: a #GList of #gint to be compared.
@@ -98,9 +231,11 @@ gchar           *gcut_list_inspect              (const GList *list,
  * @list2 are same value, FALSE otherwise.
  *
  * Since: 1.0.5
+ *
+ * Deprecated: 1.0.6: Use gcut_list_equal_int() instead.
  */
-gboolean         gcut_list_int_equal            (const GList *list1,
-                                                 const GList *list2);
+#define gcut_list_int_equal(list1, list2)       \
+    gcut_list_equal_int(list1, list2)
 
 /**
  * gcut_list_int_inspect:
@@ -112,8 +247,11 @@ gboolean         gcut_list_int_equal            (const GList *list1,
  * Returns: inspected @list as a string.
  *
  * Since: 1.0.5
+ *
+ * Deprecated: 1.0.6: Use gcut_list_inspect_int() instead.
  */
-gchar           *gcut_list_int_inspect          (const GList *list);
+#define gcut_list_int_inspect(list)             \
+    gcut_list_inspect_int(list)
 
 /**
  * gcut_list_uint_equal:
@@ -127,9 +265,11 @@ gchar           *gcut_list_int_inspect          (const GList *list);
  * @list1 and @list2 are same value, FALSE otherwise.
  *
  * Since: 1.0.5
+ *
+ * Deprecated: 1.0.6: Use gcut_list_equal_uint() instead.
  */
-gboolean         gcut_list_uint_equal           (const GList *list1,
-                                                 const GList *list2);
+#define gcut_list_uint_equal(list1, list2)       \
+    gcut_list_equal_uint(list1, list2)
 
 /**
  * gcut_list_uint_inspect:
@@ -141,8 +281,11 @@ gboolean         gcut_list_uint_equal           (const GList *list1,
  * Returns: inspected @list as a string.
  *
  * Since: 1.0.5
+ *
+ * Deprecated: 1.0.6: Use gcut_list_inspect_uint() instead.
  */
-gchar           *gcut_list_uint_inspect         (const GList *list);
+#define gcut_list_uint_inspect(list)            \
+    gcut_list_inspect_uint(list)
 
 /**
  * gcut_list_string_equal:
@@ -156,9 +299,11 @@ gchar           *gcut_list_uint_inspect         (const GList *list);
  * @list2 are same content string, FALSE otherwise.
  *
  * Since: 1.0.5
+ *
+ * Deprecated: 1.0.6: Use gcut_list_equal_string() instead.
  */
-gboolean         gcut_list_string_equal         (const GList *list1,
-                                                 const GList *list2);
+#define gcut_list_string_equal(list1, list2)       \
+    gcut_list_equal_string(list1, list2)
 
 /**
  * gcut_list_string_inspect:
@@ -170,8 +315,11 @@ gboolean         gcut_list_string_equal         (const GList *list1,
  * Returns: inspected @list as a string.
  *
  * Since: 1.0.5
+ *
+ * Deprecated: 1.0.6: Use gcut_list_inspect_string() instead.
  */
-gchar           *gcut_list_string_inspect       (const GList *list);
+#define gcut_list_string_inspect(list)          \
+    gcut_list_inspect_string(list)
 
 /**
  * gcut_list_object_inspect:
@@ -183,8 +331,11 @@ gchar           *gcut_list_string_inspect       (const GList *list);
  * Returns: inspected @list as a string.
  *
  * Since: 1.0.5
+ *
+ * Deprecated: 1.0.6: Use gcut_list_inspect_object() instead.
  */
-gchar           *gcut_list_object_inspect       (const GList *list);
+#define gcut_list_object_inspect(list)          \
+    gcut_list_inspect_object(list)
 
 /**
  * gcut_list_enum_inspect:
@@ -198,9 +349,11 @@ gchar           *gcut_list_object_inspect       (const GList *list);
  * Returns: inspected @list as a string.
  *
  * Since: 1.0.5
+ *
+ * Deprecated: 1.0.6: Use gcut_list_inspect_enum() instead.
  */
-gchar           *gcut_list_enum_inspect         (const GList *list,
-                                                 GType        type);
+#define gcut_list_enum_inspect(list, type)      \
+    gcut_list_inspect_enum(type, list)
 
 /**
  * gcut_list_flags_inspect:
@@ -214,9 +367,12 @@ gchar           *gcut_list_enum_inspect         (const GList *list,
  * Returns: inspected @list as a string.
  *
  * Since: 1.0.5
+ *
+ * Deprecated: 1.0.6: Use gcut_list_inspect_flags() instead.
  */
-gchar           *gcut_list_flags_inspect        (const GList *list,
-                                                 GType        type);
+#define gcut_list_flags_inspect(list, type)     \
+    gcut_list_inspect_flags(type, list)
+#endif
 
 G_END_DECLS
 

@@ -576,8 +576,8 @@ G_BEGIN_DECLS
                                         #expected, #actual,             \
                                         #equal_function,                \
                                         ## __VA_ARGS__, NULL),          \
-        gcut_assert_equal_object(expected, actual, equal_function,      \
-                                 ## __VA_ARGS__))
+        gcut_assert_equal_object_custom(expected, actual,               \
+                                        equal_function, ## __VA_ARGS__))
 
 
 /**

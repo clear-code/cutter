@@ -91,14 +91,14 @@ gcut_assert_equal_list_int_helper (const GList    *expected,
                                    const gchar    *user_message_format,
                                    ...)
 {
-    if (gcut_list_int_equal(expected, actual)) {
+    if (gcut_list_equal_int(expected, actual)) {
         cut_test_pass();
     } else {
         const gchar *message;
         const gchar *inspected_expected, *inspected_actual;
 
-        inspected_expected = cut_take_string(gcut_list_int_inspect(expected));
-        inspected_actual = cut_take_string(gcut_list_int_inspect(actual));
+        inspected_expected = cut_take_string(gcut_list_inspect_int(expected));
+        inspected_actual = cut_take_string(gcut_list_inspect_int(actual));
 
         message = cut_take_printf("<%s == %s>\n"
                                   "expected: <%s>\n"
@@ -119,14 +119,14 @@ gcut_assert_equal_list_uint_helper (const GList    *expected,
                                     const gchar    *user_message_format,
                                     ...)
 {
-    if (gcut_list_uint_equal(expected, actual)) {
+    if (gcut_list_equal_uint(expected, actual)) {
         cut_test_pass();
     } else {
         const gchar *message;
         const gchar *inspected_expected, *inspected_actual;
 
-        inspected_expected = cut_take_string(gcut_list_uint_inspect(expected));
-        inspected_actual = cut_take_string(gcut_list_uint_inspect(actual));
+        inspected_expected = cut_take_string(gcut_list_inspect_uint(expected));
+        inspected_actual = cut_take_string(gcut_list_inspect_uint(actual));
 
         message = cut_take_printf("<%s == %s>\n"
                                   "expected: <%s>\n"
@@ -147,14 +147,14 @@ gcut_assert_equal_list_string_helper (const GList    *expected,
                                       const gchar    *user_message_format,
                                       ...)
 {
-    if (gcut_list_string_equal(expected, actual)) {
+    if (gcut_list_equal_string(expected, actual)) {
         cut_test_pass();
     } else {
         const gchar *message;
         const gchar *inspected_expected, *inspected_actual;
 
-        inspected_expected = cut_take_string(gcut_list_string_inspect(expected));
-        inspected_actual = cut_take_string(gcut_list_string_inspect(actual));
+        inspected_expected = cut_take_string(gcut_list_inspect_string(expected));
+        inspected_actual = cut_take_string(gcut_list_inspect_string(actual));
 
         message = cut_take_printf("<%s == %s>\n"
                                   "expected: <%s>\n"
@@ -177,16 +177,16 @@ gcut_assert_equal_list_enum_helper (GType           type,
                                     const gchar    *user_message_format,
                                     ...)
 {
-    if (gcut_list_equal(expected, actual, g_direct_equal)) {
+    if (gcut_list_equal_int(expected, actual)) {
         cut_test_pass();
     } else {
         const gchar *message;
         const gchar *inspected_expected, *inspected_actual;
 
         inspected_expected =
-            cut_take_string(gcut_list_enum_inspect(expected, type));
+            cut_take_string(gcut_list_inspect_enum(type, expected));
         inspected_actual =
-            cut_take_string(gcut_list_enum_inspect(actual, type));
+            cut_take_string(gcut_list_inspect_enum(type, actual));
 
         message = cut_take_printf("<%s == %s>\n"
                                   "expected: <%s>\n"
@@ -209,16 +209,16 @@ gcut_assert_equal_list_flags_helper (GType           type,
                                      const gchar    *user_message_format,
                                      ...)
 {
-    if (gcut_list_equal(expected, actual, g_direct_equal)) {
+    if (gcut_list_equal_uint(expected, actual)) {
         cut_test_pass();
     } else {
         const gchar *message;
         const gchar *inspected_expected, *inspected_actual;
 
         inspected_expected =
-            cut_take_string(gcut_list_flags_inspect(expected, type));
+            cut_take_string(gcut_list_inspect_flags(type, expected));
         inspected_actual =
-            cut_take_string(gcut_list_flags_inspect(actual, type));
+            cut_take_string(gcut_list_inspect_flags(type, actual));
 
         message = cut_take_printf("<%s == %s>\n"
                                   "expected: <%s>\n"
@@ -247,9 +247,9 @@ gcut_assert_equal_list_object_helper (const GList    *expected,
         const gchar *inspected_expected, *inspected_actual;
 
         inspected_expected =
-            cut_take_string(gcut_list_object_inspect(expected));
+            cut_take_string(gcut_list_inspect_object(expected));
         inspected_actual =
-            cut_take_string(gcut_list_object_inspect(actual));
+            cut_take_string(gcut_list_inspect_object(actual));
 
         message = cut_take_printf("<%s == %s>\n"
                                   "expected: <%s>\n"
