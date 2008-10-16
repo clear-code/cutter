@@ -1,5 +1,8 @@
 2008-10-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-gcut-*.c: move to ...
+	* test/gcutter/: ... here.
+
 	* html/index.html*: add a link to users.
 
 	* USERS*, Makefile.am, doc/reference/Makefile.am,
