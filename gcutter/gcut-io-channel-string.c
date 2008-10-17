@@ -276,6 +276,15 @@ gcut_string_io_channel_get_string (GIOChannel *channel)
     return string_channel->string;
 }
 
+void
+gcut_string_io_channel_clear (GIOChannel  *channel)
+{
+    GCutIOChannelString *string_channel = (GCutIOChannelString *)channel;
+
+    g_string_truncate(string_channel->string, 0);
+    string_channel->offset = 0;
+}
+
 /*
 vi:nowrap:ai:expandtab:sw=4:ts=4
 */
