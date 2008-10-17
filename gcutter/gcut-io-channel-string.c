@@ -48,13 +48,13 @@ struct _GCutSourceString
 static gboolean
 source_is_available (GSource *source)
 {
-    GCutSourceString *string_source = (GCutSourceString *)string_source;
+    GCutSourceString *string_source = (GCutSourceString *)source;
     GCutIOChannelString *channel;
 
     channel = (GCutIOChannelString *)(string_source->channel);
     string_source->available_condition = 0;
 
-    if (string_source->condition & (G_IO_IN | G_IO_PRI)  &&
+    if (string_source->condition & (G_IO_IN | G_IO_PRI) &&
         channel->string &&
         channel->string->len > channel->offset)
         string_source->available_condition |= G_IO_IN | G_IO_PRI;

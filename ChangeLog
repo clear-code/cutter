@@ -1,3 +1,9 @@
+2008-10-17  Kouhei Sutou  <kou@cozmixng.org>
+
+	* gcutter/gcut-io-channel-string.c (source_is_available): fix a typo.
+
+	* test/gcutter/test-gcut-io-channel-string.c (test_source): add.
+
 2008-10-16  Kouhei Sutou  <kou@cozmixng.org>
 
 	* test/test-gcut-*.c: move to ...

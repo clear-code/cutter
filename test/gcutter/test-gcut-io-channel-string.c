@@ -22,15 +22,18 @@
 void test_new(void);
 void test_new_null(void);
 void test_read_write(void);
+void test_source(void);
 
 static GIOChannel *channel;
 static gchar *data;
+static guint watch_id;
 
 void
 setup (void)
 {
     channel = NULL;
     data = NULL;
+    watch_id = 0;
 }
 
 void
@@ -40,6 +43,8 @@ teardown (void)
         g_io_channel_unref(channel);
     if (data)
         g_free(data);
+    if (watch_id > 0)
+        g_source_remove(watch_id);
 }
 
 void
@@ -116,6 +121,47 @@ test_read_write (void)
 
     cut_assert_equal_string(write_data,
                             gcut_string_io_channel_get_string(channel)->str);
+}
+
+static gboolean
+watch_func (GIOChannel *channel, GIOCondition condition, gpointer data)
+{
+    GIOCondition *target_condition = data;
+
+    *target_condition = condition;
+
+    return FALSE;
+}
+
+void
+test_source (void)
+{
+    gchar write_data[] = "data";
+    gsize length;
+    GIOCondition target_condition = 0;
+    GError *error = NULL;
+
+    channel = gcut_io_channel_string_new(NULL);
+    g_io_channel_set_encoding(channel, NULL, &error);
+    gcut_assert_error(error);
+
+    watch_id = g_io_add_watch(channel,
+                              G_IO_IN | G_IO_PRI |
+                              G_IO_ERR | G_IO_HUP | G_IO_NVAL,
+                              watch_func, &target_condition);
+
+    g_io_channel_write_chars(channel, write_data, sizeof(write_data),
+                             &length, &error);
+    gcut_assert_error(error);
+
+    cut_assert_equal_uint(0, target_condition);
+    g_main_context_iteration(NULL, FALSE);
+    cut_assert_equal_uint(0, target_condition);
+
+    g_io_channel_seek_position(channel, 0, G_SEEK_SET, &error);
+    gcut_assert_error(error);
+    g_main_context_iteration(NULL, FALSE);
+    cut_assert_equal_uint(G_IO_IN | G_IO_PRI, target_condition);
 }
 
 /*
