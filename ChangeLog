@@ -1,5 +1,8 @@
 2008-10-17  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertions-helper.c (cut_assert_equal_memory_helper):
+	set limit.
+
 	* gcutter/gcut-io-channel-string.c (source_is_available): fix a typo.
 
 	* test/gcutter/test-gcut-io-channel-string.c (test_source): add.

@@ -253,6 +253,7 @@ cut_assert_equal_memory_helper (const void     *expected,
         const char *message;
         const char *inspected_expected;
         const char *inspected_actual;
+        gsize max_diff_target_size = 8092;
 
         inspected_expected =
             cut_take_string(cut_utils_inspect_memory(expected, expected_size));
@@ -270,7 +271,8 @@ cut_assert_equal_memory_helper (const void     *expected,
             expected_size,
             inspected_actual,
             actual_size);
-        if (expected_size > 0 && actual_size > 0)
+        if (0 < expected_size && expected_size < max_diff_target_size &&
+            0 < actual_size && actual_size < max_diff_target_size)
             message = cut_append_diff(message,
                                       inspected_expected,
                                       inspected_actual);
