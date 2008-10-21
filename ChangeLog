@@ -1,5 +1,7 @@
 2008-10-21  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/Makefile.am, gtk-doc.make: support build directory.
+
 	* ./: fix build dependencies.
 
 	* gcutter/gcut-io.[ch], gcutter/gcut-spawn.[ch],

@@ -57,16 +57,19 @@ docs: html-build.stamp
 
 scan-build.stamp: $(HFILE_GLOB) $(CFILE_GLOB)
 	@echo 'gtk-doc: Scanning header files'
-	@-chmod -R u+w $(srcdir)
-	cd $(srcdir) && \
-	  gtkdoc-scan --module=$(DOC_MODULE) --source-dir=$(DOC_SOURCE_DIR) --ignore-headers="$(IGNORE_HFILES)" $(SCAN_OPTIONS) $(EXTRA_HFILES)
+	gtkdoc-scan --module=$(DOC_MODULE) 		\
+	  --source-dir=$(srcdir)/$(DOC_SOURCE_DIR)	\
+	  --ignore-headers="$(IGNORE_HFILES)"		\
+	  $(SCAN_OPTIONS) $(EXTRA_HFILES)
 	if grep -l '^..*$$' $(srcdir)/$(DOC_MODULE).types > /dev/null 2>&1 ; then \
-	    CC="$(GTKDOC_CC)" LD="$(GTKDOC_LD)" CFLAGS="$(GTKDOC_CFLAGS)" LDFLAGS="$(GTKDOC_LIBS)" gtkdoc-scangobj $(SCANGOBJ_OPTIONS) --module=$(DOC_MODULE) --output-dir=$(srcdir) ; \
-	else \
-	    cd $(srcdir) ; \
-	    for i in $(SCANOBJ_FILES) ; do \
-               test -f $$i || touch $$i ; \
-	    done \
+	    CC="$(GTKDOC_CC)" LD="$(GTKDOC_LD)"			\
+	    CFLAGS="$(GTKDOC_CFLAGS)" LDFLAGS="$(GTKDOC_LIBS)"	\
+	    gtkdoc-scangobj $(SCANGOBJ_OPTIONS)			\
+	    --module=$(DOC_MODULE) --output-dir=.;		\
+	else							\
+	    for i in $(SCANOBJ_FILES) ; do			\
+               test -f $$i || touch $$i;			\
+	    done						\
 	fi
 	touch scan-build.stamp
 
@@ -77,8 +80,7 @@ $(DOC_MODULE)-decl.txt $(SCANOBJ_FILES) $(DOC_MODULE)-sections.txt $(DOC_MODULE)
 
 tmpl-build.stamp: $(DOC_MODULE)-decl.txt $(SCANOBJ_FILES) $(DOC_MODULE)-sections.txt $(DOC_MODULE)-overrides.txt
 	@echo 'gtk-doc: Rebuilding template files'
-	@-chmod -R u+w $(srcdir)
-	cd $(srcdir) && gtkdoc-mktmpl --module=$(DOC_MODULE) $(MKTMPL_OPTIONS)
+	gtkdoc-mktmpl --module=$(DOC_MODULE) $(MKTMPL_OPTIONS)
 	touch tmpl-build.stamp
 
 tmpl.stamp: tmpl-build.stamp
@@ -92,9 +94,14 @@ tmpl/*.sgml:
 
 sgml-build.stamp: tmpl.stamp $(HFILE_GLOB) $(CFILE_GLOB) $(DOC_MAIN_SGML_FILE) $(DOC_MODULE)-sections.txt $(srcdir)/tmpl/*.sgml $(expand_content_files)
 	@echo 'gtk-doc: Building XML'
-	@-chmod -R u+w $(srcdir)
-	cd $(srcdir) && \
-	gtkdoc-mkdb --module=$(DOC_MODULE) --source-dir=$(DOC_SOURCE_DIR) --output-format=xml --expand-content-files="$(expand_content_files)" --main-sgml-file=$(DOC_MAIN_SGML_FILE) $(MKDB_OPTIONS)
+	test -f $(srcdir)/$(DOC_MAIN_SGML_FILE) &&	\
+	  cp $(srcdir)/$(DOC_MAIN_SGML_FILE) ./
+	gtkdoc-mkdb --module=$(DOC_MODULE)			\
+	  --source-dir=$(srcdir)/$(DOC_SOURCE_DIR)		\
+	  --output-format=xml					\
+	  --expand-content-files="$(expand_content_files)"	\
+	  --main-sgml-file=$(DOC_MAIN_SGML_FILE)		\
+	  $(MKDB_OPTIONS)
 	touch sgml-build.stamp
 
 sgml.stamp: sgml-build.stamp
@@ -104,47 +111,56 @@ sgml.stamp: sgml-build.stamp
 
 html-build.stamp: sgml.stamp $(CATALOGS) $(DOC_MAIN_SGML_FILE) $(content_files)
 	@echo 'gtk-doc: Building HTML'
-	@-chmod -R u+w $(srcdir)
 	@echo "English:"
-	rm -rf $(srcdir)/html
-	mkdir -p $(srcdir)/html
-	cd $(srcdir)/html && \
-	  gtkdoc-mkhtml $(DOC_MODULE) ../$(DOC_MAIN_SGML_FILE)
-	test "x$(HTML_IMAGES)" = "x" ||	\
-	  ( cd $(srcdir) && cp $(HTML_IMAGES) html/ )
+	rm -rf html
+	mkdir -p html
+	cd html && gtkdoc-mkhtml $(DOC_MODULE) ../$(DOC_MAIN_SGML_FILE)
+	if test "x$(HTML_IMAGES)" != "x"; then	\
+	  for image in $(HTML_IMAGES); do	\
+	    cp $(srcdir)/$$image html/;		\
+	  done;					\
+	fi
 	echo 'gtk-doc: Fixing cross-references'
-	cd $(srcdir) &&					\
-	  gtkdoc-fixxref --module-dir=html		\
+	gtkdoc-fixxref --module-dir=html		\
 	  --html-dir=$(HTML_DIR) $(FIXXREF_OPTIONS)
 	for catalog in $(CATALOGS); do					\
 	  lang=`echo $$catalog | sed 's/.po$$//'`;			\
 	  echo "$$lang:";						\
-	  rm -rf $(srcdir)/$$lang;					\
-	  mkdir -p $(srcdir)/$$lang/html;				\
-	  mkdir -p $(srcdir)/$$lang/xml;				\
-	  xml2po -k -p $$catalog -l $$lang				\
-	    $(srcdir)/$(DOC_MAIN_SGML_FILE) >				\
-	      $$lang/$(DOC_MAIN_SGML_FILE);				\
+	  rm -rf $$lang;						\
+	  mkdir -p $$lang/html;						\
+	  mkdir -p $$lang/xml;						\
+	  xml2po -k -p $(srcdir)/$$catalog -l $$lang			\
+	    $(DOC_MAIN_SGML_FILE) > $$lang/$(DOC_MAIN_SGML_FILE);	\
 	  for xml in $(srcdir)/xml/*.xml; do				\
-	    xml2po -k -p $$catalog -l $$lang $$xml >			\
+	    xml2po -k -p $(srcdir)/$$catalog -l $$lang $$xml >		\
 	      $$lang/xml/`basename $$xml`;				\
 	  done;								\
 	  for file in $(content_files); do				\
-	    if test -f $(srcdir)/$$file.$$lang; then			\
-	      cp $(srcdir)/$$file.$$lang $$lang/$$file;			\
+	    if test -f $$file; then					\
+	      if test -f $$file.$$lang; then				\
+	        cp $$file.$$lang $$lang/$$file;				\
+	      else							\
+	        cp $$file $$lang;					\
+	      fi;							\
 	    else							\
-	      cp $(srcdir)/$$file $$lang;				\
+	      if test -f $(srcdir)/$$file.$$lang; then			\
+	        cp $(srcdir)/$$file.$$lang $$lang/$$file;		\
+	      else							\
+	        cp $(srcdir)/$$file $$lang;				\
+	      fi;							\
 	    fi;								\
 	  done;								\
-	  ( cd $(srcdir)/$$lang/html &&					\
-	      gtkdoc-mkhtml $(DOC_MODULE) ../$(DOC_MAIN_SGML_FILE) );	\
-	  sed -i'' -e "s,/,/$$lang/,g" $(srcdir)/$$lang/html/index.sgml;\
-	  test "x$(HTML_IMAGES)" = "x" ||				\
-	    ( cd $(srcdir) && cp $(HTML_IMAGES) $$lang/html/ );		\
+	  (cd $$lang/html &&						\
+	     gtkdoc-mkhtml $(DOC_MODULE) ../$(DOC_MAIN_SGML_FILE));	\
+	  sed -i'' -e "s,/,/$$lang/,g" $$lang/html/index.sgml;		\
+	  if test "x$(HTML_IMAGES)" != "x"; then			\
+	    for image in $(HTML_IMAGES); do				\
+	      cp $(srcdir)/$$image $$lang/html/;			\
+	    done;							\
+	  fi;								\
 	  echo 'gtk-doc: Fixing cross-references';			\
-	  ( cd $(srcdir) &&						\
-	      gtkdoc-fixxref --module-dir=$$lang/html			\
-	        --html-dir=$(HTML_DIR) $(FIXXREF_OPTIONS) );		\
+	  gtkdoc-fixxref --module-dir=$$lang/html			\
+	    --html-dir=$(HTML_DIR) $(FIXXREF_OPTIONS);			\
 	done
 	touch html-build.stamp
 
@@ -155,25 +171,24 @@ clean-local:
 	rm -rf .libs
 
 distclean-local:
-	cd $(srcdir) && \
-	  rm -rf xml $(REPORT_FILES) \
-	         $(DOC_MODULE)-decl-list.txt $(DOC_MODULE)-decl.txt
+	rm -rf xml $(REPORT_FILES) \
+	  $(DOC_MODULE)-decl-list.txt $(DOC_MODULE)-decl.txt
 
 maintainer-clean-local: clean
-	cd $(srcdir) && rm -rf xml html
+	rm -rf xml html
 
 install-data-local:
 	for catalog in '' $(CATALOGS); do				\
 	  if test x"$$catalog" = "x"; then				\
-	    dir="/html";						\
+	    dir="html";							\
 	    target_dir="";						\
 	  else								\
 	    lang=`echo $$catalog | sed 's/.po$$//'`;			\
-	    dir="/$$lang/html";						\
+	    dir="$$lang/html";						\
 	    target_dir="/$$lang";					\
 	  fi;								\
-	  installfiles=`echo $(srcdir)/$$dir/*`;			\
-	  if test "$$installfiles" = "$(srcdir)/$$dir/*"; then		\
+	  installfiles=`echo $$dir/*`;					\
+	  if test "$$installfiles" = "$$dir/*"; then			\
 	    echo '-- Nothing to install';				\
 	  else								\
 	    $(mkinstalldirs) $(DESTDIR)$(TARGET_DIR)$$target_dir;	\
@@ -181,8 +196,8 @@ install-data-local:
 	      echo "-- Installing $$i";					\
 	      $(INSTALL_DATA) $$i $(DESTDIR)$(TARGET_DIR)$$target_dir;	\
 	    done;							\
-	    echo "-- Installing $(srcdir)/$$dir/index.sgml";		\
-	    $(INSTALL_DATA) $(srcdir)$$dir/index.sgml			\
+	    echo "-- Installing $$dir/index.sgml";			\
+	    $(INSTALL_DATA) $$dir/index.sgml				\
 	      $(DESTDIR)$(TARGET_DIR)$$target_dir || :;			\
 	    if test `which gtkdoc-rebase` != ""; then			\
 	      if test "$(DESTDIR)" = ""; then				\
@@ -214,19 +229,19 @@ dist-hook: dist-check-gtkdoc dist-hook-local
 	mkdir $(distdir)/tmpl
 	mkdir $(distdir)/xml
 	mkdir $(distdir)/html
-	-cp $(srcdir)/tmpl/*.sgml $(distdir)/tmpl
-	-cp $(srcdir)/xml/*.xml $(distdir)/xml
-	cp $(srcdir)/html/* $(distdir)/html
+	-cp tmpl/*.sgml $(distdir)/tmpl
+	-cp xml/*.xml $(distdir)/xml
+	cp html/* $(distdir)/html
 	for catalog in $(CATALOGS); do					\
 	  lang=`echo $$catalog | sed 's/.po$$//'`;			\
 	  mkdir -p $(distdir)/$$lang/html;				\
 	  mkdir -p $(distdir)/$$lang/xml;				\
-	  cp $(srcdir)/$$lang/html/* $(distdir)/$$lang/html;		\
-	  cp $(srcdir)/$$lang/xml/* $(distdir)/$$lang/html;		\
-	  cp $(srcdir)/$$lang/$(DOC_MAIN_SGML_FILE) $(distdir)/$$lang/;	\
+	  cp $$lang/html/* $(distdir)/$$lang/html;			\
+	  cp $$lang/xml/* $(distdir)/$$lang/html;			\
+	  cp $$lang/$(DOC_MAIN_SGML_FILE) $(distdir)/$$lang/;		\
 	done
-	cp $(srcdir)/$(DOC_MODULE).types $(distdir)/
-	cp $(srcdir)/$(DOC_MODULE)-sections.txt $(distdir)/
+	cp $(DOC_MODULE).types $(distdir)/
+	cp $(DOC_MODULE)-sections.txt $(distdir)/
 	cd $(distdir) && rm -f $(DISTCLEANFILES)
 	-gtkdoc-rebase --online --relative --html-dir=$(distdir)/html
 

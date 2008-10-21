@@ -177,16 +177,16 @@ users.xml.ja: $(top_srcdir)/USERS.ja $(RD2REFENTRY_LIB) ja.po
 	$(RD2_JA) $(top_srcdir)/USERS.ja > users.xml.ja
 
 upload: docs
-	rm -rf $(srcdir)/tmp/
-	mkdir -p $(srcdir)/tmp/
-	cp -rp $(srcdir)/html/ $(srcdir)/tmp/reference
+	rm -rf tmp/
+	mkdir -p tmp/
+	cp -rp html/ tmp/reference
 	for catalog in $(CATALOGS); do					\
 	  lang=`echo $$catalog | sed 's/.po$$//'`;			\
-	  cp -rp $(srcdir)/$$lang/html/ $(srcdir)/tmp/reference/$$lang/;\
+	  cp -rp $$lang/html/ tmp/reference/$$lang/;			\
 	done
-	chmod -R g+w $(srcdir)/tmp/reference
+	chmod -R g+w tmp/reference
 	ruby -i'' -pe '$$_.sub!(/<\/body>/u,				\
 	                       	File.read("sf-logo.html") + "</body>")'	\
-	  $(srcdir)/tmp/reference/*.html				\
-	  $(srcdir)/tmp/reference/*/*.html
-	scp -r $(srcdir)/tmp/reference/* $(SF_HTDOCS)/reference/
+	  tmp/reference/*.html						\
+	  tmp/reference/*/*.html
+	scp -r tmp/reference/* $(SF_HTDOCS)/reference/
