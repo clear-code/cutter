@@ -1,12 +1,23 @@
 INCLUDES = 			\
 	 -I$(top_builddir)	\
-	 -I$(top_srcdir)
+	 -I$(top_srcdir)	\
+	 -I$(top_srcdir)/cutter
 
 AM_CFLAGS = 			\
 	$(CUTTER_CFLAGS)	\
 	$(COVERAGE_CFLAGS)
 
+EXTRA_DIST = gcut-marshalers.list
 CLEANFILES = *.gcno *.gcda
+
+marshal_sources =		\
+	gcut-marshalers.c	\
+	gcut-marshalers.h
+
+MAINTAINERCLEANFILES =		\
+	$(marshal_sources)
+
+BUILT_SOURCES = $(marshal_sources)
 
 noinst_LTLIBRARIES = libgcutter.la
 
@@ -40,6 +51,7 @@ gcutterinclude_HEADERS = 		\
 libgcutter_la_SOURCES =			\
 	$(gcutter_public_headers)	\
 	$(noinst_headers)		\
+	$(marshal_sources)		\
 	gcut-value-equal.c		\
 	gcut-list.c			\
 	gcut-hash-table.c		\
@@ -51,3 +63,10 @@ libgcutter_la_SOURCES =			\
 	gcut-spawn.c			\
 	gcut-io.c			\
 	gcut-main.c
+
+
+gcut-marshalers.h : gcut-marshalers.list
+	$(GLIB_GENMARSHAL) $(top_srcdir)/gcutter/gcut-marshalers.list --header --prefix=_gcut_marshal > $@
+
+gcut-marshalers.c : gcut-marshalers.list
+	$(GLIB_GENMARSHAL) $(top_srcdir)/gcutter/gcut-marshalers.list --header --body --prefix=_gcut_marshal > $@

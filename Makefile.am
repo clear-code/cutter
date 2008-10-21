@@ -26,6 +26,7 @@ endif
 
 EXTRA_DIST =		\
 	autogen.sh	\
+	config.h.in	\
 	TUTORIAL	\
 	TUTORIAL.ja	\
 	README.ja	\

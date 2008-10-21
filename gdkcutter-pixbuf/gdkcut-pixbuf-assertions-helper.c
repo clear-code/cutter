@@ -18,7 +18,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#  include "../cutter/config.h"
+#  include <config.h>
 #endif /* HAVE_CONFIG_H */
 
 #include "gdkcut-pixbuf-assertions-helper.h"

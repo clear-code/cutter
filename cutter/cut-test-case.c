@@ -18,7 +18,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#  include <config.h>
 #endif /* HAVE_CONFIG_H */
 
 #include <stdlib.h>
@@ -26,12 +26,11 @@
 #include <glib.h>
 
 #include "cut-test-case.h"
-
 #include "cut-test.h"
 #include "cut-run-context.h"
-
-#include "cut-marshalers.h"
 #include "cut-test-result.h"
+
+#include <gcutter/gcut-marshalers.h>
 
 #define CUT_TEST_CASE_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_CASE, CutTestCasePrivate))
 
@@ -131,12 +130,12 @@ cut_test_case_class_init (CutTestCaseClass *klass)
 
     cut_test_case_signals[START_TEST]
         = g_signal_new("start-test",
-                G_TYPE_FROM_CLASS(klass),
-                G_SIGNAL_RUN_LAST,
-                G_STRUCT_OFFSET(CutTestCaseClass, start_test),
-                NULL, NULL,
-                _cut_marshal_VOID__OBJECT_OBJECT,
-                G_TYPE_NONE, 2, CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT);
+                       G_TYPE_FROM_CLASS(klass),
+                       G_SIGNAL_RUN_LAST,
+                       G_STRUCT_OFFSET(CutTestCaseClass, start_test),
+                       NULL, NULL,
+                       _gcut_marshal_VOID__OBJECT_OBJECT,
+                       G_TYPE_NONE, 2, CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT);
 
     cut_test_case_signals[COMPLETE_TEST]
         = g_signal_new("complete-test",
@@ -144,7 +143,7 @@ cut_test_case_class_init (CutTestCaseClass *klass)
                        G_SIGNAL_RUN_LAST,
                        G_STRUCT_OFFSET(CutTestCaseClass, complete_test),
                        NULL, NULL,
-                       _cut_marshal_VOID__OBJECT_OBJECT_BOOLEAN,
+                       _gcut_marshal_VOID__OBJECT_OBJECT_BOOLEAN,
                        G_TYPE_NONE, 3,
                        CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT, G_TYPE_BOOLEAN);
 
@@ -154,7 +153,7 @@ cut_test_case_class_init (CutTestCaseClass *klass)
                        G_SIGNAL_RUN_LAST,
                        G_STRUCT_OFFSET(CutTestCaseClass, start_test_iterator),
                        NULL, NULL,
-                       _cut_marshal_VOID__OBJECT_OBJECT,
+                       _gcut_marshal_VOID__OBJECT_OBJECT,
                        G_TYPE_NONE,
                        2, CUT_TYPE_TEST_ITERATOR, CUT_TYPE_TEST_CONTEXT);
 
@@ -164,7 +163,7 @@ cut_test_case_class_init (CutTestCaseClass *klass)
                        G_SIGNAL_RUN_LAST,
                        G_STRUCT_OFFSET(CutTestCaseClass, complete_test_iterator),
                        NULL, NULL,
-                       _cut_marshal_VOID__OBJECT_OBJECT_BOOLEAN,
+                       _gcut_marshal_VOID__OBJECT_OBJECT_BOOLEAN,
                        G_TYPE_NONE,
                        3, CUT_TYPE_TEST_ITERATOR, CUT_TYPE_TEST_CONTEXT,
                        G_TYPE_BOOLEAN);

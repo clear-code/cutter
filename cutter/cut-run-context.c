@@ -18,7 +18,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#  include <config.h>
 #endif /* HAVE_CONFIG_H */
 
 #include <glib.h>
@@ -32,8 +32,8 @@
 #include "cut-test-case.h"
 #include "cut-test-result.h"
 
-#include "cut-marshalers.h"
 #include "cut-enum-types.h"
+#include <gcutter/gcut-marshalers.h>
 
 #if !GLIB_CHECK_VERSION(2, 18, 0)
 #  define g_set_error_literal(error, domain, code, message) \
@@ -437,7 +437,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
                         G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                         G_STRUCT_OFFSET (CutRunContextClass, ready_test_suite),
                         NULL, NULL,
-                        _cut_marshal_VOID__OBJECT_UINT_UINT,
+                        _gcut_marshal_VOID__OBJECT_UINT_UINT,
                         G_TYPE_NONE, 3,
                         CUT_TYPE_TEST_SUITE, G_TYPE_UINT, G_TYPE_UINT);
 
@@ -456,7 +456,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
                         G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                         G_STRUCT_OFFSET (CutRunContextClass, ready_test_case),
                         NULL, NULL,
-                        _cut_marshal_VOID__OBJECT_UINT,
+                        _gcut_marshal_VOID__OBJECT_UINT,
                         G_TYPE_NONE, 2, CUT_TYPE_TEST_CASE, G_TYPE_UINT);
 
     signals[START_TEST_CASE]
@@ -474,7 +474,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
                         G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                         G_STRUCT_OFFSET(CutRunContextClass, ready_test_iterator),
                         NULL, NULL,
-                        _cut_marshal_VOID__OBJECT_UINT,
+                        _gcut_marshal_VOID__OBJECT_UINT,
                         G_TYPE_NONE, 2, CUT_TYPE_TEST_ITERATOR, G_TYPE_UINT);
 
     signals[START_TEST_ITERATOR]
@@ -492,7 +492,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
                         G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                         G_STRUCT_OFFSET (CutRunContextClass, start_test),
                         NULL, NULL,
-                        _cut_marshal_VOID__OBJECT_OBJECT,
+                        _gcut_marshal_VOID__OBJECT_OBJECT,
                         G_TYPE_NONE, 2,
                         CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT);
 
@@ -502,7 +502,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
                        G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                        G_STRUCT_OFFSET(CutRunContextClass, start_iterated_test),
                        NULL, NULL,
-                       _cut_marshal_VOID__OBJECT_OBJECT,
+                       _gcut_marshal_VOID__OBJECT_OBJECT,
                        G_TYPE_NONE, 2,
                        CUT_TYPE_ITERATED_TEST, CUT_TYPE_TEST_CONTEXT);
 
@@ -512,7 +512,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
                         G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                         G_STRUCT_OFFSET (CutRunContextClass, pass_assertion),
                         NULL, NULL,
-                        _cut_marshal_VOID__OBJECT_OBJECT,
+                        _gcut_marshal_VOID__OBJECT_OBJECT,
                         G_TYPE_NONE, 2, CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT);
 
     signals[SUCCESS_TEST]
@@ -521,7 +521,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
                         G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                         G_STRUCT_OFFSET (CutRunContextClass, success_test),
                         NULL, NULL,
-                        _cut_marshal_VOID__OBJECT_OBJECT_OBJECT,
+                        _gcut_marshal_VOID__OBJECT_OBJECT_OBJECT,
                         G_TYPE_NONE, 3,
                         CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT,
                         CUT_TYPE_TEST_RESULT);
@@ -532,7 +532,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
                         G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                         G_STRUCT_OFFSET (CutRunContextClass, failure_test),
                         NULL, NULL,
-                        _cut_marshal_VOID__OBJECT_OBJECT_OBJECT,
+                        _gcut_marshal_VOID__OBJECT_OBJECT_OBJECT,
                         G_TYPE_NONE, 3,
                         CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT,
                         CUT_TYPE_TEST_RESULT);
@@ -543,7 +543,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
                         G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                         G_STRUCT_OFFSET (CutRunContextClass, error_test),
                         NULL, NULL,
-                        _cut_marshal_VOID__OBJECT_OBJECT_OBJECT,
+                        _gcut_marshal_VOID__OBJECT_OBJECT_OBJECT,
                         G_TYPE_NONE, 3,
                         CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT,
                         CUT_TYPE_TEST_RESULT);
@@ -554,7 +554,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
                         G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                         G_STRUCT_OFFSET (CutRunContextClass, pending_test),
                         NULL, NULL,
-                        _cut_marshal_VOID__OBJECT_OBJECT_OBJECT,
+                        _gcut_marshal_VOID__OBJECT_OBJECT_OBJECT,
                         G_TYPE_NONE, 3,
                         CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT,
                         CUT_TYPE_TEST_RESULT);
@@ -565,7 +565,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
                         G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                         G_STRUCT_OFFSET (CutRunContextClass, notification_test),
                         NULL, NULL,
-                        _cut_marshal_VOID__OBJECT_OBJECT_OBJECT,
+                        _gcut_marshal_VOID__OBJECT_OBJECT_OBJECT,
                         G_TYPE_NONE, 3,
                         CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT,
                         CUT_TYPE_TEST_RESULT);
@@ -576,7 +576,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
                        G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                        G_STRUCT_OFFSET(CutRunContextClass, omission_test),
                        NULL, NULL,
-                       _cut_marshal_VOID__OBJECT_OBJECT_OBJECT,
+                       _gcut_marshal_VOID__OBJECT_OBJECT_OBJECT,
                        G_TYPE_NONE, 3,
                        CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT,
                        CUT_TYPE_TEST_RESULT);
@@ -588,7 +588,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
                        G_STRUCT_OFFSET(CutRunContextClass,
                                        complete_iterated_test),
                        NULL, NULL,
-                       _cut_marshal_VOID__OBJECT_OBJECT_BOOLEAN,
+                       _gcut_marshal_VOID__OBJECT_OBJECT_BOOLEAN,
                        G_TYPE_NONE,
                        3, CUT_TYPE_ITERATED_TEST, CUT_TYPE_TEST_CONTEXT,
                        G_TYPE_BOOLEAN);
@@ -599,7 +599,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
                        G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                        G_STRUCT_OFFSET(CutRunContextClass, complete_test),
                        NULL, NULL,
-                       _cut_marshal_VOID__OBJECT_OBJECT_BOOLEAN,
+                       _gcut_marshal_VOID__OBJECT_OBJECT_BOOLEAN,
                        G_TYPE_NONE,
                        3, CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT, G_TYPE_BOOLEAN);
 
@@ -609,7 +609,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
                        G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                        G_STRUCT_OFFSET(CutRunContextClass, success_test_iterator),
                        NULL, NULL,
-                       _cut_marshal_VOID__OBJECT_OBJECT,
+                       _gcut_marshal_VOID__OBJECT_OBJECT,
                        G_TYPE_NONE,
                        2, CUT_TYPE_TEST_ITERATOR, CUT_TYPE_TEST_RESULT);
 
@@ -619,7 +619,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
                        G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                        G_STRUCT_OFFSET(CutRunContextClass, failure_test_iterator),
                        NULL, NULL,
-                       _cut_marshal_VOID__OBJECT_OBJECT,
+                       _gcut_marshal_VOID__OBJECT_OBJECT,
                        G_TYPE_NONE,
                        2, CUT_TYPE_TEST_ITERATOR, CUT_TYPE_TEST_RESULT);
 
@@ -629,7 +629,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
                        G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                        G_STRUCT_OFFSET(CutRunContextClass, error_test_iterator),
                        NULL, NULL,
-                       _cut_marshal_VOID__OBJECT_OBJECT,
+                       _gcut_marshal_VOID__OBJECT_OBJECT,
                        G_TYPE_NONE,
                        2, CUT_TYPE_TEST_ITERATOR, CUT_TYPE_TEST_RESULT);
 
@@ -639,7 +639,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
                        G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                        G_STRUCT_OFFSET(CutRunContextClass, pending_test_iterator),
                        NULL, NULL,
-                       _cut_marshal_VOID__OBJECT_OBJECT,
+                       _gcut_marshal_VOID__OBJECT_OBJECT,
                        G_TYPE_NONE,
                        2, CUT_TYPE_TEST_ITERATOR, CUT_TYPE_TEST_RESULT);
 
@@ -649,7 +649,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
                        G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                        G_STRUCT_OFFSET(CutRunContextClass, notification_test_iterator),
                        NULL, NULL,
-                       _cut_marshal_VOID__OBJECT_OBJECT,
+                       _gcut_marshal_VOID__OBJECT_OBJECT,
                        G_TYPE_NONE,
                        2, CUT_TYPE_TEST_ITERATOR, CUT_TYPE_TEST_RESULT);
 
@@ -659,7 +659,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
                        G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                        G_STRUCT_OFFSET(CutRunContextClass, omission_test_iterator),
                        NULL, NULL,
-                       _cut_marshal_VOID__OBJECT_OBJECT,
+                       _gcut_marshal_VOID__OBJECT_OBJECT,
                        G_TYPE_NONE, 2, CUT_TYPE_TEST_ITERATOR, CUT_TYPE_TEST_RESULT);
 
     signals[COMPLETE_TEST_ITERATOR]
@@ -669,7 +669,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
                        G_STRUCT_OFFSET(CutRunContextClass,
                                        complete_test_iterator),
                        NULL, NULL,
-                       _cut_marshal_VOID__OBJECT_BOOLEAN,
+                       _gcut_marshal_VOID__OBJECT_BOOLEAN,
                        G_TYPE_NONE, 2, CUT_TYPE_TEST_ITERATOR, G_TYPE_BOOLEAN);
 
     signals[SUCCESS_TEST_CASE]
@@ -678,7 +678,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
                        G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                        G_STRUCT_OFFSET(CutRunContextClass, success_test_case),
                        NULL, NULL,
-                       _cut_marshal_VOID__OBJECT_OBJECT,
+                       _gcut_marshal_VOID__OBJECT_OBJECT,
                        G_TYPE_NONE, 2, CUT_TYPE_TEST_CASE, CUT_TYPE_TEST_RESULT);
 
     signals[FAILURE_TEST_CASE]
@@ -687,7 +687,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
                        G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                        G_STRUCT_OFFSET(CutRunContextClass, failure_test_case),
                        NULL, NULL,
-                       _cut_marshal_VOID__OBJECT_OBJECT,
+                       _gcut_marshal_VOID__OBJECT_OBJECT,
                        G_TYPE_NONE, 2, CUT_TYPE_TEST_CASE, CUT_TYPE_TEST_RESULT);
 
     signals[ERROR_TEST_CASE]
@@ -696,7 +696,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
                        G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                        G_STRUCT_OFFSET(CutRunContextClass, error_test_case),
                        NULL, NULL,
-                       _cut_marshal_VOID__OBJECT_OBJECT,
+                       _gcut_marshal_VOID__OBJECT_OBJECT,
                        G_TYPE_NONE, 2, CUT_TYPE_TEST_CASE, CUT_TYPE_TEST_RESULT);
 
     signals[PENDING_TEST_CASE]
@@ -705,7 +705,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
                        G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                        G_STRUCT_OFFSET(CutRunContextClass, pending_test_case),
                        NULL, NULL,
-                       _cut_marshal_VOID__OBJECT_OBJECT,
+                       _gcut_marshal_VOID__OBJECT_OBJECT,
                        G_TYPE_NONE, 2, CUT_TYPE_TEST_CASE, CUT_TYPE_TEST_RESULT);
 
     signals[NOTIFICATION_TEST_CASE]
@@ -714,7 +714,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
                        G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                        G_STRUCT_OFFSET(CutRunContextClass, notification_test_case),
                        NULL, NULL,
-                       _cut_marshal_VOID__OBJECT_OBJECT,
+                       _gcut_marshal_VOID__OBJECT_OBJECT,
                        G_TYPE_NONE, 2, CUT_TYPE_TEST_CASE, CUT_TYPE_TEST_RESULT);
 
     signals[OMISSION_TEST_CASE]
@@ -723,7 +723,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
                        G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                        G_STRUCT_OFFSET(CutRunContextClass, omission_test_case),
                        NULL, NULL,
-                       _cut_marshal_VOID__OBJECT_OBJECT,
+                       _gcut_marshal_VOID__OBJECT_OBJECT,
                        G_TYPE_NONE, 2, CUT_TYPE_TEST_CASE, CUT_TYPE_TEST_RESULT);
 
     signals[COMPLETE_TEST_CASE]
@@ -732,7 +732,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
                        G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                        G_STRUCT_OFFSET(CutRunContextClass, complete_test_case),
                        NULL, NULL,
-                       _cut_marshal_VOID__OBJECT_BOOLEAN,
+                       _gcut_marshal_VOID__OBJECT_BOOLEAN,
                        G_TYPE_NONE, 2, CUT_TYPE_TEST_CASE, G_TYPE_BOOLEAN);
 
     signals[COMPLETE_TEST_SUITE]
@@ -741,7 +741,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
                        G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
                        G_STRUCT_OFFSET(CutRunContextClass, complete_test_suite),
                        NULL, NULL,
-                       _cut_marshal_VOID__OBJECT_BOOLEAN,
+                       _gcut_marshal_VOID__OBJECT_BOOLEAN,
                        G_TYPE_NONE, 2, CUT_TYPE_TEST_SUITE, G_TYPE_BOOLEAN);
 
     signals[COMPLETE_RUN]

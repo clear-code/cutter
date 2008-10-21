@@ -2,7 +2,7 @@
 #include <cut-utils.h>
 
 #ifdef HAVE_CONFIG_H
-#  include <cutter/config.h>
+#  include <config.h>
 #endif /* HAVE_CONFIG_H */
 
 #include <glib.h>

@@ -18,7 +18,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#  include <config.h>
 #endif /* HAVE_CONFIG_H */
 
 #include <stdlib.h>
@@ -28,9 +28,10 @@
 #include "cut-test.h"
 #include "cut-test-container.h"
 #include "cut-run-context.h"
-#include "cut-marshalers.h"
 #include "cut-test-result.h"
 #include "cut-utils.h"
+
+#include <gcutter/gcut-marshalers.h>
 
 #define CUT_TEST_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST, CutTestPrivate))
 
@@ -170,7 +171,7 @@ cut_test_class_init (CutTestClass *klass)
                         G_SIGNAL_RUN_LAST,
                         G_STRUCT_OFFSET (CutTestClass, success),
                         NULL, NULL,
-                        _cut_marshal_VOID__OBJECT_OBJECT,
+                        _gcut_marshal_VOID__OBJECT_OBJECT,
                         G_TYPE_NONE, 2,
                         CUT_TYPE_TEST_CONTEXT, CUT_TYPE_TEST_RESULT);
 
@@ -180,7 +181,7 @@ cut_test_class_init (CutTestClass *klass)
                         G_SIGNAL_RUN_LAST,
                         G_STRUCT_OFFSET (CutTestClass, failure),
                         NULL, NULL,
-                        _cut_marshal_VOID__OBJECT_OBJECT,
+                        _gcut_marshal_VOID__OBJECT_OBJECT,
                         G_TYPE_NONE, 2,
                         CUT_TYPE_TEST_CONTEXT, CUT_TYPE_TEST_RESULT);
 
@@ -190,7 +191,7 @@ cut_test_class_init (CutTestClass *klass)
                         G_SIGNAL_RUN_LAST,
                         G_STRUCT_OFFSET (CutTestClass, error),
                         NULL, NULL,
-                        _cut_marshal_VOID__OBJECT_OBJECT,
+                        _gcut_marshal_VOID__OBJECT_OBJECT,
                         G_TYPE_NONE, 2,
                         CUT_TYPE_TEST_CONTEXT, CUT_TYPE_TEST_RESULT);
 
@@ -200,7 +201,7 @@ cut_test_class_init (CutTestClass *klass)
                         G_SIGNAL_RUN_LAST,
                         G_STRUCT_OFFSET (CutTestClass, pending),
                         NULL, NULL,
-                        _cut_marshal_VOID__OBJECT_OBJECT,
+                        _gcut_marshal_VOID__OBJECT_OBJECT,
                         G_TYPE_NONE, 2,
                         CUT_TYPE_TEST_CONTEXT, CUT_TYPE_TEST_RESULT);
 
@@ -210,7 +211,7 @@ cut_test_class_init (CutTestClass *klass)
                         G_SIGNAL_RUN_LAST,
                         G_STRUCT_OFFSET (CutTestClass, notification),
                         NULL, NULL,
-                        _cut_marshal_VOID__OBJECT_OBJECT,
+                        _gcut_marshal_VOID__OBJECT_OBJECT,
                         G_TYPE_NONE, 2,
                         CUT_TYPE_TEST_CONTEXT, CUT_TYPE_TEST_RESULT);
 
@@ -220,7 +221,7 @@ cut_test_class_init (CutTestClass *klass)
                         G_SIGNAL_RUN_LAST,
                         G_STRUCT_OFFSET(CutTestClass, omission),
                         NULL, NULL,
-                        _cut_marshal_VOID__OBJECT_OBJECT,
+                        _gcut_marshal_VOID__OBJECT_OBJECT,
                         G_TYPE_NONE, 2,
                         CUT_TYPE_TEST_CONTEXT, CUT_TYPE_TEST_RESULT);
 
@@ -230,7 +231,7 @@ cut_test_class_init (CutTestClass *klass)
                        G_SIGNAL_RUN_LAST,
                        G_STRUCT_OFFSET (CutTestClass, complete),
                        NULL, NULL,
-                       _cut_marshal_VOID__OBJECT_BOOLEAN,
+                       _gcut_marshal_VOID__OBJECT_BOOLEAN,
                        G_TYPE_NONE, 2, CUT_TYPE_TEST_CONTEXT, G_TYPE_BOOLEAN);
 
     cut_test_signals[CRASHED]

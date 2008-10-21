@@ -14,7 +14,7 @@ AC_CONFIG_AUX_DIR([config])
 AC_CONFIG_MACRO_DIR([m4macros])
 
 AC_CONFIG_SRCDIR([cutter/cut-main.c])
-AM_CONFIG_HEADER([cutter/config.h])
+AM_CONFIG_HEADER([config.h])
 
 AM_INIT_AUTOMAKE($PACKAGE_NAME, $PACKAGE_VERSION)
 

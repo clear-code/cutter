@@ -18,7 +18,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#  include "config.h"
+#  include <config.h>
 #endif /* HAVE_CONFIG_H */
 
 #include <stdlib.h>
@@ -29,11 +29,11 @@
 
 #include "cut-run-context.h"
 
-#include "cut-marshalers.h"
 #include "cut-test-result.h"
 #include "cut-utils.h"
 
 #include "../gcutter/gcut-error.h"
+#include "../gcutter/gcut-marshalers.h"
 
 #define CUT_TEST_ITERATOR_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_ITERATOR, CutTestIteratorPrivate))
 
@@ -118,12 +118,13 @@ cut_test_iterator_class_init (CutTestIteratorClass *klass)
 
     signals[START_TEST]
         = g_signal_new("start-iterated-test",
-                G_TYPE_FROM_CLASS(klass),
-                G_SIGNAL_RUN_LAST,
-                G_STRUCT_OFFSET(CutTestIteratorClass, start_iterated_test),
-                NULL, NULL,
-                _cut_marshal_VOID__OBJECT_OBJECT,
-                G_TYPE_NONE, 2, CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT);
+                       G_TYPE_FROM_CLASS(klass),
+                       G_SIGNAL_RUN_LAST,
+                       G_STRUCT_OFFSET(CutTestIteratorClass,
+                                       start_iterated_test),
+                       NULL, NULL,
+                       _gcut_marshal_VOID__OBJECT_OBJECT,
+                       G_TYPE_NONE, 2, CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT);
 
     signals[COMPLETE_TEST]
         = g_signal_new("complete-iterated-test",
@@ -132,7 +133,7 @@ cut_test_iterator_class_init (CutTestIteratorClass *klass)
                        G_STRUCT_OFFSET(CutTestIteratorClass,
                                        complete_iterated_test),
                        NULL, NULL,
-                       _cut_marshal_VOID__OBJECT_OBJECT_BOOLEAN,
+                       _gcut_marshal_VOID__OBJECT_OBJECT_BOOLEAN,
                        G_TYPE_NONE, 3,
                        CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT, G_TYPE_BOOLEAN);
 

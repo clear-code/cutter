@@ -18,7 +18,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#  include "../cutter/config.h"
+#  include <config.h>
 #endif /* HAVE_CONFIG_H */
 
 #include <sys/types.h>
@@ -30,7 +30,7 @@
 
 #include "gcut-io.h"
 #include "gcut-spawn.h"
-#include <cutter/cut-marshalers.h>
+#include "gcut-marshalers.h"
 
 #define GCUT_SPAWN_GET_PRIVATE(obj)                                     \
     (G_TYPE_INSTANCE_GET_PRIVATE((obj), GCUT_TYPE_SPAWN, GCutSpawnPrivate))
@@ -119,10 +119,10 @@ gcut_spawn_class_init (GCutSpawnClass *klass)
                        G_STRUCT_OFFSET(GCutSpawnClass, output_received),
                        NULL, NULL,
 #if GLIB_SIZEOF_SIZE_T == 8
-                       _cut_marshal_VOID__STRING_UINT64,
+                       _gcut_marshal_VOID__STRING_UINT64,
                        G_TYPE_NONE, 2, G_TYPE_STRING, G_TYPE_UINT64
 #else
-                       _cut_marshal_VOID__STRING_UINT,
+                       _gcut_marshal_VOID__STRING_UINT,
                        G_TYPE_NONE, 2, G_TYPE_STRING, G_TYPE_UINT
 #endif
                        );
@@ -134,10 +134,10 @@ gcut_spawn_class_init (GCutSpawnClass *klass)
                        G_STRUCT_OFFSET(GCutSpawnClass, error_received),
                        NULL, NULL,
 #if GLIB_SIZEOF_SIZE_T == 8
-                       _cut_marshal_VOID__STRING_UINT64,
+                       _gcut_marshal_VOID__STRING_UINT64,
                        G_TYPE_NONE, 2, G_TYPE_STRING, G_TYPE_UINT64
 #else
-                       _cut_marshal_VOID__STRING_UINT,
+                       _gcut_marshal_VOID__STRING_UINT,
                        G_TYPE_NONE, 2, G_TYPE_STRING, G_TYPE_UINT
 #endif
                        );

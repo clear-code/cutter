@@ -18,7 +18,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#  include <config.h>
 #endif /* HAVE_CONFIG_H */
 
 #include <stdlib.h>
@@ -28,7 +28,6 @@
 #include "cut-test.h"
 #include "cut-test-container.h"
 #include "cut-run-context.h"
-#include "cut-marshalers.h"
 #include "cut-test-result.h"
 #include "cut-utils.h"
 

@@ -1,5 +1,7 @@
 2008-10-21  Kouhei Sutou  <kou@cozmixng.org>
 
+	* ./: fix build dependencies.
+
 	* gcutter/gcut-io.[ch], gcutter/gcut-spawn.[ch],
 	test/gcutter/test-gcut-io.c, test/gcutter/test-gcut-spawn.c: add.
 

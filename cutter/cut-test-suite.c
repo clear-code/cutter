@@ -18,7 +18,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#  include <config.h>
 #endif /* HAVE_CONFIG_H */
 
 #include <stdio.h>
@@ -40,9 +40,9 @@
 #include "cut-run-context.h"
 #include "cut-main.h"
 #include "cut-utils.h"
-#include "cut-marshalers.h"
 #include "cut-test-result.h"
 
+#include "../gcutter/gcut-marshalers.h"
 #include "../gcutter/gcut-error.h"
 
 #define CUT_TEST_SUITE_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_SUITE, CutTestSuitePrivate))
@@ -118,7 +118,7 @@ cut_test_suite_class_init (CutTestSuiteClass *klass)
                        G_SIGNAL_RUN_LAST,
                        G_STRUCT_OFFSET(CutTestSuiteClass, ready),
                        NULL, NULL,
-                       _cut_marshal_VOID__UINT_UINT,
+                       _gcut_marshal_VOID__UINT_UINT,
                        G_TYPE_NONE, 2, G_TYPE_UINT, G_TYPE_UINT);
 
     cut_test_suite_signals[START_TEST_CASE]
@@ -136,7 +136,7 @@ cut_test_suite_class_init (CutTestSuiteClass *klass)
                        G_SIGNAL_RUN_LAST,
                        G_STRUCT_OFFSET(CutTestSuiteClass, complete_test_case),
                        NULL, NULL,
-                       _cut_marshal_VOID__OBJECT_BOOLEAN,
+                       _gcut_marshal_VOID__OBJECT_BOOLEAN,
                        G_TYPE_NONE, 2, CUT_TYPE_TEST_CASE, G_TYPE_BOOLEAN);
 
     g_type_class_add_private(gobject_class, sizeof(CutTestSuitePrivate));
