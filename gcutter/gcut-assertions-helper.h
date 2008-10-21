@@ -31,6 +31,8 @@
 #include <gcutter/gcut-error.h>
 #include <gcutter/gcut-enum.h>
 #include <gcutter/gcut-object.h>
+#include <gcutter/gcut-spawn.h>
+#include <gcutter/gcut-io.h>
 
 G_BEGIN_DECLS
 

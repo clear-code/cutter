@@ -23,6 +23,8 @@ gcutter_public_headers =		\
 	gcut-types.h			\
 	gcut-object.h			\
 	gcut-io-channel-string.h	\
+	gcut-spawn.h			\
+	gcut-io.h			\
 	gcut-main.h
 
 noinst_headers = 	\
@@ -46,4 +48,6 @@ libgcutter_la_SOURCES =			\
 	gcut-assertions-helper.c	\
 	gcut-object.c			\
 	gcut-io-channel-string.c	\
+	gcut-spawn.c			\
+	gcut-io.c			\
 	gcut-main.c

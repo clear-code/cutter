@@ -1,3 +1,12 @@
+2008-10-21  Kouhei Sutou  <kou@cozmixng.org>
+
+	* gcutter/gcut-io.[ch], gcutter/gcut-spawn.[ch],
+	test/gcutter/test-gcut-io.c, test/gcutter/test-gcut-spawn.c: add.
+
+	* cutter/cut-stream-reader.c: use gcut_io_inspect_condition().
+
+	* cutter/cut-marshalers.list: add new marshalers.
+
 2008-10-17  Kouhei Sutou  <kou@cozmixng.org>
 
 	* gcutter/gcut-io-channel-string.[ch],

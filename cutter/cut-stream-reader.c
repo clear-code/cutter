@@ -18,7 +18,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#include "config.h"
+#  include "config.h"
 #endif /* HAVE_CONFIG_H */
 
 #include <glib.h>
@@ -26,6 +26,7 @@
 #include "cut-stream-reader.h"
 #include "cut-runner.h"
 #include "cut-stream-parser.h"
+#include <gcutter/gcut-io.h>
 
 #define CUT_STREAM_READER_GET_PRIVATE(obj)                         \
     (G_TYPE_INSTANCE_GET_PRIVATE((obj), CUT_TYPE_STREAM_READER,    \
@@ -120,8 +121,7 @@ watch_func (GIOChannel *channel, GIOCondition condition, gpointer data)
     if (!CUT_IS_STREAM_READER(data))
         return FALSE;
 
-    if (condition & G_IO_IN ||
-        condition & G_IO_PRI) {
+    if (condition & (G_IO_IN | G_IO_PRI)) {
         keep_callback = cut_stream_reader_read_from_io_channel(stream_reader,
                                                                channel);
     }
@@ -129,31 +129,14 @@ watch_func (GIOChannel *channel, GIOCondition condition, gpointer data)
     if (cut_run_context_is_completed(CUT_RUN_CONTEXT(stream_reader)))
         return FALSE;
 
-    if (condition & G_IO_ERR ||
-        condition & G_IO_HUP ||
-        condition & G_IO_NVAL) {
-        GArray *messages;
+    if (condition & (G_IO_ERR | G_IO_HUP | G_IO_NVAL)) {
         gchar *message;
 
-        messages = g_array_new(TRUE, TRUE, sizeof(gchar *));
-        if (condition & G_IO_ERR) {
-            message = "Error";
-            g_array_append_val(messages, message);
-        }
-        if (condition & G_IO_HUP) {
-            message = "Hung up";
-            g_array_append_val(messages, message);
-        }
-        if (condition & G_IO_NVAL) {
-            message = "Invalid request";
-            g_array_append_val(messages, message);
-        }
-        message = g_strjoinv(" | ", (gchar **)(messages->data));
+        message = gcut_io_inspect_condition(condition);
         emit_error(stream_reader,
                    CUT_STREAM_READER_ERROR_IO_ERROR, NULL,
                    "%s", message);
         g_free(message);
-        g_array_free(messages, TRUE);
         keep_callback = FALSE;
     }
 
