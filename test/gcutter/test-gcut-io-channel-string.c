@@ -320,7 +320,7 @@ test_limit (void)
                                       &length, &actual_error);
     expected_error = g_error_new(G_IO_CHANNEL_ERROR,
                                  g_io_channel_error_from_errno(ENOSPC),
-                                 g_strerror(ENOSPC));
+                                 "%s", g_strerror(ENOSPC));
     gcut_assert_equal_error(expected_error, actual_error);
     cut_assert_equal_uint(G_IO_STATUS_ERROR, status);
 }
