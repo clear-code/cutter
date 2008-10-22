@@ -5,6 +5,7 @@
 	- gcut_string_io_channel_{get,set}_limit() ->
 	  gcut_string_io_channel_{get,set}_buffer_limit() .
 	- gcut_string_io_channel_{get,set}_limit() means max content size limit.
+	- add gcut_string_io_channel_{get,set}_read_fail().
 
 	* gcutter/gcut-io-channel-string.[ch],
 	test/gcutter/test-gcut-io-channel-string.c: add

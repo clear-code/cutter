@@ -28,6 +28,7 @@ void test_source(void);
 void test_buffer_limit_block(void);
 void test_buffer_limit_non_block(void);
 void test_limit(void);
+void test_read_fail(void);
 
 static GIOChannel *channel;
 static gchar *data;
@@ -323,6 +324,35 @@ test_limit (void)
                                  "%s", g_strerror(ENOSPC));
     gcut_assert_equal_error(expected_error, actual_error);
     cut_assert_equal_uint(G_IO_STATUS_ERROR, status);
+}
+
+void
+test_read_fail (void)
+{
+    gchar buffer[1024];
+    gsize length;
+    GIOStatus status;
+    GError *error = NULL;
+
+    channel = gcut_io_channel_string_new("data\n");
+    g_io_channel_set_encoding(channel, NULL, &error);
+    gcut_assert_error(error);
+    g_io_channel_set_buffered(channel, FALSE);
+
+    status = g_io_channel_read_chars(channel, buffer, 1, &length, &error);
+    gcut_assert_error(error);
+    cut_assert_equal_uint(G_IO_STATUS_NORMAL, status);
+    cut_assert_equal_size(1, length);
+
+    gcut_string_io_channel_set_read_fail(channel, TRUE);
+
+    status = g_io_channel_read_chars(channel, buffer, 1, &length, &actual_error);
+    expected_error = g_error_new(G_IO_CHANNEL_ERROR,
+                                 g_io_channel_error_from_errno(EIO),
+                                 "%s", g_strerror(EIO));
+    gcut_assert_equal_error(expected_error, actual_error);
+    cut_assert_equal_uint(G_IO_STATUS_ERROR, status);
+    cut_assert_equal_size(0, length);
 }
 
 /*

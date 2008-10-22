@@ -35,6 +35,11 @@ void           gcut_string_io_channel_set_buffer_limit
 gsize          gcut_string_io_channel_get_limit  (GIOChannel  *channel);
 void           gcut_string_io_channel_set_limit  (GIOChannel  *channel,
                                                   gsize        limit);
+gboolean       gcut_string_io_channel_get_read_fail
+                                                 (GIOChannel  *channel);
+void           gcut_string_io_channel_set_read_fail
+                                                 (GIOChannel  *channel,
+                                                  gboolean     read_fail);
 
 G_END_DECLS
 

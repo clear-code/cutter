@@ -36,6 +36,7 @@ struct _GCutIOChannelString
     gsize offset;
     gsize buffer_limit;
     gsize limit;
+    gboolean read_fail;
     GIOFlags flags;
 };
 
@@ -123,6 +124,15 @@ gcut_io_channel_string_read (GIOChannel *channel, gchar *buf, gsize count,
 {
     GCutIOChannelString *string_channel = (GCutIOChannelString *)channel;
     gsize rest;
+
+    if (string_channel->read_fail) {
+        *bytes_read = 0;
+        g_set_error(error,
+                    G_IO_CHANNEL_ERROR,
+                    g_io_channel_error_from_errno(EIO),
+                    "%s", g_strerror(EIO));
+        return G_IO_STATUS_ERROR;
+    }
 
     rest = string_channel->string->len - string_channel->offset;
     *bytes_read = MIN(count, rest);
@@ -327,10 +337,8 @@ gcut_io_channel_string_new (const gchar *initial)
     string_channel->offset = 0;
     string_channel->buffer_limit = 0;
     string_channel->limit = 0;
-    string_channel->flags =
-        G_IO_FLAG_IS_READABLE |
-        G_IO_FLAG_IS_WRITEABLE |
-        G_IO_FLAG_IS_SEEKABLE;
+    string_channel->read_fail = FALSE;
+    string_channel->flags = 0;
 
     return channel;
 }
@@ -382,6 +390,22 @@ gcut_string_io_channel_set_limit (GIOChannel *channel, gsize limit)
     GCutIOChannelString *string_channel = (GCutIOChannelString *)channel;
 
     string_channel->limit = limit;
+}
+
+gboolean
+gcut_string_io_channel_get_read_fail (GIOChannel *channel)
+{
+    GCutIOChannelString *string_channel = (GCutIOChannelString *)channel;
+
+    return string_channel->read_fail;
+}
+
+void
+gcut_string_io_channel_set_read_fail (GIOChannel *channel, gboolean read_fail)
+{
+    GCutIOChannelString *string_channel = (GCutIOChannelString *)channel;
+
+    string_channel->read_fail = read_fail;
 }
 
 /*
