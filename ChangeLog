@@ -1,5 +1,7 @@
 2008-10-22  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-spawn.c: cleanup.
+
 	* gcutter/gcut-spawn.c (dispose): interrupt.
 
 	* gcutter/gcut-io-channel-string.[ch],

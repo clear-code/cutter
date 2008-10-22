@@ -454,23 +454,24 @@ read_from_io_channel (GIOChannel *channel, GCutSpawn *spawn, guint signal)
     priv = GCUT_SPAWN_GET_PRIVATE(spawn);
     while (need_more_data) {
         GIOStatus status;
-        gchar stream[BUFFER_SIZE + 1];
+        gchar stream[BUFFER_SIZE];
         gsize length = 0;
         GError *error = NULL;
 
         status = g_io_channel_read_chars(channel, stream, BUFFER_SIZE,
                                          &length, &error);
-        if (status == G_IO_STATUS_EOF)
-            need_more_data = FALSE;
-
         if (error) {
             g_signal_emit(spawn, signals[ERROR], 0, error);
             g_error_free(error);
-            need_more_data = TRUE;
+            need_more_data = FALSE;
             break;
         }
 
-        if (length <= 0)
+        if (status == G_IO_STATUS_EOF)
+            need_more_data = FALSE;
+
+        if (status == G_IO_STATUS_AGAIN ||
+            length == 0)
             break;
 
         g_signal_emit(spawn, signal, 0, stream, length);
