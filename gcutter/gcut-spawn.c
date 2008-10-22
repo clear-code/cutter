@@ -23,6 +23,7 @@
 
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <signal.h>
 
 #include <glib.h>
 #include <glib/gstdio.h>
@@ -194,13 +195,6 @@ remove_child_watch_func (GCutSpawnPrivate *priv)
 }
 
 static void
-close_child (GCutSpawnPrivate *priv)
-{
-    g_spawn_close_pid(priv->pid);
-    priv->pid = 0;
-}
-
-static void
 remove_output_watch_func (GCutSpawnPrivate *priv)
 {
     g_source_remove(priv->output_watch_id);
@@ -222,6 +216,10 @@ dispose (GObject *object)
     if (priv->command) {
         g_strfreev(priv->command);
         priv->command = NULL;
+    }
+
+    if (priv->process_watch_id && priv->pid) {
+        kill(priv->pid, SIGINT);
     }
 
     if (priv->process_watch_id)
@@ -389,7 +387,8 @@ reap_child (GCutSpawn *spawn, GPid pid)
     remove_child_watch_func(priv);
     waitpid(pid, &status, 0);
     g_signal_emit(spawn, signals[REAPED], 0, status);
-    close_child(priv);
+    g_spawn_close_pid(priv->pid);
+    priv->pid = 0;
 }
 
 static void
@@ -435,6 +434,7 @@ create_input_channel (gint fd, guint *watch_id,
         return NULL;
 
     g_io_channel_set_close_on_unref(channel, TRUE);
+    g_io_channel_set_flags(channel, G_IO_FLAG_NONBLOCK, NULL);
 
     *watch_id = g_io_add_watch(channel,
                                G_IO_IN | G_IO_PRI |

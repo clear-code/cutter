@@ -1,5 +1,7 @@
 2008-10-22  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-spawn.c (dispose): interrupt.
+
 	* gcutter/gcut-io-channel-string.[ch],
 	test/gcutter/test-gcut-io-channel-string.c:
 	- gcut_string_io_channel_{get,set}_limit() ->
