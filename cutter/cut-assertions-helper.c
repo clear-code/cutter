@@ -170,6 +170,27 @@ cut_assert_equal_uint_helper (unsigned long   expected,
 }
 
 void
+cut_assert_equal_size_helper (size_t          expected,
+                              size_t          actual,
+                              const char     *expression_expected,
+                              const char     *expression_actual,
+                              const char     *user_message_format,
+                              ...)
+{
+    if (expected == actual) {
+        cut_test_pass();
+    } else {
+        cut_test_fail_va_list(cut_take_printf("<%s == %s>\n"
+                                              "expected: <%" G_GSIZE_FORMAT ">\n"
+                                              "  actual: <%" G_GSIZE_FORMAT ">",
+                                              expression_expected,
+                                              expression_actual,
+                                              expected, actual),
+                              user_message_format);
+    }
+}
+
+void
 cut_assert_equal_double_helper (double          expected,
                                 double          error,
                                 double          actual,
@@ -372,6 +393,34 @@ cut_assert_operator_uint_helper (cut_boolean     result,
     } else {
         cut_test_fail_va_list(cut_take_printf("expected: <%s> %s <%s>\n"
                                               "  actual: <%lu> %s <%lu>",
+                                              expression_lhs,
+                                              expression_operator,
+                                              expression_rhs,
+                                              lhs,
+                                              expression_operator,
+                                              rhs),
+                              user_message_format);
+    }
+}
+
+void
+cut_assert_operator_size_helper (cut_boolean     result,
+                                 size_t          lhs,
+                                 size_t          rhs,
+                                 const char     *expression_lhs,
+                                 const char     *expression_operator,
+                                 const char     *expression_rhs,
+                                 const char     *user_message_format,
+                                 ...)
+{
+    if (result) {
+        cut_test_pass();
+    } else {
+        cut_test_fail_va_list(cut_take_printf("expected: <%s> %s <%s>\n"
+                                              "  actual: "
+                                              "<%" G_GSIZE_FORMAT ">"
+                                              " %s "
+                                              "<%" G_GSIZE_FORMAT ">",
                                               expression_lhs,
                                               expression_operator,
                                               expression_rhs,

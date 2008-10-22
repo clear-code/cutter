@@ -1,5 +1,9 @@
 2008-10-22  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertions-helper.[ch], cutter/cut-assertions.h,
+	test/test-cut-assertions.c: add cut_assert_equal_size() and
+	cut_assert_operator_size().
+
 	* gtk-doc.make: fix build error on same source and build directory
 	case.
 

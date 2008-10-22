@@ -16,6 +16,7 @@
 #include "lib/cuttest-assertions.h"
 
 void test_equal_int(void);
+void test_equal_size(void);
 void test_equal_string(void);
 void test_equal_string_with_diff(void);
 void test_equal_string_with_folded_diff(void);
@@ -23,6 +24,7 @@ void test_equal_double(void);
 void test_operator(void);
 void test_operator_int(void);
 void test_operator_uint(void);
+void test_operator_size(void);
 void test_operator_double(void);
 void test_equal_memory (void);
 void test_equal_string_array (void);
@@ -147,6 +149,28 @@ test_equal_int (void)
     cut_assert_equal_int(1, 1);
     cut_assert_equal_int(-1, -1);
     cut_assert_equal_int(0, 0);
+}
+
+static void
+stub_equal_size (void)
+{
+    cut_assert_equal_size(1, 1);
+    MARK_FAIL(cut_assert_equal_size(1, 10));
+}
+
+void
+test_equal_size (void)
+{
+    test = cut_test_new("cut_assert_equal_size()", stub_equal_size);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_equal_size()", NULL,
+                           "<1 == 10>\n"
+                           "expected: <1>\n"
+                           "  actual: <10>",
+                           FAIL_LOCATION,
+                           "stub_equal_size");
 }
 
 void
@@ -372,6 +396,30 @@ test_operator_uint (void)
                            "  actual: <2> >= <6>",
                            FAIL_LOCATION,
                            "stub_operator_uint");
+}
+
+static void
+stub_operator_size (void)
+{
+    cut_assert_operator_size(1, <, 2 + 3);
+    cut_assert_operator_size(2, ==, 1 + 1);
+    MARK_FAIL(cut_assert_operator_size(1 + 1, >=, 2 + 4));
+}
+
+void
+test_operator_size (void)
+{
+    test = cut_test_new("cut_assert_operator_size()", stub_operator_size);
+    cut_assert_not_null(test);
+
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_operator_size()", NULL,
+                           "expected: <1 + 1> >= <2 + 4>\n"
+                           "  actual: <2> >= <6>",
+                           FAIL_LOCATION,
+                           "stub_operator_size");
 }
 
 static void

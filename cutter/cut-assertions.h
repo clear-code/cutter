@@ -165,6 +165,24 @@ extern "C" {
         cut_assert_equal_uint(expected, actual, ## __VA_ARGS__))
 
 /**
+ * cut_assert_equal_size:
+ * @expected: an expected size_t value.
+ * @actual: an actual size_t value.
+ * @...: optional format string, followed by parameters to insert
+ *       into the format string (as with printf())
+ *
+ * Passes if @expected == @actual.
+ *
+ * Since: 1.0.6
+ */
+#define cut_assert_equal_size(expected, actual, ...)                    \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_equal_size_helper((expected), (actual),              \
+                                     #expected, #actual,                \
+                                     ## __VA_ARGS__, NULL),             \
+        cut_assert_equal_size(expected, actual, ## __VA_ARGS__))
+
+/**
  * cut_assert_equal_double:
  * @expected: an expected float value.
  * @error: a float value that specifies error range.
@@ -369,15 +387,44 @@ extern "C" {
  * Since: 1.0.5
  */
 #define cut_assert_operator_uint(lhs, operator, rhs, ...) do            \
-    {                                                                   \
-        unsigned long _lhs = (lhs);                                     \
-        unsigned long _rhs = (rhs);                                     \
+{                                                                   	\
+    unsigned long _lhs = (lhs);                                     	\
+    unsigned long _rhs = (rhs);                                     	\
     cut_trace_with_info_expression(                                     \
         cut_assert_operator_uint_helper((_lhs operator _rhs),           \
-                                       _lhs, _rhs,                      \
-                                       #lhs, #operator, #rhs,           \
-                                       ## __VA_ARGS__, NULL),           \
+                                        _lhs, _rhs,                     \
+                                        #lhs, #operator, #rhs,          \
+                                        ## __VA_ARGS__, NULL),          \
         cut_assert_operator_uint(lhs, operator, rhs, ## __VA_ARGS__));  \
+} while(0)
+
+/**
+ * cut_assert_operator_size:
+ * @lhs: a left hand side size_t value.
+ * @operator: a binary operator.
+ * @rhs: a right hand side size_t value.
+ * @...: optional format string, followed by parameters to insert
+ *       into the format string (as with printf())
+ *
+ * Passes if (@lhs @operator @rhs) is TRUE.
+ *
+ * e.g.:
+ * |[
+ * cut_assert_operator_size(1, <, 2) -> (1 < 2);
+ * ]|
+ *
+ * Since: 1.0.5
+ */
+#define cut_assert_operator_size(lhs, operator, rhs, ...) do            \
+{                                                                   	\
+    size_t _lhs = (lhs);                                     		\
+    size_t _rhs = (rhs);                                     		\
+    cut_trace_with_info_expression(                                     \
+        cut_assert_operator_size_helper((_lhs operator _rhs),           \
+                                        _lhs, _rhs,                     \
+                                        #lhs, #operator, #rhs,          \
+                                        ## __VA_ARGS__, NULL),          \
+        cut_assert_operator_size(lhs, operator, rhs, ## __VA_ARGS__));  \
 } while(0)
 
 /**
