@@ -21,9 +21,12 @@ GPATH = $(srcdir)
 
 TARGET_DIR=$(HTML_DIR)/$(DOC_MODULE)
 
+MAIN_SGML_FILE = main.sgml
+
 EXTRA_DIST = 				\
 	$(content_files)		\
 	$(HTML_IMAGES)			\
+	$(MAIN_SGML_FILE)		\
 	$(DOC_MAIN_SGML_FILE)		\
 	$(DOC_MODULE)-sections.txt	\
 	$(DOC_MODULE)-overrides.txt
@@ -92,15 +95,16 @@ tmpl/*.sgml:
 
 #### xml ####
 
-sgml-build.stamp: tmpl.stamp $(HFILE_GLOB) $(CFILE_GLOB) $(DOC_MAIN_SGML_FILE) $(DOC_MODULE)-sections.txt $(srcdir)/tmpl/*.sgml $(expand_content_files)
+$(MAIN_SGML_FILE): $(srcdir)/$(DOC_MAIN_SGML_FILE)
+	cp $(srcdir)/$(DOC_MAIN_SGML_FILE) $(MAIN_SGML_FILE)
+
+sgml-build.stamp: tmpl.stamp $(HFILE_GLOB) $(CFILE_GLOB) $(MAIN_SGML_FILE) $(DOC_MODULE)-sections.txt $(srcdir)/tmpl/*.sgml $(expand_content_files)
 	@echo 'gtk-doc: Building XML'
-	test -f $(srcdir)/$(DOC_MAIN_SGML_FILE) &&	\
-	  cp $(srcdir)/$(DOC_MAIN_SGML_FILE) ./
 	gtkdoc-mkdb --module=$(DOC_MODULE)			\
 	  --source-dir=$(srcdir)/$(DOC_SOURCE_DIR)		\
 	  --output-format=xml					\
 	  --expand-content-files="$(expand_content_files)"	\
-	  --main-sgml-file=$(DOC_MAIN_SGML_FILE)		\
+	  --main-sgml-file=$(MAIN_SGML_FILE)			\
 	  $(MKDB_OPTIONS)
 	touch sgml-build.stamp
 
@@ -109,12 +113,12 @@ sgml.stamp: sgml-build.stamp
 
 #### html ####
 
-html-build.stamp: sgml.stamp $(CATALOGS) $(DOC_MAIN_SGML_FILE) $(content_files)
+html-build.stamp: sgml.stamp $(CATALOGS) $(MAIN_SGML_FILE) $(content_files)
 	@echo 'gtk-doc: Building HTML'
 	@echo "English:"
 	rm -rf html
 	mkdir -p html
-	cd html && gtkdoc-mkhtml $(DOC_MODULE) ../$(DOC_MAIN_SGML_FILE)
+	cd html && gtkdoc-mkhtml $(DOC_MODULE) ../$(MAIN_SGML_FILE)
 	if test "x$(HTML_IMAGES)" != "x"; then	\
 	  for image in $(HTML_IMAGES); do	\
 	    cp $(srcdir)/$$image html/;		\
@@ -130,7 +134,7 @@ html-build.stamp: sgml.stamp $(CATALOGS) $(DOC_MAIN_SGML_FILE) $(content_files)
 	  mkdir -p $$lang/html;						\
 	  mkdir -p $$lang/xml;						\
 	  xml2po -k -p $(srcdir)/$$catalog -l $$lang			\
-	    $(DOC_MAIN_SGML_FILE) > $$lang/$(DOC_MAIN_SGML_FILE);	\
+	    $(MAIN_SGML_FILE) > $$lang/$(DOC_MAIN_SGML_FILE);		\
 	  for xml in $(srcdir)/xml/*.xml; do				\
 	    xml2po -k -p $(srcdir)/$$catalog -l $$lang $$xml >		\
 	      $$lang/xml/`basename $$xml`;				\

@@ -1,3 +1,8 @@
+2008-10-22  Kouhei Sutou  <kou@cozmixng.org>
+
+	* gtk-doc.make: fix build error on same source and build directory
+	case.
+
 2008-10-21  Kouhei Sutou  <kou@cozmixng.org>
 
 	* doc/reference/Makefile.am, gtk-doc.make: support build directory.
