@@ -18,7 +18,7 @@
  */
 
 #ifdef HAVE_CONFIG_H
-#  include "../cutter/config.h"
+#  include <config.h>
 #endif /* HAVE_CONFIG_H */
 
 #include <string.h>
@@ -34,6 +34,7 @@ struct _GCutIOChannelString
     GIOChannel channel;
     GString *string;
     gsize offset;
+    gsize limit;
     GIOFlags flags;
 };
 
@@ -138,15 +139,65 @@ gcut_io_channel_string_read (GIOChannel *channel, gchar *buf, gsize count,
 }
 
 static GIOStatus
+determine_write_size (GCutIOChannelString *string_channel,
+                      gsize size, gsize *write_size)
+{
+    while (TRUE) {
+        gsize buffer_size, available_size;
+
+        if (string_channel->limit == 0) {
+            *write_size = size;
+            break;
+        }
+
+        if (string_channel->string->len > string_channel->offset) {
+            buffer_size = string_channel->string->len - string_channel->offset;
+        } else {
+            buffer_size = 0;
+        }
+
+        if (string_channel->limit >= buffer_size) {
+            available_size = string_channel->limit - buffer_size;
+        } else {
+            available_size = 0;
+        }
+
+        if (string_channel->flags & G_IO_FLAG_NONBLOCK) {
+            if (available_size > 0) {
+                *write_size = MIN(size, available_size);
+                break;
+            } else {
+                return G_IO_STATUS_AGAIN;
+            }
+        } else {
+            if (available_size >= size) {
+                *write_size = size;
+                break;
+            }
+        }
+
+        g_main_context_iteration(NULL, TRUE);
+    }
+
+    return G_IO_STATUS_NORMAL;
+}
+
+static GIOStatus
 gcut_io_channel_string_write (GIOChannel *channel, const gchar *buf, gsize count,
                               gsize *bytes_written, GError **error)
 {
     GCutIOChannelString *string_channel = (GCutIOChannelString *)channel;
+    GIOStatus status;
+    gsize write_size = 0;
+
+    status = determine_write_size(string_channel, count, &write_size);
+    if (status != G_IO_STATUS_NORMAL)
+        return status;
 
     g_string_overwrite_len(string_channel->string, string_channel->offset,
-                           buf, count);
-    *bytes_written = count;
-    string_channel->offset += count;
+                           buf, write_size);
+    *bytes_written = write_size;
+    string_channel->offset += write_size;
 
     return G_IO_STATUS_NORMAL;
 }
@@ -264,6 +315,11 @@ gcut_io_channel_string_new (const gchar *initial)
 
     string_channel->string = g_string_new(initial);
     string_channel->offset = 0;
+    string_channel->limit = 0;
+    string_channel->flags =
+        G_IO_FLAG_IS_READABLE |
+        G_IO_FLAG_IS_WRITEABLE |
+        G_IO_FLAG_IS_SEEKABLE;
 
     return channel;
 }
@@ -283,6 +339,22 @@ gcut_string_io_channel_clear (GIOChannel  *channel)
 
     g_string_truncate(string_channel->string, 0);
     string_channel->offset = 0;
+}
+
+gsize
+gcut_string_io_channel_get_limit (GIOChannel *channel)
+{
+    GCutIOChannelString *string_channel = (GCutIOChannelString *)channel;
+
+    return string_channel->limit;
+}
+
+void
+gcut_string_io_channel_set_limit (GIOChannel *channel, gsize limit)
+{
+    GCutIOChannelString *string_channel = (GCutIOChannelString *)channel;
+
+    string_channel->limit = limit;
 }
 
 /*

@@ -1,5 +1,9 @@
 2008-10-22  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-io-channel-string.[ch],
+	test/gcutter/test-gcut-io-channel-string.c: add
+	gcut_string_io_channel_{get,set}_limit().
+
 	* cutter/cut-assertions-helper.[ch], cutter/cut-assertions.h,
 	test/test-cut-assertions.c: add cut_assert_equal_size() and
 	cut_assert_operator_size().
