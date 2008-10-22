@@ -27,6 +27,11 @@ G_BEGIN_DECLS
 GIOChannel    *gcut_io_channel_string_new        (const gchar *initial);
 GString       *gcut_string_io_channel_get_string (GIOChannel  *channel);
 void           gcut_string_io_channel_clear      (GIOChannel  *channel);
+gsize          gcut_string_io_channel_get_buffer_limit
+                                                 (GIOChannel  *channel);
+void           gcut_string_io_channel_set_buffer_limit
+                                                 (GIOChannel  *channel,
+                                                  gsize        limit);
 gsize          gcut_string_io_channel_get_limit  (GIOChannel  *channel);
 void           gcut_string_io_channel_set_limit  (GIOChannel  *channel,
                                                   gsize        limit);

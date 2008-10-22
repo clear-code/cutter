@@ -17,6 +17,7 @@
  *
  */
 
+#include <errno.h>
 #include <gcutter.h>
 
 void test_new(void);
@@ -24,13 +25,16 @@ void test_new_null(void);
 void test_read_write(void);
 void test_clear(void);
 void test_source(void);
-void test_limit_block(void);
-void test_limit_non_block(void);
+void test_buffer_limit_block(void);
+void test_buffer_limit_non_block(void);
+void test_limit(void);
 
 static GIOChannel *channel;
 static gchar *data;
 static guint watch_id;
 static guint timeout_id;
+static GError *expected_error;
+static GError *actual_error;
 
 void
 setup (void)
@@ -39,12 +43,15 @@ setup (void)
     data = NULL;
     watch_id = 0;
     timeout_id = 0;
+    expected_error = NULL;
+    actual_error = NULL;
 }
 
 void
 teardown (void)
 {
     if (channel) {
+        gcut_string_io_channel_set_buffer_limit(channel, 0);
         gcut_string_io_channel_set_limit(channel, 0);
         g_io_channel_unref(channel);
     }
@@ -54,6 +61,11 @@ teardown (void)
         g_source_remove(watch_id);
     if (timeout_id > 0)
         g_source_remove(timeout_id);
+
+    if (expected_error)
+        g_error_free(expected_error);
+    if (actual_error)
+        g_error_free(actual_error);
 }
 
 void
@@ -199,12 +211,12 @@ cb_timeout_detect (gpointer user_data)
     gsize limit;
 
     *timed_out = TRUE;
-    limit = gcut_string_io_channel_get_limit(channel);
-    gcut_string_io_channel_set_limit(channel, limit + 1);
+    limit = gcut_string_io_channel_get_buffer_limit(channel);
+    gcut_string_io_channel_set_buffer_limit(channel, limit + 1);
     return FALSE;
 }
 void
-test_limit_block (void)
+test_buffer_limit_block (void)
 {
     gchar write_data[] = "data\n";
     gsize length;
@@ -217,7 +229,7 @@ test_limit_block (void)
     gcut_assert_error(error);
     g_io_channel_set_buffered(channel, FALSE);
 
-    gcut_string_io_channel_set_limit(channel, sizeof(write_data));
+    gcut_string_io_channel_set_buffer_limit(channel, sizeof(write_data));
     status = g_io_channel_write_chars(channel, write_data, sizeof(write_data),
                                       &length, &error);
     gcut_assert_error(error);
@@ -229,7 +241,7 @@ test_limit_block (void)
     gcut_assert_error(error);
 
     timeout_id = g_timeout_add(100, cb_timeout_detect, &timed_out);
-    gcut_string_io_channel_set_limit(channel, length * 2 -1);
+    gcut_string_io_channel_set_buffer_limit(channel, length * 2 -1);
     status = g_io_channel_write_chars(channel, write_data, sizeof(write_data),
                                       &length, &error);
     gcut_assert_error(error);
@@ -240,7 +252,7 @@ test_limit_block (void)
 }
 
 void
-test_limit_non_block (void)
+test_buffer_limit_non_block (void)
 {
     gchar write_data[] = "data\n";
     gsize length;
@@ -256,14 +268,15 @@ test_limit_non_block (void)
     g_io_channel_set_flags(channel, G_IO_FLAG_NONBLOCK, &error);
     gcut_assert_error(error);
 
-    gcut_string_io_channel_set_limit(channel, sizeof(write_data));
-    g_io_channel_write_chars(channel, write_data, sizeof(write_data),
-                             &length, &error);
+    gcut_string_io_channel_set_buffer_limit(channel, sizeof(write_data));
+    status = g_io_channel_write_chars(channel, write_data, sizeof(write_data),
+                                      &length, &error);
     gcut_assert_error(error);
+    cut_assert_equal_uint(G_IO_STATUS_NORMAL, status);
     cut_assert_equal_size(sizeof(write_data), length);
 
 
-    gcut_string_io_channel_set_limit(channel, delta);
+    gcut_string_io_channel_set_buffer_limit(channel, delta);
     status = g_io_channel_write_chars(channel, write_data, sizeof(write_data),
                                       &length, &error);
     gcut_assert_error(error);
@@ -279,6 +292,37 @@ test_limit_non_block (void)
     gcut_assert_error(error);
     cut_assert_equal_uint(G_IO_STATUS_AGAIN, status);
     cut_assert_equal_size(0, length);
+}
+
+void
+test_limit (void)
+{
+    gchar write_data[] = "data\n";
+    gsize length;
+    GIOStatus status;
+    GError *error = NULL;
+
+    channel = gcut_io_channel_string_new(NULL);
+    g_io_channel_set_encoding(channel, NULL, &error);
+    gcut_assert_error(error);
+    g_io_channel_set_buffered(channel, FALSE);
+
+    gcut_string_io_channel_set_limit(channel, sizeof(write_data) + 1);
+
+    status = g_io_channel_write_chars(channel, write_data, sizeof(write_data),
+                                      &length, &error);
+    gcut_assert_error(error);
+    cut_assert_equal_uint(G_IO_STATUS_NORMAL, status);
+    cut_assert_equal_size(sizeof(write_data), length);
+
+
+    status = g_io_channel_write_chars(channel, write_data, sizeof(write_data),
+                                      &length, &actual_error);
+    expected_error = g_error_new(G_IO_CHANNEL_ERROR,
+                                 g_io_channel_error_from_errno(ENOSPC),
+                                 g_strerror(ENOSPC));
+    gcut_assert_equal_error(expected_error, actual_error);
+    cut_assert_equal_uint(G_IO_STATUS_ERROR, status);
 }
 
 /*
