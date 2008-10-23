@@ -5,6 +5,9 @@
 	- add: cut_get_test_name().
 	- add: cut_{get,set}_current_test_context() ->
                cut_{get,set}_test_context()
+	- add: CUT_RELATIVE_PATH for resoving path of helper shared
+	       library like test/lib/cuttest-assertions.c.
+
 
 2008-10-22  Kouhei Sutou  <kou@cozmixng.org>
 

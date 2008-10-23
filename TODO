@@ -20,3 +20,5 @@
 * cut_get_test_name().
 * cut_{get,set}_current_test_context() ->
   cut_{get,set}_test_context()
+* CUT_RELATIVE_PATH for resoving path of helper shared
+  library like test/lib/cuttest-assertions.c.
