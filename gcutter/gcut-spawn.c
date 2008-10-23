@@ -61,6 +61,8 @@ struct _GCutSpawnPrivate
 
     WatchOutputData *watch_output_data;
     WatchOutputData *watch_error_data;
+
+    guint kill_wait_milliseconds;
 };
 
 enum
@@ -185,6 +187,8 @@ gcut_spawn_init (GCutSpawn *spawn)
 
     priv->watch_output_data = NULL;
     priv->watch_error_data = NULL;
+
+    priv->kill_wait_milliseconds = 10;
 }
 
 static void
@@ -208,18 +212,40 @@ remove_error_watch_func (GCutSpawnPrivate *priv)
     priv->error_watch_id = 0;
 }
 
+static gboolean
+cb_timeout_kill_wait (gpointer user_data)
+{
+    gboolean *waiting = user_data;
+
+    *waiting = FALSE;
+
+    return FALSE;
+}
+
 static void
 dispose (GObject *object)
 {
-    GCutSpawnPrivate *priv = GCUT_SPAWN_GET_PRIVATE(object);
+    GCutSpawnPrivate *priv;
 
+    priv = GCUT_SPAWN_GET_PRIVATE(object);
     if (priv->command) {
         g_strfreev(priv->command);
         priv->command = NULL;
     }
 
     if (priv->process_watch_id && priv->pid) {
-        kill(priv->pid, SIGINT);
+        gcut_spawn_kill(GCUT_SPAWN(object), SIGTERM);
+        if (priv->kill_wait_milliseconds > 0) {
+            gboolean waiting = TRUE;
+            guint timeout_kill_wait_id;
+
+            timeout_kill_wait_id = g_timeout_add(priv->kill_wait_milliseconds,
+                                                 cb_timeout_kill_wait,
+                                                 &waiting);
+            while (waiting && priv->process_watch_id && priv->pid)
+                g_main_context_iteration(NULL, TRUE);
+            g_source_remove(timeout_kill_wait_id);
+        }
     }
 
     if (priv->process_watch_id)
@@ -626,6 +652,19 @@ gcut_spawn_get_pid (GCutSpawn *spawn)
     return GCUT_SPAWN_GET_PRIVATE(spawn)->pid;
 }
 
+void
+gcut_spawn_kill (GCutSpawn *spawn, int signal_number)
+{
+    GCutSpawnPrivate *priv;
+
+    priv = GCUT_SPAWN_GET_PRIVATE(spawn);
+
+    g_return_if_fail(priv != NULL);
+    g_return_if_fail(priv->pid > 0);
+
+    kill(priv->pid, signal_number);
+}
+
 GIOChannel *
 gcut_spawn_get_input (GCutSpawn *spawn)
 {
@@ -642,6 +681,18 @@ GIOChannel *
 gcut_spawn_get_error (GCutSpawn *spawn)
 {
     return GCUT_SPAWN_GET_PRIVATE(spawn)->error;
+}
+
+guint
+gcut_spawn_get_kill_wait_milliseconds (GCutSpawn *spawn)
+{
+    return GCUT_SPAWN_GET_PRIVATE(spawn)->kill_wait_milliseconds;
+}
+
+void
+gcut_spawn_set_kill_wait_milliseconds (GCutSpawn *spawn, guint milliseconds)
+{
+    GCUT_SPAWN_GET_PRIVATE(spawn)->kill_wait_milliseconds = milliseconds;
 }
 
 /*

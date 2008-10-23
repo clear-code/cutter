@@ -1,5 +1,7 @@
 2008-10-23  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-spawn.c: ensure kill spawned process.
+
 	* TODO:
 	- remove: GCutIOChannelString.
 	- add: cut_get_test_name().

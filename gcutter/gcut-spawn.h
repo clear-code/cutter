@@ -90,9 +90,18 @@ gboolean      gcut_spawn_write       (GCutSpawn    *spawn,
                                       GError      **error);
 
 GPid          gcut_spawn_get_pid     (GCutSpawn    *spawn);
+void          gcut_spawn_kill        (GCutSpawn    *spawn,
+                                      int           signal_number);
+
 GIOChannel   *gcut_spawn_get_input   (GCutSpawn    *spawn);
 GIOChannel   *gcut_spawn_get_output  (GCutSpawn    *spawn);
 GIOChannel   *gcut_spawn_get_error   (GCutSpawn    *spawn);
+
+guint         gcut_spawn_get_kill_wait_milliseconds
+                                     (GCutSpawn    *spawn);
+void          gcut_spawn_set_kill_wait_milliseconds
+                                     (GCutSpawn    *spawn,
+                                      guint         milliseconds);
 
 G_END_DECLS
 
