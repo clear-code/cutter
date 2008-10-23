@@ -349,7 +349,6 @@ void shutdown(void);
 #define cut_set_current_test_context(test_context)      \
     cut_test_context_current_set(test_context)
 
-
 #ifdef __cplusplus
 }
 #endif
