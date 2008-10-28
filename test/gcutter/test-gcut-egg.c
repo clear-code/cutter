@@ -6,11 +6,11 @@
 
 #include <gcutter.h>
 
-void test_run (void);
+void test_hatch (void);
 void test_io (void);
 void test_flags (void);
 
-static GCutSpawn *spawn;
+static GCutEgg *egg;
 static GError *expected_error;
 static GError *actual_error;
 static GString *output_string;
@@ -22,7 +22,7 @@ static gchar *current_locale;
 void
 setup (void)
 {
-    spawn = NULL;
+    egg = NULL;
     expected_error = NULL;
     actual_error = NULL;
     output_string = g_string_new(NULL);
@@ -43,8 +43,8 @@ teardown (void)
         setlocale(LC_ALL, NULL);
     }
 
-    if (spawn)
-        g_object_unref(spawn);
+    if (egg)
+        g_object_unref(egg);
 
     if (expected_error)
         g_error_free(expected_error);
@@ -58,37 +58,37 @@ teardown (void)
 }
 
 static void
-cb_output_received (GCutSpawn *spawn, const gchar *chunk, gsize size,
+cb_output_received (GCutEgg *egg, const gchar *chunk, gsize size,
                     gpointer user_data)
 {
     g_string_append_len(output_string, chunk, size);
 }
 
 static void
-cb_error_received (GCutSpawn *spawn, const gchar *chunk, gsize size,
+cb_error_received (GCutEgg *egg, const gchar *chunk, gsize size,
                    gpointer user_data)
 {
     g_string_append_len(error_string, chunk, size);
 }
 
 static void
-cb_reaped (GCutSpawn *spawn, gint status, gpointer user_data)
+cb_reaped (GCutEgg *egg, gint status, gpointer user_data)
 {
     exit_status = status;
     reaped = TRUE;
 }
 
 static void
-cb_error (GCutSpawn *spawn, GError *error, gpointer user_data)
+cb_error (GCutEgg *egg, GError *error, gpointer user_data)
 {
     actual_error = g_error_copy(error);
 }
 
 static void
-setup_spawn (GCutSpawn *spawn)
+setup_egg (GCutEgg *egg)
 {
 #define CONNECT(name)                                                   \
-    g_signal_connect(spawn, #name, G_CALLBACK(cb_ ## name), NULL)
+    g_signal_connect(egg, #name, G_CALLBACK(cb_ ## name), NULL)
 
     CONNECT(output_received);
     CONNECT(error_received);
@@ -102,7 +102,7 @@ cb_timeout_reaped (gpointer user_data)
 {
     GError **error = user_data;
     reaped = TRUE;
-    g_set_error(error, GCUT_SPAWN_ERROR, 0, "timeout");
+    g_set_error(error, GCUT_EGG_ERROR, 0, "timeout");
     return FALSE;
 }
 
@@ -126,17 +126,17 @@ wait_reaped_helper (void)
     cut_trace(wait_reaped_helper())
 
 void
-test_run (void)
+test_hatch (void)
 {
     GError *error = NULL;
 
-    spawn = gcut_spawn_new("echo", "XXX", NULL);
-    setup_spawn(spawn);
+    egg = gcut_egg_new("echo", "XXX", NULL);
+    setup_egg(egg);
 
-    cut_assert_equal_int(0, gcut_spawn_get_pid(spawn));
-    gcut_spawn_run(spawn, &error);
+    cut_assert_equal_int(0, gcut_egg_get_pid(egg));
+    gcut_egg_hatch(egg, &error);
     gcut_assert_error(error);
-    cut_assert_operator_int(0, !=, gcut_spawn_get_pid(spawn));
+    cut_assert_operator_int(0, !=, gcut_egg_get_pid(egg));
 
     wait_reaped();
     cut_assert_equal_string("XXX\n", output_string->str);
@@ -156,15 +156,15 @@ test_io (void)
 #endif
         ;
 
-    spawn = gcut_spawn_new(command, NULL);
-    setup_spawn(spawn);
+    egg = gcut_egg_new(command, NULL);
+    setup_egg(egg);
 
-    gcut_spawn_run(spawn, &error);
+    gcut_egg_hatch(egg, &error);
     gcut_assert_error(error);
 
-    gcut_spawn_write(spawn, buffer, strlen(buffer), &error);
+    gcut_egg_write(egg, buffer, strlen(buffer), &error);
     gcut_assert_error(error);
-    g_io_channel_shutdown(gcut_spawn_get_input(spawn), TRUE, &error);
+    g_io_channel_shutdown(gcut_egg_get_input(egg), TRUE, &error);
     gcut_assert_error(error);
 
     wait_reaped();
@@ -178,20 +178,20 @@ test_flags (void)
     GError *error = NULL;
     const gchar command[] = "echo";
 
-    spawn = gcut_spawn_new(command, "XXX", NULL);
-    setup_spawn(spawn);
+    egg = gcut_egg_new(command, "XXX", NULL);
+    setup_egg(egg);
 
-    gcut_spawn_set_flags(spawn, 0);
-    cut_assert_false(gcut_spawn_get_flags(spawn) & G_SPAWN_SEARCH_PATH);
-    cut_assert_false(gcut_spawn_run(spawn, &actual_error));
+    gcut_egg_set_flags(egg, 0);
+    cut_assert_false(gcut_egg_get_flags(egg) & G_SPAWN_SEARCH_PATH);
+    cut_assert_false(gcut_egg_hatch(egg, &actual_error));
     expected_error =
         g_error_new(G_SPAWN_ERROR, G_SPAWN_ERROR_NOENT,
                     "Failed to execute child process \"%s\" (%s)",
                     command, g_strerror(ENOENT));
     gcut_assert_equal_error(expected_error, actual_error);
 
-    gcut_spawn_set_flags(spawn, G_SPAWN_SEARCH_PATH);
-    gcut_spawn_run(spawn, &error);
+    gcut_egg_set_flags(egg, G_SPAWN_SEARCH_PATH);
+    gcut_egg_hatch(egg, &error);
     gcut_assert_error(error);
 
     wait_reaped();

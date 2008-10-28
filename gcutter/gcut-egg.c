@@ -30,20 +30,20 @@
 #include <gmodule.h>
 
 #include "gcut-io.h"
-#include "gcut-spawn.h"
+#include "gcut-egg.h"
 #include "gcut-marshalers.h"
 
-#define GCUT_SPAWN_GET_PRIVATE(obj)                                     \
-    (G_TYPE_INSTANCE_GET_PRIVATE((obj), GCUT_TYPE_SPAWN, GCutSpawnPrivate))
+#define GCUT_EGG_GET_PRIVATE(obj)                                     \
+    (G_TYPE_INSTANCE_GET_PRIVATE((obj), GCUT_TYPE_EGG, GCutEggPrivate))
 
 typedef struct _WatchOutputData
 {
-    GCutSpawn *spawn;
+    GCutEgg *egg;
     guint signal;
 } WatchOutputData;
 
-typedef struct _GCutSpawnPrivate	GCutSpawnPrivate;
-struct _GCutSpawnPrivate
+typedef struct _GCutEggPrivate	GCutEggPrivate;
+struct _GCutEggPrivate
 {
     gchar **command;
     GSpawnFlags flags;
@@ -85,7 +85,7 @@ enum
 
 static guint signals[LAST_SIGNAL] = {0};
 
-G_DEFINE_TYPE(GCutSpawn, gcut_spawn, G_TYPE_OBJECT)
+G_DEFINE_TYPE(GCutEgg, gcut_egg, G_TYPE_OBJECT)
 
 static void dispose        (GObject         *object);
 static void set_property   (GObject         *object,
@@ -98,7 +98,7 @@ static void get_property   (GObject         *object,
                             GParamSpec      *pspec);
 
 static void
-gcut_spawn_class_init (GCutSpawnClass *klass)
+gcut_egg_class_init (GCutEggClass *klass)
 {
     GObjectClass *gobject_class;
     GParamSpec *spec;
@@ -111,7 +111,7 @@ gcut_spawn_class_init (GCutSpawnClass *klass)
 
     spec = g_param_spec_pointer("command",
                                 "Command",
-                                "The command to be ran by the spawn",
+                                "The command to be ran by the egg",
                                 G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_COMMAND, spec);
 
@@ -119,7 +119,7 @@ gcut_spawn_class_init (GCutSpawnClass *klass)
         = g_signal_new("output-received",
                        G_TYPE_FROM_CLASS(klass),
                        G_SIGNAL_RUN_LAST,
-                       G_STRUCT_OFFSET(GCutSpawnClass, output_received),
+                       G_STRUCT_OFFSET(GCutEggClass, output_received),
                        NULL, NULL,
 #if GLIB_SIZEOF_SIZE_T == 8
                        _gcut_marshal_VOID__STRING_UINT64,
@@ -134,7 +134,7 @@ gcut_spawn_class_init (GCutSpawnClass *klass)
         = g_signal_new("error-received",
                        G_TYPE_FROM_CLASS(klass),
                        G_SIGNAL_RUN_LAST,
-                       G_STRUCT_OFFSET(GCutSpawnClass, error_received),
+                       G_STRUCT_OFFSET(GCutEggClass, error_received),
                        NULL, NULL,
 #if GLIB_SIZEOF_SIZE_T == 8
                        _gcut_marshal_VOID__STRING_UINT64,
@@ -149,7 +149,7 @@ gcut_spawn_class_init (GCutSpawnClass *klass)
         = g_signal_new("reaped",
                        G_TYPE_FROM_CLASS(klass),
                        G_SIGNAL_RUN_LAST,
-                       G_STRUCT_OFFSET(GCutSpawnClass, reaped),
+                       G_STRUCT_OFFSET(GCutEggClass, reaped),
                        NULL, NULL,
                        g_cclosure_marshal_VOID__INT,
                        G_TYPE_NONE, 1, G_TYPE_INT);
@@ -158,18 +158,18 @@ gcut_spawn_class_init (GCutSpawnClass *klass)
         = g_signal_new("error",
                        G_TYPE_FROM_CLASS(klass),
                        G_SIGNAL_RUN_LAST,
-                       G_STRUCT_OFFSET(GCutSpawnClass, error),
+                       G_STRUCT_OFFSET(GCutEggClass, error),
                        NULL, NULL,
                        g_cclosure_marshal_VOID__POINTER,
                        G_TYPE_NONE, 1, G_TYPE_POINTER);
 
-    g_type_class_add_private(gobject_class, sizeof(GCutSpawnPrivate));
+    g_type_class_add_private(gobject_class, sizeof(GCutEggPrivate));
 }
 
 static void
-gcut_spawn_init (GCutSpawn *spawn)
+gcut_egg_init (GCutEgg *egg)
 {
-    GCutSpawnPrivate *priv = GCUT_SPAWN_GET_PRIVATE(spawn);
+    GCutEggPrivate *priv = GCUT_EGG_GET_PRIVATE(egg);
 
     priv->command = NULL;
     priv->flags = G_SPAWN_SEARCH_PATH;
@@ -192,21 +192,21 @@ gcut_spawn_init (GCutSpawn *spawn)
 }
 
 static void
-remove_child_watch_func (GCutSpawnPrivate *priv)
+remove_child_watch_func (GCutEggPrivate *priv)
 {
     g_source_remove(priv->process_watch_id);
     priv->process_watch_id = 0;
 }
 
 static void
-remove_output_watch_func (GCutSpawnPrivate *priv)
+remove_output_watch_func (GCutEggPrivate *priv)
 {
     g_source_remove(priv->output_watch_id);
     priv->output_watch_id = 0;
 }
 
 static void
-remove_error_watch_func (GCutSpawnPrivate *priv)
+remove_error_watch_func (GCutEggPrivate *priv)
 {
     g_source_remove(priv->error_watch_id);
     priv->error_watch_id = 0;
@@ -225,16 +225,16 @@ cb_timeout_kill_wait (gpointer user_data)
 static void
 dispose (GObject *object)
 {
-    GCutSpawnPrivate *priv;
+    GCutEggPrivate *priv;
 
-    priv = GCUT_SPAWN_GET_PRIVATE(object);
+    priv = GCUT_EGG_GET_PRIVATE(object);
     if (priv->command) {
         g_strfreev(priv->command);
         priv->command = NULL;
     }
 
     if (priv->process_watch_id && priv->pid) {
-        gcut_spawn_kill(GCUT_SPAWN(object), SIGTERM);
+        gcut_egg_kill(GCUT_EGG(object), SIGTERM);
         if (priv->kill_wait_milliseconds > 0) {
             gboolean waiting = TRUE;
             guint timeout_kill_wait_id;
@@ -252,7 +252,7 @@ dispose (GObject *object)
         remove_child_watch_func(priv);
 
     if (priv->pid) {
-        gcut_spawn_close(GCUT_SPAWN(object));
+        gcut_egg_close(GCUT_EGG(object));
     }
 
     if (priv->input) {
@@ -286,7 +286,7 @@ dispose (GObject *object)
         priv->watch_error_data = NULL;
     }
 
-    G_OBJECT_CLASS(gcut_spawn_parent_class)->dispose(object);
+    G_OBJECT_CLASS(gcut_egg_parent_class)->dispose(object);
 }
 
 static void
@@ -295,7 +295,7 @@ set_property (GObject      *object,
               const GValue *value,
               GParamSpec   *pspec)
 {
-    GCutSpawnPrivate *priv = GCUT_SPAWN_GET_PRIVATE(object);
+    GCutEggPrivate *priv = GCUT_EGG_GET_PRIVATE(object);
 
     switch (prop_id) {
       case PROP_COMMAND:
@@ -315,7 +315,7 @@ get_property (GObject    *object,
               GValue     *value,
               GParamSpec *pspec)
 {
-    GCutSpawnPrivate *priv = GCUT_SPAWN_GET_PRIVATE(object);
+    GCutEggPrivate *priv = GCUT_EGG_GET_PRIVATE(object);
 
     switch (prop_id) {
       case PROP_COMMAND:
@@ -328,28 +328,28 @@ get_property (GObject    *object,
 }
 
 GQuark
-gcut_spawn_error_quark (void)
+gcut_egg_error_quark (void)
 {
-    return g_quark_from_static_string("gcut-spawn-error-quark");
+    return g_quark_from_static_string("gcut-egg-error-quark");
 }
 
-GCutSpawn *
-gcut_spawn_new (const gchar *command, ...)
+GCutEgg *
+gcut_egg_new (const gchar *command, ...)
 {
-    GCutSpawn *spawn;
+    GCutEgg *egg;
     va_list args;
 
     va_start(args, command);
-    spawn = gcut_spawn_new_va_list(command, args);
+    egg = gcut_egg_new_va_list(command, args);
     va_end(args);
 
-    return spawn;
+    return egg;
 }
 
-GCutSpawn *
-gcut_spawn_new_va_list (const gchar *command, va_list args)
+GCutEgg *
+gcut_egg_new_va_list (const gchar *command, va_list args)
 {
-    GCutSpawn *spawn;
+    GCutEgg *egg;
     GArray *command_line;
 
     command_line = g_array_new(TRUE, TRUE, sizeof(gchar *));
@@ -357,16 +357,16 @@ gcut_spawn_new_va_list (const gchar *command, va_list args)
         g_array_append_val(command_line, command);
         command = va_arg(args, const gchar *);
     }
-    spawn = gcut_spawn_new_strings((const gchar **)(command_line->data));
+    egg = gcut_egg_new_strings((const gchar **)(command_line->data));
     g_array_free(command_line, TRUE);
 
-    return spawn;
+    return egg;
 }
 
-GCutSpawn *
-gcut_spawn_new_argv (gint args, gchar **argv)
+GCutEgg *
+gcut_egg_new_argv (gint args, gchar **argv)
 {
-    GCutSpawn *spawn;
+    GCutEgg *egg;
     gint i;
     GArray *command_line;
 
@@ -375,36 +375,36 @@ gcut_spawn_new_argv (gint args, gchar **argv)
         const gchar *command = argv[i];
         g_array_append_val(command_line, command);
     }
-    spawn = gcut_spawn_new_strings((const gchar **)(command_line->data));
+    egg = gcut_egg_new_strings((const gchar **)(command_line->data));
     g_array_free(command_line, TRUE);
 
-    return spawn;
+    return egg;
 }
 
-GCutSpawn *
-gcut_spawn_new_strings (const gchar **commands)
+GCutEgg *
+gcut_egg_new_strings (const gchar **commands)
 {
-    return g_object_new(GCUT_TYPE_SPAWN,
+    return g_object_new(GCUT_TYPE_EGG,
                         "command", commands,
                         NULL);
 }
 
 GSpawnFlags
-gcut_spawn_get_flags (GCutSpawn *spawn)
+gcut_egg_get_flags (GCutEgg *egg)
 {
-    return GCUT_SPAWN_GET_PRIVATE(spawn)->flags;
+    return GCUT_EGG_GET_PRIVATE(egg)->flags;
 }
 
 void
-gcut_spawn_set_flags (GCutSpawn *spawn, GSpawnFlags flags)
+gcut_egg_set_flags (GCutEgg *egg, GSpawnFlags flags)
 {
-    GCUT_SPAWN_GET_PRIVATE(spawn)->flags = flags;
+    GCUT_EGG_GET_PRIVATE(egg)->flags = flags;
 }
 
 static void
-reap_child (GCutSpawn *spawn, GPid pid)
+reap_child (GCutEgg *egg, GPid pid)
 {
-    GCutSpawnPrivate *priv = GCUT_SPAWN_GET_PRIVATE(spawn);
+    GCutEggPrivate *priv = GCUT_EGG_GET_PRIVATE(egg);
     gint status;
 
     if (priv->pid != pid)
@@ -412,7 +412,7 @@ reap_child (GCutSpawn *spawn, GPid pid)
 
     remove_child_watch_func(priv);
     waitpid(pid, &status, 0);
-    g_signal_emit(spawn, signals[REAPED], 0, status);
+    g_signal_emit(egg, signals[REAPED], 0, status);
     g_spawn_close_pid(priv->pid);
     priv->pid = 0;
 }
@@ -420,11 +420,11 @@ reap_child (GCutSpawn *spawn, GPid pid)
 static void
 child_watch_func (GPid pid, gint status, gpointer data)
 {
-    GCutSpawn *spawn = data;
-    GCutSpawnPrivate *priv;
+    GCutEgg *egg = data;
+    GCutEggPrivate *priv;
 
-    priv = GCUT_SPAWN_GET_PRIVATE(spawn);
-    reap_child(spawn, pid);
+    priv = GCUT_EGG_GET_PRIVATE(egg);
+    reap_child(egg, pid);
 }
 
 static GIOChannel *
@@ -472,12 +472,12 @@ create_input_channel (gint fd, guint *watch_id,
 
 #define BUFFER_SIZE 4096
 static gboolean
-read_from_io_channel (GIOChannel *channel, GCutSpawn *spawn, guint signal)
+read_from_io_channel (GIOChannel *channel, GCutEgg *egg, guint signal)
 {
-    GCutSpawnPrivate *priv;
+    GCutEggPrivate *priv;
     gboolean need_more_data = TRUE;
 
-    priv = GCUT_SPAWN_GET_PRIVATE(spawn);
+    priv = GCUT_EGG_GET_PRIVATE(egg);
     while (need_more_data) {
         GIOStatus status;
         gchar stream[BUFFER_SIZE];
@@ -487,7 +487,7 @@ read_from_io_channel (GIOChannel *channel, GCutSpawn *spawn, guint signal)
         status = g_io_channel_read_chars(channel, stream, BUFFER_SIZE,
                                          &length, &error);
         if (error) {
-            g_signal_emit(spawn, signals[ERROR], 0, error);
+            g_signal_emit(egg, signals[ERROR], 0, error);
             g_error_free(error);
             need_more_data = FALSE;
             break;
@@ -500,7 +500,7 @@ read_from_io_channel (GIOChannel *channel, GCutSpawn *spawn, guint signal)
             length == 0)
             break;
 
-        g_signal_emit(spawn, signal, 0, stream, length);
+        g_signal_emit(egg, signal, 0, stream, length);
     }
 
     return need_more_data;
@@ -513,7 +513,7 @@ watch_output (GIOChannel *source, GIOCondition condition, gpointer user_data)
     gboolean keep_callback = TRUE;
 
     if (condition & (G_IO_IN | G_IO_PRI)) {
-        keep_callback = read_from_io_channel(source, data->spawn, data->signal);
+        keep_callback = read_from_io_channel(source, data->egg, data->signal);
     }
 
     if (condition & (G_IO_ERR | G_IO_NVAL)) {
@@ -521,9 +521,9 @@ watch_output (GIOChannel *source, GIOCondition condition, gpointer user_data)
         GError *error;
 
         message = gcut_io_inspect_condition(condition);
-        error = g_error_new(GCUT_SPAWN_ERROR, GCUT_SPAWN_ERROR_IO_ERROR,
+        error = g_error_new(GCUT_EGG_ERROR, GCUT_EGG_ERROR_IO_ERROR,
                             "%s", message);
-        g_signal_emit(data->spawn, signals[ERROR], 0, error);
+        g_signal_emit(data->egg, signals[ERROR], 0, error);
         g_free(message);
         g_error_free(error);
         keep_callback = FALSE;
@@ -536,16 +536,16 @@ watch_output (GIOChannel *source, GIOCondition condition, gpointer user_data)
 }
 
 gboolean
-gcut_spawn_run (GCutSpawn *spawn, GError **error)
+gcut_egg_hatch (GCutEgg *egg, GError **error)
 {
-    GCutSpawnPrivate *priv;
+    GCutEggPrivate *priv;
     gboolean success;
     gint input_fd = 0, output_fd = 0, error_fd = 0;
 
-    priv = GCUT_SPAWN_GET_PRIVATE(spawn);
+    priv = GCUT_EGG_GET_PRIVATE(egg);
 
     if (!priv->command) {
-        g_set_error(error, GCUT_SPAWN_ERROR, GCUT_SPAWN_ERROR_COMMAND_LINE,
+        g_set_error(error, GCUT_EGG_ERROR, GCUT_EGG_ERROR_COMMAND_LINE,
                     "command line isn't set");
         return FALSE;
     }
@@ -554,7 +554,7 @@ gcut_spawn_run (GCutSpawn *spawn, GError **error)
         gchar *command;
 
         command = g_strjoinv(" ", priv->command);
-        g_set_error(error, GCUT_SPAWN_ERROR, GCUT_SPAWN_ERROR_ALREADY_RUNNING,
+        g_set_error(error, GCUT_EGG_ERROR, GCUT_EGG_ERROR_ALREADY_RUNNING,
                     "already running: %s", command);
         g_free(command);
 
@@ -578,14 +578,14 @@ gcut_spawn_run (GCutSpawn *spawn, GError **error)
 
     priv->process_watch_id = g_child_watch_add(priv->pid,
                                                child_watch_func,
-                                               spawn);
+                                               egg);
 
     if (input_fd > 0)
         priv->input = create_output_channel(input_fd);
 
     if (output_fd > 0) {
         priv->watch_output_data = g_new(WatchOutputData, 1);
-        priv->watch_output_data->spawn = spawn;
+        priv->watch_output_data->egg = egg;
         priv->watch_output_data->signal = signals[OUTPUT_RECEIVED];
         priv->output = create_input_channel(output_fd,
                                             &(priv->output_watch_id),
@@ -594,7 +594,7 @@ gcut_spawn_run (GCutSpawn *spawn, GError **error)
     }
     if (error_fd > 0) {
         priv->watch_error_data = g_new(WatchOutputData, 1);
-        priv->watch_error_data->spawn = spawn;
+        priv->watch_error_data->egg = egg;
         priv->watch_error_data->signal = signals[ERROR_RECEIVED];
         priv->error = create_input_channel(error_fd,
                                            &(priv->error_watch_id),
@@ -606,11 +606,11 @@ gcut_spawn_run (GCutSpawn *spawn, GError **error)
 }
 
 void
-gcut_spawn_close (GCutSpawn *spawn)
+gcut_egg_close (GCutEgg *egg)
 {
-    GCutSpawnPrivate *priv;
+    GCutEggPrivate *priv;
 
-    priv = GCUT_SPAWN_GET_PRIVATE(spawn);
+    priv = GCUT_EGG_GET_PRIVATE(egg);
     if (priv->pid) {
         g_spawn_close_pid(priv->pid);
         priv->pid = 0;
@@ -618,13 +618,13 @@ gcut_spawn_close (GCutSpawn *spawn)
 }
 
 gboolean
-gcut_spawn_write (GCutSpawn *spawn, const gchar *chunk, gsize size,
+gcut_egg_write (GCutEgg *egg, const gchar *chunk, gsize size,
                   GError **error)
 {
-    GCutSpawnPrivate *priv;
+    GCutEggPrivate *priv;
     gsize rest_size = size;
 
-    priv = GCUT_SPAWN_GET_PRIVATE(spawn);
+    priv = GCUT_EGG_GET_PRIVATE(egg);
     while (rest_size > 0) {
         gsize written_size = 0;
         GIOStatus status;
@@ -647,17 +647,17 @@ gcut_spawn_write (GCutSpawn *spawn, const gchar *chunk, gsize size,
 }
 
 GPid
-gcut_spawn_get_pid (GCutSpawn *spawn)
+gcut_egg_get_pid (GCutEgg *egg)
 {
-    return GCUT_SPAWN_GET_PRIVATE(spawn)->pid;
+    return GCUT_EGG_GET_PRIVATE(egg)->pid;
 }
 
 void
-gcut_spawn_kill (GCutSpawn *spawn, int signal_number)
+gcut_egg_kill (GCutEgg *egg, int signal_number)
 {
-    GCutSpawnPrivate *priv;
+    GCutEggPrivate *priv;
 
-    priv = GCUT_SPAWN_GET_PRIVATE(spawn);
+    priv = GCUT_EGG_GET_PRIVATE(egg);
 
     g_return_if_fail(priv != NULL);
     g_return_if_fail(priv->pid > 0);
@@ -666,33 +666,33 @@ gcut_spawn_kill (GCutSpawn *spawn, int signal_number)
 }
 
 GIOChannel *
-gcut_spawn_get_input (GCutSpawn *spawn)
+gcut_egg_get_input (GCutEgg *egg)
 {
-    return GCUT_SPAWN_GET_PRIVATE(spawn)->input;
+    return GCUT_EGG_GET_PRIVATE(egg)->input;
 }
 
 GIOChannel *
-gcut_spawn_get_output (GCutSpawn *spawn)
+gcut_egg_get_output (GCutEgg *egg)
 {
-    return GCUT_SPAWN_GET_PRIVATE(spawn)->output;
+    return GCUT_EGG_GET_PRIVATE(egg)->output;
 }
 
 GIOChannel *
-gcut_spawn_get_error (GCutSpawn *spawn)
+gcut_egg_get_error (GCutEgg *egg)
 {
-    return GCUT_SPAWN_GET_PRIVATE(spawn)->error;
+    return GCUT_EGG_GET_PRIVATE(egg)->error;
 }
 
 guint
-gcut_spawn_get_kill_wait_milliseconds (GCutSpawn *spawn)
+gcut_egg_get_kill_wait_milliseconds (GCutEgg *egg)
 {
-    return GCUT_SPAWN_GET_PRIVATE(spawn)->kill_wait_milliseconds;
+    return GCUT_EGG_GET_PRIVATE(egg)->kill_wait_milliseconds;
 }
 
 void
-gcut_spawn_set_kill_wait_milliseconds (GCutSpawn *spawn, guint milliseconds)
+gcut_egg_set_kill_wait_milliseconds (GCutEgg *egg, guint milliseconds)
 {
-    GCUT_SPAWN_GET_PRIVATE(spawn)->kill_wait_milliseconds = milliseconds;
+    GCUT_EGG_GET_PRIVATE(egg)->kill_wait_milliseconds = milliseconds;
 }
 
 /*

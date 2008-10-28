@@ -1,3 +1,7 @@
+2008-10-28  Kouhei Sutou  <kou@cozmixng.org>
+
+	* gcutter/, test/gcutter/test-gcut-egg.c: spawn -> egg.
+
 2008-10-23  Kouhei Sutou  <kou@cozmixng.org>
 
 	* gcutter/gcut-spawn.c: ensure kill spawned process.
