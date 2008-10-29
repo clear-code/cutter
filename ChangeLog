@@ -1,3 +1,8 @@
+2008-10-29  Kouhei Sutou  <kou@cozmixng.org>
+
+	* gcutter/gcut-egg.c (reap_child): use exit status from child
+	watch callback.
+
 2008-10-29  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* tets/gcutter/test-gcut-egg.c: Use WEXITSTATUS. Still fails yet.

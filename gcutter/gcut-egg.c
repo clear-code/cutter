@@ -402,16 +402,14 @@ gcut_egg_set_flags (GCutEgg *egg, GSpawnFlags flags)
 }
 
 static void
-reap_child (GCutEgg *egg, GPid pid)
+reap_child (GCutEgg *egg, GPid pid, gint status)
 {
     GCutEggPrivate *priv = GCUT_EGG_GET_PRIVATE(egg);
-    gint status;
 
     if (priv->pid != pid)
         return;
 
     remove_child_watch_func(priv);
-    waitpid(pid, &status, 0);
     g_signal_emit(egg, signals[REAPED], 0, status);
     g_spawn_close_pid(priv->pid);
     priv->pid = 0;
@@ -424,7 +422,7 @@ child_watch_func (GPid pid, gint status, gpointer data)
     GCutEggPrivate *priv;
 
     priv = GCUT_EGG_GET_PRIVATE(egg);
-    reap_child(egg, pid);
+    reap_child(egg, pid, status);
 }
 
 static GIOChannel *

@@ -313,7 +313,7 @@ void shutdown(void);
  * {
  *     CutTestContext *test_context = data;
  *     cut_set_current_test_context(test_context);
- *     ....
+ *     ...
  * }
  *
  * void
