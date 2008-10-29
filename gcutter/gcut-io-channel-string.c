@@ -201,6 +201,8 @@ gcut_io_channel_string_write (GIOChannel *channel, const gchar *buf, gsize count
     GIOStatus status;
     gsize write_size = 0;
 
+    *bytes_written = 0;
+
     status = determine_write_size(string_channel, count, &write_size);
     if (status != G_IO_STATUS_NORMAL)
         return status;

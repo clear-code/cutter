@@ -1,6 +1,8 @@
 2008-10-29  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* tets/gcutter/test-gcut-egg.c: Use WEXITSTATUS. Still fails yet.
+	* gcutter/gcut-io-channel-string.c (gcut_io_channel_string_write):
+	Initialize bytes_written with 0 at the head of the function.
 
 2008-10-28  Kouhei Sutou  <kou@cozmixng.org>
 
