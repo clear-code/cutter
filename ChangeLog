@@ -1,3 +1,7 @@
+2008-10-29  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* tets/gcutter/test-gcut-egg.c: Use WEXITSTATUS. Still fails yet.
+
 2008-10-28  Kouhei Sutou  <kou@cozmixng.org>
 
 	* gcutter/, test/gcutter/test-gcut-egg.c: spawn -> egg.

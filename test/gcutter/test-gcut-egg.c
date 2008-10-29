@@ -3,6 +3,8 @@
 #include <string.h>
 #include <errno.h>
 #include <locale.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 #include <gcutter.h>
 
@@ -119,7 +121,7 @@ wait_reaped_helper (void)
     g_source_remove(timeout_id);
     gcut_assert_error(error);
 
-    cut_assert_equal_int(EXIT_SUCCESS, exit_status);
+    cut_assert_equal_int(EXIT_SUCCESS, WEXITSTATUS(exit_status));
 }
 
 #define wait_reaped()                           \
