@@ -171,13 +171,14 @@ watch_func (GIOChannel *channel, GIOCondition condition, gpointer data)
 
     *target_condition = condition;
 
-    return FALSE;
+    return TRUE;
 }
 
 void
 test_source (void)
 {
     gchar write_data[] = "data";
+    gchar buffer[1024];
     gsize length;
     GIOCondition target_condition = 0;
     GError *error = NULL;
@@ -197,10 +198,19 @@ test_source (void)
 
     cut_assert_equal_uint(0, target_condition);
     g_main_context_iteration(NULL, FALSE);
+    cut_assert_equal_uint(G_IO_IN | G_IO_PRI, target_condition);
+
+    cut_assert_equal_int(G_IO_STATUS_EOF,
+                         g_io_channel_read_chars(channel, buffer, sizeof(buffer),
+                                                 &length, &error));
+    gcut_assert_error(error);
+    target_condition = 0;
+    g_main_context_iteration(NULL, FALSE);
     cut_assert_equal_uint(0, target_condition);
 
     g_io_channel_seek_position(channel, 0, G_SEEK_SET, &error);
     gcut_assert_error(error);
+    target_condition = 0;
     g_main_context_iteration(NULL, FALSE);
     cut_assert_equal_uint(G_IO_IN | G_IO_PRI, target_condition);
 }

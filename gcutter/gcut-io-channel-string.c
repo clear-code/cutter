@@ -38,6 +38,7 @@ struct _GCutIOChannelString
     gsize limit;
     gboolean read_fail;
     GIOFlags flags;
+    gboolean reach_eof;
 };
 
 struct _GCutSourceString
@@ -52,22 +53,35 @@ static gboolean
 source_is_available (GSource *source)
 {
     GCutSourceString *string_source = (GCutSourceString *)source;
-    GCutIOChannelString *channel;
+    GIOChannel *channel;
+    GCutIOChannelString *string_channel;
+    GIOCondition buffer_condition;
+    GIOCondition all_input_condition, all_error_condition;
 
-    channel = (GCutIOChannelString *)(string_source->channel);
+    channel = string_source->channel;
+    string_channel = (GCutIOChannelString *)(channel);
     string_source->available_condition = 0;
+    buffer_condition = g_io_channel_get_buffer_condition(channel);
 
-    if (string_source->condition & (G_IO_IN | G_IO_PRI) &&
-        channel->string &&
-        channel->string->len > channel->offset)
-        string_source->available_condition |= G_IO_IN | G_IO_PRI;
+    all_input_condition = (G_IO_IN | G_IO_PRI);
+    if (string_source->condition & all_input_condition) {
+        string_source->available_condition |= buffer_condition;
+        if (string_channel->string &&
+            ((string_channel->string->len > string_channel->offset) ||
+             (string_channel->string->len == string_channel->offset &&
+              !string_channel->reach_eof)))
+            string_source->available_condition |= all_input_condition;
+    }
 
     if (string_source->condition & G_IO_OUT)
         string_source->available_condition |= G_IO_OUT;
 
-    if (string_source->condition & (G_IO_ERR | G_IO_HUP | G_IO_NVAL) &&
-        channel->string == NULL)
-        string_source->available_condition |= G_IO_ERR | G_IO_HUP | G_IO_NVAL;
+    all_error_condition = (G_IO_ERR | G_IO_HUP | G_IO_NVAL);
+    if (string_source->condition & all_error_condition) {
+        string_source->available_condition |= buffer_condition;
+        if (string_channel->string == NULL)
+            string_source->available_condition |= all_error_condition;
+    }
 
     return string_source->available_condition > 0;
 }
@@ -143,10 +157,13 @@ gcut_io_channel_string_read (GIOChannel *channel, gchar *buf, gsize count,
 
     if (string_channel->string->len > string_channel->offset ||
         (string_channel->string->len == string_channel->offset &&
-         *bytes_read > 0))
+         *bytes_read > 0)) {
+        string_channel->reach_eof = FALSE;
         return G_IO_STATUS_NORMAL;
-    else
+    } else {
+        string_channel->reach_eof = TRUE;
         return G_IO_STATUS_EOF;
+    }
 }
 
 static GIOStatus
@@ -248,6 +265,8 @@ gcut_io_channel_string_seek (GIOChannel *channel, gint64 offset,
         break;
     }
 
+    string_channel->reach_eof = FALSE;
+
     return G_IO_STATUS_NORMAL;
 }
 
@@ -341,6 +360,7 @@ gcut_io_channel_string_new (const gchar *initial)
     string_channel->limit = 0;
     string_channel->read_fail = FALSE;
     string_channel->flags = 0;
+    string_channel->reach_eof = FALSE;
 
     return channel;
 }

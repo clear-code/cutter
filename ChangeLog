@@ -1,3 +1,9 @@
+2008-10-30  Kouhei Sutou  <kou@cozmixng.org>
+
+	* gcutter/gcut-io-channel-string.c,
+	test/gcutter/test-gcut-io-channel-string.c: make readable 1 time
+	after all data read.
+
 2008-10-30  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-repository.c: Fix memory leak.
