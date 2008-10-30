@@ -45,15 +45,15 @@ struct _GCutEggClass
 {
     GObjectClass parent_class;
 
-    void (*output_received) (GCutEgg   *egg,
+    void (*output_received) (GCutEgg     *egg,
                              const gchar *chunk,
                              gsize        size);
-    void (*error_received)  (GCutEgg   *egg,
+    void (*error_received)  (GCutEgg     *egg,
                              const gchar *chunk,
                              gsize        size);
-    void (*reaped)          (GCutEgg   *egg,
+    void (*reaped)          (GCutEgg     *egg,
                              gint         status);
-    void (*error)           (GCutEgg   *egg,
+    void (*error)           (GCutEgg     *egg,
                              GError      *error);
 };
 
@@ -75,6 +75,7 @@ GCutEgg      *gcut_egg_new_va_list   (const gchar  *command,
 GCutEgg      *gcut_egg_new_argv      (gint          argc,
                                       gchar       **argv);
 GCutEgg      *gcut_egg_new_strings   (const gchar **command);
+GCutEgg      *gcut_egg_new_array     (GArray       *array);
 
 void          gcut_egg_set_flags     (GCutEgg      *egg,
                                       GSpawnFlags   flags);

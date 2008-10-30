@@ -357,7 +357,7 @@ gcut_egg_new_va_list (const gchar *command, va_list args)
         g_array_append_val(command_line, command);
         command = va_arg(args, const gchar *);
     }
-    egg = gcut_egg_new_strings((const gchar **)(command_line->data));
+    egg = gcut_egg_new_array(command_line);
     g_array_free(command_line, TRUE);
 
     return egg;
@@ -375,7 +375,7 @@ gcut_egg_new_argv (gint args, gchar **argv)
         const gchar *command = argv[i];
         g_array_append_val(command_line, command);
     }
-    egg = gcut_egg_new_strings((const gchar **)(command_line->data));
+    egg = gcut_egg_new_array(command_line);
     g_array_free(command_line, TRUE);
 
     return egg;
@@ -387,6 +387,12 @@ gcut_egg_new_strings (const gchar **commands)
     return g_object_new(GCUT_TYPE_EGG,
                         "command", commands,
                         NULL);
+}
+
+GCutEgg *
+gcut_egg_new_array (GArray *array)
+{
+    return gcut_egg_new_strings((const gchar **)(array->data));
 }
 
 GSpawnFlags
