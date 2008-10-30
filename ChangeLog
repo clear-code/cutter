@@ -1,3 +1,7 @@
+2008-10-30  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-repository.c: Fix memory leak.
+
 2008-10-29  Kouhei Sutou  <kou@cozmixng.org>
 
 	* gcutter/gcut-egg.c (reap_child): use exit status from child

@@ -319,6 +319,7 @@ cut_repository_collect_loader (CutRepository *repository, const gchar *dir_name,
             } else {
                 priv->loaders = g_list_prepend(priv->loaders, loader);
             }
+            g_free(relative_path);
         }
         g_free(path_name);
     }
