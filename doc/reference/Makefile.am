@@ -189,4 +189,5 @@ upload: docs
 	                       	File.read("sf-logo.html") + "</body>")'	\
 	  tmp/reference/*.html						\
 	  tmp/reference/*/*.html
-	scp -r tmp/reference/* $(SF_HTDOCS)/reference/
+	rsync -avz tmp/reference $(SF_HTDOCS)/reference/
+	ssh $(SF_HOST) chmod -R g+w $(SF_HTDOCS_PATH)/reference/

@@ -2,5 +2,5 @@ EXTRA_DIST = index.html index.html.ja
 
 upload:
 	scp $(srcdir)/index.html $(srcdir)/index.html.ja $(SF_HTDOCS)/
-	echo chmod 664 index.html | sftp $(SF_HTDOCS)
-	echo chmod 664 index.html.ja | sftp $(SF_HTDOCS)
+	ssh $(SF_HOST) chmod g+w $(SF_HTDOCS_PATH)/index.html
+	ssh $(SF_HOST) chmod g+w $(SF_HTDOCS_PATH)/index.html.ja
