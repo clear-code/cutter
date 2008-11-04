@@ -38,20 +38,31 @@ G_BEGIN_DECLS
  */
 
 /**
- * gcut_enum_equal:
- * @enum_type: a #GEnum type.
- * @enum1: a #GEnum value to be compared.
- * @enum2: a #GEnum value to be compared.
+ * GCUT_ENUM_ERROR:
  *
- * Compares two @enum_type values, @enum1 and @enum2.
+ * Error domain for key file parsing. Errors in this domain
+ * will be from the #GCutEnumError enumeration. See #GError
+ * for information on error domains.
  *
- * Returns: TRUE if @enum1 == @enum2, FALSE otherwise.
- *
- * Since: 1.0.5
+ * Since: 1.0.6
  */
-gboolean         gcut_enum_equal                (GType enum_type,
-                                                 gint  enum1,
-                                                 gint  enum2);
+#define GCUT_ENUM_ERROR (gcut_enum_error_quark())
+
+GQuark           gcut_enum_error_quark          (void);
+
+/**
+ * GCutEnumError:
+ * @GCUT_ENUM_ERROR_INVALID: Invalid format.
+ *
+ * Error codes returned by enum related operation.
+ *
+ * Since: 1.0.6
+ */
+typedef enum
+{
+    GCUT_ENUM_ERROR_INVALID_TYPE,
+    GCUT_ENUM_ERROR_INVALID_FORMAT
+} GCutEnumError;
 
 /**
  * gcut_enum_inspect:
@@ -69,20 +80,23 @@ gchar           *gcut_enum_inspect              (GType enum_type,
                                                  gint  enum_value);
 
 /**
- * gcut_flags_equal:
- * @flags_type: a #GFlags type.
- * @flags1: a #GFlags value to be compared.
- * @flags2: a #GFlags value to be compared.
+ * gcut_enum_parse:
+ * @enum_type: a #GEnum type.
+ * @enum_value: a string to be parsed.
+ * @error: return location for a #GError, or NULL
  *
- * Compares two @flags_type values, @flags1 and @flags2.
+ * Parses @enum_value and returns a enum value of
+ * @enum_type. @enum_value should be enum value name of nick
+ * name. If @enum_value isn't match then @error is set to a
+ * GCutEnumError.
  *
- * Returns: TRUE if @flags1 == @flags2, FALSE otherwise.
+ * Returns: parsed @enum_value as an enum value of @enum_type.
  *
- * Since: 1.0.5
+ * Since: 1.0.6
  */
-gboolean         gcut_flags_equal               (GType flags_type,
-                                                 guint flags1,
-                                                 guint flags2);
+gint             gcut_enum_parse                (GType         enum_type,
+                                                 const gchar  *enum_value,
+                                                 GError      **error);
 
 /**
  * gcut_flags_inspect:
@@ -99,6 +113,25 @@ gboolean         gcut_flags_equal               (GType flags_type,
 gchar           *gcut_flags_inspect             (GType flags_type,
                                                  guint flags);
 
+/**
+ * gcut_flags_parse:
+ * @flags_type: a #GFlags type.
+ * @flags_value: a string to be parsed.
+ * @error: return location for a #GError, or NULL
+ *
+ * Parses @flags_value and returns a flags value of
+ * @flags_type. @flags_value should be formated as
+ * "nick-or-name1|nick-or-name2|...|nick-or-nameN". If
+ * @flags_value includes unknown flag then @error is set to
+ * a GCutEnumError.
+ *
+ * Returns: parsed @flags_value as an flags value of @flags_type.
+ *
+ * Since: 1.0.6
+ */
+guint            gcut_flags_parse               (GType         flags_type,
+                                                 const gchar  *flags_value,
+                                                 GError      **error);
 
 G_END_DECLS
 

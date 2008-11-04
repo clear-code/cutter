@@ -1,5 +1,8 @@
 2008-11-04  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-enum.c, test/gcutter/test-gcut-enum.c: add
+	gcut_parse_enum() and gcut_parse_flags().
+
 	* gcutter/gcut-io-channel-string.[ch],
 	test/gcutter/test-gcut-io-channel-string.c: add pipe mode.
 

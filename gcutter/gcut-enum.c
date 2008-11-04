@@ -26,6 +26,13 @@
 
 #include "gcut-enum.h"
 
+GQuark
+gcut_enum_error_quark (void)
+{
+    return g_quark_from_static_string("gcut-enum-error-quark");
+}
+
+
 gchar *
 gcut_enum_inspect (GType enum_type, gint enum_value)
 {
@@ -53,6 +60,67 @@ gcut_enum_inspect (GType enum_type, gint enum_value)
     g_type_class_unref(enum_class);
 
     return inspected;
+}
+
+gint
+gcut_enum_parse (GType enum_type, const gchar *enum_value, GError **error)
+{
+    GEnumClass *enum_class;
+    gint value = 0;
+    guint i;
+    gboolean found = FALSE;
+
+    if (!enum_value) {
+        g_set_error(error,
+                    GCUT_ENUM_ERROR,
+                    GCUT_ENUM_ERROR_INVALID_FORMAT,
+                    "enum value should not be NULL");
+        return 0;
+    }
+
+    enum_class = g_type_class_ref(enum_type);
+    if (!enum_class) {
+        g_set_error(error,
+                    GCUT_ENUM_ERROR,
+                    GCUT_ENUM_ERROR_INVALID_TYPE,
+                    "unknown enum type: %s(%" G_GSIZE_FORMAT ")",
+                    g_type_name(enum_type), enum_type);
+        return 0;
+    }
+
+    if (!G_TYPE_IS_ENUM(enum_type)) {
+        g_set_error(error,
+                    GCUT_ENUM_ERROR,
+                    GCUT_ENUM_ERROR_INVALID_TYPE,
+                    "invalid enum type: %s(%" G_GSIZE_FORMAT ")",
+                    g_type_name(enum_type), enum_type);
+        g_type_class_unref(enum_class);
+        return 0;
+    }
+
+    for (i = 0; i < enum_class->n_values; i++) {
+        GEnumValue *val;
+
+        val = enum_class->values + i;
+        if (g_ascii_strcasecmp(val->value_name, enum_value) == 0 ||
+            g_ascii_strcasecmp(val->value_nick, enum_value) == 0) {
+            found = TRUE;
+            value = val->value;
+            break;
+        }
+    }
+
+    if (!found) {
+        g_set_error(error,
+                    GCUT_ENUM_ERROR,
+                    GCUT_ENUM_ERROR_INVALID_FORMAT,
+                    "unknown enum value: <%s>(%s)",
+                    enum_value, g_type_name(enum_type));
+    }
+
+    g_type_class_unref(enum_class);
+
+    return value;
 }
 
 gchar *
@@ -100,6 +168,87 @@ gcut_flags_inspect (GType flags_type, guint flags)
     g_type_class_unref(flags_class);
 
     return g_string_free(inspected, FALSE);
+}
+
+guint
+gcut_flags_parse (GType flags_type, const gchar *flags_value, GError **error)
+{
+    GFlagsClass *flags_class;
+    guint value = 0;
+    guint i;
+    gchar **flags, **flag;
+    GArray *unknown_flags;
+
+    if (!flags_value) {
+        g_set_error(error,
+                    GCUT_ENUM_ERROR,
+                    GCUT_ENUM_ERROR_INVALID_FORMAT,
+                    "flags value should not be NULL");
+        return 0;
+    }
+
+    flags_class = g_type_class_ref(flags_type);
+    if (!flags_class) {
+        g_set_error(error,
+                    GCUT_ENUM_ERROR,
+                    GCUT_ENUM_ERROR_INVALID_TYPE,
+                    "unknown flags type: %s(%" G_GSIZE_FORMAT ")",
+                    g_type_name(flags_type), flags_type);
+        return 0;
+    }
+
+    if (!G_TYPE_IS_FLAGS(flags_type)) {
+        g_set_error(error,
+                    GCUT_ENUM_ERROR,
+                    GCUT_ENUM_ERROR_INVALID_TYPE,
+                    "invalid flags type: %s(%" G_GSIZE_FORMAT ")",
+                    g_type_name(flags_type), flags_type);
+        g_type_class_unref(flags_class);
+        return 0;
+    }
+
+    unknown_flags = g_array_new(TRUE, TRUE, sizeof(gchar *));
+    flags = g_strsplit(flags_value, "|", 0);
+    for (flag = flags; *flag; flag++) {
+        gboolean found = FALSE;
+
+        for (i = 0; i < flags_class->n_values; i++) {
+            GFlagsValue *val;
+
+            val = flags_class->values + i;
+            if (g_ascii_strcasecmp(val->value_name, *flag) == 0 ||
+                g_ascii_strcasecmp(val->value_nick, *flag) == 0) {
+                found = TRUE;
+                value |= val->value;
+                break;
+            }
+        }
+
+        if (!found)
+            g_array_append_val(unknown_flags, *flag);
+    }
+
+    if (unknown_flags->len > 0) {
+        gchar *inspected_unknown_flags;
+        gchar *inspected_flags;
+
+        inspected_unknown_flags = g_strjoinv("|", (gchar **)unknown_flags->data);
+        inspected_flags = gcut_flags_inspect(flags_type, value);
+        g_set_error(error,
+                    GCUT_ENUM_ERROR,
+                    GCUT_ENUM_ERROR_INVALID_FORMAT,
+                    "unknown flags: <%s>(%s): <%s>: %s",
+                    inspected_unknown_flags, g_type_name(flags_type),
+                    flags_value, inspected_flags);
+        g_free(inspected_unknown_flags);
+        g_free(inspected_flags);
+    }
+    g_array_free(unknown_flags, TRUE);
+    g_strfreev(flags);
+
+    g_type_class_unref(flags_class);
+
+    return value;
 }
 
 /*
