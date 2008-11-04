@@ -10,4 +10,5 @@ SUBDIRS =			\
 	xml-stream		\
 	file-stream-reader	\
 	pixbuf			\
-	path
+	path			\
+	test-context

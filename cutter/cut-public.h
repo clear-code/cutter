@@ -147,6 +147,7 @@ void  cut_test_context_set_fixture_data_dir (CutTestContext *context,
                                              ...) CUT_GNUC_NULL_TERMINATED;
 
 void        cut_test_context_push_backtrace (CutTestContext *context,
+                                             const char     *relative_path,
                                              const char     *file_name,
                                              unsigned int    line,
                                              const char     *function_name,

@@ -1251,6 +1251,7 @@ cut_test_context_build_source_filename (CutTestContext *context,
 
 void
 cut_test_context_push_backtrace (CutTestContext *context,
+                                 const char     *relative_path,
                                  const char     *filename,
                                  unsigned int    line,
                                  const char     *function_name,
@@ -1266,7 +1267,23 @@ cut_test_context_push_backtrace (CutTestContext *context,
     priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
 
     g_mutex_lock(priv->mutex);
-    full_filename = cut_test_context_build_source_filename(context, filename);
+    if (relative_path) {
+        const gchar *source_directory = NULL;
+
+        if (priv->run_context)
+            source_directory =
+                cut_run_context_get_source_directory(priv->run_context);
+        if (source_directory)
+            full_filename = g_build_filename(source_directory,
+                                             relative_path,
+                                             filename,
+                                             NULL);
+        else
+            full_filename = g_build_filename(relative_path, filename, NULL);
+    } else {
+        full_filename = cut_test_context_build_source_filename(context,
+                                                               filename);
+    }
     entry = cut_backtrace_entry_new(full_filename, line, function_name, info);
     g_free(full_filename);
     priv->backtrace = g_list_prepend(priv->backtrace, entry);

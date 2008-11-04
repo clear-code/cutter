@@ -167,6 +167,63 @@ extern "C" {
     cut_test_terminate_va_list(FAILURE, system_message,                 \
                                user_message_format)
 
+
+/**
+ * CUT_RELATIVE_PATH:
+ *
+ * Define this macro in a source code or build option
+ * (e.g. -DCUT_RELATIVE_PATH=\""sub/dir/"\") if the source
+ * code is built as shared library and used it as helper
+ * library of your test. If this path isn't set, you can't
+ * get correct path from cut_trace() and
+ * cut_trace_with_info_expression(). Here is an example
+ * structure for explain:
+ *
+ * |[
+ * --- core-lib/ --- XXX.c # Your core library
+ *  |             +- ...
+ *  |             +- YYY.c
+ *  +- util-lib/ --- AAA.c # Your utility library
+ *  |             +- ...
+ *  |             +- BBB.c
+ *  |
+ *  +- test/ --- core/ --- test-XXX.c # Tests for your core library
+ *            |         +- ...
+ *            |         +- test-YYY.c
+ *            +- util/ --- test-AAA.c # Tests for your utility library
+ *            |         +- ...
+ *            |         +- test-BBB.c
+ *            +- lib/  --- my-assertions.c # Your library of tests.
+ *                      +- my-assertions.h # This library will be used
+ *                      |                  # as shared library of your
+ *                      |                  # tests (test/core/test-*.so
+ *                      |                  # and test/util/test-*.so)
+ *                      +- ...
+ *
+ *   % cutter --source-directory=test test
+ * ]|
+ *
+ * In the above example structure, you need to define
+ * CUT_RELATIVE_PATH as "lib" in test/lib/my-assertions.c
+ * because my-assertions.c is in lib/ directory from source
+ * directory "test" specified by command line option
+ * --source-directory. Here are example code and build option:
+ *
+ * |[
+ * test/lib/my-assertions.c:
+ *   #define CUT_RELATIVE_PATH "lib"
+ *   #include <cutter.h>
+ *
+ * build option:
+ *   % gcc -DCUT_RELATIVE_PATH="\"lib\"" ...
+ * ]|
+ *
+ * Since: 1.0.6
+ */
+#ifndef CUT_RELATIVE_PATH
+#define CUT_RELATIVE_PATH NULL
+#endif
+
 /**
  * cut_trace:
  * @expression: an expression to be traced.
@@ -230,6 +287,7 @@ extern "C" {
 #define cut_trace(expression) do                                        \
 {                                                                       \
     cut_test_context_push_backtrace(cut_get_current_test_context(),     \
+                                    CUT_RELATIVE_PATH,                  \
                                     __FILE__, __LINE__,                 \
                                     __PRETTY_FUNCTION__,                \
                                     #expression);                       \
@@ -297,6 +355,7 @@ extern "C" {
 #define cut_trace_with_info_expression(expression, info_expression) do  \
 {                                                                       \
     cut_test_context_push_backtrace(cut_get_current_test_context(),     \
+                                    CUT_RELATIVE_PATH,                  \
                                     __FILE__, __LINE__,                 \
                                     __PRETTY_FUNCTION__,                \
                                     #info_expression);                  \

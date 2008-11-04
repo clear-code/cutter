@@ -1,5 +1,10 @@
 2008-11-04  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-helper.h, cutter/cut-public.h,
+	cutter/cut-test-context.c,
+	test/test-cut-test-context.c, test/fixtures/test-context/: support
+	CUT_RELATIVE_PATH.
+
 	* cutter/cut-stream-parser.c: improve function name detection.
 
 	* test/lib/cuttest-assertions.c

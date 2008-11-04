@@ -1,7 +1,11 @@
-#include "cutter.h"
+#include <gcutter.h>
+
 #include <cutter/cut-test-context.h>
 #include <cutter/cut-test-suite.h>
 #include <cutter/cut-test-iterator.h>
+#include <cutter/cut-pipeline.h>
+
+#include "lib/cuttest-assertions.h"
 
 void test_set_data (void);
 void test_set_failed (void);
@@ -11,6 +15,7 @@ void test_xml_with_test_case (void);
 void test_xml_with_test_iterator (void);
 void test_xml_with_test (void);
 void test_xml_with_test_data (void);
+void test_relative_path (void);
 
 static CutTestContext *context;
 static CutTestSuite *test_suite;
@@ -18,6 +23,7 @@ static CutTestCase *test_case;
 static CutTestIterator *test_iterator;
 static CutTest *test;
 static CutTestData *test_data;
+static CutRunContext *pipeline;
 
 static gboolean destroy_called;
 static gchar *destroyed_string;
@@ -35,6 +41,8 @@ setup (void)
     test_data = NULL;
     destroy_called = FALSE;
     destroyed_string = NULL;
+
+    pipeline = NULL;
 }
 
 void
@@ -51,6 +59,9 @@ teardown (void)
         g_object_unref(test_data);
     if (destroyed_string)
         g_free(destroyed_string);
+
+    if (pipeline)
+        g_object_unref(pipeline);
 }
 
 static void
@@ -250,6 +261,51 @@ test_xml_with_test_data (void)
     cut_test_context_set_test(context, test);
     cut_test_context_set_data(context, test_data);
     cut_assert_match_with_free(expected, cut_test_context_to_xml(context));
+}
+
+static void
+report_error (CutRunContext *context, GError *error, gpointer user_data)
+{
+    gcut_assert_error(error, "Pipeline Error");
+}
+
+void
+test_relative_path (void)
+{
+    gchar *test_dir;
+    gchar *test_source_path;
+    const gchar *assert_location;
+    const gchar *test_location;
+
+    pipeline = cut_pipeline_new();
+    test_dir = g_build_filename(cuttest_get_base_dir(),
+                                "fixtures",
+                                "test-context",
+                                NULL);
+    cut_run_context_set_test_directory(pipeline, test_dir);
+    cut_run_context_set_source_directory(pipeline, cuttest_get_base_dir());
+    g_free(test_dir);
+
+    g_signal_connect(pipeline, "error", G_CALLBACK(report_error), NULL);
+    cut_assert_false(cut_run_context_start(pipeline));
+
+    test_source_path = g_build_filename(cuttest_get_base_dir(),
+                                        "fixtures",
+                                        "test-context",
+                                        "test-relative-path.c",
+                                        NULL);
+    assert_location = cut_take_printf("%s:10", test_source_path);
+    test_location = cut_take_printf("%s:16", test_source_path);
+    g_free(test_source_path);
+    cut_assert_test_result_with_message(pipeline, 0, CUT_TEST_RESULT_FAILURE,
+                                        "test_fail",
+                                        NULL,
+                                        NULL,
+                                        "always fail",
+                                        assert_location,
+                                        "cut_assert_always_fail",
+                                        test_location,
+                                        "test_fail");
 }
 
 /*
