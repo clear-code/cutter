@@ -3,7 +3,7 @@ AC_DEFUN([AC_CHECK_COVERAGE],
   dnl **************************************************************
   dnl Configure for coverage.
   dnl **************************************************************
-  
+
   AC_ARG_ENABLE([coverage],
                 AS_HELP_STRING([--enable-coverage],
                                [Enable coverage]),
@@ -12,7 +12,7 @@ AC_DEFUN([AC_CHECK_COVERAGE],
   if test "x$GCC" != "xyes"; then
     ac_cv_enable_coverage=no
   fi
-  
+
   cutter_has_lcov=no
   ltp_version_list="1.6"
   AC_CHECK_PROG(LCOV, lcov, lcov)
@@ -41,7 +41,7 @@ AC_DEFUN([AC_CHECK_COVERAGE],
   if test "x$cutter_has_lcov" != "xyes"; then
     ac_cv_enable_coverage=no
   fi
-  
+
   COVERAGE_CFLAGS=
   if test "x$ac_cv_enable_coverage" = "xyes"; then
     COVERAGE_CFLAGS="--coverage"

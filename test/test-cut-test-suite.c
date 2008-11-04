@@ -1,5 +1,5 @@
 #ifdef HAVE_CONFIG_H
-#  include "config.h"
+#  include <config.h>
 #endif
 #include <cutter.h>
 #include <cutter/cut-test-runner.h>

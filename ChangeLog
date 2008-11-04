@@ -1,3 +1,7 @@
+2008-11-04  Kouhei Sutou  <kou@cozmixng.org>
+
+	* ./: use <config.h> not "config.h".
+
 2008-10-31  Kouhei Sutou  <kou@cozmixng.org>
 
 	* configure.ac, doc/html/Makefile.am, doc/reference/Makefile.am:
