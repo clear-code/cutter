@@ -40,6 +40,11 @@ gboolean       gcut_string_io_channel_get_read_fail
 void           gcut_string_io_channel_set_read_fail
                                                  (GIOChannel  *channel,
                                                   gboolean     read_fail);
+gboolean       gcut_string_io_channel_get_pipe_mode
+                                                 (GIOChannel  *channel);
+void           gcut_string_io_channel_set_pipe_mode
+                                                 (GIOChannel  *channel,
+                                                  gboolean     pipe_mode);
 
 G_END_DECLS
 

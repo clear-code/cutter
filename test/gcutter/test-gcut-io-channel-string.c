@@ -17,6 +17,8 @@
  *
  */
 
+#include <string.h>
+
 #include <errno.h>
 #include <gcutter.h>
 
@@ -29,6 +31,8 @@ void test_buffer_limit_block(void);
 void test_buffer_limit_non_block(void);
 void test_limit(void);
 void test_read_fail(void);
+void test_pipe_mode(void);
+void test_pipe_mode_eof(void);
 
 static GIOChannel *channel;
 static gchar *data;
@@ -364,6 +368,79 @@ test_read_fail (void)
     cut_assert_equal_uint(G_IO_STATUS_ERROR, status);
     cut_assert_equal_size(0, length);
 }
+
+void
+test_pipe_mode (void)
+{
+    gchar initial_data[] = "XXX";
+    gchar write_data[] = "data\n";
+    gchar buffer[1024];
+    gsize length;
+    GIOStatus status;
+    GError *error = NULL;
+
+    channel = gcut_io_channel_string_new(initial_data);
+    g_io_channel_set_encoding(channel, NULL, &error);
+    gcut_assert_error(error);
+    g_io_channel_set_buffered(channel, FALSE);
+
+    cut_assert_false(gcut_string_io_channel_get_pipe_mode(channel));
+    gcut_string_io_channel_set_pipe_mode(channel, TRUE);
+    cut_assert_true(gcut_string_io_channel_get_pipe_mode(channel));
+
+    status = g_io_channel_read_chars(channel, buffer, sizeof(buffer),
+                                     &length, &error);
+    gcut_assert_error(error);
+    cut_assert_equal_uint(G_IO_STATUS_NORMAL, status);
+    cut_assert_equal_memory(initial_data, strlen(initial_data),
+                            buffer, length);
+
+
+    status = g_io_channel_write_chars(channel, write_data, sizeof(write_data),
+                                      &length, &error);
+    gcut_assert_error(error);
+    cut_assert_equal_uint(G_IO_STATUS_NORMAL, status);
+    cut_assert_equal_size(sizeof(write_data), length);
+
+
+    status = g_io_channel_read_chars(channel, buffer, sizeof(buffer),
+                                     &length, &error);
+    gcut_assert_error(error);
+    cut_assert_equal_uint(G_IO_STATUS_NORMAL, status);
+    cut_assert_equal_memory(write_data, sizeof(write_data),
+                            buffer, length);
+}
+
+void
+test_pipe_mode_eof (void)
+{
+    gchar buffer[1024];
+    gsize length;
+    GIOStatus status;
+    GError *error = NULL;
+
+    channel = gcut_io_channel_string_new(NULL);
+    g_io_channel_set_encoding(channel, NULL, &error);
+    gcut_assert_error(error);
+    g_io_channel_set_buffered(channel, FALSE);
+    gcut_string_io_channel_set_pipe_mode(channel, TRUE);
+
+    g_io_channel_set_flags(channel, G_IO_FLAG_NONBLOCK, &error);
+    gcut_assert_error(error);
+    status = g_io_channel_read_chars(channel, buffer, sizeof(buffer),
+                                     &length, &error);
+    gcut_assert_error(error);
+    cut_assert_equal_uint(G_IO_STATUS_AGAIN, status);
+
+
+    g_io_channel_set_flags(channel, 0, &error);
+    gcut_assert_error(error);
+    status = g_io_channel_read_chars(channel, buffer, sizeof(buffer),
+                                     &length, &error);
+    gcut_assert_error(error);
+    cut_assert_equal_uint(G_IO_STATUS_EOF, status);
+}
+
 
 /*
 vi:nowrap:ai:expandtab:sw=4:ts=4

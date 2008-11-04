@@ -33,12 +33,14 @@ struct _GCutIOChannelString
 {
     GIOChannel channel;
     GString *string;
-    gsize offset;
+    gsize write_offset;
+    gsize read_offset;
     gsize buffer_limit;
     gsize limit;
     gboolean read_fail;
     GIOFlags flags;
     gboolean reach_eof;
+    gboolean pipe_mode;
 };
 
 struct _GCutSourceString
@@ -64,16 +66,18 @@ source_is_available (GSource *source)
     buffer_condition = g_io_channel_get_buffer_condition(channel);
 
     all_input_condition = (G_IO_IN | G_IO_PRI);
-    if (string_source->condition & all_input_condition) {
+    if (string_source->condition & all_input_condition &&
+        channel->is_readable) {
         string_source->available_condition |= buffer_condition;
         if (string_channel->string &&
-            ((string_channel->string->len > string_channel->offset) ||
-             (string_channel->string->len == string_channel->offset &&
+            ((string_channel->string->len > string_channel->read_offset) ||
+             (!string_channel->pipe_mode &&
+              string_channel->string->len == string_channel->read_offset &&
               !string_channel->reach_eof)))
             string_source->available_condition |= all_input_condition;
     }
 
-    if (string_source->condition & G_IO_OUT)
+    if (string_source->condition & G_IO_OUT && channel->is_writeable)
         string_source->available_condition |= G_IO_OUT;
 
     all_error_condition = (G_IO_ERR | G_IO_HUP | G_IO_NVAL);
@@ -148,21 +152,29 @@ gcut_io_channel_string_read (GIOChannel *channel, gchar *buf, gsize count,
         return G_IO_STATUS_ERROR;
     }
 
-    rest = string_channel->string->len - string_channel->offset;
+    rest = string_channel->string->len - string_channel->read_offset;
     *bytes_read = MIN(count, rest);
     memcpy(buf,
-           string_channel->string->str + string_channel->offset,
+           string_channel->string->str + string_channel->read_offset,
            *bytes_read);
-    string_channel->offset += *bytes_read;
+    string_channel->read_offset += *bytes_read;
+    if (!string_channel->pipe_mode)
+        string_channel->write_offset += *bytes_read;
 
-    if (string_channel->string->len > string_channel->offset ||
-        (string_channel->string->len == string_channel->offset &&
+    if (string_channel->string->len > string_channel->read_offset ||
+        (string_channel->string->len == string_channel->read_offset &&
          *bytes_read > 0)) {
         string_channel->reach_eof = FALSE;
         return G_IO_STATUS_NORMAL;
     } else {
-        string_channel->reach_eof = TRUE;
-        return G_IO_STATUS_EOF;
+        if (string_channel->pipe_mode &&
+            string_channel->flags & G_IO_FLAG_NONBLOCK) {
+            string_channel->reach_eof = FALSE;
+            return G_IO_STATUS_AGAIN;
+        } else {
+            string_channel->reach_eof = TRUE;
+            return G_IO_STATUS_EOF;
+        }
     }
 }
 
@@ -178,8 +190,9 @@ determine_write_size (GCutIOChannelString *string_channel,
             break;
         }
 
-        if (string_channel->string->len > string_channel->offset) {
-            buffer_size = string_channel->string->len - string_channel->offset;
+        if (string_channel->string->len > string_channel->write_offset) {
+            buffer_size =
+                string_channel->string->len - string_channel->write_offset;
         } else {
             buffer_size = 0;
         }
@@ -233,10 +246,12 @@ gcut_io_channel_string_write (GIOChannel *channel, const gchar *buf, gsize count
         return G_IO_STATUS_ERROR;
     }
 
-    g_string_overwrite_len(string_channel->string, string_channel->offset,
+    g_string_overwrite_len(string_channel->string, string_channel->write_offset,
                            buf, write_size);
     *bytes_written = write_size;
-    string_channel->offset += write_size;
+    string_channel->write_offset += write_size;
+    if (!string_channel->pipe_mode)
+        string_channel->read_offset += write_size;
 
     return G_IO_STATUS_NORMAL;
 }
@@ -249,13 +264,16 @@ gcut_io_channel_string_seek (GIOChannel *channel, gint64 offset,
 
     switch (type) {
       case G_SEEK_SET:
-        string_channel->offset = offset;
+        string_channel->write_offset = offset;
+        string_channel->read_offset = offset;
         break;
       case G_SEEK_CUR:
-        string_channel->offset += offset;
+        string_channel->write_offset += offset;
+        string_channel->read_offset += offset;
         break;
       case G_SEEK_END:
-        string_channel->offset = string_channel->string->len + offset;
+        string_channel->write_offset = string_channel->string->len + offset;
+        string_channel->read_offset = string_channel->string->len + offset;
         break;
       default:
         g_set_error(error, G_IO_CHANNEL_ERROR,
@@ -278,7 +296,8 @@ gcut_io_channel_string_close (GIOChannel *channel, GError **err)
 
     g_string_free(string_channel->string, TRUE);
     string_channel->string = NULL;
-    string_channel->offset = 0;
+    string_channel->write_offset = 0;
+    string_channel->read_offset = 0;
 
     return G_IO_STATUS_NORMAL;
 }
@@ -355,12 +374,14 @@ gcut_io_channel_string_new (const gchar *initial)
     channel->is_seekable = TRUE;
 
     string_channel->string = g_string_new(initial);
-    string_channel->offset = 0;
+    string_channel->write_offset = string_channel->string->len;
+    string_channel->read_offset = 0;
     string_channel->buffer_limit = 0;
     string_channel->limit = 0;
     string_channel->read_fail = FALSE;
     string_channel->flags = 0;
     string_channel->reach_eof = FALSE;
+    string_channel->pipe_mode = FALSE;
 
     return channel;
 }
@@ -379,7 +400,8 @@ gcut_string_io_channel_clear (GIOChannel  *channel)
     GCutIOChannelString *string_channel = (GCutIOChannelString *)channel;
 
     g_string_truncate(string_channel->string, 0);
-    string_channel->offset = 0;
+    string_channel->write_offset = 0;
+    string_channel->read_offset = 0;
 }
 
 gsize
@@ -428,6 +450,22 @@ gcut_string_io_channel_set_read_fail (GIOChannel *channel, gboolean read_fail)
     GCutIOChannelString *string_channel = (GCutIOChannelString *)channel;
 
     string_channel->read_fail = read_fail;
+}
+
+gboolean
+gcut_string_io_channel_get_pipe_mode (GIOChannel *channel)
+{
+    GCutIOChannelString *string_channel = (GCutIOChannelString *)channel;
+
+    return string_channel->pipe_mode;
+}
+
+void
+gcut_string_io_channel_set_pipe_mode (GIOChannel *channel, gboolean pipe_mode)
+{
+    GCutIOChannelString *string_channel = (GCutIOChannelString *)channel;
+
+    string_channel->pipe_mode = pipe_mode;
 }
 
 /*

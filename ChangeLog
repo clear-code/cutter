@@ -1,5 +1,8 @@
 2008-11-04  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-io-channel-string.[ch],
+	test/gcutter/test-gcut-io-channel-string.c: add pipe mode.
+
 	* ./: use <config.h> not "config.h".
 
 2008-10-31  Kouhei Sutou  <kou@cozmixng.org>
