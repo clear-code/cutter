@@ -34,6 +34,7 @@ void
 setup (void)
 {
     inspected = NULL;
+    actual_error = NULL;
 }
 
 void
@@ -41,6 +42,9 @@ teardown (void)
 {
     if (inspected)
         g_free(inspected);
+
+    if (actual_error)
+        g_error_free(actual_error);
 }
 
 void
