@@ -1,5 +1,7 @@
 2008-11-04  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-stream-parser.c: improve function name detection.
+
 	* test/lib/cuttest-assertions.c
 	(cuttest_result_string_list_new_from_result): fix wrong variable bug.
 

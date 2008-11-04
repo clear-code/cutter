@@ -1656,9 +1656,9 @@ end_result_backtrace (CutStreamParser *parser, CutStreamParserPrivate *priv,
     if (!priv->backtrace)
         return;
 
+    priv->backtrace = g_list_reverse(priv->backtrace);
     if (priv->result)
-        cut_test_result_set_backtrace(priv->result,
-                                      g_list_reverse(priv->backtrace));
+        cut_test_result_set_backtrace(priv->result, priv->backtrace);
 
     g_list_foreach(priv->backtrace, (GFunc)g_object_unref, NULL);
     g_list_free(priv->backtrace);
@@ -2395,29 +2395,27 @@ text_result_backtrace_entry_info (CutStreamParserPrivate *priv,
                                   const gchar *text, gsize text_len,
                                   GError **error)
 {
-    if (g_str_has_suffix(text, "()")) {
+    const gchar *info_start;
+
+    info_start = strstr(text, "():");
+    if (info_start) {
+        gchar *function;
+
+        function = g_strndup(text, info_start - text);
+        info_start += strlen("():");
+        while (info_start[0] && info_start[0] == ' ')
+            info_start++;
+        cut_backtrace_entry_set_function(priv->backtrace_entry, function);
+        cut_backtrace_entry_set_info(priv->backtrace_entry, info_start);
+        g_free(function);
+    } else if (g_str_has_suffix(text, "()")) {
         gchar *function;
 
         function = g_strndup(text, strlen(text) - 2);
         cut_backtrace_entry_set_function(priv->backtrace_entry, function);
         g_free(function);
     } else {
-        const gchar *info_start;
-
-        info_start = strstr(text, "():");
-        if (info_start) {
-            gchar *function;
-
-            function = g_strndup(text, info_start - text);
-            info_start += strlen("():");
-            while (info_start[0] && info_start[0] == ' ')
-                info_start++;
-            cut_backtrace_entry_set_function(priv->backtrace_entry, function);
-            cut_backtrace_entry_set_info(priv->backtrace_entry, info_start);
-            g_free(function);
-        } else {
-            cut_backtrace_entry_set_info(priv->backtrace_entry, text);
-        }
+        cut_backtrace_entry_set_info(priv->backtrace_entry, text);
     }
 }
 
