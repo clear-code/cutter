@@ -1,5 +1,8 @@
 2008-11-04  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/lib/cuttest-assertions.c
+	(cuttest_result_string_list_new_from_result): fix wrong variable bug.
+
 	* test/gcutter/test-gcut-enum.c: fix a memory leak.
 
 	* gcutter/gcut-enum.c, test/gcutter/test-gcut-enum.c: add

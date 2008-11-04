@@ -149,7 +149,7 @@ cuttest_result_string_list_new_from_result (CutTestResult *result)
 
     backtrace = cut_test_result_get_backtrace(result);
     for (node = backtrace; node; node = g_list_next(node)) {
-        CutBacktraceEntry *entry = backtrace->data;
+        CutBacktraceEntry *entry = node->data;
         const gchar *file, *function_name;
         guint line;
 
