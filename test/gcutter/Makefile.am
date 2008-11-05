@@ -20,7 +20,8 @@ noinst_LTLIBRARIES = 			\
 	test-gcut-list.la		\
 	test-gcut-io-channel-string.la	\
 	test-gcut-egg.la		\
-	test-gcut-io.la
+	test-gcut-io.la			\
+	test-gcut-key-file.la
 
 AM_LDFLAGS =			\
 	-module			\
@@ -43,3 +44,4 @@ test_gcut_list_la_SOURCES		= test-gcut-list.c
 test_gcut_io_channel_string_la_SOURCES	= test-gcut-io-channel-string.c
 test_gcut_egg_la_SOURCES		= test-gcut-egg.c
 test_gcut_io_la_SOURCES			= test-gcut-io.c
+test_gcut_key_file_la_SOURCES		= test-gcut-key-file.c

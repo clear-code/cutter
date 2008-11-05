@@ -36,6 +36,7 @@ gcutter_public_headers =		\
 	gcut-io-channel-string.h	\
 	gcut-egg.h			\
 	gcut-io.h			\
+	gcut-key-file.h			\
 	gcut-main.h
 
 noinst_headers = 	\
@@ -62,6 +63,7 @@ libgcutter_la_SOURCES =			\
 	gcut-io-channel-string.c	\
 	gcut-egg.c			\
 	gcut-io.c			\
+	gcut-key-file.c			\
 	gcut-main.c
 
 

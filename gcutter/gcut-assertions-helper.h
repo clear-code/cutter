@@ -33,6 +33,7 @@
 #include <gcutter/gcut-object.h>
 #include <gcutter/gcut-egg.h>
 #include <gcutter/gcut-io.h>
+#include <gcutter/gcut-key-file.h>
 
 G_BEGIN_DECLS
 
