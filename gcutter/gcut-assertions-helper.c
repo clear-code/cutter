@@ -84,6 +84,45 @@ gcut_assert_equal_value_helper (GValue         *expected,
 }
 
 void
+gcut_assert_equal_list_helper (const GList    *expected,
+                               const GList    *actual,
+                               GEqualFunc      equal_function,
+                               GCutInspectFunc inspect_function,
+                               gpointer        inspect_user_data,
+                               const gchar    *expression_expected,
+                               const gchar    *expression_actual,
+                               const gchar    *expression_equal_function,
+                               const gchar    *user_message_format,
+                               ...)
+{
+    if (gcut_list_equal(expected, actual, equal_function)) {
+        cut_test_pass();
+    } else {
+        const gchar *message;
+        const gchar *inspected_expected, *inspected_actual;
+
+        inspected_expected =
+            cut_take_string(gcut_list_inspect(expected,
+                                              inspect_function,
+                                              inspect_user_data));
+        inspected_actual =
+            cut_take_string(gcut_list_inspect(actual,
+                                              inspect_function,
+                                              inspect_user_data));
+
+        message = cut_take_printf("<%s(%s[i], %s[i]) == TRUE>\n"
+                                  "expected: <%s>\n"
+                                  "  actual: <%s>",
+                                  expression_equal_function,
+                                  expression_expected, expression_actual,
+                                  inspected_expected,
+                                  inspected_actual);
+        message = cut_append_diff(message, inspected_expected, inspected_actual);
+        cut_test_fail_va_list(message, user_message_format);
+    }
+}
+
+void
 gcut_assert_equal_list_int_helper (const GList    *expected,
                                    const GList    *actual,
                                    const gchar    *expression_expected,

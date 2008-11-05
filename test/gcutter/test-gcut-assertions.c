@@ -10,6 +10,7 @@
 
 void test_equal_type(void);
 void test_equal_value(void);
+void test_equal_list(void);
 void test_equal_list_int(void);
 void test_equal_list_uint(void);
 void test_equal_list_string(void);
@@ -212,6 +213,66 @@ test_equal_value (void)
                            "  actual: <\"String\"> (gchararray)",
                            FAIL_LOCATION,
                            "stub_equal_value");
+}
+
+static gboolean
+stub_equal_list_equal_func (gconstpointer a, gconstpointer b)
+{
+    return GPOINTER_TO_INT(a) == GPOINTER_TO_INT(b);
+}
+
+static void
+stub_equal_list_inspect_func (GString *string,
+                              gconstpointer data, gpointer user_data)
+{
+    gchar *prefix = user_data;
+
+    g_string_append_printf(string, "%s: <%d>", prefix, GPOINTER_TO_INT(data));
+}
+
+static void
+stub_equal_list (void)
+{
+    list1 = g_list_append(list1, GINT_TO_POINTER(100));
+    list1 = g_list_append(list1, GINT_TO_POINTER(-200));
+    list2 = g_list_append(list2, GINT_TO_POINTER(-1000));
+    list2 = g_list_append(list2, GINT_TO_POINTER(2000));
+
+    gcut_assert_equal_list(list1, list1,
+                           stub_equal_list_equal_func,
+                           stub_equal_list_inspect_func, "AAA");
+    gcut_assert_equal_list(list2, list2,
+                           stub_equal_list_equal_func,
+                           stub_equal_list_inspect_func, "BBB");
+
+    MARK_FAIL(gcut_assert_equal_list(list1, list2,
+                                     stub_equal_list_equal_func,
+                                     stub_equal_list_inspect_func, "CCC"));
+}
+
+void
+test_equal_list (void)
+{
+    test = cut_test_new("equal_list test", stub_equal_list);
+    cut_assert_not_null(test);
+
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(
+        run_context, 0, CUT_TEST_RESULT_FAILURE,
+        "equal_list test",
+        NULL,
+        "<stub_equal_list_equal_func(list1[i], list2[i]) == TRUE>\n"
+        "expected: <(CCC: <100>, CCC: <-200>)>\n"
+        "  actual: <(CCC: <-1000>, CCC: <2000>)>\n"
+        "\n"
+        "diff:\n"
+        "- (CCC: <100>, CCC: <-200>)\n"
+        "?                    -\n"
+        "+ (CCC: <-1000>, CCC: <2000>)\n"
+        "?        + +            +",
+        FAIL_LOCATION,
+        "stub_equal_list");
 }
 
 static void

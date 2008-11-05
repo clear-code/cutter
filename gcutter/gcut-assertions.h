@@ -107,6 +107,37 @@ G_BEGIN_DECLS
 #endif
 
 /**
+ * gcut_assert_equal_list:
+ * @expected: an expected GList *.
+ * @actual: an actual GList *.
+ * @equal_function: a function that compares each elements of
+ *                  @expected and @actual list. (#GEqualFunc)
+ * @inspect_function: a function that inspected @expected
+ *                    and @actual list. (#GCutInspectFunc)
+ * @inspect_user_data: a data to be passed to @inspect_function.
+ * @...: optional format string, followed by parameters to insert
+ *       into the format string (as with printf())
+ *
+ * Passes if @equal_function(@expected, @actual) == TRUE.
+ *
+ * Since: 1.0.6
+ */
+#define gcut_assert_equal_list(expected, actual, equal_function,        \
+                               inspect_function, inspect_user_data,     \
+                               ...)                                     \
+    cut_trace_with_info_expression(                                     \
+        gcut_assert_equal_list_helper(expected, actual,                 \
+                                      equal_function,                   \
+                                      inspect_function,                 \
+                                      inspect_user_data,                \
+                                      #expected, #actual,               \
+                                      #equal_function,                  \
+                                      ## __VA_ARGS__, NULL),            \
+        gcut_assert_equal_list(expected, actual, equal_function,        \
+                               inspect_function, inspect_user_data,     \
+                               ## __VA_ARGS__))
+
+/**
  * gcut_assert_equal_list_int:
  * @expected: an expected GList * of integer.
  * @actual: an actual GList * of integer.
