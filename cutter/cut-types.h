@@ -44,7 +44,32 @@ extern "C" {
 typedef void   (*CutDestroyFunction)           (void *data);
 
 
+/**
+ * cut_boolean:
+ *
+ * A standard boolean type. Variables of this type should
+ * only contain the value %CUT_TRUE or %CUT_FALSE.
+ */
 typedef int cut_boolean;
+
+/**
+ * CUT_TRUE:
+ *
+ * Defines the %CUT_TRUE value for the #cut_boolean type.
+ */
+#ifndef CUT_TRUE
+#  define CUT_TRUE (!CUT_FALSE)
+#endif
+
+/**
+ * CUT_FALSE:
+ *
+ * Defines the %CUT_FALSE value for the #cut_boolean type.
+ */
+#ifndef CUT_FALSE
+#  define CUT_FALSE (0)
+#endif
+
 
 #ifdef __cplusplus
 }

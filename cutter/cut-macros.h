@@ -40,14 +40,6 @@ extern "C" {
 #  define CUT_GNUC_NULL_TERMINATED
 #endif
 
-#ifndef CUT_FALSE
-#  define CUT_FALSE (0)
-#endif
-
-#ifndef CUT_TRUE
-#  define CUT_TRUE (!CUT_FALSE)
-#endif
-
 
 #ifdef __cplusplus
 }

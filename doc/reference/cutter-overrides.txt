@@ -1,0 +1,35 @@
+# cut-types.h
+
+<TYPEDEF>
+<NAME>cut_boolean</NAME>
+</TYPEDEF>
+
+<MACRO>
+<NAME>CUT_TRUE</NAME>
+#define CUT_TRUE
+</MACRO>
+
+<MACRO>
+<NAME>CUT_FALSE</NAME>
+#define CUT_FALSE
+</MACRO>
+
+# cut-test-utils.h
+
+<FUNCTION>
+<NAME>cut_take</NAME>
+<RETURNS>void</RETURNS>
+void *object, CutDestroyFunction destroy_function
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_equal_string</NAME>
+<RETURNS>cut_boolean</RETURNS>
+const char string1, const char *string2
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_equal_double</NAME>
+<RETURNS>cut_boolean</RETURNS>
+double double1, double double2, double error
+</FUNCTION>

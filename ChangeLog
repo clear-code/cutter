@@ -1,5 +1,10 @@
 2008-11-05  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-macros.h (CUT_TRUE, CUT_FALSE): move to ...
+	* cutter/cut-types.h: ... here.
+
+	* doc/reference/cutter-overrides.txt: add some override declarations.
+
 	* cutter/cut-test-utils.h: update document.
 
 	* gcutter/gcut-key-file.[ch], test/gcutter/test-gcut-key-file.c:
