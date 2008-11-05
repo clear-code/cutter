@@ -1,5 +1,7 @@
 2008-11-05  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-utils.h: update document.
+
 	* gcutter/gcut-key-file.[ch], test/gcutter/test-gcut-key-file.c:
 	add GKeyFile integration.
 

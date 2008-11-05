@@ -247,7 +247,8 @@ extern "C" {
  * cut_build_fixture_data_path() shows how the fixture data
  * path is determined.
  *
- * Returns: a content of the fixture data as string. (char *)
+ * Returns: a content of the fixture data as string. (char
+ * *) It should not be freed.
  *
  * Since: 1.0.2
  */
