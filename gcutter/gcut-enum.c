@@ -73,7 +73,7 @@ gcut_enum_parse (GType enum_type, const gchar *enum_value, GError **error)
     if (!enum_value) {
         g_set_error(error,
                     GCUT_ENUM_ERROR,
-                    GCUT_ENUM_ERROR_INVALID_FORMAT,
+                    GCUT_ENUM_ERROR_INVALID_VALUE,
                     "enum value should not be NULL");
         return 0;
     }
@@ -113,7 +113,7 @@ gcut_enum_parse (GType enum_type, const gchar *enum_value, GError **error)
     if (!found) {
         g_set_error(error,
                     GCUT_ENUM_ERROR,
-                    GCUT_ENUM_ERROR_INVALID_FORMAT,
+                    GCUT_ENUM_ERROR_INVALID_VALUE,
                     "unknown enum value: <%s>(%s)",
                     enum_value, g_type_name(enum_type));
     }
@@ -182,7 +182,7 @@ gcut_flags_parse (GType flags_type, const gchar *flags_value, GError **error)
     if (!flags_value) {
         g_set_error(error,
                     GCUT_ENUM_ERROR,
-                    GCUT_ENUM_ERROR_INVALID_FORMAT,
+                    GCUT_ENUM_ERROR_INVALID_VALUE,
                     "flags value should not be NULL");
         return 0;
     }
@@ -236,7 +236,7 @@ gcut_flags_parse (GType flags_type, const gchar *flags_value, GError **error)
         inspected_flags = gcut_flags_inspect(flags_type, value);
         g_set_error(error,
                     GCUT_ENUM_ERROR,
-                    GCUT_ENUM_ERROR_INVALID_FORMAT,
+                    GCUT_ENUM_ERROR_INVALID_VALUE,
                     "unknown flags: <%s>(%s): <%s>: %s",
                     inspected_unknown_flags, g_type_name(flags_type),
                     flags_value, inspected_flags);

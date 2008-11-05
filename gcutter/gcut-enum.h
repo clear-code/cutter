@@ -61,7 +61,7 @@ GQuark           gcut_enum_error_quark          (void);
 typedef enum
 {
     GCUT_ENUM_ERROR_INVALID_TYPE,
-    GCUT_ENUM_ERROR_INVALID_FORMAT
+    GCUT_ENUM_ERROR_INVALID_VALUE
 } GCutEnumError;
 
 /**

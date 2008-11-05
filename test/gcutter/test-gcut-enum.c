@@ -140,7 +140,7 @@ data_enum_parse (void)
                      NULL,
                      0,
                      g_error_new(GCUT_ENUM_ERROR,
-                                 GCUT_ENUM_ERROR_INVALID_FORMAT,
+                                 GCUT_ENUM_ERROR_INVALID_VALUE,
                                  "enum value should not be NULL")),
                  parse_test_data_free,
                  "invalid type",
@@ -160,7 +160,7 @@ data_enum_parse (void)
                      "unknown",
                      0,
                      g_error_new(GCUT_ENUM_ERROR,
-                                 GCUT_ENUM_ERROR_INVALID_FORMAT,
+                                 GCUT_ENUM_ERROR_INVALID_VALUE,
                                  "unknown enum value: "
                                  "<unknown>(CutTestResultStatus)")),
                  parse_test_data_free);
@@ -239,7 +239,7 @@ data_flags_parse (void)
                      NULL,
                      0,
                      g_error_new(GCUT_ENUM_ERROR,
-                                 GCUT_ENUM_ERROR_INVALID_FORMAT,
+                                 GCUT_ENUM_ERROR_INVALID_VALUE,
                                  "flags value should not be NULL")),
                  parse_test_data_free,
                  "invalid type",
@@ -259,7 +259,7 @@ data_flags_parse (void)
                      "unknown",
                      0,
                      g_error_new(GCUT_ENUM_ERROR,
-                                 GCUT_ENUM_ERROR_INVALID_FORMAT,
+                                 GCUT_ENUM_ERROR_INVALID_VALUE,
                                  "unknown flags: "
                                  "<unknown>(CuttestStubFlags): "
                                  "<unknown>: "
@@ -271,7 +271,7 @@ data_flags_parse (void)
                      "first|unknown1|CUTTEST_STUB_THIRD|unknown2",
                      (1 << 0 | 1 << 2),
                      g_error_new(GCUT_ENUM_ERROR,
-                                 GCUT_ENUM_ERROR_INVALID_FORMAT,
+                                 GCUT_ENUM_ERROR_INVALID_VALUE,
                                  "unknown flags: "
                                  "<unknown1|unknown2>(CuttestStubFlags): "
                                  "<first|unknown1|CUTTEST_STUB_THIRD|unknown2>: "
