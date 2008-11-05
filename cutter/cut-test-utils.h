@@ -150,11 +150,10 @@ extern "C" {
  * cut_take_string_array:
  * @strings: the array of strings to be owned by Cutter.
  *
- * Passes ownership of the array of strings (char **) to
- * Cutter and returns an array of strings that has same
- * contents of @strings.
+ * Passes ownership of the array of strings to Cutter and
+ * returns @strings itself.
  *
- * Returns: an array of strings owned by Cutter. Don't free it.
+ * Returns: @strings strings owned by Cutter. Don't free it.
  */
 #define cut_take_string_array(strings)                                  \
     cut_test_context_take_string_array(cut_get_current_test_context(),  \

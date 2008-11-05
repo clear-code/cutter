@@ -1,5 +1,8 @@
 2008-11-05  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-utils.h, doc/reference/cutter-overrides.txt:
+	update cut_take_string_array().
+
 	* doc/reference/cutter-overrides.txt: update.
 
 	* cutter/cut-macros.h (CUT_TRUE, CUT_FALSE): move to ...

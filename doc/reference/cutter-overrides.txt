@@ -29,6 +29,12 @@ void *object, CutDestroyFunction destroy_function
 </FUNCTION>
 
 <FUNCTION>
+<NAME>cut_take_string_array</NAME>
+<RETURNS>char **</RETURNS>
+char **
+</FUNCTION>
+
+<FUNCTION>
 <NAME>cut_set_fixture_data_dir</NAME>
 <RETURNS>void</RETURNS>
 const char *path, ...
