@@ -2,6 +2,7 @@
 
 #include <gcutter.h>
 #include <cutter/cut-enum-types.h>
+#include <cuttest-enum.h>
 
 void test_enum_inspect(void);
 void data_enum_parse(void);
@@ -13,22 +14,6 @@ void test_flags_parse(gconstpointer data);
 static gchar *inspected;
 
 static GError *actual_error;
-
-static GType flags_type = 0;
-
-void
-startup (void)
-{
-    if (flags_type == 0) {
-        static const GFlagsValue values[] = {
-            {1 << 0, "CUTTEST_STUB_FIRST", "first"},
-            {1 << 1, "CUTTEST_STUB_SECOND", "second"},
-            {1 << 2, "CUTTEST_STUB_THIRD", "third"},
-            {0, NULL, NULL}
-        };
-        flags_type = g_flags_register_static("CuttestStubFlags", values);
-    }
-}
 
 void
 setup (void)
@@ -189,22 +174,25 @@ test_enum_parse (gconstpointer data)
 void
 test_flags_inspect (void)
 {
-    inspected = gcut_flags_inspect(flags_type, 0);
-    cut_assert_equal_string("#<CuttestStubFlags>", inspected);
+    inspected = gcut_flags_inspect(CUTTEST_FLAGS, 0);
+    cut_assert_equal_string("#<CuttestFlags>", inspected);
 
     g_free(inspected);
-    inspected = gcut_flags_inspect(flags_type, (1 << 0) | (1 << 1));
-    cut_assert_equal_string("#<CuttestStubFlags: "
+    inspected = gcut_flags_inspect(CUTTEST_FLAGS,
+                                   CUTTEST_FLAG_FIRST | CUTTEST_FLAG_SECOND);
+    cut_assert_equal_string("#<CuttestFlags: "
                             "first|second "
-                            "(CUTTEST_STUB_FIRST:0x1)|"
-                            "(CUTTEST_STUB_SECOND:0x2)>",
+                            "(CUTTEST_FLAG_FIRST:0x1)|"
+                            "(CUTTEST_FLAG_SECOND:0x2)>",
                             inspected);
 
     g_free(inspected);
-    inspected = gcut_flags_inspect(flags_type, (1 << 0) | (1 << 3));
-    cut_assert_equal_string("#<CuttestStubFlags: "
+    inspected = gcut_flags_inspect(CUTTEST_FLAGS,
+                                   CUTTEST_FLAG_FIRST |
+                                   (CUTTEST_FLAG_THIRD << 1));
+    cut_assert_equal_string("#<CuttestFlags: "
                             "first "
-                            "(CUTTEST_STUB_FIRST:0x1) "
+                            "(CUTTEST_FLAG_FIRST:0x1) "
                             "(unknown flags: 0x8)>",
                             inspected);
 }
@@ -213,29 +201,31 @@ void
 data_flags_parse (void)
 {
     cut_add_data("nick",
-                 parse_flags_test_data_new(flags_type,
+                 parse_flags_test_data_new(CUTTEST_FLAGS,
                                            "first|second",
-                                           (1 << 0 | 1 << 1),
+                                           CUTTEST_FLAG_FIRST |
+                                           CUTTEST_FLAG_SECOND,
                                            NULL),
                  parse_test_data_free,
                  "NICK",
-                 parse_flags_test_data_new(flags_type,
+                 parse_flags_test_data_new(CUTTEST_FLAGS,
                                            "SECOND|thIrd",
-                                           (1 << 1 | 1 << 2),
+                                           CUTTEST_FLAG_SECOND |
+                                           CUTTEST_FLAG_THIRD,
                                            NULL),
                  parse_test_data_free,
                  "name",
-                 parse_flags_test_data_new(flags_type,
-                                           "CUTTEST_STUB_FIRST",
-                                           (1 << 0),
+                 parse_flags_test_data_new(CUTTEST_FLAGS,
+                                           "CUTTEST_FLAG_FIRST",
+                                           CUTTEST_FLAG_FIRST,
                                            NULL),
                  parse_test_data_free,
                  "empty",
-                 parse_flags_test_data_new(flags_type, "", 0, NULL),
+                 parse_flags_test_data_new(CUTTEST_FLAGS, "", 0, NULL),
                  parse_test_data_free,
                  "NULL",
                  parse_flags_test_data_new(
-                     flags_type,
+                     CUTTEST_FLAGS,
                      NULL,
                      0,
                      g_error_new(GCUT_ENUM_ERROR,
@@ -255,29 +245,28 @@ data_flags_parse (void)
                  parse_test_data_free,
                  "unknown nick only",
                  parse_flags_test_data_new(
-                     flags_type,
+                     CUTTEST_FLAGS,
                      "unknown",
                      0,
                      g_error_new(GCUT_ENUM_ERROR,
                                  GCUT_ENUM_ERROR_INVALID_VALUE,
                                  "unknown flags: "
-                                 "<unknown>(CuttestStubFlags): "
-                                 "<unknown>: "
-                                 "#<CuttestStubFlags>")),
+                                 "<unknown>(CuttestFlags): "
+                                 "<unknown>: #<CuttestFlags>")),
                  parse_test_data_free,
                  "unknown nick with valid nick",
                  parse_flags_test_data_new(
-                     flags_type,
-                     "first|unknown1|CUTTEST_STUB_THIRD|unknown2",
+                     CUTTEST_FLAGS,
+                     "first|unknown1|CUTTEST_FLAG_THIRD|unknown2",
                      (1 << 0 | 1 << 2),
                      g_error_new(GCUT_ENUM_ERROR,
                                  GCUT_ENUM_ERROR_INVALID_VALUE,
                                  "unknown flags: "
-                                 "<unknown1|unknown2>(CuttestStubFlags): "
-                                 "<first|unknown1|CUTTEST_STUB_THIRD|unknown2>: "
-                                 "#<CuttestStubFlags: first|third "
-                                 "(CUTTEST_STUB_FIRST:0x1)|"
-                                 "(CUTTEST_STUB_THIRD:0x4)>")),
+                                 "<unknown1|unknown2>(CuttestFlags): "
+                                 "<first|unknown1|CUTTEST_FLAG_THIRD|unknown2>: "
+                                 "#<CuttestFlags: first|third "
+                                 "(CUTTEST_FLAG_FIRST:0x1)|"
+                                 "(CUTTEST_FLAG_THIRD:0x4)>")),
                  parse_test_data_free);
 }
 

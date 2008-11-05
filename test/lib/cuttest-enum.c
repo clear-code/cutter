@@ -17,30 +17,25 @@
  *
  */
 
-#ifndef __CUTTEST_UTILS_H__
-#define __CUTTEST_UTILS_H__
-
-#include <glib.h>
-#include <cutter/cut-test-case.h>
-#include <cutter/cut-run-context.h>
-#include <cutter/cut-test-result.h>
-
 #include "cuttest-enum.h"
 
+GType
+cuttest_flags_get_type (void)
+{
+    static GType flags_type = 0;
 
-#define ISO8601_PATTERN_WITHOUT_YEAR                    \
-    "\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?Z"
-#define ISO8601_PATTERN "\\d{4}-" ISO8601_PATTERN_WITHOUT_YEAR
+    if (flags_type == 0) {
+        static const GFlagsValue values[] = {
+            {CUTTEST_FLAG_FIRST, "CUTTEST_FLAG_FIRST", "first"},
+            {CUTTEST_FLAG_SECOND, "CUTTEST_FLAG_SECOND", "second"},
+            {CUTTEST_FLAG_THIRD, "CUTTEST_FLAG_THIRD", "third"},
+            {0, NULL, NULL}
+        };
+        flags_type = g_flags_register_static("CuttestFlags", values);
+    }
 
-#define CUTTEST_TEST_DIR_KEY "CUTTEST_TEST_DIR"
-
-const gchar *cuttest_get_base_dir (void);
-void         cuttest_add_test     (CutTestCase *test_case,
-                                   const gchar *test_name,
-                                   CutTestFunction test_function);
-
-#endif
-
+    return flags_type;
+}
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

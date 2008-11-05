@@ -17,30 +17,26 @@
  *
  */
 
-#ifndef __CUTTEST_UTILS_H__
-#define __CUTTEST_UTILS_H__
+#ifndef __CUTTEST_ENUM_H__
+#define __CUTTEST_ENUM_H__
 
-#include <glib.h>
-#include <cutter/cut-test-case.h>
-#include <cutter/cut-run-context.h>
-#include <cutter/cut-test-result.h>
+#include <glib-object.h>
 
-#include "cuttest-enum.h"
+G_BEGIN_DECLS
 
+typedef enum
+{
+    CUTTEST_FLAG_FIRST	= (1 << 0),
+    CUTTEST_FLAG_SECOND	= (1 << 1),
+    CUTTEST_FLAG_THIRD	= (1 << 2)
+} CuttestFlags;
 
-#define ISO8601_PATTERN_WITHOUT_YEAR                    \
-    "\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?Z"
-#define ISO8601_PATTERN "\\d{4}-" ISO8601_PATTERN_WITHOUT_YEAR
+GType cuttest_flags_get_type (void);
+#define CUTTEST_FLAGS (cuttest_flags_get_type())
 
-#define CUTTEST_TEST_DIR_KEY "CUTTEST_TEST_DIR"
-
-const gchar *cuttest_get_base_dir (void);
-void         cuttest_add_test     (CutTestCase *test_case,
-                                   const gchar *test_name,
-                                   CutTestFunction test_function);
+G_END_DECLS
 
 #endif
-
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

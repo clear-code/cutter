@@ -30,7 +30,9 @@ libcuttest_utils_la_SOURCES = 		\
 	cuttest-utils.c			\
 	cuttest-utils.h			\
 	cuttest-assertions.c		\
-	cuttest-assertions.h
+	cuttest-assertions.h		\
+	cuttest-enum.c			\
+	cuttest-enum.h
 
 libcuttest_event_receiver_la_SOURCES = 		\
 	cuttest-event-receiver.c		\
