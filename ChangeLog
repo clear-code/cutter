@@ -1,5 +1,7 @@
 2008-11-05  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/cutter-overrides.txt: update.
+
 	* cutter/cut-macros.h (CUT_TRUE, CUT_FALSE): move to ...
 	* cutter/cut-types.h: ... here.
 
