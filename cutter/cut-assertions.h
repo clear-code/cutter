@@ -769,6 +769,35 @@ extern "C" {
         cut_test_terminate(OMISSION, NULL, format, ## __VA_ARGS__),     \
         cut_omit(format, ## __VA_ARGS__))
 
+/**
+ * cut_return:
+ *
+ * Finish the test.
+ *
+ * e.g.:
+ * |[
+ * static void
+ * sub_xxx (void)
+ * {
+ *   some_assertions();
+ *   if (no_need_more_test)
+ *     cut_return();
+ *   some_assertions();
+ * }
+ *
+ * void
+ * test_xxx (void)
+ * {
+ *    some_assertions();
+ *    cut_trace(sub_xxx());
+ *    some_assertions();
+ * }
+ * ]|
+ *
+ * Since: 1.0.6
+ */
+#define cut_return()                                                    \
+    cut_test_context_long_jump(cut_get_current_test_context())
 
 #ifdef __cplusplus
 }

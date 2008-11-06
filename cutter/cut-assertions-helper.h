@@ -52,7 +52,7 @@ extern "C" {
 #define cut_test_terminate(status, system_message, ...) do              \
 {                                                                       \
     cut_test_register_result(status, system_message, ## __VA_ARGS__);   \
-    cut_test_context_long_jump(cut_get_current_test_context());         \
+    cut_return();                                                       \
 } while (0)
 
 #define cut_test_terminate_va_list(status, system_message,              \
@@ -60,7 +60,7 @@ extern "C" {
 {                                                                       \
     cut_test_register_result_va_list(status, system_message,            \
                                      user_message_format);              \
-    cut_test_context_long_jump(cut_get_current_test_context());         \
+    cut_return();                                                       \
 } while (0)
 
 void        cut_assert_helper              (cut_boolean     result,
