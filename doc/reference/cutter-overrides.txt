@@ -73,6 +73,12 @@ const gchar *value, ...
 const gchar **strings
 </FUNCTION>
 
+<FUNCTION>
+<NAME>gcut_take_new_hash_table_string_string</NAME>
+<RETURNS>GHashTable *</RETURNS>
+const gchar *key, ...
+</FUNCTION>
+
 # gcut-assertions.h
 
 <FUNCTION>

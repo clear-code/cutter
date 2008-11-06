@@ -1,5 +1,8 @@
 2008-11-06  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-test-utils.h, doc/reference/cutter-overrides.txt:
+	update gcut_take_new_hash_table_string_string().
+
 	* gcutter/gcut-assertions.h, doc/reference/cutter-overrides.txt:
 	update gcut_assert_equal_hash_table_string_string().
 

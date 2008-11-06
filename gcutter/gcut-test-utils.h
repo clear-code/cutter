@@ -214,7 +214,7 @@ GHashTable *gcut_hash_table_string_string_new_va_list(const gchar *key,
 
 /**
  * gcut_take_new_hash_table_string_string:
- * @key: The first key string. (const gchar *)
+ * @key: The first key string.
  * @...: A NULL-terminated list of rest arguments. The
  *       string value of the first key, followed optionally
  *       by more key/value pairs. It must end with NULL.
@@ -223,7 +223,7 @@ GHashTable *gcut_hash_table_string_string_new_va_list(const gchar *key,
  * from passed key/value pairs. The created hash table is
  * owned by Cutter. So don't g_hash_table_unref() it.
  *
- * Returns: a newly-allocated GHashTable * that contains
+ * Returns: a newly-allocated #GHashTable that contains
  * passed key/value pairs.
  *
  * Since: 1.0.5
