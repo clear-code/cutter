@@ -57,3 +57,12 @@ const char string1, const char *string2
 <RETURNS>cut_boolean</RETURNS>
 double double1, double double2, double error
 </FUNCTION>
+
+
+# gcut-test-utils.h
+
+<FUNCTION>
+<NAME>gcut_take_new_list_string</NAME>
+<RETURNS>const GList *</RETURNS>
+const gchar *value, ...
+</FUNCTION>

@@ -120,7 +120,7 @@ GList  *gcut_list_string_new  (const gchar *value, ...) G_GNUC_NULL_TERMINATED;
 
 /**
  * gcut_take_new_list_string:
- * @value: the first string. (const char *)
+ * @value: the first string.
  * @...: remaining strings in list, terminated by NULL.
  *
  * Creates a list from passed strings that is owned by
@@ -132,7 +132,7 @@ GList  *gcut_list_string_new  (const gchar *value, ...) G_GNUC_NULL_TERMINATED;
  * Since: 1.0.5
  */
 #define gcut_take_new_list_string(value, ...)                           \
-    gcut_take_list(gcut_list_string_new(value, ## __VA_ARGS__),         \
+    gcut_take_list(gcut_list_string_new(value, ## __VA_ARGS__, NULL),   \
                    g_free)
 
 /**
