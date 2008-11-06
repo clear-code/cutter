@@ -323,8 +323,8 @@ G_BEGIN_DECLS
 
 /**
  * gcut_assert_equal_hash_table_string_string:
- * @expected: an expected GHashTable * of string.
- * @actual: an actual GHashTable * of string.
+ * @expected: an expected #GHashTable of string.
+ * @actual: an actual #GHashTable of string.
  * @...: optional format string, followed by parameters to insert
  *       into the format string (as with printf())
  *

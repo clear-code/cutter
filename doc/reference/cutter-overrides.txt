@@ -72,3 +72,11 @@ const gchar *value, ...
 <RETURNS>const GList *</RETURNS>
 const gchar **strings
 </FUNCTION>
+
+# gcut-assertions.h
+
+<FUNCTION>
+<NAME>gcut_assert_equal_hash_table_string_string</NAME>
+<RETURNS>void</RETURNS>
+GHashTable *expected, GHashTable *actual, ...
+</FUNCTION>
