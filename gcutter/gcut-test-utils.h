@@ -72,12 +72,12 @@ G_BEGIN_DECLS
 
 /**
  * gcut_take_list:
- * @list: the GList * to be owned by Cutter.
- * @destroy_function: the destroy function (#CutDestroyFunction) that
- *                    destroys the elements of @list, or NULL.
+ * @list: the #GList to be owned by Cutter.
+ * @destroy_function: the destroy function that destroys the
+ *                    elements of @list, or NULL.
  *
  * Passes ownership of @list to Cutter and returns
- * a GList * that has same elements of @list.
+ * a #GList that has same elements of @list.
  *
  * Returns: a GList * owned by Cutter. Don't g_list_free()
  * it.

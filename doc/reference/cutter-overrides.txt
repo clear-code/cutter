@@ -62,6 +62,12 @@ double double1, double double2, double error
 # gcut-test-utils.h
 
 <FUNCTION>
+<NAME>gcut_take_list</NAME>
+<RETURNS>const GList *</RETURNS>
+const GList *list, CutDestroyFunction
+</FUNCTION>
+
+<FUNCTION>
 <NAME>gcut_take_new_list_string</NAME>
 <RETURNS>const GList *</RETURNS>
 const gchar *value, ...
