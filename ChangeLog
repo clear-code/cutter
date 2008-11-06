@@ -1,5 +1,8 @@
 2008-11-06  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/cutter-docs.sgml: add a new section: new symbols
+	in 1.0.6.
+
 	* cutter/cut-assertions.h (cut_return): add.
 
 	* gcutter/gcut-test-utils.h, doc/reference/cutter-overrides.txt:
