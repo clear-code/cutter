@@ -1,5 +1,9 @@
 2008-11-06  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-list.c, gcutter/gcut-test-utils.h,
+	test/gcutter/test-gcut-test-utils.c: add
+	gcut_list_string_new_array() and gcut_take_new_list_string_array().
+
 	* gcutter/gcut-test-utils.h, doc/reference/cutter-overrides.txt:
 	update gcut_take_new_list_string().
 

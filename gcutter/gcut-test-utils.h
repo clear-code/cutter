@@ -111,12 +111,25 @@ G_BEGIN_DECLS
  *
  * Creates a list from passed strings.
  *
- * Returns: a newly-allocated GList * that contains passed
+ * Returns: a newly-allocated #GList that contains passed
  * strings and must be freed with gcut_list_string_free().
  *
  * Since: 1.0.3
  */
 GList  *gcut_list_string_new  (const gchar *value, ...) G_GNUC_NULL_TERMINATED;
+
+/**
+ * gcut_list_string_new_array:
+ * @strings: the string array, terminated by NULL.
+ *
+ * Creates a list from passed string array.
+ *
+ * Returns: a newly-allocated #GList that contains passed
+ * string array and must be freed with gcut_list_string_free().
+ *
+ * Since: 1.0.6
+ */
+GList  *gcut_list_string_new_array  (const gchar **strings);
 
 /**
  * gcut_take_new_list_string:
@@ -126,7 +139,7 @@ GList  *gcut_list_string_new  (const gchar *value, ...) G_GNUC_NULL_TERMINATED;
  * Creates a list from passed strings that is owned by
  * Cutter.
  *
- * Returns: a newly-allocated GList * that contains passed
+ * Returns: a newly-allocated #GList that contains passed
  * strings and is owned by Cutter.
  *
  * Since: 1.0.5
@@ -134,6 +147,21 @@ GList  *gcut_list_string_new  (const gchar *value, ...) G_GNUC_NULL_TERMINATED;
 #define gcut_take_new_list_string(value, ...)                           \
     gcut_take_list(gcut_list_string_new(value, ## __VA_ARGS__, NULL),   \
                    g_free)
+
+/**
+ * gcut_take_new_list_string_array:
+ * @strings: the string array, terminated by NULL.
+ *
+ * Creates a list from passed string array that is owned by
+ * Cutter.
+ *
+ * Returns: a newly-allocated #GList that contains passed
+ * string array and is owned by Cutter.
+ *
+ * Since: 1.0.6
+ */
+#define gcut_take_new_list_string_array(strings)                \
+    gcut_take_list(gcut_list_string_new_array(strings), g_free)
 
 /**
  * gcut_list_string_free:

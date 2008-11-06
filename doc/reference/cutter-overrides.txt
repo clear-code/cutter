@@ -66,3 +66,9 @@ double double1, double double2, double error
 <RETURNS>const GList *</RETURNS>
 const gchar *value, ...
 </FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_take_new_list_string_array</NAME>
+<RETURNS>const GList *</RETURNS>
+const gchar **strings
+</FUNCTION>

@@ -163,6 +163,21 @@ gcut_list_string_new (const gchar *value, ...)
     return g_list_reverse(list);
 }
 
+GList *
+gcut_list_string_new_array (const gchar **strings)
+{
+    GList *list = NULL;
+
+    if (!strings)
+        return NULL;
+
+    for (; *strings; strings++) {
+        list = g_list_prepend(list, g_strdup(*strings));
+    }
+
+    return g_list_reverse(list);
+}
+
 void
 gcut_list_string_free (GList *list)
 {
