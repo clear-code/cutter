@@ -32,7 +32,8 @@ setup (void)
     exit_status = 0;
     reaped = FALSE;
 
-    current_locale = g_strdup(setlocale(LC_ALL, "C"));
+    current_locale = g_strdup(setlocale(LC_ALL, NULL));
+    setlocale(LC_ALL, "C");
 }
 
 void
@@ -42,7 +43,7 @@ teardown (void)
         setlocale(LC_ALL, current_locale);
         g_free(current_locale);
     } else {
-        setlocale(LC_ALL, NULL);
+        setlocale(LC_ALL, "");
     }
 
     if (egg)

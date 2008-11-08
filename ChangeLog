@@ -1,5 +1,8 @@
 2008-11-08  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/gcutter/test-gcut-egg.c, test/gcutter/test-gcut-key-file.c:
+	avoid locale independent test.
+
 	* cutter/cut-macros.h (CUT_FUNCTION): add.
 
 	* cutter/cut-helper.h: use CUT_FUNCTION to use __FUNCTION__ if

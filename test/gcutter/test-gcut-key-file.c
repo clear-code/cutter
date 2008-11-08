@@ -1,6 +1,7 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 
 #include <string.h>
+#include <locale.h>
 
 #include <gcutter.h>
 #include <cutter/cut-enum-types.h>
@@ -14,16 +15,28 @@ void test_get_flags(gconstpointer data);
 static GKeyFile *key_file;
 static GError *actual_error;
 
+static gchar *current_locale;
+
 void
 setup (void)
 {
     key_file = g_key_file_new();
     actual_error = NULL;
+
+    current_locale = g_strdup(setlocale(LC_ALL, NULL));
+    setlocale(LC_ALL, "C");
 }
 
 void
 teardown (void)
 {
+    if (current_locale) {
+        setlocale(LC_ALL, current_locale);
+        g_free(current_locale);
+    } else {
+        setlocale(LC_ALL, "");
+    }
+
     if (key_file)
         g_key_file_free(key_file);
 
