@@ -40,6 +40,12 @@ extern "C" {
 #  define CUT_GNUC_NULL_TERMINATED
 #endif
 
+#ifdef __GNUC__
+#  define CUT_FUNCTION __PRETTY_FUNCTION__
+#else
+#  define CUT_FUNCTION __FUNCTION__
+#endif
+
 
 #ifdef __cplusplus
 }

@@ -289,7 +289,7 @@ extern "C" {
     cut_test_context_push_backtrace(cut_get_current_test_context(),     \
                                     CUT_RELATIVE_PATH,                  \
                                     __FILE__, __LINE__,                 \
-                                    __PRETTY_FUNCTION__,                \
+                                    CUT_FUNCTION,                       \
                                     #expression);                       \
     do {                                                                \
         expression;                                                     \
@@ -357,7 +357,7 @@ extern "C" {
     cut_test_context_push_backtrace(cut_get_current_test_context(),     \
                                     CUT_RELATIVE_PATH,                  \
                                     __FILE__, __LINE__,                 \
-                                    __PRETTY_FUNCTION__,                \
+                                    CUT_FUNCTION,                       \
                                     #info_expression);                  \
     do {                                                                \
         expression;                                                     \

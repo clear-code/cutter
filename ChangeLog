@@ -1,3 +1,10 @@
+2008-11-08  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-macros.h (CUT_FUNCTION): add.
+
+	* cutter/cut-helper.h: use CUT_FUNCTION to use __FUNCTION__ if
+	__PRETTY_FUNCTION__ isn't available.
+
 2008-11-06  Kouhei Sutou  <kou@cozmixng.org>
 
 	* doc/reference/cutter-docs.sgml: add a new section: new symbols
