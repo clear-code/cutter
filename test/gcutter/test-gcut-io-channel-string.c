@@ -30,6 +30,7 @@ void test_source(void);
 void test_buffer_limit_block(void);
 void test_buffer_limit_non_block(void);
 void test_limit(void);
+void test_limit_non_block(void);
 void test_read_fail(void);
 void test_pipe_mode(void);
 void test_pipe_mode_eof(void);
@@ -309,8 +310,48 @@ test_buffer_limit_non_block (void)
     cut_assert_equal_size(0, length);
 }
 
+static gboolean
+cb_timeout (gpointer data)
+{
+    gboolean *emitted = data;
+
+    *emitted = TRUE;
+    gcut_string_io_channel_set_limit(channel, 0);
+    return FALSE;
+}
+
 void
 test_limit (void)
+{
+    gchar write_data[] = "data\n";
+    gsize length;
+    GIOStatus status;
+    guint timeout_id = 0;
+    gboolean timeout_emitted = FALSE;
+    GError *error = NULL;
+
+    channel = gcut_io_channel_string_new(NULL);
+    g_io_channel_set_encoding(channel, NULL, &error);
+    gcut_assert_error(error);
+    g_io_channel_set_buffered(channel, FALSE);
+
+    gcut_string_io_channel_set_limit(channel, sizeof(write_data) + 1);
+
+    status = g_io_channel_write_chars(channel, write_data, sizeof(write_data),
+                                      &length, &error);
+    gcut_assert_error(error);
+    cut_assert_equal_uint(G_IO_STATUS_NORMAL, status);
+    cut_assert_equal_size(sizeof(write_data), length);
+
+    timeout_id = g_timeout_add(10, cb_timeout, &timeout_emitted);
+    status = g_io_channel_write_chars(channel, write_data, sizeof(write_data),
+                                      &length, &actual_error);
+    g_source_remove(timeout_id);
+    cut_assert_true(timeout_emitted);
+}
+
+void
+test_limit_non_block (void)
 {
     gchar write_data[] = "data\n";
     gsize length;
@@ -331,6 +372,8 @@ test_limit (void)
     cut_assert_equal_size(sizeof(write_data), length);
 
 
+    g_io_channel_set_flags(channel, G_IO_FLAG_NONBLOCK, &error);
+    gcut_assert_error(error);
     status = g_io_channel_write_chars(channel, write_data, sizeof(write_data),
                                       &length, &actual_error);
     expected_error = g_error_new(G_IO_CHANNEL_ERROR,

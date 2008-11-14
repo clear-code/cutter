@@ -237,13 +237,17 @@ gcut_io_channel_string_write (GIOChannel *channel, const gchar *buf, gsize count
     if (status != G_IO_STATUS_NORMAL)
         return status;
 
-    if (0 < string_channel->limit &&
-        string_channel->limit < string_channel->string->len + write_size) {
-        g_set_error(error,
-                    G_IO_CHANNEL_ERROR,
-                    g_io_channel_error_from_errno(ENOSPC),
-                    "%s", g_strerror(ENOSPC));
-        return G_IO_STATUS_ERROR;
+    while (0 < string_channel->limit &&
+           string_channel->limit < string_channel->string->len + write_size) {
+        if (string_channel->flags & G_IO_FLAG_NONBLOCK) {
+            g_set_error(error,
+                        G_IO_CHANNEL_ERROR,
+                        g_io_channel_error_from_errno(ENOSPC),
+                        "%s", g_strerror(ENOSPC));
+            return G_IO_STATUS_ERROR;
+        } else {
+            g_main_context_iteration(NULL, TRUE);
+        }
     }
 
     g_string_overwrite_len(string_channel->string, string_channel->write_offset,
