@@ -63,9 +63,8 @@ void     cut_utils_close_pipe           (int         *pipe,
 
 const gchar *cut_utils_get_cutter_command_path (void);
 
-gchar       *cut_utils_build_pathv      (const gchar *path, va_list *args);
-gchar       *cut_utils_expand_path      (const gchar *path);
-gchar       *cut_utils_expand_pathv     (const gchar *path, va_list *args);
+gchar       *cut_utils_expand_path           (const gchar *path);
+gchar       *cut_utils_expand_path_va_list   (const gchar *path, va_list args);
 
 gboolean     cut_utils_remove_path           (const char  *path,
                                               GError     **error);

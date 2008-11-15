@@ -349,6 +349,43 @@ void shutdown(void);
 #define cut_set_current_test_context(test_context)      \
     cut_test_context_current_set(test_context)
 
+/**
+ * cut_set_message:
+ * @format: the message format. See the printf() documentation.
+ * @...: the parameters to insert into the format string.
+ *
+ * Sets a message to be used by the next assertion.
+ *
+ * Since: 1.0.6
+ */
+#define cut_set_message(...)                                            \
+    cut_test_context_set_user_message(cut_get_current_test_context(),   \
+                                      __VA_ARGS__)
+
+/**
+ * cut_set_message_va_list:
+ * @format: the message format. See the printf() documentation.
+ * @args: the parameters to insert into the format string.
+ *
+ * Sets a message to be used by the next assertion.
+ *
+ * Since: 1.0.6
+ */
+#define cut_set_message_va_list(format, args)           \
+    cut_test_context_set_user_message_va_list(          \
+        cut_get_current_test_context(), format, args)
+
+/**
+ * cut_keep_message:
+ *
+ * Keeps the current message set by cut_set_message() or
+ * cut_set_message_va_list() after the next assertion.
+ *
+ * Since: 1.0.6
+ */
+#define cut_keep_message(...)                                           \
+    cut_test_context_keep_user_message(cut_get_current_test_context())
+
 #ifdef __cplusplus
 }
 #endif

@@ -1,3 +1,10 @@
+2008-11-16  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/, gcutter/, gdkcutter-pixbuf/,
+	test/test-cut-assertions.c, test/test-cut-sequence-matcher.c:
+	assertion's optional user message is deprecated. use
+	cut_set_message() instead.
+
 2008-11-14  Kouhei Sutou  <kou@cozmixng.org>
 
 	* gcutter/gcut-io-channel-string.c,

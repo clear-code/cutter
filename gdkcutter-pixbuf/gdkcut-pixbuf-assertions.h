@@ -40,7 +40,8 @@ G_BEGIN_DECLS
  * @actual: an actual GdkPixbuf *.
  * @threshold: an threshold used for detecting pixel difference.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf())
+ *       into the format string (as with printf()) This is
+ *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @expected == @actual. If difference of each
  * corresponding pixel value is within threshold, @expected
@@ -55,14 +56,16 @@ G_BEGIN_DECLS
  *
  * Since: 1.0.5
  */
-#define gdkcut_pixbuf_assert_equal(expected, actual, threshold, ...)    \
+#define gdkcut_pixbuf_assert_equal(expected, actual, threshold, ...) do \
+{                                                                       \
+    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        gdkcut_pixbuf_assert_equal_helper(                              \
-            expected, actual, threshold,                                \
-            #expected, #actual, #threshold,                             \
-            ## __VA_ARGS__, NULL),                                      \
+        gdkcut_pixbuf_assert_equal_helper(expected, actual, threshold,  \
+                                          #expected, #actual,           \
+                                          #threshold),                  \
         gdkcut_pixbuf_assert_equal(expected, actual, threshold,         \
-                                   ## __VA_ARGS__))
+                                   __VA_ARGS__));                       \
+} while (0)
 
 G_END_DECLS
 

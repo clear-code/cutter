@@ -120,20 +120,22 @@ void          cut_test_context_to_xml_string  (CutTestContext *context,
                                                GString        *string,
                                                guint           indent);
 
-gchar        *cut_test_context_build_fixture_data_pathv
+gchar        *cut_test_context_build_fixture_data_path_va_list
                                               (CutTestContext *context,
                                                const gchar    *path,
-                                               va_list        *args);
+                                               va_list         args);
 const gchar  *cut_test_context_get_fixture_data_string
                                               (CutTestContext *context,
                                                GError        **error,
+                                               gchar         **full_path,
                                                const gchar    *path,
                                                ...) G_GNUC_NULL_TERMINATED;
-const gchar  *cut_test_context_get_fixture_data_stringv
+const gchar  *cut_test_context_get_fixture_data_string_va_list
                                               (CutTestContext *context,
                                                GError        **error,
+                                               gchar         **full_path,
                                                const gchar    *path,
-                                               va_list        *args);
+                                               va_list         args);
 
 gchar        *cut_test_context_build_source_filename
                                               (CutTestContext *context,

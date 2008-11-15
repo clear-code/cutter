@@ -39,18 +39,21 @@ G_BEGIN_DECLS
  * @expected: an expected GType.
  * @actual: an actual GType.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf())
+ *       into the format string (as with printf()) This is
+ *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @expected == @actual.
  *
  * Since: 1.0.3
  */
-#define gcut_assert_equal_type(expected, actual, ...)                   \
+#define gcut_assert_equal_type(expected, actual, ...) do                \
+{                                                                       \
+    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
         gcut_assert_equal_type_helper((expected), (actual),             \
-                                      #expected, #actual,               \
-                                      ## __VA_ARGS__, NULL),            \
-        gcut_assert_equal_type(expected, actual, ## __VA_ARGS__))
+                                      #expected, #actual),              \
+        gcut_assert_equal_type(expected, actual, __VA_ARGS__));         \
+} while (0)
 
 #ifndef CUTTER_DISABLE_DEPRECATED
 /**
@@ -58,16 +61,21 @@ G_BEGIN_DECLS
  * @expected: an expected GType.
  * @actual: an actual GType.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf())
+ *       into the format string (as with printf()) This is
+ *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @expected == @actual.
  *
  * Deprecated: 1.0.3: Use gcut_assert_equal_type() instead.
  */
-#define cut_assert_equal_g_type(expected, actual, ...)                  \
+#define cut_assert_equal_g_type(expected, actual, ...) do               \
+{                                                                       \
+    cut_set_message_backward_compatibility(__VA_ARGS__);                \
+                                                                        \
     cut_trace_with_info_expression(                                     \
-        gcut_assert_equal_type(expected, actual, ## __VA_ARGS__),       \
-        cut_assert_equal_g_type(expected, actual, ## __VA_ARGS__))
+        gcut_assert_equal_type(expected, actual),                       \
+        cut_assert_equal_g_type(expected, actual, __VA_ARGS__));        \
+} while (0)
 #endif
 
 /**
@@ -75,18 +83,21 @@ G_BEGIN_DECLS
  * @expected: an expected GValue *.
  * @actual: an actual GValue *.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf())
+ *       into the format string (as with printf()) This is
+ *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @expected == @actual.
  *
  * Since: 1.0.3
  */
-#define gcut_assert_equal_value(expected, actual, ...)                  \
+#define gcut_assert_equal_value(expected, actual, ...) do               \
+{                                                                       \
+    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
         gcut_assert_equal_value_helper(expected, actual,                \
-                                       #expected, #actual,              \
-                                       ## __VA_ARGS__, NULL),           \
-        gcut_assert_equal_value(expected, actual, ## __VA_ARGS__))
+                                       #expected, #actual),             \
+        gcut_assert_equal_value(expected, actual, __VA_ARGS__));        \
+} while (0)
 
 #ifndef CUTTER_DISABLE_DEPRECATED
 /**
@@ -94,16 +105,20 @@ G_BEGIN_DECLS
  * @expected: an expected GValue *.
  * @actual: an actual GValue *.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf())
+ *       into the format string (as with printf()) This is
+ *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @expected == @actual.
  *
  * Deprecated: 1.0.3: Use gcut_assert_equal_value() instead.
  */
-#define cut_assert_equal_g_value(expected, actual, ...)                 \
+#define cut_assert_equal_g_value(expected, actual, ...) do              \
+{                                                                       \
+    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        gcut_assert_equal_value(expected, actual, ## __VA_ARGS__),      \
-        cut_assert_equal_g_value(expected, actual, ## __VA_ARGS__))
+        gcut_assert_equal_value(expected, actual),                      \
+        cut_assert_equal_g_value(expected, actual, __VA_ARGS__));       \
+} while (0)
 #endif
 
 /**
@@ -116,7 +131,8 @@ G_BEGIN_DECLS
  *                    and @actual list. (#GCutInspectFunc)
  * @inspect_user_data: a data to be passed to @inspect_function.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf())
+ *       into the format string (as with printf()) This is
+ *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @equal_function(@expected, @actual) == TRUE.
  *
@@ -124,36 +140,42 @@ G_BEGIN_DECLS
  */
 #define gcut_assert_equal_list(expected, actual, equal_function,        \
                                inspect_function, inspect_user_data,     \
-                               ...)                                     \
+                               ...)  do                                 \
+{                                                                       \
+    cut_set_message_backward_compatibility(__VA_ARGS__);                \
+                                                                        \
     cut_trace_with_info_expression(                                     \
         gcut_assert_equal_list_helper(expected, actual,                 \
                                       equal_function,                   \
                                       inspect_function,                 \
                                       inspect_user_data,                \
                                       #expected, #actual,               \
-                                      #equal_function,                  \
-                                      ## __VA_ARGS__, NULL),            \
+                                      #equal_function),                 \
         gcut_assert_equal_list(expected, actual, equal_function,        \
                                inspect_function, inspect_user_data,     \
-                               ## __VA_ARGS__))
+                               __VA_ARGS__));                           \
+} while (0)
 
 /**
  * gcut_assert_equal_list_int:
  * @expected: an expected GList * of integer.
  * @actual: an actual GList * of integer.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf())
+ *       into the format string (as with printf()) This is
+ *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @expected == @actual.
  *
  * Since: 1.0.3
  */
-#define gcut_assert_equal_list_int(expected, actual, ...)               \
+#define gcut_assert_equal_list_int(expected, actual, ...) do            \
+{                                                                       \
+    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
         gcut_assert_equal_list_int_helper(expected, actual,             \
-                                          #expected, #actual,           \
-                                          ## __VA_ARGS__, NULL),        \
-        gcut_assert_equal_list_int(expected, actual, ## __VA_ARGS__))
+                                          #expected, #actual),          \
+        gcut_assert_equal_list_int(expected, actual, __VA_ARGS__));     \
+} while (0)
 
 #ifndef CUTTER_DISABLE_DEPRECATED
 /**
@@ -161,7 +183,8 @@ G_BEGIN_DECLS
  * @expected: an expected GList * of integer.
  * @actual: an actual GList * of integer.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf())
+ *       into the format string (as with printf()) This is
+ *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @expected == @actual.
  *
@@ -169,10 +192,14 @@ G_BEGIN_DECLS
  *
  * Deprecated: 1.0.3: Use gcut_assert_equal_list_int() instead.
  */
-#define cut_assert_equal_g_list_int(expected, actual, ...)              \
+#define cut_assert_equal_g_list_int(expected, actual, ...) do           \
+{                                                                       \
+    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        gcut_assert_equal_list_int(expected, actual, ## __VA_ARGS__),   \
-        cut_assert_equal_g_list_int(expected, actual, ## __VA_ARGS__))
+        gcut_assert_equal_list_int_helper(expected, actual,             \
+                                          #expected, #actual),          \
+        cut_assert_equal_g_list_int(expected, actual, __VA_ARGS__));    \
+} while (0)
 #endif
 
 /**
@@ -180,36 +207,42 @@ G_BEGIN_DECLS
  * @expected: an expected GList * of unsigned integer.
  * @actual: an actual GList * of unsigned integer.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf())
+ *       into the format string (as with printf()) This is
+ *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @expected == @actual.
  *
  * Since: 1.0.3
  */
-#define gcut_assert_equal_list_uint(expected, actual, ...)              \
+#define gcut_assert_equal_list_uint(expected, actual, ...) do           \
+{                                                                       \
+    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
         gcut_assert_equal_list_uint_helper(expected, actual,            \
-                                           #expected, #actual,          \
-                                           ## __VA_ARGS__, NULL),       \
-        gcut_assert_equal_list_uint(expected, actual, ## __VA_ARGS__))
+                                           #expected, #actual),         \
+        gcut_assert_equal_list_uint(expected, actual, __VA_ARGS__));    \
+} while (0)
 
 /**
  * gcut_assert_equal_list_string:
  * @expected: an expected GList * of string.
  * @actual: an actual GList * of string.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf())
+ *       into the format string (as with printf()) This is
+ *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @expected == @actual.
  *
  * Since: 1.0.3
  */
-#define gcut_assert_equal_list_string(expected, actual, ...)            \
+#define gcut_assert_equal_list_string(expected, actual, ...) do         \
+{                                                                       \
+    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
         gcut_assert_equal_list_string_helper(expected, actual,          \
-                                             #expected, #actual,        \
-                                             ## __VA_ARGS__, NULL),     \
-        gcut_assert_equal_list_string(expected, actual, ## __VA_ARGS__))
+                                             #expected, #actual),       \
+        gcut_assert_equal_list_string(expected, actual, __VA_ARGS__));  \
+} while (0)
 
 
 #ifndef CUTTER_DISABLE_DEPRECATED
@@ -218,7 +251,8 @@ G_BEGIN_DECLS
  * @expected: an expected GList * of string.
  * @actual: an actual GList * of string.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf())
+ *       into the format string (as with printf()) This is
+ *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @expected == @actual.
  *
@@ -226,12 +260,14 @@ G_BEGIN_DECLS
  *
  * Deprecated: 1.0.3: Use gcut_assert_equal_list_string() instead.
  */
-#define cut_assert_equal_g_list_string(expected, actual, ...)   \
-    cut_trace_with_info_expression(                             \
-        gcut_assert_equal_list_string(expected, actual,         \
-                                      ## __VA_ARGS__),          \
-        cut_assert_equal_g_list_string(expected, actual,        \
-                                       ## __VA_ARGS__))
+#define cut_assert_equal_g_list_string(expected, actual, ...) do        \
+{                                                                       \
+    cut_set_message_backward_compatibility(__VA_ARGS__);                \
+    cut_trace_with_info_expression(                                     \
+        gcut_assert_equal_list_string_helper(expected, actual,          \
+                                             #expected, #actual),       \
+        cut_assert_equal_g_list_string(expected, actual, __VA_ARGS__)); \
+} while (0)
 #endif
 
 /**
@@ -239,20 +275,23 @@ G_BEGIN_DECLS
  * @expected: an expected GList * of GObject *.
  * @actual: an actual GList * of GObject *.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf())
+ *       into the format string (as with printf()) This is
+ *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @expected and @actual has same GObject * in
  * same order.
  *
  * Since: 1.0.5
  */
-#define gcut_assert_equal_list_object(expected, actual, ...)            \
+#define gcut_assert_equal_list_object(expected, actual, ...) do         \
+{                                                                       \
+    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
         gcut_assert_equal_list_object_helper(expected, actual,          \
                                              g_direct_equal,            \
-                                             #expected, #actual,        \
-                                             ## __VA_ARGS__, NULL),     \
-        gcut_assert_equal_list_object(expected, actual, ## __VA_ARGS__))
+                                             #expected, #actual),       \
+        gcut_assert_equal_list_object(expected, actual, __VA_ARGS__));  \
+} while (0)
 
 /**
  * gcut_assert_equal_list_object_custom:
@@ -261,7 +300,8 @@ G_BEGIN_DECLS
  * @equal_function: a function that compares two GObject *.
  *                  (#GEqualFunc)
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf())
+ *       into the format string (as with printf()) This is
+ *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @expected and @actual has same GObject * in
  * same order. Each comparison of GObject * uses
@@ -270,14 +310,16 @@ G_BEGIN_DECLS
  * Since: 1.0.5
  */
 #define gcut_assert_equal_list_object_custom(expected, actual,          \
-                                             equal_function, ...)       \
+                                             equal_function, ...) do    \
+{                                                                       \
+    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
         gcut_assert_equal_list_object_helper(expected, actual,          \
                                              equal_function,            \
-                                             #expected, #actual,        \
-                                             ## __VA_ARGS__, NULL),     \
+                                             #expected, #actual),       \
         gcut_assert_equal_list_object_custom(expected, actual,          \
-                                             ## __VA_ARGS__))
+                                              __VA_ARGS__));            \
+} while (0)
 
 /**
  * gcut_assert_equal_list_enum:
@@ -285,20 +327,23 @@ G_BEGIN_DECLS
  * @expected: an expected GList * of enum value.
  * @actual: an actual GList * of enum value.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf())
+ *       into the format string (as with printf()) This is
+ *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @expected and @actual has same enum values in
  * same order.
  *
  * Since: 1.0.5
  */
-#define gcut_assert_equal_list_enum(type, expected, actual, ...)        \
+#define gcut_assert_equal_list_enum(type, expected, actual, ...) do     \
+{                                                                       \
+    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
         gcut_assert_equal_list_enum_helper(type, expected, actual,      \
-                                           #type, #expected, #actual,   \
-                                           ## __VA_ARGS__, NULL),       \
+                                           #type, #expected, #actual),  \
         gcut_assert_equal_list_enum(type, expected, actual,             \
-                                    ## __VA_ARGS__))
+                                    __VA_ARGS__));                      \
+} while (0)
 
 /**
  * gcut_assert_equal_list_flags:
@@ -306,63 +351,73 @@ G_BEGIN_DECLS
  * @expected: an expected GList * of flags value.
  * @actual: an actual GList * of flags value.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf())
+ *       into the format string (as with printf()) This is
+ *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @expected and @actual has same flags values in
  * same order.
  *
  * Since: 1.0.5
  */
-#define gcut_assert_equal_list_flags(type, expected, actual, ...)       \
+#define gcut_assert_equal_list_flags(type, expected, actual, ...) do    \
+{                                                                       \
+    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
         gcut_assert_equal_list_flags_helper(type, expected, actual,     \
-                                            #type, #expected, #actual,  \
-                                            ## __VA_ARGS__, NULL),      \
+                                            #type, #expected, #actual), \
         gcut_assert_equal_list_flags(type, expected, actual,            \
-                                    ## __VA_ARGS__))
+                                     __VA_ARGS__));                     \
+} while (0)
 
 /**
  * gcut_assert_equal_hash_table_string_string:
  * @expected: an expected #GHashTable of string.
  * @actual: an actual #GHashTable of string.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf())
+ *       into the format string (as with printf()) This is
+ *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @expected == @actual.
  *
  * Since: 1.0.4
  */
 #define gcut_assert_equal_hash_table_string_string(expected, actual,    \
-                                                   ...)                 \
+                                                   ...) do              \
+{                                                                       \
+    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
         gcut_assert_equal_hash_table_string_string_helper(              \
-            expected, actual, #expected, #actual,                       \
-            ## __VA_ARGS__, NULL),                                      \
+            expected, actual, #expected, #actual),                      \
         gcut_assert_equal_hash_table_string_string(expected, actual,    \
-                                                   ## __VA_ARGS__))
+                                                   __VA_ARGS__));       \
+} while (0)
 
 /**
  * gcut_assert_error:
  * @error: a target GError *.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf())
+ *       into the format string (as with printf()) This is
+ *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @error == NULL.
  *
  * Since: 1.0.3
  */
-#define gcut_assert_error(error, ...)                                   \
-    cut_trace_with_info_expression(                                     \
-        gcut_assert_error_helper(error, #error,                         \
-                                 ## __VA_ARGS__, NULL),                 \
-        gcut_assert_error(error, ## __VA_ARGS__))
+#define gcut_assert_error(error, ...) do                        \
+{                                                               \
+    cut_set_message_backward_compatibility(__VA_ARGS__);        \
+    cut_trace_with_info_expression(                             \
+        gcut_assert_error_helper(error, #error),                \
+        gcut_assert_error(error, __VA_ARGS__));                 \
+} while (0)
 
 #ifndef CUTTER_DISABLE_DEPRECATED
 /**
  * cut_assert_g_error:
  * @error: a target GError *.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf())
+ *       into the format string (as with printf()) This is
+ *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @error == NULL.
  *
@@ -370,10 +425,13 @@ G_BEGIN_DECLS
  *
  * Deprecated: 1.0.3: Use gcut_assert_error() instead.
  */
-#define cut_assert_g_error(error, ...)                  \
-    cut_trace_with_info_expression(                     \
-        gcut_assert_error(error, ## __VA_ARGS__),       \
-        cut_assert_g_error(error, ## __VA_ARGS__))
+#define cut_assert_g_error(error, ...) do                       \
+{                                                               \
+    cut_set_message_backward_compatibility(__VA_ARGS__);        \
+    cut_trace_with_info_expression(                             \
+        gcut_assert_error_helper(error, #error),                \
+        cut_assert_g_error(error, __VA_ARGS__));                \
+} while (0)
 #endif
 
 /**
@@ -381,52 +439,41 @@ G_BEGIN_DECLS
  * @expected: an expected GError *.
  * @actual: an actual GError *.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf())
+ *       into the format string (as with printf()) This is
+ *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @expected == @actual.
  *
  * Since: 1.0.5
  */
-#define gcut_assert_equal_error(expected, actual, ...)                  \
+#define gcut_assert_equal_error(expected, actual, ...) do               \
+{                                                                       \
+    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
         gcut_assert_equal_error_helper(expected, actual,                \
-                                       #expected, #actual,              \
-                                       ## __VA_ARGS__, NULL),           \
-        gcut_assert_equal_error(expected, actual, ## __VA_ARGS__))
+                                       #expected, #actual),             \
+        gcut_assert_equal_error(expected, actual, __VA_ARGS__));        \
+} while (0)
 
 /**
  * gcut_assert_remove_path:
  * @path: a first element of the path to the removed path.
- * @...: remaining elements in path.
+ * @...: remaining elements in path. NULL terminated.
  *
  * Passes if cut_utils_build_path(@path, ...) is removed successfully.
  *
  * Since: 1.0.3
  */
-#define gcut_assert_remove_path(path, ...)                              \
-    cut_trace_with_info_expression(                                     \
-        gcut_assert_remove_path_helper(path, ## __VA_ARGS__),           \
-        gcut_assert_remove_path(path, ## __VA_ARGS__))
-
-#define gcut_assert_remove_path_helper(path, ...) do                    \
-{                                                                       \
-    GError *_remove_path_g_error = NULL;                                \
-    gchar *_full_path;                                                  \
-    const gchar *_taken_full_path;                                      \
-                                                                        \
-    _full_path = cut_utils_build_path(path, ## __VA_ARGS__, NULL);      \
-    cut_utils_remove_path_recursive(_full_path, &_remove_path_g_error); \
-                                                                        \
-    _taken_full_path = cut_take_string(_full_path);                     \
-    gcut_assert_error(&_remove_path_g_error,                            \
-                      "Remove: %s", _taken_full_path);                  \
-} while (0)
+#define gcut_assert_remove_path(path, ...)                      \
+    cut_trace_with_info_expression(                             \
+        gcut_assert_remove_path_helper(path, __VA_ARGS__),      \
+        gcut_assert_remove_path(path, __VA_ARGS__))
 
 #ifndef CUTTER_DISABLE_DEPRECATED
 /**
  * cut_assert_remove_path:
  * @path: a first element of the path to the removed path.
- * @...: remaining elements in path.
+ * @...: remaining elements in path. NULL terminated.
  *
  * Passes if cut_utils_build_path(@path, ...) is removed successfully.
  *
@@ -434,10 +481,10 @@ G_BEGIN_DECLS
  *
  * Deprecated: 1.0.3: Use gcut_assert_remove_path() instead.
  */
-#define cut_assert_remove_path(path, ...)               \
-    cut_trace_with_info_expression(                     \
-        gcut_assert_remove_path(path, ## __VA_ARGS__),  \
-        cut_assert_remove_path(path, ## __VA_ARGS__))
+#define cut_assert_remove_path(path, ...)                       \
+    cut_trace_with_info_expression(                             \
+        gcut_assert_remove_path_helper(path, __VA_ARGS__),      \
+        cut_assert_remove_path(path, __VA_ARGS__))
 #endif
 
 /**
@@ -445,36 +492,21 @@ G_BEGIN_DECLS
  * @expected: an expected GTimeVal.
  * @actual: an actual GTimeVal.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf())
+ *       into the format string (as with printf()) This is
+ *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @expected == @actual.
  *
  * Since: 1.0.4
  */
-#define gcut_assert_equal_time_val(expected, actual, ...)       \
-    cut_trace_with_info_expression(                             \
-        gcut_assert_equal_time_val_helper(expected, actual,     \
-                                          ## __VA_ARGS__),      \
-        gcut_assert_equal_time_val(expected, actual,            \
-                                   ## __VA_ARGS__))
-
-#define gcut_assert_equal_time_val_helper(expected, actual, ...) do     \
+#define gcut_assert_equal_time_val(expected, actual, ...) do            \
 {                                                                       \
-    GTimeVal *_expected_time_val;                                       \
-    GTimeVal *_actual_time_val;                                         \
-    const gchar *_expected_time_val_string;                             \
-    const gchar *_actual_time_val_string;                               \
-                                                                        \
-    _expected_time_val = (expected);                                    \
-    _actual_time_val = (actual);                                        \
-    _expected_time_val_string =                                         \
-        cut_take_string(g_time_val_to_iso8601(_expected_time_val));     \
-    _actual_time_val_string =                                           \
-        cut_take_string(g_time_val_to_iso8601(_actual_time_val));       \
-    cut_assert_equal_string(_expected_time_val_string,                  \
-                            _actual_time_val_string,                    \
-                            ## __VA_ARGS__);                            \
-} while(0)
+    cut_set_message_backward_compatibility(__VA_ARGS__);                \
+    cut_trace_with_info_expression(                                     \
+        gcut_assert_equal_time_val_helper(expected, actual,             \
+                                          #expected, #actual),          \
+        gcut_assert_equal_time_val(expected, actual,  __VA_ARGS__));    \
+} while (0)
 
 /**
  * gcut_assert_equal_enum:
@@ -482,7 +514,8 @@ G_BEGIN_DECLS
  * @expected: an expected enum value.
  * @actual: an actual enum value.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf())
+ *       into the format string (as with printf()) This is
+ *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @expected == @actual.
  *
@@ -496,13 +529,15 @@ G_BEGIN_DECLS
  *
  * Since: 1.0.5
  */
-#define gcut_assert_equal_enum(enum_type, expected, actual, ...)        \
+#define gcut_assert_equal_enum(enum_type, expected, actual, ...) do     \
+{                                                                       \
+    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
         gcut_assert_equal_enum_helper(enum_type, expected, actual,      \
-                                      #enum_type, #expected, #actual,   \
-                                      ## __VA_ARGS__, NULL),            \
+                                      #enum_type, #expected, #actual),  \
         gcut_assert_equal_enum(enum_type, expected, actual,             \
-                               ## __VA_ARGS__))
+                               __VA_ARGS__));                           \
+} while (0)
 
 /**
  * gcut_assert_equal_flags:
@@ -510,7 +545,8 @@ G_BEGIN_DECLS
  * @expected: an expected flags value.
  * @actual: an actual flags value.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf())
+ *       into the format string (as with printf()) This is
+ *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @expected == @actual.
  *
@@ -529,20 +565,25 @@ G_BEGIN_DECLS
  *
  * Since: 1.0.5
  */
-#define gcut_assert_equal_flags(flags_type, expected, actual, ...)      \
+#define gcut_assert_equal_flags(flags_type, expected, actual, ...) do   \
+{                                                                       \
+    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        gcut_assert_equal_flags_helper(flags_type, expected, actual,    \
-                                       #flags_type, #expected, #actual, \
-                                       ## __VA_ARGS__, NULL),           \
+        gcut_assert_equal_flags_helper(flags_type,                      \
+                                       expected, actual,                \
+                                       #flags_type,                     \
+                                       #expected, #actual),             \
         gcut_assert_equal_flags(flags_type, expected, actual,           \
-                                ## __VA_ARGS__))
+                                __VA_ARGS__));                          \
+} while (0)
 
 /**
  * gcut_assert_equal_object:
  * @expected: an expected object. (#GObject *)
  * @actual: an actual object. (#GObject *)
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf())
+ *       into the format string (as with printf()) This is
+ *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @expected == @actual. See
  * gcut_assert_equal_object_custom() when you need to customize
@@ -558,15 +599,17 @@ G_BEGIN_DECLS
  *
  * Since: 1.0.5
  */
-#define gcut_assert_equal_object(expected, actual, ...)                 \
+#define gcut_assert_equal_object(expected, actual, ...) do              \
+{                                                                       \
+    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
         gcut_assert_equal_object_helper(G_OBJECT(expected),             \
                                         G_OBJECT(actual),               \
                                         NULL,                           \
                                         #expected, #actual,             \
-                                        NULL,                           \
-                                        ## __VA_ARGS__, NULL),          \
-        gcut_assert_equal_object(expected, actual, ## __VA_ARGS__))
+                                        NULL),                          \
+        gcut_assert_equal_object(expected, actual, __VA_ARGS__));       \
+} while (0)
 
 /**
  * gcut_assert_equal_object_custom:
@@ -574,7 +617,8 @@ G_BEGIN_DECLS
  * @actual: an actual object. (#GObject *)
  * @equal_function: a function that compare two object. (#GEqualFunc)
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf())
+ *       into the format string (as with printf()) This is
+ *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if equal_function(@expected, @actual) == TRUE.
  *
@@ -599,16 +643,18 @@ G_BEGIN_DECLS
  * Since: 1.0.5
  */
 #define gcut_assert_equal_object_custom(expected, actual,               \
-                                        equal_function, ...)            \
+                                        equal_function, ...) do         \
+{                                                                       \
+    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
         gcut_assert_equal_object_helper(G_OBJECT(expected),             \
                                         G_OBJECT(actual),               \
                                         equal_function,                 \
                                         #expected, #actual,             \
-                                        #equal_function,                \
-                                        ## __VA_ARGS__, NULL),          \
+                                        #equal_function),               \
         gcut_assert_equal_object_custom(expected, actual,               \
-                                        equal_function, ## __VA_ARGS__))
+                                        equal_function, __VA_ARGS__));  \
+} while (0)
 
 
 /**
@@ -616,36 +662,42 @@ G_BEGIN_DECLS
  * @expected: an expected 64 bit integer value. (gint64)
  * @actual: an actual 64 bit integer value. (gint64)
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf())
+ *       into the format string (as with printf()) This is
+ *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @expected == @actual.
  *
  * Since: 1.0.5
  */
-#define gcut_assert_equal_int64(expected, actual, ...)                  \
+#define gcut_assert_equal_int64(expected, actual, ...) do               \
+{                                                                       \
+    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
         gcut_assert_equal_int64_helper((expected), (actual),            \
-                                       #expected, #actual,              \
-                                       ## __VA_ARGS__, NULL),           \
-        gcut_assert_equal_int64(expected, actual, ## __VA_ARGS__))
+                                       #expected, #actual),             \
+        gcut_assert_equal_int64(expected, actual, __VA_ARGS__));        \
+} while (0)
 
 /**
  * gcut_assert_equal_uint64:
  * @expected: an expected unsigned integer value. (guint64)
  * @actual: an actual unsigned integer value. (guint64)
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf())
+ *       into the format string (as with printf()) This is
+ *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @expected == @actual.
  *
  * Since: 1.0.5
  */
-#define gcut_assert_equal_uint64(expected, actual, ...)                 \
+#define gcut_assert_equal_uint64(expected, actual, ...) do              \
+{                                                                       \
+    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
         gcut_assert_equal_uint64_helper((expected), (actual),           \
-                                        #expected, #actual,             \
-                                        ## __VA_ARGS__, NULL),          \
-        gcut_assert_equal_uint64(expected, actual, ## __VA_ARGS__))
+                                        #expected, #actual),            \
+        gcut_assert_equal_uint64(expected, actual, __VA_ARGS__));       \
+} while (0)
 
 G_END_DECLS
 

@@ -40,15 +40,11 @@ G_BEGIN_DECLS
 void      gcut_assert_equal_type_helper     (GType           expected,
                                              GType           actual,
                                              const gchar    *expression_expected,
-                                             const gchar    *expression_actual,
-                                             const gchar    *format,
-                                             ...);
+                                             const gchar    *expression_actual);
 void      gcut_assert_equal_value_helper    (GValue         *expected,
                                              GValue         *actual,
                                              const gchar    *expression_expected,
-                                             const gchar    *expression_actual,
-                                             const gchar    *format,
-                                             ...);
+                                             const gchar    *expression_actual);
 void      gcut_assert_equal_list_helper     (const GList    *expected,
                                              const GList    *actual,
                                              GEqualFunc      equal_function,
@@ -56,108 +52,84 @@ void      gcut_assert_equal_list_helper     (const GList    *expected,
                                              gpointer        inspect_user_data,
                                              const gchar    *expression_expected,
                                              const gchar    *expression_actual,
-                                             const gchar    *expression_equal_function,
-                                             const gchar    *format,
-                                             ...);
+                                             const gchar    *expression_equal_function);
 void      gcut_assert_equal_list_int_helper (const GList    *expected,
                                              const GList    *actual,
                                              const gchar    *expression_expected,
-                                             const gchar    *expression_actual,
-                                             const gchar    *format,
-                                             ...);
+                                             const gchar    *expression_actual);
 void      gcut_assert_equal_list_uint_helper(const GList    *expected,
                                              const GList    *actual,
                                              const gchar    *expression_expected,
-                                             const gchar    *expression_actual,
-                                             const gchar    *user_message_format,
-                                             ...);
+                                             const gchar    *expression_actual);
 void      gcut_assert_equal_list_string_helper
                                             (const GList    *expected,
                                              const GList    *actual,
                                              const gchar    *expression_expected,
-                                             const gchar    *expression_actual,
-                                             const gchar    *user_message_format,
-                                             ...);
+                                             const gchar    *expression_actual);
 void      gcut_assert_equal_list_enum_helper
                                             (GType           type,
                                              const GList    *expected,
                                              const GList    *actual,
                                              const gchar    *expression_type,
                                              const gchar    *expression_expected,
-                                             const gchar    *expression_actual,
-                                             const gchar    *user_message_format,
-                                             ...);
+                                             const gchar    *expression_actual);
 void      gcut_assert_equal_list_flags_helper
                                             (GType           type,
                                              const GList    *expected,
                                              const GList    *actual,
                                              const gchar    *expression_type,
                                              const gchar    *expression_expected,
-                                             const gchar    *expression_actual,
-                                             const gchar    *user_message_format,
-                                             ...);
+                                             const gchar    *expression_actual);
 void      gcut_assert_equal_list_object_helper
                                             (const GList    *expected,
                                              const GList    *actual,
                                              GEqualFunc      equal_function,
                                              const gchar    *expression_expected,
-                                             const gchar    *expression_actual,
-                                             const gchar    *user_message_format,
-                                             ...);
+                                             const gchar    *expression_actual);
 void      gcut_assert_equal_hash_table_string_string_helper
                                             (GHashTable     *expected,
                                              GHashTable     *actual,
                                              const gchar    *expression_expected,
-                                             const gchar    *expression_actual,
-                                             const gchar    *user_message_format,
-                                             ...);
+                                             const gchar    *expression_actual);
 void      gcut_assert_error_helper          (GError         *error,
-                                             const gchar    *expression_error,
-                                             const gchar    *user_message_format,
-                                             ...);
+                                             const gchar    *expression_error);
 void      gcut_assert_equal_error_helper    (const GError   *expected,
                                              const GError   *actual,
                                              const gchar    *expression_expected,
-                                             const gchar    *expression_actual,
-                                             const gchar    *user_message_format,
-                                             ...);
+                                             const gchar    *expression_actual);
+void      gcut_assert_remove_path_helper    (const gchar    *path,
+                                             ...) CUT_GNUC_NULL_TERMINATED;
+void      gcut_assert_equal_time_val_helper (GTimeVal       *expected,
+                                             GTimeVal       *actual,
+                                             const gchar    *expression_expected,
+                                             const gchar    *actual_expected);
 void      gcut_assert_equal_enum_helper     (GType           enum_type,
                                              gint            expected,
                                              gint            actual,
                                              const gchar    *expression_enum_type,
                                              const gchar    *expression_expected,
-                                             const gchar    *expression_actual,
-                                             const gchar    *user_message_format,
-                                             ...);
+                                             const gchar    *expression_actual);
 void      gcut_assert_equal_flags_helper    (GType           flags_type,
                                              gint            expected,
                                              gint            actual,
                                              const gchar    *expression_flags_type,
                                              const gchar    *expression_expected,
-                                             const gchar    *expression_actual,
-                                             const gchar    *user_message_format,
-                                             ...);
+                                             const gchar    *expression_actual);
 
 void      gcut_assert_equal_object_helper   (GObject        *expected,
                                              GObject        *actual,
                                              GEqualFunc      equal_function,
                                              const gchar    *expression_expected,
                                              const gchar    *expression_actual,
-                                             const gchar    *expression_equal_function,
-                                             const gchar    *user_message_format,
-                                             ...);
+                                             const gchar    *expression_equal_function);
 void      gcut_assert_equal_int64_helper    (gint64          expected,
                                              gint64          actual,
                                              const char     *expression_expected,
-                                             const char     *expression_actual,
-                                             const char     *user_message_format,
-                                             ...);
+                                             const char     *expression_actual);
 void      gcut_assert_equal_uint64_helper   (guint64         expected,
                                              guint64         actual,
                                              const char     *expression_expected,
-                                             const char     *expression_actual,
-                                             const char     *user_message_format,
-                                             ...);
+                                             const char     *expression_actual);
 
 G_END_DECLS
 

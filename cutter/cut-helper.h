@@ -132,8 +132,8 @@ extern "C" {
  *
  * Since: 1.0.5
  */
-#define cut_test_fail(system_message, ...)                      \
-    cut_test_terminate(FAILURE, system_message, ## __VA_ARGS__)
+#define cut_test_fail(system_message)           \
+    cut_test_terminate(FAILURE, system_message)
 
 /**
  * cut_test_fail_va_list:

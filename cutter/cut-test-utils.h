@@ -253,7 +253,7 @@ extern "C" {
  */
 #define cut_get_fixture_data_string(path, ...)                          \
     cut_utils_get_fixture_data_string(cut_get_current_test_context(),   \
-                                      path, ## __VA_ARGS__, NULL)
+                                      NULL, path, ## __VA_ARGS__, NULL)
 
 /**
  * cut_remove_path:

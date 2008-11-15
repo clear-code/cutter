@@ -883,9 +883,12 @@ test_equal_pointer (void)
 static void
 equal_fixture_data_string_test (void)
 {
-    cut_assert_equal_fixture_data_string("top level data\n", "data.txt");
-    cut_assert_equal_fixture_data_string("sub level data\n", "sub", "data.txt");
-    cut_assert_equal_fixture_data_string("wrong data\n", "sub", "data.txt");
+    cut_assert_equal_fixture_data_string("top level data\n",
+                                         "data.txt", NULL);
+    cut_assert_equal_fixture_data_string("sub level data\n",
+                                         "sub", "data.txt", NULL);
+    cut_assert_equal_fixture_data_string("wrong data\n",
+                                         "sub", "data.txt", NULL);
 }
 
 void
@@ -894,13 +897,13 @@ test_equal_fixture_data_string (void)
     test = cut_test_new("equal-fixture-data-sting-test",
                         equal_fixture_data_string_test);
     cut_assert_false(run());
-    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result_summary(run_context, 1, 5, 0, 1, 0, 0, 0, 0);
 }
 
 static void
 equal_fixture_data_string_test_without_file (void)
 {
-    cut_assert_equal_fixture_data_string("NONE!", "nonexistent.txt");
+    cut_assert_equal_fixture_data_string("NONE!", "nonexistent.txt", NULL);
 }
 
 void

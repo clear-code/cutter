@@ -207,58 +207,34 @@ cut_utils_regex_match (const gchar *pattern, const gchar *string)
 
 const gchar *
 cut_utils_get_fixture_data_string (CutTestContext *context,
+                                   gchar **fixture_data_path,
                                    const char *path,
                                    ...)
 {
-    GError *error = NULL;
     const gchar *data;
     va_list args;
 
     va_start(args, path);
-    data = cut_test_context_get_fixture_data_stringv(context, &error,
-                                                     path, &args);
-    va_end(args);
+    data = cut_utils_get_fixture_data_string_va_list(context, fixture_data_path,
+                                                     path, args);
+    va_end(args); /* FIXME: should be freed */
 
-    if (error) {
-        gchar *inspected, *message;
-
-        inspected = gcut_error_inspect(error);
-        message = g_strdup_printf("can't get fixture data: %s", inspected);
-        g_error_free(error);
-        cut_test_context_register_result(context,
-                                         CUT_TEST_RESULT_ERROR,
-                                         message, NULL);
-        g_free(inspected);
-        g_free(message);
-        cut_test_context_long_jump(context);
-    }
     return data;
 }
 
-void
-cut_utils_get_fixture_data_string_and_path (CutTestContext *context,
-                                            gchar **data,
-                                            gchar **fixture_data_path,
-                                            const gchar *path,
-                                            ...)
+const gchar *
+cut_utils_get_fixture_data_string_va_list (CutTestContext *context,
+                                           gchar **fixture_data_path,
+                                           const gchar *path,
+                                           va_list args)
 {
     GError *error = NULL;
-    va_list args, copied_args;
     const gchar *fixture_data;
 
-    va_start(args, path);
-
-    va_copy(copied_args, args);
-    *fixture_data_path = cut_test_context_build_fixture_data_pathv(context,
-                                                                   path,
-                                                                   &copied_args);
-    va_end(copied_args);
-
-    fixture_data = cut_test_context_get_fixture_data_stringv(context, &error,
-                                                             path, &args);
-    *data = (gchar *)fixture_data;
-    va_end(args);
-
+    fixture_data =
+        cut_test_context_get_fixture_data_string_va_list(context, &error,
+                                                         fixture_data_path,
+                                                         path, args);
     if (error) {
         gchar *inspected, *message;
 
@@ -269,11 +245,13 @@ cut_utils_get_fixture_data_string_and_path (CutTestContext *context,
         g_error_free(error);
         cut_test_context_register_result(context,
                                          CUT_TEST_RESULT_ERROR,
-                                         message, NULL);
+                                         message);
         g_free(inspected);
         g_free(message);
         cut_test_context_long_jump(context);
     }
+
+    return fixture_data;
 }
 
 void
@@ -383,14 +361,14 @@ cut_utils_build_path (const gchar *path, ...)
     va_list args;
 
     va_start(args, path);
-    built_path = cut_utils_build_pathv(path, &args);
+    built_path = cut_utils_build_path_va_list(path, args);
     va_end(args);
 
     return built_path;
 }
 
 gchar *
-cut_utils_build_pathv (const gchar *path, va_list *args)
+cut_utils_build_path_va_list (const gchar *path, va_list args)
 {
     GArray *elements;
     gchar *element, *concatenated_path;
@@ -401,7 +379,7 @@ cut_utils_build_pathv (const gchar *path, va_list *args)
     elements = g_array_new(TRUE, FALSE, sizeof(char *));
 
     g_array_append_val(elements, path);
-    while ((element = va_arg(*args, gchar *))) {
+    while ((element = va_arg(args, gchar *))) {
         g_array_append_val(elements, element);
     }
     concatenated_path = g_build_filenamev((gchar **)(elements->data));
@@ -430,14 +408,14 @@ cut_utils_expand_path (const gchar *path)
 }
 
 gchar *
-cut_utils_expand_pathv (const gchar *path, va_list *args)
+cut_utils_expand_path_va_list (const gchar *path, va_list args)
 {
     gchar *concatenated_path, *expanded_path;
 
     if (!path)
         return NULL;
 
-    concatenated_path = cut_utils_build_pathv(path, args);
+    concatenated_path = cut_utils_build_path_va_list(path, args);
     expanded_path = cut_utils_expand_path(concatenated_path);
     g_free(concatenated_path);
     return expanded_path;

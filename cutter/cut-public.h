@@ -47,17 +47,25 @@ typedef enum {
 void            cut_test_context_current_set(CutTestContext *context);
 CutTestContext *cut_test_context_current_get(void);
 
+void  cut_test_context_keep_user_message    (CutTestContext *context);
+void  cut_test_context_set_user_message     (CutTestContext *context,
+                                             const char *format,
+                                             ...) CUT_GNUC_PRINTF(2, 3);
+void  cut_test_context_set_user_message_backward_compatibility
+                                            (CutTestContext *context,
+                                             const char *format,
+                                             ...);
+void  cut_test_context_set_user_message_va_list
+                                            (CutTestContext *context,
+                                             const char *format,
+                                             va_list args);
+void  cut_test_context_check_optional_assertion_message
+                                            (CutTestContext *context,
+                                             const char *message);
 void  cut_test_context_pass_assertion       (CutTestContext *context);
 void  cut_test_context_register_result      (CutTestContext *context,
                                              CutTestResultStatus status,
-                                             const char *message,
-                                             ...) /* CUT_GNUC_PRINTF(4, 5) */;
-void  cut_test_context_register_result_va_list
-                                            (CutTestContext *context,
-                                             CutTestResultStatus status,
-                                             const char *system_message,
-                                             const char *user_message_format,
-                                             va_list args);
+                                             const char *system_message);
 void  cut_test_context_long_jump            (CutTestContext *context) CUT_GNUC_NORETURN;
 
 const void *cut_test_context_take           (CutTestContext *context,
@@ -99,6 +107,8 @@ const char  *cut_utils_inspect_string       (const char *string);
 cut_boolean  cut_utils_path_exist           (const char *path);
 char        *cut_utils_build_path           (const char *path,
                                              ...) CUT_GNUC_NULL_TERMINATED;
+char        *cut_utils_build_path_va_list   (const char *path,
+                                             va_list args);
 void         cut_utils_remove_path_recursive_force
                                             (const char *path);
 cut_boolean  cut_utils_regex_match          (const char *pattern,
@@ -113,15 +123,16 @@ char       *cut_test_context_build_fixture_data_path
                                              const char     *path,
                                              ...) CUT_GNUC_NULL_TERMINATED;
 
-const char *cut_utils_get_fixture_data_string(CutTestContext *context,
-                                              const char *path,
-                                              ...) CUT_GNUC_NULL_TERMINATED;
-
-void  cut_utils_get_fixture_data_string_and_path(CutTestContext *context,
-                                                 char **data,
-                                                 char **fixture_data_path,
-                                                 const char *path,
-                                                 ...) CUT_GNUC_NULL_TERMINATED;
+const char *cut_utils_get_fixture_data_string
+                                            (CutTestContext *context,
+                                             char **fixture_data_path,
+                                             const char *path,
+                                             ...) CUT_GNUC_NULL_TERMINATED;
+const char *cut_utils_get_fixture_data_string_va_list
+                                            (CutTestContext *context,
+                                             char **fixture_data_path,
+                                             const char *path,
+                                             va_list args);
 
 void  cut_test_context_add_data             (CutTestContext *context,
                                              const char     *first_data_name,

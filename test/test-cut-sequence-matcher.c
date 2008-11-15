@@ -328,22 +328,26 @@ test_to_indexes_complex_for_char_sequence (void)
     if (equal_match(&info, actual_info)) {                              \
         cut_test_pass();                                                \
     } else {                                                            \
-        cut_test_fail(cut_take_printf("expected: %s\n"                  \
-                                      "  actual: %s",                   \
-                                      inspect_match(&info),             \
-                                      inspect_match(actual_info)),      \
-                      "cut_sequence_matcher_get_longest_match"          \
-                      "(%s, %s, %s, %s, %s)\n"                          \
-                      " ==\n"                                           \
-                      "<from: %s, end: %s, size: %s>",                  \
-                      sequence_matcher_inspect,                         \
-                      #from_begin,                                      \
-                      #from_end,                                        \
-                      #to_begin,                                        \
-                      #to_end,                                          \
-                      #expected_from_index,                             \
-                      #expected_to_index,                               \
-                      #expected_size);                                  \
+        const gchar *message;                                           \
+                                                                        \
+        message =                                                       \
+            cut_take_printf("cut_sequence_matcher_get_longest_match"    \
+                            "(%s, %s, %s, %s, %s)\n"                    \
+                            " ==\n"                                     \
+                            "<from: %s, end: %s, size: %s>\n"           \
+                            "expected: %s\n"                            \
+                            "  actual: %s",                             \
+                            sequence_matcher_inspect,                   \
+                            #from_begin,                                \
+                            #from_end,                                  \
+                            #to_begin,                                  \
+                            #to_end,                                    \
+                            #expected_from_index,                       \
+                            #expected_to_index,                         \
+                            #expected_size,                             \
+                            inspect_match(&info),                       \
+                            inspect_match(actual_info));                \
+        cut_test_fail(message);                                         \
     }                                                                   \
                                                                         \
     g_object_unref(matcher);                                            \
@@ -452,11 +456,11 @@ append_match_info (GList *list, gint begin, gint end, gint size)
                                                                         \
         inspected_expected = inspect_matches(_expected);                \
         inspected_actual = inspect_matches(_actual);                    \
+        cut_set_message_backward_compatibility(__VA_ARGS__);            \
         cut_test_fail(cut_take_printf("expected: <%s>\n"                \
                                       "  actual: <%s>",                 \
                                       inspected_expected,               \
-                                      inspected_actual),                \
-                      ## __VA_ARGS__);                                  \
+                                      inspected_actual));               \
     }                                                                   \
 } while (0)
 
@@ -727,12 +731,12 @@ inspect_operations (const GList *operations)
                                                                         \
         inspected_expected = inspect_operations(_expected);             \
         inspected_actual = inspect_operations(_actual);                 \
+        cut_set_message("cut_sequence_matcher_get_operations(%s)",      \
+                        sequence_matcher_inspect);                      \
         cut_test_fail(cut_take_printf("expected: <%s>\n"                \
                                       "  actual: <%s>",                 \
                                       inspected_expected,               \
-                                      inspected_actual),                \
-                      "cut_sequence_matcher_get_operations(%s)",        \
-                      sequence_matcher_inspect);                        \
+                                      inspected_actual));               \
     }                                                                   \
     g_object_unref(matcher);                                            \
     matcher = NULL;                                                     \

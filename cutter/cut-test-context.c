@@ -53,12 +53,11 @@
 #include "cut-backtrace-entry.h"
 #include "cut-utils.h"
 
-#define cut_omit(context, message, ...) do                      \
+#define cut_omit(context, message) do                           \
 {                                                               \
     cut_test_context_register_result(context,                   \
                                      CUT_TEST_RESULT_OMISSION,  \
-                                     message, ## __VA_ARGS__,   \
-                                     NULL);                     \
+                                     message);                  \
     cut_test_context_long_jump(context);                        \
 } while (0)
 
@@ -87,6 +86,8 @@ struct _CutTestContextPrivate
     gchar *fixture_data_dir;
     GHashTable *cached_fixture_data;
     GList *backtrace;
+    gchar *user_message;
+    guint user_message_keep_count;
     GMutex *mutex;
 };
 
@@ -248,6 +249,9 @@ cut_test_context_init (CutTestContext *context)
 
     priv->backtrace = NULL;
 
+    priv->user_message = NULL;
+    priv->user_message_keep_count = 0;
+
     priv->mutex = g_mutex_new();
 }
 
@@ -260,6 +264,20 @@ free_data_list (CutTestContextPrivate *priv)
         priv->data_list = NULL;
     }
     priv->current_data = NULL;
+}
+
+static void
+clear_user_message (CutTestContextPrivate *priv)
+{
+    if (priv->user_message_keep_count > 0)
+        priv->user_message_keep_count--;
+
+    if (priv->user_message_keep_count == 0) {
+        if (priv->user_message) {
+            g_free(priv->user_message);
+            priv->user_message = NULL;
+        }
+    }
 }
 
 static void
@@ -321,6 +339,8 @@ dispose (GObject *object)
         g_list_free(priv->backtrace);
         priv->backtrace = NULL;
     }
+
+    clear_user_message(priv);
 
     if (priv->mutex) {
         g_mutex_free(priv->mutex);
@@ -692,6 +712,7 @@ cut_test_context_pass_assertion (CutTestContext *context)
     priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
     g_return_if_fail(priv->test);
 
+    clear_user_message(priv);
     g_signal_emit_by_name(priv->test, "pass-assertion", context);
 }
 
@@ -731,24 +752,17 @@ cut_test_context_emit_signal (CutTestContext *context,
 }
 
 void
-cut_test_context_register_result_va_list (CutTestContext *context,
-                                          CutTestResultStatus status,
-                                          const char *system_message,
-                                          const char *user_message_format,
-                                          va_list args)
+cut_test_context_register_result (CutTestContext *context,
+                                  CutTestResultStatus status,
+                                  const char *system_message)
 {
     CutTestContextPrivate *priv;
     CutTestResult *result;
     CutTestData *test_data = NULL;
-    gchar *user_message = NULL;
 
     priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
     if (cut_test_result_status_is_critical(status))
         priv->failed = TRUE;
-
-    if (user_message_format) {
-        user_message = g_strdup_vprintf(user_message_format, args);
-    }
 
     if (priv->current_data)
         test_data = priv->current_data->data;
@@ -756,10 +770,9 @@ cut_test_context_register_result_va_list (CutTestContext *context,
                                  priv->test, priv->test_iterator,
                                  priv->test_case, priv->test_suite,
                                  test_data,
-                                 user_message, system_message,
+                                 priv->user_message, system_message,
                                  priv->backtrace);
-    if (user_message)
-        g_free(user_message);
+    clear_user_message(priv);
 
     if (priv->test) {
         CutProcess *process;
@@ -802,22 +815,6 @@ cut_test_context_register_result_va_list (CutTestContext *context,
     }
 
     g_object_unref(result);
-}
-
-void
-cut_test_context_register_result (CutTestContext *context,
-                                  CutTestResultStatus status,
-                                  const gchar *message,
-                                  ...)
-{
-    va_list args;
-    const gchar *user_message_format;
-
-    va_start(args, message);
-    user_message_format = va_arg(args, gchar *);
-    cut_test_context_register_result_va_list(context, status, message,
-                                             user_message_format, args);
-    va_end(args);
 }
 
 void
@@ -962,8 +959,7 @@ cut_test_context_trap_fork (CutTestContext *context)
         cut_test_context_register_result(context,
                                          CUT_TEST_RESULT_OMISSION,
                                          "can't use cut_fork() "
-                                         "in multi thread mode",
-                                         NULL);
+                                         "in multi thread mode");
         cut_test_context_long_jump(context);
     }
 
@@ -1114,20 +1110,21 @@ cut_test_context_set_fixture_data_dir (CutTestContext *context,
         g_free(priv->fixture_data_dir);
 
     va_start(args, path);
-    priv->fixture_data_dir = cut_utils_expand_pathv(path, &args);
+    priv->fixture_data_dir = cut_utils_expand_path_va_list(path, args);
     va_end(args);
 }
 
 gchar *
-cut_test_context_build_fixture_data_pathv (CutTestContext *context,
-                                           const gchar *path, va_list *args)
+cut_test_context_build_fixture_data_path_va_list (CutTestContext *context,
+                                                  const gchar *path,
+                                                  va_list args)
 {
     CutTestContextPrivate *priv;
     gchar *concatenated_path, *full_path;
 
     priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
 
-    concatenated_path = cut_utils_build_pathv(path, args);
+    concatenated_path = cut_utils_build_path_va_list(path, args);
     if (g_path_is_absolute(concatenated_path)) {
         full_path = concatenated_path;
     } else {
@@ -1152,42 +1149,48 @@ cut_test_context_build_fixture_data_path (CutTestContext *context,
     gchar *full_path;
 
     va_start(args, path);
-    full_path = cut_test_context_build_fixture_data_pathv(context, path, &args);
+    full_path = cut_test_context_build_fixture_data_path_va_list(context,
+                                                                 path, args);
     va_end(args);
 
     return full_path;
 }
 
 const gchar *
-cut_test_context_get_fixture_data_stringv (CutTestContext *context,
-                                           GError **error,
-                                           const gchar *path,
-                                           va_list *args)
+cut_test_context_get_fixture_data_string_va_list (CutTestContext *context,
+                                                  GError **error,
+                                                  gchar **full_path,
+                                                  const gchar *path,
+                                                  va_list args)
 {
     CutTestContextPrivate *priv;
-    gchar *full_path;
     gpointer value;
+    gchar *_full_path;
 
     if (!path)
         return NULL;
 
     priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
 
-    full_path = cut_test_context_build_fixture_data_pathv(context, path, args);
-    value = g_hash_table_lookup(priv->cached_fixture_data, full_path);
-    if (value) {
-        g_free(full_path);
-    } else {
+    _full_path = cut_test_context_build_fixture_data_path_va_list(context,
+                                                                  path, args);
+    value = g_hash_table_lookup(priv->cached_fixture_data, _full_path);
+    if (!value) {
         gchar *contents;
         gsize length;
 
-        if (g_file_get_contents(full_path, &contents, &length, error)) {
-            g_hash_table_insert(priv->cached_fixture_data, full_path, contents);
+        if (g_file_get_contents(_full_path, &contents, &length, error)) {
+            g_hash_table_insert(priv->cached_fixture_data,
+                                g_strdup(_full_path),
+                                contents);
             value = contents;
-        } else {
-            g_free(full_path);
         }
     }
+
+    if (full_path)
+        *full_path = _full_path;
+    else
+        g_free(_full_path);
 
     return value;
 }
@@ -1195,6 +1198,7 @@ cut_test_context_get_fixture_data_stringv (CutTestContext *context,
 const gchar *
 cut_test_context_get_fixture_data_string (CutTestContext *context,
                                           GError **error,
+                                          gchar **full_path,
                                           const gchar *path, ...)
 {
     const gchar *value;
@@ -1204,8 +1208,9 @@ cut_test_context_get_fixture_data_string (CutTestContext *context,
         return NULL;
 
     va_start(args, path);
-    value = cut_test_context_get_fixture_data_stringv(context, error,
-                                                      path, &args);
+    value = cut_test_context_get_fixture_data_string_va_list(context, error,
+                                                             full_path,
+                                                             path, args);
     va_end(args);
 
     return value;
@@ -1331,6 +1336,74 @@ cut_test_context_get_last_backtrace (CutTestContext *context,
         *function_name = cut_backtrace_entry_get_function(entry);
     if (info)
         *info = cut_backtrace_entry_get_info(entry);
+}
+
+void
+cut_test_context_set_user_message (CutTestContext *context,
+                                   const char     *format,
+                                   ...)
+{
+    va_list args;
+
+    va_start(args, format);
+    cut_test_context_set_user_message_va_list(context, format, args);
+    va_end(args);
+}
+
+void
+cut_test_context_set_user_message_backward_compatibility (CutTestContext *context,
+                                                          const char     *format,
+                                                          ...)
+{
+    va_list args;
+
+    if (!format)
+        return;
+
+    va_start(args, format);
+    cut_test_context_set_user_message_va_list(context, format, args);
+    va_end(args);
+}
+
+void
+cut_test_context_set_user_message_va_list (CutTestContext *context,
+                                           const char     *format,
+                                           va_list         args)
+{
+    CutTestContextPrivate *priv;
+
+    priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+
+    clear_user_message(priv);
+    if (!format)
+        return;
+
+    priv->user_message = g_strdup_vprintf(format, args);
+}
+
+void
+cut_test_context_check_optional_assertion_message (CutTestContext *context,
+                                                   const char *message)
+{
+    CutTestContextPrivate *priv;
+
+    if (!message)
+        return;
+    if (message[0] == '\0')
+        return;
+
+    priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+
+    clear_user_message(priv);
+    priv->user_message = g_strdup_printf("optional assertion message "
+                                         "on the current environment "
+                                         "is unavailable: <%s>", message);
+}
+
+void
+cut_test_context_keep_user_message (CutTestContext *context)
+{
+    CUT_TEST_CONTEXT_GET_PRIVATE(context)->user_message_keep_count++;
 }
 
 /*

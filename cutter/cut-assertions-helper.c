@@ -32,50 +32,39 @@
 #include <errno.h>
 
 #include "cut-helper.h"
+#include <gcutter/gcut-assertions-helper.h>
 
 void
 cut_assert_helper (cut_boolean     result,
-                   const char     *expression,
-                   const char     *user_message_format,
-                   ...)
+                   const char     *expression)
 {
     if (result) {
         cut_test_pass();
     } else {
-        cut_test_fail_va_list(cut_take_printf("expected: <%s>"
-                                              " is not FALSE/NULL",
-                                              expression),
-                              user_message_format);
+        cut_test_fail(cut_take_printf("expected: <%s> is not FALSE/NULL",
+                                      expression));
     }
 }
 
 void
 cut_assert_true_helper (cut_boolean     result,
-                        const char     *expression,
-                        const char     *user_message_format,
-                        ...)
+                        const char     *expression)
 {
     if (result) {
         cut_test_pass();
     } else {
-        cut_test_fail_va_list(cut_take_printf("expected: <%s>"
-                                              " is TRUE value",
-                                              expression),
-                              user_message_format);
+        cut_test_fail(cut_take_printf("expected: <%s> is TRUE value",
+                                      expression));
     }
 }
 
 void
 cut_assert_false_helper (cut_boolean     result,
-                         const char     *expression,
-                         const char     *user_message_format,
-                         ...)
+                         const char     *expression)
 {
     if (result) {
-        cut_test_fail_va_list(cut_take_printf("expected: <%s>"
-                                              " is FALSE/NULL",
-                                              expression),
-                              user_message_format);
+        cut_test_fail(cut_take_printf("expected: <%s> is FALSE/NULL",
+                                      expression));
     } else {
         cut_test_pass();
     }
@@ -83,47 +72,38 @@ cut_assert_false_helper (cut_boolean     result,
 
 void
 cut_assert_null_helper (const void     *object,
-                        const char     *expression,
-                        const char     *user_message_format,
-                        ...)
+                        const char     *expression)
 {
     if (object == NULL) {
         cut_test_pass();
     } else {
-        cut_test_fail_va_list(cut_take_printf("expected: <%s> is NULL",
-                                              expression),
-                              user_message_format);
+        cut_test_fail(cut_take_printf("expected: <%s> is NULL",
+                                      expression));
     }
 }
 
 void
 cut_assert_null_string_helper (const char     *string,
-                               const char     *expression,
-                               const char     *user_message_format,
-                               ...)
+                               const char     *expression)
 {
     if (string == NULL) {
         cut_test_pass();
     } else {
-        cut_test_fail_va_list(cut_take_printf("expected: <%s> is NULL\n"
-                                              "  actual: <%s>",
-                                              expression, string),
-                              user_message_format);
+        cut_test_fail(cut_take_printf("expected: <%s> is NULL\n"
+                                      "  actual: <%s>",
+                                      expression, string));
     }
 }
 
 void
 cut_assert_not_null_helper (const void     *object,
-                            const char     *expression,
-                            const char     *user_message_format,
-                            ...)
+                            const char     *expression)
 {
     if (object != NULL) {
         cut_test_pass();
     } else {
-        cut_test_fail_va_list(cut_take_printf("expected: <%s> is not NULL",
-                                              expression),
-                              user_message_format);
+        cut_test_fail(cut_take_printf("expected: <%s> is not NULL",
+                                      expression));
     }
 }
 
@@ -131,20 +111,17 @@ void
 cut_assert_equal_int_helper (long            expected,
                              long            actual,
                              const char     *expression_expected,
-                             const char     *expression_actual,
-                             const char     *user_message_format,
-                             ...)
+                             const char     *expression_actual)
 {
     if (expected == actual) {
         cut_test_pass();
     } else {
-        cut_test_fail_va_list(cut_take_printf("<%s == %s>\n"
-                                              "expected: <%ld>\n"
-                                              "  actual: <%ld>",
-                                              expression_expected,
-                                              expression_actual,
-                                              expected, actual),
-                              user_message_format);
+        cut_test_fail(cut_take_printf("<%s == %s>\n"
+                                      "expected: <%ld>\n"
+                                      "  actual: <%ld>",
+                                      expression_expected,
+                                      expression_actual,
+                                      expected, actual));
     }
 }
 
@@ -152,20 +129,17 @@ void
 cut_assert_equal_uint_helper (unsigned long   expected,
                               unsigned long   actual,
                               const char     *expression_expected,
-                              const char     *expression_actual,
-                              const char     *user_message_format,
-                              ...)
+                              const char     *expression_actual)
 {
     if (expected == actual) {
         cut_test_pass();
     } else {
-        cut_test_fail_va_list(cut_take_printf("<%s == %s>\n"
-                                              "expected: <%lu>\n"
-                                              "  actual: <%lu>",
-                                              expression_expected,
-                                              expression_actual,
-                                              expected, actual),
-                              user_message_format);
+        cut_test_fail(cut_take_printf("<%s == %s>\n"
+                                      "expected: <%lu>\n"
+                                      "  actual: <%lu>",
+                                      expression_expected,
+                                      expression_actual,
+                                      expected, actual));
     }
 }
 
@@ -173,20 +147,17 @@ void
 cut_assert_equal_size_helper (size_t          expected,
                               size_t          actual,
                               const char     *expression_expected,
-                              const char     *expression_actual,
-                              const char     *user_message_format,
-                              ...)
+                              const char     *expression_actual)
 {
     if (expected == actual) {
         cut_test_pass();
     } else {
-        cut_test_fail_va_list(cut_take_printf("<%s == %s>\n"
-                                              "expected: <%" G_GSIZE_FORMAT ">\n"
-                                              "  actual: <%" G_GSIZE_FORMAT ">",
-                                              expression_expected,
-                                              expression_actual,
-                                              expected, actual),
-                              user_message_format);
+        cut_test_fail(cut_take_printf("<%s == %s>\n"
+                                      "expected: <%" G_GSIZE_FORMAT ">\n"
+                                      "  actual: <%" G_GSIZE_FORMAT ">",
+                                      expression_expected,
+                                      expression_actual,
+                                      expected, actual));
     }
 }
 
@@ -196,24 +167,21 @@ cut_assert_equal_double_helper (double          expected,
                                 double          actual,
                                 const char     *expression_expected,
                                 const char     *expression_error,
-                                const char     *expression_actual,
-                                const char     *user_message_format,
-                                ...)
+                                const char     *expression_actual)
 {
     if (cut_utils_equal_double(expected, actual, error)) {
         cut_test_pass();
     } else {
-        cut_test_fail_va_list(cut_take_printf("<%s-%s <= %s <= %s+%s>\n"
-                                              "expected: <%g +/- %g>\n"
-                                              "  actual: <%g>",
-                                              expression_expected,
-                                              expression_error,
-                                              expression_actual,
-                                              expression_expected,
-                                              expression_error,
-                                              expected, error,
-                                              actual),
-                              user_message_format);
+        cut_test_fail(cut_take_printf("<%s-%s <= %s <= %s+%s>\n"
+                                      "expected: <%g +/- %g>\n"
+                                      "  actual: <%g>",
+                                      expression_expected,
+                                      expression_error,
+                                      expression_actual,
+                                      expression_expected,
+                                      expression_error,
+                                      expected, error,
+                                      actual));
     }
 }
 
@@ -221,19 +189,16 @@ void
 cut_assert_equal_string_helper (const char     *expected,
                                 const char     *actual,
                                 const char     *expression_expected,
-                                const char     *expression_actual,
-                                const char     *user_message_format,
-                                ...)
+                                const char     *expression_actual)
 {
     if (expected == NULL) {
         if (actual == NULL) {
             cut_test_pass();
         } else {
-            cut_test_fail_va_list(cut_take_printf("expected: <%s> is NULL\n"
-                                                  "  actual: <%s>",
-                                                  expression_actual,
-                                                  actual),
-                                  user_message_format);
+            cut_test_fail(cut_take_printf("expected: <%s> is NULL\n"
+                                          "  actual: <%s>",
+                                          expression_actual,
+                                          actual));
         }
     } else {
         if (cut_utils_equal_string(expected, actual)) {
@@ -250,7 +215,7 @@ cut_assert_equal_string_helper (const char     *expected,
                                       cut_utils_inspect_string(actual));
             if (expected && actual)
                 message = cut_append_diff(message, expected, actual);
-            cut_test_fail_va_list(message, user_message_format);
+            cut_test_fail(message);
         }
     }
 }
@@ -263,9 +228,7 @@ cut_assert_equal_memory_helper (const void     *expected,
                                 const char     *expression_expected,
                                 const char     *expression_expected_size,
                                 const char     *expression_actual,
-                                const char     *expression_actual_size,
-                                const char     *user_message_format,
-                                ...)
+                                const char     *expression_actual_size)
 {
     if (expected_size == actual_size &&
         memcmp(expected, actual, expected_size) == 0) {
@@ -297,7 +260,7 @@ cut_assert_equal_memory_helper (const void     *expected,
             message = cut_append_diff(message,
                                       inspected_expected,
                                       inspected_actual);
-        cut_test_fail_va_list(message, user_message_format);
+        cut_test_fail(message);
     }
 }
 
@@ -305,9 +268,7 @@ void
 cut_assert_equal_string_array_helper (char          **expected,
                                       char          **actual,
                                       const char     *expression_expected,
-                                      const char     *expression_actual,
-                                      const char     *user_message_format,
-                                      ...)
+                                      const char     *expression_actual)
 {
     if (expected && actual &&
         cut_utils_equal_string_array(expected, actual)) {
@@ -329,7 +290,7 @@ cut_assert_equal_string_array_helper (char          **expected,
         if (expected && actual)
             message = cut_append_diff(message,
                                       inspected_expected, inspected_actual);
-        cut_test_fail_va_list(message, user_message_format);
+        cut_test_fail(message);
     }
 }
 
@@ -337,19 +298,15 @@ void
 cut_assert_operator_helper (cut_boolean     result,
                             const char     *expression_lhs,
                             const char     *expression_operator,
-                            const char     *expression_rhs,
-                            const char     *user_message_format,
-                            ...)
+                            const char     *expression_rhs)
 {
     if (result) {
         cut_test_pass();
     } else {
-        cut_test_fail_va_list(cut_take_printf("expected: <%s %s %s> "
-                                              "is TRUE",
-                                              expression_lhs,
-                                              expression_operator,
-                                              expression_rhs),
-                              user_message_format);
+        cut_test_fail(cut_take_printf("expected: <%s %s %s> is TRUE",
+                                      expression_lhs,
+                                      expression_operator,
+                                      expression_rhs));
     }
 }
 
@@ -359,22 +316,19 @@ cut_assert_operator_int_helper (cut_boolean     result,
                                 long            rhs,
                                 const char     *expression_lhs,
                                 const char     *expression_operator,
-                                const char     *expression_rhs,
-                                const char     *user_message_format,
-                                ...)
+                                const char     *expression_rhs)
 {
     if (result) {
         cut_test_pass();
     } else {
-        cut_test_fail_va_list(cut_take_printf("expected: <%s> %s <%s>\n"
-                                              "  actual: <%ld> %s <%ld>",
-                                              expression_lhs,
-                                              expression_operator,
-                                              expression_rhs,
-                                              lhs,
-                                              expression_operator,
-                                              rhs),
-                              user_message_format);
+        cut_test_fail(cut_take_printf("expected: <%s> %s <%s>\n"
+                                      "  actual: <%ld> %s <%ld>",
+                                      expression_lhs,
+                                      expression_operator,
+                                      expression_rhs,
+                                      lhs,
+                                      expression_operator,
+                                      rhs));
     }
 }
 
@@ -384,22 +338,19 @@ cut_assert_operator_uint_helper (cut_boolean     result,
                                  unsigned long   rhs,
                                  const char     *expression_lhs,
                                  const char     *expression_operator,
-                                 const char     *expression_rhs,
-                                 const char     *user_message_format,
-                                 ...)
+                                 const char     *expression_rhs)
 {
     if (result) {
         cut_test_pass();
     } else {
-        cut_test_fail_va_list(cut_take_printf("expected: <%s> %s <%s>\n"
-                                              "  actual: <%lu> %s <%lu>",
-                                              expression_lhs,
-                                              expression_operator,
-                                              expression_rhs,
-                                              lhs,
-                                              expression_operator,
-                                              rhs),
-                              user_message_format);
+        cut_test_fail(cut_take_printf("expected: <%s> %s <%s>\n"
+                                      "  actual: <%lu> %s <%lu>",
+                                      expression_lhs,
+                                      expression_operator,
+                                      expression_rhs,
+                                      lhs,
+                                      expression_operator,
+                                      rhs));
     }
 }
 
@@ -409,25 +360,22 @@ cut_assert_operator_size_helper (cut_boolean     result,
                                  size_t          rhs,
                                  const char     *expression_lhs,
                                  const char     *expression_operator,
-                                 const char     *expression_rhs,
-                                 const char     *user_message_format,
-                                 ...)
+                                 const char     *expression_rhs)
 {
     if (result) {
         cut_test_pass();
     } else {
-        cut_test_fail_va_list(cut_take_printf("expected: <%s> %s <%s>\n"
-                                              "  actual: "
-                                              "<%" G_GSIZE_FORMAT ">"
-                                              " %s "
-                                              "<%" G_GSIZE_FORMAT ">",
-                                              expression_lhs,
-                                              expression_operator,
-                                              expression_rhs,
-                                              lhs,
-                                              expression_operator,
-                                              rhs),
-                              user_message_format);
+        cut_test_fail(cut_take_printf("expected: <%s> %s <%s>\n"
+                                      "  actual: "
+                                      "<%" G_GSIZE_FORMAT ">"
+                                      " %s "
+                                      "<%" G_GSIZE_FORMAT ">",
+                                      expression_lhs,
+                                      expression_operator,
+                                      expression_rhs,
+                                      lhs,
+                                      expression_operator,
+                                      rhs));
     }
 }
 
@@ -437,22 +385,19 @@ cut_assert_operator_double_helper (cut_boolean     result,
                                    double          rhs,
                                    const char     *expression_lhs,
                                    const char     *expression_operator,
-                                   const char     *expression_rhs,
-                                   const char     *user_message_format,
-                                   ...)
+                                   const char     *expression_rhs)
 {
     if (result) {
         cut_test_pass();
     } else {
-        cut_test_fail_va_list(cut_take_printf("expected: <%s> %s <%s>\n"
-                                              "  actual: <%g> %s <%g>",
-                                              expression_lhs,
-                                              expression_operator,
-                                              expression_rhs,
-                                              lhs,
-                                              expression_operator,
-                                              rhs),
-                              user_message_format);
+        cut_test_fail(cut_take_printf("expected: <%s> %s <%s>\n"
+                                      "  actual: <%g> %s <%g>",
+                                      expression_lhs,
+                                      expression_operator,
+                                      expression_rhs,
+                                      lhs,
+                                      expression_operator,
+                                      rhs));
     }
 }
 
@@ -460,86 +405,71 @@ void
 cut_assert_equal_helper (cut_boolean     result,
                          const char     *expression_function,
                          const char     *expression_expected,
-                         const char     *expression_actual,
-                         const char     *user_message_format,
-                         ...)
+                         const char     *expression_actual)
 {
     if (result) {
         cut_test_pass();
     } else {
-        cut_test_fail_va_list(cut_take_printf("expected: <%s(%s, %s)> "
-                                              "is TRUE",
-                                              expression_function,
-                                              expression_expected,
-                                              expression_actual),
-                              user_message_format);
+        cut_test_fail(cut_take_printf("expected: <%s(%s, %s)> is TRUE",
+                                      expression_function,
+                                      expression_expected,
+                                      expression_actual));
     }
 }
 
 void
-cut_assert_errno_helper (void           *dummy_argument,
-                         const char     *user_message_format,
-                         ...)
+cut_assert_errno_helper (void)
 {
     int current_errno = errno;
 
     if (current_errno == 0) {
         cut_test_pass();
     } else {
-        cut_test_fail_va_list(cut_take_printf("expected: <0> (errno)\n"
-                                              "  actual: <%d> (%s)",
-                                              current_errno,
-                                              strerror(current_errno)),
-                              user_message_format);
+        cut_test_fail(cut_take_printf("expected: <0> (errno)\n"
+                                      "  actual: <%d> (%s)",
+                                      current_errno,
+                                      g_strerror(current_errno)));
     }
 }
 
 void
 cut_assert_path_exist_helper (const char     *path,
-                              const char     *expression_path,
-                              const char     *user_message_format,
-                              ...)
+                              const char     *expression_path)
 {
     if (!path) {
-        cut_test_fail_va_list(cut_take_printf("<%s>\n"
-                                              "expected: <%s> "
-                                              "should not be NULL",
-                                              expression_path,
-                                              path),
-                              user_message_format);
+        cut_test_fail(cut_take_printf("<%s>\n"
+                                      "expected: <%s> "
+                                      "should not be NULL",
+                                      expression_path,
+                                      path));
     } else if (cut_utils_path_exist(path)) {
         cut_test_pass();
     } else {
-        cut_test_fail_va_list(cut_take_printf("<%s>\n"
-                                              "expected: <%s> exists",
-                                              expression_path,
-                                              path),
-                              user_message_format);
+        cut_test_fail(cut_take_printf("<%s>\n"
+                                      "expected: <%s> exists",
+                                      expression_path,
+                                      path));
     }
 }
 
 void
 cut_assert_path_not_exist_helper (const char     *path,
-                                  const char     *expression_path,
-                                  const char     *user_message_format,
-                                  ...)
+                                  const char     *expression_path)
 {
     if (!path) {
-        cut_test_fail_va_list(cut_take_printf("<%s>\n"
-                                              "expected: <%s> "
-                                              "should not be NULL",
-                                              expression_path,
-                                              path),
-                              user_message_format);
+        cut_test_fail(cut_take_printf("<%s>\n"
+                                      "expected: <%s> "
+                                      "should not be NULL",
+                                      expression_path,
+                                      path));
     } else if (!cut_utils_path_exist(path)) {
         cut_test_pass();
     } else {
-        cut_test_fail_va_list(cut_take_printf("<%s>\n"
-                                              "expected: <%s> "
-                                              "doesn't exist",
-                                              expression_path,
-                                              path),
-                              user_message_format);
+        cut_test_fail(cut_take_printf("<%s>\n"
+                                      "expected: <%s> "
+                                      "doesn't exist",
+                                      expression_path,
+                                      path));
     }
 }
 
@@ -547,20 +477,17 @@ void
 cut_assert_match_helper (const char     *pattern,
                          const char     *actual,
                          const char     *expression_pattern,
-                         const char     *expression_actual,
-                         const char     *user_message_format,
-                         ...)
+                         const char     *expression_actual)
 {
     if (cut_utils_regex_match(pattern, actual)) {
         cut_test_pass();
     } else {
-        cut_test_fail_va_list(cut_take_printf("<%s> =~ <%s>\n"
-                                              " pattern: <%s>\n"
-                                              "  actual: <%s>",
-                                              expression_pattern,
-                                              expression_actual,
-                                              pattern, actual),
-                              user_message_format);
+        cut_test_fail(cut_take_printf("<%s> =~ <%s>\n"
+                                      " pattern: <%s>\n"
+                                      "  actual: <%s>",
+                                      expression_pattern,
+                                      expression_actual,
+                                      pattern, actual));
     }
 }
 
@@ -568,36 +495,51 @@ void
 cut_assert_equal_pointer_helper (const void     *expected,
                                  const void     *actual,
                                  const char     *expression_expected,
-                                 const char     *expression_actual,
-                                 const char     *user_message_format,
-                                 ...)
+                                 const char     *expression_actual)
 {
     if (expected == actual) {
         cut_test_pass();
     } else {
-        cut_test_fail_va_list(cut_take_printf("<%s == %s>\n"
-                                              "expected: <%p>\n"
-                                              "  actual: <%p>",
-                                              expression_expected,
-                                              expression_actual,
-                                              expected, actual),
-                              user_message_format);
+        cut_test_fail(cut_take_printf("<%s == %s>\n"
+                                      "expected: <%p>\n"
+                                      "  actual: <%p>",
+                                      expression_expected,
+                                      expression_actual,
+                                      expected, actual));
     }
 }
 
 void
-cut_error_errno_helper (void           *dummy_argument,
-                        const char     *user_message_format,
-                        ...)
+cut_assert_equal_fixture_data_string_helper (const void     *expected,
+                                             const gchar    *expression_expected,
+                                             const void     *path,
+                                             ...)
+{
+    GError *error = NULL;
+    const char *data;
+    char *full_path;
+    va_list args;
+
+    va_start(args, path);
+    data = cut_utils_get_fixture_data_string_va_list(
+        cut_get_current_test_context(), &full_path, path, args);
+    cut_test_context_keep_user_message(cut_get_current_test_context());
+    gcut_assert_error_helper(error, expression_expected);
+    cut_assert_equal_string_helper(expected, data,
+                                   expression_expected,
+                                   cut_take_string(full_path));
+}
+
+void
+cut_error_errno_helper (void)
 {
     int current_errno = errno;
 
     if (current_errno != 0) {
-        cut_test_terminate_va_list(ERROR,
-                                   cut_take_printf("<%d> (%s)",
-                                                   current_errno,
-                                                   strerror(current_errno)),
-                                   user_message_format);
+        cut_test_terminate(ERROR,
+                           cut_take_printf("<%d> (%s)",
+                                           current_errno,
+                                           g_strerror(current_errno)));
     }
 }
 

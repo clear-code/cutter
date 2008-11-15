@@ -32,9 +32,7 @@ void  gdkcut_pixbuf_assert_equal_helper (const GdkPixbuf *expected,
                                          guint            threshold,
                                          const gchar     *expression_expected,
                                          const gchar     *expression_actual,
-                                         const gchar     *expression_threshold,
-                                         const gchar     *user_message_format,
-                                         ...);
+                                         const gchar     *expression_threshold);
 
 G_END_DECLS
 

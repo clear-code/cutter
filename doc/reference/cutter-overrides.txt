@@ -1,3 +1,41 @@
+# cut-assertion.h
+
+<FUNCTION>
+<NAME>cut_error</NAME>
+<RETURNS>void</RETURNS>
+const char *format, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_fail</NAME>
+<RETURNS>void</RETURNS>
+const char *format, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_pend</NAME>
+<RETURNS>void</RETURNS>
+const char *format, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_pending</NAME>
+<RETURNS>void</RETURNS>
+const char *format, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_notify</NAME>
+<RETURNS>void</RETURNS>
+const char *format, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_omit</NAME>
+<RETURNS>void</RETURNS>
+const char *format, ...
+</FUNCTION>
+
 # cut-types.h
 
 <TYPEDEF>

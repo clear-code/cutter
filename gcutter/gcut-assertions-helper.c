@@ -28,27 +28,25 @@
 #include <glib.h>
 #include <glib/gstdio.h>
 
+#include <cutter/cut-utils.h>
 #include "gcut-assertions-helper.h"
 
 void
 gcut_assert_equal_type_helper (GType           expected,
                                GType           actual,
                                const gchar    *expression_expected,
-                               const gchar    *expression_actual,
-                               const gchar    *user_message_format,
-                               ...)
+                               const gchar    *expression_actual)
 {
     if (expected == actual) {
         cut_test_pass();
     } else {
-        cut_test_fail_va_list(cut_take_printf("<%s == %s>\n"
-                                              "expected: <%s>\n"
-                                              "  actual: <%s>",
-                                              expression_expected,
-                                              expression_actual,
-                                              g_type_name(expected),
-                                              g_type_name(actual)),
-                              user_message_format);
+        cut_test_fail(cut_take_printf("<%s == %s>\n"
+                                      "expected: <%s>\n"
+                                      "  actual: <%s>",
+                                      expression_expected,
+                                      expression_actual,
+                                      g_type_name(expected),
+                                      g_type_name(actual)));
     }
 }
 
@@ -56,9 +54,7 @@ void
 gcut_assert_equal_value_helper (GValue         *expected,
                                 GValue         *actual,
                                 const gchar    *expression_expected,
-                                const gchar    *expression_actual,
-                                const gchar    *user_message_format,
-                                ...)
+                                const gchar    *expression_actual)
 {
     if (gcut_value_equal(expected, actual)) {
         cut_test_pass();
@@ -79,7 +75,7 @@ gcut_assert_equal_value_helper (GValue         *expected,
                                   inspected_expected, expected_type_name,
                                   inspected_actual, actual_type_name);
         message = cut_append_diff(message, inspected_expected, inspected_actual);
-        cut_test_fail_va_list(message, user_message_format);
+        cut_test_fail(message);
     }
 }
 
@@ -91,9 +87,7 @@ gcut_assert_equal_list_helper (const GList    *expected,
                                gpointer        inspect_user_data,
                                const gchar    *expression_expected,
                                const gchar    *expression_actual,
-                               const gchar    *expression_equal_function,
-                               const gchar    *user_message_format,
-                               ...)
+                               const gchar    *expression_equal_function)
 {
     if (gcut_list_equal(expected, actual, equal_function)) {
         cut_test_pass();
@@ -118,7 +112,7 @@ gcut_assert_equal_list_helper (const GList    *expected,
                                   inspected_expected,
                                   inspected_actual);
         message = cut_append_diff(message, inspected_expected, inspected_actual);
-        cut_test_fail_va_list(message, user_message_format);
+        cut_test_fail(message);
     }
 }
 
@@ -126,9 +120,7 @@ void
 gcut_assert_equal_list_int_helper (const GList    *expected,
                                    const GList    *actual,
                                    const gchar    *expression_expected,
-                                   const gchar    *expression_actual,
-                                   const gchar    *user_message_format,
-                                   ...)
+                                   const gchar    *expression_actual)
 {
     if (gcut_list_equal_int(expected, actual)) {
         cut_test_pass();
@@ -146,7 +138,7 @@ gcut_assert_equal_list_int_helper (const GList    *expected,
                                   inspected_expected,
                                   inspected_actual);
         message = cut_append_diff(message, inspected_expected, inspected_actual);
-        cut_test_fail_va_list(message, user_message_format);
+        cut_test_fail(message);
     }
 }
 
@@ -154,9 +146,7 @@ void
 gcut_assert_equal_list_uint_helper (const GList    *expected,
                                     const GList    *actual,
                                     const gchar    *expression_expected,
-                                    const gchar    *expression_actual,
-                                    const gchar    *user_message_format,
-                                    ...)
+                                    const gchar    *expression_actual)
 {
     if (gcut_list_equal_uint(expected, actual)) {
         cut_test_pass();
@@ -174,7 +164,7 @@ gcut_assert_equal_list_uint_helper (const GList    *expected,
                                   inspected_expected,
                                   inspected_actual);
         message = cut_append_diff(message, inspected_expected, inspected_actual);
-        cut_test_fail_va_list(message, user_message_format);
+        cut_test_fail(message);
     }
 }
 
@@ -182,9 +172,7 @@ void
 gcut_assert_equal_list_string_helper (const GList    *expected,
                                       const GList    *actual,
                                       const gchar    *expression_expected,
-                                      const gchar    *expression_actual,
-                                      const gchar    *user_message_format,
-                                      ...)
+                                      const gchar    *expression_actual)
 {
     if (gcut_list_equal_string(expected, actual)) {
         cut_test_pass();
@@ -200,9 +188,9 @@ gcut_assert_equal_list_string_helper (const GList    *expected,
                                   "  actual: <%s>",
                                   expression_expected, expression_actual,
                                   inspected_expected,
-                                         inspected_actual);
+                                  inspected_actual);
         message = cut_append_diff(message, inspected_expected, inspected_actual);
-        cut_test_fail_va_list(message, user_message_format);
+        cut_test_fail(message);
     }
 }
 
@@ -212,9 +200,7 @@ gcut_assert_equal_list_enum_helper (GType           type,
                                     const GList    *actual,
                                     const gchar    *expression_type,
                                     const gchar    *expression_expected,
-                                    const gchar    *expression_actual,
-                                    const gchar    *user_message_format,
-                                    ...)
+                                    const gchar    *expression_actual)
 {
     if (gcut_list_equal_int(expected, actual)) {
         cut_test_pass();
@@ -234,7 +220,7 @@ gcut_assert_equal_list_enum_helper (GType           type,
                                   inspected_expected,
                                   inspected_actual);
         message = cut_append_diff(message, inspected_expected, inspected_actual);
-        cut_test_fail_va_list(message, user_message_format);
+        cut_test_fail(message);
     }
 }
 
@@ -244,9 +230,7 @@ gcut_assert_equal_list_flags_helper (GType           type,
                                      const GList    *actual,
                                      const gchar    *expression_type,
                                      const gchar    *expression_expected,
-                                     const gchar    *expression_actual,
-                                     const gchar    *user_message_format,
-                                     ...)
+                                     const gchar    *expression_actual)
 {
     if (gcut_list_equal_uint(expected, actual)) {
         cut_test_pass();
@@ -266,7 +250,7 @@ gcut_assert_equal_list_flags_helper (GType           type,
                                   inspected_expected,
                                   inspected_actual);
         message = cut_append_diff(message, inspected_expected, inspected_actual);
-        cut_test_fail_va_list(message, user_message_format);
+        cut_test_fail(message);
     }
 }
 
@@ -275,9 +259,7 @@ gcut_assert_equal_list_object_helper (const GList    *expected,
                                       const GList    *actual,
                                       GEqualFunc      equal_function,
                                       const gchar    *expression_expected,
-                                      const gchar    *expression_actual,
-                                      const gchar    *user_message_format,
-                                      ...)
+                                      const gchar    *expression_actual)
 {
     if (gcut_list_equal(expected, actual, equal_function)) {
         cut_test_pass();
@@ -297,18 +279,15 @@ gcut_assert_equal_list_object_helper (const GList    *expected,
                                   inspected_expected,
                                   inspected_actual);
         message = cut_append_diff(message, inspected_expected, inspected_actual);
-        cut_test_fail_va_list(message, user_message_format);
+        cut_test_fail(message);
     }
 }
 
 void
-gcut_assert_equal_hash_table_string_string_helper (
-    GHashTable     *expected,
-    GHashTable     *actual,
-    const gchar    *expression_expected,
-    const gchar    *expression_actual,
-    const gchar    *user_message_format,
-    ...)
+gcut_assert_equal_hash_table_string_string_helper (GHashTable  *expected,
+                                                   GHashTable  *actual,
+                                                   const gchar *expression_expected,
+                                                   const gchar *expression_actual)
 {
     if (gcut_hash_table_string_equal(expected, actual)) {
         cut_test_pass();
@@ -329,15 +308,13 @@ gcut_assert_equal_hash_table_string_string_helper (
         message = cut_append_diff(message, inspected_expected, inspected_actual);
         g_free(inspected_expected);
         g_free(inspected_actual);
-        cut_test_fail_va_list(message, user_message_format);
+        cut_test_fail(message);
     }
 }
 
 void
 gcut_assert_error_helper (GError         *error,
-                          const gchar    *expression_error,
-                          const gchar    *user_message_format,
-                          ...)
+                          const gchar    *expression_error)
 {
     if (error == NULL) {
         cut_test_pass();
@@ -346,10 +323,9 @@ gcut_assert_error_helper (GError         *error,
 
         inspected = cut_take_string(gcut_error_inspect(error));
         g_error_free(error);
-        cut_test_fail_va_list(cut_take_printf("expected: <%s> is NULL\n"
-                                              "  actual: <%s>",
-                                              expression_error, inspected),
-                              user_message_format);
+        cut_test_fail(cut_take_printf("expected: <%s> is NULL\n"
+                                      "  actual: <%s>",
+                                      expression_error, inspected));
     }
 }
 
@@ -357,9 +333,7 @@ void
 gcut_assert_equal_error_helper (const GError   *expected,
                                 const GError   *actual,
                                 const gchar    *expression_expected,
-                                const gchar    *expression_actual,
-                                const gchar    *user_message_format,
-                                ...)
+                                const gchar    *expression_actual)
 {
     if (gcut_error_equal(expected, actual)) {
         cut_test_pass();
@@ -380,8 +354,43 @@ gcut_assert_equal_error_helper (const GError   *expected,
         if (expected && actual)
             message = cut_append_diff(message,
                                       inspected_expected, inspected_actual);
-        cut_test_fail_va_list(message, user_message_format);
+        cut_test_fail(message);
     }
+}
+
+void
+gcut_assert_remove_path_helper (const gchar *path, ...)
+{
+    GError *remove_path_error = NULL;
+    gchar *full_path;
+    va_list args;
+
+    va_start(args, path);
+    full_path = cut_utils_build_path_va_list(path, args);
+    va_end(args);
+
+    cut_utils_remove_path_recursive(full_path, &remove_path_error);
+    gcut_assert_error_helper(remove_path_error, cut_take_string(full_path));
+}
+
+void
+gcut_assert_equal_time_val_helper (GTimeVal       *expected,
+                                   GTimeVal       *actual,
+                                   const gchar    *expression_expected,
+                                   const gchar    *expression_actual)
+{
+    const gchar *expected_string = NULL;
+    const gchar *actual_string = NULL;
+
+    if (expected)
+        expected_string = cut_take_string(g_time_val_to_iso8601(expected));
+    if (actual)
+        actual_string = cut_take_string(g_time_val_to_iso8601(actual));
+
+    cut_assert_equal_string_helper(expected_string,
+                                   actual_string,
+                                   expression_expected,
+                                   expression_actual);
 }
 
 void
@@ -390,9 +399,7 @@ gcut_assert_equal_enum_helper (GType           enum_type,
                                gint            actual,
                                const gchar    *expression_enum_type,
                                const gchar    *expression_expected,
-                               const gchar    *expression_actual,
-                               const gchar    *user_message_format,
-                               ...)
+                               const gchar    *expression_actual)
 {
     if (expected == actual) {
         cut_test_pass();
@@ -414,7 +421,7 @@ gcut_assert_equal_enum_helper (GType           enum_type,
                                   inspected_expected,
                                   inspected_actual);
         message = cut_append_diff(message, inspected_expected, inspected_actual);
-        cut_test_fail_va_list(message, user_message_format);
+        cut_test_fail(message);
     }
 }
 
@@ -424,9 +431,7 @@ gcut_assert_equal_flags_helper (GType           flags_type,
                                 gint            actual,
                                 const gchar    *expression_flags_type,
                                 const gchar    *expression_expected,
-                                const gchar    *expression_actual,
-                                const gchar    *user_message_format,
-                                ...)
+                                const gchar    *expression_actual)
 {
     if (expected == actual) {
         cut_test_pass();
@@ -448,7 +453,7 @@ gcut_assert_equal_flags_helper (GType           flags_type,
                                   inspected_expected,
                                   inspected_actual);
         message = cut_append_diff(message, inspected_expected, inspected_actual);
-        cut_test_fail_va_list(message, user_message_format);
+        cut_test_fail(message);
     }
 }
 
@@ -458,9 +463,7 @@ gcut_assert_equal_object_helper (GObject        *expected,
                                  GEqualFunc      equal_function,
                                  const gchar    *expression_expected,
                                  const gchar    *expression_actual,
-                                 const gchar    *expression_equal_function,
-                                 const gchar    *user_message_format,
-                                 ...)
+                                 const gchar    *expression_equal_function)
 {
     if (gcut_object_equal(expected, actual, equal_function)) {
         cut_test_pass();
@@ -497,7 +500,7 @@ gcut_assert_equal_object_helper (GObject        *expected,
         g_free(inspected_actual);
         g_string_free(message, TRUE);
 
-        cut_test_fail_va_list(fail_message, user_message_format);
+        cut_test_fail(fail_message);
     }
 }
 
@@ -505,21 +508,17 @@ void
 gcut_assert_equal_int64_helper (gint64          expected,
                                 gint64          actual,
                                 const char     *expression_expected,
-                                const char     *expression_actual,
-                                const char     *user_message_format,
-                                ...)
+                                const char     *expression_actual)
 {
     if (expected == actual) {
         cut_test_pass();
     } else {
-        cut_test_fail_va_list(
-            cut_take_printf("<%s == %s>\n"
-                            "expected: <%" G_GINT64_FORMAT ">\n"
-                            "  actual: <%" G_GINT64_FORMAT ">",
-                            expression_expected,
-                            expression_actual,
-                            expected, actual),
-            user_message_format);
+        cut_test_fail(cut_take_printf("<%s == %s>\n"
+                                      "expected: <%" G_GINT64_FORMAT ">\n"
+                                      "  actual: <%" G_GINT64_FORMAT ">",
+                                      expression_expected,
+                                      expression_actual,
+                                      expected, actual));
     }
 }
 
@@ -527,21 +526,17 @@ void
 gcut_assert_equal_uint64_helper (guint64         expected,
                                  guint64         actual,
                                  const char     *expression_expected,
-                                 const char     *expression_actual,
-                                 const char     *user_message_format,
-                                 ...)
+                                 const char     *expression_actual)
 {
     if (expected == actual) {
         cut_test_pass();
     } else {
-        cut_test_fail_va_list(
-            cut_take_printf("<%s == %s>\n"
-                            "expected: <%" G_GUINT64_FORMAT ">\n"
-                            "  actual: <%" G_GUINT64_FORMAT ">",
-                            expression_expected,
-                            expression_actual,
-                            expected, actual),
-            user_message_format);
+        cut_test_fail(cut_take_printf("<%s == %s>\n"
+                                      "expected: <%" G_GUINT64_FORMAT ">\n"
+                                      "  actual: <%" G_GUINT64_FORMAT ">",
+                                      expression_expected,
+                                      expression_actual,
+                                      expected, actual));
     }
 }
 

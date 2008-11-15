@@ -30,9 +30,7 @@ gdkcut_pixbuf_assert_equal_helper (const GdkPixbuf *expected,
                                    guint            threshold,
                                    const gchar     *expression_expected,
                                    const gchar     *expression_actual,
-                                   const gchar     *expression_threshold,
-                                   const gchar     *user_message_format,
-                                   ...)
+                                   const gchar     *expression_threshold)
 {
     if (gdkcut_pixbuf_equal_content(expected, actual, threshold)) {
         cut_test_pass();
@@ -78,9 +76,7 @@ gdkcut_pixbuf_assert_equal_helper (const GdkPixbuf *expected,
                 gchar *inspected_error;
 
                 inspected_error = gcut_error_inspect(error);
-                cut_test_register_result_va_list(NOTIFICATION,
-                                                 inspected_error,
-                                                 user_message_format);
+                cut_test_register_result(NOTIFICATION, inspected_error);
                 g_free(inspected_error);
             } else {
                 g_string_append_printf(message,
@@ -98,7 +94,7 @@ gdkcut_pixbuf_assert_equal_helper (const GdkPixbuf *expected,
         } else {
             fail_message = cut_take_string(g_string_free(message, FALSE));
         }
-        cut_test_fail_va_list(fail_message, user_message_format);
+        cut_test_fail(fail_message);
     }
 }
 
