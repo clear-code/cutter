@@ -2,6 +2,7 @@
 /config.h.in
 /cut-enum-types.c
 /cut-enum-types.h
+/cut-features.h
 /cut-marshalers.c
 /cut-marshalers.h
 /cut-version.h
