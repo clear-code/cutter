@@ -1,5 +1,7 @@
 2008-11-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-helper.h: mark cut_test_fail_va_list as deprecated.
+
 	* cutter/, gcutter/, gdkcutter-pixbuf/,
 	test/test-cut-assertions.c, test/test-cut-sequence-matcher.c:
 	assertion's optional user message is deprecated. use

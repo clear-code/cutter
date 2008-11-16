@@ -49,19 +49,16 @@ extern "C" {
  * extern "C" {
  * #endif
  *
- * #define my_assert_equal_int(expected, actual, ...)               \
+ * #define my_assert_equal_int(expected, actual)                    \
  *     cut_trace_with_info_expression(                              \
  *         my_assert_equal_int_helper((expected), (actual),         \
- *                                    # expected, # actual,         \
- *                                    ## __VA_ARGS__, NULL),        \
- *         my_assert_equal_int(expected, actual, ## __VA_ARGS__))
+ *                                    # expected, # actual),        \
+ *         my_assert_equal_int(expected, actual, __VA_ARGS__))
  *
  * void my_assert_equal_int (long expected,
  *                           long actual,
  *                           const char *expression_expected,
- *                           const char *expression_actual,
- *                           const char *user_message_format,
- *                           ...);
+ *                           const char *expression_actual);
  *
  * #ifdef __cplusplus
  * }
@@ -78,21 +75,17 @@ extern "C" {
  * my_assert_equal_int(glong expected,
  *                     glong actual,
  *                     const gchar *expression_expected,
- *                     const gchar *expression_actual,
- *                     const gchar *user_message_format,
- *                     ...)
+ *                     const gchar *expression_actual)
  * {
  *     if (expected == actual) {
  *         cut_test_pass();
  *     } else {
- *         cut_test_fail_va_list(
- *             cut_take_printf("<%s == %s>\n"
- *                             "expected: <%ld>\n"
- *                             "  actual: <%ld>",
- *                             expression_expected,
- *                             expression_actual,
- *                             expected, actual),
- *             user_message_format);
+ *         cut_test_fail(cut_take_printf("<%s == %s>\n"
+ *                                       "expected: <%ld>\n"
+ *                                       "  actual: <%ld>",
+ *                                       expression_expected,
+ *                                       expression_actual,
+ *                                       expected, actual));
  *     }
  * }
  * ]|
@@ -135,6 +128,7 @@ extern "C" {
 #define cut_test_fail(system_message)           \
     cut_test_terminate(FAILURE, system_message)
 
+#ifndef CUTTER_DISABLE_DEPRECATED
 /**
  * cut_test_fail_va_list:
  * @system_message: a failure message from testing
@@ -162,10 +156,14 @@ extern "C" {
  * ]|
  *
  * Since: 1.0.5
+ * Deprecated: 1.0.6: Use cut_test_fail() instead.
  */
-#define cut_test_fail_va_list(system_message, user_message_format)      \
-    cut_test_terminate_va_list(FAILURE, system_message,                 \
-                               user_message_format)
+#define cut_test_fail_va_list(system_message, ...) do           \
+{                                                               \
+    cut_set_message_backward_compatibility(__VA_ARGS__);        \
+    cut_test_terminate(FAILURE, system_message);                \
+} while (0)
+#endif
 
 
 /**
