@@ -45,16 +45,6 @@ text_invalid_prefix_function (void)
     test_static_function(); /* must not called! */
 }
 
-void
-startup (void)
-{
-}
-
-void
-shutdown (void)
-{
-}
-
 /*
 vi:nowrap:ai:expandtab:sw=4
 */

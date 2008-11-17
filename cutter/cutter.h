@@ -141,38 +141,89 @@ extern "C" {
  * setup:
  *
  * If you define setup() in your test program, cutter will
- * call your setup() before each your test is run.
+ * call your setup() before each your test is run. If you
+ * define cut_setup(), setup() is ignored.
  */
 void setup(void);
+
+/**
+ * cut_setup:
+ *
+ * If you define cut_setup() in your test program, cutter
+ * will call your cut_setup() before each your test is
+ * run. cut_setup() has priority over setup().
+ *
+ * Since: 1.0.6
+ */
+void cut_setup(void);
 
 /**
  * teardown:
  *
  * If you define teardown() in your test program, cutter will
  * call your teardown() after each your test is run even if
- * a test is failed.
+ * a test is failed. If you define cut_teardown(),
+ * teardown() is ignored.
  */
 void teardown(void);
+
+/**
+ * cut_teardown:
+ *
+ * If you define cut_teardown() in your test program, cutter
+ * will call your cut_teardown() after each your test is run
+ * even if a test is failed. cut_teardown() has priority
+ * over teardown().
+ *
+ * Since: 1.0.6
+ */
+void cut_teardown(void);
 
 /**
  * startup:
  *
  * If you define startup() in your test program, cutter will
- * call your startup() before each your test case is run.
+ * call your startup() before each your test case is run. If
+ * you define cut_startup(), startup() is ignored.
  *
  * Since: 0.8
  */
 void startup(void);
 
 /**
+ * cut_startup:
+ *
+ * If you define cut_startup() in your test program, cutter
+ * will call your cut_startup() before each your test case
+ * is run. cut_startup() has priority over startup().
+ *
+ * Since: 1.0.6
+ */
+void cut_startup(void);
+
+#ifndef SHUT_RD
+/**
  * shutdown:
  *
  * If you define shutdown() in your test program, cutter will
- * call your shutdown() after each your test case is run.
+ * call your shutdown() after each your test case is run. If
+ * you define cut_shutdown(), shutdown() is ignored.
  *
  * Since: 0.8
  */
 void shutdown(void);
+#endif
+
+/**
+ * cut_shutdown:
+ *
+ * If you define shutdown() in your test program, cutter
+ * will call your shutdown() after each your test case is
+ * run.  cut_shutdown() has priority over shutdown().
+ *
+ * Since: 1.0.6
+ */
+void cut_shutdown(void);
 
 /**
  * cut_add_data:

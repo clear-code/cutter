@@ -2,6 +2,8 @@
 
 #include <string.h>
 
+#include <gmodule.h>
+
 #include <cutter.h>
 #include <cutter/cut-loader.h>
 #include <cutter/cut-test-runner.h>
@@ -9,7 +11,8 @@
 #include "lib/cuttest-assertions.h"
 
 void test_load_function (void);
-void test_load_startup_and_shutdown_function (void);
+void data_fixture_function (void);
+void test_fixture_function (gconstpointer data);
 void test_fail_to_load (void);
 void test_load_test_iterator (void);
 
@@ -17,6 +20,7 @@ static CutLoader *loader;
 static CutTestCase *test_case;
 static CutRunContext *run_context;
 static gchar **test_names;
+static GModule *module;
 
 void
 setup (void)
@@ -25,6 +29,7 @@ setup (void)
     test_case = NULL;
     test_names = NULL;
     run_context = NULL;
+    module = NULL;
 }
 
 void
@@ -38,6 +43,8 @@ teardown (void)
         g_strfreev(test_names);
     if (run_context)
         g_object_unref(run_context);
+    if (module)
+        g_module_close(module);
 }
 
 static CutLoader *
@@ -125,22 +132,120 @@ test_load_function (void)
     cut_assert_equal_string_array(expected_functions, test_names);
 }
 
-void
-test_load_startup_and_shutdown_function (void)
+typedef struct _FixtureTestData
 {
-    CutStartupFunction startup_function = NULL;
-    CutShutdownFunction shutdown_function = NULL;
+    gchar *file_name;
+    gchar *startup_function_name;
+    gchar *setup_function_name;
+    gchar *teardown_function_name;
+    gchar *shutdown_function_name;
+} FixtureTestData;
 
-    loader = loader_new("test", "stub-loader-test." G_MODULE_SUFFIX);
+static FixtureTestData *
+fixture_test_data_new (gchar *file_name,
+                       gchar *startup_function_name,
+                       gchar *setup_function_name,
+                       gchar *teardown_function_name,
+                       gchar *shutdown_function_name)
+{
+    FixtureTestData *data;
+
+    data = g_new(FixtureTestData, 1);
+    data->file_name = g_strdup(file_name);
+    data->startup_function_name = g_strdup(startup_function_name);
+    data->setup_function_name = g_strdup(setup_function_name);
+    data->teardown_function_name = g_strdup(teardown_function_name);
+    data->shutdown_function_name = g_strdup(shutdown_function_name);
+
+    return data;
+}
+
+static void
+fixture_test_data_free (FixtureTestData *data)
+{
+    g_free(data->file_name);
+    g_free(data->startup_function_name);
+    g_free(data->setup_function_name);
+    g_free(data->teardown_function_name);
+    g_free(data->shutdown_function_name);
+    g_free(data);
+}
+
+
+void
+data_fixture_function (void)
+{
+    cut_add_data("without prefix",
+                 fixture_test_data_new("without-prefix." G_MODULE_SUFFIX,
+                                       "startup",
+                                       "setup",
+                                       "teardown",
+                                       "shutdown"),
+                 fixture_test_data_free,
+                 "with prefix",
+                 fixture_test_data_new("with-prefix." G_MODULE_SUFFIX,
+                                       "cut_startup",
+                                       "cut_setup",
+                                       "cut_teardown",
+                                       "cut_shutdown"),
+                 fixture_test_data_free,
+                 "all",
+                 fixture_test_data_new("all." G_MODULE_SUFFIX,
+                                       "cut_startup",
+                                       "cut_setup",
+                                       "cut_teardown",
+                                       "cut_shutdown"),
+                 fixture_test_data_free);
+}
+
+void
+test_fixture_function (gconstpointer data)
+{
+    const FixtureTestData *test_data = data;
+    CutStartupFunction expected_startup_function = NULL;
+    CutStartupFunction actual_startup_function = NULL;
+    CutShutdownFunction expected_shutdown_function = NULL;
+    CutShutdownFunction actual_shutdown_function = NULL;
+    CutSetupFunction expected_setup_function = NULL;
+    CutSetupFunction actual_setup_function = NULL;
+    CutTeardownFunction expected_teardown_function = NULL;
+    CutTeardownFunction actual_teardown_function = NULL;
+    gchar *so_filename;
+
+    loader = loader_new("fixture", test_data->file_name);
     test_case = cut_loader_load_test_case(loader);
     cut_assert(test_case);
 
-    g_object_get(G_OBJECT(test_case),
-                 "startup-function", &startup_function,
-                 "shutdown-function", &shutdown_function,
+    g_object_get(G_OBJECT(loader),
+                 "so-filename", &so_filename,
                  NULL);
-    cut_assert(startup_function);
-    cut_assert(shutdown_function);
+    module = g_module_open(so_filename,
+                           G_MODULE_BIND_LAZY | G_MODULE_BIND_LOCAL);
+    g_free(so_filename);
+    cut_assert_not_null(module);
+    cut_assert_true(g_module_symbol(module, test_data->startup_function_name,
+                                    (gpointer)&expected_startup_function));
+    cut_assert_true(g_module_symbol(module, test_data->setup_function_name,
+                                    (gpointer)&expected_setup_function));
+    cut_assert_true(g_module_symbol(module, test_data->teardown_function_name,
+                                    (gpointer)&expected_teardown_function));
+    cut_assert_true(g_module_symbol(module, test_data->shutdown_function_name,
+                                    (gpointer)&expected_shutdown_function));
+
+    g_object_get(G_OBJECT(test_case),
+                 "startup-function", &actual_startup_function,
+                 "setup-function", &actual_setup_function,
+                 "teardown-function", &actual_teardown_function,
+                 "shutdown-function", &actual_shutdown_function,
+                 NULL);
+    cut_assert_equal_pointer(expected_startup_function,
+                             actual_startup_function);
+    cut_assert_equal_pointer(expected_setup_function,
+                             actual_setup_function);
+    cut_assert_equal_pointer(expected_teardown_function,
+                             actual_teardown_function);
+    cut_assert_equal_pointer(expected_shutdown_function,
+                             actual_shutdown_function);
 }
 
 void

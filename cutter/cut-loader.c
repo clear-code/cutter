@@ -621,10 +621,16 @@ create_test_case (CutLoader *loader)
 
     priv = CUT_LOADER_GET_PRIVATE(loader);
 
-    g_module_symbol(priv->module, "setup", (gpointer)&setup);
-    g_module_symbol(priv->module, "teardown", (gpointer)&teardown);
-    g_module_symbol(priv->module, "startup", (gpointer)&startup);
-    g_module_symbol(priv->module, "shutdown", (gpointer)&shutdown);
+#define GET_HOOK_FUNCTION(name)                                         \
+    if (!g_module_symbol(priv->module, "cut_" #name, (gpointer)&name))  \
+        g_module_symbol(priv->module, #name, (gpointer)&name)
+
+    GET_HOOK_FUNCTION(setup);
+    GET_HOOK_FUNCTION(teardown);
+    GET_HOOK_FUNCTION(startup);
+    GET_HOOK_FUNCTION(shutdown);
+
+#undef GET_HOOK_FUNCTION
 
     filename = g_path_get_basename(priv->so_filename);
     if (g_str_has_prefix(filename, "lib")) {

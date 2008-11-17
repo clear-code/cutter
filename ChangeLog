@@ -1,3 +1,10 @@
+2008-11-18  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-loader.c, cutter/cutter.h, test/test-cut-loader.c,
+	test/fixtures/loader/fixture/: support cut_setup(),
+	cut_teardown(), cut_startup() and cut_shutdown() as fixture
+	functions because shutdown() is conflicted with shutdown(2).
+
 2008-11-16  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-helper.h: mark cut_test_fail_va_list as deprecated.
