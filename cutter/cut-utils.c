@@ -453,6 +453,7 @@ cut_utils_remove_path_recursive (const char *path, GError **error)
     if (g_file_test(path, G_FILE_TEST_IS_DIR)) {
         GDir *dir;
         const gchar *name;
+        gboolean success = TRUE;
 
         dir = g_dir_open(path, 0, error);
         if (!dir)
@@ -460,16 +461,18 @@ cut_utils_remove_path_recursive (const char *path, GError **error)
 
         while ((name = g_dir_read_name(dir))) {
             gchar *full_path;
-            gboolean success;
 
             full_path = g_build_filename(path, name, NULL);
             success = cut_utils_remove_path_recursive(full_path, error);
             g_free(full_path);
             if (!success)
-                return FALSE;
+                break;
         }
 
         g_dir_close(dir);
+
+        if (!success)
+            return FALSE;
 
         return cut_utils_remove_path(path, error);
     } else {

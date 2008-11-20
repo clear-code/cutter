@@ -1,5 +1,8 @@
 2008-11-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-utils.c (cut_utils_remove_path_recursive): ensure
+	close directory.
+
 	* cutter/cut-test-utils.h (cut_remove_path): don't use
 	', ## __VA_ARGS__'. required terminated NULL from users.
 
