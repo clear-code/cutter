@@ -1,3 +1,12 @@
+2008-11-20  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-test-utils.h (cut_remove_path): don't use
+	', ## __VA_ARGS__'. required terminated NULL from users.
+
+	* sample/cairo/nil-surface.c,
+	test/gdkcutter-pixbuf/test-gdkcut-pixbuf-assertions.c,
+	test/test-cut-utils.c: follow the above change.
+
 2008-11-18  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-loader.c, cutter/cutter.h, test/test-cut-loader.c,

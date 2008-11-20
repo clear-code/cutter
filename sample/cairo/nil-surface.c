@@ -95,7 +95,7 @@ teardown (void)
     if (surface)
         cairo_surface_destroy (surface);
     if (file_name) {
-        cut_remove_path (file_name);
+        cut_remove_path (file_name, NULL);
         free (file_name);
     }
 }
@@ -275,7 +275,7 @@ test_nil_surface (void *data)
     SurfaceTestData *test_data = data;
 
     if (test_data->file_name) {
-        cut_remove_path (test_data->file_name);
+        cut_remove_path (test_data->file_name, NULL);
         file_name = strdup (test_data->file_name);
     }
 

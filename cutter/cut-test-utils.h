@@ -258,7 +258,7 @@ extern "C" {
 /**
  * cut_remove_path:
  * @path: a first element of the path to be removed.
- * @...: remaining elements in path.
+ * @...: remaining elements in path. NULL-terminate.
  *
  * Removes @path and it's children recursively. It doesn't
  * report any errors.
@@ -268,7 +268,7 @@ extern "C" {
 #define cut_remove_path(path, ...)                                      \
     cut_utils_remove_path_recursive_force(                              \
         cut_take_string(                                                \
-            cut_utils_build_path(path, ## __VA_ARGS__, NULL)))
+            cut_utils_build_path(path, __VA_ARGS__)))
 
 /**
  * cut_equal_string:

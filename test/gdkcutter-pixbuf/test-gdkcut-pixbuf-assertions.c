@@ -83,7 +83,7 @@ teardown (void)
         g_object_unref(pixbuf2);
 
     diff_image_path = g_strdup_printf("%s-%u.png", __FILE__, fail_line);
-    cut_remove_path(diff_image_path);
+    cut_remove_path(diff_image_path, NULL);
     g_free(diff_image_path);
 }
 
