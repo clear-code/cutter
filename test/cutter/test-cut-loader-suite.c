@@ -1,7 +1,7 @@
 #include <cutter.h>
 #include <cutter/cut-loader.h>
 
-#include <lib/cuttest-utils.h>
+#include "../lib/cuttest-utils.h"
 
 void test_load_valid (void);
 void test_load_invalid (void);

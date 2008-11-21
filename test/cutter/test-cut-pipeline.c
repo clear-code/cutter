@@ -9,7 +9,7 @@
 #include <cutter/cut-pipeline.h>
 #include <cutter/cut-runner.h>
 
-#include "lib/cuttest-assertions.h"
+#include "../lib/cuttest-assertions.h"
 
 #ifdef HAVE_UNISTD_H
 #  include <unistd.h>

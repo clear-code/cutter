@@ -3,7 +3,7 @@
 #include <gcutter.h>
 #include <cutter/cut-file-stream-reader.h>
 
-#include "lib/cuttest-assertions.h"
+#include "../lib/cuttest-assertions.h"
 
 void test_start_all_success (void);
 void test_start_error_test (void);

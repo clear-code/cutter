@@ -5,7 +5,7 @@
 #include <cutter/cut-test-iterator.h>
 #include <cutter/cut-pipeline.h>
 
-#include "lib/cuttest-assertions.h"
+#include "../lib/cuttest-assertions.h"
 
 void test_set_data (void);
 void test_set_failed (void);

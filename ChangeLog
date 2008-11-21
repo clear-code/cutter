@@ -1,5 +1,8 @@
 2008-11-21  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/test-cut*.c: move to ...
+	* test/cutter/: ... here.
+
 	* gcutter/gcut-io-channel-string.[ch],
 	test/gcutter/test-gcut-io-channel-string.c: rename to ...
 	* gcutter/gcut-string-io-channel.[ch],

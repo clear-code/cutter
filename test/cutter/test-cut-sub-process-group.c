@@ -9,7 +9,7 @@
 #include <cutter/cut-pipeline.h>
 #include <cutter/cut-runner.h>
 
-#include "lib/cuttest-assertions.h"
+#include "../lib/cuttest-assertions.h"
 
 void test_run (void);
 void test_run_async (void);

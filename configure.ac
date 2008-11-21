@@ -570,6 +570,7 @@ AC_CONFIG_FILES([Makefile
 		 test/fixtures/path/parent/sub/Makefile
 		 test/fixtures/test-context/Makefile
 		 test/lib/Makefile
+		 test/cutter/Makefile
 		 test/gcutter/Makefile
 		 test/gdkcutter-pixbuf/Makefile
 		 po/Makefile.in

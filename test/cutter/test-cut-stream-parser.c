@@ -1,7 +1,7 @@
 #include <gcutter.h>
 #include <cutter/cut-stream-parser.h>
 #include <cutter/cut-backtrace-entry.h>
-#include "lib/cuttest-event-receiver.h"
+#include "../lib/cuttest-event-receiver.h"
 
 void test_start_run (void);
 void test_ready_test_suite (void);

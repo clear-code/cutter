@@ -1,7 +1,7 @@
 #include <cutter.h>
 #include <cutter/cut-module-factory.h>
 
-#include "lib/cuttest-utils.h"
+#include "../lib/cuttest-utils.h"
 
 void test_load_module (void);
 void test_collect_names (void);

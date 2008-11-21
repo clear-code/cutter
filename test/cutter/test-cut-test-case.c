@@ -2,7 +2,7 @@
 #include <cutter/cut-test-case.h>
 #include <cutter/cut-test-runner.h>
 
-#include "lib/cuttest-assertions.h"
+#include "../lib/cuttest-assertions.h"
 
 void test_setup(void);
 void test_teardown(void);

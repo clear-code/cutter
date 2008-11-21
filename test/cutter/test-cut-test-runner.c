@@ -1,7 +1,7 @@
 #include <cutter.h>
 #include <cutter/cut-test-runner.h>
 
-#include "lib/cuttest-utils.h"
+#include "../lib/cuttest-utils.h"
 
 void test_sort_test_cases (void);
 void test_n_ (void);

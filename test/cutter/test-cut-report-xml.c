@@ -2,7 +2,7 @@
 #include <cutter/cut-test-runner.h>
 #include <cutter/cut-listener.h>
 #include <cutter/cut-report.h>
-#include "lib/cuttest-utils.h"
+#include "../lib/cuttest-utils.h"
 
 void test_report_success (void);
 void test_report_failure (void);

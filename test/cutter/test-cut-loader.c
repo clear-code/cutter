@@ -8,7 +8,7 @@
 #include <cutter/cut-loader.h>
 #include <cutter/cut-test-runner.h>
 
-#include "lib/cuttest-assertions.h"
+#include "../lib/cuttest-assertions.h"
 
 void test_load_function (void);
 void data_fixture_function (void);

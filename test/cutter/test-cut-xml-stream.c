@@ -2,7 +2,7 @@
 #include <cutter/cut-test-runner.h>
 #include <cutter/cut-listener.h>
 #include <cutter/cut-stream.h>
-#include "lib/cuttest-utils.h"
+#include "../lib/cuttest-utils.h"
 
 #include <stdlib.h>
 #ifdef HAVE_UNISTD_H

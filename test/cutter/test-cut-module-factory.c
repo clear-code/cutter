@@ -2,7 +2,7 @@
 #include <cutter/cut-module-factory.h>
 #include <cutter/cut-module-factory-utils.h>
 
-#include "lib/cuttest-utils.h"
+#include "../lib/cuttest-utils.h"
 
 void test_module_names (void);
 void test_module_arguments (void);

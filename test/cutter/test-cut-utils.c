@@ -2,7 +2,7 @@
 
 #include <gcutter.h>
 #include <cutter/cut-utils.h>
-#include "lib/cuttest-utils.h"
+#include "../lib/cuttest-utils.h"
 
 void test_inspect_memory (void);
 void test_compare_string_array (void);

@@ -2,7 +2,7 @@
 #include <cutter/cut-test.h>
 #include <cutter/cut-test-runner.h>
 
-#include "lib/cuttest-assertions.h"
+#include "../lib/cuttest-assertions.h"
 
 void test_run(void *data);
 

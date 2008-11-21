@@ -1,5 +1,5 @@
 #include <gcutter.h>
-#include "lib/cuttest-utils.h"
+#include "../lib/cuttest-utils.h"
 
 void          cut_set_cutter_command_path (const char *argv0);
 const char   *cut_get_cutter_command_path (void);

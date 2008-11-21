@@ -7,7 +7,7 @@
 #include <cutter/cut-test-case.h>
 #include <cutter/cut-test-container.h>
 
-#include "lib/cuttest-utils.h"
+#include "../lib/cuttest-utils.h"
 
 void test_create_test_suite (void);
 

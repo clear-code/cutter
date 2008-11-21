@@ -3,7 +3,7 @@
 #include <cutter/cut-test-result.h>
 #include <cutter/cut-loader.h>
 #include <cutter/cut-utils.h>
-#include "lib/cuttest-assertions.h"
+#include "../lib/cuttest-assertions.h"
 
 void test_set_attribute (void);
 void test_bug_id (void);
