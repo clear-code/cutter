@@ -21,7 +21,7 @@
 #define __GCUT_TEST_UTILS_H__
 
 #include <gcutter/gcut-public.h>
-#include <gcutter/gcut-io-channel-string.h>
+#include <gcutter/gcut-string-io-channel.h>
 
 G_BEGIN_DECLS
 

@@ -18,7 +18,7 @@ noinst_LTLIBRARIES = 			\
 	test-gcut-enum.la		\
 	test-gcut-object.la		\
 	test-gcut-list.la		\
-	test-gcut-io-channel-string.la	\
+	test-gcut-string-io-channel.la	\
 	test-gcut-egg.la		\
 	test-gcut-io.la			\
 	test-gcut-key-file.la
@@ -41,7 +41,7 @@ test_gcut_hash_table_la_SOURCES		= test-gcut-hash-table.c
 test_gcut_enum_la_SOURCES		= test-gcut-enum.c
 test_gcut_object_la_SOURCES		= test-gcut-object.c
 test_gcut_list_la_SOURCES		= test-gcut-list.c
-test_gcut_io_channel_string_la_SOURCES	= test-gcut-io-channel-string.c
+test_gcut_string_io_channel_la_SOURCES	= test-gcut-string-io-channel.c
 test_gcut_egg_la_SOURCES		= test-gcut-egg.c
 test_gcut_io_la_SOURCES			= test-gcut-io.c
 test_gcut_key_file_la_SOURCES		= test-gcut-key-file.c

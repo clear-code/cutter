@@ -17,14 +17,14 @@
  *
  */
 
-#ifndef __GCUT_IO_CHANNEL_STRING_H__
-#define __GCUT_IO_CHANNEL_STRING_H__
+#ifndef __GCUT_STRING_IO_CHANNEL_H__
+#define __GCUT_STRING_IO_CHANNEL_H__
 
 #include <glib-object.h>
 
 G_BEGIN_DECLS
 
-GIOChannel    *gcut_io_channel_string_new        (const gchar *initial);
+GIOChannel    *gcut_string_io_channel_new        (const gchar *initial);
 GString       *gcut_string_io_channel_get_string (GIOChannel  *channel);
 void           gcut_string_io_channel_clear      (GIOChannel  *channel);
 gsize          gcut_string_io_channel_get_buffer_limit
@@ -48,7 +48,7 @@ void           gcut_string_io_channel_set_pipe_mode
 
 G_END_DECLS
 
-#endif /* __GCUT_IO_CHANNEL_STRING_H__ */
+#endif /* __GCUT_STRING_IO_CHANNEL_H__ */
 
 /*
 vi:nowrap:ai:expandtab:sw=4:ts=4

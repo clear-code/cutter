@@ -80,7 +80,7 @@ test_new (void)
     gsize length;
     GError *error = NULL;
 
-    channel = gcut_io_channel_string_new("XXX");
+    channel = gcut_string_io_channel_new("XXX");
     cut_assert_equal_string("XXX",
                             gcut_string_io_channel_get_string(channel)->str);
 
@@ -99,7 +99,7 @@ test_new_null (void)
     gsize length;
     GError *error = NULL;
 
-    channel = gcut_io_channel_string_new(NULL);
+    channel = gcut_string_io_channel_new(NULL);
     cut_assert_equal_string("",
                             gcut_string_io_channel_get_string(channel)->str);
 
@@ -124,7 +124,7 @@ test_read_write (void)
     gsize length;
     GError *error = NULL;
 
-    channel = gcut_io_channel_string_new(NULL);
+    channel = gcut_string_io_channel_new(NULL);
     g_io_channel_set_encoding(channel, NULL, &error);
     gcut_assert_error(error);
     cut_assert_equal_string("",
@@ -156,7 +156,7 @@ test_clear (void)
     gsize length;
     GError *error = NULL;
 
-    channel = gcut_io_channel_string_new("XXX");
+    channel = gcut_string_io_channel_new("XXX");
     cut_assert_equal_string("XXX",
                             gcut_string_io_channel_get_string(channel)->str);
 
@@ -188,7 +188,7 @@ test_source (void)
     GIOCondition target_condition = 0;
     GError *error = NULL;
 
-    channel = gcut_io_channel_string_new(NULL);
+    channel = gcut_string_io_channel_new(NULL);
     g_io_channel_set_encoding(channel, NULL, &error);
     gcut_assert_error(error);
 
@@ -240,7 +240,7 @@ test_buffer_limit_block (void)
     gboolean timed_out = FALSE;
     GError *error = NULL;
 
-    channel = gcut_io_channel_string_new(NULL);
+    channel = gcut_string_io_channel_new(NULL);
     g_io_channel_set_encoding(channel, NULL, &error);
     gcut_assert_error(error);
     g_io_channel_set_buffered(channel, FALSE);
@@ -276,7 +276,7 @@ test_buffer_limit_non_block (void)
     GIOStatus status;
     GError *error = NULL;
 
-    channel = gcut_io_channel_string_new(NULL);
+    channel = gcut_string_io_channel_new(NULL);
     g_io_channel_set_encoding(channel, NULL, &error);
     gcut_assert_error(error);
     g_io_channel_set_buffered(channel, FALSE);
@@ -330,7 +330,7 @@ test_limit (void)
     gboolean timeout_emitted = FALSE;
     GError *error = NULL;
 
-    channel = gcut_io_channel_string_new(NULL);
+    channel = gcut_string_io_channel_new(NULL);
     g_io_channel_set_encoding(channel, NULL, &error);
     gcut_assert_error(error);
     g_io_channel_set_buffered(channel, FALSE);
@@ -358,7 +358,7 @@ test_limit_non_block (void)
     GIOStatus status;
     GError *error = NULL;
 
-    channel = gcut_io_channel_string_new(NULL);
+    channel = gcut_string_io_channel_new(NULL);
     g_io_channel_set_encoding(channel, NULL, &error);
     gcut_assert_error(error);
     g_io_channel_set_buffered(channel, FALSE);
@@ -391,7 +391,7 @@ test_read_fail (void)
     GIOStatus status;
     GError *error = NULL;
 
-    channel = gcut_io_channel_string_new("data\n");
+    channel = gcut_string_io_channel_new("data\n");
     g_io_channel_set_encoding(channel, NULL, &error);
     gcut_assert_error(error);
     g_io_channel_set_buffered(channel, FALSE);
@@ -422,7 +422,7 @@ test_pipe_mode (void)
     GIOStatus status;
     GError *error = NULL;
 
-    channel = gcut_io_channel_string_new(initial_data);
+    channel = gcut_string_io_channel_new(initial_data);
     g_io_channel_set_encoding(channel, NULL, &error);
     gcut_assert_error(error);
     g_io_channel_set_buffered(channel, FALSE);
@@ -462,7 +462,7 @@ test_pipe_mode_eof (void)
     GIOStatus status;
     GError *error = NULL;
 
-    channel = gcut_io_channel_string_new(NULL);
+    channel = gcut_string_io_channel_new(NULL);
     g_io_channel_set_encoding(channel, NULL, &error);
     gcut_assert_error(error);
     g_io_channel_set_buffered(channel, FALSE);

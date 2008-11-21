@@ -33,7 +33,7 @@ gcutter_public_headers =		\
 	gcut-enum.h			\
 	gcut-types.h			\
 	gcut-object.h			\
-	gcut-io-channel-string.h	\
+	gcut-string-io-channel.h	\
 	gcut-egg.h			\
 	gcut-io.h			\
 	gcut-key-file.h			\
@@ -60,7 +60,7 @@ libgcutter_la_SOURCES =			\
 	gcut-enum.c			\
 	gcut-assertions-helper.c	\
 	gcut-object.c			\
-	gcut-io-channel-string.c	\
+	gcut-string-io-channel.c	\
 	gcut-egg.c			\
 	gcut-io.c			\
 	gcut-key-file.c			\

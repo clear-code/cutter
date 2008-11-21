@@ -1,5 +1,10 @@
 2008-11-21  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-io-channel-string.[ch],
+	test/gcutter/test-gcut-io-channel-string.c: rename to ...
+	* gcutter/gcut-string-io-channel.[ch],
+	test/gcutter/test-gcut-string-io-channel.c: ... them.
+
 	* cutter/cut-utils.c, test/test-cut-utils.c: cleanup.
 
 	* cutter/cut-assertions.h
