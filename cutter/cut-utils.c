@@ -473,13 +473,9 @@ cut_utils_remove_path_recursive (const char *path, GError **error)
 
         if (!success)
             return FALSE;
-
-        return cut_utils_remove_path(path, error);
-    } else {
-        return cut_utils_remove_path(path, error);
     }
 
-    return TRUE;
+    return cut_utils_remove_path(path, error);
 }
 
 void

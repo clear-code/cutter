@@ -32,7 +32,7 @@ void
 teardown (void)
 {
     if (tmp_dir) {
-        cut_utils_remove_path_recursive(tmp_dir, NULL);
+        cut_remove_path(tmp_dir, NULL);
         g_free(tmp_dir);
     }
 

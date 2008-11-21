@@ -1,5 +1,7 @@
 2008-11-21  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-utils.c, test/test-cut-utils.c: cleanup.
+
 	* cutter/cut-assertions.h
 	(cut_assert_equal_string_array_with_free): fix type.
 
