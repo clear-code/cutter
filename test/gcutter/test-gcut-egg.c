@@ -11,6 +11,7 @@
 void test_hatch (void);
 void test_io (void);
 void test_flags (void);
+void test_env (void);
 
 static GCutEgg *egg;
 static GError *expected_error;
@@ -199,6 +200,36 @@ test_flags (void)
 
     wait_reaped();
     cut_assert_equal_string("XXX\n", output_string->str);
+    cut_assert_equal_string("", error_string->str);
+}
+
+void
+test_env (void)
+{
+    GError *error = NULL;
+    const gchar command[] = "env";
+    gchar *env[] = {
+        "name1=value1", "name2=value2", NULL
+    };
+
+    egg = gcut_egg_new(command, NULL);
+    setup_egg(egg);
+
+    gcut_egg_set_env(egg,
+                     "name1", "value1",
+                     "no-value", NULL,
+                     "name2", "value2",
+                     NULL);
+    cut_assert_equal_string_array_with_free(env, gcut_egg_get_env(egg));
+
+    gcut_egg_set_flags(egg, G_SPAWN_SEARCH_PATH);
+    gcut_egg_hatch(egg, &error);
+    gcut_assert_error(error);
+
+    wait_reaped();
+    cut_assert_equal_string("name1=value1\n"
+                            "name2=value2\n",
+                            output_string->str);
     cut_assert_equal_string("", error_string->str);
 }
 

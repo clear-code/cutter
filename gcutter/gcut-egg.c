@@ -46,6 +46,7 @@ typedef struct _GCutEggPrivate	GCutEggPrivate;
 struct _GCutEggPrivate
 {
     gchar **command;
+    GArray *env;
     GSpawnFlags flags;
     GSpawnFlags must_flags;
 
@@ -172,6 +173,7 @@ gcut_egg_init (GCutEgg *egg)
     GCutEggPrivate *priv = GCUT_EGG_GET_PRIVATE(egg);
 
     priv->command = NULL;
+    priv->env = NULL;
     priv->flags = G_SPAWN_SEARCH_PATH;
     priv->must_flags = G_SPAWN_DO_NOT_REAP_CHILD;
 
@@ -407,6 +409,80 @@ gcut_egg_set_flags (GCutEgg *egg, GSpawnFlags flags)
     GCUT_EGG_GET_PRIVATE(egg)->flags = flags;
 }
 
+gchar **
+gcut_egg_get_env (GCutEgg *egg)
+{
+    GCutEggPrivate *priv;
+    GArray *env;
+    guint i;
+
+    priv = GCUT_EGG_GET_PRIVATE(egg);
+    if (!priv->env)
+        return NULL;
+
+    env = g_array_new(TRUE, TRUE, sizeof(gchar *));
+    for (i = 0; i < priv->env->len; i += 2) {
+        gchar *pair;
+
+        pair = g_strconcat(g_array_index(priv->env, gchar *, i),
+                           "=",
+                           g_array_index(priv->env, gchar *, i + 1),
+                           NULL);
+        g_array_append_val(env, pair);
+    }
+
+    return (gchar **)g_array_free(env, FALSE);
+}
+
+void
+gcut_egg_set_env (GCutEgg *egg, const gchar *name, ...)
+{
+    GCutEggPrivate *priv;
+    va_list args;
+
+    if (!name)
+        return;
+
+    priv = GCUT_EGG_GET_PRIVATE(egg);
+    if (!priv->env)
+        priv->env = g_array_new(TRUE, TRUE, sizeof(gchar *));
+
+    va_start(args, name);
+    while (name) {
+        const gchar *value;
+        guint i;
+        gboolean found = FALSE;
+
+        value = va_arg(args, gchar *);
+        for (i = 0; i < priv->env->len; i += 2) {
+            const gchar *_name;
+
+            _name = g_array_index(priv->env, const gchar *, i);
+            if (g_str_equal(name, _name)) {
+                if (value) {
+                    g_array_index(priv->env, gchar *, i + 1) = g_strdup(value);
+                } else {
+                    g_array_remove_index(priv->env, i + 1);
+                    g_array_remove_index(priv->env, i);
+                }
+                found = TRUE;
+                break;
+            }
+        }
+
+        if (!found && value) {
+            const gchar *duped_string;
+
+            duped_string = g_strdup(name);
+            g_array_append_val(priv->env, duped_string);
+            duped_string = g_strdup(value);
+            g_array_append_val(priv->env, duped_string);
+        }
+        name = va_arg(args, gchar *);
+    }
+    va_end(args);
+}
+
 static void
 reap_child (GCutEgg *egg, GPid pid, gint status)
 {
@@ -567,7 +643,7 @@ gcut_egg_hatch (GCutEgg *egg, GError **error)
 
     success = g_spawn_async_with_pipes(NULL,
                                        priv->command,
-                                       NULL,
+                                       gcut_egg_get_env(egg),
                                        priv->flags | priv->must_flags,
                                        NULL,
                                        NULL,

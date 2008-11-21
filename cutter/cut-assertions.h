@@ -365,7 +365,7 @@ extern "C" {
     cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
         cut_assert_equal_string_array_helper(                           \
-            expected, cut_take_string_array(actual),                    \
+            expected, (char **)cut_take_string_array(actual),           \
             #expected, #actual),                                        \
         cut_assert_equal_string_array_with_free(expected, actual,       \
                                                 __VA_ARGS__));          \

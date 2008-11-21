@@ -81,6 +81,11 @@ void          gcut_egg_set_flags     (GCutEgg      *egg,
                                       GSpawnFlags   flags);
 GSpawnFlags   gcut_egg_get_flags     (GCutEgg      *egg);
 
+void          gcut_egg_set_env       (GCutEgg      *egg,
+                                      const gchar  *name,
+                                      ...) G_GNUC_NULL_TERMINATED;
+gchar       **gcut_egg_get_env       (GCutEgg      *egg);
+
 gboolean      gcut_egg_hatch         (GCutEgg      *egg,
                                       GError      **error);
 void          gcut_egg_close         (GCutEgg      *egg);

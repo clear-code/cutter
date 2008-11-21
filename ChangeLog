@@ -1,3 +1,11 @@
+2008-11-21  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-assertions.h
+	(cut_assert_equal_string_array_with_free): fix type.
+
+	* gcutter/gcut-egg.[ch], test/gcutter/test-gcut-egg.c: support env
+	customize.
+
 2008-11-20  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-utils.c (cut_utils_remove_path_recursive): ensure
