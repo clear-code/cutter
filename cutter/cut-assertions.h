@@ -96,7 +96,7 @@ extern "C" {
     cut_trace_with_info_expression(                                     \
         cut_assert_false_helper((expression) ? CUT_TRUE : CUT_FALSE,    \
                                 #expression),                           \
-        cut_assert_false(expression, ## __VA_ARGS__));                  \
+        cut_assert_false(expression, __VA_ARGS__));                     \
 } while (0)
 
 /**

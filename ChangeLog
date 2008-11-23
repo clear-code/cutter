@@ -1,3 +1,8 @@
+2008-11-23  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-assertions.h (cut_assert_false): don't use
+	', ## __VA_ARGS__'.
+
 2008-11-21  Kouhei Sutou  <kou@cozmixng.org>
 
 	* test/test-cut*.c: move to ...
