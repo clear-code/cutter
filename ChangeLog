@@ -1,5 +1,8 @@
 2008-11-23  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-string-io-channel.c (gcut_string_io_channel_free):
+	add NULL check.
+
 	* cutter/cut-assertions.h (cut_assert_false): don't use
 	', ## __VA_ARGS__'.
 

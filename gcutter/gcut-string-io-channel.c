@@ -328,7 +328,8 @@ gcut_string_io_channel_free (GIOChannel *channel)
 {
     GCutStringIOChannel *string_channel = (GCutStringIOChannel *)channel;
 
-    g_string_free(string_channel->string, TRUE);
+    if (string_channel->string)
+        g_string_free(string_channel->string, TRUE);
     g_free(string_channel);
 }
 
