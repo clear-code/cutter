@@ -31,6 +31,7 @@ HFILE_GLOB =								\
 	$(top_srcdir)/gcutter/gcut-list.h				\
 	$(top_srcdir)/gcutter/gcut-object.h				\
 	$(top_srcdir)/gcutter/gcut-value-equal.h			\
+	$(top_srcdir)/gcutter/gcut-inspect.h				\
 	$(top_srcdir)/gdkcutter-pixbuf/gdkcutter-pixbuf.h		\
 	$(top_srcdir)/gdkcutter-pixbuf/gdkcut-pixbuf.h			\
 	$(top_srcdir)/gdkcutter-pixbuf/gdkcut-pixbuf-assertions.h

@@ -1,5 +1,9 @@
 2008-11-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-inspect.[ch], test/gcutter/test-gcut-inspect.c: add.
+	* doc/reference/Makefile.am, doc/reference/cutter-docs.sgml: add
+	gcut-inspect.h.
+
 	* gcutter/gcut-types.h: document GCutInspectFunction.
 
 2008-11-23  Kouhei Sutou  <kou@cozmixng.org>
