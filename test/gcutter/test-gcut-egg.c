@@ -12,6 +12,7 @@ void test_hatch (void);
 void test_io (void);
 void test_flags (void);
 void test_env (void);
+void test_kill (void);
 
 static GCutEgg *egg;
 static GError *expected_error;
@@ -231,6 +232,24 @@ test_env (void)
                             "name2=value2\n",
                             output_string->str);
     cut_assert_equal_string("", error_string->str);
+}
+
+
+void
+test_kill (void)
+{
+    GError *error = NULL;
+    const gchar command[] = "dd";
+
+    egg = gcut_egg_new(command, NULL);
+    setup_egg(egg);
+
+    gcut_egg_set_flags(egg, G_SPAWN_SEARCH_PATH);
+    gcut_egg_hatch(egg, &error);
+    gcut_assert_error(error);
+
+    gcut_egg_kill(egg, SIGKILL);
+    wait_reaped();
 }
 
 /*
