@@ -24,9 +24,34 @@
 
 G_BEGIN_DECLS
 
-typedef void    (*GCutInspectFunc) (GString *string,
-                                    gconstpointer data,
-                                    gpointer user_data);
+/**
+ * SECTION: gcut-types
+ * @title: Types for GLib support
+ * @short_description: Types that is used in test with GLib support.
+ *
+ * There are some types to be used in test with GLib support.
+ */
+
+/**
+ * GCutInspectFunction:
+ * @string: the #GString to be stored inspected result.
+ * @data: the data element to be inspected.
+ * @user_data: user data to pass to the function.
+ *
+ * Specifies the type of function which is called when the
+ * @data element is inspected. It is passed the pointer to
+ * the data element, should inspect @data and append
+ * inspected string to @string.
+ *
+ * Since: 1.0.5
+ */
+typedef void    (*GCutInspectFunction) (GString *string,
+                                        gconstpointer data,
+                                        gpointer user_data);
+
+#ifndef CUTTER_DISABLE_DEPRECATED
+#  define GCutInspectFunc GCutInspectFunction
+#endif
 
 G_END_DECLS
 

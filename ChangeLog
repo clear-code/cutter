@@ -1,3 +1,7 @@
+2008-11-27  Kouhei Sutou  <kou@cozmixng.org>
+
+	* gcutter/gcut-types.h: document GCutInspectFunction.
+
 2008-11-23  Kouhei Sutou  <kou@cozmixng.org>
 
 	* gcutter/gcut-string-io-channel.c (gcut_string_io_channel_free):
