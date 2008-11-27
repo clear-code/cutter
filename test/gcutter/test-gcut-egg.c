@@ -239,7 +239,7 @@ void
 test_kill (void)
 {
     GError *error = NULL;
-    const gchar command[] = "dd";
+    const gchar command[] = "cat";
 
     egg = gcut_egg_new(command, NULL);
     setup_egg(egg);
