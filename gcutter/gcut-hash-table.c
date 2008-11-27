@@ -26,6 +26,7 @@
 
 #include "gcut-hash-table.h"
 #include "gcut-test-utils.h"
+#include "gcut-inspect.h"
 
 typedef struct _EqualData
 {
@@ -143,21 +144,13 @@ gcut_hash_table_string_equal (GHashTable *hash1, GHashTable *hash2)
     return gcut_hash_table_equal(hash1, hash2, equal_string);
 }
 
-static void
-inspect_string (GString *string, gconstpointer data, gpointer user_data)
-{
-    const gchar *value = data;
-
-    if (value)
-        g_string_append_printf(string, "\"%s\"", value);
-    else
-        g_string_append(string, "NULL");
-}
-
 gchar *
 gcut_hash_table_string_string_inspect (GHashTable *hash)
 {
-    return gcut_hash_table_inspect(hash, inspect_string, inspect_string, NULL);
+    return gcut_hash_table_inspect(hash,
+                                   gcut_string_inspect,
+                                   gcut_string_inspect,
+                                   NULL);
 }
 
 GHashTable *
