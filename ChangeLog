@@ -1,5 +1,8 @@
 2008-11-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-assertions.h, gcutter/gcut-assertions-helper.[ch],
+	test/gcutter/test-gcut-assertions.c: add gcut_assert_equal_hash_table().
+
 	* gcutter/gcut-hash-table.c: use gcut_string_inspect().
 
 	* gcutter/gcut-inspect.[ch], test/gcutter/test-gcut-inspect.c: add.

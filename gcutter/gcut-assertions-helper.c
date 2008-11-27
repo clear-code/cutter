@@ -83,7 +83,7 @@ void
 gcut_assert_equal_list_helper (const GList    *expected,
                                const GList    *actual,
                                GEqualFunc      equal_function,
-                               GCutInspectFunc inspect_function,
+                               GCutInspectFunction inspect_function,
                                gpointer        inspect_user_data,
                                const gchar    *expression_expected,
                                const gchar    *expression_actual,
@@ -279,6 +279,45 @@ gcut_assert_equal_list_object_helper (const GList    *expected,
                                   inspected_expected,
                                   inspected_actual);
         message = cut_append_diff(message, inspected_expected, inspected_actual);
+        cut_test_fail(message);
+    }
+}
+
+void
+gcut_assert_equal_hash_table_helper (GHashTable  *expected,
+                                     GHashTable  *actual,
+                                     GEqualFunc   equal_function,
+                                     GCutInspectFunction key_inspect_function,
+                                     GCutInspectFunction value_inspect_function,
+                                     gpointer     inspect_user_data,
+                                     const gchar *expression_expected,
+                                     const gchar *expression_actual,
+                                     const gchar *expression_equal_function)
+{
+    if (gcut_hash_table_equal(expected, actual, equal_function)) {
+        cut_test_pass();
+    } else {
+        const gchar *message;
+        gchar *inspected_expected, *inspected_actual;
+
+        inspected_expected = gcut_hash_table_inspect(expected,
+                                                     key_inspect_function,
+                                                     value_inspect_function,
+                                                     inspect_user_data);
+        inspected_actual = gcut_hash_table_inspect(actual,
+                                                   key_inspect_function,
+                                                   value_inspect_function,
+                                                   inspect_user_data);
+        message = cut_take_printf("<%s(%s[key], %s[key]) == TRUE>\n"
+                                  "expected: <%s>\n"
+                                  "  actual: <%s>",
+                                  expression_equal_function,
+                                  expression_expected, expression_actual,
+                                  inspected_expected,
+                                  inspected_actual);
+        message = cut_append_diff(message, inspected_expected, inspected_actual);
+        g_free(inspected_expected);
+        g_free(inspected_actual);
         cut_test_fail(message);
     }
 }

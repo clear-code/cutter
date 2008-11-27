@@ -34,6 +34,7 @@
 #include <gcutter/gcut-egg.h>
 #include <gcutter/gcut-io.h>
 #include <gcutter/gcut-key-file.h>
+#include <gcutter/gcut-inspect.h>
 
 G_BEGIN_DECLS
 
@@ -48,7 +49,7 @@ void      gcut_assert_equal_value_helper    (GValue         *expected,
 void      gcut_assert_equal_list_helper     (const GList    *expected,
                                              const GList    *actual,
                                              GEqualFunc      equal_function,
-                                             GCutInspectFunc inspect_function,
+                                             GCutInspectFunction inspect_function,
                                              gpointer        inspect_user_data,
                                              const gchar    *expression_expected,
                                              const gchar    *expression_actual,
@@ -86,6 +87,21 @@ void      gcut_assert_equal_list_object_helper
                                              GEqualFunc      equal_function,
                                              const gchar    *expression_expected,
                                              const gchar    *expression_actual);
+void      gcut_assert_equal_hash_table_string_string_helper
+                                            (GHashTable     *expected,
+                                             GHashTable     *actual,
+                                             const gchar    *expression_expected,
+                                             const gchar    *expression_actual);
+void      gcut_assert_equal_hash_table_helper
+                                            (GHashTable     *expected,
+                                             GHashTable     *actual,
+                                             GEqualFunc      equal_function,
+                                             GCutInspectFunction key_inspect_function,
+                                             GCutInspectFunction value_inspect_function,
+                                             gpointer        inspect_user_data,
+                                             const gchar    *expression_expected,
+                                             const gchar    *expression_actual,
+                                             const gchar    *expression_equal_function);
 void      gcut_assert_equal_hash_table_string_string_helper
                                             (GHashTable     *expected,
                                              GHashTable     *actual,

@@ -19,7 +19,8 @@ void test_equal_list_string_other_null(void);
 void test_equal_list_enum(void);
 void test_equal_list_flags(void);
 void test_equal_list_object(void);
-void test_equal_hash_string_string(void);
+void test_equal_hash_table(void);
+void test_equal_hash_table_string_string(void);
 void test_error(void);
 void test_equal_error(void);
 void test_equal_enum(void);
@@ -626,7 +627,55 @@ test_equal_list_object (void)
 }
 
 static void
-stub_equal_hash_string_string (void)
+stub_equal_hash_table (void)
+{
+    hash1 = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, g_free);
+    hash2 = g_hash_table_new_full(g_direct_hash, g_direct_equal, NULL, g_free);
+
+    g_hash_table_insert(hash1, GUINT_TO_POINTER(1), g_strdup("11"));
+    g_hash_table_insert(hash1, GUINT_TO_POINTER(10), g_strdup("22"));
+    g_hash_table_insert(hash2, GUINT_TO_POINTER(2), g_strdup("99"));
+    g_hash_table_insert(hash2, GUINT_TO_POINTER(20), g_strdup("88"));
+
+    gcut_assert_equal_hash_table(hash1, hash1,
+                                 g_str_equal,
+                                 gcut_direct_inspect,
+                                 gcut_string_inspect,
+                                 NULL);
+    gcut_assert_equal_hash_table(hash2, hash2,
+                                 g_str_equal,
+                                 gcut_direct_inspect,
+                                 gcut_string_inspect,
+                                 NULL);
+
+    MARK_FAIL(gcut_assert_equal_hash_table(hash1, hash2,
+                                           g_str_equal,
+                                           gcut_direct_inspect,
+                                           gcut_string_inspect,
+                                           NULL));
+}
+
+void
+test_equal_hash_table (void)
+{
+    test = cut_test_new("equal_hash_table test",
+                        stub_equal_hash_table);
+    cut_assert_not_null(test);
+
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "equal_hash_table test",
+                           NULL,
+                           "<g_str_equal(hash1[key], hash2[key]) == TRUE>\n"
+                           "expected: <{1 => \"11\", 10 => \"22\"}>\n"
+                           "  actual: <{2 => \"99\", 20 => \"88\"}>",
+                           FAIL_LOCATION,
+                           "stub_equal_hash_table");
+}
+
+static void
+stub_equal_hash_table_string_string (void)
 {
     hash1 = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, g_free);
     hash2 = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, g_free);
@@ -643,22 +692,22 @@ stub_equal_hash_string_string (void)
 }
 
 void
-test_equal_hash_string_string (void)
+test_equal_hash_table_string_string (void)
 {
-    test = cut_test_new("equal_hash_string_string test",
-                        stub_equal_hash_string_string);
+    test = cut_test_new("equal_hash_table_string_string test",
+                        stub_equal_hash_table_string_string);
     cut_assert_not_null(test);
 
     cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
-                           "equal_hash_string_string test",
+                           "equal_hash_table_string_string test",
                            NULL,
                            "<hash1 == hash2>\n"
                            "expected: <{\"def\" => \"22\", \"abc\" => \"11\"}>\n"
                            "  actual: <{\"zyx\" => \"99\", \"wvu\" => \"88\"}>",
                            FAIL_LOCATION,
-                           "stub_equal_hash_string_string");
+                           "stub_equal_hash_table_string_string");
 }
 
 static void

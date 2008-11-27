@@ -126,6 +126,18 @@ const gchar *key, ...
 # gcut-assertions.h
 
 <FUNCTION>
+<NAME>gcut_assert_equal_list</NAME>
+<RETURNS>void</RETURNS>
+GList *expected, GList *actual, GEqualFunc equal_function, GCutInspectFunction inspect_function, gpointer user_data, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_assert_equal_hash_table</NAME>
+<RETURNS>void</RETURNS>
+GHashTable *expected, GHashTable *actual, GEqualFunc equal_function, GCutInspectFunction key_inspect_function, GCutInspectFunction value_inspect_function, gpointer user_data
+</FUNCTION>
+
+<FUNCTION>
 <NAME>gcut_assert_equal_hash_table_string_string</NAME>
 <RETURNS>void</RETURNS>
 GHashTable *expected, GHashTable *actual, ...

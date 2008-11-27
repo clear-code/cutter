@@ -123,12 +123,12 @@ G_BEGIN_DECLS
 
 /**
  * gcut_assert_equal_list:
- * @expected: an expected GList *.
- * @actual: an actual GList *.
+ * @expected: an expected list.
+ * @actual: an actual list.
  * @equal_function: a function that compares each elements of
- *                  @expected and @actual list. (#GEqualFunc)
+ *                  @expected and @actual list.
  * @inspect_function: a function that inspected @expected
- *                    and @actual list. (#GCutInspectFunc)
+ *                    and @actual list.
  * @inspect_user_data: a data to be passed to @inspect_function.
  * @...: optional format string, followed by parameters to insert
  *       into the format string (as with printf()) This is
@@ -367,6 +367,39 @@ G_BEGIN_DECLS
                                             #type, #expected, #actual), \
         gcut_assert_equal_list_flags(type, expected, actual,            \
                                      __VA_ARGS__));                     \
+} while (0)
+
+/**
+ * gcut_assert_equal_hash_table:
+ * @expected: an expected #GHashTable of string.
+ * @actual: an actual #GHashTable of string.
+ * @equal_function: a function that compares each values of
+ *                  @expected and @actual hash table.
+ * @key_inspect_function: a function that inspected a key of
+ *                        @expected and @actual hash table.
+ * @value_inspect_function: a function that inspected a value of
+ *                          @expected and @actual hash table.
+ * @inspect_user_data: a data to be passed to @inspect_function.
+ *
+ * Passes if @expected == @actual.
+ *
+ * Since: 1.0.6
+ */
+#define gcut_assert_equal_hash_table(expected, actual,                  \
+                                     equal_function,                    \
+                                     key_inspect_function,              \
+                                     value_inspect_function,            \
+                                     inspect_user_data) do              \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        gcut_assert_equal_hash_table_helper(expected, actual,           \
+                                            equal_function,             \
+                                            key_inspect_function,       \
+                                            value_inspect_function,       \
+                                            inspect_user_data,          \
+                                            #expected, #actual,         \
+                                            #equal_function),           \
+        gcut_assert_equal_hash_table(expected, actual));                \
 } while (0)
 
 /**
