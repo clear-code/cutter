@@ -1,5 +1,7 @@
 2008-11-28  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcutter.h (gcut_add_datum): add.
+
 	* gcutter/gcut-data.[ch], test/gcutter/test-gcut-data.c: add GCutData.
 
 	* gcutter/gcut-inspect.h: add FIXME.
