@@ -639,19 +639,19 @@ stub_equal_hash_table (void)
 
     gcut_assert_equal_hash_table(hash1, hash1,
                                  g_str_equal,
-                                 gcut_direct_inspect,
-                                 gcut_string_inspect,
+                                 gcut_inspect_direct,
+                                 gcut_inspect_string,
                                  NULL);
     gcut_assert_equal_hash_table(hash2, hash2,
                                  g_str_equal,
-                                 gcut_direct_inspect,
-                                 gcut_string_inspect,
+                                 gcut_inspect_direct,
+                                 gcut_inspect_string,
                                  NULL);
 
     MARK_FAIL(gcut_assert_equal_hash_table(hash1, hash2,
                                            g_str_equal,
-                                           gcut_direct_inspect,
-                                           gcut_string_inspect,
+                                           gcut_inspect_direct,
+                                           gcut_inspect_string,
                                            NULL));
 }
 

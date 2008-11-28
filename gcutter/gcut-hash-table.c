@@ -148,8 +148,8 @@ gchar *
 gcut_hash_table_string_string_inspect (GHashTable *hash)
 {
     return gcut_hash_table_inspect(hash,
-                                   gcut_string_inspect,
-                                   gcut_string_inspect,
+                                   gcut_inspect_string,
+                                   gcut_inspect_string,
                                    NULL);
 }
 

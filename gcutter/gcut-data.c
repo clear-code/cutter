@@ -71,7 +71,7 @@ filed_value_inspect (GString *string, gconstpointer data, gpointer user_data)
 
     switch (field_value->type) {
       case G_TYPE_STRING:
-        gcut_string_inspect(string, field_value->value.pointer, user_data);
+        gcut_inspect_string(string, field_value->value.pointer, user_data);
         break;
       default:
         g_string_append_printf(string,
@@ -216,7 +216,7 @@ gcut_data_inspect (GCutData *data)
     string = g_string_new(NULL);
     g_string_append_printf(string, "#<GCutData:0x%p ", data);
     inspected_fields = gcut_hash_table_inspect(priv->fields,
-                                               gcut_string_inspect,
+                                               gcut_inspect_string,
                                                filed_value_inspect,
                                                NULL);
     g_string_append(string, inspected_fields);

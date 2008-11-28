@@ -1,5 +1,7 @@
 2008-11-28  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/, test/gcutter/: gcut_XXX_inspect() -> gcut_inspect_XXX().
+
 	* gcutter/gcut-data.c: Field -> FieldValue.
 
 	* gcutter/gcut-data.[ch], gcutter/gcutter.h: add gcut_data_get_string().

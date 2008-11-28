@@ -24,7 +24,7 @@ teardown (void)
 void
 test_direct (void)
 {
-    gcut_direct_inspect(string, GUINT_TO_POINTER(100), NULL);
+    gcut_inspect_direct(string, GUINT_TO_POINTER(100), NULL);
     cut_assert_equal_string("100", string->str);
 }
 
@@ -33,14 +33,14 @@ test_int (void)
 {
     gint value = 99;
 
-    gcut_int_inspect(string, &value, NULL);
+    gcut_inspect_int(string, &value, NULL);
     cut_assert_equal_string("99", string->str);
 }
 
 void
 test_string (void)
 {
-    gcut_string_inspect(string, "XXX", NULL);
+    gcut_inspect_string(string, "XXX", NULL);
     cut_assert_equal_string("\"XXX\"", string->str);
 }
 

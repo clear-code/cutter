@@ -24,13 +24,13 @@
 #include "gcut-inspect.h"
 
 void
-gcut_direct_inspect (GString *string, gconstpointer data, gpointer user_data)
+gcut_inspect_direct (GString *string, gconstpointer data, gpointer user_data)
 {
     g_string_append_printf(string, "%u", GPOINTER_TO_UINT(data));
 }
 
 void
-gcut_int_inspect (GString *string, gconstpointer data, gpointer user_data)
+gcut_inspect_int (GString *string, gconstpointer data, gpointer user_data)
 {
     const gint *int_value = data;
 
@@ -38,7 +38,7 @@ gcut_int_inspect (GString *string, gconstpointer data, gpointer user_data)
 }
 
 void
-gcut_string_inspect (GString *string, gconstpointer data, gpointer user_data)
+gcut_inspect_string (GString *string, gconstpointer data, gpointer user_data)
 {
     const gchar *value = data;
 

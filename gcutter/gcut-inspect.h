@@ -37,14 +37,13 @@ G_BEGIN_DECLS
  */
 
 
-/* FIXME: rename to gcut_inspect_XXX() */
-void        gcut_direct_inspect       (GString       *string,
+void        gcut_inspect_direct       (GString       *string,
                                        gconstpointer  data,
                                        gpointer       user_data);
-void        gcut_int_inspect          (GString       *string,
+void        gcut_inspect_int          (GString       *string,
                                        gconstpointer  data,
                                        gpointer       user_data);
-void        gcut_string_inspect       (GString       *string,
+void        gcut_inspect_string       (GString       *string,
                                        gconstpointer  data,
                                        gpointer       user_data);
 
