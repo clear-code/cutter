@@ -222,6 +222,16 @@ extern "C" {
 #define CUT_RELATIVE_PATH NULL
 #endif
 
+#define cut_push_backtrace(expression)                                  \
+    cut_test_context_push_backtrace(cut_get_current_test_context(),     \
+                                    CUT_RELATIVE_PATH,                  \
+                                    __FILE__, __LINE__,                 \
+                                    CUT_FUNCTION,                       \
+                                    #expression)
+
+#define cut_pop_backtrace()                                             \
+    cut_test_context_pop_backtrace(cut_get_current_test_context())
+
 /**
  * cut_trace:
  * @expression: an expression to be traced.
@@ -284,15 +294,11 @@ extern "C" {
  */
 #define cut_trace(expression) do                                        \
 {                                                                       \
-    cut_test_context_push_backtrace(cut_get_current_test_context(),     \
-                                    CUT_RELATIVE_PATH,                  \
-                                    __FILE__, __LINE__,                 \
-                                    CUT_FUNCTION,                       \
-                                    #expression);                       \
+    cut_push_backtrace(expression);                                     \
     do {                                                                \
         expression;                                                     \
     } while (0);                                                        \
-    cut_test_context_pop_backtrace(cut_get_current_test_context());     \
+    cut_pop_backtrace();                                                \
 } while (0)
 
 /**

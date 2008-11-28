@@ -1,5 +1,7 @@
 2008-11-28  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-helper.h (cut_push_backtrace, cut_pop_backtrace): extract.
+
 	* gcutter/gcutter.h (gcut_add_datum): add.
 
 	* gcutter/gcut-data.[ch], test/gcutter/test-gcut-data.c: add GCutData.
