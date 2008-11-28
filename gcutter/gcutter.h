@@ -88,6 +88,12 @@
         g_object_unref,                                 \
         NULL)
 
+#define gcut_data_get_string(data, field_name)                          \
+    gcut_data_get_string_helper(                                        \
+        data, field_name,                                               \
+        (cut_push_backtrace(gcut_data_get_string(data, field_name)),    \
+         gcut_pop_backtrace))
+
 #endif /* __GCUTTER_H__ */
 
 /*

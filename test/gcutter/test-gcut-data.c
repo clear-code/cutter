@@ -54,6 +54,8 @@ test_string_nonexistent (void)
                                  "/nonexistent");
     gcut_data_get_string_with_error(data, "/nonexistent", &actual_error);
     gcut_assert_equal_error(expected_error, actual_error);
+
+    /* FIXME: write test for gcut_data_get_string(data, "/nonexistent");. */
 }
 
 /*

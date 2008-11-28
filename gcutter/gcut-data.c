@@ -21,17 +21,8 @@
 #  include <config.h>
 #endif /* HAVE_CONFIG_H */
 
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <signal.h>
 
-#include <glib.h>
-#include <glib/gstdio.h>
-#include <gmodule.h>
-
-#include "gcut-data.h"
-#include "gcut-hash-table.h"
-#include "gcut-inspect.h"
+#include "gcut-assertions.h"
 
 #define GCUT_DATA_GET_PRIVATE(obj)                                     \
     (G_TYPE_INSTANCE_GET_PRIVATE((obj), GCUT_TYPE_DATA, GCutDataPrivate))
@@ -262,6 +253,20 @@ gcut_data_equal (GCutData *data1, GCutData *data2)
 }
 
 const gchar *
+gcut_data_get_string_helper (GCutData *data, const gchar *field_name,
+                             GCallback callback)
+{
+    GError *error = NULL;
+    const gchar *value;
+
+    value = gcut_data_get_string_with_error(data, field_name, &error);
+    gcut_assert_error_helper(error, "error");
+    callback();
+
+    return value;
+}
+
+const gchar *
 gcut_data_get_string_with_error (GCutData *data, const gchar *field_name,
                                  GError **error)
 {
@@ -279,6 +284,12 @@ gcut_data_get_string_with_error (GCutData *data, const gchar *field_name,
     }
 
     return field->value.pointer;
+}
+
+void
+gcut_pop_backtrace (void)
+{
+    cut_pop_backtrace();
 }
 
 /*

@@ -89,9 +89,17 @@ gchar         *gcut_data_inspect               (GCutData      *data);
 gboolean       gcut_data_equal                 (GCutData      *data1,
                                                 GCutData      *data2);
 
+
 const gchar   *gcut_data_get_string_with_error (GCutData      *data,
                                                 const gchar   *field_name,
                                                 GError       **error);
+
+const gchar   *gcut_data_get_string_helper     (GCutData      *data,
+                                                const gchar   *field_name,
+                                                GCallback      callback);
+
+
+void           gcut_pop_backtrace              (void);
 
 G_END_DECLS
 
