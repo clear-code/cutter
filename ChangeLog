@@ -1,5 +1,8 @@
 2008-11-28  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-inspect.[ch], test/gcutter/test-gcut-inspect.c:
+	support GType.
+
 	* gcutter/, test/gcutter/: gcut_XXX_inspect() -> gcut_inspect_XXX().
 
 	* gcutter/gcut-data.c: Field -> FieldValue.

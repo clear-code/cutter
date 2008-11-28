@@ -46,8 +46,9 @@ void        gcut_inspect_int          (GString       *string,
 void        gcut_inspect_string       (GString       *string,
                                        gconstpointer  data,
                                        gpointer       user_data);
-
-
+void        gcut_inspect_gtype        (GString       *string,
+                                       gconstpointer  data,
+                                       gpointer       user_data);
 
 G_END_DECLS
 

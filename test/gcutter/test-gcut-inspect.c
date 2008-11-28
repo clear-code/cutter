@@ -5,6 +5,7 @@
 void test_direct (void);
 void test_int (void);
 void test_string (void);
+void test_gtype (void);
 
 static GString *string;
 
@@ -42,6 +43,16 @@ test_string (void)
 {
     gcut_inspect_string(string, "XXX", NULL);
     cut_assert_equal_string("\"XXX\"", string->str);
+}
+
+void
+test_gtype (void)
+{
+    GType type;
+
+    type = GCUT_TYPE_DATA;
+    gcut_inspect_gtype(string, &type, NULL);
+    cut_assert_equal_string("<GCutData>", string->str);
 }
 
 /*

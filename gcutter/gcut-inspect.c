@@ -48,6 +48,14 @@ gcut_inspect_string (GString *string, gconstpointer data, gpointer user_data)
         g_string_append(string, "NULL");
 }
 
+void
+gcut_inspect_gtype (GString *string, gconstpointer data, gpointer user_data)
+{
+    const GType *gtype = data;
+
+    g_string_append_printf(string, "<%s>", g_type_name(*gtype));
+}
+
 /*
 vi:nowrap:ai:expandtab:sw=4:ts=4
 */
