@@ -1,5 +1,7 @@
 2008-11-28  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-inspect.h: add FIXME.
+
 	* cutter/cutter.h: remove ## __VA_ARGS__.
 
 2008-11-27  Kouhei Sutou  <kou@cozmixng.org>

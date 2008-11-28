@@ -37,6 +37,7 @@ G_BEGIN_DECLS
  */
 
 
+/* FIXME: rename to gcut_inspect_XXX() */
 void        gcut_direct_inspect       (GString       *string,
                                        gconstpointer  data,
                                        gpointer       user_data);
