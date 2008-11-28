@@ -231,7 +231,8 @@ void cut_shutdown(void);
  * @...: The data and destroy function of the first data,
  *       followed optionally by more
  *       name/data/destroy_function(#CutDestroyFunction)
- *       triples.
+ *       triples. The variable arguments should be terminated
+ *       by NULL since 1.0.6.
  *
  * Adds data to use data driven test.
  *
@@ -288,7 +289,8 @@ void cut_shutdown(void);
  *                  translate_test_data_free,
  *                  "complex data",
  *                  translate_test_data_new("a hundred eleven", 111),
- *                  translate_test_data_free);
+ *                  translate_test_data_free,
+ *                  NULL);
  * }
  *
  * void
@@ -303,10 +305,17 @@ void cut_shutdown(void);
  *
  * Since: 1.0.3
  */
-#define cut_add_data(first_data_name, ...)                      \
-    cut_test_context_add_data(cut_get_current_test_context(),   \
-                              first_data_name, ## __VA_ARGS__,  \
-                              NULL)
+#define cut_add_data(first_data_name, ...)                              \
+    cut_add_data_backward_compatibility(cut_get_current_test_context(), \
+                                        first_data_name, __VA_ARGS__)
+
+#ifdef __GNUC__
+#define cut_add_data_backward_compatibility(context, ...)       \
+    cut_test_context_add_data(context, ## __VA_ARGS__, NULL)
+#else
+#define cut_add_data_backward_compatibility(context, ...)       \
+    cut_test_context_add_data(context, __VA_ARGS__)
+#endif
 
 /**
  * cut_set_attributes:

@@ -1,3 +1,7 @@
+2008-11-28  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cutter.h: remove ## __VA_ARGS__.
+
 2008-11-27  Kouhei Sutou  <kou@cozmixng.org>
 
 	* gcutter/gcut-assertions.h, gcutter/gcut-assertions-helper.[ch],
