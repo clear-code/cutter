@@ -94,7 +94,7 @@ const gchar   *gcut_data_get_string_with_error (GCutData      *data,
                                                 const gchar   *field_name,
                                                 GError       **error);
 
-const gchar   *gcut_data_get_string_helper     (GCutData      *data,
+const gchar   *gcut_data_get_string_helper     (const GCutData *data,
                                                 const gchar   *field_name,
                                                 GCallback      callback);
 

@@ -27,20 +27,16 @@
 #define GCUT_DATA_GET_PRIVATE(obj)                                     \
     (G_TYPE_INSTANCE_GET_PRIVATE((obj), GCUT_TYPE_DATA, GCutDataPrivate))
 
-typedef union _FieldValue
+typedef struct _FieldValue
 {
-    gpointer pointer;
-    gint integer;
-    guint unsigned_integer;
-} FieldValue;
-
-typedef struct _Field
-{
-    gchar *name;
     GType type;
-    FieldValue value;
+    union {
+        gpointer pointer;
+        gint integer;
+        guint unsigned_integer;
+    } value;
     GDestroyNotify free_function;
-} Field;
+} FieldValue;
 
 typedef struct _GCutDataPrivate	GCutDataPrivate;
 struct _GCutDataPrivate
@@ -48,68 +44,65 @@ struct _GCutDataPrivate
     GHashTable *fields;
 };
 
-static Field *
-field_new (const gchar *name, GType type)
+static FieldValue *
+filed_value_new (GType type)
 {
-    Field *field;
+    FieldValue *field_value;
 
-    field = g_slice_new0(Field);
-    field->name = g_strdup(name);
-    field->type = type;
+    field_value = g_slice_new0(FieldValue);
+    field_value->type = type;
 
-    return field;
+    return field_value;
 }
 
 static void
-field_free (Field *field)
+filed_value_free (FieldValue *field_value)
 {
-    if (field->name)
-        g_free(field->name);
-    if (field->free_function && field->value.pointer)
-        field->free_function(field->value.pointer);
+    if (field_value->free_function && field_value->value.pointer)
+        field_value->free_function(field_value->value.pointer);
 
-    g_slice_free(Field, field);
+    g_slice_free(FieldValue, field_value);
 }
 
 static void
-field_inspect (GString *string, gconstpointer data, gpointer user_data)
+filed_value_inspect (GString *string, gconstpointer data, gpointer user_data)
 {
-    const Field *field = data;
+    const FieldValue *field_value = data;
 
-    switch (field->type) {
+    switch (field_value->type) {
       case G_TYPE_STRING:
-        gcut_string_inspect(string, field->value.pointer, user_data);
+        gcut_string_inspect(string, field_value->value.pointer, user_data);
         break;
       default:
         g_string_append_printf(string,
                                "[unsupported type: <%s>]",
-                               g_type_name(field->type));
+                               g_type_name(field_value->type));
         break;
     }
 }
 
 static gboolean
-field_equal (gconstpointer data1, gconstpointer data2)
+filed_value_equal (gconstpointer data1, gconstpointer data2)
 {
-    const Field *field1 = data1;
-    const Field *field2 = data2;
+    const FieldValue *field_value1 = data1;
+    const FieldValue *field_value2 = data2;
     gboolean result = FALSE;
 
-    if (field1 == field2)
+    if (field_value1 == field_value2)
         return TRUE;
 
-    if (field1 == NULL || field2 == NULL)
+    if (field_value1 == NULL || field_value2 == NULL)
         return FALSE;
 
-    if (field1->type != field2->type)
+    if (field_value1->type != field_value2->type)
         return FALSE;
 
-    switch (field1->type) {
+    switch (field_value1->type) {
       case G_TYPE_STRING:
-        result = g_str_equal(field1->value.pointer, field2->value.pointer);
+        result = g_str_equal(field_value1->value.pointer, field_value2->value.pointer);
         break;
       default:
-        g_warning("[unsupported type: <%s>]", g_type_name(field1->type));
+        g_warning("[unsupported type: <%s>]", g_type_name(field_value1->type));
         result = FALSE;
         break;
     }
@@ -140,7 +133,7 @@ gcut_data_init (GCutData *data)
 
     priv->fields = g_hash_table_new_full(g_str_hash, g_str_equal,
                                          g_free,
-                                         (GDestroyNotify)field_free);
+                                         (GDestroyNotify)filed_value_free);
 }
 
 static void
@@ -187,24 +180,24 @@ gcut_data_new_va_list (const gchar *first_field_name, va_list args)
     priv = GCUT_DATA_GET_PRIVATE(data);
     name = first_field_name;
     while (name) {
-        Field *field;
+        FieldValue *field_value;
 
-        field = field_new(name, va_arg(args, GType));
-        switch (field->type) {
+        field_value = filed_value_new(va_arg(args, GType));
+        switch (field_value->type) {
           case G_TYPE_STRING:
-            field->value.pointer = g_strdup(va_arg(args, const gchar *));
-            field->free_function = g_free;
+            field_value->value.pointer = g_strdup(va_arg(args, const gchar *));
+            field_value->free_function = g_free;
             break;
           default:
-            g_warning("unsupported type: <%s>", g_type_name(field->type));
-            field_free(field);
-            field = NULL;
+            g_warning("unsupported type: <%s>", g_type_name(field_value->type));
+            filed_value_free(field_value);
+            field_value = NULL;
             break;
         }
-        if (!field)
+        if (!field_value)
             break;
 
-        g_hash_table_insert(priv->fields, g_strdup(name), field);
+        g_hash_table_insert(priv->fields, g_strdup(name), field_value);
 
         name = va_arg(args, const gchar *);
     }
@@ -224,7 +217,7 @@ gcut_data_inspect (GCutData *data)
     g_string_append_printf(string, "#<GCutData:0x%p ", data);
     inspected_fields = gcut_hash_table_inspect(priv->fields,
                                                gcut_string_inspect,
-                                               field_inspect,
+                                               filed_value_inspect,
                                                NULL);
     g_string_append(string, inspected_fields);
     g_free(inspected_fields);
@@ -249,17 +242,17 @@ gcut_data_equal (GCutData *data1, GCutData *data2)
     priv2 = GCUT_DATA_GET_PRIVATE(data2);
     return gcut_hash_table_equal(priv1->fields,
                                  priv2->fields,
-                                 field_equal);
+                                 filed_value_equal);
 }
 
 const gchar *
-gcut_data_get_string_helper (GCutData *data, const gchar *field_name,
+gcut_data_get_string_helper (const GCutData *data, const gchar *field_name,
                              GCallback callback)
 {
     GError *error = NULL;
     const gchar *value;
 
-    value = gcut_data_get_string_with_error(data, field_name, &error);
+    value = gcut_data_get_string_with_error(GCUT_DATA(data), field_name, &error);
     gcut_assert_error_helper(error, "error");
     callback();
 
@@ -271,11 +264,11 @@ gcut_data_get_string_with_error (GCutData *data, const gchar *field_name,
                                  GError **error)
 {
     GCutDataPrivate *priv;
-    Field *field;
+    FieldValue *field_value;
 
     priv = GCUT_DATA_GET_PRIVATE(data);
-    field = g_hash_table_lookup(priv->fields, field_name);
-    if (!field) {
+    field_value = g_hash_table_lookup(priv->fields, field_name);
+    if (!field_value) {
         g_set_error(error,
                     GCUT_DATA_ERROR,
                     GCUT_DATA_ERROR_NOT_EXIST,
@@ -283,7 +276,7 @@ gcut_data_get_string_with_error (GCutData *data, const gchar *field_name,
         return NULL;
     }
 
-    return field->value.pointer;
+    return field_value->value.pointer;
 }
 
 void
