@@ -43,7 +43,7 @@ G_BEGIN_DECLS
  * the data element, should inspect @data and append
  * inspected string to @string.
  *
- * Since: 1.0.5
+ * Since: 1.0.6
  */
 typedef void    (*GCutInspectFunction) (GString *string,
                                         gconstpointer data,
