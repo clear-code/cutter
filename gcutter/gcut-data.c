@@ -32,6 +32,7 @@ typedef struct _FieldValue
     GType type;
     union {
         gpointer pointer;
+        GType gtype;
         gint integer;
         guint unsigned_integer;
     } value;
@@ -74,9 +75,13 @@ filed_value_inspect (GString *string, gconstpointer data, gpointer user_data)
         gcut_inspect_string(string, field_value->value.pointer, user_data);
         break;
       default:
-        g_string_append_printf(string,
-                               "[unsupported type: <%s>]",
-                               g_type_name(field_value->type));
+        if (field_value->type == G_TYPE_GTYPE) {
+            gcut_inspect_gtype(string, &(field_value->value.gtype), user_data);
+        } else {
+            g_string_append_printf(string,
+                                   "[unsupported type: <%s>]",
+                                   g_type_name(field_value->type));
+        }
         break;
     }
 }
@@ -189,9 +194,14 @@ gcut_data_new_va_list (const gchar *first_field_name, va_list args)
             field_value->free_function = g_free;
             break;
           default:
-            g_warning("unsupported type: <%s>", g_type_name(field_value->type));
-            filed_value_free(field_value);
-            field_value = NULL;
+            if (field_value->type == G_TYPE_GTYPE) {
+                field_value->value.gtype = va_arg(args, GType);
+            } else {
+                g_warning("unsupported type: <%s>",
+                          g_type_name(field_value->type));
+                filed_value_free(field_value);
+                field_value = NULL;
+            }
             break;
         }
         if (!field_value)
@@ -245,23 +255,8 @@ gcut_data_equal (GCutData *data1, GCutData *data2)
                                  filed_value_equal);
 }
 
-const gchar *
-gcut_data_get_string_helper (const GCutData *data, const gchar *field_name,
-                             GCallback callback)
-{
-    GError *error = NULL;
-    const gchar *value;
-
-    value = gcut_data_get_string_with_error(GCUT_DATA(data), field_name, &error);
-    gcut_assert_error_helper(error, "error");
-    callback();
-
-    return value;
-}
-
-const gchar *
-gcut_data_get_string_with_error (GCutData *data, const gchar *field_name,
-                                 GError **error)
+static FieldValue *
+lookup (GCutData *data, const gchar *field_name, GError **error)
 {
     GCutDataPrivate *priv;
     FieldValue *field_value;
@@ -276,8 +271,55 @@ gcut_data_get_string_with_error (GCutData *data, const gchar *field_name,
         return NULL;
     }
 
+    return field_value;
+}
+
+const gchar *
+gcut_data_get_string_with_error (GCutData *data, const gchar *field_name,
+                                 GError **error)
+{
+    FieldValue *field_value;
+
+    field_value = lookup(data, field_name, error);
+    if (!field_value)
+        return NULL;
+
     return field_value->value.pointer;
 }
+
+GType
+gcut_data_get_gtype_with_error (GCutData *data, const gchar *field_name,
+                                GError **error)
+{
+    FieldValue *field_value;
+
+    field_value = lookup(data, field_name, error);
+    if (!field_value)
+        return G_TYPE_INVALID;
+
+    return field_value->value.gtype;
+}
+
+#define DEFINE_GETTER_HELPER(type_name, type)                           \
+type                                                                    \
+gcut_data_get_ ## type_name ## _helper (const GCutData *data,           \
+                                        const gchar *field_name,        \
+                                        GCallback callback)             \
+{                                                                       \
+    GError *error = NULL;                                               \
+    type value;                                                         \
+                                                                        \
+    value = gcut_data_get_ ## type_name ## _with_error(GCUT_DATA(data), \
+                                                       field_name,      \
+                                                       &error);         \
+    gcut_assert_error_helper(error, "error");                           \
+    callback();                                                         \
+                                                                        \
+    return value;                                                       \
+}
+
+DEFINE_GETTER_HELPER(string, const gchar *)
+DEFINE_GETTER_HELPER(gtype, GType)
 
 void
 gcut_pop_backtrace (void)

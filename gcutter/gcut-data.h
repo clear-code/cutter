@@ -93,8 +93,14 @@ gboolean       gcut_data_equal                 (GCutData      *data1,
 const gchar   *gcut_data_get_string_with_error (GCutData      *data,
                                                 const gchar   *field_name,
                                                 GError       **error);
+GType          gcut_data_get_gtype_with_error  (GCutData      *data,
+                                                const gchar   *field_name,
+                                                GError       **error);
 
 const gchar   *gcut_data_get_string_helper     (const GCutData *data,
+                                                const gchar   *field_name,
+                                                GCallback      callback);
+GType          gcut_data_get_gtype_helper      (const GCutData *data,
                                                 const gchar   *field_name,
                                                 GCallback      callback);
 

@@ -4,6 +4,8 @@
 
 void test_string (void);
 void test_string_nonexistent (void);
+void test_gtype (void);
+void test_gtype_nonexistent (void);
 
 static GCutData *data;
 static GError *expected_error;
@@ -56,6 +58,35 @@ test_string_nonexistent (void)
     gcut_assert_equal_error(expected_error, actual_error);
 
     /* FIXME: write test for gcut_data_get_string(data, "/nonexistent");. */
+}
+
+void
+test_gtype (void)
+{
+    GError *error = NULL;
+    GType actual_value;
+
+    data = gcut_data_new("/gtype", G_TYPE_GTYPE, GCUT_TYPE_DATA,
+                         NULL);
+    actual_value = gcut_data_get_gtype_with_error(data, "/gtype", &error);
+    gcut_assert_error(error);
+    gcut_assert_equal_type(GCUT_TYPE_DATA, actual_value);
+}
+
+void
+test_gtype_nonexistent (void)
+{
+    data = gcut_data_new("/gtype", G_TYPE_GTYPE, GCUT_TYPE_DATA,
+                         NULL);
+
+    expected_error = g_error_new(GCUT_DATA_ERROR,
+                                 GCUT_DATA_ERROR_NOT_EXIST,
+                                 "requested field doesn't exist: <%s>",
+                                 "/nonexistent");
+    gcut_data_get_gtype_with_error(data, "/nonexistent", &actual_error);
+    gcut_assert_equal_error(expected_error, actual_error);
+
+    /* FIXME: write test for gcut_data_get_gtype(data, "/nonexistent");. */
 }
 
 /*
