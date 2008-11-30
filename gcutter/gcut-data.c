@@ -46,7 +46,7 @@ struct _GCutDataPrivate
 };
 
 static FieldValue *
-filed_value_new (GType type)
+field_value_new (GType type)
 {
     FieldValue *field_value;
 
@@ -57,7 +57,7 @@ filed_value_new (GType type)
 }
 
 static void
-filed_value_free (FieldValue *field_value)
+field_value_free (FieldValue *field_value)
 {
     if (field_value->free_function && field_value->value.pointer)
         field_value->free_function(field_value->value.pointer);
@@ -66,7 +66,7 @@ filed_value_free (FieldValue *field_value)
 }
 
 static void
-filed_value_inspect (GString *string, gconstpointer data, gpointer user_data)
+field_value_inspect (GString *string, gconstpointer data, gpointer user_data)
 {
     const FieldValue *field_value = data;
 
@@ -77,6 +77,11 @@ filed_value_inspect (GString *string, gconstpointer data, gpointer user_data)
       default:
         if (field_value->type == G_TYPE_GTYPE) {
             gcut_inspect_gtype(string, &(field_value->value.gtype), user_data);
+        } else if (G_TYPE_IS_FLAGS(field_value->type)) {
+            GType flags_type = field_value->type;
+            gcut_inspect_flags(string,
+                               &(field_value->value.unsigned_integer),
+                               &flags_type);
         } else {
             g_string_append_printf(string,
                                    "[unsupported type: <%s>]",
@@ -87,7 +92,7 @@ filed_value_inspect (GString *string, gconstpointer data, gpointer user_data)
 }
 
 static gboolean
-filed_value_equal (gconstpointer data1, gconstpointer data2)
+field_value_equal (gconstpointer data1, gconstpointer data2)
 {
     const FieldValue *field_value1 = data1;
     const FieldValue *field_value2 = data2;
@@ -104,11 +109,21 @@ filed_value_equal (gconstpointer data1, gconstpointer data2)
 
     switch (field_value1->type) {
       case G_TYPE_STRING:
-        result = g_str_equal(field_value1->value.pointer, field_value2->value.pointer);
+        result = g_str_equal(field_value1->value.pointer,
+                             field_value2->value.pointer);
         break;
       default:
-        g_warning("[unsupported type: <%s>]", g_type_name(field_value1->type));
-        result = FALSE;
+        if (field_value1->type == G_TYPE_GTYPE) {
+            result = (field_value1->value.gtype ==
+                      field_value2->value.gtype);
+        } else if (G_TYPE_IS_FLAGS(field_value1->type)) {
+            result = (field_value1->value.unsigned_integer ==
+                      field_value2->value.unsigned_integer);
+        } else {
+            g_warning("[unsupported type: <%s>]",
+                      g_type_name(field_value1->type));
+            result = FALSE;
+        }
         break;
     }
 
@@ -138,7 +153,7 @@ gcut_data_init (GCutData *data)
 
     priv->fields = g_hash_table_new_full(g_str_hash, g_str_equal,
                                          g_free,
-                                         (GDestroyNotify)filed_value_free);
+                                         (GDestroyNotify)field_value_free);
 }
 
 static void
@@ -187,7 +202,7 @@ gcut_data_new_va_list (const gchar *first_field_name, va_list args)
     while (name) {
         FieldValue *field_value;
 
-        field_value = filed_value_new(va_arg(args, GType));
+        field_value = field_value_new(va_arg(args, GType));
         switch (field_value->type) {
           case G_TYPE_STRING:
             field_value->value.pointer = g_strdup(va_arg(args, const gchar *));
@@ -196,10 +211,12 @@ gcut_data_new_va_list (const gchar *first_field_name, va_list args)
           default:
             if (field_value->type == G_TYPE_GTYPE) {
                 field_value->value.gtype = va_arg(args, GType);
+            } else if (G_TYPE_IS_FLAGS(field_value->type)) {
+                field_value->value.unsigned_integer = va_arg(args, guint);
             } else {
                 g_warning("unsupported type: <%s>",
                           g_type_name(field_value->type));
-                filed_value_free(field_value);
+                field_value_free(field_value);
                 field_value = NULL;
             }
             break;
@@ -227,7 +244,7 @@ gcut_data_inspect (GCutData *data)
     g_string_append_printf(string, "#<GCutData:0x%p ", data);
     inspected_fields = gcut_hash_table_inspect(priv->fields,
                                                gcut_inspect_string,
-                                               filed_value_inspect,
+                                               field_value_inspect,
                                                NULL);
     g_string_append(string, inspected_fields);
     g_free(inspected_fields);
@@ -252,7 +269,7 @@ gcut_data_equal (GCutData *data1, GCutData *data2)
     priv2 = GCUT_DATA_GET_PRIVATE(data2);
     return gcut_hash_table_equal(priv1->fields,
                                  priv2->fields,
-                                 filed_value_equal);
+                                 field_value_equal);
 }
 
 static FieldValue *
@@ -300,6 +317,19 @@ gcut_data_get_gtype_with_error (GCutData *data, const gchar *field_name,
     return field_value->value.gtype;
 }
 
+guint
+gcut_data_get_flags_with_error (GCutData *data, const gchar *field_name,
+                                GError **error)
+{
+    FieldValue *field_value;
+
+    field_value = lookup(data, field_name, error);
+    if (!field_value)
+        return 0;
+
+    return field_value->value.unsigned_integer;
+}
+
 #define DEFINE_GETTER_HELPER(type_name, type)                           \
 type                                                                    \
 gcut_data_get_ ## type_name ## _helper (const GCutData *data,           \
@@ -320,6 +350,7 @@ gcut_data_get_ ## type_name ## _helper (const GCutData *data,           \
 
 DEFINE_GETTER_HELPER(string, const gchar *)
 DEFINE_GETTER_HELPER(gtype, GType)
+DEFINE_GETTER_HELPER(flags, guint)
 
 void
 gcut_pop_backtrace (void)

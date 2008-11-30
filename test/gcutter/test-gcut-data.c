@@ -2,10 +2,14 @@
 
 #include <gcutter.h>
 
+#include <cuttest-enum.h>
+
 void test_string (void);
 void test_string_nonexistent (void);
 void test_gtype (void);
 void test_gtype_nonexistent (void);
+void test_flags (void);
+void test_flags_nonexistent (void);
 
 static GCutData *data;
 static GError *expected_error;
@@ -87,6 +91,36 @@ test_gtype_nonexistent (void)
     gcut_assert_equal_error(expected_error, actual_error);
 
     /* FIXME: write test for gcut_data_get_gtype(data, "/nonexistent");. */
+}
+
+void
+test_flags (void)
+{
+    GError *error = NULL;
+    CuttestFlags value, actual_value;
+
+    value = CUTTEST_FLAG_FIRST | CUTTEST_FLAG_THIRD;
+    data = gcut_data_new("/flags", CUTTEST_FLAGS, value,
+                         NULL);
+    actual_value = gcut_data_get_flags_with_error(data, "/flags", &error);
+    gcut_assert_error(error);
+    gcut_assert_equal_flags(CUTTEST_FLAGS, value, actual_value);
+}
+
+void
+test_flags_nonexistent (void)
+{
+    data = gcut_data_new("/flags", CUTTEST_FLAGS, CUTTEST_FLAG_SECOND,
+                         NULL);
+
+    expected_error = g_error_new(GCUT_DATA_ERROR,
+                                 GCUT_DATA_ERROR_NOT_EXIST,
+                                 "requested field doesn't exist: <%s>",
+                                 "/nonexistent");
+    gcut_data_get_flags_with_error(data, "/nonexistent", &actual_error);
+    gcut_assert_equal_error(expected_error, actual_error);
+
+    /* FIXME: write test for gcut_data_get_flags(data, "/nonexistent");. */
 }
 
 /*

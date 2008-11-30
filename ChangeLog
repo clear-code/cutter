@@ -1,5 +1,10 @@
 2008-12-01  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcutter.h (gcut_data_get_flags): add.
+
+	* gcutter/gcut-data.[ch], test/gcutter/test-gcut-data.c: add
+	gcut_data_get_flags_helper(), gcut_data_get_flags_with_error().
+
 	* gcutter/gcut-inspect.[ch], test/gcutter/test-gcut-inspect.c: add
 	gcut_inspect_flags().
 
