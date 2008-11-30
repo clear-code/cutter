@@ -22,6 +22,7 @@
 #endif /* HAVE_CONFIG_H */
 
 #include "gcut-inspect.h"
+#include "gcut-enum.h"
 
 void
 gcut_inspect_direct (GString *string, gconstpointer data, gpointer user_data)
@@ -54,6 +55,18 @@ gcut_inspect_gtype (GString *string, gconstpointer data, gpointer user_data)
     const GType *gtype = data;
 
     g_string_append_printf(string, "<%s>", g_type_name(*gtype));
+}
+
+void
+gcut_inspect_flags (GString *string, gconstpointer data, gpointer user_data)
+{
+    const guint *flags = data;
+    GType *flags_type = user_data;
+    gchar *inspected_flags;
+
+    inspected_flags = gcut_flags_inspect(*flags_type, *flags);
+    g_string_append(string, inspected_flags);
+    g_free(inspected_flags);
 }
 
 /*

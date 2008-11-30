@@ -2,10 +2,13 @@
 
 #include <gcutter.h>
 
+#include <cuttest-enum.h>
+
 void test_direct (void);
 void test_int (void);
 void test_string (void);
 void test_gtype (void);
+void test_flags (void);
 
 static GString *string;
 
@@ -53,6 +56,21 @@ test_gtype (void)
     type = GCUT_TYPE_DATA;
     gcut_inspect_gtype(string, &type, NULL);
     cut_assert_equal_string("<GCutData>", string->str);
+}
+
+void
+test_flags (void)
+{
+    CuttestFlags flags;
+    GType flags_type;
+
+    flags = CUTTEST_FLAG_FIRST | CUTTEST_FLAG_SECOND;
+    flags_type = CUTTEST_FLAGS;
+    gcut_inspect_flags(string, &flags, &flags_type);
+    cut_assert_equal_string("#<CuttestFlags: first|second "
+                            "(CUTTEST_FLAG_FIRST:0x1)|"
+                            "(CUTTEST_FLAG_SECOND:0x2)>",
+                            string->str);
 }
 
 /*
