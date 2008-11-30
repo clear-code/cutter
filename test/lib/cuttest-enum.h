@@ -32,7 +32,7 @@ typedef enum
 } CuttestFlags;
 
 GType cuttest_flags_get_type (void);
-#define CUTTEST_FLAGS (cuttest_flags_get_type())
+#define CUTTEST_TYPE_FLAGS (cuttest_flags_get_type())
 
 G_END_DECLS
 

@@ -174,11 +174,11 @@ test_enum_parse (gconstpointer data)
 void
 test_flags_inspect (void)
 {
-    inspected = gcut_flags_inspect(CUTTEST_FLAGS, 0);
+    inspected = gcut_flags_inspect(CUTTEST_TYPE_FLAGS, 0);
     cut_assert_equal_string("#<CuttestFlags>", inspected);
 
     g_free(inspected);
-    inspected = gcut_flags_inspect(CUTTEST_FLAGS,
+    inspected = gcut_flags_inspect(CUTTEST_TYPE_FLAGS,
                                    CUTTEST_FLAG_FIRST | CUTTEST_FLAG_SECOND);
     cut_assert_equal_string("#<CuttestFlags: "
                             "first|second "
@@ -187,7 +187,7 @@ test_flags_inspect (void)
                             inspected);
 
     g_free(inspected);
-    inspected = gcut_flags_inspect(CUTTEST_FLAGS,
+    inspected = gcut_flags_inspect(CUTTEST_TYPE_FLAGS,
                                    CUTTEST_FLAG_FIRST |
                                    (CUTTEST_FLAG_THIRD << 1));
     cut_assert_equal_string("#<CuttestFlags: "
@@ -201,31 +201,31 @@ void
 data_flags_parse (void)
 {
     cut_add_data("nick",
-                 parse_flags_test_data_new(CUTTEST_FLAGS,
+                 parse_flags_test_data_new(CUTTEST_TYPE_FLAGS,
                                            "first|second",
                                            CUTTEST_FLAG_FIRST |
                                            CUTTEST_FLAG_SECOND,
                                            NULL),
                  parse_test_data_free,
                  "NICK",
-                 parse_flags_test_data_new(CUTTEST_FLAGS,
+                 parse_flags_test_data_new(CUTTEST_TYPE_FLAGS,
                                            "SECOND|thIrd",
                                            CUTTEST_FLAG_SECOND |
                                            CUTTEST_FLAG_THIRD,
                                            NULL),
                  parse_test_data_free,
                  "name",
-                 parse_flags_test_data_new(CUTTEST_FLAGS,
+                 parse_flags_test_data_new(CUTTEST_TYPE_FLAGS,
                                            "CUTTEST_FLAG_FIRST",
                                            CUTTEST_FLAG_FIRST,
                                            NULL),
                  parse_test_data_free,
                  "empty",
-                 parse_flags_test_data_new(CUTTEST_FLAGS, "", 0, NULL),
+                 parse_flags_test_data_new(CUTTEST_TYPE_FLAGS, "", 0, NULL),
                  parse_test_data_free,
                  "NULL",
                  parse_flags_test_data_new(
-                     CUTTEST_FLAGS,
+                     CUTTEST_TYPE_FLAGS,
                      NULL,
                      0,
                      g_error_new(GCUT_ENUM_ERROR,
@@ -245,7 +245,7 @@ data_flags_parse (void)
                  parse_test_data_free,
                  "unknown nick only",
                  parse_flags_test_data_new(
-                     CUTTEST_FLAGS,
+                     CUTTEST_TYPE_FLAGS,
                      "unknown",
                      0,
                      g_error_new(GCUT_ENUM_ERROR,
@@ -256,7 +256,7 @@ data_flags_parse (void)
                  parse_test_data_free,
                  "unknown nick with valid nick",
                  parse_flags_test_data_new(
-                     CUTTEST_FLAGS,
+                     CUTTEST_TYPE_FLAGS,
                      "first|unknown1|CUTTEST_FLAG_THIRD|unknown2",
                      (1 << 0 | 1 << 2),
                      g_error_new(GCUT_ENUM_ERROR,

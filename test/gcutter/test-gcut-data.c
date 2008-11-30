@@ -100,17 +100,17 @@ test_flags (void)
     CuttestFlags value, actual_value;
 
     value = CUTTEST_FLAG_FIRST | CUTTEST_FLAG_THIRD;
-    data = gcut_data_new("/flags", CUTTEST_FLAGS, value,
+    data = gcut_data_new("/flags", CUTTEST_TYPE_FLAGS, value,
                          NULL);
     actual_value = gcut_data_get_flags_with_error(data, "/flags", &error);
     gcut_assert_error(error);
-    gcut_assert_equal_flags(CUTTEST_FLAGS, value, actual_value);
+    gcut_assert_equal_flags(CUTTEST_TYPE_FLAGS, value, actual_value);
 }
 
 void
 test_flags_nonexistent (void)
 {
-    data = gcut_data_new("/flags", CUTTEST_FLAGS, CUTTEST_FLAG_SECOND,
+    data = gcut_data_new("/flags", CUTTEST_TYPE_FLAGS, CUTTEST_FLAG_SECOND,
                          NULL);
 
     expected_error = g_error_new(GCUT_DATA_ERROR,

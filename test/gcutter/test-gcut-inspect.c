@@ -65,7 +65,7 @@ test_flags (void)
     GType flags_type;
 
     flags = CUTTEST_FLAG_FIRST | CUTTEST_FLAG_SECOND;
-    flags_type = CUTTEST_FLAGS;
+    flags_type = CUTTEST_TYPE_FLAGS;
     gcut_inspect_flags(string, &flags, &flags_type);
     cut_assert_equal_string("#<CuttestFlags: first|second "
                             "(CUTTEST_FLAG_FIRST:0x1)|"
