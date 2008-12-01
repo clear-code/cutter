@@ -99,6 +99,9 @@ GType          gcut_data_get_gtype_with_error  (GCutData      *data,
 guint          gcut_data_get_flags_with_error  (GCutData      *data,
                                                 const gchar   *field_name,
                                                 GError       **error);
+gint           gcut_data_get_enum_with_error   (GCutData      *data,
+                                                const gchar   *field_name,
+                                                GError       **error);
 
 const gchar   *gcut_data_get_string_helper     (const GCutData *data,
                                                 const gchar   *field_name,
@@ -107,6 +110,9 @@ GType          gcut_data_get_gtype_helper      (const GCutData *data,
                                                 const gchar   *field_name,
                                                 GCallback      callback);
 guint          gcut_data_get_flags_helper      (const GCutData *data,
+                                                const gchar   *field_name,
+                                                GCallback      callback);
+gint           gcut_data_get_enum_helper       (const GCutData *data,
                                                 const gchar   *field_name,
                                                 GCallback      callback);
 

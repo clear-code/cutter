@@ -82,6 +82,11 @@ field_value_inspect (GString *string, gconstpointer data, gpointer user_data)
             gcut_inspect_flags(string,
                                &(field_value->value.unsigned_integer),
                                &flags_type);
+        } else if (G_TYPE_IS_ENUM(field_value->type)) {
+            GType enum_type = field_value->type;
+            gcut_inspect_enum(string,
+                              &(field_value->value.integer),
+                              &enum_type);
         } else {
             g_string_append_printf(string,
                                    "[unsupported type: <%s>]",
@@ -119,6 +124,9 @@ field_value_equal (gconstpointer data1, gconstpointer data2)
         } else if (G_TYPE_IS_FLAGS(field_value1->type)) {
             result = (field_value1->value.unsigned_integer ==
                       field_value2->value.unsigned_integer);
+        } else if (G_TYPE_IS_ENUM(field_value1->type)) {
+            result = (field_value1->value.integer ==
+                      field_value2->value.integer);
         } else {
             g_warning("[unsupported type: <%s>]",
                       g_type_name(field_value1->type));
@@ -213,6 +221,8 @@ gcut_data_new_va_list (const gchar *first_field_name, va_list args)
                 field_value->value.gtype = va_arg(args, GType);
             } else if (G_TYPE_IS_FLAGS(field_value->type)) {
                 field_value->value.unsigned_integer = va_arg(args, guint);
+            } else if (G_TYPE_IS_ENUM(field_value->type)) {
+                field_value->value.integer = va_arg(args, gint);
             } else {
                 g_warning("unsupported type: <%s>",
                           g_type_name(field_value->type));
@@ -330,6 +340,19 @@ gcut_data_get_flags_with_error (GCutData *data, const gchar *field_name,
     return field_value->value.unsigned_integer;
 }
 
+gint
+gcut_data_get_enum_with_error (GCutData *data, const gchar *field_name,
+                               GError **error)
+{
+    FieldValue *field_value;
+
+    field_value = lookup(data, field_name, error);
+    if (!field_value)
+        return 0;
+
+    return field_value->value.integer;
+}
+
 #define DEFINE_GETTER_HELPER(type_name, type)                           \
 type                                                                    \
 gcut_data_get_ ## type_name ## _helper (const GCutData *data,           \
@@ -351,6 +374,7 @@ gcut_data_get_ ## type_name ## _helper (const GCutData *data,           \
 DEFINE_GETTER_HELPER(string, const gchar *)
 DEFINE_GETTER_HELPER(gtype, GType)
 DEFINE_GETTER_HELPER(flags, guint)
+DEFINE_GETTER_HELPER(enum, gint)
 
 void
 gcut_pop_backtrace (void)

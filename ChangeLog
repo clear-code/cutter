@@ -1,5 +1,10 @@
 2008-12-01  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcutter.h (gcut_data_get_enum): add.
+
+	* gcutter/gcut-data.[ch], test/gcutter/test-gcut-data.c: add
+	gcut_data_get_enum_helper(), gcut_data_get_enum_with_error().
+
 	* gcutter/gcut-inspect.[ch], test/gcutter/test-gcut-inspect.c: add
 	gcut_inspect_enum().
 

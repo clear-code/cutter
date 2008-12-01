@@ -2,6 +2,7 @@
 
 #include <gcutter.h>
 
+#include <cutter/cut-enum-types.h>
 #include <cuttest-enum.h>
 
 void test_string (void);
@@ -10,6 +11,8 @@ void test_gtype (void);
 void test_gtype_nonexistent (void);
 void test_flags (void);
 void test_flags_nonexistent (void);
+void test_enum (void);
+void test_enum_nonexistent (void);
 
 static GCutData *data;
 static GError *expected_error;
@@ -121,6 +124,38 @@ test_flags_nonexistent (void)
     gcut_assert_equal_error(expected_error, actual_error);
 
     /* FIXME: write test for gcut_data_get_flags(data, "/nonexistent");. */
+}
+
+void
+test_enum (void)
+{
+    GError *error = NULL;
+    CutTestResultStatus value, actual_value;
+
+    value = CUT_TEST_RESULT_SUCCESS;
+    data = gcut_data_new("/enum", CUT_TYPE_TEST_RESULT_STATUS, value,
+                         NULL);
+    actual_value = gcut_data_get_enum_with_error(data, "/enum", &error);
+    gcut_assert_error(error);
+    gcut_assert_equal_enum(CUT_TYPE_TEST_RESULT_STATUS, value, actual_value);
+}
+
+void
+test_enum_nonexistent (void)
+{
+    data = gcut_data_new("/enum",
+                         CUT_TYPE_TEST_RESULT_STATUS,
+                         CUT_TEST_RESULT_SUCCESS,
+                         NULL);
+
+    expected_error = g_error_new(GCUT_DATA_ERROR,
+                                 GCUT_DATA_ERROR_NOT_EXIST,
+                                 "requested field doesn't exist: <%s>",
+                                 "/nonexistent");
+    gcut_data_get_enum_with_error(data, "/nonexistent", &actual_error);
+    gcut_assert_equal_error(expected_error, actual_error);
+
+    /* FIXME: write test for gcut_data_get_enum(data, "/nonexistent");. */
 }
 
 /*
