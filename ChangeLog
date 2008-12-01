@@ -1,5 +1,11 @@
 2008-12-01  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcutter.h: move gcut_data_get_XXX() to ...
+	* gcutter/gcut-test-utils.h: ... here.
+
+	* test/gcutter/test-gcut-test-utils.c (test_data_get): add a test
+	for gcut_data_get_XXX().
+
 	* test/gcutter/test-gcut-data.c: cleanup.
 
 	* gcutter/gcutter.h (gcut_data_get_enum): add.
