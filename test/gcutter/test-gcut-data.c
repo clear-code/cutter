@@ -6,7 +6,7 @@
 #include <cuttest-enum.h>
 
 void test_string (void);
-void test_gtype (void);
+void test_type (void);
 void test_flags (void);
 void test_enum (void);
 
@@ -68,18 +68,18 @@ test_string (void)
 }
 
 void
-test_gtype (void)
+test_type (void)
 {
     GError *error = NULL;
     GType actual_value;
 
-    data = gcut_data_new("/gtype", G_TYPE_GTYPE, GCUT_TYPE_DATA,
+    data = gcut_data_new("/type", G_TYPE_GTYPE, GCUT_TYPE_DATA,
                          NULL);
-    actual_value = gcut_data_get_gtype_with_error(data, "/gtype", &error);
+    actual_value = gcut_data_get_type_with_error(data, "/type", &error);
     gcut_assert_error(error);
     gcut_assert_equal_type(GCUT_TYPE_DATA, actual_value);
 
-    assert_nonexistent_field(gcut_data_get_gtype_with_error);
+    assert_nonexistent_field(gcut_data_get_type_with_error);
 }
 
 void

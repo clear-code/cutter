@@ -92,7 +92,7 @@ void
 test_data_get (void)
 {
     data = gcut_data_new("/string", G_TYPE_STRING, "string",
-                         "/gtype", G_TYPE_GTYPE, GCUT_TYPE_DATA,
+                         "/type", G_TYPE_GTYPE, GCUT_TYPE_DATA,
                          "/flags", CUTTEST_TYPE_FLAGS,
                          CUTTEST_FLAG_FIRST | CUTTEST_FLAG_THIRD,
                          "/enum", CUT_TYPE_TEST_RESULT_STATUS,
@@ -100,8 +100,7 @@ test_data_get (void)
                          NULL);
 
     cut_assert_equal_string("string", gcut_data_get_string(data, "/string"));
-    gcut_assert_equal_type(GCUT_TYPE_DATA,
-                           gcut_data_get_gtype(data, "/gtype"));
+    gcut_assert_equal_type(GCUT_TYPE_DATA, gcut_data_get_type(data, "/type"));
     gcut_assert_equal_flags(CUTTEST_TYPE_FLAGS,
                             CUTTEST_FLAG_FIRST | CUTTEST_FLAG_THIRD,
                             gcut_data_get_flags(data, "/flags"));

@@ -8,7 +8,7 @@
 void test_direct (void);
 void test_int (void);
 void test_string (void);
-void test_gtype (void);
+void test_type (void);
 void test_flags (void);
 void test_enum (void);
 
@@ -51,12 +51,12 @@ test_string (void)
 }
 
 void
-test_gtype (void)
+test_type (void)
 {
     GType type;
 
     type = GCUT_TYPE_DATA;
-    gcut_inspect_gtype(string, &type, NULL);
+    gcut_inspect_type(string, &type, NULL);
     cut_assert_equal_string("<GCutData>", string->str);
 }
 

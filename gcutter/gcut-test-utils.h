@@ -239,10 +239,10 @@ GHashTable *gcut_hash_table_string_string_new_va_list(const gchar *key,
         (cut_push_backtrace(gcut_data_get_string(data, field_name)),    \
          gcut_pop_backtrace))
 
-#define gcut_data_get_gtype(data, field_name)                           \
-    gcut_data_get_gtype_helper(                                         \
+#define gcut_data_get_type(data, field_name)                            \
+    gcut_data_get_type_helper(                                          \
         data, field_name,                                               \
-        (cut_push_backtrace(gcut_data_get_gtype(data, field_name)),     \
+        (cut_push_backtrace(gcut_data_get_type(data, field_name)),      \
          gcut_pop_backtrace))
 
 #define gcut_data_get_flags(data, field_name)                           \

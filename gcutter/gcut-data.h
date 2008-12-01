@@ -43,7 +43,7 @@ G_BEGIN_DECLS
  */
 #define GCUT_DATA_ERROR           (gcut_data_error_quark())
 
-#define GCUT_TYPE_DATA            (gcut_data_get_type ())
+#define GCUT_TYPE_DATA            (gcut_data__get_type())
 #define GCUT_DATA(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GCUT_TYPE_DATA, GCutData))
 #define GCUT_DATA_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GCUT_TYPE_DATA, GCutDataClass))
 #define GCUT_IS_DATA(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GCUT_TYPE_DATA))
@@ -78,7 +78,7 @@ typedef enum
 
 GQuark         gcut_data_error_quark           (void);
 
-GType          gcut_data_get_type              (void) G_GNUC_CONST;
+GType          gcut_data__get_type             (void) G_GNUC_CONST;
 
 GCutData      *gcut_data_new                   (const gchar   *first_field_name,
                                                 ...) G_GNUC_NULL_TERMINATED;
@@ -93,7 +93,7 @@ gboolean       gcut_data_equal                 (GCutData      *data1,
 const gchar   *gcut_data_get_string_with_error (GCutData      *data,
                                                 const gchar   *field_name,
                                                 GError       **error);
-GType          gcut_data_get_gtype_with_error  (GCutData      *data,
+GType          gcut_data_get_type_with_error   (GCutData      *data,
                                                 const gchar   *field_name,
                                                 GError       **error);
 guint          gcut_data_get_flags_with_error  (GCutData      *data,
@@ -106,7 +106,7 @@ gint           gcut_data_get_enum_with_error   (GCutData      *data,
 const gchar   *gcut_data_get_string_helper     (const GCutData *data,
                                                 const gchar   *field_name,
                                                 GCallback      callback);
-GType          gcut_data_get_gtype_helper      (const GCutData *data,
+GType          gcut_data_get_type_helper       (const GCutData *data,
                                                 const gchar   *field_name,
                                                 GCallback      callback);
 guint          gcut_data_get_flags_helper      (const GCutData *data,

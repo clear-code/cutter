@@ -1,5 +1,7 @@
 2008-12-01  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/, test/gcutter/: gtype -> type.
+
 	* gcutter/gcutter.h: move gcut_data_get_XXX() to ...
 	* gcutter/gcut-test-utils.h: ... here.
 

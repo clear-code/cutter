@@ -32,7 +32,7 @@ typedef struct _FieldValue
     GType type;
     union {
         gpointer pointer;
-        GType gtype;
+        GType type;
         gint integer;
         guint unsigned_integer;
     } value;
@@ -76,7 +76,7 @@ field_value_inspect (GString *string, gconstpointer data, gpointer user_data)
         break;
       default:
         if (field_value->type == G_TYPE_GTYPE) {
-            gcut_inspect_gtype(string, &(field_value->value.gtype), user_data);
+            gcut_inspect_type(string, &(field_value->value.type), user_data);
         } else if (G_TYPE_IS_FLAGS(field_value->type)) {
             GType flags_type = field_value->type;
             gcut_inspect_flags(string,
@@ -119,8 +119,8 @@ field_value_equal (gconstpointer data1, gconstpointer data2)
         break;
       default:
         if (field_value1->type == G_TYPE_GTYPE) {
-            result = (field_value1->value.gtype ==
-                      field_value2->value.gtype);
+            result = (field_value1->value.type ==
+                      field_value2->value.type);
         } else if (G_TYPE_IS_FLAGS(field_value1->type)) {
             result = (field_value1->value.unsigned_integer ==
                       field_value2->value.unsigned_integer);
@@ -138,7 +138,10 @@ field_value_equal (gconstpointer data1, gconstpointer data2)
     return result;
 }
 
+#undef gcut_data_get_type
+#define gcut_data_get_type gcut_data__get_type
 G_DEFINE_TYPE(GCutData, gcut_data, G_TYPE_OBJECT)
+#undef gcut_data_get_type
 
 static void dispose        (GObject         *object);
 
@@ -218,7 +221,7 @@ gcut_data_new_va_list (const gchar *first_field_name, va_list args)
             break;
           default:
             if (field_value->type == G_TYPE_GTYPE) {
-                field_value->value.gtype = va_arg(args, GType);
+                field_value->value.type = va_arg(args, GType);
             } else if (G_TYPE_IS_FLAGS(field_value->type)) {
                 field_value->value.unsigned_integer = va_arg(args, guint);
             } else if (G_TYPE_IS_ENUM(field_value->type)) {
@@ -315,8 +318,8 @@ gcut_data_get_string_with_error (GCutData *data, const gchar *field_name,
 }
 
 GType
-gcut_data_get_gtype_with_error (GCutData *data, const gchar *field_name,
-                                GError **error)
+gcut_data_get_type_with_error (GCutData *data, const gchar *field_name,
+                               GError **error)
 {
     FieldValue *field_value;
 
@@ -324,7 +327,7 @@ gcut_data_get_gtype_with_error (GCutData *data, const gchar *field_name,
     if (!field_value)
         return G_TYPE_INVALID;
 
-    return field_value->value.gtype;
+    return field_value->value.type;
 }
 
 guint
@@ -372,7 +375,7 @@ gcut_data_get_ ## type_name ## _helper (const GCutData *data,           \
 }
 
 DEFINE_GETTER_HELPER(string, const gchar *)
-DEFINE_GETTER_HELPER(gtype, GType)
+DEFINE_GETTER_HELPER(type, GType)
 DEFINE_GETTER_HELPER(flags, guint)
 DEFINE_GETTER_HELPER(enum, gint)
 

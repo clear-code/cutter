@@ -50,11 +50,11 @@ gcut_inspect_string (GString *string, gconstpointer data, gpointer user_data)
 }
 
 void
-gcut_inspect_gtype (GString *string, gconstpointer data, gpointer user_data)
+gcut_inspect_type (GString *string, gconstpointer data, gpointer user_data)
 {
-    const GType *gtype = data;
+    const GType *type = data;
 
-    g_string_append_printf(string, "<%s>", g_type_name(*gtype));
+    g_string_append_printf(string, "<%s>", g_type_name(*type));
 }
 
 void
