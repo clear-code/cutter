@@ -52,6 +52,9 @@ void        gcut_inspect_gtype        (GString       *string,
 void        gcut_inspect_flags        (GString       *string,
                                        gconstpointer  data,
                                        gpointer       user_data);
+void        gcut_inspect_enum         (GString       *string,
+                                       gconstpointer  data,
+                                       gpointer       user_data);
 
 G_END_DECLS
 

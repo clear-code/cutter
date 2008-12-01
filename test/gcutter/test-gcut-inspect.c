@@ -2,6 +2,7 @@
 
 #include <gcutter.h>
 
+#include <cutter/cut-enum-types.h>
 #include <cuttest-enum.h>
 
 void test_direct (void);
@@ -9,6 +10,7 @@ void test_int (void);
 void test_string (void);
 void test_gtype (void);
 void test_flags (void);
+void test_enum (void);
 
 static GString *string;
 
@@ -70,6 +72,22 @@ test_flags (void)
     cut_assert_equal_string("#<CuttestFlags: first|second "
                             "(CUTTEST_FLAG_FIRST:0x1)|"
                             "(CUTTEST_FLAG_SECOND:0x2)>",
+                            string->str);
+}
+
+void
+test_enum (void)
+{
+    CutTestResultStatus value;
+    GType enum_type;
+
+    value = CUT_TEST_RESULT_SUCCESS;
+    enum_type = CUT_TYPE_TEST_RESULT_STATUS;
+    gcut_inspect_enum(string, &value, &enum_type);
+    cut_assert_equal_string(cut_take_printf("#<CutTestResultStatus: "
+                                            "success"
+                                            "(CUT_TEST_RESULT_SUCCESS:%d)>",
+                                            CUT_TEST_RESULT_SUCCESS),
                             string->str);
 }
 

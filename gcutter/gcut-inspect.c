@@ -69,6 +69,18 @@ gcut_inspect_flags (GString *string, gconstpointer data, gpointer user_data)
     g_free(inspected_flags);
 }
 
+void
+gcut_inspect_enum (GString *string, gconstpointer data, gpointer user_data)
+{
+    const gint *enum_value = data;
+    GType *enum_type = user_data;
+    gchar *inspected_enum;
+
+    inspected_enum = gcut_enum_inspect(*enum_type, *enum_value);
+    g_string_append(string, inspected_enum);
+    g_free(inspected_enum);
+}
+
 /*
 vi:nowrap:ai:expandtab:sw=4:ts=4
 */
