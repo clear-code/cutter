@@ -6,13 +6,9 @@
 #include <cuttest-enum.h>
 
 void test_string (void);
-void test_string_nonexistent (void);
 void test_gtype (void);
-void test_gtype_nonexistent (void);
 void test_flags (void);
-void test_flags_nonexistent (void);
 void test_enum (void);
-void test_enum_nonexistent (void);
 
 static GCutData *data;
 static GError *expected_error;
@@ -38,6 +34,24 @@ teardown (void)
         g_error_free(actual_error);
 }
 
+typedef void (*GetValueFunc) (GCutData *data,
+                              const gchar *field_name,
+                              GError **error);
+
+#define assert_nonexistent_field(get_value_func)                        \
+    cut_trace(assert_nonexistent_field_helper((GetValueFunc)get_value_func))
+
+static void
+assert_nonexistent_field_helper (GetValueFunc get_value_func)
+{
+    expected_error = g_error_new(GCUT_DATA_ERROR,
+                                 GCUT_DATA_ERROR_NOT_EXIST,
+                                 "requested field doesn't exist: <%s>",
+                                 "/nonexistent");
+    get_value_func(data, "/nonexistent", &actual_error);
+    gcut_assert_equal_error(expected_error, actual_error);
+}
+
 void
 test_string (void)
 {
@@ -49,22 +63,8 @@ test_string (void)
     actual_value = gcut_data_get_string_with_error(data, "/name", &error);
     gcut_assert_error(error);
     cut_assert_equal_string("my name", actual_value);
-}
 
-void
-test_string_nonexistent (void)
-{
-    data = gcut_data_new("/name", G_TYPE_STRING, "my name",
-                         NULL);
-
-    expected_error = g_error_new(GCUT_DATA_ERROR,
-                                 GCUT_DATA_ERROR_NOT_EXIST,
-                                 "requested field doesn't exist: <%s>",
-                                 "/nonexistent");
-    gcut_data_get_string_with_error(data, "/nonexistent", &actual_error);
-    gcut_assert_equal_error(expected_error, actual_error);
-
-    /* FIXME: write test for gcut_data_get_string(data, "/nonexistent");. */
+    assert_nonexistent_field(gcut_data_get_string_with_error);
 }
 
 void
@@ -78,22 +78,8 @@ test_gtype (void)
     actual_value = gcut_data_get_gtype_with_error(data, "/gtype", &error);
     gcut_assert_error(error);
     gcut_assert_equal_type(GCUT_TYPE_DATA, actual_value);
-}
 
-void
-test_gtype_nonexistent (void)
-{
-    data = gcut_data_new("/gtype", G_TYPE_GTYPE, GCUT_TYPE_DATA,
-                         NULL);
-
-    expected_error = g_error_new(GCUT_DATA_ERROR,
-                                 GCUT_DATA_ERROR_NOT_EXIST,
-                                 "requested field doesn't exist: <%s>",
-                                 "/nonexistent");
-    gcut_data_get_gtype_with_error(data, "/nonexistent", &actual_error);
-    gcut_assert_equal_error(expected_error, actual_error);
-
-    /* FIXME: write test for gcut_data_get_gtype(data, "/nonexistent");. */
+    assert_nonexistent_field(gcut_data_get_gtype_with_error);
 }
 
 void
@@ -108,22 +94,8 @@ test_flags (void)
     actual_value = gcut_data_get_flags_with_error(data, "/flags", &error);
     gcut_assert_error(error);
     gcut_assert_equal_flags(CUTTEST_TYPE_FLAGS, value, actual_value);
-}
 
-void
-test_flags_nonexistent (void)
-{
-    data = gcut_data_new("/flags", CUTTEST_TYPE_FLAGS, CUTTEST_FLAG_SECOND,
-                         NULL);
-
-    expected_error = g_error_new(GCUT_DATA_ERROR,
-                                 GCUT_DATA_ERROR_NOT_EXIST,
-                                 "requested field doesn't exist: <%s>",
-                                 "/nonexistent");
-    gcut_data_get_flags_with_error(data, "/nonexistent", &actual_error);
-    gcut_assert_equal_error(expected_error, actual_error);
-
-    /* FIXME: write test for gcut_data_get_flags(data, "/nonexistent");. */
+    assert_nonexistent_field(gcut_data_get_flags_with_error);
 }
 
 void
@@ -138,24 +110,8 @@ test_enum (void)
     actual_value = gcut_data_get_enum_with_error(data, "/enum", &error);
     gcut_assert_error(error);
     gcut_assert_equal_enum(CUT_TYPE_TEST_RESULT_STATUS, value, actual_value);
-}
 
-void
-test_enum_nonexistent (void)
-{
-    data = gcut_data_new("/enum",
-                         CUT_TYPE_TEST_RESULT_STATUS,
-                         CUT_TEST_RESULT_SUCCESS,
-                         NULL);
-
-    expected_error = g_error_new(GCUT_DATA_ERROR,
-                                 GCUT_DATA_ERROR_NOT_EXIST,
-                                 "requested field doesn't exist: <%s>",
-                                 "/nonexistent");
-    gcut_data_get_enum_with_error(data, "/nonexistent", &actual_error);
-    gcut_assert_equal_error(expected_error, actual_error);
-
-    /* FIXME: write test for gcut_data_get_enum(data, "/nonexistent");. */
+    assert_nonexistent_field(gcut_data_get_enum_with_error);
 }
 
 /*
