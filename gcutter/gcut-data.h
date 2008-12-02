@@ -105,16 +105,16 @@ gint           gcut_data_get_enum_with_error   (GCutData      *data,
 
 const gchar   *gcut_data_get_string_helper     (const GCutData *data,
                                                 const gchar   *field_name,
-                                                GCallback      callback);
+                                                CutCallbackFunction callback);
 GType          gcut_data_get_type_helper       (const GCutData *data,
                                                 const gchar   *field_name,
-                                                GCallback      callback);
+                                                CutCallbackFunction callback);
 guint          gcut_data_get_flags_helper      (const GCutData *data,
                                                 const gchar   *field_name,
-                                                GCallback      callback);
+                                                CutCallbackFunction callback);
 gint           gcut_data_get_enum_helper       (const GCutData *data,
                                                 const gchar   *field_name,
-                                                GCallback      callback);
+                                                CutCallbackFunction callback);
 
 G_END_DECLS
 

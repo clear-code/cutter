@@ -360,7 +360,7 @@ gcut_data_get_enum_with_error (GCutData *data, const gchar *field_name,
 type                                                                    \
 gcut_data_get_ ## type_name ## _helper (const GCutData *data,           \
                                         const gchar *field_name,        \
-                                        GCallback callback)             \
+                                        CutCallbackFunction callback)   \
 {                                                                       \
     GError *error = NULL;                                               \
     type value;                                                         \

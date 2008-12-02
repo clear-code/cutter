@@ -1,5 +1,9 @@
 2008-12-02  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-types.h (CutCallbackFunction): add.
+
+	* gcutter/gcut-data.[ch]: use CutCallbackFunction.
+
 	* gcutter/gcut-data.[ch] (gcut_pop_backtrace): move to ...
 	* cutter/cut-helper.[ch] (cut_pop_backtrace): ... here.
 

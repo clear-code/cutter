@@ -44,6 +44,8 @@ extern "C" {
 typedef void   (*CutDestroyFunction)           (void *data);
 
 
+typedef void   (*CutCallbackFunction)          (void);
+
 /**
  * cut_boolean:
  *
