@@ -24,6 +24,8 @@
 extern "C" {
 #endif
 
+#include <cutter/cut-types.h>
+
 /**
  * SECTION: cut-test-utils
  * @title: Test Utilities
@@ -170,6 +172,31 @@ extern "C" {
  */
 #define cut_take_diff(from, to)                                         \
     cut_take_string(cut_diff_readable(from, to))
+
+/**
+ * cut_take_replace:
+ * @target: the replace target string.
+ * @pattern: the regular expression pattern.
+ * @replacement: text to replace each match with
+ *
+ * Replaces all occurrences of the @pattern with the
+ * @replacement in the @target string.
+ *
+ * Returns: a replaced string. Don't free it.
+ *
+ * Since: 1.0.6
+ */
+#define cut_take_replace(target, pattern, replacement)                  \
+    cut_take_replace_helper(                                            \
+    target, pattern, replacement,                                       \
+        (cut_push_backtrace(cut_take_replace(target,                    \
+                                             pattern,                   \
+                                             replacement)),             \
+         cut_pop_backtrace))
+
+const char *
+cut_take_replace_helper (const char *target, const char *pattern,
+                         const char *replacement, CutCallbackFunction callback);
 
 /**
  * cut_append_diff:

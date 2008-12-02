@@ -148,7 +148,9 @@ libcutter_la_SOURCES =			\
 	cut-sub-process.c		\
 	cut-sub-process-group.c		\
 	cut-backtrace-entry.c		\
-	cut-assertions-helper.c
+	cut-assertions-helper.c		\
+	cut-test-utils.c		\
+	cut-helper.c
 
 libcutter_la_LDFLAGS =				\
 	-version-info $(LT_VERSION_INFO)	\

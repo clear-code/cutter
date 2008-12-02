@@ -1,5 +1,10 @@
 2008-12-02  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-utils.[ch] (cut_utils_regex_replace): add.
+
+	* cutter/cut-test-utils.[ch], test/cutter/test-cut-test-utils.c:
+	add cut_take_replace().
+
 	* cutter/cut-types.h (CutCallbackFunction): add.
 
 	* gcutter/gcut-data.[ch]: use CutCallbackFunction.

@@ -38,6 +38,7 @@
 #include "cut-main.h"
 #include "../gcutter/gcut-public.h"
 #include "../gcutter/gcut-error.h"
+#include "../gcutter/gcut-assertions-helper.h"
 
 gchar *
 cut_utils_create_regex_pattern (const gchar *string)
@@ -203,6 +204,23 @@ gboolean
 cut_utils_regex_match (const gchar *pattern, const gchar *string)
 {
     return g_regex_match_simple(pattern, string, G_REGEX_MULTILINE, 0);
+}
+
+gchar *
+cut_utils_regex_replace (const gchar *pattern, const gchar *string,
+                         const gchar *replacement, GError **error)
+{
+    GRegex *regex;
+    gchar *replaced;
+
+    regex = g_regex_new(pattern, G_REGEX_MULTILINE, 0, error);
+    if (!regex)
+        return NULL;
+
+    replaced = g_regex_replace(regex, string, -1, 0, replacement, 0, error);
+    g_regex_unref(regex);
+
+    return replaced;
 }
 
 const gchar *
