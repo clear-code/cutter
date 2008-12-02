@@ -379,12 +379,6 @@ DEFINE_GETTER_HELPER(type, GType)
 DEFINE_GETTER_HELPER(flags, guint)
 DEFINE_GETTER_HELPER(enum, gint)
 
-void
-gcut_pop_backtrace (void)
-{
-    cut_pop_backtrace();
-}
-
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */

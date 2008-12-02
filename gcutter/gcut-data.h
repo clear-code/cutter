@@ -116,9 +116,6 @@ gint           gcut_data_get_enum_helper       (const GCutData *data,
                                                 const gchar   *field_name,
                                                 GCallback      callback);
 
-
-void           gcut_pop_backtrace              (void);
-
 G_END_DECLS
 
 #endif /* __GCUT_DATA_H__ */

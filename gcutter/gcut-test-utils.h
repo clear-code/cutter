@@ -237,25 +237,25 @@ GHashTable *gcut_hash_table_string_string_new_va_list(const gchar *key,
     gcut_data_get_string_helper(                                        \
         data, field_name,                                               \
         (cut_push_backtrace(gcut_data_get_string(data, field_name)),    \
-         gcut_pop_backtrace))
+         cut_pop_backtrace))
 
 #define gcut_data_get_type(data, field_name)                            \
     gcut_data_get_type_helper(                                          \
         data, field_name,                                               \
         (cut_push_backtrace(gcut_data_get_type(data, field_name)),      \
-         gcut_pop_backtrace))
+         cut_pop_backtrace))
 
 #define gcut_data_get_flags(data, field_name)                           \
     gcut_data_get_flags_helper(                                         \
         data, field_name,                                               \
         (cut_push_backtrace(gcut_data_get_flags(data, field_name)),     \
-         gcut_pop_backtrace))
+         cut_pop_backtrace))
 
 #define gcut_data_get_enum(data, field_name)                            \
     gcut_data_get_enum_helper(                                          \
         data, field_name,                                               \
         (cut_push_backtrace(gcut_data_get_enum(data, field_name)),      \
-         gcut_pop_backtrace))
+         cut_pop_backtrace))
 
 G_END_DECLS
 

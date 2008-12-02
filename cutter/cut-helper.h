@@ -229,8 +229,7 @@ extern "C" {
                                     CUT_FUNCTION,                       \
                                     #expression)
 
-#define cut_pop_backtrace()                                             \
-    cut_test_context_pop_backtrace(cut_get_current_test_context())
+void cut_pop_backtrace(void);
 
 /**
  * cut_trace:
