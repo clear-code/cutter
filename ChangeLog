@@ -1,5 +1,7 @@
 2008-12-02  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/cutter/test-cut-process.c: fix include path.
+
 	* test/lib/Makefile.am (AM_CFLAGS): add missing '\'.
 
 	* cutter/cut-utils.[ch] (cut_utils_regex_replace): add.

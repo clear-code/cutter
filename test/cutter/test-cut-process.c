@@ -1,7 +1,7 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 
 #ifdef HAVE_CONFIG_H
-#  include "../cutter/config.h"
+#  include "<config.h>"
 #endif
 
 #include <errno.h>
