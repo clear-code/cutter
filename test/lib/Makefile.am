@@ -5,7 +5,7 @@ INCLUDES = 			\
 	-I$(top_srcdir)/gcutter
 
 AM_CFLAGS =				\
-	-DCUT_RELATIVE_PATH="\"lib\""
+	-DCUT_RELATIVE_PATH="\"lib\""	\
 	$(CUTTER_CFLAGS)
 if HAVE_GTK
 AM_CFLAGS += $(GTK_CFLAGS)
