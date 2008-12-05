@@ -621,6 +621,7 @@ gcut_egg_hatch (GCutEgg *egg, GError **error)
     GCutEggPrivate *priv;
     gboolean success;
     gint input_fd = 0, output_fd = 0, error_fd = 0;
+    gchar **env;
 
     priv = GCUT_EGG_GET_PRIVATE(egg);
 
@@ -641,9 +642,10 @@ gcut_egg_hatch (GCutEgg *egg, GError **error)
         return FALSE;
     }
 
+    env = gcut_egg_get_env(egg);
     success = g_spawn_async_with_pipes(NULL,
                                        priv->command,
-                                       gcut_egg_get_env(egg),
+                                       env,
                                        priv->flags | priv->must_flags,
                                        NULL,
                                        NULL,
@@ -652,6 +654,8 @@ gcut_egg_hatch (GCutEgg *egg, GError **error)
                                        &output_fd,
                                        &error_fd,
                                        error);
+    if (env)
+        g_strfreev(env);
 
     if (!success)
         return FALSE;

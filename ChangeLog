@@ -1,3 +1,7 @@
+2008-12-05  Kouhei Sutou  <kou@cozmixng.org>
+
+	* gcutter/gcut-egg.c (gcut_egg_hatch): plug a memory leak.
+
 2008-12-02  Kouhei Sutou  <kou@cozmixng.org>
 
 	* test/cutter/test-cut-process.c: fix include path.
