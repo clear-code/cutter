@@ -79,8 +79,8 @@ gcut_hash_table_equal (GHashTable *hash1, GHashTable *hash2,
 typedef struct _InspectData
 {
     GString *output;
-    GCutInspectFunc key_inspect_func;
-    GCutInspectFunc value_inspect_func;
+    GCutInspectFunction key_inspect_func;
+    GCutInspectFunction value_inspect_func;
     gpointer user_data;
     guint nth_pair;
     guint total_size;
@@ -101,8 +101,8 @@ inspect_hash_table_pair (gpointer key, gpointer value, gpointer user_data)
 
 gchar *
 gcut_hash_table_inspect (GHashTable *hash,
-                         GCutInspectFunc key_inspect_func,
-                         GCutInspectFunc value_inspect_func,
+                         GCutInspectFunction key_inspect_func,
+                         GCutInspectFunction value_inspect_func,
                          gpointer user_data)
 {
     GString *string;

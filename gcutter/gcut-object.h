@@ -87,7 +87,7 @@ gchar           *gcut_object_inspect              (const GObject *object);
  * Since: 1.0.5
  */
 gchar           *gcut_object_inspect_custom       (const GObject *object,
-                                                   GCutInspectFunc inspect_func,
+                                                   GCutInspectFunction inspect_func,
                                                    gpointer user_data);
 
 

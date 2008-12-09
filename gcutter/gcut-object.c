@@ -93,7 +93,8 @@ gcut_object_inspect (const GObject *object)
 }
 
 gchar *
-gcut_object_inspect_custom (const GObject *object, GCutInspectFunc inspect_func,
+gcut_object_inspect_custom (const GObject *object,
+                            GCutInspectFunction inspect_func,
                             gpointer user_data)
 {
     GString *string;

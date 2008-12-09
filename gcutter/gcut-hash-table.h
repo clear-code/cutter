@@ -86,8 +86,8 @@ gboolean         gcut_hash_table_equal          (GHashTable *hash1,
  * Since: 1.0.5
  */
 gchar           *gcut_hash_table_inspect        (GHashTable *hash,
-                                                 GCutInspectFunc key_inspect_func,
-                                                 GCutInspectFunc value_inspect_func,
+                                                 GCutInspectFunction key_inspect_func,
+                                                 GCutInspectFunction value_inspect_func,
                                                  gpointer user_data);
 
 /**

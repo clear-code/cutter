@@ -83,7 +83,7 @@ gboolean         gcut_list_equal                (const GList *list1,
  * Since: 1.0.5
  */
 gchar           *gcut_list_inspect              (const GList *list,
-                                                 GCutInspectFunc inspect_func,
+                                                 GCutInspectFunction inspect_func,
                                                  gpointer user_data);
 
 /**
