@@ -309,7 +309,7 @@ void cut_shutdown(void);
     cut_add_data_backward_compatibility(cut_get_current_test_context(), \
                                         first_data_name, __VA_ARGS__)
 
-#ifdef __GNUC__
+#if !defined(CUTTER_DISABLE_DEPRECATED) && defined(__GNUC__)
 #define cut_add_data_backward_compatibility(context, ...)       \
     cut_test_context_add_data(context, ## __VA_ARGS__, NULL)
 #else

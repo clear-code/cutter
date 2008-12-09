@@ -27,7 +27,7 @@
 extern "C" {
 #endif
 
-#ifdef __GNUC__
+#if !defined(CUTTER_DISABLE_DEPRECATED) && defined(__GNUC__)
 #define cut_set_message_backward_compatibility(...)                     \
     cut_test_context_set_user_message_backward_compatibility(           \
         cut_get_current_test_context(),                                 \

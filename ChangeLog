@@ -1,7 +1,10 @@
 2008-12-09  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cutter.h, cutter/cut-assertions-helper.h: disable
+	## __VA_ARGS__ codes on CUTTER_DISABLE_DEPRECATED.
+
 	* gcutter/gcut-test-utils.h (gcut_take_new_list_string): don't use
-	## __VA__ARGS.
+	## __VA__ARGS__.
 
 2008-12-05  Kouhei Sutou  <kou@cozmixng.org>
 
