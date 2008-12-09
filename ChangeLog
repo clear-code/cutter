@@ -1,5 +1,8 @@
 2008-12-09  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/cutter/test-cut-assertions.c: cut_assert_g_error() ->
+	gcut_assert_error().
+
 	* gcutter/gcut-hash-table.[ch], gcutter/gcut-list.h,
 	gcutter/gcut-object.[ch]: GCutInspectFunc -> GCutInspectFunction.
 

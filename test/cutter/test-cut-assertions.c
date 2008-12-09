@@ -829,14 +829,14 @@ path_not_exist_test (void)
     GError *error = NULL;
 
     fd = g_file_open_tmp(NULL, &tmp_file_name, &error);
-    cut_assert_g_error(error);
+    gcut_assert_error(error);
     close(fd);
 
     g_remove(tmp_file_name);
     cut_assert_path_not_exist(tmp_file_name);
 
     g_file_set_contents(tmp_file_name, "XXX", -1, &error);
-    cut_assert_g_error(error);
+    gcut_assert_error(error);
     cut_assert_path_not_exist(tmp_file_name);
 }
 
