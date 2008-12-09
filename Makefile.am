@@ -54,7 +54,8 @@ update-po:
 	  (find cutter -name '*.c';		\
 	   find gcutter -name '*.c';		\
 	   find gdkcutter-pixbuf -name '*.c';	\
-	   find module -name '*.c') | \
+	   find module -name '*.c') |		\
+	  grep -v cut-marshalers.c |		\
 	  sort > po/POTFILES.in
 	cd po && $(MAKE) $(AM_MAKEFLAGS) update-po
 	cd doc/reference && $(MAKE) $(AM_MAKEFLAGS) update-po

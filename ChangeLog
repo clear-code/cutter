@@ -1,5 +1,7 @@
 2008-12-09  Kouhei Sutou  <kou@cozmixng.org>
 
+	* Makefile.am (update-po): remove cut-marshalers.c.
+
 	* test/cutter/test-cut-assertions.c: cut_assert_g_error() ->
 	gcut_assert_error().
 
