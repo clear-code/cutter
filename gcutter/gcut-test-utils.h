@@ -145,8 +145,17 @@ GList  *gcut_list_string_new_array  (const gchar **strings);
  * Since: 1.0.5
  */
 #define gcut_take_new_list_string(value, ...)                           \
+    gcut_take_new_list_string_backward_compatibility(value, __VA_ARGS__)
+
+#if !defined(CUTTER_DISABLE_DEPRECATED) && defined(__GNUC__)
+#define gcut_take_new_list_string_backward_compatibility(value, ...)    \
     gcut_take_list(gcut_list_string_new(value, ## __VA_ARGS__, NULL),   \
                    g_free)
+#else
+#define gcut_take_new_list_string_backward_compatibility(value, ...)    \
+    gcut_take_list(gcut_list_string_new(value, __VA_ARGS__),            \
+                   g_free)
+#endif
 
 /**
  * gcut_take_new_list_string_array:

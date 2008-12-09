@@ -1,4 +1,11 @@
+2008-12-09  Kouhei Sutou  <kou@cozmixng.org>
+
+	* gcutter/gcut-test-utils.h (gcut_take_new_list_string): don't use
+	## __VA__ARGS.
+
 2008-12-05  Kouhei Sutou  <kou@cozmixng.org>
+
+	* gcutter/gcut-egg.c (reap_child): pull all remained data on reaped.
 
 	* gcutter/gcut-egg.c (gcut_egg_hatch): plug a memory leak.
 
