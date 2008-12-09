@@ -14,8 +14,6 @@
 
 2008-12-05  Kouhei Sutou  <kou@cozmixng.org>
 
-	* gcutter/gcut-egg.c (reap_child): pull all remained data on reaped.
-
 	* gcutter/gcut-egg.c (gcut_egg_hatch): plug a memory leak.
 
 2008-12-02  Kouhei Sutou  <kou@cozmixng.org>
