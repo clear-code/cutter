@@ -1,3 +1,12 @@
+2008-12-11  Kouhei Sutou  <kou@cozmixng.org>
+
+	* configure.ac (LIBTOOL_EXPORT_OPTIONS),
+	sample/glib/Makefile.am: add -fno-strict-aliasing
+	option to the GThread test because G_TRYLOCK
+	(g_static_mutex_trylock) has strict aliasing problem.
+
+	* sample/glib/thread.c: use more meaningful assertions.
+
 2008-12-09  Kouhei Sutou  <kou@cozmixng.org>
 
 	* Makefile.am (update-po): remove cut-marshalers.c.

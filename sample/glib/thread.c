@@ -35,8 +35,8 @@ test_g_mutex_thread (gpointer user_data)
 
   cut_set_current_test_context (data->test_context);
   cut_assert_equal_int (42, data->number);
-  cut_assert (g_mutex_trylock (test_g_mutex_mutex) == FALSE);
-  cut_assert (G_TRYLOCK (test_g_mutex) == FALSE);
+  cut_assert_false (g_mutex_trylock (test_g_mutex_mutex));
+  cut_assert_false (G_TRYLOCK (test_g_mutex));
   test_g_mutex_thread_ready = TRUE;
   g_mutex_lock (test_g_mutex_mutex);
   cut_assert_equal_int (42, test_g_mutex_int);
@@ -52,8 +52,8 @@ test_g_mutex (void)
   TestData test_data;
   test_g_mutex_mutex = g_mutex_new ();
 
-  cut_assert (g_mutex_trylock (test_g_mutex_mutex));
-  cut_assert (G_TRYLOCK (test_g_mutex));
+  cut_assert_true (g_mutex_trylock (test_g_mutex_mutex));
+  cut_assert_true (G_TRYLOCK (test_g_mutex));
   test_g_mutex_thread_ready = FALSE;
   test_data.number = 42;
   test_data.test_context = cut_get_current_test_context ();
@@ -83,8 +83,7 @@ test_g_static_rec_mutex_thread (gpointer user_data)
   cut_set_current_test_context (data->test_context);
 
   cut_assert_equal_int (42, data->number);
-  cut_assert (g_static_rec_mutex_trylock (&test_g_static_rec_mutex_mutex) 
-	      == FALSE);
+  cut_assert_false (g_static_rec_mutex_trylock (&test_g_static_rec_mutex_mutex));
   test_g_static_rec_mutex_thread_ready = TRUE;
   g_static_rec_mutex_lock (&test_g_static_rec_mutex_mutex);
   g_static_rec_mutex_lock (&test_g_static_rec_mutex_mutex);
@@ -105,7 +104,7 @@ test_g_static_rec_mutex (void)
   GThread *thread;
   TestData test_data;
 
-  cut_assert (g_static_rec_mutex_trylock (&test_g_static_rec_mutex_mutex));
+  cut_assert_true (g_static_rec_mutex_trylock (&test_g_static_rec_mutex_mutex));
   test_g_static_rec_mutex_thread_ready = FALSE;
   test_data.number = 42;
   test_data.test_context = cut_get_current_test_context ();
@@ -116,7 +115,7 @@ test_g_static_rec_mutex (void)
   while (!test_g_static_rec_mutex_thread_ready)
     g_usleep (G_USEC_PER_SEC / 5);
 
-  cut_assert (g_static_rec_mutex_trylock (&test_g_static_rec_mutex_mutex));
+  cut_assert_true (g_static_rec_mutex_trylock (&test_g_static_rec_mutex_mutex));
   test_g_static_rec_mutex_int = 41;
   g_static_rec_mutex_unlock (&test_g_static_rec_mutex_mutex);
   test_g_static_rec_mutex_int = 42;  
@@ -195,7 +194,7 @@ test_g_static_private_thread (gpointer user_data)
       *private2 = number * 2;
       g_usleep (G_USEC_PER_SEC / 5);
       cut_assert_equal_int (number, *private1);
-      cut_assert_equal_int (number * 2, *private2);      
+      cut_assert_equal_int (number * 2, *private2);
     }
   g_static_mutex_lock (&test_g_static_private_mutex);
   test_g_static_private_ready++;
@@ -214,10 +213,10 @@ test_g_static_private_thread (gpointer user_data)
 	  private2 = test_g_static_private_constructor ();
 	  g_static_private_set (&test_g_static_private_private2, private2,
 				test_g_static_private_destructor);
-	}      
+	}
       *private2 = number * 2;
       g_usleep (G_USEC_PER_SEC / 5);
-      cut_assert_equal_int (number * 2, *private2);      
+      cut_assert_equal_int (number * 2, *private2);
     }
 
   return GINT_TO_POINTER (data->unsigned_number * 3);
@@ -252,8 +251,8 @@ test_g_static_private (void)
 
   for (i = 0; i < THREADS; i++)
     cut_assert_equal_int (i * 3, GPOINTER_TO_INT (g_thread_join (threads[i])));
-    
-  cut_assert_equal_int (0, test_g_static_private_counter); 
+
+  cut_assert_equal_int (0, test_g_static_private_counter);
 }
 
 /* GStaticRWLock */
@@ -280,7 +279,7 @@ test_g_static_rw_lock_thread (gpointer data)
 	    if (!g_static_rw_lock_reader_trylock (&test_g_static_rw_lock_lock))
 	      continue;
 	  G_LOCK (test_g_static_rw_lock_state);
-	  cut_assert (test_g_static_rw_lock_state >= 0);
+	  cut_assert_operator_int (test_g_static_rw_lock_state, >=, 0);
 	  test_g_static_rw_lock_state++;
 	  G_UNLOCK (test_g_static_rw_lock_state);
 

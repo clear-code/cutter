@@ -112,6 +112,12 @@ if test "x$GCC" = "xyes"; then
   esac
 fi
 
+NO_STRICT_ALIASING_CFLAGS=
+if test "x$GCC" = "xyes"; then
+  NO_STRICT_ALIASING_CFLAGS=-fno-strict-aliasing
+fi
+AC_SUBST(NO_STRICT_ALIASING_CFLAGS)
+
 # Checks for headers
 AC_HEADER_SYS_WAIT
 AC_CHECK_HEADER(io.h,
