@@ -1,3 +1,7 @@
+2008-12-16  Kouhei Sutou  <kou@cozmixng.org>
+
+	* misc/rd2refentry-lib.rb: support emphasis and footnote.
+
 2008-12-11  Kouhei Sutou  <kou@cozmixng.org>
 
 	* configure.ac (LIBTOOL_EXPORT_OPTIONS),

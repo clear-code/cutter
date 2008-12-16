@@ -126,6 +126,16 @@ module RD
       tag("para", {}, *contents)
     end
 
+    def apply_to_Emphasis(element, contents)
+      tag("emphasis", {}, *contents)
+    end
+
+    def apply_to_Footnote(element, contents)
+      @foot_note_id ||= 0
+      @foot_note_id += 1
+      tag("footnote", {"id" => @foot_note_id.to_s}, *contents)
+    end
+
     def apply_to_StringElement(element)
       apply_to_String(element.content.chomp)
     end
