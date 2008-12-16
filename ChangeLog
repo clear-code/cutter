@@ -1,5 +1,7 @@
 2008-12-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/Makefile.am (MKDB_OPTIONS): remove needless argument.
+
 	* misc/rd2refentry-lib.rb: support emphasis and footnote.
 
 2008-12-11  Kouhei Sutou  <kou@cozmixng.org>

@@ -83,7 +83,7 @@ GTKDOC_LIBS +=							\
 endif
 
 # Extra options to supply to gtkdoc-mkdb
-MKDB_OPTIONS=--sgml-mode --output-format=xml --ignore-files=trio
+MKDB_OPTIONS=--sgml-mode --output-format=xml
 
 # Images to copy into HTML directory
 HTML_IMAGES =				\
