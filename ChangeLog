@@ -1,3 +1,7 @@
+2008-12-17  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cutter.h: fix a typo.
+
 2008-12-16  Kouhei Sutou  <kou@cozmixng.org>
 
 	* doc/reference/Makefile.am (MKDB_OPTIONS): remove needless argument.

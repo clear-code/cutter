@@ -35,7 +35,7 @@ extern "C" {
 /**
  * SECTION: cutter
  * @title: Cutter
- * @short_description: An Unit Testing Framework for C.
+ * @short_description: A Unit Testing Framework for C.
  * @see_also: <link linkend="cutter-cut-assertions">Assertions</link>
  *
  * Cutter is a Unit Testing Framework for C and has the
@@ -135,7 +135,7 @@ extern "C" {
  * debugging.
  *   </para></listitem>
  * </itemizedlist>
-  */
+ */
 
 /**
  * setup:
