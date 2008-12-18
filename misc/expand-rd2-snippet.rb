@@ -16,7 +16,17 @@ class RD2RefEntrySnippetVisitor < RD::RD2RefEntryVisitor
     if section_contents.empty?
       contents.join("\n\n")
     else
-      section_contents.join("\n\n")
+      section_contents.join("\n\n").gsub(/<(\/)?refsect(\d)/) do
+        "<#{$1}refsect#{$2.to_i.succ}"
+      end
+    end
+  end
+
+  def apply_to_Verbatim(element)
+    if /\A#\s*pass-through\s*\z/ =~ (element.content[0] || '')
+      element.content[1..-1].join
+    else
+      super
     end
   end
 
@@ -24,7 +34,7 @@ class RD2RefEntrySnippetVisitor < RD::RD2RefEntryVisitor
     element.gsub(/([^<]*)(<.+?>)?/) do
       content = $1
       tag = $2
-      h(content) + (tag || "")
+      h(content).gsub(/&amp;commat;/, '&commat;') + (tag || "")
     end
   end
 end
@@ -41,6 +51,11 @@ def expand_rd2_snippets(file_name)
   rd2_snippet_re = /<para>\s*<rd>\s*(.+?)\s*<\/rd>\s*<\/para>/m
   expanded_content = content.gsub(rd2_snippet_re) do
     rd2_snippet = $1
+    program_listing_re = /\n.*?<programlisting>(?m:.+?)<\/programlisting>.*?\n/
+    rd2_snippet = rd2_snippet.gsub(program_listing_re) do |program_listing|
+      "\n  # pass-through" + program_listing.gsub(/\n/, "\n  ")
+    end
+    rd2_snippet = rd2_snippet.gsub(/<\/para>\n<para>\n/, "\n")
     expand_rd2_snippet(rd2_snippet)
   end
   changed = content != expanded_content

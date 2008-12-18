@@ -1,5 +1,7 @@
 2008-12-18  Kouhei Sutou  <kou@cozmixng.org>
 
+	* misc/expand-rd2-snippet.rb: improve section handling.
+
 	* misc/expand-rd2-snippet.rb: add.
 
 2008-12-17  Kouhei Sutou  <kou@cozmixng.org>
