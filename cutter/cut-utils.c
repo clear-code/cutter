@@ -118,17 +118,17 @@ cut_utils_inspect_memory (const void *memory, size_t size)
     n_printable_characters = 0;
     for (i = 0; i < size; i++) {
         g_string_append_printf(buffer, "0x%02x ", binary[i]);
-        if (g_ascii_isalnum(binary[i]))
+        if (g_ascii_isprint(binary[i]))
             n_printable_characters++;
     }
 
     if (n_printable_characters >= size * 0.3) {
         g_string_overwrite(buffer, buffer->len - 1, ": ");
         for (i = 0; i < size; i++) {
-            if (g_ascii_isalnum(binary[i]) || binary[i] == ' ') {
+            if (g_ascii_isprint(binary[i])) {
                 g_string_append_c(buffer, binary[i]);
             } else {
-            g_string_append_c(buffer, '.');
+                g_string_append_c(buffer, '.');
             }
         }
     } else {
