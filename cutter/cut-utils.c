@@ -106,16 +106,34 @@ cut_utils_inspect_memory (const void *memory, size_t size)
 {
     const guchar *binary = memory;
     GString *buffer;
-    size_t i;
+    size_t i, n_printable_characters;
 
     if (memory == NULL || size == 0)
         return g_strdup("(null)");
 
-    buffer = g_string_sized_new(size * 5);
+    buffer = g_string_sized_new(size * strlen("0xXX") +
+                                (size - 1) * strlen(" ") +
+                                strlen(": ") +
+                                size);
+    n_printable_characters = 0;
     for (i = 0; i < size; i++) {
         g_string_append_printf(buffer, "0x%02x ", binary[i]);
+        if (g_ascii_isalnum(binary[i]))
+            n_printable_characters++;
     }
-    g_string_truncate(buffer, buffer->len - 1);
+
+    if (n_printable_characters >= size * 0.3) {
+        g_string_overwrite(buffer, buffer->len - 1, ": ");
+        for (i = 0; i < size; i++) {
+            if (g_ascii_isalnum(binary[i]) || binary[i] == ' ') {
+                g_string_append_c(buffer, binary[i]);
+            } else {
+            g_string_append_c(buffer, '.');
+            }
+        }
+    } else {
+        g_string_truncate(buffer, buffer->len - 1);
+    }
 
     return g_string_free(buffer, FALSE);
 }

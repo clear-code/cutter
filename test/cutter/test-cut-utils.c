@@ -5,6 +5,7 @@
 #include "../lib/cuttest-utils.h"
 
 void test_inspect_memory (void);
+void test_inspect_memory_with_printable (void);
 void test_compare_string_array (void);
 void test_inspect_string_array (void);
 void test_strv_concat (void);
@@ -55,6 +56,24 @@ test_inspect_memory (void)
                                                                sizeof(binary)));
     cut_assert_equal_string_with_free("0x00 0x01",
                                       cut_utils_inspect_memory(binary, 2));
+}
+
+void
+test_inspect_memory_with_printable (void)
+{
+    gchar binary[] = {0x00, 0x01, 0x02, 0x1f, 'G', 'N', 'U', 0x01};
+
+    cut_assert_equal_string_with_free(
+        "0x00 0x01 0x02 0x1f 0x47 0x4e 0x55 0x01: ....GNU.",
+        cut_utils_inspect_memory(binary, sizeof(binary)));
+
+    cut_assert_equal_string_with_free(
+        "0x00 0x01 0x02 0x1f 0x47",
+        cut_utils_inspect_memory(binary, sizeof(binary) - 3));
+
+    cut_assert_equal_string_with_free(
+        "0x00 0x01 0x02 0x1f 0x47 0x4e: ....GN",
+        cut_utils_inspect_memory(binary, sizeof(binary) - 2));
 }
 
 void

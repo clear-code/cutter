@@ -1,3 +1,8 @@
+2008-12-19  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-utils.c, test/cutter/test-cut-utils.c:
+	cut_utils_inspect_memory() shows printable characters if needed.
+
 2008-12-18  Kouhei Sutou  <kou@cozmixng.org>
 
 	* misc/expand-rd2-snippet.rb: improve section handling.
