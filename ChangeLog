@@ -1,3 +1,8 @@
+2008-12-22  Kouhei Sutou  <kou@cozmixng.org>
+
+	* module/ui/cut-console-ui-factory.c (guess_color_usability):
+	TERM=linux is color available.
+
 2008-12-19  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-utils.c, test/cutter/test-cut-utils.c:
