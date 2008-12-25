@@ -41,7 +41,10 @@ def login(agent, user_name, password=nil)
 end
 
 def go_project_page(agent, my_page, project_name)
-  agent.click(my_page.links.text(/\A#{Regexp.escape(project_name)}\z/i))
+  project_page_link = my_page.links.find do |link|
+    /\A#{Regexp.escape(project_name)}\z/i =~ link.text
+  end
+  agent.click(project_page_link)
 end
 
 def upload_file(agent, file, sf_user_name, password)
@@ -55,7 +58,10 @@ def upload_file(agent, file, sf_user_name, password)
 end
 
 def go_file_releases_page(agent, project_page)
-  agent.click(project_page.links.text(/\AFile Releases\z/))
+  file_releases_page_link = project_page.links.find do |link|
+    /\AFile Releases\z/ =~ link.text
+  end
+  agent.click(file_releases_page_link)
 end
 
 def find_target_release_link(file_releases_page, package_name, label)
@@ -64,9 +70,8 @@ def find_target_release_link(file_releases_page, package_name, label)
   end
   raise "can't find package ID" if /package_id=(\d+)/ !~ target_release_row.to_s
   package_id = $1
-  release_links = file_releases_page.links.text(label)
-  release_links.find do |link|
-    /package_id=#{package_id}/ =~ link.href
+  file_releases_page.links.find do |link|
+    label =~ link.text and /package_id=#{package_id}/ =~ link.href
   end
 end
 
@@ -88,8 +93,10 @@ def go_edit_release_page(agent, file_releases_page, package_name, release_name)
                                                package_name,
                                                /\[Edit Releases\]/)
   release_list_page = agent.click(edit_release_link)
-  edit_current_release_row = release_list_page / "td[text() ~= #{release_name}]"
-  if edit_current_release_row.empty?
+  edit_current_release_row = (release_list_page / "td").find do |row|
+    /#{Regexp.escape(release_name)}/ =~ row.text
+  end
+  if edit_current_release_row.nil?
     add_release(agent, file_releases_page, package_name, release_name)
   else
     edit_release_link = (edit_current_release_row / "a")[0]
@@ -128,14 +135,18 @@ def remove_rd_link_markup(text)
 end
 
 def update_release_info(agent, edit_release_page, news)
-  edit_release_info_form = edit_release_page.forms.action(/editreleases/)[0]
+  edit_release_info_form = edit_release_page.forms.find do |form|
+    /editreleases/ =~ form.action
+  end
   edit_release_info_form.release_changes = latest_release_changes(news)
 
   agent.submit(edit_release_info_form, edit_release_info_form.buttons.first)
 end
 
 def register_file(agent, edit_release_page, file_name)
-  add_file_form = edit_release_page.forms.action(/editreleases/)[1]
+  add_file_form = edit_release_page.forms.find_all do |form|
+    /editreleases/ =~ form.action
+  end[1]
   add_file_form["file_list[]"] = file_name
 
   agent.submit(add_file_form, add_file_form.buttons.first)
@@ -149,7 +160,9 @@ def select_option(select_field, option_text)
 end
 
 def set_release_property(agent, edit_release_page)
-  edit_file_form = edit_release_page.forms.action(/editreleases/)[2]
+  edit_file_form = edit_release_page.forms.find_all do |form|
+    /editreleases/ =~ form.action
+  end[2]
   puts edit_release_page if edit_file_form.nil?
   select_option(edit_file_form.field("processor_id"), "Platform-Independent")
   select_option(edit_file_form.field("type_id"), "Source .gz")
@@ -157,16 +170,18 @@ def set_release_property(agent, edit_release_page)
 end
 
 def go_news_page(agent, project_page)
-  agent.click(project_page.links.text(/\ANews\z/))
+  agent.click(project_page.links.find {|link| /\ANews\z/ =~ link.text})
 end
 
 def go_submit_news_page(agent, news_page)
-  agent.click(news_page.links.text(/\ASubmit\z/))
+  agent.click(news_page.links.find {|link| /\ASubmit\z/ =~ link.text})
 end
 
 def submit_news(agent, submit_news_page, project_name, package_name,
                 release_name, readme, news)
-  submit_news_form = submit_news_page.forms.action(/\bnews\b/)[0]
+  submit_news_form = submit_news_page.forms.find do |form|
+    /\bnews\b/ =~ form.action
+  end
   summary = "#{project_name}: #{package_name} #{release_name} Released"
   submit_news_form.summary = summary
   details = [project_summary(readme),
