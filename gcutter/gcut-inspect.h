@@ -43,6 +43,9 @@ void        gcut_inspect_direct       (GString       *string,
 void        gcut_inspect_int          (GString       *string,
                                        gconstpointer  data,
                                        gpointer       user_data);
+void        gcut_inspect_uint         (GString       *string,
+                                       gconstpointer  data,
+                                       gpointer       user_data);
 void        gcut_inspect_string       (GString       *string,
                                        gconstpointer  data,
                                        gpointer       user_data);

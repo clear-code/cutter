@@ -7,6 +7,7 @@
 
 void test_direct (void);
 void test_int (void);
+void test_uint (void);
 void test_string (void);
 void test_type (void);
 void test_flags (void);
@@ -40,6 +41,15 @@ test_int (void)
     gint value = 99;
 
     gcut_inspect_int(string, &value, NULL);
+    cut_assert_equal_string("99", string->str);
+}
+
+void
+test_uint (void)
+{
+    guint value = 99;
+
+    gcut_inspect_uint(string, &value, NULL);
     cut_assert_equal_string("99", string->str);
 }
 

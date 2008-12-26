@@ -39,6 +39,14 @@ gcut_inspect_int (GString *string, gconstpointer data, gpointer user_data)
 }
 
 void
+gcut_inspect_uint (GString *string, gconstpointer data, gpointer user_data)
+{
+    const guint *uint_value = data;
+
+    g_string_append_printf(string, "%u", *uint_value);
+}
+
+void
 gcut_inspect_string (GString *string, gconstpointer data, gpointer user_data)
 {
     const gchar *value = data;

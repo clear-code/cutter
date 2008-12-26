@@ -1,3 +1,8 @@
+2008-12-26  Kouhei Sutou  <kou@cozmixng.org>
+
+	* gcutter/gcut-inspect.[ch], test/gcutter/test-gcut-inspect.c:
+	add gcut_inspect_uint().
+
 2008-12-26  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* module/ui/cut-ui-gtk.c: Remove needless cast.
