@@ -1,3 +1,7 @@
+2008-12-26  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* module/ui/cut-ui-gtk.c: Remove needless cast.
+
 2008-12-25  Kouhei Sutou  <kou@cozmixng.org>
 
 	* misc/release.rb: follow the recent Mechanize changes.

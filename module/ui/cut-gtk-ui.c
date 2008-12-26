@@ -342,9 +342,9 @@ setup_window (CutGtkUI *ui)
     gtk_window_set_default_size(GTK_WINDOW(window), 600, 500);
     gtk_window_set_title(GTK_WINDOW(window), "Cutter");
 
-    g_signal_connect(G_OBJECT(window), "destroy",
+    g_signal_connect(window, "destroy",
                      G_CALLBACK(cb_destroy), ui);
-    g_signal_connect(G_OBJECT(window), "key-press-event",
+    g_signal_connect(window, "key-press-event",
                      G_CALLBACK(cb_key_press_event), NULL);
 
     ui->window = window;
