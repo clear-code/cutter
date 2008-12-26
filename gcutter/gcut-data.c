@@ -74,6 +74,13 @@ field_value_inspect (GString *string, gconstpointer data, gpointer user_data)
       case G_TYPE_STRING:
         gcut_inspect_string(string, field_value->value.pointer, user_data);
         break;
+      case G_TYPE_INT:
+        gcut_inspect_int(string, &(field_value->value.integer), user_data);
+        break;
+      case G_TYPE_UINT:
+        gcut_inspect_uint(string, &(field_value->value.unsigned_integer),
+                          user_data);
+        break;
       default:
         if (field_value->type == G_TYPE_GTYPE) {
             gcut_inspect_type(string, &(field_value->value.type), user_data);
@@ -116,6 +123,14 @@ field_value_equal (gconstpointer data1, gconstpointer data2)
       case G_TYPE_STRING:
         result = g_str_equal(field_value1->value.pointer,
                              field_value2->value.pointer);
+        break;
+      case G_TYPE_INT:
+        result = (field_value1->value.integer ==
+                  field_value2->value.integer);
+        break;
+      case G_TYPE_UINT:
+        result = (field_value1->value.unsigned_integer ==
+                  field_value2->value.unsigned_integer);
         break;
       default:
         if (field_value1->type == G_TYPE_GTYPE) {
@@ -218,6 +233,12 @@ gcut_data_new_va_list (const gchar *first_field_name, va_list args)
           case G_TYPE_STRING:
             field_value->value.pointer = g_strdup(va_arg(args, const gchar *));
             field_value->free_function = g_free;
+            break;
+          case G_TYPE_INT:
+            field_value->value.integer = va_arg(args, gint);
+            break;
+          case G_TYPE_UINT:
+            field_value->value.unsigned_integer = va_arg(args, guint);
             break;
           default:
             if (field_value->type == G_TYPE_GTYPE) {
@@ -331,8 +352,8 @@ gcut_data_get_type_with_error (GCutData *data, const gchar *field_name,
 }
 
 guint
-gcut_data_get_flags_with_error (GCutData *data, const gchar *field_name,
-                                GError **error)
+gcut_data_get_uint_with_error (GCutData *data, const gchar *field_name,
+                               GError **error)
 {
     FieldValue *field_value;
 
@@ -343,8 +364,15 @@ gcut_data_get_flags_with_error (GCutData *data, const gchar *field_name,
     return field_value->value.unsigned_integer;
 }
 
+guint
+gcut_data_get_flags_with_error (GCutData *data, const gchar *field_name,
+                                GError **error)
+{
+    return gcut_data_get_uint_with_error(data, field_name, error);
+}
+
 gint
-gcut_data_get_enum_with_error (GCutData *data, const gchar *field_name,
+gcut_data_get_int_with_error (GCutData *data, const gchar *field_name,
                                GError **error)
 {
     FieldValue *field_value;
@@ -355,6 +383,14 @@ gcut_data_get_enum_with_error (GCutData *data, const gchar *field_name,
 
     return field_value->value.integer;
 }
+
+gint
+gcut_data_get_enum_with_error (GCutData *data, const gchar *field_name,
+                               GError **error)
+{
+    return gcut_data_get_int_with_error(data, field_name, error);
+}
+
 
 #define DEFINE_GETTER_HELPER(type_name, type)                           \
 type                                                                    \
@@ -375,6 +411,8 @@ gcut_data_get_ ## type_name ## _helper (const GCutData *data,           \
 }
 
 DEFINE_GETTER_HELPER(string, const gchar *)
+DEFINE_GETTER_HELPER(uint, guint)
+DEFINE_GETTER_HELPER(int, gint)
 DEFINE_GETTER_HELPER(type, GType)
 DEFINE_GETTER_HELPER(flags, guint)
 DEFINE_GETTER_HELPER(enum, gint)

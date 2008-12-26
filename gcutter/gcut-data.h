@@ -93,6 +93,12 @@ gboolean       gcut_data_equal                 (GCutData      *data1,
 const gchar   *gcut_data_get_string_with_error (GCutData      *data,
                                                 const gchar   *field_name,
                                                 GError       **error);
+gint           gcut_data_get_int_with_error    (GCutData      *data,
+                                                const gchar   *field_name,
+                                                GError       **error);
+guint          gcut_data_get_uint_with_error   (GCutData      *data,
+                                                const gchar   *field_name,
+                                                GError       **error);
 GType          gcut_data_get_type_with_error   (GCutData      *data,
                                                 const gchar   *field_name,
                                                 GError       **error);
@@ -104,6 +110,12 @@ gint           gcut_data_get_enum_with_error   (GCutData      *data,
                                                 GError       **error);
 
 const gchar   *gcut_data_get_string_helper     (const GCutData *data,
+                                                const gchar   *field_name,
+                                                CutCallbackFunction callback);
+gint           gcut_data_get_int_helper        (const GCutData *data,
+                                                const gchar   *field_name,
+                                                CutCallbackFunction callback);
+guint          gcut_data_get_uint_helper       (const GCutData *data,
                                                 const gchar   *field_name,
                                                 CutCallbackFunction callback);
 GType          gcut_data_get_type_helper       (const GCutData *data,

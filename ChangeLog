@@ -1,5 +1,9 @@
 2008-12-26  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-data.[ch], test/gcutter/test-gcut-data.c,
+	gcutter/gcut-test-utils.h, test/gcut-test-utils.c: GCutData
+	supports int and uint values.
+
 	* gcutter/gcut-inspect.[ch], test/gcutter/test-gcut-inspect.c:
 	add gcut_inspect_uint().
 
