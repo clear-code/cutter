@@ -69,7 +69,7 @@
  * }
  *
  * void
- * test_translate(gconstpointer *_data)
+ * test_translate(gconstpointer _data)
  * {
  *     const GCutData *data = _data;
  *
