@@ -278,6 +278,12 @@ GHashTable *gcut_hash_table_string_string_new_va_list(const gchar *key,
         (cut_push_backtrace(gcut_data_get_enum(data, field_name)),      \
          cut_pop_backtrace))
 
+#define gcut_data_get_pointer(data, field_name)                         \
+    gcut_data_get_pointer_helper(                                       \
+        data, field_name,                                               \
+        (cut_push_backtrace(gcut_data_get_pointer(data, field_name)),   \
+         cut_pop_backtrace))
+
 G_END_DECLS
 
 #endif /* __GCUT_TEST_UTILS_H__ */
