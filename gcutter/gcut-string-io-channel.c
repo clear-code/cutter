@@ -400,7 +400,7 @@ gcut_string_io_channel_get_string (GIOChannel *channel)
 }
 
 void
-gcut_string_io_channel_clear (GIOChannel  *channel)
+gcut_string_io_channel_clear (GIOChannel *channel)
 {
     GCutStringIOChannel *string_channel = (GCutStringIOChannel *)channel;
 
