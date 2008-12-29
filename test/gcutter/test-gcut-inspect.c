@@ -12,6 +12,7 @@ void test_string (void);
 void test_type (void);
 void test_flags (void);
 void test_enum (void);
+void test_pointer (void);
 
 static GString *string;
 
@@ -98,6 +99,16 @@ test_enum (void)
                                             "success"
                                             "(CUT_TEST_RESULT_SUCCESS:%d)>",
                                             CUT_TEST_RESULT_SUCCESS),
+                            string->str);
+}
+
+void
+test_pointer (void)
+{
+    gint value = 29;
+
+    gcut_inspect_pointer(string, &value, NULL);
+    cut_assert_equal_string(cut_take_printf("#<%p>", &value),
                             string->str);
 }
 

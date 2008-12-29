@@ -1,3 +1,8 @@
+2008-12-29  Kouhei Sutou  <kou@cozmixng.org>
+
+	* gcutter/gcut-inspect.[ch], test/gcutter/test-gcut-inspect.c:
+	add gcut_inspect_pointer().
+
 2008-12-26  Kouhei Sutou  <kou@cozmixng.org>
 
 	* gcutter/gcut-data.[ch], test/gcutter/test-gcut-data.c,

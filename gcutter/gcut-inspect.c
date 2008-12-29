@@ -89,6 +89,12 @@ gcut_inspect_enum (GString *string, gconstpointer data, gpointer user_data)
     g_free(inspected_enum);
 }
 
+void
+gcut_inspect_pointer (GString *string, gconstpointer data, gpointer user_data)
+{
+    g_string_append_printf(string, "#<%p>", data);
+}
+
 /*
 vi:nowrap:ai:expandtab:sw=4:ts=4
 */
