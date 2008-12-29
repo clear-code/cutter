@@ -170,6 +170,34 @@ gcut_flags_inspect (GType flags_type, guint flags)
     return g_string_free(inspected, FALSE);
 }
 
+static GFlagsClass *
+lookup_flags_class (GType flags_type, GError **error)
+{
+    GFlagsClass *flags_class;
+
+    flags_class = g_type_class_ref(flags_type);
+    if (!flags_class) {
+        g_set_error(error,
+                    GCUT_ENUM_ERROR,
+                    GCUT_ENUM_ERROR_INVALID_TYPE,
+                    "unknown flags type: %s(%" G_GSIZE_FORMAT ")",
+                    g_type_name(flags_type), flags_type);
+        return NULL;
+    }
+
+    if (!G_TYPE_IS_FLAGS(flags_type)) {
+        g_set_error(error,
+                    GCUT_ENUM_ERROR,
+                    GCUT_ENUM_ERROR_INVALID_TYPE,
+                    "invalid flags type: %s(%" G_GSIZE_FORMAT ")",
+                    g_type_name(flags_type), flags_type);
+        g_type_class_unref(flags_class);
+        return NULL;
+    }
+
+    return flags_class;
+}
+
 guint
 gcut_flags_parse (GType flags_type, const gchar *flags_value, GError **error)
 {
@@ -187,25 +215,9 @@ gcut_flags_parse (GType flags_type, const gchar *flags_value, GError **error)
         return 0;
     }
 
-    flags_class = g_type_class_ref(flags_type);
-    if (!flags_class) {
-        g_set_error(error,
-                    GCUT_ENUM_ERROR,
-                    GCUT_ENUM_ERROR_INVALID_TYPE,
-                    "unknown flags type: %s(%" G_GSIZE_FORMAT ")",
-                    g_type_name(flags_type), flags_type);
+    flags_class = lookup_flags_class(flags_type, error);
+    if (!flags_class)
         return 0;
-    }
-
-    if (!G_TYPE_IS_FLAGS(flags_type)) {
-        g_set_error(error,
-                    GCUT_ENUM_ERROR,
-                    GCUT_ENUM_ERROR_INVALID_TYPE,
-                    "invalid flags type: %s(%" G_GSIZE_FORMAT ")",
-                    g_type_name(flags_type), flags_type);
-        g_type_class_unref(flags_class);
-        return 0;
-    }
 
     unknown_flags = g_array_new(TRUE, TRUE, sizeof(gchar *));
     flags = g_strsplit(flags_value, "|", 0);
@@ -249,6 +261,23 @@ gcut_flags_parse (GType flags_type, const gchar *flags_value, GError **error)
     g_type_class_unref(flags_class);
 
     return value;
+}
+
+guint
+gcut_flags_get_all (GType flags_type, GError **error)
+{
+    GFlagsClass *flags_class;
+    guint all_available_values;
+
+    flags_class = lookup_flags_class(flags_type, error);
+    if (!flags_class)
+        return 0;
+
+    all_available_values = flags_class->mask;
+
+    g_type_class_unref(flags_class);
+
+    return all_available_values;
 }
 
 /*

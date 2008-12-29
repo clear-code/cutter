@@ -133,6 +133,9 @@ guint            gcut_flags_parse               (GType         flags_type,
                                                  const gchar  *flags_value,
                                                  GError      **error);
 
+guint            gcut_flags_get_all             (GType         flags_type,
+                                                 GError      **error);
+
 G_END_DECLS
 
 #endif /* __GCUT_ENUM_H__ */

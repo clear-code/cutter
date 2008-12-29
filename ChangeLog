@@ -1,5 +1,8 @@
 2008-12-29  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-enum.[ch], test/gcutter/test-gcut-enum.c: add
+	gcut_flags_get_all().
+
 	* gcutter/gcut-test-utils.h, test/gcutter/test-gcut-test-utils.c:
 	add gcut_data_get_pointer().
 

@@ -10,6 +10,8 @@ void test_enum_parse(gconstpointer data);
 void test_flags_inspect(void);
 void data_flags_parse(void);
 void test_flags_parse(gconstpointer data);
+void data_flags_get_all(void);
+void test_flags_get_all(gconstpointer _data);
 
 static gchar *inspected;
 
@@ -287,6 +289,55 @@ test_flags_parse (gconstpointer data)
 
     gcut_assert_equal_flags(test_data->type,
                             test_data->expected_flags_value,
+                            actual_value);
+}
+
+void
+data_flags_get_all (void)
+{
+#define ADD(label, expected, type, error)                               \
+    gcut_add_datum(label,                                               \
+                   "expected", G_TYPE_UINT, expected,                   \
+                   "type", G_TYPE_GTYPE, type,                          \
+                   "error", G_TYPE_POINTER, error, g_error_free,        \
+                   NULL)
+
+    ADD("success",
+        CUTTEST_FLAG_FIRST | CUTTEST_FLAG_SECOND | CUTTEST_FLAG_THIRD,
+        CUTTEST_TYPE_FLAGS,
+        NULL);
+    ADD("invalid type",
+        0,
+        GCUT_TYPE_EGG,
+        g_error_new(GCUT_ENUM_ERROR,
+                    GCUT_ENUM_ERROR_INVALID_TYPE,
+                    "invalid flags type: GCutEgg"
+                    "(%" G_GSIZE_FORMAT ")",
+                    GCUT_TYPE_EGG));
+#undef ADD
+}
+
+void
+test_flags_get_all (gconstpointer _data)
+{
+    const GCutData *data = _data;
+    GType flags_type;
+    GError *error = NULL;
+    const GError *expected_error;
+    guint actual_value;
+
+    flags_type = gcut_data_get_type(data, "type");
+    actual_value = gcut_flags_get_all(flags_type, &error);
+    expected_error = gcut_data_get_pointer(data, "error");
+    if (expected_error) {
+        gcut_take_error(error);
+        gcut_assert_equal_error(expected_error, error);
+    } else {
+        gcut_assert_error(error);
+    }
+
+    gcut_assert_equal_flags(flags_type,
+                            gcut_data_get_flags(data, "expected"),
                             actual_value);
 }
 
