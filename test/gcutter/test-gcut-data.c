@@ -11,6 +11,7 @@ void test_uint (void);
 void test_type (void);
 void test_flags (void);
 void test_enum (void);
+void test_pointer (void);
 
 static GCutData *data;
 static GError *expected_error;
@@ -144,6 +145,23 @@ test_enum (void)
     gcut_assert_equal_enum(CUT_TYPE_TEST_RESULT_STATUS, value, actual_value);
 
     assert_nonexistent_field(gcut_data_get_enum_with_error);
+}
+
+void
+test_pointer (void)
+{
+    GError *error = NULL;
+    gpointer value;
+    gconstpointer actual_value;
+
+    value = malloc(10);
+    data = gcut_data_new("pointer", G_TYPE_POINTER, value, g_free,
+                         NULL);
+    actual_value = gcut_data_get_pointer_with_error(data, "pointer", &error);
+    gcut_assert_error(error);
+    cut_assert_equal_pointer(value, actual_value);
+
+    assert_nonexistent_field(gcut_data_get_pointer_with_error);
 }
 
 /*

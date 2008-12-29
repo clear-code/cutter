@@ -105,10 +105,11 @@ test_enum (void)
 void
 test_pointer (void)
 {
-    gint value = 29;
+    gpointer value;
 
-    gcut_inspect_pointer(string, &value, NULL);
-    cut_assert_equal_string(cut_take_printf("#<%p>", &value),
+    value = string;
+    gcut_inspect_pointer(string, value, NULL);
+    cut_assert_equal_string(cut_take_printf("#<%p>", value),
                             string->str);
 }
 

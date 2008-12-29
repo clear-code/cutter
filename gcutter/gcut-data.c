@@ -81,6 +81,9 @@ field_value_inspect (GString *string, gconstpointer data, gpointer user_data)
         gcut_inspect_uint(string, &(field_value->value.unsigned_integer),
                           user_data);
         break;
+      case G_TYPE_POINTER:
+        gcut_inspect_pointer(string, field_value->value.pointer, user_data);
+        break;
       default:
         if (field_value->type == G_TYPE_GTYPE) {
             gcut_inspect_type(string, &(field_value->value.type), user_data);
@@ -131,6 +134,9 @@ field_value_equal (gconstpointer data1, gconstpointer data2)
       case G_TYPE_UINT:
         result = (field_value1->value.unsigned_integer ==
                   field_value2->value.unsigned_integer);
+        break;
+      case G_TYPE_POINTER:
+        result = (field_value1->value.pointer == field_value2->value.pointer);
         break;
       default:
         if (field_value1->type == G_TYPE_GTYPE) {
@@ -239,6 +245,10 @@ gcut_data_new_va_list (const gchar *first_field_name, va_list args)
             break;
           case G_TYPE_UINT:
             field_value->value.unsigned_integer = va_arg(args, guint);
+            break;
+          case G_TYPE_POINTER:
+            field_value->value.pointer = va_arg(args, gpointer);
+            field_value->free_function = va_arg(args, GDestroyNotify);
             break;
           default:
             if (field_value->type == G_TYPE_GTYPE) {
@@ -391,6 +401,19 @@ gcut_data_get_enum_with_error (GCutData *data, const gchar *field_name,
     return gcut_data_get_int_with_error(data, field_name, error);
 }
 
+gconstpointer
+gcut_data_get_pointer_with_error (GCutData *data, const gchar *field_name,
+                                  GError **error)
+{
+    FieldValue *field_value;
+
+    field_value = lookup(data, field_name, error);
+    if (!field_value)
+        return 0;
+
+    return field_value->value.pointer;
+}
+
 
 #define DEFINE_GETTER_HELPER(type_name, type)                           \
 type                                                                    \
@@ -416,6 +439,7 @@ DEFINE_GETTER_HELPER(int, gint)
 DEFINE_GETTER_HELPER(type, GType)
 DEFINE_GETTER_HELPER(flags, guint)
 DEFINE_GETTER_HELPER(enum, gint)
+DEFINE_GETTER_HELPER(pointer, gconstpointer)
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
