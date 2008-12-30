@@ -1,5 +1,7 @@
 2008-12-30  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/run-test.sh: improve default make detection.
+
 	* test/gcutter/test-gcut-egg.c: include missing <signal.h>.
 
 2008-12-29  Kouhei Sutou  <kou@cozmixng.org>

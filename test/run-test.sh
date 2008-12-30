@@ -4,7 +4,12 @@ export BASE_DIR="`dirname $0`"
 top_dir="$BASE_DIR/.."
 
 if test x"$NO_MAKE" != x"yes"; then
-    make -C $top_dir/ > /dev/null || exit 1
+    if which gmake > /dev/null; then
+	MAKE=${MAKE:-"gmake"}
+    else
+	MAKE=${MAKE:-"make"}
+    fi
+    $MAKE -C $top_dir/ > /dev/null || exit 1
 fi
 
 if test -z "$CUTTER"; then
