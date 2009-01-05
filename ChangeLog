@@ -1,5 +1,9 @@
 2009-01-05  Kouhei Sutou  <kou@cozmixng.org>
 
+	* misc/rd2refentry-lib.rb:
+	- don't set footnote ID explicitly.
+	- surround footnote contents by <para>.
+
 	* misc/Makefile.am: add missing expand-rd2-snippet.rb.
 
 	* misc/rd2refentry-lib.rb: more generic.
