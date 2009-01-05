@@ -1,5 +1,8 @@
 2009-01-05  Kouhei Sutou  <kou@cozmixng.org>
 
+	* misc/rd2refentry-lib.rb: more generic.
+	* doc/reference/Makefile.am: use --name option.
+
 	* misc/rd2refentry-lib.rb: show more information on error.
 
 2008-12-30  Kouhei Sutou  <kou@cozmixng.org>

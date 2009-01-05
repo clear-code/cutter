@@ -17,6 +17,7 @@ module RD
     VERSION = Version.new_from_version_string(SYSTEM_NAME, SYSTEM_VERSION)
 
     @@po = nil
+    @@name = nil
     class << self
       def version
         VERSION
@@ -24,6 +25,10 @@ module RD
 
       def po=(po)
         @@po = po
+      end
+
+      def name=(name)
+        @@name = name
       end
     end
 
@@ -82,7 +87,9 @@ module RD
       when /\.png$/
         return tag("inlinegraphic", {:fileref => url, :format => "PNG"})
       else
-        url = remove_lang_suffix(url.downcase) + ".html"
+        return tag("link",
+                   {:linkend => ref_entry_id(url)},
+                   remove_lang_suffix(label))
       end
       label = remove_lang_suffix(label)
       tag("ulink", {:url => url}, label)
@@ -91,10 +98,7 @@ module RD
     def apply_to_Reference_with_URL(element, contents)
       url = element.label.url
       label = contents.join("").chomp
-      if /\Ahttp:\/\/cutter\.(?:sf|sourceforge)\.net\/reference\// =~ url
-        url = File.basename($POSTMATCH)
-      end
-      url = label if label.empty?
+      label = url if label.empty?
       tag("ulink", {:url => url}, label)
     end
 
@@ -174,8 +178,9 @@ module RD
         "  \"http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd\">"
     end
 
-    def ref_entry_id
-      File.basename(ARGF.filename, ".*").downcase
+    def ref_entry_id(filename=nil)
+      filename ||= ARGF.filename
+      remove_suffix(File.basename(filename)).downcase
     end
 
     def tag(name, attributes={}, *contents)
@@ -210,7 +215,7 @@ module RD
                 "id" => "#{ref_entry_id}.top_of_page",
               },
               @title),
-          tag("refmiscinfo", {}, h(_("CUTTER Library"))))
+          tag("refmiscinfo", {}, h(_("#{@@name || 'MY'} Library"))))
     end
 
     def ref_name_div
@@ -274,13 +279,21 @@ module RD
     end
 
     def remove_lang_suffix(string)
-      string.sub(/\.[a-z]{2}$/, "")
+      string.sub(/\.[a-z]{2}\z/, "")
+    end
+
+    def remove_suffix(string)
+      string.sub(/(?:\.[^.]+)+\z/, "")
     end
   end
 end
 
 $Visitor_Class = RD::RD2RefEntryVisitor
 ARGV.options do |opts|
+  opts.on("--name=NAME", "The library name") do |name|
+    RD::RD2RefEntryVisitor.name = name
+  end
+
   opts.on("-pPO", "--po=PO", "PO file") do |po|
     RD::RD2RefEntryVisitor.po = po
   end

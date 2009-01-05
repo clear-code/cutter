@@ -145,8 +145,9 @@ update-po: Makefile sgml.stamp
 	done
 
 RD2REFENTRY_LIB = $(top_srcdir)/misc/rd2refentry-lib.rb
-RD2 = rd2 -r $(RD2REFENTRY_LIB)
+RD2 = rd2 -r $(RD2REFENTRY_LIB) --name=CUTTER
 RD2_JA = $(RD2) --po=$(srcdir)/ja.po
+
 news.xml: $(top_srcdir)/NEWS $(RD2REFENTRY_LIB) news.xml.ja
 	$(RD2) $(top_srcdir)/NEWS > news.xml
 
