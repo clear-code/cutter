@@ -1,5 +1,7 @@
 2009-01-05  Kouhei Sutou  <kou@cozmixng.org>
 
+	* misc/Makefile.am: add missing expand-rd2-snippet.rb.
+
 	* misc/rd2refentry-lib.rb: more generic.
 	* doc/reference/Makefile.am: use --name option.
 
