@@ -66,7 +66,9 @@ module RD
     end
 
     def apply_to_Reference_with_RDLabel(element, contents)
-      raise "label with filename is unsupported" if element.label.filename
+      if element.label.filename
+        raise "label with filename is unsupported: #{element.label.inspect}"
+      end
       url = element.label.element_label
       label = contents.join("").chomp
       label = url if label.empty?
