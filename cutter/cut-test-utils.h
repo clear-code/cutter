@@ -144,9 +144,9 @@ extern "C" {
  *
  * Returns: a formatted string owned by Cutter. Don't free it.
  */
-#define cut_take_printf(format, ...)                                    \
+#define cut_take_printf(...)                                            \
     cut_test_context_take_printf(cut_get_current_test_context(),        \
-                                 format, __VA_ARGS__)
+                                 __VA_ARGS__)
 
 /**
  * cut_take_string_array:

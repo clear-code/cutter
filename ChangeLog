@@ -1,3 +1,7 @@
+2009-01-07  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-test-utils.h: cut_take_printf() accepts 1 argument.
+
 2009-01-05  Kouhei Sutou  <kou@cozmixng.org>
 
 	* misc/rd2refentry-lib.rb:
