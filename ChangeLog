@@ -1,3 +1,7 @@
+2009-01-16  Kouhei Sutou  <kou@clear-code.com>
+
+	* misc/release.rb: don't use CSS selector.
+
 2009-01-15  Kouhei Sutou  <kou@clear-code.com>
 
 	* html/index.html{,.ja}: use sourceforge.net not sf.net.

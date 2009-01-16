@@ -66,7 +66,7 @@ end
 
 def find_target_release_link(file_releases_page, package_name, label)
   target_release_row = (file_releases_page / "tr").find do |row|
-    not (row / "input[@value = #{package_name}]").empty?
+    (row / "input").find {|input| input["value"] == package_name}
   end
   raise "can't find package ID" if /package_id=(\d+)/ !~ target_release_row.to_s
   package_id = $1
