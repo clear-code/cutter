@@ -7,6 +7,7 @@
 	g_win32_get_package_installation_directory_of_module instead of
 	g_win32_get_package_installation_directory since
 	g_win32_get_package_installation_directory is deprecated.
+	* cutter/cutter.h: && not ||.
 
 2009-01-22  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
