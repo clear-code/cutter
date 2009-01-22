@@ -1,3 +1,8 @@
+2009-01-23  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cutter.h: Declare shutdown if WINSOCK_API_LINKAGE is not
+	defined too.
+
 2009-01-22  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-utils.[ch]: Added cut_win32_kill_process().

@@ -201,7 +201,7 @@ void startup(void);
  */
 void cut_startup(void);
 
-#ifndef SHUT_RD
+#if !defined(SHUT_RD) || !defined(WINSOCK_API_LINKAGE)
 /**
  * shutdown:
  *
