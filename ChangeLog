@@ -3,6 +3,10 @@
 	* cutter/cutter.h: Declare shutdown if WINSOCK_API_LINKAGE is not
 	defined too.
 	* cutter/cut-utils.c: Include <winbase.h> for TerminateProcess.
+	* cutter/cut-utils.c: Use
+	g_win32_get_package_installation_directory_of_module instead of
+	g_win32_get_package_installation_directory since
+	g_win32_get_package_installation_directory is deprecated.
 
 2009-01-22  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 

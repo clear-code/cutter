@@ -620,7 +620,7 @@ cut_win32_base_path (void)
     if (win32_base_path)
         return win32_base_path;
 
-    win32_base_path = g_win32_get_package_installation_directory(PACKAGE, NULL);
+    win32_base_path = g_win32_get_package_installation_directory_of_module(NULL);
 
     return win32_base_path;
 }
