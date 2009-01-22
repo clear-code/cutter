@@ -21,6 +21,9 @@
 #  include <config.h>
 #endif /* HAVE_CONFIG_H */
 
+#ifdef G_OS_WIN32
+#  include <winbase.h>
+#endif
 #include <string.h>
 #include <math.h>
 #ifdef HAVE_UNISTD_H

@@ -2,6 +2,7 @@
 
 	* cutter/cutter.h: Declare shutdown if WINSOCK_API_LINKAGE is not
 	defined too.
+	* cutter/cut-utils.c: Include <winbase.h> for TerminateProcess.
 
 2009-01-22  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
