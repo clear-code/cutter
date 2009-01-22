@@ -91,7 +91,7 @@ constructor (GType type, guint n_props, GObjectConstructParam *props)
         object = klass->constructor(type, n_props, props);
         the_builder = CUT_STREAM_FACTORY_BUILDER(object);
     } else {
-        object = g_object_ref(G_OBJECT(the_builder));
+        object = g_object_ref(the_builder);
     }
 
     return object;
