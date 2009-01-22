@@ -83,7 +83,7 @@ print_version (const gchar *option_name, const gchar *value,
 
 static gboolean
 parse_mode (const gchar *option_name, const gchar *value,
-               gpointer data, GError **error)
+            gpointer data, GError **error)
 {
     if (g_utf8_collate(value, "test") == 0) {
         mode = MODE_TEST;
