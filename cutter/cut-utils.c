@@ -639,6 +639,12 @@ cut_win32_build_factory_module_dir_name (const gchar *type)
     g_free(module_dir);
     return factory_module_dir;
 }
+
+gboolean
+cut_win32_kill_process (GPid pid, guint exit_code)
+{
+    TerminateProcess(pid, exit_code);
+}
 #endif
 
 

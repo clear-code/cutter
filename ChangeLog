@@ -1,3 +1,8 @@
+2009-01-22  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-utils.[ch]: Added cut_win32_kill_process().
+	* gcutter/gcut-egg.c: Use cut_win32_kill_process instead of kill.
+
 2009-01-16  Kouhei Sutou  <kou@clear-code.com>
 
 	* misc/release.rb: don't use CSS selector.

@@ -80,6 +80,8 @@ gchar       *cut_utils_regex_replace         (const gchar  *pattern,
 const gchar *cut_win32_base_path                     (void);
 gchar       *cut_win32_build_module_dir_name         (const gchar *type);
 gchar       *cut_win32_build_factory_module_dir_name (const gchar *type);
+gboolean     cut_win32_kill_process                  (GPid pid,
+                                                      guint exit_code);
 #endif
 
 G_END_DECLS

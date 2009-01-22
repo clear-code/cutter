@@ -34,6 +34,7 @@
 #include "gcut-io.h"
 #include "gcut-egg.h"
 #include "gcut-marshalers.h"
+#include "cut-utils.h"
 
 #define GCUT_EGG_GET_PRIVATE(obj)                                     \
     (G_TYPE_INSTANCE_GET_PRIVATE((obj), GCUT_TYPE_EGG, GCutEggPrivate))
@@ -748,7 +749,11 @@ gcut_egg_kill (GCutEgg *egg, int signal_number)
     g_return_if_fail(priv != NULL);
     g_return_if_fail(priv->pid > 0);
 
+#ifndef G_OS_WIN32
     kill(priv->pid, signal_number);
+#else
+    cut_win32_kill_process(priv->pid, 0);
+#endif
 }
 
 GIOChannel *
