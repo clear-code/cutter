@@ -167,7 +167,7 @@ if OS_WIN32
 libcutter_la_LDFLAGS += -mwindows
 endif
 
-cutter_LDADD = libcutter.la
+cutter_LDADD = $(top_builddir)/cutter/libcutter.la
 
 $(enum_source_prefix).c: stamp-$(enum_source_prefix)-c $(enum_source_prefix).h
 	@true

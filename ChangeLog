@@ -14,6 +14,7 @@
 	* cutter/Makefile.am: Append -mwindows to LDFLASG on win32
 	environment.
 	* test/gcutter/test-gcut-egg.c: Use HAVE_SYS_WAIT_H.
+	* cutter/Makefile.am: Use top_builddir.
 
 2009-01-22  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
