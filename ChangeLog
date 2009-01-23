@@ -17,6 +17,9 @@
 	* cutter/Makefile.am: Use top_builddir.
 	* gcutter/gcut-assertions.h, gcutter/gcut-assertions-helper.[ch]:
 	Added gcut_assert_equal_g_pid.
+	* test/gcutter/test-gcut-egg.c: Define WEXITSTATUS and SIGKILL on
+	win32 environment. Use gcut_assert_equal_g_pid instead of
+	cut_assert_equal_int.
 
 2009-01-22  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 

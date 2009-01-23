@@ -119,6 +119,9 @@ wait_reaped_helper (void)
 {
     GError *error = NULL;
     guint timeout_id;
+#ifdef G_OS_WIN32
+#define WEXITSTATUS(s) (s)
+#endif
 
     gcut_assert_error(error);
     timeout_id = g_timeout_add_seconds(1, cb_timeout_reaped, &error);
@@ -141,7 +144,7 @@ test_hatch (void)
     egg = gcut_egg_new("echo", "XXX", NULL);
     setup_egg(egg);
 
-    cut_assert_equal_int(0, gcut_egg_get_pid(egg));
+    gcut_assert_equal_g_pid(0, gcut_egg_get_pid(egg));
     gcut_egg_hatch(egg, &error);
     gcut_assert_error(error);
     cut_assert_operator_int(0, !=, gcut_egg_get_pid(egg));
@@ -243,6 +246,9 @@ test_kill (void)
 {
     GError *error = NULL;
     const gchar command[] = "cat";
+#ifdef G_OS_WIN32
+#define SIGKILL 9
+#endif
 
     egg = gcut_egg_new(command, NULL);
     setup_egg(egg);
