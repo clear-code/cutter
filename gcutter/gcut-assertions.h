@@ -732,6 +732,27 @@ G_BEGIN_DECLS
         gcut_assert_equal_uint64(expected, actual, __VA_ARGS__));       \
 } while (0)
 
+/**
+ * gcut_assert_equal_g_pid:
+ * @expected: an expected GPid value.
+ * @actual: an actual GPid value.
+ * @...: optional format string, followed by parameters to insert
+ *       into the format string (as with printf()) This is
+ *       deprecated since 0.1.6. Use cut_set_message() instead.
+ *
+ * Passes if @expected == @actual.
+ *
+ * Since: 1.0.6
+ */
+#define gcut_assert_equal_g_pid(expected, actual, ...) do               \
+{                                                                       \
+    cut_set_message_backward_compatibility(__VA_ARGS__);                \
+    cut_trace_with_info_expression(                                     \
+        gcut_assert_equal_g_pid_helper((expected), (actual),            \
+                                        #expected, #actual),            \
+        gcut_assert_equal_g_pid(expected, actual, __VA_ARGS__));        \
+} while (0)
+
 G_END_DECLS
 
 #endif /* __GCUT_ASSERTIONS_H__ */

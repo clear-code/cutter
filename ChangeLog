@@ -15,6 +15,8 @@
 	environment.
 	* test/gcutter/test-gcut-egg.c: Use HAVE_SYS_WAIT_H.
 	* cutter/Makefile.am: Use top_builddir.
+	* gcutter/gcut-assertions.h, gcutter/gcut-assertions-helper.[ch]:
+	Added gcut_assert_equal_g_pid.
 
 2009-01-22  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 

@@ -579,6 +579,29 @@ gcut_assert_equal_uint64_helper (guint64         expected,
     }
 }
 
+#ifdef G_OS_WIN32
+#define GCUT_GPID_FORMAT "p"
+#else
+#define GCUT_GPID_FORMAT "d"
+#endif
+void
+gcut_assert_equal_g_pid_helper (GPid            expected,
+                                GPid            actual,
+                                const char     *expression_expected,
+                                const char     *expression_actual)
+{
+    if (expected == actual) {
+        cut_test_pass();
+    } else {
+        cut_test_fail(cut_take_printf("<%s == %s>\n"
+                                      "expected: <%" GCUT_GPID_FORMAT ">\n"
+                                      "  actual: <%" GCUT_GPID_FORMAT ">",
+                                      expression_expected,
+                                      expression_actual,
+                                      expected, actual));
+    }
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */

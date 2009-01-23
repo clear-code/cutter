@@ -147,6 +147,10 @@ void      gcut_assert_equal_uint64_helper   (guint64         expected,
                                              guint64         actual,
                                              const char     *expression_expected,
                                              const char     *expression_actual);
+void      gcut_assert_equal_g_pid_helper    (GPid            expected,
+                                             GPid            actual,
+                                             const char     *expression_expected,
+                                             const char     *expression_actual);
 
 G_END_DECLS
 
