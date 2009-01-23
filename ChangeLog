@@ -8,6 +8,9 @@
 	g_win32_get_package_installation_directory since
 	g_win32_get_package_installation_directory is deprecated.
 	* cutter/cutter.h: && not ||.
+	* cutter/cut-utils.c: Include <windows.h> instead of <winbase.h> after
+	including <glib.h>.
+	* cutter/cut-utils.c (cut_win32_kill_process): return TRUE or FALSE.
 
 2009-01-22  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 

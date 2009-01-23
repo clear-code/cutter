@@ -21,9 +21,6 @@
 #  include <config.h>
 #endif /* HAVE_CONFIG_H */
 
-#ifdef G_OS_WIN32
-#  include <winbase.h>
-#endif
 #include <string.h>
 #include <math.h>
 #ifdef HAVE_UNISTD_H
@@ -31,6 +28,9 @@
 #endif
 #include <glib.h>
 #include <glib/gstdio.h>
+#ifdef G_OS_WIN32
+#  include <windows.h>
+#endif
 
 #include <errno.h>
 
@@ -646,7 +646,7 @@ cut_win32_build_factory_module_dir_name (const gchar *type)
 gboolean
 cut_win32_kill_process (GPid pid, guint exit_code)
 {
-    TerminateProcess(pid, exit_code);
+    return TerminateProcess(pid, exit_code) ? TRUE : FALSE;
 }
 #endif
 
