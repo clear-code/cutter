@@ -28,6 +28,7 @@ void test_equal_flags(void);
 void test_equal_object(void);
 void test_equal_object_null(void);
 void test_equal_object_custom(void);
+void test_equal_g_pid(void);
 
 static CutTest *test;
 static CutRunContext *run_context;
@@ -990,6 +991,12 @@ test_equal_object_custom (void)
                            "stub_equal_object_custom");
 }
 
+void
+test_equal_g_pid (void)
+{
+    GPid pid = 0;
+    gcut_assert_equal_g_pid(0, pid);
+}
 
 /*
 vi:nowrap:ai:expandtab:sw=4:ts=4
