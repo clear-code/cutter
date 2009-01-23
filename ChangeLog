@@ -11,6 +11,8 @@
 	* cutter/cut-utils.c: Include <windows.h> instead of <winbase.h> after
 	including <glib.h>.
 	* cutter/cut-utils.c (cut_win32_kill_process): return TRUE or FALSE.
+	* cutter/Makefile.am: Append -mwindows to LDFLASG on win32
+	environment.
 
 2009-01-22  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 

@@ -163,6 +163,10 @@ if HAVE_LIBBFD
 libcutter_la_LIBADD += $(BFD_LIBS)
 endif
 
+if OS_WIN32
+libcutter_la_LDFLAGS += -mwindows
+endif
+
 cutter_LDADD = libcutter.la
 
 $(enum_source_prefix).c: stamp-$(enum_source_prefix)-c $(enum_source_prefix).h
