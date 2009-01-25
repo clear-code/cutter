@@ -1,3 +1,8 @@
+2009-01-26  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* test/cutter/test-cut-value-equal.c ->
+	test/gcutter/test-gcut-value-equal.c: Moved.
+
 2009-01-23  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cutter.h: Declare shutdown if WINSOCK_API_LINKAGE is not
