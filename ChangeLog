@@ -2,6 +2,8 @@
 
 	* test/cutter/test-cut-value-equal.c ->
 	test/gcutter/test-gcut-value-equal.c: Moved.
+	* gcutter/gcut-value-equal.c: Use g_strcmp0 instead g_str_equal to
+	handle NULL.
 
 2009-01-23  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 

@@ -163,8 +163,8 @@ value_equal_string_string (gconstpointer val1, gconstpointer val2)
     const GValue *value1 = val1;
     const GValue *value2 = val2;
 
-    return g_str_equal(g_value_get_string(value1),
-                       g_value_get_string(value2));
+    return (g_strcmp0(g_value_get_string(value1),
+                      g_value_get_string(value2)) == 0);
 }
 
 void

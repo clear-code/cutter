@@ -8,6 +8,7 @@
 void test_equal_int_string (void);
 void test_equal_long (void);
 void test_equal_uninitialized (void);
+void test_equal_null_string (void);
 
 static GValue value1, value2;
 
@@ -40,6 +41,18 @@ test_equal_int_string (void)
     cut_assert_true(gcut_value_equal(&value2, &value2));
 
     cut_assert_false(gcut_value_equal(&value1, &value2));
+}
+
+void
+test_equal_null_string (void)
+{
+    g_value_init(&value1, G_TYPE_STRING);
+    g_value_set_string(&value1, NULL);
+
+    g_value_init(&value2, G_TYPE_STRING);
+    g_value_set_string(&value2, NULL);
+
+    cut_assert_true(gcut_value_equal(&value1, &value2));
 }
 
 void
