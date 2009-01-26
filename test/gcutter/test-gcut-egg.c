@@ -1,11 +1,17 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 
+#ifdef HAVE_CONFIG_H
+#  include <config.h>
+#endif /* HAVE_CONFIG_H */
+
 #include <string.h>
 #include <errno.h>
 #include <locale.h>
 #include <sys/types.h>
 #ifdef HAVE_SYS_WAIT_H
 #  include <sys/wait.h>
+#else
+# define WEXITSTATUS(status) (status)
 #endif
 #include <signal.h>
 
@@ -119,9 +125,6 @@ wait_reaped_helper (void)
 {
     GError *error = NULL;
     guint timeout_id;
-#ifdef G_OS_WIN32
-#define WEXITSTATUS(s) (s)
-#endif
 
     gcut_assert_error(error);
     timeout_id = g_timeout_add_seconds(1, cb_timeout_reaped, &error);

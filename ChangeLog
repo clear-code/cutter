@@ -1,3 +1,8 @@
+2009-01-26  Kouhei Sutou  <kou@clear-code.com>
+
+	* test/gcutter/test-gcut-egg.c: include config.h for HAVE_SYS_WAIT_H.
+
+=======
 2009-01-26  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* test/cutter/test-cut-value-equal.c ->
