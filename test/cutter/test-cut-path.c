@@ -59,8 +59,9 @@ test_run (void)
         "test_fail_in_deep_path",
         NULL,
         NULL,
-        "fail in parent/sub/test-deep.c",
-        cut_take_printf("%s/parent/sub/test-deep.c:%d", test_dir, 10),
+        "fail in parent" G_DIR_SEPARATOR_S "sub" G_DIR_SEPARATOR_S "test-deep.c",
+        cut_take_printf("%s" G_DIR_SEPARATOR_S "parent" G_DIR_SEPARATOR_S "sub"
+                        G_DIR_SEPARATOR_S "test-deep.c:%d", test_dir, 12),
         "test_fail_in_deep_path");
 }
 
