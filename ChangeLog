@@ -10,6 +10,8 @@
 	handle NULL.
 	* test/cutter/test-cut-path.c,
 	test/fixtures/path/parent/sub/test-deep.c: Use G_DIR_SEPARATOR_S.
+	* cutter/cut-test-context.c (cut_test_context_push_backtrace): Convert
+	directory separator in relative_path.
 
 2009-01-23  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 

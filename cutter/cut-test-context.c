@@ -1254,6 +1254,21 @@ cut_test_context_build_source_filename (CutTestContext *context,
         return g_strdup(filename);
 }
 
+static gchar *
+convert_directory_separator_in_relative_path (const gchar *relative_path)
+{
+    gchar *convert, *dirname, *basename;
+
+    dirname = g_path_get_dirname(relative_path);
+    basename = g_path_get_basename(relative_path);
+
+    convert = g_build_filename(dirname, basename, NULL);
+    g_free(dirname);
+    g_free(basename);
+
+    return convert;
+}
+
 void
 cut_test_context_push_backtrace (CutTestContext *context,
                                  const char     *relative_path,
@@ -1274,17 +1289,23 @@ cut_test_context_push_backtrace (CutTestContext *context,
     g_mutex_lock(priv->mutex);
     if (relative_path) {
         const gchar *source_directory = NULL;
+        gchar *convert_relative_path;
+
+        convert_relative_path =
+            convert_directory_separator_in_relative_path(relative_path);
 
         if (priv->run_context)
             source_directory =
                 cut_run_context_get_source_directory(priv->run_context);
         if (source_directory)
             full_filename = g_build_filename(source_directory,
-                                             relative_path,
+                                             convert_relative_path,
                                              filename,
                                              NULL);
         else
-            full_filename = g_build_filename(relative_path, filename, NULL);
+            full_filename = g_build_filename(convert_relative_path,
+                                             filename, NULL);
+        g_free(convert_relative_path);
     } else {
         full_filename = cut_test_context_build_source_filename(context,
                                                                filename);
