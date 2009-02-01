@@ -84,8 +84,19 @@ module RD
           url = "#{url}\##{anchor}"
         end
       when /\.html#[a-zA-Z\-_]+$/
-      when /\.png$/
-        return tag("inlinegraphic", {:fileref => url, :format => "PNG"})
+      when /\.svg$/, /\.png$/
+        url = url.sub(/svg$/, "png")
+        return tag("inlinemediaobject",
+                   {},
+                   [
+                    tag("imageobject", {},
+                        tag("imagedata",
+                            {
+                              :fileref => url.sub(/svg$/, "png"),
+                              :format => "PNG"
+                            })),
+                    tag("textobject", {}, tag("phrase", {}, label)),
+                   ])
       else
         return tag("link",
                    {:linkend => ref_entry_id(url)},
