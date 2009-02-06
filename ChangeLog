@@ -1,3 +1,8 @@
+2009-02-06  Kouhei Sutou  <kou@clear-code.com>
+
+	* misc/release.rb (go_submit_news_page): improve submit news link
+	detection.
+
 2009-02-01  Kouhei Sutou  <kou@cozmixng.org>
 
 	* misc/rd2refentry-lib.rb: use InlineMediaObject instead of

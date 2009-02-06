@@ -174,7 +174,10 @@ def go_news_page(agent, project_page)
 end
 
 def go_submit_news_page(agent, news_page)
-  agent.click(news_page.links.find {|link| /\ASubmit\z/ =~ link.text})
+  submit_news_page_link = news_page.links.find do |link|
+    /\bnews\b/ =~ link.href and /\ASubmit\z/ =~ link.text
+  end
+  agent.click(submit_news_page_link)
 end
 
 def submit_news(agent, submit_news_page, project_name, package_name,
