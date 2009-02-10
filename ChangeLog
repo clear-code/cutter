@@ -1,3 +1,7 @@
+2009-02-10  Kouhei Sutou  <kou@cozmixng.org>
+
+	* gcutter/gcut-assertions-helper.h: remove duplicated declaration.
+
 2009-02-06  Kouhei Sutou  <kou@clear-code.com>
 
 	* misc/release.rb (go_submit_news_page): improve submit news link

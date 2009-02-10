@@ -88,11 +88,6 @@ void      gcut_assert_equal_list_object_helper
                                              GEqualFunc      equal_function,
                                              const gchar    *expression_expected,
                                              const gchar    *expression_actual);
-void      gcut_assert_equal_hash_table_string_string_helper
-                                            (GHashTable     *expected,
-                                             GHashTable     *actual,
-                                             const gchar    *expression_expected,
-                                             const gchar    *expression_actual);
 void      gcut_assert_equal_hash_table_helper
                                             (GHashTable     *expected,
                                              GHashTable     *actual,
