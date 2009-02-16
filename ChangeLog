@@ -1,3 +1,9 @@
+2009-02-16  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/cut-test-case.c (cut_test_case_run_with_filter): Do not
+	invoke cut_test_case_run_tests if no test is available to avoid
+	invoking startup.
+
 2009-02-10  Kouhei Sutou  <kou@cozmixng.org>
 
 	* gcutter/gcut-assertions-helper.h: remove duplicated declaration.
