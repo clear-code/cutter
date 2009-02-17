@@ -169,6 +169,15 @@ def set_release_property(agent, edit_release_page)
   agent.submit(edit_file_form, edit_file_form.buttons.first)
 end
 
+def notify_release(agent, edit_release_page)
+  edit_file_form = edit_release_page.forms.find_all do |form|
+    /editreleases/ =~ form.action
+  end[3]
+  puts edit_release_page if edit_file_form.nil?
+  edit_file_form.checkbox("sure").check
+  agent.submit(edit_file_form, edit_file_form.buttons.first)
+end
+
 def go_news_page(agent, project_page)
   agent.click(project_page.links.find {|link| /\ANews\z/ =~ link.text})
 end
@@ -209,7 +218,8 @@ def main(sf_user_name, project_name, package_name, release_name, file_name,
   edit_release_page = update_release_info(agent, edit_release_page, news)
   edit_release_page = register_file(agent, edit_release_page,
                                     File.basename(file_name))
-  set_release_property(agent, edit_release_page)
+  edit_release_page = set_release_property(agent, edit_release_page)
+  edit_release_page = notify_release(agent, edit_release_page)
 
   news_page = go_news_page(agent, project_page)
   submit_news_page = go_submit_news_page(agent, news_page)

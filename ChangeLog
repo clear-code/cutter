@@ -1,3 +1,7 @@
+2009-02-17  Kouhei Sutou  <kou@clear-code.com>
+
+	* misc/release.rb (notify_release): support release notice.
+
 2009-02-16  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-test-case.c (cut_test_case_run_with_filter): Do not
