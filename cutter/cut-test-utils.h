@@ -299,8 +299,8 @@ cut_take_replace_helper (const char *target, const char *pattern,
 
 /**
  * cut_equal_string:
- * @string1: a string. (char *)
- * @string2: a string. (char *)
+ * @string1: a string.
+ * @string2: a string.
  *
  * Compare @string1 to @string2. @string1 and/or @string2
  * maybe %NULL.

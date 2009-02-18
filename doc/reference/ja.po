@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.0.6\n"
-"POT-Creation-Date: 2009-02-18 11:11+0900\n"
-"PO-Revision-Date: 2009-02-18 11:13+0900\n"
+"POT-Creation-Date: 2009-02-18 11:14+0900\n"
+"PO-Revision-Date: 2009-02-18 11:14+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -9440,7 +9440,7 @@ msgid ""
 "                                                         ...);\n"
 "#define             <placeholder-30/>         (path, ...)\n"
 "#define             <placeholder-31/>                     (path, ...)\n"
-"<placeholder-32/>         <placeholder-33/>                    (const <placeholder-34/> string1,\n"
+"<placeholder-32/>         <placeholder-33/>                    (const <placeholder-34/> *string1,\n"
 "                                                         const <placeholder-35/> *string2);\n"
 "<placeholder-36/>         <placeholder-37/>                    (<placeholder-38/> double1,\n"
 "                                                         <placeholder-39/> double2,\n"
@@ -9899,7 +9899,7 @@ msgstr ""
 #: xml/cut-test-utils.xml:376(programlisting)
 #, no-wrap
 msgid ""
-"<link linkend=\"cut-boolean\">cut_boolean</link>         cut_equal_string                    (const <link linkend=\"char\">char</link> string1,\n"
+"<link linkend=\"cut-boolean\">cut_boolean</link>         cut_equal_string                    (const <link linkend=\"char\">char</link> *string1,\n"
 "                                                         const <link linkend=\"char\">char</link> *string2);"
 msgstr ""
 
@@ -9908,15 +9908,19 @@ msgid ""
 "Compare <parameter>string1</parameter> to <parameter>string2</parameter>. "
 "<parameter>string1</parameter> and/or <parameter>string2</parameter> maybe "
 "<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>."
-msgstr "<parameter>string1</parameter>と<parameter>string2</parameter>を比較します。<parameter>string1</parameter>あるいは<parameter>string2</parameter>、または両方が<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>でもかまいません。"
+msgstr ""
+"<parameter>string1</parameter>と<parameter>string2</parameter>を比較します。"
+"<parameter>string1</parameter>あるいは<parameter>string2</parameter>、または"
+"両方が<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>でもかまいま"
+"せん。"
 
 #: xml/cut-test-utils.xml:384(term)
 msgid "<parameter>string1</parameter>&nbsp;:"
 msgstr ""
 
 #: xml/cut-test-utils.xml:385(simpara) xml/cut-test-utils.xml:388(simpara)
-msgid "a string. (char *)"
-msgstr "文字列。 (char *)"
+msgid "a string."
+msgstr "文字列。"
 
 #: xml/cut-test-utils.xml:387(term)
 msgid "<parameter>string2</parameter>&nbsp;:"

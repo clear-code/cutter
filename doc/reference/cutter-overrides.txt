@@ -87,7 +87,7 @@ const char *path, ...
 <FUNCTION>
 <NAME>cut_equal_string</NAME>
 <RETURNS>cut_boolean</RETURNS>
-const char string1, const char *string2
+const char *string1, const char *string2
 </FUNCTION>
 
 <FUNCTION>
