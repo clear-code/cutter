@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2009  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -63,7 +63,7 @@ extern "C" {
  * cut_assert_true:
  * @expression: the expression to check.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf()) This is
+ *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @expression is TRUE value (not 0 or NULL).
@@ -83,7 +83,7 @@ extern "C" {
  * cut_assert_false:
  * @expression: the expression to check.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf()) This is
+ *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @expression is 0 or NULL.
@@ -103,7 +103,7 @@ extern "C" {
  * cut_assert_null:
  * @expression: the expression to check.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf()) This is
+ *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @expression is NULL.
@@ -120,7 +120,7 @@ extern "C" {
  * cut_assert_null_string:
  * @expression: the expression that returns string.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf()) This is
+ *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @expression is NULL.
@@ -139,7 +139,7 @@ extern "C" {
  * cut_assert_not_null:
  * @expression: the expression to check.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf()) This is
+ *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @expression is not NULL.
@@ -157,7 +157,7 @@ extern "C" {
  * @expected: an expected integer value.
  * @actual: an actual integer value.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf()) This is
+ *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @expected == @actual.
@@ -176,7 +176,7 @@ extern "C" {
  * @expected: an expected unsigned integer value.
  * @actual: an actual unsigned integer value.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf()) This is
+ *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @expected == @actual.
@@ -195,7 +195,7 @@ extern "C" {
  * @expected: an expected size_t value.
  * @actual: an actual size_t value.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf()) This is
+ *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @expected == @actual.
@@ -217,7 +217,7 @@ extern "C" {
  * @error: a float value that specifies error range.
  * @actual: an actual float value.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf()) This is
+ *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if (@expected - @error) <= @actual <= (@expected + @error).
@@ -236,7 +236,7 @@ extern "C" {
  * @expected: an expected string value.
  * @actual: an actual string value.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf()) This is
+ *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if both @expected and @actual are NULL or
@@ -256,7 +256,7 @@ extern "C" {
  * @expected: an expected string value.
  * @actual: an actual string value that is freed.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf()) This is
+ *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if both @expected and @actual are NULL or
@@ -281,7 +281,7 @@ extern "C" {
  * @expected: an expected string value.
  * @actual: an actual string value.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf()) This is
+ *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if both @expected and @actual are NULL or
@@ -307,7 +307,7 @@ extern "C" {
  * @actual: an actual data.
  * @actual_size: a size of @actual.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf()) This is
+ *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @expected_size == @actual_size and
@@ -331,7 +331,7 @@ extern "C" {
  * @expected: an expected NULL-terminated array of strings.
  * @actual: an actual NULL-terminated array of strings that are freed.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf()) This is
+ *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if both @expected and @actual are not NULL and
@@ -351,7 +351,7 @@ extern "C" {
  * @expected: an expected NULL-terminated array of strings.
  * @actual: an actual NULL-terminated array of strings.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf()) This is
+ *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if both @expected and @actual are not NULL and
@@ -377,7 +377,7 @@ extern "C" {
  * @operator: a binary operator.
  * @rhs: a right hand side value.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf()) This is
+ *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if (@lhs @operator @rhs) is TRUE.
@@ -402,7 +402,7 @@ extern "C" {
  * @operator: a binary operator.
  * @rhs: a right hand side integer value.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf()) This is
+ *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if (@lhs @operator @rhs) is TRUE.
@@ -431,7 +431,7 @@ extern "C" {
  * @operator: a binary operator.
  * @rhs: a right hand side unsigned integer value.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf()) This is
+ *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if (@lhs @operator @rhs) is TRUE.
@@ -462,7 +462,7 @@ extern "C" {
  * @operator: a binary operator.
  * @rhs: a right hand side size_t value.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf()) This is
+ *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if (@lhs @operator @rhs) is TRUE.
@@ -493,7 +493,7 @@ extern "C" {
  * @operator: a binary operator.
  * @rhs: a right hand side double value.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf()) This is
+ *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if (@lhs @operator @rhs) is TRUE.
@@ -524,7 +524,7 @@ extern "C" {
  * @expected: an expected value.
  * @actual: an actual value.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf()) This is
+ *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @function(@expected, @actual) returns TRUE.
@@ -546,7 +546,7 @@ extern "C" {
 /**
  * cut_assert_errno:
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf()) This is
+ *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if errno is 0.
@@ -572,7 +572,7 @@ extern "C" {
  * cut_assert_file_exist:
  * @path: the path to test.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf()) This is
+ *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @path exists. It may or may not be a regular file.
@@ -599,7 +599,7 @@ extern "C" {
  * cut_assert_path_exist:
  * @path: the path to test.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf()) This is
+ *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @path exists. It may or may not be a regular file.
@@ -624,7 +624,7 @@ extern "C" {
  * cut_assert_path_not_exist:
  * @path: the path to test.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf()) This is
+ *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @path doesn't exist.
@@ -647,10 +647,10 @@ extern "C" {
 
 /**
  * cut_assert_match:
- * @pattern: the regular expression as string.
+ * @pattern: the regular expression pattern as string.
  * @actual: the string to be matched.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf()) This is
+ *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @pattern matches @string.
@@ -676,7 +676,7 @@ extern "C" {
  * @pattern: the regular expression as string.
  * @actual: the string to be matched that is freed.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf()) This is
+ *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @pattern matches @string. See cut_assert_match()
@@ -698,7 +698,7 @@ extern "C" {
  * @expected: an expected pointer.
  * @actual: an actual pointer.
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf()) This is
+ *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @expected == @actual.
@@ -718,7 +718,7 @@ extern "C" {
  * cut_assert_equal_fixture_data_string:
  * @expected: an expected string.
  * @path: a first element of the path to the fixture data.
- * @...: remaining elements in path. NULL terminated.
+ * @...: remaining elements in path. %NULL terminated.
  *
  * Passes if @expected == cut_get_fixture_data_string(@path, ...).
  *
@@ -735,8 +735,7 @@ extern "C" {
 /**
  * cut_error:
  * @format: the message format. See the printf() documentation.
- * @...: the parameters to insert into the format string. This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: the parameters to insert into the format string.
  *
  * Raises an error with message.
  */
@@ -750,7 +749,7 @@ extern "C" {
 /**
  * cut_error_errno:
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf()) This is
+ *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * e.g.:

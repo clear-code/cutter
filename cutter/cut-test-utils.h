@@ -155,7 +155,7 @@ extern "C" {
  * Passes ownership of the array of strings to Cutter and
  * returns @strings itself.
  *
- * Returns: @strings strings owned by Cutter. Don't free it.
+ * Returns: array of strings owned by Cutter. Don't free it.
  */
 #define cut_take_string_array(strings)                                  \
     cut_test_context_take_string_array(cut_get_current_test_context(),  \
@@ -176,7 +176,7 @@ extern "C" {
 /**
  * cut_take_replace:
  * @target: the replace target string.
- * @pattern: the regular expression pattern.
+ * @pattern: the regular expression pattern as string.
  * @replacement: text to replace each match with
  *
  * Replaces all occurrences of the @pattern with the
@@ -285,7 +285,7 @@ cut_take_replace_helper (const char *target, const char *pattern,
 /**
  * cut_remove_path:
  * @path: a first element of the path to be removed.
- * @...: remaining elements in path. NULL-terminate.
+ * @...: remaining elements in path. %NULL-terminate.
  *
  * Removes @path and it's children recursively. It doesn't
  * report any errors.
@@ -303,9 +303,9 @@ cut_take_replace_helper (const char *target, const char *pattern,
  * @string2: a string. (char *)
  *
  * Compare @string1 to @string2. @string1 and/or @string2
- * maybe NULL.
+ * maybe %NULL.
  *
- * Returns: TRUE if both @string1 and @string2 are NULL or
+ * Returns: %TRUE if both @string1 and @string2 are %NULL or
  *          have the same contents; FALSE otherwise.
  *
  * Since: 1.0.5
@@ -321,7 +321,7 @@ cut_take_replace_helper (const char *target, const char *pattern,
  *
  * Compare @double1 to @double2 with @error range.
  *
- * Returns: TRUE if |@double1 - @double2| <= @error; FALSE otherwise.
+ * Returns: %TRUE if |@double1 - @double2| <= @error; FALSE otherwise.
  *
  * Since: 1.0.5
  */

@@ -1,3 +1,7 @@
+2009-02-18  Kouhei Sutou  <kou@clear-code.com>
+
+	* cutter/, gcutter/, doc/reference/: improve document.
+
 2009-02-17  Kouhei Sutou  <kou@clear-code.com>
 
 	* misc/release.rb (notify_release): support release notice.

@@ -25,6 +25,7 @@ HFILE_GLOB =								\
 	$(top_srcdir)/gcutter/gcutter.h					\
 	$(top_srcdir)/gcutter/gcut-assertions.h				\
 	$(top_srcdir)/gcutter/gcut-test-utils.h				\
+	$(top_srcdir)/gcutter/gcut-egg.h				\
 	$(top_srcdir)/gcutter/gcut-enum.h				\
 	$(top_srcdir)/gcutter/gcut-error.h				\
 	$(top_srcdir)/gcutter/gcut-hash-table.h				\

@@ -117,7 +117,8 @@ extern "C" {
  * @system_message: a failure message from testing system.
  *                  (const char *)
  * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf())
+ *       into the format string. (as with printf()) This is
+ *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Call cut_test_fail() if an assertion is failed.
  * cut_test_fail() counts up n-failures and terminate the
