@@ -653,7 +653,7 @@ G_BEGIN_DECLS
  *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
- * Passes if equal_function(@expected, @actual) == %CUT_TRUE.
+ * Passes if @equal_function(@expected, @actual) == %CUT_TRUE.
  *
  * e.g.:
  * |[

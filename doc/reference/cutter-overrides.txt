@@ -132,6 +132,18 @@ GList *expected, GList *actual, GEqualFunc equal_function, GCutInspectFunction i
 </FUNCTION>
 
 <FUNCTION>
+<NAME>gcut_assert_equal_list_object</NAME>
+<RETURNS>void</RETURNS>
+GList *expected, GList *actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_assert_equal_list_object_custom</NAME>
+<RETURNS>void</RETURNS>
+GList *expected, GList *actual, GEqualFunc equal_function, ...
+</FUNCTION>
+
+<FUNCTION>
 <NAME>gcut_assert_equal_hash_table</NAME>
 <RETURNS>void</RETURNS>
 GHashTable *expected, GHashTable *actual, GEqualFunc equal_function, GCutInspectFunction key_inspect_function, GCutInspectFunction value_inspect_function, gpointer user_data

@@ -83,14 +83,14 @@ gchar           *gcut_enum_inspect              (GType enum_type,
  * gcut_enum_parse:
  * @enum_type: a #GEnum type.
  * @enum_value: a string to be parsed.
- * @error: return location for a #GError, or NULL
+ * @error: return location for a #GError, or %NULL
  *
  * Parses @enum_value and returns a enum value of
- * @enum_type. @enum_value should be enum value name of nick
+ * @enum_type. @enum_value should be enum name or nick
  * name. If @enum_value isn't match then @error is set to a
  * GCutEnumError.
  *
- * Returns: parsed @enum_value as an enum value of @enum_type.
+ * Returns: enum value of @enum_type corresponded to @enum_value.
  *
  * Since: 1.0.6
  */
@@ -117,7 +117,7 @@ gchar           *gcut_flags_inspect             (GType flags_type,
  * gcut_flags_parse:
  * @flags_type: a #GFlags type.
  * @flags_value: a string to be parsed.
- * @error: return location for a #GError, or NULL
+ * @error: return location for a #GError, or %NULL
  *
  * Parses @flags_value and returns a flags value of
  * @flags_type. @flags_value should be formated as
@@ -125,7 +125,7 @@ gchar           *gcut_flags_inspect             (GType flags_type,
  * @flags_value includes unknown flag then @error is set to
  * a GCutEnumError.
  *
- * Returns: parsed @flags_value as an flags value of @flags_type.
+ * Returns: flags value of @flags_type corresponded to @flags_value.
  *
  * Since: 1.0.6
  */

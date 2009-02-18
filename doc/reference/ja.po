@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.0.6\n"
-"POT-Creation-Date: 2009-02-18 11:27+0900\n"
-"PO-Revision-Date: 2009-02-18 11:44+0900\n"
+"POT-Creation-Date: 2009-02-18 11:59+0900\n"
+"PO-Revision-Date: 2009-02-18 12:17+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -9927,14 +9927,18 @@ msgid "<parameter>string2</parameter>&nbsp;:"
 msgstr ""
 
 #: xml/cut-test-utils.xml:390(simpara)
-#, fuzzy
 msgid ""
 "<link linkend=\"CUT-TRUE:CAPS\"><literal>CUT_TRUE</literal></link> if both "
 "<parameter>string1</parameter> and <parameter>string2</parameter> are <link "
 "linkend=\"NULL:CAPS\"><literal>NULL</literal></link> or have the same "
 "contents; <link linkend=\"CUT-FALSE:CAPS\"><literal>CUT_FALSE</literal></"
 "link> otherwise."
-msgstr "<parameter>string1</parameter>と<parameter>string2</parameter>が両方<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>、あるいは同じ内容の場合は<link linkend=\"CUT-TRUE:CAPS\"><literal>CUT_TRUE</literal></link>、そうでない場合は<link linkend=\"CUT-FALSE:CAPS\"><literal>CUT_FALSE</literal></link>。"
+msgstr ""
+"<parameter>string1</parameter>と<parameter>string2</parameter>が両方<link "
+"linkend=\"NULL:CAPS\"><literal>NULL</literal></link>、あるいは同じ内容の場合"
+"は<link linkend=\"CUT-TRUE:CAPS\"><literal>CUT_TRUE</literal></link>、そうで"
+"ない場合は<link linkend=\"CUT-FALSE:CAPS\"><literal>CUT_FALSE</literal></"
+"link>。"
 
 #: xml/cut-test-utils.xml:397(title)
 msgid "cut_equal_double ()"
@@ -9978,7 +9982,11 @@ msgid ""
 "<parameter>double1</parameter> - <parameter>double2</parameter>| &lt;= "
 "<parameter>error</parameter>; <link linkend=\"CUT-FALSE:CAPS"
 "\"><literal>CUT_FALSE</literal></link> otherwise."
-msgstr "|<parameter>double1</parameter> - <parameter>double2</parameter>| &lt;= <parameter>error</parameter>なら<link linkend=\"CUT-TRUE:CAPS\"><literal>CUT_TRUE</literal></link>、そうでなければ<link linkend=\"CUT-FALSE:CAPS\"><literal>CUT_FALSE</literal></link>。"
+msgstr ""
+"|<parameter>double1</parameter> - <parameter>double2</parameter>| &lt;= "
+"<parameter>error</parameter>なら<link linkend=\"CUT-TRUE:CAPS"
+"\"><literal>CUT_TRUE</literal></link>、そうでなければ<link linkend=\"CUT-"
+"FALSE:CAPS\"><literal>CUT_FALSE</literal></link>。"
 
 #: xml/cut-types.xml:7(refentrytitle) xml/cut-types.xml:13(refname)
 msgid "Types"
@@ -10057,7 +10065,10 @@ msgid ""
 "A standard boolean type. Variables of this type should only contain the "
 "value <link linkend=\"CUT-TRUE:CAPS\"><literal>CUT_TRUE</literal></link> or "
 "<link linkend=\"CUT-FALSE:CAPS\"><literal>CUT_FALSE</literal></link>."
-msgstr "標準的な真偽値型。この型の値は<link linkend=\"CUT-TRUE:CAPS\"><literal>CUT_TRUE</literal></link>と<link linkend=\"CUT-FALSE:CAPS\"><literal>CUT_FALSE</literal></link>だけです。"
+msgstr ""
+"標準的な真偽値型。この型の値は<link linkend=\"CUT-TRUE:CAPS"
+"\"><literal>CUT_TRUE</literal></link>と<link linkend=\"CUT-FALSE:CAPS"
+"\"><literal>CUT_FALSE</literal></link>だけです。"
 
 #: xml/cut-types.xml:81(programlisting)
 #, no-wrap
@@ -10069,7 +10080,9 @@ msgid ""
 "Defines the <link linkend=\"CUT-TRUE:CAPS\"><literal>CUT_TRUE</literal></"
 "link> value for the <link linkend=\"cut-boolean\"><type>cut_boolean</type></"
 "link> type."
-msgstr "<link linkend=\"cut-boolean\"><type>cut_boolean</type></link>型のために<link linkend=\"CUT-TRUE:CAPS\"><literal>CUT_TRUE</literal></link>を定義します。"
+msgstr ""
+"<link linkend=\"cut-boolean\"><type>cut_boolean</type></link>型のために<link "
+"linkend=\"CUT-TRUE:CAPS\"><literal>CUT_TRUE</literal></link>を定義します。"
 
 #: xml/cut-types.xml:90(programlisting)
 #, no-wrap
@@ -10081,7 +10094,9 @@ msgid ""
 "Defines the <link linkend=\"CUT-FALSE:CAPS\"><literal>CUT_FALSE</literal></"
 "link> value for the <link linkend=\"cut-boolean\"><type>cut_boolean</type></"
 "link> type."
-msgstr "<link linkend=\"cut-boolean\"><type>cut_boolean</type></link>型のために<link linkend=\"CUT-FALSE:CAPS\"><literal>CUT_FALSE</literal></link>を定義します。"
+msgstr ""
+"<link linkend=\"cut-boolean\"><type>cut_boolean</type></link>型のために<link "
+"linkend=\"CUT-FALSE:CAPS\"><literal>CUT_FALSE</literal></link>を定義します。"
 
 #: xml/cut-ui-factory-builder.xml:7(refentrytitle)
 #: xml/cut-ui-factory-builder.xml:13(refname)
@@ -10495,14 +10510,19 @@ msgid "<link linkend=\"void\">void</link>                setup                  
 msgstr ""
 
 #: xml/cutter.xml:159(para)
-#, fuzzy
 msgid ""
 "If you define <link linkend=\"setup\"><function>setup()</function></link> in "
 "your test program, cutter will call your <link linkend=\"setup"
 "\"><function>setup()</function></link> before each your test is run. If you "
 "define <link linkend=\"cut-setup\"><function>cut_setup()</function></link>, "
 "<link linkend=\"setup\"><function>setup()</function></link> is ignored."
-msgstr "テストプログラム中で<link linkend=\"setup\"><function>setup()</function></link>を定義していたら、cutterは各テストが実行される前に定義された<link linkend=\"setup\"><function>setup()</function></link>を呼びだします。"
+msgstr ""
+"テストプログラム中で<link linkend=\"setup\"><function>setup()</function></"
+"link>を定義していたら、cutterは各テストが実行される前に定義された<link "
+"linkend=\"setup\"><function>setup()</function></link>を呼びだします。<link "
+"linkend=\"cut_setup\"><function>cut_setup()</function></link>が定義されていた"
+"場合は、<link linkend=\"setup\"><function>setup()</function></link>は無視され"
+"ます。"
 
 #: xml/cutter.xml:167(title)
 msgid "cut_setup ()"
@@ -10520,7 +10540,14 @@ msgid ""
 "\"><function>cut_setup()</function></link> before each your test is run. "
 "<link linkend=\"cut-setup\"><function>cut_setup()</function></link> has "
 "priority over <link linkend=\"setup\"><function>setup()</function></link>."
-msgstr "テストプログラム中で<link linkend=\"cut_setup\"><function>cut_setup()</function></link>を定義していたら、cutterは各テストが実行される前に定義された<link linkend=\"cut_setup\"><function>cut_setup()</function></link>を呼びだします。<link linkend=\"cut-setup\"><function>cut_setup()</function></link>と<link linkend=\"setup\"><function>setup()</function></link>が定義されていた場合は<link linkend=\"cut-setup\"><function>cut_setup()</function></link>だけが使われます。"
+msgstr ""
+"テストプログラム中で<link linkend=\"cut_setup\"><function>cut_setup()</"
+"function></link>を定義していたら、cutterは各テストが実行される前に定義された"
+"<link linkend=\"cut_setup\"><function>cut_setup()</function></link>を呼びだし"
+"ます。<link linkend=\"cut-setup\"><function>cut_setup()</function></link>と"
+"<link linkend=\"setup\"><function>setup()</function></link>が定義されていた場"
+"合は<link linkend=\"cut-setup\"><function>cut_setup()</function></link>だけが"
+"使われます。"
 
 #: xml/cutter.xml:178(title)
 msgid "teardown ()"
@@ -10539,7 +10566,13 @@ msgid ""
 "if a test is failed. If you define <link linkend=\"cut-teardown"
 "\"><function>cut_teardown()</function></link>, <link linkend=\"teardown"
 "\"><function>teardown()</function></link> is ignored."
-msgstr "テストプログラム中で<link linkend=\"teardown\"><function>teardown()</function></link>を定義していたら、cutterは各テストの後に、たとえテストが失敗していた時でも、<link linkend=\"teardown\"><function>teardown()</function></link>を呼びだします。<link linkend=\"cut-teardown\"><function>cut_teardown()</function></link>が定義されていた場合は、<link linkend=\"teardown\"><function>teardown()</function></link>は無視されます。"
+msgstr ""
+"テストプログラム中で<link linkend=\"teardown\"><function>teardown()</"
+"function></link>を定義していたら、cutterは各テストの後に、たとえテストが失敗"
+"していた時でも、<link linkend=\"teardown\"><function>teardown()</function></"
+"link>を呼びだします。<link linkend=\"cut-teardown\"><function>cut_teardown()"
+"</function></link>が定義されていた場合は、<link linkend=\"teardown"
+"\"><function>teardown()</function></link>は無視されます。"
 
 #: xml/cutter.xml:189(title)
 msgid "cut_teardown ()"
@@ -10558,7 +10591,14 @@ msgid ""
 "test is run even if a test is failed. <link linkend=\"cut-teardown"
 "\"><function>cut_teardown()</function></link> has priority over <link "
 "linkend=\"teardown\"><function>teardown()</function></link>."
-msgstr "テストプログラム中で<link linkend=\"cut-teardown\"><function>cut_teardown()</function></link>を定義していたら、cutterは各テストの後に、たとえテストが失敗していた時でも、<link linkend=\"cut-teardown\"><function>cut_teardown()</function></link>を呼びだします。<link linkend=\"cut-teardown\"><function>cut_teardown()</function></link>と<link linkend=\"teardown\"><function>teardown()</function></link>が定義されていた場合は<link linkend=\"cut-teardown\"><function>cut_teardown()</function></link>だけが使われます。"
+msgstr ""
+"テストプログラム中で<link linkend=\"cut-teardown\"><function>cut_teardown()</"
+"function></link>を定義していたら、cutterは各テストの後に、たとえテストが失敗"
+"していた時でも、<link linkend=\"cut-teardown\"><function>cut_teardown()</"
+"function></link>を呼びだします。<link linkend=\"cut-teardown"
+"\"><function>cut_teardown()</function></link>と<link linkend=\"teardown"
+"\"><function>teardown()</function></link>が定義されていた場合は<link linkend="
+"\"cut-teardown\"><function>cut_teardown()</function></link>だけが使われます。"
 
 #: xml/cutter.xml:201(title)
 msgid "startup ()"
@@ -10577,7 +10617,13 @@ msgid ""
 "If you define <link linkend=\"cut-startup\"><function>cut_startup()</"
 "function></link>, <link linkend=\"startup\"><function>startup()</function></"
 "link> is ignored."
-msgstr "テストプログラム中で<link linkend=\"startup\"><function>startup()</function></link>を定義していたら、cutterは各テストケースが実行される前に定義された<link linkend=\"startup\"><function>startup()</function></link>を呼びだします。もし、<link linkend=\"cut-startup\"><function>cut_startup()</function></link>が定義されていた場合は、<link linkend=\"startup\"><function>startup()</function></link>は無視されます。"
+msgstr ""
+"テストプログラム中で<link linkend=\"startup\"><function>startup()</"
+"function></link>を定義していたら、cutterは各テストケースが実行される前に定義"
+"された<link linkend=\"startup\"><function>startup()</function></link>を呼びだ"
+"します。もし、<link linkend=\"cut-startup\"><function>cut_startup()</"
+"function></link>が定義されていた場合は、<link linkend=\"startup"
+"\"><function>startup()</function></link>は無視されます。"
 
 #: xml/cutter.xml:212(title)
 msgid "cut_startup ()"
@@ -10596,7 +10642,14 @@ msgid ""
 "test case is run. <link linkend=\"cut-startup\"><function>cut_startup()</"
 "function></link> has priority over <link linkend=\"startup"
 "\"><function>startup()</function></link>."
-msgstr "テストプログラム中で<link linkend=\"cut-startup\"><function>cut_startup()</function></link>を定義していたら、cutterは各テストケースが実行される前に定義された<link linkend=\"cut-startup\"><function>cut_startup()</function></link>を呼びだします。<link linkend=\"cut-startup\"><function>cut_startup()</function></link>と<link linkend=\"startup\"><function>startup()</function></link>が定義されていた場合は<link linkend=\"cut-startup\"><function>cut_startup()</function></link>だけが使われます。"
+msgstr ""
+"テストプログラム中で<link linkend=\"cut-startup\"><function>cut_startup()</"
+"function></link>を定義していたら、cutterは各テストケースが実行される前に定義"
+"された<link linkend=\"cut-startup\"><function>cut_startup()</function></link>"
+"を呼びだします。<link linkend=\"cut-startup\"><function>cut_startup()</"
+"function></link>と<link linkend=\"startup\"><function>startup()</function></"
+"link>が定義されていた場合は<link linkend=\"cut-startup"
+"\"><function>cut_startup()</function></link>だけが使われます。"
 
 #: xml/cutter.xml:223(title)
 msgid "shutdown ()"
@@ -10615,7 +10668,13 @@ msgid ""
 "If you define <link linkend=\"cut-shutdown\"><function>cut_shutdown()</"
 "function></link>, <link linkend=\"shutdown\"><function>shutdown()</"
 "function></link> is ignored."
-msgstr "テストプログラム中で<link linkend=\"shutdown\"><function>shutdown()</function></link>を定義していたら、cutterは各テストケースが実行された後に定義された<link linkend=\"shutdown\"><function>shutdown()</function></link>を呼びだします。<link linkend=\"cut-shutdown\"><function>cut_shutdown()</function></link>が定義されていた場合は、<link linkend=\"shutdown\"><function>shutdown()</function></link>は無視されます。"
+msgstr ""
+"テストプログラム中で<link linkend=\"shutdown\"><function>shutdown()</"
+"function></link>を定義していたら、cutterは各テストケースが実行された後に定義"
+"された<link linkend=\"shutdown\"><function>shutdown()</function></link>を呼び"
+"だします。<link linkend=\"cut-shutdown\"><function>cut_shutdown()</"
+"function></link>が定義されていた場合は、<link linkend=\"shutdown"
+"\"><function>shutdown()</function></link>は無視されます。"
 
 #: xml/cutter.xml:234(title)
 msgid "cut_shutdown ()"
@@ -10634,7 +10693,14 @@ msgid ""
 "<link linkend=\"cut-shutdown\"><function>cut_shutdown()</function></link> "
 "has priority over <link linkend=\"shutdown\"><function>shutdown()</"
 "function></link>."
-msgstr "テストプログラム中で<link linkend=\"shutdown\"><function>shutdown()</function></link>を定義していたら、cutterは各テストケースが実行された後に定義された<link linkend=\"shutdown\"><function>shutdown()</function></link>を呼びだします。<link linkend=\"cut-shutdown\"><function>cut_shutdown()</function></link>と<link linkend=\"shutdown\"><function>shutdown()</function></link>が定義されていた場合は<link linkend=\"cut-shutdown\"><function>cut_shutdown()</function></link>だけが使われます。"
+msgstr ""
+"テストプログラム中で<link linkend=\"shutdown\"><function>shutdown()</"
+"function></link>を定義していたら、cutterは各テストケースが実行された後に定義"
+"された<link linkend=\"shutdown\"><function>shutdown()</function></link>を呼び"
+"だします。<link linkend=\"cut-shutdown\"><function>cut_shutdown()</"
+"function></link>と<link linkend=\"shutdown\"><function>shutdown()</"
+"function></link>が定義されていた場合は<link linkend=\"cut-shutdown"
+"\"><function>cut_shutdown()</function></link>だけが使われます。"
 
 #: xml/cutter.xml:245(title)
 msgid "cut_add_data()"
@@ -10727,16 +10793,13 @@ msgid "The first data name."
 msgstr "最初のデータ名。"
 
 #: xml/cutter.xml:324(simpara)
-#, fuzzy
 msgid ""
 "The data and destroy function of the first data, followed optionally by more "
 "name/data/destroy_function(<link linkend=\"CutDestroyFunction"
 "\"><type>CutDestroyFunction</type></link>) triples. The variable arguments "
-"should be terminated by NULL since 1.0.6."
-msgstr ""
-"最初のデータとデータ破棄関数。続けて任意の数の「名前・データ・データ破棄関数"
-"(<link linkend=\"CutDestroyFunction\"><type>CutDestroyFunction</type></"
-"link>)」の三つ組を指定します。"
+"should be terminated by <link linkend=\"NULL:CAPS\"><literal>NULL</literal></"
+"link> since 1.0.6."
+msgstr "最初のデータとデータ破棄関数。続けて任意の数の「名前・データ・データ破棄関数(<link linkend=\"CutDestroyFunction\"><type>CutDestroyFunction</type></link>)」の三つ組を指定します。1.0.6から可変長の引数は<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>終端しなければいけなくなりました。"
 
 #: xml/cutter.xml:333(title)
 msgid "cut_add_data_backward_compatibility()"
@@ -10923,7 +10986,11 @@ msgid ""
 "\"><function>cut_set_message()</function></link> or <link linkend=\"cut-set-"
 "message-va-list\"><function>cut_set_message_va_list()</function></link> "
 "after the next assertion."
-msgstr "<link linkend=\"cut-set-message\"><function>cut_set_message()</function></link>または<link linkend=\"cut-set-message-va-list\"><function>cut_set_message_va_list()</function></link>で設定した現在のメッセージを次の検証の後でも維持します。"
+msgstr ""
+"<link linkend=\"cut-set-message\"><function>cut_set_message()</function></"
+"link>または<link linkend=\"cut-set-message-va-list"
+"\"><function>cut_set_message_va_list()</function></link>で設定した現在のメッ"
+"セージを次の検証の後でも維持します。"
 
 #: xml/cutter.xml:497(title)
 msgid "See Also"
@@ -12447,13 +12514,11 @@ msgid ""
 msgstr ""
 
 #: xml/gcut-assertions.xml:180(para)
-#, fuzzy
 msgid ""
 "Passes if <parameter>equal_function</parameter>(<parameter>expected</"
-"parameter>, <parameter>actual</parameter>) == TRUE."
-msgstr ""
-"<parameter>function</parameter>(<parameter>expected</parameter>, "
-"<parameter>actual</parameter>)が真を返すときパスします。"
+"parameter>, <parameter>actual</parameter>) == <link linkend=\"CUT-TRUE:CAPS"
+"\"><literal>CUT_TRUE</literal></link>."
+msgstr "<parameter>equal_function</parameter>(<parameter>expected</parameter>, <parameter>actual</parameter>) == <link linkend=\"CUT-TRUE:CAPS\"><literal>CUT_TRUE</literal></link>のときパスします。"
 
 #: xml/gcut-assertions.xml:186(simpara)
 msgid "an expected list."
@@ -12464,22 +12529,16 @@ msgid "an actual list."
 msgstr "実際のリスト。"
 
 #: xml/gcut-assertions.xml:192(simpara)
-#, fuzzy
 msgid ""
 "a function that compares each elements of <parameter>expected</parameter> "
 "and <parameter>actual</parameter> list."
-msgstr ""
-"<parameter>actual</parameter>と<parameter>expected</parameter>を比較する関"
-"数。"
+msgstr "<parameter>expected</parameter>リストと<parameter>actual</parameter>リストの各要素を比較する関数。"
 
 #: xml/gcut-assertions.xml:196(simpara)
-#, fuzzy
 msgid ""
 "a function that inspected <parameter>expected</parameter> and "
 "<parameter>actual</parameter> list."
-msgstr ""
-"<parameter>expected</parameter> == <parameter>actual</parameter>が成り立つと"
-"きパスします。"
+msgstr "<parameter>expected</parameter>リストと<parameter>actual</parameter>リスとの詳細を示す関数。"
 
 #: xml/gcut-assertions.xml:210(title)
 msgid "gcut_assert_equal_list_int()"
@@ -12702,47 +12761,34 @@ msgid ""
 msgstr ""
 
 #: xml/gcut-assertions.xml:432(simpara) xml/gcut-assertions.xml:468(simpara)
-#, fuzzy
 msgid ""
 "an expected <link linkend=\"GHashTable\"><type>GHashTable</type></link> of "
 "string."
-msgstr ""
-"詳細を示す<link linkend=\"GHashTable\"><type>GHashTable</type></link>。"
+msgstr "期待する文字列の<link linkend=\"GHashTable\"><type>GHashTable</type></link>。"
 
 #: xml/gcut-assertions.xml:435(simpara) xml/gcut-assertions.xml:471(simpara)
-#, fuzzy
 msgid ""
 "an actual <link linkend=\"GHashTable\"><type>GHashTable</type></link> of "
 "string."
-msgstr ""
-"詳細を示す<link linkend=\"GHashTable\"><type>GHashTable</type></link>。"
+msgstr "実際の文字列の<link linkend=\"GHashTable\"><type>GHashTable</type></link>。"
 
 #: xml/gcut-assertions.xml:438(simpara)
-#, fuzzy
 msgid ""
 "a function that compares each values of <parameter>expected</parameter> and "
 "<parameter>actual</parameter> hash table."
-msgstr ""
-"<parameter>actual</parameter>と<parameter>expected</parameter>を比較する関"
-"数。"
+msgstr "<parameter>expected</parameter>ハッシュテーブルと<parameter>actual</parameter>ハッシュテーブルのそれぞれの値を比較する関数。"
 
 #: xml/gcut-assertions.xml:442(simpara)
-#, fuzzy
 msgid ""
 "a function that inspected a key of <parameter>expected</parameter> and "
 "<parameter>actual</parameter> hash table."
-msgstr ""
-"<parameter>expected</parameter> == <parameter>actual</parameter>が成り立つと"
-"きパスします。"
+msgstr "<parameter>expected</parameter>ハッシュテーブルと<parameter>actual</parameter>ハッシュテーブルのそれぞれのキーの詳細を示す関数。"
 
 #: xml/gcut-assertions.xml:446(simpara)
-#, fuzzy
 msgid ""
 "a function that inspected a value of <parameter>expected</parameter> and "
 "<parameter>actual</parameter> hash table."
-msgstr ""
-"<parameter>expected</parameter> == <parameter>actual</parameter>が成り立つと"
-"きパスします。"
+msgstr "<parameter>expected</parameter>ハッシュテーブルと<parameter>actual</parameter>ハッシュテーブルのそれぞれの値の詳細を示す関数。"
 
 #: xml/gcut-assertions.xml:457(title)
 msgid "gcut_assert_equal_hash_table_string_string ()"
@@ -13012,10 +13058,9 @@ msgstr ""
 #: xml/gcut-assertions.xml:701(para)
 msgid ""
 "Passes if equal_function(<parameter>expected</parameter>, <parameter>actual</"
-"parameter>) == TRUE."
+"parameter>) == <link linkend=\"CUT-TRUE:CAPS\"><literal>CUT_TRUE</literal></"
+"link>."
 msgstr ""
-"equal_function(<parameter>expected</parameter>, <parameter>actual</"
-"parameter>) == TRUEが成り立つときパスします。"
 
 #: xml/gcut-assertions.xml:706(programlisting)
 #, no-wrap
@@ -13363,14 +13408,12 @@ msgid ""
 msgstr ""
 
 #: xml/gcut-data.xml:205(term)
-#, fuzzy
 msgid "<parameter>data1</parameter>&nbsp;:"
-msgstr "<parameter>actual</parameter>のサイズ。"
+msgstr "<parameter>data1</parameter>&nbsp;:"
 
 #: xml/gcut-data.xml:208(term)
-#, fuzzy
 msgid "<parameter>data2</parameter>&nbsp;:"
-msgstr "<parameter>actual</parameter>のサイズ。"
+msgstr "<parameter>data2</parameter>&nbsp;:"
 
 #: xml/gcut-data.xml:217(title)
 msgid "gcut_data_get_string_with_error ()"
@@ -13395,9 +13438,8 @@ msgstr ""
 #: xml/gcut-test-utils.xml:367(term) xml/gcut-test-utils.xml:382(term)
 #: xml/gcut-test-utils.xml:397(term) xml/gcut-test-utils.xml:412(term)
 #: xml/gcut-test-utils.xml:427(term)
-#, fuzzy
 msgid "<parameter>field_name</parameter>&nbsp;:"
-msgstr "<parameter>expected</parameter>のサイズ。"
+msgstr "<parameter>field_name</parameter>&nbsp;:"
 
 #: xml/gcut-data.xml:239(title)
 msgid "gcut_data_get_int_with_error ()"
@@ -13816,9 +13858,8 @@ msgstr ""
 
 #: xml/gcut-egg.xml:143(term) xml/gcut-egg.xml:161(term)
 #: xml/gcut-egg.xml:196(term)
-#, fuzzy
 msgid "<parameter>command</parameter>&nbsp;:"
-msgstr "<parameter>actual</parameter>のサイズ。"
+msgstr "<parameter>command</parameter>&nbsp;:"
 
 #: xml/gcut-egg.xml:155(title)
 msgid "gcut_egg_new_va_list ()"
@@ -13861,9 +13902,8 @@ msgid "<link linkend=\"GCutEgg\">GCutEgg</link>*            gcut_egg_new_array  
 msgstr ""
 
 #: xml/gcut-egg.xml:210(term)
-#, fuzzy
 msgid "<parameter>array</parameter>&nbsp;:"
-msgstr "<parameter>actual</parameter>のサイズ。"
+msgstr "<parameter>array</parameter>&nbsp;:"
 
 #: xml/gcut-egg.xml:219(title)
 msgid "gcut_egg_set_flags ()"
@@ -13883,9 +13923,8 @@ msgstr ""
 #: xml/gcut-egg.xml:359(term) xml/gcut-egg.xml:374(term)
 #: xml/gcut-egg.xml:388(term) xml/gcut-egg.xml:402(term)
 #: xml/gcut-egg.xml:416(term) xml/gcut-egg.xml:431(term)
-#, fuzzy
 msgid "<parameter>egg</parameter>&nbsp;:"
-msgstr "<parameter>expected</parameter>のサイズ。"
+msgstr "<parameter>egg</parameter>&nbsp;:"
 
 #: xml/gcut-egg.xml:228(term) xml/gcut-enum.xml:163(term)
 msgid "<parameter>flags</parameter>&nbsp;:"
@@ -13955,9 +13994,8 @@ msgid ""
 msgstr ""
 
 #: xml/gcut-egg.xml:324(term)
-#, fuzzy
 msgid "<parameter>chunk</parameter>&nbsp;:"
-msgstr "<parameter>actual</parameter>のサイズ。"
+msgstr "<parameter>chunk</parameter>&nbsp;:"
 
 #: xml/gcut-egg.xml:339(title)
 msgid "gcut_egg_get_pid ()"
@@ -13980,9 +14018,8 @@ msgid ""
 msgstr ""
 
 #: xml/gcut-egg.xml:362(term)
-#, fuzzy
 msgid "<parameter>signal_number</parameter>&nbsp;:"
-msgstr "<parameter>actual</parameter>のサイズ。"
+msgstr "<parameter>signal_number</parameter>&nbsp;:"
 
 #: xml/gcut-egg.xml:369(title)
 msgid "gcut_egg_get_input ()"
@@ -14032,18 +14069,16 @@ msgid ""
 msgstr ""
 
 #: xml/gcut-egg.xml:434(term)
-#, fuzzy
 msgid "<parameter>milliseconds</parameter>&nbsp;:"
-msgstr "<parameter>expected</parameter>のサイズ。"
+msgstr "<parameter>milliseconds</parameter>&nbsp;:"
 
 #: xml/gcut-egg.xml:443(title)
-#, fuzzy
 msgid "Property Details"
-msgstr "詳細"
+msgstr "プロパティ詳細"
 
 #: xml/gcut-egg.xml:444(title)
 msgid "The <literal>\"command\"</literal> property"
-msgstr ""
+msgstr "<literal>\"command\"</literal>プロパティ"
 
 #: xml/gcut-egg.xml:445(primary)
 msgid "GCutEgg:command"
@@ -14059,13 +14094,12 @@ msgid "The command to be ran by the egg."
 msgstr ""
 
 #: xml/gcut-egg.xml:451(title)
-#, fuzzy
 msgid "Signal Details"
-msgstr "詳細"
+msgstr "シグナル詳細"
 
 #: xml/gcut-egg.xml:452(title)
 msgid "The <literal>\"error\"</literal> signal"
-msgstr ""
+msgstr "<literal>\"error\"</literal>シグナル"
 
 #: xml/gcut-egg.xml:453(primary)
 msgid "GCutEgg::error"
@@ -14081,9 +14115,8 @@ msgstr ""
 
 #: xml/gcut-egg.xml:459(term) xml/gcut-egg.xml:476(term)
 #: xml/gcut-egg.xml:496(term) xml/gcut-egg.xml:515(term)
-#, fuzzy
 msgid "<parameter>gcutegg</parameter>&nbsp;:"
-msgstr "<parameter>expected</parameter>のサイズ。"
+msgstr "<parameter>gcutegg</parameter>&nbsp;:"
 
 #: xml/gcut-egg.xml:460(simpara) xml/gcut-egg.xml:477(simpara)
 #: xml/gcut-egg.xml:497(simpara) xml/gcut-egg.xml:516(simpara)
@@ -14092,9 +14125,8 @@ msgstr ""
 
 #: xml/gcut-egg.xml:462(term) xml/gcut-egg.xml:479(term)
 #: xml/gcut-egg.xml:499(term) xml/gcut-egg.xml:518(term)
-#, fuzzy
 msgid "<parameter>arg1</parameter>&nbsp;:"
-msgstr "<parameter>actual</parameter>のサイズ。"
+msgstr "<parameter>arg1</parameter>&nbsp;:"
 
 #: xml/gcut-egg.xml:467(simpara) xml/gcut-egg.xml:487(simpara)
 #: xml/gcut-egg.xml:507(simpara) xml/gcut-egg.xml:523(simpara)
@@ -14103,7 +14135,7 @@ msgstr ""
 
 #: xml/gcut-egg.xml:468(title)
 msgid "The <literal>\"error-received\"</literal> signal"
-msgstr ""
+msgstr "<literal>\"error-received\"</literal>シグナル"
 
 #: xml/gcut-egg.xml:469(primary)
 msgid "GCutEgg::error-received"
@@ -14119,9 +14151,8 @@ msgid ""
 msgstr ""
 
 #: xml/gcut-egg.xml:482(term) xml/gcut-egg.xml:502(term)
-#, fuzzy
 msgid "<parameter>arg2</parameter>&nbsp;:"
-msgstr "<parameter>actual</parameter>のサイズ。"
+msgstr "<parameter>arg2</parameter>&nbsp;:"
 
 #: xml/gcut-egg.xml:488(title)
 msgid "The <literal>\"output-received\"</literal> signal"
@@ -14332,37 +14363,28 @@ msgid ""
 msgstr ""
 
 #: xml/gcut-enum.xml:128(para)
-#, fuzzy
 msgid ""
 "Parses <parameter>enum_value</parameter> and returns a enum value of "
 "<parameter>enum_type</parameter>. <parameter>enum_value</parameter> should "
 "be enum value name of nick name. If <parameter>enum_value</parameter> isn't "
 "match then <parameter>error</parameter> is set to a GCutEnumError."
 msgstr ""
-"(<parameter>expected</parameter> - <parameter>error</parameter>) &lt;= "
-"<parameter>actual</parameter> &lt;= (<parameter>expected</parameter> + "
-"<parameter>error</parameter>)が成り立つときパスします。"
 
 #: xml/gcut-enum.xml:140(simpara) xml/gcut-enum.xml:189(simpara)
-#, fuzzy
 msgid "a string to be parsed."
-msgstr "マッチされる文字列。"
+msgstr "パースされる文字列。"
 
 #: xml/gcut-enum.xml:143(simpara) xml/gcut-enum.xml:192(simpara)
-#, fuzzy
 msgid ""
 "return location for a <link linkend=\"GError\"><type>GError</type></link>, "
 "or NULL"
-msgstr "<link linkend=\"GError\"><type>GError</type></link>の値。"
+msgstr "<link linkend=\"GError\"><type>GError</type></link>のアドレスまたはNULL。"
 
 #: xml/gcut-enum.xml:145(simpara)
-#, fuzzy
 msgid ""
 "parsed <parameter>enum_value</parameter> as an enum value of "
 "<parameter>enum_type</parameter>."
 msgstr ""
-"ふたつの<parameter>enum_type</parameter>の値<parameter>enum1</parameter>と"
-"<parameter>enum2</parameter>を比較します。"
 
 #: xml/gcut-enum.xml:151(title)
 msgid "gcut_flags_inspect ()"
@@ -14414,9 +14436,8 @@ msgid ""
 msgstr ""
 
 #: xml/gcut-enum.xml:188(term)
-#, fuzzy
 msgid "<parameter>flags_value</parameter>&nbsp;:"
-msgstr "<parameter>flags_value</parameter>の詳細を示した文字列。"
+msgstr "<parameter>flags_value</parameter>&nbsp;:"
 
 #: xml/gcut-enum.xml:194(simpara)
 #, fuzzy
@@ -14810,9 +14831,8 @@ msgid "gcut_inspect_enum"
 msgstr ""
 
 #: xml/gcut-inspect.xml:43(link) xml/gcut-inspect.xml:213(primary)
-#, fuzzy
 msgid "gcut_inspect_pointer"
-msgstr "期待するポインタ。"
+msgstr "gcut_inspect_pointer"
 
 #: xml/gcut-inspect.xml:21(synopsis)
 #, no-wrap
@@ -15094,9 +15114,8 @@ msgstr ""
 #: xml/gcut-io-channel-string.xml:144(term)
 #: xml/gcut-string-io-channel.xml:129(term)
 #: xml/gcut-string-io-channel.xml:159(term)
-#, fuzzy
 msgid "<parameter>limit</parameter>&nbsp;:"
-msgstr "<parameter>actual</parameter>のサイズ。"
+msgstr "<parameter>limit</parameter>&nbsp;:"
 
 #: xml/gcut-io-channel-string.xml:121(title)
 #: xml/gcut-string-io-channel.xml:136(title)
@@ -15151,9 +15170,8 @@ msgstr ""
 
 #: xml/gcut-io-channel-string.xml:176(term)
 #: xml/gcut-string-io-channel.xml:191(term)
-#, fuzzy
 msgid "<parameter>read_fail</parameter>&nbsp;:"
-msgstr "<parameter>actual</parameter>のサイズ。"
+msgstr "<parameter>read_fail</parameter>&nbsp;:"
 
 #: xml/gcut-io-channel-string.xml:183(title)
 #: xml/gcut-string-io-channel.xml:198(title)
@@ -15184,9 +15202,8 @@ msgstr ""
 
 #: xml/gcut-io-channel-string.xml:208(term)
 #: xml/gcut-string-io-channel.xml:223(term)
-#, fuzzy
 msgid "<parameter>pipe_mode</parameter>&nbsp;:"
-msgstr "<parameter>expected</parameter>のサイズ。"
+msgstr "<parameter>pipe_mode</parameter>&nbsp;:"
 
 #: xml/gcut-io.xml:7(refentrytitle) xml/gcut-io.xml:13(refname)
 msgid "gcut-io"
@@ -15217,9 +15234,8 @@ msgid "<link linkend=\"gchar\">gchar</link>*              gcut_io_inspect_condit
 msgstr ""
 
 #: xml/gcut-io.xml:49(term)
-#, fuzzy
 msgid "<parameter>condition</parameter>&nbsp;:"
-msgstr "<parameter>actual</parameter>のサイズ。"
+msgstr "<parameter>condition</parameter>&nbsp;:"
 
 #: xml/gcut-key-file.xml:7(refentrytitle) xml/gcut-key-file.xml:13(refname)
 msgid "gcut-key-file"
@@ -15268,14 +15284,12 @@ msgid ""
 msgstr ""
 
 #: xml/gcut-key-file.xml:62(term) xml/gcut-key-file.xml:92(term)
-#, fuzzy
 msgid "<parameter>key_file</parameter>&nbsp;:"
-msgstr "<parameter>expected</parameter>のサイズ。"
+msgstr "<parameter>key_file</parameter>&nbsp;:"
 
 #: xml/gcut-key-file.xml:65(term) xml/gcut-key-file.xml:95(term)
-#, fuzzy
 msgid "<parameter>group_name</parameter>&nbsp;:"
-msgstr "<parameter>actual</parameter>のサイズ。"
+msgstr "<parameter>group_name</parameter>&nbsp;:"
 
 #: xml/gcut-key-file.xml:68(term) xml/gcut-key-file.xml:98(term)
 #: xml/gcut-test-utils.xml:259(term) xml/gcut-test-utils.xml:286(term)
@@ -15823,16 +15837,11 @@ msgid "#define             gcut_list_int_equal(list1, list2)"
 msgstr ""
 
 #: xml/gcut-list.xml:324(para)
-#, fuzzy
 msgid ""
 "<literal>gcut_list_int_equal</literal> has been deprecated since version "
 "1.0.6 and should not be used in newly-written code. Use <link linkend=\"gcut-"
 "list-equal-int\"><function>gcut_list_equal_int()</function></link> instead."
-msgstr ""
-"<literal>cut_assert_equal_g_type</literal>はバージョン1.0.3から非推奨になりま"
-"した。新しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-"
-"assert-equal-type\"><function>gcut_assert_equal_type()</function></link>を"
-"使ってください。"
+msgstr "<literal>gcut_list_int_equal</literal>はバージョン1.0.6から非推奨となりました。新しく書くコードでは使わないでください。代わりに has been deprecated si<link linkend=\"gcut-list-equal-int\"><function>gcut_list_equal_int()</function></link>を使って下さい。"
 
 #: xml/gcut-list.xml:341(title)
 msgid "gcut_list_int_inspect()"
