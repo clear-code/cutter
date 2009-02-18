@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2009  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -134,7 +134,7 @@ G_BEGIN_DECLS
  *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
- * Passes if @equal_function(@expected, @actual) == TRUE.
+ * Passes if @equal_function(@expected, @actual) == %CUT_TRUE.
  *
  * Since: 1.0.6
  */
@@ -653,7 +653,7 @@ G_BEGIN_DECLS
  *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
- * Passes if equal_function(@expected, @actual) == TRUE.
+ * Passes if equal_function(@expected, @actual) == %CUT_TRUE.
  *
  * e.g.:
  * |[

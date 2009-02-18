@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.0.6\n"
-"POT-Creation-Date: 2009-02-18 11:14+0900\n"
-"PO-Revision-Date: 2009-02-18 11:14+0900\n"
+"POT-Creation-Date: 2009-02-18 11:27+0900\n"
+"PO-Revision-Date: 2009-02-18 11:44+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -1835,7 +1835,7 @@ msgstr "右辺の符号無し整数の値。"
 #: xml/cut-test-utils.xml:94(para) xml/cut-test-utils.xml:108(para)
 #: xml/cut-test-utils.xml:136(para) xml/cut-test-utils.xml:155(para)
 #: xml/cut-test-utils.xml:173(para) xml/cut-test-utils.xml:394(para)
-#: xml/cut-test-utils.xml:418(para) xml/gcut-assertions.xml:338(para)
+#: xml/cut-test-utils.xml:419(para) xml/gcut-assertions.xml:338(para)
 #: xml/gcut-assertions.xml:366(para) xml/gcut-assertions.xml:391(para)
 #: xml/gcut-assertions.xml:416(para) xml/gcut-assertions.xml:537(para)
 #: xml/gcut-assertions.xml:625(para) xml/gcut-assertions.xml:663(para)
@@ -9929,14 +9929,12 @@ msgstr ""
 #: xml/cut-test-utils.xml:390(simpara)
 #, fuzzy
 msgid ""
-"<link linkend=\"TRUE:CAPS\"><literal>TRUE</literal></link> if both "
+"<link linkend=\"CUT-TRUE:CAPS\"><literal>CUT_TRUE</literal></link> if both "
 "<parameter>string1</parameter> and <parameter>string2</parameter> are <link "
 "linkend=\"NULL:CAPS\"><literal>NULL</literal></link> or have the same "
-"contents; FALSE otherwise."
-msgstr ""
-"<parameter>sub_process</parameter>が異常終了したときは<link linkend=\"CUT-"
-"TRUE:CAPS\"><literal>CUT_TRUE</literal></link>、そうでない場合は<link "
-"linkend=\"CUT-FALSE:CAPS\"><literal>CUT_FALSE</literal></link>。"
+"contents; <link linkend=\"CUT-FALSE:CAPS\"><literal>CUT_FALSE</literal></"
+"link> otherwise."
+msgstr "<parameter>string1</parameter>と<parameter>string2</parameter>が両方<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>、あるいは同じ内容の場合は<link linkend=\"CUT-TRUE:CAPS\"><literal>CUT_TRUE</literal></link>、そうでない場合は<link linkend=\"CUT-FALSE:CAPS\"><literal>CUT_FALSE</literal></link>。"
 
 #: xml/cut-test-utils.xml:397(title)
 msgid "cut_equal_double ()"
@@ -9975,14 +9973,12 @@ msgid "a double value that specifies error range."
 msgstr "誤差範囲を示す浮動小数点数。"
 
 #: xml/cut-test-utils.xml:415(simpara)
-#, fuzzy
 msgid ""
-"<link linkend=\"TRUE:CAPS\"><literal>TRUE</literal></link> if |"
+"<link linkend=\"CUT-TRUE:CAPS\"><literal>CUT_TRUE</literal></link> if |"
 "<parameter>double1</parameter> - <parameter>double2</parameter>| &lt;= "
-"<parameter>error</parameter>; FALSE otherwise."
-msgstr ""
-"<parameter>double1</parameter>と<parameter>double2</parameter>を誤差範囲"
-"<parameter>error</parameter>で比較します。"
+"<parameter>error</parameter>; <link linkend=\"CUT-FALSE:CAPS"
+"\"><literal>CUT_FALSE</literal></link> otherwise."
+msgstr "|<parameter>double1</parameter> - <parameter>double2</parameter>| &lt;= <parameter>error</parameter>なら<link linkend=\"CUT-TRUE:CAPS\"><literal>CUT_TRUE</literal></link>、そうでなければ<link linkend=\"CUT-FALSE:CAPS\"><literal>CUT_FALSE</literal></link>。"
 
 #: xml/cut-types.xml:7(refentrytitle) xml/cut-types.xml:13(refname)
 msgid "Types"
@@ -10057,15 +10053,11 @@ msgid "<link linkend=\"void\">void</link>                (*CutCallbackFunction) 
 msgstr ""
 
 #: xml/cut-types.xml:73(para)
-#, fuzzy
 msgid ""
 "A standard boolean type. Variables of this type should only contain the "
 "value <link linkend=\"CUT-TRUE:CAPS\"><literal>CUT_TRUE</literal></link> or "
 "<link linkend=\"CUT-FALSE:CAPS\"><literal>CUT_FALSE</literal></link>."
-msgstr ""
-"<parameter>sub_process</parameter>が実行中の場合は<link linkend=\"CUT-TRUE:"
-"CAPS\"><literal>CUT_TRUE</literal></link>、そうでない場合は<link linkend="
-"\"CUT-FALSE:CAPS\"><literal>CUT_FALSE</literal></link>。"
+msgstr "標準的な真偽値型。この型の値は<link linkend=\"CUT-TRUE:CAPS\"><literal>CUT_TRUE</literal></link>と<link linkend=\"CUT-FALSE:CAPS\"><literal>CUT_FALSE</literal></link>だけです。"
 
 #: xml/cut-types.xml:81(programlisting)
 #, no-wrap
@@ -10073,14 +10065,11 @@ msgid "#define CUT_TRUE\n"
 msgstr ""
 
 #: xml/cut-types.xml:83(para)
-#, fuzzy
 msgid ""
 "Defines the <link linkend=\"CUT-TRUE:CAPS\"><literal>CUT_TRUE</literal></"
 "link> value for the <link linkend=\"cut-boolean\"><type>cut_boolean</type></"
 "link> type."
-msgstr ""
-"マルチスレッドモードで実行するなら<link linkend=\"CUT-TRUE:CAPS"
-"\"><literal>CUT_TRUE</literal></link>。"
+msgstr "<link linkend=\"cut-boolean\"><type>cut_boolean</type></link>型のために<link linkend=\"CUT-TRUE:CAPS\"><literal>CUT_TRUE</literal></link>を定義します。"
 
 #: xml/cut-types.xml:90(programlisting)
 #, no-wrap
@@ -10088,14 +10077,11 @@ msgid "#define CUT_FALSE\n"
 msgstr ""
 
 #: xml/cut-types.xml:92(para)
-#, fuzzy
 msgid ""
 "Defines the <link linkend=\"CUT-FALSE:CAPS\"><literal>CUT_FALSE</literal></"
 "link> value for the <link linkend=\"cut-boolean\"><type>cut_boolean</type></"
 "link> type."
-msgstr ""
-"比較する<link linkend=\"GValue\"><type>GValue</type></link>の<link linkend="
-"\"GType\"><type>GType</type></link>。"
+msgstr "<link linkend=\"cut-boolean\"><type>cut_boolean</type></link>型のために<link linkend=\"CUT-FALSE:CAPS\"><literal>CUT_FALSE</literal></link>を定義します。"
 
 #: xml/cut-ui-factory-builder.xml:7(refentrytitle)
 #: xml/cut-ui-factory-builder.xml:13(refname)
@@ -10258,7 +10244,6 @@ msgid "Cutter"
 msgstr ""
 
 #: xml/cutter.xml:14(refpurpose)
-#, fuzzy
 msgid "A Unit Testing Framework for C."
 msgstr "C言語用単体テストフレームワーク"
 
@@ -10517,10 +10502,7 @@ msgid ""
 "\"><function>setup()</function></link> before each your test is run. If you "
 "define <link linkend=\"cut-setup\"><function>cut_setup()</function></link>, "
 "<link linkend=\"setup\"><function>setup()</function></link> is ignored."
-msgstr ""
-"テストプログラム中で<link linkend=\"setup\"><function>setup()</function></"
-"link>を定義していたら、cutterは各テストが実行される前に定義された<link "
-"linkend=\"setup\"><function>setup()</function></link>を呼びだします。"
+msgstr "テストプログラム中で<link linkend=\"setup\"><function>setup()</function></link>を定義していたら、cutterは各テストが実行される前に定義された<link linkend=\"setup\"><function>setup()</function></link>を呼びだします。"
 
 #: xml/cutter.xml:167(title)
 msgid "cut_setup ()"
@@ -10532,17 +10514,13 @@ msgid "<link linkend=\"void\">void</link>                cut_setup              
 msgstr ""
 
 #: xml/cutter.xml:169(para)
-#, fuzzy
 msgid ""
 "If you define <link linkend=\"cut-setup\"><function>cut_setup()</function></"
 "link> in your test program, cutter will call your <link linkend=\"cut-setup"
 "\"><function>cut_setup()</function></link> before each your test is run. "
 "<link linkend=\"cut-setup\"><function>cut_setup()</function></link> has "
 "priority over <link linkend=\"setup\"><function>setup()</function></link>."
-msgstr ""
-"テストプログラム中で<link linkend=\"setup\"><function>setup()</function></"
-"link>を定義していたら、cutterは各テストが実行される前に定義された<link "
-"linkend=\"setup\"><function>setup()</function></link>を呼びだします。"
+msgstr "テストプログラム中で<link linkend=\"cut_setup\"><function>cut_setup()</function></link>を定義していたら、cutterは各テストが実行される前に定義された<link linkend=\"cut_setup\"><function>cut_setup()</function></link>を呼びだします。<link linkend=\"cut-setup\"><function>cut_setup()</function></link>と<link linkend=\"setup\"><function>setup()</function></link>が定義されていた場合は<link linkend=\"cut-setup\"><function>cut_setup()</function></link>だけが使われます。"
 
 #: xml/cutter.xml:178(title)
 msgid "teardown ()"
@@ -10554,7 +10532,6 @@ msgid "<link linkend=\"void\">void</link>                teardown               
 msgstr ""
 
 #: xml/cutter.xml:180(para)
-#, fuzzy
 msgid ""
 "If you define <link linkend=\"teardown\"><function>teardown()</function></"
 "link> in your test program, cutter will call your <link linkend=\"teardown"
@@ -10562,11 +10539,7 @@ msgid ""
 "if a test is failed. If you define <link linkend=\"cut-teardown"
 "\"><function>cut_teardown()</function></link>, <link linkend=\"teardown"
 "\"><function>teardown()</function></link> is ignored."
-msgstr ""
-"テストプログラム中で<link linkend=\"teardown\"><function>teardown()</"
-"function></link>を定義していたら、cutterは各テストの後に、たとえテストが失敗"
-"していた時でも、<link linkend=\"teardown\"><function>teardown()</function></"
-"link>を呼びだします。"
+msgstr "テストプログラム中で<link linkend=\"teardown\"><function>teardown()</function></link>を定義していたら、cutterは各テストの後に、たとえテストが失敗していた時でも、<link linkend=\"teardown\"><function>teardown()</function></link>を呼びだします。<link linkend=\"cut-teardown\"><function>cut_teardown()</function></link>が定義されていた場合は、<link linkend=\"teardown\"><function>teardown()</function></link>は無視されます。"
 
 #: xml/cutter.xml:189(title)
 msgid "cut_teardown ()"
@@ -10578,7 +10551,6 @@ msgid "<link linkend=\"void\">void</link>                cut_teardown           
 msgstr ""
 
 #: xml/cutter.xml:191(para)
-#, fuzzy
 msgid ""
 "If you define <link linkend=\"cut-teardown\"><function>cut_teardown()</"
 "function></link> in your test program, cutter will call your <link linkend="
@@ -10586,11 +10558,7 @@ msgid ""
 "test is run even if a test is failed. <link linkend=\"cut-teardown"
 "\"><function>cut_teardown()</function></link> has priority over <link "
 "linkend=\"teardown\"><function>teardown()</function></link>."
-msgstr ""
-"テストプログラム中で<link linkend=\"teardown\"><function>teardown()</"
-"function></link>を定義していたら、cutterは各テストの後に、たとえテストが失敗"
-"していた時でも、<link linkend=\"teardown\"><function>teardown()</function></"
-"link>を呼びだします。"
+msgstr "テストプログラム中で<link linkend=\"cut-teardown\"><function>cut_teardown()</function></link>を定義していたら、cutterは各テストの後に、たとえテストが失敗していた時でも、<link linkend=\"cut-teardown\"><function>cut_teardown()</function></link>を呼びだします。<link linkend=\"cut-teardown\"><function>cut_teardown()</function></link>と<link linkend=\"teardown\"><function>teardown()</function></link>が定義されていた場合は<link linkend=\"cut-teardown\"><function>cut_teardown()</function></link>だけが使われます。"
 
 #: xml/cutter.xml:201(title)
 msgid "startup ()"
@@ -10602,7 +10570,6 @@ msgid "<link linkend=\"void\">void</link>                startup                
 msgstr ""
 
 #: xml/cutter.xml:203(para)
-#, fuzzy
 msgid ""
 "If you define <link linkend=\"startup\"><function>startup()</function></"
 "link> in your test program, cutter will call your <link linkend=\"startup"
@@ -10610,11 +10577,7 @@ msgid ""
 "If you define <link linkend=\"cut-startup\"><function>cut_startup()</"
 "function></link>, <link linkend=\"startup\"><function>startup()</function></"
 "link> is ignored."
-msgstr ""
-"テストプログラム中で<link linkend=\"startup\"><function>startup()</"
-"function></link>を定義していたら、cutterは各テストケースが実行される前に定義"
-"された<link linkend=\"startup\"><function>startup()</function></link>を呼びだ"
-"します。"
+msgstr "テストプログラム中で<link linkend=\"startup\"><function>startup()</function></link>を定義していたら、cutterは各テストケースが実行される前に定義された<link linkend=\"startup\"><function>startup()</function></link>を呼びだします。もし、<link linkend=\"cut-startup\"><function>cut_startup()</function></link>が定義されていた場合は、<link linkend=\"startup\"><function>startup()</function></link>は無視されます。"
 
 #: xml/cutter.xml:212(title)
 msgid "cut_startup ()"
@@ -10626,7 +10589,6 @@ msgid "<link linkend=\"void\">void</link>                cut_startup            
 msgstr ""
 
 #: xml/cutter.xml:214(para)
-#, fuzzy
 msgid ""
 "If you define <link linkend=\"cut-startup\"><function>cut_startup()</"
 "function></link> in your test program, cutter will call your <link linkend="
@@ -10634,11 +10596,7 @@ msgid ""
 "test case is run. <link linkend=\"cut-startup\"><function>cut_startup()</"
 "function></link> has priority over <link linkend=\"startup"
 "\"><function>startup()</function></link>."
-msgstr ""
-"テストプログラム中で<link linkend=\"startup\"><function>startup()</"
-"function></link>を定義していたら、cutterは各テストケースが実行される前に定義"
-"された<link linkend=\"startup\"><function>startup()</function></link>を呼びだ"
-"します。"
+msgstr "テストプログラム中で<link linkend=\"cut-startup\"><function>cut_startup()</function></link>を定義していたら、cutterは各テストケースが実行される前に定義された<link linkend=\"cut-startup\"><function>cut_startup()</function></link>を呼びだします。<link linkend=\"cut-startup\"><function>cut_startup()</function></link>と<link linkend=\"startup\"><function>startup()</function></link>が定義されていた場合は<link linkend=\"cut-startup\"><function>cut_startup()</function></link>だけが使われます。"
 
 #: xml/cutter.xml:223(title)
 msgid "shutdown ()"
@@ -10650,7 +10608,6 @@ msgid "<link linkend=\"void\">void</link>                shutdown               
 msgstr ""
 
 #: xml/cutter.xml:225(para)
-#, fuzzy
 msgid ""
 "If you define <link linkend=\"shutdown\"><function>shutdown()</function></"
 "link> in your test program, cutter will call your <link linkend=\"shutdown"
@@ -10658,11 +10615,7 @@ msgid ""
 "If you define <link linkend=\"cut-shutdown\"><function>cut_shutdown()</"
 "function></link>, <link linkend=\"shutdown\"><function>shutdown()</"
 "function></link> is ignored."
-msgstr ""
-"テストプログラム中で<link linkend=\"shutdown\"><function>shutdown()</"
-"function></link>を定義していたら、cutterは各テストケースが実行された後に定義"
-"された<link linkend=\"shutdown\"><function>shutdown()</function></link>を呼び"
-"だします。"
+msgstr "テストプログラム中で<link linkend=\"shutdown\"><function>shutdown()</function></link>を定義していたら、cutterは各テストケースが実行された後に定義された<link linkend=\"shutdown\"><function>shutdown()</function></link>を呼びだします。<link linkend=\"cut-shutdown\"><function>cut_shutdown()</function></link>が定義されていた場合は、<link linkend=\"shutdown\"><function>shutdown()</function></link>は無視されます。"
 
 #: xml/cutter.xml:234(title)
 msgid "cut_shutdown ()"
@@ -10674,7 +10627,6 @@ msgid "<link linkend=\"void\">void</link>                cut_shutdown           
 msgstr ""
 
 #: xml/cutter.xml:236(para)
-#, fuzzy
 msgid ""
 "If you define <link linkend=\"shutdown\"><function>shutdown()</function></"
 "link> in your test program, cutter will call your <link linkend=\"shutdown"
@@ -10682,11 +10634,7 @@ msgid ""
 "<link linkend=\"cut-shutdown\"><function>cut_shutdown()</function></link> "
 "has priority over <link linkend=\"shutdown\"><function>shutdown()</"
 "function></link>."
-msgstr ""
-"テストプログラム中で<link linkend=\"shutdown\"><function>shutdown()</"
-"function></link>を定義していたら、cutterは各テストケースが実行された後に定義"
-"された<link linkend=\"shutdown\"><function>shutdown()</function></link>を呼び"
-"だします。"
+msgstr "テストプログラム中で<link linkend=\"shutdown\"><function>shutdown()</function></link>を定義していたら、cutterは各テストケースが実行された後に定義された<link linkend=\"shutdown\"><function>shutdown()</function></link>を呼びだします。<link linkend=\"cut-shutdown\"><function>cut_shutdown()</function></link>と<link linkend=\"shutdown\"><function>shutdown()</function></link>が定義されていた場合は<link linkend=\"cut-shutdown\"><function>cut_shutdown()</function></link>だけが使われます。"
 
 #: xml/cutter.xml:245(title)
 msgid "cut_add_data()"
@@ -10970,16 +10918,12 @@ msgid "#define             cut_keep_message(...)"
 msgstr ""
 
 #: xml/cutter.xml:478(para)
-#, fuzzy
 msgid ""
 "Keeps the current message set by <link linkend=\"cut-set-message"
 "\"><function>cut_set_message()</function></link> or <link linkend=\"cut-set-"
 "message-va-list\"><function>cut_set_message_va_list()</function></link> "
 "after the next assertion."
-msgstr ""
-"検証をパスしたら<link linkend=\"cut-test-pass\"><function>cut_test_pass()</"
-"function></link>を呼んでください。<link linkend=\"cut-test-pass"
-"\"><function>cut_test_pass()</function></link>は検証数を増やします。"
+msgstr "<link linkend=\"cut-set-message\"><function>cut_set_message()</function></link>または<link linkend=\"cut-set-message-va-list\"><function>cut_set_message_va_list()</function></link>で設定した現在のメッセージを次の検証の後でも維持します。"
 
 #: xml/cutter.xml:497(title)
 msgid "See Also"
@@ -11968,15 +11912,13 @@ msgid "<parameter>equal_function</parameter>&nbsp;:"
 msgstr ""
 
 #: xml/gcut-assertions-helper.xml:206(term) xml/gcut-assertions.xml:195(term)
-#, fuzzy
 msgid "<parameter>inspect_function</parameter>&nbsp;:"
-msgstr "<parameter>expected</parameter>のサイズ。"
+msgstr "<parameter>inspect_function</parameter>&nbsp;:"
 
 #: xml/gcut-assertions-helper.xml:209(term)
 #: xml/gcut-assertions-helper.xml:444(term)
-#, fuzzy
 msgid "<parameter>inspect_user_data</parameter>&nbsp;:"
-msgstr "<parameter>expected</parameter>のサイズ。"
+msgstr "<parameter>inspect_user_data</parameter>&nbsp;:"
 
 #: xml/gcut-assertions-helper.xml:218(term)
 #: xml/gcut-assertions-helper.xml:453(term)
@@ -12107,9 +12049,8 @@ msgid ""
 msgstr ""
 
 #: xml/gcut-assertions-helper.xml:438(term) xml/gcut-assertions.xml:441(term)
-#, fuzzy
 msgid "<parameter>key_inspect_function</parameter>&nbsp;:"
-msgstr "<parameter>expected</parameter>のサイズ。"
+msgstr "<parameter>key_inspect_function</parameter>&nbsp;:"
 
 #: xml/gcut-assertions-helper.xml:441(term) xml/gcut-assertions.xml:445(term)
 msgid "<parameter>value_inspect_function</parameter>&nbsp;:"
@@ -12515,14 +12456,12 @@ msgstr ""
 "<parameter>actual</parameter>)が真を返すときパスします。"
 
 #: xml/gcut-assertions.xml:186(simpara)
-#, fuzzy
 msgid "an expected list."
-msgstr "期待する文字列。"
+msgstr "期待するリスト。"
 
 #: xml/gcut-assertions.xml:189(simpara)
-#, fuzzy
 msgid "an actual list."
-msgstr "実際のデータ。"
+msgstr "実際のリスト。"
 
 #: xml/gcut-assertions.xml:192(simpara)
 #, fuzzy

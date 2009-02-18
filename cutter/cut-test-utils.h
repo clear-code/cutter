@@ -305,8 +305,8 @@ cut_take_replace_helper (const char *target, const char *pattern,
  * Compare @string1 to @string2. @string1 and/or @string2
  * maybe %NULL.
  *
- * Returns: %TRUE if both @string1 and @string2 are %NULL or
- *          have the same contents; FALSE otherwise.
+ * Returns: %CUT_TRUE if both @string1 and @string2 are %NULL or
+ *          have the same contents; %CUT_FALSE otherwise.
  *
  * Since: 1.0.5
  */
@@ -321,7 +321,8 @@ cut_take_replace_helper (const char *target, const char *pattern,
  *
  * Compare @double1 to @double2 with @error range.
  *
- * Returns: %TRUE if |@double1 - @double2| <= @error; FALSE otherwise.
+ * Returns: %CUT_TRUE if |@double1 - @double2| <= @error;
+ *          %CUT_FALSE otherwise.
  *
  * Since: 1.0.5
  */

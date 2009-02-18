@@ -232,7 +232,7 @@ void cut_shutdown(void);
  *       followed optionally by more
  *       name/data/destroy_function(#CutDestroyFunction)
  *       triples. The variable arguments should be terminated
- *       by NULL since 1.0.6.
+ *       by %NULL since 1.0.6.
  *
  * Adds data to use data driven test.
  *
