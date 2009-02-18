@@ -42,7 +42,7 @@ G_BEGIN_DECLS
 
 /**
  * gcut_take_object:
- * @object: the GObject * to be owned by Cutter.
+ * @object: the #GObject to be owned by Cutter.
  *
  * Passes ownership of @object to Cutter and returns @object.
  *
@@ -56,12 +56,12 @@ G_BEGIN_DECLS
 
 /**
  * gcut_take_error:
- * @error: the GError * to be owned by Cutter.
+ * @error: the #GError to be owned by Cutter.
  *
  * Passes ownership of @error to Cutter and returns
- * a GError * that has same contents of @error.
+ * a @error itself.
  *
- * Returns: a GError * owned by Cutter. Don't g_error_free()
+ * Returns: a #GError owned by Cutter. Don't g_error_free()
  * it.
  *
  * Since: 1.0.3
@@ -74,12 +74,12 @@ G_BEGIN_DECLS
  * gcut_take_list:
  * @list: the #GList to be owned by Cutter.
  * @destroy_function: the destroy function that destroys the
- *                    elements of @list, or NULL.
+ *                    elements of @list, or %NULL.
  *
  * Passes ownership of @list to Cutter and returns
- * a #GList that has same elements of @list.
+ * @list itself.
  *
- * Returns: a GList * owned by Cutter. Don't g_list_free()
+ * Returns: a #GList owned by Cutter. Don't g_list_free()
  * it.
  *
  * Since: 1.0.3
@@ -90,12 +90,12 @@ G_BEGIN_DECLS
 
 /**
  * gcut_take_hash_table:
- * @hash_table: the GHashTable * to be owned by Cutter.
+ * @hash_table: the #GHashTable to be owned by Cutter.
  *
  * Passes ownership of @hash_table to Cutter and returns
- * @hash_table.
+ * @hash_table itself.
  *
- * Returns: a GHash_Table * owned by Cutter. Don't
+ * Returns: a #GHashTable owned by Cutter. Don't
  * g_hash_table_unref() it.
  *
  * Since: 1.0.4
@@ -107,7 +107,7 @@ G_BEGIN_DECLS
 /**
  * gcut_list_string_new:
  * @value: the first string.
- * @...: remaining strings in list, terminated by NULL.
+ * @...: remaining strings in list. %NULL-terminate.
  *
  * Creates a list from passed strings.
  *
@@ -120,7 +120,7 @@ GList  *gcut_list_string_new  (const gchar *value, ...) G_GNUC_NULL_TERMINATED;
 
 /**
  * gcut_list_string_new_array:
- * @strings: the string array, terminated by NULL.
+ * @strings: the string array. %NULL-terminate.
  *
  * Creates a list from passed string array.
  *
@@ -134,7 +134,7 @@ GList  *gcut_list_string_new_array  (const gchar **strings);
 /**
  * gcut_take_new_list_string:
  * @value: the first string.
- * @...: remaining strings in list, terminated by NULL.
+ * @...: remaining strings in list. %NULL-terminate.
  *
  * Creates a list from passed strings that is owned by
  * Cutter.
@@ -159,7 +159,7 @@ GList  *gcut_list_string_new_array  (const gchar **strings);
 
 /**
  * gcut_take_new_list_string_array:
- * @strings: the string array, terminated by NULL.
+ * @strings: the string array. %NULL-terminate.
  *
  * Creates a list from passed string array that is owned by
  * Cutter.
@@ -185,15 +185,15 @@ void    gcut_list_string_free (GList *list);
 /**
  * gcut_hash_table_string_string_new:
  * @key: The first key string.
- * @...: A NULL-terminated list of rest arguments. The
+ * @...: A %NULL-terminated list of rest arguments. The
  *       first item is the string value of the first key,
  *       followed optionally by more key/value pairs. It
- *       must end with NULL.
+ *       must end with %NULL.
  *
  * Creates a hash table that has string key and string value
  * from passed key/value pairs.
  *
- * Returns: a newly-allocated GHashTable * that contains
+ * Returns: a newly-allocated #GHashTable that contains
  * passed key/value pairs and must be freed with
  * g_hash_table_unref().
  *
@@ -204,15 +204,15 @@ GHashTable *gcut_hash_table_string_string_new(const gchar *key, ...) G_GNUC_NULL
 /**
  * gcut_hash_table_string_string_new_va_list:
  * @key: The first key string.
- * @args: A NULL-terminated list of rest arguments. The
+ * @args: A %NULL-terminated list of rest arguments. The
  *        first item is the string value of the first key,
  *        followed optionally by more key/value pairs. It
- *        must end with NULL.
+ *        must end with %NULL.
  *
  * Creates a hash table that has string key and string value
  * from passed key/value pairs.
  *
- * Returns: a newly-allocated GHashTable * that contains
+ * Returns: a newly-allocated #GHashTable that contains
  * passed key/value pairs and must be freed with
  * g_hash_table_unref().
  *
@@ -224,9 +224,9 @@ GHashTable *gcut_hash_table_string_string_new_va_list(const gchar *key,
 /**
  * gcut_take_new_hash_table_string_string:
  * @key: The first key string.
- * @...: A NULL-terminated list of rest arguments. The
+ * @...: A %NULL-terminated list of rest arguments. The
  *       string value of the first key, followed optionally
- *       by more key/value pairs. It must end with NULL.
+ *       by more key/value pairs. It must end with %NULL.
  *
  * Creates a hash table that has string key and string value
  * from passed key/value pairs. The created hash table is

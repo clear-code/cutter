@@ -432,7 +432,7 @@ G_BEGIN_DECLS
  *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
- * Passes if @error == NULL.
+ * Passes if @error == %NULL.
  *
  * Since: 1.0.3
  */
@@ -452,7 +452,7 @@ G_BEGIN_DECLS
  *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
- * Passes if @error == NULL.
+ * Passes if @error == %NULL.
  *
  * Since: 1.0
  *

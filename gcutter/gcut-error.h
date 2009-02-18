@@ -44,8 +44,8 @@ G_BEGIN_DECLS
  *
  * Compares two #GError, @error1 and @error2.
  *
- * Returns: TRUE if both of @error1 and @error2 have the same
- * domain, code and message, FALSE otherwise.
+ * Returns: %TRUE if both of @error1 and @error2 have the same
+ * domain, code and message, %FALSE otherwise.
  *
  * Since: 1.0.5
  */

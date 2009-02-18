@@ -918,7 +918,7 @@ const GError *
 cut_test_context_take_g_error (CutTestContext *context, GError *error)
 {
     return cut_test_context_take(context, error,
-                                 (CutDestroyFunction) g_error_free);
+                                 (CutDestroyFunction)g_error_free);
 }
 
 const GList *
