@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.0.6\n"
-"POT-Creation-Date: 2009-02-18 15:26+0900\n"
-"PO-Revision-Date: 2009-02-18 15:40+0900\n"
+"POT-Creation-Date: 2009-02-18 16:40+0900\n"
+"PO-Revision-Date: 2009-02-18 16:35+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -39,71 +39,71 @@ msgstr "リファレンス"
 msgid "Writing test"
 msgstr "テスト作成"
 
-#: cutter-docs.sgml:37(title)
+#: cutter-docs.sgml:38(title)
 msgid "Writing assertion"
 msgstr "検証作成"
 
-#: cutter-docs.sgml:77(title)
+#: cutter-docs.sgml:78(title)
 msgid "Index of all symbols"
 msgstr "すべてのシンボル一覧"
 
-#: cutter-docs.sgml:80(title)
+#: cutter-docs.sgml:81(title)
 msgid "Index of deprecated symbols"
 msgstr "非推奨のシンボル一覧"
 
-#: cutter-docs.sgml:83(title)
+#: cutter-docs.sgml:84(title)
 msgid "Index of new symbols in 1.0.6"
 msgstr "1.0.6での新しいシンボル一覧"
 
-#: cutter-docs.sgml:86(title)
+#: cutter-docs.sgml:87(title)
 msgid "Index of new symbols in 1.0.5"
 msgstr "1.0.5での新しいシンボル一覧"
 
-#: cutter-docs.sgml:89(title)
+#: cutter-docs.sgml:90(title)
 msgid "Index of new symbols in 1.0.4"
 msgstr "1.0.4での新しいシンボル一覧"
 
-#: cutter-docs.sgml:92(title)
+#: cutter-docs.sgml:93(title)
 msgid "Index of new symbols in 1.0.3"
 msgstr "1.0.3での新しいシンボル一覧"
 
-#: cutter-docs.sgml:95(title)
+#: cutter-docs.sgml:96(title)
 msgid "Index of new symbols in 1.0.2"
 msgstr "1.0.2での新しいシンボル一覧"
 
-#: cutter-docs.sgml:98(title)
+#: cutter-docs.sgml:99(title)
 msgid "Index of new symbols in 1.0.1"
 msgstr "1.0.1での新しいシンボル一覧"
 
-#: cutter-docs.sgml:101(title)
+#: cutter-docs.sgml:102(title)
 msgid "Index of new symbols in 1.0"
 msgstr "1.0での新しいシンボル一覧"
 
-#: cutter-docs.sgml:104(title)
+#: cutter-docs.sgml:105(title)
 msgid "Index of new symbols in 0.9"
 msgstr "0.9での新しいシンボル一覧"
 
-#: cutter-docs.sgml:107(title)
+#: cutter-docs.sgml:108(title)
 msgid "Index of new symbols in 0.8"
 msgstr "0.8での新しいシンボル一覧"
 
-#: cutter-docs.sgml:110(title)
+#: cutter-docs.sgml:111(title)
 msgid "Index of new symbols in 0.7"
 msgstr "0.7での新しいシンボル一覧"
 
-#: cutter-docs.sgml:113(title)
+#: cutter-docs.sgml:114(title)
 msgid "Index of new symbols in 0.6"
 msgstr "0.6での新しいシンボル一覧"
 
-#: cutter-docs.sgml:116(title)
+#: cutter-docs.sgml:117(title)
 msgid "Index of new symbols in 0.5"
 msgstr "0.5での新しいシンボル一覧"
 
-#: cutter-docs.sgml:119(title)
+#: cutter-docs.sgml:120(title)
 msgid "Index of new symbols in 0.4"
 msgstr "0.4での新しいシンボル一覧"
 
-#: cutter-docs.sgml:122(title)
+#: cutter-docs.sgml:123(title)
 msgid "Index of new symbols in 0.3"
 msgstr "0.3での新しいシンボル一覧"
 
@@ -547,7 +547,7 @@ msgstr ""
 #: xml/gcut-list.xml:64(title) xml/gcut-main.xml:38(title)
 #: xml/gcut-object.xml:42(title) xml/gcut-public.xml:43(title)
 #: xml/gcut-spawn.xml:34(title) xml/gcut-string-io-channel.xml:55(title)
-#: xml/gcut-test-utils.xml:63(title) xml/gcut-types.xml:38(title)
+#: xml/gcut-test-utils.xml:63(title) xml/gcut-types.xml:37(title)
 #: xml/gcut-value-equal.xml:40(title) xml/gcutter.xml:35(title)
 #: xml/gdkcut-pixbuf-assertions-helper.xml:40(title)
 #: xml/gdkcut-pixbuf-assertions.xml:36(title) xml/gdkcut-pixbuf.xml:47(title)
@@ -591,7 +591,7 @@ msgstr "説明"
 #: xml/gcut-list.xml:78(title) xml/gcut-main.xml:45(title)
 #: xml/gcut-object.xml:56(title) xml/gcut-public.xml:50(title)
 #: xml/gcut-spawn.xml:41(title) xml/gcut-string-io-channel.xml:62(title)
-#: xml/gcut-test-utils.xml:78(title) xml/gcut-types.xml:47(title)
+#: xml/gcut-test-utils.xml:78(title) xml/gcut-types.xml:46(title)
 #: xml/gcut-value-equal.xml:54(title) xml/gcutter.xml:42(title)
 #: xml/gdkcut-pixbuf-assertions-helper.xml:47(title)
 #: xml/gdkcut-pixbuf-assertions.xml:45(title) xml/gdkcut-pixbuf.xml:54(title)
@@ -1538,7 +1538,7 @@ msgstr "実際のsize_tの値。"
 #: xml/gcut-list.xml:258(para) xml/gcut-list.xml:275(para)
 #: xml/gcut-list.xml:297(para) xml/gcut-list.xml:319(para)
 #: xml/gcut-test-utils.xml:178(para) xml/gcut-test-utils.xml:234(para)
-#: xml/gcut-types.xml:70(para) xml/gcutter.xml:107(para)
+#: xml/gcut-types.xml:69(para) xml/gcutter.xml:107(para)
 msgid "Since 1.0.6"
 msgstr "1.0.6から"
 
@@ -2718,7 +2718,7 @@ msgstr ""
 #: xml/gcut-inspect.xml:119(term) xml/gcut-inspect.xml:139(term)
 #: xml/gcut-inspect.xml:159(term) xml/gcut-inspect.xml:179(term)
 #: xml/gcut-inspect.xml:199(term) xml/gcut-inspect.xml:219(term)
-#: xml/gcut-types.xml:61(term)
+#: xml/gcut-types.xml:60(term)
 msgid "<parameter>string</parameter>&nbsp;:"
 msgstr ""
 
@@ -2839,7 +2839,7 @@ msgstr ""
 #: xml/gcut-test-utils.xml:334(term) xml/gcut-test-utils.xml:349(term)
 #: xml/gcut-test-utils.xml:364(term) xml/gcut-test-utils.xml:379(term)
 #: xml/gcut-test-utils.xml:394(term) xml/gcut-test-utils.xml:409(term)
-#: xml/gcut-test-utils.xml:424(term) xml/gcut-types.xml:64(term)
+#: xml/gcut-test-utils.xml:424(term) xml/gcut-types.xml:63(term)
 msgid "<parameter>data</parameter>&nbsp;:"
 msgstr ""
 
@@ -3904,10 +3904,10 @@ msgid ""
 "                                   # expected, # actual),        \\\n"
 "        my_assert_equal_int(expected, actual, __VA_ARGS__))\n"
 "\n"
-"void my_assert_equal_int (long expected,\n"
-"                          long actual,\n"
-"                          const char *expression_expected,\n"
-"                          const char *expression_actual);\n"
+"void my_assert_equal_int_help (long expected,\n"
+"                               long actual,\n"
+"                               const char *expression_expected,\n"
+"                               const char *expression_actual);\n"
 "\n"
 "#ifdef __cplusplus\n"
 "}\n"
@@ -3927,10 +3927,10 @@ msgid ""
 "#include \"my-assertions.h\"\n"
 "\n"
 "void\n"
-"my_assert_equal_int(glong expected,\n"
-"                    glong actual,\n"
-"                    const gchar *expression_expected,\n"
-"                    const gchar *expression_actual)\n"
+"my_assert_equal_int_helper (long expected,\n"
+"                            long actual,\n"
+"                            const char *expression_expected,\n"
+"                            const char *expression_actual)\n"
 "{\n"
 "    if (expected == actual) {\n"
 "        cut_test_pass();\n"
@@ -8216,7 +8216,7 @@ msgstr ""
 #: xml/gcut-inspect.xml:145(term) xml/gcut-inspect.xml:165(term)
 #: xml/gcut-inspect.xml:185(term) xml/gcut-inspect.xml:205(term)
 #: xml/gcut-inspect.xml:225(term) xml/gcut-list.xml:135(term)
-#: xml/gcut-object.xml:119(term) xml/gcut-types.xml:67(term)
+#: xml/gcut-object.xml:119(term) xml/gcut-types.xml:66(term)
 msgid "<parameter>user_data</parameter>&nbsp;:"
 msgstr ""
 
@@ -10822,6 +10822,8 @@ msgid ""
 "<literal>cut_add_data_backward_compatibility</literal> is deprecated and "
 "should not be used in newly-written code."
 msgstr ""
+"<literal>cut_add_data_backward_compatibility</literal>は非推奨です。新しい"
+"コードでは使わないでください。"
 
 #: xml/cutter.xml:349(title)
 msgid "cut_set_attributes()"
@@ -11682,7 +11684,7 @@ msgstr ""
 #: xml/gcut-assertions.xml:51(link) xml/gcut-assertions.xml:52(link)
 #: xml/gcut-hash-table.xml:27(link) xml/gcut-hash-table.xml:28(link)
 #: xml/gcut-list.xml:27(link) xml/gcut-object.xml:28(link)
-#: xml/gcut-types.xml:50(primary)
+#: xml/gcut-types.xml:49(primary)
 msgid "GCutInspectFunction"
 msgstr ""
 
@@ -14775,7 +14777,7 @@ msgid "a function that inspects each value."
 msgstr "各値の詳細を示す関数。"
 
 #: xml/gcut-hash-table.xml:125(simpara) xml/gcut-list.xml:136(simpara)
-#: xml/gcut-object.xml:120(simpara) xml/gcut-types.xml:68(simpara)
+#: xml/gcut-object.xml:120(simpara) xml/gcut-types.xml:67(simpara)
 msgid "user data to pass to the function."
 msgstr "関数に渡すユーザ用データ。"
 
@@ -16672,14 +16674,19 @@ msgstr "最初の文字列。"
 msgid ""
 "remaining strings in list. <link linkend=\"NULL:CAPS\"><literal>NULL</"
 "literal></link>-terminate."
-msgstr "リストの残りの文字列。<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>終端。"
+msgstr ""
+"リストの残りの文字列。<link linkend=\"NULL:CAPS\"><literal>NULL</literal></"
+"link>終端。"
 
 #: xml/gcut-test-utils.xml:157(simpara)
 msgid ""
 "a newly-allocated <link linkend=\"GList\"><type>GList</type></link> that "
 "contains passed strings and must be freed with <link linkend=\"gcut-list-"
 "string-free\"><function>gcut_list_string_free()</function></link>."
-msgstr "渡された文字列を含む<link linkend=\"GList\"><type>GList</type></link>。<link linkend=\"gcut-list-string-free\"><function>gcut_list_string_free()</function></link>で開放すること。"
+msgstr ""
+"渡された文字列を含む<link linkend=\"GList\"><type>GList</type></link>。<link "
+"linkend=\"gcut-list-string-free\"><function>gcut_list_string_free()</"
+"function></link>で開放すること。"
 
 #: xml/gcut-test-utils.xml:164(title)
 msgid "gcut_list_string_new_array ()"
@@ -16698,14 +16705,19 @@ msgstr "渡された文字列配列からリストを作ります。"
 msgid ""
 "the string array. <link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>-"
 "terminate."
-msgstr "文字列の配列。<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>終端。"
+msgstr ""
+"文字列の配列。<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>終"
+"端。"
 
 #: xml/gcut-test-utils.xml:174(simpara)
 msgid ""
 "a newly-allocated <link linkend=\"GList\"><type>GList</type></link> that "
 "contains passed string array and must be freed with <link linkend=\"gcut-"
 "list-string-free\"><function>gcut_list_string_free()</function></link>."
-msgstr "渡された文字列配列と同じ内容の<link linkend=\"GList\"><type>GList</type></link>。<link linkend=\"gcut-list-string-free\"><function>gcut_list_string_free()</function></link>で開放すること。"
+msgstr ""
+"渡された文字列配列と同じ内容の<link linkend=\"GList\"><type>GList</type></"
+"link>。<link linkend=\"gcut-list-string-free"
+"\"><function>gcut_list_string_free()</function></link>で開放すること。"
 
 #: xml/gcut-test-utils.xml:181(title)
 msgid "gcut_take_new_list_string ()"
@@ -16728,7 +16740,9 @@ msgstr ""
 msgid ""
 "a newly-allocated <link linkend=\"GList\"><type>GList</type></link> that "
 "contains passed strings and is owned by Cutter."
-msgstr "渡された文字列と同じ内容の<link linkend=\"GList\"><type>GList</type></link>。Cutterが所有権を持ちます。"
+msgstr ""
+"渡された文字列と同じ内容の<link linkend=\"GList\"><type>GList</type></link>。"
+"Cutterが所有権を持ちます。"
 
 #: xml/gcut-test-utils.xml:203(title)
 msgid "gcut_take_new_list_string_backward_compatibility()"
@@ -16762,7 +16776,9 @@ msgstr "渡された文字列の配列からリストを作ります。Cutterが
 msgid ""
 "a newly-allocated <link linkend=\"GList\"><type>GList</type></link> that "
 "contains passed string array and is owned by Cutter."
-msgstr "渡された文字列の配列と同じ内容の<link linkend=\"GList\"><type>GList</type></link>。Cutterが所有。"
+msgstr ""
+"渡された文字列の配列と同じ内容の<link linkend=\"GList\"><type>GList</type></"
+"link>。Cutterが所有。"
 
 #: xml/gcut-test-utils.xml:237(title)
 msgid "gcut_list_string_free ()"
@@ -16813,7 +16829,11 @@ msgid ""
 "of rest arguments. The first item is the string value of the first key, "
 "followed optionally by more key/value pairs. It must end with <link linkend="
 "\"NULL:CAPS\"><literal>NULL</literal></link>."
-msgstr "残りの引数の<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>終端のリスト。まず、最初のキーの文字列値を指定します。続いて、任意の数だけキー・値のペアを指定します。最後に<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>を指定しなければいけません。"
+msgstr ""
+"残りの引数の<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>終端の"
+"リスト。まず、最初のキーの文字列値を指定します。続いて、任意の数だけキー・値"
+"のペアを指定します。最後に<link linkend=\"NULL:CAPS\"><literal>NULL</"
+"literal></link>を指定しなければいけません。"
 
 #: xml/gcut-test-utils.xml:268(simpara) xml/gcut-test-utils.xml:295(simpara)
 msgid ""
@@ -16821,7 +16841,10 @@ msgid ""
 "link> that contains passed key/value pairs and must be freed with <link "
 "linkend=\"g-hash-table-unref\"><function>g_hash_table_unref()</function></"
 "link>."
-msgstr "渡されたキー・値を持つ<link linkend=\"GHashTable\"><type>GHashTable</type></link>。<link linkend=\"g-hash-table-unref\"><function>g_hash_table_unref()</function></link>で開放してください。"
+msgstr ""
+"渡されたキー・値を持つ<link linkend=\"GHashTable\"><type>GHashTable</type></"
+"link>。<link linkend=\"g-hash-table-unref\"><function>g_hash_table_unref()</"
+"function></link>で開放してください。"
 
 #: xml/gcut-test-utils.xml:276(title)
 msgid "gcut_hash_table_string_string_new_va_list ()"
@@ -16865,13 +16888,19 @@ msgid ""
 "of rest arguments. The string value of the first key, followed optionally by "
 "more key/value pairs. It must end with <link linkend=\"NULL:CAPS"
 "\"><literal>NULL</literal></link>."
-msgstr "残りの引数の<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>終端のリスト。まず、最初のキーの文字列値を指定します。続いて、任意の数だけキー・値のペアを指定します。最後に<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>を指定しなければいけません。"
+msgstr ""
+"残りの引数の<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>終端の"
+"リスト。まず、最初のキーの文字列値を指定します。続いて、任意の数だけキー・値"
+"のペアを指定します。最後に<link linkend=\"NULL:CAPS\"><literal>NULL</"
+"literal></link>を指定しなければいけません。"
 
 #: xml/gcut-test-utils.xml:322(simpara)
 msgid ""
 "a newly-allocated <link linkend=\"GHashTable\"><type>GHashTable</type></"
 "link> that contains passed key/value pairs."
-msgstr "渡されたキー・値を持つ<link linkend=\"GHashTable\"><type>GHashTable</type></link>。"
+msgstr ""
+"渡されたキー・値を持つ<link linkend=\"GHashTable\"><type>GHashTable</type></"
+"link>。"
 
 #: xml/gcut-test-utils.xml:329(title)
 msgid "gcut_data_get_string()"
@@ -16948,11 +16977,6 @@ msgstr "GLibサポート付きテストで使う型です。"
 msgid "*GCutInspectFunction"
 msgstr ""
 
-#: xml/gcut-types.xml:25(link) xml/gcut-types.xml:73(title)
-#: xml/gcut-types.xml:74(primary)
-msgid "GCutInspectFunc"
-msgstr ""
-
 #: xml/gcut-types.xml:21(synopsis)
 #, no-wrap
 msgid ""
@@ -16960,18 +16984,17 @@ msgid ""
 "<placeholder-1/>                (<placeholder-2/>)              (<placeholder-3/> *string,\n"
 "                                                         <placeholder-4/> data,\n"
 "                                                         <placeholder-5/> user_data);\n"
-"#define             <placeholder-6/>\n"
 msgstr ""
 
-#: xml/gcut-types.xml:39(para)
+#: xml/gcut-types.xml:38(para)
 msgid "There are some types to be used in test with GLib support."
 msgstr "GLibサポート付きテストで使う型がいくつかあります。"
 
-#: xml/gcut-types.xml:49(title)
+#: xml/gcut-types.xml:48(title)
 msgid "GCutInspectFunction ()"
 msgstr ""
 
-#: xml/gcut-types.xml:50(programlisting)
+#: xml/gcut-types.xml:49(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"void\">void</link>                (*GCutInspectFunction)              (<link linkend=\"GString\">GString</link> *string,\n"
@@ -16979,34 +17002,27 @@ msgid ""
 "                                                         <link linkend=\"gpointer\">gpointer</link> user_data);"
 msgstr ""
 
-#: xml/gcut-types.xml:53(para)
+#: xml/gcut-types.xml:52(para)
 msgid ""
 "Specifies the type of function which is called when the <parameter>data</"
 "parameter> element is inspected. It is passed the pointer to the data "
 "element, should inspect <parameter>data</parameter> and append inspected "
 "string to <parameter>string</parameter>."
-msgstr "<parameter>data</parameter>要素の詳細を示すときに呼ばれる関数の型です。データ要素のポインタを渡されるので、<parameter>data</parameter>の詳細を<parameter>string</parameter>に追加してください。"
+msgstr ""
+"<parameter>data</parameter>要素の詳細を示すときに呼ばれる関数の型です。データ"
+"要素のポインタを渡されるので、<parameter>data</parameter>の詳細を"
+"<parameter>string</parameter>に追加してください。"
 
-#: xml/gcut-types.xml:62(simpara)
+#: xml/gcut-types.xml:61(simpara)
 msgid ""
 "the <link linkend=\"GString\"><type>GString</type></link> to be stored "
 "inspected result."
-msgstr "詳細情報を保存する<link linkend=\"GString\"><type>GString</type></link>。"
+msgstr ""
+"詳細情報を保存する<link linkend=\"GString\"><type>GString</type></link>。"
 
-#: xml/gcut-types.xml:65(simpara)
+#: xml/gcut-types.xml:64(simpara)
 msgid "the data element to be inspected."
 msgstr "詳細化されるデータ。"
-
-#: xml/gcut-types.xml:74(programlisting)
-#, no-wrap
-msgid "#  define GCutInspectFunc GCutInspectFunction\n"
-msgstr ""
-
-#: xml/gcut-types.xml:76(para)
-msgid ""
-"<literal>GCutInspectFunc</literal> is deprecated and should not be used in "
-"newly-written code."
-msgstr ""
 
 #: xml/gcut-value-equal.xml:7(refentrytitle)
 #: xml/gcut-value-equal.xml:13(refname)

@@ -49,10 +49,6 @@ typedef void    (*GCutInspectFunction) (GString *string,
                                         gconstpointer data,
                                         gpointer user_data);
 
-#ifndef CUTTER_DISABLE_DEPRECATED
-#  define GCutInspectFunc GCutInspectFunction
-#endif
-
 G_END_DECLS
 
 #endif /* __GCUT_TYPES_H__ */

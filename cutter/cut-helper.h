@@ -55,10 +55,10 @@ extern "C" {
  *                                    # expected, # actual),        \
  *         my_assert_equal_int(expected, actual, __VA_ARGS__))
  *
- * void my_assert_equal_int (long expected,
- *                           long actual,
- *                           const char *expression_expected,
- *                           const char *expression_actual);
+ * void my_assert_equal_int_help (long expected,
+ *                                long actual,
+ *                                const char *expression_expected,
+ *                                const char *expression_actual);
  *
  * #ifdef __cplusplus
  * }
@@ -72,10 +72,10 @@ extern "C" {
  * #include "my-assertions.h"
  *
  * void
- * my_assert_equal_int(glong expected,
- *                     glong actual,
- *                     const gchar *expression_expected,
- *                     const gchar *expression_actual)
+ * my_assert_equal_int_helper (long expected,
+ *                             long actual,
+ *                             const char *expression_expected,
+ *                             const char *expression_actual)
  * {
  *     if (expected == actual) {
  *         cut_test_pass();
@@ -92,8 +92,8 @@ extern "C" {
  *
  * Makefile.am:
  * |[
- * AM_CFLAGS = $(GCUTTER_CFLAGS)
- * LIBS = $(GCUTTER_LIBS)
+ * AM_CFLAGS = $(CUTTER_CFLAGS)
+ * LIBS = $(CUTTER_LIBS)
  * noinst_LTLIBRARIES = libmy-assertions.la
  * libmy_assertions_la_SOURCES = my-assertions.c my-assertions.h
  * AM_LDFLAGS = -module -rpath $(libdir) -avoid-version -no-undefined
@@ -220,7 +220,7 @@ extern "C" {
  * Since: 1.0.6
  */
 #ifndef CUT_RELATIVE_PATH
-#define CUT_RELATIVE_PATH NULL
+#  define CUT_RELATIVE_PATH NULL
 #endif
 
 #define cut_push_backtrace(expression)                                  \
