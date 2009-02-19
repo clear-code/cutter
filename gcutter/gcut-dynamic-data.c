@@ -435,7 +435,9 @@ gcut_data_get_ ## type_name ## _helper (const GCutDynamicData *data,    \
 DEFINE_GETTER_HELPER(string, const gchar *)
 DEFINE_GETTER_HELPER(uint, guint)
 DEFINE_GETTER_HELPER(int, gint)
+#define gcut_data_get_data_type_helper gcut_data_get_type_helper
 DEFINE_GETTER_HELPER(data_type, GType)
+#undef gcut_data_get_data_type_helper
 DEFINE_GETTER_HELPER(flags, guint)
 DEFINE_GETTER_HELPER(enum, gint)
 DEFINE_GETTER_HELPER(pointer, gconstpointer)

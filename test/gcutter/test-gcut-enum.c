@@ -326,7 +326,7 @@ test_flags_get_all (gconstpointer _data)
     const GError *expected_error;
     guint actual_value;
 
-    flags_type = gcut_data_get_data_type(data, "type");
+    flags_type = gcut_data_get_type(data, "type");
     actual_value = gcut_flags_get_all(flags_type, &error);
     expected_error = gcut_data_get_pointer(data, "error");
     if (expected_error) {

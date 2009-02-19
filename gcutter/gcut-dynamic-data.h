@@ -121,7 +121,7 @@ gint             gcut_data_get_int_helper       (const GCutDynamicData *data,
 guint            gcut_data_get_uint_helper      (const GCutDynamicData *data,
                                                  const gchar   *field_name,
                                                  CutCallbackFunction callback);
-GType            gcut_data_get_data_type_helper (const GCutDynamicData *data,
+GType            gcut_data_get_type_helper      (const GCutDynamicData *data,
                                                  const gchar   *field_name,
                                                  CutCallbackFunction callback);
 guint            gcut_data_get_flags_helper     (const GCutDynamicData *data,

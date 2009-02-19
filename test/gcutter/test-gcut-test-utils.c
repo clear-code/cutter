@@ -109,7 +109,7 @@ test_data_get (void)
     cut_assert_equal_int(-29, gcut_data_get_int(data, "int"));
     cut_assert_equal_uint(29, gcut_data_get_uint(data, "uint"));
     gcut_assert_equal_type(GCUT_TYPE_DYNAMIC_DATA,
-                           gcut_data_get_data_type(data, "type"));
+                           gcut_data_get_type(data, "type"));
     gcut_assert_equal_flags(CUTTEST_TYPE_FLAGS,
                             CUTTEST_FLAG_FIRST | CUTTEST_FLAG_THIRD,
                             gcut_data_get_flags(data, "flags"));
