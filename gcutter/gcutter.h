@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2009  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -21,8 +21,44 @@
 #define __GCUTTER_H__
 
 #include <cutter.h>
-#include <gcutter/gcut-main.h>
 #include <gcutter/gcut-assertions.h>
+
+/**
+ * SECTION: gcutter
+ * @title: GCutter
+ * @short_description: A Unit Testing Framework for C with GLib support.
+ * @see_also: <link
+ *            linkend="cutter-gcut-assertions">Assertions
+ *            with GLib support</link>
+ *
+ * GCutter adds many useful features based on GLib to
+ * Cutter. If you want to write tests with more easily,
+ * it's good idea that you consider Cutter to be used too.
+ *
+ * It's easy to use GCutter. You just include &lt;gcutter.h&at;
+ * instead of &lt;cutter.h&gt; and use gcutter.pc instead of
+ * cutter.pc:
+ *
+ * test-xxx.c:
+ * |[
+ * -#include <cutter.h>
+ * +#include <gcutter.h>
+ * ]|
+ *
+ * configure.ac:
+ * |[
+ * -AC_CHECK_CUTTER
+ * +AC_CHECK_GCUTTER
+ * ]|
+ *
+ * Makefile.am:
+ * |[
+ * -XXX_CFLAGS = $(CUTTER_CFLAGS)
+ * -XXX_LIBS = $(CUTTER_LIBS)
+ * +XXX_CFLAGS = $(GCUTTER_CFLAGS)
+ * +XXX_LIBS = $(GCUTTER_LIBS)
+ * ]|
+ */
 
 /**
  * gcut_add_datum:

@@ -1,5 +1,7 @@
 2009-02-19  Kouhei Sutou  <kou@clear-code.com>
 
+	* gcutter/gcutter.h: add document.
+
 	* gcutter/, test/gcutter/: gcut_data_get_data_type -> gcut_data_get_type.
 
 	* gcutter/, test/gcutter/: GCutData -> GCutDynamicData.
