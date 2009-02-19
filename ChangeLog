@@ -1,3 +1,7 @@
+2009-02-19  Kouhei Sutou  <kou@clear-code.com>
+
+	* gcutter/gcut-list.c (gcut_list_inspect): use GCutInspectFunction.
+
 2009-02-18  Kouhei Sutou  <kou@clear-code.com>
 
 	* cutter/, gcutter/, doc/reference/: improve document.

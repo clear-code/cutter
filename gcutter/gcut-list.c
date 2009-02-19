@@ -45,7 +45,7 @@ gcut_list_equal (const GList *list1, const GList *list2, GEqualFunc equal_func)
 }
 
 gchar *
-gcut_list_inspect (const GList *list, GCutInspectFunc inspect_func,
+gcut_list_inspect (const GList *list, GCutInspectFunction inspect_func,
                    gpointer user_data)
 {
     const GList *node;
