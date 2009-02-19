@@ -242,6 +242,17 @@ GHashTable *gcut_hash_table_string_string_new_va_list(const gchar *key,
 
 
 
+/**
+ * gcut_data_get_string:
+ * @data: the %GCutData.
+ * @field_name: the field name.
+ *
+ * Returns a field value identified by @field_name as string.
+ *
+ * Returns: a field value corresponded to @field_name.
+ *
+ * Since: 1.0.6
+ */
 #define gcut_data_get_string(data, field_name)                          \
     gcut_data_get_string_helper(                                        \
         data, field_name,                                               \
@@ -260,10 +271,10 @@ GHashTable *gcut_hash_table_string_string_new_va_list(const gchar *key,
         (cut_push_backtrace(gcut_data_get_uint(data, field_name)),      \
          cut_pop_backtrace))
 
-#define gcut_data_get_type(data, field_name)                            \
-    gcut_data_get_type_helper(                                          \
+#define gcut_data_get_data_type(data, field_name)                       \
+    gcut_data_get_data_type_helper(                                     \
         data, field_name,                                               \
-        (cut_push_backtrace(gcut_data_get_type(data, field_name)),      \
+        (cut_push_backtrace(gcut_data_get_data_type(data, field_name)), \
          cut_pop_backtrace))
 
 #define gcut_data_get_flags(data, field_name)                           \

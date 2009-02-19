@@ -35,7 +35,7 @@
 #include <gcutter/gcut-io.h>
 #include <gcutter/gcut-key-file.h>
 #include <gcutter/gcut-inspect.h>
-#include <gcutter/gcut-data.h>
+#include <gcutter/gcut-dynamic-data.h>
 
 G_BEGIN_DECLS
 

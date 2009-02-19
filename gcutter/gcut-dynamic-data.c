@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2009  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,8 +24,10 @@
 
 #include "gcut-assertions.h"
 
-#define GCUT_DATA_GET_PRIVATE(obj)                                     \
-    (G_TYPE_INSTANCE_GET_PRIVATE((obj), GCUT_TYPE_DATA, GCutDataPrivate))
+#define GCUT_DYNAMIC_DATA_GET_PRIVATE(obj)                              \
+    (G_TYPE_INSTANCE_GET_PRIVATE((obj),                                 \
+                                 GCUT_TYPE_DYNAMIC_DATA,                \
+                                 GCutDynamicDataPrivate))
 
 typedef struct _FieldValue
 {
@@ -39,8 +41,8 @@ typedef struct _FieldValue
     GDestroyNotify free_function;
 } FieldValue;
 
-typedef struct _GCutDataPrivate	GCutDataPrivate;
-struct _GCutDataPrivate
+typedef struct _GCutDynamicDataPrivate	GCutDynamicDataPrivate;
+struct _GCutDynamicDataPrivate
 {
     GHashTable *fields;
 };
@@ -71,20 +73,20 @@ field_value_inspect (GString *string, gconstpointer data, gpointer user_data)
     const FieldValue *field_value = data;
 
     switch (field_value->type) {
-      case G_TYPE_STRING:
+    case G_TYPE_STRING:
         gcut_inspect_string(string, field_value->value.pointer, user_data);
         break;
-      case G_TYPE_INT:
+    case G_TYPE_INT:
         gcut_inspect_int(string, &(field_value->value.integer), user_data);
         break;
-      case G_TYPE_UINT:
+    case G_TYPE_UINT:
         gcut_inspect_uint(string, &(field_value->value.unsigned_integer),
                           user_data);
         break;
-      case G_TYPE_POINTER:
+    case G_TYPE_POINTER:
         gcut_inspect_pointer(string, field_value->value.pointer, user_data);
         break;
-      default:
+    default:
         if (field_value->type == G_TYPE_GTYPE) {
             gcut_inspect_type(string, &(field_value->value.type), user_data);
         } else if (G_TYPE_IS_FLAGS(field_value->type)) {
@@ -123,22 +125,22 @@ field_value_equal (gconstpointer data1, gconstpointer data2)
         return FALSE;
 
     switch (field_value1->type) {
-      case G_TYPE_STRING:
+    case G_TYPE_STRING:
         result = g_str_equal(field_value1->value.pointer,
                              field_value2->value.pointer);
         break;
-      case G_TYPE_INT:
+    case G_TYPE_INT:
         result = (field_value1->value.integer ==
                   field_value2->value.integer);
         break;
-      case G_TYPE_UINT:
+    case G_TYPE_UINT:
         result = (field_value1->value.unsigned_integer ==
                   field_value2->value.unsigned_integer);
         break;
-      case G_TYPE_POINTER:
+    case G_TYPE_POINTER:
         result = (field_value1->value.pointer == field_value2->value.pointer);
         break;
-      default:
+    default:
         if (field_value1->type == G_TYPE_GTYPE) {
             result = (field_value1->value.type ==
                       field_value2->value.type);
@@ -159,15 +161,12 @@ field_value_equal (gconstpointer data1, gconstpointer data2)
     return result;
 }
 
-#undef gcut_data_get_type
-#define gcut_data_get_type gcut_data__get_type
-G_DEFINE_TYPE(GCutData, gcut_data, G_TYPE_OBJECT)
-#undef gcut_data_get_type
+G_DEFINE_TYPE(GCutDynamicData, gcut_dynamic_data, G_TYPE_OBJECT)
 
 static void dispose        (GObject         *object);
 
 static void
-gcut_data_class_init (GCutDataClass *klass)
+gcut_dynamic_data_class_init (GCutDynamicDataClass *klass)
 {
     GObjectClass *gobject_class;
 
@@ -175,13 +174,13 @@ gcut_data_class_init (GCutDataClass *klass)
 
     gobject_class->dispose      = dispose;
 
-    g_type_class_add_private(gobject_class, sizeof(GCutDataPrivate));
+    g_type_class_add_private(gobject_class, sizeof(GCutDynamicDataPrivate));
 }
 
 static void
-gcut_data_init (GCutData *data)
+gcut_dynamic_data_init (GCutDynamicData *data)
 {
-    GCutDataPrivate *priv = GCUT_DATA_GET_PRIVATE(data);
+    GCutDynamicDataPrivate *priv = GCUT_DYNAMIC_DATA_GET_PRIVATE(data);
 
     priv->fields = g_hash_table_new_full(g_str_hash, g_str_equal,
                                          g_free,
@@ -191,66 +190,66 @@ gcut_data_init (GCutData *data)
 static void
 dispose (GObject *object)
 {
-    GCutDataPrivate *priv;
+    GCutDynamicDataPrivate *priv;
 
-    priv = GCUT_DATA_GET_PRIVATE(object);
+    priv = GCUT_DYNAMIC_DATA_GET_PRIVATE(object);
     if (priv->fields) {
         g_hash_table_unref(priv->fields);
         priv->fields = NULL;
     }
 
-    G_OBJECT_CLASS(gcut_data_parent_class)->dispose(object);
+    G_OBJECT_CLASS(gcut_dynamic_data_parent_class)->dispose(object);
 }
 
 GQuark
-gcut_data_error_quark (void)
+gcut_dynamic_data_error_quark (void)
 {
-    return g_quark_from_static_string("gcut-data-error-quark");
+    return g_quark_from_static_string("gcut-dynamic-data-error-quark");
 }
 
-GCutData *
-gcut_data_new (const gchar *first_field_name, ...)
+GCutDynamicData *
+gcut_dynamic_data_new (const gchar *first_field_name, ...)
 {
-    GCutData *data;
+    GCutDynamicData *data;
     va_list args;
 
     va_start(args, first_field_name);
-    data = gcut_data_new_va_list(first_field_name, args);
+    data = gcut_dynamic_data_new_va_list(first_field_name, args);
     va_end(args);
 
     return data;
 }
 
-GCutData *
-gcut_data_new_va_list (const gchar *first_field_name, va_list args)
+GCutDynamicData *
+gcut_dynamic_data_new_va_list (const gchar *first_field_name, va_list args)
 {
-    GCutDataPrivate *priv;
-    GCutData *data;
+    GCutDynamicDataPrivate *priv;
+    GCutDynamicData *data;
     const gchar *name;
 
-    data = g_object_new(GCUT_TYPE_DATA, NULL);
-    priv = GCUT_DATA_GET_PRIVATE(data);
+    data = g_object_new(GCUT_TYPE_DYNAMIC_DATA, NULL);
+    priv = GCUT_DYNAMIC_DATA_GET_PRIVATE(data);
     name = first_field_name;
     while (name) {
         FieldValue *field_value;
 
         field_value = field_value_new(va_arg(args, GType));
         switch (field_value->type) {
-          case G_TYPE_STRING:
+        case G_TYPE_STRING:
             field_value->value.pointer = g_strdup(va_arg(args, const gchar *));
             field_value->free_function = g_free;
             break;
-          case G_TYPE_INT:
+        case G_TYPE_INT:
             field_value->value.integer = va_arg(args, gint);
             break;
-          case G_TYPE_UINT:
+        case G_TYPE_UINT:
             field_value->value.unsigned_integer = va_arg(args, guint);
             break;
-          case G_TYPE_POINTER:
+        case G_TYPE_POINTER:
             field_value->value.pointer = va_arg(args, gpointer);
             field_value->free_function = va_arg(args, GDestroyNotify);
             break;
-          default:
+        default:
             if (field_value->type == G_TYPE_GTYPE) {
                 field_value->value.type = va_arg(args, GType);
             } else if (G_TYPE_IS_FLAGS(field_value->type)) {
@@ -277,15 +276,15 @@ gcut_data_new_va_list (const gchar *first_field_name, va_list args)
 }
 
 gchar *
-gcut_data_inspect (GCutData *data)
+gcut_dynamic_data_inspect (GCutDynamicData *data)
 {
-    GCutDataPrivate *priv;
+    GCutDynamicDataPrivate *priv;
     GString *string;
     gchar *inspected_fields;
 
-    priv = GCUT_DATA_GET_PRIVATE(data);
+    priv = GCUT_DYNAMIC_DATA_GET_PRIVATE(data);
     string = g_string_new(NULL);
-    g_string_append_printf(string, "#<GCutData:0x%p ", data);
+    g_string_append_printf(string, "#<GCutDynamicData:0x%p ", data);
     inspected_fields = gcut_hash_table_inspect(priv->fields,
                                                gcut_inspect_string,
                                                field_value_inspect,
@@ -298,10 +297,10 @@ gcut_data_inspect (GCutData *data)
 }
 
 gboolean
-gcut_data_equal (GCutData *data1, GCutData *data2)
+gcut_dynamic_data_equal (GCutDynamicData *data1, GCutDynamicData *data2)
 {
-    GCutDataPrivate *priv1;
-    GCutDataPrivate *priv2;
+    GCutDynamicDataPrivate *priv1;
+    GCutDynamicDataPrivate *priv2;
 
     if (data1 == data2)
         return TRUE;
@@ -309,25 +308,25 @@ gcut_data_equal (GCutData *data1, GCutData *data2)
     if (data1 == NULL || data2 == NULL)
         return FALSE;
 
-    priv1 = GCUT_DATA_GET_PRIVATE(data1);
-    priv2 = GCUT_DATA_GET_PRIVATE(data2);
+    priv1 = GCUT_DYNAMIC_DATA_GET_PRIVATE(data1);
+    priv2 = GCUT_DYNAMIC_DATA_GET_PRIVATE(data2);
     return gcut_hash_table_equal(priv1->fields,
                                  priv2->fields,
                                  field_value_equal);
 }
 
 static FieldValue *
-lookup (GCutData *data, const gchar *field_name, GError **error)
+lookup (GCutDynamicData *data, const gchar *field_name, GError **error)
 {
-    GCutDataPrivate *priv;
+    GCutDynamicDataPrivate *priv;
     FieldValue *field_value;
 
-    priv = GCUT_DATA_GET_PRIVATE(data);
+    priv = GCUT_DYNAMIC_DATA_GET_PRIVATE(data);
     field_value = g_hash_table_lookup(priv->fields, field_name);
     if (!field_value) {
         g_set_error(error,
-                    GCUT_DATA_ERROR,
-                    GCUT_DATA_ERROR_NOT_EXIST,
+                    GCUT_DYNAMIC_DATA_ERROR,
+                    GCUT_DYNAMIC_DATA_ERROR_NOT_EXIST,
                     "requested field doesn't exist: <%s>", field_name);
         return NULL;
     }
@@ -336,8 +335,8 @@ lookup (GCutData *data, const gchar *field_name, GError **error)
 }
 
 const gchar *
-gcut_data_get_string_with_error (GCutData *data, const gchar *field_name,
-                                 GError **error)
+gcut_dynamic_data_get_string (GCutDynamicData *data, const gchar *field_name,
+                              GError **error)
 {
     FieldValue *field_value;
 
@@ -349,8 +348,8 @@ gcut_data_get_string_with_error (GCutData *data, const gchar *field_name,
 }
 
 GType
-gcut_data_get_type_with_error (GCutData *data, const gchar *field_name,
-                               GError **error)
+gcut_dynamic_data_get_data_type (GCutDynamicData *data, const gchar *field_name,
+                                 GError **error)
 {
     FieldValue *field_value;
 
@@ -362,8 +361,8 @@ gcut_data_get_type_with_error (GCutData *data, const gchar *field_name,
 }
 
 guint
-gcut_data_get_uint_with_error (GCutData *data, const gchar *field_name,
-                               GError **error)
+gcut_dynamic_data_get_uint (GCutDynamicData *data, const gchar *field_name,
+                            GError **error)
 {
     FieldValue *field_value;
 
@@ -375,15 +374,15 @@ gcut_data_get_uint_with_error (GCutData *data, const gchar *field_name,
 }
 
 guint
-gcut_data_get_flags_with_error (GCutData *data, const gchar *field_name,
-                                GError **error)
+gcut_dynamic_data_get_flags (GCutDynamicData *data, const gchar *field_name,
+                             GError **error)
 {
-    return gcut_data_get_uint_with_error(data, field_name, error);
+    return gcut_dynamic_data_get_uint(data, field_name, error);
 }
 
 gint
-gcut_data_get_int_with_error (GCutData *data, const gchar *field_name,
-                               GError **error)
+gcut_dynamic_data_get_int (GCutDynamicData *data, const gchar *field_name,
+                           GError **error)
 {
     FieldValue *field_value;
 
@@ -395,15 +394,15 @@ gcut_data_get_int_with_error (GCutData *data, const gchar *field_name,
 }
 
 gint
-gcut_data_get_enum_with_error (GCutData *data, const gchar *field_name,
-                               GError **error)
+gcut_dynamic_data_get_enum (GCutDynamicData *data, const gchar *field_name,
+                            GError **error)
 {
-    return gcut_data_get_int_with_error(data, field_name, error);
+    return gcut_dynamic_data_get_int(data, field_name, error);
 }
 
 gconstpointer
-gcut_data_get_pointer_with_error (GCutData *data, const gchar *field_name,
-                                  GError **error)
+gcut_dynamic_data_get_pointer (GCutDynamicData *data, const gchar *field_name,
+                               GError **error)
 {
     FieldValue *field_value;
 
@@ -417,16 +416,16 @@ gcut_data_get_pointer_with_error (GCutData *data, const gchar *field_name,
 
 #define DEFINE_GETTER_HELPER(type_name, type)                           \
 type                                                                    \
-gcut_data_get_ ## type_name ## _helper (const GCutData *data,           \
+gcut_data_get_ ## type_name ## _helper (const GCutDynamicData *data,    \
                                         const gchar *field_name,        \
                                         CutCallbackFunction callback)   \
 {                                                                       \
     GError *error = NULL;                                               \
     type value;                                                         \
                                                                         \
-    value = gcut_data_get_ ## type_name ## _with_error(GCUT_DATA(data), \
-                                                       field_name,      \
-                                                       &error);         \
+    value = gcut_dynamic_data_get_ ## type_name(GCUT_DYNAMIC_DATA(data), \
+                                                field_name,             \
+                                                &error);                \
     gcut_assert_error_helper(error, "error");                           \
     callback();                                                         \
                                                                         \
@@ -436,7 +435,7 @@ gcut_data_get_ ## type_name ## _helper (const GCutData *data,           \
 DEFINE_GETTER_HELPER(string, const gchar *)
 DEFINE_GETTER_HELPER(uint, guint)
 DEFINE_GETTER_HELPER(int, gint)
-DEFINE_GETTER_HELPER(type, GType)
+DEFINE_GETTER_HELPER(data_type, GType)
 DEFINE_GETTER_HELPER(flags, guint)
 DEFINE_GETTER_HELPER(enum, gint)
 DEFINE_GETTER_HELPER(pointer, gconstpointer)

@@ -154,3 +154,5 @@ GHashTable *expected, GHashTable *actual, GEqualFunc equal_function, GCutInspect
 <RETURNS>void</RETURNS>
 GHashTable *expected, GHashTable *actual, ...
 </FUNCTION>
+
+# gcut-test-utils.h

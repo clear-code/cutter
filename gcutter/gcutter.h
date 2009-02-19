@@ -80,12 +80,12 @@
  *
  * Since: 1.0.6
  */
-#define gcut_add_datum(label, first_field_name, ...)    \
-    cut_test_context_add_data(                          \
-        cut_get_current_test_context(),                 \
-        label,                                          \
-        gcut_data_new(first_field_name, __VA_ARGS__),   \
-        g_object_unref,                                 \
+#define gcut_add_datum(label, first_field_name, ...)            \
+    cut_test_context_add_data(                                  \
+        cut_get_current_test_context(),                         \
+        label,                                                  \
+        gcut_dynamic_data_new(first_field_name, __VA_ARGS__),   \
+        g_object_unref,                                         \
         NULL)
 
 #endif /* __GCUTTER_H__ */

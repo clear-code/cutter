@@ -66,9 +66,9 @@ test_type (void)
 {
     GType type;
 
-    type = GCUT_TYPE_DATA;
+    type = GCUT_TYPE_DYNAMIC_DATA;
     gcut_inspect_type(string, &type, NULL);
-    cut_assert_equal_string("<GCutData>", string->str);
+    cut_assert_equal_string("<GCutDynamicData>", string->str);
 }
 
 void
