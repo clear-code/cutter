@@ -26,7 +26,7 @@ G_BEGIN_DECLS
 
 /**
  * SECTION: gcut-data
- * @title: Convenience test data API.
+ * @title: Convenience test data API
  * @short_description: API to create test data without
  * structure definition.
  *
@@ -42,12 +42,12 @@ G_BEGIN_DECLS
  * gcut_add_datum:
  * @name: The name of the data.
  * @first_field_name: The first field name.
- * @...: FIXME: The type and value of the field. NULL
- *       terminated.
+ * @...: The type and value pair of the field and the next
+ * field name, type and value triples. %NULL-terminated.
  *
- * Adds a datum to use data driven test. FIXME: It's
- * convenient rather than cut_add_data() because you doesn't
- * need to define a new data structure for a test.
+ * Adds a datum to use data driven test. It's convenient
+ * rather than cut_add_data() because you doesn't need to
+ * define a new custom structure for a test.
  *
  * e.g.:
  * |[
@@ -92,10 +92,10 @@ G_BEGIN_DECLS
  *
  * Since: 1.0.6
  */
-#define gcut_add_datum(label, first_field_name, ...)            \
+#define gcut_add_datum(name, first_field_name, ...)             \
     cut_test_context_add_data(                                  \
         cut_get_current_test_context(),                         \
-        label,                                                  \
+        name,                                                   \
         gcut_dynamic_data_new(first_field_name, __VA_ARGS__),   \
         g_object_unref,                                         \
         NULL)
@@ -118,36 +118,106 @@ G_BEGIN_DECLS
         (cut_push_backtrace(gcut_data_get_string(data, field_name)),    \
          cut_pop_backtrace))
 
+/**
+ * gcut_data_get_int:
+ * @data: the data added by gcut_add_datum().
+ * @field_name: the field name.
+ *
+ * Returns a field value identified by @field_name as integer.
+ *
+ * Returns: a field value corresponded to @field_name.
+ *
+ * Since: 1.0.6
+ */
 #define gcut_data_get_int(data, field_name)                             \
     gcut_data_get_int_helper(                                           \
         data, field_name,                                               \
         (cut_push_backtrace(gcut_data_get_int(data, field_name)),       \
          cut_pop_backtrace))
 
+/**
+ * gcut_data_get_uint:
+ * @data: the data added by gcut_add_datum().
+ * @field_name: the field name.
+ *
+ * Returns a field value identified by @field_name as
+ * unsigned integer.
+ *
+ * Returns: a field value corresponded to @field_name.
+ *
+ * Since: 1.0.6
+ */
 #define gcut_data_get_uint(data, field_name)                            \
     gcut_data_get_uint_helper(                                          \
         data, field_name,                                               \
         (cut_push_backtrace(gcut_data_get_uint(data, field_name)),      \
          cut_pop_backtrace))
 
+/**
+ * gcut_data_get_type:
+ * @data: the data added by gcut_add_datum().
+ * @field_name: the field name.
+ *
+ * Returns a field value identified by @field_name as %GType.
+ *
+ * Returns: a field value corresponded to @field_name.
+ *
+ * Since: 1.0.6
+ */
 #define gcut_data_get_type(data, field_name)                            \
     gcut_data_get_type_helper(                                          \
         data, field_name,                                               \
         (cut_push_backtrace(gcut_data_get_type(data, field_name)),      \
          cut_pop_backtrace))
 
+/**
+ * gcut_data_get_flags:
+ * @data: the data added by gcut_add_datum().
+ * @field_name: the field name.
+ *
+ * Returns a field value identified by @field_name as
+ * unsigned integer of %GFlags.
+ *
+ * Returns: a field value corresponded to @field_name.
+ *
+ * Since: 1.0.6
+ */
 #define gcut_data_get_flags(data, field_name)                           \
     gcut_data_get_flags_helper(                                         \
         data, field_name,                                               \
         (cut_push_backtrace(gcut_data_get_flags(data, field_name)),     \
          cut_pop_backtrace))
 
+/**
+ * gcut_data_get_enum:
+ * @data: the data added by gcut_add_datum().
+ * @field_name: the field name.
+ *
+ * Returns a field value identified by @field_name as
+ * integer of %GEnum type.
+ *
+ * Returns: a field value corresponded to @field_name.
+ *
+ * Since: 1.0.6
+ */
 #define gcut_data_get_enum(data, field_name)                            \
     gcut_data_get_enum_helper(                                          \
         data, field_name,                                               \
         (cut_push_backtrace(gcut_data_get_enum(data, field_name)),      \
          cut_pop_backtrace))
 
+/**
+ * gcut_data_get_pointer:
+ * @data: the data added by gcut_add_datum().
+ * @field_name: the field name.
+ *
+ * Returns a field value identified by @field_name as
+ * pointer.
+ *
+ * Returns: a field value corresponded to @field_name.
+ *
+ * Since: 1.0.6
+ */
 #define gcut_data_get_pointer(data, field_name)                         \
     gcut_data_get_pointer_helper(                                       \
         data, field_name,                                               \

@@ -241,60 +241,6 @@ GHashTable *gcut_hash_table_string_string_new_va_list(const gchar *key,
     gcut_take_hash_table(gcut_hash_table_string_string_new(key, ## __VA_ARGS__))
 
 
-
-/**
- * gcut_data_get_string:
- * @data: the %GCutData.
- * @field_name: the field name.
- *
- * Returns a field value identified by @field_name as string.
- *
- * Returns: a field value corresponded to @field_name.
- *
- * Since: 1.0.6
- */
-#define gcut_data_get_string(data, field_name)                          \
-    gcut_data_get_string_helper(                                        \
-        data, field_name,                                               \
-        (cut_push_backtrace(gcut_data_get_string(data, field_name)),    \
-         cut_pop_backtrace))
-
-#define gcut_data_get_int(data, field_name)                             \
-    gcut_data_get_int_helper(                                           \
-        data, field_name,                                               \
-        (cut_push_backtrace(gcut_data_get_int(data, field_name)),       \
-         cut_pop_backtrace))
-
-#define gcut_data_get_uint(data, field_name)                            \
-    gcut_data_get_uint_helper(                                          \
-        data, field_name,                                               \
-        (cut_push_backtrace(gcut_data_get_uint(data, field_name)),      \
-         cut_pop_backtrace))
-
-#define gcut_data_get_type(data, field_name)                            \
-    gcut_data_get_type_helper(                                          \
-        data, field_name,                                               \
-        (cut_push_backtrace(gcut_data_get_type(data, field_name)),      \
-         cut_pop_backtrace))
-
-#define gcut_data_get_flags(data, field_name)                           \
-    gcut_data_get_flags_helper(                                         \
-        data, field_name,                                               \
-        (cut_push_backtrace(gcut_data_get_flags(data, field_name)),     \
-         cut_pop_backtrace))
-
-#define gcut_data_get_enum(data, field_name)                            \
-    gcut_data_get_enum_helper(                                          \
-        data, field_name,                                               \
-        (cut_push_backtrace(gcut_data_get_enum(data, field_name)),      \
-         cut_pop_backtrace))
-
-#define gcut_data_get_pointer(data, field_name)                         \
-    gcut_data_get_pointer_helper(                                       \
-        data, field_name,                                               \
-        (cut_push_backtrace(gcut_data_get_pointer(data, field_name)),   \
-         cut_pop_backtrace))
-
 G_END_DECLS
 
 #endif /* __GCUT_TEST_UTILS_H__ */

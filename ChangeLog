@@ -1,3 +1,8 @@
+2009-02-20  Kouhei Sutou  <kou@cozmixng.org>
+
+	* gcutter/gcut-data.h, gcutter/gcut-test-utils.h,
+	doc/reference/cutter-docs.sgml: add document for gcut_data_*.
+
 2009-02-20  Kouhei Sutou  <kou@clear-code.com>
 
 	* gcutter/gcut-data.h: update document.
