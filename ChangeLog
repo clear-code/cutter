@@ -1,5 +1,7 @@
 2009-02-20  Kouhei Sutou  <kou@clear-code.com>
 
+	* gcutter/gcut-data.h: update document.
+
 	* gcutter/gcutter.h,
 	gcutter/gcut-dynamic-data.[ch],
 	gcutter/gcut-assertions-helper.h: move data related codes to ...

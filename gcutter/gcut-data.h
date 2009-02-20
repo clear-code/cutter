@@ -26,16 +26,15 @@ G_BEGIN_DECLS
 
 /**
  * SECTION: gcut-data
- * @title: Test Utilities with GLib support
- * @short_description: Utilities to write tests more easily
- * with GLib support.
+ * @title: Convenience test data API.
+ * @short_description: API to create test data without
+ * structure definition.
  *
- * To write tests, you need to write codes that
- * set up/tear down test environment, prepare expected and
- * actual values and so on. Cutter provides test utilities
- * to you write your tests more easily.
- *
- * The utilities work with GLib.
+ * cut_add_data() requires custom structure data type for
+ * complex test data. But it's not easy to
+ * write. gcut_add_datum() provides test data API to use
+ * test data without custom structure data type. It uses
+ * %GType for providing dynamic complex data.
  */
 
 
