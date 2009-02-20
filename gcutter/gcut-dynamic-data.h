@@ -20,6 +20,7 @@
 #ifndef __GCUT_DYNAMIC_DATA_H__
 #define __GCUT_DYNAMIC_DATA_H__
 
+#include <cutter.h>
 #include <glib-object.h>
 
 G_BEGIN_DECLS
@@ -111,28 +112,6 @@ gint             gcut_dynamic_data_get_enum     (GCutDynamicData  *data,
 gconstpointer    gcut_dynamic_data_get_pointer  (GCutDynamicData  *data,
                                                  const gchar      *field_name,
                                                  GError          **error);
-
-const gchar     *gcut_data_get_string_helper    (const GCutDynamicData *data,
-                                                 const gchar   *field_name,
-                                                 CutCallbackFunction callback);
-gint             gcut_data_get_int_helper       (const GCutDynamicData *data,
-                                                 const gchar   *field_name,
-                                                 CutCallbackFunction callback);
-guint            gcut_data_get_uint_helper      (const GCutDynamicData *data,
-                                                 const gchar   *field_name,
-                                                 CutCallbackFunction callback);
-GType            gcut_data_get_type_helper      (const GCutDynamicData *data,
-                                                 const gchar   *field_name,
-                                                 CutCallbackFunction callback);
-guint            gcut_data_get_flags_helper     (const GCutDynamicData *data,
-                                                 const gchar   *field_name,
-                                                 CutCallbackFunction callback);
-gint             gcut_data_get_enum_helper      (const GCutDynamicData *data,
-                                                 const gchar   *field_name,
-                                                 CutCallbackFunction callback);
-gconstpointer    gcut_data_get_pointer_helper   (const GCutDynamicData *data,
-                                                 const gchar   *field_name,
-                                                 CutCallbackFunction callback);
 
 G_END_DECLS
 

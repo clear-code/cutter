@@ -38,6 +38,7 @@ gcutter_public_headers =		\
 	gcut-io.h			\
 	gcut-key-file.h			\
 	gcut-inspect.h			\
+	gcut-data.h			\
 	gcut-dynamic-data.h		\
 	gcut-main.h
 
@@ -67,6 +68,7 @@ libgcutter_la_SOURCES =			\
 	gcut-io.c			\
 	gcut-key-file.c			\
 	gcut-inspect.c			\
+	gcut-data.c			\
 	gcut-dynamic-data.c		\
 	gcut-main.c
 

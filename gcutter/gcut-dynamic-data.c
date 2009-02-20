@@ -413,35 +413,6 @@ gcut_dynamic_data_get_pointer (GCutDynamicData *data, const gchar *field_name,
     return field_value->value.pointer;
 }
 
-
-#define DEFINE_GETTER_HELPER(type_name, type)                           \
-type                                                                    \
-gcut_data_get_ ## type_name ## _helper (const GCutDynamicData *data,    \
-                                        const gchar *field_name,        \
-                                        CutCallbackFunction callback)   \
-{                                                                       \
-    GError *error = NULL;                                               \
-    type value;                                                         \
-                                                                        \
-    value = gcut_dynamic_data_get_ ## type_name(GCUT_DYNAMIC_DATA(data), \
-                                                field_name,             \
-                                                &error);                \
-    gcut_assert_error_helper(error, "error");                           \
-    callback();                                                         \
-                                                                        \
-    return value;                                                       \
-}
-
-DEFINE_GETTER_HELPER(string, const gchar *)
-DEFINE_GETTER_HELPER(uint, guint)
-DEFINE_GETTER_HELPER(int, gint)
-#define gcut_data_get_data_type_helper gcut_data_get_type_helper
-DEFINE_GETTER_HELPER(data_type, GType)
-#undef gcut_data_get_data_type_helper
-DEFINE_GETTER_HELPER(flags, guint)
-DEFINE_GETTER_HELPER(enum, gint)
-DEFINE_GETTER_HELPER(pointer, gconstpointer)
-
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */
