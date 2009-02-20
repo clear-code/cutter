@@ -1,3 +1,4 @@
+/*.bak
 /.xml2po.mo
 /cutter-decl-list.txt
 /cutter-decl.txt
@@ -16,6 +17,7 @@
 /html-build.stamp
 /html.stamp
 /ja
+/main.sgml
 /news.xml
 /news.xml.ja
 /readme.xml
@@ -28,6 +30,7 @@
 /tmpl.stamp
 /tutorial.xml
 /tutorial.xml.ja
+/users.xml
+/users.xml.ja
 /version.xml
 /xml
-/*.bak
