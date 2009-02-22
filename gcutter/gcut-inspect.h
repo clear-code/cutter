@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2009  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -124,7 +124,7 @@ void        gcut_inspect_string       (GString       *string,
  *
  * e.g.:
  * |[
- * gcut_inspect_type(string, GTK_TYPE_WINDOW, NULL) -> "<Gtk::Window>" FIXME: confirm
+ * gcut_inspect_type(string, GTK_TYPE_WINDOW, NULL) -> "&lt;GtkWindow&gt;"
  * ]|
  *
  * Since: 1.0.6
@@ -143,7 +143,13 @@ void        gcut_inspect_type         (GString       *string,
  *
  * e.g.:
  * |[
- * FIXME
+ * GType flags_type;
+ * GtkWidgetFlags flags;
+ *
+ * flags_type = GTK_TYPE_WIDGET_FLAGS;
+ * flags = GTK_TOPLEVEL | GTK_VISIBLE;
+ * gcut_inspect_flags(string, &flags, &flags_type);
+ * -> #&lt;GtkWidgetFlags: toplevel|visible (GTK_TOPLEVEL:0x10)|(GTK_VISIBLE:0x100)&gt;
  * ]|
  *
  * Since: 1.0.6
@@ -162,7 +168,13 @@ void        gcut_inspect_flags        (GString       *string,
  *
  * e.g.:
  * |[
- * FIXME
+ * GType enum_type;
+ * GtkWidgetHelpType value;
+ *
+ * enum_type = GTK_TYPE_WIDGET_HELP_TYPE;
+ * value = GTK_WIDGET_HELP_TOOLTIP;
+ * gcut_inspect_enum(string, &value, &enum_type);
+ * -> #&lt;GtkWidgetHelpType: tooltip(GTK_WIDGET_HELP_TOOLTIP:0)&gt;
  * ]|
  *
  * Since: 1.0.6
