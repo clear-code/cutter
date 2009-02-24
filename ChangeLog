@@ -1,3 +1,8 @@
+2009-02-24  Kouhei Sutou  <kou@cozmixng.org>
+
+	* gcutter/gcut-egg.[ch], test/gcutter/test-gcut-egg.c: add
+	gcut_egg_wait.
+
 2009-02-21  Kouhei Sutou  <kou@clear-code.com>
 
 	* gcutter/gcut-inspect.h: update document.

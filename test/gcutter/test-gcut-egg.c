@@ -22,6 +22,9 @@ void test_io (void);
 void test_flags (void);
 void test_env (void);
 void test_kill (void);
+void test_wait_before_hatch (void);
+void test_wait_after_reaped (void);
+void test_wait_timeout (void);
 
 static GCutEgg *egg;
 static GError *expected_error;
@@ -111,28 +114,15 @@ setup_egg (GCutEgg *egg)
 #undef CONNECT
 }
 
-static gboolean
-cb_timeout_reaped (gpointer user_data)
-{
-    GError **error = user_data;
-    reaped = TRUE;
-    g_set_error(error, GCUT_EGG_ERROR, 0, "timeout");
-    return FALSE;
-}
-
 static void
 wait_reaped_helper (void)
 {
     GError *error = NULL;
-    guint timeout_id;
+    gint returned_exit_status;
 
+    returned_exit_status = gcut_egg_wait(egg, 1000, &error);
     gcut_assert_error(error);
-    timeout_id = g_timeout_add_seconds(1, cb_timeout_reaped, &error);
-    while (!reaped)
-        g_main_context_iteration(NULL, TRUE);
-    g_source_remove(timeout_id);
-    gcut_assert_error(error);
-
+    cut_assert_equal_int(returned_exit_status, exit_status);
     cut_assert_equal_int(EXIT_SUCCESS, WEXITSTATUS(exit_status));
 }
 
@@ -262,6 +252,54 @@ test_kill (void)
 
     gcut_egg_kill(egg, SIGKILL);
     wait_reaped();
+}
+
+void
+test_wait_before_hatch (void)
+{
+    egg = gcut_egg_new("echo", "XXX", NULL);
+
+    cut_assert_equal_int(-1, gcut_egg_wait(egg, 0, &actual_error));
+    expected_error = g_error_new(GCUT_EGG_ERROR,
+                                 GCUT_EGG_ERROR_NOT_RUNNING,
+                                 "not running: <echo XXX>");
+    gcut_assert_equal_error(expected_error, actual_error);
+}
+
+void
+test_wait_after_reaped (void)
+{
+    GError *error = NULL;
+
+    egg = gcut_egg_new("echo", "XXX", NULL);
+
+    gcut_egg_hatch(egg, &error);
+    gcut_assert_error(error);
+
+    wait_reaped();
+
+    cut_assert_equal_int(-1, gcut_egg_wait(egg, 0, &actual_error));
+    expected_error = g_error_new(GCUT_EGG_ERROR,
+                                 GCUT_EGG_ERROR_NOT_RUNNING,
+                                 "not running: <echo XXX>");
+    gcut_assert_equal_error(expected_error, actual_error);
+}
+
+void
+test_wait_timeout (void)
+{
+    GError *error = NULL;
+
+    egg = gcut_egg_new("sleep", "1", NULL);
+
+    gcut_egg_hatch(egg, &error);
+    gcut_assert_error(error);
+
+    cut_assert_equal_int(-1, gcut_egg_wait(egg, 0, &actual_error));
+    expected_error = g_error_new(GCUT_EGG_ERROR,
+                                 GCUT_EGG_ERROR_TIMEOUT,
+                                 "timeout while waiting reaped: <sleep 1>");
+    gcut_assert_equal_error(expected_error, actual_error);
 }
 
 /*

@@ -54,6 +54,7 @@ struct _GCutEggPrivate
     GSpawnFlags must_flags;
 
     GPid pid;
+    gint status;
     guint process_watch_id;
 
     GIOChannel *input;
@@ -181,6 +182,7 @@ gcut_egg_init (GCutEgg *egg)
     priv->must_flags = G_SPAWN_DO_NOT_REAP_CHILD;
 
     priv->pid = 0;
+    priv->status = 0;
     priv->process_watch_id = 0;
 
     priv->input = NULL;
@@ -495,6 +497,7 @@ reap_child (GCutEgg *egg, GPid pid, gint status)
         return;
 
     remove_child_watch_func(priv);
+    priv->status = status;
     g_signal_emit(egg, signals[REAPED], 0, status);
     g_spawn_close_pid(priv->pid);
     priv->pid = 0;
@@ -737,6 +740,71 @@ GPid
 gcut_egg_get_pid (GCutEgg *egg)
 {
     return GCUT_EGG_GET_PRIVATE(egg)->pid;
+}
+
+static gboolean
+cb_timeout_wait (gpointer user_data)
+{
+    gboolean *timeout = user_data;
+    *timeout = TRUE;
+    return FALSE;
+}
+
+gint
+gcut_egg_wait (GCutEgg *egg, guint interval, GError **error)
+{
+    GCutEggPrivate *priv;
+    gboolean timeout = FALSE;
+    guint timeout_id;
+
+    priv = GCUT_EGG_GET_PRIVATE(egg);
+
+    if (!priv) {
+        g_set_error(error,
+                    GCUT_EGG_ERROR,
+                    GCUT_EGG_ERROR_INVALID_OBJECT,
+                    "passed GCutEgg is invalid");
+        return -1;
+    }
+
+    if (priv->pid == 0) {
+        gchar *command = NULL;
+
+        if (priv->command)
+            command = g_strjoinv(" ", priv->command);
+        if (command) {
+            g_set_error(error,
+                        GCUT_EGG_ERROR,
+                        GCUT_EGG_ERROR_NOT_RUNNING,
+                        "not running: <%s>", command);
+            g_free(command);
+        } else {
+            g_set_error(error,
+                        GCUT_EGG_ERROR,
+                        GCUT_EGG_ERROR_NOT_RUNNING,
+                        "not running");
+        }
+        return -1;
+    }
+
+    timeout_id = g_timeout_add(interval, cb_timeout_wait, &timeout);
+    while (!timeout && priv->pid > 0)
+        g_main_context_iteration(NULL, TRUE);
+    g_source_remove(timeout_id);
+
+    if (timeout) {
+        gchar *command;
+
+        command = g_strjoinv(" ", priv->command);
+        g_set_error(error,
+                    GCUT_EGG_ERROR,
+                    GCUT_EGG_ERROR_TIMEOUT,
+                    "timeout while waiting reaped: <%s>", command);
+        g_free(command);
+        return -1;
+    }
+
+    return priv->status;
 }
 
 void

@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2009  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -61,7 +61,10 @@ typedef enum
 {
     GCUT_EGG_ERROR_COMMAND_LINE,
     GCUT_EGG_ERROR_IO_ERROR,
-    GCUT_EGG_ERROR_ALREADY_RUNNING
+    GCUT_EGG_ERROR_ALREADY_RUNNING,
+    GCUT_EGG_ERROR_NOT_RUNNING,
+    GCUT_EGG_ERROR_INVALID_OBJECT,
+    GCUT_EGG_ERROR_TIMEOUT
 } GCutEggError;
 
 GQuark        gcut_egg_error_quark   (void);
@@ -96,6 +99,9 @@ gboolean      gcut_egg_write         (GCutEgg      *egg,
                                       GError      **error);
 
 GPid          gcut_egg_get_pid       (GCutEgg      *egg);
+gint          gcut_egg_wait          (GCutEgg      *egg,
+                                      guint         interval,
+                                      GError      **error);
 void          gcut_egg_kill          (GCutEgg      *egg,
                                       int           signal_number);
 
