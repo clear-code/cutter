@@ -24,6 +24,78 @@
 
 G_BEGIN_DECLS
 
+/**
+ * SECTION: gcut-egg
+ * @title: External command
+ * @short_description: Convenience API for using external
+ * command.
+ *
+ * %GCutEgg encapsulates external command execution,
+ * communication and termination. %GCutEgg reports an error
+ * as %GError. It can be asserted easily by
+ * gcut_assert_error().
+ *
+ * External command is specified to constructor like
+ * gcut_egg_new(), gcut_egg_new_strings() and so
+ * on. External command isn't run at the
+ * time. gcut_egg_hatch() runs specified external command.
+ *
+ * Standard/Error outputs of external command are passed by
+ * #GCutEgg::output-received/GCutEgg::error-received signals
+ * or %GIOChannel returned by
+ * gcut_egg_get_output()/gcut_egg_get_error().
+ * gcut_egg_write() writes a chunk to standard input of
+ * external command.
+ *
+ * To wait external command finished, gcut_egg_wait() can be
+ * used. It accepts timeout to avoid infinite waiting.
+ *
+ * Here is an example:
+ * |[
+ * static GString *output_string;
+ * static GCutEgg *egg;
+ *
+ * void
+ * cut_setup (void)
+ * {
+ *     output_string = g_string_new(NULL);
+ *     egg = NULL;
+ * }
+ *
+ * void
+ * cut_teardown (void)
+ * {
+ *     if (output_string)
+ *         g_string_free(output_string, TRUE);
+ *     if (egg)
+ *         g_object_unref(egg);
+ * }
+ *
+ * static void
+ * cb_output_received (GCutEgg *egg, const gchar *chunk, gsize size,
+ *                     gpointer user_data)
+ * {
+ *     g_string_append_len(output_string, chunk, size);
+ * }
+ * void
+ * test_echo (void)
+ * {
+ *     GError *error = NULL;
+ *
+ *     egg = gcut_egg_new("echo", "XXX", NULL);
+ *     g_signal_connect(egg, "receive-output",
+ *                      G_CALLBACK(cb_output_received), NULL);
+ *
+ *     gcut_egg_hatch(egg, &error);
+ *     gcut_assert_error(error);
+ *
+ *     gcut_egg_wait(egg, 1000, &error);
+ *     gcut_assert_error(error);
+ *     cut_assert_equal_string("XXX\n", output_string->str);
+ * }
+ * ]|
+ */
+
 #define GCUT_EGG_ERROR           (gcut_egg_error_quark())
 
 #define GCUT_TYPE_EGG            (gcut_egg_get_type ())
