@@ -1,3 +1,8 @@
+2009-02-26  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* gcutter/gcut-assertions-helper.c: Use g_clear_error instead of
+	g_error_free since to allow NULL check of error for user.
+
 2009-02-25  Kouhei Sutou  <kou@cozmixng.org>
 
 	* gcutter/gcut-egg.[ch]:

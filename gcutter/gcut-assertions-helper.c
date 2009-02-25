@@ -361,7 +361,7 @@ gcut_assert_error_helper (GError         *error,
         const gchar *inspected;
 
         inspected = cut_take_string(gcut_error_inspect(error));
-        g_error_free(error);
+        g_clear_error(&error);
         cut_test_fail(cut_take_printf("expected: <%s> is NULL\n"
                                       "  actual: <%s>",
                                       expression_error, inspected));
