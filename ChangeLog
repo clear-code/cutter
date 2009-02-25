@@ -1,3 +1,9 @@
+2009-02-25  Kouhei Sutou  <kou@cozmixng.org>
+
+	* gcutter/gcut-egg.[ch]:
+	- add document.
+	- improve API.
+
 2009-02-24  Kouhei Sutou  <kou@cozmixng.org>
 
 	* gcutter/gcut-egg.h: add document.

@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2009  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -67,7 +67,7 @@ struct _GCutEggPrivate
     WatchOutputData *watch_output_data;
     WatchOutputData *watch_error_data;
 
-    guint kill_wait_milliseconds;
+    guint forced_termination_wait_time;
 };
 
 enum
@@ -195,7 +195,7 @@ gcut_egg_init (GCutEgg *egg)
     priv->watch_output_data = NULL;
     priv->watch_error_data = NULL;
 
-    priv->kill_wait_milliseconds = 10;
+    priv->forced_termination_wait_time = 10;
 }
 
 static void
@@ -220,57 +220,25 @@ remove_error_watch_func (GCutEggPrivate *priv)
 }
 
 static gboolean
-cb_timeout_kill_wait (gpointer user_data)
+cb_timeout_wait (gpointer user_data)
 {
-    gboolean *waiting = user_data;
-
-    *waiting = FALSE;
-
+    gboolean *is_timeout = user_data;
+    *is_timeout = TRUE;
     return FALSE;
 }
 
 static void
-dispose (GObject *object)
+dispose_io_channel (GCutEggPrivate *priv)
 {
-    GCutEggPrivate *priv;
-
-    priv = GCUT_EGG_GET_PRIVATE(object);
-    if (priv->command) {
-        g_strfreev(priv->command);
-        priv->command = NULL;
-    }
-
-    if (priv->process_watch_id && priv->pid) {
-        gcut_egg_kill(GCUT_EGG(object), SIGTERM);
-        if (priv->kill_wait_milliseconds > 0) {
-            gboolean waiting = TRUE;
-            guint timeout_kill_wait_id;
-
-            timeout_kill_wait_id = g_timeout_add(priv->kill_wait_milliseconds,
-                                                 cb_timeout_kill_wait,
-                                                 &waiting);
-            while (waiting && priv->process_watch_id && priv->pid)
-                g_main_context_iteration(NULL, TRUE);
-            g_source_remove(timeout_kill_wait_id);
-        }
-    }
-
-    if (priv->process_watch_id)
-        remove_child_watch_func(priv);
-
-    if (priv->pid) {
-        gcut_egg_close(GCUT_EGG(object));
-    }
-
     if (priv->input) {
         g_io_channel_unref(priv->input);
         priv->input = NULL;
     }
 
-    if (priv->output_watch_id)
+    if (priv->output_watch_id > 0)
         remove_output_watch_func(priv);
 
-    if (priv->error_watch_id)
+    if (priv->error_watch_id > 0)
         remove_error_watch_func(priv);
 
     if (priv->output) {
@@ -292,6 +260,42 @@ dispose (GObject *object)
         g_free(priv->watch_error_data);
         priv->watch_error_data = NULL;
     }
+}
+
+static void
+dispose (GObject *object)
+{
+    GCutEggPrivate *priv;
+
+    priv = GCUT_EGG_GET_PRIVATE(object);
+    if (priv->command) {
+        g_strfreev(priv->command);
+        priv->command = NULL;
+    }
+
+    if (priv->process_watch_id && priv->pid) {
+        gcut_egg_kill(GCUT_EGG(object), SIGTERM);
+        if (priv->forced_termination_wait_time > 0) {
+            gboolean is_timeout = FALSE;
+            guint timeout_wait_id;
+
+            timeout_wait_id = g_timeout_add(priv->forced_termination_wait_time,
+                                            cb_timeout_wait,
+                                            &is_timeout);
+            while (!is_timeout && priv->process_watch_id > 0 && priv->pid > 0)
+                g_main_context_iteration(NULL, TRUE);
+            g_source_remove(timeout_wait_id);
+        }
+    }
+
+    if (priv->process_watch_id)
+        remove_child_watch_func(priv);
+
+    if (priv->pid) {
+        gcut_egg_close(GCUT_EGG(object));
+    }
+
+    dispose_io_channel(priv);
 
     G_OBJECT_CLASS(gcut_egg_parent_class)->dispose(object);
 }
@@ -397,9 +401,9 @@ gcut_egg_new_strings (const gchar **commands)
 }
 
 GCutEgg *
-gcut_egg_new_array (GArray *array)
+gcut_egg_new_array (GArray *command)
 {
-    return gcut_egg_new_strings((const gchar **)(array->data));
+    return gcut_egg_new_strings((const gchar **)(command->data));
 }
 
 GSpawnFlags
@@ -499,8 +503,7 @@ reap_child (GCutEgg *egg, GPid pid, gint status)
     remove_child_watch_func(priv);
     priv->status = status;
     g_signal_emit(egg, signals[REAPED], 0, status);
-    g_spawn_close_pid(priv->pid);
-    priv->pid = 0;
+    gcut_egg_close(egg);
 }
 
 static void
@@ -648,6 +651,8 @@ gcut_egg_hatch (GCutEgg *egg, GError **error)
         return FALSE;
     }
 
+    dispose_io_channel(priv);
+
     env = gcut_egg_get_env(egg);
     success = g_spawn_async_with_pipes(NULL,
                                        priv->command,
@@ -742,19 +747,11 @@ gcut_egg_get_pid (GCutEgg *egg)
     return GCUT_EGG_GET_PRIVATE(egg)->pid;
 }
 
-static gboolean
-cb_timeout_wait (gpointer user_data)
-{
-    gboolean *timeout = user_data;
-    *timeout = TRUE;
-    return FALSE;
-}
-
 gint
-gcut_egg_wait (GCutEgg *egg, guint interval, GError **error)
+gcut_egg_wait (GCutEgg *egg, guint timeout, GError **error)
 {
     GCutEggPrivate *priv;
-    gboolean timeout = FALSE;
+    gboolean is_timeout = FALSE;
     guint timeout_id;
 
     priv = GCUT_EGG_GET_PRIVATE(egg);
@@ -787,12 +784,12 @@ gcut_egg_wait (GCutEgg *egg, guint interval, GError **error)
         return -1;
     }
 
-    timeout_id = g_timeout_add(interval, cb_timeout_wait, &timeout);
-    while (!timeout && priv->pid > 0)
+    timeout_id = g_timeout_add(timeout, cb_timeout_wait, &is_timeout);
+    while (!is_timeout && priv->pid > 0)
         g_main_context_iteration(NULL, TRUE);
     g_source_remove(timeout_id);
 
-    if (timeout) {
+    if (is_timeout) {
         gchar *command;
 
         command = g_strjoinv(" ", priv->command);
@@ -843,15 +840,15 @@ gcut_egg_get_error (GCutEgg *egg)
 }
 
 guint
-gcut_egg_get_kill_wait_milliseconds (GCutEgg *egg)
+gcut_egg_get_forced_termination_wait_time (GCutEgg *egg)
 {
-    return GCUT_EGG_GET_PRIVATE(egg)->kill_wait_milliseconds;
+    return GCUT_EGG_GET_PRIVATE(egg)->forced_termination_wait_time;
 }
 
 void
-gcut_egg_set_kill_wait_milliseconds (GCutEgg *egg, guint milliseconds)
+gcut_egg_set_forced_termination_wait_time (GCutEgg *egg, guint timeout)
 {
-    GCUT_EGG_GET_PRIVATE(egg)->kill_wait_milliseconds = milliseconds;
+    GCUT_EGG_GET_PRIVATE(egg)->forced_termination_wait_time = timeout;
 }
 
 /*
