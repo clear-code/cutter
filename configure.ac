@@ -519,6 +519,7 @@ AC_CONFIG_COMMANDS([cutter/cut-features.h-end],
 _______EOF
 ])
 
+SHAVE_INIT([shave], [disable])
 AC_CONFIG_FILES([Makefile
 		 cutter.pc
 		 gcutter.pc
@@ -581,6 +582,8 @@ AC_CONFIG_FILES([Makefile
 		 test/gdkcutter-pixbuf/Makefile
 		 po/Makefile.in
 		 misc/Makefile
+                 shave/shave
+                 shave/shave-libtool
 		 doc/Makefile
 		 doc/reference/version.xml
 		 doc/reference/Makefile
