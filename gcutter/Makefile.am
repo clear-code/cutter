@@ -39,6 +39,7 @@ gcutter_public_headers =		\
 	gcut-key-file.h			\
 	gcut-inspect.h			\
 	gcut-data.h			\
+	gcut-data-helper.h		\
 	gcut-dynamic-data.h		\
 	gcut-main.h
 
