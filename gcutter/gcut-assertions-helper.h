@@ -110,7 +110,7 @@ void      gcut_assert_equal_error_helper    (const GError   *expected,
                                              const gchar    *expression_expected,
                                              const gchar    *expression_actual);
 void      gcut_assert_remove_path_helper    (const gchar    *path,
-                                             ...) CUT_GNUC_NULL_TERMINATED;
+                                             ...) G_GNUC_NULL_TERMINATED;
 void      gcut_assert_equal_time_val_helper (GTimeVal       *expected,
                                              GTimeVal       *actual,
                                              const gchar    *expression_expected,

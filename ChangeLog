@@ -1,3 +1,8 @@
+2009-02-27  Kouhei Sutou  <kou@clear-code.com>
+
+	* gcutter/gcut-assertions-helper.h: use G_GNUC_NULL_TERMINATED
+	instead of CUT_GNUC_NULL_TERMINATED.
+
 2009-02-26  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* gcutter/gcut-assertions-helper.c: Use g_clear_error instead of
