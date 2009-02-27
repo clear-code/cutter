@@ -58,10 +58,6 @@ const char *format, ...
 
 # cut-types.h
 
-<TYPEDEF>
-<NAME>cut_boolean</NAME>
-</TYPEDEF>
-
 <MACRO>
 <NAME>CUT_TRUE</NAME>
 #define CUT_TRUE

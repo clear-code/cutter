@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2009  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -84,7 +84,7 @@ gchar           *gcut_enum_inspect              (GType enum_type,
  * gcut_enum_parse:
  * @enum_type: a #GEnum type.
  * @enum_value: a string to be parsed.
- * @error: a location to return an error or %NULL
+ * @error: return location for an error, or %NULL
  *
  * Parses @enum_value and returns a enum value of
  * @enum_type. @enum_value should be enum name or nick
@@ -118,7 +118,7 @@ gchar           *gcut_flags_inspect             (GType flags_type,
  * gcut_flags_parse:
  * @flags_type: a #GFlags type.
  * @flags_value: a string to be parsed.
- * @error: a location to return an error or %NULL
+ * @error: return location for an error, or %NULL
  *
  * Parses @flags_value and returns a flags value of
  * @flags_type. @flags_value should be formated as

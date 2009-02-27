@@ -50,7 +50,7 @@ G_BEGIN_DECLS
  * To wait external command finished, gcut_egg_wait() can be
  * used. It accepts timeout to avoid infinite waiting.
  *
- * Here is an example:
+ * e.g.:
  * |[
  * static GString *output_string;
  * static GCutEgg *egg;

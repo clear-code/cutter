@@ -1,5 +1,9 @@
 2009-02-28  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-egg.h, gcutter/gcut-enum.h,
+	doc/reference/cutter-overrides.txt, doc/reference/ja.po: update
+	messages.
+
 	* gcutter/gcut-enum.c (gcut_flags_inspect): flags -> flags_value.
 
 	* gcutter/gcut-assertions.h,
