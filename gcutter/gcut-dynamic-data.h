@@ -25,23 +25,6 @@
 
 G_BEGIN_DECLS
 
-/**
- * SECTION: gcut-dynamic-data
- * @title: Dynamic data structure
- * @short_description: FIXME
- *
- * FIXME
- */
-
-/**
- * GCUT_DYNAMIC_DATA_ERROR:
- *
- * Error domain for key file parsing. Errors in this domain
- * will be from the #GCutDynamicDataError data. See #GError for
- * information on error domains.
- *
- * Since: 1.0.6
- */
 #define GCUT_DYNAMIC_DATA_ERROR           (gcut_dynamic_data_error_quark())
 
 #define GCUT_TYPE_DYNAMIC_DATA            (gcut_dynamic_data_get_type())
@@ -64,14 +47,6 @@ struct _GCutDynamicDataClass
     GObjectClass parent_class;
 };
 
-/**
- * GCutDynamicDataError:
- * @GCUT_DYNAMIC_DATA_ERROR_NOT_EXIST: The field doesn't exist.
- *
- * Error codes returned by data related operation.
- *
- * Since: 1.0.6
- */
 typedef enum
 {
     GCUT_DYNAMIC_DATA_ERROR_NOT_EXIST
