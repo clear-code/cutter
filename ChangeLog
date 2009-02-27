@@ -1,5 +1,7 @@
 2009-02-28  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-enum.c (gcut_flags_inspect): flags -> flags_value.
+
 	* gcutter/gcut-assertions.h,
 	gcutter/gcut-assertions-helper.[ch],
 	test/gcutter/test-gcut-assertions.c: g_pid -> pid.

@@ -138,29 +138,29 @@ gcut_flags_inspect (GType flags_type, guint flags_value)
 
     inspected = g_string_new(NULL);
     g_string_append_printf(inspected, "#<%s", g_type_name(flags_type));
-    if (flags > 0) {
+    if (flags_value > 0) {
         g_string_append(inspected, ":");
-        if (flags & flags_class->mask) {
+        if (flags_value & flags_class->mask) {
             g_string_append(inspected, " ");
             for (i = 0; i < flags_class->n_values; i++) {
                 GFlagsValue *value = flags_class->values + i;
-                if (value->value & flags)
+                if (value->value & flags_value)
                     g_string_append_printf(inspected, "%s|", value->value_nick);
             }
             inspected->str[inspected->len - 1] = ' ';
             for (i = 0; i < flags_class->n_values; i++) {
                 GFlagsValue *value = flags_class->values + i;
-                if (value->value & flags)
+                if (value->value & flags_value)
                     g_string_append_printf(inspected, "(%s:0x%x)|",
                                            value->value_name, value->value);
             }
             g_string_truncate(inspected, inspected->len - 1);
         }
 
-        if (flags & ~(flags_class->mask)) {
+        if (flags_value & ~(flags_class->mask)) {
             g_string_append_printf(inspected,
                                    " (unknown flags: 0x%x)",
-                                   flags & ~(flags_class->mask));
+                                   flags_value & ~(flags_class->mask));
         }
     }
     g_string_append(inspected, ">");
