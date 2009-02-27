@@ -733,9 +733,9 @@ G_BEGIN_DECLS
 } while (0)
 
 /**
- * gcut_assert_equal_g_pid:
- * @expected: an expected GPid value.
- * @actual: an actual GPid value.
+ * gcut_assert_equal_pid:
+ * @expected: an expected value.
+ * @actual: an actual value.
  * @...: optional format string, followed by parameters to insert
  *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
@@ -744,13 +744,13 @@ G_BEGIN_DECLS
  *
  * Since: 1.0.6
  */
-#define gcut_assert_equal_g_pid(expected, actual, ...) do               \
-{                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
-    cut_trace_with_info_expression(                                     \
-        gcut_assert_equal_g_pid_helper((expected), (actual),            \
-                                        #expected, #actual),            \
-        gcut_assert_equal_g_pid(expected, actual, __VA_ARGS__));        \
+#define gcut_assert_equal_pid(expected, actual, ...) do         \
+{                                                               \
+    cut_set_message_backward_compatibility(__VA_ARGS__);        \
+    cut_trace_with_info_expression(                             \
+        gcut_assert_equal_pid_helper((expected), (actual),      \
+                                        #expected, #actual),    \
+        gcut_assert_equal_pid(expected, actual, __VA_ARGS__));  \
 } while (0)
 
 G_END_DECLS

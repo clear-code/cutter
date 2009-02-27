@@ -585,10 +585,10 @@ gcut_assert_equal_uint64_helper (guint64         expected,
 #define GCUT_GPID_FORMAT "d"
 #endif
 void
-gcut_assert_equal_g_pid_helper (GPid            expected,
-                                GPid            actual,
-                                const char     *expression_expected,
-                                const char     *expression_actual)
+gcut_assert_equal_pid_helper (GPid            expected,
+                              GPid            actual,
+                              const char     *expression_expected,
+                              const char     *expression_actual)
 {
     if (expected == actual) {
         cut_test_pass();

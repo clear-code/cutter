@@ -1,3 +1,9 @@
+2009-02-28  Kouhei Sutou  <kou@cozmixng.org>
+
+	* gcutter/gcut-assertions.h,
+	gcutter/gcut-assertions-helper.[ch],
+	test/gcutter/test-gcut-assertions.c: g_pid -> pid.
+
 2009-02-27  Kouhei Sutou  <kou@cozmixng.org>
 
 	* gcutter/gcut-assertions.h, gcutter/gcut-enum.[ch],
