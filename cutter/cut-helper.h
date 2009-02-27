@@ -115,7 +115,6 @@ extern "C" {
 /**
  * cut_test_fail:
  * @system_message: a failure message from testing system.
- *                  (const char *)
  * @...: optional format string, followed by parameters to insert
  *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
@@ -133,9 +132,8 @@ extern "C" {
 /**
  * cut_test_fail_va_list:
  * @system_message: a failure message from testing
- *                  system. (const char *)
+ *                  system.
  * @user_message_format: a failure message from user.
- *                       (const char *)
  *
  * See cut_test_fail() for cut_test_fail_va_list()'s
  * behavior. @user_message_format is the prior variable of

@@ -1,3 +1,8 @@
+2009-02-27  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-helper.h, cutter/cutter.h,
+	doc/reference/cutter-overrides.txt: add missing type declarations.
+
 2009-02-27  Kouhei Sutou  <kou@clear-code.com>
 
 	* gcutter/gcut-assertions-helper.h: use G_GNUC_NULL_TERMINATED

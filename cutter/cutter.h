@@ -443,7 +443,7 @@ void cut_shutdown(void);
  *
  * Since: 1.0.6
  */
-#define cut_keep_message(...)                                           \
+#define cut_keep_message()                                              \
     cut_test_context_keep_user_message(cut_get_current_test_context())
 
 #ifdef __cplusplus
