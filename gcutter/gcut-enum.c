@@ -124,7 +124,7 @@ gcut_enum_parse (GType enum_type, const gchar *enum_value, GError **error)
 }
 
 gchar *
-gcut_flags_inspect (GType flags_type, guint flags)
+gcut_flags_inspect (GType flags_type, guint flags_value)
 {
     GFlagsClass *flags_class;
     guint i;

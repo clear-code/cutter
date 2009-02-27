@@ -395,7 +395,7 @@ G_BEGIN_DECLS
         gcut_assert_equal_hash_table_helper(expected, actual,           \
                                             equal_function,             \
                                             key_inspect_function,       \
-                                            value_inspect_function,       \
+                                            value_inspect_function,     \
                                             inspect_user_data,          \
                                             #expected, #actual,         \
                                             #equal_function),           \

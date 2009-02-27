@@ -52,7 +52,8 @@ GQuark           gcut_enum_error_quark          (void);
 
 /**
  * GCutEnumError:
- * @GCUT_ENUM_ERROR_INVALID: Invalid format.
+ * @GCUT_ENUM_ERROR_INVALID_TYPE: Invalid type.
+ * @GCUT_ENUM_ERROR_INVALID_VALUE: Invalid value.
  *
  * Error codes returned by enum related operation.
  *
@@ -111,7 +112,7 @@ gint             gcut_enum_parse                (GType         enum_type,
  * Since: 1.0.5
  */
 gchar           *gcut_flags_inspect             (GType flags_type,
-                                                 guint flags);
+                                                 guint flags_value);
 
 /**
  * gcut_flags_parse:

@@ -1,5 +1,8 @@
 2009-02-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-assertions.h, gcutter/gcut-enum.[ch],
+	doc/reference/cutter-overrides.txt: fix type declarations.
+
 	* cutter/cut-helper.h, cutter/cutter.h,
 	doc/reference/cutter-overrides.txt: add missing type declarations.
 
