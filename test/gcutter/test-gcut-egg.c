@@ -137,7 +137,7 @@ test_hatch (void)
     egg = gcut_egg_new("echo", "XXX", NULL);
     setup_egg(egg);
 
-    gcut_assert_equal_g_pid(0, gcut_egg_get_pid(egg));
+    gcut_assert_equal_pid(0, gcut_egg_get_pid(egg));
     gcut_egg_hatch(egg, &error);
     gcut_assert_error(error);
     cut_assert_operator_int(0, !=, gcut_egg_get_pid(egg));
