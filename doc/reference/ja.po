@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.0.6\n"
 "POT-Creation-Date: 2009-02-28 00:02+0900\n"
-"PO-Revision-Date: 2009-02-28 00:25+0900\n"
+"PO-Revision-Date: 2009-02-28 00:29+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -18983,18 +18983,3 @@ msgstr ""
 #: xml/stack.xml:0(None)
 msgid "translator-credits"
 msgstr ""
-
-#~ msgid "<parameter>array</parameter>&nbsp;:"
-#~ msgstr "<parameter>array</parameter>&nbsp;:"
-
-#~ msgid "<parameter>milliseconds</parameter>&nbsp;:"
-#~ msgstr "<parameter>milliseconds</parameter>&nbsp;:"
-
-#~ msgid "The <literal>\"error-received\"</literal> signal"
-#~ msgstr "<literal>\"error-received\"</literal>シグナル"
-
-#~ msgid "<parameter>arg2</parameter>&nbsp;:"
-#~ msgstr "<parameter>arg2</parameter>&nbsp;:"
-
-#~ msgid "<parameter>Param2</parameter>&nbsp;:"
-#~ msgstr "<parameter>Param2</parameter>&nbsp;:"
