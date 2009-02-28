@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.0.6\n"
-"POT-Creation-Date: 2009-02-28 00:02+0900\n"
-"PO-Revision-Date: 2009-02-28 00:29+0900\n"
+"POT-Creation-Date: 2009-02-28 23:21+0900\n"
+"PO-Revision-Date: 2009-02-28 23:31+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -265,17 +265,17 @@ msgstr ""
 msgid "G"
 msgstr ""
 
-#: xml/api-index-1.0.3.xml:11(link) xml/api-index-full.xml:447(link)
+#: xml/api-index-1.0.3.xml:11(link) xml/api-index-full.xml:445(link)
 #: xml/gcut-assertions.xml:32(link) xml/gcut-assertions.xml:207(primary)
 msgid "gcut_assert_equal_list_int"
 msgstr ""
 
-#: xml/api-index-1.0.3.xml:12(link) xml/api-index-full.xml:452(link)
+#: xml/api-index-1.0.3.xml:12(link) xml/api-index-full.xml:450(link)
 #: xml/gcut-assertions.xml:35(link) xml/gcut-assertions.xml:265(primary)
 msgid "gcut_assert_equal_list_string"
 msgstr ""
 
-#: xml/api-index-1.0.3.xml:13(link) xml/api-index-full.xml:454(link)
+#: xml/api-index-1.0.3.xml:13(link) xml/api-index-full.xml:452(link)
 #: xml/gcut-assertions.xml:34(link) xml/gcut-assertions.xml:246(primary)
 msgid "gcut_assert_equal_list_uint"
 msgstr ""
@@ -517,7 +517,7 @@ msgstr ""
 msgid "cut_take_new_sub_process_group"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:44(link) xml/api-index-full.xml:437(link)
+#: xml/api-index-1.0.4.xml:44(link) xml/api-index-full.xml:435(link)
 #: xml/gcut-assertions.xml:53(link) xml/gcut-assertions.xml:435(primary)
 msgid "gcut_assert_equal_hash_table_string_string"
 msgstr ""
@@ -638,37 +638,37 @@ msgstr ""
 msgid "gcut_assert_equal_flags"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:29(link) xml/api-index-full.xml:439(link)
+#: xml/api-index-1.0.5.xml:29(link) xml/api-index-full.xml:437(link)
 #: xml/gcut-assertions.xml:68(link) xml/gcut-assertions.xml:696(primary)
 msgid "gcut_assert_equal_int64"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:30(link) xml/api-index-full.xml:442(link)
+#: xml/api-index-1.0.5.xml:30(link) xml/api-index-full.xml:440(link)
 #: xml/gcut-assertions.xml:45(link) xml/gcut-assertions.xml:355(primary)
 msgid "gcut_assert_equal_list_enum"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:31(link) xml/api-index-full.xml:444(link)
+#: xml/api-index-1.0.5.xml:31(link) xml/api-index-full.xml:442(link)
 #: xml/gcut-assertions.xml:46(link) xml/gcut-assertions.xml:378(primary)
 msgid "gcut_assert_equal_list_flags"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:32(link) xml/api-index-full.xml:449(link)
+#: xml/api-index-1.0.5.xml:32(link) xml/api-index-full.xml:447(link)
 #: xml/gcut-assertions.xml:37(link) xml/gcut-assertions.xml:304(primary)
 msgid "gcut_assert_equal_list_object"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:33(link) xml/api-index-full.xml:450(link)
+#: xml/api-index-1.0.5.xml:33(link) xml/api-index-full.xml:448(link)
 #: xml/gcut-assertions.xml:40(link) xml/gcut-assertions.xml:326(primary)
 msgid "gcut_assert_equal_list_object_custom"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:34(link) xml/api-index-full.xml:456(link)
+#: xml/api-index-1.0.5.xml:34(link) xml/api-index-full.xml:454(link)
 #: xml/gcut-assertions.xml:65(link) xml/gcut-assertions.xml:624(primary)
 msgid "gcut_assert_equal_object"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:35(link) xml/api-index-full.xml:457(link)
+#: xml/api-index-1.0.5.xml:35(link) xml/api-index-full.xml:455(link)
 #: xml/gcut-assertions.xml:66(link) xml/gcut-assertions.xml:654(primary)
 msgid "gcut_assert_equal_object_custom"
 msgstr ""
@@ -884,22 +884,17 @@ msgstr ""
 msgid "cut_teardown"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:20(link) xml/api-index-full.xml:416(link)
-#: xml/gcut-dynamic-data.xml:24(link) xml/gcut-dynamic-data.xml:109(primary)
-msgid "GCutDynamicDataError"
-msgstr ""
-
-#: xml/api-index-1.0.6.xml:21(link) xml/api-index-full.xml:423(link)
+#: xml/api-index-1.0.6.xml:20(link) xml/api-index-full.xml:423(link)
 #: xml/gcut-egg.xml:24(link) xml/gcut-egg.xml:185(primary)
 msgid "GCutEggError"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:22(link) xml/api-index-full.xml:424(link)
+#: xml/api-index-1.0.6.xml:21(link) xml/api-index-full.xml:424(link)
 #: xml/gcut-enum.xml:24(link) xml/gcut-enum.xml:83(primary)
 msgid "GCutEnumError"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:23(link) xml/api-index-full.xml:425(link)
+#: xml/api-index-1.0.6.xml:22(link) xml/api-index-full.xml:425(link)
 #: xml/gcut-assertions-helper.xml:32(link)
 #: xml/gcut-assertions-helper.xml:71(link)
 #: xml/gcut-assertions-helper.xml:72(link) xml/gcut-assertions.xml:29(link)
@@ -910,274 +905,268 @@ msgstr ""
 msgid "GCutInspectFunction"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:24(link) xml/api-index-full.xml:426(link)
+#: xml/api-index-1.0.6.xml:23(link) xml/api-index-full.xml:426(link)
 #: xml/gcut-data.xml:22(link) xml/gcut-data.xml:57(primary)
 msgid "gcut_add_datum"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:25(link) xml/api-index-full.xml:433(link)
-#: xml/gcut-assertions.xml:70(link) xml/gcut-assertions.xml:734(primary)
-msgid "gcut_assert_equal_g_pid"
-msgstr ""
-
-#: xml/api-index-1.0.6.xml:26(link) xml/api-index-full.xml:435(link)
+#: xml/api-index-1.0.6.xml:24(link) xml/api-index-full.xml:433(link)
 #: xml/gcut-assertions.xml:47(link) xml/gcut-assertions.xml:401(primary)
 msgid "gcut_assert_equal_hash_table"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:27(link) xml/api-index-full.xml:441(link)
+#: xml/api-index-1.0.6.xml:25(link) xml/api-index-full.xml:439(link)
 #: xml/gcut-assertions.xml:26(link) xml/gcut-assertions.xml:172(primary)
 msgid "gcut_assert_equal_list"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:28(link) xml/api-index-full.xml:471(link)
+#: xml/api-index-1.0.6.xml:26(link) xml/api-index-full.xml:457(link)
+#: xml/gcut-assertions.xml:70(link) xml/gcut-assertions.xml:734(primary)
+msgid "gcut_assert_equal_pid"
+msgstr ""
+
+#: xml/api-index-1.0.6.xml:27(link) xml/api-index-full.xml:471(link)
 #: xml/gcut-data.xml:28(link) xml/gcut-data.xml:191(primary)
 msgid "gcut_data_get_enum"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:29(link) xml/api-index-full.xml:473(link)
+#: xml/api-index-1.0.6.xml:28(link) xml/api-index-full.xml:473(link)
 #: xml/gcut-data.xml:27(link) xml/gcut-data.xml:176(primary)
 msgid "gcut_data_get_flags"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:30(link) xml/api-index-full.xml:475(link)
+#: xml/api-index-1.0.6.xml:29(link) xml/api-index-full.xml:475(link)
 #: xml/gcut-data.xml:24(link) xml/gcut-data.xml:133(primary)
 msgid "gcut_data_get_int"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:31(link) xml/api-index-full.xml:477(link)
+#: xml/api-index-1.0.6.xml:30(link) xml/api-index-full.xml:477(link)
 #: xml/gcut-data.xml:29(link) xml/gcut-data.xml:206(primary)
 msgid "gcut_data_get_pointer"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:32(link) xml/api-index-full.xml:479(link)
+#: xml/api-index-1.0.6.xml:31(link) xml/api-index-full.xml:479(link)
 #: xml/gcut-data.xml:23(link) xml/gcut-data.xml:119(primary)
 msgid "gcut_data_get_string"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:33(link) xml/api-index-full.xml:481(link)
+#: xml/api-index-1.0.6.xml:32(link) xml/api-index-full.xml:481(link)
 #: xml/gcut-data.xml:26(link) xml/gcut-data.xml:162(primary)
 msgid "gcut_data_get_type"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:34(link) xml/api-index-full.xml:483(link)
+#: xml/api-index-1.0.6.xml:33(link) xml/api-index-full.xml:483(link)
 #: xml/gcut-data.xml:25(link) xml/gcut-data.xml:147(primary)
 msgid "gcut_data_get_uint"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:35(link) xml/api-index-full.xml:487(link)
-#: xml/gcut-dynamic-data.xml:21(link) xml/gcut-dynamic-data.xml:83(title)
-#: xml/gcut-dynamic-data.xml:84(primary)
-msgid "GCUT_DYNAMIC_DATA_ERROR"
-msgstr ""
-
-#: xml/api-index-1.0.6.xml:36(link) xml/api-index-full.xml:499(link)
+#: xml/api-index-1.0.6.xml:34(link) xml/api-index-full.xml:499(link)
 #: xml/gcut-egg.xml:43(link) xml/gcut-egg.xml:408(primary)
 msgid "gcut_egg_close"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:37(link) xml/api-index-full.xml:502(link)
+#: xml/api-index-1.0.6.xml:35(link) xml/api-index-full.xml:502(link)
 #: xml/gcut-egg.xml:40(link) xml/gcut-egg.xml:374(primary)
 msgid "gcut_egg_get_env"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:38(link) xml/api-index-full.xml:503(link)
+#: xml/api-index-1.0.6.xml:36(link) xml/api-index-full.xml:503(link)
 #: xml/gcut-egg.xml:56(link) xml/gcut-egg.xml:537(primary)
 msgid "gcut_egg_get_error"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:39(link) xml/api-index-full.xml:504(link)
+#: xml/api-index-1.0.6.xml:37(link) xml/api-index-full.xml:504(link)
 #: xml/gcut-egg.xml:36(link) xml/gcut-egg.xml:340(primary)
 msgid "gcut_egg_get_flags"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:40(link) xml/api-index-full.xml:505(link)
+#: xml/api-index-1.0.6.xml:38(link) xml/api-index-full.xml:505(link)
 #: xml/gcut-egg.xml:57(link) xml/gcut-egg.xml:553(primary)
 msgid "gcut_egg_get_forced_termination_wait_time"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:41(link) xml/api-index-full.xml:506(link)
+#: xml/api-index-1.0.6.xml:39(link) xml/api-index-full.xml:506(link)
 #: xml/gcut-egg.xml:54(link) xml/gcut-egg.xml:505(primary)
 msgid "gcut_egg_get_input"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:42(link) xml/api-index-full.xml:507(link)
+#: xml/api-index-1.0.6.xml:40(link) xml/api-index-full.xml:507(link)
 #: xml/gcut-egg.xml:55(link) xml/gcut-egg.xml:521(primary)
 msgid "gcut_egg_get_output"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:43(link) xml/api-index-full.xml:508(link)
+#: xml/api-index-1.0.6.xml:41(link) xml/api-index-full.xml:508(link)
 #: xml/gcut-egg.xml:48(link) xml/gcut-egg.xml:446(primary)
 msgid "gcut_egg_get_pid"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:44(link) xml/api-index-full.xml:509(link)
+#: xml/api-index-1.0.6.xml:42(link) xml/api-index-full.xml:509(link)
 #: xml/gcut-egg.xml:41(link) xml/gcut-egg.xml:390(primary)
 msgid "gcut_egg_hatch"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:45(link) xml/api-index-full.xml:510(link)
+#: xml/api-index-1.0.6.xml:43(link) xml/api-index-full.xml:510(link)
 #: xml/gcut-egg.xml:52(link) xml/gcut-egg.xml:490(primary)
 msgid "gcut_egg_kill"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:46(link) xml/api-index-full.xml:511(link)
+#: xml/api-index-1.0.6.xml:44(link) xml/api-index-full.xml:511(link)
 #: xml/gcut-egg.xml:26(link) xml/gcut-egg.xml:240(primary)
 msgid "gcut_egg_new"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:47(link) xml/api-index-full.xml:512(link)
+#: xml/api-index-1.0.6.xml:45(link) xml/api-index-full.xml:512(link)
 #: xml/gcut-egg.xml:30(link) xml/gcut-egg.xml:276(primary)
 msgid "gcut_egg_new_argv"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:48(link) xml/api-index-full.xml:513(link)
+#: xml/api-index-1.0.6.xml:46(link) xml/api-index-full.xml:513(link)
 #: xml/gcut-egg.xml:33(link) xml/gcut-egg.xml:310(primary)
 msgid "gcut_egg_new_array"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:49(link) xml/api-index-full.xml:514(link)
+#: xml/api-index-1.0.6.xml:47(link) xml/api-index-full.xml:514(link)
 #: xml/gcut-egg.xml:32(link) xml/gcut-egg.xml:295(primary)
 msgid "gcut_egg_new_strings"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:50(link) xml/api-index-full.xml:515(link)
+#: xml/api-index-1.0.6.xml:48(link) xml/api-index-full.xml:515(link)
 #: xml/gcut-egg.xml:28(link) xml/gcut-egg.xml:258(primary)
 msgid "gcut_egg_new_va_list"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:51(link) xml/api-index-full.xml:516(link)
+#: xml/api-index-1.0.6.xml:49(link) xml/api-index-full.xml:516(link)
 #: xml/gcut-egg.xml:37(link) xml/gcut-egg.xml:354(primary)
 msgid "gcut_egg_set_env"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:52(link) xml/api-index-full.xml:517(link)
+#: xml/api-index-1.0.6.xml:50(link) xml/api-index-full.xml:517(link)
 #: xml/gcut-egg.xml:34(link) xml/gcut-egg.xml:325(primary)
 msgid "gcut_egg_set_flags"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:53(link) xml/api-index-full.xml:518(link)
+#: xml/api-index-1.0.6.xml:51(link) xml/api-index-full.xml:518(link)
 #: xml/gcut-egg.xml:59(link) xml/gcut-egg.xml:570(primary)
 msgid "gcut_egg_set_forced_termination_wait_time"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:54(link) xml/api-index-full.xml:519(link)
+#: xml/api-index-1.0.6.xml:52(link) xml/api-index-full.xml:519(link)
 #: xml/gcut-egg.xml:49(link) xml/gcut-egg.xml:462(primary)
 msgid "gcut_egg_wait"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:55(link) xml/api-index-full.xml:520(link)
+#: xml/api-index-1.0.6.xml:53(link) xml/api-index-full.xml:520(link)
 #: xml/gcut-egg.xml:44(link) xml/gcut-egg.xml:420(primary)
 msgid "gcut_egg_write"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:56(link) xml/api-index-full.xml:521(link)
+#: xml/api-index-1.0.6.xml:54(link) xml/api-index-full.xml:521(link)
 #: xml/gcut-enum.xml:22(link) xml/gcut-enum.xml:64(title)
 #: xml/gcut-enum.xml:65(primary)
 msgid "GCUT_ENUM_ERROR"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:57(link) xml/api-index-full.xml:524(link)
+#: xml/api-index-1.0.6.xml:55(link) xml/api-index-full.xml:524(link)
 #: xml/gcut-enum.xml:27(link) xml/gcut-enum.xml:125(primary)
 msgid "gcut_enum_parse"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:58(link) xml/api-index-full.xml:529(link)
+#: xml/api-index-1.0.6.xml:56(link) xml/api-index-full.xml:529(link)
 #: xml/gcut-enum.xml:32(link) xml/gcut-enum.xml:169(primary)
 msgid "gcut_flags_parse"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:59(link) xml/api-index-full.xml:537(link)
+#: xml/api-index-1.0.6.xml:57(link) xml/api-index-full.xml:537(link)
 #: xml/gcut-inspect.xml:22(link) xml/gcut-inspect.xml:71(primary)
 msgid "gcut_inspect_direct"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:60(link) xml/api-index-full.xml:538(link)
+#: xml/api-index-1.0.6.xml:58(link) xml/api-index-full.xml:538(link)
 #: xml/gcut-inspect.xml:40(link) xml/gcut-inspect.xml:227(primary)
 msgid "gcut_inspect_enum"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:61(link) xml/api-index-full.xml:539(link)
+#: xml/api-index-1.0.6.xml:59(link) xml/api-index-full.xml:539(link)
 #: xml/gcut-inspect.xml:37(link) xml/gcut-inspect.xml:196(primary)
 msgid "gcut_inspect_flags"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:62(link) xml/api-index-full.xml:540(link)
+#: xml/api-index-1.0.6.xml:60(link) xml/api-index-full.xml:540(link)
 #: xml/gcut-inspect.xml:25(link) xml/gcut-inspect.xml:96(primary)
 msgid "gcut_inspect_int"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:63(link) xml/api-index-full.xml:541(link)
+#: xml/api-index-1.0.6.xml:61(link) xml/api-index-full.xml:541(link)
 #: xml/gcut-inspect.xml:43(link) xml/gcut-inspect.xml:258(primary)
 msgid "gcut_inspect_pointer"
 msgstr "gcut_inspect_pointer"
 
-#: xml/api-index-1.0.6.xml:64(link) xml/api-index-full.xml:542(link)
+#: xml/api-index-1.0.6.xml:62(link) xml/api-index-full.xml:542(link)
 #: xml/gcut-inspect.xml:31(link) xml/gcut-inspect.xml:146(primary)
 msgid "gcut_inspect_string"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:65(link) xml/api-index-full.xml:543(link)
+#: xml/api-index-1.0.6.xml:63(link) xml/api-index-full.xml:543(link)
 #: xml/gcut-inspect.xml:34(link) xml/gcut-inspect.xml:171(primary)
 msgid "gcut_inspect_type"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:66(link) xml/api-index-full.xml:544(link)
+#: xml/api-index-1.0.6.xml:64(link) xml/api-index-full.xml:544(link)
 #: xml/gcut-inspect.xml:28(link) xml/gcut-inspect.xml:121(primary)
 msgid "gcut_inspect_uint"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:67(link) xml/api-index-full.xml:550(link)
+#: xml/api-index-1.0.6.xml:65(link) xml/api-index-full.xml:550(link)
 #: xml/gcut-list.xml:28(link) xml/gcut-list.xml:139(primary)
 msgid "gcut_list_equal_int"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:68(link) xml/api-index-full.xml:551(link)
+#: xml/api-index-1.0.6.xml:66(link) xml/api-index-full.xml:551(link)
 #: xml/gcut-list.xml:34(link) xml/gcut-list.xml:209(primary)
 msgid "gcut_list_equal_string"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:69(link) xml/api-index-full.xml:552(link)
+#: xml/api-index-1.0.6.xml:67(link) xml/api-index-full.xml:552(link)
 #: xml/gcut-list.xml:31(link) xml/gcut-list.xml:174(primary)
 msgid "gcut_list_equal_uint"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:70(link) xml/api-index-full.xml:555(link)
+#: xml/api-index-1.0.6.xml:68(link) xml/api-index-full.xml:555(link)
 #: xml/gcut-list.xml:38(link) xml/gcut-list.xml:259(primary)
 msgid "gcut_list_inspect_enum"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:71(link) xml/api-index-full.xml:556(link)
+#: xml/api-index-1.0.6.xml:69(link) xml/api-index-full.xml:556(link)
 #: xml/gcut-list.xml:40(link) xml/gcut-list.xml:279(primary)
 msgid "gcut_list_inspect_flags"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:72(link) xml/api-index-full.xml:557(link)
+#: xml/api-index-1.0.6.xml:70(link) xml/api-index-full.xml:557(link)
 #: xml/gcut-list.xml:30(link) xml/gcut-list.xml:159(primary)
 msgid "gcut_list_inspect_int"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:73(link) xml/api-index-full.xml:558(link)
+#: xml/api-index-1.0.6.xml:71(link) xml/api-index-full.xml:558(link)
 #: xml/gcut-list.xml:37(link) xml/gcut-list.xml:244(primary)
 msgid "gcut_list_inspect_object"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:74(link) xml/api-index-full.xml:559(link)
+#: xml/api-index-1.0.6.xml:72(link) xml/api-index-full.xml:559(link)
 #: xml/gcut-list.xml:36(link) xml/gcut-list.xml:229(primary)
 msgid "gcut_list_inspect_string"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:75(link) xml/api-index-full.xml:560(link)
+#: xml/api-index-1.0.6.xml:73(link) xml/api-index-full.xml:560(link)
 #: xml/gcut-list.xml:33(link) xml/gcut-list.xml:194(primary)
 msgid "gcut_list_inspect_uint"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:76(link) xml/api-index-full.xml:568(link)
+#: xml/api-index-1.0.6.xml:74(link) xml/api-index-full.xml:568(link)
 #: xml/gcut-test-utils.xml:29(link) xml/gcut-test-utils.xml:147(primary)
 msgid "gcut_list_string_new_array"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:77(link) xml/api-index-full.xml:591(link)
+#: xml/api-index-1.0.6.xml:75(link) xml/api-index-full.xml:591(link)
 #: xml/gcut-test-utils.xml:33(link) xml/gcut-test-utils.xml:195(primary)
 msgid "gcut_take_new_list_string_array"
 msgstr ""
@@ -2947,15 +2936,21 @@ msgstr ""
 msgid "GBSearchCompareFunc"
 msgstr ""
 
-#: xml/api-index-full.xml:415(link) xml/gcut-dynamic-data.xml:23(link)
+#: xml/api-index-full.xml:415(link) xml/gcut-dynamic-data.xml:7(refentrytitle)
+#: xml/gcut-dynamic-data.xml:13(refname) xml/gcut-dynamic-data.xml:23(link)
 #: xml/gcut-dynamic-data.xml:26(link) xml/gcut-dynamic-data.xml:28(link)
 #: xml/gcut-dynamic-data.xml:30(link) xml/gcut-dynamic-data.xml:31(link)
 #: xml/gcut-dynamic-data.xml:32(link) xml/gcut-dynamic-data.xml:33(link)
 #: xml/gcut-dynamic-data.xml:36(link) xml/gcut-dynamic-data.xml:39(link)
 #: xml/gcut-dynamic-data.xml:42(link) xml/gcut-dynamic-data.xml:45(link)
 #: xml/gcut-dynamic-data.xml:48(link) xml/gcut-dynamic-data.xml:51(link)
-#: xml/gcut-dynamic-data.xml:103(title) xml/gcut-dynamic-data.xml:104(primary)
+#: xml/gcut-dynamic-data.xml:97(title) xml/gcut-dynamic-data.xml:98(primary)
 msgid "GCutDynamicData"
+msgstr ""
+
+#: xml/api-index-full.xml:416(link) xml/gcut-dynamic-data.xml:24(link)
+#: xml/gcut-dynamic-data.xml:103(primary)
+msgid "GCutDynamicDataError"
 msgstr ""
 
 #: xml/api-index-full.xml:417(link) xml/gcut-egg.xml:23(link)
@@ -2977,15 +2972,15 @@ msgstr ""
 msgid "GCutEgg::error"
 msgstr ""
 
-#: xml/api-index-full.xml:419(link)
+#: xml/api-index-full.xml:419(link) xml/gcut-egg.xml:612(primary)
 msgid "GCutEgg::error-received"
 msgstr ""
 
-#: xml/api-index-full.xml:420(link)
+#: xml/api-index-full.xml:420(link) xml/gcut-egg.xml:630(primary)
 msgid "GCutEgg::output-received"
 msgstr ""
 
-#: xml/api-index-full.xml:421(link)
+#: xml/api-index-full.xml:421(link) xml/gcut-egg.xml:648(primary)
 msgid "GCutEgg::reaped"
 msgstr ""
 
@@ -3008,64 +3003,64 @@ msgstr ""
 msgid "gcut_assert_equal_flags_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:434(link) xml/gcut-assertions-helper.xml:120(link)
-#: xml/gcut-assertions-helper.xml:632(primary)
-msgid "gcut_assert_equal_g_pid_helper"
-msgstr ""
-
-#: xml/api-index-full.xml:436(link) xml/gcut-assertions-helper.xml:68(link)
+#: xml/api-index-full.xml:434(link) xml/gcut-assertions-helper.xml:68(link)
 #: xml/gcut-assertions-helper.xml:372(primary)
 msgid "gcut_assert_equal_hash_table_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:438(link) xml/gcut-assertions-helper.xml:77(link)
+#: xml/api-index-full.xml:436(link) xml/gcut-assertions-helper.xml:77(link)
 #: xml/gcut-assertions-helper.xml:413(primary)
 msgid "gcut_assert_equal_hash_table_string_string_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:440(link) xml/gcut-assertions-helper.xml:112(link)
+#: xml/api-index-full.xml:438(link) xml/gcut-assertions-helper.xml:112(link)
 #: xml/gcut-assertions-helper.xml:590(primary)
 msgid "gcut_assert_equal_int64_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:443(link) xml/gcut-assertions-helper.xml:50(link)
+#: xml/api-index-full.xml:441(link) xml/gcut-assertions-helper.xml:50(link)
 #: xml/gcut-assertions-helper.xml:288(primary)
 msgid "gcut_assert_equal_list_enum_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:445(link) xml/gcut-assertions-helper.xml:56(link)
+#: xml/api-index-full.xml:443(link) xml/gcut-assertions-helper.xml:56(link)
 #: xml/gcut-assertions-helper.xml:317(primary)
 msgid "gcut_assert_equal_list_flags_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:446(link) xml/gcut-assertions-helper.xml:29(link)
+#: xml/api-index-full.xml:444(link) xml/gcut-assertions-helper.xml:29(link)
 #: xml/gcut-assertions-helper.xml:187(primary)
 msgid "gcut_assert_equal_list_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:448(link) xml/gcut-assertions-helper.xml:37(link)
+#: xml/api-index-full.xml:446(link) xml/gcut-assertions-helper.xml:37(link)
 #: xml/gcut-assertions-helper.xml:224(primary)
 msgid "gcut_assert_equal_list_int_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:451(link) xml/gcut-assertions-helper.xml:62(link)
+#: xml/api-index-full.xml:449(link) xml/gcut-assertions-helper.xml:62(link)
 #: xml/gcut-assertions-helper.xml:346(primary)
 msgid "gcut_assert_equal_list_object_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:453(link) xml/gcut-assertions-helper.xml:45(link)
+#: xml/api-index-full.xml:451(link) xml/gcut-assertions-helper.xml:45(link)
 #: xml/gcut-assertions-helper.xml:266(primary)
 msgid "gcut_assert_equal_list_string_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:455(link) xml/gcut-assertions-helper.xml:41(link)
+#: xml/api-index-full.xml:453(link) xml/gcut-assertions-helper.xml:41(link)
 #: xml/gcut-assertions-helper.xml:245(primary)
 msgid "gcut_assert_equal_list_uint_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:458(link) xml/gcut-assertions-helper.xml:106(link)
+#: xml/api-index-full.xml:456(link) xml/gcut-assertions-helper.xml:106(link)
 #: xml/gcut-assertions-helper.xml:561(primary)
 msgid "gcut_assert_equal_object_helper"
+msgstr ""
+
+#: xml/api-index-full.xml:458(link) xml/gcut-assertions-helper.xml:120(link)
+#: xml/gcut-assertions-helper.xml:632(primary)
+msgid "gcut_assert_equal_pid_helper"
 msgstr ""
 
 #: xml/api-index-full.xml:460(link) xml/gcut-assertions-helper.xml:90(link)
@@ -3134,67 +3129,72 @@ msgid "gcut_data_get_uint_helper"
 msgstr ""
 
 #: xml/api-index-full.xml:485(link) xml/gcut-dynamic-data.xml:22(link)
-#: xml/gcut-dynamic-data.xml:94(primary)
+#: xml/gcut-dynamic-data.xml:88(primary)
 msgid "GCUT_DYNAMIC_DATA"
 msgstr ""
 
 #: xml/api-index-full.xml:486(link) xml/gcut-dynamic-data.xml:31(link)
-#: xml/gcut-dynamic-data.xml:175(primary)
+#: xml/gcut-dynamic-data.xml:161(primary)
 msgid "gcut_dynamic_data_equal"
 msgstr ""
 
+#: xml/api-index-full.xml:487(link) xml/gcut-dynamic-data.xml:21(link)
+#: xml/gcut-dynamic-data.xml:81(title) xml/gcut-dynamic-data.xml:82(primary)
+msgid "GCUT_DYNAMIC_DATA_ERROR"
+msgstr ""
+
 #: xml/api-index-full.xml:488(link) xml/gcut-dynamic-data.xml:25(link)
-#: xml/gcut-dynamic-data.xml:126(primary)
+#: xml/gcut-dynamic-data.xml:112(primary)
 msgid "gcut_dynamic_data_error_quark"
 msgstr ""
 
 #: xml/api-index-full.xml:489(link) xml/gcut-dynamic-data.xml:42(link)
-#: xml/gcut-dynamic-data.xml:247(primary)
+#: xml/gcut-dynamic-data.xml:233(primary)
 msgid "gcut_dynamic_data_get_data_type"
 msgstr ""
 
 #: xml/api-index-full.xml:490(link) xml/gcut-dynamic-data.xml:48(link)
-#: xml/gcut-dynamic-data.xml:285(primary)
+#: xml/gcut-dynamic-data.xml:271(primary)
 msgid "gcut_dynamic_data_get_enum"
 msgstr ""
 
 #: xml/api-index-full.xml:491(link) xml/gcut-dynamic-data.xml:45(link)
-#: xml/gcut-dynamic-data.xml:266(primary)
+#: xml/gcut-dynamic-data.xml:252(primary)
 msgid "gcut_dynamic_data_get_flags"
 msgstr ""
 
 #: xml/api-index-full.xml:492(link) xml/gcut-dynamic-data.xml:36(link)
-#: xml/gcut-dynamic-data.xml:209(primary)
+#: xml/gcut-dynamic-data.xml:195(primary)
 msgid "gcut_dynamic_data_get_int"
 msgstr ""
 
 #: xml/api-index-full.xml:493(link) xml/gcut-dynamic-data.xml:51(link)
-#: xml/gcut-dynamic-data.xml:304(primary)
+#: xml/gcut-dynamic-data.xml:290(primary)
 msgid "gcut_dynamic_data_get_pointer"
 msgstr "gcut_dynamic_data_get_pointer"
 
 #: xml/api-index-full.xml:494(link) xml/gcut-dynamic-data.xml:33(link)
-#: xml/gcut-dynamic-data.xml:190(primary)
+#: xml/gcut-dynamic-data.xml:176(primary)
 msgid "gcut_dynamic_data_get_string"
 msgstr ""
 
 #: xml/api-index-full.xml:495(link) xml/gcut-dynamic-data.xml:39(link)
-#: xml/gcut-dynamic-data.xml:228(primary)
+#: xml/gcut-dynamic-data.xml:214(primary)
 msgid "gcut_dynamic_data_get_uint"
 msgstr ""
 
 #: xml/api-index-full.xml:496(link) xml/gcut-dynamic-data.xml:30(link)
-#: xml/gcut-dynamic-data.xml:164(primary)
+#: xml/gcut-dynamic-data.xml:150(primary)
 msgid "gcut_dynamic_data_inspect"
 msgstr ""
 
 #: xml/api-index-full.xml:497(link) xml/gcut-dynamic-data.xml:26(link)
-#: xml/gcut-dynamic-data.xml:134(primary)
+#: xml/gcut-dynamic-data.xml:120(primary)
 msgid "gcut_dynamic_data_new"
 msgstr ""
 
 #: xml/api-index-full.xml:498(link) xml/gcut-dynamic-data.xml:28(link)
-#: xml/gcut-dynamic-data.xml:149(primary)
+#: xml/gcut-dynamic-data.xml:135(primary)
 msgid "gcut_dynamic_data_new_va_list"
 msgstr ""
 
@@ -3954,7 +3954,7 @@ msgstr "説明"
 #: xml/cuttest-utils.xml:46(title) xml/gbsearcharray.xml:50(title)
 #: xml/gcut-assertions-helper.xml:142(title) xml/gcut-assertions.xml:91(title)
 #: xml/gcut-data-helper.xml:60(title) xml/gcut-data.xml:54(title)
-#: xml/gcut-dynamic-data.xml:81(title) xml/gcut-egg.xml:171(title)
+#: xml/gcut-dynamic-data.xml:79(title) xml/gcut-egg.xml:171(title)
 #: xml/gcut-enum.xml:62(title) xml/gcut-error.xml:50(title)
 #: xml/gcut-hash-table.xml:58(title) xml/gcut-inspect.xml:68(title)
 #: xml/gcut-io-channel-string.xml:56(title) xml/gcut-io.xml:40(title)
@@ -4091,13 +4091,13 @@ msgstr ""
 #: xml/gcut-data-helper.xml:77(term) xml/gcut-data-helper.xml:96(term)
 #: xml/gcut-data-helper.xml:115(term) xml/gcut-data-helper.xml:134(term)
 #: xml/gcut-data-helper.xml:153(term) xml/gcut-data-helper.xml:172(term)
-#: xml/gcut-data-helper.xml:191(term) xml/gcut-dynamic-data.xml:129(term)
-#: xml/gcut-dynamic-data.xml:144(term) xml/gcut-dynamic-data.xml:159(term)
-#: xml/gcut-dynamic-data.xml:170(term) xml/gcut-dynamic-data.xml:185(term)
-#: xml/gcut-dynamic-data.xml:204(term) xml/gcut-dynamic-data.xml:223(term)
-#: xml/gcut-dynamic-data.xml:242(term) xml/gcut-dynamic-data.xml:261(term)
-#: xml/gcut-dynamic-data.xml:280(term) xml/gcut-dynamic-data.xml:299(term)
-#: xml/gcut-dynamic-data.xml:318(term) xml/gcut-egg.xml:235(term)
+#: xml/gcut-data-helper.xml:191(term) xml/gcut-dynamic-data.xml:115(term)
+#: xml/gcut-dynamic-data.xml:130(term) xml/gcut-dynamic-data.xml:145(term)
+#: xml/gcut-dynamic-data.xml:156(term) xml/gcut-dynamic-data.xml:171(term)
+#: xml/gcut-dynamic-data.xml:190(term) xml/gcut-dynamic-data.xml:209(term)
+#: xml/gcut-dynamic-data.xml:228(term) xml/gcut-dynamic-data.xml:247(term)
+#: xml/gcut-dynamic-data.xml:266(term) xml/gcut-dynamic-data.xml:285(term)
+#: xml/gcut-dynamic-data.xml:304(term) xml/gcut-egg.xml:235(term)
 #: xml/gcut-egg.xml:252(term) xml/gcut-egg.xml:270(term)
 #: xml/gcut-egg.xml:289(term) xml/gcut-egg.xml:304(term)
 #: xml/gcut-egg.xml:319(term) xml/gcut-egg.xml:348(term)
@@ -4170,10 +4170,10 @@ msgstr ""
 #: xml/cut-stream-parser.xml:93(term) xml/cut-stream-parser.xml:108(term)
 #: xml/cut-stream.xml:57(term) xml/cut-test-utils.xml:387(term)
 #: xml/gcut-assertions-helper.xml:439(term) xml/gcut-assertions.xml:462(term)
-#: xml/gcut-assertions.xml:479(term) xml/gcut-dynamic-data.xml:201(term)
-#: xml/gcut-dynamic-data.xml:220(term) xml/gcut-dynamic-data.xml:239(term)
-#: xml/gcut-dynamic-data.xml:258(term) xml/gcut-dynamic-data.xml:277(term)
-#: xml/gcut-dynamic-data.xml:296(term) xml/gcut-dynamic-data.xml:315(term)
+#: xml/gcut-assertions.xml:479(term) xml/gcut-dynamic-data.xml:187(term)
+#: xml/gcut-dynamic-data.xml:206(term) xml/gcut-dynamic-data.xml:225(term)
+#: xml/gcut-dynamic-data.xml:244(term) xml/gcut-dynamic-data.xml:263(term)
+#: xml/gcut-dynamic-data.xml:282(term) xml/gcut-dynamic-data.xml:301(term)
 #: xml/gcut-egg.xml:399(term) xml/gcut-egg.xml:437(term)
 #: xml/gcut-egg.xml:480(term) xml/gcut-enum.xml:141(term)
 #: xml/gcut-enum.xml:186(term) xml/gcut-enum.xml:202(term)
@@ -4407,13 +4407,14 @@ msgstr ""
 #: xml/cutter.xml:236(para) xml/cutter.xml:335(para) xml/cutter.xml:379(para)
 #: xml/gcut-assertions.xml:561(para) xml/gcut-assertions.xml:592(para)
 #: xml/gcut-assertions.xml:630(para) xml/gcut-assertions.xml:659(para)
-#: xml/gcut-data.xml:63(para) xml/gcut-hash-table.xml:69(para)
-#: xml/gcut-hash-table.xml:103(para) xml/gcut-inspect.xml:77(para)
-#: xml/gcut-inspect.xml:102(para) xml/gcut-inspect.xml:127(para)
-#: xml/gcut-inspect.xml:152(para) xml/gcut-inspect.xml:177(para)
-#: xml/gcut-inspect.xml:202(para) xml/gcut-inspect.xml:233(para)
-#: xml/gcut-inspect.xml:264(para) xml/gcut-list.xml:86(para)
-#: xml/gcut-list.xml:117(para) xml/gcut-value-equal.xml:79(para)
+#: xml/gcut-data.xml:63(para) xml/gcut-egg.xml:121(para)
+#: xml/gcut-hash-table.xml:69(para) xml/gcut-hash-table.xml:103(para)
+#: xml/gcut-inspect.xml:77(para) xml/gcut-inspect.xml:102(para)
+#: xml/gcut-inspect.xml:127(para) xml/gcut-inspect.xml:152(para)
+#: xml/gcut-inspect.xml:177(para) xml/gcut-inspect.xml:202(para)
+#: xml/gcut-inspect.xml:233(para) xml/gcut-inspect.xml:264(para)
+#: xml/gcut-list.xml:86(para) xml/gcut-list.xml:117(para)
+#: xml/gcut-value-equal.xml:79(para)
 msgid "e.g.: <placeholder-1/>"
 msgstr "例: <placeholder-1/>"
 
@@ -4486,7 +4487,7 @@ msgstr "チェックする式。"
 #: xml/gcut-assertions.xml:646(term) xml/gcut-assertions.xml:688(term)
 #: xml/gcut-assertions.xml:707(term) xml/gcut-assertions.xml:726(term)
 #: xml/gcut-assertions.xml:745(term) xml/gcut-data.xml:112(term)
-#: xml/gcut-dynamic-data.xml:141(term) xml/gcut-egg.xml:249(term)
+#: xml/gcut-dynamic-data.xml:127(term) xml/gcut-egg.xml:249(term)
 #: xml/gcut-egg.xml:367(term) xml/gcut-test-utils.xml:137(term)
 #: xml/gcut-test-utils.xml:172(term) xml/gcut-test-utils.xml:189(term)
 #: xml/gcut-test-utils.xml:232(term) xml/gcut-test-utils.xml:283(term)
@@ -4774,7 +4775,6 @@ msgstr "実際のsize_tの値。"
 #: xml/gcut-data.xml:144(para) xml/gcut-data.xml:159(para)
 #: xml/gcut-data.xml:173(para) xml/gcut-data.xml:188(para)
 #: xml/gcut-data.xml:203(para) xml/gcut-data.xml:218(para)
-#: xml/gcut-dynamic-data.xml:91(para) xml/gcut-dynamic-data.xml:123(para)
 #: xml/gcut-egg.xml:229(para) xml/gcut-egg.xml:255(para)
 #: xml/gcut-egg.xml:273(para) xml/gcut-egg.xml:292(para)
 #: xml/gcut-egg.xml:307(para) xml/gcut-egg.xml:322(para)
@@ -5209,11 +5209,11 @@ msgstr ""
 "<parameter>actual</parameter>と<parameter>expected</parameter>を比較する関"
 "数。"
 
-#: xml/cut-assertions.xml:557(simpara)
+#: xml/cut-assertions.xml:557(simpara) xml/gcut-assertions.xml:740(simpara)
 msgid "an expected value."
 msgstr "期待値。"
 
-#: xml/cut-assertions.xml:560(simpara)
+#: xml/cut-assertions.xml:560(simpara) xml/gcut-assertions.xml:743(simpara)
 msgid "an actual value."
 msgstr "実測値。"
 
@@ -5476,7 +5476,9 @@ msgstr "フィクスチャデータのパスの最初の要素。"
 msgid ""
 "remaining elements in path. <link linkend=\"NULL--CAPS\"><literal>NULL</"
 "literal></link> terminated."
-msgstr "パスの残りの要素。<link linkend=\"NULL--CAPS\"><literal>NULL</literal></link>終端。"
+msgstr ""
+"パスの残りの要素。<link linkend=\"NULL--CAPS\"><literal>NULL</literal></link>"
+"終端。"
 
 #: xml/cut-assertions.xml:741(title)
 msgid "cut_error ()"
@@ -5982,11 +5984,11 @@ msgstr ""
 #: xml/gcut-data.xml:124(term) xml/gcut-data.xml:138(term)
 #: xml/gcut-data.xml:153(term) xml/gcut-data.xml:167(term)
 #: xml/gcut-data.xml:182(term) xml/gcut-data.xml:197(term)
-#: xml/gcut-data.xml:212(term) xml/gcut-dynamic-data.xml:167(term)
-#: xml/gcut-dynamic-data.xml:195(term) xml/gcut-dynamic-data.xml:214(term)
-#: xml/gcut-dynamic-data.xml:233(term) xml/gcut-dynamic-data.xml:252(term)
-#: xml/gcut-dynamic-data.xml:271(term) xml/gcut-dynamic-data.xml:290(term)
-#: xml/gcut-dynamic-data.xml:309(term) xml/gcut-inspect.xml:87(term)
+#: xml/gcut-data.xml:212(term) xml/gcut-dynamic-data.xml:153(term)
+#: xml/gcut-dynamic-data.xml:181(term) xml/gcut-dynamic-data.xml:200(term)
+#: xml/gcut-dynamic-data.xml:219(term) xml/gcut-dynamic-data.xml:238(term)
+#: xml/gcut-dynamic-data.xml:257(term) xml/gcut-dynamic-data.xml:276(term)
+#: xml/gcut-dynamic-data.xml:295(term) xml/gcut-inspect.xml:87(term)
 #: xml/gcut-inspect.xml:112(term) xml/gcut-inspect.xml:137(term)
 #: xml/gcut-inspect.xml:162(term) xml/gcut-inspect.xml:187(term)
 #: xml/gcut-inspect.xml:218(term) xml/gcut-inspect.xml:249(term)
@@ -8183,7 +8185,10 @@ msgid ""
 "<link linkend=\"CUT-TRUE--CAPS\"><literal>CUT_TRUE</literal></link> if "
 "<parameter>sub_process</parameter> is completed successfully, <link linkend="
 "\"CUT-FALSE--CAPS\"><literal>CUT_FALSE</literal></link> otherwise."
-msgstr "もし、<parameter>sub_process</parameter>が正常に終了した場合は<link linkend=\"CUT-TRUE--CAPS\"><literal>CUT_TRUE</literal></link>、そうでない場合は<link linkend=\"CUT-FALSE--CAPS\"><literal>CUT_FALSE</literal></link>。"
+msgstr ""
+"もし、<parameter>sub_process</parameter>が正常に終了した場合は<link linkend="
+"\"CUT-TRUE--CAPS\"><literal>CUT_TRUE</literal></link>、そうでない場合は<link "
+"linkend=\"CUT-FALSE--CAPS\"><literal>CUT_FALSE</literal></link>。"
 
 #: xml/cut-multi-process.xml:180(title)
 msgid "cut_sub_process_run_async ()"
@@ -8252,7 +8257,10 @@ msgid ""
 "<link linkend=\"CUT-TRUE--CAPS\"><literal>CUT_TRUE</literal></link> if "
 "<parameter>sub_process</parameter> is running, <link linkend=\"CUT-FALSE--"
 "CAPS\"><literal>CUT_FALSE</literal></link> otherwise."
-msgstr "<parameter>sub_process</parameter>が実行中の場合は<link linkend=\"CUT-TRUE--CAPS\"><literal>CUT_TRUE</literal></link>、そうでない場合は<link linkend=\"CUT-FALSE--CAPS\"><literal>CUT_FALSE</literal></link>。"
+msgstr ""
+"<parameter>sub_process</parameter>が実行中の場合は<link linkend=\"CUT-TRUE--"
+"CAPS\"><literal>CUT_TRUE</literal></link>、そうでない場合は<link linkend="
+"\"CUT-FALSE--CAPS\"><literal>CUT_FALSE</literal></link>。"
 
 #: xml/cut-multi-process.xml:239(title)
 msgid "cut_sub_process_get_test_directory ()"
@@ -8360,7 +8368,10 @@ msgid ""
 "<link linkend=\"CUT-TRUE--CAPS\"><literal>CUT_TRUE</literal></link> if "
 "<parameter>sub_process</parameter> is ran in multi-thread mode, <link "
 "linkend=\"CUT-FALSE--CAPS\"><literal>CUT_FALSE</literal></link> otherwise."
-msgstr "<parameter>sub_process</parameter>がマルチスレッドモードで実行されるなら<link linkend=\"CUT-TRUE--CAPS\"><literal>CUT_TRUE</literal></link>、そうでなければ<link linkend=\"CUT-FALSE--CAPS\"><literal>CUT_FALSE</literal></link>。"
+msgstr ""
+"<parameter>sub_process</parameter>がマルチスレッドモードで実行されるなら"
+"<link linkend=\"CUT-TRUE--CAPS\"><literal>CUT_TRUE</literal></link>、そうでな"
+"ければ<link linkend=\"CUT-FALSE--CAPS\"><literal>CUT_FALSE</literal></link>。"
 
 #: xml/cut-multi-process.xml:318(title)
 msgid "cut_sub_process_set_multi_thread ()"
@@ -8390,7 +8401,9 @@ msgstr ""
 msgid ""
 "<link linkend=\"CUT-TRUE--CAPS\"><literal>CUT_TRUE</literal></link> to be "
 "ran in multi-thread mode."
-msgstr "マルチスレッドモードで実行するなら<link linkend=\"CUT-TRUE--CAPS\"><literal>CUT_TRUE</literal></link>。"
+msgstr ""
+"マルチスレッドモードで実行するなら<link linkend=\"CUT-TRUE--CAPS"
+"\"><literal>CUT_TRUE</literal></link>。"
 
 #: xml/cut-multi-process.xml:334(title)
 msgid "cut_sub_process_get_max_threads ()"
@@ -8664,7 +8677,10 @@ msgid ""
 "<link linkend=\"CUT-TRUE--CAPS\"><literal>CUT_TRUE</literal></link> if "
 "<parameter>sub_process</parameter> was crashed, <link linkend=\"CUT-FALSE--"
 "CAPS\"><literal>CUT_FALSE</literal></link> otherwise."
-msgstr "<parameter>sub_process</parameter>が異常終了したときは<link linkend=\"CUT-TRUE--CAPS\"><literal>CUT_TRUE</literal></link>、そうでない場合は<link linkend=\"CUT-FALSE--CAPS\"><literal>CUT_FALSE</literal></link>。"
+msgstr ""
+"<parameter>sub_process</parameter>が異常終了したときは<link linkend=\"CUT-"
+"TRUE--CAPS\"><literal>CUT_TRUE</literal></link>、そうでない場合は<link "
+"linkend=\"CUT-FALSE--CAPS\"><literal>CUT_FALSE</literal></link>。"
 
 #: xml/cut-multi-process.xml:543(title)
 msgid "cut_sub_process_get_fatal_failures ()"
@@ -9932,7 +9948,7 @@ msgid ""
 msgstr ""
 
 #: xml/cut-run-context.xml:808(term) xml/cutter.xml:447(term)
-#: xml/gcut-dynamic-data.xml:156(term) xml/gcut-egg.xml:267(term)
+#: xml/gcut-dynamic-data.xml:142(term) xml/gcut-egg.xml:267(term)
 #: xml/gcut-test-utils.xml:257(term)
 msgid "<parameter>args</parameter>&nbsp;:"
 msgstr ""
@@ -10235,6 +10251,8 @@ msgstr ""
 
 #: xml/cut-sequence-matcher.xml:121(term)
 #: xml/cut-sequence-matcher.xml:244(term) xml/cut-stream.xml:60(term)
+#: xml/gcut-egg.xml:609(term) xml/gcut-egg.xml:627(term)
+#: xml/gcut-egg.xml:645(term) xml/gcut-egg.xml:659(term)
 #: xml/gcut-hash-table.xml:119(term) xml/gcut-inspect.xml:90(term)
 #: xml/gcut-inspect.xml:115(term) xml/gcut-inspect.xml:140(term)
 #: xml/gcut-inspect.xml:165(term) xml/gcut-inspect.xml:190(term)
@@ -12460,7 +12478,11 @@ msgid ""
 "\"><type>CutDestroyFunction</type></link>) triples. The variable arguments "
 "should be terminated by <link linkend=\"NULL--CAPS\"><literal>NULL</"
 "literal></link> since 1.0.6."
-msgstr "最初のデータとデータ破棄関数。続けて任意の数の「名前・データ・データ破棄関数(<link linkend=\"CutDestroyFunction\"><type>CutDestroyFunction</type></link>)」の三つ組を指定します。1.0.6から可変長の引数は<link linkend=\"NULL--CAPS\"><literal>NULL</literal></link>終端しなければいけなくなりました。"
+msgstr ""
+"最初のデータとデータ破棄関数。続けて任意の数の「名前・データ・データ破棄関数"
+"(<link linkend=\"CutDestroyFunction\"><type>CutDestroyFunction</type></"
+"link>)」の三つ組を指定します。1.0.6から可変長の引数は<link linkend=\"NULL--"
+"CAPS\"><literal>NULL</literal></link>終端しなければいけなくなりました。"
 
 #: xml/cutter.xml:317(title)
 msgid "cut_add_data_backward_compatibility()"
@@ -13342,7 +13364,7 @@ msgid ""
 "                                                         <placeholder-133/> actual,\n"
 "                                                         const <placeholder-134/> *expression_expected,\n"
 "                                                         const <placeholder-135/> *expression_actual);\n"
-"<placeholder-136/>                <placeholder-137/>      (<placeholder-138/> expected,\n"
+"<placeholder-136/>                <placeholder-137/>        (<placeholder-138/> expected,\n"
 "                                                         <placeholder-139/> actual,\n"
 "                                                         const <placeholder-140/> *expression_expected,\n"
 "                                                         const <placeholder-141/> *expression_actual);\n"
@@ -13739,13 +13761,13 @@ msgid ""
 msgstr ""
 
 #: xml/gcut-assertions-helper.xml:631(title)
-msgid "gcut_assert_equal_g_pid_helper ()"
+msgid "gcut_assert_equal_pid_helper ()"
 msgstr ""
 
 #: xml/gcut-assertions-helper.xml:632(programlisting)
 #, no-wrap
 msgid ""
-"<link linkend=\"void\">void</link>                gcut_assert_equal_g_pid_helper      (<link linkend=\"GPid\">GPid</link> expected,\n"
+"<link linkend=\"void\">void</link>                gcut_assert_equal_pid_helper        (<link linkend=\"GPid\">GPid</link> expected,\n"
 "                                                         <link linkend=\"GPid\">GPid</link> actual,\n"
 "                                                         const <link linkend=\"char\">char</link> *expression_expected,\n"
 "                                                         const <link linkend=\"char\">char</link> *expression_actual);"
@@ -13813,7 +13835,7 @@ msgid ""
 "                                                         equal_function, ...)\n"
 "#define             <placeholder-50/>             (expected, actual, ...)\n"
 "#define             <placeholder-51/>            (expected, actual, ...)\n"
-"#define             <placeholder-52/>             (expected, actual, ...)\n"
+"#define             <placeholder-52/>               (expected, actual, ...)\n"
 msgstr ""
 
 #: xml/gcut-assertions.xml:93(title)
@@ -14556,20 +14578,12 @@ msgid "an actual unsigned integer value. (guint64)"
 msgstr "実際の64bit符号無し符号整数の値。（guint64）"
 
 #: xml/gcut-assertions.xml:733(title)
-msgid "gcut_assert_equal_g_pid()"
+msgid "gcut_assert_equal_pid()"
 msgstr ""
 
 #: xml/gcut-assertions.xml:734(programlisting)
 #, no-wrap
-msgid "#define             gcut_assert_equal_g_pid(expected, actual, ...)"
-msgstr ""
-
-#: xml/gcut-assertions.xml:740(simpara)
-msgid "an expected GPid value."
-msgstr ""
-
-#: xml/gcut-assertions.xml:743(simpara)
-msgid "an actual GPid value."
+msgid "#define             gcut_assert_equal_pid(expected, actual, ...)"
 msgstr ""
 
 #: xml/gcut-data-helper.xml:7(refentrytitle)
@@ -14623,10 +14637,10 @@ msgstr ""
 #: xml/gcut-data.xml:141(term) xml/gcut-data.xml:156(term)
 #: xml/gcut-data.xml:170(term) xml/gcut-data.xml:185(term)
 #: xml/gcut-data.xml:200(term) xml/gcut-data.xml:215(term)
-#: xml/gcut-dynamic-data.xml:198(term) xml/gcut-dynamic-data.xml:217(term)
-#: xml/gcut-dynamic-data.xml:236(term) xml/gcut-dynamic-data.xml:255(term)
-#: xml/gcut-dynamic-data.xml:274(term) xml/gcut-dynamic-data.xml:293(term)
-#: xml/gcut-dynamic-data.xml:312(term)
+#: xml/gcut-dynamic-data.xml:184(term) xml/gcut-dynamic-data.xml:203(term)
+#: xml/gcut-dynamic-data.xml:222(term) xml/gcut-dynamic-data.xml:241(term)
+#: xml/gcut-dynamic-data.xml:260(term) xml/gcut-dynamic-data.xml:279(term)
+#: xml/gcut-dynamic-data.xml:298(term)
 msgid "<parameter>field_name</parameter>&nbsp;:"
 msgstr "<parameter>field_name</parameter>&nbsp;:"
 
@@ -14797,8 +14811,8 @@ msgstr ""
 msgid "The name of the data."
 msgstr ""
 
-#: xml/gcut-data.xml:109(term) xml/gcut-dynamic-data.xml:138(term)
-#: xml/gcut-dynamic-data.xml:153(term)
+#: xml/gcut-data.xml:109(term) xml/gcut-dynamic-data.xml:124(term)
+#: xml/gcut-dynamic-data.xml:139(term)
 msgid "<parameter>first_field_name</parameter>&nbsp;:"
 msgstr ""
 
@@ -14835,7 +14849,9 @@ msgstr ""
 msgid ""
 "the data added by <link linkend=\"gcut-add-datum\"><function>gcut_add_datum()"
 "</function></link>."
-msgstr "<link linkend=\"gcut-add-datum\"><function>gcut_add_datum()</function></link>で追加したデータ。"
+msgstr ""
+"<link linkend=\"gcut-add-datum\"><function>gcut_add_datum()</function></link>"
+"で追加したデータ。"
 
 #: xml/gcut-data.xml:128(simpara) xml/gcut-data.xml:142(simpara)
 #: xml/gcut-data.xml:157(simpara) xml/gcut-data.xml:171(simpara)
@@ -14935,15 +14951,6 @@ msgid ""
 "pointer."
 msgstr ""
 
-#: xml/gcut-dynamic-data.xml:7(refentrytitle)
-#: xml/gcut-dynamic-data.xml:13(refname)
-msgid "Dynamic data structure"
-msgstr ""
-
-#: xml/gcut-dynamic-data.xml:14(refpurpose) xml/gcut-dynamic-data.xml:74(para)
-msgid "FIXME"
-msgstr ""
-
 #: xml/gcut-dynamic-data.xml:20(synopsis)
 #, no-wrap
 msgid ""
@@ -14985,7 +14992,7 @@ msgstr ""
 
 #: xml/gcut-dynamic-data.xml:58(title) xml/gcut-egg.xml:66(title)
 msgid "Object Hierarchy"
-msgstr ""
+msgstr "オブジェクト階層"
 
 #: xml/gcut-dynamic-data.xml:59(synopsis)
 #, no-wrap
@@ -14995,42 +15002,34 @@ msgid ""
 "   +----GCutDynamicData\n"
 msgstr ""
 
-#: xml/gcut-dynamic-data.xml:84(programlisting)
+#: xml/gcut-dynamic-data.xml:82(programlisting)
 #, no-wrap
 msgid "#define GCUT_DYNAMIC_DATA_ERROR           (gcut_dynamic_data_error_quark())\n"
 msgstr ""
 
-#: xml/gcut-dynamic-data.xml:86(para)
-msgid ""
-"Error domain for key file parsing. Errors in this domain will be from the "
-"<link linkend=\"GCutDynamicDataError\"><type>GCutDynamicDataError</type></"
-"link> data. See <link linkend=\"GError\"><type>GError</type></link> for "
-"information on error domains."
-msgstr ""
-
-#: xml/gcut-dynamic-data.xml:93(title)
+#: xml/gcut-dynamic-data.xml:87(title)
 msgid "GCUT_DYNAMIC_DATA()"
 msgstr ""
 
-#: xml/gcut-dynamic-data.xml:94(programlisting)
+#: xml/gcut-dynamic-data.xml:88(programlisting)
 #, no-wrap
 msgid "#define GCUT_DYNAMIC_DATA(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GCUT_TYPE_DYNAMIC_DATA, GCutDynamicData))\n"
 msgstr ""
 
-#: xml/gcut-dynamic-data.xml:98(term)
+#: xml/gcut-dynamic-data.xml:92(term)
 msgid "<parameter>obj</parameter>&nbsp;:"
 msgstr "<parameter>obj</parameter>&nbsp;:"
 
-#: xml/gcut-dynamic-data.xml:104(programlisting)
+#: xml/gcut-dynamic-data.xml:98(programlisting)
 #, no-wrap
 msgid "typedef struct _GCutDynamicData GCutDynamicData;"
 msgstr ""
 
-#: xml/gcut-dynamic-data.xml:108(title)
+#: xml/gcut-dynamic-data.xml:102(title)
 msgid "enum GCutDynamicDataError"
 msgstr ""
 
-#: xml/gcut-dynamic-data.xml:109(programlisting)
+#: xml/gcut-dynamic-data.xml:103(programlisting)
 #, no-wrap
 msgid ""
 "typedef enum\n"
@@ -15039,82 +15038,70 @@ msgid ""
 "} GCutDynamicDataError;\n"
 msgstr ""
 
-#: xml/gcut-dynamic-data.xml:114(para)
-msgid "Error codes returned by data related operation."
-msgstr ""
-
-#: xml/gcut-dynamic-data.xml:119(literal)
-msgid "GCUT_DYNAMIC_DATA_ERROR_NOT_EXIST"
-msgstr ""
-
-#: xml/gcut-dynamic-data.xml:120(simpara)
-msgid "The field doesn't exist."
-msgstr ""
-
-#: xml/gcut-dynamic-data.xml:125(title)
+#: xml/gcut-dynamic-data.xml:111(title)
 msgid "gcut_dynamic_data_error_quark ()"
 msgstr ""
 
-#: xml/gcut-dynamic-data.xml:126(programlisting)
+#: xml/gcut-dynamic-data.xml:112(programlisting)
 #, no-wrap
 msgid "<link linkend=\"GQuark\">GQuark</link>              gcut_dynamic_data_error_quark       (void);"
 msgstr ""
 
-#: xml/gcut-dynamic-data.xml:133(title)
+#: xml/gcut-dynamic-data.xml:119(title)
 msgid "gcut_dynamic_data_new ()"
 msgstr ""
 
-#: xml/gcut-dynamic-data.xml:134(programlisting)
+#: xml/gcut-dynamic-data.xml:120(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"GCutDynamicData\">GCutDynamicData</link> *   gcut_dynamic_data_new               (const <link linkend=\"gchar\">gchar</link> *first_field_name,\n"
 "                                                         ...);"
 msgstr ""
 
-#: xml/gcut-dynamic-data.xml:148(title)
+#: xml/gcut-dynamic-data.xml:134(title)
 msgid "gcut_dynamic_data_new_va_list ()"
 msgstr ""
 
-#: xml/gcut-dynamic-data.xml:149(programlisting)
+#: xml/gcut-dynamic-data.xml:135(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"GCutDynamicData\">GCutDynamicData</link> *   gcut_dynamic_data_new_va_list       (const <link linkend=\"gchar\">gchar</link> *first_field_name,\n"
 "                                                         <link linkend=\"va-list\">va_list</link> args);"
 msgstr ""
 
-#: xml/gcut-dynamic-data.xml:163(title)
+#: xml/gcut-dynamic-data.xml:149(title)
 msgid "gcut_dynamic_data_inspect ()"
 msgstr ""
 
-#: xml/gcut-dynamic-data.xml:164(programlisting)
+#: xml/gcut-dynamic-data.xml:150(programlisting)
 #, no-wrap
 msgid "<link linkend=\"gchar\">gchar</link> *             gcut_dynamic_data_inspect           (<link linkend=\"GCutDynamicData\">GCutDynamicData</link> *data);"
 msgstr ""
 
-#: xml/gcut-dynamic-data.xml:174(title)
+#: xml/gcut-dynamic-data.xml:160(title)
 msgid "gcut_dynamic_data_equal ()"
 msgstr ""
 
-#: xml/gcut-dynamic-data.xml:175(programlisting)
+#: xml/gcut-dynamic-data.xml:161(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"gboolean\">gboolean</link>            gcut_dynamic_data_equal             (<link linkend=\"GCutDynamicData\">GCutDynamicData</link> *data1,\n"
 "                                                         <link linkend=\"GCutDynamicData\">GCutDynamicData</link> *data2);"
 msgstr ""
 
-#: xml/gcut-dynamic-data.xml:179(term)
+#: xml/gcut-dynamic-data.xml:165(term)
 msgid "<parameter>data1</parameter>&nbsp;:"
 msgstr "<parameter>data1</parameter>&nbsp;:"
 
-#: xml/gcut-dynamic-data.xml:182(term)
+#: xml/gcut-dynamic-data.xml:168(term)
 msgid "<parameter>data2</parameter>&nbsp;:"
 msgstr "<parameter>data2</parameter>&nbsp;:"
 
-#: xml/gcut-dynamic-data.xml:189(title)
+#: xml/gcut-dynamic-data.xml:175(title)
 msgid "gcut_dynamic_data_get_string ()"
 msgstr ""
 
-#: xml/gcut-dynamic-data.xml:190(programlisting)
+#: xml/gcut-dynamic-data.xml:176(programlisting)
 #, no-wrap
 msgid ""
 "const <link linkend=\"gchar\">gchar</link> *       gcut_dynamic_data_get_string        (<link linkend=\"GCutDynamicData\">GCutDynamicData</link> *data,\n"
@@ -15122,11 +15109,11 @@ msgid ""
 "                                                         <link linkend=\"GError\">GError</link> **error);"
 msgstr ""
 
-#: xml/gcut-dynamic-data.xml:208(title)
+#: xml/gcut-dynamic-data.xml:194(title)
 msgid "gcut_dynamic_data_get_int ()"
 msgstr ""
 
-#: xml/gcut-dynamic-data.xml:209(programlisting)
+#: xml/gcut-dynamic-data.xml:195(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"gint\">gint</link>                gcut_dynamic_data_get_int           (<link linkend=\"GCutDynamicData\">GCutDynamicData</link> *data,\n"
@@ -15134,11 +15121,11 @@ msgid ""
 "                                                         <link linkend=\"GError\">GError</link> **error);"
 msgstr ""
 
-#: xml/gcut-dynamic-data.xml:227(title)
+#: xml/gcut-dynamic-data.xml:213(title)
 msgid "gcut_dynamic_data_get_uint ()"
 msgstr ""
 
-#: xml/gcut-dynamic-data.xml:228(programlisting)
+#: xml/gcut-dynamic-data.xml:214(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"guint\">guint</link>               gcut_dynamic_data_get_uint          (<link linkend=\"GCutDynamicData\">GCutDynamicData</link> *data,\n"
@@ -15146,11 +15133,11 @@ msgid ""
 "                                                         <link linkend=\"GError\">GError</link> **error);"
 msgstr ""
 
-#: xml/gcut-dynamic-data.xml:246(title)
+#: xml/gcut-dynamic-data.xml:232(title)
 msgid "gcut_dynamic_data_get_data_type ()"
 msgstr ""
 
-#: xml/gcut-dynamic-data.xml:247(programlisting)
+#: xml/gcut-dynamic-data.xml:233(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"GType\">GType</link>               gcut_dynamic_data_get_data_type     (<link linkend=\"GCutDynamicData\">GCutDynamicData</link> *data,\n"
@@ -15158,11 +15145,11 @@ msgid ""
 "                                                         <link linkend=\"GError\">GError</link> **error);"
 msgstr ""
 
-#: xml/gcut-dynamic-data.xml:265(title)
+#: xml/gcut-dynamic-data.xml:251(title)
 msgid "gcut_dynamic_data_get_flags ()"
 msgstr ""
 
-#: xml/gcut-dynamic-data.xml:266(programlisting)
+#: xml/gcut-dynamic-data.xml:252(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"guint\">guint</link>               gcut_dynamic_data_get_flags         (<link linkend=\"GCutDynamicData\">GCutDynamicData</link> *data,\n"
@@ -15170,11 +15157,11 @@ msgid ""
 "                                                         <link linkend=\"GError\">GError</link> **error);"
 msgstr ""
 
-#: xml/gcut-dynamic-data.xml:284(title)
+#: xml/gcut-dynamic-data.xml:270(title)
 msgid "gcut_dynamic_data_get_enum ()"
 msgstr ""
 
-#: xml/gcut-dynamic-data.xml:285(programlisting)
+#: xml/gcut-dynamic-data.xml:271(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"gint\">gint</link>                gcut_dynamic_data_get_enum          (<link linkend=\"GCutDynamicData\">GCutDynamicData</link> *data,\n"
@@ -15182,11 +15169,11 @@ msgid ""
 "                                                         <link linkend=\"GError\">GError</link> **error);"
 msgstr ""
 
-#: xml/gcut-dynamic-data.xml:303(title)
+#: xml/gcut-dynamic-data.xml:289(title)
 msgid "gcut_dynamic_data_get_pointer ()"
 msgstr "gcut_dynamic_data_get_pointer ()"
 
-#: xml/gcut-dynamic-data.xml:304(programlisting)
+#: xml/gcut-dynamic-data.xml:290(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"gconstpointer\">gconstpointer</link>       gcut_dynamic_data_get_pointer       (<link linkend=\"GCutDynamicData\">GCutDynamicData</link> *data,\n"
@@ -15196,11 +15183,11 @@ msgstr ""
 
 #: xml/gcut-egg.xml:7(refentrytitle) xml/gcut-egg.xml:13(refname)
 msgid "External command"
-msgstr ""
+msgstr "外部コマンド"
 
 #: xml/gcut-egg.xml:14(refpurpose)
 msgid "Convenience API for using external command."
-msgstr ""
+msgstr "外部コマンドを使うための便利API"
 
 #: xml/gcut-egg.xml:33(link)
 msgid "GArray"
@@ -15266,7 +15253,7 @@ msgstr ""
 
 #: xml/gcut-egg.xml:78(title)
 msgid "Properties"
-msgstr ""
+msgstr "プロパティ"
 
 #: xml/gcut-egg.xml:80(link)
 msgid "command"
@@ -15281,7 +15268,7 @@ msgstr ""
 
 #: xml/gcut-egg.xml:85(title)
 msgid "Signals"
-msgstr ""
+msgstr "シグナル"
 
 #: xml/gcut-egg.xml:87(link)
 msgid "error"
@@ -15318,6 +15305,12 @@ msgid ""
 "easily by <link linkend=\"gcut-assert-error\"><function>gcut_assert_error()</"
 "function></link>."
 msgstr ""
+"<link linkend=\"GCutEgg\"><literal>GCutEgg</literal></link>は外部コマンドの実"
+"行・通信・終了をカプセル化します。<link linkend=\"GCutEgg"
+"\"><literal>GCutEgg</literal></link>はエラーを<link linkend=\"GError"
+"\"><literal>GError</literal></link>として報告します。エラーは<link linkend="
+"\"gcut-assert-error\"><function>gcut_assert_error()</function></link>を使うこ"
+"とにより簡単に検証できます。"
 
 #: xml/gcut-egg.xml:103(para)
 msgid ""
@@ -15328,25 +15321,32 @@ msgid ""
 "\"><function>gcut_egg_hatch()</function></link> runs specified external "
 "command."
 msgstr ""
+"外部コマンドは<link linkend=\"gcut-egg-new\"><function>gcut_egg_new()</"
+"function></link>、<link linkend=\"gcut-egg-new-strings"
+"\"><function>gcut_egg_new_strings()</function></link>などのようなコンストラク"
+"タで指定します。この時点では外部コマンドは実行されません。<link linkend="
+"\"gcut-egg-hatch\"><function>gcut_egg_hatch()</function></link>で指定された外"
+"部コマンドが実行されます。"
 
 #: xml/gcut-egg.xml:109(para)
 msgid ""
 "Standard/Error outputs of external command are passed by <link linkend="
-"\"GCutEgg-output-received\"><type>\"output-received\"</type></link>/GCutEgg::"
-"error-received signals or <link linkend=\"GIOChannel\"><literal>GIOChannel</"
-"literal></link> returned by <link linkend=\"gcut-egg-get-output"
+"\"GCutEgg-output-received\"><type>\"output-received\"</type></link>/<link "
+"linkend=\"GCutEgg-error-received\"><type>\"error-received\"</type></link> "
+"signals or <link linkend=\"GIOChannel\"><literal>GIOChannel</literal></link> "
+"returned by <link linkend=\"gcut-egg-get-output"
 "\"><function>gcut_egg_get_output()</function></link>/<link linkend=\"gcut-"
 "egg-get-error\"><function>gcut_egg_get_error()</function></link>. <link "
 "linkend=\"gcut-egg-write\"><function>gcut_egg_write()</function></link> "
 "writes a chunk to standard input of external command."
-msgstr ""
+msgstr "外部コマンドの標準出力・エラー出力は<link linkend=\"GCutEgg-output-received\"><type>\"output-received\"</type></link>シグナル・<link linkend=\"GCutEgg-error-received\"><type>\"error-received\"</type></link>シグナル、あるいは、<link linkend=\"gcut-egg-get-output\"><function>gcut_egg_get_output()</function></link>・<link linkend=\"gcut-egg-get-error\"><function>gcut_egg_get_error()</function></link>が返す<link linkend=\"GIOChannel\"><literal>GIOChannel</literal></link>で取得できます。<link linkend=\"gcut-egg-write\"><function>gcut_egg_write()</function></link>は外部コマンドの標準入力にデータを書き込みます。"
 
 #: xml/gcut-egg.xml:117(para)
 msgid ""
 "To wait external command finished, <link linkend=\"gcut-egg-wait"
 "\"><function>gcut_egg_wait()</function></link> can be used. It accepts "
 "timeout to avoid infinite waiting."
-msgstr ""
+msgstr "外部コマンドの終了を待つためには<link linkend=\"gcut-egg-wait\"><function>gcut_egg_wait()</function></link>を使うことがおできます。無限待ちを避けるために、タイムアウトを指定することができます。"
 
 #: xml/gcut-egg.xml:123(programlisting)
 #, no-wrap
@@ -15395,10 +15395,6 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: xml/gcut-egg.xml:121(para)
-msgid "Here is an example: <placeholder-1/>"
-msgstr ""
-
 #: xml/gcut-egg.xml:174(programlisting)
 #, no-wrap
 msgid "#define GCUT_EGG_ERROR           (gcut_egg_error_quark())\n"
@@ -15431,7 +15427,7 @@ msgstr ""
 msgid ""
 "Error codes returned by <link linkend=\"GCutEgg\"><literal>GCutEgg</"
 "literal></link> related operations."
-msgstr ""
+msgstr "<link linkend=\"GCutEgg\"><literal>GCutEgg</literal></link>関連の操作で返されるエラーコード。"
 
 #: xml/gcut-egg.xml:200(literal)
 msgid "GCUT_EGG_ERROR_COMMAND_LINE"
@@ -15439,7 +15435,7 @@ msgstr ""
 
 #: xml/gcut-egg.xml:201(simpara)
 msgid "Command line related error."
-msgstr ""
+msgstr "コマンドライン関連のエラー。"
 
 #: xml/gcut-egg.xml:205(literal)
 msgid "GCUT_EGG_ERROR_IO_ERROR"
@@ -15447,7 +15443,7 @@ msgstr ""
 
 #: xml/gcut-egg.xml:206(simpara)
 msgid "IO error."
-msgstr ""
+msgstr "入出力エラー。"
 
 #: xml/gcut-egg.xml:210(literal)
 msgid "GCUT_EGG_ERROR_ALREADY_RUNNING"
@@ -15455,7 +15451,7 @@ msgstr ""
 
 #: xml/gcut-egg.xml:211(simpara)
 msgid "External command is already running."
-msgstr ""
+msgstr "外部コマンドはすでに実行されています。"
 
 #: xml/gcut-egg.xml:215(literal)
 msgid "GCUT_EGG_ERROR_NOT_RUNNING"
@@ -15463,7 +15459,7 @@ msgstr ""
 
 #: xml/gcut-egg.xml:216(simpara)
 msgid "External command isn't running."
-msgstr ""
+msgstr "外部こもアンドが実行されていません。"
 
 #: xml/gcut-egg.xml:220(literal)
 msgid "GCUT_EGG_ERROR_INVALID_OBJECT"
@@ -15473,7 +15469,7 @@ msgstr ""
 msgid ""
 "Invalid <link linkend=\"GCutEgg\"><literal>GCutEgg</literal></link> object "
 "is passed."
-msgstr ""
+msgstr "不正な<link linkend=\"GCutEgg\"><literal>GCutEgg</literal></link>オブジェクトが渡されました。"
 
 #: xml/gcut-egg.xml:225(literal)
 msgid "GCUT_EGG_ERROR_TIMEOUT"
@@ -15509,7 +15505,7 @@ msgstr ""
 msgid ""
 "Creates a new <link linkend=\"GCutEgg\"><literal>GCutEgg</literal></link> "
 "object that runs <parameter>command</parameter>."
-msgstr ""
+msgstr "<parameter>command</parameter>を実行する新しい<link linkend=\"GCutEgg\"><literal>GCutEgg</literal></link>オブジェクトを生成します。"
 
 #: xml/gcut-egg.xml:246(term) xml/gcut-egg.xml:264(term)
 #: xml/gcut-egg.xml:300(term) xml/gcut-egg.xml:315(term)
@@ -15518,7 +15514,7 @@ msgstr "<parameter>command</parameter>&nbsp;:"
 
 #: xml/gcut-egg.xml:247(simpara) xml/gcut-egg.xml:265(simpara)
 msgid "the external command name to be ran"
-msgstr ""
+msgstr "実行する外部コマンド名。"
 
 #: xml/gcut-egg.xml:250(simpara)
 msgid "the arguments for <parameter>command</parameter>"
@@ -15528,7 +15524,7 @@ msgstr "<parameter>command</parameter>の引数"
 #: xml/gcut-egg.xml:289(simpara) xml/gcut-egg.xml:304(simpara)
 #: xml/gcut-egg.xml:319(simpara)
 msgid "a new <link linkend=\"GCutEgg\"><literal>GCutEgg</literal></link>."
-msgstr "あたらしい<link linkend=\"GCutEgg\"><literal>GCutEgg</literal></link>。"
+msgstr "新しい<link linkend=\"GCutEgg\"><literal>GCutEgg</literal></link>。"
 
 #: xml/gcut-egg.xml:257(title)
 msgid "gcut_egg_new_va_list ()"
@@ -15562,7 +15558,7 @@ msgstr "<parameter>argv</parameter>の要素数"
 
 #: xml/gcut-egg.xml:286(simpara)
 msgid "the external command name to be ran and arguments of it."
-msgstr ""
+msgstr "実行する外部コマンド名とコマンド引数。"
 
 #: xml/gcut-egg.xml:294(title)
 msgid "gcut_egg_new_strings ()"
@@ -15577,7 +15573,7 @@ msgstr ""
 msgid ""
 "the external command name to be ran and arguments of it. <link linkend="
 "\"NULL--CAPS\"><literal>NULL</literal></link>-terminated."
-msgstr ""
+msgstr "実行する外部コマンド名とコマンド引数。<link linkend=\"NULL--CAPS\"><literal>NULL</literal></link>終端。"
 
 #: xml/gcut-egg.xml:309(title)
 msgid "gcut_egg_new_array ()"
@@ -15592,7 +15588,7 @@ msgstr ""
 msgid ""
 "the external command name to be ran and arguments of it. The <link linkend="
 "\"GArray\"><literal>GArray</literal></link> should be zero-terminated."
-msgstr ""
+msgstr "実行する外部コマンド名とコマンド引数。<link linkend=\"GArray\"><literal>GArray</literal></link>は0終端にして下さい。"
 
 #: xml/gcut-egg.xml:324(title)
 msgid "gcut_egg_set_flags ()"
@@ -15723,7 +15719,8 @@ msgid "Hatches a new external process."
 msgstr ""
 
 #: xml/gcut-egg.xml:400(simpara) xml/gcut-egg.xml:438(simpara)
-#: xml/gcut-egg.xml:481(simpara)
+#: xml/gcut-egg.xml:481(simpara) xml/gcut-enum.xml:142(simpara)
+#: xml/gcut-enum.xml:187(simpara)
 msgid ""
 "return location for an error, or <link linkend=\"NULL--CAPS\"><literal>NULL</"
 "literal></link>"
@@ -15735,7 +15732,10 @@ msgstr ""
 msgid ""
 "<link linkend=\"TRUE--CAPS\"><literal>TRUE</literal></link> on success, "
 "otherwise <link linkend=\"FALSE--CAPS\"><literal>FALSE</literal></link>"
-msgstr "成功したときは<link linkend=\"CUT-TRUE--CAPS\"><literal>CUT_TRUE</literal></link>、そうでない場合は<link linkend=\"CUT-FALSE--CAPS\"><literal>CUT_FALSE</literal></link>。"
+msgstr ""
+"成功したときは<link linkend=\"CUT-TRUE--CAPS\"><literal>CUT_TRUE</literal></"
+"link>、そうでない場合は<link linkend=\"CUT-FALSE--CAPS\"><literal>CUT_FALSE</"
+"literal></link>。"
 
 #: xml/gcut-egg.xml:407(title)
 msgid "gcut_egg_close ()"
@@ -15988,33 +15988,57 @@ msgid ""
 "                                                        <link linkend=\"gpointer\">gpointer</link> user_data)      : Run Last"
 msgstr ""
 
-#: xml/gcut-egg.xml:603(term)
+#: xml/gcut-egg.xml:603(term) xml/gcut-egg.xml:618(term)
+#: xml/gcut-egg.xml:636(term) xml/gcut-egg.xml:653(term)
 msgid "<parameter>gcutegg</parameter>&nbsp;:"
 msgstr "<parameter>gcutegg</parameter>&nbsp;:"
 
-#: xml/gcut-egg.xml:604(simpara)
+#: xml/gcut-egg.xml:604(simpara) xml/gcut-egg.xml:619(simpara)
+#: xml/gcut-egg.xml:637(simpara) xml/gcut-egg.xml:654(simpara)
 msgid "the object which received the signal."
 msgstr ""
 
-#: xml/gcut-egg.xml:606(term)
+#: xml/gcut-egg.xml:606(term) xml/gcut-egg.xml:621(term)
+#: xml/gcut-egg.xml:639(term) xml/gcut-egg.xml:656(term)
 msgid "<parameter>arg1</parameter>&nbsp;:"
 msgstr "<parameter>arg1</parameter>&nbsp;:"
 
-#: xml/gcut-egg.xml:609(term)
+#: xml/gcut-egg.xml:610(simpara) xml/gcut-egg.xml:628(simpara)
+#: xml/gcut-egg.xml:646(simpara) xml/gcut-egg.xml:660(simpara)
+msgid "user data set when the signal handler was connected."
+msgstr ""
+
+#: xml/gcut-egg.xml:611(title)
+msgid "The <literal>\"error-received\"</literal> signal"
+msgstr "<literal>\"error-received\"</literal>シグナル"
+
+#: xml/gcut-egg.xml:612(programlisting) xml/gcut-egg.xml:630(programlisting)
+#, no-wrap
 msgid ""
-"<parameter>user_data</parameter>nbsp: user data set when the signal handler "
-"was connected. The error-received signal GCutEgg::error-receivedvoid "
-"user_function (GCutEgg *gcutegg, gchar *arg1, guint64 arg2, gpointer "
-"user_data) : Run Last gcutegg&nbsp;: the object which received the signal. "
-"arg1&nbsp;: arg2&nbsp;: user_datanbsp: user data set when the signal handler "
-"was connected. The output-received signal GCutEgg::output-receivedvoid "
-"user_function (GCutEgg *gcutegg, gchar *arg1, guint64 arg2, gpointer "
-"user_data) : Run Last gcutegg&nbsp;: the object which received the signal. "
-"arg1&nbsp;: arg2&nbsp;: user_datanbsp: user data set when the signal handler "
-"was connected. The reaped signal GCutEgg::reapedvoid user_function (GCutEgg "
-"*gcutegg, gint arg1, gpointer user_data) : Run Last gcutegg&nbsp;: the "
-"object which received the signal. arg1&nbsp;: user_datanbsp: user data set "
-"when the signal handler was connected."
+"<link linkend=\"void\">void</link>                user_function                      (<link linkend=\"GCutEgg\">GCutEgg</link> *gcutegg,\n"
+"                                                        <link linkend=\"gchar\">gchar</link>   *arg1,\n"
+"                                                        <link linkend=\"guint64\">guint64</link>  arg2,\n"
+"                                                        <link linkend=\"gpointer\">gpointer</link> user_data)      : Run Last"
+msgstr ""
+
+#: xml/gcut-egg.xml:624(term) xml/gcut-egg.xml:642(term)
+msgid "<parameter>arg2</parameter>&nbsp;:"
+msgstr "<parameter>arg2</parameter>&nbsp;:"
+
+#: xml/gcut-egg.xml:629(title)
+msgid "The <literal>\"output-received\"</literal> signal"
+msgstr "<literal>\"output-received\"</literal>シグナル"
+
+#: xml/gcut-egg.xml:647(title)
+msgid "The <literal>\"reaped\"</literal> signal"
+msgstr "<literal>\"reaped\"</literal>シグナル"
+
+#: xml/gcut-egg.xml:648(programlisting)
+#, no-wrap
+msgid ""
+"<link linkend=\"void\">void</link>                user_function                      (<link linkend=\"GCutEgg\">GCutEgg</link> *gcutegg,\n"
+"                                                        <link linkend=\"gint\">gint</link>     arg1,\n"
+"                                                        <link linkend=\"gpointer\">gpointer</link> user_data)      : Run Last"
 msgstr ""
 
 #: xml/gcut-enum.xml:7(refentrytitle) xml/gcut-enum.xml:13(refname)
@@ -16196,12 +16220,6 @@ msgstr ""
 #: xml/gcut-enum.xml:139(simpara) xml/gcut-enum.xml:184(simpara)
 msgid "a string to be parsed."
 msgstr "パースされる文字列。"
-
-#: xml/gcut-enum.xml:142(simpara) xml/gcut-enum.xml:187(simpara)
-msgid ""
-"a location to return an error or <link linkend=\"NULL--CAPS\"><literal>NULL</"
-"literal></link>"
-msgstr ""
 
 #: xml/gcut-enum.xml:144(simpara)
 msgid ""
@@ -16607,7 +16625,7 @@ msgstr ""
 "なったときは開放してください。"
 
 #: xml/gcut-inspect.xml:7(refentrytitle) xml/gcut-inspect.xml:13(refname)
-msgid "Object inspection functions."
+msgid "Object inspection functions"
 msgstr ""
 
 #: xml/gcut-inspect.xml:14(refpurpose)
@@ -18528,7 +18546,7 @@ msgstr "詳細化されるデータ。"
 #: xml/gcut-value-equal.xml:7(refentrytitle)
 #: xml/gcut-value-equal.xml:13(refname)
 msgid "Assertion Utilities for GValue"
-msgstr "GValue用の検証ユーティリティ。"
+msgstr "GValue用の検証ユーティリティ"
 
 #: xml/gcut-value-equal.xml:14(refpurpose)
 msgid ""

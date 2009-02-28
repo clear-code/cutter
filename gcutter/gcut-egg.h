@@ -41,7 +41,7 @@ G_BEGIN_DECLS
  * time. gcut_egg_hatch() runs specified external command.
  *
  * Standard/Error outputs of external command are passed by
- * #GCutEgg::output-received/GCutEgg::error-received signals
+ * #GCutEgg::output-received/#GCutEgg::error-received signals
  * or %GIOChannel returned by
  * gcut_egg_get_output()/gcut_egg_get_error().
  * gcut_egg_write() writes a chunk to standard input of

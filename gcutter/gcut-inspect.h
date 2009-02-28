@@ -26,7 +26,7 @@ G_BEGIN_DECLS
 
 /**
  * SECTION: gcut-inspect
- * @title: Object inspection functions.
+ * @title: Object inspection functions
  * @short_description: Functions to inspect a object for
  * debugging.
  *
