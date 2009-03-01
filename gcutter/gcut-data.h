@@ -100,9 +100,9 @@ G_BEGIN_DECLS
  *       <para>const %gchar *value</para>
  *       <para>e.g.:
  * |[
- * add_datum("data name",
- *           "field-name", G_TYPE_STRING, "string value",
- *           NULL);
+ * gcut_add_datum("data name",
+ *                "field-name", G_TYPE_STRING, "string value",
+ *                NULL);
  * ]|
  *       </para>
  *     </listitem>
@@ -113,9 +113,9 @@ G_BEGIN_DECLS
  *       <para>%gint value</para>
  *       <para>e.g.:
  * |[
- * add_datum("data name",
- *           "field-name", G_TYPE_INT, 100,
- *           NULL);
+ * gcut_add_datum("data name",
+ *                "field-name", G_TYPE_INT, 100,
+ *                NULL);
  * ]|
  *       </para>
  *     </listitem>
@@ -126,9 +126,9 @@ G_BEGIN_DECLS
  *       <para>%guint value</para>
  *       <para>e.g.:
  * |[
- * add_datum("data name",
- *           "field-name", G_TYPE_UINT, 100,
- *           NULL);
+ * gcut_add_datum("data name",
+ *                "field-name", G_TYPE_UINT, 100,
+ *                NULL);
  * ]|
  *       </para>
  *     </listitem>
@@ -139,9 +139,9 @@ G_BEGIN_DECLS
  *       <para>%GType value</para>
  *       <para>e.g.:
  * |[
- * add_datum("data name",
- *           "field-name", G_TYPE_GTYPE, G_TYPE_OBJECT,
- *           NULL);
+ * gut_add_datum("data name",
+ *               "field-name", G_TYPE_GTYPE, G_TYPE_OBJECT,
+ *               NULL);
  * ]|
  *       </para>
  *     </listitem>
@@ -152,9 +152,9 @@ G_BEGIN_DECLS
  *       <para>its type value.</para>
  *       <para>e.g.:
  * |[
- * add_datum("data name",
- *           "field-name", GTK_TYPE_WIDGET_FLAGS, GTK_TOPLEVEL | GTK_MAPPED,
- *           NULL);
+ * gcut_add_datum("data name",
+ *                "field-name", GTK_TYPE_WIDGET_FLAGS, GTK_TOPLEVEL | GTK_MAPPED,
+ *                NULL);
  * ]|
  *       </para>
  *     </listitem>
@@ -165,9 +165,9 @@ G_BEGIN_DECLS
  *       <para>its type value.</para>
  *       <para>e.g.:
  * |[
- * add_datum("data name",
- *           "field-name", GTK_TYPE_WRAP_MODE, GTK_WRAP_NONE,
- *           NULL);
+ * gcut_add_datum("data name",
+ *                "field-name", GTK_TYPE_WRAP_MODE, GTK_WRAP_NONE,
+ *                NULL);
  * ]|
  *       </para>
  *     </listitem>
@@ -179,9 +179,9 @@ G_BEGIN_DECLS
  *       <para>notify is called when value is destroyed.</para>
  *       <para>e.g.:
  * |[
- * add_datum("data name",
- *           "field-name", G_TYPE_POINTER, my_structure_new(...), my_structure_free,
- *           NULL);
+ * gcut_add_datum("data name",
+ *                "field-name", G_TYPE_POINTER, my_structure_new(...), my_structure_free,
+ *                NULL);
  * ]|
  *       </para>
  *     </listitem>
