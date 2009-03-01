@@ -37,7 +37,7 @@ cutter/cut-test-iterator.c
 cutter/cut-test-result.c
 cutter/cut-test-runner.c
 cutter/cut-test-suite.c
-cutter/cut-test-utils.c
+cutter/cut-test-utils-helper.c
 cutter/cut-test.c
 cutter/cut-ui-factory-builder.c
 cutter/cut-ui.c
@@ -46,6 +46,7 @@ cutter/cut-verbose-level.c
 cutter/main.c
 gcutter/gcut-assertions-helper.c
 gcutter/gcut-data.c
+gcutter/gcut-dynamic-data.c
 gcutter/gcut-egg.c
 gcutter/gcut-enum.c
 gcutter/gcut-error.c
