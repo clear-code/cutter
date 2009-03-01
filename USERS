@@ -4,11 +4,18 @@
 
 == List
 
-  * ((<Cutter|URL:http://cutter.sf.net/>)): self test
+  * ((<Cutter|URL:http://cutter.sf.net/>)): self test.
   * ((<Senna|URL://qwik.jp/senna/FrontPageJ.html>)):
-    full-text search engine
-  * ((<milter manager|URL:http://sf.net/projects/milter-manager/>)):
-    a milter that manager milters
+    full-text search engine.
+#  * ((<Groonga|URL://qwik.jp/senna/FrontPageJ.html>)):
+#    full-text search engine and column store.
+  * ((<milter manager|URL:http://milter-manager.sourceforge.net/>)):
+    a milter to use milters effectively.
+  * ((<Kazehakase|URL:http://kazehakase.sourceforge.jp/>)):
+    a browser.
+  * ((<GtkIEEmbed|URL:http://live.gnome.org/GtkIEEmbed>)):
+    a GTK+ widget library to use HTML rendering engine of
+    Internet Explorer.
 #  * ((<Poppler|URL:http://poppler.freedesktop.org/>)):
-#    PDF rendering library
+#    PDF rendering library.
 #

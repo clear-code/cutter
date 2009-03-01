@@ -1,5 +1,10 @@
 2009-03-01  Kouhei Sutou  <kou@cozmixng.org>
 
+	* USERS*: add Kazehakase and GtkIEEmbed.
+
+	* gcutter/gcutter.h, gdkcutter-pixbuf/, doc/reference/: add
+	GdkCutter documents.
+
 	* cutter/, gcutter/, doc/reference/: add missing document.
 
 	* cutter/cut-assertions.h, gcutter/gcut-data.h,

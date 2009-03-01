@@ -7,7 +7,14 @@
   * ((<Cutter|URL:http://cutter.sf.net/>)): セルフテスト
   * ((<Senna|URL://qwik.jp/senna/FrontPageJ.html>)):
     全文検索エンジン
-  * ((<milter manager|URL:http://sf.net/projects/milter-manager/>)):
-    milterを管理するmilter
+#  * ((<Groonga|URL://qwik.jp/senna/FrontPageJ.html>)):
+#    全文検索エンジンとカラムストア
+  * ((<milter manager|URL:http://milter-manager.sourceforge.net/index.html.ja>)):
+    milterを効果的に使うためのmilter
+  * ((<風博士|URL:http://kazehakase.sourceforge.jp/ja/>)):
+    ブラウザ
+  * ((<GtkIEEmbed|URL:http://live.gnome.org/GtkIEEmbed>)):
+    インターネットエクスプローラのHTMLレンダリングエンジンを
+    使うためのGTK+用のウィジェットライブラリ
 #  * ((<Poppler|URL:http://poppler.freedesktop.org/>)): PDF
 #    レンダリングライブラリ
