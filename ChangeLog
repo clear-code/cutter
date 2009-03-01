@@ -1,6 +1,6 @@
 2009-03-01  Kouhei Sutou  <kou@cozmixng.org>
 
-	* gcutter/gcut-egg.h, doc/reference/ja.po: update document.
+	* gcutter/gcut-egg.[ch], doc/reference/ja.po: update document.
 
 2009-02-28  Kouhei Sutou  <kou@cozmixng.org>
 

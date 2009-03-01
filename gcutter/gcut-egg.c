@@ -120,6 +120,23 @@ gcut_egg_class_init (GCutEggClass *klass)
                                 G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_COMMAND, spec);
 
+    /**
+     * GCutEgg::output-received:
+     * @egg: the object which received the signal.
+     * @chunk: the chunk read from an external process's
+     *         standard output.
+     * @size: the size of @chunk. (%gsize)
+     *
+     * It is emitted each time an external process outputs
+     * something to its standard output and it is read.
+     *
+     * Note that you need to run GLib's main loop by
+     * g_main_loop_run(), g_main_context_iteration() and so
+     * on for detecting an external process's output is
+     * readable.
+     *
+     * Since: 1.0.6
+     */
     signals[OUTPUT_RECEIVED]
         = g_signal_new("output-received",
                        G_TYPE_FROM_CLASS(klass),
@@ -135,6 +152,24 @@ gcut_egg_class_init (GCutEggClass *klass)
 #endif
                        );
 
+    /**
+     * GCutEgg::error-received:
+     * @egg: the object which received the signal.
+     * @chunk: the chunk read from an external process's
+     *         standard error output.
+     * @size: the size of @chunk. (%gsize)
+     *
+     * It is emitted each time an external process outputs
+     * something to its standard error output and it is
+     * read.
+     *
+     * Note that you need to run GLib's main loop by
+     * g_main_loop_run(), g_main_context_iteration() and so
+     * on for detecting an external process's output is
+     * readable.
+     *
+     * Since: 1.0.6
+     */
     signals[ERROR_RECEIVED]
         = g_signal_new("error-received",
                        G_TYPE_FROM_CLASS(klass),
@@ -150,6 +185,19 @@ gcut_egg_class_init (GCutEggClass *klass)
 #endif
                        );
 
+    /**
+     * GCutEgg::reaped:
+     * @egg: the object which received the signal.
+     * @status: the exit status of an external process.
+     *
+     * It is emitted when an external process is exited.
+     *
+     * Note that you need to run GLib's main loop by
+     * g_main_loop_run(), g_main_context_iteration() and so
+     * on for detecting an external process is exited.
+     *
+     * Since: 1.0.6
+     */
     signals[REAPED]
         = g_signal_new("reaped",
                        G_TYPE_FROM_CLASS(klass),
@@ -159,6 +207,16 @@ gcut_egg_class_init (GCutEggClass *klass)
                        g_cclosure_marshal_VOID__INT,
                        G_TYPE_NONE, 1, G_TYPE_INT);
 
+    /**
+     * GCutEgg::error:
+     * @egg: the object which received the signal.
+     * @error: the error of an external process. (%GError)
+     *
+     * It is emitted each time an external process causes an
+     * error. (e.g. IO error)
+     *
+     * Since: 1.0.6
+     */
     signals[ERROR]
         = g_signal_new("error",
                        G_TYPE_FROM_CLASS(klass),
