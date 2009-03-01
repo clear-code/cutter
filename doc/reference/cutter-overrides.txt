@@ -184,4 +184,52 @@ GHashTable *expected, GHashTable *actual, GEqualFunc equal_function, GCutInspect
 GHashTable *expected, GHashTable *actual, ...
 </FUNCTION>
 
-# gcut-test-utils.h
+# gcut-data.h
+
+<FUNCTION>
+<NAME>gcut_add_datum</NAME>
+<RETURNS>void</RETURNS>
+const gchar *name, const gchar *first_field_name, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_data_get_string</NAME>
+<RETURNS>const gchar *</RETURNS>
+gconstpointer data, const gchar *field_name
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_data_get_int</NAME>
+<RETURNS>gint</RETURNS>
+gconstpointer data, const gchar *field_name
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_data_get_uint</NAME>
+<RETURNS>guint</RETURNS>
+gconstpointer data, const gchar *field_name
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_data_get_type</NAME>
+<RETURNS>GType</RETURNS>
+gconstpointer data, const gchar *field_name
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_data_get_flags</NAME>
+<RETURNS>guint</RETURNS>
+gconstpointer data, const gchar *field_name
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_data_get_enum</NAME>
+<RETURNS>gint</RETURNS>
+gconstpointer data, const gchar *field_name
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_data_get_pointer</NAME>
+<RETURNS>gconstpointer</RETURNS>
+gconstpointer data, const gchar *field_name
+</FUNCTION>

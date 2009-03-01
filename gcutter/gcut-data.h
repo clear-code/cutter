@@ -30,24 +30,24 @@ G_BEGIN_DECLS
  * @short_description: API to create test data without
  * structure definition.
  *
- * cut_add_data() requires custom structure data type for
- * complex test data. But it's not easy to
- * write. gcut_add_datum() provides test data API to use
- * test data without custom structure data type. It uses
- * %GType for providing dynamic complex data.
+ * cut_add_data() requires custom data type for complex test
+ * data. But it's not easy to write. gcut_add_datum()
+ * provides API to use complex test data without custom data
+ * type. It uses %GType for providing complex data.
  */
 
 
 /**
  * gcut_add_datum:
- * @name: The name of the data.
- * @first_field_name: The first field name.
- * @...: The type and value pair of the field and the next
- * field name, type and value triples. %NULL-terminated.
+ * @name: the name of the data.
+ * @first_field_name: the first field name.
+ * @...: the type and value pair of the first field,
+ *       followed optionally by the next field name, type
+ *       and value triples. %NULL-terminated.
  *
- * Adds a datum to use data driven test. It's convenient
- * rather than cut_add_data() because you doesn't need to
- * define a new custom structure for a test.
+ * Adds a datum to be used in data driven test. It's
+ * convenient rather than cut_add_data() because you doesn't
+ * need to define a new structure for a complex test data.
  *
  * e.g.:
  * |[
@@ -106,7 +106,7 @@ G_BEGIN_DECLS
  * @data: the data added by gcut_add_datum().
  * @field_name: the field name.
  *
- * Returns a field value identified by @field_name as string.
+ * Gets a field value identified by @field_name as string.
  *
  * Returns: a field value corresponded to @field_name.
  *
@@ -123,7 +123,7 @@ G_BEGIN_DECLS
  * @data: the data added by gcut_add_datum().
  * @field_name: the field name.
  *
- * Returns a field value identified by @field_name as integer.
+ * Gets a field value identified by @field_name as integer.
  *
  * Returns: a field value corresponded to @field_name.
  *
@@ -140,7 +140,7 @@ G_BEGIN_DECLS
  * @data: the data added by gcut_add_datum().
  * @field_name: the field name.
  *
- * Returns a field value identified by @field_name as
+ * Gets a field value identified by @field_name as
  * unsigned integer.
  *
  * Returns: a field value corresponded to @field_name.
@@ -158,7 +158,7 @@ G_BEGIN_DECLS
  * @data: the data added by gcut_add_datum().
  * @field_name: the field name.
  *
- * Returns a field value identified by @field_name as %GType.
+ * Gets a field value identified by @field_name as %GType.
  *
  * Returns: a field value corresponded to @field_name.
  *
@@ -175,8 +175,8 @@ G_BEGIN_DECLS
  * @data: the data added by gcut_add_datum().
  * @field_name: the field name.
  *
- * Returns a field value identified by @field_name as
- * unsigned integer of %GFlags.
+ * Gets a field value identified by @field_name as
+ * unsigned integer of GFlags.
  *
  * Returns: a field value corresponded to @field_name.
  *
@@ -193,8 +193,8 @@ G_BEGIN_DECLS
  * @data: the data added by gcut_add_datum().
  * @field_name: the field name.
  *
- * Returns a field value identified by @field_name as
- * integer of %GEnum type.
+ * Gets a field value identified by @field_name as
+ * integer of GEnum type.
  *
  * Returns: a field value corresponded to @field_name.
  *
@@ -211,7 +211,7 @@ G_BEGIN_DECLS
  * @data: the data added by gcut_add_datum().
  * @field_name: the field name.
  *
- * Returns a field value identified by @field_name as
+ * Gets a field value identified by @field_name as
  * pointer.
  *
  * Returns: a field value corresponded to @field_name.
