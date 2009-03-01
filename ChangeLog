@@ -1,5 +1,7 @@
 2009-03-01  Kouhei Sutou  <kou@cozmixng.org>
 
+	* misc/release.rb: email release notify is optional.
+
 	* configure.ac, **/ja.po: 1.0.6 -> 1.0.7.
 
 	* configure.ac, html/Makefile.am, doc/reference/Makefile.am: use

@@ -173,8 +173,10 @@ def notify_release(agent, edit_release_page)
   edit_file_form = edit_release_page.forms.find_all do |form|
     /editreleases/ =~ form.action
   end[3]
-  puts edit_release_page if edit_file_form.nil?
-  edit_file_form.checkbox("sure").check
+  return if edit_file_form.nil?
+  sure_check_bock = edit_file_form.checkbox("sure")
+  return if sure_check_bock.nil?
+  sure_check_bock.check
   agent.submit(edit_file_form, edit_file_form.buttons.first)
 end
 
