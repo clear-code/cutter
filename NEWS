@@ -2,6 +2,52 @@
 
 = NEWS --- The history of Cutter
 
+== 1.0.6: 2009-03-02
+
+  * Add ((<project list that use Cutter|USERS>))
+  * Add ((<convenience API for using external command|GCutEgg.html>))
+  * Improve backtrace detection:
+    * ((<CUT_RELATIVE_PATH|cutter-cut-helper.html#CUT_RELATIVE_PATH>))
+  * Improve user message related API for assertions:
+    * Obsolete optional message
+      * for supporting non-GCC compilers
+    * Add APIs to set user message independently of assertions:
+      * ((<cut_set_message()|cutter-cutter.html#cut-set-message>))
+      * ((<cut_set_message_va_list()|cutter-cutter.html#cut-set-message-va-list>))
+    * Add API to use the same message with assertions:
+      * ((<cut_keep_message()|cutter-cutter.html#cut-keep-message>))
+  * Improve data driven test support:
+    * ((<Convenience test data API|cutter-gcut-data.html>))
+  * Add "cut_" prefix to fixture functions:
+    * ((<cut_setup()|cutter-cutter.html#cut-setup>))
+    * ((<cut_teardown()|cutter-cutter.html#cut-teardown>))
+    * ((<cut_startup()|cutter-cutter.html#cut-startup>))
+    * ((<cut_shutdown()|cutter-cutter.html#cut-shutdown>))
+  * Add test utilities:
+    * ((<Object inspection functions|cutter-gcut-inspect.html>))
+    * ((<cut_push_backtrace()|cutter-cut-helper.html#cut-push-backtrace>))
+    * ((<cut_pop_backtrace()|cutter-cut-helper.html#cut-pop-backtrace>))
+    * ((<cut_take_replace()|cutter-cut-test-utils.html#cut-take-replace>))
+    * ((<gcut_enum_parse()|cutter-gcut-enum.html#gcut-enum-parse>))
+    * ((<gcut_flags_get_all()|cutter-gcut-enum.html#gcut-flags-get-all>))
+    * ((<gcut_flags_parse()|cutter-gcut-enum.html#gcut-flags-parse>))
+    * ((<gcut_list_equal_int()|cutter-gcut-list.html#gcut-list-equal-int>))
+    * ((<gcut_list_equal_uint()|cutter-gcut-list.html#gcut-list-equal-uint>))
+    * ((<gcut_list_equal_string()|cutter-gcut-list.html#gcut-list-equal-string>))
+    * ((<gcut_list_inspect_enum()|cutter-gcut-list.html#gcut-list-inspect-enum>))
+    * ((<gcut_list_inspect_flags()|cutter-gcut-list.html#gcut-list-inspect-flags>))
+    * ((<gcut_list_inspect_int()|cutter-gcut-list.html#gcut-list-inspect-int>))
+    * ((<gcut_list_inspect_object()|cutter-gcut-list.html#gcut-list-inspect-object>))
+    * ((<gcut_list_inspect_string()|cutter-gcut-list.html#gcut-list-inspect-string>))
+    * ((<gcut_list_inspect_uint()|cutter-gcut-list.html#gcut-list-inspect-uint>))
+    * ((<gcut_list_string_new_array()|cutter-gcut-test-utils.html#gcut-list-string-new-array>))
+    * ((<gcut_take_new_list_string_array()|cutter-gcut-test-utils.html#gcut-take-new-list-string-array>))
+  * Add assertions:
+    * ((<cut_assert_equal_size()|cutter-cut-assertions.html#cut-assert-equal-size>))
+    * ((<cut_return()|cutter-cut-assertions.html#cut-return>))
+    * ((<gcut_assert_equal_list()|cutter-gcut-assertions.html#gcut-assert-equal-list>))
+    * ((<gcut_assert_equal_pid()|cutter-gcut-assertions.html#gcut-assert-equal-pid>))
+
 == 1.0.5: 2008-10-15
 
   * Support max number of threads ran concurrently:

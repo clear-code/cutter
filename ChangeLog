@@ -1,5 +1,7 @@
 2009-03-01  Kouhei Sutou  <kou@cozmixng.org>
 
+	* NEWS*: add entries for 1.0.6.
+
 	* gcutter/gcut-assertions.h: remove needless backward compatibility.
 	* doc/reference/: update document.
 

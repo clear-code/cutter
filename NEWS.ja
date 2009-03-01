@@ -2,6 +2,52 @@
 
 = NEWS --- Cutterの歴史
 
+== 1.0.6: 2009-03-02
+
+  * ((<Cutter利用プロジェクトリスト|USERS.ja>))を追加
+  * ((<外部コマンドを便利に利用するためのAPI|GCutEgg.html>))を追加
+  * バックトレース検出機能の改良:
+    * ((<CUT_RELATIVE_PATH|cutter-cut-helper.html#CUT_RELATIVE_PATH>))
+  * 検証のユーザ指定のメッセージ関連APIを改良:
+    * 省略可能なメッセージを非推奨に変更
+      * GCC以外のコンパイラをサポートするため
+    * 検証とは別にユーザ指定のメッセージを指定するAPIの追加:
+      * ((<cut_set_message()|cutter-cutter.html#cut-set-message>))
+      * ((<cut_set_message_va_list()|cutter-cutter.html#cut-set-message-va-list>))
+    * 複数の検証で同じメッセージを利用できるAPIの追加:
+      * ((<cut_keep_message()|cutter-cutter.html#cut-keep-message>))
+  * データ駆動テスト作成支援の強化:
+    * ((<便利なテストデータ用API|cutter-gcut-data.html>))
+  * フィクスチャ関数へ"cut_"プレフィックスの追加:
+    * ((<cut_setup()|cutter-cutter.html#cut-setup>))
+    * ((<cut_teardown()|cutter-cutter.html#cut-teardown>))
+    * ((<cut_startup()|cutter-cutter.html#cut-startup>))
+    * ((<cut_shutdown()|cutter-cutter.html#cut-shutdown>))
+  * テストユーティリティの追加:
+    * ((<オブジェクト調査関数|cutter-gcut-inspect.html>))
+    * ((<cut_push_backtrace()|cutter-cut-helper.html#cut-push-backtrace>))
+    * ((<cut_pop_backtrace()|cutter-cut-helper.html#cut-pop-backtrace>))
+    * ((<cut_take_replace()|cutter-cut-test-utils.html#cut-take-replace>))
+    * ((<gcut_enum_parse()|cutter-gcut-enum.html#gcut-enum-parse>))
+    * ((<gcut_flags_get_all()|cutter-gcut-enum.html#gcut-flags-get-all>))
+    * ((<gcut_flags_parse()|cutter-gcut-enum.html#gcut-flags-parse>))
+    * ((<gcut_list_equal_int()|cutter-gcut-list.html#gcut-list-equal-int>))
+    * ((<gcut_list_equal_uint()|cutter-gcut-list.html#gcut-list-equal-uint>))
+    * ((<gcut_list_equal_string()|cutter-gcut-list.html#gcut-list-equal-string>))
+    * ((<gcut_list_inspect_enum()|cutter-gcut-list.html#gcut-list-inspect-enum>))
+    * ((<gcut_list_inspect_flags()|cutter-gcut-list.html#gcut-list-inspect-flags>))
+    * ((<gcut_list_inspect_int()|cutter-gcut-list.html#gcut-list-inspect-int>))
+    * ((<gcut_list_inspect_object()|cutter-gcut-list.html#gcut-list-inspect-object>))
+    * ((<gcut_list_inspect_string()|cutter-gcut-list.html#gcut-list-inspect-string>))
+    * ((<gcut_list_inspect_uint()|cutter-gcut-list.html#gcut-list-inspect-uint>))
+    * ((<gcut_list_string_new_array()|cutter-gcut-test-utils.html#gcut-list-string-new-array>))
+    * ((<gcut_take_new_list_string_array()|cutter-gcut-test-utils.html#gcut-take-new-list-string-array>))
+  * 検証の追加:
+    * ((<cut_assert_equal_size()|cutter-cut-assertions.html#cut-assert-equal-size>))
+    * ((<cut_return()|cutter-cut-assertions.html#cut-return>))
+    * ((<gcut_assert_equal_list()|cutter-gcut-assertions.html#gcut-assert-equal-list>))
+    * ((<gcut_assert_equal_pid()|cutter-gcut-assertions.html#gcut-assert-equal-pid>))
+
 == 1.0.5: 2008-10-15
 
   * 最大同時スレッド数指定のサポート
