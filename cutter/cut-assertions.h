@@ -123,16 +123,16 @@ extern "C" {
  *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
- * Passes if @expression is %NULL.
+ * Passes if @string is %NULL.
  *
  * Since: 0.3
  */
-#define cut_assert_null_string(expression, ...)  do                     \
+#define cut_assert_null_string(string, ...)  do                         \
 {                                                                       \
     cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        cut_assert_null_string_helper((expression), #expression),       \
-        cut_assert_null_string(expression, __VA_ARGS__));               \
+        cut_assert_null_string_helper((string), #string),               \
+        cut_assert_null_string(string, __VA_ARGS__));                   \
 } while (0)
 
 /**

@@ -1,5 +1,7 @@
 2009-03-01  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/, gcutter/, doc/reference/: add missing document.
+
 	* cutter/cut-assertions.h, gcutter/gcut-data.h,
 	gcutter/gcut-inspect.h, doc/reference/ja.po,
 	doc/reference/cutter-overrides.txt: update document.

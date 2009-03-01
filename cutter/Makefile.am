@@ -22,7 +22,8 @@ cutter_public_headers = 		\
 	cut-types.h			\
 	cut-macros.h			\
 	cut-multi-process.h		\
-	cut-helper.h
+	cut-helper.h			\
+	cut-test-utils-helper.h
 
 libcutter_public_headers = 		\
 	cut-private.h			\
@@ -149,7 +150,7 @@ libcutter_la_SOURCES =			\
 	cut-sub-process-group.c		\
 	cut-backtrace-entry.c		\
 	cut-assertions-helper.c		\
-	cut-test-utils.c		\
+	cut-test-utils-helper.c		\
 	cut-helper.c
 
 libcutter_la_LDFLAGS =				\

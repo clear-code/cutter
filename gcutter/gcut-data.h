@@ -33,7 +33,7 @@ G_BEGIN_DECLS
  * cut_add_data() requires custom data type for complex test
  * data. But it's not easy to write. gcut_add_datum()
  * provides API to use complex test data without custom data
- * type. It uses %GType for providing complex data.
+ * type. It uses #GType for providing complex data.
  */
 
 
@@ -95,9 +95,9 @@ G_BEGIN_DECLS
  *
  * <variablelist>
  *   <varlistentry>
- *     <term>%G_TYPE_STRING</term>
+ *     <term>#G_TYPE_STRING</term>
  *     <listitem>
- *       <para>const %gchar *value</para>
+ *       <para>const #gchar *value</para>
  *       <para>e.g.:
  * |[
  * gcut_add_datum("data name",
@@ -108,9 +108,9 @@ G_BEGIN_DECLS
  *     </listitem>
  *   </varlistentry>
  *   <varlistentry>
- *     <term>%G_TYPE_INT</term>
+ *     <term>#G_TYPE_INT</term>
  *     <listitem>
- *       <para>%gint value</para>
+ *       <para>#gint value</para>
  *       <para>e.g.:
  * |[
  * gcut_add_datum("data name",
@@ -121,9 +121,9 @@ G_BEGIN_DECLS
  *     </listitem>
  *   </varlistentry>
  *   <varlistentry>
- *     <term>%G_TYPE_UINT</term>
+ *     <term>#G_TYPE_UINT</term>
  *     <listitem>
- *       <para>%guint value</para>
+ *       <para>#guint value</para>
  *       <para>e.g.:
  * |[
  * gcut_add_datum("data name",
@@ -134,9 +134,9 @@ G_BEGIN_DECLS
  *     </listitem>
  *   </varlistentry>
  *   <varlistentry>
- *     <term>%G_TYPE_GTYPE</term>
+ *     <term>#G_TYPE_GTYPE</term>
  *     <listitem>
- *       <para>%GType value</para>
+ *       <para>#GType value</para>
  *       <para>e.g.:
  * |[
  * gut_add_datum("data name",
@@ -173,9 +173,9 @@ G_BEGIN_DECLS
  *     </listitem>
  *   </varlistentry>
  *   <varlistentry>
- *     <term>%G_TYPE_POINTER</term>
+ *     <term>#G_TYPE_POINTER</term>
  *     <listitem>
- *       <para>%gconstpointer value, %GDestroyNotify notify</para>
+ *       <para>#gconstpointer value, #GDestroyNotify notify</para>
  *       <para>notify is called when value is destroyed.</para>
  *       <para>e.g.:
  * |[
@@ -256,7 +256,7 @@ G_BEGIN_DECLS
  * @data: the data added by gcut_add_datum().
  * @field_name: the field name.
  *
- * Gets a field value identified by @field_name as %GType.
+ * Gets a field value identified by @field_name as #GType.
  *
  * Returns: a field value corresponded to @field_name.
  *

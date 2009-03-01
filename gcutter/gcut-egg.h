@@ -30,9 +30,9 @@ G_BEGIN_DECLS
  * @short_description: Convenience API for using external
  * command.
  *
- * %GCutEgg encapsulates external command execution,
- * communication and termination. %GCutEgg reports an error
- * as %GError. It can be asserted easily by
+ * #GCutEgg encapsulates external command execution,
+ * communication and termination. #GCutEgg reports an error
+ * as #GError. It can be asserted easily by
  * gcut_assert_error().
  *
  * External command is specified to constructor like
@@ -42,7 +42,7 @@ G_BEGIN_DECLS
  *
  * Standard/Error outputs of external command are passed by
  * #GCutEgg::output-received/#GCutEgg::error-received signals
- * or %GIOChannel returned by
+ * or #GIOChannel returned by
  * gcut_egg_get_output()/gcut_egg_get_error().
  * gcut_egg_write() writes a chunk to standard input of
  * external command.
@@ -135,10 +135,10 @@ struct _GCutEggClass
  * @GCUT_EGG_ERROR_IO_ERROR: IO error.
  * @GCUT_EGG_ERROR_ALREADY_RUNNING: External command is already running.
  * @GCUT_EGG_ERROR_NOT_RUNNING: External command isn't running.
- * @GCUT_EGG_ERROR_INVALID_OBJECT: Invalid %GCutEgg object is passed.
+ * @GCUT_EGG_ERROR_INVALID_OBJECT: Invalid #GCutEgg object is passed.
  * @GCUT_EGG_ERROR_TIMEOUT: Timeout.
  *
- * Error codes returned by %GCutEgg related operations.
+ * Error codes returned by #GCutEgg related operations.
  *
  * Since: 1.0.6
  */
@@ -161,9 +161,9 @@ GType         gcut_egg_get_type      (void) G_GNUC_CONST;
  * @command: the external command name to be ran
  * @...: the arguments for @command
  *
- * Creates a new %GCutEgg object that runs @command.
+ * Creates a new #GCutEgg object that runs @command.
  *
- * Returns: a new %GCutEgg.
+ * Returns: a new #GCutEgg.
  *
  * Since: 1.0.6
  */
@@ -175,9 +175,9 @@ GCutEgg      *gcut_egg_new           (const gchar  *command,
  * @command: the external command name to be ran
  * @args: arguments for @command
  *
- * Creates a new %GCutEgg object that runs @command.
+ * Creates a new #GCutEgg object that runs @command.
  *
- * Returns: a new %GCutEgg.
+ * Returns: a new #GCutEgg.
  *
  * Since: 1.0.6
  */
@@ -190,9 +190,9 @@ GCutEgg      *gcut_egg_new_va_list   (const gchar  *command,
  * @argv: the external command name to be ran and arguments
  * of it.
  *
- * Creates a new %GCutEgg object that runs @command.
+ * Creates a new #GCutEgg object that runs @command.
  *
- * Returns: a new %GCutEgg.
+ * Returns: a new #GCutEgg.
  *
  * Since: 1.0.6
  */
@@ -204,9 +204,9 @@ GCutEgg      *gcut_egg_new_argv      (gint          argc,
  * @command: the external command name to be ran and
  * arguments of it. %NULL-terminated.
  *
- * Creates a new %GCutEgg object that runs @command.
+ * Creates a new #GCutEgg object that runs @command.
  *
- * Returns: a new %GCutEgg.
+ * Returns: a new #GCutEgg.
  *
  * Since: 1.0.6
  */
@@ -215,11 +215,11 @@ GCutEgg      *gcut_egg_new_strings   (const gchar **command);
 /**
  * gcut_egg_new_array:
  * @command: the external command name to be ran and
- * arguments of it. The %GArray should be zero-terminated.
+ * arguments of it. The #GArray should be zero-terminated.
  *
- * Creates a new %GCutEgg object that runs @command.
+ * Creates a new #GCutEgg object that runs @command.
  *
- * Returns: a new %GCutEgg.
+ * Returns: a new #GCutEgg.
  *
  * Since: 1.0.6
  */
@@ -227,7 +227,7 @@ GCutEgg      *gcut_egg_new_array     (GArray       *command);
 
 /**
  * gcut_egg_set_flags:
- * @egg: a %GCutEgg
+ * @egg: a #GCutEgg
  * @flags: the flags to be passed to g_spawn_async_with_pipes().
  *
  * Sets @flags for spawning.
@@ -239,7 +239,7 @@ void          gcut_egg_set_flags     (GCutEgg      *egg,
 
 /**
  * gcut_egg_get_flags:
- * @egg: a %GCutEgg
+ * @egg: a #GCutEgg
  *
  * Gets @flags for spawning.
  *
@@ -251,7 +251,7 @@ GSpawnFlags   gcut_egg_get_flags     (GCutEgg      *egg);
 
 /**
  * gcut_egg_set_env:
- * @egg: a %GCutEgg
+ * @egg: a #GCutEgg
  * @name: the first environment name.
  * @...: the value of @name, followed by name and value
  * pairs. %NULL-terminated.
@@ -266,7 +266,7 @@ void          gcut_egg_set_env       (GCutEgg      *egg,
 
 /**
  * gcut_egg_get_env:
- * @egg: a %GCutEgg
+ * @egg: a #GCutEgg
  *
  * Gets environment variable for external command.
  *
@@ -281,7 +281,7 @@ gchar       **gcut_egg_get_env       (GCutEgg      *egg);
 
 /**
  * gcut_egg_hatch:
- * @egg: a %GCutEgg
+ * @egg: a #GCutEgg
  * @error: return location for an error, or %NULL
  *
  * Hatches a new external process.
@@ -295,7 +295,7 @@ gboolean      gcut_egg_hatch         (GCutEgg      *egg,
 
 /**
  * gcut_egg_close:
- * @egg: a %GCutEgg
+ * @egg: a #GCutEgg
  *
  * Closes a hatched external process. It is closed
  * implicitly on destroy.
@@ -306,7 +306,7 @@ void          gcut_egg_close         (GCutEgg      *egg);
 
 /**
  * gcut_egg_write:
- * @egg: a %GCutEgg
+ * @egg: a #GCutEgg
  * @chunk: the data to be wrote
  * @size: the size of @chunk
  * @error: return location for an error, or %NULL
@@ -324,7 +324,7 @@ gboolean      gcut_egg_write         (GCutEgg      *egg,
 
 /**
  * gcut_egg_get_pid:
- * @egg: a %GCutEgg
+ * @egg: a #GCutEgg
  *
  * Gets the process ID of running external process. If
  * external process isn't running, 0 is returned.
@@ -338,7 +338,7 @@ GPid          gcut_egg_get_pid       (GCutEgg      *egg);
 
 /**
  * gcut_egg_wait:
- * @egg: a %GCutEgg
+ * @egg: a #GCutEgg
  * @timeout: the timeout period in milliseconds
  * @error: return location for an error, or %NULL
  *
@@ -360,7 +360,7 @@ gint          gcut_egg_wait          (GCutEgg      *egg,
 
 /**
  * gcut_egg_kill:
- * @egg: a %GCutEgg
+ * @egg: a #GCutEgg
  * @signal_number: the signal number to be sent to external process
  *
  * Sends @signal_number signal to external process.
@@ -368,16 +368,16 @@ gint          gcut_egg_wait          (GCutEgg      *egg,
  * Since: 1.0.6
  */
 void          gcut_egg_kill          (GCutEgg      *egg,
-                                      int           signal_number);
+                                      gint          signal_number);
 
 /**
  * gcut_egg_get_input:
- * @egg: a %GCutEgg
+ * @egg: a #GCutEgg
  *
- * Gets a %GIOChannel connected with standard input of
+ * Gets a #GIOChannel connected with standard input of
  * external process.
  *
- * Returns: a %GIOChannel if external process is running,
+ * Returns: a #GIOChannel if external process is running,
  * otherwise %NULL.
  *
  * Since: 1.0.6
@@ -386,12 +386,12 @@ GIOChannel   *gcut_egg_get_input     (GCutEgg      *egg);
 
 /**
  * gcut_egg_get_output:
- * @egg: a %GCutEgg
+ * @egg: a #GCutEgg
  *
- * Gets a %GIOChannel connected with standard output of
+ * Gets a #GIOChannel connected with standard output of
  * external process.
  *
- * Returns: a %GIOChannel if external process is running,
+ * Returns: a #GIOChannel if external process is running,
  * otherwise %NULL.
  *
  * Since: 1.0.6
@@ -400,12 +400,12 @@ GIOChannel   *gcut_egg_get_output    (GCutEgg      *egg);
 
 /**
  * gcut_egg_get_error:
- * @egg: a %GCutEgg
+ * @egg: a #GCutEgg
  *
- * Gets a %GIOChannel connected with standard error output
+ * Gets a #GIOChannel connected with standard error output
  * of external process.
  *
- * Returns: a %GIOChannel if external process is running,
+ * Returns: a #GIOChannel if external process is running,
  * otherwise %NULL.
  *
  * Since: 1.0.6
@@ -414,7 +414,7 @@ GIOChannel   *gcut_egg_get_error     (GCutEgg      *egg);
 
 /**
  * gcut_egg_get_forced_termination_wait_time:
- * @egg: a %GCutEgg
+ * @egg: a #GCutEgg
  *
  * Gets a wait time in milliseconds for forced termination
  * on dispose.
@@ -429,7 +429,7 @@ guint         gcut_egg_get_forced_termination_wait_time
 
 /**
  * gcut_egg_set_forced_termination_wait_time:
- * @egg: a %GCutEgg
+ * @egg: a #GCutEgg
  * @timeout: the timeout value in milliseconds
  *
  * Sets a wait time in milliseconds for forced termination

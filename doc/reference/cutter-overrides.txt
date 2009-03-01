@@ -209,7 +209,7 @@ const char *expected, const void *path, ...
 <FUNCTION>
 <NAME>cut_return</NAME>
 <RETURNS>void</RETURNS>
-
+void
 </FUNCTION>
 
 # cut-types.h
@@ -280,6 +280,18 @@ const char *system_message, ...
 <NAME>cut_test_fail_va_list</NAME>
 <RETURNS>void</RETURNS>
 const char *system_message, const char *user_message_format
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_push_backtrace</NAME>
+<RETURNS>void</RETURNS>
+const char *expression
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_pop_backtrace</NAME>
+<RETURNS>void</RETURNS>
+void
 </FUNCTION>
 
 # gcut-test-utils.h

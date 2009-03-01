@@ -40,9 +40,8 @@ G_BEGIN_DECLS
 /**
  * GCUT_ENUM_ERROR:
  *
- * Error domain for key file parsing. Errors in this domain
- * will be from the #GCutEnumError enumeration. See #GError
- * for information on error domains.
+ * Error domain for enum related operations. Errors in this domain
+ * will be from the #GCutEnumError enumeration.
  *
  * Since: 1.0.6
  */
@@ -89,7 +88,7 @@ gchar           *gcut_enum_inspect              (GType enum_type,
  * Parses @enum_value and returns a enum value of
  * @enum_type. @enum_value should be enum name or nick
  * name. If @enum_value isn't match then @error is set to a
- * %GCutEnumError.
+ * #GCutEnumError.
  *
  * Returns: enum value of @enum_type corresponded to @enum_value.
  *
@@ -124,7 +123,7 @@ gchar           *gcut_flags_inspect             (GType flags_type,
  * @flags_type. @flags_value should be formated as
  * "nick-or-name1|nick-or-name2|...|nick-or-nameN". If
  * @flags_value includes unknown flag then @error is set to
- * a %GCutEnumError.
+ * a #GCutEnumError.
  *
  * Returns: flags value of @flags_type corresponded to @flags_value.
  *
@@ -134,6 +133,19 @@ guint            gcut_flags_parse               (GType         flags_type,
                                                  const gchar  *flags_value,
                                                  GError      **error);
 
+/**
+ * gcut_flags_get_all:
+ * @flags_type: a #GFlags type.
+ * @error: return location for an error, or %NULL
+ *
+ * Gets a flags value that includes all available flag
+ * values.
+ *
+ * Returns: a flags value that includes all available flag
+ * values.
+ *
+ * Since: 1.0.6
+ */
 guint            gcut_flags_get_all             (GType         flags_type,
                                                  GError      **error);
 

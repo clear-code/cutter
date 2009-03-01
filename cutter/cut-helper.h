@@ -173,8 +173,9 @@ extern "C" {
  * code is built as shared library and used it as helper
  * library of your test. If this path isn't set, you can't
  * get correct path from cut_trace() and
- * cut_trace_with_info_expression(). Here is an example
- * structure for explain:
+ * cut_trace_with_info_expression().
+ *
+ * Here is an example structure for explain:
  *
  * |[
  * --- core-lib/ --- XXX.c # Your core library
@@ -201,10 +202,12 @@ extern "C" {
  * ]|
  *
  * In the above example structure, you need to define
- * CUT_RELATIVE_PATH as "lib" in test/lib/my-assertions.c
+ * %CUT_RELATIVE_PATH as "lib" in test/lib/my-assertions.c
  * because my-assertions.c is in lib/ directory from source
  * directory "test" specified by command line option
- * --source-directory. Here are example code and build option:
+ * --source-directory.
+ *
+ * Here are example code and build option:
  *
  * |[
  * test/lib/my-assertions.c:
@@ -221,6 +224,18 @@ extern "C" {
 #  define CUT_RELATIVE_PATH NULL
 #endif
 
+/**
+ * cut_push_backtrace:
+ * @expression: an expression to be traced.
+ *
+ * Pushes @expression and the current source place to the
+ * backtrace stack.
+ *
+ * Normally, you don't need to use it directory. cut_trace()
+ * is enough.
+ *
+ * Since: 1.0.6
+ */
 #define cut_push_backtrace(expression)                                  \
     cut_test_context_push_backtrace(cut_get_current_test_context(),     \
                                     CUT_RELATIVE_PATH,                  \
@@ -228,6 +243,16 @@ extern "C" {
                                     CUT_FUNCTION,                       \
                                     #expression)
 
+/**
+ * cut_pop_backtrace:
+ *
+ * Pops a backtrace from the backtrace stack.
+ *
+ * Normally, you don't need to use it directory. cut_trace()
+ * is enough.
+ *
+ * Since: 1.0.6
+ */
 void cut_pop_backtrace(void);
 
 /**
