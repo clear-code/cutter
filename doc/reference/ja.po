@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Cutter 1.0.6\n"
+"Project-Id-Version: Cutter 1.0.7\n"
 "POT-Creation-Date: 2009-03-01 15:46+0900\n"
-"PO-Revision-Date: 2009-03-01 22:15+0900\n"
+"PO-Revision-Date: 2009-03-01 23:37+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
