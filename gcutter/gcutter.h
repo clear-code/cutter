@@ -26,14 +26,14 @@
 /**
  * SECTION: gcutter
  * @title: GCutter
- * @short_description: A Unit Testing Framework for C with GLib support.
+ * @short_description: Cutter with GLib support.
  * @see_also: <link
  *            linkend="cutter-gcut-assertions">Assertions
  *            with GLib support</link>
  *
  * GCutter adds many useful features based on GLib to
  * Cutter. If you want to write tests with more easily,
- * it's good idea that you consider Cutter to be used too.
+ * it's good idea that you consider GCutter to be used too.
  *
  * It's easy to use GCutter. You just include &lt;gcutter.h&gt;
  * instead of &lt;cutter.h&gt; and use gcutter.pc instead of
@@ -60,6 +60,14 @@
  * ]|
  */
 
+/**
+ * GCUTTER_ENABLED
+ *
+ * Defined when GCutter is enabled.
+ *
+ * Since: 1.0.6
+ */
+#define GCUTTER_ENABLED 1
 
 #endif /* __GCUTTER_H__ */
 

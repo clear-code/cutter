@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2009  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -36,12 +36,9 @@ G_BEGIN_DECLS
 
 /**
  * gdkcut_pixbuf_assert_equal:
- * @expected: an expected GdkPixbuf *.
- * @actual: an actual GdkPixbuf *.
+ * @expected: an expected #GdkPixbuf.
+ * @actual: an actual #GdkPixbuf.
  * @threshold: an threshold used for detecting pixel difference.
- * @...: optional format string, followed by parameters to insert
- *       into the format string (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @expected == @actual. If difference of each
  * corresponding pixel value is within threshold, @expected
@@ -56,15 +53,13 @@ G_BEGIN_DECLS
  *
  * Since: 1.0.5
  */
-#define gdkcut_pixbuf_assert_equal(expected, actual, threshold, ...) do \
+#define gdkcut_pixbuf_assert_equal(expected, actual, threshold) do      \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
         gdkcut_pixbuf_assert_equal_helper(expected, actual, threshold,  \
                                           #expected, #actual,           \
                                           #threshold),                  \
-        gdkcut_pixbuf_assert_equal(expected, actual, threshold,         \
-                                   __VA_ARGS__));                       \
+        gdkcut_pixbuf_assert_equal(expected, actual, threshold));       \
 } while (0)
 
 G_END_DECLS

@@ -401,3 +401,11 @@ gconstpointer data, const gchar *field_name
 <RETURNS>gconstpointer</RETURNS>
 gconstpointer data, const gchar *field_name
 </FUNCTION>
+
+# gdkcut-pixbuf-assertions.h
+
+<FUNCTION>
+<NAME>gdkcut_pixbuf_assert_equal</NAME>
+<RETURNS>void</RETURNS>
+const GdkPixbuf *expected, const GdkPixbuf *actual, guint threshold
+</FUNCTION>

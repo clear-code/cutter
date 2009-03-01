@@ -23,6 +23,54 @@
 #include <gcutter.h>
 #include <gdkcutter-pixbuf/gdkcut-pixbuf-assertions.h>
 
+/**
+ * SECTION: gdkcutter-pixbuf
+ * @title: GdkCutter Pixbuf
+ * @short_description: Cutter with gdk-pixbuf support.
+ * @see_also: <link
+ *            linkend="cutter-gdkcut-pixbuf-assertions">Assertions
+ *            with gdk-pixbuf support</link>
+ *
+ * GdkCutter Pixbuf adds many useful features based on
+ * gdk-pixbuf to Cutter. If you want to write tests for
+ * image, it's good idea that you consider GdkCutter Pixbuf
+ * to be used too.
+ *
+ * It's easy to use GdkCutter Pixbuf. You just include
+ * &lt;gdk-cutter-pixbuf.h&gt; instead of &lt;cutter.h&gt;
+ * or &lt;gcutter.h&gt; and use gdkcutter-pixbuf.pc instead
+ * of cutter.pc or gcutter.pc:
+ *
+ * test-xxx.c:
+ * |[
+ * -#include <cutter.h>
+ * +#include <gdkcutter-pixbuf.h>
+ * ]|
+ *
+ * configure.ac:
+ * |[
+ * -AC_CHECK_CUTTER
+ * +AC_CHECK_GDKCUTTER_PIXBUF
+ * ]|
+ *
+ * Makefile.am:
+ * |[
+ * -XXX_CFLAGS = $(CUTTER_CFLAGS)
+ * -XXX_LIBS = $(CUTTER_LIBS)
+ * +XXX_CFLAGS = $(GDKCUTTER_PIXBUF_CFLAGS)
+ * +XXX_LIBS = $(GDKCUTTER_PIXBUF_LIBS)
+ * ]|
+ */
+
+/**
+ * GDKCUTTER_PIXBUF_ENABLED
+ *
+ * Defined when GdkCutter Pixbuf is enabled.
+ *
+ * Since: 1.0.6
+ */
+#define GDKCUTTER_PIXBUF_ENABLED 1
+
 #endif /* __GDKCUTTER_PIXBUF_H__ */
 
 /*
