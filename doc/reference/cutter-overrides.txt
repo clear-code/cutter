@@ -56,6 +56,162 @@ const char *format, ...
 const char *format, ...
 </FUNCTION>
 
+<FUNCTION>
+<NAME>cut_assert</NAME>
+<RETURNS>void</RETURNS>
+cut_boolean expression, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_true</NAME>
+<RETURNS>void</RETURNS>
+cut_boolean expression, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_false</NAME>
+<RETURNS>void</RETURNS>
+cut_boolean expression, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_null</NAME>
+<RETURNS>void</RETURNS>
+const void *expression, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_null_string</NAME>
+<RETURNS>void</RETURNS>
+const char *string, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_not_null</NAME>
+<RETURNS>void</RETURNS>
+const void *expression, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_equal_int</NAME>
+<RETURNS>void</RETURNS>
+int expected, int actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_equal_uint</NAME>
+<RETURNS>void</RETURNS>
+unsigned int expected, unsigned int actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_equal_size</NAME>
+<RETURNS>void</RETURNS>
+size_t expected, size_t actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_equal_double</NAME>
+<RETURNS>void</RETURNS>
+double expected, double error, double actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_equal_string</NAME>
+<RETURNS>void</RETURNS>
+const char *expected, const char *actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_equal_string_with_free</NAME>
+<RETURNS>void</RETURNS>
+const char *expected, const char *actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_equal_string_or_null</NAME>
+<RETURNS>void</RETURNS>
+const char *expected, const char *actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_equal_memory</NAME>
+<RETURNS>void</RETURNS>
+const void *expected, size_t expected_size, const void *actual, size_t actual_size, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_equal_string_array</NAME>
+<RETURNS>void</RETURNS>
+char **expected, char **actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_equal_string_array_with_free</NAME>
+<RETURNS>void</RETURNS>
+char **expected, char **actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_errno</NAME>
+<RETURNS>void</RETURNS>
+...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_file_exist</NAME>
+<RETURNS>void</RETURNS>
+const char *path, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_path_exist</NAME>
+<RETURNS>void</RETURNS>
+const char *path, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_path_not_exist</NAME>
+<RETURNS>void</RETURNS>
+const char *path, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_match</NAME>
+<RETURNS>void</RETURNS>
+const char *pattern, const char *actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_match_with_free</NAME>
+<RETURNS>void</RETURNS>
+const char *pattern, const char *actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_equal_pointer</NAME>
+<RETURNS>void</RETURNS>
+const void *expected, const void *actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_equal_fixture_data_string</NAME>
+<RETURNS>void</RETURNS>
+const char *expected, const void *path, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_error_errno</NAME>
+<RETURNS>void</RETURNS>
+...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_return</NAME>
+<RETURNS>void</RETURNS>
+
+</FUNCTION>
+
 # cut-types.h
 
 <MACRO>

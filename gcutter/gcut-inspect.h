@@ -27,7 +27,7 @@ G_BEGIN_DECLS
 /**
  * SECTION: gcut-inspect
  * @title: Object inspection functions
- * @short_description: Functions to inspect a object for
+ * @short_description: Functions to inspect an object for
  * debugging.
  *
  * In test result, we need to know detail of inspected
@@ -137,9 +137,9 @@ void        gcut_inspect_type         (GString       *string,
  * gcut_inspect_flags:
  * @string: the output string.
  * @data: the interested target.
- * @user_data: the data passed by user. (ignored)
+ * @user_data: the pointer of GFlags type.
  *
- * Shows @data as %GFlags.
+ * Shows @data as value a GFlags type.
  *
  * e.g.:
  * |[
@@ -162,9 +162,9 @@ void        gcut_inspect_flags        (GString       *string,
  * gcut_inspect_enum:
  * @string: the output string.
  * @data: the interested target.
- * @user_data: the data passed by user. (ignored)
+ * @user_data: the pointer of GEnum type.
  *
- * Shows @data as %GEnum.
+ * Shows @data as value of a GEnum type.
  *
  * e.g.:
  * |[

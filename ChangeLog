@@ -1,6 +1,7 @@
 2009-03-01  Kouhei Sutou  <kou@cozmixng.org>
 
-	* gcutter/gcut-data.h, doc/reference/ja.po,
+	* cutter/cut-assertions.h, gcutter/gcut-data.h,
+	gcutter/gcut-inspect.h, doc/reference/ja.po,
 	doc/reference/cutter-overrides.txt: update document.
 
 	* gcutter/gcut-egg.[ch], doc/reference/ja.po: update document.

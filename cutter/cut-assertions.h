@@ -43,12 +43,12 @@ extern "C" {
 
 /**
  * cut_assert:
- * @expression: the expression to check.
+ * @expression: the expression to be checked.
  * @...: optional format string, followed by parameters to insert
  *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
- * Passes if @expression is not 0 or NULL.
+ * Passes if @expression is not 0 or %NULL.
  */
 #define cut_assert(expression, ...) do                          \
 {                                                               \
@@ -61,12 +61,12 @@ extern "C" {
 
 /**
  * cut_assert_true:
- * @expression: the expression to check.
+ * @expression: the expression to be checked.
  * @...: optional format string, followed by parameters to insert
  *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
- * Passes if @expression is TRUE value (not 0 or NULL).
+ * Passes if @expression is %CUT_TRUE value (not 0 or %NULL).
  *
  * Since: 0.9
  */
@@ -81,12 +81,12 @@ extern "C" {
 
 /**
  * cut_assert_false:
- * @expression: the expression to check.
+ * @expression: the expression to be checked.
  * @...: optional format string, followed by parameters to insert
  *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
- * Passes if @expression is 0 or NULL.
+ * Passes if @expression is 0 or %NULL.
  *
  * Since: 0.9
  */
@@ -101,12 +101,12 @@ extern "C" {
 
 /**
  * cut_assert_null:
- * @expression: the expression to check.
+ * @expression: the expression to be checked.
  * @...: optional format string, followed by parameters to insert
  *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
- * Passes if @expression is NULL.
+ * Passes if @expression is %NULL.
  */
 #define cut_assert_null(expression, ...)  do                            \
 {                                                                       \
@@ -118,12 +118,12 @@ extern "C" {
 
 /**
  * cut_assert_null_string:
- * @expression: the expression that returns string.
+ * @string: the string to be checked.
  * @...: optional format string, followed by parameters to insert
  *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
- * Passes if @expression is NULL.
+ * Passes if @expression is %NULL.
  *
  * Since: 0.3
  */
@@ -137,12 +137,12 @@ extern "C" {
 
 /**
  * cut_assert_not_null:
- * @expression: the expression to check.
+ * @expression: the expression to be checked.
  * @...: optional format string, followed by parameters to insert
  *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
- * Passes if @expression is not NULL.
+ * Passes if @expression is not %NULL.
  */
 #define cut_assert_not_null(expression, ...)  do                \
 {                                                               \
@@ -239,7 +239,7 @@ extern "C" {
  *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
- * Passes if both @expected and @actual are NULL or
+ * Passes if both @expected and @actual are %NULL or
  * strcmp(@expected, @actual) == 0.
  */
 #define cut_assert_equal_string(expected, actual, ...) do               \
@@ -259,7 +259,7 @@ extern "C" {
  *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
- * Passes if both @expected and @actual are NULL or
+ * Passes if both @expected and @actual are %NULL or
  * strcmp(@expected, @actual) == 0.
  *
  * Since: 0.3
@@ -284,7 +284,7 @@ extern "C" {
  *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
- * Passes if both @expected and @actual are NULL or
+ * Passes if both @expected and @actual are %NULL or
  * strcmp(@expected, @actual) == 0.
  *
  *
@@ -328,13 +328,13 @@ extern "C" {
 
 /**
  * cut_assert_equal_string_array:
- * @expected: an expected NULL-terminated array of strings.
- * @actual: an actual NULL-terminated array of strings that are freed.
+ * @expected: an expected %NULL-terminated array of strings.
+ * @actual: an actual %NULL-terminated array of strings.
  * @...: optional format string, followed by parameters to insert
  *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
- * Passes if both @expected and @actual are not NULL and
+ * Passes if both @expected and @actual are not %NULL and
  * have same content (strcmp() == 0) strings.
  */
 #define cut_assert_equal_string_array(expected, actual, ...) do         \
@@ -348,13 +348,13 @@ extern "C" {
 
 /**
  * cut_assert_equal_string_array_with_free:
- * @expected: an expected NULL-terminated array of strings.
- * @actual: an actual NULL-terminated array of strings.
+ * @expected: an expected %NULL-terminated array of strings.
+ * @actual: an actual %NULL-terminated array of strings that are freed.
  * @...: optional format string, followed by parameters to insert
  *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
- * Passes if both @expected and @actual are not NULL and
+ * Passes if both @expected and @actual are not %NULL and
  * have same content (strcmp() == 0) strings.
  *
  * Since: 0.9
@@ -527,7 +527,7 @@ extern "C" {
  *       into the format string. (as with printf()) This is
  *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
- * Passes if @function(@expected, @actual) returns TRUE.
+ * Passes if @function(@expected, @actual) returns %CUT_TRUE.
  *
  * e.g.:
  * |[
