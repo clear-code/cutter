@@ -1,5 +1,8 @@
 2009-03-01  Kouhei Sutou  <kou@cozmixng.org>
 
+	* configure.ac, html/Makefile.am, doc/reference/Makefile.am: use
+	web.sf.net.
+
 	* NEWS*: add entries for 1.0.6.
 
 	* gcutter/gcut-assertions.h: remove needless backward compatibility.
