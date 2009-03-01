@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.0.6\n"
-"POT-Creation-Date: 2009-03-01 12:19+0900\n"
-"PO-Revision-Date: 2009-03-01 12:21+0900\n"
+"POT-Creation-Date: 2009-03-01 13:20+0900\n"
+"PO-Revision-Date: 2009-03-01 13:19+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -946,37 +946,37 @@ msgid "gcut_assert_equal_pid"
 msgstr ""
 
 #: xml/api-index-1.0.6.xml:31(link) xml/api-index-full.xml:471(link)
-#: xml/gcut-data.xml:35(link) xml/gcut-data.xml:222(primary)
+#: xml/gcut-data.xml:35(link) xml/gcut-data.xml:322(primary)
 msgid "gcut_data_get_enum"
 msgstr ""
 
 #: xml/api-index-1.0.6.xml:32(link) xml/api-index-full.xml:473(link)
-#: xml/gcut-data.xml:33(link) xml/gcut-data.xml:203(primary)
+#: xml/gcut-data.xml:33(link) xml/gcut-data.xml:303(primary)
 msgid "gcut_data_get_flags"
 msgstr ""
 
 #: xml/api-index-1.0.6.xml:33(link) xml/api-index-full.xml:475(link)
-#: xml/gcut-data.xml:27(link) xml/gcut-data.xml:148(primary)
+#: xml/gcut-data.xml:27(link) xml/gcut-data.xml:248(primary)
 msgid "gcut_data_get_int"
 msgstr ""
 
 #: xml/api-index-1.0.6.xml:34(link) xml/api-index-full.xml:477(link)
-#: xml/gcut-data.xml:37(link) xml/gcut-data.xml:241(primary)
+#: xml/gcut-data.xml:37(link) xml/gcut-data.xml:341(primary)
 msgid "gcut_data_get_pointer"
 msgstr ""
 
 #: xml/api-index-1.0.6.xml:35(link) xml/api-index-full.xml:479(link)
-#: xml/gcut-data.xml:25(link) xml/gcut-data.xml:130(primary)
+#: xml/gcut-data.xml:25(link) xml/gcut-data.xml:230(primary)
 msgid "gcut_data_get_string"
 msgstr ""
 
 #: xml/api-index-1.0.6.xml:36(link) xml/api-index-full.xml:481(link)
-#: xml/gcut-data.xml:31(link) xml/gcut-data.xml:185(primary)
+#: xml/gcut-data.xml:31(link) xml/gcut-data.xml:285(primary)
 msgid "gcut_data_get_type"
 msgstr ""
 
 #: xml/api-index-1.0.6.xml:37(link) xml/api-index-full.xml:483(link)
-#: xml/gcut-data.xml:29(link) xml/gcut-data.xml:166(primary)
+#: xml/gcut-data.xml:29(link) xml/gcut-data.xml:266(primary)
 msgid "gcut_data_get_uint"
 msgstr ""
 
@@ -4100,10 +4100,10 @@ msgstr ""
 #: xml/gcut-data-helper.xml:77(term) xml/gcut-data-helper.xml:96(term)
 #: xml/gcut-data-helper.xml:115(term) xml/gcut-data-helper.xml:134(term)
 #: xml/gcut-data-helper.xml:153(term) xml/gcut-data-helper.xml:172(term)
-#: xml/gcut-data-helper.xml:191(term) xml/gcut-data.xml:142(term)
-#: xml/gcut-data.xml:160(term) xml/gcut-data.xml:179(term)
-#: xml/gcut-data.xml:197(term) xml/gcut-data.xml:216(term)
-#: xml/gcut-data.xml:235(term) xml/gcut-data.xml:254(term)
+#: xml/gcut-data-helper.xml:191(term) xml/gcut-data.xml:242(term)
+#: xml/gcut-data.xml:260(term) xml/gcut-data.xml:279(term)
+#: xml/gcut-data.xml:297(term) xml/gcut-data.xml:316(term)
+#: xml/gcut-data.xml:335(term) xml/gcut-data.xml:354(term)
 #: xml/gcut-dynamic-data.xml:115(term) xml/gcut-dynamic-data.xml:130(term)
 #: xml/gcut-dynamic-data.xml:145(term) xml/gcut-dynamic-data.xml:156(term)
 #: xml/gcut-dynamic-data.xml:171(term) xml/gcut-dynamic-data.xml:190(term)
@@ -4422,14 +4422,17 @@ msgstr ""
 #: xml/cutter.xml:236(para) xml/cutter.xml:335(para) xml/cutter.xml:379(para)
 #: xml/gcut-assertions.xml:561(para) xml/gcut-assertions.xml:592(para)
 #: xml/gcut-assertions.xml:630(para) xml/gcut-assertions.xml:659(para)
-#: xml/gcut-data.xml:73(para) xml/gcut-egg.xml:121(para)
-#: xml/gcut-hash-table.xml:69(para) xml/gcut-hash-table.xml:103(para)
-#: xml/gcut-inspect.xml:77(para) xml/gcut-inspect.xml:102(para)
-#: xml/gcut-inspect.xml:127(para) xml/gcut-inspect.xml:152(para)
-#: xml/gcut-inspect.xml:177(para) xml/gcut-inspect.xml:202(para)
-#: xml/gcut-inspect.xml:233(para) xml/gcut-inspect.xml:264(para)
-#: xml/gcut-list.xml:86(para) xml/gcut-list.xml:117(para)
-#: xml/gcut-value-equal.xml:79(para)
+#: xml/gcut-data.xml:73(para) xml/gcut-data.xml:124(para)
+#: xml/gcut-data.xml:137(para) xml/gcut-data.xml:150(para)
+#: xml/gcut-data.xml:163(para) xml/gcut-data.xml:176(para)
+#: xml/gcut-data.xml:189(para) xml/gcut-data.xml:203(para)
+#: xml/gcut-egg.xml:121(para) xml/gcut-hash-table.xml:69(para)
+#: xml/gcut-hash-table.xml:103(para) xml/gcut-inspect.xml:77(para)
+#: xml/gcut-inspect.xml:102(para) xml/gcut-inspect.xml:127(para)
+#: xml/gcut-inspect.xml:152(para) xml/gcut-inspect.xml:177(para)
+#: xml/gcut-inspect.xml:202(para) xml/gcut-inspect.xml:233(para)
+#: xml/gcut-inspect.xml:264(para) xml/gcut-list.xml:86(para)
+#: xml/gcut-list.xml:117(para) xml/gcut-value-equal.xml:79(para)
 msgid "e.g.: <placeholder-1/>"
 msgstr "例: <placeholder-1/>"
 
@@ -4501,7 +4504,7 @@ msgstr "チェックする式。"
 #: xml/gcut-assertions.xml:580(term) xml/gcut-assertions.xml:616(term)
 #: xml/gcut-assertions.xml:646(term) xml/gcut-assertions.xml:688(term)
 #: xml/gcut-assertions.xml:707(term) xml/gcut-assertions.xml:726(term)
-#: xml/gcut-assertions.xml:745(term) xml/gcut-data.xml:122(term)
+#: xml/gcut-assertions.xml:745(term) xml/gcut-data.xml:221(term)
 #: xml/gcut-dynamic-data.xml:127(term) xml/gcut-egg.xml:249(term)
 #: xml/gcut-egg.xml:367(term) xml/gcut-test-utils.xml:137(term)
 #: xml/gcut-test-utils.xml:172(term) xml/gcut-test-utils.xml:189(term)
@@ -4786,10 +4789,10 @@ msgstr "実際のsize_tの値。"
 #: xml/cutter.xml:229(para) xml/cutter.xml:435(para) xml/cutter.xml:450(para)
 #: xml/cutter.xml:458(para) xml/gcut-assertions.xml:204(para)
 #: xml/gcut-assertions.xml:432(para) xml/gcut-assertions.xml:750(para)
-#: xml/gcut-data.xml:127(para) xml/gcut-data.xml:145(para)
-#: xml/gcut-data.xml:163(para) xml/gcut-data.xml:182(para)
-#: xml/gcut-data.xml:200(para) xml/gcut-data.xml:219(para)
-#: xml/gcut-data.xml:238(para) xml/gcut-data.xml:257(para)
+#: xml/gcut-data.xml:227(para) xml/gcut-data.xml:245(para)
+#: xml/gcut-data.xml:263(para) xml/gcut-data.xml:282(para)
+#: xml/gcut-data.xml:300(para) xml/gcut-data.xml:319(para)
+#: xml/gcut-data.xml:338(para) xml/gcut-data.xml:357(para)
 #: xml/gcut-egg.xml:229(para) xml/gcut-egg.xml:255(para)
 #: xml/gcut-egg.xml:273(para) xml/gcut-egg.xml:292(para)
 #: xml/gcut-egg.xml:307(para) xml/gcut-egg.xml:322(para)
@@ -5999,10 +6002,10 @@ msgstr ""
 #: xml/gcut-data-helper.xml:87(term) xml/gcut-data-helper.xml:106(term)
 #: xml/gcut-data-helper.xml:125(term) xml/gcut-data-helper.xml:144(term)
 #: xml/gcut-data-helper.xml:163(term) xml/gcut-data-helper.xml:182(term)
-#: xml/gcut-data.xml:136(term) xml/gcut-data.xml:154(term)
-#: xml/gcut-data.xml:173(term) xml/gcut-data.xml:191(term)
-#: xml/gcut-data.xml:210(term) xml/gcut-data.xml:229(term)
-#: xml/gcut-data.xml:248(term) xml/gcut-dynamic-data.xml:153(term)
+#: xml/gcut-data.xml:236(term) xml/gcut-data.xml:254(term)
+#: xml/gcut-data.xml:273(term) xml/gcut-data.xml:291(term)
+#: xml/gcut-data.xml:310(term) xml/gcut-data.xml:329(term)
+#: xml/gcut-data.xml:348(term) xml/gcut-dynamic-data.xml:153(term)
 #: xml/gcut-dynamic-data.xml:181(term) xml/gcut-dynamic-data.xml:200(term)
 #: xml/gcut-dynamic-data.xml:219(term) xml/gcut-dynamic-data.xml:238(term)
 #: xml/gcut-dynamic-data.xml:257(term) xml/gcut-dynamic-data.xml:276(term)
@@ -7349,7 +7352,7 @@ msgstr ""
 #: xml/cut-module-factory.xml:72(term) xml/cut-module-factory.xml:95(term)
 #: xml/cut-report.xml:68(term) xml/cut-stream.xml:81(term)
 #: xml/cut-test-data.xml:71(term) xml/cut-test-iterator.xml:68(term)
-#: xml/cut-ui.xml:70(term) xml/gcut-data.xml:116(term)
+#: xml/cut-ui.xml:70(term) xml/gcut-data.xml:215(term)
 #: xml/gcut-egg.xml:364(term)
 msgid "<parameter>name</parameter>&nbsp;:"
 msgstr ""
@@ -14658,10 +14661,10 @@ msgstr ""
 #: xml/gcut-data-helper.xml:71(term) xml/gcut-data-helper.xml:90(term)
 #: xml/gcut-data-helper.xml:109(term) xml/gcut-data-helper.xml:128(term)
 #: xml/gcut-data-helper.xml:147(term) xml/gcut-data-helper.xml:166(term)
-#: xml/gcut-data-helper.xml:185(term) xml/gcut-data.xml:139(term)
-#: xml/gcut-data.xml:157(term) xml/gcut-data.xml:176(term)
-#: xml/gcut-data.xml:194(term) xml/gcut-data.xml:213(term)
-#: xml/gcut-data.xml:232(term) xml/gcut-data.xml:251(term)
+#: xml/gcut-data-helper.xml:185(term) xml/gcut-data.xml:239(term)
+#: xml/gcut-data.xml:257(term) xml/gcut-data.xml:276(term)
+#: xml/gcut-data.xml:294(term) xml/gcut-data.xml:313(term)
+#: xml/gcut-data.xml:332(term) xml/gcut-data.xml:351(term)
 #: xml/gcut-dynamic-data.xml:184(term) xml/gcut-dynamic-data.xml:203(term)
 #: xml/gcut-dynamic-data.xml:222(term) xml/gcut-dynamic-data.xml:241(term)
 #: xml/gcut-dynamic-data.xml:260(term) xml/gcut-dynamic-data.xml:279(term)
@@ -14836,67 +14839,198 @@ msgid ""
 "data_translate(void)\n"
 "{\n"
 "    gcut_add_datum(\"simple data\",\n"
-"                   \"/translated\", G_TYPE_STRING, \"first\",\n"
-"                   \"/input\", G_TYPE_INT, 1,\n"
+"                   \"translated\", G_TYPE_STRING, \"first\",\n"
+"                   \"input\", G_TYPE_INT, 1,\n"
 "                   NULL);\n"
 "    gcut_add_datum(\"complex data\",\n"
-"                   \"/translated\", G_TYPE_STRING, \"a hundred eleven\",\n"
-"                   \"/input\", G_TYPE_INT, 111,\n"
+"                   \"translated\", G_TYPE_STRING, \"a hundred eleven\",\n"
+"                   \"input\", G_TYPE_INT, 111,\n"
 "                   NULL);\n"
 "}\n"
 "\n"
 "void\n"
 "test_translate(gconstpointer data)\n"
 "{\n"
-"    cut_assert_equal_string(gcut_data_get_string(data, \"/translated\"),\n"
-"                            gcut_data_get_int(data, \"/input\"));\n"
+"    cut_assert_equal_string(gcut_data_get_string(data, \"translated\"),\n"
+"                            gcut_data_get_int(data, \"input\"));\n"
 "}\n"
 msgstr ""
 
-#: xml/gcut-data.xml:117(simpara)
+#: xml/gcut-data.xml:115(para)
+msgid "Available types and their values are the followings:"
+msgstr ""
+
+#: xml/gcut-data.xml:121(literal)
+msgid "G_TYPE_STRING"
+msgstr ""
+
+#: xml/gcut-data.xml:123(para)
+msgid "const <link linkend=\"gchar\"><literal>gchar</literal></link> *value"
+msgstr "const <link linkend=\"gchar\"><literal>gchar</literal></link> *value"
+
+#: xml/gcut-data.xml:125(programlisting)
+#, no-wrap
+msgid ""
+"\n"
+"add_datum(\"data name\",\n"
+"          \"field-name\", G_TYPE_STRING, \"string value\",\n"
+"          NULL);\n"
+msgstr ""
+
+#: xml/gcut-data.xml:134(literal)
+msgid "G_TYPE_INT"
+msgstr ""
+
+#: xml/gcut-data.xml:136(para)
+msgid "<link linkend=\"gint\"><literal>gint</literal></link> value"
+msgstr "<link linkend=\"gint\"><literal>gint</literal></link> value"
+
+#: xml/gcut-data.xml:138(programlisting)
+#, no-wrap
+msgid ""
+"\n"
+"add_datum(\"data name\",\n"
+"          \"field-name\", G_TYPE_INT, 100,\n"
+"          NULL);\n"
+msgstr ""
+
+#: xml/gcut-data.xml:147(literal)
+msgid "G_TYPE_UINT"
+msgstr ""
+
+#: xml/gcut-data.xml:149(para)
+msgid "<link linkend=\"guint\"><literal>guint</literal></link> value"
+msgstr "<link linkend=\"guint\"><literal>guint</literal></link> value"
+
+#: xml/gcut-data.xml:151(programlisting)
+#, no-wrap
+msgid ""
+"\n"
+"add_datum(\"data name\",\n"
+"          \"field-name\", G_TYPE_UINT, 100,\n"
+"          NULL);\n"
+msgstr ""
+
+#: xml/gcut-data.xml:160(literal)
+msgid "G_TYPE_GTYPE"
+msgstr ""
+
+#: xml/gcut-data.xml:162(para)
+msgid "<link linkend=\"GType\"><literal>GType</literal></link> value"
+msgstr "<link linkend=\"GType\"><literal>GType</literal></link> value"
+
+#: xml/gcut-data.xml:164(programlisting)
+#, no-wrap
+msgid ""
+"\n"
+"add_datum(\"data name\",\n"
+"          \"field-name\", G_TYPE_GTYPE, G_TYPE_OBJECT,\n"
+"          NULL);\n"
+msgstr ""
+
+#: xml/gcut-data.xml:173(term)
+msgid "GFlags types"
+msgstr "GFlagsの型"
+
+#: xml/gcut-data.xml:175(para) xml/gcut-data.xml:188(para)
+#, fuzzy
+msgid "its type value."
+msgstr "その型の値。"
+
+#: xml/gcut-data.xml:177(programlisting)
+#, no-wrap
+msgid ""
+"\n"
+"add_datum(\"data name\",\n"
+"          \"field-name\", GTK_TYPE_WIDGET_FLAGS, GTK_TOPLEVEL | GTK_MAPPED,\n"
+"          NULL);\n"
+msgstr ""
+
+#: xml/gcut-data.xml:186(term)
+msgid "GEnum types"
+msgstr "GEnumの型"
+
+#: xml/gcut-data.xml:190(programlisting)
+#, no-wrap
+msgid ""
+"\n"
+"add_datum(\"data name\",\n"
+"          \"field-name\", GTK_TYPE_WRAP_MODE, GTK_WRAP_NONE,\n"
+"          NULL);\n"
+msgstr ""
+
+#: xml/gcut-data.xml:199(literal)
+msgid "G_TYPE_POINTER"
+msgstr ""
+
+#: xml/gcut-data.xml:201(para)
+msgid ""
+"<link linkend=\"gconstpointer\"><literal>gconstpointer</literal></link> "
+"value, <link linkend=\"GDestroyNotify\"><literal>GDestroyNotify</literal></"
+"link> notify"
+msgstr ""
+"<link linkend=\"gconstpointer\"><literal>gconstpointer</literal></link> "
+"value, <link linkend=\"GDestroyNotify\"><literal>GDestroyNotify</literal></"
+"link> notify"
+
+#: xml/gcut-data.xml:202(para)
+msgid "notify is called when value is destroyed."
+msgstr ""
+
+#: xml/gcut-data.xml:204(programlisting)
+#, no-wrap
+msgid ""
+"\n"
+"add_datum(\"data name\",\n"
+"          \"field-name\", G_TYPE_POINTER, my_structure_new(...), my_structure_free,\n"
+"          NULL);\n"
+msgstr ""
+
+#: xml/gcut-data.xml:216(simpara)
 msgid "the name of the data."
 msgstr "データの名前。"
 
-#: xml/gcut-data.xml:119(term) xml/gcut-dynamic-data.xml:124(term)
+#: xml/gcut-data.xml:218(term) xml/gcut-dynamic-data.xml:124(term)
 #: xml/gcut-dynamic-data.xml:139(term)
 msgid "<parameter>first_field_name</parameter>&nbsp;:"
 msgstr ""
 
-#: xml/gcut-data.xml:120(simpara)
+#: xml/gcut-data.xml:219(simpara)
 msgid "the first field name."
 msgstr "最初のフィールド名。"
 
-#: xml/gcut-data.xml:123(simpara)
+#: xml/gcut-data.xml:222(simpara)
 msgid ""
 "the type and value pair of the first field, followed optionally by the next "
 "field name, type and value triples. <link linkend=\"NULL--CAPS"
-"\"><literal>NULL</literal></link>-terminated."
+"\"><literal>NULL</literal></link>-terminated. See description for more "
+"details."
 msgstr ""
 "最初のフィールドの型と値。その後に、フィールドの名前と型と値の3つを任意の数だ"
 "け指定します。最後の引数は<link linkend=\"NULL--CAPS\"><literal>NULL</"
-"literal></link>にしてください。"
+"literal></link>にしてください。詳細は関数の説明文のところにあります。"
 
-#: xml/gcut-data.xml:129(title)
+#: xml/gcut-data.xml:229(title)
 msgid "gcut_data_get_string ()"
 msgstr "gcut_data_get_string ()"
 
-#: xml/gcut-data.xml:130(programlisting)
+#: xml/gcut-data.xml:230(programlisting)
 #, no-wrap
 msgid ""
 "const <link linkend=\"gchar\">gchar</link> *       gcut_data_get_string                (<link linkend=\"gconstpointer\">gconstpointer</link> data,\n"
 "                                                         const <link linkend=\"gchar\">gchar</link> *field_name);"
 msgstr ""
 
-#: xml/gcut-data.xml:132(para)
+#: xml/gcut-data.xml:232(para)
 msgid ""
 "Gets a field value identified by <parameter>field_name</parameter> as string."
 msgstr ""
 "<parameter>field_name</parameter>フィールドの値を文字列として取得します。"
 
-#: xml/gcut-data.xml:137(simpara) xml/gcut-data.xml:155(simpara)
-#: xml/gcut-data.xml:174(simpara) xml/gcut-data.xml:192(simpara)
-#: xml/gcut-data.xml:211(simpara) xml/gcut-data.xml:230(simpara)
-#: xml/gcut-data.xml:249(simpara)
+#: xml/gcut-data.xml:237(simpara) xml/gcut-data.xml:255(simpara)
+#: xml/gcut-data.xml:274(simpara) xml/gcut-data.xml:292(simpara)
+#: xml/gcut-data.xml:311(simpara) xml/gcut-data.xml:330(simpara)
+#: xml/gcut-data.xml:349(simpara)
 msgid ""
 "the data added by <link linkend=\"gcut-add-datum\"><function>gcut_add_datum()"
 "</function></link>."
@@ -14904,67 +15038,67 @@ msgstr ""
 "<link linkend=\"gcut-add-datum\"><function>gcut_add_datum()</function></link>"
 "で追加したデータ。"
 
-#: xml/gcut-data.xml:140(simpara) xml/gcut-data.xml:158(simpara)
-#: xml/gcut-data.xml:177(simpara) xml/gcut-data.xml:195(simpara)
-#: xml/gcut-data.xml:214(simpara) xml/gcut-data.xml:233(simpara)
-#: xml/gcut-data.xml:252(simpara)
+#: xml/gcut-data.xml:240(simpara) xml/gcut-data.xml:258(simpara)
+#: xml/gcut-data.xml:277(simpara) xml/gcut-data.xml:295(simpara)
+#: xml/gcut-data.xml:314(simpara) xml/gcut-data.xml:333(simpara)
+#: xml/gcut-data.xml:352(simpara)
 msgid "the field name."
 msgstr "フィールド名。"
 
-#: xml/gcut-data.xml:142(simpara) xml/gcut-data.xml:160(simpara)
-#: xml/gcut-data.xml:179(simpara) xml/gcut-data.xml:197(simpara)
-#: xml/gcut-data.xml:216(simpara) xml/gcut-data.xml:235(simpara)
-#: xml/gcut-data.xml:254(simpara)
+#: xml/gcut-data.xml:242(simpara) xml/gcut-data.xml:260(simpara)
+#: xml/gcut-data.xml:279(simpara) xml/gcut-data.xml:297(simpara)
+#: xml/gcut-data.xml:316(simpara) xml/gcut-data.xml:335(simpara)
+#: xml/gcut-data.xml:354(simpara)
 msgid "a field value corresponded to <parameter>field_name</parameter>."
 msgstr "<parameter>field_name</parameter>に対応するフィールドの値。"
 
-#: xml/gcut-data.xml:147(title)
+#: xml/gcut-data.xml:247(title)
 msgid "gcut_data_get_int ()"
 msgstr "gcut_data_get_int ()"
 
-#: xml/gcut-data.xml:148(programlisting)
+#: xml/gcut-data.xml:248(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"gint\">gint</link>                gcut_data_get_int                   (<link linkend=\"gconstpointer\">gconstpointer</link> data,\n"
 "                                                         const <link linkend=\"gchar\">gchar</link> *field_name);"
 msgstr ""
 
-#: xml/gcut-data.xml:150(para)
+#: xml/gcut-data.xml:250(para)
 msgid ""
 "Gets a field value identified by <parameter>field_name</parameter> as "
 "integer."
 msgstr ""
 "<parameter>field_name</parameter>フィールドの値を整数として取得します。"
 
-#: xml/gcut-data.xml:165(title)
+#: xml/gcut-data.xml:265(title)
 msgid "gcut_data_get_uint ()"
 msgstr "gcut_data_get_uint ()"
 
-#: xml/gcut-data.xml:166(programlisting)
+#: xml/gcut-data.xml:266(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"guint\">guint</link>               gcut_data_get_uint                  (<link linkend=\"gconstpointer\">gconstpointer</link> data,\n"
 "                                                         const <link linkend=\"gchar\">gchar</link> *field_name);"
 msgstr ""
 
-#: xml/gcut-data.xml:168(para)
+#: xml/gcut-data.xml:268(para)
 msgid ""
 "Gets a field value identified by <parameter>field_name</parameter> as "
 "unsigned integer."
 msgstr "<parameter>field_name</parameter>の値を符号なし整数として取得します。"
 
-#: xml/gcut-data.xml:184(title)
+#: xml/gcut-data.xml:284(title)
 msgid "gcut_data_get_type ()"
 msgstr "gcut_data_get_type ()"
 
-#: xml/gcut-data.xml:185(programlisting)
+#: xml/gcut-data.xml:285(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"GType\">GType</link>               gcut_data_get_type                  (<link linkend=\"gconstpointer\">gconstpointer</link> data,\n"
 "                                                         const <link linkend=\"gchar\">gchar</link> *field_name);"
 msgstr ""
 
-#: xml/gcut-data.xml:187(para)
+#: xml/gcut-data.xml:287(para)
 msgid ""
 "Gets a field value identified by <parameter>field_name</parameter> as <link "
 "linkend=\"GType\"><literal>GType</literal></link>."
@@ -14972,52 +15106,56 @@ msgstr ""
 "<parameter>field_name</parameter>フィールドの値を<link linkend=\"GType"
 "\"><literal>GType</literal></link>として取得します。"
 
-#: xml/gcut-data.xml:202(title)
+#: xml/gcut-data.xml:302(title)
 msgid "gcut_data_get_flags ()"
 msgstr "gcut_data_get_flags ()"
 
-#: xml/gcut-data.xml:203(programlisting)
+#: xml/gcut-data.xml:303(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"guint\">guint</link>               gcut_data_get_flags                 (<link linkend=\"gconstpointer\">gconstpointer</link> data,\n"
 "                                                         const <link linkend=\"gchar\">gchar</link> *field_name);"
 msgstr ""
 
-#: xml/gcut-data.xml:205(para)
+#: xml/gcut-data.xml:305(para)
 msgid ""
 "Gets a field value identified by <parameter>field_name</parameter> as "
 "unsigned integer of GFlags."
-msgstr "<parameter>field_name</parameter>の値をGFlags型の符号なし整数として取得します。"
+msgstr ""
+"<parameter>field_name</parameter>の値をGFlags型の符号なし整数として取得しま"
+"す。"
 
-#: xml/gcut-data.xml:221(title)
+#: xml/gcut-data.xml:321(title)
 msgid "gcut_data_get_enum ()"
 msgstr "gcut_data_get_enum ()"
 
-#: xml/gcut-data.xml:222(programlisting)
+#: xml/gcut-data.xml:322(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"gint\">gint</link>                gcut_data_get_enum                  (<link linkend=\"gconstpointer\">gconstpointer</link> data,\n"
 "                                                         const <link linkend=\"gchar\">gchar</link> *field_name);"
 msgstr ""
 
-#: xml/gcut-data.xml:224(para)
+#: xml/gcut-data.xml:324(para)
 msgid ""
 "Gets a field value identified by <parameter>field_name</parameter> as "
 "integer of GEnum type."
-msgstr "<parameter>field_name</parameter>フィールドの値をGEnum型の整数として取得します。"
+msgstr ""
+"<parameter>field_name</parameter>フィールドの値をGEnum型の整数として取得しま"
+"す。"
 
-#: xml/gcut-data.xml:240(title)
+#: xml/gcut-data.xml:340(title)
 msgid "gcut_data_get_pointer ()"
 msgstr "gcut_data_get_pointer ()"
 
-#: xml/gcut-data.xml:241(programlisting)
+#: xml/gcut-data.xml:341(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"gconstpointer\">gconstpointer</link>       gcut_data_get_pointer               (<link linkend=\"gconstpointer\">gconstpointer</link> data,\n"
 "                                                         const <link linkend=\"gchar\">gchar</link> *field_name);"
 msgstr ""
 
-#: xml/gcut-data.xml:243(para)
+#: xml/gcut-data.xml:343(para)
 msgid ""
 "Gets a field value identified by <parameter>field_name</parameter> as "
 "pointer."

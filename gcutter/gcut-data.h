@@ -43,7 +43,8 @@ G_BEGIN_DECLS
  * @first_field_name: the first field name.
  * @...: the type and value pair of the first field,
  *       followed optionally by the next field name, type
- *       and value triples. %NULL-terminated.
+ *       and value triples. %NULL-terminated. See
+ *       description for more details.
  *
  * Adds a datum to be used in data driven test. It's
  * convenient rather than cut_add_data() because you doesn't
@@ -73,22 +74,119 @@ G_BEGIN_DECLS
  * data_translate(void)
  * {
  *     gcut_add_datum("simple data",
- *                    "/translated", G_TYPE_STRING, "first",
- *                    "/input", G_TYPE_INT, 1,
+ *                    "translated", G_TYPE_STRING, "first",
+ *                    "input", G_TYPE_INT, 1,
  *                    NULL);
  *     gcut_add_datum("complex data",
- *                    "/translated", G_TYPE_STRING, "a hundred eleven",
- *                    "/input", G_TYPE_INT, 111,
+ *                    "translated", G_TYPE_STRING, "a hundred eleven",
+ *                    "input", G_TYPE_INT, 111,
  *                    NULL);
  * }
  *
  * void
  * test_translate(gconstpointer data)
  * {
- *     cut_assert_equal_string(gcut_data_get_string(data, "/translated"),
- *                             gcut_data_get_int(data, "/input"));
+ *     cut_assert_equal_string(gcut_data_get_string(data, "translated"),
+ *                             gcut_data_get_int(data, "input"));
  * }
  * ]|
+ *
+ * Available types and their values are the followings:
+ *
+ * <variablelist>
+ *   <varlistentry>
+ *     <term>%G_TYPE_STRING</term>
+ *     <listitem>
+ *       <para>const %gchar *value</para>
+ *       <para>e.g.:
+ * |[
+ * add_datum("data name",
+ *           "field-name", G_TYPE_STRING, "string value",
+ *           NULL);
+ * ]|
+ *       </para>
+ *     </listitem>
+ *   </varlistentry>
+ *   <varlistentry>
+ *     <term>%G_TYPE_INT</term>
+ *     <listitem>
+ *       <para>%gint value</para>
+ *       <para>e.g.:
+ * |[
+ * add_datum("data name",
+ *           "field-name", G_TYPE_INT, 100,
+ *           NULL);
+ * ]|
+ *       </para>
+ *     </listitem>
+ *   </varlistentry>
+ *   <varlistentry>
+ *     <term>%G_TYPE_UINT</term>
+ *     <listitem>
+ *       <para>%guint value</para>
+ *       <para>e.g.:
+ * |[
+ * add_datum("data name",
+ *           "field-name", G_TYPE_UINT, 100,
+ *           NULL);
+ * ]|
+ *       </para>
+ *     </listitem>
+ *   </varlistentry>
+ *   <varlistentry>
+ *     <term>%G_TYPE_GTYPE</term>
+ *     <listitem>
+ *       <para>%GType value</para>
+ *       <para>e.g.:
+ * |[
+ * add_datum("data name",
+ *           "field-name", G_TYPE_GTYPE, G_TYPE_OBJECT,
+ *           NULL);
+ * ]|
+ *       </para>
+ *     </listitem>
+ *   </varlistentry>
+ *   <varlistentry>
+ *     <term>GFlags types</term>
+ *     <listitem>
+ *       <para>its type value.</para>
+ *       <para>e.g.:
+ * |[
+ * add_datum("data name",
+ *           "field-name", GTK_TYPE_WIDGET_FLAGS, GTK_TOPLEVEL | GTK_MAPPED,
+ *           NULL);
+ * ]|
+ *       </para>
+ *     </listitem>
+ *   </varlistentry>
+ *   <varlistentry>
+ *     <term>GEnum types</term>
+ *     <listitem>
+ *       <para>its type value.</para>
+ *       <para>e.g.:
+ * |[
+ * add_datum("data name",
+ *           "field-name", GTK_TYPE_WRAP_MODE, GTK_WRAP_NONE,
+ *           NULL);
+ * ]|
+ *       </para>
+ *     </listitem>
+ *   </varlistentry>
+ *   <varlistentry>
+ *     <term>%G_TYPE_POINTER</term>
+ *     <listitem>
+ *       <para>%gconstpointer value, %GDestroyNotify notify</para>
+ *       <para>notify is called when value is destroyed.</para>
+ *       <para>e.g.:
+ * |[
+ * add_datum("data name",
+ *           "field-name", G_TYPE_POINTER, my_structure_new(...), my_structure_free,
+ *           NULL);
+ * ]|
+ *       </para>
+ *     </listitem>
+ *   </varlistentry>
+ * </variablelist>
  *
  * Since: 1.0.6
  */
