@@ -7,7 +7,6 @@ INCLUDES = 					\
 
 AM_CFLAGS = $(CUTTER_CFLAGS)
 
-EXTRA_DIST = run-test.sh
 CLEANFILES = *.gcno *.gcda
 
 noinst_LTLIBRARIES = 			\
