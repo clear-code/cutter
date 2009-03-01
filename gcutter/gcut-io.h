@@ -24,6 +24,8 @@
 
 G_BEGIN_DECLS
 
+/* TODO: 1.0.7: write document or create gcut_inspect_io_condition() */
+
 gchar     *gcut_io_inspect_condition         (GIOCondition condition);
 
 G_END_DECLS

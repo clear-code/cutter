@@ -24,6 +24,8 @@
 
 G_BEGIN_DECLS
 
+/* TODO: 1.0.7: write document */
+
 gboolean         gdkcut_pixbuf_equal_property   (const GdkPixbuf *pixbuf1,
                                                  const GdkPixbuf *pixbuf2);
 gboolean         gdkcut_pixbuf_equal_content    (const GdkPixbuf *pixbuf1,

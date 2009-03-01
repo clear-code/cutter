@@ -24,6 +24,8 @@
 
 G_BEGIN_DECLS
 
+/* TODO: 1.0.7: write document */
+
 GIOChannel    *gcut_string_io_channel_new        (const gchar *initial);
 GString       *gcut_string_io_channel_get_string (GIOChannel  *channel);
 void           gcut_string_io_channel_clear      (GIOChannel  *channel);

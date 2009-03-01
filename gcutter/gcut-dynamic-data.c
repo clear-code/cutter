@@ -234,6 +234,7 @@ gcut_dynamic_data_new_va_list (const gchar *first_field_name, va_list args)
         FieldValue *field_value;
 
         field_value = field_value_new(va_arg(args, GType));
+/* TODO: 1.0.7: support G_TYPE_OBJECT and so on */
         switch (field_value->type) {
         case G_TYPE_STRING:
             field_value->value.pointer = g_strdup(va_arg(args, const gchar *));

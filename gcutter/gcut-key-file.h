@@ -24,6 +24,8 @@
 
 G_BEGIN_DECLS
 
+/* TODO: 1.0.7: write document */
+
 gint         gcut_key_file_get_enum             (GKeyFile     *key_file,
                                                  const gchar  *group_name,
                                                  const gchar  *key,
