@@ -230,7 +230,7 @@ GCutEgg      *gcut_egg_new_array     (GArray       *command);
  * @egg: a %GCutEgg
  * @flags: the flags to be passed to g_spawn_async_with_pipes().
  *
- * Sets @flags for spawning to @egg.
+ * Sets @flags for spawning.
  *
  * Since: 1.0.6
  */
@@ -241,9 +241,9 @@ void          gcut_egg_set_flags     (GCutEgg      *egg,
  * gcut_egg_get_flags:
  * @egg: a %GCutEgg
  *
- * Gets @flags for spawning of @egg.
+ * Gets @flags for spawning.
  *
- * Returns: the flags for spawning of @egg.
+ * Returns: the flags for spawning.
  *
  * Since: 1.0.6
  */
@@ -271,8 +271,9 @@ void          gcut_egg_set_env       (GCutEgg      *egg,
  * Gets environment variable for external command.
  *
  * Returns: a newly-allocated %NULL-terminated environment
- * variables. It should be freed by g_strfreev() when no
- * longer needed.
+ * variables. ("NAME1=VALUE1", "NAME2=VALUE2",
+ * ..., %NULL) It should be freed by g_strfreev() when no longer
+ * needed.
  *
  * Since: 1.0.6
  */

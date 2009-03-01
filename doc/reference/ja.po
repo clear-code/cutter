@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.0.6\n"
-"POT-Creation-Date: 2009-02-28 23:21+0900\n"
-"PO-Revision-Date: 2009-02-28 23:31+0900\n"
+"POT-Creation-Date: 2009-03-01 09:41+0900\n"
+"PO-Revision-Date: 2009-03-01 09:41+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -961,7 +961,7 @@ msgid "gcut_data_get_uint"
 msgstr ""
 
 #: xml/api-index-1.0.6.xml:34(link) xml/api-index-full.xml:499(link)
-#: xml/gcut-egg.xml:43(link) xml/gcut-egg.xml:408(primary)
+#: xml/gcut-egg.xml:43(link) xml/gcut-egg.xml:409(primary)
 msgid "gcut_egg_close"
 msgstr ""
 
@@ -971,7 +971,7 @@ msgid "gcut_egg_get_env"
 msgstr ""
 
 #: xml/api-index-1.0.6.xml:36(link) xml/api-index-full.xml:503(link)
-#: xml/gcut-egg.xml:56(link) xml/gcut-egg.xml:537(primary)
+#: xml/gcut-egg.xml:56(link) xml/gcut-egg.xml:538(primary)
 msgid "gcut_egg_get_error"
 msgstr ""
 
@@ -981,32 +981,32 @@ msgid "gcut_egg_get_flags"
 msgstr ""
 
 #: xml/api-index-1.0.6.xml:38(link) xml/api-index-full.xml:505(link)
-#: xml/gcut-egg.xml:57(link) xml/gcut-egg.xml:553(primary)
+#: xml/gcut-egg.xml:57(link) xml/gcut-egg.xml:554(primary)
 msgid "gcut_egg_get_forced_termination_wait_time"
 msgstr ""
 
 #: xml/api-index-1.0.6.xml:39(link) xml/api-index-full.xml:506(link)
-#: xml/gcut-egg.xml:54(link) xml/gcut-egg.xml:505(primary)
+#: xml/gcut-egg.xml:54(link) xml/gcut-egg.xml:506(primary)
 msgid "gcut_egg_get_input"
 msgstr ""
 
 #: xml/api-index-1.0.6.xml:40(link) xml/api-index-full.xml:507(link)
-#: xml/gcut-egg.xml:55(link) xml/gcut-egg.xml:521(primary)
+#: xml/gcut-egg.xml:55(link) xml/gcut-egg.xml:522(primary)
 msgid "gcut_egg_get_output"
 msgstr ""
 
 #: xml/api-index-1.0.6.xml:41(link) xml/api-index-full.xml:508(link)
-#: xml/gcut-egg.xml:48(link) xml/gcut-egg.xml:446(primary)
+#: xml/gcut-egg.xml:48(link) xml/gcut-egg.xml:447(primary)
 msgid "gcut_egg_get_pid"
 msgstr ""
 
 #: xml/api-index-1.0.6.xml:42(link) xml/api-index-full.xml:509(link)
-#: xml/gcut-egg.xml:41(link) xml/gcut-egg.xml:390(primary)
+#: xml/gcut-egg.xml:41(link) xml/gcut-egg.xml:391(primary)
 msgid "gcut_egg_hatch"
 msgstr ""
 
 #: xml/api-index-1.0.6.xml:43(link) xml/api-index-full.xml:510(link)
-#: xml/gcut-egg.xml:52(link) xml/gcut-egg.xml:490(primary)
+#: xml/gcut-egg.xml:52(link) xml/gcut-egg.xml:491(primary)
 msgid "gcut_egg_kill"
 msgstr ""
 
@@ -1046,17 +1046,17 @@ msgid "gcut_egg_set_flags"
 msgstr ""
 
 #: xml/api-index-1.0.6.xml:51(link) xml/api-index-full.xml:518(link)
-#: xml/gcut-egg.xml:59(link) xml/gcut-egg.xml:570(primary)
+#: xml/gcut-egg.xml:59(link) xml/gcut-egg.xml:571(primary)
 msgid "gcut_egg_set_forced_termination_wait_time"
 msgstr ""
 
 #: xml/api-index-1.0.6.xml:52(link) xml/api-index-full.xml:519(link)
-#: xml/gcut-egg.xml:49(link) xml/gcut-egg.xml:462(primary)
+#: xml/gcut-egg.xml:49(link) xml/gcut-egg.xml:463(primary)
 msgid "gcut_egg_wait"
 msgstr ""
 
 #: xml/api-index-1.0.6.xml:53(link) xml/api-index-full.xml:520(link)
-#: xml/gcut-egg.xml:44(link) xml/gcut-egg.xml:420(primary)
+#: xml/gcut-egg.xml:44(link) xml/gcut-egg.xml:421(primary)
 msgid "gcut_egg_write"
 msgstr ""
 
@@ -2968,23 +2968,23 @@ msgstr ""
 msgid "GCutEgg"
 msgstr ""
 
-#: xml/api-index-full.xml:418(link) xml/gcut-egg.xml:598(primary)
+#: xml/api-index-full.xml:418(link) xml/gcut-egg.xml:599(primary)
 msgid "GCutEgg::error"
 msgstr ""
 
-#: xml/api-index-full.xml:419(link) xml/gcut-egg.xml:612(primary)
+#: xml/api-index-full.xml:419(link) xml/gcut-egg.xml:613(primary)
 msgid "GCutEgg::error-received"
 msgstr ""
 
-#: xml/api-index-full.xml:420(link) xml/gcut-egg.xml:630(primary)
+#: xml/api-index-full.xml:420(link) xml/gcut-egg.xml:631(primary)
 msgid "GCutEgg::output-received"
 msgstr ""
 
-#: xml/api-index-full.xml:421(link) xml/gcut-egg.xml:648(primary)
+#: xml/api-index-full.xml:421(link) xml/gcut-egg.xml:649(primary)
 msgid "GCutEgg::reaped"
 msgstr ""
 
-#: xml/api-index-full.xml:422(link) xml/gcut-egg.xml:591(primary)
+#: xml/api-index-full.xml:422(link) xml/gcut-egg.xml:592(primary)
 msgid "GCutEgg:command"
 msgstr ""
 
@@ -4101,11 +4101,11 @@ msgstr ""
 #: xml/gcut-egg.xml:252(term) xml/gcut-egg.xml:270(term)
 #: xml/gcut-egg.xml:289(term) xml/gcut-egg.xml:304(term)
 #: xml/gcut-egg.xml:319(term) xml/gcut-egg.xml:348(term)
-#: xml/gcut-egg.xml:382(term) xml/gcut-egg.xml:402(term)
-#: xml/gcut-egg.xml:440(term) xml/gcut-egg.xml:455(term)
-#: xml/gcut-egg.xml:483(term) xml/gcut-egg.xml:514(term)
-#: xml/gcut-egg.xml:530(term) xml/gcut-egg.xml:546(term)
-#: xml/gcut-egg.xml:563(term) xml/gcut-enum.xml:78(term)
+#: xml/gcut-egg.xml:382(term) xml/gcut-egg.xml:403(term)
+#: xml/gcut-egg.xml:441(term) xml/gcut-egg.xml:456(term)
+#: xml/gcut-egg.xml:484(term) xml/gcut-egg.xml:515(term)
+#: xml/gcut-egg.xml:531(term) xml/gcut-egg.xml:547(term)
+#: xml/gcut-egg.xml:564(term) xml/gcut-enum.xml:78(term)
 #: xml/gcut-enum.xml:119(term) xml/gcut-enum.xml:144(term)
 #: xml/gcut-enum.xml:163(term) xml/gcut-enum.xml:189(term)
 #: xml/gcut-enum.xml:205(term) xml/gcut-error.xml:65(term)
@@ -4174,8 +4174,8 @@ msgstr ""
 #: xml/gcut-dynamic-data.xml:206(term) xml/gcut-dynamic-data.xml:225(term)
 #: xml/gcut-dynamic-data.xml:244(term) xml/gcut-dynamic-data.xml:263(term)
 #: xml/gcut-dynamic-data.xml:282(term) xml/gcut-dynamic-data.xml:301(term)
-#: xml/gcut-egg.xml:399(term) xml/gcut-egg.xml:437(term)
-#: xml/gcut-egg.xml:480(term) xml/gcut-enum.xml:141(term)
+#: xml/gcut-egg.xml:400(term) xml/gcut-egg.xml:438(term)
+#: xml/gcut-egg.xml:481(term) xml/gcut-enum.xml:141(term)
 #: xml/gcut-enum.xml:186(term) xml/gcut-enum.xml:202(term)
 #: xml/gcut-error.xml:78(term) xml/gcut-key-file.xml:71(term)
 #: xml/gcut-key-file.xml:98(term) xml/gcut-public.xml:73(term)
@@ -4779,13 +4779,13 @@ msgstr "実際のsize_tの値。"
 #: xml/gcut-egg.xml:273(para) xml/gcut-egg.xml:292(para)
 #: xml/gcut-egg.xml:307(para) xml/gcut-egg.xml:322(para)
 #: xml/gcut-egg.xml:337(para) xml/gcut-egg.xml:351(para)
-#: xml/gcut-egg.xml:371(para) xml/gcut-egg.xml:387(para)
-#: xml/gcut-egg.xml:405(para) xml/gcut-egg.xml:417(para)
-#: xml/gcut-egg.xml:443(para) xml/gcut-egg.xml:459(para)
-#: xml/gcut-egg.xml:487(para) xml/gcut-egg.xml:502(para)
-#: xml/gcut-egg.xml:518(para) xml/gcut-egg.xml:534(para)
-#: xml/gcut-egg.xml:550(para) xml/gcut-egg.xml:567(para)
-#: xml/gcut-egg.xml:585(para) xml/gcut-enum.xml:72(para)
+#: xml/gcut-egg.xml:371(para) xml/gcut-egg.xml:388(para)
+#: xml/gcut-egg.xml:406(para) xml/gcut-egg.xml:418(para)
+#: xml/gcut-egg.xml:444(para) xml/gcut-egg.xml:460(para)
+#: xml/gcut-egg.xml:488(para) xml/gcut-egg.xml:503(para)
+#: xml/gcut-egg.xml:519(para) xml/gcut-egg.xml:535(para)
+#: xml/gcut-egg.xml:551(para) xml/gcut-egg.xml:568(para)
+#: xml/gcut-egg.xml:586(para) xml/gcut-enum.xml:72(para)
 #: xml/gcut-enum.xml:103(para) xml/gcut-enum.xml:147(para)
 #: xml/gcut-enum.xml:192(para) xml/gcut-inspect.xml:93(para)
 #: xml/gcut-inspect.xml:118(para) xml/gcut-inspect.xml:143(para)
@@ -10251,8 +10251,8 @@ msgstr ""
 
 #: xml/cut-sequence-matcher.xml:121(term)
 #: xml/cut-sequence-matcher.xml:244(term) xml/cut-stream.xml:60(term)
-#: xml/gcut-egg.xml:609(term) xml/gcut-egg.xml:627(term)
-#: xml/gcut-egg.xml:645(term) xml/gcut-egg.xml:659(term)
+#: xml/gcut-egg.xml:610(term) xml/gcut-egg.xml:628(term)
+#: xml/gcut-egg.xml:646(term) xml/gcut-egg.xml:660(term)
 #: xml/gcut-hash-table.xml:119(term) xml/gcut-inspect.xml:90(term)
 #: xml/gcut-inspect.xml:115(term) xml/gcut-inspect.xml:140(term)
 #: xml/gcut-inspect.xml:165(term) xml/gcut-inspect.xml:190(term)
@@ -10306,7 +10306,7 @@ msgid "<parameter>end</parameter>&nbsp;:"
 msgstr ""
 
 #: xml/cut-sequence-matcher.xml:159(term) xml/cut-test-utils.xml:146(term)
-#: xml/cut-test-utils.xml:162(term) xml/gcut-egg.xml:434(term)
+#: xml/cut-test-utils.xml:162(term) xml/gcut-egg.xml:435(term)
 msgid "<parameter>size</parameter>&nbsp;:"
 msgstr ""
 
@@ -15339,14 +15339,26 @@ msgid ""
 "egg-get-error\"><function>gcut_egg_get_error()</function></link>. <link "
 "linkend=\"gcut-egg-write\"><function>gcut_egg_write()</function></link> "
 "writes a chunk to standard input of external command."
-msgstr "外部コマンドの標準出力・エラー出力は<link linkend=\"GCutEgg-output-received\"><type>\"output-received\"</type></link>シグナル・<link linkend=\"GCutEgg-error-received\"><type>\"error-received\"</type></link>シグナル、あるいは、<link linkend=\"gcut-egg-get-output\"><function>gcut_egg_get_output()</function></link>・<link linkend=\"gcut-egg-get-error\"><function>gcut_egg_get_error()</function></link>が返す<link linkend=\"GIOChannel\"><literal>GIOChannel</literal></link>で取得できます。<link linkend=\"gcut-egg-write\"><function>gcut_egg_write()</function></link>は外部コマンドの標準入力にデータを書き込みます。"
+msgstr ""
+"外部コマンドの標準出力・エラー出力は<link linkend=\"GCutEgg-output-received"
+"\"><type>\"output-received\"</type></link>シグナル・<link linkend=\"GCutEgg-"
+"error-received\"><type>\"error-received\"</type></link>シグナル、あるいは、"
+"<link linkend=\"gcut-egg-get-output\"><function>gcut_egg_get_output()</"
+"function></link>・<link linkend=\"gcut-egg-get-error"
+"\"><function>gcut_egg_get_error()</function></link>が返す<link linkend="
+"\"GIOChannel\"><literal>GIOChannel</literal></link>で取得できます。<link "
+"linkend=\"gcut-egg-write\"><function>gcut_egg_write()</function></link>は外部"
+"コマンドの標準入力にデータを書き込みます。"
 
 #: xml/gcut-egg.xml:117(para)
 msgid ""
 "To wait external command finished, <link linkend=\"gcut-egg-wait"
 "\"><function>gcut_egg_wait()</function></link> can be used. It accepts "
 "timeout to avoid infinite waiting."
-msgstr "外部コマンドの終了を待つためには<link linkend=\"gcut-egg-wait\"><function>gcut_egg_wait()</function></link>を使うことがおできます。無限待ちを避けるために、タイムアウトを指定することができます。"
+msgstr ""
+"外部コマンドの終了を待つためには<link linkend=\"gcut-egg-wait"
+"\"><function>gcut_egg_wait()</function></link>を使うことがおできます。無限待"
+"ちを避けるために、タイムアウトを指定することができます。"
 
 #: xml/gcut-egg.xml:123(programlisting)
 #, no-wrap
@@ -15427,7 +15439,9 @@ msgstr ""
 msgid ""
 "Error codes returned by <link linkend=\"GCutEgg\"><literal>GCutEgg</"
 "literal></link> related operations."
-msgstr "<link linkend=\"GCutEgg\"><literal>GCutEgg</literal></link>関連の操作で返されるエラーコード。"
+msgstr ""
+"<link linkend=\"GCutEgg\"><literal>GCutEgg</literal></link>関連の操作で返され"
+"るエラーコード。"
 
 #: xml/gcut-egg.xml:200(literal)
 msgid "GCUT_EGG_ERROR_COMMAND_LINE"
@@ -15469,7 +15483,9 @@ msgstr ""
 msgid ""
 "Invalid <link linkend=\"GCutEgg\"><literal>GCutEgg</literal></link> object "
 "is passed."
-msgstr "不正な<link linkend=\"GCutEgg\"><literal>GCutEgg</literal></link>オブジェクトが渡されました。"
+msgstr ""
+"不正な<link linkend=\"GCutEgg\"><literal>GCutEgg</literal></link>オブジェクト"
+"が渡されました。"
 
 #: xml/gcut-egg.xml:225(literal)
 msgid "GCUT_EGG_ERROR_TIMEOUT"
@@ -15505,7 +15521,9 @@ msgstr ""
 msgid ""
 "Creates a new <link linkend=\"GCutEgg\"><literal>GCutEgg</literal></link> "
 "object that runs <parameter>command</parameter>."
-msgstr "<parameter>command</parameter>を実行する新しい<link linkend=\"GCutEgg\"><literal>GCutEgg</literal></link>オブジェクトを生成します。"
+msgstr ""
+"<parameter>command</parameter>を実行する新しい<link linkend=\"GCutEgg"
+"\"><literal>GCutEgg</literal></link>オブジェクトを生成します。"
 
 #: xml/gcut-egg.xml:246(term) xml/gcut-egg.xml:264(term)
 #: xml/gcut-egg.xml:300(term) xml/gcut-egg.xml:315(term)
@@ -15573,7 +15591,9 @@ msgstr ""
 msgid ""
 "the external command name to be ran and arguments of it. <link linkend="
 "\"NULL--CAPS\"><literal>NULL</literal></link>-terminated."
-msgstr "実行する外部コマンド名とコマンド引数。<link linkend=\"NULL--CAPS\"><literal>NULL</literal></link>終端。"
+msgstr ""
+"実行する外部コマンド名とコマンド引数。<link linkend=\"NULL--CAPS"
+"\"><literal>NULL</literal></link>終端。"
 
 #: xml/gcut-egg.xml:309(title)
 msgid "gcut_egg_new_array ()"
@@ -15588,7 +15608,9 @@ msgstr ""
 msgid ""
 "the external command name to be ran and arguments of it. The <link linkend="
 "\"GArray\"><literal>GArray</literal></link> should be zero-terminated."
-msgstr "実行する外部コマンド名とコマンド引数。<link linkend=\"GArray\"><literal>GArray</literal></link>は0終端にして下さい。"
+msgstr ""
+"実行する外部コマンド名とコマンド引数。<link linkend=\"GArray"
+"\"><literal>GArray</literal></link>は0終端にして下さい。"
 
 #: xml/gcut-egg.xml:324(title)
 msgid "gcut_egg_set_flags ()"
@@ -15602,29 +15624,28 @@ msgid ""
 msgstr ""
 
 #: xml/gcut-egg.xml:327(para)
-msgid ""
-"Sets <parameter>flags</parameter> for spawning to <parameter>egg</parameter>."
-msgstr ""
+msgid "Sets <parameter>flags</parameter> for spawning."
+msgstr "外部コマンドを実行するときの<parameter>flags</parameter>を設定します。"
 
 #: xml/gcut-egg.xml:331(term) xml/gcut-egg.xml:345(term)
 #: xml/gcut-egg.xml:361(term) xml/gcut-egg.xml:379(term)
-#: xml/gcut-egg.xml:396(term) xml/gcut-egg.xml:414(term)
-#: xml/gcut-egg.xml:428(term) xml/gcut-egg.xml:452(term)
-#: xml/gcut-egg.xml:474(term) xml/gcut-egg.xml:496(term)
-#: xml/gcut-egg.xml:511(term) xml/gcut-egg.xml:527(term)
-#: xml/gcut-egg.xml:543(term) xml/gcut-egg.xml:560(term)
-#: xml/gcut-egg.xml:579(term)
+#: xml/gcut-egg.xml:397(term) xml/gcut-egg.xml:415(term)
+#: xml/gcut-egg.xml:429(term) xml/gcut-egg.xml:453(term)
+#: xml/gcut-egg.xml:475(term) xml/gcut-egg.xml:497(term)
+#: xml/gcut-egg.xml:512(term) xml/gcut-egg.xml:528(term)
+#: xml/gcut-egg.xml:544(term) xml/gcut-egg.xml:561(term)
+#: xml/gcut-egg.xml:580(term)
 msgid "<parameter>egg</parameter>&nbsp;:"
 msgstr "<parameter>egg</parameter>&nbsp;:"
 
 #: xml/gcut-egg.xml:332(simpara) xml/gcut-egg.xml:346(simpara)
 #: xml/gcut-egg.xml:362(simpara) xml/gcut-egg.xml:380(simpara)
-#: xml/gcut-egg.xml:397(simpara) xml/gcut-egg.xml:415(simpara)
-#: xml/gcut-egg.xml:429(simpara) xml/gcut-egg.xml:453(simpara)
-#: xml/gcut-egg.xml:475(simpara) xml/gcut-egg.xml:497(simpara)
-#: xml/gcut-egg.xml:512(simpara) xml/gcut-egg.xml:528(simpara)
-#: xml/gcut-egg.xml:544(simpara) xml/gcut-egg.xml:561(simpara)
-#: xml/gcut-egg.xml:580(simpara)
+#: xml/gcut-egg.xml:398(simpara) xml/gcut-egg.xml:416(simpara)
+#: xml/gcut-egg.xml:430(simpara) xml/gcut-egg.xml:454(simpara)
+#: xml/gcut-egg.xml:476(simpara) xml/gcut-egg.xml:498(simpara)
+#: xml/gcut-egg.xml:513(simpara) xml/gcut-egg.xml:529(simpara)
+#: xml/gcut-egg.xml:545(simpara) xml/gcut-egg.xml:562(simpara)
+#: xml/gcut-egg.xml:581(simpara)
 msgid "a <link linkend=\"GCutEgg\"><literal>GCutEgg</literal></link>"
 msgstr "<link linkend=\"GCutEgg\"><literal>GCutEgg</literal></link>"
 
@@ -15637,6 +15658,8 @@ msgid ""
 "the flags to be passed to <link linkend=\"g-spawn-async-with-pipes"
 "\"><function>g_spawn_async_with_pipes()</function></link>."
 msgstr ""
+"<link linkend=\"g-spawn-async-with-pipes\"><function>g_spawn_async_with_pipes"
+"()</function></link>に渡すフラグ。"
 
 #: xml/gcut-egg.xml:339(title)
 msgid "gcut_egg_get_flags ()"
@@ -15648,13 +15671,12 @@ msgid "<link linkend=\"GSpawnFlags\">GSpawnFlags</link>         gcut_egg_get_fla
 msgstr ""
 
 #: xml/gcut-egg.xml:341(para)
-msgid ""
-"Gets <parameter>flags</parameter> for spawning of <parameter>egg</parameter>."
-msgstr ""
+msgid "Gets <parameter>flags</parameter> for spawning."
+msgstr "外部コマンドを実行する時の<parameter>flags</parameter>を取得します。"
 
 #: xml/gcut-egg.xml:348(simpara)
-msgid "the flags for spawning of <parameter>egg</parameter>."
-msgstr ""
+msgid "the flags for spawning."
+msgstr "外部コマンドを実行するときのフラグ。"
 
 #: xml/gcut-egg.xml:353(title)
 msgid "gcut_egg_set_env ()"
@@ -15670,7 +15692,7 @@ msgstr ""
 
 #: xml/gcut-egg.xml:357(para)
 msgid "Sets environment variable for external command."
-msgstr ""
+msgstr "外部コマンドの環境変数を設定します。"
 
 #: xml/gcut-egg.xml:365(simpara)
 msgid "the first environment name."
@@ -15681,6 +15703,9 @@ msgid ""
 "the value of <parameter>name</parameter>, followed by name and value pairs. "
 "<link linkend=\"NULL--CAPS\"><literal>NULL</literal></link>-terminated."
 msgstr ""
+"<parameter>name</parameter>に対応する値。その後に、名前と値のペアを任意の数だ"
+"け指定します。最後の引数は<link linkend=\"NULL--CAPS\"><literal>NULL</"
+"literal></link>にしてください。"
 
 #: xml/gcut-egg.xml:373(title)
 msgid "gcut_egg_get_env ()"
@@ -15693,33 +15718,39 @@ msgstr ""
 
 #: xml/gcut-egg.xml:375(para)
 msgid "Gets environment variable for external command."
-msgstr ""
+msgstr "外部コマンドの環境変数を取得します。"
 
 #: xml/gcut-egg.xml:382(simpara)
 msgid ""
 "a newly-allocated <link linkend=\"NULL--CAPS\"><literal>NULL</literal></"
-"link>-terminated environment variables. It should be freed by <link linkend="
-"\"g-strfreev\"><function>g_strfreev()</function></link> when no longer "
-"needed."
+"link>-terminated environment variables. (\"NAME1=VALUE1\", \"NAME2=VALUE2"
+"\", ..., <link linkend=\"NULL--CAPS\"><literal>NULL</literal></link>) It "
+"should be freed by <link linkend=\"g-strfreev\"><function>g_strfreev()</"
+"function></link> when no longer needed."
 msgstr ""
+"新しく割り当てられた<link linkend=\"NULL--CAPS\"><literal>NULL</literal></"
+"link>終端の環境変数のリスト（\"名前1=値1\", \"名前2=値2\", ..., <link "
+"linkend=\"NULL--CAPS\"><literal>NULL</literal></link>）を返します。必要がなく"
+"なったら<link linkend=\"g-strfreev\"><function>g_strfreev()</function></link>"
+"で開放してください。"
 
-#: xml/gcut-egg.xml:389(title)
+#: xml/gcut-egg.xml:390(title)
 msgid "gcut_egg_hatch ()"
 msgstr ""
 
-#: xml/gcut-egg.xml:390(programlisting)
+#: xml/gcut-egg.xml:391(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"gboolean\">gboolean</link>            gcut_egg_hatch                      (<link linkend=\"GCutEgg\">GCutEgg</link> *egg,\n"
 "                                                         <link linkend=\"GError\">GError</link> **error);"
 msgstr ""
 
-#: xml/gcut-egg.xml:392(para)
+#: xml/gcut-egg.xml:393(para)
 msgid "Hatches a new external process."
-msgstr ""
+msgstr "新しい外部プロセスを実行します。"
 
-#: xml/gcut-egg.xml:400(simpara) xml/gcut-egg.xml:438(simpara)
-#: xml/gcut-egg.xml:481(simpara) xml/gcut-enum.xml:142(simpara)
+#: xml/gcut-egg.xml:401(simpara) xml/gcut-egg.xml:439(simpara)
+#: xml/gcut-egg.xml:482(simpara) xml/gcut-enum.xml:142(simpara)
 #: xml/gcut-enum.xml:187(simpara)
 msgid ""
 "return location for an error, or <link linkend=\"NULL--CAPS\"><literal>NULL</"
@@ -15728,33 +15759,34 @@ msgstr ""
 "エラーを返すアドレスまたは<link linkend=\"NULL--CAPS\"><literal>NULL</"
 "literal></link>。"
 
-#: xml/gcut-egg.xml:402(simpara) xml/gcut-egg.xml:440(simpara)
+#: xml/gcut-egg.xml:403(simpara) xml/gcut-egg.xml:441(simpara)
 msgid ""
 "<link linkend=\"TRUE--CAPS\"><literal>TRUE</literal></link> on success, "
 "otherwise <link linkend=\"FALSE--CAPS\"><literal>FALSE</literal></link>"
 msgstr ""
-"成功したときは<link linkend=\"CUT-TRUE--CAPS\"><literal>CUT_TRUE</literal></"
-"link>、そうでない場合は<link linkend=\"CUT-FALSE--CAPS\"><literal>CUT_FALSE</"
-"literal></link>。"
+"成功したときは<link linkend=\"TRUE--CAPS\"><literal>TRUE</literal></link>、そ"
+"うでない場合は<link linkend=\"FALSE--CAPS\"><literal>FALSE</literal></link>。"
 
-#: xml/gcut-egg.xml:407(title)
+#: xml/gcut-egg.xml:408(title)
 msgid "gcut_egg_close ()"
 msgstr ""
 
-#: xml/gcut-egg.xml:408(programlisting)
+#: xml/gcut-egg.xml:409(programlisting)
 #, no-wrap
 msgid "<link linkend=\"void\">void</link>                gcut_egg_close                      (<link linkend=\"GCutEgg\">GCutEgg</link> *egg);"
 msgstr ""
 
-#: xml/gcut-egg.xml:409(para)
+#: xml/gcut-egg.xml:410(para)
 msgid "Closes a hatched external process. It is closed implicitly on destroy."
 msgstr ""
+"実行した外部コマンドのリソースを回収します。破棄されるときに暗黙的に回収され"
+"ます。"
 
-#: xml/gcut-egg.xml:419(title)
+#: xml/gcut-egg.xml:420(title)
 msgid "gcut_egg_write ()"
 msgstr ""
 
-#: xml/gcut-egg.xml:420(programlisting)
+#: xml/gcut-egg.xml:421(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"gboolean\">gboolean</link>            gcut_egg_write                      (<link linkend=\"GCutEgg\">GCutEgg</link> *egg,\n"
@@ -15763,49 +15795,51 @@ msgid ""
 "                                                         <link linkend=\"GError\">GError</link> **error);"
 msgstr ""
 
-#: xml/gcut-egg.xml:424(para)
+#: xml/gcut-egg.xml:425(para)
 msgid ""
 "Writes <parameter>chunk</parameter> to external process's standard input."
-msgstr ""
+msgstr "外部プロセスの標準入力に<parameter>chunk</parameter>を書き込みます。"
 
-#: xml/gcut-egg.xml:431(term)
+#: xml/gcut-egg.xml:432(term)
 msgid "<parameter>chunk</parameter>&nbsp;:"
 msgstr "<parameter>chunk</parameter>&nbsp;:"
 
-#: xml/gcut-egg.xml:432(simpara)
+#: xml/gcut-egg.xml:433(simpara)
 msgid "the data to be wrote"
 msgstr "書き込むデータ"
 
-#: xml/gcut-egg.xml:435(simpara)
+#: xml/gcut-egg.xml:436(simpara)
 msgid "the size of <parameter>chunk</parameter>"
 msgstr "<parameter>chunk</parameter>のサイズ"
 
-#: xml/gcut-egg.xml:445(title)
+#: xml/gcut-egg.xml:446(title)
 msgid "gcut_egg_get_pid ()"
 msgstr ""
 
-#: xml/gcut-egg.xml:446(programlisting)
+#: xml/gcut-egg.xml:447(programlisting)
 #, no-wrap
 msgid "<link linkend=\"GPid\">GPid</link>                gcut_egg_get_pid                    (<link linkend=\"GCutEgg\">GCutEgg</link> *egg);"
 msgstr ""
 
-#: xml/gcut-egg.xml:447(para)
+#: xml/gcut-egg.xml:448(para)
 msgid ""
 "Gets the process ID of running external process. If external process isn't "
 "running, 0 is returned."
 msgstr ""
+"実行している外部プロセスのプロセスIDを取得します。外部コマンドが実行されてい"
+"ない場合は0が返ります。"
 
-#: xml/gcut-egg.xml:455(simpara)
+#: xml/gcut-egg.xml:456(simpara)
 msgid ""
 "the process ID of running external process if external process is running, "
 "otherwise 0."
-msgstr ""
+msgstr "実行中の外部コマンドのプロセスID。実行していない場合は0。"
 
-#: xml/gcut-egg.xml:461(title)
+#: xml/gcut-egg.xml:462(title)
 msgid "gcut_egg_wait ()"
 msgstr ""
 
-#: xml/gcut-egg.xml:462(programlisting)
+#: xml/gcut-egg.xml:463(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"gint\">gint</link>                gcut_egg_wait                       (<link linkend=\"GCutEgg\">GCutEgg</link> *egg,\n"
@@ -15813,7 +15847,7 @@ msgid ""
 "                                                         <link linkend=\"GError\">GError</link> **error);"
 msgstr ""
 
-#: xml/gcut-egg.xml:465(para)
+#: xml/gcut-egg.xml:466(para)
 msgid ""
 "Waits running external process is finished while <parameter>timeout</"
 "parameter> milliseconds. If external process isn't finished while "
@@ -15823,120 +15857,138 @@ msgid ""
 "\"GCUT-EGG-ERROR-NOT-RUNNING--CAPS\"><literal>GCUT_EGG_ERROR_NOT_RUNNING</"
 "literal></link> error is set and -1 is returned."
 msgstr ""
+"実行中の外部プロセスが終了することを<parameter>timeout</parameter>ミリ秒待ち"
+"ます。外部コマンドが<parameter>timeout</parameter>ミリ秒以内に終了しなかった"
+"場合は、<link linkend=\"GCUT-EGG-ERROR-TIMEOUT--CAPS"
+"\"><literal>GCUT_EGG_ERROR_TIMEOUT</literal></link>エラーが設定され、-1が返り"
+"ます。外部プロセスが実行されていない場合は、<link linkend=\"GCUT-EGG-ERROR-"
+"NOT-RUNNING--CAPS\"><literal>GCUT_EGG_ERROR_NOT_RUNNING</literal></link>エ"
+"ラーが設定され、-1が返ります。"
 
-#: xml/gcut-egg.xml:477(term) xml/gcut-egg.xml:582(term)
+#: xml/gcut-egg.xml:478(term) xml/gcut-egg.xml:583(term)
 msgid "<parameter>timeout</parameter>&nbsp;:"
 msgstr "<parameter>timeout</parameter>&nbsp;:"
 
-#: xml/gcut-egg.xml:478(simpara)
+#: xml/gcut-egg.xml:479(simpara)
 msgid "the timeout period in milliseconds"
-msgstr ""
+msgstr "タイムアウト時間（ミリ秒）"
 
-#: xml/gcut-egg.xml:483(simpara)
+#: xml/gcut-egg.xml:484(simpara)
 msgid "an exit status of external process on success, otherwise -1."
-msgstr ""
+msgstr "外部プロセスが終了した場合は終了ステータス。そうでない場合は-1。"
 
-#: xml/gcut-egg.xml:489(title)
+#: xml/gcut-egg.xml:490(title)
 msgid "gcut_egg_kill ()"
 msgstr ""
 
-#: xml/gcut-egg.xml:490(programlisting)
+#: xml/gcut-egg.xml:491(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"void\">void</link>                gcut_egg_kill                       (<link linkend=\"GCutEgg\">GCutEgg</link> *egg,\n"
 "                                                         <link linkend=\"int\">int</link> signal_number);"
 msgstr ""
 
-#: xml/gcut-egg.xml:492(para)
+#: xml/gcut-egg.xml:493(para)
 msgid "Sends <parameter>signal_number</parameter> signal to external process."
-msgstr ""
+msgstr "外部プロセスに<parameter>signal_number</parameter>シグナルを送ります。"
 
-#: xml/gcut-egg.xml:499(term)
+#: xml/gcut-egg.xml:500(term)
 msgid "<parameter>signal_number</parameter>&nbsp;:"
 msgstr "<parameter>signal_number</parameter>&nbsp;:"
 
-#: xml/gcut-egg.xml:500(simpara)
+#: xml/gcut-egg.xml:501(simpara)
 msgid "the signal number to be sent to external process"
-msgstr ""
+msgstr "外部プロセスに送るシグナル番号。"
 
-#: xml/gcut-egg.xml:504(title)
+#: xml/gcut-egg.xml:505(title)
 msgid "gcut_egg_get_input ()"
 msgstr ""
 
-#: xml/gcut-egg.xml:505(programlisting)
+#: xml/gcut-egg.xml:506(programlisting)
 #, no-wrap
 msgid "<link linkend=\"GIOChannel\">GIOChannel</link> *        gcut_egg_get_input                  (<link linkend=\"GCutEgg\">GCutEgg</link> *egg);"
 msgstr ""
 
-#: xml/gcut-egg.xml:506(para)
+#: xml/gcut-egg.xml:507(para)
 msgid ""
 "Gets a <link linkend=\"GIOChannel\"><literal>GIOChannel</literal></link> "
 "connected with standard input of external process."
 msgstr ""
+"外部プロセスの標準入力と結びついた<link linkend=\"GIOChannel"
+"\"><literal>GIOChannel</literal></link>を取得します。"
 
-#: xml/gcut-egg.xml:514(simpara) xml/gcut-egg.xml:530(simpara)
-#: xml/gcut-egg.xml:546(simpara)
+#: xml/gcut-egg.xml:515(simpara) xml/gcut-egg.xml:531(simpara)
+#: xml/gcut-egg.xml:547(simpara)
 msgid ""
 "a <link linkend=\"GIOChannel\"><literal>GIOChannel</literal></link> if "
 "external process is running, otherwise <link linkend=\"NULL--CAPS"
 "\"><literal>NULL</literal></link>."
 msgstr ""
+"外部プロセスが実行中の場合は<link linkend=\"GIOChannel"
+"\"><literal>GIOChannel</literal></link>。そうでない場合は<link linkend="
+"\"NULL--CAPS\"><literal>NULL</literal></link>。"
 
-#: xml/gcut-egg.xml:520(title)
+#: xml/gcut-egg.xml:521(title)
 msgid "gcut_egg_get_output ()"
 msgstr ""
 
-#: xml/gcut-egg.xml:521(programlisting)
+#: xml/gcut-egg.xml:522(programlisting)
 #, no-wrap
 msgid "<link linkend=\"GIOChannel\">GIOChannel</link> *        gcut_egg_get_output                 (<link linkend=\"GCutEgg\">GCutEgg</link> *egg);"
 msgstr ""
 
-#: xml/gcut-egg.xml:522(para)
+#: xml/gcut-egg.xml:523(para)
 msgid ""
 "Gets a <link linkend=\"GIOChannel\"><literal>GIOChannel</literal></link> "
 "connected with standard output of external process."
 msgstr ""
+"外部プロセスの標準出力と結びついた<link linkend=\"GIOChannel"
+"\"><literal>GIOChannel</literal></link>を取得します。"
 
-#: xml/gcut-egg.xml:536(title)
+#: xml/gcut-egg.xml:537(title)
 msgid "gcut_egg_get_error ()"
 msgstr ""
 
-#: xml/gcut-egg.xml:537(programlisting)
+#: xml/gcut-egg.xml:538(programlisting)
 #, no-wrap
 msgid "<link linkend=\"GIOChannel\">GIOChannel</link> *        gcut_egg_get_error                  (<link linkend=\"GCutEgg\">GCutEgg</link> *egg);"
 msgstr ""
 
-#: xml/gcut-egg.xml:538(para)
+#: xml/gcut-egg.xml:539(para)
 msgid ""
 "Gets a <link linkend=\"GIOChannel\"><literal>GIOChannel</literal></link> "
 "connected with standard error output of external process."
 msgstr ""
+"外部プロセスのエラー出力に結びついた<link linkend=\"GIOChannel"
+"\"><literal>GIOChannel</literal></link>を返します。"
 
-#: xml/gcut-egg.xml:552(title)
+#: xml/gcut-egg.xml:553(title)
 msgid "gcut_egg_get_forced_termination_wait_time ()"
 msgstr ""
 
-#: xml/gcut-egg.xml:553(programlisting)
+#: xml/gcut-egg.xml:554(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"guint\">guint</link>               gcut_egg_get_forced_termination_wait_time\n"
 "                                                        (<link linkend=\"GCutEgg\">GCutEgg</link> *egg);"
 msgstr ""
 
-#: xml/gcut-egg.xml:555(para)
+#: xml/gcut-egg.xml:556(para)
 msgid "Gets a wait time in milliseconds for forced termination on dispose."
 msgstr ""
+"オブジェクトが破棄されるときに行われる外部コマンド強制終了後に待つ時間（ミリ"
+"秒）を取得します。"
 
-#: xml/gcut-egg.xml:563(simpara)
+#: xml/gcut-egg.xml:564(simpara)
 msgid ""
 "a timeout value for waiting forced terminated external command on dispose."
-msgstr ""
+msgstr "破棄時の強制終了待ちの時間。"
 
-#: xml/gcut-egg.xml:569(title)
+#: xml/gcut-egg.xml:570(title)
 msgid "gcut_egg_set_forced_termination_wait_time ()"
 msgstr ""
 
-#: xml/gcut-egg.xml:570(programlisting)
+#: xml/gcut-egg.xml:571(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"void\">void</link>                gcut_egg_set_forced_termination_wait_time\n"
@@ -15944,43 +15996,46 @@ msgid ""
 "                                                         <link linkend=\"guint\">guint</link> timeout);"
 msgstr ""
 
-#: xml/gcut-egg.xml:573(para)
+#: xml/gcut-egg.xml:574(para)
 msgid ""
 "Sets a wait time in milliseconds for forced termination on dispose. If "
 "<parameter>timeout</parameter> is 0, it doesn't wait termination of external "
 "process. The default value is 10."
 msgstr ""
+"オブジェクトが破棄されるときに行われる外部コマンド強制終了時に待つ時間（ミリ"
+"秒）を設定します。<parameter>timeout</parameter>が0なら外部コマンドの終了を待"
+"ちません。デフォルト値は10です。"
 
-#: xml/gcut-egg.xml:583(simpara)
+#: xml/gcut-egg.xml:584(simpara)
 msgid "the timeout value in milliseconds"
-msgstr ""
+msgstr "タイムアウト時間（ミリ秒）"
 
-#: xml/gcut-egg.xml:589(title)
+#: xml/gcut-egg.xml:590(title)
 msgid "Property Details"
 msgstr "プロパティ詳細"
 
-#: xml/gcut-egg.xml:590(title)
+#: xml/gcut-egg.xml:591(title)
 msgid "The <literal>\"command\"</literal> property"
 msgstr "<literal>\"command\"</literal>プロパティ"
 
-#: xml/gcut-egg.xml:591(programlisting)
+#: xml/gcut-egg.xml:592(programlisting)
 #, no-wrap
 msgid "  \"command\"                  <link linkend=\"gpointer\">gpointer</link>              : Read / Write"
 msgstr ""
 
-#: xml/gcut-egg.xml:592(para)
+#: xml/gcut-egg.xml:593(para)
 msgid "The command to be ran by the egg."
-msgstr ""
+msgstr "実行する外部コマンド。"
 
-#: xml/gcut-egg.xml:596(title)
+#: xml/gcut-egg.xml:597(title)
 msgid "Signal Details"
 msgstr "シグナル詳細"
 
-#: xml/gcut-egg.xml:597(title)
+#: xml/gcut-egg.xml:598(title)
 msgid "The <literal>\"error\"</literal> signal"
 msgstr "<literal>\"error\"</literal>シグナル"
 
-#: xml/gcut-egg.xml:598(programlisting)
+#: xml/gcut-egg.xml:599(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"void\">void</link>                user_function                      (<link linkend=\"GCutEgg\">GCutEgg</link> *gcutegg,\n"
@@ -15988,31 +16043,31 @@ msgid ""
 "                                                        <link linkend=\"gpointer\">gpointer</link> user_data)      : Run Last"
 msgstr ""
 
-#: xml/gcut-egg.xml:603(term) xml/gcut-egg.xml:618(term)
-#: xml/gcut-egg.xml:636(term) xml/gcut-egg.xml:653(term)
+#: xml/gcut-egg.xml:604(term) xml/gcut-egg.xml:619(term)
+#: xml/gcut-egg.xml:637(term) xml/gcut-egg.xml:654(term)
 msgid "<parameter>gcutegg</parameter>&nbsp;:"
 msgstr "<parameter>gcutegg</parameter>&nbsp;:"
 
-#: xml/gcut-egg.xml:604(simpara) xml/gcut-egg.xml:619(simpara)
-#: xml/gcut-egg.xml:637(simpara) xml/gcut-egg.xml:654(simpara)
+#: xml/gcut-egg.xml:605(simpara) xml/gcut-egg.xml:620(simpara)
+#: xml/gcut-egg.xml:638(simpara) xml/gcut-egg.xml:655(simpara)
 msgid "the object which received the signal."
-msgstr ""
+msgstr "シグナルを受け取るオブジェクト。"
 
-#: xml/gcut-egg.xml:606(term) xml/gcut-egg.xml:621(term)
-#: xml/gcut-egg.xml:639(term) xml/gcut-egg.xml:656(term)
+#: xml/gcut-egg.xml:607(term) xml/gcut-egg.xml:622(term)
+#: xml/gcut-egg.xml:640(term) xml/gcut-egg.xml:657(term)
 msgid "<parameter>arg1</parameter>&nbsp;:"
 msgstr "<parameter>arg1</parameter>&nbsp;:"
 
-#: xml/gcut-egg.xml:610(simpara) xml/gcut-egg.xml:628(simpara)
-#: xml/gcut-egg.xml:646(simpara) xml/gcut-egg.xml:660(simpara)
+#: xml/gcut-egg.xml:611(simpara) xml/gcut-egg.xml:629(simpara)
+#: xml/gcut-egg.xml:647(simpara) xml/gcut-egg.xml:661(simpara)
 msgid "user data set when the signal handler was connected."
-msgstr ""
+msgstr "シグナルハンドラが接続された時にユーザが指定したデータ。"
 
-#: xml/gcut-egg.xml:611(title)
+#: xml/gcut-egg.xml:612(title)
 msgid "The <literal>\"error-received\"</literal> signal"
 msgstr "<literal>\"error-received\"</literal>シグナル"
 
-#: xml/gcut-egg.xml:612(programlisting) xml/gcut-egg.xml:630(programlisting)
+#: xml/gcut-egg.xml:613(programlisting) xml/gcut-egg.xml:631(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"void\">void</link>                user_function                      (<link linkend=\"GCutEgg\">GCutEgg</link> *gcutegg,\n"
@@ -16021,19 +16076,19 @@ msgid ""
 "                                                        <link linkend=\"gpointer\">gpointer</link> user_data)      : Run Last"
 msgstr ""
 
-#: xml/gcut-egg.xml:624(term) xml/gcut-egg.xml:642(term)
+#: xml/gcut-egg.xml:625(term) xml/gcut-egg.xml:643(term)
 msgid "<parameter>arg2</parameter>&nbsp;:"
 msgstr "<parameter>arg2</parameter>&nbsp;:"
 
-#: xml/gcut-egg.xml:629(title)
+#: xml/gcut-egg.xml:630(title)
 msgid "The <literal>\"output-received\"</literal> signal"
 msgstr "<literal>\"output-received\"</literal>シグナル"
 
-#: xml/gcut-egg.xml:647(title)
+#: xml/gcut-egg.xml:648(title)
 msgid "The <literal>\"reaped\"</literal> signal"
 msgstr "<literal>\"reaped\"</literal>シグナル"
 
-#: xml/gcut-egg.xml:648(programlisting)
+#: xml/gcut-egg.xml:649(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"void\">void</link>                user_function                      (<link linkend=\"GCutEgg\">GCutEgg</link> *gcutegg,\n"
