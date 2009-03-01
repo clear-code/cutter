@@ -1,5 +1,8 @@
 2009-03-01  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-assertions.h: remove needless backward compatibility.
+	* doc/reference/: update document.
+
 	* USERS*: add Kazehakase and GtkIEEmbed.
 
 	* gcutter/gcutter.h, gdkcutter-pixbuf/, doc/reference/: add

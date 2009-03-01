@@ -130,20 +130,14 @@ G_BEGIN_DECLS
  * @inspect_function: a function that inspected @expected
  *                    and @actual list.
  * @inspect_user_data: a data to be passed to @inspect_function.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @equal_function(@expected, @actual) == %CUT_TRUE.
  *
  * Since: 1.0.6
  */
 #define gcut_assert_equal_list(expected, actual, equal_function,        \
-                               inspect_function, inspect_user_data,     \
-                               ...)  do                                 \
+                               inspect_function, inspect_user_data) do  \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
-                                                                        \
     cut_trace_with_info_expression(                                     \
         gcut_assert_equal_list_helper(expected, actual,                 \
                                       equal_function,                   \
@@ -152,8 +146,7 @@ G_BEGIN_DECLS
                                       #expected, #actual,               \
                                       #equal_function),                 \
         gcut_assert_equal_list(expected, actual, equal_function,        \
-                               inspect_function, inspect_user_data,     \
-                               __VA_ARGS__));                           \
+                               inspect_function, inspect_user_data));   \
 } while (0)
 
 /**
@@ -736,21 +729,17 @@ G_BEGIN_DECLS
  * gcut_assert_equal_pid:
  * @expected: an expected value.
  * @actual: an actual value.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
  *
  * Passes if @expected == @actual.
  *
  * Since: 1.0.6
  */
-#define gcut_assert_equal_pid(expected, actual, ...) do         \
+#define gcut_assert_equal_pid(expected, actual) do              \
 {                                                               \
-    cut_set_message_backward_compatibility(__VA_ARGS__);        \
     cut_trace_with_info_expression(                             \
         gcut_assert_equal_pid_helper((expected), (actual),      \
                                         #expected, #actual),    \
-        gcut_assert_equal_pid(expected, actual, __VA_ARGS__));  \
+        gcut_assert_equal_pid(expected, actual));               \
 } while (0)
 
 G_END_DECLS

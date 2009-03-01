@@ -325,7 +325,7 @@ const gchar *key, ...
 <FUNCTION>
 <NAME>gcut_assert_equal_list</NAME>
 <RETURNS>void</RETURNS>
-GList *expected, GList *actual, GEqualFunc equal_function, GCutInspectFunction inspect_function, gpointer inspect_user_data, ...
+GList *expected, GList *actual, GEqualFunc equal_function, GCutInspectFunction inspect_function, gpointer inspect_user_data
 </FUNCTION>
 
 <FUNCTION>
