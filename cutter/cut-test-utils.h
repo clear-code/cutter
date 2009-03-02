@@ -44,10 +44,10 @@ extern "C" {
  * @object: the object to be owned by Cutter.
  * @destroy_function: the destroy function for the object.
  *
- * Passes ownership of the object to Cutter and returns the
- * object itself. @object is destroyed by @destroy_func.
+ * Passes ownership of @object to Cutter and returns @object
+ * itself. @object is destroyed by @destroy_func.
  *
- * Returns: the object owned by Cutter. Don't free it.
+ * Returns: @object owned by Cutter. Don't free it.
  *
  * Since: 1.0.5
  */
@@ -57,12 +57,12 @@ extern "C" {
 
 /**
  * cut_take_memory:
- * @memory: the memory to be owned by Cutter. (void *)
+ * @memory: the memory to be owned by Cutter.
  *
- * Passes ownership of the memory to Cutter and returns the
- * memory itself. @memory is destroyed by free().
+ * Passes ownership of @memory to Cutter and returns @memory
+ * itself. @memory is destroyed by free().
  *
- * Returns: the memory owned by Cutter. Don't free it.
+ * Returns: @memory owned by Cutter. Don't free it.
  *
  * Since: 1.0.5
  */
@@ -74,10 +74,10 @@ extern "C" {
  * cut_take_string:
  * @string: the string to be owned by Cutter.
  *
- * Passes ownership of the string to Cutter and returns the
- * string itself.
+ * Passes ownership of @string to Cutter and returns @string
+ * itself.
  *
- * Returns: a string owned by Cutter. Don't free it.
+ * Returns: @string owned by Cutter. Don't free it.
  */
 #define cut_take_string(string)                                         \
     cut_test_context_take_string(cut_get_current_test_context(),        \
@@ -85,11 +85,10 @@ extern "C" {
 
 /**
  * cut_take_strdup:
- * @string: the string to be duplicated. (const char *)
+ * @string: the string to be duplicated.
  *
- * Duplicates the string, passes ownership of the
- * duplicated string to Cutter and returns the duplicated
- * string.
+ * Duplicates @string, passes ownership of the duplicated
+ * string to Cutter and returns the duplicated string.
  *
  * Returns: a duplicated string owned by Cutter. Don't free it.
  *
@@ -101,15 +100,15 @@ extern "C" {
 
 /**
  * cut_take_strndup:
- * @string: the string to be duplicated. (const char *)
- * @size: the number of bytes to duplicate. (size_t)
+ * @string: the string to be duplicated.
+ * @size: the number of bytes to duplicate.
  *
- * Duplicates the first @size bytes of the string, passes
+ * Duplicates the first @size bytes of @string, passes
  * ownership of the duplicated string to Cutter and returns
  * the duplicated string. The duplicated string is always
- * nul-terminated.
+ * %NULL-terminated.
  *
- * Returns: the duplicated string owned by Cutter. Don't free it.
+ * Returns: a duplicated string owned by Cutter. Don't free it.
  *
  * Since: 1.0.5
  */
@@ -119,14 +118,14 @@ extern "C" {
 
 /**
  * cut_take_memdup:
- * @memory: the memory to be duplicated. (void *)
- * @size: the number of bytes to duplicate. (size_t)
+ * @memory: the memory to be duplicated.
+ * @size: the number of bytes to duplicate.
  *
- * Duplicates @size bytes of the memory, passes ownership of
+ * Duplicates @size bytes of @memory, passes ownership of
  * the duplicated memory to Cutter and returns the
  * duplicated memory.
  *
- * Returns: the duplicated memory owned by Cutter. Don't free it.
+ * Returns: a duplicated memory owned by Cutter. Don't free it.
  *
  * Since: 1.0.5
  */
@@ -155,7 +154,7 @@ extern "C" {
  * Passes ownership of the array of strings to Cutter and
  * returns @strings itself.
  *
- * Returns: array of strings owned by Cutter. Don't free it.
+ * Returns: @strings owned by Cutter. Don't free it.
  */
 #define cut_take_string_array(strings)                                  \
     cut_test_context_take_string_array(cut_get_current_test_context(),  \
@@ -168,7 +167,7 @@ extern "C" {
  *
  * Computes diff between @from and @to that is owned by Cutter.
  *
- * Returns: a diff between @from and @to. Don't free it.
+ * Returns: a diff between @from and @to owned by Cutter. Don't free it.
  */
 #define cut_take_diff(from, to)                                         \
     cut_take_string(cut_diff_readable(from, to))
@@ -182,7 +181,7 @@ extern "C" {
  * Replaces all occurrences of the @pattern with the
  * @replacement in the @target string.
  *
- * Returns: a replaced string. Don't free it.
+ * Returns: a replaced string owned by Cutter. Don't free it.
  *
  * Since: 1.0.6
  */
@@ -217,7 +216,7 @@ extern "C" {
  *
  * Formats @strings as human readable string that is owned by Cutter.
  *
- * Returns: a inspected string. Don't free it.
+ * Returns: a inspected string owned by Cutter. Don't free it.
  */
 #define cut_inspect_string_array(strings)                               \
     cut_take_string(cut_utils_inspect_string_array(strings))
@@ -269,8 +268,8 @@ extern "C" {
  * cut_build_fixture_data_path() shows how the fixture data
  * path is determined.
  *
- * Returns: a content of the fixture data as string. (char
- * *) It should not be freed.
+ * Returns: a content of the fixture data as string.
+ * Don't free it.
  *
  * Since: 1.0.2
  */

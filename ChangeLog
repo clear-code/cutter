@@ -1,3 +1,8 @@
+2009-03-02  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-test-utils.h, doc/reference/cutter-overrides.txt,
+	doc/reference/ja.po: update document.
+
 2009-03-01  Kouhei Sutou  <kou@cozmixng.org>
 
 	* misc/release.rb: email release notify is optional.

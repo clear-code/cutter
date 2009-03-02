@@ -233,6 +233,36 @@ void *object, CutDestroyFunction destroy_function
 </FUNCTION>
 
 <FUNCTION>
+<NAME>cut_take_memory</NAME>
+<RETURNS>const void *</RETURNS>
+void *memory
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_take_string</NAME>
+<RETURNS>const char *</RETURNS>
+char *string
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_take_strdup</NAME>
+<RETURNS>const char *</RETURNS>
+const char *string
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_take_strndup</NAME>
+<RETURNS>const char *</RETURNS>
+const char *string, size_t size
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_take_memdup</NAME>
+<RETURNS>const void *</RETURNS>
+const void *memory, size_t size
+</FUNCTION>
+
+<FUNCTION>
 <NAME>cut_take_printf</NAME>
 <RETURNS>const char *</RETURNS>
 const char *format, ...
@@ -245,6 +275,30 @@ char **strings
 </FUNCTION>
 
 <FUNCTION>
+<NAME>cut_take_diff</NAME>
+<RETURNS>const char *</RETURNS>
+const char *from, const char *to
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_take_replace</NAME>
+<RETURNS>const char *</RETURNS>
+const char *target, const char *pattern, const char *replacement
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_append_diff</NAME>
+<RETURNS>const char *</RETURNS>
+const char *message, const char *from, const char *to
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_inspect_string_array</NAME>
+<RETURNS>const char *</RETURNS>
+const char **strings
+</FUNCTION>
+
+<FUNCTION>
 <NAME>cut_set_fixture_data_dir</NAME>
 <RETURNS>void</RETURNS>
 const char *path, ...
@@ -253,6 +307,18 @@ const char *path, ...
 <FUNCTION>
 <NAME>cut_build_fixture_data_path</NAME>
 <RETURNS>char *</RETURNS>
+const char *path, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_get_fixture_data_string</NAME>
+<RETURNS>const char *</RETURNS>
+const char *path, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_remove_path</NAME>
+<RETURNS>void</RETURNS>
 const char *path, ...
 </FUNCTION>
 
