@@ -48,7 +48,8 @@ pdf_la_SOURCES = 		\
 pdf_la_LIBADD =			\
 	$(CAIRO_PDF_LIBS)	\
 	$(PANGO_CAIRO_LIBS)	\
-	$(GOFFICE_LIBS)
+	$(GOFFICE_LIBS)		\
+	-lm
 
 
 pdf_factory_la_CFLAGS =		\

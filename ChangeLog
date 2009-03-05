@@ -1,3 +1,7 @@
+2009-03-06  Kouhei Sutou  <kou@cozmixng.org>
+
+	* module/report/Makefile.am (pdf_la_LIBADD): add -lm for cairo.
+
 2009-03-02  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-test-utils.h, doc/reference/cutter-overrides.txt,
