@@ -1,0 +1,9 @@
+usr/lib/libgdkcutter-pixbuf*.so.*
+usr/lib/libgdkcutter-pixbuf*.la
+usr/lib/cutter/module/ui/gtk.*
+usr/lib/cutter/module/factory/ui/gtk_*
+usr/lib/pkgconfig/libgcutter.pc
+usr/include/gcutter.h
+usr/include/gcutter/*.h
+usr/include/gdkcutter-pixbuf.h
+usr/include/gdkcutter-pixbuf/*.h

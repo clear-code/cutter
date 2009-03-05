@@ -1,0 +1,55 @@
+Source: cutter
+Priority: extra
+Maintainer: Kouhei Sutou <kou@cozmixng.org>
+Build-Depends: debhelper (>= 7), intltool, gtk-doc-tools, binutils-dev, libgtk2.0-dev, libgoffice-0-6-dev, libgstreamer0.10-dev
+Standards-Version: 3.7.3
+Section: libs
+Homepage: http://cutter.sourceforge.net/
+
+Package: libcutter-doc
+Section: libdevel
+Architecture: any
+Description: A unit testing framework for C
+ Cutter is a xUnit family Unit Testing Framework for C.
+ Cutter provides easy to write and easy to debug interface to programmers.
+
+Package: libcutter-dev
+Section: libdevel
+Architecture: any
+Depends: libglib2.0-dev
+Description: A unit testing framework for C
+ Cutter is a xUnit family Unit Testing Framework for C.
+ Cutter provides easy to write and easy to debug interface to programmers.
+
+Package: cutter-bin
+Section: libdevel
+Architecture: any
+Depends: libcutter-dev (= ${binary:Version})
+Description: A unit testing framework for C
+ Cutter is a xUnit family Unit Testing Framework for C.
+ Cutter provides easy to write and easy to debug interface to programmers.
+
+Package: libgcutter-dev
+Section: libdevel
+Architecture: any
+Depends: cutter-bin (= ${binary:Version}), libgtk2.0-dev
+Description: A unit testing framework for C
+ Cutter is a xUnit family Unit Testing Framework for C.
+ Cutter provides easy to write and easy to debug interface to programmers.
+
+Package: libcutter-report
+Section: libdevel
+Architecture: any
+Depends: cutter-bin (= ${binary:Version}), libgoffice-0-6
+Description: A unit testing framework for C
+ Cutter is a xUnit family Unit Testing Framework for C.
+ Cutter provides easy to write and easy to debug interface to programmers.
+
+Package: libcutter-gst
+Section: libdevel
+Architecture: any
+Depends: cutter-bin (= ${binary:Version}), libgstreamer0.10-0
+Description: A unit testing framework for C
+ Cutter is a xUnit family Unit Testing Framework for C.
+ Cutter provides easy to write and easy to debug interface to programmers.
+
