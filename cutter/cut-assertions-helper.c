@@ -41,7 +41,7 @@ cut_assert_helper (cut_boolean     result,
     if (result) {
         cut_test_pass();
     } else {
-        cut_test_fail(cut_take_printf("expected: <%s> is not FALSE/NULL",
+        cut_test_fail(cut_take_printf("expected: <%s> is neither FALSE nor NULL",
                                       expression));
     }
 }
