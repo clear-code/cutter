@@ -25,6 +25,7 @@
     <chapter id="writing-test">
       <title>Writing test</title>
       <xi:include href="xml/cutter.xml"/>
+      <xi:include href="xml/cut-version.xml"/>
       <xi:include href="xml/cut-assertions.xml"/>
       <xi:include href="xml/cut-test-utils.xml"/>
       <xi:include href="xml/cut-types.xml"/>
@@ -88,6 +89,9 @@
   </index>
   <index id="index-deprecated" role="deprecated">
     <title>Index of deprecated symbols</title>
+  </index>
+  <index id="index-1-0-7" role="1.0.7">
+    <title>Index of new symbols in 1.0.7</title>
   </index>
   <index id="index-1-0-6" role="1.0.6">
     <title>Index of new symbols in 1.0.6</title>

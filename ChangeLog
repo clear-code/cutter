@@ -1,3 +1,7 @@
+2009-03-08  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-version.h.in (CUTTER_CHECK_VERSION): add.
+
 2009-03-06  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/cut-assertions-helper.c: FALSE/NULL -> neither FALSE nor NULL.

@@ -16,6 +16,7 @@ DOC_SOURCE_DIR=../..
 # Used for dependencies
 HFILE_GLOB =								\
 	$(top_srcdir)/cutter/cutter.h					\
+	$(top_srcdir)/cutter/cut-version.h				\
 	$(top_srcdir)/cutter/cut-assertions.h				\
 	$(top_srcdir)/cutter/cut-test-utils.h				\
 	$(top_srcdir)/cutter/cut-multi-process.h			\

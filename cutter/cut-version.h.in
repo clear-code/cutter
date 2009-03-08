@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2009  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -20,12 +20,65 @@
 #ifndef __CUT_VERSION_H__
 #define __CUT_VERSION_H__
 
+/**
+ * SECTION: cut-version
+ * @title: Version Information
+ * @short_description: Variables and macros to check the Cutter version
+ *
+ * Cutter provides version information, primarily useful in
+ * configure checks for builds that have a configure
+ * script. Applications will not typically use the features
+ * described here.
+ */
 
+/**
+ * CUTTER_VERSION_MAJOR:
+ *
+ * The major version number of the Cutter library.
+ */
 #define CUTTER_VERSION_MAJOR @CUTTER_VERSION_MAJOR@
+
+/**
+ * CUTTER_VERSION_MINOR:
+ *
+ * The minor version number of the Cutter library.
+ */
 #define CUTTER_VERSION_MINOR @CUTTER_VERSION_MINOR@
+
+/**
+ * CUTTER_VERSION_MICRO:
+ *
+ * The micro version number of the Cutter library.
+ */
 #define CUTTER_VERSION_MICRO @CUTTER_VERSION_MICRO@
 
+/**
+ * CUTTER_VERSION_STRING:
+ *
+ * The version number string of the Cutter library with
+ * "#{MAJOR}.#{MINOR}.#{MICRO}" format.
+ */
 #define CUTTER_VERSION_STRING "@CUTTER_VERSION@"
+
+/**
+ * CUTTER_CHECK_VERSION:
+ * @major: the major version number.
+ * @minor: the minor version number.
+ * @micro: the micro version number.
+ *
+ * Checks the version of the Cutter library. Returns true if
+ * the version of the Cutter header files is the same as or
+ * newer than the passed-in version.
+ *
+ * Since: 1.0.7
+ */
+#define CUTTER_CHECK_VERSION(major, minor, micro)       \
+    (CUTTER_MAJOR_VERSION > (major) ||                  \
+     (CUTTER_MAJOR_VERSION == (major) &&                \
+      CUTTER_MINOR_VERSION > (minor)) ||                \
+     (CUTTER_MAJOR_VERSION == (major) &&                \
+      CUTTER_MINOR_VERSION == (minor) &&                \
+      CUTTER_MICRO_VERSION >= (micro)))
 
 #endif /* __CUT_VERSION_H__ */
 
