@@ -49,6 +49,17 @@ typedef void    (*GCutInspectFunction) (GString *string,
                                         gconstpointer data,
                                         gpointer user_data);
 
+/**
+ * GCUT_TYPE_ERROR:
+ *
+ * The #GType for a boxed type holding a #GError reference.
+ *
+ * Since: 1.0.7
+ */
+#define	GCUT_TYPE_ERROR (gcut_error_get_type())
+
+GType   gcut_error_get_type (void) G_GNUC_CONST;
+
 G_END_DECLS
 
 #endif /* __GCUT_TYPES_H__ */

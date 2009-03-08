@@ -71,7 +71,8 @@ libgcutter_la_SOURCES =			\
 	gcut-inspect.c			\
 	gcut-data.c			\
 	gcut-dynamic-data.c		\
-	gcut-main.c
+	gcut-main.c			\
+	gcut-types.c
 
 
 gcut-marshalers.h : gcut-marshalers.list

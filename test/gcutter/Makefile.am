@@ -23,7 +23,8 @@ noinst_LTLIBRARIES = 			\
 	test-gcut-key-file.la		\
 	test-gcut-inspect.la		\
 	test-gcut-dynamic-data.la	\
-	test-gcut-value-equal.la
+	test-gcut-value-equal.la	\
+	test-gcut-types.la
 
 AM_LDFLAGS =			\
 	-module			\
@@ -50,3 +51,4 @@ test_gcut_key_file_la_SOURCES		= test-gcut-key-file.c
 test_gcut_inspect_la_SOURCES		= test-gcut-inspect.c
 test_gcut_dynamic_data_la_SOURCES	= test-gcut-dynamic-data.c
 test_gcut_value_equal_la_SOURCES	= test-gcut-value-equal.c
+test_gcut_types_la_SOURCES		= test-gcut-types.c
