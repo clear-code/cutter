@@ -69,7 +69,7 @@ libgcutter_la_SOURCES =			\
 	gcut-io.c			\
 	gcut-key-file.c			\
 	gcut-inspect.c			\
-	gcut-data.c			\
+	gcut-data-helper.c		\
 	gcut-dynamic-data.c		\
 	gcut-main.c			\
 	gcut-types.c

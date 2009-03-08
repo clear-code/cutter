@@ -184,6 +184,24 @@ G_BEGIN_DECLS
  *                NULL);
  * ]|
  *       </para>
+ *       <para>NOTE: value's ownership is passed to Cutter. Don't free it.</para>
+ *     </listitem>
+ *   </varlistentry>
+ *   <varlistentry>
+ *     <term>GBoxed types</term>
+ *     <listitem>
+ *       <para>its type value.</para>
+ *       <para>e.g.:
+ * |[
+ * gcut_add_datum("data name",
+ *                "field-name", G_TYPE_HASH_TABLE,
+ *                gcut_hash_table_string_string_new("name1", "value1",
+ *                                                  "name2", "value2",
+ *                                                  NULL),
+ *                NULL);
+ * ]|
+ *       </para>
+ *       <para>NOTE: value's ownership is passed to Cutter. Don't free it.</para>
  *     </listitem>
  *   </varlistentry>
  * </variablelist>
@@ -322,6 +340,23 @@ G_BEGIN_DECLS
         (cut_push_backtrace(gcut_data_get_pointer(data, field_name)),   \
          cut_pop_backtrace))
 
+/**
+ * gcut_data_get_boxed:
+ * @data: the data added by gcut_add_datum().
+ * @field_name: the field name.
+ *
+ * Gets a field value identified by @field_name as
+ * GBoxed type value.
+ *
+ * Returns: a field value corresponded to @field_name.
+ *
+ * Since: 1.0.7
+ */
+#define gcut_data_get_boxed(data, field_name)                           \
+    gcut_data_get_boxed_helper(                                         \
+        data, field_name,                                               \
+        (cut_push_backtrace(gcut_data_get_boxed(data, field_name)),     \
+         cut_pop_backtrace))
 
 G_END_DECLS
 

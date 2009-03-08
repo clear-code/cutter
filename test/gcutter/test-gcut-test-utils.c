@@ -92,8 +92,10 @@ void
 test_data_get (void)
 {
     gpointer pointer;
+    GError *error;
 
     pointer = malloc(10);
+    error = g_error_new(G_FILE_ERROR, G_FILE_ERROR_NOENT, "not found");
     data = gcut_dynamic_data_new("string", G_TYPE_STRING, "value",
                                  "int", G_TYPE_INT, -29,
                                  "uint", G_TYPE_UINT, 29,
@@ -103,6 +105,7 @@ test_data_get (void)
                                  "enum", CUT_TYPE_TEST_RESULT_STATUS,
                                  CUT_TEST_RESULT_SUCCESS,
                                  "pointer", G_TYPE_POINTER, pointer, g_free,
+                                 "boxed", GCUT_TYPE_ERROR, error,
                                  NULL);
 
     cut_assert_equal_string("value", gcut_data_get_string(data, "string"));
@@ -118,4 +121,6 @@ test_data_get (void)
                            gcut_data_get_enum(data, "enum"));
     cut_assert_equal_pointer(pointer,
                              gcut_data_get_pointer(data, "pointer"));
+    gcut_assert_equal_error(error,
+                            gcut_data_get_boxed(data, "boxed"));
 }

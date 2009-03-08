@@ -21,7 +21,7 @@
 #  include <config.h>
 #endif /* HAVE_CONFIG_H */
 
-#include "gcut-data.h"
+#include "gcut-data-helper.h"
 #include "gcut-assertions-helper.h"
 
 #define DEFINE_GETTER_HELPER(type_name, type)                           \
@@ -51,6 +51,7 @@ DEFINE_GETTER_HELPER(data_type, GType)
 DEFINE_GETTER_HELPER(flags, guint)
 DEFINE_GETTER_HELPER(enum, gint)
 DEFINE_GETTER_HELPER(pointer, gconstpointer)
+DEFINE_GETTER_HELPER(boxed, gconstpointer)
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

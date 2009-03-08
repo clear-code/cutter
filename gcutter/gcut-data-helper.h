@@ -45,6 +45,9 @@ gint             gcut_data_get_enum_helper      (gconstpointer data,
 gconstpointer    gcut_data_get_pointer_helper   (gconstpointer data,
                                                  const gchar   *field_name,
                                                  CutCallbackFunction callback);
+gconstpointer    gcut_data_get_boxed_helper     (gconstpointer data,
+                                                 const gchar   *field_name,
+                                                 CutCallbackFunction callback);
 
 G_END_DECLS
 
