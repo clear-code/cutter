@@ -61,8 +61,13 @@ field_value_new (GType type)
 static void
 field_value_free (FieldValue *field_value)
 {
-    if (field_value->free_function && field_value->value.pointer)
-        field_value->free_function(field_value->value.pointer);
+    if (field_value->value.pointer) {
+        if (field_value->free_function) {
+            field_value->free_function(field_value->value.pointer);
+        } else if (G_TYPE_IS_BOXED(field_value->type)) {
+            g_boxed_free(field_value->type, field_value->value.pointer);
+        }
+    }
 
     g_slice_free(FieldValue, field_value);
 }
@@ -257,6 +262,8 @@ gcut_dynamic_data_new_va_list (const gchar *first_field_name, va_list args)
                 field_value->value.unsigned_integer = va_arg(args, guint);
             } else if (G_TYPE_IS_ENUM(field_value->type)) {
                 field_value->value.integer = va_arg(args, gint);
+            } else if (G_TYPE_IS_BOXED(field_value->type)) {
+                field_value->value.pointer = va_arg(args, gpointer);
             } else {
                 g_warning("unsupported type: <%s>",
                           g_type_name(field_value->type));
@@ -404,6 +411,20 @@ gcut_dynamic_data_get_enum (GCutDynamicData *data, const gchar *field_name,
 gconstpointer
 gcut_dynamic_data_get_pointer (GCutDynamicData *data, const gchar *field_name,
                                GError **error)
+{
+    FieldValue *field_value;
+
+    field_value = lookup(data, field_name, error);
+    if (!field_value)
+        return 0;
+
+    return field_value->value.pointer;
+}
+
+gconstpointer
+gcut_dynamic_data_get_boxed (GCutDynamicData  *data,
+                             const gchar      *field_name,
+                             GError          **error)
 {
     FieldValue *field_value;
 

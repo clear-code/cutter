@@ -1,5 +1,8 @@
 2009-03-08  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-dynamic-data.[ch],
+	test/gcutter/test-gcut-dynamic-data.c: support GBoxed.
+
 	* gcutter/gcut-types.[ch], test/gcutter/test-gcut-types.c: add
 	GCUT_TYPE_ERROR.
 

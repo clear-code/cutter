@@ -87,6 +87,9 @@ gint             gcut_dynamic_data_get_enum     (GCutDynamicData  *data,
 gconstpointer    gcut_dynamic_data_get_pointer  (GCutDynamicData  *data,
                                                  const gchar      *field_name,
                                                  GError          **error);
+gconstpointer    gcut_dynamic_data_get_boxed    (GCutDynamicData  *data,
+                                                 const gchar      *field_name,
+                                                 GError          **error);
 
 G_END_DECLS
 

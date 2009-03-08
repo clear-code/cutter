@@ -12,6 +12,7 @@ void test_data_type (void);
 void test_flags (void);
 void test_enum (void);
 void test_pointer (void);
+void test_boxed (void);
 
 static GCutDynamicData *data;
 static GError *expected_error;
@@ -162,6 +163,23 @@ test_pointer (void)
     cut_assert_equal_pointer(value, actual_value);
 
     assert_nonexistent_field(gcut_dynamic_data_get_pointer);
+}
+
+void
+test_boxed (void)
+{
+    GError *error = NULL;
+    GError *value;
+    const GError *actual_value;
+
+    value = g_error_new(G_FILE_ERROR, G_FILE_ERROR_NOENT, "not found");
+    data = gcut_dynamic_data_new("error", GCUT_TYPE_ERROR, value,
+                                 NULL);
+    actual_value = gcut_dynamic_data_get_boxed(data, "error", &error);
+    gcut_assert_error(error);
+    gcut_assert_equal_error(value, actual_value);
+
+    assert_nonexistent_field(gcut_dynamic_data_get_boxed);
 }
 
 /*
