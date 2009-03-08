@@ -73,12 +73,12 @@
  * Since: 1.0.7
  */
 #define CUTTER_CHECK_VERSION(major, minor, micro)       \
-    (CUTTER_MAJOR_VERSION > (major) ||                  \
-     (CUTTER_MAJOR_VERSION == (major) &&                \
-      CUTTER_MINOR_VERSION > (minor)) ||                \
-     (CUTTER_MAJOR_VERSION == (major) &&                \
-      CUTTER_MINOR_VERSION == (minor) &&                \
-      CUTTER_MICRO_VERSION >= (micro)))
+    (CUTTER_VERSION_MAJOR > (major) ||                  \
+     (CUTTER_VERSION_MAJOR == (major) &&                \
+      CUTTER_VERSION_MINOR > (minor)) ||                \
+     (CUTTER_VERSION_MAJOR == (major) &&                \
+      CUTTER_VERSION_MINOR == (minor) &&                \
+      CUTTER_VERSION_MICRO >= (micro)))
 
 #endif /* __CUT_VERSION_H__ */
 
