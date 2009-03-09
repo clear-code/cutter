@@ -16,7 +16,7 @@ Description: A unit testing framework for C
 Package: libcutter-dev
 Section: libdevel
 Architecture: any
-Depends: libglib2.0
+Depends: libglib2.0-0
 Description: A unit testing framework for C
  Cutter is a xUnit family Unit Testing Framework for C.
  Cutter provides easy to write and easy to debug interface to programmers.
