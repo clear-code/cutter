@@ -3,7 +3,7 @@
 include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/autotools.mk
 
-DEB_INSTALL_DOCS_ALL = NEWS.ja README.ja TUTORIAL TUTORIAL.ja USERS USERS.ja debian/README.Debian
+DEB_INSTALL_DOCS_ALL = NEWS NEWS.ja README.ja TUTORIAL TUTORIAL.ja USERS USERS.ja TODO debian/README.Debian
 DEB_INSTALL_DOCS_cutter-doc = doc/reference/
 
 DEB_SHLIBDEPS_INCLUDE_libcutter-dev =: libcutter
