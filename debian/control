@@ -25,6 +25,7 @@ Package: cutter-bin
 Section: libdevel
 Architecture: any
 Depends: libcutter-dev (= ${binary:Version})
+Suggests: lcov
 Description: A unit testing framework for C
  Cutter is a xUnit family Unit Testing Framework for C.
  Cutter provides easy to write and easy to debug interface to programmers.
