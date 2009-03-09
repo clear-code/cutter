@@ -1,0 +1,4 @@
+usr/include/cutter
+usr/lib/pkgconfig
+usr/lib/cutter/module/ui
+usr/lib/cutter/module/factory/ui

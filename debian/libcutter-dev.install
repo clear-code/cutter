@@ -1,9 +1,0 @@
-usr/lib/libcutter*.so.*
-usr/lib/libcutter.la
-usr/lib/cutter/module/ui/console.*
-usr/lib/cutter/module/stream/*
-usr/lib/cutter/module/factory/ui/console_*
-usr/lib/cutter/module/factory/stream/*
-usr/lib/pkgconfig/libcutter.pc
-usr/include/cutter.h
-usr/include/cutter/*.h

@@ -1,4 +1,11 @@
+usr/include/cutter
 usr/lib
-usr/include
+usr/lib/cutter/module/ui
+usr/lib/cutter/module/stream
+usr/lib/cutter/module/report
+usr/lib/cutter/module/factory/ui
+usr/lib/cutter/module/factory/stream
+usr/lib/cutter/module/factory/report
+usr/lib/pkgconfig
 usr/share/aclocal
 usr/share/locale
