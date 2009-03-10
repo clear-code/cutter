@@ -58,8 +58,14 @@ def upload_file(agent, file, sf_user_name, password)
 end
 
 def go_file_releases_page(agent, project_page)
-  file_releases_page_link = project_page.links.find do |link|
-    /\AFile Releases\z/ =~ link.text
+  download_page_link = project_page.links.find do |link|
+    /\ADownload\z/ =~ link.text
+  end
+  download_page = agent.click(download_page_link)
+
+  nbsp = "\302\240"
+  file_releases_page_link = download_page.links.find do |link|
+    "Manage#{nbsp}Packages#{nbsp}/#{nbsp}Releases" == link.text
   end
   agent.click(file_releases_page_link)
 end
