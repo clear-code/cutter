@@ -1,3 +1,7 @@
+2009-03-14  Kouhei Sutou  <kou@cozmixng.org>
+
+	* html/index.html*: add more description.
+
 2009-03-10  Kouhei Sutou  <kou@clear-code.com>
 
 	* misc/release.rb (#go_file_releases_page): follow the recent

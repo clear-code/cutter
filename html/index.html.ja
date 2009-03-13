@@ -5,11 +5,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
   <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-    <title>Cutter - C言語用単体テストフレームワーク</title>
+    <title>Cutter - C言語用単体テストフレームワーク/ユニットテストフレームワーク</title>
   </head>
   <body>
     <h1>Cutter - C言語用単体テストフレームワーク</h1>
     <p>[<a href="./">English</a>]</p>
+    <p>Cutterは書きやすさ・デバッグのしやすさを重視したC言語用の単体テスト（ユニットテスト）フレームワークです。</p>
     <ul>
       <li><a href="http://sourceforge.net/projects/cutter/">プロジェクトページ</a></li>
       <li>
