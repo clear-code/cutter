@@ -1,3 +1,7 @@
+2009-03-15  Kouhei Sutou  <kou@cozmixng.org>
+
+	* debian/control: add missing dependencies.
+
 2009-03-14  Kouhei Sutou  <kou@cozmixng.org>
 
 	* html/index.html*: add more description.
