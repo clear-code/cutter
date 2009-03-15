@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.0.7\n"
 "POT-Creation-Date: 2009-03-02 22:15+0900\n"
-"PO-Revision-Date: 2009-03-02 22:19+0900\n"
+"PO-Revision-Date: 2009-03-15 14:03+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -11674,7 +11674,7 @@ msgstr ""
 
 #: xml/cut-test-utils.xml:125(simpara)
 msgid "the string to be owned by Cutter."
-msgstr "Cutterが所有権も持つことになる文字列。"
+msgstr "Cutterが所有権を持つことになる文字列。"
 
 #: xml/cut-test-utils.xml:127(simpara)
 msgid "<parameter>string</parameter> owned by Cutter. Don't free it."
@@ -11807,7 +11807,7 @@ msgstr ""
 
 #: xml/cut-test-utils.xml:213(simpara)
 msgid "the array of strings to be owned by Cutter."
-msgstr "Cutterが所有権も持つことになる文字列の配列。"
+msgstr "Cutterが所有権を持つことになる文字列の配列。"
 
 #: xml/cut-test-utils.xml:215(simpara)
 msgid "<parameter>strings</parameter> owned by Cutter. Don't free it."
