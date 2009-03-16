@@ -16,6 +16,8 @@
   * ((<GtkIEEmbed|URL:http://live.gnome.org/GtkIEEmbed>)):
     a GTK+ widget library to use HTML rendering engine of
     Internet Explorer.
+  * ((<GPointingDeviceSettings|URL:http://live.gnome.org/GPointingDeviceSettings>)):
+    a GUI tool for setting various pointing devices.
 #  * ((<Poppler|URL:http://poppler.freedesktop.org/>)):
 #    PDF rendering library.
 #
