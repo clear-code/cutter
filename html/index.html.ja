@@ -5,12 +5,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
   <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-    <title>Cutter - C言語用単体テストフレームワーク/ユニットテストフレームワーク</title>
+    <link rel="stylesheet" href="cutter.css" type="text/css" />
+    <title>Cutter - C言語用テスティングフレームワーク</title>
   </head>
   <body>
-    <h1>Cutter - C言語用単体テストフレームワーク</h1>
+    <h1>
+      <span class="main-title">Cutter</span>
+      <span class="title-separator">-</span>
+      <span class="sub-title">C言語用単体テスト・ユニットテストフレームワーク</span>
+    </h1>
     <p>[<a href="./">English</a>]</p>
-    <p>Cutterは書きやすさ・デバッグのしやすさを重視したC言語用の単体テスト（ユニットテスト）フレームワークです。</p>
+    <p>
+      Cutterは書きやすさ・デバッグのしやすさを重視したC言語用のテスティングフレームワークです。メンテナンスしやすく、利用効果の高い単体テスト（ユニットテスト）の開発を支援します。
+    </p>
     <ul>
       <li><a href="http://sourceforge.net/projects/cutter/">プロジェクトページ</a></li>
       <li>
@@ -40,7 +47,7 @@
     </ul>
     <p>
       <a href="http://sourceforge.net/projects/cutter">
-        <img src="http://sflogo.sourceforge.net/sflogo.php?group_id=208375&type=12" width="120" height="30" border="0" alt="SourceForge.netからCutterをダウンロード。高速で安全なフリーオープンソースソフトウェアダウンロード。" />
+        <img src="http://sflogo.sourceforge.net/sflogo.php?group_id=208375&amp;type=12" width="120" height="30" border="0" alt="SourceForge.netからCutterをダウンロード。高速で安全なフリーオープンソースソフトウェアダウンロード。" />
       </a>
 <!-- Piwik -->
 <script type="text/javascript">

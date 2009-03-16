@@ -451,7 +451,9 @@ AC_SUBST(SF_USER_OPTION)
 
 SF_HOST="web.sourceforge.net"
 if test -n "$SF_USER"; then
-   SF_HOST="$SF_USER@$SF_HOST"
+   SF_HOST="$SF_USER,cutter@$SF_HOST"
+else
+   SF_HOST="$USER,cutter@$SF_HOST"
 fi
 AC_SUBST(SF_HOST)
 

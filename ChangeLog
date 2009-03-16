@@ -1,3 +1,7 @@
+2009-03-16  Kouhei Sutou  <kou@clear-code.com>
+
+	* html/index.html*: improve description.
+
 2009-03-15  Kouhei Sutou  <kou@cozmixng.org>
 
 	* debian/control: add cutter-testing-framework meta package.
