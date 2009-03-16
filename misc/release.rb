@@ -114,7 +114,8 @@ def go_edit_release_page(agent, file_releases_page, package_name, release_name)
 end
 
 def extract_sections(file)
-  File.read(file).gsub(/==+\n.*\n==+\n/, '').split(/.*\n^==.*\n\n\n*/)
+  normalized_text = File.read(file).gsub(/==+\n.*\n==+\n/, '')
+  normalized_text.split(/.*\n^(?:==\s+|====+).*\n\n\n*/)
 end
 
 def guess_target_index(file, default_index)

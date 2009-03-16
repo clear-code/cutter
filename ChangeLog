@@ -14,6 +14,9 @@
 
 2009-03-10  Kouhei Sutou  <kou@clear-code.com>
 
+	* misc/release.rb (#extract_sections): support '===' header in
+	section.
+
 	* misc/release.rb (#go_file_releases_page): follow the recent
 	SF.net change.
 
