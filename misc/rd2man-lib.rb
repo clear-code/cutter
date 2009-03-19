@@ -67,8 +67,8 @@ EOT
       ".BR #{content.strip}\n"
     end
 
-    def apply_to_RefToOtherFile(element, content)
-      ".BR #{content.join}"
+    def apply_to_Reference_with_RDLabel(element, content)
+      ".BR #{content.join.sub(/\.rd/, '')}"
     end
 
     private
