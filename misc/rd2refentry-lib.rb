@@ -152,6 +152,10 @@ module RD
           tag("para", {}, *contents))
     end
 
+    def apply_to_Code(element, contents)
+      tag("code", {}, *contents)
+    end
+
     def apply_to_StringElement(element)
       apply_to_String(element.content.chomp)
     end
