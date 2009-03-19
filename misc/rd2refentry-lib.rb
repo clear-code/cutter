@@ -41,6 +41,9 @@ module RD
     def initialize
       super
       @translate_data = nil
+      @n_sections = 0
+      @n_text_blocks_in_section = 0
+      @man_style = false
     end
 
     def apply_to_DocumentElement(element, contents)
@@ -56,8 +59,21 @@ module RD
     end
 
     def apply_to_Headline(element, title)
-      if element.level == 1
-        @title, @purpose = title.join.split(/\s*\B---\B\s*/, 2)
+      case element.level
+      when 1
+        title = title.join
+        @title, @purpose = title.split(/\s*\B---\B\s*/, 2)
+        if @purpose.nil?
+          components = title.split(/\s*\B\/\B\s*/)
+          if components.size == 3
+            name, package, manual = components
+            @title = name
+            @man_style = true
+          end
+        end
+      when 2
+        @n_sections += 1
+        @n_text_blocks_in_section = 0
       end
       [:headline, element.level - 1, title]
     end
@@ -100,9 +116,9 @@ module RD
       else
         return tag("link",
                    {:linkend => ref_entry_id(url)},
-                   remove_lang_suffix(label))
+                   remove_suffix(remove_lang_suffix(label)))
       end
-      label = remove_lang_suffix(label)
+      label = remove_suffix(remove_lang_suffix(label))
       tag("ulink", {:url => url}, label)
     end
 
@@ -140,6 +156,10 @@ module RD
     end
 
     def apply_to_TextBlock(element, contents)
+      @n_text_blocks_in_section += 1
+      if @man_style and @n_sections == 1 and @n_text_blocks_in_section == 1
+        @purpose = contents.join.split(/\s+-\s+/, 2)[1]
+      end
       tag("para", {}, *contents)
     end
 

@@ -1,5 +1,8 @@
 2009-03-19  Kouhei Sutou  <kou@clear-code.com>
 
+	* misc/rd2refentry-lib.rb: support purpose extraction from man
+	style RD.
+
 	* misc/rd2man-lib.rb: support language suffix.
 	* misc/rd2refentry-lib.rb: support code markup.
 
