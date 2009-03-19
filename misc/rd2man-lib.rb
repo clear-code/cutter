@@ -68,7 +68,7 @@ EOT
     end
 
     def apply_to_Reference_with_RDLabel(element, content)
-      ".BR #{content.join.sub(/\.rd/, '')}"
+      ".BR #{content.join.sub(/\.rd/, '')}\n"
     end
 
     private
