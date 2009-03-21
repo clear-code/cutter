@@ -1,5 +1,7 @@
 2009-03-21  Kouhei Sutou  <kou@cozmixng.org>
 
+	* apt/: add apt-line provide utilities.
+
 	* debian/control: fix a typo.
 
 2009-03-19  Kouhei Sutou  <kou@clear-code.com>
