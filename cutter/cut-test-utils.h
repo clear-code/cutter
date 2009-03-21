@@ -287,10 +287,9 @@ extern "C" {
  *
  * Since: 1.0.2
  */
-#define cut_remove_path(path, ...)                                      \
+#define cut_remove_path(...)                                            \
     cut_utils_remove_path_recursive_force(                              \
-        cut_take_string(                                                \
-            cut_utils_build_path(path, __VA_ARGS__)))
+        cut_take_string(cut_utils_build_path(__VA_ARGS__)))
 
 /**
  * cut_equal_string:

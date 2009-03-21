@@ -1,5 +1,7 @@
 2009-03-21  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-utils.h (cut_remove_path): remove needless argument.
+
 	* debian/rules: install cutter command documents.
 
 	* doc/reference/: include cutter command manual page.
