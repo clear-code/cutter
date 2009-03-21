@@ -1,6 +1,8 @@
 SUBDIRS = reference
 
-EXTRA_DIST =
+EXTRA_DIST =		\
+	cutter.rd	\
+	cutter.rd.ja
 
 dist_man1_MANS =	\
 	cutter.man
