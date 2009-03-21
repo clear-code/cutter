@@ -1,5 +1,7 @@
 2009-03-21  Kouhei Sutou  <kou@cozmixng.org>
 
+	* debian/rules: add missing libgdkcutter-pixbuf.*.
+
 	* doc/Makefile.am (EXTRA_DIST): add missing cutter.rd*.
 
 	* debian/rules: use DEB_INSTALL_DIRS.
