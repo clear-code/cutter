@@ -1,5 +1,7 @@
 2009-03-21  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/: include cutter command manual page.
+
 	* README*: move cutter command documents to ...
 	* doc/cutter.rd*: ... here.
 

@@ -22,6 +22,10 @@
 
   <part id="reference">
     <title>Reference</title>
+    <chapter id="command">
+      <title>Command</title>
+      <xi:include href="cutter.xml"/>
+    </chapter>
     <chapter id="writing-test">
       <title>Writing test</title>
       <xi:include href="xml/cutter.xml"/>

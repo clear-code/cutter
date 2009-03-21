@@ -101,7 +101,8 @@ content_files =		\
 	news.xml	\
 	tutorial.xml	\
 	features.xml	\
-	users.xml
+	users.xml	\
+	cutter.xml
 
 # Extra options to supply to gtkdoc-fixxref
 FIXXREF_OPTIONS=
@@ -121,7 +122,9 @@ generated_xml_files =	\
 	features.xml	\
 	features.xml.ja	\
 	users.xml	\
-	users.xml.ja
+	users.xml.ja	\
+	cutter.xml	\
+	cutter.xml.ja
 
 CLEANFILES +=				\
 	$(DOC_MODULE)-sections.txt	\
@@ -180,6 +183,12 @@ users.xml: $(top_srcdir)/USERS $(RD2REFENTRY_LIB) users.xml.ja
 
 users.xml.ja: $(top_srcdir)/USERS.ja $(RD2REFENTRY_LIB) ja.po
 	$(RD2_JA) $(top_srcdir)/USERS.ja > users.xml.ja
+
+cutter.xml: $(top_srcdir)/doc/cutter.rd $(RD2REFENTRY_LIB) cutter.xml.ja
+	$(RD2) $(top_srcdir)/doc/cutter.rd > cutter.xml
+
+cutter.xml.ja: $(top_srcdir)/doc/cutter.rd.ja $(RD2REFENTRY_LIB) ja.po
+	$(RD2_JA) $(top_srcdir)/doc/cutter.rd.ja > cutter.xml.ja
 
 upload: docs
 	rm -rf tmp/
