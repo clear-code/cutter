@@ -4,7 +4,7 @@ include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/autotools.mk
 
 DEB_INSTALL_DOCS_ALL = NEWS NEWS.ja README.ja TUTORIAL TUTORIAL.ja USERS USERS.ja TODO debian/README.Debian
-DEB_INSTALL_DOCS_cutter-doc = doc/reference/
+DEB_INSTALL_DOCS_cutter-doc = doc/cutter.rd doc/cutter.rd.ja doc/reference/
 
 install/cutter-doc::
 	cp -ar debian/tmp/usr/share/cutter/stack/ \
@@ -44,6 +44,8 @@ install/cutter-bin::
 	cp -ar debian/tmp/usr/bin/* debian/cutter-bin/usr/bin/
 	cp -ar debian/tmp/usr/lib/pkgconfig/cutter.pc \
 		debian/cutter-bin/usr/lib/pkgconfig/
+	cp -ar debian/tmp/usr/share/man/man1/* \
+		debian/cutter-bin/usr/share/man/man1/
 
 install/libcutter-glib-dev::
 	cp -ar debian/tmp/usr/include/cutter/gcutter.h \
