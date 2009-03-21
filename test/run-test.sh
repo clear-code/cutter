@@ -40,7 +40,7 @@ CUTTER_ARGS="$CUTTER_ARGS --exclude-directory lib"
 if echo "$@" | grep -- --mode=analyze > /dev/null; then
     :
 else
-    CUTTER_ARGS="$CUTTER_ARGS --stream=xml --stream-log-directory $top_dir/log"
+    CUTTER_ARGS="$CUTTER_ARGS --stream=xml --stream-directory $top_dir/log"
 fi
 if test x"$USE_GTK" = x"yes"; then
     CUTTER_ARGS="-u gtk $CUTTER_ARGS"

@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2009  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -32,7 +32,7 @@
 
 static const gchar *stream_name = NULL;
 static int fd = -1;
-static const gchar *log_directory = NULL;
+static const gchar *directory = NULL;
 static CutStreamFactoryBuilder *the_builder = NULL;
 #ifdef G_OS_WIN32
 static gchar *win32_stream_factory_module_dir = NULL;
@@ -151,7 +151,7 @@ set_option_context (CutFactoryBuilder *builder, GOptionContext *context)
          N_("Specify stream"), NULL},
         {"stream-fd", 0, 0, G_OPTION_ARG_INT, &fd,
          N_("Stream to FILE_DESCRIPTOR (default: stdout)"), "FILE_DESCRIPTOR"},
-        {"stream-log-directory", 0, 0, G_OPTION_ARG_STRING, &log_directory,
+        {"stream-directory", 0, 0, G_OPTION_ARG_STRING, &directory,
          N_("Stream to a file under DIRECTORY (default: none)"), "DIRECTORY"},
         {NULL}
     };
@@ -219,7 +219,7 @@ build (CutFactoryBuilder *builder)
     priv = CUT_STREAM_FACTORY_BUILDER_GET_PRIVATE(builder);
     factory = build_factory(builder, stream_name,
                             "fd", fd,
-                            "log-directory", log_directory,
+                            "directory", directory,
                             NULL);
 
     if (factory)

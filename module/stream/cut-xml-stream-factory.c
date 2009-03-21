@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2009  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -49,7 +49,7 @@ struct _CutXMLStreamFactory
     CutModuleFactory     object;
 
     gint                 fd;
-    gchar               *log_directory;
+    gchar               *directory;
 };
 
 struct _CutXMLStreamFactoryClass
@@ -61,7 +61,7 @@ enum
 {
     PROP_0,
     PROP_FD,
-    PROP_LOG_DIRECTORY
+    PROP_DIRECTORY
 };
 
 static GType cut_type_xml_stream_factory = 0;
@@ -105,19 +105,19 @@ class_init (CutModuleFactoryClass *klass)
                             G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
     g_object_class_install_property(gobject_class, PROP_FD, spec);
 
-    spec = g_param_spec_string("log-directory",
+    spec = g_param_spec_string("directory",
                                "Log Directory",
-                               "The directory of log files",
+                               "The directory of streamed files",
                                NULL,
                                G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
-    g_object_class_install_property(gobject_class, PROP_LOG_DIRECTORY, spec);
+    g_object_class_install_property(gobject_class, PROP_DIRECTORY, spec);
 }
 
 static void
 init (CutXMLStreamFactory *factory)
 {
     factory->fd = -1;
-    factory->log_directory = NULL;
+    factory->directory = NULL;
 }
 
 static void
@@ -126,9 +126,9 @@ dispose (GObject *object)
     CutXMLStreamFactory *factory;
 
     factory = CUT_XML_STREAM_FACTORY(object);
-    if (factory->log_directory) {
-        g_free(factory->log_directory);
-        factory->log_directory = NULL;
+    if (factory->directory) {
+        g_free(factory->directory);
+        factory->directory = NULL;
     }
 
     G_OBJECT_CLASS(parent_class)->dispose(object);
@@ -147,10 +147,10 @@ set_property (GObject      *object,
       case PROP_FD:
         factory->fd = g_value_get_int(value);
         break;
-      case PROP_LOG_DIRECTORY:
-        if (factory->log_directory)
-            g_free(factory->log_directory);
-        factory->log_directory = g_value_dup_string(value);
+      case PROP_DIRECTORY:
+        if (factory->directory)
+            g_free(factory->directory);
+        factory->directory = g_value_dup_string(value);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -171,8 +171,8 @@ get_property (GObject    *object,
       case PROP_FD:
         g_value_set_int(value, factory->fd);
         break;
-      case PROP_LOG_DIRECTORY:
-        g_value_set_string(value, factory->log_directory);
+      case PROP_DIRECTORY:
+        g_value_set_string(value, factory->directory);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -256,19 +256,19 @@ struct _StreamData
 {
     gboolean initialized;
     gint fd;
-    gchar *log_directory;
+    gchar *directory;
     GList *channels;
 };
 
 static StreamData *
-stream_data_new (gint fd, gchar *log_directory)
+stream_data_new (gint fd, gchar *directory)
 {
     StreamData *data;
 
     data = g_slice_new(StreamData);
     data->initialized = FALSE;
     data->fd = fd;
-    data->log_directory = g_strdup(log_directory);
+    data->directory = g_strdup(directory);
     data->channels = NULL;
 
     return data;
@@ -277,8 +277,8 @@ stream_data_new (gint fd, gchar *log_directory)
 static void
 stream_data_free (StreamData *data)
 {
-    if (data->log_directory)
-        g_free(data->log_directory);
+    if (data->directory)
+        g_free(data->directory);
 
     if (data->channels) {
         g_list_foreach(data->channels, (GFunc)g_io_channel_unref, NULL);
@@ -295,7 +295,7 @@ create_channels (StreamData *data, GError **error)
     GList *channels = NULL;
     GIOChannel *channel;
 
-    if (data->fd == -1 && !data->log_directory)
+    if (data->fd == -1 && !data->directory)
         fd = STDOUT_FILENO;
     else
         fd = data->fd;
@@ -313,7 +313,7 @@ create_channels (StreamData *data, GError **error)
         }
     }
 
-    if (data->log_directory) {
+    if (data->directory) {
         gchar *file_name, *base_name;
         time_t now;
         struct tm *tm;
@@ -327,9 +327,9 @@ create_channels (StreamData *data, GError **error)
                                     tm->tm_hour,
                                     tm->tm_min,
                                     tm->tm_sec);
-        file_name = g_build_filename(data->log_directory, base_name, NULL);
+        file_name = g_build_filename(data->directory, base_name, NULL);
 
-        g_mkdir_with_parents(data->log_directory, 0755);
+        g_mkdir_with_parents(data->directory, 0755);
         channel = g_io_channel_new_file(file_name, "w", error);
         if (channel) {
             g_io_channel_set_close_on_unref(channel, TRUE);
@@ -392,7 +392,7 @@ create (CutModuleFactory *factory)
     StreamData *data;
 
     xml_factory = CUT_XML_STREAM_FACTORY(factory);
-    data = stream_data_new(xml_factory->fd, xml_factory->log_directory);
+    data = stream_data_new(xml_factory->fd, xml_factory->directory);
     return G_OBJECT(cut_stream_new("xml",
                                    "stream-function", stream,
                                    "stream-function-user-data", data,

@@ -1,5 +1,10 @@
 2009-03-21  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-stream-factory-builder.c,
+	module/stream/cut-xml-stream-factory.c,
+	test/cutter/test-cutter.c, test/run-test.sh:
+	--stream-log-directory -> --stream-directory.
+
 	* apt/: add apt-line provide utilities.
 
 	* debian/control: fix a typo.
