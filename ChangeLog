@@ -1,5 +1,7 @@
 2009-03-21  Kouhei Sutou  <kou@cozmixng.org>
 
+	* debian/rules: use DEB_INSTALL_DIRS.
+
 	* cutter/, test/: don't use '## __VA_ARGS__' to work with non-GCC
 	compilers.
 

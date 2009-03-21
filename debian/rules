@@ -6,6 +6,46 @@ include /usr/share/cdbs/1/class/autotools.mk
 DEB_INSTALL_DOCS_ALL = NEWS NEWS.ja README.ja TUTORIAL TUTORIAL.ja USERS USERS.ja TODO debian/README.Debian
 DEB_INSTALL_DOCS_cutter-doc = doc/cutter.rd doc/cutter.rd.ja doc/reference/
 
+DEB_INSTALL_DIRS_cutter-doc =			\
+	/usr/share/cutter			\
+	/usr/share/gtk-doc
+
+DEB_INSTALL_DIRS_libcutter-dev =		\
+	/usr/include/cutter			\
+	/usr/lib				\
+	/usr/lib/cutter/module/ui		\
+	/usr/lib/cutter/module/stream		\
+	/usr/lib/cutter/module/report		\
+	/usr/lib/cutter/module/factory/ui	\
+	/usr/lib/cutter/module/factory/stream	\
+	/usr/lib/cutter/module/factory/report	\
+	/usr/lib/pkgconfig			\
+	/usr/share/aclocal			\
+	/usr/share/locale
+
+DEB_INSTALL_DIRS_cutter-bin =			\
+	/usr/bin				\
+	/usr/lib/pkgconfig			\
+	/usr/share/man/man1
+
+DEB_INSTALL_DIRS_libcutter-glib-dev =		\
+	/usr/include/cutter			\
+	/usr/lib/pkgconfig
+
+DEB_INSTALL_DIRS_libcutter-gtk-dev =		\
+	/usr/include/cutter			\
+	/usr/lib/pkgconfig			\
+	/usr/lib/cutter/module/ui		\
+	/usr/lib/cutter/module/factory/ui
+
+DEB_INSTALL_DIRS_libcutter-report =		\
+	/usr/lib/cutter/module/report		\
+	/usr/lib/cutter/module/factory/report
+
+DEB_INSTALL_DIRS_libcutter-gst =		\
+	/usr/lib/gstreamer-0.10
+
+
 install/cutter-doc::
 	cp -ar debian/tmp/usr/share/cutter/stack/ \
 		debian/cutter-doc/usr/share/cutter/
