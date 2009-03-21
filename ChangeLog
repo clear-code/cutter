@@ -1,3 +1,7 @@
+2009-03-22  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* cutter/Makefile.am: Fix parallel make issue.
+
 2009-03-21  Kouhei Sutou  <kou@cozmixng.org>
 
 	* debian/rules: add missing libgdkcutter-pixbuf.*.
