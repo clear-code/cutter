@@ -195,6 +195,7 @@ test_help_all (void)
         "  --stream=[xml]                                  Specify stream" LINE_FEED_CODE
         "  --stream-fd=FILE_DESCRIPTOR                     Stream to FILE_DESCRIPTOR (default: stdout)" LINE_FEED_CODE
         "  --stream-directory=DIRECTORY                    Stream to a file under DIRECTORY (default: none)" LINE_FEED_CODE
+        "  --stream-log-directory=DIRECTORY                Obsoleted. Use --stream-directory instead" LINE_FEED_CODE
         "" LINE_FEED_CODE
         "Report Options" LINE_FEED_CODE
         "  --pdf-report=FILE                               Set filename of pdf report" LINE_FEED_CODE

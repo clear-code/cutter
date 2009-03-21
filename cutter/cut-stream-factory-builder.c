@@ -153,6 +153,8 @@ set_option_context (CutFactoryBuilder *builder, GOptionContext *context)
          N_("Stream to FILE_DESCRIPTOR (default: stdout)"), "FILE_DESCRIPTOR"},
         {"stream-directory", 0, 0, G_OPTION_ARG_STRING, &directory,
          N_("Stream to a file under DIRECTORY (default: none)"), "DIRECTORY"},
+        {"stream-log-directory", 0, 0, G_OPTION_ARG_STRING, &directory,
+         N_("Obsoleted. Use --stream-directory instead"), "DIRECTORY"},
         {NULL}
     };
 

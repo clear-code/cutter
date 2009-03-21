@@ -1,5 +1,8 @@
 2009-03-21  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-stream-factory-builder.c, test/cutter/test-cutter.c:
+	re-enable --stream-log-directory but it's obsoleted.
+
 	* cutter/cut-stream-factory-builder.c,
 	module/stream/cut-xml-stream-factory.c,
 	test/cutter/test-cutter.c, test/run-test.sh:
