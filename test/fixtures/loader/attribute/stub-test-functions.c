@@ -24,7 +24,8 @@ attributes_attribute (void)
 {
     cut_set_attributes("bug", "1234",
                        "priority", "5678",
-                       "bug", "9");
+                       "bug", "9",
+                       NULL);
 }
 
 void

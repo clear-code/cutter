@@ -194,7 +194,7 @@ cut_file_stream_reader_error_quark (void)
     return g_quark_from_static_string("cut-file-stream-reader-error-quark");
 }
 
-#define emit_error(file_stream_reader, code, sub_error, format, ...) do \
+#define emit_error(file_stream_reader, code, sub_error, ...) do         \
 {                                                                       \
     CutRunContext *_run_context;                                        \
                                                                         \
@@ -202,7 +202,7 @@ cut_file_stream_reader_error_quark (void)
     cut_run_context_emit_error(_run_context,                            \
                                CUT_FILE_STREAM_READER_ERROR,            \
                                code, sub_error,                         \
-                               format, ## __VA_ARGS__);                 \
+                               __VA_ARGS__);                            \
     emit_complete_signal(file_stream_reader, FALSE);                    \
 } while (0)
 

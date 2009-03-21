@@ -322,6 +322,7 @@ void cut_shutdown(void);
  * @first_attribute_name: The first attribute name.
  * @...: The value of the first attribute, followed
  *       optionally by more name/value pairs.
+ *       %NULL-terminate is required since 1.0.7.
  *
  * Sets attributes of the test.
  *
@@ -337,7 +338,8 @@ void cut_shutdown(void);
  * {
  *     cut_set_attributes("description", "a test for repeat function",
  *                        "bug", "111",
- *                        "priority", "high");
+ *                        "priority", "high",
+ *                        NULL);
  * }
  *
  * void
@@ -352,8 +354,7 @@ void cut_shutdown(void);
 #define cut_set_attributes(first_attribute_name, ...)                   \
     cut_test_context_set_attributes(cut_get_current_test_context(),     \
                                     first_attribute_name,               \
-                                    ## __VA_ARGS__,                     \
-                                    NULL)
+                                    __VA_ARGS__)
 
 /**
  * cut_get_current_test_context:

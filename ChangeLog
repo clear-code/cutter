@@ -1,5 +1,8 @@
 2009-03-21  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/, test/: don't use '## __VA_ARGS__' to work with non-GCC
+	compilers.
+
 	* cutter/cut-test-utils.h (cut_remove_path): remove needless argument.
 
 	* debian/rules: install cutter command documents.

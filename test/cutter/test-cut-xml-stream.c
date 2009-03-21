@@ -46,7 +46,8 @@ setup (void)
 {
     const gchar *test_names[] = {"/.*/", NULL};
 
-    cut_set_fixture_data_dir(cuttest_get_base_dir(), "fixtures", "xml-stream");
+    cut_set_fixture_data_dir(cuttest_get_base_dir(), "fixtures", "xml-stream",
+                             NULL);
 
     test = NULL;
     iterated_test = NULL;
@@ -194,7 +195,7 @@ setup_iterated_test (void)
 void
 attributes_stream (void)
 {
-    cut_set_attributes("multi-thread", "false");
+    cut_set_attributes("multi-thread", "false", NULL);
 }
 
 void
@@ -225,7 +226,7 @@ test_stream (gconstpointer data)
     cut_assert(run());
     cut_listener_detach_from_run_context(CUT_LISTENER(stream), run_context);
 
-    expected = cut_get_fixture_data_string(test_data->data_file_name);
+    expected = cut_get_fixture_data_string(test_data->data_file_name, NULL);
     cut_assert_equal_string(expected, normalize_xml(xml->str));
 }
 

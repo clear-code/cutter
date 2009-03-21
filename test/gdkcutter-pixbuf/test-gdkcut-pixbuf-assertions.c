@@ -94,7 +94,7 @@ load_pixbuf (const gchar *path)
     GError *error = NULL;
     gchar *pixbuf_path;
 
-    pixbuf_path = cut_build_fixture_data_path(path);
+    pixbuf_path = cut_build_fixture_data_path(path, NULL);
     pixbuf = gdk_pixbuf_new_from_file(pixbuf_path, &error);
     g_free(pixbuf_path);
 

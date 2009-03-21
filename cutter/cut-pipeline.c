@@ -196,7 +196,7 @@ cut_pipeline_error_quark (void)
     return g_quark_from_static_string("cut-pipeline-error-quark");
 }
 
-#define emit_error(pipeline, code, error, format, ...) do               \
+#define emit_error(pipeline, code, error, ...) do                       \
 {                                                                       \
     CutPipeline *_pipeline;                                             \
     CutPipelinePrivate *_priv;                                          \
@@ -207,7 +207,7 @@ cut_pipeline_error_quark (void)
     _run_context = CUT_RUN_CONTEXT(_pipeline);                          \
     cut_run_context_emit_error(_run_context, CUT_PIPELINE_ERROR,        \
                                code, error,                             \
-                               format, ## __VA_ARGS__);                 \
+                               __VA_ARGS__);                            \
     cut_run_context_emit_complete_run(_run_context, FALSE);             \
 } while (0)
 

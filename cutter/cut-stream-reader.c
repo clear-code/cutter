@@ -95,7 +95,7 @@ cut_stream_reader_error_quark (void)
     return g_quark_from_static_string("cut-stream-reader-error-quark");
 }
 
-#define emit_error(stream_reader, code, sub_error, format, ...) do      \
+#define emit_error(stream_reader, code, sub_error, ...) do              \
 {                                                                       \
     CutStreamReader *_stream_reader;                                    \
     CutStreamReaderPrivate *_priv;                                      \
@@ -107,7 +107,7 @@ cut_stream_reader_error_quark (void)
     cut_run_context_emit_error(_run_context,                            \
                                CUT_STREAM_READER_ERROR,                 \
                                code, sub_error,                         \
-                               format, ## __VA_ARGS__);                 \
+                               __VA_ARGS__);                            \
     _priv->error_emitted = TRUE;                                        \
     cut_run_context_emit_complete_run(_run_context, FALSE);             \
 } while (0)

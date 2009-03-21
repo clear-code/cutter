@@ -225,23 +225,22 @@ extern "C" {
  * cut_set_fixture_data_dir:
  * @path: a first element of the path to the fixture data directory.
  * @...: remaining elements in path.
+ *       %NULL-terminate is required since 1.0.7.
  *
  * Set fixture data directory that is used by
  * cut_get_fixture_data_string() and so on.
  *
  * Since: 1.0.2
  */
-#define cut_set_fixture_data_dir(path, ...) do  \
-{                                               \
-    cut_test_context_set_fixture_data_dir(      \
-        cut_get_current_test_context(),         \
-        path, ## __VA_ARGS__, NULL);            \
-} while (0)
+#define cut_set_fixture_data_dir(...)                   \
+    cut_test_context_set_fixture_data_dir(              \
+        cut_get_current_test_context(), __VA_ARGS__)
 
 /**
  * cut_build_fixture_data_path:
  * @path: a first element of the path to the fixture data.
  * @...: remaining elements in path.
+ *       %NULL-terminate is required since 1.0.7.
  *
  * Builds a path to the fixture data. If @path is relative
  * path, the path is handled as a relative path from a
@@ -253,15 +252,15 @@ extern "C" {
  *
  * Since: 1.0.2
  */
-#define cut_build_fixture_data_path(path, ...)  \
-    cut_test_context_build_fixture_data_path(   \
-        cut_get_current_test_context(),         \
-        path, ## __VA_ARGS__, NULL)
+#define cut_build_fixture_data_path(...)                \
+    cut_test_context_build_fixture_data_path(           \
+        cut_get_current_test_context(), __VA_ARGS__)
 
 /**
  * cut_get_fixture_data_string:
  * @path: a first element of the path to the fixture data.
  * @...: remaining elements in path.
+ *       %NULL-terminate is required since 1.0.7.
  *
  * Reads the fixture data at "@path/..." and returns it as a
  * string that is owned by Cutter. The description of
@@ -273,14 +272,15 @@ extern "C" {
  *
  * Since: 1.0.2
  */
-#define cut_get_fixture_data_string(path, ...)                          \
+#define cut_get_fixture_data_string(...)                                \
     cut_utils_get_fixture_data_string(cut_get_current_test_context(),   \
-                                      NULL, path, ## __VA_ARGS__, NULL)
+                                      NULL, __VA_ARGS__)
 
 /**
  * cut_remove_path:
  * @path: a first element of the path to be removed.
- * @...: remaining elements in path. %NULL-terminate.
+ * @...: remaining elements in path.
+ *       %NULL-terminate is required since 1.0.7.
  *
  * Removes @path and it's children recursively. It doesn't
  * report any errors.
