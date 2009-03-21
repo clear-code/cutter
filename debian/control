@@ -21,7 +21,7 @@ Architecture: any
 Description: Documentation of Cutter
  Cutter is a xUnit family Unit Testing Framework for C.
  .
- This package provides dREADME and reference manual of Cutter.
+ This package provides README and reference manual of Cutter.
 
 Package: libcutter-dev
 Section: libdevel
