@@ -1,5 +1,7 @@
 2009-03-22  Kouhei Sutou  <kou@cozmixng.org>
 
+	* apt/Makefile (upload): exclude .svn.
+
 	* debian/dirs: remove a needless file.
 
 	* README.ja: use direct download URL.

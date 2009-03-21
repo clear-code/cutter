@@ -10,14 +10,15 @@ update:
 	     apt-ftparchive -c release-$${target}.conf			\
 	       release dists/$${target} > /tmp/Release;			\
 	     mv /tmp/Release dists/$${target};				\
-	     gpg --sign -ba -o dists/$${target}/Release{.gpg,};	\
+	     gpg --sign -ba -o dists/$${target}/Release{.gpg,};		\
 	    done;							\
           );								\
 	done
 
 upload: update
-	for distribution in $(DISTRIBUTIONS); do				\
-	  (cd $${distribution};							\
-	   rsync -avz --delete dists pool $(SF_HTDOCS)/$${distribution};	\
-	  );									\
+	for distribution in $(DISTRIBUTIONS); do	\
+	  (cd $${distribution};				\
+	   rsync -avz --exclude .svn --delete		\
+	     dists pool $(SF_HTDOCS)/$${distribution};	\
+	  );						\
 	done
