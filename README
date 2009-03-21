@@ -32,8 +32,10 @@ See ((<FEATURES>)) for more details.
 
 == Get
 
-((<URL:http://sourceforge.net/project/showfiles.php?group_id=208375>))
+tar.gz:
+  % wget http://downloads.sourceforge.net/cutter/cutter-1.0.6.tar.gz
 
+Subversion:
   % svn co https://cutter.svn.sourceforge.net/svnroot/cutter/cutter/trunk cutter
 
 == Install
@@ -44,86 +46,12 @@ See ((<FEATURES>)) for more details.
 
 == Usage
 
-  % cutter [Options] [Directory which has test_*.so]
+  % cutter [OPTION ...] TEST_DIRECTORY
 
-Note: test_*.so are searched recursively.
+TEST_DIRECTORY should have test_*.so. test_*.so are searched
+recursively.
 
-=== Options
-
-: --version
-
-   Cutter shows its own version and exits.
-
-: -s DIRECTORY, --source-directory=DIRECTORY
-
-   Cutter prepends DIRECTORY to file name when test fails. This
-   is for tolls (like Emacs) which have function jumping to
-   error line.
-
-: -t TEST_CASE_NAME, --test-case=TEST_CASE_NAME
-
-   Cutter runs test cases that are matched with
-   TEST_CASE_NAME. If TEST_CASE_NAME is surrounded by "/"
-   (e.g. /test_/), TEST_CASE_NAME is handled as regular
-   expression.
-
-   This option can be specified n times. In the case, Cutter
-   runs test cases that are matched with any
-   TEST_CASE_NAME. (OR)
-
-: -n TEST_NAME, --name=TEST_NAME
-
-   Cutter runs tests that are matched with TEST_NAME. If
-   TEST_NAME is surrounded by "/" (e.g. /test_/), TEST_NAME
-   is handled as regular expression.
-
-   This option can be specified n times. In the case, Cutter
-   runs test that are matched with any TEST_NAME. (OR)
-
-: -m, --multi-thread
-
-   Cutter runs a test case in a new thread.
-
-: --test-case-order=[none|name|name-desc]
-
-   It specifies test case order. Cutter doesn't sort by
-   default. (none)
-
-   If 'name' is specified, Cutter sorts test cases by name in
-   ascending order. If 'name-desc' is specified, Cutter
-   sorts test cases by name in descending order.
-
-: -u[console|gtk], --ui=[console|gtk]
-
-   It specifies UI. The default is console UI.
-
-: -v[s|silent|n|normal|v|verbose], --verbose=[s|silent|n|normal|v|verbose]
-
-   It specifies verbose level.
-
-   This option is only for console UI.
-
-: -c[yes|true|no|false|auto], --color=[yes|true|no|false|auto]
-
-   If 'yes' or 'true' is specified, Cutter uses colorized
-   output by escape sequence. If 'no' or 'false' is
-   specified, Cutter never use colorized output. If 'auto'
-   or the option is omitted, Cutter uses colorized output if
-   available.
-
-   This option is only for console UI.
-
-: --xml-report=FILE
-
-   Cutter outputs a test report to FILE as XML format.
-
-: -?, --help
-
-   Cutter shows common options.
-
-: --help-all
-
-   Cutter shows all options.
+See ((<cutter|"doc/cutter.rd">)) for more details.
 
 == How to test
 

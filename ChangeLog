@@ -1,5 +1,10 @@
 2009-03-21  Kouhei Sutou  <kou@cozmixng.org>
 
+	* README*: move cutter command documents to ...
+	* doc/cutter.rd*: ... here.
+
+	* doc/Makefile.am: generate man from RD.
+
 	* cutter/cut-stream-factory-builder.c, test/cutter/test-cutter.c:
 	re-enable --stream-log-directory but it's obsoleted.
 
