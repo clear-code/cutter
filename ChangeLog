@@ -1,3 +1,7 @@
+2009-03-22  Kouhei Sutou  <kou@cozmixng.org>
+
+	* README.ja: use direct download URL.
+
 2009-03-22  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* cutter/Makefile.am: Fix parallel make issue.

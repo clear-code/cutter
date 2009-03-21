@@ -27,8 +27,10 @@ Cutterの特徴は以下の通りです。
 
 == 入手方法
 
-((<URL:http://sourceforge.net/project/showfiles.php?group_id=208375>))
+tar.gz:
+  % wget http://downloads.sourceforge.net/cutter/cutter-1.0.6.tar.gz
 
+Subversion:
   % svn co https://cutter.svn.sourceforge.net/svnroot/cutter/cutter/trunk cutter
 
 == インストール
