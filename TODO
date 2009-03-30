@@ -22,3 +22,5 @@
   cut_{get,set}_test_context()
 * CUT_RELATIVE_PATH for resoving path of helper shared
   library like test/lib/cuttest-assertions.c.
+* cut_assert_equal_boolean().
+* show test name on crash.

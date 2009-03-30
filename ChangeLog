@@ -1,3 +1,9 @@
+2009-03-30  Kouhei Sutou  <kou@cozmixng.org>
+
+	* TODO: add:
+	- cut_assert_equal_boolean().
+	- show test name on crash.
+
 2009-03-24  Kouhei Sutou  <kou@cozmixng.org>
 
 	* apt/*/generate-*.conf: generate Sources too.
