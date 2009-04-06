@@ -199,8 +199,8 @@ upload: docs
 	  cp -rp $$lang/html/ tmp/reference/$$lang/;			\
 	done
 	chmod -R g+w tmp/reference
-	ruby -i'' -pe '$$_.sub!(/<\/body>/u,				\
-	                       	File.read("sf-logo.html") + "</body>")'	\
-	  tmp/reference/*.html						\
-	  tmp/reference/*/*.html
+	ruby $(top_srcdir)/misc/prepare-gtk-doc-html-for-publishing.rb	\
+	  --template-directory=$(srcdir) tmp/reference/*.html
+	ruby $(top_srcdir)/misc/prepare-gtk-doc-html-for-publishing.rb	\
+	  --template-directory=$(srcdir) --language=ja tmp/reference/ja/*.html
 	rsync -avz --delete tmp/reference/ $(SF_HTDOCS)/reference/

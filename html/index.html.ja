@@ -5,50 +5,75 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
   <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="description" content="C言語,xUnit,単体テスト,ユニットテスト,書きやすい,デバッグしやすい,テスティングフレームワーク" />
     <link rel="stylesheet" href="cutter.css" type="text/css" />
-    <title>Cutter - C言語用テスティングフレームワーク</title>
+    <title>C言語用テスティングフレームワーク - Cutter</title>
   </head>
   <body>
-    <h1>
-      <span class="main-title">Cutter</span>
-      <span class="title-separator">-</span>
-      <span class="sub-title">C言語用単体テスト・ユニットテストフレームワーク</span>
-    </h1>
-    <p>[<a href="./">English</a>]</p>
-    <p>
-      Cutterは書きやすさ・デバッグのしやすさを重視したC言語用のテスティングフレームワークです。メンテナンスしやすく、利用効果の高い単体テスト（ユニットテスト）の開発を支援します。
-    </p>
-    <ul>
-      <li><a href="http://sourceforge.net/projects/cutter/">プロジェクトページ</a></li>
-      <li>
-        <a href="reference/ja/news.html">ニュース</a>
-        (<a href="reference/news.html">en</a>)
-      </li>
-      <li>
-        <a href="reference/ja/readme.html">はじめに</a>
-        (<a href="reference/readme.html">en</a>)
-      </li>
-      <li>
-        <a href="reference/ja/features.html">機能</a>
-        (<a href="reference/features.html">en</a>)
-      </li>
-      <li>
-        <a href="reference/ja/tutorial.html">チュートリアル</a>
-        (<a href="reference/tutorial.html">en</a>)
-      </li>
-      <li>
-        <a href="reference/ja/">リファレンス</a>
-        (<a href="reference/">en</a>)
-      </li>
-      <li>
-        <a href="reference/ja/users.html">Cutter採用プロジェクト</a>
-        (<a href="reference/users.html">en</a>)
-      </li>
-    </ul>
-    <p>
-      <a href="http://sourceforge.net/projects/cutter">
-        <img src="http://sflogo.sourceforge.net/sflogo.php?group_id=208375&amp;type=12" width="120" height="30" border="0" alt="SourceForge.netからCutterをダウンロード。高速で安全なフリーオープンソースソフトウェアダウンロード。" />
-      </a>
+    <div class="header">
+      <h1>
+	<a href="index.html.ja">
+	  <span class="title">C言語用単体テスト・ユニットテストフレームワーク</span>
+	  <span class="title-separator">-</span>
+	  <span class="title-project">Cutter</span>
+        </a>
+      </h1>
+      <ul class="other-languages">
+	<li id="other-language-english" lang="en" xml:lang="en"><a href="./">English</a></li>
+      </ul>
+      <ul class="menu">
+	<li id="menu-readme"><a href="reference/ja/readme.html">はじめに</a></li>
+	<li id="menu-tutorial"><a href="reference/ja/tutorial.html">チュートリアル</a></li>
+	<li id="menu-reference"><a href="reference/ja/reference.html">リファレンス</a></li>
+	<li id="menu-download"><a href="http://downloads.sourceforge.net/cutter/cutter-1.0.6.tar.gz">ダウンロード</a></li>
+	<!--li id="menu-blog"><a href="blog/ja/">ブログ</a></li-->
+      </ul>
+    </div>
+
+    <div class="content">
+      <div class="main">
+	<h2>最新リリース</h2>
+	<p>
+	  2009-03-01にリリースされた1.0.6が最新です。
+          [<a href="http://downloads.sourceforge.net/cutter/cutter-1.0.6.tar.gz">ダウンロード</a>]
+	</p>
+
+        <h2>Cutterとは</h2>
+	<p>
+	  Cutterは書きやすさ・デバッグのしやすさを重視したC言語用のテスティングフレームワークです。メンテナンスしやすく、利用効果の高い単体テスト（ユニットテスト）の開発を支援します。
+	</p>
+      </div>
+
+      <div class="sidebar">
+	<ul>
+	  <li><a href="http://sourceforge.net/projects/cutter/">プロジェクトページ</a></li>
+          <li><a href="reference/ja/news.html">お知らせ</a></li>
+          <li><a href="reference/ja/readme.html">はじめに</a></li>
+          <li><a href="reference/ja/features.html">機能</a></li>
+          <li><a href="reference/ja/tutorial.html">チュートリアル</a></li>
+          <li><a href="reference/ja/">リファレンス</a></li>
+          <li><a href="reference/ja/users.html">Cutter採用プロジェクト</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sponsors">
+      <p id="sponsor-sf-net">
+	<a href="http://sourceforge.net/projects/cutter">
+	  <img src="http://sflogo.sourceforge.net/sflogo.php?group_id=208375&amp;type=12" width="120" height="30" border="0" alt="SourceForge.netからCutterをダウンロード。高速で安全なフリーオープンソースソフトウェアダウンロード。" />
+	</a>
+      </p>
+      <p id="sponsor-tango">
+	<a href="http://tango.freedesktop.org/">
+          <img width="120" height="53" border="0" alt="Tango Desktop Projectのアイコンを利用しています。" src="tango-logo.png" />
+        </a>
+      </p>
+      <p id="sponsor-famfamfam">
+	<a href="http://www.famfamfam.com/">
+          <img width="120" height="18" border="0" alt="famfamfam.comの国旗を利用しています。" src="famfamfam-logo.png" />
+        </a>
+      </p>
+
 <!-- Piwik -->
 <script type="text/javascript">
 var pkBaseURL = (("https:" == document.location.protocol) ? "https://apps.sourceforge.net/piwik/cutter/" : "http://apps.sourceforge.net/piwik/cutter/");
@@ -61,6 +86,6 @@ piwik_log(piwik_action_name, piwik_idsite, piwik_url);
 </script>
 <object><noscript><p><img src="http://apps.sourceforge.net/piwik/cutter/piwik.php?idsite=1" alt="piwik"/></p></noscript></object>
 <!-- End Piwik Tag -->
-    </p>
+    </div>
   </body>
 </html>

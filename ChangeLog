@@ -1,3 +1,8 @@
+2009-04-06  Kouhei Sutou  <kou@clear-code.com>
+
+	* doc/, html/: apply HTML design.
+	* misc/misc/prepare-gtk-doc-html-for-publishing.rb: add.
+
 2009-03-30  Kouhei Sutou  <kou@cozmixng.org>
 
 	* TODO: add:
