@@ -1,5 +1,8 @@
 2009-04-06  Kouhei Sutou  <kou@clear-code.com>
 
+	* doc/reference/header*.html: fix path.
+	* html/cutter.css: remove garbages.
+
 	* doc/, html/: apply HTML design.
 	* misc/misc/prepare-gtk-doc-html-for-publishing.rb: add.
 
