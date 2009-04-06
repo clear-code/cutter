@@ -5,10 +5,10 @@
 == 一覧
 
   * ((<Cutter|URL:http://cutter.sf.net/>)): セルフテスト
-  * ((<Senna|URL://qwik.jp/senna/FrontPageJ.html>)):
+  * ((<Senna|URL:http://qwik.jp/senna/FrontPageJ.html>)):
     全文検索エンジン
-#  * ((<Groonga|URL://qwik.jp/senna/FrontPageJ.html>)):
-#    全文検索エンジンとカラムストア
+  * ((<groonga|URL:http://groonga.org/>)):
+    全文検索エンジンとカラムストア
   * ((<milter manager|URL:http://milter-manager.sourceforge.net/index.html.ja>)):
     milterを効果的に使うためのmilter
   * ((<風博士|URL:http://kazehakase.sourceforge.jp/ja/>)):

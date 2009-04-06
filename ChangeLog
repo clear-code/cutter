@@ -1,5 +1,7 @@
 2009-04-06  Kouhei Sutou  <kou@clear-code.com>
 
+	* USERS*: add groonga.
+
 	* doc/reference/header*.html: fix path.
 	* html/cutter.css: remove garbages.
 

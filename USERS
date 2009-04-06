@@ -5,10 +5,10 @@
 == List
 
   * ((<Cutter|URL:http://cutter.sf.net/>)): self test.
-  * ((<Senna|URL://qwik.jp/senna/FrontPageJ.html>)):
+  * ((<Senna|URL:http://qwik.jp/senna/>)):
     full-text search engine.
-#  * ((<Groonga|URL://qwik.jp/senna/FrontPageJ.html>)):
-#    full-text search engine and column store.
+  * ((<groonga|URL:http://groonga.org/>)):
+    full-text search engine and column store.
   * ((<milter manager|URL:http://milter-manager.sourceforge.net/>)):
     a milter to use milters effectively.
   * ((<Kazehakase|URL:http://kazehakase.sourceforge.jp/>)):
