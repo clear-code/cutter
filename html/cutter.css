@@ -235,6 +235,10 @@ div.sponsors p#sponsor-famfamfam
   padding-bottom: 50px;
 }
 
+pre
+{
+  overflow: auto;
+}
 
 /* For GTK-Doc */
 @media screen
