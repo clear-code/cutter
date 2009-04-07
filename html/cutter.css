@@ -153,14 +153,14 @@ div.content
   margin-right: 50px;
 }
 
+div.content p
+{
+  line-height: 150%;
+}
+
 div.main
 {
   margin-right: 170px;
-}
-
-div.main p
-{
-  line-height: 150%;
 }
 
 div.main h2,
@@ -240,6 +240,16 @@ pre
   overflow: auto;
 }
 
+dt
+{
+  margin-bottom: 0.25em;
+}
+
+dd
+{
+  margin-bottom: 0.5em;
+}
+
 /* For GTK-Doc */
 @media screen
 {
@@ -247,6 +257,7 @@ pre
   {
     position: relative;
     top: 20px;
+    margin-bottom: 10px;
     z-index: 0;
   }
 
