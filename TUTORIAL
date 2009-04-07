@@ -98,7 +98,7 @@ variable. The environment variable is referred from
 autogen.sh. If we installed Cutter with $HOME/local prefix,
 here is an example command to set the environment variable:
 
-  [stack]% export ACLOCAL_ARGS=$HOME/local/share/aclocal
+  [stack]% export ACLOCAL_ARGS="-I $HOME/local/share/aclocal"
 
 The following is a result of autogen.sh at this point:
 

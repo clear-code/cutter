@@ -95,7 +95,7 @@ run()はコマンドの実行結果を確認するための便利のための関
 で参照している。ここでは、prefixを$HOME/localとしてCutterをイ
 ンストールしたものとする。
 
-  [stack]% export ACLOCAL_ARGS=$HOME/local/share/aclocal
+  [stack]% export ACLOCAL_ARGS="-I $HOME/local/share/aclocal"
 
 この時点でautogen.shを実行すると以下のようになる。
 

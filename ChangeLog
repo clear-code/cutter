@@ -1,5 +1,10 @@
 2009-04-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* README: add UNNO Hideyuki. Thanks!!!
+
+	* TUTORIAL*: fix a typo.
+	Reported by UNNO Hideyuki. Thanks!!!
+
 	* html/cutter.css: more space.
 
 	* html/cutter.css: set overflow to pre.
