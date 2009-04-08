@@ -321,25 +321,18 @@ static void
 collect_backtrace (void)
 {
     int fds[2];
-    FILE *original_stdout, *pseudo_stdout;
+    int original_stdout_fileno;
 
     if (pipe(fds) == -1) {
         perror("unable to open pipe for collecting stack trace");
         return;
     }
 
-    original_stdout = stdout;
-    pseudo_stdout = fdopen(fds[1], "w");
-    if (!pseudo_stdout) {
-        perror("unable to open FILE for pipe");
-        close(fds[0]);
-        close(fds[1]);
-        return;
-    }
-    stdout = pseudo_stdout;
+    original_stdout_fileno = dup(STDOUT_FILENO);
+    dup2(STDOUT_FILENO, fds[1]);
     g_on_error_stack_trace(cut_get_cutter_command_path());
-    stdout = original_stdout;
-    fclose(pseudo_stdout);
+    dup2(STDOUT_FILENO, original_stdout_fileno);
+    close(original_stdout_fileno);
 
     read_backtrace(fds[0]);
 

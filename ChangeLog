@@ -1,3 +1,8 @@
+2009-04-08  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-test-suite.c (collect_backtrace): use dup2().
+	Reported by UNNO Hideyuki. Thanks!!!
+
 2009-04-07  Kouhei Sutou  <kou@cozmixng.org>
 
 	* README: add UNNO Hideyuki. Thanks!!!
