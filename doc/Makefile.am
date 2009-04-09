@@ -2,7 +2,14 @@ SUBDIRS = reference
 
 EXTRA_DIST =		\
 	cutter.rd	\
-	cutter.rd.ja
+	cutter.rd.ja	\
+	$(svg_images)
+
+svg_images =					\
+	cutter-accelerate-development-cycle.svg	\
+	cutter-two-important-features.svg	\
+	cutter-easy-to-debug.svg		\
+	cutter-easy-to-write.svg
 
 dist_man1_MANS =	\
 	cutter.man

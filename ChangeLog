@@ -1,5 +1,7 @@
 2009-04-09  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/: add figures that show Cutter's important two features.
+
 	* debian/rules: add jman.
 
 	* doc/Makefile.am (install-data-local): support jman installation.
