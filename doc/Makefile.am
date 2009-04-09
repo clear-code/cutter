@@ -9,14 +9,26 @@ dist_man1_MANS =	\
 
 ja_man1dir = $(mandir)/ja/man1
 
-#dist_ja_man1_DATA = 	\
-# man in Japanese is not installed. Should they be installed? But how?
 dist_ja_man1_mans =	\
 	cutter.jman
 
 EXTRA_DIST += $(dist_ja_man1_mans)
 
-# durty...
+install-data-local:
+	test -z "$(DESTDIR)$(ja_man1dir)" || $(MKDIR_P) "$(DESTDIR)$(ja_man1dir)"
+	@for jman in $(dist_ja_man1_mans); do					\
+	  jman_file=`echo $${jman} | sed -e s/jman$$/1/`;			\
+	  echo $(INSTALL_DATA) $${jman} "$(DESTDIR)$(ja_man1dir)"/$${jman_file};\
+	  $(INSTALL_DATA) $${jman} "$(DESTDIR)$(ja_man1dir)"/$${jman_file};	\
+	done
+
+uninstall-local:
+	@for jman in $(dist_ja_man1_mans); do			\
+	  jman_file=`echo $${jman} | sed -e s/jman$$/1/`;	\
+	  rm -f "$(DESTDIR)$(ja_man1dir)"/$${jman_file};	\
+	done
+
+# dirty...
 cutter.jman: cutter.rd.ja
 
 MAINTAINERCLEANFILES = $(dist_man1_MANS) $(dist_ja_man1_mans)
@@ -26,5 +38,5 @@ SUFFIXES: .rd .man .jman
 .rd.man:
 	rd2 -r$(top_srcdir)/misc/rd2man-lib $< > $@
 
-.rd.jman: # durty...
+.rd.jman: # dirty...
 	rd2 -r$(top_srcdir)/misc/rd2man-lib $<.ja > $@

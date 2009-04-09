@@ -1,3 +1,7 @@
+2009-04-09  Kouhei Sutou  <kou@cozmixng.org>
+
+	* doc/Makefile.am (install-data-local): support jman installation.
+
 2009-04-09  Kouhei Sutou  <kou@clear-code.com>
 
 	* cutter/cut-test-suite.c (collect_backtrace): invert.
