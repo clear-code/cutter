@@ -33,10 +33,13 @@ cutter.jman: cutter.rd.ja
 
 MAINTAINERCLEANFILES = $(dist_man1_MANS) $(dist_ja_man1_mans)
 
-SUFFIXES: .rd .man .jman
+SUFFIXES: .rd .man .jman .svg .png
 
 .rd.man:
 	rd2 -r$(top_srcdir)/misc/rd2man-lib $< > $@
 
 .rd.jman: # dirty...
 	rd2 -r$(top_srcdir)/misc/rd2man-lib $<.ja > $@
+
+.svg.png:
+	inkscape --export-png $@ $<
