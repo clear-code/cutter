@@ -332,6 +332,7 @@ collect_backtrace (void)
     dup2(fds[1], STDOUT_FILENO);
     g_on_error_stack_trace(cut_get_cutter_command_path());
     dup2(original_stdout_fileno, STDOUT_FILENO);
+    close(original_stdout_fileno);
     close(fds[1]);
 
     read_backtrace(fds[0]);
