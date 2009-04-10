@@ -437,7 +437,7 @@ cut_loader_support_attribute (CutLoader *loader)
     if (priv->mach_o_loader) {
         return cut_mach_o_loader_support_attribute(priv->mach_o_loader);
     } else {
-#ifdef HAVE_BFD_H
+#ifdef HAVE_LIBBFD
         return cut_loader_support_attribute_bfd(loader);
 #else
         return cut_loader_support_attribute_scan(loader);
@@ -451,7 +451,7 @@ collect_symbols (CutLoaderPrivate *priv)
     if (priv->mach_o_loader) {
         return cut_mach_o_loader_collect_symbols(priv->mach_o_loader);
     } else {
-#ifdef HAVE_BFD_H
+#ifdef HAVE_LIBBFD
         return collect_symbols_bfd(priv);
 #else
         return collect_symbols_scan(priv);

@@ -1,5 +1,8 @@
 2009-04-10  Kouhei Sutou  <kou@clear-code.com>
 
+	* cutter/cut-loader.c, cutter/cut-main.c: use HAVE_LIBBFD instead
+	of HAVE_BFD_H.
+
 	* doc/cutter-*.svg: fix size.
 
 	* cutter/cut-test-suite.c (collect_backtrace): close dupped file
