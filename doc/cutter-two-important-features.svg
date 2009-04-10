@@ -15,7 +15,10 @@
    inkscape:version="0.46"
    sodipodi:docname="cutter-two-important-features.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
-   version="1.0">
+   version="1.0"
+   inkscape:export-filename="/home/kou/work/c/cutter/doc/cutter-two-important-features.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
   <defs
      id="defs3031">
     <marker
@@ -106,30 +109,6 @@
        inkscape:vp_z="744.09448 : 526.18109 : 1"
        inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
        id="perspective3037" />
-    <filter
-       inkscape:collect="always"
-       id="filter3255"
-       x="-0.11484894"
-       width="1.2296979"
-       y="-0.4159696"
-       height="1.8319392">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="4.6066017"
-         id="feGaussianBlur3257" />
-    </filter>
-    <filter
-       inkscape:collect="always"
-       id="filter3269"
-       x="-0.22969791"
-       width="1.4593958"
-       y="-0.83193882"
-       height="2.6638776">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="9.2132042"
-         id="feGaussianBlur3271" />
-    </filter>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -143,7 +122,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="1.4"
      inkscape:cx="291.59296"
-     inkscape:cy="167.27963"
+     inkscape:cy="138.7082"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -176,14 +155,14 @@
      transform="translate(-85.846151,-239.37762)">
     <text
        xml:space="preserve"
-       style="font-size:74px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Sans;-inkscape-font-specification:Sans"
-       x="642.28571"
-       y="361.21933"
+       style="font-size:70.30000305px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Sans;-inkscape-font-specification:Sans"
+       x="627.55164"
+       y="360.741"
        id="text3054"><tspan
          sodipodi:role="line"
          id="tspan3056"
-         x="642.28571"
-         y="361.21933" /></text>
+         x="627.55164"
+         y="360.741" /></text>
     <path
        sodipodi:type="arc"
        style="fill:#2e3436;fill-opacity:0.24313725;fill-rule:evenodd;stroke:none;stroke-width:2.79120755;stroke-linecap:round;stroke-linejoin:round;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;filter:url(#filter3169);enable-background:accumulate"
@@ -193,7 +172,7 @@
        sodipodi:rx="159.28572"
        sodipodi:ry="114.28571"
        d="M 334.28572,379.50504 A 159.28572,114.28571 0 1 1 15.714279,379.50504 A 159.28572,114.28571 0 1 1 334.28572,379.50504 z"
-       transform="matrix(0.5625,0,0,0.5625,93.326923,132.36038)" />
+       transform="matrix(0.534375,0,0,0.534375,106.0408,143.32499)" />
     <path
        sodipodi:type="arc"
        style="fill:#c2e2f7;fill-opacity:1;fill-rule:evenodd;stroke:#3550a3;stroke-width:2.79120755;stroke-linecap:round;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
@@ -203,7 +182,7 @@
        sodipodi:rx="159.28572"
        sodipodi:ry="114.28571"
        d="M 334.28572,379.50504 A 159.28572,114.28571 0 1 1 15.714279,379.50504 A 159.28572,114.28571 0 1 1 334.28572,379.50504 z"
-       transform="matrix(0.5625,0,0,0.5625,86.576923,124.48538)" />
+       transform="matrix(0.534375,0,0,0.534375,99.628297,135.84375)" />
     <path
        d="M 334.28572,379.50504 A 159.28572,114.28571 0 1 1 15.714279,379.50504 A 159.28572,114.28571 0 1 1 334.28572,379.50504 z"
        sodipodi:ry="114.28571"
@@ -213,20 +192,20 @@
        id="path3078"
        style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#3550a3;stroke-width:5.5824151;stroke-linecap:round;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;filter:url(#filter3197);enable-background:accumulate"
        sodipodi:type="arc"
-       transform="matrix(0.5625,0,0,0.5625,86.576923,124.48538)" />
+       transform="matrix(0.534375,0,0,0.534375,99.628297,135.84375)" />
     <text
        xml:space="preserve"
-       style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#273176;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:'IPA Pゴシック';-inkscape-font-specification:'IPA Pゴシック'"
-       x="187.4604"
-       y="353.20544"
+       style="font-size:30.39999962px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:#273176;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:'IPA Pゴシック';-inkscape-font-specification:'IPA Pゴシック'"
+       x="195.46761"
+       y="353.12781"
        id="text3082"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
-         x="187.4604"
-         y="353.20544"
+         x="195.46761"
+         y="353.12781"
          id="tspan3084">実装</tspan></text>
     <path
-       transform="matrix(0.5625,0,0,0.5625,413.32692,132.36038)"
+       transform="matrix(0.534375,0,0,0.534375,410.04079,143.32499)"
        d="M 334.28572,379.50504 A 159.28572,114.28571 0 1 1 15.714279,379.50504 A 159.28572,114.28571 0 1 1 334.28572,379.50504 z"
        sodipodi:ry="114.28571"
        sodipodi:rx="159.28572"
@@ -244,7 +223,7 @@
        id="path3098"
        style="fill:#f7934a;fill-opacity:1;fill-rule:evenodd;stroke:#5b100a;stroke-width:4.96214676;stroke-linecap:round;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
        sodipodi:type="arc"
-       transform="matrix(0.5625,0,0,0.5625,406.57692,124.48538)" />
+       transform="matrix(0.534375,0,0,0.534375,403.62829,135.84375)" />
     <path
        sodipodi:type="arc"
        style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#5b100a;stroke-width:5.5824151;stroke-linecap:round;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;filter:url(#filter3197);enable-background:accumulate"
@@ -254,54 +233,53 @@
        sodipodi:rx="159.28572"
        sodipodi:ry="114.28571"
        d="M 334.28572,379.50504 A 159.28572,114.28571 0 1 1 15.714279,379.50504 A 159.28572,114.28571 0 1 1 334.28572,379.50504 z"
-       transform="matrix(0.5625,0,0,0.5625,406.57692,124.48538)" />
+       transform="matrix(0.534375,0,0,0.534375,403.62829,135.84375)" />
     <text
        sodipodi:linespacing="125%"
        id="text3102"
-       y="352.35486"
-       x="512.0658"
-       style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:center;text-decoration:none;line-height:125%;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:middle;fill:#5d0c0b;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:'IPA Pゴシック';-inkscape-font-specification:'IPA Pゴシック'"
+       y="352.31976"
+       x="497.56857"
+       style="font-size:30.39999962px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:center;text-decoration:none;line-height:125%;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:middle;fill:#5d0c0b;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:'IPA Pゴシック';-inkscape-font-specification:'IPA Pゴシック'"
        xml:space="preserve"><tspan
          id="tspan3104"
-         y="352.35486"
-         x="512.0658"
+         y="352.31976"
+         x="497.56857"
          sodipodi:role="line">テスト</tspan></text>
     <path
-       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:url(#Arrow1Send);stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-       d="M 299.07153,315.73904 C 310.41261,304.1237 326.07708,296.93631 343.37066,296.93631 C 360.66424,296.93631 376.32872,304.1237 387.66979,315.73904"
+       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:4.75;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:url(#Arrow1Send);stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="M 301.49817,317.53472 C 312.2722,306.50015 327.15345,299.67213 343.58235,299.67213 C 360.01125,299.67213 374.8925,306.50015 385.66652,317.53472"
        id="path3137"
        sodipodi:nodetypes="css" />
     <path
-       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:url(#Arrow1Send);stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-       d="M 387.66979,366.47984 C 376.32872,378.09517 360.66424,385.28256 343.37066,385.28256 C 326.07708,385.28256 310.41261,378.09517 299.07153,366.47984"
+       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:4.75;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:url(#Arrow1Send);stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       d="M 385.66652,365.73848 C 374.8925,376.77305 360.01125,383.60107 343.58235,383.60107 C 327.15345,383.60107 312.2722,376.77305 301.49817,365.73848"
        id="path3936"
        sodipodi:nodetypes="csc" />
     <text
        xml:space="preserve"
-       style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:'IPA Pゴシック';-inkscape-font-specification:'IPA Pゴシック'"
-       x="347.10767"
-       y="277.74869"
+       style="font-size:30.39999962px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:'IPA Pゴシック';-inkscape-font-specification:'IPA Pゴシック'"
+       x="347.13251"
+       y="281.44388"
        id="text8936"
        sodipodi:linespacing="100%"><tspan
          sodipodi:role="line"
          id="tspan8938"
-         x="347.10767"
-         y="277.74869"
-         dx="0 3.0304577">書きやすさ</tspan></text>
+         x="347.13251"
+         y="281.44388"
+         dx="0 2.8789349">書きやすさ</tspan></text>
     <text
        sodipodi:linespacing="100%"
        id="text2431"
-       y="417.74869"
-       x="347.10767"
-       style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:'IPA Pゴシック';-inkscape-font-specification:'IPA Pゴシック'"
+       y="414.44388"
+       x="347.13251"
+       style="font-size:30.39999962px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:100%;writing-mode:lr-tb;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:'IPA Pゴシック';-inkscape-font-specification:'IPA Pゴシック'"
        xml:space="preserve"><tspan
-         y="417.74869"
-         x="347.10767"
+         y="414.44388"
+         x="347.13251"
          id="tspan2433"
-         sodipodi:role="line"
-         dx="0 0 3.0304577 -8.0812197">デバッグの</tspan><tspan
-         y="449.74869"
-         x="347.10767"
+         sodipodi:role="line">デバッグの</tspan><tspan
+         y="444.84387"
+         x="347.13251"
          sodipodi:role="line"
          id="tspan2435">しやすさ</tspan></text>
   </g>

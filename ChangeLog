@@ -1,5 +1,7 @@
 2009-04-10  Kouhei Sutou  <kou@clear-code.com>
 
+	* doc/cutter-*.svg: fix size.
+
 	* cutter/cut-test-suite.c (collect_backtrace): close dupped file
 	descriptor.
 
