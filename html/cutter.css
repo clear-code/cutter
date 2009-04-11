@@ -256,8 +256,8 @@ dd
   table.navigation#top
   {
     position: relative;
-    top: 20px;
-    margin-bottom: 10px;
+    top: 0;
+    margin-top: 20px;
     z-index: 0;
   }
 
