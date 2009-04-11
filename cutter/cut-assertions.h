@@ -287,7 +287,6 @@ extern "C" {
  * Passes if both @expected and @actual are %NULL or
  * strcmp(@expected, @actual) == 0.
  *
- *
  * Deprecated: 0.3: Use cut_assert_equal_string() instead.
  */
 #define cut_assert_equal_string_or_null(expected, actual, ...) do       \

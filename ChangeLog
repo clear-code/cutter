@@ -1,3 +1,7 @@
+2009-04-11  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cutter.h: deprecate startup() and shutdown().
+
 2009-04-10  Kouhei Sutou  <kou@clear-code.com>
 
 	* cutter/cut-loader.c, cutter/cut-main.c: use HAVE_LIBBFD instead

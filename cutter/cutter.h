@@ -179,6 +179,7 @@ void teardown(void);
  */
 void cut_teardown(void);
 
+#ifndef CUTTER_DISABLE_DEPRECATED
 /**
  * startup:
  *
@@ -187,8 +188,11 @@ void cut_teardown(void);
  * you define cut_startup(), startup() is ignored.
  *
  * Since: 0.8
+ *
+ * Deprecated: 1.0.7: Use cut_startup() instead.
  */
 void startup(void);
+#endif
 
 /**
  * cut_startup:
@@ -201,7 +205,8 @@ void startup(void);
  */
 void cut_startup(void);
 
-#if !defined(SHUT_RD) && !defined(WINSOCK_API_LINKAGE)
+#ifndef CUTTER_DISABLE_DEPRECATED
+#  if !defined(SHUT_RD) && !defined(WINSOCK_API_LINKAGE)
 /**
  * shutdown:
  *
@@ -210,8 +215,11 @@ void cut_startup(void);
  * you define cut_shutdown(), shutdown() is ignored.
  *
  * Since: 0.8
+ *
+ * Deprecated: 1.0.7: Use cut_shutdown() instead.
  */
 void shutdown(void);
+#  endif
 #endif
 
 /**
