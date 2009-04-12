@@ -7,7 +7,9 @@ void test_get_message_full(void);
 void test_get_message_only_user(void);
 void test_get_message_only_system(void);
 void test_get_message_none(void);
+void test_get_message_empty(void);
 void test_set_messages(void);
+void test_set_messages_empty(void);
 void test_get_backtrace(void);
 void test_status_to_signal_name(void);
 void test_status_is_critical(void);
@@ -171,6 +173,22 @@ test_get_message_none (void)
 }
 
 void
+test_get_message_empty (void)
+{
+    result = cut_test_result_new(CUT_TEST_RESULT_FAILURE,
+                                 NULL, NULL, NULL, NULL, NULL,
+                                 "",
+                                 "",
+                                 backtrace);
+    cut_assert_equal_string(NULL,
+                            cut_test_result_get_message(result));
+    cut_assert_equal_string(NULL,
+                            cut_test_result_get_user_message(result));
+    cut_assert_equal_string(NULL,
+                            cut_test_result_get_system_message(result));
+}
+
+void
 test_set_messages (void)
 {
     result = cut_test_result_new(CUT_TEST_RESULT_FAILURE,
@@ -195,6 +213,34 @@ test_set_messages (void)
     cut_test_result_set_system_message(result, "system message");
     cut_assert_equal_string("system message",
                             cut_test_result_get_system_message(result));
+}
+
+void
+test_set_messages_empty (void)
+{
+    result = cut_test_result_new(CUT_TEST_RESULT_FAILURE,
+                                 NULL, NULL, NULL, NULL, NULL,
+                                 "user message",
+                                 "system message",
+                                 backtrace);
+    cut_assert_equal_string("user message\nsystem message",
+                            cut_test_result_get_message(result));
+
+    cut_test_result_set_user_message(result, "");
+    cut_assert_equal_string(NULL,
+                            cut_test_result_get_user_message(result));
+    cut_assert_equal_string("system message",
+                            cut_test_result_get_system_message(result));
+    cut_assert_equal_string("system message",
+                            cut_test_result_get_message(result));
+
+    cut_test_result_set_system_message(result, "");
+    cut_assert_equal_string(NULL,
+                            cut_test_result_get_user_message(result));
+    cut_assert_equal_string(NULL,
+                            cut_test_result_get_system_message(result));
+    cut_assert_equal_string(NULL,
+                            cut_test_result_get_message(result));
 }
 
 void

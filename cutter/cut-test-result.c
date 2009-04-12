@@ -276,16 +276,10 @@ set_property (GObject      *object,
       case PROP_USER_MESSAGE:
         cut_test_result_set_user_message(CUT_TEST_RESULT(object),
                                          g_value_get_string(value));
-        if (priv->message)
-            g_free(priv->message);
-        priv->message = NULL;
         break;
       case PROP_SYSTEM_MESSAGE:
         cut_test_result_set_system_message(CUT_TEST_RESULT(object),
                                            g_value_get_string(value));
-        if (priv->message)
-            g_free(priv->message);
-        priv->message = NULL;
         break;
       case PROP_BACKTRACE:
         cut_test_result_set_backtrace(CUT_TEST_RESULT(object),
@@ -781,8 +775,12 @@ cut_test_result_set_user_message (CutTestResult *result,
         g_free(priv->user_message);
         priv->user_message = NULL;
     }
-    if (user_message)
+    if (user_message && user_message[0])
         priv->user_message = g_strdup(user_message);
+
+    if (priv->message)
+        g_free(priv->message);
+    priv->message = NULL;
 }
 
 void
@@ -809,8 +807,12 @@ cut_test_result_set_system_message (CutTestResult *result,
         g_free(priv->system_message);
         priv->system_message = NULL;
     }
-    if (system_message)
+    if (system_message && system_message[0])
         priv->system_message = g_strdup(system_message);
+
+    if (priv->message)
+        g_free(priv->message);
+    priv->message = NULL;
 }
 
 void
