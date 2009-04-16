@@ -71,7 +71,7 @@ stub_omission_function (void)
 }
 
 void
-setup (void)
+cut_setup (void)
 {
     run_test_flag = FALSE;
     n_start_signal = 0;
@@ -90,7 +90,7 @@ setup (void)
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     if (test)
         g_object_unref(test);

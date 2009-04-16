@@ -54,7 +54,7 @@ static const gchar *help_message;
     cut_assert_exit_status(EXIT_FAILURE)
 
 void
-setup (void)
+cut_setup (void)
 {
     stdout_string = NULL;
     stderr_string = NULL;
@@ -94,7 +94,7 @@ setup (void)
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     if (stdout_string)
         g_free(stdout_string);

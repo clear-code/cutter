@@ -47,7 +47,7 @@ stub_notification_test (void)
 }
 
 void
-setup (void)
+cut_setup (void)
 {
     const gchar *test_names[] = {"/.*/", NULL};
     test = NULL;
@@ -64,7 +64,7 @@ setup (void)
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     if (test)
         g_object_unref(test);

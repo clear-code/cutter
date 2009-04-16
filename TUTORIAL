@@ -962,25 +962,25 @@ expression (stack_is_empty(stack)) is false. (It will not
 cause big harm because most test programs are short-lived.)
 
 Cutter supports registering functions that are surely called
-before/after test. They are setup() and teardown(). They are
-called even if test is failed. We can use them for freeing
-memory allocated in test surely.
+before/after test. They are cut_setup() and
+cut_teardown(). They are called even if test is failed. We
+can use them for freeing memory allocated in test surely.
 
 To freeing allocated memory for test_new_stack() surely, we
-can use setup() and teardown() like the following.
+can use cut_setup() and cut_teardown() like the following.
 
 test/test-stack.c:
   ...
   static Stack *stack;
 
   void
-  setup (void)
+  cut_setup (void)
   {
       stack = NULL;
   }
 
   void
-  teardown (void)
+  cut_teardown (void)
   {
       if (stack)
           stack_free(stack);
@@ -1012,7 +1012,7 @@ test/test-stack.c:
   ...
 
 Here is whole of the test/test-stack.c that uses
-setup()/teardown().
+cut_setup()/cut_teardown().
 
 test/test-stack.c:
   #include <cutter.h>
@@ -1024,13 +1024,13 @@ test/test-stack.c:
   static Stack *stack;
 
   void
-  setup (void)
+  cut_setup (void)
   {
       stack = NULL;
   }
 
   void
-  teardown (void)
+  cut_teardown (void)
   {
       if (stack)
           stack_free(stack);
@@ -1630,13 +1630,13 @@ test/test-stack.c
   static Stack *stack;
 
   void
-  setup (void)
+  cut_setup (void)
   {
       stack = NULL;
   }
 
   void
-  teardown (void)
+  cut_teardown (void)
   {
       if (stack)
           stack_free(stack);

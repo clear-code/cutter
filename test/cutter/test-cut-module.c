@@ -22,7 +22,7 @@ log_func (const gchar   *log_domain,
 }
 
 void
-startup (void)
+cut_startup (void)
 {
     original_log_func = g_log_set_default_handler(log_func, NULL);
 
@@ -36,7 +36,7 @@ startup (void)
 }
 
 void
-shutdown (void)
+cut_shutdown (void)
 {
     g_list_foreach(modules, (GFunc) cut_module_unload, NULL);
     g_list_free(modules);

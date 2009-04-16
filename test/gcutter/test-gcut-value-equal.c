@@ -13,14 +13,14 @@ void test_equal_null_string (void);
 static GValue value1, value2;
 
 void
-setup (void)
+cut_setup (void)
 {
     memset(&value1, 0, sizeof(GValue));
     memset(&value2, 0, sizeof(GValue));
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     if (G_VALUE_TYPE(&value1))
         g_value_unset(&value1);

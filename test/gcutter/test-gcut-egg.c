@@ -36,7 +36,7 @@ static gboolean reaped;
 static gchar *current_locale;
 
 void
-setup (void)
+cut_setup (void)
 {
     egg = NULL;
     expected_error = NULL;
@@ -51,7 +51,7 @@ setup (void)
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     if (current_locale) {
         setlocale(LC_ALL, current_locale);

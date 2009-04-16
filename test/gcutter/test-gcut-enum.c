@@ -18,14 +18,14 @@ static gchar *inspected;
 static GError *actual_error;
 
 void
-setup (void)
+cut_setup (void)
 {
     inspected = NULL;
     actual_error = NULL;
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     if (inspected)
         g_free(inspected);

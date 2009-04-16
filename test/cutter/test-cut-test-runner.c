@@ -20,7 +20,7 @@ static gint n_ready_test_suite_signals = 0;
 static gint n_ready_test_case_signals = 0;
 
 void
-setup (void)
+cut_setup (void)
 {
     run_context = CUT_RUN_CONTEXT(cut_test_runner_new());
     test_case = NULL;
@@ -33,7 +33,7 @@ setup (void)
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     g_object_unref(run_context);
     if (test_case)

@@ -67,7 +67,7 @@ run (void)
 }
 
 void
-setup (void)
+cut_setup (void)
 {
     test = NULL;
     run_context = NULL;
@@ -81,7 +81,7 @@ setup (void)
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     if (test)
         g_object_unref(test);

@@ -10,14 +10,14 @@ static GList *list;
 static gchar *inspected;
 
 void
-setup (void)
+cut_setup (void)
 {
     list = NULL;
     inspected = NULL;
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     if (list)
         g_list_free(list);

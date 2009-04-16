@@ -4,7 +4,7 @@
 void test_get_fixture_data_string (void);
 
 void
-setup (void)
+cut_setup (void)
 {
     cut_set_fixture_data_dir(cuttest_get_base_dir(), "fixtures", "data", NULL);
 }

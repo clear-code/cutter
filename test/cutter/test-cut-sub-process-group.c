@@ -27,14 +27,14 @@ static gchar *env_test_dir;
                      NULL)
 
 void
-setup (void)
+cut_setup (void)
 {
     pipeline = cut_pipeline_new();
     env_test_dir = g_strdup(g_getenv(CUTTEST_TEST_DIR_KEY));
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     if (pipeline)
         g_object_unref(pipeline);

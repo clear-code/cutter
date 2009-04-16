@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2009  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -137,14 +137,18 @@ extern "C" {
  * </itemizedlist>
  */
 
+#ifndef CUTTER_DISABLE_DEPRECATED
 /**
  * setup:
  *
  * If you define setup() in your test program, cutter will
  * call your setup() before each your test is run. If you
  * define cut_setup(), setup() is ignored.
+ *
+ * Deprecated: 1.0.7: Use cut_setup() instead.
  */
 void setup(void);
+#endif
 
 /**
  * cut_setup:
@@ -157,6 +161,7 @@ void setup(void);
  */
 void cut_setup(void);
 
+#ifndef CUTTER_DISABLE_DEPRECATED
 /**
  * teardown:
  *
@@ -164,8 +169,11 @@ void cut_setup(void);
  * call your teardown() after each your test is run even if
  * a test is failed. If you define cut_teardown(),
  * teardown() is ignored.
+ *
+ * Deprecated: 1.0.7: Use cut_teardown() instead.
  */
 void teardown(void);
+#endif
 
 /**
  * cut_teardown:

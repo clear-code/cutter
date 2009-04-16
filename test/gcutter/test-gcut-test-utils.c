@@ -15,14 +15,14 @@ static GList *list;
 static GCutDynamicData *data;
 
 void
-setup (void)
+cut_setup (void)
 {
     list = NULL;
     data = NULL;
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     if (list)
         gcut_list_string_free(list);

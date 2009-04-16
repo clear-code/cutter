@@ -16,7 +16,7 @@ static GdkPixbuf *pixbuf1, *pixbuf2;
 static GdkPixbuf *expected_diff, *actual_diff;
 
 void
-setup (void)
+cut_setup (void)
 {
     pixbuf1 = NULL;
     pixbuf2 = NULL;
@@ -30,7 +30,7 @@ setup (void)
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     if (pixbuf1)
         g_object_unref(pixbuf1);

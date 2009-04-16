@@ -102,7 +102,7 @@ stub_teardown_function (void)
 }
 
 void
-setup (void)
+cut_setup (void)
 {
     const gchar *test_names[] = {"/.*/", NULL};
 
@@ -127,7 +127,7 @@ setup (void)
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     g_object_unref(test_object);
     g_object_unref(run_context);

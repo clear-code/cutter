@@ -12,7 +12,7 @@ static CutRunContext *reader;
 static gchar *path;
 
 void
-setup (void)
+cut_setup (void)
 {
     reader = NULL;
     path = NULL;
@@ -24,7 +24,7 @@ setup (void)
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     if (reader)
         g_object_unref(reader);

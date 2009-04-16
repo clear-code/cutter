@@ -43,7 +43,7 @@ static GError *expected_error;
 static GError *actual_error;
 
 void
-setup (void)
+cut_setup (void)
 {
     channel = NULL;
     data = NULL;
@@ -54,7 +54,7 @@ setup (void)
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     if (channel) {
         gcut_string_io_channel_set_buffer_limit(channel, 0);

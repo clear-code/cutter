@@ -44,7 +44,7 @@ free_operations (GList *operations)
 }
 
 void
-setup (void)
+cut_setup (void)
 {
     matcher = NULL;
     expected_indexes = NULL;
@@ -56,7 +56,7 @@ setup (void)
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     if (matcher)
         g_object_unref(matcher);

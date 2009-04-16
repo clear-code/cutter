@@ -14,7 +14,7 @@ void test_create_test_suite (void);
 static CutRepository *test_repository;
 
 void
-setup (void)
+cut_setup (void)
 {
     gchar *test_repository_path;
 
@@ -27,7 +27,7 @@ setup (void)
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     g_object_unref(test_repository);
 }

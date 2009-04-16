@@ -270,13 +270,13 @@ The following is a template of test.
   static int condition = 0;
   
   void
-  setup (void)
+  cut_setup (void)
   {
       condition = 1;
   }
   
   void
-  teardown (void)
+  cut_teardown (void)
   {
       condition = 0;
   }
@@ -284,8 +284,8 @@ The following is a template of test.
   void
   test_condition(void)
   {
-      cut_assert_equal_int(1, condition,
-                           "The condition value should be set to 1 in setup()");
+      cut_set_message("The condition value should be set to 1 in cut_setup()");
+      cut_assert_equal_int(1, condition);
     ...
   }
   
@@ -302,3 +302,4 @@ The following is a template of test.
   * Kazumasa Matsunaga: reported a build bug.
   * Daijiro MORI: reported bugs.
   * UNNO Hideyuki: reported a document bug.
+  * gunyarakun: suggested API design.

@@ -9,13 +9,13 @@ void test_cutter_command_path (void);
 static gchar *original_cutter_command_path;
 
 void
-setup (void)
+cut_setup (void)
 {
     original_cutter_command_path = g_strdup(cut_get_cutter_command_path());
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     if (original_cutter_command_path) {
         cut_set_cutter_command_path(original_cutter_command_path);

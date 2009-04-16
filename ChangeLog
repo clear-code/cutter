@@ -1,3 +1,11 @@
+2009-04-16  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cutter.h: make setup() and teardown() deprecated, use
+	cut_setup() and cut_teardown() instead.
+	Suggested by gunyarakun. Thanks!!!
+
+	* ./: follow the above changes.
+
 2009-04-12  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-test-result.c, test/cutter/test-cut-test-result.c:

@@ -13,7 +13,7 @@ static GOptionContext *option_context;
 static GObject *object;
 
 void
-startup (void)
+cut_startup (void)
 {
     gchar *factory_dir;
 
@@ -28,14 +28,14 @@ startup (void)
 }
 
 void
-shutdown (void)
+cut_shutdown (void)
 {
     cut_module_factory_unload();
     cut_module_factory_quit();
 }
 
 void
-setup (void)
+cut_setup (void)
 {
     factory = NULL;
     option_context = NULL;
@@ -43,7 +43,7 @@ setup (void)
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     if (factory)
         g_object_unref(factory);

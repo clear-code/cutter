@@ -17,7 +17,7 @@ static gchar *destroyed_string;
 static GString *string;
 
 void
-setup (void)
+cut_setup (void)
 {
     test_data = NULL;
     destroy_called = FALSE;
@@ -26,7 +26,7 @@ setup (void)
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     if (test_data)
         g_object_unref(test_data);

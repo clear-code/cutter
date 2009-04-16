@@ -29,7 +29,7 @@ static gboolean destroy_called;
 static gchar *destroyed_string;
 
 void
-setup (void)
+cut_setup (void)
 {
     context = cut_test_context_new_empty();
     test_suite = cut_test_suite_new_empty();
@@ -46,7 +46,7 @@ setup (void)
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     if (context)
         g_object_unref(context);

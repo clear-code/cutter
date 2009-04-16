@@ -23,7 +23,7 @@ static gchar **test_names;
 static GModule *module;
 
 void
-setup (void)
+cut_setup (void)
 {
     loader = NULL;
     test_case = NULL;
@@ -33,7 +33,7 @@ setup (void)
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     if (loader)
         g_object_unref(loader);

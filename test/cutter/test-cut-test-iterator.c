@@ -131,7 +131,7 @@ stub_teardown (void)
 }
 
 void
-setup (void)
+cut_setup (void)
 {
     run_test_flag = FALSE;
     n_setup_calls = 0;
@@ -157,7 +157,7 @@ setup (void)
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     if (test_iterator)
         g_object_unref(test_iterator);

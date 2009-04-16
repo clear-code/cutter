@@ -18,7 +18,7 @@ static gchar *tmp_dir;
 static gchar **actual_string_array;
 
 void
-setup (void)
+cut_setup (void)
 {
     tmp_dir = g_build_filename(cuttest_get_base_dir(), "tmp", NULL);
     cut_remove_path(tmp_dir, NULL);
@@ -30,7 +30,7 @@ setup (void)
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     if (tmp_dir) {
         cut_remove_path(tmp_dir, NULL);

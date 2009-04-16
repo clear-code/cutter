@@ -14,7 +14,7 @@ static GObject *object1, *object2;
 static gchar *inspected;
 
 void
-setup (void)
+cut_setup (void)
 {
     object = NULL;
     object1 = NULL;
@@ -23,7 +23,7 @@ setup (void)
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     if (object)
         g_object_unref(object);

@@ -11,14 +11,14 @@ static CutLoader *loader;
 static CutTestSuite *test_suite;
 
 void
-setup (void)
+cut_setup (void)
 {
     loader = NULL;
     test_suite = NULL;
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     if (loader)
         g_object_unref(loader);

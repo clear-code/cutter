@@ -114,7 +114,7 @@ run (void)
 }
 
 void
-setup (void)
+cut_setup (void)
 {
     compare_function_is_called = FALSE;
     tmp_file_name = NULL;
@@ -126,7 +126,7 @@ setup (void)
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     if (tmp_file_name) {
         g_remove(tmp_file_name);

@@ -35,48 +35,48 @@ executing setup/teardown process. See also
 ((<Test fixture
 (Wikipedia)|URL:http://en.wikipedia.org/wiki/Test_fixture>)).
 
-In Cutter, if setup()/teardown() functions are defined in a
-test program like the following, their functions are treated
-as setup/teardown processes:
+In Cutter, if cut_setup()/cut_teardown() functions are
+defined in a test program like the following, their
+functions are treated as setup/teardown processes:
 
   void
-  setup (void)
+  cut_setup (void)
   {
      /* set up test data */
   }
 
   void
-  teardown (void)
+  cut_teardown (void)
   {
      /* tear down test data */
   }
 
-Cutter also supports startup()/shutdown() functions that are
-called on each test case starting/completing:
+Cutter also supports cut_startup()/cut_shutdown() functions
+that are called on each test case starting/completing:
 
   void
-  startup (void)
+  cut_startup (void)
   {
      /* set up the test case */
   }
 
   void
-  shutdown (void)
+  cut_shutdown (void)
   {
      /* tear down the test case*/
   }
 
 Their functions are called the following order:
 
-  * startup()
-    * setup()
+  * cut_startup()
+    * cut_setup()
       * run test1
-    * teardown()
-    * setup()
+    * cut_teardown()
+    * cut_setup()
       * run test2
-    * teardown()
+    * cut_teardown()
     * ...
-  * shutdown()
+  * cut_shutdown()
 
 Cutter also supports functions that are called on all test
 starting/completing as experimental features. Their
@@ -84,24 +84,24 @@ functions are called warmup/cooldown. Here is the call
 order:
 
   * run warmup
-    * startup() of test case1
-      * setup() of test case1
+    * cut_startup() of test case1
+      * cut_setup() of test case1
         * run test1-1
-      * teardown() of test case1
-      * setup() of test case1
+      * cut_teardown() of test case1
+      * cut_setup() of test case1
         * run test1-2
-      * teardown() of test case1
+      * cut_teardown() of test case1
       * ...
-    * shutdown() of test case1
-    * startup() of test case2
-      * setup() of test case2
+    * cut_shutdown() of test case1
+    * cut_startup() of test case2
+      * cut_setup() of test case2
         * run test2-1
-      * teardown() of test case2
-      * setup() of test case2
+      * cut_teardown() of test case2
+      * cut_setup() of test case2
         * run test2-2
-      * teardown() of test case2
+      * cut_teardown() of test case2
       * ...
-    * shutdown() of test case1
+    * cut_shutdown() of test case1
     * ...
   * run cooldown
 
@@ -239,18 +239,18 @@ There is a testing method called ((<Data-Driven
 Testing|URL:http://en.wikipedia.org/wiki/Data-driven_testing>)).
 
 Cutter supports Data-Driven Testing. See ((<cut_add_data()
-|URL:http://cutter.sf.net/reference/cutter-cutter.html#cut-add-data>))
+|URL:http://cutter.sourceforge.net/reference/cutter-cutter.html#cut-add-data>))
 for writing a data-driven test.
 
 Data-driven tests are executed by the following order:
 
   * call data setup function
-  * setup()
+  * cut_setup()
     * run test with test data1
-  * teardown()
-  * setup()
+  * cut_teardown()
+  * cut_setup()
     * run test with test data2
-  * teardown()
+  * cut_teardown()
   * ...
 
 === Coverage support

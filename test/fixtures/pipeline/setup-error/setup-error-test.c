@@ -3,9 +3,9 @@
 void test_do_nothing (void);
 
 void
-setup (void)
+cut_setup (void)
 {
-    cut_error("Error in setup()");
+    cut_error("Error in cut_setup()");
 }
 
 void

@@ -33,7 +33,7 @@ static GError *error;
 static GList *backtrace;
 
 void
-setup (void)
+cut_setup (void)
 {
     result = NULL;
     suite = NULL;
@@ -47,7 +47,7 @@ setup (void)
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     if (result)
         g_object_unref(result);

@@ -18,7 +18,7 @@ static GError *actual_error;
 static gchar *current_locale;
 
 void
-setup (void)
+cut_setup (void)
 {
     key_file = g_key_file_new();
     actual_error = NULL;
@@ -28,7 +28,7 @@ setup (void)
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     if (current_locale) {
         setlocale(LC_ALL, current_locale);

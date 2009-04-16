@@ -35,7 +35,7 @@ static CutRunContext *run_context;
 static CuttestEventReceiver *receiver;
 
 void
-setup (void)
+cut_setup (void)
 {
     run_context = cuttest_event_receiver_new();
     receiver = CUTTEST_EVENT_RECEIVER(run_context);
@@ -44,7 +44,7 @@ setup (void)
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     g_object_unref(receiver);
     g_object_unref(parser);

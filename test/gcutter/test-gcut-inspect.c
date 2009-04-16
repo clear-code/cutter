@@ -17,13 +17,13 @@ void test_pointer (void);
 static GString *string;
 
 void
-setup (void)
+cut_setup (void)
 {
     string = g_string_new(NULL);
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     if (string)
         g_string_free(string, TRUE);

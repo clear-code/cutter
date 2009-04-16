@@ -8,13 +8,13 @@ void test_type_name (void);
 static GObject *builder;
 
 void
-setup (void)
+cut_setup (void)
 {
     builder = NULL;
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     if (builder)
         g_object_unref(builder);

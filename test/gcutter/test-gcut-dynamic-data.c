@@ -19,7 +19,7 @@ static GError *expected_error;
 static GError *actual_error;
 
 void
-setup (void)
+cut_setup (void)
 {
     data = NULL;
     expected_error = NULL;
@@ -27,7 +27,7 @@ setup (void)
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     if (data)
         g_object_unref(data);

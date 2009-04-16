@@ -37,48 +37,48 @@ Cutterがどのようにその機能を提供しているかについてを説�
 れは、一般的には各テスト毎にsetup/teardownと呼ばれる初期化処
 理/終了処理を実行することによって実現します。
 
-Cutterでは以下のようにテストプログラム中にsetup()/teardown()
-関数を定義すると、それらの関数が初期化処理/終了処理として扱
-われます。
+Cutterでは以下のようにテストプログラム中に
+cut_setup()/cut_teardown() 関数を定義すると、それらの関数が初
+期化処理/終了処理として扱われます。
 
   void
-  setup (void)
+  cut_setup (void)
   {
      /* 初期化処理 */
   }
 
   void
-  teardown (void)
+  cut_teardown (void)
   {
      /* 終了処理 */
   }
 
 また、Cutterではテストケース毎の初期化処理/終了処理のために
-startup()/shutdown()もサポートしてます。
+cut_startup()/cut_shutdown()もサポートしてます。
 
   void
-  startup (void)
+  cut_startup (void)
   {
      /* テストケースの初期化処理 */
   }
 
   void
-  shutdown (void)
+  cut_shutdown (void)
   {
      /* テストケースの終了処理 */
   }
 
 これらの関数は以下のような順番で呼ばれます。
 
-  * startup()
-    * setup()
+  * cut_startup()
+    * cut_setup()
       * テスト1実行
-    * teardown()
-    * setup()
+    * cut_teardown()
+    * cut_setup()
       * テスト2実行
-    * teardown()
+    * cut_teardown()
     * ...
-  * shutdown()
+  * cut_shutdown()
 
 また、実験的な機能ですが、テスト全体を実行する前、テスト全体
 を実行した後に呼び出す関数を登録することもできます。これらの
@@ -86,24 +86,24 @@ startup()/shutdown()もサポートしてます。
 こうなります。
 
   * warmup実行
-    * テストケース1のstartup()
-      * テストケース1のsetup()
+    * テストケース1のcut_startup()
+      * テストケース1のcut_setup()
         * テスト1-1実行
-      * テストケース1のteardown()
-      * テストケース1のsetup()
+      * テストケース1のcut_teardown()
+      * テストケース1のcut_setup()
         * テスト1-2実行
-      * テストケース1のteardown()
+      * テストケース1のcut_teardown()
       * ...
-    * テストケース1のshutdown()
-    * テストケース2のstartup()
-      * テストケース2のsetup()
+    * テストケース1のcut_shutdown()
+    * テストケース2のcut_startup()
+      * テストケース2のcut_setup()
         * テスト2-1実行
-      * テストケース2のteardown()
-      * テストケース2のsetup()
+      * テストケース2のcut_teardown()
+      * テストケース2のcut_setup()
         * テスト2-2実行
-      * テストケース2のteardown()
+      * テストケース2のcut_teardown()
       * ...
-    * テストケース2のshutdown()
+    * テストケース2のcut_shutdown()
     * ...
   * cooldown実行
 
@@ -250,12 +250,12 @@ Cutterでのデータ駆動テストの書き方については
 す。
 
   * テストデータ生成関数呼び出し
-  * setup()
+  * cut_setup()
     * テストデータ1を使ってテスト実行
-  * teardown()
-  * setup()
+  * cut_teardown()
+  * cut_setup()
     * テストデータ2を使ってテスト実行
-  * teardown()
+  * cut_teardown()
   * ...
 
 === カバレッジのサポート

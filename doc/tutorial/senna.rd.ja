@@ -533,17 +533,17 @@ sen_snip_add_cond()の結果は
 ((<cut_assert_equal_int|URL:http://cutter.sourceforge.net/reference/ja/cutter-cut-assertions.html#cut-assert-equal-int>))
 で検証しています。
 
-ただし、ここで問題があります。cut_assert*()は検証が失敗する
-とその時点でテスト関数からreturnし、それ以降のコードは実行し
-ません。つまり、cut_assert_equal_int()が失敗した場合は、
-sen_snip_open()で生成したsen_snip *が開放されないことになり
-ます。この問題を解決するためにsetup()/teardown()という仕組み
-があります。
+ただし、ここで問題があります。cut_assert*()は検証が失敗すると
+その時点でテスト関数からreturnし、それ以降のコードは実行しま
+せん。つまり、cut_assert_equal_int()が失敗した場合は、
+sen_snip_open()で生成したsen_snip *が開放されないことになりま
+す。この問題を解決するためにcut_setup()/cut_teardown()という
+仕組みがあります。
 
-setup()はテストが実行される前に必ず実行され、teardown()はテ
-ストが実行された後に成功・失敗に関わらず必ず実行されます。こ
-の仕組みを利用することで確実にメモリ開放処理を行うことができ
-ます。
+cut_setup()はテストが実行される前に必ず実行され、
+cut_teardown()はテストが実行された後に成功・失敗に関わらず必
+ず実行されます。この仕組みを利用することで確実にメモリ開放処
+理を行うことができます。
 
 test/unit/test-snip.c:
   # source: C
@@ -552,13 +552,13 @@ test/unit/test-snip.c:
   ...
 
   void
-  setup(void)
+  cut_setup(void)
   {
     snip = NULL;
   }
 
   void
-  teardown(void)
+  cut_teardown(void)
   {
     if (snip) {
       sen_snip_close(snip);
@@ -583,7 +583,7 @@ test/unit/test-snip.c:
 
 これでcut_assert_equal_int()が成功しても失敗してもsen_snip *
 は開放されます。Cutterではメモリ開放処理のためにstatic変数と
-setup()/teardown()を使うことが定石になっています。
+cut_setup()/cut_teardown()を使うことが定石になっています。
 
 === sen_snip_exec()のテスト
 
@@ -629,8 +629,8 @@ sen_snip_get_result()を呼び出す必要があります。
 
 snippetを格納する場所のサイズは動的に決まります。そのため、
 snippetを格納する領域を動的に確保する必要があります。
-setup()/teardown()の仕組みを用いてメモリを開放するようにしま
-す。ここ以外は特に目立った部分はありません。
+cut_setup()/cut_teardown()の仕組みを用いてメモリを開放するよ
+うにします。ここ以外は特に目立った部分はありません。
 
 test/unit/test-snip.c:
   # source: C
@@ -638,14 +638,14 @@ test/unit/test-snip.c:
   static gchar *result;
 
   void
-  setup(void)
+  cut_setup(void)
   {
     ...
     result = NULL;
   }
 
   void
-  teardown(void)
+  cut_teardown(void)
   {
     ...
     if (result) {
@@ -753,14 +753,14 @@ test/unit/test-snip.c:
   static gchar *result;
 
   void
-  setup(void)
+  cut_setup(void)
   {
     snip = NULL;
     result = NULL;
   }
 
   void
-  teardown(void)
+  cut_teardown(void)
   {
     if (snip) {
       sen_snip_close(snip);
@@ -832,7 +832,7 @@ test/unit/test-snip.c:
     * 便利なテスト起動スクリプトrun-test.shの作成方法
     * 初期化・終了関数があるライブラリのテスト方法
   * Cutterを用いたテストの作成方法
-    * setup()/teardown()を用いたメモリ管理の方法
+    * cut_setup()/cut_teardown()を用いたメモリ管理の方法
     * diffの出力
 
 Cで書かれたプロジェクトに単体テストフレームワークを導入する

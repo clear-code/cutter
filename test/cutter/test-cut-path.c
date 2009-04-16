@@ -17,7 +17,7 @@ static CutRunContext *pipeline;
 static gchar *test_dir;
 
 void
-setup (void)
+cut_setup (void)
 {
     pipeline = cut_pipeline_new();
     test_dir = g_build_filename(cuttest_get_base_dir(),
@@ -27,7 +27,7 @@ setup (void)
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     if (pipeline)
         g_object_unref(pipeline);

@@ -74,7 +74,7 @@ cut_assert_n_signals_helper(guint expected_n_assertions,
                              n_omissions))
 
 void
-setup (void)
+cut_setup (void)
 {
     run_test_flag = FALSE;
     n_start_signals = 0;
@@ -93,7 +93,7 @@ setup (void)
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     if (test_data)
         g_object_unref(test_data);

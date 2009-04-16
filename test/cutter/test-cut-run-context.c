@@ -41,13 +41,13 @@ cut_run_context_stub_init (CutRunContextStub *object)
 static CutRunContext *run_context;
 
 void
-setup (void)
+cut_setup (void)
 {
     run_context = NULL;
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     if (run_context)
         g_object_unref(run_context);

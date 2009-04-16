@@ -6,13 +6,13 @@ void test_has_builder (void);
 static CutContractor *contractor;
 
 void
-setup (void)
+cut_setup (void)
 {
     contractor = NULL;
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     if (contractor)
         g_object_unref(contractor);

@@ -96,7 +96,7 @@ cb_crashed_signal (CutTest *test, gpointer data)
 #endif
 
 void
-setup (void)
+cut_setup (void)
 {
     CutTestCase *test_case;
     gchar *test_path;
@@ -145,7 +145,7 @@ setup (void)
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     g_object_unref(loader);
     g_object_unref(test_object);

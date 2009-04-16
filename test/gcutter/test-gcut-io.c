@@ -8,13 +8,13 @@ void test_inspect_condition (void);
 static gchar *message;
 
 void
-setup (void)
+cut_setup (void)
 {
     message = NULL;
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     if (message)
         g_free(message);

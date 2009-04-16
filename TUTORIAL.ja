@@ -948,25 +948,25 @@ stack_push()された後には内部のカウンタを1つ進める必要があ�
 なプログラムため、害が大きくなることは少ない。）
 
 Cutterではテストの前後に必ず実行される関数を設定することがで
-きる。それがsetup()/teardown()である。これらはテストが成功し
-た場合も失敗した場合も呼ばれるためテスト中で割り当てたメモリ
-を確実に開放する処理などに使うことができる。
+きる。それがcut_setup()/cut_teardown()である。これらはテスト
+が成功した場合も失敗した場合も呼ばれるためテスト中で割り当て
+たメモリを確実に開放する処理などに使うことができる。
 
-test_new_stack()をsetup()/teardown()を使って確実にメモリを開
-放するようにすると以下のようになる。
+test_new_stack()をcut_setup()/cut_teardown()を使って確実にメ
+モリを開放するようにすると以下のようになる。
 
 test/test-stack.c:
   ...
   static Stack *stack;
 
   void
-  setup (void)
+  cut_setup (void)
   {
       stack = NULL;
   }
 
   void
-  teardown (void)
+  cut_teardown (void)
   {
       if (stack)
           stack_free(stack);
@@ -997,8 +997,8 @@ test/test-stack.c:
   }
   ...
 
-setup()/teardown()を使用したtest/test-stack.c全体は以下のよ
-うになる。
+cut_setup()/cut_teardown()を使用したtest/test-stack.c全体は以
+下のようになる。
 
 test/test-stack.c:
   #include <cutter.h>
@@ -1010,13 +1010,13 @@ test/test-stack.c:
   static Stack *stack;
 
   void
-  setup (void)
+  cut_setup (void)
   {
       stack = NULL;
   }
 
   void
-  teardown (void)
+  cut_teardown (void)
   {
       if (stack)
           stack_free(stack);
@@ -1601,13 +1601,13 @@ test/test-stack.c
   static Stack *stack;
 
   void
-  setup (void)
+  cut_setup (void)
   {
       stack = NULL;
   }
 
   void
-  teardown (void)
+  cut_teardown (void)
   {
       if (stack)
           stack_free(stack);

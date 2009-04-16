@@ -6,12 +6,12 @@
 void test_take_replace (void);
 
 void
-setup (void)
+cut_setup (void)
 {
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
 }
 

@@ -32,7 +32,7 @@ static GMutex *fixture_mutex, *run_mutex;
                      NULL)
 
 void
-startup (void)
+cut_startup (void)
 {
     pipelines = g_hash_table_new_full(g_direct_hash, g_direct_equal,
                                       NULL, g_object_unref);
@@ -41,7 +41,7 @@ startup (void)
 }
 
 void
-shutdown (void)
+cut_shutdown (void)
 {
     g_mutex_free(run_mutex);
     g_mutex_free(fixture_mutex);
@@ -51,7 +51,7 @@ shutdown (void)
 #define pipeline (g_hash_table_lookup(pipelines, g_thread_self()))
 
 void
-setup (void)
+cut_setup (void)
 {
     g_mutex_lock(fixture_mutex);
     g_hash_table_insert(pipelines, g_thread_self(), cut_pipeline_new());
@@ -59,7 +59,7 @@ setup (void)
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     g_mutex_lock(fixture_mutex);
     g_hash_table_remove(pipelines, g_thread_self());

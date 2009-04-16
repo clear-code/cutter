@@ -24,7 +24,7 @@ static CutTestCase *test_case;
 } while (0)
 
 void
-setup (void)
+cut_setup (void)
 {
     gchar *test_path;
 
@@ -47,7 +47,7 @@ setup (void)
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     if (expected_names)
         gcut_list_string_free(expected_names);

@@ -16,7 +16,7 @@ static GHashTable *hash1, *hash2;
 static gchar *inspected;
 
 void
-setup (void)
+cut_setup (void)
 {
     hash1 = NULL;
     hash2 = NULL;
@@ -25,7 +25,7 @@ setup (void)
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     if (hash1)
         g_hash_table_unref(hash1);

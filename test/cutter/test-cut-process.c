@@ -17,13 +17,13 @@ void test_fork (void);
 static CutProcess *process;
 
 void
-setup (void)
+cut_setup (void)
 {
     process = cut_process_new();
 }
 
 void
-teardown (void)
+cut_teardown (void)
 {
     g_object_unref(process);
 }

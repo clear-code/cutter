@@ -291,14 +291,14 @@ cut_set_attributes("bug", "123")を呼び、属性を設定しています。
   static int condition = 0;
   
   void
-  setup (void)
+  cut_setup (void)
   {
       /* 初期化用コード */
       condition = 1;
   }
   
   void
-  teardown (void)
+  cut_teardown (void)
   {
       /* 後片付け用コード */
       condition = 0;
@@ -307,8 +307,8 @@ cut_set_attributes("bug", "123")を呼び、属性を設定しています。
   void
   test_condition(void)
   {
-      cut_assert_equal_int(1, condition,
-                           "conditionの値はsetup()で1に設定されているはず");
+      cut_set_message("conditionの値はcut_setup()で1に設定されているはず");
+      cut_assert_equal_int(1, condition);
     ...
   }
   
@@ -326,3 +326,4 @@ cut_set_attributes("bug", "123")を呼び、属性を設定しています。
     た。
   * Daijiro MORIさん: 不具合を報告してくれました。
   * 海野さん: チュートリアルの不具合に気づかせてくれました。
+  * グニャラくん: APIについてアドバイスしてくれました。
