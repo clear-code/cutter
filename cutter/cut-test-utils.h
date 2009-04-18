@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2009  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -288,8 +288,21 @@ extern "C" {
  * Since: 1.0.2
  */
 #define cut_remove_path(...)                                            \
-    cut_utils_remove_path_recursive_force(                              \
-        cut_take_string(cut_utils_build_path(__VA_ARGS__)))
+    cut_utils_remove_path_recursive_force(cut_build_path(__VA_ARGS__))
+
+/**
+ * cut_build_path:
+ * @path: a first element of the path to be removed.
+ * @...: remaining elements in path terminated by %NULL.
+ *
+ * Builds path from @path and the following elements.
+ *
+ * Returns: built path owned by Cutter. Don't free it.
+ *
+ * Since: 1.0.7
+ */
+#define cut_build_path(...)                                            \
+    cut_take_string(cut_utils_build_path(__VA_ARGS__))
 
 /**
  * cut_equal_string:
