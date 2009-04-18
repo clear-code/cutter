@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2009  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -232,7 +232,6 @@ typedef struct _RunTestInfo
     CutIteratedTest *iterated_test;
     CutTestContext *test_context;
     CutTestContext *parent_test_context;
-    CutTestContext *original_test_context;
 } RunTestInfo;
 
 static void
@@ -243,7 +242,7 @@ run_test_without_thread (gpointer data, gpointer user_data)
     CutTestCase *test_case;
     CutTestIterator *test_iterator;
     CutIteratedTest *iterated_test;
-    CutTestContext *test_context, *parent_test_context, *original_test_context;
+    CutTestContext *test_context, *parent_test_context;
     gboolean *success = user_data;
 
     run_context = info->run_context;
@@ -252,12 +251,11 @@ run_test_without_thread (gpointer data, gpointer user_data)
     iterated_test = info->iterated_test;
     test_context = info->test_context;
     parent_test_context = info->parent_test_context;
-    original_test_context = info->original_test_context;
 
     if (cut_run_context_is_canceled(run_context))
         return;
 
-    cut_test_context_current_set(test_context);
+    cut_test_context_current_push(test_context);
 
     g_signal_emit_by_name(test_iterator, "start-iterated-test",
                           iterated_test, test_context);
@@ -279,7 +277,7 @@ run_test_without_thread (gpointer data, gpointer user_data)
 
     cut_test_context_set_test(test_context, NULL);
     cut_test_context_set_test(parent_test_context, NULL);
-    cut_test_context_current_set(original_test_context);
+    cut_test_context_current_pop();
 
     g_object_unref(run_context);
     g_object_unref(test_case);
@@ -287,7 +285,6 @@ run_test_without_thread (gpointer data, gpointer user_data)
     g_object_unref(iterated_test);
     g_object_unref(test_context);
     g_object_unref(parent_test_context);
-    g_object_unref(original_test_context);
     g_free(info);
 }
 
@@ -302,7 +299,7 @@ run_test_with_thread_support (CutTestIterator *test_iterator,
     RunTestInfo *info;
     CutTest *test;
     CutTestCase *test_case;
-    CutTestContext *original_test_context, *local_test_context;
+    CutTestContext *local_test_context;
     gboolean is_multi_thread;
     gboolean need_no_thread_run = TRUE;
     const gchar *multi_thread_attribute;
@@ -325,8 +322,6 @@ run_test_with_thread_support (CutTestIterator *test_iterator,
     cut_test_context_set_data(local_test_context,
                               cut_iterated_test_get_data(iterated_test));
 
-    original_test_context = cut_test_context_current_get();
-
     cut_test_context_set_test(test_context, test);
     cut_test_context_set_test(local_test_context, test);
 
@@ -337,7 +332,6 @@ run_test_with_thread_support (CutTestIterator *test_iterator,
     info->iterated_test = g_object_ref(iterated_test);
     info->test_context = local_test_context;
     info->parent_test_context = g_object_ref(test_context);
-    info->original_test_context = g_object_ref(original_test_context);
     if (is_multi_thread && thread_pool) {
         GError *error = NULL;
 

@@ -2,7 +2,8 @@
 
 	* cutter/cut-test-context.c, cutter/cut-public.h: the current test
 	context is managed as stack.
-	* cutter/cutter.h, cutter/cut-loader.c: follow the above API change.
+	* cutter/cutter.h, cutter/cut-loader.c,
+	cutter/cut-test-iterator.c: follow the above API change.
 
 	* cutter/cut-test-utils.h,
 	test/cutter/test-cut-test-utils.c: add cut_build_path().
