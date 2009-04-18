@@ -411,7 +411,7 @@ void cut_shutdown(void);
  * Since: 1.0.4
  */
 #define cut_get_current_test_context()          \
-    cut_test_context_current_get()
+    cut_test_context_current_peek()
 
 /**
  * cut_set_current_test_context:
@@ -424,7 +424,7 @@ void cut_shutdown(void);
  * Since: 1.0.4
  */
 #define cut_set_current_test_context(test_context)      \
-    cut_test_context_current_set(test_context)
+    cut_test_context_current_push(test_context)
 
 /**
  * cut_set_message:

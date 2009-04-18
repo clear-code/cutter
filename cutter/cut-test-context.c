@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2009  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -428,16 +428,51 @@ cut_test_context_current_quit (void)
     g_static_private_free(&current_context_private);
 }
 
-void
-cut_test_context_current_set (CutTestContext *context)
+static void
+contexts_free (gpointer data)
 {
-    g_static_private_set(&current_context_private, context, NULL);
+    GPtrArray *contexts = data;
+    g_ptr_array_free(contexts, TRUE);
+}
+
+void
+cut_test_context_current_push (CutTestContext *context)
+{
+    GPtrArray *contexts;
+
+    contexts = g_static_private_get(&current_context_private);
+    if (!contexts) {
+        contexts = g_ptr_array_new();
+        g_static_private_set(&current_context_private, contexts, contexts_free);
+    }
+    g_ptr_array_add(contexts, context);
 }
 
 CutTestContext *
-cut_test_context_current_get (void)
+cut_test_context_current_pop (void)
 {
-    return g_static_private_get(&current_context_private);
+    GPtrArray *contexts;
+    CutTestContext *context = NULL;
+
+    contexts = g_static_private_get(&current_context_private);
+    if (contexts) {
+        context = g_ptr_array_index(contexts, contexts->len - 1);
+        g_ptr_array_remove_index(contexts, contexts->len - 1);
+    }
+
+    return context;
+}
+
+CutTestContext *
+cut_test_context_current_peek (void)
+{
+    GPtrArray *contexts;
+
+    contexts = g_static_private_get(&current_context_private);
+    if (contexts)
+        return g_ptr_array_index(contexts, contexts->len - 1);
+    else
+        return NULL;
 }
 
 CutTestContext *
@@ -475,6 +510,7 @@ cut_test_context_set_run_context (CutTestContext *context, CutRunContext *run_co
         g_object_unref(priv->run_context);
     if (run_context)
         g_object_ref(run_context);
+
     priv->run_context = run_context;
 }
 

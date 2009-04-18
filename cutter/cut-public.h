@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2009  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -44,8 +44,9 @@ typedef enum {
     CUT_TEST_RESULT_LAST
 } CutTestResultStatus;
 
-void            cut_test_context_current_set(CutTestContext *context);
-CutTestContext *cut_test_context_current_get(void);
+void            cut_test_context_current_push(CutTestContext *context);
+CutTestContext *cut_test_context_current_pop (void);
+CutTestContext *cut_test_context_current_peek(void);
 
 void  cut_test_context_keep_user_message    (CutTestContext *context);
 void  cut_test_context_set_user_message     (CutTestContext *context,
