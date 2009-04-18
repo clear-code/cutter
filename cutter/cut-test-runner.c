@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2009  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -250,6 +250,54 @@ cb_omission_test_case (CutTestCase *test_case, CutTestContext *test_context,
     CutRunContext *context = data;
 
     g_signal_emit_by_name(context, "omission-test-case", test_case, result);
+}
+
+static void
+cb_failure_in_test_case (CutTestCase *test_case, CutTestContext *test_context,
+                         CutTestResult *result, gpointer data)
+{
+    CutRunContext *context = data;
+
+    g_signal_emit_by_name(context, "failure-in-test-case", test_case, result);
+}
+
+static void
+cb_error_in_test_case (CutTestCase *test_case, CutTestContext *test_context,
+                       CutTestResult *result, gpointer data)
+{
+    CutRunContext *context = data;
+
+    g_signal_emit_by_name(context, "error-in-test-case", test_case, result);
+}
+
+static void
+cb_pending_in_test_case (CutTestCase *test_case, CutTestContext *test_context,
+                         CutTestResult *result, gpointer data)
+{
+    CutRunContext *context = data;
+
+    g_signal_emit_by_name(context, "pending-in-test-case", test_case, result);
+}
+
+static void
+cb_notification_in_test_case (CutTestCase *test_case,
+                              CutTestContext *test_context,
+                              CutTestResult *result,
+                              gpointer data)
+{
+    CutRunContext *context = data;
+
+    g_signal_emit_by_name(context, "notification-in-test-case",
+                          test_case, result);
+}
+
+static void
+cb_omission_in_test_case (CutTestCase *test_case, CutTestContext *test_context,
+                          CutTestResult *result, gpointer data)
+{
+    CutRunContext *context = data;
+
+    g_signal_emit_by_name(context, "omission-in-test-case", test_case, result);
 }
 
 static void
@@ -617,6 +665,12 @@ connect_to_test_case (CutRunContext *context, CutTestCase *test_case)
     CONNECT(pending);
     CONNECT(notification);
     CONNECT(omission);
+
+    CONNECT(failure_in);
+    CONNECT(error_in);
+    CONNECT(pending_in);
+    CONNECT(notification_in);
+    CONNECT(omission_in);
 
     CONNECT(ready);
     CONNECT(start);

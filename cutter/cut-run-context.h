@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2009  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -160,6 +160,25 @@ struct _CutRunContextClass
     void (*omission_test_case)  (CutRunContext  *context,
                                  CutTestCase    *test_case,
                                  CutTestResult  *result);
+
+    void (*failure_in_test_case)(CutRunContext  *context,
+                                 CutTestCase    *test_case,
+                                 CutTestResult  *result);
+    void (*error_in_test_case)  (CutRunContext  *context,
+                                 CutTestCase    *test_case,
+                                 CutTestResult  *result);
+    void (*pending_in_test_case)(CutRunContext  *context,
+                                 CutTestCase    *test_case,
+                                 CutTestResult  *result);
+    void (*notification_in_test_case)
+                                (CutRunContext  *context,
+                                 CutTestCase    *test_case,
+                                 CutTestResult  *result);
+    void (*omission_in_test_case)
+                                (CutRunContext  *context,
+                                 CutTestCase    *test_case,
+                                 CutTestResult  *result);
+
     void (*complete_test_case)  (CutRunContext  *context,
                                  CutTestCase    *test_case,
                                  gboolean        success);

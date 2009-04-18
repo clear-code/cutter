@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2009  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -59,6 +59,14 @@ enum
     COMPLETE_TEST,
     START_TEST_ITERATOR,
     COMPLETE_TEST_ITERATOR,
+
+    SUCCESS_IN,
+    FAILURE_IN,
+    ERROR_IN,
+    PENDING_IN,
+    NOTIFICATION_IN,
+    OMISSION_IN,
+
     LAST_SIGNAL
 };
 
@@ -75,6 +83,10 @@ static void get_property   (GObject         *object,
                             guint            prop_id,
                             GValue          *value,
                             GParamSpec      *pspec);
+static void emit_result_signal
+                           (CutTest        *test,
+                            CutTestContext *test_context,
+                            CutTestResult  *result);
 
 static void
 cut_test_case_class_init (CutTestCaseClass *klass)
@@ -89,6 +101,8 @@ cut_test_case_class_init (CutTestCaseClass *klass)
     gobject_class->dispose      = dispose;
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
+
+    test_class->emit_result_signal = emit_result_signal;
 
     spec = g_param_spec_pointer("setup-function",
                                 "Setup Function",
@@ -167,6 +181,56 @@ cut_test_case_class_init (CutTestCaseClass *klass)
                        G_TYPE_NONE,
                        3, CUT_TYPE_TEST_ITERATOR, CUT_TYPE_TEST_CONTEXT,
                        G_TYPE_BOOLEAN);
+
+    cut_test_case_signals[FAILURE_IN]
+        = g_signal_new("failure-in",
+                       G_TYPE_FROM_CLASS(klass),
+                       G_SIGNAL_RUN_LAST,
+                       G_STRUCT_OFFSET(CutTestCaseClass, failure_in),
+                       NULL, NULL,
+                       _gcut_marshal_VOID__OBJECT_OBJECT,
+                       G_TYPE_NONE, 2,
+                       CUT_TYPE_TEST_CONTEXT, CUT_TYPE_TEST_RESULT);
+
+    cut_test_case_signals[ERROR_IN]
+        = g_signal_new("error-in",
+                       G_TYPE_FROM_CLASS(klass),
+                       G_SIGNAL_RUN_LAST,
+                       G_STRUCT_OFFSET(CutTestCaseClass, error_in),
+                       NULL, NULL,
+                       _gcut_marshal_VOID__OBJECT_OBJECT,
+                       G_TYPE_NONE, 2,
+                       CUT_TYPE_TEST_CONTEXT, CUT_TYPE_TEST_RESULT);
+
+    cut_test_case_signals[PENDING_IN]
+        = g_signal_new("pending-in",
+                       G_TYPE_FROM_CLASS(klass),
+                       G_SIGNAL_RUN_LAST,
+                       G_STRUCT_OFFSET(CutTestCaseClass, pending_in),
+                       NULL, NULL,
+                       _gcut_marshal_VOID__OBJECT_OBJECT,
+                       G_TYPE_NONE, 2,
+                       CUT_TYPE_TEST_CONTEXT, CUT_TYPE_TEST_RESULT);
+
+    cut_test_case_signals[NOTIFICATION_IN]
+        = g_signal_new("notification-in",
+                       G_TYPE_FROM_CLASS(klass),
+                       G_SIGNAL_RUN_LAST,
+                       G_STRUCT_OFFSET(CutTestCaseClass, notification_in),
+                       NULL, NULL,
+                       _gcut_marshal_VOID__OBJECT_OBJECT,
+                       G_TYPE_NONE, 2,
+                       CUT_TYPE_TEST_CONTEXT, CUT_TYPE_TEST_RESULT);
+
+    cut_test_case_signals[OMISSION_IN]
+        = g_signal_new("omission-in",
+                       G_TYPE_FROM_CLASS(klass),
+                       G_SIGNAL_RUN_LAST,
+                       G_STRUCT_OFFSET(CutTestCaseClass, omission_in),
+                       NULL, NULL,
+                       _gcut_marshal_VOID__OBJECT_OBJECT,
+                       G_TYPE_NONE, 2,
+                       CUT_TYPE_TEST_CONTEXT, CUT_TYPE_TEST_RESULT);
 
     g_type_class_add_private(gobject_class, sizeof(CutTestCasePrivate));
 }
@@ -353,7 +417,7 @@ run_test (CutTestCase *test_case, CutTest *test,
 static gboolean
 run (CutTestCase *test_case, CutTest *test, CutRunContext *run_context)
 {
-    CutTestContext *original_test_context, *test_context;
+    CutTestContext *test_context;
     gboolean success = TRUE;
     gboolean is_multi_thread;
 
@@ -365,15 +429,18 @@ run (CutTestCase *test_case, CutTest *test, CutRunContext *run_context)
     test_context = cut_test_context_new(run_context,
                                         NULL, test_case, NULL, NULL);
     cut_test_context_set_multi_thread(test_context, is_multi_thread);
-    original_test_context = cut_test_context_current_get();
-    cut_test_context_current_set(test_context);
 
+    cut_test_context_current_push(test_context);
     cut_test_context_set_test(test_context, test);
     success = run_test(test_case, test, test_context, run_context);
     cut_test_context_set_test(test_context, NULL);
 
-    cut_test_context_current_set(original_test_context);
     g_object_unref(test_context);
+    cut_test_context_current_pop();
+    /* FIXME: We want to use the code:
+         g_object_unref(cut_test_context_current_pop());
+       We need to hide cut_set_current_test_context() from user.
+    */
 
     return success;
 }
@@ -387,24 +454,74 @@ cb_test_status (CutTest *test, CutTestContext *context, CutTestResult *result,
     *status = MAX(*status, cut_test_result_get_status(result));
 }
 
-static gboolean
-cut_test_case_run_tests (CutTestCase *test_case, CutRunContext *run_context,
-                         const GList *tests)
+static void
+cut_test_case_run_startup (CutTestCase *test_case, CutTestContext *test_context)
 {
     CutTestCasePrivate *priv;
-    const GList *list;
-    CutTestResultStatus status = CUT_TEST_RESULT_SUCCESS;
-    CutTestResult *result;
-    gboolean all_success = TRUE;
-
-    g_signal_emit_by_name(test_case, "ready", g_list_length((GList *)tests));
-    g_signal_emit_by_name(CUT_TEST(test_case), "start", NULL);
 
     priv = CUT_TEST_CASE_GET_PRIVATE(test_case);
-
     if (priv->startup) {
-        priv->startup();
+        jmp_buf jump_buffer;
+
+        cut_test_context_set_jump(test_context, &jump_buffer);
+        if (setjmp(jump_buffer) == 0) {
+            priv->startup();
+        }
     }
+}
+
+static void
+cut_test_case_run_shutdown (CutTestCase *test_case, CutTestContext *test_context)
+{
+    CutTestCasePrivate *priv;
+
+    priv = CUT_TEST_CASE_GET_PRIVATE(test_case);
+    if (priv->shutdown) {
+        jmp_buf jump_buffer;
+
+        cut_test_context_set_jump(test_context, &jump_buffer);
+        if (setjmp(jump_buffer) == 0) {
+            priv->shutdown();
+        }
+    }
+}
+
+static void
+emit_result_signal (CutTest *test, CutTestContext *test_context,
+                    CutTestResult *result)
+{
+    const gchar *status_signal_name = NULL;
+    gchar *signal_name;
+    CutTestResultStatus status;
+
+    status = cut_test_result_get_status(result);
+    status_signal_name = cut_test_result_status_to_signal_name(status);
+    signal_name = g_strdup_printf("%s-in", status_signal_name);
+    g_signal_emit_by_name(test, signal_name, test_context, result);
+    g_free(signal_name);
+}
+
+static void
+cut_test_case_emit_result_signal (CutTestCase *test_case, CutTestResult *result)
+{
+    const gchar *status_signal_name = NULL;
+    CutTestResultStatus status;
+
+    cut_test_set_result_elapsed(CUT_TEST(test_case), result);
+
+    status = cut_test_result_get_status(result);
+    status_signal_name = cut_test_result_status_to_signal_name(status);
+    g_signal_emit_by_name(test_case, status_signal_name, NULL, result);
+}
+
+static gboolean
+run_tests (CutTestCase *test_case, CutRunContext *run_context,
+           const GList *tests)
+{
+    CutTestResult *result;
+    const GList *list;
+    CutTestResultStatus status = CUT_TEST_RESULT_SUCCESS;
+    gboolean all_success = TRUE;
 
     for (list = tests; list; list = g_list_next(list)) {
         CutTest *test = list->data;
@@ -438,13 +555,45 @@ cut_test_case_run_tests (CutTestCase *test_case, CutRunContext *run_context,
     result = cut_test_result_new(status,
                                  NULL, NULL, test_case, NULL, NULL,
                                  NULL, NULL, NULL);
-    cut_test_emit_result_signal(CUT_TEST(test_case), NULL, result);
+    cut_test_case_emit_result_signal(test_case, result);
     g_object_unref(result);
 
-    if (priv->shutdown) {
-        priv->shutdown();
+    return all_success;
+}
+
+static gboolean
+cut_test_case_run_tests (CutTestCase *test_case, CutRunContext *run_context,
+                         const GList *tests)
+{
+    CutTestCasePrivate *priv;
+    CutTestContext *test_context;
+    gboolean all_success = TRUE;
+
+    g_signal_emit_by_name(test_case, "ready", g_list_length((GList *)tests));
+    g_signal_emit_by_name(CUT_TEST(test_case), "start", NULL);
+
+    priv = CUT_TEST_CASE_GET_PRIVATE(test_case);
+
+    test_context = cut_test_context_new(run_context,
+                                        NULL, test_case, NULL, NULL);
+    cut_test_context_current_push(test_context);
+    cut_test_case_run_startup(test_case, test_context);
+
+    if (cut_test_context_is_failed(test_context)) {
+        all_success = FALSE;
+    } else {
+        all_success = run_tests(test_case, run_context, tests);
     }
+
+    cut_test_case_run_shutdown(test_case, test_context);
     g_signal_emit_by_name(CUT_TEST(test_case), "complete", NULL, all_success);
+
+    g_object_unref(test_context);
+    cut_test_context_current_pop();
+    /* FIXME: We want to use the code:
+         g_object_unref(cut_test_context_current_pop());
+       We need to hide cut_set_current_test_context() from user.
+    */
 
     return all_success;
 }

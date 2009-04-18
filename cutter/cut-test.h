@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2009  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -92,6 +92,10 @@ struct _CutTestClass
     void         (*invoke)       (CutTest        *test,
                                   CutTestContext *test_context,
                                   CutRunContext  *run_context);
+    void         (*emit_result_signal)
+                                 (CutTest        *test,
+                                  CutTestContext *test_context,
+                                  CutTestResult  *result);
 };
 
 GType        cut_test_get_type  (void) G_GNUC_CONST;
@@ -130,6 +134,8 @@ void         cut_test_to_xml_string       (CutTest     *test,
                                            GString     *string,
                                            guint        indent);
 
+void         cut_test_set_result_elapsed  (CutTest       *test,
+                                           CutTestResult *result);
 void         cut_test_emit_result_signal  (CutTest     *test,
                                            CutTestContext *test_context,
                                            CutTestResult *result);

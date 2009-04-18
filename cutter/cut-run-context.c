@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2009  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -146,6 +146,12 @@ enum
     NOTIFICATION_TEST_CASE,
     OMISSION_TEST_CASE,
 
+    FAILURE_IN_TEST_CASE,
+    ERROR_IN_TEST_CASE,
+    PENDING_IN_TEST_CASE,
+    NOTIFICATION_IN_TEST_CASE,
+    OMISSION_IN_TEST_CASE,
+
     COMPLETE_ITERATED_TEST,
     COMPLETE_TEST,
     COMPLETE_TEST_ITERATOR,
@@ -181,6 +187,7 @@ static void get_property   (GObject         *object,
                             GParamSpec      *pspec);
 
 static void start_run      (CutRunContext   *context);
+
 static void start_iterated_test
                            (CutRunContext   *context,
                             CutIteratedTest *iterated_test,
@@ -225,6 +232,28 @@ static void complete_iterated_test
                             CutIteratedTest *iterated_test,
                             CutTestContext  *test_context,
                             gboolean         success);
+
+static void failure_in_test_case
+                           (CutRunContext   *context,
+                            CutTestCase     *test_case,
+                            CutTestResult   *result);
+static void error_in_test_case
+                           (CutRunContext   *context,
+                            CutTestCase     *test_case,
+                            CutTestResult   *result);
+static void pending_in_test_case
+                           (CutRunContext   *context,
+                            CutTestCase     *test_case,
+                            CutTestResult   *result);
+static void notification_in_test_case
+                           (CutRunContext   *context,
+                            CutTestCase     *test_case,
+                            CutTestResult   *result);
+static void omission_in_test_case
+                           (CutRunContext   *context,
+                            CutTestCase     *test_case,
+                            CutTestResult   *result);
+
 static void complete_run   (CutRunContext   *context,
                             gboolean         success);
 static void crashed        (CutRunContext   *context,
@@ -245,6 +274,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     gobject_class->get_property = get_property;
 
     klass->start_run         = start_run;
+
     klass->start_iterated_test = start_iterated_test;
     klass->start_test        = start_test;
     klass->pass_assertion    = pass_assertion;
@@ -256,6 +286,13 @@ cut_run_context_class_init (CutRunContextClass *klass)
     klass->omission_test     = omission_test;
     klass->complete_test     = complete_test;
     klass->complete_iterated_test = complete_iterated_test;
+
+    klass->failure_in_test_case = failure_in_test_case;
+    klass->error_in_test_case   = error_in_test_case;
+    klass->pending_in_test_case = pending_in_test_case;
+    klass->notification_in_test_case = notification_in_test_case;
+    klass->omission_in_test_case = omission_in_test_case;
+
     klass->complete_run      = complete_run;
     klass->crashed           = crashed;
 
@@ -726,6 +763,53 @@ cut_run_context_class_init (CutRunContextClass *klass)
                        _gcut_marshal_VOID__OBJECT_OBJECT,
                        G_TYPE_NONE, 2, CUT_TYPE_TEST_CASE, CUT_TYPE_TEST_RESULT);
 
+    signals[FAILURE_IN_TEST_CASE]
+        = g_signal_new("failure-in-test-case",
+                       G_TYPE_FROM_CLASS(klass),
+                       G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
+                       G_STRUCT_OFFSET(CutRunContextClass, failure_in_test_case),
+                       NULL, NULL,
+                       _gcut_marshal_VOID__OBJECT_OBJECT,
+                       G_TYPE_NONE, 2, CUT_TYPE_TEST_CASE, CUT_TYPE_TEST_RESULT);
+
+    signals[ERROR_IN_TEST_CASE]
+        = g_signal_new("error-in-test-case",
+                       G_TYPE_FROM_CLASS(klass),
+                       G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
+                       G_STRUCT_OFFSET(CutRunContextClass, error_in_test_case),
+                       NULL, NULL,
+                       _gcut_marshal_VOID__OBJECT_OBJECT,
+                       G_TYPE_NONE, 2, CUT_TYPE_TEST_CASE, CUT_TYPE_TEST_RESULT);
+
+    signals[PENDING_IN_TEST_CASE]
+        = g_signal_new("pending-in-test-case",
+                       G_TYPE_FROM_CLASS(klass),
+                       G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
+                       G_STRUCT_OFFSET(CutRunContextClass, pending_in_test_case),
+                       NULL, NULL,
+                       _gcut_marshal_VOID__OBJECT_OBJECT,
+                       G_TYPE_NONE, 2, CUT_TYPE_TEST_CASE, CUT_TYPE_TEST_RESULT);
+
+    signals[NOTIFICATION_IN_TEST_CASE]
+        = g_signal_new("notification-in-test-case",
+                       G_TYPE_FROM_CLASS(klass),
+                       G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
+                       G_STRUCT_OFFSET(CutRunContextClass,
+                                       notification_in_test_case),
+                       NULL, NULL,
+                       _gcut_marshal_VOID__OBJECT_OBJECT,
+                       G_TYPE_NONE, 2, CUT_TYPE_TEST_CASE, CUT_TYPE_TEST_RESULT);
+
+    signals[OMISSION_IN_TEST_CASE]
+        = g_signal_new("omission-in-test-case",
+                       G_TYPE_FROM_CLASS (klass),
+                       G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
+                       G_STRUCT_OFFSET(CutRunContextClass,
+                                       omission_in_test_case),
+                       NULL, NULL,
+                       _gcut_marshal_VOID__OBJECT_OBJECT,
+                       G_TYPE_NONE, 2, CUT_TYPE_TEST_CASE, CUT_TYPE_TEST_RESULT);
+
     signals[COMPLETE_TEST_CASE]
         = g_signal_new("complete-test-case",
                        G_TYPE_FROM_CLASS(klass),
@@ -1127,10 +1211,7 @@ pass_assertion (CutRunContext   *context,
 }
 
 static void
-success_test (CutRunContext   *context,
-              CutTest         *test,
-              CutTestContext  *test_context,
-              CutTestResult   *result)
+register_success_result (CutRunContext *context, CutTestResult *result)
 {
     CutRunContextPrivate *priv;
 
@@ -1142,10 +1223,7 @@ success_test (CutRunContext   *context,
 }
 
 static void
-failure_test (CutRunContext   *context,
-              CutTest         *test,
-              CutTestContext  *test_context,
-              CutTestResult   *result)
+register_failure_result (CutRunContext *context, CutTestResult *result)
 {
     CutRunContextPrivate *priv= CUT_RUN_CONTEXT_GET_PRIVATE(context);
 
@@ -1156,10 +1234,7 @@ failure_test (CutRunContext   *context,
 }
 
 static void
-error_test (CutRunContext   *context,
-            CutTest         *test,
-            CutTestContext  *test_context,
-            CutTestResult   *result)
+register_error_result (CutRunContext *context, CutTestResult *result)
 {
     CutRunContextPrivate *priv;
 
@@ -1171,10 +1246,7 @@ error_test (CutRunContext   *context,
 }
 
 static void
-pending_test (CutRunContext   *context,
-              CutTest         *test,
-              CutTestContext  *test_context,
-              CutTestResult   *result)
+register_pending_result (CutRunContext *context, CutTestResult *result)
 {
     CutRunContextPrivate *priv;
 
@@ -1186,10 +1258,7 @@ pending_test (CutRunContext   *context,
 }
 
 static void
-notification_test (CutRunContext   *context,
-                   CutTest         *test,
-                   CutTestContext  *test_context,
-                   CutTestResult   *result)
+register_notification_result (CutRunContext  *context, CutTestResult *result)
 {
     CutRunContextPrivate *priv;
 
@@ -1201,10 +1270,7 @@ notification_test (CutRunContext   *context,
 }
 
 static void
-omission_test (CutRunContext   *context,
-               CutTest         *test,
-               CutTestContext  *test_context,
-               CutTestResult   *result)
+register_omission_result (CutRunContext *context, CutTestResult *result)
 {
     CutRunContextPrivate *priv;
 
@@ -1213,6 +1279,100 @@ omission_test (CutRunContext   *context,
     priv->results = g_list_prepend(priv->results, g_object_ref(result));
     priv->n_omissions++;
     g_mutex_unlock(priv->mutex);
+}
+
+static void
+success_test (CutRunContext   *context,
+              CutTest         *test,
+              CutTestContext  *test_context,
+              CutTestResult   *result)
+{
+    register_success_result(context, result);
+}
+
+static void
+failure_test (CutRunContext   *context,
+              CutTest         *test,
+              CutTestContext  *test_context,
+              CutTestResult   *result)
+{
+    register_failure_result(context, result);
+}
+
+static void
+error_test (CutRunContext   *context,
+            CutTest         *test,
+            CutTestContext  *test_context,
+            CutTestResult   *result)
+{
+    register_error_result(context, result);
+}
+
+static void
+pending_test (CutRunContext   *context,
+              CutTest         *test,
+              CutTestContext  *test_context,
+              CutTestResult   *result)
+{
+    register_pending_result(context, result);
+}
+
+static void
+notification_test (CutRunContext   *context,
+                   CutTest         *test,
+                   CutTestContext  *test_context,
+                   CutTestResult   *result)
+{
+    register_notification_result(context, result);
+}
+
+static void
+omission_test (CutRunContext   *context,
+               CutTest         *test,
+               CutTestContext  *test_context,
+               CutTestResult   *result)
+{
+    register_omission_result(context, result);
+}
+
+static void
+failure_in_test_case (CutRunContext   *context,
+                      CutTestCase     *test,
+                      CutTestResult   *result)
+{
+    register_failure_result(context, result);
+}
+
+static void
+error_in_test_case (CutRunContext   *context,
+                    CutTestCase     *test,
+                    CutTestResult   *result)
+{
+    register_error_result(context, result);
+}
+
+static void
+pending_in_test_case (CutRunContext   *context,
+                      CutTestCase     *test,
+                      CutTestResult   *result)
+{
+    register_pending_result(context, result);
+}
+
+static void
+notification_in_test_case (CutRunContext   *context,
+                           CutTestCase     *test,
+                           CutTestResult   *result)
+{
+    register_notification_result(context, result);
+}
+
+static void
+omission_in_test_case (CutRunContext   *context,
+                       CutTestCase     *test,
+                       CutTestResult   *result)
+{
+    register_omission_result(context, result);
 }
 
 static void

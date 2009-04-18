@@ -1,5 +1,9 @@
 2009-04-18  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-run-context.[ch], cutter/cut-test-case.[ch],
+	cutter/cut-test.[ch], cutter/cut-test-runner.c: test context is
+	also available in cut_startup()/cut_shutdown() context.
+
 	* cutter/cut-test-context.c, cutter/cut-public.h: the current test
 	context is managed as stack.
 	* cutter/cutter.h, cutter/cut-loader.c,

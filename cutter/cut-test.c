@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2009  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -100,6 +100,10 @@ static gboolean     is_available (CutTest        *test,
 static void         invoke       (CutTest        *test,
                                   CutTestContext *test_context,
                                   CutRunContext  *run_context);
+static void         emit_result_signal
+                                 (CutTest        *test,
+                                  CutTestContext *test_context,
+                                  CutTestResult  *result);
 
 static void
 cut_test_class_init (CutTestClass *klass)
@@ -119,6 +123,7 @@ cut_test_class_init (CutTestClass *klass)
     klass->run = run;
     klass->is_available = is_available;
     klass->invoke = invoke;
+    klass->emit_result_signal = emit_result_signal;
 
     spec = g_param_spec_string("name",
                                "Test name",
@@ -687,21 +692,37 @@ cut_test_to_xml_string (CutTest *test, GString *string, guint indent)
 }
 
 void
-cut_test_emit_result_signal (CutTest *test,
-                             CutTestContext *test_context,
-                             CutTestResult *result)
+cut_test_set_result_elapsed (CutTest *test, CutTestResult *result)
 {
     CutTestPrivate *priv;
-    const gchar *status_signal_name = NULL;
-    CutTestResultStatus status;
 
     priv = CUT_TEST_GET_PRIVATE(test);
     cut_test_result_set_start_time(result, &(priv->start_time));
     cut_test_result_set_elapsed(result, cut_test_get_elapsed(test));
+}
+
+static void
+emit_result_signal (CutTest *test,
+                    CutTestContext *test_context,
+                    CutTestResult *result)
+{
+    const gchar *status_signal_name = NULL;
+    CutTestResultStatus status;
 
     status = cut_test_result_get_status(result);
     status_signal_name = cut_test_result_status_to_signal_name(status);
     g_signal_emit_by_name(test, status_signal_name, test_context, result);
+}
+
+void
+cut_test_emit_result_signal (CutTest *test,
+                             CutTestContext *test_context,
+                             CutTestResult *result)
+{
+    cut_test_set_result_elapsed(test, result);
+
+    return CUT_TEST_GET_CLASS(test)->emit_result_signal(test, test_context,
+                                                        result);
 }
 
 /*

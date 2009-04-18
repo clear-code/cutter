@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2009  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -65,6 +65,23 @@ struct _CutTestCaseClass
                            CutTestIterator *test_iterator,
                            CutTestContext *test_context,
                            gboolean        success);
+
+    void (*failure_in)    (CutTestCase    *test_case,
+                           CutTestContext *test_context,
+                           CutTestResult  *result);
+    void (*error_in)      (CutTestCase    *test_case,
+                           CutTestContext *test_context,
+                           CutTestResult  *result);
+    void (*pending_in)    (CutTestCase    *test_case,
+                           CutTestContext *test_context,
+                           CutTestResult  *result);
+    void (*notification_in)
+                          (CutTestCase    *test_case,
+                           CutTestContext *test_context,
+                           CutTestResult  *result);
+    void (*omission_in)   (CutTestCase    *test_case,
+                           CutTestContext *test_context,
+                           CutTestResult  *result);
 };
 
 GType        cut_test_case_get_type       (void) G_GNUC_CONST;
