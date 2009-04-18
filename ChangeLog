@@ -1,3 +1,9 @@
+2009-04-18  Kouhei Sutou  <kou@cozmixng.org>
+
+	* TODO: add: cut_thread_create(): it pushes the current test
+	context. tests written by user will not case the current test
+	context.
+
 2009-04-16  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cutter.h: make setup() and teardown() deprecated, use

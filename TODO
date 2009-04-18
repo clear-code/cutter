@@ -1,3 +1,5 @@
+* cut_thread_create(): it pushes the current test context. tests written by
+  user will not case the current test context.
 * show test name on crash. [1.0.7] MUST for Poppler.
 * priority mode.
 * auto-cutter.
