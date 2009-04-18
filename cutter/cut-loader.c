@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2009  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -574,9 +574,8 @@ register_test (CutLoader *loader, CutTestCase *test_case,
     cut_test_set_base_directory(test, priv->base_directory);
 
     if (attributes_setup_function) {
-        CutTestContext *test_context, *original_test_context;
+        CutTestContext *test_context;
 
-        original_test_context = cut_test_context_current_get();
         if (data_setup_function) {
             test_context = cut_test_context_new(NULL, NULL, test_case,
                                                 CUT_TEST_ITERATOR(test), NULL);
@@ -584,9 +583,9 @@ register_test (CutLoader *loader, CutTestCase *test_case,
             test_context = cut_test_context_new(NULL, NULL, test_case,
                                                 NULL, test);
         }
-        cut_test_context_current_set(test_context);
+        cut_test_context_current_push(test_context);
         attributes_setup_function();
-        cut_test_context_current_set(original_test_context);
+        cut_test_context_current_pop();
         g_object_unref(test_case);
     }
 
