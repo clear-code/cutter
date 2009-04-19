@@ -1,3 +1,8 @@
+2009-04-19  Kouhei Sutou  <kou@cozmixng.org>
+
+	* test/cutter/test-cut-test-case.c: add tests for
+	{failure,error,pending,notification,omission}-in signal.
+
 2009-04-18  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-run-context.[ch], cutter/cut-test-case.[ch],

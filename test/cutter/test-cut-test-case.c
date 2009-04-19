@@ -21,14 +21,27 @@ void test_failure_signal(void);
 void test_error_signal(void);
 void test_pending_signal(void);
 void test_notification_signal(void);
-void test_complete_signal(void);
 void test_omission_signal(void);
+void test_failure_in_signal(void);
+void test_error_in_signal(void);
+void test_pending_in_signal(void);
+void test_notification_in_signal(void);
+void test_omission_in_signal(void);
+void test_complete_signal(void);
 
 static CutTestCase *test_object;
 static CutRunContext *run_context;
 
+static gboolean set_failure_on_startup = FALSE;
+static gboolean set_error_on_startup = FALSE;
+static gboolean set_pending_on_startup = FALSE;
+static gboolean set_notification_on_startup = FALSE;
+static gboolean set_omission_on_startup = FALSE;
+
 static gboolean set_error_on_setup = FALSE;
 
+static gint n_startup = 0;
+static gint n_shutdown = 0;
 static gint n_setup = 0;
 static gint n_teardown = 0;
 static gint n_run_stub_run_test_function = 0;
@@ -90,9 +103,10 @@ stub_omission_test (void)
 static void
 stub_setup_function (void)
 {
+    n_setup++;
+
     if (set_error_on_setup)
         cut_error("Error in setup");
-    n_setup++;
 }
 
 static void
@@ -101,13 +115,45 @@ stub_teardown_function (void)
     n_teardown++;
 }
 
+static void
+stub_startup_function (void)
+{
+    n_startup++;
+
+    if (set_failure_on_startup) {
+        cut_fail("failure in startup");
+    } else if (set_error_on_startup) {
+        cut_error("error in startup");
+    } else if (set_pending_on_startup) {
+        cut_pend("pending in startup");
+    } else if (set_notification_on_startup) {
+        cut_notify("notification in startup");
+    } else if (set_omission_on_startup) {
+        cut_omit("omission in startup");
+    }
+}
+
+static void
+stub_shutdown_function (void)
+{
+    n_shutdown++;
+}
+
 void
 cut_setup (void)
 {
     const gchar *test_names[] = {"/.*/", NULL};
 
+    set_failure_on_startup = FALSE;
+    set_error_on_startup = FALSE;
+    set_pending_on_startup = FALSE;
+    set_notification_on_startup = FALSE;
+    set_omission_on_startup = FALSE;
+
     set_error_on_setup = FALSE;
 
+    n_startup = 0;
+    n_shutdown = 0;
     n_setup = 0;
     n_teardown = 0;
     n_run_stub_run_test_function = 0;
@@ -120,7 +166,8 @@ cut_setup (void)
     test_object = cut_test_case_new("stub test case",
                                     stub_setup_function,
                                     stub_teardown_function,
-                                    NULL, NULL);
+                                    stub_startup_function,
+                                    stub_shutdown_function);
     cuttest_add_test(test_object, "stub_test_1", stub_test_function1);
     cuttest_add_test(test_object, "stub_test_2", stub_test_function2);
     cuttest_add_test(test_object, "run_test_function", stub_run_test_function);
@@ -153,6 +200,14 @@ cb_count_complete_test (CutTestCase *test_case, CutTest *test,
 static void
 cb_count_status (CutTest *test, CutTestContext *test_context,
                  CutTestResult *result, gpointer data)
+{
+    gint *count = data;
+    *count += 1;
+}
+
+static void
+cb_count_status_in (CutTestCase *test_case, CutTestContext *test_context,
+                    CutTestResult *result, gpointer data)
 {
     gint *count = data;
     *count += 1;
@@ -355,19 +410,6 @@ test_notification_signal (void)
 }
 
 void
-test_complete_signal (void)
-{
-    gint n_complete_tests = 0;
-    g_signal_connect(test_object, "complete-test",
-                     G_CALLBACK(cb_count_complete_test), &n_complete_tests);
-    cut_assert(cut_test_case_run(test_object, run_context));
-    g_signal_handlers_disconnect_by_func(test_object,
-                                         G_CALLBACK(cb_count_complete_test),
-                                         &n_complete_tests);
-    cut_assert_equal_int(3, n_complete_tests);
-}
-
-void
 test_omission_signal (void)
 {
     gint n_omissions = 0;
@@ -380,6 +422,94 @@ test_omission_signal (void)
                                          G_CALLBACK(cb_count_status),
                                          &n_omissions);
     cut_assert_equal_int(1, n_omissions);
+}
+
+void
+test_failure_in_signal (void)
+{
+    gint n_failures_in = 0;
+
+    set_failure_on_startup = TRUE;
+    g_signal_connect(test_object, "failure-in",
+                     G_CALLBACK(cb_count_status_in), &n_failures_in);
+    cut_assert(!cut_test_case_run(test_object, run_context));
+    g_signal_handlers_disconnect_by_func(test_object,
+                                         G_CALLBACK(cb_count_status_in),
+                                         &n_failures_in);
+    cut_assert_equal_int(1, n_failures_in);
+}
+
+void
+test_error_in_signal (void)
+{
+    gint n_errors_in = 0;
+
+    set_error_on_startup = TRUE;
+    g_signal_connect(test_object, "error-in",
+                     G_CALLBACK(cb_count_status_in), &n_errors_in);
+    cut_assert(!cut_test_case_run(test_object, run_context));
+    g_signal_handlers_disconnect_by_func(test_object,
+                                         G_CALLBACK(cb_count_status_in),
+                                         &n_errors_in);
+    cut_assert_equal_int(1, n_errors_in);
+}
+
+void
+test_pending_in_signal (void)
+{
+    gint n_pendings_in = 0;
+
+    set_pending_on_startup = TRUE;
+    g_signal_connect(test_object, "pending-in",
+                     G_CALLBACK(cb_count_status_in), &n_pendings_in);
+    cut_assert(!cut_test_case_run(test_object, run_context));
+    g_signal_handlers_disconnect_by_func(test_object,
+                                         G_CALLBACK(cb_count_status_in),
+                                         &n_pendings_in);
+    cut_assert_equal_int(1, n_pendings_in);
+}
+
+void
+test_notification_in_signal (void)
+{
+    gint n_notifications_in = 0;
+
+    set_notification_on_startup = TRUE;
+    g_signal_connect(test_object, "notification-in",
+                     G_CALLBACK(cb_count_status_in), &n_notifications_in);
+    cut_assert(cut_test_case_run(test_object, run_context));
+    g_signal_handlers_disconnect_by_func(test_object,
+                                         G_CALLBACK(cb_count_status_in),
+                                         &n_notifications_in);
+    cut_assert_equal_int(1, n_notifications_in);
+}
+
+void
+test_omission_in_signal (void)
+{
+    gint n_omissions_in = 0;
+
+    set_omission_on_startup = TRUE;
+    g_signal_connect(test_object, "omission-in",
+                     G_CALLBACK(cb_count_status_in), &n_omissions_in);
+    cut_assert(cut_test_case_run(test_object, run_context));
+    g_signal_handlers_disconnect_by_func(test_object,
+                                         G_CALLBACK(cb_count_status_in),
+                                         &n_omissions_in);
+    cut_assert_equal_int(1, n_omissions_in);
+}
+
+void
+test_complete_signal (void)
+{
+    gint n_complete_tests = 0;
+    g_signal_connect(test_object, "complete-test",
+                     G_CALLBACK(cb_count_complete_test), &n_complete_tests);
+    cut_assert(cut_test_case_run(test_object, run_context));
+    g_signal_handlers_disconnect_by_func(test_object,
+                                         G_CALLBACK(cb_count_complete_test),
+                                         &n_complete_tests);
+    cut_assert_equal_int(3, n_complete_tests);
 }
 
 /*
