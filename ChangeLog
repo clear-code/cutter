@@ -1,5 +1,8 @@
 2009-04-19  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-case.c: consider about cut_shutdown()
+	result status too.
+
 	* cutter/cut-test-case.c, test/cutter/test-cut-test-case.c:
 	emit test case result signal even is cut_startup() stops running
 	test.

@@ -593,25 +593,25 @@ cut_test_case_run_tests (CutTestCase *test_case, CutRunContext *run_context,
     CONNECT(omission);
 
 #undef CONNECT
-    cut_test_case_run_startup(test_case, test_context);
-    g_signal_handlers_disconnect_by_func(test_case,
-                                         G_CALLBACK(cb_test_case_status_in),
-                                         &status);
 
+    cut_test_case_run_startup(test_case, test_context);
     if (cut_test_context_is_failed(test_context)) {
         all_success = FALSE;
     } else {
         if (status != CUT_TEST_RESULT_OMISSION)
             all_success = run_tests(test_case, run_context, tests, &status);
     }
+    cut_test_case_run_shutdown(test_case, test_context);
 
+    g_signal_handlers_disconnect_by_func(test_case,
+                                         G_CALLBACK(cb_test_case_status_in),
+                                         &status);
     result = cut_test_result_new(status,
                                  NULL, NULL, test_case, NULL, NULL,
                                  NULL, NULL, NULL);
     cut_test_case_emit_result_signal(test_case, result);
     g_object_unref(result);
 
-    cut_test_case_run_shutdown(test_case, test_context);
     g_signal_emit_by_name(CUT_TEST(test_case), "complete", NULL, all_success);
 
     g_object_unref(test_context);
