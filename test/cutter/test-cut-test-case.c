@@ -437,6 +437,8 @@ test_failure_in_signal (void)
                                          G_CALLBACK(cb_count_status_in),
                                          &n_failures_in);
     cut_assert_equal_int(1, n_failures_in);
+    cut_assert_equal_int(0, n_setup);
+    cut_assert_equal_int(1, n_shutdown);
 }
 
 void
@@ -452,6 +454,8 @@ test_error_in_signal (void)
                                          G_CALLBACK(cb_count_status_in),
                                          &n_errors_in);
     cut_assert_equal_int(1, n_errors_in);
+    cut_assert_equal_int(0, n_setup);
+    cut_assert_equal_int(1, n_shutdown);
 }
 
 void
@@ -467,6 +471,8 @@ test_pending_in_signal (void)
                                          G_CALLBACK(cb_count_status_in),
                                          &n_pendings_in);
     cut_assert_equal_int(1, n_pendings_in);
+    cut_assert_equal_int(0, n_setup);
+    cut_assert_equal_int(1, n_shutdown);
 }
 
 void
@@ -482,6 +488,8 @@ test_notification_in_signal (void)
                                          G_CALLBACK(cb_count_status_in),
                                          &n_notifications_in);
     cut_assert_equal_int(1, n_notifications_in);
+    cut_assert_equal_int(3, n_setup);
+    cut_assert_equal_int(1, n_shutdown);
 }
 
 void
@@ -497,6 +505,8 @@ test_omission_in_signal (void)
                                          G_CALLBACK(cb_count_status_in),
                                          &n_omissions_in);
     cut_assert_equal_int(1, n_omissions_in);
+    cut_assert_equal_int(0, n_setup);
+    cut_assert_equal_int(1, n_shutdown);
 }
 
 void
