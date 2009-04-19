@@ -704,7 +704,7 @@ test_equal_hash_table_string_string (void)
                            NULL,
                            "<hash1 == hash2>\n"
                            "expected: <{\"def\" => \"22\", \"abc\" => \"11\"}>\n"
-                           "  actual: <{\"zyx\" => \"99\", \"wvu\" => \"88\"}>",
+                           "  actual: <{\"wvu\" => \"88\", \"zyx\" => \"99\"}>",
                            FAIL_LOCATION,
                            "stub_equal_hash_table_string_string");
 }
