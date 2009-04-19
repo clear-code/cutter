@@ -1,6 +1,10 @@
 2009-04-19  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-test-case.c, test/cutter/test-cut-test-case.c:
+	emit test case result signal even is cut_startup() stops running
+	test.
+
+	* cutter/cut-test-case.c, test/cutter/test-cut-test-case.c:
 	support omission in cut_startup().
 
 	* test/cutter/test-cut-test-case.c: add tests for

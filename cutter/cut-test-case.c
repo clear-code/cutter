@@ -516,11 +516,9 @@ cut_test_case_emit_result_signal (CutTestCase *test_case, CutTestResult *result)
 
 static gboolean
 run_tests (CutTestCase *test_case, CutRunContext *run_context,
-           const GList *tests)
+           const GList *tests, CutTestResultStatus *status)
 {
-    CutTestResult *result;
     const GList *list;
-    CutTestResultStatus status = CUT_TEST_RESULT_SUCCESS;
     gboolean all_success = TRUE;
 
     for (list = tests; list; list = g_list_next(list)) {
@@ -531,43 +529,37 @@ run_tests (CutTestCase *test_case, CutRunContext *run_context,
 
         if (CUT_IS_TEST(test)) {
             g_signal_connect(test, "success", G_CALLBACK(cb_test_status),
-                             &status);
+                             status);
             g_signal_connect(test, "failure", G_CALLBACK(cb_test_status),
-                             &status);
+                             status);
             g_signal_connect(test, "error", G_CALLBACK(cb_test_status),
-                             &status);
+                             status);
             g_signal_connect(test, "pending", G_CALLBACK(cb_test_status),
-                             &status);
+                             status);
             g_signal_connect(test, "notification", G_CALLBACK(cb_test_status),
-                             &status);
+                             status);
             g_signal_connect(test, "omission", G_CALLBACK(cb_test_status),
-                             &status);
+                             status);
             if (!run(test_case, test, run_context))
                 all_success = FALSE;
             g_signal_handlers_disconnect_by_func(test,
                                                  G_CALLBACK(cb_test_status),
-                                                 &status);
+                                                 status);
         } else {
             g_warning("This object is not CutTest object");
         }
     }
 
-    result = cut_test_result_new(status,
-                                 NULL, NULL, test_case, NULL, NULL,
-                                 NULL, NULL, NULL);
-    cut_test_case_emit_result_signal(test_case, result);
-    g_object_unref(result);
-
     return all_success;
 }
 
 static void
-cb_test_case_omission_in (CutTestCase *test_case, CutTestContext *test_context,
-                          CutTestResult *result, gpointer data)
+cb_test_case_status_in (CutTestCase *test_case, CutTestContext *test_context,
+                        CutTestResult *result, gpointer data)
 {
-    gboolean *is_omission_in = data;
+    CutTestResultStatus *status = data;
 
-    *is_omission_in = TRUE;
+    *status = MAX(*status, cut_test_result_get_status(result));
 }
 
 static gboolean
@@ -577,7 +569,8 @@ cut_test_case_run_tests (CutTestCase *test_case, CutRunContext *run_context,
     CutTestCasePrivate *priv;
     CutTestContext *test_context;
     gboolean all_success = TRUE;
-    gboolean is_omission_in = FALSE;
+    CutTestResult *result;
+    CutTestResultStatus status = CUT_TEST_RESULT_SUCCESS;
 
     g_signal_emit_by_name(test_case, "ready", g_list_length((GList *)tests));
     g_signal_emit_by_name(CUT_TEST(test_case), "start", NULL);
@@ -588,20 +581,35 @@ cut_test_case_run_tests (CutTestCase *test_case, CutRunContext *run_context,
                                         NULL, test_case, NULL, NULL);
     cut_test_context_current_push(test_context);
 
-    g_signal_connect(test_case, "omission-in",
-                     G_CALLBACK(cb_test_case_omission_in),
-                     &is_omission_in);
+#define CONNECT(event)                                          \
+    g_signal_connect(test_case, #event "-in",                   \
+                     G_CALLBACK(cb_test_case_status_in),        \
+                     &status)
+
+    CONNECT(failure);
+    CONNECT(error);
+    CONNECT(pending);
+    CONNECT(notification);
+    CONNECT(omission);
+
+#undef CONNECT
     cut_test_case_run_startup(test_case, test_context);
     g_signal_handlers_disconnect_by_func(test_case,
-                                         G_CALLBACK(cb_test_case_omission_in),
-                                         &is_omission_in);
+                                         G_CALLBACK(cb_test_case_status_in),
+                                         &status);
 
     if (cut_test_context_is_failed(test_context)) {
         all_success = FALSE;
     } else {
-        if (!is_omission_in)
-            all_success = run_tests(test_case, run_context, tests);
+        if (status != CUT_TEST_RESULT_OMISSION)
+            all_success = run_tests(test_case, run_context, tests, &status);
     }
+
+    result = cut_test_result_new(status,
+                                 NULL, NULL, test_case, NULL, NULL,
+                                 NULL, NULL, NULL);
+    cut_test_case_emit_result_signal(test_case, result);
+    g_object_unref(result);
 
     cut_test_case_run_shutdown(test_case, test_context);
     g_signal_emit_by_name(CUT_TEST(test_case), "complete", NULL, all_success);
