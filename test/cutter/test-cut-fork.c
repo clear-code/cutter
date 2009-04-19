@@ -64,18 +64,18 @@ static gboolean
 run (void)
 {
     gboolean success, is_multi_thread;
-    CutTestContext *original_test_context;
+    CutTestContext *current_test_context;
 
-    original_test_context = cut_get_current_test_context();
     test_context = cut_test_context_new(run_context, NULL, NULL, NULL, test);
 
-    is_multi_thread = cut_test_context_is_multi_thread(original_test_context);
+    current_test_context = cut_test_context_current_peek();
+    is_multi_thread = cut_test_context_is_multi_thread(current_test_context);
     cut_run_context_set_multi_thread(run_context, is_multi_thread);
     cut_test_context_set_multi_thread(test_context, is_multi_thread);
 
-    cut_set_current_test_context(test_context);
+    cut_test_context_current_push(test_context);
     success = cut_test_run(test, test_context, run_context);
-    cut_set_current_test_context(original_test_context);
+    cut_test_context_current_pop();
 
     return success;
 }

@@ -53,15 +53,13 @@ static gboolean
 run (void)
 {
     gboolean success;
-    CutTestContext *original_test_context;
 
     run_context = CUT_RUN_CONTEXT(cut_test_runner_new());
 
     test_context = cut_test_context_new(run_context, NULL, NULL, NULL, test);
-    original_test_context = cut_get_current_test_context();
-    cut_set_current_test_context(test_context);
+    cut_test_context_current_push(test_context);
     success = cut_test_run(test, test_context, run_context);
-    cut_set_current_test_context(original_test_context);
+    cut_test_context_current_pop();
 
     return success;
 }

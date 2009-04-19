@@ -1,5 +1,11 @@
 2009-04-19  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-helper.h: pop backtrace of the current test context
+	when it is called not at the time.
+
+	* test/: use cut_test_context_current_{push,pop}() instead of
+	cut_{set,get}_current_test_context().
+
 	* cutter/cut-test-case.c: consider about cut_shutdown()
 	result status too.
 

@@ -381,7 +381,10 @@ void cut_pop_backtrace(void);
  */
 #define cut_trace_with_info_expression(expression, info_expression) do  \
 {                                                                       \
-    cut_test_context_push_backtrace(cut_get_current_test_context(),     \
+    CutTestContext *_cut_test_context;                                  \
+                                                                        \
+    _cut_test_context = cut_get_current_test_context();                 \
+    cut_test_context_push_backtrace(_cut_test_context,                  \
                                     CUT_RELATIVE_PATH,                  \
                                     __FILE__, __LINE__,                 \
                                     CUT_FUNCTION,                       \
@@ -389,7 +392,7 @@ void cut_pop_backtrace(void);
     do {                                                                \
         expression;                                                     \
     } while (0);                                                        \
-    cut_test_context_pop_backtrace(cut_get_current_test_context());     \
+    cut_test_context_pop_backtrace(_cut_test_context);                  \
 } while (0)
 
 
