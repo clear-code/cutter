@@ -1,3 +1,7 @@
+2009-04-20  Kouhei Sutou  <kou@cozmixng.org>
+
+	* USERS.ja: add UNNO-san.
+
 2009-04-19  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-helper.h: pop backtrace of the current test context
