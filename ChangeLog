@@ -1,3 +1,8 @@
+2009-04-21  Kouhei Sutou  <kou@cozmixng.org>
+
+	* doc/reference/cutter-overrides.txt: add types for
+	gcut_assert_equal_enum() and gcut_assert_equal_flags().
+
 2009-04-20  Kouhei Sutou  <kou@cozmixng.org>
 
 	* USERS.ja: add UNNO-san.

@@ -418,6 +418,18 @@ GHashTable *expected, GHashTable *actual, GEqualFunc equal_function, GCutInspect
 GHashTable *expected, GHashTable *actual, ...
 </FUNCTION>
 
+<FUNCTION>
+<NAME>gcut_assert_equal_enum</NAME>
+<RETURNS>void</RETURNS>
+GType enum_type, gint expected, gint actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_assert_equal_flags</NAME>
+<RETURNS>void</RETURNS>
+GType flags_type, guint expected, guint actual, ...
+</FUNCTION>
+
 # gcut-data.h
 
 <FUNCTION>
