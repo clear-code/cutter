@@ -1,3 +1,7 @@
+2009-04-28  Kouhei Sutou  <kou@clear-code.com>
+
+	* html/index.html*: add a link to ML.
+
 2009-04-21  Kouhei Sutou  <kou@cozmixng.org>
 
 	* doc/reference/cutter-overrides.txt: add types for
