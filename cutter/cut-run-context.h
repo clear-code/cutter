@@ -103,6 +103,10 @@ struct _CutRunContextClass
                                  CutTest        *test,
                                  CutTestContext *test_context,
                                  CutTestResult  *result);
+    void (*crash_test)          (CutRunContext  *context,
+                                 CutTest        *test,
+                                 CutTestContext *test_context,
+                                 CutTestResult  *result);
     void (*complete_test)       (CutRunContext  *context,
                                  CutTest        *test,
                                  CutTestContext *test_context,
@@ -136,6 +140,9 @@ struct _CutRunContextClass
                                 (CutRunContext  *context,
                                  CutTestIterator *test_iterator,
                                  CutTestResult  *result);
+    void (*crash_test_iterator) (CutRunContext  *context,
+                                 CutTestIterator *test_iterator,
+                                 CutTestResult  *result);
     void (*complete_test_iterator)
                                 (CutRunContext  *context,
                                  CutTestIterator *test_iterator,
@@ -160,6 +167,9 @@ struct _CutRunContextClass
     void (*omission_test_case)  (CutRunContext  *context,
                                  CutTestCase    *test_case,
                                  CutTestResult  *result);
+    void (*crash_test_case)     (CutRunContext  *context,
+                                 CutTestCase    *test_case,
+                                 CutTestResult  *result);
 
     void (*failure_in_test_case)(CutRunContext  *context,
                                  CutTestCase    *test_case,
@@ -178,10 +188,17 @@ struct _CutRunContextClass
                                 (CutRunContext  *context,
                                  CutTestCase    *test_case,
                                  CutTestResult  *result);
+    void (*crash_in_test_case)  (CutRunContext  *context,
+                                 CutTestCase    *test_case,
+                                 CutTestResult  *result);
 
     void (*complete_test_case)  (CutRunContext  *context,
                                  CutTestCase    *test_case,
                                  gboolean        success);
+
+    void (*crash_test_suite)    (CutRunContext  *context,
+                                 CutTestSuite   *test_suite,
+                                 CutTestResult  *result);
 
     void (*complete_test_suite) (CutRunContext  *context,
                                  CutTestSuite   *test_suite,
@@ -192,8 +209,6 @@ struct _CutRunContextClass
 
     void (*error)               (CutRunContext  *context,
                                  GError         *error);
-    void (*crashed)             (CutRunContext  *context,
-                                 const gchar    *backtrace);
 };
 
 GType          cut_run_context_get_type  (void) G_GNUC_CONST;
@@ -248,12 +263,7 @@ gdouble        cut_run_context_get_total_elapsed    (CutRunContext *context);
 
 const GList   *cut_run_context_get_results          (CutRunContext *context);
 
-void           cut_run_context_crash                (CutRunContext *context,
-                                                     const gchar   *backtrace);
 gboolean       cut_run_context_is_crashed           (CutRunContext *context);
-const gchar   *cut_run_context_get_backtrace        (CutRunContext *context);
-void           cut_run_context_set_backtrace        (CutRunContext *context,
-                                                     const gchar   *backtrace);
 
 void           cut_run_context_cancel               (CutRunContext *context);
 gboolean       cut_run_context_is_canceled          (CutRunContext *context);

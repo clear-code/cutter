@@ -138,6 +138,15 @@ cb_omission_test (CutTest *test, CutTestContext *test_context,
 }
 
 static void
+cb_crash_test (CutTest *test, CutTestContext *test_context,
+               CutTestResult *result, gpointer data)
+{
+    CutRunContext *context = data;
+
+    g_signal_emit_by_name(context, "crash-test", test, test_context, result);
+}
+
+static void
 cb_complete_test (CutTest *test, CutTestContext *test_context,
                   gboolean success, gpointer data)
 {
@@ -161,6 +170,7 @@ connect_to_test (CutRunContext *context, CutTest *test)
     CONNECT(pending);
     CONNECT(notification);
     CONNECT(omission);
+    CONNECT(crash);
     CONNECT(complete);
 #undef CONNECT
 }
@@ -194,6 +204,7 @@ cb_complete_test_test_case (CutTestCase *test_case, CutTest *test,
     DISCONNECT(pending);
     DISCONNECT(notification);
     DISCONNECT(omission);
+    DISCONNECT(crash);
     DISCONNECT(complete);
 #undef DISCONNECT
 }
@@ -253,6 +264,15 @@ cb_omission_test_case (CutTestCase *test_case, CutTestContext *test_context,
 }
 
 static void
+cb_crash_test_case (CutTestCase *test_case, CutTestContext *test_context,
+                    CutTestResult *result, gpointer data)
+{
+    CutRunContext *context = data;
+
+    g_signal_emit_by_name(context, "crash-test-case", test_case, result);
+}
+
+static void
 cb_failure_in_test_case (CutTestCase *test_case, CutTestContext *test_context,
                          CutTestResult *result, gpointer data)
 {
@@ -301,6 +321,15 @@ cb_omission_in_test_case (CutTestCase *test_case, CutTestContext *test_context,
 }
 
 static void
+cb_crash_in_test_case (CutTestCase *test_case, CutTestContext *test_context,
+                       CutTestResult *result, gpointer data)
+{
+    CutRunContext *context = data;
+
+    g_signal_emit_by_name(context, "crash-in-test-case", test_case, result);
+}
+
+static void
 cb_start_test_case (CutTestCase *test_case, CutTestContext *test_context,
                     gpointer data)
 {
@@ -346,13 +375,12 @@ cb_start_test_suite (CutTestSuite *test_suite, CutTestContext *test_context,
 }
 
 static void
-cb_crashed_test_suite (CutTestSuite *test_suite, const gchar *backtrace,
-                       gpointer data)
+cb_crash_test_suite (CutTestSuite *test_suite, CutTestContext *test_context,
+                     CutTestResult *result, gpointer data)
 {
     CutRunContext *context = data;
 
-    cut_run_context_crash(context, backtrace);
-    g_signal_emit_by_name(context, "crashed", backtrace);
+    g_signal_emit_by_name(context, "crash-test-suite", test_suite, result);
 }
 
 static void
@@ -421,6 +449,14 @@ cb_omission_iterated_test (CutIteratedTest *iterated_test,
 }
 
 static void
+cb_crash_iterated_test (CutIteratedTest *iterated_test,
+                        CutTestContext *test_context,
+                        CutTestResult *result, gpointer data)
+{
+    cb_crash_test(CUT_TEST(iterated_test), test_context, result, data);
+}
+
+static void
 cb_complete_iterated_test (CutIteratedTest *iterated_test,
                            CutTestContext *test_context, gboolean success,
                            gpointer data)
@@ -454,6 +490,7 @@ cb_start_iterated_test_test_iterator (CutTestIterator *test_iterator,
     CONNECT(pending);
     CONNECT(notification);
     CONNECT(omission);
+    CONNECT(crash);
 #undef CONNECT
 }
 
@@ -481,6 +518,7 @@ cb_complete_iterated_test_test_iterator (CutTestIterator *test_iterator,
     DISCONNECT(pending);
     DISCONNECT(notification);
     DISCONNECT(omission);
+    DISCONNECT(crash);
 #undef DISCONNECT
 }
 
@@ -551,6 +589,17 @@ cb_omission_test_iterator (CutTestIterator *test_iterator,
 }
 
 static void
+cb_crash_test_iterator (CutTestIterator *test_iterator,
+                        CutTestContext *test_context,
+                        CutTestResult *result, gpointer data)
+{
+    CutRunContext *context = data;
+
+    g_signal_emit_by_name(context, "crash-test-iterator",
+                          test_iterator, result);
+}
+
+static void
 cb_start_test_iterator (CutTestIterator *test_iterator,
                         CutTestContext *test_context, gpointer data)
 {
@@ -597,6 +646,7 @@ connect_to_test_iterator (CutRunContext *context, CutTestIterator *test_iterator
     CONNECT(pending);
     CONNECT(notification);
     CONNECT(omission);
+    CONNECT(crash);
 
     CONNECT(ready);
     CONNECT(start);
@@ -640,6 +690,7 @@ cb_complete_test_iterator_test_case (CutTestCase *test_case,
     DISCONNECT(pending);
     DISCONNECT(notification);
     DISCONNECT(omission);
+    DISCONNECT(crash);
 
     DISCONNECT(ready);
     DISCONNECT(start);
@@ -665,12 +716,14 @@ connect_to_test_case (CutRunContext *context, CutTestCase *test_case)
     CONNECT(pending);
     CONNECT(notification);
     CONNECT(omission);
+    CONNECT(crash);
 
     CONNECT(failure_in);
     CONNECT(error_in);
     CONNECT(pending_in);
     CONNECT(notification_in);
     CONNECT(omission_in);
+    CONNECT(crash_in);
 
     CONNECT(ready);
     CONNECT(start);
@@ -713,6 +766,7 @@ cb_complete_test_case_test_suite (CutTestSuite *test_suite,
     DISCONNECT(pending);
     DISCONNECT(notification);
     DISCONNECT(omission);
+    DISCONNECT(crash);
 
     DISCONNECT(ready);
     DISCONNECT(start);
@@ -735,8 +789,8 @@ cb_complete_test_suite (CutTestSuite *test_suite, CutTestContext *test_context,
 
     DISCONNECT(ready);
     DISCONNECT(start);
+    DISCONNECT(crash);
     DISCONNECT(complete);
-    DISCONNECT(crashed);
 
     DISCONNECT(start_test_case);
     DISCONNECT(complete_test_case);
@@ -755,8 +809,8 @@ connect_to_test_suite (CutRunContext *context, CutTestSuite *test_suite)
 
     CONNECT(ready);
     CONNECT(start);
+    CONNECT(crash);
     CONNECT(complete);
-    CONNECT(crashed);
 
     CONNECT(start_test_case);
     CONNECT(complete_test_case);

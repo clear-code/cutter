@@ -24,7 +24,7 @@ void test_run_test_with_regex_in_test_case_with_regex (void);
 void test_run_test_in_test_case_with_null (void);
 void test_run_test_with_filter_with_null (void);
 #ifndef G_OS_WIN32
-void test_crashed_signal (void);
+void test_crash_signal (void);
 #endif
 
 static CutRunContext *run_context;
@@ -39,7 +39,7 @@ static gint n_run_stock_run_test_function = 0;
 static gint n_run_stock_test_function1 = 0;
 static gint n_run_stock_test_function2 = 0;
 
-static gint n_crashed_signal = 0;
+static gint n_crash_signal = 0;
 
 static void
 stub_test_function1 (void)
@@ -83,15 +83,15 @@ stock_run_test_function (void)
 
 #ifndef G_OS_WIN32
 static void
-stub_crashed_function (void)
+stub_crash_function (void)
 {
     raise(SIGSEGV);
 }
 
 static void
-cb_crashed_signal (CutTest *test, gpointer data)
+cb_crash_signal (CutTest *test, CutTestResult *result, gpointer data)
 {
-    n_crashed_signal++;
+    n_crash_signal++;
 }
 #endif
 
@@ -107,7 +107,7 @@ cut_setup (void)
     n_run_stock_test_function1 = 0;
     n_run_stock_test_function2 = 0;
     n_run_stock_run_test_function = 0;
-    n_crashed_signal = 0;
+    n_crash_signal = 0;
 
     run_context = CUT_RUN_CONTEXT(cut_test_runner_new());
 
@@ -320,22 +320,21 @@ test_run_test_with_filter_with_null (void)
 
 #ifndef G_OS_WIN32
 void
-test_crashed_signal (void)
+test_crash_signal (void)
 {
     CutTestCase *test_case;
 
     test_case = cut_test_case_new("crash_test_case", NULL, NULL, NULL, NULL);
-    cuttest_add_test(test_case, "crash_test", stub_crashed_function);
+    cuttest_add_test(test_case, "crash_test", stub_crash_function);
     cut_test_suite_add_test_case(test_object, test_case);
     g_object_unref(test_case);
 
-    g_signal_connect(test_object, "crashed",
-                     G_CALLBACK(cb_crashed_signal), NULL);
+    g_signal_connect(test_object, "crash", G_CALLBACK(cb_crash_signal), NULL);
     cut_assert_false(run_test_in_test_case("crash_test", "crash_test_case"));
     g_signal_handlers_disconnect_by_func(test_object,
-                                         G_CALLBACK(cb_crashed_signal),
+                                         G_CALLBACK(cb_crash_signal),
                                          NULL);
-    cut_assert_equal_int(1, n_crashed_signal);
+    cut_assert_equal_int(1, n_crash_signal);
 }
 #endif
 

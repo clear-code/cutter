@@ -1,6 +1,7 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
  *  Copyright (C) 2008  g新部 Hiroyuki Ikezoe  <poincare@ikezoe.net>
+ *  Copyright (C) 2009  Kouhei Sutou  <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -111,6 +112,8 @@ static gchar   *get_error_results        (CutReport   *report);
 static gchar   *get_failure_results      (CutReport   *report);
 static gchar   *get_pending_results      (CutReport   *report);
 static gchar   *get_notification_results (CutReport   *report);
+static gchar   *get_omission_results     (CutReport   *report);
+static gchar   *get_crash_results        (CutReport   *report);
 static gchar   *get_test_result          (CutReport   *report,
                                           const gchar *test_name);
 
@@ -136,6 +139,8 @@ class_init (CutPDFReportClass *klass)
     report_class->get_failure_results      = get_failure_results;
     report_class->get_pending_results      = get_pending_results;
     report_class->get_notification_results = get_notification_results;
+    report_class->get_omission_results     = get_omission_results;
+    report_class->get_crash_results        = get_crash_results;
     report_class->get_test_result          = get_test_result;
 
     spec = g_param_spec_object("cut-run-context",
@@ -576,12 +581,6 @@ cb_complete_run (CutRunContext *run_context, gboolean success,
 }
 
 static void
-cb_crashed (CutRunContext *run_context, const gchar *backtrace,
-            CutPDFReport *report)
-{
-}
-
-static void
 connect_to_run_context (CutPDFReport *report, CutRunContext *run_context)
 {
 #define CONNECT(name) \
@@ -600,13 +599,13 @@ connect_to_run_context (CutPDFReport *report, CutRunContext *run_context)
     CONNECT_TO_TEST(error_test);
     CONNECT_TO_TEST(pending_test);
     CONNECT_TO_TEST(notification_test);
+    CONNECT_TO_TEST(omission_test);
+    CONNECT_TO_TEST(crash_test);
 
     CONNECT(complete_test);
     CONNECT(complete_test_case);
     CONNECT(complete_test_suite);
     CONNECT(complete_run);
-
-    CONNECT(crashed);
 
 #undef CONNECT
 }
@@ -628,8 +627,6 @@ disconnect_from_run_context (CutPDFReport *report, CutRunContext *run_context)
     DISCONNECT(complete_test_case);
     DISCONNECT(complete_test_suite);
     DISCONNECT(complete_run);
-
-    DISCONNECT(crashed);
 
     g_signal_handlers_disconnect_by_func(run_context,
                                          G_CALLBACK(cb_test_signal),
@@ -698,6 +695,18 @@ get_pending_results (CutReport *report)
 
 static gchar *
 get_notification_results (CutReport *report)
+{
+    return NULL;
+}
+
+static gchar *
+get_omission_results (CutReport *report)
+{
+    return NULL;
+}
+
+static gchar *
+get_crash_results (CutReport *report)
 {
     return NULL;
 }

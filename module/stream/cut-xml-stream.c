@@ -694,23 +694,6 @@ cb_complete_run (CutRunContext *run_context, gboolean success,
 }
 
 static void
-cb_crashed (CutRunContext *run_context, const gchar *backtrace,
-            CutXMLStream *stream)
-{
-    GString *string;
-
-    string = g_string_new(NULL);
-
-    g_string_append(string, "  <crashed>\n");
-    cut_utils_append_xml_element_with_value(string, 4, "backtrace", backtrace);
-    g_string_append(string, "  </crashed>\n");
-
-    flow(stream, "%s", string->str);
-
-    g_string_free(string, TRUE);
-}
-
-static void
 connect_to_run_context (CutXMLStream *stream, CutRunContext *run_context)
 {
 #define CONNECT(name)                                                   \
@@ -746,6 +729,7 @@ connect_to_run_context (CutXMLStream *stream, CutRunContext *run_context)
     CONNECT_TO_TEST(pending);
     CONNECT_TO_TEST(notification);
     CONNECT_TO_TEST(omission);
+    CONNECT_TO_TEST(crash);
 
     CONNECT_TO_TEST_ITERATOR(success);
     CONNECT_TO_TEST_ITERATOR(failure);
@@ -753,6 +737,7 @@ connect_to_run_context (CutXMLStream *stream, CutRunContext *run_context)
     CONNECT_TO_TEST_ITERATOR(pending);
     CONNECT_TO_TEST_ITERATOR(notification);
     CONNECT_TO_TEST_ITERATOR(omission);
+    CONNECT_TO_TEST_ITERATOR(crash);
 
     CONNECT_TO_TEST_CASE(success);
     CONNECT_TO_TEST_CASE(failure);
@@ -760,6 +745,7 @@ connect_to_run_context (CutXMLStream *stream, CutRunContext *run_context)
     CONNECT_TO_TEST_CASE(pending);
     CONNECT_TO_TEST_CASE(notification);
     CONNECT_TO_TEST_CASE(omission);
+    CONNECT_TO_TEST_CASE(crash);
 
     CONNECT(complete_test);
     CONNECT(complete_iterated_test);
@@ -767,8 +753,6 @@ connect_to_run_context (CutXMLStream *stream, CutRunContext *run_context)
     CONNECT(complete_test_case);
     CONNECT(complete_test_suite);
     CONNECT(complete_run);
-
-    CONNECT(crashed);
 
 #undef CONNECT
 }
@@ -811,8 +795,6 @@ disconnect_from_run_context (CutXMLStream *stream,
     DISCONNECT(complete_test_case);
     DISCONNECT(complete_test_suite);
     DISCONNECT(complete_run);
-
-    DISCONNECT(crashed);
 
 #undef DISCONNECT
 }

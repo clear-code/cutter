@@ -1,3 +1,8 @@
+2009-05-03  Kouhei Sutou  <kou@cozmixng.org>
+
+	* ./: make 'crash' a test result. TODO: need to handle SIGSEGV
+	each test, test iterator and test case.
+
 2009-04-28  Kouhei Sutou  <kou@clear-code.com>
 
 	* html/index.html*: add a link to ML.

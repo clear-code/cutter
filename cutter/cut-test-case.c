@@ -66,6 +66,7 @@ enum
     PENDING_IN,
     NOTIFICATION_IN,
     OMISSION_IN,
+    CRASH_IN,
 
     LAST_SIGNAL
 };
@@ -227,6 +228,16 @@ cut_test_case_class_init (CutTestCaseClass *klass)
                        G_TYPE_FROM_CLASS(klass),
                        G_SIGNAL_RUN_LAST,
                        G_STRUCT_OFFSET(CutTestCaseClass, omission_in),
+                       NULL, NULL,
+                       _gcut_marshal_VOID__OBJECT_OBJECT,
+                       G_TYPE_NONE, 2,
+                       CUT_TYPE_TEST_CONTEXT, CUT_TYPE_TEST_RESULT);
+
+    cut_test_case_signals[CRASH_IN]
+        = g_signal_new("crash-in",
+                       G_TYPE_FROM_CLASS(klass),
+                       G_SIGNAL_RUN_LAST,
+                       G_STRUCT_OFFSET(CutTestCaseClass, crash_in),
                        NULL, NULL,
                        _gcut_marshal_VOID__OBJECT_OBJECT,
                        G_TYPE_NONE, 2,
@@ -540,6 +551,8 @@ run_tests (CutTestCase *test_case, CutRunContext *run_context,
                              status);
             g_signal_connect(test, "omission", G_CALLBACK(cb_test_status),
                              status);
+            g_signal_connect(test, "crash", G_CALLBACK(cb_test_status),
+                             status);
             if (!run(test_case, test, run_context))
                 all_success = FALSE;
             g_signal_handlers_disconnect_by_func(test,
@@ -591,6 +604,7 @@ cut_test_case_run_tests (CutTestCase *test_case, CutRunContext *run_context,
     CONNECT(pending);
     CONNECT(notification);
     CONNECT(omission);
+    CONNECT(crash);
 
 #undef CONNECT
 

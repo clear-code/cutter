@@ -27,7 +27,7 @@ void test_complete_test_suite (void);
 void test_complete_run_without_success_tag (void);
 void test_complete_run_with_success_true (void);
 void test_complete_run_with_success_false (void);
-void test_crashed (void);
+void test_crash_test (void);
 
 static CutStreamParser *parser;
 static CutTestResult *result;
@@ -1696,12 +1696,98 @@ test_complete_run_with_success_false (void)
 }
 
 void
-test_crashed (void)
+test_crash_test (void)
 {
-    gchar header[] =
-        "<stream>\n";
+    gchar xml[] =
+        "<stream>\n"
+        "  <test-result>\n"
+        "    <test>\n"
+        "      <name>stub-crash-test</name>\n"
+        "      <description>Crash Test</description>\n"
+        "      <option>\n"
+        "        <name>bug</name>\n"
+        "        <value>1234</value>\n"
+        "      </option>\n"
+        "    </test>\n"
+        "    <test-context>\n"
+        "      <test-case>\n"
+        "        <name>stub test case</name>\n"
+        "      </test-case>\n"
+        "      <test>\n"
+        "        <name>stub-crash-test</name>\n"
+        "        <description>Crash Test</description>\n"
+        "        <option>\n"
+        "          <name>bug</name>\n"
+        "          <value>1234</value>\n"
+        "        </option>\n"
+        "      </test>\n"
+        "      <failed>TRUE</failed>\n"
+        "    </test-context>\n"
+        "    <result>\n"
+        "      <test-case>\n"
+        "        <name>stub test case</name>\n"
+        "      </test-case>\n"
+        "      <test>\n"
+        "        <name>stub-crash-test</name>\n"
+        "        <description>Crash Test</description>\n"
+        "        <option>\n"
+        "          <name>bug</name>\n"
+        "          <value>1234</value>\n"
+        "        </option>\n"
+        "      </test>\n"
+        "      <status>crash</status>\n"
+        "      <detail>This test should crash</detail>\n"
+        "      <backtrace>\n"
+        "        <entry>\n"
+        "          <file>test-cut-stream-parser.c</file>\n"
+        "          <line>1099</line>\n"
+        "          <info>test_crash_test()</info>\n"
+        "        </entry>\n"
+        "        <entry>\n"
+        "          <info>cut_test_run()</info>\n"
+        "        </entry>\n"
+        "        <entry>\n"
+        "          <info>run()</info>\n"
+        "        </entry>\n"
+        "        <entry>\n"
+        "          <info>cut_test_case_run_with_filter()</info>\n"
+        "        </entry>\n"
+        "        <entry>\n"
+        "          <file>cut-test-suite.c</file>\n"
+        "          <line>129</line>\n"
+        "          <info>run()</info>\n"
+        "        </entry>\n"
+        "        <entry>\n"
+        "          <info>cut_test_suite_run_test_cases()</info>\n"
+        "        </entry>\n"
+        "        <entry>\n"
+        "          <info>cut_test_suite_run_with_filter()</info>\n"
+        "        </entry>\n"
+        "        <entry>\n"
+        "          <file>cut-runner.c</file>\n"
+        "          <line>67</line>\n"
+        "          <info>cut_runner_run()</info>\n"
+        "        </entry>\n"
+        "        <entry>\n"
+        "          <info>cut_run_context_start()</info>\n"
+        "        </entry>\n"
+        "        <entry>\n"
+        "          <info>cut_start_run_context()</info>\n"
+        "        </entry>\n"
+        "        <entry>\n"
+        "          <file>cut-main.c</file>\n"
+        "          <line>317</line>\n"
+        "          <info>cut_run()</info>\n"
+        "        </entry>\n"
+        "      </backtrace>\n"
+        "      <start-time>2008-07-29T05:16:40Z</start-time>\n"
+        "      <elapsed>0.000100</elapsed>\n"
+        "    </result>\n"
+        "  </test-result>\n"
+        "</stream>\n";
+/*
     gchar crashed_backtrace[] =
-        "#4  0x00007fd67b4fbfc5 in test_crashed () at test-cut-stream-parser.c:1099\n"
+        "#4  0x00007fd67b4fbfc5 in test_crash_test () at test-cut-stream-parser.c:1099\n"
         "#5  0x00007fd68285ea77 in cut_test_run (test=0xfc0e30, test_context=0xf90840, \n"
         "#6  0x00007fd682860cc4 in run (test_case=0xfb3400, test=0xfc0e30, \n"
         "#7  0x00007fd682860e9d in cut_test_case_run_with_filter (test_case=0xfb3400, \n"
@@ -1712,19 +1798,16 @@ test_crashed (void)
         "#12 0x00007fd68285bc7f in cut_run_context_start (context=0xf8d840)\n"
         "#13 0x00007fd68285e072 in cut_start_run_context (run_context=0xf8d840)\n"
         "#14 0x00007fd68285e1be in cut_run () at cut-main.c:317\n";
+*/
 
 
-    cut_assert_parse(header);
+    g_signal_connect(parser, "result",
+                     G_CALLBACK(collect_result), (gpointer)&result);
 
-    cut_assert_parse("  <crashed>\n");
-    cut_assert_parse("    <backtrace>");
-    cut_assert_parse(crashed_backtrace);
-    cut_assert_parse("</backtrace>\n");
-    cut_assert_null(receiver->crasheds);
-    cut_assert_parse("  </crashed>\n");
-    cut_assert_equal_int(1, g_list_length(receiver->crasheds));
+    cut_assert_parse(xml);
 
-    cut_assert_equal_string(crashed_backtrace, receiver->crasheds->data);
+    cut_assert_equal_int(CUT_TEST_RESULT_CRASH,
+                         cut_test_result_get_status(result));
 }
 
 /*

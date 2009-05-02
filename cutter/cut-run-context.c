@@ -131,6 +131,7 @@ enum
     PENDING_TEST,
     NOTIFICATION_TEST,
     OMISSION_TEST,
+    CRASH_TEST,
 
     SUCCESS_TEST_ITERATOR,
     FAILURE_TEST_ITERATOR,
@@ -138,6 +139,7 @@ enum
     PENDING_TEST_ITERATOR,
     NOTIFICATION_TEST_ITERATOR,
     OMISSION_TEST_ITERATOR,
+    CRASH_TEST_ITERATOR,
 
     SUCCESS_TEST_CASE,
     FAILURE_TEST_CASE,
@@ -145,12 +147,16 @@ enum
     PENDING_TEST_CASE,
     NOTIFICATION_TEST_CASE,
     OMISSION_TEST_CASE,
+    CRASH_TEST_CASE,
 
     FAILURE_IN_TEST_CASE,
     ERROR_IN_TEST_CASE,
     PENDING_IN_TEST_CASE,
     NOTIFICATION_IN_TEST_CASE,
     OMISSION_IN_TEST_CASE,
+    CRASH_IN_TEST_CASE,
+
+    CRASH_TEST_SUITE,
 
     COMPLETE_ITERATED_TEST,
     COMPLETE_TEST,
@@ -160,7 +166,6 @@ enum
     COMPLETE_RUN,
 
     ERROR,
-    CRASHED,
 
     LAST_SIGNAL
 };
@@ -223,6 +228,10 @@ static void omission_test  (CutRunContext   *context,
                             CutTest         *test,
                             CutTestContext  *test_context,
                             CutTestResult   *result);
+static void crash_test     (CutRunContext   *context,
+                            CutTest         *test,
+                            CutTestContext  *test_context,
+                            CutTestResult   *result);
 static void complete_test  (CutRunContext   *context,
                             CutTest         *test,
                             CutTestContext  *test_context,
@@ -253,11 +262,18 @@ static void omission_in_test_case
                            (CutRunContext   *context,
                             CutTestCase     *test_case,
                             CutTestResult   *result);
+static void crash_in_test_case
+                           (CutRunContext   *context,
+                            CutTestCase     *test_case,
+                            CutTestResult   *result);
+
+static void crash_test_suite
+                           (CutRunContext   *context,
+                            CutTestSuite    *test_suite,
+                            CutTestResult   *result);
 
 static void complete_run   (CutRunContext   *context,
                             gboolean         success);
-static void crashed        (CutRunContext   *context,
-                            const gchar     *backtrace);
 
 static gboolean runner_run (CutRunner *runner);
 
@@ -284,6 +300,7 @@ cut_run_context_class_init (CutRunContextClass *klass)
     klass->pending_test      = pending_test;
     klass->notification_test = notification_test;
     klass->omission_test     = omission_test;
+    klass->crash_test        = crash_test;
     klass->complete_test     = complete_test;
     klass->complete_iterated_test = complete_iterated_test;
 
@@ -292,9 +309,11 @@ cut_run_context_class_init (CutRunContextClass *klass)
     klass->pending_in_test_case = pending_in_test_case;
     klass->notification_in_test_case = notification_in_test_case;
     klass->omission_in_test_case = omission_in_test_case;
+    klass->crash_in_test_case = crash_in_test_case;
+
+    klass->crash_test_suite  = crash_test_suite;
 
     klass->complete_run      = complete_run;
-    klass->crashed           = crashed;
 
     spec = g_param_spec_uint("n-tests",
                              "Number of tests",
@@ -618,6 +637,17 @@ cut_run_context_class_init (CutRunContextClass *klass)
                        CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT,
                        CUT_TYPE_TEST_RESULT);
 
+    signals[CRASH_TEST]
+        = g_signal_new("crash-test",
+                       G_TYPE_FROM_CLASS(klass),
+                       G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
+                       G_STRUCT_OFFSET(CutRunContextClass, crash_test),
+                       NULL, NULL,
+                       _gcut_marshal_VOID__OBJECT_OBJECT_OBJECT,
+                       G_TYPE_NONE, 3,
+                       CUT_TYPE_TEST, CUT_TYPE_TEST_CONTEXT,
+                       CUT_TYPE_TEST_RESULT);
+
     signals[COMPLETE_ITERATED_TEST]
         = g_signal_new("complete-iterated-test",
                        G_TYPE_FROM_CLASS(klass),
@@ -699,6 +729,15 @@ cut_run_context_class_init (CutRunContextClass *klass)
                        _gcut_marshal_VOID__OBJECT_OBJECT,
                        G_TYPE_NONE, 2, CUT_TYPE_TEST_ITERATOR, CUT_TYPE_TEST_RESULT);
 
+    signals[CRASH_TEST_ITERATOR]
+        = g_signal_new("crash-test-iterator",
+                       G_TYPE_FROM_CLASS (klass),
+                       G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
+                       G_STRUCT_OFFSET(CutRunContextClass, crash_test_iterator),
+                       NULL, NULL,
+                       _gcut_marshal_VOID__OBJECT_OBJECT,
+                       G_TYPE_NONE, 2, CUT_TYPE_TEST_ITERATOR, CUT_TYPE_TEST_RESULT);
+
     signals[COMPLETE_TEST_ITERATOR]
         = g_signal_new("complete-test-iterator",
                        G_TYPE_FROM_CLASS(klass),
@@ -763,6 +802,15 @@ cut_run_context_class_init (CutRunContextClass *klass)
                        _gcut_marshal_VOID__OBJECT_OBJECT,
                        G_TYPE_NONE, 2, CUT_TYPE_TEST_CASE, CUT_TYPE_TEST_RESULT);
 
+    signals[CRASH_TEST_CASE]
+        = g_signal_new("crash-test-case",
+                       G_TYPE_FROM_CLASS (klass),
+                       G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
+                       G_STRUCT_OFFSET(CutRunContextClass, crash_test_case),
+                       NULL, NULL,
+                       _gcut_marshal_VOID__OBJECT_OBJECT,
+                       G_TYPE_NONE, 2, CUT_TYPE_TEST_CASE, CUT_TYPE_TEST_RESULT);
+
     signals[FAILURE_IN_TEST_CASE]
         = g_signal_new("failure-in-test-case",
                        G_TYPE_FROM_CLASS(klass),
@@ -810,6 +858,16 @@ cut_run_context_class_init (CutRunContextClass *klass)
                        _gcut_marshal_VOID__OBJECT_OBJECT,
                        G_TYPE_NONE, 2, CUT_TYPE_TEST_CASE, CUT_TYPE_TEST_RESULT);
 
+    signals[CRASH_IN_TEST_CASE]
+        = g_signal_new("crash-in-test-case",
+                       G_TYPE_FROM_CLASS (klass),
+                       G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
+                       G_STRUCT_OFFSET(CutRunContextClass,
+                                       crash_in_test_case),
+                       NULL, NULL,
+                       _gcut_marshal_VOID__OBJECT_OBJECT,
+                       G_TYPE_NONE, 2, CUT_TYPE_TEST_CASE, CUT_TYPE_TEST_RESULT);
+
     signals[COMPLETE_TEST_CASE]
         = g_signal_new("complete-test-case",
                        G_TYPE_FROM_CLASS(klass),
@@ -818,6 +876,15 @@ cut_run_context_class_init (CutRunContextClass *klass)
                        NULL, NULL,
                        _gcut_marshal_VOID__OBJECT_BOOLEAN,
                        G_TYPE_NONE, 2, CUT_TYPE_TEST_CASE, G_TYPE_BOOLEAN);
+
+    signals[CRASH_TEST_SUITE]
+        = g_signal_new("crash-test-suite",
+                       G_TYPE_FROM_CLASS(klass),
+                       G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
+                       G_STRUCT_OFFSET(CutRunContextClass, crash_test_suite),
+                       NULL, NULL,
+                       _gcut_marshal_VOID__OBJECT_OBJECT,
+                       G_TYPE_NONE, 2, CUT_TYPE_TEST_SUITE, CUT_TYPE_TEST_RESULT);
 
     signals[COMPLETE_TEST_SUITE]
         = g_signal_new("complete-test-suite",
@@ -846,15 +913,6 @@ cut_run_context_class_init (CutRunContextClass *klass)
                         g_cclosure_marshal_VOID__POINTER,
                        G_TYPE_NONE, 1, G_TYPE_POINTER);
 
-    signals[CRASHED]
-        = g_signal_new("crashed",
-                       G_TYPE_FROM_CLASS(klass),
-                       G_SIGNAL_RUN_LAST | G_SIGNAL_DETAILED,
-                       G_STRUCT_OFFSET(CutRunContextClass, crashed),
-                       NULL, NULL,
-                       g_cclosure_marshal_VOID__STRING,
-                       G_TYPE_NONE, 1, G_TYPE_STRING);
-
     g_type_class_add_private(gobject_class, sizeof(CutRunContextPrivate));
 }
 
@@ -880,7 +938,6 @@ cut_run_context_init (CutRunContext *context)
     priv->max_threads = 10;
     priv->mutex = g_mutex_new();
     priv->crashed = FALSE;
-    priv->backtrace = NULL;
     priv->test_directory = NULL;
     priv->source_directory = NULL;
     priv->log_directory = NULL;
@@ -1282,6 +1339,18 @@ register_omission_result (CutRunContext *context, CutTestResult *result)
 }
 
 static void
+register_crash_result (CutRunContext *context, CutTestResult *result)
+{
+    CutRunContextPrivate *priv;
+
+    priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
+    priv->crashed = TRUE;
+    g_mutex_lock(priv->mutex);
+    priv->results = g_list_prepend(priv->results, g_object_ref(result));
+    g_mutex_unlock(priv->mutex);
+}
+
+static void
 success_test (CutRunContext   *context,
               CutTest         *test,
               CutTestContext  *test_context,
@@ -1336,6 +1405,15 @@ omission_test (CutRunContext   *context,
 }
 
 static void
+crash_test (CutRunContext   *context,
+            CutTest         *test,
+            CutTestContext  *test_context,
+            CutTestResult   *result)
+{
+    register_crash_result(context, result);
+}
+
+static void
 failure_in_test_case (CutRunContext   *context,
                       CutTestCase     *test,
                       CutTestResult   *result)
@@ -1373,6 +1451,22 @@ omission_in_test_case (CutRunContext   *context,
                        CutTestResult   *result)
 {
     register_omission_result(context, result);
+}
+
+static void
+crash_in_test_case (CutRunContext   *context,
+                    CutTestCase     *test,
+                    CutTestResult   *result)
+{
+    register_crash_result(context, result);
+}
+
+static void
+crash_test_suite (CutRunContext   *context,
+                  CutTestSuite    *test_suite,
+                  CutTestResult   *result)
+{
+    register_crash_result(context, result);
 }
 
 static void
@@ -1416,16 +1510,6 @@ complete_run (CutRunContext *context, gboolean success)
     g_mutex_unlock(priv->mutex);
 }
 
-static void
-crashed (CutRunContext *context, const gchar *backtrace)
-{
-    CutRunContextPrivate *priv;
-
-    priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
-    priv->crashed = TRUE;
-    g_free(priv->backtrace);
-    priv->backtrace = g_strdup(backtrace);
-}
 
 void
 cut_run_context_set_test_directory (CutRunContext *context,
@@ -1637,7 +1721,9 @@ cut_run_context_get_status (CutRunContext *context)
 
     priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
 
-    if (priv->n_errors > 0) {
+    if (priv->crashed) {
+        status = CUT_TEST_RESULT_CRASH;
+    } else if (priv->n_errors > 0) {
         status = CUT_TEST_RESULT_ERROR;
     } else if (priv->n_failures > 0) {
         status = CUT_TEST_RESULT_FAILURE;
@@ -1685,38 +1771,10 @@ cut_run_context_get_results (CutRunContext *context)
     return priv->reversed_results;
 }
 
-void
-cut_run_context_crash (CutRunContext *context, const gchar *backtrace)
-{
-    CUT_RUN_CONTEXT_GET_PRIVATE(context)->crashed = TRUE;
-    cut_run_context_set_backtrace(context, backtrace);
-}
-
 gboolean
 cut_run_context_is_crashed (CutRunContext *context)
 {
     return CUT_RUN_CONTEXT_GET_PRIVATE(context)->crashed;
-}
-
-const gchar *
-cut_run_context_get_backtrace (CutRunContext *context)
-{
-    return CUT_RUN_CONTEXT_GET_PRIVATE(context)->backtrace;
-}
-
-void
-cut_run_context_set_backtrace (CutRunContext *context, const gchar *backtrace)
-{
-    CutRunContextPrivate *priv;
-
-    priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
-    if (priv->backtrace) {
-        g_free(priv->backtrace);
-        priv->backtrace = NULL;
-    }
-
-    if (backtrace)
-        priv->backtrace = g_strdup(backtrace);
 }
 
 void
@@ -1728,7 +1786,10 @@ cut_run_context_cancel (CutRunContext *context)
 gboolean
 cut_run_context_is_canceled (CutRunContext *context)
 {
-    return CUT_RUN_CONTEXT_GET_PRIVATE(context)->canceled;
+    CutRunContextPrivate *priv;
+
+    priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
+    return priv->canceled || priv->crashed;
 }
 
 CutTestSuite *
@@ -2149,6 +2210,18 @@ cb_delegate_omission_test (CutRunContext *context,
                   test, test_context, result);
 }
 
+static void
+cb_delegate_crash_test (CutRunContext *context,
+                        CutTest *test,
+                        CutTestContext *test_context,
+                        CutTestResult *result,
+                        gpointer user_data)
+{
+    CutRunContext *other_context = user_data;
+    g_signal_emit(other_context, signals[CRASH_TEST], detail_delegate,
+                  test, test_context, result);
+}
+
 
 static void
 cb_delegate_complete_test (CutRunContext *context,
@@ -2243,6 +2316,18 @@ cb_delegate_omission_test_iterator (CutRunContext *context,
 }
 
 static void
+cb_delegate_crash_test_iterator (CutRunContext *context,
+                                 CutTestIterator *test_iterator,
+                                 CutTestResult *result,
+                                 gpointer user_data)
+{
+    CutRunContext *other_context = user_data;
+    g_signal_emit(other_context, signals[CRASH_TEST_ITERATOR],
+                  detail_delegate,
+                  test_iterator, result);
+}
+
+static void
 cb_delegate_complete_test_iterator (CutRunContext *context,
                                     CutTestIterator *test_iterator,
                                     gboolean success,
@@ -2321,6 +2406,17 @@ cb_delegate_omission_test_case (CutRunContext *context,
 }
 
 static void
+cb_delegate_crash_test_case (CutRunContext *context,
+                             CutTestCase *test_case,
+                             CutTestResult *result,
+                             gpointer user_data)
+{
+    CutRunContext *other_context = user_data;
+    g_signal_emit(other_context, signals[CRASH_TEST_CASE], detail_delegate,
+                  test_case, result);
+}
+
+static void
 cb_delegate_complete_test_case (CutRunContext *context,
                                 CutTestCase *test_case,
                                 gboolean success,
@@ -2338,15 +2434,6 @@ cb_delegate_error (CutRunContext *context, GError *error, gpointer user_data)
     CutRunContext *other_context = user_data;
     g_signal_emit(other_context, signals[ERROR], detail_delegate,
                   error);
-}
-
-static void
-cb_delegate_crashed (CutRunContext *context, const gchar *backtrace,
-                     gpointer user_data)
-{
-    CutRunContext *other_context = user_data;
-    g_signal_emit(other_context, signals[CRASHED], detail_delegate,
-                  backtrace);
 }
 
 
@@ -2375,6 +2462,7 @@ cb_delegate_complete_run (CutRunContext *context, gboolean success,
     DISCONNECT_DELEGATE_SIGNAL(pending_test);
     DISCONNECT_DELEGATE_SIGNAL(notification_test);
     DISCONNECT_DELEGATE_SIGNAL(omission_test);
+    DISCONNECT_DELEGATE_SIGNAL(crash_test);
 
     DISCONNECT_DELEGATE_SIGNAL(complete_test);
     DISCONNECT_DELEGATE_SIGNAL(complete_iterated_test);
@@ -2385,6 +2473,7 @@ cb_delegate_complete_run (CutRunContext *context, gboolean success,
     DISCONNECT_DELEGATE_SIGNAL(pending_test_iterator);
     DISCONNECT_DELEGATE_SIGNAL(notification_test_iterator);
     DISCONNECT_DELEGATE_SIGNAL(omission_test_iterator);
+    DISCONNECT_DELEGATE_SIGNAL(crash_test_iterator);
     DISCONNECT_DELEGATE_SIGNAL(complete_test_iterator);
 
     DISCONNECT_DELEGATE_SIGNAL(success_test_case);
@@ -2393,10 +2482,10 @@ cb_delegate_complete_run (CutRunContext *context, gboolean success,
     DISCONNECT_DELEGATE_SIGNAL(pending_test_case);
     DISCONNECT_DELEGATE_SIGNAL(notification_test_case);
     DISCONNECT_DELEGATE_SIGNAL(omission_test_case);
+    DISCONNECT_DELEGATE_SIGNAL(crash_test_case);
     DISCONNECT_DELEGATE_SIGNAL(complete_test_case);
 
     DISCONNECT_DELEGATE_SIGNAL(error);
-    DISCONNECT_DELEGATE_SIGNAL(crashed);
 
     DISCONNECT_DELEGATE_SIGNAL(complete_run);
 
@@ -2430,6 +2519,7 @@ cut_run_context_delegate_signals (CutRunContext *context,
     CONNECT_DELEGATE_SIGNAL(pending_test);
     CONNECT_DELEGATE_SIGNAL(notification_test);
     CONNECT_DELEGATE_SIGNAL(omission_test);
+    CONNECT_DELEGATE_SIGNAL(crash_test);
 
     CONNECT_DELEGATE_SIGNAL(complete_test);
     CONNECT_DELEGATE_SIGNAL(complete_iterated_test);
@@ -2440,6 +2530,7 @@ cut_run_context_delegate_signals (CutRunContext *context,
     CONNECT_DELEGATE_SIGNAL(pending_test_iterator);
     CONNECT_DELEGATE_SIGNAL(notification_test_iterator);
     CONNECT_DELEGATE_SIGNAL(omission_test_iterator);
+    CONNECT_DELEGATE_SIGNAL(crash_test_iterator);
     CONNECT_DELEGATE_SIGNAL(complete_test_iterator);
 
     CONNECT_DELEGATE_SIGNAL(success_test_case);
@@ -2448,10 +2539,10 @@ cut_run_context_delegate_signals (CutRunContext *context,
     CONNECT_DELEGATE_SIGNAL(pending_test_case);
     CONNECT_DELEGATE_SIGNAL(notification_test_case);
     CONNECT_DELEGATE_SIGNAL(omission_test_case);
+    CONNECT_DELEGATE_SIGNAL(crash_test_case);
     CONNECT_DELEGATE_SIGNAL(complete_test_case);
 
     CONNECT_DELEGATE_SIGNAL(error);
-    CONNECT_DELEGATE_SIGNAL(crashed);
 
     CONNECT_DELEGATE_SIGNAL(complete_run);
 #undef CONNECT_DELEGATE_SIGNAL

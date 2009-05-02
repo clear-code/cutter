@@ -1,6 +1,7 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
  *  Copyright (C) 2008  g新部 Hiroyuki Ikezoe  <poincare@ikezoe.net>
+ *  Copyright (C) 2009  Kouhei Sutou  <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -48,6 +49,8 @@ struct _CutReportClass
     gchar   *(*get_failure_results)(CutReport        *report);
     gchar   *(*get_pending_results)(CutReport        *report);
     gchar   *(*get_notification_results) (CutReport  *report);
+    gchar   *(*get_omission_results)(CutReport       *report);
+    gchar   *(*get_crash_results)  (CutReport        *report);
     gchar   *(*get_test_result)    (CutReport        *report,
                                     const gchar      *test_name);
 };
@@ -67,6 +70,8 @@ gchar       *cut_report_get_error_results        (CutReport *report);
 gchar       *cut_report_get_failure_results      (CutReport *report);
 gchar       *cut_report_get_pending_results      (CutReport *report);
 gchar       *cut_report_get_notification_results (CutReport *report);
+gchar       *cut_report_get_omission_results     (CutReport *report);
+gchar       *cut_report_get_crash_results        (CutReport *report);
 
 G_END_DECLS
 

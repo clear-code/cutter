@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2009  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -551,20 +551,23 @@ result_status_to_name (CutTestResultStatus status)
       case CUT_TEST_RESULT_SUCCESS:
         return "success";
         break;
+      case CUT_TEST_RESULT_NOTIFICATION:
+        return "notification";
+        break;
+      case CUT_TEST_RESULT_OMISSION:
+        return "omission";
+        break;
+      case CUT_TEST_RESULT_PENDING:
+        return "pending";
+        break;
       case CUT_TEST_RESULT_FAILURE:
         return "failure";
         break;
       case CUT_TEST_RESULT_ERROR:
         return "error";
         break;
-      case CUT_TEST_RESULT_PENDING:
-        return "pending";
-        break;
-      case CUT_TEST_RESULT_NOTIFICATION:
-        return "notification";
-        break;
-      case CUT_TEST_RESULT_OMISSION:
-        return "omission";
+      case CUT_TEST_RESULT_CRASH:
+        return "crash";
         break;
       default:
         return "unknown status";
@@ -678,6 +681,9 @@ cut_test_result_status_to_signal_name (CutTestResultStatus status)
         break;
       case CUT_TEST_RESULT_ERROR:
         signal_name = "error";
+        break;
+      case CUT_TEST_RESULT_CRASH:
+        signal_name = "crash";
         break;
       default:
         signal_name = "invalid status";

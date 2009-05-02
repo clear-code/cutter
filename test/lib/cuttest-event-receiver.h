@@ -55,7 +55,6 @@ struct _CuttestEventReceiver
     GList *complete_test_cases;
     GList *complete_test_suites;
     GList *complete_runs;
-    GList *crasheds;
 };
 
 struct _CuttestEventReceiverClass

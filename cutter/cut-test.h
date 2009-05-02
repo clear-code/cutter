@@ -74,11 +74,12 @@ struct _CutTestClass
     void (*omission)       (CutTest        *test,
                             CutTestContext *context,
                             CutTestResult  *result);
+    void (*crash)          (CutTest        *test,
+                            CutTestContext *context,
+                            CutTestResult  *result);
     void (*complete)       (CutTest        *test,
                             CutTestContext *context,
                             gboolean        success);
-    void (*crashed)        (CutTest        *test,
-                            const gchar    *backtrace);
 
     gdouble      (*get_elapsed)  (CutTest *test);
     void         (*set_elapsed)  (CutTest *test, gdouble elapsed);

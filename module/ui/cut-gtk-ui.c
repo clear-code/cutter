@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2009  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -536,6 +536,9 @@ status_to_color (CutTestResultStatus status, gboolean only_if_not_success)
       case CUT_TEST_RESULT_ERROR:
         color = "purple";
         break;
+      case CUT_TEST_RESULT_CRASH:
+        color = "red";
+        break;
       default:
         break;
     }
@@ -567,6 +570,9 @@ get_status_icon (GtkTreeView *tree_view, CutTestResultStatus status)
         break;
       case CUT_TEST_RESULT_ERROR:
         stock_id = GTK_STOCK_CANCEL;
+        break;
+      case CUT_TEST_RESULT_CRASH:
+        stock_id = GTK_STOCK_STOP;
         break;
       default:
         stock_id = GTK_STOCK_INFO;
@@ -1152,6 +1158,19 @@ cb_omission_test (CutRunContext *run_context,
     idle_add_append_test_result_row(info, result);
 }
 
+static void
+cb_crash_test (CutRunContext *run_context,
+               CutTest *test, CutTestContext *context,
+               CutTestResult *result, gpointer data)
+{
+    TestRowInfo *info = data;
+
+    update_status(info, CUT_TEST_RESULT_CRASH);
+
+    g_idle_add(idle_cb_update_test_row_status, data);
+    idle_add_append_test_result_row(info, result);
+}
+
 static gboolean
 idle_cb_push_running_test_message (gpointer data)
 {
@@ -1214,6 +1233,7 @@ cb_complete_test (CutRunContext *run_context,
     DISCONNECT(pending_test);
     DISCONNECT(notification_test);
     DISCONNECT(omission_test);
+    DISCONNECT(crash_test);
     DISCONNECT(complete_test);
 #undef DISCONNECT
 }
@@ -1246,6 +1266,7 @@ cb_start_test (CutRunContext *run_context,
     CONNECT(pending_test);
     CONNECT(notification_test);
     CONNECT(omission_test);
+    CONNECT(crash_test);
     CONNECT(complete_test);
 #undef CONNECT
 }
@@ -1345,52 +1366,11 @@ cb_complete_test_suite (CutRunContext *run_context,
     push_complete_test_suite_message(ui);
 }
 
-typedef struct _CrashRowInfo
-{
-    CutGtkUI *ui;
-    gchar *backtrace;
-} CrashRowInfo;
-
-static gboolean
-idle_cb_append_crash_row (gpointer data)
-{
-    CrashRowInfo *info = data;
-    CutGtkUI *ui;
-    GtkTreeIter iter;
-
-    ui = info->ui;
-
-    gtk_tree_store_append(ui->logs, &iter, NULL);
-    gtk_tree_store_set(ui->logs, &iter,
-                       COLUMN_NAME, _("CRASHED!!!"),
-                       COLUMN_DESCRIPTION, info->backtrace,
-                       COLUMN_COLOR, "red",
-                       -1);
-
-    g_object_unref(ui);
-    g_free(info->backtrace);
-    g_free(info);
-
-    return FALSE;
-}
-
 static void
 cb_error (CutRunContext *run_context, const gchar *name, const gchar *detail,
           CutGtkUI *ui)
 {
     g_print("SystemError: %s: %s\n", name, detail);
-}
-
-static void
-cb_crashed (CutRunContext *run_context, const gchar *backtrace, CutGtkUI *ui)
-{
-    CrashRowInfo *info;
-
-    info = g_new0(CrashRowInfo, 1);
-    info->ui = g_object_ref(ui);
-    info->backtrace = g_strdup(backtrace);
-
-    g_idle_add(idle_cb_append_crash_row, info);
 }
 
 static void
@@ -1406,7 +1386,6 @@ connect_to_run_context (CutGtkUI *ui, CutRunContext *run_context)
     CONNECT(complete_run);
 
     CONNECT(error);
-    CONNECT(crashed);
 #undef CONNECT
 }
 
@@ -1425,7 +1404,6 @@ disconnect_from_run_context (CutGtkUI *ui, CutRunContext *run_context)
     DISCONNECT(complete_run);
 
     DISCONNECT(error);
-    DISCONNECT(crashed);
 #undef DISCONNECT
 }
 

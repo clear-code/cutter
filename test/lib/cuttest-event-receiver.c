@@ -339,12 +339,6 @@ dispose (GObject *object)
         receiver->complete_runs = NULL;
     }
 
-    if (receiver->crasheds) {
-        g_list_foreach(receiver->crasheds, (GFunc)g_free, NULL);
-        g_list_free(receiver->crasheds);
-        receiver->crasheds = NULL;
-    }
-
     G_OBJECT_CLASS(cuttest_event_receiver_parent_class)->dispose(object);
 }
 
@@ -533,15 +527,6 @@ complete_run (CutRunContext *context, gboolean success)
 }
 
 static void
-crashed (CutRunContext *context, const gchar *backtrace)
-{
-    CuttestEventReceiver *receiver;
-
-    receiver = CUTTEST_EVENT_RECEIVER(context);
-    receiver->crasheds = g_list_append(receiver->crasheds, g_strdup(backtrace));
-}
-
-static void
 cuttest_event_receiver_class_init (CuttestEventReceiverClass *klass)
 {
     GObjectClass *gobject_class;
@@ -568,7 +553,6 @@ cuttest_event_receiver_class_init (CuttestEventReceiverClass *klass)
     run_context_class->complete_test_case = complete_test_case;
     run_context_class->complete_test_suite = complete_test_suite;
     run_context_class->complete_run = complete_run;
-    run_context_class->crashed = crashed;
 }
 
 static void
@@ -589,7 +573,6 @@ cuttest_event_receiver_init (CuttestEventReceiver *receiver)
     receiver->complete_test_cases = NULL;
     receiver->complete_test_suites = NULL;
     receiver->complete_runs = NULL;
-    receiver->crasheds = NULL;
 }
 
 CutRunContext *

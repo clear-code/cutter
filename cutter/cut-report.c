@@ -1,6 +1,7 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
  *  Copyright (C) 2008  g新部 Hiroyuki Ikezoe  <poincare@ikezoe.net>
+ *  Copyright (C) 2009  Kouhei Sutou  <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -240,6 +241,34 @@ cut_report_get_notification_results (CutReport *report)
     klass = CUT_REPORT_GET_CLASS(report);
     if (klass->get_notification_results)
         return klass->get_notification_results(report);
+    else
+        return NULL;
+}
+
+gchar *
+cut_report_get_omission_results (CutReport *report)
+{
+    CutReportClass *klass;
+
+    g_return_val_if_fail(CUT_IS_REPORT(report), NULL);
+
+    klass = CUT_REPORT_GET_CLASS(report);
+    if (klass->get_omission_results)
+        return klass->get_omission_results(report);
+    else
+        return NULL;
+}
+
+gchar *
+cut_report_get_crash_results (CutReport *report)
+{
+    CutReportClass *klass;
+
+    g_return_val_if_fail(CUT_IS_REPORT(report), NULL);
+
+    klass = CUT_REPORT_GET_CLASS(report);
+    if (klass->get_crash_results)
+        return klass->get_crash_results(report);
     else
         return NULL;
 }

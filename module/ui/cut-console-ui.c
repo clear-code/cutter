@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2009  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -308,25 +308,28 @@ status_to_name(CutTestResultStatus status)
     const gchar *name;
 
     switch (status) {
-      case CUT_TEST_RESULT_SUCCESS:
+    case CUT_TEST_RESULT_SUCCESS:
         name = "Success";
         break;
-      case CUT_TEST_RESULT_NOTIFICATION:
+    case CUT_TEST_RESULT_NOTIFICATION:
         name = "Notification";
         break;
-      case CUT_TEST_RESULT_OMISSION:
+    case CUT_TEST_RESULT_OMISSION:
         name = "Omission";
         break;
-      case CUT_TEST_RESULT_PENDING:
+    case CUT_TEST_RESULT_PENDING:
         name = "Pending";
         break;
-      case CUT_TEST_RESULT_FAILURE:
+    case CUT_TEST_RESULT_FAILURE:
         name = "Failure";
         break;
-      case CUT_TEST_RESULT_ERROR:
+    case CUT_TEST_RESULT_ERROR:
         name = "Error";
         break;
-      default:
+    case CUT_TEST_RESULT_CRASH:
+        name = "Crash";
+        break;
+    default:
         name = "MUST NOT HAPPEN!!!";
         break;
     }
@@ -340,25 +343,28 @@ status_to_color(CutTestResultStatus status)
     const gchar *color;
 
     switch (status) {
-      case CUT_TEST_RESULT_SUCCESS:
+    case CUT_TEST_RESULT_SUCCESS:
         color = GREEN_COLOR;
         break;
-      case CUT_TEST_RESULT_NOTIFICATION:
+    case CUT_TEST_RESULT_NOTIFICATION:
         color = CYAN_COLOR;
         break;
-      case CUT_TEST_RESULT_OMISSION:
+    case CUT_TEST_RESULT_OMISSION:
         color = BLUE_COLOR;
         break;
-      case CUT_TEST_RESULT_PENDING:
+    case CUT_TEST_RESULT_PENDING:
         color = MAGENTA_COLOR;
         break;
-      case CUT_TEST_RESULT_FAILURE:
+    case CUT_TEST_RESULT_FAILURE:
         color = RED_COLOR;
         break;
-      case CUT_TEST_RESULT_ERROR:
+    case CUT_TEST_RESULT_ERROR:
         color = YELLOW_COLOR;
         break;
-      default:
+    case CUT_TEST_RESULT_CRASH:
+        color = CRASH_COLOR;
+        break;
+    default:
         color = "";
         break;
     }
@@ -584,6 +590,36 @@ cb_error_test (CutRunContext  *run_context,
 }
 
 static void
+handle_crash (CutRunContext  *run_context,
+              CutTestResult  *result,
+              CutConsoleUI   *console)
+{
+    if (console->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
+        return;
+    print_progress(console, CUT_TEST_RESULT_CRASH, "!");
+    fflush(stdout);
+}
+
+static void
+cb_crash_test (CutRunContext  *run_context,
+               CutTest        *test,
+               CutTestContext *test_context,
+               CutTestResult  *result,
+               CutConsoleUI   *console)
+{
+    handle_crash(run_context, result, console);
+}
+
+static void
+cb_crash_test_suite (CutRunContext  *run_context,
+                     CutTestSuite   *test_suite,
+                     CutTestResult  *result,
+                     CutConsoleUI   *console)
+{
+    handle_crash(run_context, result, console);
+}
+
+static void
 cb_complete_test (CutRunContext *run_context, CutTest *test,
                   CutTestContext *test_context, gboolean success,
                   CutConsoleUI *console)
@@ -730,8 +766,7 @@ print_results (CutConsoleUI *console, CutRunContext *run_context)
 }
 
 static void
-print_summary (CutConsoleUI *console, CutRunContext *run_context,
-               gboolean crashed)
+print_summary (CutConsoleUI *console, CutRunContext *run_context)
 {
     guint n_tests, n_assertions, n_successes, n_failures, n_errors;
     guint n_pendings, n_notifications, n_omissions;
@@ -747,11 +782,7 @@ print_summary (CutConsoleUI *console, CutRunContext *run_context,
     n_notifications = cut_run_context_get_n_notifications(run_context);
     n_omissions = cut_run_context_get_n_omissions(run_context);
 
-    if (crashed) {
-        color = CRASH_COLOR;
-    } else {
-        color = status_to_color(cut_run_context_get_status(run_context));
-    }
+    color = status_to_color(cut_run_context_get_status(run_context));
     print_with_color(console, color,
                      "%d test(s), %d assertion(s), %d failure(s), "
                      "%d error(s), %d pending(s), %d omission(s), "
@@ -773,7 +804,6 @@ static void
 cb_complete_run (CutRunContext *run_context, gboolean success,
                  CutConsoleUI *console)
 {
-    gboolean crashed;
     CutVerboseLevel verbose_level;
 
     verbose_level = console->verbose_level;
@@ -783,17 +813,6 @@ cb_complete_run (CutRunContext *run_context, gboolean success,
     if (verbose_level == CUT_VERBOSE_LEVEL_NORMAL)
         g_print("\n");
 
-    crashed = cut_run_context_is_crashed(run_context);
-    if (crashed) {
-        const gchar *backtrace;
-        print_with_color(console, CRASH_COLOR, "CRASH!!!");
-        g_print("\n");
-
-        backtrace = cut_run_context_get_backtrace(run_context);
-        if (backtrace)
-            g_print("%s\n", backtrace);
-    }
-
     print_results(console, run_context);
 
     g_print("\n");
@@ -802,7 +821,7 @@ cb_complete_run (CutRunContext *run_context, gboolean success,
             cut_run_context_get_total_elapsed(run_context));
     g_print("\n\n");
 
-    print_summary(console, run_context, crashed);
+    print_summary(console, run_context);
 }
 
 static void
@@ -814,16 +833,6 @@ cb_error (CutRunContext *run_context, GError *error, CutConsoleUI *console)
     }
 
     console->errors = g_list_append(console->errors, g_error_copy(error));
-}
-
-static void
-cb_crashed (CutRunContext *run_context, const gchar *backtrace,
-            CutConsoleUI *console)
-{
-    if (console->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
-        return;
-    print_with_color(console, CRASH_COLOR, "!");
-    fflush(stdout);
 }
 
 static void
@@ -844,6 +853,9 @@ connect_to_run_context (CutConsoleUI *console, CutRunContext *run_context)
     CONNECT(pending_test);
     CONNECT(failure_test);
     CONNECT(error_test);
+    CONNECT(crash_test);
+
+    CONNECT(crash_test_suite);
 
     CONNECT(complete_test);
     CONNECT(complete_iterated_test);
@@ -853,7 +865,6 @@ connect_to_run_context (CutConsoleUI *console, CutRunContext *run_context)
     CONNECT(complete_run);
 
     CONNECT(error);
-    CONNECT(crashed);
 
 #undef CONNECT
 }
@@ -878,6 +889,9 @@ disconnect_from_run_context (CutConsoleUI *console, CutRunContext *run_context)
     DISCONNECT(pending_test);
     DISCONNECT(failure_test);
     DISCONNECT(error_test);
+    DISCONNECT(crash_test);
+
+    DISCONNECT(crash_test_suite);
 
     DISCONNECT(complete_iterated_test);
     DISCONNECT(complete_test);
@@ -887,7 +901,6 @@ disconnect_from_run_context (CutConsoleUI *console, CutRunContext *run_context)
     DISCONNECT(complete_run);
 
     DISCONNECT(error);
-    DISCONNECT(crashed);
 
 #undef DISCONNECT
 }

@@ -68,8 +68,8 @@ enum
     PENDING,
     NOTIFICATION,
     OMISSION,
+    CRASH,
     COMPLETE,
-    CRASHED,
     LAST_SIGNAL
 };
 
@@ -230,6 +230,16 @@ cut_test_class_init (CutTestClass *klass)
                         G_TYPE_NONE, 2,
                         CUT_TYPE_TEST_CONTEXT, CUT_TYPE_TEST_RESULT);
 
+    cut_test_signals[CRASH]
+        = g_signal_new("crash",
+                        G_TYPE_FROM_CLASS(klass),
+                        G_SIGNAL_RUN_LAST,
+                        G_STRUCT_OFFSET(CutTestClass, crash),
+                        NULL, NULL,
+                        _gcut_marshal_VOID__OBJECT_OBJECT,
+                        G_TYPE_NONE, 2,
+                        CUT_TYPE_TEST_CONTEXT, CUT_TYPE_TEST_RESULT);
+
     cut_test_signals[COMPLETE]
         = g_signal_new("complete",
                        G_TYPE_FROM_CLASS (klass),
@@ -239,14 +249,6 @@ cut_test_class_init (CutTestClass *klass)
                        _gcut_marshal_VOID__OBJECT_BOOLEAN,
                        G_TYPE_NONE, 2, CUT_TYPE_TEST_CONTEXT, G_TYPE_BOOLEAN);
 
-    cut_test_signals[CRASHED]
-        = g_signal_new("crashed",
-                       G_TYPE_FROM_CLASS (klass),
-                       G_SIGNAL_RUN_LAST,
-                       G_STRUCT_OFFSET (CutTestClass, crashed),
-                       NULL, NULL,
-                       g_cclosure_marshal_VOID__STRING,
-                       G_TYPE_NONE, 1, G_TYPE_STRING);
 
     g_type_class_add_private(gobject_class, sizeof(CutTestPrivate));
 }

@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2009  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -41,6 +41,7 @@
 #include "cut-main.h"
 #include "cut-utils.h"
 #include "cut-test-result.h"
+#include "cut-backtrace-entry.h"
 
 #include "../gcutter/gcut-marshalers.h"
 #include "../gcutter/gcut-error.h"
@@ -371,6 +372,42 @@ emit_ready_signal (CutTestSuite *test_suite, GList *test_cases,
     g_signal_emit_by_name(test_suite, "ready", n_test_cases, n_tests);
 }
 
+#ifndef G_OS_WIN32
+static void
+emit_crash_result (CutTestSuite *test_suite)
+{
+    CutTestResult *result;
+    /* GRegex *regex; */
+    GList *parsed_backtrace = NULL;
+    CutBacktraceEntry *entry;
+
+/*     regex = g_regex_new("^#\\d +0x\\d+ in ([a-zA-Z_]+) (.+)\n", */
+/*                         G_REGEX_MULTILINE | G_REGEX_DOTALL, */
+/*                         G_REGEX_MATCH_NEWLINE_ANY, NULL); */
+/*     if (regex) { */
+/*         parsed_backtrace */
+/*         backtrace = g_regex_replace(regex, buffer->str, buffer->len, 0, */
+/*                                     "", 0, NULL); */
+/*         g_regex_unref(regex); */
+/*         g_string_free(buffer, TRUE); */
+/*     } */
+    entry = cut_backtrace_entry_new(backtrace, 0, "unknown", NULL);
+    parsed_backtrace = g_list_append(parsed_backtrace, entry);
+
+    g_free(backtrace);
+    backtrace = NULL;
+
+    result = cut_test_result_new(CUT_TEST_RESULT_CRASH,
+                                 NULL, NULL, NULL, test_suite, NULL,
+                                 NULL, NULL, parsed_backtrace);
+    g_list_foreach(parsed_backtrace, (GFunc)g_object_unref, NULL);
+    g_list_free(parsed_backtrace);
+
+    cut_test_emit_result_signal(CUT_TEST(test_suite), NULL, result);
+    g_object_unref(result);
+}
+#endif
+
 static gboolean
 cut_test_suite_run_test_cases (CutTestSuite *test_suite,
                                CutRunContext *run_context,
@@ -461,8 +498,7 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite,
       case SIGSEGV:
       case SIGABRT:
         all_success = FALSE;
-        g_signal_emit_by_name(CUT_TEST(test_suite), "crashed", backtrace);
-        g_free(backtrace);
+        emit_crash_result(test_suite);
         break;
 #endif
       default:

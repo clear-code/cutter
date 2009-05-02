@@ -82,6 +82,9 @@ struct _CutTestCaseClass
     void (*omission_in)   (CutTestCase    *test_case,
                            CutTestContext *test_context,
                            CutTestResult  *result);
+    void (*crash_in)      (CutTestCase    *test_case,
+                           CutTestContext *test_context,
+                           CutTestResult  *result);
 };
 
 GType        cut_test_case_get_type       (void) G_GNUC_CONST;

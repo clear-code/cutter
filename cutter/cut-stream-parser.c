@@ -105,10 +105,7 @@ typedef enum {
 
     IN_COMPLETE_TEST_SUITE,
 
-    IN_COMPLETE_SUCCESS,
-
-    IN_CRASHED,
-    IN_CRASHED_BACKTRACE
+    IN_COMPLETE_SUCCESS
 } ParseState;
 
 #define CUT_STREAM_PARSER_GET_PRIVATE(obj)                              \
@@ -228,7 +225,6 @@ struct _CutStreamParserPrivate
     gchar *option_value;
     gboolean complete_success;
     gboolean stream_success;
-    gchar *crashed_backtrace;
 };
 
 #define PUSH_STATE(priv, state)                                 \
@@ -411,7 +407,6 @@ cut_stream_parser_init (CutStreamParser *stream_parser)
     priv->test_result = NULL;
     priv->test_iterator_result = NULL;
     priv->test_case_result = NULL;
-    priv->crashed_backtrace = NULL;
 
     priv->result = NULL;
     priv->backtrace = NULL;
@@ -732,11 +727,6 @@ dispose (GObject *object)
         priv->option_value = NULL;
     }
 
-    if (priv->crashed_backtrace) {
-        g_free(priv->crashed_backtrace);
-        priv->crashed_backtrace = NULL;
-    }
-
     G_OBJECT_CLASS(cut_stream_parser_parent_class)->dispose(object);
 }
 
@@ -946,8 +936,6 @@ start_stream (CutStreamParserPrivate *priv,
         PUSH_STATE(priv, IN_COMPLETE_TEST_SUITE);
     } else if (g_str_equal("success", element_name)) {
         PUSH_STATE(priv, IN_STREAM_SUCCESS);
-    } else if (g_str_equal("crashed", element_name)) {
-        PUSH_STATE(priv, IN_CRASHED);
     } else {
         invalid_element(context, error);
     }
@@ -1318,17 +1306,6 @@ start_complete_test_suite (CutStreamParserPrivate *priv,
 }
 
 static void
-start_crashed (CutStreamParserPrivate *priv, GMarkupParseContext *context,
-               const gchar *element_name, GError **error)
-{
-    if (g_str_equal("backtrace", element_name)) {
-        PUSH_STATE(priv, IN_CRASHED_BACKTRACE);
-    } else {
-        invalid_element(context, error);
-    }
-}
-
-static void
 start_test_object (CutStreamParserPrivate *priv, GMarkupParseContext *context,
                    const gchar *element_name, GError **error)
 {
@@ -1539,9 +1516,6 @@ start_element_handler (GMarkupParseContext *context,
         break;
       case IN_COMPLETE_TEST_SUITE:
         start_complete_test_suite(priv, context, element_name, error);
-        break;
-      case IN_CRASHED:
-        start_crashed(priv, context, element_name, error);
         break;
       case IN_TEST_SUITE:
       case IN_TEST_CASE:
@@ -2059,22 +2033,6 @@ end_complete_test_suite (CutStreamParser *parser, CutStreamParserPrivate *priv,
 }
 
 static void
-end_crashed (CutStreamParser *parser, CutStreamParserPrivate *priv,
-             GMarkupParseContext *context,
-             const gchar *element_name, GError **error)
-{
-    if (priv->run_context)
-        g_signal_emit_by_name(priv->run_context,
-                              "crashed", priv->crashed_backtrace);
-
-    if (!priv->crashed_backtrace)
-        return;
-
-    g_free(priv->crashed_backtrace);
-    priv->crashed_backtrace = NULL;
-}
-
-static void
 end_element_handler (GMarkupParseContext *context,
                      const gchar         *element_name,
                      gpointer             user_data,
@@ -2162,9 +2120,6 @@ end_element_handler (GMarkupParseContext *context,
       case IN_COMPLETE_TEST_SUITE:
         end_complete_test_suite(parser, priv, context, element_name, error);
         break;
-      case IN_CRASHED:
-        end_crashed(parser, priv, context, element_name, error);
-        break;
       default:
         break;
     }
@@ -2185,6 +2140,8 @@ result_name_to_status (const gchar *name)
         return CUT_TEST_RESULT_NOTIFICATION;
     else if (g_str_equal(name, "omission"))
         return CUT_TEST_RESULT_OMISSION;
+    else if (g_str_equal(name, "crash"))
+        return CUT_TEST_RESULT_CRASH;
 
     return CUT_TEST_RESULT_INVALID;
 }
@@ -2550,14 +2507,6 @@ text_stream_success (CutStreamParserPrivate *priv, GMarkupParseContext *context,
 }
 
 static void
-text_crashed_backtrace (CutStreamParserPrivate *priv,
-                        GMarkupParseContext *context,
-                        const gchar *text, gsize text_len, GError **error)
-{
-    priv->crashed_backtrace = g_strdup(text);
-}
-
-static void
 text_handler (GMarkupParseContext *context,
               const gchar         *text,
               gsize                text_len,
@@ -2635,9 +2584,6 @@ text_handler (GMarkupParseContext *context,
         text_complete_success(priv, context, text, text_len, error);
       case IN_STREAM_SUCCESS:
         text_stream_success(priv, context, text, text_len, error);
-        break;
-      case IN_CRASHED_BACKTRACE:
-        text_crashed_backtrace(priv, context, text, text_len, error);
         break;
       default:
         break;
