@@ -118,7 +118,7 @@ option is specified.
 : --enable-convenience-attribute-definition
 
    It enables convenience but danger
-   '#{ATTRIBUTE_NAME}_#{TEST_NAME - 'test_' PREFIX}'
+   "#{ATTRIBUTE_NAME}_#{TEST_NAME - 'test_' PREFIX}"
    attribute set function.
 
    The default is off.

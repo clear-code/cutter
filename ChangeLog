@@ -1,5 +1,7 @@
 2009-05-03  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/cutter.rd*: use " instead of '.
+
 	* ./: make 'crash' a test result. TODO: need to handle SIGSEGV
 	each test, test iterator and test case.
 
