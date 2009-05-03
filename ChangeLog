@@ -1,5 +1,7 @@
 2009-05-03  Kouhei Sutou  <kou@cozmixng.org>
 
+	* TODO: add: cut_assert_equal_not_{int,string,...}().
+
 	* TODO: remove: more intelligent crashed reporting.
 	- get the latest unfinished test and bundle it into crashed reporting.
 	- CutRunContext should have multiple crashed information.
