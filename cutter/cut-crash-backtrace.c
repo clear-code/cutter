@@ -33,6 +33,7 @@
 #include "cut-main.h"
 #include "cut-test-result.h"
 #include "cut-backtrace-entry.h"
+#include "cut-utils.h"
 #include "cut-crash-backtrace.h"
 
 static gboolean cut_crash_backtrace_show_on_the_moment = TRUE;
@@ -227,24 +228,10 @@ cut_crash_backtrace_emit (CutTestSuite    *test_suite,
                           CutTestContext  *test_context)
 {
     CutTestResult *result;
-    /* GRegex *regex; */
     GList *parsed_backtrace = NULL;
-    CutBacktraceEntry *entry;
     CutTest *target;
 
-/*     regex = g_regex_new("^#\\d +0x\\d+ in ([a-zA-Z_]+) (.+)\n", */
-/*                         G_REGEX_MULTILINE | G_REGEX_DOTALL, */
-/*                         G_REGEX_MATCH_NEWLINE_ANY, NULL); */
-/*     if (regex) { */
-/*         parsed_backtrace */
-/*         backtrace = g_regex_replace(regex, buffer->str, buffer->len, 0, */
-/*                                     "", 0, NULL); */
-/*         g_regex_unref(regex); */
-/*         g_string_free(buffer, TRUE); */
-/*     } */
-    entry = cut_backtrace_entry_new(crash_backtrace, 0, "unknown", NULL);
-    parsed_backtrace = g_list_append(parsed_backtrace, entry);
-
+    parsed_backtrace = cut_utils_parse_gdb_backtrace(crash_backtrace);
     g_free(crash_backtrace);
     crash_backtrace = NULL;
 

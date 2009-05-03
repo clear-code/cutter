@@ -1,5 +1,9 @@
 2009-05-03  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-utils.[ch], test/cutter/test-cut-utils.c: add GDB
+	backtrace parser.
+	* cutter/cut-crash-backtrace.c: use GDB backtrace parser.
+
 	* doc/cutter.rd*: use " instead of '.
 
 	* ./: make 'crash' a test result. TODO: need to handle SIGSEGV

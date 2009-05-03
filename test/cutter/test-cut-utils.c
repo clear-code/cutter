@@ -2,6 +2,7 @@
 
 #include <gcutter.h>
 #include <cutter/cut-utils.h>
+#include <cutter/cut-backtrace-entry.h>
 #include "../lib/cuttest-utils.h"
 
 void test_inspect_memory (void);
@@ -13,6 +14,8 @@ void test_remove_path_recursive (void);
 void test_fold (void);
 void test_equal_string (void);
 void test_equal_double (void);
+void data_parse_gdb_backtrace (void);
+void test_parse_gdb_backtrace (gconstpointer data);
 
 static gchar *tmp_dir;
 static gchar **actual_string_array;
@@ -186,6 +189,130 @@ test_equal_double (void)
     cut_assert_true(cut_utils_equal_double(0.11, 0.19, 0.1));
     cut_assert_true(cut_utils_equal_double(0.11, 0.12, 0.01));
     cut_assert_false(cut_utils_equal_double(0.11, 0.12, 0.009));
+}
+
+static GList *
+backtraces_new (const gchar *file, ...)
+{
+    GList *backtraces = NULL;
+    va_list args;
+
+    va_start(args, file);
+    while (file) {
+        guint line;
+        const gchar *function;
+        const gchar *info;
+        CutBacktraceEntry *entry;
+
+        line = va_arg(args, guint);
+        function = va_arg(args, gchar *);
+        info = va_arg(args, gchar *);
+        entry = cut_backtrace_entry_new(file, line, function, info);
+        backtraces = g_list_append(backtraces, entry);
+
+        file = va_arg(args, gchar *);
+    }
+    va_end(args);
+
+    return backtraces;
+}
+
+static void
+backtraces_free (GList *backtraces)
+{
+    g_list_foreach(backtraces, (GFunc)g_object_unref, NULL);
+    g_list_free(backtraces);
+}
+
+void
+data_parse_gdb_backtrace (void)
+{
+#define ADD(label, expected, gdb_backtrace)                             \
+    gcut_add_datum(label,                                               \
+                   "expected", G_TYPE_POINTER, expected, backtraces_free, \
+                   "gdb-backtrace", G_TYPE_STRING, gdb_backtrace,       \
+                   NULL)
+
+    ADD("NULL", NULL, NULL);
+    ADD("known line",
+        backtraces_new("test-cut-stream-parser.c", 1099, "test_crash_test", NULL,
+                       NULL),
+        "#4  0x00007fd67b4fbfc5 in test_crash_test () at test-cut-stream-parser.c:1099\n");
+    ADD("unknown line",
+        backtraces_new("unknown", 0, "cut_test_run", NULL,
+                       NULL),
+        "#5  0x00007fd68285ea77 in cut_test_run (test=0xfc0e30, test_context=0xf90840, \n");
+    ADD("full",
+        backtraces_new("test-cut-stream-parser.c", 1099, "test_crash_test", NULL,
+                       "unknown", 0, "cut_test_run", NULL,
+                       "unknown", 0, "run", NULL,
+                       "unknown", 0, "cut_test_case_run_with_filter", NULL,
+                       "cut-test-suite.c", 129, "run", NULL,
+                       "unknown", 0, "cut_test_suite_run_test_cases", NULL,
+                       "unknown", 0, "cut_test_suite_run_with_filter", NULL,
+                       "cut-runner.c", 67, "cut_runner_run", NULL,
+                       "unknown", 0, "cut_run_context_start", NULL,
+                       "unknown", 0, "cut_start_run_context", NULL,
+                       "cut-main.c", 317, "cut_run", NULL,
+                       NULL),
+        "#4  0x00007fd67b4fbfc5 in test_crash_test () at test-cut-stream-parser.c:1099\n"
+        "#5  0x00007fd68285ea77 in cut_test_run (test=0xfc0e30, test_context=0xf90840, \n"
+        "#6  0x00007fd682860cc4 in run (test_case=0xfb3400, test=0xfc0e30, \n"
+        "#7  0x00007fd682860e9d in cut_test_case_run_with_filter (test_case=0xfb3400, \n"
+        "#8  0x00007fd682862c66 in run (data=0xfc3560) at cut-test-suite.c:129\n"
+        "#9  0x00007fd68286313e in cut_test_suite_run_test_cases (test_suite=0xf88c60, \n"
+        "#10 0x00007fd6828631e0 in cut_test_suite_run_with_filter (test_suite=0xf88c60, \n"
+        "#11 0x00007fd68285dbe8 in cut_runner_run (runner=0xf8d840) at cut-runner.c:67\n"
+        "#12 0x00007fd68285bc7f in cut_run_context_start (context=0xf8d840)\n"
+        "#13 0x00007fd68285e072 in cut_start_run_context (run_context=0xf8d840)\n"
+        "#14 0x00007fd68285e1be in cut_run () at cut-main.c:317\n");
+
+#undef ADD
+}
+
+static gboolean
+backtrace_entry_equal (gconstpointer data1, gconstpointer data2)
+{
+    CutBacktraceEntry *entry1;
+    CutBacktraceEntry *entry2;
+
+    entry1 = CUT_BACKTRACE_ENTRY(data1);
+    entry2 = CUT_BACKTRACE_ENTRY(data2);
+
+    if (!cut_utils_equal_string(cut_backtrace_entry_get_file(entry1),
+                                cut_backtrace_entry_get_file(entry2)))
+        return FALSE;
+
+    if (cut_backtrace_entry_get_line(entry1) !=
+        cut_backtrace_entry_get_line(entry2))
+        return FALSE;
+
+    if (!cut_utils_equal_string(cut_backtrace_entry_get_function(entry1),
+                                cut_backtrace_entry_get_function(entry2)))
+        return FALSE;
+
+    if (!cut_utils_equal_string(cut_backtrace_entry_get_info(entry1),
+                                cut_backtrace_entry_get_info(entry2)))
+        return FALSE;
+
+    return TRUE;
+}
+
+void
+test_parse_gdb_backtrace (gconstpointer data)
+{
+    const gchar *gdb_backtrace;
+    GList *backtraces;
+    const GList *expected_backtraces;
+
+    gdb_backtrace = gcut_data_get_string(data, "gdb-backtrace");
+    backtraces = cut_utils_parse_gdb_backtrace(gdb_backtrace);
+    gcut_take_list(backtraces, (CutDestroyFunction)g_object_unref);
+
+    expected_backtraces = gcut_data_get_pointer(data, "expected");
+    gcut_assert_equal_list_object_custom(backtraces,
+                                         expected_backtraces,
+                                         backtrace_entry_equal);
 }
 
 /*

@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2009  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -39,6 +39,7 @@
 #include "cut-sub-process-group.h"
 #include "cut-diff.h"
 #include "cut-main.h"
+#include "cut-backtrace-entry.h"
 #include "../gcutter/gcut-public.h"
 #include "../gcutter/gcut-error.h"
 #include "../gcutter/gcut-assertions-helper.h"
@@ -609,6 +610,109 @@ cut_utils_take_new_sub_process_group (CutTestContext *test_context)
     group = cut_sub_process_group_new(test_context);
     cut_test_context_take_g_object(test_context, G_OBJECT(group));
     return group;
+}
+
+typedef enum
+{
+    GDB_BACKTRACE_START,
+    GDB_BACKTRACE_IN,
+    GDB_BACKTRACE_FUNCTION,
+    GDB_BACKTRACE_ARGUMENTS,
+    GDB_BACKTRACE_ARGUMENTS_END,
+    GDB_BACKTRACE_AT,
+    GDB_BACKTRACE_LINE
+} GdbBacktraceState;
+
+GList *
+cut_utils_parse_gdb_backtrace (const gchar *gdb_backtrace)
+{
+    GList *backtraces = NULL;
+
+    while (gdb_backtrace && gdb_backtrace[0]) {
+        CutBacktraceEntry *entry;
+        gchar *file = NULL;
+        guint line = 0;
+        gchar *function = NULL;
+        gchar *info = NULL;
+        const gchar *start_point = NULL;
+        GdbBacktraceState state = GDB_BACKTRACE_START;
+
+        while (gdb_backtrace[0] && gdb_backtrace[0] != '\n') {
+            switch (state) {
+            case GDB_BACKTRACE_START:
+                if (gdb_backtrace[0] == 'i' && gdb_backtrace[1] == 'n') {
+                    gdb_backtrace++;
+                    state = GDB_BACKTRACE_IN;
+                }
+                break;
+            case GDB_BACKTRACE_IN:
+                if (start_point) {
+                    if (gdb_backtrace[0] == ' ') {
+                        function = g_strndup(start_point,
+                                             gdb_backtrace - start_point);
+                        state = GDB_BACKTRACE_ARGUMENTS;
+                        start_point = NULL;
+                    }
+                } else {
+                    if (gdb_backtrace[0] != ' ')
+                        start_point = gdb_backtrace;
+                }
+                break;
+            case GDB_BACKTRACE_ARGUMENTS:
+                if (gdb_backtrace[0] == ')')
+                    state = GDB_BACKTRACE_ARGUMENTS_END;
+                break;
+            case GDB_BACKTRACE_ARGUMENTS_END:
+                if (gdb_backtrace[0] == 'a' && gdb_backtrace[1] == 't') {
+                    gdb_backtrace ++;
+                    state = GDB_BACKTRACE_AT;
+                }
+                break;
+            case GDB_BACKTRACE_AT:
+                if (start_point) {
+                    if (gdb_backtrace[0] == ':') {
+                        file = g_strndup(start_point,
+                                         gdb_backtrace - start_point);
+                        state = GDB_BACKTRACE_LINE;
+                        start_point = NULL;
+                    }
+                } else {
+                    if (gdb_backtrace[0] != ' ')
+                        start_point = gdb_backtrace;
+                }
+                break;
+            case GDB_BACKTRACE_LINE:
+                if (start_point) {
+                    if (gdb_backtrace[1] == '\n') {
+                        line = atoi(start_point);
+                        start_point = NULL;
+                    }
+                } else {
+                    start_point = gdb_backtrace;
+                }
+                break;
+            default:
+                break;
+            }
+            gdb_backtrace++;
+        }
+
+        entry = cut_backtrace_entry_new(file ? file : "unknown",
+                                        line,
+                                        function,
+                                        info);
+        backtraces = g_list_append(backtraces, entry);
+        if (file)
+            g_free(file);
+        if (function)
+            g_free(function);
+        if (info)
+            g_free(info);
+
+        gdb_backtrace++;
+    }
+
+    return backtraces;
 }
 
 #ifdef G_OS_WIN32
