@@ -29,6 +29,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "cut-main.h"
 #include "cut-test-result.h"
@@ -96,9 +97,9 @@ struct _CutCrashBacktrace
 static void
 read_backtrace (int in_fd)
 {
-    GRegex *regex;
     GString *buffer = NULL;
     gssize size;
+    gchar *internal_backtrace;
 
     while ((size = read(in_fd,
                         crash_backtrace_read_buffer,
@@ -111,22 +112,17 @@ read_backtrace (int in_fd)
         g_string_append_len(buffer, crash_backtrace_read_buffer, size);
     }
 
-    if (!buffer) {
-        crash_backtrace = g_strdup("");
+    if (!buffer)
         return;
-    }
 
-    regex = g_regex_new("^.+?<signal handler called>\n",
-                        G_REGEX_MULTILINE | G_REGEX_DOTALL,
-                        G_REGEX_MATCH_NEWLINE_ANY, NULL);
-    if (regex) {
-        crash_backtrace = g_regex_replace(regex, buffer->str, buffer->len, 0,
-                                              "", 0, NULL);
-        g_regex_unref(regex);
-        g_string_free(buffer, TRUE);
-    } else {
-        crash_backtrace = g_string_free(buffer, FALSE);
+#define INTERNAL_BACKTRACE_MARK "<signal handler called>\n"
+    internal_backtrace = strstr(buffer->str, INTERNAL_BACKTRACE_MARK);
+    if (internal_backtrace) {
+        internal_backtrace += strlen(INTERNAL_BACKTRACE_MARK);
+        g_string_erase(buffer, 0, internal_backtrace - buffer->str);
     }
+#undef INTERNAL_BACKTRACE_MARK
+    crash_backtrace = g_string_free(buffer, FALSE);
 }
 
 static void
