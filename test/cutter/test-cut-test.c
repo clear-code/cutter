@@ -1,6 +1,11 @@
 #include <gcutter.h>
 #include <cutter/cut-test.h>
 #include <cutter/cut-test-runner.h>
+#include <cutter/cut-crash-backtrace.h>
+
+#ifndef G_OS_WIN32
+#  include <signal.h>
+#endif
 
 void test_get_name(void);
 void test_get_description(void);
@@ -14,6 +19,7 @@ void test_failure_signal(void);
 void test_pending_signal(void);
 void test_notification_signal(void);
 void test_omission_signal(void);
+void test_crash_signal (void);
 void test_test_function(void);
 void test_set_elapsed(void);
 void test_start_time(void);
@@ -30,6 +36,7 @@ static gint n_pending_signal = 0;
 static gint n_pass_assertion_signal = 0;
 static gint n_notification_signal = 0;
 static gint n_omission_signal = 0;
+static gint n_crash_signal = 0;
 
 static void
 stub_test_function (void)
@@ -83,6 +90,7 @@ cut_setup (void)
     n_notification_signal = 0;
     n_pass_assertion_signal = 0;
     n_omission_signal = 0;
+    n_crash_signal = 0;
 
     run_context = CUT_RUN_CONTEXT(cut_test_runner_new());
 
@@ -92,6 +100,7 @@ cut_setup (void)
 void
 cut_teardown (void)
 {
+    cut_crash_backtrace_set_show_on_the_moment(TRUE);
     if (test)
         g_object_unref(test);
     g_object_unref(run_context);
@@ -143,6 +152,12 @@ static void
 cb_omission_signal (CutTest *test, gpointer data)
 {
     n_omission_signal++;
+}
+
+static void
+cb_crash_signal (CutTest *test, CutTestResult *result, gpointer data)
+{
+    n_crash_signal++;
 }
 
 static gboolean
@@ -299,6 +314,34 @@ test_omission_signal (void)
     cut_assert_equal_uint(1, n_omission_signal);
 }
 
+static void
+stub_crash_function (void)
+{
+#ifndef G_OS_WIN32
+    raise(SIGSEGV);
+#endif
+}
+
+void
+test_crash_signal (void)
+{
+#ifdef G_OS_WIN32
+    cut_omit("crash isn't supported yet on Windows.");
+#else
+    cut_crash_backtrace_set_show_on_the_moment(FALSE);
+
+    test = cut_test_new("stub-crash-test", stub_crash_function);
+    cut_assert_not_null(test);
+
+    g_signal_connect(test, "crash", G_CALLBACK(cb_crash_signal), NULL);
+    cut_assert_false(run());
+    g_signal_handlers_disconnect_by_func(test,
+                                         G_CALLBACK(cb_crash_signal),
+                                         NULL);
+    cut_assert_equal_uint(1, n_crash_signal);
+#endif
+}
+
 void
 test_pass_assertion_signal (void)
 {
@@ -351,6 +394,7 @@ test_start_time (void)
     cut_test_get_start_time(test, &actual);
     gcut_assert_equal_time_val(&expected, &actual);
 }
+
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

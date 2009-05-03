@@ -29,6 +29,7 @@
 #include "cut-test.h"
 #include "cut-run-context.h"
 #include "cut-test-result.h"
+#include "cut-crash-backtrace.h"
 
 #include <gcutter/gcut-marshalers.h>
 
@@ -431,14 +432,16 @@ run (CutTestCase *test_case, CutTest *test, CutRunContext *run_context)
     CutTestContext *test_context;
     gboolean success = TRUE;
     gboolean is_multi_thread;
+    CutTestSuite *test_suite;
 
     if (cut_run_context_is_canceled(run_context))
         return TRUE;
 
+    test_suite = cut_run_context_get_test_suite(run_context);
     is_multi_thread = cut_run_context_is_multi_thread(run_context);
 
     test_context = cut_test_context_new(run_context,
-                                        NULL, test_case, NULL, NULL);
+                                        test_suite, test_case, NULL, NULL);
     cut_test_context_set_multi_thread(test_context, is_multi_thread);
 
     cut_test_context_current_push(test_context);
@@ -449,7 +452,7 @@ run (CutTestCase *test_case, CutTest *test, CutRunContext *run_context)
     g_object_unref(test_context);
     cut_test_context_current_pop();
     /* FIXME: We want to use the code:
-         g_object_unref(cut_test_context_current_pop());
+       g_object_unref(cut_test_context_current_pop());
        We need to hide cut_set_current_test_context() from user.
     */
 
@@ -584,14 +587,20 @@ cut_test_case_run_tests (CutTestCase *test_case, CutRunContext *run_context,
     gboolean all_success = TRUE;
     CutTestResult *result;
     CutTestResultStatus status = CUT_TEST_RESULT_SUCCESS;
+    gint signum;
+    jmp_buf jump_buffer;
+    CutTestSuite *test_suite;
+    CutCrashBacktrace *crash_backtrace;
+
 
     g_signal_emit_by_name(test_case, "ready", g_list_length((GList *)tests));
     g_signal_emit_by_name(CUT_TEST(test_case), "start", NULL);
 
     priv = CUT_TEST_CASE_GET_PRIVATE(test_case);
 
+    test_suite = cut_run_context_get_test_suite(run_context);
     test_context = cut_test_context_new(run_context,
-                                        NULL, test_case, NULL, NULL);
+                                        test_suite, test_case, NULL, NULL);
     cut_test_context_current_push(test_context);
 
 #define CONNECT(event)                                          \
@@ -608,13 +617,35 @@ cut_test_case_run_tests (CutTestCase *test_case, CutRunContext *run_context,
 
 #undef CONNECT
 
-    cut_test_case_run_startup(test_case, test_context);
-    if (cut_test_context_is_failed(test_context)) {
+    crash_backtrace = cut_crash_backtrace_new(&jump_buffer);
+    signum = setjmp(jump_buffer);
+    switch (signum) {
+    case 0:
+        cut_test_case_run_startup(test_case, test_context);
+        if (cut_test_context_is_failed(test_context)) {
+            all_success = FALSE;
+        } else {
+            if (status != CUT_TEST_RESULT_OMISSION)
+                all_success = run_tests(test_case, run_context, tests, &status);
+        }
+        cut_crash_backtrace_free(crash_backtrace);
+
+        break;
+#ifndef G_OS_WIN32
+    case SIGSEGV:
+    case SIGABRT:
         all_success = FALSE;
-    } else {
-        if (status != CUT_TEST_RESULT_OMISSION)
-            all_success = run_tests(test_case, run_context, tests, &status);
+        cut_crash_backtrace_emit(test_suite, test_case, NULL, NULL, NULL,
+                                 test_context);
+        break;
+    case SIGINT:
+        cut_run_context_cancel(run_context);
+        break;
+#endif
+    default:
+        break;
     }
+
     cut_test_case_run_shutdown(test_case, test_context);
 
     g_signal_handlers_disconnect_by_func(test_case,

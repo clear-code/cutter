@@ -42,6 +42,7 @@
 #include "cut-utils.h"
 #include "cut-test-result.h"
 #include "cut-backtrace-entry.h"
+#include "cut-crash-backtrace.h"
 
 #include "../gcutter/gcut-marshalers.h"
 #include "../gcutter/gcut-error.h"
@@ -69,11 +70,6 @@ enum
     COMPLETE_TEST_CASE,
     LAST_SIGNAL
 };
-
-static jmp_buf jump_buffer;
-#ifndef G_OS_WIN32
-static gchar *backtrace = NULL;
-#endif
 
 static gint cut_test_suite_signals[LAST_SIGNAL] = {0};
 
@@ -291,66 +287,6 @@ run_with_thread_support (CutTestSuite *test_suite, CutTestCase *test_case,
         run(info, success);
 }
 
-#ifndef G_OS_WIN32
-static void
-read_backtrace (int in_fd)
-{
-    GRegex *regex;
-    GString *buffer;
-    gchar window[4096];
-    gssize size;
-
-    buffer = g_string_new("");
-    while ((size = read(in_fd, window, sizeof(window))) > 0) {
-        g_string_append_len(buffer, window, size);
-    }
-
-    regex = g_regex_new("^.+?<signal handler called>\n",
-                        G_REGEX_MULTILINE | G_REGEX_DOTALL,
-                        G_REGEX_MATCH_NEWLINE_ANY, NULL);
-    if (regex) {
-        backtrace = g_regex_replace(regex, buffer->str, buffer->len, 0,
-                                    "", 0, NULL);
-        g_regex_unref(regex);
-        g_string_free(buffer, TRUE);
-    } else {
-        backtrace = g_string_free(buffer, FALSE);
-    }
-}
-
-static void
-collect_backtrace (void)
-{
-    int fds[2];
-    int original_stdout_fileno;
-
-    if (pipe(fds) == -1) {
-        perror("unable to open pipe for collecting stack trace");
-        return;
-    }
-
-    original_stdout_fileno = dup(STDOUT_FILENO);
-    dup2(fds[1], STDOUT_FILENO);
-    g_on_error_stack_trace(cut_get_cutter_command_path());
-    dup2(original_stdout_fileno, STDOUT_FILENO);
-    close(original_stdout_fileno);
-    close(fds[1]);
-
-    read_backtrace(fds[0]);
-
-    close(fds[0]);
-}
-
-static void
-i_will_be_back_handler (int signum)
-{
-    g_free(backtrace);
-    backtrace = NULL;
-    collect_backtrace();
-    longjmp(jump_buffer, signum);
-}
-#endif
-
 static void
 emit_ready_signal (CutTestSuite *test_suite, GList *test_cases,
                    CutRunContext *run_context)
@@ -372,42 +308,6 @@ emit_ready_signal (CutTestSuite *test_suite, GList *test_cases,
     g_signal_emit_by_name(test_suite, "ready", n_test_cases, n_tests);
 }
 
-#ifndef G_OS_WIN32
-static void
-emit_crash_result (CutTestSuite *test_suite)
-{
-    CutTestResult *result;
-    /* GRegex *regex; */
-    GList *parsed_backtrace = NULL;
-    CutBacktraceEntry *entry;
-
-/*     regex = g_regex_new("^#\\d +0x\\d+ in ([a-zA-Z_]+) (.+)\n", */
-/*                         G_REGEX_MULTILINE | G_REGEX_DOTALL, */
-/*                         G_REGEX_MATCH_NEWLINE_ANY, NULL); */
-/*     if (regex) { */
-/*         parsed_backtrace */
-/*         backtrace = g_regex_replace(regex, buffer->str, buffer->len, 0, */
-/*                                     "", 0, NULL); */
-/*         g_regex_unref(regex); */
-/*         g_string_free(buffer, TRUE); */
-/*     } */
-    entry = cut_backtrace_entry_new(backtrace, 0, "unknown", NULL);
-    parsed_backtrace = g_list_append(parsed_backtrace, entry);
-
-    g_free(backtrace);
-    backtrace = NULL;
-
-    result = cut_test_result_new(CUT_TEST_RESULT_CRASH,
-                                 NULL, NULL, NULL, test_suite, NULL,
-                                 NULL, NULL, parsed_backtrace);
-    g_list_foreach(parsed_backtrace, (GFunc)g_object_unref, NULL);
-    g_list_free(parsed_backtrace);
-
-    cut_test_emit_result_signal(CUT_TEST(test_suite), NULL, result);
-    g_object_unref(result);
-}
-#endif
-
 static gboolean
 cut_test_suite_run_test_cases (CutTestSuite *test_suite,
                                CutRunContext *run_context,
@@ -420,32 +320,14 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite,
     gboolean try_thread;
     gboolean all_success = TRUE;
     gint signum;
-#ifndef G_OS_WIN32
-    struct sigaction i_will_be_back_action;
-    struct sigaction previous_segv_action, previous_abort_action;
-    struct sigaction previous_int_action;
-    gboolean set_segv_action = TRUE;
-    gboolean set_abort_action = TRUE;
-    gboolean set_int_action = TRUE;
-#endif
+    jmp_buf jump_buffer;
+    CutCrashBacktrace *crash_backtrace;
 
     priv = CUT_TEST_SUITE_GET_PRIVATE(test_suite);
 
     sorted_test_cases = g_list_copy(test_cases);
     sorted_test_cases = cut_run_context_sort_test_cases(run_context,
                                                         sorted_test_cases);
-
-#ifndef G_OS_WIN32
-    i_will_be_back_action.sa_handler = i_will_be_back_handler;
-    sigemptyset(&i_will_be_back_action.sa_mask);
-    i_will_be_back_action.sa_flags = 0;
-    if (sigaction(SIGSEGV, &i_will_be_back_action, &previous_segv_action) == -1)
-        set_segv_action = FALSE;
-    if (sigaction(SIGABRT, &i_will_be_back_action, &previous_abort_action) == -1)
-        set_abort_action = FALSE;
-    if (sigaction(SIGINT, &i_will_be_back_action, &previous_int_action) == -1)
-        set_int_action = FALSE;
-#endif
 
     try_thread = cut_run_context_get_multi_thread(run_context);
     if (try_thread) {
@@ -460,9 +342,10 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite,
         }
     }
 
+    crash_backtrace = cut_crash_backtrace_new(&jump_buffer);
     signum = setjmp(jump_buffer);
     switch (signum) {
-      case 0:
+    case 0:
         emit_ready_signal(test_suite, sorted_test_cases, run_context);
         g_signal_emit_by_name(test_suite, "start", NULL);
 
@@ -493,25 +376,21 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite,
             cut_test_emit_result_signal(CUT_TEST(test_suite), NULL, result);
             g_object_unref(result);
         }
+        cut_crash_backtrace_free(crash_backtrace);
         break;
 #ifndef G_OS_WIN32
-      case SIGSEGV:
-      case SIGABRT:
+    case SIGSEGV:
+    case SIGABRT:
         all_success = FALSE;
-        emit_crash_result(test_suite);
+        cut_crash_backtrace_emit(test_suite, NULL, NULL, NULL, NULL, NULL);
+        break;
+    case SIGINT:
+        cut_run_context_cancel(run_context);
         break;
 #endif
-      default:
+    default:
         break;
     }
-#ifndef G_OS_WIN32
-    if (set_int_action)
-        sigaction(SIGINT, &previous_int_action, NULL);
-    if (set_abort_action)
-        sigaction(SIGABRT, &previous_abort_action, NULL);
-    if (set_segv_action)
-        sigaction(SIGSEGV, &previous_segv_action, NULL);
-#endif
 
     if (priv->cooldown)
         priv->cooldown();

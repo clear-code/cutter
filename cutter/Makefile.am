@@ -71,7 +71,8 @@ noinst_headers = 		\
 	cut-module.h		\
 	cut-module-impl.h	\
 	cut-repository.h	\
-	cut-utils.h
+	cut-utils.h		\
+	cut-crash-backtrace.h
 
 pkginclude_HEADERS = 		\
 	cutter.h
@@ -151,7 +152,8 @@ libcutter_la_SOURCES =			\
 	cut-backtrace-entry.c		\
 	cut-assertions-helper.c		\
 	cut-test-utils-helper.c		\
-	cut-helper.c
+	cut-helper.c			\
+	cut-crash-backtrace.c
 
 libcutter_la_LDFLAGS =				\
 	-version-info $(LT_VERSION_INFO)	\

@@ -1,6 +1,7 @@
 #include <cutter.h>
 #include <cutter/cut-test-case.h>
 #include <cutter/cut-test-runner.h>
+#include <cutter/cut-crash-backtrace.h>
 
 #include "../lib/cuttest-assertions.h"
 
@@ -22,11 +23,13 @@ void test_error_signal(void);
 void test_pending_signal(void);
 void test_notification_signal(void);
 void test_omission_signal(void);
+void test_crash_signal(void);
 void test_failure_in_signal(void);
 void test_error_in_signal(void);
 void test_pending_in_signal(void);
 void test_notification_in_signal(void);
 void test_omission_in_signal(void);
+void test_crash_in_signal(void);
 void test_complete_signal(void);
 
 static CutTestCase *test_object;
@@ -37,6 +40,7 @@ static gboolean set_error_on_startup = FALSE;
 static gboolean set_pending_on_startup = FALSE;
 static gboolean set_notification_on_startup = FALSE;
 static gboolean set_omission_on_startup = FALSE;
+static gboolean set_crash_on_startup = FALSE;
 
 static gboolean set_error_on_setup = FALSE;
 
@@ -101,6 +105,14 @@ stub_omission_test (void)
 }
 
 static void
+stub_crash_test (void)
+{
+#ifndef G_OS_WIN32
+    raise(SIGABRT);
+#endif
+}
+
+static void
 stub_setup_function (void)
 {
     n_setup++;
@@ -130,6 +142,10 @@ stub_startup_function (void)
         cut_notify("notification in startup");
     } else if (set_omission_on_startup) {
         cut_omit("omission in startup");
+    } else if (set_crash_on_startup) {
+#ifndef G_OS_WIN32
+        raise(SIGSEGV);
+#endif
     }
 }
 
@@ -149,6 +165,7 @@ cut_setup (void)
     set_pending_on_startup = FALSE;
     set_notification_on_startup = FALSE;
     set_omission_on_startup = FALSE;
+    set_crash_on_startup = FALSE;
 
     set_error_on_setup = FALSE;
 
@@ -176,6 +193,8 @@ cut_setup (void)
 void
 cut_teardown (void)
 {
+    cut_crash_backtrace_set_show_on_the_moment(TRUE);
+
     g_object_unref(test_object);
     g_object_unref(run_context);
 }
@@ -425,6 +444,28 @@ test_omission_signal (void)
 }
 
 void
+test_crash_signal (void)
+{
+#ifdef G_OS_WIN32
+    cut_omit("crash isn't supported yet on Windows.");
+#else
+    gint n_crashes = 0;
+
+    cut_crash_backtrace_set_show_on_the_moment(FALSE);
+
+    g_signal_connect(test_object, "crash",
+                     G_CALLBACK(cb_count_status), &n_crashes);
+    cuttest_add_test(test_object, "stub_crash_test",
+                     stub_crash_test);
+    cut_assert_false(cut_test_case_run(test_object, run_context));
+    g_signal_handlers_disconnect_by_func(test_object,
+                                         G_CALLBACK(cb_count_status),
+                                         &n_crashes);
+    cut_assert_equal_int(1, n_crashes);
+#endif
+}
+
+void
 test_failure_in_signal (void)
 {
     gint n_failures_in = 0;
@@ -542,6 +583,36 @@ test_omission_in_signal (void)
     cut_assert_equal_int(1, n_omissions_in);
     cut_assert_equal_int(0, n_setup);
     cut_assert_equal_int(1, n_shutdown);
+}
+
+void
+test_crash_in_signal (void)
+{
+#ifdef G_OS_WIN32
+    cut_omit("crash isn't supported yet on Windows.");
+#else
+    gint n_crashes_in = 0;
+    gint n_crashes = 0;
+
+    cut_crash_backtrace_set_show_on_the_moment(FALSE);
+
+    set_crash_on_startup = TRUE;
+    g_signal_connect(test_object, "crash-in",
+                     G_CALLBACK(cb_count_status_in), &n_crashes_in);
+    g_signal_connect(test_object, "crash",
+                     G_CALLBACK(cb_count_status), &n_crashes);
+    cut_assert_false(cut_test_case_run(test_object, run_context));
+    g_signal_handlers_disconnect_by_func(test_object,
+                                         G_CALLBACK(cb_count_status_in),
+                                         &n_crashes_in);
+    g_signal_handlers_disconnect_by_func(test_object,
+                                         G_CALLBACK(cb_count_status),
+                                         &n_crashes);
+    cut_assert_equal_int(1, n_crashes);
+    cut_assert_equal_int(1, n_crashes_in);
+    cut_assert_equal_int(0, n_setup);
+    cut_assert_equal_int(1, n_shutdown);
+#endif
 }
 
 void

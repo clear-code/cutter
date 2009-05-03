@@ -23,6 +23,8 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <signal.h>
+
 #include <glib.h>
 
 #include "cut-test.h"
@@ -30,6 +32,7 @@
 #include "cut-run-context.h"
 #include "cut-test-result.h"
 #include "cut-utils.h"
+#include "cut-crash-backtrace.h"
 
 #include <gcutter/gcut-marshalers.h>
 
@@ -417,6 +420,14 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
     CutTestPrivate *priv;
     gboolean success = TRUE;
     jmp_buf jump_buffer;
+    CutTestSuite *test_suite;
+    CutTestCase *test_case;
+    CutTestIterator *test_iterator;
+    CutTestResult *result;
+    CutTestData *data = NULL;
+    gint signum;
+    jmp_buf crash_jump_buffer;
+    CutCrashBacktrace *crash_backtrace;
 
     priv = CUT_TEST_GET_PRIVATE(test);
     klass = CUT_TEST_GET_CLASS(test);
@@ -424,30 +435,50 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
     if (!klass->is_available(test, test_context, run_context))
         return FALSE;
 
-    g_signal_emit_by_name(test, "start", test_context);
+    test_suite = cut_test_context_get_test_suite(test_context);
+    test_case = cut_test_context_get_test_case(test_context);
+    test_iterator = cut_test_context_get_test_iterator(test_context);
+    if (CUT_IS_ITERATED_TEST(test))
+        data = cut_iterated_test_get_data(CUT_ITERATED_TEST(test));
 
-    cut_test_context_set_jump(test_context, &jump_buffer);
-    if (setjmp(jump_buffer) == 0) {
-        if (priv->timer) {
-            g_timer_start(priv->timer);
-        } else {
-            priv->timer = g_timer_new();
+    crash_backtrace = cut_crash_backtrace_new(&crash_jump_buffer);
+    signum = setjmp(crash_jump_buffer);
+    switch (signum) {
+    case 0:
+        g_signal_emit_by_name(test, "start", test_context);
+
+        cut_test_context_set_jump(test_context, &jump_buffer);
+        if (setjmp(jump_buffer) == 0) {
+            if (priv->timer) {
+                g_timer_start(priv->timer);
+            } else {
+                priv->timer = g_timer_new();
+            }
+            klass->invoke(test, test_context, run_context);
         }
-        klass->invoke(test, test_context, run_context);
+        g_timer_stop(priv->timer);
+
+        success = !cut_test_context_is_failed(test_context);
+
+        cut_crash_backtrace_free(crash_backtrace);
+        break;
+#ifndef G_OS_WIN32
+    case SIGSEGV:
+    case SIGABRT:
+        success = FALSE;
+        cut_crash_backtrace_emit(test_suite, test_case,
+                                 test, test_iterator, data,
+                                 test_context);
+        break;
+    case SIGINT:
+        cut_run_context_cancel(run_context);
+        break;
+#endif
+    default:
+        break;
     }
-    g_timer_stop(priv->timer);
 
-    success = !cut_test_context_is_failed(test_context);
     if (success) {
-        CutTestCase *test_case;
-        CutTestIterator *test_iterator;
-        CutTestResult *result;
-        CutTestData *data = NULL;
-
-        test_case = cut_test_context_get_test_case(test_context);
-        test_iterator = cut_test_context_get_test_iterator(test_context);
-        if (CUT_IS_ITERATED_TEST(test))
-            data = cut_iterated_test_get_data(CUT_ITERATED_TEST(test));
         result = cut_test_result_new(CUT_TEST_RESULT_SUCCESS,
                                      test, test_iterator, test_case,
                                      NULL, data,

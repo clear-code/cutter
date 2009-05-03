@@ -6,9 +6,6 @@
 #include <cutter/cut-test-case.h>
 #include <cutter/cut-test-suite.h>
 #include <cutter/cut-loader.h>
-#ifndef G_OS_WIN32
-#include <signal.h>
-#endif
 
 #include "../lib/cuttest-utils.h"
 
@@ -23,9 +20,6 @@ void test_run_test_in_test_case_with_regex (void);
 void test_run_test_with_regex_in_test_case_with_regex (void);
 void test_run_test_in_test_case_with_null (void);
 void test_run_test_with_filter_with_null (void);
-#ifndef G_OS_WIN32
-void test_crash_signal (void);
-#endif
 
 static CutRunContext *run_context;
 static CutTestSuite *test_object;
@@ -38,8 +32,6 @@ static gint n_run_stub_test_function2 = 0;
 static gint n_run_stock_run_test_function = 0;
 static gint n_run_stock_test_function1 = 0;
 static gint n_run_stock_test_function2 = 0;
-
-static gint n_crash_signal = 0;
 
 static void
 stub_test_function1 (void)
@@ -81,20 +73,6 @@ stock_run_test_function (void)
     n_run_stock_run_test_function++;
 }
 
-#ifndef G_OS_WIN32
-static void
-stub_crash_function (void)
-{
-    raise(SIGSEGV);
-}
-
-static void
-cb_crash_signal (CutTest *test, CutTestResult *result, gpointer data)
-{
-    n_crash_signal++;
-}
-#endif
-
 void
 cut_setup (void)
 {
@@ -107,7 +85,6 @@ cut_setup (void)
     n_run_stock_test_function1 = 0;
     n_run_stock_test_function2 = 0;
     n_run_stock_run_test_function = 0;
-    n_crash_signal = 0;
 
     run_context = CUT_RUN_CONTEXT(cut_test_runner_new());
 
@@ -317,26 +294,6 @@ test_run_test_with_filter_with_null (void)
     cut_assert_equal_int(1, n_run_stock_test_function2);
     cut_assert_equal_int(1, n_run_stock_run_test_function);
 }
-
-#ifndef G_OS_WIN32
-void
-test_crash_signal (void)
-{
-    CutTestCase *test_case;
-
-    test_case = cut_test_case_new("crash_test_case", NULL, NULL, NULL, NULL);
-    cuttest_add_test(test_case, "crash_test", stub_crash_function);
-    cut_test_suite_add_test_case(test_object, test_case);
-    g_object_unref(test_case);
-
-    g_signal_connect(test_object, "crash", G_CALLBACK(cb_crash_signal), NULL);
-    cut_assert_false(run_test_in_test_case("crash_test", "crash_test_case"));
-    g_signal_handlers_disconnect_by_func(test_object,
-                                         G_CALLBACK(cb_crash_signal),
-                                         NULL);
-    cut_assert_equal_int(1, n_crash_signal);
-}
-#endif
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
