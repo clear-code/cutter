@@ -1,5 +1,8 @@
 2009-05-03  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test.c, cutter/cut-test-case.c: disable crash report
+	for each test and test case on multi thread mode.
+
 	* TODO: add: cut_assert_equal_not_{int,string,...}().
 
 	* TODO: remove: more intelligent crashed reporting.

@@ -590,8 +590,8 @@ cut_test_case_run_tests (CutTestCase *test_case, CutRunContext *run_context,
     gint signum;
     jmp_buf jump_buffer;
     CutTestSuite *test_suite;
-    CutCrashBacktrace *crash_backtrace;
-
+    CutCrashBacktrace *crash_backtrace = NULL;
+    gboolean is_multi_thread;
 
     g_signal_emit_by_name(test_case, "ready", g_list_length((GList *)tests));
     g_signal_emit_by_name(CUT_TEST(test_case), "start", NULL);
@@ -617,8 +617,13 @@ cut_test_case_run_tests (CutTestCase *test_case, CutRunContext *run_context,
 
 #undef CONNECT
 
-    crash_backtrace = cut_crash_backtrace_new(&jump_buffer);
-    signum = setjmp(jump_buffer);
+    is_multi_thread = cut_run_context_is_multi_thread(run_context);
+    if (is_multi_thread) {
+        signum = 0;
+    } else {
+        crash_backtrace = cut_crash_backtrace_new(&jump_buffer);
+        signum = setjmp(jump_buffer);
+    }
     switch (signum) {
     case 0:
         cut_test_case_run_startup(test_case, test_context);
@@ -628,7 +633,9 @@ cut_test_case_run_tests (CutTestCase *test_case, CutRunContext *run_context,
             if (status != CUT_TEST_RESULT_OMISSION)
                 all_success = run_tests(test_case, run_context, tests, &status);
         }
-        cut_crash_backtrace_free(crash_backtrace);
+
+        if (crash_backtrace)
+            cut_crash_backtrace_free(crash_backtrace);
 
         break;
 #ifndef G_OS_WIN32

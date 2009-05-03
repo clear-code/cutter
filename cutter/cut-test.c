@@ -427,7 +427,8 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
     CutTestData *data = NULL;
     gint signum;
     jmp_buf crash_jump_buffer;
-    CutCrashBacktrace *crash_backtrace;
+    CutCrashBacktrace *crash_backtrace = NULL;
+    gboolean is_multi_thread;
 
     priv = CUT_TEST_GET_PRIVATE(test);
     klass = CUT_TEST_GET_CLASS(test);
@@ -441,8 +442,13 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
     if (CUT_IS_ITERATED_TEST(test))
         data = cut_iterated_test_get_data(CUT_ITERATED_TEST(test));
 
-    crash_backtrace = cut_crash_backtrace_new(&crash_jump_buffer);
-    signum = setjmp(crash_jump_buffer);
+    is_multi_thread = cut_run_context_is_multi_thread(run_context);
+    if (is_multi_thread) {
+        signum = 0;
+    } else {
+        crash_backtrace = cut_crash_backtrace_new(&crash_jump_buffer);
+        signum = setjmp(crash_jump_buffer);
+    }
     switch (signum) {
     case 0:
         g_signal_emit_by_name(test, "start", test_context);
@@ -460,7 +466,8 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
 
         success = !cut_test_context_is_failed(test_context);
 
-        cut_crash_backtrace_free(crash_backtrace);
+        if (crash_backtrace)
+            cut_crash_backtrace_free(crash_backtrace);
         break;
 #ifndef G_OS_WIN32
     case SIGSEGV:
