@@ -1,5 +1,7 @@
 2009-05-03  Kouhei Sutou  <kou@cozmixng.org>
 
+	* TODO: remove: show test name on crash. [1.0.7] MUST for Poppler.
+
 	* cutter/cut-utils.[ch], test/cutter/test-cut-utils.c: add GDB
 	backtrace parser.
 	* cutter/cut-crash-backtrace.c: use GDB backtrace parser.
