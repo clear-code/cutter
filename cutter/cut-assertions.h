@@ -208,6 +208,23 @@ extern "C" {
 } while (0)
 
 /**
+ * cut_assert_not_equal_uint:
+ * @expected: an expected unsigned integer value.
+ * @actual: an actual unsigned integer value.
+ *
+ * Passes if @expected != @actual.
+ *
+ * Since: 1.0.7
+ */
+#define cut_assert_not_equal_uint(expected, actual)  do         \
+{                                                               \
+    cut_trace_with_info_expression(                             \
+        cut_assert_not_equal_uint_helper((expected), (actual),  \
+                                         #expected, #actual),   \
+        cut_assert_not_equal_uint(expected, actual));           \
+} while (0)
+
+/**
  * cut_assert_equal_size:
  * @expected: an expected size_t value.
  * @actual: an actual size_t value.

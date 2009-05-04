@@ -162,6 +162,24 @@ cut_assert_equal_uint_helper (unsigned long   expected,
 }
 
 void
+cut_assert_not_equal_uint_helper (unsigned long   expected,
+                                  unsigned long   actual,
+                                  const char     *expression_expected,
+                                  const char     *expression_actual)
+{
+    if (expected != actual) {
+        cut_test_pass();
+    } else {
+        cut_test_fail(cut_take_printf("<%s != %s>\n"
+                                      "expected: <%lu>\n"
+                                      "  actual: <%lu>",
+                                      expression_expected,
+                                      expression_actual,
+                                      expected, actual));
+    }
+}
+
+void
 cut_assert_equal_size_helper (size_t          expected,
                               size_t          actual,
                               const char     *expression_expected,

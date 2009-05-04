@@ -75,6 +75,11 @@ void        cut_assert_equal_uint_helper   (unsigned long   expected,
                                             unsigned long   actual,
                                             const char     *expression_expected,
                                             const char     *expression_actual);
+void        cut_assert_not_equal_uint_helper
+                                           (unsigned long   expected,
+                                            unsigned long   actual,
+                                            const char     *expression_expected,
+                                            const char     *expression_actual);
 void        cut_assert_equal_size_helper   (size_t          expected,
                                             size_t          actual,
                                             const char     *expression_expected,
