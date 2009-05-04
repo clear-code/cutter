@@ -283,6 +283,25 @@ extern "C" {
 } while (0)
 
 /**
+ * cut_assert_not_equal_double:
+ * @expected: an expected float value.
+ * @error: a float value that specifies error range.
+ * @actual: an actual float value.
+ *
+ * Passes if @actual < (@expected - @error) && (@expected + @error) < @actual.
+ *
+ * Since: 1.0.7
+ */
+#define cut_assert_not_equal_double(expected, error, actual) do \
+{                                                               \
+    cut_trace_with_info_expression(                             \
+        cut_assert_not_equal_double_helper(                     \
+            (expected), (error), (actual),                      \
+            #expected, #error, #actual),                        \
+        cut_assert_not_equal_double(expected, error, actual));  \
+} while (0)
+
+/**
  * cut_assert_equal_string:
  * @expected: an expected string value.
  * @actual: an actual string value.

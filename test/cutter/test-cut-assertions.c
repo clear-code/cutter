@@ -47,6 +47,7 @@ void test_equal_string_with_diff(void);
 void test_equal_string_with_folded_diff(void);
 void test_equal_substring(void);
 void test_equal_double(void);
+void test_not_equal_double(void);
 void test_operator(void);
 void test_operator_int(void);
 void test_operator_uint(void);
@@ -294,7 +295,7 @@ test_not_equal_size (void)
     cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "cut_assert_not_equal_size()", NULL,
-                           "<2 + 3 == 3 + 2>\n"
+                           "<2 + 3 != 3 + 2>\n"
                            "expected: <5>\n"
                            "  actual: <5>",
                            FAIL_LOCATION,
@@ -482,11 +483,57 @@ test_equal_substring (void)
     cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
 }
 
-void
-test_equal_double (void)
+static void
+stub_equal_double (void)
 {
     cut_assert_equal_double(1.0, 0.1, 1.0);
     cut_assert_equal_double(1.01, 0.01, 1.01);
+    MARK_FAIL(cut_assert_equal_double(1.02, 0.01, 1.04));
+}
+
+void
+test_equal_double (void)
+{
+    test = cut_test_new("cut_assert_equal_double()", stub_equal_double);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_equal_double()", NULL,
+                           "<1.02-0.01 <= 1.04 <= 1.02+0.01>\n"
+                           "expected: <1.02>\n"
+                           "   error: <0.01>\n"
+                           "     min: <1.01>\n"
+                           "     max: <1.03>\n"
+                           "  actual: <1.04>\n"
+                           "relation: <min < max < actual>",
+                           FAIL_LOCATION,
+                           "stub_equal_double");
+}
+
+static void
+stub_not_equal_double (void)
+{
+    cut_assert_not_equal_double(1.0, 0.1, 1.2);
+    MARK_FAIL(cut_assert_not_equal_double(1.01, 0.1, 1.02));
+}
+
+void
+test_not_equal_double (void)
+{
+    test = cut_test_new("cut_assert_not_equal_double()", stub_not_equal_double);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_not_equal_double()", NULL,
+                           "<(1.02 < 1.01-0.1) && (1.01+0.1 < 1.02)>\n"
+                           "expected: <1.01>\n"
+                           "   error: <0.1>\n"
+                           "     min: <0.91>\n"
+                           "     max: <1.11>\n"
+                           "  actual: <1.02>\n"
+                           "relation: <min < actual < max>",
+                           FAIL_LOCATION,
+                           "stub_not_equal_double");
 }
 
 void

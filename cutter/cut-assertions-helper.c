@@ -226,15 +226,81 @@ cut_assert_equal_double_helper (double          expected,
     if (cut_utils_equal_double(expected, actual, error)) {
         cut_test_pass();
     } else {
+        double min, max;
+        const gchar *relation;
+
+        if (error > 0) {
+            min = expected - error;
+            max = expected + error;
+        } else {
+            min = expected + error;
+            max = expected - error;
+        }
+
+        if (actual < min)
+            relation = "actual < min < max";
+        else
+            relation = "min < max < actual";
+
         cut_test_fail(cut_take_printf("<%s-%s <= %s <= %s+%s>\n"
-                                      "expected: <%g +/- %g>\n"
-                                      "  actual: <%g>",
+                                      "expected: <%g>\n"
+                                      "   error: <%g>\n"
+                                      "     min: <%g>\n"
+                                      "     max: <%g>\n"
+                                      "  actual: <%g>\n"
+                                      "relation: <%s>",
                                       expression_expected,
                                       expression_error,
                                       expression_actual,
                                       expression_expected,
                                       expression_error,
-                                      expected, error,
+                                      expected,
+                                      error,
+                                      min,
+                                      max,
+                                      actual,
+                                      relation));
+    }
+}
+
+void
+cut_assert_not_equal_double_helper (double          expected,
+                                    double          error,
+                                    double          actual,
+                                    const char     *expression_expected,
+                                    const char     *expression_error,
+                                    const char     *expression_actual)
+{
+    if (!cut_utils_equal_double(expected, actual, error)) {
+        cut_test_pass();
+    } else {
+        double min, max;
+
+        if (error > 0) {
+            min = expected - error;
+            max = expected + error;
+        } else {
+            min = expected + error;
+            max = expected - error;
+        }
+
+        cut_test_fail(cut_take_printf("<(%s < %s-%s) && (%s+%s < %s)>\n"
+                                      "expected: <%g>\n"
+                                      "   error: <%g>\n"
+                                      "     min: <%g>\n"
+                                      "     max: <%g>\n"
+                                      "  actual: <%g>\n"
+                                      "relation: <min < actual < max>",
+                                      expression_actual,
+                                      expression_expected,
+                                      expression_error,
+                                      expression_expected,
+                                      expression_error,
+                                      expression_actual,
+                                      expected,
+                                      error,
+                                      min,
+                                      max,
                                       actual));
     }
 }

@@ -95,6 +95,13 @@ void        cut_assert_equal_double_helper (double          expected,
                                             const char     *expression_expected,
                                             const char     *expression_error,
                                             const char     *expression_actual);
+void        cut_assert_not_equal_double_helper
+                                           (double          expected,
+                                            double          error,
+                                            double          actual,
+                                            const char     *expression_expected,
+                                            const char     *expression_error,
+                                            const char     *expression_actual);
 void        cut_assert_equal_string_helper (const char     *expected,
                                             const char     *actual,
                                             const char     *expression_expected,
