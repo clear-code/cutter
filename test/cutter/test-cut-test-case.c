@@ -123,13 +123,13 @@ stub_omission_test (void)
     cut_omit("Omit!!!");
 }
 
+#ifndef G_OS_WIN32
 static void
 stub_crash_test (void)
 {
-#ifndef G_OS_WIN32
     raise(SIGABRT);
-#endif
 }
+#endif
 
 static void
 stub_setup_function (void)
