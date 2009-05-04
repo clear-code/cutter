@@ -140,7 +140,7 @@ test_hatch (void)
     gcut_assert_equal_pid(0, gcut_egg_get_pid(egg));
     gcut_egg_hatch(egg, &error);
     gcut_assert_error(error);
-    cut_assert_operator_int(0, !=, gcut_egg_get_pid(egg));
+    gcut_assert_not_equal_pid(0, gcut_egg_get_pid(egg));
 
     wait_reaped();
     cut_assert_equal_string("XXX\n", output_string->str);
