@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2009  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -594,6 +594,24 @@ gcut_assert_equal_pid_helper (GPid            expected,
         cut_test_pass();
     } else {
         cut_test_fail(cut_take_printf("<%s == %s>\n"
+                                      "expected: <%" GCUT_GPID_FORMAT ">\n"
+                                      "  actual: <%" GCUT_GPID_FORMAT ">",
+                                      expression_expected,
+                                      expression_actual,
+                                      expected, actual));
+    }
+}
+
+void
+gcut_assert_not_equal_pid_helper (GPid            expected,
+                                  GPid            actual,
+                                  const char     *expression_expected,
+                                  const char     *expression_actual)
+{
+    if (expected != actual) {
+        cut_test_pass();
+    } else {
+        cut_test_fail(cut_take_printf("<%s != %s>\n"
                                       "expected: <%" GCUT_GPID_FORMAT ">\n"
                                       "  actual: <%" GCUT_GPID_FORMAT ">",
                                       expression_expected,

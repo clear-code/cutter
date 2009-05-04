@@ -742,6 +742,23 @@ G_BEGIN_DECLS
         gcut_assert_equal_pid(expected, actual));               \
 } while (0)
 
+/**
+ * gcut_assert_not_equal_pid:
+ * @expected: an expected value.
+ * @actual: an actual value.
+ *
+ * Passes if @expected != @actual.
+ *
+ * Since: 1.0.7
+ */
+#define gcut_assert_not_equal_pid(expected, actual) do          \
+{                                                               \
+    cut_trace_with_info_expression(                             \
+        gcut_assert_not_equal_pid_helper((expected), (actual),  \
+                                         #expected, #actual),   \
+        gcut_assert_not_equal_pid(expected, actual));           \
+} while (0)
+
 G_END_DECLS
 
 #endif /* __GCUT_ASSERTIONS_H__ */

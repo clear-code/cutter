@@ -1,3 +1,22 @@
+/* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+/*
+ *  Copyright (C) 2009  Kouhei Sutou <kou@cozmixng.org>
+ *
+ *  This library is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
 #include <gcutter.h>
 #include <cutter/cut-test.h>
 #include <cutter/cut-test-result.h>
@@ -29,6 +48,7 @@ void test_equal_object(void);
 void test_equal_object_null(void);
 void test_equal_object_custom(void);
 void test_equal_pid(void);
+void test_not_equal_pid(void);
 
 static CutTest *test;
 static CutRunContext *run_context;
@@ -989,12 +1009,50 @@ test_equal_object_custom (void)
                            "stub_equal_object_custom");
 }
 
+static void
+stub_equal_pid (void)
+{
+    gcut_assert_equal_pid(0, 0);
+    MARK_FAIL(gcut_assert_equal_pid(0, 100));
+}
+
 void
 test_equal_pid (void)
 {
-    GPid pid = 0;
-    gcut_assert_equal_pid(0, pid);
+    test = cut_test_new("cut_assert_equal_pid()", stub_equal_pid);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_equal_pid()", NULL,
+                           "<0 == 100>\n"
+                           "expected: <0>\n"
+                           "  actual: <100>",
+                           FAIL_LOCATION,
+                           "stub_equal_pid");
 }
+
+static void
+stub_not_equal_pid (void)
+{
+    gcut_assert_not_equal_pid(0, 100);
+    MARK_FAIL(gcut_assert_not_equal_pid(0, 0));
+}
+
+void
+test_not_equal_pid (void)
+{
+    test = cut_test_new("cut_assert_not_equal_pid()", stub_not_equal_pid);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_not_equal_pid()", NULL,
+                           "<0 != 0>\n"
+                           "expected: <0>\n"
+                           "  actual: <0>",
+                           FAIL_LOCATION,
+                           "stub_not_equal_pid");
+}
+
 
 /*
 vi:nowrap:ai:expandtab:sw=4:ts=4

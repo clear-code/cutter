@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2009  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -143,6 +143,10 @@ void      gcut_assert_equal_uint64_helper   (guint64         expected,
                                              const char     *expression_expected,
                                              const char     *expression_actual);
 void      gcut_assert_equal_pid_helper      (GPid            expected,
+                                             GPid            actual,
+                                             const char     *expression_expected,
+                                             const char     *expression_actual);
+void      gcut_assert_not_equal_pid_helper  (GPid            expected,
                                              GPid            actual,
                                              const char     *expression_expected,
                                              const char     *expression_actual);
