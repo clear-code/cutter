@@ -472,6 +472,7 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
 #ifndef G_OS_WIN32
     case SIGSEGV:
     case SIGABRT:
+    case SIGTERM:
         success = FALSE;
         cut_crash_backtrace_emit(test_suite, test_case,
                                  test, test_iterator, data,

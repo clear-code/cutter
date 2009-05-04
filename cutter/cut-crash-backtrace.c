@@ -88,10 +88,12 @@ struct _CutCrashBacktrace
     struct sigaction i_will_be_back_action;
     struct sigaction previous_segv_action;
     struct sigaction previous_abort_action;
-    struct sigaction previous_int_action;
+    struct sigaction previous_terminate_action;
+    struct sigaction previous_interrupt_action;
     gboolean set_segv_action;
     gboolean set_abort_action;
-    gboolean set_int_action;
+    gboolean set_terminate_action;
+    gboolean set_interrupt_action;
 };
 
 static void
@@ -171,18 +173,21 @@ cut_crash_backtrace_new (jmp_buf *jump_buffer)
     struct sigaction *i_will_be_back_action;
     struct sigaction *previous_segv_action;
     struct sigaction *previous_abort_action;
-    struct sigaction *previous_int_action;
+    struct sigaction *previous_terminate_action;
+    struct sigaction *previous_interrupt_action;
 
     crash_backtrace = g_new0(CutCrashBacktrace, 1);
     crash_backtrace->jump_buffer = jump_buffer;
     crash_backtrace->set_segv_action = TRUE;
     crash_backtrace->set_abort_action = TRUE;
-    crash_backtrace->set_int_action = TRUE;
+    crash_backtrace->set_terminate_action = TRUE;
+    crash_backtrace->set_interrupt_action = TRUE;
 
     i_will_be_back_action = &(crash_backtrace->i_will_be_back_action);
     previous_segv_action = &(crash_backtrace->previous_segv_action);
     previous_abort_action = &(crash_backtrace->previous_abort_action);
-    previous_int_action = &(crash_backtrace->previous_int_action);
+    previous_terminate_action = &(crash_backtrace->previous_terminate_action);
+    previous_interrupt_action = &(crash_backtrace->previous_interrupt_action);
 
     i_will_be_back_action->sa_handler = i_will_be_back_handler;
     sigemptyset(&(i_will_be_back_action->sa_mask));
@@ -191,8 +196,12 @@ cut_crash_backtrace_new (jmp_buf *jump_buffer)
         crash_backtrace->set_segv_action = FALSE;
     if (sigaction(SIGABRT, i_will_be_back_action, previous_abort_action) == -1)
         crash_backtrace->set_abort_action = FALSE;
-    if (sigaction(SIGINT, i_will_be_back_action, previous_int_action) == -1)
-        crash_backtrace->set_int_action = FALSE;
+    if (sigaction(SIGTERM, i_will_be_back_action,
+                  previous_terminate_action) == -1)
+        crash_backtrace->set_terminate_action = FALSE;
+    if (sigaction(SIGINT, i_will_be_back_action,
+                  previous_interrupt_action) == -1)
+        crash_backtrace->set_interrupt_action = FALSE;
 
     crash_backtrace->previous = current_crash_backtrace;
     current_crash_backtrace = crash_backtrace;
@@ -203,8 +212,10 @@ cut_crash_backtrace_new (jmp_buf *jump_buffer)
 void
 cut_crash_backtrace_free (CutCrashBacktrace *crash_backtrace)
 {
-    if (crash_backtrace->set_int_action)
-        sigaction(SIGINT, &(crash_backtrace->previous_int_action), NULL);
+    if (crash_backtrace->set_interrupt_action)
+        sigaction(SIGINT, &(crash_backtrace->previous_interrupt_action), NULL);
+    if (crash_backtrace->set_terminate_action)
+        sigaction(SIGTERM, &(crash_backtrace->previous_terminate_action), NULL);
     if (crash_backtrace->set_abort_action)
         sigaction(SIGABRT, &(crash_backtrace->previous_abort_action), NULL);
     if (crash_backtrace->set_segv_action)

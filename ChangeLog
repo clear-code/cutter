@@ -1,5 +1,10 @@
 2009-05-04  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-crash-backtrace.c,
+	cutter/cut-test.c, cutter/cut-test-case.c,
+	cutter/cut-test-suite.c,
+	test/cutter/test-cut-test-case.c: treat SIGTERM as crash signal too.
+
 	* cutter/cut-assertions.h, cutter/cut-assertions-helper.[ch],
 	cutter/cut-public.h, cutter/cut-utils.c,
 	test/cutter/test-cut-assertions.c,
