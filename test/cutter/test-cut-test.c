@@ -154,11 +154,13 @@ cb_omission_signal (CutTest *test, gpointer data)
     n_omission_signal++;
 }
 
+#ifndef G_OS_WIN32
 static void
 cb_crash_signal (CutTest *test, CutTestResult *result, gpointer data)
 {
     n_crash_signal++;
 }
+#endif
 
 static gboolean
 run (void)
@@ -314,13 +316,13 @@ test_omission_signal (void)
     cut_assert_equal_uint(1, n_omission_signal);
 }
 
+#ifndef G_OS_WIN32
 static void
 stub_crash_function (void)
 {
-#ifndef G_OS_WIN32
     raise(SIGSEGV);
-#endif
 }
+#endif
 
 void
 test_crash_signal (void)
