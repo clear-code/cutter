@@ -37,6 +37,7 @@
 #include "../lib/cuttest-assertions.h"
 
 void test_equal_int(void);
+void test_not_equal_int(void);
 void test_equal_size(void);
 void test_equal_string(void);
 void test_equal_string_with_diff(void);
@@ -169,6 +170,29 @@ test_equal_int (void)
     cut_assert_equal_int(1, 1);
     cut_assert_equal_int(-1, -1);
     cut_assert_equal_int(0, 0);
+}
+
+static void
+stub_not_equal_int (void)
+{
+    cut_assert_not_equal_int(1, 2);
+    cut_assert_not_equal_int(1, -1);
+    MARK_FAIL(cut_assert_not_equal_int(2 + 3, 3 + 2));
+}
+
+void
+test_not_equal_int (void)
+{
+    test = cut_test_new("cut_assert_not_equal_int()", stub_not_equal_int);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_not_equal_int()", NULL,
+                           "<2 + 3 != 3 + 2>\n"
+                           "expected: <5>\n"
+                           "  actual: <5>",
+                           FAIL_LOCATION,
+                           "stub_not_equal_int");
 }
 
 static void
