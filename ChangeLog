@@ -1,5 +1,7 @@
 2009-05-04  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/gcutter/test-gcut-assertions.c: cast to GPid.
+
 	* test/cutter/test-cut-test-case.c: add missing ifdef G_OS_WIN32.
 
 	* test/gcutter/test-gcut-egg.c (test_hatch): use

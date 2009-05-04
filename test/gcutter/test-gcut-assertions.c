@@ -1013,7 +1013,7 @@ static void
 stub_equal_pid (void)
 {
     gcut_assert_equal_pid(0, 0);
-    MARK_FAIL(gcut_assert_equal_pid(0, 100));
+    MARK_FAIL(gcut_assert_equal_pid(0, (GPid)100));
 }
 
 void
@@ -1034,7 +1034,7 @@ test_equal_pid (void)
 static void
 stub_not_equal_pid (void)
 {
-    gcut_assert_not_equal_pid(0, 100);
+    gcut_assert_not_equal_pid(0, (GPid)100);
     MARK_FAIL(gcut_assert_not_equal_pid(0, 0));
 }
 
