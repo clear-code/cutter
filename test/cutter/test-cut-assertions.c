@@ -1,6 +1,27 @@
+/* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+/*
+ *  Copyright (C) 2009  Kouhei Sutou <kou@cozmixng.org>
+ *
+ *  This library is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
 #ifdef HAVE_CONFIG_H
 #  include <config.h>
 #endif
+
+#include <string.h>
 
 #include <glib/gstdio.h>
 #ifdef HAVE_UNISTD_H
@@ -20,6 +41,7 @@ void test_equal_size(void);
 void test_equal_string(void);
 void test_equal_string_with_diff(void);
 void test_equal_string_with_folded_diff(void);
+void test_equal_substring(void);
 void test_equal_double(void);
 void test_operator(void);
 void test_operator_int(void);
@@ -327,6 +349,29 @@ test_equal_string_with_folded_diff (void)
                             "  89"
                             "8123456789",
                             cut_test_result_get_system_message(test_result));
+}
+
+static void
+equal_substring (void)
+{
+    const gchar actual_string[] =
+        "0000"
+        "0123456789"
+        "999999";
+    cut_assert_equal_substring("0123456789",
+                               actual_string + strlen("0000"),
+                               strlen("0123456789"));
+    cut_assert_equal_substring("0123456789",
+                               actual_string + strlen("0000") + 1,
+                               strlen("0123456789"));
+}
+
+void
+test_equal_substring (void)
+{
+    test = cut_test_new("equal-substring", equal_substring);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
 }
 
 void

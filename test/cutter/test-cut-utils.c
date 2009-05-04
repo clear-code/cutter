@@ -1,4 +1,23 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+/*
+ *  Copyright (C) 2009  Kouhei Sutou <kou@cozmixng.org>
+ *
+ *  This library is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
+#include <string.h>
 
 #include <gcutter.h>
 #include <cutter/cut-utils.h>
@@ -13,6 +32,7 @@ void test_strv_concat (void);
 void test_remove_path_recursive (void);
 void test_fold (void);
 void test_equal_string (void);
+void test_equal_substring (void);
 void test_equal_double (void);
 void data_parse_gdb_backtrace (void);
 void test_parse_gdb_backtrace (gconstpointer data);
@@ -180,6 +200,18 @@ test_equal_string (void)
     cut_assert_true(cut_utils_equal_string("string", "string"));
     cut_assert_false(cut_utils_equal_string("string", NULL));
     cut_assert_false(cut_utils_equal_string(NULL, "string"));
+}
+
+void
+test_equal_substring (void)
+{
+    cut_assert_true(cut_utils_equal_substring(NULL, NULL, 10));
+    cut_assert_true(cut_utils_equal_substring("string", "string-garbage",
+                                              strlen("string")));
+    cut_assert_false(cut_utils_equal_substring("string", "string-garbage",
+                                               strlen("string") + 1));
+    cut_assert_false(cut_utils_equal_substring("string", NULL, 5));
+    cut_assert_false(cut_utils_equal_substring(NULL, "string", 5));
 }
 
 void

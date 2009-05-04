@@ -300,6 +300,25 @@ extern "C" {
 #endif
 
 /**
+ * cut_assert_equal_substring:
+ * @expected: an expected string value.
+ * @actual: an actual string value.
+ * @length: compared string length.
+ *
+ * Passes if both @expected and @actual are %NULL or
+ * strncmp(@expected, @actual, @length) == 0.
+ *
+ * Since: 1.0.7
+ */
+#define cut_assert_equal_substring(expected, actual, length) do         \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_equal_substring_helper(expected, actual, length,     \
+                                          #expected, #actual, #length), \
+        cut_assert_equal_substring(expected, actual, length));          \
+} while (0)
+
+/**
  * cut_assert_equal_memory:
  * @expected: an expected data.
  * @expected_size: a size of @expected.

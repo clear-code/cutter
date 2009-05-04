@@ -98,6 +98,9 @@ char        *cut_utils_inspect_memory       (const void *memory,
 
 cut_boolean  cut_utils_equal_string         (const char *string1,
                                              const char *string2);
+cut_boolean  cut_utils_equal_substring      (const char *string1,
+                                             const char *string2,
+                                             size_t      length);
 cut_boolean  cut_utils_equal_double         (double double1,
                                              double double2,
                                              double error);

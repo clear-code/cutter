@@ -1,5 +1,10 @@
 2009-05-04  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertions.h, cutter/cut-assertions-helper.[ch],
+	cutter/cut-public.h, cutter/cut-utils.c,
+	test/cutter/test-cut-assertions.c,
+	test/cutter/test-cut-utils.c: add cut_assert_equal_substring().
+
 	* misc/rd2man-lib.rb: markup variable as italic.
 
 2009-05-03  Kouhei Sutou  <kou@cozmixng.org>

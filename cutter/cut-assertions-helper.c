@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2009  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -215,6 +215,50 @@ cut_assert_equal_string_helper (const char     *expected,
                                       cut_utils_inspect_string(actual));
             if (expected && actual)
                 message = cut_append_diff(message, expected, actual);
+            cut_test_fail(message);
+        }
+    }
+}
+
+void
+cut_assert_equal_substring_helper (const char     *expected,
+                                   const char     *actual,
+                                   size_t          length,
+                                   const char     *expression_expected,
+                                   const char     *expression_actual,
+                                   const char     *expression_length)
+{
+    if (expected == NULL) {
+        if (actual == NULL) {
+            cut_test_pass();
+        } else {
+            const gchar *actual_substring;
+
+            actual_substring = cut_take_string(g_strndup(actual, length));
+            cut_test_fail(cut_take_printf("expected: <%s> is NULL\n"
+                                          "  actual: <%s>",
+                                          expression_actual,
+                                          actual_substring));
+        }
+    } else {
+        if (cut_utils_equal_substring(expected, actual, length)) {
+            cut_test_pass();
+        } else {
+            const gchar *actual_substring;
+            const char *message;
+
+            actual_substring = cut_take_string(g_strndup(actual, length));
+            message =
+                cut_take_printf("<%s == %s[0..%s]>\n"
+                                "expected: <%s>\n"
+                                "  actual: <%s>",
+                                expression_expected,
+                                expression_actual,
+                                expression_length,
+                                cut_utils_inspect_string(expected),
+                                cut_utils_inspect_string(actual_substring));
+            if (expected && actual_substring)
+                message = cut_append_diff(message, expected, actual_substring);
             cut_test_fail(message);
         }
     }

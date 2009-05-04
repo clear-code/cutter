@@ -155,6 +155,19 @@ cut_utils_equal_string (const gchar *string1, const gchar *string2)
 }
 
 gboolean
+cut_utils_equal_substring (const gchar *string1, const gchar *string2,
+                           size_t length)
+{
+    if (string1 == string2)
+        return TRUE;
+
+    if (string1 == NULL || string2 == NULL)
+        return FALSE;
+
+    return strncmp(string1, string2, length) == 0;
+}
+
+gboolean
 cut_utils_equal_double (gdouble double1, gdouble double2, gdouble error)
 {
     return fabs(double1 - double2) <= error;
