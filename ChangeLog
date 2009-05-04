@@ -1,5 +1,7 @@
 2009-05-04  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/cutter/test-cut-assertions.c (test_equal_int): test failure case.
+
 	* gcutter/gcut-assertions.h, gcutter/gcut-assertions-helper.[ch],
 	test/gcutter/test-gcut-assertions.c: add gcut_assert_not_equal_pid().
 

@@ -164,12 +164,27 @@ cut_teardown (void)
         g_object_unref(test_result);
 }
 
-void
-test_equal_int (void)
+static void
+stub_equal_int (void)
 {
     cut_assert_equal_int(1, 1);
     cut_assert_equal_int(-1, -1);
-    cut_assert_equal_int(0, 0);
+    MARK_FAIL(cut_assert_equal_int(2 + 3, 3 + 4));
+}
+
+void
+test_equal_int (void)
+{
+    test = cut_test_new("cut_assert_equal_int()", stub_equal_int);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_equal_int()", NULL,
+                           "<2 + 3 == 3 + 4>\n"
+                           "expected: <5>\n"
+                           "  actual: <7>",
+                           FAIL_LOCATION,
+                           "stub_equal_int");
 }
 
 static void
