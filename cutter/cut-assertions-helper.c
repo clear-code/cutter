@@ -198,6 +198,24 @@ cut_assert_equal_size_helper (size_t          expected,
 }
 
 void
+cut_assert_not_equal_size_helper (size_t          expected,
+                                  size_t          actual,
+                                  const char     *expression_expected,
+                                  const char     *expression_actual)
+{
+    if (expected != actual) {
+        cut_test_pass();
+    } else {
+        cut_test_fail(cut_take_printf("<%s != %s>\n"
+                                      "expected: <%" G_GSIZE_FORMAT ">\n"
+                                      "  actual: <%" G_GSIZE_FORMAT ">",
+                                      expression_expected,
+                                      expression_actual,
+                                      expected, actual));
+    }
+}
+
+void
 cut_assert_equal_double_helper (double          expected,
                                 double          error,
                                 double          actual,

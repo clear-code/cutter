@@ -1,6 +1,9 @@
 2009-05-04  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-assertions.h, cutter/cut-assertions-helper.[ch],
+	test/cutter/test-cut-assertions.c: add cut_assert_not_equal_size().
+
+	* cutter/cut-assertions.h, cutter/cut-assertions-helper.[ch],
 	test/cutter/test-cut-assertions.c: add cut_assert_not_equal_uint().
 
 	* test/gcutter/test-gcut-assertions.c: cast to GPid.
