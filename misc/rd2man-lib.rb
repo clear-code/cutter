@@ -71,6 +71,10 @@ EOT
       ".BR #{content.join.sub(/\.rd(\.[a-z]{2})?\z/, '')}\n"
     end
 
+    def apply_to_Var(element, content)
+      "\n.I #{content.join.sub(/\./, '\\.')}\n"
+    end
+
     private
     def guess_title
       title = @filename || ARGF.filename || "Untitled"

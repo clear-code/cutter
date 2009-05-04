@@ -1,3 +1,7 @@
+2009-05-04  Kouhei Sutou  <kou@cozmixng.org>
+
+	* misc/rd2man-lib.rb: markup variable as italic.
+
 2009-05-03  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-crash-backtrace.c (read_backtrace): don't use regexp.
