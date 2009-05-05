@@ -1,5 +1,8 @@
 2009-05-05  Kouhei Sutou  <kou@cozmixng.org>
 
+	* misc/prepare-gtk-doc-html-for-publishing.rb: support site title
+	injection.
+
 	* misc/Makefile.am (dist_noinst_SCRIPTS): update.
 
 	* html/logo.*: update.

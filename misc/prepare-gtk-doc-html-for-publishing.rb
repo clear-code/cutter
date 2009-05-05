@@ -4,6 +4,7 @@ require 'optparse'
 
 template_directory = File.dirname(__FILE__)
 target_language = nil
+site_title = nil
 opts = OptionParser.new do |opts|
   opts.on("--help", "Show this message") do
     puts opts
@@ -16,6 +17,10 @@ opts = OptionParser.new do |opts|
 
   opts.on("--language=LANGUAGE", "Target language") do |language|
     target_language = language
+  end
+
+  opts.on("--title=TITLE", "Site title") do |title|
+    site_title = title
   end
 end
 opts.parse!
@@ -31,6 +36,7 @@ footer = read_template(template_directory, "footer", target_language)
 ARGV.each do |target|
   File.open(target, "r+") do |input|
     content = input.read
+    content = content.sub(/(<\/title>)/, " - #{site_title}\\1") if site_title
     content = content.sub(/(<\/head>)/, head + "\n\\1")
     content = content.sub(/(<body\s.+?>)/, "\\1\n" + header)
     content = content.sub(/(<\/body>)/, footer + "\n\\1")
