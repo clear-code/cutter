@@ -1,5 +1,7 @@
 2009-05-05  Kouhei Sutou  <kou@cozmixng.org>
 
+	* USERS*: use sourceforge.net instead of sf.net.
+
 	* html/index.html*, doc/reference/header*.html: use reference/ for
 	Reference link instead of reference/reference.html.
 
