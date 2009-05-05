@@ -1,5 +1,7 @@
 2009-05-05  Kouhei Sutou  <kou@cozmixng.org>
 
+	* misc/Makefile.am (dist_noinst_SCRIPTS): update.
+
 	* html/logo.*: update.
 	* html/cutter.css: follow the logo size change.
 
