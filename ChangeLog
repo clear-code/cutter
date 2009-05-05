@@ -1,5 +1,10 @@
 2009-05-05  Kouhei Sutou  <kou@cozmixng.org>
 
+	* html/index.html*, doc/reference/header*.html: use reference/ for
+	Reference link instead of reference/reference.html.
+
+	* html/cutter.css: improve spaces.
+
 	* misc/prepare-gtk-doc-html-for-publishing.rb: support site title
 	injection.
 

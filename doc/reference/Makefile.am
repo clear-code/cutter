@@ -200,7 +200,9 @@ upload: docs
 	done
 	chmod -R g+w tmp/reference
 	ruby $(top_srcdir)/misc/prepare-gtk-doc-html-for-publishing.rb	\
-	  --template-directory=$(srcdir) tmp/reference/*.html
+	  --template-directory=$(srcdir) --title "$(PACKAGE_TITLE)"	\
+	  tmp/reference/*.html
 	ruby $(top_srcdir)/misc/prepare-gtk-doc-html-for-publishing.rb	\
-	  --template-directory=$(srcdir) --language=ja tmp/reference/ja/*.html
+	  --template-directory=$(srcdir) --title "$(PACKAGE_TITLE)"	\
+	  --language=ja tmp/reference/ja/*.html
 	rsync -avz --delete tmp/reference/ $(SF_HTDOCS)/reference/
