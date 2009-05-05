@@ -1,3 +1,8 @@
+2009-05-05  Kouhei Sutou  <kou@cozmixng.org>
+
+	* html/logo.*: update.
+	* html/cutter.css: follow the logo size change.
+
 2009-05-04  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-assertions.h, cutter/cut-assertions-helper.[ch],

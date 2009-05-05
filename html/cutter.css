@@ -29,7 +29,7 @@ div.header h1
   margin-top: 20px;
   margin-left: 50px;
   margin-right: 220px;
-  height: 40px;
+  height: 50px;
 }
 
 div.header h1 a,
@@ -43,7 +43,7 @@ div.header h1 a:visited
 div.header h1 span
 {
   display: block;
-  padding-left: 100px;
+  padding-left: 130px;
   margin-bottom: 2px;
 }
 

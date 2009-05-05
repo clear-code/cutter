@@ -9,8 +9,8 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="84"
-   height="40"
+   width="115"
+   height="50"
    id="svg2"
    sodipodi:version="0.32"
    inkscape:version="0.46"
@@ -22,6 +22,28 @@
    inkscape:export-ydpi="183.76721">
   <defs
      id="defs4">
+    <linearGradient
+       id="linearGradient3528">
+      <stop
+         id="stop3530"
+         offset="0"
+         style="stop-color:#1a5f00;stop-opacity:0;" />
+      <stop
+         id="stop3532"
+         offset="1"
+         style="stop-color:#001f02;stop-opacity:0.87058824;" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3514">
+      <stop
+         style="stop-color:#1a5f00;stop-opacity:1;"
+         offset="0"
+         id="stop3516" />
+      <stop
+         style="stop-color:#001f02;stop-opacity:1;"
+         offset="1"
+         id="stop3518" />
+    </linearGradient>
     <linearGradient
        id="linearGradient4383">
       <stop
@@ -1973,6 +1995,26 @@
        y1="-602.7334"
        x2="154.41304"
        y2="-617.37909" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3514"
+       id="linearGradient3520"
+       x1="197.40004"
+       y1="430.4967"
+       x2="197.40004"
+       y2="457.72565"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(1.7677669,21.950513)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3528"
+       id="linearGradient3526"
+       gradientUnits="userSpaceOnUse"
+       x1="197.40004"
+       y1="430.4967"
+       x2="197.40004"
+       y2="457.72565"
+       gradientTransform="matrix(0.897346,0,0,0.897346,1.5862982,-943.91797)" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -1982,7 +2024,7 @@
      gridtolerance="10000"
      guidetolerance="10"
      objecttolerance="10"
-     inkscape:pageopacity="0.0"
+     inkscape:pageopacity="1"
      inkscape:pageshadow="2"
      inkscape:zoom="3.959798"
      inkscape:cx="104.30089"
@@ -1994,8 +2036,8 @@
      inkscape:guide-bbox="true"
      inkscape:window-width="1071"
      inkscape:window-height="782"
-     inkscape:window-x="83"
-     inkscape:window-y="98" />
+     inkscape:window-x="194"
+     inkscape:window-y="108" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -2011,75 +2053,31 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-141.08286,-461.9147)">
-    <g
-       id="g2747"
-       transform="matrix(0.9801,0,0,0.9801,1.412751,9.8454082)">
-      <g
-         id="g3186"
-         transform="matrix(1.01362,0,0,-1.01362,235.09139,470.24125)"
-         inkscape:r_cx="true"
-         inkscape:r_cy="true" />
-      <text
-         sodipodi:linespacing="100%"
-         id="text2383"
-         y="486.2272"
-         x="142.17661"
-         style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:FreeSans;-inkscape-font-specification:FreeSans"
-         xml:space="preserve"><tspan
-           style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ff0000;fill-opacity:1;font-family:FreeSans;-inkscape-font-specification:FreeSans"
-           y="486.2272"
-           x="142.17661"
-           id="tspan2385"
-           sodipodi:role="line">C</tspan></text>
-      <g
-         transform="matrix(1.966567e-2,0,0,1.966567e-2,252.85602,473.20969)"
-         id="g5275"
-         inkscape:label="Layer 1">
-        <g
-           id="g1929"
-           inkscape:export-filename="C:\Documents and Settings\Administrator\Desktop\programs\svg\firewall.png"
-           inkscape:export-xdpi="90.000000"
-           inkscape:export-ydpi="90.000000" />
-      </g>
-      <text
-         xml:space="preserve"
-         style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#00ff00;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:FreeSans;-inkscape-font-specification:FreeSans"
-         x="164.17661"
-         y="486.2272"
-         id="text4359"
-         sodipodi:linespacing="100%"><tspan
-           sodipodi:role="line"
-           id="tspan4361"
-           x="164.17661"
-           y="486.2272"
-           style="font-size:32px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#00ff00;fill-opacity:1;font-family:FreeSans;-inkscape-font-specification:FreeSans">utter</tspan></text>
-      <text
-         transform="scale(1.2409186,-0.8058546)"
-         xml:space="preserve"
-         style="font-size:25.78734779px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:url(#linearGradient2760);fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:FreeSans;-inkscape-font-specification:FreeSans"
-         x="114.57388"
-         y="-603.32684"
-         id="text4367"
-         sodipodi:linespacing="100%"><tspan
-           sodipodi:role="line"
-           id="tspan4369"
-           x="114.57388"
-           y="-603.32684"
-           style="font-size:25.78734779px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:url(#linearGradient2760);fill-opacity:1;font-family:FreeSans;-inkscape-font-specification:FreeSans">C</tspan></text>
-      <text
-         transform="scale(1.2409186,-0.8058546)"
-         sodipodi:linespacing="100%"
-         id="text4371"
-         y="-603.32684"
-         x="132.3027"
-         style="font-size:25.78734779px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:url(#linearGradient2762);fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:FreeSans;-inkscape-font-specification:FreeSans"
-         xml:space="preserve"><tspan
-           style="font-size:25.78734779px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:url(#linearGradient2762);fill-opacity:1;font-family:FreeSans;-inkscape-font-specification:FreeSans"
-           y="-603.32684"
-           x="132.3027"
-           id="tspan4373"
-           sodipodi:role="line">utter</tspan></text>
-    </g>
+     transform="translate(-145.37718,-451.20483)">
+    <text
+       xml:space="preserve"
+       style="font-size:36px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:url(#linearGradient3520);fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans"
+       x="145.12346"
+       y="479.16595"
+       id="text2740"
+       sodipodi:linespacing="100%"><tspan
+         sodipodi:role="line"
+         id="tspan2742"
+         x="145.12346"
+         y="479.16595"
+         style="fill:url(#linearGradient3520);fill-opacity:1">Cutter</tspan></text>
+    <text
+       sodipodi:linespacing="100%"
+       id="text3522"
+       y="-533.63763"
+       x="130.22595"
+       style="font-size:32.30445862px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:url(#linearGradient3526);fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:DejaVu Sans;-inkscape-font-specification:DejaVu Sans"
+       xml:space="preserve"
+       transform="scale(1.1143973,-0.897346)"><tspan
+         style="fill:url(#linearGradient3526);fill-opacity:1"
+         y="-533.63763"
+         x="130.22595"
+         id="tspan3524"
+         sodipodi:role="line">Cutter</tspan></text>
   </g>
 </svg>
