@@ -115,6 +115,11 @@ void        cut_assert_equal_string_helper (const char     *expected,
                                             const char     *actual,
                                             const char     *expression_expected,
                                             const char     *expression_actual);
+void        cut_assert_not_equal_string_helper
+                                           (const char     *expected,
+                                            const char     *actual,
+                                            const char     *expression_expected,
+                                            const char     *expression_actual);
 void        cut_assert_equal_substring_helper
                                            (const char     *expected,
                                             const char     *actual,
@@ -122,7 +127,23 @@ void        cut_assert_equal_substring_helper
                                             const char     *expression_expected,
                                             const char     *expression_actual,
                                             const char     *expression_length);
+void        cut_assert_not_equal_substring_helper
+                                           (const char     *expected,
+                                            const char     *actual,
+                                            size_t          length,
+                                            const char     *expression_expected,
+                                            const char     *expression_actual,
+                                            const char     *expression_length);
 void        cut_assert_equal_memory_helper (const void     *expected,
+                                            size_t          expected_size,
+                                            const void     *actual,
+                                            size_t          actual_size,
+                                            const char     *expression_expected,
+                                            const char     *expression_expected_size,
+                                            const char     *expression_actual,
+                                            const char     *expression_actual_size);
+void        cut_assert_not_equal_memory_helper
+                                           (const void     *expected,
                                             size_t          expected_size,
                                             const void     *actual,
                                             size_t          actual_size,

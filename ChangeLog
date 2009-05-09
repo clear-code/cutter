@@ -1,5 +1,11 @@
 2009-05-09  Kouhei Sutou  <kou@cozmixng.org>
 
+	* TODO: remove: cut_assert_equal_not_{int,string,...}().
+
+	* cutter/cut-assertions.h, cutter/cut-assertions-helper.[ch],
+	test/cutter/test-cut-assertions.c: add cut_assert_not_equal_string(),
+	cut_assert_not_equal_substring() and cut_assert_not_equal_memory().
+
 	* cutter/cut-assertions.h: add examples for cut_assert_equal_boolean()
 	and cut_assert_not_equal_boolean().
 

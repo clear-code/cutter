@@ -108,7 +108,7 @@ extern "C" {
  * value or both of @expected and @actual are %CUT_FALSE
  * value.
  *
- * e.g.
+ * e.g.:
  * |[
  * cut_assert_equal_boolean(CUT_TRUE, CUT_TRUE);   -> Pass
  * cut_assert_equal_boolean(CUT_FALSE, CUT_FALSE); -> Pass
@@ -134,7 +134,7 @@ extern "C" {
  * but @actual is %CUT_FALSE value or @expected is
  * %CUT_FALSE value but @actual is %CUT_TRUE value.
  *
- * e.g.
+ * e.g.:
  * |[
  * cut_assert_not_equal_boolean(CUT_TRUE, CUT_TRUE);   -> Fail
  * cut_assert_not_equal_boolean(CUT_FALSE, CUT_FALSE); -> Fail
@@ -363,6 +363,15 @@ extern "C" {
  *
  * Passes if both @expected and @actual are %NULL or
  * strcmp(@expected, @actual) == 0.
+ *
+ * e.g.:
+ * |[
+ * cut_assert_equal_string("abc", "abc"); -> Pass
+ * cut_assert_equal_string(NULL, NULL);   -> Pass
+ * cut_assert_equal_string("abc", "ABC"); -> Fail
+ * cut_assert_equal_string("abc", NULL);  -> Fail
+ * cut_assert_equal_string(NULL, "abc");  -> Fail
+ * ]|
  */
 #define cut_assert_equal_string(expected, actual, ...) do               \
 {                                                                       \
@@ -371,6 +380,33 @@ extern "C" {
         cut_assert_equal_string_helper(expected, actual,                \
                                        #expected, #actual),             \
         cut_assert_equal_string(expected, actual, __VA_ARGS__));        \
+} while (0)
+
+/**
+ * cut_assert_not_equal_string:
+ * @expected: an expected string value.
+ * @actual: an actual string value.
+ *
+ * Passes if one of @expected and @actual is %NULL or
+ * strcmp(@expected, @actual) != 0.
+ *
+ * e.g.:
+ * |[
+ * cut_assert_equal_string("abc", "ABC"); -> Pass
+ * cut_assert_equal_string("abc", NULL);  -> Pass
+ * cut_assert_equal_string(NULL, "abc");  -> Pass
+ * cut_assert_equal_string("abc", "abc"); -> Fail
+ * cut_assert_equal_string(NULL, NULL);   -> Fail
+ * ]|
+ *
+ * Since: 1.0.7
+ */
+#define cut_assert_not_equal_string(expected, actual) do                \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_not_equal_string_helper(expected, actual,            \
+                                           #expected, #actual),         \
+        cut_assert_not_equal_string(expected, actual));                 \
 } while (0)
 
 /**
@@ -383,6 +419,8 @@ extern "C" {
  *
  * Passes if both @expected and @actual are %NULL or
  * strcmp(@expected, @actual) == 0.
+ *
+ * See also cut_assert_equal_string() for examples.
  *
  * Since: 0.3
  */
@@ -427,8 +465,19 @@ extern "C" {
  * @actual: an actual string value.
  * @length: compared string length.
  *
- * Passes if both @expected and @actual are %NULL or
- * strncmp(@expected, @actual, @length) == 0.
+ * Passes if (1) both @expected and @actual are %NULL and
+ * @length == 1 or (2) strncmp(@expected, @actual, @length)
+ * == 0.
+ *
+ * e.g.:
+ * |[
+ * cut_assert_equal_substring("abcdef", "abcDEF", 3); -> Pass
+ * cut_assert_equal_substring(NULL, NULL, 0);         -> Pass
+ * cut_assert_equal_substring(NULL, NULL, 3);         -> Fail
+ * cut_assert_equal_substring("abc", "ABC", 3);       -> Fail
+ * cut_assert_equal_substring("abc", NULL, 3);        -> Fail
+ * cut_assert_equal_substring(NULL, "abc", 3);        -> Fail
+ * ]|
  *
  * Since: 1.0.7
  */
@@ -438,6 +487,36 @@ extern "C" {
         cut_assert_equal_substring_helper(expected, actual, length,     \
                                           #expected, #actual, #length), \
         cut_assert_equal_substring(expected, actual, length));          \
+} while (0)
+
+/**
+ * cut_assert_not_equal_substring:
+ * @expected: an expected string value.
+ * @actual: an actual string value.
+ * @length: compared string length.
+ *
+ * Passes if (1) one of @expected and @actual is %NULL or
+ * strncmp(@expected, @actual, @length) != 0.
+ *
+ * e.g.:
+ * |[
+ * cut_assert_not_equal_substring("abc", "ABC", 3);       -> Pass
+ * cut_assert_not_equal_substring("abc", NULL, 3);        -> Pass
+ * cut_assert_not_equal_substring(NULL, "abc", 3);        -> Pass
+ * cut_assert_not_equal_substring("abcdef", "abcDEF", 3); -> Fail
+ * cut_assert_not_equal_substring(NULL, NULL, 0);         -> Fail
+ * cut_assert_not_equal_substring(NULL, NULL, 3);         -> Fail
+ * ]|
+ *
+ * Since: 1.0.7
+ */
+#define cut_assert_not_equal_substring(expected, actual, length) do     \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_not_equal_substring_helper(expected, actual, length, \
+                                              #expected, #actual,       \
+                                              #length),                 \
+        cut_assert_not_equal_substring(expected, actual, length));      \
 } while (0)
 
 /**
@@ -464,6 +543,30 @@ extern "C" {
                                        #actual, #actual_size),          \
         cut_assert_equal_memory(expected, expected_size,                \
                                 actual, actual_size, __VA_ARGS__));     \
+} while (0)
+
+/**
+ * cut_assert_not_equal_memory:
+ * @expected: an expected data.
+ * @expected_size: a size of @expected.
+ * @actual: an actual data.
+ * @actual_size: a size of @actual.
+ *
+ * Passes if @expected_size != @actual_size or
+ * memcmp(@expected, @actual, @expected_size) != 0.
+ *
+ * Since: 1.0.7
+ */
+#define cut_assert_not_equal_memory(expected, expected_size,            \
+                                    actual, actual_size) do             \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_not_equal_memory_helper(expected, expected_size,     \
+                                           actual, actual_size,         \
+                                           #expected, #expected_size,   \
+                                           #actual, #actual_size),      \
+        cut_assert_not_equal_memory(expected, expected_size,            \
+                                    actual, actual_size));              \
 } while (0)
 
 /**

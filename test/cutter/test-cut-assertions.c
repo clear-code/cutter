@@ -47,7 +47,9 @@ void test_not_equal_size(void);
 void test_equal_string(void);
 void test_equal_string_with_diff(void);
 void test_equal_string_with_folded_diff(void);
+void test_not_equal_string(void);
 void test_equal_substring(void);
+void test_not_equal_substring(void);
 void test_equal_double(void);
 void test_not_equal_double(void);
 void test_operator(void);
@@ -56,6 +58,7 @@ void test_operator_uint(void);
 void test_operator_size(void);
 void test_operator_double(void);
 void test_equal_memory (void);
+void test_not_equal_memory (void);
 void test_equal_string_array (void);
 void test_null(void);
 void test_null_string(void);
@@ -66,7 +69,6 @@ void test_pending(void);
 void test_notification(void);
 void test_assert_message(void);
 void test_assert_message_with_format_string(void);
-void test_error_equal_string (void);
 void test_error_equal_string_with_null (void);
 void test_assert_equal_function (void);
 void test_failure_from_nested_function (void);
@@ -98,12 +100,6 @@ static gint fail_line;
 
 #define FAIL_LOCATION (cut_take_printf("%s:%d", __FILE__, fail_line))
 
-
-static void
-error_equal_string (void)
-{
-    cut_assert_equal_string("a", "ab");
-}
 
 static void
 error_equal_string_with_null (void)
@@ -353,11 +349,51 @@ test_not_equal_size (void)
                            "stub_not_equal_size");
 }
 
+static void
+stub_equal_string (void)
+{
+    cut_assert_equal_string("abc", "abc");
+    cut_assert_equal_string(NULL, NULL);
+    MARK_FAIL(cut_assert_equal_string("abc", "ABC"));
+}
+
 void
 test_equal_string (void)
 {
-    cut_assert_equal_string("", "");
-    cut_assert_equal_string("a", "a");
+    test = cut_test_new("assert-equal-string", stub_equal_string);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "assert-equal-string", NULL,
+                           "<\"abc\" == \"ABC\">\n"
+                           "expected: <abc>\n"
+                           "  actual: <ABC>",
+                           FAIL_LOCATION,
+                           "stub_equal_string");
+}
+
+static void
+stub_not_equal_string (void)
+{
+    cut_assert_not_equal_string("abc", "ABC");
+    cut_assert_not_equal_string("abc", NULL);
+    cut_assert_not_equal_string(NULL, "abc");
+    MARK_FAIL(cut_assert_not_equal_string("abc", "abc"));
+}
+
+void
+test_not_equal_string (void)
+{
+    test = cut_test_new("assert-not-equal-string", stub_not_equal_string);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 3, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "assert-not-equal-string", NULL,
+                           "<\"abc\" != \"abc\">\n"
+                           "expected: <abc>\n"
+                           "  actual: <abc>",
+                           FAIL_LOCATION,
+                           "stub_not_equal_string");
 }
 
 static void
@@ -512,26 +548,77 @@ test_equal_string_with_folded_diff (void)
 }
 
 static void
-equal_substring (void)
+stub_equal_substring (void)
 {
     const gchar actual_string[] =
         "0000"
         "0123456789"
         "999999";
+    cut_assert_equal_substring(NULL, NULL, 0);
     cut_assert_equal_substring("0123456789",
                                actual_string + strlen("0000"),
                                strlen("0123456789"));
-    cut_assert_equal_substring("0123456789",
-                               actual_string + strlen("0000") + 1,
-                               strlen("0123456789"));
+    MARK_FAIL(cut_assert_equal_substring("0123456789",
+                                         actual_string + strlen("0000") + 1,
+                                         strlen("0123456789")));
 }
 
 void
 test_equal_substring (void)
 {
-    test = cut_test_new("equal-substring", equal_substring);
+    test = cut_test_new("equal-substring", stub_equal_substring);
     cut_assert_false(run());
-    cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "equal-substring", NULL,
+                           "<\"0123456789\" == "
+                           "(actual_string + strlen(\"0000\") + 1)"
+                           "[0..strlen(\"0123456789\")]>\n"
+                           "expected: <0123456789>\n"
+                           "  actual: <1234567899>\n"
+                           "\n"
+                           "diff:\n"
+                           "- 0123456789\n"
+                           "? -\n"
+                           "+ 1234567899\n"
+                           "?          +",
+                           FAIL_LOCATION,
+                           "stub_equal_substring");
+}
+
+static void
+stub_not_equal_substring (void)
+{
+    const gchar actual_string[] =
+        "0000"
+        "0123456789"
+        "999999";
+
+    cut_assert_not_equal_substring("abc", NULL, 3);
+    cut_assert_not_equal_substring(NULL, "abc", 3);
+    cut_assert_not_equal_substring("0123456789",
+                               actual_string + strlen("0000") + 1,
+                               strlen("0123456789"));
+    MARK_FAIL(cut_assert_not_equal_substring("0123456789",
+                                             actual_string + strlen("0000"),
+                                             strlen("0123456789")));
+}
+
+void
+test_not_equal_substring (void)
+{
+    test = cut_test_new("not-equal-substring", stub_not_equal_substring);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 3, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "not-equal-substring", NULL,
+                           "<\"0123456789\" != "
+                           "(actual_string + strlen(\"0000\"))"
+                           "[0..strlen(\"0123456789\")]>\n"
+                           "expected: <0123456789>\n"
+                           "  actual: <0123456789>",
+                           FAIL_LOCATION,
+                           "stub_not_equal_substring");
 }
 
 static void
@@ -728,6 +815,39 @@ test_equal_memory (void)
                            "stub_equal_memory");
 }
 
+static void
+stub_not_equal_memory (void)
+{
+    gchar expected[] = {0x00, 0x01, 0x02, 0x03, 0x04};
+    gchar actual[] = {0x00, 0x01, 0x02, 0x03, 0x04,
+                      0x12, 0x10, 0x0e, 0x0c, 0x0a};
+
+    cut_assert_not_equal_memory(expected, sizeof(expected),
+                                actual, sizeof(actual));
+    cut_assert_not_equal_memory(NULL, 0,
+                                actual, sizeof(actual));
+    cut_assert_not_equal_memory(expected, sizeof(expected),
+                                NULL, 0);
+    MARK_FAIL(cut_assert_not_equal_memory(expected, sizeof(expected),
+                                          actual, sizeof(expected)));
+}
+
+void
+test_not_equal_memory (void)
+{
+    test = cut_test_new("stub-not-equal-memory", stub_not_equal_memory);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 3, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "stub-not-equal-memory", NULL,
+                           "<expected(size: sizeof(expected)) != "
+                           "actual(size: sizeof(expected))>\n"
+                           "expected: <0x00 0x01 0x02 0x03 0x04 (size: 5)>\n"
+                           "  actual: <0x00 0x01 0x02 0x03 0x04 (size: 5)>",
+                           FAIL_LOCATION,
+                           "stub_not_equal_memory");
+}
+
 void
 test_equal_string_array (void)
 {
@@ -748,14 +868,6 @@ test_error_equal_string_with_null (void)
 {
     test = cut_test_new("error-equal-string-with-null",
                         error_equal_string_with_null);
-    cut_assert_not_null(test);
-    cut_assert_false(run());
-}
-
-void
-test_error_equal_string (void)
-{
-    test = cut_test_new("error-equal-string", error_equal_string);
     cut_assert_not_null(test);
     cut_assert_false(run());
 }

@@ -379,6 +379,41 @@ cut_assert_equal_string_helper (const char     *expected,
 }
 
 void
+cut_assert_not_equal_string_helper (const char     *expected,
+                                    const char     *actual,
+                                    const char     *expression_expected,
+                                    const char     *expression_actual)
+{
+    if (expected == NULL) {
+        if (actual) {
+            cut_test_pass();
+        } else {
+            cut_test_fail(cut_take_printf("expected: <%s> is not NULL\n"
+                                          "  actual: <%s>",
+                                          expression_actual,
+                                          actual));
+        }
+    } else {
+        if (!cut_utils_equal_string(expected, actual)) {
+            cut_test_pass();
+        } else {
+            const char *message;
+
+            message = cut_take_printf("<%s != %s>\n"
+                                      "expected: <%s>\n"
+                                      "  actual: <%s>",
+                                      expression_expected,
+                                      expression_actual,
+                                      cut_utils_inspect_string(expected),
+                                      cut_utils_inspect_string(actual));
+            if (expected && actual)
+                message = cut_append_diff(message, expected, actual);
+            cut_test_fail(message);
+        }
+    }
+}
+
+void
 cut_assert_equal_substring_helper (const char     *expected,
                                    const char     *actual,
                                    size_t          length,
@@ -407,7 +442,52 @@ cut_assert_equal_substring_helper (const char     *expected,
 
             actual_substring = cut_take_string(g_strndup(actual, length));
             message =
-                cut_take_printf("<%s == %s[0..%s]>\n"
+                cut_take_printf("<%s == (%s)[0..%s]>\n"
+                                "expected: <%s>\n"
+                                "  actual: <%s>",
+                                expression_expected,
+                                expression_actual,
+                                expression_length,
+                                cut_utils_inspect_string(expected),
+                                cut_utils_inspect_string(actual_substring));
+            if (expected && actual_substring)
+                message = cut_append_diff(message, expected, actual_substring);
+            cut_test_fail(message);
+        }
+    }
+}
+
+void
+cut_assert_not_equal_substring_helper (const char     *expected,
+                                       const char     *actual,
+                                       size_t          length,
+                                       const char     *expression_expected,
+                                       const char     *expression_actual,
+                                       const char     *expression_length)
+{
+    if (expected == NULL) {
+        if (actual) {
+            cut_test_pass();
+        } else {
+            const gchar *actual_substring;
+
+            actual_substring = cut_take_string(g_strndup(actual, length));
+            cut_test_fail(cut_take_printf("expected: <%s> is not NULL\n"
+                                          "  actual: <%s>",
+                                          expression_actual,
+                                          actual_substring));
+        }
+    } else {
+        if (!cut_utils_equal_substring(expected, actual, length)) {
+            cut_test_pass();
+        } else {
+            const gchar *actual_substring = NULL;
+            const char *message;
+
+            if (actual)
+                actual_substring = cut_take_string(g_strndup(actual, length));
+            message =
+                cut_take_printf("<%s != (%s)[0..%s]>\n"
                                 "expected: <%s>\n"
                                 "  actual: <%s>",
                                 expression_expected,
@@ -447,6 +527,50 @@ cut_assert_equal_memory_helper (const void     *expected,
             cut_take_string(cut_utils_inspect_memory(actual, actual_size));
         message = cut_take_printf(
             "<%s(size: %s) == %s(size: %s)>\n"
+            "expected: <%s (size: %" G_GSIZE_FORMAT ")>\n"
+            "  actual: <%s (size: %" G_GSIZE_FORMAT ")>",
+            expression_expected,
+            expression_expected_size,
+            expression_actual,
+            expression_actual_size,
+            inspected_expected,
+            expected_size,
+            inspected_actual,
+            actual_size);
+        if (0 < expected_size && expected_size < max_diff_target_size &&
+            0 < actual_size && actual_size < max_diff_target_size)
+            message = cut_append_diff(message,
+                                      inspected_expected,
+                                      inspected_actual);
+        cut_test_fail(message);
+    }
+}
+
+void
+cut_assert_not_equal_memory_helper (const void     *expected,
+                                    size_t          expected_size,
+                                    const void     *actual,
+                                    size_t          actual_size,
+                                    const char     *expression_expected,
+                                    const char     *expression_expected_size,
+                                    const char     *expression_actual,
+                                    const char     *expression_actual_size)
+{
+    if ((expected_size != actual_size) ||
+        memcmp(expected, actual, expected_size) != 0) {
+        cut_test_pass();
+    } else {
+        const char *message;
+        const char *inspected_expected;
+        const char *inspected_actual;
+        gsize max_diff_target_size = 8092;
+
+        inspected_expected =
+            cut_take_string(cut_utils_inspect_memory(expected, expected_size));
+        inspected_actual =
+            cut_take_string(cut_utils_inspect_memory(actual, actual_size));
+        message = cut_take_printf(
+            "<%s(size: %s) != %s(size: %s)>\n"
             "expected: <%s (size: %" G_GSIZE_FORMAT ")>\n"
             "  actual: <%s (size: %" G_GSIZE_FORMAT ")>",
             expression_expected,
