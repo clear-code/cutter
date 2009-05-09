@@ -1,5 +1,8 @@
 2009-05-09  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/gcutter/test-gcut-assertions.c (test_equal_pid): add
+	missing "(GPid)".
+
 	* TODO: remove: cut_assert_equal_boolean().
 
 	* cutter/cut-assertions.h, cutter/cut-assertions-helper.[ch],
