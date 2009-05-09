@@ -100,6 +100,44 @@ extern "C" {
 } while (0)
 
 /**
+ * cut_assert_equal_boolean:
+ * @expected: the expected boolean.
+ * @actual: the actual boolean.
+ *
+ * Passes if both of @expected and @actual are %CUT_TRUE
+ * value or both of @expected and @actual are %CUT_FALSE
+ * value.
+ *
+ * Since: 1.0.7
+ */
+#define cut_assert_equal_boolean(expected, actual)  do                  \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_equal_boolean_helper((expected), (actual),           \
+                                        #expected, #actual),            \
+        cut_assert_equal_boolean(expected, actual));                    \
+} while (0)
+
+/**
+ * cut_assert_not_equal_boolean:
+ * @expected: the expected boolean.
+ * @actual: the actual boolean.
+ *
+ * Passes if @expected is %CUT_TRUE value
+ * but @actual is %CUT_FALSE value or @expected is
+ * %CUT_FALSE value but @actual is %CUT_TRUE value.
+ *
+ * Since: 1.0.7
+ */
+#define cut_assert_not_equal_boolean(expected, actual)  do              \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_not_equal_boolean_helper((expected), (actual),       \
+                                            #expected, #actual),        \
+        cut_assert_not_equal_boolean(expected, actual));                \
+} while (0)
+
+/**
  * cut_assert_null:
  * @expression: the expression to be checked.
  * @...: optional format string, followed by parameters to insert

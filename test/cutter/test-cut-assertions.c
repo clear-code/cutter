@@ -36,6 +36,8 @@
 #include <cutter/cut-test-runner.h>
 #include "../lib/cuttest-assertions.h"
 
+void test_equal_boolean(void);
+void test_not_equal_boolean(void);
 void test_equal_int(void);
 void test_not_equal_int(void);
 void test_equal_uint(void);
@@ -166,6 +168,55 @@ cut_teardown (void)
         g_object_unref(test_context);
     if (test_result)
         g_object_unref(test_result);
+}
+
+static void
+stub_equal_boolean (void)
+{
+    cut_assert_equal_boolean(CUT_TRUE, CUT_TRUE);
+    cut_assert_equal_boolean(CUT_TRUE, 100);
+    cut_assert_equal_boolean(CUT_FALSE, CUT_FALSE);
+    MARK_FAIL(cut_assert_equal_boolean(CUT_TRUE, CUT_FALSE));
+}
+
+void
+test_equal_boolean (void)
+{
+    test = cut_test_new("cut_assert_equal_boolean()", stub_equal_boolean);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 3, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_equal_boolean()", NULL,
+                           "<CUT_TRUE == CUT_FALSE>\n"
+                           "expected: <true>\n"
+                           "  actual: <false>",
+                           FAIL_LOCATION,
+                           "stub_equal_boolean");
+}
+
+static void
+stub_not_equal_boolean (void)
+{
+    cut_assert_not_equal_boolean(CUT_FALSE, CUT_TRUE);
+    cut_assert_not_equal_boolean(CUT_TRUE, CUT_FALSE);
+    cut_assert_not_equal_boolean(100, CUT_FALSE);
+    MARK_FAIL(cut_assert_not_equal_boolean(CUT_TRUE, 100));
+}
+
+void
+test_not_equal_boolean (void)
+{
+    test = cut_test_new("cut_assert_not_equal_boolean()",
+                        stub_not_equal_boolean);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 3, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_not_equal_boolean()", NULL,
+                           "<CUT_TRUE != 100>\n"
+                           "expected: <true>\n"
+                           "  actual: <true>",
+                           FAIL_LOCATION,
+                           "stub_not_equal_boolean");
 }
 
 static void

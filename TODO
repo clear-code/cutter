@@ -19,5 +19,4 @@
 * cut_get_test_name().
 * cut_{get,set}_current_test_context() ->
   cut_{get,set}_test_context()
-* cut_assert_equal_boolean().
 * cut_assert_equal_not_{int,string,...}().

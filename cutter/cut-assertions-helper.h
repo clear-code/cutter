@@ -57,6 +57,15 @@ void        cut_assert_true_helper         (cut_boolean     result,
                                             const char     *expression);
 void        cut_assert_false_helper        (cut_boolean     result,
                                             const char     *expression);
+void        cut_assert_equal_boolean_helper(cut_boolean     expected,
+                                            cut_boolean     actual,
+                                            const char     *expression_expected,
+                                            const char     *expression_actual);
+void        cut_assert_not_equal_boolean_helper
+                                           (cut_boolean     expected,
+                                            cut_boolean     actual,
+                                            const char     *expression_expected,
+                                            const char     *expression_actual);
 void        cut_assert_null_helper         (const void     *object,
                                             const char     *expression);
 void        cut_assert_null_string_helper  (const char     *string,

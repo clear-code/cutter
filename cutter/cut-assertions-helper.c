@@ -71,6 +71,44 @@ cut_assert_false_helper (cut_boolean     result,
 }
 
 void
+cut_assert_equal_boolean_helper (cut_boolean     expected,
+                                 cut_boolean     actual,
+                                 const char     *expression_expected,
+                                 const char     *expression_actual)
+{
+    if ((expected && actual) || (!expected && !actual)) {
+        cut_test_pass();
+    } else {
+        cut_test_fail(cut_take_printf("<%s == %s>\n"
+                                      "expected: <%s>\n"
+                                      "  actual: <%s>",
+                                      expression_expected,
+                                      expression_actual,
+                                      expected ? "true" : "false",
+                                      actual ? "true" : "false"));
+    }
+}
+
+void
+cut_assert_not_equal_boolean_helper (cut_boolean     expected,
+                                     cut_boolean     actual,
+                                     const char     *expression_expected,
+                                     const char     *expression_actual)
+{
+    if ((expected && actual) || (!expected && !actual)) {
+        cut_test_fail(cut_take_printf("<%s != %s>\n"
+                                      "expected: <%s>\n"
+                                      "  actual: <%s>",
+                                      expression_expected,
+                                      expression_actual,
+                                      expected ? "true" : "false",
+                                      actual ? "true" : "false"));
+    } else {
+        cut_test_pass();
+    }
+}
+
+void
 cut_assert_null_helper (const void     *object,
                         const char     *expression)
 {
