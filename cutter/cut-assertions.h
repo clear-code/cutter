@@ -108,6 +108,13 @@ extern "C" {
  * value or both of @expected and @actual are %CUT_FALSE
  * value.
  *
+ * e.g.
+ * |[
+ * cut_assert_equal_boolean(CUT_TRUE, CUT_TRUE);   -> Pass
+ * cut_assert_equal_boolean(CUT_FALSE, CUT_FALSE); -> Pass
+ * cut_assert_equal_boolean(CUT_TRUE, CUT_FALSE);  -> Fail
+ * ]|
+ *
  * Since: 1.0.7
  */
 #define cut_assert_equal_boolean(expected, actual)  do                  \
@@ -126,6 +133,13 @@ extern "C" {
  * Passes if @expected is %CUT_TRUE value
  * but @actual is %CUT_FALSE value or @expected is
  * %CUT_FALSE value but @actual is %CUT_TRUE value.
+ *
+ * e.g.
+ * |[
+ * cut_assert_not_equal_boolean(CUT_TRUE, CUT_TRUE);   -> Fail
+ * cut_assert_not_equal_boolean(CUT_FALSE, CUT_FALSE); -> Fail
+ * cut_assert_not_equal_boolean(CUT_TRUE, CUT_FALSE);  -> Pass
+ * ]|
  *
  * Since: 1.0.7
  */

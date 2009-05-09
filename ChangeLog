@@ -1,5 +1,8 @@
 2009-05-09  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertions.h: add examples for cut_assert_equal_boolean()
+	and cut_assert_not_equal_boolean().
+
 	* test/gcutter/test-gcut-assertions.c (test_equal_pid): add
 	missing "(GPid)".
 
