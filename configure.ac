@@ -122,6 +122,16 @@ AC_SUBST(NO_STRICT_ALIASING_CFLAGS)
 AC_HEADER_SYS_WAIT
 AC_CHECK_HEADER(io.h,
                 [AC_DEFINE(HAVE_IO_H, 1, [Define to 1 if you have <io.h>.])])
+have_imagehlp_h=no
+AC_CHECK_HEADER(imagehlp.h,
+                [have_imagehlp_h=yes
+		 AC_DEFINE(HAVE_IMAGEHLP_H, 1,
+		           [Define to 1 if you have <imagehlp.h>.])],
+		[],
+		[
+		  #include <windows.h>
+		])
+AM_CONDITIONAL([HAVE_IMAGEHLP_H], [test "$have_imagehlp_h" = "yes"])
 
 AC_CHECK_HEADER(mach-o/loader.h,
                 [AC_DEFINE(HAVE_MACH_O_LOADER_H, 1,

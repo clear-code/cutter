@@ -68,6 +68,7 @@ libcutter_public_headers = 		\
 noinst_headers = 		\
 	cut-loader.h		\
 	cut-mach-o-loader.h	\
+	cut-image-hlp-loader.h	\
 	cut-module.h		\
 	cut-module-impl.h	\
 	cut-repository.h	\
@@ -125,6 +126,7 @@ libcutter_la_SOURCES =			\
 	cut-verbose-level.c		\
 	cut-loader.c			\
 	cut-mach-o-loader.c		\
+	cut-image-hlp-loader.c		\
 	cut-repository.c		\
 	cut-module.c			\
 	cut-module-impl.h		\
@@ -162,8 +164,13 @@ libcutter_la_LDFLAGS =				\
 libcutter_la_LIBADD =				\
 	$(top_builddir)/gcutter/libgcutter.la	\
 	$(GLIB_LIBS)
+
 if HAVE_LIBBFD
 libcutter_la_LIBADD += $(BFD_LIBS)
+endif
+
+if HAVE_IMAGEHLP_H
+libcutter_la_LIBADD += -limagehlp
 endif
 
 if OS_WIN32

@@ -34,6 +34,7 @@
 
 #include "cut-loader.h"
 #include "cut-mach-o-loader.h"
+#include "cut-image-hlp-loader.h"
 #include "cut-test-iterator.h"
 #include "cut-experimental.h"
 
@@ -57,6 +58,7 @@ struct _CutLoaderPrivate
     GModule *module;
     CutBinaryType binary_type;
     CutMachOLoader *mach_o_loader;
+    CutImageHlpLoader *image_hlp_loader;
     gboolean keep_opening;
     gboolean enable_convenience_attribute_definition;
     gchar *base_directory;
@@ -118,6 +120,7 @@ cut_loader_init (CutLoader *loader)
     priv->so_filename = NULL;
     priv->binary_type = CUT_BINARY_TYPE_UNKNOWN;
     priv->mach_o_loader = NULL;
+    priv->image_hlp_loader = NULL;
     priv->keep_opening = FALSE;
     priv->enable_convenience_attribute_definition = FALSE;
     priv->base_directory = NULL;
@@ -146,6 +149,11 @@ dispose (GObject *object)
     if (priv->mach_o_loader) {
         g_object_unref(priv->mach_o_loader);
         priv->mach_o_loader = NULL;
+    }
+
+    if (priv->image_hlp_loader) {
+        g_object_unref(priv->image_hlp_loader);
+        priv->image_hlp_loader = NULL;
     }
 
     if (priv->module) {
@@ -436,6 +444,8 @@ cut_loader_support_attribute (CutLoader *loader)
 
     if (priv->mach_o_loader) {
         return cut_mach_o_loader_support_attribute(priv->mach_o_loader);
+    } else if (priv->image_hlp_loader) {
+        return cut_image_hlp_loader_support_attribute(priv->image_hlp_loader);
     } else {
 #ifdef HAVE_LIBBFD
         return cut_loader_support_attribute_bfd(loader);
@@ -450,6 +460,8 @@ collect_symbols (CutLoaderPrivate *priv)
 {
     if (priv->mach_o_loader) {
         return cut_mach_o_loader_collect_symbols(priv->mach_o_loader);
+    } else if (priv->image_hlp_loader) {
+        return cut_image_hlp_loader_collect_symbols(priv->image_hlp_loader);
     } else {
 #ifdef HAVE_LIBBFD
         return collect_symbols_bfd(priv);
@@ -678,6 +690,12 @@ cut_loader_load_test_case (CutLoader *loader)
     if (!cut_mach_o_loader_is_mach_o(priv->mach_o_loader)) {
         g_object_unref(priv->mach_o_loader);
         priv->mach_o_loader = NULL;
+    }
+
+    priv->image_hlp_loader = cut_image_hlp_loader_new(priv->so_filename);
+    if (!cut_image_hlp_loader_is_dll(priv->image_hlp_loader)) {
+        g_object_unref(priv->image_hlp_loader);
+        priv->image_hlp_loader = NULL;
     }
 
     priv->symbols = collect_symbols(priv);

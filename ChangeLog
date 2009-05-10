@@ -1,3 +1,10 @@
+2009-05-10  Kouhei Sutou  <kou@cozmixng.org>
+
+	* configure.ac, cutter/Makefile.am,
+	cutter/cut-image-hlp-loader.[ch], cutter/cut-loader.c: add
+	ImageHlp support. maybe work. need to check on Windows. Wine
+	doesn't support ImageHlp (DebugHlp) yet.
+
 2009-05-09  Kouhei Sutou  <kou@cozmixng.org>
 
 	* TODO: remove: cut_assert_equal_not_{int,string,...}().
