@@ -1,5 +1,7 @@
 2009-05-10  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-mach-o-loader.c: just make buildable. not work.
+
 	* NEWS*: add an entry for 1.0.7.
 
 	* doc/reference/cutter-overrides.txt: add declaration for macros.

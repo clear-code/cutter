@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2009  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -34,10 +34,18 @@
 
 #define CUT_MACH_O_LOADER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), CUT_TYPE_MACH_O_LOADER, CutMachOLoaderPrivate))
 
+typedef enum {
+    ARCHITECTURE_32BIT,
+    ARCHITECTURE_64BIT
+} ArchitectureBit;
+
 typedef struct _CutMachOLoaderPrivate	CutMachOLoaderPrivate;
 struct _CutMachOLoaderPrivate
 {
     gchar *so_filename;
+    gchar *content;
+    gsize length;
+    ArchitectureBit bit;
 };
 
 enum
@@ -86,6 +94,8 @@ cut_mach_o_loader_init (CutMachOLoader *loader)
     CutMachOLoaderPrivate *priv = CUT_MACH_O_LOADER_GET_PRIVATE(loader);
 
     priv->so_filename = NULL;
+    priv->content = NULL;
+    priv->length = 0;
 }
 
 static void
@@ -96,6 +106,11 @@ dispose (GObject *object)
     if (priv->so_filename) {
         g_free(priv->so_filename);
         priv->so_filename = NULL;
+    }
+
+    if (priv->content) {
+        g_free(priv->content);
+        priv->content = NULL;
     }
 
     G_OBJECT_CLASS(cut_mach_o_loader_parent_class)->dispose(object);
@@ -151,23 +166,36 @@ gboolean
 cut_mach_o_loader_is_mach_o (CutMachOLoader *loader)
 {
 #ifdef HAVE_MACH_O_LOADER_H
-    CutLoaderPrivate *priv;
-    FILE *input;
-    struct mach_header header;
-    gboolean is_mach_o = FALSE;
+    CutMachOLoaderPrivate *priv;
+    GError *error = NULL;
+    uint32_t magic = 0;
 
     priv = CUT_MACH_O_LOADER_GET_PRIVATE(loader);
-    input = g_fopen(priv->so_filename);
-    if (!input)
+    if (!g_file_get_contents(priv->so_filename, &priv->content, &priv->length,
+                             &error)) {
+        g_warning("can't read shared library file: %s", error->message);
+        g_error_free(error);
         return FALSE;
-
-    if (fread(&header, sizeof(header), 1, input) == 1) {
-        is_mach_o = header.magic == MH_MAGIC;
     }
 
-    fclose(input);
+    if (priv->length >= sizeof(magic))
+        memcpy(&magic, priv->content, sizeof(magic));
 
-    return is_mach_o;
+    switch (magic) {
+    case MH_MAGIC:
+        priv->bit = ARCHITECTURE_32BIT;
+        break;
+    case MH_MAGIC_64:
+        priv->bit = ARCHITECTURE_64BIT;
+        break;
+    default:
+        g_warning("non mach-o magic: 0x%x", magic);
+        g_free(priv->content);
+        priv->content = NULL;
+        break;
+    }
+
+    return priv->content != NULL;
 #else
     return FALSE;
 #endif
