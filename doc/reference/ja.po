@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.0.7\n"
-"POT-Creation-Date: 2009-05-10 16:24+0900\n"
-"PO-Revision-Date: 2009-05-10 16:36+0900\n"
+"POT-Creation-Date: 2009-05-10 16:37+0900\n"
+"PO-Revision-Date: 2009-05-10 16:50+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -4912,7 +4912,11 @@ msgid ""
 "link> value or both of <parameter>expected</parameter> and "
 "<parameter>actual</parameter> are <link linkend=\"CUT-FALSE--CAPS"
 "\"><literal>CUT_FALSE</literal></link> value."
-msgstr "<parameter>expected</parameter>と<parameter>actual</parameter>が両方とも<link linkend=\"CUT-TRUE--CAPS\"><literal>CUT_TRUE</literal></link>の値か、両方とも<link linkend=\"CUT-FALSE--CAPS\"><literal>CUT_FALSE</literal></link>の値のときパスします。"
+msgstr ""
+"<parameter>expected</parameter>と<parameter>actual</parameter>が両方とも"
+"<link linkend=\"CUT-TRUE--CAPS\"><literal>CUT_TRUE</literal></link>の値か、両"
+"方とも<link linkend=\"CUT-FALSE--CAPS\"><literal>CUT_FALSE</literal></link>の"
+"値のときパスします。"
 
 #: xml/cut-assertions.xml:208(programlisting)
 #, no-wrap
@@ -5063,7 +5067,14 @@ msgid ""
 "\"CUT-FALSE--CAPS\"><literal>CUT_FALSE</literal></link> value but "
 "<parameter>actual</parameter> is <link linkend=\"CUT-TRUE--CAPS"
 "\"><literal>CUT_TRUE</literal></link> value."
-msgstr "<parameter>expected</parameter>が<link linkend=\"CUT-TRUE--CAPS\"><literal>CUT_TRUE</literal></link>の値だが<parameter>actual</parameter>は<link linkend=\"CUT-FALSE--CAPS\"><literal>CUT_FALSE</literal></link>の値のとき、または、<parameter>expected</parameter>が<link linkend=\"CUT-FALSE--CAPS\"><literal>CUT_FALSE</literal></link>の値だが<parameter>actual</parameter>は<link linkend=\"CUT-TRUE--CAPS\"><literal>CUT_TRUE</literal></link>の値のときにパスします。"
+msgstr ""
+"<parameter>expected</parameter>が<link linkend=\"CUT-TRUE--CAPS"
+"\"><literal>CUT_TRUE</literal></link>の値だが<parameter>actual</parameter>は"
+"<link linkend=\"CUT-FALSE--CAPS\"><literal>CUT_FALSE</literal></link>の値のと"
+"き、または、<parameter>expected</parameter>が<link linkend=\"CUT-FALSE--CAPS"
+"\"><literal>CUT_FALSE</literal></link>の値だが<parameter>actual</parameter>は"
+"<link linkend=\"CUT-TRUE--CAPS\"><literal>CUT_TRUE</literal></link>の値のとき"
+"にパスします。"
 
 #: xml/cut-assertions.xml:232(programlisting)
 #, no-wrap
@@ -5204,7 +5215,9 @@ msgstr ""
 #: xml/cut-assertions.xml:391(para) xml/gcut-assertions.xml:755(para)
 msgid ""
 "Passes if <parameter>expected</parameter> != <parameter>actual</parameter>."
-msgstr "<parameter>expected</parameter> != <parameter>actual</parameter>が成り立つときパスします。"
+msgstr ""
+"<parameter>expected</parameter> != <parameter>actual</parameter>が成り立つと"
+"きパスします。"
 
 #: xml/cut-assertions.xml:333(title)
 msgid "cut_assert_equal_uint ()"
@@ -5354,7 +5367,11 @@ msgid ""
 "parameter> - <parameter>error</parameter>) &amp;&amp; (<parameter>expected</"
 "parameter> + <parameter>error</parameter>) &lt; <parameter>actual</"
 "parameter>."
-msgstr "<parameter>actual</parameter> &lt; (<parameter>expected</parameter> - <parameter>error</parameter>) &amp;&amp; (<parameter>expected</parameter> + <parameter>error</parameter>) &lt; <parameter>actual</parameter>が成り立つときパスします。"
+msgstr ""
+"<parameter>actual</parameter> &lt; (<parameter>expected</parameter> - "
+"<parameter>error</parameter>) &amp;&amp; (<parameter>expected</parameter> + "
+"<parameter>error</parameter>) &lt; <parameter>actual</parameter>が成り立つと"
+"きパスします。"
 
 #: xml/cut-assertions.xml:445(title)
 msgid "cut_assert_equal_string ()"
@@ -5424,7 +5441,11 @@ msgid ""
 "Passes if one of <parameter>expected</parameter> and <parameter>actual</"
 "parameter> is <link linkend=\"NULL--CAPS\"><literal>NULL</literal></link> or "
 "strcmp(<parameter>expected</parameter>, <parameter>actual</parameter>) != 0."
-msgstr "<parameter>expected</parameter>か<parameter>actual</parameter>のどちらかが<link linkend=\"NULL--CAPS\"><literal>NULL</literal></link>のとき、または、strcmp(<parameter>expected</parameter>, <parameter>actual</parameter>) != 0のときパスします。"
+msgstr ""
+"<parameter>expected</parameter>か<parameter>actual</parameter>のどちらかが"
+"<link linkend=\"NULL--CAPS\"><literal>NULL</literal></link>のとき、または、"
+"strcmp(<parameter>expected</parameter>, <parameter>actual</parameter>) != 0の"
+"ときパスします。"
 
 #: xml/cut-assertions.xml:485(programlisting)
 #, no-wrap
@@ -5507,7 +5528,12 @@ msgid ""
 "and <parameter>length</parameter> == 1 or (2) strncmp(<parameter>expected</"
 "parameter>, <parameter>actual</parameter>, <parameter>length</parameter>) == "
 "0."
-msgstr "(1)<parameter>expected</parameter>と<parameter>actual</parameter>が両方とも<link linkend=\"NULL--CAPS\"><literal>NULL</literal></link>で<parameter>length</parameter> == 1が成り立つとき、または、(2) strncmp(<parameter>expected</parameter>, <parameter>actual</parameter>, <parameter>length</parameter>) == 0が成り立つときパスします。"
+msgstr ""
+"(1)<parameter>expected</parameter>と<parameter>actual</parameter>が両方とも"
+"<link linkend=\"NULL--CAPS\"><literal>NULL</literal></link>で"
+"<parameter>length</parameter> == 1が成り立つとき、または、(2) strncmp"
+"(<parameter>expected</parameter>, <parameter>actual</parameter>, "
+"<parameter>length</parameter>) == 0が成り立つときパスします。"
 
 #: xml/cut-assertions.xml:559(programlisting)
 #, no-wrap
@@ -5550,9 +5576,13 @@ msgstr ""
 msgid ""
 "Passes if (1) one of <parameter>expected</parameter> and <parameter>actual</"
 "parameter> is <link linkend=\"NULL--CAPS\"><literal>NULL</literal></link> or "
-"strncmp(<parameter>expected</parameter>, <parameter>actual</parameter>, "
+"(2) strncmp(<parameter>expected</parameter>, <parameter>actual</parameter>, "
 "<parameter>length</parameter>) != 0."
-msgstr "(1) <parameter>expected</parameter>と<parameter>actual</parameter>のどちらかが<link linkend=\"NULL--CAPS\"><literal>NULL</literal></link>、または、(2) strncmp(<parameter>expected</parameter>, <parameter>actual</parameter>, <parameter>length</parameter>) != 0が成り立つときパスします。"
+msgstr ""
+"(1) <parameter>expected</parameter>と<parameter>actual</parameter>のどちらか"
+"が<link linkend=\"NULL--CAPS\"><literal>NULL</literal></link>、または、(2) "
+"strncmp(<parameter>expected</parameter>, <parameter>actual</parameter>, "
+"<parameter>length</parameter>) != 0が成り立つときパスします。"
 
 #: xml/cut-assertions.xml:588(programlisting)
 #, no-wrap
@@ -5638,7 +5668,10 @@ msgid ""
 "Passes if <parameter>expected_size</parameter> != <parameter>actual_size</"
 "parameter> or memcmp(<parameter>expected</parameter>, <parameter>actual</"
 "parameter>, <parameter>expected_size</parameter>) != 0."
-msgstr "<parameter>expected_size</parameter> != <parameter>actual_size</parameter>またはmemcmp(<parameter>expected</parameter>, <parameter>actual</parameter>, <parameter>expected_size</parameter>) != 0が成り立つときパスします。"
+msgstr ""
+"<parameter>expected_size</parameter> != <parameter>actual_size</parameter>ま"
+"たはmemcmp(<parameter>expected</parameter>, <parameter>actual</parameter>, "
+"<parameter>expected_size</parameter>) != 0が成り立つときパスします。"
 
 #: xml/cut-assertions.xml:661(title)
 msgid "cut_assert_equal_string_array ()"
@@ -9755,9 +9788,7 @@ msgstr ""
 #: xml/cut-multi-process.xml:583(para)
 msgid ""
 "Creates a group of sub cutter process. A created group is owned by Cutter."
-msgstr ""
-"サブc<uterプロセスのグループを作ります。作られたグループの所有者はCutterで"
-"す。"
+msgstr "サブcuterプロセスのグループを作ります。作られたグループの所有者はCutterです。"
 
 #: xml/cut-multi-process.xml:588(simpara)
 #: xml/cut-multi-process.xml:601(simpara)
@@ -20034,7 +20065,11 @@ msgid ""
 "literal></link> macro to get <link linkend=\"GType\"><type>GType</type></"
 "link> for <link linkend=\"GError\"><type>GError</type></link> instead of "
 "this function."
-msgstr "<link linkend=\"GError\"><type>GError</type></link>の<link linkend=\"GType\"><type>GType</type></link>を取得するためには、この関数ではなく<link linkend=\"GCUT-TYPE-ERROR--CAPS\"><literal>GCUT_TYPE_ERROR</literal></link>マクロを使ってください。"
+msgstr ""
+"<link linkend=\"GError\"><type>GError</type></link>の<link linkend=\"GType"
+"\"><type>GType</type></link>を取得するためには、この関数ではなく<link "
+"linkend=\"GCUT-TYPE-ERROR--CAPS\"><literal>GCUT_TYPE_ERROR</literal></link>マ"
+"クロを使ってください。"
 
 #: xml/gcut-value-equal.xml:7(refentrytitle)
 #: xml/gcut-value-equal.xml:13(refname)

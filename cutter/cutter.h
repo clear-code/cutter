@@ -213,8 +213,8 @@ void startup(void);
  */
 void cut_startup(void);
 
-#ifndef CUTTER_DISABLE_DEPRECATED
-#  if !defined(SHUT_RD) && !defined(WINSOCK_API_LINKAGE)
+#ifndef CUTTER_DISABLE_DEPRECATED ||                    \
+    (!defined(SHUT_RD) && !defined(WINSOCK_API_LINKAGE))
 /**
  * shutdown:
  *
@@ -227,7 +227,6 @@ void cut_startup(void);
  * Deprecated: 1.0.7: Use cut_shutdown() instead.
  */
 void shutdown(void);
-#  endif
 #endif
 
 /**

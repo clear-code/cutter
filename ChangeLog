@@ -1,5 +1,7 @@
 2009-05-10  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/cutter-overrides.txt: add declaration for macros.
+
 	* doc/reference/ja.po: update translations.
 
 	* configure.ac, cutter/Makefile.am,

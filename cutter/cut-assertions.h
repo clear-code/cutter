@@ -496,7 +496,7 @@ extern "C" {
  * @length: compared string length.
  *
  * Passes if (1) one of @expected and @actual is %NULL or
- * strncmp(@expected, @actual, @length) != 0.
+ * (2) strncmp(@expected, @actual, @length) != 0.
  *
  * e.g.:
  * |[
