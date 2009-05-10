@@ -24,7 +24,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <glib.h>
-#include <gmodule.h>
 
 #ifdef HAVE_MACH_O_LOADER_H
 #  include <mach-o/loader.h>

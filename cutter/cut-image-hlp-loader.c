@@ -24,7 +24,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <glib.h>
-#include <gmodule.h>
 
 #ifdef HAVE_IMAGEHLP_H
 #  include <windows.h>
