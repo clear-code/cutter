@@ -1,5 +1,7 @@
 2009-05-10  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/ja.po: update translations.
+
 	* configure.ac, cutter/Makefile.am,
 	cutter/cut-image-hlp-loader.[ch], cutter/cut-loader.c: add
 	ImageHlp support. maybe work. need to check on Windows. Wine

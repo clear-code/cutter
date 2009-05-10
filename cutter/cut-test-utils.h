@@ -293,7 +293,7 @@ extern "C" {
 /**
  * cut_build_path:
  * @path: a first element of the path to be removed.
- * @...: remaining elements in path terminated by %NULL.
+ * @...: remaining elements in path. %NULL terminated.
  *
  * Builds path from @path and the following elements.
  *
