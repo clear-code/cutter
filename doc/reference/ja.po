@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.0.7\n"
-"POT-Creation-Date: 2009-05-10 17:56+0900\n"
-"PO-Revision-Date: 2009-05-10 18:05+0900\n"
+"POT-Creation-Date: 2009-05-10 18:08+0900\n"
+"PO-Revision-Date: 2009-05-10 18:09+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -12990,9 +12990,11 @@ msgstr ""
 #: xml/cut-version.xml:39(para)
 msgid ""
 "Cutter provides version information, primarily useful in configure checks "
-"for builds that have a configure script. Applications will not typically use "
-"the features described here."
-msgstr "Cutterはビルド時の設定で便利なようにバージョン情報を提供します。通常のテストではここで説明する機能は使わないでしょう。"
+"for builds that have a configure script. Tests will not typically use the "
+"features described here."
+msgstr ""
+"Cutterはビルド時の設定で便利なようにバージョン情報を提供します。通常のテスト"
+"ではここで説明する機能は使わないでしょう。"
 
 #: xml/cut-version.xml:52(programlisting)
 #, no-wrap
@@ -13000,7 +13002,7 @@ msgid "#define CUTTER_VERSION_MAJOR 1\n"
 msgstr ""
 
 #: xml/cut-version.xml:54(para)
-msgid "The major version number of the Cutter library."
+msgid "The major version number of the Cutter."
 msgstr "Cutterのメジャーバージョン。"
 
 #: xml/cut-version.xml:60(programlisting)
@@ -13009,7 +13011,7 @@ msgid "#define CUTTER_VERSION_MINOR 0\n"
 msgstr ""
 
 #: xml/cut-version.xml:62(para)
-msgid "The minor version number of the Cutter library."
+msgid "The minor version number of the Cutter."
 msgstr "Cutterのマイナーバージョン。"
 
 #: xml/cut-version.xml:68(programlisting)
@@ -13018,7 +13020,7 @@ msgid "#define CUTTER_VERSION_MICRO 7\n"
 msgstr ""
 
 #: xml/cut-version.xml:70(para)
-msgid "The micro version number of the Cutter library."
+msgid "The micro version number of the Cutter."
 msgstr "Cutterのマイクロバージョン。"
 
 #: xml/cut-version.xml:76(programlisting)
@@ -13028,9 +13030,11 @@ msgstr ""
 
 #: xml/cut-version.xml:78(para)
 msgid ""
-"The version number string of the Cutter library with \"#{MAJOR}.#{MINOR}.#"
-"{MICRO}\" format."
-msgstr "\"#{メジャーバージョン}.#{マイナーバージョン}.#{マイクロバージョン}\"という書式のCutterのバージョン文字列。"
+"The version number string of the Cutter with \"#{MAJOR}.#{MINOR}.#{MICRO}\" "
+"format."
+msgstr ""
+"\"#{メジャーバージョン}.#{マイナーバージョン}.#{マイクロバージョン}\"という書"
+"式のCutterのバージョン文字列。"
 
 #: xml/cut-version.xml:84(title)
 msgid "CUTTER_CHECK_VERSION()"
@@ -13043,9 +13047,11 @@ msgstr ""
 
 #: xml/cut-version.xml:86(para)
 msgid ""
-"Checks the version of the Cutter library. Returns true if the version of the "
-"Cutter header files is the same as or newer than the passed-in version."
-msgstr "Cutterのバージョンをチェックします。Cutterのヘッダファイルのバージョンと同じかそれより新しいバージョンを渡すと真を返します。"
+"Checks the version of the Cutter. Returns true if the version of the Cutter "
+"header files is the same as or newer than the passed-in version."
+msgstr ""
+"Cutterのバージョンをチェックします。Cutterのヘッダファイルのバージョンと同じ"
+"かそれより新しいバージョンを渡すと真を返します。"
 
 #: xml/cut-version.xml:92(term)
 msgid "<parameter>major</parameter> :"
@@ -19864,7 +19870,9 @@ msgstr ""
 msgid ""
 "<parameter>object</parameter> owned by Cutter. Don't <link linkend=\"g-"
 "object-unref\"><function>g_object_unref()</function></link> it."
-msgstr "Cutterが所有権をもつ<parameter>object</parameter>。<link linkend=\"g-object-unref\"><function>g_object_unref()</function></link>しないでください。"
+msgstr ""
+"Cutterが所有権をもつ<parameter>object</parameter>。<link linkend=\"g-object-"
+"unref\"><function>g_object_unref()</function></link>しないでください。"
 
 #: xml/gcut-test-utils.xml:85(title)
 msgid "gcut_take_error ()"
@@ -19894,7 +19902,10 @@ msgstr ""
 msgid ""
 "a <link linkend=\"GError\"><type>GError</type></link> owned by Cutter. Don't "
 "<link linkend=\"g-error-free\"><function>g_error_free()</function></link> it."
-msgstr "Cutterが所有権をもつ<link linkend=\"GError\"><type>GError</type></link>。<link linkend=\"g-error-free\"><function>g_error_free()</function></link>しないでください。"
+msgstr ""
+"Cutterが所有権をもつ<link linkend=\"GError\"><type>GError</type></link>。"
+"<link linkend=\"g-error-free\"><function>g_error_free()</function></link>しな"
+"いでください。"
 
 #: xml/gcut-test-utils.xml:101(title)
 msgid "gcut_take_list ()"
@@ -19966,7 +19977,10 @@ msgid ""
 "a <link linkend=\"GHashTable\"><type>GHashTable</type></link> owned by "
 "Cutter. Don't <link linkend=\"g-hash-table-unref"
 "\"><function>g_hash_table_unref()</function></link> it."
-msgstr "Cutterが所有権をもつ<link linkend=\"GHashTable\"><type>GHashTable</type></link>。<link linkend=\"g-hash-table-unref\"><function>g_hash_table_unref()</function></link>しないでください。"
+msgstr ""
+"Cutterが所有権をもつ<link linkend=\"GHashTable\"><type>GHashTable</type></"
+"link>。<link linkend=\"g-hash-table-unref\"><function>g_hash_table_unref()</"
+"function></link>しないでください。"
 
 #: xml/gcut-test-utils.xml:138(title)
 msgid "gcut_list_string_new ()"
