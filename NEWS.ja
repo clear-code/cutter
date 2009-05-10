@@ -2,6 +2,44 @@
 
 = お知らせ --- Cutterの歴史
 
+== 1.0.7: 2009-05-XX
+
+  * ((<バージョン情報|cutter-cut-version.html>))を提供
+  * ((<GBoxed型のテストデータ|cutter-gcut-data.html#gcut-data-get-boxed>))
+    をサポート
+  * クラッシュ時のテスト名表示（可能なら）
+  * Windows環境ではBFDではなくImageHlpを使用
+  * ドキュメント:
+    * ((<cutterコマンドのman|cutter.html>))を追加
+  * テストユーティリティの追加:
+    * ((<cut_build_path()|cutter-cut-test-utils.html#cut-build-path>))
+  * 検証の追加:
+    * ((<cut_assert_equal_boolean()|cutter-cut-assertions.html#cut-assert-equal-boolean>))
+    * ((<cut_assert_not_equal_boolean()|cutter-cut-assertions.html#cut-assert-not-equal-boolean>))
+    * ((<cut_assert_equal_substring()|cutter-cut-assertions.html#cut-assert-equal-substring>))
+    * ((<cut_assert_not_equal_substring()|cutter-cut-assertions.html#cut-assert-not-equal-substring>))
+    * ((<cut_assert_not_equal_double()|cutter-cut-assertions.html#cut-assert-not-equal-double>)) [グニャラくん]
+    * ((<cut_assert_not_equal_int()|cutter-cut-assertions.html#cut-assert-not-equal-int>)) [グニャラくん]
+    * ((<cut_assert_not_equal_uint()|cutter-cut-assertions.html#cut-assert-not-equal-int>)) [グニャラくん]
+    * ((<cut_assert_not_equal_memory()|cutter-cut-assertions.html#cut-assert-not-equal-memory>)) [グニャラくん]
+    * ((<cut_assert_not_equal_size()|cutter-cut-assertions.html#cut-assert-not-equal-size>)) [グニャラくん]
+    * ((<cut_assert_not_equal_string()|cutter-cut-assertions.html#cut-assert-not-equal-string>)) [グニャラくん]
+    * ((<gcut_assert_not_equal_pid()|cutter-gcut-assertions.html#gcut-assert-not-equal-pid>)) [グニャラくん]
+  * 互換性:
+    * これまでの"cut_"プリフィックスなしのフィクスチャ用関数
+      を非推奨に変更。[グニャラくん]
+      * ((<setup()|cutter-cutter.html#setup>)) ->
+        ((<cut_setup()|cutter-cutter.html#cut_setup>))
+      * ((<teardown()|cutter-cutter.html#teardown>)) ->
+        ((<cut_teardown()|cutter-cutter.html#cut_teardown>))
+      * ((<startup()|cutter-cutter.html#startup>)) ->
+        ((<cut_startup()|cutter-cutter.html#cut_startup>))
+      * ((<shutdown()|cutter-cutter.html#shutdown>)) ->
+        ((<cut_shutdown()|cutter-cutter.html#cut_shutdown>))
+  * バグ修正:
+    * チュートリアルのtypoを修正: [海野さん]
+    * ファイルディスクリプタのリダイレクト方法の修正: [海野さん]
+
 == 1.0.6: 2009-03-01
 
   * ((<Cutter利用プロジェクトリスト|USERS.ja>))を追加
