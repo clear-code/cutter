@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-01 21:48+0900\n"
-"PO-Revision-Date: 2009-03-01 23:37+0900\n"
+"POT-Creation-Date: 2009-05-10 15:34+0900\n"
+"PO-Revision-Date: 2009-05-10 17:02+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -125,15 +125,19 @@ msgstr "ストリームをFILE_DESCRIPTORに出力（既定値: stdout）"
 msgid "Stream to a file under DIRECTORY (default: none)"
 msgstr "ストリームをDIRECTORY以下のファイルに出力（既定値: 無し）"
 
-#: ../cutter/cut-stream-factory-builder.c:180
+#: ../cutter/cut-stream-factory-builder.c:157
+msgid "Obsoleted. Use --stream-directory instead"
+msgstr ""
+
+#: ../cutter/cut-stream-factory-builder.c:182
 msgid "Stream Options"
 msgstr "ストリームのオプション"
 
-#: ../cutter/cut-stream-factory-builder.c:181
+#: ../cutter/cut-stream-factory-builder.c:183
 msgid "Show stream options"
 msgstr "ストリームのオプションを表示"
 
-#: ../cutter/cut-test-context.c:797
+#: ../cutter/cut-test-context.c:833
 msgid "Treat a failure as a fatal problem, aborting."
 msgstr "失敗を致命的な問題として扱い、異常終了しています。"
 
@@ -206,38 +210,34 @@ msgstr "名前"
 msgid "Description"
 msgstr "説明"
 
-#: ../module/ui/cut-gtk-ui.c:596
+#: ../module/ui/cut-gtk-ui.c:602
 #, c-format
 msgid ""
 "%d test(s), %d assertion(s), %d failure(s), %d error(s), %d pending(s), %d "
 "omission(s), %d notification(s)"
 msgstr "%dテスト、%d検証、%d失敗、%dエラー、%d保留、%d省略、%d通知"
 
-#: ../module/ui/cut-gtk-ui.c:617
+#: ../module/ui/cut-gtk-ui.c:623
 #, c-format
 msgid "%dT:%dA:%dF:%d:E:%dP:%dO:%dN"
 msgstr "%dテ:%d検:%d失:%d:エ:%d保:%d略:%d通"
 
-#: ../module/ui/cut-gtk-ui.c:663
+#: ../module/ui/cut-gtk-ui.c:669
 #, c-format
 msgid "%u/%u (%u%%): %.1fs"
 msgstr "%u/%u (%u%%): %.1f秒"
 
-#: ../module/ui/cut-gtk-ui.c:685
+#: ../module/ui/cut-gtk-ui.c:691
 #, c-format
 msgid "Staring test suite %s..."
 msgstr "テストスイート%sを開始..."
 
-#: ../module/ui/cut-gtk-ui.c:1165
+#: ../module/ui/cut-gtk-ui.c:1184
 #, c-format
 msgid "Running test: %s"
 msgstr "テストを実行中: %s"
 
-#: ../module/ui/cut-gtk-ui.c:1323
+#: ../module/ui/cut-gtk-ui.c:1344
 #, c-format
 msgid "Finished in %0.1f seconds: %s"
 msgstr "%0.1f秒で終了: %s"
-
-#: ../module/ui/cut-gtk-ui.c:1365
-msgid "CRASHED!!!"
-msgstr "異常終了！！！"

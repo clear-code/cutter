@@ -2,11 +2,13 @@ cutter/cut-analyzer.c
 cutter/cut-assertions-helper.c
 cutter/cut-backtrace-entry.c
 cutter/cut-contractor.c
+cutter/cut-crash-backtrace.c
 cutter/cut-diff.c
 cutter/cut-enum-types.c
 cutter/cut-factory-builder.c
 cutter/cut-file-stream-reader.c
 cutter/cut-helper.c
+cutter/cut-image-hlp-loader.c
 cutter/cut-iterated-test.c
 cutter/cut-listener.c
 cutter/cut-loader.c
@@ -45,7 +47,7 @@ cutter/cut-utils.c
 cutter/cut-verbose-level.c
 cutter/main.c
 gcutter/gcut-assertions-helper.c
-gcutter/gcut-data.c
+gcutter/gcut-data-helper.c
 gcutter/gcut-dynamic-data.c
 gcutter/gcut-egg.c
 gcutter/gcut-enum.c
@@ -58,6 +60,7 @@ gcutter/gcut-list.c
 gcutter/gcut-main.c
 gcutter/gcut-object.c
 gcutter/gcut-string-io-channel.c
+gcutter/gcut-types.c
 gcutter/gcut-value-equal.c
 gdkcutter-pixbuf/gdkcut-pixbuf-assertions-helper.c
 gdkcutter-pixbuf/gdkcut-pixbuf.c
