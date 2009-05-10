@@ -66,7 +66,11 @@ IGNORE_HFILES=			\
 	cut-test.h		\
 	cut-utils.h		\
 	cut-verbose-level.h	\
-	config.h
+	config.h		\
+	vcc			\
+	doc			\
+	test			\
+	sample
 
 INCLUDES =					\
 	-I$(top_srcdir)/cutter			\
