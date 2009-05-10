@@ -58,6 +58,16 @@ typedef void    (*GCutInspectFunction) (GString *string,
  */
 #define	GCUT_TYPE_ERROR (gcut_error_get_type())
 
+/**
+ * gcut_error_get_type:
+ *
+ * Use %GCUT_TYPE_ERROR macro to get #GType for #GError
+ * instead of this function.
+ *
+ * Returns: The #GType for a boxed type holding a #GError reference.
+ *
+ * Since: 1.0.7
+ */
 GType   gcut_error_get_type (void) G_GNUC_CONST;
 
 G_END_DECLS
