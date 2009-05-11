@@ -191,9 +191,6 @@ cut_mach_o_loader_is_mach_o (CutMachOLoader *loader)
         break;
     case MH_MAGIC_64:
         priv->bit = ARCHITECTURE_64BIT;
-        g_warning("64bit mach-o isn't supported yet");
-        g_free(priv->content);
-        priv->content = NULL;
         break;
     default:
         g_warning("non mach-o magic: 0x%x", magic);
@@ -218,21 +215,33 @@ cut_mach_o_loader_support_attribute (CutMachOLoader *loader)
 #endif
 }
 
-#ifdef HAVE_MACH_O_LOADER_H
-static GList *
-cut_mach_o_loader_collect_symbols_32 (CutMachOLoaderPrivate *priv)
+GList *
+cut_mach_o_loader_collect_symbols (CutMachOLoader *loader)
 {
+#ifdef HAVE_MACH_O_LOADER_H
+    CutMachOLoaderPrivate *priv;
+    GList *symbols = NULL;
     gsize offset = 0;
     GPtrArray *all_symbols;
     GList *symbols = NULL;
-    struct mach_header *header;
+    struct mach_header *header = NULL;
+    struct mach_header_64 *header_64 = NULL;
+    uint32_t n_commands;
     gint i;
 
-    header = (struct mach_header *)priv->content;
-    offset += sizeof(*header);
+    priv = CUT_MACH_O_LOADER_GET_PRIVATE(loader);
+    if (priv->bit == ARCHITECTURE_32BIT) {
+        header = (struct mach_header *)priv->content;
+        offset += sizeof(*header);
+        n_commands = header->ncmds;
+    } else {
+        header_64 = (struct mach_header_64 *)priv->content;
+        offset += sizeof(*header_64);
+        n_commands = header_64->ncmds;
+    }
 
-    all_symbols = g_ptr_array_sized_new(header->ncmds);
-    for (i = 0; i < header->ncmds; i++) {
+    all_symbols = g_ptr_array_sized_new(n_commands);
+    for (i = 0; i < n_commands; i++) {
         struct load_command *load;
 
         load = (struct load_command *)(priv->content + offset);
@@ -240,20 +249,32 @@ cut_mach_o_loader_collect_symbols_32 (CutMachOLoaderPrivate *priv)
         case LC_SYMTAB:
         {
             struct symtab_command *table;
-            struct nlist *symbol_info;
+            struct nlist *symbol_info = NULL;
+            struct nlist_64 *symbol_info_64 = NULL;
             gchar *string_table;
             gint j;
 
             table = (struct symtab_command *)(priv->content + offset);
-            symbol_info = (struct nlist *)(priv->content + table->symoff);
+            if (priv->bit == ARCHITECTURE_32BIT) {
+                symbol_info = (struct nlist *)(priv->content + table->symoff);
+            } else {
+                symbol_info_64 =
+                    (struct nlist_64 *)(priv->content + table->symoff);
+            }
             string_table = priv->content + table->stroff;
             for (j = 0; j < table->nsyms; j++) {
                 uint8_t type;
                 int32_t string_offset;
                 gchar *name;
 
-                type = symbol_info[j].n_type;
-                string_offset = symbol_info[j].n_un.n_strx;
+                if (priv->bit == ARCHITECTURE_32BIT) {
+                    type = symbol_info[j].n_type;
+                    string_offset = symbol_info[j].n_un.n_strx;
+                } else {
+                    type = symbol_info_64[j].n_type;
+                    string_offset = symbol_info_64[j].n_un.n_strx;
+                }
+
                 name = string_table + string_offset;
                 if ((string_offset == 0) ||
                     (name[0] == '\0') ||
@@ -284,35 +305,6 @@ cut_mach_o_loader_collect_symbols_32 (CutMachOLoaderPrivate *priv)
         offset += load->cmdsize;
     }
     g_ptr_array_free(all_symbols, TRUE);
-
-    return symbols;
-}
-
-static GList *
-cut_mach_o_loader_collect_symbols_64 (CutMachOLoaderPrivate *priv)
-{
-    return NULL;
-}
-#endif
-
-GList *
-cut_mach_o_loader_collect_symbols (CutMachOLoader *loader)
-{
-#ifdef HAVE_MACH_O_LOADER_H
-    CutMachOLoaderPrivate *priv;
-    GList *symbols = NULL;
-
-    priv = CUT_MACH_O_LOADER_GET_PRIVATE(loader);
-    switch (priv->bit) {
-    case ARCHITECTURE_32BIT:
-        symbols = cut_mach_o_loader_collect_symbols_32(priv);
-        break;
-    case ARCHITECTURE_64BIT:
-        symbols = cut_mach_o_loader_collect_symbols_64(priv);
-        break;
-    default:
-        break;
-    }
 
     return symbols;
 #else

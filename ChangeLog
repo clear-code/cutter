@@ -1,5 +1,10 @@
 2009-05-11  Kouhei Sutou  <kou@cozmixng.org>
 
+	* TODO: remove: use mach-o/loader.h on Mac OS X.
+
+	* cutter/cut-mach-o-loader.c: support Mach-O parsing on
+	64bit. (maybe work)
+
 	* cutter/cut-mach-o-loader.c: support Mach-O parsing on 32bit.
 
 2009-05-10  Kouhei Sutou  <kou@cozmixng.org>
