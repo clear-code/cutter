@@ -1,3 +1,7 @@
+2009-05-12  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-mach-o-loader.c: buildable!
+
 2009-05-11  Kouhei Sutou  <kou@cozmixng.org>
 
 	* TODO: remove: use mach-o/loader.h on Mac OS X.

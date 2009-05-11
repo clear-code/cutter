@@ -223,7 +223,6 @@ cut_mach_o_loader_collect_symbols (CutMachOLoader *loader)
     GList *symbols = NULL;
     gsize offset = 0;
     GPtrArray *all_symbols;
-    GList *symbols = NULL;
     struct mach_header *header = NULL;
     struct mach_header_64 *header_64 = NULL;
     uint32_t n_commands;
