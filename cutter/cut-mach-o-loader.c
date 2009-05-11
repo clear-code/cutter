@@ -27,6 +27,8 @@
 
 #ifdef HAVE_MACH_O_LOADER_H
 #  include <mach-o/loader.h>
+#  include <mach-o/nlist.h>
+#  include <mach-o/stab.h>
 #endif
 #include <glib/gstdio.h>
 
@@ -35,6 +37,7 @@
 #define CUT_MACH_O_LOADER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), CUT_TYPE_MACH_O_LOADER, CutMachOLoaderPrivate))
 
 typedef enum {
+    ARCHITECTURE_UNKNOWN,
     ARCHITECTURE_32BIT,
     ARCHITECTURE_64BIT
 } ArchitectureBit;
@@ -96,6 +99,7 @@ cut_mach_o_loader_init (CutMachOLoader *loader)
     priv->so_filename = NULL;
     priv->content = NULL;
     priv->length = 0;
+    priv->bit = ARCHITECTURE_UNKNOWN;
 }
 
 static void
@@ -125,12 +129,12 @@ set_property (GObject      *object,
     CutMachOLoaderPrivate *priv = CUT_MACH_O_LOADER_GET_PRIVATE(object);
 
     switch (prop_id) {
-      case PROP_SO_FILENAME:
+    case PROP_SO_FILENAME:
         if (priv->so_filename)
             g_free(priv->so_filename);
         priv->so_filename = g_value_dup_string(value);
         break;
-      default:
+    default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
     }
@@ -145,10 +149,10 @@ get_property (GObject    *object,
     CutMachOLoaderPrivate *priv = CUT_MACH_O_LOADER_GET_PRIVATE(object);
 
     switch (prop_id) {
-      case PROP_SO_FILENAME:
+    case PROP_SO_FILENAME:
         g_value_set_string(value, priv->so_filename);
         break;
-      default:
+    default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
     }
@@ -187,6 +191,9 @@ cut_mach_o_loader_is_mach_o (CutMachOLoader *loader)
         break;
     case MH_MAGIC_64:
         priv->bit = ARCHITECTURE_64BIT;
+        g_warning("64bit mach-o isn't supported yet");
+        g_free(priv->content);
+        priv->content = NULL;
         break;
     default:
         g_warning("non mach-o magic: 0x%x", magic);
@@ -211,11 +218,103 @@ cut_mach_o_loader_support_attribute (CutMachOLoader *loader)
 #endif
 }
 
+#ifdef HAVE_MACH_O_LOADER_H
+static GList *
+cut_mach_o_loader_collect_symbols_32 (CutMachOLoaderPrivate *priv)
+{
+    gsize offset = 0;
+    GPtrArray *all_symbols;
+    GList *symbols = NULL;
+    struct mach_header *header;
+    gint i;
+
+    header = (struct mach_header *)priv->content;
+    offset += sizeof(*header);
+
+    all_symbols = g_ptr_array_sized_new(header->ncmds);
+    for (i = 0; i < header->ncmds; i++) {
+        struct load_command *load;
+
+        load = (struct load_command *)(priv->content + offset);
+        switch (load->cmd) {
+        case LC_SYMTAB:
+        {
+            struct symtab_command *table;
+            struct nlist *symbol_info;
+            gchar *string_table;
+            gint j;
+
+            table = (struct symtab_command *)(priv->content + offset);
+            symbol_info = (struct nlist *)(priv->content + table->symoff);
+            string_table = priv->content + table->stroff;
+            for (j = 0; j < table->nsyms; j++) {
+                uint8_t type;
+                int32_t string_offset;
+                gchar *name;
+
+                type = symbol_info[j].n_type;
+                string_offset = symbol_info[j].n_un.n_strx;
+                name = string_table + string_offset;
+                if ((string_offset == 0) ||
+                    (name[0] == '\0') ||
+                    (name[0] != '_')) {
+                    g_ptr_array_add(all_symbols, NULL);
+                } else {
+                    g_ptr_array_add(all_symbols, name + 1);
+                }
+            }
+            break;
+        }
+        case LC_DYSYMTAB:
+        {
+            struct dysymtab_command *table;
+            gint j;
+
+            table = (struct dysymtab_command *)(priv->content + offset);
+            for (j = 0; j < table->nextdefsym; j++) {
+                const gchar *name;
+
+                name = g_ptr_array_index(all_symbols, table->iextdefsym + j);
+                symbols = g_list_prepend(symbols, g_strdup(name));
+            }
+        }
+        default:
+            break;
+        }
+        offset += load->cmdsize;
+    }
+    g_ptr_array_free(all_symbols, TRUE);
+
+    return symbols;
+}
+
+static GList *
+cut_mach_o_loader_collect_symbols_64 (CutMachOLoaderPrivate *priv)
+{
+    return NULL;
+}
+#endif
+
 GList *
 cut_mach_o_loader_collect_symbols (CutMachOLoader *loader)
 {
 #ifdef HAVE_MACH_O_LOADER_H
-    return NULL;
+    CutMachOLoaderPrivate *priv;
+    GList *symbols = NULL;
+
+    priv = CUT_MACH_O_LOADER_GET_PRIVATE(loader);
+    switch (priv->bit) {
+    case ARCHITECTURE_32BIT:
+        symbols = cut_mach_o_loader_collect_symbols_32(priv);
+        break;
+    case ARCHITECTURE_64BIT:
+        symbols = cut_mach_o_loader_collect_symbols_64(priv);
+        break;
+    default:
+        break;
+    }
+
+    return symbols;
 #else
     return NULL;
 #endif
