@@ -1,3 +1,8 @@
+2009-05-12  Kouhei Sutou  <kou@clear-code.com>
+
+	* configure.ac, cutter/cut-loader.c, cutter/cut-elf-loader.[ch]:
+	support ELF parsing with elf.h.
+
 2009-05-12  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-mach-o-loader.c: buildable!

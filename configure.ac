@@ -137,6 +137,8 @@ AC_CHECK_HEADER(mach-o/loader.h,
                 [AC_DEFINE(HAVE_MACH_O_LOADER_H, 1,
                            [Define to 1 if you have <mach-o/loader.h>.])])
 
+AC_CHECK_HEADERS(elf.h)
+
 dnl **************************************************************
 dnl Check for MinGW
 dnl **************************************************************

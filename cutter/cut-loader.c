@@ -33,6 +33,7 @@
 #endif
 
 #include "cut-loader.h"
+#include "cut-elf-loader.h"
 #include "cut-mach-o-loader.h"
 #include "cut-image-hlp-loader.h"
 #include "cut-test-iterator.h"
@@ -57,6 +58,7 @@ struct _CutLoaderPrivate
     GList *symbols;
     GModule *module;
     CutBinaryType binary_type;
+    CutELFLoader *elf_loader;
     CutMachOLoader *mach_o_loader;
     CutImageHlpLoader *image_hlp_loader;
     gboolean keep_opening;
@@ -119,6 +121,7 @@ cut_loader_init (CutLoader *loader)
 
     priv->so_filename = NULL;
     priv->binary_type = CUT_BINARY_TYPE_UNKNOWN;
+    priv->elf_loader = NULL;
     priv->mach_o_loader = NULL;
     priv->image_hlp_loader = NULL;
     priv->keep_opening = FALSE;
@@ -144,6 +147,11 @@ dispose (GObject *object)
     if (priv->so_filename) {
         g_free(priv->so_filename);
         priv->so_filename = NULL;
+    }
+
+    if (priv->elf_loader) {
+        g_object_unref(priv->elf_loader);
+        priv->elf_loader = NULL;
     }
 
     if (priv->mach_o_loader) {
@@ -442,7 +450,9 @@ cut_loader_support_attribute (CutLoader *loader)
     if (!priv->enable_convenience_attribute_definition)
         return FALSE;
 
-    if (priv->mach_o_loader) {
+    if (priv->elf_loader) {
+        return cut_elf_loader_support_attribute(priv->elf_loader);
+    } else if (priv->mach_o_loader) {
         return cut_mach_o_loader_support_attribute(priv->mach_o_loader);
     } else if (priv->image_hlp_loader) {
         return cut_image_hlp_loader_support_attribute(priv->image_hlp_loader);
@@ -458,7 +468,9 @@ cut_loader_support_attribute (CutLoader *loader)
 static GList *
 collect_symbols (CutLoaderPrivate *priv)
 {
-    if (priv->mach_o_loader) {
+    if (priv->elf_loader) {
+        return cut_elf_loader_collect_symbols(priv->elf_loader);
+    } else if (priv->mach_o_loader) {
         return cut_mach_o_loader_collect_symbols(priv->mach_o_loader);
     } else if (priv->image_hlp_loader) {
         return cut_image_hlp_loader_collect_symbols(priv->image_hlp_loader);
@@ -684,6 +696,12 @@ cut_loader_load_test_case (CutLoader *loader)
         g_warning("can't load a shared object for test case: %s: %s",
                   priv->so_filename, g_module_error());
         return NULL;
+    }
+
+    priv->elf_loader = cut_elf_loader_new(priv->so_filename);
+    if (!cut_elf_loader_is_elf(priv->elf_loader)) {
+        g_object_unref(priv->elf_loader);
+        priv->elf_loader = NULL;
     }
 
     priv->mach_o_loader = cut_mach_o_loader_new(priv->so_filename);

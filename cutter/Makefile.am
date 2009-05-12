@@ -67,6 +67,7 @@ libcutter_public_headers = 		\
 
 noinst_headers = 		\
 	cut-loader.h		\
+	cut-elf-loader.h	\
 	cut-mach-o-loader.h	\
 	cut-image-hlp-loader.h	\
 	cut-module.h		\
@@ -125,6 +126,7 @@ libcutter_la_SOURCES =			\
 	cut-test-data.c			\
 	cut-verbose-level.c		\
 	cut-loader.c			\
+	cut-elf-loader.c		\
 	cut-mach-o-loader.c		\
 	cut-image-hlp-loader.c		\
 	cut-repository.c		\
