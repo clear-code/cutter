@@ -165,14 +165,12 @@ libcutter_la_LDFLAGS =				\
 
 libcutter_la_LIBADD =				\
 	$(top_builddir)/gcutter/libgcutter.la	\
-	$(GLIB_LIBS)
+	$(GLIB_LIBS)				\
+	$(IMAGEHLP_LIBS)			\
+	$(LIBELF_LIBS)
 
 if HAVE_LIBBFD
 libcutter_la_LIBADD += $(BFD_LIBS)
-endif
-
-if HAVE_IMAGEHLP_H
-libcutter_la_LIBADD += -limagehlp
 endif
 
 if OS_WIN32

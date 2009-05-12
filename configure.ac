@@ -122,13 +122,18 @@ AC_SUBST(NO_STRICT_ALIASING_CFLAGS)
 AC_HEADER_SYS_WAIT
 
 AC_CHECK_HEADERS(io.h)
-have_imagehlp_h=no
-AC_CHECK_HEADERS(imagehlp.h, [have_imagehlp_h=yes], [], [#include <windows.h>])
-AM_CONDITIONAL([HAVE_IMAGEHLP_H], [test "$have_imagehlp_h" = "yes"])
+IMAGEHLP_LIBS=
+AC_CHECK_HEADERS(imagehlp.h, [IMAGEHLP_LIBS=-limagehlp], [],
+                 [#include <windows.h>])
+AC_SUBST(IMAGEHLP_LIBS)
 
 AC_CHECK_HEADERS(mach-o/loader.h)
 
 AC_CHECK_HEADERS(elf.h)
+
+LIBELF_LIBS=
+AC_CHECK_HEADERS(libelf.h, [LIBELF_LIBS=-lelf])
+AC_SUBST(LIBELF_LIBS)
 
 dnl **************************************************************
 dnl Check for MinGW
