@@ -1,5 +1,7 @@
 2009-05-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* configure.ac: use AC_CHECK_HEADERS instead of AC_CHECK_HEADER.
+
 	* cutter/cutter.h: fix inverted condition.
 
 2009-05-12  Kouhei Sutou  <kou@clear-code.com>
