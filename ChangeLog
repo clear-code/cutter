@@ -1,3 +1,7 @@
+2009-05-12  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cutter.h: fix inverted condition.
+
 2009-05-12  Kouhei Sutou  <kou@clear-code.com>
 
 	* cutter/cut-elf-loader.c, cutter/cut-mach-o-loader.c: don't
