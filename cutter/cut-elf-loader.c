@@ -201,9 +201,6 @@ cut_elf_loader_is_elf (CutELFLoader *loader)
             break;
         }
     } else {
-        g_warning("non ELF magic: 0x%x%x%x%x",
-                  ident[EI_MAG0], ident[EI_MAG1],
-                  ident[EI_MAG2], ident[EI_MAG3]);
         g_free(priv->content);
         priv->content = NULL;
     }

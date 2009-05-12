@@ -193,7 +193,6 @@ cut_mach_o_loader_is_mach_o (CutMachOLoader *loader)
         priv->bit = ARCHITECTURE_64BIT;
         break;
     default:
-        g_warning("non mach-o magic: 0x%x", magic);
         g_free(priv->content);
         priv->content = NULL;
         break;
