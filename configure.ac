@@ -122,18 +122,9 @@ AC_SUBST(NO_STRICT_ALIASING_CFLAGS)
 AC_HEADER_SYS_WAIT
 
 AC_CHECK_HEADERS(io.h)
-IMAGEHLP_LIBS=
-AC_CHECK_HEADERS(imagehlp.h, [IMAGEHLP_LIBS=-limagehlp], [],
-                 [#include <windows.h>])
-AC_SUBST(IMAGEHLP_LIBS)
-
+AC_CHECK_HEADERS(winnt.h)
 AC_CHECK_HEADERS(mach-o/loader.h)
-
 AC_CHECK_HEADERS(elf.h)
-
-LIBELF_LIBS=
-AC_CHECK_HEADERS(libelf.h, [LIBELF_LIBS=-lelf])
-AC_SUBST(LIBELF_LIBS)
 
 dnl **************************************************************
 dnl Check for MinGW
@@ -478,7 +469,7 @@ dnl **************************************************************
 dnl Cutter related variables.
 dnl **************************************************************
 
-CUTTER="\$(top_builddir)/cutter/cutter"
+CUTTER="\$(top_builddir)/cutter/cutter\$(EXEEXT)"
 AC_SUBST(CUTTER)
 
 CUTTER_CFLAGS="$GLIB_CFLAGS -DG_DISABLE_DEPRECATED -DUI_MODULEDIR=\\\"\"\$(ui_moduledir)\"\\\""

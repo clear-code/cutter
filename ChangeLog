@@ -1,3 +1,8 @@
+2009-05-13  Kouhei Sutou  <kou@cozmixng.org>
+
+	* configure.ac, cutter/Makefile.am, cutter/cut-image-hlp-loader.c:
+	support PE COFF parsing without imagehlp.
+
 2009-05-12  Kouhei Sutou  <kou@cozmixng.org>
 
 	* configure.ac, cutter/Makefile.am: detect libelf.h. (just only detect)

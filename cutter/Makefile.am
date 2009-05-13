@@ -165,9 +165,7 @@ libcutter_la_LDFLAGS =				\
 
 libcutter_la_LIBADD =				\
 	$(top_builddir)/gcutter/libgcutter.la	\
-	$(GLIB_LIBS)				\
-	$(IMAGEHLP_LIBS)			\
-	$(LIBELF_LIBS)
+	$(GLIB_LIBS)
 
 if HAVE_LIBBFD
 libcutter_la_LIBADD += $(BFD_LIBS)

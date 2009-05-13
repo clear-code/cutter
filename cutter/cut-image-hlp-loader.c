@@ -25,9 +25,8 @@
 #include <string.h>
 #include <glib.h>
 
-#ifdef HAVE_IMAGEHLP_H
-#  include <windows.h>
-#  include <imagehlp.h>
+#ifdef HAVE_WINNT_H
+#  include <winnt.h>
 #endif
 #include <glib/gstdio.h>
 
@@ -39,8 +38,10 @@ typedef struct _CutImageHlpLoaderPrivate	CutImageHlpLoaderPrivate;
 struct _CutImageHlpLoaderPrivate
 {
     gchar *so_filename;
+    gchar *content;
+    gsize length;
 #ifdef HAVE_IMAGEHLP_H
-    IMAGE_DEBUG_INFORMATION *debug_information;
+    IMAGE_NT_HEADERS *nt_headers;
 #endif
 };
 
@@ -90,8 +91,10 @@ cut_image_hlp_loader_init (CutImageHlpLoader *loader)
     CutImageHlpLoaderPrivate *priv = CUT_IMAGE_HLP_LOADER_GET_PRIVATE(loader);
 
     priv->so_filename = NULL;
-#ifdef HAVE_IMAGEHLP_H
-    priv->debug_information = NULL;
+    priv->content = NULL;
+    priv->length = 0;
+#ifdef HAVE_WINNT_H
+    priv->nt_headers = NULL;
 #endif
 }
 
@@ -105,12 +108,10 @@ dispose (GObject *object)
         priv->so_filename = NULL;
     }
 
-#ifdef HAVE_IMAGEHLP_H
-    if (priv->debug_information) {
-        UnmapDebugInformation(priv->debug_information);
-        priv->debug_information = NULL;
+    if (priv->content) {
+        g_free(priv->content);
+        priv->content = NULL;
     }
-#endif
 
     G_OBJECT_CLASS(cut_image_hlp_loader_parent_class)->dispose(object);
 }
@@ -164,32 +165,34 @@ cut_image_hlp_loader_new (const gchar *so_filename)
 gboolean
 cut_image_hlp_loader_is_dll (CutImageHlpLoader *loader)
 {
-#ifdef HAVE_IMAGEHLP_H
+#ifdef HAVE_WINNT_H
     CutImageHlpLoaderPrivate *priv;
-    gchar *base_name, *directory_name;
+    GError *error = NULL;
+    unsigned char signature_offset_offset = 0x3c;
+    unsigned char nt_headers_offset;
 
     priv = CUT_IMAGE_HLP_LOADER_GET_PRIVATE(loader);
-    if (priv->debug_information)
-        return TRUE;
-
-    base_name = g_path_get_basename(priv->so_filename);
-    directory_name = g_path_get_dirname(priv->so_filename);
-    priv->debug_information = MapDebugInformation(NULL,
-                                                  base_name, directory_name,
-                                                  0);
-    g_free(base_name);
-    g_free(directory_name);
-    if (!priv->debug_information) {
-        gchar *error_message;
-
-        error_message = g_win32_error_message(GetLastError());
-        g_warning("failed to load DLL: <%s>: %s",
-                  priv->so_filename, error_message);
-        g_free(error_message);
+    if (!g_file_get_contents(priv->so_filename, &priv->content, &priv->length,
+                             &error)) {
+        g_warning("can't read shared library file: %s", error->message);
+        g_error_free(error);
+        return FALSE;
     }
 
-    /* should check characterize == IMAGE_FILE_DLL? */
-    return priv->debug_information != NULL;
+    if (priv->length < signature_offset_offset)
+        return FALSE;
+
+    memcpy(&nt_headers_offset,
+           priv->content + signature_offset_offset,
+           sizeof(nt_headers_offset));
+    if (priv->length < nt_headers_offset)
+        return FALSE;
+
+    priv->nt_headers = (IMAGE_NT_HEADERS *)(priv->content + nt_headers_offset);
+    if (priv->nt_headers->Signature != IMAGE_NT_SIGNATURE)
+        return FALSE;
+
+    return priv->nt_headers->FileHeader.Characteristics & IMAGE_FILE_DLL;
 #else
     return FALSE;
 #endif
@@ -210,20 +213,40 @@ cut_image_hlp_loader_collect_symbols (CutImageHlpLoader *loader)
 {
 #ifdef HAVE_IMAGEHLP_H
     CutImageHlpLoaderPrivate *priv;
-    IMAGE_DEBUG_INFORMATION *debug_information;
     GList *symbols = NULL;
-    DWORD i, last_index;
+    WORD i;
+    IMAGE_SECTION_HEADER *first_section;
+    IMAGE_SECTION_HEADER *edata_section = NULL;
+    IMAGE_EXPORT_DIRECTORY *directory;
+    IMAGE_DATA_DIRECTORY *data_directories;
+    const gchar *base_address;
+    ULONG *name_addresses;
 
     priv = CUT_IMAGE_HLP_LOADER_GET_PRIVATE(loader);
-    debug_information = priv->debug_information;
-    for (i = 0, last_index = 0; i < debug_information->ExportedNamesSize; i++) {
-        if (debug_information->ExportedNames[i] == '\0') {
-            PSTR name;
-
-            name = debug_information->ExportedNames + last_index;
-            symbols = g_list_prepend(symbols, g_strdup(name));
-            last_index = i + 1;
+    first_section = IMAGE_FIRST_SECTION(priv->nt_headers);
+    for (i = 0; i < priv->nt_headers->FileHeader.NumberOfSections; i++) {
+        if (g_str_equal(".edata", (first_section + i)->Name)) {
+            edata_section = first_section + i;
+            break;
         }
+    }
+
+    if (!edata_section)
+        return NULL;
+
+    data_directories = priv->nt_headers->OptionalHeader.DataDirectory;
+    directory = (IMAGE_EXPORT_DIRECTORY *)(priv->content +
+                                           edata_section->PointerToRawData);
+    base_address =
+        priv->content +
+        edata_section->PointerToRawData -
+        data_directories[IMAGE_DIRECTORY_ENTRY_EXPORT].VirtualAddress;
+    name_addresses = (ULONG *)(base_address + directory->AddressOfNames);
+    for (i = 0; i < directory->NumberOfNames; i++) {
+        const gchar *name;
+
+        name = base_address + name_addresses[i];
+        symbols = g_list_prepend(symbols, g_strdup(name));
     }
 
     return symbols;
