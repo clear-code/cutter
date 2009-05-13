@@ -1,3 +1,11 @@
+2009-05-14  Kouhei Sutou  <kou@cozmixng.org>
+
+	* TODO: remove: use imagehlp.h on Windows.
+
+	* configure.ac, cutter/Makefile.am,
+	cutter/cut-image-hlp-loader.[ch], cutter/cut-pe-loader.[ch]:
+	image-hlp -> pe.
+
 2009-05-13  Kouhei Sutou  <kou@cozmixng.org>
 
 	* configure.ac, cutter/Makefile.am, cutter/cut-image-hlp-loader.c:

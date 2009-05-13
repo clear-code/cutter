@@ -26,21 +26,22 @@
 #include <glib.h>
 
 #ifdef HAVE_WINNT_H
+#  include <windows.h>
 #  include <winnt.h>
 #endif
 #include <glib/gstdio.h>
 
-#include "cut-image-hlp-loader.h"
+#include "cut-pe-loader.h"
 
-#define CUT_IMAGE_HLP_LOADER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), CUT_TYPE_IMAGE_HLP_LOADER, CutImageHlpLoaderPrivate))
+#define CUT_PE_LOADER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), CUT_TYPE_PE_LOADER, CutPELoaderPrivate))
 
-typedef struct _CutImageHlpLoaderPrivate	CutImageHlpLoaderPrivate;
-struct _CutImageHlpLoaderPrivate
+typedef struct _CutPELoaderPrivate	CutPELoaderPrivate;
+struct _CutPELoaderPrivate
 {
     gchar *so_filename;
     gchar *content;
     gsize length;
-#ifdef HAVE_IMAGEHLP_H
+#ifdef HAVE_WINNT_H
     IMAGE_NT_HEADERS *nt_headers;
 #endif
 };
@@ -51,7 +52,7 @@ enum
     PROP_SO_FILENAME
 };
 
-G_DEFINE_TYPE(CutImageHlpLoader, cut_image_hlp_loader, G_TYPE_OBJECT)
+G_DEFINE_TYPE(CutPELoader, cut_pe_loader, G_TYPE_OBJECT)
 
 static void dispose         (GObject               *object);
 static void set_property    (GObject               *object,
@@ -64,7 +65,7 @@ static void get_property    (GObject               *object,
                              GParamSpec            *pspec);
 
 static void
-cut_image_hlp_loader_class_init (CutImageHlpLoaderClass *klass)
+cut_pe_loader_class_init (CutPELoaderClass *klass)
 {
     GObjectClass *gobject_class;
     GParamSpec *spec;
@@ -82,13 +83,13 @@ cut_image_hlp_loader_class_init (CutImageHlpLoaderClass *klass)
                                G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class, PROP_SO_FILENAME, spec);
 
-    g_type_class_add_private(gobject_class, sizeof(CutImageHlpLoaderPrivate));
+    g_type_class_add_private(gobject_class, sizeof(CutPELoaderPrivate));
 }
 
 static void
-cut_image_hlp_loader_init (CutImageHlpLoader *loader)
+cut_pe_loader_init (CutPELoader *loader)
 {
-    CutImageHlpLoaderPrivate *priv = CUT_IMAGE_HLP_LOADER_GET_PRIVATE(loader);
+    CutPELoaderPrivate *priv = CUT_PE_LOADER_GET_PRIVATE(loader);
 
     priv->so_filename = NULL;
     priv->content = NULL;
@@ -101,7 +102,7 @@ cut_image_hlp_loader_init (CutImageHlpLoader *loader)
 static void
 dispose (GObject *object)
 {
-    CutImageHlpLoaderPrivate *priv = CUT_IMAGE_HLP_LOADER_GET_PRIVATE(object);
+    CutPELoaderPrivate *priv = CUT_PE_LOADER_GET_PRIVATE(object);
 
     if (priv->so_filename) {
         g_free(priv->so_filename);
@@ -113,7 +114,7 @@ dispose (GObject *object)
         priv->content = NULL;
     }
 
-    G_OBJECT_CLASS(cut_image_hlp_loader_parent_class)->dispose(object);
+    G_OBJECT_CLASS(cut_pe_loader_parent_class)->dispose(object);
 }
 
 static void
@@ -122,7 +123,7 @@ set_property (GObject      *object,
               const GValue *value,
               GParamSpec   *pspec)
 {
-    CutImageHlpLoaderPrivate *priv = CUT_IMAGE_HLP_LOADER_GET_PRIVATE(object);
+    CutPELoaderPrivate *priv = CUT_PE_LOADER_GET_PRIVATE(object);
 
     switch (prop_id) {
     case PROP_SO_FILENAME:
@@ -142,7 +143,7 @@ get_property (GObject    *object,
               GValue     *value,
               GParamSpec *pspec)
 {
-    CutImageHlpLoaderPrivate *priv = CUT_IMAGE_HLP_LOADER_GET_PRIVATE(object);
+    CutPELoaderPrivate *priv = CUT_PE_LOADER_GET_PRIVATE(object);
 
     switch (prop_id) {
     case PROP_SO_FILENAME:
@@ -154,24 +155,23 @@ get_property (GObject    *object,
     }
 }
 
-CutImageHlpLoader *
-cut_image_hlp_loader_new (const gchar *so_filename)
+CutPELoader *
+cut_pe_loader_new (const gchar *so_filename)
 {
-    return g_object_new(CUT_TYPE_IMAGE_HLP_LOADER,
+    return g_object_new(CUT_TYPE_PE_LOADER,
                         "so-filename", so_filename,
                         NULL);
 }
 
 gboolean
-cut_image_hlp_loader_is_dll (CutImageHlpLoader *loader)
+cut_pe_loader_is_dll (CutPELoader *loader)
 {
 #ifdef HAVE_WINNT_H
-    CutImageHlpLoaderPrivate *priv;
+    CutPELoaderPrivate *priv;
     GError *error = NULL;
-    unsigned char signature_offset_offset = 0x3c;
-    unsigned char nt_headers_offset;
+    IMAGE_DOS_HEADER *dos_header;
 
-    priv = CUT_IMAGE_HLP_LOADER_GET_PRIVATE(loader);
+    priv = CUT_PE_LOADER_GET_PRIVATE(loader);
     if (!g_file_get_contents(priv->so_filename, &priv->content, &priv->length,
                              &error)) {
         g_warning("can't read shared library file: %s", error->message);
@@ -179,16 +179,15 @@ cut_image_hlp_loader_is_dll (CutImageHlpLoader *loader)
         return FALSE;
     }
 
-    if (priv->length < signature_offset_offset)
+    if (priv->length < sizeof(*dos_header))
         return FALSE;
 
-    memcpy(&nt_headers_offset,
-           priv->content + signature_offset_offset,
-           sizeof(nt_headers_offset));
-    if (priv->length < nt_headers_offset)
+    dos_header = (IMAGE_DOS_HEADER *)priv->content;
+    if (priv->length < dos_header->e_lfarlc)
         return FALSE;
 
-    priv->nt_headers = (IMAGE_NT_HEADERS *)(priv->content + nt_headers_offset);
+    priv->nt_headers =
+        (IMAGE_NT_HEADERS *)(priv->content + dos_header->e_lfarlc);
     if (priv->nt_headers->Signature != IMAGE_NT_SIGNATURE)
         return FALSE;
 
@@ -199,9 +198,9 @@ cut_image_hlp_loader_is_dll (CutImageHlpLoader *loader)
 }
 
 gboolean
-cut_image_hlp_loader_support_attribute (CutImageHlpLoader *loader)
+cut_pe_loader_support_attribute (CutPELoader *loader)
 {
-#ifdef HAVE_IMAGEHLP_H
+#ifdef HAVE_WINNT_H
     return TRUE;
 #else
     return FALSE;
@@ -209,10 +208,10 @@ cut_image_hlp_loader_support_attribute (CutImageHlpLoader *loader)
 }
 
 GList *
-cut_image_hlp_loader_collect_symbols (CutImageHlpLoader *loader)
+cut_pe_loader_collect_symbols (CutPELoader *loader)
 {
-#ifdef HAVE_IMAGEHLP_H
-    CutImageHlpLoaderPrivate *priv;
+#ifdef HAVE_WINNT_H
+    CutPELoaderPrivate *priv;
     GList *symbols = NULL;
     WORD i;
     IMAGE_SECTION_HEADER *first_section;
@@ -222,7 +221,7 @@ cut_image_hlp_loader_collect_symbols (CutImageHlpLoader *loader)
     const gchar *base_address;
     ULONG *name_addresses;
 
-    priv = CUT_IMAGE_HLP_LOADER_GET_PRIVATE(loader);
+    priv = CUT_PE_LOADER_GET_PRIVATE(loader);
     first_section = IMAGE_FIRST_SECTION(priv->nt_headers);
     for (i = 0; i < priv->nt_headers->FileHeader.NumberOfSections; i++) {
         if (g_str_equal(".edata", (first_section + i)->Name)) {

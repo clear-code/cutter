@@ -10,7 +10,6 @@
   * elapsed time
 * coordinattion with TestLink.
 * failmalloc like memory test.
-* use imagehlp.h on Windows.
 * update option descriptions in README.
 * introduce easy sub process debugging mechanism.
 * cut_assert_equal_sockaddr().

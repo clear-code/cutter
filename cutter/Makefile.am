@@ -69,7 +69,7 @@ noinst_headers = 		\
 	cut-loader.h		\
 	cut-elf-loader.h	\
 	cut-mach-o-loader.h	\
-	cut-image-hlp-loader.h	\
+	cut-pe-loader.h		\
 	cut-module.h		\
 	cut-module-impl.h	\
 	cut-repository.h	\
@@ -128,7 +128,7 @@ libcutter_la_SOURCES =			\
 	cut-loader.c			\
 	cut-elf-loader.c		\
 	cut-mach-o-loader.c		\
-	cut-image-hlp-loader.c		\
+	cut-pe-loader.c			\
 	cut-repository.c		\
 	cut-module.c			\
 	cut-module-impl.h		\

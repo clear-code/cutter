@@ -122,7 +122,7 @@ AC_SUBST(NO_STRICT_ALIASING_CFLAGS)
 AC_HEADER_SYS_WAIT
 
 AC_CHECK_HEADERS(io.h)
-AC_CHECK_HEADERS(winnt.h)
+AC_CHECK_HEADERS(winnt.h, [], [], [#include <windows.h>])
 AC_CHECK_HEADERS(mach-o/loader.h)
 AC_CHECK_HEADERS(elf.h)
 
