@@ -10,13 +10,22 @@
 
   <part id="introduction">
     <title>Introduction</title>
-    <chapter id="start">
-      <title>Getting start</title>
+    <chapter id="overview">
+      <title>Overview of Cutter</title>
       <xi:include href="news.xml"/>
       <xi:include href="readme.xml"/>
-      <xi:include href="tutorial.xml"/>
       <xi:include href="features.xml"/>
       <xi:include href="users.xml"/>
+    </chapter>
+    <chapter id="install">
+      <title>Install Cutter to your platform</title>
+      <xi:include href="install-to-debian.xml"/>
+      <xi:include href="install-to-cygwin.xml"/>
+      <xi:include href="install-to-others.xml"/>
+    </chapter>
+    <chapter id="start">
+      <title>Getting start</title>
+      <xi:include href="tutorial.xml"/>
     </chapter>
   </part>
 

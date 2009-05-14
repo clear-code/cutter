@@ -40,9 +40,7 @@ Subversion:
 
 == Install
 
-  % ./configure
-  % make
-  # make install
+See ((<Install>)).
 
 == Usage
 

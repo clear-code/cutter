@@ -1,0 +1,36 @@
+# -*- rd -*-
+
+= Debian GNU/Linuxへインストール --- Debian GNU/LinuxへのCutterのインストール方法
+
+== はじめに
+
+Debian GNU/LinuxへのCutterのインストール方法を説明します。
+Ubuntuでも同様にインストールできます。
+
+== インストール
+
+CutterのDebianパッケージが提供されているので、aptitudeインス
+トールできます。
+
+まず、以下のapt lineを/etc/apt/sources.listに追加します。
+
+  deb http://cutter.sourceforge.net/debian/ unstable main
+  deb-src http://cutter.sourceforge.net/debian/ unstable main
+
+パッケージはkou@cozmixng.org/kou@clear-code.comの鍵でサイン
+しています。信用する場合は鍵を登録します。
+
+  % gpg --keyserver hkp://subkeys.pgp.net --recv-keys 1C837F31
+  % gpg --export 1C837F31 | sudo apt-key add -
+
+鍵を登録したらaptitudeでインストールできます。
+
+  % sudo aptitude update
+  % sudo aptitude -V -D install cutter-testing-framework
+
+== 次のステップ
+
+以上でインストールは完了です。
+
+まずは((<チュートリアル|TUTORIAL.ja>))を一通り試してください。
+Cutterを使った開発の流れがわかります。

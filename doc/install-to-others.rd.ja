@@ -1,0 +1,60 @@
+# -*- rd -*-
+
+= その他のプラットフォームへインストール --- その他のプラットフォームへのCutterのインストール方法
+
+== はじめに
+
+((<"Debian GNU/Linux"|install-to-debian.rd.ja>))、
+((<Cygwin|install-to-cygwin.rd.ja>))以外のプラットフォームへ
+のインストール方法です。
+
+== GLibのインストール
+
+Cutterを動かすためにはGLib 2.16以降が必要です。もし、システム
+で提供されているGLibが古い場合（例えばCentOS）は別途GLibをイ
+ンストールし、それを利用することができます。
+
+~/local/以下にGLibをインストールするとします。
+
+  % mkdir -p ~/src
+  % cd ~/src
+  % wget http://ftp.gnome.org/pub/GNOME/sources/glib/2.20/glib-2.20.1.tar.gz
+  % tar xvfz glib-2.20.1.tar.gz
+  % cd glib-2.20.1
+  % ./configure --prefix=$HOME/local
+  % make
+  % make install
+
+== Cutterのインストール
+
+CutterはGNUビルドツールを利用しているので、他のフリーソフト
+ウェアと同じように以下でインストールできます。
+
+  % mkdir -p ~/src
+  % cd ~/src
+  % wget http://downloads.sourceforge.net/cutter/cutter-1.0.7.tar.gz
+  % tar xvzf cutter-1.0.7.tar.gz
+  % cd cutter-1.0.7
+  % ./configure
+  % make
+  % sudo make install
+
+もし、~/local/以下にGLibをインストールした場合は以下のように
+なります。この例ではCutterも~/local/以下にインストールしてい
+ます。
+
+  % mkdir -p ~/src
+  % cd ~/src
+  % wget http://downloads.sourceforge.net/cutter/cutter-1.0.7.tar.gz
+  % tar xvzf cutter-1.0.7.tar.gz
+  % cd cutter-1.0.7
+  % ./configure PKG_CONFIG_PATH=$HOME/local/lib/pkgconfig LD_LIBRARY_PATH=$HOME/local/lib --prefix=$HOME/local
+  % make
+  % make install
+
+== 次のステップ
+
+以上でインストールは完了です。
+
+まずは((<チュートリアル|TUTORIAL.ja>))を一通り試してください。
+Cutterを使った開発の流れがわかります。

@@ -99,14 +99,17 @@ HTML_IMAGES =				\
 	diff-dark-and-nested-circle.png
 
 # Extra SGML files that are included by $(DOC_MAIN_SGML_FILE)
-content_files =		\
-	version.xml	\
-	readme.xml	\
-	news.xml	\
-	tutorial.xml	\
-	features.xml	\
-	users.xml	\
-	cutter.xml
+content_files =					\
+	version.xml				\
+	readme.xml				\
+	news.xml				\
+	tutorial.xml				\
+	features.xml				\
+	users.xml				\
+	cutter.xml				\
+	install-to-debian.xml			\
+	install-to-cygwin.xml			\
+	install-to-others.xml
 
 # Extra options to supply to gtkdoc-fixxref
 FIXXREF_OPTIONS=
@@ -116,19 +119,25 @@ CATALOGS=ja.po
 # include common portion ...
 include $(top_srcdir)/gtk-doc.make
 
-generated_xml_files =	\
-	readme.xml	\
-	readme.xml.ja	\
-	news.xml	\
-	news.xml.ja	\
-	tutorial.xml	\
-	tutorial.xml.ja	\
-	features.xml	\
-	features.xml.ja	\
-	users.xml	\
-	users.xml.ja	\
-	cutter.xml	\
-	cutter.xml.ja
+generated_xml_files =				\
+	readme.xml				\
+	readme.xml.ja				\
+	news.xml				\
+	news.xml.ja				\
+	tutorial.xml				\
+	tutorial.xml.ja				\
+	features.xml				\
+	features.xml.ja				\
+	users.xml				\
+	users.xml.ja				\
+	cutter.xml				\
+	cutter.xml.ja				\
+	install-to-debian.xml			\
+	install-to-debian.xml.ja		\
+	install-to-cygwin.xml			\
+	install-to-cygwin.xml.ja		\
+	install-to-others.xml			\
+	install-to-others.xml.ja
 
 CLEANFILES +=				\
 	$(DOC_MODULE)-sections.txt	\
@@ -193,6 +202,24 @@ cutter.xml: $(top_srcdir)/doc/cutter.rd $(RD2REFENTRY_LIB) cutter.xml.ja
 
 cutter.xml.ja: $(top_srcdir)/doc/cutter.rd.ja $(RD2REFENTRY_LIB) ja.po
 	$(RD2_JA) $(top_srcdir)/doc/cutter.rd.ja > cutter.xml.ja
+
+install-to-debian.xml: $(top_srcdir)/doc/install-to-debian.rd $(RD2REFENTRY_LIB) install-to-debian.xml.ja
+	$(RD2) $(top_srcdir)/doc/install-to-debian.rd > install-to-debian.xml
+
+install-to-debian.xml.ja: $(top_srcdir)/doc/install-to-debian.rd.ja $(RD2REFENTRY_LIB) ja.po
+	$(RD2_JA) $(top_srcdir)/doc/install-to-debian.rd.ja > install-to-debian.xml.ja
+
+install-to-cygwin.xml: $(top_srcdir)/doc/install-to-cygwin.rd $(RD2REFENTRY_LIB) install-to-cygwin.xml.ja
+	$(RD2) $(top_srcdir)/doc/install-to-cygwin.rd > install-to-cygwin.xml
+
+install-to-cygwin.xml.ja: $(top_srcdir)/doc/install-to-cygwin.rd.ja $(RD2REFENTRY_LIB) ja.po
+	$(RD2_JA) $(top_srcdir)/doc/install-to-cygwin.rd.ja > install-to-cygwin.xml.ja
+
+install-to-others.xml: $(top_srcdir)/doc/install-to-others.rd $(RD2REFENTRY_LIB) install-to-others.xml.ja
+	$(RD2) $(top_srcdir)/doc/install-to-others.rd > install-to-others.xml
+
+install-to-others.xml.ja: $(top_srcdir)/doc/install-to-others.rd.ja $(RD2REFENTRY_LIB) ja.po
+	$(RD2_JA) $(top_srcdir)/doc/install-to-others.rd.ja > install-to-others.xml.ja
 
 upload: docs
 	rm -rf tmp/

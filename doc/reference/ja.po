@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.0.7\n"
-"POT-Creation-Date: 2009-05-10 18:08+0900\n"
-"PO-Revision-Date: 2009-05-10 18:09+0900\n"
+"POT-Creation-Date: 2009-05-15 00:14+0900\n"
+"PO-Revision-Date: 2009-05-15 00:17+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -28,90 +28,98 @@ msgid "Introduction"
 msgstr "はじめに"
 
 #: cutter-docs.sgml:14(title)
+msgid "Overview of Cutter"
+msgstr "Cutterの概要"
+
+#: cutter-docs.sgml:21(title)
+msgid "Install Cutter to your platform"
+msgstr "プラットフォーム毎のCutterのインストール方法"
+
+#: cutter-docs.sgml:27(title)
 msgid "Getting start"
 msgstr "はじめよう"
 
-#: cutter-docs.sgml:24(title)
+#: cutter-docs.sgml:33(title)
 msgid "Reference"
 msgstr "リファレンス"
 
-#: cutter-docs.sgml:26(title)
+#: cutter-docs.sgml:35(title)
 msgid "Command"
 msgstr "コマンド"
 
-#: cutter-docs.sgml:30(title)
+#: cutter-docs.sgml:39(title)
 msgid "Writing test"
 msgstr "テスト作成"
 
-#: cutter-docs.sgml:50(title)
+#: cutter-docs.sgml:59(title)
 msgid "Writing assertion"
 msgstr "検証作成"
 
-#: cutter-docs.sgml:92(title)
+#: cutter-docs.sgml:101(title)
 msgid "Index of all symbols"
 msgstr "すべてのシンボル一覧"
 
-#: cutter-docs.sgml:95(title)
+#: cutter-docs.sgml:104(title)
 msgid "Index of deprecated symbols"
 msgstr "非推奨のシンボル一覧"
 
-#: cutter-docs.sgml:98(title)
+#: cutter-docs.sgml:107(title)
 msgid "Index of new symbols in 1.0.7"
 msgstr "1.0.7での新しいシンボル一覧"
 
-#: cutter-docs.sgml:101(title)
+#: cutter-docs.sgml:110(title)
 msgid "Index of new symbols in 1.0.6"
 msgstr "1.0.6での新しいシンボル一覧"
 
-#: cutter-docs.sgml:104(title)
+#: cutter-docs.sgml:113(title)
 msgid "Index of new symbols in 1.0.5"
 msgstr "1.0.5での新しいシンボル一覧"
 
-#: cutter-docs.sgml:107(title)
+#: cutter-docs.sgml:116(title)
 msgid "Index of new symbols in 1.0.4"
 msgstr "1.0.4での新しいシンボル一覧"
 
-#: cutter-docs.sgml:110(title)
+#: cutter-docs.sgml:119(title)
 msgid "Index of new symbols in 1.0.3"
 msgstr "1.0.3での新しいシンボル一覧"
 
-#: cutter-docs.sgml:113(title)
+#: cutter-docs.sgml:122(title)
 msgid "Index of new symbols in 1.0.2"
 msgstr "1.0.2での新しいシンボル一覧"
 
-#: cutter-docs.sgml:116(title)
+#: cutter-docs.sgml:125(title)
 msgid "Index of new symbols in 1.0.1"
 msgstr "1.0.1での新しいシンボル一覧"
 
-#: cutter-docs.sgml:119(title)
+#: cutter-docs.sgml:128(title)
 msgid "Index of new symbols in 1.0"
 msgstr "1.0での新しいシンボル一覧"
 
-#: cutter-docs.sgml:122(title)
+#: cutter-docs.sgml:131(title)
 msgid "Index of new symbols in 0.9"
 msgstr "0.9での新しいシンボル一覧"
 
-#: cutter-docs.sgml:125(title)
+#: cutter-docs.sgml:134(title)
 msgid "Index of new symbols in 0.8"
 msgstr "0.8での新しいシンボル一覧"
 
-#: cutter-docs.sgml:128(title)
+#: cutter-docs.sgml:137(title)
 msgid "Index of new symbols in 0.7"
 msgstr "0.7での新しいシンボル一覧"
 
-#: cutter-docs.sgml:131(title)
+#: cutter-docs.sgml:140(title)
 msgid "Index of new symbols in 0.6"
 msgstr "0.6での新しいシンボル一覧"
 
-#: cutter-docs.sgml:134(title)
+#: cutter-docs.sgml:143(title)
 msgid "Index of new symbols in 0.5"
 msgstr "0.5での新しいシンボル一覧"
 
-#: cutter-docs.sgml:137(title)
+#: cutter-docs.sgml:146(title)
 msgid "Index of new symbols in 0.4"
 msgstr "0.4での新しいシンボル一覧"
 
-#: cutter-docs.sgml:140(title)
+#: cutter-docs.sgml:149(title)
 msgid "Index of new symbols in 0.3"
 msgstr "0.3での新しいシンボル一覧"
 
@@ -124,148 +132,148 @@ msgstr "0.3での新しいシンボル一覧"
 msgid "C"
 msgstr ""
 
-#: xml/api-index-0.3.xml:7(link) xml/api-index-full.xml:80(link)
+#: xml/api-index-0.3.xml:7(link) xml/api-index-full.xml:81(link)
 #: xml/cut-assertions.xml:64(link) xml/cut-assertions.xml:525(primary)
 msgid "cut_assert_equal_string_with_free"
 msgstr ""
 
-#: xml/api-index-0.3.xml:8(link) xml/api-index-full.xml:99(link)
+#: xml/api-index-0.3.xml:8(link) xml/api-index-full.xml:100(link)
 #: xml/cut-assertions.xml:33(link) xml/cut-assertions.xml:281(primary)
 msgid "cut_assert_null_string"
 msgstr ""
 
 #: xml/api-index-0.8.xml:7(link) xml/api-index-deprecated.xml:8(link)
-#: xml/api-index-full.xml:68(link) xml/gcut-assertions.xml:42(link)
+#: xml/api-index-full.xml:69(link) xml/gcut-assertions.xml:42(link)
 #: xml/gcut-assertions.xml:278(primary)
 msgid "cut_assert_equal_g_list_int"
 msgstr ""
 
 #: xml/api-index-0.8.xml:8(link) xml/api-index-deprecated.xml:9(link)
-#: xml/api-index-full.xml:69(link) xml/gcut-assertions.xml:51(link)
+#: xml/api-index-full.xml:70(link) xml/gcut-assertions.xml:51(link)
 #: xml/gcut-assertions.xml:342(primary)
 msgid "cut_assert_equal_g_list_string"
 msgstr ""
 
-#: xml/api-index-0.8.xml:9(link) xml/api-index-full.xml:83(link)
+#: xml/api-index-0.8.xml:9(link) xml/api-index-full.xml:84(link)
 #: xml/cut-assertions.xml:98(link) xml/cut-assertions.xml:903(primary)
 msgid "cut_assert_errno"
 msgstr ""
 
-#: xml/api-index-0.8.xml:10(link) xml/api-index-full.xml:167(link)
+#: xml/api-index-0.8.xml:10(link) xml/api-index-full.xml:172(link)
 #: xml/cut-experimental.xml:21(link) xml/cut-experimental.xml:48(primary)
 msgid "cut_fork"
 msgstr ""
 
-#: xml/api-index-0.8.xml:11(link) xml/api-index-full.xml:168(link)
+#: xml/api-index-0.8.xml:11(link) xml/api-index-full.xml:173(link)
 #: xml/cut-experimental.xml:24(link) xml/cut-experimental.xml:131(primary)
 msgid "cut_fork_get_stderr_message"
 msgstr ""
 
-#: xml/api-index-0.8.xml:12(link) xml/api-index-full.xml:169(link)
+#: xml/api-index-0.8.xml:12(link) xml/api-index-full.xml:174(link)
 #: xml/cut-experimental.xml:23(link) xml/cut-experimental.xml:104(primary)
 msgid "cut_fork_get_stdout_message"
 msgstr ""
 
-#: xml/api-index-0.8.xml:13(link) xml/api-index-full.xml:208(link)
+#: xml/api-index-0.8.xml:13(link) xml/api-index-full.xml:209(link)
 #: xml/cut-assertions.xml:129(link) xml/cut-assertions.xml:1187(primary)
 msgid "cut_omit"
 msgstr ""
 
-#: xml/api-index-0.8.xml:14(link) xml/api-index-full.xml:417(link)
+#: xml/api-index-0.8.xml:14(link) xml/api-index-full.xml:422(link)
 #: xml/cut-experimental.xml:22(link) xml/cut-experimental.xml:74(primary)
 msgid "cut_wait_process"
 msgstr ""
 
 #: xml/api-index-0.8.xml:16(title) xml/api-index-deprecated.xml:31(title)
-#: xml/api-index-full.xml:637(title)
+#: xml/api-index-full.xml:642(title)
 msgid "S"
 msgstr ""
 
 #: xml/api-index-0.8.xml:17(link) xml/api-index-deprecated.xml:33(link)
-#: xml/api-index-full.xml:639(link) xml/cutter.xml:27(link)
+#: xml/api-index-full.xml:644(link) xml/cutter.xml:27(link)
 #: xml/cutter.xml:217(primary)
 msgid "shutdown"
 msgstr ""
 
 #: xml/api-index-0.8.xml:18(link) xml/api-index-deprecated.xml:34(link)
-#: xml/api-index-full.xml:640(link) xml/cutter.xml:25(link)
+#: xml/api-index-full.xml:645(link) xml/cutter.xml:25(link)
 #: xml/cutter.xml:198(primary)
 msgid "startup"
 msgstr ""
 
-#: xml/api-index-0.9.xml:7(link) xml/api-index-full.xml:78(link)
+#: xml/api-index-0.9.xml:7(link) xml/api-index-full.xml:79(link)
 #: xml/cut-assertions.xml:88(link) xml/cut-assertions.xml:712(primary)
 msgid "cut_assert_equal_string_array_with_free"
 msgstr ""
 
-#: xml/api-index-0.9.xml:8(link) xml/api-index-full.xml:84(link)
+#: xml/api-index-0.9.xml:8(link) xml/api-index-full.xml:85(link)
 #: xml/cut-assertions.xml:25(link) xml/cut-assertions.xml:197(primary)
 msgid "cut_assert_false"
 msgstr ""
 
 #: xml/api-index-0.9.xml:9(link) xml/api-index-deprecated.xml:13(link)
-#: xml/api-index-full.xml:85(link) xml/cut-assertions.xml:99(link)
+#: xml/api-index-full.xml:86(link) xml/cut-assertions.xml:99(link)
 #: xml/cut-assertions.xml:923(primary)
 msgid "cut_assert_file_exist"
 msgstr ""
 
-#: xml/api-index-0.9.xml:10(link) xml/api-index-full.xml:108(link)
+#: xml/api-index-0.9.xml:10(link) xml/api-index-full.xml:109(link)
 #: xml/cut-assertions.xml:23(link) xml/cut-assertions.xml:180(primary)
 msgid "cut_assert_true"
 msgstr ""
 
-#: xml/api-index-1.0.2.xml:7(link) xml/api-index-full.xml:67(link)
+#: xml/api-index-1.0.2.xml:7(link) xml/api-index-full.xml:68(link)
 #: xml/cut-assertions.xml:114(link) xml/cut-assertions.xml:1067(primary)
 msgid "cut_assert_equal_fixture_data_string"
 msgstr ""
 
-#: xml/api-index-1.0.2.xml:8(link) xml/api-index-full.xml:105(link)
+#: xml/api-index-1.0.2.xml:8(link) xml/api-index-full.xml:106(link)
 #: xml/cut-assertions.xml:101(link) xml/cut-assertions.xml:948(primary)
 msgid "cut_assert_path_exist"
 msgstr ""
 
-#: xml/api-index-1.0.2.xml:9(link) xml/api-index-full.xml:106(link)
+#: xml/api-index-1.0.2.xml:9(link) xml/api-index-full.xml:107(link)
 #: xml/cut-assertions.xml:103(link) xml/cut-assertions.xml:972(primary)
 msgid "cut_assert_path_not_exist"
 msgstr ""
 
 #: xml/api-index-1.0.2.xml:10(link) xml/api-index-deprecated.xml:15(link)
-#: xml/api-index-full.xml:107(link) xml/gcut-assertions.xml:89(link)
+#: xml/api-index-full.xml:108(link) xml/gcut-assertions.xml:89(link)
 #: xml/gcut-assertions.xml:594(primary)
 msgid "cut_assert_remove_path"
 msgstr ""
 
-#: xml/api-index-1.0.2.xml:11(link) xml/api-index-full.xml:124(link)
+#: xml/api-index-1.0.2.xml:11(link) xml/api-index-full.xml:125(link)
 #: xml/cut-test-utils.xml:44(link) xml/cut-test-utils.xml:316(primary)
 msgid "cut_build_fixture_data_path"
 msgstr ""
 
-#: xml/api-index-1.0.2.xml:12(link) xml/api-index-full.xml:156(link)
+#: xml/api-index-1.0.2.xml:12(link) xml/api-index-full.xml:161(link)
 #: xml/cut-assertions.xml:120(link) xml/cut-assertions.xml:1102(primary)
 msgid "cut_error_errno"
 msgstr ""
 
-#: xml/api-index-1.0.2.xml:13(link) xml/api-index-full.xml:172(link)
+#: xml/api-index-1.0.2.xml:13(link) xml/api-index-full.xml:177(link)
 #: xml/cut-test-utils.xml:46(link) xml/cut-test-utils.xml:339(primary)
 msgid "cut_get_fixture_data_string"
 msgstr ""
 
-#: xml/api-index-1.0.2.xml:14(link) xml/api-index-full.xml:228(link)
+#: xml/api-index-1.0.2.xml:14(link) xml/api-index-full.xml:233(link)
 #: xml/cut-test-utils.xml:48(link) xml/cut-test-utils.xml:362(primary)
 msgid "cut_remove_path"
 msgstr ""
 
-#: xml/api-index-1.0.2.xml:15(link) xml/api-index-full.xml:323(link)
+#: xml/api-index-1.0.2.xml:15(link) xml/api-index-full.xml:328(link)
 #: xml/cut-test-utils.xml:42(link) xml/cut-test-utils.xml:299(primary)
 msgid "cut_set_fixture_data_dir"
 msgstr ""
 
-#: xml/api-index-1.0.3.xml:7(link) xml/api-index-full.xml:57(link)
+#: xml/api-index-1.0.3.xml:7(link) xml/api-index-full.xml:58(link)
 #: xml/cutter.xml:29(link) xml/cutter.xml:236(primary)
 msgid "cut_add_data"
 msgstr ""
 
-#: xml/api-index-1.0.3.xml:8(link) xml/api-index-full.xml:62(link)
+#: xml/api-index-1.0.3.xml:8(link) xml/api-index-full.xml:63(link)
 #: xml/cut-test-utils.xml:38(link) xml/cut-test-utils.xml:262(primary)
 msgid "cut_append_diff"
 msgstr ""
@@ -273,71 +281,71 @@ msgstr ""
 #: xml/api-index-1.0.3.xml:10(title) xml/api-index-1.0.4.xml:43(title)
 #: xml/api-index-1.0.5.xml:25(title) xml/api-index-1.0.6.xml:21(title)
 #: xml/api-index-1.0.7.xml:20(title) xml/api-index-deprecated.xml:19(title)
-#: xml/api-index-full.xml:419(title)
+#: xml/api-index-full.xml:424(title)
 msgid "G"
 msgstr ""
 
-#: xml/api-index-1.0.3.xml:11(link) xml/api-index-full.xml:453(link)
+#: xml/api-index-1.0.3.xml:11(link) xml/api-index-full.xml:458(link)
 #: xml/gcut-assertions.xml:39(link) xml/gcut-assertions.xml:257(primary)
 msgid "gcut_assert_equal_list_int"
 msgstr ""
 
-#: xml/api-index-1.0.3.xml:12(link) xml/api-index-full.xml:458(link)
+#: xml/api-index-1.0.3.xml:12(link) xml/api-index-full.xml:463(link)
 #: xml/gcut-assertions.xml:48(link) xml/gcut-assertions.xml:321(primary)
 msgid "gcut_assert_equal_list_string"
 msgstr ""
 
-#: xml/api-index-1.0.3.xml:13(link) xml/api-index-full.xml:460(link)
+#: xml/api-index-1.0.3.xml:13(link) xml/api-index-full.xml:465(link)
 #: xml/gcut-assertions.xml:45(link) xml/gcut-assertions.xml:300(primary)
 msgid "gcut_assert_equal_list_uint"
 msgstr ""
 
-#: xml/api-index-1.0.3.xml:14(link) xml/api-index-full.xml:469(link)
+#: xml/api-index-1.0.3.xml:14(link) xml/api-index-full.xml:474(link)
 #: xml/gcut-assertions.xml:22(link) xml/gcut-assertions.xml:142(primary)
 msgid "gcut_assert_equal_type"
 msgstr ""
 
-#: xml/api-index-1.0.3.xml:15(link) xml/api-index-full.xml:473(link)
+#: xml/api-index-1.0.3.xml:15(link) xml/api-index-full.xml:478(link)
 #: xml/gcut-assertions.xml:28(link) xml/gcut-assertions.xml:185(primary)
 msgid "gcut_assert_equal_value"
 msgstr ""
 
-#: xml/api-index-1.0.3.xml:16(link) xml/api-index-full.xml:475(link)
+#: xml/api-index-1.0.3.xml:16(link) xml/api-index-full.xml:480(link)
 #: xml/gcut-assertions.xml:80(link) xml/gcut-assertions.xml:523(primary)
 msgid "gcut_assert_error"
 msgstr ""
 
-#: xml/api-index-1.0.3.xml:17(link) xml/api-index-full.xml:479(link)
+#: xml/api-index-1.0.3.xml:17(link) xml/api-index-full.xml:484(link)
 #: xml/gcut-assertions.xml:87(link) xml/gcut-assertions.xml:579(primary)
 msgid "gcut_assert_remove_path"
 msgstr ""
 
-#: xml/api-index-1.0.3.xml:18(link) xml/api-index-full.xml:579(link)
+#: xml/api-index-1.0.3.xml:18(link) xml/api-index-full.xml:584(link)
 #: xml/gcut-test-utils.xml:34(link) xml/gcut-test-utils.xml:222(primary)
 msgid "gcut_list_string_free"
 msgstr ""
 
-#: xml/api-index-1.0.3.xml:19(link) xml/api-index-full.xml:581(link)
+#: xml/api-index-1.0.3.xml:19(link) xml/api-index-full.xml:586(link)
 #: xml/gcut-test-utils.xml:27(link) xml/gcut-test-utils.xml:139(primary)
 msgid "gcut_list_string_new"
 msgstr ""
 
-#: xml/api-index-1.0.3.xml:20(link) xml/api-index-full.xml:600(link)
+#: xml/api-index-1.0.3.xml:20(link) xml/api-index-full.xml:605(link)
 #: xml/gcut-test-utils.xml:23(link) xml/gcut-test-utils.xml:86(primary)
 msgid "gcut_take_error"
 msgstr ""
 
-#: xml/api-index-1.0.3.xml:21(link) xml/api-index-full.xml:602(link)
+#: xml/api-index-1.0.3.xml:21(link) xml/api-index-full.xml:607(link)
 #: xml/gcut-test-utils.xml:24(link) xml/gcut-test-utils.xml:102(primary)
 msgid "gcut_take_list"
 msgstr ""
 
-#: xml/api-index-1.0.3.xml:22(link) xml/api-index-full.xml:607(link)
+#: xml/api-index-1.0.3.xml:22(link) xml/api-index-full.xml:612(link)
 #: xml/gcut-test-utils.xml:22(link) xml/gcut-test-utils.xml:72(primary)
 msgid "gcut_take_object"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:7(link) xml/api-index-full.xml:45(link)
+#: xml/api-index-1.0.4.xml:7(link) xml/api-index-full.xml:46(link)
 #: xml/cut-multi-process.xml:22(link) xml/cut-multi-process.xml:24(link)
 #: xml/cut-multi-process.xml:25(link) xml/cut-multi-process.xml:26(link)
 #: xml/cut-multi-process.xml:27(link) xml/cut-multi-process.xml:28(link)
@@ -357,7 +365,7 @@ msgstr ""
 msgid "CutSubProcess"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:8(link) xml/api-index-full.xml:46(link)
+#: xml/api-index-1.0.4.xml:8(link) xml/api-index-full.xml:47(link)
 #: xml/cut-multi-process.xml:23(link) xml/cut-multi-process.xml:68(link)
 #: xml/cut-multi-process.xml:69(link) xml/cut-multi-process.xml:71(link)
 #: xml/cut-multi-process.xml:72(link) xml/cut-multi-process.xml:73(link)
@@ -365,579 +373,579 @@ msgstr ""
 msgid "CutSubProcessGroup"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:9(link) xml/api-index-full.xml:170(link)
+#: xml/api-index-1.0.4.xml:9(link) xml/api-index-full.xml:175(link)
 #: xml/cutter.xml:32(link) xml/cutter.xml:375(primary)
 msgid "cut_get_current_test_context"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:10(link) xml/api-index-full.xml:320(link)
+#: xml/api-index-1.0.4.xml:10(link) xml/api-index-full.xml:325(link)
 #: xml/cutter.xml:31(link) xml/cutter.xml:335(primary)
 msgid "cut_set_attributes"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:11(link) xml/api-index-full.xml:321(link)
+#: xml/api-index-1.0.4.xml:11(link) xml/api-index-full.xml:326(link)
 #: xml/cutter.xml:33(link) xml/cutter.xml:416(primary)
 msgid "cut_set_current_test_context"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:12(link) xml/api-index-full.xml:340(link)
+#: xml/api-index-1.0.4.xml:12(link) xml/api-index-full.xml:345(link)
 #: xml/cut-multi-process.xml:62(link) xml/cut-multi-process.xml:504(primary)
 msgid "cut_sub_process_get_elapsed"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:13(link) xml/api-index-full.xml:341(link)
+#: xml/api-index-1.0.4.xml:13(link) xml/api-index-full.xml:346(link)
 #: xml/cut-multi-process.xml:47(link) xml/cut-multi-process.xml:404(primary)
 msgid "cut_sub_process_get_exclude_directories"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:14(link) xml/api-index-full.xml:342(link)
+#: xml/api-index-1.0.4.xml:14(link) xml/api-index-full.xml:347(link)
 #: xml/cut-multi-process.xml:44(link) xml/cut-multi-process.xml:372(primary)
 msgid "cut_sub_process_get_exclude_files"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:15(link) xml/api-index-full.xml:343(link)
+#: xml/api-index-1.0.4.xml:15(link) xml/api-index-full.xml:348(link)
 #: xml/cut-multi-process.xml:65(link) xml/cut-multi-process.xml:547(primary)
 msgid "cut_sub_process_get_fatal_failures"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:16(link) xml/api-index-full.xml:345(link)
+#: xml/api-index-1.0.4.xml:16(link) xml/api-index-full.xml:350(link)
 #: xml/cut-multi-process.xml:38(link) xml/cut-multi-process.xml:307(primary)
 msgid "cut_sub_process_get_multi_thread"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:17(link) xml/api-index-full.xml:346(link)
+#: xml/api-index-1.0.4.xml:17(link) xml/api-index-full.xml:351(link)
 #: xml/cut-multi-process.xml:33(link) xml/cut-multi-process.xml:274(primary)
 msgid "cut_sub_process_get_source_directory"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:18(link) xml/api-index-full.xml:347(link)
+#: xml/api-index-1.0.4.xml:18(link) xml/api-index-full.xml:352(link)
 #: xml/cut-multi-process.xml:52(link) xml/cut-multi-process.xml:440(primary)
 msgid "cut_sub_process_get_target_test_case_names"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:19(link) xml/api-index-full.xml:348(link)
+#: xml/api-index-1.0.4.xml:19(link) xml/api-index-full.xml:353(link)
 #: xml/cut-multi-process.xml:57(link) xml/cut-multi-process.xml:472(primary)
 msgid "cut_sub_process_get_target_test_names"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:20(link) xml/api-index-full.xml:349(link)
+#: xml/api-index-1.0.4.xml:20(link) xml/api-index-full.xml:354(link)
 #: xml/cut-multi-process.xml:30(link) xml/cut-multi-process.xml:243(primary)
 msgid "cut_sub_process_get_test_directory"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:21(link) xml/api-index-full.xml:350(link)
+#: xml/api-index-1.0.4.xml:21(link) xml/api-index-full.xml:355(link)
 #: xml/cut-multi-process.xml:63(link) xml/cut-multi-process.xml:518(primary)
 msgid "cut_sub_process_get_total_elapsed"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:22(link) xml/api-index-full.xml:351(link)
+#: xml/api-index-1.0.4.xml:22(link) xml/api-index-full.xml:356(link)
 #: xml/cut-multi-process.xml:69(link) xml/cut-multi-process.xml:597(primary)
 msgid "cut_sub_process_group_add"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:23(link) xml/api-index-full.xml:352(link)
+#: xml/api-index-1.0.4.xml:23(link) xml/api-index-full.xml:357(link)
 #: xml/cut-multi-process.xml:71(link) xml/cut-multi-process.xml:612(primary)
 msgid "cut_sub_process_group_run"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:24(link) xml/api-index-full.xml:353(link)
+#: xml/api-index-1.0.4.xml:24(link) xml/api-index-full.xml:358(link)
 #: xml/cut-multi-process.xml:72(link) xml/cut-multi-process.xml:628(primary)
 msgid "cut_sub_process_group_run_async"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:25(link) xml/api-index-full.xml:354(link)
+#: xml/api-index-1.0.4.xml:25(link) xml/api-index-full.xml:359(link)
 #: xml/cut-multi-process.xml:73(link) xml/cut-multi-process.xml:641(primary)
 msgid "cut_sub_process_group_wait"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:26(link) xml/api-index-full.xml:355(link)
+#: xml/api-index-1.0.4.xml:26(link) xml/api-index-full.xml:360(link)
 #: xml/cut-multi-process.xml:64(link) xml/cut-multi-process.xml:532(primary)
 msgid "cut_sub_process_is_crashed"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:27(link) xml/api-index-full.xml:356(link)
+#: xml/api-index-1.0.4.xml:27(link) xml/api-index-full.xml:361(link)
 #: xml/cut-multi-process.xml:29(link) xml/cut-multi-process.xml:228(primary)
 msgid "cut_sub_process_is_running"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:28(link) xml/api-index-full.xml:357(link)
+#: xml/api-index-1.0.4.xml:28(link) xml/api-index-full.xml:362(link)
 #: xml/cut-multi-process.xml:28(link) xml/cut-multi-process.xml:212(primary)
 msgid "cut_sub_process_is_success"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:29(link) xml/api-index-full.xml:358(link)
+#: xml/api-index-1.0.4.xml:29(link) xml/api-index-full.xml:363(link)
 #: xml/cut-multi-process.xml:25(link) xml/cut-multi-process.xml:169(primary)
 msgid "cut_sub_process_run"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:30(link) xml/api-index-full.xml:359(link)
+#: xml/api-index-1.0.4.xml:30(link) xml/api-index-full.xml:364(link)
 #: xml/cut-multi-process.xml:26(link) xml/cut-multi-process.xml:184(primary)
 msgid "cut_sub_process_run_async"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:31(link) xml/api-index-full.xml:360(link)
+#: xml/api-index-1.0.4.xml:31(link) xml/api-index-full.xml:365(link)
 #: xml/cut-multi-process.xml:49(link) xml/cut-multi-process.xml:421(primary)
 msgid "cut_sub_process_set_exclude_directories"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:32(link) xml/api-index-full.xml:361(link)
+#: xml/api-index-1.0.4.xml:32(link) xml/api-index-full.xml:366(link)
 #: xml/cut-multi-process.xml:45(link) xml/cut-multi-process.xml:387(primary)
 msgid "cut_sub_process_set_exclude_files"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:33(link) xml/api-index-full.xml:362(link)
+#: xml/api-index-1.0.4.xml:33(link) xml/api-index-full.xml:367(link)
 #: xml/cut-multi-process.xml:66(link) xml/cut-multi-process.xml:564(primary)
 msgid "cut_sub_process_set_fatal_failures"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:34(link) xml/api-index-full.xml:364(link)
+#: xml/api-index-1.0.4.xml:34(link) xml/api-index-full.xml:369(link)
 #: xml/cut-multi-process.xml:39(link) xml/cut-multi-process.xml:322(primary)
 msgid "cut_sub_process_set_multi_thread"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:35(link) xml/api-index-full.xml:365(link)
+#: xml/api-index-1.0.4.xml:35(link) xml/api-index-full.xml:370(link)
 #: xml/cut-multi-process.xml:35(link) xml/cut-multi-process.xml:289(primary)
 msgid "cut_sub_process_set_source_directory"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:36(link) xml/api-index-full.xml:366(link)
+#: xml/api-index-1.0.4.xml:36(link) xml/api-index-full.xml:371(link)
 #: xml/cut-multi-process.xml:54(link) xml/cut-multi-process.xml:455(primary)
 msgid "cut_sub_process_set_target_test_case_names"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:37(link) xml/api-index-full.xml:367(link)
+#: xml/api-index-1.0.4.xml:37(link) xml/api-index-full.xml:372(link)
 #: xml/cut-multi-process.xml:59(link) xml/cut-multi-process.xml:487(primary)
 msgid "cut_sub_process_set_target_test_names"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:38(link) xml/api-index-full.xml:368(link)
+#: xml/api-index-1.0.4.xml:38(link) xml/api-index-full.xml:373(link)
 #: xml/cut-multi-process.xml:31(link) xml/cut-multi-process.xml:257(primary)
 msgid "cut_sub_process_set_test_directory"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:39(link) xml/api-index-full.xml:369(link)
+#: xml/api-index-1.0.4.xml:39(link) xml/api-index-full.xml:374(link)
 #: xml/cut-multi-process.xml:27(link) xml/cut-multi-process.xml:196(primary)
 msgid "cut_sub_process_wait"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:40(link) xml/api-index-full.xml:376(link)
+#: xml/api-index-1.0.4.xml:40(link) xml/api-index-full.xml:381(link)
 #: xml/cut-multi-process.xml:24(link) xml/cut-multi-process.xml:153(primary)
 msgid "cut_take_new_sub_process"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:41(link) xml/api-index-full.xml:377(link)
+#: xml/api-index-1.0.4.xml:41(link) xml/api-index-full.xml:382(link)
 #: xml/cut-multi-process.xml:68(link) xml/cut-multi-process.xml:585(primary)
 msgid "cut_take_new_sub_process_group"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:44(link) xml/api-index-full.xml:443(link)
+#: xml/api-index-1.0.4.xml:44(link) xml/api-index-full.xml:448(link)
 #: xml/gcut-assertions.xml:76(link) xml/gcut-assertions.xml:501(primary)
 msgid "gcut_assert_equal_hash_table_string_string"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:45(link) xml/api-index-full.xml:467(link)
+#: xml/api-index-1.0.4.xml:45(link) xml/api-index-full.xml:472(link)
 #: xml/gcut-assertions.xml:91(link) xml/gcut-assertions.xml:610(primary)
 msgid "gcut_assert_equal_time_val"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:46(link) xml/api-index-full.xml:548(link)
+#: xml/api-index-1.0.4.xml:46(link) xml/api-index-full.xml:553(link)
 #: xml/gcut-test-utils.xml:35(link) xml/gcut-test-utils.xml:233(primary)
 msgid "gcut_hash_table_string_string_new"
 msgstr ""
 
-#: xml/api-index-1.0.4.xml:47(link) xml/api-index-full.xml:601(link)
+#: xml/api-index-1.0.4.xml:47(link) xml/api-index-full.xml:606(link)
 #: xml/gcut-test-utils.xml:26(link) xml/gcut-test-utils.xml:123(primary)
 msgid "gcut_take_hash_table"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:7(link) xml/api-index-full.xml:101(link)
+#: xml/api-index-1.0.5.xml:7(link) xml/api-index-full.xml:102(link)
 #: xml/cut-assertions.xml:96(link) xml/cut-assertions.xml:847(primary)
 msgid "cut_assert_operator_double"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:8(link) xml/api-index-full.xml:103(link)
+#: xml/api-index-1.0.5.xml:8(link) xml/api-index-full.xml:104(link)
 #: xml/cut-assertions.xml:95(link) xml/cut-assertions.xml:819(primary)
 msgid "cut_assert_operator_size"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:9(link) xml/api-index-full.xml:104(link)
+#: xml/api-index-1.0.5.xml:9(link) xml/api-index-full.xml:105(link)
 #: xml/cut-assertions.xml:94(link) xml/cut-assertions.xml:791(primary)
 msgid "cut_assert_operator_uint"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:10(link) xml/api-index-full.xml:153(link)
+#: xml/api-index-1.0.5.xml:10(link) xml/api-index-full.xml:158(link)
 #: xml/cut-test-utils.xml:54(link) xml/cut-test-utils.xml:417(primary)
 msgid "cut_equal_double"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:11(link) xml/api-index-full.xml:154(link)
+#: xml/api-index-1.0.5.xml:11(link) xml/api-index-full.xml:159(link)
 #: xml/cut-test-utils.xml:52(link) xml/cut-test-utils.xml:397(primary)
 msgid "cut_equal_string"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:12(link) xml/api-index-full.xml:344(link)
+#: xml/api-index-1.0.5.xml:12(link) xml/api-index-full.xml:349(link)
 #: xml/cut-multi-process.xml:41(link) xml/cut-multi-process.xml:338(primary)
 msgid "cut_sub_process_get_max_threads"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:13(link) xml/api-index-full.xml:363(link)
+#: xml/api-index-1.0.5.xml:13(link) xml/api-index-full.xml:368(link)
 #: xml/cut-multi-process.xml:42(link) xml/cut-multi-process.xml:354(primary)
 msgid "cut_sub_process_set_max_threads"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:14(link) xml/api-index-full.xml:372(link)
+#: xml/api-index-1.0.5.xml:14(link) xml/api-index-full.xml:377(link)
 #: xml/cut-test-utils.xml:21(link) xml/cut-test-utils.xml:86(primary)
 msgid "cut_take"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:15(link) xml/api-index-full.xml:374(link)
+#: xml/api-index-1.0.5.xml:15(link) xml/api-index-full.xml:379(link)
 #: xml/cut-test-utils.xml:28(link) xml/cut-test-utils.xml:170(primary)
 msgid "cut_take_memdup"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:16(link) xml/api-index-full.xml:375(link)
+#: xml/api-index-1.0.5.xml:16(link) xml/api-index-full.xml:380(link)
 #: xml/cut-test-utils.xml:23(link) xml/cut-test-utils.xml:105(primary)
 msgid "cut_take_memory"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:17(link) xml/api-index-full.xml:381(link)
+#: xml/api-index-1.0.5.xml:17(link) xml/api-index-full.xml:386(link)
 #: xml/cut-test-utils.xml:25(link) xml/cut-test-utils.xml:134(primary)
 msgid "cut_take_strdup"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:18(link) xml/api-index-full.xml:384(link)
+#: xml/api-index-1.0.5.xml:18(link) xml/api-index-full.xml:389(link)
 #: xml/cut-test-utils.xml:26(link) xml/cut-test-utils.xml:149(primary)
 msgid "cut_take_strndup"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:19(link) xml/api-index-full.xml:398(link)
+#: xml/api-index-1.0.5.xml:19(link) xml/api-index-full.xml:403(link)
 #: xml/cut-helper.xml:23(link) xml/cut-helper.xml:132(primary)
 msgid "cut_test_fail"
 msgstr ""
 
 #: xml/api-index-1.0.5.xml:20(link) xml/api-index-deprecated.xml:17(link)
-#: xml/api-index-full.xml:399(link) xml/cut-helper.xml:25(link)
+#: xml/api-index-full.xml:404(link) xml/cut-helper.xml:25(link)
 #: xml/cut-helper.xml:151(primary)
 msgid "cut_test_fail_va_list"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:21(link) xml/api-index-full.xml:403(link)
+#: xml/api-index-1.0.5.xml:21(link) xml/api-index-full.xml:408(link)
 #: xml/cut-helper.xml:22(link) xml/cut-helper.xml:124(primary)
 msgid "cut_test_pass"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:22(link) xml/api-index-full.xml:410(link)
+#: xml/api-index-1.0.5.xml:22(link) xml/api-index-full.xml:415(link)
 #: xml/cut-helper.xml:30(link) xml/cut-helper.xml:274(primary)
 msgid "cut_trace"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:23(link) xml/api-index-full.xml:411(link)
+#: xml/api-index-1.0.5.xml:23(link) xml/api-index-full.xml:416(link)
 #: xml/cut-helper.xml:31(link) xml/cut-helper.xml:341(primary)
 msgid "cut_trace_with_info_expression"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:26(link) xml/api-index-full.xml:435(link)
+#: xml/api-index-1.0.5.xml:26(link) xml/api-index-full.xml:440(link)
 #: xml/gcut-assertions.xml:94(link) xml/gcut-assertions.xml:631(primary)
 msgid "gcut_assert_equal_enum"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:27(link) xml/api-index-full.xml:437(link)
+#: xml/api-index-1.0.5.xml:27(link) xml/api-index-full.xml:442(link)
 #: xml/gcut-assertions.xml:84(link) xml/gcut-assertions.xml:558(primary)
 msgid "gcut_assert_equal_error"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:28(link) xml/api-index-full.xml:439(link)
+#: xml/api-index-1.0.5.xml:28(link) xml/api-index-full.xml:444(link)
 #: xml/gcut-assertions.xml:98(link) xml/gcut-assertions.xml:665(primary)
 msgid "gcut_assert_equal_flags"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:29(link) xml/api-index-full.xml:445(link)
+#: xml/api-index-1.0.5.xml:29(link) xml/api-index-full.xml:450(link)
 #: xml/gcut-assertions.xml:109(link) xml/gcut-assertions.xml:780(primary)
 msgid "gcut_assert_equal_int64"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:30(link) xml/api-index-full.xml:448(link)
+#: xml/api-index-1.0.5.xml:30(link) xml/api-index-full.xml:453(link)
 #: xml/gcut-assertions.xml:62(link) xml/gcut-assertions.xml:415(primary)
 msgid "gcut_assert_equal_list_enum"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:31(link) xml/api-index-full.xml:450(link)
+#: xml/api-index-1.0.5.xml:31(link) xml/api-index-full.xml:455(link)
 #: xml/gcut-assertions.xml:66(link) xml/gcut-assertions.xml:441(primary)
 msgid "gcut_assert_equal_list_flags"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:32(link) xml/api-index-full.xml:455(link)
+#: xml/api-index-1.0.5.xml:32(link) xml/api-index-full.xml:460(link)
 #: xml/gcut-assertions.xml:54(link) xml/gcut-assertions.xml:364(primary)
 msgid "gcut_assert_equal_list_object"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:33(link) xml/api-index-full.xml:456(link)
+#: xml/api-index-1.0.5.xml:33(link) xml/api-index-full.xml:461(link)
 #: xml/gcut-assertions.xml:57(link) xml/gcut-assertions.xml:386(primary)
 msgid "gcut_assert_equal_list_object_custom"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:34(link) xml/api-index-full.xml:462(link)
+#: xml/api-index-1.0.5.xml:34(link) xml/api-index-full.xml:467(link)
 #: xml/gcut-assertions.xml:102(link) xml/gcut-assertions.xml:704(primary)
 msgid "gcut_assert_equal_object"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:35(link) xml/api-index-full.xml:463(link)
+#: xml/api-index-1.0.5.xml:35(link) xml/api-index-full.xml:468(link)
 #: xml/gcut-assertions.xml:105(link) xml/gcut-assertions.xml:736(primary)
 msgid "gcut_assert_equal_object_custom"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:36(link) xml/api-index-full.xml:471(link)
+#: xml/api-index-1.0.5.xml:36(link) xml/api-index-full.xml:476(link)
 #: xml/gcut-assertions.xml:112(link) xml/gcut-assertions.xml:801(primary)
 msgid "gcut_assert_equal_uint64"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:37(link) xml/api-index-full.xml:536(link)
+#: xml/api-index-1.0.5.xml:37(link) xml/api-index-full.xml:541(link)
 #: xml/gcut-enum.xml:25(link) xml/gcut-enum.xml:105(primary)
 msgid "gcut_enum_inspect"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:38(link) xml/api-index-full.xml:538(link)
+#: xml/api-index-1.0.5.xml:38(link) xml/api-index-full.xml:543(link)
 #: xml/gcut-error.xml:22(link) xml/gcut-error.xml:53(primary)
 msgid "gcut_error_equal"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:39(link) xml/api-index-full.xml:540(link)
+#: xml/api-index-1.0.5.xml:39(link) xml/api-index-full.xml:545(link)
 #: xml/gcut-error.xml:24(link) xml/gcut-error.xml:72(primary)
 msgid "gcut_error_inspect"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:40(link) xml/api-index-full.xml:542(link)
+#: xml/api-index-1.0.5.xml:40(link) xml/api-index-full.xml:547(link)
 #: xml/gcut-enum.xml:30(link) xml/gcut-enum.xml:149(primary)
 msgid "gcut_flags_inspect"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:41(link) xml/api-index-full.xml:544(link)
+#: xml/api-index-1.0.5.xml:41(link) xml/api-index-full.xml:549(link)
 #: xml/gcut-hash-table.xml:22(link) xml/gcut-hash-table.xml:61(primary)
 msgid "gcut_hash_table_equal"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:42(link) xml/api-index-full.xml:545(link)
+#: xml/api-index-1.0.5.xml:42(link) xml/api-index-full.xml:550(link)
 #: xml/gcut-hash-table.xml:25(link) xml/gcut-hash-table.xml:93(primary)
 msgid "gcut_hash_table_inspect"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:43(link) xml/api-index-full.xml:546(link)
+#: xml/api-index-1.0.5.xml:43(link) xml/api-index-full.xml:551(link)
 #: xml/gcut-hash-table.xml:29(link) xml/gcut-hash-table.xml:128(primary)
 msgid "gcut_hash_table_string_equal"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:44(link) xml/api-index-full.xml:547(link)
+#: xml/api-index-1.0.5.xml:44(link) xml/api-index-full.xml:552(link)
 #: xml/gcut-hash-table.xml:31(link) xml/gcut-hash-table.xml:149(primary)
 msgid "gcut_hash_table_string_string_inspect"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:45(link) xml/api-index-full.xml:549(link)
+#: xml/api-index-1.0.5.xml:45(link) xml/api-index-full.xml:554(link)
 #: xml/gcut-test-utils.xml:37(link) xml/gcut-test-utils.xml:257(primary)
 msgid "gcut_hash_table_string_string_new_va_list"
 msgstr ""
 
 #: xml/api-index-1.0.5.xml:46(link) xml/api-index-deprecated.xml:20(link)
-#: xml/api-index-full.xml:562(link) xml/gcut-list.xml:49(link)
+#: xml/api-index-full.xml:567(link) xml/gcut-list.xml:49(link)
 #: xml/gcut-list.xml:399(primary)
 msgid "gcut_list_enum_inspect"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:47(link) xml/api-index-full.xml:563(link)
+#: xml/api-index-1.0.5.xml:47(link) xml/api-index-full.xml:568(link)
 #: xml/gcut-list.xml:22(link) xml/gcut-list.xml:79(primary)
 msgid "gcut_list_equal"
 msgstr ""
 
 #: xml/api-index-1.0.5.xml:48(link) xml/api-index-deprecated.xml:21(link)
-#: xml/api-index-full.xml:567(link) xml/gcut-list.xml:50(link)
+#: xml/api-index-full.xml:572(link) xml/gcut-list.xml:50(link)
 #: xml/gcut-list.xml:416(primary)
 msgid "gcut_list_flags_inspect"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:49(link) xml/api-index-full.xml:568(link)
+#: xml/api-index-1.0.5.xml:49(link) xml/api-index-full.xml:573(link)
 #: xml/gcut-list.xml:25(link) xml/gcut-list.xml:109(primary)
 msgid "gcut_list_inspect"
 msgstr ""
 
 #: xml/api-index-1.0.5.xml:50(link) xml/api-index-deprecated.xml:22(link)
-#: xml/api-index-full.xml:575(link) xml/gcut-list.xml:42(link)
+#: xml/api-index-full.xml:580(link) xml/gcut-list.xml:42(link)
 #: xml/gcut-list.xml:299(primary)
 msgid "gcut_list_int_equal"
 msgstr ""
 
 #: xml/api-index-1.0.5.xml:51(link) xml/api-index-deprecated.xml:23(link)
-#: xml/api-index-full.xml:576(link) xml/gcut-list.xml:43(link)
+#: xml/api-index-full.xml:581(link) xml/gcut-list.xml:43(link)
 #: xml/gcut-list.xml:315(primary)
 msgid "gcut_list_int_inspect"
 msgstr ""
 
 #: xml/api-index-1.0.5.xml:52(link) xml/api-index-deprecated.xml:24(link)
-#: xml/api-index-full.xml:577(link) xml/gcut-list.xml:48(link)
+#: xml/api-index-full.xml:582(link) xml/gcut-list.xml:48(link)
 #: xml/gcut-list.xml:386(primary)
 msgid "gcut_list_object_inspect"
 msgstr ""
 
 #: xml/api-index-1.0.5.xml:53(link) xml/api-index-deprecated.xml:25(link)
-#: xml/api-index-full.xml:578(link) xml/gcut-list.xml:46(link)
+#: xml/api-index-full.xml:583(link) xml/gcut-list.xml:46(link)
 #: xml/gcut-list.xml:357(primary)
 msgid "gcut_list_string_equal"
 msgstr ""
 
 #: xml/api-index-1.0.5.xml:54(link) xml/api-index-deprecated.xml:26(link)
-#: xml/api-index-full.xml:580(link) xml/gcut-list.xml:47(link)
+#: xml/api-index-full.xml:585(link) xml/gcut-list.xml:47(link)
 #: xml/gcut-list.xml:373(primary)
 msgid "gcut_list_string_inspect"
 msgstr ""
 
 #: xml/api-index-1.0.5.xml:55(link) xml/api-index-deprecated.xml:27(link)
-#: xml/api-index-full.xml:583(link) xml/gcut-list.xml:44(link)
+#: xml/api-index-full.xml:588(link) xml/gcut-list.xml:44(link)
 #: xml/gcut-list.xml:328(primary)
 msgid "gcut_list_uint_equal"
 msgstr ""
 
 #: xml/api-index-1.0.5.xml:56(link) xml/api-index-deprecated.xml:28(link)
-#: xml/api-index-full.xml:584(link) xml/gcut-list.xml:45(link)
+#: xml/api-index-full.xml:589(link) xml/gcut-list.xml:45(link)
 #: xml/gcut-list.xml:344(primary)
 msgid "gcut_list_uint_inspect"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:57(link) xml/api-index-full.xml:585(link)
+#: xml/api-index-1.0.5.xml:57(link) xml/api-index-full.xml:590(link)
 #: xml/gcut-object.xml:22(link) xml/gcut-object.xml:57(primary)
 msgid "gcut_object_equal"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:58(link) xml/api-index-full.xml:586(link)
+#: xml/api-index-1.0.5.xml:58(link) xml/api-index-full.xml:591(link)
 #: xml/gcut-object.xml:25(link) xml/gcut-object.xml:83(primary)
 msgid "gcut_object_inspect"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:59(link) xml/api-index-full.xml:587(link)
+#: xml/api-index-1.0.5.xml:59(link) xml/api-index-full.xml:592(link)
 #: xml/gcut-object.xml:26(link) xml/gcut-object.xml:98(primary)
 msgid "gcut_object_inspect_custom"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:60(link) xml/api-index-full.xml:603(link)
+#: xml/api-index-1.0.5.xml:60(link) xml/api-index-full.xml:608(link)
 #: xml/gcut-test-utils.xml:40(link) xml/gcut-test-utils.xml:282(primary)
 msgid "gcut_take_new_hash_table_string_string"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:61(link) xml/api-index-full.xml:604(link)
+#: xml/api-index-1.0.5.xml:61(link) xml/api-index-full.xml:609(link)
 #: xml/gcut-test-utils.xml:30(link) xml/gcut-test-utils.xml:173(primary)
 msgid "gcut_take_new_list_string"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:62(link) xml/api-index-full.xml:609(link)
+#: xml/api-index-1.0.5.xml:62(link) xml/api-index-full.xml:614(link)
 #: xml/gcut-value-equal.xml:22(link) xml/gcut-value-equal.xml:55(primary)
 msgid "gcut_value_equal"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:63(link) xml/api-index-full.xml:612(link)
+#: xml/api-index-1.0.5.xml:63(link) xml/api-index-full.xml:617(link)
 #: xml/gcut-value-equal.xml:24(link) xml/gcut-value-equal.xml:76(primary)
 msgid "gcut_value_register_equal_func"
 msgstr ""
 
-#: xml/api-index-1.0.5.xml:64(link) xml/api-index-full.xml:614(link)
+#: xml/api-index-1.0.5.xml:64(link) xml/api-index-full.xml:619(link)
 #: xml/gdkcut-pixbuf-assertions.xml:22(link)
 #: xml/gdkcut-pixbuf-assertions.xml:48(primary)
 msgid "gdkcut_pixbuf_assert_equal"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:7(link) xml/api-index-full.xml:75(link)
+#: xml/api-index-1.0.6.xml:7(link) xml/api-index-full.xml:76(link)
 #: xml/cut-assertions.xml:47(link) xml/cut-assertions.xml:387(primary)
 msgid "cut_assert_equal_size"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:8(link) xml/api-index-full.xml:184(link)
+#: xml/api-index-1.0.6.xml:8(link) xml/api-index-full.xml:185(link)
 #: xml/cutter.xml:38(link) xml/cutter.xml:459(primary)
 msgid "cut_keep_message"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:9(link) xml/api-index-full.xml:215(link)
+#: xml/api-index-1.0.6.xml:9(link) xml/api-index-full.xml:220(link)
 #: xml/cut-helper.xml:29(link) xml/cut-helper.xml:263(primary)
 msgid "cut_pop_backtrace"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:10(link) xml/api-index-full.xml:225(link)
+#: xml/api-index-1.0.6.xml:10(link) xml/api-index-full.xml:230(link)
 #: xml/cut-helper.xml:28(link) xml/cut-helper.xml:247(primary)
 msgid "cut_push_backtrace"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:11(link) xml/api-index-full.xml:227(link)
+#: xml/api-index-1.0.6.xml:11(link) xml/api-index-full.xml:232(link)
 #: xml/cut-helper.xml:27(link) xml/cut-helper.xml:185(title)
 #: xml/cut-helper.xml:186(primary)
 msgid "CUT_RELATIVE_PATH"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:12(link) xml/api-index-full.xml:240(link)
+#: xml/api-index-1.0.6.xml:12(link) xml/api-index-full.xml:245(link)
 #: xml/cut-assertions.xml:131(link) xml/cut-assertions.xml:1209(primary)
 msgid "cut_return"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:13(link) xml/api-index-full.xml:319(link)
+#: xml/api-index-1.0.6.xml:13(link) xml/api-index-full.xml:324(link)
 #: xml/cutter.xml:22(link) xml/cutter.xml:168(primary)
 msgid "cut_setup"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:14(link) xml/api-index-full.xml:324(link)
+#: xml/api-index-1.0.6.xml:14(link) xml/api-index-full.xml:329(link)
 #: xml/cutter.xml:34(link) xml/cutter.xml:429(primary)
 msgid "cut_set_message"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:15(link) xml/api-index-full.xml:325(link)
+#: xml/api-index-1.0.6.xml:15(link) xml/api-index-full.xml:330(link)
 #: xml/cutter.xml:36(link) xml/cutter.xml:444(primary)
 msgid "cut_set_message_va_list"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:16(link) xml/api-index-full.xml:326(link)
+#: xml/api-index-1.0.6.xml:16(link) xml/api-index-full.xml:331(link)
 #: xml/cutter.xml:28(link) xml/cutter.xml:227(primary)
 msgid "cut_shutdown"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:17(link) xml/api-index-full.xml:327(link)
+#: xml/api-index-1.0.6.xml:17(link) xml/api-index-full.xml:332(link)
 #: xml/cutter.xml:26(link) xml/cutter.xml:208(primary)
 msgid "cut_startup"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:18(link) xml/api-index-full.xml:379(link)
+#: xml/api-index-1.0.6.xml:18(link) xml/api-index-full.xml:384(link)
 #: xml/cut-test-utils.xml:35(link) xml/cut-test-utils.xml:239(primary)
 msgid "cut_take_replace"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:19(link) xml/api-index-full.xml:385(link)
+#: xml/api-index-1.0.6.xml:19(link) xml/api-index-full.xml:390(link)
 #: xml/cutter.xml:24(link) xml/cutter.xml:188(primary)
 msgid "cut_teardown"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:22(link) xml/api-index-full.xml:425(link)
+#: xml/api-index-1.0.6.xml:22(link) xml/api-index-full.xml:430(link)
 #: xml/gcut-egg.xml:599(primary)
 msgid "GCutEgg::error"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:23(link) xml/api-index-full.xml:426(link)
+#: xml/api-index-1.0.6.xml:23(link) xml/api-index-full.xml:431(link)
 #: xml/gcut-egg.xml:616(primary)
 msgid "GCutEgg::error-received"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:24(link) xml/api-index-full.xml:427(link)
+#: xml/api-index-1.0.6.xml:24(link) xml/api-index-full.xml:432(link)
 #: xml/gcut-egg.xml:645(primary)
 msgid "GCutEgg::output-received"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:25(link) xml/api-index-full.xml:428(link)
+#: xml/api-index-1.0.6.xml:25(link) xml/api-index-full.xml:433(link)
 #: xml/gcut-egg.xml:673(primary)
 msgid "GCutEgg::reaped"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:26(link) xml/api-index-full.xml:430(link)
+#: xml/api-index-1.0.6.xml:26(link) xml/api-index-full.xml:435(link)
 #: xml/gcut-egg.xml:24(link) xml/gcut-egg.xml:185(primary)
 msgid "GCutEggError"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:27(link) xml/api-index-full.xml:431(link)
+#: xml/api-index-1.0.6.xml:27(link) xml/api-index-full.xml:436(link)
 #: xml/gcut-enum.xml:24(link) xml/gcut-enum.xml:82(primary)
 msgid "GCutEnumError"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:28(link) xml/api-index-full.xml:432(link)
+#: xml/api-index-1.0.6.xml:28(link) xml/api-index-full.xml:437(link)
 #: xml/gcut-assertions-helper.xml:32(link)
 #: xml/gcut-assertions-helper.xml:71(link)
 #: xml/gcut-assertions-helper.xml:72(link) xml/gcut-assertions.xml:37(link)
@@ -948,431 +956,431 @@ msgstr ""
 msgid "GCutInspectFunction"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:29(link) xml/api-index-full.xml:433(link)
+#: xml/api-index-1.0.6.xml:29(link) xml/api-index-full.xml:438(link)
 #: xml/gcutter.xml:21(link) xml/gcutter.xml:74(title)
 #: xml/gcutter.xml:75(primary)
 msgid "GCUTTER_ENABLED"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:30(link) xml/api-index-full.xml:434(link)
+#: xml/api-index-1.0.6.xml:30(link) xml/api-index-full.xml:439(link)
 #: xml/gcut-data.xml:22(link) xml/gcut-data.xml:67(primary)
 msgid "gcut_add_datum"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:31(link) xml/api-index-full.xml:441(link)
+#: xml/api-index-1.0.6.xml:31(link) xml/api-index-full.xml:446(link)
 #: xml/gcut-assertions.xml:70(link) xml/gcut-assertions.xml:467(primary)
 msgid "gcut_assert_equal_hash_table"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:32(link) xml/api-index-full.xml:447(link)
+#: xml/api-index-1.0.6.xml:32(link) xml/api-index-full.xml:452(link)
 #: xml/gcut-assertions.xml:34(link) xml/gcut-assertions.xml:228(primary)
 msgid "gcut_assert_equal_list"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:33(link) xml/api-index-full.xml:465(link)
+#: xml/api-index-1.0.6.xml:33(link) xml/api-index-full.xml:470(link)
 #: xml/gcut-assertions.xml:115(link) xml/gcut-assertions.xml:822(primary)
 msgid "gcut_assert_equal_pid"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:34(link) xml/api-index-full.xml:483(link)
+#: xml/api-index-1.0.6.xml:34(link) xml/api-index-full.xml:488(link)
 #: xml/gcut-data.xml:35(link) xml/gcut-data.xml:342(primary)
 msgid "gcut_data_get_enum"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:35(link) xml/api-index-full.xml:485(link)
+#: xml/api-index-1.0.6.xml:35(link) xml/api-index-full.xml:490(link)
 #: xml/gcut-data.xml:33(link) xml/gcut-data.xml:323(primary)
 msgid "gcut_data_get_flags"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:36(link) xml/api-index-full.xml:487(link)
+#: xml/api-index-1.0.6.xml:36(link) xml/api-index-full.xml:492(link)
 #: xml/gcut-data.xml:27(link) xml/gcut-data.xml:268(primary)
 msgid "gcut_data_get_int"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:37(link) xml/api-index-full.xml:489(link)
+#: xml/api-index-1.0.6.xml:37(link) xml/api-index-full.xml:494(link)
 #: xml/gcut-data.xml:37(link) xml/gcut-data.xml:361(primary)
 msgid "gcut_data_get_pointer"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:38(link) xml/api-index-full.xml:491(link)
+#: xml/api-index-1.0.6.xml:38(link) xml/api-index-full.xml:496(link)
 #: xml/gcut-data.xml:25(link) xml/gcut-data.xml:250(primary)
 msgid "gcut_data_get_string"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:39(link) xml/api-index-full.xml:493(link)
+#: xml/api-index-1.0.6.xml:39(link) xml/api-index-full.xml:498(link)
 #: xml/gcut-data.xml:31(link) xml/gcut-data.xml:305(primary)
 msgid "gcut_data_get_type"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:40(link) xml/api-index-full.xml:495(link)
+#: xml/api-index-1.0.6.xml:40(link) xml/api-index-full.xml:500(link)
 #: xml/gcut-data.xml:29(link) xml/gcut-data.xml:286(primary)
 msgid "gcut_data_get_uint"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:41(link) xml/api-index-full.xml:512(link)
+#: xml/api-index-1.0.6.xml:41(link) xml/api-index-full.xml:517(link)
 #: xml/gcut-egg.xml:43(link) xml/gcut-egg.xml:409(primary)
 msgid "gcut_egg_close"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:42(link) xml/api-index-full.xml:515(link)
+#: xml/api-index-1.0.6.xml:42(link) xml/api-index-full.xml:520(link)
 #: xml/gcut-egg.xml:40(link) xml/gcut-egg.xml:374(primary)
 msgid "gcut_egg_get_env"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:43(link) xml/api-index-full.xml:516(link)
+#: xml/api-index-1.0.6.xml:43(link) xml/api-index-full.xml:521(link)
 #: xml/gcut-egg.xml:56(link) xml/gcut-egg.xml:538(primary)
 msgid "gcut_egg_get_error"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:44(link) xml/api-index-full.xml:517(link)
+#: xml/api-index-1.0.6.xml:44(link) xml/api-index-full.xml:522(link)
 #: xml/gcut-egg.xml:36(link) xml/gcut-egg.xml:340(primary)
 msgid "gcut_egg_get_flags"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:45(link) xml/api-index-full.xml:518(link)
+#: xml/api-index-1.0.6.xml:45(link) xml/api-index-full.xml:523(link)
 #: xml/gcut-egg.xml:57(link) xml/gcut-egg.xml:554(primary)
 msgid "gcut_egg_get_forced_termination_wait_time"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:46(link) xml/api-index-full.xml:519(link)
+#: xml/api-index-1.0.6.xml:46(link) xml/api-index-full.xml:524(link)
 #: xml/gcut-egg.xml:54(link) xml/gcut-egg.xml:506(primary)
 msgid "gcut_egg_get_input"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:47(link) xml/api-index-full.xml:520(link)
+#: xml/api-index-1.0.6.xml:47(link) xml/api-index-full.xml:525(link)
 #: xml/gcut-egg.xml:55(link) xml/gcut-egg.xml:522(primary)
 msgid "gcut_egg_get_output"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:48(link) xml/api-index-full.xml:521(link)
+#: xml/api-index-1.0.6.xml:48(link) xml/api-index-full.xml:526(link)
 #: xml/gcut-egg.xml:48(link) xml/gcut-egg.xml:447(primary)
 msgid "gcut_egg_get_pid"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:49(link) xml/api-index-full.xml:522(link)
+#: xml/api-index-1.0.6.xml:49(link) xml/api-index-full.xml:527(link)
 #: xml/gcut-egg.xml:41(link) xml/gcut-egg.xml:391(primary)
 msgid "gcut_egg_hatch"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:50(link) xml/api-index-full.xml:523(link)
+#: xml/api-index-1.0.6.xml:50(link) xml/api-index-full.xml:528(link)
 #: xml/gcut-egg.xml:52(link) xml/gcut-egg.xml:491(primary)
 msgid "gcut_egg_kill"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:51(link) xml/api-index-full.xml:524(link)
+#: xml/api-index-1.0.6.xml:51(link) xml/api-index-full.xml:529(link)
 #: xml/gcut-egg.xml:26(link) xml/gcut-egg.xml:240(primary)
 msgid "gcut_egg_new"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:52(link) xml/api-index-full.xml:525(link)
+#: xml/api-index-1.0.6.xml:52(link) xml/api-index-full.xml:530(link)
 #: xml/gcut-egg.xml:30(link) xml/gcut-egg.xml:276(primary)
 msgid "gcut_egg_new_argv"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:53(link) xml/api-index-full.xml:526(link)
+#: xml/api-index-1.0.6.xml:53(link) xml/api-index-full.xml:531(link)
 #: xml/gcut-egg.xml:33(link) xml/gcut-egg.xml:310(primary)
 msgid "gcut_egg_new_array"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:54(link) xml/api-index-full.xml:527(link)
+#: xml/api-index-1.0.6.xml:54(link) xml/api-index-full.xml:532(link)
 #: xml/gcut-egg.xml:32(link) xml/gcut-egg.xml:295(primary)
 msgid "gcut_egg_new_strings"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:55(link) xml/api-index-full.xml:528(link)
+#: xml/api-index-1.0.6.xml:55(link) xml/api-index-full.xml:533(link)
 #: xml/gcut-egg.xml:28(link) xml/gcut-egg.xml:258(primary)
 msgid "gcut_egg_new_va_list"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:56(link) xml/api-index-full.xml:529(link)
+#: xml/api-index-1.0.6.xml:56(link) xml/api-index-full.xml:534(link)
 #: xml/gcut-egg.xml:37(link) xml/gcut-egg.xml:354(primary)
 msgid "gcut_egg_set_env"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:57(link) xml/api-index-full.xml:530(link)
+#: xml/api-index-1.0.6.xml:57(link) xml/api-index-full.xml:535(link)
 #: xml/gcut-egg.xml:34(link) xml/gcut-egg.xml:325(primary)
 msgid "gcut_egg_set_flags"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:58(link) xml/api-index-full.xml:531(link)
+#: xml/api-index-1.0.6.xml:58(link) xml/api-index-full.xml:536(link)
 #: xml/gcut-egg.xml:59(link) xml/gcut-egg.xml:571(primary)
 msgid "gcut_egg_set_forced_termination_wait_time"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:59(link) xml/api-index-full.xml:532(link)
+#: xml/api-index-1.0.6.xml:59(link) xml/api-index-full.xml:537(link)
 #: xml/gcut-egg.xml:49(link) xml/gcut-egg.xml:463(primary)
 msgid "gcut_egg_wait"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:60(link) xml/api-index-full.xml:533(link)
+#: xml/api-index-1.0.6.xml:60(link) xml/api-index-full.xml:538(link)
 #: xml/gcut-egg.xml:44(link) xml/gcut-egg.xml:421(primary)
 msgid "gcut_egg_write"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:61(link) xml/api-index-full.xml:534(link)
+#: xml/api-index-1.0.6.xml:61(link) xml/api-index-full.xml:539(link)
 #: xml/gcut-enum.xml:22(link) xml/gcut-enum.xml:64(title)
 #: xml/gcut-enum.xml:65(primary)
 msgid "GCUT_ENUM_ERROR"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:62(link) xml/api-index-full.xml:537(link)
+#: xml/api-index-1.0.6.xml:62(link) xml/api-index-full.xml:542(link)
 #: xml/gcut-enum.xml:27(link) xml/gcut-enum.xml:124(primary)
 msgid "gcut_enum_parse"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:63(link) xml/api-index-full.xml:541(link)
+#: xml/api-index-1.0.6.xml:63(link) xml/api-index-full.xml:546(link)
 #: xml/gcut-enum.xml:35(link) xml/gcut-enum.xml:194(primary)
 msgid "gcut_flags_get_all"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:64(link) xml/api-index-full.xml:543(link)
+#: xml/api-index-1.0.6.xml:64(link) xml/api-index-full.xml:548(link)
 #: xml/gcut-enum.xml:32(link) xml/gcut-enum.xml:168(primary)
 msgid "gcut_flags_parse"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:65(link) xml/api-index-full.xml:551(link)
+#: xml/api-index-1.0.6.xml:65(link) xml/api-index-full.xml:556(link)
 #: xml/gcut-inspect.xml:22(link) xml/gcut-inspect.xml:71(primary)
 msgid "gcut_inspect_direct"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:66(link) xml/api-index-full.xml:552(link)
+#: xml/api-index-1.0.6.xml:66(link) xml/api-index-full.xml:557(link)
 #: xml/gcut-inspect.xml:40(link) xml/gcut-inspect.xml:227(primary)
 msgid "gcut_inspect_enum"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:67(link) xml/api-index-full.xml:553(link)
+#: xml/api-index-1.0.6.xml:67(link) xml/api-index-full.xml:558(link)
 #: xml/gcut-inspect.xml:37(link) xml/gcut-inspect.xml:196(primary)
 msgid "gcut_inspect_flags"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:68(link) xml/api-index-full.xml:554(link)
+#: xml/api-index-1.0.6.xml:68(link) xml/api-index-full.xml:559(link)
 #: xml/gcut-inspect.xml:25(link) xml/gcut-inspect.xml:96(primary)
 msgid "gcut_inspect_int"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:69(link) xml/api-index-full.xml:555(link)
+#: xml/api-index-1.0.6.xml:69(link) xml/api-index-full.xml:560(link)
 #: xml/gcut-inspect.xml:43(link) xml/gcut-inspect.xml:258(primary)
 msgid "gcut_inspect_pointer"
 msgstr "gcut_inspect_pointer"
 
-#: xml/api-index-1.0.6.xml:70(link) xml/api-index-full.xml:556(link)
+#: xml/api-index-1.0.6.xml:70(link) xml/api-index-full.xml:561(link)
 #: xml/gcut-inspect.xml:31(link) xml/gcut-inspect.xml:146(primary)
 msgid "gcut_inspect_string"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:71(link) xml/api-index-full.xml:557(link)
+#: xml/api-index-1.0.6.xml:71(link) xml/api-index-full.xml:562(link)
 #: xml/gcut-inspect.xml:34(link) xml/gcut-inspect.xml:171(primary)
 msgid "gcut_inspect_type"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:72(link) xml/api-index-full.xml:558(link)
+#: xml/api-index-1.0.6.xml:72(link) xml/api-index-full.xml:563(link)
 #: xml/gcut-inspect.xml:28(link) xml/gcut-inspect.xml:121(primary)
 msgid "gcut_inspect_uint"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:73(link) xml/api-index-full.xml:564(link)
+#: xml/api-index-1.0.6.xml:73(link) xml/api-index-full.xml:569(link)
 #: xml/gcut-list.xml:28(link) xml/gcut-list.xml:139(primary)
 msgid "gcut_list_equal_int"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:74(link) xml/api-index-full.xml:565(link)
+#: xml/api-index-1.0.6.xml:74(link) xml/api-index-full.xml:570(link)
 #: xml/gcut-list.xml:34(link) xml/gcut-list.xml:209(primary)
 msgid "gcut_list_equal_string"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:75(link) xml/api-index-full.xml:566(link)
+#: xml/api-index-1.0.6.xml:75(link) xml/api-index-full.xml:571(link)
 #: xml/gcut-list.xml:31(link) xml/gcut-list.xml:174(primary)
 msgid "gcut_list_equal_uint"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:76(link) xml/api-index-full.xml:569(link)
+#: xml/api-index-1.0.6.xml:76(link) xml/api-index-full.xml:574(link)
 #: xml/gcut-list.xml:38(link) xml/gcut-list.xml:259(primary)
 msgid "gcut_list_inspect_enum"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:77(link) xml/api-index-full.xml:570(link)
+#: xml/api-index-1.0.6.xml:77(link) xml/api-index-full.xml:575(link)
 #: xml/gcut-list.xml:40(link) xml/gcut-list.xml:279(primary)
 msgid "gcut_list_inspect_flags"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:78(link) xml/api-index-full.xml:571(link)
+#: xml/api-index-1.0.6.xml:78(link) xml/api-index-full.xml:576(link)
 #: xml/gcut-list.xml:30(link) xml/gcut-list.xml:159(primary)
 msgid "gcut_list_inspect_int"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:79(link) xml/api-index-full.xml:572(link)
+#: xml/api-index-1.0.6.xml:79(link) xml/api-index-full.xml:577(link)
 #: xml/gcut-list.xml:37(link) xml/gcut-list.xml:244(primary)
 msgid "gcut_list_inspect_object"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:80(link) xml/api-index-full.xml:573(link)
+#: xml/api-index-1.0.6.xml:80(link) xml/api-index-full.xml:578(link)
 #: xml/gcut-list.xml:36(link) xml/gcut-list.xml:229(primary)
 msgid "gcut_list_inspect_string"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:81(link) xml/api-index-full.xml:574(link)
+#: xml/api-index-1.0.6.xml:81(link) xml/api-index-full.xml:579(link)
 #: xml/gcut-list.xml:33(link) xml/gcut-list.xml:194(primary)
 msgid "gcut_list_inspect_uint"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:82(link) xml/api-index-full.xml:582(link)
+#: xml/api-index-1.0.6.xml:82(link) xml/api-index-full.xml:587(link)
 #: xml/gcut-test-utils.xml:29(link) xml/gcut-test-utils.xml:158(primary)
 msgid "gcut_list_string_new_array"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:83(link) xml/api-index-full.xml:605(link)
+#: xml/api-index-1.0.6.xml:83(link) xml/api-index-full.xml:610(link)
 #: xml/gcut-test-utils.xml:33(link) xml/gcut-test-utils.xml:206(primary)
 msgid "gcut_take_new_list_string_array"
 msgstr ""
 
-#: xml/api-index-1.0.6.xml:84(link) xml/api-index-full.xml:613(link)
+#: xml/api-index-1.0.6.xml:84(link) xml/api-index-full.xml:618(link)
 #: xml/gdkcutter-pixbuf.xml:21(link) xml/gdkcutter-pixbuf.xml:76(title)
 #: xml/gdkcutter-pixbuf.xml:77(primary)
 msgid "GDKCUTTER_PIXBUF_ENABLED"
 msgstr ""
 
-#: xml/api-index-1.0.7.xml:7(link) xml/api-index-full.xml:47(link)
+#: xml/api-index-1.0.7.xml:7(link) xml/api-index-full.xml:48(link)
 #: xml/cut-version.xml:25(link) xml/cut-version.xml:85(primary)
 msgid "CUTTER_CHECK_VERSION"
 msgstr ""
 
-#: xml/api-index-1.0.7.xml:8(link) xml/api-index-full.xml:65(link)
+#: xml/api-index-1.0.7.xml:8(link) xml/api-index-full.xml:66(link)
 #: xml/cut-assertions.xml:27(link) xml/cut-assertions.xml:214(primary)
 msgid "cut_assert_equal_boolean"
 msgstr ""
 
-#: xml/api-index-1.0.7.xml:9(link) xml/api-index-full.xml:81(link)
+#: xml/api-index-1.0.7.xml:9(link) xml/api-index-full.xml:82(link)
 #: xml/cut-assertions.xml:70(link) xml/cut-assertions.xml:573(primary)
 msgid "cut_assert_equal_substring"
 msgstr ""
 
-#: xml/api-index-1.0.7.xml:10(link) xml/api-index-full.xml:89(link)
+#: xml/api-index-1.0.7.xml:10(link) xml/api-index-full.xml:90(link)
 #: xml/cut-assertions.xml:29(link) xml/cut-assertions.xml:239(primary)
 msgid "cut_assert_not_equal_boolean"
 msgstr ""
 
-#: xml/api-index-1.0.7.xml:11(link) xml/api-index-full.xml:90(link)
+#: xml/api-index-1.0.7.xml:11(link) xml/api-index-full.xml:91(link)
 #: xml/cut-assertions.xml:56(link) xml/cut-assertions.xml:448(primary)
 msgid "cut_assert_not_equal_double"
 msgstr ""
 
-#: xml/api-index-1.0.7.xml:12(link) xml/api-index-full.xml:91(link)
+#: xml/api-index-1.0.7.xml:12(link) xml/api-index-full.xml:92(link)
 #: xml/cut-assertions.xml:40(link) xml/cut-assertions.xml:336(primary)
 msgid "cut_assert_not_equal_int"
 msgstr ""
 
-#: xml/api-index-1.0.7.xml:13(link) xml/api-index-full.xml:92(link)
+#: xml/api-index-1.0.7.xml:13(link) xml/api-index-full.xml:93(link)
 #: xml/cut-assertions.xml:81(link) xml/cut-assertions.xml:666(primary)
 msgid "cut_assert_not_equal_memory"
 msgstr ""
 
-#: xml/api-index-1.0.7.xml:14(link) xml/api-index-full.xml:93(link)
+#: xml/api-index-1.0.7.xml:14(link) xml/api-index-full.xml:94(link)
 #: xml/cut-assertions.xml:50(link) xml/cut-assertions.xml:408(primary)
 msgid "cut_assert_not_equal_size"
 msgstr ""
 
-#: xml/api-index-1.0.7.xml:15(link) xml/api-index-full.xml:94(link)
+#: xml/api-index-1.0.7.xml:15(link) xml/api-index-full.xml:95(link)
 #: xml/cut-assertions.xml:62(link) xml/cut-assertions.xml:499(primary)
 msgid "cut_assert_not_equal_string"
 msgstr ""
 
-#: xml/api-index-1.0.7.xml:16(link) xml/api-index-full.xml:95(link)
+#: xml/api-index-1.0.7.xml:16(link) xml/api-index-full.xml:96(link)
 #: xml/cut-assertions.xml:73(link) xml/cut-assertions.xml:605(primary)
 msgid "cut_assert_not_equal_substring"
 msgstr ""
 
-#: xml/api-index-1.0.7.xml:17(link) xml/api-index-full.xml:96(link)
+#: xml/api-index-1.0.7.xml:17(link) xml/api-index-full.xml:97(link)
 #: xml/cut-assertions.xml:45(link) xml/cut-assertions.xml:372(primary)
 msgid "cut_assert_not_equal_uint"
 msgstr ""
 
-#: xml/api-index-1.0.7.xml:18(link) xml/api-index-full.xml:125(link)
+#: xml/api-index-1.0.7.xml:18(link) xml/api-index-full.xml:126(link)
 #: xml/cut-test-utils.xml:50(link) xml/cut-test-utils.xml:379(primary)
 msgid "cut_build_path"
 msgstr ""
 
-#: xml/api-index-1.0.7.xml:21(link) xml/api-index-full.xml:477(link)
+#: xml/api-index-1.0.7.xml:21(link) xml/api-index-full.xml:482(link)
 #: xml/gcut-assertions.xml:117(link) xml/gcut-assertions.xml:837(primary)
 msgid "gcut_assert_not_equal_pid"
 msgstr ""
 
-#: xml/api-index-1.0.7.xml:22(link) xml/api-index-full.xml:481(link)
+#: xml/api-index-1.0.7.xml:22(link) xml/api-index-full.xml:486(link)
 #: xml/gcut-data.xml:39(link) xml/gcut-data.xml:380(primary)
 msgid "gcut_data_get_boxed"
 msgstr ""
 
-#: xml/api-index-1.0.7.xml:23(link) xml/api-index-full.xml:539(link)
+#: xml/api-index-1.0.7.xml:23(link) xml/api-index-full.xml:544(link)
 #: xml/gcut-types.xml:25(link) xml/gcut-types.xml:79(primary)
 msgid "gcut_error_get_type"
 msgstr ""
 
-#: xml/api-index-1.0.7.xml:24(link) xml/api-index-full.xml:608(link)
+#: xml/api-index-1.0.7.xml:24(link) xml/api-index-full.xml:613(link)
 #: xml/gcut-types.xml:24(link) xml/gcut-types.xml:70(title)
 #: xml/gcut-types.xml:71(primary)
 msgid "GCUT_TYPE_ERROR"
 msgstr ""
 
-#: xml/api-index-1.0.xml:7(link) xml/api-index-full.xml:74(link)
+#: xml/api-index-1.0.xml:7(link) xml/api-index-full.xml:75(link)
 #: xml/cut-assertions.xml:111(link) xml/cut-assertions.xml:1046(primary)
 msgid "cut_assert_equal_pointer"
 msgstr ""
 
 #: xml/api-index-1.0.xml:8(link) xml/api-index-deprecated.xml:14(link)
-#: xml/api-index-full.xml:86(link) xml/gcut-assertions.xml:82(link)
+#: xml/api-index-full.xml:87(link) xml/gcut-assertions.xml:82(link)
 #: xml/gcut-assertions.xml:540(primary)
 msgid "cut_assert_g_error"
 msgstr ""
 
-#: xml/api-index-1.0.xml:9(link) xml/api-index-full.xml:87(link)
+#: xml/api-index-1.0.xml:9(link) xml/api-index-full.xml:88(link)
 #: xml/cut-assertions.xml:105(link) xml/cut-assertions.xml:996(primary)
 msgid "cut_assert_match"
 msgstr ""
 
-#: xml/api-index-1.0.xml:10(link) xml/api-index-full.xml:88(link)
+#: xml/api-index-1.0.xml:10(link) xml/api-index-full.xml:89(link)
 #: xml/cut-assertions.xml:108(link) xml/cut-assertions.xml:1024(primary)
 msgid "cut_assert_match_with_free"
 msgstr ""
 
-#: xml/api-index-deprecated.xml:7(link) xml/api-index-full.xml:58(link)
+#: xml/api-index-deprecated.xml:7(link) xml/api-index-full.xml:59(link)
 #: xml/cutter.xml:30(link) xml/cutter.xml:322(primary)
 msgid "cut_add_data_backward_compatibility"
 msgstr ""
 
-#: xml/api-index-deprecated.xml:10(link) xml/api-index-full.xml:70(link)
+#: xml/api-index-deprecated.xml:10(link) xml/api-index-full.xml:71(link)
 #: xml/gcut-assertions.xml:25(link) xml/gcut-assertions.xml:163(primary)
 msgid "cut_assert_equal_g_type"
 msgstr ""
 
-#: xml/api-index-deprecated.xml:11(link) xml/api-index-full.xml:71(link)
+#: xml/api-index-deprecated.xml:11(link) xml/api-index-full.xml:72(link)
 #: xml/gcut-assertions.xml:31(link) xml/gcut-assertions.xml:206(primary)
 msgid "cut_assert_equal_g_value"
 msgstr ""
 
-#: xml/api-index-deprecated.xml:12(link) xml/api-index-full.xml:79(link)
+#: xml/api-index-deprecated.xml:12(link) xml/api-index-full.xml:80(link)
 #: xml/cut-assertions.xml:67(link) xml/cut-assertions.xml:550(primary)
 msgid "cut_assert_equal_string_or_null"
 msgstr ""
 
-#: xml/api-index-deprecated.xml:16(link) xml/api-index-full.xml:210(link)
+#: xml/api-index-deprecated.xml:16(link) xml/api-index-full.xml:211(link)
 #: xml/cut-assertions.xml:125(link) xml/cut-assertions.xml:1155(primary)
 msgid "cut_pending"
 msgstr ""
 
-#: xml/api-index-deprecated.xml:29(link) xml/api-index-full.xml:606(link)
+#: xml/api-index-deprecated.xml:29(link) xml/api-index-full.xml:611(link)
 #: xml/gcut-test-utils.xml:32(link) xml/gcut-test-utils.xml:193(primary)
 msgid "gcut_take_new_list_string_backward_compatibility"
 msgstr ""
 
-#: xml/api-index-deprecated.xml:32(link) xml/api-index-full.xml:638(link)
+#: xml/api-index-deprecated.xml:32(link) xml/api-index-full.xml:643(link)
 #: xml/cutter.xml:21(link) xml/cutter.xml:158(primary)
 msgid "setup"
 msgstr ""
 
-#: xml/api-index-deprecated.xml:36(title) xml/api-index-full.xml:642(title)
+#: xml/api-index-deprecated.xml:36(title) xml/api-index-full.xml:647(title)
 msgid "T"
 msgstr ""
 
-#: xml/api-index-deprecated.xml:37(link) xml/api-index-full.xml:643(link)
+#: xml/api-index-deprecated.xml:37(link) xml/api-index-full.xml:648(link)
 #: xml/cutter.xml:23(link) xml/cutter.xml:177(primary)
 msgid "teardown"
 msgstr ""
@@ -1464,7 +1472,15 @@ msgstr ""
 msgid "CutDiffer"
 msgstr ""
 
-#: xml/api-index-full.xml:17(link)
+#: xml/api-index-full.xml:17(link) xml/cut-elf-loader.xml:7(refentrytitle)
+#: xml/cut-elf-loader.xml:13(refname) xml/cut-elf-loader.xml:21(link)
+#: xml/cut-elf-loader.xml:22(link) xml/cut-elf-loader.xml:23(link)
+#: xml/cut-elf-loader.xml:24(link) xml/cut-elf-loader.xml:25(link)
+#: xml/cut-elf-loader.xml:46(title) xml/cut-elf-loader.xml:47(primary)
+msgid "CutELFLoader"
+msgstr ""
+
+#: xml/api-index-full.xml:18(link)
 #: xml/cut-factory-builder.xml:7(refentrytitle)
 #: xml/cut-factory-builder.xml:13(refname)
 #: xml/cut-factory-builder.xml:21(link) xml/cut-factory-builder.xml:22(link)
@@ -1475,7 +1491,7 @@ msgstr ""
 msgid "CutFactoryBuilder"
 msgstr ""
 
-#: xml/api-index-full.xml:18(link)
+#: xml/api-index-full.xml:19(link)
 #: xml/cut-file-stream-reader.xml:7(refentrytitle)
 #: xml/cut-file-stream-reader.xml:13(refname)
 #: xml/cut-file-stream-reader.xml:22(link)
@@ -1484,20 +1500,9 @@ msgstr ""
 msgid "CutFileStreamReader"
 msgstr ""
 
-#: xml/api-index-full.xml:19(link) xml/cut-file-stream-reader.xml:23(link)
+#: xml/api-index-full.xml:20(link) xml/cut-file-stream-reader.xml:23(link)
 #: xml/cut-file-stream-reader.xml:61(primary)
 msgid "CutFileStreamReaderError"
-msgstr ""
-
-#: xml/api-index-full.xml:20(link)
-#: xml/cut-image-hlp-loader.xml:7(refentrytitle)
-#: xml/cut-image-hlp-loader.xml:13(refname)
-#: xml/cut-image-hlp-loader.xml:21(link) xml/cut-image-hlp-loader.xml:22(link)
-#: xml/cut-image-hlp-loader.xml:23(link) xml/cut-image-hlp-loader.xml:25(link)
-#: xml/cut-image-hlp-loader.xml:27(link)
-#: xml/cut-image-hlp-loader.xml:48(title)
-#: xml/cut-image-hlp-loader.xml:49(primary)
-msgid "CutImageHlpLoader"
 msgstr ""
 
 #: xml/api-index-full.xml:21(link) xml/cut-iterated-test.xml:7(refentrytitle)
@@ -1543,18 +1548,26 @@ msgstr ""
 msgid "CutOrder"
 msgstr ""
 
-#: xml/api-index-full.xml:27(link) xml/cut-pipeline.xml:7(refentrytitle)
+#: xml/api-index-full.xml:27(link) xml/cut-pe-loader.xml:7(refentrytitle)
+#: xml/cut-pe-loader.xml:13(refname) xml/cut-pe-loader.xml:21(link)
+#: xml/cut-pe-loader.xml:22(link) xml/cut-pe-loader.xml:23(link)
+#: xml/cut-pe-loader.xml:24(link) xml/cut-pe-loader.xml:25(link)
+#: xml/cut-pe-loader.xml:46(title) xml/cut-pe-loader.xml:47(primary)
+msgid "CutPELoader"
+msgstr ""
+
+#: xml/api-index-full.xml:28(link) xml/cut-pipeline.xml:7(refentrytitle)
 #: xml/cut-pipeline.xml:13(refname) xml/cut-pipeline.xml:22(link)
 #: xml/cut-pipeline.xml:53(title) xml/cut-pipeline.xml:54(primary)
 msgid "CutPipeline"
 msgstr ""
 
-#: xml/api-index-full.xml:28(link) xml/cut-pipeline.xml:23(link)
+#: xml/api-index-full.xml:29(link) xml/cut-pipeline.xml:23(link)
 #: xml/cut-pipeline.xml:62(primary)
 msgid "CutPipelineError"
 msgstr ""
 
-#: xml/api-index-full.xml:29(link) xml/cut-process.xml:7(refentrytitle)
+#: xml/api-index-full.xml:30(link) xml/cut-process.xml:7(refentrytitle)
 #: xml/cut-process.xml:13(refname) xml/cut-process.xml:21(link)
 #: xml/cut-process.xml:22(link) xml/cut-process.xml:23(link)
 #: xml/cut-process.xml:24(link) xml/cut-process.xml:26(link)
@@ -1565,7 +1578,7 @@ msgstr ""
 msgid "CutProcess"
 msgstr ""
 
-#: xml/api-index-full.xml:30(link) xml/cut-report.xml:7(refentrytitle)
+#: xml/api-index-full.xml:31(link) xml/cut-report.xml:7(refentrytitle)
 #: xml/cut-report.xml:13(refname) xml/cut-report.xml:21(link)
 #: xml/cut-report.xml:22(link) xml/cut-report.xml:25(link)
 #: xml/cut-report.xml:26(link) xml/cut-report.xml:27(link)
@@ -1577,7 +1590,7 @@ msgstr ""
 msgid "CutReport"
 msgstr ""
 
-#: xml/api-index-full.xml:31(link)
+#: xml/api-index-full.xml:32(link)
 #: xml/cut-report-factory-builder.xml:7(refentrytitle)
 #: xml/cut-report-factory-builder.xml:13(refname)
 #: xml/cut-report-factory-builder.xml:21(link)
@@ -1586,7 +1599,7 @@ msgstr ""
 msgid "CutReportFactoryBuilder"
 msgstr ""
 
-#: xml/api-index-full.xml:32(link) xml/cut-cairo-pie-chart.xml:26(link)
+#: xml/api-index-full.xml:33(link) xml/cut-cairo-pie-chart.xml:26(link)
 #: xml/cut-file-stream-reader.xml:25(link) xml/cut-listener.xml:22(link)
 #: xml/cut-listener.xml:25(link) xml/cut-main.xml:28(link)
 #: xml/cut-main.xml:29(link) xml/cut-pipeline.xml:25(link)
@@ -1629,18 +1642,18 @@ msgstr ""
 msgid "CutRunContext"
 msgstr ""
 
-#: xml/api-index-full.xml:33(link) xml/cut-runner.xml:21(link)
+#: xml/api-index-full.xml:34(link) xml/cut-runner.xml:21(link)
 #: xml/cut-runner.xml:23(link) xml/cut-runner.xml:24(link)
 #: xml/cut-runner.xml:45(title) xml/cut-runner.xml:46(primary)
 msgid "CutRunner"
 msgstr ""
 
-#: xml/api-index-full.xml:34(link) xml/cut-runner.xml:22(link)
+#: xml/api-index-full.xml:35(link) xml/cut-runner.xml:22(link)
 #: xml/cut-runner.xml:50(title) xml/cut-runner.xml:51(primary)
 msgid "CutRunnerIface"
 msgstr ""
 
-#: xml/api-index-full.xml:35(link)
+#: xml/api-index-full.xml:36(link)
 #: xml/cut-sequence-matcher.xml:7(refentrytitle)
 #: xml/cut-sequence-matcher.xml:13(refname)
 #: xml/cut-sequence-matcher.xml:26(link) xml/cut-sequence-matcher.xml:38(link)
@@ -1654,7 +1667,7 @@ msgstr ""
 msgid "CutSequenceMatcher"
 msgstr ""
 
-#: xml/api-index-full.xml:36(link) xml/cut-sequence-matcher.xml:21(link)
+#: xml/api-index-full.xml:37(link) xml/cut-sequence-matcher.xml:21(link)
 #: xml/cut-sequence-matcher.xml:27(link) xml/cut-sequence-matcher.xml:30(link)
 #: xml/cut-sequence-matcher.xml:61(link)
 #: xml/cut-sequence-matcher.xml:91(title)
@@ -1662,27 +1675,27 @@ msgstr ""
 msgid "CutSequenceMatchInfo"
 msgstr ""
 
-#: xml/api-index-full.xml:37(link) xml/cut-sequence-matcher.xml:22(link)
+#: xml/api-index-full.xml:38(link) xml/cut-sequence-matcher.xml:22(link)
 #: xml/cut-sequence-matcher.xml:31(link) xml/cut-sequence-matcher.xml:37(link)
 #: xml/cut-sequence-matcher.xml:101(title)
 #: xml/cut-sequence-matcher.xml:102(primary)
 msgid "CutSequenceMatchOperation"
 msgstr ""
 
-#: xml/api-index-full.xml:38(link) xml/cut-sequence-matcher.xml:25(link)
+#: xml/api-index-full.xml:39(link) xml/cut-sequence-matcher.xml:25(link)
 #: xml/cut-sequence-matcher.xml:32(link)
 #: xml/cut-sequence-matcher.xml:129(primary)
 msgid "CutSequenceMatchOperationType"
 msgstr ""
 
-#: xml/api-index-full.xml:39(link) xml/cut-stream.xml:7(refentrytitle)
+#: xml/api-index-full.xml:40(link) xml/cut-stream.xml:7(refentrytitle)
 #: xml/cut-stream.xml:13(refname) xml/cut-stream.xml:24(link)
 #: xml/cut-stream.xml:25(link) xml/cut-stream.xml:67(title)
 #: xml/cut-stream.xml:68(primary)
 msgid "CutStream"
 msgstr ""
 
-#: xml/api-index-full.xml:40(link)
+#: xml/api-index-full.xml:41(link)
 #: xml/cut-stream-factory-builder.xml:7(refentrytitle)
 #: xml/cut-stream-factory-builder.xml:13(refname)
 #: xml/cut-stream-factory-builder.xml:21(link)
@@ -1691,11 +1704,11 @@ msgstr ""
 msgid "CutStreamFactoryBuilder"
 msgstr ""
 
-#: xml/api-index-full.xml:41(link) xml/cut-stream.xml:49(primary)
+#: xml/api-index-full.xml:42(link) xml/cut-stream.xml:49(primary)
 msgid "CutStreamFunction"
 msgstr ""
 
-#: xml/api-index-full.xml:42(link) xml/cut-stream-parser.xml:7(refentrytitle)
+#: xml/api-index-full.xml:43(link) xml/cut-stream-parser.xml:7(refentrytitle)
 #: xml/cut-stream-parser.xml:13(refname) xml/cut-stream-parser.xml:21(link)
 #: xml/cut-stream-parser.xml:22(link) xml/cut-stream-parser.xml:23(link)
 #: xml/cut-stream-parser.xml:24(link) xml/cut-stream-parser.xml:28(link)
@@ -1703,7 +1716,7 @@ msgstr ""
 msgid "CutStreamParser"
 msgstr ""
 
-#: xml/api-index-full.xml:43(link) xml/cut-stream-reader.xml:7(refentrytitle)
+#: xml/api-index-full.xml:44(link) xml/cut-stream-reader.xml:7(refentrytitle)
 #: xml/cut-stream-reader.xml:13(refname) xml/cut-stream-reader.xml:22(link)
 #: xml/cut-stream-reader.xml:26(link) xml/cut-stream-reader.xml:29(link)
 #: xml/cut-stream-reader.xml:31(link) xml/cut-stream-reader.xml:34(link)
@@ -1711,32 +1724,32 @@ msgstr ""
 msgid "CutStreamReader"
 msgstr ""
 
-#: xml/api-index-full.xml:44(link) xml/cut-stream-reader.xml:23(link)
+#: xml/api-index-full.xml:45(link) xml/cut-stream-reader.xml:23(link)
 #: xml/cut-stream-reader.xml:70(primary)
 msgid "CutStreamReaderError"
 msgstr ""
 
-#: xml/api-index-full.xml:48(link) xml/cut-version.xml:21(link)
+#: xml/api-index-full.xml:49(link) xml/cut-version.xml:21(link)
 #: xml/cut-version.xml:51(title) xml/cut-version.xml:52(primary)
 msgid "CUTTER_VERSION_MAJOR"
 msgstr ""
 
-#: xml/api-index-full.xml:49(link) xml/cut-version.xml:23(link)
+#: xml/api-index-full.xml:50(link) xml/cut-version.xml:23(link)
 #: xml/cut-version.xml:67(title) xml/cut-version.xml:68(primary)
 msgid "CUTTER_VERSION_MICRO"
 msgstr ""
 
-#: xml/api-index-full.xml:50(link) xml/cut-version.xml:22(link)
+#: xml/api-index-full.xml:51(link) xml/cut-version.xml:22(link)
 #: xml/cut-version.xml:59(title) xml/cut-version.xml:60(primary)
 msgid "CUTTER_VERSION_MINOR"
 msgstr ""
 
-#: xml/api-index-full.xml:51(link) xml/cut-version.xml:24(link)
+#: xml/api-index-full.xml:52(link) xml/cut-version.xml:24(link)
 #: xml/cut-version.xml:75(title) xml/cut-version.xml:76(primary)
 msgid "CUTTER_VERSION_STRING"
 msgstr ""
 
-#: xml/api-index-full.xml:52(link) xml/cut-crash-backtrace.xml:32(link)
+#: xml/api-index-full.xml:53(link) xml/cut-crash-backtrace.xml:32(link)
 #: xml/cut-iterated-test.xml:25(link) xml/cut-iterated-test.xml:27(link)
 #: xml/cut-iterated-test.xml:29(link) xml/cut-test-data.xml:7(refentrytitle)
 #: xml/cut-test-data.xml:13(refname) xml/cut-test-data.xml:21(link)
@@ -1748,7 +1761,7 @@ msgstr ""
 msgid "CutTestData"
 msgstr ""
 
-#: xml/api-index-full.xml:53(link) xml/cut-crash-backtrace.xml:31(link)
+#: xml/api-index-full.xml:54(link) xml/cut-crash-backtrace.xml:31(link)
 #: xml/cut-test-iterator.xml:7(refentrytitle)
 #: xml/cut-test-iterator.xml:13(refname) xml/cut-test-iterator.xml:22(link)
 #: xml/cut-test-iterator.xml:23(link) xml/cut-test-iterator.xml:26(link)
@@ -1757,7 +1770,7 @@ msgstr ""
 msgid "CutTestIterator"
 msgstr ""
 
-#: xml/api-index-full.xml:54(link) xml/cut-test-runner.xml:7(refentrytitle)
+#: xml/api-index-full.xml:55(link) xml/cut-test-runner.xml:7(refentrytitle)
 #: xml/cut-test-runner.xml:13(refname) xml/cut-test-runner.xml:21(link)
 #: xml/cut-test-runner.xml:23(link) xml/cut-test-runner.xml:26(link)
 #: xml/cut-test-runner.xml:28(link) xml/cut-test-runner.xml:31(link)
@@ -1765,13 +1778,13 @@ msgstr ""
 msgid "CutTestRunner"
 msgstr ""
 
-#: xml/api-index-full.xml:55(link) xml/cut-ui.xml:7(refentrytitle)
+#: xml/api-index-full.xml:56(link) xml/cut-ui.xml:7(refentrytitle)
 #: xml/cut-ui.xml:13(refname) xml/cut-ui.xml:21(link) xml/cut-ui.xml:27(link)
 #: xml/cut-ui.xml:49(title) xml/cut-ui.xml:50(primary)
 msgid "CutUI"
 msgstr ""
 
-#: xml/api-index-full.xml:56(link)
+#: xml/api-index-full.xml:57(link)
 #: xml/cut-ui-factory-builder.xml:7(refentrytitle)
 #: xml/cut-ui-factory-builder.xml:13(refname)
 #: xml/cut-ui-factory-builder.xml:21(link)
@@ -1780,152 +1793,152 @@ msgstr ""
 msgid "CutUIFactoryBuilder"
 msgstr ""
 
-#: xml/api-index-full.xml:59(link) xml/cut-analyzer.xml:23(link)
+#: xml/api-index-full.xml:60(link) xml/cut-analyzer.xml:23(link)
 #: xml/cut-analyzer.xml:64(primary)
 msgid "cut_analyzer_analyze"
 msgstr ""
 
-#: xml/api-index-full.xml:60(link) xml/cut-analyzer.xml:26(link)
+#: xml/api-index-full.xml:61(link) xml/cut-analyzer.xml:26(link)
 #: xml/cut-analyzer.xml:83(primary)
 msgid "cut_analyzer_get_run_contexts"
 msgstr ""
 
-#: xml/api-index-full.xml:61(link) xml/cut-analyzer.xml:22(link)
+#: xml/api-index-full.xml:62(link) xml/cut-analyzer.xml:22(link)
 #: xml/cut-analyzer.xml:56(primary)
 msgid "cut_analyzer_new"
 msgstr ""
 
-#: xml/api-index-full.xml:63(link) xml/cut-assertions.xml:21(link)
+#: xml/api-index-full.xml:64(link) xml/cut-assertions.xml:21(link)
 #: xml/cut-assertions.xml:163(primary)
 msgid "cut_assert"
 msgstr ""
 
-#: xml/api-index-full.xml:64(link) xml/cut-assertions.xml:97(link)
+#: xml/api-index-full.xml:65(link) xml/cut-assertions.xml:97(link)
 #: xml/cut-assertions.xml:875(primary)
 msgid "cut_assert_equal"
 msgstr ""
 
-#: xml/api-index-full.xml:66(link) xml/cut-assertions.xml:52(link)
+#: xml/api-index-full.xml:67(link) xml/cut-assertions.xml:52(link)
 #: xml/cut-assertions.xml:423(primary)
 msgid "cut_assert_equal_double"
 msgstr ""
 
-#: xml/api-index-full.xml:72(link) xml/cut-assertions.xml:37(link)
+#: xml/api-index-full.xml:73(link) xml/cut-assertions.xml:37(link)
 #: xml/cut-assertions.xml:315(primary)
 msgid "cut_assert_equal_int"
 msgstr ""
 
-#: xml/api-index-full.xml:73(link) xml/cut-assertions.xml:76(link)
+#: xml/api-index-full.xml:74(link) xml/cut-assertions.xml:76(link)
 #: xml/cut-assertions.xml:636(primary)
 msgid "cut_assert_equal_memory"
 msgstr ""
 
-#: xml/api-index-full.xml:76(link) xml/cut-assertions.xml:59(link)
+#: xml/api-index-full.xml:77(link) xml/cut-assertions.xml:59(link)
 #: xml/cut-assertions.xml:467(primary)
 msgid "cut_assert_equal_string"
 msgstr ""
 
-#: xml/api-index-full.xml:77(link) xml/cut-assertions.xml:85(link)
+#: xml/api-index-full.xml:78(link) xml/cut-assertions.xml:85(link)
 #: xml/cut-assertions.xml:690(primary)
 msgid "cut_assert_equal_string_array"
 msgstr ""
 
-#: xml/api-index-full.xml:82(link) xml/cut-assertions.xml:42(link)
+#: xml/api-index-full.xml:83(link) xml/cut-assertions.xml:42(link)
 #: xml/cut-assertions.xml:351(primary)
 msgid "cut_assert_equal_uint"
 msgstr ""
 
-#: xml/api-index-full.xml:97(link) xml/cut-assertions.xml:35(link)
+#: xml/api-index-full.xml:98(link) xml/cut-assertions.xml:35(link)
 #: xml/cut-assertions.xml:298(primary)
 msgid "cut_assert_not_null"
 msgstr ""
 
-#: xml/api-index-full.xml:98(link) xml/cut-assertions.xml:31(link)
+#: xml/api-index-full.xml:99(link) xml/cut-assertions.xml:31(link)
 #: xml/cut-assertions.xml:264(primary)
 msgid "cut_assert_null"
 msgstr ""
 
-#: xml/api-index-full.xml:100(link) xml/cut-assertions.xml:92(link)
+#: xml/api-index-full.xml:101(link) xml/cut-assertions.xml:92(link)
 #: xml/cut-assertions.xml:735(primary)
 msgid "cut_assert_operator"
 msgstr ""
 
-#: xml/api-index-full.xml:102(link) xml/cut-assertions.xml:93(link)
+#: xml/api-index-full.xml:103(link) xml/cut-assertions.xml:93(link)
 #: xml/cut-assertions.xml:763(primary)
 msgid "cut_assert_operator_int"
 msgstr ""
 
-#: xml/api-index-full.xml:109(link) xml/cut-backtrace-entry.xml:43(link)
+#: xml/api-index-full.xml:110(link) xml/cut-backtrace-entry.xml:43(link)
 #: xml/cut-backtrace-entry.xml:230(primary)
 msgid "cut_backtrace_entry_format"
 msgstr ""
 
-#: xml/api-index-full.xml:110(link) xml/cut-backtrace-entry.xml:44(link)
+#: xml/api-index-full.xml:111(link) xml/cut-backtrace-entry.xml:44(link)
 #: xml/cut-backtrace-entry.xml:241(primary)
 msgid "cut_backtrace_entry_format_string"
 msgstr ""
 
-#: xml/api-index-full.xml:111(link) xml/cut-backtrace-entry.xml:27(link)
+#: xml/api-index-full.xml:112(link) xml/cut-backtrace-entry.xml:27(link)
 #: xml/cut-backtrace-entry.xml:106(primary)
 msgid "cut_backtrace_entry_get_file"
 msgstr ""
 
-#: xml/api-index-full.xml:112(link) xml/cut-backtrace-entry.xml:33(link)
+#: xml/api-index-full.xml:113(link) xml/cut-backtrace-entry.xml:33(link)
 #: xml/cut-backtrace-entry.xml:154(primary)
 msgid "cut_backtrace_entry_get_function"
 msgstr ""
 
-#: xml/api-index-full.xml:113(link) xml/cut-backtrace-entry.xml:36(link)
+#: xml/api-index-full.xml:114(link) xml/cut-backtrace-entry.xml:36(link)
 #: xml/cut-backtrace-entry.xml:178(primary)
 msgid "cut_backtrace_entry_get_info"
 msgstr ""
 
-#: xml/api-index-full.xml:114(link) xml/cut-backtrace-entry.xml:30(link)
+#: xml/api-index-full.xml:115(link) xml/cut-backtrace-entry.xml:30(link)
 #: xml/cut-backtrace-entry.xml:130(primary)
 msgid "cut_backtrace_entry_get_line"
 msgstr ""
 
-#: xml/api-index-full.xml:115(link) xml/cut-backtrace-entry.xml:22(link)
+#: xml/api-index-full.xml:116(link) xml/cut-backtrace-entry.xml:22(link)
 #: xml/cut-backtrace-entry.xml:75(primary)
 msgid "cut_backtrace_entry_new"
 msgstr ""
 
-#: xml/api-index-full.xml:116(link) xml/cut-backtrace-entry.xml:26(link)
+#: xml/api-index-full.xml:117(link) xml/cut-backtrace-entry.xml:26(link)
 #: xml/cut-backtrace-entry.xml:98(primary)
 msgid "cut_backtrace_entry_new_empty"
 msgstr ""
 
-#: xml/api-index-full.xml:117(link) xml/cut-backtrace-entry.xml:28(link)
+#: xml/api-index-full.xml:118(link) xml/cut-backtrace-entry.xml:28(link)
 #: xml/cut-backtrace-entry.xml:117(primary)
 msgid "cut_backtrace_entry_set_file"
 msgstr ""
 
-#: xml/api-index-full.xml:118(link) xml/cut-backtrace-entry.xml:34(link)
+#: xml/api-index-full.xml:119(link) xml/cut-backtrace-entry.xml:34(link)
 #: xml/cut-backtrace-entry.xml:165(primary)
 msgid "cut_backtrace_entry_set_function"
 msgstr ""
 
-#: xml/api-index-full.xml:119(link) xml/cut-backtrace-entry.xml:37(link)
+#: xml/api-index-full.xml:120(link) xml/cut-backtrace-entry.xml:37(link)
 #: xml/cut-backtrace-entry.xml:189(primary)
 msgid "cut_backtrace_entry_set_info"
 msgstr ""
 
-#: xml/api-index-full.xml:120(link) xml/cut-backtrace-entry.xml:31(link)
+#: xml/api-index-full.xml:121(link) xml/cut-backtrace-entry.xml:31(link)
 #: xml/cut-backtrace-entry.xml:141(primary)
 msgid "cut_backtrace_entry_set_line"
 msgstr ""
 
-#: xml/api-index-full.xml:121(link) xml/cut-backtrace-entry.xml:39(link)
+#: xml/api-index-full.xml:122(link) xml/cut-backtrace-entry.xml:39(link)
 #: xml/cut-backtrace-entry.xml:202(primary)
 msgid "cut_backtrace_entry_to_xml"
 msgstr ""
 
-#: xml/api-index-full.xml:122(link) xml/cut-backtrace-entry.xml:40(link)
+#: xml/api-index-full.xml:123(link) xml/cut-backtrace-entry.xml:40(link)
 #: xml/cut-backtrace-entry.xml:213(primary)
 msgid "cut_backtrace_entry_to_xml_string"
 msgstr ""
 
-#: xml/api-index-full.xml:123(link) xml/cut-assertions.xml:21(link)
+#: xml/api-index-full.xml:124(link) xml/cut-assertions.xml:21(link)
 #: xml/cut-assertions.xml:23(link) xml/cut-assertions.xml:25(link)
 #: xml/cut-assertions.xml:27(link) xml/cut-assertions.xml:28(link)
 #: xml/cut-assertions.xml:29(link) xml/cut-assertions.xml:30(link)
@@ -1940,1132 +1953,1152 @@ msgstr ""
 msgid "cut_boolean"
 msgstr ""
 
-#: xml/api-index-full.xml:126(link) xml/cut-cairo-chart-data.xml:23(link)
+#: xml/api-index-full.xml:127(link) xml/cut-cairo-chart-data.xml:23(link)
 #: xml/cut-cairo-chart-data.xml:66(primary)
 msgid "cut_cairo_chart_data_get_description"
 msgstr ""
 
-#: xml/api-index-full.xml:127(link) xml/cut-cairo-chart-data.xml:25(link)
+#: xml/api-index-full.xml:128(link) xml/cut-cairo-chart-data.xml:25(link)
 #: xml/cut-cairo-chart-data.xml:78(primary)
 msgid "cut_cairo_chart_data_get_rgb"
 msgstr ""
 
-#: xml/api-index-full.xml:128(link) xml/cut-cairo-chart-data.xml:22(link)
+#: xml/api-index-full.xml:129(link) xml/cut-cairo-chart-data.xml:22(link)
 #: xml/cut-cairo-chart-data.xml:58(primary)
 msgid "cut_cairo_chart_data_new"
 msgstr ""
 
-#: xml/api-index-full.xml:129(link) xml/cut-cairo.xml:21(link)
+#: xml/api-index-full.xml:130(link) xml/cut-cairo.xml:21(link)
 #: xml/cut-cairo.xml:47(primary)
 msgid "cut_cairo_create_pango_layout"
 msgstr ""
 
-#: xml/api-index-full.xml:130(link) xml/cut-cairo-pie-chart.xml:24(link)
+#: xml/api-index-full.xml:131(link) xml/cut-cairo-pie-chart.xml:24(link)
 #: xml/cut-cairo-pie-chart.xml:76(primary)
 msgid "cut_cairo_pie_chart_draw"
 msgstr ""
 
-#: xml/api-index-full.xml:131(link) xml/cut-cairo-pie-chart.xml:31(link)
+#: xml/api-index-full.xml:132(link) xml/cut-cairo-pie-chart.xml:31(link)
 #: xml/cut-cairo-pie-chart.xml:121(primary)
 msgid "cut_cairo_pie_chart_get_height"
 msgstr ""
 
-#: xml/api-index-full.xml:132(link) xml/cut-cairo-pie-chart.xml:27(link)
+#: xml/api-index-full.xml:133(link) xml/cut-cairo-pie-chart.xml:27(link)
 #: xml/cut-cairo-pie-chart.xml:93(primary)
 msgid "cut_cairo_pie_chart_get_size"
 msgstr ""
 
-#: xml/api-index-full.xml:133(link) xml/cut-cairo-pie-chart.xml:30(link)
+#: xml/api-index-full.xml:134(link) xml/cut-cairo-pie-chart.xml:30(link)
 #: xml/cut-cairo-pie-chart.xml:110(primary)
 msgid "cut_cairo_pie_chart_get_width"
 msgstr ""
 
-#: xml/api-index-full.xml:134(link) xml/cut-cairo-pie-chart.xml:22(link)
+#: xml/api-index-full.xml:135(link) xml/cut-cairo-pie-chart.xml:22(link)
 #: xml/cut-cairo-pie-chart.xml:61(primary)
 msgid "cut_cairo_pie_chart_new"
 msgstr ""
 
-#: xml/api-index-full.xml:135(link) xml/cut-cairo.xml:24(link)
+#: xml/api-index-full.xml:136(link) xml/cut-cairo.xml:24(link)
 #: xml/cut-cairo.xml:66(primary)
 msgid "cut_cairo_set_source_result_color"
 msgstr ""
 
-#: xml/api-index-full.xml:136(link) xml/cut-contractor.xml:24(link)
+#: xml/api-index-full.xml:137(link) xml/cut-contractor.xml:24(link)
 #: xml/cut-contractor.xml:77(primary)
 msgid "cut_contractor_build_all_factories"
 msgstr ""
 
-#: xml/api-index-full.xml:137(link) xml/cut-contractor.xml:23(link)
+#: xml/api-index-full.xml:138(link) xml/cut-contractor.xml:23(link)
 #: xml/cut-contractor.xml:66(primary)
 msgid "cut_contractor_build_factories"
 msgstr ""
 
-#: xml/api-index-full.xml:138(link) xml/cut-contractor.xml:25(link)
+#: xml/api-index-full.xml:139(link) xml/cut-contractor.xml:25(link)
 #: xml/cut-contractor.xml:88(primary)
 msgid "cut_contractor_has_builder"
 msgstr ""
 
-#: xml/api-index-full.xml:139(link) xml/cut-contractor.xml:22(link)
+#: xml/api-index-full.xml:140(link) xml/cut-contractor.xml:22(link)
 #: xml/cut-contractor.xml:58(primary)
 msgid "cut_contractor_new"
 msgstr ""
 
-#: xml/api-index-full.xml:140(link) xml/cut-contractor.xml:27(link)
+#: xml/api-index-full.xml:141(link) xml/cut-contractor.xml:27(link)
 #: xml/cut-contractor.xml:103(primary)
 msgid "cut_contractor_set_option_context"
 msgstr ""
 
-#: xml/api-index-full.xml:141(link) xml/cut-crash-backtrace.xml:28(link)
+#: xml/api-index-full.xml:142(link) xml/cut-crash-backtrace.xml:28(link)
 #: xml/cut-crash-backtrace.xml:99(primary)
 msgid "cut_crash_backtrace_emit"
 msgstr ""
 
-#: xml/api-index-full.xml:142(link) xml/cut-crash-backtrace.xml:27(link)
+#: xml/api-index-full.xml:143(link) xml/cut-crash-backtrace.xml:27(link)
 #: xml/cut-crash-backtrace.xml:90(primary)
 msgid "cut_crash_backtrace_free"
 msgstr ""
 
-#: xml/api-index-full.xml:143(link) xml/cut-crash-backtrace.xml:24(link)
+#: xml/api-index-full.xml:144(link) xml/cut-crash-backtrace.xml:24(link)
 #: xml/cut-crash-backtrace.xml:70(primary)
 msgid "cut_crash_backtrace_get_show_on_the_moment"
 msgstr ""
 
-#: xml/api-index-full.xml:144(link) xml/cut-crash-backtrace.xml:26(link)
+#: xml/api-index-full.xml:145(link) xml/cut-crash-backtrace.xml:26(link)
 #: xml/cut-crash-backtrace.xml:79(primary)
 msgid "cut_crash_backtrace_new"
 msgstr ""
 
-#: xml/api-index-full.xml:145(link) xml/cut-crash-backtrace.xml:22(link)
+#: xml/api-index-full.xml:146(link) xml/cut-crash-backtrace.xml:22(link)
 #: xml/cut-crash-backtrace.xml:60(primary)
 msgid "cut_crash_backtrace_set_show_on_the_moment"
 msgstr ""
 
-#: xml/api-index-full.xml:146(link) xml/cut-main.xml:28(link)
+#: xml/api-index-full.xml:147(link) xml/cut-main.xml:28(link)
 #: xml/cut-main.xml:102(primary)
 msgid "cut_create_run_context"
 msgstr ""
 
-#: xml/api-index-full.xml:147(link) xml/cut-listener-utils.xml:21(link)
+#: xml/api-index-full.xml:148(link) xml/cut-listener-utils.xml:21(link)
 #: xml/cut-listener-utils.xml:45(primary)
 msgid "CUT_DEFINE_ADDITIONAL_LISTENER_VARIABLES"
 msgstr ""
 
-#: xml/api-index-full.xml:148(link) xml/cut-listener-utils.xml:23(link)
+#: xml/api-index-full.xml:149(link) xml/cut-listener-utils.xml:23(link)
 #: xml/cut-listener-utils.xml:66(primary)
 msgid "CUT_DEFINE_LISTENER_MODULE"
 msgstr ""
 
-#: xml/api-index-full.xml:149(link) xml/cut-diff.xml:24(link)
+#: xml/api-index-full.xml:150(link) xml/cut-diff.xml:24(link)
 #: xml/cut-diff.xml:71(primary)
 msgid "cut_differ_diff"
 msgstr ""
 
-#: xml/api-index-full.xml:150(link) xml/cut-diff.xml:22(link)
+#: xml/api-index-full.xml:151(link) xml/cut-diff.xml:22(link)
 #: xml/cut-diff.xml:56(primary)
 msgid "cut_differ_readable_new"
 msgstr ""
 
-#: xml/api-index-full.xml:151(link) xml/cut-diff.xml:25(link)
+#: xml/api-index-full.xml:152(link) xml/cut-diff.xml:25(link)
 #: xml/cut-diff.xml:82(primary)
 msgid "cut_diff_is_interested"
 msgstr ""
 
-#: xml/api-index-full.xml:152(link) xml/cut-diff.xml:26(link)
+#: xml/api-index-full.xml:153(link) xml/cut-diff.xml:26(link)
 #: xml/cut-diff.xml:93(primary)
 msgid "cut_diff_need_fold"
 msgstr ""
 
-#: xml/api-index-full.xml:155(link) xml/cut-assertions.xml:118(link)
+#: xml/api-index-full.xml:154(link) xml/cut-elf-loader.xml:25(link)
+#: xml/cut-elf-loader.xml:88(primary)
+msgid "cut_elf_loader_collect_symbols"
+msgstr ""
+
+#: xml/api-index-full.xml:155(link) xml/cut-elf-loader.xml:23(link)
+#: xml/cut-elf-loader.xml:66(primary)
+msgid "cut_elf_loader_is_elf"
+msgstr ""
+
+#: xml/api-index-full.xml:156(link) xml/cut-elf-loader.xml:22(link)
+#: xml/cut-elf-loader.xml:55(primary)
+msgid "cut_elf_loader_new"
+msgstr ""
+
+#: xml/api-index-full.xml:157(link) xml/cut-elf-loader.xml:24(link)
+#: xml/cut-elf-loader.xml:77(primary)
+msgid "cut_elf_loader_support_attribute"
+msgstr ""
+
+#: xml/api-index-full.xml:160(link) xml/cut-assertions.xml:118(link)
 #: xml/cut-assertions.xml:1087(primary)
 msgid "cut_error"
 msgstr ""
 
-#: xml/api-index-full.xml:157(link) xml/cut-factory-builder.xml:27(link)
+#: xml/api-index-full.xml:162(link) xml/cut-factory-builder.xml:27(link)
 #: xml/cut-factory-builder.xml:94(primary)
 msgid "cut_factory_builder_build"
 msgstr ""
 
-#: xml/api-index-full.xml:158(link) xml/cut-factory-builder.xml:28(link)
+#: xml/api-index-full.xml:163(link) xml/cut-factory-builder.xml:28(link)
 #: xml/cut-factory-builder.xml:105(primary)
 msgid "cut_factory_builder_build_all"
 msgstr ""
 
-#: xml/api-index-full.xml:159(link) xml/cut-factory-builder.xml:23(link)
+#: xml/api-index-full.xml:164(link) xml/cut-factory-builder.xml:23(link)
 #: xml/cut-factory-builder.xml:69(primary)
 msgid "cut_factory_builder_get_module_dir"
 msgstr ""
 
-#: xml/api-index-full.xml:160(link) xml/cut-factory-builder.xml:22(link)
+#: xml/api-index-full.xml:165(link) xml/cut-factory-builder.xml:22(link)
 #: xml/cut-factory-builder.xml:58(primary)
 msgid "cut_factory_builder_get_type_name"
 msgstr ""
 
-#: xml/api-index-full.xml:161(link) xml/cut-factory-builder.xml:24(link)
+#: xml/api-index-full.xml:166(link) xml/cut-factory-builder.xml:24(link)
 #: xml/cut-factory-builder.xml:80(primary)
 msgid "cut_factory_builder_set_option_context"
 msgstr ""
 
-#: xml/api-index-full.xml:162(link) xml/cut-assertions.xml:121(link)
+#: xml/api-index-full.xml:167(link) xml/cut-assertions.xml:121(link)
 #: xml/cut-assertions.xml:1124(primary)
 msgid "cut_fail"
 msgstr ""
 
-#: xml/api-index-full.xml:163(link) xml/cut-types.xml:25(link)
+#: xml/api-index-full.xml:168(link) xml/cut-types.xml:25(link)
 #: xml/cut-types.xml:84(title) xml/cut-types.xml:85(primary)
 msgid "CUT_FALSE"
 msgstr ""
 
-#: xml/api-index-full.xml:164(link) xml/cut-file-stream-reader.xml:21(link)
+#: xml/api-index-full.xml:169(link) xml/cut-file-stream-reader.xml:21(link)
 #: xml/cut-file-stream-reader.xml:46(title)
 #: xml/cut-file-stream-reader.xml:47(primary)
 msgid "CUT_FILE_STREAM_READER_ERROR"
 msgstr ""
 
-#: xml/api-index-full.xml:165(link) xml/cut-file-stream-reader.xml:24(link)
+#: xml/api-index-full.xml:170(link) xml/cut-file-stream-reader.xml:24(link)
 #: xml/cut-file-stream-reader.xml:70(primary)
 msgid "cut_file_stream_reader_error_quark"
 msgstr ""
 
-#: xml/api-index-full.xml:166(link) xml/cut-file-stream-reader.xml:25(link)
+#: xml/api-index-full.xml:171(link) xml/cut-file-stream-reader.xml:25(link)
 #: xml/cut-file-stream-reader.xml:78(primary)
 msgid "cut_file_stream_reader_new"
 msgstr ""
 
-#: xml/api-index-full.xml:171(link) xml/cut-main.xml:27(link)
+#: xml/api-index-full.xml:176(link) xml/cut-main.xml:27(link)
 #: xml/cut-main.xml:94(primary)
 msgid "cut_get_cutter_command_path"
 msgstr ""
 
-#: xml/api-index-full.xml:173(link) xml/cut-image-hlp-loader.xml:26(link)
-#: xml/cut-image-hlp-loader.xml:91(primary)
-msgid "cut_image_hlp_loader_collect_symbols"
-msgstr ""
-
-#: xml/api-index-full.xml:174(link) xml/cut-image-hlp-loader.xml:23(link)
-#: xml/cut-image-hlp-loader.xml:68(primary)
-msgid "cut_image_hlp_loader_is_dll"
-msgstr ""
-
-#: xml/api-index-full.xml:175(link) xml/cut-image-hlp-loader.xml:22(link)
-#: xml/cut-image-hlp-loader.xml:57(primary)
-msgid "cut_image_hlp_loader_new"
-msgstr ""
-
-#: xml/api-index-full.xml:176(link) xml/cut-image-hlp-loader.xml:24(link)
-#: xml/cut-image-hlp-loader.xml:79(primary)
-msgid "cut_image_hlp_loader_support_attribute"
-msgstr ""
-
-#: xml/api-index-full.xml:177(link) xml/cut-main.xml:21(link)
+#: xml/api-index-full.xml:178(link) xml/cut-main.xml:21(link)
 #: xml/cut-main.xml:51(primary)
 msgid "cut_init"
 msgstr ""
 
-#: xml/api-index-full.xml:178(link) xml/cut-test-utils.xml:41(link)
+#: xml/api-index-full.xml:179(link) xml/cut-test-utils.xml:41(link)
 #: xml/cut-test-utils.xml:286(primary)
 msgid "cut_inspect_string_array"
 msgstr ""
 
-#: xml/api-index-full.xml:179(link) xml/cut-iterated-test.xml:30(link)
+#: xml/api-index-full.xml:180(link) xml/cut-iterated-test.xml:30(link)
 #: xml/cut-iterated-test.xml:120(primary)
 msgid "cut_iterated_test_clear_data"
 msgstr ""
 
-#: xml/api-index-full.xml:180(link) xml/cut-iterated-test.xml:27(link)
+#: xml/api-index-full.xml:181(link) xml/cut-iterated-test.xml:27(link)
 #: xml/cut-iterated-test.xml:96(primary)
 msgid "cut_iterated_test_get_data"
 msgstr ""
 
-#: xml/api-index-full.xml:181(link) xml/cut-iterated-test.xml:23(link)
+#: xml/api-index-full.xml:182(link) xml/cut-iterated-test.xml:23(link)
 #: xml/cut-iterated-test.xml:69(primary)
 msgid "cut_iterated_test_new"
 msgstr ""
 
-#: xml/api-index-full.xml:182(link) xml/cut-iterated-test.xml:26(link)
+#: xml/api-index-full.xml:183(link) xml/cut-iterated-test.xml:26(link)
 #: xml/cut-iterated-test.xml:88(primary)
 msgid "cut_iterated_test_new_empty"
 msgstr ""
 
-#: xml/api-index-full.xml:183(link) xml/cut-iterated-test.xml:28(link)
+#: xml/api-index-full.xml:184(link) xml/cut-iterated-test.xml:28(link)
 #: xml/cut-iterated-test.xml:107(primary)
 msgid "cut_iterated_test_set_data"
 msgstr ""
 
-#: xml/api-index-full.xml:185(link) xml/cut-listener.xml:21(link)
+#: xml/api-index-full.xml:186(link) xml/cut-listener.xml:21(link)
 #: xml/cut-listener.xml:47(primary)
 msgid "cut_listener_attach_to_run_context"
 msgstr ""
 
-#: xml/api-index-full.xml:186(link) xml/cut-listener.xml:23(link)
+#: xml/api-index-full.xml:187(link) xml/cut-listener.xml:23(link)
 #: xml/cut-listener.xml:60(primary)
 msgid "cut_listener_detach_from_run_context"
 msgstr ""
 
-#: xml/api-index-full.xml:187(link) xml/cut-listener-utils.xml:22(link)
+#: xml/api-index-full.xml:188(link) xml/cut-listener-utils.xml:22(link)
 #: xml/cut-listener-utils.xml:54(primary)
 msgid "CUT_LISTENER_RETURN_DEFAULT_MODULE_DIR"
 msgstr ""
 
-#: xml/api-index-full.xml:188(link) xml/cut-mach-o-loader.xml:25(link)
+#: xml/api-index-full.xml:189(link) xml/cut-mach-o-loader.xml:25(link)
 #: xml/cut-mach-o-loader.xml:88(primary)
 msgid "cut_mach_o_loader_collect_symbols"
 msgstr ""
 
-#: xml/api-index-full.xml:189(link) xml/cut-mach-o-loader.xml:23(link)
+#: xml/api-index-full.xml:190(link) xml/cut-mach-o-loader.xml:23(link)
 #: xml/cut-mach-o-loader.xml:66(primary)
 msgid "cut_mach_o_loader_is_mach_o"
 msgstr ""
 
-#: xml/api-index-full.xml:190(link) xml/cut-mach-o-loader.xml:22(link)
+#: xml/api-index-full.xml:191(link) xml/cut-mach-o-loader.xml:22(link)
 #: xml/cut-mach-o-loader.xml:55(primary)
 msgid "cut_mach_o_loader_new"
 msgstr ""
 
-#: xml/api-index-full.xml:191(link) xml/cut-mach-o-loader.xml:24(link)
+#: xml/api-index-full.xml:192(link) xml/cut-mach-o-loader.xml:24(link)
 #: xml/cut-mach-o-loader.xml:77(primary)
 msgid "cut_mach_o_loader_support_attribute"
 msgstr ""
 
-#: xml/api-index-full.xml:192(link) xml/cut-module-factory.xml:32(link)
+#: xml/api-index-full.xml:193(link) xml/cut-module-factory.xml:32(link)
 #: xml/cut-module-factory.xml:122(primary)
 msgid "cut_module_factory_create"
 msgstr ""
 
-#: xml/api-index-full.xml:193(link) xml/cut-module-factory-utils.xml:32(link)
+#: xml/api-index-full.xml:194(link) xml/cut-module-factory-utils.xml:32(link)
 #: xml/cut-module-factory-utils.xml:124(primary)
 msgid "cut_module_factory_exist_module"
 msgstr ""
 
-#: xml/api-index-full.xml:194(link) xml/cut-module-factory-utils.xml:23(link)
+#: xml/api-index-full.xml:195(link) xml/cut-module-factory-utils.xml:23(link)
 #: xml/cut-module-factory-utils.xml:67(primary)
 msgid "cut_module_factory_get_default_module_dir"
 msgstr ""
 
-#: xml/api-index-full.xml:195(link) xml/cut-module-factory.xml:33(link)
+#: xml/api-index-full.xml:196(link) xml/cut-module-factory.xml:33(link)
 #: xml/cut-module-factory.xml:133(primary)
 msgid "cut_module_factory_get_name"
 msgstr ""
 
-#: xml/api-index-full.xml:196(link) xml/cut-module-factory-utils.xml:31(link)
+#: xml/api-index-full.xml:197(link) xml/cut-module-factory-utils.xml:31(link)
 #: xml/cut-module-factory-utils.xml:113(primary)
 msgid "cut_module_factory_get_names"
 msgstr ""
 
-#: xml/api-index-full.xml:197(link) xml/cut-module-factory-utils.xml:21(link)
+#: xml/api-index-full.xml:198(link) xml/cut-module-factory-utils.xml:21(link)
 #: xml/cut-module-factory-utils.xml:57(primary)
 msgid "cut_module_factory_init"
 msgstr ""
 
-#: xml/api-index-full.xml:198(link) xml/cut-module-factory-utils.xml:27(link)
+#: xml/api-index-full.xml:199(link) xml/cut-module-factory-utils.xml:27(link)
 #: xml/cut-module-factory-utils.xml:86(primary)
 msgid "cut_module_factory_load"
 msgstr ""
 
-#: xml/api-index-full.xml:199(link) xml/cut-module-factory-utils.xml:29(link)
+#: xml/api-index-full.xml:200(link) xml/cut-module-factory-utils.xml:29(link)
 #: xml/cut-module-factory-utils.xml:99(primary)
 msgid "cut_module_factory_load_all"
 msgstr ""
 
-#: xml/api-index-full.xml:200(link) xml/cut-module-factory-utils.xml:34(link)
+#: xml/api-index-full.xml:201(link) xml/cut-module-factory-utils.xml:34(link)
 #: xml/cut-module-factory-utils.xml:139(primary)
 msgid "cut_module_factory_load_module"
 msgstr ""
 
-#: xml/api-index-full.xml:201(link) xml/cut-module-factory.xml:22(link)
+#: xml/api-index-full.xml:202(link) xml/cut-module-factory.xml:22(link)
 #: xml/cut-module-factory.xml:63(primary)
 msgid "cut_module_factory_new"
 msgstr ""
 
-#: xml/api-index-full.xml:202(link) xml/cut-module-factory.xml:26(link)
+#: xml/api-index-full.xml:203(link) xml/cut-module-factory.xml:26(link)
 #: xml/cut-module-factory.xml:86(primary)
 msgid "cut_module_factory_new_valist"
 msgstr ""
 
-#: xml/api-index-full.xml:203(link) xml/cut-module-factory-utils.xml:22(link)
+#: xml/api-index-full.xml:204(link) xml/cut-module-factory-utils.xml:22(link)
 #: xml/cut-module-factory-utils.xml:62(primary)
 msgid "cut_module_factory_quit"
 msgstr ""
 
-#: xml/api-index-full.xml:204(link) xml/cut-module-factory-utils.xml:25(link)
+#: xml/api-index-full.xml:205(link) xml/cut-module-factory-utils.xml:25(link)
 #: xml/cut-module-factory-utils.xml:76(primary)
 msgid "cut_module_factory_set_default_module_dir"
 msgstr ""
 
-#: xml/api-index-full.xml:205(link) xml/cut-module-factory.xml:30(link)
+#: xml/api-index-full.xml:206(link) xml/cut-module-factory.xml:30(link)
 #: xml/cut-module-factory.xml:109(primary)
 msgid "cut_module_factory_set_option_group"
 msgstr ""
 
-#: xml/api-index-full.xml:206(link) xml/cut-module-factory-utils.xml:30(link)
+#: xml/api-index-full.xml:207(link) xml/cut-module-factory-utils.xml:30(link)
 #: xml/cut-module-factory-utils.xml:108(primary)
 msgid "cut_module_factory_unload"
 msgstr ""
 
-#: xml/api-index-full.xml:207(link) xml/cut-assertions.xml:127(link)
+#: xml/api-index-full.xml:208(link) xml/cut-assertions.xml:127(link)
 #: xml/cut-assertions.xml:1172(primary)
 msgid "cut_notify"
 msgstr ""
 
-#: xml/api-index-full.xml:209(link) xml/cut-assertions.xml:123(link)
+#: xml/api-index-full.xml:210(link) xml/cut-assertions.xml:123(link)
 #: xml/cut-assertions.xml:1139(primary)
 msgid "cut_pend"
 msgstr ""
 
-#: xml/api-index-full.xml:211(link) xml/cut-pipeline.xml:21(link)
+#: xml/api-index-full.xml:212(link) xml/cut-pe-loader.xml:25(link)
+#: xml/cut-pe-loader.xml:88(primary)
+msgid "cut_pe_loader_collect_symbols"
+msgstr ""
+
+#: xml/api-index-full.xml:213(link) xml/cut-pe-loader.xml:23(link)
+#: xml/cut-pe-loader.xml:66(primary)
+msgid "cut_pe_loader_is_dll"
+msgstr ""
+
+#: xml/api-index-full.xml:214(link) xml/cut-pe-loader.xml:22(link)
+#: xml/cut-pe-loader.xml:55(primary)
+msgid "cut_pe_loader_new"
+msgstr ""
+
+#: xml/api-index-full.xml:215(link) xml/cut-pe-loader.xml:24(link)
+#: xml/cut-pe-loader.xml:77(primary)
+msgid "cut_pe_loader_support_attribute"
+msgstr ""
+
+#: xml/api-index-full.xml:216(link) xml/cut-pipeline.xml:21(link)
 #: xml/cut-pipeline.xml:47(title) xml/cut-pipeline.xml:48(primary)
 msgid "CUT_PIPELINE_ERROR"
 msgstr ""
 
-#: xml/api-index-full.xml:212(link) xml/cut-pipeline.xml:24(link)
+#: xml/api-index-full.xml:217(link) xml/cut-pipeline.xml:24(link)
 #: xml/cut-pipeline.xml:75(primary)
 msgid "cut_pipeline_error_quark"
 msgstr ""
 
-#: xml/api-index-full.xml:213(link) xml/cut-pipeline.xml:25(link)
+#: xml/api-index-full.xml:218(link) xml/cut-pipeline.xml:25(link)
 #: xml/cut-pipeline.xml:83(primary)
 msgid "cut_pipeline_new"
 msgstr ""
 
-#: xml/api-index-full.xml:214(link) xml/cut-pipeline.xml:26(link)
+#: xml/api-index-full.xml:219(link) xml/cut-pipeline.xml:26(link)
 #: xml/cut-pipeline.xml:91(primary)
 msgid "cut_pipeline_new_from_run_context"
 msgstr ""
 
-#: xml/api-index-full.xml:216(link) xml/cut-process.xml:33(link)
+#: xml/api-index-full.xml:221(link) xml/cut-process.xml:33(link)
 #: xml/cut-process.xml:157(primary)
 msgid "cut_process_exit"
 msgstr ""
 
-#: xml/api-index-full.xml:217(link) xml/cut-process.xml:23(link)
+#: xml/api-index-full.xml:222(link) xml/cut-process.xml:23(link)
 #: xml/cut-process.xml:71(primary)
 msgid "cut_process_fork"
 msgstr ""
 
-#: xml/api-index-full.xml:218(link) xml/cut-process.xml:26(link)
+#: xml/api-index-full.xml:223(link) xml/cut-process.xml:26(link)
 #: xml/cut-process.xml:97(primary)
 msgid "cut_process_get_pid"
 msgstr ""
 
-#: xml/api-index-full.xml:219(link) xml/cut-process.xml:32(link)
+#: xml/api-index-full.xml:224(link) xml/cut-process.xml:32(link)
 #: xml/cut-process.xml:146(primary)
 msgid "cut_process_get_result_from_child"
 msgstr ""
 
-#: xml/api-index-full.xml:220(link) xml/cut-process.xml:28(link)
+#: xml/api-index-full.xml:225(link) xml/cut-process.xml:28(link)
 #: xml/cut-process.xml:119(primary)
 msgid "cut_process_get_stderr_message"
 msgstr ""
 
-#: xml/api-index-full.xml:221(link) xml/cut-process.xml:27(link)
+#: xml/api-index-full.xml:226(link) xml/cut-process.xml:27(link)
 #: xml/cut-process.xml:108(primary)
 msgid "cut_process_get_stdout_message"
 msgstr ""
 
-#: xml/api-index-full.xml:222(link) xml/cut-process.xml:22(link)
+#: xml/api-index-full.xml:227(link) xml/cut-process.xml:22(link)
 #: xml/cut-process.xml:63(primary)
 msgid "cut_process_new"
 msgstr ""
 
-#: xml/api-index-full.xml:223(link) xml/cut-process.xml:29(link)
+#: xml/api-index-full.xml:228(link) xml/cut-process.xml:29(link)
 #: xml/cut-process.xml:130(primary)
 msgid "cut_process_send_test_result_to_parent"
 msgstr ""
 
-#: xml/api-index-full.xml:224(link) xml/cut-process.xml:24(link)
+#: xml/api-index-full.xml:229(link) xml/cut-process.xml:24(link)
 #: xml/cut-process.xml:82(primary)
 msgid "cut_process_wait"
 msgstr ""
 
-#: xml/api-index-full.xml:226(link) xml/cut-main.xml:23(link)
+#: xml/api-index-full.xml:231(link) xml/cut-main.xml:23(link)
 #: xml/cut-main.xml:64(primary)
 msgid "cut_quit"
 msgstr ""
 
-#: xml/api-index-full.xml:229(link) xml/cut-report.xml:26(link)
+#: xml/api-index-full.xml:234(link) xml/cut-report.xml:26(link)
 #: xml/cut-report.xml:95(primary)
 msgid "cut_report_get_all_results"
 msgstr ""
 
-#: xml/api-index-full.xml:230(link) xml/cut-report.xml:35(link)
+#: xml/api-index-full.xml:235(link) xml/cut-report.xml:35(link)
 #: xml/cut-report.xml:187(primary)
 msgid "cut_report_get_crash_results"
 msgstr ""
 
-#: xml/api-index-full.xml:231(link) xml/cut-report.xml:30(link)
+#: xml/api-index-full.xml:236(link) xml/cut-report.xml:30(link)
 #: xml/cut-report.xml:132(primary)
 msgid "cut_report_get_error_results"
 msgstr ""
 
-#: xml/api-index-full.xml:232(link) xml/cut-report.xml:31(link)
+#: xml/api-index-full.xml:237(link) xml/cut-report.xml:31(link)
 #: xml/cut-report.xml:143(primary)
 msgid "cut_report_get_failure_results"
 msgstr ""
 
-#: xml/api-index-full.xml:233(link) xml/cut-report.xml:25(link)
+#: xml/api-index-full.xml:238(link) xml/cut-report.xml:25(link)
 #: xml/cut-report.xml:84(primary)
 msgid "cut_report_get_filename"
 msgstr ""
 
-#: xml/api-index-full.xml:234(link) xml/cut-report.xml:33(link)
+#: xml/api-index-full.xml:239(link) xml/cut-report.xml:33(link)
 #: xml/cut-report.xml:165(primary)
 msgid "cut_report_get_notification_results"
 msgstr ""
 
-#: xml/api-index-full.xml:235(link) xml/cut-report.xml:34(link)
+#: xml/api-index-full.xml:240(link) xml/cut-report.xml:34(link)
 #: xml/cut-report.xml:176(primary)
 msgid "cut_report_get_omission_results"
 msgstr ""
 
-#: xml/api-index-full.xml:236(link) xml/cut-report.xml:32(link)
+#: xml/api-index-full.xml:241(link) xml/cut-report.xml:32(link)
 #: xml/cut-report.xml:154(primary)
 msgid "cut_report_get_pending_results"
 msgstr ""
 
-#: xml/api-index-full.xml:237(link) xml/cut-report.xml:29(link)
+#: xml/api-index-full.xml:242(link) xml/cut-report.xml:29(link)
 #: xml/cut-report.xml:121(primary)
 msgid "cut_report_get_success_results"
 msgstr ""
 
-#: xml/api-index-full.xml:238(link) xml/cut-report.xml:27(link)
+#: xml/api-index-full.xml:243(link) xml/cut-report.xml:27(link)
 #: xml/cut-report.xml:106(primary)
 msgid "cut_report_get_test_result"
 msgstr ""
 
-#: xml/api-index-full.xml:239(link) xml/cut-report.xml:22(link)
+#: xml/api-index-full.xml:244(link) xml/cut-report.xml:22(link)
 #: xml/cut-report.xml:65(primary)
 msgid "cut_report_new"
 msgstr ""
 
-#: xml/api-index-full.xml:241(link) xml/cut-main.xml:24(link)
+#: xml/api-index-full.xml:246(link) xml/cut-main.xml:24(link)
 #: xml/cut-main.xml:69(primary)
 msgid "cut_run"
 msgstr ""
 
-#: xml/api-index-full.xml:242(link) xml/cut-runner.xml:23(link)
+#: xml/api-index-full.xml:247(link) xml/cut-runner.xml:23(link)
 #: xml/cut-runner.xml:62(primary)
 msgid "cut_runner_run"
 msgstr ""
 
-#: xml/api-index-full.xml:243(link) xml/cut-runner.xml:24(link)
+#: xml/api-index-full.xml:248(link) xml/cut-runner.xml:24(link)
 #: xml/cut-runner.xml:73(primary)
 msgid "cut_runner_run_async"
 msgstr ""
 
-#: xml/api-index-full.xml:244(link) xml/cut-run-context.xml:83(link)
+#: xml/api-index-full.xml:249(link) xml/cut-run-context.xml:83(link)
 #: xml/cut-run-context.xml:634(primary)
 msgid "cut_run_context_add_listener"
 msgstr ""
 
-#: xml/api-index-full.xml:245(link) xml/cut-run-context.xml:87(link)
+#: xml/api-index-full.xml:250(link) xml/cut-run-context.xml:87(link)
 #: xml/cut-run-context.xml:660(primary)
 msgid "cut_run_context_attach_listeners"
 msgstr ""
 
-#: xml/api-index-full.xml:246(link) xml/cut-run-context.xml:89(link)
+#: xml/api-index-full.xml:251(link) xml/cut-run-context.xml:89(link)
 #: xml/cut-run-context.xml:678(primary)
 msgid "cut_run_context_build_source_filename"
 msgstr ""
 
-#: xml/api-index-full.xml:247(link) xml/cut-run-context.xml:72(link)
+#: xml/api-index-full.xml:252(link) xml/cut-run-context.xml:72(link)
 #: xml/cut-run-context.xml:540(primary)
 msgid "cut_run_context_cancel"
 msgstr ""
 
-#: xml/api-index-full.xml:248(link) xml/cut-run-context.xml:74(link)
+#: xml/api-index-full.xml:253(link) xml/cut-run-context.xml:74(link)
 #: xml/cut-run-context.xml:560(primary)
 msgid "cut_run_context_create_test_suite"
 msgstr ""
 
-#: xml/api-index-full.xml:249(link) xml/cut-run-context.xml:107(link)
+#: xml/api-index-full.xml:254(link) xml/cut-run-context.xml:107(link)
 #: xml/cut-run-context.xml:784(primary)
 msgid "cut_run_context_delegate_signals"
 msgstr ""
 
-#: xml/api-index-full.xml:250(link) xml/cut-run-context.xml:88(link)
+#: xml/api-index-full.xml:255(link) xml/cut-run-context.xml:88(link)
 #: xml/cut-run-context.xml:669(primary)
 msgid "cut_run_context_detach_listeners"
 msgstr ""
 
-#: xml/api-index-full.xml:251(link) xml/cut-run-context.xml:94(link)
+#: xml/api-index-full.xml:256(link) xml/cut-run-context.xml:94(link)
 #: xml/cut-run-context.xml:714(primary)
 msgid "cut_run_context_emit_complete_run"
 msgstr ""
 
-#: xml/api-index-full.xml:252(link) xml/cut-run-context.xml:96(link)
+#: xml/api-index-full.xml:257(link) xml/cut-run-context.xml:96(link)
 #: xml/cut-run-context.xml:729(primary)
 msgid "cut_run_context_emit_error"
 msgstr ""
 
-#: xml/api-index-full.xml:253(link) xml/cut-run-context.xml:105(link)
+#: xml/api-index-full.xml:258(link) xml/cut-run-context.xml:105(link)
 #: xml/cut-run-context.xml:772(primary)
 msgid "cut_run_context_get_command_line_args"
 msgstr ""
 
-#: xml/api-index-full.xml:254(link) xml/cut-run-context.xml:68(link)
+#: xml/api-index-full.xml:259(link) xml/cut-run-context.xml:68(link)
 #: xml/cut-run-context.xml:496(primary)
 msgid "cut_run_context_get_elapsed"
 msgstr ""
 
-#: xml/api-index-full.xml:255(link) xml/cut-run-context.xml:121(link)
+#: xml/api-index-full.xml:260(link) xml/cut-run-context.xml:121(link)
 #: xml/cut-run-context.xml:872(primary)
 msgid "cut_run_context_get_enable_convenience_attribute_definition"
 msgstr ""
 
-#: xml/api-index-full.xml:256(link) xml/cut-run-context.xml:47(link)
+#: xml/api-index-full.xml:261(link) xml/cut-run-context.xml:47(link)
 #: xml/cut-run-context.xml:333(primary)
 msgid "cut_run_context_get_exclude_directories"
 msgstr ""
 
-#: xml/api-index-full.xml:257(link) xml/cut-run-context.xml:43(link)
+#: xml/api-index-full.xml:262(link) xml/cut-run-context.xml:43(link)
 #: xml/cut-run-context.xml:308(primary)
 msgid "cut_run_context_get_exclude_files"
 msgstr ""
 
-#: xml/api-index-full.xml:258(link) xml/cut-run-context.xml:112(link)
+#: xml/api-index-full.xml:263(link) xml/cut-run-context.xml:112(link)
 #: xml/cut-run-context.xml:821(primary)
 msgid "cut_run_context_get_fatal_failures"
 msgstr ""
 
-#: xml/api-index-full.xml:259(link) xml/cut-run-context.xml:116(link)
+#: xml/api-index-full.xml:264(link) xml/cut-run-context.xml:116(link)
 #: xml/cut-run-context.xml:846(primary)
 msgid "cut_run_context_get_keep_opening_modules"
 msgstr ""
 
-#: xml/api-index-full.xml:260(link) xml/cut-run-context.xml:33(link)
+#: xml/api-index-full.xml:265(link) xml/cut-run-context.xml:33(link)
 #: xml/cut-run-context.xml:225(primary)
 msgid "cut_run_context_get_log_directory"
 msgstr ""
 
-#: xml/api-index-full.xml:261(link) xml/cut-run-context.xml:40(link)
+#: xml/api-index-full.xml:266(link) xml/cut-run-context.xml:40(link)
 #: xml/cut-run-context.xml:284(primary)
 msgid "cut_run_context_get_max_threads"
 msgstr ""
 
-#: xml/api-index-full.xml:262(link) xml/cut-run-context.xml:36(link)
+#: xml/api-index-full.xml:267(link) xml/cut-run-context.xml:36(link)
 #: xml/cut-run-context.xml:249(primary)
 msgid "cut_run_context_get_multi_thread"
 msgstr ""
 
-#: xml/api-index-full.xml:263(link) xml/cut-run-context.xml:61(link)
+#: xml/api-index-full.xml:268(link) xml/cut-run-context.xml:61(link)
 #: xml/cut-run-context.xml:419(primary)
 msgid "cut_run_context_get_n_assertions"
 msgstr ""
 
-#: xml/api-index-full.xml:264(link) xml/cut-run-context.xml:63(link)
+#: xml/api-index-full.xml:269(link) xml/cut-run-context.xml:63(link)
 #: xml/cut-run-context.xml:441(primary)
 msgid "cut_run_context_get_n_errors"
 msgstr ""
 
-#: xml/api-index-full.xml:265(link) xml/cut-run-context.xml:62(link)
+#: xml/api-index-full.xml:270(link) xml/cut-run-context.xml:62(link)
 #: xml/cut-run-context.xml:430(primary)
 msgid "cut_run_context_get_n_failures"
 msgstr ""
 
-#: xml/api-index-full.xml:266(link) xml/cut-run-context.xml:65(link)
+#: xml/api-index-full.xml:271(link) xml/cut-run-context.xml:65(link)
 #: xml/cut-run-context.xml:463(primary)
 msgid "cut_run_context_get_n_notifications"
 msgstr ""
 
-#: xml/api-index-full.xml:267(link) xml/cut-run-context.xml:66(link)
+#: xml/api-index-full.xml:272(link) xml/cut-run-context.xml:66(link)
 #: xml/cut-run-context.xml:474(primary)
 msgid "cut_run_context_get_n_omissions"
 msgstr ""
 
-#: xml/api-index-full.xml:268(link) xml/cut-run-context.xml:64(link)
+#: xml/api-index-full.xml:273(link) xml/cut-run-context.xml:64(link)
 #: xml/cut-run-context.xml:452(primary)
 msgid "cut_run_context_get_n_pendings"
 msgstr ""
 
-#: xml/api-index-full.xml:269(link) xml/cut-run-context.xml:60(link)
+#: xml/api-index-full.xml:274(link) xml/cut-run-context.xml:60(link)
 #: xml/cut-run-context.xml:408(primary)
 msgid "cut_run_context_get_n_successes"
 msgstr ""
 
-#: xml/api-index-full.xml:270(link) xml/cut-run-context.xml:59(link)
+#: xml/api-index-full.xml:275(link) xml/cut-run-context.xml:59(link)
 #: xml/cut-run-context.xml:397(primary)
 msgid "cut_run_context_get_n_tests"
 msgstr ""
 
-#: xml/api-index-full.xml:271(link) xml/cut-run-context.xml:70(link)
+#: xml/api-index-full.xml:276(link) xml/cut-run-context.xml:70(link)
 #: xml/cut-run-context.xml:518(primary)
 msgid "cut_run_context_get_results"
 msgstr ""
 
-#: xml/api-index-full.xml:272(link) xml/cut-run-context.xml:29(link)
+#: xml/api-index-full.xml:277(link) xml/cut-run-context.xml:29(link)
 #: xml/cut-run-context.xml:200(primary)
 msgid "cut_run_context_get_source_directory"
 msgstr ""
 
-#: xml/api-index-full.xml:273(link) xml/cut-run-context.xml:67(link)
+#: xml/api-index-full.xml:278(link) xml/cut-run-context.xml:67(link)
 #: xml/cut-run-context.xml:485(primary)
 msgid "cut_run_context_get_status"
 msgstr ""
 
-#: xml/api-index-full.xml:274(link) xml/cut-run-context.xml:52(link)
+#: xml/api-index-full.xml:279(link) xml/cut-run-context.xml:52(link)
 #: xml/cut-run-context.xml:359(primary)
 msgid "cut_run_context_get_target_test_case_names"
 msgstr ""
 
-#: xml/api-index-full.xml:275(link) xml/cut-run-context.xml:57(link)
+#: xml/api-index-full.xml:280(link) xml/cut-run-context.xml:57(link)
 #: xml/cut-run-context.xml:385(primary)
 msgid "cut_run_context_get_target_test_names"
 msgstr ""
 
-#: xml/api-index-full.xml:276(link) xml/cut-run-context.xml:80(link)
+#: xml/api-index-full.xml:281(link) xml/cut-run-context.xml:80(link)
 #: xml/cut-run-context.xml:608(primary)
 msgid "cut_run_context_get_test_case_order"
 msgstr ""
 
-#: xml/api-index-full.xml:277(link) xml/cut-run-context.xml:25(link)
+#: xml/api-index-full.xml:282(link) xml/cut-run-context.xml:25(link)
 #: xml/cut-run-context.xml:175(primary)
 msgid "cut_run_context_get_test_directory"
 msgstr ""
 
-#: xml/api-index-full.xml:278(link) xml/cut-run-context.xml:75(link)
+#: xml/api-index-full.xml:283(link) xml/cut-run-context.xml:75(link)
 #: xml/cut-run-context.xml:571(primary)
 msgid "cut_run_context_get_test_suite"
 msgstr ""
 
-#: xml/api-index-full.xml:279(link) xml/cut-run-context.xml:69(link)
+#: xml/api-index-full.xml:284(link) xml/cut-run-context.xml:69(link)
 #: xml/cut-run-context.xml:507(primary)
 msgid "cut_run_context_get_total_elapsed"
 msgstr ""
 
-#: xml/api-index-full.xml:280(link) xml/cut-run-context.xml:73(link)
+#: xml/api-index-full.xml:285(link) xml/cut-run-context.xml:73(link)
 #: xml/cut-run-context.xml:549(primary)
 msgid "cut_run_context_is_canceled"
 msgstr ""
 
-#: xml/api-index-full.xml:281(link) xml/cut-run-context.xml:109(link)
+#: xml/api-index-full.xml:286(link) xml/cut-run-context.xml:109(link)
 #: xml/cut-run-context.xml:797(primary)
 msgid "cut_run_context_is_completed"
 msgstr ""
 
-#: xml/api-index-full.xml:282(link) xml/cut-run-context.xml:71(link)
+#: xml/api-index-full.xml:287(link) xml/cut-run-context.xml:71(link)
 #: xml/cut-run-context.xml:529(primary)
 msgid "cut_run_context_is_crashed"
 msgstr ""
 
-#: xml/api-index-full.xml:283(link) xml/cut-run-context.xml:37(link)
+#: xml/api-index-full.xml:288(link) xml/cut-run-context.xml:37(link)
 #: xml/cut-run-context.xml:260(primary)
 msgid "cut_run_context_is_multi_thread"
 msgstr ""
 
-#: xml/api-index-full.xml:284(link) xml/cut-run-context.xml:85(link)
+#: xml/api-index-full.xml:289(link) xml/cut-run-context.xml:85(link)
 #: xml/cut-run-context.xml:647(primary)
 msgid "cut_run_context_remove_listener"
 msgstr ""
 
-#: xml/api-index-full.xml:285(link) xml/cut-run-context.xml:102(link)
+#: xml/api-index-full.xml:290(link) xml/cut-run-context.xml:102(link)
 #: xml/cut-run-context.xml:758(primary)
 msgid "cut_run_context_set_command_line_args"
 msgstr ""
 
-#: xml/api-index-full.xml:286(link) xml/cut-run-context.xml:118(link)
+#: xml/api-index-full.xml:291(link) xml/cut-run-context.xml:118(link)
 #: xml/cut-run-context.xml:858(primary)
 msgid "cut_run_context_set_enable_convenience_attribute_definition"
 msgstr ""
 
-#: xml/api-index-full.xml:287(link) xml/cut-run-context.xml:44(link)
+#: xml/api-index-full.xml:292(link) xml/cut-run-context.xml:44(link)
 #: xml/cut-run-context.xml:319(primary)
 msgid "cut_run_context_set_exclude_directories"
 msgstr ""
 
-#: xml/api-index-full.xml:288(link) xml/cut-run-context.xml:41(link)
+#: xml/api-index-full.xml:293(link) xml/cut-run-context.xml:41(link)
 #: xml/cut-run-context.xml:295(primary)
 msgid "cut_run_context_set_exclude_files"
 msgstr ""
 
-#: xml/api-index-full.xml:289(link) xml/cut-run-context.xml:110(link)
+#: xml/api-index-full.xml:294(link) xml/cut-run-context.xml:110(link)
 #: xml/cut-run-context.xml:808(primary)
 msgid "cut_run_context_set_fatal_failures"
 msgstr ""
 
-#: xml/api-index-full.xml:290(link) xml/cut-run-context.xml:113(link)
+#: xml/api-index-full.xml:295(link) xml/cut-run-context.xml:113(link)
 #: xml/cut-run-context.xml:832(primary)
 msgid "cut_run_context_set_keep_opening_modules"
 msgstr ""
 
-#: xml/api-index-full.xml:291(link) xml/cut-run-context.xml:31(link)
+#: xml/api-index-full.xml:296(link) xml/cut-run-context.xml:31(link)
 #: xml/cut-run-context.xml:212(primary)
 msgid "cut_run_context_set_log_directory"
 msgstr ""
 
-#: xml/api-index-full.xml:292(link) xml/cut-run-context.xml:38(link)
+#: xml/api-index-full.xml:297(link) xml/cut-run-context.xml:38(link)
 #: xml/cut-run-context.xml:271(primary)
 msgid "cut_run_context_set_max_threads"
 msgstr ""
 
-#: xml/api-index-full.xml:293(link) xml/cut-run-context.xml:34(link)
+#: xml/api-index-full.xml:298(link) xml/cut-run-context.xml:34(link)
 #: xml/cut-run-context.xml:236(primary)
 msgid "cut_run_context_set_multi_thread"
 msgstr ""
 
-#: xml/api-index-full.xml:294(link) xml/cut-run-context.xml:26(link)
+#: xml/api-index-full.xml:299(link) xml/cut-run-context.xml:26(link)
 #: xml/cut-run-context.xml:186(primary)
 msgid "cut_run_context_set_source_directory"
 msgstr ""
 
-#: xml/api-index-full.xml:295(link) xml/cut-run-context.xml:49(link)
+#: xml/api-index-full.xml:300(link) xml/cut-run-context.xml:49(link)
 #: xml/cut-run-context.xml:345(primary)
 msgid "cut_run_context_set_target_test_case_names"
 msgstr ""
 
-#: xml/api-index-full.xml:296(link) xml/cut-run-context.xml:54(link)
+#: xml/api-index-full.xml:301(link) xml/cut-run-context.xml:54(link)
 #: xml/cut-run-context.xml:371(primary)
 msgid "cut_run_context_set_target_test_names"
 msgstr ""
 
-#: xml/api-index-full.xml:297(link) xml/cut-run-context.xml:78(link)
+#: xml/api-index-full.xml:302(link) xml/cut-run-context.xml:78(link)
 #: xml/cut-run-context.xml:595(primary)
 msgid "cut_run_context_set_test_case_order"
 msgstr ""
 
-#: xml/api-index-full.xml:298(link) xml/cut-run-context.xml:23(link)
+#: xml/api-index-full.xml:303(link) xml/cut-run-context.xml:23(link)
 #: xml/cut-run-context.xml:162(primary)
 msgid "cut_run_context_set_test_directory"
 msgstr ""
 
-#: xml/api-index-full.xml:299(link) xml/cut-run-context.xml:76(link)
+#: xml/api-index-full.xml:304(link) xml/cut-run-context.xml:76(link)
 #: xml/cut-run-context.xml:582(primary)
 msgid "cut_run_context_set_test_suite"
 msgstr ""
 
-#: xml/api-index-full.xml:300(link) xml/cut-run-context.xml:81(link)
+#: xml/api-index-full.xml:305(link) xml/cut-run-context.xml:81(link)
 #: xml/cut-run-context.xml:619(primary)
 msgid "cut_run_context_sort_test_cases"
 msgstr ""
 
-#: xml/api-index-full.xml:301(link) xml/cut-run-context.xml:92(link)
+#: xml/api-index-full.xml:306(link) xml/cut-run-context.xml:92(link)
 #: xml/cut-run-context.xml:694(primary)
 msgid "cut_run_context_start"
 msgstr ""
 
-#: xml/api-index-full.xml:302(link) xml/cut-run-context.xml:93(link)
+#: xml/api-index-full.xml:307(link) xml/cut-run-context.xml:93(link)
 #: xml/cut-run-context.xml:705(primary)
 msgid "cut_run_context_start_async"
 msgstr ""
 
-#: xml/api-index-full.xml:303(link) xml/cut-main.xml:25(link)
+#: xml/api-index-full.xml:308(link) xml/cut-main.xml:25(link)
 #: xml/cut-main.xml:77(primary)
 msgid "cut_run_iteration"
 msgstr ""
 
-#: xml/api-index-full.xml:304(link) xml/cut-sequence-matcher.xml:46(link)
+#: xml/api-index-full.xml:309(link) xml/cut-sequence-matcher.xml:46(link)
 #: xml/cut-sequence-matcher.xml:252(primary)
 msgid "cut_sequence_matcher_char_new"
 msgstr ""
 
-#: xml/api-index-full.xml:305(link) xml/cut-sequence-matcher.xml:48(link)
+#: xml/api-index-full.xml:310(link) xml/cut-sequence-matcher.xml:48(link)
 #: xml/cut-sequence-matcher.xml:267(primary)
 msgid "cut_sequence_matcher_char_new_full"
 msgstr ""
 
-#: xml/api-index-full.xml:306(link) xml/cut-sequence-matcher.xml:68(link)
+#: xml/api-index-full.xml:311(link) xml/cut-sequence-matcher.xml:68(link)
 #: xml/cut-sequence-matcher.xml:383(primary)
 msgid "cut_sequence_matcher_get_blocks"
 msgstr ""
 
-#: xml/api-index-full.xml:307(link) xml/cut-sequence-matcher.xml:61(link)
+#: xml/api-index-full.xml:312(link) xml/cut-sequence-matcher.xml:61(link)
 #: xml/cut-sequence-matcher.xml:344(primary)
 msgid "cut_sequence_matcher_get_longest_match"
 msgstr ""
 
-#: xml/api-index-full.xml:308(link) xml/cut-sequence-matcher.xml:67(link)
+#: xml/api-index-full.xml:313(link) xml/cut-sequence-matcher.xml:67(link)
 #: xml/cut-sequence-matcher.xml:372(primary)
 msgid "cut_sequence_matcher_get_matches"
 msgstr ""
 
-#: xml/api-index-full.xml:309(link) xml/cut-sequence-matcher.xml:69(link)
+#: xml/api-index-full.xml:314(link) xml/cut-sequence-matcher.xml:69(link)
 #: xml/cut-sequence-matcher.xml:394(primary)
 msgid "cut_sequence_matcher_get_operations"
 msgstr ""
 
-#: xml/api-index-full.xml:310(link) xml/cut-sequence-matcher.xml:70(link)
+#: xml/api-index-full.xml:315(link) xml/cut-sequence-matcher.xml:70(link)
 #: xml/cut-sequence-matcher.xml:405(primary)
 msgid "cut_sequence_matcher_get_ratio"
 msgstr ""
 
-#: xml/api-index-full.xml:311(link) xml/cut-sequence-matcher.xml:59(link)
+#: xml/api-index-full.xml:316(link) xml/cut-sequence-matcher.xml:59(link)
 #: xml/cut-sequence-matcher.xml:329(primary)
 msgid "cut_sequence_matcher_get_to_index"
 msgstr ""
 
-#: xml/api-index-full.xml:312(link) xml/cut-sequence-matcher.xml:38(link)
+#: xml/api-index-full.xml:317(link) xml/cut-sequence-matcher.xml:38(link)
 #: xml/cut-sequence-matcher.xml:213(primary)
 msgid "cut_sequence_matcher_new"
 msgstr ""
 
-#: xml/api-index-full.xml:313(link) xml/cut-sequence-matcher.xml:52(link)
+#: xml/api-index-full.xml:318(link) xml/cut-sequence-matcher.xml:52(link)
 #: xml/cut-sequence-matcher.xml:290(primary)
 msgid "cut_sequence_matcher_string_new"
 msgstr ""
 
-#: xml/api-index-full.xml:314(link) xml/cut-sequence-matcher.xml:54(link)
+#: xml/api-index-full.xml:319(link) xml/cut-sequence-matcher.xml:54(link)
 #: xml/cut-sequence-matcher.xml:305(primary)
 msgid "cut_sequence_matcher_string_new_full"
 msgstr ""
 
-#: xml/api-index-full.xml:315(link) xml/cut-sequence-matcher.xml:30(link)
+#: xml/api-index-full.xml:320(link) xml/cut-sequence-matcher.xml:30(link)
 #: xml/cut-sequence-matcher.xml:167(primary)
 msgid "cut_sequence_match_info_free"
 msgstr ""
 
-#: xml/api-index-full.xml:316(link) xml/cut-sequence-matcher.xml:27(link)
+#: xml/api-index-full.xml:321(link) xml/cut-sequence-matcher.xml:27(link)
 #: xml/cut-sequence-matcher.xml:148(primary)
 msgid "cut_sequence_match_info_new"
 msgstr ""
 
-#: xml/api-index-full.xml:317(link) xml/cut-sequence-matcher.xml:37(link)
+#: xml/api-index-full.xml:322(link) xml/cut-sequence-matcher.xml:37(link)
 #: xml/cut-sequence-matcher.xml:204(primary)
 msgid "cut_sequence_match_operation_free"
 msgstr ""
 
-#: xml/api-index-full.xml:318(link) xml/cut-sequence-matcher.xml:31(link)
+#: xml/api-index-full.xml:323(link) xml/cut-sequence-matcher.xml:31(link)
 #: xml/cut-sequence-matcher.xml:176(primary)
 msgid "cut_sequence_match_operation_new"
 msgstr ""
 
-#: xml/api-index-full.xml:322(link) xml/cut-main.xml:26(link)
+#: xml/api-index-full.xml:327(link) xml/cut-main.xml:26(link)
 #: xml/cut-main.xml:85(primary)
 msgid "cut_set_cutter_command_path"
 msgstr ""
 
-#: xml/api-index-full.xml:328(link) xml/cut-main.xml:29(link)
+#: xml/api-index-full.xml:333(link) xml/cut-main.xml:29(link)
 #: xml/cut-main.xml:110(primary)
 msgid "cut_start_run_context"
 msgstr ""
 
-#: xml/api-index-full.xml:329(link) xml/cut-stream.xml:25(link)
+#: xml/api-index-full.xml:334(link) xml/cut-stream.xml:25(link)
 #: xml/cut-stream.xml:76(primary)
 msgid "cut_stream_new"
 msgstr ""
 
-#: xml/api-index-full.xml:330(link) xml/cut-stream-parser.xml:28(link)
+#: xml/api-index-full.xml:335(link) xml/cut-stream-parser.xml:28(link)
 #: xml/cut-stream-parser.xml:101(primary)
 msgid "cut_stream_parser_end_parse"
 msgstr ""
 
-#: xml/api-index-full.xml:331(link) xml/cut-stream-parser.xml:22(link)
+#: xml/api-index-full.xml:336(link) xml/cut-stream-parser.xml:22(link)
 #: xml/cut-stream-parser.xml:59(primary)
 msgid "cut_stream_parser_new"
 msgstr ""
 
-#: xml/api-index-full.xml:332(link) xml/cut-stream-parser.xml:24(link)
+#: xml/api-index-full.xml:337(link) xml/cut-stream-parser.xml:24(link)
 #: xml/cut-stream-parser.xml:78(primary)
 msgid "cut_stream_parser_parse"
 msgstr ""
 
-#: xml/api-index-full.xml:333(link) xml/cut-stream-reader.xml:34(link)
+#: xml/api-index-full.xml:338(link) xml/cut-stream-reader.xml:34(link)
 #: xml/cut-stream-reader.xml:148(primary)
 msgid "cut_stream_reader_end_read"
 msgstr ""
 
-#: xml/api-index-full.xml:334(link) xml/cut-stream-reader.xml:21(link)
+#: xml/api-index-full.xml:339(link) xml/cut-stream-reader.xml:21(link)
 #: xml/cut-stream-reader.xml:55(title) xml/cut-stream-reader.xml:56(primary)
 msgid "CUT_STREAM_READER_ERROR"
 msgstr ""
 
-#: xml/api-index-full.xml:335(link) xml/cut-stream-reader.xml:24(link)
+#: xml/api-index-full.xml:340(link) xml/cut-stream-reader.xml:24(link)
 #: xml/cut-stream-reader.xml:82(primary)
 msgid "cut_stream_reader_error_quark"
 msgstr ""
 
-#: xml/api-index-full.xml:336(link) xml/cut-stream-reader.xml:25(link)
+#: xml/api-index-full.xml:341(link) xml/cut-stream-reader.xml:25(link)
 #: xml/cut-stream-reader.xml:90(primary)
 msgid "cut_stream_reader_new"
 msgstr ""
 
-#: xml/api-index-full.xml:337(link) xml/cut-stream-reader.xml:31(link)
+#: xml/api-index-full.xml:342(link) xml/cut-stream-reader.xml:31(link)
 #: xml/cut-stream-reader.xml:129(primary)
 msgid "cut_stream_reader_read"
 msgstr ""
 
-#: xml/api-index-full.xml:338(link) xml/cut-stream-reader.xml:28(link)
+#: xml/api-index-full.xml:343(link) xml/cut-stream-reader.xml:28(link)
 #: xml/cut-stream-reader.xml:113(primary)
 msgid "cut_stream_reader_read_from_io_channel"
 msgstr ""
 
-#: xml/api-index-full.xml:339(link) xml/cut-stream-reader.xml:26(link)
+#: xml/api-index-full.xml:344(link) xml/cut-stream-reader.xml:26(link)
 #: xml/cut-stream-reader.xml:98(primary)
 msgid "cut_stream_reader_watch_io_channel"
 msgstr ""
 
-#: xml/api-index-full.xml:370(link) xml/cut-features.xml:22(link)
+#: xml/api-index-full.xml:375(link) xml/cut-features.xml:22(link)
 #: xml/cut-features.xml:49(title) xml/cut-features.xml:50(primary)
 msgid "CUT_SUPPORT_GDK_PIXBUF"
 msgstr ""
 
-#: xml/api-index-full.xml:371(link) xml/cut-features.xml:21(link)
+#: xml/api-index-full.xml:376(link) xml/cut-features.xml:21(link)
 #: xml/cut-features.xml:43(title) xml/cut-features.xml:44(primary)
 msgid "CUT_SUPPORT_GLIB"
 msgstr ""
 
-#: xml/api-index-full.xml:373(link) xml/cut-test-utils.xml:33(link)
+#: xml/api-index-full.xml:378(link) xml/cut-test-utils.xml:33(link)
 #: xml/cut-test-utils.xml:222(primary)
 msgid "cut_take_diff"
 msgstr ""
 
-#: xml/api-index-full.xml:378(link) xml/cut-test-utils.xml:30(link)
+#: xml/api-index-full.xml:383(link) xml/cut-test-utils.xml:30(link)
 #: xml/cut-test-utils.xml:190(primary)
 msgid "cut_take_printf"
 msgstr ""
 
-#: xml/api-index-full.xml:380(link) xml/cut-test-utils-helper.xml:21(link)
+#: xml/api-index-full.xml:385(link) xml/cut-test-utils-helper.xml:21(link)
 #: xml/cut-test-utils-helper.xml:46(primary)
 msgid "cut_take_replace_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:382(link) xml/cut-test-utils.xml:24(link)
+#: xml/api-index-full.xml:387(link) xml/cut-test-utils.xml:24(link)
 #: xml/cut-test-utils.xml:120(primary)
 msgid "cut_take_string"
 msgstr ""
 
-#: xml/api-index-full.xml:383(link) xml/cut-test-utils.xml:32(link)
+#: xml/api-index-full.xml:388(link) xml/cut-test-utils.xml:32(link)
 #: xml/cut-test-utils.xml:208(primary)
 msgid "cut_take_string_array"
 msgstr ""
 
-#: xml/api-index-full.xml:386(link) xml/gcut-public.xml:23(link)
+#: xml/api-index-full.xml:391(link) xml/gcut-public.xml:23(link)
 #: xml/gcut-public.xml:66(primary)
 msgid "cut_test_context_take_g_error"
 msgstr ""
 
-#: xml/api-index-full.xml:387(link) xml/gcut-public.xml:28(link)
+#: xml/api-index-full.xml:392(link) xml/gcut-public.xml:28(link)
 #: xml/gcut-public.xml:100(primary)
 msgid "cut_test_context_take_g_hash_table"
 msgstr ""
 
-#: xml/api-index-full.xml:388(link) xml/gcut-public.xml:25(link)
+#: xml/api-index-full.xml:393(link) xml/gcut-public.xml:25(link)
 #: xml/gcut-public.xml:81(primary)
 msgid "cut_test_context_take_g_list"
 msgstr ""
 
-#: xml/api-index-full.xml:389(link) xml/gcut-public.xml:21(link)
+#: xml/api-index-full.xml:394(link) xml/gcut-public.xml:21(link)
 #: xml/gcut-public.xml:51(primary)
 msgid "cut_test_context_take_g_object"
 msgstr ""
 
-#: xml/api-index-full.xml:390(link) xml/cut-test-data.xml:26(link)
+#: xml/api-index-full.xml:395(link) xml/cut-test-data.xml:26(link)
 #: xml/cut-test-data.xml:93(primary)
 msgid "cut_test_data_get_name"
 msgstr ""
 
-#: xml/api-index-full.xml:391(link) xml/cut-test-data.xml:29(link)
+#: xml/api-index-full.xml:396(link) xml/cut-test-data.xml:29(link)
 #: xml/cut-test-data.xml:117(primary)
 msgid "cut_test_data_get_value"
 msgstr ""
 
-#: xml/api-index-full.xml:392(link) xml/cut-test-data.xml:22(link)
+#: xml/api-index-full.xml:397(link) xml/cut-test-data.xml:22(link)
 #: xml/cut-test-data.xml:66(primary)
 msgid "cut_test_data_new"
 msgstr ""
 
-#: xml/api-index-full.xml:393(link) xml/cut-test-data.xml:25(link)
+#: xml/api-index-full.xml:398(link) xml/cut-test-data.xml:25(link)
 #: xml/cut-test-data.xml:85(primary)
 msgid "cut_test_data_new_empty"
 msgstr ""
 
-#: xml/api-index-full.xml:394(link) xml/cut-test-data.xml:27(link)
+#: xml/api-index-full.xml:399(link) xml/cut-test-data.xml:27(link)
 #: xml/cut-test-data.xml:104(primary)
 msgid "cut_test_data_set_name"
 msgstr ""
 
-#: xml/api-index-full.xml:395(link) xml/cut-test-data.xml:30(link)
+#: xml/api-index-full.xml:400(link) xml/cut-test-data.xml:30(link)
 #: xml/cut-test-data.xml:128(primary)
 msgid "cut_test_data_set_value"
 msgstr ""
 
-#: xml/api-index-full.xml:396(link) xml/cut-test-data.xml:33(link)
+#: xml/api-index-full.xml:401(link) xml/cut-test-data.xml:33(link)
 #: xml/cut-test-data.xml:145(primary)
 msgid "cut_test_data_to_xml"
 msgstr ""
 
-#: xml/api-index-full.xml:397(link) xml/cut-test-data.xml:34(link)
+#: xml/api-index-full.xml:402(link) xml/cut-test-data.xml:34(link)
 #: xml/cut-test-data.xml:156(primary)
 msgid "cut_test_data_to_xml_string"
 msgstr ""
 
-#: xml/api-index-full.xml:400(link) xml/cut-test-iterator.xml:27(link)
+#: xml/api-index-full.xml:405(link) xml/cut-test-iterator.xml:27(link)
 #: xml/cut-test-iterator.xml:90(primary)
 msgid "cut_test_iterator_add_test"
 msgstr ""
 
-#: xml/api-index-full.xml:401(link) xml/cut-test-iterator.xml:23(link)
+#: xml/api-index-full.xml:406(link) xml/cut-test-iterator.xml:23(link)
 #: xml/cut-test-iterator.xml:63(primary)
 msgid "cut_test_iterator_new"
 msgstr ""
 
-#: xml/api-index-full.xml:402(link) xml/cut-test-iterator.xml:26(link)
+#: xml/api-index-full.xml:407(link) xml/cut-test-iterator.xml:26(link)
 #: xml/cut-test-iterator.xml:82(primary)
 msgid "cut_test_iterator_new_empty"
 msgstr ""
 
-#: xml/api-index-full.xml:404(link) xml/cut-stream-parser.xml:23(link)
+#: xml/api-index-full.xml:409(link) xml/cut-stream-parser.xml:23(link)
 #: xml/cut-stream-parser.xml:70(primary)
 msgid "cut_test_result_parser_new"
 msgstr ""
 
-#: xml/api-index-full.xml:405(link) xml/cut-test-runner.xml:22(link)
+#: xml/api-index-full.xml:410(link) xml/cut-test-runner.xml:22(link)
 #: xml/cut-test-runner.xml:62(primary)
 msgid "cut_test_runner_new"
 msgstr ""
 
-#: xml/api-index-full.xml:406(link) xml/cut-test-runner.xml:23(link)
+#: xml/api-index-full.xml:411(link) xml/cut-test-runner.xml:23(link)
 #: xml/cut-test-runner.xml:70(primary)
 msgid "cut_test_runner_run_test"
 msgstr ""
 
-#: xml/api-index-full.xml:407(link) xml/cut-test-runner.xml:26(link)
+#: xml/api-index-full.xml:412(link) xml/cut-test-runner.xml:26(link)
 #: xml/cut-test-runner.xml:89(primary)
 msgid "cut_test_runner_run_test_case"
 msgstr ""
 
-#: xml/api-index-full.xml:408(link) xml/cut-test-runner.xml:28(link)
+#: xml/api-index-full.xml:413(link) xml/cut-test-runner.xml:28(link)
 #: xml/cut-test-runner.xml:104(primary)
 msgid "cut_test_runner_run_test_iterator"
 msgstr ""
 
-#: xml/api-index-full.xml:409(link) xml/cut-test-runner.xml:31(link)
+#: xml/api-index-full.xml:414(link) xml/cut-test-runner.xml:31(link)
 #: xml/cut-test-runner.xml:123(primary)
 msgid "cut_test_runner_run_test_suite"
 msgstr ""
 
-#: xml/api-index-full.xml:412(link) xml/cut-types.xml:24(link)
+#: xml/api-index-full.xml:417(link) xml/cut-types.xml:24(link)
 #: xml/cut-types.xml:76(title) xml/cut-types.xml:77(primary)
 msgid "CUT_TRUE"
 msgstr ""
 
-#: xml/api-index-full.xml:413(link) xml/cut-ui.xml:22(link)
+#: xml/api-index-full.xml:418(link) xml/cut-ui.xml:22(link)
 #: xml/cut-ui.xml:55(primary)
 msgid "cut_ui_init"
 msgstr ""
 
-#: xml/api-index-full.xml:414(link) xml/cut-ui.xml:24(link)
+#: xml/api-index-full.xml:419(link) xml/cut-ui.xml:24(link)
 #: xml/cut-ui.xml:65(primary)
 msgid "cut_ui_new"
 msgstr ""
 
-#: xml/api-index-full.xml:415(link) xml/cut-ui.xml:23(link)
+#: xml/api-index-full.xml:420(link) xml/cut-ui.xml:23(link)
 #: xml/cut-ui.xml:60(primary)
 msgid "cut_ui_quit"
 msgstr ""
 
-#: xml/api-index-full.xml:416(link) xml/cut-ui.xml:27(link)
+#: xml/api-index-full.xml:421(link) xml/cut-ui.xml:27(link)
 #: xml/cut-ui.xml:84(primary)
 msgid "cut_ui_run"
 msgstr ""
 
-#: xml/api-index-full.xml:420(link) xml/gbsearcharray.xml:23(link)
+#: xml/api-index-full.xml:425(link) xml/gbsearcharray.xml:23(link)
 #: xml/gbsearcharray.xml:77(primary)
 msgid "GBSearchArrayFlags"
 msgstr ""
 
-#: xml/api-index-full.xml:421(link) xml/gbsearcharray.xml:66(primary)
+#: xml/api-index-full.xml:426(link) xml/gbsearcharray.xml:66(primary)
 msgid "GBSearchCompareFunc"
 msgstr ""
 
-#: xml/api-index-full.xml:422(link) xml/gcut-dynamic-data.xml:7(refentrytitle)
+#: xml/api-index-full.xml:427(link) xml/gcut-dynamic-data.xml:7(refentrytitle)
 #: xml/gcut-dynamic-data.xml:13(refname) xml/gcut-dynamic-data.xml:23(link)
 #: xml/gcut-dynamic-data.xml:26(link) xml/gcut-dynamic-data.xml:28(link)
 #: xml/gcut-dynamic-data.xml:30(link) xml/gcut-dynamic-data.xml:31(link)
@@ -3078,12 +3111,12 @@ msgstr ""
 msgid "GCutDynamicData"
 msgstr ""
 
-#: xml/api-index-full.xml:423(link) xml/gcut-dynamic-data.xml:24(link)
+#: xml/api-index-full.xml:428(link) xml/gcut-dynamic-data.xml:24(link)
 #: xml/gcut-dynamic-data.xml:106(primary)
 msgid "GCutDynamicDataError"
 msgstr ""
 
-#: xml/api-index-full.xml:424(link) xml/gcut-egg.xml:23(link)
+#: xml/api-index-full.xml:429(link) xml/gcut-egg.xml:23(link)
 #: xml/gcut-egg.xml:26(link) xml/gcut-egg.xml:28(link)
 #: xml/gcut-egg.xml:30(link) xml/gcut-egg.xml:32(link)
 #: xml/gcut-egg.xml:33(link) xml/gcut-egg.xml:34(link)
@@ -3098,367 +3131,367 @@ msgstr ""
 msgid "GCutEgg"
 msgstr ""
 
-#: xml/api-index-full.xml:429(link) xml/gcut-egg.xml:592(primary)
+#: xml/api-index-full.xml:434(link) xml/gcut-egg.xml:592(primary)
 msgid "GCutEgg:command"
 msgstr ""
 
-#: xml/api-index-full.xml:436(link) xml/gcut-assertions-helper.xml:94(link)
+#: xml/api-index-full.xml:441(link) xml/gcut-assertions-helper.xml:94(link)
 #: xml/gcut-assertions-helper.xml:507(primary)
 msgid "gcut_assert_equal_enum_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:438(link) xml/gcut-assertions-helper.xml:84(link)
+#: xml/api-index-full.xml:443(link) xml/gcut-assertions-helper.xml:84(link)
 #: xml/gcut-assertions-helper.xml:452(primary)
 msgid "gcut_assert_equal_error_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:440(link) xml/gcut-assertions-helper.xml:100(link)
+#: xml/api-index-full.xml:445(link) xml/gcut-assertions-helper.xml:100(link)
 #: xml/gcut-assertions-helper.xml:536(primary)
 msgid "gcut_assert_equal_flags_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:442(link) xml/gcut-assertions-helper.xml:68(link)
+#: xml/api-index-full.xml:447(link) xml/gcut-assertions-helper.xml:68(link)
 #: xml/gcut-assertions-helper.xml:376(primary)
 msgid "gcut_assert_equal_hash_table_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:444(link) xml/gcut-assertions-helper.xml:77(link)
+#: xml/api-index-full.xml:449(link) xml/gcut-assertions-helper.xml:77(link)
 #: xml/gcut-assertions-helper.xml:417(primary)
 msgid "gcut_assert_equal_hash_table_string_string_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:446(link) xml/gcut-assertions-helper.xml:112(link)
+#: xml/api-index-full.xml:451(link) xml/gcut-assertions-helper.xml:112(link)
 #: xml/gcut-assertions-helper.xml:594(primary)
 msgid "gcut_assert_equal_int64_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:449(link) xml/gcut-assertions-helper.xml:50(link)
+#: xml/api-index-full.xml:454(link) xml/gcut-assertions-helper.xml:50(link)
 #: xml/gcut-assertions-helper.xml:292(primary)
 msgid "gcut_assert_equal_list_enum_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:451(link) xml/gcut-assertions-helper.xml:56(link)
+#: xml/api-index-full.xml:456(link) xml/gcut-assertions-helper.xml:56(link)
 #: xml/gcut-assertions-helper.xml:321(primary)
 msgid "gcut_assert_equal_list_flags_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:452(link) xml/gcut-assertions-helper.xml:29(link)
+#: xml/api-index-full.xml:457(link) xml/gcut-assertions-helper.xml:29(link)
 #: xml/gcut-assertions-helper.xml:191(primary)
 msgid "gcut_assert_equal_list_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:454(link) xml/gcut-assertions-helper.xml:37(link)
+#: xml/api-index-full.xml:459(link) xml/gcut-assertions-helper.xml:37(link)
 #: xml/gcut-assertions-helper.xml:228(primary)
 msgid "gcut_assert_equal_list_int_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:457(link) xml/gcut-assertions-helper.xml:62(link)
+#: xml/api-index-full.xml:462(link) xml/gcut-assertions-helper.xml:62(link)
 #: xml/gcut-assertions-helper.xml:350(primary)
 msgid "gcut_assert_equal_list_object_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:459(link) xml/gcut-assertions-helper.xml:45(link)
+#: xml/api-index-full.xml:464(link) xml/gcut-assertions-helper.xml:45(link)
 #: xml/gcut-assertions-helper.xml:270(primary)
 msgid "gcut_assert_equal_list_string_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:461(link) xml/gcut-assertions-helper.xml:41(link)
+#: xml/api-index-full.xml:466(link) xml/gcut-assertions-helper.xml:41(link)
 #: xml/gcut-assertions-helper.xml:249(primary)
 msgid "gcut_assert_equal_list_uint_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:464(link) xml/gcut-assertions-helper.xml:106(link)
+#: xml/api-index-full.xml:469(link) xml/gcut-assertions-helper.xml:106(link)
 #: xml/gcut-assertions-helper.xml:565(primary)
 msgid "gcut_assert_equal_object_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:466(link) xml/gcut-assertions-helper.xml:120(link)
+#: xml/api-index-full.xml:471(link) xml/gcut-assertions-helper.xml:120(link)
 #: xml/gcut-assertions-helper.xml:636(primary)
 msgid "gcut_assert_equal_pid_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:468(link) xml/gcut-assertions-helper.xml:90(link)
+#: xml/api-index-full.xml:473(link) xml/gcut-assertions-helper.xml:90(link)
 #: xml/gcut-assertions-helper.xml:486(primary)
 msgid "gcut_assert_equal_time_val_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:470(link) xml/gcut-assertions-helper.xml:21(link)
+#: xml/api-index-full.xml:475(link) xml/gcut-assertions-helper.xml:21(link)
 #: xml/gcut-assertions-helper.xml:149(primary)
 msgid "gcut_assert_equal_type_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:472(link) xml/gcut-assertions-helper.xml:116(link)
+#: xml/api-index-full.xml:477(link) xml/gcut-assertions-helper.xml:116(link)
 #: xml/gcut-assertions-helper.xml:615(primary)
 msgid "gcut_assert_equal_uint64_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:474(link) xml/gcut-assertions-helper.xml:25(link)
+#: xml/api-index-full.xml:479(link) xml/gcut-assertions-helper.xml:25(link)
 #: xml/gcut-assertions-helper.xml:170(primary)
 msgid "gcut_assert_equal_value_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:476(link) xml/gcut-assertions-helper.xml:82(link)
+#: xml/api-index-full.xml:481(link) xml/gcut-assertions-helper.xml:82(link)
 #: xml/gcut-assertions-helper.xml:439(primary)
 msgid "gcut_assert_error_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:478(link) xml/gcut-assertions-helper.xml:124(link)
+#: xml/api-index-full.xml:483(link) xml/gcut-assertions-helper.xml:124(link)
 #: xml/gcut-assertions-helper.xml:657(primary)
 msgid "gcut_assert_not_equal_pid_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:480(link) xml/gcut-assertions-helper.xml:88(link)
+#: xml/api-index-full.xml:485(link) xml/gcut-assertions-helper.xml:88(link)
 #: xml/gcut-assertions-helper.xml:473(primary)
 msgid "gcut_assert_remove_path_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:482(link) xml/gcut-data-helper.xml:42(link)
+#: xml/api-index-full.xml:487(link) xml/gcut-data-helper.xml:42(link)
 #: xml/gcut-data-helper.xml:199(primary)
 msgid "gcut_data_get_boxed_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:484(link) xml/gcut-data-helper.xml:36(link)
+#: xml/api-index-full.xml:489(link) xml/gcut-data-helper.xml:36(link)
 #: xml/gcut-data-helper.xml:161(primary)
 msgid "gcut_data_get_enum_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:486(link) xml/gcut-data-helper.xml:33(link)
+#: xml/api-index-full.xml:491(link) xml/gcut-data-helper.xml:33(link)
 #: xml/gcut-data-helper.xml:142(primary)
 msgid "gcut_data_get_flags_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:488(link) xml/gcut-data-helper.xml:24(link)
+#: xml/api-index-full.xml:493(link) xml/gcut-data-helper.xml:24(link)
 #: xml/gcut-data-helper.xml:85(primary)
 msgid "gcut_data_get_int_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:490(link) xml/gcut-data-helper.xml:39(link)
+#: xml/api-index-full.xml:495(link) xml/gcut-data-helper.xml:39(link)
 #: xml/gcut-data-helper.xml:180(primary)
 msgid "gcut_data_get_pointer_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:492(link) xml/gcut-data-helper.xml:21(link)
+#: xml/api-index-full.xml:497(link) xml/gcut-data-helper.xml:21(link)
 #: xml/gcut-data-helper.xml:66(primary)
 msgid "gcut_data_get_string_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:494(link) xml/gcut-data-helper.xml:30(link)
+#: xml/api-index-full.xml:499(link) xml/gcut-data-helper.xml:30(link)
 #: xml/gcut-data-helper.xml:123(primary)
 msgid "gcut_data_get_type_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:496(link) xml/gcut-data-helper.xml:27(link)
+#: xml/api-index-full.xml:501(link) xml/gcut-data-helper.xml:27(link)
 #: xml/gcut-data-helper.xml:104(primary)
 msgid "gcut_data_get_uint_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:497(link) xml/gcut-dynamic-data.xml:22(link)
+#: xml/api-index-full.xml:502(link) xml/gcut-dynamic-data.xml:22(link)
 #: xml/gcut-dynamic-data.xml:91(primary)
 msgid "GCUT_DYNAMIC_DATA"
 msgstr ""
 
-#: xml/api-index-full.xml:498(link) xml/gcut-dynamic-data.xml:31(link)
+#: xml/api-index-full.xml:503(link) xml/gcut-dynamic-data.xml:31(link)
 #: xml/gcut-dynamic-data.xml:164(primary)
 msgid "gcut_dynamic_data_equal"
 msgstr ""
 
-#: xml/api-index-full.xml:499(link) xml/gcut-dynamic-data.xml:21(link)
+#: xml/api-index-full.xml:504(link) xml/gcut-dynamic-data.xml:21(link)
 #: xml/gcut-dynamic-data.xml:84(title) xml/gcut-dynamic-data.xml:85(primary)
 msgid "GCUT_DYNAMIC_DATA_ERROR"
 msgstr ""
 
-#: xml/api-index-full.xml:500(link) xml/gcut-dynamic-data.xml:25(link)
+#: xml/api-index-full.xml:505(link) xml/gcut-dynamic-data.xml:25(link)
 #: xml/gcut-dynamic-data.xml:115(primary)
 msgid "gcut_dynamic_data_error_quark"
 msgstr ""
 
-#: xml/api-index-full.xml:501(link) xml/gcut-dynamic-data.xml:54(link)
+#: xml/api-index-full.xml:506(link) xml/gcut-dynamic-data.xml:54(link)
 #: xml/gcut-dynamic-data.xml:312(primary)
 msgid "gcut_dynamic_data_get_boxed"
 msgstr ""
 
-#: xml/api-index-full.xml:502(link) xml/gcut-dynamic-data.xml:42(link)
+#: xml/api-index-full.xml:507(link) xml/gcut-dynamic-data.xml:42(link)
 #: xml/gcut-dynamic-data.xml:236(primary)
 msgid "gcut_dynamic_data_get_data_type"
 msgstr ""
 
-#: xml/api-index-full.xml:503(link) xml/gcut-dynamic-data.xml:48(link)
+#: xml/api-index-full.xml:508(link) xml/gcut-dynamic-data.xml:48(link)
 #: xml/gcut-dynamic-data.xml:274(primary)
 msgid "gcut_dynamic_data_get_enum"
 msgstr ""
 
-#: xml/api-index-full.xml:504(link) xml/gcut-dynamic-data.xml:45(link)
+#: xml/api-index-full.xml:509(link) xml/gcut-dynamic-data.xml:45(link)
 #: xml/gcut-dynamic-data.xml:255(primary)
 msgid "gcut_dynamic_data_get_flags"
 msgstr ""
 
-#: xml/api-index-full.xml:505(link) xml/gcut-dynamic-data.xml:36(link)
+#: xml/api-index-full.xml:510(link) xml/gcut-dynamic-data.xml:36(link)
 #: xml/gcut-dynamic-data.xml:198(primary)
 msgid "gcut_dynamic_data_get_int"
 msgstr ""
 
-#: xml/api-index-full.xml:506(link) xml/gcut-dynamic-data.xml:51(link)
+#: xml/api-index-full.xml:511(link) xml/gcut-dynamic-data.xml:51(link)
 #: xml/gcut-dynamic-data.xml:293(primary)
 msgid "gcut_dynamic_data_get_pointer"
 msgstr "gcut_dynamic_data_get_pointer"
 
-#: xml/api-index-full.xml:507(link) xml/gcut-dynamic-data.xml:33(link)
+#: xml/api-index-full.xml:512(link) xml/gcut-dynamic-data.xml:33(link)
 #: xml/gcut-dynamic-data.xml:179(primary)
 msgid "gcut_dynamic_data_get_string"
 msgstr ""
 
-#: xml/api-index-full.xml:508(link) xml/gcut-dynamic-data.xml:39(link)
+#: xml/api-index-full.xml:513(link) xml/gcut-dynamic-data.xml:39(link)
 #: xml/gcut-dynamic-data.xml:217(primary)
 msgid "gcut_dynamic_data_get_uint"
 msgstr ""
 
-#: xml/api-index-full.xml:509(link) xml/gcut-dynamic-data.xml:30(link)
+#: xml/api-index-full.xml:514(link) xml/gcut-dynamic-data.xml:30(link)
 #: xml/gcut-dynamic-data.xml:153(primary)
 msgid "gcut_dynamic_data_inspect"
 msgstr ""
 
-#: xml/api-index-full.xml:510(link) xml/gcut-dynamic-data.xml:26(link)
+#: xml/api-index-full.xml:515(link) xml/gcut-dynamic-data.xml:26(link)
 #: xml/gcut-dynamic-data.xml:123(primary)
 msgid "gcut_dynamic_data_new"
 msgstr ""
 
-#: xml/api-index-full.xml:511(link) xml/gcut-dynamic-data.xml:28(link)
+#: xml/api-index-full.xml:516(link) xml/gcut-dynamic-data.xml:28(link)
 #: xml/gcut-dynamic-data.xml:138(primary)
 msgid "gcut_dynamic_data_new_va_list"
 msgstr ""
 
-#: xml/api-index-full.xml:513(link) xml/gcut-egg.xml:22(link)
+#: xml/api-index-full.xml:518(link) xml/gcut-egg.xml:22(link)
 #: xml/gcut-egg.xml:173(title) xml/gcut-egg.xml:174(primary)
 msgid "GCUT_EGG_ERROR"
 msgstr ""
 
-#: xml/api-index-full.xml:514(link) xml/gcut-egg.xml:25(link)
+#: xml/api-index-full.xml:519(link) xml/gcut-egg.xml:25(link)
 #: xml/gcut-egg.xml:232(primary)
 msgid "gcut_egg_error_quark"
 msgstr ""
 
-#: xml/api-index-full.xml:535(link) xml/gcut-enum.xml:23(link)
+#: xml/api-index-full.xml:540(link) xml/gcut-enum.xml:23(link)
 #: xml/gcut-enum.xml:74(primary)
 msgid "gcut_enum_error_quark"
 msgstr ""
 
-#: xml/api-index-full.xml:550(link) xml/gcut-main.xml:21(link)
+#: xml/api-index-full.xml:555(link) xml/gcut-main.xml:21(link)
 #: xml/gcut-main.xml:46(primary)
 msgid "gcut_init"
 msgstr ""
 
-#: xml/api-index-full.xml:559(link) xml/gcut-io.xml:21(link)
+#: xml/api-index-full.xml:564(link) xml/gcut-io.xml:21(link)
 #: xml/gcut-io.xml:43(primary)
 msgid "gcut_io_inspect_condition"
 msgstr ""
 
-#: xml/api-index-full.xml:560(link) xml/gcut-key-file.xml:21(link)
+#: xml/api-index-full.xml:565(link) xml/gcut-key-file.xml:21(link)
 #: xml/gcut-key-file.xml:52(primary)
 msgid "gcut_key_file_get_enum"
 msgstr ""
 
-#: xml/api-index-full.xml:561(link) xml/gcut-key-file.xml:26(link)
+#: xml/api-index-full.xml:566(link) xml/gcut-key-file.xml:26(link)
 #: xml/gcut-key-file.xml:79(primary)
 msgid "gcut_key_file_get_flags"
 msgstr ""
 
-#: xml/api-index-full.xml:588(link) xml/gcut-main.xml:23(link)
+#: xml/api-index-full.xml:593(link) xml/gcut-main.xml:23(link)
 #: xml/gcut-main.xml:56(primary)
 msgid "gcut_quit"
 msgstr ""
 
-#: xml/api-index-full.xml:589(link) xml/gcut-string-io-channel.xml:23(link)
+#: xml/api-index-full.xml:594(link) xml/gcut-string-io-channel.xml:23(link)
 #: xml/gcut-string-io-channel.xml:85(primary)
 msgid "gcut_string_io_channel_clear"
 msgstr ""
 
-#: xml/api-index-full.xml:590(link) xml/gcut-string-io-channel.xml:24(link)
+#: xml/api-index-full.xml:595(link) xml/gcut-string-io-channel.xml:24(link)
 #: xml/gcut-string-io-channel.xml:94(primary)
 msgid "gcut_string_io_channel_get_buffer_limit"
 msgstr ""
 
-#: xml/api-index-full.xml:591(link) xml/gcut-string-io-channel.xml:29(link)
+#: xml/api-index-full.xml:596(link) xml/gcut-string-io-channel.xml:29(link)
 #: xml/gcut-string-io-channel.xml:120(primary)
 msgid "gcut_string_io_channel_get_limit"
 msgstr ""
 
-#: xml/api-index-full.xml:592(link) xml/gcut-string-io-channel.xml:37(link)
+#: xml/api-index-full.xml:597(link) xml/gcut-string-io-channel.xml:37(link)
 #: xml/gcut-string-io-channel.xml:170(primary)
 msgid "gcut_string_io_channel_get_pipe_mode"
 msgstr ""
 
-#: xml/api-index-full.xml:593(link) xml/gcut-string-io-channel.xml:32(link)
+#: xml/api-index-full.xml:598(link) xml/gcut-string-io-channel.xml:32(link)
 #: xml/gcut-string-io-channel.xml:144(primary)
 msgid "gcut_string_io_channel_get_read_fail"
 msgstr ""
 
-#: xml/api-index-full.xml:594(link) xml/gcut-string-io-channel.xml:22(link)
+#: xml/api-index-full.xml:599(link) xml/gcut-string-io-channel.xml:22(link)
 #: xml/gcut-string-io-channel.xml:74(primary)
 msgid "gcut_string_io_channel_get_string"
 msgstr ""
 
-#: xml/api-index-full.xml:595(link) xml/gcut-string-io-channel.xml:21(link)
+#: xml/api-index-full.xml:600(link) xml/gcut-string-io-channel.xml:21(link)
 #: xml/gcut-string-io-channel.xml:63(primary)
 msgid "gcut_string_io_channel_new"
 msgstr ""
 
-#: xml/api-index-full.xml:596(link) xml/gcut-string-io-channel.xml:26(link)
+#: xml/api-index-full.xml:601(link) xml/gcut-string-io-channel.xml:26(link)
 #: xml/gcut-string-io-channel.xml:106(primary)
 msgid "gcut_string_io_channel_set_buffer_limit"
 msgstr ""
 
-#: xml/api-index-full.xml:597(link) xml/gcut-string-io-channel.xml:30(link)
+#: xml/api-index-full.xml:602(link) xml/gcut-string-io-channel.xml:30(link)
 #: xml/gcut-string-io-channel.xml:131(primary)
 msgid "gcut_string_io_channel_set_limit"
 msgstr ""
 
-#: xml/api-index-full.xml:598(link) xml/gcut-string-io-channel.xml:39(link)
+#: xml/api-index-full.xml:603(link) xml/gcut-string-io-channel.xml:39(link)
 #: xml/gcut-string-io-channel.xml:182(primary)
 msgid "gcut_string_io_channel_set_pipe_mode"
 msgstr ""
 
-#: xml/api-index-full.xml:599(link) xml/gcut-string-io-channel.xml:34(link)
+#: xml/api-index-full.xml:604(link) xml/gcut-string-io-channel.xml:34(link)
 #: xml/gcut-string-io-channel.xml:156(primary)
 msgid "gcut_string_io_channel_set_read_fail"
 msgstr ""
 
-#: xml/api-index-full.xml:610(link) xml/gcut-main.xml:22(link)
+#: xml/api-index-full.xml:615(link) xml/gcut-main.xml:22(link)
 #: xml/gcut-main.xml:51(primary)
 msgid "gcut_value_equal_init"
 msgstr ""
 
-#: xml/api-index-full.xml:611(link) xml/gcut-main.xml:24(link)
+#: xml/api-index-full.xml:616(link) xml/gcut-main.xml:24(link)
 #: xml/gcut-main.xml:61(primary)
 msgid "gcut_value_equal_quit"
 msgstr ""
 
-#: xml/api-index-full.xml:615(link)
+#: xml/api-index-full.xml:620(link)
 #: xml/gdkcut-pixbuf-assertions-helper.xml:21(link)
 #: xml/gdkcut-pixbuf-assertions-helper.xml:48(primary)
 msgid "gdkcut_pixbuf_assert_equal_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:616(link) xml/gdkcut-pixbuf.xml:26(link)
+#: xml/api-index-full.xml:621(link) xml/gdkcut-pixbuf.xml:26(link)
 #: xml/gdkcut-pixbuf.xml:89(primary)
 msgid "gdkcut_pixbuf_diff"
 msgstr ""
 
-#: xml/api-index-full.xml:617(link) xml/gdkcut-pixbuf.xml:23(link)
+#: xml/api-index-full.xml:622(link) xml/gdkcut-pixbuf.xml:23(link)
 #: xml/gdkcut-pixbuf.xml:70(primary)
 msgid "gdkcut_pixbuf_equal_content"
 msgstr ""
 
-#: xml/api-index-full.xml:618(link) xml/gdkcut-pixbuf.xml:21(link)
+#: xml/api-index-full.xml:623(link) xml/gdkcut-pixbuf.xml:21(link)
 #: xml/gdkcut-pixbuf.xml:55(primary)
 msgid "gdkcut_pixbuf_equal_property"
 msgstr ""
 
-#: xml/api-index-full.xml:619(link) xml/gdkcut-pixbuf.xml:29(link)
+#: xml/api-index-full.xml:624(link) xml/gdkcut-pixbuf.xml:29(link)
 #: xml/gdkcut-pixbuf.xml:108(primary)
 msgid "gdkcut_pixbuf_save_diff"
 msgstr ""
 
-#: xml/api-index-full.xml:620(link)
+#: xml/api-index-full.xml:625(link)
 #: xml/gst-cutter-console-output.xml:7(refentrytitle)
 #: xml/gst-cutter-console-output.xml:13(refname)
 #: xml/gst-cutter-console-output.xml:21(link)
@@ -3467,13 +3500,13 @@ msgstr ""
 msgid "GstCutterConsoleOutput"
 msgstr ""
 
-#: xml/api-index-full.xml:621(link) xml/gst-cutter-server.xml:7(refentrytitle)
+#: xml/api-index-full.xml:626(link) xml/gst-cutter-server.xml:7(refentrytitle)
 #: xml/gst-cutter-server.xml:13(refname) xml/gst-cutter-server.xml:21(link)
 #: xml/gst-cutter-server.xml:42(title) xml/gst-cutter-server.xml:43(primary)
 msgid "GstCutterServer"
 msgstr ""
 
-#: xml/api-index-full.xml:622(link)
+#: xml/api-index-full.xml:627(link)
 #: xml/gst-cutter-test-runner.xml:7(refentrytitle)
 #: xml/gst-cutter-test-runner.xml:13(refname)
 #: xml/gst-cutter-test-runner.xml:21(link)
@@ -3482,55 +3515,55 @@ msgstr ""
 msgid "GstCutterTestRunner"
 msgstr ""
 
-#: xml/api-index-full.xml:623(link) xml/gbsearcharray.xml:21(link)
+#: xml/api-index-full.xml:628(link) xml/gbsearcharray.xml:21(link)
 #: xml/gbsearcharray.xml:53(primary)
 msgid "G_BSEARCH_ARRAY_CMP"
 msgstr ""
 
-#: xml/api-index-full.xml:624(link) xml/gbsearcharray.xml:24(link)
+#: xml/api-index-full.xml:629(link) xml/gbsearcharray.xml:24(link)
 #: xml/gbsearcharray.xml:87(primary)
 msgid "g_bsearch_array_get_n_nodes"
 msgstr ""
 
-#: xml/api-index-full.xml:625(link) xml/gbsearcharray.xml:25(link)
+#: xml/api-index-full.xml:630(link) xml/gbsearcharray.xml:25(link)
 #: xml/gbsearcharray.xml:96(primary)
 msgid "g_bsearch_array_lookup"
 msgstr ""
 
-#: xml/api-index-full.xml:626(link) xml/gbsearcharray.xml:27(link)
+#: xml/api-index-full.xml:631(link) xml/gbsearcharray.xml:27(link)
 #: xml/gbsearcharray.xml:126(primary)
 msgid "g_bsearch_array_lookup_insertion"
 msgstr ""
 
-#: xml/api-index-full.xml:627(link) xml/gbsearcharray.xml:26(link)
+#: xml/api-index-full.xml:632(link) xml/gbsearcharray.xml:26(link)
 #: xml/gbsearcharray.xml:111(primary)
 msgid "g_bsearch_array_lookup_sibling"
 msgstr ""
 
-#: xml/api-index-full.xml:628(link) xml/gbsearcharray.xml:29(link)
+#: xml/api-index-full.xml:633(link) xml/gbsearcharray.xml:29(link)
 #: xml/gbsearcharray.xml:150(primary)
 msgid "G_BSEARCH_ARRAY_NODES"
 msgstr ""
 
-#: xml/api-index-full.xml:629(link) xml/gbsearcharray.xml:28(link)
+#: xml/api-index-full.xml:634(link) xml/gbsearcharray.xml:28(link)
 #: xml/gbsearcharray.xml:141(primary)
 msgid "G_BSEARCH_UPPER_POWER2"
 msgstr ""
 
-#: xml/api-index-full.xml:631(title)
+#: xml/api-index-full.xml:636(title)
 msgid "I"
 msgstr ""
 
-#: xml/api-index-full.xml:632(link) xml/gbsearcharray.xml:30(link)
+#: xml/api-index-full.xml:637(link) xml/gbsearcharray.xml:30(link)
 #: xml/gbsearcharray.xml:160(primary)
 msgid "if"
 msgstr ""
 
-#: xml/api-index-full.xml:634(title)
+#: xml/api-index-full.xml:639(title)
 msgid "M"
 msgstr ""
 
-#: xml/api-index-full.xml:635(link) xml/gbsearcharray.xml:31(link)
+#: xml/api-index-full.xml:640(link) xml/gbsearcharray.xml:31(link)
 #: xml/gbsearcharray.xml:168(primary)
 msgid "MIN"
 msgstr ""
@@ -3541,7 +3574,7 @@ msgstr ""
 #: xml/cut-cairo-pie-chart.xml:8(manvolnum) xml/cut-cairo.xml:8(manvolnum)
 #: xml/cut-contractor.xml:8(manvolnum)
 #: xml/cut-crash-backtrace.xml:8(manvolnum) xml/cut-diff.xml:8(manvolnum)
-#: xml/cut-experimental.xml:8(manvolnum)
+#: xml/cut-elf-loader.xml:8(manvolnum) xml/cut-experimental.xml:8(manvolnum)
 #: xml/cut-factory-builder.xml:8(manvolnum) xml/cut-features.xml:8(manvolnum)
 #: xml/cut-file-stream-reader.xml:8(manvolnum) xml/cut-helper.xml:8(manvolnum)
 #: xml/cut-image-hlp-loader.xml:8(manvolnum)
@@ -3550,8 +3583,8 @@ msgstr ""
 #: xml/cut-mach-o-loader.xml:8(manvolnum) xml/cut-main.xml:8(manvolnum)
 #: xml/cut-module-factory-utils.xml:8(manvolnum)
 #: xml/cut-module-factory.xml:8(manvolnum)
-#: xml/cut-multi-process.xml:8(manvolnum) xml/cut-pipeline.xml:8(manvolnum)
-#: xml/cut-process.xml:8(manvolnum)
+#: xml/cut-multi-process.xml:8(manvolnum) xml/cut-pe-loader.xml:8(manvolnum)
+#: xml/cut-pipeline.xml:8(manvolnum) xml/cut-process.xml:8(manvolnum)
 #: xml/cut-report-factory-builder.xml:8(manvolnum)
 #: xml/cut-report.xml:8(manvolnum) xml/cut-run-context.xml:8(manvolnum)
 #: xml/cut-runner.xml:8(manvolnum) xml/cut-sequence-matcher.xml:8(manvolnum)
@@ -3594,6 +3627,7 @@ msgstr ""
 #: xml/cut-cairo-pie-chart.xml:9(refmiscinfo) xml/cut-cairo.xml:9(refmiscinfo)
 #: xml/cut-contractor.xml:9(refmiscinfo)
 #: xml/cut-crash-backtrace.xml:9(refmiscinfo) xml/cut-diff.xml:9(refmiscinfo)
+#: xml/cut-elf-loader.xml:9(refmiscinfo)
 #: xml/cut-experimental.xml:9(refmiscinfo)
 #: xml/cut-factory-builder.xml:9(refmiscinfo)
 #: xml/cut-features.xml:9(refmiscinfo)
@@ -3607,7 +3641,8 @@ msgstr ""
 #: xml/cut-module-factory-utils.xml:9(refmiscinfo)
 #: xml/cut-module-factory.xml:9(refmiscinfo)
 #: xml/cut-multi-process.xml:9(refmiscinfo)
-#: xml/cut-pipeline.xml:9(refmiscinfo) xml/cut-process.xml:9(refmiscinfo)
+#: xml/cut-pe-loader.xml:9(refmiscinfo) xml/cut-pipeline.xml:9(refmiscinfo)
+#: xml/cut-process.xml:9(refmiscinfo)
 #: xml/cut-report-factory-builder.xml:9(refmiscinfo)
 #: xml/cut-report.xml:9(refmiscinfo) xml/cut-run-context.xml:9(refmiscinfo)
 #: xml/cut-runner.xml:9(refmiscinfo)
@@ -3653,18 +3688,18 @@ msgstr "Cutterライブラリ"
 #: xml/cut-cairo-chart-data.xml:18(title)
 #: xml/cut-cairo-pie-chart.xml:18(title) xml/cut-cairo.xml:18(title)
 #: xml/cut-contractor.xml:18(title) xml/cut-crash-backtrace.xml:18(title)
-#: xml/cut-diff.xml:18(title) xml/cut-experimental.xml:18(title)
-#: xml/cut-factory-builder.xml:18(title) xml/cut-features.xml:18(title)
-#: xml/cut-file-stream-reader.xml:18(title) xml/cut-helper.xml:19(title)
-#: xml/cut-image-hlp-loader.xml:18(title) xml/cut-iterated-test.xml:18(title)
-#: xml/cut-listener-utils.xml:18(title) xml/cut-listener.xml:18(title)
-#: xml/cut-mach-o-loader.xml:18(title) xml/cut-main.xml:18(title)
-#: xml/cut-module-factory-utils.xml:18(title)
+#: xml/cut-diff.xml:18(title) xml/cut-elf-loader.xml:18(title)
+#: xml/cut-experimental.xml:18(title) xml/cut-factory-builder.xml:18(title)
+#: xml/cut-features.xml:18(title) xml/cut-file-stream-reader.xml:18(title)
+#: xml/cut-helper.xml:19(title) xml/cut-image-hlp-loader.xml:18(title)
+#: xml/cut-iterated-test.xml:18(title) xml/cut-listener-utils.xml:18(title)
+#: xml/cut-listener.xml:18(title) xml/cut-mach-o-loader.xml:18(title)
+#: xml/cut-main.xml:18(title) xml/cut-module-factory-utils.xml:18(title)
 #: xml/cut-module-factory.xml:18(title) xml/cut-multi-process.xml:19(title)
-#: xml/cut-pipeline.xml:18(title) xml/cut-process.xml:18(title)
-#: xml/cut-report-factory-builder.xml:18(title) xml/cut-report.xml:18(title)
-#: xml/cut-run-context.xml:18(title) xml/cut-runner.xml:18(title)
-#: xml/cut-sequence-matcher.xml:18(title)
+#: xml/cut-pe-loader.xml:18(title) xml/cut-pipeline.xml:18(title)
+#: xml/cut-process.xml:18(title) xml/cut-report-factory-builder.xml:18(title)
+#: xml/cut-report.xml:18(title) xml/cut-run-context.xml:18(title)
+#: xml/cut-runner.xml:18(title) xml/cut-sequence-matcher.xml:18(title)
 #: xml/cut-stream-factory-builder.xml:18(title)
 #: xml/cut-stream-parser.xml:18(title) xml/cut-stream-reader.xml:18(title)
 #: xml/cut-stream.xml:18(title) xml/cut-test-data.xml:18(title)
@@ -3697,11 +3732,12 @@ msgstr "概要"
 #: xml/cut-analyzer.xml:23(link) xml/cut-cairo-chart-data.xml:25(link)
 #: xml/cut-contractor.xml:25(link) xml/cut-crash-backtrace.xml:23(link)
 #: xml/cut-crash-backtrace.xml:24(link) xml/cut-diff.xml:25(link)
-#: xml/cut-diff.xml:26(link) xml/cut-image-hlp-loader.xml:23(link)
-#: xml/cut-image-hlp-loader.xml:24(link) xml/cut-mach-o-loader.xml:23(link)
+#: xml/cut-diff.xml:26(link) xml/cut-elf-loader.xml:23(link)
+#: xml/cut-elf-loader.xml:24(link) xml/cut-mach-o-loader.xml:23(link)
 #: xml/cut-mach-o-loader.xml:24(link) xml/cut-main.xml:24(link)
 #: xml/cut-main.xml:25(link) xml/cut-main.xml:29(link)
-#: xml/cut-module-factory-utils.xml:32(link) xml/cut-process.xml:29(link)
+#: xml/cut-module-factory-utils.xml:32(link) xml/cut-pe-loader.xml:23(link)
+#: xml/cut-pe-loader.xml:24(link) xml/cut-process.xml:29(link)
 #: xml/cut-run-context.xml:35(link) xml/cut-run-context.xml:36(link)
 #: xml/cut-run-context.xml:37(link) xml/cut-run-context.xml:71(link)
 #: xml/cut-run-context.xml:73(link) xml/cut-run-context.xml:92(link)
@@ -3739,9 +3775,9 @@ msgstr ""
 #: xml/cut-contractor.xml:26(link) xml/cut-diff.xml:22(link)
 #: xml/cut-diff.xml:23(link) xml/cut-diff.xml:24(link)
 #: xml/cut-diff.xml:25(link) xml/cut-diff.xml:26(link)
-#: xml/cut-factory-builder.xml:22(link) xml/cut-factory-builder.xml:23(link)
-#: xml/cut-file-stream-reader.xml:25(link)
-#: xml/cut-image-hlp-loader.xml:22(link) xml/cut-iterated-test.xml:23(link)
+#: xml/cut-elf-loader.xml:22(link) xml/cut-factory-builder.xml:22(link)
+#: xml/cut-factory-builder.xml:23(link)
+#: xml/cut-file-stream-reader.xml:25(link) xml/cut-iterated-test.xml:23(link)
 #: xml/cut-mach-o-loader.xml:22(link)
 #: xml/cut-module-factory-utils.xml:23(link)
 #: xml/cut-module-factory-utils.xml:26(link)
@@ -3756,38 +3792,39 @@ msgstr ""
 #: xml/cut-module-factory.xml:22(link) xml/cut-module-factory.xml:23(link)
 #: xml/cut-module-factory.xml:24(link) xml/cut-module-factory.xml:26(link)
 #: xml/cut-module-factory.xml:27(link) xml/cut-module-factory.xml:28(link)
-#: xml/cut-module-factory.xml:33(link) xml/cut-process.xml:27(link)
-#: xml/cut-process.xml:28(link) xml/cut-process.xml:32(link)
-#: xml/cut-report.xml:22(link) xml/cut-report.xml:23(link)
-#: xml/cut-report.xml:25(link) xml/cut-report.xml:26(link)
-#: xml/cut-report.xml:27(link) xml/cut-report.xml:28(link)
-#: xml/cut-report.xml:29(link) xml/cut-report.xml:30(link)
-#: xml/cut-report.xml:31(link) xml/cut-report.xml:32(link)
-#: xml/cut-report.xml:33(link) xml/cut-report.xml:34(link)
-#: xml/cut-report.xml:35(link) xml/cut-run-context.xml:24(link)
-#: xml/cut-run-context.xml:25(link) xml/cut-run-context.xml:28(link)
-#: xml/cut-run-context.xml:29(link) xml/cut-run-context.xml:32(link)
-#: xml/cut-run-context.xml:33(link) xml/cut-run-context.xml:42(link)
-#: xml/cut-run-context.xml:43(link) xml/cut-run-context.xml:46(link)
-#: xml/cut-run-context.xml:47(link) xml/cut-run-context.xml:51(link)
-#: xml/cut-run-context.xml:52(link) xml/cut-run-context.xml:56(link)
-#: xml/cut-run-context.xml:57(link) xml/cut-run-context.xml:89(link)
-#: xml/cut-run-context.xml:91(link) xml/cut-run-context.xml:100(link)
-#: xml/cut-run-context.xml:104(link) xml/cut-run-context.xml:105(link)
-#: xml/cut-sequence-matcher.xml:46(link) xml/cut-sequence-matcher.xml:47(link)
-#: xml/cut-sequence-matcher.xml:48(link) xml/cut-sequence-matcher.xml:49(link)
-#: xml/cut-sequence-matcher.xml:52(link) xml/cut-sequence-matcher.xml:53(link)
-#: xml/cut-sequence-matcher.xml:55(link) xml/cut-sequence-matcher.xml:56(link)
-#: xml/cut-stream-parser.xml:25(link) xml/cut-stream-reader.xml:32(link)
-#: xml/cut-stream.xml:21(link) xml/cut-stream.xml:25(link)
-#: xml/cut-stream.xml:26(link) xml/cut-test-data.xml:22(link)
-#: xml/cut-test-data.xml:26(link) xml/cut-test-data.xml:28(link)
-#: xml/cut-test-data.xml:33(link) xml/cut-test-iterator.xml:23(link)
-#: xml/cut-ui.xml:24(link) xml/cut-ui.xml:25(link)
-#: xml/cuttest-assertions.xml:48(link) xml/cuttest-assertions.xml:49(link)
-#: xml/cuttest-assertions.xml:50(link) xml/cuttest-assertions.xml:51(link)
-#: xml/cuttest-assertions.xml:52(link) xml/cuttest-utils.xml:24(link)
-#: xml/cuttest-utils.xml:26(link) xml/gcut-assertions-helper.xml:23(link)
+#: xml/cut-module-factory.xml:33(link) xml/cut-pe-loader.xml:22(link)
+#: xml/cut-process.xml:27(link) xml/cut-process.xml:28(link)
+#: xml/cut-process.xml:32(link) xml/cut-report.xml:22(link)
+#: xml/cut-report.xml:23(link) xml/cut-report.xml:25(link)
+#: xml/cut-report.xml:26(link) xml/cut-report.xml:27(link)
+#: xml/cut-report.xml:28(link) xml/cut-report.xml:29(link)
+#: xml/cut-report.xml:30(link) xml/cut-report.xml:31(link)
+#: xml/cut-report.xml:32(link) xml/cut-report.xml:33(link)
+#: xml/cut-report.xml:34(link) xml/cut-report.xml:35(link)
+#: xml/cut-run-context.xml:24(link) xml/cut-run-context.xml:25(link)
+#: xml/cut-run-context.xml:28(link) xml/cut-run-context.xml:29(link)
+#: xml/cut-run-context.xml:32(link) xml/cut-run-context.xml:33(link)
+#: xml/cut-run-context.xml:42(link) xml/cut-run-context.xml:43(link)
+#: xml/cut-run-context.xml:46(link) xml/cut-run-context.xml:47(link)
+#: xml/cut-run-context.xml:51(link) xml/cut-run-context.xml:52(link)
+#: xml/cut-run-context.xml:56(link) xml/cut-run-context.xml:57(link)
+#: xml/cut-run-context.xml:89(link) xml/cut-run-context.xml:91(link)
+#: xml/cut-run-context.xml:100(link) xml/cut-run-context.xml:104(link)
+#: xml/cut-run-context.xml:105(link) xml/cut-sequence-matcher.xml:46(link)
+#: xml/cut-sequence-matcher.xml:47(link) xml/cut-sequence-matcher.xml:48(link)
+#: xml/cut-sequence-matcher.xml:49(link) xml/cut-sequence-matcher.xml:52(link)
+#: xml/cut-sequence-matcher.xml:53(link) xml/cut-sequence-matcher.xml:55(link)
+#: xml/cut-sequence-matcher.xml:56(link) xml/cut-stream-parser.xml:25(link)
+#: xml/cut-stream-reader.xml:32(link) xml/cut-stream.xml:21(link)
+#: xml/cut-stream.xml:25(link) xml/cut-stream.xml:26(link)
+#: xml/cut-test-data.xml:22(link) xml/cut-test-data.xml:26(link)
+#: xml/cut-test-data.xml:28(link) xml/cut-test-data.xml:33(link)
+#: xml/cut-test-iterator.xml:23(link) xml/cut-ui.xml:24(link)
+#: xml/cut-ui.xml:25(link) xml/cuttest-assertions.xml:48(link)
+#: xml/cuttest-assertions.xml:49(link) xml/cuttest-assertions.xml:50(link)
+#: xml/cuttest-assertions.xml:51(link) xml/cuttest-assertions.xml:52(link)
+#: xml/cuttest-utils.xml:24(link) xml/cuttest-utils.xml:26(link)
+#: xml/gcut-assertions-helper.xml:23(link)
 #: xml/gcut-assertions-helper.xml:24(link)
 #: xml/gcut-assertions-helper.xml:27(link)
 #: xml/gcut-assertions-helper.xml:28(link)
@@ -3893,13 +3930,14 @@ msgid "GError"
 msgstr ""
 
 #: xml/cut-analyzer.xml:26(link) xml/cut-contractor.xml:23(link)
-#: xml/cut-contractor.xml:24(link) xml/cut-factory-builder.xml:27(link)
-#: xml/cut-factory-builder.xml:28(link) xml/cut-image-hlp-loader.xml:26(link)
+#: xml/cut-contractor.xml:24(link) xml/cut-elf-loader.xml:25(link)
+#: xml/cut-factory-builder.xml:27(link) xml/cut-factory-builder.xml:28(link)
 #: xml/cut-mach-o-loader.xml:25(link)
-#: xml/cut-module-factory-utils.xml:31(link) xml/cut-run-context.xml:70(link)
-#: xml/cut-run-context.xml:81(link) xml/cut-run-context.xml:82(link)
-#: xml/cut-sequence-matcher.xml:59(link) xml/cut-sequence-matcher.xml:67(link)
-#: xml/cut-sequence-matcher.xml:68(link) xml/cut-sequence-matcher.xml:69(link)
+#: xml/cut-module-factory-utils.xml:31(link) xml/cut-pe-loader.xml:25(link)
+#: xml/cut-run-context.xml:70(link) xml/cut-run-context.xml:81(link)
+#: xml/cut-run-context.xml:82(link) xml/cut-sequence-matcher.xml:59(link)
+#: xml/cut-sequence-matcher.xml:67(link) xml/cut-sequence-matcher.xml:68(link)
+#: xml/cut-sequence-matcher.xml:69(link)
 #: xml/gcut-assertions-helper.xml:29(link)
 #: xml/gcut-assertions-helper.xml:30(link)
 #: xml/gcut-assertions-helper.xml:37(link)
@@ -3956,18 +3994,18 @@ msgstr ""
 #: xml/cut-cairo-chart-data.xml:41(title)
 #: xml/cut-cairo-pie-chart.xml:44(title) xml/cut-cairo.xml:38(title)
 #: xml/cut-contractor.xml:41(title) xml/cut-crash-backtrace.xml:46(title)
-#: xml/cut-diff.xml:39(title) xml/cut-experimental.xml:37(title)
-#: xml/cut-factory-builder.xml:41(title) xml/cut-features.xml:35(title)
-#: xml/cut-file-stream-reader.xml:38(title) xml/cut-helper.xml:44(title)
-#: xml/cut-image-hlp-loader.xml:40(title) xml/cut-iterated-test.xml:43(title)
-#: xml/cut-listener-utils.xml:36(title) xml/cut-listener.xml:38(title)
-#: xml/cut-mach-o-loader.xml:38(title) xml/cut-main.xml:42(title)
-#: xml/cut-module-factory-utils.xml:48(title)
+#: xml/cut-diff.xml:39(title) xml/cut-elf-loader.xml:38(title)
+#: xml/cut-experimental.xml:37(title) xml/cut-factory-builder.xml:41(title)
+#: xml/cut-features.xml:35(title) xml/cut-file-stream-reader.xml:38(title)
+#: xml/cut-helper.xml:44(title) xml/cut-image-hlp-loader.xml:33(title)
+#: xml/cut-iterated-test.xml:43(title) xml/cut-listener-utils.xml:36(title)
+#: xml/cut-listener.xml:38(title) xml/cut-mach-o-loader.xml:38(title)
+#: xml/cut-main.xml:42(title) xml/cut-module-factory-utils.xml:48(title)
 #: xml/cut-module-factory.xml:46(title) xml/cut-multi-process.xml:86(title)
-#: xml/cut-pipeline.xml:39(title) xml/cut-process.xml:46(title)
-#: xml/cut-report-factory-builder.xml:34(title) xml/cut-report.xml:48(title)
-#: xml/cut-run-context.xml:135(title) xml/cut-runner.xml:37(title)
-#: xml/cut-sequence-matcher.xml:83(title)
+#: xml/cut-pe-loader.xml:38(title) xml/cut-pipeline.xml:39(title)
+#: xml/cut-process.xml:46(title) xml/cut-report-factory-builder.xml:34(title)
+#: xml/cut-report.xml:48(title) xml/cut-run-context.xml:135(title)
+#: xml/cut-runner.xml:37(title) xml/cut-sequence-matcher.xml:83(title)
 #: xml/cut-stream-factory-builder.xml:34(title)
 #: xml/cut-stream-parser.xml:42(title) xml/cut-stream-reader.xml:47(title)
 #: xml/cut-stream.xml:40(title) xml/cut-test-data.xml:49(title)
@@ -4003,18 +4041,18 @@ msgstr "説明"
 #: xml/cut-cairo-chart-data.xml:47(title)
 #: xml/cut-cairo-pie-chart.xml:50(title) xml/cut-cairo.xml:44(title)
 #: xml/cut-contractor.xml:47(title) xml/cut-crash-backtrace.xml:52(title)
-#: xml/cut-diff.xml:45(title) xml/cut-experimental.xml:45(title)
-#: xml/cut-factory-builder.xml:47(title) xml/cut-features.xml:41(title)
-#: xml/cut-file-stream-reader.xml:44(title) xml/cut-helper.xml:121(title)
-#: xml/cut-image-hlp-loader.xml:46(title) xml/cut-iterated-test.xml:49(title)
-#: xml/cut-listener-utils.xml:42(title) xml/cut-listener.xml:44(title)
-#: xml/cut-mach-o-loader.xml:44(title) xml/cut-main.xml:48(title)
-#: xml/cut-module-factory-utils.xml:54(title)
+#: xml/cut-diff.xml:45(title) xml/cut-elf-loader.xml:44(title)
+#: xml/cut-experimental.xml:45(title) xml/cut-factory-builder.xml:47(title)
+#: xml/cut-features.xml:41(title) xml/cut-file-stream-reader.xml:44(title)
+#: xml/cut-helper.xml:121(title) xml/cut-image-hlp-loader.xml:39(title)
+#: xml/cut-iterated-test.xml:49(title) xml/cut-listener-utils.xml:42(title)
+#: xml/cut-listener.xml:44(title) xml/cut-mach-o-loader.xml:44(title)
+#: xml/cut-main.xml:48(title) xml/cut-module-factory-utils.xml:54(title)
 #: xml/cut-module-factory.xml:52(title) xml/cut-multi-process.xml:106(title)
-#: xml/cut-pipeline.xml:45(title) xml/cut-process.xml:52(title)
-#: xml/cut-report-factory-builder.xml:40(title) xml/cut-report.xml:54(title)
-#: xml/cut-run-context.xml:141(title) xml/cut-runner.xml:43(title)
-#: xml/cut-sequence-matcher.xml:89(title)
+#: xml/cut-pe-loader.xml:44(title) xml/cut-pipeline.xml:45(title)
+#: xml/cut-process.xml:52(title) xml/cut-report-factory-builder.xml:40(title)
+#: xml/cut-report.xml:54(title) xml/cut-run-context.xml:141(title)
+#: xml/cut-runner.xml:43(title) xml/cut-sequence-matcher.xml:89(title)
 #: xml/cut-stream-factory-builder.xml:40(title)
 #: xml/cut-stream-parser.xml:48(title) xml/cut-stream-reader.xml:53(title)
 #: xml/cut-stream.xml:46(title) xml/cut-test-data.xml:55(title)
@@ -4076,20 +4114,19 @@ msgstr ""
 #: xml/cut-crash-backtrace.xml:74(term) xml/cut-crash-backtrace.xml:85(term)
 #: xml/cut-diff.xml:66(term) xml/cut-diff.xml:77(term)
 #: xml/cut-diff.xml:88(term) xml/cut-diff.xml:99(term)
+#: xml/cut-elf-loader.xml:61(term) xml/cut-elf-loader.xml:72(term)
+#: xml/cut-elf-loader.xml:83(term) xml/cut-elf-loader.xml:94(term)
 #: xml/cut-experimental.xml:68(term) xml/cut-factory-builder.xml:64(term)
 #: xml/cut-factory-builder.xml:75(term) xml/cut-factory-builder.xml:100(term)
 #: xml/cut-factory-builder.xml:111(term)
 #: xml/cut-file-stream-reader.xml:73(term)
-#: xml/cut-file-stream-reader.xml:84(term)
-#: xml/cut-image-hlp-loader.xml:63(term) xml/cut-image-hlp-loader.xml:74(term)
-#: xml/cut-image-hlp-loader.xml:86(term) xml/cut-image-hlp-loader.xml:98(term)
-#: xml/cut-iterated-test.xml:83(term) xml/cut-iterated-test.xml:91(term)
-#: xml/cut-iterated-test.xml:102(term) xml/cut-mach-o-loader.xml:61(term)
-#: xml/cut-mach-o-loader.xml:72(term) xml/cut-mach-o-loader.xml:83(term)
-#: xml/cut-mach-o-loader.xml:94(term) xml/cut-main.xml:72(term)
-#: xml/cut-main.xml:80(term) xml/cut-main.xml:97(term)
-#: xml/cut-main.xml:105(term) xml/cut-main.xml:116(term)
-#: xml/cut-module-factory-utils.xml:71(term)
+#: xml/cut-file-stream-reader.xml:84(term) xml/cut-iterated-test.xml:83(term)
+#: xml/cut-iterated-test.xml:91(term) xml/cut-iterated-test.xml:102(term)
+#: xml/cut-mach-o-loader.xml:61(term) xml/cut-mach-o-loader.xml:72(term)
+#: xml/cut-mach-o-loader.xml:83(term) xml/cut-mach-o-loader.xml:94(term)
+#: xml/cut-main.xml:72(term) xml/cut-main.xml:80(term)
+#: xml/cut-main.xml:97(term) xml/cut-main.xml:105(term)
+#: xml/cut-main.xml:116(term) xml/cut-module-factory-utils.xml:71(term)
 #: xml/cut-module-factory-utils.xml:119(term)
 #: xml/cut-module-factory-utils.xml:134(term)
 #: xml/cut-module-factory-utils.xml:149(term)
@@ -4105,6 +4142,8 @@ msgstr ""
 #: xml/cut-multi-process.xml:526(term) xml/cut-multi-process.xml:540(term)
 #: xml/cut-multi-process.xml:557(term) xml/cut-multi-process.xml:591(term)
 #: xml/cut-multi-process.xml:621(term) xml/cut-multi-process.xml:650(term)
+#: xml/cut-pe-loader.xml:61(term) xml/cut-pe-loader.xml:72(term)
+#: xml/cut-pe-loader.xml:83(term) xml/cut-pe-loader.xml:94(term)
 #: xml/cut-pipeline.xml:78(term) xml/cut-pipeline.xml:86(term)
 #: xml/cut-pipeline.xml:97(term) xml/cut-process.xml:66(term)
 #: xml/cut-process.xml:77(term) xml/cut-process.xml:92(term)
@@ -7299,6 +7338,74 @@ msgstr ""
 msgid "<link linkend=\"gboolean\">gboolean</link>            cut_diff_need_fold                  (const <link linkend=\"gchar\">gchar</link> *diff);"
 msgstr ""
 
+#: xml/cut-elf-loader.xml:20(synopsis)
+#, no-wrap
+msgid ""
+"\n"
+"                    <placeholder-1/>;\n"
+"<placeholder-2/> *      <placeholder-3/>                  (const <placeholder-4/> *so_filename);\n"
+"<placeholder-5/>            <placeholder-6/>               (<placeholder-7/> *loader);\n"
+"<placeholder-8/>            <placeholder-9/>    (<placeholder-10/> *loader);\n"
+"<placeholder-11/> *             <placeholder-12/>      (<placeholder-13/> *loader);\n"
+msgstr ""
+
+#: xml/cut-elf-loader.xml:47(programlisting)
+#, no-wrap
+msgid ""
+"typedef struct {\n"
+"    GObject object;\n"
+"} CutELFLoader;\n"
+msgstr ""
+
+#: xml/cut-elf-loader.xml:54(title)
+msgid "cut_elf_loader_new ()"
+msgstr ""
+
+#: xml/cut-elf-loader.xml:55(programlisting)
+#, no-wrap
+msgid "<link linkend=\"CutELFLoader\">CutELFLoader</link> *      cut_elf_loader_new                  (const <link linkend=\"gchar\">gchar</link> *so_filename);"
+msgstr ""
+
+#: xml/cut-elf-loader.xml:58(term) xml/cut-mach-o-loader.xml:58(term)
+#: xml/cut-pe-loader.xml:58(term)
+msgid "<parameter>so_filename</parameter> :"
+msgstr ""
+
+#: xml/cut-elf-loader.xml:65(title)
+msgid "cut_elf_loader_is_elf ()"
+msgstr ""
+
+#: xml/cut-elf-loader.xml:66(programlisting)
+#, no-wrap
+msgid "<link linkend=\"gboolean\">gboolean</link>            cut_elf_loader_is_elf               (<link linkend=\"CutELFLoader\">CutELFLoader</link> *loader);"
+msgstr ""
+
+#: xml/cut-elf-loader.xml:69(term) xml/cut-elf-loader.xml:80(term)
+#: xml/cut-elf-loader.xml:91(term) xml/cut-mach-o-loader.xml:69(term)
+#: xml/cut-mach-o-loader.xml:80(term) xml/cut-mach-o-loader.xml:91(term)
+#: xml/cut-pe-loader.xml:69(term) xml/cut-pe-loader.xml:80(term)
+#: xml/cut-pe-loader.xml:91(term)
+msgid "<parameter>loader</parameter> :"
+msgstr ""
+
+#: xml/cut-elf-loader.xml:76(title)
+msgid "cut_elf_loader_support_attribute ()"
+msgstr ""
+
+#: xml/cut-elf-loader.xml:77(programlisting)
+#, no-wrap
+msgid "<link linkend=\"gboolean\">gboolean</link>            cut_elf_loader_support_attribute    (<link linkend=\"CutELFLoader\">CutELFLoader</link> *loader);"
+msgstr ""
+
+#: xml/cut-elf-loader.xml:87(title)
+msgid "cut_elf_loader_collect_symbols ()"
+msgstr ""
+
+#: xml/cut-elf-loader.xml:88(programlisting)
+#, no-wrap
+msgid "<link linkend=\"GList\">GList</link> *             cut_elf_loader_collect_symbols      (<link linkend=\"CutELFLoader\">CutELFLoader</link> *loader);"
+msgstr ""
+
 #: xml/cut-experimental.xml:7(refentrytitle)
 #: xml/cut-experimental.xml:13(refname)
 msgid "Experimental"
@@ -8190,75 +8297,9 @@ msgstr ""
 msgid "a traced expression."
 msgstr "呼び出されたと記録される式。"
 
-#: xml/cut-image-hlp-loader.xml:20(synopsis)
-#, no-wrap
-msgid ""
-"\n"
-"                    <placeholder-1/>;\n"
-"<placeholder-2/> * <placeholder-3/>            (const <placeholder-4/> *so_filename);\n"
-"<placeholder-5/>            <placeholder-6/>         (<placeholder-7/> *loader);\n"
-"<placeholder-8/>            <placeholder-9/>\n"
-"                                                        (<placeholder-10/> *loader);\n"
-"<placeholder-11/> *             <placeholder-12/>\n"
-"                                                        (<placeholder-13/> *loader);\n"
-msgstr ""
-
-#: xml/cut-image-hlp-loader.xml:49(programlisting)
-#, no-wrap
-msgid ""
-"typedef struct {\n"
-"    GObject object;\n"
-"} CutImageHlpLoader;\n"
-msgstr ""
-
-#: xml/cut-image-hlp-loader.xml:56(title)
-msgid "cut_image_hlp_loader_new ()"
-msgstr ""
-
-#: xml/cut-image-hlp-loader.xml:57(programlisting)
-#, no-wrap
-msgid "<link linkend=\"CutImageHlpLoader\">CutImageHlpLoader</link> * cut_image_hlp_loader_new            (const <link linkend=\"gchar\">gchar</link> *so_filename);"
-msgstr ""
-
-#: xml/cut-image-hlp-loader.xml:60(term) xml/cut-mach-o-loader.xml:58(term)
-msgid "<parameter>so_filename</parameter> :"
-msgstr ""
-
-#: xml/cut-image-hlp-loader.xml:67(title)
-msgid "cut_image_hlp_loader_is_dll ()"
-msgstr ""
-
-#: xml/cut-image-hlp-loader.xml:68(programlisting)
-#, no-wrap
-msgid "<link linkend=\"gboolean\">gboolean</link>            cut_image_hlp_loader_is_dll         (<link linkend=\"CutImageHlpLoader\">CutImageHlpLoader</link> *loader);"
-msgstr ""
-
-#: xml/cut-image-hlp-loader.xml:71(term) xml/cut-image-hlp-loader.xml:83(term)
-#: xml/cut-image-hlp-loader.xml:95(term) xml/cut-mach-o-loader.xml:69(term)
-#: xml/cut-mach-o-loader.xml:80(term) xml/cut-mach-o-loader.xml:91(term)
-msgid "<parameter>loader</parameter> :"
-msgstr ""
-
-#: xml/cut-image-hlp-loader.xml:78(title)
-msgid "cut_image_hlp_loader_support_attribute ()"
-msgstr ""
-
-#: xml/cut-image-hlp-loader.xml:79(programlisting)
-#, no-wrap
-msgid ""
-"<link linkend=\"gboolean\">gboolean</link>            cut_image_hlp_loader_support_attribute\n"
-"                                                        (<link linkend=\"CutImageHlpLoader\">CutImageHlpLoader</link> *loader);"
-msgstr ""
-
-#: xml/cut-image-hlp-loader.xml:90(title)
-msgid "cut_image_hlp_loader_collect_symbols ()"
-msgstr ""
-
-#: xml/cut-image-hlp-loader.xml:91(programlisting)
-#, no-wrap
-msgid ""
-"<link linkend=\"GList\">GList</link> *             cut_image_hlp_loader_collect_symbols\n"
-"                                                        (<link linkend=\"CutImageHlpLoader\">CutImageHlpLoader</link> *loader);"
+#: xml/cut-image-hlp-loader.xml:7(refentrytitle)
+#: xml/cut-image-hlp-loader.xml:13(refname)
+msgid "CutImageHlpLoader"
 msgstr ""
 
 #: xml/cut-iterated-test.xml:21(link)
@@ -9855,6 +9896,61 @@ msgid ""
 msgstr ""
 "<parameter>group</parameter>内の非同期で実行されたすべてのサブcutterプロセス"
 "の終了を待ち、終了結果を返します。"
+
+#: xml/cut-pe-loader.xml:20(synopsis)
+#, no-wrap
+msgid ""
+"\n"
+"                    <placeholder-1/>;\n"
+"<placeholder-2/> *       <placeholder-3/>                   (const <placeholder-4/> *so_filename);\n"
+"<placeholder-5/>            <placeholder-6/>                (<placeholder-7/> *loader);\n"
+"<placeholder-8/>            <placeholder-9/>     (<placeholder-10/> *loader);\n"
+"<placeholder-11/> *             <placeholder-12/>       (<placeholder-13/> *loader);\n"
+msgstr ""
+
+#: xml/cut-pe-loader.xml:47(programlisting)
+#, no-wrap
+msgid ""
+"typedef struct {\n"
+"    GObject object;\n"
+"} CutPELoader;\n"
+msgstr ""
+
+#: xml/cut-pe-loader.xml:54(title)
+msgid "cut_pe_loader_new ()"
+msgstr ""
+
+#: xml/cut-pe-loader.xml:55(programlisting)
+#, no-wrap
+msgid "<link linkend=\"CutPELoader\">CutPELoader</link> *       cut_pe_loader_new                   (const <link linkend=\"gchar\">gchar</link> *so_filename);"
+msgstr ""
+
+#: xml/cut-pe-loader.xml:65(title)
+msgid "cut_pe_loader_is_dll ()"
+msgstr ""
+
+#: xml/cut-pe-loader.xml:66(programlisting)
+#, no-wrap
+msgid "<link linkend=\"gboolean\">gboolean</link>            cut_pe_loader_is_dll                (<link linkend=\"CutPELoader\">CutPELoader</link> *loader);"
+msgstr ""
+
+#: xml/cut-pe-loader.xml:76(title)
+msgid "cut_pe_loader_support_attribute ()"
+msgstr ""
+
+#: xml/cut-pe-loader.xml:77(programlisting)
+#, no-wrap
+msgid "<link linkend=\"gboolean\">gboolean</link>            cut_pe_loader_support_attribute     (<link linkend=\"CutPELoader\">CutPELoader</link> *loader);"
+msgstr ""
+
+#: xml/cut-pe-loader.xml:87(title)
+msgid "cut_pe_loader_collect_symbols ()"
+msgstr ""
+
+#: xml/cut-pe-loader.xml:88(programlisting)
+#, no-wrap
+msgid "<link linkend=\"GList\">GList</link> *             cut_pe_loader_collect_symbols       (<link linkend=\"CutPELoader\">CutPELoader</link> *loader);"
+msgstr ""
 
 #: xml/cut-pipeline.xml:20(synopsis)
 #, no-wrap

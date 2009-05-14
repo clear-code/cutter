@@ -23,9 +23,10 @@
       </ul>
       <ul class="menu">
 	<li id="menu-readme"><a href="reference/ja/readme.html">はじめに</a></li>
+	<li id="menu-install"><a href="reference/ja/install.html">インストール</a></li>
 	<li id="menu-tutorial"><a href="reference/ja/tutorial.html">チュートリアル</a></li>
 	<li id="menu-reference"><a href="reference/ja/">リファレンス</a></li>
-	<li id="menu-download"><a href="http://downloads.sourceforge.net/cutter/cutter-1.0.6.tar.gz">ダウンロード</a></li>
+	<li id="menu-download"><a href="http://downloads.sourceforge.net/cutter/cutter-1.0.7.tar.gz">ダウンロード</a></li>
 	<!--li id="menu-blog"><a href="blog/ja/">ブログ</a></li-->
       </ul>
     </div>
@@ -34,8 +35,10 @@
       <div class="main">
 	<h2>最新リリース</h2>
 	<p>
-	  2009-03-01にリリースされた1.0.6が最新です。
-          [<a href="http://downloads.sourceforge.net/cutter/cutter-1.0.6.tar.gz">ダウンロード</a>]
+	  2009-05-XXにリリースされた1.0.7が最新です。
+        </p>
+	<p>
+          [<a href="http://downloads.sourceforge.net/cutter/cutter-1.0.7.tar.gz">ダウンロード</a>]
 	</p>
 
         <h2>Cutterとは</h2>
@@ -51,6 +54,14 @@
           <li><a href="reference/ja/readme.html">はじめに</a></li>
           <li><a href="reference/ja/features.html">機能</a></li>
           <li><a href="reference/ja/tutorial.html">チュートリアル</a></li>
+          <li>
+            <a href="reference/ja/install.html">インストール</a>
+            <ul class="sidebar-install">
+              <li><a href="reference/ja/install-to-debian.html">Debian GNU/Linux</a></li>
+              <li><a href="reference/ja/install-to-cygwin.html">Cygwin</a></li>
+              <li><a href="reference/ja/install-to-others.html">Others</a></li>
+            </ul>
+          </li>
           <li><a href="reference/ja/">リファレンス</a></li>
           <li><a href="reference/ja/users.html">Cutter採用プロジェクト</a></li>
           <li><a href="https://lists.sourceforge.net/lists/listinfo/cutter-users-ja">メーリングリスト</a></li>

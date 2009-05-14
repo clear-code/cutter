@@ -1,8 +1,14 @@
 SUBDIRS = reference
 
-EXTRA_DIST =		\
-	cutter.rd	\
-	cutter.rd.ja	\
+EXTRA_DIST =					\
+	cutter.rd				\
+	cutter.rd.ja				\
+	install-to-debian.rd			\
+	install-to-debian.rd.ja			\
+	install-to-cygwin.rd			\
+	install-to-cygwin.rd.ja			\
+	install-to-others.rd			\
+	install-to-others.rd.ja			\
 	$(svg_images)
 
 svg_images =					\
@@ -20,6 +26,8 @@ dist_ja_man1_mans =	\
 	cutter.jman
 
 EXTRA_DIST += $(dist_ja_man1_mans)
+
+jman: $(dist_ja_man1_mans)
 
 install-data-local:
 	test -z "$(DESTDIR)$(ja_man1dir)" || $(MKDIR_P) "$(DESTDIR)$(ja_man1dir)"

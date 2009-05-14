@@ -1,3 +1,7 @@
+2009-05-15  Kouhei Sutou  <kou@cozmixng.org>
+
+	* README*, doc/, html/: add install documents.
+
 2009-05-14  Kouhei Sutou  <kou@cozmixng.org>
 
 	* apt/{debian,ubuntu}/dists/.htaccess: enable indexes.
