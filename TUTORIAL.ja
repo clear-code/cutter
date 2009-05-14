@@ -513,6 +513,9 @@ stack_new()が宣言されていないため警告がでるが共有ライブラ
   [stack]% file test/.libs/test_stack.so
   test/.libs/test_stack.so: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, not stripped
 
+注: Cygwin上では未解決のシンボルがあるときは作成できない。
+Cygwin環境の場合は気にせずに次に進むこと。
+
 ==== stack_new()/stack_is_empty()の宣言
 
 stack_new()、stack_is_empty()を宣言し、警告を解消する。
@@ -537,6 +540,13 @@ makeをして警告がでないことを確認する。
 
 stack_new()が定義されていないため読み込みに失敗するが、テス
 トプログラムが読み込まれることは確認できる。
+
+注: Cygwin上では未解決のシンボルがあるときはDLL作成できないの
+で、エラーにならず、「0個のテストを実行して失敗しなかった」結
+果が報告される。以降の作業の中でスタックを実装し、未解決のシ
+ンボルが解決されればDLLが作成され、テストが実行できるようにな
+る。それまではテストの実行結果が異なる。Cygwin環境の場合は気
+にせずに次に進むこと。
 
 ==== テスト起動の自動化
 
@@ -581,6 +591,11 @@ makeの出力を抑えるオプション（silent）であり、これを指定�
   Please report to you@example.com
   ================================
   ...
+
+
+注: 前述のとおり、Cygwin上ではDLLが作成できないため、エラーは
+発生しない。Cygwin環境の場合は実行結果が異なっても気にせずに
+次に進むこと。
 
 ==== test/run-test.shの単独実行のサポート
 
@@ -640,6 +655,8 @@ test/run-test.shを直接実行してテストが起動することを確認す�
 
   [stack]% test/run-test.sh
   cutter: symbol lookup error: test/.libs/test_stack.so: undefined symbol: stack_new
+
+注: Cygwin環境ではエラーは発生しない。
 
 ここからはmake -s checkではなくtest/run-test.shを使用する。こ
 れは必要な情報のみが出力され、本当に興味のあるテストの結果が
@@ -709,6 +726,8 @@ src/Makefile.amを作成するとこのエラーはなくなる。
   [stack]% test/run-test.sh
   cutter: symbol lookup error: test/.libs/test_stack.so: undefined symbol: stack_new
 
+注: Cygwin環境ではエラーは発生しない。
+
 makeは通るようになるが、この時点ではsrc/stack.cはビルドされ
 ないし、テストプログラムもlibstack.soをリンクしていないので
 stack_new()が定義されていないエラーは変わらない。
@@ -743,6 +762,8 @@ makeでsrc/.libs/libstack.so.0.0.0を生成することができる。
   [stack]% file src/.libs/libstack.so.0.0.0
   src/.libs/libstack.so.0.0.0: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, not stripped
 
+注: Cygwin上ではsrc/.libs/cyglibstack.dllが作成される。
+
 ==== src/libstack.laのリンク
 
 libstack.soはできたがテストプログラムにはリンクしていないの
@@ -751,6 +772,8 @@ libstack.soはできたがテストプログラムにはリンクしていない
   [stack]% test/run-test.sh
   cutter: symbol lookup error: test/.libs/test_stack.so: undefined symbol: stack_new
 
+注: Cygwin環境ではエラーは発生しない。
+
 libstack.soをリンクするためにtest/Makefile.amを以下のように
 変更する。
 
@@ -758,6 +781,24 @@ test/Makefile.am:
   ...
   LIBS = $(CUTTER_LIBS) $(top_builddir)/src/libstack.la
   ...
+
+Cygwin環境の場合はsrc/.libs/以下に生成されるスタックを実装し
+たDLLを利用するために、src/.libs/にパスを通す必要がある。その
+ため、以下のようにtest/run-test.shでcutterを実行する前にPATH
+を設定する。
+
+test/run-test.sh:
+  ...
+  case `uname` in
+      CYGWIN*)
+          PATH="$top_dir/src/.libs:$PATH"
+          ;;
+      *)
+          :
+          ;;
+  esac
+
+  $CUTTER -s $BASE_DIR "$@" $BASE_DIR
 
 テストプログラムを再リンクする必要があるため、一度make clean
 してからビルドしなおす。
@@ -770,6 +811,8 @@ test/Makefile.am:
 今まではstack_new()が見つからずにエラーが発生していたが、
 stack_is_empty()が見つからないというエラーに変わった。これに
 より、libstack.soがリンクされていることが確認できた。
+
+注: Cygwin環境ではエラーは発生しない。
 
 ==== stack_is_empty()の実装
 
@@ -869,6 +912,8 @@ test/test-stack.c:
 
   [stack]% test/run-test.sh
   cutter: symbol lookup error: ./test/.libs/test_stack.so: undefined symbol: stack_get_size
+
+注: Cygwin環境ではエラーは発生しない？
 
 このテストをパスするようにpushを実装する。
 
@@ -1255,6 +1300,8 @@ test/test-stack.c:
 stack_pop()を定義していないためエラーが発生している。エラー
 メッセージの前に「.」が二つ出ているので既存のテストはパスし
 ていることが確認できる。
+
+注: Cygwin環境ではエラーは発生しない？
 
 === stack_pop()の実装
 

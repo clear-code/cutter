@@ -1,5 +1,9 @@
 2009-05-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* sample/stack/test/run-test.sh: add src/.libs to PATH on Cygwin.
+
+	* TUTORIAL*: add notes for Cygwin environment.
+
 	* README*: add Yamakawa Hiroshi to Thanks list. Thanks!!!
 
 	* TUTORIAL*, sample/stack/Makefile.am (ACLOCAL_AMFLAGS): use

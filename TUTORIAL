@@ -526,6 +526,10 @@ can build a shared library.
   [stack]% file test/.libs/test_stack.so
   test/.libs/test_stack.so: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, not stripped
 
+NOTE: We can't generate a shared library (DLL) on Cygwin
+when we have unresolved symbols. We can go to the next step
+on Cygwin without caring the command result.
+
 ==== Declare stack_new()/stack_is_empty()
 
 To suppress a warning, we declare stack_new() and stack_is_empty().
@@ -549,6 +553,13 @@ Now, we can run a test because we got a shared library.
 
 Loading our test is failed due to undefined stack_new() but
 we can confirm that our test is loaded.
+
+NOTE: We get a "0 tests are ran and no failure" result
+report on Cygwin because we can't generate a DLL on Cygwin
+when we have unresolved symbols. We will implement stack and
+resolve all symbols. We can generate a DLL and run test
+after implementing stack. We can go to the next step on
+Cygwin without caring the command result.
 
 ==== Automate running test
 
@@ -593,6 +604,10 @@ is for silence mode. A test result can be confirmed more easier.
   Please report to you@example.com
   ================================
   ...
+
+NOTE: As mentioned the above, we doesn't get an error on
+Cygwin because we can't generate a DLL for now. We doesn't
+need to care it. We can go to the next.
 
 ==== Make test/run-test.sh workable alone
 
@@ -654,6 +669,8 @@ invoked from 'make -s check'.
 
   [stack]% test/run-test.sh
   cutter: symbol lookup error: test/.libs/test_stack.so: undefined symbol: stack_new
+
+NOTE: We doesn't get the error on Cygwin.
 
 We will use test/run-test.sh instead of 'make -s check' from
 now. Test result that is what we are interested
@@ -724,6 +741,8 @@ To resolve the above error, we need to make src/Makefile.am.
   [stack]% test/run-test.sh
   cutter: symbol lookup error: test/.libs/test_stack.so: undefined symbol: stack_new
 
+NOTE: We doesn't get the error on Cygwin.
+
 make doesn't report error but we still have an error that
 stack_new() is undefined. Because we don't build src/stack.c
 and test program also doesn't link libstack.so yet.
@@ -757,6 +776,8 @@ make will generate src/.libs/libstack.so.0.0.0 now.
   [stack]% file src/.libs/libstack.so.0.0.0
   src/.libs/libstack.so.0.0.0: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, not stripped
 
+NOTE: We will generate src/.libs/cyglibstack.dll on Cygwin.
+
 ==== Link src/libstack.la
 
 libstack.so is generated but it's not linked into test
@@ -765,6 +786,8 @@ program. So there is still run-time error.
   [stack]% test/run-test.sh
   cutter: symbol lookup error: test/.libs/test_stack.so: undefined symbol: stack_new
 
+NOTE: We doesn't get the error on Cygwin.
+
 To link libstack.so, we will change test/Makefile.am like
 the following.
 
@@ -772,6 +795,23 @@ test/Makefile.am:
   ...
   LIBS = $(CUTTER_LIBS) $(top_builddir)/src/libstack.la
   ...
+
+We need to add src/.libs/ to PATH environment variable
+before run cutter to find DLL generated under src/.libs/ on
+Cygwin:
+
+test/run-test.sh:
+  ...
+  case `uname` in
+      CYGWIN*)
+          PATH="$top_dir/src/.libs:$PATH"
+          ;;
+      *)
+          :
+          ;;
+  esac
+
+  $CUTTER -s $BASE_DIR "$@" $BASE_DIR
 
 We need to run 'make clean' to re-link our test program.
 
@@ -783,6 +823,8 @@ We need to run 'make clean' to re-link our test program.
 An error message is changed to stack_is_empty() isn't found
 from stack_new() isn't found. We can confirm that
 libstack.so is linked correctly by this change.
+
+NOTE: We doesn't get the error on Cygwin.
 
 ==== Implement stack_is_empty()
 
@@ -848,7 +890,7 @@ number of tests is just one. So one "." means all tests are
 passed.
 
 The above result may be displayed in green. This means that
-we may go the next step because our all tests are passed.
+we may go to the next step because our all tests are passed.
 
 We confirmed that test is worked. We will complete stack
 implementation with writing tests.
@@ -886,6 +928,8 @@ undefined if we run test.
   cutter: symbol lookup error: ./test/.libs/test_stack.so: undefined symbol: stack_get_size
 
 We will implement push to pass this test.
+
+NOTE: We doesn't get the error on Cygwin.
 
 === Implement cut_stack_push()
 
@@ -1274,6 +1318,8 @@ We can run test.
 There is an error that reports stack_pop() isn't defined. We
 can confirm that existed two tests are passed because there
 are two "." before the error message.
+
+NOTE: We doesn't get the error on Cygwin.
 
 === Implement stack_pop()
 

@@ -10,4 +10,13 @@ if test -z "$CUTTER"; then
     CUTTER="`make -s -C $BASE_DIR echo-cutter`"
 fi
 
+case `uname` in
+    CYGWIN*)
+	PATH="$top_dir/src/.libs:$PATH"
+	;;
+    *)
+	:
+	;;
+esac
+
 $CUTTER -s $BASE_DIR "$@" $BASE_DIR
