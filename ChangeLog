@@ -1,5 +1,7 @@
 2009-05-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* apt/{debian,ubuntu}/dists/.htaccess: enable indexes.
+
 	* sample/stack/test/run-test.sh: add src/.libs to PATH on Cygwin.
 
 	* TUTORIAL*: add notes for Cygwin environment.
