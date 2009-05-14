@@ -1,5 +1,7 @@
 2009-05-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/run-test.sh: add PATH on Cygwin.
+
 	* configure.ac: disable BFD detection by default.
 
 2009-05-14  Kouhei Sutou  <kou@clear-code.com>

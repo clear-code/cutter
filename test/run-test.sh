@@ -45,4 +45,17 @@ fi
 if test x"$USE_GTK" = x"yes"; then
     CUTTER_ARGS="-u gtk $CUTTER_ARGS"
 fi
+
+case `uname` in
+    CYGWIN*)
+	PATH="$top_dir/cutter/.libs:$PATH"
+	PATH="$top_dir/gcutter/.libs:$PATH"
+	PATH="$top_dir/gdkcutter-pixbuf/.libs:$PATH"
+	PATH="$top_dir/test/lib/.libs:$PATH"
+	;;
+    *)
+	:
+	;;
+esac
+
 $CUTTER_WRAPPER $CUTTER $CUTTER_ARGS "$@" $BASE_DIR
