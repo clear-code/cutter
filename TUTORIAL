@@ -240,11 +240,21 @@ Makefile.am.
 
 ==== Build configuration in test/
 
-Makefile.am is empty for now. To build test/test-stack.c in
-test/ directory, we need to specify that there is test/
-directory as sub directory in Makefile.am.
+Makefile.am is empty for now.
+
+First, put the following configuration to use ACLOCAL_ARGS
+environment variable for autogen.sh with aclocal invoked
+via make:
 
 Makefile.am:
+  ACLOCAL_AMFLAGS = $$ACLOCAL_ARGS
+
+Next, to build test/test-stack.c in test/ directory, we need
+to specify that there is test/ directory as sub directory in
+Makefile.am.
+
+Makefile.am:
+  ...
   SUBDIRS = test
 
 make will detect Makefile.am is changed and update Makefile
@@ -325,6 +335,7 @@ environments, shared library isn't generated without
 Windows.)
 
 test/Makefile.am:
+  ...
   LDFLAGS = -module -rpath $(libdir) -avoid-version -no-undefined
 
 To build test/test_stack.la, test/test-stack.c is
@@ -332,6 +343,7 @@ used. (test_stack.so is generated into test/.libs/.) We need
 to specify this.
 
 test/Makefile.am:
+  ...
   test_stack_la_SOURCES = test-stack.c
 
 Now, we can build test/test_stack.la.
@@ -395,7 +407,8 @@ test/Makefile.am:
   LIBS = $(CUTTER_LIBS)
   ...
 
-The followings are the current whole configure.ac and test/Makefile.am:
+The followings are the current whole configure.ac,
+Makefile.am and test/Makefile.am:
 
 configure.ac:
   AC_PREREQ(2.59)
@@ -414,6 +427,11 @@ configure.ac:
                    test/Makefile])
 
   AC_OUTPUT
+
+Makefile.am:
+  ACLOCAL_AMFLAGS = $$ACLOCAL_ARGS
+
+  SUBDIRS = test
 
 test/Makefile.am:
   noinst_LTLIBRARIES = test_stack.la
@@ -683,6 +701,8 @@ We will build src/stack.c with make. src/ should be included
 into build targets like test/.
 
 Makefile.am:
+  ACLOCAL_AMFLAGS = $$ACLOCAL_ARGS
+
   SUBDIRS = src test
 
 configure.ac:

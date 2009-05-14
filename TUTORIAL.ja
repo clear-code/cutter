@@ -232,11 +232,20 @@ Cutterの各テストは共有ライブラリになる。上記で作成した�
 
 ==== test/以下でのビルド設定
 
-現在のMakefile.amは空である。サブディレクトリであるtest/以下
-のtest/test-stack.cをビルドするためにはMakefile.amにtest/以
-下がサブディレクトリとして存在することを指定する。
+現在のMakefile.amは空である。
+
+まず、make経由でaclocalが実行された場合にもautogen.sh用に設
+定したACLOCAL_ARGS環境変数が使われるように以下を追記する。
 
 Makefile.am:
+  ACLOCAL_AMFLAGS = $$ACLOCAL_ARGS
+
+次に、サブディレクトリであるtest/以下のtest/test-stack.cをビ
+ルドするためにはMakefile.amにtest/以下がサブディレクトリとし
+て存在することを指定する。
+
+Makefile.am:
+  ...
   SUBDIRS = test
 
 Makefile.amを変更した後にmakeを実行すると、makeがMakefile.am
@@ -313,6 +322,7 @@ cutterから動的に読み込まれる。動的に読み込まれる共有ラ�
 Windows上でDLLを作成する場合）
 
 test/Makefile.am:
+  ...
   LDFLAGS = -module -rpath $(libdir) -avoid-version -no-undefined
 
 test/test_stack.laのビルド（test_stack.soはtest/.libs/以下に
@@ -320,6 +330,7 @@ test/test_stack.laのビルド（test_stack.soはtest/.libs/以下に
 る。
 
 test/Makefile.am:
+  ...
   test_stack_la_SOURCES = test-stack.c
 
 これでtest/test_stack.laがビルドできる。
@@ -383,8 +394,8 @@ test/Makefile.am:
   LIBS = $(CUTTER_LIBS)
   ...
 
-現時点での完全なconfigure.acとtest/Makefile.amは以下のように
-なる。
+現時点での完全なconfigure.ac、Makefile.am、test/Makefile.amは
+以下のようになる。
 
 configure.ac:
   AC_PREREQ(2.59)
@@ -403,6 +414,11 @@ configure.ac:
                    test/Makefile])
 
   AC_OUTPUT
+
+Makefile.am:
+  ACLOCAL_AMFLAGS = $$ACLOCAL_ARGS
+
+  SUBDIRS = test
 
 test/Makefile.am:
   noinst_LTLIBRARIES = test_stack.la
@@ -670,6 +686,8 @@ src/stack.c:
 対象とする。
 
 Makefile.am:
+  ACLOCAL_AMFLAGS = $$ACLOCAL_ARGS
+
   SUBDIRS = src test
 
 configure.ac:

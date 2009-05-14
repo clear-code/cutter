@@ -1,5 +1,10 @@
 2009-05-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* README*: add Yamakawa Hiroshi to Thanks list. Thanks!!!
+
+	* TUTORIAL*, sample/stack/Makefile.am (ACLOCAL_AMFLAGS): use
+	ACLOCAL_ARGS environment variable with aclocal invoked via make.
+
 	* Makefile.am (ACLOCAL_AMFLAGS): use ACLOCAL_OPTIONS environment
 	variable.
 
