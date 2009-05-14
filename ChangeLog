@@ -1,3 +1,7 @@
+2009-05-14  Kouhei Sutou  <kou@cozmixng.org>
+
+	* configure.ac: disable BFD detection by default.
+
 2009-05-14  Kouhei Sutou  <kou@clear-code.com>
 
 	* cutter/cut-pipeline.c, cutter/cut-process.c: use _pipe() in io.h
@@ -17,6 +21,8 @@
 	support PE COFF parsing without imagehlp.
 
 2009-05-12  Kouhei Sutou  <kou@cozmixng.org>
+
+	* configure.ac, cutter/Makefile.am: libelf.h isn't needed.
 
 	* configure.ac, cutter/Makefile.am: detect libelf.h. (just only detect)
 

@@ -166,10 +166,10 @@ AM_CONDITIONAL([HAVE_GDK_PIXBUF], [test "$gdk_pixbuf_exists" = "yes"])
 # Checks for libraries.
 AC_MSG_CHECKING([whether to try to use BFD])
 AC_ARG_ENABLE([bfd],
-              AS_HELP_STRING([--disable-bfd],
-                             [Disable BFD support]),
+              AS_HELP_STRING([--enable-bfd],
+                             [Enable BFD detection]),
               [ac_cv_enable_bfd=$enableval],
-              [ac_cv_enable_bfd=yes])
+              [ac_cv_enable_bfd=no])
 AC_MSG_RESULT([$ac_cv_enable_bfd])
 
 bfd_available=no
