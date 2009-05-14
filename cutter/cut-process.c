@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2009  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -30,13 +30,15 @@
 
 #ifdef HAVE_UNISTD_H
 #  include <unistd.h>
+#else
+#  ifdef HAVE_IO_H
+#    include <io.h>
+#    define pipe(phandles) _pipe(phandles, 4096, _O_BINARY)
+#  endif
 #endif
+
 #ifdef HAVE_SYS_WAIT_H
 #  include <sys/wait.h>
-#endif
-#ifdef HAVE_IO_H
-#  include <io.h>
-#  define pipe(phandles) _pipe(phandles, 4096, _O_BINARY)
 #endif
 
 #include <glib.h>

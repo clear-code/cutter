@@ -1,3 +1,8 @@
+2009-05-14  Kouhei Sutou  <kou@clear-code.com>
+
+	* cutter/cut-pipeline.c, cutter/cut-process.c: use _pipe() in io.h
+	only when unistd.h doesn't exist.
+
 2009-05-14  Kouhei Sutou  <kou@cozmixng.org>
 
 	* TODO: remove: use imagehlp.h on Windows.
