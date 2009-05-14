@@ -1,5 +1,8 @@
 2009-05-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* Makefile.am (ACLOCAL_AMFLAGS): use ACLOCAL_OPTIONS environment
+	variable.
+
 	* test/run-test.sh: add PATH on Cygwin.
 
 	* configure.ac: disable BFD detection by default.

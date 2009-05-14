@@ -1,4 +1,4 @@
-ACLOCAL_AMFLAGS = -I m4macros
+ACLOCAL_AMFLAGS = -I m4macros $$ACLOCAL_OPTIONS
 
 SUBDIRS = 			\
 	m4macros		\
