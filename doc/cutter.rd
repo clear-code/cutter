@@ -82,6 +82,16 @@ option is specified.
 
    The default is 10.
 
+: --disable-signal-handling
+
+   Disable signal handling that provides aborting test by
+   C-c, provides backtrace on SEGV and so on. If your test
+   target uses signal, Cutter's signal handling may cause a
+   problem. In the case, you should disable Cutter's signal
+   handling by this option.
+
+   The default is enabled.
+
 : --test-case-order=[none|name|name-desc]
 
    It specifies test case order.

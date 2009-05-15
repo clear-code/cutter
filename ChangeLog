@@ -1,5 +1,8 @@
 2009-05-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/cutter.rd*: add a description about
+	--disable-signal-handling option.
+
 	* cutter/cut-main.c, test/cutter/test-cutter.c: add
 	--disable-signal-handling option.
 
