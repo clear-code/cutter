@@ -53,6 +53,9 @@ case `uname` in
 	PATH="$top_dir/gdkcutter-pixbuf/.libs:$PATH"
 	PATH="$top_dir/test/lib/.libs:$PATH"
 	;;
+    Darwin)
+	export DYLD_LIBRARY_PATH="$top_dir/gdkcutter-pixbuf/.libs:$DYLD_LIBRARY_PATH"
+	;;
     *)
 	:
 	;;
