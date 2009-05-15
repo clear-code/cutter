@@ -1,5 +1,12 @@
 2009-05-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-main.c, test/cutter/test-cutter.c: add
+	--disable-signal-handling option.
+
+	* cutter/cut-test-case.c, cutter/cut-test-iterator.c,
+	cutter/cut-test-suite.c, cutter/cut-test.c: support dynamic signal
+	handling disable.
+
 	* cutter/cut-run-context.[ch],
 	cutter/cut-run-context.ctest/cutter/test-cut-run-context.c: add
 	signal handling configuration.

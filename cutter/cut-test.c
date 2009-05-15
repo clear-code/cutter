@@ -428,7 +428,6 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
     gint signum;
     jmp_buf crash_jump_buffer;
     CutCrashBacktrace *crash_backtrace = NULL;
-    gboolean is_multi_thread;
 
     priv = CUT_TEST_GET_PRIVATE(test);
     klass = CUT_TEST_GET_CLASS(test);
@@ -442,8 +441,8 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
     if (CUT_IS_ITERATED_TEST(test))
         data = cut_iterated_test_get_data(CUT_ITERATED_TEST(test));
 
-    is_multi_thread = cut_run_context_is_multi_thread(run_context);
-    if (is_multi_thread) {
+    if (cut_run_context_is_multi_thread(run_context) ||
+        !cut_run_context_get_handle_signals(run_context)) {
         signum = 0;
     } else {
         crash_backtrace = cut_crash_backtrace_new(&crash_jump_buffer);

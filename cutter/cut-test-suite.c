@@ -321,7 +321,7 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite,
     gboolean all_success = TRUE;
     gint signum;
     jmp_buf jump_buffer;
-    CutCrashBacktrace *crash_backtrace;
+    CutCrashBacktrace *crash_backtrace = NULL;
 
     priv = CUT_TEST_SUITE_GET_PRIVATE(test_suite);
 
@@ -342,8 +342,12 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite,
         }
     }
 
-    crash_backtrace = cut_crash_backtrace_new(&jump_buffer);
-    signum = setjmp(jump_buffer);
+    if (cut_run_context_get_handle_signals(run_context)) {
+        crash_backtrace = cut_crash_backtrace_new(&jump_buffer);
+        signum = setjmp(jump_buffer);
+    } else {
+        signum = 0;
+    }
     switch (signum) {
     case 0:
         emit_ready_signal(test_suite, sorted_test_cases, run_context);
@@ -376,7 +380,8 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite,
             cut_test_emit_result_signal(CUT_TEST(test_suite), NULL, result);
             g_object_unref(result);
         }
-        cut_crash_backtrace_free(crash_backtrace);
+        if (crash_backtrace)
+            cut_crash_backtrace_free(crash_backtrace);
         break;
 #ifndef G_OS_WIN32
     case SIGSEGV:

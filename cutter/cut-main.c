@@ -64,6 +64,7 @@ static gchar **exclude_directories = NULL;
 static CutOrder test_case_order = CUT_ORDER_NONE_SPECIFIED;
 static gboolean use_multi_thread = FALSE;
 static gint max_threads = 10;
+static gboolean disable_signal_handling = FALSE;
 static GList *factories = NULL;
 static CutContractor *contractor = NULL;
 static gchar **original_argv = NULL;
@@ -140,6 +141,9 @@ static const GOptionEntry option_entries[] =
         "concurrently at a maximum "
         "(default: 10; -1 is no limit)"),
      "MAX_THREADS"},
+    {"disable-signal-handling", 0, 0, G_OPTION_ARG_NONE,
+     &disable_signal_handling,
+     N_("Disable signal handling"), NULL},
     {"test-case-order", 0, 0, G_OPTION_ARG_CALLBACK, parse_test_case_order,
      N_("Sort test case by. Default is 'none'."), "[none|name|name-desc]"},
     {"exclude-file", 0, 0, G_OPTION_ARG_STRING_ARRAY, &exclude_files,
@@ -316,6 +320,7 @@ cut_create_run_context (void)
         cut_run_context_set_source_directory(run_context, source_directory);
     cut_run_context_set_multi_thread(run_context, use_multi_thread);
     cut_run_context_set_max_threads(run_context, max_threads);
+    cut_run_context_set_handle_signals(run_context, !disable_signal_handling);
     cut_run_context_set_exclude_files(run_context,
                                       (const gchar **)exclude_files);
     cut_run_context_set_exclude_directories(run_context,

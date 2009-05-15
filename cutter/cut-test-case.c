@@ -591,7 +591,6 @@ cut_test_case_run_tests (CutTestCase *test_case, CutRunContext *run_context,
     jmp_buf jump_buffer;
     CutTestSuite *test_suite;
     CutCrashBacktrace *crash_backtrace = NULL;
-    gboolean is_multi_thread;
 
     g_signal_emit_by_name(test_case, "ready", g_list_length((GList *)tests));
     g_signal_emit_by_name(CUT_TEST(test_case), "start", NULL);
@@ -617,8 +616,8 @@ cut_test_case_run_tests (CutTestCase *test_case, CutRunContext *run_context,
 
 #undef CONNECT
 
-    is_multi_thread = cut_run_context_is_multi_thread(run_context);
-    if (is_multi_thread) {
+    if (cut_run_context_is_multi_thread(run_context) ||
+        !cut_run_context_get_handle_signals(run_context)) {
         signum = 0;
     } else {
         crash_backtrace = cut_crash_backtrace_new(&jump_buffer);

@@ -31,6 +31,7 @@
 
 #include "cut-test-result.h"
 #include "cut-utils.h"
+#include "cut-crash-backtrace.h"
 
 #include "../gcutter/gcut-error.h"
 #include "../gcutter/gcut-marshalers.h"
@@ -243,6 +244,9 @@ run_test_without_thread (gpointer data, gpointer user_data)
     CutTestIterator *test_iterator;
     CutIteratedTest *iterated_test;
     CutTestContext *test_context, *parent_test_context;
+    gint signum;
+    jmp_buf crash_jump_buffer;
+    CutCrashBacktrace *crash_backtrace = NULL;
     gboolean *success = user_data;
 
     run_context = info->run_context;
@@ -257,16 +261,50 @@ run_test_without_thread (gpointer data, gpointer user_data)
 
     cut_test_context_current_push(test_context);
 
-    g_signal_emit_by_name(test_iterator, "start-iterated-test",
-                          iterated_test, test_context);
-
-    cut_test_case_run_setup(test_case, test_context);
-    if (cut_test_context_is_failed(test_context)) {
-        *success = FALSE;
+    if (cut_run_context_is_multi_thread(run_context) ||
+        !cut_run_context_get_handle_signals(run_context)) {
+        signum = 0;
     } else {
-        if (!cut_test_run(CUT_TEST(iterated_test), test_context, run_context))
-            *success = FALSE;
+        crash_backtrace = cut_crash_backtrace_new(&crash_jump_buffer);
+        signum = setjmp(crash_jump_buffer);
     }
+    switch (signum) {
+    case 0:
+        g_signal_emit_by_name(test_iterator, "start-iterated-test",
+                              iterated_test, test_context);
+
+        cut_test_case_run_setup(test_case, test_context);
+        if (cut_test_context_is_failed(test_context)) {
+            *success = FALSE;
+        } else {
+            if (!cut_test_run(CUT_TEST(iterated_test),
+                              test_context, run_context))
+                *success = FALSE;
+        }
+
+        if (crash_backtrace)
+            cut_crash_backtrace_free(crash_backtrace);
+
+        break;
+#ifndef G_OS_WIN32
+    case SIGSEGV:
+    case SIGABRT:
+    case SIGTERM:
+        success = FALSE;
+        cut_crash_backtrace_emit(cut_run_context_get_test_suite(run_context),
+                                 test_case, CUT_TEST(iterated_test),
+                                 test_iterator,
+                                 cut_iterated_test_get_data(iterated_test),
+                                 test_context);
+        break;
+    case SIGINT:
+        cut_run_context_cancel(run_context);
+        break;
+#endif
+    default:
+        break;
+    }
+
     cut_test_case_run_teardown(test_case, test_context);
 
     cut_test_context_set_failed(parent_test_context,
