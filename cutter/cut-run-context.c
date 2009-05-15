@@ -60,6 +60,7 @@ struct _CutRunContextPrivate
     gboolean use_multi_thread;
     gboolean is_multi_thread;
     gboolean max_threads;
+    gboolean handle_signals;
     GMutex *mutex;
     gboolean crashed;
     gchar *backtrace;
@@ -95,6 +96,7 @@ enum
     PROP_USE_MULTI_THREAD,
     PROP_IS_MULTI_THREAD,
     PROP_MAX_THREADS,
+    PROP_HANDLE_SIGNALS,
     PROP_TEST_CASE_ORDER,
     PROP_TEST_DIRECTORY,
     PROP_SOURCE_DIRECTORY,
@@ -391,6 +393,13 @@ cut_run_context_class_init (CutRunContextClass *klass)
                             -1, G_MAXINT32, 10,
                             G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_MAX_THREADS, spec);
+
+    spec = g_param_spec_boolean("handle-signals",
+                                "Whether handle signals",
+                                "Whether the run context handles signals",
+                                TRUE,
+                                G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_HANDLE_SIGNALS, spec);
 
     spec = g_param_spec_enum("test-case-order",
                              "Test case order",
@@ -936,6 +945,7 @@ cut_run_context_init (CutRunContext *context)
     priv->use_multi_thread = FALSE;
     priv->is_multi_thread = FALSE;
     priv->max_threads = 10;
+    priv->handle_signals = TRUE;
     priv->mutex = g_mutex_new();
     priv->crashed = FALSE;
     priv->test_directory = NULL;
@@ -1072,6 +1082,9 @@ set_property (GObject      *object,
       case PROP_MAX_THREADS:
         priv->max_threads = g_value_get_int(value);
         break;
+      case PROP_HANDLE_SIGNALS:
+        priv->handle_signals = g_value_get_boolean(value);
+        break;
       case PROP_TEST_CASE_ORDER:
         priv->test_case_order = g_value_get_enum(value);
         break;
@@ -1155,6 +1168,9 @@ get_property (GObject    *object,
         break;
       case PROP_MAX_THREADS:
         g_value_set_int(value, priv->max_threads);
+        break;
+      case PROP_HANDLE_SIGNALS:
+        g_value_set_boolean(value, priv->handle_signals);
         break;
       case PROP_TEST_CASE_ORDER:
         g_value_set_enum(value, priv->test_case_order);
@@ -1596,6 +1612,19 @@ gint
 cut_run_context_get_max_threads (CutRunContext *context)
 {
     return CUT_RUN_CONTEXT_GET_PRIVATE(context)->max_threads;
+}
+
+void
+cut_run_context_set_handle_signals (CutRunContext *context,
+                                    gboolean handle_signals)
+{
+    CUT_RUN_CONTEXT_GET_PRIVATE(context)->handle_signals = handle_signals;
+}
+
+gboolean
+cut_run_context_get_handle_signals (CutRunContext *context)
+{
+    return CUT_RUN_CONTEXT_GET_PRIVATE(context)->handle_signals;
 }
 
 void

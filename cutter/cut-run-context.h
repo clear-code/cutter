@@ -232,6 +232,10 @@ void           cut_run_context_set_max_threads      (CutRunContext *context,
                                                      gint           max_threads);
 gint           cut_run_context_get_max_threads      (CutRunContext *context);
 
+void           cut_run_context_set_handle_signals   (CutRunContext *context,
+                                                     gboolean       handle_signals);
+gboolean       cut_run_context_get_handle_signals   (CutRunContext *context);
+
 void           cut_run_context_set_exclude_files    (CutRunContext *context,
                                                      const gchar  **filenames);
 const gchar  **cut_run_context_get_exclude_files    (CutRunContext *context);

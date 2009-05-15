@@ -1,5 +1,9 @@
 2009-05-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-run-context.[ch],
+	cutter/cut-run-context.ctest/cutter/test-cut-run-context.c: add
+	signal handling configuration.
+
 	* test/run-test.sh: set DYLD_LIBRARY_PATH on MacOS X.
 
 	* README*, doc/, html/: add install documents.

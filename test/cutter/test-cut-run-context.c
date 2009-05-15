@@ -2,6 +2,7 @@
 #include <cutter/cut-run-context.h>
 
 void test_max_threads(void);
+void test_handle_signals(void);
 
 #define CUT_TYPE_RUN_CONTEXT_STUB            (cut_run_context_stub_get_type ())
 #define CUT_RUN_CONTEXT_STUB(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_RUN_CONTEXT_STUB, CutRunContextStub))
@@ -63,6 +64,17 @@ test_max_threads (void)
 
     cut_run_context_set_max_threads(run_context, 100);
     cut_assert_equal_int(100, cut_run_context_get_max_threads(run_context));
+}
+
+void
+test_handle_signals (void)
+{
+    run_context = g_object_new(CUT_TYPE_RUN_CONTEXT_STUB, NULL);
+    cut_assert_not_null(run_context);
+
+    cut_assert_true(cut_run_context_get_handle_signals(run_context));
+    cut_run_context_set_handle_signals(run_context, FALSE);
+    cut_assert_false(cut_run_context_get_handle_signals(run_context));
 }
 
 /*
