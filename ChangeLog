@@ -1,5 +1,7 @@
 2009-05-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-pipeline.c: support RunContext::handle-signals property.
+
 	* doc/cutter.rd*: add a description about
 	--disable-signal-handling option.
 
