@@ -2,14 +2,21 @@
 
 = NEWS --- The history of Cutter
 
-== 1.0.7: 2009-05-XX
+== 1.0.7: 2009-05-20
 
   * Provide ((<Version Information|cutter-cut-version.html>))
   * Support ((<GBoxed type test data|cutter-gcut-data.html#gcut-data-get-boxed>))
   * Display test name on crash (if available)
+  * Add shared library parser
+    * Support ELF (Linux/*BSD), PE (Windows),  Mach-O (Mac OS X)
+    * Don't use BFD by default
   * Use ImageHlp instead of BFD on Windows
   * Document:
     * Add ((<cutter command's man|cutter.html>))
+    * Add ((<install document for Debian|install-to-debian.html>))
+    * Add ((<install document for Cygwin|install-to-cygwin.html>))
+    * Add Cygwin related notes to ((<tutorial|tutorial.html>))
+      [Yamakawa Hiroshi]
   * Add test utilities:
     * ((<cut_build_path()|cutter-cut-test-utils.html#cut-build-path>))
   * Add assertions:
@@ -37,6 +44,7 @@
   * Bug fixes:
     * Fix a typo in tutorial: [UNNO Hideyuki]
     * Fix file descriptor redirection: [UNNO Hideyuki]
+  * Add --disable-signal-handling option
 
 == 1.0.6: 2009-03-01
 

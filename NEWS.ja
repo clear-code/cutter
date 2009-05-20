@@ -2,15 +2,21 @@
 
 = お知らせ --- Cutterの歴史
 
-== 1.0.7: 2009-05-XX
+== 1.0.7: 2009-05-20
 
   * ((<バージョン情報|cutter-cut-version.html>))を提供
   * ((<GBoxed型のテストデータ|cutter-gcut-data.html#gcut-data-get-boxed>))
     をサポート
   * クラッシュ時のテスト名表示（可能なら）
-  * Windows環境ではBFDではなくImageHlpを使用
+  * 共有ライブラリ解析処理の追加
+    * ELF（Linux/*BSD）、PE（Windows）、Mach-O（Mac OS X）に対応
+    * BFDによる解析処理をデフォルト無効に変更
   * ドキュメント:
     * ((<cutterコマンドのman|cutter.html>))を追加
+    * ((<Debian用インストールドキュメント|install-to-debian.html>))を追加
+    * ((<Cygwin用インストールドキュメント|install-to-cygwin.html>))を追加
+    * ((<チュートリアル|tutorial.html>))にCygwin関連の注意書きを追加
+      [山川さん]
   * テストユーティリティの追加:
     * ((<cut_build_path()|cutter-cut-test-utils.html#cut-build-path>))
   * 検証の追加:
@@ -39,6 +45,7 @@
   * バグ修正:
     * チュートリアルのtypoを修正: [海野さん]
     * ファイルディスクリプタのリダイレクト方法の修正: [海野さん]
+  * --disable-signal-handlingオプションの追加
 
 == 1.0.6: 2009-03-01
 
