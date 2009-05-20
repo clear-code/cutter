@@ -1,5 +1,8 @@
 2009-05-20  Kouhei Sutou  <kou@clear-code.com>
 
+	* cutter/cut-process.c, cutter/cut-pipeline.c: check HAVE_IO_H
+	before HAVE_UNISTD_H.
+
 	* NEWS.*:
 	- update shared object parsing.
 	- add install document.

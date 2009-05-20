@@ -26,12 +26,12 @@
 #include <fcntl.h>
 #include <errno.h>
 
-#ifdef HAVE_UNISTD_H
-#  include <unistd.h>
+#ifdef HAVE_IO_H
+#  include <io.h>
+#  define pipe(phandles) _pipe(phandles, 4096, _O_BINARY)
 #else
-#  ifdef HAVE_IO_H
-#    include <io.h>
-#    define pipe(phandles) _pipe(phandles, 4096, _O_BINARY)
+#  ifdef HAVE_UNISTD_H
+#    include <unistd.h>
 #  endif
 #endif
 
