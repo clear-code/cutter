@@ -1,5 +1,9 @@
 2009-05-21  Kouhei Sutou  <kou@clear-code.com>
 
+	* license/lgpl.txt: add.
+
+	* README*: LGPL v3+.
+
 	* rpm/fedora/cutter.spec.in: add.
 
 	* apt/debian/: support sid/i386.

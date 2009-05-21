@@ -584,6 +584,7 @@ AC_CONFIG_FILES([Makefile
 		 test/gdkcutter-pixbuf/Makefile
 		 po/Makefile.in
 		 misc/Makefile
+		 license/Makefile
                  shave/shave
                  shave/shave-libtool
 		 doc/Makefile
