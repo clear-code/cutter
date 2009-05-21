@@ -11,6 +11,7 @@ SUBDIRS = 			\
 	gst-plugins		\
 	po			\
 	misc			\
+	license			\
 	doc			\
 	html
 

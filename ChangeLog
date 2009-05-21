@@ -1,3 +1,7 @@
+2009-05-21  Kouhei Sutou  <kou@cozmixng.org>
+
+	* Makefile.am (SUBDIRS): add missing license/.
+
 2009-05-21  Kouhei Sutou  <kou@clear-code.com>
 
 	* license/lgpl.txt: add.
