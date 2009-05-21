@@ -1,5 +1,7 @@
 2009-05-21  Kouhei Sutou  <kou@clear-code.com>
 
+	* rpm/fedora/cutter.spec.in: add.
+
 	* apt/debian/: support sid/i386.
 
 	* test/cutter/test-cut-test-case.c: add missing "#include

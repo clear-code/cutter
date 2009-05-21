@@ -526,6 +526,7 @@ AC_CONFIG_FILES([Makefile
 		 gcutter.pc
 		 libcutter.pc
 		 gdkcutter-pixbuf.pc
+		 rpm/fedora/cutter.spec
 		 m4macros/Makefile
 		 gcutter/Makefile
 		 gdkcutter-pixbuf/Makefile
