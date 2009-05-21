@@ -1,5 +1,8 @@
 2009-05-21  Kouhei Sutou  <kou@clear-code.com>
 
+	* test/cutter/test-cut-test-case.c: add missing "#include
+	<signal.h>".
+
 	* cutter/cut-test-iterator.c, cutter/cut-test-case.c: add
 	missing "#include <signal.h>".
 
