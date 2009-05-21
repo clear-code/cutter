@@ -16,7 +16,7 @@ Description: Cutter testing framework suite (meta-package)
  This package depends all Cutter related package for convenience.
 
 Package: cutter-doc
-Section: libdevel
+Section: doc
 Architecture: any
 Description: Documentation of Cutter
  Cutter is a xUnit family Unit Testing Framework for C.

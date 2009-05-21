@@ -1,5 +1,9 @@
 2009-05-21  Kouhei Sutou  <kou@clear-code.com>
 
+	* debian/control (Section): fix documentation section.
+
+	* debian/changelog: 1.0.7-0 -> 1.0.7-1.
+
 	* debian/compat: 7 -> 6.
 
 	* html/index.html*: add a link to change log.
