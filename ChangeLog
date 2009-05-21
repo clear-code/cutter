@@ -1,3 +1,9 @@
+2009-05-21  Kouhei Sutou  <kou@clear-code.com>
+
+	* debian/control: remove a dependency to binutils-dev.
+
+	* debian/rules (install/cutter-bin): fix a typo.
+
 2009-05-20  Kouhei Sutou  <kou@clear-code.com>
 
 	* html/index.html*: fill 1.0.7 release date.

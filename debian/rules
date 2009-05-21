@@ -88,7 +88,7 @@ install/cutter-bin::
 	cp -ar debian/tmp/usr/share/man/man1/* \
 		debian/cutter-bin/usr/share/man/man1/
 	cp -ar debian/tmp/usr/share/man/ja/man1/* \
-		debian/cutter-bin/usr/share/ja/man/man1/
+		debian/cutter-bin/usr/share/man/ja/man1/
 
 install/libcutter-glib-dev::
 	cp -ar debian/tmp/usr/include/cutter/gcutter.h \
