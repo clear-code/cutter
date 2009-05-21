@@ -25,6 +25,8 @@
 #include <string.h>
 #include <glib.h>
 
+#include <signal.h>
+
 #include "cut-test-iterator.h"
 
 #include "cut-run-context.h"

@@ -1,5 +1,8 @@
 2009-05-21  Kouhei Sutou  <kou@clear-code.com>
 
+	* cutter/cut-test-iterator.c, cutter/cut-test-case.c: add
+	missing "#include <signal.h>".
+
 	* debian/control (Section): fix documentation section.
 
 	* debian/changelog: 1.0.7-0 -> 1.0.7-1.
