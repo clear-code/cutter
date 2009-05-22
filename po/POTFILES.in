@@ -4,11 +4,11 @@ cutter/cut-backtrace-entry.c
 cutter/cut-contractor.c
 cutter/cut-crash-backtrace.c
 cutter/cut-diff.c
+cutter/cut-elf-loader.c
 cutter/cut-enum-types.c
 cutter/cut-factory-builder.c
 cutter/cut-file-stream-reader.c
 cutter/cut-helper.c
-cutter/cut-image-hlp-loader.c
 cutter/cut-iterated-test.c
 cutter/cut-listener.c
 cutter/cut-loader.c
@@ -17,6 +17,7 @@ cutter/cut-main.c
 cutter/cut-module-factory-utils.c
 cutter/cut-module-factory.c
 cutter/cut-module.c
+cutter/cut-pe-loader.c
 cutter/cut-pipeline.c
 cutter/cut-process.c
 cutter/cut-report-factory-builder.c
