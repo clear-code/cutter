@@ -1,0 +1,35 @@
+# -*- rd -*-
+
+= Solarisへインストール --- SolarisへのCutterのインストール方法
+
+== はじめに
+
+SolraisへのCutterのインストール方法を説明します。
+
+== GLibのインストール
+
+Cutterを動かすためにはGLib 2.16以降が必要です。
+
+パッケージでインストールできない？？？
+
+== Cutterのインストール
+
+CutterはGNUビルドツールを利用しているので、他のフリーソフト
+ウェアと同じように以下のようにインストールできます。GNU make
+を使うことに注意してください。
+
+  % mkdir -p ~/src
+  % cd ~/src
+  % wget http://downloads.sourceforge.net/cutter/cutter-1.0.7.tar.gz
+  % tar xvzf cutter-1.0.7.tar.gz
+  % cd cutter-1.0.7
+  % ./configure PKG_CONFIG_PATH=$HOME/local/lib/pkgconfig LD_LIBRARY_PATH=$HOME/local/lib --prefix=$HOME/local
+  % gmake
+  % gmake install
+
+== 次のステップ
+
+以上でインストールは完了です。
+
+まずは((<チュートリアル|TUTORIAL.ja>))を一通り試してください。
+Cutterを使った開発の流れがわかります。
