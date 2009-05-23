@@ -60,6 +60,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="glib-2.0.lib gobject-2.0.lib gmodule-2.0.lib gthread-2.0.lib intl.lib cutter.lib"
+				OutputFile="$(OutDir)\console_factory.dll"
 				AdditionalLibraryDirectories="vendor\lib;&quot;$(SolutionDir)$(ConfigurationName)&quot;"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
@@ -132,6 +133,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="glib-2.0.lib gobject-2.0.lib gmodule-2.0.lib gthread-2.0.lib intl.lib cutter.lib"
+				OutputFile="$(OutDir)\console_factory.dll"
 				AdditionalLibraryDirectories="vendor\lib;&quot;$(SolutionDir)$(ConfigurationName)&quot;"
 				GenerateDebugInformation="true"
 				OptimizeReferences="2"
