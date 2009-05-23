@@ -1,5 +1,7 @@
 2009-05-23  Kouhei Sutou  <kou@cozmixng.org>
 
+	* misc/generate-def.rb: collect missing function names.
+
 	* cutter/Makefile.am: add cut-enum-types.h to public headers.
 
 	* cutter/cut-module-impl.h: add missing G_MODULE_EXPORT.

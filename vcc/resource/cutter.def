@@ -3,29 +3,46 @@ EXPORTS
 	cut_assert_true_helper
 	cut_assert_false_helper
 	cut_assert_equal_boolean_helper
+	cut_assert_not_equal_boolean_helper
 	cut_assert_null_helper
 	cut_assert_null_string_helper
 	cut_assert_not_null_helper
 	cut_assert_equal_int_helper
 	cut_assert_not_equal_int_helper
 	cut_assert_equal_uint_helper
+	cut_assert_not_equal_uint_helper
 	cut_assert_equal_size_helper
+	cut_assert_not_equal_size_helper
 	cut_assert_equal_double_helper
+	cut_assert_not_equal_double_helper
 	cut_assert_equal_string_helper
+	cut_assert_not_equal_string_helper
+	cut_assert_equal_substring_helper
+	cut_assert_not_equal_substring_helper
 	cut_assert_equal_memory_helper
+	cut_assert_not_equal_memory_helper
+	cut_assert_equal_string_array_helper
 	cut_assert_operator_helper
 	cut_assert_operator_int_helper
 	cut_assert_operator_uint_helper
 	cut_assert_operator_size_helper
+	cut_assert_operator_double_helper
 	cut_assert_equal_helper
 	cut_assert_errno_helper
+	cut_assert_path_exist_helper
+	cut_assert_path_not_exist_helper
 	cut_assert_match_helper
+	cut_assert_equal_pointer_helper
+	cut_assert_equal_fixture_data_string_helper
 	cut_error_errno_helper
 	cut_test_context_current_push
 	cut_test_context_current_pop
 	cut_test_context_current_peek
 	cut_test_context_keep_user_message
 	cut_test_context_set_user_message
+	cut_test_context_set_user_message_backward_compatibility
+	cut_test_context_set_user_message_va_list
+	cut_test_context_check_optional_assertion_message
 	cut_test_context_pass_assertion
 	cut_test_context_register_result
 	cut_test_context_long_jump
@@ -46,16 +63,23 @@ EXPORTS
 	cut_utils_path_exist
 	cut_utils_build_path
 	cut_utils_build_path_va_list
+	cut_utils_remove_path_recursive_force
 	cut_utils_regex_match
 	cut_utils_fold
 	cut_utils_append_diff
+	cut_test_context_build_fixture_data_path
+	cut_utils_get_fixture_data_string
+	cut_utils_get_fixture_data_string_va_list
 	cut_test_context_add_data
 	cut_test_context_set_attributes
 	cut_test_context_trap_fork
 	cut_test_context_wait_process
+	cut_test_context_get_forked_stdout_message
+	cut_test_context_get_forked_stderr_message
 	cut_test_context_set_fixture_data_dir
 	cut_test_context_push_backtrace
 	cut_test_context_pop_backtrace
+	cut_test_context_get_last_backtrace
 	cut_diff_readable
 	cut_diff_folded_readable
 	cut_utils_take_new_sub_process
@@ -67,11 +91,16 @@ EXPORTS
 	cut_sub_process_is_running
 	cut_sub_process_get_test_directory
 	cut_sub_process_set_test_directory
+	cut_sub_process_get_source_directory
+	cut_sub_process_set_source_directory
 	cut_sub_process_get_multi_thread
 	cut_sub_process_set_multi_thread
 	cut_sub_process_get_max_threads
 	cut_sub_process_set_max_threads
 	cut_sub_process_set_exclude_files
+	cut_sub_process_set_exclude_directories
+	cut_sub_process_set_target_test_case_names
+	cut_sub_process_set_target_test_names
 	cut_sub_process_get_elapsed
 	cut_sub_process_get_total_elapsed
 	cut_sub_process_is_crashed
@@ -100,6 +129,8 @@ EXPORTS
 	cut_run_context_set_handle_signals
 	cut_run_context_get_handle_signals
 	cut_run_context_set_exclude_files
+	cut_run_context_set_exclude_directories
+	cut_run_context_set_target_test_case_names
 	cut_run_context_set_target_test_names
 	cut_run_context_get_n_tests
 	cut_run_context_get_n_successes
@@ -136,6 +167,10 @@ EXPORTS
 	cut_run_context_is_completed
 	cut_run_context_set_fatal_failures
 	cut_run_context_get_fatal_failures
+	cut_run_context_set_keep_opening_modules
+	cut_run_context_get_keep_opening_modules
+	cut_run_context_set_enable_convenience_attribute_definition
+	cut_run_context_get_enable_convenience_attribute_definition
 	cut_test_runner_get_type
 	cut_test_runner_new
 	cut_test_runner_run_test
@@ -183,6 +218,7 @@ EXPORTS
 	cut_test_container_get_type
 	cut_test_container_add_test
 	cut_test_container_get_children
+	cut_test_container_filter_children
 	cut_test_container_get_n_tests
 	cut_test_iterator_get_type
 	cut_test_iterator_new
@@ -204,6 +240,8 @@ EXPORTS
 	cut_test_suite_run
 	cut_test_suite_run_test_case
 	cut_test_suite_run_test
+	cut_test_suite_run_test_in_test_case
+	cut_test_suite_run_with_filter
 	cut_test_context_error_quark
 	cut_test_context_get_type
 	cut_test_context_current_init
@@ -216,12 +254,17 @@ EXPORTS
 	cut_test_context_set_test_suite
 	cut_test_context_get_test_case
 	cut_test_context_set_test_case
+	cut_test_context_get_test_iterator
+	cut_test_context_set_test_iterator
 	cut_test_context_get_test
 	cut_test_context_set_test
+	cut_test_context_set_multi_thread
+	cut_test_context_is_multi_thread
 	cut_test_context_set_data
 	cut_test_context_get_data
 	cut_test_context_shift_data
 	cut_test_context_have_data
+	cut_test_context_get_current_data
 	cut_test_context_get_n_data
 	cut_test_context_set_failed
 	cut_test_context_is_failed
@@ -230,13 +273,19 @@ EXPORTS
 	cut_test_context_emit_signal
 	cut_test_context_to_xml
 	cut_test_context_to_xml_string
+	cut_test_context_build_fixture_data_path_va_list
+	cut_test_context_get_fixture_data_string
+	cut_test_context_get_fixture_data_string_va_list
+	cut_test_context_build_source_filename
 	cut_test_result_get_type
 	cut_test_result_new
 	cut_test_result_new_empty
+	cut_test_result_new_from_xml
 	cut_test_result_get_status
 	cut_test_result_get_test
 	cut_test_result_get_test_name
 	cut_test_result_get_test_iterator
+	cut_test_result_get_test_iterator_name
 	cut_test_result_get_test_case
 	cut_test_result_get_test_case_name
 	cut_test_result_get_test_suite
@@ -287,6 +336,7 @@ EXPORTS
 	cut_factory_builder_get_type
 	cut_factory_builder_get_type_name
 	cut_factory_builder_get_module_dir
+	cut_factory_builder_set_option_context
 	cut_factory_builder_build
 	cut_factory_builder_build_all
 	cut_report_factory_builder_get_type
@@ -294,6 +344,7 @@ EXPORTS
 	cut_ui_factory_builder_get_type
 	cut_module_factory_get_type
 	cut_module_factory_new
+	cut_module_factory_new_valist
 	cut_module_factory_set_option_group
 	cut_module_factory_create
 	cut_module_factory_init
@@ -325,10 +376,15 @@ EXPORTS
 	cut_process_fork
 	cut_process_wait
 	cut_process_get_pid
+	cut_process_get_stdout_message
+	cut_process_get_stderr_message
+	cut_process_send_test_result_to_parent
+	cut_process_get_result_from_child
 	cut_process_exit
 	cut_pipeline_error_quark
 	cut_pipeline_get_type
 	cut_pipeline_new
+	cut_pipeline_new_from_run_context
 	cut_stream_parser_get_type
 	cut_stream_parser_new
 	cut_test_result_parser_new
@@ -337,10 +393,17 @@ EXPORTS
 	cut_verbose_level_error_quark
 	cut_verbose_level_parse
 	cut_sequence_match_info_new
+	cut_sequence_match_info_free
+	cut_sequence_match_operation_new
+	cut_sequence_match_operation_free
 	cut_sequence_matcher_get_type
 	cut_sequence_matcher_new
 	cut_sequence_matcher_char_new
+	cut_sequence_matcher_char_new_full
+	cut_sequence_matcher_string_new
+	cut_sequence_matcher_string_new_full
 	cut_sequence_matcher_get_to_index
+	cut_sequence_matcher_get_longest_match
 	cut_sequence_matcher_get_matches
 	cut_sequence_matcher_get_blocks
 	cut_sequence_matcher_get_operations
@@ -353,9 +416,12 @@ EXPORTS
 	cut_analyzer_get_type
 	cut_analyzer_new
 	cut_analyzer_analyze
+	cut_analyzer_get_run_contexts
 	cut_stream_reader_error_quark
 	cut_stream_reader_get_type
 	cut_stream_reader_new
+	cut_stream_reader_watch_io_channel
+	cut_stream_reader_read_from_io_channel
 	cut_stream_reader_read
 	cut_stream_reader_end_read
 	cut_file_stream_reader_error_quark
@@ -378,10 +444,14 @@ EXPORTS
 	cut_backtrace_entry_set_file
 	cut_backtrace_entry_get_line
 	cut_backtrace_entry_set_line
+	cut_backtrace_entry_get_function
+	cut_backtrace_entry_set_function
 	cut_backtrace_entry_get_info
 	cut_backtrace_entry_set_info
 	cut_backtrace_entry_to_xml
+	cut_backtrace_entry_to_xml_string
 	cut_backtrace_entry_format
+	cut_backtrace_entry_format_string
 	cut_test_result_status_get_type
 	cut_order_get_type
 	cut_test_context_error_get_type
@@ -396,6 +466,12 @@ EXPORTS
 	gcut_assert_equal_list_helper
 	gcut_assert_equal_list_int_helper
 	gcut_assert_equal_list_uint_helper
+	gcut_assert_equal_list_string_helper
+	gcut_assert_equal_list_enum_helper
+	gcut_assert_equal_list_flags_helper
+	gcut_assert_equal_list_object_helper
+	gcut_assert_equal_hash_table_helper
+	gcut_assert_equal_hash_table_string_string_helper
 	gcut_assert_error_helper
 	gcut_assert_equal_error_helper
 	gcut_assert_remove_path_helper
@@ -408,6 +484,7 @@ EXPORTS
 	cut_test_context_take_g_object
 	cut_test_context_take_g_error
 	cut_test_context_take_g_list
+	cut_test_context_take_g_hash_table
 	gcut_list_string_new
 	gcut_list_string_new_array
 	gcut_list_string_free
@@ -429,6 +506,7 @@ EXPORTS
 	gcut_hash_table_equal
 	gcut_hash_table_inspect
 	gcut_hash_table_string_equal
+	gcut_hash_table_string_string_inspect
 	gcut_error_equal
 	gcut_error_inspect
 	gcut_enum_error_quark
@@ -444,8 +522,14 @@ EXPORTS
 	gcut_string_io_channel_new
 	gcut_string_io_channel_get_string
 	gcut_string_io_channel_clear
+	gcut_string_io_channel_get_buffer_limit
+	gcut_string_io_channel_set_buffer_limit
 	gcut_string_io_channel_get_limit
 	gcut_string_io_channel_set_limit
+	gcut_string_io_channel_get_read_fail
+	gcut_string_io_channel_set_read_fail
+	gcut_string_io_channel_get_pipe_mode
+	gcut_string_io_channel_set_pipe_mode
 	gcut_egg_error_quark
 	gcut_egg_get_type
 	gcut_egg_new
@@ -465,6 +549,8 @@ EXPORTS
 	gcut_egg_get_input
 	gcut_egg_get_output
 	gcut_egg_get_error
+	gcut_egg_get_forced_termination_wait_time
+	gcut_egg_set_forced_termination_wait_time
 	gcut_io_inspect_condition
 	gcut_key_file_get_enum
 	gcut_key_file_get_flags
