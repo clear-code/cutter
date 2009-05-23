@@ -82,7 +82,8 @@ pkginclude_HEADERS = 		\
 cutter_includedir=$(pkgincludedir)/cutter
 cutter_include_HEADERS = 		\
 	$(cutter_public_headers)	\
-	$(libcutter_public_headers)
+	$(libcutter_public_headers)	\
+	$(enum_source_prefix).h
 
 enum_source_prefix = cut-enum-types
 
@@ -216,6 +217,10 @@ stamp-$(enum_source_prefix)-h: $(enum_sources_h) Makefile
 	echo timestamp > $(@F)
 
 echo-public-headers:
-	@for header in $(cutter_include_HEADERS); do	\
-	  echo $(abs_srcdir)/$${header};		\
+	@for header in $(cutter_include_HEADERS); do			\
+	  if test "$${header}" = "$(enum_source_prefix).h"; then	\
+	    echo $(abs_builddir)/$(enum_source_prefix).h;		\
+	  else								\
+	    echo $(abs_srcdir)/$${header};				\
+	  fi;								\
 	done
