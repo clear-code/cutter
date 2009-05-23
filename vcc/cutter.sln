@@ -9,7 +9,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cutter-cui", "cutter-cui.vc
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cutter", "cutter.vcproj", "{B10DE031-3018-4D65-B5A0-88C97AC5BA6B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "console-ui", "console-ui\console-ui.vcproj", "{B608769F-B187-4BDF-BC9D-DB181AEBE308}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "console-ui", "console-ui.vcproj", "{B608769F-B187-4BDF-BC9D-DB181AEBE308}"
 	ProjectSection(ProjectDependencies) = postProject
 		{B10DE031-3018-4D65-B5A0-88C97AC5BA6B} = {B10DE031-3018-4D65-B5A0-88C97AC5BA6B}
 	EndProjectSection
