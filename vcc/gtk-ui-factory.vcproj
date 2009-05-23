@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="include;include\cutter;include\gcutter;..;..\cutter;&quot;vendor\lib\gtk-2.0\include&quot;;&quot;vendor\include\gtk-2.0&quot;;&quot;vendor\lib\glib-2.0\include&quot;;&quot;vendor\include\glib-2.0&quot;;vendor\include"
+				AdditionalIncludeDirectories="include;include\cutter;include\gcutter;..;..\cutter;&quot;vendor\lib\gtk-2.0\include&quot;;&quot;vendor\include\gtk-2.0&quot;;&quot;vendor\lib\glib-2.0\include&quot;;&quot;vendor\include\glib-2.0&quot;;&quot;vendor\lib\cairo\include&quot;&quot;vendor\lib\atk-1.0\include&quot;&quot;vendor\lib\pango-1.0\include&quot;&quot;vendor\lib\gail-1.0\include&quot;&quot;vendor\lib\libpng12\include&quot;vendor\include"
 				PreprocessorDefinitions="HAVE_CONFIG_H"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -59,7 +59,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="gtk-2.0.lib glib-2.0.lib gobject-2.0.lib gmodule-2.0.lib gthread-2.0.lib intl.lib cutter.lib"
+				AdditionalDependencies="cairo.lib gailutil.lib atk-1.0.lib gdk_pixbuf-2.0.lib gdk-win32-2.0.lib gio-2.0.lib gtk-win32-2.0.lib jpeg.lib libpng.lib pangocairo-1.0.lib pangoft2-1.0.lib pangowin32-1.0.lib zdll.lib gtk-2.0.lib glib-2.0.lib gobject-2.0.lib gmodule-2.0.lib gthread-2.0.lib intl.lib cutter.lib"
 				AdditionalLibraryDirectories="vendor\lib;&quot;$(SolutionDir)$(ConfigurationName)&quot;"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
@@ -112,7 +112,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="2"
-				AdditionalIncludeDirectories="include;include\cutter;include\gcutter;..;..\cutter;&quot;vendor\lib\gtk-2.0\include&quot;;&quot;vendor\include\gtk-2.0&quot;;&quot;vendor\lib\glib-2.0\include&quot;;&quot;vendor\include\glib-2.0&quot;;vendor\include"
+				AdditionalIncludeDirectories="include;include\cutter;include\gcutter;..;..\cutter;&quot;vendor\lib\gtk-2.0\include&quot;;&quot;vendor\include\gtk-2.0&quot;;&quot;vendor\lib\glib-2.0\include&quot;;&quot;vendor\include\glib-2.0&quot;;&quot;vendor\lib\cairo\include&quot;&quot;vendor\lib\atk-1.0\include&quot;&quot;vendor\lib\pango-1.0\include&quot;&quot;vendor\lib\gail-1.0\include&quot;&quot;vendor\lib\libpng12\include&quot;vendor\include"
 				PreprocessorDefinitions="HAVE_CONFIG_H"
 				EnableIntrinsicFunctions="true"
 				RuntimeLibrary="2"
@@ -131,7 +131,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="gtk-2.0.lib glib-2.0.lib gobject-2.0.lib gmodule-2.0.lib gthread-2.0.lib intl.lib cutter.lib"
+				AdditionalDependencies="cairo.lib gailutil.lib atk-1.0.lib gdk_pixbuf-2.0.lib gdk-win32-2.0.lib gio-2.0.lib gtk-win32-2.0.lib jpeg.lib libpng.lib pangocairo-1.0.lib pangoft2-1.0.lib pangowin32-1.0.lib zdll.lib gtk-2.0.lib glib-2.0.lib gobject-2.0.lib gmodule-2.0.lib gthread-2.0.lib intl.lib cutter.lib"
 				AdditionalLibraryDirectories="vendor\lib;&quot;$(SolutionDir)$(ConfigurationName)&quot;"
 				GenerateDebugInformation="true"
 				OptimizeReferences="2"
