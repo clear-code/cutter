@@ -4,7 +4,10 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cutter-cui", "cutter-cui.vcproj", "{8E9F7BA1-8145-4E91-8237-66B96B83F69F}"
 	ProjectSection(ProjectDependencies) = postProject
 		{B10DE031-3018-4D65-B5A0-88C97AC5BA6B} = {B10DE031-3018-4D65-B5A0-88C97AC5BA6B}
+		{2E796136-EC07-462D-AD89-F7A6EF00DE04} = {2E796136-EC07-462D-AD89-F7A6EF00DE04}
 		{B608769F-B187-4BDF-BC9D-DB181AEBE308} = {B608769F-B187-4BDF-BC9D-DB181AEBE308}
+		{94A0E7A0-8513-46AB-B5ED-71DB25017C53} = {94A0E7A0-8513-46AB-B5ED-71DB25017C53}
+		{823B71BD-16F6-42B4-A638-07813AA6BAD6} = {823B71BD-16F6-42B4-A638-07813AA6BAD6}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cutter", "cutter.vcproj", "{B10DE031-3018-4D65-B5A0-88C97AC5BA6B}"
@@ -15,13 +18,19 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "console-ui", "console-ui.vc
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "console-ui-factory", "console-ui-factory.vcproj", "{823B71BD-16F6-42B4-A638-07813AA6BAD6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B10DE031-3018-4D65-B5A0-88C97AC5BA6B} = {B10DE031-3018-4D65-B5A0-88C97AC5BA6B}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gtk-ui", "gtk-ui.vcproj", "{94A0E7A0-8513-46AB-B5ED-71DB25017C53}"
 	ProjectSection(ProjectDependencies) = postProject
-		{B10DE031-3018-4D65-B5A0-88C97AC5BA6B} = {94A0E7A0-8513-46AB-B5ED-71DB25017C53}
+		{B10DE031-3018-4D65-B5A0-88C97AC5BA6B} = {B10DE031-3018-4D65-B5A0-88C97AC5BA6B}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gtk-ui-factory", "gtk-ui-factory.vcproj", "{2E796136-EC07-462D-AD89-F7A6EF00DE04}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B10DE031-3018-4D65-B5A0-88C97AC5BA6B} = {B10DE031-3018-4D65-B5A0-88C97AC5BA6B}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +54,14 @@ Global
 		{823B71BD-16F6-42B4-A638-07813AA6BAD6}.Debug|Win32.Build.0 = Debug|Win32
 		{823B71BD-16F6-42B4-A638-07813AA6BAD6}.Release|Win32.ActiveCfg = Release|Win32
 		{823B71BD-16F6-42B4-A638-07813AA6BAD6}.Release|Win32.Build.0 = Release|Win32
+		{94A0E7A0-8513-46AB-B5ED-71DB25017C53}.Debug|Win32.ActiveCfg = Debug|Win32
+		{94A0E7A0-8513-46AB-B5ED-71DB25017C53}.Debug|Win32.Build.0 = Debug|Win32
+		{94A0E7A0-8513-46AB-B5ED-71DB25017C53}.Release|Win32.ActiveCfg = Release|Win32
+		{94A0E7A0-8513-46AB-B5ED-71DB25017C53}.Release|Win32.Build.0 = Release|Win32
+		{2E796136-EC07-462D-AD89-F7A6EF00DE04}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2E796136-EC07-462D-AD89-F7A6EF00DE04}.Debug|Win32.Build.0 = Debug|Win32
+		{2E796136-EC07-462D-AD89-F7A6EF00DE04}.Release|Win32.ActiveCfg = Release|Win32
+		{2E796136-EC07-462D-AD89-F7A6EF00DE04}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
