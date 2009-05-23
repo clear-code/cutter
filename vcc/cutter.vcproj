@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="cutter"
+	Name="cutter-cui"
 	ProjectGUID="{8E9F7BA1-8145-4E91-8237-66B96B83F69F}"
 	RootNamespace="cutter"
 	Keyword="Win32Proj"
@@ -18,8 +18,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="Debug"
-			IntermediateDirectory="Debug"
+			OutputDirectory="$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
 			>
 			<Tool
@@ -41,13 +41,13 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="include;..;..\cutter;&quot;vendor\lib\glib-2.0\include&quot;;&quot;vendor\include\glib-2.0&quot;;vendor\include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE;"
+				PreprocessorDefinitions="HAVE_CONFIG_H"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="true"
+				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="4"
 			/>
 			<Tool
@@ -61,7 +61,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="glib-2.0.lib gobject-2.0.lib gmodule-2.0.lib gthread-2.0.lib intl.lib cutter.lib"
 				LinkIncremental="2"
+				AdditionalLibraryDirectories="vendor\lib;&quot;$(ConfigurationName)&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="1"
@@ -90,8 +92,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="Release"
-			IntermediateDirectory="Release"
+			OutputDirectory="$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
 			>
 			<Tool
@@ -112,11 +114,11 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="include;..;..\cutter;&quot;vendor\lib\glib-2.0\include&quot;;&quot;vendor\include\glib-2.0&quot;;vendor\include"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE;"
+				PreprocessorDefinitions="HAVE_CONFIG_H"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="true"
+				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="3"
 			/>
 			<Tool
@@ -130,7 +132,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="glib-2.0.lib gobject-2.0.lib gmodule-2.0.lib gthread-2.0.lib intl.lib cutter.lib"
 				LinkIncremental="2"
+				AdditionalLibraryDirectories="vendor\lib;&quot;$(ConfigurationName)&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -168,234 +172,6 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
-			<File
-				RelativePath="..\cutter\cut-analyzer.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-assertions-helper.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-assertions.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-backtrace-entry.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-contractor.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-diff.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-experimental.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-factory-builder.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\cutter\cut-features.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-file-stream-reader.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-helper.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-iterated-test.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-listener-utils.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-listener.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-loader.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-mach-o-loader.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-macros.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-main.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-module-factory-utils.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-module-factory.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-module-impl.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-module.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-multi-process.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-pipeline.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-private.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-process.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-public.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-report-factory-builder.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-report.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-repository.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-run-context.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-runner.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-sequence-matcher.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-stream-factory-builder.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-stream-parser.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-stream-reader.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-stream.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-sub-process-group.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-sub-process.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-test-case.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-test-container.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-test-context.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-test-data.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-test-iterator.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-test-result.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-test-runner.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-test-suite.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-test-utils-helper.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-test-utils.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-test.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-types.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-ui-factory-builder.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-ui.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-utils.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-verbose-level.h"
-				>
-			</File>
-			<File
-				RelativePath=".\include\cutter\cut-version.h"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cutter.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
@@ -408,182 +184,6 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
-			<File
-				RelativePath="..\cutter\cut-analyzer.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-assertions-helper.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-backtrace-entry.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-contractor.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-diff.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-factory-builder.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-file-stream-reader.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-helper.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-iterated-test.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-listener.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-loader.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-mach-o-loader.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-main.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-module-factory-utils.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-module-factory.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-module.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-pipeline.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-process.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-report-factory-builder.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-report.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-repository.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-run-context.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-runner.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-sequence-matcher.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-stream-factory-builder.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-stream-parser.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-stream-reader.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-stream.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-sub-process-group.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-sub-process.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-test-case.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-test-container.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-test-context.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-test-data.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-test-iterator.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-test-result.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-test-runner.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-test-suite.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-test-utils-helper.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-test.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-ui-factory-builder.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-ui.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-utils.c"
-				>
-			</File>
-			<File
-				RelativePath="..\cutter\cut-verbose-level.c"
-				>
-			</File>
 			<File
 				RelativePath="..\cutter\main.c"
 				>
