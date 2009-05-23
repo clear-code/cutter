@@ -54,8 +54,10 @@
 typedef struct _CutProcessPrivate	CutProcessPrivate;
 struct _CutProcessPrivate
 {
+#ifdef G_OS_WIN32
+    void *dummy;
+#else
     pid_t pid;
-#ifndef G_OS_WIN32
     gchar *stdout_string;
     gchar *stderr_string;
     GString *cutter_string;
@@ -214,8 +216,8 @@ cut_process_init (CutProcess *process)
 {
     CutProcessPrivate *priv = CUT_PROCESS_GET_PRIVATE(process);
 
-    priv->pid = 0;
 #ifndef G_OS_WIN32
+    priv->pid = 0;
     priv->stdout_string = NULL;
     priv->stderr_string = NULL;
     priv->cutter_string = g_string_new(NULL);
@@ -318,7 +320,11 @@ cut_process_wait (CutProcess *process, unsigned int usec_timeout)
 int
 cut_process_get_pid (CutProcess *process)
 {
+#ifdef G_OS_WIN32
+    return 0;
+#else
     return CUT_PROCESS_GET_PRIVATE(process)->pid;
+#endif
 }
 
 #ifndef G_OS_WIN32
