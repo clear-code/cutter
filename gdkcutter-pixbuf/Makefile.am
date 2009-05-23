@@ -38,3 +38,8 @@ libgdkcutter_pixbuf_la_LDFLAGS =		\
 libgdkcutter_pixbuf_la_LIBADD =			\
 	$(top_builddir)/cutter/libcutter.la	\
 	$(GDK_PIXBUF_LIBS)
+
+echo-public-headers:
+	@for header in $(gdkcutter_pixbuf_include_HEADERS); do	\
+	  echo $(abs_srcdir)/$${header};			\
+	done

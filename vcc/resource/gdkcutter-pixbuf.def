@@ -1,0 +1,6 @@
+EXPORTS
+	gdkcut_pixbuf_assert_equal_helper
+	gdkcut_pixbuf_equal_property
+	gdkcut_pixbuf_equal_content
+	gdkcut_pixbuf_diff
+	gdkcut_pixbuf_save_diff

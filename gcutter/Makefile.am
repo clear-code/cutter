@@ -49,8 +49,8 @@ noinst_headers = 	\
 pkginclude_HEADERS = 	\
 	gcutter.h
 
-gcutterincludedir=$(pkgincludedir)/gcutter
-gcutterinclude_HEADERS = 		\
+gcutter_includedir=$(pkgincludedir)/gcutter
+gcutter_include_HEADERS = 		\
 	$(gcutter_public_headers)
 
 libgcutter_la_SOURCES =			\
@@ -80,3 +80,8 @@ gcut-marshalers.h : gcut-marshalers.list
 
 gcut-marshalers.c : gcut-marshalers.list
 	$(GLIB_GENMARSHAL) $(top_srcdir)/gcutter/gcut-marshalers.list --header --body --prefix=_gcut_marshal > $@
+
+echo-public-headers:
+	@for header in $(gcutter_include_HEADERS); do	\
+	  echo $(abs_srcdir)/$${header};		\
+	done

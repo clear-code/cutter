@@ -79,8 +79,8 @@ noinst_headers = 		\
 pkginclude_HEADERS = 		\
 	cutter.h
 
-cutterincludedir=$(pkgincludedir)/cutter
-cutterinclude_HEADERS = 		\
+cutter_includedir=$(pkgincludedir)/cutter
+cutter_include_HEADERS = 		\
 	$(cutter_public_headers)	\
 	$(libcutter_public_headers)
 
@@ -214,3 +214,8 @@ stamp-$(enum_source_prefix)-h: $(enum_sources_h) Makefile
 	  cp tmp-$(enum_source_prefix).h $(enum_source_prefix).h) && \
 	rm -f tmp-$(enum_source_prefix).h && \
 	echo timestamp > $(@F)
+
+echo-public-headers:
+	@for header in $(cutter_include_HEADERS); do	\
+	  echo $(abs_srcdir)/$${header};		\
+	done

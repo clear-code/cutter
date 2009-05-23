@@ -24,3 +24,10 @@ sync:
 	cp $(top_builddir)/cutter/cut-enum-types.c source/cutter/
 	cp $(top_builddir)/cutter/cut-marshalers.c source/cutter/
 	cp $(top_builddir)/gcutter/gcut-marshalers.c source/gcutter/
+	($(MAKE) -s -C $(top_srcdir)/cutter echo-public-headers;	\
+	 $(MAKE) -s -C $(top_srcdir)/gcutter echo-public-headers) |	\
+	  xargs $(top_srcdir)/misc/generate-def.rb >			\
+	    resource/cutter.def
+	($(MAKE) -s -C $(top_srcdir)/gdkcutter-pixbuf echo-public-headers) |	\
+	  xargs $(top_srcdir)/misc/generate-def.rb >				\
+	    resource/gdkcutter-pixbuf.def

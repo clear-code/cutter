@@ -1,5 +1,9 @@
 2009-05-23  Kouhei Sutou  <kou@cozmixng.org>
 
+	* misc/generate-def.rb: add.
+
+	* vcc/resource/: add.
+
 	* vcc/: add auto-generated files.
 
 	* configure.ac, doc/Makefile.am, doc/reference/Makefile.am,
