@@ -608,7 +608,7 @@ set_elapsed (CutTest *test, gdouble elapsed)
 void
 cut_test_set_elapsed (CutTest *test, gdouble elapsed)
 {
-    return CUT_TEST_GET_CLASS(test)->set_elapsed(test, elapsed);
+    CUT_TEST_GET_CLASS(test)->set_elapsed(test, elapsed);
 }
 
 const gchar *
@@ -761,8 +761,7 @@ cut_test_emit_result_signal (CutTest *test,
 {
     cut_test_set_result_elapsed(test, result);
 
-    return CUT_TEST_GET_CLASS(test)->emit_result_signal(test, test_context,
-                                                        result);
+    CUT_TEST_GET_CLASS(test)->emit_result_signal(test, test_context, result);
 }
 
 /*
