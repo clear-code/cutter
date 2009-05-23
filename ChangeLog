@@ -1,5 +1,8 @@
 2009-05-23  Kouhei Sutou  <kou@cozmixng.org>
 
+	* html/index.html*: add more Cutter information.
+	* html/cutter.css: add a style for command line.
+
 	* cutter/cut-elf-loader.c (cut_elf_loader_collect_symbols): use
 	ELF32_ST_BIND() for ELF32.
 

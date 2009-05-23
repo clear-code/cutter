@@ -33,7 +33,7 @@
 
     <div class="content">
       <div class="main">
-	<h2>最新リリース</h2>
+	<h2 id="latest">最新リリース</h2>
 	<p>
 	  2009-05-20にリリースされた1.0.7が最新です。
         </p>
@@ -42,9 +42,24 @@
           [<a href="reference/ja/news.html">変更点</a>]
 	</p>
 
-        <h2>Cutterとは</h2>
+        <h2 id="about">Cutterとは</h2>
 	<p>
 	  Cutterは書きやすさ・デバッグのしやすさを重視したC言語用のテスティングフレームワークです。メンテナンスしやすく、利用効果の高い単体テスト（ユニットテスト）の開発を支援します。
+	</p>
+
+        <h2 id="support">サポート</h2>
+	<p>
+	  <a href="https://lists.sourceforge.net/lists/listinfo/cutter-users-ja">メーリングリスト</a>で質問・バグレポートを受け付けています。新バージョンのアナウンスもメーリングリストに告知されるので、Cutterを利用している場合はメーリングリストの購読を検討してください。
+	</p>
+	<p>
+	  有償でのサポートやCutterを用いたテスト開発、Cutterの導入支援、Cutterを用いたテスト開発のための教育が必要な場合は<a href="http://www.clear-code.com/software/cutter.html">クリアコードが提供するCutter関連サービス</a>を検討してください。
+	</p>
+
+        <h2 id="development">Cutter本体の開発に興味がある場合</h2>
+	<p>
+	  CutterはSourceForge.netのSubversionリポジトリを利用して開発を行っています。ソースコードは以下のように取得できます。
+	  <pre class="command">% svn co https://cutter.svn.sourceforge.net/svnroot/cutter/cutter/trunk cutter</pre>
+	  新機能や問題修正のパッチはtrunkに対するものでお願いします。パッチは<a href="https://lists.sourceforge.net/lists/listinfo/cutter-users-ja">メーリングリスト</a>に送ってください。
 	</p>
       </div>
 

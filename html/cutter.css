@@ -221,6 +221,7 @@ div.sponsors
 {
   border-top: solid black 1px;
   position: relative;
+  margin-top: 20px;
 }
 
 div.sponsors p
@@ -260,6 +261,13 @@ div.sponsors p#sponsor-famfamfam
 pre
 {
   overflow: auto;
+}
+
+pre.command
+{
+  color: white;
+  background-color: black;
+  padding: 5px 10px;
 }
 
 dt
