@@ -55,7 +55,7 @@
 	  有償でのサポートやCutterを用いたテスト開発、Cutterの導入支援、Cutterを用いたテスト開発のための教育が必要な場合は<a href="http://www.clear-code.com/software/cutter.html">クリアコードが提供するCutter関連サービス</a>を検討してください。
 	</p>
 
-        <h2 id="development">Cutter本体の開発に興味がある場合</h2>
+        <h2 id="development">Cutterの開発に参加</h2>
 	<p>
 	  CutterはSourceForge.netのSubversionリポジトリを利用して開発を行っています。ソースコードは以下のように取得できます。
 	  <pre class="command">% svn co https://cutter.svn.sourceforge.net/svnroot/cutter/cutter/trunk cutter</pre>
@@ -75,6 +75,7 @@
             <ul class="sidebar-install">
               <li><a href="reference/ja/install-to-debian.html">Debian GNU/Linux</a></li>
               <li><a href="reference/ja/install-to-ubuntu.html">Ubuntu Linux</a></li>
+              <li><a href="reference/ja/install-to-fedora.html">Fedora</a></li>
               <li><a href="reference/ja/install-to-freebsd.html">FreeBSD</a></li>
               <li><a href="reference/ja/install-to-soralis.html">Solaris</a></li>
               <li><a href="reference/ja/install-to-cygwin.html">Cygwin</a></li>

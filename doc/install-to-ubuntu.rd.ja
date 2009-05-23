@@ -8,7 +8,7 @@ Ubuntu LinuxへのCutterのインストール方法を説明します。
 
 == インストール
 
-CutterのDebianパッケージが提供されているので、aptitudeインス
+CutterのDebianパッケージが提供されているので、aptitudeでインス
 トールできます。
 
 現在は、Ubuntu Linux Hardy Heron amd64用のパッケージのみ提供

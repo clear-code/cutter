@@ -15,6 +15,7 @@ Here is a dependency library to build Cutter:
 Here are dependency libraries needed by development with
 Cutter:
 
+  * autoconf
   * automake
   * libtool
   * intltool

@@ -16,6 +16,7 @@ FreeBSDへのCutterのインストール方法を説明します。
 また、Cutterを用いた開発で必要になる以下のパッケージもインス
 トールします。
 
+  * autoconf
   * automake
   * libtool
   * intltool

@@ -8,7 +8,7 @@ Debian GNU/LinuxへのCutterのインストール方法を説明します。
 
 == インストール
 
-CutterのDebianパッケージが提供されているので、aptitudeインス
+CutterのDebianパッケージが提供されているので、aptitudeでインス
 トールできます。
 
 現在は、Debian GNU/Linux sid i386/amd64用のパッケージのみ提供
