@@ -14,7 +14,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "console-ui", "console-ui.vc
 		{B10DE031-3018-4D65-B5A0-88C97AC5BA6B} = {B10DE031-3018-4D65-B5A0-88C97AC5BA6B}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "console-ui-factory", "console-ui-factory\console-ui-factory.vcproj", "{823B71BD-16F6-42B4-A638-07813AA6BAD6}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "console-ui-factory", "console-ui-factory.vcproj", "{823B71BD-16F6-42B4-A638-07813AA6BAD6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
