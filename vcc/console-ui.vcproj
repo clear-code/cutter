@@ -19,7 +19,7 @@
 			Name="Debug|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ProjectName)\$(ConfigurationName)"
-			ConfigurationType="1"
+			ConfigurationType="2"
 			CharacterSet="2"
 			>
 			<Tool
@@ -60,7 +60,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="glib-2.0.lib gobject-2.0.lib gmodule-2.0.lib gthread-2.0.lib intl.lib cutter.lib"
-				AdditionalLibraryDirectories="vendor\lib"
+				AdditionalLibraryDirectories="vendor\lib;&quot;$(SolutionDir)$(ConfigurationName)&quot;"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
 			/>
@@ -90,7 +90,7 @@
 			Name="Release|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ProjectName)\$(ConfigurationName)"
-			ConfigurationType="1"
+			ConfigurationType="2"
 			CharacterSet="2"
 			WholeProgramOptimization="1"
 			>
@@ -112,9 +112,9 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="2"
+				EnableIntrinsicFunctions="true"
 				AdditionalIncludeDirectories="include;include\cutter;include\gcutter;..;..\cutter;&quot;vendor\lib\glib-2.0\include&quot;;&quot;vendor\include\glib-2.0&quot;;vendor\include"
 				PreprocessorDefinitions="HAVE_CONFIG_H"
-				EnableIntrinsicFunctions="true"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				WarningLevel="3"
@@ -132,7 +132,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="glib-2.0.lib gobject-2.0.lib gmodule-2.0.lib gthread-2.0.lib intl.lib cutter.lib"
-				AdditionalLibraryDirectories="vendor\lib"
+				AdditionalLibraryDirectories="vendor\lib;&quot;$(SolutionDir)$(ConfigurationName)&quot;"
 				GenerateDebugInformation="true"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
@@ -169,10 +169,6 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
-			<File
-				RelativePath="..\module\ui\cut-console-ui-factory.c"
-				>
-			</File>
 			<File
 				RelativePath="..\module\ui\cut-console-ui.c"
 				>
