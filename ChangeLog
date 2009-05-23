@@ -1,5 +1,7 @@
 2009-05-23  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/run-test.sh: work with standard /bin/sh.
+
 	* doc/install-to-ubuntu.rd*: add.
 	* doc/reference/cutter-docs.sgml: add installation for Ubuntu.
 

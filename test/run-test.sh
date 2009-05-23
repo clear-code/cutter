@@ -1,13 +1,16 @@
 #!/bin/sh
 
-export BASE_DIR="`dirname $0`"
+BASE_DIR="`dirname $0`"
+export BASE_DIR
 top_dir="$BASE_DIR/.."
 
 if test x"$NO_MAKE" != x"yes"; then
-    if which gmake > /dev/null; then
-	MAKE=${MAKE:-"gmake"}
-    else
-	MAKE=${MAKE:-"make"}
+    if test -z "$MAKE"; then
+	if which gmake 2>&1 > /dev/null; then
+	    MAKE=gmake
+	else
+	    MAKE=make
+	fi
     fi
     $MAKE -C $top_dir/ > /dev/null || exit 1
 fi
@@ -27,13 +30,20 @@ elif test x"$CUTTER_CHECK_LEAK" = x"yes"; then
     CUTTER_ARGS="--keep-opening-modules"
 fi
 
+CUT_UI_MODULE_DIR=$top_dir/module/ui/.libs
+CUT_UI_FACTORY_MODULE_DIR=$top_dir/module/ui/.libs
+CUT_REPORT_MODULE_DIR=$top_dir/module/report/.libs
+CUT_REPORT_FACTORY_MODULE_DIR=$top_dir/module/report/.libs
+CUT_STREAM_MODULE_DIR=$top_dir/module/stream/.libs
+CUT_STREAM_FACTORY_MODULE_DIR=$top_dir/module/stream/.libs
+
 export CUTTER
-export CUT_UI_MODULE_DIR=$top_dir/module/ui/.libs
-export CUT_UI_FACTORY_MODULE_DIR=$top_dir/module/ui/.libs
-export CUT_REPORT_MODULE_DIR=$top_dir/module/report/.libs
-export CUT_REPORT_FACTORY_MODULE_DIR=$top_dir/module/report/.libs
-export CUT_STREAM_MODULE_DIR=$top_dir/module/stream/.libs
-export CUT_STREAM_FACTORY_MODULE_DIR=$top_dir/module/stream/.libs
+export CUT_UI_MODULE_DIR
+export CUT_UI_FACTORY_MODULE_DIR
+export CUT_REPORT_MODULE_DIR
+export CUT_REPORT_FACTORY_MODULE_DIR
+export CUT_STREAM_MODULE_DIR
+export CUT_STREAM_FACTORY_MODULE_DIR
 
 CUTTER_ARGS="$CUTTER_ARGS -s $BASE_DIR --exclude-directory fixtures"
 CUTTER_ARGS="$CUTTER_ARGS --exclude-directory lib"
@@ -54,7 +64,8 @@ case `uname` in
 	PATH="$top_dir/test/lib/.libs:$PATH"
 	;;
     Darwin)
-	export DYLD_LIBRARY_PATH="$top_dir/gdkcutter-pixbuf/.libs:$DYLD_LIBRARY_PATH"
+	DYLD_LIBRARY_PATH="$top_dir/gdkcutter-pixbuf/.libs:$DYLD_LIBRARY_PATH"
+	export DYLD_LIBRARY_PATH
 	;;
     *)
 	:
