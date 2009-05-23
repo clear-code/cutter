@@ -135,7 +135,7 @@ html-build.stamp: sgml.stamp $(CATALOGS) $(MAIN_SGML_FILE) $(content_files)
 	  mkdir -p $$lang/xml;						\
 	  xml2po -k -p $(srcdir)/$$catalog -l $$lang			\
 	    $(MAIN_SGML_FILE) > $$lang/$(DOC_MAIN_SGML_FILE);		\
-	  for xml in $(srcdir)/xml/*.xml; do				\
+	  for xml in $(builddir)/xml/*.xml; do				\
 	    xml2po -k -p $(srcdir)/$$catalog -l $$lang $$xml >		\
 	      $$lang/xml/`basename $$xml`;				\
 	  done;								\
@@ -147,10 +147,10 @@ html-build.stamp: sgml.stamp $(CATALOGS) $(MAIN_SGML_FILE) $(content_files)
 	        cp $$file $$lang;					\
 	      fi;							\
 	    else							\
-	      if test -f $(srcdir)/$$file.$$lang; then			\
-	        cp $(srcdir)/$$file.$$lang $$lang/$$file;		\
+	      if test -f $(builddir)/$$file.$$lang; then		\
+	        cp $(builddir)/$$file.$$lang $$lang/$$file;		\
 	      else							\
-	        cp $(srcdir)/$$file $$lang;				\
+	        cp $(builddir)/$$file $$lang;				\
 	      fi;							\
 	    fi;								\
 	  done;								\
