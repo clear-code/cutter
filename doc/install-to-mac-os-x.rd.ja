@@ -1,0 +1,32 @@
+# -*- rd -*-
+
+= Mac OS Xへインストール --- Mac OS XへのCutterのインストール方法
+
+== はじめに
+
+Mac OS XへのCutterのインストール方法を説明します。
+
+== インストール
+
+CutterのMacPortsが提供されているので、portでインストールでき
+ます。
+
+まず、Cutter用のMacPortsを取得します。
+
+  % cd ~
+  % svn co https://cutter.svn.sourceforge.net/svnroot/cutter/macports/ cutter-macports
+
+次に、取得したディレクトリを登録します。
+
+  % echo file://$HOME/cutter-macports | sudo sh -c "cat >> /opt/local/etc/macports/sources.conf"
+
+portでインストールします。
+
+  % sudo port install cutter
+
+== 次のステップ
+
+以上でインストールは完了です。
+
+まずは((<チュートリアル|TUTORIAL.ja>))を一通り試してください。
+Cutterを使った開発の流れがわかります。

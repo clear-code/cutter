@@ -1,5 +1,11 @@
 2009-05-23  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/install-to-mac-os-x.rd*: add.
+
+	* doc/install-to-others.rd*, doc/reference/Makefile.am,
+	doc/reference/cutter-docs.sgml, html/index.html*: add install
+	document for Mac OS X.
+
 	* doc/install-to-fedora.rd*: add.
 
 	* doc/install-to-others.rd*, doc/reference/Makefile.am,

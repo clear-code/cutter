@@ -111,6 +111,7 @@ content_files =					\
 	install-to-ubuntu.xml			\
 	install-to-fedora.xml			\
 	install-to-freebsd.xml			\
+	install-to-mac-os-x.xml			\
 	install-to-cygwin.xml			\
 	install-to-others.xml
 
@@ -143,6 +144,8 @@ generated_xml_files =				\
 	install-to-fedora.xml.ja		\
 	install-to-freebsd.xml			\
 	install-to-freebsd.xml.ja		\
+	install-to-mac-os-x.xml			\
+	install-to-mac-os-x.xml.ja		\
 	install-to-cygwin.xml			\
 	install-to-cygwin.xml.ja		\
 	install-to-others.xml			\
@@ -235,6 +238,12 @@ install-to-freebsd.xml: $(top_srcdir)/doc/install-to-freebsd.rd $(RD2REFENTRY_LI
 
 install-to-freebsd.xml.ja: $(top_srcdir)/doc/install-to-freebsd.rd.ja $(RD2REFENTRY_LIB) ja.po
 	$(RD2_JA) $(top_srcdir)/doc/install-to-freebsd.rd.ja > install-to-freebsd.xml.ja
+
+install-to-mac-os-x.xml: $(top_srcdir)/doc/install-to-mac-os-x.rd $(RD2REFENTRY_LIB) install-to-mac-os-x.xml.ja
+	$(RD2) $(top_srcdir)/doc/install-to-mac-os-x.rd > install-to-mac-os-x.xml
+
+install-to-mac-os-x.xml.ja: $(top_srcdir)/doc/install-to-mac-os-x.rd.ja $(RD2REFENTRY_LIB) ja.po
+	$(RD2_JA) $(top_srcdir)/doc/install-to-mac-os-x.rd.ja > install-to-mac-os-x.xml.ja
 
 install-to-cygwin.xml: $(top_srcdir)/doc/install-to-cygwin.rd $(RD2REFENTRY_LIB) install-to-cygwin.xml.ja
 	$(RD2) $(top_srcdir)/doc/install-to-cygwin.rd > install-to-cygwin.xml
