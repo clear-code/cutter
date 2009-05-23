@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="shift_jis"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
@@ -61,6 +61,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="glib-2.0.lib gobject-2.0.lib gmodule-2.0.lib gthread-2.0.lib intl.lib"
 				AdditionalLibraryDirectories="vendor\lib"
+				ModuleDefinitionFile="resource\cutter.def"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
 			/>
@@ -133,6 +134,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="glib-2.0.lib gobject-2.0.lib gmodule-2.0.lib gthread-2.0.lib intl.lib"
 				AdditionalLibraryDirectories="vendor\lib"
+				ModuleDefinitionFile="resource\cutter.def"
 				GenerateDebugInformation="true"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
