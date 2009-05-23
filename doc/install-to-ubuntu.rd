@@ -1,17 +1,17 @@
 # -*- rd -*-
 
-= Install to Debian GNU/Linux --- How to install Cutter to Debian GNU/Linux
+= Install to Ubuntu Linux --- How to install Cutter to Ubuntu Linux
 
 == Introduction
 
-This document explains how to install Cutter to Debian
-GNU/Linux.
+This document explains how to install Cutter to Ubuntu
+Linux.
 
 == Install
 
 We can use aptitude because Cutter provides Debian packages.
 
-There are packages for Debian GNU/Linux sid i386/amd64. If
+There is a package for Ubuntu Linux Hardy Heron amd64. If
 you need a package for another environment, you can request
 on ((<mailing
 list|URL:https://lists.sourceforge.net/lists/listinfo/cutter-users-en>)).
@@ -19,8 +19,8 @@ list|URL:https://lists.sourceforge.net/lists/listinfo/cutter-users-en>)).
 We need to add the following apt lines to
 /etc/apt/sources.list:
 
-  deb http://cutter.sourceforge.net/debian/ unstable main
-  deb-src http://cutter.sourceforge.net/debian/ unstable main
+  deb http://cutter.sourceforge.nef/ubuntu/ hardy main
+  deb-src http://cutter.sourceforge.net/ubuntu/ hardy main
 
 Cutter packages are signed by key of
 kou@cozmixng.org/kou@clear-code.com If we trust the key, we

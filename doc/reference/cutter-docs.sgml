@@ -20,6 +20,7 @@
     <chapter id="install">
       <title>Install Cutter to your platform</title>
       <xi:include href="install-to-debian.xml"/>
+      <xi:include href="install-to-ubuntu.xml"/>
       <xi:include href="install-to-cygwin.xml"/>
       <xi:include href="install-to-others.xml"/>
     </chapter>

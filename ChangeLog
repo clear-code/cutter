@@ -1,5 +1,8 @@
 2009-05-23  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/install-to-ubuntu.rd*: add.
+	* doc/reference/cutter-docs.sgml: add installation for Ubuntu.
+
 	* html/index.html*: add more Cutter information.
 	* html/cutter.css: add a style for command line.
 
