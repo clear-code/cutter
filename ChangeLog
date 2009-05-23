@@ -1,5 +1,7 @@
 2009-05-23  Kouhei Sutou  <kou@cozmixng.org>
 
+	* vcc/: add auto-generated files.
+
 	* configure.ac, doc/Makefile.am, doc/reference/Makefile.am,
 	gtk-doc.make: work with different build directory.
 

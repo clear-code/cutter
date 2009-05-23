@@ -201,7 +201,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\cutter\cut-enum-types.c"
+					RelativePath="source\cutter\cut-enum-types.c"
 					>
 				</File>
 				<File
@@ -237,7 +237,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\cutter\cut-marshalers.c"
+					RelativePath="source\cutter\cut-marshalers.c"
 					>
 				</File>
 				<File
@@ -421,7 +421,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\gcutter\gcut-marshalers.c"
+					RelativePath="source\gcutter\gcut-marshalers.c"
 					>
 				</File>
 				<File
@@ -483,7 +483,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\cutter\cut-enum-types.h"
+					RelativePath="include\cutter\cut-enum-types.h"
 					>
 				</File>
 				<File
@@ -531,7 +531,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\cutter\cut-marshalers.h"
+					RelativePath="include\cutter\cut-marshalers.h"
 					>
 				</File>
 				<File
@@ -755,7 +755,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\gcutter\gcut-marshalers.h"
+					RelativePath="include\gcutter\gcut-marshalers.h"
 					>
 				</File>
 				<File

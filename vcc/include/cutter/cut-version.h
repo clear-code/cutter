@@ -27,35 +27,35 @@
  *
  * Cutter provides version information, primarily useful in
  * configure checks for builds that have a configure
- * script. Applications will not typically use the features
+ * script. Tests will not typically use the features
  * described here.
  */
 
 /**
  * CUTTER_VERSION_MAJOR:
  *
- * The major version number of the Cutter library.
+ * The major version number of the Cutter.
  */
 #define CUTTER_VERSION_MAJOR 1
 
 /**
  * CUTTER_VERSION_MINOR:
  *
- * The minor version number of the Cutter library.
+ * The minor version number of the Cutter.
  */
 #define CUTTER_VERSION_MINOR 0
 
 /**
  * CUTTER_VERSION_MICRO:
  *
- * The micro version number of the Cutter library.
+ * The micro version number of the Cutter.
  */
 #define CUTTER_VERSION_MICRO 8
 
 /**
  * CUTTER_VERSION_STRING:
  *
- * The version number string of the Cutter library with
+ * The version number string of the Cutter with
  * "#{MAJOR}.#{MINOR}.#{MICRO}" format.
  */
 #define CUTTER_VERSION_STRING "1.0.8"
@@ -66,8 +66,8 @@
  * @minor: the minor version number.
  * @micro: the micro version number.
  *
- * Checks the version of the Cutter library. Returns true if
- * the version of the Cutter header files is the same as or
+ * Checks the version of the Cutter. Returns true if the
+ * version of the Cutter header files is the same as or
  * newer than the passed-in version.
  *
  * Since: 1.0.7

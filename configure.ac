@@ -597,6 +597,7 @@ AC_CONFIG_FILES([Makefile
 		 doc/Makefile
 		 doc/reference/version.xml
 		 doc/reference/Makefile
-		 html/Makefile])
+		 html/Makefile
+		 vcc/Makefile])
 
 AC_OUTPUT

@@ -13,7 +13,8 @@ SUBDIRS = 			\
 	misc			\
 	license			\
 	doc			\
-	html
+	html			\
+	vcc
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = 	\
