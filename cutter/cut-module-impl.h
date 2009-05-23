@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2006 Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2006-2009 Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -35,10 +35,10 @@ typedef GObject *(*CutModuleInstantiateFunc)  (const gchar *first_property,
 #define CUT_MODULE_IMPL_EXIT           cut_module_impl_exit
 #define CUT_MODULE_IMPL_INSTANTIATE    cut_module_impl_instantiate
 
-GList   *CUT_MODULE_IMPL_INIT           (GTypeModule  *module);
-void     CUT_MODULE_IMPL_EXIT           (void);
-GObject *CUT_MODULE_IMPL_INSTANTIATE    (const gchar *first_property,
-                                         va_list      var_args);
+G_MODULE_EXPORT GList   *CUT_MODULE_IMPL_INIT        (GTypeModule  *module);
+G_MODULE_EXPORT void     CUT_MODULE_IMPL_EXIT        (void);
+G_MODULE_EXPORT GObject *CUT_MODULE_IMPL_INSTANTIATE (const gchar *first_property,
+                                                      va_list      var_args);
 
 G_END_DECLS
 

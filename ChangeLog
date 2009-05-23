@@ -1,5 +1,7 @@
 2009-05-23  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-module-impl.h: add missing G_MODULE_EXPORT.
+
 	* cutter/main.c: use return instead of exit.
 
 	* cutter/cut-test-context.h, cutter/cut-module-factory.h: remove
