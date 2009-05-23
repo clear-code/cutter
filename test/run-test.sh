@@ -67,6 +67,10 @@ case `uname` in
 	DYLD_LIBRARY_PATH="$top_dir/gdkcutter-pixbuf/.libs:$DYLD_LIBRARY_PATH"
 	export DYLD_LIBRARY_PATH
 	;;
+    *BSD)
+	LD_LIBRARY_PATH="$top_dir/gdkcutter-pixbuf/.libs:$LD_LIBRARY_PATH"
+	export LD_LIBRARY_PATH
+        ;;
     *)
 	:
 	;;

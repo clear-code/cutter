@@ -1,5 +1,7 @@
 2009-05-23  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/run-test.sh: work with *BSD.
+
 	* doc/install-to-solaris.rd.ja: add but not completed yet.
 
 	* doc/reference/Makefile.am: add missing ubuntu rules.
