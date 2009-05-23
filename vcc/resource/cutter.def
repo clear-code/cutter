@@ -227,8 +227,6 @@ EXPORTS
 	cut_test_context_is_failed
 	cut_test_context_set_jump
 	cut_test_context_get_jump
-	cut_test_context_set_backtrace
-	cut_test_context_get_backtrace
 	cut_test_context_emit_signal
 	cut_test_context_to_xml
 	cut_test_context_to_xml_string
@@ -298,7 +296,6 @@ EXPORTS
 	cut_module_factory_new
 	cut_module_factory_set_option_group
 	cut_module_factory_create
-	cut_module_factory_get_name
 	cut_module_factory_init
 	cut_module_factory_quit
 	cut_module_factory_get_default_module_dir

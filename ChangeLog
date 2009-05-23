@@ -1,5 +1,8 @@
 2009-05-23  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-context.h, cutter/cut-module-factory.h: remove
+	needless declarations.
+
 	* misc/generate-def.rb: add.
 
 	* vcc/resource/: add.

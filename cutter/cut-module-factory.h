@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2009  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -65,7 +65,6 @@ CutModuleFactory *cut_module_factory_new_valist
 void         cut_module_factory_set_option_group (CutModuleFactory *factory,
                                                   GOptionContext *context);
 GObject     *cut_module_factory_create           (CutModuleFactory *factory);
-const gchar *cut_module_factory_get_name         (CutModuleFactory *factory);
 
 G_END_DECLS
 
