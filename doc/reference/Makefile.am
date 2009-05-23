@@ -11,6 +11,10 @@ SCAN_OPTIONS =						\
 	--deprecated-guards="CUTTER_DISABLE_DEPRECATED"	\
 	--source-dir=$(top_builddir)/cutter
 
+# Extra options to supply to gtkdoc-scangobj
+SCANGOBJ_OPTIONS =					\
+	--types="$(srcdir)/$(DOC_MODULE).types"
+
 # The directory containing the source code. Relative to $(srcdir)
 DOC_SOURCE_DIR=../..
 
@@ -164,7 +168,12 @@ EXTRA_DIST +=				\
 	version.xml.in			\
 	$(generated_xml_files)		\
 	sf-logo.html			\
+	overrides.txt			\
 	ja.po
+
+$(DOC_MODULE)-overrides.txt: $(srcdir)/overrides.txt
+	cp $< $@
+
 
 $(DOC_MODULE).pot: sgml-build.stamp
 	xml2po -k -o $(DOC_MODULE).pot				\
