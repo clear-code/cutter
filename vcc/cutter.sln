@@ -1,12 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cutter-cui", "cutter.vcproj", "{8E9F7BA1-8145-4E91-8237-66B96B83F69F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cutter-cui", "cutter-cui.vcproj", "{8E9F7BA1-8145-4E91-8237-66B96B83F69F}"
 	ProjectSection(ProjectDependencies) = postProject
 		{B10DE031-3018-4D65-B5A0-88C97AC5BA6B} = {B10DE031-3018-4D65-B5A0-88C97AC5BA6B}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cutter", "libcutter\libcutter.vcproj", "{B10DE031-3018-4D65-B5A0-88C97AC5BA6B}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cutter", "bcutter.vcproj", "{B10DE031-3018-4D65-B5A0-88C97AC5BA6B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
