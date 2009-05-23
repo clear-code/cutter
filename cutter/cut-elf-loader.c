@@ -373,7 +373,7 @@ cut_elf_loader_collect_symbols (CutELFLoader *loader)
         Elf32_Sym *symbol_32;
         Elf64_Sym *symbol_64;
         uint32_t name_index;
-        unsigned char info;
+        unsigned char info, bind;
         uint16_t section_header_index;
         gsize offset;
 
@@ -382,16 +382,18 @@ cut_elf_loader_collect_symbols (CutELFLoader *loader)
             symbol_32 = (Elf32_Sym *)(priv->content + offset);
             name_index = symbol_32->st_name;
             info = symbol_32->st_info;
+            bind = ELF32_ST_BIND(info);
             section_header_index = symbol_32->st_shndx;
         } else {
             symbol_64 = (Elf64_Sym *)(priv->content + offset);
             name_index = symbol_64->st_name;
             info = symbol_64->st_info;
+            bind = ELF64_ST_BIND(info);
             section_header_index = symbol_64->st_shndx;
         }
 
         if ((info & STT_FUNC) &&
-            (ELF64_ST_BIND(info) & STB_GLOBAL) &&
+            (bind & STB_GLOBAL) &&
             (section_header_index == text_section_header_index)) {
             const gchar *name;
 
