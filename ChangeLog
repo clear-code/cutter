@@ -1,5 +1,7 @@
 2009-05-23  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-iterated-test.c: remove needless return.
+
 	* doc/install-to-mac-os-x.rd*: add.
 
 	* doc/install-to-others.rd*, doc/reference/Makefile.am,

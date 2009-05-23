@@ -234,7 +234,7 @@ invoke (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
     priv = CUT_ITERATED_TEST_GET_PRIVATE(test);
 
     value = cut_test_data_get_value(priv->data);
-    return priv->iterated_test_function(value);
+    priv->iterated_test_function(value);
 }
 
 /*
