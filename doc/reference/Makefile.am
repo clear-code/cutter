@@ -16,7 +16,7 @@ DOC_SOURCE_DIR=../..
 # Used for dependencies
 HFILE_GLOB =								\
 	$(top_srcdir)/cutter/cutter.h					\
-	$(top_srcdir)/cutter/cut-version.h				\
+	$(top_builddir)/cutter/cut-version.h				\
 	$(top_srcdir)/cutter/cut-assertions.h				\
 	$(top_srcdir)/cutter/cut-test-utils.h				\
 	$(top_srcdir)/cutter/cut-multi-process.h			\
@@ -90,7 +90,9 @@ GTKDOC_LIBS +=							\
 endif
 
 # Extra options to supply to gtkdoc-mkdb
-MKDB_OPTIONS=--sgml-mode --output-format=xml
+MKDB_OPTIONS =					\
+	--sgml-mode				\
+	--source-dir=$(top_builddir)/cutter
 
 # Images to copy into HTML directory
 HTML_IMAGES =				\
@@ -176,86 +178,86 @@ update-po: Makefile sgml.stamp
 	done
 
 RD2REFENTRY_LIB = $(top_srcdir)/misc/rd2refentry-lib.rb
-RD2 = rd2 -r $(RD2REFENTRY_LIB) --name=CUTTER
-RD2_JA = $(RD2) --po=$(srcdir)/ja.po
+RD2DOCBOOK = $(RD2) -r $(RD2REFENTRY_LIB) --name=CUTTER
+RD2DOCBOOK_JA = $(RD2DOCBOOK) --po=$(srcdir)/ja.po
 
 news.xml: $(top_srcdir)/NEWS $(RD2REFENTRY_LIB) news.xml.ja
-	$(RD2) $(top_srcdir)/NEWS > news.xml
+	$(RD2DOCBOOK) $(top_srcdir)/NEWS > news.xml
 
 news.xml.ja: $(top_srcdir)/NEWS.ja $(RD2REFENTRY_LIB) ja.po
-	$(RD2_JA) $(top_srcdir)/NEWS.ja > news.xml.ja
+	$(RD2DOCBOOK_JA) $(top_srcdir)/NEWS.ja > news.xml.ja
 
 readme.xml: $(top_srcdir)/README $(RD2REFENTRY_LIB) readme.xml.ja
-	$(RD2) $(top_srcdir)/README > readme.xml
+	$(RD2DOCBOOK) $(top_srcdir)/README > readme.xml
 
 readme.xml.ja: $(top_srcdir)/README.ja $(RD2REFENTRY_LIB) ja.po
-	$(RD2_JA) $(top_srcdir)/README.ja > readme.xml.ja
+	$(RD2DOCBOOK_JA) $(top_srcdir)/README.ja > readme.xml.ja
 
 tutorial.xml: $(top_srcdir)/TUTORIAL $(RD2REFENTRY_LIB) tutorial.xml.ja
-	$(RD2) $(top_srcdir)/TUTORIAL > tutorial.xml
+	$(RD2DOCBOOK) $(top_srcdir)/TUTORIAL > tutorial.xml
 
 tutorial.xml.ja: $(top_srcdir)/TUTORIAL.ja $(RD2REFENTRY_LIB) ja.po
-	$(RD2_JA) $(top_srcdir)/TUTORIAL.ja > tutorial.xml.ja
+	$(RD2DOCBOOK_JA) $(top_srcdir)/TUTORIAL.ja > tutorial.xml.ja
 
 features.xml: $(top_srcdir)/FEATURES $(RD2REFENTRY_LIB) features.xml.ja
-	$(RD2) $(top_srcdir)/FEATURES > features.xml
+	$(RD2DOCBOOK) $(top_srcdir)/FEATURES > features.xml
 
 features.xml.ja: $(top_srcdir)/FEATURES.ja $(RD2REFENTRY_LIB) ja.po
-	$(RD2_JA) $(top_srcdir)/FEATURES.ja > features.xml.ja
+	$(RD2DOCBOOK_JA) $(top_srcdir)/FEATURES.ja > features.xml.ja
 
 users.xml: $(top_srcdir)/USERS $(RD2REFENTRY_LIB) users.xml.ja
-	$(RD2) $(top_srcdir)/USERS > users.xml
+	$(RD2DOCBOOK) $(top_srcdir)/USERS > users.xml
 
 users.xml.ja: $(top_srcdir)/USERS.ja $(RD2REFENTRY_LIB) ja.po
-	$(RD2_JA) $(top_srcdir)/USERS.ja > users.xml.ja
+	$(RD2DOCBOOK_JA) $(top_srcdir)/USERS.ja > users.xml.ja
 
 cutter.xml: $(top_srcdir)/doc/cutter.rd $(RD2REFENTRY_LIB) cutter.xml.ja
-	$(RD2) $(top_srcdir)/doc/cutter.rd > cutter.xml
+	$(RD2DOCBOOK) $(top_srcdir)/doc/cutter.rd > cutter.xml
 
 cutter.xml.ja: $(top_srcdir)/doc/cutter.rd.ja $(RD2REFENTRY_LIB) ja.po
-	$(RD2_JA) $(top_srcdir)/doc/cutter.rd.ja > cutter.xml.ja
+	$(RD2DOCBOOK_JA) $(top_srcdir)/doc/cutter.rd.ja > cutter.xml.ja
 
 install-to-debian.xml: $(top_srcdir)/doc/install-to-debian.rd $(RD2REFENTRY_LIB) install-to-debian.xml.ja
-	$(RD2) $(top_srcdir)/doc/install-to-debian.rd > install-to-debian.xml
+	$(RD2DOCBOOK) $(top_srcdir)/doc/install-to-debian.rd > install-to-debian.xml
 
 install-to-debian.xml.ja: $(top_srcdir)/doc/install-to-debian.rd.ja $(RD2REFENTRY_LIB) ja.po
-	$(RD2_JA) $(top_srcdir)/doc/install-to-debian.rd.ja > install-to-debian.xml.ja
+	$(RD2DOCBOOK_JA) $(top_srcdir)/doc/install-to-debian.rd.ja > install-to-debian.xml.ja
 
 install-to-ubuntu.xml: $(top_srcdir)/doc/install-to-ubuntu.rd $(RD2REFENTRY_LIB) install-to-ubuntu.xml.ja
-	$(RD2) $(top_srcdir)/doc/install-to-ubuntu.rd > install-to-ubuntu.xml
+	$(RD2DOCBOOK) $(top_srcdir)/doc/install-to-ubuntu.rd > install-to-ubuntu.xml
 
 install-to-ubuntu.xml.ja: $(top_srcdir)/doc/install-to-ubuntu.rd.ja $(RD2REFENTRY_LIB) ja.po
-	$(RD2_JA) $(top_srcdir)/doc/install-to-ubuntu.rd.ja > install-to-ubuntu.xml.ja
+	$(RD2DOCBOOK_JA) $(top_srcdir)/doc/install-to-ubuntu.rd.ja > install-to-ubuntu.xml.ja
 
 install-to-fedora.xml: $(top_srcdir)/doc/install-to-fedora.rd $(RD2REFENTRY_LIB) install-to-fedora.xml.ja
-	$(RD2) $(top_srcdir)/doc/install-to-fedora.rd > install-to-fedora.xml
+	$(RD2DOCBOOK) $(top_srcdir)/doc/install-to-fedora.rd > install-to-fedora.xml
 
 install-to-fedora.xml.ja: $(top_srcdir)/doc/install-to-fedora.rd.ja $(RD2REFENTRY_LIB) ja.po
-	$(RD2_JA) $(top_srcdir)/doc/install-to-fedora.rd.ja > install-to-fedora.xml.ja
+	$(RD2DOCBOOK_JA) $(top_srcdir)/doc/install-to-fedora.rd.ja > install-to-fedora.xml.ja
 
 install-to-freebsd.xml: $(top_srcdir)/doc/install-to-freebsd.rd $(RD2REFENTRY_LIB) install-to-freebsd.xml.ja
-	$(RD2) $(top_srcdir)/doc/install-to-freebsd.rd > install-to-freebsd.xml
+	$(RD2DOCBOOK) $(top_srcdir)/doc/install-to-freebsd.rd > install-to-freebsd.xml
 
 install-to-freebsd.xml.ja: $(top_srcdir)/doc/install-to-freebsd.rd.ja $(RD2REFENTRY_LIB) ja.po
-	$(RD2_JA) $(top_srcdir)/doc/install-to-freebsd.rd.ja > install-to-freebsd.xml.ja
+	$(RD2DOCBOOK_JA) $(top_srcdir)/doc/install-to-freebsd.rd.ja > install-to-freebsd.xml.ja
 
 install-to-mac-os-x.xml: $(top_srcdir)/doc/install-to-mac-os-x.rd $(RD2REFENTRY_LIB) install-to-mac-os-x.xml.ja
-	$(RD2) $(top_srcdir)/doc/install-to-mac-os-x.rd > install-to-mac-os-x.xml
+	$(RD2DOCBOOK) $(top_srcdir)/doc/install-to-mac-os-x.rd > install-to-mac-os-x.xml
 
 install-to-mac-os-x.xml.ja: $(top_srcdir)/doc/install-to-mac-os-x.rd.ja $(RD2REFENTRY_LIB) ja.po
-	$(RD2_JA) $(top_srcdir)/doc/install-to-mac-os-x.rd.ja > install-to-mac-os-x.xml.ja
+	$(RD2DOCBOOK_JA) $(top_srcdir)/doc/install-to-mac-os-x.rd.ja > install-to-mac-os-x.xml.ja
 
 install-to-cygwin.xml: $(top_srcdir)/doc/install-to-cygwin.rd $(RD2REFENTRY_LIB) install-to-cygwin.xml.ja
-	$(RD2) $(top_srcdir)/doc/install-to-cygwin.rd > install-to-cygwin.xml
+	$(RD2DOCBOOK) $(top_srcdir)/doc/install-to-cygwin.rd > install-to-cygwin.xml
 
 install-to-cygwin.xml.ja: $(top_srcdir)/doc/install-to-cygwin.rd.ja $(RD2REFENTRY_LIB) ja.po
-	$(RD2_JA) $(top_srcdir)/doc/install-to-cygwin.rd.ja > install-to-cygwin.xml.ja
+	$(RD2DOCBOOK_JA) $(top_srcdir)/doc/install-to-cygwin.rd.ja > install-to-cygwin.xml.ja
 
 install-to-others.xml: $(top_srcdir)/doc/install-to-others.rd $(RD2REFENTRY_LIB) install-to-others.xml.ja
-	$(RD2) $(top_srcdir)/doc/install-to-others.rd > install-to-others.xml
+	$(RD2DOCBOOK) $(top_srcdir)/doc/install-to-others.rd > install-to-others.xml
 
 install-to-others.xml.ja: $(top_srcdir)/doc/install-to-others.rd.ja $(RD2REFENTRY_LIB) ja.po
-	$(RD2_JA) $(top_srcdir)/doc/install-to-others.rd.ja > install-to-others.xml.ja
+	$(RD2DOCBOOK_JA) $(top_srcdir)/doc/install-to-others.rd.ja > install-to-others.xml.ja
 
 upload: docs
 	rm -rf tmp/

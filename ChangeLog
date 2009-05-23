@@ -1,5 +1,8 @@
 2009-05-23  Kouhei Sutou  <kou@cozmixng.org>
 
+	* configure.ac, doc/Makefile.am, doc/reference/Makefile.am,
+	gtk-doc.make: work with different build directory.
+
 	* cutter/cutter.h (shutdown): guard shutdown() on Windows.
 
 	* cutter/cut-test.c: remove needless return.
