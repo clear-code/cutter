@@ -321,7 +321,7 @@ append_arg (GArray *argv, const gchar *arg)
 {
     gchar *dupped_arg;
 
-    dupped_arg = strdup(arg);
+    dupped_arg = g_strdup(arg);
     g_array_append_val(argv, dupped_arg);
 }
 
@@ -447,7 +447,7 @@ run_async (CutPipeline *pipeline)
 
     if (pipe(priv->child_pipe) < 0) {
         emit_error(pipeline, CUT_PIPELINE_ERROR_PIPE, NULL,
-                   "failed to create pipe: %s", strerror(errno));
+                   "failed to create pipe: %s", g_strerror(errno));
         return;
     }
 
