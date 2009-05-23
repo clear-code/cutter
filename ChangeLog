@@ -1,5 +1,7 @@
 2009-05-23  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cutter.h (shutdown): guard shutdown() on Windows.
+
 	* cutter/cut-test.c: remove needless return.
 
 	* cutter/cut-pipeline.c: use g_ functions.
