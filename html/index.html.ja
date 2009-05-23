@@ -74,6 +74,9 @@
             <a href="reference/ja/install.html">インストール</a>
             <ul class="sidebar-install">
               <li><a href="reference/ja/install-to-debian.html">Debian GNU/Linux</a></li>
+              <li><a href="reference/ja/install-to-ubuntu.html">Ubuntu Linux</a></li>
+              <li><a href="reference/ja/install-to-freebsd.html">FreeBSD</a></li>
+              <li><a href="reference/ja/install-to-soralis.html">Solaris</a></li>
               <li><a href="reference/ja/install-to-cygwin.html">Cygwin</a></li>
               <li><a href="reference/ja/install-to-others.html">Others</a></li>
             </ul>

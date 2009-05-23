@@ -109,6 +109,7 @@ content_files =					\
 	cutter.xml				\
 	install-to-debian.xml			\
 	install-to-ubuntu.xml			\
+	install-to-freebsd.xml			\
 	install-to-cygwin.xml			\
 	install-to-others.xml
 
@@ -137,6 +138,8 @@ generated_xml_files =				\
 	install-to-debian.xml.ja		\
 	install-to-ubuntu.xml			\
 	install-to-ubuntu.xml.ja		\
+	install-to-freebsd.xml			\
+	install-to-freebsd.xml.ja		\
 	install-to-cygwin.xml			\
 	install-to-cygwin.xml.ja		\
 	install-to-others.xml			\
@@ -217,6 +220,12 @@ install-to-ubuntu.xml: $(top_srcdir)/doc/install-to-ubuntu.rd $(RD2REFENTRY_LIB)
 
 install-to-ubuntu.xml.ja: $(top_srcdir)/doc/install-to-ubuntu.rd.ja $(RD2REFENTRY_LIB) ja.po
 	$(RD2_JA) $(top_srcdir)/doc/install-to-ubuntu.rd.ja > install-to-ubuntu.xml.ja
+
+install-to-freebsd.xml: $(top_srcdir)/doc/install-to-freebsd.rd $(RD2REFENTRY_LIB) install-to-freebsd.xml.ja
+	$(RD2) $(top_srcdir)/doc/install-to-freebsd.rd > install-to-freebsd.xml
+
+install-to-freebsd.xml.ja: $(top_srcdir)/doc/install-to-freebsd.rd.ja $(RD2REFENTRY_LIB) ja.po
+	$(RD2_JA) $(top_srcdir)/doc/install-to-freebsd.rd.ja > install-to-freebsd.xml.ja
 
 install-to-cygwin.xml: $(top_srcdir)/doc/install-to-cygwin.rd $(RD2REFENTRY_LIB) install-to-cygwin.xml.ja
 	$(RD2) $(top_srcdir)/doc/install-to-cygwin.rd > install-to-cygwin.xml

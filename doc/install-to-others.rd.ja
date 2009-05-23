@@ -5,6 +5,9 @@
 == はじめに
 
 ((<"Debian GNU/Linux"|install-to-debian.rd.ja>))、
+((<Ubuntu Linux|install-to-ubuntu.rd.ja>))、
+((<FreeBSD|install-to-freebsd.rd.ja>))、
+((<Solaris|install-to-solaris.rd.ja>))、
 ((<Cygwin|install-to-cygwin.rd.ja>))以外のプラットフォームへ
 のインストール方法です。
 

@@ -5,8 +5,11 @@
 == Introduction
 
 This document explains how to install Cutter to platforms
-except ((<"Debian GNU/Linux"|install-to-debian.rd.ja>)) and
-((<Cygwin|install-to-cygwin.rd.ja>)).
+except ((<"Debian GNU/Linux"|install-to-debian.rd>)),
+((<Ubuntu Linux|install-to-ubuntu.rd>)),
+((<FreeBSD|install-to-freebsd.rd>)),
+((<Solaris|install-to-solaris.rd>)) and
+((<Cygwin|install-to-cygwin.rd>)).
 
 == Install GLib
 
