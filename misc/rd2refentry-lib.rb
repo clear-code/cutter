@@ -176,6 +176,10 @@ module RD
       tag("code", {}, *contents)
     end
 
+    def apply_to_Var(element, contents)
+      tag("varname", {}, *contents)
+    end
+
     def apply_to_StringElement(element)
       apply_to_String(element.content.chomp)
     end

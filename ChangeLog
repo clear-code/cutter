@@ -1,5 +1,7 @@
 2009-05-24  Kouhei Sutou  <kou@cozmixng.org>
 
+	* misc/rd2refentry-lib.rb: support variable markup.
+
 	* configure.ac: use AC_PATH_PROG instead of AC_CHECK_PROG.
 
 	* doc/Makefile.am (install-data-local): don't install cutter.jman
