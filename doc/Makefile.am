@@ -31,8 +31,12 @@ jman: $(dist_ja_man1_mans)
 
 if HAVE_RD2
 install-data-local: cutter.jman
+else
+install-data-local:
+endif
 	test -z "$(DESTDIR)$(ja_man1dir)" || $(MKDIR_P) "$(DESTDIR)$(ja_man1dir)"
 	@for jman in $(dist_ja_man1_mans); do			\
+	  test -f "$${jman}" || break;				\
 	  jman_path=$(top_builddir)/doc/$${jman};		\
 	  jman_file=`echo $${jman} | sed -e s/jman$$/1/`;	\
 	  echo $(INSTALL_DATA) $${jman_path}			\
@@ -40,7 +44,6 @@ install-data-local: cutter.jman
 	  $(INSTALL_DATA) $${jman_path}				\
 	    "$(DESTDIR)$(ja_man1dir)"/$${jman_file};		\
 	done
-endif
 
 uninstall-local:
 	@for jman in $(dist_ja_man1_mans); do			\
