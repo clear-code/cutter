@@ -8,9 +8,42 @@ SolraisへのCutterのインストール方法を説明します。
 
 == GLibのインストール
 
-Cutterを動かすためにはGLib 2.16以降が必要です。
+Cutterを動かすためにはGLib 2.16以降が必要です。Solaris 10には
+GLib 2.16以降のパッケージがないため、自分でビルド・インストー
+ルしなければいけません。
 
-パッケージでインストールできない？？？
+GLibをビルドするためにはGNU gettext、GNU libiconvが必要です。
+これらのソフトウェアは
+((<Sunfreeware|URL:http://www.sunfreeware.com/>))のパッケー
+ジを利用してインストールすることができます。
+
+例えば、GNU gettextは以下のようにインストールできます。
+
+  % mkdir -p ~/packages
+  % cd ~/packages
+  % wget ftp://ftp.sunfreeware.com/pub/freeware/sparc/10/gettext-0.17-sol10-sparc-local.gz
+  % gzip -d gettext-0.17-sol10-sparc-local.gz
+  % pkgadd -d ./gettext-0.17-sol10-sparc-local
+
+同様にGNU libiconvもインストールしてください。
+
+また、Cutterを用いた開発では、GNUビルドツールが必要になるので、
+GNU Autoconf、GNU Automake、GNU Libtoolもインストールしておい
+てください。必須ではありませんが、国際化されたソフトウェアを
+開発する場合はintltoolもあるとよいでしょう。
+
+パッケージをインストールしたらGLibをビルドすることができます。
+以下のようにしてビルド・インストールできます。GNU make を使う
+ことに注意してください。
+
+  % mkdir -p ~/src
+  % cd ~/src
+  % wget http://ftp.acc.umu.se/pub/GNOME/sources/glib/2.20/glib-2.20.2.tar.gz
+  % tar xvzf glib-2.20.2.tar.gz
+  % cd glib-2.20.2
+  % ./configure --with-libiconv=gnu
+  % gmake
+  % sudo gmake install
 
 == Cutterのインストール
 
@@ -23,7 +56,7 @@ CutterはGNUビルドツールを利用しているので、他のフリーソ�
   % wget http://downloads.sourceforge.net/cutter/cutter-1.0.7.tar.gz
   % tar xvzf cutter-1.0.7.tar.gz
   % cd cutter-1.0.7
-  % ./configure PKG_CONFIG_PATH=$HOME/local/lib/pkgconfig LD_LIBRARY_PATH=$HOME/local/lib --prefix=$HOME/local
+  % ./configure
   % gmake
   % gmake install
 

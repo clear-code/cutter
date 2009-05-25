@@ -1,3 +1,13 @@
+2009-05-25  Kouhei Sutou  <kou@cozmixng.org>
+
+	* doc/reference/cutter-docs.sgml, doc/reference/Makefile.am:
+	include install document for Solaris.
+
+	* doc/install-to-solaris.rd: add.
+
+	* doc/install-to-solaris.rd.ja: complete.
+	Assisted by UNNO Hideyuki. Thanks!!!
+
 2009-05-24  Kouhei Sutou  <kou@cozmixng.org>
 
 	* misc/rd2refentry-lib.rb: support variable markup.

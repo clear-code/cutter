@@ -118,6 +118,7 @@ content_files =					\
 	install-to-ubuntu.xml			\
 	install-to-fedora.xml			\
 	install-to-freebsd.xml			\
+	install-to-solaris.xml			\
 	install-to-mac-os-x.xml			\
 	install-to-cygwin.xml			\
 	install-to-others.xml
@@ -151,6 +152,8 @@ generated_xml_files =				\
 	install-to-fedora.xml.ja		\
 	install-to-freebsd.xml			\
 	install-to-freebsd.xml.ja		\
+	install-to-solaris.xml			\
+	install-to-solaris.xml.ja		\
 	install-to-mac-os-x.xml			\
 	install-to-mac-os-x.xml.ja		\
 	install-to-cygwin.xml			\
@@ -250,6 +253,12 @@ install-to-freebsd.xml: $(top_srcdir)/doc/install-to-freebsd.rd $(RD2REFENTRY_LI
 
 install-to-freebsd.xml.ja: $(top_srcdir)/doc/install-to-freebsd.rd.ja $(RD2REFENTRY_LIB) ja.po
 	$(RD2DOCBOOK_JA) $(top_srcdir)/doc/install-to-freebsd.rd.ja > install-to-freebsd.xml.ja
+
+install-to-solaris.xml: $(top_srcdir)/doc/install-to-solaris.rd $(RD2REFENTRY_LIB) install-to-solaris.xml.ja
+	$(RD2DOCBOOK) $(top_srcdir)/doc/install-to-solaris.rd > install-to-solaris.xml
+
+install-to-solaris.xml.ja: $(top_srcdir)/doc/install-to-solaris.rd.ja $(RD2REFENTRY_LIB) ja.po
+	$(RD2DOCBOOK_JA) $(top_srcdir)/doc/install-to-solaris.rd.ja > install-to-solaris.xml.ja
 
 install-to-mac-os-x.xml: $(top_srcdir)/doc/install-to-mac-os-x.rd $(RD2REFENTRY_LIB) install-to-mac-os-x.xml.ja
 	$(RD2DOCBOOK) $(top_srcdir)/doc/install-to-mac-os-x.rd > install-to-mac-os-x.xml

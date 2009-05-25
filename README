@@ -299,6 +299,8 @@ The following is a template of test.
 
   * Kazumasa Matsunaga: reported a build bug.
   * Daijiro MORI: reported bugs.
-  * UNNO Hideyuki: reported a document bug.
+  * UNNO Hideyuki:
+    * reported a document bug.
+    * assisted Solaris install document.
   * gunyara-kun: suggested API design.
   * Yamakawa Hiroshi: reported works on Cygwin.
