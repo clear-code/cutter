@@ -1,5 +1,7 @@
 2009-06-02  Kouhei Sutou  <kou@clear-code.com>
 
+	* doc/install-to-{debian,ubuntu}.rd: fix typos.
+
 	* misc/prepare-gtk-doc-html-for-publishing.rb: support --suffix.
 
 2009-05-25  Kouhei Sutou  <kou@cozmixng.org>
