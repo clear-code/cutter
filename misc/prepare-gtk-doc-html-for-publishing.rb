@@ -17,6 +17,7 @@ opts = OptionParser.new do |opts|
   end
 
   opts.on("--suffix=SUFFIX", "Template file suffix") do |suffix|
+    suffix = nil if suffix.empty?
     template_suffix = suffix
   end
 
