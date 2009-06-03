@@ -1,3 +1,7 @@
+2009-06-03  Kouhei Sutou  <kou@cozmixng.org>
+
+	* html/index.html*: fix description.
+
 2009-06-02  Kouhei Sutou  <kou@clear-code.com>
 
 	* doc/install-to-{debian,ubuntu}.rd: fix typos.
