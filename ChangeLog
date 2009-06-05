@@ -2,6 +2,7 @@
 
 	* misc/rd2refentry-lib.rb: support RT.
 	* misc/rd2refentry-lib.rb: remomve needless newline.
+	* misc/rd2refentry-lib.rb: support anchor on headline.
 
 2009-06-04  Kouhei Sutou  <kou@clear-code.com>
 

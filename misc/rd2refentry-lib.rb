@@ -61,6 +61,11 @@ module RD
     end
 
     def apply_to_Headline(element, title)
+      id = nil
+      if /\A\s*\[(.+?)\]\s*/ =~ title.first
+        id = $1
+        title[0] = $POSTMATCH
+      end
       case element.level
       when 1
         title = title.join
@@ -77,7 +82,7 @@ module RD
         @n_sections += 1
         @n_text_blocks_in_section = 0
       end
-      [:headline, element.level - 1, title]
+      [:headline, element.level - 1, title, id]
     end
 
     def apply_to_Verbatim(element)
@@ -310,10 +315,10 @@ module RD
     end
 
     def pre_collect_section_contents(contents)
-      section_contents = [[0, []]]
+      section_contents = [[0, [], nil]]
       contents.each do |content|
         if content.is_a?(Array) and content[0] == :headline
-          _, level, title = content
+          _, level, title, id = content
           title_tag = tag("title", {}, *title)
           sub_section_contents = []
           while section_contents.last[0] > level
@@ -322,7 +327,7 @@ module RD
                                              *sub_contents.flatten) + "\n")
           end
           section_contents.last[1].concat(sub_section_contents)
-          section_contents << [level, [title_tag]]
+          section_contents << [level, [title_tag], id]
         else
           section_contents.last[1] << content
         end
@@ -335,15 +340,19 @@ module RD
       section_contents.last[0].downto(0) do |level|
         sub_section_contents = []
         while section_contents.last[0] > level
-          sub_level, sub_contents = section_contents.pop
-          sub_section_contents.unshift(tag("refsect#{sub_level}", {},
+          sub_level, sub_contents, id = section_contents.pop
+          attributes = {}
+          attributes["id"] = id if id
+          sub_section_contents.unshift(tag("refsect#{sub_level}", attributes,
                                            *sub_contents))
         end
         unless sub_section_contents.empty?
           raise "!?" unless section_contents.last[0] == level
-          _, contents = section_contents.pop
+          _, contents, id = section_contents.pop
           if level > 0
-            contents = tag("refsect#{level}", {},
+            attributes = {}
+            attributes["id"] = id if id
+            contents = tag("refsect#{level}", attributes,
                            *(contents + sub_section_contents))
           else
             contents = sub_section_contents.join("\n\n")
