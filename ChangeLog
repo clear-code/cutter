@@ -1,3 +1,7 @@
+2009-06-05  Kouhei Sutou  <kou@clear-code.com>
+
+	* misc/rd2refentry-lib.rb: support RT.
+
 2009-06-04  Kouhei Sutou  <kou@clear-code.com>
 
 	* apt/ubuntu/: support hardy i386.

@@ -5,6 +5,8 @@ require "optparse"
 require "rd/rdvisitor"
 require "rd/version"
 
+require "rt/rtparser"
+
 require "gettext"
 require "gettext/poparser"
 
@@ -79,11 +81,51 @@ module RD
     end
 
     def apply_to_Verbatim(element)
-      contents = []
+      lines = []
       element.each_line do |line|
-	contents.push(apply_to_String(line))
+        lines.push(line)
       end
-      tag("programlisting", {}, contents.join("").chomp)
+
+      case lines.first.strip
+      when "# RT"
+        apply_to_RT(lines.join)
+      else
+        contents = lines.collect {|line| apply_to_String(line)}
+        tag("programlisting", {}, contents.join("").chomp)
+      end
+    end
+
+    def apply_to_RT(content)
+      rt = RT::RTParser.parse(content)
+      elements = [tag("caption", {}, apply_to_String(rt.config["caption"]))]
+
+      header_rows = []
+      rt.header.each do |row|
+        header_cells = []
+        row.each do |cell|
+          if cell.class == RT::RTCell
+            header_cells << [tag("th", {}, apply_to_String(cell.value))]
+          end
+        end
+        header_rows << [tag("tr", {}, header_cells)]
+      end
+      elements << [tag("thead", {}, header_rows)]
+
+      rows = []
+      rt.body.each do |row|
+        cells = []
+        row.each do |cell|
+          if cell.class == RT::RTCell
+            cells << [tag("td", {}, apply_to_String(cell.value))]
+          end
+        end
+        rows << [tag("tr", {}, cells)]
+      end
+      elements << [tag("tbody", {}, rows)]
+
+      attributes = {}
+      attributes["id"] = rt.config["id"] if rt.config["id"]
+      tag("table", attributes, elements)
     end
 
     def apply_to_Reference_with_RDLabel(element, contents)
