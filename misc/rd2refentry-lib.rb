@@ -223,7 +223,7 @@ module RD
     end
 
     def apply_to_StringElement(element)
-      apply_to_String(element.content.chomp)
+      apply_to_String(remove_newline(element.content))
     end
 
     def apply_to_String(element)
@@ -364,6 +364,21 @@ module RD
 
     def remove_suffix(string)
       string.sub(/(?:\.[^.]+)+\z/, "")
+    end
+
+    def remove_newline(string)
+      content = ""
+      lines = string.split(/\r?\n/)
+      lines.each_with_index do |line, i|
+        line = line.strip
+        next_line = lines[i + 1]
+        if next_line and /\A[a-z]/i =~ next_line and /[a-z]\z/i =~ line
+          content << line + " "
+        else
+          content << line
+        end
+      end
+      content
     end
   end
 end
