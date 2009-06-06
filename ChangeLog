@@ -1,3 +1,12 @@
+2009-06-07  Kouhei Sutou  <kou@cozmixng.org>
+
+	* misc/rd2refentry-lib.rb, misc/rd-visitor-util.rb: share
+	remove_newline.
+
+	* misc/misc/rd2man-lib.rb: use remove_newline.
+
+	* misc/rd-visitor-util.rb: fix removable newline detection.
+
 2009-06-05  Kouhei Sutou  <kou@clear-code.com>
 
 	* misc/rd2refentry-lib.rb: support RT.

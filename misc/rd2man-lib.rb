@@ -1,7 +1,9 @@
 require 'rd/rd2man-lib'
+require 'rd-visitor-util'
 
 module RD
   class RD2MANVisitor
+    include RDVisitorUtil
 
     def apply_to_DocumentElement(element, content)
       content = content.join
@@ -73,6 +75,10 @@ EOT
 
     def apply_to_Var(element, content)
       "\n.I #{content.join.sub(/\./, '\\.')}\n"
+    end
+
+    def apply_to_StringElement(element)
+      apply_to_String(remove_newline(element.content))
     end
 
     private

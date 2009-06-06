@@ -5,6 +5,8 @@ require "optparse"
 require "rd/rdvisitor"
 require "rd/version"
 
+require 'rd-visitor-util'
+
 require "rt/rtparser"
 
 require "gettext"
@@ -13,6 +15,7 @@ require "gettext/poparser"
 module RD
   class RD2RefEntryVisitor < RDVisitor
     include ERB::Util
+    include RDVisitorUtil
 
     SYSTEM_NAME = "RDtool -- RD2RefEntryVisitor"
     SYSTEM_VERSION = "0.0.1"
@@ -379,7 +382,7 @@ module RD
       content = ""
       lines = string.split(/\r?\n/)
       lines.each_with_index do |line, i|
-        line = line.strip
+        line = line.chomp
         next_line = lines[i + 1]
         if next_line and /\A[a-z]/i =~ next_line and /[a-z]\z/i =~ line
           content << line + " "
