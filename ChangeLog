@@ -1,5 +1,8 @@
 2009-06-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* configure.ac, doc/Makefile.am, doc/reference/Makefile.am: use
+	detected Ruby.
+
 	* misc/rd2refentry-lib.rb, misc/rd-visitor-util.rb: share
 	remove_newline.
 

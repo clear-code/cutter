@@ -190,8 +190,10 @@ update-po: Makefile sgml.stamp
 	    $(srcdir)/xml/*.xml;		\
 	done
 
-RD2REFENTRY_LIB = $(top_srcdir)/misc/rd2refentry-lib.rb
-RD2DOCBOOK = $(RD2) -r $(RD2REFENTRY_LIB) --name=CUTTER
+RD2LIB_DIR = $(top_srcdir)/misc
+RD2REFENTRY_LIB_FILE = rd2refentry-lib.rb
+RD2REFENTRY_LIB = $(RD2LIB_DIR)/$(RD2REFENTRY_LIB_FILE)
+RD2DOCBOOK = $(RUBY) -I $(RD2LIB_DIR) $(RD2) -r $(RD2REFENTRY_LIB_FILE) --name=CUTTER
 RD2DOCBOOK_JA = $(RD2DOCBOOK) --po=$(srcdir)/ja.po
 
 news.xml: $(top_srcdir)/NEWS $(RD2REFENTRY_LIB) news.xml.ja

@@ -421,6 +421,7 @@ dnl **************************************************************
 dnl Checks for RD2
 dnl **************************************************************
 
+AC_PATH_PROG(RUBY, ruby, ruby-not-found)
 AC_PATH_PROG(RD2, rd2, rd2-not-found)
 AM_CONDITIONAL([HAVE_RD2], [test "$RD2" != "rd2-not-found"])
 
