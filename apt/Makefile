@@ -22,3 +22,10 @@ upload: update
 	     dists pool $(SF_HTDOCS)/$${distribution};	\
 	  );						\
 	done
+
+download:
+	for distribution in $(DISTRIBUTIONS); do		\
+	  (cd $${distribution};					\
+	   rsync -avz $(SF_HTDOCS)/$${distribution}/pool/ pool;	\
+	  );							\
+	done
