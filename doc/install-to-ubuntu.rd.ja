@@ -18,7 +18,7 @@ CutterのDebianパッケージが提供されているので、aptitudeでイン
 
 まず、以下のapt lineを/etc/apt/sources.listに追加します。
 
-  deb http://cutter.sourceforge.nef/ubuntu/ hardy main
+  deb http://cutter.sourceforge.net/ubuntu/ hardy main
   deb-src http://cutter.sourceforge.net/ubuntu/ hardy main
 
 パッケージはkou@cozmixng.org/kou@clear-code.comの鍵でサイン

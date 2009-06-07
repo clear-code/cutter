@@ -19,7 +19,7 @@ list|URL:https://lists.sourceforge.net/lists/listinfo/cutter-users-en>)).
 We need to add the following apt lines to
 /etc/apt/sources.list:
 
-  deb http://cutter.sourceforge.nef/ubuntu/ hardy main
+  deb http://cutter.sourceforge.net/ubuntu/ hardy main
   deb-src http://cutter.sourceforge.net/ubuntu/ hardy main
 
 Cutter packages are signed by key of
