@@ -1,6 +1,5 @@
-Archive: hardy
-Version: 8.04
+Archive: unstable
 Component: main
 Origin: The Cutter project
 Label: The Cutter project
-Architecture: source
+Architecture: i386
