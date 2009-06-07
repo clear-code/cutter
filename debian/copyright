@@ -1,12 +1,12 @@
-This package was debianized by Kouhei Sutou <kou@cozmixng.org> on
+This package was debianized by Kouhei Sutou <kou@clear-code.com> on
 Thu, 05 Mar 2009 14:52:04 +0000.
 
-It was downloaded from <url://example.com>
+It was downloaded from <http://cutter.sourceforge.net/>
 
 Upstream Author(s):
 
-    Kouhei Sutou <kou@cozmixng.org>
-    Hiroyuki Ikezoe <poincare@ikezoe.net>
+    Kouhei Sutou <kou@clear-code.com>
+    Hiroyuki Ikezoe <ikezoe@clear-code.com>
 
 Copyright:
 
@@ -27,7 +27,7 @@ License:
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-The Debian packaging is (C) 2009, Kouhei Sutou <kou@cozmixng.org> and
+The Debian packaging is (C) 2009, Kouhei Sutou <kou@clear-code.com> and
 is licensed under the GPL, see `/usr/share/common-licenses/GPL'.
 
 # Please also look if there are files or directories which have a
