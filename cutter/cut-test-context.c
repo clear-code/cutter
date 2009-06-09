@@ -150,10 +150,14 @@ taken_list_new (GList *list, CutDestroyFunction destroy_function)
 static void
 taken_list_free (TakenList *taken_list)
 {
-    if (taken_list->destroy_function)
-        g_list_foreach(taken_list->list,
-                       (GFunc)taken_list->destroy_function,
-                       NULL);
+    if (taken_list->destroy_function) {
+        GList *node;
+
+        for (node = taken_list->list; node; node = g_list_next(node)) {
+            if (node->data)
+                taken_list->destroy_function(node->data);
+        }
+    }
     g_list_free(taken_list->list);
 
     g_slice_free(TakenList, taken_list);

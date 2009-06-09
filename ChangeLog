@@ -1,5 +1,7 @@
 2009-06-09  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-context.c: don't call destroy function for NULL.
+
 	* test/gcutter/test-gcut-list.c: add tests for gcut_list_*_string().
 
 2009-06-07  Kouhei Sutou  <kou@cozmixng.org>
