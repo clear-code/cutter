@@ -3,6 +3,8 @@
 #include <gcutter.h>
 #include <cutter/cut-enum-types.h>
 
+void test_equal_string_including_null(void);
+void test_inspect_string_including_null(void);
 void test_inspect_enum(void);
 void test_inspect_flags(void);
 
@@ -23,6 +25,41 @@ cut_teardown (void)
         g_list_free(list);
     if (inspected)
         g_free(inspected);
+}
+
+void
+test_equal_string_including_null (void)
+{
+    GList *list1, *list2;
+
+    list1 = g_list_append(list, g_strdup("a"));
+    list1 = g_list_append(list, NULL);
+    list1 = g_list_append(list, g_strdup("c"));
+    gcut_take_list(list1, g_free);
+
+    cut_assert_true(gcut_list_equal_string(list1, list1));
+
+    list2 = g_list_append(list, NULL);
+    list2 = g_list_append(list, g_strdup("b"));
+    list2 = g_list_append(list, g_strdup("c"));
+    gcut_take_list(list2, g_free);
+
+    cut_assert_false(gcut_list_equal_string(list1, list2));
+}
+
+void
+test_inspect_string_including_null (void)
+{
+    GList *list;
+
+    list = g_list_append(list, g_strdup("a"));
+    list = g_list_append(list, NULL);
+    list = g_list_append(list, g_strdup("c"));
+    gcut_take_list(list, g_free);
+
+    inspected = gcut_list_inspect_string(list);
+    cut_assert_equal_string("(\"a\", (null), \"c\')",
+                            inspected);
 }
 
 void

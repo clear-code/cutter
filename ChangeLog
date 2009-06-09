@@ -1,3 +1,7 @@
+2009-06-09  Kouhei Sutou  <kou@cozmixng.org>
+
+	* gcutter/gcut-list.c, test/gcutter/test-gcut-list.c: add NULL check.
+
 2009-06-07  Kouhei Sutou  <kou@cozmixng.org>
 
 	* apt/ubuntu: universe -> main.

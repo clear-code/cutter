@@ -37,7 +37,14 @@ gcut_list_equal (const GList *list1, const GList *list2, GEqualFunc equal_func)
     for (node1 = list1, node2 = list2;
          node1 && node2;
          node1 = g_list_next(node1), node2 = g_list_next(node2)) {
-        if (!equal_func(node1->data, node2->data))
+        gpointer data1 = node1->data;
+        gpointer data2 = node2->data;
+
+        if (data1 == data2)
+            continue;
+        if (data1 == NULL || data2 == NULL)
+            return FALSE;
+        if (!equal_func(data1, data2))
             return FALSE;
     }
 
@@ -54,7 +61,10 @@ gcut_list_inspect (const GList *list, GCutInspectFunction inspect_func,
     string = g_string_new("(");
     node = list;
     while (node) {
-        inspect_func(string, node->data, user_data);
+        if (node->data)
+            inspect_func(string, node->data, user_data);
+        else
+            g_string_append(string, "(null)");
         node = g_list_next(node);
         if (node)
             g_string_append(string, ", ");
