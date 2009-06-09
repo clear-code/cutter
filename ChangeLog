@@ -1,6 +1,6 @@
 2009-06-09  Kouhei Sutou  <kou@cozmixng.org>
 
-	* gcutter/gcut-list.c, test/gcutter/test-gcut-list.c: add NULL check.
+	* test/gcutter/test-gcut-list.c: add tests for gcut_list_*_string().
 
 2009-06-07  Kouhei Sutou  <kou@cozmixng.org>
 

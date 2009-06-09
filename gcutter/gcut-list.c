@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2009  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -37,14 +37,7 @@ gcut_list_equal (const GList *list1, const GList *list2, GEqualFunc equal_func)
     for (node1 = list1, node2 = list2;
          node1 && node2;
          node1 = g_list_next(node1), node2 = g_list_next(node2)) {
-        gpointer data1 = node1->data;
-        gpointer data2 = node2->data;
-
-        if (data1 == data2)
-            continue;
-        if (data1 == NULL || data2 == NULL)
-            return FALSE;
-        if (!equal_func(data1, data2))
+        if (!equal_func(node1->data, node2->data))
             return FALSE;
     }
 
@@ -61,10 +54,7 @@ gcut_list_inspect (const GList *list, GCutInspectFunction inspect_func,
     string = g_string_new("(");
     node = list;
     while (node) {
-        if (node->data)
-            inspect_func(string, node->data, user_data);
-        else
-            g_string_append(string, "(null)");
+        inspect_func(string, node->data, user_data);
         node = g_list_next(node);
         if (node)
             g_string_append(string, ", ");

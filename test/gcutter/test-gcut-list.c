@@ -30,18 +30,18 @@ cut_teardown (void)
 void
 test_equal_string_including_null (void)
 {
-    GList *list1, *list2;
+    GList *list1 = NULL, *list2 = NULL;
 
-    list1 = g_list_append(list, g_strdup("a"));
-    list1 = g_list_append(list, NULL);
-    list1 = g_list_append(list, g_strdup("c"));
+    list1 = g_list_append(list1, g_strdup("a"));
+    list1 = g_list_append(list1, NULL);
+    list1 = g_list_append(list1, g_strdup("c"));
     gcut_take_list(list1, g_free);
 
     cut_assert_true(gcut_list_equal_string(list1, list1));
 
-    list2 = g_list_append(list, NULL);
-    list2 = g_list_append(list, g_strdup("b"));
-    list2 = g_list_append(list, g_strdup("c"));
+    list2 = g_list_append(list2, NULL);
+    list2 = g_list_append(list2, g_strdup("b"));
+    list2 = g_list_append(list2, g_strdup("c"));
     gcut_take_list(list2, g_free);
 
     cut_assert_false(gcut_list_equal_string(list1, list2));
@@ -50,7 +50,7 @@ test_equal_string_including_null (void)
 void
 test_inspect_string_including_null (void)
 {
-    GList *list;
+    GList *list = NULL;
 
     list = g_list_append(list, g_strdup("a"));
     list = g_list_append(list, NULL);
@@ -58,7 +58,7 @@ test_inspect_string_including_null (void)
     gcut_take_list(list, g_free);
 
     inspected = gcut_list_inspect_string(list);
-    cut_assert_equal_string("(\"a\", (null), \"c\')",
+    cut_assert_equal_string("(\"a\", NULL, \"c\")",
                             inspected);
 }
 
