@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2009  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -180,7 +180,7 @@ gcut_string_io_channel_read (GIOChannel *channel, gchar *buf, gsize count,
 
 static GIOStatus
 determine_write_size (GCutStringIOChannel *string_channel,
-                      gsize size, gsize *write_size)
+                      gsize size, gsize *write_size, GError **error)
 {
     while (TRUE) {
         gsize buffer_size, available_size;
@@ -188,6 +188,14 @@ determine_write_size (GCutStringIOChannel *string_channel,
         if (string_channel->buffer_limit == 0) {
             *write_size = size;
             break;
+        }
+
+        if (!string_channel->string) {
+            g_set_error(error,
+                        G_IO_CHANNEL_ERROR,
+                        g_io_channel_error_from_errno(EBADF),
+                        "%s: closed channel", g_strerror(EBADF));
+            return G_IO_STATUS_ERROR;
         }
 
         if (string_channel->string->len > string_channel->write_offset) {
@@ -233,11 +241,12 @@ gcut_string_io_channel_write (GIOChannel *channel, const gchar *buf, gsize count
 
     *bytes_written = 0;
 
-    status = determine_write_size(string_channel, count, &write_size);
+    status = determine_write_size(string_channel, count, &write_size, error);
     if (status != G_IO_STATUS_NORMAL)
         return status;
 
     while (0 < string_channel->limit &&
+           string_channel->string &&
            string_channel->limit < string_channel->string->len + write_size) {
         if (string_channel->flags & G_IO_FLAG_NONBLOCK) {
             g_set_error(error,
@@ -248,6 +257,14 @@ gcut_string_io_channel_write (GIOChannel *channel, const gchar *buf, gsize count
         } else {
             g_main_context_iteration(NULL, TRUE);
         }
+    }
+
+    if (!string_channel->string) {
+        g_set_error(error,
+                    G_IO_CHANNEL_ERROR,
+                    g_io_channel_error_from_errno(EBADF),
+                    "%s: closed channel", g_strerror(EBADF));
+        return G_IO_STATUS_ERROR;
     }
 
     g_string_overwrite_len(string_channel->string, string_channel->write_offset,

@@ -1,3 +1,7 @@
+2009-06-19  Kouhei Sutou  <kou@clear-code.com>
+
+	* gcutter/gcut-string-io-channel.c: add error check.
+
 2009-06-09  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-test-context.c: don't call destroy function for NULL.
