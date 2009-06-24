@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2009  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2009  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -28,7 +28,6 @@
 #ifdef HAVE_MACH_O_LOADER_H
 #  include <mach-o/loader.h>
 #  include <mach-o/nlist.h>
-#  include <mach-o/stab.h>
 #endif
 #include <glib/gstdio.h>
 
@@ -296,6 +295,7 @@ cut_mach_o_loader_collect_symbols (CutMachOLoader *loader)
                 name = g_ptr_array_index(all_symbols, table->iextdefsym + j);
                 symbols = g_list_prepend(symbols, g_strdup(name));
             }
+            break;
         }
         default:
             break;
