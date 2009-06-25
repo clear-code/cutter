@@ -1,5 +1,7 @@
 2009-06-26  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-mach-o-loader.c: cleanup.
+
 	* cutter/cut-mach-o-loader.c: use defined section to detect
 	symbols for public function in Mach-O.
 
