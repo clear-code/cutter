@@ -220,11 +220,10 @@ cut_mach_o_loader_collect_symbols (CutMachOLoader *loader)
     CutMachOLoaderPrivate *priv;
     GList *symbols = NULL;
     gsize offset = 0;
-    GPtrArray *all_symbols;
     struct mach_header *header = NULL;
     struct mach_header_64 *header_64 = NULL;
-    uint32_t n_commands;
-    gint i;
+    uint32_t i, n_commands;
+    uint32_t section_index = 0, text_section_index = 0;
 
     priv = CUT_MACH_O_LOADER_GET_PRIVATE(loader);
     if (priv->bit == ARCHITECTURE_32BIT) {
@@ -237,63 +236,107 @@ cut_mach_o_loader_collect_symbols (CutMachOLoader *loader)
         n_commands = header_64->ncmds;
     }
 
-    all_symbols = g_ptr_array_sized_new(n_commands);
     for (i = 0; i < n_commands; i++) {
         struct load_command *load;
 
         load = (struct load_command *)(priv->content + offset);
         switch (load->cmd) {
-        case LC_SYMTAB:
+        case LC_SEGMENT:
         {
-            struct symtab_command *table;
-            struct nlist *symbol_info = NULL;
-            struct nlist_64 *symbol_info_64 = NULL;
-            gchar *string_table;
+            struct segment_command *segment;
+            struct segment_command_64 *segment_64;
             gint j;
+            const gchar *segment_name;
+            uint32_t n_sections;
+            struct section *section;
+            struct section_64 *section_64;
 
-            table = (struct symtab_command *)(priv->content + offset);
             if (priv->bit == ARCHITECTURE_32BIT) {
-                symbol_info = (struct nlist *)(priv->content + table->symoff);
+                segment = (struct segment_command *)(priv->content + offset);
+                segment_name = segment->segname;
+                n_sections = segment->nsects;
             } else {
-                symbol_info_64 =
-                    (struct nlist_64 *)(priv->content + table->symoff);
+                segment_64 = (struct segment_command_64 *)(priv->content + offset);
+                segment_name = segment_64->segname;
+                n_sections = segment_64->nsects;
             }
-            string_table = priv->content + table->stroff;
-            for (j = 0; j < table->nsyms; j++) {
-                uint8_t type;
-                int32_t string_offset;
-                gchar *name;
+
+            if (!g_str_equal(segment_name, "__TEXT")) {
+                section_index += n_sections;
+                break;
+            }
+
+            if (priv->bit == ARCHITECTURE_32BIT) {
+                section =
+                    (struct section *)(priv->content + offset + sizeof(*segment));
+            } else {
+                section_64 =
+                    (struct section_64 *)(priv->content + offset + sizeof(*segment_64));
+            }
+
+            for (j = 0; j < n_sections; j++) {
+                const gchar *section_name;
 
                 if (priv->bit == ARCHITECTURE_32BIT) {
-                    type = symbol_info[j].n_type;
-                    string_offset = symbol_info[j].n_un.n_strx;
+                    section_name = section->sectname;
+                    section++;
                 } else {
-                    type = symbol_info_64[j].n_type;
-                    string_offset = symbol_info_64[j].n_un.n_strx;
+                    section_name = section_64->sectname;
+                    section_64++;
                 }
+                section_index++;
 
-                name = string_table + string_offset;
-                if ((string_offset == 0) ||
-                    (name[0] == '\0') ||
-                    (name[0] != '_')) {
-                    g_ptr_array_add(all_symbols, NULL);
-                } else {
-                    g_ptr_array_add(all_symbols, name + 1);
-                }
+                if (g_str_equal(section_name, "__text"))
+                    text_section_index = section_index;
             }
             break;
         }
-        case LC_DYSYMTAB:
+        case LC_SYMTAB:
         {
-            struct dysymtab_command *table;
+            struct symtab_command *table;
+            struct nlist *symbol = NULL;
+            struct nlist_64 *symbol_64 = NULL;
+            gchar *string_table;
             gint j;
 
-            table = (struct dysymtab_command *)(priv->content + offset);
-            for (j = 0; j < table->nextdefsym; j++) {
-                const gchar *name;
+            if (text_section_index == 0)
+                break;
 
-                name = g_ptr_array_index(all_symbols, table->iextdefsym + j);
-                symbols = g_list_prepend(symbols, g_strdup(name));
+            table = (struct symtab_command *)(priv->content + offset);
+            if (priv->bit == ARCHITECTURE_32BIT) {
+                symbol = (struct nlist *)(priv->content + table->symoff);
+            } else {
+                symbol_64 = (struct nlist_64 *)(priv->content + table->symoff);
+            }
+            string_table = priv->content + table->stroff;
+            for (j = 0; j < table->nsyms; j++) {
+                uint8_t type, defined_section_index;
+                gboolean defined_in_section = FALSE;
+                int32_t string_offset;
+
+                if (priv->bit == ARCHITECTURE_32BIT) {
+                    type = symbol->n_type;
+                    string_offset = symbol->n_un.n_strx;
+                    defined_section_index = symbol->n_sect;
+                    symbol++;
+                } else {
+                    type = symbol_64->n_type;
+                    string_offset = symbol_64->n_un.n_strx;
+                    defined_section_index = symbol_64->n_sect;
+                    symbol_64++;
+                }
+
+                if ((type & N_TYPE) == N_SECT)
+                    defined_in_section = TRUE;
+
+                if (defined_in_section &&
+                    defined_section_index == text_section_index &&
+                    type & N_EXT) {
+                    gchar *name;
+
+                    name = string_table + string_offset;
+                    symbols = g_list_prepend(symbols, g_strdup(name + 1));
+                }
             }
             break;
         }
@@ -302,7 +345,6 @@ cut_mach_o_loader_collect_symbols (CutMachOLoader *loader)
         }
         offset += load->cmdsize;
     }
-    g_ptr_array_free(all_symbols, TRUE);
 
     return symbols;
 #else
