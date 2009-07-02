@@ -2,7 +2,7 @@ module RDVisitorUtil
   module_function
   def remove_newline(string)
     content = ""
-    lines = string.split(/\r?\n/)
+    lines = string.split(/\r?\n\s*/)
     lines.each_with_index do |line, i|
       line = line.chomp
       next_line = lines[i + 1]

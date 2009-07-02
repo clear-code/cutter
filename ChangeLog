@@ -1,5 +1,7 @@
 2009-07-02  Kouhei Sutou  <kou@clear-code.com>
 
+	* misc/rd-visitor-util.rb: remove needless spaces after newline.
+
 	* USERS*: add mroonga.
 
 	* misc/rd2refentry-lib.rb: support naming term and referencing to
