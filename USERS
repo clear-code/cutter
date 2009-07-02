@@ -9,6 +9,8 @@
     full-text search engine.
   * ((<groonga|URL:http://groonga.org/>)):
     full-text search engine and column store.
+  * ((<mroonga|URL:http://wiki.github.com/mroonga/mroonga>)):
+    a MySQL pluggable storage engine for groonga.
   * ((<milter manager|URL:http://milter-manager.sourceforge.net/>)):
     a milter to use milters effectively.
   * ((<Kazehakase|URL:http://kazehakase.sourceforge.jp/>)):
