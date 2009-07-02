@@ -48,6 +48,7 @@ module RD
       @translate_data = nil
       @n_sections = 0
       @n_text_blocks_in_section = 0
+      @term_indexes = {}
       @man_style = false
     end
 
@@ -164,9 +165,15 @@ module RD
                     tag("textobject", {}, tag("phrase", {}, label)),
                    ])
       else
+        if url =~ /#/
+          target, hash = $PREMATCH, $POSTMATCH
+          linkend = "#{ref_entry_id(target)}.#{term_index_id(hash)}"
+        else
+          linkend = ref_entry_id(url)
+        end
         return tag("link",
-                   {:linkend => ref_entry_id(url)},
-                   remove_suffix(remove_lang_suffix(label)))
+                   {:linkend => linkend},
+                   remove_suffix(remove_lang_suffix(remove_hash_suffix(label))))
       end
       label = remove_suffix(remove_lang_suffix(label))
       tag("ulink", {:url => url}, label)
@@ -200,8 +207,14 @@ module RD
     end
 
     def apply_to_DescListItem(element, term, contents)
+      term_attributes = {}
+      id = term_index_id(term)
+      unless @term_indexes[id]
+        @term_indexes[id] = term
+        term_attributes["id"] = "#{ref_entry_id}.#{id}"
+      end
       tag("varlistentry", {},
-          tag("term", {}, term),
+          tag("term", term_attributes, term),
           tag("listitem", {}, *contents))
     end
 
@@ -269,6 +282,11 @@ module RD
     def ref_entry_id(filename=nil)
       filename ||= ARGF.filename
       remove_suffix(File.basename(filename)).downcase
+    end
+
+    def term_index_id(term)
+      first_sentence = term.to_s.split(/\s/, 2)[0]
+      first_sentence.gsub(/[._]/, "-")
     end
 
     def tag(name, attributes={}, *contents)
@@ -370,12 +388,16 @@ module RD
       listitem.children.size == 1 and listitem.children[0].is_a?(TextBlock)
     end
 
+    def remove_hash_suffix(string)
+      string.sub(/\#.*\z/, "")
+    end
+
     def remove_lang_suffix(string)
       string.sub(/\.[a-z]{2}\z/, "")
     end
 
     def remove_suffix(string)
-      string.sub(/(?:\.[^.]+)+\z/, "")
+      string.sub(/(?:\.[^.]{2,4})+\z/, "")
     end
   end
 end
