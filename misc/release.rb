@@ -57,9 +57,16 @@ def upload_file(agent, file, sf_user_name, password)
   agent.submit(upload_form, upload_form.buttons.first)
 end
 
-def go_file_releases_page(agent, project_page)
-  download_page_link = project_page.links.find do |link|
-    /\ADownload\z/ =~ link.text
+def go_development_page(agent, project_page)
+  development_page_link = project_page.links.find do |link|
+    /\bprojects\b/ =~ link.href and /\ADevelop\z/ =~ link.text
+  end
+  agent.click(development_page_link)
+end
+
+def go_file_releases_page(agent, development_page)
+  download_page_link = development_page.links.find do |link|
+    /\badmin\b/ =~ link.href and /\ADownloads\z/ =~ link.text
   end
   download_page = agent.click(download_page_link)
 
@@ -187,8 +194,8 @@ def notify_release(agent, edit_release_page)
   agent.submit(edit_file_form, edit_file_form.buttons.first)
 end
 
-def go_news_page(agent, project_page)
-  agent.click(project_page.links.find {|link| /\ANews\z/ =~ link.text})
+def go_news_page(agent, development_page)
+  agent.click(development_page.links.find {|link| /\ANews\z/ =~ link.text})
 end
 
 def go_submit_news_page(agent, news_page)
@@ -220,7 +227,8 @@ def main(sf_user_name, project_name, package_name, release_name, file_name,
   my_page = login(agent, sf_user_name, password)
 
   project_page = go_project_page(agent, my_page, project_name)
-  file_releases_page = go_file_releases_page(agent, project_page)
+  development_page = go_development_page(agent, project_page)
+  file_releases_page = go_file_releases_page(agent, development_page)
   upload_file(agent, file_name, sf_user_name, password)
   edit_release_page = go_edit_release_page(agent, file_releases_page,
                                            package_name, release_name)
@@ -230,7 +238,7 @@ def main(sf_user_name, project_name, package_name, release_name, file_name,
   edit_release_page = set_release_property(agent, edit_release_page)
   edit_release_page = notify_release(agent, edit_release_page)
 
-  news_page = go_news_page(agent, project_page)
+  news_page = go_news_page(agent, development_page)
   submit_news_page = go_submit_news_page(agent, news_page)
   submit_news(agent, submit_news_page, project_name, package_name,
               release_name, readme, news)
