@@ -273,7 +273,9 @@ AC_SUBST(factory_moduledir)
 dnl **************************************************************
 dnl Check for GTK+
 dnl **************************************************************
-AM_PATH_GTK_2_0(2.12.0, [], [], [])
+m4_ifdef([AM_PATH_GTK_2_0],
+         [AM_PATH_GTK_2_0(2.12.0, [], [], [])],
+         [no_gtk="yes"])
 
 if test -z "$no_gtk"; then
   AC_DEFINE(HAVE_GTK, 1, [Define to 1 if you have GTK+ installed])
