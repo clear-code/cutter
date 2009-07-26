@@ -5,15 +5,17 @@ require 'rubygems'
 require 'mechanize'
 require 'logger'
 
-if ARGV.size < 5
+if ARGV.size < 6
   puts "Usage: #{$0} " +
-         "SF_USER_NAME PROJECT_NAME PACKAGE_NAME RELEASE_NAME FILE_NAME README NEWS"
-  puts " e.g.: #{$0} ktou Cutter cutter 0.3.0 cutter-0.3.0.tar.gz README NEWS"
+         "SF_USER_NAME PROJECT_NAME PACKAGE_NAME RELEASE_NAME README NEWS " +
+         "FILES..."
+  puts " e.g.: #{$0} ktou Cutter cutter 0.3.0 README NEWS " +
+         "cutter-0.3.0.tar.gz cutter-0.3.0.tar.bz2"
   exit(1)
 end
 
-sf_user_name, project_name, package_name, release_name, file_name, \
-  readme, news, = ARGV
+sf_user_name, project_name, package_name, release_name, \
+  readme, news, *files = ARGV
 
 def read_password(prompt, input=$stdin, output=$stdout)
   output.print(prompt)
@@ -47,14 +49,24 @@ def go_project_page(agent, my_page, project_name)
   agent.click(project_page_link)
 end
 
-def upload_file(agent, file, sf_user_name, password)
-  agent.basic_auth(sf_user_name, password)
+def upload_files(sf_user_name, project_name, package_name, release_name,
+                 news, files)
+  project_name = project_name.downcase.gsub(/ /, '')
 
-  page = agent.get("https://frs.sourceforge.net/webupload")
-  upload_form = page.forms[0]
-  upload_form.file_uploads[0].file_name = file
-
-  agent.submit(upload_form, upload_form.buttons.first)
+  dist_top_dir = "dist"
+  FileUtils.rm_rf(dist_top_dir)
+  dist_dir = File.join(dist_top_dir, package_name, release_name)
+  FileUtils.mkdir_p(dist_dir)
+  FileUtils.cp(files, dist_dir)
+  File.open(File.join(dist_dir, "#{release_name}-release.txt"), "w") do |note|
+    note.print(latest_release_changes(news))
+  end
+  Dir.chdir(dist_top_dir) do
+    host = "#{sf_user_name},#{project_name}@frs.sourceforge.net"
+    path = ["", "home", "frs", "project",
+            project_name[0, 1], project_name[0, 2], project_name].join("/")
+    system("rsync", "-avz", "./", "#{host}:#{path}/")
+  end
 end
 
 def go_development_page(agent, project_page)
@@ -64,65 +76,9 @@ def go_development_page(agent, project_page)
   agent.click(development_page_link)
 end
 
-def go_file_releases_page(agent, development_page)
-  download_page_link = development_page.links.find do |link|
-    /\badmin\b/ =~ link.href and /\ADownloads\z/ =~ link.text
-  end
-  download_page = agent.click(download_page_link)
-
-  nbsp = "\302\240"
-  file_releases_page_link = download_page.links.find do |link|
-    "Manage#{nbsp}Packages#{nbsp}/#{nbsp}Releases" == link.text
-  end
-  agent.click(file_releases_page_link)
-end
-
-def find_target_release_link(file_releases_page, package_name, label)
-  target_release_row = (file_releases_page / "tr").find do |row|
-    (row / "input").find {|input| input["value"] == package_name}
-  end
-  raise "can't find package ID" if /package_id=(\d+)/ !~ target_release_row.to_s
-  package_id = $1
-  file_releases_page.links.find do |link|
-    label =~ link.text and /package_id=#{package_id}/ =~ link.href
-  end
-end
-
-def add_release(agent, file_releases_page, package_name, release_name)
-  add_release_link = find_target_release_link(file_releases_page,
-                                              package_name,
-                                              /\[Add Release\]/)
-  add_release_page = agent.click(add_release_link)
-
-  create_file_release_form = add_release_page.forms.last
-  create_file_release_form.release_name = release_name
-
-  agent.submit(create_file_release_form,
-               create_file_release_form.buttons.first)
-end
-
-def go_edit_release_page(agent, file_releases_page, package_name, release_name)
-  edit_release_link = find_target_release_link(file_releases_page,
-                                               package_name,
-                                               /\[Edit Releases\]/)
-  release_list_page = agent.click(edit_release_link)
-  edit_current_release_row = (release_list_page / "td").find do |row|
-    /#{Regexp.escape(release_name)}/ =~ row.text
-  end
-  if edit_current_release_row.nil?
-    add_release(agent, file_releases_page, package_name, release_name)
-  else
-    edit_release_link = (edit_current_release_row / "a")[0]
-    edit_release_link = WWW::Mechanize::Page::Link.new(edit_release_link,
-                                                       file_releases_page.mech,
-                                                       file_releases_page)
-    agent.click(edit_release_link)
-  end
-end
-
 def extract_sections(file)
   normalized_text = File.read(file).gsub(/==+\n.*\n==+\n/, '')
-  normalized_text.split(/.*\n^(?:==\s+|====+).*\n\n\n*/)
+  normalized_text.split(/.*\n^(?:==\s+|=+$).*\n\n\n*/)
 end
 
 def guess_target_index(file, default_index)
@@ -146,52 +102,6 @@ end
 
 def remove_rd_link_markup(text)
   text.gsub(/\(\(<(.*?)(?:\|.*?)?>\)\)/m, '\1')
-end
-
-def update_release_info(agent, edit_release_page, news)
-  edit_release_info_form = edit_release_page.forms.find do |form|
-    /editreleases/ =~ form.action
-  end
-  edit_release_info_form.release_changes = latest_release_changes(news)
-
-  agent.submit(edit_release_info_form, edit_release_info_form.buttons.first)
-end
-
-def register_file(agent, edit_release_page, file_name)
-  add_file_form = edit_release_page.forms.find_all do |form|
-    /editreleases/ =~ form.action
-  end[1]
-  add_file_form["file_list[]"] = file_name
-
-  agent.submit(add_file_form, add_file_form.buttons.first)
-end
-
-def select_option(select_field, option_text)
-  option = select_field.options.find do |option|
-    option.text == option_text
-  end
-  select_field.value = option.value
-end
-
-def set_release_property(agent, edit_release_page)
-  edit_file_form = edit_release_page.forms.find_all do |form|
-    /editreleases/ =~ form.action
-  end[2]
-  puts edit_release_page if edit_file_form.nil?
-  select_option(edit_file_form.field("processor_id"), "Platform-Independent")
-  select_option(edit_file_form.field("type_id"), "Source .gz")
-  agent.submit(edit_file_form, edit_file_form.buttons.first)
-end
-
-def notify_release(agent, edit_release_page)
-  edit_file_form = edit_release_page.forms.find_all do |form|
-    /editreleases/ =~ form.action
-  end[3]
-  return if edit_file_form.nil?
-  sure_check_bock = edit_file_form.checkbox("sure")
-  return if sure_check_bock.nil?
-  sure_check_bock.check
-  agent.submit(edit_file_form, edit_file_form.buttons.first)
 end
 
 def go_news_page(agent, development_page)
@@ -218,8 +128,8 @@ def submit_news(agent, submit_news_page, project_name, package_name,
   agent.submit(submit_news_form, submit_news_form.buttons.first)
 end
 
-def main(sf_user_name, project_name, package_name, release_name, file_name,
-         readme, news)
+def main(sf_user_name, project_name, package_name, release_name, readme, news,
+         files)
   agent = WWW::Mechanize.new do |_agent|
     # _agent.log = Logger.new(STDOUT)
   end
@@ -228,15 +138,8 @@ def main(sf_user_name, project_name, package_name, release_name, file_name,
 
   project_page = go_project_page(agent, my_page, project_name)
   development_page = go_development_page(agent, project_page)
-  file_releases_page = go_file_releases_page(agent, development_page)
-  upload_file(agent, file_name, sf_user_name, password)
-  edit_release_page = go_edit_release_page(agent, file_releases_page,
-                                           package_name, release_name)
-  edit_release_page = update_release_info(agent, edit_release_page, news)
-  edit_release_page = register_file(agent, edit_release_page,
-                                    File.basename(file_name))
-  edit_release_page = set_release_property(agent, edit_release_page)
-  edit_release_page = notify_release(agent, edit_release_page)
+  upload_files(sf_user_name, project_name, package_name,
+               release_name, news, files)
 
   news_page = go_news_page(agent, development_page)
   submit_news_page = go_submit_news_page(agent, news_page)
@@ -244,5 +147,4 @@ def main(sf_user_name, project_name, package_name, release_name, file_name,
               release_name, readme, news)
 end
 
-main(sf_user_name, project_name, package_name, release_name, file_name,
-     readme, news)
+main(sf_user_name, project_name, package_name, release_name, readme, news, files)

@@ -1,3 +1,7 @@
+2009-07-26  Kouhei Sutou  <kou@cozmixng.org>
+
+	* misc/release.rb: follow the recent SF.net change.
+
 2009-07-07  Kouhei Sutou  <kou@clear-code.com>
 
 	* configure.ac: don't require GTK+ for autogen.sh.
