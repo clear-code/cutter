@@ -51,7 +51,7 @@ end
 
 def upload_files(sf_user_name, project_name, package_name, release_name,
                  news, files)
-  project_name = project_name.downcase.gsub(/ /, '')
+  project_name = project_name.downcase.gsub(/ /, '-')
 
   dist_top_dir = "dist"
   FileUtils.rm_rf(dist_top_dir)
