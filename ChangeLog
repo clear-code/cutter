@@ -1,5 +1,8 @@
 2009-08-14  Kouhei Sutou  <kou@clear-code.com>
 
+	* configure.ac, cutter/cut-pe-loader.c, vcc/include/config.h:
+	check windows.h not winnt.h.
+
 	* cutter/cut-pe-loader.c: use e_lfanew not e_lfarlc.
 
 2009-08-12  Kouhei Sutou  <kou@clear-code.com>

@@ -25,9 +25,8 @@
 #include <string.h>
 #include <glib.h>
 
-#ifdef HAVE_WINNT_H
+#ifdef HAVE_WINDOWS_H
 #  include <windows.h>
-#  include <winnt.h>
 #endif
 #include <glib/gstdio.h>
 
@@ -41,7 +40,7 @@ struct _CutPELoaderPrivate
     gchar *so_filename;
     gchar *content;
     gsize length;
-#ifdef HAVE_WINNT_H
+#ifdef HAVE_WINDOWS_H
     IMAGE_NT_HEADERS *nt_headers;
 #endif
 };
@@ -94,7 +93,7 @@ cut_pe_loader_init (CutPELoader *loader)
     priv->so_filename = NULL;
     priv->content = NULL;
     priv->length = 0;
-#ifdef HAVE_WINNT_H
+#ifdef HAVE_WINDOWS_H
     priv->nt_headers = NULL;
 #endif
 }
@@ -166,7 +165,7 @@ cut_pe_loader_new (const gchar *so_filename)
 gboolean
 cut_pe_loader_is_dll (CutPELoader *loader)
 {
-#ifdef HAVE_WINNT_H
+#ifdef HAVE_WINDOWS_H
     CutPELoaderPrivate *priv;
     GError *error = NULL;
     IMAGE_DOS_HEADER *dos_header;
@@ -200,7 +199,7 @@ cut_pe_loader_is_dll (CutPELoader *loader)
 gboolean
 cut_pe_loader_support_attribute (CutPELoader *loader)
 {
-#ifdef HAVE_WINNT_H
+#ifdef HAVE_WINDOWS_H
     return TRUE;
 #else
     return FALSE;
@@ -210,7 +209,7 @@ cut_pe_loader_support_attribute (CutPELoader *loader)
 GList *
 cut_pe_loader_collect_symbols (CutPELoader *loader)
 {
-#ifdef HAVE_WINNT_H
+#ifdef HAVE_WINDOWS_H
     CutPELoaderPrivate *priv;
     GList *symbols = NULL;
     WORD i;

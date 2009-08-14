@@ -94,8 +94,8 @@
 /* Define to 1 if you have the <unistd.h> header file. */
 /* #undef HAVE_UNISTD_H */
 
-/* Define to 1 if you have the <winnt.h> header file. */
-#define HAVE_WINNT_H 1
+/* Define to 1 if you have the <windows.h> header file. */
+#define HAVE_WINDOWS_H 1
 
 /* Define to the sub-directory in which libtool stores uninstalled libraries.
    */
