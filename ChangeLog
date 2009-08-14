@@ -1,7 +1,7 @@
 2009-08-14  Kouhei Sutou  <kou@clear-code.com>
 
 	* cutter/cut-pe-loader.c: check symbol is function or not by
-	.text. This change isn't built but maybe work. :p
+	.text.
 
 	* configure.ac, cutter/cut-pe-loader.c, vcc/include/config.h:
 	check windows.h not winnt.h.

@@ -216,10 +216,11 @@ cut_pe_loader_collect_symbols (CutPELoader *loader)
     IMAGE_SECTION_HEADER *first_section;
     IMAGE_SECTION_HEADER *text_section = NULL;
     IMAGE_SECTION_HEADER *edata_section = NULL;
-    IMAGE_EXPORT_DIRECTORY *directory;
+    IMAGE_EXPORT_DIRECTORY *export_directory;
     const gchar *base_address;
     ULONG *name_addresses;
     ULONG *function_addresses;
+    DWORD min_text_section_address, max_text_section_address;
 
     priv = CUT_PE_LOADER_GET_PRIVATE(loader);
     first_section = IMAGE_FIRST_SECTION(priv->nt_headers);
@@ -239,19 +240,20 @@ cut_pe_loader_collect_symbols (CutPELoader *loader)
     if (!edata_section)
         return NULL;
 
-    directory = (IMAGE_EXPORT_DIRECTORY *)(priv->content +
-                                           edata_section->PointerToRawData);
+    export_directory =
+        (IMAGE_EXPORT_DIRECTORY *)(priv->content +
+                                   edata_section->PointerToRawData);
     base_address =
         priv->content +
         edata_section->PointerToRawData -
         edata_section->VirtualAddress;
-    name_addresses = (ULONG *)(base_address + directory->AddressOfNames);
+    name_addresses = (ULONG *)(base_address + export_directory->AddressOfNames);
     function_addresses =
         (ULONG *)(base_address + export_directory->AddressOfFunctions);
     min_text_section_address = text_section->VirtualAddress;
     max_text_section_address =
         min_text_section_address + text_section->SizeOfRawData;
-    for (i = 0; i < directory->NumberOfNames; i++) {
+    for (i = 0; i < export_directory->NumberOfNames; i++) {
         const gchar *name;
         DWORD function_address;
 
