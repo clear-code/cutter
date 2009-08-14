@@ -1,5 +1,7 @@
 2009-08-14  Kouhei Sutou  <kou@clear-code.com>
 
+	* cutter/cut-process.c (cut_process_init): suppress a warning.
+
 	* cutter/cut-pe-loader.c: check symbol is function or not by
 	.text.
 

@@ -214,9 +214,9 @@ ensure_collect_result (CutProcess *process, unsigned int usec_timeout)
 static void
 cut_process_init (CutProcess *process)
 {
+#ifndef G_OS_WIN32
     CutProcessPrivate *priv = CUT_PROCESS_GET_PRIVATE(process);
 
-#ifndef G_OS_WIN32
     priv->pid = 0;
     priv->stdout_string = NULL;
     priv->stderr_string = NULL;
