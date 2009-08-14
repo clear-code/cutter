@@ -183,11 +183,11 @@ cut_pe_loader_is_dll (CutPELoader *loader)
         return FALSE;
 
     dos_header = (IMAGE_DOS_HEADER *)priv->content;
-    if (priv->length < dos_header->e_lfarlc)
+    if (priv->length < dos_header->e_lfanew)
         return FALSE;
 
     priv->nt_headers =
-        (IMAGE_NT_HEADERS *)(priv->content + dos_header->e_lfarlc);
+        (IMAGE_NT_HEADERS *)(priv->content + dos_header->e_lfanew);
     if (priv->nt_headers->Signature != IMAGE_NT_SIGNATURE)
         return FALSE;
 

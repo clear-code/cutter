@@ -1,3 +1,7 @@
+2009-08-14  Kouhei Sutou  <kou@clear-code.com>
+
+	* cutter/cut-pe-loader.c: use e_lfanew not e_lfarlc.
+
 2009-08-12  Kouhei Sutou  <kou@clear-code.com>
 
 	* m4macros/cutter.m4: support lcov 1.7.
