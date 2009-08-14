@@ -214,37 +214,52 @@ cut_pe_loader_collect_symbols (CutPELoader *loader)
     GList *symbols = NULL;
     WORD i;
     IMAGE_SECTION_HEADER *first_section;
+    IMAGE_SECTION_HEADER *text_section = NULL;
     IMAGE_SECTION_HEADER *edata_section = NULL;
     IMAGE_EXPORT_DIRECTORY *directory;
-    IMAGE_DATA_DIRECTORY *data_directories;
     const gchar *base_address;
     ULONG *name_addresses;
+    ULONG *function_addresses;
 
     priv = CUT_PE_LOADER_GET_PRIVATE(loader);
     first_section = IMAGE_FIRST_SECTION(priv->nt_headers);
     for (i = 0; i < priv->nt_headers->FileHeader.NumberOfSections; i++) {
-        if (g_str_equal(".edata", (first_section + i)->Name)) {
+        const gchar *section_name;
+
+        section_name = (const gchar *)((first_section + i)->Name);
+        if (g_str_equal(".text", section_name)) {
+            text_section = first_section + i;
+        } else if (g_str_equal(".edata", section_name)) {
             edata_section = first_section + i;
-            break;
         }
     }
 
+    if (!text_section)
+        return NULL;
     if (!edata_section)
         return NULL;
 
-    data_directories = priv->nt_headers->OptionalHeader.DataDirectory;
     directory = (IMAGE_EXPORT_DIRECTORY *)(priv->content +
                                            edata_section->PointerToRawData);
     base_address =
         priv->content +
         edata_section->PointerToRawData -
-        data_directories[IMAGE_DIRECTORY_ENTRY_EXPORT].VirtualAddress;
+        edata_section->VirtualAddress;
     name_addresses = (ULONG *)(base_address + directory->AddressOfNames);
+    function_addresses =
+        (ULONG *)(base_address + export_directory->AddressOfFunctions);
+    min_text_section_address = text_section->VirtualAddress;
+    max_text_section_address =
+        min_text_section_address + text_section->SizeOfRawData;
     for (i = 0; i < directory->NumberOfNames; i++) {
         const gchar *name;
+        DWORD function_address;
 
         name = base_address + name_addresses[i];
-        symbols = g_list_prepend(symbols, g_strdup(name));
+        function_address = function_addresses[i];
+        if (min_text_section_address < function_address &&
+            function_address < max_text_section_address)
+            symbols = g_list_prepend(symbols, g_strdup(name));
     }
 
     return symbols;
