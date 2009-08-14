@@ -167,7 +167,12 @@ module RD
       else
         if url =~ /#/
           target, hash = $PREMATCH, $POSTMATCH
-          linkend = "#{ref_entry_id(target)}.#{term_index_id(hash)}"
+          if target.empty?
+            linkend = term_index_id(hash)
+          else
+            target = nil if target == "."
+            linkend = "#{ref_entry_id(target)}.#{term_index_id(hash)}"
+          end
         else
           linkend = ref_entry_id(url)
         end
