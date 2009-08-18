@@ -338,7 +338,7 @@ dnl **************************************************************
 AC_MSG_CHECKING([whether to try to use GStreamer])
 AC_ARG_ENABLE([gstreamer],
               AS_HELP_STRING([--disable-gstreamer],
-                             [Disable BFD support]),
+                             [Disable GStreamer support]),
               [ac_cv_enable_gstreamer=$enableval],
               [ac_cv_enable_gstreamer=yes])
 AC_MSG_RESULT([$ac_cv_enable_gstreamer])

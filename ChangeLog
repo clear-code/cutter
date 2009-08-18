@@ -1,3 +1,7 @@
+2009-08-18  Kouhei Sutou  <kou@clear-code.com>
+
+	* configure.ac: fix a typo.
+
 2009-08-14  Kouhei Sutou  <kou@clear-code.com>
 
 	* misc/rd2refentry-lib.rb: accept local anchor.
