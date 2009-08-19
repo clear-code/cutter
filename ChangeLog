@@ -1,3 +1,7 @@
+2009-08-19  Yuto Hayamizu  <y.hayamizu@gmail.com>
+
+	* configure.ac: add libsoup.
+
 2009-08-18  Kouhei Sutou  <kou@clear-code.com>
 
 	* configure.ac: fix a typo.

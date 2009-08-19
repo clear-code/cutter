@@ -369,6 +369,30 @@ fi
 AM_CONDITIONAL([HAVE_GSTREAMER], [test $gstreamer_exists = "yes"])
 
 dnl **************************************************************
+dnl Check for libsoup
+dnl **************************************************************
+AC_MSG_CHECKING([whether to try to use libsoup])
+AC_ARG_ENABLE([libsoup],
+              AS_HELP_STRING([--disable-libsoup],
+                             [Disable libsoup support]),
+              [ac_cv_enable_libsoup=$enableval],
+              [ac_cv_enable_libsoup=yes])
+AC_MSG_RESULT([$ac_cv_enable_libsoup])
+
+libsoup_exists=no
+if test "$ac_cv_enable_libsoup" = "yes"; then
+  PKG_CHECK_MODULES(LIBSOUP,
+                    libsoup-2.4,
+		    [libsoup_exists=yes], [libsoup_exists=no])
+  AC_SUBST([LIBSOUP_CFLAGS])
+  AC_SUBST([LIBSOUP_LIBS])
+  if test x"$libsoup_exists" = "xyes"; then
+    AC_DEFINE(HAVE_LIBSOUP, 1, [Define to 1 if you have libsoup installed])
+  fi
+fi
+AM_CONDITIONAL([HAVE_LIBSOUP], [test $libsoup_exists = "yes"])
+
+dnl **************************************************************
 dnl Check for Cairo
 dnl **************************************************************
 cairo_exists=no
