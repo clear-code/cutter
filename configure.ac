@@ -564,6 +564,7 @@ AC_CONFIG_FILES([Makefile
 		 m4macros/Makefile
 		 gcutter/Makefile
 		 gdkcutter-pixbuf/Makefile
+		 soupcutter/Makefile
 		 cutter/cut-version.h
 		 cutter/Makefile
 		 module/Makefile
@@ -616,6 +617,7 @@ AC_CONFIG_FILES([Makefile
 		 test/cutter/Makefile
 		 test/gcutter/Makefile
 		 test/gdkcutter-pixbuf/Makefile
+		 test/soupcutter/Makefile
 		 po/Makefile.in
 		 misc/Makefile
 		 license/Makefile

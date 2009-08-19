@@ -1,5 +1,9 @@
 2009-08-19  Yuto Hayamizu  <y.hayamizu@gmail.com>
 
+	* test/soupcutter/: add
+
+	* soupcutter/: add
+
 	* configure.ac: add libsoup.
 
 2009-08-18  Kouhei Sutou  <kou@clear-code.com>

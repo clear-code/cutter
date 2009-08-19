@@ -1,0 +1,32 @@
+INCLUDES = 					\
+	-I$(top_builddir)			\
+	-I$(top_srcdir)				\
+	-I$(top_srcdir)/cutter			\
+	-I$(top_srcdir)/gcutter			\
+	-I$(top_srcdir)/soupcutter
+
+AM_CFLAGS = $(CUTTER_CFLAGS)
+AM_CFLAGS += $(LIBSOUP_CFLAGS)
+
+CLEANFILES = *.gcno *.gcda
+
+if HAVE_LIBSOUP
+noinst_LTLIBRARIES = 				\
+	test-soupcut-assertions.la
+endif
+
+AM_LDFLAGS =			\
+	-module			\
+	-rpath `pwd`/.libs	\
+	-avoid-version		\
+	-no-undefined
+
+LIBS =								\
+	$(top_builddir)/cutter/libcutter.la			\
+	$(top_builddir)/soupcutter/libsoupcutter.la		\
+	$(top_builddir)/test/lib/libcuttest-utils.la		\
+	$(GLIB_LIBS)						\
+	$(LIBSOUP_LIBS)
+
+test_soupcut_assertions_la_SOURCES = test-soupcut-assertions.c
+

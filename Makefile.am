@@ -5,6 +5,7 @@ SUBDIRS = 			\
 	gcutter			\
 	cutter			\
 	gdkcutter-pixbuf	\
+	soupcutter		\
 	module			\
 	test			\
 	sample			\

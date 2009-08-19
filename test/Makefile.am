@@ -3,7 +3,8 @@ SUBDIRS = 			\
 	fixtures		\
 	cutter			\
 	gcutter			\
-	gdkcutter-pixbuf
+	gdkcutter-pixbuf	\
+	soupcutter
 
 EXTRA_DIST = run-test.sh
 
