@@ -16,7 +16,8 @@ lib_LTLIBRARIES = libsoupcutter.la
 endif
 
 soupcutter_public_headers =		\
-	soupcutter.h
+	soupcut-assertions.h		\
+	soupcut-assertions-helper.h
 
 pkginclude_HEADERS = 		\
 	soupcutter.h

@@ -22,6 +22,7 @@
 
 #include <libsoup/soup.h>
 #include <gcutter.h>
+#include <soupcutter/soupcut-assertions.h>
 
 /**
  * SECTION: gdkcutter-pixbuf
@@ -70,24 +71,6 @@
  * Since: 1.0.8
  */
 #define SOUPCUTTER_ENABLED 1
-
-G_BEGIN_DECLS
-
-#define soupcut_assert_equal_content_type(expected, actual) do          \
-    {                                                                   \
-        cut_trace_with_info_expression(                                 \
-            soupcut_assert_equal_content_type_helper(expected, actual,    \
-                                        #expected, #actual),                    \
-            soupcut_assert_equal_content_type(expected, actual));         \
-    } while (0)
-
-void soupcut_assert_equal_content_type_helper (const gchar *expected,
-                                               const SoupMessage *actual,
-                                               const gchar     *expression_expected,
-                                               const gchar     *expression_actual);
-
-G_END_DECLS
-
 
 #endif /* __SOUPCUTTER_H__ */
 

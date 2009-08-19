@@ -21,6 +21,7 @@
 #  include <config.h>
 #endif /* HAVE_CONFIG_H */
 
+#include "soupcut-assertions-helper.h"
 #include "soupcutter.h"
 
 

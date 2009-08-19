@@ -1,5 +1,13 @@
 2009-08-19  Yuto Hayamizu  <y.hayamizu@gmail.com>
 
+	* soupcutter/Makefile.am: add new files
+
+	* soupcutter/soupcut-assertions-helper.c: add an include file
+
+	* soupcutter/soupcut-assertions.h,
+	soupcutter/soupcut-assertions-helper.h: extracted from ...
+	* soupcutter/soupcutter.h: ... here.
+
 	* test/soupcutter/: add
 
 	* soupcutter/: add
