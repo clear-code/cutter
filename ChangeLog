@@ -1,5 +1,9 @@
 2009-08-19  Yuto Hayamizu  <y.hayamizu@gmail.com>
 
+	* soupcutter/soupcut-client.c (soupcut_client_send_message)
+	(soupcut_client_get_n_messages)
+	(soupcut_client_get_latest_message): implemented.
+
 	* test/soupcutter/test-soupcut-client.c: add
 
 	* soupcutter/soupcutter.h: add include

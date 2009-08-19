@@ -78,6 +78,32 @@ soupcut_client_new (void)
                         NULL);
 }
 
+guint
+soupcut_client_send_message (SoupCutClient *client, SoupMessage *message)
+{
+    SoupCutClientPrivate *priv = SOUPCUT_CLIENT_GET_PRIVATE(client);
+    priv->messages = g_list_prepend(priv->messages, message);
+    return SOUP_STATUS_OK;
+}
+
+guint
+soupcut_client_get_n_messages (SoupCutClient *client)
+{
+    SoupCutClientPrivate *priv = SOUPCUT_CLIENT_GET_PRIVATE(client);
+    return g_list_length(priv->messages);
+}
+
+SoupMessage *
+soupcut_client_get_latest_message (SoupCutClient *client)
+{
+    SoupCutClientPrivate *priv = SOUPCUT_CLIENT_GET_PRIVATE(client);
+    if (!priv->messages){
+        return NULL;
+    }
+    
+    return priv->messages->data;
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */
