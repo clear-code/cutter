@@ -11,8 +11,9 @@ AM_CFLAGS += $(LIBSOUP_CFLAGS)
 CLEANFILES = *.gcno *.gcda
 
 if HAVE_LIBSOUP
-noinst_LTLIBRARIES = 				\
-	test-soupcut-assertions.la
+noinst_LTLIBRARIES =				\
+	test-soupcut-assertions.la		\
+	test-soupcut-client.la
 endif
 
 AM_LDFLAGS =			\
@@ -29,4 +30,5 @@ LIBS =								\
 	$(LIBSOUP_LIBS)
 
 test_soupcut_assertions_la_SOURCES = test-soupcut-assertions.c
+test_soupcut_client_la_SOURCES = test-soupcut-client.c
 

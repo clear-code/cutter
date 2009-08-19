@@ -1,5 +1,13 @@
 2009-08-19  Yuto Hayamizu  <y.hayamizu@gmail.com>
 
+	* test/soupcutter/test-soupcut-client.c: add
+
+	* soupcutter/soupcutter.h: add include
+
+	* soupcutter/soupcut-client.h: add
+
+	* soupcutter/soupcut-client.c: add
+
 	* soupcutter/Makefile.am: add new files
 
 	* soupcutter/soupcut-assertions-helper.c: add an include file

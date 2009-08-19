@@ -15,9 +15,10 @@ if HAVE_LIBSOUP
 lib_LTLIBRARIES = libsoupcutter.la
 endif
 
-soupcutter_public_headers =		\
-	soupcut-assertions.h		\
-	soupcut-assertions-helper.h
+soupcutter_public_headers =			\
+	soupcut-assertions.h			\
+	soupcut-assertions-helper.h		\
+	soupcut-client.h
 
 pkginclude_HEADERS = 		\
 	soupcutter.h
@@ -26,9 +27,10 @@ soupcutter_includedir=$(pkgincludedir)/soupcutter
 soupcutter_include_HEADERS = 		\
 	$(soupcutter_public_headers)
 
-libsoupcutter_la_SOURCES =		\
+libsoupcutter_la_SOURCES =			\
 	$(gcutter_public_headers)		\
-	soupcut-assertions-helper.c
+	soupcut-assertions-helper.c		\
+	soupcut-client.c
 
 libsoupcutter_la_LDFLAGS =		\
 	-version-info $(LT_VERSION_INFO)	\
