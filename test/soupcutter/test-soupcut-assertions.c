@@ -131,13 +131,16 @@ stub_client_equal_content_type (void)
 {
     SoupCutClient *client;
     SoupMessage *message;
-    
     GThread *server_thread;
     SoupServer *server;
+    SoupAddress *address;
 
-    server = soup_server_new(SOUP_SERVER_PORT, SOUPCUT_TEST_PORT,
+    address = soup_address_new("localhost", SOUPCUT_TEST_PORT);
+    soup_address_resolve_sync(address, NULL);
+    server = soup_server_new(SOUP_SERVER_INTERFACE, address,
                              SOUP_SERVER_ASYNC_CONTEXT, g_main_context_new(),
                              NULL);
+    g_object_unref(address);
     cut_assert_not_null(server);
     server_thread = g_thread_create(serve, server, TRUE, NULL);
 

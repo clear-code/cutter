@@ -53,16 +53,23 @@ test_request (void)
 
     GThread *server_thread;
     SoupServer *server;
+    SoupAddress *address;
 
-    server = soup_server_new(SOUP_SERVER_PORT, SOUPCUT_TEST_PORT,
+    address = soup_address_new("localhost", SOUPCUT_TEST_PORT);
+    soup_address_resolve_sync(address, NULL);
+    server = soup_server_new(SOUP_SERVER_INTERFACE, address,
                              SOUP_SERVER_ASYNC_CONTEXT, g_main_context_new(),
                              NULL);
+    g_object_unref(address);
 
     server_thread = g_thread_create(serve, server, TRUE, NULL);
-    
+
     client = soupcut_client_new();
-    message = soup_message_new("GET", cut_take_printf("http://localhost:%u/", SOUPCUT_TEST_PORT));
-    soupcut_client_send_message(client, message);
+    message = soup_message_new("GET",
+                               cut_take_printf("http://localhost:%u/",
+                                               SOUPCUT_TEST_PORT));
+    cut_assert_equal_uint(SOUP_STATUS_OK,
+                          soupcut_client_send_message(client, message));
     
     soup_server_quit(server);
     g_thread_join(server_thread);
