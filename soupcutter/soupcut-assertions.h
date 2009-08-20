@@ -84,6 +84,24 @@ G_BEGIN_DECLS
         soupcut_client_assert_response(client));                \
 } while (0)
 
+/**
+ * soupcut_client_assert_equal_body:
+ * @expected: an expected response body.
+ * @actual: an #SoupCutClient.
+ *
+ * Passes if @expected == @actual->response_body->data.
+ *
+ * Since: 1.0.8
+ */
+#define soupcut_client_assert_equal_body(expected, actual) do           \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        soupcut_client_assert_equal_body_helper(expected, actual,       \
+                                                 #expected, #actual),   \
+        soupcut_client_assert_equal_body(expected, actual));            \
+} while (0)
+
+
 G_END_DECLS
 
 #endif /* __SOUPCUT_ASSERTIONS_H__ */

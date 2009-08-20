@@ -10,6 +10,7 @@
 void test_message_equal_content_type(void);
 void test_client_equal_content_type(void);
 void test_client_response(void);
+void test_client_equal_body(void);
 
 static CutTest *test;
 static CutRunContext *run_context;
@@ -215,6 +216,52 @@ test_client_response (void)
                            message,
                            FAIL_LOCATION,
                            "stub_client_response");
+}
+
+
+static void
+stub_client_equal_body (void)
+{
+    SoupCutClient *client;
+    SoupMessage *message;
+    SoupServer *server;
+    GMainContext *context;
+    const gchar *uri;
+
+    client = soupcut_client_new();
+    context = soupcut_client_get_async_context(client);
+    server = cuttest_soup_server_take_new(context);
+    uri = cuttest_soup_server_build_uri(server, "/");
+    serve(server);
+
+    message = soup_message_new("GET", uri);
+    soupcut_client_send_message(client, message);
+
+    soupcut_client_assert_equal_body("Hello", client);
+    MARK_FAIL(soupcut_client_assert_equal_body("Goodbye", client));
+}
+
+void
+test_client_equal_body (void)
+{
+    const gchar *message;
+
+    test = cut_test_new("client equal body test", stub_client_equal_body);
+    cut_assert_not_null(test);
+
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+    
+    message = cut_take_printf("<\"Goodbye\" == latest_message(client)[response][body]>\n"
+                              "  expected: <%s>\n"
+                              "    actual: <%s>",
+                              "Goodbye", "Hello");
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "client equal body test",
+                           NULL,
+                           message,
+                           FAIL_LOCATION,
+                           "stub_client_equal_body");
 }
 
 /*

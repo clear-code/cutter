@@ -158,6 +158,62 @@ void soupcut_client_assert_response_helper (SoupCutClient *client,
 }
 
 
+
+void
+soupcut_client_assert_equal_body_helper (const gchar   *expected,
+                                         SoupCutClient *client,
+                                         const gchar   *expression_expected,
+                                         const gchar   *expression_client)
+{
+    const gchar *body;
+    SoupMessage *soup_message;
+
+    soup_message = soupcut_client_get_latest_message(client);
+    if (!soup_message) {
+        GString *message;
+        const gchar *fail_message;
+        const gchar *inspected_actual;
+
+        message = g_string_new(NULL);
+        g_string_append_printf(message,
+                               "<latest_message(%s) != NULL>\n",
+                               expression_client);
+        inspected_actual = gcut_object_inspect(G_OBJECT(client));
+        g_string_append_printf(message,
+                               "    client: <%s>",
+                               inspected_actual);
+        fail_message = cut_take_string(g_string_free(message, FALSE));
+        cut_test_fail(fail_message);
+    }
+    
+    body = soup_message->response_body->data;
+    
+    if (cut_utils_equal_string(expected, body)) {
+        cut_test_pass();
+    } else {
+        GString *message;
+        const gchar *fail_message;
+        const gchar *inspected_expected;
+        const gchar *inspected_actual;
+
+        message = g_string_new(NULL);
+        g_string_append_printf(message,
+                               "<%s == latest_message(%s)[response][body]>\n",
+                               expression_expected,
+                               expression_client);
+        inspected_expected = cut_utils_inspect_string(expected);
+        inspected_actual = cut_utils_inspect_string(body);
+        g_string_append_printf(message,
+                               "  expected: <%s>\n"
+                               "    actual: <%s>",
+                               inspected_expected,
+                               inspected_actual);
+        fail_message = cut_take_string(g_string_free(message, FALSE));
+        cut_test_fail(fail_message);
+    }
+}
+
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */

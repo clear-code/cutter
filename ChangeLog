@@ -1,5 +1,11 @@
 2009-08-20  Yuto Hayamizu  <y.hayamizu@gmail.com>
 
+	* test/soupcutter/test-soupcut-assertions.c: add
+
+	* soupcutter/soupcut-assertions.h (soupcut_client_assert_equal_body): add
+
+	* soupcutter/soupcut-assertions-helper.[ch] (soupcut_client_assert_equal_body_helper): add
+
 	* test/soupcutter/test-soupcut-assertions.c (test_client_response): add
 
 	* soupcutter/soupcut-assertions.h (soupcut_client_assert_response): add
