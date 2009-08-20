@@ -63,9 +63,10 @@ test_request (void)
     client = soupcut_client_new();
     message = soup_message_new("GET", cut_take_printf("http://localhost:%u/", SOUPCUT_TEST_PORT));
     soupcut_client_send_message(client, message);
-
+    
     soup_server_quit(server);
     g_thread_join(server_thread);
+    g_object_unref(server);
 
     cut_assert_equal_string("text/plain", soup_message_headers_get_content_type(message->response_headers, NULL));
     cut_assert_equal_uint(1, soupcut_client_get_n_messages(client));

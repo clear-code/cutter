@@ -24,13 +24,19 @@
 #include <libsoup/soup.h>
 
 #include <gcutter/gcut-assertions-helper.h>
+#include <soupcutter/soupcut-client.h>
 
 G_BEGIN_DECLS
 
 void soupcut_message_assert_equal_content_type_helper (const gchar       *expected,
-                                                       const SoupMessage *actual,
+                                                       SoupMessage *actual,
                                                        const gchar       *expression_expected,
                                                        const gchar       *expression_actual);
+
+void soupcut_client_assert_equal_content_type_helper (const gchar         *expected,
+                                                      SoupCutClient *actual,
+                                                      const gchar         *expression_expected,
+                                                      const gchar         *expression_actual);
 
 G_END_DECLS
 

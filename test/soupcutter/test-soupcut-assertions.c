@@ -6,7 +6,10 @@
 #include <soupcutter.h>
 #include "../lib/cuttest-assertions.h"
 
+#define SOUPCUT_TEST_PORT 33333
+
 void test_message_equal_content_type(void);
+void test_client_equal_content_type(void);
 
 static CutTest *test;
 static CutRunContext *run_context;
@@ -95,6 +98,82 @@ test_message_equal_content_type (void)
                            message,
                            FAIL_LOCATION,
                            "stub_message_equal_content_type");
+}
+
+
+static void
+server_callback(SoupServer *server,
+                SoupMessage *msg,
+                const gchar *path,
+                GHashTable *query,
+                SoupClientContext *client,
+                gpointer user_data)
+{
+    soup_message_set_status(msg, SOUP_STATUS_OK);
+    soup_message_set_response(msg, "text/plain", SOUP_MEMORY_COPY,
+                              "Hello", 5);
+}
+
+static gpointer
+serve(gpointer data)
+{
+    SoupServer *server = data;
+
+    soup_server_add_handler(server, "/", server_callback,
+                            NULL, NULL);
+    soup_server_run(server);
+
+    return NULL;
+}
+
+static void
+stub_client_equal_content_type (void)
+{
+    SoupCutClient *client;
+    SoupMessage *message;
+    
+    GThread *server_thread;
+    SoupServer *server;
+
+    server = soup_server_new(SOUP_SERVER_PORT, SOUPCUT_TEST_PORT,
+                             SOUP_SERVER_ASYNC_CONTEXT, g_main_context_new(),
+                             NULL);
+    cut_assert_not_null(server);
+    server_thread = g_thread_create(serve, server, TRUE, NULL);
+
+    client = soupcut_client_new();
+    message = soup_message_new("GET", cut_take_printf("http://localhost:%u/", SOUPCUT_TEST_PORT));
+    soupcut_client_send_message(client, message);
+
+    soup_server_quit(server);
+    g_thread_join(server_thread);
+    g_object_unref(server);
+    
+    soupcut_client_assert_equal_content_type("text/plain", client);
+    MARK_FAIL(soupcut_client_assert_equal_content_type("text/html", client));
+}
+
+void
+test_client_equal_content_type (void)
+{
+    const gchar *message;
+
+    test = cut_test_new("client equal content-type test", stub_client_equal_content_type);
+    cut_assert_not_null(test);
+
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+
+    message = cut_take_printf("<\"text/html\" == latest_message(client)[response][content-type]>\n"
+                              "  expected: <%s>\n"
+                              "    actual: <%s>",
+                              "text/html", "text/plain");
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "client equal content-type test",
+                           NULL,
+                           message,
+                           FAIL_LOCATION,
+                           "stub_client_equal_content_type");
 }
 
 /*

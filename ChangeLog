@@ -6,6 +6,14 @@
 =======
 2009-08-20  Yuto Hayamizu  <y.hayamizu@gmail.com>
 
+	* test/soupcutter/test-soupcut-client.c (test_request): unref server
+
+	* test/soupcutter/test-soupcut-assertions.c: add
+
+	* soupcutter/soupcut-assertions-helper.[ch] (soupcut_client_assert_equal_content_type_helper): add
+
+	* soupcutter/soupcut-assertions.h (soupcut_client_assert_equal_content_type): add
+
 	* test/soupcutter/test-soupcut-assertions.c,
 	soupcutter/soupcut-assertions-helper.h,
 	soupcutter/soupcut-assertions-helper.c,
