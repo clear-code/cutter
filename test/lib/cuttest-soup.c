@@ -59,9 +59,7 @@ cuttest_soup_server_build_uri(SoupServer   *server,
                  NULL);
 
     uri = soup_uri_new(NULL);
-    g_print("uri: %p\n", uri);
     soup_uri_set_scheme(uri, SOUP_URI_SCHEME_HTTP);
-    g_print("uri scheme: %p\n", uri);
     soup_uri_set_host(uri, "localhost");
     soup_uri_set_port(uri, soup_address_get_port(address));
     soup_uri_set_path(uri, path);
