@@ -1,5 +1,7 @@
 2009-08-20  Kouhei Sutou  <kou@clear-code.com>
 
+	* autogen.sh: fix command order.
+
 	* cutter/cut-loader.c,
 	gst-plugins/test/dummy-test-functions.c,
 	test/cutter/test-cut-loader.c,
