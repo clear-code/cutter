@@ -176,6 +176,18 @@ soupcut_client_get_latest_message (SoupCutClient *client)
     return priv->messages->data;
 }
 
+GMainContext *
+soupcut_client_get_async_context (SoupCutClient *client)
+{
+    SoupCutClientPrivate *priv;
+
+    priv = SOUPCUT_CLIENT_GET_PRIVATE(client);
+    if (!priv->session)
+        return NULL;
+
+    return soup_session_get_async_context(priv->session);
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */

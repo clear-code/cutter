@@ -121,7 +121,7 @@ serve(gpointer data)
 
     soup_server_add_handler(server, "/", server_callback,
                             NULL, NULL);
-    soup_server_run(server);
+    soup_server_run_async(server);
 
     return NULL;
 }
@@ -131,27 +131,27 @@ stub_client_equal_content_type (void)
 {
     SoupCutClient *client;
     SoupMessage *message;
-    GThread *server_thread;
     SoupServer *server;
     SoupAddress *address;
+
+    client = soupcut_client_new();
 
     address = soup_address_new("localhost", SOUPCUT_TEST_PORT);
     soup_address_resolve_sync(address, NULL);
     server = soup_server_new(SOUP_SERVER_INTERFACE, address,
-                             SOUP_SERVER_ASYNC_CONTEXT, g_main_context_new(),
+                             SOUP_SERVER_ASYNC_CONTEXT,
+                             soupcut_client_get_async_context(client),
                              NULL);
     g_object_unref(address);
     cut_assert_not_null(server);
-    server_thread = g_thread_create(serve, server, TRUE, NULL);
+    serve(server);
 
-    client = soupcut_client_new();
     message = soup_message_new("GET", cut_take_printf("http://localhost:%u/", SOUPCUT_TEST_PORT));
     soupcut_client_send_message(client, message);
 
     soup_server_quit(server);
-    g_thread_join(server_thread);
     g_object_unref(server);
-    
+
     soupcut_client_assert_equal_content_type("text/plain", client);
     MARK_FAIL(soupcut_client_assert_equal_content_type("text/html", client));
 }

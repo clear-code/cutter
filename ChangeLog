@@ -1,6 +1,11 @@
 2009-08-20  Kouhei Sutou  <kou@clear-code.com>
 
 	* test/soupcutter/test-soupcut-assertions.c,
+	test/soupcutter/test-soupcut-client.c: don't use thread.
+
+	* soupcutter/soupcut-client.[ch]: export GMainContext.
+
+	* test/soupcutter/test-soupcut-assertions.c,
 	test/soupcutter/test-soupcut-client.c: use SoupAddress.
 
 	* soupcutter/soupcut-client.c: cleanup.
