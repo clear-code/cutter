@@ -187,21 +187,6 @@ void teardown(void);
  */
 void cut_teardown(void);
 
-#ifndef CUTTER_DISABLE_DEPRECATED
-/**
- * startup:
- *
- * If you define startup() in your test program, cutter will
- * call your startup() before each your test case is run. If
- * you define cut_startup(), startup() is ignored.
- *
- * Since: 0.8
- *
- * Deprecated: 1.0.7: Use cut_startup() instead.
- */
-void startup(void);
-#endif
-
 /**
  * cut_startup:
  *
@@ -212,24 +197,6 @@ void startup(void);
  * Since: 1.0.6
  */
 void cut_startup(void);
-
-#if !defined(CUTTER_DISABLE_DEPRECATED) &&      \
-    !defined(SHUT_RD) &&                        \
-    !defined(WINSOCK_API_LINKAGE) &&            \
-    !defined(_WINSOCKAPI_)
-/**
- * shutdown:
- *
- * If you define shutdown() in your test program, cutter will
- * call your shutdown() after each your test case is run. If
- * you define cut_shutdown(), shutdown() is ignored.
- *
- * Since: 0.8
- *
- * Deprecated: 1.0.7: Use cut_shutdown() instead.
- */
-void shutdown(void);
-#endif
 
 /**
  * cut_shutdown:

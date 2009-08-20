@@ -3,7 +3,7 @@
 	* test/soupcutter/test-soupcut-assertions.c (test_client_equal_content_type_null): add
 
 	* test/soupcutter/test-soupcut-assertions.c: add
-	
+
 	* soupcutter/soupcut-assertions.h (soupcut_client_assert_equal_body): add
 
 	* soupcutter/soupcut-assertions-helper.[ch] (soupcut_client_assert_equal_body_helper): add
@@ -15,6 +15,8 @@
 	* soupcutter/soupcut-assertions-helper.[ch] (soupcut_client_assert_response_helper): add
 
 2009-08-20  Kouhei Sutou  <kou@clear-code.com>
+
+	* cutter/cutter.h (startup, shutdown): remove [INCOMPATIBLE].
 
 	* test/lib/cuttest-soup.[ch]: add.
 
