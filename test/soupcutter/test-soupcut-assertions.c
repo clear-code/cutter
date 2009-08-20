@@ -6,7 +6,7 @@
 #include <soupcutter.h>
 #include "../lib/cuttest-assertions.h"
 
-void test_equal_content_type(void);
+void test_message_equal_content_type(void);
 
 static CutTest *test;
 static CutRunContext *run_context;
@@ -64,22 +64,22 @@ cut_teardown (void)
 }
 
 static void
-stub_equal_content_type (void)
+stub_message_equal_content_type (void)
 {
     SoupMessage *message;
     message = soup_message_new("GET", "http://localhost/");
     soup_message_set_response(message, "text/html", SOUP_MEMORY_COPY, "", 0);
     
-    soupcut_assert_equal_content_type("text/html", message);
-    MARK_FAIL(soupcut_assert_equal_content_type("text/plain", message));
+    soupcut_message_assert_equal_content_type("text/html", message);
+    MARK_FAIL(soupcut_message_assert_equal_content_type("text/plain", message));
 }
 
 void
-test_equal_content_type (void)
+test_message_equal_content_type (void)
 {
     const gchar *message;
 
-    test = cut_test_new("equal content-type test", stub_equal_content_type);
+    test = cut_test_new("message equal content-type test", stub_message_equal_content_type);
     cut_assert_not_null(test);
 
     cut_assert_false(run());
@@ -90,11 +90,11 @@ test_equal_content_type (void)
                               "    actual: <%s>",
                               "text/plain", "text/html");
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
-                           "equal content-type test",
+                           "message equal content-type test",
                            NULL,
                            message,
                            FAIL_LOCATION,
-                           "stub_equal_content_type");
+                           "stub_message_equal_content_type");
 }
 
 /*

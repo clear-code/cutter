@@ -26,10 +26,10 @@
 
 
 void
-soupcut_assert_equal_content_type_helper (const gchar *expected,
-                                          const SoupMessage *actual,
-                                          const gchar     *expression_expected,
-                                          const gchar     *expression_actual)
+soupcut_message_assert_equal_content_type_helper (const gchar *expected,
+                                                  const SoupMessage *actual,
+                                                  const gchar     *expression_expected,
+                                                  const gchar     *expression_actual)
 {
     const gchar *content_type;
     content_type = soup_message_headers_get_content_type(actual->response_headers,

@@ -27,10 +27,10 @@
 
 G_BEGIN_DECLS
 
-void soupcut_assert_equal_content_type_helper (const gchar       *expected,
-                                               const SoupMessage *actual,
-                                               const gchar       *expression_expected,
-                                               const gchar       *expression_actual);
+void soupcut_message_assert_equal_content_type_helper (const gchar       *expected,
+                                                       const SoupMessage *actual,
+                                                       const gchar       *expression_expected,
+                                                       const gchar       *expression_actual);
 
 G_END_DECLS
 

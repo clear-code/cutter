@@ -35,7 +35,7 @@ G_BEGIN_DECLS
  */
 
 /**
- * soupcut_assert_equal_content_type:
+ * soupcut_message_assert_equal_content_type:
  * @expected: an expected content-type.
  * @actual: an actual #SoupMessage.
  *
@@ -43,12 +43,12 @@ G_BEGIN_DECLS
  *
  * Since: 1.0.8
  */
-#define soupcut_assert_equal_content_type(expected, actual) do          \
+#define soupcut_message_assert_equal_content_type(expected, actual) do  \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        soupcut_assert_equal_content_type_helper(expected, actual,      \
+        soupcut_message_assert_equal_content_type_helper(expected, actual, \
                                                  #expected, #actual),   \
-        soupcut_assert_equal_content_type(expected, actual));           \
+        soupcut_message_assert_equal_content_type(expected, actual));   \
 } while (0)
 
 G_END_DECLS
