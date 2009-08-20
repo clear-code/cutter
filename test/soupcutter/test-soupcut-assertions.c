@@ -11,7 +11,9 @@ void test_message_equal_content_type(void);
 void test_client_equal_content_type(void);
 void test_client_equal_content_type_null(void);
 void test_client_response(void);
+void test_client_response_null(void);
 void test_client_equal_body(void);
+void test_client_equal_body_null(void);
 
 static CutTest *test;
 static CutRunContext *run_context;
@@ -253,6 +255,37 @@ test_client_response (void)
 
 
 static void
+stub_client_response_null (void)
+{
+    client = soupcut_client_new();
+
+    MARK_FAIL(soupcut_client_assert_response(client));
+}
+
+void
+test_client_response_null (void)
+{
+    const gchar *message;
+
+    test = cut_test_new("client response test null", stub_client_response_null);
+    cut_assert_not_null(test);
+
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 0, 0, 1, 0, 0, 0, 0);
+
+    message = cut_take_printf("<latest_message(client) != NULL>\n"
+                              "    client: <%s>",
+                              cut_take_string(gcut_object_inspect(G_OBJECT(client))));
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "client response test null",
+                           NULL,
+                           message,
+                           FAIL_LOCATION,
+                           "stub_client_response_null");
+}
+
+
+static void
 stub_client_equal_body (void)
 {
     SoupMessage *message;
@@ -294,6 +327,36 @@ test_client_equal_body (void)
                            message,
                            FAIL_LOCATION,
                            "stub_client_equal_body");
+}
+
+static void
+stub_client_equal_body_null (void)
+{
+    client = soupcut_client_new();
+
+    MARK_FAIL(soupcut_client_assert_equal_body("Hello", client));
+}
+
+void
+test_client_equal_body_null (void)
+{
+    const gchar *message;
+
+    test = cut_test_new("client equal body test null", stub_client_equal_body_null);
+    cut_assert_not_null(test);
+
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 0, 0, 1, 0, 0, 0, 0);
+    
+    message = cut_take_printf("<latest_message(client) != NULL>\n"
+                              "    client: <%s>",
+                              cut_take_string(gcut_object_inspect(G_OBJECT(client))));
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "client equal body test null",
+                           NULL,
+                           message,
+                           FAIL_LOCATION,
+                           "stub_client_equal_body_null");
 }
 
 /*
