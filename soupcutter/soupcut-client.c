@@ -148,27 +148,31 @@ soupcut_client_new (void)
 guint
 soupcut_client_send_message (SoupCutClient *client, SoupMessage *message)
 {
-    SoupCutClientPrivate *priv = SOUPCUT_CLIENT_GET_PRIVATE(client);
-    priv->messages = g_list_prepend(priv->messages, message);
+    SoupCutClientPrivate *priv;
 
+    priv = SOUPCUT_CLIENT_GET_PRIVATE(client);
+    priv->messages = g_list_prepend(priv->messages, message);
     return soup_session_send_message(priv->session, message);
 }
 
 guint
 soupcut_client_get_n_messages (SoupCutClient *client)
 {
-    SoupCutClientPrivate *priv = SOUPCUT_CLIENT_GET_PRIVATE(client);
+    SoupCutClientPrivate *priv;
+
+    priv = SOUPCUT_CLIENT_GET_PRIVATE(client);
     return g_list_length(priv->messages);
 }
 
 SoupMessage *
 soupcut_client_get_latest_message (SoupCutClient *client)
 {
-    SoupCutClientPrivate *priv = SOUPCUT_CLIENT_GET_PRIVATE(client);
-    if (!priv->messages){
+    SoupCutClientPrivate *priv;
+
+    priv = SOUPCUT_CLIENT_GET_PRIVATE(client);
+    if (!priv->messages)
         return NULL;
-    }
-    
+
     return priv->messages->data;
 }
 
