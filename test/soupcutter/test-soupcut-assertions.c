@@ -1,4 +1,23 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+/*
+ *  Copyright (C) 2009  Yuto HAYAMIZU <y.hayamizu@gmail.com>
+ *
+ *  This library is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
+#include <soupcutter/soupcutter.h>
 
 #include <cutter/cut-test.h>
 #include <cutter/cut-run-context.h>
@@ -78,9 +97,10 @@ static void
 stub_message_equal_content_type (void)
 {
     SoupMessage *message;
+
     message = soup_message_new("GET", "http://localhost/");
     soup_message_set_response(message, "text/html", SOUP_MEMORY_COPY, "", 0);
-    
+
     soupcut_message_assert_equal_content_type("text/html", message);
     MARK_FAIL(soupcut_message_assert_equal_content_type("text/plain", message));
 }
@@ -90,16 +110,18 @@ test_message_equal_content_type (void)
 {
     const gchar *message;
 
-    test = cut_test_new("message equal content-type test", stub_message_equal_content_type);
+    test = cut_test_new("message equal content-type test",
+                        stub_message_equal_content_type);
     cut_assert_not_null(test);
 
     cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
 
-    message = cut_take_printf("<\"text/plain\" == message[response][content-type]>\n"
-                              "  expected: <%s>\n"
-                              "    actual: <%s>",
-                              "text/plain", "text/html");
+    message =
+        cut_take_printf("<\"text/plain\" == message[response][content-type]>\n"
+                        "  expected: <%s>\n"
+                        "    actual: <%s>",
+                        "text/plain", "text/html");
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "message equal content-type test",
                            NULL,
@@ -109,46 +131,43 @@ test_message_equal_content_type (void)
 }
 
 static void
-server_callback(SoupServer *server,
-                SoupMessage *msg,
-                const gchar *path,
-                GHashTable *query,
-                SoupClientContext *client,
-                gpointer user_data)
+server_callback (SoupServer *server,
+                 SoupMessage *msg,
+                 const gchar *path,
+                 GHashTable *query,
+                 SoupClientContext *client,
+                 gpointer user_data)
 {
     soup_message_set_status(msg, SOUP_STATUS_OK);
     soup_message_set_response(msg, "text/plain", SOUP_MEMORY_COPY,
                               "Hello", 5);
 }
 
-static gpointer
-serve(gpointer data)
+static const gchar *
+serve (SoupCutClient *client)
 {
-    SoupServer *server = data;
+    SoupServer *server;
+    GMainContext *context;
+    const gchar *uri;
 
+    context = soupcut_client_get_async_context(client);
+    server = cuttest_soup_server_take_new(context);
+    uri = cuttest_soup_server_build_uri(server, "/");
     soup_server_add_handler(server, "/", server_callback,
                             NULL, NULL);
     soup_server_run_async(server);
 
-    return NULL;
+    return uri;
 }
 
 static void
 stub_client_equal_content_type (void)
 {
-    SoupMessage *message;
-    SoupServer *server;
-    GMainContext *context;
     const gchar *uri;
 
     client = soupcut_client_new();
-    context = soupcut_client_get_async_context(client);
-    server = cuttest_soup_server_take_new(context);
-    uri = cuttest_soup_server_build_uri(server, "/");
-    serve(server);
-
-    message = soup_message_new("GET", uri);
-    soupcut_client_send_message(client, message);
+    uri = serve(client);
+    soupcut_client_get(client, uri, NULL);
 
     soupcut_client_assert_equal_content_type("text/plain", client);
     MARK_FAIL(soupcut_client_assert_equal_content_type("text/html", client));
@@ -159,16 +178,19 @@ test_client_equal_content_type (void)
 {
     const gchar *message;
 
-    test = cut_test_new("client equal content-type test", stub_client_equal_content_type);
+    test = cut_test_new("client equal content-type test",
+                        stub_client_equal_content_type);
     cut_assert_not_null(test);
 
     cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
 
-    message = cut_take_printf("<\"text/html\" == latest_message(client)[response][content-type]>\n"
-                              "  expected: <%s>\n"
-                              "    actual: <%s>",
-                              "text/html", "text/plain");
+    message =
+        cut_take_printf("<\"text/html\" == "
+                        "latest_message(client)[response][content-type]>\n"
+                        "  expected: <%s>\n"
+                        "    actual: <%s>",
+                        "text/html", "text/plain");
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "client equal content-type test",
                            NULL,
@@ -182,24 +204,25 @@ static void
 stub_client_equal_content_type_null (void)
 {
     client = soupcut_client_new();
-
     MARK_FAIL(soupcut_client_assert_equal_content_type("text/plain", client));
 }
 
 void
 test_client_equal_content_type_null (void)
 {
-    const gchar *message;
+    const gchar *inspected_client, *message;
 
-    test = cut_test_new("client equal content-type test null", stub_client_equal_content_type_null);
+    test = cut_test_new("client equal content-type test null",
+                        stub_client_equal_content_type_null);
     cut_assert_not_null(test);
 
     cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 1, 0, 0, 1, 0, 0, 0, 0);
 
+    inspected_client = cut_take_string(gcut_object_inspect(G_OBJECT(client)));
     message = cut_take_printf("<latest_message(client) != NULL>\n"
                               "    client: <%s>",
-                              cut_take_string(gcut_object_inspect(G_OBJECT(client))));
+                              inspected_client);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "client equal content-type test null",
                            NULL,
@@ -213,21 +236,17 @@ static void
 stub_client_response (void)
 {
     SoupMessage *message;
-    SoupServer *server;
-    GMainContext *context;
     const gchar *uri;
 
     client = soupcut_client_new();
-    context = soupcut_client_get_async_context(client);
-    server = cuttest_soup_server_take_new(context);
-    uri = cuttest_soup_server_build_uri(server, "/");
-    serve(server);
+    uri = serve(client);
 
     message = soup_message_new("GET", uri);
     soupcut_client_send_message(client, message);
     soupcut_client_assert_response(client);
 
-    soup_message_set_status_full(message, SOUP_STATUS_NOT_FOUND, "Blog not found");
+    soup_message_set_status_full(message,
+                                 SOUP_STATUS_NOT_FOUND, "Blog Not Found");
     MARK_FAIL(soupcut_client_assert_response(client));
 }
 
@@ -242,9 +261,9 @@ test_client_response (void)
     cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
 
-    message = cut_take_printf("<latest_message(client)[response][status] == 2XX>\n"
-                              "    actual: <%s>(%s)",
-                              "404", "Blog not found");
+    message =
+        "<latest_message(client)[response][status] == 2XX>\n"
+        "    actual: <404>(Blog Not Found)";
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "client response test",
                            NULL,
@@ -258,24 +277,25 @@ static void
 stub_client_response_null (void)
 {
     client = soupcut_client_new();
-
     MARK_FAIL(soupcut_client_assert_response(client));
 }
 
 void
 test_client_response_null (void)
 {
-    const gchar *message;
+    const gchar *inspected_client, *message;
 
-    test = cut_test_new("client response test null", stub_client_response_null);
+    test = cut_test_new("client response test null",
+                        stub_client_response_null);
     cut_assert_not_null(test);
 
     cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 1, 0, 0, 1, 0, 0, 0, 0);
 
+    inspected_client = cut_take_string(gcut_object_inspect(G_OBJECT(client)));
     message = cut_take_printf("<latest_message(client) != NULL>\n"
                               "    client: <%s>",
-                              cut_take_string(gcut_object_inspect(G_OBJECT(client))));
+                              inspected_client);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "client response test null",
                            NULL,
@@ -288,19 +308,11 @@ test_client_response_null (void)
 static void
 stub_client_equal_body (void)
 {
-    SoupMessage *message;
-    SoupServer *server;
-    GMainContext *context;
     const gchar *uri;
 
     client = soupcut_client_new();
-    context = soupcut_client_get_async_context(client);
-    server = cuttest_soup_server_take_new(context);
-    uri = cuttest_soup_server_build_uri(server, "/");
-    serve(server);
-
-    message = soup_message_new("GET", uri);
-    soupcut_client_send_message(client, message);
+    uri = serve(client);
+    soupcut_client_get(client, uri, NULL);
 
     soupcut_client_assert_equal_body("Hello", client);
     MARK_FAIL(soupcut_client_assert_equal_body("Goodbye", client));
@@ -316,11 +328,11 @@ test_client_equal_body (void)
 
     cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
-    
-    message = cut_take_printf("<\"Goodbye\" == latest_message(client)[response][body]>\n"
-                              "  expected: <%s>\n"
-                              "    actual: <%s>",
-                              "Goodbye", "Hello");
+
+    message =
+        "<\"Goodbye\" == latest_message(client)[response][body]>\n"
+        "  expected: <Goodbye>\n"
+        "    actual: <Hello>";
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "client equal body test",
                            NULL,
@@ -333,24 +345,25 @@ static void
 stub_client_equal_body_null (void)
 {
     client = soupcut_client_new();
-
     MARK_FAIL(soupcut_client_assert_equal_body("Hello", client));
 }
 
 void
 test_client_equal_body_null (void)
 {
-    const gchar *message;
+    const gchar *inspected_client, *message;
 
-    test = cut_test_new("client equal body test null", stub_client_equal_body_null);
+    test = cut_test_new("client equal body test null",
+                        stub_client_equal_body_null);
     cut_assert_not_null(test);
 
     cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 1, 0, 0, 1, 0, 0, 0, 0);
-    
+
+    inspected_client = cut_take_string(gcut_object_inspect(G_OBJECT(client)));
     message = cut_take_printf("<latest_message(client) != NULL>\n"
                               "    client: <%s>",
-                              cut_take_string(gcut_object_inspect(G_OBJECT(client))));
+                              inspected_client);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "client equal body test null",
                            NULL,
