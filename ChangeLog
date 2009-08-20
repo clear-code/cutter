@@ -1,3 +1,9 @@
+2009-08-20  Yuto Hayamizu  <y.hayamizu@gmail.com>
+
+	* test/soupcutter/test-soupcut-client.c (test_request): work with mock server
+
+	* soupcutter/soupcut-client.c (soupcut_client_send_message): now that it actually send messages
+
 2009-08-19  Yuto Hayamizu  <y.hayamizu@gmail.com>
 
 	* soupcutter/soupcut-client.c (soupcut_client_send_message)

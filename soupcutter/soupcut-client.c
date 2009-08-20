@@ -31,20 +31,48 @@ typedef struct _SoupCutClientPrivate	SoupCutClientPrivate;
 struct _SoupCutClientPrivate
 {
     GList *messages;
+    SoupSession *session;
+
+    gboolean async;
+};
+
+
+enum
+{
+    PROP_0,
+    PROP_ASYNC,
 };
 
 G_DEFINE_TYPE (SoupCutClient, soupcut_client, G_TYPE_OBJECT)
 
 static void dispose        (GObject         *object);
+static void set_property   (GObject         *object,
+                            guint            prop_id,
+                            const GValue    *value,
+                            GParamSpec      *pspec);
+static void get_property   (GObject         *object,
+                            guint            prop_id,
+                            GValue          *value,
+                            GParamSpec      *pspec);
 
 static void
 soupcut_client_class_init (SoupCutClientClass *klass)
 {
     GObjectClass *gobject_class;
+    GParamSpec *spec;
 
     gobject_class = G_OBJECT_CLASS(klass);
 
     gobject_class->dispose      = dispose;
+    gobject_class->set_property = set_property;
+    gobject_class->get_property = get_property;
+
+    spec = g_param_spec_boolean("async",
+                                "Async",
+                                "True if the session is asynchronous",
+                                FALSE,
+                                G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_ASYNC, spec);
 
     g_type_class_add_private(gobject_class, sizeof(SoupCutClientPrivate));
 }
@@ -55,6 +83,9 @@ soupcut_client_init (SoupCutClient *result)
     SoupCutClientPrivate *priv = SOUPCUT_CLIENT_GET_PRIVATE(result);
 
     priv->messages = NULL;
+    priv->session = soup_session_async_new_with_options(
+        SOUP_SESSION_ASYNC_CONTEXT, g_main_context_new(),
+        NULL);
 }
 
 static void
@@ -71,6 +102,42 @@ dispose (GObject *object)
     G_OBJECT_CLASS(soupcut_client_parent_class)->dispose(object);
 }
 
+static void
+set_property (GObject      *object,
+              guint         prop_id,
+              const GValue *value,
+              GParamSpec   *pspec)
+{
+    SoupCutClientPrivate *priv = SOUPCUT_CLIENT_GET_PRIVATE(object);
+
+    switch (prop_id) {
+      case PROP_ASYNC:
+        priv->async = g_value_get_boolean(value);
+        break;
+      default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
+        break;
+    }
+}
+
+static void
+get_property (GObject    *object,
+              guint       prop_id,
+              GValue     *value,
+              GParamSpec *pspec)
+{
+    SoupCutClientPrivate *priv = SOUPCUT_CLIENT_GET_PRIVATE(object);
+
+    switch (prop_id) {
+      case PROP_ASYNC:
+        g_value_set_boolean(value, priv->async);
+        break;
+      default:
+        G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
+        break;
+    }
+}
+
 SoupCutClient *
 soupcut_client_new (void)
 {
@@ -83,7 +150,8 @@ soupcut_client_send_message (SoupCutClient *client, SoupMessage *message)
 {
     SoupCutClientPrivate *priv = SOUPCUT_CLIENT_GET_PRIVATE(client);
     priv->messages = g_list_prepend(priv->messages, message);
-    return SOUP_STATUS_OK;
+
+    return soup_session_send_message(priv->session, message);
 }
 
 guint
