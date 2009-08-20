@@ -24,6 +24,25 @@
 #include "soupcut-assertions-helper.h"
 #include "soupcutter.h"
 
+static void
+soupcut_test_fail_null_message(SoupCutClient *client,
+                               const gchar *expression_client)
+{
+    GString *message;
+    const gchar *fail_message;
+    const gchar *inspected_client;
+
+    message = g_string_new(NULL);
+    g_string_append_printf(message,
+                           "<latest_message(%s) != NULL>\n",
+                           expression_client);
+    inspected_client = gcut_object_inspect(G_OBJECT(client));
+    g_string_append_printf(message,
+                           "    client: <%s>",
+                           inspected_client);
+    fail_message = cut_take_string(g_string_free(message, FALSE));
+    cut_test_fail(fail_message);
+}
 
 void
 soupcut_message_assert_equal_content_type_helper (const gchar *expected,
@@ -64,27 +83,14 @@ void
 soupcut_client_assert_equal_content_type_helper (const gchar *expected,
                                                  SoupCutClient *client,
                                                  const gchar     *expression_expected,
-                                                 const gchar     *expression_actual)
+                                                 const gchar     *expression_client)
 {
     const gchar *content_type;
     SoupMessage *message;
 
     message = soupcut_client_get_latest_message(client);
     if (!message) {
-        GString *message;
-        const gchar *fail_message;
-        const gchar *inspected_actual;
-
-        message = g_string_new(NULL);
-        g_string_append_printf(message,
-                               "<latest_message(%s) != NULL>\n",
-                               expression_actual);
-        inspected_actual = gcut_object_inspect(G_OBJECT(client));
-        g_string_append_printf(message,
-                               "    client: <%s>",
-                               inspected_actual);
-        fail_message = cut_take_string(g_string_free(message, FALSE));
-        cut_test_fail(fail_message);
+        soupcut_test_fail_null_message(client, expression_client);
     }
     
     content_type = soup_message_headers_get_content_type(message->response_headers,
@@ -102,7 +108,7 @@ soupcut_client_assert_equal_content_type_helper (const gchar *expected,
         g_string_append_printf(message,
                                "<%s == latest_message(%s)[response][content-type]>\n",
                                expression_expected,
-                               expression_actual);
+                               expression_client);
         inspected_expected = cut_utils_inspect_string(expected);
         inspected_actual = cut_utils_inspect_string(content_type);
         g_string_append_printf(message,
@@ -122,20 +128,7 @@ void soupcut_client_assert_response_helper (SoupCutClient *client,
 
     soup_message = soupcut_client_get_latest_message(client);
     if (!soup_message) {
-        GString *message;
-        const gchar *fail_message;
-        const gchar *inspected_actual;
-
-        message = g_string_new(NULL);
-        g_string_append_printf(message,
-                               "<latest_message(%s) != NULL>\n",
-                               expression_client);
-        inspected_actual = gcut_object_inspect(G_OBJECT(client));
-        g_string_append_printf(message,
-                               "    client: <%s>",
-                               inspected_actual);
-        fail_message = cut_take_string(g_string_free(message, FALSE));
-        cut_test_fail(fail_message);
+        soupcut_test_fail_null_message(client, expression_client);
     }
     
     if (soup_message->status_code >= 200 && soup_message->status_code < 300) {
@@ -170,20 +163,7 @@ soupcut_client_assert_equal_body_helper (const gchar   *expected,
 
     soup_message = soupcut_client_get_latest_message(client);
     if (!soup_message) {
-        GString *message;
-        const gchar *fail_message;
-        const gchar *inspected_actual;
-
-        message = g_string_new(NULL);
-        g_string_append_printf(message,
-                               "<latest_message(%s) != NULL>\n",
-                               expression_client);
-        inspected_actual = gcut_object_inspect(G_OBJECT(client));
-        g_string_append_printf(message,
-                               "    client: <%s>",
-                               inspected_actual);
-        fail_message = cut_take_string(g_string_free(message, FALSE));
-        cut_test_fail(fail_message);
+        soupcut_test_fail_null_message(client, expression_client);
     }
     
     body = soup_message->response_body->data;
