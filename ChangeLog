@@ -1,3 +1,9 @@
+<<<<<<< .mine
+2009-08-20  Kouhei Sutou  <kou@clear-code.com>
+
+	* gcutter/gcut-inspect.h: fix a typo.
+
+=======
 2009-08-20  Yuto Hayamizu  <y.hayamizu@gmail.com>
 
 	* test/soupcutter/test-soupcut-assertions.c,
@@ -13,6 +19,7 @@
 	* soupcutter/soupcut-client.c (soupcut_client_send_message): now
 	that it actually send messages
 
+>>>>>>> .r3027
 2009-08-19  Yuto Hayamizu  <y.hayamizu@gmail.com>
 
 	* soupcutter/soupcut-client.c (soupcut_client_send_message)
