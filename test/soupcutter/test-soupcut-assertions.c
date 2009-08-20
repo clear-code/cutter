@@ -9,6 +9,7 @@
 
 void test_message_equal_content_type(void);
 void test_client_equal_content_type(void);
+void test_client_equal_content_type_null(void);
 void test_client_response(void);
 void test_client_equal_body(void);
 
@@ -16,6 +17,7 @@ static CutTest *test;
 static CutRunContext *run_context;
 static CutTestContext *test_context;
 static CutTestResult *test_result;
+static SoupCutClient *client;
 
 static gint fail_line;
 
@@ -50,6 +52,7 @@ cut_setup (void)
     run_context = NULL;
     test_context = NULL;
     test_result = NULL;
+    client = NULL;
 
     fail_line = 0;
 }
@@ -65,6 +68,8 @@ cut_teardown (void)
         g_object_unref(test_context);
     if (test_result)
         g_object_unref(test_result);
+    if (client)
+        g_object_unref(client);
 }
 
 static void
@@ -101,7 +106,6 @@ test_message_equal_content_type (void)
                            "stub_message_equal_content_type");
 }
 
-
 static void
 server_callback(SoupServer *server,
                 SoupMessage *msg,
@@ -130,7 +134,6 @@ serve(gpointer data)
 static void
 stub_client_equal_content_type (void)
 {
-    SoupCutClient *client;
     SoupMessage *message;
     SoupServer *server;
     GMainContext *context;
@@ -174,9 +177,39 @@ test_client_equal_content_type (void)
 
 
 static void
+stub_client_equal_content_type_null (void)
+{
+    client = soupcut_client_new();
+
+    MARK_FAIL(soupcut_client_assert_equal_content_type("text/plain", client));
+}
+
+void
+test_client_equal_content_type_null (void)
+{
+    const gchar *message;
+
+    test = cut_test_new("client equal content-type test null", stub_client_equal_content_type_null);
+    cut_assert_not_null(test);
+
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 0, 0, 1, 0, 0, 0, 0);
+
+    message = cut_take_printf("<latest_message(client) != NULL>\n"
+                              "    client: <%s>",
+                              cut_take_string(gcut_object_inspect(G_OBJECT(client))));
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "client equal content-type test null",
+                           NULL,
+                           message,
+                           FAIL_LOCATION,
+                           "stub_client_equal_content_type_null");
+}
+
+
+static void
 stub_client_response (void)
 {
-    SoupCutClient *client;
     SoupMessage *message;
     SoupServer *server;
     GMainContext *context;
@@ -222,7 +255,6 @@ test_client_response (void)
 static void
 stub_client_equal_body (void)
 {
-    SoupCutClient *client;
     SoupMessage *message;
     SoupServer *server;
     GMainContext *context;
