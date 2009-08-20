@@ -22,6 +22,7 @@
 #endif /* HAVE_CONFIG_H */
 
 #include <glib.h>
+#include <gcutter.h>
 
 #include "soupcut-client.h"
 
@@ -153,6 +154,32 @@ soupcut_client_send_message (SoupCutClient *client, SoupMessage *message)
     priv = SOUPCUT_CLIENT_GET_PRIVATE(client);
     priv->messages = g_list_prepend(priv->messages, message);
     return soup_session_send_message(priv->session, message);
+}
+
+guint
+soupcut_client_get(SoupCutClient *client, const gchar *uri_string,
+                   const gchar *first_name, ...)
+{
+    SoupMessage *message;
+    GHashTable *params;
+    va_list args;
+    SoupURI *uri;
+    
+    uri = soup_uri_new(uri_string);
+
+    if (first_name){
+        va_start(args, first_name);
+        params = gcut_hash_table_string_string_new_va_list(first_name, args);
+        va_end(args);
+
+        soup_uri_set_query_from_form(uri, params);
+        g_hash_table_unref(params);
+    }
+    
+    message = soup_message_new("GET", cut_take_string(soup_uri_to_string(uri, FALSE)));
+    soup_uri_free(uri);
+
+    return soupcut_client_send_message(client, message);
 }
 
 guint

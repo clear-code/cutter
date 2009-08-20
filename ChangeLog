@@ -9,6 +9,11 @@
 
 2009-08-20  Yuto Hayamizu  <y.hayamizu@gmail.com>
 
+	* test/soupcutter/test-soupcut-client.c (test_send_message): rename
+	(test_get): add
+
+	* soupcutter/soupcut-client.[ch] (soupcut_client_get): add
+
 	* soupcutter/soupcut-assertions-helper.c (soupcut_test_fail_null_message): add
 
 	* test/soupcutter/test-soupcut-assertions.c

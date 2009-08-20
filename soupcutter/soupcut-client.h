@@ -23,10 +23,6 @@
 #include <glib-object.h>
 #include <libsoup/soup.h>
 
-#include <cutter/cut-test.h>
-#include <cutter/cut-test-case.h>
-#include <cutter/cut-test-suite.h>
-
 G_BEGIN_DECLS
 
 #define SOUPCUT_TYPE_CLIENT            (soupcut_client_get_type ())
@@ -54,9 +50,12 @@ GType          soupcut_client_get_type   (void) G_GNUC_CONST;
 SoupCutClient *soupcut_client_new        (void);
 
 guint          soupcut_client_send_message(SoupCutClient *client, SoupMessage *message);
+guint          soupcut_client_get(SoupCutClient *client, const gchar *uri,
+                                  const gchar *first_name, ...);
 guint          soupcut_client_get_n_messages(SoupCutClient *client);
 SoupMessage    *soupcut_client_get_latest_message(SoupCutClient *client);
 GMainContext   *soupcut_client_get_async_context(SoupCutClient *client);
+
 
 G_END_DECLS
 

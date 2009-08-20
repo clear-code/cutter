@@ -1,8 +1,9 @@
 #include <soupcutter/soupcutter.h>
 #include "../lib/cuttest-soup.h"
 
-void test_request(void);
-
+void test_send_message(void);
+void test_get(void);
+    
 static GError *error;
 
 void
@@ -45,7 +46,7 @@ serve(gpointer data)
 }
 
 void
-test_request (void)
+test_send_message (void)
 {
     SoupMessage *message;
     SoupCutClient *client;
@@ -67,6 +68,27 @@ test_request (void)
      cut_assert_equal_string("text/plain", soup_message_headers_get_content_type(message->response_headers, NULL));
     cut_assert_equal_uint(1, soupcut_client_get_n_messages(client));
     gcut_assert_equal_object(message, soupcut_client_get_latest_message(client));
+}
+
+void
+test_get (void)
+{
+    SoupCutClient *client;
+    SoupServer *server;
+    GMainContext *context;
+    const gchar *uri;
+
+    client = soupcut_client_new();
+    context = soupcut_client_get_async_context(client);
+    server = cuttest_soup_server_take_new(context);
+    uri = cuttest_soup_server_build_uri(server, "/");
+    serve(server);
+
+    soupcut_client_get(client, uri, NULL);
+
+    soupcut_client_assert_response(client);
+    soupcut_client_assert_equal_content_type("text/plain", client);
+    soupcut_client_assert_equal_body("Hello", client);
 }
 
 /*
