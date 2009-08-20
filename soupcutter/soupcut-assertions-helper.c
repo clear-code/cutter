@@ -73,18 +73,16 @@ soupcut_client_assert_equal_content_type_helper (const gchar *expected,
     if (!message) {
         GString *message;
         const gchar *fail_message;
-        const gchar *inspected_expected;
         const gchar *inspected_actual;
 
         message = g_string_new(NULL);
         g_string_append_printf(message,
                                "<latest_message(%s) != NULL>\n",
                                expression_actual);
-        inspected_expected = cut_utils_inspect_string(expected);
         inspected_actual = gcut_object_inspect(G_OBJECT(client));
         g_string_append_printf(message,
                                "    client: <%s>",
-                               inspected_expected);
+                               inspected_actual);
         fail_message = cut_take_string(g_string_free(message, FALSE));
         cut_test_fail(fail_message);
     }
@@ -116,6 +114,49 @@ soupcut_client_assert_equal_content_type_helper (const gchar *expected,
         cut_test_fail(fail_message);
     }
 }
+
+void soupcut_client_assert_response_helper (SoupCutClient *client,
+                                            const gchar   *expression_client)
+{
+    SoupMessage *soup_message;
+
+    soup_message = soupcut_client_get_latest_message(client);
+    if (!soup_message) {
+        GString *message;
+        const gchar *fail_message;
+        const gchar *inspected_actual;
+
+        message = g_string_new(NULL);
+        g_string_append_printf(message,
+                               "<latest_message(%s) != NULL>\n",
+                               expression_client);
+        inspected_actual = gcut_object_inspect(G_OBJECT(client));
+        g_string_append_printf(message,
+                               "    client: <%s>",
+                               inspected_actual);
+        fail_message = cut_take_string(g_string_free(message, FALSE));
+        cut_test_fail(fail_message);
+    }
+    
+    if (soup_message->status_code >= 200 && soup_message->status_code < 300) {
+        cut_test_pass();
+    } else {
+        GString *message;
+        const gchar *fail_message;
+
+        message = g_string_new(NULL);
+        g_string_append_printf(message,
+                               "<latest_message(%s)[response][status] == 2XX>\n",
+                               expression_client);
+        g_string_append_printf(message,
+                               "    actual: <%u>(%s)",
+                               soup_message->status_code,
+                               soup_message->reason_phrase);
+        fail_message = cut_take_string(g_string_free(message, FALSE));
+        cut_test_fail(fail_message);
+    }
+}
+
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

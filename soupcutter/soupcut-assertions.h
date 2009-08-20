@@ -68,6 +68,22 @@ G_BEGIN_DECLS
         soupcut_client_assert_equal_content_type(expected, actual));   \
 } while (0)
 
+
+/**
+ * soupcut_client_assert_response:
+ * @client: an #SoupCutClient
+ *
+ * Passes if status code of @client == 2XX.
+ *
+ * Since: 1.0.8
+ */
+#define soupcut_client_assert_response(client) do               \
+{                                                               \
+    cut_trace_with_info_expression(                             \
+        soupcut_client_assert_response_helper(client, #client), \
+        soupcut_client_assert_response(client));                \
+} while (0)
+
 G_END_DECLS
 
 #endif /* __SOUPCUT_ASSERTIONS_H__ */

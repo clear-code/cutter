@@ -9,6 +9,7 @@
 
 void test_message_equal_content_type(void);
 void test_client_equal_content_type(void);
+void test_client_response(void);
 
 static CutTest *test;
 static CutRunContext *run_context;
@@ -168,6 +169,52 @@ test_client_equal_content_type (void)
                            message,
                            FAIL_LOCATION,
                            "stub_client_equal_content_type");
+}
+
+
+static void
+stub_client_response (void)
+{
+    SoupCutClient *client;
+    SoupMessage *message;
+    SoupServer *server;
+    GMainContext *context;
+    const gchar *uri;
+
+    client = soupcut_client_new();
+    context = soupcut_client_get_async_context(client);
+    server = cuttest_soup_server_take_new(context);
+    uri = cuttest_soup_server_build_uri(server, "/");
+    serve(server);
+
+    message = soup_message_new("GET", uri);
+    soupcut_client_send_message(client, message);
+    soupcut_client_assert_response(client);
+
+    soup_message_set_status_full(message, SOUP_STATUS_NOT_FOUND, "Blog not found");
+    MARK_FAIL(soupcut_client_assert_response(client));
+}
+
+void
+test_client_response (void)
+{
+    const gchar *message;
+
+    test = cut_test_new("client response test", stub_client_response);
+    cut_assert_not_null(test);
+
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+
+    message = cut_take_printf("<latest_message(client)[response][status] == 2XX>\n"
+                              "    actual: <%s>(%s)",
+                              "404", "Blog not found");
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "client response test",
+                           NULL,
+                           message,
+                           FAIL_LOCATION,
+                           "stub_client_response");
 }
 
 /*
