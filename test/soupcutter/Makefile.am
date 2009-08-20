@@ -12,6 +12,7 @@ CLEANFILES = *.gcno *.gcda
 
 if HAVE_LIBSOUP
 noinst_LTLIBRARIES =				\
+	suite-soupcut-test.la			\
 	test-soupcut-assertions.la		\
 	test-soupcut-client.la
 endif
@@ -30,5 +31,6 @@ LIBS =								\
 	$(GLIB_LIBS)						\
 	$(LIBSOUP_LIBS)
 
-test_soupcut_assertions_la_SOURCES = test-soupcut-assertions.c
-test_soupcut_client_la_SOURCES = test-soupcut-client.c
+suite_soupcut_test_la_SOURCES		= suite-soupcut-test.c
+test_soupcut_assertions_la_SOURCES	= test-soupcut-assertions.c
+test_soupcut_client_la_SOURCES		= test-soupcut-client.c
