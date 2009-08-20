@@ -650,8 +650,8 @@ create_test_case (CutLoader *loader)
 
     GET_HOOK_FUNCTION(setup);
     GET_HOOK_FUNCTION(teardown);
-    GET_HOOK_FUNCTION(startup);
-    GET_HOOK_FUNCTION(shutdown);
+    g_module_symbol(priv->module, "cut_startup", (gpointer)&startup);
+    g_module_symbol(priv->module, "cut_shutdown", (gpointer)&shutdown);
 
 #undef GET_HOOK_FUNCTION
 

@@ -177,10 +177,10 @@ data_fixture_function (void)
 {
     cut_add_data("without prefix",
                  fixture_test_data_new("without-prefix." G_MODULE_SUFFIX,
-                                       "startup",
+                                       NULL,
                                        "setup",
                                        "teardown",
-                                       "shutdown"),
+                                       NULL),
                  fixture_test_data_free,
                  "with prefix",
                  fixture_test_data_new("with-prefix." G_MODULE_SUFFIX,
@@ -223,14 +223,22 @@ test_fixture_function (gconstpointer data)
                            G_MODULE_BIND_LAZY | G_MODULE_BIND_LOCAL);
     g_free(so_filename);
     cut_assert_not_null(module);
-    cut_assert_true(g_module_symbol(module, test_data->startup_function_name,
-                                    (gpointer)&expected_startup_function));
-    cut_assert_true(g_module_symbol(module, test_data->setup_function_name,
-                                    (gpointer)&expected_setup_function));
-    cut_assert_true(g_module_symbol(module, test_data->teardown_function_name,
-                                    (gpointer)&expected_teardown_function));
-    cut_assert_true(g_module_symbol(module, test_data->shutdown_function_name,
-                                    (gpointer)&expected_shutdown_function));
+    if (test_data->startup_function_name)
+        cut_assert_true(g_module_symbol(module,
+                                        test_data->startup_function_name,
+                                        (gpointer)&expected_startup_function));
+    if (test_data->setup_function_name)
+        cut_assert_true(g_module_symbol(module,
+                                        test_data->setup_function_name,
+                                        (gpointer)&expected_setup_function));
+    if (test_data->teardown_function_name)
+        cut_assert_true(g_module_symbol(module,
+                                        test_data->teardown_function_name,
+                                        (gpointer)&expected_teardown_function));
+    if (test_data->shutdown_function_name)
+        cut_assert_true(g_module_symbol(module,
+                                        test_data->shutdown_function_name,
+                                        (gpointer)&expected_shutdown_function));
 
     g_object_get(G_OBJECT(test_case),
                  "startup-function", &actual_startup_function,

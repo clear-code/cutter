@@ -1,3 +1,12 @@
+2009-08-20  Kouhei Sutou  <kou@clear-code.com>
+
+	* cutter/cut-loader.c,
+	gst-plugins/test/dummy-test-functions.c,
+	test/cutter/test-cut-loader.c,
+	test/fixtures/loader/fixture/all.c,
+	test/fixtures/loader/fixture/without-prefix.c: follow the
+	startup/shutdown removing.
+
 2009-08-20  Yuto Hayamizu  <y.hayamizu@gmail.com>
 
 	* soupcutter/soupcut-assertions-helper.c (soupcut_test_fail_null_message): add

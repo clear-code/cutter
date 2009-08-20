@@ -4,6 +4,9 @@
 
 void test_nothing (void);
 
+void startup (void);
+void shutdown (void);
+
 void
 cut_startup (void)
 {

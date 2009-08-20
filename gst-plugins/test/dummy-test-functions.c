@@ -46,12 +46,12 @@ text_invalid_prefix_function (void)
 }
 
 void
-startup (void)
+cut_startup (void)
 {
 }
 
 void
-shutdown (void)
+cut_shutdown (void)
 {
 }
 
