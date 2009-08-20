@@ -26,9 +26,9 @@ LIBS =								\
 	$(top_builddir)/cutter/libcutter.la			\
 	$(top_builddir)/soupcutter/libsoupcutter.la		\
 	$(top_builddir)/test/lib/libcuttest-utils.la		\
+	$(top_builddir)/test/lib/libcuttest-soup.la		\
 	$(GLIB_LIBS)						\
 	$(LIBSOUP_LIBS)
 
 test_soupcut_assertions_la_SOURCES = test-soupcut-assertions.c
 test_soupcut_client_la_SOURCES = test-soupcut-client.c
-

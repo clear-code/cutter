@@ -5,8 +5,7 @@
 #include <cutter/cut-test-runner.h>
 #include <soupcutter.h>
 #include "../lib/cuttest-assertions.h"
-
-#define SOUPCUT_TEST_PORT 33333
+#include "../lib/cuttest-soup.h"
 
 void test_message_equal_content_type(void);
 void test_client_equal_content_type(void);
@@ -132,25 +131,17 @@ stub_client_equal_content_type (void)
     SoupCutClient *client;
     SoupMessage *message;
     SoupServer *server;
-    SoupAddress *address;
+    GMainContext *context;
+    const gchar *uri;
 
     client = soupcut_client_new();
-
-    address = soup_address_new("localhost", SOUPCUT_TEST_PORT);
-    soup_address_resolve_sync(address, NULL);
-    server = soup_server_new(SOUP_SERVER_INTERFACE, address,
-                             SOUP_SERVER_ASYNC_CONTEXT,
-                             soupcut_client_get_async_context(client),
-                             NULL);
-    g_object_unref(address);
-    cut_assert_not_null(server);
+    context = soupcut_client_get_async_context(client);
+    server = cuttest_soup_server_take_new(context);
+    uri = cuttest_soup_server_build_uri(server, "/");
     serve(server);
 
-    message = soup_message_new("GET", cut_take_printf("http://localhost:%u/", SOUPCUT_TEST_PORT));
+    message = soup_message_new("GET", uri);
     soupcut_client_send_message(client, message);
-
-    soup_server_quit(server);
-    g_object_unref(server);
 
     soupcut_client_assert_equal_content_type("text/plain", client);
     MARK_FAIL(soupcut_client_assert_equal_content_type("text/html", client));
@@ -165,7 +156,7 @@ test_client_equal_content_type (void)
     cut_assert_not_null(test);
 
     cut_assert_false(run());
-    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
 
     message = cut_take_printf("<\"text/html\" == latest_message(client)[response][content-type]>\n"
                               "  expected: <%s>\n"

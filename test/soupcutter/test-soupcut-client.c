@@ -1,6 +1,5 @@
 #include <soupcutter/soupcutter.h>
-
-#define SOUPCUT_TEST_PORT 33333
+#include "../lib/cuttest-soup.h"
 
 void test_request(void);
 
@@ -51,30 +50,21 @@ test_request (void)
     SoupMessage *message;
     SoupCutClient *client;
     SoupServer *server;
-    SoupAddress *address;
+    GMainContext *context;
+    const gchar *uri;
 
     client = soupcut_client_new();
-
-    address = soup_address_new("localhost", SOUPCUT_TEST_PORT);
-    soup_address_resolve_sync(address, NULL);
-    server = soup_server_new(SOUP_SERVER_INTERFACE, address,
-                             SOUP_SERVER_ASYNC_CONTEXT,
-                             soupcut_client_get_async_context(client),
-                             NULL);
-    g_object_unref(address);
-
+    context = soupcut_client_get_async_context(client);
+    server = cuttest_soup_server_take_new(context);
+    uri = cuttest_soup_server_build_uri(server, "/");
     serve(server);
 
-    message = soup_message_new("GET",
-                               cut_take_printf("http://localhost:%u/",
-                                               SOUPCUT_TEST_PORT));
+    message = soup_message_new("GET", uri);
+
     cut_assert_equal_uint(SOUP_STATUS_OK,
                           soupcut_client_send_message(client, message));
-    
-    soup_server_quit(server);
-    g_object_unref(server);
 
-    cut_assert_equal_string("text/plain", soup_message_headers_get_content_type(message->response_headers, NULL));
+     cut_assert_equal_string("text/plain", soup_message_headers_get_content_type(message->response_headers, NULL));
     cut_assert_equal_uint(1, soupcut_client_get_n_messages(client));
     gcut_assert_equal_object(message, soupcut_client_get_latest_message(client));
 }
