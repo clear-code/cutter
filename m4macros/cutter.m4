@@ -131,3 +131,15 @@ AC_DEFUN([AC_CHECK_GDKCUTTER_PIXBUF],
     AC_SUBST([GDKCUTTER_PIXBUF_LIBS])
   fi
 ])
+
+AC_DEFUN([AC_CHECK_SOUPCUTTER],
+[
+  AC_CHECK_GCUTTER($1)
+  ac_cv_use_soupcutter=no
+  if test "$ac_cv_use_cutter" != "no"; then
+    PKG_CHECK_MODULES(SOUPCUTTER, soupcutter $1,
+                      [ac_cv_use_soupcutter=yes], [:])
+    AC_SUBST([SOUPCUTTER_CFLAGS])
+    AC_SUBST([SOUPCUTTER_LIBS])
+  fi
+])
