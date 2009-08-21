@@ -25,6 +25,20 @@
 
 G_BEGIN_DECLS
 
+/**
+ * SECTION: soupcut-client
+ * @title: Convenience HTTP client API
+ * @short_description: API to process HTTP client.
+ * @see_also: <link
+ *            linkend="cutter-soupcutter-assertions">Assertions
+ *            with libsoup support</link>
+ *
+ * #SoupCutClient works as a HTTP client. It accepts
+ * multiple requests and responses are managed by
+ * #SoupCutClient. #SoupCutClient related assertions are
+ * also provided.
+ */
+
 #define SOUPCUT_TYPE_CLIENT            (soupcut_client_get_type ())
 #define SOUPCUT_CLIENT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), SOUPCUT_TYPE_CLIENT, SoupCutClient))
 #define SOUPCUT_CLIENT_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), SOUPCUT_TYPE_CLIENT, SoupCutClientClass))
