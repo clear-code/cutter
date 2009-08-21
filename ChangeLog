@@ -1,3 +1,7 @@
+2009-08-21  Yuto Hayamizu  <y.hayamizu@gmail.com>
+
+	* test/soupcutter/test-soupcut-client.c (test_set_base): add some test.
+
 2009-08-21  Kouhei Sutou  <kou@clear-code.com>
 
 	* soupcutter/soupcut-client.h: add description.

@@ -59,7 +59,8 @@ server_callback (SoupServer *server,
                  gpointer user_data)
 {
     const gchar *body;
-    body = cut_take_printf("Hello %s", path);
+    body = cut_take_printf("Hello %s",
+                           cuttest_soup_server_build_uri(server, path));
     soup_message_set_status(msg, SOUP_STATUS_OK);
     soup_message_set_response(msg, "text/plain", SOUP_MEMORY_COPY,
                               body, strlen(body));
@@ -97,7 +98,7 @@ test_send_message (void)
     cut_assert_equal_uint(1, soupcut_client_get_n_messages(client));
     gcut_assert_equal_object(message, soupcut_client_get_latest_message(client));
 
-    assert_response_equal_body("Hello /", client);
+    assert_response_equal_body(cut_take_printf("Hello %s", uri), client);
 }
 
 void
@@ -109,29 +110,39 @@ test_get (void)
 
     soupcut_client_get(client, uri, NULL);
 
-    assert_response_equal_body("Hello /", client);
+    assert_response_equal_body(cut_take_printf("Hello %s", uri), client);
 }
 
 void
 test_set_base (void)
 {
     const gchar *uri;
+    const gchar *uri_another;
 
     uri = serve(client);
 
     soupcut_client_set_base(client, uri);
     
     soupcut_client_get(client, NULL, NULL);
-    assert_response_equal_body("Hello /", client);
+    assert_response_equal_body(cut_take_printf("Hello %s", uri), client);
     
     soupcut_client_get(client, "/", NULL);
-    assert_response_equal_body("Hello /", client);
+    assert_response_equal_body(cut_take_printf("Hello %s", uri), client);
 
     soupcut_client_get(client, "/hello", NULL);
-    assert_response_equal_body("Hello /hello", client);
+    assert_response_equal_body(cut_take_printf("Hello %shello", uri), client);
 
     soupcut_client_get(client, "goodbye", NULL);
-    assert_response_equal_body("Hello /goodbye", client);
+    assert_response_equal_body(cut_take_printf("Hello %sgoodbye", uri), client);
+
+    uri_another = serve(client);
+
+    soupcut_client_get(client, uri_another, NULL);
+    assert_response_equal_body(cut_take_printf("Hello %s", uri_another), client);
+
+    soupcut_client_get(client, cut_take_printf("%s%s", uri_another, "another"),
+                       NULL);
+    assert_response_equal_body(cut_take_printf("Hello %sanother", uri_another), client);
 }
 
 void
@@ -147,7 +158,7 @@ test_set_base_null (void)
                           soupcut_client_get(client, NULL, NULL));
     
     soupcut_client_get(client, uri, NULL);
-    assert_response_equal_body("Hello /", client);
+    assert_response_equal_body(cut_take_printf("Hello %s", uri), client);
 }
 
 /*
