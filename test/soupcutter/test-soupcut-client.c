@@ -23,23 +23,29 @@
 
 void test_send_message(void);
 void test_get(void);
+void test_get_query(void);
 void test_set_base(void);
 void test_set_base_null(void);
-    
+
 static SoupCutClient *client;
+static GHashTable *received_query;
 
 void
 cut_setup (void)
 {
     client = soupcut_client_new();
+    received_query = NULL;
 }
 
 void
 cut_teardown (void)
 {
-    if(client){
+    if (client){
         g_object_unref(client);
     }
+
+    if (received_query)
+        g_hash_table_unref(received_query);
 }
 
 static void
@@ -61,6 +67,13 @@ server_callback (SoupServer *server,
     const gchar *body;
     body = cut_take_printf("Hello %s",
                            cuttest_soup_server_build_uri(server, path));
+    if (received_query){
+        g_hash_table_unref(received_query);
+        received_query = NULL;
+    }
+    if (query)
+        received_query = gcut_hash_table_string_string_copy(query);
+
     soup_message_set_status(msg, SOUP_STATUS_OK);
     soup_message_set_response(msg, "text/plain", SOUP_MEMORY_COPY,
                               body, strlen(body));
@@ -111,6 +124,20 @@ test_get (void)
     soupcut_client_get(client, uri, NULL);
 
     assert_response_equal_body(cut_take_printf("Hello %s", uri), client);
+}
+
+void
+test_get_query (void)
+{
+    const gchar *uri;
+    GHashTable *query;
+    
+    uri = serve(client);
+
+    query = gcut_take_new_hash_table_string_string("name", "value", NULL);
+    soupcut_client_get(client, uri, "name", "value", NULL);
+
+    gcut_assert_equal_hash_table_string_string(query, received_query);
 }
 
 void
