@@ -4,6 +4,8 @@
 
 2009-08-21  Kouhei Sutou  <kou@clear-code.com>
 
+	* doc/reference/: add SoupCutter to document.
+
 	* soupcutter/soupcutter.h: fix document.
 
 2009-08-21  Yuto Hayamizu  <y.hayamizu@gmail.com>

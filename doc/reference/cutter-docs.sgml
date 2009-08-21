@@ -58,6 +58,8 @@
       <!--xi:include href="xml/gcut-key-file.xml"/-->
       <xi:include href="xml/gdkcutter-pixbuf.xml"/>
       <xi:include href="xml/gdkcut-pixbuf-assertions.xml"/>
+      <xi:include href="xml/soupcutter.xml"/>
+      <xi:include href="xml/soupcut-assertions.xml"/>
       <xi:include href="xml/cut-experimental.xml"/>
     </chapter>
     <chapter id="writing-assertion">
