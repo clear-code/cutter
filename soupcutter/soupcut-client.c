@@ -33,6 +33,7 @@ struct _SoupCutClientPrivate
 {
     GList *messages;
     SoupSession *session;
+    SoupURI *base;
 
     gboolean async;
 };
@@ -83,6 +84,7 @@ soupcut_client_init (SoupCutClient *result)
 {
     SoupCutClientPrivate *priv = SOUPCUT_CLIENT_GET_PRIVATE(result);
 
+    priv->base = NULL;
     priv->messages = NULL;
     priv->session = soup_session_async_new_with_options(
         SOUP_SESSION_ASYNC_CONTEXT, g_main_context_new(),
@@ -94,6 +96,11 @@ dispose (GObject *object)
 {
     SoupCutClientPrivate *priv = SOUPCUT_CLIENT_GET_PRIVATE(object);
 
+    if (priv->base) {
+        soup_uri_free(priv->base);
+        priv->base = NULL;
+    }
+    
     if (priv->messages) {
         g_list_foreach(priv->messages, (GFunc)g_object_unref, NULL);
         g_list_free(priv->messages);
@@ -146,6 +153,21 @@ soupcut_client_new (void)
                         NULL);
 }
 
+void
+soupcut_client_set_base(SoupCutClient *client, const gchar *uri)
+{
+    SoupCutClientPrivate *priv;
+
+    priv = SOUPCUT_CLIENT_GET_PRIVATE(client);
+    if (priv->base) {
+        soup_uri_free(priv->base);
+        priv->base = NULL;
+    }
+
+    if (uri)
+        priv->base = soup_uri_new(uri);
+}
+
 guint
 soupcut_client_send_message (SoupCutClient *client, SoupMessage *message)
 {
@@ -164,8 +186,23 @@ soupcut_client_get(SoupCutClient *client, const gchar *uri_string,
     GHashTable *params;
     va_list args;
     SoupURI *uri;
-    
-    uri = soup_uri_new(uri_string);
+    SoupCutClientPrivate *priv;
+
+    priv = SOUPCUT_CLIENT_GET_PRIVATE(client);
+
+    if (!priv->base) {
+        if (!uri_string) {
+            return SOUP_STATUS_MALFORMED;
+        }
+        
+        uri = soup_uri_new(uri_string);
+    } else {
+        if (!uri_string) {
+            uri = soup_uri_copy(priv->base);
+        } else {
+            uri = soup_uri_new_with_base(priv->base, uri_string);
+        }
+    }
 
     if (first_name){
         va_start(args, first_name);

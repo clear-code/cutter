@@ -4,6 +4,10 @@
 
 2009-08-21  Yuto Hayamizu  <y.hayamizu@gmail.com>
 
+	* test/soupcutter/test-soupcut-client.c: add tests for set_base.
+
+	* soupcutter/soupcut-client.c (soupcut_client_set_base): add.
+
 	* m4macros/cutter.m4 (AC_CHECK_SOUPCUTTER): add.
 
 2009-08-21  Kouhei Sutou  <kou@clear-code.com>

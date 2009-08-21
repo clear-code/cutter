@@ -49,6 +49,7 @@ GType          soupcut_client_get_type   (void) G_GNUC_CONST;
 
 SoupCutClient *soupcut_client_new        (void);
 
+void           soupcut_client_set_base(SoupCutClient *client, const gchar *uri);
 guint          soupcut_client_send_message(SoupCutClient *client, SoupMessage *message);
 guint          soupcut_client_get(SoupCutClient *client, const gchar *uri,
                                   const gchar *first_name, ...);
