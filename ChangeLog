@@ -1,3 +1,7 @@
+2009-08-21  Kouhei Sutou  <kou@clear-code.com>
+
+	* Makefile.am (update-po): add soupcutter.
+
 2009-08-21  Yuto Hayamizu  <y.hayamizu@gmail.com>
 
 	* m4macros/cutter.m4 (AC_CHECK_SOUPCUTTER): add.

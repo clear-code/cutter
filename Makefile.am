@@ -61,6 +61,7 @@ update-po:
 	  (find cutter -name '*.c';		\
 	   find gcutter -name '*.c';		\
 	   find gdkcutter-pixbuf -name '*.c';	\
+	   find soupcutter -name '*.c';		\
 	   find module -name '*.c') |		\
 	  grep -v cut-marshalers.c |		\
 	  sort > po/POTFILES.in
