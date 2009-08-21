@@ -4,6 +4,8 @@
 
 2009-08-21  Yuto Hayamizu  <y.hayamizu@gmail.com>
 
+	* configure.ac, soupcutter.pc.in: SoupCutter support .pc.
+
 	* soupcutter/soupcut-assertions-helper.c
 	(soupcut_message_get_content_type): replaced
 	soup_..._get_content_type
