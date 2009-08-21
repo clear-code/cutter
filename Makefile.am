@@ -27,6 +27,10 @@ if HAVE_GDK_PIXBUF
 pkgconfig_DATA += gdkcutter-pixbuf.pc
 endif
 
+if HAVE_LIBSOUP
+pkgconfig_DATA += soupcutter.pc
+endif
+
 EXTRA_DIST =		\
 	autogen.sh	\
 	config.h.in	\

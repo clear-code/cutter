@@ -4,6 +4,8 @@
 
 2009-08-21  Yuto Hayamizu  <y.hayamizu@gmail.com>
 
+	* Makefile.am: install soupcutter.pc.
+
 	* configure.ac, soupcutter.pc.in: SoupCutter support .pc.
 
 	* soupcutter/soupcut-assertions-helper.c
