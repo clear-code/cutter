@@ -21,6 +21,8 @@
 
 2009-08-21  Kouhei Sutou  <kou@clear-code.com>
 
+	* doc/reference/Makefile.am: fix a typo.
+
 	* soupcutter/soupcut-client.h: add description.
 
 	* Makefile.am (update-po): add soupcutter.

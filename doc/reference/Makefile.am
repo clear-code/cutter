@@ -43,9 +43,9 @@ HFILE_GLOB =								\
 	$(top_srcdir)/gdkcutter-pixbuf/gdkcutter-pixbuf.h		\
 	$(top_srcdir)/gdkcutter-pixbuf/gdkcut-pixbuf.h			\
 	$(top_srcdir)/gdkcutter-pixbuf/gdkcut-pixbuf-assertions.h	\
-	$(top_srcdir)/soupcutter/soupcuttter.h				\
+	$(top_srcdir)/soupcutter/soupcutter.h				\
 	$(top_srcdir)/soupcutter/soupcut-client.h			\
-	$(top_srcdir)/soupcutter/soupcut-assertions.h			\
+	$(top_srcdir)/soupcutter/soupcut-assertions.h
 #CFILE_GLOB=$(top_srcdir)/cutter/*.c
 
 # Headers to ignore
