@@ -217,6 +217,46 @@ soupcut_client_assert_equal_body_helper (const gchar   *expected,
     }
 }
 
+void
+soupcut_client_assert_match_body_helper (const gchar   *pattern,
+                                         SoupCutClient *client,
+                                         const gchar   *expression_pattern,
+                                         const gchar   *expression_client)
+{
+    const gchar *body;
+    SoupMessage *soup_message;
+
+    soup_message = soupcut_client_get_latest_message(client);
+    if (!soup_message) {
+        soupcut_test_fail_null_message(client, expression_client);
+    }
+    
+    body = soup_message->response_body->data;
+    
+    if (cut_utils_regex_match(pattern, body)) {
+        cut_test_pass();
+    } else {
+        GString *message;
+        const gchar *fail_message;
+        const gchar *inspected_pattern;
+        const gchar *inspected_actual;
+
+        message = g_string_new(NULL);
+        g_string_append_printf(message,
+                               "<%s> =~ <latest_message(%s)[response][body]>\n",
+                               expression_pattern,
+                               expression_client);
+        inspected_pattern = cut_utils_inspect_string(pattern);
+        inspected_actual = cut_utils_inspect_string(body);
+        g_string_append_printf(message,
+                               " pattern: <%s>\n"
+                               "  actual: <%s>",
+                               inspected_pattern,
+                               inspected_actual);
+        fail_message = cut_take_string(g_string_free(message, FALSE));
+        cut_test_fail(fail_message);
+    }
+}
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

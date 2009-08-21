@@ -46,6 +46,11 @@ void soupcut_client_assert_equal_body_helper (const gchar   *expected,
                                               const gchar   *expression_expected,
                                               const gchar   *expression_client);
 
+void soupcut_client_assert_match_body_helper (const gchar   *pattern,
+                                              SoupCutClient *client,
+                                              const gchar   *expression_pattern,
+                                              const gchar   *expression_client);
+
 G_END_DECLS
 
 #endif /* __SOUPCUT_ASSERTIONS_HELPER_H__ */

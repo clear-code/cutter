@@ -33,6 +33,7 @@ void test_client_response(void);
 void test_client_response_null(void);
 void test_client_equal_body(void);
 void test_client_equal_body_null(void);
+void test_client_match_body(void);
 
 static CutTest *test;
 static CutRunContext *run_context;
@@ -304,7 +305,6 @@ test_client_response_null (void)
                            "stub_client_response_null");
 }
 
-
 static void
 stub_client_equal_body (void)
 {
@@ -370,6 +370,42 @@ test_client_equal_body_null (void)
                            message,
                            FAIL_LOCATION,
                            "stub_client_equal_body_null");
+}
+
+static void
+stub_client_match_body (void)
+{
+    const gchar *uri;
+
+    client = soupcut_client_new();
+    uri = serve(client);
+    soupcut_client_get(client, uri, NULL);
+
+    soupcut_client_assert_match_body("\\w+", client);
+    MARK_FAIL(soupcut_client_assert_match_body("\\d+", client));
+}
+
+void
+test_client_match_body (void)
+{
+    const gchar *message;
+
+    test = cut_test_new("client match body test", stub_client_match_body);
+    cut_assert_not_null(test);
+
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+
+    message =
+        "<\"\\\\d+\"> =~ <latest_message(client)[response][body]>\n"
+        " pattern: <\\d+>\n"
+        "  actual: <Hello>";
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "client match body test",
+                           NULL,
+                           message,
+                           FAIL_LOCATION,
+                           "stub_client_match_body");
 }
 
 /*

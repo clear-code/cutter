@@ -101,6 +101,23 @@ G_BEGIN_DECLS
         soupcut_client_assert_equal_body(expected, actual));            \
 } while (0)
 
+/**
+ * soupcut_client_assert_match_body:
+ * @pattern: the regular expression pattern as string.
+ * @client: an #SoupCutClient.
+ *
+ * Passes if @pattern matches the response body of latest_message(@client).
+ *
+ * Since: 1.0.8
+ */
+#define soupcut_client_assert_match_body(expected, actual) do           \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        soupcut_client_assert_match_body_helper(expected, actual,       \
+                                                 #expected, #actual),   \
+        soupcut_client_assert_match_body(expected, actual));            \
+} while (0)
+
 
 G_END_DECLS
 

@@ -1,5 +1,22 @@
 2009-08-21  Yuto Hayamizu  <y.hayamizu@gmail.com>
 
+	* test/soupcutter/test-soupcut-assertions.c
+	(test_client_match_body): add an test for soupcut_client_assert_match_body.
+
+	* soupcutter/soupcut-assertions.h
+	(soupcut_client_assert_match_body): add.
+
+	* soupcutter/soupcut-assertions-helper.[ch]
+	(soupcut_client_assert_match_body_helper): add for
+	soupcut_client_assert_match_body.
+
+	* test/soupcutter/test-soupcut-client.c (test_get_query): add.
+
+	* test/gcutter/test-gcut-hash-table.c: add an test for
+	gcut_hash_table_string_string_copy
+
+	* gcutter/gcut-hash-table.[ch] (gcut_hash_table_string_string_copy): add.
+
 	* test/soupcutter/test-soupcut-client.c (test_set_base): add some test.
 
 2009-08-21  Kouhei Sutou  <kou@clear-code.com>
