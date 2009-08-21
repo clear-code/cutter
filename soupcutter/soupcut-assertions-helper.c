@@ -44,6 +44,32 @@ soupcut_test_fail_null_message(SoupCutClient *client,
     cut_test_fail(fail_message);
 }
 
+static void
+soupcut_find_content_type(const gchar *name, const gchar *value, gpointer user_data)
+{
+    const gchar **content_type = user_data;
+
+    if (cut_utils_equal_string(name, "Content-Type")){
+        *content_type = value;
+    }
+}
+
+static const gchar *
+soupcut_message_get_content_type(SoupMessage *message)
+{
+    const gchar *content_type = NULL;
+    
+    if(!message->response_headers){
+        return NULL;
+    }
+
+    soup_message_headers_foreach(message->response_headers,
+                                 soupcut_find_content_type,
+                                 &content_type);
+
+    return content_type;
+}
+
 void
 soupcut_message_assert_equal_content_type_helper (const gchar *expected,
                                                   SoupMessage *actual,
@@ -51,8 +77,7 @@ soupcut_message_assert_equal_content_type_helper (const gchar *expected,
                                                   const gchar     *expression_actual)
 {
     const gchar *content_type;
-    content_type = soup_message_headers_get_content_type(actual->response_headers,
-                                                         NULL);
+    content_type = soupcut_message_get_content_type(actual);
     if (cut_utils_equal_string(expected, content_type)) {
         cut_test_pass();
     } else {
@@ -93,8 +118,7 @@ soupcut_client_assert_equal_content_type_helper (const gchar *expected,
         soupcut_test_fail_null_message(client, expression_client);
     }
     
-    content_type = soup_message_headers_get_content_type(message->response_headers,
-                                                         NULL);
+    content_type = soupcut_message_get_content_type(message);
     
     if (cut_utils_equal_string(expected, content_type)) {
         cut_test_pass();

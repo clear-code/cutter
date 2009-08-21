@@ -1,3 +1,7 @@
+2009-08-21  Yuto Hayamizu  <y.hayamizu@gmail.com>
+
+	* soupcutter/soupcut-assertions-helper.c (soupcut_message_get_content_type):  replaced soup_..._get_content_type
+
 2009-08-20  Kouhei Sutou  <kou@clear-code.com>
 
 	* test/soupcutter/test-soupcut-assertions.c: cleanup.
