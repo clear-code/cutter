@@ -27,27 +27,26 @@
 
 
 /**
- * SECTION: gdkcutter-pixbuf
- * @title: GdkCutter Pixbuf
- * @short_description: Cutter with gdk-pixbuf support.
+ * SECTION: soupcutter
+ * @title: SoupCutter
+ * @short_description: Cutter with libsoup support.
  * @see_also: <link
- *            linkend="cutter-gdkcut-pixbuf-assertions">Assertions
- *            with gdk-pixbuf support</link>
+ *            linkend="cutter-soupcut-assertions">Assertions
+ *            with libsoup support</link>
  *
- * GdkCutter Pixbuf adds many useful features based on
- * gdk-pixbuf to Cutter. If you want to write tests for
- * image, it's good idea that you consider GdkCutter Pixbuf
- * to be used too.
+ * SoupCutter adds many useful features based on libsoup to
+ * Cutter. If you want to write tests for HTTP, it's good
+ * idea that you consider SoupCutter to be used too.
  *
- * It's easy to use GdkCutter Pixbuf. You just include
- * &lt;gdk-cutter-pixbuf.h&gt; instead of &lt;cutter.h&gt;
- * or &lt;gcutter.h&gt; and use gdkcutter-pixbuf.pc instead
+ * It's easy to use SoupCutter. You just include
+ * &lt;soupcuttter.h&gt; instead of &lt;cutter.h&gt;
+ * or &lt;gcutter.h&gt; and use soupcutter-pixbuf.pc instead
  * of cutter.pc or gcutter.pc:
  *
  * test-xxx.c:
  * |[
  * -#include <cutter.h>
- * +#include <gdkcutter-pixbuf.h>
+ * +#include <soupcutter.h>
  * ]|
  *
  * configure.ac:
