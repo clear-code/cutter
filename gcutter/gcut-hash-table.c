@@ -153,6 +153,27 @@ gcut_hash_table_string_string_inspect (GHashTable *hash)
                                    NULL);
 }
 
+static void
+gcut_hash_table_copy_entry (gpointer key,
+                            gpointer value,
+                            gpointer user_data)
+{
+    GHashTable *hash;
+    hash = user_data;
+
+    g_hash_table_insert(hash, g_strdup(key), g_strdup(value));
+}
+
+GHashTable *
+gcut_hash_table_string_string_copy (GHashTable *hash)
+{
+    GHashTable *copied_hash;
+    copied_hash = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, g_free);
+    g_hash_table_foreach(hash, gcut_hash_table_copy_entry, copied_hash);
+
+    return copied_hash;
+}
+
 GHashTable *
 gcut_hash_table_string_string_new (const gchar *key, ...)
 {
@@ -183,6 +204,8 @@ gcut_hash_table_string_string_new_va_list (const gchar *key, va_list args)
 
     return table;
 }
+
+
 
 /*
 vi:nowrap:ai:expandtab:sw=4:ts=4

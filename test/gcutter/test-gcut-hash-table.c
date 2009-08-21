@@ -11,6 +11,7 @@ void test_equal_empty(void);
 void test_inspect(void);
 void test_inspect_empty(void);
 void test_inspect_null(void);
+void test_copy(void);
 
 static GHashTable *hash1, *hash2;
 static gchar *inspected;
@@ -141,6 +142,17 @@ test_inspect_null (void)
     inspected = gcut_hash_table_string_string_inspect(NULL);
     cut_assert_equal_string("(null)", inspected);
 }
+
+void
+test_copy (void)
+{
+    hash1 = gcut_hash_table_string_string_new("key1", "value1",
+                                              "key2", "value2",
+                                              NULL);
+    hash2 = gcut_hash_table_string_string_copy(hash1);
+    gcut_assert_equal_hash_table_string_string(hash1, hash2);
+}
+
 
 /*
 vi:nowrap:ai:expandtab:sw=4:ts=4

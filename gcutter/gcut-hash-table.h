@@ -122,6 +122,20 @@ gboolean         gcut_hash_table_string_equal   (GHashTable *hash1,
 gchar           *gcut_hash_table_string_string_inspect
                                                 (GHashTable *hash);
 
+/**
+ * gcut_hash_table_string_string_copy:
+ * @hash: a #GHashTable to be copied.
+ *
+ * Copy @hash. @hash should have string key and string
+ * value.
+ *
+ * Returns: copied #GHashTable.
+ *
+ * Since: 1.0.5
+ */
+GHashTable      *gcut_hash_table_string_string_copy
+                                                (GHashTable *hash);
+
 
 G_END_DECLS
 
