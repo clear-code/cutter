@@ -129,8 +129,9 @@ set_property (GObject      *object,
               const GValue *value,
               GParamSpec   *pspec)
 {
-    SoupCutClientPrivate *priv = SOUPCUT_CLIENT_GET_PRIVATE(object);
+    SoupCutClientPrivate *priv;
 
+    priv = SOUPCUT_CLIENT_GET_PRIVATE(object);
     switch (prop_id) {
     case PROP_ASYNC:
         priv->async = g_value_get_boolean(value);
@@ -147,8 +148,9 @@ get_property (GObject    *object,
               GValue     *value,
               GParamSpec *pspec)
 {
-    SoupCutClientPrivate *priv = SOUPCUT_CLIENT_GET_PRIVATE(object);
+    SoupCutClientPrivate *priv;
 
+    priv = SOUPCUT_CLIENT_GET_PRIVATE(object);
     switch (prop_id) {
     case PROP_ASYNC:
         g_value_set_boolean(value, priv->async);
@@ -192,8 +194,8 @@ soupcut_client_send_message (SoupCutClient *client, SoupMessage *message)
 }
 
 guint
-soupcut_client_get(SoupCutClient *client, const gchar *uri_string,
-                   const gchar *first_query_name, ...)
+soupcut_client_get (SoupCutClient *client, const gchar *uri_string,
+                    const gchar *first_query_name, ...)
 {
     SoupMessage *message;
     GHashTable *params;
@@ -204,16 +206,16 @@ soupcut_client_get(SoupCutClient *client, const gchar *uri_string,
 
     priv = SOUPCUT_CLIENT_GET_PRIVATE(client);
 
-    if (!priv->base) {
+    if (priv->base) {
+        if (uri_string) {
+            uri = soup_uri_new_with_base(priv->base, uri_string);
+        } else {
+            uri = soup_uri_copy(priv->base);
+        }
+    } else {
         if (!uri_string)
             return SOUP_STATUS_MALFORMED;
         uri = soup_uri_new(uri_string);
-    } else {
-        if (!uri_string) {
-            uri = soup_uri_copy(priv->base);
-        } else {
-            uri = soup_uri_new_with_base(priv->base, uri_string);
-        }
     }
 
     if (first_query_name) {
