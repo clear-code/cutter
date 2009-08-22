@@ -9,76 +9,104 @@ DOC_MAIN_SGML_FILE=cutter-docs.sgml
 # Extra options to supply to gtkdoc-scan
 SCAN_OPTIONS =						\
 	--deprecated-guards="CUTTER_DISABLE_DEPRECATED"	\
-	--source-dir=$(top_builddir)/cutter
+	--source-dir=$(top_builddir)/cutter		\
+	--source-dir=$(top_srcdir)/gcutter		\
+	--source-dir=$(top_srcdir)/gdkcutter-pixbuf	\
+	--source-dir=$(top_srcdir)/soupcutter
 
 # Extra options to supply to gtkdoc-scangobj
 SCANGOBJ_OPTIONS =					\
 	--types="$(srcdir)/$(DOC_MODULE).types"
 
 # The directory containing the source code. Relative to $(srcdir)
-DOC_SOURCE_DIR=../..
+DOC_SOURCE_DIR=../../cutter
 
 # Used for dependencies
 HFILE_GLOB =								\
-	$(top_srcdir)/cutter/cutter.h					\
 	$(top_builddir)/cutter/cut-version.h				\
 	$(top_srcdir)/cutter/cut-assertions.h				\
-	$(top_srcdir)/cutter/cut-test-utils.h				\
-	$(top_srcdir)/cutter/cut-multi-process.h			\
-	$(top_srcdir)/cutter/cut-types.h				\
 	$(top_srcdir)/cutter/cut-experimental.h				\
 	$(top_srcdir)/cutter/cut-helper.h				\
-	$(top_srcdir)/gcutter/gcutter.h					\
+	$(top_srcdir)/cutter/cut-multi-process.h			\
+	$(top_srcdir)/cutter/cut-test-utils.h				\
+	$(top_srcdir)/cutter/cut-types.h				\
+	$(top_srcdir)/cutter/cutter.h					\
 	$(top_srcdir)/gcutter/gcut-assertions.h				\
-	$(top_srcdir)/gcutter/gcut-test-utils.h				\
+	$(top_srcdir)/gcutter/gcut-data.h				\
 	$(top_srcdir)/gcutter/gcut-egg.h				\
 	$(top_srcdir)/gcutter/gcut-enum.h				\
 	$(top_srcdir)/gcutter/gcut-error.h				\
 	$(top_srcdir)/gcutter/gcut-hash-table.h				\
+	$(top_srcdir)/gcutter/gcut-inspect.h				\
 	$(top_srcdir)/gcutter/gcut-list.h				\
 	$(top_srcdir)/gcutter/gcut-object.h				\
+	$(top_srcdir)/gcutter/gcut-test-utils.h				\
 	$(top_srcdir)/gcutter/gcut-value-equal.h			\
-	$(top_srcdir)/gcutter/gcut-inspect.h				\
-	$(top_srcdir)/gcutter/gcut-data.h				\
-	$(top_srcdir)/gdkcutter-pixbuf/gdkcutter-pixbuf.h		\
-	$(top_srcdir)/gdkcutter-pixbuf/gdkcut-pixbuf.h			\
+	$(top_srcdir)/gcutter/gcutter.h					\
 	$(top_srcdir)/gdkcutter-pixbuf/gdkcut-pixbuf-assertions.h	\
-	$(top_srcdir)/soupcutter/soupcutter.h				\
+	$(top_srcdir)/gdkcutter-pixbuf/gdkcut-pixbuf.h			\
+	$(top_srcdir)/gdkcutter-pixbuf/gdkcutter-pixbuf.h		\
+	$(top_srcdir)/soupcutter/soupcut-assertions.h			\
 	$(top_srcdir)/soupcutter/soupcut-client.h			\
-	$(top_srcdir)/soupcutter/soupcut-assertions.h
+	$(top_srcdir)/soupcutter/soupcutter.h
+
 #CFILE_GLOB=$(top_srcdir)/cutter/*.c
 
 # Headers to ignore
-IGNORE_HFILES=			\
-	cut-assertions-helper.h	\
-	cut-gassertions-helper.h\
-	cut-context.h		\
-	cut-enum-types.h	\
-	cut-hidden-definitions.h\
-	cut-loader.h		\
-	cut-macros.h		\
-	cut-marshalers.h	\
-	cut-module-impl.h	\
-	cut-module.h		\
-	cut-private.h		\
-	cut-public.h		\
-	cut-gpublic.h		\
-	cut-repository.h	\
-	cut-sub-process.h	\
-	cut-sub-process-group.h	\
-	cut-test-case.h		\
-	cut-test-context.h	\
-	cut-test-container.h	\
-	cut-test-result.h	\
-	cut-test-suite.h	\
-	cut-test.h		\
-	cut-utils.h		\
-	cut-verbose-level.h	\
-	config.h		\
-	vcc			\
-	doc			\
-	test			\
-	sample
+IGNORE_HFILES=					\
+	cut-analyzer.h				\
+	cut-assertions-helper.h			\
+	cut-backtrace-entry.h			\
+	cut-context.h				\
+	cut-contractor.h			\
+	cut-diff.h				\
+	cut-elf-loader.h			\
+	cut-enum-types.h			\
+	cut-factory-builder.h			\
+	cut-file-stream-reader.h		\
+	cut-gassertions-helper.h		\
+	cut-gpublic.h				\
+	cut-hidden-definitions.h		\
+	cut-iterated-test.h			\
+	cut-listener.h				\
+	cut-loader.h				\
+	cut-mach-o-loader.h			\
+	cut-macros.h				\
+	cut-marshalers.h			\
+	cut-module-factory.h			\
+	cut-module-impl.h			\
+	cut-module.h				\
+	cut-pe-loader.h				\
+	cut-pipeline.h				\
+	cut-private.h				\
+	cut-process.h				\
+	cut-public.h				\
+	cut-report-factory-builder.h		\
+	cut-report.h				\
+	cut-repository.h			\
+	cut-run-context.h			\
+	cut-runner.h				\
+	cut-sequence-matcher.h			\
+	cut-stream-factory-builder.h		\
+	cut-stream-parser.h			\
+	cut-stream-reader.h			\
+	cut-stream.h				\
+	cut-sub-process-group.h			\
+	cut-sub-process-group.h			\
+	cut-sub-process.h			\
+	cut-test-case.h				\
+	cut-test-container.h			\
+	cut-test-context.h			\
+	cut-test-data.h				\
+	cut-test-iterator.h			\
+	cut-test-result.h			\
+	cut-test-runner.h			\
+	cut-test-suite.h			\
+	cut-test.h				\
+	cut-ui-factory-builder.h		\
+	cut-ui.h				\
+	cut-utils.h				\
+	cut-verbose-level.h
 
 INCLUDES =					\
 	-I$(top_srcdir)/cutter			\
@@ -104,9 +132,12 @@ GTKDOC_LIBS +=						\
 endif
 
 # Extra options to supply to gtkdoc-mkdb
-MKDB_OPTIONS =					\
-	--sgml-mode				\
-	--source-dir=$(top_builddir)/cutter
+MKDB_OPTIONS =						\
+	--sgml-mode					\
+	--source-dir=$(top_builddir)/cutter		\
+	--source-dir=$(top_srcdir)/gcutter		\
+	--source-dir=$(top_srcdir)/gdkcutter-pixbuf	\
+	--source-dir=$(top_srcdir)/soupcutter
 
 # Images to copy into HTML directory
 HTML_IMAGES =				\

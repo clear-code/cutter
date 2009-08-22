@@ -1,3 +1,7 @@
+2009-08-22  Kouhei Sutou  <kou@cozmixng.org>
+
+	* doc/reference/Makefile.am: update file names.
+
 2009-08-21  Yuto Hayamizu  <y.hayamizu@gmail.com>
 
 	* test/soupcutter/test-soupcut-assertions.c
