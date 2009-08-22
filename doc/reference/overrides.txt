@@ -741,3 +741,35 @@ gconstpointer data, const gchar *field_name
 <RETURNS>void</RETURNS>
 const GdkPixbuf *expected, const GdkPixbuf *actual, guint threshold
 </FUNCTION>
+
+# soupcut-assertions.h
+
+<FUNCTION>
+<NAME>soupcut_message_assert_equal_content_type</NAME>
+<RETURNS>void</RETURNS>
+const gchar *expected, SoupMessage *message
+</FUNCTION>
+
+<FUNCTION>
+<NAME>soupcut_client_assert_equal_content_type</NAME>
+<RETURNS>void</RETURNS>
+const gchar *expected, SoupCutClient *client
+</FUNCTION>
+
+<FUNCTION>
+<NAME>soupcut_client_assert_response</NAME>
+<RETURNS>void</RETURNS>
+SoupCutClient *client
+</FUNCTION>
+
+<FUNCTION>
+<NAME>soupcut_client_assert_equal_body</NAME>
+<RETURNS>void</RETURNS>
+const gchar *expected, SoupCutClient *client
+</FUNCTION>
+
+<FUNCTION>
+<NAME>soupcut_client_assert_match_body</NAME>
+<RETURNS>void</RETURNS>
+const gchar *pattern, SoupCutClient *client
+</FUNCTION>
