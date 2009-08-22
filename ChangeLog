@@ -1,5 +1,7 @@
 2009-08-22  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/cutter-docs.sgml: add an index of new symbols in 1.0.8.
+
 	* doc/reference/Makefile.am: support build in different directory.
 
 	* doc/reference/Makefile.am: update file names.
