@@ -264,6 +264,7 @@ test_client_response (void)
 
     message =
         "<latest_message(client)[response][status] == 2XX>\n"
+        "  expected: <2XX>"
         "    actual: <404>(Blog Not Found)";
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "client response test",

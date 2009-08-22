@@ -1,5 +1,8 @@
 2009-08-22  Kouhei Sutou  <kou@cozmixng.org>
 
+	* soupcutter/soupcut-assertions-helper.[ch],
+	test/soupcutter/test-soupcut-assertions.c: cleanup.
+
 	* soupcutter/soupcut-client.[ch]:
 	- cleanup
 	- fix memory leaks.

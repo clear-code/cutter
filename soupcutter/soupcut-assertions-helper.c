@@ -25,8 +25,8 @@
 #include "soupcutter.h"
 
 static void
-soupcut_test_fail_null_message(SoupCutClient *client,
-                               const gchar *expression_client)
+soupcut_test_fail_null_message (SoupCutClient *client,
+                                const gchar *expression_client)
 {
     GString *message;
     const gchar *fail_message;
@@ -45,7 +45,8 @@ soupcut_test_fail_null_message(SoupCutClient *client,
 }
 
 static void
-soupcut_find_content_type(const gchar *name, const gchar *value, gpointer user_data)
+soupcut_find_content_type (const gchar *name, const gchar *value,
+                           gpointer user_data)
 {
     const gchar **content_type = user_data;
 
@@ -55,26 +56,24 @@ soupcut_find_content_type(const gchar *name, const gchar *value, gpointer user_d
 }
 
 static const gchar *
-soupcut_message_get_content_type(SoupMessage *message)
+soupcut_message_get_content_type (SoupMessage *message)
 {
     const gchar *content_type = NULL;
-    
-    if(!message->response_headers){
+
+    if (!message->response_headers)
         return NULL;
-    }
 
     soup_message_headers_foreach(message->response_headers,
                                  soupcut_find_content_type,
                                  &content_type);
-
     return content_type;
 }
 
 void
 soupcut_message_assert_equal_content_type_helper (const gchar *expected,
                                                   SoupMessage *actual,
-                                                  const gchar     *expression_expected,
-                                                  const gchar     *expression_actual)
+                                                  const gchar *expression_expected,
+                                                  const gchar *expression_actual)
 {
     const gchar *content_type;
     content_type = soupcut_message_get_content_type(actual);
@@ -107,8 +106,8 @@ soupcut_message_assert_equal_content_type_helper (const gchar *expected,
 void
 soupcut_client_assert_equal_content_type_helper (const gchar *expected,
                                                  SoupCutClient *client,
-                                                 const gchar     *expression_expected,
-                                                 const gchar     *expression_client)
+                                                 const gchar *expression_expected,
+                                                 const gchar *expression_client)
 {
     const gchar *content_type;
     SoupMessage *message;
@@ -117,30 +116,26 @@ soupcut_client_assert_equal_content_type_helper (const gchar *expected,
     if (!message) {
         soupcut_test_fail_null_message(client, expression_client);
     }
-    
+
     content_type = soupcut_message_get_content_type(message);
-    
     if (cut_utils_equal_string(expected, content_type)) {
         cut_test_pass();
     } else {
-        GString *message;
         const gchar *fail_message;
         const gchar *inspected_expected;
         const gchar *inspected_actual;
 
-        message = g_string_new(NULL);
-        g_string_append_printf(message,
-                               "<%s == latest_message(%s)[response][content-type]>\n",
-                               expression_expected,
-                               expression_client);
         inspected_expected = cut_utils_inspect_string(expected);
         inspected_actual = cut_utils_inspect_string(content_type);
-        g_string_append_printf(message,
-                               "  expected: <%s>\n"
-                               "    actual: <%s>",
-                               inspected_expected,
-                               inspected_actual);
-        fail_message = cut_take_string(g_string_free(message, FALSE));
+        fail_message =
+            cut_take_printf(
+                "<%s == latest_message(%s)[response][content-type]>\n"
+                "  expected: <%s>\n"
+                "    actual: <%s>",
+                expression_expected,
+                expression_client,
+                inspected_expected,
+                inspected_actual);
         cut_test_fail(fail_message);
     }
 }
@@ -148,33 +143,28 @@ soupcut_client_assert_equal_content_type_helper (const gchar *expected,
 void soupcut_client_assert_response_helper (SoupCutClient *client,
                                             const gchar   *expression_client)
 {
-    SoupMessage *soup_message;
+    SoupMessage *message;
 
-    soup_message = soupcut_client_get_latest_message(client);
-    if (!soup_message) {
+    message = soupcut_client_get_latest_message(client);
+    if (!message) {
         soupcut_test_fail_null_message(client, expression_client);
     }
-    
-    if (soup_message->status_code >= 200 && soup_message->status_code < 300) {
+
+    if (200 <= message->status_code && message->status_code < 300) {
         cut_test_pass();
     } else {
-        GString *message;
         const gchar *fail_message;
 
-        message = g_string_new(NULL);
-        g_string_append_printf(message,
-                               "<latest_message(%s)[response][status] == 2XX>\n",
-                               expression_client);
-        g_string_append_printf(message,
-                               "    actual: <%u>(%s)",
-                               soup_message->status_code,
-                               soup_message->reason_phrase);
-        fail_message = cut_take_string(g_string_free(message, FALSE));
+        fail_message =
+            cut_take_printf("<latest_message(%s)[response][status] == 2XX>\n"
+                            "  expected: <2XX>"
+                            "    actual: <%u>(%s)",
+                            expression_client,
+                            message->status_code,
+                            message->reason_phrase);
         cut_test_fail(fail_message);
     }
 }
-
-
 
 void
 soupcut_client_assert_equal_body_helper (const gchar   *expected,
@@ -183,36 +173,31 @@ soupcut_client_assert_equal_body_helper (const gchar   *expected,
                                          const gchar   *expression_client)
 {
     const gchar *body;
-    SoupMessage *soup_message;
+    SoupMessage *message;
 
-    soup_message = soupcut_client_get_latest_message(client);
-    if (!soup_message) {
+    message = soupcut_client_get_latest_message(client);
+    if (!message) {
         soupcut_test_fail_null_message(client, expression_client);
     }
-    
-    body = soup_message->response_body->data;
-    
+
+    body = message->response_body->data;
     if (cut_utils_equal_string(expected, body)) {
         cut_test_pass();
     } else {
-        GString *message;
         const gchar *fail_message;
         const gchar *inspected_expected;
         const gchar *inspected_actual;
 
-        message = g_string_new(NULL);
-        g_string_append_printf(message,
-                               "<%s == latest_message(%s)[response][body]>\n",
-                               expression_expected,
-                               expression_client);
         inspected_expected = cut_utils_inspect_string(expected);
         inspected_actual = cut_utils_inspect_string(body);
-        g_string_append_printf(message,
-                               "  expected: <%s>\n"
-                               "    actual: <%s>",
-                               inspected_expected,
-                               inspected_actual);
-        fail_message = cut_take_string(g_string_free(message, FALSE));
+        fail_message =
+            cut_take_printf("<%s == latest_message(%s)[response][body]>\n"
+                            "  expected: <%s>\n"
+                            "    actual: <%s>",
+                            expression_expected,
+                            expression_client,
+                            inspected_expected,
+                            inspected_actual);
         cut_test_fail(fail_message);
     }
 }
@@ -224,36 +209,31 @@ soupcut_client_assert_match_body_helper (const gchar   *pattern,
                                          const gchar   *expression_client)
 {
     const gchar *body;
-    SoupMessage *soup_message;
+    SoupMessage *message;
 
-    soup_message = soupcut_client_get_latest_message(client);
-    if (!soup_message) {
+    message = soupcut_client_get_latest_message(client);
+    if (!message) {
         soupcut_test_fail_null_message(client, expression_client);
     }
-    
-    body = soup_message->response_body->data;
-    
+
+    body = message->response_body->data;
     if (cut_utils_regex_match(pattern, body)) {
         cut_test_pass();
     } else {
-        GString *message;
         const gchar *fail_message;
         const gchar *inspected_pattern;
         const gchar *inspected_actual;
 
-        message = g_string_new(NULL);
-        g_string_append_printf(message,
-                               "<%s> =~ <latest_message(%s)[response][body]>\n",
-                               expression_pattern,
-                               expression_client);
         inspected_pattern = cut_utils_inspect_string(pattern);
         inspected_actual = cut_utils_inspect_string(body);
-        g_string_append_printf(message,
-                               " pattern: <%s>\n"
-                               "  actual: <%s>",
-                               inspected_pattern,
-                               inspected_actual);
-        fail_message = cut_take_string(g_string_free(message, FALSE));
+        fail_message =
+            cut_take_printf("<%s> =~ <latest_message(%s)[response][body]>\n"
+                            " pattern: <%s>\n"
+                            "  actual: <%s>",
+                            expression_pattern,
+                            expression_client,
+                            inspected_pattern,
+                            inspected_actual);
         cut_test_fail(fail_message);
     }
 }
