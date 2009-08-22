@@ -29,14 +29,15 @@
 /**
  * SECTION: soupcutter
  * @title: SoupCutter
- * @short_description: Cutter with libsoup support.
+ * @short_description: HTTP supported Cutter with libsoup.
  * @see_also: <link
  *            linkend="cutter-soupcut-assertions">Assertions
- *            with libsoup support</link>
+ *            for HTTP client/server based on libsoup</link>
  *
- * SoupCutter adds many useful features based on libsoup to
- * Cutter. If you want to write tests for HTTP, it's good
- * idea that you consider SoupCutter to be used too.
+ * SoupCutter adds many useful HTTP related features based
+ * on libsoup to Cutter. If you want to write tests for
+ * HTTP, it's good idea that you consider SoupCutter to be
+ * used too.
  *
  * It's easy to use SoupCutter. You just include
  * &lt;soupcuttter.h&gt; instead of &lt;cutter.h&gt;

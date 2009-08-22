@@ -127,11 +127,13 @@ gchar           *gcut_hash_table_string_string_inspect
  * @hash: a #GHashTable to be copied.
  *
  * Copy @hash. @hash should have string key and string
- * value.
+ * value. The returned @hash should be freed by
+ * g_hash_table_unref().
  *
- * Returns: copied #GHashTable.
+ * Returns: copied #GHashTable. It should be freed when no
+ *          longer needed.
  *
- * Since: 1.0.5
+ * Since: 1.0.8
  */
 GHashTable      *gcut_hash_table_string_string_copy
                                                 (GHashTable *hash);

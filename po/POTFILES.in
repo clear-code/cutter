@@ -78,3 +78,5 @@ module/ui/cut-console-ui-factory.c
 module/ui/cut-console-ui.c
 module/ui/cut-gtk-ui-factory.c
 module/ui/cut-gtk-ui.c
+soupcutter/soupcut-assertions-helper.c
+soupcutter/soupcut-client.c

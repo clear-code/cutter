@@ -28,7 +28,7 @@ G_BEGIN_DECLS
 /**
  * SECTION: soupcut-client
  * @title: Convenience HTTP client API
- * @short_description: API to process HTTP client.
+ * @short_description: API to work as HTTP client.
  * @see_also: <link
  *            linkend="cutter-soupcutter-assertions">Assertions
  *            with libsoup support</link>
