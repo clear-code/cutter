@@ -1,5 +1,7 @@
 2009-08-23  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/ja.po: update.
+
 	* doc/reference/overrides.txt: show SoupCutter assertions as function.
 
 2009-08-22  Kouhei Sutou  <kou@cozmixng.org>
