@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.0.8\n"
-"POT-Creation-Date: 2009-08-22 22:53+0900\n"
-"PO-Revision-Date: 2009-08-22 22:53+0900\n"
+"POT-Creation-Date: 2009-08-22 23:39+0900\n"
+"PO-Revision-Date: 2009-08-22 23:40+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -2791,7 +2791,7 @@ msgstr ""
 #: xml/soupcut-assertions-helper.xml:94(term)
 #: xml/soupcut-assertions-helper.xml:130(term)
 #: xml/soupcut-assertions.xml:55(term) xml/soupcut-assertions.xml:70(term)
-#: xml/soupcut-assertions.xml:95(term) xml/soupcut-assertions.xml:110(term)
+#: xml/soupcut-assertions.xml:95(term)
 msgid "<parameter>expected</parameter> :"
 msgstr ""
 
@@ -2846,10 +2846,6 @@ msgstr "期待する真偽値。"
 #: xml/gcut-assertions.xml:846(term)
 #: xml/gdkcut-pixbuf-assertions-helper.xml:59(term)
 #: xml/gdkcut-pixbuf-assertions.xml:68(term)
-#: xml/soupcut-assertions-helper.xml:75(term)
-#: xml/soupcut-assertions-helper.xml:97(term)
-#: xml/soupcut-assertions.xml:58(term) xml/soupcut-assertions.xml:73(term)
-#: xml/soupcut-assertions.xml:98(term) xml/soupcut-assertions.xml:113(term)
 msgid "<parameter>actual</parameter> :"
 msgstr ""
 
@@ -4003,10 +3999,12 @@ msgstr ""
 #: xml/cut-assertions.xml:1010(term) xml/cut-assertions.xml:1032(term)
 #: xml/cut-test-utils.xml:250(term)
 #: xml/soupcut-assertions-helper.xml:152(term)
+#: xml/soupcut-assertions.xml:110(term)
 msgid "<parameter>pattern</parameter> :"
 msgstr ""
 
 #: xml/cut-assertions.xml:1011(simpara) xml/cut-test-utils.xml:251(simpara)
+#: xml/soupcut-assertions.xml:111(simpara)
 msgid "the regular expression pattern as string."
 msgstr "正規表現パターン。（文字列で指定）"
 
@@ -6486,7 +6484,8 @@ msgstr ""
 "diffを<parameter>message</parameter>に追加します。戻り値の文字列の所有者は"
 "Cutterです。"
 
-#: xml/cut-test-utils.xml:270(term) xml/soupcut-client.xml:96(term)
+#: xml/cut-test-utils.xml:270(term) xml/soupcut-assertions-helper.xml:75(term)
+#: xml/soupcut-assertions.xml:58(term) xml/soupcut-client.xml:96(term)
 msgid "<parameter>message</parameter> :"
 msgstr ""
 
@@ -8142,8 +8141,6 @@ msgstr ""
 #: xml/gcut-assertions-helper.xml:651(term)
 #: xml/gcut-assertions-helper.xml:672(term)
 #: xml/gdkcut-pixbuf-assertions-helper.xml:68(term)
-#: xml/soupcut-assertions-helper.xml:81(term)
-#: xml/soupcut-assertions-helper.xml:103(term)
 msgid "<parameter>expression_actual</parameter> :"
 msgstr ""
 
@@ -14514,14 +14511,14 @@ msgid ""
 "\n"
 "<placeholder-1/>                <placeholder-2/>\n"
 "                                                        (const <placeholder-3/> *expected,\n"
-"                                                         <placeholder-4/> *actual,\n"
+"                                                         <placeholder-4/> *message,\n"
 "                                                         const <placeholder-5/> *expression_expected,\n"
-"                                                         const <placeholder-6/> *expression_actual);\n"
+"                                                         const <placeholder-6/> *expression_message);\n"
 "<placeholder-7/>                <placeholder-8/>\n"
 "                                                        (const <placeholder-9/> *expected,\n"
-"                                                         <placeholder-10/> *actual,\n"
+"                                                         <placeholder-10/> *client,\n"
 "                                                         const <placeholder-11/> *expression_expected,\n"
-"                                                         const <placeholder-12/> *expression_actual);\n"
+"                                                         const <placeholder-12/> *expression_client);\n"
 "<placeholder-13/>                <placeholder-14/>\n"
 "                                                        (<placeholder-15/> *client,\n"
 "                                                         const <placeholder-16/> *expression_client);\n"
@@ -14546,9 +14543,13 @@ msgstr ""
 msgid ""
 "<link linkend=\"void\">void</link>                soupcut_message_assert_equal_content_type_helper\n"
 "                                                        (const <link linkend=\"gchar\">gchar</link> *expected,\n"
-"                                                         <link linkend=\"SoupMessage\">SoupMessage</link> *actual,\n"
+"                                                         <link linkend=\"SoupMessage\">SoupMessage</link> *message,\n"
 "                                                         const <link linkend=\"gchar\">gchar</link> *expression_expected,\n"
-"                                                         const <link linkend=\"gchar\">gchar</link> *expression_actual);"
+"                                                         const <link linkend=\"gchar\">gchar</link> *expression_message);"
+msgstr ""
+
+#: xml/soupcut-assertions-helper.xml:81(term)
+msgid "<parameter>expression_message</parameter> :"
 msgstr ""
 
 #: xml/soupcut-assertions-helper.xml:86(title)
@@ -14560,9 +14561,28 @@ msgstr ""
 msgid ""
 "<link linkend=\"void\">void</link>                soupcut_client_assert_equal_content_type_helper\n"
 "                                                        (const <link linkend=\"gchar\">gchar</link> *expected,\n"
-"                                                         <link linkend=\"SoupCutClient\">SoupCutClient</link> *actual,\n"
+"                                                         <link linkend=\"SoupCutClient\">SoupCutClient</link> *client,\n"
 "                                                         const <link linkend=\"gchar\">gchar</link> *expression_expected,\n"
-"                                                         const <link linkend=\"gchar\">gchar</link> *expression_actual);"
+"                                                         const <link linkend=\"gchar\">gchar</link> *expression_client);"
+msgstr ""
+
+#: xml/soupcut-assertions-helper.xml:97(term)
+#: xml/soupcut-assertions-helper.xml:114(term)
+#: xml/soupcut-assertions-helper.xml:133(term)
+#: xml/soupcut-assertions-helper.xml:155(term)
+#: xml/soupcut-assertions.xml:73(term) xml/soupcut-assertions.xml:84(term)
+#: xml/soupcut-assertions.xml:98(term) xml/soupcut-assertions.xml:113(term)
+#: xml/soupcut-client.xml:80(term) xml/soupcut-client.xml:93(term)
+#: xml/soupcut-client.xml:110(term) xml/soupcut-client.xml:130(term)
+#: xml/soupcut-client.xml:141(term) xml/soupcut-client.xml:152(term)
+msgid "<parameter>client</parameter> :"
+msgstr ""
+
+#: xml/soupcut-assertions-helper.xml:103(term)
+#: xml/soupcut-assertions-helper.xml:117(term)
+#: xml/soupcut-assertions-helper.xml:139(term)
+#: xml/soupcut-assertions-helper.xml:161(term)
+msgid "<parameter>expression_client</parameter> :"
 msgstr ""
 
 #: xml/soupcut-assertions-helper.xml:108(title)
@@ -14575,22 +14595,6 @@ msgid ""
 "<link linkend=\"void\">void</link>                soupcut_client_assert_response_helper\n"
 "                                                        (<link linkend=\"SoupCutClient\">SoupCutClient</link> *client,\n"
 "                                                         const <link linkend=\"gchar\">gchar</link> *expression_client);"
-msgstr ""
-
-#: xml/soupcut-assertions-helper.xml:114(term)
-#: xml/soupcut-assertions-helper.xml:133(term)
-#: xml/soupcut-assertions-helper.xml:155(term)
-#: xml/soupcut-assertions.xml:84(term) xml/soupcut-client.xml:80(term)
-#: xml/soupcut-client.xml:93(term) xml/soupcut-client.xml:110(term)
-#: xml/soupcut-client.xml:130(term) xml/soupcut-client.xml:141(term)
-#: xml/soupcut-client.xml:152(term)
-msgid "<parameter>client</parameter> :"
-msgstr ""
-
-#: xml/soupcut-assertions-helper.xml:117(term)
-#: xml/soupcut-assertions-helper.xml:139(term)
-#: xml/soupcut-assertions-helper.xml:161(term)
-msgid "<parameter>expression_client</parameter> :"
 msgstr ""
 
 #: xml/soupcut-assertions-helper.xml:122(title)
@@ -14641,11 +14645,11 @@ msgstr ""
 #, no-wrap
 msgid ""
 "\n"
-"#define             <placeholder-1/>(expected, actual)\n"
-"#define             <placeholder-2/>(expected, actual)\n"
+"#define             <placeholder-1/>(expected, message)\n"
+"#define             <placeholder-2/>(expected, client)\n"
 "#define             <placeholder-3/>      (client)\n"
-"#define             <placeholder-4/>    (expected, actual)\n"
-"#define             <placeholder-5/>    (expected, actual)\n"
+"#define             <placeholder-4/>    (expected, client)\n"
+"#define             <placeholder-5/>    (pattern, client)\n"
 msgstr ""
 
 #: xml/soupcut-assertions.xml:49(title)
@@ -14654,16 +14658,14 @@ msgstr ""
 
 #: xml/soupcut-assertions.xml:50(programlisting)
 #, no-wrap
-msgid "#define             soupcut_message_assert_equal_content_type(expected, actual)"
+msgid "#define             soupcut_message_assert_equal_content_type(expected, message)"
 msgstr ""
 
 #: xml/soupcut-assertions.xml:51(para)
 msgid ""
-"Passes if <parameter>expected</parameter> == <parameter>actual-&gt;"
+"Passes if <parameter>expected</parameter> == <parameter>message-&gt;"
 "response_headers-&gt;content_type</parameter>."
-msgstr ""
-"<parameter>expected</parameter> == <parameter>actual-&gt;response_headers-"
-"&gt;content_type</parameter>が成り立つときパスします。"
+msgstr "<parameter>expected</parameter> == <parameter>message-&gt;response_headers-&gt;content_type</parameter>が成り立つときパスします。"
 
 #: xml/soupcut-assertions.xml:56(simpara)
 #: xml/soupcut-assertions.xml:71(simpara)
@@ -14671,9 +14673,8 @@ msgid "an expected Content-Type."
 msgstr "期待するContent-Type。"
 
 #: xml/soupcut-assertions.xml:59(simpara)
-msgid ""
-"an actual <link linkend=\"SoupMessage\"><type>SoupMessage</type></link>."
-msgstr "実際の<link linkend=\"SoupMessage\"><type>SoupMessage</type></link>。"
+msgid "an <link linkend=\"SoupMessage\"><type>SoupMessage</type></link>."
+msgstr "<link linkend=\"SoupMessage\"><type>SoupMessage</type></link>オブジェクト。"
 
 #: xml/soupcut-assertions.xml:63(title)
 msgid "soupcut_client_assert_equal_content_type()"
@@ -14681,22 +14682,23 @@ msgstr ""
 
 #: xml/soupcut-assertions.xml:64(programlisting)
 #, no-wrap
-msgid "#define             soupcut_client_assert_equal_content_type(expected, actual)"
+msgid "#define             soupcut_client_assert_equal_content_type(expected, client)"
 msgstr ""
 
 #: xml/soupcut-assertions.xml:65(para)
 msgid ""
 "Passes if <parameter>expected</parameter> equals to Content-Type of the "
-"latest message of <parameter>actual</parameter>."
-msgstr ""
-"<parameter>expected</parameter>が<parameter>actual</parameter>の最後のメッ"
-"セージのContent-Typeと等しいとパスします。"
+"latest message of <parameter>client</parameter>."
+msgstr "<parameter>expected</parameter>が<parameter>client</parameter>の最後のメッセージのContent-Typeと等しいとパスします。"
 
 #: xml/soupcut-assertions.xml:74(simpara)
-msgid ""
-"an actual <link linkend=\"SoupCutClient\"><type>SoupCutClient</type></link>."
+#: xml/soupcut-assertions.xml:85(simpara)
+#: xml/soupcut-assertions.xml:99(simpara)
+#: xml/soupcut-assertions.xml:114(simpara)
+msgid "an <link linkend=\"SoupCutClient\"><type>SoupCutClient</type></link>."
 msgstr ""
-"実際の<link linkend=\"SoupCutClient\"><type>SoupCutClient</type></link>。"
+"<link linkend=\"SoupCutClient\"><type>SoupCutClient</type></link>オブジェク"
+"ト。"
 
 #: xml/soupcut-assertions.xml:78(title)
 msgid "soupcut_client_assert_response()"
@@ -14711,29 +14713,20 @@ msgstr ""
 msgid "Passes if status code of <parameter>client</parameter> is 2XX."
 msgstr "<parameter>client</parameter>のステータスコードが2XXならパスします。"
 
-#: xml/soupcut-assertions.xml:85(simpara)
-#: xml/soupcut-assertions.xml:99(simpara)
-msgid "an <link linkend=\"SoupCutClient\"><type>SoupCutClient</type></link>."
-msgstr ""
-"<link linkend=\"SoupCutClient\"><type>SoupCutClient</type></link>オブジェク"
-"ト。"
-
 #: xml/soupcut-assertions.xml:89(title)
 msgid "soupcut_client_assert_equal_body()"
 msgstr ""
 
 #: xml/soupcut-assertions.xml:90(programlisting)
 #, no-wrap
-msgid "#define             soupcut_client_assert_equal_body(expected, actual)"
+msgid "#define             soupcut_client_assert_equal_body(expected, client)"
 msgstr ""
 
 #: xml/soupcut-assertions.xml:91(para)
 msgid ""
-"Passes if <parameter>expected</parameter> == <parameter>actual-&gt;"
+"Passes if <parameter>expected</parameter> == <parameter>client-&gt;"
 "response_body-&gt;data</parameter>."
-msgstr ""
-"<parameter>expected</parameter> == <parameter>actual-&gt;response_body-&gt;"
-"data</parameter>が成り立つときパスします。"
+msgstr "<parameter>expected</parameter> == <parameter>message-&gt;response_body-&gt;data</parameter>が成り立つときパスします。"
 
 #: xml/soupcut-assertions.xml:96(simpara)
 msgid "an expected response body."
@@ -14745,7 +14738,7 @@ msgstr ""
 
 #: xml/soupcut-assertions.xml:104(programlisting)
 #, no-wrap
-msgid "#define             soupcut_client_assert_match_body(expected, actual)"
+msgid "#define             soupcut_client_assert_match_body(pattern, client)"
 msgstr ""
 
 #: xml/soupcut-assertions.xml:105(para)
@@ -14780,7 +14773,7 @@ msgid ""
 "                                                         <placeholder-11/> *message);\n"
 "<placeholder-12/>               <placeholder-13/>                  (<placeholder-14/> *client,\n"
 "                                                         const <placeholder-15/> *uri,\n"
-"                                                         const <placeholder-16/> *first_name,\n"
+"                                                         const <placeholder-16/> *first_query_name,\n"
 "                                                         ...);\n"
 "<placeholder-17/>               <placeholder-18/>       (<placeholder-19/> *client);\n"
 "<placeholder-20/> *       <placeholder-21/>   (<placeholder-22/> *client);\n"
@@ -14848,12 +14841,12 @@ msgstr ""
 msgid ""
 "<link linkend=\"guint\">guint</link>               soupcut_client_get                  (<link linkend=\"SoupCutClient\">SoupCutClient</link> *client,\n"
 "                                                         const <link linkend=\"gchar\">gchar</link> *uri,\n"
-"                                                         const <link linkend=\"gchar\">gchar</link> *first_name,\n"
+"                                                         const <link linkend=\"gchar\">gchar</link> *first_query_name,\n"
 "                                                         ...);"
 msgstr ""
 
 #: xml/soupcut-client.xml:116(term)
-msgid "<parameter>first_name</parameter> :"
+msgid "<parameter>first_query_name</parameter> :"
 msgstr ""
 
 #: xml/soupcut-client.xml:126(title)
