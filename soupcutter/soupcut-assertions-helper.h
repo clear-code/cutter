@@ -30,15 +30,15 @@ G_BEGIN_DECLS
 
 void soupcut_message_assert_equal_content_type_helper
                                               (const gchar *expected,
-                                               SoupMessage *actual,
+                                               SoupMessage *message,
                                                const gchar *expression_expected,
-                                               const gchar *expression_actual);
+                                               const gchar *expression_message);
 
 void soupcut_client_assert_equal_content_type_helper
                                              (const gchar   *expected,
-                                              SoupCutClient *actual,
+                                              SoupCutClient *client,
                                               const gchar   *expression_expected,
-                                              const gchar   *expression_actual);
+                                              const gchar   *expression_client);
 
 void soupcut_client_assert_response_helper   (SoupCutClient *client,
                                               const gchar   *expression_client);

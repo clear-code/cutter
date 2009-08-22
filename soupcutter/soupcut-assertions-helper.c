@@ -71,33 +71,29 @@ soupcut_message_get_content_type (SoupMessage *message)
 
 void
 soupcut_message_assert_equal_content_type_helper (const gchar *expected,
-                                                  SoupMessage *actual,
+                                                  SoupMessage *message,
                                                   const gchar *expression_expected,
-                                                  const gchar *expression_actual)
+                                                  const gchar *expression_message)
 {
     const gchar *content_type;
-    content_type = soupcut_message_get_content_type(actual);
+
+    content_type = soupcut_message_get_content_type(message);
     if (cut_utils_equal_string(expected, content_type)) {
         cut_test_pass();
     } else {
-        GString *message;
         const gchar *fail_message;
         const gchar *inspected_expected;
         const gchar *inspected_actual;
 
-        message = g_string_new(NULL);
-        g_string_append_printf(message,
-                               "<%s == %s[response][content-type]>\n",
-                               expression_expected,
-                               expression_actual);
         inspected_expected = cut_utils_inspect_string(expected);
         inspected_actual = cut_utils_inspect_string(content_type);
-        g_string_append_printf(message,
-                               "  expected: <%s>\n"
-                               "    actual: <%s>",
-                               inspected_expected,
-                               inspected_actual);
-        fail_message = cut_take_string(g_string_free(message, FALSE));
+        fail_message = cut_take_printf("<%s == %s[response][content-type]>\n"
+                                       "  expected: <%s>\n"
+                                       "    actual: <%s>",
+                                       expression_expected,
+                                       expression_message,
+                                       inspected_expected,
+                                       inspected_actual);
         cut_test_fail(fail_message);
     }
 }
