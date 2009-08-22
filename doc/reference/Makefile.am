@@ -6,13 +6,17 @@ DOC_MODULE=cutter
 # The top-level SGML file.
 DOC_MAIN_SGML_FILE=cutter-docs.sgml
 
+SOURCE_DIR_OPTIONS=					\
+	--source-dir="$(top_srcdir)/gcutter"		\
+	--source-dir="$(top_srcdir)/gdkcutter-pixbuf"	\
+	--source-dir="$(top_srcdir)/soupcutter"		\
+	`test "$(top_builddir)" != "$(top_srcdir)" &&	\
+	   echo --source-dir="$(top_builddir)/cutter"`
+
 # Extra options to supply to gtkdoc-scan
 SCAN_OPTIONS =						\
 	--deprecated-guards="CUTTER_DISABLE_DEPRECATED"	\
-	--source-dir=$(top_builddir)/cutter		\
-	--source-dir=$(top_srcdir)/gcutter		\
-	--source-dir=$(top_srcdir)/gdkcutter-pixbuf	\
-	--source-dir=$(top_srcdir)/soupcutter
+	$(SOURCE_DIR_OPTIONS)
 
 # Extra options to supply to gtkdoc-scangobj
 SCANGOBJ_OPTIONS =					\
@@ -59,6 +63,7 @@ IGNORE_HFILES=					\
 	cut-backtrace-entry.h			\
 	cut-context.h				\
 	cut-contractor.h			\
+	cut-crash-backtrace.h			\
 	cut-diff.h				\
 	cut-elf-loader.h			\
 	cut-enum-types.h			\
@@ -68,11 +73,14 @@ IGNORE_HFILES=					\
 	cut-gpublic.h				\
 	cut-hidden-definitions.h		\
 	cut-iterated-test.h			\
+	cut-listener-utils.h			\
 	cut-listener.h				\
 	cut-loader.h				\
 	cut-mach-o-loader.h			\
 	cut-macros.h				\
+	cut-main.h				\
 	cut-marshalers.h			\
+	cut-module-factory-utils.h		\
 	cut-module-factory.h			\
 	cut-module-impl.h			\
 	cut-module.h				\
@@ -102,11 +110,13 @@ IGNORE_HFILES=					\
 	cut-test-result.h			\
 	cut-test-runner.h			\
 	cut-test-suite.h			\
+	cut-test-utils-helper.h			\
 	cut-test.h				\
 	cut-ui-factory-builder.h		\
 	cut-ui.h				\
 	cut-utils.h				\
-	cut-verbose-level.h
+	cut-verbose-level.h			\
+	gbsearcharray.h
 
 INCLUDES =					\
 	-I$(top_srcdir)/cutter			\
@@ -134,10 +144,7 @@ endif
 # Extra options to supply to gtkdoc-mkdb
 MKDB_OPTIONS =						\
 	--sgml-mode					\
-	--source-dir=$(top_builddir)/cutter		\
-	--source-dir=$(top_srcdir)/gcutter		\
-	--source-dir=$(top_srcdir)/gdkcutter-pixbuf	\
-	--source-dir=$(top_srcdir)/soupcutter
+	$(SOURCE_DIR_OPTIONS)
 
 # Images to copy into HTML directory
 HTML_IMAGES =				\
