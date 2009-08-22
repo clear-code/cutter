@@ -9,7 +9,7 @@ m4_define([cutter_version_micro], [8])
 m4_define([cutter_version],
           [cutter_version_major.cutter_version_minor.cutter_version_micro])
 
-AC_INIT(cutter, [cutter_version], kou@cozmixng.org)
+AC_INIT(cutter, [cutter_version], kou@clear-code.com)
 AC_CONFIG_AUX_DIR([config])
 AC_CONFIG_MACRO_DIR([m4macros])
 
