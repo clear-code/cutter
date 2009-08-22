@@ -37,36 +37,36 @@ G_BEGIN_DECLS
 /**
  * soupcut_message_assert_equal_content_type:
  * @expected: an expected Content-Type.
- * @actual: an actual #SoupMessage.
+ * @message: an #SoupMessage.
  *
- * Passes if @expected == @actual->response_headers->content_type.
+ * Passes if @expected == @message->response_headers->content_type.
  *
  * Since: 1.0.8
  */
-#define soupcut_message_assert_equal_content_type(expected, actual) do  \
+#define soupcut_message_assert_equal_content_type(expected, message) do \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
         soupcut_message_assert_equal_content_type_helper(               \
-            expected, actual, #expected, #actual),                      \
-        soupcut_message_assert_equal_content_type(expected, actual));   \
+            expected, message, #expected, #message),                    \
+        soupcut_message_assert_equal_content_type(expected, message));  \
 } while (0)
 
 /**
  * soupcut_client_assert_equal_content_type:
  * @expected: an expected Content-Type.
- * @actual: an actual #SoupCutClient.
+ * @client: an #SoupCutClient.
  *
  * Passes if @expected equals to Content-Type of the latest
- * message of @actual.
+ * message of @client.
  *
  * Since: 1.0.8
  */
-#define soupcut_client_assert_equal_content_type(expected, actual) do   \
+#define soupcut_client_assert_equal_content_type(expected, client) do   \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
         soupcut_client_assert_equal_content_type_helper(                \
-            expected, actual, #expected, #actual),                      \
-        soupcut_client_assert_equal_content_type(expected, actual));    \
+            expected, client, #expected, #client),                      \
+        soupcut_client_assert_equal_content_type(expected, client));    \
 } while (0)
 
 
@@ -88,18 +88,18 @@ G_BEGIN_DECLS
 /**
  * soupcut_client_assert_equal_body:
  * @expected: an expected response body.
- * @actual: an #SoupCutClient.
+ * @client: an #SoupCutClient.
  *
- * Passes if @expected == @actual->response_body->data.
+ * Passes if @expected == @client->response_body->data.
  *
  * Since: 1.0.8
  */
-#define soupcut_client_assert_equal_body(expected, actual) do           \
+#define soupcut_client_assert_equal_body(expected, client) do           \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        soupcut_client_assert_equal_body_helper(expected, actual,       \
-                                                #expected, #actual),    \
-        soupcut_client_assert_equal_body(expected, actual));            \
+        soupcut_client_assert_equal_body_helper(expected, client,       \
+                                                #expected, #client),    \
+        soupcut_client_assert_equal_body(expected, client));            \
 } while (0)
 
 /**
@@ -112,12 +112,12 @@ G_BEGIN_DECLS
  *
  * Since: 1.0.8
  */
-#define soupcut_client_assert_match_body(expected, actual) do           \
+#define soupcut_client_assert_match_body(pattern, client) do            \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        soupcut_client_assert_match_body_helper(expected, actual,       \
-                                                #expected, #actual),    \
-        soupcut_client_assert_match_body(expected, actual));            \
+        soupcut_client_assert_match_body_helper(pattern, client,        \
+                                                #pattern, #client),     \
+        soupcut_client_assert_match_body(pattern, client));             \
 } while (0)
 
 
