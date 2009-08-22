@@ -1,5 +1,9 @@
 2009-08-22  Kouhei Sutou  <kou@cozmixng.org>
 
+	* soupcutter/soupcut-client.[ch]:
+	- cleanup
+	- fix memory leaks.
+
 	* doc/reference/ja.po: update.
 	* soupcutter/*.h, gcutter/gcut-hash-table.h: fix documentations.
 

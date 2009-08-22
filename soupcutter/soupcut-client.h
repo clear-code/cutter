@@ -59,17 +59,22 @@ struct _SoupCutClientClass
     GObjectClass parent_class;
 };
 
-GType          soupcut_client_get_type   (void) G_GNUC_CONST;
+GType          soupcut_client_get_type           (void) G_GNUC_CONST;
 
-SoupCutClient *soupcut_client_new        (void);
+SoupCutClient *soupcut_client_new                (void);
 
-void           soupcut_client_set_base(SoupCutClient *client, const gchar *uri);
-guint          soupcut_client_send_message(SoupCutClient *client, SoupMessage *message);
-guint          soupcut_client_get(SoupCutClient *client, const gchar *uri,
-                                  const gchar *first_name, ...);
-guint          soupcut_client_get_n_messages(SoupCutClient *client);
-SoupMessage    *soupcut_client_get_latest_message(SoupCutClient *client);
-GMainContext   *soupcut_client_get_async_context(SoupCutClient *client);
+void           soupcut_client_set_base           (SoupCutClient *client,
+                                                  const gchar   *uri);
+guint          soupcut_client_send_message       (SoupCutClient *client,
+                                                  SoupMessage   *message);
+
+guint          soupcut_client_get                (SoupCutClient *client,
+                                                  const gchar   *uri,
+                                                  const gchar   *first_query_name,
+                                                  ...);
+guint          soupcut_client_get_n_messages     (SoupCutClient *client);
+SoupMessage   *soupcut_client_get_latest_message (SoupCutClient *client);
+GMainContext  *soupcut_client_get_async_context  (SoupCutClient *client);
 
 
 G_END_DECLS

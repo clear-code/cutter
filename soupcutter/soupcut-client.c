@@ -34,6 +34,7 @@ struct _SoupCutClientPrivate
     GList *messages;
     SoupSession *session;
     SoupURI *base;
+    GMainContext *main_context;
 
     gboolean async;
 };
@@ -86,9 +87,11 @@ soupcut_client_init (SoupCutClient *result)
 
     priv->base = NULL;
     priv->messages = NULL;
-    priv->session = soup_session_async_new_with_options(
-        SOUP_SESSION_ASYNC_CONTEXT, g_main_context_new(),
-        NULL);
+    priv->main_context = g_main_context_new();
+    priv->session =
+        soup_session_async_new_with_options(
+            SOUP_SESSION_ASYNC_CONTEXT, priv->main_context,
+            NULL);
 }
 
 static void
@@ -100,11 +103,21 @@ dispose (GObject *object)
         soup_uri_free(priv->base);
         priv->base = NULL;
     }
-    
+
     if (priv->messages) {
         g_list_foreach(priv->messages, (GFunc)g_object_unref, NULL);
         g_list_free(priv->messages);
         priv->messages = NULL;
+    }
+
+    if (priv->main_context) {
+        g_main_context_unref(priv->main_context);
+        priv->main_context = NULL;
+    }
+
+    if (priv->session) {
+        g_object_unref(priv->session);
+        priv->session = NULL;
     }
 
     G_OBJECT_CLASS(soupcut_client_parent_class)->dispose(object);
@@ -119,10 +132,10 @@ set_property (GObject      *object,
     SoupCutClientPrivate *priv = SOUPCUT_CLIENT_GET_PRIVATE(object);
 
     switch (prop_id) {
-      case PROP_ASYNC:
+    case PROP_ASYNC:
         priv->async = g_value_get_boolean(value);
         break;
-      default:
+    default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
     }
@@ -137,10 +150,10 @@ get_property (GObject    *object,
     SoupCutClientPrivate *priv = SOUPCUT_CLIENT_GET_PRIVATE(object);
 
     switch (prop_id) {
-      case PROP_ASYNC:
+    case PROP_ASYNC:
         g_value_set_boolean(value, priv->async);
         break;
-      default:
+    default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
     }
@@ -180,21 +193,20 @@ soupcut_client_send_message (SoupCutClient *client, SoupMessage *message)
 
 guint
 soupcut_client_get(SoupCutClient *client, const gchar *uri_string,
-                   const gchar *first_name, ...)
+                   const gchar *first_query_name, ...)
 {
     SoupMessage *message;
     GHashTable *params;
     va_list args;
     SoupURI *uri;
+    gchar *built_uri;
     SoupCutClientPrivate *priv;
 
     priv = SOUPCUT_CLIENT_GET_PRIVATE(client);
 
     if (!priv->base) {
-        if (!uri_string) {
+        if (!uri_string)
             return SOUP_STATUS_MALFORMED;
-        }
-        
         uri = soup_uri_new(uri_string);
     } else {
         if (!uri_string) {
@@ -204,16 +216,19 @@ soupcut_client_get(SoupCutClient *client, const gchar *uri_string,
         }
     }
 
-    if (first_name){
-        va_start(args, first_name);
-        params = gcut_hash_table_string_string_new_va_list(first_name, args);
+    if (first_query_name) {
+        va_start(args, first_query_name);
+        params = gcut_hash_table_string_string_new_va_list(first_query_name,
+                                                           args);
         va_end(args);
 
         soup_uri_set_query_from_form(uri, params);
         g_hash_table_unref(params);
     }
-    
-    message = soup_message_new("GET", cut_take_string(soup_uri_to_string(uri, FALSE)));
+
+    built_uri = soup_uri_to_string(uri, FALSE);
+    message = soup_message_new("GET", built_uri);
+    g_free(built_uri);
     soup_uri_free(uri);
 
     return soupcut_client_send_message(client, message);
