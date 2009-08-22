@@ -60,6 +60,7 @@
       <xi:include href="xml/gdkcut-pixbuf-assertions.xml"/>
       <xi:include href="xml/soupcutter.xml"/>
       <xi:include href="xml/soupcut-assertions.xml"/>
+      <xi:include href="xml/soupcut-client.xml"/>
       <xi:include href="xml/cut-experimental.xml"/>
     </chapter>
     <chapter id="writing-assertion">

@@ -1,5 +1,7 @@
 2009-08-22  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/cutter-docs.sgml: add SoupCutClient.
+
 	* soupcutter/soupcut-assertions-helper.[ch],
 	test/soupcutter/test-soupcut-assertions.c: cleanup.
 
