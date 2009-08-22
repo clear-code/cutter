@@ -104,11 +104,11 @@ G_BEGIN_DECLS
 
 /**
  * soupcut_client_assert_match_body:
- * @pattern: the regular expression pattern as string.
+ * @pattern: the regular expression pattern.
  * @client: an #SoupCutClient.
  *
  * Passes if @pattern matches the response body of
- * latest_message(@client).
+ * the latest message of @client.
  *
  * Since: 1.0.8
  */

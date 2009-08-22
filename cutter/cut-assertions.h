@@ -890,7 +890,7 @@ extern "C" {
 
 /**
  * cut_assert_match:
- * @pattern: the regular expression pattern as string.
+ * @pattern: the regular expression pattern.
  * @actual: the string to be matched.
  * @...: optional format string, followed by parameters to insert
  *       into the format string. (as with printf()) This is
