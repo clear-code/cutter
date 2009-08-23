@@ -1,5 +1,8 @@
 2009-08-23  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/cutter/test-cutter.c: GLib >= 2.21 shows '-h' as short name
+	of '--help' not '-?' when '-h' doesn't exist in other short name.
+
 	* doc/reference/ja.po: update.
 
 	* doc/reference/overrides.txt: show SoupCutter assertions as function.

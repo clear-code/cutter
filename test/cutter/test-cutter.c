@@ -67,7 +67,11 @@ cut_setup (void)
         "  %s --mode=analyze [OPTION...] LOG_DIRECTORY" LINE_FEED_CODE
         "" LINE_FEED_CODE
         "Help Options:" LINE_FEED_CODE
+#if GLIB_CHECK_VERSION(2, 21, 0)
+        "  -h, --help                                      Show help options" LINE_FEED_CODE
+#else
         "  -?, --help                                      Show help options" LINE_FEED_CODE
+#endif
         "  --help-all                                      Show all help options" LINE_FEED_CODE
         "  --help-stream                                   Show stream options" LINE_FEED_CODE
         "  --help-report                                   Show report options" LINE_FEED_CODE
@@ -182,7 +186,11 @@ test_help_all (void)
         "  %s --mode=analyze [OPTION...] LOG_DIRECTORY" LINE_FEED_CODE
         "" LINE_FEED_CODE
         "Help Options:" LINE_FEED_CODE
+#if GLIB_CHECK_VERSION(2, 21, 0)
+        "  -h, --help                                      Show help options" LINE_FEED_CODE
+#else
         "  -?, --help                                      Show help options" LINE_FEED_CODE
+#endif
         "  --help-all                                      Show all help options" LINE_FEED_CODE
         "  --help-stream                                   Show stream options" LINE_FEED_CODE
         "  --help-report                                   Show report options" LINE_FEED_CODE
