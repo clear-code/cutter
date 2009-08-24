@@ -91,7 +91,7 @@ void           soupcut_client_set_base           (SoupCutClient *client,
  *
  * Send @message with @client. @client remebers all the messages it sent.
  *
- * Returns: a status code of the request.
+ * Returns: a status code of the response.
  *
  * Since: 1.0.8
  */
@@ -108,7 +108,7 @@ guint          soupcut_client_send_message       (SoupCutClient *client,
  * Send a GET request to @uri with queries. If the base URI of @client
  * is set by soupcut_client_set_base(), the destination URI is composed of the base URI and @uri. If not, @uri must be a fully qualified URI.
  *
- * Returns: a status code of the request.
+ * Returns: a status code of the response.
  *
  * Since: 1.0.8
  */

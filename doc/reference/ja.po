@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.0.8\n"
-"POT-Creation-Date: 2009-08-24 11:41+0900\n"
-"PO-Revision-Date: 2009-08-24 11:52+0900\n"
+"POT-Creation-Date: 2009-08-24 12:21+0900\n"
+"PO-Revision-Date: 2009-08-24 12:22+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -15193,6 +15193,11 @@ msgid ""
 "\"SoupCutClient\"><type>SoupCutClient</type></link> related assertions are "
 "also provided."
 msgstr ""
+"<link linkend=\"SoupCutClient\"><type>SoupCutClient</type></link>オブジェクト"
+"はHTTPクライアントとして動作します。<link linkend=\"SoupCutClient"
+"\"><type>SoupCutClient</type></link>は複数のリクエストやレスポンスを管理する"
+"ことができます。また、<link linkend=\"SoupCutClient\"><type>SoupCutClient</"
+"type></link>に関連するアサーションのAPIも提供しています。"
 
 #: xml/soupcut-client.xml:73(programlisting)
 #, no-wrap
@@ -15212,7 +15217,9 @@ msgstr ""
 msgid ""
 "Creates and returns a new <link linkend=\"SoupCutClient"
 "\"><type>SoupCutClient</type></link>"
-msgstr "新たに<link linkend=\"SoupCutClient\"><type>SoupCutClient</type></link>オブジェクトを生成して返します。"
+msgstr ""
+"新たに<link linkend=\"SoupCutClient\"><type>SoupCutClient</type></link>オブ"
+"ジェクトを生成して返します。"
 
 #: xml/soupcut-client.xml:83(simpara)
 msgid ""
@@ -15236,7 +15243,9 @@ msgstr ""
 msgid ""
 "Set <parameter>uri</parameter> as a base uri of <parameter>client</"
 "parameter>."
-msgstr "<parameter>client</parameter>のベースURIを<parameter>uri</parameter>に設定します。"
+msgstr ""
+"<parameter>client</parameter>のベースURIを<parameter>uri</parameter>に設定し"
+"ます。"
 
 #: xml/soupcut-client.xml:98(term) xml/soupcut-client.xml:134(term)
 msgid "<parameter>uri</parameter> :"
@@ -15261,11 +15270,15 @@ msgstr ""
 msgid ""
 "Send <parameter>message</parameter> with <parameter>client</parameter>. "
 "<parameter>client</parameter> remebers all the messages it sent."
-msgstr "<parameter>client</parameter>を使って<parameter>message</parameter>を送信します。<parameter>client</parameter>は過去に送信した全ての#SoupMessageの情報を保持しています。"
+msgstr ""
+"<parameter>client</parameter>を使って<parameter>message</parameter>を送信しま"
+"す。<parameter>client</parameter>は過去に送信した全ての<link linkend="
+"\"SoupMessage\">SoupMessage</link>の情報を保持しています。"
 
 #: xml/soupcut-client.xml:116(simpara) xml/soupcut-client.xml:143(simpara)
-msgid "a status code of the request."
-msgstr ""
+#, fuzzy
+msgid "a status code of the response."
+msgstr "レスポンスのステータスコード。"
 
 #: xml/soupcut-client.xml:121(title)
 msgid "soupcut_client_get ()"
@@ -15288,6 +15301,12 @@ msgid ""
 "destination URI is composed of the base URI and <parameter>uri</parameter>. "
 "If not, <parameter>uri</parameter> must be a fully qualified URI."
 msgstr ""
+"<parameter>uri</parameter>とクエリパラメータで指定されたURIにGETリクエストを"
+"送信します。もしも<parameter>client</parameter>のベースURIが<link linkend="
+"\"soupcut-client-set-base\"><function>soupcut_client_set_base()</function></"
+"link>によって設定されていた場合は、URIはベースURIと<parameter>uri</parameter>"
+"を組み合わせたものとなります。そうでない場合は、<parameter>uri</parameter>は"
+"絶対URIである必要があります。"
 
 #: xml/soupcut-client.xml:135(simpara)
 msgid "an URI string."
@@ -15306,7 +15325,10 @@ msgid ""
 "pairs of query parameter names and values, starting with "
 "<parameter>first_query_name</parameter>, terminated by <link linkend=\"NULL--"
 "CAPS\"><literal>NULL</literal></link>"
-msgstr "<parameter>first_query_name</parameter>から始まる、クエリパラメータの名前と値のペア。最後に<link linkend=\"NULL--CAPS\"><literal>NULL</literal></link>を指定しなければいけません。"
+msgstr ""
+"<parameter>first_query_name</parameter>から始まる、クエリパラメータの名前と値"
+"のペア。最後に<link linkend=\"NULL--CAPS\"><literal>NULL</literal></link>を指"
+"定しなければいけません。"
 
 #: xml/soupcut-client.xml:148(title)
 msgid "soupcut_client_get_n_messages ()"
@@ -15338,12 +15360,16 @@ msgstr ""
 msgid ""
 "Returns the latest <link linkend=\"SoupMessage\"><type>SoupMessage</type></"
 "link> <parameter>client</parameter> sent."
-msgstr "<parameter>client</parameter>が最後に送信した<link linkend=\"SoupMessage\"><type>SoupMessage</type></link>オブジェクト。"
+msgstr ""
+"<parameter>client</parameter>が最後に送信した<link linkend=\"SoupMessage"
+"\"><type>SoupMessage</type></link>オブジェクト。"
 
 #: xml/soupcut-client.xml:171(simpara)
 msgid ""
 "the latest <link linkend=\"SoupMessage\"><type>SoupMessage</type></link>."
-msgstr "最後に送信された<link linkend=\"SoupMessage\"><type>SoupMessage</type></link>オブジェクト。"
+msgstr ""
+"最後に送信された<link linkend=\"SoupMessage\"><type>SoupMessage</type></link>"
+"オブジェクト。"
 
 #: xml/soupcut-client.xml:176(title)
 msgid "soupcut_client_get_async_context ()"
@@ -15363,7 +15389,10 @@ msgid ""
 "a <link linkend=\"GMainContext\"><type>GMainContext</type></link> of "
 "<parameter>client</parameter>, which may be <link linkend=\"NULL--CAPS"
 "\"><literal>NULL</literal></link>."
-msgstr "<parameter>client</parameter>の<link linkend=\"GMainContext\"><type>GMainContext</type></link>。<link linkend=\"NULL--CAPS\"><literal>NULL</literal></link>が返る可能性があります。"
+msgstr ""
+"<parameter>client</parameter>の<link linkend=\"GMainContext"
+"\"><type>GMainContext</type></link>。<link linkend=\"NULL--CAPS"
+"\"><literal>NULL</literal></link>が返る可能性があります。"
 
 #: xml/soupcut-client.xml:193(title)
 msgid "The <literal>\"async\"</literal> property"
@@ -15376,11 +15405,11 @@ msgstr ""
 
 #: xml/soupcut-client.xml:195(para)
 msgid "True if the session is asynchronous."
-msgstr ""
+msgstr "セッションが非同期の場合は真。"
 
 #: xml/soupcut-client.xml:195(para)
 msgid "Default value: FALSE"
-msgstr ""
+msgstr "デフォルト値: FALSE"
 
 #: xml/soupcut-server.xml:7(refentrytitle) xml/soupcut-server.xml:13(refname)
 msgid "Convenience HTTP server API"

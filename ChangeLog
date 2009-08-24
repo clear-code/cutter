@@ -1,5 +1,8 @@
 2009-08-24  Yuto Hayamizu  <y.hayamizu@gmail.com>
 
+	* doc/reference/ja.po, soupcutter/soupcut-client.h: fix docs of
+	soupcut-client
+
 	* debian/control, debian/rules: add libcutter-soup-dev
 
 	* doc/reference/ja.po: wrote docs for soupcut-client
