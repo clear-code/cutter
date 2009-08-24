@@ -4,6 +4,10 @@
 
 2009-08-24  Yuto Hayamizu  <y.hayamizu@gmail.com>
 
+	* NEWS.ja: wrote news for 1.0.8
+
+	* html/index.html*, doc/install-to-*, README*: changed version number 1.0.7 -> 1.0.8
+
 	* doc/reference/ja.po, soupcutter/soupcut-client.h: fix docs of
 	soupcut-client
 

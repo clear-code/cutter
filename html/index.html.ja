@@ -26,7 +26,7 @@
 	<li id="menu-install"><a href="reference/ja/install.html">インストール</a></li>
 	<li id="menu-tutorial"><a href="reference/ja/tutorial.html">チュートリアル</a></li>
 	<li id="menu-reference"><a href="reference/ja/">リファレンス</a></li>
-	<li id="menu-download"><a href="http://downloads.sourceforge.net/cutter/cutter-1.0.7.tar.gz">ダウンロード</a></li>
+	<li id="menu-download"><a href="http://downloads.sourceforge.net/cutter/cutter-1.0.8.tar.gz">ダウンロード</a></li>
 	<!--li id="menu-blog"><a href="blog/ja/">ブログ</a></li-->
       </ul>
     </div>
@@ -35,10 +35,10 @@
       <div class="main">
 	<h2 id="latest">最新リリース</h2>
 	<p>
-	  2009-05-20にリリースされた1.0.7が最新です。
+	  2009-05-20にリリースされた1.0.8が最新です。
         </p>
 	<p>
-          [<a href="http://downloads.sourceforge.net/cutter/cutter-1.0.7.tar.gz">ダウンロード</a>]
+          [<a href="http://downloads.sourceforge.net/cutter/cutter-1.0.8.tar.gz">ダウンロード</a>]
           [<a href="reference/ja/news.html">変更点</a>]
 	</p>
 

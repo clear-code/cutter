@@ -33,7 +33,7 @@ See ((<FEATURES>)) for more details.
 == Get
 
 tar.gz:
-  % wget http://downloads.sourceforge.net/cutter/cutter-1.0.6.tar.gz
+  % wget http://downloads.sourceforge.net/cutter/cutter-1.0.8.tar.gz
 
 Subversion:
   % svn co https://cutter.svn.sourceforge.net/svnroot/cutter/cutter/trunk cutter

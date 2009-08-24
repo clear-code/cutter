@@ -2,6 +2,39 @@
 
 = お知らせ --- Cutterの歴史
 
+== 1.0.8: 2009-08-29
+
+  * libsoupサポートの追加:
+    * HTTPクライアント機能:
+      * ((<soupcut_client_new()|SoupCutClient.html#soupcut-client-new>))
+      * ((<soupcut_client_set_base()|SoupCutClient.html#soupcut-client-set-base>))
+      * ((<soupcut_client_send_message()|SoupCutClient.html#soupcut-client-send_message>))
+      * ((<soupcut_client_get()|SoupCutClient.html#soupcut-client-get>))
+      * ((<soupcut_client_get_n_messages()|SoupCutClient.html#soupcut-client-get-n-messages>))
+      * ((<soupcut_client_get_latest_message()|SoupCutClient.html#soupcut-client-get-latest-message>))
+      * ((<soupcut_client_get_async_context()|SoupCutClient.html#soupcut-client-get-async-context>))
+    * HTTPサーバー機能:
+      * ((<soupcut_server_take_new()|cutter-soupcut-server.html#soupcut-server-take-new>))
+      * ((<soupcut_server_build_uri()|cutter-soupcut-server.html#soupcut-server-build-uri>))
+    * 検証:
+      * ((<soupcut_message_assert_equal_content_type()|cutter-soupcut-assertions.html#soupcut-message-assert-content-type>))
+      * ((<soupcut_client_assert_equal_content_type()|cutter-soupcut-assertions.html#soupcut-client-assert-content-type>))
+      * ((<soupcut_client_assert_response()|cutter-soupcut-assertions.html#soupcut-client-assert-response>))
+      * ((<soupcut_client_assert_equal_body()|cutter-soupcut-assertions.html#soupcut-client-assert-equal-body>))
+      * ((<soupcut_client_assert_match_body()|cutter-soupcut-assertions.html#soupcut-client-assert-match-body>))
+  * ((<GHashTable用の検証ユーティリティ|cutter-gcut-hash-table.html>))に関数を追加:
+    * ((<gcut_hash_table_string_string_copy()|cutter-gcut-hash-table.html#gcut-hash-table-string-string-copy>))
+  * ((<Cutter利用プロジェクトリスト|USERS.ja>))にmroongaを追加
+  * Fedora用rpmパッケージをサポート
+  * Debian用debパッケージをサポート
+  * Ubuntu用debパッケージをサポート
+  * lcov 1.7対応
+  * ドキュメント:
+    * ((<Ubuntu用インストールドキュメント|install-to-ubuntu.html>))を追加
+    * ((<FreeBSD用インストールドキュメント|install-to-freebsd.html>))を追加
+    * ((<Mac OS X用インストールドキュメント|install-to-mac-os-x.html>))を追加
+    * ((<Solaris用インストールドキュメント|install-to-solaris.html>))を追加
+
 == 1.0.7: 2009-05-20
 
   * ((<バージョン情報|cutter-cut-version.html>))を提供

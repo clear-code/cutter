@@ -35,8 +35,8 @@ CutterのRPMパッケージが提供されているので、rpmでインスト�
 |URL:https://lists.sourceforge.net/lists/listinfo/cutter-users-ja>))
 でリクエストしてください。
 
-  % wget http://downloads.sourceforge.net/cutter/cutter-1.0.7-0.x86_64.rpm
-  % sudo rpm -Uvh cutter-1.0.7-0.x86_64.rpm
+  % wget http://downloads.sourceforge.net/cutter/cutter-1.0.8-0.x86_64.rpm
+  % sudo rpm -Uvh cutter-1.0.8-0.x86_64.rpm
 
 == 次のステップ
 
