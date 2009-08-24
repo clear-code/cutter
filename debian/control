@@ -79,3 +79,12 @@ Description: Cutter GStreamer integration
  Cutter is a xUnit family Unit Testing Framework for C.
  .
  This provides GStreamer elements that stream test result of Cutter.
+
+Package: libcutter-soup-dev
+Section: libdevel
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}, libcutter-glib-dev (= ${binary:Version}), libsoup2.4-dev
+Description: Cutter libsoup integration
+ Cutter is a xUnit family Unit Testing Framework for C.
+ .
+ This package provides header files to write tests for Cutter with libsoup support.

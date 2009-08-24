@@ -30,14 +30,18 @@ DEB_INSTALL_DIRS_cutter-bin =			\
 	/usr/share/man/ja/man1
 
 DEB_INSTALL_DIRS_libcutter-glib-dev =		\
-	/usr/include/cutter			\
+	/usr/include/cutter/gcutter		\
 	/usr/lib/pkgconfig
 
 DEB_INSTALL_DIRS_libcutter-gtk-dev =		\
-	/usr/include/cutter			\
+	/usr/include/cutter/gdkcutter-pixbuf	\
 	/usr/lib/pkgconfig			\
 	/usr/lib/cutter/module/ui		\
 	/usr/lib/cutter/module/factory/ui
+
+DEB_INSTALL_DIRS_libcutter-soup-dev =		\
+	/usr/include/cutter/soupcutter		\
+	/usr/lib/pkgconfig
 
 DEB_INSTALL_DIRS_libcutter-report =		\
 	/usr/lib/cutter/module/report		\
@@ -112,6 +116,16 @@ install/libcutter-gtk-dev::
 		debian/libcutter-gtk-dev/usr/lib/cutter/module/ui/
 	cp -ar debian/tmp/usr/lib/cutter/module/factory/ui/gtk_* \
 		debian/libcutter-gtk-dev/usr/lib/cutter/module/factory/ui/
+
+install/libcutter-soup-dev::
+	cp -ar debian/tmp/usr/lib/libsoup* \
+		debian/libcutter-soup-dev/usr/lib/
+	cp -ar debian/tmp/usr/include/cutter/soupcutter.h \
+		debian/libcutter-soup-dev/usr/include/cutter/
+	cp -ar debian/tmp/usr/include/cutter/soupcutter/ \
+		debian/libcutter-soup-dev/usr/include/cutter/
+	cp -ar debian/tmp/usr/lib/pkgconfig/soupcutter.pc \
+		debian/libcutter-soup-dev/usr/lib/pkgconfig/
 
 install/libcutter-report::
 	cp -ar debian/tmp/usr/lib/cutter/module/report/pdf* \
