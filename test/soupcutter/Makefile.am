@@ -28,7 +28,6 @@ LIBS =								\
 	$(top_builddir)/cutter/libcutter.la			\
 	$(top_builddir)/soupcutter/libsoupcutter.la		\
 	$(top_builddir)/test/lib/libcuttest-utils.la		\
-	$(top_builddir)/test/lib/libcuttest-soup.la		\
 	$(GLIB_LIBS)						\
 	$(LIBSOUP_LIBS)
 

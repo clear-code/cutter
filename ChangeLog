@@ -1,3 +1,7 @@
+2009-08-24  Kouhei Sutou  <kou@clear-code.com>
+
+	* test/soupcutter/Makefile.am: remove a needless dependency.
+
 2009-08-24  Yuto Hayamizu  <y.hayamizu@gmail.com>
 
 	* doc/reference/ja.po, soupcutter/soupcut-client.h: fix docs of
