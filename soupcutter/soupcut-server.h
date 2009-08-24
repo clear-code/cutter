@@ -25,9 +25,44 @@
 
 G_BEGIN_DECLS
 
-SoupServer  *soupcut_server_take_new (GMainContext *context);
+/**
+ * SECTION: soupcut-server
+ * @title: Convenience HTTP server API
+ * @short_description: API to work as HTTP server.
+ * @see_also: <link
+ *            linkend="cutter-soupcut-assertions">Assertions
+ *            for HTTP client/server based on libsoup</link>
+ *
+ * Useful wrappers for #SoupServer are provided.
+ *
+ */
+
+/**
+ * soupcut_server_take_new:
+ * @context: a #GMainContext for the main loop of a new server.
+ *
+ * Creates and returns a new #SoupServer, whose context is @context.
+ * The server is shut down and freed when
+ *
+ * Returns: a new #SoupServer owned by Cutter. Don't g_object_unref() it.
+ *
+ * Since: 1.0.8
+ */
+SoupServer  *soupcut_server_take_new  (GMainContext *context);
+
+/**
+ * soupcut_server_build_uri:
+ * @server: a #SoupServer.
+ * @path: a path.
+ *
+ * an URI is built and returned with the base uri of @server and @path.
+ *
+ * Returns: a new uri string owned by Cutter. Don't free it.
+ *
+ * Since: 1.0.8
+ */
 const gchar *soupcut_server_build_uri (SoupServer   *server,
-                                    const gchar  *path);
+                                       const gchar  *path);
 
 G_END_DECLS
 

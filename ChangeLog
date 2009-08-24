@@ -1,5 +1,9 @@
 2009-08-24  Yuto Hayamizu  <y.hayamizu@gmail.com>
 
+	* soupcutter/soupcut-server.h: wrote docs
+
+	* soupcutter/soupcut-assertions.h: fix type in docs
+
 	* test/soupcutter/test-soupcut-assertions.c,
 	test/soupcutter/test-soupcut-client.c: use soupcut-server instead
 	of cuttest-soup
