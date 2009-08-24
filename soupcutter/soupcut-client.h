@@ -61,19 +61,96 @@ struct _SoupCutClientClass
 
 GType          soupcut_client_get_type           (void) G_GNUC_CONST;
 
+/**
+ * soupcut_client_new:
+ *
+ * Creates and returns a new #SoupCutClient
+ *
+ * Returns: a new #SoupCutClient.
+ *
+ * Since: 1.0.8
+ */
 SoupCutClient *soupcut_client_new                (void);
 
+/**
+ * soupcut_client_set_base:
+ * @client: a #SoupCutClient.
+ * @uri: a base uri.
+ *
+ * Set @uri as a base uri of @client.
+ *
+ * Since: 1.0.8
+ */
 void           soupcut_client_set_base           (SoupCutClient *client,
                                                   const gchar   *uri);
+
+/**
+ * soupcut_client_send_message:
+ * @client: a #SoupCutClient.
+ * @message: a #SoupMessage.
+ *
+ * Send @message with @client. @client remebers all the messages it sent.
+ *
+ * Returns: a status code of the request.
+ *
+ * Since: 1.0.8
+ */
 guint          soupcut_client_send_message       (SoupCutClient *client,
                                                   SoupMessage   *message);
 
+/**
+ * soupcut_client_get:
+ * @client: a #SoupCutClient.
+ * @uri: an URI string.
+ * @first_query_name: the name of the first query parameter.
+ * @...: pairs of query parameter names and values, starting with @first_query_name, terminated by %NULL
+ *
+ * Send a GET request to @uri with queries. If the base URI of @client
+ * is set by soupcut_client_set_base(), the destination URI is composed of the base URI and @uri. If not, @uri must be a fully qualified URI.
+ *
+ * Returns: a status code of the request.
+ *
+ * Since: 1.0.8
+ */
 guint          soupcut_client_get                (SoupCutClient *client,
                                                   const gchar   *uri,
                                                   const gchar   *first_query_name,
                                                   ...);
+
+/**
+ * soupcut_client_get_n_messages:
+ * @client: a #SoupCutClient.
+ *
+ * Returns the number of messages @client sent.
+ *
+ * Returns: the number of messages.
+ *
+ * Since: 1.0.8
+ */
 guint          soupcut_client_get_n_messages     (SoupCutClient *client);
+
+/**
+ * soupcut_client_get_latest_message:
+ * @client: a #SoupCutClient.
+ *
+ * Returns the latest #SoupMessage @client sent.
+ *
+ * Returns: the latest #SoupMessage.
+ *
+ * Since: 1.0.8
+ */
 SoupMessage   *soupcut_client_get_latest_message (SoupCutClient *client);
+
+/**
+ * soupcut_client_get_async_context:
+ * @client: a #SoupCutClient.
+ *
+ * Returns the asynch_context of @client.
+ *
+ * Returns: a #GMainContext of @client, which may be %NULL.
+ *
+ * Since: 1.0.8
+ */
 GMainContext  *soupcut_client_get_async_context  (SoupCutClient *client);
 
 

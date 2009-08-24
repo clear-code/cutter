@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.0.8\n"
-"POT-Creation-Date: 2009-08-24 10:58+0900\n"
-"PO-Revision-Date: 2009-08-24 11:07+0900\n"
+"POT-Creation-Date: 2009-08-24 11:41+0900\n"
+"PO-Revision-Date: 2009-08-24 11:52+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -1343,17 +1343,52 @@ msgstr ""
 msgid "soupcut_client_assert_response"
 msgstr ""
 
-#: xml/api-index-1.0.8.xml:15(link) xml/api-index-full.xml:376(link)
+#: xml/api-index-1.0.8.xml:15(link) xml/api-index-full.xml:369(link)
+#: xml/soupcut-client.xml:27(link) xml/soupcut-client.xml:122(primary)
+msgid "soupcut_client_get"
+msgstr ""
+
+#: xml/api-index-1.0.8.xml:16(link) xml/api-index-full.xml:370(link)
+#: xml/soupcut-client.xml:33(link) xml/soupcut-client.xml:177(primary)
+msgid "soupcut_client_get_async_context"
+msgstr ""
+
+#: xml/api-index-1.0.8.xml:17(link) xml/api-index-full.xml:371(link)
+#: xml/soupcut-client.xml:32(link) xml/soupcut-client.xml:163(primary)
+msgid "soupcut_client_get_latest_message"
+msgstr ""
+
+#: xml/api-index-1.0.8.xml:18(link) xml/api-index-full.xml:372(link)
+#: xml/soupcut-client.xml:31(link) xml/soupcut-client.xml:149(primary)
+msgid "soupcut_client_get_n_messages"
+msgstr ""
+
+#: xml/api-index-1.0.8.xml:19(link) xml/api-index-full.xml:373(link)
+#: xml/soupcut-client.xml:22(link) xml/soupcut-client.xml:78(primary)
+msgid "soupcut_client_new"
+msgstr ""
+
+#: xml/api-index-1.0.8.xml:20(link) xml/api-index-full.xml:374(link)
+#: xml/soupcut-client.xml:25(link) xml/soupcut-client.xml:104(primary)
+msgid "soupcut_client_send_message"
+msgstr ""
+
+#: xml/api-index-1.0.8.xml:21(link) xml/api-index-full.xml:375(link)
+#: xml/soupcut-client.xml:23(link) xml/soupcut-client.xml:89(primary)
+msgid "soupcut_client_set_base"
+msgstr ""
+
+#: xml/api-index-1.0.8.xml:22(link) xml/api-index-full.xml:376(link)
 #: xml/soupcut-assertions.xml:22(link) xml/soupcut-assertions.xml:56(primary)
 msgid "soupcut_message_assert_equal_content_type"
 msgstr ""
 
-#: xml/api-index-1.0.8.xml:16(link) xml/api-index-full.xml:378(link)
+#: xml/api-index-1.0.8.xml:23(link) xml/api-index-full.xml:378(link)
 #: xml/soupcut-server.xml:22(link) xml/soupcut-server.xml:62(primary)
 msgid "soupcut_server_build_uri"
 msgstr ""
 
-#: xml/api-index-1.0.8.xml:17(link) xml/api-index-full.xml:379(link)
+#: xml/api-index-1.0.8.xml:24(link) xml/api-index-full.xml:379(link)
 #: xml/soupcut-server.xml:21(link) xml/soupcut-server.xml:47(primary)
 msgid "soupcut_server_take_new"
 msgstr ""
@@ -2024,7 +2059,7 @@ msgstr ""
 msgid "SoupCutClient"
 msgstr ""
 
-#: xml/api-index-full.xml:359(link) xml/soupcut-client.xml:173(primary)
+#: xml/api-index-full.xml:359(link) xml/soupcut-client.xml:194(primary)
 msgid "SoupCutClient:async"
 msgstr ""
 
@@ -2046,41 +2081,6 @@ msgstr ""
 #: xml/api-index-full.xml:368(link) xml/soupcut-assertions-helper.xml:31(link)
 #: xml/soupcut-assertions-helper.xml:109(primary)
 msgid "soupcut_client_assert_response_helper"
-msgstr ""
-
-#: xml/api-index-full.xml:369(link) xml/soupcut-client.xml:27(link)
-#: xml/soupcut-client.xml:114(primary)
-msgid "soupcut_client_get"
-msgstr ""
-
-#: xml/api-index-full.xml:370(link) xml/soupcut-client.xml:33(link)
-#: xml/soupcut-client.xml:159(primary)
-msgid "soupcut_client_get_async_context"
-msgstr ""
-
-#: xml/api-index-full.xml:371(link) xml/soupcut-client.xml:32(link)
-#: xml/soupcut-client.xml:148(primary)
-msgid "soupcut_client_get_latest_message"
-msgstr ""
-
-#: xml/api-index-full.xml:372(link) xml/soupcut-client.xml:31(link)
-#: xml/soupcut-client.xml:137(primary)
-msgid "soupcut_client_get_n_messages"
-msgstr ""
-
-#: xml/api-index-full.xml:373(link) xml/soupcut-client.xml:22(link)
-#: xml/soupcut-client.xml:78(primary)
-msgid "soupcut_client_new"
-msgstr ""
-
-#: xml/api-index-full.xml:374(link) xml/soupcut-client.xml:25(link)
-#: xml/soupcut-client.xml:99(primary)
-msgid "soupcut_client_send_message"
-msgstr ""
-
-#: xml/api-index-full.xml:375(link) xml/soupcut-client.xml:23(link)
-#: xml/soupcut-client.xml:86(primary)
-msgid "soupcut_client_set_base"
 msgstr ""
 
 #: xml/api-index-full.xml:377(link) xml/soupcut-assertions-helper.xml:21(link)
@@ -2772,7 +2772,7 @@ msgstr "チェックする式。"
 #: xml/gcut-egg.xml:249(term) xml/gcut-egg.xml:367(term)
 #: xml/gcut-test-utils.xml:148(term) xml/gcut-test-utils.xml:183(term)
 #: xml/gcut-test-utils.xml:200(term) xml/gcut-test-utils.xml:243(term)
-#: xml/gcut-test-utils.xml:294(term) xml/soupcut-client.xml:129(term)
+#: xml/gcut-test-utils.xml:294(term) xml/soupcut-client.xml:140(term)
 msgid "<parameter>...</parameter> :"
 msgstr ""
 
@@ -4614,9 +4614,9 @@ msgstr ""
 #: xml/gcut-types.xml:85(term) xml/gcut-value-equal.xml:69(term)
 #: xml/gdkcut-pixbuf.xml:65(term) xml/gdkcut-pixbuf.xml:84(term)
 #: xml/gdkcut-pixbuf.xml:103(term) xml/gdkcut-pixbuf.xml:130(term)
-#: xml/soupcut-client.xml:81(term) xml/soupcut-client.xml:109(term)
-#: xml/soupcut-client.xml:132(term) xml/soupcut-client.xml:143(term)
-#: xml/soupcut-client.xml:154(term) xml/soupcut-client.xml:165(term)
+#: xml/soupcut-client.xml:83(term) xml/soupcut-client.xml:116(term)
+#: xml/soupcut-client.xml:143(term) xml/soupcut-client.xml:157(term)
+#: xml/soupcut-client.xml:171(term) xml/soupcut-client.xml:185(term)
 #: xml/soupcut-server.xml:56(term) xml/soupcut-server.xml:74(term)
 msgid "<emphasis>Returns</emphasis> :"
 msgstr "<emphasis>戻り値</emphasis> :"
@@ -6799,7 +6799,7 @@ msgstr ""
 "Cutterです。"
 
 #: xml/cut-test-utils.xml:270(term) xml/soupcut-assertions-helper.xml:75(term)
-#: xml/soupcut-assertions.xml:66(term) xml/soupcut-client.xml:106(term)
+#: xml/soupcut-assertions.xml:66(term) xml/soupcut-client.xml:113(term)
 msgid "<parameter>message</parameter> :"
 msgstr ""
 
@@ -8005,7 +8005,7 @@ msgstr ""
 "セージを次の検証の後でも維持します。"
 
 #: xml/cutter.xml:449(title) xml/gcutter.xml:87(title)
-#: xml/gdkcutter-pixbuf.xml:89(title) xml/soupcut-client.xml:181(title)
+#: xml/gdkcutter-pixbuf.xml:89(title) xml/soupcut-client.xml:202(title)
 #: xml/soupcut-server.xml:84(title) xml/soupcutter.xml:89(title)
 msgid "See Also"
 msgstr "参考"
@@ -11554,7 +11554,7 @@ msgstr ""
 msgid "the timeout value in milliseconds"
 msgstr "タイムアウト時間（ミリ秒）"
 
-#: xml/gcut-egg.xml:590(title) xml/soupcut-client.xml:171(title)
+#: xml/gcut-egg.xml:590(title) xml/soupcut-client.xml:192(title)
 msgid "Property Details"
 msgstr "プロパティ詳細"
 
@@ -12360,8 +12360,11 @@ msgstr ""
 #: xml/gcut-hash-table.xml:181(para) xml/soupcut-assertions.xml:69(para)
 #: xml/soupcut-assertions.xml:86(para) xml/soupcut-assertions.xml:97(para)
 #: xml/soupcut-assertions.xml:112(para) xml/soupcut-assertions.xml:128(para)
-#: xml/soupcut-server.xml:59(para) xml/soupcut-server.xml:77(para)
-#: xml/soupcutter.xml:82(para)
+#: xml/soupcut-client.xml:86(para) xml/soupcut-client.xml:101(para)
+#: xml/soupcut-client.xml:119(para) xml/soupcut-client.xml:146(para)
+#: xml/soupcut-client.xml:160(para) xml/soupcut-client.xml:174(para)
+#: xml/soupcut-client.xml:188(para) xml/soupcut-server.xml:59(para)
+#: xml/soupcut-server.xml:77(para) xml/soupcutter.xml:82(para)
 msgid "Since 1.0.8"
 msgstr "1.0.8から"
 
@@ -14928,9 +14931,9 @@ msgstr ""
 #: xml/soupcut-assertions-helper.xml:155(term)
 #: xml/soupcut-assertions.xml:83(term) xml/soupcut-assertions.xml:94(term)
 #: xml/soupcut-assertions.xml:109(term) xml/soupcut-assertions.xml:125(term)
-#: xml/soupcut-client.xml:90(term) xml/soupcut-client.xml:103(term)
-#: xml/soupcut-client.xml:120(term) xml/soupcut-client.xml:140(term)
-#: xml/soupcut-client.xml:151(term) xml/soupcut-client.xml:162(term)
+#: xml/soupcut-client.xml:95(term) xml/soupcut-client.xml:110(term)
+#: xml/soupcut-client.xml:131(term) xml/soupcut-client.xml:154(term)
+#: xml/soupcut-client.xml:168(term) xml/soupcut-client.xml:182(term)
 msgid "<parameter>client</parameter> :"
 msgstr ""
 
@@ -14986,7 +14989,7 @@ msgid "<parameter>expression_pattern</parameter> :"
 msgstr ""
 
 #: xml/soupcut-assertions.xml:7(refentrytitle)
-#: xml/soupcut-assertions.xml:13(refname) xml/soupcut-client.xml:183(link)
+#: xml/soupcut-assertions.xml:13(refname) xml/soupcut-client.xml:204(link)
 #: xml/soupcut-server.xml:86(link) xml/soupcutter.xml:91(link)
 msgid "Assertions for HTTP client/server based on libsoup"
 msgstr "libsoupを使ったHTTPクライアント・サーバ用の検証"
@@ -15040,7 +15043,7 @@ msgstr ""
 msgid "an expected Content-Type."
 msgstr "期待するContent-Type。"
 
-#: xml/soupcut-assertions.xml:67(simpara)
+#: xml/soupcut-assertions.xml:67(simpara) xml/soupcut-client.xml:114(simpara)
 msgid "a <link linkend=\"SoupMessage\"><type>SoupMessage</type></link>."
 msgstr ""
 "<link linkend=\"SoupMessage\"><type>SoupMessage</type></link>オブジェクト。"
@@ -15068,7 +15071,10 @@ msgstr ""
 #: xml/soupcut-assertions.xml:84(simpara)
 #: xml/soupcut-assertions.xml:95(simpara)
 #: xml/soupcut-assertions.xml:110(simpara)
-#: xml/soupcut-assertions.xml:126(simpara)
+#: xml/soupcut-assertions.xml:126(simpara) xml/soupcut-client.xml:96(simpara)
+#: xml/soupcut-client.xml:111(simpara) xml/soupcut-client.xml:132(simpara)
+#: xml/soupcut-client.xml:155(simpara) xml/soupcut-client.xml:169(simpara)
+#: xml/soupcut-client.xml:183(simpara)
 msgid "a <link linkend=\"SoupCutClient\"><type>SoupCutClient</type></link>."
 msgstr ""
 "<link linkend=\"SoupCutClient\"><type>SoupCutClient</type></link>オブジェク"
@@ -15202,37 +15208,70 @@ msgstr ""
 msgid "<link linkend=\"SoupCutClient\">SoupCutClient</link> *     soupcut_client_new                  (void);"
 msgstr ""
 
-#: xml/soupcut-client.xml:85(title)
+#: xml/soupcut-client.xml:79(para)
+msgid ""
+"Creates and returns a new <link linkend=\"SoupCutClient"
+"\"><type>SoupCutClient</type></link>"
+msgstr "新たに<link linkend=\"SoupCutClient\"><type>SoupCutClient</type></link>オブジェクトを生成して返します。"
+
+#: xml/soupcut-client.xml:83(simpara)
+msgid ""
+"a new <link linkend=\"SoupCutClient\"><type>SoupCutClient</type></link>."
+msgstr ""
+"<link linkend=\"SoupCutClient\"><type>SoupCutClient</type></link>オブジェク"
+"ト。"
+
+#: xml/soupcut-client.xml:88(title)
 msgid "soupcut_client_set_base ()"
 msgstr ""
 
-#: xml/soupcut-client.xml:86(programlisting)
+#: xml/soupcut-client.xml:89(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"void\">void</link>                soupcut_client_set_base             (<link linkend=\"SoupCutClient\">SoupCutClient</link> *client,\n"
 "                                                         const <link linkend=\"gchar\">gchar</link> *uri);"
 msgstr ""
 
-#: xml/soupcut-client.xml:93(term) xml/soupcut-client.xml:123(term)
+#: xml/soupcut-client.xml:91(para)
+msgid ""
+"Set <parameter>uri</parameter> as a base uri of <parameter>client</"
+"parameter>."
+msgstr "<parameter>client</parameter>のベースURIを<parameter>uri</parameter>に設定します。"
+
+#: xml/soupcut-client.xml:98(term) xml/soupcut-client.xml:134(term)
 msgid "<parameter>uri</parameter> :"
 msgstr ""
 
-#: xml/soupcut-client.xml:98(title)
+#: xml/soupcut-client.xml:99(simpara)
+msgid "a base uri."
+msgstr "ベースURIの文字列。"
+
+#: xml/soupcut-client.xml:103(title)
 msgid "soupcut_client_send_message ()"
 msgstr ""
 
-#: xml/soupcut-client.xml:99(programlisting)
+#: xml/soupcut-client.xml:104(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"guint\">guint</link>               soupcut_client_send_message         (<link linkend=\"SoupCutClient\">SoupCutClient</link> *client,\n"
 "                                                         <link linkend=\"SoupMessage\">SoupMessage</link> *message);"
 msgstr ""
 
-#: xml/soupcut-client.xml:113(title)
+#: xml/soupcut-client.xml:106(para)
+msgid ""
+"Send <parameter>message</parameter> with <parameter>client</parameter>. "
+"<parameter>client</parameter> remebers all the messages it sent."
+msgstr "<parameter>client</parameter>を使って<parameter>message</parameter>を送信します。<parameter>client</parameter>は過去に送信した全ての#SoupMessageの情報を保持しています。"
+
+#: xml/soupcut-client.xml:116(simpara) xml/soupcut-client.xml:143(simpara)
+msgid "a status code of the request."
+msgstr ""
+
+#: xml/soupcut-client.xml:121(title)
 msgid "soupcut_client_get ()"
 msgstr ""
 
-#: xml/soupcut-client.xml:114(programlisting)
+#: xml/soupcut-client.xml:122(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"guint\">guint</link>               soupcut_client_get                  (<link linkend=\"SoupCutClient\">SoupCutClient</link> *client,\n"
@@ -15241,51 +15280,105 @@ msgid ""
 "                                                         ...);"
 msgstr ""
 
-#: xml/soupcut-client.xml:126(term)
+#: xml/soupcut-client.xml:126(para)
+msgid ""
+"Send a GET request to <parameter>uri</parameter> with queries. If the base "
+"URI of <parameter>client</parameter> is set by <link linkend=\"soupcut-"
+"client-set-base\"><function>soupcut_client_set_base()</function></link>, the "
+"destination URI is composed of the base URI and <parameter>uri</parameter>. "
+"If not, <parameter>uri</parameter> must be a fully qualified URI."
+msgstr ""
+
+#: xml/soupcut-client.xml:135(simpara)
+msgid "an URI string."
+msgstr "URI文字列。"
+
+#: xml/soupcut-client.xml:137(term)
 msgid "<parameter>first_query_name</parameter> :"
 msgstr ""
 
-#: xml/soupcut-client.xml:136(title)
+#: xml/soupcut-client.xml:138(simpara)
+msgid "the name of the first query parameter."
+msgstr "ひとつめのクエリパラメータの名前"
+
+#: xml/soupcut-client.xml:141(simpara)
+msgid ""
+"pairs of query parameter names and values, starting with "
+"<parameter>first_query_name</parameter>, terminated by <link linkend=\"NULL--"
+"CAPS\"><literal>NULL</literal></link>"
+msgstr "<parameter>first_query_name</parameter>から始まる、クエリパラメータの名前と値のペア。最後に<link linkend=\"NULL--CAPS\"><literal>NULL</literal></link>を指定しなければいけません。"
+
+#: xml/soupcut-client.xml:148(title)
 msgid "soupcut_client_get_n_messages ()"
 msgstr ""
 
-#: xml/soupcut-client.xml:137(programlisting)
+#: xml/soupcut-client.xml:149(programlisting)
 #, no-wrap
 msgid "<link linkend=\"guint\">guint</link>               soupcut_client_get_n_messages       (<link linkend=\"SoupCutClient\">SoupCutClient</link> *client);"
 msgstr ""
 
-#: xml/soupcut-client.xml:147(title)
+#: xml/soupcut-client.xml:150(para)
+msgid "Returns the number of messages <parameter>client</parameter> sent."
+msgstr "<parameter>client</parameter>が送信した#SoupMessageの数。"
+
+#: xml/soupcut-client.xml:157(simpara)
+msgid "the number of messages."
+msgstr "#SoupMessageの数。"
+
+#: xml/soupcut-client.xml:162(title)
 msgid "soupcut_client_get_latest_message ()"
 msgstr ""
 
-#: xml/soupcut-client.xml:148(programlisting)
+#: xml/soupcut-client.xml:163(programlisting)
 #, no-wrap
 msgid "<link linkend=\"SoupMessage\">SoupMessage</link> *       soupcut_client_get_latest_message   (<link linkend=\"SoupCutClient\">SoupCutClient</link> *client);"
 msgstr ""
 
-#: xml/soupcut-client.xml:158(title)
+#: xml/soupcut-client.xml:164(para)
+msgid ""
+"Returns the latest <link linkend=\"SoupMessage\"><type>SoupMessage</type></"
+"link> <parameter>client</parameter> sent."
+msgstr "<parameter>client</parameter>が最後に送信した<link linkend=\"SoupMessage\"><type>SoupMessage</type></link>オブジェクト。"
+
+#: xml/soupcut-client.xml:171(simpara)
+msgid ""
+"the latest <link linkend=\"SoupMessage\"><type>SoupMessage</type></link>."
+msgstr "最後に送信された<link linkend=\"SoupMessage\"><type>SoupMessage</type></link>オブジェクト。"
+
+#: xml/soupcut-client.xml:176(title)
 msgid "soupcut_client_get_async_context ()"
 msgstr ""
 
-#: xml/soupcut-client.xml:159(programlisting)
+#: xml/soupcut-client.xml:177(programlisting)
 #, no-wrap
 msgid "<link linkend=\"GMainContext\">GMainContext</link> *      soupcut_client_get_async_context    (<link linkend=\"SoupCutClient\">SoupCutClient</link> *client);"
 msgstr ""
 
-#: xml/soupcut-client.xml:172(title)
+#: xml/soupcut-client.xml:178(para)
+msgid "Returns the asynch_context of <parameter>client</parameter>."
+msgstr "<parameter>client</parameter>の非同期コンテキスト。"
+
+#: xml/soupcut-client.xml:185(simpara)
+msgid ""
+"a <link linkend=\"GMainContext\"><type>GMainContext</type></link> of "
+"<parameter>client</parameter>, which may be <link linkend=\"NULL--CAPS"
+"\"><literal>NULL</literal></link>."
+msgstr "<parameter>client</parameter>の<link linkend=\"GMainContext\"><type>GMainContext</type></link>。<link linkend=\"NULL--CAPS\"><literal>NULL</literal></link>が返る可能性があります。"
+
+#: xml/soupcut-client.xml:193(title)
 msgid "The <literal>\"async\"</literal> property"
 msgstr "<literal>\"async\"</literal>プロパティ"
 
-#: xml/soupcut-client.xml:173(programlisting)
+#: xml/soupcut-client.xml:194(programlisting)
 #, no-wrap
 msgid "  \"async\"                    <link linkend=\"gboolean\">gboolean</link>              : Read / Write"
 msgstr ""
 
-#: xml/soupcut-client.xml:174(para)
+#: xml/soupcut-client.xml:195(para)
 msgid "True if the session is asynchronous."
 msgstr ""
 
-#: xml/soupcut-client.xml:174(para)
+#: xml/soupcut-client.xml:195(para)
 msgid "Default value: FALSE"
 msgstr ""
 
@@ -15331,20 +15424,30 @@ msgid ""
 "Creates and returns a new <link linkend=\"SoupServer\"><type>SoupServer</"
 "type></link>, whose context is <parameter>context</parameter>. The server is "
 "shut down and unref when tear down."
-msgstr "コンテキストが<parameter>context</parameter>である<link linkend=\"SoupServer\"><type>SoupServer</type></link>オブジェクトを生成して返します。サーバーはtear down 時に自動的にシャットダウンされ、<link linkend=\\\"g-object-unref\\\"><function>g_object_unref()</function></link>により解放されます。"
+msgstr ""
+"コンテキストが<parameter>context</parameter>である<link linkend=\"SoupServer"
+"\"><type>SoupServer</type></link>オブジェクトを生成して返します。サーバーは"
+"tear down 時に自動的にシャットダウンされ、<link linkend=\\\"g-object-unref\\"
+"\"><function>g_object_unref()</function></link>により解放されます。"
 
 #: xml/soupcut-server.xml:54(simpara)
 msgid ""
 "a <link linkend=\"GMainContext\"><type>GMainContext</type></link> for the "
 "main loop of a new server."
-msgstr "サーバーの<link linkend=\"GMainContext\"><type>GMainContext</type></link>コンテキスト。"
+msgstr ""
+"サーバーの<link linkend=\"GMainContext\"><type>GMainContext</type></link>コン"
+"テキスト。"
 
 #: xml/soupcut-server.xml:56(simpara)
 msgid ""
 "a new <link linkend=\"SoupServer\"><type>SoupServer</type></link> owned by "
 "Cutter. Don't <link linkend=\"g-object-unref\"><function>g_object_unref()</"
 "function></link> it."
-msgstr "新たに<link linkend=\"SoupServer\"><type>SoupServer</type></link>オブジェクトを生成します。作成されたサーバーはCutterが所有権を持つので、<link linkend=\"g-object-unref\"><function>g_object_unref()</function></link>を呼ばないでください。"
+msgstr ""
+"新たに<link linkend=\"SoupServer\"><type>SoupServer</type></link>オブジェクト"
+"を生成します。作成されたサーバーはCutterが所有権を持つので、<link linkend="
+"\"g-object-unref\"><function>g_object_unref()</function></link>を呼ばないでく"
+"ださい。"
 
 #: xml/soupcut-server.xml:61(title)
 msgid "soupcut_server_build_uri ()"
@@ -15361,7 +15464,8 @@ msgstr ""
 msgid ""
 "an URI is built and returned with the base uri of <parameter>server</"
 "parameter> and <parameter>path</parameter>."
-msgstr "@server のベースURIにパスとして @path を組み合わせたURIの文字列を作成します。"
+msgstr ""
+"@server のベースURIにパスとして @path を組み合わせたURIの文字列を作成します。"
 
 #: xml/soupcut-server.xml:68(term)
 msgid "<parameter>server</parameter> :"
@@ -15369,7 +15473,8 @@ msgstr ""
 
 #: xml/soupcut-server.xml:69(simpara)
 msgid "a <link linkend=\"SoupServer\"><type>SoupServer</type></link>."
-msgstr "<link linkend=\"SoupServer\"><type>SoupServer</type></link>オブジェクト。"
+msgstr ""
+"<link linkend=\"SoupServer\"><type>SoupServer</type></link>オブジェクト。"
 
 #: xml/soupcut-server.xml:72(simpara)
 msgid "a path."
