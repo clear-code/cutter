@@ -49,8 +49,8 @@ upload: upload-doc
 release: dist
 	$(srcdir)/misc/release.rb				\
 	  $(SF_USER) $(SF_PROJECT_NAME) $(PACKAGE_NAME)		\
-	  $(VERSION) $(PACKAGE)-$(VERSION).tar.gz       	\
-	  README NEWS
+	  $(VERSION) README NEWS				\
+	  $(PACKAGE)-$(VERSION).tar.gz
 
 upload-doc:
 	cd html && $(MAKE) $(AM_MAKEFLAGS) upload
