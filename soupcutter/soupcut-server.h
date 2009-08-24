@@ -42,7 +42,7 @@ G_BEGIN_DECLS
  * @context: a #GMainContext for the main loop of a new server.
  *
  * Creates and returns a new #SoupServer, whose context is @context.
- * The server is shut down and freed when
+ * The server is shut down and unref when tear down.
  *
  * Returns: a new #SoupServer owned by Cutter. Don't g_object_unref() it.
  *

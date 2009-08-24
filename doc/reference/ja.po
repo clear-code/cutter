@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.0.8\n"
-"POT-Creation-Date: 2009-08-23 00:00+0900\n"
-"PO-Revision-Date: 2009-08-23 00:05+0900\n"
+"POT-Creation-Date: 2009-08-24 10:58+0900\n"
+"PO-Revision-Date: 2009-08-24 11:07+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -51,79 +51,79 @@ msgstr "コマンド"
 msgid "Writing test"
 msgstr "テスト作成"
 
-#: cutter-docs.sgml:67(title)
+#: cutter-docs.sgml:68(title)
 msgid "Writing assertion"
 msgstr "検証作成"
 
-#: cutter-docs.sgml:109(title)
+#: cutter-docs.sgml:110(title)
 msgid "Index of all symbols"
 msgstr "すべてのシンボル一覧"
 
-#: cutter-docs.sgml:112(title)
+#: cutter-docs.sgml:113(title)
 msgid "Index of deprecated symbols"
 msgstr "非推奨のシンボル一覧"
 
-#: cutter-docs.sgml:115(title)
+#: cutter-docs.sgml:116(title)
 msgid "Index of new symbols in 1.0.8"
 msgstr "1.0.8での新しいシンボル一覧"
 
-#: cutter-docs.sgml:118(title)
+#: cutter-docs.sgml:119(title)
 msgid "Index of new symbols in 1.0.7"
 msgstr "1.0.7での新しいシンボル一覧"
 
-#: cutter-docs.sgml:121(title)
+#: cutter-docs.sgml:122(title)
 msgid "Index of new symbols in 1.0.6"
 msgstr "1.0.6での新しいシンボル一覧"
 
-#: cutter-docs.sgml:124(title)
+#: cutter-docs.sgml:125(title)
 msgid "Index of new symbols in 1.0.5"
 msgstr "1.0.5での新しいシンボル一覧"
 
-#: cutter-docs.sgml:127(title)
+#: cutter-docs.sgml:128(title)
 msgid "Index of new symbols in 1.0.4"
 msgstr "1.0.4での新しいシンボル一覧"
 
-#: cutter-docs.sgml:130(title)
+#: cutter-docs.sgml:131(title)
 msgid "Index of new symbols in 1.0.3"
 msgstr "1.0.3での新しいシンボル一覧"
 
-#: cutter-docs.sgml:133(title)
+#: cutter-docs.sgml:134(title)
 msgid "Index of new symbols in 1.0.2"
 msgstr "1.0.2での新しいシンボル一覧"
 
-#: cutter-docs.sgml:136(title)
+#: cutter-docs.sgml:137(title)
 msgid "Index of new symbols in 1.0.1"
 msgstr "1.0.1での新しいシンボル一覧"
 
-#: cutter-docs.sgml:139(title)
+#: cutter-docs.sgml:140(title)
 msgid "Index of new symbols in 1.0"
 msgstr "1.0での新しいシンボル一覧"
 
-#: cutter-docs.sgml:142(title)
+#: cutter-docs.sgml:143(title)
 msgid "Index of new symbols in 0.9"
 msgstr "0.9での新しいシンボル一覧"
 
-#: cutter-docs.sgml:145(title)
+#: cutter-docs.sgml:146(title)
 msgid "Index of new symbols in 0.8"
 msgstr "0.8での新しいシンボル一覧"
 
-#: cutter-docs.sgml:148(title)
+#: cutter-docs.sgml:149(title)
 msgid "Index of new symbols in 0.7"
 msgstr "0.7での新しいシンボル一覧"
 
-#: cutter-docs.sgml:151(title)
+#: cutter-docs.sgml:152(title)
 msgid "Index of new symbols in 0.6"
 msgstr "0.6での新しいシンボル一覧"
 
-#: cutter-docs.sgml:154(title)
+#: cutter-docs.sgml:155(title)
 msgid "Index of new symbols in 0.5"
 msgstr "0.5での新しいシンボル一覧"
 
-#: cutter-docs.sgml:157(title)
+#: cutter-docs.sgml:158(title)
 msgid "Index of new symbols in 0.4"
 msgstr "0.4での新しいシンボル一覧"
 
-#: cutter-docs.sgml:160(title)
+#: cutter-docs.sgml:161(title)
 msgid "Index of new symbols in 0.3"
 msgstr "0.3での新しいシンボル一覧"
 
@@ -1317,35 +1317,45 @@ msgstr ""
 msgid "S"
 msgstr ""
 
-#: xml/api-index-1.0.8.xml:10(link) xml/api-index-full.xml:359(link)
+#: xml/api-index-1.0.8.xml:10(link) xml/api-index-full.xml:360(link)
 #: xml/soupcutter.xml:21(link) xml/soupcutter.xml:76(title)
 #: xml/soupcutter.xml:77(primary)
 msgid "SOUPCUTTER_ENABLED"
 msgstr ""
 
-#: xml/api-index-1.0.8.xml:11(link) xml/api-index-full.xml:360(link)
+#: xml/api-index-1.0.8.xml:11(link) xml/api-index-full.xml:361(link)
 #: xml/soupcut-assertions.xml:29(link) xml/soupcut-assertions.xml:100(primary)
 msgid "soupcut_client_assert_equal_body"
 msgstr ""
 
-#: xml/api-index-1.0.8.xml:12(link) xml/api-index-full.xml:362(link)
+#: xml/api-index-1.0.8.xml:12(link) xml/api-index-full.xml:363(link)
 #: xml/soupcut-assertions.xml:25(link) xml/soupcut-assertions.xml:72(primary)
 msgid "soupcut_client_assert_equal_content_type"
 msgstr ""
 
-#: xml/api-index-1.0.8.xml:13(link) xml/api-index-full.xml:364(link)
+#: xml/api-index-1.0.8.xml:13(link) xml/api-index-full.xml:365(link)
 #: xml/soupcut-assertions.xml:31(link) xml/soupcut-assertions.xml:115(primary)
 msgid "soupcut_client_assert_match_body"
 msgstr ""
 
-#: xml/api-index-1.0.8.xml:14(link) xml/api-index-full.xml:366(link)
+#: xml/api-index-1.0.8.xml:14(link) xml/api-index-full.xml:367(link)
 #: xml/soupcut-assertions.xml:28(link) xml/soupcut-assertions.xml:89(primary)
 msgid "soupcut_client_assert_response"
 msgstr ""
 
-#: xml/api-index-1.0.8.xml:15(link) xml/api-index-full.xml:375(link)
+#: xml/api-index-1.0.8.xml:15(link) xml/api-index-full.xml:376(link)
 #: xml/soupcut-assertions.xml:22(link) xml/soupcut-assertions.xml:56(primary)
 msgid "soupcut_message_assert_equal_content_type"
+msgstr ""
+
+#: xml/api-index-1.0.8.xml:16(link) xml/api-index-full.xml:378(link)
+#: xml/soupcut-server.xml:22(link) xml/soupcut-server.xml:62(primary)
+msgid "soupcut_server_build_uri"
+msgstr ""
+
+#: xml/api-index-1.0.8.xml:17(link) xml/api-index-full.xml:379(link)
+#: xml/soupcut-server.xml:21(link) xml/soupcut-server.xml:47(primary)
+msgid "soupcut_server_take_new"
 msgstr ""
 
 #: xml/api-index-1.0.xml:7(link) xml/api-index-full.xml:30(link)
@@ -1404,11 +1414,11 @@ msgstr ""
 msgid "setup"
 msgstr ""
 
-#: xml/api-index-deprecated.xml:34(title) xml/api-index-full.xml:378(title)
+#: xml/api-index-deprecated.xml:34(title) xml/api-index-full.xml:381(title)
 msgid "T"
 msgstr ""
 
-#: xml/api-index-deprecated.xml:35(link) xml/api-index-full.xml:379(link)
+#: xml/api-index-deprecated.xml:35(link) xml/api-index-full.xml:382(link)
 #: xml/cutter.xml:23(link) xml/cutter.xml:175(primary)
 msgid "teardown"
 msgstr ""
@@ -2010,80 +2020,108 @@ msgstr ""
 #: xml/soupcut-client.xml:23(link) xml/soupcut-client.xml:25(link)
 #: xml/soupcut-client.xml:27(link) xml/soupcut-client.xml:31(link)
 #: xml/soupcut-client.xml:32(link) xml/soupcut-client.xml:33(link)
-#: xml/soupcut-client.xml:59(title) xml/soupcut-client.xml:60(primary)
+#: xml/soupcut-client.xml:72(title) xml/soupcut-client.xml:73(primary)
 msgid "SoupCutClient"
 msgstr ""
 
-#: xml/api-index-full.xml:361(link) xml/soupcut-assertions-helper.xml:34(link)
+#: xml/api-index-full.xml:359(link) xml/soupcut-client.xml:173(primary)
+msgid "SoupCutClient:async"
+msgstr ""
+
+#: xml/api-index-full.xml:362(link) xml/soupcut-assertions-helper.xml:34(link)
 #: xml/soupcut-assertions-helper.xml:123(primary)
 msgid "soupcut_client_assert_equal_body_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:363(link) xml/soupcut-assertions-helper.xml:26(link)
+#: xml/api-index-full.xml:364(link) xml/soupcut-assertions-helper.xml:26(link)
 #: xml/soupcut-assertions-helper.xml:87(primary)
 msgid "soupcut_client_assert_equal_content_type_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:365(link) xml/soupcut-assertions-helper.xml:39(link)
+#: xml/api-index-full.xml:366(link) xml/soupcut-assertions-helper.xml:39(link)
 #: xml/soupcut-assertions-helper.xml:145(primary)
 msgid "soupcut_client_assert_match_body_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:367(link) xml/soupcut-assertions-helper.xml:31(link)
+#: xml/api-index-full.xml:368(link) xml/soupcut-assertions-helper.xml:31(link)
 #: xml/soupcut-assertions-helper.xml:109(primary)
 msgid "soupcut_client_assert_response_helper"
 msgstr ""
 
-#: xml/api-index-full.xml:368(link) xml/soupcut-client.xml:27(link)
-#: xml/soupcut-client.xml:104(primary)
+#: xml/api-index-full.xml:369(link) xml/soupcut-client.xml:27(link)
+#: xml/soupcut-client.xml:114(primary)
 msgid "soupcut_client_get"
 msgstr ""
 
-#: xml/api-index-full.xml:369(link) xml/soupcut-client.xml:33(link)
-#: xml/soupcut-client.xml:149(primary)
+#: xml/api-index-full.xml:370(link) xml/soupcut-client.xml:33(link)
+#: xml/soupcut-client.xml:159(primary)
 msgid "soupcut_client_get_async_context"
 msgstr ""
 
-#: xml/api-index-full.xml:370(link) xml/soupcut-client.xml:32(link)
-#: xml/soupcut-client.xml:138(primary)
+#: xml/api-index-full.xml:371(link) xml/soupcut-client.xml:32(link)
+#: xml/soupcut-client.xml:148(primary)
 msgid "soupcut_client_get_latest_message"
 msgstr ""
 
-#: xml/api-index-full.xml:371(link) xml/soupcut-client.xml:31(link)
-#: xml/soupcut-client.xml:127(primary)
+#: xml/api-index-full.xml:372(link) xml/soupcut-client.xml:31(link)
+#: xml/soupcut-client.xml:137(primary)
 msgid "soupcut_client_get_n_messages"
 msgstr ""
 
-#: xml/api-index-full.xml:372(link) xml/soupcut-client.xml:22(link)
-#: xml/soupcut-client.xml:68(primary)
+#: xml/api-index-full.xml:373(link) xml/soupcut-client.xml:22(link)
+#: xml/soupcut-client.xml:78(primary)
 msgid "soupcut_client_new"
 msgstr ""
 
-#: xml/api-index-full.xml:373(link) xml/soupcut-client.xml:25(link)
-#: xml/soupcut-client.xml:89(primary)
+#: xml/api-index-full.xml:374(link) xml/soupcut-client.xml:25(link)
+#: xml/soupcut-client.xml:99(primary)
 msgid "soupcut_client_send_message"
 msgstr ""
 
-#: xml/api-index-full.xml:374(link) xml/soupcut-client.xml:23(link)
-#: xml/soupcut-client.xml:76(primary)
+#: xml/api-index-full.xml:375(link) xml/soupcut-client.xml:23(link)
+#: xml/soupcut-client.xml:86(primary)
 msgid "soupcut_client_set_base"
 msgstr ""
 
-#: xml/api-index-full.xml:376(link) xml/soupcut-assertions-helper.xml:21(link)
+#: xml/api-index-full.xml:377(link) xml/soupcut-assertions-helper.xml:21(link)
 #: xml/soupcut-assertions-helper.xml:65(primary)
 msgid "soupcut_message_assert_equal_content_type_helper"
 msgstr ""
 
-#: xml/cut-assertions.xml:7(refentrytitle) xml/cut-assertions.xml:13(refname)
-#: xml/cutter.xml:450(link)
-msgid "Assertions"
-msgstr "検証"
+#: xml/cut-analyzer.xml:7(refentrytitle) xml/cut-analyzer.xml:13(refname)
+msgid "CutAnalyzer"
+msgstr ""
 
-#: xml/cut-assertions.xml:8(manvolnum) xml/cut-experimental.xml:8(manvolnum)
-#: xml/cut-features.xml:8(manvolnum) xml/cut-helper.xml:8(manvolnum)
-#: xml/cut-multi-process.xml:8(manvolnum) xml/cut-test-utils.xml:8(manvolnum)
-#: xml/cut-types.xml:8(manvolnum) xml/cut-version.xml:8(manvolnum)
-#: xml/cutter.xml:8(manvolnum) xml/gcut-assertions-helper.xml:8(manvolnum)
+#: xml/cut-analyzer.xml:8(manvolnum) xml/cut-assertions.xml:8(manvolnum)
+#: xml/cut-backtrace-entry.xml:8(manvolnum)
+#: xml/cut-cairo-chart-data.xml:8(manvolnum)
+#: xml/cut-cairo-pie-chart.xml:8(manvolnum) xml/cut-cairo.xml:8(manvolnum)
+#: xml/cut-contractor.xml:8(manvolnum)
+#: xml/cut-crash-backtrace.xml:8(manvolnum) xml/cut-diff.xml:8(manvolnum)
+#: xml/cut-elf-loader.xml:8(manvolnum) xml/cut-experimental.xml:8(manvolnum)
+#: xml/cut-factory-builder.xml:8(manvolnum) xml/cut-features.xml:8(manvolnum)
+#: xml/cut-file-stream-reader.xml:8(manvolnum) xml/cut-helper.xml:8(manvolnum)
+#: xml/cut-iterated-test.xml:8(manvolnum)
+#: xml/cut-listener-utils.xml:8(manvolnum) xml/cut-listener.xml:8(manvolnum)
+#: xml/cut-mach-o-loader.xml:8(manvolnum) xml/cut-main.xml:8(manvolnum)
+#: xml/cut-module-factory-utils.xml:8(manvolnum)
+#: xml/cut-module-factory.xml:8(manvolnum)
+#: xml/cut-multi-process.xml:8(manvolnum) xml/cut-pe-loader.xml:8(manvolnum)
+#: xml/cut-pipeline.xml:8(manvolnum) xml/cut-process.xml:8(manvolnum)
+#: xml/cut-report-factory-builder.xml:8(manvolnum)
+#: xml/cut-report.xml:8(manvolnum) xml/cut-run-context.xml:8(manvolnum)
+#: xml/cut-runner.xml:8(manvolnum) xml/cut-sequence-matcher.xml:8(manvolnum)
+#: xml/cut-stream-factory-builder.xml:8(manvolnum)
+#: xml/cut-stream-parser.xml:8(manvolnum)
+#: xml/cut-stream-reader.xml:8(manvolnum) xml/cut-stream.xml:8(manvolnum)
+#: xml/cut-test-data.xml:8(manvolnum) xml/cut-test-iterator.xml:8(manvolnum)
+#: xml/cut-test-runner.xml:8(manvolnum)
+#: xml/cut-test-utils-helper.xml:8(manvolnum)
+#: xml/cut-test-utils.xml:8(manvolnum) xml/cut-types.xml:8(manvolnum)
+#: xml/cut-ui-factory-builder.xml:8(manvolnum) xml/cut-ui.xml:8(manvolnum)
+#: xml/cut-version.xml:8(manvolnum) xml/cutter.xml:8(manvolnum)
+#: xml/gbsearcharray.xml:8(manvolnum)
+#: xml/gcut-assertions-helper.xml:8(manvolnum)
 #: xml/gcut-assertions.xml:8(manvolnum) xml/gcut-data-helper.xml:8(manvolnum)
 #: xml/gcut-data.xml:8(manvolnum) xml/gcut-dynamic-data.xml:8(manvolnum)
 #: xml/gcut-egg.xml:8(manvolnum) xml/gcut-enum.xml:8(manvolnum)
@@ -2098,17 +2136,50 @@ msgstr "検証"
 #: xml/gdkcut-pixbuf-assertions-helper.xml:8(manvolnum)
 #: xml/gdkcut-pixbuf-assertions.xml:8(manvolnum)
 #: xml/gdkcut-pixbuf.xml:8(manvolnum) xml/gdkcutter-pixbuf.xml:8(manvolnum)
+#: xml/gst-cutter-console-output.xml:8(manvolnum)
+#: xml/gst-cutter-server.xml:8(manvolnum)
+#: xml/gst-cutter-test-runner.xml:8(manvolnum)
 #: xml/soupcut-assertions-helper.xml:8(manvolnum)
 #: xml/soupcut-assertions.xml:8(manvolnum) xml/soupcut-client.xml:8(manvolnum)
-#: xml/soupcutter.xml:8(manvolnum)
+#: xml/soupcut-server.xml:8(manvolnum) xml/soupcutter.xml:8(manvolnum)
 msgid "3"
 msgstr ""
 
-#: xml/cut-assertions.xml:9(refmiscinfo)
-#: xml/cut-experimental.xml:9(refmiscinfo) xml/cut-features.xml:9(refmiscinfo)
-#: xml/cut-helper.xml:9(refmiscinfo) xml/cut-multi-process.xml:9(refmiscinfo)
+#: xml/cut-analyzer.xml:9(refmiscinfo) xml/cut-assertions.xml:9(refmiscinfo)
+#: xml/cut-backtrace-entry.xml:9(refmiscinfo)
+#: xml/cut-cairo-chart-data.xml:9(refmiscinfo)
+#: xml/cut-cairo-pie-chart.xml:9(refmiscinfo) xml/cut-cairo.xml:9(refmiscinfo)
+#: xml/cut-contractor.xml:9(refmiscinfo)
+#: xml/cut-crash-backtrace.xml:9(refmiscinfo) xml/cut-diff.xml:9(refmiscinfo)
+#: xml/cut-elf-loader.xml:9(refmiscinfo)
+#: xml/cut-experimental.xml:9(refmiscinfo)
+#: xml/cut-factory-builder.xml:9(refmiscinfo)
+#: xml/cut-features.xml:9(refmiscinfo)
+#: xml/cut-file-stream-reader.xml:9(refmiscinfo)
+#: xml/cut-helper.xml:9(refmiscinfo) xml/cut-iterated-test.xml:9(refmiscinfo)
+#: xml/cut-listener-utils.xml:9(refmiscinfo)
+#: xml/cut-listener.xml:9(refmiscinfo)
+#: xml/cut-mach-o-loader.xml:9(refmiscinfo) xml/cut-main.xml:9(refmiscinfo)
+#: xml/cut-module-factory-utils.xml:9(refmiscinfo)
+#: xml/cut-module-factory.xml:9(refmiscinfo)
+#: xml/cut-multi-process.xml:9(refmiscinfo)
+#: xml/cut-pe-loader.xml:9(refmiscinfo) xml/cut-pipeline.xml:9(refmiscinfo)
+#: xml/cut-process.xml:9(refmiscinfo)
+#: xml/cut-report-factory-builder.xml:9(refmiscinfo)
+#: xml/cut-report.xml:9(refmiscinfo) xml/cut-run-context.xml:9(refmiscinfo)
+#: xml/cut-runner.xml:9(refmiscinfo)
+#: xml/cut-sequence-matcher.xml:9(refmiscinfo)
+#: xml/cut-stream-factory-builder.xml:9(refmiscinfo)
+#: xml/cut-stream-parser.xml:9(refmiscinfo)
+#: xml/cut-stream-reader.xml:9(refmiscinfo) xml/cut-stream.xml:9(refmiscinfo)
+#: xml/cut-test-data.xml:9(refmiscinfo)
+#: xml/cut-test-iterator.xml:9(refmiscinfo)
+#: xml/cut-test-runner.xml:9(refmiscinfo)
+#: xml/cut-test-utils-helper.xml:9(refmiscinfo)
 #: xml/cut-test-utils.xml:9(refmiscinfo) xml/cut-types.xml:9(refmiscinfo)
+#: xml/cut-ui-factory-builder.xml:9(refmiscinfo) xml/cut-ui.xml:9(refmiscinfo)
 #: xml/cut-version.xml:9(refmiscinfo) xml/cutter.xml:9(refmiscinfo)
+#: xml/gbsearcharray.xml:9(refmiscinfo)
 #: xml/gcut-assertions-helper.xml:9(refmiscinfo)
 #: xml/gcut-assertions.xml:9(refmiscinfo)
 #: xml/gcut-data-helper.xml:9(refmiscinfo) xml/gcut-data.xml:9(refmiscinfo)
@@ -2125,39 +2196,167 @@ msgstr ""
 #: xml/gdkcut-pixbuf-assertions.xml:9(refmiscinfo)
 #: xml/gdkcut-pixbuf.xml:9(refmiscinfo)
 #: xml/gdkcutter-pixbuf.xml:9(refmiscinfo)
+#: xml/gst-cutter-console-output.xml:9(refmiscinfo)
+#: xml/gst-cutter-server.xml:9(refmiscinfo)
+#: xml/gst-cutter-test-runner.xml:9(refmiscinfo)
 #: xml/soupcut-assertions-helper.xml:9(refmiscinfo)
 #: xml/soupcut-assertions.xml:9(refmiscinfo)
-#: xml/soupcut-client.xml:9(refmiscinfo) xml/soupcutter.xml:9(refmiscinfo)
+#: xml/soupcut-client.xml:9(refmiscinfo) xml/soupcut-server.xml:9(refmiscinfo)
+#: xml/soupcutter.xml:9(refmiscinfo)
 msgid "CUTTER Library"
 msgstr "Cutterライブラリ"
+
+#: xml/cut-analyzer.xml:18(title) xml/cut-assertions.xml:18(title)
+#: xml/cut-backtrace-entry.xml:18(title)
+#: xml/cut-cairo-chart-data.xml:18(title)
+#: xml/cut-cairo-pie-chart.xml:18(title) xml/cut-cairo.xml:18(title)
+#: xml/cut-contractor.xml:18(title) xml/cut-crash-backtrace.xml:18(title)
+#: xml/cut-diff.xml:18(title) xml/cut-elf-loader.xml:18(title)
+#: xml/cut-experimental.xml:18(title) xml/cut-factory-builder.xml:18(title)
+#: xml/cut-features.xml:18(title) xml/cut-file-stream-reader.xml:18(title)
+#: xml/cut-helper.xml:19(title) xml/cut-iterated-test.xml:18(title)
+#: xml/cut-listener-utils.xml:18(title) xml/cut-listener.xml:18(title)
+#: xml/cut-mach-o-loader.xml:18(title) xml/cut-main.xml:18(title)
+#: xml/cut-module-factory-utils.xml:18(title)
+#: xml/cut-module-factory.xml:18(title) xml/cut-multi-process.xml:19(title)
+#: xml/cut-pe-loader.xml:18(title) xml/cut-pipeline.xml:18(title)
+#: xml/cut-process.xml:18(title) xml/cut-report-factory-builder.xml:18(title)
+#: xml/cut-report.xml:18(title) xml/cut-run-context.xml:18(title)
+#: xml/cut-runner.xml:18(title) xml/cut-sequence-matcher.xml:18(title)
+#: xml/cut-stream-factory-builder.xml:18(title)
+#: xml/cut-stream-parser.xml:18(title) xml/cut-stream-reader.xml:18(title)
+#: xml/cut-stream.xml:18(title) xml/cut-test-data.xml:18(title)
+#: xml/cut-test-iterator.xml:18(title) xml/cut-test-runner.xml:18(title)
+#: xml/cut-test-utils-helper.xml:18(title) xml/cut-test-utils.xml:18(title)
+#: xml/cut-types.xml:18(title) xml/cut-ui-factory-builder.xml:18(title)
+#: xml/cut-ui.xml:18(title) xml/cut-version.xml:18(title)
+#: xml/cutter.xml:18(title) xml/gbsearcharray.xml:18(title)
+#: xml/gcut-assertions-helper.xml:18(title) xml/gcut-assertions.xml:19(title)
+#: xml/gcut-data-helper.xml:18(title) xml/gcut-data.xml:19(title)
+#: xml/gcut-dynamic-data.xml:18(title) xml/gcut-egg.xml:19(title)
+#: xml/gcut-enum.xml:19(title) xml/gcut-error.xml:19(title)
+#: xml/gcut-hash-table.xml:19(title) xml/gcut-inspect.xml:19(title)
+#: xml/gcut-io.xml:18(title) xml/gcut-key-file.xml:18(title)
+#: xml/gcut-list.xml:19(title) xml/gcut-main.xml:18(title)
+#: xml/gcut-object.xml:19(title) xml/gcut-public.xml:18(title)
+#: xml/gcut-string-io-channel.xml:18(title) xml/gcut-test-utils.xml:19(title)
+#: xml/gcut-types.xml:18(title) xml/gcut-value-equal.xml:19(title)
+#: xml/gcutter.xml:18(title) xml/gdkcut-pixbuf-assertions-helper.xml:18(title)
+#: xml/gdkcut-pixbuf-assertions.xml:19(title) xml/gdkcut-pixbuf.xml:18(title)
+#: xml/gdkcutter-pixbuf.xml:18(title)
+#: xml/gst-cutter-console-output.xml:18(title)
+#: xml/gst-cutter-server.xml:18(title)
+#: xml/gst-cutter-test-runner.xml:18(title)
+#: xml/soupcut-assertions-helper.xml:18(title)
+#: xml/soupcut-assertions.xml:19(title) xml/soupcut-client.xml:18(title)
+#: xml/soupcut-server.xml:18(title) xml/soupcutter.xml:18(title)
+msgid "Synopsis"
+msgstr "概要"
+
+#: xml/cut-analyzer.xml:33(title) xml/cut-assertions.xml:144(title)
+#: xml/cut-backtrace-entry.xml:33(title)
+#: xml/cut-cairo-chart-data.xml:33(title)
+#: xml/cut-cairo-pie-chart.xml:33(title) xml/cut-cairo.xml:33(title)
+#: xml/cut-contractor.xml:33(title) xml/cut-crash-backtrace.xml:33(title)
+#: xml/cut-diff.xml:33(title) xml/cut-elf-loader.xml:33(title)
+#: xml/cut-experimental.xml:37(title) xml/cut-factory-builder.xml:33(title)
+#: xml/cut-features.xml:35(title) xml/cut-file-stream-reader.xml:33(title)
+#: xml/cut-helper.xml:44(title) xml/cut-iterated-test.xml:33(title)
+#: xml/cut-listener-utils.xml:33(title) xml/cut-listener.xml:33(title)
+#: xml/cut-mach-o-loader.xml:33(title) xml/cut-main.xml:33(title)
+#: xml/cut-module-factory-utils.xml:33(title)
+#: xml/cut-module-factory.xml:33(title) xml/cut-multi-process.xml:86(title)
+#: xml/cut-pe-loader.xml:33(title) xml/cut-pipeline.xml:33(title)
+#: xml/cut-process.xml:33(title) xml/cut-report-factory-builder.xml:33(title)
+#: xml/cut-report.xml:33(title) xml/cut-run-context.xml:33(title)
+#: xml/cut-runner.xml:33(title) xml/cut-sequence-matcher.xml:33(title)
+#: xml/cut-stream-factory-builder.xml:33(title)
+#: xml/cut-stream-parser.xml:33(title) xml/cut-stream-reader.xml:33(title)
+#: xml/cut-stream.xml:33(title) xml/cut-test-data.xml:33(title)
+#: xml/cut-test-iterator.xml:33(title) xml/cut-test-runner.xml:33(title)
+#: xml/cut-test-utils-helper.xml:33(title) xml/cut-test-utils.xml:69(title)
+#: xml/cut-types.xml:38(title) xml/cut-ui-factory-builder.xml:33(title)
+#: xml/cut-ui.xml:33(title) xml/cut-version.xml:38(title)
+#: xml/cutter.xml:49(title) xml/gbsearcharray.xml:33(title)
+#: xml/gcut-assertions-helper.xml:140(title)
+#: xml/gcut-assertions.xml:131(title) xml/gcut-data-helper.xml:57(title)
+#: xml/gcut-data.xml:53(title) xml/gcut-dynamic-data.xml:76(title)
+#: xml/gcut-egg.xml:96(title) xml/gcut-enum.xml:49(title)
+#: xml/gcut-error.xml:37(title) xml/gcut-hash-table.xml:46(title)
+#: xml/gcut-inspect.xml:58(title) xml/gcut-io.xml:34(title)
+#: xml/gcut-key-file.xml:43(title) xml/gcut-list.xml:63(title)
+#: xml/gcut-main.xml:37(title) xml/gcut-object.xml:41(title)
+#: xml/gcut-public.xml:42(title) xml/gcut-string-io-channel.xml:54(title)
+#: xml/gcut-test-utils.xml:55(title) xml/gcut-types.xml:38(title)
+#: xml/gcut-value-equal.xml:39(title) xml/gcutter.xml:34(title)
+#: xml/gdkcut-pixbuf-assertions-helper.xml:39(title)
+#: xml/gdkcut-pixbuf-assertions.xml:37(title) xml/gdkcut-pixbuf.xml:46(title)
+#: xml/gdkcutter-pixbuf.xml:34(title)
+#: xml/gst-cutter-console-output.xml:33(title)
+#: xml/gst-cutter-server.xml:33(title)
+#: xml/gst-cutter-test-runner.xml:33(title)
+#: xml/soupcut-assertions-helper.xml:56(title)
+#: xml/soupcut-assertions.xml:45(title) xml/soupcut-client.xml:59(title)
+#: xml/soupcut-server.xml:36(title) xml/soupcutter.xml:34(title)
+msgid "Description"
+msgstr "説明"
+
+#: xml/cut-analyzer.xml:38(title) xml/cut-assertions.xml:160(title)
+#: xml/cut-backtrace-entry.xml:38(title)
+#: xml/cut-cairo-chart-data.xml:39(title)
+#: xml/cut-cairo-pie-chart.xml:39(title) xml/cut-cairo.xml:39(title)
+#: xml/cut-contractor.xml:38(title) xml/cut-crash-backtrace.xml:38(title)
+#: xml/cut-diff.xml:38(title) xml/cut-elf-loader.xml:38(title)
+#: xml/cut-experimental.xml:45(title) xml/cut-factory-builder.xml:38(title)
+#: xml/cut-features.xml:41(title) xml/cut-file-stream-reader.xml:38(title)
+#: xml/cut-helper.xml:121(title) xml/cut-iterated-test.xml:38(title)
+#: xml/cut-listener-utils.xml:38(title) xml/cut-listener.xml:38(title)
+#: xml/cut-mach-o-loader.xml:38(title) xml/cut-main.xml:38(title)
+#: xml/cut-module-factory-utils.xml:38(title)
+#: xml/cut-module-factory.xml:38(title) xml/cut-multi-process.xml:106(title)
+#: xml/cut-pe-loader.xml:38(title) xml/cut-pipeline.xml:38(title)
+#: xml/cut-process.xml:38(title) xml/cut-report-factory-builder.xml:38(title)
+#: xml/cut-report.xml:38(title) xml/cut-run-context.xml:38(title)
+#: xml/cut-runner.xml:38(title) xml/cut-sequence-matcher.xml:38(title)
+#: xml/cut-stream-factory-builder.xml:38(title)
+#: xml/cut-stream-parser.xml:38(title) xml/cut-stream-reader.xml:38(title)
+#: xml/cut-stream.xml:38(title) xml/cut-test-data.xml:38(title)
+#: xml/cut-test-iterator.xml:38(title) xml/cut-test-runner.xml:38(title)
+#: xml/cut-test-utils-helper.xml:38(title) xml/cut-test-utils.xml:83(title)
+#: xml/cut-types.xml:46(title) xml/cut-ui-factory-builder.xml:38(title)
+#: xml/cut-ui.xml:38(title) xml/cut-version.xml:49(title)
+#: xml/cutter.xml:153(title) xml/gbsearcharray.xml:39(title)
+#: xml/gcut-assertions-helper.xml:146(title)
+#: xml/gcut-assertions.xml:139(title) xml/gcut-data-helper.xml:63(title)
+#: xml/gcut-data.xml:64(title) xml/gcut-dynamic-data.xml:82(title)
+#: xml/gcut-egg.xml:171(title) xml/gcut-enum.xml:62(title)
+#: xml/gcut-error.xml:50(title) xml/gcut-hash-table.xml:59(title)
+#: xml/gcut-inspect.xml:68(title) xml/gcut-io.xml:40(title)
+#: xml/gcut-key-file.xml:49(title) xml/gcut-list.xml:76(title)
+#: xml/gcut-main.xml:43(title) xml/gcut-object.xml:54(title)
+#: xml/gcut-public.xml:48(title) xml/gcut-string-io-channel.xml:60(title)
+#: xml/gcut-test-utils.xml:69(title) xml/gcut-types.xml:46(title)
+#: xml/gcut-value-equal.xml:52(title) xml/gcutter.xml:72(title)
+#: xml/gdkcut-pixbuf-assertions-helper.xml:45(title)
+#: xml/gdkcut-pixbuf-assertions.xml:45(title) xml/gdkcut-pixbuf.xml:52(title)
+#: xml/gdkcutter-pixbuf.xml:74(title)
+#: xml/gst-cutter-console-output.xml:39(title)
+#: xml/gst-cutter-server.xml:39(title)
+#: xml/gst-cutter-test-runner.xml:39(title)
+#: xml/soupcut-assertions-helper.xml:62(title)
+#: xml/soupcut-assertions.xml:53(title) xml/soupcut-client.xml:70(title)
+#: xml/soupcut-server.xml:44(title) xml/soupcutter.xml:74(title)
+msgid "Details"
+msgstr "詳細"
+
+#: xml/cut-assertions.xml:7(refentrytitle) xml/cut-assertions.xml:13(refname)
+#: xml/cutter.xml:450(link)
+msgid "Assertions"
+msgstr "検証"
 
 #: xml/cut-assertions.xml:14(refpurpose)
 msgid "Checks that your program works as you expect."
 msgstr "あなたのプログラムが期待通りに動作しているかを検証します。"
-
-#: xml/cut-assertions.xml:18(title) xml/cut-experimental.xml:18(title)
-#: xml/cut-features.xml:18(title) xml/cut-helper.xml:19(title)
-#: xml/cut-multi-process.xml:19(title) xml/cut-test-utils.xml:18(title)
-#: xml/cut-types.xml:18(title) xml/cut-version.xml:18(title)
-#: xml/cutter.xml:18(title) xml/gcut-assertions-helper.xml:18(title)
-#: xml/gcut-assertions.xml:19(title) xml/gcut-data-helper.xml:18(title)
-#: xml/gcut-data.xml:19(title) xml/gcut-dynamic-data.xml:18(title)
-#: xml/gcut-egg.xml:19(title) xml/gcut-enum.xml:19(title)
-#: xml/gcut-error.xml:19(title) xml/gcut-hash-table.xml:19(title)
-#: xml/gcut-inspect.xml:19(title) xml/gcut-io.xml:18(title)
-#: xml/gcut-key-file.xml:18(title) xml/gcut-list.xml:19(title)
-#: xml/gcut-main.xml:18(title) xml/gcut-object.xml:19(title)
-#: xml/gcut-public.xml:18(title) xml/gcut-string-io-channel.xml:18(title)
-#: xml/gcut-test-utils.xml:19(title) xml/gcut-types.xml:18(title)
-#: xml/gcut-value-equal.xml:19(title) xml/gcutter.xml:18(title)
-#: xml/gdkcut-pixbuf-assertions-helper.xml:18(title)
-#: xml/gdkcut-pixbuf-assertions.xml:19(title) xml/gdkcut-pixbuf.xml:18(title)
-#: xml/gdkcutter-pixbuf.xml:18(title)
-#: xml/soupcut-assertions-helper.xml:18(title)
-#: xml/soupcut-assertions.xml:19(title) xml/soupcut-client.xml:18(title)
-#: xml/soupcutter.xml:18(title)
-msgid "Synopsis"
-msgstr "概要"
 
 #: xml/cut-assertions.xml:21(link) xml/cut-assertions.xml:23(link)
 #: xml/cut-assertions.xml:25(link) xml/cut-assertions.xml:27(link)
@@ -2450,30 +2649,6 @@ msgid ""
 "<placeholder-160/>                <placeholder-161/>                          (void);\n"
 msgstr ""
 
-#: xml/cut-assertions.xml:144(title) xml/cut-experimental.xml:37(title)
-#: xml/cut-features.xml:35(title) xml/cut-helper.xml:44(title)
-#: xml/cut-multi-process.xml:86(title) xml/cut-test-utils.xml:69(title)
-#: xml/cut-types.xml:38(title) xml/cut-version.xml:38(title)
-#: xml/cutter.xml:49(title) xml/gcut-assertions-helper.xml:140(title)
-#: xml/gcut-assertions.xml:131(title) xml/gcut-data-helper.xml:57(title)
-#: xml/gcut-data.xml:53(title) xml/gcut-dynamic-data.xml:76(title)
-#: xml/gcut-egg.xml:96(title) xml/gcut-enum.xml:49(title)
-#: xml/gcut-error.xml:37(title) xml/gcut-hash-table.xml:46(title)
-#: xml/gcut-inspect.xml:58(title) xml/gcut-io.xml:34(title)
-#: xml/gcut-key-file.xml:43(title) xml/gcut-list.xml:63(title)
-#: xml/gcut-main.xml:37(title) xml/gcut-object.xml:41(title)
-#: xml/gcut-public.xml:42(title) xml/gcut-string-io-channel.xml:54(title)
-#: xml/gcut-test-utils.xml:55(title) xml/gcut-types.xml:38(title)
-#: xml/gcut-value-equal.xml:39(title) xml/gcutter.xml:34(title)
-#: xml/gdkcut-pixbuf-assertions-helper.xml:39(title)
-#: xml/gdkcut-pixbuf-assertions.xml:37(title) xml/gdkcut-pixbuf.xml:46(title)
-#: xml/gdkcutter-pixbuf.xml:34(title)
-#: xml/soupcut-assertions-helper.xml:56(title)
-#: xml/soupcut-assertions.xml:45(title) xml/soupcut-client.xml:46(title)
-#: xml/soupcutter.xml:34(title)
-msgid "Description"
-msgstr "説明"
-
 #: xml/cut-assertions.xml:145(para)
 msgid ""
 "To check that your program works as you expect, you use <link linkend=\"cut-"
@@ -2523,30 +2698,6 @@ msgstr ""
 #: xml/gcut-value-equal.xml:79(para)
 msgid "e.g.: <placeholder-1/>"
 msgstr "例: <placeholder-1/>"
-
-#: xml/cut-assertions.xml:160(title) xml/cut-experimental.xml:45(title)
-#: xml/cut-features.xml:41(title) xml/cut-helper.xml:121(title)
-#: xml/cut-multi-process.xml:106(title) xml/cut-test-utils.xml:83(title)
-#: xml/cut-types.xml:46(title) xml/cut-version.xml:49(title)
-#: xml/cutter.xml:153(title) xml/gcut-assertions-helper.xml:146(title)
-#: xml/gcut-assertions.xml:139(title) xml/gcut-data-helper.xml:63(title)
-#: xml/gcut-data.xml:64(title) xml/gcut-dynamic-data.xml:82(title)
-#: xml/gcut-egg.xml:171(title) xml/gcut-enum.xml:62(title)
-#: xml/gcut-error.xml:50(title) xml/gcut-hash-table.xml:59(title)
-#: xml/gcut-inspect.xml:68(title) xml/gcut-io.xml:40(title)
-#: xml/gcut-key-file.xml:49(title) xml/gcut-list.xml:76(title)
-#: xml/gcut-main.xml:43(title) xml/gcut-object.xml:54(title)
-#: xml/gcut-public.xml:48(title) xml/gcut-string-io-channel.xml:60(title)
-#: xml/gcut-test-utils.xml:69(title) xml/gcut-types.xml:46(title)
-#: xml/gcut-value-equal.xml:52(title) xml/gcutter.xml:72(title)
-#: xml/gdkcut-pixbuf-assertions-helper.xml:45(title)
-#: xml/gdkcut-pixbuf-assertions.xml:45(title) xml/gdkcut-pixbuf.xml:52(title)
-#: xml/gdkcutter-pixbuf.xml:74(title)
-#: xml/soupcut-assertions-helper.xml:62(title)
-#: xml/soupcut-assertions.xml:53(title) xml/soupcut-client.xml:57(title)
-#: xml/soupcutter.xml:74(title)
-msgid "Details"
-msgstr "詳細"
 
 #: xml/cut-assertions.xml:162(title)
 msgid "cut_assert ()"
@@ -2621,7 +2772,7 @@ msgstr "チェックする式。"
 #: xml/gcut-egg.xml:249(term) xml/gcut-egg.xml:367(term)
 #: xml/gcut-test-utils.xml:148(term) xml/gcut-test-utils.xml:183(term)
 #: xml/gcut-test-utils.xml:200(term) xml/gcut-test-utils.xml:243(term)
-#: xml/gcut-test-utils.xml:294(term) xml/soupcut-client.xml:119(term)
+#: xml/gcut-test-utils.xml:294(term) xml/soupcut-client.xml:129(term)
 msgid "<parameter>...</parameter> :"
 msgstr ""
 
@@ -3906,6 +4057,7 @@ msgstr ""
 #: xml/cut-test-utils.xml:348(term) xml/cut-test-utils.xml:369(term)
 #: xml/cut-test-utils.xml:385(term) xml/gcut-assertions-helper.xml:477(term)
 #: xml/gcut-assertions.xml:585(term) xml/gcut-assertions.xml:601(term)
+#: xml/soupcut-server.xml:71(term)
 msgid "<parameter>path</parameter> :"
 msgstr ""
 
@@ -4301,6 +4453,42 @@ msgid ""
 "}\n"
 msgstr ""
 
+#: xml/cut-backtrace-entry.xml:7(refentrytitle)
+#: xml/cut-backtrace-entry.xml:13(refname)
+msgid "CutBacktraceEntry"
+msgstr ""
+
+#: xml/cut-cairo-chart-data.xml:7(refentrytitle)
+#: xml/cut-cairo-chart-data.xml:13(refname)
+msgid "CutCairoChartData"
+msgstr ""
+
+#: xml/cut-cairo-pie-chart.xml:7(refentrytitle)
+#: xml/cut-cairo-pie-chart.xml:13(refname)
+msgid "CutCairoPieChart"
+msgstr ""
+
+#: xml/cut-cairo.xml:7(refentrytitle) xml/cut-cairo.xml:13(refname)
+msgid "cut-cairo"
+msgstr ""
+
+#: xml/cut-contractor.xml:7(refentrytitle) xml/cut-contractor.xml:13(refname)
+msgid "CutContractor"
+msgstr ""
+
+#: xml/cut-crash-backtrace.xml:7(refentrytitle)
+#: xml/cut-crash-backtrace.xml:13(refname)
+msgid "cut-crash-backtrace"
+msgstr ""
+
+#: xml/cut-diff.xml:7(refentrytitle) xml/cut-diff.xml:13(refname)
+msgid "CutDiffer"
+msgstr ""
+
+#: xml/cut-elf-loader.xml:7(refentrytitle) xml/cut-elf-loader.xml:13(refname)
+msgid "CutELFLoader"
+msgstr ""
+
 #: xml/cut-experimental.xml:7(refentrytitle)
 #: xml/cut-experimental.xml:13(refname)
 msgid "Experimental"
@@ -4426,9 +4614,10 @@ msgstr ""
 #: xml/gcut-types.xml:85(term) xml/gcut-value-equal.xml:69(term)
 #: xml/gdkcut-pixbuf.xml:65(term) xml/gdkcut-pixbuf.xml:84(term)
 #: xml/gdkcut-pixbuf.xml:103(term) xml/gdkcut-pixbuf.xml:130(term)
-#: xml/soupcut-client.xml:71(term) xml/soupcut-client.xml:99(term)
-#: xml/soupcut-client.xml:122(term) xml/soupcut-client.xml:133(term)
-#: xml/soupcut-client.xml:144(term) xml/soupcut-client.xml:155(term)
+#: xml/soupcut-client.xml:81(term) xml/soupcut-client.xml:109(term)
+#: xml/soupcut-client.xml:132(term) xml/soupcut-client.xml:143(term)
+#: xml/soupcut-client.xml:154(term) xml/soupcut-client.xml:165(term)
+#: xml/soupcut-server.xml:56(term) xml/soupcut-server.xml:74(term)
 msgid "<emphasis>Returns</emphasis> :"
 msgstr "<emphasis>戻り値</emphasis> :"
 
@@ -4541,6 +4730,11 @@ msgid ""
 "cut_assert_equal_int(EXIT_SUCCESS, cut_wait_process(pid, 100));\n"
 msgstr ""
 
+#: xml/cut-factory-builder.xml:7(refentrytitle)
+#: xml/cut-factory-builder.xml:13(refname)
+msgid "CutFactoryBuilder"
+msgstr ""
+
 #: xml/cut-features.xml:7(refentrytitle) xml/cut-features.xml:13(refname)
 msgid "cut-features"
 msgstr ""
@@ -4561,6 +4755,11 @@ msgstr ""
 #: xml/cut-features.xml:50(programlisting)
 #, no-wrap
 msgid "#define CUT_SUPPORT_GDK_PIXBUF 1\n"
+msgstr ""
+
+#: xml/cut-file-stream-reader.xml:7(refentrytitle)
+#: xml/cut-file-stream-reader.xml:13(refname)
+msgid "CutFileStreamReader"
 msgstr ""
 
 #: xml/cut-helper.xml:7(refentrytitle) xml/cut-helper.xml:13(refname)
@@ -5126,6 +5325,39 @@ msgstr ""
 #: xml/cut-helper.xml:398(simpara)
 msgid "a traced expression."
 msgstr "呼び出されたと記録される式。"
+
+#: xml/cut-iterated-test.xml:7(refentrytitle)
+#: xml/cut-iterated-test.xml:13(refname)
+msgid "CutIteratedTest"
+msgstr ""
+
+#: xml/cut-listener-utils.xml:7(refentrytitle)
+#: xml/cut-listener-utils.xml:13(refname)
+msgid "cut-listener-utils"
+msgstr ""
+
+#: xml/cut-listener.xml:7(refentrytitle) xml/cut-listener.xml:13(refname)
+msgid "CutListener"
+msgstr ""
+
+#: xml/cut-mach-o-loader.xml:7(refentrytitle)
+#: xml/cut-mach-o-loader.xml:13(refname)
+msgid "CutMachOLoader"
+msgstr ""
+
+#: xml/cut-main.xml:7(refentrytitle) xml/cut-main.xml:13(refname)
+msgid "cut-main"
+msgstr ""
+
+#: xml/cut-module-factory-utils.xml:7(refentrytitle)
+#: xml/cut-module-factory-utils.xml:13(refname)
+msgid "cut-module-factory-utils"
+msgstr ""
+
+#: xml/cut-module-factory.xml:7(refentrytitle)
+#: xml/cut-module-factory.xml:13(refname)
+msgid "CutModuleFactory"
+msgstr ""
 
 #: xml/cut-multi-process.xml:7(refentrytitle)
 #: xml/cut-multi-process.xml:13(refname)
@@ -6081,6 +6313,79 @@ msgstr ""
 "<parameter>group</parameter>内の非同期で実行されたすべてのサブcutterプロセス"
 "の終了を待ち、終了結果を返します。"
 
+#: xml/cut-pe-loader.xml:7(refentrytitle) xml/cut-pe-loader.xml:13(refname)
+msgid "CutPELoader"
+msgstr ""
+
+#: xml/cut-pipeline.xml:7(refentrytitle) xml/cut-pipeline.xml:13(refname)
+msgid "CutPipeline"
+msgstr ""
+
+#: xml/cut-process.xml:7(refentrytitle) xml/cut-process.xml:13(refname)
+msgid "CutProcess"
+msgstr ""
+
+#: xml/cut-report-factory-builder.xml:7(refentrytitle)
+#: xml/cut-report-factory-builder.xml:13(refname)
+msgid "CutReportFactoryBuilder"
+msgstr ""
+
+#: xml/cut-report.xml:7(refentrytitle) xml/cut-report.xml:13(refname)
+msgid "CutReport"
+msgstr ""
+
+#: xml/cut-run-context.xml:7(refentrytitle)
+#: xml/cut-run-context.xml:13(refname)
+msgid "CutRunContext"
+msgstr ""
+
+#: xml/cut-runner.xml:7(refentrytitle) xml/cut-runner.xml:13(refname)
+msgid "cut-runner"
+msgstr ""
+
+#: xml/cut-sequence-matcher.xml:7(refentrytitle)
+#: xml/cut-sequence-matcher.xml:13(refname)
+msgid "CutSequenceMatcher"
+msgstr ""
+
+#: xml/cut-stream-factory-builder.xml:7(refentrytitle)
+#: xml/cut-stream-factory-builder.xml:13(refname)
+msgid "CutStreamFactoryBuilder"
+msgstr ""
+
+#: xml/cut-stream-parser.xml:7(refentrytitle)
+#: xml/cut-stream-parser.xml:13(refname)
+msgid "CutStreamParser"
+msgstr ""
+
+#: xml/cut-stream-reader.xml:7(refentrytitle)
+#: xml/cut-stream-reader.xml:13(refname)
+msgid "CutStreamReader"
+msgstr ""
+
+#: xml/cut-stream.xml:7(refentrytitle) xml/cut-stream.xml:13(refname)
+msgid "CutStream"
+msgstr ""
+
+#: xml/cut-test-data.xml:7(refentrytitle) xml/cut-test-data.xml:13(refname)
+msgid "CutTestData"
+msgstr ""
+
+#: xml/cut-test-iterator.xml:7(refentrytitle)
+#: xml/cut-test-iterator.xml:13(refname)
+msgid "CutTestIterator"
+msgstr ""
+
+#: xml/cut-test-runner.xml:7(refentrytitle)
+#: xml/cut-test-runner.xml:13(refname)
+msgid "CutTestRunner"
+msgstr ""
+
+#: xml/cut-test-utils-helper.xml:7(refentrytitle)
+#: xml/cut-test-utils-helper.xml:13(refname)
+msgid "cut-test-utils-helper"
+msgstr ""
+
 #: xml/cut-test-utils.xml:7(refentrytitle) xml/cut-test-utils.xml:13(refname)
 msgid "Test Utilities"
 msgstr "テストユーティリティ"
@@ -6494,7 +6799,7 @@ msgstr ""
 "Cutterです。"
 
 #: xml/cut-test-utils.xml:270(term) xml/soupcut-assertions-helper.xml:75(term)
-#: xml/soupcut-assertions.xml:66(term) xml/soupcut-client.xml:96(term)
+#: xml/soupcut-assertions.xml:66(term) xml/soupcut-client.xml:106(term)
 msgid "<parameter>message</parameter> :"
 msgstr ""
 
@@ -6902,6 +7207,15 @@ msgid ""
 msgstr ""
 "<link linkend=\"cut-boolean\"><type>cut_boolean</type></link>型のために<link "
 "linkend=\"CUT-FALSE--CAPS\"><literal>CUT_FALSE</literal></link>を定義します。"
+
+#: xml/cut-ui-factory-builder.xml:7(refentrytitle)
+#: xml/cut-ui-factory-builder.xml:13(refname)
+msgid "CutUIFactoryBuilder"
+msgstr ""
+
+#: xml/cut-ui.xml:7(refentrytitle) xml/cut-ui.xml:13(refname)
+msgid "CutUI"
+msgstr ""
 
 #: xml/cut-version.xml:7(refentrytitle) xml/cut-version.xml:13(refname)
 msgid "Version Information"
@@ -7493,7 +7807,7 @@ msgstr ""
 
 #: xml/cutter.xml:304(term) xml/gcut-public.xml:55(term)
 #: xml/gcut-public.xml:70(term) xml/gcut-public.xml:86(term)
-#: xml/gcut-public.xml:104(term)
+#: xml/gcut-public.xml:104(term) xml/soupcut-server.xml:53(term)
 msgid "<parameter>context</parameter> :"
 msgstr ""
 
@@ -7691,10 +8005,14 @@ msgstr ""
 "セージを次の検証の後でも維持します。"
 
 #: xml/cutter.xml:449(title) xml/gcutter.xml:87(title)
-#: xml/gdkcutter-pixbuf.xml:89(title) xml/soupcut-client.xml:164(title)
-#: xml/soupcutter.xml:89(title)
+#: xml/gdkcutter-pixbuf.xml:89(title) xml/soupcut-client.xml:181(title)
+#: xml/soupcut-server.xml:84(title) xml/soupcutter.xml:89(title)
 msgid "See Also"
 msgstr "参考"
+
+#: xml/gbsearcharray.xml:7(refentrytitle) xml/gbsearcharray.xml:13(refname)
+msgid "gbsearcharray"
+msgstr ""
 
 #: xml/gcut-assertions-helper.xml:7(refentrytitle)
 #: xml/gcut-assertions-helper.xml:13(refname)
@@ -7817,7 +8135,8 @@ msgstr ""
 #: xml/soupcut-assertions.xml:23(link) xml/soupcut-assertions.xml:26(link)
 #: xml/soupcut-assertions.xml:29(link) xml/soupcut-assertions.xml:31(link)
 #: xml/soupcut-client.xml:24(link) xml/soupcut-client.xml:28(link)
-#: xml/soupcut-client.xml:29(link)
+#: xml/soupcut-client.xml:29(link) xml/soupcut-server.xml:22(link)
+#: xml/soupcut-server.xml:23(link)
 msgid "gchar"
 msgstr ""
 
@@ -7955,7 +8274,7 @@ msgstr ""
 #: xml/gcut-object.xml:22(link) xml/gcut-object.xml:23(link)
 #: xml/gcut-object.xml:25(link) xml/gcut-object.xml:26(link)
 #: xml/gcut-public.xml:21(link) xml/gcut-public.xml:22(link)
-#: xml/gcut-test-utils.xml:22(link)
+#: xml/gcut-test-utils.xml:22(link) xml/soupcut-client.xml:40(link)
 msgid "GObject"
 msgstr ""
 
@@ -10124,6 +10443,7 @@ msgstr ""
 #: xml/gcut-string-io-channel.xml:37(link)
 #: xml/gcut-string-io-channel.xml:41(link) xml/gcut-value-equal.xml:22(link)
 #: xml/gdkcut-pixbuf.xml:21(link) xml/gdkcut-pixbuf.xml:23(link)
+#: xml/soupcut-client.xml:52(link)
 msgid "gboolean"
 msgstr ""
 
@@ -10170,6 +10490,7 @@ msgid ""
 msgstr ""
 
 #: xml/gcut-dynamic-data.xml:61(title) xml/gcut-egg.xml:66(title)
+#: xml/soupcut-client.xml:38(title)
 msgid "Object Hierarchy"
 msgstr "オブジェクト階層"
 
@@ -10464,7 +10785,7 @@ msgid ""
 "   +----GCutEgg\n"
 msgstr ""
 
-#: xml/gcut-egg.xml:78(title)
+#: xml/gcut-egg.xml:78(title) xml/soupcut-client.xml:50(title)
 msgid "Properties"
 msgstr "プロパティ"
 
@@ -11233,7 +11554,7 @@ msgstr ""
 msgid "the timeout value in milliseconds"
 msgstr "タイムアウト時間（ミリ秒）"
 
-#: xml/gcut-egg.xml:590(title)
+#: xml/gcut-egg.xml:590(title) xml/soupcut-client.xml:171(title)
 msgid "Property Details"
 msgstr "プロパティ詳細"
 
@@ -11310,7 +11631,7 @@ msgstr "<literal>\"error-received\"</literal>シグナル"
 msgid ""
 "<link linkend=\"void\">void</link>                user_function                      (<link linkend=\"GCutEgg\">GCutEgg</link> *egg,\n"
 "                                                        <link linkend=\"gchar\">gchar</link>   *chunk,\n"
-"                                                        <link linkend=\"guint64\">guint64</link>  size,\n"
+"                                                        <link linkend=\"guint\">guint</link>    size,\n"
 "                                                        <link linkend=\"gpointer\">gpointer</link> user_data)      : Run Last"
 msgstr ""
 
@@ -12039,6 +12360,7 @@ msgstr ""
 #: xml/gcut-hash-table.xml:181(para) xml/soupcut-assertions.xml:69(para)
 #: xml/soupcut-assertions.xml:86(para) xml/soupcut-assertions.xml:97(para)
 #: xml/soupcut-assertions.xml:112(para) xml/soupcut-assertions.xml:128(para)
+#: xml/soupcut-server.xml:59(para) xml/soupcut-server.xml:77(para)
 #: xml/soupcutter.xml:82(para)
 msgid "Since 1.0.8"
 msgstr "1.0.8から"
@@ -13631,7 +13953,9 @@ msgstr ""
 msgid ""
 "the destroy function that destroys the elements of <parameter>list</"
 "parameter>, or <link linkend=\"NULL--CAPS\"><literal>NULL</literal></link>."
-msgstr "<parameter>list</parameter>の各要素を破棄する関数、または<link linkend=\"NULL--CAPS\"><literal>NULL</literal></link>。"
+msgstr ""
+"<parameter>list</parameter>の各要素を破棄する関数、または<link linkend="
+"\"NULL--CAPS\"><literal>NULL</literal></link>。"
 
 #: xml/gcut-test-utils.xml:116(simpara)
 msgid ""
@@ -14511,6 +14835,21 @@ msgstr ""
 msgid "Defined when GdkCutter Pixbuf is enabled."
 msgstr "GdkCutter Pixbufが有効なとき定義されます。"
 
+#: xml/gst-cutter-console-output.xml:7(refentrytitle)
+#: xml/gst-cutter-console-output.xml:13(refname)
+msgid "GstCutterConsoleOutput"
+msgstr ""
+
+#: xml/gst-cutter-server.xml:7(refentrytitle)
+#: xml/gst-cutter-server.xml:13(refname)
+msgid "GstCutterServer"
+msgstr ""
+
+#: xml/gst-cutter-test-runner.xml:7(refentrytitle)
+#: xml/gst-cutter-test-runner.xml:13(refname)
+msgid "GstCutterTestRunner"
+msgstr ""
+
 #: xml/soupcut-assertions-helper.xml:7(refentrytitle)
 #: xml/soupcut-assertions-helper.xml:13(refname)
 msgid "soupcut-assertions-helper"
@@ -14589,9 +14928,9 @@ msgstr ""
 #: xml/soupcut-assertions-helper.xml:155(term)
 #: xml/soupcut-assertions.xml:83(term) xml/soupcut-assertions.xml:94(term)
 #: xml/soupcut-assertions.xml:109(term) xml/soupcut-assertions.xml:125(term)
-#: xml/soupcut-client.xml:80(term) xml/soupcut-client.xml:93(term)
-#: xml/soupcut-client.xml:110(term) xml/soupcut-client.xml:130(term)
-#: xml/soupcut-client.xml:141(term) xml/soupcut-client.xml:152(term)
+#: xml/soupcut-client.xml:90(term) xml/soupcut-client.xml:103(term)
+#: xml/soupcut-client.xml:120(term) xml/soupcut-client.xml:140(term)
+#: xml/soupcut-client.xml:151(term) xml/soupcut-client.xml:162(term)
 msgid "<parameter>client</parameter> :"
 msgstr ""
 
@@ -14647,8 +14986,8 @@ msgid "<parameter>expression_pattern</parameter> :"
 msgstr ""
 
 #: xml/soupcut-assertions.xml:7(refentrytitle)
-#: xml/soupcut-assertions.xml:13(refname) xml/soupcut-client.xml:166(link)
-#: xml/soupcutter.xml:91(link)
+#: xml/soupcut-assertions.xml:13(refname) xml/soupcut-client.xml:183(link)
+#: xml/soupcut-server.xml:86(link) xml/soupcutter.xml:91(link)
 msgid "Assertions for HTTP client/server based on libsoup"
 msgstr "libsoupを使ったHTTPクライアント・サーバ用の検証"
 
@@ -14702,7 +15041,7 @@ msgid "an expected Content-Type."
 msgstr "期待するContent-Type。"
 
 #: xml/soupcut-assertions.xml:67(simpara)
-msgid "an <link linkend=\"SoupMessage\"><type>SoupMessage</type></link>."
+msgid "a <link linkend=\"SoupMessage\"><type>SoupMessage</type></link>."
 msgstr ""
 "<link linkend=\"SoupMessage\"><type>SoupMessage</type></link>オブジェクト。"
 
@@ -14730,7 +15069,7 @@ msgstr ""
 #: xml/soupcut-assertions.xml:95(simpara)
 #: xml/soupcut-assertions.xml:110(simpara)
 #: xml/soupcut-assertions.xml:126(simpara)
-msgid "an <link linkend=\"SoupCutClient\"><type>SoupCutClient</type></link>."
+msgid "a <link linkend=\"SoupCutClient\"><type>SoupCutClient</type></link>."
 msgstr ""
 "<link linkend=\"SoupCutClient\"><type>SoupCutClient</type></link>オブジェク"
 "ト。"
@@ -14798,7 +15137,7 @@ msgstr "便利なHTTPクライアントAPI"
 msgid "API to work as HTTP client."
 msgstr "HTTPクライアントとして動作するためのAPI。"
 
-#: xml/soupcut-client.xml:33(link)
+#: xml/soupcut-client.xml:33(link) xml/soupcut-server.xml:21(link)
 msgid "GMainContext"
 msgstr ""
 
@@ -14821,7 +15160,26 @@ msgid ""
 "<placeholder-23/> *      <placeholder-24/>    (<placeholder-25/> *client);\n"
 msgstr ""
 
-#: xml/soupcut-client.xml:47(para)
+#: xml/soupcut-client.xml:39(synopsis)
+#, no-wrap
+msgid ""
+"\n"
+"  <placeholder-1/>\n"
+"   +----SoupCutClient\n"
+msgstr ""
+
+#: xml/soupcut-client.xml:52(link)
+msgid "async"
+msgstr ""
+
+#: xml/soupcut-client.xml:51(synopsis)
+#, no-wrap
+msgid ""
+"\n"
+"  \"<placeholder-1/>\"                    <placeholder-2/>              : Read / Write\n"
+msgstr ""
+
+#: xml/soupcut-client.xml:60(para)
 msgid ""
 "<link linkend=\"SoupCutClient\"><type>SoupCutClient</type></link> works as a "
 "HTTP client. It accepts multiple requests and responses are managed by <link "
@@ -14830,54 +15188,51 @@ msgid ""
 "also provided."
 msgstr ""
 
-#: xml/soupcut-client.xml:60(programlisting)
+#: xml/soupcut-client.xml:73(programlisting)
 #, no-wrap
-msgid ""
-"typedef struct {\n"
-"    GObject object;\n"
-"} SoupCutClient;\n"
+msgid "typedef struct _SoupCutClient SoupCutClient;"
 msgstr ""
 
-#: xml/soupcut-client.xml:67(title)
+#: xml/soupcut-client.xml:77(title)
 msgid "soupcut_client_new ()"
 msgstr ""
 
-#: xml/soupcut-client.xml:68(programlisting)
+#: xml/soupcut-client.xml:78(programlisting)
 #, no-wrap
 msgid "<link linkend=\"SoupCutClient\">SoupCutClient</link> *     soupcut_client_new                  (void);"
 msgstr ""
 
-#: xml/soupcut-client.xml:75(title)
+#: xml/soupcut-client.xml:85(title)
 msgid "soupcut_client_set_base ()"
 msgstr ""
 
-#: xml/soupcut-client.xml:76(programlisting)
+#: xml/soupcut-client.xml:86(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"void\">void</link>                soupcut_client_set_base             (<link linkend=\"SoupCutClient\">SoupCutClient</link> *client,\n"
 "                                                         const <link linkend=\"gchar\">gchar</link> *uri);"
 msgstr ""
 
-#: xml/soupcut-client.xml:83(term) xml/soupcut-client.xml:113(term)
+#: xml/soupcut-client.xml:93(term) xml/soupcut-client.xml:123(term)
 msgid "<parameter>uri</parameter> :"
 msgstr ""
 
-#: xml/soupcut-client.xml:88(title)
+#: xml/soupcut-client.xml:98(title)
 msgid "soupcut_client_send_message ()"
 msgstr ""
 
-#: xml/soupcut-client.xml:89(programlisting)
+#: xml/soupcut-client.xml:99(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"guint\">guint</link>               soupcut_client_send_message         (<link linkend=\"SoupCutClient\">SoupCutClient</link> *client,\n"
 "                                                         <link linkend=\"SoupMessage\">SoupMessage</link> *message);"
 msgstr ""
 
-#: xml/soupcut-client.xml:103(title)
+#: xml/soupcut-client.xml:113(title)
 msgid "soupcut_client_get ()"
 msgstr ""
 
-#: xml/soupcut-client.xml:104(programlisting)
+#: xml/soupcut-client.xml:114(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"guint\">guint</link>               soupcut_client_get                  (<link linkend=\"SoupCutClient\">SoupCutClient</link> *client,\n"
@@ -14886,36 +15241,143 @@ msgid ""
 "                                                         ...);"
 msgstr ""
 
-#: xml/soupcut-client.xml:116(term)
+#: xml/soupcut-client.xml:126(term)
 msgid "<parameter>first_query_name</parameter> :"
 msgstr ""
 
-#: xml/soupcut-client.xml:126(title)
+#: xml/soupcut-client.xml:136(title)
 msgid "soupcut_client_get_n_messages ()"
 msgstr ""
 
-#: xml/soupcut-client.xml:127(programlisting)
+#: xml/soupcut-client.xml:137(programlisting)
 #, no-wrap
 msgid "<link linkend=\"guint\">guint</link>               soupcut_client_get_n_messages       (<link linkend=\"SoupCutClient\">SoupCutClient</link> *client);"
 msgstr ""
 
-#: xml/soupcut-client.xml:137(title)
+#: xml/soupcut-client.xml:147(title)
 msgid "soupcut_client_get_latest_message ()"
 msgstr ""
 
-#: xml/soupcut-client.xml:138(programlisting)
+#: xml/soupcut-client.xml:148(programlisting)
 #, no-wrap
 msgid "<link linkend=\"SoupMessage\">SoupMessage</link> *       soupcut_client_get_latest_message   (<link linkend=\"SoupCutClient\">SoupCutClient</link> *client);"
 msgstr ""
 
-#: xml/soupcut-client.xml:148(title)
+#: xml/soupcut-client.xml:158(title)
 msgid "soupcut_client_get_async_context ()"
 msgstr ""
 
-#: xml/soupcut-client.xml:149(programlisting)
+#: xml/soupcut-client.xml:159(programlisting)
 #, no-wrap
 msgid "<link linkend=\"GMainContext\">GMainContext</link> *      soupcut_client_get_async_context    (<link linkend=\"SoupCutClient\">SoupCutClient</link> *client);"
 msgstr ""
+
+#: xml/soupcut-client.xml:172(title)
+msgid "The <literal>\"async\"</literal> property"
+msgstr "<literal>\"async\"</literal>プロパティ"
+
+#: xml/soupcut-client.xml:173(programlisting)
+#, no-wrap
+msgid "  \"async\"                    <link linkend=\"gboolean\">gboolean</link>              : Read / Write"
+msgstr ""
+
+#: xml/soupcut-client.xml:174(para)
+msgid "True if the session is asynchronous."
+msgstr ""
+
+#: xml/soupcut-client.xml:174(para)
+msgid "Default value: FALSE"
+msgstr ""
+
+#: xml/soupcut-server.xml:7(refentrytitle) xml/soupcut-server.xml:13(refname)
+msgid "Convenience HTTP server API"
+msgstr "便利なHTTPサーバーAPI"
+
+#: xml/soupcut-server.xml:14(refpurpose)
+msgid "API to work as HTTP server."
+msgstr "HTTPサーバーとして動作するためのAPI。"
+
+#: xml/soupcut-server.xml:21(link) xml/soupcut-server.xml:22(link)
+msgid "SoupServer"
+msgstr ""
+
+#: xml/soupcut-server.xml:20(synopsis)
+#, no-wrap
+msgid ""
+"\n"
+"<placeholder-1/> *        <placeholder-2/>             (<placeholder-3/> *context);\n"
+"const <placeholder-4/> *       <placeholder-5/>            (<placeholder-6/> *server,\n"
+"                                                         const <placeholder-7/> *path);\n"
+msgstr ""
+
+#: xml/soupcut-server.xml:37(para)
+msgid ""
+"Useful wrappers for <link linkend=\"SoupServer\"><type>SoupServer</type></"
+"link> are provided."
+msgstr ""
+"<link linkend=\"SoupServer\"><type>SoupServer</type></link>の便利なラッパー。"
+
+#: xml/soupcut-server.xml:46(title)
+msgid "soupcut_server_take_new ()"
+msgstr ""
+
+#: xml/soupcut-server.xml:47(programlisting)
+#, no-wrap
+msgid "<link linkend=\"SoupServer\">SoupServer</link> *        soupcut_server_take_new             (<link linkend=\"GMainContext\">GMainContext</link> *context);"
+msgstr ""
+
+#: xml/soupcut-server.xml:48(para)
+msgid ""
+"Creates and returns a new <link linkend=\"SoupServer\"><type>SoupServer</"
+"type></link>, whose context is <parameter>context</parameter>. The server is "
+"shut down and unref when tear down."
+msgstr "コンテキストが<parameter>context</parameter>である<link linkend=\"SoupServer\"><type>SoupServer</type></link>オブジェクトを生成して返します。サーバーはtear down 時に自動的にシャットダウンされ、<link linkend=\\\"g-object-unref\\\"><function>g_object_unref()</function></link>により解放されます。"
+
+#: xml/soupcut-server.xml:54(simpara)
+msgid ""
+"a <link linkend=\"GMainContext\"><type>GMainContext</type></link> for the "
+"main loop of a new server."
+msgstr "サーバーの<link linkend=\"GMainContext\"><type>GMainContext</type></link>コンテキスト。"
+
+#: xml/soupcut-server.xml:56(simpara)
+msgid ""
+"a new <link linkend=\"SoupServer\"><type>SoupServer</type></link> owned by "
+"Cutter. Don't <link linkend=\"g-object-unref\"><function>g_object_unref()</"
+"function></link> it."
+msgstr "新たに<link linkend=\"SoupServer\"><type>SoupServer</type></link>オブジェクトを生成します。作成されたサーバーはCutterが所有権を持つので、<link linkend=\"g-object-unref\"><function>g_object_unref()</function></link>を呼ばないでください。"
+
+#: xml/soupcut-server.xml:61(title)
+msgid "soupcut_server_build_uri ()"
+msgstr ""
+
+#: xml/soupcut-server.xml:62(programlisting)
+#, no-wrap
+msgid ""
+"const <link linkend=\"gchar\">gchar</link> *       soupcut_server_build_uri            (<link linkend=\"SoupServer\">SoupServer</link> *server,\n"
+"                                                         const <link linkend=\"gchar\">gchar</link> *path);"
+msgstr ""
+
+#: xml/soupcut-server.xml:64(para)
+msgid ""
+"an URI is built and returned with the base uri of <parameter>server</"
+"parameter> and <parameter>path</parameter>."
+msgstr "@server のベースURIにパスとして @path を組み合わせたURIの文字列を作成します。"
+
+#: xml/soupcut-server.xml:68(term)
+msgid "<parameter>server</parameter> :"
+msgstr ""
+
+#: xml/soupcut-server.xml:69(simpara)
+msgid "a <link linkend=\"SoupServer\"><type>SoupServer</type></link>."
+msgstr "<link linkend=\"SoupServer\"><type>SoupServer</type></link>オブジェクト。"
+
+#: xml/soupcut-server.xml:72(simpara)
+msgid "a path."
+msgstr ""
+
+#: xml/soupcut-server.xml:74(simpara)
+msgid "a new uri string owned by Cutter. Don't free it."
+msgstr "Cutterが所有するURI文字列。解放しないで下さい。"
 
 #: xml/soupcutter.xml:7(refentrytitle) xml/soupcutter.xml:13(refname)
 msgid "SoupCutter"

@@ -1,5 +1,9 @@
 2009-08-24  Yuto Hayamizu  <y.hayamizu@gmail.com>
 
+	* doc/reference/ja.po: wrote docs for soupcut-server
+
+	* soupcutter/soupcut-server.h: fix docs
+
 	* doc/reference/cutter-docs.sgml: add soupcut-server
 
 	* soupcutter/soupcut-server.h: wrote docs
