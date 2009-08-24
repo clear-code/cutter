@@ -1,5 +1,7 @@
 2009-08-24  Yuto Hayamizu  <y.hayamizu@gmail.com>
 
+	* doc/reference/cutter-docs.sgml: add soupcut-server
+
 	* soupcutter/soupcut-server.h: wrote docs
 
 	* soupcutter/soupcut-assertions.h: fix type in docs

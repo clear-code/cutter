@@ -52,6 +52,7 @@ HFILE_GLOB =								\
 	$(top_srcdir)/gdkcutter-pixbuf/gdkcutter-pixbuf.h		\
 	$(top_srcdir)/soupcutter/soupcut-assertions.h			\
 	$(top_srcdir)/soupcutter/soupcut-client.h			\
+	$(top_srcdir)/soupcutter/soupcut-server.h			\
 	$(top_srcdir)/soupcutter/soupcutter.h
 
 #CFILE_GLOB=$(top_srcdir)/cutter/*.c
