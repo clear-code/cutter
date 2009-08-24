@@ -8,7 +8,7 @@
     * HTTPクライアント機能:
       * ((<soupcut_client_new()|SoupCutClient.html#soupcut-client-new>))
       * ((<soupcut_client_set_base()|SoupCutClient.html#soupcut-client-set-base>))
-      * ((<soupcut_client_send_message()|SoupCutClient.html#soupcut-client-send_message>))
+      * ((<soupcut_client_send_message()|SoupCutClient.html#soupcut-client-send-message>))
       * ((<soupcut_client_get()|SoupCutClient.html#soupcut-client-get>))
       * ((<soupcut_client_get_n_messages()|SoupCutClient.html#soupcut-client-get-n-messages>))
       * ((<soupcut_client_get_latest_message()|SoupCutClient.html#soupcut-client-get-latest-message>))
@@ -17,8 +17,8 @@
       * ((<soupcut_server_take_new()|cutter-soupcut-server.html#soupcut-server-take-new>))
       * ((<soupcut_server_build_uri()|cutter-soupcut-server.html#soupcut-server-build-uri>))
     * 検証:
-      * ((<soupcut_message_assert_equal_content_type()|cutter-soupcut-assertions.html#soupcut-message-assert-content-type>))
-      * ((<soupcut_client_assert_equal_content_type()|cutter-soupcut-assertions.html#soupcut-client-assert-content-type>))
+      * ((<soupcut_message_assert_equal_content_type()|cutter-soupcut-assertions.html#soupcut-message-assert-equal-content-type>))
+      * ((<soupcut_client_assert_equal_content_type()|cutter-soupcut-assertions.html#soupcut-client-assert-equal-content-type>))
       * ((<soupcut_client_assert_response()|cutter-soupcut-assertions.html#soupcut-client-assert-response>))
       * ((<soupcut_client_assert_equal_body()|cutter-soupcut-assertions.html#soupcut-client-assert-equal-body>))
       * ((<soupcut_client_assert_match_body()|cutter-soupcut-assertions.html#soupcut-client-assert-match-body>))

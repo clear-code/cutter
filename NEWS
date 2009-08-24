@@ -2,6 +2,39 @@
 
 = NEWS --- The history of Cutter
 
+== 1.0.8: 2009-08-29
+
+  * Support libsoup:
+    * HTTP client:
+      * ((<soupcut_client_new()|SoupCutClient.html#soupcut-client-new>))
+      * ((<soupcut_client_set_base()|SoupCutClient.html#soupcut-client-set-base>))
+      * ((<soupcut_client_send_message()|SoupCutClient.html#soupcut-client-send-message>))
+      * ((<soupcut_client_get()|SoupCutClient.html#soupcut-client-get>))
+      * ((<soupcut_client_get_n_messages()|SoupCutClient.html#soupcut-client-get-n-messages>))
+      * ((<soupcut_client_get_latest_message()|SoupCutClient.html#soupcut-client-get-latest-message>))
+      * ((<soupcut_client_get_async_context()|SoupCutClient.html#soupcut-client-get-async-context>))
+    * HTTP server:
+      * ((<soupcut_server_take_new()|cutter-soupcut-server.html#soupcut-server-take-new>))
+      * ((<soupcut_server_build_uri()|cutter-soupcut-server.html#soupcut-server-build-uri>))
+    * Assertions:
+      * ((<soupcut_message_assert_equal_content_type()|cutter-soupcut-assertions.html#soupcut-message-assert-equal-content-type>))
+      * ((<soupcut_client_assert_equal_content_type()|cutter-soupcut-assertions.html#soupcut-client-assert-equal-content-type>))
+      * ((<soupcut_client_assert_response()|cutter-soupcut-assertions.html#soupcut-client-assert-response>))
+      * ((<soupcut_client_assert_equal_body()|cutter-soupcut-assertions.html#soupcut-client-assert-equal-body>))
+      * ((<soupcut_client_assert_match_body()|cutter-soupcut-assertions.html#soupcut-client-assert-match-body>))
+  * Add an function to ((<Assertion Utilities for GHashTable|cutter-gcut-hash-table.html>)):
+    * ((<gcut_hash_table_string_string_copy()|cutter-gcut-hash-table.html#gcut-hash-table-string-string-copy>))
+  * Add mroonga to ((<project list that use Cutter|USERS>))
+  * Support rpm package for Fedora
+  * Support deb package for Debian
+  * Support deb package for Ubuntu
+  * Support lcov 1.7
+  * Document:
+    * Add ((<install document for Ubuntu|install-to-ubuntu.html>))
+    * Add ((<install document for FreeBSD|install-to-freebsd.html>))
+    * Add ((<install document for Mac OS X|install-to-mac-os-x.html>))
+    * Add ((<install document for Solaris|install-to-solaris.html>))
+
 == 1.0.7: 2009-05-20
 
   * Provide ((<Version Information|cutter-cut-version.html>))
