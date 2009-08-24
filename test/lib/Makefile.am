@@ -10,20 +10,12 @@ AM_CFLAGS =				\
 if HAVE_GTK
 AM_CFLAGS += $(GTK_CFLAGS)
 endif
-if HAVE_LIBSOUP
-AM_CFLAGS += $(LIBSOUP_CFLAGS)
-endif
 
 EXTRA_DIST = cuttest-assertions.h
 
 noinst_LTLIBRARIES = 			\
 	libcuttest-utils.la		\
 	libcuttest-event-receiver.la
-
-if HAVE_LIBSOUP
-noinst_LTLIBRARIES += 			\
-	libcuttest-soup.la
-endif
 
 LIBS =						\
 	$(top_builddir)/cutter/libcutter.la	\
@@ -45,11 +37,3 @@ libcuttest_utils_la_SOURCES = 		\
 libcuttest_event_receiver_la_SOURCES = 		\
 	cuttest-event-receiver.c		\
 	cuttest-event-receiver.h
-
-libcuttest_soup_la_SOURCES =			\
-	cuttest-soup.c				\
-	cuttest-soup.h
-
-libcuttest_soup_la_LDFLAGS =			\
-	$(LIBS)					\
-	$(LIBSOUP_LIBS)

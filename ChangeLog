@@ -1,3 +1,13 @@
+2009-08-24  Yuto Hayamizu  <y.hayamizu@gmail.com>
+
+	* test/soupcutter/test-soupcut-assertions.c,
+	test/soupcutter/test-soupcut-client.c: use soupcut-server instead
+	of cuttest-soup
+
+	* test/soupcutter/test-soupcut-server.c: add for soupcut-server
+
+	* soupcutter/soupcut-server.[ch]: renamed from test/lib/cuttest-soup.[ch]
+
 2009-08-23  Kouhei Sutou  <kou@cozmixng.org>
 
 	* test/cutter/test-cutter.c: GLib >= 2.21 shows '-h' as short name

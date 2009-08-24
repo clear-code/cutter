@@ -19,7 +19,6 @@
 
 #include <string.h>
 #include <soupcutter/soupcutter.h>
-#include "../lib/cuttest-soup.h"
 
 void test_send_message(void);
 void test_get(void);
@@ -66,7 +65,7 @@ server_callback (SoupServer *server,
 {
     const gchar *body;
     body = cut_take_printf("Hello %s",
-                           cuttest_soup_server_build_uri(server, path));
+                           soupcut_server_build_uri(server, path));
     if (received_query){
         g_hash_table_unref(received_query);
         received_query = NULL;
@@ -87,8 +86,8 @@ serve (SoupCutClient *client)
     const gchar *uri;
 
     context = soupcut_client_get_async_context(client);
-    server = cuttest_soup_server_take_new(context);
-    uri = cuttest_soup_server_build_uri(server, "/");
+    server = soupcut_server_take_new(context);
+    uri = soupcut_server_build_uri(server, "/");
 
     soup_server_add_handler(server, "/", server_callback,
                             NULL, NULL);

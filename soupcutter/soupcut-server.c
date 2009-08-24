@@ -17,7 +17,7 @@
  *
  */
 
-#include "cuttest-soup.h"
+#include "soupcutter/soupcut-server.h"
 #include <cutter.h>
 
 static void
@@ -30,7 +30,7 @@ cb_destroy (gpointer data)
 }
 
 SoupServer *
-cuttest_soup_server_take_new (GMainContext *context)
+soupcut_server_take_new (GMainContext *context)
 {
     SoupServer *server;
     SoupAddress *address;
@@ -47,7 +47,7 @@ cuttest_soup_server_take_new (GMainContext *context)
 }
 
 const gchar *
-cuttest_soup_server_build_uri(SoupServer   *server,
+soupcut_server_build_uri(SoupServer   *server,
                               const gchar  *path)
 {
     SoupAddress *address;

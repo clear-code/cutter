@@ -14,7 +14,8 @@ if HAVE_LIBSOUP
 noinst_LTLIBRARIES =				\
 	suite-soupcut-test.la			\
 	test-soupcut-assertions.la		\
-	test-soupcut-client.la
+	test-soupcut-client.la			\
+	test-soupcut-server.la
 endif
 
 AM_LDFLAGS =			\
@@ -34,3 +35,4 @@ LIBS =								\
 suite_soupcut_test_la_SOURCES		= suite-soupcut-test.c
 test_soupcut_assertions_la_SOURCES	= test-soupcut-assertions.c
 test_soupcut_client_la_SOURCES		= test-soupcut-client.c
+test_soupcut_server_la_SOURCES		= test-soupcut-server.c

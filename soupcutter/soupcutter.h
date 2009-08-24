@@ -23,6 +23,7 @@
 #include <libsoup/soup.h>
 #include <gcutter.h>
 #include <soupcutter/soupcut-client.h>
+#include <soupcutter/soupcut-server.h>
 #include <soupcutter/soupcut-assertions.h>
 
 

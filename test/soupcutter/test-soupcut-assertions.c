@@ -24,7 +24,6 @@
 #include <cutter/cut-test-runner.h>
 #include <soupcutter.h>
 #include "../lib/cuttest-assertions.h"
-#include "../lib/cuttest-soup.h"
 
 void test_message_equal_content_type(void);
 void test_client_equal_content_type(void);
@@ -152,8 +151,8 @@ serve (SoupCutClient *client)
     const gchar *uri;
 
     context = soupcut_client_get_async_context(client);
-    server = cuttest_soup_server_take_new(context);
-    uri = cuttest_soup_server_build_uri(server, "/");
+    server = soupcut_server_take_new(context);
+    uri = soupcut_server_build_uri(server, "/");
     soup_server_add_handler(server, "/", server_callback,
                             NULL, NULL);
     soup_server_run_async(server);

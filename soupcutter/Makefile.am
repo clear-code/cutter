@@ -18,7 +18,8 @@ endif
 soupcutter_public_headers =			\
 	soupcut-assertions.h			\
 	soupcut-assertions-helper.h		\
-	soupcut-client.h
+	soupcut-client.h			\
+	soupcut-server.h
 
 pkginclude_HEADERS = 		\
 	soupcutter.h
@@ -30,7 +31,8 @@ soupcutter_include_HEADERS = 		\
 libsoupcutter_la_SOURCES =			\
 	$(gcutter_public_headers)		\
 	soupcut-assertions-helper.c		\
-	soupcut-client.c
+	soupcut-client.c			\
+	soupcut-server.c
 
 libsoupcutter_la_LDFLAGS =		\
 	-version-info $(LT_VERSION_INFO)	\

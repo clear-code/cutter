@@ -25,9 +25,9 @@
 
 G_BEGIN_DECLS
 
-SoupServer  *cuttest_soup_server_take_new (GMainContext *context);
-const gchar *cuttest_soup_server_build_uri(SoupServer   *server,
-                                           const gchar  *path);
+SoupServer  *soupcut_server_take_new (GMainContext *context);
+const gchar *soupcut_server_build_uri (SoupServer   *server,
+                                    const gchar  *path);
 
 G_END_DECLS
 
