@@ -30,6 +30,14 @@ cb_destroy (gpointer data)
 }
 
 SoupServer *
+soupcut_server_take (SoupServer *server)
+{
+    cut_take(server, cb_destroy);
+
+    return server;
+}
+
+SoupServer *
 soupcut_server_take_new (GMainContext *context)
 {
     SoupServer *server;
@@ -41,9 +49,8 @@ soupcut_server_take_new (GMainContext *context)
                              SOUP_SERVER_ASYNC_CONTEXT, context,
                              NULL);
     g_object_unref(address);
-    cut_take(server, cb_destroy);
 
-    return server;
+    return soupcut_server_take(server);
 }
 
 const gchar *

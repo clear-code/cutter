@@ -1,3 +1,7 @@
+2009-08-25  Yuto Hayamizu  <y.hayamizu@gmail.com>
+
+	* soupcutter/soupcut-server.[ch] (soupcut_server_take): add
+
 2009-08-24  Yuto Hayamizu  <y.hayamizu@gmail.com>
 
 	* NEWS.ja: fixed typo

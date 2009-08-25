@@ -38,6 +38,18 @@ G_BEGIN_DECLS
  */
 
 /**
+ * soupcut_server_take:
+ * @server: a #SoupServer.
+ *
+ * @server is shut down and unref when tear down.
+ *
+ * Returns: @server owned by Cutter. Don't g_object_unref() it.
+ *
+ * Since: 1.0.8
+ */
+SoupServer  *soupcut_server_take      (SoupServer *server);
+
+/**
  * soupcut_server_take_new:
  * @context: a #GMainContext for the main loop of a new server.
  *
