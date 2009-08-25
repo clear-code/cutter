@@ -1,5 +1,9 @@
 2009-08-25  Yuto Hayamizu  <y.hayamizu@gmail.com>
 
+	* NEWS*: add soupcut_server_take
+
+	* doc/reference/ja.po: docs of soupcut_server_take
+
 	* soupcutter/soupcut-server.[ch] (soupcut_server_take): add
 
 2009-08-24  Yuto Hayamizu  <y.hayamizu@gmail.com>

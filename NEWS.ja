@@ -14,6 +14,7 @@
       * ((<soupcut_client_get_latest_message()|SoupCutClient.html#soupcut-client-get-latest-message>))
       * ((<soupcut_client_get_async_context()|SoupCutClient.html#soupcut-client-get-async-context>))
     * HTTPサーバー機能:
+      * ((<soupcut_server_take()|cutter-soupcut-server.html#soupcut-server-take>))
       * ((<soupcut_server_take_new()|cutter-soupcut-server.html#soupcut-server-take-new>))
       * ((<soupcut_server_build_uri()|cutter-soupcut-server.html#soupcut-server-build-uri>))
     * 検証:
