@@ -1,5 +1,7 @@
 2009-08-26  Kouhei Sutou  <kou@clear-code.com>
 
+	* apt/debian/: add lenny support.
+
 	* apt/build-deb.sh: consider libgoffice-0-6.
 
 	* apt/build-deb.sh: add a script to build .deb.
