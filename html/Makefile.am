@@ -32,6 +32,7 @@ generated_images =				\
 	blog.png				\
 	download.png				\
 	heading-mark.png			\
+	mini-heading-mark.png			\
 	install.png				\
 	mini-install.png			\
 	readme.png				\
@@ -49,3 +50,6 @@ SUFFIXES = .svg .png
 
 mini-install.png: install.png
 	convert install.png -resize 12x12 mini-install.png
+
+mini-heading-mark.png: heading-mark.png
+	convert heading-mark.png -resize 19x19 mini-heading-mark.png

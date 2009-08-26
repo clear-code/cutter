@@ -2,7 +2,7 @@
 
 = NEWS --- The history of Cutter
 
-== 1.0.8: 2009-08-29
+== [release-1-0-8] 1.0.8: 2009-08-29
 
   * Support libsoup:
     * HTTP client:

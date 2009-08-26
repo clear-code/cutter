@@ -39,7 +39,7 @@
         </p>
 	<p>
           [<a href="http://downloads.sourceforge.net/cutter/cutter-1.0.8.tar.gz">ダウンロード</a>]
-          [<a href="reference/ja/news.html">変更点</a>]
+          [<a href="reference/ja/news.html#release-1-0-8">変更点</a>]
 	</p>
 
         <h2 id="about">Cutterとは</h2>
@@ -75,29 +75,44 @@
       </div>
 
       <div class="sidebar">
-	<ul>
-	  <li><a href="http://sourceforge.net/projects/cutter/">プロジェクトページ</a></li>
-          <li><a href="reference/ja/news.html">お知らせ</a></li>
-          <li><a href="reference/ja/readme.html">はじめに</a></li>
-          <li><a href="reference/ja/features.html">機能</a></li>
-          <li><a href="reference/ja/tutorial.html">チュートリアル</a></li>
-          <li>
-            <a href="reference/ja/install.html">インストール</a>
-            <ul class="sidebar-install">
-              <li><a href="reference/ja/install-to-debian.html">Debian GNU/Linux</a></li>
-              <li><a href="reference/ja/install-to-ubuntu.html">Ubuntu Linux</a></li>
-              <li><a href="reference/ja/install-to-fedora.html">Fedora</a></li>
-              <li><a href="reference/ja/install-to-freebsd.html">FreeBSD</a></li>
-              <li><a href="reference/ja/install-to-soralis.html">Solaris</a></li>
-              <li><a href="reference/ja/install-to-mac-os-x.html">Mac OS X</a></li>
-              <li><a href="reference/ja/install-to-cygwin.html">Cygwin</a></li>
-              <li><a href="reference/ja/install-to-others.html">Others</a></li>
-            </ul>
-          </li>
-          <li><a href="reference/ja/">リファレンス</a></li>
-          <li><a href="reference/ja/users.html">Cutter採用プロジェクト</a></li>
-          <li><a href="https://lists.sourceforge.net/lists/listinfo/cutter-users-ja">メーリングリスト</a></li>
-        </ul>
+        <div class="sidebar-item">
+	  <h2>導入</h2>
+	  <ul>
+	    <li class="sidebar-install">
+	      <a href="reference/ja/install.html">インストール</a>
+	      <ul>
+		<li><a href="reference/ja/install-to-debian.html">Debian GNU/Linux</a></li>
+		<li><a href="reference/ja/install-to-ubuntu.html">Ubuntu Linux</a></li>
+		<li><a href="reference/ja/install-to-fedora.html">Fedora</a></li>
+		<li><a href="reference/ja/install-to-freebsd.html">FreeBSD</a></li>
+		<li><a href="reference/ja/install-to-soralis.html">Solaris</a></li>
+		<li><a href="reference/ja/install-to-mac-os-x.html">Mac OS X</a></li>
+		<li><a href="reference/ja/install-to-cygwin.html">Cygwin</a></li>
+		<li><a href="reference/ja/install-to-others.html">その他</a></li>
+	      </ul>
+	    </li>
+          </ul>
+        </div>
+
+        <div class="sidebar-item">
+	  <h2>ドキュメント</h2>
+          <ul>
+	    <li><a href="reference/ja/news.html">お知らせ</a></li>
+	    <li><a href="reference/ja/readme.html">はじめに</a></li>
+	    <li><a href="reference/ja/features.html">機能</a></li>
+	    <li><a href="reference/ja/tutorial.html">チュートリアル</a></li>
+	    <li><a href="reference/ja/">リファレンス</a></li>
+	  </ul>
+        </div>
+
+        <div class="sidebar-item">
+	  <h2>プロジェクト情報</h2>
+	  <ul>
+	    <li><a href="http://sourceforge.net/projects/cutter/">プロジェクトページ</a></li>
+	    <li><a href="reference/ja/users.html">Cutter採用プロジェクト</a></li>
+	    <li><a href="https://lists.sourceforge.net/lists/listinfo/cutter-users-ja">メーリングリスト</a></li>
+	  </ul>
+        </div>
       </div>
     </div>
 

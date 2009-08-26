@@ -79,6 +79,7 @@ ul.other-languages li a
   height: 11px;
   width: 16px;
   text-indent: -100000px;
+  outline: none;
 }
 
 ul.other-languages li#other-language-english
@@ -188,9 +189,23 @@ div.sidebar
   position: absolute;
   top: 0px;
   right: 0px;
-  width: 150px;
-  text-align: right;
+  width: 175px;
   background-color: white;
+}
+
+div.sidebar div.sidebar-item
+{
+  background: url(mini-heading-mark.png) no-repeat;
+  padding-left: 22px;
+  margin-bottom: 15px;
+}
+
+div.sidebar div.sidebar-item h2
+{
+  font-size: 1em;
+  margin: 0px;
+  padding: 0px;
+  padding-bottom: 5px;
 }
 
 div.sidebar ul
@@ -205,16 +220,21 @@ div.sidebar ul li
   margin-bottom: 5px;
 }
 
-div.sidebar ul li ul.sidebar-install
+div.sidebar ul li ul
 {
   margin-top: 5px;
 }
 
-div.sidebar ul li ul.sidebar-install li
+div.sidebar ul li ul li
 {
-  list-style-image: url(mini-install.png);
   padding: 0;
   margin: 0;
+  margin-left: 24px;
+}
+
+div.sidebar ul li.sidebar-install ul li
+{
+  list-style-image: url(mini-install.png);
 }
 
 div.sponsors

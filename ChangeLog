@@ -1,5 +1,9 @@
 2009-08-27  Kouhei Sutou  <kou@clear-code.com>
 
+	* NEWS*: add release-1-0-8 anchor.
+
+	* html/: improve sidebar style.
+
 	* html/index.html.ja: fix a typo.
 
 2009-08-26  Kouhei Sutou  <kou@clear-code.com>
