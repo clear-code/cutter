@@ -34,9 +34,16 @@ download:
 
 build:
 	for target in {lenny,sid,hardy,jaunty}-{i386,amd64}; do		\
+	  if echo $$target | grep -e 'lenny\|sid' > /dev/null; then	\
+	    distribution=debian;					\
+	  else								\
+	    distribution=ubuntu;					\
+	  fi								\
 	  build_dir=$(CHROOT_BASE)/$$target/home/$$USER/work/c;		\
 	  cp ../cutter-$(VERSION).tar.gz				\
 	    $$build_dir/cutter_$(VERSION).orig.tar.gz &&		\
 	  sudo su -c							\
 	    "chroot $(CHROOT_BASE)/$$target su - $$USER" < build-deb.sh;\
+	  cp -p $$build_dir/*cutter*_$(VERSION)*			\
+	    $$distribution/pool/main/c/cutter;				\
 	done
