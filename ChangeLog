@@ -1,3 +1,7 @@
+2009-08-27  Kouhei Sutou  <kou@clear-code.com>
+
+	* html/index.html.ja: fix a typo.
+
 2009-08-26  Kouhei Sutou  <kou@clear-code.com>
 
 	* debian/control, apt/build-deb.sh: add a missing dependency.
