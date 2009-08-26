@@ -1,5 +1,7 @@
 2009-08-26  Kouhei Sutou  <kou@clear-code.com>
 
+	* debian/control, apt/build-deb.sh: add a missing dependency.
+
 	* apt/Makefile (build): add.
 
 	* apt/debian/: add lenny support.

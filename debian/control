@@ -1,7 +1,7 @@
 Source: cutter
 Priority: extra
 Maintainer: Kouhei Sutou <kou@clear-code.com>
-Build-Depends: debhelper (>= 5), cdbs, autotools-dev, intltool, gtk-doc-tools, libgtk2.0-dev, libgoffice-0-8-dev, libgstreamer0.10-dev
+Build-Depends: debhelper (>= 5), cdbs, autotools-dev, intltool, gtk-doc-tools, libgtk2.0-dev, libgoffice-0-8-dev, libgstreamer0.10-dev, libsoup2.4-dev
 Standards-Version: 3.7.3
 Section: libs
 Homepage: http://cutter.sourceforge.net/
