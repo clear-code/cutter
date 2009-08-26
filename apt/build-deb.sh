@@ -5,7 +5,7 @@ VERSION=1.0.8
 sudo aptitude update
 sudo aptitude install -y subversion devscripts debhelper cdbs autotools-dev \
     intltool gtk-doc-tools libgtk2.0-dev libgoffice-0-{6,8}-dev \
-    libgstreamer0.10-dev libsup2.4-dev
+    libgstreamer0.10-dev libsoup2.4-dev
 
 mkdir -p ~/work/c
 if [ -d ~/work/c/cutter ]; then
