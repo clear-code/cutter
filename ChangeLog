@@ -1,3 +1,7 @@
+2009-08-26  Yuto Hayamizu  <y.hayamizu@gmail.com>
+
+	* configure.ac: 1.0.8 -> 1.0.9
+
 2009-08-25  Yuto Hayamizu  <y.hayamizu@gmail.com>
 
 	* NEWS*: add soupcut_server_take
