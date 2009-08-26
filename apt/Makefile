@@ -38,7 +38,7 @@ build:
 	    distribution=debian;					\
 	  else								\
 	    distribution=ubuntu;					\
-	  fi								\
+	  fi;								\
 	  build_dir=$(CHROOT_BASE)/$$target/home/$$USER/work/c;		\
 	  cp ../cutter-$(VERSION).tar.gz				\
 	    $$build_dir/cutter_$(VERSION).orig.tar.gz &&		\
