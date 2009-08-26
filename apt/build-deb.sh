@@ -24,4 +24,10 @@ cd cutter-${VERSION}
 mkdir debian
 cp -rp ../cutter/debian/* debian/
 
+if dpkg -l libgoffice-0-8-dev > /dev/null 2>&1; then
+    :
+else
+    sed -i'' -e 's/libgoffice-0-8/libgoffice-0-6/g' debian/control
+fi
+
 debuild -us -uc
