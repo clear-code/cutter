@@ -40,6 +40,7 @@ build:
 	    distribution=ubuntu;					\
 	  fi;								\
 	  build_dir=$(CHROOT_BASE)/$$target/home/$$USER/work/c;		\
+	  mkdir -p $$build_dir;						\
 	  cp ../cutter-$(VERSION).tar.gz				\
 	    $$build_dir/cutter_$(VERSION).orig.tar.gz &&		\
 	  sudo su -c							\
