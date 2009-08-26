@@ -1,5 +1,7 @@
 2009-08-26  Kouhei Sutou  <kou@clear-code.com>
 
+	* apt/build-deb.sh: add a script to build .deb.
+
 	* autogen.sh: fix order.
 
 2009-08-26  Yuto Hayamizu  <y.hayamizu@gmail.com>
