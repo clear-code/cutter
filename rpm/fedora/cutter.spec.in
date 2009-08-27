@@ -10,7 +10,9 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-%(%{__id_u} -n)
 BuildRequires: intltool
 BuildRequires: gcc
 BuildRequires: glib2-devel
+BuildRequires: libsoup-devel
 Requires: glib2
+Requires: libsoup
 
 %description
 Cutter is a xUnit family Unit Testing Framework for C.
@@ -43,6 +45,10 @@ rm -rf %{buildroot}
 %{_datadir}/locale/
 
 %changelog
+* Sat Aug 29 2009 Kouhei Sutou <kou@clear-code.com>
+- (1.0.8-0)
+- new upstream release
+
 * Thu May 21 2009 Kouhei Sutou <kou@clear-code.com>
 - (1.0.7-1)
 - initial RPM

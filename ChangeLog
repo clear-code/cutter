@@ -1,5 +1,7 @@
 2009-08-27  Kouhei Sutou  <kou@clear-code.com>
 
+	* rpm/fedora/cutter.spec.in: add libsoup dependency.
+
 	* debian/control (Depends): add missing libcutter-soup-dev
 	dependency to cutter-testing-framework.
 
