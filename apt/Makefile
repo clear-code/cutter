@@ -33,18 +33,24 @@ download:
 	done
 
 build:
-	for target in {lenny,sid,hardy,jaunty}-{i386,amd64}; do		\
-	  if echo $$target | grep -e 'lenny\|sid' > /dev/null; then	\
-	    distribution=debian;					\
-	  else								\
-	    distribution=ubuntu;					\
-	  fi;								\
-	  build_dir=$(CHROOT_BASE)/$$target/home/$$USER/work/c;		\
-	  mkdir -p $$build_dir;						\
-	  cp ../cutter-$(VERSION).tar.gz				\
-	    $$build_dir/cutter_$(VERSION).orig.tar.gz &&		\
-	  sudo su -c							\
-	    "chroot $(CHROOT_BASE)/$$target su - $$USER" < build-deb.sh;\
-	  cp -p $$build_dir/*cutter*_$(VERSION)*			\
-	    $$distribution/pool/main/c/cutter;				\
+	for architecture in i386 amd64; do					\
+	  for code_name in lenny unstable hardy jaunty; do			\
+	    target=$${code_name}-$${architecture};				\
+	    case $${code_name} in						\
+	    lenny|unstable)							\
+	      distribution=debian;						\
+	      ;;								\
+	    *)									\
+	      distribution=ubuntu;						\
+	      ;;								\
+	    esac;								\
+	    build_dir=$(CHROOT_BASE)/$$target/home/$$USER/work/c;		\
+	    pool_dir=$$distribution/pool/$$code_name/main/c/cutter		\
+	    mkdir -p $$build_dir;					\
+	    cp ../cutter-$(VERSION).tar.gz					\
+	      $$build_dir/cutter_$(VERSION).orig.tar.gz &&			\
+	    sudo su -c								\
+	      "chroot $(CHROOT_BASE)/$$target su - $$USER" < build-deb.sh;	\
+	    cp -p $$build_dir/*cutter*_$(VERSION)* $$pool_dir;			\
+	  done;									\
 	done
