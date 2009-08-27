@@ -14,7 +14,7 @@ if [ ! -e config/po ]; then
     ln -s ../po config/po
 fi
 
-run ${ACLOCAL:-aclocal} -I m4macros $ACLOCAL_OPTIONS
+run ${ACLOCAL:-aclocal} -I acmacros -I m4macros $ACLOCAL_OPTIONS
 run ${LIBTOOLIZE:-libtoolize} --copy --force
 run ${INTLTOOLIZE:-intltoolize} --force --copy
 #run ${GTKDOCIZE:-gtkdocize} --copy
