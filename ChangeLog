@@ -1,5 +1,8 @@
 2009-08-27  Kouhei Sutou  <kou@clear-code.com>
 
+	* debian/control (Depends): add missing libcutter-soup-dev
+	dependency to cutter-testing-framework.
+
 	* autogen.sh: add missing "-I m4macros" aclocal args.
 
 	* apt/: use separated pool directory for each code name.

@@ -9,7 +9,7 @@ Homepage: http://cutter.sourceforge.net/
 Package: cutter-testing-framework
 Section: libdevel
 Architecture: any
-Depends: cutter-bin, libcutter-dev, libcutter-glib-dev, libcutter-gtk-dev, libcutter-report, libcutter-gst, cutter-doc
+Depends: cutter-bin, libcutter-dev, libcutter-glib-dev, libcutter-gtk-dev, libcutter-soup-dev, libcutter-report, libcutter-gst, cutter-doc
 Description: Cutter testing framework suite (meta-package)
  Cutter is a xUnit family Unit Testing Framework for C.
  .
