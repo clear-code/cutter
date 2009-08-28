@@ -1,3 +1,7 @@
+2009-08-28  Yuto Hayamizu  <y.hayamizu@gmail.com>
+
+	* html/index.html: fixed typo "a Unit" -> "an Unit"
+
 2009-08-28  Kouhei Sutou  <kou@clear-code.com>
 
 	* configure.ac: add --disable-goffice for Win32.
