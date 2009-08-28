@@ -322,10 +322,21 @@ AM_CONDITIONAL([HAVE_GTK], [test -z "$no_gtk"])
 dnl **************************************************************
 dnl Check for GOffice
 dnl **************************************************************
-PKG_CHECK_MODULES(GOFFICE, libgoffice-0.6,
-                  [goffice_exists=yes], [goffice_exists=no])
-AC_SUBST(GOFFICE_CFLAGS)
-AC_SUBST(GOFFICE_LIBS)
+AC_MSG_CHECKING([whether to try to use GOffice])
+AC_ARG_ENABLE([goffice],
+              AS_HELP_STRING([--disable-goffice],
+                             [Disable GOffice support]),
+              [ac_cv_enable_goffice=$enableval],
+              [ac_cv_enable_goffice=yes])
+AC_MSG_RESULT([$ac_cv_enable_goffice])
+
+goffice_exists=no
+if test "$ac_cv_enable_goffice" = "yes"; then
+  PKG_CHECK_MODULES(GOFFICE, libgoffice-0.6,
+		    [goffice_exists=yes], [goffice_exists=no])
+  AC_SUBST(GOFFICE_CFLAGS)
+  AC_SUBST(GOFFICE_LIBS)
+fi
 
 if test "$goffice_exists" = "yes"; then
   AC_DEFINE(HAVE_GOFFICE, 1, [Define to 1 if you have goffice installed])

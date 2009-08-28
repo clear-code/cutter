@@ -1,5 +1,7 @@
 2009-08-28  Kouhei Sutou  <kou@clear-code.com>
 
+	* configure.ac: add --disable-goffice for Win32.
+
 	* autogen.sh, configure.ac, Makefile.am: put generated .m4 into
 	different directory.
 
