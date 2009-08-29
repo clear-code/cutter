@@ -34,7 +34,7 @@ install-data-local: cutter.jman
 else
 install-data-local:
 endif
-	test -z "$(DESTDIR)$(ja_man1dir)" || $(MKDIR_P) "$(DESTDIR)$(ja_man1dir)"
+	test -z "$(DESTDIR)$(ja_man1dir)" || $(mkdir_p) "$(DESTDIR)$(ja_man1dir)"
 	@for jman in $(dist_ja_man1_mans); do			\
 	  test -f "$${jman}" || break;				\
 	  jman_path=$(top_builddir)/doc/$${jman};		\

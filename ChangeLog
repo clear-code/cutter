@@ -1,3 +1,9 @@
+2009-08-29  Yuto Hayamizu  <y.hayamizu@gmail.com>
+
+	* doc/Makefile.am (install-data-local): use mkdir_p instead of
+	MKDIR_P. It seems that MKDIR_P is not defined with autoconf 2.61
+	and automake 1.9.6
+
 2009-08-28  Yuto Hayamizu  <y.hayamizu@gmail.com>
 
 	* html/index.html: fixed typo "a Unit" -> "an Unit"
