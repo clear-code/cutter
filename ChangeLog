@@ -1,5 +1,8 @@
 2009-09-01  Kouhei Sutou  <kou@clear-code.com>
 
+	* gcutter/gcut-hash-table.[ch] (gcut_hash_table_inspect_sorted):
+	add and use it in gcut_hash_table_string_string_inspect().
+
 	* README*, cutter/cut-test-result.c, cutter/cut-test.c,
 	cutter/cut-utils.[ch]: use '.' not ',' for string elapsed format
 	to work with locale independent.

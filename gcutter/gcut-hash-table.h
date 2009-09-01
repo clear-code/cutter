@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2009  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -89,6 +89,38 @@ gchar           *gcut_hash_table_inspect        (GHashTable *hash,
                                                  GCutInspectFunction key_inspect_func,
                                                  GCutInspectFunction value_inspect_func,
                                                  gpointer user_data);
+
+/**
+ * gcut_hash_table_inspect_sorted:
+ * @hash: a #GHashTable to be inspected and sorted.
+ * @key_inspect_func: a function that inspects each key.
+ * @value_inspect_func: a function that inspects each value.
+ * @key_compare_func: a function that compares each key.
+ * @user_data: user data to pass to the function.
+ *
+ * Sorts @hash as key by @key_compare_func and inspects
+ * it. Each key of @hash is inspected by @key_inspect_func
+ * and each value of @hash is inspected by
+ * @value_inspect_func. The returned string should be freed
+ * when no longer needed.
+ *
+ * If @key_compare_func is %NULL, @hash isn't sorted. It is
+ * the same behavior as gcut_hash_table_inspect().
+ *
+ * e.g.:
+ * |[
+ * TODO
+ * ]|
+ *
+ * Returns: inspected and sorted @hash as a string.
+ *
+ * Since: 1.0.9
+ */
+gchar           *gcut_hash_table_inspect_sorted (GHashTable          *hash,
+                                                 GCutInspectFunction  key_inspect_func,
+                                                 GCutInspectFunction  value_inspect_func,
+                                                 GCompareFunc         key_compare_func,
+                                                 gpointer             user_data);
 
 /**
  * gcut_hash_table_string_equal:

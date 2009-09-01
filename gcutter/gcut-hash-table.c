@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2009  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -87,10 +87,8 @@ typedef struct _InspectData
 } InspectData;
 
 static void
-inspect_hash_table_pair (gpointer key, gpointer value, gpointer user_data)
+inspect_hash_table_pair (gpointer key, gpointer value, InspectData *data)
 {
-    InspectData *data = user_data;
-
     data->nth_pair++;
     data->key_inspect_func(data->output, key, data->user_data);
     g_string_append(data->output, " => ");
@@ -105,7 +103,20 @@ gcut_hash_table_inspect (GHashTable *hash,
                          GCutInspectFunction value_inspect_func,
                          gpointer user_data)
 {
+    return gcut_hash_table_inspect_sorted(hash,
+                                          key_inspect_func, value_inspect_func,
+                                          NULL, user_data);
+}
+
+gchar *
+gcut_hash_table_inspect_sorted (GHashTable *hash,
+                                GCutInspectFunction key_inspect_func,
+                                GCutInspectFunction value_inspect_func,
+                                GCompareFunc compare_func,
+                                gpointer user_data)
+{
     GString *string;
+    GList *keys, *sorted_keys;
     InspectData data;
 
     if (!hash)
@@ -119,7 +130,17 @@ gcut_hash_table_inspect (GHashTable *hash,
     data.user_data = user_data;
     data.nth_pair = 0;
     data.total_size = g_hash_table_size(hash);
-    g_hash_table_foreach(hash, inspect_hash_table_pair, &data);
+    keys = g_hash_table_get_keys(hash);
+    if (compare_func) {
+        sorted_keys = g_list_sort(keys, compare_func);
+    } else {
+        sorted_keys = keys;
+    }
+    for (; sorted_keys; sorted_keys = g_list_next(sorted_keys)) {
+        gpointer key = sorted_keys->data;
+        inspect_hash_table_pair(key, g_hash_table_lookup(hash, key), &data);
+    }
+    g_list_free(keys);
 
     g_string_append(string, "}");
 
@@ -144,13 +165,28 @@ gcut_hash_table_string_equal (GHashTable *hash1, GHashTable *hash2)
     return gcut_hash_table_equal(hash1, hash2, equal_string);
 }
 
+static int
+compare_string (gconstpointer data1, gconstpointer data2)
+{
+    if (data1 == NULL && data2 == NULL)
+        return 0;
+
+    if (data1 == NULL)
+        return -1;
+    if (data2 == NULL)
+        return 1;
+
+    return strcmp(data1, data2);
+}
+
 gchar *
 gcut_hash_table_string_string_inspect (GHashTable *hash)
 {
-    return gcut_hash_table_inspect(hash,
-                                   gcut_inspect_string,
-                                   gcut_inspect_string,
-                                   NULL);
+    return gcut_hash_table_inspect_sorted(hash,
+                                          gcut_inspect_string,
+                                          gcut_inspect_string,
+                                          compare_string,
+                                          NULL);
 }
 
 static void
