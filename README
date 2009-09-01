@@ -304,3 +304,4 @@ The following is a template of test.
     * assisted Solaris install document.
   * gunyara-kun: suggested API design.
   * Yamakawa Hiroshi: reported works on Cygwin.
+  * Yoshinori K. Okuji: reported locale related bugs.

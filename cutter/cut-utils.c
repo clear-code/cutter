@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2009  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2009  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -726,6 +726,21 @@ cut_utils_parse_gdb_backtrace (const gchar *gdb_backtrace)
     }
 
     return backtraces;
+}
+
+gchar *
+cut_utils_double_to_string (gdouble value)
+{
+    gint i;
+    gchar *string;
+
+    string = g_strdup_printf("%f", value);
+    for (i = 0; string[i]; i++) {
+        if (string[i] == ',')
+            string[i] = '.';
+    }
+
+    return string;
 }
 
 #ifdef G_OS_WIN32

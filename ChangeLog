@@ -1,5 +1,10 @@
 2009-09-01  Kouhei Sutou  <kou@clear-code.com>
 
+	* README*, cutter/cut-test-result.c, cutter/cut-test.c,
+	cutter/cut-utils.[ch]: use '.' not ',' for string elapsed format
+	to work with locale independent.
+	Reported by Yoshinori K. Okuji. Thanks!!!
+
 	* test/cutter/test-cut-assertions.c: use %g for double value to
 	avoid locale depended error.
 	Reported by Yoshinori K. Okuji. Thanks!!!

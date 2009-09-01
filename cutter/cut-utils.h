@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2009  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2009  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -77,6 +77,8 @@ gchar       *cut_utils_regex_replace         (const gchar  *pattern,
                                               GError      **error);
 
 GList       *cut_utils_parse_gdb_backtrace   (const gchar  *gdb_backtrace);
+
+gchar       *cut_utils_double_to_string      (gdouble       value);
 
 #ifdef G_OS_WIN32
 const gchar *cut_win32_base_path                     (void);

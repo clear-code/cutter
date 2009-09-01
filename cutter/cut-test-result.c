@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2009  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2009  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -622,7 +622,8 @@ append_test_result_to_string (GString *string, CutTestResult *result,
                                             start_time_string);
     g_free(start_time_string);
 
-    elapsed_string = g_strdup_printf("%f", cut_test_result_get_elapsed(result));
+    elapsed_string =
+        cut_utils_double_to_string(cut_test_result_get_elapsed(result));
     cut_utils_append_xml_element_with_value(string, indent, "elapsed",
                                             elapsed_string);
     g_free(elapsed_string);
