@@ -24,6 +24,7 @@
 #include <glib.h>
 #include <string.h>
 
+#include <cutter/cut-utils.h>
 #include "gcut-hash-table.h"
 #include "gcut-test-utils.h"
 #include "gcut-inspect.h"
@@ -165,27 +166,13 @@ gcut_hash_table_string_equal (GHashTable *hash1, GHashTable *hash2)
     return gcut_hash_table_equal(hash1, hash2, equal_string);
 }
 
-static int
-compare_string (gconstpointer data1, gconstpointer data2)
-{
-    if (data1 == NULL && data2 == NULL)
-        return 0;
-
-    if (data1 == NULL)
-        return -1;
-    if (data2 == NULL)
-        return 1;
-
-    return strcmp(data1, data2);
-}
-
 gchar *
 gcut_hash_table_string_string_inspect (GHashTable *hash)
 {
     return gcut_hash_table_inspect_sorted(hash,
                                           gcut_inspect_string,
                                           gcut_inspect_string,
-                                          compare_string,
+                                          cut_utils_compare_string,
                                           NULL);
 }
 
