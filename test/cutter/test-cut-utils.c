@@ -365,9 +365,12 @@ test_compare_direct (void)
     guint data1 = 10;
     guint data2 = 20;
 
-    cut_assert_equal_int(0, cut_utils_compare_string(&data1, &data1));
-    cut_assert_equal_int(-1, cut_utils_compare_string(&data1, &data2));
-    cut_assert_equal_int(1, cut_utils_compare_string(&data2, &data1));
+    cut_assert_equal_int(0, cut_utils_compare_direct(GUINT_TO_POINTER(data1),
+                                                     GUINT_TO_POINTER(data1)));
+    cut_assert_equal_int(-1, cut_utils_compare_direct(GUINT_TO_POINTER(data1),
+                                                      GUINT_TO_POINTER(data2)));
+    cut_assert_equal_int(1, cut_utils_compare_direct(GUINT_TO_POINTER(data2),
+                                                     GUINT_TO_POINTER(data1)));
 }
 
 /*

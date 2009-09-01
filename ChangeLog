@@ -1,5 +1,8 @@
 2009-09-01  Kouhei Sutou  <kou@clear-code.com>
 
+	* test/cutter/test-cut-utils.c (test_compare_direct): fix a strange
+	test.
+
 	* test/cutter/test-cutter.c (test_help_all): check whether
 	--pdf-report is available or not.
 
