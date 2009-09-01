@@ -80,6 +80,11 @@ GList       *cut_utils_parse_gdb_backtrace   (const gchar  *gdb_backtrace);
 
 gchar       *cut_utils_double_to_string      (gdouble       value);
 
+gint         cut_utils_compare_string        (gconstpointer data1,
+                                              gconstpointer data2);
+gint         cut_utils_compare_direct        (gconstpointer data1,
+                                              gconstpointer data2);
+
 #ifdef G_OS_WIN32
 const gchar *cut_win32_base_path                     (void);
 gchar       *cut_win32_build_module_dir_name         (const gchar *type);

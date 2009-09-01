@@ -1,5 +1,8 @@
 2009-09-01  Kouhei Sutou  <kou@clear-code.com>
 
+	* cutter/cut-utils.[ch], test/cutter/test-cut-utils.c:
+	add cut_utils_compare_string() and cut_utils_compare_direct().
+
 	* gcutter/gcut-hash-table.[ch] (gcut_hash_table_inspect_sorted):
 	add and use it in gcut_hash_table_string_string_inspect().
 

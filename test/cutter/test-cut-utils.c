@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2009  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2009  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -36,6 +36,8 @@ void test_equal_substring (void);
 void test_equal_double (void);
 void data_parse_gdb_backtrace (void);
 void test_parse_gdb_backtrace (gconstpointer data);
+void test_compare_string (void);
+void test_compare_direct (void);
 
 static gchar *tmp_dir;
 static gchar **actual_string_array;
@@ -345,6 +347,27 @@ test_parse_gdb_backtrace (gconstpointer data)
     gcut_assert_equal_list_object_custom(backtraces,
                                          expected_backtraces,
                                          backtrace_entry_equal);
+}
+
+void
+test_compare_string (void)
+{
+    cut_assert_equal_int(0, cut_utils_compare_string(NULL, NULL));
+    cut_assert_equal_int(-1, cut_utils_compare_string(NULL, "a"));
+    cut_assert_equal_int(1, cut_utils_compare_string("a", NULL));
+    cut_assert_equal_int(-1, cut_utils_compare_string("a", "b"));
+    cut_assert_equal_int(1, cut_utils_compare_string("b", "a"));
+}
+
+void
+test_compare_direct (void)
+{
+    guint data1 = 10;
+    guint data2 = 20;
+
+    cut_assert_equal_int(0, cut_utils_compare_string(&data1, &data1));
+    cut_assert_equal_int(-1, cut_utils_compare_string(&data1, &data2));
+    cut_assert_equal_int(1, cut_utils_compare_string(&data2, &data1));
 }
 
 /*

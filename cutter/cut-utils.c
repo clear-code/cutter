@@ -743,6 +743,36 @@ cut_utils_double_to_string (gdouble value)
     return string;
 }
 
+gint
+cut_utils_compare_string (gconstpointer data1, gconstpointer data2)
+{
+    if (data1 == NULL && data2 == NULL)
+        return 0;
+
+    if (data1 == NULL)
+        return -1;
+    if (data2 == NULL)
+        return 1;
+
+    return strcmp(data1, data2);
+}
+
+gint
+cut_utils_compare_direct (gconstpointer data1, gconstpointer data2)
+{
+    guint value1, value2;
+
+    value1 = GPOINTER_TO_UINT(data1);
+    value2 = GPOINTER_TO_UINT(data2);
+    if (value1 == value2) {
+        return 0;
+    } else if (value1 < value2) {
+        return -1;
+    } else {
+        return 1;
+    }
+}
+
 #ifdef G_OS_WIN32
 static gchar *win32_base_path = NULL;
 
