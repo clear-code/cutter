@@ -207,7 +207,9 @@ test_help_all (void)
         "  --stream-log-directory=DIRECTORY                Obsoleted. Use --stream-directory instead" LINE_FEED_CODE
         "" LINE_FEED_CODE
         "Report Options" LINE_FEED_CODE
+#if defined(HAVE_PANGO_CAIRO) && defined(HAVE_CAIRO_PDF)
         "  --pdf-report=FILE                               Set filename of pdf report" LINE_FEED_CODE
+#endif
         "  --xml-report=FILE                               Set filename of xml report" LINE_FEED_CODE
         "" LINE_FEED_CODE
         "UI Options" LINE_FEED_CODE

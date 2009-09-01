@@ -1,5 +1,8 @@
 2009-09-01  Kouhei Sutou  <kou@clear-code.com>
 
+	* test/cutter/test-cutter.c (test_help_all): check whether
+	--pdf-report is available or not.
+
 	* gcutter/gcut-assertions-helper.c,
 	test/gcutter/test-gcut-assertions.c: sort direct and string key
 	automatically.
