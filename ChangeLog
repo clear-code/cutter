@@ -1,5 +1,9 @@
 2009-09-01  Kouhei Sutou  <kou@clear-code.com>
 
+	* gcutter/gcut-assertions-helper.c,
+	test/gcutter/test-gcut-assertions.c: sort direct and string key
+	automatically.
+
 	* gcutter/gcut-hash-table.c: use cut_utils_compare_string().
 
 	* cutter/cut-utils.[ch], test/cutter/test-cut-utils.c:

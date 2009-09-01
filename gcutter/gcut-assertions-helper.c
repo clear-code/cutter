@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2009  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2009  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -299,15 +299,25 @@ gcut_assert_equal_hash_table_helper (GHashTable  *expected,
     } else {
         const gchar *message;
         gchar *inspected_expected, *inspected_actual;
+        GCompareFunc compare_function = NULL;
 
-        inspected_expected = gcut_hash_table_inspect(expected,
-                                                     key_inspect_function,
-                                                     value_inspect_function,
-                                                     inspect_user_data);
-        inspected_actual = gcut_hash_table_inspect(actual,
-                                                   key_inspect_function,
-                                                   value_inspect_function,
-                                                   inspect_user_data);
+        if (key_inspect_function == gcut_inspect_direct) {
+            compare_function = cut_utils_compare_direct;
+        } else if (key_inspect_function == gcut_inspect_string) {
+            compare_function = cut_utils_compare_string;
+        }
+        inspected_expected =
+            gcut_hash_table_inspect_sorted(expected,
+                                           key_inspect_function,
+                                           value_inspect_function,
+                                           compare_function,
+                                           inspect_user_data);
+        inspected_actual =
+            gcut_hash_table_inspect_sorted(actual,
+                                           key_inspect_function,
+                                           value_inspect_function,
+                                           compare_function,
+                                           inspect_user_data);
         message = cut_take_printf("<%s(%s[key], %s[key]) == TRUE>\n"
                                   "expected: <%s>\n"
                                   "  actual: <%s>",
