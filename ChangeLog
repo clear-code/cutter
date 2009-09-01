@@ -1,3 +1,9 @@
+2009-09-01  Kouhei Sutou  <kou@clear-code.com>
+
+	* test/cutter/test-cut-assertions.c: use %g for double value to
+	avoid locale depended error.
+	Reported by Yoshinori K. Okuji. Thanks!!!
+
 2009-08-29  Yuto Hayamizu  <y.hayamizu@gmail.com>
 
 	* doc/Makefile.am (install-data-local): use mkdir_p instead of

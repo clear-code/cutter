@@ -632,20 +632,30 @@ stub_equal_double (void)
 void
 test_equal_double (void)
 {
+    gdouble expected = 1.02;
+    gdouble actual = 1.04;
+    gdouble error = 0.01;
+
     test = cut_test_new("cut_assert_equal_double()", stub_equal_double);
     cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
-    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
-                           "cut_assert_equal_double()", NULL,
-                           "<1.02-0.01 <= 1.04 <= 1.02+0.01>\n"
-                           "expected: <1.02>\n"
-                           "   error: <0.01>\n"
-                           "     min: <1.01>\n"
-                           "     max: <1.03>\n"
-                           "  actual: <1.04>\n"
-                           "relation: <min < max < actual>",
-                           FAIL_LOCATION,
-                           "stub_equal_double");
+    cut_assert_test_result(
+        run_context, 0, CUT_TEST_RESULT_FAILURE,
+        "cut_assert_equal_double()", NULL,
+        cut_take_printf("<1.02-0.01 <= 1.04 <= 1.02+0.01>\n"
+                        "expected: <%g>\n"
+                        "   error: <%g>\n"
+                        "     min: <%g>\n"
+                        "     max: <%g>\n"
+                        "  actual: <%g>\n"
+                        "relation: <min < max < actual>",
+                        expected,
+                        error,
+                        expected - error,
+                        expected + error,
+                        actual),
+        FAIL_LOCATION,
+        "stub_equal_double");
 }
 
 static void
@@ -658,20 +668,30 @@ stub_not_equal_double (void)
 void
 test_not_equal_double (void)
 {
+    gdouble expected = 1.01;
+    gdouble actual = 1.02;
+    gdouble error = 0.1;
+
     test = cut_test_new("cut_assert_not_equal_double()", stub_not_equal_double);
     cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
-    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
-                           "cut_assert_not_equal_double()", NULL,
-                           "<(1.02 < 1.01-0.1) && (1.01+0.1 < 1.02)>\n"
-                           "expected: <1.01>\n"
-                           "   error: <0.1>\n"
-                           "     min: <0.91>\n"
-                           "     max: <1.11>\n"
-                           "  actual: <1.02>\n"
-                           "relation: <min < actual < max>",
-                           FAIL_LOCATION,
-                           "stub_not_equal_double");
+    cut_assert_test_result(
+        run_context, 0, CUT_TEST_RESULT_FAILURE,
+        "cut_assert_not_equal_double()", NULL,
+        cut_take_printf("<(1.02 < 1.01-0.1) && (1.01+0.1 < 1.02)>\n"
+                        "expected: <%g>\n"
+                        "   error: <%g>\n"
+                        "     min: <%g>\n"
+                        "     max: <%g>\n"
+                        "  actual: <%g>\n"
+                        "relation: <min < actual < max>",
+                        expected,
+                        error,
+                        expected - error,
+                        expected + error,
+                        actual),
+        FAIL_LOCATION,
+        "stub_not_equal_double");
 }
 
 void
@@ -768,17 +788,24 @@ stub_operator_double (void)
 void
 test_operator_double (void)
 {
+    gdouble lhs, rhs;
+
+    lhs = 1.1 + 1.1;
+    rhs = 2.2 + 4.4;
+
     test = cut_test_new("stub-operator-double", stub_operator_double);
     cut_assert_not_null(test);
 
     cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
-    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
-                           "stub-operator-double", NULL,
-                           "expected: <1.1 + 1.1> >= <2.2 + 4.4>\n"
-                           "  actual: <2.2> >= <6.6>",
-                           FAIL_LOCATION,
-                           "stub_operator_double");
+    cut_assert_test_result(
+        run_context, 0, CUT_TEST_RESULT_FAILURE,
+        "stub-operator-double", NULL,
+        cut_take_printf("expected: <1.1 + 1.1> >= <2.2 + 4.4>\n"
+                        "  actual: <%g> >= <%g>",
+                        lhs, rhs),
+        FAIL_LOCATION,
+        "stub_operator_double");
 }
 
 static void
