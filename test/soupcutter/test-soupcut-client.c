@@ -130,7 +130,7 @@ test_get_query (void)
 {
     const gchar *uri;
     GHashTable *query;
-    
+
     uri = serve(client);
 
     query = gcut_take_new_hash_table_string_string("name", "value", NULL);
@@ -148,10 +148,10 @@ test_set_base (void)
     uri = serve(client);
 
     soupcut_client_set_base(client, uri);
-    
+
     soupcut_client_get(client, NULL, NULL);
     assert_response_equal_body(cut_take_printf("Hello %s", uri), client);
-    
+
     soupcut_client_get(client, "/", NULL);
     assert_response_equal_body(cut_take_printf("Hello %s", uri), client);
 
@@ -168,7 +168,8 @@ test_set_base (void)
 
     soupcut_client_get(client, cut_take_printf("%s%s", uri_another, "another"),
                        NULL);
-    assert_response_equal_body(cut_take_printf("Hello %sanother", uri_another), client);
+    assert_response_equal_body(cut_take_printf("Hello %sanother", uri_another),
+                               client);
 }
 
 void
@@ -179,10 +180,10 @@ test_set_base_null (void)
     uri = serve(client);
 
     soupcut_client_set_base(client, NULL);
-    
+
     cut_assert_equal_uint(SOUP_STATUS_MALFORMED,
                           soupcut_client_get(client, NULL, NULL));
-    
+
     soupcut_client_get(client, uri, NULL);
     assert_response_equal_body(cut_take_printf("Hello %s", uri), client);
 }
