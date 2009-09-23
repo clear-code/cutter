@@ -193,6 +193,7 @@ extern "C" {
                                              replacement)),             \
          cut_pop_backtrace))
 
+#ifndef CUTTER_DISABLE_DEPRECATED
 /**
  * cut_append_diff:
  * @message: the string to be appended diff.
@@ -206,9 +207,49 @@ extern "C" {
  * as @message if the diff not interested. Don't free it.
  *
  * Since: 1.0.3
+ *
+ * Deprecated: 1.0.9: Use cut_set_expected() and
+ * cut_set_actual() instead.
  */
 #define cut_append_diff(message, from, to)                      \
     cut_take_string(cut_utils_append_diff(message, from, to))
+#endif
+
+/**
+ * cut_set_expected:
+ * @expected: the inspected expected object.
+ *
+ * Sets an inspected expected object to be used by the next
+ * assertion.
+ *
+ * If both of expected and actual object are set and diff of
+ * them is needed, the diff is generated automatically.
+ *
+ * See also cut_set_actual().
+ *
+ * Since: 1.0.9
+ */
+#define cut_set_expected(expected)                                      \
+    cut_test_context_set_expected(cut_get_current_test_context(),       \
+                                      expected)
+
+/**
+ * cut_set_actual:
+ * @expected: the inspected actual object.
+ *
+ * Sets an inspected actual object to be used by the next
+ * assertion.
+ *
+ * If both of expected and actual object are set and diff of
+ * them is needed, the diff is generated automatically.
+ *
+ * See also cut_set_expected().
+ *
+ * Since: 1.0.9
+ */
+#define cut_set_actual(actual)                                  \
+    cut_test_context_set_actual(cut_get_current_test_context(), \
+                                actual)
 
 /**
  * cut_inspect_string_array:

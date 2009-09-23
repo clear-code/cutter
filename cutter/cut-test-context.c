@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2009  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2009  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -89,6 +89,8 @@ struct _CutTestContextPrivate
     gchar *user_message;
     guint user_message_keep_count;
     GMutex *mutex;
+    gchar *expected;
+    gchar *actual;
 };
 
 enum
@@ -257,6 +259,9 @@ cut_test_context_init (CutTestContext *context)
     priv->user_message_keep_count = 0;
 
     priv->mutex = g_mutex_new();
+
+    priv->expected = NULL;
+    priv->actual = NULL;
 }
 
 static void
@@ -281,6 +286,20 @@ clear_user_message (CutTestContextPrivate *priv)
             g_free(priv->user_message);
             priv->user_message = NULL;
         }
+    }
+}
+
+static void
+clear_additional_test_result_data (CutTestContextPrivate *priv)
+{
+    if (priv->expected) {
+        g_free(priv->expected);
+        priv->expected = NULL;
+    }
+
+    if (priv->actual) {
+        g_free(priv->actual);
+        priv->actual = NULL;
     }
 }
 
@@ -350,6 +369,8 @@ dispose (GObject *object)
         g_mutex_free(priv->mutex);
         priv->mutex = NULL;
     }
+
+    clear_additional_test_result_data(priv);
 
     G_OBJECT_CLASS(cut_test_context_parent_class)->dispose(object);
 }
@@ -813,6 +834,10 @@ cut_test_context_register_result (CutTestContext *context,
                                  priv->user_message, system_message,
                                  priv->backtrace);
     clear_user_message(priv);
+
+    cut_test_result_set_expected(result, priv->expected);
+    cut_test_result_set_actual(result, priv->actual);
+    clear_additional_test_result_data(priv);
 
     if (priv->test) {
         CutProcess *process;
@@ -1465,6 +1490,28 @@ void
 cut_test_context_keep_user_message (CutTestContext *context)
 {
     CUT_TEST_CONTEXT_GET_PRIVATE(context)->user_message_keep_count++;
+}
+
+void
+cut_test_context_set_expected (CutTestContext *context, const gchar *expected)
+{
+    CutTestContextPrivate *priv;
+
+    priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+    if (priv->expected)
+        g_free(priv->expected);
+    priv->expected = g_strdup(expected);
+}
+
+void
+cut_test_context_set_actual (CutTestContext *context, const gchar *actual)
+{
+    CutTestContextPrivate *priv;
+
+    priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+    if (priv->actual)
+        g_free(priv->actual);
+    priv->actual = g_strdup(actual);
 }
 
 /*
