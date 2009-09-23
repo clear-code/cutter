@@ -85,19 +85,36 @@ cuttest_result_string_list_new_va_list (const gchar *test_name,
     APPEND(system_message);
     if (message) {
         APPEND(message);
-    } else if (user_message && system_message) {
-        gchar *computed_message;
-
-        computed_message = g_strdup_printf("%s\n%s",
-                                           user_message, system_message);
-        APPEND(computed_message);
-        g_free(computed_message);
-    } else if (user_message) {
-        APPEND(user_message);
-    } else if (system_message) {
-        APPEND(system_message);
     } else {
-        APPEND(NULL);
+        GString *computed_message;
+
+        computed_message = g_string_new(NULL);
+        if (user_message)
+            g_string_append(computed_message, user_message);
+
+        if (system_message) {
+            if (computed_message->len > 0)
+                g_string_append(computed_message, "\n");
+            g_string_append(computed_message, system_message);
+        }
+
+        if (expected) {
+            if (computed_message->len > 0)
+                g_string_append(computed_message, "\n");
+            g_string_append_printf(computed_message, "expected: <%s>", expected);
+        }
+
+        if (actual) {
+            if (computed_message->len > 0)
+                g_string_append(computed_message, "\n");
+            g_string_append_printf(computed_message, "  actual: <%s>", actual);
+        }
+
+        if (computed_message->len > 0)
+            APPEND(computed_message->str);
+        else
+            APPEND(NULL);
+        g_string_free(computed_message, TRUE);
     }
     APPEND(expected);
     APPEND(actual);

@@ -1,5 +1,12 @@
 2009-09-23  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/lib/cuttest-assertions.c: support message generation with
+	expected and actual.
+
+	* cutter/cut-assertions-helper.c, cutter/cut-assertions-helper.c:
+	cut_assert_equal_string() uses cut_set_expected() and
+	cut_set_actual() instead of cut_append_diff().
+
 	* test/lib/cuttest-assertions.[ch]: support expected and actual.
 	* test/: follow the above changes.
 

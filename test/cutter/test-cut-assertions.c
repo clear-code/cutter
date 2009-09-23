@@ -1103,7 +1103,7 @@ test_assert_message_with_format_string (void)
                            "stub-assert-message-with-string",
                            "expected and actual have format string",
                            "<\"%s\" == \"%d\">",
-                           NULL, NULL,
+                           "%s", "%d",
                            FAIL_LOCATION,
                            "stub_assert_message_with_format_string",
                            NULL);
