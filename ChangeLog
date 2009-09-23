@@ -1,5 +1,9 @@
 2009-09-23  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-macros.h: add CUT_STRINGIFY.
+
+	* cutter/cut-helper.h: use CUT_STRINGIFY.
+
 	* cutter/cut-test-result.[ch],
 	test/cutter/test-cut-test-result.c: add fields that hold expected,
 	actual and diff information.

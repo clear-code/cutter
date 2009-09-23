@@ -241,7 +241,7 @@ extern "C" {
                                     CUT_RELATIVE_PATH,                  \
                                     __FILE__, __LINE__,                 \
                                     CUT_FUNCTION,                       \
-                                    #expression)
+                                    CUT_STRINGIFY(expression))
 
 /**
  * cut_pop_backtrace:
@@ -388,7 +388,7 @@ void cut_pop_backtrace(void);
                                     CUT_RELATIVE_PATH,                  \
                                     __FILE__, __LINE__,                 \
                                     CUT_FUNCTION,                       \
-                                    #info_expression);                  \
+                                    CUT_STRINGIFY(info_expression));    \
     do {                                                                \
         expression;                                                     \
     } while (0);                                                        \

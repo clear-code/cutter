@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2009  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -46,6 +46,8 @@ extern "C" {
 #  define CUT_FUNCTION __FUNCTION__
 #endif
 
+#define CUT_STRINGIFY(macro_or_string)	CUT_STRINGIFY_ARG(macro_or_string)
+#define	CUT_STRINGIFY_ARG(contents)	#contents
 
 #ifdef __cplusplus
 }
