@@ -1,5 +1,8 @@
 2009-09-23  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-result.c, test/cutter/test-cut-test-result.c:
+	generated message includes expected, actual and diff.
+
 	* cutter/cut-macros.h: add CUT_STRINGIFY.
 
 	* cutter/cut-helper.h: use CUT_STRINGIFY.

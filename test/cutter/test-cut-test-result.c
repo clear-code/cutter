@@ -112,12 +112,28 @@ test_get_message_full (void)
                                  "user-message",
                                  "system-message",
                                  backtrace);
-    cut_assert_equal_string("user-message\nsystem-message",
+    cut_assert_equal_string("user-message\n"
+                            "system-message",
                             cut_test_result_get_message(result));
     cut_assert_equal_string("user-message",
                             cut_test_result_get_user_message(result));
     cut_assert_equal_string("system-message",
                             cut_test_result_get_system_message(result));
+
+    cut_test_result_set_expected(result, "a\nb\nc");
+    cut_test_result_set_actual(result, "a\nB\nc");
+
+    cut_assert_equal_string("user-message\n"
+                            "system-message\n"
+                            "expected: <a\nb\nc>\n"
+                            "  actual: <a\nB\nc>\n"
+                            "\n"
+                            "diff:\n"
+                            "  a\n"
+                            "- b\n"
+                            "+ B\n"
+                            "  c",
+                            cut_test_result_get_message(result));
 }
 
 void

@@ -48,6 +48,7 @@ struct _CutTestResultPrivate
     CutTestSuite *test_suite;
     CutTestData *test_data;
     gchar *message;
+    gboolean user_set_message;
     gchar *user_message;
     gchar *system_message;
     GList *backtrace;
@@ -220,6 +221,7 @@ cut_test_result_init (CutTestResult *result)
     priv->test_suite = NULL;
     priv->test_data = NULL;
     priv->message = NULL;
+    priv->user_set_message = FALSE;
     priv->user_message = NULL;
     priv->system_message = NULL;
     priv->backtrace = NULL;
@@ -502,20 +504,69 @@ cut_test_result_get_status (CutTestResult *result)
     return CUT_TEST_RESULT_GET_PRIVATE(result)->status;
 }
 
+static void
+reset_message (CutTestResultPrivate *priv)
+{
+    if (priv->user_set_message)
+        return;
+
+    if (priv->message) {
+        g_free(priv->message);
+        priv->message = NULL;
+    }
+}
+
 const gchar *
 cut_test_result_get_message (CutTestResult *result)
 {
     CutTestResultPrivate *priv = CUT_TEST_RESULT_GET_PRIVATE(result);
 
-    if (!priv->message && (priv->user_message || priv->system_message)) {
-        if (priv->user_message && priv->system_message) {
-            priv->message = g_strdup_printf("%s\n%s",
-                                            priv->user_message,
-                                            priv->system_message);
+    if (!priv->message) {
+        GString *message;
+        const gchar *diff, *folded_diff;
+
+        message = g_string_new(NULL);
+        if (priv->user_message)
+            g_string_append(message, priv->user_message);
+
+        if (priv->system_message) {
+            if (message->len > 0)
+                g_string_append(message, "\n");
+            g_string_append(message, priv->system_message);
+        }
+
+        if (priv->expected) {
+            if (message->len > 0)
+                g_string_append(message, "\n");
+            g_string_append_printf(message, "expected: <%s>", priv->expected);
+        }
+
+        if (priv->actual) {
+            if (message->len > 0)
+                g_string_append(message, "\n");
+            g_string_append_printf(message, "  actual: <%s>", priv->actual);
+        }
+
+        diff = cut_test_result_get_diff(result);
+        if (diff) {
+            if (message->len > 0)
+                g_string_append(message, "\n\n");
+            g_string_append(message, "diff:\n");
+            g_string_append(message, diff);
+        }
+
+        folded_diff = cut_test_result_get_folded_diff(result);
+        if (folded_diff) {
+            if (message->len > 0)
+                g_string_append(message, "\n\n");
+            g_string_append(message, "folded diff:\n");
+            g_string_append(message, folded_diff);
+        }
+
+        if (message->len > 0) {
+            priv->message = g_string_free(message, FALSE);
         } else {
-            priv->message = g_strdup(priv->user_message ?
-                                     priv->user_message :
-                                     priv->system_message);
+            g_string_free(message, TRUE);
         }
     }
 
@@ -947,9 +998,7 @@ cut_test_result_set_user_message (CutTestResult *result,
     if (user_message && user_message[0])
         priv->user_message = g_strdup(user_message);
 
-    if (priv->message)
-        g_free(priv->message);
-    priv->message = NULL;
+    reset_message(priv);
 }
 
 void
@@ -962,8 +1011,13 @@ cut_test_result_set_message (CutTestResult *result,
         g_free(priv->message);
         priv->message = NULL;
     }
-    if (message)
+
+    if (message) {
         priv->message = g_strdup(message);
+        priv->user_set_message = TRUE;
+    } else {
+        priv->user_set_message = FALSE;
+    }
 }
 
 void
@@ -979,9 +1033,7 @@ cut_test_result_set_system_message (CutTestResult *result,
     if (system_message && system_message[0])
         priv->system_message = g_strdup(system_message);
 
-    if (priv->message)
-        g_free(priv->message);
-    priv->message = NULL;
+    reset_message(priv);
 }
 
 void
@@ -1015,17 +1067,24 @@ cut_test_result_set_elapsed (CutTestResult *result,
 static void
 reset_diff (CutTestResultPrivate *priv)
 {
+    gboolean need_message_regeneration = FALSE;
+
     if (!priv->user_set_diff) {
         if (priv->diff)
             g_free(priv->diff);
         priv->diff = NULL;
+        need_message_regeneration = TRUE;
     }
 
     if (!priv->user_set_folded_diff) {
         if (priv->folded_diff)
             g_free(priv->folded_diff);
         priv->folded_diff = NULL;
+        need_message_regeneration = TRUE;
     }
+
+    if (need_message_regeneration)
+        reset_message(priv);
 }
 
 void
