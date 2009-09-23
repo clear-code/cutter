@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2009  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2009  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -437,8 +437,8 @@ cb_start_test_case (CutRunContext *run_context, CutTestCase *test_case,
         return;
 
     print_with_color(console, GREEN_BACK_COLOR,
-                     "%s:", cut_test_get_name(CUT_TEST(test_case)));
-    g_print("\n");
+                     "%s", cut_test_get_name(CUT_TEST(test_case)));
+    g_print(":\n");
 }
 
 static void
@@ -451,8 +451,8 @@ cb_start_test_iterator (CutRunContext *run_context,
 
     g_print("  ");
     print_with_color(console, BLUE_BACK_COLOR,
-                     "%s:", cut_test_get_name(CUT_TEST(test_iterator)));
-    g_print("\n");
+                     "%s", cut_test_get_name(CUT_TEST(test_iterator)));
+    g_print(":\n");
 }
 
 static void
@@ -684,13 +684,67 @@ print_each_attribute (gpointer key, gpointer value, gpointer data)
 
 static void
 print_test_attributes (CutConsoleUI *console, CutTestResultStatus status,
-                     CutTest *test)
+                       CutTest *test)
 {
     ConsoleAndStatus info;
     info.console = console;
     info.status = status;
     g_hash_table_foreach(cut_test_get_attributes(test),
                          (GHFunc)print_each_attribute, &info);
+}
+
+static void
+print_result_detail (CutConsoleUI *console, CutTestResultStatus status,
+                     CutTestResult *result)
+{
+    const gchar *expected, *actual;
+
+    expected = cut_test_result_get_expected(result);
+    actual = cut_test_result_get_actual(result);
+    if (expected && actual) {
+        const gchar *user_message, *system_message;
+        const gchar *diff, *folded_diff;
+
+        user_message = cut_test_result_get_user_message(result);
+        system_message = cut_test_result_get_system_message(result);
+        diff = cut_test_result_get_diff(result);
+        folded_diff = cut_test_result_get_folded_diff(result);
+        if (user_message) {
+            g_print("\n");
+            print_for_status(console, status, "%s", user_message);
+        }
+
+        if (system_message) {
+            g_print("\n");
+            print_for_status(console, status, "%s", system_message);
+        }
+
+        g_print("\n");
+        g_print("expected: <");
+        print_for_status(console, CUT_TEST_RESULT_SUCCESS, "%s", expected);
+        g_print(">\n");
+        g_print("  actual: <");
+        print_for_status(console, CUT_TEST_RESULT_FAILURE, "%s", actual);
+        g_print(">");
+
+        if (diff) {
+            g_print("\n\n");
+            g_print("diff:\n%s", diff);
+        }
+
+        if (folded_diff) {
+            g_print("\n\n");
+            g_print("folded_diff:\n%s", folded_diff);
+        }
+    } else {
+        const gchar *message;
+
+        message = cut_test_result_get_message(result);
+        if (message) {
+            g_print("\n");
+            print_for_status(console, status, "%s", message);
+        }
+    }
 }
 
 static void
@@ -724,14 +778,12 @@ print_results (CutConsoleUI *console, CutRunContext *run_context)
         CutTestResultStatus status;
         CutTest *test;
         const GList *node;
-        const gchar *message;
         const gchar *name;
 
         status = cut_test_result_get_status(result);
         if (status == CUT_TEST_RESULT_SUCCESS)
             continue;
 
-        message = cut_test_result_get_message(result);
         name = cut_test_result_get_test_name(result);
         if (!name)
             name = cut_test_result_get_test_case_name(result);
@@ -739,17 +791,15 @@ print_results (CutConsoleUI *console, CutRunContext *run_context)
             name = cut_test_result_get_test_suite_name(result);
 
         g_print("\n%d) ", i);
-        print_for_status(console, status, "%s: %s",
-                         status_to_name(status), name);
+        print_for_status(console, status, "%s", status_to_name(status));
+        g_print(": %s", name);
 
         test = cut_test_result_get_test(result);
         if (test)
             print_test_attributes(console, status, test);
 
-        if (message) {
-            g_print("\n");
-            print_for_status(console, status, "%s", message);
-        }
+        print_result_detail(console, status, result);
+
         g_print("\n");
         for (node = cut_test_result_get_backtrace(result);
              node;

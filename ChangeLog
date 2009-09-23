@@ -1,5 +1,7 @@
 2009-09-23  Kouhei Sutou  <kou@cozmixng.org>
 
+	* module/ui/cut-console-ui.c: colorize more finely.
+
 	* test/lib/cuttest-assertions.c: support message generation with
 	expected and actual.
 
