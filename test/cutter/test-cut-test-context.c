@@ -297,15 +297,16 @@ test_relative_path (void)
     assert_location = cut_take_printf("%s:10", test_source_path);
     test_location = cut_take_printf("%s:16", test_source_path);
     g_free(test_source_path);
-    cut_assert_test_result_with_message(pipeline, 0, CUT_TEST_RESULT_FAILURE,
-                                        "test_fail",
-                                        NULL,
-                                        NULL,
-                                        "always fail",
-                                        assert_location,
-                                        "cut_assert_always_fail",
-                                        test_location,
-                                        "test_fail");
+    cut_assert_test_result_with_message(
+        pipeline, 0, CUT_TEST_RESULT_FAILURE,
+        "test_fail",
+        NULL,
+        NULL,
+        "always fail",
+        NULL, NULL,
+        assert_location, "cut_assert_always_fail",
+        test_location, "test_fail",
+        NULL);
 }
 
 /*
