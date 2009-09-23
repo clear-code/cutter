@@ -729,6 +729,8 @@ print_diff_with_one_side_change (CutConsoleUI *console,
         }
         line++;
     }
+
+    g_print("%s", line);
 }
 
 static void
@@ -756,24 +758,54 @@ print_diff_with_both_change (CutConsoleUI *console,
         print_with_color(console, DIFF_IN_LINE_CHANGE_COLOR, "*");
     g_print(" ");
 
-    for (;
-         expected_char_diff_line[0];
-         expected_line++, expected_char_diff_line++) {
-        switch (expected_char_diff_line[0]) {
-        case '^':
-            have_diff_char = TRUE;
-            print_with_color(console, DIFF_IN_LINE_EXPECTED_COLOR,
-                             "%c", expected_line[0]);
-            break;
-        case '-':
-            print_with_color(console, DIFF_IN_LINE_EXPECTED_COLOR,
-                             "%c", expected_line[0]);
-            break;
-        default:
-            g_print("%c", expected_line[0]);
+    while (expected_char_diff_line[0] || actual_char_diff_line[0]) {
+        gboolean check_actual = TRUE;
+
+        if (expected_char_diff_line[0]) {
+            switch (expected_char_diff_line[0]) {
+            case '^':
+                print_with_color(console, DIFF_IN_LINE_EXPECTED_COLOR,
+                                 "%c", expected_line[0]);
+                actual_line++;
+                actual_char_diff_line++;
+                check_actual = FALSE;
+                break;
+            case '-':
+                print_with_color(console, DIFF_IN_LINE_EXPECTED_COLOR,
+                                 "%c", expected_line[0]);
+                check_actual = FALSE;
+                break;
+            default:
+                if (!actual_char_diff_line[0]) {
+                    g_print("%c", expected_line[0]);
+                    actual_line++;
+                    check_actual = FALSE;
+                }
+                break;
+            }
+        }
+
+        if (check_actual && actual_char_diff_line[0]) {
+            switch (actual_char_diff_line[0]) {
+            case '^':
+                break;
+            case '+':
+                print_with_color(console, DIFF_IN_LINE_ACTUAL_COLOR,
+                                 "%c", actual_line[0]);
+                break;
+            default:
+                g_print("%c", actual_line[0]);
+                if (expected_line[0])
+                    expected_line++;
+                if (expected_char_diff_line[0])
+                    expected_char_diff_line++;
+                break;
+            }
             actual_line++;
             actual_char_diff_line++;
-            break;
+        } else {
+            expected_line++;
+            expected_char_diff_line++;
         }
     }
 
@@ -783,30 +815,23 @@ print_diff_with_both_change (CutConsoleUI *console,
         actual_char_diff_line = original_actual_char_diff_line;
         print_with_color(console, DIFF_IN_LINE_ACTUAL_COLOR, "+");
         g_print(" ");
-    }
 
-    for (; actual_char_diff_line[0]; actual_line++, actual_char_diff_line++) {
-        switch (actual_char_diff_line[0]) {
-        case '^':
-            print_with_color(console, DIFF_IN_LINE_ACTUAL_COLOR,
-                             "%c", actual_line[0]);
-            break;
-        case '+':
-            print_with_color(console, DIFF_IN_LINE_ACTUAL_COLOR,
-                             "%c", actual_line[0]);
-            break;
-        default:
-            if (have_diff_char) {
+        while (actual_char_diff_line[0]) {
+            switch (actual_char_diff_line[0]) {
+            case '^':
+                print_with_color(console, DIFF_IN_LINE_ACTUAL_COLOR,
+                                 "%c", actual_line[0]);
+                break;
+            default:
                 g_print(" ");
-            } else {
-                g_print("%c", actual_line[0]);
-            }
             break;
-        }
-    }
-
-    if (!have_diff_char)
+            }
+            actual_line++;
+            actual_char_diff_line++;
+      }
+    } else {
         g_print("%s", actual_line);
+    }
 }
 
 static void
@@ -919,8 +944,8 @@ print_result_detail (CutConsoleUI *console, CutTestResultStatus status,
 
         if (folded_diff) {
             g_print("\n\n");
-            g_print("folded_diff:\n");
-            print_diff(console, diff);
+            g_print("folded diff:\n");
+            print_diff(console, folded_diff);
         }
     } else {
         const gchar *message;
