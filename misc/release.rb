@@ -7,14 +7,14 @@ require 'logger'
 
 if ARGV.size < 7
   puts "Usage: #{$0} " +
-         "SF_USER_NAME PROJECT_NAME PROJECT_ID PACKAGE_NAME RELEASE_NAME " +
+         "SF_USER_NAME PROJECT_ID PROJECT_NAME PACKAGE_NAME RELEASE_NAME " +
          "README NEWS FILES..."
-  puts " e.g.: #{$0} ktou Cutter cutter cutter 0.3.0 README NEWS " +
+  puts " e.g.: #{$0} ktou cutter Cutter cutter 0.3.0 README NEWS " +
          "cutter-0.3.0.tar.gz cutter-0.3.0.tar.bz2"
   exit(1)
 end
 
-sf_user_name, project_name, project_id, package_name, release_name, \
+sf_user_name, project_id, project_name, package_name, release_name, \
   readme, news, *files = ARGV
 
 def read_password(prompt, input=$stdin, output=$stdout)
@@ -126,8 +126,8 @@ def submit_news(agent, submit_news_page, project_name, package_name,
   agent.submit(submit_news_form, submit_news_form.buttons.first)
 end
 
-def main(sf_user_name, project_name, package_name, release_name, readme, news,
-         files)
+def main(sf_user_name, project_id, project_name,
+         package_name, release_name, readme, news, files)
   agent = WWW::Mechanize.new do |_agent|
     # _agent.log = Logger.new(STDOUT)
   end
@@ -136,7 +136,7 @@ def main(sf_user_name, project_name, package_name, release_name, readme, news,
 
   project_page = go_project_page(agent, my_page, project_name)
   development_page = go_development_page(agent, project_page)
-  upload_files(sf_user_name, project_name, package_name,
+  upload_files(sf_user_name, project_id, package_name,
                release_name, news, files)
 
   news_page = go_news_page(agent, development_page)
@@ -145,4 +145,5 @@ def main(sf_user_name, project_name, package_name, release_name, readme, news,
               release_name, readme, news)
 end
 
-main(sf_user_name, project_name, package_name, release_name, readme, news, files)
+main(sf_user_name, project_id, project_name,
+     package_name, release_name, readme, news, files)

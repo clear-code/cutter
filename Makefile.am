@@ -48,7 +48,7 @@ upload: upload-doc
 
 release: dist
 	$(srcdir)/misc/release.rb				\
-	  $(SF_USER) $(SF_PROJECT_NAME) $(SF_PROJECT_ID)	\
+	  $(SF_USER) $(SF_PROJECT_ID) $(SF_PROJECT_NAME)	\
 	  $(PACKAGE_NAME) $(VERSION) README NEWS		\
 	  $(PACKAGE)-$(VERSION).tar.gz
 
