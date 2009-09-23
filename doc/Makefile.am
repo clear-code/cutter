@@ -30,7 +30,7 @@ EXTRA_DIST += $(dist_ja_man1_mans)
 jman: $(dist_ja_man1_mans)
 
 if HAVE_RD2
-install-data-local: cutter.jman
+install-data-local: jman
 else
 install-data-local:
 endif
