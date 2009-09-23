@@ -5,16 +5,16 @@ require 'rubygems'
 require 'mechanize'
 require 'logger'
 
-if ARGV.size < 6
+if ARGV.size < 7
   puts "Usage: #{$0} " +
-         "SF_USER_NAME PROJECT_NAME PACKAGE_NAME RELEASE_NAME README NEWS " +
-         "FILES..."
-  puts " e.g.: #{$0} ktou Cutter cutter 0.3.0 README NEWS " +
+         "SF_USER_NAME PROJECT_NAME PROJECT_ID PACKAGE_NAME RELEASE_NAME " +
+         "README NEWS FILES..."
+  puts " e.g.: #{$0} ktou Cutter cutter cutter 0.3.0 README NEWS " +
          "cutter-0.3.0.tar.gz cutter-0.3.0.tar.bz2"
   exit(1)
 end
 
-sf_user_name, project_name, package_name, release_name, \
+sf_user_name, project_name, project_id, package_name, release_name, \
   readme, news, *files = ARGV
 
 def read_password(prompt, input=$stdin, output=$stdout)
@@ -49,10 +49,8 @@ def go_project_page(agent, my_page, project_name)
   agent.click(project_page_link)
 end
 
-def upload_files(sf_user_name, project_name, package_name, release_name,
+def upload_files(sf_user_name, project_id, package_name, release_name,
                  news, files)
-  project_name = project_name.downcase.gsub(/ /, '-')
-
   dist_top_dir = "dist"
   FileUtils.rm_rf(dist_top_dir)
   dist_dir = File.join(dist_top_dir, package_name, release_name)
@@ -62,9 +60,9 @@ def upload_files(sf_user_name, project_name, package_name, release_name,
     note.print(latest_release_changes(news))
   end
   Dir.chdir(dist_top_dir) do
-    host = "#{sf_user_name},#{project_name}@frs.sourceforge.net"
+    host = "#{sf_user_name},#{project_id}@frs.sourceforge.net"
     path = ["", "home", "frs", "project",
-            project_name[0, 1], project_name[0, 2], project_name].join("/")
+            project_id[0, 1], project_id[0, 2], project_id].join("/")
     system("rsync", "-avz", "./", "#{host}:#{path}/")
   end
 end

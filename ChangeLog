@@ -1,3 +1,9 @@
+2009-09-23  Kouhei Sutou  <kou@cozmixng.org>
+
+	* misc/release.rb: require project ID (project user name).
+
+	* Makefile.am, configure.ac: follow the misc/release.rb change.
+
 2009-09-01  Kouhei Sutou  <kou@clear-code.com>
 
 	* test/cutter/test-cut-utils.c (test_compare_direct): fix a strange
