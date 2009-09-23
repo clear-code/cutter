@@ -55,10 +55,20 @@
 #define BLUE_BACK_COLOR "\033[01;44m"
 #define MAGENTA_COLOR "\033[01;35m"
 #define CYAN_COLOR "\033[01;36m"
+#define CYAN_BACK_COLOR "\033[01;46m"
 #define WHITE_COLOR "\033[01;37m"
+#define WHITE_BACK_COLOR "\033[01;47m"
+#define BLACK_BACK_COLOR "\033[01;40m"
 #define NORMAL_COLOR "\033[00m"
 
 #define CRASH_COLOR RED_BACK_COLOR WHITE_COLOR
+
+#define DIFF_LINE_EXPECTED_COLOR GREEN_COLOR
+#define DIFF_LINE_ACTUAL_COLOR RED_COLOR
+#define DIFF_LINE_CHANGE_COLOR CYAN_COLOR
+#define DIFF_IN_LINE_EXPECTED_COLOR GREEN_BACK_COLOR WHITE_COLOR
+#define DIFF_IN_LINE_ACTUAL_COLOR RED_BACK_COLOR WHITE_COLOR
+#define DIFF_IN_LINE_CHANGE_COLOR CYAN_BACK_COLOR WHITE_COLOR
 
 typedef struct _CutConsoleUI CutConsoleUI;
 typedef struct _CutConsoleUIClass CutConsoleUIClass;
@@ -694,6 +704,180 @@ print_test_attributes (CutConsoleUI *console, CutTestResultStatus status,
 }
 
 static void
+print_diff_with_one_side_change (CutConsoleUI *console,
+                                 const gchar *line,
+                                 const gchar *char_diff_line)
+{
+    print_with_color(console, DIFF_IN_LINE_CHANGE_COLOR, "*");
+    g_print(" ");
+
+    for (; char_diff_line[0]; char_diff_line++) {
+        switch (char_diff_line[0]) {
+        case '-':
+            print_with_color(console,
+                             DIFF_IN_LINE_EXPECTED_COLOR,
+                             "%c", line[0]);
+            break;
+        case '+':
+            print_with_color(console,
+                             DIFF_IN_LINE_ACTUAL_COLOR,
+                             "%c", line[0]);
+            break;
+        default:
+            g_print("%c", line[0]);
+            break;
+        }
+        line++;
+    }
+}
+
+static void
+print_diff_with_both_change (CutConsoleUI *console,
+                             const gchar *expected_line,
+                             const gchar *expected_char_diff_line,
+                             const gchar *actual_line,
+                             const gchar *actual_char_diff_line)
+{
+    const gchar *original_actual_line = actual_line;
+    const gchar *original_actual_char_diff_line = actual_char_diff_line;
+    gboolean have_diff_char = FALSE;
+    gint i;
+
+    for (i = 0; expected_char_diff_line[i]; i++) {
+        if (expected_char_diff_line[i] == '^') {
+            have_diff_char = TRUE;
+            break;
+        }
+    }
+
+    if (have_diff_char)
+        print_with_color(console, DIFF_IN_LINE_EXPECTED_COLOR, "-");
+    else
+        print_with_color(console, DIFF_IN_LINE_CHANGE_COLOR, "*");
+    g_print(" ");
+
+    for (;
+         expected_char_diff_line[0];
+         expected_line++, expected_char_diff_line++) {
+        switch (expected_char_diff_line[0]) {
+        case '^':
+            have_diff_char = TRUE;
+            print_with_color(console, DIFF_IN_LINE_EXPECTED_COLOR,
+                             "%c", expected_line[0]);
+            break;
+        case '-':
+            print_with_color(console, DIFF_IN_LINE_EXPECTED_COLOR,
+                             "%c", expected_line[0]);
+            break;
+        default:
+            g_print("%c", expected_line[0]);
+            actual_line++;
+            actual_char_diff_line++;
+            break;
+        }
+    }
+
+    if (have_diff_char) {
+        g_print("%s\n", expected_line);
+        actual_line = original_actual_line;
+        actual_char_diff_line = original_actual_char_diff_line;
+        print_with_color(console, DIFF_IN_LINE_ACTUAL_COLOR, "+");
+        g_print(" ");
+    }
+
+    for (; actual_char_diff_line[0]; actual_line++, actual_char_diff_line++) {
+        switch (actual_char_diff_line[0]) {
+        case '^':
+            print_with_color(console, DIFF_IN_LINE_ACTUAL_COLOR,
+                             "%c", actual_line[0]);
+            break;
+        case '+':
+            print_with_color(console, DIFF_IN_LINE_ACTUAL_COLOR,
+                             "%c", actual_line[0]);
+            break;
+        default:
+            if (have_diff_char) {
+                g_print(" ");
+            } else {
+                g_print("%c", actual_line[0]);
+            }
+            break;
+        }
+    }
+
+    if (!have_diff_char)
+        g_print("%s", actual_line);
+}
+
+static void
+print_diff (CutConsoleUI *console, const gchar *diff)
+{
+    gchar **lines, **_lines;
+
+    lines = g_regex_split_simple("\r?\n", diff, 0, 0);
+    for (_lines = lines; *_lines; _lines++) {
+        const gchar *line, *line2, *line3 = NULL, *line4 = NULL;
+
+        line = *_lines;
+        line2 = *(_lines + 1);
+        if (line2)
+            line3 = *(_lines + 2);
+        if (line3)
+            line4 = *(_lines + 3);
+        switch (line[0]) {
+        case '-':
+            if ((line2 && line2[0] == '+') &&
+                (line3 && line3[0] == '?')) {
+                const gchar *actual_line = line2;
+                const gchar *actual_char_diff_line = line3;
+
+                print_diff_with_one_side_change(console,
+                                                actual_line + 2,
+                                                actual_char_diff_line + 2);
+                _lines += 2;
+            } else if ((line2 && line2[0] == '?') &&
+                       (line3 && line3[0] == '+')) {
+                const gchar *expected_char_diff_line = line2;
+                const gchar *actual_line = line3;
+
+                if (line4 && line4[0] == '?') {
+                    const gchar *actual_char_diff_line = line4;
+
+                    print_diff_with_both_change(console,
+                                                line + 2,
+                                                expected_char_diff_line + 2,
+                                                actual_line + 2,
+                                                actual_char_diff_line + 2);
+                    _lines++;
+                } else {
+                    print_diff_with_one_side_change(console,
+                                                    line + 2,
+                                                    expected_char_diff_line + 2);
+                }
+                _lines += 2;
+            } else {
+                print_with_color(console, DIFF_LINE_EXPECTED_COLOR,
+                                 "%s", line);
+            }
+            break;
+        case '+':
+            print_with_color(console, DIFF_LINE_ACTUAL_COLOR,
+                             "%s", line);
+            break;
+        case '?':
+            print_with_color(console, DIFF_LINE_CHANGE_COLOR,
+                             "%s", line);
+            break;
+        default:
+            g_print("%s", line);
+            break;
+        }
+        g_print("\n");
+    }
+    g_strfreev(lines);
+}
+
+static void
 print_result_detail (CutConsoleUI *console, CutTestResultStatus status,
                      CutTestResult *result)
 {
@@ -729,12 +913,14 @@ print_result_detail (CutConsoleUI *console, CutTestResultStatus status,
 
         if (diff) {
             g_print("\n\n");
-            g_print("diff:\n%s", diff);
+            g_print("diff:\n");
+            print_diff(console, diff);
         }
 
         if (folded_diff) {
             g_print("\n\n");
-            g_print("folded_diff:\n%s", folded_diff);
+            g_print("folded_diff:\n");
+            print_diff(console, diff);
         }
     } else {
         const gchar *message;
