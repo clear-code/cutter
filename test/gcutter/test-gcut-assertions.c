@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2009  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2009  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -198,8 +198,9 @@ test_equal_type (void)
                            "<G_TYPE_INT == G_TYPE_STRING>\n"
                            "expected: <gint>\n"
                            "  actual: <gchararray>",
-                           FAIL_LOCATION,
-                           "stub_equal_type");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_equal_type",
+                           NULL);
 }
 
 
@@ -231,8 +232,9 @@ test_equal_value (void)
                            "<value1 == value2>\n"
                            "expected: <10> (gint)\n"
                            "  actual: <\"String\"> (gchararray)",
-                           FAIL_LOCATION,
-                           "stub_equal_value");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_equal_value",
+                           NULL);
 }
 
 static gboolean
@@ -291,8 +293,9 @@ test_equal_list (void)
         "?                    -\n"
         "+ (CCC: <-1000>, CCC: <2000>)\n"
         "?        + +            +",
-        FAIL_LOCATION,
-        "stub_equal_list");
+        NULL, NULL,
+        FAIL_LOCATION, "stub_equal_list",
+        NULL);
 }
 
 static void
@@ -329,8 +332,9 @@ test_equal_list_int (void)
                            "?      ^^\n"
                            "+ (-1000, 2000)\n"
                            "?  +   + ^   +",
-                           FAIL_LOCATION,
-                           "stub_equal_list_int");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_equal_list_int",
+                           NULL);
 }
 
 static void
@@ -366,8 +370,9 @@ test_equal_list_uint (void)
                            "- (100, 200)\n"
                            "+ (1000, 2000)\n"
                            "?     +     +",
-                           FAIL_LOCATION,
-                           "stub_equal_list_uint");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_equal_list_uint",
+                           NULL);
 }
 
 static void
@@ -400,8 +405,9 @@ test_equal_list_string (void)
                            "<list1 == list2>\n"
                            "expected: <(\"abc\", \"def\")>\n"
                            "  actual: <(\"zyx\", \"wvu\")>",
-                           FAIL_LOCATION,
-                           "stub_equal_list_string");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_equal_list_string",
+                           NULL);
 }
 
 static void
@@ -466,8 +472,9 @@ test_equal_list_string_other_null (void)
                            "<list1 == list2>\n"
                            "expected: <(\"abc\", \"abc\", \"def\")>\n"
                            "  actual: <(NULL, \"abc\", \"def\")>",
-                           FAIL_LOCATION,
-                           "stub_equal_list_string_other_null");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_equal_list_string_other_null",
+                           NULL);
 }
 
 static void
@@ -516,8 +523,9 @@ test_equal_list_enum (void)
                            "equal_list_enum test",
                            NULL,
                            message_with_diff,
-                           FAIL_LOCATION,
-                           "stub_equal_list_enum");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_equal_list_enum",
+                           NULL);
 }
 
 static void
@@ -574,8 +582,9 @@ test_equal_list_flags (void)
                            "equal_list_flags test",
                            NULL,
                            message_with_diff,
-                           FAIL_LOCATION,
-                           "stub_equal_list_flags");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_equal_list_flags",
+                           NULL);
 }
 
 static void
@@ -641,8 +650,9 @@ test_equal_list_object (void)
                            "equal_list_object test",
                            NULL,
                            message_with_diff,
-                           FAIL_LOCATION,
-                           "stub_equal_list_object");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_equal_list_object",
+                           NULL);
 }
 
 static void
@@ -689,8 +699,9 @@ test_equal_hash_table (void)
                            "<g_str_equal(hash1[key], hash2[key]) == TRUE>\n"
                            "expected: <{1 => \"11\", 10 => \"22\"}>\n"
                            "  actual: <{2 => \"99\", 20 => \"88\"}>",
-                           FAIL_LOCATION,
-                           "stub_equal_hash_table");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_equal_hash_table",
+                           NULL);
 }
 
 static void
@@ -725,8 +736,9 @@ test_equal_hash_table_string_string (void)
                            "<hash1 == hash2>\n"
                            "expected: <{\"abc\" => \"11\", \"def\" => \"22\"}>\n"
                            "  actual: <{\"wvu\" => \"88\", \"zyx\" => \"99\"}>",
-                           FAIL_LOCATION,
-                           "stub_equal_hash_table_string_string");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_equal_hash_table_string_string",
+                           NULL);
 }
 
 static void
@@ -751,8 +763,9 @@ test_error (void)
                            NULL,
                            "expected: <error> is NULL\n"
                            "  actual: <g-file-error-quark:4: not found>",
-                           FAIL_LOCATION,
-                           "stub_error");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_error",
+                           NULL);
 }
 
 static void
@@ -787,8 +800,9 @@ test_equal_error (void)
                            "?                          ^^^^^^\n"
                            "+ g-file-error-quark:4: no entry\n"
                            "?                         +++ ^^",
-                           FAIL_LOCATION,
-                           "stub_equal_error");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_equal_error",
+                           NULL);
 }
 
 static void
@@ -826,8 +840,9 @@ test_equal_enum (void)
         "?                        ^^ ^^^^                 ^^ ^^^^ ^\n"
         "+ #<CutTestResultStatus: pending(CUT_TEST_RESULT_PENDING:3)>\n"
         "?                        ^^^^ ^^                 ^^^^ ^^ ^",
-        FAIL_LOCATION,
-        "stub_equal_enum");
+        NULL, NULL,
+        FAIL_LOCATION, "stub_equal_enum",
+        NULL);
 }
 
 static void
@@ -868,8 +883,9 @@ test_equal_flags (void)
                            "(CUTTEST_ASSERT_STUB_THIRD:0x4)>>\n"
                            "  actual: <#<CuttestAssertStubFlags: "
                            "(unknown flags: 0x8)>>",
-                           FAIL_LOCATION,
-                           "stub_equal_flags");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_equal_flags",
+                           NULL);
 }
 
 static void
@@ -913,8 +929,9 @@ test_equal_object (void)
                            "gcut_assert_equal_object test",
                            NULL,
                            message,
-                           FAIL_LOCATION,
-                           "stub_equal_object");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_equal_object",
+                           NULL);
 }
 
 static void
@@ -949,8 +966,9 @@ test_equal_object_null (void)
                            "gcut_assert_equal_object_null test",
                            NULL,
                            message,
-                           FAIL_LOCATION,
-                           "stub_equal_object_null");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_equal_object_null",
+                           NULL);
 }
 
 static gboolean
@@ -1005,8 +1023,9 @@ test_equal_object_custom (void)
                            "gcut_assert_equal_object_custom test",
                            NULL,
                            message,
-                           FAIL_LOCATION,
-                           "stub_equal_object_custom");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_equal_object_custom",
+                           NULL);
 }
 
 static void
@@ -1027,8 +1046,9 @@ test_equal_pid (void)
                            "<0 == (GPid)100>\n"
                            "expected: <0>\n"
                            "  actual: <100>",
-                           FAIL_LOCATION,
-                           "stub_equal_pid");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_equal_pid",
+                           NULL);
 }
 
 static void
@@ -1049,8 +1069,9 @@ test_not_equal_pid (void)
                            "<0 != 0>\n"
                            "expected: <0>\n"
                            "  actual: <0>",
-                           FAIL_LOCATION,
-                           "stub_not_equal_pid");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_not_equal_pid",
+                           NULL);
 }
 
 

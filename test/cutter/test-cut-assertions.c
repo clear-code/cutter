@@ -186,8 +186,9 @@ test_equal_boolean (void)
                            "<CUT_TRUE == CUT_FALSE>\n"
                            "expected: <true>\n"
                            "  actual: <false>",
-                           FAIL_LOCATION,
-                           "stub_equal_boolean");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_equal_boolean",
+                           NULL);
 }
 
 static void
@@ -211,8 +212,9 @@ test_not_equal_boolean (void)
                            "<CUT_TRUE != 100>\n"
                            "expected: <true>\n"
                            "  actual: <true>",
-                           FAIL_LOCATION,
-                           "stub_not_equal_boolean");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_not_equal_boolean",
+                           NULL);
 }
 
 static void
@@ -234,8 +236,9 @@ test_equal_int (void)
                            "<2 + 3 == 3 + 4>\n"
                            "expected: <5>\n"
                            "  actual: <7>",
-                           FAIL_LOCATION,
-                           "stub_equal_int");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_equal_int",
+                           NULL);
 }
 
 static void
@@ -257,8 +260,9 @@ test_not_equal_int (void)
                            "<2 + 3 != 3 + 2>\n"
                            "expected: <5>\n"
                            "  actual: <5>",
-                           FAIL_LOCATION,
-                           "stub_not_equal_int");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_not_equal_int",
+                           NULL);
 }
 
 static void
@@ -279,8 +283,9 @@ test_equal_uint (void)
                            "<2 + 3 == 3 + 4>\n"
                            "expected: <5>\n"
                            "  actual: <7>",
-                           FAIL_LOCATION,
-                           "stub_equal_uint");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_equal_uint",
+                           NULL);
 }
 
 static void
@@ -301,8 +306,9 @@ test_not_equal_uint (void)
                            "<2 + 3 != 3 + 2>\n"
                            "expected: <5>\n"
                            "  actual: <5>",
-                           FAIL_LOCATION,
-                           "stub_not_equal_uint");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_not_equal_uint",
+                           NULL);
 }
 
 static void
@@ -323,8 +329,9 @@ test_equal_size (void)
                            "<1 == 10>\n"
                            "expected: <1>\n"
                            "  actual: <10>",
-                           FAIL_LOCATION,
-                           "stub_equal_size");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_equal_size",
+                           NULL);
 }
 
 static void
@@ -345,8 +352,9 @@ test_not_equal_size (void)
                            "<2 + 3 != 3 + 2>\n"
                            "expected: <5>\n"
                            "  actual: <5>",
-                           FAIL_LOCATION,
-                           "stub_not_equal_size");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_not_equal_size",
+                           NULL);
 }
 
 static void
@@ -365,11 +373,10 @@ test_equal_string (void)
     cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "assert-equal-string", NULL,
-                           "<\"abc\" == \"ABC\">\n"
-                           "expected: <abc>\n"
-                           "  actual: <ABC>",
-                           FAIL_LOCATION,
-                           "stub_equal_string");
+                           "<\"abc\" == \"ABC\">",
+                           "abc", "ABC",
+                           FAIL_LOCATION, "stub_equal_string",
+                           NULL);
 }
 
 static void
@@ -392,8 +399,9 @@ test_not_equal_string (void)
                            "<\"abc\" != \"abc\">\n"
                            "expected: <abc>\n"
                            "  actual: <abc>",
-                           FAIL_LOCATION,
-                           "stub_not_equal_string");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_not_equal_string",
+                           NULL);
 }
 
 static void
@@ -412,6 +420,8 @@ test_equal_string_with_diff (void)
                      &test_result);
     cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 1, 0, 0, 1, 0, 0, 0, 0);
+    cut_assert_equal_string("<\"abc def ghi jkl\" == \"abc DEF ghi jkl\">",
+                            cut_test_result_get_system_message(test_result));
     cut_assert_equal_string("<\"abc def ghi jkl\" == \"abc DEF ghi jkl\">\n"
                             "expected: <abc def ghi jkl>\n"
                             "  actual: <abc DEF ghi jkl>\n"
@@ -421,7 +431,7 @@ test_equal_string_with_diff (void)
                             "?     ^^^\n"
                             "+ abc DEF ghi jkl\n"
                             "?     ^^^",
-                            cut_test_result_get_system_message(test_result));
+                            cut_test_result_get_message(test_result));
 }
 
 static void
@@ -457,6 +467,29 @@ test_equal_string_with_folded_diff (void)
                      &test_result);
     cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 1, 0, 0, 1, 0, 0, 0, 0);
+    cut_assert_equal_string("<"
+                            "\"0123456789\" "
+                            "\"1123456789\" "
+                            "\"2123456789\" "
+                            "\"3123456789\" "
+                            "\"4123456789\" "
+                            "\"5123456789\" "
+                            "\"6123456789\" "
+                            "\"7123456789\" "
+                            "\"8123456789\""
+                            " == "
+                            "\"0000000000\" "
+                            "\"1123456789\" "
+                            "\"2123456789\" "
+                            "\"3123456789\" "
+                            "\"4123456789\" "
+                            "\"5123456789\" "
+                            "\"6123456789\" "
+                            "\"7123456789\" "
+                            "\"8123456789\""
+                            ">",
+                            cut_test_result_get_system_message(test_result));
+
     cut_assert_equal_string("<"
                             "\"0123456789\" "
                             "\"1123456789\" "
@@ -544,7 +577,7 @@ test_equal_string_with_folded_diff (void)
                             "?  ^^^^^^^^^\n"
                             "  89"
                             "8123456789",
-                            cut_test_result_get_system_message(test_result));
+                            cut_test_result_get_message(test_result));
 }
 
 static void
@@ -582,8 +615,9 @@ test_equal_substring (void)
                            "? -\n"
                            "+ 1234567899\n"
                            "?          +",
-                           FAIL_LOCATION,
-                           "stub_equal_substring");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_equal_substring",
+                           NULL);
 }
 
 static void
@@ -617,8 +651,9 @@ test_not_equal_substring (void)
                            "[0..strlen(\"0123456789\")]>\n"
                            "expected: <0123456789>\n"
                            "  actual: <0123456789>",
-                           FAIL_LOCATION,
-                           "stub_not_equal_substring");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_not_equal_substring",
+                           NULL);
 }
 
 static void
@@ -654,8 +689,9 @@ test_equal_double (void)
                         expected - error,
                         expected + error,
                         actual),
-        FAIL_LOCATION,
-        "stub_equal_double");
+        NULL, NULL,
+        FAIL_LOCATION, "stub_equal_double",
+        NULL);
 }
 
 static void
@@ -690,8 +726,9 @@ test_not_equal_double (void)
                         expected - error,
                         expected + error,
                         actual),
-        FAIL_LOCATION,
-        "stub_not_equal_double");
+        NULL, NULL,
+        FAIL_LOCATION, "stub_not_equal_double",
+        NULL);
 }
 
 void
@@ -726,8 +763,9 @@ test_operator_int (void)
                            "stub-operator-int", NULL,
                            "expected: <1 + 1> >= <2 + 4>\n"
                            "  actual: <2> >= <6>",
-                           FAIL_LOCATION,
-                           "stub_operator_int");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_operator_int",
+                           NULL);
 }
 
 static void
@@ -750,8 +788,9 @@ test_operator_uint (void)
                            "stub-operator-uint", NULL,
                            "expected: <1 + 1> >= <2 + 4>\n"
                            "  actual: <2> >= <6>",
-                           FAIL_LOCATION,
-                           "stub_operator_uint");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_operator_uint",
+                           NULL);
 }
 
 static void
@@ -774,8 +813,9 @@ test_operator_size (void)
                            "cut_assert_operator_size()", NULL,
                            "expected: <1 + 1> >= <2 + 4>\n"
                            "  actual: <2> >= <6>",
-                           FAIL_LOCATION,
-                           "stub_operator_size");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_operator_size",
+                           NULL);
 }
 
 static void
@@ -804,8 +844,9 @@ test_operator_double (void)
         cut_take_printf("expected: <1.1 + 1.1> >= <2.2 + 4.4>\n"
                         "  actual: <%g> >= <%g>",
                         lhs, rhs),
-        FAIL_LOCATION,
-        "stub_operator_double");
+        NULL, NULL,
+        FAIL_LOCATION, "stub_operator_double",
+        NULL);
 }
 
 static void
@@ -838,8 +879,9 @@ test_equal_memory (void)
                            "expected: <0x00 0x01 0x02 0x03 0x04 (size: 5)>\n"
                            "  actual: <0x00 0x01 0x02 0x03 0x04 "
                            "0x12 0x10 0x0e 0x0c 0x0a (size: 10)>",
-                           FAIL_LOCATION,
-                           "stub_equal_memory");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_equal_memory",
+                           NULL);
 }
 
 static void
@@ -871,8 +913,9 @@ test_not_equal_memory (void)
                            "actual(size: sizeof(expected))>\n"
                            "expected: <0x00 0x01 0x02 0x03 0x04 (size: 5)>\n"
                            "  actual: <0x00 0x01 0x02 0x03 0x04 (size: 5)>",
-                           FAIL_LOCATION,
-                           "stub_not_equal_memory");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_not_equal_memory",
+                           NULL);
 }
 
 void
@@ -916,8 +959,9 @@ test_error (void)
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_ERROR,
                            "stub-error-test",
                            "This test should error", NULL,
-                           FAIL_LOCATION,
-                           "stub_error");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_error",
+                           NULL);
 }
 
 static void
@@ -1035,15 +1079,14 @@ test_assert_message (void)
 static void
 stub_assert_message_with_format_string (void)
 {
-    cut_assert_equal_string("%s", "%d",
-                            "%s and %s have format string",
-                            "expected", "actual");
+    MARK_FAIL(cut_assert_equal_string("%s", "%d",
+                                      "%s and %s have format string",
+                                      "expected", "actual"));
 }
 
 void
 test_assert_message_with_format_string (void)
 {
-    /* FIXME: use cut_assert_test_result_summary() */
     test = cut_test_new("stub-assert-message-with-string",
                         stub_assert_message_with_format_string);
     cut_assert_not_null(test);
@@ -1054,17 +1097,16 @@ test_assert_message_with_format_string (void)
     g_signal_handlers_disconnect_by_func(test,
                                          G_CALLBACK(cb_collect_result),
                                          &test_result);
-    cut_assert_not_null(test_result,
-                        "Could not get a CutTestResult object "
-                        "since \"failure\" signal was not emitted.");
-    cut_assert_equal_int(CUT_TEST_RESULT_FAILURE,
-                         cut_test_result_get_status(test_result));
-    cut_assert_equal_string("<\"%s\" == \"%d\">\n"
-                            "expected: <%s>\n"
-                            "  actual: <%d>",
-                            cut_test_result_get_system_message(test_result));
-    cut_assert_equal_string("expected and actual have format string",
-                            cut_test_result_get_user_message(test_result));
+
+    cut_assert_test_result_summary(run_context, 1, 0, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "stub-assert-message-with-string",
+                           "expected and actual have format string",
+                           "<\"%s\" == \"%d\">",
+                           NULL, NULL,
+                           FAIL_LOCATION,
+                           "stub_assert_message_with_format_string",
+                           NULL);
 }
 
 static gboolean

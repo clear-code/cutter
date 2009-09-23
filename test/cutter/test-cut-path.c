@@ -57,12 +57,13 @@ test_run (void)
     cut_assert_test_result_with_message(
         pipeline, 0, CUT_TEST_RESULT_FAILURE,
         "test_fail_in_deep_path",
-        NULL,
-        NULL,
+        NULL, NULL,
         "fail in parent" G_DIR_SEPARATOR_S "sub" G_DIR_SEPARATOR_S "test-deep.c",
+        NULL, NULL,
         cut_take_printf("%s" G_DIR_SEPARATOR_S "parent" G_DIR_SEPARATOR_S "sub"
                         G_DIR_SEPARATOR_S "test-deep.c:%d", test_dir, 12),
-        "test_fail_in_deep_path");
+        "test_fail_in_deep_path",
+        NULL);
 }
 
 /*

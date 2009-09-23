@@ -354,19 +354,23 @@ test_failure (void)
                            "<2 == GPOINTER_TO_INT(data)>\n"
                            "expected: <2>\n"
                            "  actual: <1>",
-                           FAIL_LOCATION,
-                           "stub_failure_iterated_test");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_failure_iterated_test",
+                           NULL);
     cut_assert_test_result(run_context, 1, CUT_TEST_RESULT_SUCCESS,
                            "failure test iterator (Second)",
-                           NULL, NULL, NULL);
+                           NULL, NULL,
+                           NULL, NULL,
+                           NULL);
     cut_assert_test_result(run_context, 2, CUT_TEST_RESULT_FAILURE,
                            "failure test iterator (Third)",
                            NULL,
                            "<2 == GPOINTER_TO_INT(data)>\n"
                            "expected: <2>\n"
                            "  actual: <3>",
-                           FAIL_LOCATION,
-                           "stub_failure_iterated_test");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_failure_iterated_test",
+                           NULL);
 }
 
 static void
@@ -395,16 +399,21 @@ test_error (void)
     cut_assert_test_result_summary(run_context, 3, 5, 2, 0, 1, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_SUCCESS,
                            "error test iterator (First)",
-                           NULL, NULL, NULL);
+                           NULL, NULL,
+                           NULL, NULL,
+                           NULL);
     cut_assert_test_result(run_context, 1, CUT_TEST_RESULT_ERROR,
                            "error test iterator (Second)",
                            "ERROR!",
                            NULL,
-                           FAIL_LOCATION,
-                           "stub_error_iterated_test");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_error_iterated_test",
+                           NULL);
     cut_assert_test_result(run_context, 2, CUT_TEST_RESULT_SUCCESS,
                            "error test iterator (Third)",
-                           NULL, NULL, NULL);
+                           NULL, NULL,
+                           NULL, NULL,
+                           NULL);
 }
 
 static void
@@ -433,16 +442,21 @@ test_pending (void)
     cut_assert_test_result_summary(run_context, 3, 5, 2, 0, 0, 1, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_SUCCESS,
                            "pending test iterator (First)",
-                           NULL, NULL, NULL);
+                           NULL, NULL,
+                           NULL, NULL,
+                           NULL);
     cut_assert_test_result(run_context, 1, CUT_TEST_RESULT_PENDING,
                            "pending test iterator (Second)",
                            "PENDING!",
                            NULL,
-                           FAIL_LOCATION,
-                           "stub_pending_iterated_test");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_pending_iterated_test",
+                           NULL);
     cut_assert_test_result(run_context, 2, CUT_TEST_RESULT_SUCCESS,
                            "pending test iterator (Third)",
-                           NULL, NULL, NULL);
+                           NULL, NULL,
+                           NULL, NULL,
+                           NULL);
 }
 
 static void
@@ -471,19 +485,26 @@ test_notification (void)
     cut_assert_test_result_summary(run_context, 3, 6, 3, 0, 0, 0, 1, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_SUCCESS,
                            "notification test iterator (First)",
-                           NULL, NULL, NULL);
+                           NULL, NULL,
+                           NULL, NULL,
+                           NULL);
     cut_assert_test_result(run_context, 1, CUT_TEST_RESULT_NOTIFICATION,
                            "notification test iterator (Second)",
                            "NOTIFICATION!",
                            NULL,
-                           FAIL_LOCATION,
-                           "stub_notification_iterated_test");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_notification_iterated_test",
+                           NULL);
     cut_assert_test_result(run_context, 2, CUT_TEST_RESULT_SUCCESS,
                            "notification test iterator (Second)",
-                           NULL, NULL, NULL);
+                           NULL, NULL,
+                           NULL, NULL,
+                           NULL);
     cut_assert_test_result(run_context, 3, CUT_TEST_RESULT_SUCCESS,
                            "notification test iterator (Third)",
-                           NULL, NULL, NULL);
+                           NULL, NULL,
+                           NULL, NULL,
+                           NULL);
 }
 
 static void
@@ -512,19 +533,26 @@ test_omission (void)
     cut_assert_test_result_summary(run_context, 3, 5, 3, 0, 0, 0, 0, 1);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_SUCCESS,
                            "omission test iterator (First)",
-                           NULL, NULL, NULL);
+                           NULL, NULL,
+                           NULL, NULL,
+                           NULL);
     cut_assert_test_result(run_context, 1, CUT_TEST_RESULT_OMISSION,
                            "omission test iterator (Second)",
                            "OMISSION!",
                            NULL,
-                           FAIL_LOCATION,
-                           "stub_omission_iterated_test");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_omission_iterated_test",
+                           NULL);
     cut_assert_test_result(run_context, 2, CUT_TEST_RESULT_SUCCESS,
                            "omission test iterator (Second)",
-                           NULL, NULL, NULL);
+                           NULL, NULL,
+                           NULL, NULL,
+                           NULL);
     cut_assert_test_result(run_context, 3, CUT_TEST_RESULT_SUCCESS,
                            "omission test iterator (Third)",
-                           NULL, NULL, NULL);
+                           NULL, NULL,
+                           NULL, NULL,
+                           NULL);
 }
 
 static void

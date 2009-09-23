@@ -126,8 +126,9 @@ test_message_equal_content_type (void)
                            "message equal content-type test",
                            NULL,
                            message,
-                           FAIL_LOCATION,
-                           "stub_message_equal_content_type");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_message_equal_content_type",
+                           NULL);
 }
 
 static void
@@ -195,8 +196,9 @@ test_client_equal_content_type (void)
                            "client equal content-type test",
                            NULL,
                            message,
-                           FAIL_LOCATION,
-                           "stub_client_equal_content_type");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_client_equal_content_type",
+                           NULL);
 }
 
 
@@ -227,8 +229,9 @@ test_client_equal_content_type_null (void)
                            "client equal content-type test null",
                            NULL,
                            message,
-                           FAIL_LOCATION,
-                           "stub_client_equal_content_type_null");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_client_equal_content_type_null",
+                           NULL);
 }
 
 
@@ -269,8 +272,9 @@ test_client_response (void)
                            "client response test",
                            NULL,
                            message,
-                           FAIL_LOCATION,
-                           "stub_client_response");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_client_response",
+                           NULL);
 }
 
 
@@ -301,8 +305,9 @@ test_client_response_null (void)
                            "client response test null",
                            NULL,
                            message,
-                           FAIL_LOCATION,
-                           "stub_client_response_null");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_client_response_null",
+                           NULL);
 }
 
 static void
@@ -337,8 +342,9 @@ test_client_equal_body (void)
                            "client equal body test",
                            NULL,
                            message,
-                           FAIL_LOCATION,
-                           "stub_client_equal_body");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_client_equal_body",
+                           NULL);
 }
 
 static void
@@ -368,8 +374,9 @@ test_client_equal_body_null (void)
                            "client equal body test null",
                            NULL,
                            message,
-                           FAIL_LOCATION,
-                           "stub_client_equal_body_null");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_client_equal_body_null",
+                           NULL);
 }
 
 static void
@@ -404,8 +411,9 @@ test_client_match_body (void)
                            "client match body test",
                            NULL,
                            message,
-                           FAIL_LOCATION,
-                           "stub_client_match_body");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_client_match_body",
+                           NULL);
 }
 
 /*

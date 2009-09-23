@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2009  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -69,6 +69,8 @@ cuttest_result_string_list_new_va_list (const gchar *test_name,
                                         const gchar *user_message,
                                         const gchar *system_message,
                                         const gchar *message,
+                                        const gchar *expected,
+                                        const gchar *actual,
                                         const gchar *backtrace,
                                         va_list args)
 {
@@ -97,6 +99,8 @@ cuttest_result_string_list_new_va_list (const gchar *test_name,
     } else {
         APPEND(NULL);
     }
+    APPEND(expected);
+    APPEND(actual);
 
     file_line = backtrace;
     while (file_line) {
@@ -115,7 +119,9 @@ static GList *
 cuttest_result_string_list_new (const gchar *test_name,
                                 const gchar *user_message,
                                 const gchar *system_message,
-                                        const gchar *message,
+                                const gchar *message,
+                                const gchar *expected,
+                                const gchar *actual,
                                 const gchar *backtrace,
                                 ...)
 {
@@ -127,6 +133,8 @@ cuttest_result_string_list_new (const gchar *test_name,
                                                          user_message,
                                                          system_message,
                                                          message,
+                                                         expected,
+                                                         actual,
                                                          backtrace,
                                                          args);
     va_end(args);
@@ -145,6 +153,8 @@ cuttest_result_string_list_new_from_result (CutTestResult *result)
         cut_test_result_get_user_message(result),
         cut_test_result_get_system_message(result),
         cut_test_result_get_message(result),
+        cut_test_result_get_expected(result),
+        cut_test_result_get_actual(result),
         NULL);
 
     backtrace = cut_test_result_get_backtrace(result);
@@ -205,6 +215,8 @@ cut_assert_test_result_helper(CutRunContext *run_context,
                               const gchar *user_message,
                               const gchar *system_message,
                               const gchar *message,
+                              const gchar *expected,
+                              const gchar *actual,
                               const gchar *backtrace,
                               ...)
 {
@@ -226,6 +238,8 @@ cut_assert_test_result_helper(CutRunContext *run_context,
                                                      user_message,
                                                      system_message,
                                                      message,
+                                                     expected,
+                                                     actual,
                                                      backtrace,
                                                      args);
     va_end(args);

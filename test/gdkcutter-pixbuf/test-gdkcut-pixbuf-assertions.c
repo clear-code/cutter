@@ -140,8 +140,9 @@ test_equal (void)
                            "equal test",
                            NULL,
                            message,
-                           FAIL_LOCATION,
-                           "stub_equal");
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_equal",
+                           NULL);
 }
 
 /*

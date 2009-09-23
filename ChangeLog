@@ -1,5 +1,8 @@
 2009-09-23  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/lib/cuttest-assertions.[ch]: support expected and actual.
+	* test/: follow the above changes.
+
 	* cutter/cut-test-context.c, cutter/cut-public.h,
 	cutter/cut-test-utils.h: test context has expected and actual and
 	pass them to test result. cut_append_diff() is deprecated. use
