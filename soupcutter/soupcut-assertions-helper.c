@@ -153,7 +153,7 @@ void soupcut_client_assert_response_helper (SoupCutClient *client,
 
         fail_message =
             cut_take_printf("<latest_message(%s)[response][status] == 2XX>\n"
-                            "  expected: <2XX>"
+                            "  expected: <2XX>\n"
                             "    actual: <%u>(%s)",
                             expression_client,
                             message->status_code,
