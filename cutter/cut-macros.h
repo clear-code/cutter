@@ -46,8 +46,8 @@ extern "C" {
 #  define CUT_FUNCTION __FUNCTION__
 #endif
 
-#define CUT_STRINGIFY(macro_or_string)	CUT_STRINGIFY_ARG(macro_or_string)
-#define	CUT_STRINGIFY_ARG(contents)	#contents
+#define CUT_STRINGIFY(macro_or_string)  CUT_STRINGIFY_ARG(macro_or_string)
+#define CUT_STRINGIFY_ARG(contents)     #contents
 
 #ifdef __cplusplus
 }
