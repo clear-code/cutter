@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2009  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -80,6 +80,10 @@ const GList         *cut_test_result_get_backtrace    (CutTestResult *result);
 void                 cut_test_result_get_start_time    (CutTestResult *result,
                                                         GTimeVal *start_time);
 gdouble              cut_test_result_get_elapsed       (CutTestResult *result);
+const gchar         *cut_test_result_get_expected      (CutTestResult *result);
+const gchar         *cut_test_result_get_actual        (CutTestResult *result);
+const gchar         *cut_test_result_get_diff          (CutTestResult *result);
+const gchar         *cut_test_result_get_folded_diff   (CutTestResult *result);
 
 void cut_test_result_set_status          (CutTestResult *result,
                                           CutTestResultStatus status);
@@ -105,6 +109,14 @@ void cut_test_result_set_start_time      (CutTestResult *result,
                                           GTimeVal *start_time);
 void cut_test_result_set_elapsed         (CutTestResult *result,
                                           gdouble elapsed);
+void cut_test_result_set_expected        (CutTestResult *result,
+                                          const gchar   *expected);
+void cut_test_result_set_actual          (CutTestResult *result,
+                                          const gchar   *actual);
+void cut_test_result_set_diff            (CutTestResult *result,
+                                          const gchar   *diff);
+void cut_test_result_set_folded_diff     (CutTestResult *result,
+                                          const gchar   *folded_diff);
 
 gchar       *cut_test_result_to_xml                (CutTestResult *result);
 void         cut_test_result_to_xml_string         (CutTestResult *result,

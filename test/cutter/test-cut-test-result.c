@@ -14,6 +14,8 @@ void test_get_backtrace(void);
 void test_status_to_signal_name(void);
 void test_status_is_critical(void);
 void test_get_test_suite(void);
+void test_get_diff(void);
+void test_set_diff(void);
 void test_to_xml_empty(void);
 void test_to_xml_empty_failure(void);
 void test_new_from_xml(void);
@@ -319,6 +321,56 @@ test_get_test_suite (void)
 
     cut_test_result_set_test_suite(result, NULL);
     cut_assert_null(cut_test_result_get_test_suite(result));
+}
+
+void
+test_get_diff (void)
+{
+    result = cut_test_result_new_empty();
+    cut_assert_equal_string(NULL, cut_test_result_get_expected(result));
+    cut_assert_equal_string(NULL, cut_test_result_get_actual(result));
+    cut_assert_equal_string(NULL, cut_test_result_get_diff(result));
+    cut_assert_equal_string(NULL, cut_test_result_get_folded_diff(result));
+
+    cut_test_result_set_expected(result, "a\nb\nc");
+    cut_assert_equal_string(NULL, cut_test_result_get_diff(result));
+    cut_assert_equal_string(NULL, cut_test_result_get_folded_diff(result));
+
+    cut_test_result_set_actual(result, "a\nB\nc");
+    cut_assert_equal_string("  a\n"
+                            "- b\n"
+                            "+ B\n"
+                            "  c",
+                            cut_test_result_get_diff(result));
+    cut_assert_equal_string(NULL, cut_test_result_get_folded_diff(result));
+
+    cut_test_result_set_actual(result, "a\nX\nc");
+    cut_assert_equal_string("  a\n"
+                            "- b\n"
+                            "+ X\n"
+                            "  c",
+                            cut_test_result_get_diff(result));
+    cut_assert_equal_string(NULL, cut_test_result_get_folded_diff(result));
+}
+
+void
+test_set_diff (void)
+{
+    const gchar diff[] =
+        "  A\n"
+        "- B\n"
+        "+ b\n"
+        "  C";
+
+    result = cut_test_result_new_empty();
+    cut_test_result_set_diff(result, diff);
+
+    cut_test_result_set_expected(result, "a\nb\nc");
+    cut_assert_equal_string(diff, cut_test_result_get_diff(result));
+    cut_assert_equal_string(NULL, cut_test_result_get_folded_diff(result));
+    cut_test_result_set_actual(result, "a\nB\nc");
+    cut_assert_equal_string(diff, cut_test_result_get_diff(result));
+    cut_assert_equal_string(NULL, cut_test_result_get_folded_diff(result));
 }
 
 void

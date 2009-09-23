@@ -1,5 +1,9 @@
 2009-09-23  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-result.[ch],
+	test/cutter/test-cut-test-result.c: add fields that hold expected,
+	actual and diff information.
+
 	* soupcutter/soupcut-assertions-helper.c,
 	test/soupcutter/test-soupcut-assertions.c: add missing new line of
 	soupcut_client_assert_response().

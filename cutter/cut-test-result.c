@@ -34,6 +34,7 @@
 #include "cut-stream-parser.h"
 #include "cut-backtrace-entry.h"
 #include "cut-utils.h"
+#include "cut-diff.h"
 
 #define CUT_TEST_RESULT_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_RESULT, CutTestResultPrivate))
 
@@ -52,6 +53,12 @@ struct _CutTestResultPrivate
     GList *backtrace;
     GTimeVal start_time;
     gdouble elapsed;
+    gchar *expected;
+    gchar *actual;
+    gchar *diff;
+    gchar *folded_diff;
+    gboolean user_set_diff;
+    gboolean user_set_folded_diff;
 };
 
 enum
@@ -67,6 +74,10 @@ enum
     PROP_SYSTEM_MESSAGE,
     PROP_BACKTRACE,
     PROP_ELAPSED,
+    PROP_EXPECTED,
+    PROP_ACTUAL,
+    PROP_DIFF,
+    PROP_FOLDED_DIFF,
 };
 
 
@@ -164,6 +175,36 @@ cut_test_result_class_init (CutTestResultClass *klass)
                                G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_ELAPSED, spec);
 
+    spec = g_param_spec_string("expected",
+                               "Expected object",
+                               "The inspected string of expected object",
+                               NULL,
+                               G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_EXPECTED, spec);
+
+    spec = g_param_spec_string("actual",
+                               "Actual object",
+                               "The inspected string of actual object",
+                               NULL,
+                               G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_ACTUAL, spec);
+
+    spec = g_param_spec_string("diff",
+                               "Difference",
+                               "The difference between expected object "
+                               "and actual object",
+                               NULL,
+                               G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_DIFF, spec);
+
+    spec = g_param_spec_string("folded-diff",
+                               "Folded difference",
+                               "The difference between folded expected object "
+                               "and folded actual object",
+                               NULL,
+                               G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_FOLDED_DIFF, spec);
+
     g_type_class_add_private(gobject_class, sizeof(CutTestResultPrivate));
 }
 
@@ -185,6 +226,12 @@ cut_test_result_init (CutTestResult *result)
     priv->start_time.tv_sec = 0;
     priv->start_time.tv_usec = 0;
     priv->elapsed = 0.0;
+    priv->expected = NULL;
+    priv->actual = NULL;
+    priv->diff = NULL;
+    priv->folded_diff= NULL;
+    priv->user_set_diff = FALSE;
+    priv->user_set_folded_diff = FALSE;
 }
 
 static void
@@ -238,6 +285,26 @@ dispose (GObject *object)
         priv->backtrace = NULL;
     }
 
+    if (priv->expected) {
+        g_free(priv->expected);
+        priv->expected = NULL;
+    }
+
+    if (priv->actual) {
+        g_free(priv->actual);
+        priv->actual = NULL;
+    }
+
+    if (priv->diff) {
+        g_free(priv->diff);
+        priv->diff = NULL;
+    }
+
+    if (priv->folded_diff) {
+        g_free(priv->folded_diff);
+        priv->folded_diff = NULL;
+    }
+
     G_OBJECT_CLASS(cut_test_result_parent_class)->dispose(object);
 }
 
@@ -247,48 +314,57 @@ set_property (GObject      *object,
               const GValue *value,
               GParamSpec   *pspec)
 {
-    CutTestResultPrivate *priv = CUT_TEST_RESULT_GET_PRIVATE(object);
+    CutTestResult *result;
+    CutTestResultPrivate *priv;
+
+    result = CUT_TEST_RESULT(object);
+    priv = CUT_TEST_RESULT_GET_PRIVATE(result);
 
     switch (prop_id) {
-      case PROP_STATUS:
+    case PROP_STATUS:
         priv->status = g_value_get_enum(value);
         break;
-      case PROP_TEST:
-        cut_test_result_set_test(CUT_TEST_RESULT(object),
-                                 g_value_get_object(value));
+    case PROP_TEST:
+        cut_test_result_set_test(result, g_value_get_object(value));
         break;
-      case PROP_TEST_ITERATOR:
-        cut_test_result_set_test_iterator(CUT_TEST_RESULT(object),
+    case PROP_TEST_ITERATOR:
+        cut_test_result_set_test_iterator(result,
                                           g_value_get_object(value));
         break;
-      case PROP_TEST_CASE:
-        cut_test_result_set_test_case(CUT_TEST_RESULT(object),
-                                      g_value_get_object(value));
+    case PROP_TEST_CASE:
+        cut_test_result_set_test_case(result, g_value_get_object(value));
         break;
-      case PROP_TEST_SUITE:
-        cut_test_result_set_test_suite(CUT_TEST_RESULT(object),
-                                       g_value_get_object(value));
+    case PROP_TEST_SUITE:
+        cut_test_result_set_test_suite(result, g_value_get_object(value));
         break;
-      case PROP_TEST_DATA:
-        cut_test_result_set_test_data(CUT_TEST_RESULT(object),
-                                      g_value_get_object(value));
+    case PROP_TEST_DATA:
+        cut_test_result_set_test_data(result, g_value_get_object(value));
         break;
-      case PROP_USER_MESSAGE:
-        cut_test_result_set_user_message(CUT_TEST_RESULT(object),
-                                         g_value_get_string(value));
+    case PROP_USER_MESSAGE:
+        cut_test_result_set_user_message(result, g_value_get_string(value));
         break;
-      case PROP_SYSTEM_MESSAGE:
-        cut_test_result_set_system_message(CUT_TEST_RESULT(object),
-                                           g_value_get_string(value));
+    case PROP_SYSTEM_MESSAGE:
+        cut_test_result_set_system_message(result, g_value_get_string(value));
         break;
-      case PROP_BACKTRACE:
-        cut_test_result_set_backtrace(CUT_TEST_RESULT(object),
-                                      g_value_get_pointer(value));
+    case PROP_BACKTRACE:
+        cut_test_result_set_backtrace(result, g_value_get_pointer(value));
         break;
-      case PROP_ELAPSED:
+    case PROP_ELAPSED:
         priv->elapsed = g_value_get_double(value);
         break;
-      default:
+    case PROP_EXPECTED:
+        cut_test_result_set_expected(result, g_value_get_string(value));
+        break;
+    case PROP_ACTUAL:
+        cut_test_result_set_actual(result, g_value_get_string(value));
+        break;
+    case PROP_DIFF:
+        cut_test_result_set_diff(result, g_value_get_string(value));
+        break;
+    case PROP_FOLDED_DIFF:
+        cut_test_result_set_folded_diff(result, g_value_get_string(value));
+        break;
+    default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
     }
@@ -300,40 +376,56 @@ get_property (GObject    *object,
               GValue     *value,
               GParamSpec *pspec)
 {
-    CutTestResultPrivate *priv = CUT_TEST_RESULT_GET_PRIVATE(object);
+    CutTestResult *result;
+    CutTestResultPrivate *priv;
+
+    result = CUT_TEST_RESULT(object);
+    priv = CUT_TEST_RESULT_GET_PRIVATE(result);
 
     switch (prop_id) {
-      case PROP_STATUS:
+    case PROP_STATUS:
         g_value_set_enum(value, priv->status);
         break;
-      case PROP_TEST:
+    case PROP_TEST:
         g_value_set_object(value, G_OBJECT(priv->test));
         break;
-      case PROP_TEST_ITERATOR:
+    case PROP_TEST_ITERATOR:
         g_value_set_object(value, G_OBJECT(priv->test_iterator));
         break;
-      case PROP_TEST_CASE:
+    case PROP_TEST_CASE:
         g_value_set_object(value, G_OBJECT(priv->test_case));
         break;
-      case PROP_TEST_SUITE:
+    case PROP_TEST_SUITE:
         g_value_set_object(value, G_OBJECT(priv->test_suite));
         break;
-      case PROP_TEST_DATA:
+    case PROP_TEST_DATA:
         g_value_set_object(value, G_OBJECT(priv->test_data));
         break;
-      case PROP_USER_MESSAGE:
+    case PROP_USER_MESSAGE:
         g_value_set_string(value, priv->user_message);
         break;
-      case PROP_SYSTEM_MESSAGE:
+    case PROP_SYSTEM_MESSAGE:
         g_value_set_string(value, priv->system_message);
         break;
-      case PROP_BACKTRACE:
+    case PROP_BACKTRACE:
         g_value_set_pointer(value, priv->backtrace);
         break;
-      case PROP_ELAPSED:
+    case PROP_ELAPSED:
         g_value_set_double(value, priv->elapsed);
         break;
-      default:
+    case PROP_EXPECTED:
+        g_value_set_string(value, priv->expected);
+        break;
+    case PROP_ACTUAL:
+        g_value_set_string(value, priv->actual);
+        break;
+    case PROP_DIFF:
+        g_value_set_string(value, cut_test_result_get_diff(result));
+        break;
+    case PROP_FOLDED_DIFF:
+        g_value_set_string(value, cut_test_result_get_folded_diff(result));
+        break;
+    default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
     }
@@ -534,6 +626,59 @@ cut_test_result_get_elapsed (CutTestResult *result)
     return CUT_TEST_RESULT_GET_PRIVATE(result)->elapsed;
 }
 
+const gchar *
+cut_test_result_get_expected (CutTestResult *result)
+{
+    return CUT_TEST_RESULT_GET_PRIVATE(result)->expected;
+}
+
+const gchar *
+cut_test_result_get_actual (CutTestResult *result)
+{
+    return CUT_TEST_RESULT_GET_PRIVATE(result)->actual;
+}
+
+const gchar *
+cut_test_result_get_diff (CutTestResult *result)
+{
+    CutTestResultPrivate *priv;
+
+    priv = CUT_TEST_RESULT_GET_PRIVATE(result);
+
+    if (priv->diff)
+        return priv->diff;
+
+    if (priv->expected && priv->actual) {
+        priv->diff = cut_diff_readable(priv->expected, priv->actual);
+        if (!cut_diff_is_interested(priv->diff)) {
+            g_free(priv->diff);
+            priv->diff = NULL;
+        }
+    }
+
+    return priv->diff;
+}
+
+const gchar *
+cut_test_result_get_folded_diff (CutTestResult *result)
+{
+    CutTestResultPrivate *priv;
+    const gchar *diff;
+
+    priv = CUT_TEST_RESULT_GET_PRIVATE(result);
+
+    if (priv->folded_diff)
+        return priv->folded_diff;
+
+    diff = cut_test_result_get_diff(result);
+    if (cut_diff_need_fold(diff)) {
+        priv->folded_diff =
+            cut_diff_folded_readable(priv->expected, priv->actual);
+    }
+
+    return priv->folded_diff;
+}
+
 gchar *
 cut_test_result_to_xml (CutTestResult *result)
 {
@@ -603,10 +748,14 @@ append_test_result_to_string (GString *string, CutTestResult *result,
     CutTestResultStatus status;
     GTimeVal start_time;
     gchar *elapsed_string, *start_time_string;
-    const gchar *message;
+    const gchar *message, *expected, *actual, *diff, *folded_diff;
 
-    message = cut_test_result_get_message(result);
     status = cut_test_result_get_status(result);
+    message = cut_test_result_get_message(result);
+    expected = cut_test_result_get_expected(result);
+    actual = cut_test_result_get_actual(result);
+    diff = cut_test_result_get_diff(result);
+    folded_diff = cut_test_result_get_folded_diff(result);
 
     cut_utils_append_xml_element_with_value(string, indent, "status",
                                             result_status_to_name(status));
@@ -627,6 +776,19 @@ append_test_result_to_string (GString *string, CutTestResult *result,
     cut_utils_append_xml_element_with_value(string, indent, "elapsed",
                                             elapsed_string);
     g_free(elapsed_string);
+
+    if (expected)
+        cut_utils_append_xml_element_with_value(string, indent,
+                                                "expected", expected);
+    if (actual)
+        cut_utils_append_xml_element_with_value(string, indent,
+                                                "actual", actual);
+    if (diff)
+        cut_utils_append_xml_element_with_value(string, indent,
+                                                "diff", diff);
+    if (folded_diff)
+        cut_utils_append_xml_element_with_value(string, indent,
+                                                "folded-diff", folded_diff);
 }
 
 void
@@ -850,6 +1012,99 @@ cut_test_result_set_elapsed (CutTestResult *result,
     CUT_TEST_RESULT_GET_PRIVATE(result)->elapsed = elapsed;
 }
 
+static void
+reset_diff (CutTestResultPrivate *priv)
+{
+    if (!priv->user_set_diff) {
+        if (priv->diff)
+            g_free(priv->diff);
+        priv->diff = NULL;
+    }
+
+    if (!priv->user_set_folded_diff) {
+        if (priv->folded_diff)
+            g_free(priv->folded_diff);
+        priv->folded_diff = NULL;
+    }
+}
+
+void
+cut_test_result_set_expected (CutTestResult *result, const gchar *expected)
+{
+    CutTestResultPrivate *priv;
+
+    priv = CUT_TEST_RESULT_GET_PRIVATE(result);
+
+    if (priv->expected) {
+        g_free(priv->expected);
+        priv->expected = NULL;
+    }
+
+    if (expected && expected[0])
+        priv->expected = g_strdup(expected);
+
+    if (priv->expected)
+        reset_diff(priv);
+}
+
+void
+cut_test_result_set_actual (CutTestResult *result, const gchar *actual)
+{
+    CutTestResultPrivate *priv;
+
+    priv = CUT_TEST_RESULT_GET_PRIVATE(result);
+
+    if (priv->actual) {
+        g_free(priv->actual);
+        priv->actual = NULL;
+    }
+
+    if (actual && actual[0])
+        priv->actual = g_strdup(actual);
+
+    if (priv->actual)
+        reset_diff(priv);
+}
+
+void
+cut_test_result_set_diff (CutTestResult *result, const gchar *diff)
+{
+    CutTestResultPrivate *priv;
+
+    priv = CUT_TEST_RESULT_GET_PRIVATE(result);
+
+    if (priv->diff) {
+        g_free(priv->diff);
+        priv->diff = NULL;
+    }
+
+    if (diff && diff[0]) {
+        priv->diff = g_strdup(diff);
+        priv->user_set_diff = TRUE;
+    } else {
+        priv->user_set_diff = FALSE;
+    }
+}
+
+void
+cut_test_result_set_folded_diff (CutTestResult *result, const gchar *folded_diff)
+{
+    CutTestResultPrivate *priv;
+
+    priv = CUT_TEST_RESULT_GET_PRIVATE(result);
+
+    if (priv->folded_diff) {
+        g_free(priv->folded_diff);
+        priv->folded_diff = NULL;
+    }
+
+    if (folded_diff && folded_diff[0]) {
+        priv->folded_diff = g_strdup(folded_diff);
+        priv->user_set_folded_diff = TRUE;
+    } else {
+        priv->user_set_folded_diff = FALSE;
+    }
+}
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
