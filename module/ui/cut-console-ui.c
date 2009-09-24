@@ -912,12 +912,11 @@ print_result_detail (CutConsoleUI *console, CutTestResultStatus status,
     actual = cut_test_result_get_actual(result);
     if (expected && actual) {
         const gchar *user_message, *system_message;
-        const gchar *diff, *folded_diff;
+        const gchar *diff;
 
         user_message = cut_test_result_get_user_message(result);
         system_message = cut_test_result_get_system_message(result);
         diff = cut_test_result_get_diff(result);
-        folded_diff = cut_test_result_get_folded_diff(result);
         if (user_message) {
             g_print("\n");
             print_for_status(console, status, "%s", user_message);
@@ -942,10 +941,15 @@ print_result_detail (CutConsoleUI *console, CutTestResultStatus status,
             print_diff(console, diff);
         }
 
-        if (folded_diff) {
-            g_print("\n\n");
-            g_print("folded diff:\n");
-            print_diff(console, folded_diff);
+        if (!console->use_color) {
+            const gchar *folded_diff;
+
+            folded_diff = cut_test_result_get_folded_diff(result);
+            if (folded_diff) {
+                g_print("\n\n");
+                g_print("folded diff:\n");
+                print_diff(console, folded_diff);
+            }
         }
     } else {
         const gchar *message;

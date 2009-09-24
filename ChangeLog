@@ -1,3 +1,7 @@
+2009-09-24  Kouhei Sutou  <kou@cozmixng.org>
+
+	* module/ui/cut-console-ui.c: don't show folded diff on colorize mode.
+
 2009-09-23  Kouhei Sutou  <kou@cozmixng.org>
 
 	* test/cutter/test-cut-test-context.c: follow
