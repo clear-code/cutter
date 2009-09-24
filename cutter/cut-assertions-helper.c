@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2009  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2009  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -395,15 +395,11 @@ cut_assert_not_equal_string_helper (const char     *expected,
         } else {
             const char *message;
 
-            message = cut_take_printf("<%s != %s>\n"
-                                      "expected: <%s>\n"
-                                      "  actual: <%s>",
+            message = cut_take_printf("<%s != %s>",
                                       expression_expected,
-                                      expression_actual,
-                                      cut_utils_inspect_string(expected),
-                                      cut_utils_inspect_string(actual));
-            if (expected && actual)
-                message = cut_append_diff(message, expected, actual);
+                                      expression_actual);
+            cut_set_expected(expected);
+            cut_set_actual(actual);
             cut_test_fail(message);
         }
     }

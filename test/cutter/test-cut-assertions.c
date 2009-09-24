@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2009  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2009  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -396,10 +396,8 @@ test_not_equal_string (void)
     cut_assert_test_result_summary(run_context, 1, 3, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "assert-not-equal-string", NULL,
-                           "<\"abc\" != \"abc\">\n"
-                           "expected: <abc>\n"
-                           "  actual: <abc>",
-                           NULL, NULL,
+                           "<\"abc\" != \"abc\">",
+                           "abc", "abc",
                            FAIL_LOCATION, "stub_not_equal_string",
                            NULL);
 }

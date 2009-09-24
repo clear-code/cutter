@@ -1,5 +1,10 @@
 2009-09-24  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertions-helper.c,
+	test/cutter/test-cut-assertions.c:
+	cut_assert_not_equal_string() uses cut_set_expected() and
+	cut_set_actual() instead of cut_append_diff().
+
 	* gcutter/gcut-assertions-helper.c,
 	test/gcutter/test-gcut-assertions.c:
 	gcut_assert_equal_list_string() uses cut_set_expected() and
