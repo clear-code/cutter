@@ -402,10 +402,9 @@ test_equal_list_string (void)
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "equal_list_string test",
                            NULL,
-                           "<list1 == list2>\n"
-                           "expected: <(\"abc\", \"def\")>\n"
-                           "  actual: <(\"zyx\", \"wvu\")>",
-                           NULL, NULL,
+                           "<list1 == list2>",
+                           "(\"abc\", \"def\")",
+                           "(\"zyx\", \"wvu\")",
                            FAIL_LOCATION, "stub_equal_list_string",
                            NULL);
 }
@@ -469,10 +468,9 @@ test_equal_list_string_other_null (void)
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "equal_list_string test (other NULL)",
                            NULL,
-                           "<list1 == list2>\n"
-                           "expected: <(\"abc\", \"abc\", \"def\")>\n"
-                           "  actual: <(NULL, \"abc\", \"def\")>",
-                           NULL, NULL,
+                           "<list1 == list2>",
+                           "(\"abc\", \"abc\", \"def\")",
+                           "(NULL, \"abc\", \"def\")",
                            FAIL_LOCATION, "stub_equal_list_string_other_null",
                            NULL);
 }

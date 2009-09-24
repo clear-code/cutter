@@ -183,13 +183,10 @@ gcut_assert_equal_list_string_helper (const GList    *expected,
         inspected_expected = cut_take_string(gcut_list_inspect_string(expected));
         inspected_actual = cut_take_string(gcut_list_inspect_string(actual));
 
-        message = cut_take_printf("<%s == %s>\n"
-                                  "expected: <%s>\n"
-                                  "  actual: <%s>",
-                                  expression_expected, expression_actual,
-                                  inspected_expected,
-                                  inspected_actual);
-        message = cut_append_diff(message, inspected_expected, inspected_actual);
+        message = cut_take_printf("<%s == %s>",
+                                  expression_expected, expression_actual);
+        cut_set_expected(inspected_expected);
+        cut_set_actual(inspected_actual);
         cut_test_fail(message);
     }
 }
