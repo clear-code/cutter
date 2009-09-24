@@ -475,16 +475,12 @@ cut_assert_not_equal_substring_helper (const char     *expected,
             if (actual)
                 actual_substring = cut_take_string(g_strndup(actual, length));
             message =
-                cut_take_printf("<%s != (%s)[0..%s]>\n"
-                                "expected: <%s>\n"
-                                "  actual: <%s>",
+                cut_take_printf("<%s != (%s)[0..%s]>",
                                 expression_expected,
                                 expression_actual,
-                                expression_length,
-                                cut_utils_inspect_string(expected),
-                                cut_utils_inspect_string(actual_substring));
-            if (expected && actual_substring)
-                message = cut_append_diff(message, expected, actual_substring);
+                                expression_length);
+            cut_set_expected(expected);
+            cut_set_actual(actual_substring);
             cut_test_fail(message);
         }
     }

@@ -639,10 +639,9 @@ test_not_equal_substring (void)
                            "not-equal-substring", NULL,
                            "<\"0123456789\" != "
                            "(actual_string + strlen(\"0000\"))"
-                           "[0..strlen(\"0123456789\")]>\n"
-                           "expected: <0123456789>\n"
-                           "  actual: <0123456789>",
-                           NULL, NULL,
+                           "[0..strlen(\"0123456789\")]>",
+                           "0123456789",
+                           "0123456789",
                            FAIL_LOCATION, "stub_not_equal_substring",
                            NULL);
 }
