@@ -1,5 +1,13 @@
 2009-09-24  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/lib/cuttest-assertions.c
+	(cuttest_result_string_list_new_va_list): support diff.
+
+	* cutter/cut-assertions-helper.c,
+	test/cutter/test-cut-assertions.c:
+	cut_assert_equal_substring() uses cut_set_expected() and
+	cut_set_actual() instead of cut_append_diff().
+
 	* cutter/cut-assertions-helper.c,
 	test/cutter/test-cut-assertions.c:
 	cut_assert_not_equal_string() uses cut_set_expected() and

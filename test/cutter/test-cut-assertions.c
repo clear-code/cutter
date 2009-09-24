@@ -604,16 +604,9 @@ test_equal_substring (void)
                            "equal-substring", NULL,
                            "<\"0123456789\" == "
                            "(actual_string + strlen(\"0000\") + 1)"
-                           "[0..strlen(\"0123456789\")]>\n"
-                           "expected: <0123456789>\n"
-                           "  actual: <1234567899>\n"
-                           "\n"
-                           "diff:\n"
-                           "- 0123456789\n"
-                           "? -\n"
-                           "+ 1234567899\n"
-                           "?          +",
-                           NULL, NULL,
+                           "[0..strlen(\"0123456789\")]>",
+                           "0123456789",
+                           "1234567899",
                            FAIL_LOCATION, "stub_equal_substring",
                            NULL);
 }

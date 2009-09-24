@@ -20,6 +20,7 @@
 #include <cutter/cut-helper.h>
 #include "cuttest-assertions.h"
 #include <cutter/cut-backtrace-entry.h>
+#include <cutter/cut-diff.h>
 
 static GList *
 cuttest_result_summary_list_new (guint n_tests,
@@ -108,6 +109,13 @@ cuttest_result_string_list_new_va_list (const gchar *test_name,
             if (computed_message->len > 0)
                 g_string_append(computed_message, "\n");
             g_string_append_printf(computed_message, "  actual: <%s>", actual);
+        }
+
+        if (expected && actual) {
+            const gchar *diff;
+            diff = cut_take_diff(expected, actual);
+            if (diff && cut_diff_is_interested(diff))
+                g_string_append_printf(computed_message, "\n\ndiff:\n%s", diff);
         }
 
         if (computed_message->len > 0)
