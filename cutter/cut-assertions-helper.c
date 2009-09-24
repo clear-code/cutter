@@ -547,29 +547,21 @@ cut_assert_not_equal_memory_helper (const void     *expected,
         const char *message;
         const char *inspected_expected;
         const char *inspected_actual;
-        gsize max_diff_target_size = 8092;
 
         inspected_expected =
             cut_take_string(cut_utils_inspect_memory(expected, expected_size));
         inspected_actual =
             cut_take_string(cut_utils_inspect_memory(actual, actual_size));
         message = cut_take_printf(
-            "<%s(size: %s) != %s(size: %s)>\n"
-            "expected: <%s (size: %" G_GSIZE_FORMAT ")>\n"
-            "  actual: <%s (size: %" G_GSIZE_FORMAT ")>",
+            "<%s(size: %s) != %s(size: %s)>",
             expression_expected,
             expression_expected_size,
             expression_actual,
-            expression_actual_size,
-            inspected_expected,
-            expected_size,
-            inspected_actual,
-            actual_size);
-        if (0 < expected_size && expected_size < max_diff_target_size &&
-            0 < actual_size && actual_size < max_diff_target_size)
-            message = cut_append_diff(message,
-                                      inspected_expected,
-                                      inspected_actual);
+            expression_actual_size);
+        cut_set_expected(cut_take_printf("%s (size: %" G_GSIZE_FORMAT ")",
+                                         inspected_expected, expected_size));
+        cut_set_actual(cut_take_printf("%s (size: %" G_GSIZE_FORMAT ")",
+                                       inspected_actual, actual_size));
         cut_test_fail(message);
     }
 }

@@ -36,6 +36,8 @@
 #include "cut-utils.h"
 #include "cut-diff.h"
 
+#define MAX_DIFF_TARGET_SIZE 8092
+
 #define CUT_TEST_RESULT_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_TEST_RESULT, CutTestResultPrivate))
 
 typedef struct _CutTestResultPrivate	CutTestResultPrivate;
@@ -699,7 +701,9 @@ cut_test_result_get_diff (CutTestResult *result)
     if (priv->diff)
         return priv->diff;
 
-    if (priv->expected && priv->actual) {
+    if (priv->expected && priv->actual &&
+        strlen(priv->expected) < MAX_DIFF_TARGET_SIZE &&
+        strlen(priv->actual) < MAX_DIFF_TARGET_SIZE) {
         priv->diff = cut_diff_readable(priv->expected, priv->actual);
         if (!cut_diff_is_interested(priv->diff)) {
             g_free(priv->diff);

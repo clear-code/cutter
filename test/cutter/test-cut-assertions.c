@@ -900,10 +900,9 @@ test_not_equal_memory (void)
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "stub-not-equal-memory", NULL,
                            "<expected(size: sizeof(expected)) != "
-                           "actual(size: sizeof(expected))>\n"
-                           "expected: <0x00 0x01 0x02 0x03 0x04 (size: 5)>\n"
-                           "  actual: <0x00 0x01 0x02 0x03 0x04 (size: 5)>",
-                           NULL, NULL,
+                           "actual(size: sizeof(expected))>",
+                           "0x00 0x01 0x02 0x03 0x04 (size: 5)",
+                           "0x00 0x01 0x02 0x03 0x04 (size: 5)",
                            FAIL_LOCATION, "stub_not_equal_memory",
                            NULL);
 }
