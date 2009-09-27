@@ -953,8 +953,7 @@ print_result_detail (CutConsoleUI *console, CutTestResultStatus status,
             folded_diff = cut_test_result_get_folded_diff(result);
             if (folded_diff) {
                 g_print("\n\n");
-                g_print("folded diff:\n");
-                print_diff(console, folded_diff);
+                g_print("folded diff:\n%s", folded_diff);
             }
         }
     } else {
