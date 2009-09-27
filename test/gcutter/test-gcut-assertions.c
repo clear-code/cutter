@@ -806,14 +806,12 @@ test_equal_flags (void)
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "gcut_assert_equal_flags test",
                            NULL,
-                           "<(1 << 1) | (1 << 2) == (1 << 3)> (flags_type)\n"
-                           "expected: <#<CuttestAssertStubFlags: "
+                           "<(1 << 1) | (1 << 2) == (1 << 3)> (flags_type)",
+                           "#<CuttestAssertStubFlags: "
                            "second|third "
                            "(CUTTEST_ASSERT_STUB_SECOND:0x2)|"
-                           "(CUTTEST_ASSERT_STUB_THIRD:0x4)>>\n"
-                           "  actual: <#<CuttestAssertStubFlags: "
-                           "(unknown flags: 0x8)>>",
-                           NULL, NULL,
+                           "(CUTTEST_ASSERT_STUB_THIRD:0x4)>",
+                           "#<CuttestAssertStubFlags: (unknown flags: 0x8)>",
                            FAIL_LOCATION, "stub_equal_flags",
                            NULL);
 }
