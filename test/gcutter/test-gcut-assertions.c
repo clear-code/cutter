@@ -644,10 +644,9 @@ test_equal_hash_table (void)
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "equal_hash_table test",
                            NULL,
-                           "<g_str_equal(hash1[key], hash2[key]) == TRUE>\n"
-                           "expected: <{1 => \"11\", 10 => \"22\"}>\n"
-                           "  actual: <{2 => \"99\", 20 => \"88\"}>",
-                           NULL, NULL,
+                           "<g_str_equal(hash1[key], hash2[key]) == TRUE>",
+                           "{1 => \"11\", 10 => \"22\"}",
+                           "{2 => \"99\", 20 => \"88\"}",
                            FAIL_LOCATION, "stub_equal_hash_table",
                            NULL);
 }
