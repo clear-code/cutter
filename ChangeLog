@@ -1,5 +1,9 @@
 2009-09-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-utils.h: move helper functions for writing
+	assertions to ...
+	* cutter/cut-helper.h: ... here.
+
 	* gcutter/gcut-assertions.h: remove needless descriptions.
 
 	* doc/reference/cutter-docs.sgml: add symbol index added at 1.0.9.

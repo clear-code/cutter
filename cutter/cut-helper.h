@@ -395,6 +395,106 @@ void cut_pop_backtrace(void);
     cut_test_context_pop_backtrace(_cut_test_context);                  \
 } while (0)
 
+#ifndef CUTTER_DISABLE_DEPRECATED
+/**
+ * cut_append_diff:
+ * @message: the string to be appended diff.
+ * @from: the original string.
+ * @to: the modified string.
+ *
+ * Computes diff between @from and @to and append the diff
+ * to @message. Returned string is owned by Cutter.
+ *
+ * Returns: @message with diff between @from and @to or same
+ * as @message if the diff not interested. Don't free it.
+ *
+ * Since: 1.0.3
+ *
+ * Deprecated: 1.0.9: Use cut_set_expected() and
+ * cut_set_actual() instead.
+ */
+#define cut_append_diff(message, from, to)                      \
+    cut_take_string(cut_utils_append_diff(message, from, to))
+#endif
+
+/**
+ * cut_set_expected:
+ * @expected: the inspected expected object.
+ *
+ * Sets an inspected expected object to be used by the next
+ * assertion.
+ *
+ * If both of expected and actual object are set and diff of
+ * them is needed, the diff is generated automatically.
+ *
+ * See also cut_set_actual().
+ *
+ * Since: 1.0.9
+ */
+#define cut_set_expected(expected)                                      \
+    cut_test_context_set_expected(cut_get_current_test_context(),       \
+                                      expected)
+
+/**
+ * cut_set_actual:
+ * @expected: the inspected actual object.
+ *
+ * Sets an inspected actual object to be used by the next
+ * assertion.
+ *
+ * If both of expected and actual object are set and diff of
+ * them is needed, the diff is generated automatically.
+ *
+ * See also cut_set_expected().
+ *
+ * Since: 1.0.9
+ */
+#define cut_set_actual(actual)                                  \
+    cut_test_context_set_actual(cut_get_current_test_context(), \
+                                actual)
+
+/**
+ * cut_inspect_string_array:
+ * @strings: the array of strings to be inspected.
+ *
+ * Formats @strings as human readable string that is owned by Cutter.
+ *
+ * Returns: a inspected string owned by Cutter. Don't free it.
+ */
+#define cut_inspect_string_array(strings)                               \
+    cut_take_string(cut_utils_inspect_string_array(strings))
+
+/**
+ * cut_equal_string:
+ * @string1: a string.
+ * @string2: a string.
+ *
+ * Compare @string1 to @string2. @string1 and/or @string2
+ * maybe %NULL.
+ *
+ * Returns: %CUT_TRUE if both @string1 and @string2 are %NULL or
+ *          have the same contents; %CUT_FALSE otherwise.
+ *
+ * Since: 1.0.5
+ */
+#define cut_equal_string(string1, string2)                              \
+    cut_utils_equal_string(string1, string2)
+
+/**
+ * cut_equal_double:
+ * @double1: a double value.
+ * @double2: a double value.
+ * @error: a double value that specifies error range.
+ *
+ * Compare @double1 to @double2 with @error range.
+ *
+ * Returns: %CUT_TRUE if |@double1 - @double2| <= @error;
+ *          %CUT_FALSE otherwise.
+ *
+ * Since: 1.0.5
+ */
+#define cut_equal_double(double1, double2, error)       \
+    cut_utils_equal_double(double1, double2, error)
 
 #ifdef __cplusplus
 }
