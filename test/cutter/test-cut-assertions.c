@@ -865,11 +865,10 @@ test_equal_memory (void)
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "stub-equal-memory", NULL,
                            "<expected(size: sizeof(expected)) == "
-                           "actual(size: sizeof(actual))>\n"
-                           "expected: <0x00 0x01 0x02 0x03 0x04 (size: 5)>\n"
-                           "  actual: <0x00 0x01 0x02 0x03 0x04 "
-                           "0x12 0x10 0x0e 0x0c 0x0a (size: 10)>",
-                           NULL, NULL,
+                           "actual(size: sizeof(actual))>",
+                           "0x00 0x01 0x02 0x03 0x04 (size: 5)",
+                           "0x00 0x01 0x02 0x03 0x04 "
+                           "0x12 0x10 0x0e 0x0c 0x0a (size: 10)",
                            FAIL_LOCATION, "stub_equal_memory",
                            NULL);
 }
