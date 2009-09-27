@@ -80,3 +80,4 @@ module/ui/cut-gtk-ui-factory.c
 module/ui/cut-gtk-ui.c
 soupcutter/soupcut-assertions-helper.c
 soupcutter/soupcut-client.c
+soupcutter/soupcut-server.c
