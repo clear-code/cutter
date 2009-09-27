@@ -345,15 +345,9 @@ test_equal_list_uint (void)
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "equal_list_uint test",
                            NULL,
-                           "<list1 == list2>\n"
-                           "expected: <(100, 200)>\n"
-                           "  actual: <(1000, 2000)>\n"
-                           "\n"
-                           "diff:\n"
-                           "- (100, 200)\n"
-                           "+ (1000, 2000)\n"
-                           "?     +     +",
-                           NULL, NULL,
+                           "<list1 == list2>",
+                           "(100, 200)",
+                           "(1000, 2000)",
                            FAIL_LOCATION, "stub_equal_list_uint",
                            NULL);
 }
@@ -483,8 +477,6 @@ test_equal_list_enum (void)
     const gchar inspected_actual[] =
         "(#<CutTestResultStatus: "
         "failure(CUT_TEST_RESULT_FAILURE:4)>)";
-        ;
-    const gchar *message, *message_with_diff;
 
     test = cut_test_new("equal_list_enum test", stub_equal_list_enum);
     cut_assert_not_null(test);
@@ -492,19 +484,11 @@ test_equal_list_enum (void)
     cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
 
-    message = cut_take_printf("<list1 == list2>\n"
-                              "expected: <%s>\n"
-                              "  actual: <%s>",
-                              inspected_expected,
-                              inspected_actual);
-    message_with_diff = cut_append_diff(message,
-                                        inspected_expected,
-                                        inspected_actual);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "equal_list_enum test",
                            NULL,
-                           message_with_diff,
-                           NULL, NULL,
+                           "<list1 == list2>",
+                           inspected_expected, inspected_actual,
                            FAIL_LOCATION, "stub_equal_list_enum",
                            NULL);
 }
