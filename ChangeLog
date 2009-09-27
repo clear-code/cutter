@@ -1,5 +1,7 @@
 2009-09-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/ja.po: fix a typo.
+
 	* doc/reference/cutter-overrides.txt: add cut_set_expected() and
 	cut_set_actual().
 
