@@ -113,9 +113,17 @@ cuttest_result_string_list_new_va_list (const gchar *test_name,
 
         if (expected && actual) {
             const gchar *diff;
+
             diff = cut_take_diff(expected, actual);
-            if (diff && cut_diff_is_interested(diff))
+            if (diff && cut_diff_is_interested(diff)) {
                 g_string_append_printf(computed_message, "\n\ndiff:\n%s", diff);
+                if (cut_diff_need_fold(diff)) {
+                    const gchar *folded_diff;
+                    folded_diff = cut_diff_folded_readable(expected, actual);
+                    g_string_append_printf(computed_message,
+                                           "\n\nfolded diff:\n%s", folded_diff);
+                }
+            }
         }
 
         if (computed_message->len > 0)

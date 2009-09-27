@@ -573,7 +573,6 @@ void
 test_equal_list_object (void)
 {
     const gchar *inspected_expected, *inspected_actual;
-    const gchar *message, *message_with_diff;
 
     test = cut_test_new("equal_list_object test",
                         stub_equal_list_object);
@@ -594,19 +593,12 @@ test_equal_list_object (void)
          "#<CutTest:%p name=<\"test2\">, element-name=<\"test\">, "
             "test-function=<NULL>, base-directory=<NULL>>)",
         list2->data, g_list_nth_data(list2, 2));
-    message = cut_take_printf("<list1 == list2>\n"
-                              "expected: <%s>\n"
-                              "  actual: <%s>",
-                              inspected_expected,
-                              inspected_actual);
-    message_with_diff = cut_append_diff(message,
-                                        inspected_expected,
-                                        inspected_actual);
+
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "equal_list_object test",
                            NULL,
-                           message_with_diff,
-                           NULL, NULL,
+                           "<list1 == list2>",
+                           inspected_expected, inspected_actual,
                            FAIL_LOCATION, "stub_equal_list_object",
                            NULL);
 }

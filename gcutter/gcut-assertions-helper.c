@@ -234,7 +234,6 @@ gcut_assert_equal_list_object_helper (const GList    *expected,
     if (gcut_list_equal(expected, actual, equal_function)) {
         cut_test_pass();
     } else {
-        const gchar *message;
         const gchar *inspected_expected, *inspected_actual;
 
         inspected_expected =
@@ -242,14 +241,10 @@ gcut_assert_equal_list_object_helper (const GList    *expected,
         inspected_actual =
             cut_take_string(gcut_list_inspect_object(actual));
 
-        message = cut_take_printf("<%s == %s>\n"
-                                  "expected: <%s>\n"
-                                  "  actual: <%s>",
-                                  expression_expected, expression_actual,
-                                  inspected_expected,
-                                  inspected_actual);
-        message = cut_append_diff(message, inspected_expected, inspected_actual);
-        cut_test_fail(message);
+        cut_set_expected(inspected_expected);
+        cut_set_actual(inspected_actual);
+        cut_test_fail(cut_take_printf("<%s == %s>",
+                                      expression_expected, expression_actual));
     }
 }
 
