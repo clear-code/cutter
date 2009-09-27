@@ -281,16 +281,9 @@ test_equal_list (void)
         run_context, 0, CUT_TEST_RESULT_FAILURE,
         "equal_list test",
         NULL,
-        "<stub_equal_list_equal_func(list1[i], list2[i]) == TRUE>\n"
-        "expected: <(CCC: <100>, CCC: <-200>)>\n"
-        "  actual: <(CCC: <-1000>, CCC: <2000>)>\n"
-        "\n"
-        "diff:\n"
-        "- (CCC: <100>, CCC: <-200>)\n"
-        "?                    -\n"
-        "+ (CCC: <-1000>, CCC: <2000>)\n"
-        "?        + +            +",
-        NULL, NULL,
+        "<stub_equal_list_equal_func(list1[i], list2[i]) == TRUE>",
+        "(CCC: <100>, CCC: <-200>)",
+        "(CCC: <-1000>, CCC: <2000>)",
         FAIL_LOCATION, "stub_equal_list",
         NULL);
 }
