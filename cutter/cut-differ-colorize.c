@@ -27,31 +27,21 @@
 
 #include "cut-sequence-matcher.h"
 #include "cut-differ-colorize.h"
+#include "cut-console-colors.h"
 #include "cut-utils.h"
 
-#define RED_COLOR "\033[01;31m"
-#define RED_BACK_COLOR "\033[41m"
-#define GREEN_COLOR "\033[01;32m"
-#define GREEN_BACK_COLOR "\033[01;42m"
-#define YELLOW_COLOR "\033[01;33m"
-#define BLUE_COLOR "\033[01;34m"
-#define BLUE_BACK_COLOR "\033[01;44m"
-#define MAGENTA_COLOR "\033[01;35m"
-#define CYAN_COLOR "\033[01;36m"
-#define CYAN_BACK_COLOR "\033[01;46m"
-#define WHITE_COLOR "\033[01;37m"
-#define WHITE_BACK_COLOR "\033[01;47m"
-#define BLACK_BACK_COLOR "\033[01;40m"
-#define NORMAL_COLOR "\033[00m"
+#define NORMAL_COLOR CUT_CONSOLE_COLOR_NORMAL
 
-#define CRASH_COLOR RED_BACK_COLOR WHITE_COLOR
+#define INSERTED_TAG_COLOR CUT_CONSOLE_COLOR_GREEN
+#define DELETED_TAG_COLOR CUT_CONSOLE_COLOR_RED
+#define DIFFERENCE_TAG_COLOR CUT_CONSOLE_COLOR_CYAN
 
-#define DIFF_LINE_EXPECTED_COLOR GREEN_COLOR
-#define DIFF_LINE_ACTUAL_COLOR RED_COLOR
-#define DIFF_LINE_CHANGE_COLOR CYAN_COLOR
-#define DIFF_IN_LINE_EXPECTED_COLOR GREEN_BACK_COLOR WHITE_COLOR
-#define DIFF_IN_LINE_ACTUAL_COLOR RED_BACK_COLOR WHITE_COLOR
-#define DIFF_IN_LINE_CHANGE_COLOR CYAN_BACK_COLOR WHITE_COLOR
+#define INSERTED_COLOR                          \
+    CUT_CONSOLE_COLOR_GREEN_BACK                \
+    CUT_CONSOLE_COLOR_WHITE
+#define DELETED_COLOR                           \
+    CUT_CONSOLE_COLOR_RED_BACK                  \
+    CUT_CONSOLE_COLOR_WHITE
 
 G_DEFINE_TYPE(CutDifferColorize, cut_differ_colorize, CUT_TYPE_DIFFER)
 
@@ -90,7 +80,7 @@ static void
 tag_inserted (GArray *result, gchar **lines, gint begin, gint end)
 {
     cut_differ_util_append_with_tag(result,
-                                    GREEN_COLOR "+" NORMAL_COLOR " ",
+                                    INSERTED_TAG_COLOR "+" NORMAL_COLOR " ",
                                     lines, begin, end);
 }
 
@@ -98,7 +88,7 @@ static void
 tag_deleted (GArray *result, gchar **lines, gint begin, gint end)
 {
     cut_differ_util_append_with_tag(result,
-                                    RED_COLOR "-" NORMAL_COLOR " ",
+                                    DELETED_TAG_COLOR "-" NORMAL_COLOR " ",
                                     lines, begin, end);
 }
 
@@ -106,8 +96,22 @@ static void
 tag_difference (GArray *result, gchar **lines, gint begin, gint end)
 {
     cut_differ_util_append_with_tag(result,
-                                    CYAN_COLOR "?" NORMAL_COLOR " ",
+                                    DIFFERENCE_TAG_COLOR "?" NORMAL_COLOR " ",
                                     lines, begin, end);
+}
+
+static void
+append_spaces (GString *string, guint n)
+{
+    cut_differ_util_append_n_character(string, ' ', n);
+}
+
+static void
+append_nothing_marks (GString *string, guint n)
+{
+    g_string_append(string, DIFFERENCE_TAG_COLOR);
+    append_spaces(string, n);
+    g_string_append(string, NORMAL_COLOR);
 }
 
 static void
@@ -118,6 +122,16 @@ append_segment (GString *string, const gchar *target, gint begin, gint end)
     target_begin = g_utf8_offset_to_pointer(target, begin);
     target_end = g_utf8_offset_to_pointer(target, end);
     g_string_append_len(string, target_begin, target_end - target_begin);
+}
+
+static void
+append_segment_with_color (GString *string,
+                           const gchar *target, gint begin, gint end,
+                           const gchar *color)
+{
+    g_string_append(string, color);
+    append_segment(string, target, begin, end);
+    g_string_append(string, NORMAL_COLOR);
 }
 
 static void
@@ -149,53 +163,40 @@ diff_line (GArray *result, gchar *from_line, gchar *to_line)
         case CUT_SEQUENCE_MATCH_OPERATION_EQUAL:
             append_segment(colorized_from_line, from_line,
                            operation->from_begin, operation->from_end);
-            cut_differ_util_append_n_character(colorized_to_line,
-                                               ' ', to_width);
+            append_spaces(colorized_to_line, to_width);
             break;
         case CUT_SEQUENCE_MATCH_OPERATION_INSERT:
-            g_string_append(colorized_from_line, CYAN_BACK_COLOR);
-            cut_differ_util_append_n_character(colorized_from_line,
-                                               ' ', to_width);
-            g_string_append(colorized_from_line, NORMAL_COLOR);
-
-            g_string_append(colorized_to_line, DIFF_IN_LINE_ACTUAL_COLOR);
-            append_segment(colorized_to_line, to_line,
-                           operation->to_begin, operation->to_end);
-            g_string_append(colorized_to_line, NORMAL_COLOR);
+            append_nothing_marks(colorized_from_line, to_width);
+            append_segment_with_color(colorized_to_line,
+                                      to_line,
+                                      operation->to_begin,
+                                      operation->to_end,
+                                      INSERTED_COLOR);
             break;
         case CUT_SEQUENCE_MATCH_OPERATION_DELETE:
-            g_string_append(colorized_from_line, DIFF_IN_LINE_EXPECTED_COLOR);
-            append_segment(colorized_from_line, from_line,
-                           operation->from_begin, operation->from_end);
-            g_string_append(colorized_from_line, NORMAL_COLOR);
-
-            g_string_append(colorized_to_line, CYAN_BACK_COLOR);
-            cut_differ_util_append_n_character(colorized_to_line,
-                                               ' ', from_width);
-            g_string_append(colorized_to_line, NORMAL_COLOR);
+            append_segment_with_color(colorized_from_line,
+                                      from_line,
+                                      operation->from_begin,
+                                      operation->from_end,
+                                      DELETED_COLOR);
+            append_nothing_marks(colorized_to_line, from_width);
             break;
         case CUT_SEQUENCE_MATCH_OPERATION_REPLACE:
-            g_string_append(colorized_from_line, DIFF_IN_LINE_EXPECTED_COLOR);
-            append_segment(colorized_from_line, from_line,
-                           operation->from_begin, operation->from_end);
-            g_string_append(colorized_from_line, NORMAL_COLOR);
-            if (from_width < to_width) {
-                g_string_append(colorized_from_line, CYAN_BACK_COLOR);
-                cut_differ_util_append_n_character(colorized_from_line,
-                                                   ' ', from_width);
-                g_string_append(colorized_from_line, NORMAL_COLOR);
-            }
+            append_segment_with_color(colorized_from_line,
+                                      from_line,
+                                      operation->from_begin,
+                                      operation->from_end,
+                                      DELETED_COLOR);
+            if (from_width < to_width)
+                append_nothing_marks(colorized_from_line, to_width - from_width);
 
-            g_string_append(colorized_to_line, DIFF_IN_LINE_ACTUAL_COLOR);
-            append_segment(colorized_to_line, to_line,
-                           operation->to_begin, operation->to_end);
-            g_string_append(colorized_to_line, NORMAL_COLOR);
-            if (to_width < from_width) {
-                g_string_append(colorized_to_line, CYAN_BACK_COLOR);
-                cut_differ_util_append_n_character(colorized_to_line,
-                                                   ' ', from_width);
-                g_string_append(colorized_to_line, NORMAL_COLOR);
-            }
+            append_segment_with_color(colorized_to_line,
+                                      to_line,
+                                      operation->to_begin,
+                                      operation->to_end,
+                                      INSERTED_COLOR);
+            if (to_width < from_width)
+                append_nothing_marks(colorized_to_line, from_width - to_width);
             break;
         default:
             g_error("unknown operation type: %d", operation->type);

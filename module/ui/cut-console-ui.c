@@ -38,6 +38,7 @@
 #include <cutter/cut-backtrace-entry.h>
 #include <cutter/cut-verbose-level.h>
 #include <cutter/cut-differ-colorize.h>
+#include <cutter/cut-console-colors.h>
 #include <cutter/cut-enum-types.h>
 
 #define CUT_TYPE_CONSOLE_UI            cut_type_console_ui
@@ -47,29 +48,9 @@
 #define CUT_IS_CONSOLE_UI_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_CONSOLE_UI))
 #define CUT_CONSOLE_UI_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_CONSOLE_UI, CutConsoleUIClass))
 
-#define RED_COLOR "\033[01;31m"
-#define RED_BACK_COLOR "\033[41m"
-#define GREEN_COLOR "\033[01;32m"
-#define GREEN_BACK_COLOR "\033[01;42m"
-#define YELLOW_COLOR "\033[01;33m"
-#define BLUE_COLOR "\033[01;34m"
-#define BLUE_BACK_COLOR "\033[01;44m"
-#define MAGENTA_COLOR "\033[01;35m"
-#define CYAN_COLOR "\033[01;36m"
-#define CYAN_BACK_COLOR "\033[01;46m"
-#define WHITE_COLOR "\033[01;37m"
-#define WHITE_BACK_COLOR "\033[01;47m"
-#define BLACK_BACK_COLOR "\033[01;40m"
-#define NORMAL_COLOR "\033[00m"
-
-#define CRASH_COLOR RED_BACK_COLOR WHITE_COLOR
-
-#define DIFF_LINE_EXPECTED_COLOR GREEN_COLOR
-#define DIFF_LINE_ACTUAL_COLOR RED_COLOR
-#define DIFF_LINE_CHANGE_COLOR CYAN_COLOR
-#define DIFF_IN_LINE_EXPECTED_COLOR GREEN_BACK_COLOR WHITE_COLOR
-#define DIFF_IN_LINE_ACTUAL_COLOR RED_BACK_COLOR WHITE_COLOR
-#define DIFF_IN_LINE_CHANGE_COLOR CYAN_BACK_COLOR WHITE_COLOR
+#define CRASH_COLOR                             \
+    CUT_CONSOLE_COLOR_RED_BACK                  \
+    CUT_CONSOLE_COLOR_WHITE
 
 typedef struct _CutConsoleUI CutConsoleUI;
 typedef struct _CutConsoleUIClass CutConsoleUIClass;
@@ -355,22 +336,22 @@ status_to_color(CutTestResultStatus status)
 
     switch (status) {
     case CUT_TEST_RESULT_SUCCESS:
-        color = GREEN_COLOR;
+        color = CUT_CONSOLE_COLOR_GREEN;
         break;
     case CUT_TEST_RESULT_NOTIFICATION:
-        color = CYAN_COLOR;
+        color = CUT_CONSOLE_COLOR_CYAN;
         break;
     case CUT_TEST_RESULT_OMISSION:
-        color = BLUE_COLOR;
+        color = CUT_CONSOLE_COLOR_BLUE;
         break;
     case CUT_TEST_RESULT_PENDING:
-        color = MAGENTA_COLOR;
+        color = CUT_CONSOLE_COLOR_MAGENTA;
         break;
     case CUT_TEST_RESULT_FAILURE:
-        color = RED_COLOR;
+        color = CUT_CONSOLE_COLOR_RED;
         break;
     case CUT_TEST_RESULT_ERROR:
-        color = YELLOW_COLOR;
+        color = CUT_CONSOLE_COLOR_YELLOW;
         break;
     case CUT_TEST_RESULT_CRASH:
         color = CRASH_COLOR;
@@ -390,7 +371,7 @@ print_with_colorv (CutConsoleUI *console, const gchar *color,
    if (console->use_color) {
         gchar *message;
         message = g_strdup_vprintf(format, args);
-        g_print("%s%s%s", color, message, NORMAL_COLOR);
+        g_print("%s%s%s", color, message, CUT_CONSOLE_COLOR_NORMAL);
         g_free(message);
     } else {
         g_vprintf(format, args);
@@ -447,7 +428,7 @@ cb_start_test_case (CutRunContext *run_context, CutTestCase *test_case,
     if (console->verbose_level < CUT_VERBOSE_LEVEL_VERBOSE)
         return;
 
-    print_with_color(console, GREEN_BACK_COLOR,
+    print_with_color(console, CUT_CONSOLE_COLOR_GREEN_BACK,
                      "%s", cut_test_get_name(CUT_TEST(test_case)));
     g_print(":\n");
 }
@@ -461,7 +442,7 @@ cb_start_test_iterator (CutRunContext *run_context,
         return;
 
     g_print("  ");
-    print_with_color(console, BLUE_BACK_COLOR,
+    print_with_color(console, CUT_CONSOLE_COLOR_BLUE_BACK,
                      "%s", cut_test_get_name(CUT_TEST(test_iterator)));
     g_print(":\n");
 }

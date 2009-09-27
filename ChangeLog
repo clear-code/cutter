@@ -1,5 +1,9 @@
 2009-09-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-differ-colorize.c,
+	module/ui/cut-console-ui.c: move color definitions to ...
+	* cutter/cut-console-colors.h: ... here.
+
 	* module/ui/cut-console-ui.c: use CutDifferColorize.
 
 	* module/ui/cut-console-ui.c: move colorized diff features to ...

@@ -60,6 +60,7 @@ libcutter_public_headers = 		\
 	cut-diff.h			\
 	cut-differ-readable.h		\
 	cut-differ-colorize.h		\
+	cut-console-colors.h		\
 	cut-analyzer.h			\
 	cut-stream-reader.h		\
 	cut-file-stream-reader.h	\
