@@ -2,6 +2,11 @@
 
 	* cutter/gcut-assertions-helper.c,
 	test/gcutter/test-gcut-assertions.c:
+	gcut_assert_equal_type() uses cut_set_expected() and
+	cut_set_actual() instead of cut_append_diff().
+
+	* cutter/gcut-assertions-helper.c,
+	test/gcutter/test-gcut-assertions.c:
 	gcut_assert_equal_value() uses cut_set_expected() and
 	cut_set_actual() instead of cut_append_diff().
 

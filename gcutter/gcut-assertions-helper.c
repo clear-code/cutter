@@ -40,13 +40,11 @@ gcut_assert_equal_type_helper (GType           expected,
     if (expected == actual) {
         cut_test_pass();
     } else {
-        cut_test_fail(cut_take_printf("<%s == %s>\n"
-                                      "expected: <%s>\n"
-                                      "  actual: <%s>",
+        cut_set_expected(g_type_name(expected));
+        cut_set_actual(g_type_name(actual));
+        cut_test_fail(cut_take_printf("<%s == %s>",
                                       expression_expected,
-                                      expression_actual,
-                                      g_type_name(expected),
-                                      g_type_name(actual)));
+                                      expression_actual));
     }
 }
 

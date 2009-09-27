@@ -195,10 +195,8 @@ test_equal_type (void)
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "equal_type test",
                            NULL,
-                           "<G_TYPE_INT == G_TYPE_STRING>\n"
-                           "expected: <gint>\n"
-                           "  actual: <gchararray>",
-                           NULL, NULL,
+                           "<G_TYPE_INT == G_TYPE_STRING>",
+                           "gint", "gchararray",
                            FAIL_LOCATION, "stub_equal_type",
                            NULL);
 }
