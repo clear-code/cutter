@@ -49,6 +49,8 @@ void test_equal_object_null(void);
 void test_equal_object_custom(void);
 void test_equal_pid(void);
 void test_not_equal_pid(void);
+void test_equal_int64(void);
+void test_equal_uint64(void);
 
 static CutTest *test;
 static CutRunContext *run_context;
@@ -985,6 +987,49 @@ test_not_equal_pid (void)
                            NULL);
 }
 
+static void
+stub_equal_int64 (void)
+{
+    gcut_assert_equal_int64(0, 0);
+    gcut_assert_equal_int64((gint64)G_MAXINT32 + 1, (gint64)G_MAXINT32 + 1);
+    MARK_FAIL(gcut_assert_equal_int64(G_MAXINT32, G_MAXINT64));
+}
+
+void
+test_equal_int64 (void)
+{
+    test = cut_test_new("cut_assert_equal_int64()", stub_equal_int64);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_equal_int64()", NULL,
+                           "<G_MAXINT32 == G_MAXINT64>",
+                           "2147483647", "9223372036854775807",
+                           FAIL_LOCATION, "stub_equal_int64",
+                           NULL);
+}
+
+static void
+stub_equal_uint64 (void)
+{
+    gcut_assert_equal_uint64(0, 0);
+    gcut_assert_equal_uint64((guint64)G_MAXUINT32 + 1, (guint64)G_MAXUINT32 + 1);
+    MARK_FAIL(gcut_assert_equal_uint64(G_MAXUINT32, G_MAXUINT64));
+}
+
+void
+test_equal_uint64 (void)
+{
+    test = cut_test_new("cut_assert_equal_uint64()", stub_equal_uint64);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_equal_uint64()", NULL,
+                           "<G_MAXUINT32 == G_MAXUINT64>",
+                           "4294967295", "18446744073709551615",
+                           FAIL_LOCATION, "stub_equal_uint64",
+                           NULL);
+}
 
 /*
 vi:nowrap:ai:expandtab:sw=4:ts=4

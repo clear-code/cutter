@@ -483,12 +483,10 @@ gcut_assert_equal_int64_helper (gint64          expected,
     if (expected == actual) {
         cut_test_pass();
     } else {
-        cut_test_fail(cut_take_printf("<%s == %s>\n"
-                                      "expected: <%" G_GINT64_FORMAT ">\n"
-                                      "  actual: <%" G_GINT64_FORMAT ">",
-                                      expression_expected,
-                                      expression_actual,
-                                      expected, actual));
+        cut_set_expected(cut_take_printf("%" G_GINT64_FORMAT, expected));
+        cut_set_actual(cut_take_printf("%" G_GINT64_FORMAT, actual));
+        cut_test_fail(cut_take_printf("<%s == %s>",
+                                      expression_expected, expression_actual));
     }
 }
 
@@ -501,12 +499,11 @@ gcut_assert_equal_uint64_helper (guint64         expected,
     if (expected == actual) {
         cut_test_pass();
     } else {
-        cut_test_fail(cut_take_printf("<%s == %s>\n"
-                                      "expected: <%" G_GUINT64_FORMAT ">\n"
-                                      "  actual: <%" G_GUINT64_FORMAT ">",
+        cut_set_expected(cut_take_printf("%" G_GUINT64_FORMAT, expected));
+        cut_set_actual(cut_take_printf("%" G_GUINT64_FORMAT, actual));
+        cut_test_fail(cut_take_printf("<%s == %s>",
                                       expression_expected,
-                                      expression_actual,
-                                      expected, actual));
+                                      expression_actual));
     }
 }
 
