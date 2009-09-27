@@ -704,9 +704,9 @@ print_test_attributes (CutConsoleUI *console, CutTestResultStatus status,
 }
 
 static void
-print_diff_with_one_side_change (CutConsoleUI *console,
-                                 const gchar *line,
-                                 const gchar *char_diff_line)
+print_colorize_diff_with_one_side_change (CutConsoleUI *console,
+                                          const gchar *line,
+                                          const gchar *char_diff_line)
 {
     print_with_color(console, DIFF_IN_LINE_CHANGE_COLOR, "*");
     g_print(" ");
@@ -734,11 +734,11 @@ print_diff_with_one_side_change (CutConsoleUI *console,
 }
 
 static void
-print_diff_with_both_change (CutConsoleUI *console,
-                             const gchar *expected_line,
-                             const gchar *expected_char_diff_line,
-                             const gchar *actual_line,
-                             const gchar *actual_char_diff_line)
+print_colorize_diff_with_both_change (CutConsoleUI *console,
+                                      const gchar *expected_line,
+                                      const gchar *expected_char_diff_line,
+                                      const gchar *actual_line,
+                                      const gchar *actual_char_diff_line)
 {
     const gchar *original_actual_line = actual_line;
     const gchar *original_actual_char_diff_line = actual_char_diff_line;
@@ -835,7 +835,7 @@ print_diff_with_both_change (CutConsoleUI *console,
 }
 
 static void
-print_diff (CutConsoleUI *console, const gchar *diff)
+print_colorize_diff (CutConsoleUI *console, const gchar *diff)
 {
     gchar **lines, **_lines;
 
@@ -856,9 +856,10 @@ print_diff (CutConsoleUI *console, const gchar *diff)
                 const gchar *actual_line = line2;
                 const gchar *actual_char_diff_line = line3;
 
-                print_diff_with_one_side_change(console,
-                                                actual_line + 2,
-                                                actual_char_diff_line + 2);
+                print_colorize_diff_with_one_side_change(
+                    console,
+                    actual_line + 2,
+                    actual_char_diff_line + 2);
                 _lines += 2;
             } else if ((line2 && line2[0] == '?') &&
                        (line3 && line3[0] == '+')) {
@@ -868,16 +869,18 @@ print_diff (CutConsoleUI *console, const gchar *diff)
                 if (line4 && line4[0] == '?') {
                     const gchar *actual_char_diff_line = line4;
 
-                    print_diff_with_both_change(console,
-                                                line + 2,
-                                                expected_char_diff_line + 2,
-                                                actual_line + 2,
-                                                actual_char_diff_line + 2);
+                    print_colorize_diff_with_both_change(
+                        console,
+                        line + 2,
+                        expected_char_diff_line + 2,
+                        actual_line + 2,
+                        actual_char_diff_line + 2);
                     _lines++;
                 } else {
-                    print_diff_with_one_side_change(console,
-                                                    line + 2,
-                                                    expected_char_diff_line + 2);
+                    print_colorize_diff_with_one_side_change(
+                        console,
+                        line + 2,
+                        expected_char_diff_line + 2);
                 }
                 _lines += 2;
             } else {
@@ -938,7 +941,10 @@ print_result_detail (CutConsoleUI *console, CutTestResultStatus status,
         if (diff) {
             g_print("\n\n");
             g_print("diff:\n");
-            print_diff(console, diff);
+            if (console->use_color)
+                print_colorize_diff(console, diff);
+            else
+                g_print(diff);
         }
 
         if (!console->use_color) {

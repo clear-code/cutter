@@ -1,3 +1,7 @@
+2009-09-27  Kouhei Sutou  <kou@cozmixng.org>
+
+	* module/ui/cut-console-ui.c: add "colorize" instruction modifier.
+
 2009-09-24  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-test-result.c: add max diff size limit.
