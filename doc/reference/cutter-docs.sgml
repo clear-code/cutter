@@ -112,6 +112,9 @@
   <index id="index-deprecated" role="deprecated">
     <title>Index of deprecated symbols</title>
   </index>
+  <index id="index-1-0-9" role="1.0.9">
+    <title>Index of new symbols in 1.0.9</title>
+  </index>
   <index id="index-1-0-8" role="1.0.8">
     <title>Index of new symbols in 1.0.8</title>
   </index>
