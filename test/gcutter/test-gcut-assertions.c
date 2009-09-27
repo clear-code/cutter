@@ -832,7 +832,6 @@ void
 test_equal_object (void)
 {
     const gchar *inspected_expected, *inspected_actual;
-    const gchar *message;
 
     test = cut_test_new("gcut_assert_equal_object test", stub_equal_object);
     cut_assert_not_null(test);
@@ -848,16 +847,11 @@ test_equal_object (void)
                                        "so-filename=<\"so-name2\">, "
                                        "base-directory=<NULL>>",
                                        object2);
-    message = cut_take_printf("<object1 == object2>\n"
-                              "expected: <%s>\n"
-                              "  actual: <%s>",
-                              inspected_expected, inspected_actual);
-    message = cut_append_diff(message, inspected_expected, inspected_actual);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "gcut_assert_equal_object test",
                            NULL,
-                           message,
-                           NULL, NULL,
+                           "<object1 == object2>",
+                           inspected_expected, inspected_actual,
                            FAIL_LOCATION, "stub_equal_object",
                            NULL);
 }
@@ -873,7 +867,6 @@ void
 test_equal_object_null (void)
 {
     const gchar *inspected_expected;
-    const gchar *message;
 
     test = cut_test_new("gcut_assert_equal_object_null test",
                         stub_equal_object_null);
@@ -886,15 +879,11 @@ test_equal_object_null (void)
                                          "so-filename=<\"so-name\">, "
                                          "base-directory=<NULL>>",
                                          object1);
-    message = cut_take_printf("<object1 == NULL>\n"
-                              "expected: <%s>\n"
-                              "  actual: <%s>",
-                              inspected_expected, "(null)");
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "gcut_assert_equal_object_null test",
                            NULL,
-                           message,
-                           NULL, NULL,
+                           "<object1 == NULL>",
+                           inspected_expected, "(null)",
                            FAIL_LOCATION, "stub_equal_object_null",
                            NULL);
 }
@@ -921,7 +910,6 @@ void
 test_equal_object_custom (void)
 {
     const gchar *inspected_expected, *inspected_actual;
-    const gchar *message;
 
     test = cut_test_new("gcut_assert_equal_object_custom test",
                         stub_equal_object_custom);
@@ -942,16 +930,11 @@ test_equal_object_custom (void)
                                        "test-function=<NULL>, "
                                        "base-directory=<NULL>>",
                                        object3);
-    message = cut_take_printf("<equal_name(object1, object3)>\n"
-                              "expected: <%s>\n"
-                              "  actual: <%s>",
-                              inspected_expected, inspected_actual);
-    message = cut_append_diff(message, inspected_expected, inspected_actual);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "gcut_assert_equal_object_custom test",
                            NULL,
-                           message,
-                           NULL, NULL,
+                           "<equal_name(object1, object3)>",
+                           inspected_expected, inspected_actual,
                            FAIL_LOCATION, "stub_equal_object_custom",
                            NULL);
 }

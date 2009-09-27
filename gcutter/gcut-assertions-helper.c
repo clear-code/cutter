@@ -454,38 +454,23 @@ gcut_assert_equal_object_helper (GObject        *expected,
         cut_test_pass();
     } else {
         gchar *inspected_expected, *inspected_actual;
-        GString *message;
-        const gchar *fail_message;
+        const gchar *message;
 
         inspected_expected = gcut_object_inspect(expected);
         inspected_actual = gcut_object_inspect(actual);
-        message = g_string_new(NULL);
-
-        if (expression_equal_function)
-            g_string_append_printf(message,
-                                   "<%s(%s, %s)>\n",
-                                   expression_equal_function,
-                                   expression_expected, expression_actual);
-        else
-            g_string_append_printf(message,
-                                   "<%s == %s>\n",
-                                   expression_expected, expression_actual);
-        g_string_append_printf(message,
-                               "expected: <%s>\n"
-                               "  actual: <%s>",
-                               inspected_expected,
-                               inspected_actual);
-        if (expected && actual)
-            fail_message = cut_append_diff(message->str,
-                                           inspected_expected,
-                                           inspected_actual);
-        else
-            fail_message = cut_take_strdup(message->str);
+        cut_set_expected(inspected_expected);
+        cut_set_actual(inspected_actual);
         g_free(inspected_expected);
         g_free(inspected_actual);
-        g_string_free(message, TRUE);
 
-        cut_test_fail(fail_message);
+        if (expression_equal_function)
+            message = cut_take_printf("<%s(%s, %s)>",
+                                      expression_equal_function,
+                                      expression_expected, expression_actual);
+        else
+            message = cut_take_printf("<%s == %s>",
+                                      expression_expected, expression_actual);
+        cut_test_fail(message);
     }
 }
 
