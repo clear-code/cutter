@@ -521,12 +521,11 @@ gcut_assert_equal_pid_helper (GPid            expected,
     if (expected == actual) {
         cut_test_pass();
     } else {
-        cut_test_fail(cut_take_printf("<%s == %s>\n"
-                                      "expected: <%" GCUT_GPID_FORMAT ">\n"
-                                      "  actual: <%" GCUT_GPID_FORMAT ">",
+        cut_set_expected(cut_take_printf("%" GCUT_GPID_FORMAT, expected));
+        cut_set_actual(cut_take_printf("%" GCUT_GPID_FORMAT, actual));
+        cut_test_fail(cut_take_printf("<%s == %s>",
                                       expression_expected,
-                                      expression_actual,
-                                      expected, actual));
+                                      expression_actual));
     }
 }
 
@@ -539,12 +538,11 @@ gcut_assert_not_equal_pid_helper (GPid            expected,
     if (expected != actual) {
         cut_test_pass();
     } else {
-        cut_test_fail(cut_take_printf("<%s != %s>\n"
-                                      "expected: <%" GCUT_GPID_FORMAT ">\n"
-                                      "  actual: <%" GCUT_GPID_FORMAT ">",
+        cut_set_expected(cut_take_printf("%" GCUT_GPID_FORMAT, expected));
+        cut_set_actual(cut_take_printf("%" GCUT_GPID_FORMAT, actual));
+        cut_test_fail(cut_take_printf("<%s != %s>",
                                       expression_expected,
-                                      expression_actual,
-                                      expected, actual));
+                                      expression_actual));
     }
 }
 

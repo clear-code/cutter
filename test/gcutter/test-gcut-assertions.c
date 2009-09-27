@@ -956,10 +956,8 @@ test_equal_pid (void)
     cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "cut_assert_equal_pid()", NULL,
-                           "<0 == (GPid)100>\n"
-                           "expected: <0>\n"
-                           "  actual: <100>",
-                           NULL, NULL,
+                           "<0 == (GPid)100>",
+                           "0", "100",
                            FAIL_LOCATION, "stub_equal_pid",
                            NULL);
 }
@@ -979,10 +977,8 @@ test_not_equal_pid (void)
     cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "cut_assert_not_equal_pid()", NULL,
-                           "<0 != 0>\n"
-                           "expected: <0>\n"
-                           "  actual: <0>",
-                           NULL, NULL,
+                           "<0 != 0>",
+                           "0", "0",
                            FAIL_LOCATION, "stub_not_equal_pid",
                            NULL);
 }
