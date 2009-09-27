@@ -1,0 +1,787 @@
+# cutter.h
+
+<FUNCTION>
+<NAME>cut_set_message</NAME>
+<RETURNS>void</RETURNS>
+const char *format, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_set_message_va_list</NAME>
+<RETURNS>void</RETURNS>
+const char *format, va_list args
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_keep_message</NAME>
+<RETURNS>void</RETURNS>
+void
+</FUNCTION>
+
+# cut-assertion.h
+
+<FUNCTION>
+<NAME>cut_error</NAME>
+<RETURNS>void</RETURNS>
+const char *format, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_fail</NAME>
+<RETURNS>void</RETURNS>
+const char *format, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_pend</NAME>
+<RETURNS>void</RETURNS>
+const char *format, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_pending</NAME>
+<RETURNS>void</RETURNS>
+const char *format, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_notify</NAME>
+<RETURNS>void</RETURNS>
+const char *format, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_omit</NAME>
+<RETURNS>void</RETURNS>
+const char *format, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert</NAME>
+<RETURNS>void</RETURNS>
+cut_boolean expression, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_true</NAME>
+<RETURNS>void</RETURNS>
+cut_boolean expression, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_false</NAME>
+<RETURNS>void</RETURNS>
+cut_boolean expression, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_equal_boolean</NAME>
+<RETURNS>void</RETURNS>
+cut_boolean expected, cut_boolean actual
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_not_equal_boolean</NAME>
+<RETURNS>void</RETURNS>
+cut_boolean expected, cut_boolean actual
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_null</NAME>
+<RETURNS>void</RETURNS>
+const void *expression, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_null_string</NAME>
+<RETURNS>void</RETURNS>
+const char *string, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_not_null</NAME>
+<RETURNS>void</RETURNS>
+const void *expression, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_equal_int</NAME>
+<RETURNS>void</RETURNS>
+int expected, int actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_not_equal_int</NAME>
+<RETURNS>void</RETURNS>
+int expected, int actual
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_equal_uint</NAME>
+<RETURNS>void</RETURNS>
+unsigned int expected, unsigned int actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_not_equal_uint</NAME>
+<RETURNS>void</RETURNS>
+unsigned int expected, unsigned int actual
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_equal_size</NAME>
+<RETURNS>void</RETURNS>
+size_t expected, size_t actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_not_equal_size</NAME>
+<RETURNS>void</RETURNS>
+size_t expected, size_t actual
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_equal_double</NAME>
+<RETURNS>void</RETURNS>
+double expected, double error, double actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_not_equal_double</NAME>
+<RETURNS>void</RETURNS>
+double expected, double error, double actual
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_equal_string</NAME>
+<RETURNS>void</RETURNS>
+const char *expected, const char *actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_not_equal_string</NAME>
+<RETURNS>void</RETURNS>
+const char *expected, const char *actual
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_equal_string_with_free</NAME>
+<RETURNS>void</RETURNS>
+const char *expected, const char *actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_equal_string_or_null</NAME>
+<RETURNS>void</RETURNS>
+const char *expected, const char *actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_equal_substring</NAME>
+<RETURNS>void</RETURNS>
+const char *expected, const char *actual, size_t length
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_not_equal_substring</NAME>
+<RETURNS>void</RETURNS>
+const char *expected, const char *actual, size_t length
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_equal_memory</NAME>
+<RETURNS>void</RETURNS>
+const void *expected, size_t expected_size, const void *actual, size_t actual_size, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_not_equal_memory</NAME>
+<RETURNS>void</RETURNS>
+const void *expected, size_t expected_size, const void *actual, size_t actual_size
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_equal_string_array</NAME>
+<RETURNS>void</RETURNS>
+char **expected, char **actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_equal_string_array_with_free</NAME>
+<RETURNS>void</RETURNS>
+char **expected, char **actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_errno</NAME>
+<RETURNS>void</RETURNS>
+...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_file_exist</NAME>
+<RETURNS>void</RETURNS>
+const char *path, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_path_exist</NAME>
+<RETURNS>void</RETURNS>
+const char *path, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_path_not_exist</NAME>
+<RETURNS>void</RETURNS>
+const char *path, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_match</NAME>
+<RETURNS>void</RETURNS>
+const char *pattern, const char *actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_match_with_free</NAME>
+<RETURNS>void</RETURNS>
+const char *pattern, const char *actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_equal_pointer</NAME>
+<RETURNS>void</RETURNS>
+const void *expected, const void *actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_equal_fixture_data_string</NAME>
+<RETURNS>void</RETURNS>
+const char *expected, const void *path, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_error_errno</NAME>
+<RETURNS>void</RETURNS>
+...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_return</NAME>
+<RETURNS>void</RETURNS>
+void
+</FUNCTION>
+
+# cut-types.h
+
+<MACRO>
+<NAME>CUT_TRUE</NAME>
+#define CUT_TRUE
+</MACRO>
+
+<MACRO>
+<NAME>CUT_FALSE</NAME>
+#define CUT_FALSE
+</MACRO>
+
+# cut-test-utils.h
+
+<FUNCTION>
+<NAME>cut_take</NAME>
+<RETURNS>void *</RETURNS>
+void *object, CutDestroyFunction destroy_function
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_take_memory</NAME>
+<RETURNS>const void *</RETURNS>
+void *memory
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_take_string</NAME>
+<RETURNS>const char *</RETURNS>
+char *string
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_take_strdup</NAME>
+<RETURNS>const char *</RETURNS>
+const char *string
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_take_strndup</NAME>
+<RETURNS>const char *</RETURNS>
+const char *string, size_t size
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_take_memdup</NAME>
+<RETURNS>const void *</RETURNS>
+const void *memory, size_t size
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_take_printf</NAME>
+<RETURNS>const char *</RETURNS>
+const char *format, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_take_string_array</NAME>
+<RETURNS>char **</RETURNS>
+char **strings
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_take_diff</NAME>
+<RETURNS>const char *</RETURNS>
+const char *from, const char *to
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_take_replace</NAME>
+<RETURNS>const char *</RETURNS>
+const char *target, const char *pattern, const char *replacement
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_set_fixture_data_dir</NAME>
+<RETURNS>void</RETURNS>
+const char *path, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_build_fixture_data_path</NAME>
+<RETURNS>char *</RETURNS>
+const char *path, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_get_fixture_data_string</NAME>
+<RETURNS>const char *</RETURNS>
+const char *path, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_remove_path</NAME>
+<RETURNS>void</RETURNS>
+const char *path, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_build_path</NAME>
+<RETURNS>const char *</RETURNS>
+const char *path, ...
+</FUNCTION>
+
+# cut-helper.h
+
+<FUNCTION>
+<NAME>cut_test_pass</NAME>
+<RETURNS>void</RETURNS>
+void
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_test_fail</NAME>
+<RETURNS>void</RETURNS>
+const char *system_message, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_test_fail_va_list</NAME>
+<RETURNS>void</RETURNS>
+const char *system_message, const char *user_message_format
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_push_backtrace</NAME>
+<RETURNS>void</RETURNS>
+const char *expression
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_pop_backtrace</NAME>
+<RETURNS>void</RETURNS>
+void
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_set_expected</NAME>
+<RETURNS>void</RETURNS>
+const char *expected
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_set_actual</NAME>
+<RETURNS>void</RETURNS>
+const char *actual
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_append_diff</NAME>
+<RETURNS>const char *</RETURNS>
+const char *message, const char *from, const char *to
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_inspect_string_array</NAME>
+<RETURNS>const char *</RETURNS>
+const char **strings
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_equal_string</NAME>
+<RETURNS>cut_boolean</RETURNS>
+const char *string1, const char *string2
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_equal_double</NAME>
+<RETURNS>cut_boolean</RETURNS>
+double double1, double double2, double error
+</FUNCTION>
+
+# cut-multi-process.h
+
+<FUNCTION>
+<NAME>cut_take_new_sub_process</NAME>
+<RETURNS>CutSubProcess *</RETURNS>
+const char *test_directory
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_take_new_sub_process_group</NAME>
+<RETURNS>CutSubProcessGroup *</RETURNS>
+void
+</FUNCTION>
+
+# gcut-test-utils.h
+
+<FUNCTION>
+<NAME>gcut_take_object</NAME>
+<RETURNS>GObject *</RETURNS>
+GObject *object
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_take_error</NAME>
+<RETURNS>GError *</RETURNS>
+GError *error
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_take_list</NAME>
+<RETURNS>const GList *</RETURNS>
+const GList *list, CutDestroyFunction destroy_function
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_take_hash_table</NAME>
+<RETURNS>GHashTable *</RETURNS>
+GHashTable *hash_table
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_take_new_list_string</NAME>
+<RETURNS>const GList *</RETURNS>
+const gchar *value, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_take_new_list_string_array</NAME>
+<RETURNS>const GList *</RETURNS>
+const gchar **strings
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_take_new_hash_table_string_string</NAME>
+<RETURNS>GHashTable *</RETURNS>
+const gchar *key, ...
+</FUNCTION>
+
+# gcut-assertions.h
+
+<FUNCTION>
+<NAME>gcut_assert_equal_type</NAME>
+<RETURNS>void</RETURNS>
+GType expected, GType actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_equal_g_type</NAME>
+<RETURNS>void</RETURNS>
+GType expected, GType actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_assert_equal_value</NAME>
+<RETURNS>void</RETURNS>
+GValue *expected, GValue *actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_equal_g_value</NAME>
+<RETURNS>void</RETURNS>
+GValue *expected, GValue *actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_assert_equal_list</NAME>
+<RETURNS>void</RETURNS>
+GList *expected, GList *actual, GEqualFunc equal_function, GCutInspectFunction inspect_function, gpointer inspect_user_data
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_assert_equal_list_int</NAME>
+<RETURNS>void</RETURNS>
+GList *expected, GList *actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_equal_g_list_int</NAME>
+<RETURNS>void</RETURNS>
+GList *expected, GList *actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_assert_equal_list_uint</NAME>
+<RETURNS>void</RETURNS>
+GList *expected, GList *actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_equal_g_list_uint</NAME>
+<RETURNS>void</RETURNS>
+GList *expected, GList *actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_assert_equal_list_string</NAME>
+<RETURNS>void</RETURNS>
+GList *expected, GList *actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_equal_g_list_string</NAME>
+<RETURNS>void</RETURNS>
+GList *expected, GList *actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_assert_equal_list_object</NAME>
+<RETURNS>void</RETURNS>
+GList *expected, GList *actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_assert_equal_list_object_custom</NAME>
+<RETURNS>void</RETURNS>
+GList *expected, GList *actual, GEqualFunc equal_function, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_assert_equal_list_enum</NAME>
+<RETURNS>void</RETURNS>
+GType type, GList *expected, GList *actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_assert_equal_list_flags</NAME>
+<RETURNS>void</RETURNS>
+GType type, GList *expected, GList *actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_assert_equal_hash_table</NAME>
+<RETURNS>void</RETURNS>
+GHashTable *expected, GHashTable *actual, GEqualFunc equal_function, GCutInspectFunction key_inspect_function, GCutInspectFunction value_inspect_function, gpointer inspect_user_data
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_assert_equal_hash_table_string_string</NAME>
+<RETURNS>void</RETURNS>
+GHashTable *expected, GHashTable *actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_assert_error</NAME>
+<RETURNS>void</RETURNS>
+GError *error, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_g_error</NAME>
+<RETURNS>void</RETURNS>
+GError *error, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_assert_equal_error</NAME>
+<RETURNS>void</RETURNS>
+GError *expected, GError *actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_assert_remove_path</NAME>
+<RETURNS>void</RETURNS>
+const gchar *path, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_remove_path</NAME>
+<RETURNS>void</RETURNS>
+const gchar *path, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_assert_equal_time_val</NAME>
+<RETURNS>void</RETURNS>
+GTimeVal expected, GTimeVal actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_assert_equal_enum</NAME>
+<RETURNS>void</RETURNS>
+GType enum_type, gint expected, gint actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_assert_equal_flags</NAME>
+<RETURNS>void</RETURNS>
+GType flags_type, guint expected, guint actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_assert_equal_object</NAME>
+<RETURNS>void</RETURNS>
+GObject *expected, GObject *actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_assert_equal_object_custom</NAME>
+<RETURNS>void</RETURNS>
+GObject *expected, GObject *actual, GEqualFunc equal_function, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_assert_equal_int64</NAME>
+<RETURNS>void</RETURNS>
+gint64 expected, gint64 actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_assert_equal_uint64</NAME>
+<RETURNS>void</RETURNS>
+guint64 expected, guint64 actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_assert_equal_pid</NAME>
+<RETURNS>void</RETURNS>
+GPid expected, GPid actual
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_assert_not_equal_pid</NAME>
+<RETURNS>void</RETURNS>
+GPid expected, GPid actual
+</FUNCTION>
+
+# gcut-data.h
+
+<FUNCTION>
+<NAME>gcut_add_datum</NAME>
+<RETURNS>void</RETURNS>
+const gchar *name, const gchar *first_field_name, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_data_get_string</NAME>
+<RETURNS>const gchar *</RETURNS>
+gconstpointer data, const gchar *field_name
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_data_get_int</NAME>
+<RETURNS>gint</RETURNS>
+gconstpointer data, const gchar *field_name
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_data_get_uint</NAME>
+<RETURNS>guint</RETURNS>
+gconstpointer data, const gchar *field_name
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_data_get_type</NAME>
+<RETURNS>GType</RETURNS>
+gconstpointer data, const gchar *field_name
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_data_get_flags</NAME>
+<RETURNS>guint</RETURNS>
+gconstpointer data, const gchar *field_name
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_data_get_enum</NAME>
+<RETURNS>gint</RETURNS>
+gconstpointer data, const gchar *field_name
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_data_get_pointer</NAME>
+<RETURNS>gconstpointer</RETURNS>
+gconstpointer data, const gchar *field_name
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_data_get_boxed</NAME>
+<RETURNS>gconstpointer</RETURNS>
+gconstpointer data, const gchar *field_name
+</FUNCTION>
+
+# gdkcut-pixbuf-assertions.h
+
+<FUNCTION>
+<NAME>gdkcut_pixbuf_assert_equal</NAME>
+<RETURNS>void</RETURNS>
+const GdkPixbuf *expected, const GdkPixbuf *actual, guint threshold
+</FUNCTION>
+
+# soupcut-assertions.h
+
+<FUNCTION>
+<NAME>soupcut_message_assert_equal_content_type</NAME>
+<RETURNS>void</RETURNS>
+const gchar *expected, SoupMessage *message
+</FUNCTION>
+
+<FUNCTION>
+<NAME>soupcut_client_assert_equal_content_type</NAME>
+<RETURNS>void</RETURNS>
+const gchar *expected, SoupCutClient *client
+</FUNCTION>
+
+<FUNCTION>
+<NAME>soupcut_client_assert_response</NAME>
+<RETURNS>void</RETURNS>
+SoupCutClient *client
+</FUNCTION>
+
+<FUNCTION>
+<NAME>soupcut_client_assert_equal_body</NAME>
+<RETURNS>void</RETURNS>
+const gchar *expected, SoupCutClient *client
+</FUNCTION>
+
+<FUNCTION>
+<NAME>soupcut_client_assert_match_body</NAME>
+<RETURNS>void</RETURNS>
+const gchar *pattern, SoupCutClient *client
+</FUNCTION>

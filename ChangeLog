@@ -1,5 +1,8 @@
 2009-09-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/cutter-overrides.txt: add cut_set_expected() and
+	cut_set_actual().
+
 	* cutter/cut-test-utils.h: move helper functions for writing
 	assertions to ...
 	* cutter/cut-helper.h: ... here.
