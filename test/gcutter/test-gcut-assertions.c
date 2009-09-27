@@ -737,16 +737,9 @@ test_equal_error (void)
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "gcut_assert_equal_error test",
                            NULL,
-                           "<error1 == error2>\n"
-                           "expected: <g-file-error-quark:4: not found>\n"
-                           "  actual: <g-file-error-quark:4: no entry>\n"
-                           "\n"
-                           "diff:\n"
-                           "- g-file-error-quark:4: not found\n"
-                           "?                          ^^^^^^\n"
-                           "+ g-file-error-quark:4: no entry\n"
-                           "?                         +++ ^^",
-                           NULL, NULL,
+                           "<error1 == error2>",
+                           "g-file-error-quark:4: not found",
+                           "g-file-error-quark:4: no entry",
                            FAIL_LOCATION, "stub_equal_error",
                            NULL);
 }

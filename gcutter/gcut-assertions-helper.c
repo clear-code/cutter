@@ -345,23 +345,11 @@ gcut_assert_equal_error_helper (const GError   *expected,
     if (gcut_error_equal(expected, actual)) {
         cut_test_pass();
     } else {
-        const gchar *inspected_expected;
-        const gchar *inspected_actual;
-        const gchar *message;
-
-        inspected_expected = cut_take_string(gcut_error_inspect(expected));
-        inspected_actual = cut_take_string(gcut_error_inspect(actual));
-        message = cut_take_printf("<%s == %s>\n"
-                                  "expected: <%s>\n"
-                                  "  actual: <%s>",
-                                  expression_expected,
-                                  expression_actual,
-                                  inspected_expected,
-                                  inspected_actual);
-        if (expected && actual)
-            message = cut_append_diff(message,
-                                      inspected_expected, inspected_actual);
-        cut_test_fail(message);
+        cut_set_expected(cut_take_string(gcut_error_inspect(expected)));
+        cut_set_actual(cut_take_string(gcut_error_inspect(actual)));
+        cut_test_fail(cut_take_printf("<%s == %s>",
+                                      expression_expected,
+                                      expression_actual));
     }
 }
 
