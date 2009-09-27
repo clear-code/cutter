@@ -1,5 +1,10 @@
 2009-09-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertions-helper.c,
+	test/cutter/test-cut-assertions.c:
+	cut_assert_equal_string_array() uses cut_set_expected() and
+	cut_set_actual() instead of cut_append_diff().
+
 	* module/ui/cut-console-ui.c: add "colorize" instruction modifier.
 
 2009-09-24  Kouhei Sutou  <kou@cozmixng.org>

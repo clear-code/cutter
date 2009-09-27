@@ -907,13 +907,30 @@ test_not_equal_memory (void)
                            NULL);
 }
 
+static void
+stub_equal_string_array (void)
+{
+    gchar *strings1[] = {"a", "b", "c", NULL};
+    gchar *strings2[] = {"a", "b", "c", "d", NULL};
+
+    cut_assert_equal_string_array(strings1, strings1);
+    cut_assert_equal_string_array(strings2, strings2);
+    MARK_FAIL(cut_assert_equal_string_array(strings1, strings2));
+}
+
 void
 test_equal_string_array (void)
 {
-    gchar *strings1[] = {"a", "b", "c", NULL};
-    gchar *strings2[] = {"a", "b", "c", NULL};
-
-    cut_assert_equal_string_array(strings1, strings2);
+    test = cut_test_new("stub-equal-string-array", stub_equal_string_array);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "stub-equal-string-array", NULL,
+                           "<strings1 == strings2>",
+                           "[\"a\", \"b\", \"c\"]",
+                           "[\"a\", \"b\", \"c\", \"d\"]",
+                           FAIL_LOCATION, "stub_equal_string_array",
+                           NULL);
 }
 
 void

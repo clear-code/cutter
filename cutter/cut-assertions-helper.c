@@ -582,16 +582,11 @@ cut_assert_equal_string_array_helper (char          **expected,
 
         inspected_expected = cut_inspect_string_array(expected);
         inspected_actual = cut_inspect_string_array(actual);
-        message = cut_take_printf("<%s == %s>\n"
-                                  "expected: <%s>\n"
-                                  "  actual: <%s>",
+        message = cut_take_printf("<%s == %s>",
                                   expression_expected,
-                                  expression_actual,
-                                  inspected_expected,
-                                  inspected_actual);
-        if (expected && actual)
-            message = cut_append_diff(message,
-                                      inspected_expected, inspected_actual);
+                                  expression_actual);
+        cut_set_expected(inspected_expected);
+        cut_set_actual(inspected_actual);
         cut_test_fail(message);
     }
 }
