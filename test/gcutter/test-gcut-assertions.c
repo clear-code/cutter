@@ -768,18 +768,9 @@ test_equal_enum (void)
         "gcut_assert_equal_enum test",
         NULL,
         "<CUT_TEST_RESULT_FAILURE == CUT_TEST_RESULT_PENDING>"
-        " (CUT_TYPE_TEST_RESULT_STATUS)\n"
-        "expected: <#<CutTestResultStatus: "
-        "failure(CUT_TEST_RESULT_FAILURE:4)>>\n"
-        "  actual: <#<CutTestResultStatus: "
-        "pending(CUT_TEST_RESULT_PENDING:3)>>\n"
-        "\n"
-        "diff:\n"
-        "- #<CutTestResultStatus: failure(CUT_TEST_RESULT_FAILURE:4)>\n"
-        "?                        ^^ ^^^^                 ^^ ^^^^ ^\n"
-        "+ #<CutTestResultStatus: pending(CUT_TEST_RESULT_PENDING:3)>\n"
-        "?                        ^^^^ ^^                 ^^^^ ^^ ^",
-        NULL, NULL,
+        " (CUT_TYPE_TEST_RESULT_STATUS)",
+        "#<CutTestResultStatus: failure(CUT_TEST_RESULT_FAILURE:4)>",
+        "#<CutTestResultStatus: pending(CUT_TEST_RESULT_PENDING:3)>",
         FAIL_LOCATION, "stub_equal_enum",
         NULL);
 }

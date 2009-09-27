@@ -401,22 +401,17 @@ gcut_assert_equal_enum_helper (GType           enum_type,
     } else {
         const gchar *inspected_expected;
         const gchar *inspected_actual;
-        const gchar *message;
 
         inspected_expected =
             cut_take_string(gcut_enum_inspect(enum_type, expected));
         inspected_actual =
             cut_take_string(gcut_enum_inspect(enum_type, actual));
-        message = cut_take_printf("<%s == %s> (%s)\n"
-                                  "expected: <%s>\n"
-                                  "  actual: <%s>",
-                                  expression_expected,
-                                  expression_actual,
-                                  expression_enum_type,
-                                  inspected_expected,
-                                  inspected_actual);
-        message = cut_append_diff(message, inspected_expected, inspected_actual);
-        cut_test_fail(message);
+        cut_set_expected(inspected_expected);
+        cut_set_actual(inspected_actual);
+        cut_test_fail(cut_take_printf("<%s == %s> (%s)",
+                                      expression_expected,
+                                      expression_actual,
+                                      expression_enum_type));
     }
 }
 
