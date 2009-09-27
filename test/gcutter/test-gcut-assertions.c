@@ -518,7 +518,6 @@ test_equal_list_flags (void)
         "third (CUTTEST_ASSERT_LIST_STUB_THIRD:0x4)>)";
     const gchar inspected_actual[] =
         "(#<CuttestAssertListStubFlags>)";
-    const gchar *message, *message_with_diff;
     static const GFlagsValue values[] = {
         {1 << 0, "CUTTEST_ASSERT_LIST_STUB_FIRST", "first"},
         {1 << 1, "CUTTEST_ASSERT_LIST_STUB_SECOND", "second"},
@@ -535,19 +534,11 @@ test_equal_list_flags (void)
     cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
 
-    message = cut_take_printf("<list1 == list2>\n"
-                              "expected: <%s>\n"
-                              "  actual: <%s>",
-                              inspected_expected,
-                              inspected_actual);
-    message_with_diff = cut_append_diff(message,
-                                        inspected_expected,
-                                        inspected_actual);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "equal_list_flags test",
                            NULL,
-                           message_with_diff,
-                           NULL, NULL,
+                           "<list1 == list2>",
+                           inspected_expected, inspected_actual,
                            FAIL_LOCATION, "stub_equal_list_flags",
                            NULL);
 }
