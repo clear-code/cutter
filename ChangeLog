@@ -1,5 +1,13 @@
 2009-09-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* module/ui/cut-console-ui.c: use CutDifferColorize.
+
+	* module/ui/cut-console-ui.c: move colorized diff features to ...
+	* cutter/cut-differ-colorize.[ch]: ... here.
+
+	* cutter/cut-diff.c: move CutDifferReadable to ...
+	* cutter/cut-differ-readable.[ch]: ... here.
+
 	* doc/reference/ja.po: fix a typo.
 
 	* doc/reference/cutter-overrides.txt: add cut_set_expected() and

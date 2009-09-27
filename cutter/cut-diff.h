@@ -21,7 +21,7 @@
 #define __CUT_DIFF_H__
 
 #include <glib-object.h>
-#include "cut-public.h"
+#include <cutter/cut-public.h>
 
 G_BEGIN_DECLS
 
@@ -47,15 +47,32 @@ struct _CutDifferClass
     void (*diff) (CutDiffer *differ, GArray *result);
 };
 
-GType      cut_differ_get_type         (void) G_GNUC_CONST;
+GType         cut_differ_get_type         (void) G_GNUC_CONST;
 
-CutDiffer *cut_differ_readable_new     (const gchar *from,
-                                        const gchar *to);
-gchar     *cut_differ_diff             (CutDiffer   *differ);
+gchar        *cut_differ_diff             (CutDiffer   *differ);
+gchar       **cut_differ_get_from         (CutDiffer   *differ);
+gchar       **cut_differ_get_to           (CutDiffer   *differ);
 
+void          cut_differ_util_append_with_tag
+                                          (GArray      *result,
+                                           const gchar *tag,
+                                           gchar      **lines,
+                                           guint        begin,
+                                           guint        end);
+gboolean      cut_differ_util_is_space_character
+                                          (gpointer     data,
+                                           gpointer     user_data);
+guint         cut_differ_util_compute_width
+                                          (const gchar *string,
+                                           guint         begin,
+                                           guint         end);
+void          cut_differ_util_append_n_character
+                                         (GString       *string,
+                                          gchar          character,
+                                          guint          n);
 
-gboolean   cut_diff_is_interested      (const gchar *diff);
-gboolean   cut_diff_need_fold          (const gchar *diff);
+gboolean      cut_diff_is_interested      (const gchar *diff);
+gboolean      cut_diff_need_fold          (const gchar *diff);
 
 G_END_DECLS
 

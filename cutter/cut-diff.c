@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2009  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -125,13 +125,13 @@ set_property (GObject      *object,
     CutDifferPrivate *priv = CUT_DIFFER_GET_PRIVATE(object);
 
     switch (prop_id) {
-      case PROP_FROM:
+    case PROP_FROM:
         priv->from = split_to_lines(g_value_get_string(value));
         break;
-      case PROP_TO:
+    case PROP_TO:
         priv->to = split_to_lines(g_value_get_string(value));
         break;
-      default:
+    default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
     }
@@ -156,58 +156,21 @@ cut_differ_diff (CutDiffer *differ)
     return diff;
 }
 
-
-static void readable_diff        (CutDiffer *differ, GArray *result);
-
-typedef struct _CutDifferReadable         CutDifferReadable;
-typedef struct _CutDifferReadableClass    CutDifferReadableClass;
-
-struct _CutDifferReadable
+gchar **
+cut_differ_get_from (CutDiffer *differ)
 {
-    CutDiffer object;
-};
-
-struct _CutDifferReadableClass
-{
-    CutDifferClass parent_class;
-};
-
-#define CUT_TYPE_DIFFER_READABLE            (cut_differ_readable_get_type ())
-#define CUT_DIFFER_READABLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_DIFFER_READABLE, CutDifferReadable))
-#define CUT_DIFFER_READABLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_DIFFER_READABLE, CutDifferReadableClass))
-#define CUT_IS_DIFFER_READABLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_DIFFER_READABLE))
-#define CUT_IS_DIFFER_READABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_DIFFER_READABLE))
-#define CUT_DIFFER_READABLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_DIFFER_READABLE, CutDifferReadableClass))
-
-GType      cut_differ_readable_get_type  (void) G_GNUC_CONST;
-
-G_DEFINE_TYPE(CutDifferReadable, cut_differ_readable, CUT_TYPE_DIFFER)
-
-static void
-cut_differ_readable_class_init (CutDifferReadableClass *klass)
-{
-    CutDifferClass *differ_class;
-
-    differ_class = CUT_DIFFER_CLASS(klass);
-    differ_class->diff = readable_diff;
+    return CUT_DIFFER_GET_PRIVATE(differ)->from;
 }
 
-static void
-cut_differ_readable_init (CutDifferReadable *differ)
+gchar **
+cut_differ_get_to (CutDiffer *differ)
 {
+    return CUT_DIFFER_GET_PRIVATE(differ)->to;
 }
 
-CutDiffer *
-cut_differ_readable_new (const gchar *from, const gchar *to)
-{
-    return g_object_new(CUT_TYPE_DIFFER_READABLE,
-                        "from", from,
-                        "to", to,
-                        NULL);
-}
-
-static void
-tag (GArray *result, const gchar *tag, gchar **lines, gint begin, gint end)
+void
+cut_differ_util_append_with_tag (GArray *result, const gchar *tag,
+                                 gchar **lines, guint begin, guint end)
 {
     gint i;
     for (i = begin; i < end; i++) {
@@ -218,32 +181,8 @@ tag (GArray *result, const gchar *tag, gchar **lines, gint begin, gint end)
     }
 }
 
-static void
-tag_equal (GArray *result, gchar **lines, gint begin, gint end)
-{
-    tag(result, "  ", lines, begin, end);
-}
-
-static void
-tag_inserted (GArray *result, gchar **lines, gint begin, gint end)
-{
-    tag(result, "+ ", lines, begin, end);
-}
-
-static void
-tag_deleted (GArray *result, gchar **lines, gint begin, gint end)
-{
-    tag(result, "- ", lines, begin, end);
-}
-
-static void
-tag_difference (GArray *result, gchar **lines, gint begin, gint end)
-{
-    tag(result, "? ", lines, begin, end);
-}
-
-static gboolean
-is_space_character (gpointer data, gpointer user_data)
+gboolean
+cut_differ_util_is_space_character (gpointer data, gpointer user_data)
 {
     gint character;
 
@@ -251,47 +190,11 @@ is_space_character (gpointer data, gpointer user_data)
     return character == ' ' || character == '\t';
 }
 
-static void
-append_n_tag (GString *string, gchar tag, gint n)
-{
-    gchar *tags;
-
-    tags = g_strnfill(n, tag);
-    g_string_append(string, tags);
-    g_free(tags);
-}
-
-static void
-format_diff_point (GArray *result, gchar *from_line, gchar *to_line,
-                   gchar *from_tags, gchar *to_tags)
-{
-    gchar *lines[] = {NULL, NULL};
-
-    from_tags = g_strchomp(from_tags);
-    to_tags = g_strchomp(to_tags);
-
-    lines[0] = from_line;
-    tag_deleted(result, lines, 0, 1);
-
-    if (from_tags[0]) {
-        lines[0] = from_tags;
-        tag_difference(result, lines, 0, 1);
-    }
-
-    lines[0] = to_line;
-    tag_inserted(result, lines, 0, 1);
-
-    if (to_tags[0]) {
-        lines[0] = to_tags;
-        tag_difference(result, lines, 0, 1);
-    }
-}
-
-static gint
-compute_width (const gchar *string, gint begin, gint end)
+guint
+cut_differ_util_compute_width (const gchar *string, guint begin, guint end)
 {
     const gchar *last;
-    gint width = 0;
+    guint width = 0;
 
     last = g_utf8_offset_to_pointer(string, end);
     for (string = g_utf8_offset_to_pointer(string, begin);
@@ -307,252 +210,14 @@ compute_width (const gchar *string, gint begin, gint end)
     return width;
 }
 
-static void
-diff_line (GArray *result, gchar *from_line, gchar *to_line)
+void
+cut_differ_util_append_n_character (GString *string, gchar character, guint n)
 {
-    GString *from_tags, *to_tags;
-    CutSequenceMatcher *matcher;
-    const GList *operations;
+    gchar *characters;
 
-    from_tags = g_string_new("");
-    to_tags = g_string_new("");
-    matcher = cut_sequence_matcher_char_new_full(from_line,
-                                                 to_line,
-                                                 is_space_character,
-                                                 NULL);
-    for (operations = cut_sequence_matcher_get_operations(matcher);
-         operations;
-         operations = g_list_next(operations)) {
-        CutSequenceMatchOperation *operation = operations->data;
-        gint from_width, to_width;
-
-        from_width = compute_width(from_line,
-                                   operation->from_begin,
-                                   operation->from_end);
-        to_width = compute_width(to_line,
-                                 operation->to_begin,
-                                 operation->to_end);
-        switch (operation->type) {
-          case CUT_SEQUENCE_MATCH_OPERATION_EQUAL:
-            append_n_tag(from_tags, ' ', from_width);
-            append_n_tag(to_tags, ' ', to_width);
-            break;
-          case CUT_SEQUENCE_MATCH_OPERATION_INSERT:
-            append_n_tag(to_tags, '+', to_width);
-            break;
-          case CUT_SEQUENCE_MATCH_OPERATION_DELETE:
-            append_n_tag(from_tags, '-', from_width);
-            break;
-          case CUT_SEQUENCE_MATCH_OPERATION_REPLACE:
-            append_n_tag(from_tags, '^', from_width);
-            append_n_tag(to_tags, '^', to_width);
-            break;
-          default:
-            g_error("unknown operation type: %d", operation->type);
-            break;
-        }
-    }
-
-    format_diff_point(result, from_line, to_line, from_tags->str, to_tags->str);
-
-    g_string_free(from_tags, TRUE);
-    g_string_free(to_tags, TRUE);
-    g_object_unref(matcher);
-}
-
-static void diff_lines (CutDiffer *differ, GArray *result,
-                        gint from_begin, gint from_end,
-                        gint to_begin, gint to_end);
-
-static void
-tag_diff_lines (CutDiffer *differ, GArray *result,
-                gint from_begin, gint from_end,
-                gint to_begin, gint to_end)
-{
-    CutDifferPrivate *priv;
-
-    priv = CUT_DIFFER_GET_PRIVATE(differ);
-    if (from_begin < from_end) {
-        if (to_begin < to_end) {
-            diff_lines(differ, result, from_begin, from_end, to_begin, to_end);
-        } else {
-            tag_deleted(result, priv->from, from_begin, from_end);
-        }
-    } else {
-        tag_inserted(result, priv->to, to_begin, to_end);
-    }
-}
-
-static void
-diff_lines (CutDiffer *differ, GArray *result,
-            gint from_begin, gint from_end,
-            gint to_begin, gint to_end)
-{
-    CutDifferPrivate *priv;
-    gdouble best_ratio, cut_off;
-    gint from_equal_index, to_equal_index;
-    gint from_best_index, to_best_index;
-    gint to_index, from_index;
-
-    priv = CUT_DIFFER_GET_PRIVATE(differ);
-
-    best_ratio = 0.74;
-    cut_off = 0.75;
-
-    from_equal_index = to_equal_index = -1;
-    from_best_index = to_best_index = -1;
-
-    for (to_index = to_begin; to_index < to_end; to_index++) {
-        for (from_index = from_begin; from_index < from_end; from_index++) {
-            CutSequenceMatcher *matcher;
-            gchar *from_line, *to_line;
-            gdouble ratio;
-
-            from_line = priv->from[from_index];
-            to_line = priv->to[to_index];
-            if (strcmp(from_line, to_line) == 0) {
-                if (from_equal_index < 0)
-                    from_equal_index = from_index;
-                if (to_equal_index < 0)
-                    to_equal_index = to_index;
-                continue;
-            }
-
-            matcher = cut_sequence_matcher_char_new_full(from_line,
-                                                         to_line,
-                                                         is_space_character,
-                                                         NULL);
-            ratio = cut_sequence_matcher_get_ratio(matcher);
-            if (ratio > best_ratio) {
-                best_ratio = ratio;
-                from_best_index = from_index;
-                to_best_index = to_index;
-            }
-            g_object_unref(matcher);
-        }
-    }
-
-    if (best_ratio < cut_off) {
-        if (from_equal_index < 0) {
-            if (to_end - to_begin < from_end - from_begin) {
-                tag_inserted(result, priv->to, to_begin, to_end);
-                tag_deleted(result, priv->from, from_begin, from_end);
-            } else {
-                tag_deleted(result, priv->from, from_begin, from_end);
-                tag_inserted(result, priv->to, to_begin, to_end);
-            }
-            return;
-        }
-        from_best_index = from_equal_index;
-        to_best_index = to_equal_index;
-        best_ratio = 1.0;
-    }
-
-    tag_diff_lines(differ, result,
-                   from_begin, from_best_index,
-                   to_begin, to_best_index);
-    diff_line(result, priv->from[from_best_index], priv->to[to_best_index]);
-    tag_diff_lines(differ, result,
-                   from_best_index + 1, from_end,
-                   to_best_index + 1, to_end);
-}
-
-static void
-readable_diff (CutDiffer *differ, GArray *result)
-{
-    CutDifferPrivate *priv;
-    CutSequenceMatcher *matcher;
-    const GList *operations;
-
-    priv = CUT_DIFFER_GET_PRIVATE(differ);
-    matcher = cut_sequence_matcher_string_new(priv->from, priv->to);
-    for (operations = cut_sequence_matcher_get_operations(matcher);
-         operations;
-         operations = g_list_next(operations)) {
-        CutSequenceMatchOperation *operation = operations->data;
-
-        switch (operation->type) {
-          case CUT_SEQUENCE_MATCH_OPERATION_EQUAL:
-            tag_equal(result, priv->from,
-                      operation->from_begin, operation->from_end);
-            break;
-          case CUT_SEQUENCE_MATCH_OPERATION_INSERT:
-            tag_inserted(result, priv->to,
-                         operation->to_begin, operation->to_end);
-            break;
-          case CUT_SEQUENCE_MATCH_OPERATION_DELETE:
-            tag_deleted(result, priv->from,
-                        operation->from_begin, operation->from_end);
-            break;
-          case CUT_SEQUENCE_MATCH_OPERATION_REPLACE:
-            diff_lines(differ, result,
-                       operation->from_begin, operation->from_end,
-                       operation->to_begin, operation->to_end);
-            break;
-          default:
-            g_error("unknown operation type: %d", operation->type);
-            break;
-        }
-    }
-
-    g_object_unref(matcher);
-}
-
-gchar *
-cut_diff_readable (const gchar *from, const gchar *to)
-{
-    CutDiffer *differ;
-    gchar *result;
-
-    differ = cut_differ_readable_new(from, to);
-    result = cut_differ_diff(differ);
-    g_object_unref(differ);
-    return result;
-}
-
-gchar *
-cut_diff_folded_readable (const gchar *from, const gchar *to)
-{
-    gchar *folded_from, *folded_to;
-    gchar *folded_diff;
-
-    folded_from = cut_utils_fold(from);
-    folded_to = cut_utils_fold(to);
-    folded_diff = cut_diff_readable(folded_from, folded_to);
-    g_free(folded_from);
-    g_free(folded_to);
-
-    return folded_diff;
-}
-
-gboolean
-cut_diff_is_interested (const gchar *diff)
-{
-    if (!diff)
-        return FALSE;
-
-    if (!g_regex_match_simple("^[-+]", diff, G_REGEX_MULTILINE, 0))
-        return FALSE;
-
-    if (g_regex_match_simple("^[ ?]", diff, G_REGEX_MULTILINE, 0))
-        return TRUE;
-
-    if (g_regex_match_simple("(?:.*\n){2,}", diff, G_REGEX_MULTILINE, 0))
-        return TRUE;
-
-    return FALSE;
-}
-
-gboolean
-cut_diff_need_fold (const gchar *diff)
-{
-    if (!diff)
-        return FALSE;
-
-    if (g_regex_match_simple("^[-+].{79}", diff, G_REGEX_MULTILINE, 0))
-        return TRUE;
-
-    return FALSE;
+    characters = g_strnfill(n, character);
+    g_string_append(string, characters);
+    g_free(characters);
 }
 
 /*
