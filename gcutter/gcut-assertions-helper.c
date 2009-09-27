@@ -118,20 +118,15 @@ gcut_assert_equal_list_int_helper (const GList    *expected,
     if (gcut_list_equal_int(expected, actual)) {
         cut_test_pass();
     } else {
-        const gchar *message;
         const gchar *inspected_expected, *inspected_actual;
 
         inspected_expected = cut_take_string(gcut_list_inspect_int(expected));
         inspected_actual = cut_take_string(gcut_list_inspect_int(actual));
 
-        message = cut_take_printf("<%s == %s>\n"
-                                  "expected: <%s>\n"
-                                  "  actual: <%s>",
-                                  expression_expected, expression_actual,
-                                  inspected_expected,
-                                  inspected_actual);
-        message = cut_append_diff(message, inspected_expected, inspected_actual);
-        cut_test_fail(message);
+        cut_set_expected(inspected_expected);
+        cut_set_actual(inspected_actual);
+        cut_test_fail(cut_take_printf("<%s == %s>",
+                                      expression_expected, expression_actual));
     }
 }
 
