@@ -68,13 +68,13 @@ gcut_assert_equal_value_helper (GValue         *expected,
         expected_type_name = g_type_name(G_VALUE_TYPE(expected));
         actual_type_name = g_type_name(G_VALUE_TYPE(actual));
 
-        message = cut_take_printf("<%s == %s>\n"
-                                  "expected: <%s> (%s)\n"
-                                  "  actual: <%s> (%s)",
-                                  expression_expected, expression_actual,
-                                  inspected_expected, expected_type_name,
-                                  inspected_actual, actual_type_name);
-        message = cut_append_diff(message, inspected_expected, inspected_actual);
+        message = cut_take_printf("<%s == %s>",
+                                  expression_expected, expression_actual);
+        cut_set_expected(cut_take_printf("%s (%s)",
+                                         inspected_expected,
+                                         expected_type_name));
+        cut_set_actual(cut_take_printf("%s (%s)",
+                                       inspected_actual, actual_type_name));
         cut_test_fail(message);
     }
 }

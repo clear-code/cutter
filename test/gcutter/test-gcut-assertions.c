@@ -229,10 +229,9 @@ test_equal_value (void)
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "equal_value test",
                            NULL,
-                           "<value1 == value2>\n"
-                           "expected: <10> (gint)\n"
-                           "  actual: <\"String\"> (gchararray)",
-                           NULL, NULL,
+                           "<value1 == value2>",
+                           "10 (gint)",
+                           "\"String\" (gchararray)",
                            FAIL_LOCATION, "stub_equal_value",
                            NULL);
 }
