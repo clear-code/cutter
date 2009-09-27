@@ -37,7 +37,7 @@
 #include "cut-utils.h"
 #include "cut-sub-process.h"
 #include "cut-sub-process-group.h"
-#include "cut-diff.h"
+#include "cut-differ-readable.h"
 #include "cut-main.h"
 #include "cut-backtrace-entry.h"
 #include "../gcutter/gcut-public.h"
@@ -543,17 +543,17 @@ cut_utils_append_diff (const gchar *message, const gchar *from, const gchar *to)
     gchar *diff, *result;
 
     diff = cut_diff_readable(from, to);
-    if (cut_diff_is_interested(diff)) {
+    if (cut_diff_readable_is_interested(diff)) {
         result = g_strdup_printf("%s\n"
                                  "\n"
                                  "diff:\n"
                                  "%s",
                                  message, diff);
-        if (cut_diff_need_fold(diff)) {
+        if (cut_diff_readable_need_fold(diff)) {
             gchar *folded_diff, *original_result;
 
             original_result = result;
-            folded_diff = cut_diff_folded_readable(from, to);
+            folded_diff = cut_diff_readable_folded(from, to);
             result = g_strdup_printf("%s\n"
                                      "\n"
                                      "folded diff:\n"

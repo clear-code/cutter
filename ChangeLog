@@ -1,5 +1,14 @@
 2009-09-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-diff.h, cutter-cut-public.h,
+	cut-differ-readable.[ch]: add 'readable' to readable diff related
+	functions.
+
+	* cutter/cut-test-result.c, cutter/cut-utils.c,
+	test/lib/cuttest-assertions.c,
+	test/cutter/test-cut-diff.c, test/cutter/test-cut-differ-readable.c:
+	follow the above change.
+
 	* cutter/cut-differ-colorize.c: swap colors of inserted and deleted.
 
 	* cutter/cut-differ-colorize.c,

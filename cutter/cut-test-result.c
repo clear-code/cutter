@@ -34,7 +34,7 @@
 #include "cut-stream-parser.h"
 #include "cut-backtrace-entry.h"
 #include "cut-utils.h"
-#include "cut-diff.h"
+#include "cut-differ-readable.h"
 
 #define MAX_DIFF_TARGET_SIZE 8092
 
@@ -705,7 +705,7 @@ cut_test_result_get_diff (CutTestResult *result)
         strlen(priv->expected) < MAX_DIFF_TARGET_SIZE &&
         strlen(priv->actual) < MAX_DIFF_TARGET_SIZE) {
         priv->diff = cut_diff_readable(priv->expected, priv->actual);
-        if (!cut_diff_is_interested(priv->diff)) {
+        if (!cut_diff_readable_is_interested(priv->diff)) {
             g_free(priv->diff);
             priv->diff = NULL;
         }
@@ -726,9 +726,9 @@ cut_test_result_get_folded_diff (CutTestResult *result)
         return priv->folded_diff;
 
     diff = cut_test_result_get_diff(result);
-    if (cut_diff_need_fold(diff)) {
+    if (cut_diff_readable_need_fold(diff)) {
         priv->folded_diff =
-            cut_diff_folded_readable(priv->expected, priv->actual);
+            cut_diff_readable_folded(priv->expected, priv->actual);
     }
 
     return priv->folded_diff;

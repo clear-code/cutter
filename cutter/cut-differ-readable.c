@@ -305,7 +305,7 @@ cut_diff_readable (const gchar *from, const gchar *to)
 }
 
 gchar *
-cut_diff_folded_readable (const gchar *from, const gchar *to)
+cut_diff_readable_folded (const gchar *from, const gchar *to)
 {
     gchar *folded_from, *folded_to;
     gchar *folded_diff;
@@ -320,7 +320,7 @@ cut_diff_folded_readable (const gchar *from, const gchar *to)
 }
 
 gboolean
-cut_diff_is_interested (const gchar *diff)
+cut_diff_readable_is_interested (const gchar *diff)
 {
     if (!diff)
         return FALSE;
@@ -338,7 +338,7 @@ cut_diff_is_interested (const gchar *diff)
 }
 
 gboolean
-cut_diff_need_fold (const gchar *diff)
+cut_diff_readable_need_fold (const gchar *diff)
 {
     if (!diff)
         return FALSE;

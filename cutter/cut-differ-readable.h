@@ -47,8 +47,13 @@ struct _CutDifferReadableClass
 
 GType      cut_differ_readable_get_type  (void) G_GNUC_CONST;
 
-CutDiffer *cut_differ_readable_new     (const gchar *from,
-                                        const gchar *to);
+CutDiffer *cut_differ_readable_new       (const gchar *from,
+                                          const gchar *to);
+
+gboolean   cut_diff_readable_is_interested
+                                         (const gchar *diff);
+gboolean   cut_diff_readable_need_fold   (const gchar *diff);
+
 G_END_DECLS
 
 #endif /* __CUT_DIFFER_READABLE_H__ */

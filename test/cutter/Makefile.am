@@ -38,7 +38,7 @@ noinst_LTLIBRARIES = 			\
 	test-cut-verbose-level.la	\
 	test-cut-utils.la		\
 	test-cut-sequence-matcher.la	\
-	test-cut-diff.la		\
+	test-cut-differ-readable.la	\
 	test-cut-main.la		\
 	test-cut-fixture-data.la	\
 	test-cut-test-data.la		\
@@ -91,7 +91,7 @@ test_cut_verbose_level_la_SOURCES	= test-cut-verbose-level.c
 test_cut_test_context_la_SOURCES	= test-cut-test-context.c
 test_cut_utils_la_SOURCES		= test-cut-utils.c
 test_cut_sequence_matcher_la_SOURCES	= test-cut-sequence-matcher.c
-test_cut_diff_la_SOURCES		= test-cut-diff.c
+test_cut_differ_readable_la_SOURCES	= test-cut-differ-readable.c
 test_cut_main_la_SOURCES		= test-cut-main.c
 test_cut_fixture_data_la_SOURCES	= test-cut-fixture-data.c
 test_cut_test_data_la_SOURCES		= test-cut-test-data.c

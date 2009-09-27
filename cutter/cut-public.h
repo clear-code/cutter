@@ -182,7 +182,7 @@ void        cut_test_context_get_last_backtrace
 
 char       *cut_diff_readable               (const char     *from,
                                              const char     *to);
-char       *cut_diff_folded_readable        (const char     *from,
+char       *cut_diff_readable_folded        (const char     *from,
                                              const char     *to);
 
 CutSubProcess *cut_utils_take_new_sub_process     (const char     *test_directory,

@@ -71,9 +71,6 @@ void          cut_differ_util_append_n_character
                                           gchar          character,
                                           guint          n);
 
-gboolean      cut_diff_is_interested      (const gchar *diff);
-gboolean      cut_diff_need_fold          (const gchar *diff);
-
 G_END_DECLS
 
 #endif /* __CUT_DIFF_H__ */
