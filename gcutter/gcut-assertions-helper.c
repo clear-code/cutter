@@ -302,23 +302,20 @@ gcut_assert_equal_hash_table_string_string_helper (GHashTable  *expected,
     if (gcut_hash_table_string_equal(expected, actual)) {
         cut_test_pass();
     } else {
-        const gchar *message;
         gchar *inspected_expected, *inspected_actual;
 
         inspected_expected =
             gcut_hash_table_string_string_inspect(expected);
         inspected_actual =
             gcut_hash_table_string_string_inspect(actual);
-        message = cut_take_printf("<%s == %s>\n"
-                                  "expected: <%s>\n"
-                                  "  actual: <%s>",
-                                  expression_expected, expression_actual,
-                                  inspected_expected,
-                                  inspected_actual);
-        message = cut_append_diff(message, inspected_expected, inspected_actual);
+
+        cut_set_expected(inspected_expected);
+        cut_set_actual(inspected_actual);
         g_free(inspected_expected);
         g_free(inspected_actual);
-        cut_test_fail(message);
+
+        cut_test_fail(cut_take_printf("<%s == %s>",
+                                      expression_expected, expression_actual));
     }
 }
 

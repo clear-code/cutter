@@ -680,10 +680,9 @@ test_equal_hash_table_string_string (void)
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "equal_hash_table_string_string test",
                            NULL,
-                           "<hash1 == hash2>\n"
-                           "expected: <{\"abc\" => \"11\", \"def\" => \"22\"}>\n"
-                           "  actual: <{\"wvu\" => \"88\", \"zyx\" => \"99\"}>",
-                           NULL, NULL,
+                           "<hash1 == hash2>",
+                           "{\"abc\" => \"11\", \"def\" => \"22\"}",
+                           "{\"wvu\" => \"88\", \"zyx\" => \"99\"}",
                            FAIL_LOCATION, "stub_equal_hash_table_string_string",
                            NULL);
 }
