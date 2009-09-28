@@ -79,13 +79,11 @@ cut_assert_equal_boolean_helper (cut_boolean     expected,
     if ((expected && actual) || (!expected && !actual)) {
         cut_test_pass();
     } else {
-        cut_test_fail(cut_take_printf("<%s == %s>\n"
-                                      "expected: <%s>\n"
-                                      "  actual: <%s>",
+        cut_set_expected(expected ? "true" : "false");
+        cut_set_actual(actual ? "true" : "false");
+        cut_test_fail(cut_take_printf("<%s == %s>",
                                       expression_expected,
-                                      expression_actual,
-                                      expected ? "true" : "false",
-                                      actual ? "true" : "false"));
+                                      expression_actual));
     }
 }
 
@@ -96,13 +94,11 @@ cut_assert_not_equal_boolean_helper (cut_boolean     expected,
                                      const char     *expression_actual)
 {
     if ((expected && actual) || (!expected && !actual)) {
-        cut_test_fail(cut_take_printf("<%s != %s>\n"
-                                      "expected: <%s>\n"
-                                      "  actual: <%s>",
+        cut_set_expected(expected ? "true" : "false");
+        cut_set_actual(actual ? "true" : "false");
+        cut_test_fail(cut_take_printf("<%s != %s>",
                                       expression_expected,
-                                      expression_actual,
-                                      expected ? "true" : "false",
-                                      actual ? "true" : "false"));
+                                      expression_actual));
     } else {
         cut_test_pass();
     }

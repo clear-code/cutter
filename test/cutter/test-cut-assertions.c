@@ -183,10 +183,8 @@ test_equal_boolean (void)
     cut_assert_test_result_summary(run_context, 1, 3, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "cut_assert_equal_boolean()", NULL,
-                           "<CUT_TRUE == CUT_FALSE>\n"
-                           "expected: <true>\n"
-                           "  actual: <false>",
-                           NULL, NULL,
+                           "<CUT_TRUE == CUT_FALSE>",
+                           "true", "false",
                            FAIL_LOCATION, "stub_equal_boolean",
                            NULL);
 }
@@ -209,10 +207,8 @@ test_not_equal_boolean (void)
     cut_assert_test_result_summary(run_context, 1, 3, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "cut_assert_not_equal_boolean()", NULL,
-                           "<CUT_TRUE != 100>\n"
-                           "expected: <true>\n"
-                           "  actual: <true>",
-                           NULL, NULL,
+                           "<CUT_TRUE != 100>",
+                           "true", "true",
                            FAIL_LOCATION, "stub_not_equal_boolean",
                            NULL);
 }
