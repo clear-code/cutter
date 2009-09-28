@@ -1,5 +1,8 @@
 2009-09-28  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-result.c (cut_test_result_set_expected)
+	(cut_test_result_set_actual): accept empty string.
+
 	* cutter/cut-assertions-helper.c,
 	test/cutter/test-cut-assertions.c: cut_assert_equal_boolean() and
 	cut_assert_not_equal_boolean() uses cut_set_expected() and

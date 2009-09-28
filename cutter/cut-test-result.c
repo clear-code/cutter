@@ -1103,7 +1103,7 @@ cut_test_result_set_expected (CutTestResult *result, const gchar *expected)
         priv->expected = NULL;
     }
 
-    if (expected && expected[0])
+    if (expected)
         priv->expected = g_strdup(expected);
 
     if (priv->expected)
@@ -1122,7 +1122,7 @@ cut_test_result_set_actual (CutTestResult *result, const gchar *actual)
         priv->actual = NULL;
     }
 
-    if (actual && actual[0])
+    if (actual)
         priv->actual = g_strdup(actual);
 
     if (priv->actual)
