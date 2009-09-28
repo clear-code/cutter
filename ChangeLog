@@ -1,3 +1,8 @@
+2009-09-28  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-differ-colorize.c (diff_line): show in one line if
+	any replaced character exists.
+
 2009-09-27  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-diff.h, cutter-cut-public.h,

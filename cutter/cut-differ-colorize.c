@@ -140,6 +140,7 @@ diff_line (GArray *result, gchar *from_line, gchar *to_line)
     GString *colorized_from_line, *colorized_to_line;
     CutSequenceMatcher *matcher;
     const GList *operations;
+    gboolean no_replace = TRUE;
 
     colorized_from_line = g_string_new("");
     colorized_to_line = g_string_new("");
@@ -147,6 +148,17 @@ diff_line (GArray *result, gchar *from_line, gchar *to_line)
         cut_sequence_matcher_char_new_full(from_line, to_line,
                                            cut_differ_util_is_space_character,
                                            NULL);
+    for (operations = cut_sequence_matcher_get_operations(matcher);
+         operations;
+         operations = g_list_next(operations)) {
+        CutSequenceMatchOperation *operation = operations->data;
+
+        if (operation->type == CUT_SEQUENCE_MATCH_OPERATION_REPLACE) {
+            no_replace = FALSE;
+            break;
+        }
+    }
+
     for (operations = cut_sequence_matcher_get_operations(matcher);
          operations;
          operations = g_list_next(operations)) {
@@ -163,15 +175,24 @@ diff_line (GArray *result, gchar *from_line, gchar *to_line)
         case CUT_SEQUENCE_MATCH_OPERATION_EQUAL:
             append_segment(colorized_from_line, from_line,
                            operation->from_begin, operation->from_end);
-            append_spaces(colorized_to_line, to_width);
+            if (!no_replace)
+                append_spaces(colorized_to_line, to_width);
             break;
         case CUT_SEQUENCE_MATCH_OPERATION_INSERT:
-            append_nothing_marks(colorized_from_line, to_width);
-            append_segment_with_color(colorized_to_line,
-                                      to_line,
-                                      operation->to_begin,
-                                      operation->to_end,
-                                      INSERTED_COLOR);
+            if (no_replace) {
+                append_segment_with_color(colorized_from_line,
+                                          to_line,
+                                          operation->to_begin,
+                                          operation->to_end,
+                                          INSERTED_COLOR);
+            } else {
+                append_nothing_marks(colorized_from_line, to_width);
+                append_segment_with_color(colorized_to_line,
+                                          to_line,
+                                          operation->to_begin,
+                                          operation->to_end,
+                                          INSERTED_COLOR);
+            }
             break;
         case CUT_SEQUENCE_MATCH_OPERATION_DELETE:
             append_segment_with_color(colorized_from_line,
@@ -179,7 +200,8 @@ diff_line (GArray *result, gchar *from_line, gchar *to_line)
                                       operation->from_begin,
                                       operation->from_end,
                                       DELETED_COLOR);
-            append_nothing_marks(colorized_to_line, from_width);
+            if (!no_replace)
+                append_nothing_marks(colorized_to_line, from_width);
             break;
         case CUT_SEQUENCE_MATCH_OPERATION_REPLACE:
             append_segment_with_color(colorized_from_line,
@@ -206,9 +228,12 @@ diff_line (GArray *result, gchar *from_line, gchar *to_line)
 
     {
         gchar *lines[] = {NULL, NULL, NULL};
-        lines[0] = colorized_from_line->str;
-        lines[1] = colorized_to_line->str;
-        tag_difference(result, lines, 0, 2);
+        guint n_lines = 0;
+
+        lines[n_lines++] = colorized_from_line->str;
+        if (!no_replace)
+            lines[n_lines++] = colorized_to_line->str;
+        tag_difference(result, lines, 0, n_lines);
     }
 
     g_string_free(colorized_from_line, TRUE);
