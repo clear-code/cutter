@@ -351,10 +351,8 @@ test_failure (void)
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "failure test iterator (First)",
                            NULL,
-                           "<2 == GPOINTER_TO_INT(data)>\n"
-                           "expected: <2>\n"
-                           "  actual: <1>",
-                           NULL, NULL,
+                           "<2 == GPOINTER_TO_INT(data)>",
+                           "2", "1",
                            FAIL_LOCATION, "stub_failure_iterated_test",
                            NULL);
     cut_assert_test_result(run_context, 1, CUT_TEST_RESULT_SUCCESS,
@@ -365,10 +363,8 @@ test_failure (void)
     cut_assert_test_result(run_context, 2, CUT_TEST_RESULT_FAILURE,
                            "failure test iterator (Third)",
                            NULL,
-                           "<2 == GPOINTER_TO_INT(data)>\n"
-                           "expected: <2>\n"
-                           "  actual: <3>",
-                           NULL, NULL,
+                           "<2 == GPOINTER_TO_INT(data)>",
+                           "2", "3",
                            FAIL_LOCATION, "stub_failure_iterated_test",
                            NULL);
 }

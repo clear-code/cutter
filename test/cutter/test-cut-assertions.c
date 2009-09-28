@@ -229,10 +229,8 @@ test_equal_int (void)
     cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "cut_assert_equal_int()", NULL,
-                           "<2 + 3 == 3 + 4>\n"
-                           "expected: <5>\n"
-                           "  actual: <7>",
-                           NULL, NULL,
+                           "<2 + 3 == 3 + 4>",
+                           "5", "7",
                            FAIL_LOCATION, "stub_equal_int",
                            NULL);
 }
@@ -253,10 +251,8 @@ test_not_equal_int (void)
     cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "cut_assert_not_equal_int()", NULL,
-                           "<2 + 3 != 3 + 2>\n"
-                           "expected: <5>\n"
-                           "  actual: <5>",
-                           NULL, NULL,
+                           "<2 + 3 != 3 + 2>",
+                           "5", "5",
                            FAIL_LOCATION, "stub_not_equal_int",
                            NULL);
 }
@@ -276,10 +272,8 @@ test_equal_uint (void)
     cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "cut_assert_equal_uint()", NULL,
-                           "<2 + 3 == 3 + 4>\n"
-                           "expected: <5>\n"
-                           "  actual: <7>",
-                           NULL, NULL,
+                           "<2 + 3 == 3 + 4>",
+                           "5", "7",
                            FAIL_LOCATION, "stub_equal_uint",
                            NULL);
 }
@@ -299,10 +293,8 @@ test_not_equal_uint (void)
     cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "cut_assert_not_equal_uint()", NULL,
-                           "<2 + 3 != 3 + 2>\n"
-                           "expected: <5>\n"
-                           "  actual: <5>",
-                           NULL, NULL,
+                           "<2 + 3 != 3 + 2>",
+                           "5", "5",
                            FAIL_LOCATION, "stub_not_equal_uint",
                            NULL);
 }
@@ -322,10 +314,8 @@ test_equal_size (void)
     cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "cut_assert_equal_size()", NULL,
-                           "<1 == 10>\n"
-                           "expected: <1>\n"
-                           "  actual: <10>",
-                           NULL, NULL,
+                           "<1 == 10>",
+                           "1", "10",
                            FAIL_LOCATION, "stub_equal_size",
                            NULL);
 }
@@ -345,10 +335,8 @@ test_not_equal_size (void)
     cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "cut_assert_not_equal_size()", NULL,
-                           "<2 + 3 != 3 + 2>\n"
-                           "expected: <5>\n"
-                           "  actual: <5>",
-                           NULL, NULL,
+                           "<2 + 3 != 3 + 2>",
+                           "5", "5",
                            FAIL_LOCATION, "stub_not_equal_size",
                            NULL);
 }

@@ -150,12 +150,11 @@ cut_assert_equal_int_helper (long            expected,
     if (expected == actual) {
         cut_test_pass();
     } else {
-        cut_test_fail(cut_take_printf("<%s == %s>\n"
-                                      "expected: <%ld>\n"
-                                      "  actual: <%ld>",
+        cut_set_expected(cut_take_printf("%ld", expected));
+        cut_set_actual(cut_take_printf("%ld", actual));
+        cut_test_fail(cut_take_printf("<%s == %s>",
                                       expression_expected,
-                                      expression_actual,
-                                      expected, actual));
+                                      expression_actual));
     }
 }
 
@@ -168,12 +167,11 @@ cut_assert_not_equal_int_helper (long            expected,
     if (expected != actual) {
         cut_test_pass();
     } else {
-        cut_test_fail(cut_take_printf("<%s != %s>\n"
-                                      "expected: <%ld>\n"
-                                      "  actual: <%ld>",
+        cut_set_expected(cut_take_printf("%ld", expected));
+        cut_set_actual(cut_take_printf("%ld", actual));
+        cut_test_fail(cut_take_printf("<%s != %s>",
                                       expression_expected,
-                                      expression_actual,
-                                      expected, actual));
+                                      expression_actual));
     }
 }
 
@@ -186,12 +184,11 @@ cut_assert_equal_uint_helper (unsigned long   expected,
     if (expected == actual) {
         cut_test_pass();
     } else {
-        cut_test_fail(cut_take_printf("<%s == %s>\n"
-                                      "expected: <%lu>\n"
-                                      "  actual: <%lu>",
+        cut_set_expected(cut_take_printf("%lu", expected));
+        cut_set_actual(cut_take_printf("%lu", actual));
+        cut_test_fail(cut_take_printf("<%s == %s>",
                                       expression_expected,
-                                      expression_actual,
-                                      expected, actual));
+                                      expression_actual));
     }
 }
 
@@ -204,12 +201,11 @@ cut_assert_not_equal_uint_helper (unsigned long   expected,
     if (expected != actual) {
         cut_test_pass();
     } else {
-        cut_test_fail(cut_take_printf("<%s != %s>\n"
-                                      "expected: <%lu>\n"
-                                      "  actual: <%lu>",
+        cut_set_expected(cut_take_printf("%lu", expected));
+        cut_set_actual(cut_take_printf("%lu", actual));
+        cut_test_fail(cut_take_printf("<%s != %s>",
                                       expression_expected,
-                                      expression_actual,
-                                      expected, actual));
+                                      expression_actual));
     }
 }
 
@@ -222,12 +218,11 @@ cut_assert_equal_size_helper (size_t          expected,
     if (expected == actual) {
         cut_test_pass();
     } else {
-        cut_test_fail(cut_take_printf("<%s == %s>\n"
-                                      "expected: <%" G_GSIZE_FORMAT ">\n"
-                                      "  actual: <%" G_GSIZE_FORMAT ">",
+        cut_set_expected(cut_take_printf("%" G_GSIZE_FORMAT, expected));
+        cut_set_actual(cut_take_printf("%" G_GSIZE_FORMAT, actual));
+        cut_test_fail(cut_take_printf("<%s == %s>",
                                       expression_expected,
-                                      expression_actual,
-                                      expected, actual));
+                                      expression_actual));
     }
 }
 
@@ -240,12 +235,11 @@ cut_assert_not_equal_size_helper (size_t          expected,
     if (expected != actual) {
         cut_test_pass();
     } else {
-        cut_test_fail(cut_take_printf("<%s != %s>\n"
-                                      "expected: <%" G_GSIZE_FORMAT ">\n"
-                                      "  actual: <%" G_GSIZE_FORMAT ">",
+        cut_set_expected(cut_take_printf("%" G_GSIZE_FORMAT, expected));
+        cut_set_actual(cut_take_printf("%" G_GSIZE_FORMAT, actual));
+        cut_test_fail(cut_take_printf("<%s != %s>",
                                       expression_expected,
-                                      expression_actual,
-                                      expected, actual));
+                                      expression_actual));
     }
 }
 
