@@ -700,15 +700,10 @@ print_result_detail (CutConsoleUI *console, CutTestResultStatus status,
         user_message = cut_test_result_get_user_message(result);
         system_message = cut_test_result_get_system_message(result);
         diff = cut_test_result_get_diff(result);
-        if (user_message) {
-            g_print("\n");
-            print_for_status(console, status, "%s", user_message);
-        }
-
-        if (system_message) {
-            g_print("\n");
-            print_for_status(console, status, "%s", system_message);
-        }
+        if (user_message)
+            g_print("\n%s", user_message);
+        if (system_message)
+            g_print("\n%s", system_message);
 
         g_print("\n");
         g_print("expected: <");

@@ -1,5 +1,8 @@
 2009-09-28  Kouhei Sutou  <kou@cozmixng.org>
 
+	* module/ui/cut-console-ui.c (print_result_detail): don't colorize
+	user and system messages.
+
 	* cutter/cut-assertions-helper.c,
 	test/cutter/test-cut-assertions.c,
 	test/cutter/test-cut-test-iterator.c: cut_assert_equal_int(),
