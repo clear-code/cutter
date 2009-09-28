@@ -1159,18 +1159,24 @@ test_failure_from_nested_function (void)
 }
 
 static void
-null_string_assertions (void)
+stub_null_string (void)
 {
     cut_assert_null_string(NULL);
-    cut_assert_null_string("");
+    MARK_FAIL(cut_assert_null_string(""));
 }
 
 void
 test_null_string (void)
 {
-    test = cut_test_new("assert-null-string", null_string_assertions);
+    test = cut_test_new("assert-null-string", stub_null_string);
     cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "assert-null-string", NULL,
+                           "<\"\"> is NULL",
+                           "<NULL>", "",
+                           FAIL_LOCATION, "stub_null_string",
+                           NULL);
 }
 
 static void

@@ -123,9 +123,9 @@ cut_assert_null_string_helper (const char     *string,
     if (string == NULL) {
         cut_test_pass();
     } else {
-        cut_test_fail(cut_take_printf("expected: <%s> is NULL\n"
-                                      "  actual: <%s>",
-                                      expression, string));
+        cut_set_expected("<NULL>");
+        cut_set_actual(string);
+        cut_test_fail(cut_take_printf("<%s> is NULL", expression));
     }
 }
 
