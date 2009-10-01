@@ -489,6 +489,14 @@
 					>
 				</File>
 				<File
+					RelativePath="..\cutter\cut-differ-readable.h"
+					>
+				</File>
+				<File
+					RelativePath="..\cutter\cut-differ-colorize.h"
+					>
+				</File>
+				<File
 					RelativePath="..\cutter\cut-elf-loader.h"
 					>
 				</File>
