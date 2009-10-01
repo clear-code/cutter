@@ -43,6 +43,8 @@ EXPORTS
 	cut_test_context_set_user_message_backward_compatibility
 	cut_test_context_set_user_message_va_list
 	cut_test_context_check_optional_assertion_message
+	cut_test_context_set_expected
+	cut_test_context_set_actual
 	cut_test_context_pass_assertion
 	cut_test_context_register_result
 	cut_test_context_long_jump
@@ -81,7 +83,7 @@ EXPORTS
 	cut_test_context_pop_backtrace
 	cut_test_context_get_last_backtrace
 	cut_diff_readable
-	cut_diff_folded_readable
+	cut_diff_readable_folded
 	cut_utils_take_new_sub_process
 	cut_utils_take_new_sub_process_group
 	cut_sub_process_run
@@ -297,6 +299,10 @@ EXPORTS
 	cut_test_result_get_backtrace
 	cut_test_result_get_start_time
 	cut_test_result_get_elapsed
+	cut_test_result_get_expected
+	cut_test_result_get_actual
+	cut_test_result_get_diff
+	cut_test_result_get_folded_diff
 	cut_test_result_set_status
 	cut_test_result_set_test
 	cut_test_result_set_test_iterator
@@ -309,6 +315,10 @@ EXPORTS
 	cut_test_result_set_backtrace
 	cut_test_result_set_start_time
 	cut_test_result_set_elapsed
+	cut_test_result_set_expected
+	cut_test_result_set_actual
+	cut_test_result_set_diff
+	cut_test_result_set_folded_diff
 	cut_test_result_to_xml
 	cut_test_result_to_xml_string
 	cut_test_result_status_to_signal_name
@@ -409,10 +419,17 @@ EXPORTS
 	cut_sequence_matcher_get_operations
 	cut_sequence_matcher_get_ratio
 	cut_differ_get_type
-	cut_differ_readable_new
 	cut_differ_diff
-	cut_diff_is_interested
-	cut_diff_need_fold
+	cut_differ_util_append_with_tag
+	cut_differ_util_is_space_character
+	cut_differ_util_compute_width
+	cut_differ_util_append_n_character
+	cut_differ_readable_get_type
+	cut_differ_readable_new
+	cut_diff_readable_is_interested
+	cut_diff_readable_need_fold
+	cut_differ_colorize_get_type
+	cut_differ_colorize_new
 	cut_analyzer_get_type
 	cut_analyzer_new
 	cut_analyzer_analyze
@@ -505,8 +522,10 @@ EXPORTS
 	gcut_list_inspect_flags
 	gcut_hash_table_equal
 	gcut_hash_table_inspect
+	gcut_hash_table_inspect_sorted
 	gcut_hash_table_string_equal
 	gcut_hash_table_string_string_inspect
+	gcut_hash_table_string_string_copy
 	gcut_error_equal
 	gcut_error_inspect
 	gcut_enum_error_quark
