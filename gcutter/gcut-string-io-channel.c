@@ -152,7 +152,7 @@ gcut_string_io_channel_read (GIOChannel *channel, gchar *buf, gsize count,
         return G_IO_STATUS_ERROR;
     }
 
-    rest = string_channel->string->len - string_channel->read_offset;
+    rest = string_channel->string->len - (gsize)string_channel->read_offset;
     *bytes_read = MIN(count, rest);
     memcpy(buf,
            string_channel->string->str + string_channel->read_offset,
@@ -200,7 +200,8 @@ determine_write_size (GCutStringIOChannel *string_channel,
 
         if (string_channel->string->len > string_channel->write_offset) {
             buffer_size =
-                string_channel->string->len - string_channel->write_offset;
+                string_channel->string->len -
+                (gsize)string_channel->write_offset;
         } else {
             buffer_size = 0;
         }
@@ -267,7 +268,8 @@ gcut_string_io_channel_write (GIOChannel *channel, const gchar *buf, gsize count
         return G_IO_STATUS_ERROR;
     }
 
-    g_string_overwrite_len(string_channel->string, string_channel->write_offset,
+    g_string_overwrite_len(string_channel->string,
+                           (gsize)string_channel->write_offset,
                            buf, write_size);
     *bytes_written = write_size;
     string_channel->write_offset += write_size;

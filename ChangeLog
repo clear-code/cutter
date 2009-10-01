@@ -1,5 +1,7 @@
 2009-10-01  Kouhei Sutou  <kou@clear-code.com>
 
+	* gcutter/gcut-string-io-channel.c: add explicit gsize cast.
+
 	* vcc/: sync.
 
 	* test/cutter/test-cut-differ-readable.c: remove needless
