@@ -1,5 +1,7 @@
 2009-10-01  Kouhei Sutou  <kou@clear-code.com>
 
+	* gcutter/gcut-string-io-channel.c: use gint64 for offset.
+
 	* cutter/cut-utils.c: use _close() instead of close() on Windows.
 
 	* cutter/cut-ui-factory-builder.c: remove needless const.

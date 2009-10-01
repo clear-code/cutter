@@ -33,8 +33,8 @@ struct _GCutStringIOChannel
 {
     GIOChannel channel;
     GString *string;
-    gsize write_offset;
-    gsize read_offset;
+    gint64 write_offset;
+    gint64 read_offset;
     gsize buffer_limit;
     gsize limit;
     gboolean read_fail;
