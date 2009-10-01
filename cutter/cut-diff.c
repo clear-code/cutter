@@ -172,7 +172,7 @@ void
 cut_differ_util_append_with_tag (GArray *result, const gchar *tag,
                                  gchar **lines, guint begin, guint end)
 {
-    gint i;
+    guint i;
     for (i = begin; i < end; i++) {
         gchar *line;
 

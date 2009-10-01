@@ -1,3 +1,7 @@
+2009-10-01  Kouhei Sutou  <kou@clear-code.com>
+
+	* cutter/cut-diff.c (cut_differ_util_append_with_tag): fix wrong type.
+
 2009-09-28  Kouhei Sutou  <kou@cozmixng.org>
 
 	* module/ui/cut-console-ui.c (print_result_detail): don't colorize
