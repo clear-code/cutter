@@ -30,6 +30,8 @@
 #include <glib/gstdio.h>
 #ifdef G_OS_WIN32
 #  include <windows.h>
+#  include <io.h>
+#  define close _close
 #endif
 
 #include <errno.h>

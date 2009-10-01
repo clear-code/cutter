@@ -1,5 +1,7 @@
 2009-10-01  Kouhei Sutou  <kou@clear-code.com>
 
+	* cutter/cut-utils.c: use _close() instead of close() on Windows.
+
 	* cutter/cut-ui-factory-builder.c: remove needless const.
 
 	* cutter/cut-stream-factory-builder.c: remove needless const.
