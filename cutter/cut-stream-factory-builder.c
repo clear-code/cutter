@@ -30,9 +30,9 @@
 #include "cut-module-factory.h"
 #include "cut-module-factory-utils.h"
 
-static const gchar *stream_name = NULL;
+static gchar *stream_name = NULL;
 static int fd = -1;
-static const gchar *directory = NULL;
+static gchar *directory = NULL;
 static CutStreamFactoryBuilder *the_builder = NULL;
 #ifdef G_OS_WIN32
 static gchar *win32_stream_factory_module_dir = NULL;
