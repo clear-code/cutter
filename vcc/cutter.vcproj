@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
@@ -196,6 +196,14 @@
 				</File>
 				<File
 					RelativePath="..\cutter\cut-diff.c"
+					>
+				</File>
+				<File
+					RelativePath="..\cutter\cut-differ-readable.c"
+					>
+				</File>
+				<File
+					RelativePath="..\cutter\cut-differ-colorize.c"
 					>
 				</File>
 				<File

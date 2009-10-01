@@ -1,5 +1,8 @@
 2009-10-01  Kouhei Sutou  <kou@clear-code.com>
 
+	* vcc/cutter.vcproj: add cut-differ-readable.c and
+	cut-differ-colorize.c.
+
 	* gcutter/gcut-string-io-channel.c: add explicit gsize cast.
 
 	* vcc/: sync.
