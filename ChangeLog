@@ -1,3 +1,9 @@
+2009-10-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+	* Use AM_SILENT_RULES instead of shave.
+	By default, --enable-silent-rules is enabled, if you want to disable
+	this temporarily, use make V=1.
+
 2009-10-01  Kouhei Sutou  <kou@clear-code.com>
 
 	* vcc/cutter.vcproj: add cut-differ-readable.[ch] and

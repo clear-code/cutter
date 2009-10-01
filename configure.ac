@@ -17,6 +17,7 @@ AC_CONFIG_SRCDIR([cutter/cut-main.c])
 AM_CONFIG_HEADER([config.h])
 
 AM_INIT_AUTOMAKE($PACKAGE_NAME, $PACKAGE_VERSION)
+m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES([yes])])
 
 PACKAGE_TITLE=Cutter
 AC_SUBST(PACKAGE_TITLE)
@@ -567,7 +568,6 @@ AC_CONFIG_COMMANDS([cutter/cut-features.h-end],
 _______EOF
 ])
 
-SHAVE_INIT([shave], [disable])
 AC_CONFIG_FILES([Makefile
 		 cutter.pc
 		 gcutter.pc
@@ -635,8 +635,6 @@ AC_CONFIG_FILES([Makefile
 		 po/Makefile.in
 		 misc/Makefile
 		 license/Makefile
-                 shave/shave
-                 shave/shave-libtool
 		 doc/Makefile
 		 doc/reference/version.xml
 		 doc/reference/Makefile
