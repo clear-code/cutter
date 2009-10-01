@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2009  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -29,7 +29,7 @@
 #include "cut-module-factory.h"
 #include "cut-module-factory-utils.h"
 
-static const gchar *ui_name = NULL;
+static gchar *ui_name = NULL;
 static CutUIFactoryBuilder *the_builder = NULL;
 #ifdef G_OS_WIN32
 static gchar *win32_ui_factory_module_dir = NULL;
