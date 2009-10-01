@@ -11,7 +11,6 @@ void test_difference_readable_diff(void);
 void test_complex_readable_diff(void);
 void test_double_width_readable_diff(void);
 void test_empty_readable_diff(void);
-void test_folded_readable_diff(void);
 void test_is_interested (void);
 void test_need_fold (void);
 
