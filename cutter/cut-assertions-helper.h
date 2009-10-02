@@ -35,7 +35,7 @@ extern "C" {
 #else
 #define cut_set_message_backward_compatibility(...)                     \
     cut_test_context_check_optional_assertion_message(                  \
-        cut_get_current_test_context(), #__VA_ARGS__)
+        cut_get_current_test_context())
 #endif
 
 #define cut_test_register_result(status, system_message) do             \

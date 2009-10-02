@@ -1,5 +1,8 @@
 2009-10-02  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertions-helper.h
+	(cut_set_message_backward_compatibility): remove invalid __VA_ARGS__.
+
 	* cutter/cut-repository.c (compute_relative_path): add length check.
 
 2009-10-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
