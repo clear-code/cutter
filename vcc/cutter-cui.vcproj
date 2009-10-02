@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
@@ -88,6 +88,10 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 			/>
+			<DebugSettings
+				Environment="PATH=$(SolutionDir)vendor\bin"
+				EnvironmentMerge="true"
+			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
@@ -159,6 +163,10 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+			/>
+			<DebugSettings
+				Environment="PATH=$(SolutionDir)vendor\bin"
+				EnvironmentMerge="true"
 			/>
 		</Configuration>
 	</Configurations>
