@@ -62,8 +62,7 @@ void  cut_test_context_set_user_message_va_list
                                              const char *format,
                                              va_list args);
 void  cut_test_context_check_optional_assertion_message
-                                            (CutTestContext *context,
-                                             const char *message);
+                                            (CutTestContext *context);
 void  cut_test_context_set_expected         (CutTestContext *context,
                                              const char *expected);
 void  cut_test_context_set_actual           (CutTestContext *context,

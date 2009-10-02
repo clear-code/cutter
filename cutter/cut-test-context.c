@@ -1468,22 +1468,16 @@ cut_test_context_set_user_message_va_list (CutTestContext *context,
 }
 
 void
-cut_test_context_check_optional_assertion_message (CutTestContext *context,
-                                                   const char *message)
+cut_test_context_check_optional_assertion_message (CutTestContext *context)
 {
     CutTestContextPrivate *priv;
-
-    if (!message)
-        return;
-    if (message[0] == '\0')
-        return;
 
     priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
 
     clear_user_message(priv);
-    priv->user_message = g_strdup_printf("optional assertion message "
-                                         "on the current environment "
-                                         "is unavailable: <%s>", message);
+    priv->user_message = g_strdup("optional assertion message "
+                                  "on the current environment "
+                                  "is unavailable");
 }
 
 void

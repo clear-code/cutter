@@ -1,5 +1,9 @@
 2009-10-02  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-context.c, cutter/cut-public.h
+	(cut_test_context_check_optional_assertion_message): remove
+	needless message argument.
+
 	* cutter/cut-assertions-helper.h
 	(cut_set_message_backward_compatibility): remove invalid __VA_ARGS__.
 
