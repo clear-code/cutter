@@ -28,6 +28,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gtk-ui-factory", "gtk-ui-fa
 		{B10DE031-3018-4D65-B5A0-88C97AC5BA6B} = {B10DE031-3018-4D65-B5A0-88C97AC5BA6B}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test-cut-diff-readable", "test\cutter\test-cut-diff-readable\test-cut-diff-readable.vcproj", "{1271F2E6-840B-47A5-9DD5-AD8A1FB2A591}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -58,6 +60,10 @@ Global
 		{2E796136-EC07-462D-AD89-F7A6EF00DE04}.Debug|Win32.Build.0 = Debug|Win32
 		{2E796136-EC07-462D-AD89-F7A6EF00DE04}.Release|Win32.ActiveCfg = Release|Win32
 		{2E796136-EC07-462D-AD89-F7A6EF00DE04}.Release|Win32.Build.0 = Release|Win32
+		{1271F2E6-840B-47A5-9DD5-AD8A1FB2A591}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1271F2E6-840B-47A5-9DD5-AD8A1FB2A591}.Debug|Win32.Build.0 = Debug|Win32
+		{1271F2E6-840B-47A5-9DD5-AD8A1FB2A591}.Release|Win32.ActiveCfg = Release|Win32
+		{1271F2E6-840B-47A5-9DD5-AD8A1FB2A591}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
