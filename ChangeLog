@@ -1,7 +1,3 @@
-2009-10-02  Kouhei Sutou  <kou@cozmixng.org>
-
-	* vcc/cutter-cui.vcproj: set PATH environment for debug.
-
 2009-10-01  Hiroyuki Ikezoe  <poincare@ikezoe.net>
 
 	* Use AM_SILENT_RULES instead of shave.

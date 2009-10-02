@@ -88,10 +88,6 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 			/>
-			<DebugSettings
-				Environment="PATH=$(SolutionDir)vendor\bin"
-				EnvironmentMerge="true"
-			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
@@ -163,10 +159,6 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-			/>
-			<DebugSettings
-				Environment="PATH=$(SolutionDir)vendor\bin"
-				EnvironmentMerge="true"
 			/>
 		</Configuration>
 	</Configurations>
