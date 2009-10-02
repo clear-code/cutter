@@ -257,10 +257,12 @@ compute_relative_path (GArray *paths)
     gchar *last_component, *relative_path;
     gboolean is_ignore_library_directory = FALSE;
 
-    last_component = g_array_index(paths, gchar *, paths->len - 1);
-    if (g_str_equal(last_component, ".libs") ||
-        g_str_equal(last_component, "_libs"))
-        is_ignore_library_directory = TRUE;
+    if (paths->len > 0) {
+        last_component = g_array_index(paths, gchar *, paths->len - 1);
+        if (g_str_equal(last_component, ".libs") ||
+            g_str_equal(last_component, "_libs"))
+            is_ignore_library_directory = TRUE;
+    }
 
     if (is_ignore_library_directory)
         g_array_index(paths, gchar *, paths->len - 1) = NULL;
@@ -312,8 +314,8 @@ cut_repository_collect_loader (CutRepository *repository, const gchar *dir_name,
             relative_path = compute_relative_path(paths);
             cut_loader_set_base_directory(loader, relative_path);
             cut_loader_set_keep_opening(loader, priv->keep_opening_modules);
-            cut_loader_set_enable_convenience_attribute_definition(loader,
-                                                                   priv->enable_convenience_attribute_definition);
+            cut_loader_set_enable_convenience_attribute_definition(
+                loader, priv->enable_convenience_attribute_definition);
             if (is_test_suite_so_path_name(path_name)) {
                 update_test_suite_loader(priv, loader, paths->len);
             } else {
