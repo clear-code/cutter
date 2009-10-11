@@ -18,6 +18,7 @@ void test_get_blocks_for_char_sequence(void);
 void test_get_blocks_complex_for_char_sequence(void);
 void test_get_operations_for_string_sequence(void);
 void test_get_operations_for_char_sequence(void);
+void test_get_grouped_operations(void);
 void test_get_ratio_for_string_sequence(void);
 void test_get_ratio_for_char_sequence(void);
 
@@ -26,6 +27,7 @@ static GList *expected_indexes;
 static CutSequenceMatchInfo *actual_info;
 static GList *expected_matches;
 static GList *expected_operations;
+static GList *expected_grouped_operations;
 static CutJunkFilterFunc junk_filter_func;
 static gpointer junk_filter_func_user_data;
 
@@ -43,6 +45,13 @@ free_operations (GList *operations)
     g_list_free(operations);
 }
 
+static void
+free_grouped_operations (GList *grouped_operations)
+{
+    g_list_foreach(grouped_operations, (GFunc)free_operations, NULL);
+    g_list_free(grouped_operations);
+}
+
 void
 cut_setup (void)
 {
@@ -51,6 +60,7 @@ cut_setup (void)
     actual_info = NULL;
     expected_matches = NULL;
     expected_operations = NULL;
+    expected_grouped_operations = NULL;
     junk_filter_func = NULL;
     junk_filter_func_user_data = NULL;
 }
@@ -68,6 +78,8 @@ cut_teardown (void)
     free_matches(expected_matches);
 
     free_operations(expected_operations);
+
+    free_grouped_operations(expected_grouped_operations);
 }
 
 static gboolean
@@ -859,6 +871,126 @@ test_get_operations_for_char_sequence (void)
     cut_assert_operations_char(expected_operations,
                                "1 tests, 0 assertions, 1 failures, 0 pendings",
                                "1 tests, 0 assertions, 0 failures, 1 pendings");
+}
+
+static gboolean
+equal_grouped_operation_with_data (gconstpointer data1, gconstpointer data2)
+{
+    const GList *grouped_operation1, *grouped_operation2;
+
+    grouped_operation1 = data1;
+    grouped_operation2 = data2;
+    return equal_operations(grouped_operation1, grouped_operation2);
+}
+
+static gboolean
+equal_grouped_operations (const GList *grouped_operations1,
+                          const GList *grouped_operations2)
+{
+    return gcut_list_equal(grouped_operations1, grouped_operations2,
+                           equal_grouped_operation_with_data);
+}
+
+static void
+inspect_grouped_operation_func (GString *string, gconstpointer data,
+                                gpointer user_data)
+{
+    const GList *grouped_operation = data;
+
+    g_string_append(string, inspect_operations(grouped_operation));
+}
+
+static const gchar *
+inspect_grouped_operations (const GList *grouped_operations)
+{
+    return cut_take_string(gcut_list_inspect(grouped_operations,
+                                             inspect_grouped_operation_func,
+                                             NULL));
+}
+
+static void
+cut_assert_grouped_operations (const GList *expected,
+                               CutSequenceMatcher *sequence_matcher,
+                               const gchar *sequence_matcher_inspect)
+{
+    const GList *actual;
+
+    matcher = sequence_matcher;
+    actual = cut_sequence_matcher_get_grouped_operations(matcher);
+
+    if (equal_grouped_operations(expected, actual)) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(inspect_grouped_operations(expected));
+        cut_set_actual(inspect_grouped_operations(actual));
+        cut_fail("cut_sequence_matcher_get_grouped_operations(%s)",
+                 sequence_matcher_inspect);
+    }
+    g_object_unref(matcher);
+    matcher = NULL;
+}
+
+static void
+cut_assert_grouped_operations_string (const GList *expected_grouped_operations,
+                                      gchar **from, gchar **to)
+{
+    cut_assert_grouped_operations(expected_grouped_operations,
+                                  string_matcher_new(from, to),
+                                  inspect_string_matcher(from, to));
+}
+
+void
+test_get_grouped_operations (void)
+{
+    GList *grouped_operation = NULL;
+    gchar *empty[] = {NULL};
+    gchar *abc[] = {"a", "b", "c", NULL};
+    gchar *alnum[] = {
+        "1", "2", "3", "4", "5", "6", "7", "8", "9",
+        "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k",
+        NULL};
+    gchar *alnum_garbage[] = {
+        "1", "i", "3", "4", "5", "6", "7", "8", "9",
+        "a", "b", "cX", "d", "h", "iX", "j", "k",
+        NULL};
+
+    grouped_operation = append_operation(NULL, EQUAL, 0, 0, 0, 0);
+    expected_grouped_operations = g_list_append(NULL, grouped_operation);
+    cut_assert_grouped_operations_string(expected_grouped_operations,
+                                         empty, empty);
+    free_grouped_operations(expected_grouped_operations);
+
+
+    grouped_operation = append_operation(NULL, EQUAL, 0, 3, 0, 3);
+    expected_grouped_operations = g_list_append(NULL, grouped_operation);
+    cut_assert_grouped_operations_string(expected_grouped_operations,
+                                         abc, abc);
+    free_grouped_operations(expected_grouped_operations);
+
+
+    grouped_operation = append_operation(NULL, EQUAL, 0, 1, 0, 1);
+    grouped_operation = append_operation(grouped_operation, REPLACE, 1, 2, 1, 2);
+    grouped_operation = append_operation(grouped_operation, EQUAL, 2, 5, 2, 5);
+    expected_grouped_operations = g_list_append(NULL, grouped_operation);
+
+    grouped_operation = append_operation(NULL, EQUAL, 8, 11, 8, 11);
+    grouped_operation = append_operation(grouped_operation,
+                                         REPLACE, 11, 12, 11, 12);
+    grouped_operation = append_operation(grouped_operation,
+                                         EQUAL, 12, 13, 12, 13);
+    grouped_operation = append_operation(grouped_operation,
+                                         DELETE, 13, 16, 13, 13);
+    grouped_operation = append_operation(grouped_operation,
+                                         EQUAL, 16, 17, 13, 14);
+    grouped_operation = append_operation(grouped_operation,
+                                         REPLACE, 17, 18, 14, 15);
+    grouped_operation = append_operation(grouped_operation,
+                                         EQUAL, 18, 20, 15, 17);
+    expected_grouped_operations = g_list_append(expected_grouped_operations,
+                                                grouped_operation);
+
+    cut_assert_grouped_operations_string(expected_grouped_operations,
+                                         alnum, alnum_garbage);
 }
 
 #define cut_assert_ratio(expected,                                      \

@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2009  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -42,6 +42,7 @@ struct _CutSequenceMatcherPrivate
     GList *matches;
     GList *blocks;
     GList *operations;
+    GList *grouped_operations;
     gdouble ratio;
 };
 
@@ -173,6 +174,7 @@ cut_sequence_matcher_init (CutSequenceMatcher *sequence_matcher)
     priv->matches = NULL;
     priv->blocks = NULL;
     priv->operations = NULL;
+    priv->grouped_operations = NULL;
     priv->ratio = -1.0;
 }
 
@@ -221,6 +223,18 @@ dispose (GObject *object)
                        (GFunc)cut_sequence_match_operation_free, NULL);
         g_list_free(priv->operations);
         priv->operations = NULL;
+    }
+
+    if (priv->grouped_operations) {
+        GList *node;
+        for (node = priv->grouped_operations; node; node = g_list_next(node)) {
+            GList *operations = node->data;
+            g_list_foreach(operations,
+                           (GFunc)cut_sequence_match_operation_free, NULL);
+            g_list_free(operations);
+        }
+        g_list_free(priv->grouped_operations);
+        priv->grouped_operations = NULL;
     }
 
     G_OBJECT_CLASS(cut_sequence_matcher_parent_class)->dispose(object);
@@ -333,7 +347,7 @@ update_to_indices (CutSequenceMatcher *matcher,
     for (i = 0, iter = begin;
          iter != end;
          i++, iter = g_sequence_iter_next(iter)) {
-        gchar *data;
+        gpointer data;
         GList *indices;
 
         data = g_sequence_get(iter);
@@ -364,7 +378,7 @@ cut_sequence_matcher_new (GSequence *from, GSequence *to,
                            "to-sequence", to,
                            "compare-function", compare_func,
                            "compare-function-user-data", compare_func_user_data,
-                           "to_indices",
+                           "to-indices",
                            g_hash_table_new_full(content_hash_func,
                                                  content_equal_func,
                                                  NULL,
@@ -855,6 +869,119 @@ cut_sequence_matcher_get_operations (CutSequenceMatcher *matcher)
 
     priv->operations = g_list_reverse(operations);
     return priv->operations;
+}
+
+static GList *
+get_edge_expanded_copied_operations (CutSequenceMatcher *matcher,
+                                     gint context_size)
+{
+    const GList *original_operations = NULL;
+    GList *operations = NULL;
+
+    original_operations = cut_sequence_matcher_get_operations(matcher);
+    if (original_operations) {
+        CutSequenceMatchOperation *operation = original_operations->data;
+        const GList *node;
+        gint from_begin, from_end, to_begin, to_end;
+
+        from_begin = operation->from_begin;
+        from_end = operation->from_end;
+        to_begin = operation->to_begin;
+        to_end = operation->to_end;
+        node = original_operations;
+        if (operation->type == CUT_SEQUENCE_MATCH_OPERATION_EQUAL) {
+            operations = prepend_operation(operations,
+                                           CUT_SEQUENCE_MATCH_OPERATION_EQUAL,
+                                           MAX(from_begin,
+                                               from_end - context_size),
+                                           from_end,
+                                           MAX(to_begin, to_end - context_size),
+                                           to_end);
+            node = g_list_next(node);
+        }
+        for (; node; node = g_list_next(node)) {
+            operation = node->data;
+            from_begin = operation->from_begin;
+            from_end = operation->from_end;
+            to_begin = operation->to_begin;
+            to_end = operation->to_end;
+            if (!g_list_next(node) &&
+                operation->type == CUT_SEQUENCE_MATCH_OPERATION_EQUAL) {
+                operations =
+                    prepend_operation(operations,
+                                      CUT_SEQUENCE_MATCH_OPERATION_EQUAL,
+                                      from_begin,
+                                      MIN(from_end, from_begin + context_size),
+                                      to_begin,
+                                      MIN(to_end, to_begin + context_size));
+            } else {
+                operations = prepend_operation(operations,
+                                               operation->type,
+                                               from_begin, from_end,
+                                               to_begin, to_end);
+            }
+        }
+        operations = g_list_reverse(operations);
+    } else {
+        operations = prepend_operation(operations,
+                                       CUT_SEQUENCE_MATCH_OPERATION_EQUAL,
+                                       0, 0, 0, 0);
+    }
+
+    return operations;
+}
+
+const GList *
+cut_sequence_matcher_get_grouped_operations (CutSequenceMatcher *matcher)
+{
+    CutSequenceMatcherPrivate *priv;
+    GList *node;
+    GList *operations = NULL;
+    GList *groups = NULL;
+    GList *group = NULL;
+    gint context_size = 3;
+    gint group_window;
+
+    priv = CUT_SEQUENCE_MATCHER_GET_PRIVATE(matcher);
+    if (priv->grouped_operations)
+        return priv->grouped_operations;
+
+    operations = get_edge_expanded_copied_operations(matcher, context_size);
+    group_window = context_size * 2;
+
+    for (node = operations; node; node = g_list_next(node)) {
+        CutSequenceMatchOperation *operation = node->data;
+        guint from_begin, from_end, to_begin, to_end;
+
+        from_begin = operation->from_begin;
+        from_end = operation->from_end;
+        to_begin = operation->to_begin;
+        to_end = operation->to_end;
+        if (operation->type == CUT_SEQUENCE_MATCH_OPERATION_EQUAL &&
+            ((from_end - from_begin) > group_window)) {
+            operation->from_end = MIN(from_end, from_begin + context_size);
+            operation->to_end = MIN(to_end, to_begin + context_size);
+            group = g_list_prepend(group, operation);
+            groups = g_list_prepend(groups, g_list_reverse(group));
+            group = NULL;
+
+            from_begin = MAX(from_begin, from_end - context_size);
+            to_begin = MAX(to_begin, to_end - context_size);
+            group = prepend_operation(group, operation->type,
+                                      from_begin, from_end,
+                                      to_begin, to_end);
+        } else {
+            group = g_list_prepend(group, operation);
+        }
+    }
+
+    if (group)
+        groups = g_list_prepend(groups, g_list_reverse(group));
+
+    g_list_free(operations);
+
+    priv->grouped_operations = g_list_reverse(groups);
+    return priv->grouped_operations;
 }
 
 gdouble

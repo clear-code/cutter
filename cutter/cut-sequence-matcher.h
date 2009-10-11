@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2009  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -84,7 +84,7 @@ CutSequenceMatchOperation *cut_sequence_match_operation_new
                                                   gint from_end,
                                                   gint to_begin,
                                                   gint to_end);
-void                       cut_sequence_match_operation_free
+void                  cut_sequence_match_operation_free
                                                  (CutSequenceMatchOperation *operation);
 
 
@@ -125,6 +125,8 @@ CutSequenceMatchInfo *cut_sequence_matcher_get_longest_match
 const GList *cut_sequence_matcher_get_matches    (CutSequenceMatcher *matcher);
 const GList *cut_sequence_matcher_get_blocks     (CutSequenceMatcher *matcher);
 const GList *cut_sequence_matcher_get_operations (CutSequenceMatcher *matcher);
+const GList *cut_sequence_matcher_get_grouped_operations
+                                                 (CutSequenceMatcher *matcher);
 gdouble      cut_sequence_matcher_get_ratio      (CutSequenceMatcher *matcher);
 
 G_END_DECLS
