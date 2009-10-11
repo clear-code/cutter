@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2009  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -72,6 +72,7 @@ static gchar *cutter_command_path = NULL;
 static gboolean fatal_failures = FALSE;
 static gboolean keep_opening_modules = FALSE;
 static gboolean enable_convenience_attribute_definition = FALSE;
+static gboolean stop_before_test = FALSE;
 
 static gboolean
 print_version (const gchar *option_name, const gchar *value,
@@ -159,6 +160,10 @@ static const GOptionEntry option_entries[] =
      N_("Enable convenience but danger "
         "'#{ATTRIBUTE_NAME}_#{TEST_NAME - 'test_' PREFIX}' "
         "attribute set function"), NULL},
+    {"stop-before-test", 0, 0, G_OPTION_ARG_NONE,
+     &stop_before_test,
+     N_("Set breakpoints at each line which invokes test. "
+        "You can step into a test function with your debugger."), NULL},
     {NULL}
 };
 
@@ -334,6 +339,7 @@ cut_create_run_context (void)
     cut_run_context_set_keep_opening_modules(run_context, keep_opening_modules);
     cut_run_context_set_enable_convenience_attribute_definition(run_context,
                                                                 enable_convenience_attribute_definition);
+    cut_run_context_set_stop_before_test(run_context, stop_before_test);
     cut_run_context_set_command_line_args(run_context, original_argv);
 
     return run_context;

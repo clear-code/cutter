@@ -410,7 +410,12 @@ is_available (CutTest *test, CutTestContext *test_context,
 static void
 invoke (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
 {
-    CUT_TEST_GET_PRIVATE(test)->test_function();
+    CutTestPrivate *priv;
+
+    priv = CUT_TEST_GET_PRIVATE(test);
+    if (cut_run_context_get_stop_before_test(run_context))
+        G_BREAKPOINT();
+    priv->test_function();
 }
 
 static gboolean

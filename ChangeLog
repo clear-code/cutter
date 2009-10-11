@@ -1,3 +1,13 @@
+2009-10-11  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-main.c: add --stop-before-test option that sets
+	breakpoints before invoking each test.
+
+	* cutter/cut-test.c, cutter/cut-iterated-test.c: set breakpoint
+	before invoking test.
+
+	* cutter/cut-run-context.c: keep stop-before-test option value.
+
 2009-10-02  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-test-context.c, cutter/cut-public.h

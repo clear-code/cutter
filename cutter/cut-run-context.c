@@ -80,6 +80,7 @@ struct _CutRunContextPrivate
     gboolean fatal_failures;
     gboolean keep_opening_modules;
     gboolean enable_convenience_attribute_definition;
+    gboolean stop_before_test;
 };
 
 enum
@@ -108,7 +109,8 @@ enum
     PROP_COMMAND_LINE_ARGS,
     PROP_FATAL_FAILURES,
     PROP_KEEP_OPENING_MODULES,
-    PROP_ENABLE_CONVENIENCE_ATTRIBUTE_DEFINITION
+    PROP_ENABLE_CONVENIENCE_ATTRIBUTE_DEFINITION,
+    PROP_STOP_BEFORE_TEST
 };
 
 enum
@@ -485,6 +487,15 @@ cut_run_context_class_init (CutRunContextClass *klass)
                                 G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class,
                                     PROP_ENABLE_CONVENIENCE_ATTRIBUTE_DEFINITION,
+                                    spec);
+
+    spec = g_param_spec_boolean("stop-before-test",
+                                "Stops before a test",
+                                "Set breakpoint before invoking a test",
+                                FALSE,
+                                G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class,
+                                    PROP_STOP_BEFORE_TEST,
                                     spec);
 
     signals[START_RUN]
@@ -963,6 +974,7 @@ cut_run_context_init (CutRunContext *context)
     priv->fatal_failures = FALSE;
     priv->keep_opening_modules = FALSE;
     priv->enable_convenience_attribute_definition = FALSE;
+    priv->stop_before_test = FALSE;
 }
 
 static void
@@ -1121,6 +1133,9 @@ set_property (GObject      *object,
       case PROP_ENABLE_CONVENIENCE_ATTRIBUTE_DEFINITION:
         priv->enable_convenience_attribute_definition = g_value_get_boolean(value);
         break;
+      case PROP_STOP_BEFORE_TEST:
+        priv->stop_before_test = g_value_get_boolean(value);
+        break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
@@ -1207,6 +1222,9 @@ get_property (GObject    *object,
         break;
       case PROP_ENABLE_CONVENIENCE_ATTRIBUTE_DEFINITION:
         g_value_set_boolean(value, priv->enable_convenience_attribute_definition);
+        break;
+      case PROP_STOP_BEFORE_TEST:
+        g_value_set_boolean(value, priv->stop_before_test);
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -2621,6 +2639,19 @@ gboolean
 cut_run_context_get_enable_convenience_attribute_definition (CutRunContext *context)
 {
     return CUT_RUN_CONTEXT_GET_PRIVATE(context)->enable_convenience_attribute_definition;
+}
+
+void
+cut_run_context_set_stop_before_test (CutRunContext *context,
+                                      gboolean       stop)
+{
+    CUT_RUN_CONTEXT_GET_PRIVATE(context)->stop_before_test = stop;
+}
+
+gboolean
+cut_run_context_get_stop_before_test (CutRunContext *context)
+{
+    return CUT_RUN_CONTEXT_GET_PRIVATE(context)->stop_before_test;
 }
 
 /*

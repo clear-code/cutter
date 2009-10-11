@@ -327,6 +327,10 @@ void           cut_run_context_set_enable_convenience_attribute_definition
 gboolean       cut_run_context_get_enable_convenience_attribute_definition
                                                     (CutRunContext *context);
 
+void           cut_run_context_set_stop_before_test (CutRunContext *context,
+                                                     gboolean       stop);
+gboolean       cut_run_context_get_stop_before_test (CutRunContext *context);
+
 
 G_END_DECLS
 
