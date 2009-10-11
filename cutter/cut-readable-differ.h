@@ -21,7 +21,7 @@
 #define __CUT_READABLE_DIFFER_H__
 
 #include <glib-object.h>
-#include <cutter/cut-diff.h>
+#include <cutter/cut-differ.h>
 
 G_BEGIN_DECLS
 

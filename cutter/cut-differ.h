@@ -17,8 +17,8 @@
  *
  */
 
-#ifndef __CUT_DIFF_H__
-#define __CUT_DIFF_H__
+#ifndef __CUT_DIFFER_H__
+#define __CUT_DIFFER_H__
 
 #include <glib-object.h>
 #include <cutter/cut-public.h>
@@ -70,7 +70,7 @@ guint         cut_differ_util_compute_width
 
 G_END_DECLS
 
-#endif /* __CUT_DIFF_H__ */
+#endif /* __CUT_DIFFER_H__ */
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

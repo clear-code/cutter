@@ -1,5 +1,8 @@
 2009-10-11  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-diff.[ch]: rename to ...
+	* cutter/cut-differ.[ch]: ... them.
+
 	* module/ui/cut-console-ui.c: create a console colorized diff writer.
 
 	* cutter/cut-colorize-differ.c: add missing write commands.

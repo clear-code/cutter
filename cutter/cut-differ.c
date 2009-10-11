@@ -25,7 +25,7 @@
 #include <string.h>
 #include <glib.h>
 
-#include "cut-diff.h"
+#include "cut-differ.h"
 #include "cut-string-diff-writer.h"
 #include "cut-utils.h"
 
