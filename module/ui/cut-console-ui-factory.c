@@ -31,6 +31,7 @@
 #include <cutter/cut-ui.h>
 #include <cutter/cut-module-factory.h>
 #include <cutter/cut-verbose-level.h>
+#include <cutter/cut-console.h>
 #include <cutter/cut-enum-types.h>
 
 #define CUT_TYPE_CONSOLE_UI_FACTORY            cut_type_console_ui_factory
@@ -218,25 +219,6 @@ get_property (GObject    *object,
     }
 }
 
-static gboolean
-guess_color_usability (void)
-{
-    const gchar *term, *emacs;
-
-    term = g_getenv("TERM");
-    if (term && (g_str_has_suffix(term, "term") ||
-                 g_str_has_suffix(term, "term-color") ||
-                 g_str_equal(term, "screen") ||
-                 g_str_equal(term, "linux")))
-        return TRUE;
-
-    emacs = g_getenv("EMACS");
-    if (emacs && (g_str_equal(emacs, "t")))
-        return TRUE;
-
-    return FALSE;
-}
-
 static gint
 guess_term_width (void)
 {
@@ -292,24 +274,8 @@ parse_color_arg (const gchar *option_name, const gchar *value,
 {
     CutConsoleUIFactory *console = data;
 
-    if (value == NULL ||
-        g_utf8_collate(value, "yes") == 0 ||
-        g_utf8_collate(value, "true") == 0) {
-        console->use_color = TRUE;
-    } else if (g_utf8_collate(value, "no") == 0 ||
-               g_utf8_collate(value, "false") == 0) {
-        console->use_color = FALSE;
-    } else if (g_utf8_collate(value, "auto") == 0) {
-        console->use_color = guess_color_usability();
-    } else {
-        g_set_error(error,
-                    G_OPTION_ERROR,
-                    G_OPTION_ERROR_BAD_VALUE,
-                    _("Invalid color value: %s"), value);
-        return FALSE;
-    }
-
-    return TRUE;
+    return cut_console_parse_color_arg(option_name, value,
+                                       &(console->use_color), error);
 }
 
 static gboolean
@@ -318,7 +284,7 @@ pre_parse (GOptionContext *context, GOptionGroup *group, gpointer data,
 {
     CutConsoleUIFactory *console = data;
 
-    console->use_color = guess_color_usability();
+    console->use_color = cut_console_guess_color_usability();
 
     return TRUE;
 }

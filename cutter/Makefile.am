@@ -63,7 +63,7 @@ libcutter_public_headers = 		\
 	cut-console-color-diff-writer.h	\
 	cut-readable-differ.h		\
 	cut-colorize-differ.h		\
-	cut-console-colors.h		\
+	cut-console.h			\
 	cut-analyzer.h			\
 	cut-stream-reader.h		\
 	cut-file-stream-reader.h	\
@@ -160,6 +160,7 @@ libcutter_la_SOURCES =			\
 	cut-console-color-diff-writer.c	\
 	cut-readable-differ.c		\
 	cut-colorize-differ.c		\
+	cut-console.c			\
 	cut-analyzer.c			\
 	cut-stream-reader.c		\
 	cut-file-stream-reader.c	\

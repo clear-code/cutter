@@ -1,5 +1,9 @@
 2009-10-11  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-console-colors.h, module/ui/cut-console-ui-factory.c:
+	move color related functions to ...
+	* cutter/cut-console.[ch]: ... here.
+
 	* module/ui/cut-console-ui.c: move console color diff writer to ...
 	* cutter/cut-console-color-diff-writer.[ch]: ... here.
 

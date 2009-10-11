@@ -39,7 +39,7 @@
 #include <cutter/cut-verbose-level.h>
 #include <cutter/cut-colorize-differ.h>
 #include <cutter/cut-console-color-diff-writer.h>
-#include <cutter/cut-console-colors.h>
+#include <cutter/cut-console.h>
 #include <cutter/cut-enum-types.h>
 
 #define CUT_TYPE_CONSOLE_UI            cut_type_console_ui

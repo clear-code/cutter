@@ -17,8 +17,12 @@
  *
  */
 
-#ifndef __CUT_CONSOLE_COLORS_H__
-#define __CUT_CONSOLE_COLORS_H__
+#ifndef __CUT_CONSOLE_H__
+#define __CUT_CONSOLE_H__
+
+#include <glib-object.h>
+
+G_BEGIN_DECLS
 
 #define CUT_CONSOLE_COLOR_RED "\033[01;31m"
 #define CUT_CONSOLE_COLOR_RED_BACK "\033[41m"
@@ -35,7 +39,15 @@
 #define CUT_CONSOLE_COLOR_BLACK_BACK "\033[01;40m"
 #define CUT_CONSOLE_COLOR_NORMAL "\033[00m"
 
-#endif /* __CUT_CONSOLE_COLORS_H__ */
+gboolean cut_console_guess_color_usability (void);
+gboolean cut_console_parse_color_arg       (const gchar  *option_name,
+                                            const gchar  *value,
+                                            gboolean     *use_color,
+                                            GError      **error);
+
+G_END_DECLS
+
+#endif /* __CUT_CONSOLE_H__ */
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

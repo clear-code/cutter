@@ -24,7 +24,7 @@
 #include <glib.h>
 
 #include "cut-console-color-diff-writer.h"
-#include "cut-console-colors.h"
+#include "cut-console.h"
 
 G_DEFINE_TYPE(CutConsoleColorDiffWriter, cut_console_color_diff_writer, CUT_TYPE_DIFF_WRITER)
 
