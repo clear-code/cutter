@@ -1,5 +1,7 @@
 2009-10-11  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-string-diff-writer.h: fix typos.
+
 	* cutter/cut-diff.[ch], cutter/cut-readable-differ.c: make
 	non-common function static.
 

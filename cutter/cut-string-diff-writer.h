@@ -26,11 +26,11 @@
 G_BEGIN_DECLS
 
 #define CUT_TYPE_STRING_DIFF_WRITER            (cut_string_diff_writer_get_type ())
-#define CUT_STRING_DIFF_WRITER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_STRING_DIFF_WRITER, CutDiffWriter))
-#define CUT_STRING_DIFF_WRITER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_STRING_DIFF_WRITER, CutDiffWriterClass))
+#define CUT_STRING_DIFF_WRITER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_STRING_DIFF_WRITER, CutStringDiffWriter))
+#define CUT_STRING_DIFF_WRITER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_STRING_DIFF_WRITER, CutStringDiffWriterClass))
 #define CUT_IS_STRING_DIFF_WRITER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_STRING_DIFF_WRITER))
 #define CUT_IS_STRING_DIFF_WRITER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_STRING_DIFF_WRITER))
-#define CUT_STRING_DIFF_WRITER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_STRING_DIFF_WRITER, CutDiffWriterClass))
+#define CUT_STRING_DIFF_WRITER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_STRING_DIFF_WRITER, CutStringDiffWriterClass))
 
 typedef struct _CutStringDiffWriter         CutStringDiffWriter;
 typedef struct _CutStringDiffWriterClass    CutStringDiffWriterClass;
