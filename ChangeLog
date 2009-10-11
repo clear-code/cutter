@@ -1,5 +1,8 @@
 2009-10-11  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-diff.[ch], cutter/cut-readable-differ.c: make
+	non-common function static.
+
 	* cutter/cut-differ-*: rename to ...
 	* cutter/cut-*-differ: ... them.
 	* cutter/, modules/, test/: follow the above change.

@@ -193,16 +193,6 @@ cut_differ_util_compute_width (const gchar *string, guint begin, guint end)
     return width;
 }
 
-void
-cut_differ_util_append_n_character (GString *string, gchar character, guint n)
-{
-    gchar *characters;
-
-    characters = g_strnfill(n, character);
-    g_string_append(string, characters);
-    g_free(characters);
-}
-
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */

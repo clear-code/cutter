@@ -61,10 +61,6 @@ guint         cut_differ_util_compute_width
                                           (const gchar *string,
                                            guint         begin,
                                            guint         end);
-void          cut_differ_util_append_n_character
-                                          (GString       *string,
-                                           gchar          character,
-                                           guint          n);
 
 G_END_DECLS
 

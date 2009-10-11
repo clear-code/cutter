@@ -119,6 +119,15 @@ format_diff_point (CutDiffWriter *writer,
 }
 
 static void
+append_character_n_times (GString *string, gchar character, guint n)
+{
+    guint i;
+
+    for (i = 0; i < n; i++)
+        g_string_append_c(string, character);
+}
+
+static void
 diff_line (CutDiffer *differ, CutDiffWriter *writer,
            gchar *from_line, gchar *to_line)
 {
@@ -146,18 +155,18 @@ diff_line (CutDiffer *differ, CutDiffWriter *writer,
                                                  operation->to_end);
         switch (operation->type) {
         case CUT_SEQUENCE_MATCH_OPERATION_EQUAL:
-            cut_differ_util_append_n_character(from_tags, ' ', from_width);
-            cut_differ_util_append_n_character(to_tags, ' ', to_width);
+            append_character_n_times(from_tags, ' ', from_width);
+            append_character_n_times(to_tags, ' ', to_width);
             break;
         case CUT_SEQUENCE_MATCH_OPERATION_INSERT:
-            cut_differ_util_append_n_character(to_tags, '+', to_width);
+            append_character_n_times(to_tags, '+', to_width);
             break;
         case CUT_SEQUENCE_MATCH_OPERATION_DELETE:
-            cut_differ_util_append_n_character(from_tags, '-', from_width);
+            append_character_n_times(from_tags, '-', from_width);
             break;
         case CUT_SEQUENCE_MATCH_OPERATION_REPLACE:
-            cut_differ_util_append_n_character(from_tags, '^', from_width);
-            cut_differ_util_append_n_character(to_tags, '^', to_width);
+            append_character_n_times(from_tags, '^', from_width);
+            append_character_n_times(to_tags, '^', to_width);
             break;
         default:
             g_error("unknown operation type: %d", operation->type);
