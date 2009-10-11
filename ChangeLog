@@ -1,5 +1,7 @@
 2009-10-11  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-diff.c: add.
+
 	* cutter/cut-main.[ch]: split environment init/quit functions.
 
 	* cutter/cut-console-diff-writer.[ch]: make color customizable.

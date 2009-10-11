@@ -107,9 +107,10 @@ MAINTAINERCLEANFILES =			\
 
 BUILT_SOURCES = $(enum_sources)
 
-bin_PROGRAMS = cutter
+bin_PROGRAMS = cutter cut-diff
 
 cutter_SOURCES = main.c
+cut_diff_SOURCES = cut-diff.c
 
 libcutter_la_SOURCES =			\
 	cut-enum-types.h		\
@@ -189,6 +190,7 @@ libcutter_la_LDFLAGS += -mwindows
 endif
 
 cutter_LDADD = libcutter.la
+cut_diff_LDADD = libcutter.la
 
 $(enum_source_prefix).c: stamp-$(enum_source_prefix)-c $(enum_source_prefix).h
 	@true
