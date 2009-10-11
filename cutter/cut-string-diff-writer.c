@@ -71,11 +71,11 @@ cut_string_diff_writer_class_init (CutStringDiffWriterClass *klass)
 }
 
 static void
-cut_string_diff_writer_init (CutStringDiffWriter *string_diff_writer)
+cut_string_diff_writer_init (CutStringDiffWriter *writer)
 {
     CutStringDiffWriterPrivate *priv;
 
-    priv = CUT_STRING_DIFF_WRITER_GET_PRIVATE(string_diff_writer);
+    priv = CUT_STRING_DIFF_WRITER_GET_PRIVATE(writer);
     priv->result = g_string_new(NULL);
 }
 
