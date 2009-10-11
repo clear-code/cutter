@@ -52,6 +52,7 @@ typedef enum {
     MODE_ANALYZE
 } RunMode;
 
+static gboolean environment_initialized = FALSE;
 static gboolean initialized = FALSE;
 static RunMode mode = MODE_TEST;
 static gchar *test_directory = NULL;
@@ -168,22 +169,14 @@ static const GOptionEntry option_entries[] =
 };
 
 void
-cut_init (int *argc, char ***argv)
+cut_init_environment (int *argc, char ***argv)
 {
-    int i;
-    GOptionContext *option_context;
-    GOptionGroup *main_group;
-    GError *error = NULL;
-    gchar *program_name, *parameter_string;
-
-    if (initialized)
+    if (environment_initialized)
         return;
 
-    initialized = TRUE;
+    environment_initialized = TRUE;
 
     cut_set_cutter_command_path((*argv)[0]);
-
-    original_argv = g_strdupv(*argv);
 
     setlocale(LC_ALL, "");
 
@@ -206,6 +199,25 @@ cut_init (int *argc, char ***argv)
         g_thread_init(NULL);
 
     gcut_init();
+}
+
+void
+cut_init (int *argc, char ***argv)
+{
+    int i;
+    GOptionContext *option_context;
+    GOptionGroup *main_group;
+    GError *error = NULL;
+    gchar *program_name, *parameter_string;
+
+    if (initialized)
+        return;
+
+    initialized = TRUE;
+
+    original_argv = g_strdupv(*argv);
+
+    cut_init_environment(argc, argv);
 
     cut_test_context_current_init();
 
@@ -225,7 +237,7 @@ cut_init (int *argc, char ***argv)
 
     main_group = g_option_group_new(NULL, NULL, NULL, option_context, NULL);
     g_option_group_add_entries(main_group, option_entries);
-    g_option_group_set_translation_domain(main_group, "cutter");
+    g_option_group_set_translation_domain(main_group, GETTEXT_PACKAGE);
     g_option_context_set_main_group(option_context, main_group);
 
     if (!g_option_context_parse(option_context, argc, argv, &error)) {
@@ -283,6 +295,17 @@ cut_init (int *argc, char ***argv)
 }
 
 void
+cut_quit_environment (void)
+{
+    if (!environment_initialized)
+        return;
+
+    gcut_quit();
+
+    environment_initialized = FALSE;
+}
+
+void
 cut_quit (void)
 {
     if (!initialized)
@@ -307,7 +330,7 @@ cut_quit (void)
 
     cut_test_context_current_quit();
 
-    gcut_quit();
+    cut_quit_environment();
 
     initialized = FALSE;
 }

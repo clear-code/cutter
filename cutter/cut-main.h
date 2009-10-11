@@ -27,6 +27,8 @@
 
 G_BEGIN_DECLS
 
+void          cut_init_environment   (int *argc, char ***argv);
+void          cut_quit_environment   (void);
 void          cut_init               (int *argc, char ***argv);
 void          cut_quit               (void);
 
