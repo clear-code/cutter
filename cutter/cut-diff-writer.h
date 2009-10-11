@@ -90,6 +90,10 @@ void          cut_diff_writer_write_lines      (CutDiffWriter      *writer,
                                                 guint               begin,
                                                 guint               end,
                                                 CutDiffWriterTag    tag);
+void          cut_diff_writer_mark_line        (CutDiffWriter      *writer,
+                                                const gchar        *mark,
+                                                const gchar        *line,
+                                                CutDiffWriterTag    tag);
 void          cut_diff_writer_mark_lines       (CutDiffWriter      *writer,
                                                 const gchar        *mark,
                                                 gchar             **lines,
