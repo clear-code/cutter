@@ -133,6 +133,15 @@ option is specified.
 
    The default is off.
 
+: --stop-before-test
+
+   It sets a breakpoint immediately before each test.
+   You can dive into test function easily by running
+   cutter on your debugger and stepping into the next
+   function.
+
+   The default is off.
+
 : -u[console|gtk], --ui=[console|gtk]
 
    It specifies UI.
