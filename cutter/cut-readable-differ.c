@@ -25,8 +25,8 @@
 #include <string.h>
 #include <glib.h>
 
-#include "cut-sequence-matcher.h"
 #include "cut-readable-differ.h"
+#include "cut-string-diff-writer.h"
 #include "cut-utils.h"
 
 G_DEFINE_TYPE(CutReadableDiffer, cut_readable_differ, CUT_TYPE_DIFFER)
@@ -284,7 +284,7 @@ diff (CutDiffer *differ, CutDiffWriter *writer)
 
     from = cut_differ_get_from(differ);
     to = cut_differ_get_to(differ);
-    matcher = cut_sequence_matcher_string_new(from, to);
+    matcher = cut_differ_get_sequence_matcher(differ);
     for (operations = cut_sequence_matcher_get_operations(matcher);
          operations;
          operations = g_list_next(operations)) {
@@ -314,20 +314,23 @@ diff (CutDiffer *differ, CutDiffWriter *writer)
         }
     }
     cut_diff_writer_finish(writer);
-
-    g_object_unref(matcher);
 }
 
 gchar *
 cut_diff_readable (const gchar *from, const gchar *to)
 {
+    CutDiffWriter *writer;
     CutDiffer *differ;
-    gchar *result;
+    gchar *diff;
 
     differ = cut_readable_differ_new(from, to);
-    result = cut_differ_diff(differ);
+    writer = cut_string_diff_writer_new();
+    cut_differ_diff(differ, writer);
+    diff = g_strdup(cut_string_diff_writer_get_result(writer));
+    g_object_unref(writer);
     g_object_unref(differ);
-    return result;
+
+    return diff;
 }
 
 gchar *

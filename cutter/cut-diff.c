@@ -25,7 +25,6 @@
 #include <string.h>
 #include <glib.h>
 
-#include "cut-sequence-matcher.h"
 #include "cut-diff.h"
 #include "cut-string-diff-writer.h"
 #include "cut-utils.h"
@@ -37,6 +36,7 @@ struct _CutDifferPrivate
 {
     gchar **from;
     gchar **to;
+    CutSequenceMatcher *matcher;
 };
 
 enum {
@@ -89,6 +89,7 @@ cut_differ_init (CutDiffer *differ)
     priv = CUT_DIFFER_GET_PRIVATE(differ);
     priv->from = NULL;
     priv->to = NULL;
+    priv->matcher = NULL;
 }
 
 static void
@@ -97,6 +98,11 @@ dispose (GObject *object)
     CutDifferPrivate *priv;
 
     priv = CUT_DIFFER_GET_PRIVATE(object);
+
+    if (priv->matcher) {
+        g_object_unref(priv->matcher);
+        priv->matcher = NULL;
+    }
 
     if (priv->from) {
         g_strfreev(priv->from);
@@ -138,18 +144,10 @@ set_property (GObject      *object,
     }
 }
 
-gchar *
-cut_differ_diff (CutDiffer *differ)
+void
+cut_differ_diff (CutDiffer *differ, CutDiffWriter *writer)
 {
-    CutDiffWriter *writer;
-    gchar *diff;
-
-    writer = cut_string_diff_writer_new();
     CUT_DIFFER_GET_CLASS(differ)->diff(differ, writer);
-    diff = g_strdup(cut_string_diff_writer_get_result(writer));
-    g_object_unref(writer);
-
-    return diff;
 }
 
 gchar **
@@ -162,6 +160,59 @@ gchar **
 cut_differ_get_to (CutDiffer *differ)
 {
     return CUT_DIFFER_GET_PRIVATE(differ)->to;
+}
+
+CutSequenceMatcher *
+cut_differ_get_sequence_matcher (CutDiffer *differ)
+{
+    CutDifferPrivate *priv;
+
+    priv = CUT_DIFFER_GET_PRIVATE(differ);
+    if (!priv->matcher) {
+        gchar **from, **to;
+
+        from = cut_differ_get_from(differ);
+        to = cut_differ_get_to(differ);
+        priv->matcher = cut_sequence_matcher_string_new(from, to);
+    }
+
+    return priv->matcher;
+}
+
+gboolean
+cut_differ_need_diff (CutDiffer *differ)
+{
+    CutSequenceMatcher *matcher;
+    const GList *operations;
+    gboolean have_equal = FALSE;
+    gboolean have_insert_or_delete = FALSE;
+
+    matcher = cut_differ_get_sequence_matcher(differ);
+    for (operations = cut_sequence_matcher_get_operations(matcher);
+         operations;
+         operations = g_list_next(operations)) {
+        CutSequenceMatchOperation *operation = operations->data;
+
+        switch (operation->type) {
+        case CUT_SEQUENCE_MATCH_OPERATION_EQUAL:
+            have_equal = TRUE;
+            if (have_insert_or_delete)
+                return TRUE;
+            break;
+        case CUT_SEQUENCE_MATCH_OPERATION_REPLACE:
+            return TRUE;
+            break;
+        case CUT_SEQUENCE_MATCH_OPERATION_INSERT:
+        case CUT_SEQUENCE_MATCH_OPERATION_DELETE:
+            have_insert_or_delete = TRUE;
+            if (have_equal)
+                return TRUE;
+            break;
+        default:
+            break;
+        }
+    }
+    return FALSE;
 }
 
 gboolean

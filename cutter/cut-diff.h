@@ -22,6 +22,7 @@
 
 #include <glib-object.h>
 #include <cutter/cut-public.h>
+#include <cutter/cut-sequence-matcher.h>
 #include <cutter/cut-diff-writer.h>
 
 G_BEGIN_DECLS
@@ -50,9 +51,14 @@ struct _CutDifferClass
 
 GType         cut_differ_get_type         (void) G_GNUC_CONST;
 
-gchar        *cut_differ_diff             (CutDiffer   *differ);
+void          cut_differ_diff             (CutDiffer   *differ,
+                                           CutDiffWriter *writer);
 gchar       **cut_differ_get_from         (CutDiffer   *differ);
 gchar       **cut_differ_get_to           (CutDiffer   *differ);
+CutSequenceMatcher *
+              cut_differ_get_sequence_matcher
+                                          (CutDiffer   *differ);
+gboolean      cut_differ_need_diff        (CutDiffer   *differ);
 
 gboolean      cut_differ_util_is_space_character
                                           (gpointer     data,
