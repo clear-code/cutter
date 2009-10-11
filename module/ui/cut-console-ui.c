@@ -99,6 +99,8 @@ static void     detach_from_run_context (CutListener *listener,
 static gboolean run                     (CutUI       *ui,
                                          CutRunContext   *run_context);
 
+static CutDiffWriter *console_diff_writer_new (CutConsoleUI *console);
+
 static void
 class_init (CutConsoleUIClass *klass)
 {
@@ -693,13 +695,12 @@ print_result_detail (CutConsoleUI *console, CutTestResultStatus status,
 
     expected = cut_test_result_get_expected(result);
     actual = cut_test_result_get_actual(result);
-    if (expected && actual) {
+    if (console->use_color && expected && actual) {
         const gchar *user_message, *system_message;
-        const gchar *diff;
+        CutDiffer *differ;
 
         user_message = cut_test_result_get_user_message(result);
         system_message = cut_test_result_get_system_message(result);
-        diff = cut_test_result_get_diff(result);
         if (user_message)
             g_print("\n%s", user_message);
         if (system_message)
@@ -713,37 +714,23 @@ print_result_detail (CutConsoleUI *console, CutTestResultStatus status,
         print_for_status(console, CUT_TEST_RESULT_FAILURE, "%s", actual);
         g_print(">");
 
-        if (diff) {
+        differ = cut_colorize_differ_new(expected, actual);
+        if (cut_differ_need_diff(differ)) {
+            CutDiffWriter *writer;
+
             g_print("\n\n");
             g_print("diff:\n");
-            if (console->use_color) {
-                CutDiffer *differ;
-                gchar *colorized_diff;
-                differ = cut_colorize_differ_new(expected, actual);
-                colorized_diff = cut_differ_diff(differ);
-                g_print("%s", colorized_diff);
-                g_free(colorized_diff);
-            } else {
-                g_print(diff);
-            }
+            writer = console_diff_writer_new(console);
+            cut_differ_diff(differ, writer);
+            g_object_unref(writer);
         }
-
-        if (!console->use_color) {
-            const gchar *folded_diff;
-
-            folded_diff = cut_test_result_get_folded_diff(result);
-            if (folded_diff) {
-                g_print("\n\n");
-                g_print("folded diff:\n%s", folded_diff);
-            }
-        }
+        g_object_unref(differ);
     } else {
         const gchar *message;
 
         message = cut_test_result_get_message(result);
         if (message) {
-            g_print("\n");
-            print_for_status(console, status, "%s", message);
+            g_print("\n%s", message);
         }
     }
 }
@@ -974,6 +961,141 @@ static gboolean
 run (CutUI *ui, CutRunContext *run_context)
 {
     return cut_run_context_start(run_context);
+}
+
+/* CutConsoleDiffWriter */
+#define CUT_TYPE_CONSOLE_DIFF_WRITER            (cut_console_diff_writer_get_type ())
+#define CUT_CONSOLE_DIFF_WRITER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_CONSOLE_DIFF_WRITER, CutConsoleDiffWriter))
+#define CUT_CONSOLE_DIFF_WRITER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_CONSOLE_DIFF_WRITER, CutConsoleDiffWriterClass))
+#define CUT_IS_CONSOLE_DIFF_WRITER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_CONSOLE_DIFF_WRITER))
+#define CUT_IS_CONSOLE_DIFF_WRITER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_CONSOLE_DIFF_WRITER))
+#define CUT_CONSOLE_DIFF_WRITER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_CONSOLE_DIFF_WRITER, CutConsoleDiffWriterClass))
+
+typedef struct _CutConsoleDiffWriter         CutConsoleDiffWriter;
+typedef struct _CutConsoleDiffWriterClass    CutConsoleDiffWriterClass;
+
+struct _CutConsoleDiffWriter
+{
+    CutDiffWriter object;
+
+    CutConsoleUI *console;
+};
+
+struct _CutConsoleDiffWriterClass
+{
+    CutDiffWriterClass parent_class;
+};
+
+GType          cut_console_diff_writer_get_type         (void) G_GNUC_CONST;
+
+G_DEFINE_TYPE(CutConsoleDiffWriter, cut_console_diff_writer, CUT_TYPE_DIFF_WRITER)
+
+static void writer_write          (CutDiffWriter       *writer,
+                                   const gchar         *string,
+                                   CutDiffWriterTag     tag);
+static void writer_write_mark     (CutDiffWriter       *writer,
+                                   const gchar         *mark,
+                                   CutDiffWriterTag     tag);
+static void writer_write_line     (CutDiffWriter       *writer,
+                                   const gchar         *line,
+                                   CutDiffWriterTag     tag);
+static void writer_finish         (CutDiffWriter       *writer);
+
+static void
+cut_console_diff_writer_class_init (CutConsoleDiffWriterClass *klass)
+{
+    CutDiffWriterClass *diff_writer_class;
+
+    diff_writer_class = CUT_DIFF_WRITER_CLASS(klass);
+
+    diff_writer_class->write = writer_write;
+    diff_writer_class->write_mark = writer_write_mark;
+    diff_writer_class->write_line = writer_write_line;
+    diff_writer_class->finish = writer_finish;
+}
+
+static void
+cut_console_diff_writer_init (CutConsoleDiffWriter *writer)
+{
+    writer->console = NULL;
+}
+
+static CutDiffWriter *
+console_diff_writer_new (CutConsoleUI *console)
+{
+    CutDiffWriter *writer;
+
+    writer = g_object_new(CUT_TYPE_CONSOLE_DIFF_WRITER, NULL);
+    CUT_CONSOLE_DIFF_WRITER(writer)->console = console;
+    return writer;
+}
+
+static const gchar *
+writer_tag_to_color(CutDiffWriterTag tag)
+{
+    const gchar *color;
+
+    switch (tag) {
+    case CUT_DIFF_WRITER_TAG_DELETED_MARK:
+        color = CUT_CONSOLE_COLOR_GREEN;
+        break;
+    case CUT_DIFF_WRITER_TAG_INSERTED_MARK:
+        color = CUT_CONSOLE_COLOR_RED;
+        break;
+    case CUT_DIFF_WRITER_TAG_DIFFERENCE_MARK:
+        color = CUT_CONSOLE_COLOR_CYAN;
+        break;
+    case CUT_DIFF_WRITER_TAG_DELETED:
+        color = CUT_CONSOLE_COLOR_WHITE CUT_CONSOLE_COLOR_RED_BACK;
+        break;
+    case CUT_DIFF_WRITER_TAG_INSERTED:
+        color = CUT_CONSOLE_COLOR_WHITE CUT_CONSOLE_COLOR_GREEN_BACK;
+        break;
+    default:
+        color = "";
+        break;
+    }
+
+    return color;
+}
+
+static void
+writer_write (CutDiffWriter *_writer, const gchar *string, CutDiffWriterTag tag)
+{
+    CutConsoleDiffWriter *writer;
+
+    writer = CUT_CONSOLE_DIFF_WRITER(_writer);
+    print_with_color(writer->console, writer_tag_to_color(tag),
+                     "%s", string);
+}
+
+static void
+writer_write_mark (CutDiffWriter *_writer, const gchar *mark,
+                   CutDiffWriterTag tag)
+{
+    CutConsoleDiffWriter *writer;
+
+    writer = CUT_CONSOLE_DIFF_WRITER(_writer);
+    print_with_color(writer->console, writer_tag_to_color(tag),
+                     "%s", mark);
+    g_print(" ");
+}
+
+static void
+writer_write_line (CutDiffWriter *_writer, const gchar *line,
+                   CutDiffWriterTag tag)
+{
+    CutConsoleDiffWriter *writer;
+
+    writer = CUT_CONSOLE_DIFF_WRITER(_writer);
+    print_with_color(writer->console, writer_tag_to_color(tag),
+                     "%s", line);
+    g_print("\n");
+}
+
+static void
+writer_finish (CutDiffWriter *_writer)
+{
 }
 
 /*

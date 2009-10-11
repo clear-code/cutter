@@ -27,21 +27,7 @@
 
 #include "cut-sequence-matcher.h"
 #include "cut-colorize-differ.h"
-#include "cut-console-colors.h"
 #include "cut-utils.h"
-
-#define NORMAL_COLOR CUT_CONSOLE_COLOR_NORMAL
-
-#define INSERTED_TAG_COLOR CUT_CONSOLE_COLOR_RED
-#define DELETED_TAG_COLOR CUT_CONSOLE_COLOR_GREEN
-#define DIFFERENCE_TAG_COLOR CUT_CONSOLE_COLOR_CYAN
-
-#define INSERTED_COLOR                          \
-    CUT_CONSOLE_COLOR_RED_BACK                  \
-    CUT_CONSOLE_COLOR_WHITE
-#define DELETED_COLOR                           \
-    CUT_CONSOLE_COLOR_GREEN_BACK                \
-    CUT_CONSOLE_COLOR_WHITE
 
 G_DEFINE_TYPE(CutColorizeDiffer, cut_colorize_differ, CUT_TYPE_READABLE_DIFFER)
 
@@ -186,6 +172,7 @@ diff_line (CutDiffer *differ, CutDiffWriter *writer,
         }
     }
 
+    cut_diff_writer_write_mark(writer, "?", CUT_DIFF_WRITER_TAG_DIFFERENCE_MARK);
 #define APPEND_WRITE_OPERATION(write_operation)                         \
     write_operations = g_list_append(write_operations, write_operation)
 
@@ -252,10 +239,13 @@ diff_line (CutDiffer *differ, CutDiffWriter *writer,
         }
     }
 #undef APPEND_WRITE_OPERATION
+    cut_diff_writer_write_line(writer, "", CUT_DIFF_WRITER_TAG_NONE);
 
     if (write_operations) {
         GList *node;
 
+        cut_diff_writer_write_mark(writer, "?",
+                                   CUT_DIFF_WRITER_TAG_DIFFERENCE_MARK);
         for (node = write_operations; node; node = g_list_next(node)) {
             WriteOperation *operation = node->data;
 
@@ -276,6 +266,7 @@ diff_line (CutDiffer *differ, CutDiffWriter *writer,
             g_free(operation);
         }
         g_list_free(write_operations);
+        cut_diff_writer_write_line(writer, "", CUT_DIFF_WRITER_TAG_NONE);
     }
 
     g_object_unref(matcher);

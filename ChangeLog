@@ -1,5 +1,9 @@
 2009-10-11  Kouhei Sutou  <kou@cozmixng.org>
 
+	* module/ui/cut-console-ui.c: create a console colorized diff writer.
+
+	* cutter/cut-colorize-differ.c: add missing write commands.
+
 	* cutter/cut-diff.[ch]: cache sequence matcher.
 	* cutter/cut-readable-differ.c: use cached sequence matcher.
 
