@@ -37,7 +37,7 @@
 #include <cutter/cut-test-context.h>
 #include <cutter/cut-backtrace-entry.h>
 #include <cutter/cut-verbose-level.h>
-#include <cutter/cut-differ-colorize.h>
+#include <cutter/cut-colorize-differ.h>
 #include <cutter/cut-console-colors.h>
 #include <cutter/cut-enum-types.h>
 
@@ -719,7 +719,7 @@ print_result_detail (CutConsoleUI *console, CutTestResultStatus status,
             if (console->use_color) {
                 CutDiffer *differ;
                 gchar *colorized_diff;
-                differ = cut_differ_colorize_new(expected, actual);
+                differ = cut_colorize_differ_new(expected, actual);
                 colorized_diff = cut_differ_diff(differ);
                 g_print("%s", colorized_diff);
                 g_free(colorized_diff);

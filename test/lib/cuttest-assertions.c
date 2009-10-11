@@ -20,7 +20,7 @@
 #include <cutter/cut-helper.h>
 #include "cuttest-assertions.h"
 #include <cutter/cut-backtrace-entry.h>
-#include <cutter/cut-differ-readable.h>
+#include <cutter/cut-readable-differ.h>
 
 static GList *
 cuttest_result_summary_list_new (guint n_tests,

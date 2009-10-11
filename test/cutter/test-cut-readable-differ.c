@@ -1,7 +1,7 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 
 #include <gcutter.h>
-#include <cutter/cut-differ-readable.h>
+#include <cutter/cut-readable-differ.h>
 
 void test_same_contents_readable_diff(void);
 void test_inserted_readable_diff(void);

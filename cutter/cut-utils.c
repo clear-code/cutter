@@ -39,7 +39,7 @@
 #include "cut-utils.h"
 #include "cut-sub-process.h"
 #include "cut-sub-process-group.h"
-#include "cut-differ-readable.h"
+#include "cut-readable-differ.h"
 #include "cut-main.h"
 #include "cut-backtrace-entry.h"
 #include "../gcutter/gcut-public.h"

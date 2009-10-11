@@ -26,10 +26,10 @@
 #include <glib.h>
 
 #include "cut-sequence-matcher.h"
-#include "cut-differ-readable.h"
+#include "cut-readable-differ.h"
 #include "cut-utils.h"
 
-G_DEFINE_TYPE(CutDifferReadable, cut_differ_readable, CUT_TYPE_DIFFER)
+G_DEFINE_TYPE(CutReadableDiffer, cut_readable_differ, CUT_TYPE_DIFFER)
 
 static void diff        (CutDiffer     *differ,
                          CutDiffWriter *writer);
@@ -39,7 +39,7 @@ static void diff_line   (CutDiffer     *differ,
                          gchar         *to_line);
 
 static void
-cut_differ_readable_class_init (CutDifferReadableClass *klass)
+cut_readable_differ_class_init (CutReadableDifferClass *klass)
 {
     CutDifferClass *differ_class;
 
@@ -50,14 +50,14 @@ cut_differ_readable_class_init (CutDifferReadableClass *klass)
 }
 
 static void
-cut_differ_readable_init (CutDifferReadable *differ)
+cut_readable_differ_init (CutReadableDiffer *differ)
 {
 }
 
 CutDiffer *
-cut_differ_readable_new (const gchar *from, const gchar *to)
+cut_readable_differ_new (const gchar *from, const gchar *to)
 {
-    return g_object_new(CUT_TYPE_DIFFER_READABLE,
+    return g_object_new(CUT_TYPE_READABLE_DIFFER,
                         "from", from,
                         "to", to,
                         NULL);
@@ -198,13 +198,13 @@ diff_lines (CutDiffer *differ, CutDiffWriter *writer,
             gchar **from, gint from_begin, gint from_end,
             gchar **to, gint to_begin, gint to_end)
 {
-    CutDifferReadableClass *klass;
+    CutReadableDifferClass *klass;
     gdouble best_ratio, cut_off;
     gint from_equal_index, to_equal_index;
     gint from_best_index, to_best_index;
     gint to_index, from_index;
 
-    klass = CUT_DIFFER_READABLE_GET_CLASS(differ);
+    klass = CUT_READABLE_DIFFER_GET_CLASS(differ);
 
     best_ratio = 0.74;
     cut_off = 0.75;
@@ -315,7 +315,7 @@ cut_diff_readable (const gchar *from, const gchar *to)
     CutDiffer *differ;
     gchar *result;
 
-    differ = cut_differ_readable_new(from, to);
+    differ = cut_readable_differ_new(from, to);
     result = cut_differ_diff(differ);
     g_object_unref(differ);
     return result;

@@ -17,30 +17,30 @@
  *
  */
 
-#ifndef __CUT_DIFFER_READABLE_H__
-#define __CUT_DIFFER_READABLE_H__
+#ifndef __CUT_READABLE_DIFFER_H__
+#define __CUT_READABLE_DIFFER_H__
 
 #include <glib-object.h>
 #include <cutter/cut-diff.h>
 
 G_BEGIN_DECLS
 
-#define CUT_TYPE_DIFFER_READABLE            (cut_differ_readable_get_type ())
-#define CUT_DIFFER_READABLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_DIFFER_READABLE, CutDifferReadable))
-#define CUT_DIFFER_READABLE_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_DIFFER_READABLE, CutDifferReadableClass))
-#define CUT_IS_DIFFER_READABLE(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_DIFFER_READABLE))
-#define CUT_IS_DIFFER_READABLE_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_DIFFER_READABLE))
-#define CUT_DIFFER_READABLE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_DIFFER_READABLE, CutDifferReadableClass))
+#define CUT_TYPE_READABLE_DIFFER            (cut_readable_differ_get_type ())
+#define CUT_READABLE_DIFFER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_READABLE_DIFFER, CutReadableDiffer))
+#define CUT_READABLE_DIFFER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_READABLE_DIFFER, CutReadableDifferClass))
+#define CUT_IS_READABLE_DIFFER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_READABLE_DIFFER))
+#define CUT_IS_READABLE_DIFFER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_READABLE_DIFFER))
+#define CUT_READABLE_DIFFER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_READABLE_DIFFER, CutReadableDifferClass))
 
-typedef struct _CutDifferReadable         CutDifferReadable;
-typedef struct _CutDifferReadableClass    CutDifferReadableClass;
+typedef struct _CutReadableDiffer         CutReadableDiffer;
+typedef struct _CutReadableDifferClass    CutReadableDifferClass;
 
-struct _CutDifferReadable
+struct _CutReadableDiffer
 {
     CutDiffer object;
 };
 
-struct _CutDifferReadableClass
+struct _CutReadableDifferClass
 {
     CutDifferClass parent_class;
 
@@ -50,9 +50,9 @@ struct _CutDifferReadableClass
                        gchar         *to_line);
 };
 
-GType      cut_differ_readable_get_type  (void) G_GNUC_CONST;
+GType      cut_readable_differ_get_type  (void) G_GNUC_CONST;
 
-CutDiffer *cut_differ_readable_new       (const gchar *from,
+CutDiffer *cut_readable_differ_new       (const gchar *from,
                                           const gchar *to);
 
 gboolean   cut_diff_readable_is_interested
@@ -61,7 +61,7 @@ gboolean   cut_diff_readable_need_fold   (const gchar *diff);
 
 G_END_DECLS
 
-#endif /* __CUT_DIFFER_READABLE_H__ */
+#endif /* __CUT_READABLE_DIFFER_H__ */
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

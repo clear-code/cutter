@@ -34,7 +34,7 @@
 #include "cut-stream-parser.h"
 #include "cut-backtrace-entry.h"
 #include "cut-utils.h"
-#include "cut-differ-readable.h"
+#include "cut-readable-differ.h"
 
 #define MAX_DIFF_TARGET_SIZE 8092
 

@@ -26,7 +26,7 @@
 #include <glib.h>
 
 #include "cut-sequence-matcher.h"
-#include "cut-differ-colorize.h"
+#include "cut-colorize-differ.h"
 #include "cut-console-colors.h"
 #include "cut-utils.h"
 
@@ -43,7 +43,7 @@
     CUT_CONSOLE_COLOR_GREEN_BACK                \
     CUT_CONSOLE_COLOR_WHITE
 
-G_DEFINE_TYPE(CutDifferColorize, cut_differ_colorize, CUT_TYPE_DIFFER_READABLE)
+G_DEFINE_TYPE(CutColorizeDiffer, cut_colorize_differ, CUT_TYPE_READABLE_DIFFER)
 
 static void diff_line   (CutDiffer     *differ,
                          CutDiffWriter *writer,
@@ -51,23 +51,23 @@ static void diff_line   (CutDiffer     *differ,
                          gchar         *to_line);
 
 static void
-cut_differ_colorize_class_init (CutDifferColorizeClass *klass)
+cut_colorize_differ_class_init (CutColorizeDifferClass *klass)
 {
-    CutDifferReadableClass *differ_readable_class;
+    CutReadableDifferClass *readable_differ_class;
 
-    differ_readable_class = CUT_DIFFER_READABLE_CLASS(klass);
-    differ_readable_class->diff_line = diff_line;
+    readable_differ_class = CUT_READABLE_DIFFER_CLASS(klass);
+    readable_differ_class->diff_line = diff_line;
 }
 
 static void
-cut_differ_colorize_init (CutDifferColorize *differ)
+cut_colorize_differ_init (CutColorizeDiffer *differ)
 {
 }
 
 CutDiffer *
-cut_differ_colorize_new (const gchar *from, const gchar *to)
+cut_colorize_differ_new (const gchar *from, const gchar *to)
 {
-    return g_object_new(CUT_TYPE_DIFFER_COLORIZE,
+    return g_object_new(CUT_TYPE_COLORIZE_DIFFER,
                         "from", from,
                         "to", to,
                         NULL);
