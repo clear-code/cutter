@@ -21,7 +21,7 @@
 #define __CUT_DIFFER_COLORIZE_H__
 
 #include <glib-object.h>
-#include <cutter/cut-diff.h>
+#include <cutter/cut-differ-readable.h>
 
 G_BEGIN_DECLS
 
@@ -37,12 +37,12 @@ typedef struct _CutDifferColorizeClass    CutDifferColorizeClass;
 
 struct _CutDifferColorize
 {
-    CutDiffer object;
+    CutDifferReadable object;
 };
 
 struct _CutDifferColorizeClass
 {
-    CutDifferClass parent_class;
+    CutDifferReadableClass parent_class;
 };
 
 GType      cut_differ_colorize_get_type  (void) G_GNUC_CONST;

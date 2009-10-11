@@ -27,6 +27,7 @@
 
 #include "cut-sequence-matcher.h"
 #include "cut-diff.h"
+#include "cut-string-diff-writer.h"
 #include "cut-utils.h"
 
 #define CUT_DIFFER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_DIFFER, CutDifferPrivate))
@@ -140,18 +141,13 @@ set_property (GObject      *object,
 gchar *
 cut_differ_diff (CutDiffer *differ)
 {
-    gint i, len;
-    GArray *result;
+    CutDiffWriter *writer;
     gchar *diff;
 
-    result = g_array_new(TRUE, FALSE, sizeof(gchar *));
-    CUT_DIFFER_GET_CLASS(differ)->diff(differ, result);
-    diff = g_strjoinv("\n", (gchar **)result->data);
-
-    for (i = 0, len = result->len; i < len; i++) {
-        g_free(g_array_index(result, gchar *, i));
-    }
-    g_array_free(result, TRUE);
+    writer = cut_string_diff_writer_new();
+    CUT_DIFFER_GET_CLASS(differ)->diff(differ, writer);
+    diff = g_strdup(cut_string_diff_writer_get_result(writer));
+    g_object_unref(writer);
 
     return diff;
 }
@@ -166,19 +162,6 @@ gchar **
 cut_differ_get_to (CutDiffer *differ)
 {
     return CUT_DIFFER_GET_PRIVATE(differ)->to;
-}
-
-void
-cut_differ_util_append_with_tag (GArray *result, const gchar *tag,
-                                 gchar **lines, guint begin, guint end)
-{
-    guint i;
-    for (i = begin; i < end; i++) {
-        gchar *line;
-
-        line = g_strconcat(tag, lines[i], NULL);
-        g_array_append_val(result, line);
-    }
 }
 
 gboolean

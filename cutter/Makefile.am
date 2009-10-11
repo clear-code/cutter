@@ -58,6 +58,8 @@ libcutter_public_headers = 		\
 	cut-verbose-level.h		\
 	cut-sequence-matcher.h		\
 	cut-diff.h			\
+	cut-diff-writer.h		\
+	cut-string-diff-writer.h	\
 	cut-differ-readable.h		\
 	cut-differ-colorize.h		\
 	cut-console-colors.h		\
@@ -152,6 +154,8 @@ libcutter_la_SOURCES =			\
 	cut-stream-parser.c		\
 	cut-sequence-matcher.c		\
 	cut-diff.c			\
+	cut-diff-writer.c		\
+	cut-string-diff-writer.c	\
 	cut-differ-readable.c		\
 	cut-differ-colorize.c		\
 	cut-analyzer.c			\

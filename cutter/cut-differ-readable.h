@@ -43,6 +43,11 @@ struct _CutDifferReadable
 struct _CutDifferReadableClass
 {
     CutDifferClass parent_class;
+
+    void (*diff_line) (CutDiffer     *differ,
+                       CutDiffWriter *writer,
+                       gchar         *from_line,
+                       gchar         *to_line);
 };
 
 GType      cut_differ_readable_get_type  (void) G_GNUC_CONST;

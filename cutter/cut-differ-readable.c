@@ -31,7 +31,12 @@
 
 G_DEFINE_TYPE(CutDifferReadable, cut_differ_readable, CUT_TYPE_DIFFER)
 
-static void diff        (CutDiffer *differ, GArray *result);
+static void diff        (CutDiffer     *differ,
+                         CutDiffWriter *writer);
+static void diff_line   (CutDiffer     *differ,
+                         CutDiffWriter *writer,
+                         gchar         *from_line,
+                         gchar         *to_line);
 
 static void
 cut_differ_readable_class_init (CutDifferReadableClass *klass)
@@ -40,6 +45,8 @@ cut_differ_readable_class_init (CutDifferReadableClass *klass)
 
     differ_class = CUT_DIFFER_CLASS(klass);
     differ_class->diff = diff;
+
+    klass->diff_line = diff_line;
 }
 
 static void
@@ -57,31 +64,35 @@ cut_differ_readable_new (const gchar *from, const gchar *to)
 }
 
 static void
-tag_equal (GArray *result, gchar **lines, gint begin, gint end)
+mark_equal (CutDiffWriter *writer, gchar **lines, gint begin, gint end)
 {
-    cut_differ_util_append_with_tag(result, "  ", lines, begin, end);
+    cut_diff_writer_mark_lines(writer, " ", lines, begin, end,
+                               CUT_DIFF_WRITER_TAG_EQUAL_MARK);
 }
 
 static void
-tag_inserted (GArray *result, gchar **lines, gint begin, gint end)
+mark_inserted (CutDiffWriter *writer, gchar **lines, gint begin, gint end)
 {
-    cut_differ_util_append_with_tag(result, "+ ", lines, begin, end);
+    cut_diff_writer_mark_lines(writer, "+", lines, begin, end,
+                               CUT_DIFF_WRITER_TAG_INSERTED_MARK);
 }
 
 static void
-tag_deleted (GArray *result, gchar **lines, gint begin, gint end)
+mark_deleted (CutDiffWriter *writer, gchar **lines, gint begin, gint end)
 {
-    cut_differ_util_append_with_tag(result, "- ", lines, begin, end);
+    cut_diff_writer_mark_lines(writer, "-", lines, begin, end,
+                               CUT_DIFF_WRITER_TAG_DELETED_MARK);
 }
 
 static void
-tag_difference (GArray *result, gchar **lines, gint begin, gint end)
+mark_difference (CutDiffWriter *writer, gchar **lines, gint begin, gint end)
 {
-    cut_differ_util_append_with_tag(result, "? ", lines, begin, end);
+    cut_diff_writer_mark_lines(writer, "?", lines, begin, end,
+                               CUT_DIFF_WRITER_TAG_DIFFERENCE_MARK);
 }
 
 static void
-format_diff_point (GArray *result,
+format_diff_point (CutDiffWriter *writer,
                    gchar *from_line, gchar *to_line,
                    gchar *from_tags, gchar *to_tags)
 {
@@ -91,24 +102,25 @@ format_diff_point (GArray *result,
     to_tags = g_strchomp(to_tags);
 
     lines[0] = from_line;
-    tag_deleted(result, lines, 0, 1);
+    mark_deleted(writer, lines, 0, 1);
 
     if (from_tags[0]) {
         lines[0] = from_tags;
-        tag_difference(result, lines, 0, 1);
+        mark_difference(writer, lines, 0, 1);
     }
 
     lines[0] = to_line;
-    tag_inserted(result, lines, 0, 1);
+    mark_inserted(writer, lines, 0, 1);
 
     if (to_tags[0]) {
         lines[0] = to_tags;
-        tag_difference(result, lines, 0, 1);
+        mark_difference(writer, lines, 0, 1);
     }
 }
 
 static void
-diff_line (GArray *result, gchar *from_line, gchar *to_line)
+diff_line (CutDiffer *differ, CutDiffWriter *writer,
+           gchar *from_line, gchar *to_line)
 {
     GString *from_tags, *to_tags;
     CutSequenceMatcher *matcher;
@@ -153,42 +165,46 @@ diff_line (GArray *result, gchar *from_line, gchar *to_line)
         }
     }
 
-    format_diff_point(result, from_line, to_line, from_tags->str, to_tags->str);
+    format_diff_point(writer, from_line, to_line, from_tags->str, to_tags->str);
 
     g_string_free(from_tags, TRUE);
     g_string_free(to_tags, TRUE);
     g_object_unref(matcher);
 }
 
-static void diff_lines (GArray *result,
+static void diff_lines (CutDiffer *differ, CutDiffWriter *writer,
                         gchar **from, gint from_begin, gint from_end,
                         gchar **to, gint to_begin, gint to_end);
 
 static void
-tag_diff_lines (GArray *result,
-                gchar **from, gint from_begin, gint from_end,
-                gchar **to, gint to_begin, gint to_end)
+mark_diff_lines (CutDiffer *differ, CutDiffWriter *writer,
+                 gchar **from, gint from_begin, gint from_end,
+                 gchar **to, gint to_begin, gint to_end)
 {
     if (from_begin < from_end) {
         if (to_begin < to_end) {
-            diff_lines(result, from, from_begin, from_end, to, to_begin, to_end);
+            diff_lines(differ, writer,
+                       from, from_begin, from_end, to, to_begin, to_end);
         } else {
-            tag_deleted(result, from, from_begin, from_end);
+            mark_deleted(writer, from, from_begin, from_end);
         }
     } else {
-        tag_inserted(result, to, to_begin, to_end);
+        mark_inserted(writer, to, to_begin, to_end);
     }
 }
 
 static void
-diff_lines (GArray *result,
+diff_lines (CutDiffer *differ, CutDiffWriter *writer,
             gchar **from, gint from_begin, gint from_end,
             gchar **to, gint to_begin, gint to_end)
 {
+    CutDifferReadableClass *klass;
     gdouble best_ratio, cut_off;
     gint from_equal_index, to_equal_index;
     gint from_best_index, to_best_index;
     gint to_index, from_index;
+
+    klass = CUT_DIFFER_READABLE_GET_CLASS(differ);
 
     best_ratio = 0.74;
     cut_off = 0.75;
@@ -228,11 +244,11 @@ diff_lines (GArray *result,
     if (best_ratio < cut_off) {
         if (from_equal_index < 0) {
             if (to_end - to_begin < from_end - from_begin) {
-                tag_inserted(result, to, to_begin, to_end);
-                tag_deleted(result, from, from_begin, from_end);
+                mark_inserted(writer, to, to_begin, to_end);
+                mark_deleted(writer, from, from_begin, from_end);
             } else {
-                tag_deleted(result, from, from_begin, from_end);
-                tag_inserted(result, to, to_begin, to_end);
+                mark_deleted(writer, from, from_begin, from_end);
+                mark_inserted(writer, to, to_begin, to_end);
             }
             return;
         }
@@ -241,17 +257,17 @@ diff_lines (GArray *result,
         best_ratio = 1.0;
     }
 
-    tag_diff_lines(result,
-                   from, from_begin, from_best_index,
-                   to, to_begin, to_best_index);
-    diff_line(result, from[from_best_index], to[to_best_index]);
-    tag_diff_lines(result,
-                   from, from_best_index + 1, from_end,
-                   to, to_best_index + 1, to_end);
+    mark_diff_lines(differ, writer,
+                    from, from_begin, from_best_index,
+                    to, to_begin, to_best_index);
+    klass->diff_line(differ, writer, from[from_best_index], to[to_best_index]);
+    mark_diff_lines(differ, writer,
+                    from, from_best_index + 1, from_end,
+                    to, to_best_index + 1, to_end);
 }
 
 static void
-diff (CutDiffer *differ, GArray *result)
+diff (CutDiffer *differ, CutDiffWriter *writer)
 {
     CutSequenceMatcher *matcher;
     const GList *operations;
@@ -267,19 +283,19 @@ diff (CutDiffer *differ, GArray *result)
 
         switch (operation->type) {
         case CUT_SEQUENCE_MATCH_OPERATION_EQUAL:
-            tag_equal(result, from,
-                      operation->from_begin, operation->from_end);
+            mark_equal(writer, from,
+                       operation->from_begin, operation->from_end);
             break;
         case CUT_SEQUENCE_MATCH_OPERATION_INSERT:
-            tag_inserted(result, to,
-                         operation->to_begin, operation->to_end);
+            mark_inserted(writer, to,
+                          operation->to_begin, operation->to_end);
             break;
         case CUT_SEQUENCE_MATCH_OPERATION_DELETE:
-            tag_deleted(result, from,
-                        operation->from_begin, operation->from_end);
+            mark_deleted(writer, from,
+                         operation->from_begin, operation->from_end);
             break;
         case CUT_SEQUENCE_MATCH_OPERATION_REPLACE:
-            diff_lines(result,
+            diff_lines(differ, writer,
                        from, operation->from_begin, operation->from_end,
                        to, operation->to_begin, operation->to_end);
             break;
@@ -288,6 +304,7 @@ diff (CutDiffer *differ, GArray *result)
             break;
         }
     }
+    cut_diff_writer_finish(writer);
 
     g_object_unref(matcher);
 }
