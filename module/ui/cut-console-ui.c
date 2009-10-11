@@ -38,6 +38,7 @@
 #include <cutter/cut-backtrace-entry.h>
 #include <cutter/cut-verbose-level.h>
 #include <cutter/cut-colorize-differ.h>
+#include <cutter/cut-console-color-diff-writer.h>
 #include <cutter/cut-console-colors.h>
 #include <cutter/cut-enum-types.h>
 
@@ -98,8 +99,6 @@ static void     detach_from_run_context (CutListener *listener,
                                          CutRunContext   *run_context);
 static gboolean run                     (CutUI       *ui,
                                          CutRunContext   *run_context);
-
-static CutDiffWriter *console_diff_writer_new (CutConsoleUI *console);
 
 static void
 class_init (CutConsoleUIClass *klass)
@@ -720,7 +719,7 @@ print_result_detail (CutConsoleUI *console, CutTestResultStatus status,
 
             g_print("\n\n");
             g_print("diff:\n");
-            writer = console_diff_writer_new(console);
+            writer = cut_console_color_diff_writer_new();
             cut_differ_diff(differ, writer);
             g_object_unref(writer);
         }
@@ -961,141 +960,6 @@ static gboolean
 run (CutUI *ui, CutRunContext *run_context)
 {
     return cut_run_context_start(run_context);
-}
-
-/* CutConsoleDiffWriter */
-#define CUT_TYPE_CONSOLE_DIFF_WRITER            (cut_console_diff_writer_get_type ())
-#define CUT_CONSOLE_DIFF_WRITER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_CONSOLE_DIFF_WRITER, CutConsoleDiffWriter))
-#define CUT_CONSOLE_DIFF_WRITER_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_CONSOLE_DIFF_WRITER, CutConsoleDiffWriterClass))
-#define CUT_IS_CONSOLE_DIFF_WRITER(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_CONSOLE_DIFF_WRITER))
-#define CUT_IS_CONSOLE_DIFF_WRITER_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_CONSOLE_DIFF_WRITER))
-#define CUT_CONSOLE_DIFF_WRITER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_CONSOLE_DIFF_WRITER, CutConsoleDiffWriterClass))
-
-typedef struct _CutConsoleDiffWriter         CutConsoleDiffWriter;
-typedef struct _CutConsoleDiffWriterClass    CutConsoleDiffWriterClass;
-
-struct _CutConsoleDiffWriter
-{
-    CutDiffWriter object;
-
-    CutConsoleUI *console;
-};
-
-struct _CutConsoleDiffWriterClass
-{
-    CutDiffWriterClass parent_class;
-};
-
-GType          cut_console_diff_writer_get_type         (void) G_GNUC_CONST;
-
-G_DEFINE_TYPE(CutConsoleDiffWriter, cut_console_diff_writer, CUT_TYPE_DIFF_WRITER)
-
-static void writer_write          (CutDiffWriter       *writer,
-                                   const gchar         *string,
-                                   CutDiffWriterTag     tag);
-static void writer_write_mark     (CutDiffWriter       *writer,
-                                   const gchar         *mark,
-                                   CutDiffWriterTag     tag);
-static void writer_write_line     (CutDiffWriter       *writer,
-                                   const gchar         *line,
-                                   CutDiffWriterTag     tag);
-static void writer_finish         (CutDiffWriter       *writer);
-
-static void
-cut_console_diff_writer_class_init (CutConsoleDiffWriterClass *klass)
-{
-    CutDiffWriterClass *diff_writer_class;
-
-    diff_writer_class = CUT_DIFF_WRITER_CLASS(klass);
-
-    diff_writer_class->write = writer_write;
-    diff_writer_class->write_mark = writer_write_mark;
-    diff_writer_class->write_line = writer_write_line;
-    diff_writer_class->finish = writer_finish;
-}
-
-static void
-cut_console_diff_writer_init (CutConsoleDiffWriter *writer)
-{
-    writer->console = NULL;
-}
-
-static CutDiffWriter *
-console_diff_writer_new (CutConsoleUI *console)
-{
-    CutDiffWriter *writer;
-
-    writer = g_object_new(CUT_TYPE_CONSOLE_DIFF_WRITER, NULL);
-    CUT_CONSOLE_DIFF_WRITER(writer)->console = console;
-    return writer;
-}
-
-static const gchar *
-writer_tag_to_color(CutDiffWriterTag tag)
-{
-    const gchar *color;
-
-    switch (tag) {
-    case CUT_DIFF_WRITER_TAG_DELETED_MARK:
-        color = CUT_CONSOLE_COLOR_GREEN;
-        break;
-    case CUT_DIFF_WRITER_TAG_INSERTED_MARK:
-        color = CUT_CONSOLE_COLOR_RED;
-        break;
-    case CUT_DIFF_WRITER_TAG_DIFFERENCE_MARK:
-        color = CUT_CONSOLE_COLOR_CYAN;
-        break;
-    case CUT_DIFF_WRITER_TAG_DELETED:
-        color = CUT_CONSOLE_COLOR_WHITE CUT_CONSOLE_COLOR_RED_BACK;
-        break;
-    case CUT_DIFF_WRITER_TAG_INSERTED:
-        color = CUT_CONSOLE_COLOR_WHITE CUT_CONSOLE_COLOR_GREEN_BACK;
-        break;
-    default:
-        color = "";
-        break;
-    }
-
-    return color;
-}
-
-static void
-writer_write (CutDiffWriter *_writer, const gchar *string, CutDiffWriterTag tag)
-{
-    CutConsoleDiffWriter *writer;
-
-    writer = CUT_CONSOLE_DIFF_WRITER(_writer);
-    print_with_color(writer->console, writer_tag_to_color(tag),
-                     "%s", string);
-}
-
-static void
-writer_write_mark (CutDiffWriter *_writer, const gchar *mark,
-                   CutDiffWriterTag tag)
-{
-    CutConsoleDiffWriter *writer;
-
-    writer = CUT_CONSOLE_DIFF_WRITER(_writer);
-    print_with_color(writer->console, writer_tag_to_color(tag),
-                     "%s", mark);
-    g_print(" ");
-}
-
-static void
-writer_write_line (CutDiffWriter *_writer, const gchar *line,
-                   CutDiffWriterTag tag)
-{
-    CutConsoleDiffWriter *writer;
-
-    writer = CUT_CONSOLE_DIFF_WRITER(_writer);
-    print_with_color(writer->console, writer_tag_to_color(tag),
-                     "%s", line);
-    g_print("\n");
-}
-
-static void
-writer_finish (CutDiffWriter *_writer)
-{
 }
 
 /*
