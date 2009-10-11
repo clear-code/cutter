@@ -49,6 +49,25 @@ GType          cut_console_diff_writer_get_type         (void) G_GNUC_CONST;
 
 CutDiffWriter *cut_console_diff_writer_new              (gboolean use_color);
 
+void           cut_console_diff_writer_set_deleted_mark_color
+                                                        (CutDiffWriter *writer,
+                                                         const gchar   *color);
+const gchar   *cut_console_diff_writer_get_deleted_mark_color
+                                                        (CutDiffWriter *writer);
+void           cut_console_diff_writer_set_inserted_mark_color
+                                                        (CutDiffWriter *writer,
+                                                         const gchar   *color);
+const gchar   *cut_console_diff_writer_get_inserted_mark_color
+                                                        (CutDiffWriter *writer);
+void           cut_console_diff_writer_set_deleted_color(CutDiffWriter *writer,
+                                                         const gchar   *color);
+const gchar   *cut_console_diff_writer_get_deleted_color(CutDiffWriter *writer);
+void           cut_console_diff_writer_set_inserted_color
+                                                        (CutDiffWriter *writer,
+                                                         const gchar   *color);
+const gchar   *cut_console_diff_writer_get_inserted_color
+                                                        (CutDiffWriter *writer);
+
 G_END_DECLS
 
 #endif /* __CUT_CONSOLE_DIFF_WRITER_H__ */

@@ -1,5 +1,8 @@
 2009-10-11  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-console-diff-writer.[ch]: make color customizable.
+	* module/ui/cut-console-ui.c: invert default diff colors.
+
 	* cutter/cut-console-color-diff-writer.[ch]: rename to ...
 	* cutter/cut-console-diff-writer.[ch]: ... them and use-color is
 	parameterized.

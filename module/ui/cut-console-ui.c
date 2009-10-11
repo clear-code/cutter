@@ -686,6 +686,37 @@ print_test_attributes (CutConsoleUI *console, CutTestResultStatus status,
                          (GHFunc)print_each_attribute, &info);
 }
 
+static CutDiffWriter *
+console_diff_writer_new (gboolean use_color)
+{
+    CutDiffWriter *writer;
+    gchar *deleted_mark_color, *inserted_mark_color;
+    gchar *deleted_color, *inserted_color;
+
+    writer = cut_console_diff_writer_new(use_color);
+
+    deleted_mark_color =
+        g_strdup(cut_console_diff_writer_get_deleted_mark_color(writer));
+    inserted_mark_color =
+        g_strdup(cut_console_diff_writer_get_inserted_mark_color(writer));
+    deleted_color =
+        g_strdup(cut_console_diff_writer_get_deleted_color(writer));
+    inserted_color =
+        g_strdup(cut_console_diff_writer_get_inserted_color(writer));
+
+    cut_console_diff_writer_set_inserted_mark_color(writer, deleted_mark_color);
+    cut_console_diff_writer_set_deleted_mark_color(writer, inserted_mark_color);
+    cut_console_diff_writer_set_inserted_color(writer, deleted_color);
+    cut_console_diff_writer_set_deleted_color(writer, inserted_color);
+
+    g_free(deleted_mark_color);
+    g_free(inserted_mark_color);
+    g_free(deleted_color);
+    g_free(inserted_color);
+
+    return writer;
+}
+
 static void
 print_result_detail (CutConsoleUI *console, CutTestResultStatus status,
                      CutTestResult *result)
@@ -719,7 +750,7 @@ print_result_detail (CutConsoleUI *console, CutTestResultStatus status,
 
             g_print("\n\n");
             g_print("diff:\n");
-            writer = cut_console_diff_writer_new(console->use_color);
+            writer = console_diff_writer_new(console->use_color);
             cut_differ_diff(differ, writer);
             g_object_unref(writer);
         }
