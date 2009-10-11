@@ -1,3 +1,7 @@
+2009-10-11  Kouhei Sutou  <kou@cozmixng.org>
+
+	* POTFILES.in, ja.po: update.
+
 2009-09-27  Kouhei Sutou  <kou@cozmixng.org>
 
 	* POTFILES.in: add soupcut-server.c.

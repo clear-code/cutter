@@ -4,6 +4,8 @@ cutter/cut-backtrace-entry.c
 cutter/cut-contractor.c
 cutter/cut-crash-backtrace.c
 cutter/cut-diff.c
+cutter/cut-differ-colorize.c
+cutter/cut-differ-readable.c
 cutter/cut-elf-loader.c
 cutter/cut-enum-types.c
 cutter/cut-factory-builder.c

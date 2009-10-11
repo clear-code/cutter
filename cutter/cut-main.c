@@ -163,7 +163,7 @@ static const GOptionEntry option_entries[] =
     {"stop-before-test", 0, 0, G_OPTION_ARG_NONE,
      &stop_before_test,
      N_("Set breakpoints at each line which invokes test. "
-        "You can step into a test function with your debugger."), NULL},
+        "You can step into a test function with your debugger easily."), NULL},
     {NULL}
 };
 
