@@ -93,6 +93,7 @@ cut_setup (void)
         "  --fatal-failures                                Treat failures as fatal problem" LINE_FEED_CODE
         "  --keep-opening-modules                          Keep opening loaded modules to resolve symbols for debugging" LINE_FEED_CODE
         "  --enable-convenience-attribute-definition       Enable convenience but danger '#{ATTRIBUTE_NAME}_#{TEST_NAME - 'test_' PREFIX}' attribute set function" LINE_FEED_CODE
+        "  --stop-before-test                              Set breakpoints at each line which invokes test. You can step into a test function with your debugger easily." LINE_FEED_CODE
         "" LINE_FEED_CODE,
         g_get_prgname(),
         g_get_prgname());
@@ -264,6 +265,7 @@ test_help_all (void)
         "  --fatal-failures                                Treat failures as fatal problem" LINE_FEED_CODE
         "  --keep-opening-modules                          Keep opening loaded modules to resolve symbols for debugging" LINE_FEED_CODE
         "  --enable-convenience-attribute-definition       Enable convenience but danger '#{ATTRIBUTE_NAME}_#{TEST_NAME - 'test_' PREFIX}' attribute set function" LINE_FEED_CODE
+        "  --stop-before-test                              Set breakpoints at each line which invokes test. You can step into a test function with your debugger easily." LINE_FEED_CODE
 #ifdef HAVE_GTK
         "  --display=DISPLAY                               X display to use" LINE_FEED_CODE
 #endif

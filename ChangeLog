@@ -1,5 +1,7 @@
 2009-10-11  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/cutter/test-cutter.c: follow --stop-before-test option change.
+
 	* cutter/cut-diff.[ch], cutter/cut-differ-*: split write
 	operations to ...
 	* cutter/cut-diff-writer.[ch], cutter/cut-string-diff-writer.[ch]:
