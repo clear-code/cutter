@@ -29,13 +29,16 @@ void test_complex_unified_diff(void);
 void test_double_width_unified_diff(void);
 void test_empty_unified_diff(void);
 
-#define cut_assert_unified_diff(expected, from, to)    \
-    cut_assert_equal_string_with_free(expected, cut_diff_unified(from, to))
+#define cut_assert_unified_diff(expected, from, to, from_label, to_label) \
+    cut_assert_equal_string_with_free(expected,                         \
+                                      cut_diff_unified(from, to,        \
+                                                       from_label,      \
+                                                       to_label))
 
 void
 test_same_contents_unified_diff (void)
 {
-    cut_assert_unified_diff("", "aaa", "aaa");
+    cut_assert_unified_diff("", "aaa", "aaa", "from", "to");
 
     cut_assert_unified_diff("",
 
@@ -43,7 +46,10 @@ test_same_contents_unified_diff (void)
                             "bbb",
 
                             "aaa\n"
-                            "bbb");
+                            "bbb",
+
+                            "from",
+                            "to");
 }
 
 void
@@ -62,7 +68,10 @@ test_inserted_unified_diff(void)
                             "aaa\n"
                             "bbb\n"
                             "ccc\n"
-                            "ddd");
+                            "ddd",
+
+                            "from",
+                            "to");
 }
 
 void
@@ -81,7 +90,10 @@ test_deleted_unified_diff(void)
                             "ccc\n"
                             "ddd",
 
-                            "aaa");
+                            "aaa",
+
+                            "from",
+                            "to");
 }
 
 void
@@ -105,13 +117,16 @@ test_replace_unified_diff (void)
                             "zero\n"
                             "one\n"
                             "thre\n"
-                            "four");
+                            "four",
+
+                            "from",
+                            "to");
 }
 
 void
 test_empty_unified_diff (void)
 {
-    cut_assert_unified_diff("", "", "");
+    cut_assert_unified_diff("", "", "", "from", "to");
 }
 
 /*

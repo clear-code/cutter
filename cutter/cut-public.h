@@ -184,7 +184,9 @@ char       *cut_diff_readable               (const char     *from,
 char       *cut_diff_readable_folded        (const char     *from,
                                              const char     *to);
 char       *cut_diff_unified                (const char     *from,
-                                             const char     *to);
+                                             const char     *to,
+                                             const char     *from_label,
+                                             const char     *to_label);
 
 CutSubProcess *cut_utils_take_new_sub_process     (const char     *test_directory,
                                                    CutTestContext *test_context);
