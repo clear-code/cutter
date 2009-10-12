@@ -1,5 +1,7 @@
 2009-10-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-diff.c: support unified diff by -u option.
+
 	* cutter/cut-public.h,
 	cutter/cut-unified-differ.[ch],
 	test/cutter/test-cut-unified-differ.c: support label customize.

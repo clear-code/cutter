@@ -26,10 +26,13 @@
 #include <glib/gi18n.h>
 #include "cut-main.h"
 #include "cut-colorize-differ.h"
+#include "cut-unified-differ.h"
 #include "cut-console.h"
 #include "cut-console-diff-writer.h"
 
 static gboolean use_color = FALSE;
+static gboolean unified_diff = FALSE;
+static gint unified_diff_context = 3; /* FIXME: support option */
 
 static gboolean
 print_version (const gchar *option_name, const gchar *value,
@@ -55,6 +58,8 @@ static const GOptionEntry option_entries[] =
     {"color", 'c', G_OPTION_FLAG_OPTIONAL_ARG, G_OPTION_ARG_CALLBACK,
      parse_color_arg, N_("Output log with colors"),
      "[yes|true|no|false|auto]"},
+    {"unified", 'u', 0, G_OPTION_ARG_NONE, &unified_diff,
+     N_("Use unified diff format"), NULL},
     {NULL}
 };
 
@@ -97,13 +102,20 @@ print_diff (const gchar *from, const gchar *to)
         return FALSE;
     }
 
-    if (use_color) {
-        differ = cut_colorize_differ_new(from_contents, to_contents);
-    } else {
-        differ = cut_readable_differ_new(from_contents, to_contents);
-    }
     writer = cut_console_diff_writer_new(use_color);
-    print_diff_header(writer, from, to);
+    if (unified_diff) {
+        differ = cut_unified_differ_new(from_contents, to_contents);
+        cut_unified_differ_set_from_label(differ, from);
+        cut_unified_differ_set_to_label(differ, to);
+        cut_unified_differ_set_context(differ, unified_diff_context);
+    } else {
+        if (use_color) {
+            differ = cut_colorize_differ_new(from_contents, to_contents);
+        } else {
+            differ = cut_readable_differ_new(from_contents, to_contents);
+        }
+        print_diff_header(writer, from, to);
+    }
     cut_differ_diff(differ, writer);
     g_object_unref(writer);
     g_object_unref(differ);
