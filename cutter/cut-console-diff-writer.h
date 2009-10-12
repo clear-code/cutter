@@ -59,13 +59,25 @@ void           cut_console_diff_writer_set_inserted_mark_color
                                                          const gchar   *color);
 const gchar   *cut_console_diff_writer_get_inserted_mark_color
                                                         (CutDiffWriter *writer);
-void           cut_console_diff_writer_set_deleted_color(CutDiffWriter *writer,
-                                                         const gchar   *color);
-const gchar   *cut_console_diff_writer_get_deleted_color(CutDiffWriter *writer);
-void           cut_console_diff_writer_set_inserted_color
+void           cut_console_diff_writer_set_deleted_line_color
                                                         (CutDiffWriter *writer,
                                                          const gchar   *color);
-const gchar   *cut_console_diff_writer_get_inserted_color
+const gchar   *cut_console_diff_writer_get_deleted_line_color
+                                                        (CutDiffWriter *writer);
+void           cut_console_diff_writer_set_inserted_line_color
+                                                        (CutDiffWriter *writer,
+                                                         const gchar   *color);
+const gchar   *cut_console_diff_writer_get_inserted_line_color
+                                                        (CutDiffWriter *writer);
+void           cut_console_diff_writer_set_deleted_segment_color
+                                                        (CutDiffWriter *writer,
+                                                         const gchar   *color);
+const gchar   *cut_console_diff_writer_get_deleted_segment_color
+                                                        (CutDiffWriter *writer);
+void           cut_console_diff_writer_set_inserted_segment_color
+                                                        (CutDiffWriter *writer,
+                                                         const gchar   *color);
+const gchar   *cut_console_diff_writer_get_inserted_segment_color
                                                         (CutDiffWriter *writer);
 
 G_END_DECLS

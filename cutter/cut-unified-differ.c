@@ -153,21 +153,21 @@ static void
 mark_equal (CutDiffWriter *writer, gchar **lines, gint begin, gint end)
 {
     cut_diff_writer_mark_lines(writer, " ", NULL, lines, begin, end,
-                               CUT_DIFF_WRITER_TAG_EQUAL_MARK);
+                               CUT_DIFF_WRITER_TAG_EQUAL_LINE);
 }
 
 static void
 mark_inserted (CutDiffWriter *writer, gchar **lines, gint begin, gint end)
 {
     cut_diff_writer_mark_lines(writer, "+", NULL, lines, begin, end,
-                               CUT_DIFF_WRITER_TAG_INSERTED_MARK);
+                               CUT_DIFF_WRITER_TAG_INSERTED_LINE);
 }
 
 static void
 mark_deleted (CutDiffWriter *writer, gchar **lines, gint begin, gint end)
 {
     cut_diff_writer_mark_lines(writer, "-", NULL, lines, begin, end,
-                               CUT_DIFF_WRITER_TAG_DELETED_MARK);
+                               CUT_DIFF_WRITER_TAG_DELETED_LINE);
 }
 
 static void
@@ -182,7 +182,7 @@ write_header (CutUnifiedDifferPrivate *priv, CutDiffWriter *writer)
         label = priv->from_label;
     }
     cut_diff_writer_mark_line(writer, "---", separator, label,
-                              CUT_DIFF_WRITER_TAG_DELETED_MARK);
+                              CUT_DIFF_WRITER_TAG_DELETED_LINE);
 
     separator = NULL;
     label = "";
@@ -191,7 +191,7 @@ write_header (CutUnifiedDifferPrivate *priv, CutDiffWriter *writer)
         label = priv->to_label;
     }
     cut_diff_writer_mark_line(writer, "+++", separator, label,
-                              CUT_DIFF_WRITER_TAG_INSERTED_MARK);
+                              CUT_DIFF_WRITER_TAG_INSERTED_LINE);
 }
 
 static void
@@ -219,7 +219,7 @@ write_summary (CutUnifiedDifferPrivate *priv, CutDiffWriter *writer,
         g_string_append_printf(format, ",%d", inserted_lines);
     g_string_append(format, " @@");
     cut_diff_writer_write_line(writer, format->str,
-                               CUT_DIFF_WRITER_TAG_DIFFERENCE); /* FIXME */
+                               CUT_DIFF_WRITER_TAG_SUMMARY);
     g_string_free(format, TRUE);
 }
 

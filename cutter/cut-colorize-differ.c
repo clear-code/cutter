@@ -64,7 +64,7 @@ write_equal_segment (CutDiffWriter *writer, const gchar *line,
                      guint begin, guint end)
 {
     cut_diff_writer_write_segment(writer, line, begin, end,
-                                  CUT_DIFF_WRITER_TAG_NONE);
+                                  CUT_DIFF_WRITER_TAG_EQUAL_SEGMENT);
 }
 
 static void
@@ -72,7 +72,7 @@ write_inserted_segment (CutDiffWriter *writer, const gchar *line,
                         guint begin, guint end)
 {
     cut_diff_writer_write_segment(writer, line, begin, end,
-                                  CUT_DIFF_WRITER_TAG_INSERTED);
+                                  CUT_DIFF_WRITER_TAG_INSERTED_SEGMENT);
 }
 
 static void
@@ -80,21 +80,21 @@ write_deleted_segment (CutDiffWriter *writer, const gchar *line,
                        guint begin, guint end)
 {
     cut_diff_writer_write_segment(writer, line, begin, end,
-                                  CUT_DIFF_WRITER_TAG_DELETED);
+                                  CUT_DIFF_WRITER_TAG_DELETED_SEGMENT);
 }
 
 static void
 write_difference_spaces (CutDiffWriter *writer, guint n)
 {
-    cut_diff_writer_write_character_n_times(writer, ' ', n,
-                                            CUT_DIFF_WRITER_TAG_DIFFERENCE);
+    cut_diff_writer_write_character_n_times(
+        writer, ' ', n, CUT_DIFF_WRITER_TAG_DIFFERENCE_SEGMENT);
 }
 
 static void
 write_equal_spaces (CutDiffWriter *writer, guint n)
 {
     cut_diff_writer_write_character_n_times(writer, ' ', n,
-                                            CUT_DIFF_WRITER_TAG_NONE);
+                                            CUT_DIFF_WRITER_TAG_EQUAL_SEGMENT);
 }
 
 typedef enum

@@ -28,11 +28,13 @@
 
 #define DEFAULT_DELETED_MARK_COLOR CUT_CONSOLE_COLOR_RED
 #define DEFAULT_INSERTED_MARK_COLOR CUT_CONSOLE_COLOR_GREEN
+#define DEFAULT_DELETED_LINE_COLOR CUT_CONSOLE_COLOR_RED
+#define DEFAULT_INSERTED_LINE_COLOR CUT_CONSOLE_COLOR_GREEN
 
-#define DEFAULT_DELETED_COLOR                   \
+#define DEFAULT_DELETED_SEGMENT_COLOR           \
     CUT_CONSOLE_COLOR_WHITE                     \
     CUT_CONSOLE_COLOR_RED_BACK
-#define DEFAULT_INSERTED_COLOR                  \
+#define DEFAULT_INSERTED_SEGMENT_COLOR          \
     CUT_CONSOLE_COLOR_WHITE                     \
     CUT_CONSOLE_COLOR_GREEN_BACK
 
@@ -44,8 +46,10 @@ struct _CutConsoleDiffWriterPrivate
     gboolean use_color;
     gchar *deleted_mark_color;
     gchar *inserted_mark_color;
-    gchar *deleted_color;
-    gchar *inserted_color;
+    gchar *deleted_line_color;
+    gchar *inserted_line_color;
+    gchar *deleted_segment_color;
+    gchar *inserted_segment_color;
 };
 
 enum {
@@ -109,8 +113,10 @@ cut_console_diff_writer_init (CutConsoleDiffWriter *writer)
     priv = CUT_CONSOLE_DIFF_WRITER_GET_PRIVATE(writer);
     priv->deleted_mark_color = g_strdup(DEFAULT_DELETED_MARK_COLOR);
     priv->inserted_mark_color = g_strdup(DEFAULT_INSERTED_MARK_COLOR);
-    priv->deleted_color = g_strdup(DEFAULT_DELETED_COLOR);
-    priv->inserted_color = g_strdup(DEFAULT_INSERTED_COLOR);
+    priv->deleted_line_color = g_strdup(DEFAULT_DELETED_LINE_COLOR);
+    priv->inserted_line_color = g_strdup(DEFAULT_INSERTED_LINE_COLOR);
+    priv->deleted_segment_color = g_strdup(DEFAULT_DELETED_SEGMENT_COLOR);
+    priv->inserted_segment_color = g_strdup(DEFAULT_INSERTED_SEGMENT_COLOR);
 }
 
 static void
@@ -130,14 +136,24 @@ dispose (GObject *object)
         priv->inserted_mark_color = NULL;
     }
 
-    if (priv->deleted_color) {
-        g_free(priv->deleted_color);
-        priv->deleted_color = NULL;
+    if (priv->deleted_line_color) {
+        g_free(priv->deleted_line_color);
+        priv->deleted_line_color = NULL;
     }
 
-    if (priv->inserted_color) {
-        g_free(priv->inserted_color);
-        priv->inserted_color = NULL;
+    if (priv->inserted_line_color) {
+        g_free(priv->inserted_line_color);
+        priv->inserted_line_color = NULL;
+    }
+
+    if (priv->deleted_segment_color) {
+        g_free(priv->deleted_segment_color);
+        priv->deleted_segment_color = NULL;
+    }
+
+    if (priv->inserted_segment_color) {
+        g_free(priv->inserted_segment_color);
+        priv->inserted_segment_color = NULL;
     }
 
     G_OBJECT_CLASS(cut_console_diff_writer_parent_class)->dispose(object);
@@ -228,41 +244,79 @@ cut_console_diff_writer_get_inserted_mark_color (CutDiffWriter *writer)
 }
 
 void
-cut_console_diff_writer_set_deleted_color (CutDiffWriter *writer,
-                                           const gchar *color)
+cut_console_diff_writer_set_deleted_line_color (CutDiffWriter *writer,
+                                                const gchar *color)
 {
     CutConsoleDiffWriterPrivate *priv;
 
     priv = CUT_CONSOLE_DIFF_WRITER_GET_PRIVATE(writer);
-    g_free(priv->deleted_color);
+    g_free(priv->deleted_line_color);
     if (!color)
-        color = DEFAULT_DELETED_COLOR;
-    priv->deleted_color = g_strdup(color);
+        color = DEFAULT_DELETED_LINE_COLOR;
+    priv->deleted_line_color = g_strdup(color);
 }
 
 const gchar *
-cut_console_diff_writer_get_deleted_color (CutDiffWriter *writer)
+cut_console_diff_writer_get_deleted_line_color (CutDiffWriter *writer)
 {
-    return CUT_CONSOLE_DIFF_WRITER_GET_PRIVATE(writer)->deleted_color;
+    return CUT_CONSOLE_DIFF_WRITER_GET_PRIVATE(writer)->deleted_line_color;
 }
 
 void
-cut_console_diff_writer_set_inserted_color (CutDiffWriter *writer,
-                                            const gchar *color)
+cut_console_diff_writer_set_inserted_line_color (CutDiffWriter *writer,
+                                                 const gchar *color)
 {
     CutConsoleDiffWriterPrivate *priv;
 
     priv = CUT_CONSOLE_DIFF_WRITER_GET_PRIVATE(writer);
-    g_free(priv->inserted_color);
+    g_free(priv->inserted_line_color);
     if (!color)
-        color = DEFAULT_INSERTED_COLOR;
-    priv->inserted_color = g_strdup(color);
+        color = DEFAULT_INSERTED_LINE_COLOR;
+    priv->inserted_line_color = g_strdup(color);
 }
 
 const gchar *
-cut_console_diff_writer_get_inserted_color (CutDiffWriter *writer)
+cut_console_diff_writer_get_inserted_line_color (CutDiffWriter *writer)
 {
-    return CUT_CONSOLE_DIFF_WRITER_GET_PRIVATE(writer)->inserted_color;
+    return CUT_CONSOLE_DIFF_WRITER_GET_PRIVATE(writer)->inserted_line_color;
+}
+
+void
+cut_console_diff_writer_set_deleted_segment_color (CutDiffWriter *writer,
+                                                   const gchar *color)
+{
+    CutConsoleDiffWriterPrivate *priv;
+
+    priv = CUT_CONSOLE_DIFF_WRITER_GET_PRIVATE(writer);
+    g_free(priv->deleted_segment_color);
+    if (!color)
+        color = DEFAULT_DELETED_SEGMENT_COLOR;
+    priv->deleted_segment_color = g_strdup(color);
+}
+
+const gchar *
+cut_console_diff_writer_get_deleted_segment_color (CutDiffWriter *writer)
+{
+    return CUT_CONSOLE_DIFF_WRITER_GET_PRIVATE(writer)->deleted_segment_color;
+}
+
+void
+cut_console_diff_writer_set_inserted_segment_color (CutDiffWriter *writer,
+                                                    const gchar *color)
+{
+    CutConsoleDiffWriterPrivate *priv;
+
+    priv = CUT_CONSOLE_DIFF_WRITER_GET_PRIVATE(writer);
+    g_free(priv->inserted_segment_color);
+    if (!color)
+        color = DEFAULT_INSERTED_SEGMENT_COLOR;
+    priv->inserted_segment_color = g_strdup(color);
+}
+
+const gchar *
+cut_console_diff_writer_get_inserted_segment_color (CutDiffWriter *writer)
+{
+    return CUT_CONSOLE_DIFF_WRITER_GET_PRIVATE(writer)->inserted_segment_color;
 }
 
 static const gchar *
@@ -271,6 +325,12 @@ tag_to_color (CutConsoleDiffWriterPrivate *priv, CutDiffWriterTag tag)
     const gchar *color;
 
     switch (tag) {
+    case CUT_DIFF_WRITER_TAG_SUMMARY:
+        color = CUT_CONSOLE_COLOR_CYAN;
+        break;
+    case CUT_DIFF_WRITER_TAG_CONTEXT:
+        color = CUT_CONSOLE_COLOR_WHITE CUT_CONSOLE_COLOR_CYAN_BACK;
+        break;
     case CUT_DIFF_WRITER_TAG_DELETED_MARK:
         color = priv->deleted_mark_color;
         break;
@@ -280,11 +340,20 @@ tag_to_color (CutConsoleDiffWriterPrivate *priv, CutDiffWriterTag tag)
     case CUT_DIFF_WRITER_TAG_DIFFERENCE_MARK:
         color = CUT_CONSOLE_COLOR_CYAN;
         break;
-    case CUT_DIFF_WRITER_TAG_DELETED:
-        color = priv->deleted_color;
+    case CUT_DIFF_WRITER_TAG_DELETED_LINE:
+        color = priv->deleted_line_color;
         break;
-    case CUT_DIFF_WRITER_TAG_INSERTED:
-        color = priv->inserted_color;
+    case CUT_DIFF_WRITER_TAG_INSERTED_LINE:
+        color = priv->inserted_line_color;
+        break;
+    case CUT_DIFF_WRITER_TAG_DIFFERENCE_LINE:
+        color = CUT_CONSOLE_COLOR_CYAN;
+        break;
+    case CUT_DIFF_WRITER_TAG_DELETED_SEGMENT:
+        color = priv->deleted_segment_color;
+        break;
+    case CUT_DIFF_WRITER_TAG_INSERTED_SEGMENT:
+        color = priv->inserted_segment_color;
         break;
     default:
         color = NULL;

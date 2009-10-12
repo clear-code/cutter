@@ -691,7 +691,8 @@ console_diff_writer_new (gboolean use_color)
 {
     CutDiffWriter *writer;
     gchar *deleted_mark_color, *inserted_mark_color;
-    gchar *deleted_color, *inserted_color;
+    gchar *deleted_line_color, *inserted_line_color;
+    gchar *deleted_segment_color, *inserted_segment_color;
 
     writer = cut_console_diff_writer_new(use_color);
 
@@ -699,20 +700,30 @@ console_diff_writer_new (gboolean use_color)
         g_strdup(cut_console_diff_writer_get_deleted_mark_color(writer));
     inserted_mark_color =
         g_strdup(cut_console_diff_writer_get_inserted_mark_color(writer));
-    deleted_color =
-        g_strdup(cut_console_diff_writer_get_deleted_color(writer));
-    inserted_color =
-        g_strdup(cut_console_diff_writer_get_inserted_color(writer));
+    deleted_line_color =
+        g_strdup(cut_console_diff_writer_get_deleted_line_color(writer));
+    inserted_line_color =
+        g_strdup(cut_console_diff_writer_get_inserted_line_color(writer));
+    deleted_segment_color =
+        g_strdup(cut_console_diff_writer_get_deleted_segment_color(writer));
+    inserted_segment_color =
+        g_strdup(cut_console_diff_writer_get_inserted_segment_color(writer));
 
     cut_console_diff_writer_set_inserted_mark_color(writer, deleted_mark_color);
     cut_console_diff_writer_set_deleted_mark_color(writer, inserted_mark_color);
-    cut_console_diff_writer_set_inserted_color(writer, deleted_color);
-    cut_console_diff_writer_set_deleted_color(writer, inserted_color);
+    cut_console_diff_writer_set_inserted_line_color(writer, deleted_line_color);
+    cut_console_diff_writer_set_deleted_line_color(writer, inserted_line_color);
+    cut_console_diff_writer_set_inserted_segment_color(writer,
+                                                       deleted_segment_color);
+    cut_console_diff_writer_set_deleted_segment_color(writer,
+                                                      inserted_segment_color);
 
     g_free(deleted_mark_color);
     g_free(inserted_mark_color);
-    g_free(deleted_color);
-    g_free(inserted_color);
+    g_free(deleted_line_color);
+    g_free(inserted_line_color);
+    g_free(deleted_segment_color);
+    g_free(inserted_segment_color);
 
     return writer;
 }

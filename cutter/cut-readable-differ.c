@@ -67,28 +67,28 @@ static void
 mark_equal (CutDiffWriter *writer, gchar **lines, gint begin, gint end)
 {
     cut_diff_writer_mark_lines(writer, " ", " ", lines, begin, end,
-                               CUT_DIFF_WRITER_TAG_EQUAL_MARK);
+                               CUT_DIFF_WRITER_TAG_EQUAL_LINE);
 }
 
 static void
 mark_inserted (CutDiffWriter *writer, gchar **lines, gint begin, gint end)
 {
     cut_diff_writer_mark_lines(writer, "+", " ", lines, begin, end,
-                               CUT_DIFF_WRITER_TAG_INSERTED_MARK);
+                               CUT_DIFF_WRITER_TAG_INSERTED_LINE);
 }
 
 static void
 mark_deleted (CutDiffWriter *writer, gchar **lines, gint begin, gint end)
 {
     cut_diff_writer_mark_lines(writer, "-", " ", lines, begin, end,
-                               CUT_DIFF_WRITER_TAG_DELETED_MARK);
+                               CUT_DIFF_WRITER_TAG_DELETED_LINE);
 }
 
 static void
 mark_difference (CutDiffWriter *writer, gchar **lines, gint begin, gint end)
 {
     cut_diff_writer_mark_lines(writer, "?", " ", lines, begin, end,
-                               CUT_DIFF_WRITER_TAG_DIFFERENCE_MARK);
+                               CUT_DIFF_WRITER_TAG_DIFFERENCE_LINE);
 }
 
 static void

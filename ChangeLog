@@ -1,5 +1,9 @@
 2009-10-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-diff-writer.h: improve diff writer tag names.
+	* cutter/cut-*diff*.[ch], module/ui/cut-console-ui.c: follow the
+	above change.
+
 	* cutter/cut-diff.c: support unified diff by -u option.
 
 	* cutter/cut-public.h,
