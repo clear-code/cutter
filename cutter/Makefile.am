@@ -62,6 +62,7 @@ libcutter_public_headers = 		\
 	cut-string-diff-writer.h	\
 	cut-console-diff-writer.h	\
 	cut-readable-differ.h		\
+	cut-unified-differ.h		\
 	cut-colorize-differ.h		\
 	cut-console.h			\
 	cut-analyzer.h			\
@@ -160,6 +161,7 @@ libcutter_la_SOURCES =			\
 	cut-string-diff-writer.c	\
 	cut-console-diff-writer.c	\
 	cut-readable-differ.c		\
+	cut-unified-differ.c		\
 	cut-colorize-differ.c		\
 	cut-console.c			\
 	cut-analyzer.c			\

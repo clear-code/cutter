@@ -39,6 +39,7 @@ noinst_LTLIBRARIES = 			\
 	test-cut-utils.la		\
 	test-cut-sequence-matcher.la	\
 	test-cut-readable-differ.la	\
+	test-cut-unified-differ.la	\
 	test-cut-main.la		\
 	test-cut-fixture-data.la	\
 	test-cut-test-data.la		\
@@ -92,6 +93,7 @@ test_cut_test_context_la_SOURCES	= test-cut-test-context.c
 test_cut_utils_la_SOURCES		= test-cut-utils.c
 test_cut_sequence_matcher_la_SOURCES	= test-cut-sequence-matcher.c
 test_cut_readable_differ_la_SOURCES	= test-cut-readable-differ.c
+test_cut_unified_differ_la_SOURCES	= test-cut-unified-differ.c
 test_cut_main_la_SOURCES		= test-cut-main.c
 test_cut_fixture_data_la_SOURCES	= test-cut-fixture-data.c
 test_cut_test_data_la_SOURCES		= test-cut-test-data.c

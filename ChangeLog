@@ -1,5 +1,9 @@
 2009-10-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-unified-differ.[ch],
+	test/cutter/test-cut-unified-differ.c,
+	cutter/cut-public.h: support unified diff.
+
 	* cutter/cut-diff-writer.[ch]: cut_diff_writer_mark_*() doesn't
 	put " " but get separator parameter.
 	* cutter/cut-*-differ.[ch], cutter/cut-*-diff-writer.c: follow the
