@@ -70,9 +70,9 @@ pre_parse (GOptionContext *context, GOptionGroup *group, gpointer data,
 static void
 print_diff_header (CutDiffWriter *writer, const gchar *from, const gchar *to)
 {
-    cut_diff_writer_mark_line(writer, "---", from,
+    cut_diff_writer_mark_line(writer, "---", " ", from,
                               CUT_DIFF_WRITER_TAG_DELETED_MARK);
-    cut_diff_writer_mark_line(writer, "+++", to,
+    cut_diff_writer_mark_line(writer, "+++", " ", to,
                               CUT_DIFF_WRITER_TAG_INSERTED_MARK);
 }
 

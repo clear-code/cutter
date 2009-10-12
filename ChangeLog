@@ -1,5 +1,10 @@
 2009-10-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-diff-writer.[ch]: cut_diff_writer_mark_*() doesn't
+	put " " but get separator parameter.
+	* cutter/cut-*-differ.[ch], cutter/cut-*-diff-writer.c: follow the
+	above change.
+
 	* cutter/cut-sequence-matcher.[ch],
 	test/cutter/test-cut-sequence-matcher.c: implement
 	cut_sequence_matcher_get_grouped_operations().

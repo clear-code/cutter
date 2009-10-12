@@ -43,9 +43,6 @@ static void dispose        (GObject         *object);
 static void write          (CutDiffWriter       *writer,
                             const gchar         *string,
                             CutDiffWriterTag     tag);
-static void write_mark     (CutDiffWriter       *writer,
-                            const gchar         *mark,
-                            CutDiffWriterTag     tag);
 static void write_line     (CutDiffWriter       *writer,
                             const gchar         *line,
                             CutDiffWriterTag     tag);
@@ -63,7 +60,6 @@ cut_string_diff_writer_class_init (CutStringDiffWriterClass *klass)
     gobject_class->dispose = dispose;
 
     diff_writer_class->write = write;
-    diff_writer_class->write_mark = write_mark;
     diff_writer_class->write_line = write_line;
     diff_writer_class->finish = finish;
 
@@ -113,16 +109,6 @@ write (CutDiffWriter *writer, const gchar *string, CutDiffWriterTag tag)
 
     priv = CUT_STRING_DIFF_WRITER_GET_PRIVATE(writer);
     g_string_append(priv->result, string);
-}
-
-static void
-write_mark (CutDiffWriter *writer, const gchar *mark, CutDiffWriterTag tag)
-{
-    CutStringDiffWriterPrivate *priv;
-
-    priv = CUT_STRING_DIFF_WRITER_GET_PRIVATE(writer);
-    g_string_append(priv->result, mark);
-    g_string_append_c(priv->result, ' ');
 }
 
 static void

@@ -68,9 +68,6 @@ static void get_property   (GObject         *object,
 static void write          (CutDiffWriter       *writer,
                             const gchar         *console,
                             CutDiffWriterTag     tag);
-static void write_mark     (CutDiffWriter       *writer,
-                            const gchar         *mark,
-                            CutDiffWriterTag     tag);
 static void write_line     (CutDiffWriter       *writer,
                             const gchar         *line,
                             CutDiffWriterTag     tag);
@@ -91,7 +88,6 @@ cut_console_diff_writer_class_init (CutConsoleDiffWriterClass *klass)
     gobject_class->get_property = get_property;
 
     diff_writer_class->write = write;
-    diff_writer_class->write_mark = write_mark;
     diff_writer_class->write_line = write_line;
     diff_writer_class->finish = finish;
 
@@ -312,13 +308,6 @@ write (CutDiffWriter *writer, const gchar *string, CutDiffWriterTag tag)
         g_print("%s%s%s", color, string, CUT_CONSOLE_COLOR_NORMAL);
     else
         g_print("%s", string);
-}
-
-static void
-write_mark (CutDiffWriter *writer, const gchar *mark, CutDiffWriterTag tag)
-{
-    write(writer, mark, tag);
-    g_print(" ");
 }
 
 static void

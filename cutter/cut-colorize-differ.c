@@ -172,7 +172,8 @@ diff_line (CutDiffer *differ, CutDiffWriter *writer,
         }
     }
 
-    cut_diff_writer_write_mark(writer, "?", CUT_DIFF_WRITER_TAG_DIFFERENCE_MARK);
+    cut_diff_writer_write_mark(writer, "?", " ",
+                               CUT_DIFF_WRITER_TAG_DIFFERENCE_MARK);
 #define APPEND_WRITE_OPERATION(write_operation)                         \
     write_operations = g_list_append(write_operations, write_operation)
 
@@ -244,7 +245,7 @@ diff_line (CutDiffer *differ, CutDiffWriter *writer,
     if (write_operations) {
         GList *node;
 
-        cut_diff_writer_write_mark(writer, "?",
+        cut_diff_writer_write_mark(writer, "?", " ",
                                    CUT_DIFF_WRITER_TAG_DIFFERENCE_MARK);
         for (node = write_operations; node; node = g_list_next(node)) {
             WriteOperation *operation = node->data;

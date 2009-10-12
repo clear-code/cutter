@@ -83,9 +83,12 @@ cut_diff_writer_write_segment (CutDiffWriter       *writer,
 void
 cut_diff_writer_write_mark (CutDiffWriter       *writer,
                             const gchar         *mark,
+                            const gchar         *separator,
                             CutDiffWriterTag     tag)
 {
-    CUT_DIFF_WRITER_GET_CLASS(writer)->write_mark(writer, mark, tag);
+    cut_diff_writer_write(writer, mark, tag);
+    if (separator && separator[0])
+        cut_diff_writer_write(writer, separator, CUT_DIFF_WRITER_TAG_NONE);
 }
 
 void
@@ -113,16 +116,18 @@ cut_diff_writer_write_lines (CutDiffWriter       *writer,
 void
 cut_diff_writer_mark_line (CutDiffWriter       *writer,
                            const gchar         *mark,
+                           const gchar         *separator,
                            const gchar         *line,
                            CutDiffWriterTag     tag)
 {
-    cut_diff_writer_write_mark(writer, mark, tag);
+    cut_diff_writer_write_mark(writer, mark, separator, tag);
     cut_diff_writer_write_line(writer, line, tag);
 }
 
 void
 cut_diff_writer_mark_lines (CutDiffWriter       *writer,
                             const gchar         *mark,
+                            const gchar         *separator,
                             gchar              **lines,
                             guint                begin,
                             guint                end,
@@ -131,7 +136,7 @@ cut_diff_writer_mark_lines (CutDiffWriter       *writer,
     guint i;
 
     for (i = begin; i < end; i++) {
-        cut_diff_writer_mark_line(writer, mark, lines[i], tag);
+        cut_diff_writer_mark_line(writer, mark, separator, lines[i], tag);
     }
 }
 

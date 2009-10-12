@@ -60,9 +60,6 @@ struct _CutDiffWriterClass
     void (*write)      (CutDiffWriter     *writer,
                         const gchar       *string,
                         CutDiffWriterTag   tag);
-    void (*write_mark) (CutDiffWriter     *writer,
-                        const gchar       *mark,
-                        CutDiffWriterTag   tag);
     void (*write_line) (CutDiffWriter     *writer,
                         const gchar       *line,
                         CutDiffWriterTag   tag);
@@ -81,6 +78,7 @@ void          cut_diff_writer_write_segment    (CutDiffWriter      *writer,
                                                 CutDiffWriterTag    tag);
 void          cut_diff_writer_write_mark       (CutDiffWriter      *writer,
                                                 const gchar        *mark,
+                                                const gchar        *separator,
                                                 CutDiffWriterTag    tag);
 void          cut_diff_writer_write_line       (CutDiffWriter      *writer,
                                                 const gchar        *line,
@@ -92,10 +90,12 @@ void          cut_diff_writer_write_lines      (CutDiffWriter      *writer,
                                                 CutDiffWriterTag    tag);
 void          cut_diff_writer_mark_line        (CutDiffWriter      *writer,
                                                 const gchar        *mark,
+                                                const gchar        *separator,
                                                 const gchar        *line,
                                                 CutDiffWriterTag    tag);
 void          cut_diff_writer_mark_lines       (CutDiffWriter      *writer,
                                                 const gchar        *mark,
+                                                const gchar        *separator,
                                                 gchar             **lines,
                                                 guint               begin,
                                                 guint               end,
