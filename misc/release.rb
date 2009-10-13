@@ -36,9 +36,9 @@ def login(agent, user_name, password=nil)
   begin
     page = agent.submit(login_form, login_form.buttons.first)
   rescue WWW::Mechanize::ResponseCodeError
-    page = agent.get("https://sourceforge.net/my/")
   end
   raise "login failed" unless /Log Out|Log&nbsp;out/ =~ page.body
+  page = agent.get("https://sourceforge.net/my/")
   page
 end
 
