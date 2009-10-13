@@ -38,7 +38,7 @@ def login(agent, user_name, password=nil)
   rescue WWW::Mechanize::ResponseCodeError
     page = agent.get("https://sourceforge.net/my/")
   end
-  raise "login failed" unless /Personal Page/ =~ page.title
+  raise "login failed" unless /Log(?:&nbsp;| )Out/ =~ page.body
   page
 end
 

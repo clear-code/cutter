@@ -1,3 +1,7 @@
+2009-10-13  Kouhei Sutou  <kou@clear-code.com>
+
+	* misc/release.rb: fix login success keyword.
+
 2009-10-12  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-diff-writer.h: improve diff writer tag names.
