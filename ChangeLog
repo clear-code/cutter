@@ -1,3 +1,8 @@
+2009-10-17  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-differ.c (cut_differ_need_diff): check line's
+	replaced ratio.
+
 2009-10-13  Kouhei Sutou  <kou@clear-code.com>
 
 	* misc/release.rb: force go to my page.

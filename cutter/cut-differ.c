@@ -186,12 +186,18 @@ cut_differ_need_diff (CutDiffer *differ)
     const GList *operations;
     gboolean have_equal = FALSE;
     gboolean have_insert_or_delete = FALSE;
+    gdouble best_ratio = 0.75; /* FIXME */
+    gchar **from, **to;
 
+    from = cut_differ_get_from(differ);
+    to = cut_differ_get_to(differ);
     matcher = cut_differ_get_sequence_matcher(differ);
     for (operations = cut_sequence_matcher_get_operations(matcher);
          operations;
          operations = g_list_next(operations)) {
         CutSequenceMatchOperation *operation = operations->data;
+        gint from_begin, from_end, from_index;
+        gint to_begin, to_end, to_index;
 
         switch (operation->type) {
         case CUT_SEQUENCE_MATCH_OPERATION_EQUAL:
@@ -200,7 +206,27 @@ cut_differ_need_diff (CutDiffer *differ)
                 return TRUE;
             break;
         case CUT_SEQUENCE_MATCH_OPERATION_REPLACE:
-            return TRUE;
+            from_begin = operation->from_begin;
+            from_end = operation->from_end;
+            to_begin = operation->to_begin;
+            to_end = operation->to_end;
+            for (from_index = from_begin; from_index < from_end; from_index++) {
+                for (to_index = to_begin; to_index < to_end; to_index++) {
+                    CutSequenceMatcher *char_matcher;
+                    const gchar *from_line, *to_line;
+                    gdouble ratio;
+
+                    from_line = from[from_index];
+                    to_line = to[to_index];
+                    char_matcher = cut_sequence_matcher_char_new_full(
+                        from_line, to_line,
+                        cut_differ_util_is_space_character, NULL);
+                    ratio = cut_sequence_matcher_get_ratio(char_matcher);
+                    g_object_unref(char_matcher);
+                    if (ratio > best_ratio)
+                        return TRUE;
+                }
+            }
             break;
         case CUT_SEQUENCE_MATCH_OPERATION_INSERT:
         case CUT_SEQUENCE_MATCH_OPERATION_DELETE:
