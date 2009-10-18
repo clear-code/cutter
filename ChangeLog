@@ -1,5 +1,8 @@
 2009-10-18  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter++/cutter++.h, test/cutter++/test-cut++-assertions.cpp:
+	add CUTPP_BEGIN_TEST_DECLS and CUTPP_END_TEST_DECLS.
+
 	* m4macros/cutter.m4: add AC_CHECK_CUTTERPP.
 
 	* cutter++/, test/cutter++/, test/lib/: support C++: Cutter++.

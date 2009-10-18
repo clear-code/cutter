@@ -27,9 +27,11 @@
 #include <cutter/cut-loader.h>
 #include "../lib/cuttest-assertions.h"
 
-extern "C" void test_equal_int(void);
-extern "C" void test_equal_c_string(void);
-extern "C" void test_equal_string(void);
+CUTPP_BEGIN_TEST_DECLS
+void test_equal_int(void);
+void test_equal_c_string(void);
+void test_equal_string(void);
+CUTPP_END_TEST_DECLS
 
 static CutTest *test;
 static CutRunContext *run_context;

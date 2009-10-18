@@ -58,6 +58,9 @@
  * +XXX_CFLAGS = $(CUTTERPP_CFLAGS)
  * +XXX_LIBS = $(CUTTERPP_LIBS)
  * ]|
+ *
+ * NOTE: You need to extern test functions in C scope. See
+ * %CUTPP_BEGIN_TEST_DECLS.
  */
 
 /**
@@ -65,9 +68,38 @@
  *
  * Defined when Cutter++ is enabled.
  *
- * Since: 1.0.8
+ * Since: 1.0.9
  */
 #define CUTTERPP_ENABLED 1
+
+/**
+ * CUTPP_BEGIN_TEST_DECLS
+ *
+ * Use %CUTPP_BEGIN_TEST_DECLS and %CUTPP_END_TEST_DECLS
+ * pair for prototype declarations for test functions:
+ *
+ * |[
+ * CUTPP_BEGIN_TEST_DECLS
+ * void test_add ();
+ * void test_remove ();
+ * CUTPP_END_TEST_DECLS
+ * ]|
+ *
+ * Those macros just surround prototype declarations for
+ * test functions with 'extern "C" {...}'.
+ *
+ * Since: 1.0.9
+ */
+#define CUTPP_BEGIN_TEST_DECLS extern "C" {
+
+/**
+ * CUTPP_END_TEST_DECLS
+ *
+ * See %CUTPP_BEGIN_TEST_DECLS.
+ *
+ * Since: 1.0.9
+ */
+#define CUTPP_END_TEST_DECLS }
 
 #endif /* __CUTTERPP_H__ */
 

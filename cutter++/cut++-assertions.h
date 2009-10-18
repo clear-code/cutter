@@ -37,7 +37,7 @@
  *
  * Passes if @expected == @actual.
  *
- * Since: 1.0.8
+ * Since: 1.0.9
  */
 #define cutpp_assert_equal(expected, actual)              \
     cut_trace(cut::assert_equal(expected, actual,         \
