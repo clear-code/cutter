@@ -56,6 +56,8 @@
       <xi:include href="xml/gcut-egg.xml"/>
       <!--xi:include href="xml/gcut-string-io-channel.xml"/-->
       <!--xi:include href="xml/gcut-key-file.xml"/-->
+      <xi:include href="xml/cutter++.xml"/>
+      <xi:include href="xml/cut++-assertions.xml"/>
       <xi:include href="xml/gdkcutter-pixbuf.xml"/>
       <xi:include href="xml/gdkcut-pixbuf-assertions.xml"/>
       <xi:include href="xml/soupcutter.xml"/>

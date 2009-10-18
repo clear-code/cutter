@@ -746,6 +746,14 @@ gconstpointer data, const gchar *field_name
 gconstpointer data, const gchar *field_name
 </FUNCTION>
 
+# cut++-assertion.h
+
+<FUNCTION>
+<NAME>cutpp_assert_equal</NAME>
+<RETURNS>void</RETURNS>
+const Type &expected, const Type &actual
+</FUNCTION>
+
 # gdkcut-pixbuf-assertions.h
 
 <FUNCTION>

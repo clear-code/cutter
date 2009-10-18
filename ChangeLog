@@ -1,5 +1,7 @@
 2009-10-18  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/: add Cutter++.
+
 	* cutter++/cutter++.h, test/cutter++/test-cut++-assertions.cpp:
 	add CUTPP_BEGIN_TEST_DECLS and CUTPP_END_TEST_DECLS.
 
