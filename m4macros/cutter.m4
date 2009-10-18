@@ -120,6 +120,17 @@ AC_DEFUN([AC_CHECK_GCUTTER],
   fi
 ])
 
+AC_DEFUN([AC_CHECK_CUTTERPP],
+[
+  AC_CHECK_CUTTER($1)
+  ac_cv_use_cutterpp=no
+  if test "$ac_cv_use_cutterpp" != "no"; then
+    PKG_CHECK_MODULES(CUTTERPP, cutter++ $1, [ac_cv_use_cutterpp=yes], [:])
+    AC_SUBST([CUTTERPP_CFLAGS])
+    AC_SUBST([CUTTERPP_LIBS])
+  fi
+])
+
 AC_DEFUN([AC_CHECK_GDKCUTTER_PIXBUF],
 [
   AC_CHECK_GCUTTER($1)
