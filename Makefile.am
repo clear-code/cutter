@@ -4,6 +4,7 @@ SUBDIRS = 			\
 	m4macros		\
 	gcutter			\
 	cutter			\
+	cutter++		\
 	gdkcutter-pixbuf	\
 	soupcutter		\
 	module			\
@@ -21,6 +22,7 @@ pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = 	\
 	cutter.pc	\
 	gcutter.pc	\
+	cutter++.pc	\
 	libcutter.pc
 
 if HAVE_GDK_PIXBUF

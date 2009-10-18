@@ -1,0 +1,11 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+bindir=@bindir@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: Cutter++
+Description: Cutter with C++ support.
+Version: @VERSION@
+Requires: cutter >= @VERSION@
+Libs: -L${libdir} -lcutter++

@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2009  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -17,32 +17,34 @@
  *
  */
 
-#ifndef __CUTTEST_UTILS_H__
-#define __CUTTEST_UTILS_H__
+#ifndef __CUTPP_ASSERTIONS_H__
+#define __CUTPP_ASSERTIONS_H__
 
-#include <glib.h>
-#include <cutter/cut-test-case.h>
-#include <cutter/cut-run-context.h>
-#include <cutter/cut-test-result.h>
+#include <cutter++/cut++-assertions-helper.h>
 
-#include "cuttest-enum.h"
+/**
+ * SECTION: cut++-assertions
+ * @title: Assertions with C++ support
+ * @short_description: Checks that your program works as you
+ * expect with C++ support.
+ *
+ */
 
-G_BEGIN_DECLS
+/**
+ * cutpp_assert_equal:
+ * @expected: an expected value.
+ * @actual: an actual value.
+ *
+ * Passes if @expected == @actual.
+ *
+ * Since: 1.0.8
+ */
+#define cutpp_assert_equal(expected, actual)              \
+    cut_trace(cut::assert_equal(expected, actual,         \
+                                CUT_STRINGIFY(expected),  \
+                                CUT_STRINGIFY(actual)))
 
-#define ISO8601_PATTERN_WITHOUT_YEAR                    \
-    "\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?Z"
-#define ISO8601_PATTERN "\\d{4}-" ISO8601_PATTERN_WITHOUT_YEAR
-
-#define CUTTEST_TEST_DIR_KEY "CUTTEST_TEST_DIR"
-
-const gchar *cuttest_get_base_dir (void);
-void         cuttest_add_test     (CutTestCase *test_case,
-                                   const gchar *test_name,
-                                   CutTestFunction test_function);
-
-G_END_DECLS
-
-#endif /* __CUTTEST_UTILS_H__ */
+#endif /* __CUTPP_ASSERTIONS_H__ */
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

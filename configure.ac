@@ -82,6 +82,7 @@ AC_SUBST(LIBTOOL_EXPORT_OPTIONS)
 
 # Checks for programs.
 AC_PROG_CC
+AC_PROG_CXX
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
@@ -571,6 +572,7 @@ _______EOF
 AC_CONFIG_FILES([Makefile
 		 cutter.pc
 		 gcutter.pc
+		 cutter++.pc
 		 libcutter.pc
 		 gdkcutter-pixbuf.pc
 		 soupcutter.pc
@@ -581,6 +583,7 @@ AC_CONFIG_FILES([Makefile
 		 soupcutter/Makefile
 		 cutter/cut-version.h
 		 cutter/Makefile
+		 cutter++/Makefile
 		 module/Makefile
 		 module/ui/Makefile
 		 module/report/Makefile
@@ -630,6 +633,7 @@ AC_CONFIG_FILES([Makefile
 		 test/lib/Makefile
 		 test/cutter/Makefile
 		 test/gcutter/Makefile
+		 test/cutter++/Makefile
 		 test/gdkcutter-pixbuf/Makefile
 		 test/soupcutter/Makefile
 		 po/Makefile.in

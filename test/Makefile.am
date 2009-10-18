@@ -3,6 +3,7 @@ SUBDIRS = 			\
 	fixtures		\
 	cutter			\
 	gcutter			\
+	cutter++		\
 	gdkcutter-pixbuf	\
 	soupcutter
 

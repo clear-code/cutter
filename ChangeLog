@@ -1,3 +1,7 @@
+2009-10-18  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter++/, test/cutter++/, test/lib/: support C++: Cutter++.
+
 2009-10-17  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-differ.c (cut_differ_need_diff): check line's

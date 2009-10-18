@@ -26,6 +26,8 @@
 #include <cutter/cut-test-result.h>
 #include "cuttest-utils.h"
 
+G_BEGIN_DECLS
+
 #define cut_take_result_summary_list(list)      \
     gcut_take_list(list, NULL)
 
@@ -105,4 +107,10 @@ void cut_assert_test_result_helper         (CutRunContext *run_context,
                                             const gchar *backtrace,
                                             ...);
 
-#endif
+G_END_DECLS
+
+#endif /* __CUTTEST_ASSERTIONS_H__ */
+
+/*
+vi:ts=4:nowrap:ai:expandtab:sw=4
+*/
