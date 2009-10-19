@@ -17,7 +17,7 @@
  *
  */
 
-#include <cutter++.h>
+#include <cppcutter.h>
 #include <cutter/cut-test.h>
 #include <cutter/cut-test-result.h>
 #include <cutter/cut-utils.h>
@@ -27,11 +27,11 @@
 #include <cutter/cut-loader.h>
 #include "../lib/cuttest-assertions.h"
 
-CUTPP_BEGIN_TEST_DECLS
+CPPCUT_BEGIN_TEST_DECLS
 void test_equal_int(void);
 void test_equal_c_string(void);
 void test_equal_string(void);
-CUTPP_END_TEST_DECLS
+CPPCUT_END_TEST_DECLS
 
 static CutTest *test;
 static CutRunContext *run_context;
@@ -100,8 +100,8 @@ stub_equal_int (void)
 {
     int expected = 100;
     int actual = -100;
-    cutpp_assert_equal(expected, expected);
-    MARK_FAIL(cutpp_assert_equal(expected, actual));
+    cppcut_assert_equal(expected, expected);
+    MARK_FAIL(cppcut_assert_equal(expected, actual));
 }
 
 void
@@ -126,8 +126,8 @@ stub_equal_c_string (void)
 {
     char expected[] = "abcde";
     char actual[] = "ABcDE";
-    cutpp_assert_equal(expected, expected);
-    MARK_FAIL(cutpp_assert_equal(expected, actual));
+    cppcut_assert_equal(expected, expected);
+    MARK_FAIL(cppcut_assert_equal(expected, actual));
 }
 
 void
@@ -152,8 +152,8 @@ stub_equal_string (void)
 {
     std::string expected("abcde");
     std::string actual("ABcDE");
-    cutpp_assert_equal(expected, expected);
-    MARK_FAIL(cutpp_assert_equal(expected, actual));
+    cppcut_assert_equal(expected, expected);
+    MARK_FAIL(cppcut_assert_equal(expected, actual));
 }
 
 void

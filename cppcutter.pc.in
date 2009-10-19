@@ -4,8 +4,8 @@ bindir=@bindir@
 libdir=@libdir@
 includedir=@includedir@
 
-Name: Cutter++
+Name: CppCutter
 Description: Cutter with C++ support.
 Version: @VERSION@
 Requires: cutter >= @VERSION@
-Libs: -L${libdir} -lcutter++
+Libs: -L${libdir} -lcppcutter

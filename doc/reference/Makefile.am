@@ -8,7 +8,7 @@ DOC_MAIN_SGML_FILE=cutter-docs.sgml
 
 SOURCE_DIR_OPTIONS=					\
 	--source-dir="$(top_srcdir)/gcutter"		\
-	--source-dir="$(top_srcdir)/cutter++"		\
+	--source-dir="$(top_srcdir)/cppcutter"		\
 	--source-dir="$(top_srcdir)/gdkcutter-pixbuf"	\
 	--source-dir="$(top_srcdir)/soupcutter"		\
 	`test "$(top_builddir)" != "$(top_srcdir)" &&	\
@@ -48,8 +48,8 @@ HFILE_GLOB =								\
 	$(top_srcdir)/gcutter/gcut-test-utils.h				\
 	$(top_srcdir)/gcutter/gcut-value-equal.h			\
 	$(top_srcdir)/gcutter/gcutter.h					\
-	$(top_srcdir)/cutter++/cut++-assertions.h			\
-	$(top_srcdir)/cutter++/cutter++.h				\
+	$(top_srcdir)/cppcutter/cppcut-assertions.h			\
+	$(top_srcdir)/cppcutter/cppcutter.h				\
 	$(top_srcdir)/gdkcutter-pixbuf/gdkcut-pixbuf-assertions.h	\
 	$(top_srcdir)/gdkcutter-pixbuf/gdkcut-pixbuf.h			\
 	$(top_srcdir)/gdkcutter-pixbuf/gdkcutter-pixbuf.h		\
@@ -120,22 +120,22 @@ IGNORE_HFILES=					\
 	cut-ui.h				\
 	cut-utils.h				\
 	cut-verbose-level.h			\
-	cut++-assertions-helper.h		\
+	cppcut-assertions-helper.h		\
 	gbsearcharray.h
 
 INCLUDES =					\
 	-I$(top_srcdir)/cutter			\
 	-I$(top_srcdir)/gcutter			\
-	-I$(top_srcdir)/cutter++		\
+	-I$(top_srcdir)/cppcutter		\
 	-I$(top_srcdir)/gdkcutter-pixbuf	\
 	-I$(top_srcdir)/soupcutter		\
 	-I$(top_srcdir)				\
 	-I$(top_builddir)/cutter		\
 	$(GLIB_CFLAGS)
 
-GTKDOC_LIBS =					\
-	$(top_builddir)/cutter/libcutter.la	\
-	$(top_builddir)/cutter++/libcutter++.la	\
+GTKDOC_LIBS =						\
+	$(top_builddir)/cutter/libcutter.la		\
+	$(top_builddir)/cppcutter/libcppcutter.la	\
 	$(GLIB_LIBS)
 if HAVE_GDK_PIXBUF
 GTKDOC_LIBS +=							\

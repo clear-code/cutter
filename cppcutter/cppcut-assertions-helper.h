@@ -17,8 +17,8 @@
  *
  */
 
-#ifndef __CUTPP_ASSERTIONS_HELPER_H__
-#define __CUTPP_ASSERTIONS_HELPER_H__
+#ifndef __CPPCUT_ASSERTIONS_HELPER_H__
+#define __CPPCUT_ASSERTIONS_HELPER_H__
 
 #include <string>
 #include <sstream>
@@ -50,7 +50,7 @@ namespace cut
     }
 }
 
-#endif /* __CUTPP_ASSERTIONS_HELPER_H__ */
+#endif /* __CPPCUT_ASSERTIONS_HELPER_H__ */
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

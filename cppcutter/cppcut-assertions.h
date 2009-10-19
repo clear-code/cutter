@@ -17,13 +17,13 @@
  *
  */
 
-#ifndef __CUTPP_ASSERTIONS_H__
-#define __CUTPP_ASSERTIONS_H__
+#ifndef __CPPCUT_ASSERTIONS_H__
+#define __CPPCUT_ASSERTIONS_H__
 
-#include <cutter++/cut++-assertions-helper.h>
+#include <cppcutter/cppcut-assertions-helper.h>
 
 /**
- * SECTION: cut++-assertions
+ * SECTION: cppcut-assertions
  * @title: Assertions with C++ support
  * @short_description: Checks that your program works as you
  * expect with C++ support.
@@ -31,7 +31,7 @@
  */
 
 /**
- * cutpp_assert_equal:
+ * cppcut_assert_equal:
  * @expected: an expected value.
  * @actual: an actual value.
  *
@@ -39,12 +39,12 @@
  *
  * Since: 1.0.9
  */
-#define cutpp_assert_equal(expected, actual)              \
+#define cppcut_assert_equal(expected, actual)              \
     cut_trace(cut::assert_equal(expected, actual,         \
                                 CUT_STRINGIFY(expected),  \
                                 CUT_STRINGIFY(actual)))
 
-#endif /* __CUTPP_ASSERTIONS_H__ */
+#endif /* __CPPCUT_ASSERTIONS_H__ */
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

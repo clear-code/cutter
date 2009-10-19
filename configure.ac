@@ -572,7 +572,7 @@ _______EOF
 AC_CONFIG_FILES([Makefile
 		 cutter.pc
 		 gcutter.pc
-		 cutter++.pc
+		 cppcutter.pc
 		 libcutter.pc
 		 gdkcutter-pixbuf.pc
 		 soupcutter.pc
@@ -583,7 +583,7 @@ AC_CONFIG_FILES([Makefile
 		 soupcutter/Makefile
 		 cutter/cut-version.h
 		 cutter/Makefile
-		 cutter++/Makefile
+		 cppcutter/Makefile
 		 module/Makefile
 		 module/ui/Makefile
 		 module/report/Makefile
@@ -633,7 +633,7 @@ AC_CONFIG_FILES([Makefile
 		 test/lib/Makefile
 		 test/cutter/Makefile
 		 test/gcutter/Makefile
-		 test/cutter++/Makefile
+		 test/cppcutter/Makefile
 		 test/gdkcutter-pixbuf/Makefile
 		 test/soupcutter/Makefile
 		 po/Makefile.in

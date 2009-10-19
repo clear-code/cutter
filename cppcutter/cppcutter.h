@@ -17,72 +17,72 @@
  *
  */
 
-#ifndef __CUTTERPP_H__
-#define __CUTTERPP_H__
+#ifndef __CPPCUTTER_H__
+#define __CPPCUTTER_H__
 
 #include <cutter.h>
-#include <cutter++/cut++-assertions.h>
+#include <cppcutter/cppcut-assertions.h>
 
 /**
- * SECTION: cutter++
- * @title: Cutter++
+ * SECTION: cppcutter
+ * @title: CppCutter
  * @short_description: Cutter with C++ support.
  * @see_also: <link
- *            linkend="cutter++-cut++-assertions">Assertions
+ *            linkend="cppcutter-cppcut-assertions">Assertions
  *            with C++ support</link>
  *
- * Cutter++ provides C++ friendly interface of Cutter. If
+ * CppCutter provides C++ friendly interface of Cutter. If
  * you want to write tests with C++, it's good idea that you
  * consider Cutter++ to be used too.
  *
- * It's easy to use Cutter++. You just include &lt;cutter++.h&gt;
- * instead of &lt;cutter.h&gt; and use cutter++.pc instead of
+ * It's easy to use CppCutter. You just include &lt;cppcutter.h&gt;
+ * instead of &lt;cutter.h&gt; and use cppcutter.pc instead of
  * cutter.pc:
  *
  * test-xxx.cpp:
  * |[
  * -#include <cutter.h>
- * +#include <cutter++.h>
+ * +#include <cppcutter.h>
  * ]|
  *
  * configure.ac:
  * |[
  * -AC_CHECK_CUTTER
- * +AC_CHECK_CUTTERPP
+ * +AC_CHECK_CPPCUTTER
  * ]|
  *
  * Makefile.am:
  * |[
  * -XXX_CFLAGS = $(CUTTER_CFLAGS)
  * -XXX_LIBS = $(CUTTER_LIBS)
- * +XXX_CFLAGS = $(CUTTERPP_CFLAGS)
- * +XXX_LIBS = $(CUTTERPP_LIBS)
+ * +XXX_CFLAGS = $(CPPCUTTER_CFLAGS)
+ * +XXX_LIBS = $(CPPCUTTER_LIBS)
  * ]|
  *
  * NOTE: You need to extern test functions in C scope. See
- * %CUTPP_BEGIN_TEST_DECLS.
+ * %CPPCUT_BEGIN_TEST_DECLS.
  */
 
 /**
- * CUTTERPP_ENABLED
+ * CPPCUTTER_ENABLED
  *
  * Defined when Cutter++ is enabled.
  *
  * Since: 1.0.9
  */
-#define CUTTERPP_ENABLED 1
+#define CPPCUTTER_ENABLED 1
 
 /**
- * CUTPP_BEGIN_TEST_DECLS
+ * CPPCUT_BEGIN_TEST_DECLS
  *
- * Use %CUTPP_BEGIN_TEST_DECLS and %CUTPP_END_TEST_DECLS
+ * Use %CPPCUT_BEGIN_TEST_DECLS and %CPPCUT_END_TEST_DECLS
  * pair for prototype declarations for test functions:
  *
  * |[
- * CUTPP_BEGIN_TEST_DECLS
+ * CPPCUT_BEGIN_TEST_DECLS
  * void test_add ();
  * void test_remove ();
- * CUTPP_END_TEST_DECLS
+ * CPPCUT_END_TEST_DECLS
  * ]|
  *
  * Those macros just surround prototype declarations for
@@ -90,18 +90,18 @@
  *
  * Since: 1.0.9
  */
-#define CUTPP_BEGIN_TEST_DECLS extern "C" {
+#define CPPCUT_BEGIN_TEST_DECLS extern "C" {
 
 /**
- * CUTPP_END_TEST_DECLS
+ * CPPCUT_END_TEST_DECLS
  *
- * See %CUTPP_BEGIN_TEST_DECLS.
+ * See %CPPCUT_BEGIN_TEST_DECLS.
  *
  * Since: 1.0.9
  */
-#define CUTPP_END_TEST_DECLS }
+#define CPPCUT_END_TEST_DECLS }
 
-#endif /* __CUTTERPP_H__ */
+#endif /* __CPPCUTTER_H__ */
 
 /*
 vi:nowrap:ai:expandtab:sw=4
