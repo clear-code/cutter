@@ -56,7 +56,7 @@ static const GOptionEntry option_entries[] =
     {"version", 0, G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_CALLBACK, print_version,
      N_("Show version"), NULL},
     {"color", 'c', G_OPTION_FLAG_OPTIONAL_ARG, G_OPTION_ARG_CALLBACK,
-     parse_color_arg, N_("Output log with colors"),
+     parse_color_arg, N_("Output diff with colors"),
      "[yes|true|no|false|auto]"},
     {"unified", 'u', 0, G_OPTION_ARG_NONE, &unified_diff,
      N_("Use unified diff format"), NULL},

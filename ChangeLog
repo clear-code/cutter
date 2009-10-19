@@ -1,5 +1,7 @@
 2009-10-19  Kouhei Sutou  <kou@clear-code.com>
 
+	* cutter/cut-diff.c: fix a typo.
+
 	* cutter/cut-differ.[ch], cutter/cut-readable-differ.c,
 	cutter/cut-colorize-differ.c: show more difference in colorized
 	mode.
@@ -615,7 +617,7 @@
 	(soupcut_message_get_content_type): replaced
 	soup_..._get_content_type
 
-2009-08-20  Kouhei Sutou  <kou@clear-code.com>
+2009-08-2  Kouhei Sutou  <kou@clear-code.com>
 
 	* test/soupcutter/test-soupcut-assertions.c: cleanup.
 
