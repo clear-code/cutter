@@ -1,4 +1,4 @@
-VERSION = 1.0.8
+VERSION = 1.0.9
 SF_HTDOCS = ktou,cutter@web.sourceforge.net:/home/groups/c/cu/cutter/htdocs
 DISTRIBUTIONS = debian ubuntu
 CHROOT_BASE = /var/lib/chroot

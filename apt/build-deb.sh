@@ -1,8 +1,8 @@
 #!/bin/sh
 
-VERSION=1.0.8
+VERSION=1.0.9
 
-sudo aptitude update
+sudo aptitude -V -D update && sudo aptitude -V -D -y safe-upgrade
 sudo aptitude install -y subversion devscripts debhelper cdbs autotools-dev \
     intltool gtk-doc-tools libgtk2.0-dev libgoffice-0-{6,8}-dev \
     libgstreamer0.10-dev libsoup2.4-dev
