@@ -39,6 +39,7 @@
     <chapter id="command">
       <title>Command</title>
       <xi:include href="cutter.xml"/>
+      <xi:include href="cut-diff.xml"/>
     </chapter>
     <chapter id="writing-test">
       <title>Writing test</title>
@@ -56,8 +57,8 @@
       <xi:include href="xml/gcut-egg.xml"/>
       <!--xi:include href="xml/gcut-string-io-channel.xml"/-->
       <!--xi:include href="xml/gcut-key-file.xml"/-->
-      <xi:include href="xml/cutter++.xml"/>
-      <xi:include href="xml/cut++-assertions.xml"/>
+      <xi:include href="xml/cppcutter.xml"/>
+      <xi:include href="xml/cppcut-assertions.xml"/>
       <xi:include href="xml/gdkcutter-pixbuf.xml"/>
       <xi:include href="xml/gdkcut-pixbuf-assertions.xml"/>
       <xi:include href="xml/soupcutter.xml"/>

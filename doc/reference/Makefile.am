@@ -157,7 +157,8 @@ MKDB_OPTIONS =						\
 HTML_IMAGES =				\
 	dark-circle.png			\
 	nested-circle.png		\
-	diff-dark-and-nested-circle.png
+	diff-dark-and-nested-circle.png	\
+	colorized-diff.png
 
 # Extra SGML files that are included by $(DOC_MAIN_SGML_FILE)
 content_files =					\
@@ -168,6 +169,7 @@ content_files =					\
 	features.xml				\
 	users.xml				\
 	cutter.xml				\
+	cut-diff.xml				\
 	install-to-debian.xml			\
 	install-to-ubuntu.xml			\
 	install-to-fedora.xml			\
@@ -197,7 +199,7 @@ generated_xml_files =				\
 	users.xml				\
 	users.xml.ja				\
 	cutter.xml				\
-	cutter.xml.ja				\
+	cut-diff.xml.ja				\
 	install-to-debian.xml			\
 	install-to-debian.xml.ja		\
 	install-to-ubuntu.xml			\
@@ -285,6 +287,12 @@ cutter.xml: $(top_srcdir)/doc/cutter.rd $(RD2REFENTRY_LIB) cutter.xml.ja
 
 cutter.xml.ja: $(top_srcdir)/doc/cutter.rd.ja $(RD2REFENTRY_LIB) ja.po
 	$(RD2DOCBOOK_JA) $(top_srcdir)/doc/cutter.rd.ja > cutter.xml.ja
+
+cut-diff.xml: $(top_srcdir)/doc/cut-diff.rd $(RD2REFENTRY_LIB) cut-diff.xml.ja
+	$(RD2DOCBOOK) $(top_srcdir)/doc/cut-diff.rd > cut-diff.xml
+
+cut-diff.xml.ja: $(top_srcdir)/doc/cut-diff.rd.ja $(RD2REFENTRY_LIB) ja.po
+	$(RD2DOCBOOK_JA) $(top_srcdir)/doc/cut-diff.rd.ja > cut-diff.xml.ja
 
 install-to-debian.xml: $(top_srcdir)/doc/install-to-debian.rd $(RD2REFENTRY_LIB) install-to-debian.xml.ja
 	$(RD2DOCBOOK) $(top_srcdir)/doc/install-to-debian.rd > install-to-debian.xml

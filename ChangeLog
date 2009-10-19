@@ -1,5 +1,7 @@
 2009-10-19  Kouhei Sutou  <kou@clear-code.com>
 
+	* doc/reference/: update.
+
 	* cutter/cut-helper.h, cppcutter/cppcutter.h,
 	cppcutter/cppcut-assertions.h: fix documents.
 
