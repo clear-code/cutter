@@ -223,8 +223,8 @@ update_section_index (CutMachOLoaderPrivate *priv, gsize offset,
     gint j;
     const gchar *segment_name;
     uint32_t n_sections;
-    struct section *section;
-    struct section_64 *section_64;
+    struct section *section = NULL;
+    struct section_64 *section_64 = NULL;
 
     if (priv->bit == ARCHITECTURE_32BIT) {
         segment = (struct segment_command *)(priv->content + offset);
