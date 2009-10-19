@@ -60,15 +60,21 @@ case `uname` in
     CYGWIN*)
 	PATH="$top_dir/cutter/.libs:$PATH"
 	PATH="$top_dir/gcutter/.libs:$PATH"
+	PATH="$top_dir/cppcutter/.libs:$PATH"
 	PATH="$top_dir/gdkcutter-pixbuf/.libs:$PATH"
+	PATH="$top_dir/soupcutter/.libs:$PATH"
 	PATH="$top_dir/test/lib/.libs:$PATH"
 	;;
     Darwin)
+	DYLD_LIBRARY_PATH="$top_dir/cppcutter/.libs:$DYLD_LIBRARY_PATH"
 	DYLD_LIBRARY_PATH="$top_dir/gdkcutter-pixbuf/.libs:$DYLD_LIBRARY_PATH"
+	DYLD_LIBRARY_PATH="$top_dir/soupcutter/.libs:$DYLD_LIBRARY_PATH"
 	export DYLD_LIBRARY_PATH
 	;;
     *BSD)
+	LD_LIBRARY_PATH="$top_dir/cppcutter/.libs:$LD_LIBRARY_PATH"
 	LD_LIBRARY_PATH="$top_dir/gdkcutter-pixbuf/.libs:$LD_LIBRARY_PATH"
+	LD_LIBRARY_PATH="$top_dir/soupcutter/.libs:$LD_LIBRARY_PATH"
 	export LD_LIBRARY_PATH
         ;;
     *)
