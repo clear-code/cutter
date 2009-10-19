@@ -1,5 +1,7 @@
 2009-10-19  Kouhei Sutou  <kou@clear-code.com>
 
+	* apt/Makefile: parameterize architectures and code names.
+
 	* rpm/fedora/cutter.spec.in (BuildRequires): add g++.
 
 	* Makefile.am: add rpms to release files.

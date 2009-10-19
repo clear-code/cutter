@@ -2,6 +2,8 @@ VERSION = 1.0.9
 SF_HTDOCS = ktou,cutter@web.sourceforge.net:/home/groups/c/cu/cutter/htdocs
 DISTRIBUTIONS = debian ubuntu
 CHROOT_BASE = /var/lib/chroot
+ARCHITECTURES = i386 amd64
+CODES = lenny unstable hardy jaunty
 
 update:
 	for distribution in $(DISTRIBUTIONS); do			\
@@ -33,8 +35,8 @@ download:
 	done
 
 build:
-	for architecture in i386 amd64; do					\
-	  for code_name in lenny unstable hardy jaunty; do			\
+	for architecture in $(ARCHITECTURES); do				\
+	  for code_name in $(CODES); do						\
 	    target=$${code_name}-$${architecture};				\
 	    case $${code_name} in						\
 	    lenny|unstable)							\
