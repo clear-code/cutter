@@ -2,6 +2,28 @@
 
 = NEWS --- The history of Cutter
 
+== [release-1-0-9] 1.0.9: 2009-10-19
+
+=== Improvements
+
+  * Add an function to ((<Assertion Utilities for GHashTable|cutter-gcut-hash-table.html>)):
+    * ((<gcut_hash_table_inspect_sorted()|cutter-gcut-hash-table.html#gcut-hash-table-inspect-sorted>))
+  * Inspect hash table after sorted by key
+  * Support colorized diff: ((<colorized-diff.png>))
+  * Add --stop-before-test option that sets breakpoint
+    before each test [Suggested by Yoshinori K. Okuji]
+  * Add ((<cut-diff>)) command
+  * Support unified diff
+  * Support C++: ((<CppCutter|cppcutter>))
+
+=== Bug fixes
+
+  * Fix locale dependent bugs [Reported by Yoshinori K. Okuji]
+
+=== Thanks
+
+  * Yoshinori K. Okuji
+
 == [release-1-0-8] 1.0.8: 2009-08-29
 
   * Support libsoup:

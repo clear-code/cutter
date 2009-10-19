@@ -1,5 +1,7 @@
 2009-10-19  Kouhei Sutou  <kou@clear-code.com>
 
+	* NEWS*: add 1.0.9 entry.
+
 	* doc/reference/: update.
 
 	* cutter/cut-helper.h, cppcutter/cppcutter.h,

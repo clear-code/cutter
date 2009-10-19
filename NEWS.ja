@@ -2,6 +2,28 @@
 
 = お知らせ --- Cutterの歴史
 
+== [release-1-0-9] 1.0.9: 2009-10-19
+
+=== 改良
+
+  * ((<GHashTable用の検証ユーティリティ|cutter-gcut-hash-table.html>))に関数を追加:
+    * ((<gcut_hash_table_inspect_sorted()|cutter-gcut-hash-table.html#gcut-hash-table-inspect-sorted>))
+  * ハッシュの詳細表示時に内容をキーでソート
+  * 色付き差分表示対応: ((<colorized-diff.png>))
+  * テスト実行直前にブレークポイントを設定する
+    --stop-before-testオプションの追加 [奥地さんによる提案]
+  * ((<cut-diff>))コマンドの追加
+  * unified diff対応
+  * C++サポートの追加: ((<CppCutter|cppcutter>))
+
+=== バグ修正
+
+  * ロケール依存を修正 [奥地さんによる報告]
+
+=== 感謝
+
+  * 奥地さん
+
 == [release-1-0-8] 1.0.8: 2009-08-29
 
   * libsoupサポートの追加:
