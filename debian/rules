@@ -33,6 +33,10 @@ DEB_INSTALL_DIRS_libcutter-glib-dev =		\
 	/usr/include/cutter/gcutter		\
 	/usr/lib/pkgconfig
 
+DEB_INSTALL_DIRS_libcutter-cpp-dev =		\
+	/usr/include/cutter/cppcutter		\
+	/usr/lib/pkgconfig
+
 DEB_INSTALL_DIRS_libcutter-gtk-dev =		\
 	/usr/include/cutter/gdkcutter-pixbuf	\
 	/usr/lib/pkgconfig			\
