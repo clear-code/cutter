@@ -1,5 +1,8 @@
 2009-10-19  Kouhei Sutou  <kou@clear-code.com>
 
+	* debian/changelog, rpm/fedora/cutter.spec.in, html/index.html*,
+	doc/reference/header*.html: 1.0.8 -> 1.0.9.
+
 	* NEWS*: add 1.0.9 entry.
 
 	* doc/reference/: update.
