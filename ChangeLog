@@ -1,5 +1,7 @@
 2009-10-19  Kouhei Sutou  <kou@clear-code.com>
 
+	* rpm/fedora/cutter.spec.in (BuildRequires): add g++.
+
 	* Makefile.am: add rpms to release files.
 
 	* debian/rules (DEB_INSTALL_DIRS_libcutter-cpp-dev): add.
