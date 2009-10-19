@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-11 16:03+0900\n"
-"PO-Revision-Date: 2009-10-11 16:03+0900\n"
+"POT-Creation-Date: 2009-10-19 14:42+0900\n"
+"PO-Revision-Date: 2009-10-19 14:47+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -16,41 +16,58 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../cutter/cut-main.c:98
+#: ../cutter/cut-console.c:65
+#, c-format
+msgid "Invalid color value: %s"
+msgstr "不正な色指定です: %s"
+
+#: ../cutter/cut-diff.c:57 ../cutter/cut-main.c:130
+msgid "Show version"
+msgstr "バージョンを表示"
+
+#: ../cutter/cut-diff.c:59
+msgid "Output diff with colors"
+msgstr "色付きで差分を出力"
+
+#: ../cutter/cut-diff.c:62
+msgid "Use unified diff format"
+msgstr "unified diff形式を使用"
+
+#: ../cutter/cut-diff.c:136
+msgid "FILE_FROM FILE_TO"
+msgstr "変更前ファイル 変更後ファイル"
+
+#: ../cutter/cut-main.c:99
 #, c-format
 msgid "Invalid run mode: %s"
 msgstr "不正な実行モードです: %s"
 
-#: ../cutter/cut-main.c:119
+#: ../cutter/cut-main.c:120
 #, c-format
 msgid "Invalid test case order value: %s"
 msgstr "不正なテストケース順序指定です: %s"
 
-#: ../cutter/cut-main.c:129
-msgid "Show version"
-msgstr "バージョンを表示"
-
-#: ../cutter/cut-main.c:131
+#: ../cutter/cut-main.c:132
 msgid "Set run mode (default: test)"
 msgstr "実行モードを設定（既定値: test）"
 
-#: ../cutter/cut-main.c:133
+#: ../cutter/cut-main.c:134
 msgid "Set directory of source code"
 msgstr "ソースコードのディレクトリを設定"
 
-#: ../cutter/cut-main.c:135
+#: ../cutter/cut-main.c:136
 msgid "Specify tests"
 msgstr "テストを指定"
 
-#: ../cutter/cut-main.c:137
+#: ../cutter/cut-main.c:138
 msgid "Specify test cases"
 msgstr "テストケースを指定"
 
-#: ../cutter/cut-main.c:139
+#: ../cutter/cut-main.c:140
 msgid "Run test cases and iterated tests with multi-thread"
 msgstr "マルチスレッドでテストケースと繰り返しテストを実行"
 
-#: ../cutter/cut-main.c:141
+#: ../cutter/cut-main.c:142
 msgid ""
 "Run test cases and iterated tests with MAX_THREADS threads concurrently at a "
 "maximum (default: 10; -1 is no limit)"
@@ -58,32 +75,32 @@ msgstr ""
 "最大MAX_THREADSスレッドを同時に動かしてテストケースと繰り返しテストを実行しま"
 "す（既定値: 10; -1は制限なし）"
 
-#: ../cutter/cut-main.c:147
+#: ../cutter/cut-main.c:148
 msgid "Disable signal handling"
 msgstr "シグナルを処理しない"
 
-#: ../cutter/cut-main.c:149
+#: ../cutter/cut-main.c:150
 msgid "Sort test case by. Default is 'none'."
 msgstr "テストケースを並び替える。既定値は'none'（並び替えない）"
 
-#: ../cutter/cut-main.c:151
+#: ../cutter/cut-main.c:152
 msgid "Skip files"
 msgstr "ファイルをスキップ"
 
-#: ../cutter/cut-main.c:153
+#: ../cutter/cut-main.c:154
 msgid "Skip directories"
 msgstr "ディレクトリをスキップ"
 
-#: ../cutter/cut-main.c:155
+#: ../cutter/cut-main.c:156
 msgid "Treat failures as fatal problem"
 msgstr "失敗を致命的な問題として扱う"
 
-#: ../cutter/cut-main.c:157
+#: ../cutter/cut-main.c:158
 msgid "Keep opening loaded modules to resolve symbols for debugging"
 msgstr ""
 "デバッグ時にシンボルを解決できるようにロードしたモジュールを開いたままにする"
 
-#: ../cutter/cut-main.c:160
+#: ../cutter/cut-main.c:161
 msgid ""
 "Enable convenience but danger '#{ATTRIBUTE_NAME}_#{TEST_NAME - 'test_' "
 "PREFIX}' attribute set function"
@@ -91,7 +108,7 @@ msgstr ""
 "便利だが危険な'#{属性名}_#{テスト名 - 'test_'プリフィックス}'属性設定関数を有"
 "効にする"
 
-#: ../cutter/cut-main.c:165
+#: ../cutter/cut-main.c:166
 msgid ""
 "Set breakpoints at each line which invokes test. You can step into a test "
 "function with your debugger easily."
@@ -99,7 +116,7 @@ msgstr ""
 "テストを実行する前の行にブレークポイントを設定する。デバッガでステップイン実"
 "行すれば簡単にテスト関数に入れます。"
 
-#: ../cutter/cut-main.c:214
+#: ../cutter/cut-main.c:226
 #, c-format
 msgid ""
 "TEST_DIRECTORY\n"
@@ -108,7 +125,7 @@ msgstr ""
 "テストディレクトリ\n"
 "  %s --mode=analyze %s ログディレクトリ"
 
-#: ../cutter/cut-main.c:216
+#: ../cutter/cut-main.c:228
 msgid "[OPTION...]"
 msgstr "[オプション...]"
 
@@ -189,24 +206,19 @@ msgstr "XMLストリームのオプション"
 msgid "Show XML stream options"
 msgstr "XMLストリームのオプションを表示"
 
-#: ../module/ui/cut-console-ui-factory.c:308
-#, c-format
-msgid "Invalid color value: %s"
-msgstr "不正な色指定です: %s"
-
-#: ../module/ui/cut-console-ui-factory.c:333
+#: ../module/ui/cut-console-ui-factory.c:299
 msgid "Set verbose level"
 msgstr "詳細度を設定"
 
-#: ../module/ui/cut-console-ui-factory.c:335
+#: ../module/ui/cut-console-ui-factory.c:301
 msgid "Output log with colors"
 msgstr "色付きでログを出力"
 
-#: ../module/ui/cut-console-ui-factory.c:344
+#: ../module/ui/cut-console-ui-factory.c:310
 msgid "Console UI Options"
 msgstr "コンソールUIのオプション"
 
-#: ../module/ui/cut-console-ui-factory.c:345
+#: ../module/ui/cut-console-ui-factory.c:311
 msgid "Show console UI options"
 msgstr "コンソールUIのオプションの表示"
 

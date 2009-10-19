@@ -1,11 +1,14 @@
 cutter/cut-analyzer.c
 cutter/cut-assertions-helper.c
 cutter/cut-backtrace-entry.c
+cutter/cut-colorize-differ.c
+cutter/cut-console-diff-writer.c
+cutter/cut-console.c
 cutter/cut-contractor.c
 cutter/cut-crash-backtrace.c
+cutter/cut-diff-writer.c
 cutter/cut-diff.c
-cutter/cut-differ-colorize.c
-cutter/cut-differ-readable.c
+cutter/cut-differ.c
 cutter/cut-elf-loader.c
 cutter/cut-enum-types.c
 cutter/cut-factory-builder.c
@@ -22,6 +25,7 @@ cutter/cut-module.c
 cutter/cut-pe-loader.c
 cutter/cut-pipeline.c
 cutter/cut-process.c
+cutter/cut-readable-differ.c
 cutter/cut-report-factory-builder.c
 cutter/cut-report.c
 cutter/cut-repository.c
@@ -32,6 +36,7 @@ cutter/cut-stream-factory-builder.c
 cutter/cut-stream-parser.c
 cutter/cut-stream-reader.c
 cutter/cut-stream.c
+cutter/cut-string-diff-writer.c
 cutter/cut-sub-process-group.c
 cutter/cut-sub-process.c
 cutter/cut-test-case.c
@@ -46,6 +51,7 @@ cutter/cut-test-utils-helper.c
 cutter/cut-test.c
 cutter/cut-ui-factory-builder.c
 cutter/cut-ui.c
+cutter/cut-unified-differ.c
 cutter/cut-utils.c
 cutter/cut-verbose-level.c
 cutter/main.c
