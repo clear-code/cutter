@@ -685,7 +685,7 @@ test_locale_string (void)
   /* now test that translations are thrown away */
 
   g_setenv ("LANGUAGE", "de", TRUE);
-  original_locale = setlocale (LC_ALL, "");
+  original_locale = g_strdup (setlocale (LC_ALL, ""));
 
   keyfile = g_key_file_new ();
   cut_assert (g_key_file_load_from_data (keyfile, data, -1, 0, NULL));

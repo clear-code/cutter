@@ -1,5 +1,8 @@
 2009-10-19  Kouhei Sutou  <kou@clear-code.com>
 
+	* sample/glib/keyfile.c (test_locale_string): dup returned string
+	by setlocale().
+
 	* cutter/cut-mach-o-loader.c: initialize variables as NULL.
 
 	* debian/changelog, rpm/fedora/cutter.spec.in, html/index.html*,
