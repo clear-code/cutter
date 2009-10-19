@@ -33,7 +33,7 @@
  *
  * CppCutter provides C++ friendly interface of Cutter. If
  * you want to write tests with C++, it's good idea that you
- * consider Cutter++ to be used too.
+ * consider CppCutter to be used too.
  *
  * It's easy to use CppCutter. You just include &lt;cppcutter.h&gt;
  * instead of &lt;cutter.h&gt; and use cppcutter.pc instead of
@@ -66,7 +66,7 @@
 /**
  * CPPCUTTER_ENABLED
  *
- * Defined when Cutter++ is enabled.
+ * Defined when CppCutter is enabled.
  *
  * Since: 1.0.9
  */
