@@ -102,6 +102,14 @@ install/libcutter-glib-dev::
 	cp -ar debian/tmp/usr/lib/pkgconfig/gcutter.pc \
 		debian/libcutter-glib-dev/usr/lib/pkgconfig/
 
+install/libcutter-cpp-dev::
+	cp -ar debian/tmp/usr/include/cutter/cppcutter.h \
+		debian/libcutter-cpp-dev/usr/include/cutter/
+	cp -ar debian/tmp/usr/include/cutter/cppcutter/ \
+		debian/libcutter-cpp-dev/usr/include/cutter/
+	cp -ar debian/tmp/usr/lib/pkgconfig/cppcutter.pc \
+		debian/libcutter-cpp-dev/usr/lib/pkgconfig/
+
 install/libcutter-gtk-dev::
 	cp -ar debian/tmp/usr/lib/libgdkcutter-pixbuf* \
 		debian/libcutter-gtk-dev/usr/lib/

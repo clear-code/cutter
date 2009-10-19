@@ -9,7 +9,7 @@ Homepage: http://cutter.sourceforge.net/
 Package: cutter-testing-framework
 Section: libdevel
 Architecture: any
-Depends: cutter-bin, libcutter-dev, libcutter-glib-dev, libcutter-gtk-dev, libcutter-soup-dev, libcutter-report, libcutter-gst, cutter-doc
+Depends: cutter-bin, libcutter-dev, libcutter-glib-dev, libcutter-cpp-dev, libcutter-gtk-dev, libcutter-soup-dev, libcutter-report, libcutter-gst, cutter-doc
 Description: Cutter testing framework suite (meta-package)
  Cutter is a xUnit family Unit Testing Framework for C.
  .
@@ -51,6 +51,15 @@ Description: Cutter GLib integration
  Cutter is a xUnit family Unit Testing Framework for C.
  .
  This package provides header files to write tests for Cutter with GLib support.
+
+Package: libcutter-cpp-dev
+Section: libdevel
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}, cutter-bin (= ${binary:Version})
+Description: Cutter C++ integration
+ Cutter is a xUnit family Unit Testing Framework for C.
+ .
+ This package provides header files to write tests for Cutter with C++ support.
 
 Package: libcutter-gtk-dev
 Section: libdevel
