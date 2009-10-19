@@ -1,5 +1,7 @@
 2009-10-19  Kouhei Sutou  <kou@clear-code.com>
 
+	* Makefile.am: add rpms to release files.
+
 	* debian/rules (DEB_INSTALL_DIRS_libcutter-cpp-dev): add.
 
 	* debian/control, debian/rules: include CppCutter.

@@ -52,7 +52,9 @@ release: dist
 	$(srcdir)/misc/release.rb				\
 	  $(SF_USER) $(SF_PROJECT_ID) $(SF_PROJECT_NAME)	\
 	  $(PACKAGE_NAME) $(VERSION) README NEWS		\
-	  $(PACKAGE)-$(VERSION).tar.gz
+	  $(PACKAGE)-$(VERSION).tar.gz				\
+	  $(PACKAGE)-$(VERSION)-0.src.rpm			\
+	  $(PACKAGE)-$(VERSION)-0.x86_64.rpm
 
 upload-doc:
 	cd html && $(MAKE) $(AM_MAKEFLAGS) upload
@@ -62,6 +64,7 @@ update-po:
 	cd $(top_srcdir) &&			\
 	  (find cutter -name '*.c';		\
 	   find gcutter -name '*.c';		\
+	   find cppcutter -name '*.c';		\
 	   find gdkcutter-pixbuf -name '*.c';	\
 	   find soupcutter -name '*.c';		\
 	   find module -name '*.c') |		\
