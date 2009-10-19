@@ -1,5 +1,7 @@
 2009-10-19  Kouhei Sutou  <kou@clear-code.com>
 
+	* doc/cut-diff.rd*: add documents for cut-diff.
+
 	* cutter/cut-diff.c: fix a typo.
 
 	* cutter/cut-differ.[ch], cutter/cut-readable-differ.c,

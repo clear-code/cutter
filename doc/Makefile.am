@@ -3,6 +3,8 @@ SUBDIRS = reference
 EXTRA_DIST =					\
 	cutter.rd				\
 	cutter.rd.ja				\
+	cut-diff.rd				\
+	cut-diff.rd.ja				\
 	install-to-debian.rd			\
 	install-to-debian.rd.ja			\
 	install-to-cygwin.rd			\
@@ -18,12 +20,14 @@ svg_images =					\
 	cutter-easy-to-write.svg
 
 dist_man1_MANS =	\
-	cutter.man
+	cutter.man	\
+	cut-diff.man
 
 ja_man1dir = $(mandir)/ja/man1
 
 dist_ja_man1_mans =	\
-	cutter.jman
+	cutter.jman	\
+	cut-diff.jman
 
 EXTRA_DIST += $(dist_ja_man1_mans)
 
@@ -53,6 +57,7 @@ uninstall-local:
 
 # dirty...
 cutter.jman: cutter.rd.ja
+cut-diff.jman: cut-diff.rd.ja
 
 MAINTAINERCLEANFILES = $(dist_man1_MANS) $(dist_ja_man1_mans)
 
