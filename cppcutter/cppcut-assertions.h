@@ -35,11 +35,14 @@
  * @expected: an expected value.
  * @actual: an actual value.
  *
+ * This assertion is a generic method based on template. You
+ * can pass any object's reference as @expected and @actual.
+ *
  * Passes if @expected == @actual.
  *
  * Since: 1.0.9
  */
-#define cppcut_assert_equal(expected, actual)              \
+#define cppcut_assert_equal(expected, actual)             \
     cut_trace(cut::assert_equal(expected, actual,         \
                                 CUT_STRINGIFY(expected),  \
                                 CUT_STRINGIFY(actual)))

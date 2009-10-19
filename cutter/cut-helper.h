@@ -437,7 +437,7 @@ void cut_pop_backtrace(void);
 
 /**
  * cut_set_actual:
- * @expected: the inspected actual object.
+ * @actual: the inspected actual object.
  *
  * Sets an inspected actual object to be used by the next
  * assertion.

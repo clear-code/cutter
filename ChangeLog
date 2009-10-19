@@ -1,5 +1,8 @@
 2009-10-19  Kouhei Sutou  <kou@clear-code.com>
 
+	* cutter/cut-helper.h, cppcutter/cppcutter.h,
+	cppcutter/cppcut-assertions.h: fix documents.
+
 	* doc/cut-diff.rd*: add documents for cut-diff.
 
 	* cutter/cut-diff.c: fix a typo.

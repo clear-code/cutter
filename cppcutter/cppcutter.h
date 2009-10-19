@@ -28,7 +28,7 @@
  * @title: CppCutter
  * @short_description: Cutter with C++ support.
  * @see_also: <link
- *            linkend="cppcutter-cppcut-assertions">Assertions
+ *            linkend="cutter-cppcut-assertions">Assertions
  *            with C++ support</link>
  *
  * CppCutter provides C++ friendly interface of Cutter. If
