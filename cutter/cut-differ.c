@@ -53,6 +53,9 @@ static void set_property   (GObject         *object,
                             const GValue    *value,
                             GParamSpec      *pspec);
 
+static gdouble get_best_ratio    (CutDiffer *differ);
+static gdouble get_cut_off_ratio (CutDiffer *differ);
+
 static void
 cut_differ_class_init (CutDifferClass *klass)
 {
@@ -63,6 +66,9 @@ cut_differ_class_init (CutDifferClass *klass)
 
     gobject_class->dispose = dispose;
     gobject_class->set_property = set_property;
+
+    klass->get_best_ratio = get_best_ratio;
+    klass->get_cut_off_ratio = get_cut_off_ratio;
 
     spec = g_param_spec_string("from",
                                "Original text",
@@ -144,10 +150,34 @@ set_property (GObject      *object,
     }
 }
 
+static gdouble
+get_best_ratio (CutDiffer *differ)
+{
+    return 0.74;
+}
+
+static gdouble
+get_cut_off_ratio (CutDiffer *differ)
+{
+    return 0.75;
+}
+
 void
 cut_differ_diff (CutDiffer *differ, CutDiffWriter *writer)
 {
     CUT_DIFFER_GET_CLASS(differ)->diff(differ, writer);
+}
+
+gdouble
+cut_differ_get_best_ratio (CutDiffer *differ)
+{
+    return CUT_DIFFER_GET_CLASS(differ)->get_best_ratio(differ);
+}
+
+gdouble
+cut_differ_get_cut_off_ratio (CutDiffer *differ)
+{
+    return CUT_DIFFER_GET_CLASS(differ)->get_cut_off_ratio(differ);
 }
 
 gchar **
@@ -186,9 +216,10 @@ cut_differ_need_diff (CutDiffer *differ)
     const GList *operations;
     gboolean have_equal = FALSE;
     gboolean have_insert_or_delete = FALSE;
-    gdouble best_ratio = 0.75; /* FIXME */
+    gdouble best_ratio;
     gchar **from, **to;
 
+    best_ratio = cut_differ_get_best_ratio(differ);
     from = cut_differ_get_from(differ);
     to = cut_differ_get_to(differ);
     matcher = cut_differ_get_sequence_matcher(differ);

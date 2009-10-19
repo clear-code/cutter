@@ -1,5 +1,9 @@
 2009-10-19  Kouhei Sutou  <kou@clear-code.com>
 
+	* cutter/cut-differ.[ch], cutter/cut-readable-differ.c,
+	cutter/cut-colorize-differ.c: show more difference in colorized
+	mode.
+
 	* ./: Cutter++ -> CppCutter.
 
 2009-10-18  Kouhei Sutou  <kou@cozmixng.org>

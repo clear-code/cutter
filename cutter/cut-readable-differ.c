@@ -208,18 +208,19 @@ diff_lines (CutDiffer *differ, CutDiffWriter *writer,
             gchar **to, gint to_begin, gint to_end)
 {
     CutReadableDifferClass *klass;
-    gdouble best_ratio, cut_off;
+    gdouble best_ratio, cut_off_ratio;
     gint from_equal_index, to_equal_index;
     gint from_best_index, to_best_index;
     gint to_index, from_index;
 
     klass = CUT_READABLE_DIFFER_GET_CLASS(differ);
 
-    best_ratio = 0.74;
-    cut_off = 0.75;
+    best_ratio = cut_differ_get_best_ratio(differ);
+    cut_off_ratio = cut_differ_get_cut_off_ratio(differ);
 
     from_equal_index = to_equal_index = -1;
-    from_best_index = to_best_index = -1;
+    from_best_index = from_begin;
+    to_best_index = to_begin;
 
     for (to_index = to_begin; to_index < to_end; to_index++) {
         for (from_index = from_begin; from_index < from_end; from_index++) {
@@ -250,7 +251,7 @@ diff_lines (CutDiffer *differ, CutDiffWriter *writer,
         }
     }
 
-    if (best_ratio < cut_off) {
+    if (best_ratio < cut_off_ratio) {
         if (from_equal_index < 0) {
             if (to_end - to_begin < from_end - from_begin) {
                 mark_inserted(writer, to, to_begin, to_end);

@@ -46,13 +46,18 @@ struct _CutDifferClass
 {
     GObjectClass parent_class;
 
-    void (*diff) (CutDiffer *differ, CutDiffWriter *writer);
+    void    (*diff)              (CutDiffer *differ, CutDiffWriter *writer);
+    gdouble (*get_best_ratio)    (CutDiffer *differ);
+    gdouble (*get_cut_off_ratio) (CutDiffer *differ);
 };
 
 GType         cut_differ_get_type         (void) G_GNUC_CONST;
 
 void          cut_differ_diff             (CutDiffer   *differ,
                                            CutDiffWriter *writer);
+gdouble       cut_differ_get_best_ratio   (CutDiffer   *differ);
+gdouble       cut_differ_get_cut_off_ratio(CutDiffer   *differ);
+
 gchar       **cut_differ_get_from         (CutDiffer   *differ);
 gchar       **cut_differ_get_to           (CutDiffer   *differ);
 CutSequenceMatcher *

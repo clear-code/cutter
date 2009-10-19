@@ -31,6 +31,9 @@
 
 G_DEFINE_TYPE(CutColorizeDiffer, cut_colorize_differ, CUT_TYPE_READABLE_DIFFER)
 
+static gdouble get_best_ratio    (CutDiffer *differ);
+static gdouble get_cut_off_ratio (CutDiffer *differ);
+
 static void diff_line   (CutDiffer     *differ,
                          CutDiffWriter *writer,
                          gchar         *from_line,
@@ -39,7 +42,12 @@ static void diff_line   (CutDiffer     *differ,
 static void
 cut_colorize_differ_class_init (CutColorizeDifferClass *klass)
 {
+    CutDifferClass *differ_class;
     CutReadableDifferClass *readable_differ_class;
+
+    differ_class = CUT_DIFFER_CLASS(klass);
+    differ_class->get_best_ratio = get_best_ratio;
+    differ_class->get_cut_off_ratio = get_cut_off_ratio;
 
     readable_differ_class = CUT_READABLE_DIFFER_CLASS(klass);
     readable_differ_class->diff_line = diff_line;
@@ -57,6 +65,18 @@ cut_colorize_differ_new (const gchar *from, const gchar *to)
                         "from", from,
                         "to", to,
                         NULL);
+}
+
+static gdouble
+get_best_ratio (CutDiffer *differ)
+{
+    return 0.0;
+}
+
+static gdouble
+get_cut_off_ratio (CutDiffer *differ)
+{
+    return 0.0;
 }
 
 static void
