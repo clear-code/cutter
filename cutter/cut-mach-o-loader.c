@@ -346,6 +346,7 @@ cut_mach_o_loader_collect_symbols (CutMachOLoader *loader)
         load = (struct load_command *)(priv->content + offset);
         switch (load->cmd) {
         case LC_SEGMENT:
+        case LC_SEGMENT_64:
             update_section_index(priv, offset,
                                  &section_index, &text_section_index);
             break;
