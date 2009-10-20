@@ -22,6 +22,7 @@ AM_LDFLAGS =			\
 LIBS =							\
 	$(top_builddir)/cutter/libcutter.la		\
 	$(top_builddir)/cppcutter/libcppcutter.la	\
-	$(top_builddir)/test/lib/libcuttest-utils.la
+	$(top_builddir)/test/lib/libcuttest-utils.la	\
+	$(GLIB_LIBS)
 
 test_cppcut_assertions_la_SOURCES	= test-cppcut-assertions.cpp

@@ -1,5 +1,8 @@
 2009-10-20  Kouhei Sutou  <kou@clear-code.com>
 
+	* test/cppcutter/Makefile.am (noinst_LTLIBRARIES): add missing
+	GLib dependency.
+
 	* doc/install-*: update.
 
 	* Makefile.am (release): add .zip.
