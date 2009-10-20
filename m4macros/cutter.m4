@@ -92,65 +92,75 @@ AC_DEFUN([AC_CHECK_CUTTER],
   AC_ARG_WITH([cutter],
               AS_HELP_STRING([--with-cutter],
                              [Use Cutter (default: auto)]),
-              [ac_cv_use_cutter=$withval],
-              [ac_cv_use_cutter=auto])
+              [ac_cv_with_cutter=$withval],
+              [ac_cv_with_cutter=auto])
   AC_CACHE_CHECK([whether to use Cutter],
-                 [ac_cv_use_cutter], [ac_cv_use_cutter=auto])
-  if test "$ac_cv_use_cutter" != "no"; then
-    PKG_CHECK_MODULES(CUTTER, cutter $1, [], [ac_cv_use_cutter=no])
-    AC_SUBST([CUTTER_CFLAGS])
-    AC_SUBST([CUTTER_LIBS])
-  fi
+                 [ac_cv_with_cutter],
+                 [ac_cv_with_cutter=auto])
+  AC_CACHE_VAL([ac_cv_use_cutter],
+               [ac_cv_use_cutter=$ac_cv_with_cutter
+                if test "$ac_cv_use_cutter" != "no"; then
+                  PKG_CHECK_MODULES(CUTTER, cutter $1,
+                                    [], [ac_cv_use_cutter=no])
+                fi
 
-  if test "$ac_cv_use_cutter" != "no"; then
-    _PKG_CONFIG(CUTTER, variable=cutter, cutter)
-    CUTTER=$pkg_cv_CUTTER
-    AC_SUBST([CUTTER])
-  fi
+                if test "$ac_cv_use_cutter" != "no"; then
+                  _PKG_CONFIG(CUTTER, variable=cutter, cutter)
+                  CUTTER=$pkg_cv_CUTTER
+                fi])
+  AC_SUBST([CUTTER_CFLAGS])
+  AC_SUBST([CUTTER_LIBS])
+  AC_SUBST([CUTTER])
 ])
 
 AC_DEFUN([AC_CHECK_GCUTTER],
 [
   AC_CHECK_CUTTER($1)
-  ac_cv_use_gcutter=no
-  if test "$ac_cv_use_cutter" != "no"; then
-    PKG_CHECK_MODULES(GCUTTER, gcutter $1, [ac_cv_use_gcutter=yes], [:])
-    AC_SUBST([GCUTTER_CFLAGS])
-    AC_SUBST([GCUTTER_LIBS])
-  fi
+  AC_CACHE_VAL([ac_cv_use_gcutter],
+               [ac_cv_use_gcutter=no
+		if test "$ac_cv_use_cutter" != "no"; then
+		  PKG_CHECK_MODULES(GCUTTER, gcutter $1,
+                                    [ac_cv_use_gcutter=yes], [:])
+		fi])
+  AC_SUBST([GCUTTER_CFLAGS])
+  AC_SUBST([GCUTTER_LIBS])
 ])
 
 AC_DEFUN([AC_CHECK_CPPCUTTER],
 [
   AC_CHECK_CUTTER($1)
-  ac_cv_use_cppcutter=no
-  if test "$ac_cv_use_cppcutter" != "no"; then
-    PKG_CHECK_MODULES(CPPCUTTER, cppcutter $1, [ac_cv_use_cppcutter=yes], [:])
-    AC_SUBST([CPPCUTTER_CFLAGS])
-    AC_SUBST([PCPCUTTER_LIBS])
-  fi
+  AC_CACHE_VAL([ac_cv_use_cppcutter],
+               [ac_cv_use_cppcutter=no
+		if test "$ac_cv_use_cutter" != "no"; then
+		  PKG_CHECK_MODULES(CPPCUTTER, cppcutter $1,
+                                    [ac_cv_use_cppcutter=yes], [:])
+		fi])
+  AC_SUBST([CPPCUTTER_CFLAGS])
+  AC_SUBST([CPPCUTTER_LIBS])
 ])
 
 AC_DEFUN([AC_CHECK_GDKCUTTER_PIXBUF],
 [
   AC_CHECK_GCUTTER($1)
-  ac_cv_use_gdkcutter_pixbuf=no
-  if test "$ac_cv_use_cutter" != "no"; then
-    PKG_CHECK_MODULES(GDKCUTTER_PIXBUF, gdkcutter-pixbuf $1,
-                      [ac_cv_use_gdkcutter_pixbuf=yes], [:])
-    AC_SUBST([GDKCUTTER_PIXBUF_CFLAGS])
-    AC_SUBST([GDKCUTTER_PIXBUF_LIBS])
-  fi
+  AC_CACHE_VAL([ac_cv_use_gdkcutter_pixbuf],
+               [ac_cv_use_gdkcutter_pixbuf=no
+		if test "$ac_cv_use_cutter" != "no"; then
+		  PKG_CHECK_MODULES(GDKCUTTER_PIXBUF, gdkcutter-pixbuf $1,
+				    [ac_cv_use_gdkcutter_pixbuf=yes], [:])
+		fi])
+  AC_SUBST([GDKCUTTER_PIXBUF_CFLAGS])
+  AC_SUBST([GDKCUTTER_PIXBUF_LIBS])
 ])
 
 AC_DEFUN([AC_CHECK_SOUPCUTTER],
 [
   AC_CHECK_GCUTTER($1)
-  ac_cv_use_soupcutter=no
-  if test "$ac_cv_use_cutter" != "no"; then
-    PKG_CHECK_MODULES(SOUPCUTTER, soupcutter $1,
-                      [ac_cv_use_soupcutter=yes], [:])
-    AC_SUBST([SOUPCUTTER_CFLAGS])
-    AC_SUBST([SOUPCUTTER_LIBS])
-  fi
+  AC_CACHE_VAL([ac_cv_use_soupcutter],
+	       [ac_cv_use_soupcutter=no
+		if test "$ac_cv_use_cutter" != "no"; then
+		  PKG_CHECK_MODULES(SOUPCUTTER, soupcutter $1,
+				    [ac_cv_use_soupcutter=yes], [:])
+		fi])
+  AC_SUBST([SOUPCUTTER_CFLAGS])
+  AC_SUBST([SOUPCUTTER_LIBS])
 ])

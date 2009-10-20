@@ -1,5 +1,7 @@
 2009-10-20  Kouhei Sutou  <kou@clear-code.com>
 
+	* m4macros/cutter.m4: guard duplicated cutter check.
+
 	* NEWS*/, html/index.html*, debian/changelog,
 	rpm/fedora/cutter.spec.in: 10-19 -> 10-20.
 
