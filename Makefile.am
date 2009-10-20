@@ -54,7 +54,8 @@ release: dist
 	  $(PACKAGE_NAME) $(VERSION) README NEWS		\
 	  $(PACKAGE)-$(VERSION).tar.gz				\
 	  $(PACKAGE)-$(VERSION)-0.src.rpm			\
-	  $(PACKAGE)-$(VERSION)-0.x86_64.rpm
+	  $(PACKAGE)-$(VERSION)-0.x86_64.rpm			\
+	  $(PACKAGE)-$(VERSION).zip
 
 upload-doc:
 	cd html && $(MAKE) $(AM_MAKEFLAGS) upload
