@@ -1,5 +1,7 @@
 2009-10-20  Kouhei Sutou  <kou@clear-code.com>
 
+	* misc/release.rb: follow the recent SF.net changes.
+
 	* configure.ac: 1.0.9 -> 1.1.0.
 
 	* m4macros/cutter.m4: guard duplicated cutter check.

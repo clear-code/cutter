@@ -38,7 +38,7 @@ def login(agent, user_name, password=nil)
   rescue WWW::Mechanize::ResponseCodeError
   end
   raise "login failed" unless /Log Out|Log&nbsp;out/ =~ page.body
-  page = agent.get("https://sourceforge.net/my/")
+  page = agent.get("https://sourceforge.net/users/#{user_name}")
   page
 end
 
@@ -69,7 +69,7 @@ end
 
 def go_development_page(agent, project_page)
   development_page_link = project_page.links.find do |link|
-    /\bprojects\b/ =~ link.href and /\ADevelop\z/ =~ link.text
+    /\bprojects\b/ =~ link.href and /\bDevelop\b/ =~ link.text
   end
   agent.click(development_page_link)
 end
