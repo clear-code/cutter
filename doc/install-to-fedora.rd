@@ -31,8 +31,8 @@ need a package for another environment, you can request on
 ((<mailing
 list|URL:https://lists.sourceforge.net/lists/listinfo/cutter-users-en>)).
 
-  % wget http://downloads.sourceforge.net/cutter/cutter-1.0.8-0.x86_64.rpm
-  % sudo rpm -Uvh cutter-1.0.8-0.x86_64.rpm
+  % wget http://downloads.sourceforge.net/cutter/cutter-1.0.9-0.x86_64.rpm
+  % sudo rpm -Uvh cutter-1.0.9-0.x86_64.rpm
 
 == The next step
 

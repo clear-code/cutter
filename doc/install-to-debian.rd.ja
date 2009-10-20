@@ -11,13 +11,22 @@ Debian GNU/LinuxへのCutterのインストール方法を説明します。
 CutterのDebianパッケージが提供されているので、aptitudeでインス
 トールできます。
 
-現在は、Debian GNU/Linux sid i386/amd64用のパッケージのみ提供
-しています。他のバージョンが必要な場合は((<メーリングリスト
-|URL:https://lists.sourceforge.net/lists/listinfo/cutter-users-ja>))
+現在は、Debian GNU/Linux lenny/sid i386/amd64用のパッケージを
+提供しています。他のバージョンが必要な場合は((<メーリングリス
+ト|URL:https://lists.sourceforge.net/lists/listinfo/cutter-users-ja>))
 でリクエストしてください。
 
-まず、以下のapt lineを/etc/apt/sources.listに追加します。
+lennyの場合は以下のapt lineを書いた
+/etc/apt/sources.list.d/cutter.listを作成してください。
 
+/etc/apt/sources.list.d/cutter.list:
+  deb http://cutter.sourceforge.net/debian/ lenny main
+  deb-src http://cutter.sourceforge.net/debian/ lenny main
+
+sidの場合は以下のapt lineを書いた
+/etc/apt/sources.list.d/cutter.listを作成してください。
+
+/etc/apt/sources.list.d/cutter.list:
   deb http://cutter.sourceforge.net/debian/ unstable main
   deb-src http://cutter.sourceforge.net/debian/ unstable main
 

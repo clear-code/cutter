@@ -47,9 +47,9 @@ We install GLib into /usr/local/.
 We install Cutter.
 
   % cd
-  % wget http://downloads.sourceforge.net/cutter/cutter-1.0.8.tar.gz
-  % tar xvzf cutter-1.0.8.tar.gz
-  % cd cutter-1.0.8
+  % wget http://downloads.sourceforge.net/cutter/cutter-1.0.9.tar.gz
+  % tar xvzf cutter-1.0.9.tar.gz
+  % cd cutter-1.0.9
   % ./configure PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
   % make
   % make install

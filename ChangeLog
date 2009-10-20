@@ -1,5 +1,7 @@
 2009-10-20  Kouhei Sutou  <kou@clear-code.com>
 
+	* doc/install-*: update.
+
 	* Makefile.am (release): add .zip.
 
 	* misc/release.rb: follow the recent SF.net changes.

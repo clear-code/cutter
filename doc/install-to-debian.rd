@@ -11,14 +11,22 @@ GNU/Linux.
 
 We can use aptitude because Cutter provides Debian packages.
 
-There are packages for Debian GNU/Linux sid i386/amd64. If
-you need a package for another environment, you can request
-on ((<mailing
+There are packages for Debian GNU/Linux lenny/sid
+i386/amd64. If you need a package for another environment,
+you can request on ((<mailing
 list|URL:https://lists.sourceforge.net/lists/listinfo/cutter-users-en>)).
 
-We need to add the following apt lines to
-/etc/apt/sources.list:
+Here are apt lines for for lenny. We put them into
+/etc/apt/sources.list/cutter.list.
 
+/etc/apt/sources.list/cutter.list:
+  deb http://cutter.sourceforge.net/debian/ lenny main
+  deb-src http://cutter.sourceforge.net/debian/ lenny main
+
+Here are apt lines for for sid. We put them into
+/etc/apt/sources.list/cutter.list.
+
+/etc/apt/sources.list/cutter.list:
   deb http://cutter.sourceforge.net/debian/ unstable main
   deb-src http://cutter.sourceforge.net/debian/ unstable main
 

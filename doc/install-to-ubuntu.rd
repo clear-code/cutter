@@ -11,16 +11,24 @@ Linux.
 
 We can use aptitude because Cutter provides Debian packages.
 
-There is a package for Ubuntu Linux Hardy Heron amd64. If
-you need a package for another environment, you can request
-on ((<mailing
+There are packages for Ubuntu Linux Hardy Heron/Jaunty
+Jackalope i386/amd64. If you need a package for another
+environment, you can request on ((<mailing
 list|URL:https://lists.sourceforge.net/lists/listinfo/cutter-users-en>)).
 
-We need to add the following apt lines to
-/etc/apt/sources.list:
+Here are apt lines for for Hardy. We put them into
+/etc/apt/sources.list/cutter.list.
 
+/etc/apt/sources.list/cutter.list:
   deb http://cutter.sourceforge.net/ubuntu/ hardy main
   deb-src http://cutter.sourceforge.net/ubuntu/ hardy main
+
+Here are apt lines for for Jaunty. We put them into
+/etc/apt/sources.list/cutter.list.
+
+/etc/apt/sources.list/cutter.list:
+  deb http://cutter.sourceforge.net/ubuntu/ jaunty main
+  deb-src http://cutter.sourceforge.net/ubuntu/ jaunty main
 
 Cutter packages are signed by key of
 kou@cozmixng.org/kou@clear-code.com. If we trust the key, we
