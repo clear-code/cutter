@@ -6,7 +6,7 @@
 
 === Improvements
 
-  * Add an function to ((<Assertion Utilities for GHashTable|cutter-gcut-hash-table.html>)):
+  * Add a function to ((<Assertion Utilities for GHashTable|cutter-gcut-hash-table.html>)):
     * ((<gcut_hash_table_inspect_sorted()|cutter-gcut-hash-table.html#gcut-hash-table-inspect-sorted>))
   * Inspect hash table after sorted by key
   * Support colorized diff: ((<colorized-diff.png>))
