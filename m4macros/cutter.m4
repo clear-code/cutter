@@ -120,14 +120,14 @@ AC_DEFUN([AC_CHECK_GCUTTER],
   fi
 ])
 
-AC_DEFUN([AC_CHECK_CUTTERPP],
+AC_DEFUN([AC_CHECK_CPPCUTTER],
 [
   AC_CHECK_CUTTER($1)
-  ac_cv_use_cutterpp=no
-  if test "$ac_cv_use_cutterpp" != "no"; then
-    PKG_CHECK_MODULES(CUTTERPP, cutter++ $1, [ac_cv_use_cutterpp=yes], [:])
-    AC_SUBST([CUTTERPP_CFLAGS])
-    AC_SUBST([CUTTERPP_LIBS])
+  ac_cv_use_cppcutter=no
+  if test "$ac_cv_use_cppcutter" != "no"; then
+    PKG_CHECK_MODULES(CPPCUTTER, cppcutter $1, [ac_cv_use_cppcutter=yes], [:])
+    AC_SUBST([CPPCUTTER_CFLAGS])
+    AC_SUBST([PCPCUTTER_LIBS])
   fi
 ])
 

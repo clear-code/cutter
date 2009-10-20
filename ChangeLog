@@ -1,3 +1,7 @@
+2009-10-20  Kouhei Sutou  <kou@clear-code.com>
+
+	* m4macros/cutter.m4: cutterpp -> cppcutter.
+
 2009-10-19  Kouhei Sutou  <kou@clear-code.com>
 
 	* apt/Makefile: parameterize architectures and code names.
