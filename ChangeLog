@@ -1,5 +1,10 @@
 2009-10-23  Kouhei Sutou  <kou@clear-code.com>
 
+	* test/cppcutter/test-cppcut-assertions.cpp: pend
+	cut::assert_equal(float expected, float actual, float error)
+	because it doesn't match cppcut_assert_equal() signature. Need
+	better API idea.
+
 	* cppcutter/cppcut-assertions-helper.[cpp,h],
 	test/cppcutter/test-cppcut-assertions.cpp (cut::assert_equal()):
 	support long and unsigned long literal.

@@ -33,8 +33,6 @@ void test_equal_int_reference(void);
 void test_equal_unsigned_int(void);
 void test_equal_long(void);
 void test_equal_unsigned_long(void);
-void test_equal_float(void);
-void test_equal_double(void);
 void test_equal_c_string(void);
 void test_equal_c_string_reference(void);
 void test_equal_string(void);
