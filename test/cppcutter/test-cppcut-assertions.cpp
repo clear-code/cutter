@@ -31,6 +31,10 @@ CPPCUT_BEGIN_TEST_DECLS
 void test_equal_int(void);
 void test_equal_int_reference(void);
 void test_equal_unsigned_int(void);
+void test_equal_long(void);
+void test_equal_unsigned_long(void);
+void test_equal_float(void);
+void test_equal_double(void);
 void test_equal_c_string(void);
 void test_equal_c_string_reference(void);
 void test_equal_string(void);
@@ -169,6 +173,54 @@ test_equal_unsigned_int (void)
                            "<100 == 2 - 1>",
                            "100", "1",
                            FAIL_LOCATION, "void stub_equal_unsigned_int()",
+                           NULL);
+}
+
+static void
+stub_equal_long (void)
+{
+    cppcut_assert_equal(2147483648, 2147483648);
+    MARK_FAIL(cppcut_assert_equal(2147483648, 2147483648 + 1));
+}
+
+void
+test_equal_long (void)
+{
+    test = cut_test_new("equal_long test", stub_equal_long);
+    cut_assert_not_null(test);
+
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "equal_long test",
+                           NULL,
+                           "<2147483648 == 2147483648 + 1>",
+                           "2147483648", "2147483649",
+                           FAIL_LOCATION, "void stub_equal_long()",
+                           NULL);
+}
+
+static void
+stub_equal_unsigned_long (void)
+{
+    cppcut_assert_equal(4294967296, 4294967296);
+    MARK_FAIL(cppcut_assert_equal(4294967296, 4294967296 + 1));
+}
+
+void
+test_equal_unsigned_long (void)
+{
+    test = cut_test_new("equal_unsigned_long test", stub_equal_unsigned_long);
+    cut_assert_not_null(test);
+
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "equal_unsigned_long test",
+                           NULL,
+                           "<4294967296 == 4294967296 + 1>",
+                           "4294967296", "4294967297",
+                           FAIL_LOCATION, "void stub_equal_unsigned_long()",
                            NULL);
 }
 

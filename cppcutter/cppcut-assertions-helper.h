@@ -32,6 +32,12 @@ namespace cut
     void assert_equal(unsigned int expected, unsigned int actual,
                       const char *expression_expected,
                       const char *expression_actual);
+    void assert_equal(long expected, long actual,
+                      const char *expression_expected,
+                      const char *expression_actual);
+    void assert_equal(unsigned long expected, unsigned long actual,
+                      const char *expression_expected,
+                      const char *expression_actual);
 
     template <class Type> void assert_equal(Type& expected, Type& actual,
                                             const char *expression_expected,

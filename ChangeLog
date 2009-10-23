@@ -2,6 +2,10 @@
 
 	* cppcutter/cppcut-assertions-helper.[cpp,h],
 	test/cppcutter/test-cppcut-assertions.cpp (cut::assert_equal()):
+	support long and unsigned long literal.
+
+	* cppcutter/cppcut-assertions-helper.[cpp,h],
+	test/cppcutter/test-cppcut-assertions.cpp (cut::assert_equal()):
 	support int, unsigned int and char * literal.
 
 2009-10-20  Kouhei Sutou  <kou@clear-code.com>
