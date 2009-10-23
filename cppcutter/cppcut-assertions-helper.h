@@ -26,9 +26,24 @@
 
 namespace cut
 {
+    void assert_equal(int expected, int actual,
+                      const char *expression_expected,
+                      const char *expression_actual);
+    void assert_equal(unsigned int expected, unsigned int actual,
+                      const char *expression_expected,
+                      const char *expression_actual);
+
     template <class Type> void assert_equal(Type& expected, Type& actual,
                                             const char *expression_expected,
                                             const char *expression_actual)
+    {
+        assert_equal_reference(expected, actual,
+                               expression_expected, expression_actual);
+    };
+
+    template <class Type> void assert_equal_reference(
+        Type& expected, Type& actual,
+        const char *expression_expected, const char *expression_actual)
     {
         if (expected == actual) {
             cut_test_pass();

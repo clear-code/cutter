@@ -29,7 +29,10 @@
 
 CPPCUT_BEGIN_TEST_DECLS
 void test_equal_int(void);
+void test_equal_int_reference(void);
+void test_equal_unsigned_int(void);
 void test_equal_c_string(void);
+void test_equal_c_string_reference(void);
 void test_equal_string(void);
 CPPCUT_END_TEST_DECLS
 
@@ -98,10 +101,8 @@ cut_teardown (void)
 static void
 stub_equal_int (void)
 {
-    int expected = 100;
-    int actual = -100;
-    cppcut_assert_equal(expected, expected);
-    MARK_FAIL(cppcut_assert_equal(expected, actual));
+    cppcut_assert_equal(100, 100);
+    MARK_FAIL(cppcut_assert_equal(100, 1 - 2));
 }
 
 void
@@ -115,19 +116,67 @@ test_equal_int (void)
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "equal_int test",
                            NULL,
+                           "<100 == 1 - 2>",
+                           "100", "-1",
+                           FAIL_LOCATION, "void stub_equal_int()",
+                           NULL);
+}
+
+static void
+stub_equal_int_reference (void)
+{
+    int expected = 100;
+    int actual = -100;
+    cppcut_assert_equal(expected, expected);
+    MARK_FAIL(cppcut_assert_equal(expected, actual));
+}
+
+void
+test_equal_int_reference (void)
+{
+    test = cut_test_new("equal_int_reference test", stub_equal_int_reference);
+    cut_assert_not_null(test);
+
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "equal_int_reference test",
+                           NULL,
                            "<expected == actual>",
                            "100", "-100",
-                           FAIL_LOCATION, "void stub_equal_int()",
+                           FAIL_LOCATION, "void stub_equal_int_reference()",
+                           NULL);
+}
+
+static void
+stub_equal_unsigned_int (void)
+{
+    cppcut_assert_equal(100, 100);
+    MARK_FAIL(cppcut_assert_equal(100, 2 - 1));
+}
+
+void
+test_equal_unsigned_int (void)
+{
+    test = cut_test_new("equal_unsigned_int test", stub_equal_unsigned_int);
+    cut_assert_not_null(test);
+
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "equal_unsigned_int test",
+                           NULL,
+                           "<100 == 2 - 1>",
+                           "100", "1",
+                           FAIL_LOCATION, "void stub_equal_unsigned_int()",
                            NULL);
 }
 
 static void
 stub_equal_c_string (void)
 {
-    char expected[] = "abcde";
-    char actual[] = "ABcDE";
-    cppcut_assert_equal(expected, expected);
-    MARK_FAIL(cppcut_assert_equal(expected, actual));
+    cppcut_assert_equal("abcde", "abcde");
+    MARK_FAIL(cppcut_assert_equal("abcde", "ABcDE"));
 }
 
 void
@@ -141,9 +190,36 @@ test_equal_c_string (void)
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "equal_c_string test",
                            NULL,
-                           "<expected == actual>",
+                           "<\"abcde\" == \"ABcDE\">",
                            "abcde", "ABcDE",
                            FAIL_LOCATION, "void stub_equal_c_string()",
+                           NULL);
+}
+
+static void
+stub_equal_c_string_reference (void)
+{
+    char expected[] = "abcde";
+    char actual[] = "ABcDE";
+    cppcut_assert_equal(expected, expected);
+    MARK_FAIL(cppcut_assert_equal(expected, actual));
+}
+
+void
+test_equal_c_string_reference (void)
+{
+    test = cut_test_new("equal_c_string_reference test",
+                        stub_equal_c_string_reference);
+    cut_assert_not_null(test);
+
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "equal_c_string_reference test",
+                           NULL,
+                           "<expected == actual>",
+                           "abcde", "ABcDE",
+                           FAIL_LOCATION, "void stub_equal_c_string_reference()",
                            NULL);
 }
 

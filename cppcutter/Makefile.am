@@ -23,4 +23,5 @@ cppcutter_include_HEADERS = 		\
 	$(cppcutter_public_headers)
 
 libcppcutter_la_SOURCES =		\
-	$(cppcutter_public_headers)
+	$(cppcutter_public_headers)	\
+	cppcut-assertions-helper.cpp
