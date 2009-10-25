@@ -177,8 +177,13 @@ test_equal_unsigned_int (void)
 static void
 stub_equal_long (void)
 {
-    cppcut_assert_equal(2147483648, 2147483648);
-    MARK_FAIL(cppcut_assert_equal(2147483648, 2147483648 + 1));
+#if GLIB_SIZEOF_LONG == 8
+    cppcut_assert_equal(G_MAXINT64, G_MAXINT64);
+    MARK_FAIL(cppcut_assert_equal(G_MAXINT64, G_MAXINT64 - 1));
+#else
+    cppcut_assert_equal(G_MAXINT32, G_MAXINT32);
+    MARK_FAIL(cppcut_assert_equal(G_MAXINT32, G_MAXINT32 - 1));
+#endif
 }
 
 void
@@ -192,8 +197,15 @@ test_equal_long (void)
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "equal_long test",
                            NULL,
-                           "<2147483648 == 2147483648 + 1>",
-                           "2147483648", "2147483649",
+#if GLIB_SIZEOF_LONG == 8
+                           "<G_MAXINT64 == G_MAXINT64 - 1>",
+                           cut_take_printf("%ld", G_MAXINT64),
+                           cut_take_printf("%ld", G_MAXINT64 - 1),
+#else
+                           "<G_MAXINT32 == G_MAXINT32 - 1>",
+                           cut_take_printf("%ld", G_MAXINT32),
+                           cut_take_printf("%ld", G_MAXINT32 - 1),
+#endif
                            FAIL_LOCATION, "void stub_equal_long()",
                            NULL);
 }
@@ -201,8 +213,13 @@ test_equal_long (void)
 static void
 stub_equal_unsigned_long (void)
 {
-    cppcut_assert_equal(4294967296, 4294967296);
-    MARK_FAIL(cppcut_assert_equal(4294967296, 4294967296 + 1));
+#if GLIB_SIZEOF_LONG == 8
+    cppcut_assert_equal(G_MAXUINT64, G_MAXUINT64);
+    MARK_FAIL(cppcut_assert_equal(G_MAXUINT64, G_MAXUINT64 - 1));
+#else
+    cppcut_assert_equal(G_MAXUINT32, G_MAXUINT32);
+    MARK_FAIL(cppcut_assert_equal(G_MAXUINT32, G_MAXUINT32 - 1));
+#endif
 }
 
 void
@@ -216,8 +233,15 @@ test_equal_unsigned_long (void)
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "equal_unsigned_long test",
                            NULL,
-                           "<4294967296 == 4294967296 + 1>",
-                           "4294967296", "4294967297",
+#if GLIB_SIZEOF_LONG == 8
+                           "<G_MAXUINT64 == G_MAXUINT64 - 1>",
+                           cut_take_printf("%lu", G_MAXUINT64),
+                           cut_take_printf("%lu", G_MAXUINT64 - 1U),
+#else
+                           "<G_MAXUINT32 == G_MAXUINT32 - 1>",
+                           cut_take_printf("%lu", G_MAXUINT32),
+                           cut_take_printf("%lu", G_MAXUINT32 - 1U),
+#endif
                            FAIL_LOCATION, "void stub_equal_unsigned_long()",
                            NULL);
 }
