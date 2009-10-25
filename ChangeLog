@@ -1,5 +1,7 @@
 2009-10-25  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gst-plugins/Makefile.am: $(no_undefined) -> -no-undefined.
+
 	* gst-plugins/Makefile.am: remove needless variables.
 
 	* doc/Makefile.am (SUFFIXES): SUFFIXES is a variable not target.

@@ -29,6 +29,6 @@ libgstcuttertest_la_LIBADD = 			\
 libgstcuttertest_la_LDFLAGS =		\
 	-avoid-version -module		\
 	-export-dynamic 		\
-	$(no_undefined)			\
+	-no-undefined			\
 	$(LIBTOOL_EXPORT_OPTIONS)
 endif
