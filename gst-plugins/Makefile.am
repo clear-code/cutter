@@ -19,18 +19,14 @@ libgstcuttertest_la_SOURCES =		\
 	gst-cutter-server.c
 
 libgstcuttertest_la_CFLAGS = 		\
-        $(GST_PLUGINS_BASE_CFLAGS)	\
-	$(GST_BASE_CFLAGS) 		\
 	$(GSTREAMER_CFLAGS)		\
 	$(CUTTER_CFLAGS)
 
 libgstcuttertest_la_LIBADD = 			\
-	$(GST_BASE_LIBS) 			\
 	$(GSTREAMER_LIBS) 			\
 	$(top_builddir)/cutter/libcutter.la
 
 libgstcuttertest_la_LDFLAGS =		\
-	$(GST_PLUGIN_LDFLAGS)		\
 	-avoid-version -module		\
 	-export-dynamic 		\
 	$(no_undefined)			\
