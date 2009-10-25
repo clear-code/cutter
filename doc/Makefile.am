@@ -61,7 +61,7 @@ cut-diff.jman: cut-diff.rd.ja
 
 MAINTAINERCLEANFILES = $(dist_man1_MANS) $(dist_ja_man1_mans)
 
-SUFFIXES: .rd .man .jman .svg .png
+SUFFIXES = .rd .man .jman .svg .png
 
 RD2LIB_DIR = $(top_srcdir)/misc
 RD2MAN_LIB_FILE = rd2man-lib.rb
