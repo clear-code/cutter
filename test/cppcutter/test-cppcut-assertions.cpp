@@ -201,12 +201,12 @@ test_equal_long (void)
                            NULL,
 #if GLIB_SIZEOF_LONG == 8
                            "<G_MAXINT64 == G_MAXINT64 - 1>",
-                           cut_take_printf("%" G_GINT64_FOMART, G_MAXINT64),
-                           cut_take_printf("%" G_GINT64_FOMART, G_MAXINT64 - 1),
+                           cut_take_printf("%" G_GINT64_FORMAT, G_MAXINT64),
+                           cut_take_printf("%" G_GINT64_FORMAT, G_MAXINT64 - 1),
 #else
                            "<G_MAXINT32 == G_MAXINT32 - 1>",
-                           cut_take_printf("%" G_GINT32_FOMART, G_MAXINT32),
-                           cut_take_printf("%" G_GINT32_FOMART, G_MAXINT32 - 1),
+                           cut_take_printf("%" G_GINT32_FORMAT, G_MAXINT32),
+                           cut_take_printf("%" G_GINT32_FORMAT, G_MAXINT32 - 1),
 #endif
                            FAIL_LOCATION, "void stub_equal_long()",
                            NULL);
@@ -269,8 +269,8 @@ test_equal_long_long (void)
                            "equal_long_long test",
                            NULL,
                            "<G_MAXINT64 == G_MAXINT64 - 1>",
-                           cut_take_printf("%" G_GINT64_FOMART, G_MAXINT64),
-                           cut_take_printf("%" G_GINT64_FOMART, G_MAXINT64 - 1),
+                           cut_take_printf("%" G_GINT64_FORMAT, G_MAXINT64),
+                           cut_take_printf("%" G_GINT64_FORMAT, G_MAXINT64 - 1),
                            FAIL_LOCATION, "void stub_equal_long_long()",
                            NULL);
 }
@@ -295,8 +295,8 @@ test_equal_unsigned_long_long (void)
                            "equal_unsigned_long_long test",
                            NULL,
                            "<G_MAXUINT64 == G_MAXUINT64 - 1>",
-                           cut_take_printf("%" G_GUINT64_FOMART, G_MAXUINT64),
-                           cut_take_printf("%" G_GUINT64_FOMART,
+                           cut_take_printf("%" G_GUINT64_FORMAT, G_MAXUINT64),
+                           cut_take_printf("%" G_GUINT64_FORMAT,
                                            G_MAXUINT64 - 1U),
                            FAIL_LOCATION, "void stub_equal_unsigned_long_long()",
                            NULL);
