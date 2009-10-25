@@ -24,9 +24,7 @@ cut::assert_equal(int expected, int actual,
                   const char *expression_expected,
                   const char *expression_actual)
 {
-    int expected_ = expected;
-    int actual_ = actual;
-    cut::assert_equal_reference(expected_, actual_,
+    cut::assert_equal_reference(expected, actual,
                                 expression_expected, expression_actual);
 }
 
@@ -35,9 +33,7 @@ cut::assert_equal(unsigned int expected, unsigned int actual,
                   const char *expression_expected,
                   const char *expression_actual)
 {
-    unsigned int expected_ = expected;
-    unsigned int actual_ = actual;
-    cut::assert_equal_reference(expected_, actual_,
+    cut::assert_equal_reference(expected, actual,
                                 expression_expected, expression_actual);
 }
 
@@ -46,9 +42,7 @@ cut::assert_equal(long expected, long actual,
                   const char *expression_expected,
                   const char *expression_actual)
 {
-    long expected_ = expected;
-    long actual_ = actual;
-    cut::assert_equal_reference(expected_, actual_,
+    cut::assert_equal_reference(expected, actual,
                                 expression_expected, expression_actual);
 }
 
@@ -57,9 +51,7 @@ cut::assert_equal(unsigned long expected, unsigned long actual,
                   const char *expression_expected,
                   const char *expression_actual)
 {
-    unsigned long expected_ = expected;
-    unsigned long actual_ = actual;
-    cut::assert_equal_reference(expected_, actual_,
+    cut::assert_equal_reference(expected, actual,
                                 expression_expected, expression_actual);
 }
 

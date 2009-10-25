@@ -1,5 +1,8 @@
 2009-10-25  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cppcutter/cppcut-assertions-helper.cpp: remove needless
+	variables.
+
 	* gst-plugins/Makefile.am: $(no_undefined) -> -no-undefined.
 
 	* gst-plugins/Makefile.am: remove needless variables.
