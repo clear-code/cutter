@@ -1,5 +1,8 @@
 2009-10-25  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/cppcutter/test-cppcut-assertions.cpp: use format macro for
+	environment dependent type.
+
 	* cppcutter/cppcut-assertions-helper.{cpp,h},
 	test/cppcutter/test-cppcut-assertions.cpp: support long long.
 
