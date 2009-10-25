@@ -1,5 +1,8 @@
 2009-10-25  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cppcutter/cppcut-assertions-helper.{cpp,h},
+	test/cppcutter/test-cppcut-assertions.cpp: support long long.
+
 	* test/cppcutter/test-cppcut-assertions.cpp: work on 32bit
 	environment.
 

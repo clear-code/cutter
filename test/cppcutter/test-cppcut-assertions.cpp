@@ -33,6 +33,8 @@ void test_equal_int_reference(void);
 void test_equal_unsigned_int(void);
 void test_equal_long(void);
 void test_equal_unsigned_long(void);
+void test_equal_long_long(void);
+void test_equal_unsigned_long_long(void);
 void test_equal_c_string(void);
 void test_equal_c_string_reference(void);
 void test_equal_string(void);
@@ -243,6 +245,57 @@ test_equal_unsigned_long (void)
                            cut_take_printf("%lu", G_MAXUINT32 - 1U),
 #endif
                            FAIL_LOCATION, "void stub_equal_unsigned_long()",
+                           NULL);
+}
+
+static void
+stub_equal_long_long (void)
+{
+    cppcut_assert_equal(G_MAXINT64, G_MAXINT64);
+    MARK_FAIL(cppcut_assert_equal(G_MAXINT64, G_MAXINT64 - 1));
+}
+
+void
+test_equal_long_long (void)
+{
+    test = cut_test_new("equal_long_long test", stub_equal_long_long);
+    cut_assert_not_null(test);
+
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "equal_long_long test",
+                           NULL,
+                           "<G_MAXINT64 == G_MAXINT64 - 1>",
+                           cut_take_printf("%ld", G_MAXINT64),
+                           cut_take_printf("%ld", G_MAXINT64 - 1),
+                           FAIL_LOCATION, "void stub_equal_long_long()",
+                           NULL);
+}
+
+static void
+stub_equal_unsigned_long_long (void)
+{
+    cppcut_assert_equal(G_MAXUINT64, G_MAXUINT64);
+    MARK_FAIL(cppcut_assert_equal(G_MAXUINT64, G_MAXUINT64 - 1));
+}
+
+void
+test_equal_unsigned_long_long (void)
+{
+    test = cut_test_new("equal_unsigned_long_long test",
+                        stub_equal_unsigned_long_long);
+    cut_assert_not_null(test);
+
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "equal_unsigned_long_long test",
+                           NULL,
+                           "<G_MAXUINT64 == G_MAXUINT64 - 1>",
+                           cut_take_printf("%lu", G_MAXUINT64),
+                           cut_take_printf("%lu", G_MAXUINT64 - 1U),
+                           FAIL_LOCATION, "void stub_equal_unsigned_long_long()",
                            NULL);
 }
 

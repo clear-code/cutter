@@ -55,6 +55,24 @@ cut::assert_equal(unsigned long expected, unsigned long actual,
                                 expression_expected, expression_actual);
 }
 
+void
+cut::assert_equal(long long expected, long long actual,
+                  const char *expression_expected,
+                  const char *expression_actual)
+{
+    cut::assert_equal_reference(expected, actual,
+                                expression_expected, expression_actual);
+}
+
+void
+cut::assert_equal(unsigned long long expected, unsigned long long actual,
+                  const char *expression_expected,
+                  const char *expression_actual)
+{
+    cut::assert_equal_reference(expected, actual,
+                                expression_expected, expression_actual);
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */
