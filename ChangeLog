@@ -1,5 +1,9 @@
 2009-10-25  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-helper.h, cppcutter/cppcut-assertions.h: use #
+	instead of CUT_STRINGIFY because CUT_STRINGIFY expands macro
+	unexpectedly.
+
 	* cppcutter/cppcut-assertions-helper.cpp: remove needless
 	variables.
 

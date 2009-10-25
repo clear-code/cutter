@@ -44,8 +44,7 @@
  */
 #define cppcut_assert_equal(expected, actual)             \
     cut_trace(cut::assert_equal(expected, actual,         \
-                                CUT_STRINGIFY(expected),  \
-                                CUT_STRINGIFY(actual)))
+                                #expected, #actual))
 
 #endif /* __CPPCUT_ASSERTIONS_H__ */
 
