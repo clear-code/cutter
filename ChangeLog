@@ -1,3 +1,8 @@
+2009-10-28  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-utils.c: don't inspect all data for huge data. (>=
+	1024 bytes)
+
 2009-10-27  Kouhei Sutou  <kou@cozmixng.org>
 
 	* gcutter/gcut-string-io-channel.c: check only requested
