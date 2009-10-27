@@ -1,5 +1,10 @@
 2009-10-27  Yuto Hayamizu  <y.hayamizu@gmail.com>
 
+	* configure.ac: check existence of inttypes.h for format
+	specifiers of various int types.
+
+	* cutter/cut-public.h : include inttypes.h or stdint.h.
+
 	* configure.ac: check existence of stdint.h.
 
 	* test/cutter/test-cut-assertions.c : add tests for
