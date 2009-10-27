@@ -40,8 +40,52 @@ void test_equal_boolean(void);
 void test_not_equal_boolean(void);
 void test_equal_int(void);
 void test_not_equal_int(void);
+#ifdef HAVE_STDINT_H
+void test_equal_int_least8(void);
+void test_not_equal_int_least8(void);
+void test_equal_int_least16(void);
+void test_not_equal_int_least16(void);
+void test_equal_int_least32(void);
+void test_not_equal_int_least32(void);
+void test_equal_int_least64(void);
+void test_not_equal_int_least64(void);
+void test_equal_int_fast8(void);
+void test_not_equal_int_fast8(void);
+void test_equal_int_fast16(void);
+void test_not_equal_int_fast16(void);
+void test_equal_int_fast32(void);
+void test_not_equal_int_fast32(void);
+void test_equal_int_fast64(void);
+void test_not_equal_int_fast64(void);
+void test_equal_intptr(void);
+void test_not_equal_intptr(void);
+void test_equal_intmax(void);
+void test_not_equal_intmax(void);
+#endif
 void test_equal_uint(void);
 void test_not_equal_uint(void);
+#ifdef HAVE_STDINT_H
+void test_equal_uint_least8(void);
+void test_not_equal_uint_least8(void);
+void test_equal_uint_least16(void);
+void test_not_equal_uint_least16(void);
+void test_equal_uint_least32(void);
+void test_not_equal_uint_least32(void);
+void test_equal_uint_least64(void);
+void test_not_equal_uint_least64(void);
+void test_equal_uint_fast8(void);
+void test_not_equal_uint_fast8(void);
+void test_equal_uint_fast16(void);
+void test_not_equal_uint_fast16(void);
+void test_equal_uint_fast32(void);
+void test_not_equal_uint_fast32(void);
+void test_equal_uint_fast64(void);
+void test_not_equal_uint_fast64(void);
+void test_equal_uintptr(void);
+void test_not_equal_uintptr(void);
+void test_equal_uintmax(void);
+void test_not_equal_uintmax(void);
+#endif
 void test_equal_size(void);
 void test_not_equal_size(void);
 void test_equal_string(void);
@@ -258,6 +302,446 @@ test_not_equal_int (void)
 }
 
 static void
+stub_equal_int_least8 (void)
+{
+    cut_assert_equal_int_least8(1, 1);
+    cut_assert_equal_int_least8(-1, -1);
+    MARK_FAIL(cut_assert_equal_int_least8(2 + 3, 3 + 4));
+}
+
+void
+test_equal_int_least8 (void)
+{
+    test = cut_test_new("cut_assert_equal_int_least8()", stub_equal_int_least8);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_equal_int_least8()", NULL,
+                           "<2 + 3 == 3 + 4>",
+                           "5", "7",
+                           FAIL_LOCATION, "stub_equal_int_least8",
+                           NULL);
+}
+
+static void
+stub_not_equal_int_least8 (void)
+{
+    cut_assert_not_equal_int_least8(1, 2);
+    cut_assert_not_equal_int_least8(1, -1);
+    MARK_FAIL(cut_assert_not_equal_int_least8(2 + 3, 3 + 2));
+}
+
+void
+test_not_equal_int_least8 (void)
+{
+    test = cut_test_new("cut_assert_not_equal_int_least8()", stub_not_equal_int_least8);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_not_equal_int_least8()", NULL,
+                           "<2 + 3 != 3 + 2>",
+                           "5", "5",
+                           FAIL_LOCATION, "stub_not_equal_int_least8",
+                           NULL);
+}
+
+static void
+stub_equal_int_least16 (void)
+{
+    cut_assert_equal_int_least16(1, 1);
+    cut_assert_equal_int_least16(-1, -1);
+    MARK_FAIL(cut_assert_equal_int_least16(2 + 3, 3 + 4));
+}
+
+void
+test_equal_int_least16 (void)
+{
+    test = cut_test_new("cut_assert_equal_int_least16()", stub_equal_int_least16);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_equal_int_least16()", NULL,
+                           "<2 + 3 == 3 + 4>",
+                           "5", "7",
+                           FAIL_LOCATION, "stub_equal_int_least16",
+                           NULL);
+}
+
+static void
+stub_not_equal_int_least16 (void)
+{
+    cut_assert_not_equal_int_least16(1, 2);
+    cut_assert_not_equal_int_least16(1, -1);
+    MARK_FAIL(cut_assert_not_equal_int_least16(2 + 3, 3 + 2));
+}
+
+void
+test_not_equal_int_least16 (void)
+{
+    test = cut_test_new("cut_assert_not_equal_int_least16()", stub_not_equal_int_least16);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_not_equal_int_least16()", NULL,
+                           "<2 + 3 != 3 + 2>",
+                           "5", "5",
+                           FAIL_LOCATION, "stub_not_equal_int_least16",
+                           NULL);
+}
+
+static void
+stub_equal_int_least32 (void)
+{
+    cut_assert_equal_int_least32(1, 1);
+    cut_assert_equal_int_least32(-1, -1);
+    MARK_FAIL(cut_assert_equal_int_least32(2 + 3, 3 + 4));
+}
+
+void
+test_equal_int_least32 (void)
+{
+    test = cut_test_new("cut_assert_equal_int_least32()", stub_equal_int_least32);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_equal_int_least32()", NULL,
+                           "<2 + 3 == 3 + 4>",
+                           "5", "7",
+                           FAIL_LOCATION, "stub_equal_int_least32",
+                           NULL);
+}
+
+static void
+stub_not_equal_int_least32 (void)
+{
+    cut_assert_not_equal_int_least32(1, 2);
+    cut_assert_not_equal_int_least32(1, -1);
+    MARK_FAIL(cut_assert_not_equal_int_least32(2 + 3, 3 + 2));
+}
+
+void
+test_not_equal_int_least32 (void)
+{
+    test = cut_test_new("cut_assert_not_equal_int_least32()", stub_not_equal_int_least32);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_not_equal_int_least32()", NULL,
+                           "<2 + 3 != 3 + 2>",
+                           "5", "5",
+                           FAIL_LOCATION, "stub_not_equal_int_least32",
+                           NULL);
+}
+
+static void
+stub_equal_int_least64 (void)
+{
+    cut_assert_equal_int_least64(1, 1);
+    cut_assert_equal_int_least64(-1, -1);
+    MARK_FAIL(cut_assert_equal_int_least64(2 + 3, 3 + 4));
+}
+
+void
+test_equal_int_least64 (void)
+{
+    test = cut_test_new("cut_assert_equal_int_least64()", stub_equal_int_least64);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_equal_int_least64()", NULL,
+                           "<2 + 3 == 3 + 4>",
+                           "5", "7",
+                           FAIL_LOCATION, "stub_equal_int_least64",
+                           NULL);
+}
+
+static void
+stub_not_equal_int_least64 (void)
+{
+    cut_assert_not_equal_int_least64(1, 2);
+    cut_assert_not_equal_int_least64(1, -1);
+    MARK_FAIL(cut_assert_not_equal_int_least64(2 + 3, 3 + 2));
+}
+
+void
+test_not_equal_int_least64 (void)
+{
+    test = cut_test_new("cut_assert_not_equal_int_least64()", stub_not_equal_int_least64);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_not_equal_int_least64()", NULL,
+                           "<2 + 3 != 3 + 2>",
+                           "5", "5",
+                           FAIL_LOCATION, "stub_not_equal_int_least64",
+                           NULL);
+}
+
+static void
+stub_equal_int_fast8 (void)
+{
+    cut_assert_equal_int_fast8(1, 1);
+    cut_assert_equal_int_fast8(-1, -1);
+    MARK_FAIL(cut_assert_equal_int_fast8(2 + 3, 3 + 4));
+}
+
+void
+test_equal_int_fast8 (void)
+{
+    test = cut_test_new("cut_assert_equal_int_fast8()", stub_equal_int_fast8);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_equal_int_fast8()", NULL,
+                           "<2 + 3 == 3 + 4>",
+                           "5", "7",
+                           FAIL_LOCATION, "stub_equal_int_fast8",
+                           NULL);
+}
+
+static void
+stub_not_equal_int_fast8 (void)
+{
+    cut_assert_not_equal_int_fast8(1, 2);
+    cut_assert_not_equal_int_fast8(1, -1);
+    MARK_FAIL(cut_assert_not_equal_int_fast8(2 + 3, 3 + 2));
+}
+
+void
+test_not_equal_int_fast8 (void)
+{
+    test = cut_test_new("cut_assert_not_equal_int_fast8()", stub_not_equal_int_fast8);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_not_equal_int_fast8()", NULL,
+                           "<2 + 3 != 3 + 2>",
+                           "5", "5",
+                           FAIL_LOCATION, "stub_not_equal_int_fast8",
+                           NULL);
+}
+
+static void
+stub_equal_int_fast16 (void)
+{
+    cut_assert_equal_int_fast16(1, 1);
+    cut_assert_equal_int_fast16(-1, -1);
+    MARK_FAIL(cut_assert_equal_int_fast16(2 + 3, 3 + 4));
+}
+
+void
+test_equal_int_fast16 (void)
+{
+    test = cut_test_new("cut_assert_equal_int_fast16()", stub_equal_int_fast16);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_equal_int_fast16()", NULL,
+                           "<2 + 3 == 3 + 4>",
+                           "5", "7",
+                           FAIL_LOCATION, "stub_equal_int_fast16",
+                           NULL);
+}
+
+static void
+stub_not_equal_int_fast16 (void)
+{
+    cut_assert_not_equal_int_fast16(1, 2);
+    cut_assert_not_equal_int_fast16(1, -1);
+    MARK_FAIL(cut_assert_not_equal_int_fast16(2 + 3, 3 + 2));
+}
+
+void
+test_not_equal_int_fast16 (void)
+{
+    test = cut_test_new("cut_assert_not_equal_int_fast16()", stub_not_equal_int_fast16);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_not_equal_int_fast16()", NULL,
+                           "<2 + 3 != 3 + 2>",
+                           "5", "5",
+                           FAIL_LOCATION, "stub_not_equal_int_fast16",
+                           NULL);
+}
+
+static void
+stub_equal_int_fast32 (void)
+{
+    cut_assert_equal_int_fast32(1, 1);
+    cut_assert_equal_int_fast32(-1, -1);
+    MARK_FAIL(cut_assert_equal_int_fast32(2 + 3, 3 + 4));
+}
+
+void
+test_equal_int_fast32 (void)
+{
+    test = cut_test_new("cut_assert_equal_int_fast32()", stub_equal_int_fast32);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_equal_int_fast32()", NULL,
+                           "<2 + 3 == 3 + 4>",
+                           "5", "7",
+                           FAIL_LOCATION, "stub_equal_int_fast32",
+                           NULL);
+}
+
+static void
+stub_not_equal_int_fast32 (void)
+{
+    cut_assert_not_equal_int_fast32(1, 2);
+    cut_assert_not_equal_int_fast32(1, -1);
+    MARK_FAIL(cut_assert_not_equal_int_fast32(2 + 3, 3 + 2));
+}
+
+void
+test_not_equal_int_fast32 (void)
+{
+    test = cut_test_new("cut_assert_not_equal_int_fast32()", stub_not_equal_int_fast32);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_not_equal_int_fast32()", NULL,
+                           "<2 + 3 != 3 + 2>",
+                           "5", "5",
+                           FAIL_LOCATION, "stub_not_equal_int_fast32",
+                           NULL);
+}
+
+static void
+stub_equal_int_fast64 (void)
+{
+    cut_assert_equal_int_fast64(1, 1);
+    cut_assert_equal_int_fast64(-1, -1);
+    MARK_FAIL(cut_assert_equal_int_fast64(2 + 3, 3 + 4));
+}
+
+void
+test_equal_int_fast64 (void)
+{
+    test = cut_test_new("cut_assert_equal_int_fast64()", stub_equal_int_fast64);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_equal_int_fast64()", NULL,
+                           "<2 + 3 == 3 + 4>",
+                           "5", "7",
+                           FAIL_LOCATION, "stub_equal_int_fast64",
+                           NULL);
+}
+
+static void
+stub_not_equal_int_fast64 (void)
+{
+    cut_assert_not_equal_int_fast64(1, 2);
+    cut_assert_not_equal_int_fast64(1, -1);
+    MARK_FAIL(cut_assert_not_equal_int_fast64(2 + 3, 3 + 2));
+}
+
+void
+test_not_equal_int_fast64 (void)
+{
+    test = cut_test_new("cut_assert_not_equal_int_fast64()", stub_not_equal_int_fast64);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_not_equal_int_fast64()", NULL,
+                           "<2 + 3 != 3 + 2>",
+                           "5", "5",
+                           FAIL_LOCATION, "stub_not_equal_int_fast64",
+                           NULL);
+}
+
+static void
+stub_equal_intptr (void)
+{
+    cut_assert_equal_intptr(1, 1);
+    cut_assert_equal_intptr(-1, -1);
+    MARK_FAIL(cut_assert_equal_intptr(2 + 3, 3 + 4));
+}
+
+void
+test_equal_intptr (void)
+{
+    test = cut_test_new("cut_assert_equal_intptr()", stub_equal_intptr);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_equal_intptr()", NULL,
+                           "<2 + 3 == 3 + 4>",
+                           "5", "7",
+                           FAIL_LOCATION, "stub_equal_intptr",
+                           NULL);
+}
+
+static void
+stub_not_equal_intptr (void)
+{
+    cut_assert_not_equal_intptr(1, 2);
+    cut_assert_not_equal_intptr(1, -1);
+    MARK_FAIL(cut_assert_not_equal_intptr(2 + 3, 3 + 2));
+}
+
+void
+test_not_equal_intptr (void)
+{
+    test = cut_test_new("cut_assert_not_equal_intptr()", stub_not_equal_intptr);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_not_equal_intptr()", NULL,
+                           "<2 + 3 != 3 + 2>",
+                           "5", "5",
+                           FAIL_LOCATION, "stub_not_equal_intptr",
+                           NULL);
+}
+
+static void
+stub_equal_intmax (void)
+{
+    cut_assert_equal_intmax(1, 1);
+    cut_assert_equal_intmax(-1, -1);
+    MARK_FAIL(cut_assert_equal_intmax(2 + 3, 3 + 4));
+}
+
+void
+test_equal_intmax (void)
+{
+    test = cut_test_new("cut_assert_equal_intmax()", stub_equal_intmax);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_equal_intmax()", NULL,
+                           "<2 + 3 == 3 + 4>",
+                           "5", "7",
+                           FAIL_LOCATION, "stub_equal_intmax",
+                           NULL);
+}
+
+static void
+stub_not_equal_intmax (void)
+{
+    cut_assert_not_equal_intmax(1, 2);
+    cut_assert_not_equal_intmax(1, -1);
+    MARK_FAIL(cut_assert_not_equal_intmax(2 + 3, 3 + 2));
+}
+
+void
+test_not_equal_intmax (void)
+{
+    test = cut_test_new("cut_assert_not_equal_intmax()", stub_not_equal_intmax);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_not_equal_intmax()", NULL,
+                           "<2 + 3 != 3 + 2>",
+                           "5", "5",
+                           FAIL_LOCATION, "stub_not_equal_intmax",
+                           NULL);
+}
+
+static void
 stub_equal_uint (void)
 {
     cut_assert_equal_uint(1, 1);
@@ -296,6 +780,446 @@ test_not_equal_uint (void)
                            "<2 + 3 != 3 + 2>",
                            "5", "5",
                            FAIL_LOCATION, "stub_not_equal_uint",
+                           NULL);
+}
+
+static void
+stub_equal_uint_least8 (void)
+{
+    cut_assert_equal_uint_least8(1, 1);
+    cut_assert_equal_uint_least8(-1, -1);
+    MARK_FAIL(cut_assert_equal_uint_least8(2 + 3, 3 + 4));
+}
+
+void
+test_equal_uint_least8 (void)
+{
+    test = cut_test_new("cut_assert_equal_uint_least8()", stub_equal_uint_least8);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_equal_uint_least8()", NULL,
+                           "<2 + 3 == 3 + 4>",
+                           "5", "7",
+                           FAIL_LOCATION, "stub_equal_uint_least8",
+                           NULL);
+}
+
+static void
+stub_not_equal_uint_least8 (void)
+{
+    cut_assert_not_equal_uint_least8(1, 2);
+    cut_assert_not_equal_uint_least8(1, -1);
+    MARK_FAIL(cut_assert_not_equal_uint_least8(2 + 3, 3 + 2));
+}
+
+void
+test_not_equal_uint_least8 (void)
+{
+    test = cut_test_new("cut_assert_not_equal_uint_least8()", stub_not_equal_uint_least8);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_not_equal_uint_least8()", NULL,
+                           "<2 + 3 != 3 + 2>",
+                           "5", "5",
+                           FAIL_LOCATION, "stub_not_equal_uint_least8",
+                           NULL);
+}
+
+static void
+stub_equal_uint_least16 (void)
+{
+    cut_assert_equal_uint_least16(1, 1);
+    cut_assert_equal_uint_least16(-1, -1);
+    MARK_FAIL(cut_assert_equal_uint_least16(2 + 3, 3 + 4));
+}
+
+void
+test_equal_uint_least16 (void)
+{
+    test = cut_test_new("cut_assert_equal_uint_least16()", stub_equal_uint_least16);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_equal_uint_least16()", NULL,
+                           "<2 + 3 == 3 + 4>",
+                           "5", "7",
+                           FAIL_LOCATION, "stub_equal_uint_least16",
+                           NULL);
+}
+
+static void
+stub_not_equal_uint_least16 (void)
+{
+    cut_assert_not_equal_uint_least16(1, 2);
+    cut_assert_not_equal_uint_least16(1, -1);
+    MARK_FAIL(cut_assert_not_equal_uint_least16(2 + 3, 3 + 2));
+}
+
+void
+test_not_equal_uint_least16 (void)
+{
+    test = cut_test_new("cut_assert_not_equal_uint_least16()", stub_not_equal_uint_least16);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_not_equal_uint_least16()", NULL,
+                           "<2 + 3 != 3 + 2>",
+                           "5", "5",
+                           FAIL_LOCATION, "stub_not_equal_uint_least16",
+                           NULL);
+}
+
+static void
+stub_equal_uint_least32 (void)
+{
+    cut_assert_equal_uint_least32(1, 1);
+    cut_assert_equal_uint_least32(-1, -1);
+    MARK_FAIL(cut_assert_equal_uint_least32(2 + 3, 3 + 4));
+}
+
+void
+test_equal_uint_least32 (void)
+{
+    test = cut_test_new("cut_assert_equal_uint_least32()", stub_equal_uint_least32);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_equal_uint_least32()", NULL,
+                           "<2 + 3 == 3 + 4>",
+                           "5", "7",
+                           FAIL_LOCATION, "stub_equal_uint_least32",
+                           NULL);
+}
+
+static void
+stub_not_equal_uint_least32 (void)
+{
+    cut_assert_not_equal_uint_least32(1, 2);
+    cut_assert_not_equal_uint_least32(1, -1);
+    MARK_FAIL(cut_assert_not_equal_uint_least32(2 + 3, 3 + 2));
+}
+
+void
+test_not_equal_uint_least32 (void)
+{
+    test = cut_test_new("cut_assert_not_equal_uint_least32()", stub_not_equal_uint_least32);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_not_equal_uint_least32()", NULL,
+                           "<2 + 3 != 3 + 2>",
+                           "5", "5",
+                           FAIL_LOCATION, "stub_not_equal_uint_least32",
+                           NULL);
+}
+
+static void
+stub_equal_uint_least64 (void)
+{
+    cut_assert_equal_uint_least64(1, 1);
+    cut_assert_equal_uint_least64(-1, -1);
+    MARK_FAIL(cut_assert_equal_uint_least64(2 + 3, 3 + 4));
+}
+
+void
+test_equal_uint_least64 (void)
+{
+    test = cut_test_new("cut_assert_equal_uint_least64()", stub_equal_uint_least64);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_equal_uint_least64()", NULL,
+                           "<2 + 3 == 3 + 4>",
+                           "5", "7",
+                           FAIL_LOCATION, "stub_equal_uint_least64",
+                           NULL);
+}
+
+static void
+stub_not_equal_uint_least64 (void)
+{
+    cut_assert_not_equal_uint_least64(1, 2);
+    cut_assert_not_equal_uint_least64(1, -1);
+    MARK_FAIL(cut_assert_not_equal_uint_least64(2 + 3, 3 + 2));
+}
+
+void
+test_not_equal_uint_least64 (void)
+{
+    test = cut_test_new("cut_assert_not_equal_uint_least64()", stub_not_equal_uint_least64);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_not_equal_uint_least64()", NULL,
+                           "<2 + 3 != 3 + 2>",
+                           "5", "5",
+                           FAIL_LOCATION, "stub_not_equal_uint_least64",
+                           NULL);
+}
+
+static void
+stub_equal_uint_fast8 (void)
+{
+    cut_assert_equal_uint_fast8(1, 1);
+    cut_assert_equal_uint_fast8(-1, -1);
+    MARK_FAIL(cut_assert_equal_uint_fast8(2 + 3, 3 + 4));
+}
+
+void
+test_equal_uint_fast8 (void)
+{
+    test = cut_test_new("cut_assert_equal_uint_fast8()", stub_equal_uint_fast8);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_equal_uint_fast8()", NULL,
+                           "<2 + 3 == 3 + 4>",
+                           "5", "7",
+                           FAIL_LOCATION, "stub_equal_uint_fast8",
+                           NULL);
+}
+
+static void
+stub_not_equal_uint_fast8 (void)
+{
+    cut_assert_not_equal_uint_fast8(1, 2);
+    cut_assert_not_equal_uint_fast8(1, -1);
+    MARK_FAIL(cut_assert_not_equal_uint_fast8(2 + 3, 3 + 2));
+}
+
+void
+test_not_equal_uint_fast8 (void)
+{
+    test = cut_test_new("cut_assert_not_equal_uint_fast8()", stub_not_equal_uint_fast8);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_not_equal_uint_fast8()", NULL,
+                           "<2 + 3 != 3 + 2>",
+                           "5", "5",
+                           FAIL_LOCATION, "stub_not_equal_uint_fast8",
+                           NULL);
+}
+
+static void
+stub_equal_uint_fast16 (void)
+{
+    cut_assert_equal_uint_fast16(1, 1);
+    cut_assert_equal_uint_fast16(-1, -1);
+    MARK_FAIL(cut_assert_equal_uint_fast16(2 + 3, 3 + 4));
+}
+
+void
+test_equal_uint_fast16 (void)
+{
+    test = cut_test_new("cut_assert_equal_uint_fast16()", stub_equal_uint_fast16);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_equal_uint_fast16()", NULL,
+                           "<2 + 3 == 3 + 4>",
+                           "5", "7",
+                           FAIL_LOCATION, "stub_equal_uint_fast16",
+                           NULL);
+}
+
+static void
+stub_not_equal_uint_fast16 (void)
+{
+    cut_assert_not_equal_uint_fast16(1, 2);
+    cut_assert_not_equal_uint_fast16(1, -1);
+    MARK_FAIL(cut_assert_not_equal_uint_fast16(2 + 3, 3 + 2));
+}
+
+void
+test_not_equal_uint_fast16 (void)
+{
+    test = cut_test_new("cut_assert_not_equal_uint_fast16()", stub_not_equal_uint_fast16);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_not_equal_uint_fast16()", NULL,
+                           "<2 + 3 != 3 + 2>",
+                           "5", "5",
+                           FAIL_LOCATION, "stub_not_equal_uint_fast16",
+                           NULL);
+}
+
+static void
+stub_equal_uint_fast32 (void)
+{
+    cut_assert_equal_uint_fast32(1, 1);
+    cut_assert_equal_uint_fast32(-1, -1);
+    MARK_FAIL(cut_assert_equal_uint_fast32(2 + 3, 3 + 4));
+}
+
+void
+test_equal_uint_fast32 (void)
+{
+    test = cut_test_new("cut_assert_equal_uint_fast32()", stub_equal_uint_fast32);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_equal_uint_fast32()", NULL,
+                           "<2 + 3 == 3 + 4>",
+                           "5", "7",
+                           FAIL_LOCATION, "stub_equal_uint_fast32",
+                           NULL);
+}
+
+static void
+stub_not_equal_uint_fast32 (void)
+{
+    cut_assert_not_equal_uint_fast32(1, 2);
+    cut_assert_not_equal_uint_fast32(1, -1);
+    MARK_FAIL(cut_assert_not_equal_uint_fast32(2 + 3, 3 + 2));
+}
+
+void
+test_not_equal_uint_fast32 (void)
+{
+    test = cut_test_new("cut_assert_not_equal_uint_fast32()", stub_not_equal_uint_fast32);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_not_equal_uint_fast32()", NULL,
+                           "<2 + 3 != 3 + 2>",
+                           "5", "5",
+                           FAIL_LOCATION, "stub_not_equal_uint_fast32",
+                           NULL);
+}
+
+static void
+stub_equal_uint_fast64 (void)
+{
+    cut_assert_equal_uint_fast64(1, 1);
+    cut_assert_equal_uint_fast64(-1, -1);
+    MARK_FAIL(cut_assert_equal_uint_fast64(2 + 3, 3 + 4));
+}
+
+void
+test_equal_uint_fast64 (void)
+{
+    test = cut_test_new("cut_assert_equal_uint_fast64()", stub_equal_uint_fast64);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_equal_uint_fast64()", NULL,
+                           "<2 + 3 == 3 + 4>",
+                           "5", "7",
+                           FAIL_LOCATION, "stub_equal_uint_fast64",
+                           NULL);
+}
+
+static void
+stub_not_equal_uint_fast64 (void)
+{
+    cut_assert_not_equal_uint_fast64(1, 2);
+    cut_assert_not_equal_uint_fast64(1, -1);
+    MARK_FAIL(cut_assert_not_equal_uint_fast64(2 + 3, 3 + 2));
+}
+
+void
+test_not_equal_uint_fast64 (void)
+{
+    test = cut_test_new("cut_assert_not_equal_uint_fast64()", stub_not_equal_uint_fast64);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_not_equal_uint_fast64()", NULL,
+                           "<2 + 3 != 3 + 2>",
+                           "5", "5",
+                           FAIL_LOCATION, "stub_not_equal_uint_fast64",
+                           NULL);
+}
+
+static void
+stub_equal_uintptr (void)
+{
+    cut_assert_equal_uintptr(1, 1);
+    cut_assert_equal_uintptr(-1, -1);
+    MARK_FAIL(cut_assert_equal_uintptr(2 + 3, 3 + 4));
+}
+
+void
+test_equal_uintptr (void)
+{
+    test = cut_test_new("cut_assert_equal_uintptr()", stub_equal_uintptr);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_equal_uintptr()", NULL,
+                           "<2 + 3 == 3 + 4>",
+                           "5", "7",
+                           FAIL_LOCATION, "stub_equal_uintptr",
+                           NULL);
+}
+
+static void
+stub_not_equal_uintptr (void)
+{
+    cut_assert_not_equal_uintptr(1, 2);
+    cut_assert_not_equal_uintptr(1, -1);
+    MARK_FAIL(cut_assert_not_equal_uintptr(2 + 3, 3 + 2));
+}
+
+void
+test_not_equal_uintptr (void)
+{
+    test = cut_test_new("cut_assert_not_equal_uintptr()", stub_not_equal_uintptr);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_not_equal_uintptr()", NULL,
+                           "<2 + 3 != 3 + 2>",
+                           "5", "5",
+                           FAIL_LOCATION, "stub_not_equal_uintptr",
+                           NULL);
+}
+
+static void
+stub_equal_uintmax (void)
+{
+    cut_assert_equal_uintmax(1, 1);
+    cut_assert_equal_uintmax(-1, -1);
+    MARK_FAIL(cut_assert_equal_uintmax(2 + 3, 3 + 4));
+}
+
+void
+test_equal_uintmax (void)
+{
+    test = cut_test_new("cut_assert_equal_uintmax()", stub_equal_uintmax);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_equal_uintmax()", NULL,
+                           "<2 + 3 == 3 + 4>",
+                           "5", "7",
+                           FAIL_LOCATION, "stub_equal_uintmax",
+                           NULL);
+}
+
+static void
+stub_not_equal_uintmax (void)
+{
+    cut_assert_not_equal_uintmax(1, 2);
+    cut_assert_not_equal_uintmax(1, -1);
+    MARK_FAIL(cut_assert_not_equal_uintmax(2 + 3, 3 + 2));
+}
+
+void
+test_not_equal_uintmax (void)
+{
+    test = cut_test_new("cut_assert_not_equal_uintmax()", stub_not_equal_uintmax);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_not_equal_uintmax()", NULL,
+                           "<2 + 3 != 3 + 2>",
+                           "5", "5",
+                           FAIL_LOCATION, "stub_not_equal_uintmax",
                            NULL);
 }
 

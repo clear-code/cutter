@@ -127,6 +127,7 @@ AC_CHECK_HEADERS(io.h)
 AC_CHECK_HEADERS(windows.h)
 AC_CHECK_HEADERS(mach-o/loader.h)
 AC_CHECK_HEADERS(elf.h)
+AC_CHECK_HEADERS(stdint.h, [AC_DEFINE(HAVE_STDINT_H)])
 
 dnl **************************************************************
 dnl Check for MinGW
