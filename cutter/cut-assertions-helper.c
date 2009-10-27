@@ -175,6 +175,350 @@ cut_assert_not_equal_int_helper (long            expected,
     }
 }
 
+#ifdef HAVE_STDINT_H
+
+void
+cut_assert_equal_int_least8_helper (int_least8_t  expected,
+                             int_least8_t         actual,
+                             const char          *expression_expected,
+                             const char          *expression_actual)
+{
+    if (expected == actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIdLEAST8, expected));
+        cut_set_actual(cut_take_printf("%" PRIdLEAST8, actual));
+        cut_test_fail(cut_take_printf("<%s == %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+cut_assert_not_equal_int_least8_helper (int_least8_t  expected,
+                                 int_least8_t         actual,
+                                 const char          *expression_expected,
+                                 const char          *expression_actual)
+{
+    if (expected != actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIdLEAST8, expected));
+        cut_set_actual(cut_take_printf("%" PRIdLEAST8, actual));
+        cut_test_fail(cut_take_printf("<%s != %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+cut_assert_equal_int_least16_helper (int_least16_t  expected,
+                             int_least16_t          actual,
+                             const char            *expression_expected,
+                             const char            *expression_actual)
+{
+    if (expected == actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIdLEAST16, expected));
+        cut_set_actual(cut_take_printf("%" PRIdLEAST16, actual));
+        cut_test_fail(cut_take_printf("<%s == %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+cut_assert_not_equal_int_least16_helper (int_least16_t  expected,
+                                 int_least16_t          actual,
+                                 const char            *expression_expected,
+                                 const char            *expression_actual)
+{
+    if (expected != actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIdLEAST16, expected));
+        cut_set_actual(cut_take_printf("%" PRIdLEAST16, actual));
+        cut_test_fail(cut_take_printf("<%s != %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+cut_assert_equal_int_least32_helper (int_least32_t  expected,
+                             int_least32_t          actual,
+                             const char            *expression_expected,
+                             const char            *expression_actual)
+{
+    if (expected == actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIdLEAST32, expected));
+        cut_set_actual(cut_take_printf("%" PRIdLEAST32, actual));
+        cut_test_fail(cut_take_printf("<%s == %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+cut_assert_not_equal_int_least32_helper (int_least32_t  expected,
+                                 int_least32_t          actual,
+                                 const char            *expression_expected,
+                                 const char            *expression_actual)
+{
+    if (expected != actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIdLEAST32, expected));
+        cut_set_actual(cut_take_printf("%" PRIdLEAST32, actual));
+        cut_test_fail(cut_take_printf("<%s != %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+cut_assert_equal_int_least64_helper (int_least64_t  expected,
+                             int_least64_t          actual,
+                             const char            *expression_expected,
+                             const char            *expression_actual)
+{
+    if (expected == actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIdLEAST64, expected));
+        cut_set_actual(cut_take_printf("%" PRIdLEAST64, actual));
+        cut_test_fail(cut_take_printf("<%s == %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+cut_assert_not_equal_int_least64_helper (int_least64_t  expected,
+                                 int_least64_t          actual,
+                                 const char            *expression_expected,
+                                 const char            *expression_actual)
+{
+    if (expected != actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIdLEAST64, expected));
+        cut_set_actual(cut_take_printf("%" PRIdLEAST64, actual));
+        cut_test_fail(cut_take_printf("<%s != %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+cut_assert_equal_int_fast8_helper (int_fast8_t  expected,
+                             int_fast8_t        actual,
+                             const char        *expression_expected,
+                             const char        *expression_actual)
+{
+    if (expected == actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIdFAST8, expected));
+        cut_set_actual(cut_take_printf("%" PRIdFAST8, actual));
+        cut_test_fail(cut_take_printf("<%s == %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+cut_assert_not_equal_int_fast8_helper (int_fast8_t  expected,
+                                 int_fast8_t        actual,
+                                 const char        *expression_expected,
+                                 const char        *expression_actual)
+{
+    if (expected != actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIdFAST8, expected));
+        cut_set_actual(cut_take_printf("%" PRIdFAST8, actual));
+        cut_test_fail(cut_take_printf("<%s != %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+cut_assert_equal_int_fast16_helper (int_fast16_t  expected,
+                             int_fast16_t         actual,
+                             const char          *expression_expected,
+                             const char          *expression_actual)
+{
+    if (expected == actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIdFAST16, expected));
+        cut_set_actual(cut_take_printf("%" PRIdFAST16, actual));
+        cut_test_fail(cut_take_printf("<%s == %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+cut_assert_not_equal_int_fast16_helper (int_fast16_t  expected,
+                                 int_fast16_t         actual,
+                                 const char          *expression_expected,
+                                 const char          *expression_actual)
+{
+    if (expected != actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIdFAST16, expected));
+        cut_set_actual(cut_take_printf("%" PRIdFAST16, actual));
+        cut_test_fail(cut_take_printf("<%s != %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+cut_assert_equal_int_fast32_helper (int_fast32_t  expected,
+                             int_fast32_t         actual,
+                             const char          *expression_expected,
+                             const char          *expression_actual)
+{
+    if (expected == actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIdFAST32, expected));
+        cut_set_actual(cut_take_printf("%" PRIdFAST32, actual));
+        cut_test_fail(cut_take_printf("<%s == %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+cut_assert_not_equal_int_fast32_helper (int_fast32_t  expected,
+                                 int_fast32_t         actual,
+                                 const char          *expression_expected,
+                                 const char          *expression_actual)
+{
+    if (expected != actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIdFAST32, expected));
+        cut_set_actual(cut_take_printf("%" PRIdFAST32, actual));
+        cut_test_fail(cut_take_printf("<%s != %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+cut_assert_equal_int_fast64_helper (int_fast64_t  expected,
+                             int_fast64_t         actual,
+                             const char          *expression_expected,
+                             const char          *expression_actual)
+{
+    if (expected == actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIdFAST64, expected));
+        cut_set_actual(cut_take_printf("%" PRIdFAST64, actual));
+        cut_test_fail(cut_take_printf("<%s == %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+cut_assert_not_equal_int_fast64_helper (int_fast64_t  expected,
+                                 int_fast64_t         actual,
+                                 const char          *expression_expected,
+                                 const char          *expression_actual)
+{
+    if (expected != actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIdFAST64, expected));
+        cut_set_actual(cut_take_printf("%" PRIdFAST64, actual));
+        cut_test_fail(cut_take_printf("<%s != %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+cut_assert_equal_intptr_helper (intptr_t  expected,
+                             intptr_t     actual,
+                             const char  *expression_expected,
+                             const char  *expression_actual)
+{
+    if (expected == actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIdPTR, expected));
+        cut_set_actual(cut_take_printf("%" PRIdPTR, actual));
+        cut_test_fail(cut_take_printf("<%s == %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+cut_assert_not_equal_intptr_helper (intptr_t  expected,
+                                 intptr_t     actual,
+                                 const char  *expression_expected,
+                                 const char  *expression_actual)
+{
+    if (expected != actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIdPTR, expected));
+        cut_set_actual(cut_take_printf("%" PRIdPTR, actual));
+        cut_test_fail(cut_take_printf("<%s != %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+cut_assert_equal_intmax_helper (intmax_t  expected,
+                             intmax_t     actual,
+                             const char  *expression_expected,
+                             const char  *expression_actual)
+{
+    if (expected == actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIdMAX, expected));
+        cut_set_actual(cut_take_printf("%" PRIdMAX, actual));
+        cut_test_fail(cut_take_printf("<%s == %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+cut_assert_not_equal_intmax_helper (intmax_t  expected,
+                                 intmax_t     actual,
+                                 const char  *expression_expected,
+                                 const char  *expression_actual)
+{
+    if (expected != actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIdMAX, expected));
+        cut_set_actual(cut_take_printf("%" PRIdMAX, actual));
+        cut_test_fail(cut_take_printf("<%s != %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+#endif
+
 void
 cut_assert_equal_uint_helper (unsigned long   expected,
                               unsigned long   actual,
@@ -208,6 +552,350 @@ cut_assert_not_equal_uint_helper (unsigned long   expected,
                                       expression_actual));
     }
 }
+
+#ifdef HAVE_STDINT_H
+
+void
+cut_assert_equal_uint_least8_helper (uint_least8_t  expected,
+                             uint_least8_t          actual,
+                             const char            *expression_expected,
+                             const char            *expression_actual)
+{
+    if (expected == actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIuLEAST8, expected));
+        cut_set_actual(cut_take_printf("%" PRIuLEAST8, actual));
+        cut_test_fail(cut_take_printf("<%s == %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+cut_assert_not_equal_uint_least8_helper (uint_least8_t  expected,
+                                 uint_least8_t          actual,
+                                 const char            *expression_expected,
+                                 const char            *expression_actual)
+{
+    if (expected != actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIuLEAST8, expected));
+        cut_set_actual(cut_take_printf("%" PRIuLEAST8, actual));
+        cut_test_fail(cut_take_printf("<%s != %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+cut_assert_equal_uint_least16_helper (uint_least16_t  expected,
+                             uint_least16_t           actual,
+                             const char              *expression_expected,
+                             const char              *expression_actual)
+{
+    if (expected == actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIuLEAST16, expected));
+        cut_set_actual(cut_take_printf("%" PRIuLEAST16, actual));
+        cut_test_fail(cut_take_printf("<%s == %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+cut_assert_not_equal_uint_least16_helper (uint_least16_t  expected,
+                                 uint_least16_t           actual,
+                                 const char              *expression_expected,
+                                 const char              *expression_actual)
+{
+    if (expected != actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIuLEAST16, expected));
+        cut_set_actual(cut_take_printf("%" PRIuLEAST16, actual));
+        cut_test_fail(cut_take_printf("<%s != %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+cut_assert_equal_uint_least32_helper (uint_least32_t  expected,
+                             uint_least32_t           actual,
+                             const char              *expression_expected,
+                             const char              *expression_actual)
+{
+    if (expected == actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIuLEAST32, expected));
+        cut_set_actual(cut_take_printf("%" PRIuLEAST32, actual));
+        cut_test_fail(cut_take_printf("<%s == %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+cut_assert_not_equal_uint_least32_helper (uint_least32_t  expected,
+                                 uint_least32_t           actual,
+                                 const char              *expression_expected,
+                                 const char              *expression_actual)
+{
+    if (expected != actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIuLEAST32, expected));
+        cut_set_actual(cut_take_printf("%" PRIuLEAST32, actual));
+        cut_test_fail(cut_take_printf("<%s != %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+cut_assert_equal_uint_least64_helper (uint_least64_t  expected,
+                             uint_least64_t           actual,
+                             const char              *expression_expected,
+                             const char              *expression_actual)
+{
+    if (expected == actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIuLEAST64, expected));
+        cut_set_actual(cut_take_printf("%" PRIuLEAST64, actual));
+        cut_test_fail(cut_take_printf("<%s == %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+cut_assert_not_equal_uint_least64_helper (uint_least64_t  expected,
+                                 uint_least64_t           actual,
+                                 const char              *expression_expected,
+                                 const char              *expression_actual)
+{
+    if (expected != actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIuLEAST64, expected));
+        cut_set_actual(cut_take_printf("%" PRIuLEAST64, actual));
+        cut_test_fail(cut_take_printf("<%s != %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+cut_assert_equal_uint_fast8_helper (uint_fast8_t  expected,
+                             uint_fast8_t         actual,
+                             const char          *expression_expected,
+                             const char          *expression_actual)
+{
+    if (expected == actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIuFAST8, expected));
+        cut_set_actual(cut_take_printf("%" PRIuFAST8, actual));
+        cut_test_fail(cut_take_printf("<%s == %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+cut_assert_not_equal_uint_fast8_helper (uint_fast8_t  expected,
+                                 uint_fast8_t         actual,
+                                 const char          *expression_expected,
+                                 const char          *expression_actual)
+{
+    if (expected != actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIuFAST8, expected));
+        cut_set_actual(cut_take_printf("%" PRIuFAST8, actual));
+        cut_test_fail(cut_take_printf("<%s != %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+cut_assert_equal_uint_fast16_helper (uint_fast16_t  expected,
+                             uint_fast16_t          actual,
+                             const char            *expression_expected,
+                             const char            *expression_actual)
+{
+    if (expected == actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIuFAST16, expected));
+        cut_set_actual(cut_take_printf("%" PRIuFAST16, actual));
+        cut_test_fail(cut_take_printf("<%s == %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+cut_assert_not_equal_uint_fast16_helper (uint_fast16_t  expected,
+                                 uint_fast16_t          actual,
+                                 const char            *expression_expected,
+                                 const char            *expression_actual)
+{
+    if (expected != actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIuFAST16, expected));
+        cut_set_actual(cut_take_printf("%" PRIuFAST16, actual));
+        cut_test_fail(cut_take_printf("<%s != %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+cut_assert_equal_uint_fast32_helper (uint_fast32_t  expected,
+                             uint_fast32_t          actual,
+                             const char            *expression_expected,
+                             const char            *expression_actual)
+{
+    if (expected == actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIuFAST32, expected));
+        cut_set_actual(cut_take_printf("%" PRIuFAST32, actual));
+        cut_test_fail(cut_take_printf("<%s == %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+cut_assert_not_equal_uint_fast32_helper (uint_fast32_t  expected,
+                                 uint_fast32_t          actual,
+                                 const char            *expression_expected,
+                                 const char            *expression_actual)
+{
+    if (expected != actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIuFAST32, expected));
+        cut_set_actual(cut_take_printf("%" PRIuFAST32, actual));
+        cut_test_fail(cut_take_printf("<%s != %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+cut_assert_equal_uint_fast64_helper (uint_fast64_t  expected,
+                             uint_fast64_t          actual,
+                             const char            *expression_expected,
+                             const char            *expression_actual)
+{
+    if (expected == actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIuFAST64, expected));
+        cut_set_actual(cut_take_printf("%" PRIuFAST64, actual));
+        cut_test_fail(cut_take_printf("<%s == %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+cut_assert_not_equal_uint_fast64_helper (uint_fast64_t  expected,
+                                 uint_fast64_t          actual,
+                                 const char            *expression_expected,
+                                 const char            *expression_actual)
+{
+    if (expected != actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIuFAST64, expected));
+        cut_set_actual(cut_take_printf("%" PRIuFAST64, actual));
+        cut_test_fail(cut_take_printf("<%s != %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+cut_assert_equal_uintptr_helper (uintptr_t   expected,
+                             uintptr_t       actual,
+                             const char     *expression_expected,
+                             const char     *expression_actual)
+{
+    if (expected == actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIuPTR, expected));
+        cut_set_actual(cut_take_printf("%" PRIuPTR, actual));
+        cut_test_fail(cut_take_printf("<%s == %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+cut_assert_not_equal_uintptr_helper (uintptr_t   expected,
+                                 uintptr_t       actual,
+                                 const char     *expression_expected,
+                                 const char     *expression_actual)
+{
+    if (expected != actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIuPTR, expected));
+        cut_set_actual(cut_take_printf("%" PRIuPTR, actual));
+        cut_test_fail(cut_take_printf("<%s != %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+cut_assert_equal_uintmax_helper (uintmax_t   expected,
+                             uintmax_t       actual,
+                             const char     *expression_expected,
+                             const char     *expression_actual)
+{
+    if (expected == actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIuMAX, expected));
+        cut_set_actual(cut_take_printf("%" PRIuMAX, actual));
+        cut_test_fail(cut_take_printf("<%s == %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+cut_assert_not_equal_uintmax_helper (uintmax_t   expected,
+                                 uintmax_t       actual,
+                                 const char     *expression_expected,
+                                 const char     *expression_actual)
+{
+    if (expected != actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" PRIuMAX, expected));
+        cut_set_actual(cut_take_printf("%" PRIuMAX, actual));
+        cut_test_fail(cut_take_printf("<%s != %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+#endif
 
 void
 cut_assert_equal_size_helper (size_t          expected,

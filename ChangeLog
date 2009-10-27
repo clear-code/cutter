@@ -1,5 +1,8 @@
 2009-10-27  Yuto Hayamizu  <y.hayamizu@gmail.com>
 
+	* cutter/cut-assertions.h, cutter/cut-assertions-helper.[ch] : add
+	cut_assert_equal_int*, cut_assert_not_equal_int*
+
 	* configure.ac: check existence of inttypes.h for format
 	specifiers of various int types.
 
