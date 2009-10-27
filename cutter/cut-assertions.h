@@ -243,383 +243,403 @@ extern "C" {
 #ifdef CUT_SUPPORT_C99_STDINT_TYPES
 /**
  * cut_assert_equal_int_least8:
- * @expected: an expected integer value (int_least8_t).
- * @actual: an actual integer value (int_least8_t).
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @expected: an expected integer value.
+ * @actual: an actual integer value.
  *
  * Passes if @expected == @actual.
- * This function is available if stdint.h exists.
+ *
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
-#define cut_assert_equal_int_least8(expected, actual, ...)  do          \
-    {                                                                   \
-        cut_set_message_backward_compatibility(__VA_ARGS__);            \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_equal_int_least8_helper((expected), (actual),    \
-                                               #expected, #actual),     \
-            cut_assert_equal_int_least8(expected, actual, __VA_ARGS__)); \
-    } while (0)
+#define cut_assert_equal_int_least8(expected, actual)  do               \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_equal_int_least8_helper((expected), (actual),        \
+                                           #expected, #actual),         \
+        cut_assert_equal_int_least8(expected, actual));                 \
+} while (0)
 
 /**
  * cut_assert_not_equal_int_least8:
- * @expected: an expected integer value (int_least8_t).
- * @actual: an actual integer value (int_least8_t).
+ * @expected: an expected integer value.
+ * @actual: an actual integer value.
  *
  * Passes if @expected != @actual.
- * This function is available if stdint.h exists.
  *
- * Since: 1.0.7
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
 #define cut_assert_not_equal_int_least8(expected, actual)  do           \
-    {                                                                   \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_not_equal_int_least8_helper((expected), (actual), \
-                                                   #expected, #actual), \
-            cut_assert_not_equal_int_least8(expected, actual));         \
-    } while (0)
+{                                                                   \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_not_equal_int_least8_helper((expected), (actual),    \
+                                               #expected, #actual),     \
+        cut_assert_not_equal_int_least8(expected, actual));             \
+} while (0)
 
 /**
  * cut_assert_equal_int_least16:
- * @expected: an expected integer value (int_least16_t).
- * @actual: an actual integer value (int_least16_t).
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @expected: an expected integer value.
+ * @actual: an actual integer value.
  *
  * Passes if @expected == @actual.
- * This function is available if stdint.h exists.
+ *
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
-#define cut_assert_equal_int_least16(expected, actual, ...)  do         \
-    {                                                                   \
-        cut_set_message_backward_compatibility(__VA_ARGS__);            \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_equal_int_least16_helper((expected), (actual),   \
-                                                #expected, #actual),    \
-            cut_assert_equal_int_least16(expected, actual, __VA_ARGS__)); \
-    } while (0)
+#define cut_assert_equal_int_least16(expected, actual)  do              \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_equal_int_least16_helper((expected), (actual),       \
+                                            #expected, #actual),        \
+        cut_assert_equal_int_least16(expected, actual));                \
+} while (0)
 
 /**
  * cut_assert_not_equal_int_least16:
- * @expected: an expected integer value (int_least16_t).
- * @actual: an actual integer value (int_least16_t).
+ * @expected: an expected integer value.
+ * @actual: an actual integer value.
  *
  * Passes if @expected != @actual.
- * This function is available if stdint.h exists.
  *
- * Since: 1.0.7
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
 #define cut_assert_not_equal_int_least16(expected, actual)  do          \
-    {                                                                   \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_not_equal_int_least16_helper((expected), (actual), \
-                                                    #expected, #actual), \
-            cut_assert_not_equal_int_least16(expected, actual));        \
-    } while (0)
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_not_equal_int_least16_helper((expected), (actual),   \
+                                                #expected, #actual),    \
+        cut_assert_not_equal_int_least16(expected, actual));            \
+} while (0)
 
 /**
  * cut_assert_equal_int_least32:
- * @expected: an expected integer value (int_least32_t).
- * @actual: an actual integer value (int_least32_t).
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @expected: an expected integer value.
+ * @actual: an actual integer value.
  *
  * Passes if @expected == @actual.
- * This function is available if stdint.h exists.
+ *
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
-#define cut_assert_equal_int_least32(expected, actual, ...)  do         \
-    {                                                                   \
-        cut_set_message_backward_compatibility(__VA_ARGS__);            \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_equal_int_least32_helper((expected), (actual),   \
-                                                #expected, #actual),    \
-            cut_assert_equal_int_least32(expected, actual, __VA_ARGS__)); \
-    } while (0)
+#define cut_assert_equal_int_least32(expected, actual)  do              \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_equal_int_least32_helper((expected), (actual),       \
+                                            #expected, #actual),        \
+        cut_assert_equal_int_least32(expected, actual));                \
+} while (0)
 
 /**
  * cut_assert_not_equal_int_least32:
- * @expected: an expected integer value (int_least32_t).
- * @actual: an actual integer value (int_least32_t).
+ * @expected: an expected integer value.
+ * @actual: an actual integer value.
  *
  * Passes if @expected != @actual.
- * This function is available if stdint.h exists.
  *
- * Since: 1.0.7
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
 #define cut_assert_not_equal_int_least32(expected, actual)  do          \
-    {                                                                   \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_not_equal_int_least32_helper((expected), (actual), \
-                                                    #expected, #actual), \
-            cut_assert_not_equal_int_least32(expected, actual));        \
-    } while (0)
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_not_equal_int_least32_helper((expected), (actual),   \
+                                                #expected, #actual),    \
+        cut_assert_not_equal_int_least32(expected, actual));            \
+} while (0)
 
 /**
  * cut_assert_equal_int_least64:
- * @expected: an expected integer value (int_least64_t).
- * @actual: an actual integer value (int_least64_t).
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @expected: an expected integer value.
+ * @actual: an actual integer value.
  *
  * Passes if @expected == @actual.
- * This function is available if stdint.h exists.
+ *
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
-#define cut_assert_equal_int_least64(expected, actual, ...)  do         \
-    {                                                                   \
-        cut_set_message_backward_compatibility(__VA_ARGS__);            \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_equal_int_least64_helper((expected), (actual),   \
-                                                #expected, #actual),    \
-            cut_assert_equal_int_least64(expected, actual, __VA_ARGS__)); \
-    } while (0)
+#define cut_assert_equal_int_least64(expected, actual)  do              \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_equal_int_least64_helper((expected), (actual),       \
+                                            #expected, #actual),        \
+        cut_assert_equal_int_least64(expected, actual));                \
+} while (0)
 
 /**
  * cut_assert_not_equal_int_least64:
- * @expected: an expected integer value (int_least64_t).
- * @actual: an actual integer value (int_least64_t).
+ * @expected: an expected integer value.
+ * @actual: an actual integer value.
  *
  * Passes if @expected != @actual.
- * This function is available if stdint.h exists.
  *
- * Since: 1.0.7
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
 #define cut_assert_not_equal_int_least64(expected, actual)  do          \
-    {                                                                   \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_not_equal_int_least64_helper((expected), (actual), \
-                                                    #expected, #actual), \
-            cut_assert_not_equal_int_least64(expected, actual));        \
-    } while (0)
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_not_equal_int_least64_helper((expected), (actual),   \
+                                                #expected, #actual),    \
+        cut_assert_not_equal_int_least64(expected, actual));            \
+} while (0)
 
 /**
  * cut_assert_equal_int_fast8:
- * @expected: an expected integer value (int_fast8_t).
- * @actual: an actual integer value (int_fast8_t).
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @expected: an expected integer value.
+ * @actual: an actual integer value.
  *
  * Passes if @expected == @actual.
- * This function is available if stdint.h exists.
+ *
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
-#define cut_assert_equal_int_fast8(expected, actual, ...)  do           \
-    {                                                                   \
-        cut_set_message_backward_compatibility(__VA_ARGS__);            \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_equal_int_fast8_helper((expected), (actual),     \
-                                              #expected, #actual),      \
-            cut_assert_equal_int_fast8(expected, actual, __VA_ARGS__)); \
-    } while (0)
+#define cut_assert_equal_int_fast8(expected, actual)  do        \
+{                                                               \
+    cut_trace_with_info_expression(                             \
+        cut_assert_equal_int_fast8_helper((expected), (actual), \
+                                          #expected, #actual),  \
+        cut_assert_equal_int_fast8(expected, actual));          \
+} while (0)
 
 /**
  * cut_assert_not_equal_int_fast8:
- * @expected: an expected integer value (int_fast8_t).
- * @actual: an actual integer value (int_fast8_t).
+ * @expected: an expected integer value.
+ * @actual: an actual integer value.
  *
  * Passes if @expected != @actual.
- * This function is available if stdint.h exists.
  *
- * Since: 1.0.7
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
 #define cut_assert_not_equal_int_fast8(expected, actual)  do            \
-    {                                                                   \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_not_equal_int_fast8_helper((expected), (actual), \
-                                                  #expected, #actual),  \
-            cut_assert_not_equal_int_fast8(expected, actual));          \
-    } while (0)
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_not_equal_int_fast8_helper((expected), (actual),     \
+                                              #expected, #actual),      \
+        cut_assert_not_equal_int_fast8(expected, actual));              \
+} while (0)
 
 /**
  * cut_assert_equal_int_fast16:
- * @expected: an expected integer value (int_fast16_t).
- * @actual: an actual integer value (int_fast16_t).
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @expected: an expected integer value.
+ * @actual: an actual integer value.
  *
  * Passes if @expected == @actual.
- * This function is available if stdint.h exists.
+ *
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
-#define cut_assert_equal_int_fast16(expected, actual, ...)  do          \
-    {                                                                   \
-        cut_set_message_backward_compatibility(__VA_ARGS__);            \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_equal_int_fast16_helper((expected), (actual),    \
-                                               #expected, #actual),     \
-            cut_assert_equal_int_fast16(expected, actual, __VA_ARGS__)); \
-    } while (0)
+#define cut_assert_equal_int_fast16(expected, actual)  do               \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_equal_int_fast16_helper((expected), (actual),        \
+                                           #expected, #actual),         \
+        cut_assert_equal_int_fast16(expected, actual));                 \
+} while (0)
 
 /**
  * cut_assert_not_equal_int_fast16:
- * @expected: an expected integer value (int_fast16_t).
- * @actual: an actual integer value (int_fast16_t).
+ * @expected: an expected integer value.
+ * @actual: an actual integer value.
  *
  * Passes if @expected != @actual.
- * This function is available if stdint.h exists.
  *
- * Since: 1.0.7
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
 #define cut_assert_not_equal_int_fast16(expected, actual)  do           \
-    {                                                                   \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_not_equal_int_fast16_helper((expected), (actual), \
-                                                   #expected, #actual), \
-            cut_assert_not_equal_int_fast16(expected, actual));         \
-    } while (0)
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_not_equal_int_fast16_helper((expected), (actual),    \
+                                               #expected, #actual),     \
+        cut_assert_not_equal_int_fast16(expected, actual));             \
+} while (0)
 
 /**
  * cut_assert_equal_int_fast32:
- * @expected: an expected integer value (int_fast32_t).
- * @actual: an actual integer value (int_fast32_t).
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @expected: an expected integer value.
+ * @actual: an actual integer value.
  *
  * Passes if @expected == @actual.
- * This function is available if stdint.h exists.
+ *
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
-#define cut_assert_equal_int_fast32(expected, actual, ...)  do          \
-    {                                                                   \
-        cut_set_message_backward_compatibility(__VA_ARGS__);            \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_equal_int_fast32_helper((expected), (actual),    \
-                                               #expected, #actual),     \
-            cut_assert_equal_int_fast32(expected, actual, __VA_ARGS__)); \
-    } while (0)
+#define cut_assert_equal_int_fast32(expected, actual)  do               \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_equal_int_fast32_helper((expected), (actual),        \
+                                           #expected, #actual),         \
+        cut_assert_equal_int_fast32(expected, actual));                 \
+} while (0)
 
 /**
  * cut_assert_not_equal_int_fast32:
- * @expected: an expected integer value (int_fast32_t).
- * @actual: an actual integer value (int_fast32_t).
+ * @expected: an expected integer value.
+ * @actual: an actual integer value.
  *
  * Passes if @expected != @actual.
- * This function is available if stdint.h exists.
  *
- * Since: 1.0.7
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
 #define cut_assert_not_equal_int_fast32(expected, actual)  do           \
-    {                                                                   \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_not_equal_int_fast32_helper((expected), (actual), \
-                                                   #expected, #actual), \
-            cut_assert_not_equal_int_fast32(expected, actual));         \
-    } while (0)
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_not_equal_int_fast32_helper((expected), (actual),    \
+                                               #expected, #actual),     \
+        cut_assert_not_equal_int_fast32(expected, actual));             \
+} while (0)
 
 /**
  * cut_assert_equal_int_fast64:
- * @expected: an expected integer value (int_fast64_t).
- * @actual: an actual integer value (int_fast64_t).
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @expected: an expected integer value.
+ * @actual: an actual integer value.
  *
  * Passes if @expected == @actual.
- * This function is available if stdint.h exists.
+ *
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
-#define cut_assert_equal_int_fast64(expected, actual, ...)  do          \
-    {                                                                   \
-        cut_set_message_backward_compatibility(__VA_ARGS__);            \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_equal_int_fast64_helper((expected), (actual),    \
-                                               #expected, #actual),     \
-            cut_assert_equal_int_fast64(expected, actual, __VA_ARGS__)); \
-    } while (0)
+#define cut_assert_equal_int_fast64(expected, actual)  do               \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_equal_int_fast64_helper((expected), (actual),        \
+                                           #expected, #actual),         \
+        cut_assert_equal_int_fast64(expected, actual));                 \
+} while (0)
 
 /**
  * cut_assert_not_equal_int_fast64:
- * @expected: an expected integer value (int_fast64_t).
- * @actual: an actual integer value (int_fast64_t).
+ * @expected: an expected integer value.
+ * @actual: an actual integer value.
  *
  * Passes if @expected != @actual.
- * This function is available if stdint.h exists.
  *
- * Since: 1.0.7
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
 #define cut_assert_not_equal_int_fast64(expected, actual)  do           \
-    {                                                                   \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_not_equal_int_fast64_helper((expected), (actual), \
-                                                   #expected, #actual), \
-            cut_assert_not_equal_int_fast64(expected, actual));         \
-    } while (0)
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_not_equal_int_fast64_helper((expected), (actual),    \
+                                               #expected, #actual),     \
+        cut_assert_not_equal_int_fast64(expected, actual));             \
+} while (0)
 
 /**
  * cut_assert_equal_intptr:
- * @expected: an expected integer value (intptr_t).
- * @actual: an actual integer value (intptr_t).
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @expected: an expected integer value.
+ * @actual: an actual integer value.
  *
  * Passes if @expected == @actual.
- * This function is available if stdint.h exists.
+ *
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
-#define cut_assert_equal_intptr(expected, actual, ...)  do              \
-    {                                                                   \
-        cut_set_message_backward_compatibility(__VA_ARGS__);            \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_equal_intptr_helper((expected), (actual),        \
-                                           #expected, #actual),         \
-            cut_assert_equal_intptr(expected, actual, __VA_ARGS__));    \
-    } while (0)
+#define cut_assert_equal_intptr(expected, actual)  do           \
+{                                                               \
+    cut_trace_with_info_expression(                             \
+        cut_assert_equal_intptr_helper((expected), (actual),    \
+                                       #expected, #actual),     \
+        cut_assert_equal_intptr(expected, actual));             \
+} while (0)
 
 /**
  * cut_assert_not_equal_intptr:
- * @expected: an expected integer value (intptr_t).
- * @actual: an actual integer value (intptr_t).
+ * @expected: an expected integer value.
+ * @actual: an actual integer value.
  *
  * Passes if @expected != @actual.
- * This function is available if stdint.h exists.
  *
- * Since: 1.0.7
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
 #define cut_assert_not_equal_intptr(expected, actual)  do               \
-    {                                                                   \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_not_equal_intptr_helper((expected), (actual),    \
-                                               #expected, #actual),     \
-            cut_assert_not_equal_intptr(expected, actual));             \
-    } while (0)
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_not_equal_intptr_helper((expected), (actual),        \
+                                           #expected, #actual),         \
+        cut_assert_not_equal_intptr(expected, actual));                 \
+} while (0)
 
 /**
  * cut_assert_equal_intmax:
- * @expected: an expected integer value (intmax_t).
- * @actual: an actual integer value (intmax_t).
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @expected: an expected integer value.
+ * @actual: an actual integer value.
  *
  * Passes if @expected == @actual.
- * This function is available if stdint.h exists.
+ *
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
-#define cut_assert_equal_intmax(expected, actual, ...)  do              \
-    {                                                                   \
-        cut_set_message_backward_compatibility(__VA_ARGS__);            \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_equal_intmax_helper((expected), (actual),        \
-                                           #expected, #actual),         \
-            cut_assert_equal_intmax(expected, actual, __VA_ARGS__));    \
-    } while (0)
+#define cut_assert_equal_intmax(expected, actual)  do           \
+{                                                               \
+    cut_trace_with_info_expression(                             \
+        cut_assert_equal_intmax_helper((expected), (actual),    \
+                                       #expected, #actual),     \
+        cut_assert_equal_intmax(expected, actual));             \
+} while (0)
 
 /**
  * cut_assert_not_equal_intmax:
- * @expected: an expected integer value (intmax_t).
- * @actual: an actual integer value (intmax_t).
+ * @expected: an expected integer value.
+ * @actual: an actual integer value.
  *
  * Passes if @expected != @actual.
- * This function is available if stdint.h exists.
  *
- * Since: 1.0.7
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
 #define cut_assert_not_equal_intmax(expected, actual)  do               \
-    {                                                                   \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_not_equal_intmax_helper((expected), (actual),    \
-                                               #expected, #actual),     \
-            cut_assert_not_equal_intmax(expected, actual));             \
-    } while (0)
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_not_equal_intmax_helper((expected), (actual),        \
+                                           #expected, #actual),         \
+        cut_assert_not_equal_intmax(expected, actual));                 \
+} while (0)
 #endif
 
 /**
@@ -661,383 +681,403 @@ extern "C" {
 #ifdef CUT_SUPPORT_C99_STDINT_TYPES
 /**
  * cut_assert_equal_uint_least8:
- * @expected: an expected integer value (uint_least8_t).
- * @actual: an actual integer value (uint_least8_t).
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @expected: an expected unsigned integer value.
+ * @actual: an actual unsigned integer value.
  *
  * Passes if @expected == @actual.
- * This function is available if stdint.h exists.
+ *
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
-#define cut_assert_equal_uint_least8(expected, actual, ...)  do         \
-    {                                                                   \
-        cut_set_message_backward_compatibility(__VA_ARGS__);            \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_equal_uint_least8_helper((expected), (actual),   \
-                                                #expected, #actual),    \
-            cut_assert_equal_uint_least8(expected, actual, __VA_ARGS__)); \
-    } while (0)
+#define cut_assert_equal_uint_least8(expected, actual)  do              \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_equal_uint_least8_helper((expected), (actual),       \
+                                            #expected, #actual),        \
+        cut_assert_equal_uint_least8(expected, actual));                \
+} while (0)
 
 /**
  * cut_assert_not_equal_uint_least8:
- * @expected: an expected integer value (uint_least8_t).
- * @actual: an actual integer value (uint_least8_t).
+ * @expected: an expected unsigned integer value.
+ * @actual: an actual unsigned integer value.
  *
  * Passes if @expected != @actual.
- * This function is available if stdint.h exists.
  *
- * Since: 1.0.7
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
 #define cut_assert_not_equal_uint_least8(expected, actual)  do          \
-    {                                                                   \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_not_equal_uint_least8_helper((expected), (actual), \
-                                                    #expected, #actual), \
-            cut_assert_not_equal_uint_least8(expected, actual));        \
-    } while (0)
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_not_equal_uint_least8_helper((expected), (actual),   \
+                                                #expected, #actual),    \
+        cut_assert_not_equal_uint_least8(expected, actual));            \
+} while (0)
 
 /**
  * cut_assert_equal_uint_least16:
- * @expected: an expected integer value (uint_least16_t).
- * @actual: an actual integer value (uint_least16_t).
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @expected: an expected unsigned integer value.
+ * @actual: an actual unsigned integer value.
  *
  * Passes if @expected == @actual.
- * This function is available if stdint.h exists.
+ *
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
-#define cut_assert_equal_uint_least16(expected, actual, ...)  do        \
-    {                                                                   \
-        cut_set_message_backward_compatibility(__VA_ARGS__);            \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_equal_uint_least16_helper((expected), (actual),  \
-                                                 #expected, #actual),   \
-            cut_assert_equal_uint_least16(expected, actual, __VA_ARGS__)); \
-    } while (0)
+#define cut_assert_equal_uint_least16(expected, actual)  do             \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_equal_uint_least16_helper((expected), (actual),      \
+                                             #expected, #actual),       \
+        cut_assert_equal_uint_least16(expected, actual));               \
+} while (0)
 
 /**
  * cut_assert_not_equal_uint_least16:
- * @expected: an expected integer value (uint_least16_t).
- * @actual: an actual integer value (uint_least16_t).
+ * @expected: an expected unsigned integer value.
+ * @actual: an actual unsigned integer value.
  *
  * Passes if @expected != @actual.
- * This function is available if stdint.h exists.
  *
- * Since: 1.0.7
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
 #define cut_assert_not_equal_uint_least16(expected, actual)  do         \
-    {                                                                   \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_not_equal_uint_least16_helper((expected), (actual), \
-                                                     #expected, #actual), \
-            cut_assert_not_equal_uint_least16(expected, actual));       \
-    } while (0)
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_not_equal_uint_least16_helper((expected), (actual),  \
+                                                 #expected, #actual),   \
+        cut_assert_not_equal_uint_least16(expected, actual));           \
+} while (0)
 
 /**
  * cut_assert_equal_uint_least32:
- * @expected: an expected integer value (uint_least32_t).
- * @actual: an actual integer value (uint_least32_t).
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @expected: an expected unsigned integer value.
+ * @actual: an actual unsigned integer value.
  *
  * Passes if @expected == @actual.
- * This function is available if stdint.h exists.
+ *
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
-#define cut_assert_equal_uint_least32(expected, actual, ...)  do        \
-    {                                                                   \
-        cut_set_message_backward_compatibility(__VA_ARGS__);            \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_equal_uint_least32_helper((expected), (actual),  \
-                                                 #expected, #actual),   \
-            cut_assert_equal_uint_least32(expected, actual, __VA_ARGS__)); \
-    } while (0)
+#define cut_assert_equal_uint_least32(expected, actual)  do             \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_equal_uint_least32_helper((expected), (actual),      \
+                                             #expected, #actual),       \
+        cut_assert_equal_uint_least32(expected, actual));               \
+} while (0)
 
 /**
  * cut_assert_not_equal_uint_least32:
- * @expected: an expected integer value (uint_least32_t).
- * @actual: an actual integer value (uint_least32_t).
+ * @expected: an expected unsigned integer value.
+ * @actual: an actual unsigned integer value.
  *
  * Passes if @expected != @actual.
- * This function is available if stdint.h exists.
  *
- * Since: 1.0.7
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
 #define cut_assert_not_equal_uint_least32(expected, actual)  do         \
-    {                                                                   \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_not_equal_uint_least32_helper((expected), (actual), \
-                                                     #expected, #actual), \
-            cut_assert_not_equal_uint_least32(expected, actual));       \
-    } while (0)
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_not_equal_uint_least32_helper((expected), (actual),  \
+                                                 #expected, #actual),   \
+        cut_assert_not_equal_uint_least32(expected, actual));           \
+} while (0)
 
 /**
  * cut_assert_equal_uint_least64:
- * @expected: an expected integer value (uint_least64_t).
- * @actual: an actual integer value (uint_least64_t).
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @expected: an expected unsigned integer value.
+ * @actual: an actual unsigned integer value.
  *
  * Passes if @expected == @actual.
- * This function is available if stdint.h exists.
+ *
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
-#define cut_assert_equal_uint_least64(expected, actual, ...)  do        \
-    {                                                                   \
-        cut_set_message_backward_compatibility(__VA_ARGS__);            \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_equal_uint_least64_helper((expected), (actual),  \
-                                                 #expected, #actual),   \
-            cut_assert_equal_uint_least64(expected, actual, __VA_ARGS__)); \
-    } while (0)
+#define cut_assert_equal_uint_least64(expected, actual)  do             \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_equal_uint_least64_helper((expected), (actual),      \
+                                             #expected, #actual),       \
+        cut_assert_equal_uint_least64(expected, actual));               \
+} while (0)
 
 /**
  * cut_assert_not_equal_uint_least64:
- * @expected: an expected integer value (uint_least64_t).
- * @actual: an actual integer value (uint_least64_t).
+ * @expected: an expected unsigned integer value.
+ * @actual: an actual unsigned integer value.
  *
  * Passes if @expected != @actual.
- * This function is available if stdint.h exists.
  *
- * Since: 1.0.7
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
 #define cut_assert_not_equal_uint_least64(expected, actual)  do         \
-    {                                                                   \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_not_equal_uint_least64_helper((expected), (actual), \
-                                                     #expected, #actual), \
-            cut_assert_not_equal_uint_least64(expected, actual));       \
-    } while (0)
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_not_equal_uint_least64_helper((expected), (actual),  \
+                                                 #expected, #actual),   \
+        cut_assert_not_equal_uint_least64(expected, actual));           \
+} while (0)
 
 /**
  * cut_assert_equal_uint_fast8:
- * @expected: an expected integer value (uint_fast8_t).
- * @actual: an actual integer value (uint_fast8_t).
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @expected: an expected unsigned integer value.
+ * @actual: an actual unsigned integer value.
  *
  * Passes if @expected == @actual.
- * This function is available if stdint.h exists.
+ *
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
-#define cut_assert_equal_uint_fast8(expected, actual, ...)  do          \
-    {                                                                   \
-        cut_set_message_backward_compatibility(__VA_ARGS__);            \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_equal_uint_fast8_helper((expected), (actual),    \
-                                               #expected, #actual),     \
-            cut_assert_equal_uint_fast8(expected, actual, __VA_ARGS__)); \
-    } while (0)
+#define cut_assert_equal_uint_fast8(expected, actual)  do               \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_equal_uint_fast8_helper((expected), (actual),        \
+                                           #expected, #actual),         \
+        cut_assert_equal_uint_fast8(expected, actual));                 \
+} while (0)
 
 /**
  * cut_assert_not_equal_uint_fast8:
- * @expected: an expected integer value (uint_fast8_t).
- * @actual: an actual integer value (uint_fast8_t).
+ * @expected: an expected unsigned integer value.
+ * @actual: an actual unsigned integer value.
  *
  * Passes if @expected != @actual.
- * This function is available if stdint.h exists.
  *
- * Since: 1.0.7
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
 #define cut_assert_not_equal_uint_fast8(expected, actual)  do           \
-    {                                                                   \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_not_equal_uint_fast8_helper((expected), (actual), \
-                                                   #expected, #actual), \
-            cut_assert_not_equal_uint_fast8(expected, actual));         \
-    } while (0)
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_not_equal_uint_fast8_helper((expected), (actual),    \
+                                               #expected, #actual),     \
+        cut_assert_not_equal_uint_fast8(expected, actual));             \
+} while (0)
 
 /**
  * cut_assert_equal_uint_fast16:
- * @expected: an expected integer value (uint_fast16_t).
- * @actual: an actual integer value (uint_fast16_t).
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @expected: an expected unsigned integer value.
+ * @actual: an actual unsigned integer value.
  *
  * Passes if @expected == @actual.
- * This function is available if stdint.h exists.
+ *
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
-#define cut_assert_equal_uint_fast16(expected, actual, ...)  do         \
-    {                                                                   \
-        cut_set_message_backward_compatibility(__VA_ARGS__);            \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_equal_uint_fast16_helper((expected), (actual),   \
-                                                #expected, #actual),    \
-            cut_assert_equal_uint_fast16(expected, actual, __VA_ARGS__)); \
-    } while (0)
+#define cut_assert_equal_uint_fast16(expected, actual)  do              \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_equal_uint_fast16_helper((expected), (actual),       \
+                                            #expected, #actual),        \
+        cut_assert_equal_uint_fast16(expected, actual));                \
+} while (0)
 
 /**
  * cut_assert_not_equal_uint_fast16:
- * @expected: an expected integer value (uint_fast16_t).
- * @actual: an actual integer value (uint_fast16_t).
+ * @expected: an expected unsigned integer value.
+ * @actual: an actual unsigned integer value.
  *
  * Passes if @expected != @actual.
- * This function is available if stdint.h exists.
  *
- * Since: 1.0.7
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
 #define cut_assert_not_equal_uint_fast16(expected, actual)  do          \
-    {                                                                   \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_not_equal_uint_fast16_helper((expected), (actual), \
-                                                    #expected, #actual), \
-            cut_assert_not_equal_uint_fast16(expected, actual));        \
-    } while (0)
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_not_equal_uint_fast16_helper((expected), (actual),   \
+                                                #expected, #actual),    \
+        cut_assert_not_equal_uint_fast16(expected, actual));            \
+} while (0)
 
 /**
  * cut_assert_equal_uint_fast32:
- * @expected: an expected integer value (uint_fast32_t).
- * @actual: an actual integer value (uint_fast32_t).
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @expected: an expected unsigned integer value.
+ * @actual: an actual unsigned integer value.
  *
  * Passes if @expected == @actual.
- * This function is available if stdint.h exists.
+ *
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
-#define cut_assert_equal_uint_fast32(expected, actual, ...)  do         \
-    {                                                                   \
-        cut_set_message_backward_compatibility(__VA_ARGS__);            \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_equal_uint_fast32_helper((expected), (actual),   \
-                                                #expected, #actual),    \
-            cut_assert_equal_uint_fast32(expected, actual, __VA_ARGS__)); \
-    } while (0)
+#define cut_assert_equal_uint_fast32(expected, actual)  do              \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_equal_uint_fast32_helper((expected), (actual),       \
+                                            #expected, #actual),        \
+        cut_assert_equal_uint_fast32(expected, actual));                \
+} while (0)
 
 /**
  * cut_assert_not_equal_uint_fast32:
- * @expected: an expected integer value (uint_fast32_t).
- * @actual: an actual integer value (uint_fast32_t).
+ * @expected: an expected unsigned integer value.
+ * @actual: an actual unsigned integer value.
  *
  * Passes if @expected != @actual.
- * This function is available if stdint.h exists.
  *
- * Since: 1.0.7
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
 #define cut_assert_not_equal_uint_fast32(expected, actual)  do          \
-    {                                                                   \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_not_equal_uint_fast32_helper((expected), (actual), \
-                                                    #expected, #actual), \
-            cut_assert_not_equal_uint_fast32(expected, actual));        \
-    } while (0)
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_not_equal_uint_fast32_helper((expected), (actual),   \
+                                                #expected, #actual),    \
+        cut_assert_not_equal_uint_fast32(expected, actual));            \
+} while (0)
 
 /**
  * cut_assert_equal_uint_fast64:
- * @expected: an expected integer value (uint_fast64_t).
- * @actual: an actual integer value (uint_fast64_t).
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @expected: an expected unsigned integer value.
+ * @actual: an actual unsigned integer value.
  *
  * Passes if @expected == @actual.
- * This function is available if stdint.h exists.
+ *
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
-#define cut_assert_equal_uint_fast64(expected, actual, ...)  do         \
-    {                                                                   \
-        cut_set_message_backward_compatibility(__VA_ARGS__);            \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_equal_uint_fast64_helper((expected), (actual),   \
-                                                #expected, #actual),    \
-            cut_assert_equal_uint_fast64(expected, actual, __VA_ARGS__)); \
-    } while (0)
+#define cut_assert_equal_uint_fast64(expected, actual)  do              \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_equal_uint_fast64_helper((expected), (actual),       \
+                                            #expected, #actual),        \
+        cut_assert_equal_uint_fast64(expected, actual));                \
+} while (0)
 
 /**
  * cut_assert_not_equal_uint_fast64:
- * @expected: an expected integer value (uint_fast64_t).
- * @actual: an actual integer value (uint_fast64_t).
+ * @expected: an expected unsigned integer value.
+ * @actual: an actual unsigned integer value.
  *
  * Passes if @expected != @actual.
- * This function is available if stdint.h exists.
  *
- * Since: 1.0.7
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
 #define cut_assert_not_equal_uint_fast64(expected, actual)  do          \
-    {                                                                   \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_not_equal_uint_fast64_helper((expected), (actual), \
-                                                    #expected, #actual), \
-            cut_assert_not_equal_uint_fast64(expected, actual));        \
-    } while (0)
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_not_equal_uint_fast64_helper((expected), (actual),   \
+                                                #expected, #actual),    \
+        cut_assert_not_equal_uint_fast64(expected, actual));            \
+} while (0)
 
 /**
  * cut_assert_equal_uintptr:
- * @expected: an expected integer value (uintptr_t).
- * @actual: an actual integer value (uintptr_t).
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @expected: an expected unsigned integer value.
+ * @actual: an actual unsigned integer value.
  *
  * Passes if @expected == @actual.
- * This function is available if stdint.h exists.
+ *
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
-#define cut_assert_equal_uintptr(expected, actual, ...)  do             \
-    {                                                                   \
-        cut_set_message_backward_compatibility(__VA_ARGS__);            \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_equal_uintptr_helper((expected), (actual),       \
-                                            #expected, #actual),        \
-            cut_assert_equal_uintptr(expected, actual, __VA_ARGS__));   \
-    } while (0)
+#define cut_assert_equal_uintptr(expected, actual)  do          \
+{                                                               \
+    cut_trace_with_info_expression(                             \
+        cut_assert_equal_uintptr_helper((expected), (actual),   \
+                                        #expected, #actual),    \
+        cut_assert_equal_uintptr(expected, actual));            \
+} while (0)
 
 /**
  * cut_assert_not_equal_uintptr:
- * @expected: an expected integer value (uintptr_t).
- * @actual: an actual integer value (uintptr_t).
+ * @expected: an expected unsigned integer value.
+ * @actual: an actual unsigned integer value.
  *
  * Passes if @expected != @actual.
- * This function is available if stdint.h exists.
  *
- * Since: 1.0.7
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
 #define cut_assert_not_equal_uintptr(expected, actual)  do              \
-    {                                                                   \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_not_equal_uintptr_helper((expected), (actual),   \
-                                                #expected, #actual),    \
-            cut_assert_not_equal_uintptr(expected, actual));            \
-    } while (0)
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_not_equal_uintptr_helper((expected), (actual),       \
+                                            #expected, #actual),        \
+        cut_assert_not_equal_uintptr(expected, actual));                \
+} while (0)
 
 /**
  * cut_assert_equal_uintmax:
- * @expected: an expected integer value (uintmax_t).
- * @actual: an actual integer value (uintmax_t).
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @expected: an expected unsigned integer value.
+ * @actual: an actual unsigned integer value.
  *
  * Passes if @expected == @actual.
- * This function is available if stdint.h exists.
+ *
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
-#define cut_assert_equal_uintmax(expected, actual, ...)  do             \
-    {                                                                   \
-        cut_set_message_backward_compatibility(__VA_ARGS__);            \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_equal_uintmax_helper((expected), (actual),       \
-                                            #expected, #actual),        \
-            cut_assert_equal_uintmax(expected, actual, __VA_ARGS__));   \
-    } while (0)
+#define cut_assert_equal_uintmax(expected, actual)  do          \
+{                                                               \
+    cut_trace_with_info_expression(                             \
+        cut_assert_equal_uintmax_helper((expected), (actual),   \
+                                        #expected, #actual),    \
+        cut_assert_equal_uintmax(expected, actual));            \
+} while (0)
 
 /**
  * cut_assert_not_equal_uintmax:
- * @expected: an expected integer value (uintmax_t).
- * @actual: an actual integer value (uintmax_t).
+ * @expected: an expected unsigned integer value.
+ * @actual: an actual unsigned integer value.
  *
  * Passes if @expected != @actual.
- * This function is available if stdint.h exists.
  *
- * Since: 1.0.7
+ * This function is available only when
+ * CUT_SUPPORT_C99_STDINT_TYPES is defined.
+ *
+ * Since: 1.1.0
  */
 #define cut_assert_not_equal_uintmax(expected, actual)  do              \
-    {                                                                   \
-        cut_trace_with_info_expression(                                 \
-            cut_assert_not_equal_uintmax_helper((expected), (actual),   \
-                                                #expected, #actual),    \
-            cut_assert_not_equal_uintmax(expected, actual));            \
-    } while (0)
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_assert_not_equal_uintmax_helper((expected), (actual),       \
+                                            #expected, #actual),        \
+        cut_assert_not_equal_uintmax(expected, actual));                \
+} while (0)
 #endif
 
 /**
