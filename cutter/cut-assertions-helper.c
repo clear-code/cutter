@@ -26,8 +26,44 @@
 #ifdef HAVE_UNISTD_H
 #  include <unistd.h>
 #endif
+
 #include <glib.h>
 #include <glib/gstdio.h>
+
+#if defined(HAVE_STDINT_H) && !defined(HAVE_INTTYPES_H)
+#  if !defined(G_GINTPTR_MODIFIER)
+#    if GLIB_SIZEOF_VOID_P == 8
+#      define G_GINTPTR_MODIFIER      "l"
+#      define G_GINTPTR_FORMAT        "li"
+#      define G_GUINTPTR_FORMAT       "lu"
+#    else
+#      define G_GINTPTR_MODIFIER      ""
+#      define G_GINTPTR_FORMAT        "i"
+#      define G_GUINTPTR_FORMAT       "u"
+#    endif
+#  endif
+
+#  define PRIdLEAST8    "d"
+#  define PRIdLEAST16   "d"
+#  define PRIdLEAST32   G_GINT32_FORMAT
+#  define PRIdLEAST64   G_GINT64_FORMAT
+#  define PRIdFAST8     "d"
+#  define PRIdFAST16    G_GINTPTR_MODIFIER "d"
+#  define PRIdFAST32    G_GINTPTR_MODIFIER "d"
+#  define PRIdFAST64    G_GINT64_FORMAT
+#  define PRIdMAX       G_GINT64_FORMAT
+#  define PRIdPTR       G_GINTPTR_FORMAT
+#  define PRIuLEAST8    "u"
+#  define PRIuLEAST16   "u"
+#  define PRIuLEAST32   G_GUINT32_FORMAT
+#  define PRIuLEAST64   G_GUINT64_FORMAT
+#  define PRIuFAST8     "u"
+#  define PRIuFAST16    G_GINTPTR_MODIFIER "u"
+#  define PRIuFAST32    G_GINTPTR_MODIFIER "u"
+#  define PRIuFAST64    G_GUINT64_FORMAT
+#  define PRIuMAX       G_GUINT64_FORMAT
+#  define PRIuPTR       G_GUINTPTR_FORMAT
+#endif
 
 #include <errno.h>
 
@@ -175,8 +211,7 @@ cut_assert_not_equal_int_helper (long            expected,
     }
 }
 
-#ifdef HAVE_STDINT_H
-
+#ifdef CUT_SUPPORT_C99_STDINT_TYPES
 void
 cut_assert_equal_int_least8_helper (int_least8_t  expected,
                              int_least8_t         actual,
@@ -553,7 +588,7 @@ cut_assert_not_equal_uint_helper (unsigned long   expected,
     }
 }
 
-#ifdef HAVE_STDINT_H
+#ifdef CUT_SUPPORT_C99_STDINT_TYPES
 
 void
 cut_assert_equal_uint_least8_helper (uint_least8_t  expected,

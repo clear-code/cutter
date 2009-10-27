@@ -1,5 +1,8 @@
 2009-10-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-public.h: move fallback PR* to ...
+	* cutter/cut-assertions-helper.c: ... here to use GLib macros.
+
 	* cutter/cut-assertions.h:
 	- fix document
 	- remove optional user message argument.

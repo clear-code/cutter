@@ -28,29 +28,8 @@ extern "C" {
 #include <stdlib.h>
 #ifdef HAVE_INTTYPES_H
 #  include <inttypes.h>
-#elif HAVE_STDINT_H
+#elif defined(HAVE_STDINT_H)
 #  include <stdint.h>
-/* TODO: define properly */
-#  define PRIdLEAST8    "ld"
-#  define PRIdLEAST16   "ld"
-#  define PRIdLEAST32   "ld"
-#  define PRIdLEAST64   "ld"
-#  define PRIdFAST8     "ld"
-#  define PRIdFAST16    "ld"
-#  define PRIdFAST32    "ld"
-#  define PRIdFAST64    "ld"
-#  define PRIdMAX       "ld"
-#  define PRIdPTR       "ld"
-#  define PRIuLEAST8    "ud"
-#  define PRIuLEAST16   "ud"
-#  define PRIuLEAST32   "ud"
-#  define PRIuLEAST64   "ud"
-#  define PRIuFAST8     "ud"
-#  define PRIuFAST16    "ud"
-#  define PRIuFAST32    "ud"
-#  define PRIuFAST64    "ud"
-#  define PRIuMAX       "ud"
-#  define PRIuPTR       "ud"
 #endif
 
 #include <cutter/cut-types.h>
