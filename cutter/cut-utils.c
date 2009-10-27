@@ -129,6 +129,8 @@ cut_utils_inspect_memory (const void *memory, size_t size)
         if (g_ascii_isprint(binary[i]))
             n_printable_characters++;
     }
+    if (size > max_size)
+        g_string_append(buffer, "... ");
 
     if (n_printable_characters >= max_size * 0.3) {
         g_string_overwrite(buffer, buffer->len - 1, ": ");
@@ -139,6 +141,8 @@ cut_utils_inspect_memory (const void *memory, size_t size)
                 g_string_append_c(buffer, '.');
             }
         }
+        if (size > max_size)
+            g_string_append(buffer, "...");
     } else {
         g_string_truncate(buffer, buffer->len - 1);
     }

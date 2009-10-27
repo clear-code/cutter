@@ -1,7 +1,10 @@
 2009-10-28  Kouhei Sutou  <kou@cozmixng.org>
 
-	* cutter/cut-utils.c: don't inspect all data for huge data. (>=
-	1024 bytes)
+	* cutter/cut-utils.c, test/test-cut-utils.c: add shorten mark
+	(...) to inspected memory.
+
+	* cutter/cut-utils.c: don't inspect all
+	data for huge data. (>= 1024 bytes)
 
 2009-10-27  Kouhei Sutou  <kou@cozmixng.org>
 

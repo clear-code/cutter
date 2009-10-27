@@ -26,6 +26,7 @@
 
 void test_inspect_memory (void);
 void test_inspect_memory_with_printable (void);
+void test_inspect_memory_huge_data (void);
 void test_compare_string_array (void);
 void test_inspect_string_array (void);
 void test_strv_concat (void);
@@ -99,6 +100,28 @@ test_inspect_memory_with_printable (void)
     cut_assert_equal_string_with_free(
         "0x00 0x01 0x02 0x1f 0x47 0x4e: ....GN",
         cut_utils_inspect_memory(binary, sizeof(binary) - 2));
+}
+
+void
+test_inspect_memory_huge_data (void)
+{
+#define INSPECT_SIZE 1025
+    gint i, max_inspect_size = 1024;
+    GString *expected;
+    gchar binary[INSPECT_SIZE];
+
+    expected = g_string_new(NULL);
+    for (i = 0; i < INSPECT_SIZE; i++) {
+        binary[i] = 0;
+        if (i < max_inspect_size)
+            g_string_append_printf(expected, "0x%02x ", 0);
+    }
+    g_string_append_printf(expected, "...");
+
+    cut_assert_equal_string_with_free(
+        cut_take_string(g_string_free(expected, FALSE)),
+        cut_utils_inspect_memory(binary, INSPECT_SIZE));
+#undef INSPECT_SIZE
 }
 
 void
