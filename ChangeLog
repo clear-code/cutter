@@ -1,5 +1,8 @@
 2009-10-27  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-string-io-channel.c: check only requested
+	conditions' availability.
+
 	* cutter/cut-public.h: move fallback PR* to ...
 	* cutter/cut-assertions-helper.c: ... here to use GLib macros.
 
