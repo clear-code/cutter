@@ -1,3 +1,9 @@
+2009-10-27  Kouhei Sutou  <kou@cozmixng.org>
+
+	* configure.ac, cutter/cut-assertions.h: put C99 stdint
+	availability to cut-features.h and use it because Cutter users
+	doesn't include config.h. They only use cut-features.h.
+
 2009-10-27  Yuto Hayamizu  <y.hayamizu@gmail.com>
 
 	* cutter/cut-assertions.h, cutter/cut-assertions-helper.[ch] : add

@@ -127,8 +127,16 @@ AC_CHECK_HEADERS(io.h)
 AC_CHECK_HEADERS(windows.h)
 AC_CHECK_HEADERS(mach-o/loader.h)
 AC_CHECK_HEADERS(elf.h)
-AC_CHECK_HEADERS(stdint.h, [AC_DEFINE(HAVE_STDINT_H)])
-AC_CHECK_HEADERS(inttypes.h, [AC_DEFINE(HAVE_INTTYPES_H)])
+AC_CHECK_HEADERS(stdint.h, [have_stdint_h=yes], [have_stdint_h=no])
+AC_CHECK_HEADERS(inttypes.h, [have_inttypes_h=yes], [have_inttypes_h=no])
+
+if test "$have_stdint_h" = "yes" -o "$have_inttypes_h" = "yes"; then
+   have_c99_stdint_types=yes
+   AC_DEFINE(HAVE_C99_STDINT_TYPES, 1,
+             [Define to 1 if you have <stdint.h> or <inttypes.h>])
+else
+   have_c99_stdint_types=no
+fi
 
 dnl **************************************************************
 dnl Check for MinGW
@@ -560,6 +568,18 @@ AC_CONFIG_COMMANDS([cutter/cut-features.h-gdk-pixbuf-enable],
 AC_CONFIG_COMMANDS([cutter/cut-features.h-gdk-pixbuf-disable],
 [
     echo "/* #undef CUT_SUPPORT_GDK_PIXBUF */" >> cutter/cut-features.h
+])
+  fi
+
+  if test "$have_c99_stdint_types" = "yes"; then
+AC_CONFIG_COMMANDS([cutter/cut-features.h-have-c99-stdint-types],
+[
+    echo "#define CUT_SUPPORT_C99_STDINT_TYPES 1" >> cutter/cut-features.h
+])
+  else
+AC_CONFIG_COMMANDS([cutter/cut-features.h-not-have-c99-stdint-types],
+[
+    echo "/* #undef CUT_SUPPORT_C99_STDINT_TYPES */" >> cutter/cut-features.h
 ])
   fi
 

@@ -240,7 +240,7 @@ extern "C" {
         cut_assert_not_equal_int(expected, actual));            \
 } while (0)
 
-#ifdef HAVE_STDINT_H
+#ifdef CUT_SUPPORT_C99_STDINT_TYPES
 /**
  * cut_assert_equal_int_least8:
  * @expected: an expected integer value (int_least8_t).
@@ -658,7 +658,7 @@ extern "C" {
         cut_assert_not_equal_uint(expected, actual));           \
 } while (0)
 
-#ifdef HAVE_STDINT_H
+#ifdef CUT_SUPPORT_C99_STDINT_TYPES
 /**
  * cut_assert_equal_uint_least8:
  * @expected: an expected integer value (uint_least8_t).
