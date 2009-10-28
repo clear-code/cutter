@@ -1,5 +1,8 @@
 2009-10-28  Kouhei Sutou  <kou@clear-code.com>
 
+	* misc/update-latest-release.rb: add for automating latest release
+	version/date updating.
+
 	* TODO: add:
 	- add CUTTER_DEBUG technique in test/run-test.sh to tutorial
 	  as a debugging technique.
