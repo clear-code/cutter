@@ -1,3 +1,10 @@
+* add CUTTER_DEBUG technique in test/run-test.sh to tutorial
+  as a debugging technique.
+* use real data instead of dummy data (e.g. a, b, c, ...)
+  for demo screenshot. (It's more realistic)
+* add 'what merit we will get' instead of 'what features we
+  will get' to introduction document.
+* add 'how to become a test junkie from a test amateur' to document.
 * cut_thread_create(): it pushes the current test context. tests written by
   user will not care the current test context.
 * priority mode.
