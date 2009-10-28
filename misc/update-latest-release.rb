@@ -32,6 +32,13 @@ files.each do |file|
     [[old_version, new_version],
      [old_release_date, new_release_date]].each do |old, new|
       replaced_content = replaced_content.gsub(/#{Regexp.escape(old)}/, new)
+      if /\./ =~ old
+        old_underscore = old.gsub(/\./, '-')
+        new_underscore = new.gsub(/\./, '-')
+        replaced_content =
+          replaced_content.gsub(/#{Regexp.escape(old_underscore)}/,
+                                new_underscore)
+      end
     end
   end
 

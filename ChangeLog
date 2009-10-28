@@ -1,5 +1,8 @@
 2009-10-28  Kouhei Sutou  <kou@cozmixng.org>
 
+	* misc/update-latest-release.rb: support X-X-X version variant
+	replacing.
+
 	* misc/Makefile.am (dist_noinst_SCRIPTS): add update-latest-release.rb.
 
 2009-10-28  Kouhei Sutou  <kou@clear-code.com>
