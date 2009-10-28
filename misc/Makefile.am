@@ -3,4 +3,5 @@ dist_noinst_SCRIPTS =				\
 	expand-rd2-snippet.rb			\
 	rd2man-lib.rb				\
 	prepare-gtk-doc-html-for-publishing.rb	\
-	release.rb
+	release.rb				\
+	update-latest-release.rb
