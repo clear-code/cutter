@@ -6,7 +6,7 @@
 
 We write a program (library) that implements a stack in C.
 We write a program with writing tests. To write tests, we
-use Cutter that is an unit testing framework for C.
+use Cutter that is a unit testing framework for C.
 
 We use GNU build system (GNU Autoconf/GNU Automake/GNU
 Libtool) for build system. GNU build system lessens

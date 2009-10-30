@@ -1,3 +1,7 @@
+2009-10-30  Yuto Hayamizu  <y.hayamizu@gmail.com>
+
+	* TUTORIAL, html/index.html: fix "an unit" -> "a unit"
+
 2009-10-28  Kouhei Sutou  <kou@cozmixng.org>
 
 	* misc/update-latest-release.rb: support X-X-X version variant
