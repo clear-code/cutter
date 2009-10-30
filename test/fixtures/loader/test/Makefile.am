@@ -5,7 +5,7 @@ INCLUDES =			\
 	-I$(top_srcdir)/cutter
 
 noinst_LTLIBRARIES = 		\
-	stub-loader-test.la
+	stub-test-functions.la
 
 AM_LDFLAGS =			\
 	-module			\
@@ -17,5 +17,5 @@ LIBS =						\
 	$(top_builddir)/cutter/libcutter.la	\
 	$(GLIB_LIBS)
 
-stub_loader_test_la_SOURCES = stub-test-functions.c
+stub_test_functions_la_SOURCES = stub-test-functions.c
 

@@ -1,3 +1,8 @@
+2009-10-30  Kouhei Sutou  <kou@clear-code.com>
+
+	* test/cutter/test-cut-loader.c,
+	test/fixtures/loader/test/Makefile.am: fix file name.
+
 2009-10-30  Yuto Hayamizu  <y.hayamizu@gmail.com>
 
 	* TUTORIAL, html/index.html: fix "an unit" -> "a unit"

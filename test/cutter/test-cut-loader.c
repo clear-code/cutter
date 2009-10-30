@@ -102,7 +102,7 @@ test_load_function (void)
     const gchar *target_test_names[] = {"/.*/", NULL};
     gint i;
 
-    loader = loader_new("test", "stub-loader-test." G_MODULE_SUFFIX);
+    loader = loader_new("test", "stub-test-functions." G_MODULE_SUFFIX);
     test_case = cut_loader_load_test_case(loader);
     cut_assert(test_case);
 
