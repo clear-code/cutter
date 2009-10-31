@@ -62,6 +62,7 @@ void          cut_loader_set_enable_convenience_attribute_definition
 const gchar  *cut_loader_get_base_directory(CutLoader *loader);
 void          cut_loader_set_base_directory(CutLoader *loader,
                                             const gchar *base_directory);
+GList        *cut_loader_load_test_cases   (CutLoader *loader);
 CutTestCase  *cut_loader_load_test_case    (CutLoader *loader);
 CutTestSuite *cut_loader_load_test_suite   (CutLoader *loader);
 

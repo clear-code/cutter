@@ -16,6 +16,8 @@ void test_fixture_function (gconstpointer data);
 void test_fail_to_load (void);
 void test_load_test_iterator (void);
 void test_load_cpp_namespace (void);
+void data_cpp_fixture_function (void);
+void test_cpp_fixture_function (gconstpointer data);
 
 static CutLoader *loader;
 static CutTestCase *test_case;
@@ -341,6 +343,98 @@ test_load_cpp_namespace (void)
         test_names[i] = g_strdup(cut_test_get_name(test));
     }
     cut_assert_equal_string_array(expected_functions, test_names);
+}
+
+static const gchar *
+mangle (const gchar *component, ...)
+{
+    GString *mangled;
+    va_list args;
+
+    mangled = g_string_new("_ZN");
+    va_start(args, component);
+    while (component) {
+        g_string_append_printf(mangled,
+                               "%" G_GSIZE_FORMAT "%s",
+                               strlen(component), component);
+        component = va_arg(args, gchar *);
+    }
+    va_end(args);
+    g_string_append(mangled, "Ev");
+
+    return cut_take_string(g_string_free(mangled, FALSE));
+}
+
+void
+data_cpp_fixture_function (void)
+{
+    data_fixture_function();
+}
+
+void
+test_cpp_fixture_function (gconstpointer data)
+{
+    const FixtureTestData *test_data = data;
+    CutStartupFunction expected_startup_function = NULL;
+    CutStartupFunction actual_startup_function = NULL;
+    CutShutdownFunction expected_shutdown_function = NULL;
+    CutShutdownFunction actual_shutdown_function = NULL;
+    CutSetupFunction expected_setup_function = NULL;
+    CutSetupFunction actual_setup_function = NULL;
+    CutTeardownFunction expected_teardown_function = NULL;
+    CutTeardownFunction actual_teardown_function = NULL;
+    gchar *so_filename;
+
+    loader = loader_new("cpp-fixture", test_data->file_name);
+    test_case = cut_loader_load_test_case(loader);
+    cut_assert(test_case);
+
+    g_object_get(G_OBJECT(loader),
+                 "so-filename", &so_filename,
+                 NULL);
+    module = g_module_open(so_filename,
+                           G_MODULE_BIND_LAZY | G_MODULE_BIND_LOCAL);
+    g_free(so_filename);
+    cut_assert_not_null(module);
+    if (test_data->startup_function_name)
+        cut_assert_true(g_module_symbol(module,
+                                        mangle("fixture",
+                                               test_data->startup_function_name,
+                                               NULL),
+                                        (gpointer)&expected_startup_function));
+    if (test_data->setup_function_name)
+        cut_assert_true(g_module_symbol(module,
+                                        mangle("fixture",
+                                               test_data->setup_function_name,
+                                               NULL),
+                                        (gpointer)&expected_setup_function));
+    if (test_data->teardown_function_name)
+        cut_assert_true(g_module_symbol(module,
+                                        mangle("fixture",
+                                               test_data->teardown_function_name,
+                                               NULL),
+                                        (gpointer)&expected_teardown_function));
+    if (test_data->shutdown_function_name)
+        cut_assert_true(g_module_symbol(module,
+                                        mangle("fixture",
+                                               test_data->shutdown_function_name,
+                                               NULL),
+                                        (gpointer)&expected_shutdown_function));
+
+    g_object_get(G_OBJECT(test_case),
+                 "startup-function", &actual_startup_function,
+                 "setup-function", &actual_setup_function,
+                 "teardown-function", &actual_teardown_function,
+                 "shutdown-function", &actual_shutdown_function,
+                 NULL);
+    cut_assert_equal_pointer(expected_startup_function,
+                             actual_startup_function);
+    cut_assert_equal_pointer(expected_setup_function,
+                             actual_setup_function);
+    cut_assert_equal_pointer(expected_teardown_function,
+                             actual_teardown_function);
+    cut_assert_equal_pointer(expected_shutdown_function,
+                             actual_shutdown_function);
 }
 
 /*

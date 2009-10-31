@@ -632,6 +632,7 @@ AC_CONFIG_FILES([Makefile
 		 test/fixtures/loader/suite/Makefile
 		 test/fixtures/loader/test/Makefile
 		 test/fixtures/loader/cpp/Makefile
+		 test/fixtures/loader/cpp-fixture/Makefile
 		 test/fixtures/pipeline/Makefile
 		 test/fixtures/pipeline/error/Makefile
 		 test/fixtures/pipeline/failure/Makefile

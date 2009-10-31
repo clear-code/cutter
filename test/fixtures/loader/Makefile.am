@@ -5,4 +5,5 @@ SUBDIRS =		\
 	module		\
 	suite		\
 	test		\
-	cpp
+	cpp		\
+	cpp-fixture

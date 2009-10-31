@@ -354,13 +354,16 @@ cut_repository_create_test_suite (CutRepository *repository)
 
     for (list = priv->loaders; list; list = g_list_next(list)) {
         CutLoader *loader = CUT_LOADER(list->data);
-        CutTestCase *test_case;
+        GList *test_cases, *node;
 
-        test_case = cut_loader_load_test_case(loader);
-        if (test_case) {
+        test_cases = cut_loader_load_test_cases(loader);
+        for (node = test_cases; node; node = g_list_next(node)) {
+            CutTestCase *test_case = node->data;
+
             cut_test_suite_add_test_case(suite, test_case);
             g_object_unref(test_case);
         }
+        g_list_free(test_cases);
     }
     return suite;
 }

@@ -1,3 +1,10 @@
+2009-11-01  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-loader.[ch], cutter/cut-repository.c,
+	test/cutter/test-cut-loader.c,
+	test/fixtures/loader/cpp-fixture/: support fixture functions
+	detection defined in C++ namespace.
+
 2009-10-31  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-loader.c,
