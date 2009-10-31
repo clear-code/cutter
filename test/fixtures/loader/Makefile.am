@@ -4,4 +4,5 @@ SUBDIRS =		\
 	iterator	\
 	module		\
 	suite		\
-	test
+	test		\
+	cpp

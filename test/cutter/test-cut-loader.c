@@ -15,6 +15,7 @@ void data_fixture_function (void);
 void test_fixture_function (gconstpointer data);
 void test_fail_to_load (void);
 void test_load_test_iterator (void);
+void test_load_cpp_namespace (void);
 
 static CutLoader *loader;
 static CutTestCase *test_case;
@@ -76,14 +77,6 @@ run (void)
                                          test_case);
 }
 
-static gchar *expected_functions[] = {
-    "test_abcdefghijklmnopqratuvwzyz_ABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789",
-    "test_stub_function1",
-    "test_stub_function2",
-    "test_stub_function3",
-    NULL
-};
-
 static gint
 compare_function_name (gconstpointer a, gconstpointer b)
 {
@@ -99,8 +92,15 @@ test_load_function (void)
 {
     CutTestContainer *container;
     GList *tests, *list;
-    const gchar *target_test_names[] = {"/.*/", NULL};
     gint i;
+    const gchar *target_test_names[] = {"/.*/", NULL};
+    gchar *expected_functions[] = {
+        "test_abcdefghijklmnopqratuvwzyz_ABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789",
+        "test_stub_function1",
+        "test_stub_function2",
+        "test_stub_function3",
+        NULL
+    };
 
     loader = loader_new("test", "stub-test-functions." G_MODULE_SUFFIX);
     test_case = cut_loader_load_test_case(loader);
@@ -298,6 +298,49 @@ test_load_test_iterator (void)
 
     cut_assert_true(run());
     cut_assert_test_result_summary(run_context, 2, 2, 2, 0, 0, 0, 0, 0);
+}
+
+void
+test_load_cpp_namespace (void)
+{
+    CutTestContainer *container;
+    GList *tests, *list;
+    gint i;
+    const gchar *target_test_names[] = {"/.*/", NULL};
+    gchar *expected_functions[] = {
+        "calc::test_add",
+        "calc::test_sub",
+        NULL
+    };
+
+    loader = loader_new("cpp", "stub-namespace." G_MODULE_SUFFIX);
+    test_case = cut_loader_load_test_case(loader);
+    cut_assert(test_case);
+
+    container = CUT_TEST_CONTAINER(test_case);
+    cut_assert_equal_int(2,
+                         cut_test_container_get_n_tests(container, NULL));
+
+    run_context = cut_test_runner_new();
+    cut_run_context_set_target_test_names(run_context, target_test_names);
+    cut_assert_equal_int(2,
+                         cut_test_container_get_n_tests(container, run_context));
+
+    tests = (GList *)cut_test_container_get_children(container);
+    cut_assert(tests);
+
+    tests = g_list_sort(tests, compare_function_name);
+    test_names = g_new0(gchar *, g_list_length(tests) + 1);
+    for (list = tests, i = 0; list; list = g_list_next(list), i++) {
+        CutTest *test;
+
+        cut_assert(list->data);
+        cut_assert(CUT_IS_TEST(list->data));
+
+        test = CUT_TEST(list->data);
+        test_names[i] = g_strdup(cut_test_get_name(test));
+    }
+    cut_assert_equal_string_array(expected_functions, test_names);
 }
 
 /*

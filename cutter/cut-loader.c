@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2009  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2009  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -51,6 +51,17 @@ typedef enum {
     CUT_BINARY_TYPE_MS_WINDOWS_DLL
 } CutBinaryType;
 
+typedef struct _SymbolNames SymbolNames;
+struct _SymbolNames
+{
+    gchar *test_name;
+    gchar *test_function_name;
+    gchar *data_setup_function_name;
+    gchar *attributes_setup_function_name;
+    gboolean require_data_setup_function;
+    gboolean cpp;
+};
+
 typedef struct _CutLoaderPrivate	CutLoaderPrivate;
 struct _CutLoaderPrivate
 {
@@ -74,6 +85,37 @@ enum
 };
 
 G_DEFINE_TYPE (CutLoader, cut_loader, G_TYPE_OBJECT)
+
+static SymbolNames *
+symbol_names_new (gchar *test_name,
+                  gchar *test_function_name,
+                  gchar *data_setup_function_name,
+                  gchar *attributes_setup_function_name,
+                  gboolean require_data_setup_function,
+                  gboolean cpp)
+{
+    SymbolNames *names;
+
+    names = g_new0(SymbolNames, 1);
+    names->test_name = test_name;
+    names->test_function_name = test_function_name;
+    names->data_setup_function_name = data_setup_function_name;
+    names->attributes_setup_function_name = attributes_setup_function_name;
+    names->require_data_setup_function = require_data_setup_function;
+    names->cpp = cpp;
+
+    return names;
+}
+
+static void
+symbol_names_free (SymbolNames *names)
+{
+    g_free(names->test_name);
+    g_free(names->test_function_name);
+    g_free(names->data_setup_function_name);
+    g_free(names->attributes_setup_function_name);
+    g_free(names);
+}
 
 static void dispose         (GObject               *object);
 static void set_property    (GObject               *object,
@@ -273,10 +315,161 @@ cut_loader_set_base_directory (CutLoader *loader, const gchar *base_directory)
     priv->base_directory = g_strdup(base_directory);
 }
 
-static inline gboolean
-is_test_function_name (const gchar *name)
+static inline const gchar *
+skip_cpp_namespace (const gchar *name, GString *namespaces)
 {
-    return name && g_str_has_prefix(name, TEST_NAME_PREFIX);
+    if (g_str_has_prefix(name, "_Z")) {
+        name += strlen("_Z");
+    } else {
+        return NULL;
+    }
+
+    if (!name[0])
+        return NULL;
+
+    while (name[0] == 'N') {
+        gchar *namespace_name_start;
+        guint64 namespace_name_length;
+
+        name++;
+        namespace_name_length = g_ascii_strtoull(name,
+                                                 &namespace_name_start,
+                                                 10);
+        if (namespace_name_length == 0)
+            return NULL;
+        if (namespaces) {
+            g_string_append_len(namespaces,
+                                namespace_name_start,
+                                namespace_name_length);
+            g_string_append(namespaces, "::");
+        }
+        name = namespace_name_start + namespace_name_length;
+    }
+
+    return name;
+}
+
+static inline gboolean
+find_cpp_test_name (const gchar *name, gchar **test_name_start,
+                    guint64 *test_name_length, GString *namespaces)
+{
+    guint64 length;
+
+    name = skip_cpp_namespace(name, namespaces);
+    if (!name)
+        return FALSE;
+
+    length = g_ascii_strtoull(name, test_name_start, 10);
+    if (length == 0)
+        return FALSE;
+
+    if (test_name_length)
+        *test_name_length = length;
+
+    return g_str_has_prefix(*test_name_start, TEST_NAME_PREFIX);
+}
+
+static inline SymbolNames *
+detect_cpp_test_function_symbol_names (const gchar *name)
+{
+    const gchar *original_name = name;
+    gchar *test_name_start;
+    guint64 test_name_length;
+    gchar *data_setup_function_name = NULL;
+    gchar *attributes_setup_function_name = NULL;
+    gboolean require_data_setup_function = FALSE;
+    GString *test_name;
+
+    test_name = g_string_new(NULL);
+    if (!find_cpp_test_name(name, &test_name_start, &test_name_length,
+                            test_name)) {
+        g_string_free(test_name, TRUE);
+        return NULL;
+    }
+
+    name = test_name_start + test_name_length;
+    if (g_str_equal(name, "Ev")) {
+    } else if (g_str_equal(name, "EPv")) {
+        GString *data_setup_function_name_string;
+        size_t test_name_prefix_length;
+
+        require_data_setup_function = TRUE;
+
+        test_name_prefix_length = strlen(TEST_NAME_PREFIX);
+
+        data_setup_function_name_string = g_string_new(NULL);
+        g_string_append_len(data_setup_function_name_string,
+                            original_name, original_name - test_name_start);
+        g_string_append(data_setup_function_name_string,
+                        DATA_SETUP_FUNCTION_NAME_PREFIX);
+        g_string_append_len(data_setup_function_name_string,
+                            test_name_start + test_name_prefix_length,
+                            test_name_length - test_name_prefix_length);
+        g_string_append(data_setup_function_name_string, "Ev");
+
+        data_setup_function_name = g_string_free(data_setup_function_name_string,
+                                                 FALSE);
+    } else {
+        g_string_free(test_name, TRUE);
+        return NULL;
+    }
+
+    {
+        GString *attributes_setup_function_name_string;
+        size_t test_name_prefix_length;
+
+        test_name_prefix_length = strlen(TEST_NAME_PREFIX);
+
+        attributes_setup_function_name_string = g_string_new(NULL);
+        g_string_append_len(attributes_setup_function_name_string,
+                            original_name, original_name - test_name_start);
+        g_string_append(attributes_setup_function_name_string,
+                        ATTRIBUTES_SETUP_FUNCTION_NAME_PREFIX);
+        g_string_append_len(attributes_setup_function_name_string,
+                            test_name_start + test_name_prefix_length,
+                            test_name_length - test_name_prefix_length);
+        g_string_append(attributes_setup_function_name_string, "Ev");
+
+        attributes_setup_function_name =
+            g_string_free(attributes_setup_function_name_string, FALSE);
+    }
+
+    g_string_append_len(test_name, test_name_start, test_name_length);
+    return symbol_names_new(g_string_free(test_name, FALSE),
+                            g_strdup(original_name),
+                            data_setup_function_name,
+                            attributes_setup_function_name,
+                            require_data_setup_function,
+                            TRUE);
+}
+
+static inline SymbolNames *
+detect_test_function_symbol_names (const gchar *name)
+{
+    if (!name)
+        return NULL;
+
+    if (g_str_has_prefix(name, TEST_NAME_PREFIX)) {
+        gchar *data_setup_function_name;
+        gchar *attributes_setup_function_name;
+
+        data_setup_function_name =
+            g_strconcat(DATA_SETUP_FUNCTION_NAME_PREFIX,
+                        name + strlen(TEST_NAME_PREFIX),
+                        NULL);
+        attributes_setup_function_name =
+            g_strconcat(ATTRIBUTES_SETUP_FUNCTION_NAME_PREFIX,
+                        name + strlen(TEST_NAME_PREFIX),
+                        NULL);
+        return symbol_names_new(g_strdup(name),
+                                g_strdup(name),
+                                data_setup_function_name,
+                                attributes_setup_function_name,
+                                FALSE,
+                                FALSE);
+    }
+
+    return detect_cpp_test_function_symbol_names(name);
 }
 
 #ifdef HAVE_LIBBFD
@@ -490,64 +683,127 @@ collect_test_functions (CutLoaderPrivate *priv)
 
     for (node = priv->symbols; node; node = g_list_next(node)) {
         gchar *name = node->data;
-        if (is_test_function_name(name)) {
-            test_names = g_list_prepend(test_names, name);
+        SymbolNames *names;
+        names = detect_test_function_symbol_names(name);
+        if (names) {
+            test_names = g_list_prepend(test_names, names);
         }
     }
     return test_names;
 }
 
 static gboolean
-is_including_test_name (const gchar *function_name, const gchar *test_name)
+is_including_test_name (const gchar *function_name, SymbolNames *names)
 {
-    return (strlen(function_name) > strlen(test_name) - strlen(TEST_NAME_PREFIX)) &&
-        g_str_has_suffix(function_name, test_name + strlen(TEST_NAME_PREFIX));
+    gboolean included = FALSE;
+    GString *suffix;
+    gchar *base_name;
+
+    if (names->cpp) {
+        const gchar *target_namespace_end;
+        GString *target_namespace;
+        GString *test_namespace;
+        guint64 function_name_length;
+
+        target_namespace = g_string_new(NULL);
+        target_namespace_end = skip_cpp_namespace(function_name,
+                                                  target_namespace);
+        if (!target_namespace_end) {
+            g_string_free(target_namespace, TRUE);
+            return FALSE;
+        }
+
+        test_namespace = g_string_new(NULL);
+        skip_cpp_namespace(names->test_function_name, test_namespace);
+        included = g_str_equal(target_namespace->str, test_namespace->str);
+        g_string_free(target_namespace, TRUE);
+        g_string_free(test_namespace, TRUE);
+        if (!included)
+            return FALSE;
+
+        function_name_length = g_ascii_strtoull(target_namespace_end,
+                                                &base_name, 10);
+        if (function_name_length == 0)
+            return FALSE;
+    } else {
+        base_name = (gchar *)function_name;
+    }
+
+    suffix = g_string_new("_");
+    g_string_append(suffix, names->test_name + strlen(TEST_NAME_PREFIX));
+    if (names->cpp)
+        g_string_append(suffix, "Ev");
+    included = g_str_has_suffix(base_name, suffix->str);
+    g_string_free(suffix, TRUE);
+
+    return included;
 }
 
 static gboolean
-is_valid_attribute_function_name (const gchar *function_name, const gchar *test_name)
+is_valid_attribute_function_name (const gchar *function_name, SymbolNames *names)
 {
-    return !g_str_has_prefix(function_name,
-                             ATTRIBUTES_SETUP_FUNCTION_NAME_PREFIX) &&
-        !g_str_has_prefix(function_name, DATA_SETUP_FUNCTION_NAME_PREFIX) &&
-        is_including_test_name(function_name, test_name);
+    gchar *base_name;
+
+    if (!function_name)
+        return FALSE;
+
+    if (names->cpp) {
+        if (!find_cpp_test_name(function_name, &base_name, NULL, NULL))
+            return FALSE;
+    } else {
+        base_name = (gchar *)function_name;
+    }
+
+    return
+        !g_str_has_prefix(base_name, TEST_NAME_PREFIX) &&
+        !g_str_has_prefix(base_name,
+                          ATTRIBUTES_SETUP_FUNCTION_NAME_PREFIX) &&
+        !g_str_has_prefix(base_name, DATA_SETUP_FUNCTION_NAME_PREFIX) &&
+        is_including_test_name(function_name, names);
 }
 
 static gchar *
-get_attribute_name (const gchar *attribute_function_name, const gchar *test_name)
+get_attribute_name (const gchar *attribute_function_name, SymbolNames *names)
 {
-    gchar *pos;
+    gchar *base_name;
+    gchar *test_base_name;
 
-    pos = g_strrstr(attribute_function_name,
-                    test_name + strlen(TEST_NAME_PREFIX)) - 1;
+    if (names->cpp) {
+        const gchar *namespace_end;
 
-    return g_strndup(attribute_function_name, pos - attribute_function_name);
+        namespace_end = skip_cpp_namespace(attribute_function_name, NULL);
+        g_ascii_strtoull(namespace_end, &base_name, 10);
+    } else {
+        base_name = (gchar *)attribute_function_name;
+    }
+
+    test_base_name = g_strrstr(base_name,
+                               names->test_name + strlen(TEST_NAME_PREFIX)) - 1;
+    return g_strndup(base_name, test_base_name - base_name);
 }
 
 typedef const gchar *(*CutAttributeItemFunction)     (void);
 
 static void
-apply_attributes (CutLoaderPrivate *priv, CutTest *test, const gchar *test_name)
+apply_attributes (CutLoaderPrivate *priv, CutTest *test, SymbolNames *names)
 {
     GList *node;
 
     if (!test)
         return;
-    if (!test_name)
+    if (!names)
         return;
 
     for (node = priv->symbols; node; node = g_list_next(node)) {
         gchar *function_name = node->data;
-        if (is_test_function_name(function_name))
-            continue;
-        if (is_valid_attribute_function_name(function_name, test_name)) {
+        if (is_valid_attribute_function_name(function_name, names)) {
             CutAttributeItemFunction function = NULL;
             g_module_symbol(priv->module, function_name, (gpointer)&function);
             if (function) {
                 gchar *name;
                 const gchar *value;
 
-                name = get_attribute_name(function_name, test_name);
+                name = get_attribute_name(function_name, names);
                 value = function();
                 cut_test_set_attribute(test, name, value);
                 g_free(name);
@@ -557,43 +813,43 @@ apply_attributes (CutLoaderPrivate *priv, CutTest *test, const gchar *test_name)
 }
 
 static void
-register_test (CutLoader *loader, CutTestCase *test_case,
-               const gchar *name, CutTestFunction function)
+register_valid_test (CutLoader *loader, CutTestCase *test_case,
+                     SymbolNames *names)
 {
     CutLoaderPrivate *priv;
     CutTest *test;
-    gchar *data_setup_function_name;
+    CutTestFunction test_function = NULL;
     CutDataSetupFunction data_setup_function = NULL;
-    gchar *attributes_setup_function_name;
     CutAttributesSetupFunction attributes_setup_function = NULL;
 
     priv = CUT_LOADER_GET_PRIVATE(loader);
 
-    data_setup_function_name =
-        g_strconcat(DATA_SETUP_FUNCTION_NAME_PREFIX,
-                    name + strlen(TEST_NAME_PREFIX),
-                    NULL);
-    g_module_symbol(priv->module, data_setup_function_name,
-                    (gpointer)&data_setup_function);
+    g_module_symbol(priv->module, names->test_function_name,
+                    (gpointer)&test_function);
+    if (!test_function)
+        return;
 
-    attributes_setup_function_name =
-        g_strconcat(ATTRIBUTES_SETUP_FUNCTION_NAME_PREFIX,
-                    name + strlen(TEST_NAME_PREFIX),
-                    NULL);
-    g_module_symbol(priv->module, attributes_setup_function_name,
-                    (gpointer)&attributes_setup_function);
+    if (names->data_setup_function_name)
+        g_module_symbol(priv->module, names->data_setup_function_name,
+                        (gpointer)&data_setup_function);
+    if (names->require_data_setup_function && !data_setup_function)
+        return;
+
+    if (names->attributes_setup_function_name)
+        g_module_symbol(priv->module, names->attributes_setup_function_name,
+                        (gpointer)&attributes_setup_function);
 
     if (data_setup_function) {
         CutTestIterator *test_iterator;
-        CutIteratedTestFunction test_function;
+        CutIteratedTestFunction iterated_test_function;
 
-        test_function = (CutIteratedTestFunction)function;
-        test_iterator = cut_test_iterator_new(name,
-                                              test_function,
+        iterated_test_function = (CutIteratedTestFunction)test_function;
+        test_iterator = cut_test_iterator_new(names->test_name,
+                                              iterated_test_function,
                                               data_setup_function);
         test = CUT_TEST(test_iterator);
     } else {
-        test = cut_test_new(name, function);
+        test = cut_test_new(names->test_name, test_function);
     }
     cut_test_set_base_directory(test, priv->base_directory);
 
@@ -614,13 +870,11 @@ register_test (CutLoader *loader, CutTestCase *test_case,
     }
 
     if (cut_loader_support_attribute(loader))
-        apply_attributes(priv, test, name);
+        apply_attributes(priv, test, names);
 
     cut_test_case_add_test(test_case, test);
 
     g_object_unref(test);
-    g_free(data_setup_function_name);
-    g_free(attributes_setup_function_name);
 }
 
 static void
@@ -726,13 +980,10 @@ cut_loader_load_test_case (CutLoader *loader)
 
     test_case = create_test_case(loader);
     for (node = test_names; node; node = g_list_next(node)) {
-        gchar *name;
-        CutTestFunction function = NULL;
+        SymbolNames *names = node->data;
 
-        name = node->data;
-        g_module_symbol(priv->module, name, (gpointer)&function);
-        if (function)
-            register_test(loader, test_case, name, function);
+        register_valid_test(loader, test_case, names);
+        symbol_names_free(names);
     }
     g_list_free(test_names);
 

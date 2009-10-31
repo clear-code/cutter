@@ -1,3 +1,10 @@
+2009-10-31  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-loader.c,
+	test/cutter/test-cut-loader.c,
+	test/fixtures/loader/cpp/: support test detection defined in C++
+	namespace.
+
 2009-10-30  Kouhei Sutou  <kou@clear-code.com>
 
 	* test/cutter/test-cut-loader.c,
