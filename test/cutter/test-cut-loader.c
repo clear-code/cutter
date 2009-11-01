@@ -368,7 +368,27 @@ mangle (const gchar *component, ...)
 void
 data_cpp_fixture_function (void)
 {
-    data_fixture_function();
+    cut_add_data("without prefix",
+                 fixture_test_data_new("without-prefix." G_MODULE_SUFFIX,
+                                       "startup",
+                                       "setup",
+                                       "teardown",
+                                       "shutdown"),
+                 fixture_test_data_free,
+                 "with prefix",
+                 fixture_test_data_new("with-prefix." G_MODULE_SUFFIX,
+                                       "cut_startup",
+                                       "cut_setup",
+                                       "cut_teardown",
+                                       "cut_shutdown"),
+                 fixture_test_data_free,
+                 "all",
+                 fixture_test_data_new("all." G_MODULE_SUFFIX,
+                                       "cut_startup",
+                                       "cut_setup",
+                                       "cut_teardown",
+                                       "cut_shutdown"),
+                 fixture_test_data_free);
 }
 
 void

@@ -1,5 +1,8 @@
 2009-11-01  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/cutter/test-cut-loader.c: C++ test case can use
+	startup/shutdown without cut_ prefix.
+
 	* cutter/, gcutter/gcut-assertions.h,
 	gdkcutter-pixbuf/gdkcut-pixbuf-assertions.h,
 	soupcutter/soupcut-assertions.h:
