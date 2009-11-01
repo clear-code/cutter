@@ -27,17 +27,6 @@
 extern "C" {
 #endif
 
-#if !defined(CUTTER_DISABLE_DEPRECATED) && defined(__GNUC__)
-#define cut_set_message_backward_compatibility(...)                     \
-    cut_test_context_set_user_message_backward_compatibility(           \
-        cut_get_current_test_context(),                                 \
-        ## __VA_ARGS__, NULL)
-#else
-#define cut_set_message_backward_compatibility(...)                     \
-    cut_test_context_check_optional_assertion_message(                  \
-        cut_get_current_test_context())
-#endif
-
 #define cut_test_with_user_message(assertion, set_user_message) do      \
 {                                                                       \
     if (cut_test_context_get_have_user_message_jump(cut_get_current_test_context())) { \

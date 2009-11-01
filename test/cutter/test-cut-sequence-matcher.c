@@ -455,50 +455,55 @@ append_match_info (GList *list, gint begin, gint end, gint size)
     return g_list_append(list, cut_sequence_match_info_new(begin, end, size));
 }
 
-#define cut_assert_equal_matches(expected, actual, ...) do              \
-{                                                                       \
-    const GList *_expected, *_actual;                                   \
-                                                                        \
-    _expected = (expected);                                             \
-    _actual = (actual);                                                 \
-    if (equal_matches(_expected, _actual)) {                            \
-        cut_test_pass();                                                \
-    } else {                                                            \
-        const gchar *inspected_expected, *inspected_actual;             \
-                                                                        \
-        inspected_expected = inspect_matches(_expected);                \
-        inspected_actual = inspect_matches(_actual);                    \
-        cut_set_message_backward_compatibility(__VA_ARGS__);            \
-        cut_test_fail(cut_take_printf("expected: <%s>\n"                \
-                                      "  actual: <%s>",                 \
-                                      inspected_expected,               \
-                                      inspected_actual));               \
-    }                                                                   \
-} while (0)
+#define cut_assert_equal_matches(expected, actual, ...)                 \
+    cut_trace_with_info_expression(                                     \
+        cut_test_with_user_message(                                     \
+            cut_assert_equal_matches_helper((expected), (actual),       \
+                                            #expected, #actual),        \
+            __VA_ARGS__),                                               \
+        cut_assert_equal_matches(expected, actual, __VA_ARGS__))
 
-#define cut_assert_matches(expected_matches,                            \
-                           sequence_matcher,                            \
-                           sequence_matcher_inspect) do                 \
-{                                                                       \
-    matcher = (sequence_matcher);                                       \
-    cut_assert_equal_matches(expected_matches,                          \
-                             cut_sequence_matcher_get_matches(matcher), \
-                             "cut_sequence_matcher_get_matches(%s)",    \
-                             sequence_matcher_inspect);                 \
-    g_object_unref(matcher);                                            \
-    matcher = NULL;                                                     \
-} while (0)
+static void
+cut_assert_equal_matches_helper(const GList *expected, const GList *actual,
+                                const gchar *expression_expected,
+                                const gchar *expression_actual)
+{
+    if (equal_matches(expected, actual)) {
+        cut_test_pass();
+    } else {
+        const gchar *inspected_expected, *inspected_actual;
 
-#define cut_assert_matches_string(expected_matches, from, to) do        \
-{                                                                       \
-    gchar **_from, **_to;                                               \
-    _from = (from);                                                     \
-    _to = (to);                                                         \
-                                                                        \
-    cut_assert_matches(expected_matches,                                \
-                       string_matcher_new(_from, _to),                  \
-                       inspect_string_matcher(_from, _to));             \
-} while (0)
+        inspected_expected = inspect_matches(expected);
+        inspected_actual = inspect_matches(actual);
+        cut_set_expected(inspected_expected);
+        cut_set_actual(inspected_actual);
+        cut_test_fail(cut_take_printf("<%s> == <%s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+static void
+cut_assert_matches(const GList *expected_matches,
+                   CutSequenceMatcher *sequence_matcher,
+                   const gchar *sequence_matcher_inspect)
+{
+    matcher = sequence_matcher;
+    cut_assert_equal_matches(expected_matches,
+                             cut_sequence_matcher_get_matches(matcher),
+                             cut_message("cut_sequence_matcher_get_matches(%s)",
+                                         sequence_matcher_inspect));
+    g_object_unref(matcher);
+    matcher = NULL;
+}
+
+static void
+cut_assert_matches_string(GList *expected_matches, gchar **from, gchar **to)
+{
+    cut_assert_matches(expected_matches,
+                       string_matcher_new(from, to),
+                       inspect_string_matcher(from, to));
+}
 
 void
 test_get_matches_for_string_sequence (void)
@@ -576,10 +581,11 @@ test_get_matches_complex_for_char_sequence (void)
                           sequence_matcher_inspect) do                  \
 {                                                                       \
     matcher = (sequence_matcher);                                       \
-    cut_assert_equal_matches(expected_matches,                          \
-                             cut_sequence_matcher_get_blocks(matcher),  \
-                             "cut_sequence_matcher_get_blocks(%s)",     \
-                             sequence_matcher_inspect);                 \
+    cut_assert_equal_matches(                                           \
+        expected_matches,                                               \
+        cut_sequence_matcher_get_blocks(matcher),                       \
+        cut_message("cut_sequence_matcher_get_blocks(%s)",              \
+                    sequence_matcher_inspect));                         \
     g_object_unref(matcher);                                            \
     matcher = NULL;                                                     \
 } while (0)

@@ -1,5 +1,11 @@
 2009-11-01  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertions-helper.h
+	(cut_set_message_backward_compatibility): remove.
+
+	* test/cutter/test-cut-sequence-matcher.c: rewrite as function
+	from macro.
+
 	* test/cutter/test-cut-loader.c: C++ test case can use
 	startup/shutdown without cut_ prefix.
 
